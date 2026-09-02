@@ -341,13 +341,13 @@ const COMIC = (function(){
     else if(scene==='coins') base=coinsSVG();
     else base=pondSVG();
     // высота опоры (земля/пол/вода) в координатах сцены 360x210
-    const groundY = scene==='kitchen'? 200 : (scene==='pond'? 208 : 204);
-    const h=78, w=68;
-    // говорящий: слева, если есть слушатели; иначе по центру-слева
-    const speakerX = withs.length? 18 : 148;
+    const groundY = scene==='kitchen'? 192 : (scene==='pond'? 196 : 192);
+    // говорящий всегда слева (крупный), слушатели справа — облачку место справа
+    const hW=withs.length? 118 : 138, wW=withs.length? 102 : 120;
+    const speakerX = 10;
     let actors='';
-    actors+=actorAt(who, emo, speakerX, groundY-h, w, h);
-    withs.slice(0,2).forEach((wt,i)=>{ actors+=actorAt(wt,'smile', 218+i*64, groundY-h+4, w-8, h-8); });
+    actors+=actorAt(who, emo, speakerX, groundY-hW, wW, hW);
+    withs.slice(0,2).forEach((wt,i)=>{ actors+=actorAt(wt,'smile', 232+i*58, groundY-86, 84, 90); });
     const propW = prop.length>18? 240 : prop.length>10? 200 : 160;
     const tag = propTag(prop, (360-propW)/2, 28, propW);
     // всё внутри одного svg, чтобы координаты x/y работали
@@ -386,11 +386,11 @@ const COMIC = (function(){
       @keyframes c2glint { 0%,100%{ transform:translateY(0); opacity:1;} 50%{ transform:translateY(-3px); opacity:.85;} }
       .c2a-spark { animation:c2twinkle 1.7s ease-in-out infinite; }
       @keyframes c2twinkle { 0%,100%{opacity:.25; transform:scale(.7);} 50%{opacity:1; transform:scale(1.2);} }
-      .c2-caption { position:absolute; left:0; right:0; bottom:0; background:rgba(51,41,30,.92); color:#f4e9c8;
-        font-size:12.5px; line-height:1.45; padding:7px 12px; }
-      .c2-caption .c2cap-in { animation:c2capup .45s ease both; }
+      .c2-capbar { background:#33291e; color:#f4e9c8; font-size:13px; line-height:1.45;
+        padding:8px 14px; display:flex; gap:8px; align-items:baseline; }
+      .c2-capbar .c2cap-tag { color:#d9a441; font-weight:bold; flex-shrink:0; }
+      .c2-capbar .c2cap-in { animation:c2capup .45s ease both; }
       @keyframes c2capup { from{ opacity:0; transform:translateY(9px);} to{ opacity:1; transform:none;} }
-      .c2-caption .c2cap-tag { color:#d9a441; font-weight:bold; }
       /* сцена: появление целиком + актёры */
       .c2-stage.c2-fresh { animation:c2staget .5s cubic-bezier(.2,.9,.3,1) both; }
       @keyframes c2staget { from{ opacity:0; transform:scale(.97) translateY(10px);} to{ opacity:1; transform:none;} }
@@ -401,28 +401,38 @@ const COMIC = (function(){
       .c2a-prop { animation:c2prop .4s ease .3s both; }
       @keyframes c2prop { from{ opacity:0; transform:translateY(-14px) scale(.7);} to{ opacity:1; transform:none;} }
       .c2a-prop rect { filter:drop-shadow(0 3px 6px rgba(0,0,0,.18)); }
-      /* диалог */
-      .c2-dialog { position:relative; flex:1 1 auto; min-height:0; background:#fffaf0; display:flex; }
-      .c2-speaker { width:124px; flex-shrink:0; display:flex; flex-direction:column; align-items:center;
-        justify-content:flex-end; padding:4px 2px 8px; }
-      .c2-speaker .c2s-card { width:112px; border-radius:16px; overflow:hidden;
-        box-shadow:0 7px 18px rgba(0,0,0,.22); border:4px solid #33291e; background:#fff; }
+      /* диалог: герой крупно слева (внизу), облачко справа на уровне его головы/рта */
+      .c2-dialog { flex:1 1 auto; display:flex; align-items:flex-end; gap:2px; background:#fffaf0;
+        padding:6px 12px; min-height:0; }
+      .c2-speaker { flex:0 0 106px; display:flex; flex-direction:column; align-items:center; }
+      .c2-speaker .c2s-card { width:100px; border-radius:14px; overflow:hidden;
+        box-shadow:0 6px 16px rgba(0,0,0,.2); border:4px solid #33291e; background:#fff;
+        animation:c2srise .45s cubic-bezier(.2,1.5,.4,1) both; }
+      @keyframes c2srise { from{ transform:translateY(30px); opacity:0;} to{ transform:none; opacity:1;} }
       .c2-speaker .c2s-card svg { display:block; width:100%; height:auto; }
-      .c2-speaker .c2s-name { margin-top:5px; font-size:12.5px; font-weight:bold; }
-      .c2-bubbles { flex:1; display:flex; flex-direction:column; justify-content:center; gap:7px;
-        padding:10px 12px 8px 4px; min-width:0; }
-      .c2-bubble { position:relative; background:#fff; border:4px solid #33291e; border-radius:8px 20px 20px 20px;
-        padding:10px 13px; font-size:15.5px; line-height:1.5; box-shadow:0 4px 12px rgba(0,0,0,.12); }
-      .c2-bubble::before { content:""; position:absolute; left:-17px; top:15px; border:8px solid transparent;
-        border-right-color:#33291e; border-left:0; }
-      .c2-bubble .c2-caret { display:inline-block; width:2px; background:#33291e; animation:c2blink .8s steps(1) infinite; }
+      .c2-speaker .c2s-name { margin-top:3px; font-size:12px; font-weight:bold; }
+      .c2-bubbles { flex:1; min-width:0; display:flex; align-items:flex-end;
+        align-self:stretch; padding-bottom:56px; }
+      .c2-bubble { position:relative; background:#fff; border:4px solid #33291e;
+        border-radius:16px 16px 16px 4px; padding:9px 13px 10px; font-size:15px; line-height:1.5;
+        box-shadow:0 4px 12px rgba(0,0,0,.12); margin-left:14px; width:100%;
+        animation:c2talk .3s cubic-bezier(.2,1.6,.4,1) both; }
+      /* хвостик облачка: слева внизу — «отходит от рта» героя */
+      .c2-bubble::before { content:""; position:absolute; left:-17px; bottom:12px;
+        border:10px solid transparent; border-right-color:#33291e; border-bottom-color:#33291e;
+        border-left:0; border-top:0; transform:rotate(-18deg); }
+      .c2-bubble::after { content:""; position:absolute; left:-9px; bottom:15px;
+        border:6px solid transparent; border-right-color:#fff; border-bottom-color:#fff;
+        border-left:0; border-top:0; transform:rotate(-18deg); }
+      .c2-bubble .c2-caret { display:inline-block; width:2px; background:#33291e;
+        animation:c2blink .8s steps(1) infinite; }
       @keyframes c2blink { 50%{ opacity:0; } }
-      .c2-bubble.hist { opacity:.5; font-size:12.5px; padding:5px 10px; border-width:2px; }
-      .c2-bubble.hist::before { display:none; }
-      .c2-bubble.new { animation:c2pop .3s cubic-bezier(.2,1.7,.4,1) both; }
-      @keyframes c2pop { from{ transform:scale(.5) translateY(9px); opacity:0;} to{ transform:none; opacity:1;} }
-      .c2-speaker.new .c2s-card { animation:c2slide .4s ease both; }
-      @keyframes c2slide { from{ transform:translateY(26px) scale(.9); opacity:0;} to{ transform:none; opacity:1;} }
+      @keyframes c2talk { from{ transform:scale(.55) translateX(14px); opacity:0;} to{ transform:none; opacity:1;} }
+      .c2-history { display:flex; gap:6px; overflow-x:auto; padding:0 12px 8px; background:#fffaf0; }
+      .c2-history .c2-bubble.hist { flex:0 0 auto; background:#f7f1e0; border:2px solid #cbb897;
+        border-radius:12px; padding:4px 10px; font-size:12px; max-width:230px;
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .c2-history .c2-bubble.hist::before, .c2-history .c2-bubble.hist::after { display:none; }
       /* навигация */
       .comic-nav { display:flex; align-items:center; justify-content:space-between; gap:10px;
         padding:4px 14px 14px; }
@@ -467,19 +477,18 @@ const COMIC = (function(){
         <button class="ct-x" onclick="COMIC.close()">✕</button>
       </div>
       <div class="c2-page">
-        <div class="c2-stage c2-fresh" id="c2stage">${sceneArt(scene, fr)}
-          <div class="c2-caption"><span class="c2cap-in"><span class="c2cap-tag">${idx+1}/${frs.length} · </span>${escHtml(fr.cap||'')}</span></div>
-        </div>
+        <div class="c2-stage c2-fresh" id="c2stage">${sceneArt(scene, fr)}</div>
+        <div class="c2-capbar"><span class="c2cap-tag">${idx+1}/${frs.length} · </span><span class="c2cap-in">${escHtml(fr.cap||'')}</span></div>
         <div class="c2-dialog">
           <div class="c2-speaker">
             <div class="c2s-card">${pers.svg(emo)}</div>
             <div class="c2s-name" style="color:${pers.color}">${pers.name}</div>
           </div>
           <div class="c2-bubbles">
-            ${hist}
             <div class="c2-bubble new" id="c2cur"><span class="c2-say"></span><span class="c2-caret"></span></div>
           </div>
         </div>
+        ${hist?`<div class="c2-history">${hist}</div>`:''}
       </div>
       <div class="comic-nav">
         <button class="cbtn" onclick="COMIC.step(-1)" ${idx===0?'disabled':''}>◀ Назад</button>
@@ -488,14 +497,15 @@ const COMIC = (function(){
           ? `<button class="cbtn primary" onclick="COMIC.done()">Понял! Проверю себя →</button>`
           : `<button class="cbtn primary" onclick="COMIC.next()">Дальше ▶</button>`}
       </div>`;
-    // печать реплики по буквам
+        // печать реплики по буквам
     const cur=document.getElementById('c2cur'); const say=cur.querySelector('.c2-say'); const caret=cur.querySelector('.c2-caret');
     const text=fr.say||''; say.textContent=''; caret.style.visibility='visible';
     let i=0;
     const tick=()=>{ if(!root||root.style.display==='none') return;
       say.textContent=text.slice(0,++i);
-      if(i<text.length){ tmr=setTimeout(tick, text.length>70?20:30); } else { caret.style.visibility='hidden'; } };
-    if(tmr){clearTimeout(tmr);} tmr=setTimeout(tick,200);
+      if(i<text.length){ tmr=setTimeout(tick, text.length>70?20:30); } else { caret.style.visibility='hidden';
+        try{ document.getElementById('c2cur').classList.add('ready'); }catch(e){} } };
+    if(tmr){clearTimeout(tmr);} tmr=setTimeout(tick,180);
   }
   function step(d){ idx=Math.max(0,Math.min(L.comic.length-1,idx+d)); render(); }
   function next(){ if(idx<L.comic.length-1){ idx++; render(); } }
