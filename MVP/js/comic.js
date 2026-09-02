@@ -135,6 +135,20 @@ const COMIC = (function(){
     pig:{ svg:pigSVG, name:'Пятачок', color:'#a05a50' }
   };
 
+  /* вложить персонажа как «актёра» сцены: берём внутренности его SVG */
+  function svgInner(full){ return full.replace(/^<svg[^>]*>/,'').replace(/<\/svg>\s*$/,''); }
+  function actorAt(who,emo,x,y,w,h){
+    const P=PERS[who]||PERS.arch;
+    return `<svg x="${x}" y="${y}" width="${w}" height="${h}" viewBox="0 0 120 140">${svgInner(P.svg(emo))}</svg>`;
+  }
+  /* плашка-надпись сцены (как реплика комикса) */
+  function propTag(prop,x,y,w){
+    if(!prop) return '';
+    const fs=w>150?19:(w>110?16:13);
+    return `<g class="c2a-prop"><rect x="${x-14}" y="${y-24}" width="${w+28}" height="34" rx="17"
+        fill="#fffef4" stroke="#33291e" stroke-width="3"/>
+      <text x="${x+w/2}" y="${y+1}" text-anchor="middle" font-size="${fs}" font-weight="bold" fill="#33291e" font-family="Georgia,serif">${escHtml(prop)}</text></g>`;
+  }
   /* ================= СЦЕНЫ-РАЗВОРОТЫ (SVG, всё стоит на поверхностях) ================= */
   function pondSVG(){
     return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
@@ -155,7 +169,13 @@ const COMIC = (function(){
       <rect x="0" y="88" width="360" height="20" fill="#93c270"/>
       <path d="M0 88 Q30 82 60 88 T120 88 T180 88 T240 88 T300 88 T360 88 L360 108 L0 108 Z" fill="#7fb45c" opacity=".6"/>
       <!-- вода -->
-      <rect x="0" y="104" width="360" height="106" fill="url(#wtP)"/>
+      <rect x="0" y="104" width="360" height="94" fill="url(#wtP)"/>
+      <!-- передний берег, на котором стоят герои -->
+      <path d="M0 198 L360 198 L360 210 L0 210 Z" fill="#7fb45c"/>
+      <path d="M0 196 Q40 192 80 196 T160 196 T240 196 T320 196 T360 196 L360 210 L0 210 Z" fill="#5c8f3e"/>
+      <g stroke="#6f9c46" stroke-width="2" fill="none">
+        <path d="M40 210 Q38 200 42 194"/><path d="M150 210 Q152 201 149 195"/>
+        <path d="M280 210 Q278 200 282 194"/></g>
       <!-- блики-волны на воде -->
       <g stroke="#cdeefc" stroke-width="2.5" fill="none" opacity=".75" stroke-linecap="round">
         <path d="M30 118 q7 -5 14 0 t14 0"/><path d="M150 124 q7 -5 14 0 t14 0"/>
@@ -309,12 +329,32 @@ const COMIC = (function(){
       <text x="248" y="120" font-size="15" class="c2a-spark">✨</text>
     </svg>`;
   }
-  function sceneArt(scene){
-    if(scene==='pond') return pondSVG();
-    if(scene==='kitchen') return kitchenSVG();
-    if(scene==='coins') return coinsSVG();
-    return pondSVG();
+  /* размещение актёров и надписи поверх базовой среды */
+  function sceneArt(scene, fr){
+    const emo=(fr&&fr.emo)||'smile';
+    const who=(fr&&fr.who)||'arch';
+    const withs=fr&&fr.with? fr.with.filter(w=>w!==who) : [];
+    const prop=(fr&&fr.prop)||'';
+    let base='';
+    if(scene==='pond') base=pondSVG();
+    else if(scene==='kitchen') base=kitchenSVG();
+    else if(scene==='coins') base=coinsSVG();
+    else base=pondSVG();
+    // высота опоры (земля/пол/вода) в координатах сцены 360x210
+    const groundY = scene==='kitchen'? 200 : (scene==='pond'? 208 : 204);
+    const h=78, w=68;
+    // говорящий: слева, если есть слушатели; иначе по центру-слева
+    const speakerX = withs.length? 18 : 148;
+    let actors='';
+    actors+=actorAt(who, emo, speakerX, groundY-h, w, h);
+    withs.slice(0,2).forEach((wt,i)=>{ actors+=actorAt(wt,'smile', 218+i*64, groundY-h+4, w-8, h-8); });
+    const propW = prop.length>18? 240 : prop.length>10? 200 : 160;
+    const tag = propTag(prop, (360-propW)/2, 28, propW);
+    // всё внутри одного svg, чтобы координаты x/y работали
+    return '<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">'
+      + svgInner(base) + actors + tag + '</svg>';
   }
+
   function emojiFor(scene){ return scene==='pond'?'🐟':scene==='kitchen'?'🥧':'🪙'; }
 
   /* ================= ОВЕРЛЕЙ ================= */
@@ -351,6 +391,16 @@ const COMIC = (function(){
       .c2-caption .c2cap-in { animation:c2capup .45s ease both; }
       @keyframes c2capup { from{ opacity:0; transform:translateY(9px);} to{ opacity:1; transform:none;} }
       .c2-caption .c2cap-tag { color:#d9a441; font-weight:bold; }
+      /* сцена: появление целиком + актёры */
+      .c2-stage.c2-fresh { animation:c2staget .5s cubic-bezier(.2,.9,.3,1) both; }
+      @keyframes c2staget { from{ opacity:0; transform:scale(.97) translateY(10px);} to{ opacity:1; transform:none;} }
+      .c2-fresh svg > svg { animation:c2actorin .55s cubic-bezier(.25,1.4,.4,1) both; transform-box:fill-box; }
+      .c2-fresh svg > svg:nth-of-type(2){ animation-delay:.08s; }
+      .c2-fresh svg > svg:nth-of-type(3){ animation-delay:.16s; }
+      @keyframes c2actorin { from{ opacity:0; transform:translateY(26px) scale(.8);} to{ opacity:1; transform:none;} }
+      .c2a-prop { animation:c2prop .4s ease .3s both; }
+      @keyframes c2prop { from{ opacity:0; transform:translateY(-14px) scale(.7);} to{ opacity:1; transform:none;} }
+      .c2a-prop rect { filter:drop-shadow(0 3px 6px rgba(0,0,0,.18)); }
       /* диалог */
       .c2-dialog { position:relative; flex:1 1 auto; min-height:0; background:#fffaf0; display:flex; }
       .c2-speaker { width:124px; flex-shrink:0; display:flex; flex-direction:column; align-items:center;
@@ -417,7 +467,7 @@ const COMIC = (function(){
         <button class="ct-x" onclick="COMIC.close()">✕</button>
       </div>
       <div class="c2-page">
-        <div class="c2-stage">${sceneArt(scene)}
+        <div class="c2-stage c2-fresh" id="c2stage">${sceneArt(scene, fr)}
           <div class="c2-caption"><span class="c2cap-in"><span class="c2cap-tag">${idx+1}/${frs.length} · </span>${escHtml(fr.cap||'')}</span></div>
         </div>
         <div class="c2-dialog">
