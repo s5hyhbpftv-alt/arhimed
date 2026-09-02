@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Острова Познания</title>
+<style>
+  :root { --deep:#0b1712; --panel:#13251c; --card:#182f24; --brass:#d9a441; --glass:#7fb8a0;
+    --ivory:#e8e0cc; --muted:#8fa08f; --glow:#7fd1ff; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:Georgia,'Times New Roman',serif; color:var(--ivory); min-height:100vh;
+    background: radial-gradient(ellipse at 50% -10%, #1a3226 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 110%, #132a20 0%, transparent 45%), var(--deep); }
+  .wrap { max-width:860px; margin:0 auto; padding:28px 16px 60px; }
+  .logo { font-size:30px; color:var(--brass); letter-spacing:.05em; }
+  .logo small { display:block; font-size:13px; color:var(--muted); margin-top:6px; line-height:1.5; }
+  .hero { background:linear-gradient(135deg,rgba(127,209,255,.09),rgba(217,164,65,.06));
+    border:1px solid rgba(127,209,255,.3); border-radius:16px; padding:20px 22px; margin:18px 0; line-height:1.6; }
+  h2 { font-size:15px; color:var(--brass); margin:22px 2px 10px; letter-spacing:.03em; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:640px){ .grid{grid-template-columns:1fr;} }
+  a.card { display:block; background:linear-gradient(170deg,var(--card),#101f18); border:1px solid rgba(217,164,65,.25);
+    border-radius:14px; padding:14px 16px; text-decoration:none; color:var(--ivory); transition:.15s; }
+  a.card:hover { border-color:var(--brass); transform:translateY(-1px); }
+  a.card .big { font-size:19px; font-weight:bold; }
+  a.card .sub { font-size:12.5px; color:var(--muted); margin-top:4px; line-height:1.5; }
+  .badge { display:inline-block; background:#20382b; color:var(--glass); border:1px solid rgba(127,184,160,.4);
+    border-radius:999px; font-size:11px; padding:3px 10px; margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">🏛 АРХИМЕД<small>Интерактивная платформа олимпиадной подготовки для школьников 10–17 лет<br>математика · физика · химия · информатика — «Острова Познания»</small></div>
+
+  <div class="hero">
+    <b style="color:var(--glow)">📜 Легенда</b> — Хранитель Внутреннего моря учит приёмам олимпиад:<br>
+    сначала объясняет, потом даёт решить. Нажми «Путь» — и Архимед проведёт тебя по островам.
+  </div>
+
+  <h2>🚀 Запустить приложение</h2>
+  <div class="grid">
+    <a class="card" href="MVP/">
+      <div class="big">🧭 MVP-приложение</div>
+      <div class="sub">Путь по 4 островам · 71 задача · Книга знаний (28 уроков «объясни → реши») · Легенда · Тур и Дуэль · родительский кабинет</div>
+      <span class="badge">рекомендуем начать здесь</span>
+    </a>
+    <a class="card" href="ХАБ_ПРОТОТИП.html">
+      <div class="big">🗺 Хаб всех прототипов</div>
+      <div class="sub">Карта вселенной: все HTML-прототипы островов, тренажёры и 3D-сцены</div>
+    </a>
+    <a class="card" href="ПРОТОТИП_ГЛАВА1_СИРАКУЗЫ.html">
+      <div class="big">🏛 Сиракузы (3D)</div>
+      <div class="sub">Математический остров — логика, комбинаторика, инварианты</div>
+    </a>
+    <a class="card" href="ПРОТОТИП_ОСТРОВ_БАШНЯ_НЬЮТОНА.md">
+      <div class="big">🍎 Башня Ньютона</div>
+      <div class="sub">Физика: механика, энергия, электричество — спецификация острова</div>
+    </a>
+    <a class="card" href="ПРОТОТИП_ОСТРОВ_ЛАБОРАТОРИЯ_ЛАВУАЗЬЕ.md">
+      <div class="big">⚗️ Лаборатория Лавуазье</div>
+      <div class="sub">Химия: молекулы, растворы, газы — спецификация острова</div>
+    </a>
+    <a class="card" href="chemistry-demo/">
+      <div class="big">🧪 3D-химия (React-демо)</div>
+      <div class="sub">Фотореалистичные пробирки и переливания — сборка: cd chemistry-demo && npm i && npm run dev</div>
+    </a>
+  </div>
+
+  <h2>📚 Документы проекта</h2>
+  <div class="grid">
+    <a class="card" href="README.md"><div class="big">📄 README</div><div class="sub">Обзор всех файлов проекта</div></a>
+    <a class="card" href="ПРОЕКТ_АРХИМЕД.md"><div class="big">📐 Проект АРХИМЕД</div><div class="sub">Концепция и видение продукта</div></a>
+    <a class="card" href="ТЗ_MVP.md"><div class="big">📋 ТЗ на MVP</div><div class="sub">Требования, роли, user stories</div></a>
+    <a class="card" href="ПИТЧ_ПРЕЗЕНТАЦИЯ.md"><div class="big">🎤 Питч-презентация</div><div class="sub">12 слайдов для инвесторов (текст)</div></a>
+    <a class="card" href="ЛЕГЕНДА_АРХИМЕДА.md"><div class="big">📜 Легенда об Архимеде</div><div class="sub">Полная вводная история мира</div></a>
+    <a class="card" href="МЕТОДИКА_ОБУЧЕНИЯ_ВСОШ_МАТЕМАТИКА_6_7.md"><div class="big">🎓 Методика ВсОШ</div><div class="sub">Как учить решать задачи олимпиад (6–7 класс)</div></a>
+  </div>
+
+  <div class="hero" style="margin-top:22px">
+    <b style="color:var(--brass)">⚙ Запуск локально</b><br>
+    Сервер: <span style="font-family:Menlo,monospace;font-size:13px">python3 -m http.server 8123</span> → <span style="font-family:Menlo,monospace;font-size:13px">http://localhost:8123/MVP/</span><br>
+    Голос озвучки: <span style="font-family:Menlo,monospace;font-size:13px">python3 tts_server.py</span> (8124) · Живой агент: <span style="font-family:Menlo,monospace;font-size:13px">python3 агент_сервер.py</span> (8125, нужен ключ Яндекса)
+  </div>
+</div>
+</body>
+</html>
