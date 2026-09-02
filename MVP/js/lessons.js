@@ -7,10 +7,17 @@ function lessonById(id){ return window.ARH_LESSONS.find(L=>L.id===id); }
 function lrec(){ DB.lessons=DB.lessons||{}; if(!DB.lessons[LV.id]) DB.lessons[LV.id]={done:false,stars:0,tasks:[]}; return DB.lessons[LV.id]; }
 
 /* ---------- список ---------- */
+const SUBJ_META={
+  jun:{ico:'🧸', name:'Начальная школа', dsc:'1–4 класс · просто и понятно'},
+  math:{ico:'🏛', name:'Математика', dsc:'Сиракузы · логика, числа, комбинаторика'},
+  phys:{ico:'🍎', name:'Физика', dsc:'Ньютон · движение, силы, энергия'},
+  chem:{ico:'⚗️', name:'Химия', dsc:'Лавуазье · вещества, реакции, растворы'},
+  inf:{ico:'💻', name:'Информатика', dsc:'Код, алгоритмы, логика'}};
+function subjOf(L){ return (L&&L.subj) || (/Начальная школа/.test(L.src||'')?'jun':/Информатика/.test(L.src||'')?'inf':/физика/i.test(L.src||'')?'phys':'math'); }
 function lessonPool(){
   try{
-    if(typeof isJunior==='function'&&isJunior()) return window.ARH_LESSONS.filter(L=>/Начальная школа/.test(L.src||''));
-    return window.ARH_LESSONS.filter(L=>!/Начальная школа/.test(L.src||''));
+    if(typeof isJunior==='function'&&isJunior()) return window.ARH_LESSONS.filter(L=>subjOf(L)==='jun');
+    return window.ARH_LESSONS.filter(L=>subjOf(L)!=='jun');
   }catch(e){ return window.ARH_LESSONS; }
 }
 function renderBookList(){
@@ -18,16 +25,22 @@ function renderBookList(){
   const pool=lessonPool();
   const doneAll=pool.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
   const totalL=pool.length;
+  const order=isJunior && typeof isJunior==='function' && isJunior() ? ['jun'] : ['math','phys','chem','inf'];
+  const grouped=order.map(subj=>({ subj, meta:SUBJ_META[subj], items:pool.filter(L=>subjOf(L)===subj) })).filter(g=>g.items.length);
   s.innerHTML=`<h2>📖 Книга знаний <span class="small">(пройдено ${doneAll}/${totalL})</span></h2>
     <div class="arch"><span class="who">◈ Архимед</span>
       «Сначала я объясню приём — по шагам. Потом проверим, как ты понял, — и только затем дам задачи».</div>
-    ${pool.map(L=>{
-      const rec=DB.lessons&&DB.lessons[L.id];
-      const done=!!(rec&&rec.done);
-      return `<div class="island" onclick="openLessonView(${L.id})" style="${done?'border-color:var(--ok)':''}">
-        <div class="top"><span class="nm">${L.ico} ${esc(L.title)}</span>
-        <span class="pr">${done?'✅ пройден':(rec&&rec.stars? '⭐ '+rec.stars+'/2':'⭐ 0/2')}</span></div>
-        <div class="sub">${esc(L.src)} · шагов объяснения: ${L.explain.length}</div></div>`;}).join('')}`;
+    ${grouped.map(g=>{
+      const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
+      return `<div class="sec" style="margin-top:16px">${g.meta.ico} ${g.meta.name} <span class="small" style="text-transform:none;letter-spacing:0">(${gd}/${g.items.length})</span></div>
+      <div class="small" style="margin:-4px 2px 8px;color:var(--muted)">${esc(g.meta.dsc)}</div>
+      ${g.items.map(L=>{
+        const rec=DB.lessons&&DB.lessons[L.id];
+        const done=!!(rec&&rec.done);
+        return `<div class="island" onclick="openLessonView(${L.id})" style="${done?'border-color:var(--ok)':''}">
+          <div class="top"><span class="nm">${L.ico} ${esc(L.title)}</span>
+          <span class="pr">${done?'✅ пройден':(rec&&rec.stars? '⭐ '+rec.stars+'/2':'⭐ 0/2')}</span></div>
+          <div class="sub">${esc(L.src)} · шагов объяснения: ${L.explain.length}</div></div>`;}).join('')}`;}).join('')}`;
   hud();
 }
 
