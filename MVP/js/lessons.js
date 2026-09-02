@@ -369,6 +369,122 @@ function visMathNew(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+
+var CHS={};
+function chRender(lid){ const el=document.getElementById('lvis'); if(el&&visIsChem()) visChemNew(el); }
+function visChemNew(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    if(!CHS[lidKey(LV.id)]) CHS[lidKey(LV.id)]={};
+    const st=CHS[lidKey(LV.id)];
+    const all=((L.explain||[]).join(' ')+' '+(L.check&&L.check.q||'')+' '+L.title).toLowerCase();
+    const raw=(L.check&&L.check.q||'');
+    const nums=(raw.match(/\d+(?:[.,]\d+)?/g)||[]).map(x=>parseFloat(x.replace(',','.')));
+    const has=(...ws)=>ws.some(w=>all.includes(w));
+    const card=(inner)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">${inner}</div>`;
+    const big=(t)=>`<div style="font-size:19px;color:var(--amber);font-family:Georgia,serif">${t}</div>`;
+    const btn=(txt,on)=>{ const k=lidKey(LV.id)+'_b'; const n=((st._b)||0)+1; st._b=n; return `<button class="hint-btn" onclick="chBtn('${lidKey(LV.id)}','${txt}')">${txt}</button>`; };
+    const lk=lidKey(LV.id);
+    const TARGET=12;
+    let h='';
+    if(has('титрован')||(has('кислот')&&has('основан'))||has('лакмус')||has('индикатор')){
+      const d=st.drops||0; const done=d>=TARGET;
+      const color = d===0?'#f7f0e0':(done?'#ff9fb0':'#e8dff0');
+      st.drops=d;
+      h=card(
+        `<div style="display:flex;align-items:flex-end;gap:14px">
+          <div style="position:relative;width:46px;height:120px;border:3px solid #33291e;border-top:none;border-radius:0 0 16px 16px;background:linear-gradient(#fff, #dde8ff);overflow:hidden">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:${8+d*3}px;background:#9fc5f5;transition:.2s"></div>
+            <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:16px">🫗</div>
+          </div>
+          <div style="width:52px;height:70px;border:3px solid #33291e;border-radius:0 0 14px 14px;background:${color};display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;font-size:12px;color:#33291e;transition:.2s">${done?'розовый!':'кислота'}</div>
+        </div>`+
+        big(`капель щёлочи: ${Math.min(d,TARGET)}`)+
+        `<div style="display:flex;gap:8px;justify-content:center">
+          <button class="hint-btn" onclick="chTitr('${lk}',1)" ${done?'disabled':''}>💧 капля</button>
+          <button class="hint-btn" onclick="chTitr('${lk}',0)">↺ сброс</button></div>`+
+        `<div class="small" style="color:#cbb89a">${done?'Щёлочь добавили достаточно — индикатор стал розовым (нейтрализация).':'Добавляй щёлочь по капле — следи за цветом индикатора.'}</div>`);
+    }
+    else if(has('валентн')){
+      const sel=st.sel||'H'; const cards=[['H',1,'#7fb8a0'],['O',2,'#c96f4a'],['C',4,'#8a5c33'],['N',3,'#7c9b4f'],['Cl',1,'#8fc7f5']];
+      st.sel=sel;
+      h=card(`<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">${cards.map(([nm,v,col])=>`<div onclick="chVal('${lk}','${nm}')" style="cursor:pointer;width:64px;padding:6px;border:2px solid ${sel===nm?'var(--brass)':'#3d5c49'};border-radius:10px;background:rgba(255,255,255,.05);text-align:center"><div style="font-size:24px;font-weight:bold;color:${col}">${nm}</div><div class="small" style="font-size:10.5px;color:#cbb89a">валентность ${v}</div></div>`).join('')}</div>`+
+        `<div class="small" style="color:#cbb89a">нажми на элемент — увидишь его валентность. Водород H = 1, кислород O = 2 — постоянны.</div>`);
+    }
+    else if(has('молярная масса')||has('mr(')||has('относительн')||has('молекулярн. масс')){
+      const M=st.M||0; const parts=st.parts||[];
+      const add=(nm,val)=>{ parts.push([nm,val]); st.parts=parts; st.M=M+val; chRender(LV.id); };
+      h=card(`<div style="display:flex;align-items:center;gap:12px">
+        <div style="font-size:40px">⚖️</div>
+        <div style="min-width:120px;text-align:left">
+          <div class="small" style="color:#cbb89a">атомы в формуле:</div>
+          ${parts.length?parts.map(([nm,v])=>`<span style="display:inline-block;margin:1px;padding:0 6px;background:#13251c;border:1px solid #3d5c49;border-radius:8px;font-size:13px">${nm}(${v})</span>`).join(' '):'<span class="small">—</span>'}
+        </div></div>`+big(`Mr = ${M||0}`)+
+        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+          <button class="hint-btn" onclick="chMr('${lk}','H',1)">+H(1)</button>
+          <button class="hint-btn" onclick="chMr('${lk}','O',16)">+O(16)</button>
+          <button class="hint-btn" onclick="chMr('${lk}','C',12)">+C(12)</button>
+          <button class="hint-btn" onclick="chMr('${lk}','N',14)">+N(14)</button>
+          <button class="hint-btn" onclick="chMr('${lk}','Na',23)">+Na(23)</button>
+          <button class="hint-btn" onclick="chMr('${lk}','Cl',35)">+Cl(35)</button>
+          <button class="hint-btn" onclick="chMr('${lk}','')">↺</button></div>`);
+    }
+    else if(has('моль')){ const n=st.n||0;
+      h=card(`<div style="font-size:42px">🧂</div>`+big(`${n} моль`)+`<div class="small" style="color:#cbb89a">1 моль — это 6·10²³ частиц (число Авогадро)</div>`+
+        `<div style="display:flex;gap:8px;justify-content:center"><button class="hint-btn" onclick="chMol('${lk}',1)">+1 моль</button><button class="hint-btn" onclick="chMol('${lk}',0)">↺</button></div>`);
+    }
+    else if(has('раствор')||has('массовая доля')){
+      const salt=(st.salt==null?10:st.salt), water=st.water==null?90:st.water; st.salt=salt; st.water=water;
+      const tot=salt+water, pct=Math.round(salt/tot*100);
+      h=card(`<div style="position:relative;width:90px;height:130px;border:3px solid #33291e;border-radius:0 0 18px 18px;background:linear-gradient(#bcd9f2,#7fb8d8);overflow:hidden">
+        <div style="position:absolute;bottom:0;left:0;right:0;height:${Math.round(salt/tot*100)}%;background:#f4f4ee;display:flex;align-items:center;justify-content:center;font-size:11px;color:#8a94ad">соль</div>
+        <div style="position:absolute;top:4px;left:0;right:0;text-align:center;font-size:11px;color:#2a3b52">${water} г воды</div></div>`+
+        big(`${salt} г соли + ${water} г воды`)+
+        `<div style="display:flex;gap:6px;justify-content:center"><button class="hint-btn" onclick="chSalt('${lk}',10)">+10 г соли</button><button class="hint-btn" onclick="chSalt('${lk}',-10)">−10 г</button><button class="hint-btn" onclick="chSalt('${lk}',0)">↺</button></div>`+
+        `<div class="small" style="color:#cbb89a">массовая доля соли: ${pct}% (соль/всё·100)</div>`);
+    }
+    else if(has('горен')){ const on=st.fire==null?1:st.fire; st.fire=on;
+      const need=on===1?'горючее, кислород и тепло — огонь горит':'убрали условие — огонь погас';
+      h=card(`<div style="font-size:52px">${on?'🔥':'💨'}</div>`+big(on?'горит':'погас')+
+        `<div style="display:flex;gap:6px;justify-content:center"><button class="hint-btn" onclick="chFire('${lk}',1)">🔥 зажечь</button><button class="hint-btn" onclick="chFire('${lk}',0)">🧯 потушить</button></div>`+
+        `<div class="small" style="color:#cbb89a">${need}</div>`);
+    }
+    else if(has('кислот')&&has('металл')){
+      const nz=st.zn||0;
+      h=card(`<div style="display:flex;gap:10px;align-items:center;justify-content:center">
+        <div style="font-size:44px">🧪</div><div style="font-size:44px">+</div><div style="font-size:44px">${nz?'🫧':'⚙️'}</div></div>`+
+        big(`Zn + 2HCl → ZnCl₂ + H₂`)+
+        `<div style="display:flex;gap:8px;justify-content:center"><button class="hint-btn" onclick="chZn('${lk}',1)">добавить цинк</button><button class="hint-btn" onclick="chZn('${lk}',0)">↺</button></div>`+
+        `<div class="small" style="color:#cbb89a">${nz?'выделяется газ водород — пузырьки!':'брось кусочек цинка в кислоту'}</div>`);
+    }
+    else if(has('металл')||has('неметалл')){
+      h=card(`<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <div style="padding:8px;border:2px solid #3d5c49;border-radius:10px;background:#13251c;width:110px"><div style="font-size:28px">🔩</div><b>Железо, медь</b><div class="small" style="color:#cbb89a">блестят, проводят ток</div></div>
+        <div style="padding:8px;border:2px solid #3d5c49;border-radius:10px;background:#13251c;width:110px"><div style="font-size:28px">🎈</div><b>Кислород, сера</b><div class="small" style="color:#cbb89a">не блестят, не проводят</div></div></div>`);
+    }
+    else if(has('молекул')||has('атом')||has('формул')||has('символ')){
+      const m=st.mol||0; st.mol=m;
+      h=card(`<div style="display:flex;gap:4px;align-items:center;justify-content:center;font-size:30px">${Array.from({length:Math.min(m+1,6)},()=>'🧪').join('')}</div>`+big(`${m}${m===1?' молекула':' молекул'}`)+
+        `<div style="display:flex;gap:8px;justify-content:center"><button class="hint-btn" onclick="chMol2('${lk}',1)">+молекула</button><button class="hint-btn" onclick="chMol2('${lk}',0)">↺</button></div>`+
+        `<div class="small" style="color:#cbb89a">считаем молекулы — как и частицы в формулах</div>`);
+    }
+    else {
+      h=card(`<div style="font-size:36px">🧪</div>`+big(L.title||'')+`<div class="small" style="color:#cbb89a;max-width:300px">${esc(((L.explain&&L.explain[0])||'')).slice(0,150)}…</div>`);
+    }
+    el.innerHTML=`<div style="background:rgba(16,31,24,.75);border:1px solid #3d5c49;border-radius:12px;padding:10px;margin-top:10px">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+function lidKey(id){ return 'l'+id; }
+function chTitr(lk,d){ const st=CHS[lk]||(CHS[lk]={}); st.drops=d? (st.drops||0)+1 : 0; chRender(0); }
+function chVal(lk,nm){ const st=CHS[lk]||(CHS[lk]={}); st.sel=nm; chRender(0); }
+function chMr(lk,nm,v){ const st=CHS[lk]||(CHS[lk]={}); if(!v){st.M=0;st.parts=[];} else { st.parts=(st.parts||[]).concat([[nm,v]]); st.M=(st.M||0)+v; } chRender(0); }
+function chMol(lk,d){ const st=CHS[lk]||(CHS[lk]={}); st.n=Math.max(0,(st.n||0)+(d?1:-1)); chRender(0); }
+function chMol2(lk,d){ const st=CHS[lk]||(CHS[lk]={}); st.mol=Math.max(0,(st.mol||0)+(d?1:-1)); chRender(0); }
+function chSalt(lk,d){ const st=CHS[lk]||(CHS[lk]={}); if(d===0){st.salt=10;st.water=90;} else { st.salt=Math.max(0,(st.salt==null?10:st.salt)+d); } chRender(0); }
+function chFire(lk,on){ const st=CHS[lk]||(CHS[lk]={}); st.fire=on; chRender(0); }
+function chZn(lk,d){ const st=CHS[lk]||(CHS[lk]={}); st.zn=d; chRender(0); }
+function visIsChem(){ try{ const L=lessonById(LV.id); return !!L && L.subj==='chem'; }catch(e){ return false; } }
+
 function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
@@ -378,6 +494,7 @@ function renderLessonVis(){
   else if(id===4) visCandy(el);
   else if(id===5) visTourn(el);
   else if(id===6) visVillage(el);
+  else if(visIsChem()) visChemNew(el);
   else if(visIsMath()) visMathNew(el);
   else el.innerHTML='';
 }
