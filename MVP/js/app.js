@@ -45,31 +45,118 @@ function hud(){
 /* ---------- ОНБОРДИНГ ---------- */
 let chosenCol=COLORS[0], chosenGender='boy';
 function figSVG(g){
-  const col=chosenCol, sh=shade(col);
-  const skin='#eec39b', hair='#6b4a33';
-  // причёски: мальчик — короткая «шапочка»; девочка — длинные волосы с чёлкой и хвостики
-  const hairBoy=`<path d="M26 30 C26 16 36 9 48 9 C60 9 70 16 70 30 C70 22 62 18 48 18 C34 18 26 22 26 30 Z" fill="${hair}"/>
-    <path d="M27 28 C29 20 38 16 48 16 C58 16 67 20 69 28 C64 22 56 20 48 20 C40 20 32 22 27 28 Z" fill="${hair}"/>`;
-  const hairGirl=`<path d="M20 34 C20 24 26 16 34 12 C30 14 27 19 26 26 C24 34 23 46 24 58 L31 58 C29 46 30 36 33 30 Z" fill="${hair}"/>
-    <path d="M76 34 C76 24 70 16 62 12 C66 14 69 19 70 26 C72 34 73 46 72 58 L65 58 C67 46 66 36 63 30 Z" fill="${hair}"/>
-    <path d="M28 30 C28 14 38 7 48 7 C58 7 68 14 68 30 C68 22 60 18 48 18 C36 18 28 22 28 30 Z" fill="${hair}"/>
-    <path d="M30 26 C32 18 40 15 48 15 C56 15 64 18 66 26 C60 21 54 19 48 19 C42 19 36 21 30 26 Z" fill="${hair}"/>
-    <circle cx="60" cy="13" r="4.5" fill="#e86a5a"/>`;
-  const hairTop = g==='boy'? hairBoy : hairGirl;
-  return `<svg width="92" height="118" viewBox="0 0 96 122" style="filter:drop-shadow(0 4px 10px rgba(0,0,0,.45))">
-      ${hairTop}
-      <ellipse cx="48" cy="32" rx="27" ry="29" fill="${skin}"/>
-      <circle cx="48" cy="26" r="23" fill="${skin}"/>
-      <path d="M28 34 Q36 46 48 46 Q60 46 68 34" stroke="${hair}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-      <circle cx="40" cy="27" r="2.4" fill="#33291e"/><circle cx="56" cy="27" r="2.4" fill="#33291e"/>
-      <circle cx="41.5" cy="26" r=".7" fill="#fff"/><circle cx="57.5" cy="26" r=".7" fill="#fff"/>
-      <path d="M47 35 Q49 39 51 35" stroke="#d09a6a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-      <path d="M10 122 C15 90 30 70 48 70 C66 70 81 90 86 122 Z" fill="${sh}"/>
-      <path d="M12 122 C16 84 32 65 48 65 C64 65 80 84 84 122 Z" fill="${col}" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
-      <path d="M37 67 L44 90" stroke="rgba(255,255,255,.5)" stroke-width="2.6" stroke-linecap="round"/>
-      <path d="M59 67 L52 90" stroke="rgba(0,0,0,.18)" stroke-width="2.6" stroke-linecap="round"/>
-      <path d="M44 90 L52 90" stroke="rgba(217,164,65,.9)" stroke-width="2.6" stroke-linecap="round"/>
-    </svg>`;
+  return g==='girl' ? girlSVG(chosenCol) : boySVG(chosenCol);
+}
+function boySVG(c){
+  const skin='#f4c9a3', skinD='#d9a87e', hair='#5a4030', hairD='#45301f';
+  const sh=shade(c);
+  return `<svg width="150" height="205" viewBox="0 0 220 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- тень под фигурой -->
+    <ellipse cx="110" cy="288" rx="62" ry="9" fill="rgba(0,0,0,.3)"/>
+    <!-- руки (рукава хитона) -->
+    <path d="M40 190 C28 200 22 214 20 230 C34 236 50 236 62 230 C58 214 52 200 44 190 Z" fill="${c}" stroke="rgba(0,0,0,.22)" stroke-width="2"/>
+    <path d="M180 190 C192 200 198 214 200 230 C186 236 170 236 158 230 C162 214 168 200 176 190 Z" fill="${c}" stroke="rgba(0,0,0,.22)" stroke-width="2"/>
+    <path d="M20 230 C26 244 34 252 44 258 L176 258 C186 252 194 244 200 230 C180 244 160 250 110 250 C60 250 40 244 20 230 Z" fill="${skinD}" opacity=".5"/>
+    <!-- хитон -->
+    <path d="M48 300 C52 236 76 196 110 196 C144 196 168 236 172 300 Z" fill="${c}" stroke="rgba(0,0,0,.25)" stroke-width="2.5"/>
+    <path d="M88 205 C96 220 104 230 110 230 C116 230 124 220 132 205 L120 300 L100 300 Z" fill="${sh}" opacity=".85"/>
+    <path d="M78 218 C86 240 96 250 110 250 C124 250 134 240 142 218" stroke="rgba(255,255,255,.4)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M84 200 L76 300" stroke="rgba(0,0,0,.15)" stroke-width="3" fill="none"/>
+    <path d="M136 200 L144 300" stroke="rgba(0,0,0,.15)" stroke-width="3" fill="none"/>
+    <!-- ворот -->
+    <path d="M84 200 C94 210 126 210 136 200 L140 212 C128 224 92 224 80 212 Z" fill="${sh}" opacity=".9"/>
+    <!-- шея -->
+    <rect x="97" y="172" width="26" height="28" rx="10" fill="${skin}"/>
+    <!-- голова -->
+    <circle cx="110" cy="132" r="52" fill="${skin}"/>
+    <!-- уши -->
+    <circle cx="56" cy="140" r="12" fill="${skin}" stroke="${skinD}" stroke-width="2"/>
+    <circle cx="164" cy="140" r="12" fill="${skin}" stroke="${skinD}" stroke-width="2"/>
+    <circle cx="56" cy="140" r="4" fill="${skinD}"/><circle cx="164" cy="140" r="4" fill="${skinD}"/>
+    <!-- волосы мальчика: шапка -->
+    <path d="M58 128 L58 118 C58 74 82 54 110 54 C138 54 162 74 162 118 L162 128 L58 128 Z" fill="${hair}"/>
+    <path d="M56 128 C78 118 142 118 164 128 L164 118 C162 92 152 74 136 66 C150 74 158 92 160 116 L160 128 Z" fill="${hairD}"/>
+    <!-- чёлка -->
+    <path d="M64 128 L66 148 L80 126 L90 150 L100 124 L112 150 L122 126 L132 148 L142 124 L154 146 L156 128 Z" fill="${hair}"/>
+    <!-- брови -->
+    <path d="M78 124 Q92 116 104 122" stroke="${hairD}" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M116 122 Q128 116 142 124" stroke="${hairD}" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <!-- глаза -->
+    <ellipse cx="92" cy="140" rx="8.5" ry="10" fill="#fff"/>
+    <ellipse cx="128" cy="140" rx="8.5" ry="10" fill="#fff"/>
+    <circle cx="93" cy="142" r="5" fill="#3a2c1e"/>
+    <circle cx="127" cy="142" r="5" fill="#3a2c1e"/>
+    <circle cx="95" cy="140" r="1.6" fill="#fff"/><circle cx="129" cy="140" r="1.6" fill="#fff"/>
+    <!-- нос -->
+    <path d="M110 148 C108 154 110 158 113 157" stroke="${skinD}" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- рот: лёгкая улыбка -->
+    <path d="M100 170 Q110 179 120 170" stroke="#b0635a" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+    <!-- румянец -->
+    <ellipse cx="78" cy="162" rx="9" ry="5.5" fill="rgba(230,120,110,.32)"/>
+    <ellipse cx="142" cy="162" rx="9" ry="5.5" fill="rgba(230,120,110,.32)"/>
+  </svg>`;
+}
+
+/* ------------------ ДЕВОЧКА ------------------ */
+function girlSVG(c){
+  const skin='#f6cdad', skinD='#dcaa82', hair='#6b4326', hairD='#54331c', hairL='#8a5a34';
+  const sh=shade(c);
+  return `<svg width="150" height="205" viewBox="0 0 220 300" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="110" cy="288" rx="62" ry="9" fill="rgba(0,0,0,.3)"/>
+    <!-- длинные волосы (задний слой) -->
+    <path d="M58 118 C36 140 32 190 40 236 C52 252 66 256 76 250 C66 210 66 160 78 138 Z" fill="${hairL}"/>
+    <path d="M162 118 C184 140 188 190 180 236 C168 252 154 256 144 250 C154 210 154 160 142 138 Z" fill="${hairL}"/>
+    <!-- руки -->
+    <path d="M40 192 C28 202 22 216 20 232 C34 238 50 238 62 232 C58 216 52 202 44 192 Z" fill="${c}" stroke="rgba(0,0,0,.22)" stroke-width="2"/>
+    <path d="M180 192 C192 202 198 216 200 232 C186 238 170 238 158 232 C162 216 168 202 176 192 Z" fill="${c}" stroke="rgba(0,0,0,.22)" stroke-width="2"/>
+    <!-- хитон с расширением (платье) -->
+    <path d="M52 300 C52 240 76 200 110 200 C144 200 168 240 168 300 Z" fill="${c}" stroke="rgba(0,0,0,.25)" stroke-width="2.5"/>
+    <path d="M52 300 C58 262 82 236 110 236 C138 236 162 262 168 300 Z" fill="${sh}" opacity=".55"/>
+    <path d="M84 300 C90 268 98 252 110 252 C122 252 130 268 136 300 Z" fill="${sh}" opacity=".8"/>
+    <path d="M80 222 C90 242 100 252 110 252 C120 252 130 242 140 222" stroke="rgba(255,255,255,.4)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M86 208 L80 300" stroke="rgba(0,0,0,.12)" stroke-width="3" fill="none"/>
+    <path d="M134 208 L140 300" stroke="rgba(0,0,0,.12)" stroke-width="3" fill="none"/>
+    <!-- ворот-оборочка -->
+    <path d="M84 204 C96 218 124 218 136 204 L142 216 C128 230 92 230 78 216 Z" fill="#fdf6e8" stroke="rgba(0,0,0,.12)" stroke-width="1.5"/>
+    <circle cx="96" cy="210" r="2.4" fill="${c}"/><circle cx="110" cy="213" r="2.4" fill="${c}"/><circle cx="124" cy="210" r="2.4" fill="${c}"/>
+    <!-- шея -->
+    <rect x="97" y="172" width="26" height="26" rx="10" fill="${skin}"/>
+    <!-- голова -->
+    <circle cx="110" cy="132" r="52" fill="${skin}"/>
+    <!-- уши -->
+    <circle cx="58" cy="142" r="11" fill="${skin}" stroke="${skinD}" stroke-width="2"/>
+    <circle cx="162" cy="142" r="11" fill="${skin}" stroke="${skinD}" stroke-width="2"/>
+    <!-- волосы сверху -->
+    <path d="M58 132 L58 120 C58 74 82 52 110 52 C138 52 162 74 162 120 L162 132 L58 132 Z" fill="${hair}"/>
+    <!-- чёлка -->
+    <path d="M58 132 C80 116 140 116 162 132 L162 120 C158 100 146 92 130 92 C138 104 140 116 136 126 C128 114 92 114 84 126 C80 116 82 104 90 92 C74 92 62 100 58 120 Z" fill="${hairL}"/>
+    <!-- хвостики с бантиками -->
+    <circle cx="56" cy="88" r="10" fill="${hair}"/>
+    <circle cx="164" cy="88" r="10" fill="${hair}"/>
+    <path d="M46 80 L40 62 L58 70 Z" fill="#e86a5a"/><path d="M66 80 L72 62 L54 70 Z" fill="#e86a5a"/>
+    <path d="M154 80 L148 62 L166 70 Z" fill="#e86a5a"/><path d="M174 80 L180 62 L162 70 Z" fill="#e86a5a"/>
+    <path d="M52 84 L48 106 L60 106 Z" fill="${hairL}"/>
+    <path d="M168 84 L172 106 L160 106 Z" fill="${hairL}"/>
+    <!-- брови -->
+    <path d="M80 126 Q92 120 104 124" stroke="${hairD}" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+    <path d="M116 124 Q128 120 140 126" stroke="${hairD}" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+    <!-- глаза с ресницами -->
+    <ellipse cx="93" cy="140" rx="8.5" ry="10.5" fill="#fff"/>
+    <ellipse cx="127" cy="140" rx="8.5" ry="10.5" fill="#fff"/>
+    <circle cx="94" cy="142" r="5.2" fill="#3a2c1e"/><circle cx="126" cy="142" r="5.2" fill="#3a2c1e"/>
+    <circle cx="96" cy="139" r="1.7" fill="#fff"/><circle cx="128" cy="139" r="1.7" fill="#fff"/>
+    <path d="M83 132 Q86 128 90 130" stroke="${hairD}" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M102 131 Q106 128 110 131" stroke="${hairD}" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M137 132 Q140 128 144 130" stroke="${hairD}" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M118 131 Q122 128 126 131" stroke="${hairD}" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <!-- нос -->
+    <path d="M110 149 C108 154 110 158 113 157" stroke="${skinD}" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <!-- улыбка -->
+    <path d="M98 170 Q110 182 122 170" stroke="#c06a5e" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+    <!-- румянец -->
+    <ellipse cx="78" cy="162" rx="9.5" ry="6" fill="rgba(235,130,120,.35)"/>
+    <ellipse cx="142" cy="162" rx="9.5" ry="6" fill="rgba(235,130,120,.35)"/>
+  </svg>`;
 }
 function renderOnboard(){
   const s=document.getElementById('screen');
