@@ -27,7 +27,7 @@ function lessonRow(L){
   return `<div class="lesson-row ${done?'done':''}" onclick="openLessonView(${L.id})">
     <span class="lr-ico">${L.ico}</span>
     <span class="lr-ti"><span class="lr-tt">${esc(L.title)}</span>
-    <span class="lr-td">${esc(L.src)} · ${L.explain.length} шагов</span></span>
+    <span class="lr-td">${esc(L.src)} · ${L.comic? L.comic.length+' кадров': L.explain.length+' шагов'}</span></span>
     <span class="lr-pr">${done?'✅':(rec&&rec.stars? '⭐ '+rec.stars+'/2':'⭐ 0/2')}</span>
   </div>`;
 }
@@ -99,20 +99,50 @@ function openLessonView(id){
   renderLessonView();
 }
 function lessonTitle(){ const L=lessonById(LV.id); return `${L.ico} Урок ${L.id} · ${L.title}`; }
-
+/* персонажи комиксов */
+const COMIC_CH={
+  arch:{ emoji:'🧙‍♂️', name:'Архимед', bg:'rgba(217,164,65,.14)' },
+  kid:{ emoji:'🧒', name:'Ты', bg:'rgba(127,209,255,.12)' },
+  cat:{ emoji:'🐱', name:'Барсик', bg:'rgba(127,184,160,.14)' },
+  fish:{ emoji:'🐟', name:'Рыбка', bg:'rgba(127,209,255,.12)' },
+  granny:{ emoji:'👵', name:'Бабушка', bg:'rgba(232,106,90,.12)' },
+  coin:{ emoji:'🪙', name:'Монетка', bg:'rgba(217,164,65,.16)' },
+  pig:{ emoji:'🐷', name:'Пятачок', bg:'rgba(232,106,90,.12)' }
+};
+function lessonSteps(L){ return L.comic? L.comic.length : L.explain.length; }
 function renderLessonView(){
   const L=lessonById(LV.id);
   const screen=document.getElementById('screen');
-  const n=L.explain.length;
+  const n=lessonSteps(L);
   const dots=LV.phase==='explain' ? `<div style="display:flex;gap:5px;margin:4px 0 8px">${Array.from({length:n},(_,i)=>
     `<div class="sdot ${i<LV.step?'past':''} ${i===LV.step?'on':''}"></div>`).join('')}</div>` : '';
   let msg='', nav='', phase2='';
   if(LV.phase==='explain'){
-    msg=`<span class="who">◈ Архимед · шаг ${LV.step+1} из ${n}</span>${esc(L.explain[LV.step])}`;
-    nav=`<button class="btn ghost" onclick="lvStep(-1)" ${LV.step===0?'disabled':''}>← Назад</button>`+
-        (LV.step>=n-1
-          ? `<button class="btn ok2" onclick="lvToCheck()">Понял! Проверю себя →</button>`
-          : `<button class="btn" onclick="lvStep(1)">Дальше →</button>`);
+    if(L.comic){
+      // ===== КОМИКС: кадр с персонажем и пузырём речи =====
+      const fr=L.comic[LV.step];
+      const ch=COMIC_CH[fr.who]||COMIC_CH.arch;
+      msg=`<div class="comic-panel">
+        <div class="comic-side" style="background:${ch.bg}">
+          <div class="comic-ava">${ch.emoji}</div>
+          <div class="comic-name">${ch.name}</div>
+        </div>
+        <div class="comic-main">
+          <div class="comic-speech">${esc(fr.say)}</div>
+          ${fr.note?`<div class="comic-note">${esc(fr.note)}</div>`:''}
+        </div>
+      </div>`;
+      nav=`<button class="btn ghost" onclick="lvStep(-1)" ${LV.step===0?'disabled':''}>← Назад</button>`+
+          (LV.step>=n-1
+            ? `<button class="btn ok2" onclick="lvToCheck()">Понял! Проверю себя →</button>`
+            : `<button class="btn" onclick="lvStep(1)">Дальше →</button>`);
+    } else {
+      msg=`<span class="who">◈ Архимед · шаг ${LV.step+1} из ${n}</span>${esc(L.explain[LV.step])}`;
+      nav=`<button class="btn ghost" onclick="lvStep(-1)" ${LV.step===0?'disabled':''}>← Назад</button>`+
+          (LV.step>=n-1
+            ? `<button class="btn ok2" onclick="lvToCheck()">Понял! Проверю себя →</button>`
+            : `<button class="btn" onclick="lvStep(1)">Дальше →</button>`);
+    }
   } else if(LV.phase==='check'){
     const c=L.check;
     msg=`<span class="who">◈ Архимед · проверь себя</span>${esc(c.q)}`;
@@ -151,7 +181,7 @@ function renderLessonView(){
   if(LV.phase==='explain') renderLessonVis();
   hud();
 }
-function lvStep(d){ LV.step=Math.max(0,Math.min(lessonById(LV.id).explain.length-1,LV.step+d)); renderLessonView(); }
+function lvStep(d){ const L=lessonById(LV.id); LV.step=Math.max(0,Math.min(lessonSteps(L)-1,LV.step+d)); renderLessonView(); }
 function lvToCheck(){ LV.phase='check'; LV.ch=null; renderLessonView(); }
 function lvBackExplain(){ LV.phase='explain'; renderLessonView(); }
 function lvCheck(i){ LV.ch=i; renderLessonView(); }
