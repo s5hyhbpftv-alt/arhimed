@@ -135,12 +135,6 @@ const COMIC = (function(){
     pig:{ svg:pigSVG, name:'Пятачок', color:'#a05a50' }
   };
 
-  /* вложить персонажа как «актёра» сцены: берём внутренности его SVG */
-  function svgInner(full){ return full.replace(/^<svg[^>]*>/,'').replace(/<\/svg>\s*$/,''); }
-  function actorAt(who,emo,x,y,w,h){
-    const P=PERS[who]||PERS.arch;
-    return `<svg x="${x}" y="${y}" width="${w}" height="${h}" viewBox="0 0 120 140">${svgInner(P.svg(emo))}</svg>`;
-  }
   /* плашка-надпись сцены (как реплика комикса) */
   function propTag(prop,x,y,w){
     if(!prop) return '';
@@ -332,47 +326,26 @@ function coinsSVG(){
       <text x="248" y="120" font-size="15" class="c2a-spark">✨</text>
     </svg>`;
   }
-  /* размещение актёров и надписи поверх базовой среды */
+
+
+
+  /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
-    const emo=(fr&&fr.emo)||'smile';
-    const who=(fr&&fr.who)||'arch';
-    const withs=fr&&fr.with? fr.with.filter(w=>w!==who) : [];
-    const prop=(fr&&fr.prop)||'';
     let base='';
     if(scene==='pond') base=pondSVG();
     else if(scene==='kitchen') base=kitchenSVG();
     else if(scene==='coins') base=coinsSVG();
     else base=pondSVG();
-    // высота опоры (земля/пол/вода) в координатах сцены 360x210
-    const groundY = scene==='kitchen'? 192 : (scene==='pond'? 196 : 192);
-    // говорящий всегда слева (крупный), слушатели справа — облачку место справа
-    const hW=withs.length? 118 : 138, wW=withs.length? 102 : 120;
-    const speakerX = 10;
-    let actors='';
-    actors+=actorAt(who, emo, speakerX, groundY-hW, wW, hW);
-    withs.slice(0,2).forEach((wt,i)=>{ actors+=actorAt(wt,'smile', 232+i*58, groundY-86, 84, 90); });
-    const propW = prop.length>18? 240 : prop.length>10? 200 : 160;
-    const tag = propTag(prop, (360-propW)/2, 28, propW);
-    // всё внутри одного svg, чтобы координаты x/y работали
-    return '<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">'
-      + svgInner(base) + actors + tag + '</svg>';
+    let s = base;
+    const prop = (fr && fr.prop) || '';
+    if (prop) {
+      const propW = prop.length > 20 ? 250 : (prop.length > 12 ? 210 : 170);
+      s = s.replace('</svg>', propTag(prop, (360 - propW) / 2, 26, propW) + '</svg>');
+    }
+    return s;
   }
-
   function emojiFor(scene){ return scene==='pond'?'🐟':scene==='kitchen'?'🥧':'🪙'; }
 
-
-
-  /* ================= ФОН-ПАНОРАМА (заполняет весь экран) ================= */
-  function sceneArt(scene, fr){
-    let base='';
-    if(scene==='pond') base=pondSVG();
-    else if(scene==='kitchen') base=kitchenSVG();
-    else if(scene==='coins') base=coinsSVG();
-    else base=pondSVG();
-    // slice: фон всегда заполняет контейнер целиком
-    return base.replace('<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">',
-      '<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid slice" class="c2-scene">');
-  }
   /* HTML-герой: крупный, полностью видимый, стоит на «земле» сцены */
   function heroHTML(who, emo, side){
     const P=PERS[who]||PERS.arch;
@@ -381,7 +354,6 @@ function coinsSVG(){
       <div class="c2h-name" style="color:${P.color}">${P.name}</div>
     </div>`;
   }
-  function emojiFor(scene){ return scene==='pond'?'🐟':scene==='kitchen'?'🥧':'🪙'; }
 
   /* ================= ОВЕРЛЕЙ ================= */
   function ensure(){
@@ -395,12 +367,10 @@ function coinsSVG(){
       .comic-top .ct-title { font-size:16px; font-weight:bold; flex:1; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; }
       .comic-top .ct-x { background:none; border:2px solid #33291e; border-radius:50%; width:30px; height:30px;
         font-size:15px; line-height:1; color:#33291e; cursor:pointer; font-family:inherit; flex-shrink:0; }
-      .c2-page { flex:1; margin:4px 14px 10px; background:#fffdf4; border:6px solid #33291e;
-        border-radius:10px; overflow:hidden; box-shadow:0 12px 34px rgba(0,0,0,.28);
+      .c2-page { flex:1 1 auto; width:100%; max-width:620px; margin:4px auto 10px; background:#fffdf4;
+        border:6px solid #33291e; border-radius:10px; overflow:hidden; box-shadow:0 12px 34px rgba(0,0,0,.28);
         display:flex; flex-direction:column; position:relative; }
-            .c2-stage { position:relative; width:100%; flex:0 0 auto; aspect-ratio:360/210;
-        overflow:hidden; border-bottom:5px solid #33291e; background:#fffdf4; display:flex; align-items:center; justify-content:center; }
-      .c2-scene { width:100%; height:100%; display:block; }
+      .c2-scene { width:100%; height:auto; display:block; }
       .c2a-cloud { animation:c2drift 11s ease-in-out infinite alternate; }
       @keyframes c2drift { from{ transform:translateX(0);} to{ transform:translateX(24px);} }
       .c2a-fish text { animation:c2fish 4.5s ease-in-out infinite alternate; }
@@ -412,31 +382,40 @@ function coinsSVG(){
       @keyframes c2glint { 0%,100%{ transform:translateY(0); opacity:1;} 50%{ transform:translateY(-3px); opacity:.85;} }
       .c2a-spark { animation:c2twinkle 1.7s ease-in-out infinite; }
       @keyframes c2twinkle { 0%,100%{opacity:.25; transform:scale(.7);} 50%{opacity:1; transform:scale(1.2);} }
-      .c2-capbar { background:#33291e; color:#f4e9c8; font-size:13px; line-height:1.45;
-        padding:8px 14px; display:flex; gap:8px; align-items:baseline; }
+      .c2-capbar { box-sizing:border-box; min-height:60px; background:#33291e; color:#f4e9c8;
+        font-size:13px; line-height:1.45; padding:8px 14px; display:flex; gap:8px; align-items:center; }
       .c2-capbar .c2cap-tag { color:#d9a441; font-weight:bold; flex-shrink:0; }
       .c2-capbar .c2cap-in { animation:c2capup .45s ease both; }
       @keyframes c2capup { from{ opacity:0; transform:translateY(9px);} to{ opacity:1; transform:none;} }
       /* сцена: появление целиком + актёры */
       .c2-stage.c2-fresh { animation:c2staget .5s cubic-bezier(.2,.9,.3,1) both; }
       @keyframes c2staget { from{ opacity:0; transform:scale(.97) translateY(10px);} to{ opacity:1; transform:none;} }
-      .c2-fresh svg > svg { animation:c2actorin .55s cubic-bezier(.25,1.4,.4,1) both; transform-box:fill-box; }
-      .c2-fresh svg > svg:nth-of-type(2){ animation-delay:.08s; }
-      .c2-fresh svg > svg:nth-of-type(3){ animation-delay:.16s; }
-      @keyframes c2actorin { from{ opacity:0; transform:translateY(26px) scale(.8);} to{ opacity:1; transform:none;} }
       .c2a-prop { animation:c2prop .4s ease .3s both; }
       @keyframes c2prop { from{ opacity:0; transform:translateY(-14px) scale(.7);} to{ opacity:1; transform:none;} }
       .c2a-prop rect { filter:drop-shadow(0 3px 6px rgba(0,0,0,.18)); }
       /* сцена-кадр: фон-панорама + герои поверх */
       .c2-stage { position:relative; flex:1 1 auto; min-height:0; width:100%; overflow:hidden;
-        background:#bfe3f7; }
-      .c2-stage .c2-scene { position:absolute; inset:0; width:100%; height:100%; }
-      .c2-cast { position:absolute; left:0; right:0; bottom:6px; display:flex; align-items:flex-end;
+        border-bottom:5px solid #33291e; background:linear-gradient(#8fc060,#5c8f3e 45%,#4a7a33); }
+      .c2-stage.c2-bg-pond { background:linear-gradient(#7fb45c,#5c8f3e 50%,#4a7a33); }
+      .c2-stage.c2-bg-kitchen { background:linear-gradient(#c2915b,#9c6c3a 45%,#7a4f26); }
+      .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
+        box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
+      .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
         justify-content:space-between; padding:0 10px; pointer-events:none; z-index:4; }
       .c2-hero { pointer-events:auto; display:flex; flex-direction:column; align-items:center;
         width:118px; animation:c2hIn .5s cubic-bezier(.2,1.4,.4,1) both; }
       .c2-hero.listener-1 { width:96px; animation-delay:.1s; }
       .c2-hero.listener-2 { width:96px; animation-delay:.16s; }
+      .c2-cast.c2-many .c2-hero.talker { width:122px; }
+      .c2-cast.c2-many .c2-hero { width:92px; }
+      .c2-cast.c2-solo { justify-content:center; }
+      .c2-cast.c2-solo .c2-hero.talker { width:150px; }
+      .c2-deco { position:absolute; left:0; right:0; bottom:0; height:100%; pointer-events:none; z-index:2; }
+      .c2-deco span { position:absolute; line-height:1; filter:drop-shadow(0 2px 2px rgba(0,0,0,.15)); }
+      .c2-deco .d1 { left:10px; bottom:16px; }
+      .c2-deco .d2 { right:12px; bottom:14px; }
+      .c2-deco .d3 { right:40px; bottom:86px; font-size:22px; opacity:.65; }
+      .c2-deco .d4 { left:46px; bottom:92px; font-size:20px; opacity:.6; }
       .c2-hero .c2h-card { width:100%; border-radius:16px 16px 6px 6px; overflow:hidden;
         border:4px solid #33291e; background:#fff; box-shadow:0 8px 20px rgba(0,0,0,.25); }
       .c2-hero .c2h-card svg { display:block; width:100%; height:auto; }
@@ -446,27 +425,20 @@ function coinsSVG(){
       .c2-hero.talker .c2h-name { font-size:13px; }
       @keyframes c2hIn { from{ opacity:0; transform:translateY(34px);} to{ opacity:1; transform:none;} }
       .c2-talk { position:absolute; z-index:6; background:#fff; border:4px solid #33291e;
-        border-radius:16px 16px 4px 16px; padding:8px 13px 9px; font-size:14px; line-height:1.5;
+        border-radius:18px; padding:9px 14px 11px; font-size:14px; line-height:1.5;
         box-shadow:0 6px 16px rgba(0,0,0,.22); animation:c2talk .3s cubic-bezier(.2,1.6,.4,1) both; }
-      .c2-talk::before { content:""; position:absolute; left:-16px; bottom:10px;
-        border:9px solid transparent; border-right-color:#33291e; border-bottom-color:#33291e;
-        border-left:0; border-top:0; transform:rotate(-12deg); }
-      .c2-talk::after { content:""; position:absolute; left:-8px; bottom:13px;
-        border:5px solid transparent; border-right-color:#fff; border-bottom-color:#fff;
-        border-left:0; border-top:0; transform:rotate(-12deg); }
+      .c2-talk::before { content:""; position:absolute; left:50%; top:100%; margin-left:-10px;
+        border:10px solid transparent; border-top:16px solid #33291e; border-bottom:0; }
+      .c2-talk::after { content:""; position:absolute; left:50%; top:100%; margin-left:-6px;
+        border:6px solid transparent; border-top:12px solid #fff; border-bottom:0; }
       .c2-talk .c2-caret { display:inline-block; width:2px; background:#33291e;
         animation:c2blink .8s steps(1) infinite; }
       @keyframes c2blink { 50%{ opacity:0; } }
       @keyframes c2talk { from{ transform:scale(.6) translateY(-10px); opacity:0;} to{ transform:none; opacity:1;} }
-      .c2-history { display:flex; gap:6px; overflow-x:auto; padding:0 12px 8px; background:#fffaf0; }      .c2-history { display:flex; gap:6px; overflow-x:auto; padding:0 12px 8px; background:#fffaf0; }
-      .c2-history .c2-bubble.hist { flex:0 0 auto; background:#f7f1e0; border:2px solid #cbb897;
-        border-radius:12px; padding:4px 10px; font-size:12px; max-width:230px;
-        white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-      .c2-history .c2-bubble.hist::before, .c2-history .c2-bubble.hist::after { display:none; }
       /* навигация */
-      .comic-nav { display:flex; align-items:center; justify-content:space-between; gap:10px;
-        padding:4px 14px 14px; }
-      .comic-nav .cn-dots { flex:1; text-align:center; }
+      .comic-nav { display:flex; flex-direction:column; gap:8px; padding:6px 14px 12px; }
+      .comic-nav .cn-row { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+      .comic-nav .cn-dots { text-align:center; }
       .comic-nav .cn-dot { display:inline-block; width:9px; height:9px; border-radius:50%;
         background:#cbb897; margin:0 3px; transition:.15s; }
       .comic-nav .cn-dot.on { background:#33291e; transform:scale(1.35); }
@@ -476,9 +448,6 @@ function coinsSVG(){
       .cbtn:active { transform:translateY(2px); box-shadow:0 1px 0 #33291e; }
       .cbtn.primary { background:#f0c75e; border-color:#8a6d1e; box-shadow:0 3px 0 #8a6d1e; }
       .cbtn:disabled { opacity:.35; cursor:default; transform:none; box-shadow:0 3px 0 #33291e; }
-      @media (max-width:430px){
-        .c2-speaker{ width:98px; } .c2-speaker .c2s-card{ width:90px; }
-        .c2-bubble{ font-size:14.5px; } .c2-bubble.hist{ font-size:12px; } }
     `;
     document.head.appendChild(st);
     root=document.createElement('div');
@@ -498,54 +467,58 @@ function coinsSVG(){
     const who=fr.who||'arch';
     const emo=fr.emo||'smile';
     const last=idx>=frs.length-1;
-    const hist=frs.slice(Math.max(0,idx-2),idx).map(h=>{
-      const hp=PERS[h.who]||PERS.arch;
-      return `<div class="c2-bubble hist"><b>${escHtml(hp.name)}:</b> ${escHtml(h.say)}</div>`;}).join('');
+    const nList=(fr.with||[]).filter(w=>w!==who).length;
+    const many=nList>=2;
+    const solo=nList===0;
     const dots=frs.map((_,i)=>`<span class="cn-dot ${i===idx?'on':''}"></span>`).join('');
+    const DECO={pond:['🌾','🌼','🐞','🌷'],kitchen:['🧺','🪑','🌿','🫙'],coins:['🌼','🪙','🌻','🍄']};
+    const deco=(DECO[scene]||DECO.pond).map((e,i)=>`<span class="d${i+1}">${e}</span>`).join('');
     root.innerHTML=`<div class="comic-top">
         <span class="ct-book">📖 ${escHtml(emojiFor(scene))} КОМИКС</span>
         <span class="ct-title">${escHtml(L.title)}</span>
         <button class="ct-x" onclick="COMIC.close()">✕</button>
       </div>
       <div class="c2-page">
-        <div class="c2-stage c2-fresh" id="c2stage">
+        <div class="c2-stage c2-fresh c2-bg-${scene}" id="c2stage">
           ${sceneArt(scene, fr)}
-          <div class="c2-cast">
+          <div class="c2-cast${many?' c2-many':(solo?' c2-solo':'')}">
             ${heroHTML(who, emo, 'talker')}
             ${(fr.with||[]).filter(w=>w!==who).slice(0,2).map((w,i)=>heroHTML(w,'smile','listener-'+(i+1))).join('')}
           </div>
+          <div class="c2-deco">${deco}</div>
           <div class="c2-talk" id="c2cur"><span class="c2-say"></span><span class="c2-caret"></span></div>
         </div>
         <div class="c2-capbar"><span class="c2cap-tag">${idx+1}/${frs.length} · </span><span class="c2cap-in">${escHtml(fr.cap||'')}</span></div>
       </div>
       <div class="comic-nav">
-        <button class="cbtn" onclick="COMIC.step(-1)" ${idx===0?'disabled':''}>◀ Назад</button>
         <span class="cn-dots">${dots}</span>
-        ${last
-          ? `<button class="cbtn primary" onclick="COMIC.done()">Понял! Проверю себя →</button>`
-          : `<button class="cbtn primary" onclick="COMIC.next()">Дальше ▶</button>`}
+        <div class="cn-row">
+          <button class="cbtn" onclick="COMIC.step(-1)" ${idx===0?'disabled':''}>◀ Назад</button>
+          ${last
+            ? `<button class="cbtn primary" onclick="COMIC.done()">Понял! Проверю себя →</button>`
+            : `<button class="cbtn primary" onclick="COMIC.next()">Дальше ▶</button>`}
+        </div>
       </div>`;
-        // привязка облачка к рту говорящего героя (HTML .c2-hero.talker поверх сцены)
+        // облачко речи — НАД головой говорящего (лица не закрывает), хвостик вниз к голове
     try{
       const stage=document.getElementById('c2stage');
       const talk=document.getElementById('c2cur');
       if(stage&&talk){
         const sr=stage.getBoundingClientRect();
-        const hero=stage.querySelector('.c2-hero.talker .c2h-card');
-        if(hero){
-          const hr=hero.getBoundingClientRect();
-          // рот говорящего — примерно 52% высоты его карточки (лицо в верхней части svg)
-          const mouthX=(hr.left-sr.left)+hr.width*0.5;
-          const mouthY=(hr.top-sr.top)+hr.height*0.5;
-          const maxW=Math.min(sr.width*0.62, 260);
-          let left=mouthX+12; if(left+maxW>sr.width-8) left=Math.max(6, sr.width-maxW-8);
+        const card=stage.querySelector('.c2-hero.talker .c2h-card');
+        if(card){
+          const cr=card.getBoundingClientRect();
+          const cardTop=cr.top-sr.top;
+          const centerX=(cr.left-sr.left)+cr.width/2;
+          const maxW=Math.min(sr.width*0.56, 240);
           talk.style.maxWidth=maxW+'px';
+          talk.style.bottom=(sr.height-(cardTop-12))+'px'; // низ облачка чуть выше макушки
+          const left=Math.max(14, Math.min(centerX-maxW/2, sr.width-maxW-10));
           talk.style.left=left+'px';
           talk.style.top='auto';
-          talk.style.bottom=(sr.height-(mouthY-4))+'px'; // низ облачка у рта — хвостик отходит от него
-        } else { talk.style.top='10px'; talk.style.left='12px'; }
+        } else { talk.style.top='10px'; talk.style.left='14px'; }
       }
-    }catch(e){}
+    }catch(e){ console.warn('comic bubble anchor:', e); }
     // печать реплики по буквам
     const cur=document.getElementById('c2cur'); const say=cur.querySelector('.c2-say'); const caret=cur.querySelector('.c2-caret');
     const text=fr.say||''; say.textContent=''; caret.style.visibility='visible';
