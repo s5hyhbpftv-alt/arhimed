@@ -125,9 +125,27 @@ const COMIC = (function(){
       ${mouthSVG(emo)}
     </svg>`;
   }
+  /* ---- герой-ученик: берём выбор со стартового экрана (пол + цвет хитона) ---- */
+  function heroKidGender(){ try{ if(typeof DB!=='undefined'&&DB.profile&&DB.profile.gender) return DB.profile.gender; }catch(e){} return 'boy'; }
+  function heroKidColor(){ try{ if(typeof DB!=='undefined'&&DB.profile&&DB.profile.color) return DB.profile.color; }catch(e){} return '#d9a441'; }
+  function heroKidName(){ try{ if(typeof DB!=='undefined'&&DB.profile&&DB.profile.name) return String(DB.profile.name).trim(); }catch(e){} return ''; }
+  function kidSVG(emo){
+    const g=heroKidGender(), c=heroKidColor();
+    try{
+      const fn = (g==='girl' && typeof girlSVG==='function') ? girlSVG
+               : (typeof boySVG==='function') ? boySVG : null;
+      if(!fn) throw 0;
+      let s = fn(c);
+      // убираем пустоту сверху (фигура стартует с y≈52) и вписываем в кадр героя
+      s = s.replace('viewBox="0 0 220 300"', 'viewBox="0 42 220 258"');
+      if(emo==='wow') s = s.replace('</svg>',
+        '<text x="40" y="76" font-size="26" class="c2a-spark">✨</text><text x="176" y="76" font-size="26" class="c2a-spark">✨</text></svg>');
+      return s;
+    }catch(e){ return humanSVG(emo,'kid'); }
+  }
   const PERS={
     arch:{ svg:(e)=>humanSVG(e,'arch'), name:'Архимед', color:'#a3762a' },
-    kid:{ svg:(e)=>humanSVG(e,'kid'), name:'Ты', color:'#4a93d0' },
+    kid:{ svg:(e)=>kidSVG(e), name:'Ты', color:'#4a93d0' },
     granny:{ svg:(e)=>humanSVG(e,'granny'), name:'Бабушка', color:'#7c4f81' },
     cat:{ svg:catSVG, name:'Барсик', color:'#c07a30' },
     fish:{ svg:fishSVG, name:'Рыбка', color:'#4a93d0' },
@@ -349,9 +367,11 @@ function coinsSVG(){
   /* HTML-герой: крупный, полностью видимый, стоит на «земле» сцены */
   function heroHTML(who, emo, side){
     const P=PERS[who]||PERS.arch;
+    const nm = who==='kid' ? (heroKidName()||'Ты') : P.name;
+    const col = who==='kid' ? heroKidColor() : P.color;
     return `<div class="c2-hero ${side}" data-hero="${who}">
       <div class="c2h-card">${P.svg(emo)}</div>
-      <div class="c2h-name" style="color:${P.color}">${P.name}</div>
+      <div class="c2h-name" style="color:${col}">${escHtml(nm)}</div>
     </div>`;
   }
 
@@ -420,7 +440,9 @@ function coinsSVG(){
         border:4px solid #33291e; background:#fff; box-shadow:0 8px 20px rgba(0,0,0,.25); }
       .c2-hero .c2h-card svg { display:block; width:100%; height:auto; }
       .c2-hero .c2h-name { margin-top:3px; font-size:12px; font-weight:bold; background:#fffdf4;
-        padding:1px 8px; border-radius:999px; border:2px solid #33291e; }
+        padding:1px 8px; border-radius:999px; border:2px solid #33291e;
+        max-width:100%; box-sizing:border-box; white-space:nowrap; overflow:hidden;
+        text-overflow:ellipsis; text-align:center; }
       .c2-hero.talker { width:138px; }
       .c2-hero.talker .c2h-name { font-size:13px; }
       @keyframes c2hIn { from{ opacity:0; transform:translateY(34px);} to{ opacity:1; transform:none;} }
