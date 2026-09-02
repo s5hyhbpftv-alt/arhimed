@@ -25,6 +25,12 @@ function rankName(){ const n=Object.keys(DB.tasks).filter(id=>DB.tasks[id].done)
   let r=RANKS[0][1]; for(const [t,x] of RANKS) if(n>=t) r=x; return r; }
 function islandOf(t){ return t.island; }
 function themeOf(t){ return (t.theme||'').replace(/^Гл\.\d+\s*·\s*/,''); }
+
+function clsMatch(t){ const m=/^(\d{1,2})(?:\s*[-\u2013\u2014]\s*(\d{1,2}))?\s*кл/.exec((t&&t.theme)||''); return m; }
+function clsKey(t){ const m=clsMatch(t); return m? (m[2]? m[1]+'-'+m[2] : m[1]) : ''; }
+function clsSort(t){ const m=clsMatch(t); return m? +m[1] : 999; }
+function clsFromKey(k){ return k? (k.indexOf('-')>=0? k.replace('-','–')+' кл' : k+' класс') : ''; }
+
 function tasksBy(sel){ return window.ARH_TASKS.filter(sel||(()=>true)); }
 function solvedCount(){ return Object.keys(DB.tasks).filter(id=>DB.tasks[id].done).length; }
 

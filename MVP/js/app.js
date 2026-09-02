@@ -281,9 +281,10 @@ function renderPath(){
       <span style="color:var(--brass)">→</span></div>`;
   const cards=ISLANDS.filter(islandVisible).map((I,i)=>{
     const st=islStats(I.name); const pct=st.total? Math.round(st.done/st.total*100):0;
-    const themes=[...new Set(window.ARH_TASKS.filter(t=>t.island===I.name).map(t=>themeOf(t)))];
+    const islSorted=window.ARH_TASKS.filter(t=>t.island===I.name).sort((a,b)=>clsSort(a)-clsSort(b)||a.diff-b.diff||a.id.localeCompare(b.id));
+    const themes=[...new Set(islSorted.map(t=>themeOf(t)))];
     const themeRows=themes.map(th=>{
-      const tt=window.ARH_TASKS.filter(t=>t.island===I.name&&themeOf(t)===th);
+      const tt=islSorted.filter(t=>themeOf(t)===th);
       const d=tt.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
       return `<div class="theme-row"><span class="tn">${esc(th)}</span><div class="bar"><i style="width:${d/tt.length*100}%"></i></div><span class="pc">${d}/${tt.length}</span></div>`;
     }).join('');
@@ -307,10 +308,17 @@ function renderPath(){
 /* ---------- ОСТРОВ ---------- */
 function renderIsland(name){
   const s=document.getElementById('screen');
-  const ts=window.ARH_TASKS.filter(t=>t.island===name).sort((a,b)=>a.diff-b.diff||a.id.localeCompare(b.id));
+  const ts=window.ARH_TASKS.filter(t=>t.island===name).sort((a,b)=>clsSort(a)-clsSort(b)||a.diff-b.diff||a.id.localeCompare(b.id));
+  let prevCls=null;
   const rows=ts.map(t=>{
+    const cl=clsKey(t);
+    let head='';
+    if(cl!==prevCls){
+      prevCls=cl;
+      head=`<div style="margin:14px 2px 4px;color:var(--brass);font-weight:bold;font-size:12.5px;letter-spacing:.05em">${esc(cl? clsFromKey(cl):'Общие задачи')}</div>`;
+    }
     const done=!!(DB.tasks[t.id]&&DB.tasks[t.id].done);
-    return `<div class="task-row ${done?'done':''}" onclick="go('task-${t.id}')">
+    return head+`<div class="task-row ${done?'done':''}" onclick="go('task-${t.id}')">
       <span class="st">${done?'✅':'🔒'}</span>
       <div class="ti"><div class="tt">${esc(t.title)}</div><div class="td">${esc(themeOf(t))}</div></div>
       <span class="lvl">ур. ${t.diff}</span></div>`;
@@ -324,7 +332,23 @@ function renderIsland(name){
   hud();
 }
 /* ---------- БАНК ЗАДАЧ ---------- */
-let LB={ island:'all', status:'all', open:{} };  // фильтры банка задач
+let LB={ island:'all', status:'all', cls:'all', open:{} };
+function clsHeadRow(label){ return `<div style="margin:12px 2px 4px;color:var(--brass);font-weight:bold;font-size:12.5px;letter-spacing:.05em">${esc(label)}</div>`; }
+function thClean(th){ return th.replace(/^\d{1,2}(?:\s*[-–—]\s*\d{1,2})?\s*кл(?:асс)?\s*·\s*/,''); }
+function secRows(items){
+  const by={};
+  items.forEach(t=>{ const k=clsKey(t)||'__none'; (by[k]=by[k]||[]).push(t); });
+  const order=Object.keys(by).sort((a,b)=>(a==='__none'?999:+a)-(b==='__none'?999:+b));
+  return order.map(k=>{
+    const arr=by[k].slice().sort((a,b)=>a.diff-b.diff||a.id.localeCompare(b.id));
+    const label=k==='__none' ? 'Общие задачи' : clsFromKey(k);
+    const byTh={};
+    arr.forEach(t=>{ const th=thClean(themeOf(t))||themeOf(t); (byTh[th]=byTh[th]||[]).push(t); });
+    const rows=Object.keys(byTh).map(th=>`<div class="small" style="margin:7px 4px 4px;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(th)}</div>`+
+      byTh[th].map(taskRow).join('')).join('');
+    return clsHeadRow(label)+rows;
+  }).join('');
+}
 function taskRow(t){
   const done=!!(DB.tasks[t.id]&&DB.tasks[t.id].done);
   return `<div class="task-row ${done?'done':''}" onclick="go('task-${t.id}')"><span class="st">${done?'✅':'🔒'}</span>
@@ -339,12 +363,22 @@ function renderLibrary(){
   const islands=ISLANDS.filter(islandVisible);
   const status=LB.status||'all';
   const statFilter=t=> status==='all'? true : status==='todo'? !(DB.tasks[t.id]&&DB.tasks[t.id].done) : !!(DB.tasks[t.id]&&DB.tasks[t.id].done);
+  const clsFilter=t=> LB.cls==='all' || clsKey(t)===LB.cls;
   const selIsl=libIsland();
-  const allFit = window.ARH_TASKS.filter(t=>islandVisible({name:t.island})).filter(statFilter);
+  const allFit = window.ARH_TASKS.filter(t=>islandVisible({name:t.island})).filter(statFilter).filter(clsFilter);
   const doneFit=allFit.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
   const todoFit=allFit.length-doneFit;
   const statBadge = status==='all'? `всего ${allFit.length}` : status==='todo'? `осталось ${todoFit}` : `решено ${doneFit}`;
-  // табы-острова (в стиле Книги): all + каждый видимый остров с прогрессом
+  // доступные классы для чипов — из задач текущего выбора
+  const clsSource = selIsl==='all'
+    ? window.ARH_TASKS.filter(t=>islandVisible({name:t.island})).filter(statFilter)
+    : window.ARH_TASKS.filter(t=>t.island===selIsl).filter(statFilter);
+  const clsOpts=[...new Set(clsSource.map(clsKey).filter(Boolean))].sort((a,b)=>+a.split('-')[0]-+b.split('-')[0]);
+  const clsChips = clsOpts.length
+    ? `<div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+        <button class="chip fb ${LB.cls==='all'?'on':''}" onclick="libPick('cls','all')">Все классы</button>
+        ${clsOpts.map(c=>`<button class="chip fb ${LB.cls===c?'on':''}" onclick="libPick('cls','${c}')">${clsFromKey(c)}</button>`).join('')}
+      </div>` : '';
   const tabAll = junior? [] : [{
     key:'all', ico:'🗺', name:'Все',
     items: allFit,
@@ -362,27 +396,21 @@ function renderLibrary(){
       <span class="bt-name">${g.key==='all'? 'Все': esc(g.name)}</span>
       <span class="bt-bar"><i style="width:${p}%"></i></span>
     </button>`;}).join('');
-  // группы: если выбран остров — только он; иначе все (аккордеон)
   const groups = (selIsl==='all'? islands : islands.filter(I=>I.name===selIsl))
-    .map(I=>({ I, items: window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t)).sort((a,b)=>a.diff-b.diff||a.id.localeCompare(b.id)) }))
+    .map(I=>({ I, items: window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t)&&clsFilter(t))
+      .sort((a,b)=>clsSort(a)-clsSort(b)||a.diff-b.diff||a.id.localeCompare(b.id)) }))
     .filter(g=>g.items.length);
   const content = selIsl!=='all'
     ? (()=>{ const g=groups[0]; if(!g) return '';
         const gd=g.items.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
-        const byTheme={}; g.items.forEach(t=>{ const th=themeOf(t); (byTheme[th]=byTheme[th]||[]).push(t); });
-        const rows=Object.keys(byTheme).map(th=>`<div class="small" style="margin:8px 4px 4px;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(th)}</div>`+
-          byTheme[th].map(taskRow).join('')).join('');
         return `<div class="book-subj-head">
             <span class="bsh-ico">${g.I.ico}</span>
             <span><b>${esc(g.I.name)}</b><br>
             <span class="small" style="color:var(--muted)">${esc(g.I.dsc)} · ${gd}/${g.items.length} решено</span></span>
-          </div>${rows}`; })()
+          </div>${secRows(g.items)}`; })()
     : groups.map((g,i)=>{
         const open = LB.open[g.I.name]===true || (LB.open[g.I.name]===undefined && i===0);
         const gd=g.items.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
-        const byTheme={}; g.items.forEach(t=>{ const th=themeOf(t); (byTheme[th]=byTheme[th]||[]).push(t); });
-        const rows=Object.keys(byTheme).map(th=>`<div class="small" style="margin:8px 4px 4px;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(th)}</div>`+
-          byTheme[th].map(taskRow).join('')).join('');
         return `<div class="book-sec">
           <div class="bs-head" onclick="libToggle('${esc(g.I.name)}')">
             <span class="bs-ico">${g.I.ico}</span>
@@ -390,11 +418,12 @@ function renderLibrary(){
               <span class="small" style="color:var(--muted);display:block">${esc(g.I.dsc)}</span></span>
             <span class="pr2">${gd}/${g.items.length} <i class="caret ${open?'down':''}">▸</i></span>
           </div>
-          ${open? rows : ''}
+          ${open? secRows(g.items) : ''}
         </div>`;}).join('');
   s.innerHTML=`<h2>📚 Банк задач <span class="small">(${statBadge})</span></h2>
-    <div class="small" style="margin-bottom:8px">Все задачи по темам — от простых к сложным. Приёмы сначала объясняет Архимед в «Пути».</div>
+    <div class="small" style="margin-bottom:8px">Все задачи по темам и классам — от простых к сложным. Приёмы сначала объясняет Архимед в «Пути».</div>
     <div class="btabs" style="margin-bottom:10px">${tabHTML}</div>
+    ${clsChips}
     <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
       ${[['all','Все задачи'],['todo','🔒 Осталось решить'],['done','✅ Решено']].map(([v,lab])=>
         `<button class="chip fb ${status===v?'on':''}" onclick="libPick('status','${v}')">${lab}</button>`).join('')}
