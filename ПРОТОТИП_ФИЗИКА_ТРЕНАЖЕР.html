@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Башня Ньютона · Миссия и 3D</title>
+<style>
+  :root { --brick:#7A4A33; --brick-dark:#5c3623; --amber:#E8A33D; --fog:#9FB4C7;
+    --ink:#2c2318; --parch:#f6ecd2; --paper:#fdf9ee; --night:#141F38; --glow:#7FD1FF; --olive:#5F7A3A; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:Georgia,"Times New Roman",serif;
+    background: radial-gradient(ellipse at 50% 0%,#3a3328 0%,transparent 55%), linear-gradient(165deg,#2e2a24 0%,#1c1915 70%);
+    color:var(--parch); min-height:100vh; display:flex; justify-content:center; padding:16px 12px; }
+  #app { max-width:860px; width:100%; }
+  header { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+    padding:8px 2px 10px; border-bottom:1px solid rgba(232,163,61,.35); margin-bottom:10px; }
+  h1 { font-size:19px; color:var(--amber); font-weight:normal; }
+  .sub { font-size:12px; color:#8a94ad; }
+  .hud { display:flex; gap:12px; font-size:13px; color:var(--fog); flex-wrap:wrap; }
+  .hud b { color:var(--amber); }
+  .progress { display:flex; gap:5px; margin-bottom:10px; }
+  .dot { flex:1; height:7px; border-radius:4px; background:#3a3a33; }
+  .dot.done { background:var(--olive); }
+  .dot.current { background:var(--amber); }
+  .mission { display:flex; align-items:center; gap:10px; flex-wrap:wrap; background:#1f1c16;
+    border:1px solid rgba(232,163,61,.3); border-radius:9px; padding:8px 14px; margin-bottom:10px; font-size:13.5px; }
+  .mission .m-ico { font-size:18px; }
+  .mission .m-text { color:#cbb89a; }
+  .mission b { color:var(--amber); }
+  .rank-badge { margin-left:auto; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--glow); }
+  .stage { position:relative; border:1px solid rgba(232,163,61,.4); border-radius:12px; overflow:hidden;
+    background:radial-gradient(ellipse at 50% 30%,#2b2720,#16130f); margin-bottom:12px; }
+  .stage::after { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(0,0,0,.4) 100%);
+    mix-blend-mode:multiply; }
+  .stage canvas { display:block; width:100%; height:auto; }
+  .stage-cap { position:absolute; left:12px; bottom:8px; font-size:11.5px; color:#8a94ad; letter-spacing:.08em; }
+  .card { background:linear-gradient(180deg,#26221c,#1d1a15); border:1px solid rgba(232,163,61,.4);
+    border-radius:12px; padding:18px 20px; box-shadow:0 12px 34px rgba(0,0,0,.5); }
+  .story { font-style:italic; color:#cbb89a; border-left:3px solid var(--brick); padding-left:12px; margin:8px 0; font-size:14px; line-height:1.5; }
+  .q { font-size:15.5px; font-weight:bold; margin:8px 0 4px; }
+  .arch { background:linear-gradient(135deg,rgba(44,62,107,.25),rgba(127,209,255,.08));
+    border:1px solid rgba(127,209,255,.35); border-radius:8px; padding:9px 13px; margin:8px 0;
+    color:#cfd8ea; font-size:13px; line-height:1.5; }
+  .arch .who { display:block; font-size:10.5px; letter-spacing:2px; text-transform:uppercase; color:var(--amber); margin-bottom:2px; }
+  .answer-row { display:flex; gap:8px; align-items:center; margin:10px 0 4px; flex-wrap:wrap; }
+  input[type=number] { width:130px; font-family:Georgia,serif; font-size:19px; padding:8px 11px;
+    border:2px solid var(--amber); border-radius:8px; background:#101018; color:var(--paper); outline:none; }
+  select { font-family:Georgia,serif; font-size:14px; padding:8px 9px; border:2px solid var(--amber);
+    border-radius:8px; background:#101018; color:var(--paper); }
+  .choices { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+  .choice { background:#2a2620; border:1.5px solid #4a4538; border-radius:9px; padding:10px 13px;
+    font-family:inherit; font-size:14px; text-align:left; color:var(--parch); cursor:pointer; }
+  .choice:hover { border-color:var(--amber); }
+  .choice.right { border-color:var(--olive); background:#243320; }
+  .choice.wrong { border-color:#b0513c; background:#3a2218; }
+  .hints { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .hint-btn { background:var(--olive); color:#fff; border:none; border-radius:7px; padding:7px 13px;
+    font-family:inherit; font-size:12.5px; cursor:pointer; }
+  .hint-btn:disabled { background:#3d4a30; cursor:not-allowed; }
+  .hint-box { background:#2a2620; border:1px dashed var(--amber); border-radius:8px; padding:9px 12px; margin-top:8px; font-size:13px; color:#cbb89a; }
+  .sliders { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#1f1c16;
+    border:1px solid rgba(232,163,61,.25); border-radius:9px; padding:9px 14px; margin-bottom:10px; font-size:12.5px; }
+  .sliders label { display:flex; align-items:center; gap:8px; color:#cbb89a; }
+  .sliders input[type=range] { width:110px; accent-color:var(--amber); }
+  .sliders .live { margin-left:auto; color:var(--amber); font-weight:bold; }
+  .fb { margin-top:9px; padding:9px 12px; border-radius:8px; font-size:13px; }
+  .fb.right { background:#243320; border:1px solid var(--olive); }
+  .fb.wrong { background:#3a2218; border:1px solid #b0513c; }
+  .sol { background:#201c16; border:1px solid var(--amber); border-radius:9px; padding:11px 13px; margin-top:10px; font-size:13px; line-height:1.55; color:#d9c9a8; }
+  .sol b { color:var(--amber); }
+  .btn { background:linear-gradient(180deg,var(--brick),var(--brick-dark)); color:#fff; border:none;
+    border-radius:9px; padding:10px 19px; font-family:inherit; font-size:14.5px; cursor:pointer; margin-top:12px; }
+  .btn:disabled { opacity:.45; cursor:not-allowed; }
+  .confetti { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:50; }
+  .confetti-piece { position:absolute; top:-12px; width:8px; height:14px; border-radius:2px; opacity:.9; animation:fall linear forwards; }
+  @keyframes fall { to { transform:translateY(110vh) rotate(720deg); } }
+  .note { text-align:center; font-size:11px; color:#5d6a8a; margin-top:10px; }
+
+/* === мобильная адаптация (АРХИМЕД PWA) === */
+@media (max-width: 640px){
+  body { padding:10px 8px 28px; }
+  h1 { font-size:17px; }
+  #app { max-width:100%; }
+  .card { padding:14px 13px; }
+  .btn, .btn2, .btn3, .choice, .hint-btn, .hint { min-height:48px; font-size:15px; }
+  .btn, .btn2, .btn3 { width:100%; padding:12px 16px; }
+  .choice { padding:12px 14px; }
+  .hud { font-size:12px; gap:8px; }
+  .sliders, .controls { flex-direction:column; align-items:stretch; gap:10px; }
+  .sliders input[type=range] { width:100%; }
+  .answer-row { gap:6px; }
+  input[type=number] { width:116px; font-size:19px; }
+  .story, .q { font-size:14px; }
+  .mission { padding:8px 10px; font-size:13px; }
+  .protocol, .panel { padding:10px; overflow-x:auto; }
+  .stage-cap { font-size:10px; }
+  .note { font-size:10px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div><h1>🍎 Башня Ньютона · Миссия</h1><div class="sub">Лондон, 1665 · чума · ты — ученик Ньютона</div></div>
+    <div class="hud"><span>⭐ <b id="hudPoints">0</b></span><span>🔥 <b id="hudStreak">0</b></span><span class="rank-badge" id="hudRank">Стажёр</span></div>
+  </header>
+  <div class="progress" id="progress"></div>
+  <div class="mission" id="mission"></div>
+  <div class="stage"><div id="stage3d"></div><div class="stage-cap" id="stageCap">3D-симуляция задачи</div></div>
+  <div class="sliders" id="sliders"></div>
+  <div class="card" id="card"></div>
+  <div class="note">Прототип · «АРХИМЕД» · ответ — число с единицей или выбор · 3D-анимация каждой задачи</div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+
+<script type="module">
+import * as THREE from 'three'
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
+import { SSAOPass } from 'three/addons/postprocessing/SSAOPass.js'
+
+/* ================= ЗАДАЧИ (с миссией) ================= */
+const TASKS = [
+  { id:1, title:'Курьер-карантин', ch:'Гл.1 · Кинематика', diff:2,
+    mission:'Доставь письмо в обсерваторию: чумной квартал перекрыт!',
+    beat:'Письмо доставлено — Ньютон получил новости из города!',
+    story:'Чумной квартал перекрыт, и курьер с письмом для Гринвичской обсерватории едет туда со скоростью 12 км/ч, а обратно — в объезд, со скоростью 8 км/ч. Какова его СРЕДНЯЯ скорость за всю поездку?',
+    q:'Средняя скорость на всём пути?', type:'unit', unit:'км/ч', answer:2.667, tol:0.1,
+    hints:['Средняя скорость = весь путь ÷ всё время. Просто усреднять числа нельзя!','Путь в одну сторону — d. Время туда d/12, обратно d/8, всего 2d.','v = 2d ÷ (d/12 + d/8). Сложи дроби: 1/12 + 1/8 = 5/24.'],
+    sol:'v = 2/(1/12 + 1/8) = 48/5 = 9,6 км/ч. Медленный отрезок «весит» больше — средняя скорость ближе к 8.',
+    trap:'(12+8)/2 = 10 — так усреднять нельзя: время в пути разное.',
+    art:'Письмо в сургуче' },
+  { id:2, title:'Маятник чумного карантина', ch:'Гл.1 · Колебания', diff:2,
+    mission:'Отмерь время по маятнику — точных часов в усадьбе нет!',
+    beat:'Маятник отмеряет секунды — у Ньютона теперь точный метроном!',
+    story:'Ньютон в усадьбе Вулсторп измеряет время по маятнику длиной 1 м. Чему равен период колебаний? (g = 10 м/с², π ≈ 3,14)',
+    q:'Период маятника?', type:'unit', unit:'с', answer:2.0, tol:0.1,
+    hints:['Период математического маятника: T = 2π√(L/g).','L = 1 м, g = 10 → √(1/10) ≈ 0,316.','T = 2·3,14·0,316 ≈ 1,99 с.'],
+    sol:'T ≈ 2 с. Маятник в метр — «двухсекундный метроном», которым отмеряли время до точных часов.',
+    trap:'Ответить √(L/g) = 0,316 — забыть умножить на 2π.',
+    art:'Нитяной маятник' },
+  { id:3, title:'Яблоко с башни', ch:'Гл.2 · Свободное падение', diff:2,
+    mission:'Поймай момент: яблоко вот-вот упадёт с ветки!',
+    beat:'Яблоко упало — и в голове Ньютона родилась идея тяготения!',
+    story:'Легендарное яблоко падает с ветки на высоте 20 м без начальной скорости. С какой скоростью оно ударится о землю? (g = 10 м/с²)',
+    q:'Скорость у земли?', type:'unit', unit:'м/с', answer:20, tol:0.5,
+    hints:['При падении без начальной скорости v² = 2gh.','v² = 2·10·20 = 400.','Какой квадрат даёт 400? v = √400.'],
+    sol:'v = √(2·10·20) = 20 м/с. Падение превращает высоту в скорость — яблоко и камень падают одинаково.',
+    trap:'Ответить 400 (м/с) — это v², а не v.',
+    art:'Яблоко с черенком' },
+  { id:4, title:'Стрела с башни', ch:'Гл.2 · Горизонтальный бросок', diff:3,
+    mission:'Подай сигнал с башни: стрела должна долететь до ворот!',
+    beat:'Стрела легла точно у ворот — сигнал подан, город предупреждён!',
+    story:'Со смотровой башни высотой 45 м горизонтально пускают сигнальную стрелу со скоростью 10 м/с. На каком расстоянии от башни она коснётся земли? (g = 10 м/с²)',
+    q:'Дальность полёта?', type:'unit', unit:'м', answer:30, tol:0.5,
+    hints:['Вертикаль и горизонталь независимы. Сначала время падения: h = gt²/2.','t = √(2·45/10) = √9 = 3 с.','Горизонтально — равномерно: S = v·t = 10·3.'],
+    sol:'Падение 3 с, а за это время стрела пролетает 30 м. Разложить движение на части — главный трюк механики.',
+    trap:'Сложить скорости по Пифагору — это скорость в момент удара, а не дальность.',
+    art:'Оперённая стрела' },
+  { id:5, title:'Бочка с элем', ch:'Гл.3 · Сила тяжести', diff:1,
+    mission:'Перетащи бочку с элем на причал — посчитай её вес!',
+    beat:'Бочка на месте, а ты узнал: вес — это не масса!',
+    story:'На причале Темзы бочка с элем массой 12 кг. С какой силой Земля тянет её к себе? (g = 10 м/с²)',
+    q:'Сила тяжести?', type:'unit', unit:'Н', answer:120, tol:2,
+    hints:['Сила тяжести = масса × ускорение свободного падения.','F = mg = 12·10.'],
+    sol:'F = 120 Н. Масса — сколько вещества, вес — с какой силой его тянет планета. На Луне бочка весила бы меньше.',
+    trap:'Ответить «12» — это масса, а не сила. Сила — в ньютонах.',
+    art:'Дубовая бочка' },
+  { id:6, title:'Тележка Ньютона', ch:'Гл.3 · Второй закон', diff:2,
+    mission:'Сдвинь тележку с книгами — посчитай, как быстро она разгонится!',
+    beat:'Тележка покатилась — ты применил второй закон Ньютона!',
+    story:'Ньютон толкает тележку с книгами массой 25 кг с силой 50 Н. Какое ускорение получит тележка? (трением пренебречь)',
+    q:'Ускорение?', type:'unit', unit:'м/с²', answer:2, tol:0.2,
+    hints:['Второй закон Ньютона: F = ma.','Нужно a → a = F/m = 50/25.'],
+    sol:'a = 2 м/с². Сила — причина, ускорение — следствие, масса — мера упрямства.',
+    trap:'Перепутать формулу (F·m = 1250) или забыть единицу м/с².',
+    art:'Книжный фолиант' },
+  { id:7, title:'Пружина Гука', ch:'Гл.3 · Сила упругости', diff:3,
+    mission:'Почини каретные рессоры — найди жёсткость пружины!',
+    beat:'Пружина проверена: карета больше не трясётся на булыжниках!',
+    story:'Под грузом в 40 Н пружина растянулась на 20 см. Какова жёсткость пружины? (закон Гука: F = k·Δx)',
+    q:'Жёсткость пружины?', type:'unit', unit:'Н/м', answer:200, tol:5,
+    hints:['Закон Гука: F = k·Δx → k = F/Δx.','Δx = 20 см = 0,2 м — переведи в метры!','k = 40/0,2.'],
+    sol:'k = 200 Н/м. Пружина — честный работник: сколько растягивают, столько сопротивляется.',
+    trap:'Не перевести 20 см в 0,2 м → k = 2 (в 100 раз меньше).',
+    art:'Стальная пружина' },
+  { id:8, title:'Колыбель Ньютона', ch:'Гл.3 · Импульс', diff:2,
+    mission:'Запусти колыбель — узнай, сколько шаров отлетит!',
+    beat:'Шар отлетел — ты увидел закон сохранения импульса вживую!',
+    story:'В кабинете Ньютона колыбель из 5 одинаковых шаров. Крайний шар отводят и отпускают. Сколько шаров отлетит с другого конца?',
+    q:'Сколько шаров отлетит?', type:'choice', choices:['Ни одного — все остановятся','Один шар','Два шара','Все четыре'], answer:1,
+    hints:['Что сохраняется при ударе? Импульс.','Импульс и энергия передаются по цепочке одинаковых шаров.','Один ударил — один отлетит.'],
+    sol:'Отлетит ровно один шар — закон сохранения импульса в наглядном виде.',
+    trap:'«Все четыре» — так было бы, если бы энергия сохранялась, а импульс нет.',
+    art:'Шар колыбели' },
+  { id:9, title:'Пловец Темзы', ch:'Гл.5 · Сложение скоростей', diff:3,
+    mission:'Переплыви Темзу точно к нужному берегу!',
+    beat:'Пловец вышел на нужный берег — векторы сложились как надо!',
+    story:'Пловец плывёт строго поперёк Темзы со скоростью 1 м/с, а течение несёт его вдоль реки со скоростью 1 м/с. Какова скорость пловца относительно берега?',
+    q:'Скорость относительно берега?', type:'unit', unit:'м/с', answer:1.41, tol:0.05,
+    hints:['Скорости складываются как векторы — под прямым углом.','v = √(1² + 1²) — теорема Пифагора.'],
+    sol:'v = √2 ≈ 1,41 м/с. Поперёк и вдоль — перпендикулярные движения; река и пловец — два измерения одной картины.',
+    trap:'Ответить 2 м/с — скорости перпендикулярны, складывать надо как векторы.',
+    art:'Весло' },
+  { id:10, title:'График скорости', ch:'Гл.4 · Графики движения', diff:2,
+    mission:'Прочитай график кареты — какое ускорение?',
+    beat:'График прочитан: карета разгоняется на 2 м/с каждую секунду!',
+    story:'Ньютон начертил график v(t) кареты: при t = 0 скорость 0, при t = 5 с скорость 10 м/с, прямая. Какое ускорение?',
+    q:'Ускорение по графику?', type:'choice', choices:['1 м/с²','2 м/с²','5 м/с²','10 м/с²'], answer:1,
+    hints:['Ускорение на графике v(t) — наклон прямой.','Наклон = Δv/Δt = (10 − 0)/(5 − 0).'],
+    sol:'a = 10/5 = 2 м/с². График скорости — «портрет» ускорения: чем круче, тем быстрее разгон.',
+    trap:'Ответить 10 — это конечная скорость, а не ускорение.',
+    art:'График на пергаменте' },
+  { id:11, title:'Сила тяготения', ch:'БОСС · Гл.6', diff:4,
+    mission:'Босс: спутник поднимается — во сколько раз ослабнет притяжение?',
+    beat:'Спутник на орбите! Ты разгадал закон обратных квадратов!',
+    story:'Спутник подняли на высоту, равную радиусу Земли (расстояние до центра стало 2R вместо R). Во сколько раз уменьшилась сила притяжения?',
+    q:'Во сколько раз уменьшилась сила?', type:'unit', unit:'раз', answer:4, tol:0.2,
+    hints:['F ~ 1/r² — закон обратных квадратов.','Расстояние выросло с R до 2R — в 2 раза.','Сила упала в 2² = 4 раза.'],
+    sol:'F ~ 1/r²: расстояние удвоилось, сила упала в 4 раза. Небо и земля — одна физика.',
+    trap:'Ответить «в 2 раза» — забыть квадрат.',
+    art:'Ключ от неба' },
+  { id:12, title:'Путь за последнюю секунду', ch:'Гл.2 · Кинематика', diff:4,
+    mission:'Камень падает с башни 45 м — какой путь за ПОСЛЕДНЮЮ секунду?',
+    beat:'Последняя секунда — 25 м: падение ускоряется!',
+    story:'Камень падает с башни высотой 45 м без начальной скорости. Какой путь он проходит за последнюю секунду падения? (g = 10 м/с²)',
+    q:'Путь за последнюю секунду?', type:'unit', unit:'м', answer:25, tol:0.5,
+    hints:['Всё время падения t = √(2h/g) = 3 с.','Путь за первые 2 с: h₂ = ½·10·2² = 20 м.','Последняя секунда = 45 − 20 = 25 м.'],
+    sol:'t = √(2·45/10) = 3 с. За первые 2 с камень пролетает 20 м, значит за третью (последнюю) секунду — 45−20 = 25 м. Падение ускоряется — каждая секунда длиннее!',
+    trap:'Ответить 15 (45/3) — движение равноускоренное, путь не делится поровну.',
+    art:'Клепсидра' },
+  { id:13, title:'Пружинный маятник', ch:'Гл.1 · Колебания', diff:3,
+    mission:'Груз 2 кг на пружине 50 Н/м — каков период?',
+    beat:'Период найден: 1,26 с!',
+    story:'На пружине жёсткостью 50 Н/м колеблется груз массой 2 кг. Чему равен период колебаний? (T = 2π√(m/k), π ≈ 3,14)',
+    q:'Период колебаний?', type:'unit', unit:'с', answer:1.26, tol:0.05,
+    hints:['Период пружинного маятника: T = 2π√(m/k).','√(2/50) = √0,04 = 0,2.','T = 2·3,14·0,2 ≈ 1,26 с.'],
+    sol:'T = 2π√(m/k) = 2π√(2/50) = 2π·0,2 ≈ 1,26 с. Чем жёстче пружина — тем быстрее колебания.',
+    trap:'Взять m·k под корнем (√(2·50)) — нужна ДРОБЬ m/k.',
+    art:'Спираль пружины' },
+  { id:14, title:'Кинетическая энергия', ch:'Гл.4 · Энергия', diff:2,
+    mission:'Разгони тележку 20 кг до 3 м/с — сколько энергии?',
+    beat:'Энергия движения — 90 Дж!',
+    story:'Тележка массой 20 кг катится со скоростью 3 м/с. Чему равна её кинетическая энергия? (E = ½mv²)',
+    q:'Кинетическая энергия?', type:'unit', unit:'Дж', answer:90, tol:1,
+    hints:['E = ½·m·v².','E = ½·20·3² = 10·9.'],
+    sol:'E = ½·20·9 = 90 Дж. Кинетическая энергия — энергия движения; скорость в квадрате!',
+    trap:'Забыть квадрат скорости: ½·20·3 = 30 — втрое меньше.',
+    art:'Вращающееся колесо' },
+  { id:15, title:'Потенциальная энергия', ch:'Гл.4 · Энергия', diff:2,
+    mission:'Подними яблоко 0,2 кг на 5 м — сколько энергии?',
+    beat:'Энергия высоты — 10 Дж!',
+    story:'Яблоко массой 0,2 кг лежит на ветке на высоте 5 м. Какова его потенциальная энергия? (E = mgh, g = 10)',
+    q:'Потенциальная энергия?', type:'unit', unit:'Дж', answer:10, tol:0.5,
+    hints:['E = mgh.','E = 0,2·10·5.'],
+    sol:'E = 0,2·10·5 = 10 Дж. Потенциальная энергия — «запас» высоты; при падении она станет кинетической.',
+    trap:'Перепутать массу и высоту местами — произведение то же, но смысл теряется.',
+    art:'Ветка с яблоком' },
+  { id:16, title:'Давление на мост', ch:'Гл.4 · Давление', diff:2,
+    mission:'Груз 400 Н на опоре 0,2 м² — какое давление?',
+    beat:'Давление — 2000 Па: мост выдержит!',
+    story:'Телега давит на мост с силой 400 Н. Площадь соприкосновения колёс — 0,2 м². Какое давление она создаёт? (p = F/S)',
+    q:'Давление?', type:'unit', unit:'Па', answer:2000, tol:20,
+    hints:['p = F/S.','p = 400 / 0,2.'],
+    sol:'p = 400/0,2 = 2000 Па. Давление — сила на единицу площади: чем меньше опора, тем больше давление.',
+    trap:'Перепутать: 400·0,2 = 80 — это не давление, а «нагрузка на площадь».',
+    art:'Мостовая плита' },
+  { id:17, title:'Сила Архимеда', ch:'Гл.4 · Плавание', diff:3,
+    mission:'Архимед: куб объёмом 0,001 м³ в воде — какая выталкивающая сила?',
+    beat:'Выталкивающая сила — 10 Н: Эврика!',
+    story:'Куб объёмом 0,001 м³ полностью погружён в воду. Какова выталкивающая сила? (F = ρgV, ρ воды = 1000 кг/м³, g = 10)',
+    q:'Сила Архимеда?', type:'unit', unit:'Н', answer:10, tol:0.5,
+    hints:['F = ρ·g·V.','F = 1000·10·0,001.'],
+    sol:'F = 1000·10·0,001 = 10 Н. Тело выталкивается с силой веса вытесненной воды — закон самого Архимеда!',
+    trap:'Забыть плотность воды (1000) и умножить только g·V = 0,01.',
+    art:'Венок Архимеда' },
+  { id:18, title:'Мощность мельницы', ch:'Гл.4 · Мощность', diff:2,
+    mission:'Мельница совершает 600 Дж за 30 с — какая мощность?',
+    beat:'Мощность — 20 Вт: мельница работает!',
+    story:'Ветряная мельница совершает работу 600 Дж за 30 секунд. Какова её мощность? (P = A/t)',
+    q:'Мощность?', type:'unit', unit:'Вт', answer:20, tol:1,
+    hints:['P = A/t.','P = 600 / 30.'],
+    sol:'P = 600/30 = 20 Вт. Мощность — работа в единицу времени.',
+    trap:'Перевернуть: 30/600 = 0,05 — это время на работу.',
+    art:'Лопасть мельницы' },
+  { id:19, title:'Встреча гонцов', ch:'Гл.5 · Относительность', diff:3,
+    mission:'Два гонца из городов в 100 км мчатся навстречу — когда встретятся?',
+    beat:'Гонцы встретились через 2 часа!',
+    story:'Из двух городов, между которыми 100 км, одновременно выехали навстречу друг другу два гонца: 20 км/ч и 30 км/ч. Через сколько часов они встретятся?',
+    q:'Через сколько часов встретятся?', type:'unit', unit:'ч', answer:2, tol:0.1,
+    hints:['Скорость сближения = 20 + 30 = 50 км/ч.','t = расстояние / скорость сближения.','t = 100 / 50 = 2 ч.'],
+    sol:'t = S/(v₁+v₂) = 100/50 = 2 ч. Навстречу — скорости складываются.',
+    trap:'Вычесть скорости (30−20=10) — они едут НАВСТРЕЧУ, а не вдогонку.',
+    art:'Пыль дороги' },
+  { id:20, title:'Рычаг Архимеда', ch:'Гл.3 · Рычаг', diff:3,
+    mission:'Уравновесь рычаг: груз 300 Н на коротком плече!',
+    beat:'Рычаг уравновешен: сила 100 Н!',
+    story:'«Дайте мне точку опоры — и я сдвину Землю!» Архимед строит рычаг: груз 300 Н висит на плече 1 м от опоры, а силу прикладывают на плече 3 м. Какую силу нужно приложить, чтобы уравновесить груз?',
+    q:'Сила на длинном плече?', type:'unit', unit:'Н', answer:100, tol:0,
+    hints:['Правило рычага: F₁·L₁ = F₂·L₂.','300 · 1 = F · 3.','F = 300/3 = 100 Н.'],
+    sol:'F₁L₁ = F₂L₂ → 300·1 = F·3 → F = 100 Н. Выигрыш в силе — во столько раз, во сколько плечо длиннее.',
+    trap:'Ответить 300 — длинное плечо УМЕНЬШАЕТ силу, а не сохраняет её.',
+    art:'Точка опоры' },
+  { id:21, title:'Плотность масла', ch:'Гл.3 · Плотность', diff:2,
+    mission:'Найди плотность оливкового масла по массе и объёму!',
+    beat:'Плотность 900 кг/м³ — масло плавает!',
+    story:'В бочке 45 кг оливкового масла, а объём бочки 0,05 м³. Какова плотность масла?',
+    q:'Плотность масла?', type:'unit', unit:'кг/м³', answer:900, tol:1,
+    hints:['ρ = m / V.','45 ÷ 0,05 = ?','45/0,05 = 900 кг/м³.'],
+    sol:'ρ = m/V = 45/0,05 = 900 кг/м³. Масло легче воды (1000 кг/м³) — поэтому плавает на ней.',
+    trap:'Ответить 45 (масса) — плотность это масса на единицу объёма.',
+    art:'Пробка от бочки' },
+  { id:22, title:'КПД наклонной плоскости', ch:'Гл.3 · Работа', diff:4,
+    mission:'Вкати бочку по доске и найди КПД!',
+    beat:'КПД 75% — Ньютон доволен!',
+    story:'Бочку весом 600 Н вкатывают по доске длиной 4 м на высоту 1 м, прикладывая силу 200 Н. Каков КПД наклонной плоскости?',
+    q:'КПД наклонной плоскости?', type:'unit', unit:'%', answer:75, tol:0.5,
+    hints:['Полезная работа: Aп = P·h = 600·1.','Затраченная: Aз = F·s = 200·4.','η = Aп/Aз = 600/800 = 75%.'],
+    sol:'η = (600·1)/(200·4) = 600/800 = 0,75 = 75%. Остальное — работа против трения.',
+    trap:'Ответить 100 — часть работы уходит на трение доски.',
+    art:'Клин доски' },
+  { id:23, title:'Нагрев воды', ch:'Гл.4 · Теплота', diff:3,
+    mission:'Разожги огонь: сколько теплоты нужно для котла?',
+    beat:'Котёл закипает: нужно 420 кДж!',
+    story:'В котле 2 кг воды. Сколько теплоты нужно, чтобы нагреть её с 20 °C до 70 °C? Удельная теплоёмкость воды c = 4200 Дж/(кг·°C).',
+    q:'Теплота?', type:'unit', unit:'кДж', answer:420000, tol:1000,
+    hints:['Q = c·m·Δt.','Δt = 70 − 20 = 50 °C.','Q = 4200·2·50 = 420 000 Дж = 420 кДж.'],
+    sol:'Q = 4200·2·50 = 420 000 Дж = 420 кДж. Ответ можно дать в Дж (420000) или кДж (420).',
+    trap:'Забыть массу: 4200·50 = 210 кДж — масса обязательна в формуле.',
+    art:'Кочегарная лопатка' },
+  { id:24, title:'Лампа в лаборатории', ch:'Гл.5 · Электричество', diff:2,
+    mission:'Зажги лампу и посчитай сопротивление нити!',
+    beat:'Лампа горит: сопротивление 24 Ом!',
+    story:'В лаборатории Ньютона лампочка подключена к батарее 12 В, и по цепи идёт ток 0,5 А. Каково сопротивление нити накаливания?',
+    q:'Сопротивление нити?', type:'unit', unit:'Ом', answer:24, tol:0,
+    hints:['Закон Ома: R = U / I.','R = 12 / 0,5 = ?','24 Ом.'],
+    sol:'R = U/I = 12/0,5 = 24 Ом. Чем больше сопротивление — тем меньше ток.',
+    trap:'Ответить 6 (12·0,5) — по закону Ома напряжение ДЕЛЯТ на ток.',
+    art:'Проводник' },
+  { id:25, title:'Откат пушки', ch:'Гл.3 · Импульс', diff:4,
+    mission:'Выстрели из пушки и поймай откат!',
+    beat:'Пушка откатилась на 3 м/с — импульс сохранился!',
+    story:'Пушка массой 200 кг стреляет ядром массой 10 кг со скоростью 60 м/с. С какой скоростью откатывается пушка?',
+    q:'Скорость отката пушки?', type:'unit', unit:'м/с', answer:3, tol:0,
+    hints:['Закон сохранения импульса: M·V = m·v.','200·V = 10·60 = 600.','V = 600/200 = 3 м/с.'],
+    sol:'M·V = m·v → V = 10·60/200 = 3 м/с. Пушка в 20 раз тяжелее — откат в 20 раз медленнее.',
+    trap:'Ответить 60 (скорость ядра) — импульс сохраняется, а не скорость.',
+    art:'Лафет' },
+  { id:26, title:'Карусель на ярмарке', ch:'Гл.5 · Криволинейное движение', diff:3,
+    mission:'Прокатись на карусели — найди ускорение к центру!',
+    beat:'Ускорение 4,5 м/с² — карусель крутится!',
+    story:'На ярмарке карусель радиусом 2 м вращается так, что лошадка движется со скоростью 3 м/с. Каково центростремительное ускорение лошадки?',
+    q:'Центростремительное ускорение?', type:'unit', unit:'м/с²', answer:4.5, tol:0.1,
+    hints:['a = v² / r.','a = 9 / 2 = 4,5.','Ускорение направлено к центру вращения.'],
+    sol:'a = v²/r = 9/2 = 4,5 м/с². Скорость в квадрате делим на радиус.',
+    trap:'Ответить 1,5 (v/r) — скорость в квадрате: a = v²/r.',
+    art:'Лошадка карусели' },
+];
+const RANKS = ['Стажёр','Помощник','Лаборант','Физик','Мастер Механики'];
+
+/* интерактивные параметры задач: ползунки + живой расчёт */
+const TASK_FX = {
+  1: { params:[{k:'v1',label:'Туда, км/ч',min:6,max:20,step:1,def:12},{k:'v2',label:'Обратно, км/ч',min:4,max:15,step:1,def:8}],
+       calc:P=>`vср = 2/(1/${P.v1}+1/${P.v2}) = <b>${(2/(1/P.v1+1/P.v2)).toFixed(2)}</b> км/ч` },
+  2: { params:[{k:'L',label:'Длина, м',min:0.4,max:2,step:0.1,def:1}],
+       calc:P=>`T = 2π√(L/g) = <b>${(2*Math.PI*Math.sqrt(P.L/10)).toFixed(2)}</b> с` },
+  3: { params:[{k:'h',label:'Высота, м',min:5,max:45,step:1,def:20}],
+       calc:P=>`v = √(2gh) = <b>${Math.sqrt(2*10*P.h).toFixed(1)}</b> м/с` },
+  4: { params:[{k:'h',label:'Высота, м',min:20,max:80,step:5,def:45},{k:'v',label:'Скорость, м/с',min:5,max:20,step:1,def:10}],
+       calc:P=>{const t=Math.sqrt(2*P.h/10);return`t=${t.toFixed(1)} с, дальность = <b>${(P.v*t).toFixed(0)}</b> м`} },
+  5: { params:[{k:'m',label:'Масса, кг',min:5,max:30,step:1,def:12}],
+       calc:P=>`F = mg = <b>${P.m*10}</b> Н` },
+  6: { params:[{k:'m',label:'Масса, кг',min:10,max:60,step:5,def:25},{k:'F',label:'Сила, Н',min:20,max:120,step:5,def:50}],
+       calc:P=>`a = F/m = <b>${(P.F/P.m).toFixed(2)}</b> м/с²` },
+  7: { params:[{k:'F',label:'Сила, Н',min:20,max:80,step:5,def:40},{k:'dx',label:'Удлинение, см',min:10,max:40,step:2,def:20}],
+       calc:P=>`k = F/Δx = <b>${(P.F/(P.dx/100)).toFixed(0)}</b> Н/м` },
+  9: { params:[{k:'v',label:'Пловец, м/с',min:0.5,max:2,step:0.1,def:1},{k:'u',label:'Течение, м/с',min:0.5,max:2,step:0.1,def:1}],
+       calc:P=>`v = √(${P.v}²+${P.u}²) = <b>${Math.sqrt(P.v*P.v+P.u*P.u).toFixed(2)}</b> м/с` },
+  10:{ params:[{k:'dv',label:'Δv, м/с',min:5,max:20,step:1,def:10},{k:'dt',label:'Δt, с',min:2,max:8,step:1,def:5}],
+       calc:P=>`a = Δv/Δt = <b>${(P.dv/P.dt).toFixed(2)}</b> м/с²` },
+  11:{ params:[{k:'n',label:'Расстояние ×R',min:1,max:3,step:0.5,def:2}],
+       calc:P=>`F уменьшится в <b>${(P.n*P.n).toFixed(1)}</b> раза (r²)` },
+  12:{ params:[{k:'h',label:'Высота, м',min:20,max:80,step:5,def:45}],
+       calc:P=>{const t=Math.sqrt(2*P.h/10), h2=5*(t-1)*(t-1); return`последняя секунда = h − h(t−1) = <b>${(P.h-h2).toFixed(1)}</b> м`} },
+  13:{ params:[{k:'m',label:'Масса, кг',min:1,max:5,step:0.5,def:2},{k:'k',label:'Жёсткость, Н/м',min:20,max:100,step:10,def:50}],
+       calc:P=>`T = 2π√(m/k) = <b>${(2*Math.PI*Math.sqrt(P.m/P.k)).toFixed(2)}</b> с` },
+  14:{ params:[{k:'m',label:'Масса, кг',min:5,max:40,step:5,def:20},{k:'v',label:'Скорость, м/с',min:1,max:6,step:0.5,def:3}],
+       calc:P=>`E = ½mv² = <b>${(0.5*P.m*P.v*P.v).toFixed(0)}</b> Дж` },
+  15:{ params:[{k:'m',label:'Масса, кг',min:0.1,max:2,step:0.1,def:0.2},{k:'h',label:'Высота, м',min:2,max:15,step:1,def:5}],
+       calc:P=>`E = mgh = <b>${(P.m*10*P.h).toFixed(1)}</b> Дж` },
+  16:{ params:[{k:'F',label:'Сила, Н',min:100,max:800,step:50,def:400},{k:'S',label:'Площадь, м²',min:0.1,max:1,step:0.1,def:0.2}],
+       calc:P=>`p = F/S = <b>${(P.F/P.S).toFixed(0)}</b> Па` },
+  17:{ params:[{k:'V',label:'Объём, м³',min:0.0005,max:0.005,step:0.0005,def:0.001}],
+       calc:P=>`F = ρgV = <b>${(1000*10*P.V).toFixed(1)}</b> Н` },
+  18:{ params:[{k:'A',label:'Работа, Дж',min:200,max:1200,step:100,def:600},{k:'t',label:'Время, с',min:10,max:60,step:5,def:30}],
+       calc:P=>`P = A/t = <b>${(P.A/P.t).toFixed(1)}</b> Вт` },
+  19:{ params:[{k:'S',label:'Расстояние, км',min:40,max:200,step:10,def:100},{k:'v1',label:'Гонец 1, км/ч',min:10,max:40,step:5,def:20},{k:'v2',label:'Гонец 2, км/ч',min:10,max:40,step:5,def:30}],
+       calc:P=>`t = S/(v1+v2) = <b>${(P.S/(P.v1+P.v2)).toFixed(2)}</b> ч` },
+
+  20:{ params:[{k:'F',label:'Груз, Н',min:100,max:500,step:50,def:300},{k:'L1',label:'Короткое плечо, м',min:.5,max:2,step:.1,def:1},{k:'L2',label:'Длинное плечо, м',min:1,max:5,step:.5,def:3}],
+       calc:P=>`F₂ = F·L₁/L₂ = <b>${(P.F*P.L1/P.L2).toFixed(0)}</b> Н` },
+  21:{ params:[{k:'m',label:'Масса, кг',min:10,max:100,step:5,def:45},{k:'V',label:'Объём, м³',min:.01,max:.1,step:.01,def:.05}],
+       calc:P=>`ρ = m/V = <b>${(P.m/P.V).toFixed(0)}</b> кг/м³` },
+  22:{ params:[{k:'P',label:'Вес, Н',min:300,max:900,step:100,def:600},{k:'F',label:'Сила, Н',min:100,max:400,step:25,def:200},{k:'s',label:'Длина доски, м',min:2,max:8,step:1,def:4},{k:'h',label:'Высота, м',min:.5,max:3,step:.5,def:1}],
+       calc:P=>{const A1=P.P*P.h,A2=P.F*P.s;return`η = ${A1}/${A2} = <b>${(A1/A2*100).toFixed(0)}</b>%`} },
+  23:{ params:[{k:'m',label:'Масса, кг',min:1,max:5,step:.5,def:2},{k:'dt',label:'Δt, °C',min:10,max:80,step:5,def:50}],
+       calc:P=>`Q = 4200·${P.m}·${P.dt} = <b>${(4200*P.m*P.dt/1000).toFixed(0)}</b> кДж` },
+  24:{ params:[{k:'U',label:'Напряжение, В',min:3,max:24,step:3,def:12},{k:'I',label:'Ток, А',min:.1,max:2,step:.1,def:.5}],
+       calc:P=>`R = U/I = <b>${(P.U/P.I).toFixed(1)}</b> Ом` },
+  25:{ params:[{k:'M',label:'Масса пушки, кг',min:50,max:400,step:50,def:200},{k:'m',label:'Масса ядра, кг',min:5,max:20,step:5,def:10},{k:'v',label:'Скорость ядра, м/с',min:20,max:100,step:10,def:60}],
+       calc:P=>`V = m·v/M = <b>${(P.m*P.v/P.M).toFixed(1)}</b> м/с` },
+  26:{ params:[{k:'r',label:'Радиус, м',min:1,max:5,step:.5,def:2},{k:'v',label:'Скорость, м/с',min:1,max:8,step:.5,def:3}],
+       calc:P=>`a = v²/r = <b>${(P.v*P.v/P.r).toFixed(1)}</b> м/с²` },
+};
+let P = {};
+const SAVE_KEY='arhimed_phys3d_v1';
+let state={idx:0,points:0,streak:0,stars:0,solved:[],hintsUsed:{}};
+try{const s=JSON.parse(localStorage.getItem(SAVE_KEY)); if(s&&Array.isArray(s.solved)) state=Object.assign(state,s);}catch(e){}
+let fb=null, chosen=null, showSol=false;
+
+/* ================= 3D (фотореализм) ================= */
+const stage = document.getElementById('stage3d');
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.18;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+stage.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x16130f, 0.05);
+const camera = new THREE.PerspectiveCamera(42, 16/9, 0.1, 100);
+camera.position.set(0, 4.6, 10.5); camera.lookAt(0, 1.6, 0);
+/* окружение IBL (реальные отражения на материалах) */
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+/* свет */
+scene.add(new THREE.HemisphereLight(0xfff2dd, 0x2a1a0a, 0.65));
+const dir = new THREE.DirectionalLight(0xffe2b8, 2.1);
+dir.position.set(5,9,5); dir.castShadow = true;
+dir.shadow.mapSize.set(1024,1024); dir.shadow.radius = 4; dir.shadow.bias = -0.0004;
+dir.shadow.camera.left=-6; dir.shadow.camera.right=6; dir.shadow.camera.top=6; dir.shadow.camera.bottom=-6;
+scene.add(dir);
+scene.add(new THREE.DirectionalLight(0x7fd1ff, 0.55).translateX(-5).translateY(3).translateZ(-4));
+scene.add(new THREE.DirectionalLight(0xffffff, 0.25).translateY(3).translateZ(9));
+/* пост-обработка: SSAO + Bloom */
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const ssao = new SSAOPass(scene, camera, 512, 512); ssao.kernelRadius = 5; composer.addPass(ssao);
+const bloom = new UnrealBloomPass(new THREE.Vector2(512,288), 0.18, 0.5, 0.85); composer.addPass(bloom);
+/* старая булыжная мостовая */
+function cobbleTexture(seed=3){
+  const c=document.createElement('canvas'); c.width=c.height=256; const x=c.getContext('2d');
+  let s=seed; const rnd=()=>{s=(s*1664525+1013904223)>>>0; return s/4294967296;};
+  x.fillStyle='#211d17'; x.fillRect(0,0,256,256);
+  for(let i=0;i<7;i++){ for(let j=0;j<7;j++){
+    const t=0.5+rnd()*0.4;
+    x.fillStyle=`rgb(${Math.round(58*t)},${Math.round(54*t)},${Math.round(48*t)})`;
+    x.fillRect(j*37+2,i*37+2,33,33);
+    x.fillStyle='rgba(255,240,210,0.06)'; x.fillRect(j*37+5,i*37+4,9,7);
+  }}
+  x.strokeStyle='rgba(0,0,0,0.75)'; x.lineWidth=2;
+  for(let i=0;i<=7;i++){ x.beginPath(); x.moveTo(0,i*37); x.lineTo(256,i*37); x.stroke(); x.beginPath(); x.moveTo(i*37,0); x.lineTo(i*37,256); x.stroke(); }
+  for(let i=0;i<70;i++){ x.fillStyle=`rgba(36,30,22,${0.1+rnd()*0.22})`; x.fillRect(rnd()*256,rnd()*256,8+rnd()*22,2+rnd()*5); }
+  const tex=new THREE.CanvasTexture(c); tex.wrapS=tex.wrapT=THREE.RepeatWrapping;
+  tex.colorSpace=THREE.SRGBColorSpace; tex.repeat.set(5,5); tex.anisotropy=4; return tex;
+}
+const ground = new THREE.Mesh(new THREE.CircleGeometry(6, 48),
+  new THREE.MeshStandardMaterial({ map: cobbleTexture(), roughness: 0.88, envMapIntensity: 0.5 }));
+ground.rotation.x=-Math.PI/2; ground.position.y=-0.02; ground.receiveShadow = true; scene.add(ground);
+
+const M = (c,r=.5)=>new THREE.MeshStandardMaterial({color:c, roughness:r, envMapIntensity:1.1});
+let taskGroup = null; let anim = null; let sol = null; let solAnim = null;
+
+function clear3D(){ if(taskGroup){ scene.remove(taskGroup); taskGroup.traverse(o=>{ if(o.geometry)o.geometry.dispose(); if(o.material)o.material.dispose(); }); taskGroup=null; } anim=null; sol=null; solAnim=null; }
+
+const B3D = {
+1: { build:(g)=>{ const road=new THREE.Mesh(new THREE.BoxGeometry(8,.12,1.6),M(0x3a3a3a,.9)); road.position.y=.05; g.add(road);
+      for(let i=0;i<5;i++){ const h=new THREE.Mesh(new THREE.BoxGeometry(.85,1+Math.random()*.9,.85),M(0x7a4a33,.9)); h.position.set(-3.5+i*1.75,.55,1.7); g.add(h); }
+      const cart=new THREE.Group();
+      cart.add(new THREE.Mesh(new THREE.BoxGeometry(1.15,.4,.72),M(0x8a6c3f,.8)).translateY(.48));
+      cart.add(new THREE.Mesh(new THREE.BoxGeometry(1.2,.26,.78),M(0x6b4a2c,.85)).translateY(.72));
+      cart.add(new THREE.Mesh(new THREE.CylinderGeometry(.2,.2,.4,14),M(0x8a5a2a,.7)).translateX(-.22).translateY(.98));
+      cart.add(new THREE.Mesh(new THREE.BoxGeometry(.3,.2,.3),M(0xc9b98a,.8)).translateX(.25).translateY(.88));
+      cart.add(new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,2.4,6),M(0x6b4a2c,.8)).rotateZ(Math.PI/2).translateX(.95).translateY(.45));
+      const wheels=[]; for(let i=0;i<2;i++){
+        const w=new THREE.Group();
+        w.add(new THREE.Mesh(new THREE.TorusGeometry(.24,.05,8,20),M(0x241c12,.55)).rotateX(Math.PI/2));
+        for(let s=0;s<8;s++){ w.add(new THREE.Mesh(new THREE.BoxGeometry(.05,.04,.4),M(0x6b4a2c,.7)).rotateX(s/8*Math.PI*2).translateY(.12)); }
+        w.add(new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,.14,10),M(0x8a6c3f,.5)).rotateZ(Math.PI/2));
+        w.position.set(i? .4:-.4, .24, 0); cart.add(w); wheels.push(w);
+      }
+      cart.position.set(-3.2,.06,0); g.add(cart); anim={cart,wheels}; },
+  anim:(t)=>{ const p=(Math.sin(t*0.8)+1)/2; anim.cart.position.x=-3.2+p*6.4; anim.wheels.forEach(w=>w.rotation.x+=0.09); } },
+2: { build:(g)=>{ g.add(new THREE.Mesh(new THREE.SphereGeometry(.12,12,12),M(0x8a6c3f)).translateY(4.3));
+      const L=3.1; const sw=new THREE.Group(); sw.position.y=4.3;
+      const bob=new THREE.Mesh(new THREE.SphereGeometry(.32,20,20),M(0xc96f4a,.35));
+      bob.add(new THREE.Mesh(new THREE.CylinderGeometry(.02,.02,L,.6),M(0xd9c9a8,.6)).translateY(-L/2));
+      bob.position.y=-L; sw.add(bob); g.add(sw); anim={sw}; },
+  anim:(t)=>{ const T=2*Math.PI*Math.sqrt((P.L||1)/10); anim.sw.rotation.z=0.55*Math.sin(2*Math.PI*t/T); } },
+3: { build:(g)=>{ g.add(new THREE.Mesh(new THREE.BoxGeometry(1,3.2,1),M(0x5c3623,.9)).translateX(-2.4).translateY(1.6));
+      g.add(new THREE.Mesh(new THREE.SphereGeometry(.18,10,10),M(0x5f7a3a,.7)).translateX(-2.4).translateY(3.4));
+      const apple=new THREE.Mesh(new THREE.SphereGeometry(.26,18,18),M(0xb02818,.35)); apple.position.set(1.4,4,0); g.add(apple); anim={apple}; },
+  anim:(t)=>{ const hh=0.8+3.2*Math.min(1,Math.max(0,((P.h||20)-5)/40)); const tt=t%3; let y; if(tt<2){ const k=tt/2; y=0.26+(hh-0.26)*(1-k*k); } else y=0.26+0.4*(1-(tt-2)); anim.apple.position.y=Math.max(.26,y); } },
+4: { build:(g)=>{ g.add(new THREE.Mesh(new THREE.BoxGeometry(1,3.2,1),M(0x5c3623,.9)).translateX(-2.6).translateY(1.6));
+      const arrow=new THREE.Group();
+      arrow.add(new THREE.Mesh(new THREE.CylinderGeometry(.04,.04,.9,8),M(0x8a6c3f,.6)).rotateZ(Math.PI/2));
+      const head=new THREE.Mesh(new THREE.ConeGeometry(.09,.25,8),M(0xc9a25f,.5)); head.rotation.z=-Math.PI/2; head.position.x=.55; arrow.add(head);
+      arrow.position.set(-1.8,4,0); g.add(arrow); anim={arrow}; },
+  anim:(t)=>{ const tf=Math.max(1.2,Math.sqrt(2*(P.h||45)/10)); const tt=t%(tf+0.4); let x,y,rot; if(tt<tf){ const k=tt/tf; x=-1.8+k*4.6; y=0.2+3.8*(1-k*k); rot=-Math.atan2(3.8*2*k,4.6); } else { x=2.8; y=0.2; rot=0; }
+      anim.arrow.position.set(x,y,0); anim.arrow.rotation.z=rot; } },
+5: { build:(g)=>{ g.add(new THREE.Mesh(new THREE.CylinderGeometry(.75,.75,1.1,20),M(0x8a5a2a,.7)).translateY(.55));
+      g.add(new THREE.Mesh(new THREE.TorusGeometry(.76,.05,8,20),M(0x3a3a3a,.5)).rotateX(Math.PI/2).translateY(.3));
+      const arrow=new THREE.Group();
+      arrow.add(new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,.8,8),M(0xd03a2a,.4)));
+      arrow.add(new THREE.Mesh(new THREE.ConeGeometry(.14,.3,10),M(0xd03a2a,.4)).translateY(-.55));
+      arrow.position.set(1.3,1.6,0); g.add(arrow); anim={arrow}; },
+  anim:(t)=>{ anim.arrow.scale.setScalar(1+0.12*Math.sin(t*3)); } },
+6: { build:(g)=>{ const cart=new THREE.Group();
+      cart.add(new THREE.Mesh(new THREE.BoxGeometry(1,.5,.6),M(0x8a6c3f,.7)).translateY(.4));
+      cart.add(new THREE.Mesh(new THREE.BoxGeometry(.7,.35,.5),M(0x6b4a2c,.8)).translateY(.75).translateZ(.05));
+      const wheels=[]; for(let i=0;i<4;i++){ const w=new THREE.Mesh(new THREE.CylinderGeometry(.17,.17,.1,10),M(0x1c1a15,.4)); w.rotation.z=Math.PI/2; w.position.set(i<2?-.3:.3,.17,i%2?-.3:.3); cart.add(w); wheels.push(w); }
+      cart.position.set(-3.4,.1,0); g.add(cart); anim={cart,wheels}; },
+  anim:(t)=>{ const tt=t%3; const k=Math.min(tt,2.4)/2.4; anim.cart.position.x=-3.4+k*k*6.4; anim.wheels.forEach(w=>w.rotation.x+=0.07); } },
+7: { build:(g)=>{ g.add(new THREE.Mesh(new THREE.CylinderGeometry(.5,.5,.3,14),M(0x3a3a3a,.6)).translateY(.15));
+      const geo=new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(3*120),3));
+      const spring=new THREE.Line(geo, new THREE.LineBasicMaterial({color:0xd9c9a8})); spring.frustumCulled=false; g.add(spring);
+      const ball=new THREE.Mesh(new THREE.SphereGeometry(.3,18,18),M(0x4a6a8a,.3)); ball.position.set(0,2.6,0); g.add(ball);
+      anim={geo,ball}; },
+  anim:(t)=>{ const c=0.55+0.4*Math.sin(2*Math.PI*t/1.6); const top=0.5+1.9*c; anim.ball.position.y=top+0.3;
+      const pos=anim.geo.attributes.position.array; const N=120, coils=7;
+      for(let i=0;i<N;i++){ const f=i/(N-1); const phi=f*coils*Math.PI*2; const y=0.4+(top-0.4)*f;
+        pos[i*3]=0.3*Math.cos(phi); pos[i*3+1]=y; pos[i*3+2]=0.3*Math.sin(phi); }
+      anim.geo.attributes.position.needsUpdate=true; } },
+8: { build:(g)=>{ const postL=new THREE.Mesh(new THREE.BoxGeometry(.1,2.2,.1),M(0x4a3a2a,.8)); postL.position.set(-1.15,1.1,0); g.add(postL);
+      const postR=postL.clone(); postR.position.x=1.15; g.add(postR);
+      g.add(new THREE.Mesh(new THREE.BoxGeometry(2.5,.1,.1),M(0x4a3a2a,.8)).translateY(2.2));
+      const balls=[]; for(let i=0;i<5;i++){ const b=new THREE.Mesh(new THREE.SphereGeometry(.22,16,16),M(0xb0b8c0,.25)); b.position.set(-0.8+i*0.4,1.25,0); balls.push(b); g.add(b); }
+      anim={balls}; },
+  anim:(t)=>{ const A=0.62, T=2.4, L=0.95, barY=2.2;
+      const al=A*Math.sin(2*Math.PI*t/T), ar=A*Math.sin(2*Math.PI*(t-T/2)/T);
+      [[0,al],[4,ar]].forEach(([i,ang])=>{ const b=anim.balls[i]; b.position.x=-0.8+i*0.4+L*Math.sin(ang); b.position.y=barY-L*Math.cos(ang); }); } },
+9: { build:(g)=>{ const river=new THREE.Mesh(new THREE.PlaneGeometry(8,3),M(0x2e5a7a,.4)); river.rotation.x=-Math.PI/2; river.position.set(0,.06,0); g.add(river);
+      g.add(new THREE.Mesh(new THREE.BoxGeometry(8,.2,1.2),M(0x6b4a2c,.9)).translateY(.1).translateZ(-1.7));
+      g.add(new THREE.Mesh(new THREE.BoxGeometry(8,.2,1.2),M(0x6b4a2c,.9)).translateY(.1).translateZ(1.7));
+      const stripes=[]; for(let i=0;i<5;i++){ const s=new THREE.Mesh(new THREE.PlaneGeometry(1.4,.06),M(0x9fc4d8,.5)); s.rotation.x=-Math.PI/2; s.position.set(-2.8+i*1.4,.09,-1+Math.random()); stripes.push(s); g.add(s); }
+      const swim=new THREE.Mesh(new THREE.CapsuleGeometry(.16,.4,4,10),M(0xd9a441,.4)); swim.rotation.z=Math.PI/2; swim.position.set(-3.5,.4,-1.2); g.add(swim);
+      anim={swim,stripes}; },
+  anim:(t)=>{ const vx=(P.v||1), vz=(P.u||1); const k=(t%4)/4; anim.swim.position.set(-3.5+7*k,.4,-1.2+2.6*k*(vz/vx));
+      anim.stripes.forEach(s=>{ s.position.z-=0.02; if(s.position.z<-1.5)s.position.z=1.5; }); } },
+10:{ build:(g)=>{ g.add(new THREE.Mesh(new THREE.BoxGeometry(3.4,.03,.03),M(0x8a94ad,.5)).translateX(1.5).translateY(.02));
+      g.add(new THREE.Mesh(new THREE.BoxGeometry(.03,3.4,.03),M(0x8a94ad,.5)).translateX(-.02).translateY(1.7));
+      const lineGeo=new THREE.BufferGeometry(); lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(3*2),3));
+      const line=new THREE.Line(lineGeo, new THREE.LineBasicMaterial({color:0xe8a33d})); line.frustumCulled=false; g.add(line);
+      const pt=new THREE.Mesh(new THREE.SphereGeometry(.08,10,10),M(0xd9a441,.3)); pt.position.set(0,0,0); g.add(pt);
+      const tri=new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({color:0xe8a33d, transparent:true, opacity:.18, side:THREE.DoubleSide}));
+      tri.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(9),3)); g.add(tri);
+      anim={line,pt,tri}; },
+  anim:(t)=>{ const k=(t%3)/3; const px=3*k, py=3*k;
+      const lp=anim.line.geometry.attributes.position.array; lp[0]=0;lp[1]=0;lp[2]=0;lp[3]=px;lp[4]=py;lp[5]=0; anim.line.geometry.attributes.position.needsUpdate=true;
+      anim.pt.position.set(px,py,0);
+      const tp=anim.tri.geometry.attributes.position.array; tp[0]=0;tp[1]=0;tp[2]=0.01; tp[3]=px;tp[4]=0;tp[5]=0.01; tp[6]=px;tp[7]=py;tp[8]=0.01; anim.tri.geometry.attributes.position.needsUpdate=true; } },
+11:{ build:(g)=>{ g.add(new THREE.Mesh(new THREE.SphereGeometry(.6,20,20),M(0x3a6a8a,.6)).translateY(.6));
+      const r1=new THREE.Mesh(new THREE.TorusGeometry(.95,.02,6,40),M(0x8a94ad,.4)); r1.rotation.x=Math.PI/2; r1.position.y=.6; g.add(r1);
+      const r2=new THREE.Mesh(new THREE.TorusGeometry(1.9,.02,6,40),M(0x8a94ad,.25)); r2.rotation.x=Math.PI/2; r2.position.y=.6; g.add(r2);
+      const sat=new THREE.Mesh(new THREE.SphereGeometry(.12,12,12),M(0xd9a441,.3)); sat.position.set(1.9,.6,0); g.add(sat);
+      anim={sat}; },
+  anim:(t)=>{ const a=t*1.2; anim.sat.position.set(1.9*Math.cos(a),.6,1.9*Math.sin(a)); } },
+12:{ build:(g)=>{ const tower=new THREE.Mesh(new THREE.BoxGeometry(.9,3,0.9),M(0x5c3623,.9)); tower.position.set(-2.6,1.5,0); g.add(tower);
+      const stone=new THREE.Mesh(new THREE.SphereGeometry(.22,14,14),M(0x8a8f94,.6)); stone.position.set(1.4,4,0); g.add(stone);
+      const marker=new THREE.Mesh(new THREE.BoxGeometry(1.2,.04,.04),M(0xe8a33d,.6)); marker.position.set(1.4,2.5,0); g.add(marker); anim={stone,marker}; },
+  anim:(t)=>{ const h=3.6; const tt=t%3.4; if(tt<3){ const k=tt/3; anim.stone.position.y=0.3+h*(1-k*k); } else anim.stone.position.y=0.3;
+      anim.marker.position.y = 0.3+h*Math.max(0,1-(tt/3-2/3)); } },
+13:{ build:(g)=>{ const geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(3*80),3));
+      const spring=new THREE.Line(geo,new THREE.LineBasicMaterial({color:0xd9c9a8})); spring.frustumCulled=false; g.add(spring);
+      const mass=new THREE.Mesh(new THREE.CylinderGeometry(.4,.4,.5,16),M(0x8a6c3f,.5)); mass.position.y=1.6; g.add(mass); anim={geo,mass}; },
+  anim:(t)=>{ const T=2*Math.PI*Math.sqrt((P.m||2)/(P.k||50)); const yy=2.6+0.8*Math.sin(2*Math.PI*t/T);
+      anim.mass.position.y=yy;
+      const pos=anim.geo.attributes.position.array, N=80, coils=6;
+      for(let i=0;i<N;i++){ const f=i/(N-1); const phi=f*coils*Math.PI*2; const y=0.3+(yy-0.75)*f;
+        pos[i*3]=0.28*Math.cos(phi); pos[i*3+1]=y; pos[i*3+2]=0.28*Math.sin(phi); }
+      anim.geo.attributes.position.needsUpdate=true; } },
+14:{ build:(g)=>{ const cart=new THREE.Group();
+      cart.add(new THREE.Mesh(new THREE.BoxGeometry(1,.5,.6),M(0x8a6c3f,.7)).translateY(.4));
+      const wheels=[]; for(let i=0;i<2;i++){ const w=new THREE.Mesh(new THREE.CylinderGeometry(.18,.18,.1,10),M(0x1c1a15,.4)); w.rotation.z=Math.PI/2; w.position.set(i? .35:-.35,.18,0); cart.add(w); wheels.push(w); }
+      cart.position.set(-3.2,.1,0); g.add(cart);
+      const bar=new THREE.Mesh(new THREE.BoxGeometry(2.2,.18,.18),M(0x4a3a2a,.8)); bar.position.set(1.6,2.2,0); g.add(bar);
+      const fill=new THREE.Mesh(new THREE.BoxGeometry(.1,.2,.2),M(0xd9a441,.5)); fill.position.set(.6,2.2,0); g.add(fill);
+      anim={cart,wheels,fill}; },
+  anim:(t)=>{ const tt=t%3; const k=Math.min(tt,2.4)/2.4; anim.cart.position.x=-3.2+k*k*6; anim.wheels.forEach(w=>w.rotation.x+=0.06);
+      const e=(P.m||20)*(P.v||3)*(P.v||3)*0.5; anim.fill.scale.x=Math.max(.05,e/200); anim.fill.position.x=.6+anim.fill.scale.x/2; } },
+15:{ build:(g)=>{ const branch=new THREE.Mesh(new THREE.BoxGeometry(2,.08,.08),M(0x6b4a2c,.8)); branch.position.set(0,3.2,0); g.add(branch);
+      const apple=new THREE.Mesh(new THREE.SphereGeometry(.2,14,14),M(0xb02818,.35)); apple.position.set(0,2.8,0); g.add(apple);
+      const bar=new THREE.Mesh(new THREE.BoxGeometry(2.2,.18,.18),M(0x4a3a2a,.8)); bar.position.set(1.7,2.2,0); g.add(bar);
+      const fill=new THREE.Mesh(new THREE.BoxGeometry(.1,.2,.2),M(0xd9a441,.5)); fill.position.set(.7,2.2,0); g.add(fill); anim={apple,fill}; },
+  anim:(t)=>{ const tt=t%3; if(tt<1.6){ anim.apple.position.y=2.8-tt*1.4; } else anim.apple.position.y=0.3;
+      const e=(P.m||0.2)*10*(P.h||5); anim.fill.scale.x=Math.max(.05,e/40); anim.fill.position.x=.7+anim.fill.scale.x/2; } },
+16:{ build:(g)=>{ const plate=new THREE.Mesh(new THREE.BoxGeometry(1.6,.1,1.6),M(0x8a6c3f,.7)); plate.position.y=.05; g.add(plate);
+      const box=new THREE.Mesh(new THREE.BoxGeometry(1,.9,1),M(0x6b4a2c,.8)); box.position.y=.55; g.add(box);
+      const arrows=[]; for(let i=0;i<4;i++){ const a=new THREE.Group();
+        a.add(new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,.5,6),M(0xd03a2a,.4)).translateY(-.25));
+        a.add(new THREE.Mesh(new THREE.ConeGeometry(.08,.2,6),M(0xd03a2a,.4)).translateY(-.5));
+        a.position.set(-.5+i%2, 1.5, i<2?-.35:.35); g.add(a); arrows.push(a); } anim={arrows}; },
+  anim:(t)=>{ const p=(P.F||400)/(P.S||0.2); anim.arrows.forEach(a=>{ const s=Math.min(2,p/1500)+.4; a.scale.setScalar(s); a.position.y=1.2+s*.3; }); } },
+17:{ build:(g)=>{ const water=new THREE.Mesh(new THREE.BoxGeometry(3,.9,1.8),new THREE.MeshPhysicalMaterial({color:0x2e5a7a,transparent:true,opacity:.5,roughness:.3})); water.position.y=.45; g.add(water);
+      const cube=new THREE.Mesh(new THREE.BoxGeometry(.7,.7,.7),M(0x8a6c3f,.6)); cube.position.set(0,.45,0); g.add(cube);
+      const arrow=new THREE.Group();
+      arrow.add(new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,.5,6),M(0x7fd1ff,.4)).translateY(.25));
+      arrow.add(new THREE.Mesh(new THREE.ConeGeometry(.08,.2,6),M(0x7fd1ff,.4)).translateY(.5));
+      arrow.position.set(0,1.1,0); g.add(arrow); anim={cube,arrow}; },
+  anim:(t)=>{ const F=(P.V||0.001)*10000; anim.arrow.scale.setScalar(Math.min(2.2,F/20)+.4); anim.cube.position.y=.45+Math.sin(t*2)*.05; } },
+18:{ build:(g)=>{ const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.9,.9,.1,18),M(0x8a6c3f,.6)); wheel.rotation.z=Math.PI/2; wheel.position.set(-2,1.5,0); g.add(wheel);
+      const blades=[]; for(let i=0;i<4;i++){ const b=new THREE.Mesh(new THREE.BoxGeometry(1.7,.12,.12),M(0x6b4a2c,.8)); b.position.set(-2,1.5,0); b.rotation.z=i*Math.PI/4+Math.PI/2; b.position.x=-2+Math.cos(b.rotation.z)*.85; b.position.y=1.5+Math.sin(b.rotation.z)*.85; g.add(b); blades.push(b); }
+      const bar=new THREE.Mesh(new THREE.BoxGeometry(2.2,.16,.16),M(0x4a3a2a,.8)); bar.position.set(1.7,2,0); g.add(bar);
+      const fill=new THREE.Mesh(new THREE.BoxGeometry(.1,.18,.18),M(0xd9a441,.5)); fill.position.set(.7,2,0); g.add(fill); anim={blades,fill}; },
+  anim:(t)=>{ const tt=t%3; anim.blades.forEach((b,i)=>{ const a=tt*2+i*Math.PI/2; b.rotation.z=a; b.position.x=-2+Math.cos(a)*.85; b.position.y=1.5+Math.sin(a)*.85; });
+      const p=(P.A||600)/(P.t||30); anim.fill.scale.x=Math.max(.05,p/60); anim.fill.position.x=.7+anim.fill.scale.x/2; } },
+19:{ build:(g)=>{ const road=new THREE.Mesh(new THREE.BoxGeometry(8,.1,1),M(0x3a3a3a,.9)); road.position.y=.05; g.add(road);
+      const mk=()=>{ const c=new THREE.Group();
+        c.add(new THREE.Mesh(new THREE.BoxGeometry(.5,.4,.5),M(0x8a6c3f,.7)).translateY(.4));
+        const w1=new THREE.Mesh(new THREE.CylinderGeometry(.14,.14,.08,8),M(0x1c1a15,.4)); w1.rotation.z=Math.PI/2; w1.position.set(-.15,.14,0); c.add(w1);
+        const w2=w1.clone(); w2.position.x=.15; c.add(w2); return c; };
+      const c1=mk(); c1.position.set(-3.2,.1,0); g.add(c1);
+      const c2=mk(); c2.position.set(3.2,.1,0); g.add(c2); anim={c1,c2}; },
+  anim:(t)=>{ const tt=t%4; const k=tt/4; anim.c1.position.x=-3.2+3.2*k; anim.c2.position.x=3.2-3.2*k; } },
+
+20:{ build:(g)=>{ const fulcrum=new THREE.Mesh(new THREE.CylinderGeometry(.22,.28,.5,12),M(0x8a6c3f,.7)); fulcrum.position.y=.25; g.add(fulcrum);
+      const beam=new THREE.Group();
+      beam.add(new THREE.Mesh(new THREE.BoxGeometry(5.6,.18,.3),M(0x6b4a2c,.8)).translateY(.6));
+      beam.add(new THREE.Mesh(new THREE.BoxGeometry(.6,.7,.6),M(0x7a4a33,.8)).translateX(-1.2).translateY(.25));
+      beam.add(new THREE.Mesh(new THREE.CapsuleGeometry(.12,.4,6,10),M(0xc96f4a,.6)).translateX(1.6).translateY(.9));
+      beam.position.y=.4; g.add(beam); anim={beam}; },
+  anim:(t)=>{ const tt=t%5; const k=tt<2.5?tt/2.5:1-(tt-2.5)/2.5;
+      anim.beam.rotation.z=(k-.5)*.35; } },
+21:{ build:(g)=>{ const tank=new THREE.Mesh(new THREE.BoxGeometry(3,1.8,1.6),new THREE.MeshPhysicalMaterial({color:0x9fb4c7,transparent:true,opacity:.25,roughness:.1,depthWrite:false,side:THREE.DoubleSide})); tank.position.y=.9; g.add(tank);
+      const water=new THREE.Mesh(new THREE.BoxGeometry(2.85,1.4,1.45),new THREE.MeshPhysicalMaterial({color:0x2e7fd4,transparent:true,opacity:.5,roughness:.15,depthWrite:false})); water.position.y=.7; g.add(water);
+      const cube=new THREE.Mesh(new THREE.BoxGeometry(.75,.75,.75),M(0xd9a441,.35)); cube.position.set(.6,.6,0); g.add(cube);
+      const barrel=new THREE.Mesh(new THREE.CylinderGeometry(.55,.65,1.1,14),M(0x8a6c3f,.8)); barrel.position.set(-1.8,.55,0); g.add(barrel);
+      const oil=new THREE.Mesh(new THREE.CylinderGeometry(.5,.6,.7,12),new THREE.MeshPhysicalMaterial({color:0xc96f4a,transparent:true,opacity:.5,roughness:.2,depthWrite:false})); oil.position.set(-1.8,.3,0); g.add(oil);
+      anim={cube,water}; },
+  anim:(t)=>{ const tt=t%6; const k=Math.min(tt/2,1);
+      anim.cube.position.y=.32+.3*k+Math.sin(t*2)*.05; anim.water.material.opacity=.45+.08*Math.sin(t*3); } },
+22:{ build:(g)=>{ const plane=new THREE.Mesh(new THREE.BoxGeometry(5,.2,1.2),M(0x6b4a2c,.85)); plane.rotation.z=Math.atan2(1,4); plane.position.set(0,.25,-.5); g.add(plane);
+      const barrel=new THREE.Group();
+      barrel.add(new THREE.Mesh(new THREE.CylinderGeometry(.4,.4,.7,14),M(0x8a6c3f,.8)).rotateZ(Math.PI/2));
+      barrel.add(new THREE.Mesh(new THREE.TorusGeometry(.41,.05,8,16),M(0x5c3623,.9)).rotateY(Math.PI/2));
+      barrel.position.set(-2.4,.3,-.5); g.add(barrel); anim={barrel}; },
+  anim:(t)=>{ const tt=t%6; const k=Math.min(tt/3,1);
+      anim.barrel.position.x=-2.4+4.8*k; anim.barrel.position.y=.3+(anim.barrel.position.x+2.4)*.25; anim.barrel.rotation.z=tt*3; } },
+23:{ build:(g)=>{ const pot=new THREE.Mesh(new THREE.CylinderGeometry(.9,1,1.2,16,1,true),M(0x3a3a3a,.7)); pot.position.y=.6; g.add(pot);
+      const water=new THREE.Mesh(new THREE.CylinderGeometry(.82,.92,.9,14),new THREE.MeshPhysicalMaterial({color:0x2e7fd4,transparent:true,opacity:.55,roughness:.2,depthWrite:false})); water.position.y=.45; g.add(water);
+      const flame=new THREE.Mesh(new THREE.ConeGeometry(.55,1.1,10,1,true),new THREE.MeshBasicMaterial({color:0xe86a4a,transparent:true,opacity:.75,side:THREE.DoubleSide})); flame.position.y=-.1; g.add(flame);
+      const flame2=new THREE.Mesh(new THREE.ConeGeometry(.4,.8,10,1,true),new THREE.MeshBasicMaterial({color:0xd9a441,transparent:true,opacity:.7,side:THREE.DoubleSide})); flame2.position.y=-.15; g.add(flame2);
+      const bub=[]; for(let i=0;i<12;i++){ const b=new THREE.Mesh(new THREE.SphereGeometry(.05,6,6),new THREE.MeshBasicMaterial({color:0xbfd8e8,transparent:true,opacity:.6})); b.visible=false; g.add(b); bub.push(b); }
+      anim={flame,flame2,bub}; },
+  anim:(t)=>{ const tt=t%10; const f=1+.25*Math.sin(t*7);
+      anim.flame.scale.set(f,1+.35*Math.sin(t*9),f); anim.flame2.scale.set(f*.8,1+.3*Math.sin(t*11),f*.8);
+      anim.flame.position.y=-.1+.05*Math.sin(t*8); anim.flame2.position.y=-.15+.04*Math.sin(t*10);
+      anim.bub.forEach((b,i)=>{ const ph=(tt*1.1+i*.3)%1.3; b.visible=ph<1.1&&tt>1;
+        if(b.visible){ b.position.set(-.2+(i%3)*.2,.1+ph*.6,0); b.material.opacity=.6*(1-ph/1.1); } }); } },
+24:{ build:(g)=>{ const wire=(x1,y1,x2,y2)=>{ const dx=x2-x1,dy=y2-y1;
+      const w=new THREE.Mesh(new THREE.CylinderGeometry(.035,.035,Math.hypot(dx,dy),6),M(0x8a6c3f,.7));
+      w.position.set((x1+x2)/2,(y1+y2)/2,0); w.rotation.z=Math.atan2(dy,dx); g.add(w); return w; };
+      wire(-1.5,.3,0,.8); wire(0,.8,0,1.4); wire(0,1.4,1.5,1.2); wire(1.5,1.2,1.5,.3); wire(1.5,.3,-1.5,.3);
+      const batt=new THREE.Mesh(new THREE.CylinderGeometry(.28,.28,.7,10),M(0xd9a441,.5)); batt.position.set(-1.5,.3,0); batt.rotation.z=Math.PI/2; g.add(batt);
+      const bulb=new THREE.Group();
+      bulb.add(new THREE.Mesh(new THREE.SphereGeometry(.32,14,14),new THREE.MeshPhysicalMaterial({color:0xfff2cc,transparent:true,opacity:.6,roughness:.1,depthWrite:false,emissive:0xffd27a,emissiveIntensity:.6})));
+      bulb.add(new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,.2,6),M(0x8a6c3f,.7)).translateY(-.25));
+      bulb.position.set(0,1.4,0); g.add(bulb);
+      const els=[]; for(let i=0;i<16;i++){ const e=new THREE.Mesh(new THREE.SphereGeometry(.035,6,6),new THREE.MeshBasicMaterial({color:0x7fd1ff})); e.visible=false; g.add(e); els.push(e); }
+      anim={bulb,els}; },
+  anim:(t)=>{ const tt=t%4; anim.bulb.children[0].material.emissiveIntensity=.4+.5*Math.sin(t*5);
+      anim.els.forEach((e,i)=>{ const ph=(tt+i*.14)%1; e.visible=true; e.position.set(-1.5+3*ph,.3+Math.sin(ph*Math.PI*2)*.18,0); }); } },
+25:{ build:(g)=>{ const cannon=new THREE.Group();
+      cannon.add(new THREE.Mesh(new THREE.BoxGeometry(.8,.55,.7),M(0x8a6c3f,.7)).translateY(.35));
+      const wheel=()=>{ const w=new THREE.Group();
+        w.add(new THREE.Mesh(new THREE.TorusGeometry(.3,.06,8,18),M(0x241c12,.55)).rotateX(Math.PI/2));
+        w.add(new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,.2,8),M(0x8a6c3f,.5)).rotateZ(Math.PI/2)); return w; };
+      const wl=wheel(),wr=wheel(); wl.position.set(-.35,.3,0); wr.position.set(.35,.3,0); cannon.add(wl,wr);
+      cannon.add(new THREE.Mesh(new THREE.CylinderGeometry(.13,.15,.8,12),M(0x3a3a3a,.8)).rotateZ(Math.PI/2).translateX(.6).translateY(.55));
+      cannon.position.set(-2.2,.05,0); g.add(cannon);
+      const ball=new THREE.Mesh(new THREE.SphereGeometry(.16,12,12),M(0x2e2e2e,.5)); ball.visible=false; g.add(ball);
+      const smoke=new THREE.Mesh(new THREE.SphereGeometry(.2,8,8),new THREE.MeshBasicMaterial({color:0x9aa,transparent:true,opacity:.5})); smoke.visible=false; g.add(smoke);
+      anim={cannon,ball,smoke}; },
+  anim:(t)=>{ const tt=t%5;
+      if(tt<1.2){ anim.cannon.position.x=-2.2; anim.ball.visible=false; anim.smoke.visible=false; }
+      else if(tt<1.8){ const k=(tt-1.2)/.6; anim.cannon.position.x=-2.2-k*.45; anim.ball.visible=true; anim.ball.position.set(-.4+k*3, .6, 0); }
+      else if(tt<2.4){ const k=(tt-1.8)/.6; anim.cannon.position.x=-2.65+k*.45; anim.ball.visible=false; anim.smoke.visible=true;
+        anim.smoke.position.set(-.4,.55,0); anim.smoke.scale.setScalar(1+k*2.2); anim.smoke.material.opacity=.5-k*.4; }
+      else { anim.cannon.position.x=-2.2; anim.smoke.visible=false; } } },
+26:{ build:(g)=>{ const disk=new THREE.Mesh(new THREE.CylinderGeometry(2,.1,2.2,.1,24),M(0x8a6c3f,.7)); disk.position.y=.15; g.add(disk);
+      const pole=new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,2.5,8),M(0x5c3623,.8)); pole.position.y=1.4; g.add(pole);
+      const horses=[]; for(let i=0;i<4;i++){ const h=new THREE.Group();
+        h.add(new THREE.Mesh(new THREE.CapsuleGeometry(.09,.3,4,8),M(i%2?0xc96f4a:0xd9a441,.6)).translateY(.6));
+        h.add(new THREE.Mesh(new THREE.SphereGeometry(.1,8,8),M(0xe0c9a8,.5)).translateY(1.05));
+        h.position.set(Math.sin(i/4*Math.PI*2)*1.6,.25,Math.cos(i/4*Math.PI*2)*1.6); g.add(h); horses.push(h); }
+      anim={disk,horses}; },
+  anim:(t)=>{ const ang=t*.6; anim.disk.rotation.y=ang;
+      anim.horses.forEach((h,i)=>{ const a=i/4*Math.PI*2+ang; h.position.set(Math.sin(a)*1.6,.25+Math.abs(Math.sin(t*2+i))*.15,Math.cos(a)*1.6); }); } },
+};
+
+/* стрелка-вектор для разбора решения */
+function vec(c){ const g=new THREE.Group();
+  g.add(new THREE.Mesh(new THREE.CylinderGeometry(.035,.035,.75,8),M(c,.25)).translateY(.37));
+  g.add(new THREE.Mesh(new THREE.ConeGeometry(.095,.26,8),M(c,.25)).translateY(.88));
+  return g; }
+function buildSol(id){
+  sol = new THREE.Group();
+  if(id===2){ sol.a=vec(0xe8a33d); sol.add(sol.a);
+    solAnim=t=>{ const A=.55, T=2*Math.PI*Math.sqrt((P.L||1)/10), ang=A*Math.sin(2*Math.PI*t/T);
+      const px=3.1*Math.sin(ang), py=4.3-3.1*Math.cos(ang), vx=Math.cos(ang), vy=Math.sin(ang);
+      sol.a.position.set(px,py,0); sol.a.rotation.z=Math.atan2(vy,vx); }; }
+  else if(id===3){ sol.a=vec(0xd03a2a); sol.a.position.set(1.4,.35,0); sol.add(sol.a);
+    solAnim=()=>{ const v=Math.sqrt(2*10*(P.h||20)); sol.a.scale.setScalar(Math.min(2, v/18)); sol.a.rotation.z=-Math.PI/2; }; }
+  else if(id===4){ const geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(3*40),3));
+    sol.line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:0xe8a33d,transparent:true,opacity:.75})); sol.add(sol.line);
+    solAnim=()=>{ const pos=sol.line.geometry.attributes.position.array;
+      for(let i=0;i<40;i++){ const k=i/39; pos[i*3]=-1.8+k*4.6; pos[i*3+1]=0.2+3.8*(1-k*k); pos[i*3+2]=0.01; }
+      sol.line.geometry.attributes.position.needsUpdate=true; }; }
+  else if(id===5){ sol.a=vec(0xd03a2a); sol.a.position.set(1.3,1.55,0); sol.add(sol.a);
+    solAnim=()=>{ const sc=0.9+0.35*Math.sin(performance.now()/300); sol.a.scale.setScalar(sc); sol.a.rotation.x=Math.PI; }; }
+  else if(id===9){ sol.a1=vec(0x7fd1ff); sol.a2=vec(0x9fc4d8); sol.a3=vec(0xe8a33d);
+    sol.a1.position.set(-2,1.9,-.4); sol.a2.position.set(-2,1.5,.4); sol.add(sol.a1,sol.a2,sol.a3);
+    solAnim=()=>{ const v=P.v||1, u=P.u||1, L=Math.sqrt(v*v+u*u)||1;
+      sol.a1.scale.setScalar(Math.min(1.6,v)); sol.a1.rotation.z=0;
+      sol.a2.scale.setScalar(Math.min(1.6,u)); sol.a2.rotation.z=0; sol.a2.rotation.y=Math.PI/2;
+      sol.a3.scale.setScalar(Math.min(2.4,L)); sol.a3.rotation.z=Math.atan2(u,v); sol.a3.position.set(-2+0.9,1.7,0); }; }
+
+  else if(id===20){ sol.a=vec(0xe8a33d); sol.b=vec(0xd03a2a); sol.add(sol.a,sol.b);
+    solAnim=()=>{ const F=P.F||300,L1=P.L1||1,L2=P.L2||3, F2=F*L1/L2;
+      sol.a.position.set(1.6,.9,0); sol.a.rotation.z=-Math.PI/2; sol.a.scale.setScalar(Math.min(1.5,F2/250));
+      sol.b.position.set(-1.2,1.35,0); sol.b.rotation.z=Math.PI/2; sol.b.scale.setScalar(Math.min(1.5,F/250)); }; }
+  else if(id===22){ sol.a=vec(0xe8a33d); sol.b=vec(0xd03a2a); sol.c=vec(0x7fd1ff); sol.add(sol.a,sol.b,sol.c);
+    solAnim=()=>{ const Pv=P.P||600,Fv=P.F||200,s=P.s||4,h=P.h||1, eta=Pv*h/(Fv*s);
+      sol.a.position.set(1.8,1.4,0); sol.a.rotation.z=-Math.PI/2; sol.a.scale.setScalar(Math.min(1.6,eta));
+      sol.b.position.set(-1.8,.7,0); sol.b.rotation.z=-Math.PI/2; sol.b.scale.setScalar(Math.min(1.6,Pv/400));
+      sol.c.position.set(.2,1.7,0); sol.c.rotation.z=Math.PI/2; sol.c.scale.setScalar(Math.min(1.6,Fv/150)); }; }
+  else if(id===23){ sol.a=vec(0xe86a4a); sol.add(sol.a);
+    solAnim=()=>{ const Q=4200*(P.m||2)*(P.dt||50); sol.a.position.set(0,1.1,0); sol.a.rotation.x=Math.PI/2; sol.a.scale.setScalar(Math.min(2,Q/200000)); }; }
+  else if(id===24){ sol.a=vec(0x7fd1ff); sol.add(sol.a);
+    solAnim=()=>{ sol.a.position.set(0,.9,0); sol.a.rotation.z=-Math.PI/2; sol.a.scale.setScalar(1); }; }
+  else if(id===25){ sol.a=vec(0xe8a33d); sol.b=vec(0x7fd1ff); sol.add(sol.a,sol.b);
+    solAnim=()=>{ const V=(P.m||10)*(P.v||60)/(P.M||200);
+      sol.a.position.set(-1.5,1.1,0); sol.a.rotation.z=-Math.PI/2; sol.a.scale.setScalar(Math.min(1.8,V*6));
+      sol.b.position.set(1.5,1.1,0); sol.b.rotation.z=-Math.PI/2; sol.b.scale.setScalar(Math.min(1.8,(P.v||60)/40)); }; }
+  else if(id===26){ sol.a=vec(0xe86a4a); sol.add(sol.a);
+    solAnim=()=>{ const tt2=performance.now()/1000; const a=tt2*.6;
+      sol.a.position.set(Math.sin(a)*1.6,.6,Math.cos(a)*1.6);
+      sol.a.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),new THREE.Vector3(-Math.sin(a),0,-Math.cos(a))); }; }
+
+  scene.add(sol);
+}
+
+function build3D(idx){
+  clear3D();
+  const builder=B3D[idx]; if(!builder) return;
+  taskGroup=new THREE.Group(); builder.build(taskGroup); scene.add(taskGroup);
+  taskGroup.traverse(o=>{ if(o.isMesh) o.castShadow = true; });
+  const size=stage.clientWidth||860; renderer.setSize(size, size*9/16);
+  composer.setSize(size, size*9/16);
+  composer.render();
+}
+function tick(){ requestAnimationFrame(tick);
+  if(anim&&TASKS[state.idx]&&B3D[TASKS[state.idx].id]&&B3D[TASKS[state.idx].id].anim) B3D[TASKS[state.idx].id].anim(performance.now()/1000);
+  if(solAnim) solAnim(performance.now()/1000);
+  composer.render(); }
+tick();
+
+/* ================= UI ================= */
+function save(){ try{localStorage.setItem(SAVE_KEY,JSON.stringify(state));}catch(e){} }
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+const rank=()=>RANKS[Math.min(Math.floor(state.stars||0),4)];
+
+function render(){
+  document.getElementById('hudPoints').textContent=state.points;
+  document.getElementById('hudStreak').textContent=state.streak;
+  document.getElementById('hudRank').textContent=rank();
+  document.getElementById('progress').innerHTML=TASKS.map((t,i)=>`<div class="dot ${state.solved[i]?'done':(i===state.idx?'current':'')}"></div>`).join('');
+  const t=TASKS[state.idx]; if(!t){finish();return;}
+  document.getElementById('mission').innerHTML=
+    `<span class="m-ico">🎯</span><span class="m-text"><b>Миссия ${state.idx+1}/${TASKS.length}:</b> ${esc(t.mission)}</span><span class="rank-badge">${esc(t.ch)}</span>`;
+  document.getElementById('stageCap').textContent='3D: '+t.title;
+  /* ползунки параметров задачи */
+  const fx=TASK_FX[t.id], sl=document.getElementById('sliders');
+  if(fx&&fx.params){ P={}; fx.params.forEach(pr=>P[pr.k]=pr.def);
+    sl.innerHTML=fx.params.map(pr=>`<label>${pr.label}
+      <input type="range" min="${pr.min}" max="${pr.max}" step="${pr.step}" value="${P[pr.k]}" oninput="setP('${pr.k}',this.value)">
+      <span id="pv_${pr.k}">${P[pr.k]}</span></label>`).join('')
+      +`<span class="live" id="liveCalc">${fx.calc(P)}</span>`;
+  } else { sl.innerHTML=''; P={}; }
+  build3D(t.id);
+  if(showSol){ buildSol(t.id); }
+  const card=document.getElementById('card');
+  const hints=[0,1,2].map(i=>{ const used=(state.hintsUsed[state.idx]||0)>i;
+    return `<button class="hint-btn" ${used?'disabled':''} onclick="useHint(${i})">Подсказка ${i+1}${i<2?' · '+(i===0?10:5)+'⭐':' · бесплатно'}</button>`; }).join('');
+  const openHints=[0,1,2].filter(i=>(state.hintsUsed[state.idx]||0)>i).map(i=>`<div class="hint-box">${esc(t.hints[i])}</div>`).join('');
+  const solved=state.solved[state.idx];
+  const input=t.type==='unit'
+    ? `<div class="answer-row"><input type="number" id="numIn" step="any" placeholder="число" ${solved?'disabled':''}>
+        <select id="unitIn" ${solved?'disabled':''}>${unitsOptions(t.unit)}</select>
+        <button class="btn" style="margin-top:0" onclick="checkUnit()" ${solved?'disabled':''}>Ответить</button></div>`
+    : `<div class="choices">${t.choices.map((c,i)=>`<button class="choice ${solved?(i===t.answer?'right':(chosen===i?'wrong':'')):''}" ${solved?'disabled':''} onclick="checkChoice(${i})">${esc(c)}</button>`).join('')}</div>`;
+  const fbHtml=fb?`<div class="fb ${fb.ok?'right':'wrong'}">${esc(fb.txt)}</div>`:'';
+  const solHtml=showSol?`<div class="sol"><b>📜 Решение Архимеда:</b> ${esc(t.sol)}<br><span style="color:var(--olive)">✅ ${esc(t.beat)}</span></div>
+    <button class="btn" onclick="next()">${state.idx===TASKS.length-1?'Забрать трофей':'Дальше →'}</button>`:'';
+  card.innerHTML=`
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px">
+      <span style="color:#8a94ad;font-size:11.5px;letter-spacing:.14em">${esc(t.ch)}</span>
+      <span style="color:var(--amber);font-size:11.5px">сложность ${t.diff}/4</span></div>
+    <div style="font-size:16.5px;font-weight:bold;margin-top:6px">${esc(t.title)}</div>
+    <div class="story">${esc(t.story)}</div>
+    <div class="q">${esc(t.q)}</div>${input}
+    <div class="hints">${hints}</div>${openHints}${fbHtml}${solHtml}`;
+}
+function unitsOptions(unit){ const map={'км/ч':['км/ч','м/с'],'с':['с','мин'],'м/с':['м/с','км/ч'],'м':['м','км','см'],'Н':['Н','кН'],'м/с²':['м/с²','см/с²'],'Н/м':['Н/м','кН/м'],'раз':['раз','%'],'кДж':['кДж','Дж']};
+  return (map[unit]||[unit]).map(u=>`<option>${u}</option>`).join(''); }
+function useHint(i){ const t=TASKS[state.idx]; if(state.solved[state.idx])return; if((state.hintsUsed[state.idx]||0)>i)return;
+  if(i<2){ const cost=i===0?10:5; if(state.points<cost)return; state.points-=cost; }
+  state.hintsUsed[state.idx]=(state.hintsUsed[state.idx]||0)+1; save(); render(); }
+function checkChoice(i){ const t=TASKS[state.idx]; if(state.solved[state.idx])return; chosen=i;
+  if(i===t.answer) win(t); else { fb={ok:false,txt:'❌ «А ты уверен?» '+t.trap}; render(); } }
+function checkUnit(){ const t=TASKS[state.idx]; if(state.solved[state.idx])return;
+  const n=parseFloat(document.getElementById('numIn').value); const u=document.getElementById('unitIn').value;
+  if(isNaN(n)){ fb={ok:false,txt:'Введи число!'}; render(); return; }
+  const conv={'м/с':1,'км/ч':0.2778,'см':0.01,'км':1000,'м':1,'см/с²':0.01,'мин':60,'кН':1000,'Н/м':1,'кН/м':1000,'Н':1,'м/с²':1,'раз':1,'%':1,'кДж':1000};
+  const si=n*(conv[u]||1);
+  if(Math.abs(si-t.answer)<=t.tol) win(t); else { fb={ok:false,txt:'❌ «А ты уверен?» '+t.trap}; render(); } }
+function win(t){ const h=state.hintsUsed[state.idx]||0; const gain=Math.max(15,30-h*5);
+  state.points+=gain; state.streak+=1; state.solved[state.idx]=true; state.stars=(state.stars||0)+1; showSol=true;
+  fb={ok:true,txt:`✅ Верно! +${gain}⭐ · артефакт «${t.art}»`}; save(); render(); }
+function next(){ state.idx+=1; fb=null; chosen=null; showSol=false; save(); render(); }
+function finish(){
+  document.getElementById('progress').innerHTML=TASKS.map(()=>`<div class="dot done"></div>`).join('');
+  document.getElementById('mission').innerHTML=`<span class="m-ico">🏆</span><span class="m-text"><b>Лондон спасён!</b> Ньютон принимает тебя в ученики. Звание: <b>${rank()}</b></span>`;
+  document.getElementById('card').innerHTML=`
+    <div style="font-size:22px;font-weight:bold;margin-bottom:8px">🏆 Башня Ньютона пройдена!</div>
+    <div class="arch"><span class="who">◈ Архимед</span>
+      «Ты прошёл всю физику острова: кинематику, силы, импульс, графики и тяготение.
+      Ньютон бы тобой гордился — а впереди орбиты и кванты». Очки: <b style="color:var(--amber)">${state.points}</b>⭐ · серия ${state.streak}🔥</div>
+    <button class="btn" onclick="resetAll()">↺ Пройти заново</button>`;
+  showConfetti();
+}
+function resetAll(){ if(!confirm('Сбросить прогресс?'))return;
+  state={idx:0,points:0,streak:0,stars:0,solved:[],hintsUsed:{}}; fb=null; chosen=null; showSol=false; save(); render(); }
+function showConfetti(){ const d=document.createElement('div'); d.className='confetti';
+  for(let i=0;i<70;i++){ const s=document.createElement('span'); s.className='confetti-piece';
+    s.style.left=Math.random()*100+'%'; s.style.background=['#d9a441','#c8795a','#7fb8a0','#b06fd0','#6fb4f0'][i%5];
+    s.style.animationDelay=Math.random()*0.6+'s'; s.style.animationDuration=1.6+Math.random()*1.4+'s'; d.appendChild(s); }
+  document.body.appendChild(d); setTimeout(()=>d.remove(),4000); }
+
+window.useHint=useHint; window.checkChoice=checkChoice; window.checkUnit=checkUnit; window.next=next; window.resetAll=resetAll;
+window.setP=(k,v)=>{ P[k]=parseFloat(v); const fx=TASK_FX[TASKS[state.idx].id];
+  if(fx&&fx.params){ fx.params.forEach(pr=>{ const el=document.getElementById('pv_'+pr.k); if(el)el.textContent=P[pr.k]; });
+    const lc=document.getElementById('liveCalc'); if(lc&&fx.calc) lc.innerHTML=fx.calc(P); }
+  if([2,3,4,9].includes(TASKS[state.idx].id)) build3D(TASKS[state.idx].id); };
+window.addEventListener('resize',()=>{ const s=stage.clientWidth||860; renderer.setSize(s, s*9/16); composer.setSize(s, s*9/16); });
+render();
+</script>
+</body>
+</html>

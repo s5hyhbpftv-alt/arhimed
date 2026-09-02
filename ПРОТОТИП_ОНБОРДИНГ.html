@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Онбординг · Первый вход</title>
+<style>
+  :root {
+    --marble:#F5F0E6; --marble-dark:#E8E0D0; --bronze:#B08D57; --bronze-dark:#8a6c3f;
+    --terracotta:#C96F4A; --olive:#6B7F3F; --night:#2C3E6B; --glow:#7FD1FF; --ink:#3a3228;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:Georgia,"Times New Roman",serif;
+    background:radial-gradient(ellipse at 50% 0%,#fff8ea 0%,transparent 55%),
+               linear-gradient(170deg,#f5eede 0%,#e6d8bc 60%,#d2bf9c 100%);
+    color:var(--ink); min-height:100vh; display:flex; justify-content:center; padding:20px 14px;
+  }
+  #app { max-width:640px; width:100%; }
+  .progress { display:flex; gap:8px; margin-bottom:14px; }
+  .step-dot { flex:1; height:8px; border-radius:4px; background:var(--marble-dark); border:1px solid var(--bronze); }
+  .step-dot.done { background:var(--olive); }
+  .step-dot.current { background:var(--terracotta); }
+  .card {
+    background:var(--marble); border:2px solid var(--bronze); border-radius:14px;
+    padding:26px 28px; box-shadow:0 8px 24px rgba(0,0,0,.18);
+  }
+  h1 { font-size:26px; color:var(--bronze-dark); margin-bottom:8px; }
+  p { font-size:16px; line-height:1.55; margin-bottom:12px; }
+  .archimedes {
+    background:linear-gradient(135deg,rgba(44,62,107,.12),rgba(127,209,255,.10));
+    border:1px solid rgba(127,209,255,.5); border-radius:10px; padding:14px 16px;
+    color:var(--night); font-size:15px; line-height:1.5; margin:12px 0;
+    animation:flicker 6s infinite;
+  }
+  @keyframes flicker {0%,100%{opacity:1;}92%{opacity:1;}93%{opacity:.75;}94%{opacity:1;}97%{opacity:.85;}98%{opacity:1;}}
+  .archimedes .who { display:block; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--bronze-dark); margin-bottom:4px; }
+  input[type=text] {
+    width:100%; font-family:Georgia,serif; font-size:18px; padding:12px 14px;
+    border:2px solid var(--bronze); border-radius:8px; background:#fffdf5;
+    margin:8px 0 4px; outline:none;
+  }
+  input[type=text]:focus { border-color:var(--terracotta); }
+  .colors { display:flex; gap:14px; margin:14px 0; flex-wrap:wrap; }
+  .color-swatch {
+    width:64px; height:64px; border-radius:50%; cursor:pointer; border:4px solid transparent;
+    transition:transform .12s;
+  }
+  .color-swatch:hover { transform:scale(1.1); }
+  .color-swatch.sel { border-color:var(--night); box-shadow:0 0 0 3px var(--glow); }
+  .color-label { text-align:center; font-size:12px; color:#8a7a60; margin-top:4px; }
+  .swatch-wrap { text-align:center; }
+  .btn {
+    background:var(--terracotta); color:#fff; border:none; border-radius:10px;
+    padding:13px 24px; font-family:inherit; font-size:16px; cursor:pointer; margin-top:14px;
+  }
+  .btn:disabled { background:#d8a68e; cursor:not-allowed; }
+  .btn2 { background:var(--marble-dark); color:var(--ink); border:2px solid var(--bronze); }
+  .hint-btn {
+    background:var(--olive); color:#fff; border:none; border-radius:8px;
+    padding:9px 16px; font-family:inherit; font-size:14px; cursor:pointer; margin:8px 4px 0 0;
+  }
+  .hint-box { background:#f3ecd9; border:1px dashed var(--bronze); border-radius:8px; padding:10px 14px; margin-top:10px; font-size:14.5px; }
+  .choices { display:flex; flex-direction:column; gap:10px; margin-top:12px; }
+  .choice {
+    background:var(--marble-dark); border:2px solid var(--bronze); border-radius:10px;
+    padding:13px 15px; font-family:inherit; font-size:15px; text-align:left; cursor:pointer;
+  }
+  .choice:hover { background:#f0e6d2; transform:translateX(4px); }
+  .choice.right { background:#e2ead0; border-color:var(--olive); }
+  .choice.wrong { background:#f8e0d6; border-color:var(--terracotta); }
+  .solution { background:#fdf9ee; border:2px solid var(--bronze); border-radius:10px; padding:13px 15px; margin-top:12px; font-size:14.5px; }
+  .solution b { color:var(--bronze-dark); }
+  .feedback { margin-top:10px; padding:11px 14px; border-radius:8px; font-size:14.5px; }
+  .feedback.right { background:#e2ead0; border:1px solid var(--olive); }
+  .feedback.wrong { background:#f8e0d6; border:1px solid var(--terracotta); }
+  .profile-line { font-size:14px; color:#8a7a60; margin-top:10px; }
+  .badge { display:inline-block; background:var(--night); color:#fff; border-radius:999px; padding:5px 14px; font-size:13px; margin:6px 4px 0 0; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="progress" id="progress"></div>
+  <div class="card" id="card"></div>
+</div>
+
+<script>
+/* ========== ПРОФИЛЬ ========== */
+const KEY = "arhimed_profile_v1";
+let profile = { name: "", color: "#B08D57", level: "novice" };
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.name) profile = Object.assign(profile, s); } catch(e){}
+
+const STEPS = ["Имя", "Хитон", "Задача", "Сложность"];
+const COLORS = [
+  { name: "Мрамор",   hex: "#F5F0E6" },
+  { name: "Терракота", hex: "#C96F4A" },
+  { name: "Олива",    hex: "#6B7F3F" },
+  { name: "Ночь",     hex: "#2C3E6B" }
+];
+let step = 0;            // 0..3
+let taskDone = false, hintShown = false, chosen = null;
+
+function renderProgress() {
+  document.getElementById("progress").innerHTML = STEPS.map((s,i) =>
+    `<div class="step-dot ${i < step ? "done" : (i === step ? "current" : "")}"></div>`).join("");
+}
+
+/* ========== ЭКРАНЫ ========== */
+function render() {
+  renderProgress();
+  const card = document.getElementById("card");
+  if (step === 0) card.innerHTML = screenName();
+  else if (step === 1) card.innerHTML = screenColor();
+  else if (step === 2) card.innerHTML = screenTask();
+  else if (step === 3) card.innerHTML = screenLevel();
+  else card.innerHTML = screenDone();
+}
+function screenName() {
+  return `
+    <h1>Пробуждение</h1>
+    <div class="archimedes"><span class="who">◈ Архимед</span>
+      «Так-так… Я спал в бронзе две тысячи лет, а разбудил меня — ты. Значит, ты и есть Исследователь,
+      которому суждено спасти Острова Познания. Как тебя зовут, герой?»</div>
+    <input type="text" id="nameInput" maxlength="20" placeholder="Твоё имя…" value="${escapeHtml(profile.name)}">
+    <p class="profile-line">Имя появится на карте и в дневнике.</p>
+    <button class="btn" onclick="nextName()">Дальше →</button>`;
+}
+function screenColor() {
+  const swatches = COLORS.map(c => `
+    <div class="swatch-wrap">
+      <div class="color-swatch ${profile.color === c.hex ? "sel" : ""}" style="background:${c.hex};"
+           onclick="pickColor('${c.hex}')"></div>
+      <div class="color-label">${c.name}</div>
+    </div>`).join("");
+  return `
+    <h1>Цвет хитона</h1>
+    <div class="archimedes"><span class="who">◈ Архимед</span>
+      «Каждый Исследователь носит хитон своего города. Выбери цвет — он будет с тобой на всех островах».</div>
+    <div class="colors">${swatches}</div>
+    <button class="btn" onclick="nextColor()">Дальше →</button>`;
+}
+function screenTask() {
+  const h = hintShown ? `<div class="hint-box">💡 Подсказка бесплатна: посчитай «4 + 3» — это просто числа, сложи их. Ответ — одно число.</div>` : "";
+  const fb = chosen !== null
+    ? (chosen === 7
+      ? `<div class="feedback right">✅ Верно! Так работает решатель: выбрал ответ — получил мгновенную проверку и «Решение Архимеда».</div>`
+      : `<div class="feedback wrong">❌ «А ты уверен?» Ошибки не наказываются — это часть пути. Попробуй ещё раз (или используй подсказку).</div>`)
+    : "";
+  const sol = chosen === 7 ? `<div class="solution"><b>📜 Решение Архимеда:</b> Четыре и три — это семь. Простое сложение, но за ним стоит главный принцип: <i>сначала попробуй — потом поймёшь</i>. Именно так ты будешь решать олимпиадные задачи.</div>` : "";
+  return `
+    <h1>Обучающая задача</h1>
+    <div class="archimedes"><span class="who">◈ Архимед</span>
+      «Прежде чем идти к воротам Сиракуз, освоим механику. Ответь на простой вопрос — и ты поймёшь,
+      как устроен решатель: ответ, подсказки, разбор».</div>
+    <p><b>Сколько будет 4 + 3?</b></p>
+    <div class="choices">
+      <button class="choice" onclick="answerTask(6)">6</button>
+      <button class="choice" onclick="answerTask(7)">7</button>
+      <button class="choice" onclick="answerTask(8)">8</button>
+    </div>
+    <button class="hint-btn" ${hintShown ? "disabled" : ""} onclick="useHint()">💡 Подсказка · бесплатно</button>
+    ${h}${fb}${sol}
+    <button class="btn" ${taskDone ? "" : "disabled"} onclick="nextTask()">Дальше →</button>`;
+}
+function screenLevel() {
+  return `
+    <h1>С чего начинаем?</h1>
+    <div class="archimedes"><span class="who">◈ Архимед</span>
+      «Олимпиадные задачи бывают разной сложности. Честно скажи, где ты, — и я подберу тебе
+      первые острова «на грани возможностей»: решаемо, но с усилием».</div>
+    <div class="choices">
+      <button class="choice" onclick="pickLevel('novice')">🌱 Я новичок<br><span style="font-size:13px;color:#8a7a60;">Начнём с логики и лёгких задач</span></button>
+      <button class="choice" onclick="pickLevel('advanced')">⚡ Уже решал олимпиады<br><span style="font-size:13px;color:#8a7a60;">Сразу задачи посложнее, приёмы и дуэли</span></button>
+    </div>
+    <button class="btn" onclick="finish()">Войти во вселенную →</button>`;
+}
+function screenDone() {
+  return `
+    <h1>Добро пожаловать, ${escapeHtml(profile.name)}! 🎉</h1>
+    <div class="archimedes"><span class="who">◈ Архимед</span>
+      «Профиль создан. Хитон цвета твоего города, стартовая сложность — ${profile.level === "novice" ? "новичок" : "опытный"}.
+      Ворота Сиракуз ждут. Помни: сначала попробуй — потом поймёшь».</div>
+    <p><span class="badge">${escapeHtml(profile.name)}</span><span class="badge">сложность: ${profile.level === "novice" ? "новичок" : "опытный"}</span></p>
+    <button class="btn" onclick="openChapter()">⚔ Открыть Главу 1 «Стражники»</button>
+    <button class="btn btn2" onclick="openHub()">🗺 Вернуться на карту</button>`;
+}
+
+/* ========== ДЕЙСТВИЯ ========== */
+function escapeHtml(s){ return String(s||"").replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function nextName() {
+  const v = document.getElementById("nameInput").value.trim();
+  if (!v) { alert("Архимед ждёт твоё имя!"); return; }
+  profile.name = v; save(); step = 1; render();
+}
+function pickColor(hex) { profile.color = hex; save(); render(); }
+function nextColor() { step = 2; render(); }
+function useHint() { hintShown = true; render(); }
+function answerTask(n) { chosen = n; if (n === 7) taskDone = true; render(); }
+function nextTask() { step = 3; render(); }
+function pickLevel(lv) { profile.level = lv; save(); render(); }
+function finish() { save(); step = 4; render(); }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(profile)); } catch(e){} }
+function openChapter() { window.location.href = "ПРОТОТИП_ГЛАВА1_СИРАКУЗЫ.html"; }
+function openHub() { window.location.href = "ХАБ_ПРОТОТИП.html"; }
+
+render();
+</script>
+</body>
+</html>

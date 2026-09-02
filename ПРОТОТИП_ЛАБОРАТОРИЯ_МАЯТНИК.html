@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Лаборатория · Маятник: измерь силу Земли</title>
+<style>
+  :root {
+    --marble:#F5F0E6; --marble-dark:#E8E0D0; --bronze:#B08D57; --bronze-dark:#8a6c3f;
+    --terracotta:#C96F4A; --olive:#6B7F3F; --night:#2C3E6B; --glow:#7FD1FF; --ink:#3a3228;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:Georgia,"Times New Roman",serif;
+    background:radial-gradient(ellipse at 20% 10%,#fff8ea 0%,transparent 55%),
+               linear-gradient(160deg,#f7f0e0 0%,#e9ddc8 60%,#d9c8a8 100%);
+    color:var(--ink); min-height:100vh; display:flex; justify-content:center; padding:14px;
+  }
+  #app { max-width:960px; width:100%; }
+  header {
+    display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+    background:linear-gradient(90deg,var(--marble),var(--marble-dark));
+    border:2px solid var(--bronze); border-radius:10px; padding:10px 16px; margin-bottom:12px;
+    box-shadow:0 3px 8px rgba(0,0,0,.15);
+  }
+  .hud { font-size:14px; color:var(--bronze-dark); }
+  .hud b { color:var(--ink); }
+  .card {
+    background:var(--marble); border:2px solid var(--bronze); border-radius:12px;
+    padding:20px 22px; box-shadow:0 6px 18px rgba(0,0,0,.18); margin-bottom:12px;
+  }
+  .meander {
+    height:8px; margin-bottom:12px; opacity:.45;
+    background:repeating-linear-gradient(90deg,var(--bronze) 0 8px,transparent 8px 12px,var(--bronze) 12px 20px,transparent 20px 24px);
+  }
+  h1 { font-size:24px; color:var(--bronze-dark); }
+  h2 { font-size:17px; color:var(--terracotta); margin:10px 0 6px; }
+  p  { font-size:15px; line-height:1.5; margin-bottom:8px; }
+  .archimedes {
+    background:linear-gradient(135deg,rgba(44,62,107,.12),rgba(127,209,255,.10));
+    border:1px solid rgba(127,209,255,.5); border-radius:10px; padding:10px 14px; margin:10px 0;
+    color:var(--night); font-size:14px; line-height:1.45; animation:flicker 6s infinite;
+  }
+  @keyframes flicker {0%,100%{opacity:1;}92%{opacity:1;}93%{opacity:.75;}94%{opacity:1;}97%{opacity:.85;}98%{opacity:1;}}
+  .archimedes .who { display:block; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--bronze-dark); margin-bottom:3px; }
+  .lab { display:flex; gap:16px; flex-wrap:wrap; }
+  .panel { flex:1 1 400px; min-width:340px; }
+  canvas { display:block; background:linear-gradient(180deg,#fffdf5,#f3ecd9); border:2px solid var(--bronze); border-radius:10px; width:100%; }
+  .controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .btn {
+    background:var(--terracotta); color:#fff; border:none; border-radius:8px;
+    padding:10px 18px; font-family:inherit; font-size:15px; cursor:pointer;
+  }
+  .btn:disabled { background:#d8a68e; cursor:not-allowed; }
+  .btn2 { background:var(--marble-dark); color:var(--ink); border:2px solid var(--bronze); }
+  .btn3 { background:var(--olive); color:#fff; border:none; }
+  .slider-row { display:flex; align-items:center; gap:10px; margin-top:10px; }
+  input[type=range] { flex:1; }
+  .stopwatch {
+    font-family:"Courier New",monospace; font-size:28px; color:var(--night);
+    background:#0f1b30; color:#7fd1ff; border-radius:8px; padding:6px 14px; display:inline-block;
+    border:2px solid var(--bronze); text-shadow:0 0 8px rgba(127,209,255,.7);
+  }
+  table { width:100%; border-collapse:collapse; margin:8px 0; font-size:14px; }
+  th,td { border:1px solid var(--bronze); padding:6px 8px; text-align:center; }
+  th { background:var(--marble-dark); }
+  .formula { background:#f3ecd9; border:1px dashed var(--bronze); border-radius:8px; padding:10px 12px; margin:8px 0; font-family:"Courier New",monospace; font-size:14px; }
+  .protocol { background:#fdf9ee; border:2px solid var(--bronze); border-radius:10px; padding:12px 14px; font-size:14px; line-height:1.6; }
+  .protocol b { color:var(--bronze-dark); }
+  .medal { text-align:center; font-size:20px; padding:12px; border-radius:10px; margin-top:10px; }
+  .medal.gold { background:linear-gradient(135deg,#f6e3a8,#e0b45a); border:2px solid #b8860b; }
+  .medal.silver { background:linear-gradient(135deg,#e8e8e8,#bfc4c9); border:2px solid #8a8f94; }
+  .medal.bronze { background:linear-gradient(135deg,#ecc9a8,#c98d5a); border:2px solid #a05c2c; }
+  .note { font-size:12px; color:#9a8c74; }
+  .btn-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+
+/* === мобильная адаптация (АРХИМЕД PWA) === */
+@media (max-width: 640px){
+  body { padding:10px 8px 28px; }
+  h1 { font-size:17px; }
+  #app { max-width:100%; }
+  .card { padding:14px 13px; }
+  .btn, .btn2, .btn3, .choice, .hint-btn, .hint { min-height:48px; font-size:15px; }
+  .btn, .btn2, .btn3 { width:100%; padding:12px 16px; }
+  .choice { padding:12px 14px; }
+  .hud { font-size:12px; gap:8px; }
+  .sliders, .controls { flex-direction:column; align-items:stretch; gap:10px; }
+  .sliders input[type=range] { width:100%; }
+  .answer-row { gap:6px; }
+  input[type=number] { width:116px; font-size:19px; }
+  .story, .q { font-size:14px; }
+  .mission { padding:8px 10px; font-size:13px; }
+  .protocol, .panel { padding:10px; overflow-x:auto; }
+  .stage-cap { font-size:10px; }
+  .note { font-size:10px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="hud">⚗ Лаборатория Архимеда · <b>Эксперимент 1</b></div>
+    <div class="hud">Медаль: <b id="medalBadge">—</b></div>
+    <button class="btn2 btn" style="padding:6px 12px;font-size:13px;" onclick="resetAll()">↺ Заново</button>
+  </header>
+
+  <div class="card">
+    <div class="meander"></div>
+    <h1>🕰 Маятник: измерь силу, что держит Луну</h1>
+    <div class="archimedes">
+      <span class="who">◈ Архимед</span>
+      «Каждый маятник — метроном самой Земли. Разгони его, измерь период — и ты узнаешь,
+      с какой силой планета тянет всё к себе. Это <b>g</b> — то самое, что потом Ньютон
+      назовёт тяготением. На олимпиаде за такой эксперимент дают баллы. Покажи, что достоин золота».
+    </div>
+
+    <div class="lab">
+      <div class="panel">
+        <h2>Установка</h2>
+        <canvas id="cv" width="480" height="320"></canvas>
+        <div class="slider-row">
+          <span>Длина нити L:</span>
+          <input type="range" id="lenSlider" min="25" max="150" value="100" oninput="setLen(this.value)">
+          <b id="lenVal">1.00 м</b>
+        </div>
+        <div class="controls">
+          <button class="btn" id="btnSwing" onclick="togglePendulum()">▶ Разогнать маятник</button>
+          <button class="btn btn3" id="btnTimer" onclick="toggleTimer()" disabled>⏱ Пуск секундомера</button>
+          <span class="stopwatch" id="stopwatch">0:00.00</span>
+        </div>
+        <p class="note">Секундомер считает <b>10 полных колебаний</b>. Запусти его, когда маятник в крайней точке, и останови, когда насчитаешь 10 (считай про себя «ноль… один… два…»).</p>
+        <div class="controls">
+          <button class="btn btn2" onclick="recordRun()" disabled id="btnRecord">📝 Записать серию</button>
+          <button class="btn btn2" onclick="clearRuns()">🗑 Очистить серии</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Журнал измерений</h2>
+        <table>
+          <thead><tr><th>Серия</th><th>L, м</th><th>t₁₀, с</th><th>T, с</th><th>g = 4π²L/T², м/с²</th></tr></thead>
+          <tbody id="tbody"><tr><td colspan="5" style="color:#9a8c74;">Пока пусто — проведи измерения</td></tr></tbody>
+        </table>
+        <p class="note">Погрешность: ΔL = 0.005 м, Δt = 0.2 с · ΔT = Δt/10 = 0.02 с</p>
+        <h2>Расчёт</h2>
+        <div class="formula" id="calcBox">g = 4π²L / T²</div>
+        <div id="medalBox"></div>
+      </div>
+    </div>
+
+    <h2>Протокол (автозаполнение)</h2>
+    <div class="protocol" id="protocol">
+      <b>Цель:</b> определить ускорение свободного падения g с помощью математического маятника.<br>
+      <b>Установка:</b> нить длиной L, груз; секундомер.<br>
+      <b>Данные:</b> <span id="pData">—</span><br>
+      <b>Расчёты:</b> T = t₁₀/10; g = 4π²L/T² <span id="pCalc">—</span><br>
+      <b>Вывод:</b> <span id="pOut">—</span>
+    </div>
+  </div>
+  <div class="note" style="text-align:center;">Прототип лаборатории · «АРХИМЕД» · v0.1 · честная физика: симуляция использует g = 9.81 м/с²</div>
+</div>
+
+<script>
+/* ================= СОСТОЯНИЕ ================= */
+const G = 9.81, PI = Math.PI;
+let L = 1.0;                 // длина нити, м
+let angle = 0.30, omega = 0; // маятник
+let running = false;
+let timerOn = false, timerStart = 0, timerAcc = 0, timerRun = null;
+let medal = "—";
+let runs = [];
+
+const SAVE_KEY = "arhimed_lab_v1";
+try { const s = JSON.parse(localStorage.getItem(SAVE_KEY)); if (s && Array.isArray(s.runs)) { runs = s.runs; medal = s.medal || "—"; } } catch(e){}
+
+/* ================= КАНВАС ================= */
+const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+function draw() {
+  const w = cv.width, h = cv.height;
+  const px = w * 0.5, py = 56, lenPx = Math.min(200, L * 180);
+  const bobX = px + lenPx * Math.sin(angle), bobY = py + lenPx * Math.cos(angle);
+  ctx.clearRect(0,0,w,h);
+  // крепление
+  ctx.fillStyle = "#8a6c3f"; ctx.fillRect(px-40, 40, 80, 16);
+  ctx.fillStyle = "#6b5a41"; ctx.fillRect(px-6, 56, 12, 8);
+  // нить
+  ctx.strokeStyle = "#7a6a50"; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(bobX,bobY); ctx.stroke();
+  // груз
+  ctx.fillStyle = "#b08d57"; ctx.beginPath(); ctx.arc(bobX,bobY,14,0,2*PI); ctx.fill();
+  ctx.strokeStyle = "#8a6c3f"; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = "#5c4a30"; ctx.font = "10px Georgia"; ctx.textAlign = "center";
+  ctx.fillText("m", bobX, bobY+4);
+  // шкала
+  ctx.strokeStyle = "rgba(176,141,87,.5)"; ctx.lineWidth = 1;
+  for (let a = -50; a <= 50; a += 10) {
+    const rad = a*PI/180;
+    ctx.beginPath();
+    ctx.moveTo(px + 90*Math.sin(rad), py + 90*Math.cos(rad));
+    ctx.lineTo(px + 100*Math.sin(rad), py + 100*Math.cos(rad));
+    ctx.stroke();
+  }
+  ctx.fillStyle = "#9a8c74"; ctx.font = "11px Georgia";
+  ctx.fillText("L = " + L.toFixed(2) + " м", w-90, h-10);
+}
+function step() {
+  if (running) {
+    const dt = 1/60;
+    const a = -G/L * Math.sin(angle);
+    omega += a*dt; angle += omega*dt;
+    omega *= 0.9992; // лёгкое затухание
+  }
+  draw();
+  requestAnimationFrame(step);
+}
+step();
+
+/* ================= УПРАВЛЕНИЕ ================= */
+function setLen(v) {
+  L = v/100; document.getElementById("lenVal").textContent = L.toFixed(2) + " м";
+  if (!running) { angle = 0.30; omega = 0; }
+  draw();
+}
+function togglePendulum() {
+  running = !running;
+  const b = document.getElementById("btnSwing");
+  b.textContent = running ? "⏸ Остановить" : "▶ Разогнать маятник";
+  document.getElementById("btnTimer").disabled = !running;
+  if (!running) { timerOn = false; updateTimer(); }
+}
+function toggleTimer() {
+  if (!running) return;
+  timerOn = !timerOn;
+  const b = document.getElementById("btnTimer");
+  if (timerOn) {
+    timerStart = performance.now(); timerAcc = 0;
+    b.textContent = "⏹ Стоп (10 колебаний)";
+    timerRun = setInterval(updateTimer, 30);
+  } else {
+    clearInterval(timerRun);
+    b.textContent = "⏱ Пуск секундомера";
+    document.getElementById("btnRecord").disabled = false;
+  }
+}
+function updateTimer() {
+  if (timerOn) timerAcc = (performance.now() - timerStart)/1000;
+  const m = Math.floor(timerAcc/60), s = timerAcc - m*60;
+  document.getElementById("stopwatch").textContent =
+    m + ":" + s.toFixed(2).padStart(5,"0");
+}
+function recordRun() {
+  if (timerOn) return;
+  const t10 = timerAcc;
+  if (t10 <= 0) { alert("Сначала измерь время: разгони маятник и запусти секундомер."); return; }
+  const T = t10/10;
+  const g = 4*PI*PI*L/(T*T);
+  runs.push({L:+L.toFixed(2), t10:+t10.toFixed(2), T:+T.toFixed(3), g:+g.toFixed(2)});
+  save(); renderRuns(); compute();
+  document.getElementById("btnRecord").disabled = true;
+}
+function clearRuns() { runs = []; medal = "—"; save(); renderRuns(); compute(); }
+function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify({runs, medal})); } catch(e){} }
+function resetAll() {
+  if (!confirm("Сбросить все измерения?")) return;
+  runs = []; medal = "—"; timerAcc = 0; updateTimer(); save(); renderRuns(); compute();
+}
+
+/* ================= РАСЧЁТ ================= */
+function compute() {
+  const gs = runs.map(r=>r.g);
+  const box = document.getElementById("calcBox"), medalBox = document.getElementById("medalBox");
+  const pData = document.getElementById("pData"), pCalc = document.getElementById("pCalc"), pOut = document.getElementById("pOut");
+  if (!gs.length) {
+    box.innerHTML = "g = 4π²L / T²  <span style='color:#9a8c74'>(нужны измерения)</span>";
+    medalBox.innerHTML = ""; medal = "—";
+    pData.textContent = "—"; pCalc.textContent = "—"; pOut.textContent = "—";
+    document.getElementById("medalBadge").textContent = "—";
+    return;
+  }
+  const gAvg = gs.reduce((a,b)=>a+b,0)/gs.length;
+  // случайная погрешность (разброс) + приборная
+  const spread = gs.length>1 ? Math.sqrt(gs.reduce((a,g)=>a+(g-gAvg)**2,0)/(gs.length-1)) : 0;
+  const deltaG = Math.sqrt(spread*spread + Math.pow(4*PI*PI*0.005/(1.0*1.0), 2)); // [оценка]
+  const rel = Math.abs(gAvg - 9.81)/9.81*100;
+  let cls = "bronze", label = "🥉 Бронза";
+  if (rel <= 3) { cls = "gold"; label = "🥇 Золото — уровень призёра ВсОШ!"; }
+  else if (rel <= 8) { cls = "silver"; label = "🥈 Серебро — близко к идеалу"; }
+  else label = "🥉 Бронза — попробуй точнее (больше серий!)";
+  medal = label;
+  medalBox.innerHTML = `<div class="medal ${cls}">${label}<br><span style="font-size:14px;">g<sub>среднее</sub> = ${gAvg.toFixed(2)} м/с² · погрешность ±${deltaG.toFixed(2)} · отклонение ${rel.toFixed(1)}%</span></div>`;
+  box.innerHTML = `g<sub>ср</sub> = (${gs.map(g=>g.toFixed(2)).join(" + ")}) / ${gs.length} = <b>${gAvg.toFixed(2)}</b> м/с²<br>` +
+    `Δg ≈ √(σ² + (4π²ΔL/L²)²) ≈ ±${deltaG.toFixed(2)} м/с² · эталон: 9.81 м/с²`;
+  pData.textContent = gs.length + " серий: " + gs.map(g=>g.toFixed(2)).join("; ") + " м/с²";
+  pCalc.textContent = "gср = " + gAvg.toFixed(2) + " ± " + deltaG.toFixed(2) + " м/с²";
+  pOut.textContent = (rel<=8 ? "Полученное g в пределах погрешности совпадает с табличным (9.81 м/с²), что подтверждает модель математического маятника." : "Отклонение от табличного g существенное — стоит увеличить число измерений и следить за точностью секундомера.");
+  document.getElementById("medalBadge").textContent = label.replace(/^[^\s]+\s/,"");
+  save(); renderRuns();
+}
+function renderRuns() {
+  const tb = document.getElementById("tbody");
+  if (!runs.length) { tb.innerHTML = "<tr><td colspan='5' style='color:#9a8c74'>Пока пусто — проведи измерения</td></tr>"; return; }
+  tb.innerHTML = runs.map((r,i)=>`<tr><td>${i+1}</td><td>${r.L}</td><td>${r.t10}</td><td>${r.T}</td><td>${r.g}</td></tr>`).join("");
+}
+renderRuns(); compute();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "АРХИМЕД — Острова Познания",
+  "short_name": "АРХИМЕД",
+  "description": "Игровая вселенная олимпиадной математики, физики и химии для школьников 10–17 лет",
+  "lang": "ru",
+  "start_url": "МОБ_ПРИЛОЖЕНИЕ/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1712",
+  "theme_color": "#0b1712",
+  "categories": ["education", "games"],
+  "icons": [
+    { "src": "МОБ_ПРИЛОЖЕНИЕ/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "МОБ_ПРИЛОЖЕНИЕ/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "МОБ_ПРИЛОЖЕНИЕ/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

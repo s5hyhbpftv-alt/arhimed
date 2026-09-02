@@ -1,0 +1,29 @@
+# --- Секреты (НИКОГДА не пушить) ---
+ключ_яндекса.txt
+.env
+*.key
+
+# --- Служебные каталоги (локальные зависимости) ---
+.py-libs/
+браузеры/
+голоса/
+node_modules/
+chemistry-demo/node_modules/
+chemistry-demo/dist/
+chemistry-demo/.npm-cache/
+шрифты/
+
+скилы/
+
+# --- macOS ---
+.DS_Store
+:memory:.ses
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+
+# --- Прочее ---
+*.log
+npm-debug.log*

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Лаборатория Лавуазье · Миссия и 3D</title>
+<style>
+  :root { --brick:#7A4A33; --brick-dark:#5c3623; --amber:#E8A33D; --fog:#9FB4C7;
+    --ink:#2c2318; --parch:#f6ecd2; --paper:#fdf9ee; --night:#141F38; --glow:#7FD1FF; --olive:#5F7A3A; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:Georgia,"Times New Roman",serif;
+    background: radial-gradient(ellipse at 50% 0%,#3a3328 0%,transparent 55%), linear-gradient(165deg,#2e2a24 0%,#1c1915 70%);
+    color:var(--parch); min-height:100vh; display:flex; justify-content:center; padding:16px 12px; }
+  #app { max-width:860px; width:100%; }
+  header { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+    padding:8px 2px 10px; border-bottom:1px solid rgba(232,163,61,.35); margin-bottom:10px; }
+  h1 { font-size:19px; color:var(--amber); font-weight:normal; }
+  .sub { font-size:12px; color:#8a94ad; }
+  .hud { display:flex; gap:12px; font-size:13px; color:var(--fog); flex-wrap:wrap; }
+  .hud b { color:var(--amber); }
+  .progress { display:flex; gap:5px; margin-bottom:10px; }
+  .dot { flex:1; height:7px; border-radius:4px; background:#3a3a33; }
+  .dot.done { background:var(--olive); }
+  .dot.current { background:var(--amber); }
+  .mission { display:flex; align-items:center; gap:10px; flex-wrap:wrap; background:#1f1c16;
+    border:1px solid rgba(232,163,61,.3); border-radius:9px; padding:8px 14px; margin-bottom:10px; font-size:13.5px; }
+  .mission .m-ico { font-size:18px; }
+  .mission .m-text { color:#cbb89a; }
+  .mission b { color:var(--amber); }
+  .rank-badge { margin-left:auto; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--glow); }
+  .stage { position:relative; border:1px solid rgba(232,163,61,.4); border-radius:12px; overflow:hidden;
+    background:radial-gradient(ellipse at 50% 30%,#2b2720,#16130f); margin-bottom:12px; }
+  .stage::after { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(0,0,0,.4) 100%);
+    mix-blend-mode:multiply; }
+  .stage canvas { display:block; width:100%; height:auto; }
+  .stage-cap { position:absolute; left:12px; bottom:8px; font-size:11.5px; color:#8a94ad; letter-spacing:.08em; }
+  .card { background:linear-gradient(180deg,#26221c,#1d1a15); border:1px solid rgba(232,163,61,.4);
+    border-radius:12px; padding:18px 20px; box-shadow:0 12px 34px rgba(0,0,0,.5); }
+  .story { font-style:italic; color:#cbb89a; border-left:3px solid var(--brick); padding-left:12px; margin:8px 0; font-size:14px; line-height:1.5; }
+  .q { font-size:15.5px; font-weight:bold; margin:8px 0 4px; }
+  .arch { background:linear-gradient(135deg,rgba(44,62,107,.25),rgba(127,209,255,.08));
+    border:1px solid rgba(127,209,255,.35); border-radius:8px; padding:9px 13px; margin:8px 0;
+    color:#cfd8ea; font-size:13px; line-height:1.5; }
+  .arch .who { display:block; font-size:10.5px; letter-spacing:2px; text-transform:uppercase; color:var(--amber); margin-bottom:2px; }
+  .answer-row { display:flex; gap:8px; align-items:center; margin:10px 0 4px; flex-wrap:wrap; }
+  input[type=number] { width:130px; font-family:Georgia,serif; font-size:19px; padding:8px 11px;
+    border:2px solid var(--amber); border-radius:8px; background:#101018; color:var(--paper); outline:none; }
+  select { font-family:Georgia,serif; font-size:14px; padding:8px 9px; border:2px solid var(--amber);
+    border-radius:8px; background:#101018; color:var(--paper); }
+  .choices { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+  .choice { background:#2a2620; border:1.5px solid #4a4538; border-radius:9px; padding:10px 13px;
+    font-family:inherit; font-size:14px; text-align:left; color:var(--parch); cursor:pointer; }
+  .choice:hover { border-color:var(--amber); }
+  .choice.right { border-color:var(--olive); background:#243320; }
+  .choice.wrong { border-color:#b0513c; background:#3a2218; }
+  .hints { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .hint-btn { background:var(--olive); color:#fff; border:none; border-radius:7px; padding:7px 13px;
+    font-family:inherit; font-size:12.5px; cursor:pointer; }
+  .hint-btn:disabled { background:#3d4a30; cursor:not-allowed; }
+  .hint-box { background:#2a2620; border:1px dashed var(--amber); border-radius:8px; padding:9px 12px; margin-top:8px; font-size:13px; color:#cbb89a; }
+  .sliders { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#1f1c16;
+    border:1px solid rgba(232,163,61,.25); border-radius:9px; padding:9px 14px; margin-bottom:10px; font-size:12.5px; }
+  .sliders label { display:flex; align-items:center; gap:8px; color:#cbb89a; }
+  .sliders input[type=range] { width:110px; accent-color:var(--amber); }
+  .sliders .live { margin-left:auto; color:var(--amber); font-weight:bold; }
+  .fb { margin-top:9px; padding:9px 12px; border-radius:8px; font-size:13px; }
+  .fb.right { background:#243320; border:1px solid var(--olive); }
+  .fb.wrong { background:#3a2218; border:1px solid #b0513c; }
+  .sol { background:#201c16; border:1px solid var(--amber); border-radius:9px; padding:11px 13px; margin-top:10px; font-size:13px; line-height:1.55; color:#d9c9a8; }
+  .sol b { color:var(--amber); }
+  .btn { background:linear-gradient(180deg,var(--brick),var(--brick-dark)); color:#fff; border:none;
+    border-radius:9px; padding:10px 19px; font-family:inherit; font-size:14.5px; cursor:pointer; margin-top:12px; }
+  .btn:disabled { opacity:.45; cursor:not-allowed; }
+  .confetti { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:50; }
+  .confetti-piece { position:absolute; top:-12px; width:8px; height:14px; border-radius:2px; opacity:.9; animation:fall linear forwards; }
+  @keyframes fall { to { transform:translateY(110vh) rotate(720deg); } }
+  .note { text-align:center; font-size:11px; color:#5d6a8a; margin-top:10px; }
+
+/* === мобильная адаптация (АРХИМЕД PWA) === */
+@media (max-width: 640px){
+  body { padding:10px 8px 28px; }
+  h1 { font-size:17px; }
+  #app { max-width:100%; }
+  .card { padding:14px 13px; }
+  .btn, .btn2, .btn3, .choice, .hint-btn, .hint { min-height:48px; font-size:15px; }
+  .btn, .btn2, .btn3 { width:100%; padding:12px 16px; }
+  .choice { padding:12px 14px; }
+  .hud { font-size:12px; gap:8px; }
+  .sliders, .controls { flex-direction:column; align-items:stretch; gap:10px; }
+  .sliders input[type=range] { width:100%; }
+  .answer-row { gap:6px; }
+  input[type=number] { width:116px; font-size:19px; }
+  .story, .q { font-size:14px; }
+  .mission { padding:8px 10px; font-size:13px; }
+  .protocol, .panel { padding:10px; overflow-x:auto; }
+  .stage-cap { font-size:10px; }
+  .note { font-size:10px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div><h1>⚗️ Лаборатория Лавуазье · Миссия</h1><div class="sub">Париж, 1780 · лаборатория · ты — ученик Лавуазье</div></div>
+    <div class="hud"><span>⭐ <b id="hudPoints">0</b></span><span>🔥 <b id="hudStreak">0</b></span><span class="rank-badge" id="hudRank">Стажёр</span></div>
+  </header>
+  <div class="progress" id="progress"></div>
+  <div class="mission" id="mission"></div>
+  <div class="stage"><div id="stage3d"></div><div class="stage-cap" id="stageCap">3D-симуляция задачи</div></div>
+  <div class="sliders" id="sliders"></div>
+  <div class="card" id="card"></div>
+  <div class="note">Прототип · «АРХИМЕД» · ответ — число с единицей или выбор · 3D-анимация каждой задачи</div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+
+<script type="module">
+import * as THREE from 'three'
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
+import { SSAOPass } from 'three/addons/postprocessing/SSAOPass.js'
+
+/* ================= ЗАДАЧИ (с миссией) ================= */
+const TASKS = [
+  { id:1, title:'Молекула воды', ch:'Гл.1 · Молярная масса', diff:1,
+    mission:'Собери молекулу воды из атомов и найди её массу!',
+    beat:'Молекула собрана: M(H₂O) = 18 г/моль!',
+    story:'Лавуазье показывает молекулу воды: два атома водорода (масса 1) и один атом кислорода (масса 16). Какова молярная масса воды?',
+    q:'M(H₂O)?', type:'unit', unit:'г/моль', answer:18, tol:0,
+    hints:['Сложи массы всех атомов молекулы.','1 + 1 + 16 = ?','18 г/моль.'],
+    sol:'M = 2·1 + 16 = 18 г/моль. Один моль воды весит 18 граммов.',
+    trap:'Ответить 17 (16+1) — водорода в молекуле ДВА атома.',
+    art:'Стеклянная колба' },
+  { id:2, title:'Закон сохранения', ch:'Гл.1 · Масса веществ', diff:1,
+    mission:'Проверь закон сохранения массы на реакции!',
+    beat:'Масса сохранилась: 14 г!',
+    story:'В запаянной колбе смешали 8 г и 6 г веществ, произошла реакция (газ не улетучился). Сколько весят продукты реакции?',
+    q:'Масса продуктов?', type:'unit', unit:'г', answer:14, tol:0,
+    hints:['Лавуазье: масса не исчезает и не появляется.','8 + 6 = ?'],
+    sol:'8 + 6 = 14 г. Закон сохранения массы — фундамент химии.',
+    trap:'Ответить меньше 14 — в закрытой колбе масса не теряется.',
+    art:'Запаянная колба' },
+  { id:3, title:'Баланс водорода', ch:'Гл.1 · Уравнения', diff:2,
+    mission:'Собери реакцию: 2H₂ + O₂ → 2H₂O!',
+    beat:'Реакция сбалансирована: нужно 2 молекулы O₂!',
+    story:'Водород горит: 2H₂ + O₂ → 2H₂O. Сколько молекул кислорода нужно, чтобы сжечь 4 молекулы водорода?',
+    q:'Сколько молекул O₂?', type:'unit', unit:'молекул', answer:2, tol:0,
+    hints:['На 2 молекулы H₂ нужна 1 молекула O₂.','4 молекулы H₂ — это вдвое больше.','Нужно 2 молекулы O₂.'],
+    sol:'Пропорция из уравнения: 2H₂ ↔ 1O₂ → 4H₂ ↔ 2O₂. Числа в уравнении — это пропорции.',
+    trap:'Ответить 1 — на 4 молекулы водорода кислорода нужно вдвое больше.',
+    art:'Пламя горелки' },
+  { id:4, title:'Рассол для припасов', ch:'Гл.2 · Массовая доля', diff:2,
+    mission:'Засоли рыбу: найди долю соли в рассоле!',
+    beat:'Рассол готов: 20% соли!',
+    story:'Для соления рыбы приготовили 100 г рассола, растворив в нём 20 г соли. Какова массовая доля соли в рассоле?',
+    q:'Массовая доля соли?', type:'unit', unit:'%', answer:20, tol:0.1,
+    hints:['Доля = масса вещества / масса раствора.','20 / 100 = ?','20%.'],
+    sol:'ω = 20/100 = 0,2 = 20%. Массовая доля — сколько граммов соли в 100 г раствора.',
+    trap:'Ответить 80 (вода) — нужна доля СОЛИ, а не воды.',
+    art:'Бочонок рассола' },
+  { id:5, title:'Моль газа', ch:'Гл.2 · Объём газа', diff:3,
+    mission:'Надуй шар: сколько литров в одном моле газа?',
+    beat:'Шар надут: 22,4 литра!',
+    story:'Лавуазье собирает газ в шар. Сколько литров занимает 1 моль любого газа при нормальных условиях (н.у.)?',
+    q:'Объём 1 моль газа при н.у.?', type:'unit', unit:'л', answer:22.4, tol:0.1,
+    hints:['Закон Авогадро: одинаковое число молекул — одинаковый объём.','1 моль любого газа при н.у. — это константа.','22,4 л.'],
+    sol:'Vm = 22,4 л/моль — молярный объём любого газа при нормальных условиях.',
+    trap:'Ответить 6,02·10²³ — это число молекул (число Авогадро), а не объём.',
+    art:'Резиновый шар' },
+  { id:6, title:'Титрование', ch:'Гл.3 · Кислоты и щёлочи', diff:3,
+    mission:'Проведи титрование: найди концентрацию NaOH!',
+    beat:'Титрование точное: C(NaOH) = 0,1 М!',
+    story:'На нейтрализацию 20 мл раствора HCl концентрации 0,1 М ушло ровно 20 мл раствора NaOH. Какова концентрация раствора NaOH?',
+    q:'Концентрация NaOH?', type:'unit', unit:'М', answer:0.1, tol:0.01,
+    hints:['Кислота и щёлочь реагируют 1:1.','Объёмы равны → концентрации равны.','0,1 М.'],
+    sol:'C₁V₁ = C₂V₂ → 0,1·20 = C₂·20 → C₂ = 0,1 М. Равные объёмы — равные концентрации.',
+    trap:'Ответить 0,2 — концентрация не удваивается: объёмы-то равны.',
+    art:'Бюретка' },
+  { id:7, title:'Ядро кислорода', ch:'БОСС · Гл.4', diff:2,
+    mission:'Босс: посчитай протоны в ядре кислорода!',
+    beat:'Ядро разгадано: 8 протонов!',
+    story:'Лавуазье показывает таблицу элементов: кислород стоит под номером 8. Сколько протонов в ядре атома кислорода?',
+    q:'Сколько протонов в ядре кислорода?', type:'choice', choices:['6','8','16','32'], answer:1,
+    hints:['Порядковый номер = число протонов.','Кислород — 8-й элемент.'],
+    sol:'Число протонов = порядковый номер = 8. Масса 16 — это протоны + нейтроны.',
+    trap:'Ответить 16 — это массовое число (протоны + нейтроны), а не протоны.',
+    art:'Ядро атома' },
+];
+const RANKS = ['Стажёр','Юный химик','Лаборант','Алхимик','Повелитель Элементов'];
+
+/* интерактивные параметры задач: ползунки + живой расчёт */
+const TASK_FX = {
+  1:{ params:[{k:'nH',label:'Атомов H',min:1,max:4,step:1,def:2},{k:'mO',label:'Масса O',min:8,max:32,step:8,def:16}],
+     calc:P=>`M = ${P.nH}·1 + ${P.mO} = <b>${P.nH+P.mO}</b> г/моль` },
+  4:{ params:[{k:'m',label:'Соль, г',min:5,max:40,step:5,def:20},{k:'V',label:'Раствор, г',min:50,max:300,step:50,def:100}],
+     calc:P=>`ω = ${P.m}/${P.V} = <b>${(P.m/P.V*100).toFixed(0)}</b>%` },
+  5:{ params:[{k:'n',label:'Молей',min:1,max:3,step:1,def:1}],
+     calc:P=>`V = ${P.n}·22,4 = <b>${(P.n*22.4).toFixed(1)}</b> л` },
+  6:{ params:[{k:'C1',label:'C(HCl), М',min:.05,max:.5,step:.05,def:.1},{k:'V1',label:'V(HCl), мл',min:10,max:40,step:5,def:20}],
+     calc:P=>`C(NaOH) = C₁V₁/V₂ = <b>${(P.C1*P.V1/20).toFixed(2)}</b> М` },
+};
+let P = {};
+const SAVE_KEY='arhimed_chem_v1';
+let state={idx:0,points:0,streak:0,stars:0,solved:[],hintsUsed:{}};
+try{const s=JSON.parse(localStorage.getItem(SAVE_KEY)); if(s&&Array.isArray(s.solved)) state=Object.assign(state,s);}catch(e){}
+let fb=null, chosen=null, showSol=false;
+
+/* ================= 3D (фотореализм) ================= */
+const stage = document.getElementById('stage3d');
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.18;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+stage.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x121a13, 0.055);
+const camera = new THREE.PerspectiveCamera(42, 16/9, 0.1, 100);
+camera.position.set(0, 4.6, 10.5); camera.lookAt(0, 1.6, 0);
+/* окружение IBL (реальные отражения на материалах) */
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+/* свет */
+scene.add(new THREE.HemisphereLight(0xfff2dd, 0x2a1a0a, 0.65));
+const dir = new THREE.DirectionalLight(0xffe2b8, 2.1);
+dir.position.set(5,9,5); dir.castShadow = true;
+dir.shadow.mapSize.set(1024,1024); dir.shadow.radius = 4; dir.shadow.bias = -0.0004;
+dir.shadow.camera.left=-6; dir.shadow.camera.right=6; dir.shadow.camera.top=6; dir.shadow.camera.bottom=-6;
+scene.add(dir);
+scene.add(new THREE.DirectionalLight(0x7fd1ff, 0.55).translateX(-5).translateY(3).translateZ(-4));
+scene.add(new THREE.DirectionalLight(0xffffff, 0.25).translateY(3).translateZ(9));
+/* пост-обработка: SSAO + Bloom */
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const ssao = new SSAOPass(scene, camera, 512, 512); ssao.kernelRadius = 5; composer.addPass(ssao);
+const bloom = new UnrealBloomPass(new THREE.Vector2(512,288), 0.18, 0.5, 0.85); composer.addPass(bloom);
+/* старая булыжная мостовая */
+function benchTexture(seed=7){
+  const c=document.createElement('canvas'); c.width=c.height=256; const x=c.getContext('2d');
+  let s=seed; const rnd=()=>{s=(s*1664525+1013904223)>>>0; return s/4294967296;};
+  x.fillStyle='#16120d'; x.fillRect(0,0,256,256);
+  const tones=['#3a2f22','#33291e','#3e3325','#2f261a'];
+  for(let i=0;i<4;i++){ const y0=i*64+3;
+    x.fillStyle=tones[i]; x.fillRect(0,y0,256,56);
+    x.fillStyle='rgba(0,0,0,.65)'; x.fillRect(0,y0+56,256,3);
+    for(let g=0;g<22;g++){ x.fillStyle=`rgba(0,0,0,${0.05+rnd()*0.13})`; x.fillRect(rnd()*256,y0+rnd()*50,12+rnd()*44,2+rnd()*4); }
+    x.fillStyle='rgba(255,230,190,0.05)'; x.fillRect(0,y0+6,256,5);
+  }
+  for(let i=0;i<26;i++){ x.fillStyle=`rgba(217,164,65,${0.03+rnd()*0.05})`; x.fillRect(rnd()*256,rnd()*256,20+rnd()*60,1+rnd()*3); }
+  const tex=new THREE.CanvasTexture(c); tex.wrapS=tex.wrapT=THREE.RepeatWrapping;
+  tex.colorSpace=THREE.SRGBColorSpace; tex.repeat.set(4,4); tex.anisotropy=4; return tex;
+}
+const ground = new THREE.Mesh(new THREE.CircleGeometry(6, 48),
+  new THREE.MeshStandardMaterial({ map: benchTexture(), roughness: 0.8, envMapIntensity: 0.55 }));
+ground.rotation.x=-Math.PI/2; ground.position.y=-0.02; ground.receiveShadow = true; scene.add(ground);
+
+const M = (c,r=.5)=>new THREE.MeshStandardMaterial({color:c, roughness:r, envMapIntensity:1.1});
+let taskGroup = null; let anim = null; let sol = null; let solAnim = null;
+
+function clear3D(){ if(taskGroup){ scene.remove(taskGroup); taskGroup.traverse(o=>{ if(o.geometry)o.geometry.dispose(); if(o.material)o.material.dispose(); }); taskGroup=null; } anim=null; sol=null; solAnim=null; }
+
+const B3D = {
+ 1:{ build:(g)=>{ const bond=(x1,y1,z1,x2,y2,z2)=>{ const v=new THREE.Vector3(x2-x1,y2-y1,z2-z1), L=v.length();
+      const b=new THREE.Mesh(new THREE.CylinderGeometry(.04,.04,L,6),M(0x9fb4c7,.4));
+      b.position.set((x1+x2)/2,(y1+y2)/2,(z1+z2)/2); b.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),v.clone().normalize()); return b; };
+      const O=new THREE.Mesh(new THREE.SphereGeometry(.34,18,18),M(0xc0392b,.25)); O.position.set(0,.7,0); g.add(O);
+      const H1=new THREE.Mesh(new THREE.SphereGeometry(.2,14,14),M(0xe8e0cc,.35)); H1.position.set(.7,1.2,.35); g.add(H1);
+      const H2=new THREE.Mesh(new THREE.SphereGeometry(.2,14,14),M(0xe8e0cc,.35)); H2.position.set(-.7,1.2,.35); g.add(H2);
+      g.add(bond(0,.7,0,.7,1.2,.35)); g.add(bond(0,.7,0,-.7,1.2,.35));
+      const ring=new THREE.Mesh(new THREE.TorusGeometry(.62,.015,6,40),new THREE.MeshBasicMaterial({color:0x7fd1ff,transparent:true,opacity:.6})); ring.position.set(0,.95,0); ring.rotation.x=Math.PI/2; g.add(ring);
+      anim={O,H1,H2,ring}; },
+  anim:(t)=>{ [anim.H1,anim.H2].forEach(h=>{ h.position.y=1.2+Math.sin(t*2+h.position.x)*.06; });
+      anim.ring.rotation.z=t*.5; } },
+ 2:{ build:(g)=>{ g.add(new THREE.Mesh(new THREE.CylinderGeometry(.06,.2,.9,8),M(0x8a6c3f,.6)).translateY(.45));
+      const beam=new THREE.Mesh(new THREE.BoxGeometry(3,.07,.1),M(0x8a6c3f,.6)); beam.position.y=.95; g.add(beam);
+      const fl1=new THREE.Mesh(new THREE.CylinderGeometry(.28,.2,.5,12,1,true),new THREE.MeshPhysicalMaterial({color:0xbfd8e8,transparent:true,opacity:.35,roughness:.1,depthWrite:false})); fl1.position.set(-1.2,.45,0); g.add(fl1);
+      const fl2=fl1.clone(); fl2.position.set(1.2,.45,0); g.add(fl2);
+      const lq1=new THREE.Mesh(new THREE.CylinderGeometry(.22,.16,.3,10),new THREE.MeshPhysicalMaterial({color:0xc96f4a,transparent:true,opacity:.6,depthWrite:false})); lq1.position.set(-1.2,.35,0); g.add(lq1);
+      const lq2=new THREE.Mesh(new THREE.CylinderGeometry(.22,.16,.3,10),new THREE.MeshPhysicalMaterial({color:0x6b7f3f,transparent:true,opacity:.6,depthWrite:false})); lq2.position.set(1.2,.35,0); g.add(lq2);
+      const prod=new THREE.Mesh(new THREE.CylinderGeometry(.3,.22,.55,12,1,true),new THREE.MeshPhysicalMaterial({color:0xbfd8e8,transparent:true,opacity:.35,roughness:.1,depthWrite:false})); prod.position.set(0,.42,0); prod.visible=false; g.add(prod);
+      const plq=new THREE.Mesh(new THREE.CylinderGeometry(.24,.18,.35,10),new THREE.MeshPhysicalMaterial({color:0x7fb8a0,transparent:true,opacity:.6,depthWrite:false})); plq.position.set(0,.28,0); plq.visible=false; g.add(plq);
+      anim={beam,lq1,lq2,prod,plq}; },
+  anim:(t)=>{ const tt=t%6; const k=Math.min(tt/2,1);
+      anim.beam.rotation.z=Math.sin(t*1.4)*.06;
+      const merge=tt>3; anim.lq1.visible=!merge; anim.lq2.visible=!merge; anim.prod.visible=merge; anim.plq.visible=merge;
+      if(merge){ anim.prod.scale.setScalar(.8+.2*Math.sin(t*3)); anim.plq.material.color.setHex(0x7fb8a0); } } },
+ 3:{ build:(g)=>{ const H2=[]; for(let i=0;i<4;i++){ const m=new THREE.Group();
+      m.add(new THREE.Mesh(new THREE.SphereGeometry(.13,12,12),M(0xe8e0cc,.35)).translateX(-.12));
+      m.add(new THREE.Mesh(new THREE.SphereGeometry(.13,12,12),M(0xe8e0cc,.35)).translateX(.12));
+      m.add(new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,.24,6),M(0x9fb4c7,.4)));
+      m.position.set(-3.4+(i%2)*.9,1.8-Math.floor(i/2)*1.3,0); g.add(m); H2.push(m); }
+      const O2=[]; for(let i=0;i<2;i++){ const m=new THREE.Group();
+      m.add(new THREE.Mesh(new THREE.SphereGeometry(.2,14,14),M(0xc0392b,.3)).translateX(-.16));
+      m.add(new THREE.Mesh(new THREE.SphereGeometry(.2,14,14),M(0xc0392b,.3)).translateX(.16));
+      m.add(new THREE.Mesh(new THREE.CylinderGeometry(.04,.04,.32,6),M(0x9fb4c7,.4)));
+      m.position.set(2.9,.3+i*1.3,0); g.add(m); O2.push(m); }
+      const W=[]; for(let i=0;i<4;i++){ const m=new THREE.Group();
+      m.add(new THREE.Mesh(new THREE.SphereGeometry(.11,12,12),M(0xe8e0cc,.35)).translateX(-.1).translateY(-.05));
+      m.add(new THREE.Mesh(new THREE.SphereGeometry(.11,12,12),M(0xe8e0cc,.35)).translateX(.1).translateY(-.05));
+      m.add(new THREE.Mesh(new THREE.SphereGeometry(.17,14,14),M(0xc0392b,.3)).translateY(.09));
+      m.visible=false; m.position.set(-1.3+(i%2)*2.6,-.7+Math.floor(i/2)*1.4,0); g.add(m); W.push(m); }
+      anim={H2,O2,W}; },
+  anim:(t)=>{ const tt=t%9; const k=Math.min(Math.max((tt-2)/2,0),1); const fade=Math.min(Math.max((tt-4.2)/1,0),1);
+      anim.H2.forEach((m,i)=>{ const tx=-1.3+(i%2)*2.6, ty=-.7+Math.floor(i/2)*1.4;
+        m.position.x=-3.4+(i%2)*.9+(tx-(-3.4+(i%2)*.9))*k; m.position.y=1.8-Math.floor(i/2)*1.3+(ty-(1.8-Math.floor(i/2)*1.3))*k;
+        m.visible=tt<4.2; m.rotation.y+=.03; });
+      anim.O2.forEach((m,i)=>{ const tx=-1.3+i*2.6, ty=-.7+Math.floor(i)*1.4;
+        m.position.x=2.9+(tx-2.9)*k; m.position.y=.3+i*1.3+(ty-(.3+i*1.3))*k; m.visible=tt<4.2; m.rotation.y+=.02; });
+      anim.W.forEach((m,i)=>{ m.visible=tt>4.2; if(tt>4.2){ m.position.y=-.7+Math.floor(i/2)*1.4+Math.sin(t*2+i)*.03; m.rotation.y=t*.4; } }); } },
+ 4:{ build:(g)=>{ const glass=new THREE.Mesh(new THREE.CylinderGeometry(.7,.5,1.1,14,1,true),new THREE.MeshPhysicalMaterial({color:0xbfd8e8,transparent:true,opacity:.3,roughness:.1,depthWrite:false,side:THREE.DoubleSide})); glass.position.y=.55; g.add(glass);
+      const water=new THREE.Mesh(new THREE.CylinderGeometry(.62,.45,.8,12),new THREE.MeshPhysicalMaterial({color:0xbfe8d8,transparent:true,opacity:.55,roughness:.15,depthWrite:false})); water.position.y=.4; g.add(water);
+      const salt=[]; for(let i=0;i<24;i++){ const c=new THREE.Mesh(new THREE.BoxGeometry(.05,.05,.05),M(0xf5f0e6,.3)); c.position.set(-.2+(i%6)*.09,.18+Math.floor(i/6)*.07,0); c.visible=false; g.add(c); salt.push(c); }
+      anim={water,salt}; },
+  anim:(t)=>{ const tt=t%6; const k=Math.min(tt/1.5,1);
+      anim.salt.forEach((s,i)=>{ s.visible=tt>0.4; s.position.y=.35+Math.sin(t*3+i)*.04-(k*.25); s.rotation.y=t; }); } },
+ 5:{ build:(g)=>{ const balloon=new THREE.Mesh(new THREE.SphereGeometry(.5,20,20),M(0xc96f4a,.5)); balloon.position.set(.4,1.2,0); balloon.scale.setScalar(.05); g.add(balloon);
+      const knot=new THREE.Mesh(new THREE.ConeGeometry(.06,.14,8),M(0x8a6c3f,.6)); knot.position.set(.4,.62,0); g.add(knot);
+      const rod=new THREE.Mesh(new THREE.CylinderGeometry(.02,.02,1.4,6),M(0x6b4a2c,.8)); rod.position.set(1.5,.7,0); g.add(rod);
+      const marks=[]; for(let i=0;i<=9;i++){ const m=new THREE.Mesh(new THREE.BoxGeometry(.12,.015,.015),M(0xd9a441,.7)); m.position.set(1.5,.12+i*.12,0); g.add(m); marks.push(m); }
+      const arrow=new THREE.Mesh(new THREE.ConeGeometry(.05,.16,8),M(0xe86a4a,.4)); arrow.rotation.x=Math.PI; arrow.position.set(2.2,.9,0); g.add(arrow);
+      anim={balloon,arrow}; },
+  anim:(t)=>{ const tt=t%8; const k=Math.min(tt/6,1);
+      anim.balloon.scale.setScalar(.05+.95*k); anim.balloon.position.y=1.2+k*.55+Math.sin(t*3)*.03;
+      anim.arrow.position.y=.18+k*1.0; } },
+ 6:{ build:(g)=>{ const burette=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,2,12,1,true),new THREE.MeshPhysicalMaterial({color:0xbfd8e8,transparent:true,opacity:.3,roughness:.1,depthWrite:false,side:THREE.DoubleSide})); burette.position.set(-1.4,1.3,0); g.add(burette);
+      const lq=new THREE.Mesh(new THREE.CylinderGeometry(.075,.075,1.5,10),new THREE.MeshPhysicalMaterial({color:0xc96f4a,transparent:true,opacity:.55,roughness:.15,depthWrite:false})); lq.position.set(-1.4,.85,0); g.add(lq);
+      const flask=new THREE.Mesh(new THREE.CylinderGeometry(.55,.35,.8,12,1,true),new THREE.MeshPhysicalMaterial({color:0xbfd8e8,transparent:true,opacity:.35,roughness:.1,depthWrite:false,side:THREE.DoubleSide})); flask.position.set(1.2,.4,0); g.add(flask);
+      const sol=new THREE.Mesh(new THREE.CylinderGeometry(.42,.3,.5,10),new THREE.MeshPhysicalMaterial({color:0xe8e0cc,transparent:true,opacity:.6,roughness:.2,depthWrite:false})); sol.position.set(1.2,.2,0); g.add(sol);
+      const drops=[]; for(let i=0;i<10;i++){ const d=new THREE.Mesh(new THREE.SphereGeometry(.03,6,6),new THREE.MeshBasicMaterial({color:0xc96f4a,transparent:true,opacity:.8})); d.visible=false; g.add(d); drops.push(d); }
+      anim={lq,sol,drops}; },
+  anim:(t)=>{ const tt=t%8; const k=Math.min(tt/6,1);
+      anim.lq.scale.y=1-k*.5; anim.lq.position.y=.85-k*.4;
+      anim.drops.forEach((d,i)=>{ const ph=(tt*1.5+i*.25)%1.1; d.visible=ph<.9&&tt>1;
+        if(d.visible){ d.position.set(-.6+1.8*(ph/.9), 1.1-ph*1.1, 0); d.material.opacity=.8*(1-ph/1.1); } });
+      anim.sol.material.color.setHex(tt>4?0xe86a8a:0xe8e0cc); } },
+ 7:{ build:(g)=>{ const nucleus=new THREE.Mesh(new THREE.SphereGeometry(.34,18,18),M(0xc0392b,.25)); nucleus.position.y=1.2; g.add(nucleus);
+      const els=[]; for(let i=0;i<8;i++){ const e=new THREE.Mesh(new THREE.SphereGeometry(.06,8,8),M(0x7fd1ff,.2)); els.push(e); g.add(e); }
+      const rings=[]; for(let i=0;i<2;i++){ const r=new THREE.Mesh(new THREE.TorusGeometry(.9+i*.35,.012,6,48),new THREE.MeshBasicMaterial({color:0xd9a441,transparent:true,opacity:.5})); r.position.y=1.2; rings.push(r); g.add(r); }
+      anim={els,rings}; },
+  anim:(t)=>{ anim.els.forEach((e,i)=>{ const ring=i%2, n=4; const a=(i%n)/n*Math.PI*2+t*(ring?1.3:-1);
+      const R=.9+ring*.35; e.position.set(Math.sin(a)*R,1.2+Math.cos(a)*R*.4,0); });
+      anim.rings[0].rotation.y=t*.5; anim.rings[1].rotation.y=-t*.4; } },
+};
+
+/* стрелка-вектор для разбора решения */
+function vec(c){ const g=new THREE.Group();
+  g.add(new THREE.Mesh(new THREE.CylinderGeometry(.035,.035,.75,8),M(c,.25)).translateY(.37));
+  g.add(new THREE.Mesh(new THREE.ConeGeometry(.095,.26,8),M(c,.25)).translateY(.88));
+  return g; }
+function buildSol(id){
+  sol = new THREE.Group();
+  if(id===1){ const hi=new THREE.Mesh(new THREE.SphereGeometry(.4,16,16),new THREE.MeshBasicMaterial({color:0xd9a441,transparent:true,opacity:.4})); hi.position.set(0,.7,0); sol.add(hi); }
+  else if(id===3){ const hi=new THREE.Mesh(new THREE.BoxGeometry(4,2.4,1),new THREE.MeshBasicMaterial({color:0xd9a441,transparent:true,opacity:.22})); hi.position.set(0,.5,0); sol.add(hi); }
+  else if(id===5){ sol.a=vec(0xe8a33d); sol.add(sol.a);
+    solAnim=()=>{ sol.a.position.set(1.5,1.15,0); sol.a.rotation.x=Math.PI/2; sol.a.scale.setScalar(1); }; }
+  else if(id===6){ sol.a=vec(0xe86a8a); sol.add(sol.a);
+    solAnim=()=>{ sol.a.position.set(.2,1,0); sol.a.rotation.z=-Math.PI/2; sol.a.scale.setScalar(1); }; }
+  else if(id===7){ for(let i=0;i<8;i++){ const p=new THREE.Mesh(new THREE.SphereGeometry(.06,8,8),new THREE.MeshBasicMaterial({color:0xd9a441}));
+      const a=i/8*Math.PI*2; p.position.set(.15*Math.cos(a),1.2,.15*Math.sin(a)); sol.add(p); } }
+  scene.add(sol);
+}
+
+function build3D(idx){
+  clear3D();
+  const builder=B3D[idx]; if(!builder) return;
+  taskGroup=new THREE.Group(); builder.build(taskGroup); scene.add(taskGroup);
+  taskGroup.traverse(o=>{ if(o.isMesh) o.castShadow = true; });
+  const size=stage.clientWidth||860; renderer.setSize(size, size*9/16);
+  composer.setSize(size, size*9/16);
+  composer.render();
+}
+function tick(){ requestAnimationFrame(tick);
+  if(anim&&TASKS[state.idx]&&B3D[TASKS[state.idx].id]&&B3D[TASKS[state.idx].id].anim) B3D[TASKS[state.idx].id].anim(performance.now()/1000);
+  if(solAnim) solAnim(performance.now()/1000);
+  composer.render(); }
+tick();
+
+/* ================= UI ================= */
+function save(){ try{localStorage.setItem(SAVE_KEY,JSON.stringify(state));}catch(e){} }
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+const rank=()=>RANKS[Math.min(Math.floor(state.stars||0),4)];
+
+function render(){
+  document.getElementById('hudPoints').textContent=state.points;
+  document.getElementById('hudStreak').textContent=state.streak;
+  document.getElementById('hudRank').textContent=rank();
+  document.getElementById('progress').innerHTML=TASKS.map((t,i)=>`<div class="dot ${state.solved[i]?'done':(i===state.idx?'current':'')}"></div>`).join('');
+  const t=TASKS[state.idx]; if(!t){finish();return;}
+  document.getElementById('mission').innerHTML=
+    `<span class="m-ico">🎯</span><span class="m-text"><b>Миссия ${state.idx+1}/${TASKS.length}:</b> ${esc(t.mission)}</span><span class="rank-badge">${esc(t.ch)}</span>`;
+  document.getElementById('stageCap').textContent='3D: '+t.title;
+  /* ползунки параметров задачи */
+  const fx=TASK_FX[t.id], sl=document.getElementById('sliders');
+  if(fx&&fx.params){ P={}; fx.params.forEach(pr=>P[pr.k]=pr.def);
+    sl.innerHTML=fx.params.map(pr=>`<label>${pr.label}
+      <input type="range" min="${pr.min}" max="${pr.max}" step="${pr.step}" value="${P[pr.k]}" oninput="setP('${pr.k}',this.value)">
+      <span id="pv_${pr.k}">${P[pr.k]}</span></label>`).join('')
+      +`<span class="live" id="liveCalc">${fx.calc(P)}</span>`;
+  } else { sl.innerHTML=''; P={}; }
+  build3D(t.id);
+  if(showSol){ buildSol(t.id); }
+  const card=document.getElementById('card');
+  const hints=[0,1,2].map(i=>{ const used=(state.hintsUsed[state.idx]||0)>i;
+    return `<button class="hint-btn" ${used?'disabled':''} onclick="useHint(${i})">Подсказка ${i+1}${i<2?' · '+(i===0?10:5)+'⭐':' · бесплатно'}</button>`; }).join('');
+  const openHints=[0,1,2].filter(i=>(state.hintsUsed[state.idx]||0)>i).map(i=>`<div class="hint-box">${esc(t.hints[i])}</div>`).join('');
+  const solved=state.solved[state.idx];
+  const input=t.type==='unit'
+    ? `<div class="answer-row"><input type="number" id="numIn" step="any" placeholder="число" ${solved?'disabled':''}>
+        <select id="unitIn" ${solved?'disabled':''}>${unitsOptions(t.unit)}</select>
+        <button class="btn" style="margin-top:0" onclick="checkUnit()" ${solved?'disabled':''}>Ответить</button></div>`
+    : `<div class="choices">${t.choices.map((c,i)=>`<button class="choice ${solved?(i===t.answer?'right':(chosen===i?'wrong':'')):''}" ${solved?'disabled':''} onclick="checkChoice(${i})">${esc(c)}</button>`).join('')}</div>`;
+  const fbHtml=fb?`<div class="fb ${fb.ok?'right':'wrong'}">${esc(fb.txt)}</div>`:'';
+  const solHtml=showSol?`<div class="sol"><b>📜 Решение Архимеда:</b> ${esc(t.sol)}<br><span style="color:var(--olive)">✅ ${esc(t.beat)}</span></div>
+    <button class="btn" onclick="next()">${state.idx===TASKS.length-1?'Забрать трофей':'Дальше →'}</button>`:'';
+  card.innerHTML=`
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px">
+      <span style="color:#8a94ad;font-size:11.5px;letter-spacing:.14em">${esc(t.ch)}</span>
+      <span style="color:var(--amber);font-size:11.5px">сложность ${t.diff}/4</span></div>
+    <div style="font-size:16.5px;font-weight:bold;margin-top:6px">${esc(t.title)}</div>
+    <div class="story">${esc(t.story)}</div>
+    <div class="q">${esc(t.q)}</div>${input}
+    <div class="hints">${hints}</div>${openHints}${fbHtml}${solHtml}`;
+}
+function unitsOptions(unit){ const map={'г/моль':['г/моль'],'г':['г'],'молекул':['молекул'],'%':['%'],'л':['л'],'М':['М']};
+  return (map[unit]||[unit]).map(u=>`<option>${u}</option>`).join(''); }
+function useHint(i){ const t=TASKS[state.idx]; if(state.solved[state.idx])return; if((state.hintsUsed[state.idx]||0)>i)return;
+  if(i<2){ const cost=i===0?10:5; if(state.points<cost)return; state.points-=cost; }
+  state.hintsUsed[state.idx]=(state.hintsUsed[state.idx]||0)+1; save(); render(); }
+function checkChoice(i){ const t=TASKS[state.idx]; if(state.solved[state.idx])return; chosen=i;
+  if(i===t.answer) win(t); else { fb={ok:false,txt:'❌ «А ты уверен?» '+t.trap}; render(); } }
+function checkUnit(){ const t=TASKS[state.idx]; if(state.solved[state.idx])return;
+  const n=parseFloat(document.getElementById('numIn').value); const u=document.getElementById('unitIn').value;
+  if(isNaN(n)){ fb={ok:false,txt:'Введи число!'}; render(); return; }
+  const conv={'г/моль':1,'г':1,'молекул':1,'%':1,'л':1,'М':1};
+  const si=n*(conv[u]||1);
+  if(Math.abs(si-t.answer)<=t.tol) win(t); else { fb={ok:false,txt:'❌ «А ты уверен?» '+t.trap}; render(); } }
+function win(t){ const h=state.hintsUsed[state.idx]||0; const gain=Math.max(15,30-h*5);
+  state.points+=gain; state.streak+=1; state.solved[state.idx]=true; state.stars=(state.stars||0)+1; showSol=true;
+  fb={ok:true,txt:`✅ Верно! +${gain}⭐ · артефакт «${t.art}»`}; save(); render(); }
+function next(){ state.idx+=1; fb=null; chosen=null; showSol=false; save(); render(); }
+function finish(){
+  document.getElementById('progress').innerHTML=TASKS.map(()=>`<div class="dot done"></div>`).join('');
+  document.getElementById('mission').innerHTML=`<span class="m-ico">🏆</span><span class="m-text"><b>Лондон спасён!</b> Ньютон принимает тебя в ученики. Звание: <b>${rank()}</b></span>`;
+  document.getElementById('card').innerHTML=`
+    <div style="font-size:22px;font-weight:bold;margin-bottom:8px">🏆 Лаборатория Лавуазье пройдена!</div>
+    <div class="arch"><span class="who">◈ Архимед</span>
+      «Ты прошёл всю химию острова: молекулы, уравнения, растворы и газы.
+      Лавуазье бы тобой гордился — а впереди таблица элементов и синтез». Очки: <b style="color:var(--amber)">${state.points}</b>⭐ · серия ${state.streak}🔥</div>
+    <button class="btn" onclick="resetAll()">↺ Пройти заново</button>`;
+  showConfetti();
+}
+function resetAll(){ if(!confirm('Сбросить прогресс?'))return;
+  state={idx:0,points:0,streak:0,stars:0,solved:[],hintsUsed:{}}; fb=null; chosen=null; showSol=false; save(); render(); }
+function showConfetti(){ const d=document.createElement('div'); d.className='confetti';
+  for(let i=0;i<70;i++){ const s=document.createElement('span'); s.className='confetti-piece';
+    s.style.left=Math.random()*100+'%'; s.style.background=['#d9a441','#c8795a','#7fb8a0','#b06fd0','#6fb4f0'][i%5];
+    s.style.animationDelay=Math.random()*0.6+'s'; s.style.animationDuration=1.6+Math.random()*1.4+'s'; d.appendChild(s); }
+  document.body.appendChild(d); setTimeout(()=>d.remove(),4000); }
+
+window.useHint=useHint; window.checkChoice=checkChoice; window.checkUnit=checkUnit; window.next=next; window.resetAll=resetAll;
+window.setP=(k,v)=>{ P[k]=parseFloat(v); const fx=TASK_FX[TASKS[state.idx].id];
+  if(fx&&fx.params){ fx.params.forEach(pr=>{ const el=document.getElementById('pv_'+pr.k); if(el)el.textContent=P[pr.k]; });
+    const lc=document.getElementById('liveCalc'); if(lc&&fx.calc) lc.innerHTML=fx.calc(P); }
+  if([2,3,4,9].includes(TASKS[state.idx].id)) build3D(state.idx); };
+window.addEventListener('resize',()=>{ const s=stage.clientWidth||860; renderer.setSize(s, s*9/16); composer.setSize(s, s*9/16); });
+render();
+</script>
+</body>
+</html>

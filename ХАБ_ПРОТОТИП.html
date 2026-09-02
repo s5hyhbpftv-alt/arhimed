@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Карта вселенной · Прототипы</title>
+<style>
+  :root {
+    --marble:#F5F0E6; --marble-dark:#E8E0D0; --bronze:#B08D57; --bronze-dark:#8a6c3f;
+    --terracotta:#C96F4A; --olive:#6B7F3F; --night:#2C3E6B; --glow:#7FD1FF; --ink:#3a3228;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:Georgia,"Times New Roman",serif;
+    background:radial-gradient(ellipse at 50% 0%,#fff8ea 0%,transparent 50%),
+               linear-gradient(170deg,#f5eede 0%,#e6d8bc 60%,#d2bf9c 100%);
+    color:var(--ink); min-height:100vh; padding:24px 16px;
+  }
+  .wrap { max-width:860px; margin:0 auto; }
+  header { text-align:center; margin-bottom:22px; }
+  h1 { font-size:30px; color:var(--bronze-dark); letter-spacing:1px; }
+  .sub { color:#9a8c74; font-size:14px; margin-top:4px; }
+  .meander {
+    height:10px; max-width:520px; margin:12px auto; opacity:.5;
+    background:repeating-linear-gradient(90deg,var(--bronze) 0 10px,transparent 10px 14px,var(--bronze) 14px 24px,transparent 24px 28px);
+  }
+  .archimedes {
+    background:linear-gradient(135deg,rgba(44,62,107,.10),rgba(127,209,255,.08));
+    border:1px solid rgba(127,209,255,.45); border-radius:10px; padding:12px 16px;
+    color:var(--night); font-size:15px; line-height:1.5; margin-bottom:22px; text-align:center;
+  }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; }
+  .card {
+    background:var(--marble); border:2px solid var(--bronze); border-radius:12px;
+    padding:16px; text-decoration:none; color:var(--ink); display:block;
+    box-shadow:0 4px 12px rgba(0,0,0,.12); transition:transform .12s, box-shadow .12s;
+  }
+  .card:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.2); }
+  .card .ico { font-size:30px; }
+  .card .ttl { font-weight:bold; font-size:16px; margin:8px 0 4px; color:var(--bronze-dark); }
+  .card .dsc { font-size:13px; color:#6a5d4a; line-height:1.45; }
+  .card .tag {
+    display:inline-block; font-size:11px; margin-top:8px; padding:3px 9px; border-radius:999px;
+    background:var(--night); color:#fff;
+  }
+  .card .tag.olive { background:var(--olive); }
+  .card .tag.terra { background:var(--terracotta); }
+  h2 { font-size:18px; color:var(--terracotta); margin:24px 0 10px; }
+  .note { text-align:center; font-size:12px; color:#9a8c74; margin-top:26px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🗺 АРХИМЕД · Карта вселенной</h1>
+    <div class="meander"></div>
+    <div class="sub">Интерактивные прототипы · откройте в браузере</div>
+  </header>
+
+  <div style="text-align:center; margin-bottom:20px;">
+    <a href="MVP/index.html"
+       style="display:inline-block; background:linear-gradient(135deg,#0b1712,#1c3327); color:#e8e0cc;
+              border:2px solid #d9a441; border-radius:14px; padding:16px 34px; text-decoration:none;
+              box-shadow:0 6px 20px rgba(0,0,0,.3);">
+      <div style="font-size:34px;">🏛</div>
+      <div style="font-weight:bold; font-size:19px; margin-top:4px; color:#d9a441;">MVP-ПРИЛОЖЕНИЕ АРХИМЕД</div>
+      <div style="font-size:13px; opacity:.85; margin-top:3px;">единый продукт: профиль · Путь · банк 59 задач · кабинет родителя</div>
+      <div style="font-size:11px; opacity:.6; margin-top:4px;">разработка по ТЗ_MVP.md · Milestone 1 готов</div>
+    </a>
+  </div>
+
+  <div class="archimedes">
+    <b>◈ Архимед:</b> «Исследователь, вот твои острова. Каждый прототип — живое доказательство
+    того, что олимпиадная подготовка может быть приключением. Начни с онбординга — я жду тебя у ворот».
+  </div>
+
+  <div style="text-align:center; margin-bottom:20px;">
+    <a href="ПРОТОТИП_ВСЕЛЕННАЯ.html"
+       style="display:inline-block; background:linear-gradient(135deg,#2C3E6B,#1d2a4d); color:#fff;
+              border:2px solid var(--bronze); border-radius:14px; padding:16px 34px; text-decoration:none;
+              box-shadow:0 6px 20px rgba(0,0,0,.25);">
+      <div style="font-size:34px;">🌌</div>
+      <div style="font-weight:bold; font-size:19px; margin-top:4px;">ВСЕЛЕННАЯ АРХИМЕД — всё в одном</div>
+      <div style="font-size:13px; opacity:.85; margin-top:3px;">единая карта островов · профиль · звёзды · ранг · прогресс</div>
+    </a>
+  </div>
+
+  <div style="text-align:center; margin-bottom:20px;">
+    <a href="МОБ_ПРИЛОЖЕНИЕ/index.html"
+       style="display:inline-block; background:linear-gradient(135deg,#0b1712,#13251c); color:#e8e0cc;
+              border:2px solid #d9a441; border-radius:14px; padding:16px 34px; text-decoration:none;
+              box-shadow:0 6px 20px rgba(0,0,0,.3);">
+      <div style="font-size:34px;">📱</div>
+      <div style="font-weight:bold; font-size:19px; margin-top:4px; color:#d9a441;">МОБИЛЬНОЕ ПРИЛОЖЕНИЕ</div>
+      <div style="font-size:13px; opacity:.85; margin-top:3px;">PWA для Android и iPhone · устанавливается на главный экран · офлайн · тач-интерфейс</div>
+      <div style="font-size:11px; opacity:.6; margin-top:4px;">работает при открытии через сервер (см. README)</div>
+    </a>
+  </div>
+
+  <h2>🎮 Игровые прототипы (HTML)</h2>
+  <div class="grid">
+    <a class="card" href="ПРОТОТИП_МАТЕМАТИКА_ТРЕНАЖЕР.html">
+      <div class="ico">🏛</div>
+      <div class="ttl">Остров Сиракузы · тренажёр</div>
+      <div class="dsc">19 олимпиадных задач по математике: 3D-сцены, ползунки, миссии, разбор решений.</div>
+      <span class="tag terra">математика</span>
+    </a>
+    <a class="card" href="ПРОТОТИП_ФИЗИКА_ТРЕНАЖЕР.html">
+      <div class="ico">🍎</div>
+      <div class="ttl">Башня Ньютона · тренажёр</div>
+      <div class="dsc">19 задач по физике: кинематика, силы, энергия. 3D-сцены и векторный разбор.</div>
+      <span class="tag">физика</span>
+    </a>
+    <a class="card" href="ПРОТОТИП_ХИМИЯ_ТРЕНАЖЕР.html">
+      <div class="ico">⚗️</div>
+      <div class="ttl">Лаборатория Лавуазье · тренажёр</div>
+      <div class="dsc">7 задач по химии: молекулы, уравнения, растворы, газы, титрование. 3D-сцены с анимацией.</div>
+      <span class="tag olive">химия</span>
+    </a>
+    <a class="card" href="ПРОТОТИП_УРОК_ОБЪЯСНИ_И_РЕШИ.html">
+      <div class="ico">📖</div>
+      <div class="ttl">Книга знаний · Объясни → Реши</div>
+      <div class="dsc">6 уроков по задачам ВсОШ (6–7 класс): сначала интерактивное объяснение приёма (анимации, слайдеры, шаги), потом задачи на закрепление. ⭐ в localStorage.</div>
+      <span class="tag">ВсОШ</span>
+    </a>
+    <a class="card" href="ПРОТОТИП_ОНБОРДИНГ.html">
+      <div class="ico">🧭</div>
+      <div class="ttl">Онбординг</div>
+      <div class="dsc">Первый вход во вселенную: имя героя, цвет хитона, обучающая задача, выбор сложности.</div>
+      <span class="tag">начать здесь</span>
+    </a>
+    <a class="card" href="ПРОТОТИП_ГЛАВА1_СИРАКУЗЫ.html">
+      <div class="ico">🏛</div>
+      <div class="ttl">Глава 1 «Стражники»</div>
+      <div class="dsc">Остров Сиракузы: логика «рыцарь и лжец», подсказки-лестница, «Решение Архимеда».</div>
+      <span class="tag terra">математика</span>
+    </a>
+    <a class="card" href="ПРОТОТИП_ЛАБОРАТОРИЯ_МАЯТНИК.html">
+      <div class="ico">🕰</div>
+      <div class="ttl">Лаборатория: маятник</div>
+      <div class="dsc">Физический эксперимент: определение g, погрешности, автопротокол, медаль за точность.</div>
+      <span class="tag">физика</span>
+    </a>
+    <a class="card" href="ПРОТОТИП_ТИТРОВАНИЕ.html">
+      <div class="ico">🧪</div>
+      <div class="ttl">Лаборатория: титрование</div>
+      <div class="dsc">Химический эксперимент: бюретка, переход цвета фенолфталеина, расчёт концентрации.</div>
+      <span class="tag olive">химия</span>
+    </a>
+  </div>
+
+  <h2>📜 Дизайн-документы (Markdown)</h2>
+  <div class="grid">
+    <a class="card" href="ПРОТОТИП_ОСТРОВ_СИРАКУЗЫ.md">
+      <div class="ico">🏛</div>
+      <div class="ttl">Остров Сиракузы</div>
+      <div class="dsc">Полный дизайн первого острова: 6 глав, паспорта задач, UX-флоу, визуальный стиль.</div>
+    </a>
+    <a class="card" href="ПРОТОТИП_ОСТРОВ_БАШНЯ_НЬЮТОНА.md">
+      <div class="ico">🍎</div>
+      <div class="ttl">Башня Ньютона</div>
+      <div class="dsc">Второй остров: механика, кинематика, законы Ньютона. Лондон, 1665 год.</div>
+    </a>
+    <a class="card" href="ПРОТОТИП_ОСТРОВ_ЛАБОРАТОРИЯ_ЛАВУАЗЬЕ.md">
+      <div class="ico">⚗️</div>
+      <div class="ttl">Лаборатория Лавуазье</div>
+      <div class="dsc">Третий остров: стехиометрия, титрование, качественный анализ. Париж, революция.</div>
+    </a>
+    <a class="card" href="ПРОТОТИП_ОСТРОВ_МЕНДЕЛЕЕВА.md">
+      <div class="ico">📊</div>
+      <div class="ttl">Остров Менделеева</div>
+      <div class="dsc">Четвёртый остров: периодичность, валентность, предсказания элементов. СПб, 1869.</div>
+    </a>
+  </div>
+
+  <h2>🚀 Бизнес-артефакты</h2>
+  <div class="grid">
+    <a class="card" href="ПИТЧ_АРХИМЕД.pdf">
+      <div class="ico">📊</div>
+      <div class="ttl">Питч (PDF)</div>
+      <div class="dsc">12 слайдов для инвесторов и партнёров.</div>
+      <span class="tag">инвесторы</span>
+    </a>
+    <a class="card" href="ФИНАНСОВАЯ_МОДЕЛЬ.md">
+      <div class="ico">💰</div>
+      <div class="ttl">Финансовая модель</div>
+      <div class="dsc">Unit-экономика, 24-месячный прогноз, 3 сценария.</div>
+    </a>
+    <a class="card" href="ТЗ_MVP.md">
+      <div class="ico">🛠</div>
+      <div class="ttl">ТЗ на MVP</div>
+      <div class="dsc">Техническое задание: объём, роли, контент, ИИ-слой, спринты.</div>
+    </a>
+    <a class="card" href="ПРОЕКТ_АРХИМЕД.md">
+      <div class="ico">📖</div>
+      <div class="ttl">Концепция</div>
+      <div class="dsc">Главный документ: 13 разделов о проекте.</div>
+    </a>
+  </div>
+
+  <div class="note">«АРХИМЕД» · игровая вселенная олимпиадной математики, физики и химии · версия прототипов 0.1<br>
+  Прототипы: онбординг → глава 1 → лаборатория (маятник / титрование). Прогресс сохраняется в браузере.<br>
+  <b>Совет:</b> открывайте всё через <a href="ПРОТОТИП_ВСЕЛЕННАЯ.html" style="color:var(--bronze-dark);">Вселенную АРХИМЕД</a> — там единый профиль, звёзды и ранг.</div>
+</div>
+</body>
+</html>

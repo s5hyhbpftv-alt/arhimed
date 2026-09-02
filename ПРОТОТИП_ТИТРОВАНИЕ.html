@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Лаборатория Лавуазье · Титрование: поймай точку</title>
+<style>
+  :root {
+    --sepia:#E8C07A; --amber:#A67B5B; --glass:#7BA05B; --copper:#B87333;
+    --violet:#6B3FA0; --oak:#4A3728; --parch:#f6ecd2; --ink:#3a3228; --glow:#7FD1FF;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:Georgia,"Times New Roman",serif;
+    background:radial-gradient(ellipse at 15% 8%,#fff8e8 0%,transparent 55%),
+               linear-gradient(160deg,#f0e4c8 0%,#e0cfa4 55%,#cdb58a 100%);
+    color:var(--ink); min-height:100vh; display:flex; justify-content:center; padding:14px;
+  }
+  #app { max-width:1000px; width:100%; }
+  header {
+    display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+    background:linear-gradient(90deg,#fdf6e3,#f3e6c8);
+    border:2px solid var(--amber); border-radius:10px; padding:10px 16px; margin-bottom:12px;
+    box-shadow:0 3px 8px rgba(0,0,0,.15);
+  }
+  .hud { font-size:14px; color:var(--amber); }
+  .hud b { color:var(--ink); }
+  .card {
+    background:var(--parch); border:2px solid var(--amber); border-radius:12px;
+    padding:20px 22px; box-shadow:0 6px 18px rgba(0,0,0,.18); margin-bottom:12px;
+  }
+  h1 { font-size:23px; color:var(--oak); }
+  h2 { font-size:16px; color:var(--copper); margin:12px 0 6px; }
+  p { font-size:14.5px; line-height:1.5; margin-bottom:8px; }
+  .archimedes {
+    background:linear-gradient(135deg,rgba(107,63,160,.10),rgba(127,209,255,.08));
+    border:1px solid rgba(107,63,160,.35); border-radius:10px; padding:10px 14px; margin:10px 0;
+    color:#3a2a55; font-size:14px; line-height:1.45;
+  }
+  .archimedes .who { display:block; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--copper); margin-bottom:3px; }
+  .lab { display:flex; gap:16px; flex-wrap:wrap; }
+  .panel { flex:1 1 300px; min-width:280px; text-align:center; }
+  canvas { display:block; margin:0 auto; }
+  .burette-wrap { position:relative; display:inline-block; }
+  .flask-wrap { display:inline-block; margin-top:6px; }
+  .controls { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:10px; }
+  .btn {
+    background:var(--copper); color:#fff; border:none; border-radius:8px;
+    padding:9px 14px; font-family:inherit; font-size:14px; cursor:pointer;
+  }
+  .btn:disabled { background:#d8b08e; cursor:not-allowed; }
+  .btn2 { background:var(--parch); color:var(--oak); border:2px solid var(--amber); }
+  .btn3 { background:var(--glass); color:#fff; }
+  .btn-stop { background:var(--violet); color:#fff; }
+  .readout {
+    font-family:"Courier New",monospace; font-size:22px; color:var(--violet);
+    background:#fdf9ee; border:2px solid var(--amber); border-radius:8px;
+    padding:6px 12px; display:inline-block; margin-top:8px;
+  }
+  .status { font-size:13px; color:var(--glass); margin-top:6px; min-height:18px; }
+  table { width:100%; border-collapse:collapse; margin:8px 0; font-size:13.5px; }
+  th,td { border:1px solid var(--amber); padding:5px 8px; text-align:center; }
+  th { background:#f3e6c8; }
+  .formula { background:#fdf9ee; border:1px dashed var(--amber); border-radius:8px; padding:9px 11px; margin:8px 0; font-family:"Courier New",monospace; font-size:13.5px; }
+  .medal { text-align:center; font-size:18px; padding:11px; border-radius:10px; margin-top:10px; }
+  .medal.gold { background:linear-gradient(135deg,#f6e3a8,#e0b45a); border:2px solid #b8860b; }
+  .medal.silver { background:linear-gradient(135deg,#e8e8e8,#bfc4c9); border:2px solid #8a8f94; }
+  .medal.bronze { background:linear-gradient(135deg,#ecc9a8,#c98d5a); border:2px solid #a05c2c; }
+  .medal.fail { background:linear-gradient(135deg,#e8d8d8,#c8a8a8); border:2px solid #8a6060; }
+  .note { font-size:12px; color:#9a8c74; }
+  .protocol { background:#fdf9ee; border:2px solid var(--amber); border-radius:10px; padding:11px 13px; font-size:13.5px; line-height:1.6; }
+  .protocol b { color:var(--copper); }
+  .hint { background:#f6ecd2; border:1px dashed var(--amber); border-radius:8px; padding:9px 12px; margin:8px 0; font-size:13.5px; }
+
+/* === мобильная адаптация (АРХИМЕД PWA) === */
+@media (max-width: 640px){
+  body { padding:10px 8px 28px; }
+  h1 { font-size:17px; }
+  #app { max-width:100%; }
+  .card { padding:14px 13px; }
+  .btn, .btn2, .btn3, .choice, .hint-btn, .hint { min-height:48px; font-size:15px; }
+  .btn, .btn2, .btn3 { width:100%; padding:12px 16px; }
+  .choice { padding:12px 14px; }
+  .hud { font-size:12px; gap:8px; }
+  .sliders, .controls { flex-direction:column; align-items:stretch; gap:10px; }
+  .sliders input[type=range] { width:100%; }
+  .answer-row { gap:6px; }
+  input[type=number] { width:116px; font-size:19px; }
+  .story, .q { font-size:14px; }
+  .mission { padding:8px 10px; font-size:13px; }
+  .protocol, .panel { padding:10px; overflow-x:auto; }
+  .stage-cap { font-size:10px; }
+  .note { font-size:10px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="hud">⚗ Лаборатория Лавуазье · <b>Эксперимент: Титрование</b></div>
+    <div class="hud">Медаль: <b id="medalBadge">—</b></div>
+    <button class="btn2 btn" style="padding:6px 12px;font-size:13px;" onclick="resetAll()">↺ Заново</button>
+  </header>
+
+  <div class="card">
+    <h1>🧪 Кислота-невидимка: титрование</h1>
+    <div class="archimedes">
+      <span class="who">◈ Мария-Анна Лавуазье</span>
+      «В подвале нашли склянку с кислотой неизвестной концентрации — возможно, диверсия.
+      В колбе ровно <b>20 мл HCl</b>. В бюретке — щёлочь <b>NaOH (0,1 М)</b> с фенолфталеином.
+      Добавляй щёлочь по каплям. Когда кислота кончится, раствор станет <b>розовым</b> —
+      это и есть конец титрования. Остановись как можно ближе к этому моменту и рассчитай
+      концентрацию кислоты. На олимпиаде за это дают баллы».
+    </div>
+    <div class="hint">💡 Фенолфталеин бесцветен в кислой среде и розовеет в щелочной.
+      Цвет начнёт меняться, когда щёлочи станет «чуть больше, чем нужно». Точность — всё!</div>
+
+    <div class="lab">
+      <div class="panel">
+        <h2>Бюретка с NaOH (0,1 М)</h2>
+        <div class="burette-wrap"><canvas id="burette" width="160" height="320"></canvas></div>
+        <div class="controls">
+          <button class="btn" id="b1" onclick="addVol(1.0)">+1 мл</button>
+          <button class="btn" id="b2" onclick="addVol(0.2)">+0,2 мл</button>
+          <button class="btn" id="b3" onclick="addVol(0.05)">Капля (0,05 мл)</button>
+        </div>
+        <div><span class="readout" id="readout">0.00 мл</span></div>
+        <div class="status" id="status">Начни добавлять щёлочь…</div>
+      </div>
+
+      <div class="panel">
+        <h2>Колба: 20 мл HCl + фенолфталеин</h2>
+        <div class="flask-wrap"><canvas id="flask" width="220" height="240"></canvas></div>
+        <div class="controls">
+          <button class="btn btn-stop" id="btnStop" onclick="stopTitration()" disabled>⏹ Зафиксировать конец</button>
+          <button class="btn btn2" onclick="resetAll()">🗑 Сброс</button>
+        </div>
+        <p class="note">Добавляй щёлочь и следи за цветом. Как только появится стойкий розовый — стоп.</p>
+      </div>
+
+      <div class="panel">
+        <h2>Журнал и расчёт</h2>
+        <table>
+          <thead><tr><th>Параметр</th><th>Значение</th></tr></thead>
+          <tbody>
+            <tr><td>V(NaOH) добавлено</td><td id="jV">—</td></tr>
+            <tr><td>V(HCl) в колбе</td><td>20 мл</td></tr>
+            <tr><td>C(NaOH)</td><td>0,1 М</td></tr>
+            <tr><td>n(HCl) = n(NaOH)</td><td id="jn">—</td></tr>
+            <tr><td><b>C(HCl)</b></td><td id="jC">—</td></tr>
+          </tbody>
+        </table>
+        <div class="formula" id="calcBox">C(HCl) = C(NaOH) · V(NaOH) / V(HCl)</div>
+        <div id="medalBox"></div>
+      </div>
+    </div>
+
+    <h2>Протокол</h2>
+    <div class="protocol" id="protocol">
+      <b>Цель:</b> определить концентрацию HCl титрованием раствором NaOH (0,1 М) с фенолфталеином.<br>
+      <b>Установка:</b> бюретка, колба, индикатор.<br>
+      <b>Данные:</b> <span id="pData">—</span><br>
+      <b>Расчёт:</b> n = C·V; C(HCl) = n/V(HCl) <span id="pCalc">—</span><br>
+      <b>Вывод:</b> <span id="pOut">—</span>
+    </div>
+    <p class="note" style="text-align:center;margin-top:8px;">Прототип · «АРХИМЕД» · v0.1 · истинная концентрация HCl скрыта: 0,08 М (точка эквивалентности — 16,0 мл NaOH)</p>
+  </div>
+</div>
+
+<script>
+/* ========== КОНСТАНТЫ ========== */
+const V_HCL = 20;            // мл
+const C_NAOH = 0.1;          // М
+const TRUE_C = 0.08;         // истинная C(HCl), М (скрыта от игрока)
+const V_EQ_ML = TRUE_C * V_HCL / C_NAOH; // 16.0 мл
+const TRANS_START = V_EQ_ML - 0.45;      // начало перехода индикатора
+const TRANS_END   = V_EQ_ML + 0.25;      // полный розовый
+const INIT_BURETTE = 50.0;   // мл в бюретке
+
+let vAdded = 0;      // мл NaOH добавлено
+let finished = false;
+let dropAnim = 0;
+
+const SAVE_KEY = "arhimed_titr_v1";
+let medal = "—";
+try { const s = JSON.parse(localStorage.getItem(SAVE_KEY)); if (s && typeof s.medal === "string") medal = s.medal; } catch(e){}
+
+/* ========== ЦВЕТ ИНДИКАТОРА ========== */
+function indicatorColor() {
+  // бесцветный → бледно-розовый (переход) → ярко-розовый
+  if (vAdded <= TRANS_START) return [252, 246, 232, 0.06];      // почти бесцветный
+  if (vAdded >= TRANS_END)   return [240, 110, 150, 0.55];      // стойкий розовый
+  const t = (vAdded - TRANS_START) / (TRANS_END - TRANS_START); // 0..1
+  const r = Math.round(252 - (252-240)*t), g = Math.round(246 - (246-110)*t), b = Math.round(232 - (232-150)*t);
+  return [r, g, b, 0.06 + 0.49*t];
+}
+
+/* ========== КАНВАСЫ ========== */
+const bc = document.getElementById("burette").getContext("2d");
+const fc = document.getElementById("flask").getContext("2d");
+
+function drawBurette() {
+  const w = 160, h = 320;
+  bc.clearRect(0,0,w,h);
+  // корпус бюретки
+  bc.fillStyle = "rgba(220,210,190,0.35)";
+  bc.strokeStyle = "#4A3728"; bc.lineWidth = 2;
+  bc.beginPath(); bc.roundRect(52, 16, 56, 250, 8); bc.fill(); bc.stroke();
+  // шкала
+  bc.strokeStyle = "#7a6a50"; bc.lineWidth = 1;
+  bc.fillStyle = "#5c4a30"; bc.font = "9px Georgia";
+  for (let i = 0; i <= 5; i++) {
+    const y = 26 + i * 48;
+    bc.beginPath(); bc.moveTo(70, y); bc.lineTo(90, y); bc.stroke();
+    bc.fillText((50 - i * 10) + "", 52, y + 3);
+  }
+  // уровень жидкости
+  const usedFrac = Math.min(vAdded / INIT_BURETTE, 1);
+  const liquidH = 250 * (1 - usedFrac);
+  if (liquidH > 2) {
+    const grad = bc.createLinearGradient(0, 60, 0, 260);
+    grad.addColorStop(0, "rgba(123,160,91,0.85)"); grad.addColorStop(1, "rgba(80,120,60,0.9)");
+    bc.fillStyle = grad;
+    bc.beginPath(); bc.roundRect(52, 60 + (250 - liquidH), 56, liquidH, 6); bc.fill();
+  }
+  // кран
+  bc.fillStyle = "#B87333"; bc.fillRect(70, 258, 20, 10);
+  bc.fillStyle = "#8a5a25";
+  bc.beginPath(); bc.arc(80, 270, 5, 0, 2*Math.PI); bc.fill();
+  // капля
+  if (dropAnim > 0 && !finished) {
+    const py = 290 + (1 - dropAnim) * 40;
+    bc.fillStyle = "rgba(123,160,91,0.8)";
+    bc.beginPath(); bc.ellipse(80, py, 3, 4, 0, 0, 2*Math.PI); bc.fill();
+  }
+}
+function drawFlask() {
+  const w = 220, h = 240;
+  fc.clearRect(0,0,w,h);
+  // колба
+  fc.strokeStyle = "#4A3728"; fc.lineWidth = 2;
+  fc.beginPath();
+  fc.moveTo(95, 30); fc.lineTo(125, 30);          // горлышко
+  fc.lineTo(125, 90);
+  fc.quadraticCurveTo(185, 120, 175, 175);        // правая стенка
+  fc.quadraticCurveTo(170, 205, 110, 205);
+  fc.quadraticCurveTo(50, 205, 45, 175);
+  fc.quadraticCurveTo(35, 120, 95, 90);           // левая стенка
+  fc.closePath(); fc.fillStyle = "rgba(230,225,210,0.5)"; fc.fill(); fc.stroke();
+  // жидкость (уровень и цвет индикатора)
+  const [r,g,b,a] = indicatorColor();
+  fc.fillStyle = `rgba(${r},${g},${b},${a + 0.25})`;
+  fc.beginPath();
+  fc.moveTo(125, 100); fc.quadraticCurveTo(178, 128, 172, 172);
+  fc.quadraticCurveTo(168, 198, 110, 198);
+  fc.quadraticCurveTo(55, 198, 48, 172);
+  fc.quadraticCurveTo(42, 128, 95, 100);
+  fc.closePath(); fc.fill();
+  // блик
+  fc.strokeStyle = "rgba(255,255,255,0.6)"; fc.lineWidth = 3;
+  fc.beginPath(); fc.moveTo(70, 120); fc.quadraticCurveTo(64, 150, 70, 175); fc.stroke();
+  // подпись
+  fc.fillStyle = "#5c4a30"; fc.font = "11px Georgia"; fc.textAlign = "center";
+  fc.fillText("20 мл HCl + ф/ф", 110, 224);
+}
+function animate() {
+  drawBurette(); drawFlask();
+  if (dropAnim > 0) { dropAnim -= 0.04; if (dropAnim < 0) dropAnim = 0; }
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ========== УПРАВЛЕНИЕ ========== */
+function addVol(ml) {
+  if (finished) return;
+  vAdded = Math.min(vAdded + ml, INIT_BURETTE);
+  dropAnim = 1;
+  updateStatus();
+  drawBurette(); drawFlask();
+  document.getElementById("btnStop").disabled = false;
+  document.getElementById("readout").textContent = vAdded.toFixed(2) + " мл";
+}
+function updateStatus() {
+  const st = document.getElementById("status");
+  if (vAdded < V_EQ_ML - 2) st.textContent = "Раствор бесцветен — кислота ещё есть.";
+  else if (vAdded < TRANS_START) st.textContent = "Почти! Цвет вот-вот начнёт меняться…";
+  else if (vAdded < V_EQ_ML) st.textContent = "⚠️ Переход цвета! Тормози — добавляй каплями.";
+  else if (vAdded < TRANS_END) st.textContent = "Розовый появился. Это избыток щёлочи — зафиксируй объём!";
+  else st.textContent = "Ярко-розовый — ты перелил. Зафиксируй и посчитай.";
+}
+function stopTitration() {
+  if (finished) return;
+  finished = true;
+  document.getElementById("btnStop").disabled = true;
+  document.getElementById("b1").disabled = true;
+  document.getElementById("b2").disabled = true;
+  document.getElementById("b3").disabled = true;
+  compute();
+}
+function resetAll() {
+  if (finished && !confirm("Начать титрование заново?")) return;
+  vAdded = 0; finished = false; medal = "—";
+  document.getElementById("btnStop").disabled = true;
+  document.getElementById("b1").disabled = false;
+  document.getElementById("b2").disabled = false;
+  document.getElementById("b3").disabled = false;
+  document.getElementById("status").textContent = "Начни добавлять щёлочь…";
+  document.getElementById("readout").textContent = "0.00 мл";
+  document.getElementById("medalBadge").textContent = "—";
+  save(); renderCompute(true);
+  drawBurette(); drawFlask();
+}
+
+/* ========== РАСЧЁТ ========== */
+function compute() {
+  const nNaOH = C_NAOH * (vAdded / 1000);           // моль
+  const cHCl = nNaOH / (V_HCL / 1000);              // М
+  const err = Math.abs(vAdded - V_EQ_ML);           // отклонение от точки эквивалентности, мл
+  let cls = "fail", label = "😅 Мимо — перелей и попробуй точнее";
+  if (err <= 0.2)      { cls = "gold";   label = "🥇 Золото — призёрская точность!"; }
+  else if (err <= 0.5) { cls = "silver"; label = "🥈 Серебро — почти идеально"; }
+  else if (err <= 1.2) { cls = "bronze"; label = "🥉 Бронза — учись ловить переход цвета"; }
+  medal = label;
+  const relErr = Math.abs(cHCl - TRUE_C) / TRUE_C * 100;
+  const devNote = relErr <= 3 ? "C(HCl) определена в пределах погрешности (эталон 0,08 М)." :
+    (relErr <= 10 ? "Отклонение от эталона умеренное — погрешность определения конца титрования." :
+     "Отклонение существенное — перелей и повтори, добавляя финальные капли по одной.");
+  document.getElementById("medalBox").innerHTML =
+    `<div class="medal ${cls}">${label}<br><span style="font-size:13px;">C(HCl) = ${cHCl.toFixed(4)} М · отклонение от точки эквивалентности ${err.toFixed(2)} мл</span></div>`;
+  document.getElementById("medalBadge").textContent = label.replace(/^[^\s]+\s/,"");
+  document.getElementById("jV").textContent = vAdded.toFixed(2) + " мл";
+  document.getElementById("jn").textContent = nNaOH.toFixed(5) + " моль";
+  document.getElementById("jC").textContent = cHCl.toFixed(4) + " М";
+  document.getElementById("calcBox").innerHTML =
+    `n(NaOH) = 0,1 × ${(vAdded/1000).toFixed(3)} л = ${nNaOH.toFixed(5)} моль<br>` +
+    `C(HCl) = ${nNaOH.toFixed(5)} / 0,020 л = <b>${cHCl.toFixed(4)} М</b>`;
+  document.getElementById("pData").textContent = `V(NaOH) = ${vAdded.toFixed(2)} мл; V(HCl) = 20 мл; C(NaOH) = 0,1 М`;
+  document.getElementById("pCalc").textContent = `n = 0,1 × ${(vAdded/1000).toFixed(3)} = ${nNaOH.toFixed(5)} моль; C(HCl) = ${nNaOH.toFixed(5)}/0,020 = ${cHCl.toFixed(4)} М`;
+  document.getElementById("pOut").textContent = devNote;
+  save(); renderCompute(false);
+}
+function renderCompute(reset) {
+  if (reset) {
+    document.getElementById("jV").textContent = "—";
+    document.getElementById("jn").textContent = "—";
+    document.getElementById("jC").textContent = "—";
+    document.getElementById("calcBox").innerHTML = "C(HCl) = C(NaOH) · V(NaOH) / V(HCl)";
+    document.getElementById("medalBox").innerHTML = "";
+    document.getElementById("pData").textContent = "—";
+    document.getElementById("pCalc").textContent = "—";
+    document.getElementById("pOut").textContent = "—";
+  }
+}
+function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify({medal})); } catch(e){} }
+
+/* старт */
+drawBurette(); drawFlask();
+</script>
+</body>
+</html>

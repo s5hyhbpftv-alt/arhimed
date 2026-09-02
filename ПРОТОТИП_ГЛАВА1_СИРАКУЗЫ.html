@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД — Остров Сиракузы · Глава 1 «Стражники»</title>
+<style>
+  :root {
+    --marble: #F5F0E6;
+    --marble-dark: #E8E0D0;
+    --bronze: #B08D57;
+    --bronze-dark: #8a6c3f;
+    --terracotta: #C96F4A;
+    --olive: #6B7F3F;
+    --night: #2C3E6B;
+    --glow: #7FD1FF;
+    --ink: #3a3228;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Georgia", "Times New Roman", serif;
+    background:
+      radial-gradient(ellipse at 20% 10%, #fff8ea 0%, transparent 55%),
+      linear-gradient(160deg, #f7f0e0 0%, #e9ddc8 60%, #d9c8a8 100%);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex; justify-content: center;
+    padding: 16px;
+  }
+  #app { max-width: 720px; width: 100%; }
+
+  /* ===== Header ===== */
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(90deg, var(--marble), var(--marble-dark));
+    border: 2px solid var(--bronze);
+    border-radius: 10px;
+    padding: 10px 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+  .hud-item { display: flex; align-items: center; gap: 6px; font-size: 15px; }
+  .hud-star { color: var(--bronze-dark); font-size: 18px; }
+  .hud-fire { font-size: 18px; }
+  .hud-btn {
+    background: var(--night); color: #fff; border: none;
+    border-radius: 6px; padding: 6px 12px; cursor: pointer;
+    font-family: inherit; font-size: 14px;
+  }
+  .hud-btn:hover { filter: brightness(1.2); }
+
+  /* ===== Screens ===== */
+  .card {
+    background: var(--marble);
+    border: 2px solid var(--bronze);
+    border-radius: 12px;
+    padding: 24px 26px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    position: relative;
+  }
+  .meander {
+    height: 10px;
+    background: repeating-linear-gradient(90deg,
+      var(--bronze) 0 10px, transparent 10px 14px,
+      var(--bronze) 14px 24px, transparent 24px 28px);
+    opacity: 0.5;
+    margin-bottom: 16px;
+  }
+  h1 { font-size: 26px; color: var(--bronze-dark); margin-bottom: 6px; }
+  h2 { font-size: 20px; color: var(--terracotta); margin: 14px 0 8px; }
+  p  { font-size: 16px; line-height: 1.55; margin-bottom: 10px; }
+  .story { font-style: italic; color: #5a4e3d; border-left: 4px solid var(--terracotta); padding-left: 14px; }
+
+  /* ===== Hologram ===== */
+  .archimedes {
+    background: linear-gradient(135deg, rgba(44,62,107,0.12), rgba(127,209,255,0.10));
+    border: 1px solid rgba(127,209,255,0.5);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    color: var(--night);
+    font-size: 15px;
+    line-height: 1.5;
+    box-shadow: 0 0 18px rgba(127,209,255,0.25) inset;
+  }
+  .archimedes .who {
+    display: block; font-size: 13px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--bronze-dark); margin-bottom: 4px;
+  }
+  @keyframes flicker { 0%,100%{opacity:1;} 92%{opacity:1;} 93%{opacity:.75;} 94%{opacity:1;} 97%{opacity:.85;} 98%{opacity:1;} }
+  .archimedes { animation: flicker 6s infinite; }
+
+  /* ===== Tasks ===== */
+  .task-text { font-size: 17px; font-weight: bold; margin: 12px 0; }
+  .choices { display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
+  .choice {
+    background: var(--marble-dark);
+    border: 2px solid var(--bronze);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: inherit; font-size: 15px; text-align: left; cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+  }
+  .choice:hover { background: #f0e6d2; transform: translateX(4px); }
+  .choice:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+  .hints { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .hint-btn {
+    background: var(--olive); color: #fff; border: none;
+    border-radius: 6px; padding: 8px 12px; cursor: pointer;
+    font-family: inherit; font-size: 14px;
+  }
+  .hint-btn:disabled { background: #a9b58a; cursor: not-allowed; }
+  .hint-text {
+    background: #f3ecd9; border: 1px dashed var(--bronze);
+    border-radius: 8px; padding: 10px 14px; margin-top: 8px; font-size: 15px;
+  }
+  .free-note { font-size: 12px; color: var(--olive); }
+
+  .feedback { margin-top: 12px; padding: 12px 14px; border-radius: 8px; font-size: 15px; }
+  .feedback.wrong { background: #f8e0d6; border: 1px solid var(--terracotta); }
+  .feedback.right { background: #e2ead0; border: 1px solid var(--olive); }
+  .solution {
+    background: linear-gradient(135deg, #fdf6e3, #f6ecd2);
+    border: 2px solid var(--bronze); border-radius: 10px;
+    padding: 14px 16px; margin-top: 12px; font-size: 15px; line-height: 1.5;
+  }
+  .solution b { color: var(--bronze-dark); }
+
+  .btn-primary {
+    background: var(--terracotta); color: #fff; border: none;
+    border-radius: 8px; padding: 12px 22px; font-family: inherit;
+    font-size: 16px; cursor: pointer; margin-top: 12px;
+  }
+  .btn-primary:hover { filter: brightness(1.1); }
+  .btn-secondary {
+    background: var(--marble-dark); color: var(--ink); border: 2px solid var(--bronze);
+    border-radius: 8px; padding: 10px 18px; font-family: inherit;
+    font-size: 15px; cursor: pointer; margin-top: 10px;
+  }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* ===== Map ===== */
+  .map-title { text-align: center; }
+  .island {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--marble-dark); border: 2px solid var(--bronze);
+    border-radius: 10px; padding: 12px 14px; margin-bottom: 10px;
+  }
+  .island .ico { font-size: 26px; }
+  .island .name { font-weight: bold; }
+  .island.locked { opacity: 0.55; }
+  .chapter-dot {
+    display: inline-block; width: 12px; height: 12px; border-radius: 50%;
+    background: #c9b79a; margin-right: 4px;
+  }
+  .chapter-dot.done { background: var(--olive); }
+  .chapter-dot.current { background: var(--terracotta); box-shadow: 0 0 6px var(--terracotta); }
+
+  .badge {
+    display: inline-block; background: var(--night); color: #fff;
+    border-radius: 999px; padding: 4px 12px; font-size: 13px; margin: 4px 4px 0 0;
+  }
+  .footer-note { text-align: center; font-size: 12px; color: #9a8c74; margin-top: 16px; }
+
+/* === мобильная адаптация (АРХИМЕД PWA) === */
+@media (max-width: 640px){
+  body { padding:10px 8px 28px; }
+  h1 { font-size:17px; }
+  #app { max-width:100%; }
+  .card { padding:14px 13px; }
+  .btn, .btn2, .btn3, .choice, .hint-btn, .hint { min-height:48px; font-size:15px; }
+  .btn, .btn2, .btn3 { width:100%; padding:12px 16px; }
+  .choice { padding:12px 14px; }
+  .hud { font-size:12px; gap:8px; }
+  .sliders, .controls { flex-direction:column; align-items:stretch; gap:10px; }
+  .sliders input[type=range] { width:100%; }
+  .answer-row { gap:6px; }
+  input[type=number] { width:116px; font-size:19px; }
+  .story, .q { font-size:14px; }
+  .mission { padding:8px 10px; font-size:13px; }
+  .protocol, .panel { padding:10px; overflow-x:auto; }
+  .stage-cap { font-size:10px; }
+  .note { font-size:10px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="hud-item"><span class="hud-star">⭐</span><span id="hud-points">0</span></div>
+    <div class="hud-item"><span class="hud-fire">🔥</span><span id="hud-streak">0</span></div>
+    <button class="hud-btn" onclick="go('map')">🗺 Карта</button>
+    <button class="hud-btn" onclick="resetAll()">↺ Заново</button>
+  </header>
+  <main id="screen"></main>
+  <div class="footer-note">Прототип главы 1 · «АРХИМЕД» · v0.1 · данные сохраняются в этом браузере</div>
+</div>
+
+<script>
+/* ================= DATA ================= */
+const TASKS = [
+  {
+    id: 0, title: "Испытание 1 · Две двери", slozhnost: 1,
+    story: "Ксанф, слуга Архимеда, шепчет: «За этими дверями — оружейная. Но один стражник всегда говорит правду, а второй всегда лжёт. Один вопрос — одному из них. Что спросить, господин?»",
+    question: "Какой вопрос задать, чтобы наверняка найти оружейную?",
+    type: "choice",
+    choices: [
+      "«Какая дверь ведёт в оружейную?»",
+      "«Какую дверь указал бы твой товарищ?» — и пойти в противоположную",
+      "«Ты — стражник?»"
+    ],
+    correct: 1,
+    hints: [
+      "Представь, что ты спросил лжеца о том, что скажет правдивый.",
+      "Оба стражника укажут на ОДНУ и ту же дверь. Какую?",
+      "Спроси о другом. И сделай наоборот."
+    ],
+    hintCost: [10, 5, 0],
+    solution: "Правдивый честно скажет, куда укажет лжец, — в ложную дверь. Лжец соврёт о честном — и тоже укажет в ложную. Оба указывают в ловушку — значит, оружейная в другой. Один вопрос, одна истина, ноль риска.",
+    trap: "Лжец соврёт и укажет в ловушку. Ты не знаешь, кто из них лжец, — это риск 50 на 50. Нужен вопрос, который «ломает» обоих.",
+    reward: 30, artifact: "Бронзовый ключ"
+  },
+  {
+    id: 1, title: "Испытание 2 · Три сундука", slozhnost: 2,
+    story: "В оружейной — три сундука: с золотом, с серебром и пустой (ловушка). На каждом вырезана надпись. Архимед говорит: «Ровно одна из трёх надписей правдива. Где золото?»",
+    question: "Надписи: 1) «Золото здесь»  2) «Золота здесь нет»  3) «Серебро во втором сундуке». Где золото?",
+    type: "choice",
+    choices: ["В сундуке 1", "В сундуке 2", "В сундуке 3"],
+    correct: 2,
+    hints: [
+      "Перебери варианты «где золото» и каждый раз считай правдивые надписи.",
+      "Если золото в сундуке 1 — правдивых надписей три. Слишком болтливо.",
+      "Единственный случай с ровно одной правдой — золото в третьем сундуке."
+    ],
+    hintCost: [10, 5, 0],
+    solution: "Проверяем три случая. Золото в 1 — три правды, слишком болтливо. Золото в 2 — ноль правд, слишком тихо. Золото в 3 — ровно одна правда (надпись на втором сундуке). Перебор — честный инструмент, когда вариантов мало.",
+    trap: "При золоте в первом сундуке правдивы сразу три надписи — условие нарушено.",
+    reward: 40, artifact: "Обломок весла"
+  },
+  {
+    id: 2, title: "БОСС · Стражник-загадка", slozhnost: 3,
+    story: "У самых ворот тебя останавливает стражник. Он произносит: «Я лжец, ИЛИ ворота открыты». Архимед шепчет: «Если ворота открыты — мы спасены. Что можно сказать о воротах?»",
+    question: "Стражник — либо рыцарь (всегда правду), либо лжец (всегда ложь). Его фраза: «Я лжец ИЛИ ворота открыты». Что верно?",
+    type: "choice",
+    choices: ["Ворота открыты", "Ворота закрыты", "Невозможно определить"],
+    correct: 0,
+    hints: [
+      "Допусти, что стражник лжёт. Что тогда следует из его фразы?",
+      "Если он лжец, его фраза ложна: «я НЕ лжец И ворота закрыты» — противоречие!",
+      "Значит, он правдив. Его фраза истинна: «я лжец или ворота открыты». Раз он не лжец…"
+    ],
+    hintCost: [10, 5, 0],
+    solution: "Допустим, он лжец — тогда его утверждение ложно, значит он не лжец и ворота закрыты — противоречие. Лжецом он быть не может. Он честен: его фраза истинна, но первая её часть ложна, значит истинна вторая: ворота открыты. Рассуждение от противного — щит и меч логики.",
+    trap: "От противного всё решается однозначно. Попробуй допустить, что он лжец, — и ты упрёшься в противоречие.",
+    reward: 60, artifact: "Меч Марцелла (трофей)"
+  }
+];
+
+/* ================= STATE ================= */
+const KEY = "arhimed_proto_v1";
+let state = {
+  screen: "map",
+  points: 0,
+  streak: 1,
+  taskIndex: 0,          // текущая задача (0..2)
+  solved: [false, false, false],
+  hintsUsed: [0, 0, 0],  // сколько подсказок открыто на задачу
+  feedback: null,        // {type: 'wrong'|'right', text}
+  showSolution: false,
+  lastReward: null
+};
+
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+function load() {
+  try {
+    const s = JSON.parse(localStorage.getItem(KEY));
+    if (s && typeof s.points === "number") state = Object.assign(state, s);
+  } catch(e){}
+}
+
+/* ================= HELPERS ================= */
+function go(screen) { state.screen = screen; render(); }
+function resetAll() {
+  if (!confirm("Сбросить прогресс прототипа?")) return;
+  state = { screen: "map", points: 0, streak: 1, taskIndex: 0,
+            solved: [false,false,false], hintsUsed: [0,0,0],
+            feedback: null, showSolution: false, lastReward: null };
+  save(); render();
+}
+
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+function hud() {
+  document.getElementById("hud-points").textContent = state.points;
+  document.getElementById("hud-streak").textContent = state.streak;
+}
+
+/* ================= RENDER ================= */
+function render() {
+  hud(); save();
+  const el = document.getElementById("screen");
+  if (state.screen === "map") el.innerHTML = renderMap();
+  else if (state.screen === "prolog") el.innerHTML = renderProlog();
+  else if (state.screen === "task") el.innerHTML = renderTask();
+  else if (state.screen === "reward") el.innerHTML = renderReward();
+}
+
+function renderMap() {
+  const ch1 = state.solved[2] ? "done" : "current";
+  const dots = [0,1,2].map(i => state.solved[i] ? "done" : (i === 0 && !state.solved[0] ? "current" : ""));
+  const dotsHtml = dots.map(d => `<span class="chapter-dot ${d}"></span>`).join("");
+  const ch2 = `<span class="chapter-dot"></span><span class="chapter-dot"></span><span class="chapter-dot"></span><span class="chapter-dot"></span><span class="chapter-dot"></span><span class="chapter-dot"></span>`;
+  return `
+    <div class="card">
+      <div class="meander"></div>
+      <h1 class="map-title">🗺 Остров Сиракузы</h1>
+      <p class="map-title" style="font-size:14px;color:#9a8c74;">213 г. до н.э. · Город в осаде · 6 глав</p>
+
+      <div class="island">
+        <span class="ico">🏛</span>
+        <div>
+          <div class="name">Глава 1 · Стражники <span class="chapter-dot ${ch1}"></span></div>
+          <div style="font-size:13px;color:#8a7a60;">${dotsHtml} логика: рыцарь и лжец</div>
+          <div style="font-size:13px;color:#8a7a60;">${state.solved[2] ? "✅ пройдена" : "▶ доступна"}</div>
+        </div>
+      </div>
+
+      <div class="island locked">
+        <span class="ico">⚓</span>
+        <div>
+          <div class="name">Глава 2 · Гавань Марцелла <span class="chapter-dot"></span></div>
+          <div style="font-size:13px;color:#8a7a60;">${ch2} принцип Дирихле</div>
+          <div style="font-size:13px;color:#8a7a60;">🔒 откроется после главы 1</div>
+        </div>
+      </div>
+      <div class="island locked"><span class="ico">🪞</span><div><div class="name">Глава 3 · Зеркала</div><div style="font-size:13px;color:#8a7a60;">инварианты · 🔒</div></div></div>
+      <div class="island locked"><span class="ico">⚖️</span><div><div class="name">Глава 4 · Весы Гиерона</div><div style="font-size:13px;color:#8a7a60;">взвешивания · 🔒</div></div></div>
+      <div class="island locked"><span class="ico">🏹</span><div><div class="name">Глава 5 · Машины войны</div><div style="font-size:13px;color:#8a7a60;">комбинаторика · 🔒</div></div></div>
+      <div class="island locked"><span class="ico">✨</span><div><div class="name">Глава 6 · Эврика!</div><div style="font-size:13px;color:#8a7a60;">финальный босс · 🔒</div></div></div>
+
+      <div class="btn-row">
+        ${state.taskIndex < 3 && !state.solved[2] ? `<button class="btn-primary" onclick="go('prolog')">▶ Начать главу 1</button>` : ""}
+        ${state.solved[2] ? `<span class="badge">Глава 1 пройдена — глава 2 откроется в полной версии</span>` : ""}
+      </div>
+    </div>`;
+}
+
+function renderProlog() {
+  return `
+    <div class="card">
+      <div class="meander"></div>
+      <h1>Пролог · Мастерская Архимеда</h1>
+      <p class="story">«Ты нашёл древний интеллект, спавший в бронзе. Он открывает глаза: — Так, так… Исследователь? Прекрасно. Город в осаде, Марцелл у ворот, а я — лишь голограмма. Но разум — величайшая из машин, и сегодня он будет работать на нас».</p>
+      <div class="archimedes">
+        <span class="who">◈ Архимед</span>
+        «Мир подчиняется числам. Каждая задача — чудо, которое ты можешь сотворить разумом. Первое чудо ждёт у ворот: два стражника, два характера — и одна дверь к спасению. Ступай, Исследователь. И помни: сначала попробуй — потом поймёшь».
+      </div>
+      <p style="font-size:13px;color:#8a7a60;">Подсказки стоят очков Архимеда (⭐). Их зарабатывают решением. Третья подсказка — бесплатная «наводка Ксанфа».</p>
+      <button class="btn-primary" onclick="go('task')">⚔ В путь к воротам</button>
+    </div>`;
+}
+
+function renderTask() {
+  const t = TASKS[state.taskIndex];
+  if (!t) { state.screen = "reward"; return renderReward(); }
+  const isBoss = state.taskIndex === 2;
+  const solved = state.solved[state.taskIndex];
+
+  const hintBtns = t.hints.map((h, i) => {
+    const used = state.hintsUsed[state.taskIndex] > i;
+    const affordable = state.points >= t.hintCost[i] || t.hintCost[i] === 0;
+    const disabled = used || (!affordable && t.hintCost[i] > 0);
+    const label = t.hintCost[i] === 0 ? `Подсказка ${i+1} · бесплатно` : `Подсказка ${i+1} · ${t.hintCost[i]}⭐`;
+    return `<button class="hint-btn" ${disabled ? "disabled" : ""} onclick="useHint(${i})">${label}</button>`;
+  }).join("");
+
+  const openHints = t.hints.slice(0, state.hintsUsed[state.taskIndex])
+    .map(h => `<div class="hint-text">${esc(h)}</div>`).join("");
+
+  const choices = t.choices.map((c, i) =>
+    `<button class="choice" ${solved ? "disabled" : ""} onclick="answer(${i})">${esc(c)}</button>`).join("");
+
+  const feedback = state.feedback
+    ? `<div class="feedback ${state.feedback.type}">${esc(state.feedback.text)}</div>` : "";
+
+  const solution = state.showSolution
+    ? `<div class="solution"><b>📜 Решение Архимеда:</b><br>${esc(t.solution)}</div>
+       <button class="btn-primary" onclick="nextTask()">${state.taskIndex === 2 ? "Забрать трофей" : "Дальше →"}</button>`
+    : "";
+
+  return `
+    <div class="card">
+      <div class="meander"></div>
+      <h1>${isBoss ? "👑 " : ""}${esc(t.title)}</h1>
+      <div class="badge">сложность ${t.sloznost}/7</div>
+      <p class="story">${esc(t.story)}</p>
+      <p class="task-text">${esc(t.question)}</p>
+      <div class="choices">${choices}</div>
+      <div class="hints">${hintBtns}</div>
+      ${openHints}
+      <div class="free-note">«наводка Ксанфа» всегда бесплатна · ошибки не наказываются — они часть пути</div>
+      ${feedback}
+      ${solution}
+    </div>`;
+}
+
+function renderReward() {
+  const r = state.lastReward || {points: 0, artifact: "—"};
+  const allDone = state.solved.every(Boolean);
+  return `
+    <div class="card">
+      <div class="meander"></div>
+      <h1>${allDone ? "🏆 Глава 1 пройдена!" : "🎁 Награда"}</h1>
+      <p>Очки Архимеда: <b>+${r.points}⭐</b></p>
+      <p>Артефакт: <b>${esc(r.artifact)}</b></p>
+      <div class="archimedes"><span class="who">◈ Архимед</span>
+        ${allDone
+          ? "«Ты разгадал стражников, сундуки и самую хитрую загадку города. Марцелл ещё не знает, что ему противостоит разум. Отдохни, Исследователь, — впереди гавань, зеркала и… кое-что, от чего пахнет серой»."
+          : "«Отлично! Так и рождаются победители олимпиад — по одной задаче за раз»."}
+      </div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="go('map')">🗺 К карте</button>
+      </div>
+    </div>`;
+}
+
+/* ================= ACTIONS ================= */
+function useHint(i) {
+  const t = TASKS[state.taskIndex];
+  if (state.solved[state.taskIndex]) return;
+  if (i >= state.hintsUsed[state.taskIndex]) {
+    if (t.hintCost[i] > 0 && state.points < t.hintCost[i]) return;
+    state.points -= t.hintCost[i];
+    state.hintsUsed[state.taskIndex] = i + 1;
+    render();
+  }
+}
+
+function answer(choice) {
+  const t = TASKS[state.taskIndex];
+  if (state.solved[state.taskIndex]) return;
+  if (choice === t.correct) {
+    const hints = state.hintsUsed[state.taskIndex];
+    const hintPenalty = hints * 5;
+    const gain = t.reward - hintPenalty;
+    state.points += gain;
+    state.solved[state.taskIndex] = true;
+    state.showSolution = true;
+    state.streak += 1;
+    state.feedback = { type: "right", text: "✅ Верно! Ошибки не наказываются — а подсказки лишь чуть убавляют награду. Смотри, как красиво это решается:" };
+    state.lastReward = { points: gain, artifact: t.artifact };
+    render();
+  } else {
+    state.feedback = { type: "wrong", text: "❌ «А ты уверен?» " + t.trap };
+    render();
+  }
+}
+
+function nextTask() {
+  state.taskIndex += 1;
+  state.feedback = null;
+  state.showSolution = false;
+  if (state.taskIndex >= TASKS.length) {
+    state.screen = "reward";
+    render();
+  } else {
+    state.screen = "task";
+    render();
+  }
+}
+
+/* ================= INIT ================= */
+load();
+render();
+</script>
+</body>
+</html>

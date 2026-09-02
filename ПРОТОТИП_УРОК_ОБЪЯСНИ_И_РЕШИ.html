@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Книга знаний · Сначала объясни — потом реши</title>
+<style>
+  :root { --brick:#7A4A33; --brick-dark:#5c3623; --amber:#E8A33D; --fog:#9FB4C7;
+    --ink:#2c2318; --parch:#f6ecd2; --paper:#fdf9ee; --night:#141F38; --glow:#7FD1FF; --olive:#5F7A3A; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:Georgia,"Times New Roman",serif;
+    background: radial-gradient(ellipse at 50% 0%,#3a3328 0%,transparent 55%), linear-gradient(165deg,#2e2a24 0%,#1c1915 70%);
+    color:var(--parch); min-height:100vh; padding:16px 12px 40px; }
+  #app { max-width:880px; margin:0 auto; }
+  header { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+    border-bottom:1px solid rgba(232,163,61,.35); padding-bottom:10px; margin-bottom:12px; }
+  h1 { font-size:20px; color:var(--amber); font-weight:normal; }
+  h1 small { display:block; font-size:12px; color:#8a94ad; margin-top:2px; }
+  .hud { display:flex; gap:10px; align-items:center; font-size:13px; color:var(--fog); flex-wrap:wrap; }
+  .hud b { color:var(--amber); }
+  .chip { background:#1f1c16; border:1px solid rgba(232,163,61,.3); border-radius:999px; padding:5px 12px; }
+  /* список уроков */
+  .lesson-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+  .lcard { background:linear-gradient(170deg,#26221c,#1d1a15); border:1px solid rgba(232,163,61,.35);
+    border-radius:12px; padding:15px; cursor:pointer; transition:transform .12s, border-color .12s; }
+  .lcard:hover { transform:translateY(-2px); border-color:var(--amber); }
+  .lcard.done { border-color:var(--olive); }
+  .lcard .num { font-size:11px; letter-spacing:.14em; color:var(--glow); text-transform:uppercase; }
+  .lcard h3 { font-size:15.5px; margin:6px 0 4px; }
+  .lcard .src { font-size:11px; color:#8a94ad; margin-bottom:6px; }
+  .lcard .st { display:flex; justify-content:space-between; font-size:12px; color:var(--fog); }
+  .lcard .st .go { color:var(--amber); font-size:14px; }
+  /* урок */
+  .stage-box { position:relative; border:1px solid rgba(232,163,61,.4); border-radius:12px; overflow:hidden;
+    background:radial-gradient(ellipse at 50% 30%,#2b2720,#16130f); min-height:250px; padding:14px; margin-bottom:12px; }
+  .step-bar { display:flex; gap:5px; margin:6px 0 10px; }
+  .sdot { flex:1; height:6px; border-radius:4px; background:#3a3a33; }
+  .sdot.on { background:var(--amber); } .sdot.past { background:var(--olive); }
+  .msg { background:#221e17; border-left:3px solid var(--brick); border-radius:0 8px 8px 0;
+    padding:10px 14px; margin-bottom:12px; font-size:14px; line-height:1.55; min-height:64px; }
+  .msg .who { display:block; font-size:10.5px; letter-spacing:2px; text-transform:uppercase; color:var(--amber); margin-bottom:3px; }
+  .nav { display:flex; gap:10px; flex-wrap:wrap; }
+  .btn { background:linear-gradient(180deg,var(--brick),var(--brick-dark)); color:#fff; border:none;
+    border-radius:9px; padding:10px 20px; font-family:inherit; font-size:14.5px; cursor:pointer; }
+  .btn:disabled { opacity:.45; cursor:not-allowed; }
+  .btn.alt { background:linear-gradient(180deg,#2c3e6b,#1d2a4d); }
+  .btn.ok { background:linear-gradient(180deg,var(--olive),#3d4a26); }
+  /* визуализации */
+  .vis { display:flex; flex-direction:column; gap:10px; align-items:center; justify-content:center; min-height:180px; }
+  .digits { display:flex; gap:8px; align-items:flex-end; }
+  .dcol { display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .dcol .blocks { display:flex; flex-direction:column-reverse; gap:2px; }
+  .blk { width:44px; height:14px; border-radius:3px; transition:height .3s; }
+  .hundreds { background:#c96f4a; } .tens { background:#b06fd0; } .ones { background:#7fb8a0; }
+  .dnum { font-size:34px; color:var(--amber); font-family:Georgia,serif; }
+  .live-row { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; font-size:13.5px; color:#cbb89a; margin-top:8px; }
+  .live-row b { color:var(--amber); font-size:16px; }
+  .btnstep { background:#2c3e6b; color:#fff; border:none; border-radius:8px; padding:6px 14px;
+    font-family:inherit; font-size:13px; cursor:pointer; }
+  .btnstep:disabled { opacity:.4; }
+  /* клетки и голуби */
+  .nests { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; }
+  .nest { width:88px; min-height:120px; border:2px solid #4a4538; border-radius:8px; background:#211d17;
+    display:flex; flex-direction:column; align-items:center; gap:2px; padding-top:6px; position:relative; }
+  .nest .nlab { font-size:10px; color:#8a94ad; position:absolute; bottom:4px; }
+  .nest.full { border-color:var(--amber); }
+  .nest.win { border-color:#e86a4a; box-shadow:0 0 12px rgba(232,106,74,.6); }
+  .pigeon { font-size:17px; animation:drop .4s ease; }
+  @keyframes drop { from{transform:translateY(-18px);opacity:0;} to{transform:none;opacity:1;} }
+  /* SVG-ячейки улиток */
+  svg text { font-family:Georgia,serif; }
+  .cellc { fill:#2b2720; stroke:#8a94ad; stroke-width:1.5; }
+  .cellc.hot { fill:#3a2c1c; stroke:var(--amber); stroke-width:2.5; }
+  /* конфеты */
+  .kids { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+  .kid { width:150px; background:#1f1c16; border:1px solid #4a4538; border-radius:10px; padding:10px; text-align:center; }
+  .kid .face { font-size:26px; }
+  .kid .cnt { font-size:30px; color:var(--amber); margin:4px 0; }
+  .kid .state { font-size:11.5px; color:var(--glow); min-height:30px; }
+  /* турнирные полоски */
+  .wbar { width:100%; max-width:330px; }
+  .wrow { display:flex; align-items:center; gap:8px; margin-bottom:6px; font-size:12.5px; }
+  .wrow .nm { width:64px; } .wrow .tr { flex:1; height:14px; background:#2b2720; border-radius:4px; overflow:hidden; }
+  .wrow .tr i { display:block; height:100%; background:linear-gradient(90deg,#c96f4a,var(--amber)); width:0; transition:width .5s; }
+  .wrow .pt { width:52px; text-align:right; color:var(--amber); }
+  /* остатки/посёлки */
+  .groups { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  .grp { border:2px solid #4a4538; border-radius:10px; padding:8px 12px; background:#1f1c16; min-width:110px; text-align:center; }
+  .grp .gname { font-size:11px; color:#8a94ad; }
+  .grp .gcnt { font-size:20px; color:var(--amber); }
+  .grp.comp { border-color:var(--glow); box-shadow:0 0 10px rgba(127,209,255,.25); }
+  .roads { margin-top:8px; font-size:12.5px; color:#cbb89a; line-height:1.6; }
+  /* задачи */
+  .task-box { border:1px solid rgba(232,163,61,.35); border-radius:12px; background:#1f1c16; padding:16px; margin-top:12px; }
+  .task-box h4 { color:var(--amber); font-size:13px; letter-spacing:.1em; margin-bottom:8px; }
+  .tq { font-size:15px; line-height:1.5; margin-bottom:10px; }
+  .choices { display:flex; flex-direction:column; gap:8px; }
+  .choice { background:#2a2620; border:1.5px solid #4a4538; border-radius:9px; padding:11px 14px;
+    font-family:inherit; font-size:14px; text-align:left; color:var(--parch); cursor:pointer; }
+  .choice.right { border-color:var(--olive); background:#243320; }
+  .choice.wrong { border-color:#b0513c; background:#3a2218; }
+  .answer-row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  input[type=number] { width:130px; font-family:Georgia,serif; font-size:19px; padding:8px 11px;
+    border:2px solid var(--amber); border-radius:8px; background:#101018; color:var(--paper); outline:none; }
+  .hints { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .hint-btn { background:var(--olive); color:#fff; border:none; border-radius:7px; padding:6px 12px; font-family:inherit; font-size:12px; cursor:pointer; }
+  .hint-btn:disabled { background:#3d4a30; cursor:not-allowed; }
+  .hint-box { background:#2a2620; border:1px dashed var(--amber); border-radius:8px; padding:8px 12px; margin-top:8px; font-size:13px; color:#cbb89a; }
+  .fb { margin-top:9px; padding:9px 12px; border-radius:8px; font-size:13px; }
+  .fb.right { background:#243320; border:1px solid var(--olive); }
+  .fb.wrong { background:#3a2218; border:1px solid #b0513c; }
+  .note { text-align:center; font-size:11px; color:#5d6a8a; margin-top:14px; line-height:1.6; }
+  .confetti { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:50; }
+  .confetti-piece { position:absolute; top:-12px; width:8px; height:14px; border-radius:2px; opacity:.9; animation:fall linear forwards; }
+  @keyframes fall { to { transform:translateY(110vh) rotate(720deg); } }
+  @media (max-width:640px){
+    body { padding:10px 8px 28px; }
+    .lesson-list { grid-template-columns:1fr; }
+    .blk { width:34px; } .dnum { font-size:26px; }
+    .nest { width:64px; min-height:96px; }
+    .btn { width:100%; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div>
+      <h1>📖 Книга знаний Архимеда<small>Сначала объясню — потом дам решить. 6 уроков по задачам ВсОШ (6–7 класс)</small></h1>
+    </div>
+    <div class="hud">
+      <span class="chip">⭐ <b id="hStars">0</b>/12</span>
+      <span class="chip" id="hDone">уроков: 0/6</span>
+    </div>
+  </header>
+
+  <div id="listView"></div>
+
+  <div id="lessonView" style="display:none">
+    <button class="btn alt" onclick="goList()" style="margin-bottom:10px">← Ко всем урокам</button>
+    <div id="lvHead"></div>
+    <div class="step-bar" id="stepBar"></div>
+    <div class="stage-box"><div id="visEl" class="vis"></div></div>
+    <div class="msg" id="msgEl"></div>
+    <div class="nav" id="navEl"></div>
+    <div id="phase2"></div>
+  </div>
+
+  <div class="note" id="appNote">АРХИМЕД · «Объясни → Реши» · уроки построены на реальных задачах ВсОШ по математике (школьный этап, 2022/23–2025/26) · прогресс сохраняется в браузере</div>
+</div>
+
+<script>
+/* ================= ДАННЫЕ УРОКОВ ================= */
+const LESSONS = [
+{ id:1, title:'Числа-перевёртыши', src:'ВсОШ 2023/24 · 6 класс · №3', ico:'🔁',
+  explain:[
+    { t:'Аня записала трёхзначное число, Яна — то же число наоборот. Сумма получилась 443. Как найти разность?',
+      s:'Попробуй числа: 172 и 271. Крути цифры на экране — следи за колонками: сотни, десятки, единицы.' },
+    { t:'Запишем число Ани буквами: АБВ. Это не произведение, а разрядная запись: А сотен, Б десятков, В единиц.',
+      s:'Число АБВ = 100·А + 10·Б + В. Перевёртыш ВБА = 100·В + 10·Б + А. Смотри, как колонки меняются местами.' },
+    { t:'Сложим: АБВ + ВБА = (100А+В)+(100В+А) + 20Б = 101·(А+В) + 20·Б.',
+      s:'Сотни и единицы «слились» в 101·(А+В), десятки дали 20·Б. Теперь 443 = 101·(А+В) + 20·Б — подбери А+В и Б!' },
+    { t:'Последняя цифра суммы 443 — тройка. Значит, А+В оканчивается на 3, но А+В < 10 (переносов нет) → А+В = 3.',
+      s:'Тогда 101·3 + 20·Б = 443 → 20·Б = 140 → Б = 7. Осталось: А+В = 3, А и В не нули → это 1 и 2.' },
+    { t:'Числа: 172 и 271. Разность = 271 − 172 = 99. Заметь: 99 = 99·(В − А) — разность ВСЕГДА кратна 99!',
+      s:'АБВ − ВБА = (100А+В) − (100В+А) = 99·(А − В). Разность перевёртышей всегда делится на 99 — это и есть «крючок» задачи.' },
+    { t:'Проверь сам: разность любых перевёртышей = 99·(разность крайних цифр). Покрути цифры и убедись: 99, 198, 297…',
+      s:'Теперь ты умеешь решать весь класс таких задач — вперёд к задачам!' } ],
+  check:{ q:'Разность трёхзначного числа и его перевёртыша всегда делится на…', choices:['9','11','99','100'], ans:2,
+         exp:'99·(А−В): сотни и единицы «съедают» друг друга, остаётся кратное 99.' },
+  tasks:[
+    { q:'Сумма числа и его перевёртыша равна 303. Найдите разность большего и меньшего чисел.', kind:'choice',
+      choices:['99','108','297','1010'], ans:0, unit:null,
+      hints:['303 = 101·(А+В) + 20·Б — подбери Б.','303 − 20·Б должно делиться на 101: Б = 0, А+В = 3.','А+В = 3 → крайние цифры 1 и 2 → разность 99.'],
+      sol:'303 = 101·3 + 20·0 → А+В=3, Б=0 → числа 102 и 201, разность 99.' },
+    { q:'Разность числа и его перевёртыша равна 396. Чему равна разность крайних цифр (|А − В|)?', kind:'unit', unit:'', ans:4, tol:0,
+      hints:['Разность всегда равна 99·(А − В).','396 : 99 = ?','396 : 99 = 4.'],
+      sol:'396 = 99·4 → |А − В| = 4. Например, 513 и 315.' } ] },
+
+{ id:2, title:'Голуби и клетки — Дирихле', src:'приём ВсОШ · «гарантированно»', ico:'🕊',
+  explain:[
+    { t:'Классика: 10 голубей, 7 клеток. Архимед спрашивает: сколько голубей ГАРАНТИРОВАННО окажутся в одной клетке?',
+      s:'Жми «Расселить голубей» и смотри: в конце обязательно найдётся клетка минимум с двумя.' },
+    { t:'Чтобы «избежать» совпадения, сажаем голубей по одному в каждую клетку: 7 голубей — 7 клеток, нигде нет пары.',
+      s:'Но голубей 10, а клеток 7: осталось 3 голубя, и им НЕКУДА сесть, кроме уже занятых клеток.' },
+    { t:'Принцип Дирихле: если n предметов разложить по m ячейкам и n > m, то хотя бы в одной ячейке не меньше ⌈n/m⌉ предметов.',
+      s:'⌈10/7⌉ = 2. Знак ⌈ ⌉ — «округление вверх»: 10/7 = 1,43… → 2.' },
+    { t:'Почему «гарантированно»? Самое «равномерное» размещение — по одному. Если и при нём есть пара — пара будет всегда.',
+      s:'Дирихле отвечает на слова «гарантированно», «наверняка», «хотя бы»: ищи, что раскладывается, и куда.' },
+    { t:'Тренировка глаза: 13 носков, 6 цветов → в какой-то паре цветов минимум ⌈13/6⌉ = 3 носка одного цвета.',
+      s:'Ищи «предметы» и «ячейки» — они могут быть спрятаны: носки по цветам, ученики по месяцам, остатки по делителю…' } ],
+  check:{ q:'25 учеников, 12 месяцев рождения. Сколько учеников гарантированно родились в один месяц?', choices:['2','3','12','13'], ans:1,
+         exp:'⌈25/12⌉ = 3: даже при самых «честных» 12 месяцах (по 2 ученика) останется 25−24 = 1 лишний.' },
+  tasks:[
+    { q:'В классе 28 учеников. Сколько учеников гарантированно родились в один и тот же месяц?', kind:'unit', unit:'', ans:3, tol:0,
+      hints:['Предметы — ученики, ячейки — месяцы (их 12).','⌈28/12⌉ = ?','28 : 12 = 2,33… → округляем вверх: 3.'],
+      sol:'⌈28/12⌉ = 3. Даже если в каждый месяц попало бы не больше 2, поместилось бы лишь 24 — значит, где-то есть 3.' },
+    { q:'В коробке 40 карандашей 7 цветов. Сколько карандашей одного цвета гарантированно найдётся?', kind:'unit', unit:'', ans:6, tol:0,
+      hints:['Ячейки — цвета (7), предметы — карандаши (40).','⌈40/7⌉ = ?','40 : 7 = 5,71… → 6.'],
+      sol:'⌈40/7⌉ = 6: если бы каждого цвета было не больше 5, всего было бы не больше 35 < 40.' } ] },
+
+{ id:3, title:'Улитки в ячейках', src:'ВсОШ 2023/24 · 6 класс · №2', ico:'🐌',
+  explain:[
+    { t:'В вершинах семиугольника — ячейки. В одну положили 64 улитки. Каждый час улитки каждой ячейки поровну расходятся в две соседние.',
+      s:'Жми «Час +» и следи, как число в каждой ячейке делится пополам и раздаёт соседям. Сумма всегда 64!' },
+    { t:'Час 1: из стартовой ячейки 32 улитки ушли влево и 32 вправо. В ней самой — 0.',
+      s:'Число в ячейке x каждый час превращается в x/2 слева и x/2 справа. Это процесс, а не магия — считаем по шагам.' },
+    { t:'Час 2: из каждой занятой ячейки снова делим пополам. Видишь закономерность: заняты только «чётные» позиции от старта.',
+      s:'Чётность — твой компас: улиток всегда чётное число, поэтому деление пополам работает без остатка.' },
+    { t:'Час 3, час 4, час 5… Не гадай — просто «прокрути» процесс и выпиши числа.',
+      s:'Такие задачи решаются тупым честным подсчётом по шагам — но с умной головой: рисуй и не спеши.' },
+    { t:'Через 5 часов в оранжевой ячейке (через две от старта) оказалось 10 улиток — это и есть ответ задачи ВсОШ.',
+      s:'Запомни приём: процесс с делением пополам = рисуй шаги и следи за чётностью и симметрией.' } ],
+  check:{ q:'В процессе «улитки расходятся пополам» сумма улиток во всех ячейках…', choices:['растёт','падает','не меняется','зависит от формы'], ans:2,
+         exp:'Половина ушла влево, половина вправо — ничего не потерялось: сумма постоянна (здесь 64).' },
+  tasks:[
+    { q:'Шестиугольник, 64 улитки в одной вершине. Через 4 часа сколько улиток в противоположной вершине? Подумай о чётности!', kind:'choice',
+      choices:['0','10','20','32'], ans:0, unit:null,
+      hints:['После нечётного часа заняты «нечётные» вершины, после чётного — «чётные».','4 часа — чётное число: заняты вершины с чётным номером от старта.','Противоположная вершина имеет НЕчётный номер → пуста.'],
+      sol:'При чётном числе часов улитки только в вершинах с чётным номером от старта; противоположная — нечётная → там 0.' },
+    { q:'Семиугольник, 128 улиток в стартовой вершине. Через 5 часов сколько улиток в вершине «через две» (как в примере)?', kind:'unit', unit:'', ans:20, tol:0,
+      hints:['В примере было 64 улитки → 10. Улиток стало вдвое больше (128).','Процесс линеен: всё вырастет в 2 раза.','10 · 2 = 20.'],
+      sol:'Удвоение старта удваивает все числа по шагам: было 10 при 64, станет 20 при 128.' } ] },
+
+{ id:4, title:'Конфеты: чёт — правда, нечёт — ложь', src:'ВсОШ 2023/24 · 6 класс · №6', ico:'🍬',
+  explain:[
+    { t:'Ваня, Стёпа и Лёша взяли конфеты. Правило: взявший НЕчётное число — соврал, взявший чётное — сказал правду. Кто сколько взял?',
+      s:'Фразы: Ваня: «вместе 6». Стёпа: «нет, нечётное количество». Лёша: «я взял одну». Ваня: «каждый взял хотя бы одну».' },
+    { t:'Шаг 1. Смотрим на Лёшу. Он говорит «я взял одну». Если бы он сказал правду, у него было бы чётное число — но 1 нечётное. Противоречие!',
+      s:'Значит, Лёша соврал → у него НЕчётное число конфет, и «одна» — ложь → у него минимум 3.' },
+    { t:'Шаг 2. Допустим, Стёпа прав (у него чётное). Тогда «вместе нечётное» — правда. Но Ваня сказал «вместе 6» — тогда Ваня соврал (у него нечётное).',
+      s:'Считаем чётность: Лёша нечёт + Ваня нечёт + Стёпа чёт = чётное. Но Стёпа утверждает нечётное — противоречие.' },
+    { t:'Шаг 3. Значит, Стёпа соврал (у него нечётное), а «вместе нечётное» — ложь: вместе ЧЁТНОЕ число. Тогда Ваня прав (у него чётное, вместе 6).',
+      s:'Итог по чётности: Лёша нечёт (≥3), Стёпа нечёт (≥1), Ваня чёт (≥2), сумма ровно 6.' },
+    { t:'Шаг 4. Единственный вариант: Лёша 3, Стёпа 1, Ваня 2. Проверяем: 3 нечёт → Лёша соврал ✓, 1 нечёт → Стёпа соврал ✓, 2 чёт → Ваня прав ✓.',
+      s:'Главный приём: «если правда, то…» — ищи противоречие. Логика — это перебор случаев с проверкой.' } ],
+  check:{ q:'Почему Лёша не мог сказать правду?', choices:['он жадный','1 — нечётное, а правду говорят только с чётным числом','он сказал два слова','6 делится на 2'], ans:1,
+         exp:'Правда доступна только владельцу чётного числа, а фраза «у меня 1» требует числа 1 — нечётного. Противоречие.' },
+  tasks:[
+    { q:'В примере сколько конфет оказалось у Лёши?', kind:'unit', unit:'', ans:3, tol:0,
+      hints:['Лёша соврал → у него нечётное, не 1.','Сумма у всех — 6.','3 + 1 + 2 = 6 — единственный расклад.'],
+      sol:'Лёша 3, Стёпа 1, Ваня 2. Проверь по правилу чётности — всё сходится.' },
+    { q:'А сказал: «У нас вместе 5 конфет». Б сказал: «Я взял одну». Правило то же: чёт — правда, нечёт — ложь. Могут ли оба говорить правду?', kind:'choice',
+      choices:['Да','Нет'], ans:1, unit:null,
+      hints:['Если оба правы — у обоих чётное число конфет.','Сумма двух чётных чисел — чётная.','А утверждает нечётную сумму 5 — противоречие!'],
+      sol:'Правда → чётные количества → сумма чётная. Но А говорит «5» — нечётное. Значит, оба правы быть не могут.' } ] },
+
+{ id:5, title:'Круговой турнир', src:'ВсОШ 2023/24 · 6 класс · №8', ico:'♟',
+  explain:[
+    { t:'5 школьников сыграли круговой турнир: каждый с каждым — по разу. Победа 5 очков, ничья — по 2. Всего набрано 46 очков.',
+      s:'Настя победила на 2 раза больше Саши и в 2 раза меньше Юли; вничью сыграла 1 раз. Сколько очков у Антона, Гордея и Саши вместе?' },
+    { t:'Шаг 1. Победы Насти: не меньше 2 (на 2 больше Саши, а у Саши не меньше 0).',
+      s:'И не больше 2: иначе у Юли (вдвое больше) было бы больше 4 побед — а игр у каждого всего 4!' },
+    { t:'Шаг 2. Значит, у Насти ровно 2 победы, у Юли 4, у Саши 0. Смотри на полоски — они сравнялись с реальностью.',
+      s:'Всё, что осталось от 4 игр Насти: 2 победы + 1 ничья + 1 поражение.' },
+    { t:'Шаг 3. Считаем очки: Настя 2·5 + 2 + 0 = 12. Юля 4·5 = 20. Вместе 32.',
+      s:'Тогда на всех остальных (Антон, Гордей, Саша) приходится 46 − 32 = 14 очков. Ответ найден!' },
+    { t:'Приём: «оценка с двух сторон» — победы не меньше X и не больше X → ровно X. Потом честный подсчёт очков.',
+      s:'Полоски побед — визуальная подсказка: победы не могут превысить число сыгранных партий (4).' } ],
+  check:{ q:'Сколько всего партий сыграно в турнире из 5 игроков (каждый с каждым)?', choices:['5','10','20','25'], ans:1,
+         exp:'Пар — C(5,2) = 5·4/2 = 10: из каждого игрока выходит 4 партии, но каждая посчитана дважды.' },
+  tasks:[
+    { q:'В примере сколько очков набрали Антон, Гордей и Саша вместе?', kind:'unit', unit:'', ans:14, tol:0,
+      hints:['Сначала очки Насти: 2 победы + 1 ничья + 1 поражение.','Настя 12, Юля 20 — вместе 32.','46 − 32 = ?'],
+      sol:'Настя: 2·5+2+0 = 12; Юля: 4·5 = 20; остальные: 46 − 32 = 14.' },
+    { q:'В другом турнире из 6 игроков каждый сыграл с каждым один раз. Сколько всего было партий?', kind:'unit', unit:'', ans:15, tol:0,
+      hints:['Каждый из 6 сыграл с 5 другими.','Но партия посчитана дважды (А с Б и Б с А).','6·5/2 = ?'],
+      sol:'6·5/2 = 15 партий — классический подсчёт «рукопожатий».' } ] },
+
+{ id:6, title:'Оценка и пример: посёлки', src:'ВсОШ 2025/26 · 6 класс · №7', ico:'🏘',
+  explain:[
+    { t:'100 посёлков с номерами 1…100. Дорога между двумя есть, если сумма номеров делится на 5. Минимум дорог добавить, чтобы все были связаны?',
+      s:'Ключ — остатки при делении на 5. Номер делится на 5, если его остаток 0; сумма делится на 5, если остатки складываются в 0 или 5.' },
+    { t:'Пары остатков, дающие в сумме 0 (mod 5): (0,0), (1,4), (2,3). Вот и вся «карта дорог»!',
+      s:'Посёлки остатка 0 связаны друг с другом; остатка 1 — с остатком 4; остатка 2 — с остатком 3. Больше дорог нет.' },
+    { t:'Значит, сеть распадается на 3 «острова»: кратные 5; остатки 1 и 4; остатки 2 и 3. Внутри острова — всё связано, между островами — ничего.',
+      s:'Смотри на группы: обведены три компоненты связности.' },
+    { t:'Оценка: чтобы связать 3 отдельных острова, нужно минимум 3 − 1 = 2 дороги.',
+      s:'Каждая новая дорога может «склеить» не больше двух островов — двух дорог достаточно, меньше — нельзя.' },
+    { t:'Пример: построили 2 дороги между островами — теперь из любого посёлка можно добраться до любого. Оценка + пример = ответ 2.',
+      s:'Так решаются «минимальные» задачи: сначала докажи, что меньше нельзя (оценка), потом покажи, что столько хватает (пример).' } ],
+  check:{ q:'На сколько «островов» распадается сеть посёлков в примере?', choices:['2','3','5','100'], ans:1,
+         exp:'Острова: {кратные 5}, {остатки 1 и 4}, {остатки 2 и 3} — всего 3 компоненты.' },
+  tasks:[
+    { q:'Сколько компонент связности в сети посёлков 1…100 (делимость на 5)?', kind:'unit', unit:'', ans:3, tol:0,
+      hints:['Пары остатков с суммой, кратной 5: (0,0), (1,4), (2,3).','Остаток 0 — остров; 1∪4 — остров; 2∪3 — остров.','Их три.'],
+      sol:'Три компоненты: кратные 5; остатки 1 и 4; остатки 2 и 3.' },
+    { q:'Посёлки с номерами 1…20: дорога, если сумма номеров делится на 4. Какое минимальное число дорог надо добавить, чтобы связать все посёлки?', kind:'unit', unit:'', ans:2, tol:0,
+      hints:['Пары остатков mod 4 с суммой 0: (0,0), (1,3), (2,2).','Острова: {0}, {2}, {1 и 3} — три компоненты.','Три острова связывают 2 дорогами.'],
+      sol:'Три компоненты → нужно 2 дороги. Оценка: меньше нельзя (дорога склеивает максимум два острова).' } ] },
+];
+
+const SAVE_KEY='arhimed_urok_v1';
+let P={ a:1, b:7, c:2 };
+let state={ stars:0, done:{}, cur:null, phase:'list', step:0, taskDone:{} };
+try{ const s=JSON.parse(localStorage.getItem(SAVE_KEY)); if(s&&typeof s.stars==='number'){ state.stars=s.stars; state.done=s.done||{}; state.taskDone=s.taskDone||{}; } }catch(e){}
+function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify({stars:state.stars, done:state.done, taskDone:state.taskDone})); }catch(e){} }
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+/* ================= СПИСОК ================= */
+function goList(){ state.phase='list'; document.getElementById('listView').style.display=''; document.getElementById('lessonView').style.display='none'; renderList(); }
+function renderList(){
+  const el=document.getElementById('listView');
+  el.innerHTML=`<div class="lesson-list">${LESSONS.map(L=>`
+    <div class="lcard ${state.done[L.id]?'done':''}" onclick="openLesson(${L.id})">
+      <div class="num">Урок ${L.id} · ${state.done[L.id]?'пройден':'не пройден'}</div>
+      <h3>${L.ico} ${esc(L.title)}</h3>
+      <div class="src">${esc(L.src)}</div>
+      <div class="st"><span>⭐ ${state.done[L.id]?2:0}/2</span><span class="go">Открыть →</span></div>
+    </div>`).join('')}</div>`;
+  hud();
+}
+function hud(){
+  document.getElementById('hStars').textContent=state.stars;
+  document.getElementById('hDone').textContent='уроков: '+Object.keys(state.done).length+'/6';
+}
+
+/* ================= УРОК ================= */
+function openLesson(id){
+  state.phase='explain'; state.cur=id; state.step=0;
+  document.getElementById('listView').style.display='none';
+  document.getElementById('lessonView').style.display='';
+  renderLesson();
+}
+function L(){ return LESSONS[state.cur-1]; }
+
+function renderLesson(){
+  const les=L();
+  document.getElementById('lvHead').innerHTML=`<h1 style="font-size:17px;color:var(--parch)">Урок ${les.id} · ${esc(les.title)} <span style="font-size:11px;color:#8a94ad">· ${esc(les.src)}</span></h1>`;
+  const steps=les.explain.length;
+  document.getElementById('stepBar').innerHTML=steps>1
+    ? Array.from({length:steps},(_,i)=>`<div class="sdot ${i<state.step?'past':''} ${i===state.step?'on':''}"></div>`).join('')
+    : '';
+  const stepText=les.explain[state.step].t;
+  document.getElementById('msgEl').innerHTML=`<span class="who">◈ Архимед · объяснение</span>${esc(stepText)}`;
+  renderVis();
+  const isLast=state.step>=steps-1;
+  document.getElementById('navEl').innerHTML=`
+    <button class="btn" onclick="step(-1)" ${state.step===0?'disabled':''}>← Назад</button>
+    ${isLast
+      ? `<button class="btn ok" onclick="toCheckInit()">Понял! Проверю себя →</button>`
+      : `<button class="btn" onclick="step(1)">Дальше →</button>`}`;
+  document.getElementById('phase2').innerHTML='';
+  document.getElementById('appNote').style.display='';
+}
+function step(d){ state.step=Math.max(0,Math.min(L().explain.length-1,state.step+d)); renderLesson(); }
+
+/* ================= ВИЗУАЛИЗАЦИИ ================= */
+function renderVis(){
+  const el=document.getElementById('visEl');
+  const s=state.step;
+  switch(state.cur){
+    case 1: return visRev(el,s);
+    case 2: return visPigeons(el,s);
+    case 3: return visSnails(el,s);
+    case 4: return visCandy(el,s);
+    case 5: return visTourn(el,s);
+    case 6: return visVillages(el,s);
+  }
+}
+/* ---- Урок 1: перевёртыши ---- */
+function visRev(el){
+  const dg=(k,lo,hi)=>`<div class="dcol"><span class="dnum">${P[k]}</span>
+    <div style="display:flex;gap:4px"><button class="btnstep" onclick="chD('${k}',-1,${lo},${hi})">−</button>
+    <button class="btnstep" onclick="chD('${k}',1,${lo},${hi})">+</button></div></div>`;
+  const blk=(n,cls)=>`<div style="display:flex;flex-direction:column-reverse;gap:2px;min-height:150px">${Array.from({length:n},()=>`<div class="blk ${cls}"></div>`).join('')}</div>`;
+  const num=100*P.a+10*P.b+P.c, rev=100*P.c+10*P.b+P.a;
+  el.innerHTML=`<div style="text-align:center">
+    <div class="digits">
+      <div style="display:flex;align-items:flex-end;gap:10px">${dg('a',1,9)}${dg('b',0,9)}${dg('c',1,9)}</div>
+    </div>
+    <div class="live-row">
+      <span>число: <b>${num}</b></span>
+      <span>перевёртыш: <b>${rev}</b></span>
+      <span>сумма: <b>${num+rev}</b></span>
+      <span>разность: <b>${Math.abs(num-rev)}</b></span>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      ${blk(P.a,'hundreds')}<span style="font-size:22px;color:#8a94ad">${num}</span>
+    </div>
+    <div style="font-size:12px;color:#8a94ad;margin-top:4px">Сотни · десятки · единицы — крути цифры и следи за суммой и разностью</div>
+  </div>`;
+}
+function chD(k,d,lo,hi){ P[k]=Math.max(lo,Math.min(hi,P[k]+d)); renderVis(); }
+/* ---- Урок 2: голуби ---- */
+let pigeons=[];
+function visPigeons(el){
+  if(!pigeons.length){ pigeons=[]; for(let i=0;i<10;i++) pigeons.push(i%7); }
+  const cells=Array.from({length:7},()=>[]);
+  pigeons.forEach((p,i)=>cells[p].push(i));
+  el.innerHTML=`<div class="nests">${cells.map((c,i)=>{
+    const full=c.length>=2;
+    return `<div class="nest ${full?'win':''}">${c.map(()=>`<span class="pigeon">🕊</span>`).join('')}
+      <span class="nlab">клетка ${i+1} · ${c.length}</span></div>`;}).join('')}</div>
+    <div style="display:flex;gap:10px;margin-top:8px;align-items:center;flex-wrap:wrap;justify-content:center">
+      <button class="btnstep" onclick="flock()">🐦 Расселить голубей заново</button>
+      <span id="flockMsg" style="font-size:13px;color:#cbb89a">${pigeons.filter(p=>pigeons.filter(q=>q===p).length>=2).length? 'Есть клетка с парой — Дирихле сработал! ⌈10/7⌉ = 2':'Жми — и смотри'}</span>
+    </div>`;
+}
+function flock(){
+  pigeons=[];
+  // симулируем «равномерное» расселение: по кругу, затем остаток — к уже занятым
+  for(let i=0;i<7;i++) pigeons.push(i);
+  for(let i=0;i<3;i++) pigeons.push(i*2%7);
+  renderVis();
+  const m=document.getElementById('flockMsg');
+  if(m){ m.textContent='10 голубей, 7 клеток — куда-то точно сел второй! ⌈10/7⌉ = 2'; }
+}
+/* ---- Урок 3: улитки ---- */
+let snails={t:0, cells:[64,0,0,0,0,0,0]};
+function visSnails(el){
+  const cells=snails.cells;
+  const r=70, cx=150, cy=110;
+  const pts=Array.from({length:7},(_,i)=>{ const a=-Math.PI/2+i*2*Math.PI/7; return [cx+r*Math.cos(a), cy+r*Math.sin(a)]; });
+  const ring=pts.map((p,i)=>`<circle class="cellc ${i===3?'hot':''}" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="26"></circle>
+    <text x="${p[0].toFixed(1)}" y="${(p[1]+4).toFixed(1)}" text-anchor="middle" fill="${i===3?'#E8A33D':'#cbb89a'}" font-size="13">${cells[i]}</text>`).join('');
+  const lines=pts.map((p,i)=>{ const q=pts[(i+1)%7]; return `<line x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${q[0].toFixed(1)}" y2="${q[1].toFixed(1)}" stroke="#4a4538" stroke-width="2"></line>`; }).join('');
+  el.innerHTML=`<svg width="300" height="220" viewBox="0 0 300 220" style="max-width:100%">${lines}${ring}
+      <text x="150" y="26" text-anchor="middle" fill="#8a94ad" font-size="11">7 ячеек · сумма всегда 64</text>
+      <text x="150" y="212" text-anchor="middle" fill="${snails.t>=5?'#E8A33D':'#8a94ad'}" font-size="12">${snails.t>=5?'через 5 часов в оранжевой — 10 улиток ✓':'прошло часов: '+snails.t}</text></svg>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btnstep" onclick="hour()">⏱ Час +</button>
+      <button class="btnstep" onclick="snails={t:0,cells:[64,0,0,0,0,0,0]};renderVis()">↺ Сброс</button>
+    </div>`;
+}
+function hour(){
+  if(snails.t>=5) return;
+  const c=snails.cells, n=7, out=Array(n).fill(0);
+  c.forEach((x,i)=>{ if(x>0){ out[(i-1+n)%n]+=x/2; out[(i+1)%n]+=x/2; } });
+  snails.t++; snails.cells=out; renderVis();
+}
+/* ---- Урок 4: конфеты ---- */
+function visCandy(el){
+  const kids=[
+    {face:'🧒',name:'Ваня',cnt:2,state:'чёт → правда ✓'},
+    {face:'👦',name:'Стёпа',cnt:1,state:'нечёт → соврал ✓'},
+    {face:'👧',name:'Лёша',cnt:3,state:'нечёт → соврал ✓'}];
+  el.innerHTML=`<div class="kids">${kids.map(k=>`<div class="kid"><div class="face">${k.face}</div>
+    <div class="cnt">${k.cnt} 🍬</div><div class="nm" style="font-weight:bold">${k.name}</div>
+    <div class="state">${k.state}</div></div>`).join('')}</div>
+    <div style="margin-top:8px;font-size:13px;color:#cbb89a;text-align:center">Проверка: 2+1+3 = 6 · «вместе 6» правда (Ваня чёт) · Лёша не «одна», а 3 · сумма нечётной не была — Стёпа соврал про «нечётное»</div>`;
+}
+/* ---- Урок 5: турнир ---- */
+function visTourn(el){
+  const rows=[['Настя',2,12],['Юля',4,20],['Саша',0,0],['Антон+Гордей+Саша',null,14]];
+  const showPts=state.step>=3;
+  el.innerHTML=`<div class="wbar">${rows.map(r=>{
+    const w=r[1]===null?0:r[1], pts=showPts||r[0]==='Настя'||r[0]==='Юля'? r[2]:'?';
+    return `<div class="wrow"><span class="nm">${r[0]}</span>
+      <span class="tr"><i style="width:${r[1]===null?0:w/4*100}%"></i></span>
+      <span class="pt">${pts} очк.</span></div>`;}).join('')}</div>
+    <div style="font-size:12.5px;color:#8a94ad;margin-top:6px;text-align:center">Полоски — победы (макс 4 игры). Всего набрано 46 очков</div>`;
+}
+/* ---- Урок 6: посёлки ---- */
+function visVillages(el){
+  const groups=[['остаток 0','20 шт',true],['остаток 1','20 шт',true],['остаток 4','20 шт',true],['остаток 2','20 шт',true],['остаток 3','20 шт',true]];
+  const comps=state.step>=2; // выделяем компоненты
+  el.innerHTML=`<div class="groups">
+    ${groups.map((g,i)=>{
+      const comp = comps ? (i<=0?'компонента A':(i<=2?'компонента B':'компонента C')) : '';
+      return `<div class="grp ${comps?'comp':''}"><div class="gname">${g[0]}</div><div class="gcnt">${g[1]}</div>
+      <div style="font-size:10.5px;color:${comps?'#7FD1FF':'#54705f'}">${comp}</div></div>`;}).join('')}
+  </div>
+  <div class="roads">${state.step<1
+    ? 'Дороги: остаток 0 ↔ остаток 0 (сами с собой), 1 ↔ 4, 2 ↔ 3.'
+    : state.step===1
+      ? 'Смотри: посёлки остатка 1 связаны только с остатком 4 (1+4=5 ✓). С остатком 0 или 2 — дорог нет!'
+      : state.step===2
+        ? 'Три «острова»: {0}, {1 и 4}, {2 и 3} — внутри связаны, между собой — никак.'
+        : state.step===3
+          ? 'Оценка: 3 острова → минимум 2 дороги (каждая склеивает не больше двух островов).'
+          : 'Пример: 2 дороги соединили острова — сеть связана. Ответ: 2!'}</div>`;
+}
+
+/* ================= ПРОВЕРКА ПОНИМАНИЯ ================= */
+let checkChosen=null;
+function toCheckInit(){ checkChosen=null; toCheck(); }
+function toCheck(){
+  state.phase='check';
+  const c=L().check;
+  document.getElementById('msgEl').innerHTML=`<span class="who">◈ Архимед · проверь себя</span>Быстрый вопрос: ${esc(c.q)}`;
+  document.getElementById('navEl').innerHTML='';
+  const fb=checkChosen!==null? (checkChosen===c.ans
+    ? `<div class="fb right">✅ Точно! ${esc(c.exp)}</div><button class="btn ok" style="margin-top:8px" onclick="toTasks()">К задачам →</button>`
+    : `<div class="fb wrong">❌ Попробуй ещё раз. Подсказка: ${esc(c.exp)}</div>`):'';
+  document.getElementById('phase2').innerHTML=`<div class="task-box"><div class="choices">${c.choices.map((x,i)=>
+    `<button class="choice ${checkChosen===i?(i===c.ans?'right':'wrong'):''}" onclick="checkAns(${i})">${esc(x)}</button>`).join('')}</div>${fb}</div>`;
+  renderVis();
+}
+function checkAns(i){ checkChosen=i; toCheck(); }
+
+/* ================= ЗАДАЧИ ================= */
+let tChosen=null, tHints=0, curTask=0;
+function toTasks(){
+  state.phase='solve'; curTask=0; tChosen=null; tHints=0; renderSolve();
+}
+function renderSolve(){
+  const les=L(); const T=les.tasks[curTask]; if(!T){ return lessonDone(); }
+  const solved=state.taskDone[les.id]?.[curTask];
+  const hints=[0,1,2].map((_,i)=>`<button class="hint-btn" ${tHints>i||solved?'disabled':''} onclick="tUseHint(${i})">Подсказка ${i+1}</button>`).join('');
+  const openHints=[0,1,2].filter(i=>tHints>i).map(i=>`<div class="hint-box">${esc(T.hints[i])}</div>`).join('');
+  const input=T.kind==='unit'
+    ? `<div class="answer-row"><input type="number" id="tNum" step="any" placeholder="число" ${solved?'disabled':''}>
+       <button class="btn ok" style="margin-top:0" onclick="tCheckNum()" ${solved?'disabled':''}>Ответить</button></div>`
+    : `<div class="choices">${T.choices.map((c,i)=>`<button class="choice ${solved?(i===T.ans?'right':''):(tChosen===i?'wrong':'')}" ${solved?'disabled':''} onclick="tCheckCh(${i})">${esc(c)}</button>`).join('')}</div>`;
+  const fb = solved
+    ? `<div class="fb right">✅ Верно! +1 ⭐ ${curTask===les.tasks.length-1?'':' · теперь вторая задача'}</div>`
+    : '';
+  document.getElementById('msgEl').innerHTML=`<span class="who">◈ Архимед · реши сам · задача ${curTask+1} из ${les.tasks.length}</span>${esc(T.q)}`;
+  document.getElementById('navEl').innerHTML=`<button class="btn" onclick="step(0);document.getElementById('msgEl').innerHTML=''">↺ Перечитать объяснение</button>`;
+  document.getElementById('phase2').innerHTML=`<div class="task-box">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px">
+      <span style="color:#8a94ad;font-size:11.5px">задача ${curTask+1}/${les.tasks.length} · стиль ВсОШ</span>
+      <span style="color:var(--amber);font-size:11.5px">награда 1 ⭐</span></div>
+    ${input}<div class="hints">${hints}</div>${openHints}${fb}
+    ${solved?`<button class="btn ok" style="margin-top:10px" onclick="${curTask<les.tasks.length-1?'nextTask()':'backToLesson()'}">${curTask<les.tasks.length-1?'Следующая задача →':'Урок пройден! В меню ⭐'}</button>`:''}
+  </div>`;
+  hud();
+}
+function tUseHint(i){ if(tHints>i) return; tHints=i+1; renderSolve(); }
+function tCheckCh(i){
+  const T=L().tasks[curTask];
+  if(state.taskDone[L().id]?.[curTask]) return;
+  if(i===T.ans){ state.stars+=1; state.taskDone[L().id]=state.taskDone[L().id]||{}; state.taskDone[L().id][curTask]=true; save(); }
+  tChosen=i; renderSolve();
+}
+function tCheckNum(){
+  const T=L().tasks[curTask];
+  if(state.taskDone[L().id]?.[curTask]) return;
+  const n=parseFloat(document.getElementById('tNum').value);
+  if(isNaN(n)) return;
+  if(Math.abs(n-T.ans)<=T.tol){ state.stars+=1; state.taskDone[L().id]=state.taskDone[L().id]||{}; state.taskDone[L().id][curTask]=true; save(); }
+  renderSolve();
+}
+function nextTask(){ curTask++; tChosen=null; tHints=0; renderSolve(); }
+function lessonDone(){
+  const les=L();
+  if(!state.done[les.id]){ state.done[les.id]=true; save(); }
+  document.getElementById('msgEl').innerHTML=`<span class="who">◈ Архимед</span>Отлично! Ты прошёл урок «${esc(les.title)}». Приём усвоен — теперь он будет работать на любых похожих задачах ВсОШ.`;
+  document.getElementById('navEl').innerHTML=`<button class="btn ok" onclick="goList()">К списку уроков →</button>`;
+  document.getElementById('phase2').innerHTML=`<div class="task-box" style="text-align:center">
+    <div style="font-size:26px">🏆</div><div style="font-size:17px;margin:6px 0">Урок пройден!</div>
+    <div style="color:#cbb89a;font-size:13px">+2 ⭐ · всего звёзд: <b style="color:var(--amber)">${state.stars}</b></div></div>`;
+  showConfetti();
+  hud();
+}
+function backToLesson(){ lessonDone(); }
+function showConfetti(){ const d=document.createElement('div'); d.className='confetti';
+  for(let i=0;i<60;i++){ const s=document.createElement('span'); s.className='confetti-piece';
+    s.style.left=Math.random()*100+'%'; s.style.background=['#d9a441','#c8795a','#7fb8a0','#b06fd0','#6fb4f0'][i%5];
+    s.style.animationDelay=Math.random()*0.6+'s'; s.style.animationDuration=1.6+Math.random()*1.4+'s'; d.appendChild(s); }
+  document.body.appendChild(d); setTimeout(()=>d.remove(),4000); }
+
+window.openLesson=openLesson; window.goList=goList; window.step=step; window.chD=chD;
+window.flock=flock; window.hour=hour;
+window.toCheck=toCheck; window.toCheckInit=toCheckInit; window.checkAns=checkAns; window.toTasks=toTasks;
+window.tUseHint=tUseHint; window.tCheckCh=tCheckCh; window.tCheckNum=tCheckNum;
+window.nextTask=nextTask; window.backToLesson=backToLesson;
+renderList();
+</script>
+</body>
+</html>

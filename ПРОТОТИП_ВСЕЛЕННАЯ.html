@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Вселенная · все острова в одном месте</title>
+<style>
+  :root { --deep:#0b1712; --panel:#13251c; --card:#182f24; --brass:#d9a441; --brass-d:#a3762a;
+    --ivory:#e8e0cc; --muted:#8fa08f; --glass:#7fb8a0; --hairline:rgba(217,164,65,.25); --glow:#7fd1ff; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Georgia',serif;
+    background: radial-gradient(ellipse at 50% -10%, #1a3226 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 110%, #132a20 0%, transparent 45%), var(--deep);
+    color:var(--ivory); min-height:100vh; padding:22px 14px 40px; }
+  .wrap { max-width:1000px; margin:0 auto; }
+  /* шапка */
+  header { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;
+    border-bottom:1px solid var(--hairline); padding-bottom:14px; margin-bottom:14px; }
+  .logo { font-size:24px; letter-spacing:.06em; color:var(--brass); }
+  .logo em { font-style:italic; color:var(--glass); }
+  .sub { font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .hud { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .hud .chip { background:var(--panel); border:1px solid var(--hairline); border-radius:999px;
+    padding:6px 14px; font-size:13px; }
+  .hud b { color:var(--brass); }
+  .hud .rank { border-color:rgba(217,164,65,.55); color:var(--brass); }
+  .btn-ghost { background:none; border:1px solid var(--hairline); color:var(--muted); border-radius:8px;
+    padding:6px 12px; font-family:inherit; font-size:12.5px; cursor:pointer; }
+  .btn-ghost:hover { color:var(--ivory); border-color:var(--brass); }
+  /* прогресс */
+  .progress-line { display:flex; align-items:center; gap:10px; margin-bottom:16px; font-size:12.5px; color:var(--muted); }
+  .track { flex:1; height:10px; background:var(--panel); border:1px solid var(--hairline); border-radius:999px; overflow:hidden; }
+  .fill { height:100%; width:0; background:linear-gradient(90deg,var(--brass-d),var(--brass)); border-radius:999px;
+    transition:width .6s ease; }
+  /* онбординг-мини */
+  .onboard { background:linear-gradient(180deg,var(--panel),#0f1f17); border:1px solid var(--hairline);
+    border-radius:14px; padding:22px; margin-bottom:16px; }
+  .onboard h2 { font-weight:normal; font-size:19px; color:var(--brass); margin-bottom:8px; }
+  .onboard input { width:220px; max-width:100%; font-family:inherit; font-size:16px; padding:9px 12px;
+    border:2px solid var(--brass); border-radius:8px; background:#0d1a13; color:var(--ivory); margin:8px 8px 0 0; }
+  .onboard select { font-family:inherit; font-size:14px; padding:9px 10px; border:2px solid var(--hairline);
+    border-radius:8px; background:#0d1a13; color:var(--ivory); margin-top:8px; }
+  .btn-brass { background:linear-gradient(180deg,var(--brass),var(--brass-d)); color:#201a08; border:none;
+    border-radius:8px; padding:10px 18px; font-family:inherit; font-size:14px; font-weight:bold; cursor:pointer; margin-top:10px; }
+  /* карта островов */
+  .map-title { font-size:14px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin:18px 0 12px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:14px; }
+  .island { position:relative; background:linear-gradient(170deg,var(--card),#101f18); border:1px solid var(--hairline);
+    border-radius:14px; padding:18px; cursor:pointer; transition:transform .15s, border-color .15s, box-shadow .15s;
+    overflow:hidden; }
+  .island:hover { transform:translateY(-3px); border-color:var(--brass); box-shadow:0 12px 30px rgba(0,0,0,.5); }
+  .island .ico { font-size:30px; }
+  .island .name { font-size:16px; font-weight:bold; margin:8px 0 4px; color:var(--ivory); }
+  .island .dsc { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .island .meta { display:flex; justify-content:space-between; align-items:center; margin-top:12px; font-size:12px; }
+  .island .prog { color:var(--glass); }
+  .island .open { background:var(--brass); color:#201a08; border:none; border-radius:8px; padding:7px 14px;
+    font-family:inherit; font-size:12.5px; font-weight:bold; cursor:pointer; }
+  .island .tag { position:absolute; top:14px; right:14px; font-size:10.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--brass); border:1px solid var(--hairline); border-radius:999px; padding:3px 9px; }
+  /* модалка */
+  .modal { position:fixed; inset:0; background:rgba(4,9,6,.9); display:none; flex-direction:column; z-index:60; padding:14px; }
+  .modal.open { display:flex; }
+  .modal-bar { display:flex; justify-content:space-between; align-items:center; padding:6px 4px 10px; }
+  .modal-bar .t { font-size:15px; color:var(--brass); }
+  .modal-bar .close { background:var(--brass); color:#201a08; border:none; border-radius:8px; padding:7px 16px;
+    font-family:inherit; font-size:13px; font-weight:bold; cursor:pointer; }
+  .modal iframe { flex:1; width:100%; border:1px solid var(--hairline); border-radius:10px; background:#10150f; }
+  .note { text-align:center; font-size:11.5px; color:#54705f; margin-top:18px; line-height:1.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="logo">АРХИМЕД <em>· Вселенная</em></div>
+      <div class="sub">Острова Познания · математика, физика, химия — в одном приключении</div>
+    </div>
+    <div class="hud">
+      <span class="chip">🧭 <b id="hudName">Исследователь</b></span>
+      <span class="chip">⭐ <b id="hudStars">0</b></span>
+      <span class="chip rank" id="hudRank">Стажёр</span>
+      <button class="btn-ghost" onclick="resetAll()">↺ Сброс</button>
+    </div>
+  </header>
+
+  <div class="progress-line">
+    <span id="progLabel">Открыто островов: 0/6</span>
+    <div class="track"><div class="fill" id="progFill"></div></div>
+    <span id="progPct">0%</span>
+  </div>
+
+  <div id="onboard"></div>
+
+  <div class="map-title">🗺 Карта Островов Познания</div>
+  <div class="grid" id="grid"></div>
+  <div class="note">Прототип-интегратор «АРХИМЕД» · прогресс сохраняется в браузере · 3D-лаборатория химии открывается отдельно (React-сервер)</div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-bar">
+    <span class="t" id="modalTitle">Остров</span>
+    <button class="close" onclick="closeModal()">✕ Закрыть</button>
+  </div>
+  <iframe id="modalFrame" src="about:blank" title="модуль"></iframe>
+</div>
+
+<script>
+/* ================= ОСТРОВА ================= */
+const ISLANDS = [
+  { id:'math', file:'ПРОТОТИП_МАТЕМАТИКА_ТРЕНАЖЕР.html', ico:'🏛', name:'Остров Сиракузы · Математика', dsc:'26 задач: логика, Дирихле, комбинаторика, дроби, проценты, движение. 3D-сцены, ползунки, миссии Архимеда.', tag:'математика' },
+  { id:'phys', file:'ПРОТОТИП_ФИЗИКА_ТРЕНАЖЕР.html', ico:'🍎', name:'Башня Ньютона · Физика', dsc:'26 задач: кинематика, силы, энергия, теплота, электричество, рычаги. 3D-сцены, ползунки, разбор с векторами.', tag:'физика' },
+  { id:'ch1', file:'ПРОТОТИП_ГЛАВА1_СИРАКУЗЫ.html', ico:'🧭', name:'Глава 1 «Стражники»', dsc:'Квест-прототип: рыцарь и лжец, подсказки-лестница, «Решение Архимеда».', tag:'квест' },
+  { id:'pend', file:'ПРОТОТИП_ЛАБОРАТОРИЯ_МАЯТНИК.html', ico:'🕰', name:'Лаборатория · Маятник', dsc:'Эксперимент: измерь g с точностью и получи медаль олимпийца.', tag:'лаборатория' },
+  { id:'chem', file:'ПРОТОТИП_ХИМИЯ_ТРЕНАЖЕР.html', ico:'⚗️', name:'Лаборатория Лавуазье · Химия', dsc:'7 задач: молекулы, уравнения, растворы, газы, титрование. 3D-сцены с анимацией.', tag:'химия' },
+  { id:'titr', file:'ПРОТОТИП_ТИТРОВАНИЕ.html', ico:'🧪', name:'Лаборатория · Титрование', dsc:'Химия: поймай точку эквивалентности, рассчитай концентрацию.', tag:'химия' },
+  { id:'chem3d', url:'http://localhost:5173/', ico:'🔬', name:'3D-лаборатория химии (React)', dsc:'Фотореалистичная сцена: драг пробирок, выливание, миссии. Нужен запущенный сервер.', tag:'3d · внешний' },
+];
+
+const RANKS = [
+  [0,'Стажёр'], [6,'Исследователь'], [14,'Стратег'], [24,'Хранитель Островов'], [34,'Мастер Вселенной'], [48,'Легенда Островов'],
+];
+
+/* ================= ПРОФИЛЬ ================= */
+const PKEY='arhimed_profile_v1';
+let profile={name:'',level:'novice'};
+try{const s=JSON.parse(localStorage.getItem(PKEY)); if(s&&s.name) profile=Object.assign(profile,s);}catch(e){}
+
+/* ================= ПРОГРЕСС ================= */
+function readJSON(k){ try{ const s=JSON.parse(localStorage.getItem(k)); return s||null; }catch(e){ return null; } }
+function progress(){
+  const math=readJSON('arhimed_math3d_v1')||{}, phys=readJSON('arhimed_phys3d_v1')||{};
+  const ch1=readJSON('arhimed_proto_v1')||{}, pend=readJSON('arhimed_lab_v1')||{}, titr=readJSON('arhimed_titr_v1')||{};
+  const chem=readJSON('arhimed_chem_v1')||{};
+  const stars=(math.stars||0)+(phys.stars||0)+(chem.stars||0);
+  const ch1solved=ch1.solved||[];
+  const ch1done=ch1solved.length>=3 && ch1solved.every(Boolean);
+  const done=[
+    (math.solved||[]).length>=26, (phys.solved||[]).length>=26, (chem.solved||[]).length>=7,
+    ch1done, !!pend.medal, !!titr.medal,
+  ].filter(Boolean).length;
+  const extra=(ch1.points||0)>0 && !ch1done ? 1 : 0;
+  const total=done+extra;
+  return { stars, done:total, all:7 };
+}
+function rankName(stars){ let n=RANKS[0][1]; for(const [t,name] of RANKS) if(stars>=t) n=name; return n; }
+
+/* ================= РЕНДЕР ================= */
+function render(){
+  const p=progress();
+  document.getElementById('hudName').textContent=profile.name||'Исследователь';
+  document.getElementById('hudStars').textContent=p.stars;
+  document.getElementById('hudRank').textContent=rankName(p.stars);
+  const pct=Math.round(p.done/p.all*100);
+  document.getElementById('progLabel').textContent=`Открыто островов: ${p.done}/${p.all}`;
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('progPct').textContent=pct+'%';
+
+  // онбординг
+  const ob=document.getElementById('onboard');
+  if(!profile.name){
+    ob.innerHTML=`<div class="onboard"><h2>🧭 Добро пожаловать во вселенную!</h2>
+      Архимед: «Назови себя, Исследователь, и выбери путь — я открою тебе карту Островов Познания».
+      <div><input id="obName" maxlength="20" placeholder="Твоё имя…">
+      <select id="obLevel"><option value="novice">🌱 Я новичок</option><option value="advanced">⚡ Уже решал олимпиады</option></select></div>
+      <button class="btn-brass" onclick="saveProfile()">Войти во вселенную →</button></div>`;
+  } else ob.innerHTML='';
+
+  // карта
+  const g=document.getElementById('grid');
+  g.innerHTML=ISLANDS.map((is,i)=>{
+    let meta='';
+    if(is.id==='math'||is.id==='phys'||is.id==='chem'){ const key=is.id==='math'?'arhimed_math3d_v1':(is.id==='phys'?'arhimed_phys3d_v1':'arhimed_chem_v1');
+      const st=readJSON(key)||{}; const total=is.id==='chem'?7:26;
+      const solved=(st.solved||[]).length; meta=`<span class="prog">⭐ ${st.stars||0} · решено ${solved}/${total}</span>`; }
+    else if(is.id==='ch1'){ const c=readJSON('arhimed_proto_v1')||{}; const done=(c.solved||[]).filter(Boolean).length;
+      meta=`<span class="prog">задач: ${done}/3</span>`; }
+    else if(is.id==='pend'){ const m=readJSON('arhimed_lab_v1')||{}; meta=`<span class="prog">${m.medal||'—'}</span>`; }
+    else if(is.id==='titr'){ const m=readJSON('arhimed_titr_v1')||{}; meta=`<span class="prog">${m.medal||'—'}</span>`; }
+    else meta='<span class="prog">открыть в новой вкладке</span>';
+    return `<div class="island" onclick="openIsland(${i})">
+      <span class="tag">${is.tag}</span><div class="ico">${is.ico}</div>
+      <div class="name">${is.name}</div><div class="dsc">${is.dsc}</div>
+      <div class="meta">${meta}<span class="open">Открыть</span></div></div>`;
+  }).join('');
+}
+function saveProfile(){
+  const n=document.getElementById('obName').value.trim();
+  if(!n){ alert('Архимед ждёт твоё имя!'); return; }
+  profile={name:n, level:document.getElementById('obLevel').value};
+  try{ localStorage.setItem(PKEY, JSON.stringify(profile)); }catch(e){}
+  render();
+}
+function openIsland(i){
+  const is=ISLANDS[i];
+  if(is.url){ window.open(is.url,'_blank'); return; }
+  document.getElementById('modalTitle').textContent=is.ico+' '+is.name;
+  document.getElementById('modalFrame').src=is.file;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('modalFrame').src='about:blank';
+  render(); // обновить прогресс после модуля
+}
+function resetAll(){
+  if(!confirm('Сбросить ВЕСЬ прогресс по всем островам?')) return;
+  ['arhimed_math3d_v1','arhimed_phys3d_v1','arhimed_chem_v1','arhimed_proto_v1','arhimed_lab_v1','arhimed_titr_v1','arhimed_profile_v1'].forEach(k=>localStorage.removeItem(k));
+  profile={name:'',level:'novice'}; render();
+}
+render();
+</script>
+</body>
+</html>

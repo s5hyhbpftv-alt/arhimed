@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Сиракузы · Математика · Миссия и 3D</title>
+<style>
+  :root { --brick:#7A4A33; --brick-dark:#5c3623; --amber:#E8A33D; --fog:#9FB4C7;
+    --ink:#2c2318; --parch:#f6ecd2; --paper:#fdf9ee; --night:#141F38; --glow:#7FD1FF; --olive:#5F7A3A; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:Georgia,"Times New Roman",serif;
+    background: radial-gradient(ellipse at 50% 0%,#3a3328 0%,transparent 55%), linear-gradient(165deg,#2e2a24 0%,#1c1915 70%);
+    color:var(--parch); min-height:100vh; display:flex; justify-content:center; padding:16px 12px; }
+  #app { max-width:860px; width:100%; }
+  header { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+    padding:8px 2px 10px; border-bottom:1px solid rgba(232,163,61,.35); margin-bottom:10px; }
+  h1 { font-size:19px; color:var(--amber); font-weight:normal; }
+  .sub { font-size:12px; color:#8a94ad; }
+  .hud { display:flex; gap:12px; font-size:13px; color:var(--fog); flex-wrap:wrap; }
+  .hud b { color:var(--amber); }
+  .progress { display:flex; gap:5px; margin-bottom:10px; }
+  .dot { flex:1; height:7px; border-radius:4px; background:#3a3a33; }
+  .dot.done { background:var(--olive); }
+  .dot.current { background:var(--amber); }
+  .mission { display:flex; align-items:center; gap:10px; flex-wrap:wrap; background:#1f1c16;
+    border:1px solid rgba(232,163,61,.3); border-radius:9px; padding:8px 14px; margin-bottom:10px; font-size:13.5px; }
+  .mission .m-ico { font-size:18px; }
+  .mission .m-text { color:#cbb89a; }
+  .mission b { color:var(--amber); }
+  .rank-badge { margin-left:auto; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--glow); }
+  .stage { position:relative; border:1px solid rgba(232,163,61,.4); border-radius:12px; overflow:hidden;
+    background:radial-gradient(ellipse at 50% 30%,#2b2720,#16130f); margin-bottom:12px; }
+  .stage::after { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(0,0,0,.4) 100%);
+    mix-blend-mode:multiply; }
+  .stage canvas { display:block; width:100%; height:auto; }
+  .stage-cap { position:absolute; left:12px; bottom:8px; font-size:11.5px; color:#8a94ad; letter-spacing:.08em; }
+  .card { background:linear-gradient(180deg,#26221c,#1d1a15); border:1px solid rgba(232,163,61,.4);
+    border-radius:12px; padding:18px 20px; box-shadow:0 12px 34px rgba(0,0,0,.5); }
+  .story { font-style:italic; color:#cbb89a; border-left:3px solid var(--brick); padding-left:12px; margin:8px 0; font-size:14px; line-height:1.5; }
+  .q { font-size:15.5px; font-weight:bold; margin:8px 0 4px; }
+  .arch { background:linear-gradient(135deg,rgba(44,62,107,.25),rgba(127,209,255,.08));
+    border:1px solid rgba(127,209,255,.35); border-radius:8px; padding:9px 13px; margin:8px 0;
+    color:#cfd8ea; font-size:13px; line-height:1.5; }
+  .arch .who { display:block; font-size:10.5px; letter-spacing:2px; text-transform:uppercase; color:var(--amber); margin-bottom:2px; }
+  .answer-row { display:flex; gap:8px; align-items:center; margin:10px 0 4px; flex-wrap:wrap; }
+  input[type=number] { width:130px; font-family:Georgia,serif; font-size:19px; padding:8px 11px;
+    border:2px solid var(--amber); border-radius:8px; background:#101018; color:var(--paper); outline:none; }
+  select { font-family:Georgia,serif; font-size:14px; padding:8px 9px; border:2px solid var(--amber);
+    border-radius:8px; background:#101018; color:var(--paper); }
+  .choices { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+  .choice { background:#2a2620; border:1.5px solid #4a4538; border-radius:9px; padding:10px 13px;
+    font-family:inherit; font-size:14px; text-align:left; color:var(--parch); cursor:pointer; }
+  .choice:hover { border-color:var(--amber); }
+  .choice.right { border-color:var(--olive); background:#243320; }
+  .choice.wrong { border-color:#b0513c; background:#3a2218; }
+  .hints { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .hint-btn { background:var(--olive); color:#fff; border:none; border-radius:7px; padding:7px 13px;
+    font-family:inherit; font-size:12.5px; cursor:pointer; }
+  .hint-btn:disabled { background:#3d4a30; cursor:not-allowed; }
+  .hint-box { background:#2a2620; border:1px dashed var(--amber); border-radius:8px; padding:9px 12px; margin-top:8px; font-size:13px; color:#cbb89a; }
+  .sliders { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#1f1c16;
+    border:1px solid rgba(232,163,61,.25); border-radius:9px; padding:9px 14px; margin-bottom:10px; font-size:12.5px; }
+  .sliders label { display:flex; align-items:center; gap:8px; color:#cbb89a; }
+  .sliders input[type=range] { width:110px; accent-color:var(--amber); }
+  .sliders .live { margin-left:auto; color:var(--amber); font-weight:bold; }
+  .fb { margin-top:9px; padding:9px 12px; border-radius:8px; font-size:13px; }
+  .fb.right { background:#243320; border:1px solid var(--olive); }
+  .fb.wrong { background:#3a2218; border:1px solid #b0513c; }
+  .sol { background:#201c16; border:1px solid var(--amber); border-radius:9px; padding:11px 13px; margin-top:10px; font-size:13px; line-height:1.55; color:#d9c9a8; }
+  .sol b { color:var(--amber); }
+  .btn { background:linear-gradient(180deg,var(--brick),var(--brick-dark)); color:#fff; border:none;
+    border-radius:9px; padding:10px 19px; font-family:inherit; font-size:14.5px; cursor:pointer; margin-top:12px; }
+  .btn:disabled { opacity:.45; cursor:not-allowed; }
+  .confetti { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:50; }
+  .confetti-piece { position:absolute; top:-12px; width:8px; height:14px; border-radius:2px; opacity:.9; animation:fall linear forwards; }
+  @keyframes fall { to { transform:translateY(110vh) rotate(720deg); } }
+  .note { text-align:center; font-size:11px; color:#5d6a8a; margin-top:10px; }
+
+/* === мобильная адаптация (АРХИМЕД PWA) === */
+@media (max-width: 640px){
+  body { padding:10px 8px 28px; }
+  h1 { font-size:17px; }
+  #app { max-width:100%; }
+  .card { padding:14px 13px; }
+  .btn, .btn2, .btn3, .choice, .hint-btn, .hint { min-height:48px; font-size:15px; }
+  .btn, .btn2, .btn3 { width:100%; padding:12px 16px; }
+  .choice { padding:12px 14px; }
+  .hud { font-size:12px; gap:8px; }
+  .sliders, .controls { flex-direction:column; align-items:stretch; gap:10px; }
+  .sliders input[type=range] { width:100%; }
+  .answer-row { gap:6px; }
+  input[type=number] { width:116px; font-size:19px; }
+  .story, .q { font-size:14px; }
+  .mission { padding:8px 10px; font-size:13px; }
+  .protocol, .panel { padding:10px; overflow-x:auto; }
+  .stage-cap { font-size:10px; }
+  .note { font-size:10px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div><h1>🏛 Сиракузы · Миссия</h1><div class="sub">213 г. до н.э. · осада города · ты — ученик Архимеда</div></div>
+    <div class="hud"><span>⭐ <b id="hudPoints">0</b></span><span>🔥 <b id="hudStreak">0</b></span><span class="rank-badge" id="hudRank">Стажёр</span></div>
+  </header>
+  <div class="progress" id="progress"></div>
+  <div class="mission" id="mission"></div>
+  <div class="stage"><div id="stage3d"></div><div class="stage-cap" id="stageCap">3D-симуляция задачи</div></div>
+  <div class="sliders" id="sliders"></div>
+  <div class="card" id="card"></div>
+  <div class="note">Прототип · «АРХИМЕД» · математика · ответ — число с единицей или выбор · 3D-анимация каждой задачи</div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+
+<script type="module">
+import * as THREE from 'three'
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
+import { SSAOPass } from 'three/addons/postprocessing/SSAOPass.js'
+
+/* ================= ЗАДАЧИ (с миссией) ================= */
+const TASKS = [
+  { id:1, title:'Две двери', ch:'Гл.1 · Логика', diff:2,
+    mission:'Пройди ворота Сиракуз: один стражник врёт, второй — нет!',
+    beat:'Ворота открыты — ты обманул саму логику!',
+    story:'Перед тобой две двери: за одной — оружейная Архимеда, за другой — ловушка. Два стражника: один всегда говорит правду, второй всегда лжёт. Разрешён один вопрос одному стражнику.',
+    q:'Какой вопрос задать, чтобы наверняка найти оружейную?', type:'choice',
+    choices:['«Какая дверь ведёт в оружейную?»','«Какую дверь указал бы твой товарищ?» — и пойти в противоположную','«Ты — стражник?»'], answer:1,
+    hints:['Представь, что ты спросил лжеца о том, что скажет правдивый.','Оба стражника укажут на ОДНУ и ту же дверь. Какую?','Спроси о другом. И сделай наоборот.'],
+    sol:'Правдивый честно скажет, куда укажет лжец, — в ложную дверь. Лжец соврёт о честном — и тоже укажет в ложную. Оба в ловушку → оружейная в другой.',
+    trap:'Спросить «какая дверь правильная?» — лжец соврёт, риск 50/50.',
+    art:'Бронзовый ключ' },
+  { id:2, title:'Голуби и клетки', ch:'Гл.1 · Принцип Дирихле', diff:2,
+    mission:'Докажи: 10 голубей в 7 клетках — совпадение неизбежно!',
+    beat:'Два голубя в одной клетке — Дирихле доказан!',
+    story:'Ксанф насчитал 10 голубей на площади и 7 клеток для них. Архимед усмехается: «Сколько голубей ГАРАНТИРОВАННО окажутся в одной клетке?»',
+    q:'Сколько голубей гарантированно в одной клетке?', type:'unit', unit:'голубя', answer:2, tol:0,
+    hints:['Если голубей больше, чем клеток, — что неизбежно?','10 голубей, 7 клеток: 10 ÷ 7 = 1 целый + остаток 3.','Минимум = ⌈10/7⌉ = 2.'],
+    sol:'⌈N/M⌉ = ⌈10/7⌉ = 2. Если бы в каждой клетке было не больше 1 голубя, клеток понадобилось бы 10, а их 7 — значит, двое обязательно делят клетку.',
+    trap:'Ответить «1» — нет: голубей больше, чем клеток.',
+    art:'Голубиное перо' },
+  { id:3, title:'Арсенал Архимеда', ch:'Гл.1 · Правило умножения', diff:1,
+    mission:'Собери арсенал: машины и снаряды — сколько комбинаций?',
+    beat:'Арсенал готов: 12 способов обстрела!',
+    story:'В арсенале 4 метательные машины и 3 вида снарядов: камни, горшки с огнём, ядра. Сколько разных комбинаций «машина + снаряд» можно собрать?',
+    q:'Сколько комбинаций?', type:'unit', unit:'комбинаций', answer:12, tol:0,
+    hints:['Для каждой машины — сколько вариантов снаряда?','4 машины × 3 снаряда — правило умножения.'],
+    sol:'4 × 3 = 12. Каждую машину можно снарядить тремя способами — комбинации перемножаются.',
+    trap:'Сложить 4 + 3 = 7 — комбинации перемножаются, а не складываются.',
+    art:'Чертёж баллисты' },
+  { id:4, title:'Площадь пола', ch:'Гл.2 · Геометрия', diff:1,
+    mission:'Выложи пол арсенала плиткой 1×1 м!',
+    beat:'Пол выложен: 24 плитки!',
+    story:'Пол арсенала — прямоугольник 6 м на 4 м. Сколько плиток 1×1 м понадобится, чтобы выложить весь пол?',
+    q:'Сколько плиток?', type:'unit', unit:'плиток', answer:24, tol:0,
+    hints:['Площадь прямоугольника = длина × ширина.','6 × 4 = ?'],
+    sol:'6 × 4 = 24 плитки. Площадь — это сколько квадратиков помещается.',
+    trap:'Сложить 6 + 4 = 10 — это периметр, а нужна площадь (умножение).',
+    art:'Терракотовая плитка' },
+  { id:5, title:'Казнохранилище', ch:'Гл.2 · Среднее арифметическое', diff:2,
+    mission:'Подели добычу поровну между тремя сундуками!',
+    beat:'Добыча поделена: в среднем по 10 монет!',
+    story:'В трёх сундуках 10, 14 и 6 монет. Архимед приказывает уравнять. Сколько монет будет в среднем в каждом сундуке?',
+    q:'Среднее число монет?', type:'unit', unit:'монет', answer:10, tol:0,
+    hints:['Среднее = сумма ÷ количество.','(10 + 14 + 6) ÷ 3 = ?','30 ÷ 3 = 10.'],
+    sol:'(10+14+6)/3 = 30/3 = 10. Среднее — это «ровно поровну» на всех.',
+    trap:'Взять среднее двух крайних (10 и 6) — надо складывать ВСЕ значения.',
+    art:'Золотая монета' },
+  { id:6, title:'Зеркала обороны', ch:'Гл.3 · Инварианты', diff:3,
+    mission:'Настрой 7 зеркал: можно ли все повернуть влево?',
+    beat:'Невозможность доказана — инвариант побеждает!',
+    story:'На стене 7 зеркал: 6 повёрнуты влево, 1 вправо. За один ход можно перевернуть ровно 2 зеркала. Можно ли за конечное число ходов повернуть все зеркала влево?',
+    q:'Можно ли все повернуть влево?', type:'choice', choices:['Да','Нет','Зависит от порядка'], answer:1,
+    hints:['Что происходит с числом зеркал «вправо» при перевороте двух?','Переворот двух: −2, +2 или без изменений. Что не меняется?','Чётность числа «вправо» — инвариант: 1 (нечётно) → 0 (чётно) не достижимо.'],
+    sol:'Любой ход не меняет чётность числа «правых» зеркал: 1 (нечётно) никогда не станет 0 (чётно). Невозможно — инвариант сильнее перебора.',
+    trap:'Ответить «да» — попробуй: чётность не даст прийти к нулю.',
+    art:'Бронзовое зеркало' },
+  { id:7, title:'Весы Гиерона', ch:'Гл.3 · Взвешивания', diff:3,
+    mission:'Найди фальшивый слиток: он легче остальных!',
+    beat:'Фальшивка найдена за 2 взвешивания!',
+    story:'Среди 8 одинаковых на вид слитков один фальшивый — он легче. На чашечных весах без гирь. За какое минимальное число взвешиваний можно гарантированно найти фальшивый?',
+    q:'Минимальное число взвешиваний?', type:'unit', unit:'взвешиваний', answer:2, tol:0,
+    hints:['Весы дают ТРИ исхода: легче / тяжелее / равно.','8 слитков: дели на 3+3+2. Первое взвешивание сужает поиск.','Из тройки взвесь 1 и 1 — и всё.'],
+    sol:'8 = 3+3+2: взвешиваем тройки → находим, где фальшивка (3 или 2 слитка), затем 1+1. Два взвешивания. Весы — троичная машина: log₃8 ≈ 2.',
+    trap:'Делить пополам (4+4) — это 3 взвешивания, а не 2. Три части лучше!',
+    art:'Чашка весов' },
+  { id:8, title:'Полки Архимеда', ch:'Гл.4 · Перестановки', diff:3,
+    mission:'Расставь 4 свитка на полке — сколькими способами?',
+    beat:'Свитки расставлены: 24 способа!',
+    story:'На полку нужно поставить 4 свитка Архимеда: «О шаре», «О спиралях», «О плавающих телах» и «Псаммит». Сколькими способами их можно расставить в ряд?',
+    q:'Сколько способов расстановки?', type:'unit', unit:'способов', answer:24, tol:0,
+    hints:['Первый свиток — 4 варианта, второй — 3, третий — 2, последний — 1.','4 × 3 × 2 × 1 = 4!','4! = 24.'],
+    sol:'4! = 4·3·2·1 = 24. Факториал — «сколько переставить»: каждый выбор уменьшает варианты на единицу.',
+    trap:'Ответить 4 (число свитков) — это количество объектов, а не перестановок.',
+    art:'Свиток с печатью' },
+  { id:9, title:'Дороги союзников', ch:'Гл.4 · Сочетания', diff:3,
+    mission:'Соедини 6 городов дорогами — каждый с каждым!',
+    beat:'15 дорог построено — союз скреплён!',
+    story:'Шесть городов-союзников решили соединить дорогами так, чтобы из каждого города можно было попасть в каждый другой напрямую. Сколько дорог нужно?',
+    q:'Сколько дорог?', type:'unit', unit:'дорог', answer:15, tol:0,
+    hints:['Из каждого города выходит дорога к каждому из остальных: 6 × 5.','Но каждая дорога посчитана дважды (из А в Б и из Б в А).','6 × 5 / 2 = 15.'],
+    sol:'C(6,2) = 6·5/2 = 15. Пара городов — одна дорога: делим пополам, чтобы не считать дважды.',
+    trap:'Ответить 30 (6×5) — забыть, что дорога одна на пару.',
+    art:'Узел дороги' },
+  { id:10, title:'Смены стражников', ch:'Гл.5 · НОК', diff:3,
+    mission:'Согласуй смены: один стражник — каждые 3 дня, другой — каждые 5!',
+    beat:'Вместе через 15 дней — НОК найден!',
+    story:'Стражник А заступает каждые 3 дня, стражник Б — каждые 5. Они заступили вместе сегодня. Через сколько дней они снова заступят вместе?',
+    q:'Через сколько дней вместе?', type:'unit', unit:'дней', answer:15, tol:0,
+    hints:['Нужно число, которое делится и на 3, и на 5.','Первое такое число — наименьшее общее кратное.','НОК(3,5) = 15.'],
+    sol:'НОК(3,5) = 15. Число дней должно делиться и на 3, и на 5 — первое такое 15. Смены совпадут через 15 дней.',
+    trap:'Ответить 8 (3+5) — нужно ОБЩЕЕ кратное, а не сумма.',
+    art:'Песочные часы' },
+  { id:11, title:'Мешок фальшивых монет', ch:'БОСС · Гл.6', diff:4,
+    mission:'Босс: 10 мешков, в одном фальшивые монеты. Одно взвешивание!',
+    beat:'Мешок найден одним взвешиванием — ты гений!',
+    story:'10 мешков по 10 монет. В одном мешке все монеты фальшивые — по 9 г вместо 10 г. Разрешено одно-единственное взвешивание на точных весах. Сколько всего монет нужно взять, если из мешка №k брать ровно k монет?',
+    q:'Сколько всего монет взято (1+2+…+10)?', type:'unit', unit:'монет', answer:55, tol:0,
+    hints:['Из мешка №1 — 1 монета, №2 — 2, …, №10 — 10.','Сумма 1+2+…+10 = ?','Арифметическая прогрессия: 10·11/2 = 55.'],
+    sol:'1+2+…+10 = 55. Нехватка в граммах укажет номер мешка: если весы покажут 549 г — фальшивка в 1-м, 548 — во 2-м и т.д. Каждая монета — посланник своего мешка.',
+    trap:'Взять по 1 монете из каждого (10 монет) — тогда не различить мешки.',
+    art:'Корона Гиерона' },
+  { id:12, title:'Ограда арсенала', ch:'Гл.2 · Периметр', diff:1,
+    mission:'Обнеси арсенал 6×4 м оградой — какой периметр?',
+    beat:'Ограда построена: 20 м!',
+    story:'Арсенал — прямоугольник 6 м на 4 м. Сколько метров ограды нужно, чтобы обнести его по периметру?',
+    q:'Периметр арсенала?', type:'unit', unit:'м', answer:20, tol:0,
+    hints:['Периметр = сумма всех сторон.','P = 2·(a + b) = 2·(6+4).'],
+    sol:'P = 2·(6+4) = 20 м. Периметр — длина границы: две длины и две ширины.',
+    trap:'Ответить 24 (площадь 6×4) — площадь и периметр разные вещи.',
+    art:'Веревка межевщика' },
+  { id:13, title:'Объём сундука', ch:'Гл.2 · Объём', diff:2,
+    mission:'Заполни сундук 3×3×3 кубиками 1×1×1!',
+    beat:'Сундук полон: 27 кубиков!',
+    story:'Сундук для сокровищ — куб 3×3×3. Сколько кубиков 1×1×1 в него войдёт?',
+    q:'Сколько кубиков?', type:'unit', unit:'кубиков', answer:27, tol:0,
+    hints:['Объём куба = сторона³.','3·3·3 = ?'],
+    sol:'V = 3³ = 27. Объём — сколько маленьких кубиков помещается.',
+    trap:'Ответить 9 (3×3) — это площадь одной грани.',
+    art:'Кубик сокровищ' },
+  { id:14, title:'Доля добычи', ch:'Гл.2 · Проценты', diff:2,
+    mission:'Отдай союзникам 25% из 200 монет!',
+    beat:'Доля отдана: 50 монет союзникам!',
+    story:'Из добычи в 200 монет Архимед велит отдать союзникам 25%. Сколько монет получит каждый союзный город в сумме?',
+    q:'Сколько монет — 25% от 200?', type:'unit', unit:'монет', answer:50, tol:0,
+    hints:['25% — это четверть (25/100 = 1/4).','200 ÷ 4 = ?','200 · 0,25 = 50.'],
+    sol:'200 · 25% = 200 · 0,25 = 50. Процент — это доля: 25 из каждых 100.',
+    trap:'Ответить 25 (само число процентов) — это доля от базы, а не ответ.',
+    art:'Монета с чеканом' },
+  { id:15, title:'Смена стражи', ch:'Гл.3 · НОД', diff:3,
+    mission:'Согласуй смены: 12 и 18 дней — когда совпадут максимум?',
+    beat:'Смены согласованы: общий ритм — 6 дней!',
+    story:'Два отряда заступают каждые 12 и каждые 18 дней. Каждые сколько дней их смены совпадают наиболее часто?',
+    q:'Наибольший общий делитель НОД(12,18)?', type:'unit', unit:'дней', answer:6, tol:0,
+    hints:['Нужен наибольший делитель, общий для 12 и 18.','Делители 12: 1,2,3,4,6,12. Делители 18: 1,2,3,6,9,18.','Общий наибольший — 6.'],
+    sol:'НОД(12,18) = 6. Общие делители: 1,2,3,6 — самый большой 6.',
+    trap:'Ответить 36 (НОК) — тут нужен делитель, а не кратное.',
+    art:'Календарь стражника' },
+  { id:16, title:'Капитан и знаменосец', ch:'Гл.4 · Размещения', diff:3,
+    mission:'Выбери капитана и знаменосца из 5 воинов!',
+    beat:'Команда выбрана: 20 способов!',
+    story:'Из 5 воинов нужно выбрать капитана и знаменосца — это разные должности. Сколькими способами можно это сделать?',
+    q:'Сколько способов?', type:'unit', unit:'способов', answer:20, tol:0,
+    hints:['Капитана можно выбрать 5 способами.','После этого знаменосца — из оставшихся 4.','5 · 4 = 20.'],
+    sol:'5·4 = 20. Размещения: порядок важен (капитан ≠ знаменосец), поэтому перемножаем 5 и 4.',
+    trap:'Ответить 10 (5·4/2) — это если должности неважны; здесь важны.',
+    art:'Штандарт Сиракуз' },
+  { id:17, title:'Чётные в строю', ch:'Гл.5 · Делимость', diff:2,
+    mission:'Сосчитай чётные числа от 1 до 20!',
+    beat:'Чётных — 10: строй посчитан!',
+    story:'Воин построил номера от 1 до 20. Сколько среди них чётных чисел?',
+    q:'Сколько чётных чисел от 1 до 20?', type:'unit', unit:'чисел', answer:10, tol:0,
+    hints:['Чётные: 2, 4, 6, 8, …','Каждое второе число — чётное.','20 ÷ 2 = 10.'],
+    sol:'20/2 = 10. Чётные — каждое второе число: 2,4,…,20.',
+    trap:'Ответить 20 — не все числа чётные, только половина.',
+    art:'Жетон с числом' },
+  { id:18, title:'Углы треугольника', ch:'Гл.5 · Геометрия', diff:2,
+    mission:'Найди третий угол крепостного треугольника!',
+    beat:'Угол найден: 50°!',
+    story:'Крепостной треугольник: один угол 60°, другой 70°. Чему равен третий угол?',
+    q:'Третий угол?', type:'unit', unit:'градусов', answer:50, tol:0,
+    hints:['Сумма углов треугольника = 180°.','180 − 60 − 70 = ?'],
+    sol:'180 − 60 − 70 = 50°. Три угла всегда в сумме дают 180°.',
+    trap:'Ответить 130 (60+70) — это сумма двух, а нужен третий.',
+    art:'Медный угломер' },
+  { id:19, title:'Круги союза', ch:'Гл.5 · Множества', diff:3,
+    mission:'Сколько воинов любят хоть что-то: математику или физику?',
+    beat:'Союз полный: 40 воинов!',
+    story:'30 воинов любят математику, 20 — физику, а 10 любят обе. Сколько воинов любят хотя бы один предмет?',
+    q:'Сколько воинов любят хоть один предмет?', type:'unit', unit:'воинов', answer:40, tol:0,
+    hints:['Сложи 30 и 20 — но 10 посчитаны дважды.','30 + 20 − 10 = ?'],
+    sol:'30 + 20 − 10 = 40. Круги Эйлера: пересечение вычитаем один раз.',
+    trap:'Ответить 50 (30+20) — двоелюбы посчитаны дважды.',
+    art:'Два кольца' },
+  { id:20, title:'Потепление над Сиракузами', ch:'Гл.5 · Целые числа', diff:2,
+    mission:'Узнай, на сколько градусов потеплело от морозного утра до полдня!',
+    beat:'Термометр пройден: разница 10°!',
+    story:'Утром над Сиракузами термометр показывал −3°, а в полдень солнце разогрело воздух до +7°. Архимед спрашивает: на сколько градусов потеплело?',
+    q:'На сколько градусов потеплело?', type:'unit', unit:'градусов', answer:10, tol:0,
+    hints:['Начерти числовую ось: от −3 до +7.','Сколько делений от −3 до 0? А от 0 до +7?','3 + 7 = 10.'],
+    sol:'Разница = 7 − (−3) = 10°. Минус на минус даёт плюс: от −3 до +7 ровно 10 делений шкалы.',
+    trap:'Ответить 4 (7−3) — забыть морозную часть шкалы: от −3 до 0 ещё 3 деления.',
+    art:'Медный термометр' },
+  { id:21, title:'Амфоры с маслом', ch:'Гл.2 · Дроби', diff:2,
+    mission:'Подели склад: треть амфор — с оливковым маслом!',
+    beat:'Масло найдено: 4 амфоры!',
+    story:'На складе 12 амфор с маслом и вином. Архимед говорит: треть всех амфор — с оливковым маслом. Сколько амфор с маслом?',
+    q:'Сколько амфор с маслом?', type:'unit', unit:'амфор', answer:4, tol:0,
+    hints:['Треть — это 1/3 от всего.','12 ÷ 3 = ?'],
+    sol:'12 · 1/3 = 4. Треть от дюжины — четыре амфоры с маслом.',
+    trap:'Ответить 3 — «треть» это не «3 из 12», а 1/3 от 12, то есть 4.',
+    art:'Амфора с оливками' },
+  { id:22, title:'Гонцы навстречу', ch:'Гл.4 · Движение', diff:3,
+    mission:'Два гонца мчатся навстречу по площади — когда встретятся?',
+    beat:'Гонцы встретились через 10 секунд!',
+    story:'Из Сиракуз в Карфаген — 100 м (городская площадь в масштабе). Гонец А бежит 4 м/с, гонец Б — 6 м/с навстречу. Через сколько секунд они встретятся?',
+    q:'Через сколько секунд?', type:'unit', unit:'с', answer:10, tol:0,
+    hints:['Они сближаются со скоростью 4 + 6 = 10 м/с.','t = S / vсближ = 100 / 10.','t = 10 с.'],
+    sol:'Скорость сближения 4+6 = 10 м/с → t = 100/10 = 10 с. Оба бегут — скорости складываются.',
+    trap:'Ответить 25 (100/4) — гонец Б тоже бежит навстречу, а не стоит.',
+    art:'Сандалия гонца' },
+  { id:23, title:'Цифры крепости', ch:'Гл.5 · Делимость', diff:3,
+    mission:'Проверь число на воротах: делится ли 123456 на 9?',
+    beat:'Делимость раскрыта: 21 на 9 не делится!',
+    story:'Над воротами крепости выбито число 123456. Архимед: «Делится ли оно на 9?» Вспомни признак делимости на 9!',
+    q:'Делится ли 123456 на 9?', type:'choice', choices:['Да','Нет'], answer:1,
+    hints:['Число делится на 9, если сумма его цифр делится на 9.','1+2+3+4+5+6 = 21.','21 на 9 не делится.'],
+    sol:'Сумма цифр 1+2+3+4+5+6 = 21, 21 не кратно 9 → число 123456 на 9 не делится (123456:9 = 13717,33…).',
+    trap:'Ответить «да» — проверь делением: остаток не ноль.',
+    art:'Цифровая плита' },
+  { id:24, title:'Водяные часы', ch:'Гл.5 · Совместная работа', diff:4,
+    mission:'Почини водяные часы: кран и течь работают вместе!',
+    beat:'Часы идут: бассейн наполнится за 12 часов!',
+    story:'Водяные часы Архимеда: кран наполняет бассейн за 8 часов, а через щель вода вытекает — полный бассейн опорожнился бы за 24 часа. Сколько часов нужно, чтобы наполнить бассейн при открытой щели?',
+    q:'Сколько часов?', type:'unit', unit:'ч', answer:12, tol:0.2,
+    hints:['За час кран добавляет 1/8 бассейна, течь уносит 1/24.','За час остаётся 1/8 − 1/24 = 2/24 = 1/12.','Если за час 1/12 — весь бассейн за 12 часов.'],
+    sol:'За час наполняется 1/8 − 1/24 = 1/12 бассейна → весь бассейн за 12 часов.',
+    trap:'Ответить 8 (без течи) или 16 — течь уменьшает скорость наполнения.',
+    art:'Клепсидра' },
+  { id:25, title:'Хлеб для воинов', ch:'Гл.2 · Пропорции', diff:2,
+    mission:'Посчитай хлеб для усиленного гарнизона!',
+    beat:'Хлеб посчитан: 30 буханок!',
+    story:'10 воинов гарнизона съедают 20 хлебов в день. Сколько хлебов понадобится 15 воинам?',
+    q:'Сколько хлебов?', type:'unit', unit:'хлебов', answer:30, tol:0,
+    hints:['Один воин съедает 20 ÷ 10 = 2 хлеба.','15 · 2 = ?'],
+    sol:'На одного воина 20/10 = 2 хлеба → 15 · 2 = 30. Пропорция прямая: больше воинов — больше хлеба.',
+    trap:'Ответить 25 (20+5) — это не прибавка, а прямая пропорция.',
+    art:'Печать пекаря' },
+  { id:26, title:'Сумма до 99', ch:'Гл.3 · Чётность', diff:3,
+    mission:'Реши спор: чётна или нечётна сумма 1+2+…+99?',
+    beat:'Сумма чётная — спор решён!',
+    story:'Архимед загадал: «Чётна или нечётна сумма 1 + 2 + 3 + … + 99?» Считать вручную нельзя — только рассуждать!',
+    q:'Сумма 1+2+…+99 — какая?', type:'choice', choices:['Чётная','Нечётная'], answer:0,
+    hints:['Сколько среди чисел 1..99 нечётных?','Нечётных 50 (1,3,…,99), чётных 49.','Сумма 50 нечётных чётна (пары 1+3, 5+7…), чётные её не портят.'],
+    sol:'Нечётных чисел 50 — сумма чётна (1+3=4 и т.д.). По формуле: (1+99)·99/2 = 4950 — чётное.',
+    trap:'Ответить «нечётная» — проверь формулу: 4950 делится на 2.',
+    art:'Счётная доска' },
+];
+const RANKS = ['Стажёр','Гонец','Воин','Стратег','Защитник Сиракуз'];
+
+/* интерактивные параметры задач: ползунки + живой расчёт */
+const TASK_FX = {
+  2: { params:[{k:'N',label:'Голубей',min:5,max:15,step:1,def:10},{k:'M',label:'Клеток',min:3,max:9,step:1,def:7}],
+       calc:P=>`минимум совпадут = ⌈N/M⌉ = <b>${Math.ceil(P.N/P.M)}</b>` },
+  3: { params:[{k:'m',label:'Машин',min:2,max:7,step:1,def:4},{k:'n',label:'Снарядов',min:2,max:6,step:1,def:3}],
+       calc:P=>`m×n = <b>${P.m*P.n}</b> комбинаций` },
+  4: { params:[{k:'a',label:'Длина, м',min:3,max:9,step:1,def:6},{k:'b',label:'Ширина, м',min:3,max:8,step:1,def:4}],
+       calc:P=>`плиток = a×b = <b>${P.a*P.b}</b>` },
+  5: { params:[{k:'c1',label:'Сундук 1',min:1,max:20,step:1,def:10},{k:'c2',label:'Сундук 2',min:1,max:20,step:1,def:14},{k:'c3',label:'Сундук 3',min:1,max:20,step:1,def:6}],
+       calc:P=>`среднее = (${P.c1}+${P.c2}+${P.c3})/3 = <b>${((P.c1+P.c2+P.c3)/3).toFixed(1)}</b>` },
+  6: { params:[{k:'nm',label:'Зеркал',min:5,max:9,step:1,def:7}],
+       calc:P=>`чётность числа «вправо» — инвариант: 1 (нечётно) → 0 (чётно) НЕ достижимо` },
+  7: { params:[{k:'nc',label:'Слитков',min:3,max:15,step:1,def:8}],
+       calc:P=>`взвешиваний = ⌈log₃N⌉ = <b>${Math.ceil(Math.log(P.nc)/Math.log(3))}</b>` },
+  8: { params:[{k:'n',label:'Свитков',min:2,max:6,step:1,def:4}],
+       calc:P=>`способов = n! = <b>${Array.from({length:P.n},(_,i)=>i+1).reduce((a,b)=>a*b,1)}</b>` },
+  9: { params:[{k:'n',label:'Городов',min:3,max:10,step:1,def:6}],
+       calc:P=>`дорог = n(n-1)/2 = <b>${P.n*(P.n-1)/2}</b>` },
+  10:{ params:[{k:'a',label:'Смена А, дней',min:2,max:7,step:1,def:3},{k:'b',label:'Смена Б, дней',min:3,max:8,step:1,def:5}],
+       calc:P=>{let x=P.a,y=P.b,t=x*y;while(y){[x,y]=[y,x%y];}t=(P.a*P.b)/x;return`НОК(${P.a},${P.b}) = <b>${t}</b> дней`} },
+  11:{ params:[{k:'nb',label:'Мешков',min:3,max:12,step:1,def:10}],
+       calc:P=>`всего монет = 1+2+…+N = <b>${P.nb*(P.nb+1)/2}</b>` },
+  12:{ params:[{k:'a',label:'Длина, м',min:3,max:9,step:1,def:6},{k:'b',label:'Ширина, м',min:3,max:8,step:1,def:4}],
+       calc:P=>`P = 2(a+b) = <b>${2*(P.a+P.b)}</b> м` },
+  13:{ params:[{k:'s',label:'Сторона',min:2,max:5,step:1,def:3}],
+       calc:P=>`V = s³ = <b>${P.s*P.s*P.s}</b> кубиков` },
+  14:{ params:[{k:'p',label:'Процент',min:5,max:75,step:5,def:25},{k:'base',label:'База, монет',min:50,max:400,step:50,def:200}],
+       calc:P=>`${P.p}% от ${P.base} = <b>${P.base*P.p/100}</b>` },
+  15:{ params:[{k:'a',label:'Смена А',min:6,max:24,step:2,def:12},{k:'b',label:'Смена Б',min:6,max:24,step:2,def:18}],
+       calc:P=>{let x=P.a,y=P.b;while(y){[x,y]=[y,x%y];}return`НОД(${P.a},${P.b}) = <b>${x}</b>`} },
+  16:{ params:[{k:'n',label:'Воинов',min:3,max:8,step:1,def:5}],
+       calc:P=>`n·(n-1) = <b>${P.n*(P.n-1)}</b> способов` },
+  17:{ params:[{k:'n',label:'До числа',min:10,max:40,step:2,def:20}],
+       calc:P=>`чётных = ⌊n/2⌋ = <b>${Math.floor(P.n/2)}</b>` },
+  18:{ params:[{k:'a',label:'Угол 1, °',min:30,max:80,step:5,def:60},{k:'b',label:'Угол 2, °',min:30,max:80,step:5,def:70}],
+       calc:P=>`третий = 180-${P.a}-${P.b} = <b>${180-P.a-P.b}</b>°` },
+  19:{ params:[{k:'a',label:'Любят математику',min:15,max:45,step:5,def:30},{k:'b',label:'Любят физику',min:10,max:40,step:5,def:20},{k:'ab',label:'Любят обе',min:5,max:15,step:5,def:10}],
+       calc:P=>`всего = ${P.a}+${P.b}-${P.ab} = <b>${P.a+P.b-P.ab}</b>` },
+};
+let P = {};
+const SAVE_KEY='arhimed_math3d_v1';
+let state={idx:0,points:0,streak:0,stars:0,solved:[],hintsUsed:{}};
+try{const s=JSON.parse(localStorage.getItem(SAVE_KEY)); if(s&&Array.isArray(s.solved)) state=Object.assign(state,s);}catch(e){}
+let fb=null, chosen=null, showSol=false;
+
+/* ================= 3D (фотореализм) ================= */
+const stage = document.getElementById('stage3d');
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.18;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+stage.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x16130f, 0.05);
+const camera = new THREE.PerspectiveCamera(42, 16/9, 0.1, 100);
+camera.position.set(0, 4.6, 10.5); camera.lookAt(0, 1.6, 0);
+/* окружение IBL (реальные отражения на материалах) */
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+/* свет */
+scene.add(new THREE.HemisphereLight(0xfff2dd, 0x2a1a0a, 0.65));
+const dir = new THREE.DirectionalLight(0xffe2b8, 2.1);
+dir.position.set(5,9,5); dir.castShadow = true;
+dir.shadow.mapSize.set(1024,1024); dir.shadow.radius = 4; dir.shadow.bias = -0.0004;
+dir.shadow.camera.left=-6; dir.shadow.camera.right=6; dir.shadow.camera.top=6; dir.shadow.camera.bottom=-6;
+scene.add(dir);
+scene.add(new THREE.DirectionalLight(0x7fd1ff, 0.55).translateX(-5).translateY(3).translateZ(-4));
+scene.add(new THREE.DirectionalLight(0xffffff, 0.25).translateY(3).translateZ(9));
+/* пост-обработка: SSAO + Bloom */
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const ssao = new SSAOPass(scene, camera, 512, 512); ssao.kernelRadius = 5; composer.addPass(ssao);
+const bloom = new UnrealBloomPass(new THREE.Vector2(512,288), 0.18, 0.5, 0.85); composer.addPass(bloom);
+/* старая булыжная мостовая */
+function cobbleTexture(seed=3){
+  const c=document.createElement('canvas'); c.width=c.height=256; const x=c.getContext('2d');
+  let s=seed; const rnd=()=>{s=(s*1664525+1013904223)>>>0; return s/4294967296;};
+  x.fillStyle='#211d17'; x.fillRect(0,0,256,256);
+  for(let i=0;i<7;i++){ for(let j=0;j<7;j++){
+    const t=0.5+rnd()*0.4;
+    x.fillStyle=`rgb(${Math.round(58*t)},${Math.round(54*t)},${Math.round(48*t)})`;
+    x.fillRect(j*37+2,i*37+2,33,33);
+    x.fillStyle='rgba(255,240,210,0.06)'; x.fillRect(j*37+5,i*37+4,9,7);
+  }}
+  x.strokeStyle='rgba(0,0,0,0.75)'; x.lineWidth=2;
+  for(let i=0;i<=7;i++){ x.beginPath(); x.moveTo(0,i*37); x.lineTo(256,i*37); x.stroke(); x.beginPath(); x.moveTo(i*37,0); x.lineTo(i*37,256); x.stroke(); }
+  for(let i=0;i<70;i++){ x.fillStyle=`rgba(36,30,22,${0.1+rnd()*0.22})`; x.fillRect(rnd()*256,rnd()*256,8+rnd()*22,2+rnd()*5); }
+  const tex=new THREE.CanvasTexture(c); tex.wrapS=tex.wrapT=THREE.RepeatWrapping;
+  tex.colorSpace=THREE.SRGBColorSpace; tex.repeat.set(5,5); tex.anisotropy=4; return tex;
+}
+const ground = new THREE.Mesh(new THREE.CircleGeometry(6, 48),
+  new THREE.MeshStandardMaterial({ map: cobbleTexture(), roughness: 0.88, envMapIntensity: 0.5 }));
+ground.rotation.x=-Math.PI/2; ground.position.y=-0.02; ground.receiveShadow = true; scene.add(ground);
+
+const M = (c,r=.5)=>new THREE.MeshStandardMaterial({color:c, roughness:r, envMapIntensity:1.1});
+let taskGroup = null; let anim = null; let sol = null; let solAnim = null;
+
+function clear3D(){ if(taskGroup){ scene.remove(taskGroup); taskGroup.traverse(o=>{ if(o.geometry)o.geometry.dispose(); if(o.material)o.material.dispose(); }); taskGroup=null; } anim=null; sol=null; solAnim=null; }
+
+const B3D = {
+1: { build:(g)=>{ const mk=(x,good)=>{ const door=new THREE.Group();
+      door.add(new THREE.Mesh(new THREE.BoxGeometry(1.3,2.6,.2),M(good?0x8a6c3f:0x5c3623,.8)).translateY(1.3));
+      door.add(new THREE.Mesh(new THREE.BoxGeometry(1.6,.24,.26),M(0x6b4a2c,.85)).translateY(2.65));
+      const guard=new THREE.Group();
+      guard.add(new THREE.Mesh(new THREE.CylinderGeometry(.16,.2,1.1,10),M(good?0xc9a25f:0x3a3a3a,.6)).translateY(.55));
+      guard.add(new THREE.Mesh(new THREE.SphereGeometry(.13,10,10),M(0xe0c9a8,.5)).translateY(1.2));
+      guard.position.set(x,0,-1); door.add(guard);
+      if(good){ const ring=new THREE.Mesh(new THREE.TorusGeometry(.55,.04,8,24),M(0xd9a441,.3)); ring.rotation.x=Math.PI/2; ring.position.set(x,1.2,0.1); g.add(ring); }
+      door.position.set(x,0,0); g.add(door); };
+    mk(-1.8,false); mk(1.8,true); },
+  anim:()=>{} },
+2: { build:(g)=>{ const nests=[]; for(let i=0;i<7;i++){ const n=new THREE.Mesh(new THREE.BoxGeometry(.5,.28,.6),M(0x8a6c3f,.8)); n.position.set(-2.6+i*.86,.14,1.6); g.add(n); nests.push(n); }
+      const pigeons=[]; for(let i=0;i<10;i++){ const p=new THREE.Mesh(new THREE.SphereGeometry(.14,10,10),M(0xe8e0cc,.5)); p.position.set(-3.4+(i%5)*.5, 2.2+Math.random()*1.2, 0); g.add(p); pigeons.push({m:p,nest:i%7,off:i}); }
+      anim={nests,pigeons}; },
+  anim:(t)=>{ const tt=t%6; const k=Math.min(tt/3,1);
+      anim.pigeons.forEach(p=>{ const nx=-2.6+p.nest*.86, nz=1.6;
+        const y = tt<3 ? 2.2+p.off*.1 - k*1.6 : 0.42;
+        p.m.position.set(nx+(Math.sin(t*4+p.off)*.12)*(1-k), y, nz); });
+      const counts=Array(7).fill(0); anim.pigeons.forEach(p=>counts[p.nest]++);
+      anim.nests.forEach((n,i)=>{ if(counts[i]>1){ n.material.emissive=new THREE.Color(0xd9a441); n.material.emissiveIntensity=0.5; } else { n.material.emissive=null; n.material.emissiveIntensity=0; } }); } },
+3: { build:(g)=>{ const grid=[]; for(let i=0;i<12;i++){ const s=new THREE.Mesh(new THREE.SphereGeometry(.14,10,10),M(i%3===0?0x8a6c3f:(i%3===1?0xc96f4a:0x6b7f3f),.4)); s.position.set(-2+i%4*1.35, .3+Math.floor(i/4)*1.0, .5); s.scale.setScalar(0.001); grid.push(s); g.add(s); }
+      anim={grid}; },
+  anim:(t)=>{ const tt=t%5; anim.grid.forEach((s,i)=>{ const k=Math.min(1,Math.max(0,(tt*12-i)/1.2)); s.scale.setScalar(0.001+0.999*k); }); } },
+4: { build:(g)=>{ const tiles=[]; for(let i=0;i<24;i++){ const t=new THREE.Mesh(new THREE.BoxGeometry(.95,.08,.95),M(0xc9a25f,.6)); t.position.set(-2.5+(i%6)*1.0, .04, -1+(Math.floor(i/6))*1.0); t.scale.setScalar(0.001); tiles.push(t); g.add(t); }
+      anim={tiles}; },
+  anim:(t)=>{ const tt=t%5; anim.tiles.forEach((s,i)=>{ const k=Math.min(1,Math.max(0,(tt*12-i)/1.2)); s.scale.setScalar(0.001+0.999*k); }); } },
+5: { build:(g)=>{ const stacks=[]; [10,14,6].forEach((v,i)=>{ const st=new THREE.Group(); for(let c=0;c<v;c++){ st.add(new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,.14,12),M(0xd9a441,.45)).translateY(.07+c*.14)); } st.position.set(-2+i*2,.1,0); stacks.push(st); g.add(st); });
+      const bar=new THREE.Mesh(new THREE.BoxGeometry(5.2,.06,.06),M(0xe86a4a,.3)); bar.position.y=0; g.add(bar); anim={stacks,bar}; },
+  anim:(t)=>{ const mean=(10+14+6)/3; anim.bar.position.y=0.12+mean*.14*0.9; } },
+6: { build:(g)=>{ const ms=[]; for(let i=0;i<7;i++){ const m=new THREE.Mesh(new THREE.BoxGeometry(.5,1.6,.08),M(0xbfd8e8,.35)); m.position.set(-3+i, .8, 0); m.rotation.y = i<6?0:Math.PI/2; g.add(m); ms.push(m); }
+      anim={ms}; },
+  anim:(t)=>{ const tt=t%4; if(tt<1.2){ const k=tt/1.2; [[6,0],[0,Math.PI/2]].forEach(([idx,to],i)=>{ const from=i?0:Math.PI/2; anim.ms[idx].rotation.y = from+(to-from)*(k<0.5?k*2:1); }); }
+      else if(tt>1.4){ anim.ms[6].rotation.y=Math.PI/2; } } },
+7: { build:(g)=>{ g.add(new THREE.Mesh(new THREE.CylinderGeometry(.06,.2,.9,8),M(0x8a6c3f,.6)).translateY(.45));
+      g.add(new THREE.Mesh(new THREE.BoxGeometry(2.4,.08,.12),M(0x8a6c3f,.6)).translateY(.9));
+      const panL=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,.1,14),M(0x6b4a2c,.7)); panL.position.set(-1,.7,0); g.add(panL);
+      const panR=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,.1,14),M(0x6b4a2c,.7)); panR.position.set(1,.7,0); g.add(panR);
+      const beam=new THREE.Group(); beam.add(panL,panR); beam.position.y=0; g.add(beam);
+      const coins=[]; for(let i=0;i<8;i++){ const c=new THREE.Mesh(new THREE.CylinderGeometry(.1,.1,.05,10),M(0xd9a441,.4)); coins.push(c); g.add(c); }
+      anim={beam,coins}; },
+  anim:(t)=>{ const tt=t%5; const k=Math.min(tt/1,1);
+      anim.beam.rotation.z = (1-k)*0.18*(tt<2.5?1:-1);
+      anim.coins.forEach((c,i)=>{ if(i<3) c.position.set(-1, .75+(i*.07), 0); else if(i<6) c.position.set(1, .75+(i-3)*.07, 0); else c.position.set(i%2?-1:1, .75+(i-6)*.05, .3); c.rotation.y+=0.02; }); } },
+8: { build:(g)=>{ const books=[]; const colors=[0xb02818,0x2e7fd4,0x6b7f3f,0xc96f4a];
+      for(let i=0;i<4;i++){ const b=new THREE.Mesh(new THREE.BoxGeometry(.34,.9,.18),M(colors[i],.6)); b.position.set(-1.5+i, .45, 0); b.rotation.z=(i%2?0.06:-0.06); books.push(b); g.add(b); }
+      anim={books}; },
+  anim:(t)=>{ const order=[0,2,1,3]; anim.books.forEach((b,i)=>{ const target=-1.5+order[i]*1.0; b.position.x += (target-b.position.x)*0.06; b.rotation.y = Math.sin(t*3+i)*0.1; }); } },
+9: { build:(g)=>{ const dots=[]; for(let i=0;i<6;i++){ const a=i/6*Math.PI*2; const d=new THREE.Mesh(new THREE.SphereGeometry(.16,10,10),M(0xc9a25f,.4)); d.position.set(Math.sin(a)*1.8,.7,Math.cos(a)*1.8); dots.push(d); g.add(d); }
+      const lineGeo=new THREE.BufferGeometry(); const pts=new Float32Array(15*2*3);
+      lineGeo.setAttribute('position', new THREE.BufferAttribute(pts,3));
+      const lines=new THREE.LineSegments(lineGeo, new THREE.LineBasicMaterial({color:0xd9a441, transparent:true, opacity:.8})); g.add(lines);
+      anim={dots,lines}; },
+  anim:(t)=>{ const n=6; const pos=anim.lines.geometry.attributes.position.array; let k=0;
+      for(let i=0;i<n;i++){ for(let j=i+1;j<n;j++){ const a=i/n*Math.PI*2, b=j/n*Math.PI*2;
+        pos[k++]=Math.sin(a)*1.8; pos[k++]=.7; pos[k++]=Math.cos(a)*1.8;
+        pos[k++]=Math.sin(b)*1.8; pos[k++]=.7; pos[k++]=Math.cos(b)*1.8; } }
+      anim.lines.geometry.attributes.position.needsUpdate=true;
+      anim.dots.forEach((d,i)=>{ const a=i/n*Math.PI*2 + t*0.1; d.position.set(Math.sin(a)*1.8,.7,Math.cos(a)*1.8); }); } },
+10:{ build:(g)=>{ const stripA=[], stripB=[]; for(let i=1;i<=16;i++){ if(i%3===0){ const s=new THREE.Mesh(new THREE.BoxGeometry(.4,.3,.4),M(0x8a6c3f,.7)); s.position.set(-2.4+(i-1)*.34, 1.1, 0); g.add(s); stripA.push(s); } if(i%5===0){ const s=new THREE.Mesh(new THREE.BoxGeometry(.4,.3,.4),M(0xc96f4a,.7)); s.position.set(-2.4+(i-1)*.34, .55, 0); g.add(s); stripB.push(s); } }
+      const common=new THREE.Mesh(new THREE.BoxGeometry(.46,.95,.46),M(0xd9a441,.4)); common.visible=false; g.add(common); anim={stripA,stripB,common}; },
+  anim:(t)=>{ const tt=t%4; anim.common.visible = tt>1; anim.common.position.set(-2.4+14*.34, .8, 0);
+      anim.stripA.forEach((s)=>{ if(s.material) s.material.emissive=null; }); anim.stripB.forEach((s)=>{ if(s.material) s.material.emissive=null; });
+      if(tt>1){ if(anim.stripA[3]&&anim.stripA[3].material) anim.stripA[3].material.emissive=new THREE.Color(0xd9a441); if(anim.stripB[1]&&anim.stripB[1].material) anim.stripB[1].material.emissive=new THREE.Color(0xd9a441); } } },
+11:{ build:(g)=>{ const bags=[]; for(let i=0;i<10;i++){ const b=new THREE.Mesh(new THREE.BoxGeometry(.55,.7,.4),M(0x8a6c3f,.8)); b.position.set(-3+i*.68,.35,-1.2); g.add(b); bags.push(b); }
+      g.add(new THREE.Mesh(new THREE.CylinderGeometry(.05,.2,.7,8),M(0x8a6c3f,.6)).translateY(.35).translateZ(1.2));
+      g.add(new THREE.Mesh(new THREE.BoxGeometry(2.2,.06,.1),M(0x8a6c3f,.6)).translateY(.7).translateZ(1.2));
+      const coins=[]; for(let i=0;i<55;i++){ const c=new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,.04,8),M(0xd9a441,.4)); c.visible=false; g.add(c); coins.push(c); }
+      anim={bags,coins}; },
+  anim:(t)=>{ const tt=t%7; const k=Math.min(tt/1.5,1);
+      let idx=0;
+      for(let b=0;b<10;b++){ for(let c=0;c<=b;c++){ const co=anim.coins[idx++];
+        if(co){ if(c<=b*k){ co.visible=true; co.position.set(-2+b*.45, 1+c*.06, 1.4); } else co.visible=false; } } }
+      anim.bags.forEach((b,i)=>{ if(tt>5.5&&i===7){ b.material.emissive=new THREE.Color(0xd9a441); b.material.emissiveIntensity=0.5; } else { b.material.emissive=null; b.material.emissiveIntensity=0; } }); } },
+12:{ build:(g)=>{ const pts=[];
+      for(let i=0;i<4;i++){ const p=new THREE.Mesh(new THREE.SphereGeometry(.1,8,8),M(0xd9a441,.4)); p.position.set([-2,2,2,-2][i],.1,[-1,-1,1,1][i]); pts.push(p); g.add(p); }
+      const lineGeo=new THREE.BufferGeometry(); lineGeo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(4*2*3),3));
+      const lines=new THREE.LineSegments(lineGeo,new THREE.LineBasicMaterial({color:0xd9a441,transparent:true,opacity:.8})); g.add(lines);
+      anim={pts,lines}; },
+  anim:()=>{ const pos=anim.lines.geometry.attributes.position.array; const P=anim.pts;
+    for(let i=0;i<4;i++){ const a=i,b=(i+1)%4; pos[i*6]=P[a].position.x;pos[i*6+1]=P[a].position.y;pos[i*6+2]=P[a].position.z; pos[i*6+3]=P[b].position.x;pos[i*6+4]=P[b].position.y;pos[i*6+5]=P[b].position.z; }
+    anim.lines.geometry.attributes.position.needsUpdate=true; } },
+13:{ build:(g)=>{ const cubes=[]; for(let i=0;i<27;i++){ const c=new THREE.Mesh(new THREE.BoxGeometry(.52,.52,.52),M(0xc9a25f,.5)); c.position.set(-1+(i%3)*1, .3+Math.floor(i/3)%3, -1+Math.floor(i/9)); c.scale.setScalar(0.001); cubes.push(c); g.add(c); } anim={cubes}; },
+  anim:(t)=>{ const tt=t%5; anim.cubes.forEach((c,i)=>{ const k=Math.min(1,Math.max(0,(tt*14-i)/1.2)); c.scale.setScalar(0.001+0.999*k); }); } },
+14:{ build:(g)=>{ const bar=new THREE.Mesh(new THREE.BoxGeometry(4,.4,.4),M(0x4a3a2a,.8)); bar.position.set(0,.2,0); g.add(bar);
+      const part=new THREE.Mesh(new THREE.BoxGeometry(1,.44,.44),M(0xd9a441,.5)); part.position.set(-1.5,.2,0); g.add(part); anim={bar,part}; },
+  anim:(t)=>{ anim.part.scale.x = 0.2 + 0.02*Math.sin(t*2); anim.part.position.x = -1.5 + anim.part.scale.x/2; } },
+15:{ build:(g)=>{ const barA=new THREE.Mesh(new THREE.BoxGeometry(4,.2,.3),M(0x8a6c3f,.7)); barA.position.set(0,1.6,0); g.add(barA);
+      const barB=new THREE.Mesh(new THREE.BoxGeometry(4,.2,.3),M(0xc96f4a,.7)); barB.position.set(0,.7,0); g.add(barB);
+      const marks=[]; for(let i=1;i<24;i++){ const m=new THREE.Mesh(new THREE.BoxGeometry(.02,.9,.02),M(0xd9a441,.8)); m.position.set(-2+i*0.17,.05,0); m.visible=false; g.add(m); marks.push(m); } anim={marks}; },
+  anim:(t)=>{ const tt=t%4; anim.marks.forEach((m,i)=>{ const v=(i+1); m.visible = tt>1 && (12%v===0 || 18%v===0); }); } },
+16:{ build:(g)=>{ const dots=[]; for(let i=0;i<5;i++){ const d=new THREE.Mesh(new THREE.SphereGeometry(.15,10,10),M(0xc9a25f,.4)); d.position.set(-2+i, .3, 0); dots.push(d); g.add(d); }
+      const pair=new THREE.Mesh(new THREE.BoxGeometry(.05,.05,1),M(0xd9a441,.5)); pair.position.set(-2,.9,0); pair.visible=false; g.add(pair); anim={dots,pair}; },
+  anim:(t)=>{ const tt=t%4; anim.pair.visible = tt>0.5; anim.pair.position.set(-2+(tt*2)%4, .9, 0); anim.dots.forEach((d,i)=>d.position.y=.3+Math.sin(t*2+i)*.03); } },
+17:{ build:(g)=>{ const tiles=[]; for(let i=0;i<20;i++){ const t=new THREE.Mesh(new THREE.BoxGeometry(.4,.18,.4),M(0x8a6c3f,.7)); t.position.set(-4.8+i*.5,.09,1.6); tiles.push(t); g.add(t); } anim={tiles}; },
+  anim:(t)=>{ const tt=t%3; anim.tiles.forEach((t,i)=>{ const even=(i+1)%2===0; const glow=even&&tt>1; t.material.emissive = glow?new THREE.Color(0xd9a441):null; t.material.emissiveIntensity=glow?.5:0; if(glow)t.position.y=.12+Math.sin(t*4+i)*.02; else t.position.y=.09; }); } },
+18:{ build:(g)=>{ const tri=new THREE.Mesh(new THREE.CircleGeometry(2,3),M(0xc9a25f,.4)); tri.position.set(0,1.2,0); tri.rotation.y=Math.PI/2; g.add(tri);
+      const edges=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.CircleGeometry(2,3)),new THREE.LineBasicMaterial({color:0xd9a441})); edges.position.copy(tri.position); edges.rotation.copy(tri.rotation); g.add(edges);
+      anim={tri,edges}; },
+  anim:(t)=>{ anim.tri.rotation.y=Math.PI/2+t*0.15; anim.edges.rotation.y=anim.tri.rotation.y; } },
+19:{ build:(g)=>{ const cA=new THREE.Mesh(new THREE.CircleGeometry(1.6,32),M(0x8a6c3f,.4)); cA.rotation.x=-Math.PI/2; cA.position.set(-.8,.05,0); g.add(cA);
+      const cB=new THREE.Mesh(new THREE.CircleGeometry(1.6,32),M(0xc96f4a,.4)); cB.rotation.x=-Math.PI/2; cB.position.set(.8,.06,0); g.add(cB);
+      anim={cA,cB}; },
+  anim:(t)=>{ const k=.5+.5*Math.sin(t); anim.cA.material.opacity=.5; anim.cB.material.opacity=.5; } },
+
+20:{ build:(g)=>{ const tube=new THREE.Mesh(new THREE.CylinderGeometry(.14,.14,5,16,1,true),new THREE.MeshPhysicalMaterial({color:0xbfd8e8,transparent:true,opacity:.28,roughness:.15,depthWrite:false,side:THREE.DoubleSide})); tube.position.y=2.5; g.add(tube);
+      const bulb=new THREE.Mesh(new THREE.SphereGeometry(.24,12,12),new THREE.MeshPhysicalMaterial({color:0xbfd8e8,transparent:true,opacity:.28,roughness:.15,depthWrite:false})); bulb.position.y=.18; g.add(bulb);
+      const mer=new THREE.Group(); mer.add(new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,1,12),new THREE.MeshStandardMaterial({color:0xd03a2a,roughness:.25,emissive:0x771a0a,emissiveIntensity:.35})).translateY(.5)); mer.position.y=.3; g.add(mer);
+      const marks=[]; for(let i=-3;i<=7;i++){ const m=new THREE.Mesh(new THREE.BoxGeometry(.85,.025,.03),M(0xd9a441,.8)); m.position.set(0,.32+i*.45,0); g.add(m); marks.push(m); }
+      anim={mer,marks}; },
+  anim:(t)=>{ const tt=t%8; const pos=tt<4?-3+tt*2.5:7-(tt-4)*2.5; const h=(pos+3)*.45;
+      anim.mer.scale.y=Math.max(.05,h); anim.mer.position.y=.3+h/2;
+      anim.marks.forEach((m,i)=>{ const v=i-3; const gl=tt>0.8&&Math.abs(v-pos)<1.3; m.material.emissive=gl?new THREE.Color(0xd9a441):null; m.material.emissiveIntensity=.6; }); } },
+21:{ build:(g)=>{ const jars=[]; for(let i=0;i<12;i++){ const a=new THREE.Group();
+      a.add(new THREE.Mesh(new THREE.CylinderGeometry(.22,.3,.6,12),M(i<4?0xd9a441:0x8a6c3f,.7)).translateY(.3));
+      a.add(new THREE.Mesh(new THREE.CylinderGeometry(.08,.14,.22,10),M(0x5c3623,.8)).translateY(.68));
+      a.position.set(-2.9+(i%6)*1.15,.02,Math.floor(i/6)?-1.6:1.6); jars.push(a); g.add(a); }
+      anim={jars}; },
+  anim:(t)=>{ const tt=t%6; const k=Math.min(tt/2,1);
+      anim.jars.forEach((a,i)=>{ const oil=i<4; const idx=i<4?i:i-4;
+        if(oil){ a.position.x=-2.9+idx*.5; a.position.z=1.6+2.3*k; a.rotation.z=Math.sin(t*2+i)*.07; }
+        else { a.position.x=-2.9+(idx%6)*1.15; a.position.z=Math.floor(idx/6)?-1.6:1.6; }
+        const gl=oil&&tt>0.5; a.children[0].material.emissive=gl?new THREE.Color(0xfff0c0):null; a.children[0].material.emissiveIntensity=gl?.35:0; }); } },
+22:{ build:(g)=>{ g.add(new THREE.Mesh(new THREE.BoxGeometry(11,.06,.8),M(0x3a3a3a,.9)).translateY(.03));
+      const mk=(color)=>{ const r=new THREE.Group();
+        r.add(new THREE.Mesh(new THREE.CapsuleGeometry(.16,.5,6,10),M(color,.6)).translateY(.6));
+        r.add(new THREE.Mesh(new THREE.SphereGeometry(.17,10,10),M(0xe0c9a8,.5)).translateY(1.25));
+        r.add(new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,.5,6),M(0x3a3a3a,.7)).translateX(.12).translateY(.2));
+        return r; };
+      const A=mk(0xc96f4a), B=mk(0x2e7fd4); A.position.set(-5,.05,0); B.position.set(5,.05,0); g.add(A,B); anim={A,B}; },
+  anim:(t)=>{ const tt=t%11; const k=Math.min(tt/10,1);
+      anim.A.position.x=-5+4*k; anim.B.position.x=5-6*k;
+      anim.A.children[0].rotation.x=Math.sin(tt*9)*.4; anim.B.children[0].rotation.x=Math.sin(tt*13.5)*.4;
+      anim.A.rotation.z=Math.sin(tt*9)*.05; anim.B.rotation.z=Math.sin(tt*13.5)*.05; } },
+23:{ build:(g)=>{ const dig=[]; const colors=[0x8a6c3f,0xc96f4a,0x6b7f3f,0x2e7fd4,0xb06fd0,0xd9a441];
+      for(let i=0;i<6;i++){ const d=new THREE.Mesh(new THREE.BoxGeometry(.5,.7,.12),M(colors[i],.5)); d.position.set(-2.5+i*1.02,1.4,0); d.rotation.y=.3; dig.push(d); g.add(d); }
+      anim={dig}; },
+  anim:(t)=>{ const tt=t%6; const k=Math.min(Math.max((tt-1.5)/1.5,0),1);
+      anim.dig.forEach((d,i)=>{ const tx=1.2+(i-2.5)*.35, ty=.35+(i%2)*.22;
+        d.position.x=-2.5+i*1.02+(tx-(-2.5+i*1.02))*k; d.position.y=1.4+(ty-1.4)*k; d.rotation.y=.3+k*1.4;
+        const gl=tt>0.8; d.material.emissive=gl?new THREE.Color(0xfff0c0):null; d.material.emissiveIntensity=gl?.35:0; }); } },
+24:{ build:(g)=>{ const tank=new THREE.Mesh(new THREE.BoxGeometry(3,2.2,1.6),new THREE.MeshPhysicalMaterial({color:0x9fb4c7,transparent:true,opacity:.22,roughness:.1,depthWrite:false,side:THREE.DoubleSide})); tank.position.y=1.1; g.add(tank);
+      const wg=new THREE.Group(); wg.add(new THREE.Mesh(new THREE.BoxGeometry(2.85,2,1.45),new THREE.MeshPhysicalMaterial({color:0x2e7fd4,transparent:true,opacity:.55,roughness:.15,depthWrite:false})).translateY(1)); g.add(wg);
+      const spout=new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,.7,8),M(0x8a6c3f,.6)); spout.position.set(-1.7,2.4,0); g.add(spout);
+      const drips=[]; for(let i=0;i<14;i++){ const d=new THREE.Mesh(new THREE.SphereGeometry(.045,6,6),new THREE.MeshBasicMaterial({color:0x7fd1ff,transparent:true,opacity:.8})); d.visible=false; g.add(d); drips.push(d); }
+      const leak=new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,.5,6),new THREE.MeshBasicMaterial({color:0x4a6a7a,transparent:true,opacity:.45})); leak.position.set(1.6,.35,0); g.add(leak);
+      anim={wg,drips}; },
+  anim:(t)=>{ const tt=t%14; const k=Math.min(tt/12,1);
+      anim.wg.scale.y=.04+.96*k; anim.wg.position.y=0;
+      anim.drips.forEach((d,i)=>{ const ph=(tt*1.4+i*.35)%1.2; d.visible=ph<.9;
+        if(ph<.9){ d.position.set(-1.7,2.4-ph*2,0); d.material.opacity=.8*(1-ph); } }); } },
+25:{ build:(g)=>{ const loaves=[]; for(let i=0;i<30;i++){ const l=new THREE.Mesh(new THREE.BoxGeometry(.6,.32,.42),M(0xc9a25f,.8)); l.scale.setScalar(.001); loaves.push(l); g.add(l); }
+      g.add(new THREE.Mesh(new THREE.BoxGeometry(9,.08,2.4),M(0x6b4a2c,.85)).translateY(.04)); anim={loaves}; },
+  anim:(t)=>{ const tt=t%7; anim.loaves.forEach((l,i)=>{ const k=Math.min(1,Math.max(0,(tt*12-i)/1.2));
+      l.scale.setScalar(.001+.999*k); const col=Math.floor(i/5),row=i%5;
+      l.position.set(-3.9+col*1.0,.17+row*.4,0); }); } },
+26:{ build:(g)=>{ const chips=[]; for(let i=0;i<50;i++){ const c=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,.07,14),M(i%2?0x8a6c3f:0xe8e0cc,.6)); c.position.set(-4.9+(i%25)*.4,.03+Math.floor(i/25)*.13,0); c.scale.setScalar(.001); chips.push(c); g.add(c); }
+      anim={chips}; },
+  anim:(t)=>{ const tt=t%6;
+      anim.chips.forEach((c,i)=>{ c.scale.setScalar(.001+.999*Math.min(1,Math.max(0,(tt*20-i)/1.2)));
+        const odd=i%2===0; if(tt>2.2&&odd){ c.position.y=.03+Math.floor(i/25)*.13+Math.sin(t*3+i)*.025; c.material.emissive=new THREE.Color(0xd9a441); c.material.emissiveIntensity=.35; }
+        else { c.position.y=.03+Math.floor(i/25)*.13; if(c.material){c.material.emissive=null;c.material.emissiveIntensity=0;} } }); } },
+};
+
+/* стрелка-вектор для разбора решения */
+function vec(c){ const g=new THREE.Group();
+  g.add(new THREE.Mesh(new THREE.CylinderGeometry(.035,.035,.75,8),M(c,.25)).translateY(.37));
+  g.add(new THREE.Mesh(new THREE.ConeGeometry(.095,.26,8),M(c,.25)).translateY(.88));
+  return g; }
+function buildSol(id){
+  sol = new THREE.Group();
+  if(id===2){ const hi=new THREE.Mesh(new THREE.BoxGeometry(.6,.5,.02),new THREE.MeshBasicMaterial({color:0xd9a441,transparent:true,opacity:.5})); hi.position.set(-2.6+7*.86,1.0,1.75); sol.add(hi); }
+  else if(id===7){ const mark=new THREE.Mesh(new THREE.SphereGeometry(.3,10,10),new THREE.MeshBasicMaterial({color:0xd9a441,transparent:true,opacity:.45})); mark.position.set(0,1.15,0); sol.add(mark); }
+  scene.add(sol);
+}
+
+function build3D(idx){
+  clear3D();
+  const builder=B3D[idx]; if(!builder) return;
+  taskGroup=new THREE.Group(); builder.build(taskGroup); scene.add(taskGroup);
+  taskGroup.traverse(o=>{ if(o.isMesh) o.castShadow = true; });
+  const size=stage.clientWidth||860; renderer.setSize(size, size*9/16);
+  composer.setSize(size, size*9/16);
+  composer.render();
+}
+function tick(){ requestAnimationFrame(tick);
+  if(anim&&TASKS[state.idx]&&B3D[TASKS[state.idx].id]&&B3D[TASKS[state.idx].id].anim) B3D[TASKS[state.idx].id].anim(performance.now()/1000);
+  if(solAnim) solAnim(performance.now()/1000);
+  composer.render(); }
+tick();
+
+/* ================= UI ================= */
+function save(){ try{localStorage.setItem(SAVE_KEY,JSON.stringify(state));}catch(e){} }
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+const rank=()=>RANKS[Math.min(Math.floor(state.stars||0),4)];
+
+function render(){
+  document.getElementById('hudPoints').textContent=state.points;
+  document.getElementById('hudStreak').textContent=state.streak;
+  document.getElementById('hudRank').textContent=rank();
+  document.getElementById('progress').innerHTML=TASKS.map((t,i)=>`<div class="dot ${state.solved[i]?'done':(i===state.idx?'current':'')}"></div>`).join('');
+  const t=TASKS[state.idx]; if(!t){finish();return;}
+  document.getElementById('mission').innerHTML=
+    `<span class="m-ico">🎯</span><span class="m-text"><b>Миссия ${state.idx+1}/${TASKS.length}:</b> ${esc(t.mission)}</span><span class="rank-badge">${esc(t.ch)}</span>`;
+  document.getElementById('stageCap').textContent='3D: '+t.title;
+  /* ползунки параметров задачи */
+  const fx=TASK_FX[t.id], sl=document.getElementById('sliders');
+  if(fx&&fx.params){ P={}; fx.params.forEach(pr=>P[pr.k]=pr.def);
+    sl.innerHTML=fx.params.map(pr=>`<label>${pr.label}
+      <input type="range" min="${pr.min}" max="${pr.max}" step="${pr.step}" value="${P[pr.k]}" oninput="setP('${pr.k}',this.value)">
+      <span id="pv_${pr.k}">${P[pr.k]}</span></label>`).join('')
+      +`<span class="live" id="liveCalc">${fx.calc(P)}</span>`;
+  } else { sl.innerHTML=''; P={}; }
+  build3D(t.id);
+  if(showSol){ buildSol(t.id); }
+  const card=document.getElementById('card');
+  const hints=[0,1,2].map(i=>{ const used=(state.hintsUsed[state.idx]||0)>i;
+    return `<button class="hint-btn" ${used?'disabled':''} onclick="useHint(${i})">Подсказка ${i+1}${i<2?' · '+(i===0?10:5)+'⭐':' · бесплатно'}</button>`; }).join('');
+  const openHints=[0,1,2].filter(i=>(state.hintsUsed[state.idx]||0)>i).map(i=>`<div class="hint-box">${esc(t.hints[i])}</div>`).join('');
+  const solved=state.solved[state.idx];
+  const input=t.type==='unit'
+    ? `<div class="answer-row"><input type="number" id="numIn" step="any" placeholder="число" ${solved?'disabled':''}>
+        <select id="unitIn" ${solved?'disabled':''}>${unitsOptions(t.unit)}</select>
+        <button class="btn" style="margin-top:0" onclick="checkUnit()" ${solved?'disabled':''}>Ответить</button></div>`
+    : `<div class="choices">${t.choices.map((c,i)=>`<button class="choice ${solved?(i===t.answer?'right':(chosen===i?'wrong':'')):''}" ${solved?'disabled':''} onclick="checkChoice(${i})">${esc(c)}</button>`).join('')}</div>`;
+  const fbHtml=fb?`<div class="fb ${fb.ok?'right':'wrong'}">${esc(fb.txt)}</div>`:'';
+  const solHtml=showSol?`<div class="sol"><b>📜 Решение Архимеда:</b> ${esc(t.sol)}<br><span style="color:var(--olive)">✅ ${esc(t.beat)}</span></div>
+    <button class="btn" onclick="next()">${state.idx===TASKS.length-1?'Забрать трофей':'Дальше →'}</button>`:'';
+  card.innerHTML=`
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px">
+      <span style="color:#8a94ad;font-size:11.5px;letter-spacing:.14em">${esc(t.ch)}</span>
+      <span style="color:var(--amber);font-size:11.5px">сложность ${t.diff}/4</span></div>
+    <div style="font-size:16.5px;font-weight:bold;margin-top:6px">${esc(t.title)}</div>
+    <div class="story">${esc(t.story)}</div>
+    <div class="q">${esc(t.q)}</div>${input}
+    <div class="hints">${hints}</div>${openHints}${fbHtml}${solHtml}`;
+}
+function unitsOptions(unit){ const map={'км/ч':['км/ч','м/с'],'с':['с','мин'],'м/с':['м/с','км/ч'],'м':['м','км','см'],'Н':['Н','кН'],'м/с²':['м/с²','см/с²'],'Н/м':['Н/м','кН/м'],'раз':['раз','%']};
+  return (map[unit]||[unit]).map(u=>`<option>${u}</option>`).join(''); }
+function useHint(i){ const t=TASKS[state.idx]; if(state.solved[state.idx])return; if((state.hintsUsed[state.idx]||0)>i)return;
+  if(i<2){ const cost=i===0?10:5; if(state.points<cost)return; state.points-=cost; }
+  state.hintsUsed[state.idx]=(state.hintsUsed[state.idx]||0)+1; save(); render(); }
+function checkChoice(i){ const t=TASKS[state.idx]; if(state.solved[state.idx])return; chosen=i;
+  if(i===t.answer) win(t); else { fb={ok:false,txt:'❌ «А ты уверен?» '+t.trap}; render(); } }
+function checkUnit(){ const t=TASKS[state.idx]; if(state.solved[state.idx])return;
+  const n=parseFloat(document.getElementById('numIn').value); const u=document.getElementById('unitIn').value;
+  if(isNaN(n)){ fb={ok:false,txt:'Введи число!'}; render(); return; }
+  const conv={'м/с':1,'км/ч':0.2778,'см':0.01,'км':1000,'м':1,'см/с²':0.01,'мин':60,'кН':1000,'Н/м':1,'кН/м':1000,'Н':1,'м/с²':1,'раз':1,'%':0.01};
+  const si=n*(conv[u]||1);
+  if(Math.abs(si-t.answer)<=t.tol) win(t); else { fb={ok:false,txt:'❌ «А ты уверен?» '+t.trap}; render(); } }
+function win(t){ const h=state.hintsUsed[state.idx]||0; const gain=Math.max(15,30-h*5);
+  state.points+=gain; state.streak+=1; state.solved[state.idx]=true; state.stars=(state.stars||0)+1; showSol=true;
+  fb={ok:true,txt:`✅ Верно! +${gain}⭐ · артефакт «${t.art}»`}; save(); render(); }
+function next(){ state.idx+=1; fb=null; chosen=null; showSol=false; save(); render(); }
+function finish(){
+  document.getElementById('progress').innerHTML=TASKS.map(()=>`<div class="dot done"></div>`).join('');
+  document.getElementById('mission').innerHTML=`<span class="m-ico">🏆</span><span class="m-text"><b>Сиракузы спасены!</b> Архимед принимает тебя в ученики. Звание: <b>${rank()}</b></span>`;
+  document.getElementById('card').innerHTML=`
+    <div style="font-size:22px;font-weight:bold;margin-bottom:8px">🏆 Сиракузы спасены — математика пройдена!</div>
+    <div class="arch"><span class="who">◈ Архимед</span>
+      «Ты прошёл всю математику острова: логику, Дирихле, комбинаторику, инварианты и делимость.
+      Архимед принимает тебя в свою школу — а впереди теория чисел и геометрия». Очки: <b style="color:var(--amber)">${state.points}</b>⭐ · серия ${state.streak}🔥</div>
+    <button class="btn" onclick="resetAll()">↺ Пройти заново</button>`;
+  showConfetti();
+}
+function resetAll(){ if(!confirm('Сбросить прогресс?'))return;
+  state={idx:0,points:0,streak:0,stars:0,solved:[],hintsUsed:{}}; fb=null; chosen=null; showSol=false; save(); render(); }
+function showConfetti(){ const d=document.createElement('div'); d.className='confetti';
+  for(let i=0;i<70;i++){ const s=document.createElement('span'); s.className='confetti-piece';
+    s.style.left=Math.random()*100+'%'; s.style.background=['#d9a441','#c8795a','#7fb8a0','#b06fd0','#6fb4f0'][i%5];
+    s.style.animationDelay=Math.random()*0.6+'s'; s.style.animationDuration=1.6+Math.random()*1.4+'s'; d.appendChild(s); }
+  document.body.appendChild(d); setTimeout(()=>d.remove(),4000); }
+
+window.useHint=useHint; window.checkChoice=checkChoice; window.checkUnit=checkUnit; window.next=next; window.resetAll=resetAll;
+window.setP=(k,v)=>{ P[k]=parseFloat(v); const fx=TASK_FX[TASKS[state.idx].id];
+  if(fx&&fx.params){ fx.params.forEach(pr=>{ const el=document.getElementById('pv_'+pr.k); if(el)el.textContent=P[pr.k]; });
+    const lc=document.getElementById('liveCalc'); if(lc&&fx.calc) lc.innerHTML=fx.calc(P); }
+  if([2,3,4,9].includes(TASKS[state.idx].id)) build3D(TASKS[state.idx].id); };
+window.addEventListener('resize',()=>{ const s=stage.clientWidth||860; renderer.setSize(s, s*9/16); composer.setSize(s, s*9/16); });
+render();
+</script>
+</body>
+</html>
