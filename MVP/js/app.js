@@ -30,6 +30,8 @@ function go(target){
   if(target.startsWith('task-')){ openTask(target.slice(5), UI.islName? 'island-'+UI.islName : 'path'); return; }
 }
 function hud(){
+  const lg=document.getElementById('hLogout');
+  if(lg) lg.classList.toggle('hidden', !(DB.profile));
   if(!DB.profile){ return; }
   const col=DB.profile.color||COLORS[0];
   const hEl=document.getElementById('hName');
@@ -72,6 +74,7 @@ function renderOnboard(){
       </div>
       <button class="btn" style="width:100%" onclick="finishOnboard()">В путь →</button>
     </div></div>`;
+  hud();
 }
 let chosenCol=COLORS[0];
 function pickCol(el){
@@ -98,6 +101,18 @@ function finishOnboard(){
     level:document.getElementById('obLevel').value,
     limitMin:45, createdAt:Date.now() };
   DB.sessionStart=Date.now(); save(); showNav(true); go('path'); toast('Добро пожаловать, '+name+'!');
+}
+/* ---------- ВЫХОД ИЗ ПРОФИЛЯ ---------- */
+function logoutProfile(){
+  if(!DB.profile) return;
+  if(!confirm('Выйти из профиля «'+DB.profile.name+'»? Прогресс сохранится — вернёмся к начальному экрану.')) return;
+  DB.profile=null;
+  DB.sessionStart=Date.now();
+  save();
+  try{ if(typeof AGENTLIVE!=='undefined'&&AGENTLIVE.state&&AGENTLIVE.state()) AGENTLIVE.stop(); }catch(e){}
+  showNav(false);
+  go('onboard');
+  toast('До встречи! Можно войти другому Исследователю.');
 }
 /* ---------- ПУТЬ ---------- */
 const ISLANDS=[

@@ -27,6 +27,10 @@
   .chip { background:var(--panel); border:1px solid var(--hairline); border-radius:999px; padding:5px 12px; font-size:12.5px; }
   .chip b { color:var(--brass); }
   .chip.rank { color:var(--glass); border-color:rgba(127,184,160,.4); }
+  .logout { background:none; border:1px solid rgba(232,106,90,.45); color:#e89a8f; font-family:inherit;
+    font-size:12px; cursor:pointer; padding:4px 10px; transition:.15s; }
+  .logout:hover { background:rgba(232,106,90,.15); border-color:var(--danger); color:var(--danger); }
+  .logout.hidden { display:none; }
   .nav { position:fixed; left:0; right:0; bottom:0; display:flex; background:rgba(11,23,18,.97);
     border-top:1px solid var(--hairline); z-index:40; backdrop-filter:blur(6px);
     padding:6px 8px env(safe-area-inset-bottom,0px); max-width:900px; margin:0 auto; }
@@ -196,6 +200,7 @@
       <span class="chip">⭐ <b id="hPoints">0</b></span>
       <span class="chip">🔥 <b id="hStreak">0</b></span>
       <span class="chip rank" id="hRank"></span>
+      <button class="chip logout" id="hLogout" onclick="logoutProfile()" title="Выйти из профиля">⏻ Выйти</button>
     </div>
   </header>
 
@@ -212,20 +217,20 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=38"></script>
-<script src="data/lessons.js?v=38"></script>
-<script src="js/core.js?v=38"></script>
-<script src="js/engine.js?v=38"></script>
-<script src="js/app.js?v=38"></script>
-<script src="js/dashboard.js?v=38"></script>
-<script src="js/lessons.js?v=38"></script>
-<script src="js/legend.js?v=38"></script>
-<script src="js/simulator.js?v=38"></script>
-<script src="js/duel.js?v=38"></script>
-<script src="js/agent.js?v=38"></script>
-<script src="js/voice.js?v=38"></script>
-<script src="js/assistant.js?v=38"></script>
-<script src="js/agentlive.js?v=38"></script>
+<script src="data/tasks.js?v=39"></script>
+<script src="data/lessons.js?v=39"></script>
+<script src="js/core.js?v=39"></script>
+<script src="js/engine.js?v=39"></script>
+<script src="js/app.js?v=39"></script>
+<script src="js/dashboard.js?v=39"></script>
+<script src="js/lessons.js?v=39"></script>
+<script src="js/legend.js?v=39"></script>
+<script src="js/simulator.js?v=39"></script>
+<script src="js/duel.js?v=39"></script>
+<script src="js/agent.js?v=39"></script>
+<script src="js/voice.js?v=39"></script>
+<script src="js/assistant.js?v=39"></script>
+<script src="js/agentlive.js?v=39"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -240,7 +245,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=38').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=39').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
