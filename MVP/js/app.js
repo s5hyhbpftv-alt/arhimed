@@ -337,54 +337,74 @@ function renderLibrary(){
   const s=document.getElementById('screen');
   const junior=typeof isJunior==='function'&&isJunior();
   const islands=ISLANDS.filter(islandVisible);
-  const visible = junior? islands : islands;   // для младших тоже один остров
   const status=LB.status||'all';
   const statFilter=t=> status==='all'? true : status==='todo'? !(DB.tasks[t.id]&&DB.tasks[t.id].done) : !!(DB.tasks[t.id]&&DB.tasks[t.id].done);
   const selIsl=libIsland();
-  // сколько подходит под фильтры — для заголовка
   const allFit = window.ARH_TASKS.filter(t=>islandVisible({name:t.island})).filter(statFilter);
   const doneFit=allFit.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
   const todoFit=allFit.length-doneFit;
-  const optIsl = selIsl==='all'
-    ? `<option value="all" selected>🗺 Все острова (${allFit.length})</option>`
-    : `<option value="all">🗺 Все острова (${allFit.length})</option>`;
-  const optIslSel = visible.map(I=>{
-    const n=window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t)).length;
-    return `<option value="${I.name}" ${selIsl===I.name?'selected':''}>${I.ico} ${I.name} (${n})</option>`;}).join('');
   const statBadge = status==='all'? `всего ${allFit.length}` : status==='todo'? `осталось ${todoFit}` : `решено ${doneFit}`;
-  // группы: если выбран остров — только он; иначе все видимые
-  const groups = (selIsl==='all'? visible : visible.filter(I=>I.name===selIsl))
+  // табы-острова (в стиле Книги): all + каждый видимый остров с прогрессом
+  const tabAll = junior? [] : [{
+    key:'all', ico:'🗺', name:'Все',
+    items: allFit,
+    done: doneFit, total: allFit.length }];
+  const tabIsls = islands.map(I=>{
+    const items=window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t));
+    return { key:I.name, ico:I.ico, name:I.name, items, done: items.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length, total: items.length };
+  }).filter(g=>g.total>0);
+  const tabs=[...tabAll, ...tabIsls];
+  const tabHTML=tabs.map(g=>{
+    const on = selIsl===g.key;
+    const p=g.total? Math.round(g.done/g.total*100):0;
+    return `<button class="btab ${on?'on':''}" onclick="libPick('island','${g.key}')">
+      <span class="bt-ico">${g.ico}</span>
+      <span class="bt-name">${g.key==='all'? 'Все': esc(g.name)}</span>
+      <span class="bt-bar"><i style="width:${p}%"></i></span>
+    </button>`;}).join('');
+  // группы: если выбран остров — только он; иначе все (аккордеон)
+  const groups = (selIsl==='all'? islands : islands.filter(I=>I.name===selIsl))
     .map(I=>({ I, items: window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t)).sort((a,b)=>a.diff-b.diff||a.id.localeCompare(b.id)) }))
     .filter(g=>g.items.length);
+  const content = selIsl!=='all'
+    ? (()=>{ const g=groups[0]; if(!g) return '';
+        const gd=g.items.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
+        const byTheme={}; g.items.forEach(t=>{ const th=themeOf(t); (byTheme[th]=byTheme[th]||[]).push(t); });
+        const rows=Object.keys(byTheme).map(th=>`<div class="small" style="margin:8px 4px 4px;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(th)}</div>`+
+          byTheme[th].map(taskRow).join('')).join('');
+        return `<div class="book-subj-head">
+            <span class="bsh-ico">${g.I.ico}</span>
+            <span><b>${esc(g.I.name)}</b><br>
+            <span class="small" style="color:var(--muted)">${esc(g.I.dsc)} · ${gd}/${g.items.length} решено</span></span>
+          </div>${rows}`; })()
+    : groups.map((g,i)=>{
+        const open = LB.open[g.I.name]===true || (LB.open[g.I.name]===undefined && i===0);
+        const gd=g.items.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
+        const byTheme={}; g.items.forEach(t=>{ const th=themeOf(t); (byTheme[th]=byTheme[th]||[]).push(t); });
+        const rows=Object.keys(byTheme).map(th=>`<div class="small" style="margin:8px 4px 4px;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(th)}</div>`+
+          byTheme[th].map(taskRow).join('')).join('');
+        return `<div class="book-sec">
+          <div class="bs-head" onclick="libToggle('${esc(g.I.name)}')">
+            <span class="bs-ico">${g.I.ico}</span>
+            <span style="flex:1;text-align:left"><b>${esc(g.I.name)}</b>
+              <span class="small" style="color:var(--muted);display:block">${esc(g.I.dsc)}</span></span>
+            <span class="pr2">${gd}/${g.items.length} <i class="caret ${open?'down':''}">▸</i></span>
+          </div>
+          ${open? rows : ''}
+        </div>`;}).join('');
   s.innerHTML=`<h2>📚 Банк задач <span class="small">(${statBadge})</span></h2>
     <div class="small" style="margin-bottom:8px">Все задачи по темам — от простых к сложным. Приёмы сначала объясняет Архимед в «Пути».</div>
-    <select id="libIsl" onchange="libPick('island',this.value)" style="width:100%;margin-bottom:8px;font-size:15px">
-      ${optIsl}${optIslSel}
-    </select>
-    <div style="display:flex;gap:8px;margin-bottom:10px">
+    <div class="btabs" style="margin-bottom:10px">${tabHTML}</div>
+    <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
       ${[['all','Все задачи'],['todo','🔒 Осталось решить'],['done','✅ Решено']].map(([v,lab])=>
         `<button class="chip fb ${status===v?'on':''}" onclick="libPick('status','${v}')">${lab}</button>`).join('')}
     </div>
-    ${groups.map((g,i)=>{
-      const open = selIsl===g.I.name || (selIsl==='all' && (LB.open[g.I.name]===true || (LB.open[g.I.name]===undefined && i===0)));
-      const gd=g.items.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
-      // группировка внутри острова по темам
-      const byTheme={}; g.items.forEach(t=>{ const th=themeOf(t); (byTheme[th]=byTheme[th]||[]).push(t); });
-      const rows=Object.keys(byTheme).map(th=>`<div class="small" style="margin:8px 4px 4px;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(th)}</div>`+
-        byTheme[th].map(taskRow).join('')).join('');
-      return `<div style="margin-bottom:8px">
-        <div class="sec-head" onclick="libToggle('${esc(g.I.name)}')">
-          <span>${g.I.ico} ${esc(g.I.name)}</span>
-          <span class="pr2">${gd}/${g.items.length} <i class="caret ${open?'down':''}">▸</i></span>
-        </div>
-        ${open? rows : ''}
-      </div>`;}).join('')}`;
+    ${content}`;
   hud();
 }
 function libPick(k,v){ LB[k]=v; renderLibrary(); }
 function libToggle(isl){
-  if(LB.island==='all'){ LB.open[isl]= !(LB.open[isl]===true); }
-  else { LB.island='all'; LB.open[isl]=true; const el=document.getElementById('libIsl'); if(el) el.value='all'; }
+  LB.open[isl]= !(LB.open[isl]===true);
   renderLibrary();
 }
 /* ---------- вспомогательное ---------- */
