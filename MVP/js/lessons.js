@@ -21,13 +21,15 @@ function lessonPool(){
   }catch(e){ return window.ARH_LESSONS; }
 }
 let BK={ subj:'all', open:{} };   // фильтр по предмету + раскрытые секции
-function lessonCard(L){
+function lessonRow(L){
   const rec=DB.lessons&&DB.lessons[L.id];
   const done=!!(rec&&rec.done);
-  return `<div class="island" onclick="openLessonView(${L.id})" style="${done?'border-color:var(--ok)':''}">
-    <div class="top"><span class="nm">${L.ico} ${esc(L.title)}</span>
-    <span class="pr">${done?'✅':(rec&&rec.stars? '⭐ '+rec.stars+'/2':'⭐')}</span></div>
-    <div class="sub">${esc(L.src)} · ${L.explain.length} шагов</div></div>`;
+  return `<div class="lesson-row ${done?'done':''}" onclick="openLessonView(${L.id})">
+    <span class="lr-ico">${L.ico}</span>
+    <span class="lr-ti"><span class="lr-tt">${esc(L.title)}</span>
+    <span class="lr-td">${esc(L.src)} · ${L.explain.length} шагов</span></span>
+    <span class="lr-pr">${done?'✅':(rec&&rec.stars? '⭐ '+rec.stars+'/2':'⭐ 0/2')}</span>
+  </div>`;
 }
 function bookSel(){
   try{ if(typeof isJunior==='function'&&isJunior()) return 'jun'; }catch(e){}
@@ -39,38 +41,53 @@ function renderBookList(){
   const doneAll=pool.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
   const totalL=pool.length;
   const junior=typeof isJunior==='function'&&isJunior();
-  const order=junior? ['jun'] : ['math','phys','chem','inf'];
-  const grouped=order.map(subj=>({ subj, meta:SUBJ_META[subj], items:pool.filter(L=>subjOf(L)===subj) })).filter(g=>g.items.length);
+  const order=junior? ['jun'] : ['all','math','phys','chem','inf'];
+  const grouped=order.filter(s=>s==='all'||pool.some(L=>subjOf(L)===s)).map(subj=>{
+    if(subj==='all') return { subj:'all', meta:{ico:'📚',name:'Все предметы'}, items:pool };
+    const meta=SUBJ_META[subj]; return { subj, meta, items:pool.filter(L=>subjOf(L)===subj) };
+  }).filter(g=>g.items.length);
   const sel=bookSel();
-  const opts=grouped.map(g=>`<option value="${g.subj}" ${sel===g.subj?'selected':''}>${g.meta.ico} ${g.meta.name} (${g.items.length})</option>`).join('');
-  // «Все предметы» только для старших (у младших один предмет)
-  const allOpt=junior? '' : `<option value="all" ${sel==='all'?'selected':''}>📚 Все предметы (${totalL})</option>`;
+  // табы-предметы
+  const tabs=grouped.map(g=>{
+    const on = sel===g.subj;
+    const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
+    const p=Math.round(gd/g.items.length*100);
+    return `<button class="btab ${on?'on':''}" onclick="bookPick('${g.subj}')">
+      <span class="bt-ico">${g.meta.ico}</span>
+      <span class="bt-name">${g.subj==='all'? 'Все': g.meta.name}</span>
+      <span class="bt-bar"><i style="width:${p}%"></i></span>
+    </button>`;}).join('');
+  // содержимое: для конкретного предмета — шапка + строки уроков; для «Все» — аккордеон секций
+  const content = sel!=='all'
+    ? (()=>{ const g=grouped.find(x=>x.subj===sel); if(!g) return '';
+        const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
+        return `<div class="book-subj-head">
+            <span class="bsh-ico">${g.meta.ico}</span>
+            <span><b>${g.meta.name}</b><br>
+            <span class="small" style="color:var(--muted)">${esc(g.meta.dsc)} · ${gd}/${g.items.length} пройдено</span></span>
+          </div>${g.items.map(lessonRow).join('')}`; })()
+    : grouped.filter(g=>g.subj!=='all').map((g,i)=>{
+        const isOpen = BK.open[g.subj]===true || (BK.open[g.subj]===undefined && i===0);
+        const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
+        return `<div class="book-sec">
+          <div class="bs-head" onclick="bookToggle('${g.subj}')">
+            <span class="bs-ico">${g.meta.ico}</span>
+            <span style="flex:1;text-align:left"><b>${g.meta.name}</b>
+              <span class="small" style="color:var(--muted);display:block">${esc(g.meta.dsc)}</span></span>
+            <span class="pr2">${gd}/${g.items.length} <i class="caret ${isOpen?'down':''}">▸</i></span>
+          </div>
+          ${isOpen? g.items.map(lessonRow).join('') : ''}
+        </div>`;}).join('');
   s.innerHTML=`<h2>📖 Книга знаний <span class="small">(пройдено ${doneAll}/${totalL})</span></h2>
     <div class="arch"><span class="who">◈ Архимед</span>
       «Сначала я объясню приём — по шагам. Потом проверим, как ты понял, — и только затем дам задачи».</div>
-    <select id="bookSel" onchange="bookPick(this.value)" style="width:100%;margin-bottom:10px;font-size:15px">
-      ${allOpt}${opts}
-    </select>
-    ${grouped.map((g,i)=>{
-      // при «Все» по умолчанию раскрыта только первая секция; остальные — по клику
-      const isOpen = sel===g.subj || (sel==='all' && (BK.open[g.subj]===true || (BK.open[g.subj]===undefined && i===0)));
-      const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
-      return `<div style="margin-bottom:8px">
-        <div class="sec-head" onclick="bookToggle('${g.subj}')" style="${isOpen?'':'opacity:.85'}">
-          <span>${g.meta.ico} ${g.meta.name}</span>
-          <span class="pr2">${gd}/${g.items.length} <i class="caret ${isOpen?'down':''}">▸</i></span>
-        </div>
-        ${isOpen? `<div class="small" style="margin:2px 6px 8px;color:var(--muted)">${esc(g.meta.dsc)}</div>
-          ${g.items.map(lessonCard).join('')}` : ''}
-      </div>`;}).join('')}`;
+    <div class="btabs">${tabs}</div>
+    ${content}`;
   hud();
 }
 function bookPick(v){ BK.subj=v; renderBookList(); }
 function bookToggle(subj){
-  if(BK.subj==='all'){
-    // undefined (не трогали) = секция свёрнута (кроме первой) → клик раскрывает
-    BK.open[subj]= !(BK.open[subj]===true);
-  } else { BK.subj='all'; BK.open[subj]=true; const sel=document.getElementById('bookSel'); if(sel) sel.value='all'; }
+  BK.open[subj]= !(BK.open[subj]===true);
   renderBookList();
 }
 
