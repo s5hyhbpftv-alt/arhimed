@@ -77,7 +77,7 @@ function renderDashboard(){
     <h2>🛡 Кабинет родителя</h2>
     <div class="card">
       <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
-        <div><b style="font-size:17px;color:var(--brass)">${esc(p.name)}</b> · класс ${esc(p.klass)} · ${rankName()}</div>
+        <div><span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:${esc(p.color||'#d9a441')};border:1px solid rgba(255,255,255,.35);margin-right:8px;vertical-align:-1px"></span><b style="font-size:17px;color:var(--brass)">${esc(p.name)}</b> · класс ${esc(p.klass)} · ${rankName()}</div>
         <span class="chip">решил(а) ${solvedCount()}/${window.ARH_TASKS.length}</span>
       </div>
       ${DB.duel?`<div class="theme-row" style="margin-top:6px"><span class="tn">⚔ Рейтинг дуэлей</span><span class="pc">${DB.duel.rating} · побед ${DB.duel.wins}/${DB.duel.games}</span></div>`:""}

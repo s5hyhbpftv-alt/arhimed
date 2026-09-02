@@ -31,7 +31,9 @@ function go(target){
 }
 function hud(){
   if(!DB.profile){ return; }
-  document.getElementById('hName').textContent=DB.profile.name||'';
+  const col=DB.profile.color||COLORS[0];
+  const hEl=document.getElementById('hName');
+  hEl.innerHTML=`<i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${col};margin-right:6px;border:1px solid rgba(255,255,255,.35)"></i>${esc(DB.profile.name||'')}`;
   document.getElementById('hPoints').textContent=DB.points;
   document.getElementById('hStreak').textContent=DB.streak;
   document.getElementById('hRank').textContent=rankName();
@@ -53,12 +55,41 @@ function renderOnboard(){
       <label>Уровень</label>
       <select id="obLevel"><option value="novice">🌱 Новичок — объясняй побольше</option><option value="pro">⚡ Уже решал олимпиады</option></select>
       <label>Цвет хитона</label>
-      <div class="swatches">${COLORS.map((c,i)=>`<div class="sw ${i===0?'sel':''}" style="background:${c}" data-c="${c}" onclick="pickCol(this)"></div>`).join('')}</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin:2px 0 8px">
+        <svg width="86" height="104" viewBox="0 0 96 116" style="filter:drop-shadow(0 4px 10px rgba(0,0,0,.45))">
+          <ellipse cx="48" cy="30" rx="26" ry="28" fill="#eec39b"/>
+          <circle cx="48" cy="26" r="22" fill="#eec39b"/>
+          <path d="M30 30 Q38 40 48 40 Q58 40 66 30" stroke="#6b4a33" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <circle cx="41" cy="26" r="2.4" fill="#33291e"/><circle cx="55" cy="26" r="2.4" fill="#33291e"/>
+          <path d="M46 34 Q48 38 50 34" stroke="#d09a6a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <path id="chitShade" d="M12 116 C16 84 30 66 48 66 C66 66 80 84 84 116 Z" fill="#00000000"/>
+          <path id="chitBody" d="M14 116 C17 80 32 62 48 62 C64 62 79 80 82 116 Z" fill="#d9a441" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
+          <path d="M38 64 L44 84" stroke="rgba(255,255,255,.5)" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M58 64 L52 84" stroke="rgba(0,0,0,.18)" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+        <div style="text-align:left;max-width:200px"><div class="small" style="color:var(--muted)">Хитон Исследователя — выбери свой цвет:</div>
+        <div class="swatches" style="margin:8px 0 0">${COLORS.map((c,i)=>`<div class="sw ${i===0?'sel':''}" style="background:${c}" data-c="${c}" onclick="pickCol(this)"></div>`).join('')}</div></div>
+      </div>
       <button class="btn" style="width:100%" onclick="finishOnboard()">В путь →</button>
     </div></div>`;
 }
 let chosenCol=COLORS[0];
-function pickCol(el){ chosenCol=el.dataset.c; document.querySelectorAll('.sw').forEach(x=>x.classList.toggle('sel',x===el)); }
+function pickCol(el){
+  chosenCol=el.dataset.c;
+  document.querySelectorAll('.sw').forEach(x=>x.classList.toggle('sel',x===el));
+  // перекрашиваем превью-хитон
+  const b=document.getElementById('chitBody'), s=document.getElementById('chitShade');
+  if(b) b.setAttribute('fill', chosenCol);
+  if(s) s.setAttribute('fill', shade(chosenCol));
+}
+/* затемнение цвета для тени хитона */
+function shade(hex){
+  try{
+    const n=parseInt(hex.slice(1),16);
+    const f=v=>Math.max(0,Math.round(((n>>v)&255)*0.55));
+    return 'rgb('+f(16)+','+f(8)+','+f(0)+')';
+  }catch(e){ return 'rgba(0,0,0,.3)'; }
+}
 function finishOnboard(){
   const name=document.getElementById('obName').value.trim();
   if(!name){ toast('Архимед ждёт твоё имя!'); return; }
