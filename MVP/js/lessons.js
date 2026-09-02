@@ -96,6 +96,7 @@ function openLessonView(id){
   const L=lessonById(id); if(!L) return;
   LV={ id, step:0, phase:'explain', ch:null, task:0, hints:0, sel:null };
   LX={ a:1, b:7, c:2, pigeons:null, hour:0, cells:[64,0,0,0,0,0,0] };
+  if(L.comic&&typeof COMIC!=='undefined'&&COMIC.open){ COMIC.open(L); return; }
   renderLessonView();
 }
 function lessonTitle(){ const L=lessonById(LV.id); return `${L.ico} Урок ${L.id} · ${L.title}`; }
@@ -183,7 +184,7 @@ function renderLessonView(){
 }
 function lvStep(d){ const L=lessonById(LV.id); LV.step=Math.max(0,Math.min(lessonSteps(L)-1,LV.step+d)); renderLessonView(); }
 function lvToCheck(){ LV.phase='check'; LV.ch=null; renderLessonView(); }
-function lvBackExplain(){ LV.phase='explain'; renderLessonView(); }
+function lvBackExplain(){ const L=lessonById(LV.id); if(L&&L.comic&&typeof COMIC!=='undefined'&&COMIC.open){ COMIC.open(L); return; } LV.phase='explain'; renderLessonView(); }
 function lvCheck(i){ LV.ch=i; renderLessonView(); }
 function lvToTasks(){ LV.phase='tasks'; LV.task=0; LV.hints=0; LV.sel=null; renderLessonView(); }
 function lvHint(i){ if(LV.hints>i) return; const cost=i===0?0:(i===1?5:10);
