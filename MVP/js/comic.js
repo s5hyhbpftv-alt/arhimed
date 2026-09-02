@@ -437,12 +437,159 @@ function coinsSVG(){
 
 
 
+
+  /* ============ НОВЫЕ СЦЕНЫ: сад, огород, двор, магазин, космос ============ */
+  function sadSVG(){ // сад: яблоня с яблоками, корзина
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skS" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#cfeffb"/><stop offset="1" stop-color="#a9dcf4"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="150" fill="url(#skS)"/>
+      <circle cx="316" cy="30" r="16" fill="#ffe08a"/>
+      <g fill="#fff" opacity=".95">
+        <ellipse cx="70" cy="26" rx="26" ry="10"/><ellipse cx="92" cy="19" rx="17" ry="8"/>
+        <ellipse cx="250" cy="40" rx="22" ry="9"/><ellipse cx="268" cy="33" rx="15" ry="7"/></g>
+      <rect x="0" y="150" width="360" height="60" fill="#7fb45c"/>
+      <path d="M0 150 Q40 143 80 150 T160 150 T240 150 T320 150 T360 150 L360 162 L0 162 Z" fill="#5c8f3e" opacity=".55"/>
+      <g stroke="#6f9c46" stroke-width="2" fill="none">
+        <path d="M30 210 Q27 195 33 187"/><path d="M200 210 Q198 199 203 190"/><path d="M330 210 Q327 197 332 189"/></g>
+      <!-- яблоня -->
+      <rect x="168" y="108" width="26" height="46" rx="8" fill="#8a5c33" stroke="#5f3f12" stroke-width="2"/>
+      <g fill="#5f9a3c" stroke="#3f6b26" stroke-width="1.5">
+        <circle cx="150" cy="86" r="46"/><circle cx="215" cy="92" r="42"/><circle cx="183" cy="62" r="48"/></g>
+      <g fill="#74b04c" opacity=".55">
+        <circle cx="158" cy="70" r="16"/><circle cx="205" cy="74" r="18"/><circle cx="178" cy="96" r="15"/></g>
+      <!-- яблоки на дереве -->
+      <g class="c2a-apple">
+        <text x="150" y="60" font-size="24">🍎</text><text x="196" y="52" font-size="24">🍎</text>
+        <text x="228" y="84" font-size="22">🍎</text><text x="128" y="92" font-size="22">🍎</text>
+        <text x="168" y="108" font-size="20">🍎</text></g>
+      <!-- корзина с яблоками справа на траве -->
+      <path d="M236 168 L236 192 Q236 200 252 200 L282 200 Q298 200 298 192 L298 168 Z" fill="#b07a2e" stroke="#5f3f12" stroke-width="2.5"/>
+      <path d="M236 168 Q267 156 298 168" stroke="#8a5c1e" stroke-width="4" fill="none"/>
+      <text x="252" y="158" font-size="20">🍎</text><text x="272" y="152" font-size="20">🍎</text><text x="262" y="176" font-size="18">🍎</text>
+      <text x="252" y="192" font-size="16">🍎</text><text x="272" y="190" font-size="16">🍎</text>
+      <path d="M60 210 Q56 198 63 190" stroke="#6f9c46" stroke-width="2.5" fill="none"/>
+    </svg>`; }
+  function ogorodSVG(){ // огород: грядки с морковками
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skO" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#d6f0fd"/><stop offset="1" stop-color="#b2e0f6"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="96" fill="url(#skO)"/>
+      <circle cx="318" cy="26" r="15" fill="#ffe08a"/>
+      <g fill="#fff" opacity=".95"><ellipse cx="70" cy="22" rx="25" ry="9"/><ellipse cx="90" cy="16" rx="16" ry="7"/></g>
+      <!-- забор на горизонте -->
+      <g stroke="#a8721f" stroke-width="3">
+        <line x1="0" y1="86" x2="360" y2="86"/></g>
+      <rect x="0" y="86" width="360" height="14" fill="#c2915b"/>
+      <g stroke="#8a5c33" stroke-width="2.5"><line x1="30" y1="84" x2="30" y2="100"/><line x1="80" y1="84" x2="80" y2="100"/><line x1="130" y1="84" x2="130" y2="100"/><line x1="180" y1="84" x2="180" y2="100"/><line x1="230" y1="84" x2="230" y2="100"/><line x1="280" y1="84" x2="280" y2="100"/><line x1="330" y1="84" x2="330" y2="100"/></g>
+      <!-- земля и грядки -->
+      <rect x="0" y="100" width="360" height="110" fill="#a06a3a"/>
+      <rect x="20" y="112" width="150" height="52" rx="8" fill="#7a4a26"/>
+      <rect x="196" y="112" width="146" height="52" rx="8" fill="#7a4a26"/>
+      <g stroke="#5f3a1a" stroke-width="2" opacity=".5">
+        <line x1="24" y1="120" x2="24" y2="160"/><line x1="46" y1="120" x2="46" y2="160"/><line x1="68" y1="120" x2="68" y2="160"/><line x1="90" y1="120" x2="90" y2="160"/><line x1="112" y1="120" x2="112" y2="160"/><line x1="134" y1="120" x2="134" y2="160"/></g>
+      <g stroke="#5f3a1a" stroke-width="2" opacity=".5">
+        <line x1="200" y1="120" x2="200" y2="160"/><line x1="222" y1="120" x2="222" y2="160"/><line x1="244" y1="120" x2="244" y2="160"/><line x1="266" y1="120" x2="266" y2="160"/><line x1="288" y1="120" x2="288" y2="160"/><line x1="310" y1="120" x2="310" y2="160"/></g>
+      <!-- морковки в грядках -->
+      <g class="c2a-carrot">
+        <text x="36" y="146" font-size="22">🥕</text><text x="78" y="146" font-size="22">🥕</text><text x="120" y="146" font-size="22">🥕</text>
+        <text x="210" y="140" font-size="22">🥕</text><text x="252" y="146" font-size="22">🥕</text><text x="294" y="140" font-size="22">🥕</text></g>
+      <!-- ведёрко с морковками -->
+      <path d="M40 168 L40 198 Q40 204 50 204 L84 204 Q94 204 94 198 L94 168 Z" fill="#d98f3f" stroke="#7a4a26" stroke-width="2"/>
+      <text x="54" y="160" font-size="18">🥕</text><text x="72" y="162" font-size="18">🥕</text>
+      <text x="50" y="192" font-size="16">🥕</text><text x="70" y="194" font-size="16">🥕</text>
+    </svg>`; }
+  function fermaSVG(){ // птичий двор: куры и цыплята
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skF" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#cdeefb"/><stop offset="1" stop-color="#a5d9f0"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="96" fill="url(#skF)"/>
+      <circle cx="314" cy="26" r="15" fill="#ffe08a"/>
+      <g fill="#fff" opacity=".95"><ellipse cx="66" cy="22" rx="24" ry="9"/><ellipse cx="86" cy="16" rx="16" ry="7"/></g>
+      <!-- курятник справа -->
+      <rect x="236" y="52" width="104" height="70" fill="#c98f3a" stroke="#7a4a26" stroke-width="2.5"/>
+      <path d="M232 52 L288 26 L344 52 Z" fill="#a8721f" stroke="#7a4a26" stroke-width="2.5"/>
+      <rect x="300" y="92" width="24" height="30" fill="#5f3f12"/>
+      <circle cx="312" cy="150" r="10" fill="#5f3f12"/>
+      <!-- трава двора -->
+      <rect x="0" y="96" width="360" height="114" fill="#8fc060"/>
+      <path d="M0 96 Q40 88 80 96 T160 96 T240 96 T320 96 T360 96 L360 108 L0 108 Z" fill="#5c8f3e" opacity=".5"/>
+      <!-- забор слева -->
+      <g stroke="#c2915b" stroke-width="4"><line x1="14" y1="120" x2="14" y2="160"/><line x1="44" y1="120" x2="44" y2="160"/><line x1="74" y1="120" x2="74" y2="160"/><line x1="104" y1="120" x2="104" y2="160"/></g>
+      <rect x="6" y="118" width="106" height="10" rx="4" fill="#c2915b"/><rect x="6" y="150" width="106" height="10" rx="4" fill="#c2915b"/>
+      <!-- куры и цыплята -->
+      <g class="c2a-chick">
+        <text x="150" y="150" font-size="30">🐔</text><text x="196" y="156" font-size="28">🐔</text>
+        <text x="120" y="178" font-size="22">🐥</text><text x="146" y="184" font-size="20">🐥</text><text x="172" y="180" font-size="22">🐥</text>
+        <text x="206" y="184" font-size="18">🐥</text><text x="232" y="178" font-size="20">🐥</text></g>
+      <!-- зёрнышки -->
+      <g fill="#e8d5a8"><circle cx="140" cy="168" r="1.6"/><circle cx="190" cy="172" r="1.6"/><circle cx="224" cy="170" r="1.6"/></g>
+      <g stroke="#5c8f3e" stroke-width="2" fill="none">
+        <path d="M50 210 Q46 198 52 190"/><path d="M330 210 Q326 197 332 189"/></g>
+    </svg>`; }
+  function magazinSVG(){ // магазин игрушек: полки
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="wlM" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fdf3d9"/><stop offset="1" stop-color="#f3e0b5"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="148" fill="url(#wlM)"/>
+      <!-- вывеска -->
+      <rect x="96" y="12" width="168" height="30" rx="8" fill="#d97b6c" stroke="#8a3b2e" stroke-width="2.5"/>
+      <text x="180" y="32" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff" font-family="Georgia,serif">ИГРУШКИ</text>
+      <!-- полки -->
+      <g>
+        <rect x="20" y="58" width="150" height="8" rx="3" fill="#a8721f"/><rect x="20" y="58" width="150" height="3" fill="#c2915b"/>
+        <text x="44" y="52" font-size="26">🧸</text><text x="92" y="54" font-size="24">🚗</text><text x="136" y="52" font-size="26">⚽</text>
+        <rect x="196" y="58" width="146" height="8" rx="3" fill="#a8721f"/><rect x="196" y="58" width="146" height="3" fill="#c2915b"/>
+        <text x="222" y="52" font-size="26">🎈</text><text x="270" y="52" font-size="26">🧸</text><text x="316" y="52" font-size="24">🚂</text>
+      </g>
+      <g>
+        <rect x="20" y="104" width="150" height="8" rx="3" fill="#a8721f"/><rect x="20" y="104" width="150" height="3" fill="#c2915b"/>
+        <text x="52" y="100" font-size="24">🪁</text><text x="98" y="100" font-size="26">🎲</text><text x="140" y="100" font-size="22">🧸</text>
+        <rect x="196" y="104" width="146" height="8" rx="3" fill="#a8721f"/><rect x="196" y="104" width="146" height="3" fill="#c2915b"/>
+        <text x="220" y="100" font-size="26">⚽</text><text x="268" y="100" font-size="22">🚗</text><text x="314" y="100" font-size="22">🎈</text>
+      </g>
+      <!-- пол -->
+      <rect x="0" y="148" width="360" height="62" fill="#c2915b"/>
+      <g stroke="#8a5c33" stroke-width="1.6" opacity=".5">
+        <line x1="0" y1="166" x2="360" y2="166"/><line x1="0" y1="184" x2="360" y2="184"/>
+        <line x1="60" y1="148" x2="48" y2="210"/><line x1="150" y1="148" x2="140" y2="210"/>
+        <line x1="240" y1="148" x2="252" y2="210"/><line x1="330" y1="148" x2="336" y2="210"/></g>
+      <!-- прилавок справа снизу -->
+      <rect x="250" y="162" width="100" height="12" rx="3" fill="#a8721f" stroke="#6e441d" stroke-width="2"/>
+      <rect x="262" y="174" width="10" height="30" fill="#8a5c33"/><rect x="330" y="174" width="10" height="30" fill="#8a5c33"/>
+      <text x="282" y="160" font-size="20">🧸</text>
+    </svg>`; }
+  function cosmosSVG(){ // космос: звёзды, ракета, поверхность Луны
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skC2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1b2450"/><stop offset="1" stop-color="#3d4d94"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="150" fill="url(#skC2)"/>
+      <g class="c2a-star">
+        <text x="40" y="40" font-size="22">⭐</text><text x="120" y="60" font-size="16">✨</text>
+        <text x="210" y="34" font-size="20">⭐</text><text x="300" y="70" font-size="18">✨</text>
+        <text x="84" y="92" font-size="14">✨</text><text x="270" y="120" font-size="16">⭐</text>
+        <text x="330" y="30" font-size="14">✨</text></g>
+      <text x="60" y="130" font-size="30">🪐</text>
+      <text x="296" y="60" font-size="34">🚀</text>
+      <!-- поверхность Луны -->
+      <rect x="0" y="150" width="360" height="60" fill="#9aa0b8"/>
+      <path d="M0 150 Q40 144 80 150 T160 150 T240 150 T320 150 T360 150 L360 162 L0 162 Z" fill="#7f859e" opacity=".6"/>
+      <g fill="#6f7690" stroke="#565c73" stroke-width="1.5">
+        <circle cx="70" cy="178" r="9"/><circle cx="180" cy="190" r="7"/><circle cx="300" cy="176" r="11"/>
+        <circle cx="130" cy="200" r="5"/><circle cx="240" cy="202" r="6"/></g>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
     if(scene==='pond') base=pondSVG();
     else if(scene==='kitchen') base=kitchenSVG();
     else if(scene==='coins') base=coinsSVG();
+    else if(scene==='sad') base=sadSVG();
+    else if(scene==='ogorod') base=ogorodSVG();
+    else if(scene==='ferma') base=fermaSVG();
+    else if(scene==='magazin') base=magazinSVG();
+    else if(scene==='cosmos') base=cosmosSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -452,7 +599,10 @@ function coinsSVG(){
     }
     return s;
   }
-  function emojiFor(scene){ return scene==='pond'?'🐟':scene==='kitchen'?'🥧':'🪙'; }
+  function emojiFor(scene){
+    return scene==='pond'?'🐟':scene==='kitchen'?'🥧':scene==='coins'?'🪙'
+      : scene==='sad'?'🍎':scene==='ogorod'?'🥕':scene==='ferma'?'🐥':scene==='magazin'?'🧸':scene==='cosmos'?'⭐':'🐟';
+  }
 
   /* HTML-герой: крупный, полностью видимый, стоит на «земле» сцены */
   function heroHTML(who, emo, side){
@@ -506,8 +656,10 @@ function coinsSVG(){
       /* сцена-кадр: фон-панорама + герои поверх */
       .c2-stage { position:relative; flex:1 1 auto; min-height:0; width:100%; overflow:hidden;
         border-bottom:5px solid #33291e; background:linear-gradient(#8fc060,#5c8f3e 45%,#4a7a33); }
-      .c2-stage.c2-bg-pond { background:linear-gradient(#7fb45c,#5c8f3e 50%,#4a7a33); }
-      .c2-stage.c2-bg-kitchen { background:linear-gradient(#c2915b,#9c6c3a 45%,#7a4f26); }
+      .c2-stage.c2-bg-pond, .c2-stage.c2-bg-sad, .c2-stage.c2-bg-ferma { background:linear-gradient(#7fb45c,#5c8f3e 50%,#4a7a33); }
+      .c2-stage.c2-bg-kitchen, .c2-stage.c2-bg-magazin { background:linear-gradient(#c2915b,#9c6c3a 45%,#7a4f26); }
+      .c2-stage.c2-bg-ogorod { background:linear-gradient(#a06a3a,#7a4a26 55%,#5f3a1a); }
+      .c2-stage.c2-bg-cosmos { background:linear-gradient(#9aa0b8,#7f859e 45%,#565c73); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
@@ -583,7 +735,9 @@ function coinsSVG(){
     const many=nList>=2;
     const solo=nList===0;
     const dots=frs.map((_,i)=>`<span class="cn-dot ${i===idx?'on':''}"></span>`).join('');
-    const DECO={pond:['🌾','🌼','🐞','🌷'],kitchen:['🧺','🪑','🌿','🫙'],coins:['🌼','🪙','🌻','🍄']};
+    const DECO={pond:['🌾','🌼','🐞','🌷'],kitchen:['🧺','🪑','🌿','🫙'],coins:['🌼','🪙','🌻','🍄'],
+      sad:['🌼','🍄','🐞','🌿'],ogorod:['🐛','🌼','🪱','🌿'],ferma:['🌾','🐞','🌻','🌼'],
+      magazin:['🧸','🎈','🪁','🚂'],cosmos:['🌟','🪐','✨','🚀']};
     const deco=(DECO[scene]||DECO.pond).map((e,i)=>`<span class="d${i+1}">${e}</span>`).join('');
     root.innerHTML=`<div class="comic-top">
         <span class="ct-book">📖 ${escHtml(emojiFor(scene))} КОМИКС</span>
