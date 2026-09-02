@@ -13,6 +13,16 @@ const AGENTLIVE = (function(){
   const listeners={};
 
   function host(){ return (location.hostname||'127.0.0.1'); }
+  /* Адрес живого агента: 
+     - страница открыта по HTTPS (VPS с доменом, туннель) → тот же origin: wss://хост/agent
+     - локальный шлюз на порту 8130 → тот же origin: ws://хост/agent
+     - локальная разработка (8123) → прямой агент-сервер: ws://хост:8125/agent */
+  function agentUrl(name){
+    const proto = location.protocol==='https:' ? 'wss://' : 'ws://';
+    const sameOrigin = location.protocol==='https:' || location.port==='8130';
+    const base = sameOrigin ? (location.host||location.hostname) : host()+':8125';
+    return proto+base+'/agent?name='+encodeURIComponent(name);
+  }
   function whoAmI(){ return (typeof DB!=='undefined'&&DB.profile&&DB.profile.name)||'друг'; }
   function screenContext(){
     const head='Ты — Архимед, мудрый учитель из приложения АРХИМЕД. Ученика зовут '+whoAmI()+'. Говори всегда обычными словами и цифрами, без звёздочек и специальных символов. ';
@@ -169,8 +179,8 @@ const AGENTLIVE = (function(){
     };
     srcNode.connect(procNode); procNode.connect(ctx.destination);
     setPill(true,'Я здесь — соединяюсь…');
-    try{ ws=new WebSocket('ws://'+host()+':8125/agent?name='+encodeURIComponent(name)); }
-    catch(e){ setPill(false); stopTracks(); toast('❌ Нет связи со мной (8125). Запустите агент_сервер.py'); return; }
+    try{ ws=new WebSocket(agentUrl(name)); }
+    catch(e){ setPill(false); stopTracks(); toast('❌ Нет связи со мной. Запустите шлюз (шлюз_сервер.py) или агент_сервер.py'); return; }
     ws.onopen=()=>{
       running=true;
       setPill(true,'🗣 Я Архимед — слушаю, говори (стоп — клик по полоске)');
