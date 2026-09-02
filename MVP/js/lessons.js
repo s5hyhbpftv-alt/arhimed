@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(el&&visIsChem()) visChemNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -485,6 +485,162 @@ function chFire(lk,on){ const st=CHS[lk]||(CHS[lk]={}); st.fire=on; chRender(0);
 function chZn(lk,d){ const st=CHS[lk]||(CHS[lk]={}); st.zn=d; chRender(0); }
 function visIsChem(){ try{ const L=lessonById(LV.id); return !!L && L.subj==='chem'; }catch(e){ return false; } }
 
+
+function visPhysNew(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const all=((L.explain||[]).join(' ')+' '+(L.check&&L.check.q||'')+' '+L.title).toLowerCase();
+    const raw=(L.check&&L.check.q||'');
+    const nums=(raw.match(/\d+(?:[.,]\d+)?/g)||[]).map(x=>parseFloat(x.replace(',','.')));
+    const has=(...ws)=>ws.some(w=>all.includes(w));
+    const card=(inner)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">${inner}</div>`;
+    const big=(t)=>`<div style="font-size:19px;color:var(--amber);font-family:Georgia,serif">${t}</div>`;
+    const small=(t)=>`<div class="small" style="color:#cbb89a">${t}</div>`;
+    const btns=(...bs)=>`<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">${bs.map(b=>`<button class="hint-btn" onclick="phAct('${lk}','${b[0]}')">${b[1]}</button>`).join('')}</div>`;
+    let h='';
+    if(has('скорост','движен')){
+      if(st.v==null) st.v=Math.max(nums[0]||5,1); if(st.t==null) st.t=Math.max(nums[1]||2,1);
+      const S=st.v*st.t;
+      h=card(`<div style="width:250px;height:26px;border:2px solid #3d5c49;border-radius:6px;position:relative;background:#101f18">
+        <div style="position:absolute;top:2px;left:2px;width:${Math.min(240, S*4)}px;height:18px;background:linear-gradient(90deg,#7fd1ff,var(--brass));border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:4px;font-size:11px">🚗</div></div>`
+        + big(`v=${st.v} км/ч · t=${st.t} ч`)
+        + big(`S = v·t = ${S} км`)
+        + btns(['v+','🚗 быстрее +5'],['v-','медленнее −5'],['t+','⏱ +1 ч'],['t-','⏱ −1 ч'],['r','↺']));
+    }
+    else if(has('плотност')){
+      if(st.m==null) st.m=Math.max(nums[0]||6,1); if(st.V==null) st.V=Math.max(nums[1]||2,1);
+      const ro=st.m/st.V; const swim=ro<=1;
+      h=card(`<div style="display:flex;gap:10px;align-items:center;justify-content:center">
+        <div style="font-size:52px">${swim?'🛟':'🪨'}</div>
+        <div style="width:110px;height:120px;border:3px solid #33291e;border-radius:0 0 16px 16px;background:linear-gradient(#9fc5f5,#6aa8dc);position:relative;overflow:hidden">
+          <div style="position:absolute;bottom:0;left:0;right:0;height:${Math.min(100,st.V*22)}px;background:#a06a3a;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px">${st.m} г / ${st.V} см³</div></div></div>`
+        + big(`ρ = ${st.m} : ${st.V} = ${ro} г/см³`)
+        + btns(['m+','+1 г'],['m-','−1 г'],['V+','+1 см³'],['V-','−1 см³'],['r','↺'])
+        + small(swim?'ρ ≤ 1 — тело плавает в воде':'ρ > 1 — тело тонет'));
+    }
+    else if(has('сила тяжест','вес','тяжести')){
+      if(st.m==null) st.m=Math.max(nums[0]||3,1);
+      const F=st.m*10;
+      h=card(`<div style="display:flex;gap:14px;align-items:flex-end;justify-content:center">
+        <div style="width:60px;height:${Math.min(130,40+F*6)}px;background:linear-gradient(#f0c75e,#c96f4a);border:2px solid #33291e;border-radius:6px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-size:12px;color:#33291e;transition:.2s">${st.m} кг</div>
+        <div style="width:46px;height:140px;border:3px solid #33291e;border-radius:10px;position:relative;background:#fff">
+          <div style="position:absolute;bottom:6px;left:6px;right:6px;height:${Math.min(120,F*4)}px;background:#7fd1ff;border-radius:4px"></div>
+          <div style="position:absolute;top:4px;left:0;right:0;text-align:center;font-size:11px;color:#33291e">${F} Н</div></div></div>`
+        + big(`F = m·g = ${st.m}·10 = ${F} Н`)
+        + btns(['m+','+1 кг'],['m-','−1 кг'],['r','↺']));
+    }
+    else if(has('давление твёрдых')){
+      if(st.F==null) st.F=Math.max(nums[0]||60,1); if(st.S==null) st.S=Math.max(nums[1]||3,1);
+      const p=st.F/st.S;
+      h=card(`<div style="display:flex;align-items:flex-end;gap:10px;justify-content:center">
+        <div style="font-size:44px">🧱</div>
+        <div style="width:${Math.min(150,40+st.S*14)}px;height:26px;background:#8a94ad;border:2px solid #33291e;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff">S = ${st.S} м²</div></div>`
+        + big(`p = F : S = ${st.F} : ${st.S} = ${p} Па`)
+        + btns(['F+','+10 Н'],['F-','−10 Н'],['S+','+1 м²'],['S-','−1 м²'],['r','↺']));
+    }
+    else if(has('архимед','выталкива')){
+      if(st.d==null) st.d=1;
+      const F=1000*10*(st.d*0.1); // глубина 0.1..? объём погружённой части
+      h=card(`<div style="position:relative;width:150px;height:130px;border:3px solid #33291e;border-radius:0 0 16px 16px;background:linear-gradient(#9fc5f5,#6aa8dc);overflow:hidden">
+        <div style="position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:44px;height:${st.d*14}px;background:#a06a3a;border:2px solid #33291e;border-radius:4px"></div>
+        <div style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:11px;color:#123">F = ${F.toFixed(0)} Н</div></div>`
+        + big(`погружение: ${st.d*10}%`)
+        + btns(['d+','⬇ глубже'],['d-','⬆ выше'],['r','↺'])
+        + small('F = ρ·g·V погружённой части'));
+    }
+    else if(has('паскал','давление жидкости')){
+      if(st.h==null) st.h=Math.max(nums[1]||2,1);
+      const p=1000*10*st.h;
+      h=card(`<div style="position:relative;width:110px;height:150px;border:3px solid #33291e;border-radius:0 0 14px 14px;background:linear-gradient(#cfe8fb,#9fc5f5);overflow:hidden">
+        <div style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:12px;color:#123">h = ${st.h} м</div></div>`
+        + big(`p = ρ·g·h = 1000·10·${st.h} = ${p} Па = ${p/1000} кПа`)
+        + btns(['h+','⬆ глубже'],['h-','⬆ выше'],['r','↺']));
+    }
+    else if(has('ом','напряжен','сопротивлен','сила тока')){
+      if(st.U==null) st.U=Math.max(nums[0]||6,1); if(st.R==null) st.R=Math.max(nums[1]||2,1);
+      const I=st.U/st.R;
+      h=card(`<div style="display:flex;align-items:center;gap:12px;justify-content:center">
+        <div style="font-size:40px">💡</div>
+        <div style="text-align:left">
+          <div style="font-size:15px;color:#cbb89a">батарея: ${st.U} В</div>
+          <div style="font-size:15px;color:#cbb89a">сопротивление: ${st.R} Ом</div></div></div>`
+        + big(`I = U : R = ${st.U} : ${st.R} = ${I.toFixed(1)} А`)
+        + btns(['U+','+3 В'],['U-','−3 В'],['R+','+1 Ом'],['R-','−1 Ом'],['r','↺'])
+        + small(I>=1?'лампочка яркая 🔆':'лампочка тусклая 🔅'));
+    }
+    else if(has('энерг','кинетическ','потенциальн','высо')){
+      const kin=has('кинетическ');
+      if(st.a==null) st.a=Math.max(nums[0]||(kin?3:2),1); if(st.b==null) st.b=Math.max(nums[1]||(kin?2:5),1);
+      const E=kin? (st.a*st.b*st.b/2) : (st.a*10*st.b);
+      h=card(`<div style="font-size:44px">${kin?'⚡':'🚀'}</div>`
+        + (kin? big(`E = m·v²/2 = ${st.a}·${st.b}²/2 = ${E} Дж`) : big(`E = m·g·h = ${st.a}·10·${st.b} = ${E} Дж`))
+        + btns(['a+',kin?'+1 кг':'+1 кг'],['a-',kin?'−1 кг':'−1 кг'],['b+',kin?'+1 м/с':'+1 м'],['b-',kin?'−1 м/с':'−1 м'],['r','↺']));
+    }
+    else if(has('работ','мощност')){
+      if(st.a==null) st.a=Math.max(nums[0]||10,1); if(st.b==null) st.b=Math.max(nums[1]||5,1);
+      const A=st.a*st.b;
+      h=card(`<div style="font-size:44px">🏋️</div>`+big(`A = F·s = ${st.a}·${st.b} = ${A} Дж`)
+        + btns(['a+','+5 Н'],['a-','−5 Н'],['b+','+1 м'],['b-','−1 м'],['r','↺']));
+    }
+    else if(has('тепл','нагрев','температур','калор')){
+      if(st.dt==null) st.dt=Math.max(nums[1]||1,1); if(st.m==null) st.m=Math.max(nums[0]||1,1);
+      const Q=st.m*st.dt; // в калориях (1 кал = 1г·1°)
+      h=card(`<div style="font-size:44px">♨️</div>`+big(`Q = m·Δt = ${st.m}·${st.dt} = ${Q} кал`)
+        + btns(['m+','+1 г'],['m-','−1 г'],['dt+','+1°'],['dt-','−1°'],['r','↺'])
+        + small('чтобы нагреть 1 г воды на 1°, нужно 1 кал'));
+    }
+    else if(has('звук')){
+      if(st.t==null) st.t=Math.max(nums[0]||3,1);
+      const S=340*st.t;
+      h=card(`<div style="font-size:40px">📢</div>`+big(`S = v·t = 340·${st.t} = ${S} м`)
+        + btns(['t+','+1 с'],['t-','−1 с'],['r','↺'])
+        + small('скорость звука в воздухе ≈ 340 м/с'));
+    }
+    else if(has('измерен','метр','килограмм','единиц')){
+      if(st.v==null) st.v=Math.max(nums[0]||3,1);
+      h=card(`<div style="font-size:40px">📏</div>`+big(`${st.v} м = ${st.v*100} см`)
+        + btns(['v+','+1'],['v-','−1'],['r','↺'])
+        + small('1 м = 100 см; 1 кг = 1000 г'));
+    }
+    else if(has('трен')){
+      if(st.f==null) st.f=2; const srf=st.srf||'шершавый';
+      h=card(`<div style="font-size:44px">🧊</div>`+big(`тянуть по ${srf}: ${st.f} Н`)
+        + btns(['smooth','гладкий лёд'],['rough','шершавый асфальт'])
+        + small('трение больше на шершавой поверхности'));
+    }
+    else {
+      h=card(`<div style="font-size:36px">🔭</div>`+big(L.title||'')+`<div class="small" style="color:#cbb89a;max-width:300px">${esc(((L.explain&&L.explain[0])||'')).slice(0,150)}…</div>`);
+    }
+    el.innerHTML=`<div style="background:rgba(16,31,24,.75);border:1px solid #3d5c49;border-radius:12px;padding:10px;margin-top:10px">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+function phAct(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const bump=(k,d,min)=> st[k]=Math.max(min||1, Math.round(((st[k]==null?1:st[k])+d)*10)/10);
+  switch(act){
+    case 'v+': bump('v',5); break; case 'v-': bump('v',-5); break;
+    case 't+': bump('t',1); break; case 't-': bump('t',-1); break;
+    case 'm+': bump('m',1); break; case 'm-': bump('m',-1); break;
+    case 'V+': bump('V',1); break; case 'V-': bump('V',-1); break;
+    case 'F+': bump('F',10); break; case 'F-': bump('F',-10); break;
+    case 'S+': bump('S',1); break; case 'S-': bump('S',-1); break;
+    case 'd+': st.d=Math.min(9,(st.d||1)+1); break; case 'd-': st.d=Math.max(1,(st.d||1)-1); break;
+    case 'h+': bump('h',1); break; case 'h-': bump('h',-1); break;
+    case 'U+': bump('U',3); break; case 'U-': bump('U',-3); break;
+    case 'R+': bump('R',1); break; case 'R-': bump('R',-1); break;
+    case 'a+': bump('a',1); break; case 'a-': bump('a',-1); break;
+    case 'b+': bump('b',1); break; case 'b-': bump('b',-1); break;
+    case 'dt+': bump('dt',1); break; case 'dt-': bump('dt',-1); break;
+    case 'smooth': st.srf='гладкий лёд'; st.f=1; break;
+    case 'rough': st.srf='шершавый асфальт'; st.f=6; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function visIsPhys(){ try{ const L=lessonById(LV.id); return !!L && L.subj==='phys'; }catch(e){ return false; } }
+
 function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
@@ -495,6 +651,7 @@ function renderLessonVis(){
   else if(id===5) visTourn(el);
   else if(id===6) visVillage(el);
   else if(visIsChem()) visChemNew(el);
+  else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
   else el.innerHTML='';
 }
