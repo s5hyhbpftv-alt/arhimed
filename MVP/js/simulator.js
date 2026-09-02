@@ -22,25 +22,53 @@ function tickTour(){
   },1000);
 }
 function fmt(sec){ const m=Math.floor(sec/60), s=sec%60; return (m<10?'0':'')+m+':'+(s<10?'0':'')+s; }
+function tourIsls(){ return ISLANDS.filter(I=>{ if(typeof isJunior==='function'&&isJunior()) return I.name==='Начальная школа'; return I.name!=='Начальная школа'; }); }
+function tourLabel(n){ return typeof isJunior==='function'&&isJunior()? 'Тур по начальной школе' : 'Олимпиадный тур'; }
+function bestTour(isl){ try{ return (DB.tours||[]).filter(t=>t.island===isl); }catch(e){ return []; } }
 function renderTourScreen(){
   const s=document.getElementById('screen');
-  const isls=['Сиракузы','Ньютон','Лавуазье','Информатика'];
-  const ico=n=>n==='Сиракузы'?'🏛':n==='Ньютон'?'🍎':n==='Лавуазье'?'⚗️':'💻';
-  s.innerHTML=`<h2>🏁 Олимпиадный тур <span class="small">(как школьный этап ВсОШ)</span></h2>
-    <div class="arch"><span class="who">◈ Архимед</span>
-      «8 задач · таймер · без подсказок — как на настоящем туре. Реши сколько сможешь, потом посмотрим протокол».</div>
-    <div class="card">
-      <div class="sec" style="margin-top:0">Выбери предмет</div>
-      <div class="choices">${isls.map(n=>{const st=islStats(n);
-        return `<button class="choice" onclick="UI.tourIsl='${n}';startTour()">${ico(n)} ${n} — тур из 8 задач</button>`;}).join('')}</div>
-      ${DB.tours&&DB.tours.length?`<div class="small" style="margin-top:8px">Лучший тур: ${Math.max(...DB.tours.map(t=>t.score))}/${tourCount()} · последний: ${DB.tours[0].score}/${tourCount()} (${fmt(DB.tours[0].secs)})</div>`:''}
+  const isls=tourIsls();
+  const junior=typeof isJunior==='function'&&isJunior();
+  const sub=junior? tourCount()+' задач на время — проверь себя в разделе «Начальная школа»' : 'как школьный этап ВсОШ · '+tourCount()+' задач · таймер · без подсказок';
+  const nTask=tourCount();
+  const hero=`<div class="card path-hero" style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
+      <div style="font-size:40px;filter:drop-shadow(0 0 14px rgba(217,164,65,.5))">🏁</div>
+      <div style="flex:1"><div style="font-size:19px;font-weight:bold;color:var(--brass)">${tourLabel()}</div>
+      <div class="small" style="color:var(--muted);margin-top:3px;line-height:1.5">${sub}</div></div>
     </div>
-    <div class="card">
-      <div class="sec" style="margin-top:0">⚔ Дуэль с призраком Архимеда</div>
-      <div style="font-size:13px;color:#cbb89a;line-height:1.5;margin-bottom:8px">Реши 6 задач быстрее призрака (или точнее при равном времени) — рейтинг как в настоящих дуэлях.
-      ${DB.duel?`Сейчас рейтинг <b style="color:var(--amber)">${DB.duel.rating}</b> · побед ${DB.duel.wins}/${DB.duel.games}.`:''}</div>
-      <div class="choices">${isls.map(n=>`<button class="choice" onclick="UI.tourIsl='${n}';startDuel()">${ico(n)} Дуэль: ${n}</button>`).join('')}</div>
+    <div class="arch"><span class="who">◈ Архимед</span>
+      «${junior?'Соберись и покажи, чему научился — решай по порядку, время пошло!':'Таймер запущен — не застревай на одной задаче, как на настоящем туре. Потом разберём протокол'}».</div>`;
+  const tourCards=isls.map((I,i)=>{
+    const st=islStats(I.name);
+    const best=bestTour(I.name);
+    const bestN=best.length? Math.max(...best.map(t=>t.score)) : null;
+    const last=best.length? best[0] : null;
+    return `<div class="tour-card path-island" style="animation-delay:${0.07*i}s" onclick="UI.tourIsl='${I.name}';startTour()">
+      <div class="tc-icon">${I.ico}</div>
+      <div style="flex:1;min-width:0">
+        <div class="tc-name">${esc(I.name)}</div>
+        <div class="small" style="color:var(--muted);margin-top:2px">${esc(I.dsc)} · ${st.done}/${st.total} решено</div>
+        <div class="tc-meta">
+          <span class="chip" style="font-size:11px">⏱ ${nTask} задач</span>
+          ${bestN!==null?`<span class="chip" style="font-size:11px">🏆 лучший ${bestN}/${nTask}</span>`:''}
+          ${last?`<span class="chip" style="font-size:11px">последний ${last.score}/${nTask} (${fmt(last.secs)})</span>`:''}
+        </div>
+      </div>
+      <span class="tc-go">▶</span>
+    </div>`;}).join('');
+  const duelBest=DB.duel? DB.duel : null;
+  const duel=`<div class="card duel-card" style="margin-top:12px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div style="font-size:34px">⚔</div>
+        <div style="flex:1"><b style="font-size:16px">Дуэль с призраком Архимеда</b>
+        <div class="small" style="color:var(--muted);margin-top:2px">${junior?'Реши 6 задачек быстрее призрака':'6 задач на время против призрака — рейтинг как в настоящих дуэлях'}</div></div>
+        ${duelBest?`<div class="duel-score">${duelBest.rating}</div>`:''}
+      </div>
+      <div class="duel-row">${isls.map((I,i)=>`<button class="duel-btn path-island" style="animation-delay:${0.05*i}s" onclick="UI.tourIsl='${I.name}';startDuel()">
+        <span style="font-size:20px">${I.ico}</span><span>${esc(I.name)}</span></button>`).join('')}</div>
+      ${duelBest?`<div class="small" style="margin-top:8px;color:var(--muted)">Рейтинг <b style="color:var(--brass)">${duelBest.rating}</b> · побед ${duelBest.wins}/${duelBest.games}${duelBest.best? ' · лучший счёт '+duelBest.best:''}</div>`:''}
     </div>`;
+  s.innerHTML=hero+tourCards+duel;
   hud();
 }
 function renderTour(){

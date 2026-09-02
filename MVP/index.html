@@ -85,6 +85,26 @@
   .path-island .pct { color:var(--brass); font-weight:bold; }
   .path-island .ring { opacity:0; animation:ringIn .4s ease .3s forwards; }
   @keyframes ringIn { from{opacity:0; transform:scale(.6);} to{opacity:1; transform:scale(1);} }
+  /* ===== ТУР ===== */
+  .tour-card { display:flex; align-items:center; gap:12px; background:linear-gradient(170deg,var(--card),var(--card2));
+    border:1px solid var(--hairline); border-radius:14px; padding:13px 14px; margin-bottom:10px; cursor:pointer;
+    position:relative; overflow:hidden; }
+  .tour-card::before { content:""; position:absolute; top:-30px; right:-30px; width:100px; height:100px;
+    background:radial-gradient(circle, rgba(127,209,255,.14), transparent 70%); pointer-events:none; }
+  .tour-card:hover { border-color:var(--brass); }
+  .tour-card .tc-icon { font-size:34px; filter:drop-shadow(0 3px 8px rgba(0,0,0,.4)); flex-shrink:0;
+    animation:tcFloat 3.4s ease-in-out infinite; }
+  @keyframes tcFloat { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-3px);} }
+  .tour-card .tc-name { font-size:16px; font-weight:bold; color:var(--ivory); }
+  .tour-card .tc-meta { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
+  .tour-card .tc-go { font-size:18px; color:var(--brass); flex-shrink:0; }
+  .duel-card { border-color:rgba(232,106,90,.4); background:linear-gradient(170deg,#241a1a,#1c1414); }
+  .duel-card .duel-score { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(180deg,var(--danger),#a34a3e); color:#fff; font-size:17px; font-weight:bold; box-shadow:0 0 14px rgba(232,106,90,.4); flex-shrink:0; }
+  .duel-row { display:flex; gap:8px; flex-wrap:wrap; }
+  .duel-btn { flex:1 1 150px; display:flex; align-items:center; gap:8px; background:#20382b; color:var(--ivory);
+    border:1.5px solid #3d5c49; border-radius:10px; padding:10px 12px; font-family:inherit; font-size:13.5px; cursor:pointer; }
+  .duel-btn:hover { border-color:var(--danger); color:#ffd9d3; }
   .theme-row { display:flex; align-items:center; gap:8px; margin-top:8px; font-size:12px; }
   .theme-row .tn { width:150px; flex-shrink:0; color:#cbb89a; }
   .theme-row .bar { flex:1; height:6px; background:#0d1a13; border:1px solid var(--hairline); border-radius:99px; overflow:hidden; }
@@ -258,20 +278,20 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=45"></script>
-<script src="data/lessons.js?v=45"></script>
-<script src="js/core.js?v=45"></script>
-<script src="js/engine.js?v=45"></script>
-<script src="js/app.js?v=45"></script>
-<script src="js/dashboard.js?v=45"></script>
-<script src="js/lessons.js?v=45"></script>
-<script src="js/legend.js?v=45"></script>
-<script src="js/simulator.js?v=45"></script>
-<script src="js/duel.js?v=45"></script>
-<script src="js/agent.js?v=45"></script>
-<script src="js/voice.js?v=45"></script>
-<script src="js/assistant.js?v=45"></script>
-<script src="js/agentlive.js?v=45"></script>
+<script src="data/tasks.js?v=46"></script>
+<script src="data/lessons.js?v=46"></script>
+<script src="js/core.js?v=46"></script>
+<script src="js/engine.js?v=46"></script>
+<script src="js/app.js?v=46"></script>
+<script src="js/dashboard.js?v=46"></script>
+<script src="js/lessons.js?v=46"></script>
+<script src="js/legend.js?v=46"></script>
+<script src="js/simulator.js?v=46"></script>
+<script src="js/duel.js?v=46"></script>
+<script src="js/agent.js?v=46"></script>
+<script src="js/voice.js?v=46"></script>
+<script src="js/assistant.js?v=46"></script>
+<script src="js/agentlive.js?v=46"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -286,7 +306,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=45').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=46').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
