@@ -20,28 +20,58 @@ function lessonPool(){
     return window.ARH_LESSONS.filter(L=>subjOf(L)!=='jun');
   }catch(e){ return window.ARH_LESSONS; }
 }
+let BK={ subj:'all', open:{} };   // фильтр по предмету + раскрытые секции
+function lessonCard(L){
+  const rec=DB.lessons&&DB.lessons[L.id];
+  const done=!!(rec&&rec.done);
+  return `<div class="island" onclick="openLessonView(${L.id})" style="${done?'border-color:var(--ok)':''}">
+    <div class="top"><span class="nm">${L.ico} ${esc(L.title)}</span>
+    <span class="pr">${done?'✅':(rec&&rec.stars? '⭐ '+rec.stars+'/2':'⭐')}</span></div>
+    <div class="sub">${esc(L.src)} · ${L.explain.length} шагов</div></div>`;
+}
+function bookSel(){
+  try{ if(typeof isJunior==='function'&&isJunior()) return 'jun'; }catch(e){}
+  return BK.subj;
+}
 function renderBookList(){
   const s=document.getElementById('screen');
   const pool=lessonPool();
   const doneAll=pool.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
   const totalL=pool.length;
-  const order=isJunior && typeof isJunior==='function' && isJunior() ? ['jun'] : ['math','phys','chem','inf'];
+  const junior=typeof isJunior==='function'&&isJunior();
+  const order=junior? ['jun'] : ['math','phys','chem','inf'];
   const grouped=order.map(subj=>({ subj, meta:SUBJ_META[subj], items:pool.filter(L=>subjOf(L)===subj) })).filter(g=>g.items.length);
+  const sel=bookSel();
+  const opts=grouped.map(g=>`<option value="${g.subj}" ${sel===g.subj?'selected':''}>${g.meta.ico} ${g.meta.name} (${g.items.length})</option>`).join('');
+  // «Все предметы» только для старших (у младших один предмет)
+  const allOpt=junior? '' : `<option value="all" ${sel==='all'?'selected':''}>📚 Все предметы (${totalL})</option>`;
   s.innerHTML=`<h2>📖 Книга знаний <span class="small">(пройдено ${doneAll}/${totalL})</span></h2>
     <div class="arch"><span class="who">◈ Архимед</span>
       «Сначала я объясню приём — по шагам. Потом проверим, как ты понял, — и только затем дам задачи».</div>
-    ${grouped.map(g=>{
+    <select id="bookSel" onchange="bookPick(this.value)" style="width:100%;margin-bottom:10px;font-size:15px">
+      ${allOpt}${opts}
+    </select>
+    ${grouped.map((g,i)=>{
+      // при «Все» по умолчанию раскрыта только первая секция; остальные — по клику
+      const isOpen = sel===g.subj || (sel==='all' && (BK.open[g.subj]===true || (BK.open[g.subj]===undefined && i===0)));
       const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
-      return `<div class="sec" style="margin-top:16px">${g.meta.ico} ${g.meta.name} <span class="small" style="text-transform:none;letter-spacing:0">(${gd}/${g.items.length})</span></div>
-      <div class="small" style="margin:-4px 2px 8px;color:var(--muted)">${esc(g.meta.dsc)}</div>
-      ${g.items.map(L=>{
-        const rec=DB.lessons&&DB.lessons[L.id];
-        const done=!!(rec&&rec.done);
-        return `<div class="island" onclick="openLessonView(${L.id})" style="${done?'border-color:var(--ok)':''}">
-          <div class="top"><span class="nm">${L.ico} ${esc(L.title)}</span>
-          <span class="pr">${done?'✅ пройден':(rec&&rec.stars? '⭐ '+rec.stars+'/2':'⭐ 0/2')}</span></div>
-          <div class="sub">${esc(L.src)} · шагов объяснения: ${L.explain.length}</div></div>`;}).join('')}`;}).join('')}`;
+      return `<div style="margin-bottom:8px">
+        <div class="sec-head" onclick="bookToggle('${g.subj}')" style="${isOpen?'':'opacity:.85'}">
+          <span>${g.meta.ico} ${g.meta.name}</span>
+          <span class="pr2">${gd}/${g.items.length} <i class="caret ${isOpen?'down':''}">▸</i></span>
+        </div>
+        ${isOpen? `<div class="small" style="margin:2px 6px 8px;color:var(--muted)">${esc(g.meta.dsc)}</div>
+          ${g.items.map(lessonCard).join('')}` : ''}
+      </div>`;}).join('')}`;
   hud();
+}
+function bookPick(v){ BK.subj=v; renderBookList(); }
+function bookToggle(subj){
+  if(BK.subj==='all'){
+    // undefined (не трогали) = секция свёрнута (кроме первой) → клик раскрывает
+    BK.open[subj]= !(BK.open[subj]===true);
+  } else { BK.subj='all'; BK.open[subj]=true; const sel=document.getElementById('bookSel'); if(sel) sel.value='all'; }
+  renderBookList();
 }
 
 /* ---------- экран урока ---------- */
