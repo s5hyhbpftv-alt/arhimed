@@ -43,6 +43,34 @@ function hud(){
   document.getElementById('hdrSub').textContent = now>=lim ? `⏰ сегодня лимит (${now}/${lim} мин)` : 'Острова Познания · MVP';
 }
 /* ---------- ОНБОРДИНГ ---------- */
+let chosenCol=COLORS[0], chosenGender='boy';
+function figSVG(g){
+  const col=chosenCol, sh=shade(col);
+  const skin='#eec39b', hair='#6b4a33';
+  // причёски: мальчик — короткая «шапочка»; девочка — длинные волосы с чёлкой и хвостики
+  const hairBoy=`<path d="M26 30 C26 16 36 9 48 9 C60 9 70 16 70 30 C70 22 62 18 48 18 C34 18 26 22 26 30 Z" fill="${hair}"/>
+    <path d="M27 28 C29 20 38 16 48 16 C58 16 67 20 69 28 C64 22 56 20 48 20 C40 20 32 22 27 28 Z" fill="${hair}"/>`;
+  const hairGirl=`<path d="M20 34 C20 24 26 16 34 12 C30 14 27 19 26 26 C24 34 23 46 24 58 L31 58 C29 46 30 36 33 30 Z" fill="${hair}"/>
+    <path d="M76 34 C76 24 70 16 62 12 C66 14 69 19 70 26 C72 34 73 46 72 58 L65 58 C67 46 66 36 63 30 Z" fill="${hair}"/>
+    <path d="M28 30 C28 14 38 7 48 7 C58 7 68 14 68 30 C68 22 60 18 48 18 C36 18 28 22 28 30 Z" fill="${hair}"/>
+    <path d="M30 26 C32 18 40 15 48 15 C56 15 64 18 66 26 C60 21 54 19 48 19 C42 19 36 21 30 26 Z" fill="${hair}"/>
+    <circle cx="60" cy="13" r="4.5" fill="#e86a5a"/>`;
+  const hairTop = g==='boy'? hairBoy : hairGirl;
+  return `<svg width="92" height="118" viewBox="0 0 96 122" style="filter:drop-shadow(0 4px 10px rgba(0,0,0,.45))">
+      ${hairTop}
+      <ellipse cx="48" cy="32" rx="27" ry="29" fill="${skin}"/>
+      <circle cx="48" cy="26" r="23" fill="${skin}"/>
+      <path d="M28 34 Q36 46 48 46 Q60 46 68 34" stroke="${hair}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <circle cx="40" cy="27" r="2.4" fill="#33291e"/><circle cx="56" cy="27" r="2.4" fill="#33291e"/>
+      <circle cx="41.5" cy="26" r=".7" fill="#fff"/><circle cx="57.5" cy="26" r=".7" fill="#fff"/>
+      <path d="M47 35 Q49 39 51 35" stroke="#d09a6a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <path d="M10 122 C15 90 30 70 48 70 C66 70 81 90 86 122 Z" fill="${sh}"/>
+      <path d="M12 122 C16 84 32 65 48 65 C64 65 80 84 84 122 Z" fill="${col}" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
+      <path d="M37 67 L44 90" stroke="rgba(255,255,255,.5)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M59 67 L52 90" stroke="rgba(0,0,0,.18)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M44 90 L52 90" stroke="rgba(217,164,65,.9)" stroke-width="2.6" stroke-linecap="round"/>
+    </svg>`;
+}
 function renderOnboard(){
   const s=document.getElementById('screen');
   s.innerHTML=`<div class="onboard">
@@ -56,34 +84,27 @@ function renderOnboard(){
       <select id="obClass"><option>1–2</option><option>3–4</option><option>5–6</option><option selected>7</option><option>8+</option></select>
       <label>Уровень</label>
       <select id="obLevel"><option value="novice">🌱 Новичок — объясняй побольше</option><option value="pro">⚡ Уже решал олимпиады</option></select>
-      <label>Цвет хитона</label>
-      <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin:2px 0 8px">
-        <svg width="86" height="104" viewBox="0 0 96 116" style="filter:drop-shadow(0 4px 10px rgba(0,0,0,.45))">
-          <ellipse cx="48" cy="30" rx="26" ry="28" fill="#eec39b"/>
-          <circle cx="48" cy="26" r="22" fill="#eec39b"/>
-          <path d="M30 30 Q38 40 48 40 Q58 40 66 30" stroke="#6b4a33" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-          <circle cx="41" cy="26" r="2.4" fill="#33291e"/><circle cx="55" cy="26" r="2.4" fill="#33291e"/>
-          <path d="M46 34 Q48 38 50 34" stroke="#d09a6a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-          <path id="chitShade" d="M12 116 C16 84 30 66 48 66 C66 66 80 84 84 116 Z" fill="#00000000"/>
-          <path id="chitBody" d="M14 116 C17 80 32 62 48 62 C64 62 79 80 82 116 Z" fill="#d9a441" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
-          <path d="M38 64 L44 84" stroke="rgba(255,255,255,.5)" stroke-width="2.4" stroke-linecap="round"/>
-          <path d="M58 64 L52 84" stroke="rgba(0,0,0,.18)" stroke-width="2.4" stroke-linecap="round"/>
-        </svg>
-        <div style="text-align:left;max-width:200px"><div class="small" style="color:var(--muted)">Хитон Исследователя — выбери свой цвет:</div>
-        <div class="swatches" style="margin:8px 0 0">${COLORS.map((c,i)=>`<div class="sw ${i===0?'sel':''}" style="background:${c}" data-c="${c}" onclick="pickCol(this)"></div>`).join('')}</div></div>
+      <label>Герой</label>
+      <div class="gender-pick">
+        <button type="button" class="gender-btn ${chosenGender==='boy'?'sel':''}" onclick="pickGender('boy')">👦 Мальчик</button>
+        <button type="button" class="gender-btn ${chosenGender==='girl'?'sel':''}" onclick="pickGender('girl')">👧 Девочка</button>
       </div>
+      <div id="chitPrev" style="display:flex;justify-content:center;margin:2px 0 6px">${figSVG(chosenGender)}</div>
+      <label>Цвет хитона</label>
+      <div class="swatches" style="justify-content:center">${COLORS.map((c,i)=>`<div class="sw ${i===0?'sel':''}" style="background:${c}" data-c="${c}" onclick="pickCol(this)"></div>`).join('')}</div>
       <button class="btn" style="width:100%" onclick="finishOnboard()">В путь →</button>
     </div></div>`;
   hud();
 }
-let chosenCol=COLORS[0];
+function pickGender(g){
+  chosenGender=g;
+  document.querySelectorAll('.gender-btn').forEach(b=>b.classList.toggle('sel', b.getAttribute('onclick').indexOf("'"+g+"'")>=0));
+  const p=document.getElementById('chitPrev'); if(p) p.innerHTML=figSVG(g);
+}
 function pickCol(el){
   chosenCol=el.dataset.c;
   document.querySelectorAll('.sw').forEach(x=>x.classList.toggle('sel',x===el));
-  // перекрашиваем превью-хитон
-  const b=document.getElementById('chitBody'), s=document.getElementById('chitShade');
-  if(b) b.setAttribute('fill', chosenCol);
-  if(s) s.setAttribute('fill', shade(chosenCol));
+  const p=document.getElementById('chitPrev'); if(p) p.innerHTML=figSVG(chosenGender);
 }
 /* затемнение цвета для тени хитона */
 function shade(hex){
@@ -96,7 +117,7 @@ function shade(hex){
 function finishOnboard(){
   const name=document.getElementById('obName').value.trim();
   if(!name){ toast('Архимед ждёт твоё имя!'); return; }
-  DB.profile={ name, color:chosenCol,
+  DB.profile={ name, color:chosenCol, gender:chosenGender,
     klass:document.getElementById('obClass').value,
     level:document.getElementById('obLevel').value,
     limitMin:45, createdAt:Date.now() };

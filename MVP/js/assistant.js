@@ -74,7 +74,7 @@
       <div class="ap-chips" id="asstChips"></div>
       <div class="ap-hint">💡 Кнопки меню подстраиваются под экран; голосовые — работают, когда разговор включён.</div>
       <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-        <span class="ap-hint" id="asstVer" style="margin:0">сборка v39</span>
+        <span class="ap-hint" id="asstVer" style="margin:0">сборка v40</span>
         <button class="asmall" style="width:auto;padding:0 10px" onclick="ASSIST.hardReload()" title="Сбросить кэш и обновить">🔄 Обновить</button>
       </div>
     </div>`)
