@@ -222,7 +222,8 @@ function renderLessonVis(){
   else if(id===3) visSnail(el);
   else if(id===4) visCandy(el);
   else if(id===5) visTourn(el);
-  else visVillage(el);
+  else if(id===6) visVillage(el);
+  else el.innerHTML='';   // для остальных уроков визуала нет — не подставляем чужой
 }
 function visDigits(el){
   const blk=(n,c)=>`<div style="display:flex;flex-direction:column-reverse;gap:2px;min-height:110px;align-items:center">${Array.from({length:n},()=>`<div style="width:36px;height:11px;background:${c};border-radius:3px"></div>`).join('')||'<div class="small">—</div>'}</div>`;
