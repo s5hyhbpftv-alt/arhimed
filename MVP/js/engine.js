@@ -75,7 +75,7 @@ function pickCh(i){
 function pickNum(){
   if(CUR.st&&CUR.st.done) return;
   const t=CUR.task;
-  const n=parseFloat(document.getElementById('numIn').value);
+  const n=parseFloat((document.getElementById('numIn').value||'').replace(',', '.'));
   const u=document.getElementById('unitIn').value;
   if(isNaN(n)){ toast('Введи число!'); return; }
   if(Math.abs(convert(n,u)-t.answer)<=t.tol) win(); else wrongPing();
