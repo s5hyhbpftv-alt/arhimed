@@ -49,7 +49,7 @@ function renderOnboard(){
         «Назови себя, Исследователь. Острова Познания ждут — а я объясню каждый приём перед тем, как дать тебе задачу».</div>
       <label>Имя героя</label><input id="obName" maxlength="20" placeholder="Как тебя зовут?">
       <label>Класс</label>
-      <select id="obClass"><option>5–6</option><option selected>7</option><option>8+</option></select>
+      <select id="obClass"><option>1–2</option><option>3–4</option><option>5–6</option><option selected>7</option><option>8+</option></select>
       <label>Уровень</label>
       <select id="obLevel"><option value="novice">🌱 Новичок — объясняй побольше</option><option value="pro">⚡ Уже решал олимпиады</option></select>
       <label>Цвет хитона</label>
@@ -70,29 +70,38 @@ function finishOnboard(){
 }
 /* ---------- ПУТЬ ---------- */
 const ISLANDS=[
+  {name:'Начальная школа', ico:'🧸', dsc:'1–4 класс · счёт, сложение, умножение, доли'},
   {name:'Сиракузы', ico:'🏛', dsc:'Математика · логика, комбинаторика, инварианты'},
   {name:'Ньютон', ico:'🍎', dsc:'Физика · механика, энергия, электричество'},
   {name:'Лавуазье', ico:'⚗️', dsc:'Химия · молекулы, растворы, газы'},
   {name:'Информатика', ico:'💻', dsc:'Информатика · двоичный код, алгоритмы, логика'}];
+function isJunior(){ try{ return !!DB.profile&&/(^|\s)(1–2|3–4)(\s|$)/.test(DB.profile.klass||''); }catch(e){ return false; } }
+function taskPool(){ return isJunior()? window.ARH_TASKS.filter(t=>t.island==='Начальная школа') : window.ARH_TASKS.filter(t=>t.island!=='Начальная школа'); }
+function islandVisible(I){ return isJunior()? (I.name==='Начальная школа') : (I.name!=='Начальная школа'); }
+function nextTask(){ return taskPool().filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0] || window.ARH_TASKS.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0] || null; }
+function poolDone(){ const ts=taskPool(); return ts.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length; }
 function islStats(name){
   const ts=window.ARH_TASKS.filter(t=>t.island===name);
   const done=ts.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
   return {total:ts.length, done};
 }
 function renderPath(){
-  const next = window.ARH_TASKS.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0];
+  const pool=taskPool();
+  const doneN=pool.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
+  const next = pool.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0]
+            || window.ARH_TASKS.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0];
   const s=document.getElementById('screen');
   const top=`<div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-    <div><div style="font-size:13px;color:var(--muted)">Решено задач: <b style="color:var(--brass)">${solvedCount()}</b> из ${window.ARH_TASKS.length}</div>
+    <div><div style="font-size:13px;color:var(--muted)">Решено задач: <b style="color:var(--brass)">${doneN}</b> из ${pool.length}${isJunior()?' · раздел 1–4 класс':' (всего '+window.ARH_TASKS.length+')'}</div>
     <div style="font-size:12px;color:var(--muted);margin-top:3px">серия ${DB.streak}🔥 · лучшая ${DB.best}</div></div>
-    <div class="bar" style="width:150px"><i style="width:${Math.round(solvedCount()/window.ARH_TASKS.length*100)}%"></i></div></div>
+    <div class="bar" style="width:150px"><i style="width:${pool.length?Math.round(doneN/pool.length*100):0}%"></i></div></div>
     ${next?`<button class="btn" style="width:100%;margin:10px 0 4px" onclick="go('task-${next.id}')">🎯 Продолжить: ${esc(next.title)}</button>`:''}
     <div class="island" style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(127,209,255,.08),rgba(217,164,65,.07));border-color:rgba(127,209,255,.35)" onclick="go('legend')">
       <div style="font-size:34px">📜</div>
       <div style="flex:1"><div class="nm" style="color:var(--glow)">Легенда об Архимеде</div>
       <div class="sub">Кто он, почему острова называются так и откуда взялся новый — 💻 Цитадель Информатики</div></div>
       <span style="color:var(--brass)">→</span></div>`;
-  const cards=ISLANDS.map(I=>{
+  const cards=ISLANDS.filter(islandVisible).map(I=>{
     const st=islStats(I.name); const pct=Math.round(st.done/st.total*100);
     const themes=[...new Set(window.ARH_TASKS.filter(t=>t.island===I.name).map(t=>themeOf(t)))];
     const themeRows=themes.map(th=>{
@@ -119,18 +128,22 @@ function renderIsland(name){
       <span class="lvl">ур. ${t.diff}</span></div>`;
   }).join('');
   const meta=ISLANDS.find(i=>i.name===name)||{ico:'🗺',name:name};
+  const tip=name==='Начальная школа' ? 'Выбирай задачу — Архимед поможет, если что-то непонятно 😊'
+    : 'выбирай задачу — помни: сначала ищи знакомый приём';
   s.innerHTML=`<button class="btn ghost" onclick="go('path')">← Путь</button>
     <h2>${meta.ico} ${esc(meta.name)}</h2>
-    <div class="small" style="margin-bottom:8px">${islStats(name).done}/${islStats(name).total} решено · выбирай задачу — помни: сначала ищи знакомый приём</div>${rows}`;
+    <div class="small" style="margin-bottom:8px">${islStats(name).done}/${islStats(name).total} решено · ${tip}</div>${rows}`;
   hud();
 }
 /* ---------- БАНК ЗАДАЧ ---------- */
 function renderLibrary(){
   const s=document.getElementById('screen');
-  const h=window.ARH_TASKS.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done).length;
-  s.innerHTML=`<h2>📚 Банк задач <span class="small">(решено ${solvedCount()}/${window.ARH_TASKS.length} · осталось ${h})</span></h2>
+  const pool=taskPool();
+  const h=pool.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done).length;
+  const doneN=pool.length-h;
+  s.innerHTML=`<h2>📚 Банк задач <span class="small">(решено ${doneN}/${pool.length} · осталось ${h})</span></h2>
     <div class="small" style="margin-bottom:8px">Все задачи по темам — от простых к сложным. Приёмы сначала объясняет Архимед в «Пути».</div>
-    ${ISLANDS.map(I=>{
+    ${ISLANDS.filter(islandVisible).map(I=>{
       const ts=window.ARH_TASKS.filter(t=>t.island===I.name).sort((a,b)=>a.diff-b.diff);
       return `<div class="sec">${I.ico} ${I.name}</div>`+ts.map(t=>{
         const done=!!(DB.tasks[t.id]&&DB.tasks[t.id].done);

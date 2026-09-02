@@ -7,15 +7,21 @@ function lessonById(id){ return window.ARH_LESSONS.find(L=>L.id===id); }
 function lrec(){ DB.lessons=DB.lessons||{}; if(!DB.lessons[LV.id]) DB.lessons[LV.id]={done:false,stars:0,tasks:[]}; return DB.lessons[LV.id]; }
 
 /* ---------- список ---------- */
+function lessonPool(){
+  try{
+    if(typeof isJunior==='function'&&isJunior()) return window.ARH_LESSONS.filter(L=>/Начальная школа/.test(L.src||''));
+    return window.ARH_LESSONS.filter(L=>!/Начальная школа/.test(L.src||''));
+  }catch(e){ return window.ARH_LESSONS; }
+}
 function renderBookList(){
   const s=document.getElementById('screen');
-  const h=document.getElementById('hdrSub');
-  const doneAll=(window.ARH_LESSONS.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done)).length;
-  const totalL=window.ARH_LESSONS.length;
+  const pool=lessonPool();
+  const doneAll=pool.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
+  const totalL=pool.length;
   s.innerHTML=`<h2>📖 Книга знаний <span class="small">(пройдено ${doneAll}/${totalL})</span></h2>
     <div class="arch"><span class="who">◈ Архимед</span>
-      «Сначала я объясню приём — по шагам и с анимацией. Потом проверим, как ты понял, — и только затем дам задачи. Так учатся настоящие олимпиадники».</div>
-    ${window.ARH_LESSONS.map(L=>{
+      «Сначала я объясню приём — по шагам. Потом проверим, как ты понял, — и только затем дам задачи».</div>
+    ${pool.map(L=>{
       const rec=DB.lessons&&DB.lessons[L.id];
       const done=!!(rec&&rec.done);
       return `<div class="island" onclick="openLessonView(${L.id})" style="${done?'border-color:var(--ok)':''}">
