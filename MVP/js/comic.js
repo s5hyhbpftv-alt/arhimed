@@ -125,6 +125,96 @@ const COMIC = (function(){
       ${mouthSVG(emo)}
     </svg>`;
   }
+  /* ---- АРХИМЕД v2: мудрый грек — белая борода, брови, лысина с лавром, гиматий ---- */
+  function archSVG(emo){
+    const skin='#f4c9a3', skinD='#d9a87e';
+    const robe='#f6ecd2', robeD='#e0d0a4', hem='#d9a441';
+    const hair='#eef1f7', hairD='#c6cfe0', beard='#f4f6fb', beardD='#d3d9e6';
+    const wow=emo==='wow';
+    let mouth;
+    if(emo==='wow') mouth=`<ellipse cx="60" cy="89.5" rx="8.4" ry="6.4" fill="#7c3326"/>
+      <rect x="54.2" y="84.4" width="11.6" height="3.4" rx="1.6" fill="#fff"/>
+      <path d="M54.2 87.8 Q60 90.6 65.8 87.8" stroke="#c2604f" stroke-width="2.6" fill="none"/>
+      <ellipse cx="60" cy="93.6" rx="4.6" ry="2.2" fill="#c2604f"/>
+      <path d="M60 79.5 l-4 -3.5 M60 79.5 l4 -3.5" stroke="#33291e" stroke-width="2.2" fill="none"/>`;
+    else if(emo==='sad') mouth=`<path d="M53 88 Q60 80 67 88" stroke="#7c4a33" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    else if(emo==='think') mouth=`<path d="M54 84 Q60 88 66 84" stroke="#7c4a33" stroke-width="2.8" fill="none" stroke-linecap="round"/>`;
+    else if(emo==='laugh') mouth=`<path d="M50 82 Q60 98 70 82 Q60 89 50 82 Z" fill="#8a3b33"/><path d="M50 82 Q60 90 70 82" stroke="#fff" stroke-width="1.6" fill="none"/>`;
+    else mouth=`<path d="M54 84 Q60 90 66 84" stroke="#a0504a" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    return `<svg viewBox="0 0 120 140">
+      <!-- тень -->
+      <ellipse cx="60" cy="134" rx="33" ry="5" fill="rgba(0,0,0,.16)"/>
+      <!-- гиматий (накидка): руки скрыты, как у статуи -->
+      <path d="M36 140 C30 110 42 92 60 92 C78 92 90 110 84 140 Z" fill="${robe}" stroke="#33291e" stroke-width="2.6"/>
+      <path d="M40 140 C36 118 42 104 50 98" stroke="${robeD}" stroke-width="3" fill="none"/>
+      <path d="M80 140 C84 118 78 104 70 98" stroke="${robeD}" stroke-width="3" fill="none"/>
+      <path d="M48 96 C52 104 50 112 48 120" stroke="${robeD}" stroke-width="2.2" fill="none" opacity=".8"/>
+      <path d="M72 96 C68 104 70 112 72 120" stroke="${robeD}" stroke-width="2.2" fill="none" opacity=".8"/>
+      <!-- золотая кайма по краям и подолу -->
+      <path d="M42 140 C38 120 42 106 50 100 L53 100 C46 106 43 120 47 140 Z" fill="${hem}"/>
+      <path d="M78 140 C82 120 78 106 70 100 L67 100 C74 106 77 120 73 140 Z" fill="${hem}"/>
+      <path d="M36 140 C44 131 76 131 84 140 Z" fill="${hem}" opacity=".85"/>
+      <path d="M60 100 L60 140" stroke="rgba(0,0,0,.12)" stroke-width="2.4"/>
+      <!-- шея -->
+      <rect x="52" y="62" width="16" height="24" rx="8" fill="${skin}" stroke="${skinD}" stroke-width="1.6"/>
+      <!-- голова -->
+      <circle cx="60" cy="46" r="33" fill="${skin}" stroke="#33291e" stroke-width="2.6"/>
+      <!-- уши -->
+      <circle cx="25" cy="55" r="7.5" fill="${skin}" stroke="#33291e" stroke-width="2"/>
+      <circle cx="95" cy="55" r="7.5" fill="${skin}" stroke="#33291e" stroke-width="2"/>
+      <!-- седые волосы по бокам (лысина сверху открыта) -->
+      <path d="M27 44 C27 26 40 15 60 15 C80 15 93 26 93 44 C91 30 82 22 60 22 C38 22 29 30 27 44 Z" fill="${hair}" stroke="${hairD}" stroke-width="1"/>
+      <path d="M26 52 C24 40 27 34 32 30 C30 38 31 46 34 52 Z" fill="${hair}"/>
+      <path d="M94 52 C96 40 93 34 88 30 C90 38 89 46 86 52 Z" fill="${hair}"/>
+      <!-- лавровый венок: две веточки с листьями по дуге -->
+      <path d="M38 28 C42 20 50 15 60 13 C70 15 78 20 82 28" stroke="#4e7f2f" stroke-width="2.2" fill="none"/>
+      <g fill="#66a33f" stroke="#3f6b26" stroke-width=".9">
+        <ellipse cx="42" cy="24" rx="6.4" ry="2.7" transform="rotate(-40 42 24)"/>
+        <ellipse cx="47" cy="18.5" rx="6" ry="2.6" transform="rotate(-22 47 18.5)"/>
+        <ellipse cx="53" cy="14.5" rx="5.6" ry="2.5" transform="rotate(-8 53 14.5)"/>
+        <ellipse cx="60" cy="13" rx="5.4" ry="2.4"/>
+        <ellipse cx="67" cy="14.5" rx="5.6" ry="2.5" transform="rotate(8 67 14.5)"/>
+        <ellipse cx="73" cy="18.5" rx="6" ry="2.6" transform="rotate(22 73 18.5)"/>
+        <ellipse cx="78" cy="24" rx="6.4" ry="2.7" transform="rotate(40 78 24)"/>
+        <ellipse cx="36" cy="20" rx="5.4" ry="2.5" transform="rotate(-64 36 20)"/>
+        <ellipse cx="84" cy="20" rx="5.4" ry="2.5" transform="rotate(64 84 20)"/>
+      </g>
+      <!-- морщины на лбу -->
+      <path d="M45 30 Q60 25 75 30" stroke="${skinD}" stroke-width="1.8" fill="none" opacity=".7"/>
+      <path d="M48 35.5 Q60 31 72 35.5" stroke="${skinD}" stroke-width="1.6" fill="none" opacity=".6"/>
+      <!-- кустистые седые брови -->
+      <path d="M37 44 Q47 37 56 42" stroke="${hairD}" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+      <path d="M64 42 Q73 37 83 44" stroke="${hairD}" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+      <!-- глаза (чуть меньше, с мешками-морщинками) -->
+      <ellipse cx="46.5" cy="52" rx="5.8" ry="${wow?8:6.6}" fill="#fff" stroke="#33291e" stroke-width="1.9"/>
+      <ellipse cx="73.5" cy="52" rx="5.8" ry="${wow?8:6.6}" fill="#fff" stroke="#33291e" stroke-width="1.9"/>
+      <circle cx="48" cy="${wow?54.5:53.5}" r="${wow?2.6:3}" fill="#33291e"/><circle cx="72" cy="${wow?54.5:53.5}" r="${wow?2.6:3}" fill="#33291e"/>
+      <circle cx="49.4" cy="${wow?52.5:51.5}" r="1.2" fill="#fff"/><circle cx="73.4" cy="${wow?52.5:51.5}" r="1.2" fill="#fff"/>
+      <path d="M40 60 Q42 57 45 58" stroke="${skinD}" stroke-width="1.6" fill="none" opacity=".65"/>
+      <path d="M80 60 Q78 57 75 58" stroke="${skinD}" stroke-width="1.6" fill="none" opacity=".65"/>
+      <!-- нос с носогубными складками -->
+      <path d="M60 50 C58 56 57 60 53 63 M60 50 C62 56 63 60 67 63" stroke="${skinD}" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M53 63 Q60 67 67 63" stroke="#33291e" stroke-width="2" fill="none"/>
+      <path d="M50 66 Q49 71 50 75" stroke="${skinD}" stroke-width="1.7" fill="none" opacity=".7"/>
+      <path d="M70 66 Q71 71 70 75" stroke="${skinD}" stroke-width="1.7" fill="none" opacity=".7"/>
+      <!-- большая белая борода -->
+      <path d="M33 58 C30 76 34 92 44 100 C52 107 68 107 76 100 C86 92 90 76 87 58 C87 68 82 76 76 81 C80 78 83 72 83 64 C76 74 70 80 60 80 C50 80 44 74 37 64 C37 72 40 78 44 81 C38 76 33 70 33 58 Z" fill="${beard}" stroke="#33291e" stroke-width="2.4"/>
+      <!-- текстура бороды -->
+      <path d="M46 86 C49 93 54 99 60 102 M60 82 L60 103 M74 86 C71 93 66 99 60 102" stroke="${beardD}" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <path d="M40 76 C44 80 50 82 56 82 M80 76 C76 80 70 82 64 82" stroke="${beardD}" stroke-width="1.6" fill="none" opacity=".7"/>
+      <!-- седые усы (висят по бокам рта) -->
+      <path d="M60 70 C53 70 47 73 44 78 C49 77 55 74 60 72 Z" fill="${beard}" stroke="#33291e" stroke-width="1.5"/>
+      <path d="M60 70 C67 70 73 73 76 78 C71 77 65 74 60 72 Z" fill="${beard}" stroke="#33291e" stroke-width="1.5"/>
+      <path d="M46 74 C50 74 54 73 58 71 M74 74 C70 74 66 73 62 71" stroke="${beardD}" stroke-width="1.5" fill="none" opacity=".8"/>
+      <!-- мягкая тень под усами -->
+      <ellipse cx="60" cy="80.5" rx="9" ry="3.4" fill="rgba(160,170,190,.25)"/>
+      <!-- рот (аккуратный, поверх бороды) -->
+      ${mouth}
+      <!-- румянец -->
+      <ellipse cx="34" cy="62" rx="6" ry="4" fill="rgba(232,120,110,.25)"/>
+      <ellipse cx="86" cy="62" rx="6" ry="4" fill="rgba(232,120,110,.25)"/>
+    </svg>`;
+  }
   /* ---- герой-ученик: берём выбор со стартового экрана (пол + цвет хитона) ---- */
   function heroKidGender(){ try{ if(typeof DB!=='undefined'&&DB.profile&&DB.profile.gender) return DB.profile.gender; }catch(e){} return 'boy'; }
   function heroKidColor(){ try{ if(typeof DB!=='undefined'&&DB.profile&&DB.profile.color) return DB.profile.color; }catch(e){} return '#d9a441'; }
@@ -144,7 +234,7 @@ const COMIC = (function(){
     }catch(e){ return humanSVG(emo,'kid'); }
   }
   const PERS={
-    arch:{ svg:(e)=>humanSVG(e,'arch'), name:'Архимед', color:'#a3762a' },
+    arch:{ svg:(e)=>archSVG(e), name:'Архимед', color:'#a3762a' },
     kid:{ svg:(e)=>kidSVG(e), name:'Ты', color:'#4a93d0' },
     granny:{ svg:(e)=>humanSVG(e,'granny'), name:'Бабушка', color:'#7c4f81' },
     cat:{ svg:catSVG, name:'Барсик', color:'#c07a30' },
