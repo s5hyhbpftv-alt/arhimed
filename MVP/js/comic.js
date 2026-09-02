@@ -135,33 +135,185 @@ const COMIC = (function(){
     pig:{ svg:pigSVG, name:'Пятачок', color:'#a05a50' }
   };
 
-  /* ================= СЦЕНЫ-РАЗВОРОТЫ ================= */
+  /* ================= СЦЕНЫ-РАЗВОРОТЫ (SVG, всё стоит на поверхностях) ================= */
+  function pondSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <!-- небо -->
+      <rect x="0" y="0" width="360" height="102" fill="url(#skP)"/>
+      <defs><linearGradient id="skP" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#b7e0f7"/><stop offset="1" stop-color="#8ecdf0"/></linearGradient>
+        <linearGradient id="wtP" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#6fc0e8"/><stop offset="1" stop-color="#2f7fb8"/></linearGradient></defs>
+      <!-- солнце (за облаками) -->
+      <circle cx="310" cy="28" r="17" fill="#ffe08a"/>
+      <!-- облака -->
+      <g fill="#fff" opacity=".95" class="c2a-cloud">
+        <ellipse cx="70" cy="26" rx="26" ry="11"/><ellipse cx="92" cy="20" rx="18" ry="9"/>
+        <ellipse cx="205" cy="40" rx="24" ry="9"/><ellipse cx="224" cy="34" rx="16" ry="8"/>
+      </g>
+      <!-- дальний луг за прудом -->
+      <rect x="0" y="88" width="360" height="20" fill="#93c270"/>
+      <path d="M0 88 Q30 82 60 88 T120 88 T180 88 T240 88 T300 88 T360 88 L360 108 L0 108 Z" fill="#7fb45c" opacity=".6"/>
+      <!-- вода -->
+      <rect x="0" y="104" width="360" height="106" fill="url(#wtP)"/>
+      <!-- блики-волны на воде -->
+      <g stroke="#cdeefc" stroke-width="2.5" fill="none" opacity=".75" stroke-linecap="round">
+        <path d="M30 118 q7 -5 14 0 t14 0"/><path d="M150 124 q7 -5 14 0 t14 0"/>
+        <path d="M250 116 q7 -5 14 0 t14 0"/><path d="M90 160 q7 -5 14 0 t14 0"/>
+        <path d="M205 150 q7 -5 14 0 t14 0"/><path d="M320 170 q7 -5 14 0 t14 0"/>
+      </g>
+      <!-- камыши из дна (слева) -->
+      <g stroke="#6f9c46" stroke-width="3" fill="none">
+        <path d="M20 210 Q18 150 30 96"/><path d="M34 210 Q34 160 46 118"/></g>
+      <ellipse cx="30" cy="92" rx="4.5" ry="16" fill="#8a6130"/><ellipse cx="46" cy="114" rx="4" ry="14" fill="#8a6130"/>
+      <g stroke="#5f8a3d" stroke-width="2.5" fill="none">
+        <path d="M96 210 Q92 165 100 132"/></g>
+      <ellipse cx="100" cy="128" rx="4" ry="13" fill="#7a5428"/>
+      <!-- кувшинка на воде -->
+      <ellipse cx="258" cy="112" rx="17" ry="7" fill="#4e8f4a"/>
+      <path d="M258 104 L258 112" stroke="#4e8f4a" stroke-width="2"/>
+      <g transform="translate(258,102)">
+        <ellipse cx="0" cy="-6" rx="6" ry="10" fill="#fff" transform="rotate(20)"/>
+        <ellipse cx="0" cy="-6" rx="6" ry="10" fill="#fff" transform="rotate(60)"/>
+        <ellipse cx="0" cy="-6" rx="6" ry="10" fill="#fff" transform="rotate(100)"/>
+        <ellipse cx="0" cy="-6" rx="6" ry="10" fill="#fff" transform="rotate(140)"/>
+        <circle r="4" fill="#ffd45e"/>
+      </g>
+      <!-- рыбки ПОД водой -->
+      <g class="c2a-fish">
+        <text x="52" y="150" font-size="30">🐟</text>
+        <text x="168" y="182" font-size="28">🐠</text>
+        <text x="272" y="140" font-size="26">🐟</text>
+      </g>
+      <!-- пузырьки -->
+      <g fill="#fff" opacity=".7">
+        <circle cx="90" cy="176" r="2.6"/><circle cx="96" cy="166" r="1.8"/><circle cx="82" cy="168" r="1.4"/>
+      </g>
+    </svg>`;
+  }
+  function kitchenSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs>
+        <linearGradient id="wlK" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f8e7cb"/><stop offset="1" stop-color="#f0d2a8"/></linearGradient>
+        <linearGradient id="flK" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#c2915b"/><stop offset="1" stop-color="#9c6c3a"/></linearGradient>
+      </defs>
+      <!-- стена -->
+      <rect x="0" y="0" width="360" height="152" fill="url(#wlK)"/>
+      <rect x="0" y="0" width="360" height="152" fill="none"/>
+      <!-- окно на стене с небом за ним -->
+      <rect x="240" y="20" width="98" height="82" rx="4" fill="#fff" stroke="#8a5c33" stroke-width="7"/>
+      <rect x="248" y="28" width="82" height="66" fill="#bfe3f7"/>
+      <circle cx="316" cy="46" r="9" fill="#ffe08a"/>
+      <ellipse cx="268" cy="44" rx="12" ry="5" fill="#fff" opacity=".9"/>
+      <line x1="289" y1="28" x2="289" y2="94" stroke="#8a5c33" stroke-width="5"/>
+      <line x1="248" y1="61" x2="330" y2="61" stroke="#8a5c33" stroke-width="5"/>
+      <!-- занавески -->
+      <path d="M240 20 q10 22 0 34 q-4 -6 0 -34 Z" fill="#d97b6c"/>
+      <path d="M338 20 q-10 22 0 34 q4 -6 0 -34 Z" fill="#d97b6c"/>
+      <!-- полка с баночками -->
+      <rect x="18" y="52" width="118" height="8" rx="2" fill="#9c6c3a"/>
+      <rect x="18" y="52" width="118" height="3" fill="#c2915b"/>
+      <text x="46" y="44" font-size="22">🧂</text><text x="92" y="46" font-size="20">🍯</text>
+      <!-- пол -->
+      <rect x="0" y="152" width="360" height="58" fill="url(#flK)"/>
+      <g stroke="#7c5028" stroke-width="1.6" opacity=".5">
+        <line x1="0" y1="170" x2="360" y2="170"/><line x1="0" y1="188" x2="360" y2="188"/>
+        <line x1="60" y1="152" x2="44" y2="210"/><line x1="150" y1="152" x2="140" y2="210"/>
+        <line x1="240" y1="152" x2="252" y2="210"/><line x1="330" y1="152" x2="336" y2="210"/>
+      </g>
+      <!-- тень под столом -->
+      <rect x="40" y="196" width="280" height="10" rx="5" fill="rgba(0,0,0,.16)"/>
+      <!-- стол: ножки и столешница -->
+      <rect x="52" y="170" width="14" height="40" fill="#8a5c33"/>
+      <rect x="294" y="170" width="14" height="40" fill="#8a5c33"/>
+      <rect x="52" y="170" width="14" height="40" fill="#a8721f" opacity=".35"/>
+      <rect x="40" y="150" width="280" height="16" rx="3" fill="#a8721f" stroke="#6e441d" stroke-width="3"/>
+      <rect x="40" y="150" width="280" height="6" rx="3" fill="#c2915b"/>
+      <!-- скатёрка-полоска -->
+      <rect x="46" y="166" width="268" height="10" fill="#e8d5b0" opacity=".85"/>
+      <!-- тарелка на столе -->
+      <ellipse cx="150" cy="152" rx="30" ry="8" fill="#f4f0e4" stroke="#c9c2ae" stroke-width="2"/>
+      <!-- пирожки НА тарелке/столе -->
+      <text x="128" y="151" font-size="22">🥧</text>
+      <text x="148" y="155" font-size="24">🥧</text>
+      <text x="170" y="151" font-size="22">🥧</text>
+      <!-- чайник на столе -->
+      <text x="252" y="156" font-size="30">🫖</text>
+    </svg>`;
+  }
+  function coinsSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs>
+        <linearGradient id="skC" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fdf3d2"/><stop offset="1" stop-color="#f3e0a8"/></linearGradient>
+        <linearGradient id="grC" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#8fc060"/><stop offset="1" stop-color="#5c8f3e"/></linearGradient>
+      </defs>
+      <!-- небо -->
+      <rect x="0" y="0" width="360" height="166" fill="url(#skC)"/>
+      <circle cx="306" cy="34" r="16" fill="#ffd96a"/>
+      <!-- облако -->
+      <g fill="#fff" opacity=".95" class="c2a-cloud">
+        <ellipse cx="80" cy="40" rx="26" ry="10"/><ellipse cx="102" cy="33" rx="17" ry="8"/>
+        <ellipse cx="200" cy="60" rx="22" ry="9"/><ellipse cx="218" cy="53" rx="15" ry="7"/>
+      </g>
+      <!-- дерево слева: ствол из земли, крона -->
+      <rect x="52" y="104" width="20" height="72" fill="#7a5230"/>
+      <rect x="52" y="104" width="20" height="72" fill="#8a6130" opacity=".4"/>
+      <path d="M44 110 Q30 60 20 44 L26 60 Z" fill="#4e7f2f"/>
+      <g fill="#5f9a3c">
+        <circle cx="62" cy="62" r="30"/><circle cx="34" cy="84" r="24"/><circle cx="92" cy="84" r="24"/>
+      </g>
+      <g fill="#74b04c" opacity=".6">
+        <circle cx="52" cy="52" r="14"/><circle cx="78" cy="70" r="16"/>
+      </g>
+      <!-- земля -->
+      <rect x="0" y="166" width="360" height="44" fill="url(#grC)"/>
+      <path d="M0 166 Q30 158 60 166 T120 166 T180 166 T240 166 T300 166 T360 166 L360 178 L0 178 Z" fill="#a2d078" opacity=".7"/>
+      <!-- тень под сундуком -->
+      <ellipse cx="210" cy="196" rx="85" ry="9" fill="rgba(0,0,0,.22)"/>
+      <!-- сундук (стоит на земле) -->
+      <g>
+        <!-- крышка откинута назад -->
+        <path d="M140 148 L118 84 L300 84 L282 148 Z" fill="#9a6a1c" stroke="#5f3f12" stroke-width="4"/>
+        <path d="M140 148 L118 84 L210 78 L300 84 L282 148 Z" fill="#b07a2e" stroke="#5f3f12" stroke-width="4"/>
+        <line x1="210" y1="80" x2="210" y2="146" stroke="#8a5c1e" stroke-width="3"/>
+        <!-- корпус -->
+        <rect x="140" y="146" width="142" height="42" rx="4" fill="#b07a2e" stroke="#5f3f12" stroke-width="4"/>
+        <rect x="140" y="146" width="142" height="12" rx="3" fill="#c98f3a"/>
+        <!-- оковка -->
+        <line x1="211" y1="146" x2="211" y2="188" stroke="#8a5c1e" stroke-width="3"/>
+        <rect x="204" y="160" width="14" height="10" rx="2" fill="#ffe08a" stroke="#8a5c1e" stroke-width="2"/>
+        <!-- монеты внутри сундука -->
+        <text x="160" y="180" font-size="22">🪙</text>
+        <text x="188" y="184" font-size="20">🪙</text>
+        <text x="214" y="176" font-size="24">🪙</text>
+        <text x="242" y="184" font-size="20">🪙</text>
+        <text x="264" y="178" font-size="22">🪙</text>
+      </g>
+      <!-- кучка монет на земле перед сундуком -->
+      <g class="c2a-coin">
+        <text x="176" y="200" font-size="20">🪙</text>
+        <text x="198" y="204" font-size="24">🪙</text>
+        <text x="224" y="199" font-size="20">🪙</text>
+        <text x="248" y="204" font-size="22">🪙</text>
+        <text x="272" y="199" font-size="20">🪙</text>
+      </g>
+      <!-- одна монетка откатилась в сторону -->
+      <text x="92" y="203" font-size="20" class="c2a-coin">🪙</text>
+      <!-- искры -->
+      <text x="150" y="72" font-size="18" class="c2a-spark">✨</text>
+      <text x="282" y="60" font-size="18" class="c2a-spark">✨</text>
+      <text x="248" y="120" font-size="15" class="c2a-spark">✨</text>
+    </svg>`;
+  }
   function sceneArt(scene){
-    if(scene==='pond') return `
-      <div class="c2-sun">☀️</div>
-      <div class="c2-cloud" style="left:60%;top:12%;animation-delay:-1s">☁️</div>
-      <div class="c2-reeds" style="left:2%;bottom:36%">🌾</div><div class="c2-reeds" style="left:9%;bottom:31%;font-size:34px">🌿</div>
-      <div class="c2-pond"></div>
-      <div class="c2-wave" style="left:16%;bottom:56%">〰️</div><div class="c2-wave" style="left:46%;bottom:47%">〰️</div>
-      <div class="c2-wave" style="left:74%;bottom:60%">〰️</div>
-      <div class="c2-fishy" style="left:22%;bottom:46%">🐟</div><div class="c2-fishy" style="left:56%;bottom:54%">🐠</div><div class="c2-fishy" style="left:78%;bottom:42%">🐟</div>
-      <div class="c2-lily">🪷</div>`;
-    if(scene==='kitchen') return `
-      <div class="c2-window"></div><div class="c2-sun" style="left:auto;right:14%;top:9%">☀️</div>
-      <div class="c2-cloud" style="left:16%;top:10%">☁️</div>
-      <div class="c2-shelf" style="left:70%;top:14%">🧂</div>
-      <div class="c2-cup" style="left:8%;top:40%;font-size:36px">🫖</div>
-      <div class="c2-table"></div>
-      <div class="c2-pie" style="left:34%;bottom:32%">🥧</div><div class="c2-pie" style="left:47%;bottom:38%;font-size:40px">🥧</div><div class="c2-pie" style="left:60%;bottom:32%">🥧</div>`;
-    if(scene==='coins') return `
-      <div class="c2-sun" style="left:82%">🌞</div>
-      <div class="c2-cloud" style="left:12%;top:10%;animation-delay:-2s">☁️</div>
-      <div class="c2-tree">🌳</div>
-      <div class="c2-chest"></div>
-      <span class="c2-gold" style="left:36%;bottom:26%">🪙</span><span class="c2-gold" style="left:52%;bottom:18%;font-size:36px">🪙</span>
-      <span class="c2-gold" style="left:64%;bottom:28%">🪙</span><span class="c2-gold" style="left:44%;bottom:36%;font-size:30px">🪙</span>
-      <div class="c2-spark" style="left:28%;bottom:50%">✨</div><div class="c2-spark" style="left:70%;bottom:54%">✨</div>`;
-    return `<div class="c2-sun">☀️</div><div class="c2-cloud" style="left:30%">☁️</div>`;
+    if(scene==='pond') return pondSVG();
+    if(scene==='kitchen') return kitchenSVG();
+    if(scene==='coins') return coinsSVG();
+    return pondSVG();
   }
   function emojiFor(scene){ return scene==='pond'?'🐟':scene==='kitchen'?'🥧':'🪙'; }
 
@@ -180,46 +332,27 @@ const COMIC = (function(){
       .c2-page { flex:1; margin:4px 14px 10px; background:#fffdf4; border:6px solid #33291e;
         border-radius:10px; overflow:hidden; box-shadow:0 12px 34px rgba(0,0,0,.28);
         display:flex; flex-direction:column; position:relative; }
-      .c2-stage { position:relative; flex:1 1 44%; min-height:170px; overflow:hidden; border-bottom:5px solid #33291e;
-        background:linear-gradient(180deg,#bfe3f7 0%,#a5d9f4 58%,#8cc9ea 100%); }
-      .c2-sun { position:absolute; top:12px; left:10%; font-size:44px; animation:c2spin 26s linear infinite; }
-      @keyframes c2spin { to{ transform:rotate(360deg);} }
-      .c2-cloud { position:absolute; top:14%; font-size:40px; opacity:.9; animation:c2drift 9s ease-in-out infinite alternate; }
-      @keyframes c2drift { from{ transform:translateX(0);} to{ transform:translateX(26px);} }
-      .c2-reeds,.c2-fishy,.c2-pie,.c2-gold,.c2-spark,.c2-cup { position:absolute; }
-      .c2-pond { position:absolute; left:0; right:0; bottom:0; height:56%;
-        background:linear-gradient(180deg,#8fd4ef,#4a9fd0); border-top:5px solid #bfe8f8; }
-      .c2-wave { position:absolute; font-size:24px; opacity:.85; animation:c2drift 6s ease-in-out infinite alternate; }
-      .c2-fishy { font-size:32px; animation:c2fish 5s ease-in-out infinite alternate; }
-      @keyframes c2fish { from{ transform:translate(0,0);} to{ transform:translate(12px,-7px);} }
-      .c2-lily { position:absolute; right:16%; bottom:30%; font-size:30px; }
-      .c2-window { position:absolute; right:7%; top:8%; width:96px; height:74px; background:linear-gradient(180deg,#bfe3f7,#9fd4f0);
-        border:6px solid #8a5c33; border-radius:6px; }
-      .c2-window::after { content:""; position:absolute; left:50%; top:0; bottom:0; width:4px; background:#8a5c33; }
-      .c2-window::before { content:""; position:absolute; top:50%; left:0; right:0; height:4px; background:#8a5c33; }
-      .c2-table { position:absolute; left:-6%; right:-6%; bottom:-4%; height:30%;
-        background:linear-gradient(180deg,#b0783f,#8f5c28); border-top:8px solid #6e441d; }
-      .c2-pie { font-size:34px; animation:c2float 4s ease-in-out infinite; }
-      @keyframes c2float { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-5px);} }
-      .c2-shelf { position:absolute; font-size:30px; }
-      .c2-cup { position:absolute; }
-      .c2-tree { position:absolute; left:3%; bottom:4%; font-size:100px; }
-      .c2-chest { position:absolute; left:50%; bottom:14%; transform:translateX(-50%); width:170px; height:112px;
-        background:linear-gradient(180deg,#c08830,#8a5c1e); border:6px solid #5f3f12; border-radius:10px; }
-      .c2-chest::before { content:"◈"; position:absolute; left:50%; top:44%; transform:translate(-50%,-50%);
-        color:#ffe08a; font-size:38px; text-shadow:0 0 16px rgba(255,220,120,.95); }
-      .c2-chest::after { content:""; position:absolute; left:-6px; right:-6px; top:-18px; height:28px;
-        background:linear-gradient(180deg,#a8721f,#7c4f12); border:6px solid #5f3f12; border-radius:8px; }
-      .c2-gold { animation:c2float 3.6s ease-in-out infinite; }
-      .c2-spark { font-size:20px; animation:c2twinkle 1.8s ease-in-out infinite; }
-      @keyframes c2twinkle { 0%,100%{opacity:.2; transform:scale(.7);} 50%{opacity:1; transform:scale(1.25);} }
+            .c2-stage { position:relative; width:100%; flex:0 0 auto; aspect-ratio:360/210;
+        overflow:hidden; border-bottom:5px solid #33291e; background:#fffdf4; display:flex; align-items:center; justify-content:center; }
+      .c2-scene { width:100%; height:100%; display:block; }
+      .c2a-cloud { animation:c2drift 11s ease-in-out infinite alternate; }
+      @keyframes c2drift { from{ transform:translateX(0);} to{ transform:translateX(24px);} }
+      .c2a-fish text { animation:c2fish 4.5s ease-in-out infinite alternate; }
+      .c2a-fish text:nth-child(2){ animation-delay:-1.5s; }
+      .c2a-fish text:nth-child(3){ animation-delay:-3s; }
+      @keyframes c2fish { from{ transform:translateY(0);} to{ transform:translateY(-6px);} }
+      .c2a-coin text { animation:c2glint 2.6s ease-in-out infinite; }
+      .c2a-coin text:nth-child(2){ animation-delay:-.8s; } .c2a-coin text:nth-child(3){ animation-delay:-1.6s; }
+      @keyframes c2glint { 0%,100%{ transform:translateY(0); opacity:1;} 50%{ transform:translateY(-3px); opacity:.85;} }
+      .c2a-spark { animation:c2twinkle 1.7s ease-in-out infinite; }
+      @keyframes c2twinkle { 0%,100%{opacity:.25; transform:scale(.7);} 50%{opacity:1; transform:scale(1.2);} }
       .c2-caption { position:absolute; left:0; right:0; bottom:0; background:rgba(51,41,30,.92); color:#f4e9c8;
         font-size:12.5px; line-height:1.45; padding:7px 12px; }
       .c2-caption .c2cap-in { animation:c2capup .45s ease both; }
       @keyframes c2capup { from{ opacity:0; transform:translateY(9px);} to{ opacity:1; transform:none;} }
       .c2-caption .c2cap-tag { color:#d9a441; font-weight:bold; }
       /* диалог */
-      .c2-dialog { position:relative; flex:1 1 42%; background:#fffaf0; display:flex; }
+      .c2-dialog { position:relative; flex:1 1 auto; min-height:0; background:#fffaf0; display:flex; }
       .c2-speaker { width:124px; flex-shrink:0; display:flex; flex-direction:column; align-items:center;
         justify-content:flex-end; padding:4px 2px 8px; }
       .c2-speaker .c2s-card { width:112px; border-radius:16px; overflow:hidden;
