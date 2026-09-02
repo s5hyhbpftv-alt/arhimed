@@ -290,22 +290,68 @@ function renderIsland(name){
   hud();
 }
 /* ---------- БАНК ЗАДАЧ ---------- */
+let LB={ island:'all', status:'all', open:{} };  // фильтры банка задач
+function taskRow(t){
+  const done=!!(DB.tasks[t.id]&&DB.tasks[t.id].done);
+  return `<div class="task-row ${done?'done':''}" onclick="go('task-${t.id}')"><span class="st">${done?'✅':'🔒'}</span>
+    <div class="ti"><div class="tt">${esc(t.title)}</div><div class="td">${esc(themeOf(t))}</div></div>
+    <span class="lvl">ур. ${t.diff}</span></div>`;
+}
+function libIsland(){ try{ if(typeof isJunior==='function'&&isJunior()) return 'Начальная школа'; }catch(e){}
+  return LB.island==='all'? 'all' : LB.island; }
 function renderLibrary(){
   const s=document.getElementById('screen');
-  const pool=taskPool();
-  const h=pool.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done).length;
-  const doneN=pool.length-h;
-  s.innerHTML=`<h2>📚 Банк задач <span class="small">(решено ${doneN}/${pool.length} · осталось ${h})</span></h2>
+  const junior=typeof isJunior==='function'&&isJunior();
+  const islands=ISLANDS.filter(islandVisible);
+  const visible = junior? islands : islands;   // для младших тоже один остров
+  const status=LB.status||'all';
+  const statFilter=t=> status==='all'? true : status==='todo'? !(DB.tasks[t.id]&&DB.tasks[t.id].done) : !!(DB.tasks[t.id]&&DB.tasks[t.id].done);
+  const selIsl=libIsland();
+  // сколько подходит под фильтры — для заголовка
+  const allFit = window.ARH_TASKS.filter(t=>islandVisible({name:t.island})).filter(statFilter);
+  const doneFit=allFit.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
+  const todoFit=allFit.length-doneFit;
+  const optIsl = selIsl==='all'
+    ? `<option value="all" selected>🗺 Все острова (${allFit.length})</option>`
+    : `<option value="all">🗺 Все острова (${allFit.length})</option>`;
+  const optIslSel = visible.map(I=>{
+    const n=window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t)).length;
+    return `<option value="${I.name}" ${selIsl===I.name?'selected':''}>${I.ico} ${I.name} (${n})</option>`;}).join('');
+  const statBadge = status==='all'? `всего ${allFit.length}` : status==='todo'? `осталось ${todoFit}` : `решено ${doneFit}`;
+  // группы: если выбран остров — только он; иначе все видимые
+  const groups = (selIsl==='all'? visible : visible.filter(I=>I.name===selIsl))
+    .map(I=>({ I, items: window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t)).sort((a,b)=>a.diff-b.diff||a.id.localeCompare(b.id)) }))
+    .filter(g=>g.items.length);
+  s.innerHTML=`<h2>📚 Банк задач <span class="small">(${statBadge})</span></h2>
     <div class="small" style="margin-bottom:8px">Все задачи по темам — от простых к сложным. Приёмы сначала объясняет Архимед в «Пути».</div>
-    ${ISLANDS.filter(islandVisible).map(I=>{
-      const ts=window.ARH_TASKS.filter(t=>t.island===I.name).sort((a,b)=>a.diff-b.diff);
-      return `<div class="sec">${I.ico} ${I.name}</div>`+ts.map(t=>{
-        const done=!!(DB.tasks[t.id]&&DB.tasks[t.id].done);
-        return `<div class="task-row ${done?'done':''}" onclick="go('task-${t.id}')"><span class="st">${done?'✅':'🔒'}</span>
-        <div class="ti"><div class="tt">${esc(t.title)}</div><div class="td">${esc(themeOf(t))}</div></div>
-        <span class="lvl">ур. ${t.diff}</span></div>`;}).join('');
-    }).join('')}`;
+    <select id="libIsl" onchange="libPick('island',this.value)" style="width:100%;margin-bottom:8px;font-size:15px">
+      ${optIsl}${optIslSel}
+    </select>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      ${[['all','Все задачи'],['todo','🔒 Осталось решить'],['done','✅ Решено']].map(([v,lab])=>
+        `<button class="chip fb ${status===v?'on':''}" onclick="libPick('status','${v}')">${lab}</button>`).join('')}
+    </div>
+    ${groups.map((g,i)=>{
+      const open = selIsl===g.I.name || (selIsl==='all' && (LB.open[g.I.name]===true || (LB.open[g.I.name]===undefined && i===0)));
+      const gd=g.items.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
+      // группировка внутри острова по темам
+      const byTheme={}; g.items.forEach(t=>{ const th=themeOf(t); (byTheme[th]=byTheme[th]||[]).push(t); });
+      const rows=Object.keys(byTheme).map(th=>`<div class="small" style="margin:8px 4px 4px;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(th)}</div>`+
+        byTheme[th].map(taskRow).join('')).join('');
+      return `<div style="margin-bottom:8px">
+        <div class="sec-head" onclick="libToggle('${esc(g.I.name)}')">
+          <span>${g.I.ico} ${esc(g.I.name)}</span>
+          <span class="pr2">${gd}/${g.items.length} <i class="caret ${open?'down':''}">▸</i></span>
+        </div>
+        ${open? rows : ''}
+      </div>`;}).join('')}`;
   hud();
+}
+function libPick(k,v){ LB[k]=v; renderLibrary(); }
+function libToggle(isl){
+  if(LB.island==='all'){ LB.open[isl]= !(LB.open[isl]===true); }
+  else { LB.island='all'; LB.open[isl]=true; const el=document.getElementById('libIsl'); if(el) el.value='all'; }
+  renderLibrary();
 }
 /* ---------- вспомогательное ---------- */
 function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('show');
