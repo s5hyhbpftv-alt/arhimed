@@ -239,35 +239,69 @@ function islStats(name){
   const done=ts.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
   return {total:ts.length, done};
 }
+function ringHTML(pct, size, label){
+  // анимированное кольцо прогресса
+  const r=(size-10)/2, c=2*Math.PI*r;
+  const off=c*(1-Math.min(100,Math.max(0,pct))/100);
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" class="ring" style="--off:${off};--len:${c}">
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="5"/>
+    <circle class="ring-fg" cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--brass)" stroke-width="5"
+      stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c}" transform="rotate(-90 ${size/2} ${size/2})"/>
+    <text x="50%" y="53%" text-anchor="middle" dominant-baseline="middle" fill="#e8e0cc" font-size="${size*0.21}" font-family="Georgia,serif">${label}</text>
+  </svg>`;
+}
 function renderPath(){
   const pool=taskPool();
   const doneN=pool.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
+  const pctAll=pool.length? Math.round(doneN/pool.length*100):0;
   const next = pool.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0]
             || window.ARH_TASKS.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0];
   const s=document.getElementById('screen');
-  const top=`<div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-    <div><div style="font-size:13px;color:var(--muted)">Решено задач: <b style="color:var(--brass)">${doneN}</b> из ${pool.length}${isJunior()?' · раздел 1–4 класс':' (всего '+window.ARH_TASKS.length+')'}</div>
-    <div style="font-size:12px;color:var(--muted);margin-top:3px">серия ${DB.streak}🔥 · лучшая ${DB.best}</div></div>
-    <div class="bar" style="width:150px"><i style="width:${pool.length?Math.round(doneN/pool.length*100):0}%"></i></div></div>
-    ${next?`<button class="btn" style="width:100%;margin:10px 0 4px" onclick="go('task-${next.id}')">🎯 Продолжить: ${esc(next.title)}</button>`:''}
-    <div class="island" style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(127,209,255,.08),rgba(217,164,65,.07));border-color:rgba(127,209,255,.35)" onclick="go('legend')">
-      <div style="font-size:34px">📜</div>
-      <div style="flex:1"><div class="nm" style="color:var(--glow)">Легенда об Архимеде</div>
-      <div class="sub">Кто он, почему острова называются так и откуда взялся новый — 💻 Цитадель Информатики</div></div>
+  const rank=rankName();
+  const heroName=esc(DB.profile?DB.profile.name:'');
+  // общее кольцо с именем
+  const hero=`<div class="path-hero card" style="display:flex;align-items:center;gap:16px">
+      ${ringHTML(pctAll, 92, pctAll+'%')}
+      <div style="flex:1">
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Острова Познания</div>
+        <div style="font-size:22px;font-weight:bold;color:var(--ivory);margin:2px 0">${heroName||'Исследователь'} <span class="rank-badge">${esc(rank)}</span></div>
+        <div style="font-size:12.5px;color:var(--muted);line-height:1.5">Решено <b style="color:var(--brass)">${doneN}</b> из ${pool.length}${isJunior()?' в разделе 1–4 класс':' на карте'} · серия ${DB.streak}🔥</div>
+        <div class="spark-row">
+          ${doneN>0?`<span class="spark done">✦</span>`:''}${(DB.streak||0)>=3?`<span class="spark done">🔥</span>`:''}${pctAll>=50?`<span class="spark done">🏆</span>`:''}
+        </div>
+      </div>
+    </div>`;
+  const nextBtn = next
+    ? `<button class="btn pulse" style="width:100%;margin:12px 0 4px" onclick="go('task-${next.id}')">🎯 Продолжить: ${esc(next.title)}</button>`
+    : `<div class="card" style="text-align:center;color:var(--ok);font-size:14px">🏆 Все задачи решены! Ты — настоящий ${esc(rank)}!</div>`;
+  const legendCard=`<div class="path-legend" onclick="go('legend')">
+      <span style="font-size:26px">📜</span>
+      <span style="flex:1;text-align:left"><b style="color:var(--glow)">Легенда об Архимеде</b><br>
+      <span class="small" style="color:var(--muted)">Кто он и откуда острова — читай историю</span></span>
       <span style="color:var(--brass)">→</span></div>`;
-  const cards=ISLANDS.filter(islandVisible).map(I=>{
-    const st=islStats(I.name); const pct=Math.round(st.done/st.total*100);
+  const cards=ISLANDS.filter(islandVisible).map((I,i)=>{
+    const st=islStats(I.name); const pct=st.total? Math.round(st.done/st.total*100):0;
     const themes=[...new Set(window.ARH_TASKS.filter(t=>t.island===I.name).map(t=>themeOf(t)))];
     const themeRows=themes.map(th=>{
       const tt=window.ARH_TASKS.filter(t=>t.island===I.name&&themeOf(t)===th);
       const d=tt.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
       return `<div class="theme-row"><span class="tn">${esc(th)}</span><div class="bar"><i style="width:${d/tt.length*100}%"></i></div><span class="pc">${d}/${tt.length}</span></div>`;
     }).join('');
-    return `<div class="island" onclick="go('island-${encodeURIComponent(I.name)}')">
-      <div class="top"><span class="nm">${I.ico} ${esc(I.name)}</span><span class="pr">${st.done}/${st.total} · ${pct}%</span></div>
-      <div class="sub">${esc(I.dsc)}</div>${themeRows}</div>`;
+    const glow = pct===100? 'rgba(95,154,106,.5)' : 'rgba(217,164,65,.18)';
+    return `<div class="island path-island" style="animation-delay:${0.06*i}s" onclick="go('island-${encodeURIComponent(I.name)}')">
+      <div class="pi-head">
+        ${ringHTML(pct, 58, I.ico)}
+        <div style="flex:1;min-width:0">
+          <div class="nm">${esc(I.name)}</div>
+          <div class="sub">${esc(I.dsc)}</div>
+          <div class="small" style="margin-top:5px;color:var(--glass)">${st.done}/${st.total} · <span class="pct">${pct}%</span></div>
+        </div>
+      </div>
+      ${themeRows}</div>`;
   }).join('');
-  s.innerHTML=top+cards;
+  s.innerHTML=hero+nextBtn+legendCard+`<div class="path-map">${cards}</div>`;
+  // запускаем анимацию колец после отрисовки
+  requestAnimationFrame(()=>{ document.querySelectorAll('.ring-fg').forEach(el=>{ el.style.strokeDashoffset=getComputedStyle(el.parentNode).getPropertyValue('--off'); }); });
   hud();
 }
 /* ---------- ОСТРОВ ---------- */
