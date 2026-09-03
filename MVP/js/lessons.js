@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,196 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l18Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['sq','7'],['sq','12'],['sq','15'],['cb','2'],['cb','3'],['cb','5'],['back','81'],['back','144'],['back','125'],['back','64'],['cnt','sq'],['cnt','cb']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l18Grid(n,uid,opt){
+  // квадрат n×n клеток, появляются по одной
+  const cell=Math.min(26, Math.floor(280/n));
+  let h='';
+  for(let i=0;i<n*n;i++) h+=`<div class="l35-pop" style="animation-delay:${(i*0.02).toFixed(3)}s;width:${cell}px;height:${cell}px;margin:1px;border-radius:3px;background:${opt&&opt.hot&&i===n*n-1?'#ffd9a0':'#5aa8d8'}"></div>`;
+  return `<div style="display:flex;flex-wrap:wrap;justify-content:center;width:${n*(cell+2)}px;margin:0 auto">${h}</div>`;
+}
+function l18Layers(n,uid){
+  // куб n³: n слоёв по n×n клеток
+  const cell=Math.min(30, Math.floor(240/n));
+  let s='';
+  for(let layer=1;layer<=n;layer++){
+    let row='';
+    for(let i=0;i<n*n;i++) row+=`<div class="l35-pop" style="animation-delay:${((layer-1)*n*n+i)*0.01}px;width:${cell}px;height:${cell}px;margin:1px;border-radius:2px;background:${layer===n?'#e8a35a':'#8ab860'}"></div>`;
+    s+=`<div style="display:flex;flex-wrap:wrap;justify-content:center;width:${n*(cell+2)}px;margin:2px auto"><span style="width:100%;font-size:10px;color:#cbb89a;text-align:center">слой ${layer} из ${n}</span>${row}</div>`;
+  }
+  return `<div style="text-align:center">${s}</div>`;
+}
+function l18OddSum(n,uid){
+  // 1+3+5+…+(2n-1) ступеньками-квадратом: L-слои вокруг центра
+  const cell=16;
+  let grid=[];
+  for(let i=0;i<2*n-1;i++) grid.push(Array(2*n-1).fill(0));
+  for(let k=0;k<n;k++){ // добавляем кольцо из (2k+1)²
+    const s=2*k+1, off=n-1-k;
+    for(let i=0;i<s;i++){ grid[off][off+i]=1; grid[off+i][off]=1; }
+  }
+  let h='';
+  for(let r=0;r<2*n-1;r++) for(let c=0;c<2*n-1;c++){
+    const ring=Math.min(r,c,2*n-2-r,2*n-2-c);
+    h+=`<div class="l35-pop" style="animation-delay:${((r*(2*n-1)+c)*0.008).toFixed(3)}s;width:${cell}px;height:${cell}px;margin:.5px;border-radius:2px;background:${grid[r][c]? ['#5aa8d8','#8ab860','#e8a35a','#e0523d','#b06ab8'][ring]||'#7fd1ff':'rgba(255,255,255,.05)'}"></div>`;
+  }
+  return `<div style="display:flex;flex-wrap:wrap;justify-content:center;width:${(2*n-1)*(cell+1)}px;margin:0 auto">${h}</div>`;
+}
+function visL18(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Квадратный сад Архимеда'),
+        `<div style="font-size:46px" class="l35-pop">🟩</div>`+
+        big('5² — что это? «5 в квадрате»!')+
+        sml('квадраты и кубы чисел — самые важные «строительные» числа математики. посмотрим, как они растут!'));
+    } else if(step===1){
+      h=col(big('Квадрат числа'),
+        l18Grid(3,'a')+
+        `<div style="text-align:center;font-size:20px" class="wv-pop">3² = 3 · 3 = 9 клеток</div>`+
+        sml('квадрат числа — число, умноженное САМО НА СЕБЯ. 3² читаем «три в квадрате»'));
+    } else if(step===2){
+      h=col(big('Запись 5²'),
+        rowC(chip('5² = 5·5 = 25','rgba(127,184,160,.5)'))+
+        l18Grid(5,'b')+
+        sml('маленькая двойка сверху — «сколько раз умножаем число само на себя»'));
+    } else if(step===3){
+      h=col(big('Таблица квадратов 1..10'),
+        rowC(chip('1, 4, 9, 16, 25, 36, 49, 64, 81, 100','rgba(217,164,65,.4)'))+
+        `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div style="text-align:center;min-width:46px;border:1px solid rgba(127,209,255,.25);border-radius:8px;padding:2px 0"><div style="font-size:13px;color:#a9d2ec">${n}²</div><div style="font-size:16px;font-weight:bold;color:#fff">${n*n}</div></div>`).join('')}</div>`+
+        sml('выучи эту таблицу — она нужна постоянно!'));
+    } else if(step===4){
+      h=col(big('Точных квадратов до 100 — 10'),
+        rowC(chip('1², 2², …, 10²: ровно 10 чисел','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">квадратов ≤ 100: 10 ✓</div>`+
+        sml('10² = 100 — последний. как в наших задачках!'));
+    } else if(step===5){
+      h=col(big('Удивительно: 1+3+5 = 3²'),
+        l18OddSum(3,'c')+
+        `<div style="text-align:center;font-size:17px" class="wv-pop">сумма первых нечётных: 1+3+5 = 9 = 3²</div>`+
+        sml('добавляй «кольцо» из нечётного числа клеток — и каждый раз получается новый квадрат!'));
+    } else if(step===6){
+      h=col(big('Чётность квадрата'),
+        rowC(chip('чёт² = чёт: 4²=16','rgba(127,184,160,.5)'),chip('нечёт² = нечёт: 7²=49','rgba(127,209,255,.5)'))+
+        sml('вспомни урок про чётность: квадрат повторяет чётность числа'));
+    } else if(step===7){
+      h=col(big('Последняя цифра квадрата'),
+        rowC(chip('квадрат кончается только на 0,1,4,5,6,9','rgba(217,164,65,.4)'))+
+        sml('на 2, 3, 7 или 8 квадрат закончиться НЕ может. отличная проверка ответов!'));
+    } else if(step===8){
+      h=col(big('Куб числа'),
+        l18Layers(2,'d')+
+        `<div style="text-align:center;font-size:20px" class="wv-pop">2³ = 2·2·2 = 8 кубиков</div>`+
+        sml('куб — число, умноженное на себя ТРИ раза: два слоя по четыре кубика'));
+    } else if(step===9){
+      h=col(big('Куб: 3³ = 27'),
+        l18Layers(3,'e')+
+        `<div style="text-align:center;font-size:19px">3 слоя по 9 кубиков = 27</div>`+
+        sml('три квадрата друг на друге!'));
+    } else if(step===10){
+      h=col(big('Кубы 1..4'),
+        rowC(chip('1³=1 · 2³=8 · 3³=27 · 4³=64','rgba(127,209,255,.5)'))+
+        sml('запомни: 8, 27, 64 — это кубы'));
+    } else if(step===11){
+      h=col(big('Точных кубов до 100 — 4'),
+        rowC(chip('1³, 2³, 3³, 4³ = 1, 8, 27, 64','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">кубов ≤ 100: 4 ✓</div>`+
+        sml('а 5³ = 125 — уже больше 100! как в наших задачках'));
+    } else if(step===12){
+      h=col(big('Квадраты 11..15 наизусть'),
+        rowC(chip('11²=121','rgba(127,184,160,.5)'),chip('12²=144','rgba(127,209,255,.5)'),chip('13²=169','rgba(232,160,90,.5)'),chip('14²=196','rgba(217,164,65,.5)'),chip('15²=225','rgba(127,209,160,.5)'))+
+        sml('пары для олимпиад: 144, 169, 196, 225 — красивые числа, выучи!'));
+    } else if(step===13){
+      h=col(big('Обратная задача: 81 — чей квадрат?'),
+        `<div style="text-align:center;font-size:20px" class="wv-pop">9 · 9 = 81 → 81 = 9²</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">9 ✓ (как в проверке!)</div>`+
+        sml('если знаешь таблицу квадратов — обратная задача в одно движение'));
+    } else if(step===14){
+      h=col(big('Квадрат и куб в жизни'),
+        rowC(chip('площадь квадрата S = a²','rgba(127,209,160,.5)'),chip('объём куба V = a³','rgba(127,209,255,.5)'))+
+        sml('квадратный метр — это м² (квадрат!), кубический метр — м³ (куб!)'));
+    } else if(step===15){
+      h=col(big('Пример: площадь сада'),
+        rowC(chip('сад 7×7 м','rgba(127,184,160,.5)'))+
+        `<div style="text-align:center;font-size:19px" class="wv-pop">S = 7² = 49 м²</div>`+
+        sml('семь в квадрате — сорок девять. квадраты повсюду!'));
+    } else if(step===16){
+      const POOL=[['sq','7'],['sq','12'],['sq','15'],['cb','2'],['cb','3'],['cb','5'],['back','81'],['back','144'],['back','125'],['back','64'],['cnt','sq'],['cnt','cb']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i];
+      if(e[0]==='sq'){
+        const n=+e[1]; const ans=n*n;
+        h=col(big('Тренажёр: квадрат'),
+          `<div class="wv-row">${chip(n+'² = ?','rgba(217,164,65,.35)')}</div>`+
+          (st.s1? `<div class="l35-pop" style="font-size:19px;text-align:center;color:#ffd9a0">1) n² = n·n = ${n}·${n}</div>`:'')+
+          (st.s2? `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">${n}² = ${ans}</div>`:'')+
+          btns(btn('1️⃣ умножь',`l18Act('${lk}','s1')`),btn('2️⃣ ответ',`l18Act('${lk}','s2')`),btn('🎲 другой',`l18Act('${lk}','n')`),btn('↺',`l18Act('${lk}','r')`))+
+          sml('квадрат = число × само себя!'));
+      } else if(e[0]==='cb'){
+        const n=+e[1]; const ans=n*n*n;
+        h=col(big('Тренажёр: куб'),
+          `<div class="wv-row">${chip(n+'³ = ?','rgba(217,164,65,.35)')}</div>`+
+          (st.s1? `<div class="l35-pop" style="font-size:19px;text-align:center;color:#ffd9a0">1) n³ = n·n·n = ${n}·${n}·${n} = ${n*n}·${n}</div>`:'')+
+          (st.s2? `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">${n}³ = ${ans}</div>`:'')+
+          btns(btn('1️⃣ умножь',`l18Act('${lk}','s1')`),btn('2️⃣ ответ',`l18Act('${lk}','s2')`),btn('🎲 другой',`l18Act('${lk}','n')`),btn('↺',`l18Act('${lk}','r')`))+
+          sml('куб = число × себя × себя!'));
+      } else if(e[0]==='back'){
+        const v=+e[1];
+        const base= v<=100? Math.round(Math.sqrt(v)) : Math.round(Math.cbrt(v));
+        const kind= v<=100? 'квадрат':'куб';
+        h=col(big('Тренажёр: обратная задача'),
+          `<div class="wv-row">${chip(v+' — чей это '+kind+'?','rgba(217,164,65,.35)')}</div>`+
+          (st.s1? `<div class="l35-pop" style="font-size:19px;text-align:center;color:#ffd9a0">1) вспомни таблицу ${kind}ов</div>`:'')+
+          (st.s2? `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">${base}²${v>100?'³':''} = ${v}</div>`:'')+
+          btns(btn('1️⃣ таблица',`l18Act('${lk}','s1')`),btn('2️⃣ ответ',`l18Act('${lk}','s2')`),btn('🎲 другой',`l18Act('${lk}','n')`),btn('↺',`l18Act('${lk}','r')`))+
+          sml('по таблице квадратов и кубов — в обратную сторону!'));
+      } else {
+        const kind=e[1];
+        const ans= kind==='sq'?10:4;
+        const lab= kind==='sq'?'квадратов (≤100)':'кубов (≤100)';
+        h=col(big('Тренажёр: сколько чисел'),
+          `<div class="wv-row">${chip('сколько точных '+lab+'?','rgba(217,164,65,.35)')}</div>`+
+          (st.s1? `<div class="l35-pop" style="font-size:19px;text-align:center;color:#ffd9a0">1) ${kind==='sq'?'1²,2²,…,10² — последний 100':'1³,2³,3³,4³ — а 5³=125 уже больше 100'}</div>`:'')+
+          (st.s2? `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">их ${ans}</div>`:'')+
+          btns(btn('1️⃣ подумай',`l18Act('${lk}','s1')`),btn('2️⃣ ответ',`l18Act('${lk}','s2')`),btn('🎲 другой',`l18Act('${lk}','n')`),btn('↺',`l18Act('${lk}','r')`))+
+          sml('квадратов до 100 — 10, кубов — 4!'));
+      }
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🟩 Квадрат n² = n·n (таблица до 15!).<br>
+            🧊 Куб n³ = n·n·n (кубы: 8, 27, 64).<br>
+            🔍 Квадраты ≤100: 10 · кубы ≤100: 4.<br>
+            ✨ 1+3+5+…+(2n−1) = n² · квадрат не кончается на 2,3,7,8.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там квадрат числа 81'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -6533,6 +6723,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===18) visL18(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
