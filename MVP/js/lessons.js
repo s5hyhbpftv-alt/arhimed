@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,206 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l46Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const LISTS=[[4,5,3],[6,8,10,12],[5,4,3,5,3],[20,22,21,23,19],[140,150,160,150],[2,2,4,8],[7,7,7,7,7],[1,9],[10,20,30],[3,5,7,9,11]];
+  const REV=[[4,5],[9,4],[10,3],[2,6]];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'rev': st.rev=st.rev?0:1; st.s1=st.s2=0; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%LISTS.length; st.s1=st.s2=0; st.rev=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l46Share(total,n,uid){
+  const per=total/n;
+  let h='';
+  const rows=Math.ceil(total/n);
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<n;c++){
+      const idx=r*n+c;
+      if(idx>=total) continue;
+      h+=`<div class="l35-pop" style="animation-delay:${(idx*0.05).toFixed(2)}s;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#d9a52a);margin:2px;display:inline-flex"></div>`;
+    }
+  }
+  return `<div style="width:300px;margin:0 auto;text-align:center">
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:230px;margin:0 auto">${h}</div>
+    <div style="margin-top:6px;font-size:17px;color:#ffd9a0">${total} : ${n} = <b style="color:#7fd1a0">${per}</b> — каждому поровну</div>
+  </div>`;
+}
+function l46Bars(list,uid,opt){
+  const o=opt||{};
+  const W=300, maxH=120;
+  const maxV=Math.max(...list);
+  const n=list.length;
+  const bw=Math.min(52,Math.floor((W-30)/n));
+  const gx=Math.floor((W-n*bw)/2);
+  const base=Math.max(16, maxH+14);
+  const avg=list.reduce((a,b)=>a+b,0)/n;
+  let bars='';
+  list.forEach((v,i)=>{
+    const hh=Math.max(4, Math.round(v/maxV*maxH));
+    bars+=`<div style="position:absolute;left:${gx+i*bw+bw/2-10}px;bottom:28px;width:20px;height:${hh}px;background:linear-gradient(180deg,#7fd1ff,#3a7fc0);border-radius:4px 4px 0 0" class="l35-pop"></div>`;
+    bars+=`<div style="position:absolute;left:${gx+i*bw+bw/2-14}px;bottom:${30+hh}px;width:28px;text-align:center;font-size:12px;color:#fff;font-weight:bold">${v}</div>`;
+  });
+  const ay=28+Math.round(avg/maxV*maxH);
+  return `<div style="position:relative;width:${W}px;height:170px;margin:0 auto;background:rgba(255,255,255,.03);border-radius:12px;border:1px solid rgba(255,255,255,.1)">
+    <div style="position:absolute;left:0;right:0;bottom:28px;border-bottom:2px solid rgba(255,255,255,.3)"></div>
+    ${bars}
+    <div style="position:absolute;left:4px;right:4px;top:${ay}px;border-top:2px dashed #ffd9a0"></div>
+    <div style="position:absolute;left:6px;top:${Math.max(4,ay-18)}px;font-size:12px;color:#ffd9a0;font-weight:bold">среднее ${Math.round(avg*10)/10}</div>
+    <div style="position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:12px;color:#cbb89a">${list.join(' · ')}</div>
+  </div>`;
+}
+function visL46(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Поровну на всех'),
+        l46Share(12,3,'a')+
+        big('12 конфет · 3 друга → каждому по 4')+
+        sml('это и есть среднее арифметическое: сложить всё и поделить на всех поровну!'));
+    } else if(step===1){
+      h=col(big('Что мы делаем?'),
+        rowC(chip('сложили 12','rgba(232,160,90,.5)'),chip('поделили на 3','rgba(127,209,255,.5)'),chip('получили 4','rgba(127,184,160,.5)'))+
+        big('среднее = сумма : количество')+
+        sml('два простых шага: сначала ВСЁ сложить, потом разделить на ЧИСЛО предметов'));
+    } else if(step===2){
+      h=col(big('Оценки: 4, 5, 3'),
+        l46Bars([4,5,3],'b')+
+        `<div style="text-align:center;font-size:20px" class="wv-pop">(4 + 5 + 3) : 3</div>`+
+        sml('три оценки — значит, делим на 3'));
+    } else if(step===3){
+      h=col(big('Два шага подробно'),
+        `<div style="display:flex;flex-direction:column;gap:6px;align-items:center;font-size:20px">
+          <div class="wv-pop">1) сумма: 4 + 5 + 3 = 12</div>
+          <div class="wv-pop" style="animation-delay:.25s">2) делим: 12 : 3 = 4</div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:32px;color:#7fd1a0;font-weight:bold">среднее = 4</div>`+
+        sml('сначала сложи, потом подели — и всё!'));
+    } else if(step===4){
+      h=col(big('Среднее всегда посередине'),
+        rowC(chip('числа: 3 и 5','rgba(127,209,255,.5)'))+
+        `<div style="width:280px;margin:8px auto;position:relative;height:56px;background:rgba(255,255,255,.05);border-radius:28px;border:1px solid rgba(255,255,255,.12)">
+          <div style="position:absolute;left:10px;top:14px;font-size:20px;font-weight:bold;color:#a9d2ec">3</div>
+          <div style="position:absolute;right:10px;top:14px;font-size:20px;font-weight:bold;color:#a9d2ec">5</div>
+          <div class="l35-pop" style="position:absolute;left:50%;transform:translateX(-50%);top:8px;background:#ffd9a0;color:#4a3200;border-radius:12px;padding:4px 10px;font-size:16px;font-weight:bold">среднее 4</div>
+        </div>`+
+        sml('среднее не меньше самого маленького и не больше самого большого — оно «посередине»'));
+    } else if(step===5){
+      h=col(big('Бывает и половинка'),
+        `<div style="text-align:center;font-size:22px">оценки 4 и 5 → (4 + 5) : 2 = 4,5</div>`+
+        l46Bars([4,5],'c')+
+        sml('две оценки — делим на 2. среднее 4,5 — «четыре с половиной»!'));
+    } else if(step===6){
+      h=col(big('Обратно: находим сумму'),
+        `<div style="text-align:center;font-size:20px" class="wv-pop">сумма = среднее · количество</div>`+
+        rowC(chip('среднее 4','rgba(127,209,160,.5)'),chip('5 оценок','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">4 · 5 = 20</div>`+
+        sml('знаешь среднее и сколько чисел — умножь и узнаешь всю сумму!'));
+    } else if(step===7){
+      h=col(big('Как в задачках: сумма'),
+        rowC(chip('средний балл 4','rgba(127,184,160,.5)'),chip('5 оценок','rgba(127,209,255,.5)'))+
+        `<div style="font-size:20px;text-align:center" class="wv-pop">сумма = 4 · 5 = 20</div>`+
+        sml('например, оценки 4,4,4,4,4 — в сумме 20. или 5,5,3,3,4 — тоже 20!'));
+    } else if(step===8){
+      h=col(big('Средняя скорость'),
+        rowC(chip('путь 240 км','rgba(127,184,160,.5)'),chip('время 4 ч','rgba(232,106,90,.5)'))+
+        `<div style="text-align:center;font-size:20px" class="wv-pop">240 : 4 = 60 км/ч — «поровну на каждый час»</div>`+
+        sml('средняя скорость = весь путь, разложенный на все часы'));
+    } else if(step===9){
+      h=col(big('Средний балл за четверть'),
+        rowC(chip('оценки 5, 4, 3, 5, 3','rgba(127,209,160,.5)'))+
+        `<div style="text-align:center;font-size:19px" class="wv-pop">5+4+3+5+3 = 20 → 20 : 5 = 4</div>`+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">средний балл 4</div>`+
+        sml('пять оценок — делим на 5!'));
+    } else if(step===10){
+      h=col(big('Температура за неделю'),
+        l46Bars([20,22,21,23,19],'d')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">(20+22+21+23+19):5 = 105:5 = 21°</div>`+
+        sml('пунктирная линия — средняя температура: что-то теплее, что-то холоднее, а в среднем 21°'));
+    } else if(step===11){
+      h=col(big('Рост: уровнять всех'),
+        l46Bars([140,150,160,150],'e')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">600 : 4 = 150 см</div>`+
+        sml('четверо ребят ростом 140, 150, 160 и 150 см — «в среднем» все по 150 см!'));
+    } else if(step===12){
+      h=col(big('Задача: 6, 8, 10, 12'),
+        l46Bars([6,8,10,12],'f')+
+        `<div style="text-align:center;font-size:19px" class="wv-pop">6+8+10+12 = 36 → 36 : 4 = 9</div>`+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">среднее = 9 ✓</div>`+
+        sml('четыре числа — делим на 4. как в наших задачках!'));
+    } else if(step===13){
+      h=col(big('Задача: средний балл 4'),
+        l46Bars([4,4,4,4,4],'g')+
+        rowC(chip('среднее 4','rgba(127,184,160,.5)'),chip('5 оценок','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">сумма = 4 · 5 = 20 ✓</div>`+
+        sml('если среднее 4 и оценок 5, то в сумме должно быть ровно 20!'));
+    } else if(step===14){
+      h=col(big('Ловушка: средние нельзя так просто'),
+        rowC(chip('в классе А: 3 ученика, средний балл 4','rgba(127,209,255,.5)'),chip('в классе Б: 1 ученик, балл 2','rgba(232,106,90,.5)'))+
+        `<div style="text-align:center;font-size:18px">(4 + 2) : 2 = 3 — неверно! учеников же не поровну</div>`+
+        `<div style="text-align:center;font-size:18px" class="wv-pop">правильно: (3·4 + 1·2) : 4 = 14 : 4 = 3,5</div>`+
+        sml('усреднять средние можно, только если «кучек» поровну. иначе взвешивай по количеству!'));
+    } else if(step===15){
+      h=col(big('Где встречается среднее'),
+        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+          ${[['🎓','средний балл'],['🚗','средняя скорость'],['🌡','средняя температура'],['📏','средний рост'],['🧾','средний чек'],['📊','средние продажи']].map(([e,t],i)=>`
+            <div class="l35-pop" style="animation-delay:${(i*0.1).toFixed(2)}s;width:92px;border:1px solid rgba(127,209,255,.25);border-radius:12px;padding:8px 4px;text-align:center;background:rgba(127,209,255,.05)"><div style="font-size:24px">${e}</div><div style="font-size:11px;color:#a9d2ec">${t}</div></div>`).join('')}
+        </div>`+
+        sml('везде, где «в среднем», работает одно правило: сумма : количество'));
+    } else if(step===16){
+      const LISTS=[[4,5,3],[6,8,10,12],[5,4,3,5,3],[20,22,21,23,19],[140,150,160,150],[2,2,4,8],[7,7,7,7,7],[1,9],[10,20,30],[3,5,7,9,11]];
+      const REV=[[4,5],[9,4],[10,3],[2,6]];
+      if(st.i==null) st.i=0;
+      if(st.rev){
+        const [avg,n]=REV[st.i%REV.length];
+        const sum=avg*n;
+        h=col(big('Тренажёр (обратная)'),
+          `<div class="wv-row">${chip('среднее = '+avg,'rgba(127,184,160,.5)')} ${chip('чисел = '+n,'rgba(127,209,255,.5)')}</div>`+
+          (st.s1? `<div class="l35-pop" style="font-size:19px;text-align:center;color:#ffd9a0">1) сумма = среднее · количество</div>`:'')+
+          (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">сумма = ${avg} · ${n} = ${sum}</div>`:'')+
+          btns(btn('1️⃣ формула',`l46Act('${lk}','s1')`),btn('2️⃣ ответ',`l46Act('${lk}','s2')`),btn('↺',`l46Act('${lk}','r')`))+
+          sml('найди сумму, зная среднее и количество!'));
+      } else {
+        const list=LISTS[st.i];
+        const sum=list.reduce((a,b)=>a+b,0);
+        const avg=sum/list.length;
+        h=col(big('Тренажёр: найди среднее'),
+          `<div class="wv-row">${chip(list.join(' · '),'rgba(217,164,65,.35)')}</div>`+
+          (st.s1? `<div class="l35-pop" style="font-size:19px;text-align:center;color:#ffd9a0">1) сумма: ${list.join(' + ')} = ${sum}</div>`:'')+
+          (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">среднее = ${sum} : ${list.length} = ${avg}</div>`:'')+
+          btns(btn('1️⃣ сумма',`l46Act('${lk}','s1')`),btn('2️⃣ среднее',`l46Act('${lk}','s2')`),btn('🔄 обратная',`l46Act('${lk}','rev')`),btn('🎲 другой',`l46Act('${lk}','n')`),btn('↺',`l46Act('${lk}','r')`))+
+          sml('сначала всё сложи, потом раздели на количество чисел!'));
+      }
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:260px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            ➕ Среднее = сумма : количество.<br>
+            📐 Оно всегда «посередине»: от минимума до максимума.<br>
+            🔄 Сумма = среднее · количество.<br>
+            ⚠️ Средние разных «кучек» усредняй по весу!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 4, 5 и 3'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -5293,6 +5493,7 @@ function renderLessonVis(){
   else if(id===81) visL81(el);
   else if(id===82) visL82(el);
   else if(id===83) visL83(el);
+  else if(id===46) visL46(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
