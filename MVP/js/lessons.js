@@ -1256,7 +1256,7 @@ function visL48(el){
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
     const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
     let h='';
     if(step===0){
       h=col(big('Корона царя Гиерона'),
@@ -1388,103 +1388,6 @@ function visL48(el){
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
-function visL36(el){
-  // Урок 36 «Закон Ома»: сюжет «электричество — водопровод», цепь с электронами
-  try{
-    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    window.LK48=lk;
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(big('Ток — как вода в трубе'),
-        l36Water()+
-        sml('насос даёт напор (напряжение), по трубе бежит поток (ток), узкое место мешает (сопротивление)'));
-    } else if(step===1){
-      h=col(big('Вместо воды — заряды'),
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center">
-          <div style="font-size:40px">🔋</div><div style="font-size:24px;color:#cbb89a">→</div><div style="font-size:40px">💡</div></div>`+
-        big('батарейка толкает заряды по проводу')+
-        sml('как насос гонит воду — так батарейка гонит заряды, и лампочка светится'));
-    } else if(step===2){
-      h=col(big('Три величины'),
-        rowC(
-          `<div style="text-align:center;width:96px;border:2px solid rgba(127,209,255,.5);border-radius:12px;padding:8px"><div style="font-size:22px">🔋</div><b>U</b><div class="wv-sml" style="font-size:10px">напряжение<br>вольты (В)</div></div>`+
-          `<div style="text-align:center;width:96px;border:2px solid rgba(127,209,160,.5);border-radius:12px;padding:8px"><div style="font-size:22px">⚡</div><b>I</b><div class="wv-sml" style="font-size:10px">сила тока<br>амперы (А)</div></div>`+
-          `<div style="text-align:center;width:96px;border:2px solid rgba(232,160,90,.5);border-radius:12px;padding:8px"><div style="font-size:22px">🚧</div><b>R</b><div class="wv-sml" style="font-size:10px">сопротивление<br>омы (Ом)</div></div>`)+
-        sml('напор · поток · узкое место'));
-    } else if(step===3){
-      h=col(big('Закон Ома'),
-        `<div style="font-size:38px;color:var(--brass);font-family:Georgia,serif">I = U : R</div>`+
-        sml('сила тока = напряжение : сопротивление. больше напор → больше ток; больше сопротивление → меньше ток'));
-    } else if(step===4){
-      const I=3;
-      h=col(big('Разбираем на числах'),
-        `<div class="wv-row">${chip('U = 6 В','rgba(127,209,255,.5)')} ${chip('R = 2 Ом','rgba(232,160,90,.5)')}</div>`+
-        l36Circuit(I,6,2)+
-        `<div style="font-size:19px" class="wv-pop">I = 6 : 2 = 3 А</div>`+
-        sml('лампочка светится ярко — ток 3 ампера'));
-    } else if(step===5){
-      h=col(big('Проверяем закон'),
-        rowC(
-          `<div style="text-align:center;width:132px;border:2px solid rgba(127,209,255,.4);border-radius:12px;padding:6px">${l36Circuit(6,12,2,120)}<div class="wv-sml" style="font-size:10px">12 В · 2 Ом → 6 А</div></div>`+
-          `<div style="text-align:center;width:132px;border:2px solid rgba(232,160,90,.4);border-radius:12px;padding:6px">${l36Circuit(1.5,6,4,120)}<div class="wv-sml" style="font-size:10px">6 В · 4 Ом → 1,5 А</div></div>`)+
-        sml('напряжение выросло в 2 раза → ток вырос в 2 раза. сопротивление выросло → ток упал'));
-    } else if(step===6){
-      h=col(big('Находим напряжение'),
-        `<div class="wv-row">${chip('I = 2 А','rgba(127,209,160,.5)')} ${chip('R = 3 Ом','rgba(232,160,90,.5)')}</div>`+
-        `<div style="font-size:20px" class="wv-pop">U = I · R = 2 · 3</div>`+
-        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">U = 6 В</div>`+
-        sml('напряжение = ток × сопротивление'));
-    } else if(step===7){
-      h=col(big('Находим сопротивление'),
-        `<div class="wv-row">${chip('U = 12 В','rgba(127,209,255,.5)')} ${chip('I = 3 А','rgba(127,209,160,.5)')}</div>`+
-        `<div style="font-size:20px" class="wv-pop">R = U : I = 12 : 3</div>`+
-        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">R = 4 Ом</div>`+
-        sml('сопротивление = напряжение : ток'));
-    } else if(step===8){
-      h=col(big('Почему опасно КЗ?'),
-        `<div style="display:flex;gap:12px;justify-content:center;align-items:center">
-          <div style="text-align:center">🔋</div><div style="font-size:22px">⚡⚡⚡</div><div style="font-size:34px" class="wv-flick">💥</div></div>`+
-        big('короткое замыкание: R ≈ 0 → ток огромный')+
-        sml('провод плавится! поэтому в цепях ставят предохранители'));
-    } else if(step===9){
-      h=col(big('Разбираем задачку'),
-        `<div class="wv-row">${chip('U = 6 В','rgba(127,209,255,.5)')} ${chip('R = 2 Ом','rgba(232,160,90,.5)')}</div>`+
-        `<div style="font-size:20px" class="wv-pop">I = U : R = 6 : 2</div>`+
-        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">I = 3 А ✓</div>`+
-        sml('такой вопрос будет дальше!'));
-    } else if(step===10){
-      // тренажёр
-      if(st.U==null) st.U=6; if(st.R==null) st.R=2;
-      const I=Math.round(st.U/st.R*100)/100;
-      h=col(big('Тренажёр: собери цепь'),
-        `<div class="wv-row">${chip('U = '+st.U+' В','rgba(127,209,255,.5)')} ${chip('R = '+st.R+' Ом','rgba(232,160,90,.5)')}</div>`+
-        l36Circuit(I,st.U,st.R,252)+
-        `<div class="wv-ans" style="font-size:24px">I = ${st.U} : ${st.R} = ${I} А</div>`+
-        btns(btn('+1 В',`l36Act('${lk}','U+')`),btn('−1 В',`l36Act('${lk}','U-')`),btn('+1 Ом',`l36Act('${lk}','R+')`),btn('−1 Ом',`l36Act('${lk}','R-')`),btn('↺',`l36Act('${lk}','r')`))+
-        sml(I>=2?'ток большой — лампочка яркая, электроны быстрые!':'ток маленький — лампочка тусклая. уменьши R!'));
-    } else {
-      // памятка
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:320px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
-          ⚡ <b>I = U : R</b> — закон Ома.<br>
-          🔋 U (В) — «напор» · ⚡ I (А) — «поток» · 🚧 R (Ом) — «узкое место».<br>
-          🔁 U = I·R · R = U:I.<br>
-          💥 Больше R → меньше ток. Маленький R → короткое замыкание!</div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там 6 В и 2 Ом'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
-}
 function l34Scene0(dropped){
   // Детальная сцена «яблоня Ньютона»: небо, солнце, облако, трава, дерево с яблоками.
   // Падающее яблоко: до клика висит на ветке; после — падает на землю (анимация), 💥 в момент удара.
@@ -1558,7 +1461,7 @@ function visL34(el){
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
     const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
     const girya=(kg,w)=>`<svg width="${w||64}" height="${Math.round((w||64)*.9)}" viewBox="0 0 80 72" style="display:block">
       <path d="M28,6 a12,12 0 0 1 24,0 L52,20 a14,14 0 0 1 14,14 L66,58 a10,10 0 0 1 -10,10 L24,68 a10,10 0 0 1 -10,-10 L14,34 a14,14 0 0 1 14,-14 Z" fill="#8a94a2" stroke="#3a3f47" stroke-width="2"/>
       <rect x="34" y="26" width="12" height="18" rx="3" fill="#5c6672"/>
@@ -1677,71 +1580,290 @@ function visL34(el){
 }
 function l36Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  const bump=(k,d,lo,hi)=> st[k]=Math.max(lo||1, Math.min(hi||30, Math.round(((st[k]==null?1:st[k])+d)*10)/10));
+  const bump=(k,d,lo,hi)=> st[k]=Math.max(lo||1, Math.min(hi||24, (st[k]==null?1:st[k])+d));
   switch(act){
     case 'U+': bump('U',1,1,24); break; case 'U-': bump('U',-1,1,24); break;
-    case 'R+': bump('R',1,1,24); break; case 'R-': bump('R',-1,1,24); break;
+    case 'R+': bump('R',1,1,12); break; case 'R-': bump('R',-1,1,12); break;
+    case 'kz': st.kz=st.kz?0:1; break;
     case 'r': CHS[lk]={}; break;
   }
   chRender(0);
 }
-function l36Circuit(I,U,R,w){
-  // Линейная цепь: батарейка — резистор — лампочка, электроны бегут
-  const W=w||252, H=Math.round(W*.44);
-  const y=H*.5;
-  const bright=Math.min(1, Math.max(.08, I/4));
-  const dur=Math.max(.5, 2.6-I*.5).toFixed(2);
-  const glow = I>0.01? `<circle cx="${W*.87}" cy="${y}" r="${10+bright*14}" fill="rgba(255,220,80,${.25+bright*.5})" opacity="${.5+bright*.4}"/>` : '';
-  const elems=3;
-  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block">
-    <!-- провод -->
-    <line x1="${W*.03}" y1="${y}" x2="${W*.18}" y2="${y}" stroke="#cbb89a" stroke-width="3"/>
-    <!-- батарейка -->
-    <line x1="${W*.185}" y1="${y-13}" x2="${W*.185}" y2="${y+13}" stroke="#e8e0cc" stroke-width="4"/>
-    <line x1="${W*.25}" y1="${y-7}" x2="${W*.25}" y2="${y+7}" stroke="#e8e0cc" stroke-width="7"/>
-    <text x="${W*.218}" y="${y-20}" text-anchor="middle" font-size="14" fill="#ffd9a0" font-weight="bold">${U} В</text>
-    <line x1="${W*.255}" y1="${y}" x2="${W*.42}" y2="${y}" stroke="#cbb89a" stroke-width="3"/>
-    <!-- резистор (зигзаг) -->
-    <path d="M${W*.42},${y} l7,-9 l7,18 l7,-18 l7,18 l7,-18 l7,9" stroke="#e8a05a" stroke-width="3.4" fill="none"/>
-    <text x="${W*.52}" y="${y-16}" text-anchor="middle" font-size="14" fill="#ffd9a0" font-weight="bold">R=${R} Ом</text>
-    <line x1="${W*.6}" y1="${y}" x2="${W*.78}" y2="${y}" stroke="#cbb89a" stroke-width="3"/>
-    <!-- лампочка -->
-    <circle cx="${W*.87}" cy="${y}" r="14" fill="${I>1.5?'#fff6c8':'#c9b98a'}" stroke="#33291e" stroke-width="2"/>
-    <circle cx="${W*.87}" cy="${y}" r="7" fill="none" stroke="#8a6a2a" stroke-width="2"/>
-    ${glow}
-    <line x1="${W*.84}" y1="${y-9}" x2="${W*.9}" y2="${y-9}" stroke="#8a6a2a" stroke-width="1.6"/>
-    <line x1="${W*.84}" y1="${y+9}" x2="${W*.9}" y2="${y+9}" stroke="#8a6a2a" stroke-width="1.6"/>
-    <line x1="${W*.78}" y1="${y}" x2="${W*.8}" y2="${y}" stroke="#cbb89a" stroke-width="3"/>
-    <line x1="${W*.94}" y1="${y}" x2="${W*.97}" y2="${y}" stroke="#cbb89a" stroke-width="3"/>
-    <!-- электроны -->
-    ${Array.from({length:elems},(_,i)=>`<circle r="3.4" fill="#7fd1ff">
-      <animateMotion dur="${dur}s" begin="${(-i*dur/elems).toFixed(2)}s" repeatCount="indefinite"
-        path="M${W*.06},${y} L${W*.94},${y}"/></circle>`).join('')}
-    <text x="${W*.5}" y="${H-4}" text-anchor="middle" font-size="${Math.round(W*.06)}" fill="#7fd1a0" font-weight="bold">I = ${I} А</text>
+function l36Dial(w,val,max,label,unit,col){
+  // круглая шкала-прибор
+  const cx=w/2, cy=w/2, r=w*.34;
+  const a0=-210, a1=30, frac=Math.max(0,Math.min(1,val/max));
+  const ang=a0+frac*(a1-a0);
+  const rad=(d)=> d*Math.PI/180;
+  const px=cx+r*Math.cos(rad(ang)), py=cy+r*Math.sin(rad(ang));
+  const arcLen=(from,to)=>{ let d=''; const steps=Math.max(2,Math.ceil(Math.abs(to-from)/8));
+    for(let i=0;i<=steps;i++){ const a=from+(to-from)*i/steps; const x=cx+r*Math.cos(rad(a)), y=cy+r*Math.sin(rad(a));
+      d+=(i?'L':'M')+x.toFixed(1)+','+y.toFixed(1); } return d; };
+  return `<svg width="${w}" height="${w}" viewBox="0 0 ${w} ${w}" style="display:block">
+    <circle cx="${cx}" cy="${cy}" r="${r+3}" fill="none" stroke="#3c5170" stroke-width="2"/>
+    <path d="${arcLen(a0,a1)}" stroke="#23314d" stroke-width="${r*.5}" fill="none" stroke-linecap="round"/>
+    <path d="${arcLen(a0,ang)}" stroke="${col||'#f0a35a'}" stroke-width="${r*.5}" fill="none" stroke-linecap="round" class="l49-on"/>
+    ${[0,.25,.5,.75,1].map(f=>{ const a=a0+f*(a1-a0); const x1=cx+(r+6)*Math.cos(rad(a)), y1=cy+(r+6)*Math.sin(rad(a)); return `<circle cx="${x1}" cy="${y1}" r="1.4" fill="#7fa3ba"/>`;}).join('')}
+    <line x1="${cx}" y1="${cy}" x2="${px}" y2="${py}" stroke="#e8e0cc" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="3" fill="#e8e0cc"/>
+    <text x="${cx}" y="${cy+9}" text-anchor="middle" font-size="${Math.round(w*.2)}" fill="#fff" font-weight="bold">${val}</text>
+    <text x="${cx}" y="${w-2}" text-anchor="middle" font-size="${Math.round(w*.12)}" fill="#9fc5e8">${label}, ${unit}</text>
   </svg>`;
 }
-function l36Water(){
-  // водопроводная аналогия: насос (напряжение), труба с сужением (сопротивление), поток (ток)
-  const W=252, H=120;
-  const y=H*.55;
-  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block">
-    <!-- насос -->
-    <circle cx="34" cy="${y}" r="18" fill="#4a90c9" stroke="#1a4a6a" stroke-width="2"/>
-    <path d="M34,${y-12} q10,12 -10,12 q10,12 10,24" stroke="#bfe6ff" stroke-width="3" fill="none"/>
-    <text x="34" y="${y+5}" text-anchor="middle" font-size="13" fill="#fff" font-weight="bold">U</text>
-    <text x="34" y="${H-8}" text-anchor="middle" font-size="11" fill="#9fc5e8">напряжение</text>
-    <!-- труба с сужением -->
-    <path d="M52,${y-16} H${W*.72} a14,14 0 0 1 14,14 a14,14 0 0 1 -14,14 H52 Z" fill="none" stroke="#cbb89a" stroke-width="4"/>
-    <path d="M52,${y-11} H${W*.72} a9,9 0 0 1 9,9 a9,9 0 0 1 -9,9 H52 Z" fill="rgba(80,150,220,.85)"/>
-    <!-- сужение -->
-    <path d="M${W*.5-8},${y-16} L${W*.5+8},${y-16} L${W*.5+8},${y+16} L${W*.5-8},${y+16} Z" fill="#7a4a2a"/>
-    <text x="${W*.5}" y="${y-24}" text-anchor="middle" font-size="11" fill="#e8a05a">сопротивление R</text>
-    <!-- поток воды -->
-    ${[.15,.4,.65,.9].map(f=>`<circle r="3" fill="#dff0ff"><animateMotion dur="1.8s" repeatCount="indefinite"
-      path="M${W*.16},${y} H${W*.9}" begin="${(-f*1.8).toFixed(2)}s"/></circle>`).join('')}
-    <text x="${W*.85}" y="${H-8}" text-anchor="middle" font-size="11" fill="#9fc5e8">ток I</text>
-  </svg>`;
+function l36Pipe(w,uid){
+  // «Архимедов водопровод»: насос (U) → поток капель (I) → узкое место (R)
+  const W=w||312, H=150;
+  const y=86, tubeH=26;
+  const nx=Math.round(W*.28);        // сужение
+  const pumpX=Math.round(W*.1);
+  let drops='';
+  for(let i=0;i<7;i++){
+    const pos=W*.06+i*W*.125;
+    if(pos<nx-30||pos>nx+40){
+      const dur=(1.6+(i%3)*.4);
+      drops+=`<circle r="3.4" fill="#bfe6ff"><animateMotion dur="${dur}s" begin="${(-i*dur/7).toFixed(2)}s" repeatCount="indefinite" path="M${pumpX+34},${y+13} L${nx-34},${y+13}"/></circle>`;
+    }
+  }
+  for(let i=0;i<5;i++){
+    drops+=`<circle r="2.8" fill="#dff0ff"><animateMotion dur="1.7s" begin="${(-i*.5).toFixed(2)}s" repeatCount="indefinite" path="M${nx+44},${y+13} L${W-28},${y+13}"/></circle>`;
+  }
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.35)">
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">
+      <defs>
+        <linearGradient id="l36bg${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f2a44"/><stop offset="1" stop-color="#071523"/></linearGradient>
+        <linearGradient id="l36tube${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(140,210,255,.22)"/><stop offset="1" stop-color="rgba(70,150,220,.34)"/></linearGradient>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#l36bg${uid})"/>
+      <!-- пол -->
+      <rect x="0" y="${H-14}" width="${W}" height="14" fill="#0a1c30"/>
+      <!-- насос с вращающимся винтом -->
+      <g transform="translate(${pumpX},${H-34})">
+        <rect x="6" y="-34" width="58" height="34" rx="7" fill="#3c5a78" stroke="#243e58" stroke-width="2"/>
+        <circle cx="35" cy="-17" r="13" fill="#16314e"/>
+        <g><animateTransform attributeName="transform" type="rotate" from="0 35 -17" to="360 35 -17" dur="1.7s" repeatCount="indefinite"/>
+          <path d="M35,-17 L30,-29 A13,13 0 0 1 40,-29 Z M35,-17 L22,-14 A13,13 0 0 1 23,-6 Z M35,-17 L29,-5 A13,13 0 0 1 41,-6 Z M35,-17 L48,-14 A13,13 0 0 1 47,-22 Z" fill="#bfe6ff" opacity=".9"/></g>
+        <circle cx="35" cy="-17" r="4" fill="#e8e0cc"/>
+        <text x="35" y="10" text-anchor="middle" font-size="10" fill="#9fd4f2">насос «Архимедов винт»</text>
+        <text x="35" y="24" text-anchor="middle" font-size="10.5" fill="#ffd9a0" font-weight="bold">напор = батарейка (U)</text>
+      </g>
+      <!-- манометр -->
+      <g transform="translate(${pumpX+40},22)">${l36Dial(44,6,12,'U','В','#f0a35a')}</g>
+      <!-- труба: толстая, потом сужение -->
+      <rect x="${pumpX+54}" y="${y}" width="${W-pumpX-90}" height="${tubeH}" rx="13" fill="url(#l36tube${uid})" stroke="#7fd1ff" stroke-width="2"/>
+      <!-- сужение -->
+      <path d="M${nx-26},${y} L${nx+6},${y+tubeH/2-6} L${nx+6},${y+tubeH/2+6} L${nx-26},${y+tubeH}" fill="none" stroke="#ffb04a" stroke-width="2.5"/>
+      <path d="M${nx+6},${y+tubeH/2-7} L${nx+40},${y+tubeH/2-4} L${nx+40},${y+tubeH/2+4} L${nx+6},${y+tubeH/2+7} Z" fill="#8a4a1a" opacity=".9"/>
+      <text x="${nx+23}" y="${y-8}" text-anchor="middle" font-size="11" fill="#ffcf8a" font-weight="bold">R — узкое место</text>
+      <!-- мерный стакан справа -->
+      <g transform="translate(${W-52},${y-2})">
+        <rect x="-16" y="0" width="32" height="40" rx="4" fill="rgba(190,230,255,.15)" stroke="#7fd1ff" stroke-width="2"/>
+        <rect x="-12" y="10" width="24" height="30" fill="#4a90d0" opacity=".8"/>
+        <text x="0" y="-5" text-anchor="middle" font-size="9.5" fill="#9fd4f2">ток I</text>
+        <text x="0" y="26" text-anchor="middle" font-size="11" fill="#fff" font-weight="bold">3 А</text>
+      </g>
+      ${drops}
+      <!-- капли-объяснение -->
+      <text x="${Math.round(pumpX+52)}" y="${y+tubeH+22}" text-anchor="middle" font-size="10.5" fill="#bfe6ff">поток = ток I</text>
+      <text x="${Math.round((nx+40+W-52)/2)}" y="${y+tubeH+22}" text-anchor="middle" font-size="10.5" fill="#bfe6ff">чем уже — тем меньше поток</text>
+    </svg>
+  </div>`;
 }
+function l36Board(U,R,uid,mini){
+  // электрическая цепь на плате: батарея, резистор, лампа; яркость ∝ I
+  const I=Math.round(U/R*100)/100;
+  const bright=Math.min(1,Math.max(.06,I/4));
+  const W=mini? 148 : 300;
+  const H=mini? 112 : 168;
+  const yT=Math.round(H*.3), yB=Math.round(H*.78);
+  const xL=Math.round(W*.16), xR=Math.round(W*.88);
+  const dur=Math.max(.5,(2.6-I*.5)).toFixed(2);
+  const col=(v)=> v>=3.5?'#7df3ff': v>=2?'#7fd1ff': v>=1?'#4d9fe8':'#7fa3ba';
+  const bulbX=Math.round(W*.74);
+  const resX=Math.round(W*.42);
+  const resL=Math.round(W*.16);
+  const wireTop= yT;
+  const electrons= [0,1,2].map(i=>`<circle r="3" fill="${col(I)}"><animateMotion dur="${dur}s" begin="${(-i*dur/3).toFixed(2)}s" repeatCount="indefinite" path="M${xL+8},${wireTop} L${xR-6},${wireTop} L${xR-6},${yB} L${xL+8},${yB} Z"/></circle>`).join('');
+  const zig=(x0,y,len)=>{ const n=3, seg=len/(n*2); let d=`M${x0},${y}`; for(let i=0;i<n;i++){ d+=` l${seg},${-7} l${seg},${7}`;} d+=` l${seg},${-7} l${seg},${7}`; return d; };
+  return `<div style="position:relative;width:${W}px;height:${H}px;border-radius:14px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.3)">
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">
+      <defs><linearGradient id="l36bd${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d2b47"/><stop offset="1" stop-color="#0f1728"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" rx="14" fill="url(#l36bd${uid})"/>
+      <line x1="${xL}" y1="${wireTop}" x2="${resX-8}" y2="${wireTop}" stroke="#e8d9a8" stroke-width="3"/>
+      <path d="${zig(resX,wireTop,resL)}" stroke="#f0a35a" stroke-width="3.2" fill="none"/>
+      <line x1="${resX+resL+8}" y1="${wireTop}" x2="${bulbX-14}" y2="${wireTop}" stroke="#e8d9a8" stroke-width="3"/>
+      <line x1="${bulbX+14}" y1="${wireTop}" x2="${xR}" y2="${wireTop}" stroke="#e8d9a8" stroke-width="3"/>
+      <line x1="${xR}" y1="${wireTop}" x2="${xR}" y2="${yB}" stroke="#e8d9a8" stroke-width="3"/>
+      <line x1="${xR}" y1="${yB}" x2="${xL}" y2="${yB}" stroke="#e8d9a8" stroke-width="3"/>
+      <line x1="${xL}" y1="${yB}" x2="${xL}" y2="${wireTop}" stroke="#e8d9a8" stroke-width="3"/>
+      <!-- батарея -->
+      <g transform="translate(${xL-14},${(yT+yB)/2})">
+        <rect x="-8" y="-16" width="16" height="32" rx="4" fill="#eef3f6" stroke="#9aa7b4" stroke-width="1.6"/>
+        <text x="0" y="4" text-anchor="middle" font-size="9" fill="#e0523d" font-weight="bold">${U}В</text>
+        <path d="M0,-28 v-6 M-5,-34 h10" stroke="#e8e0cc" stroke-width="3" fill="none"/>
+        <path d="M0,26 v6" stroke="#e8e0cc" stroke-width="3"/>
+      </g>
+      <text x="${resX+resL/2}" y="${wireTop-12}" text-anchor="middle" font-size="${mini?9:11}" fill="#ffd9a0" font-weight="bold">${mini? R+' Ом':'R = '+R+' Ом'}</text>
+      <!-- лампа -->
+      <g transform="translate(${bulbX},${wireTop})">
+        ${I>0.4?`<circle r="26" fill="rgba(255,224,120,${.1+bright*.22})"/><circle r="18" fill="rgba(255,224,120,${.14+bright*.3})"/>`:''}
+        <circle r="13" fill="${I>1.5?'#fff6c8':'#dfe4ea'}" stroke="${I>1.5?'#d9a52a':'#97a4b1'}" stroke-width="2"/>
+        <path d="M-4,0 q0,-6 0,0 M0,-6 v6" stroke="${I>1.5?'#8a5a10':'#6f7b88'}" stroke-width="1.8" fill="none"/>
+        ${I>2?`<circle cx="-5" cy="-4" r="2.4" fill="rgba(255,255,255,.9)"/>`:''}
+        <path d="M-8,8 L8,8 L5,14 L-5,14 Z" fill="#97a4b1"/>
+      </g>
+      <text x="${bulbX}" y="${wireTop+26}" text-anchor="middle" font-size="${mini?8.5:10}" fill="${I>1?'#ffd9a0':'#9aa7b4'}">${mini?'': 'лампочка'}</text>
+      <!-- приборы -->
+      ${mini?'':`
+        <g transform="translate(${xL-10},${yB-34})"><rect x="0" y="0" width="52" height="20" rx="6" fill="#14233c" stroke="#3c5170" stroke-width="1.6"/>
+          <text x="26" y="13" text-anchor="middle" font-size="11" fill="#f0a35a" font-weight="bold">U=${U} В</text></g>
+        <g transform="translate(${xR-56},${yB-34})"><rect x="0" y="0" width="60" height="20" rx="6" fill="#14233c" stroke="#3c5170" stroke-width="1.6"/>
+          <text x="30" y="13" text-anchor="middle" font-size="11" fill="#7fd1ff" font-weight="bold">I=${I} А</text></g>`}
+      ${electrons}
+    </svg>
+  </div>`;
+}
+function l36KZ(kz,uid){
+  // раскалённый провод при коротком замыкании + предохранитель
+  const W=312,H=170, xL=64, xR=W-40, y=86, yB=126;
+  let html='';
+  html+=`<line x1="${xL}" y1="${y}" x2="${xR}" y2="${y}" stroke="${kz?'#ff6a4a':'#e8d9a8'}" stroke-width="${kz?5:3}" class="${kz?'l49-heat':''}"/>`;
+  html+=`<rect x="${xL-16}" y="${y-14}" width="13" height="28" rx="3" fill="#eef3f6" stroke="#9aa7b4" stroke-width="1.5"/><text x="${xL-9}" y="${y+4}" text-anchor="middle" font-size="8" fill="#e0523d">+</text>`;
+  html+=`<rect x="${xR-2}" y="${y-14}" width="13" height="28" rx="3" fill="#eef3f6" stroke="#9aa7b4" stroke-width="1.5"/><text x="${xR+5}" y="${y+4}" text-anchor="middle" font-size="8" fill="#3a6a8a">−</text>`;
+  // предохранитель посередине
+  const fx=(xL+xR)/2;
+  html+=`<rect x="${fx-13}" y="${y-8}" width="26" height="16" rx="4" fill="${kz?'#b3543f':'#f0c060'}" stroke="#7a5a20" stroke-width="2"/>
+    <path d="M${fx-9},${y} L${fx+9},${y}" stroke="#7a5a20" stroke-width="2"/>`;
+  if(kz){
+    html+=`<path d="M${fx-8},${y-6} L${fx+8},${y+6} M${fx+8},${y-6} L${fx-8},${y+6}" stroke="#8a2f20" stroke-width="2.6"/>
+      <text x="${fx}" y="${y-16}" text-anchor="middle" font-size="10" fill="#ffb0a0" font-weight="bold">предохранитель сгорел!</text>
+      <path d="M${xL+40},${y-10} q6,-10 12,0 M${xR-52},${y-10} q6,-10 12,0" class="l49-bolt" stroke="#ffe27a" stroke-width="3" fill="none"/>
+      <circle cx="${xL+60}" cy="${y-26}" r="4" fill="#8a94ad"><animate attributeName="cy" values="${y-26};${y-40};${y-26}" dur="1.1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="1.1s" repeatCount="indefinite"/></circle>
+      <circle cx="${xR-46}" cy="${y-22}" r="3" fill="#8a94ad"><animate attributeName="cy" values="${y-22};${y-34};${y-22}" dur="1.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/></circle>`;
+  } else {
+    html+=`<text x="${fx}" y="${y-16}" text-anchor="middle" font-size="10" fill="#9fd4f2">предохранитель 10 А</text>`;
+  }
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:14px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.3)">
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">
+      <defs><linearGradient id="l36kz${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d2b47"/><stop offset="1" stop-color="#0f1728"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" rx="14" fill="url(#l36kz${uid})"/>
+      ${html}
+      <text x="${W/2}" y="${yB+22}" text-anchor="middle" font-size="11.5" fill="${kz?'#ffb0a0':'#9fe8c0'}" font-weight="bold">${kz?'R ≈ 0 → ток огромный: провод раскаляется, предохранитель спасает!':'провод цел, ток в норме — предохранитель на страже'}</text>
+    </svg>
+  </div>`;
+}
+function visL36(el){
+  // Урок 36 «Закон Ома»: «Архимедов водопровод» — вода объясняет электричество
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(inner,w)=>`<div style="text-align:center;${w?'width:'+w+'px':''}">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Архимедов водопровод'),
+        l36Pipe(312,'w')+
+        big('насос даёт напор · труба несёт поток · узкое место мешает')+
+        sml('так и с электричеством: батарейка «давит», по проводу «течёт» ток, а резистор — как узкое место. листай!'));
+    } else if(step===1){
+      h=col(big('Вода → электричество'),
+        `<div style="display:flex;flex-direction:column;gap:7px;align-items:stretch;max-width:300px;margin:0 auto">
+          ${[['🚰 насос','=','🔋 батарейка','напряжение U','#f0a35a'],['🌊 поток воды','=','⚡ электрический ток','сила тока I','#7fd1ff'],['🚧 узкая труба','=','〰️ резистор','сопротивление R','#7fd1a0']].map(([a,e,b,c,cc],i)=>`
+            <div class="l35-pop" style="animation-delay:${(0.2+i*.25).toFixed(2)}s;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid rgba(127,209,255,.16);border-radius:12px;padding:6px 8px">
+              <span style="font-size:24px">${a}</span><span style="color:#cbb89a;font-weight:bold">${e}</span><span style="font-size:24px">${b}</span>
+              <span style="flex:1;text-align:right;font-size:12px;color:${cc};font-weight:bold">${c}</span>
+            </div>`).join('')}
+        </div>`+
+        sml('принцип один: что-то «давит», что-то «течёт», что-то «мешает»'));
+    } else if(step===2){
+      h=col(big('Три главные величины'),
+        rowC(
+          card(`<div style="width:108px">${l36Dial(100,6,12,'напряжение','В','#f0a35a')}<div class="wv-sml" style="font-size:10px;color:#cbb89a">🔋 «напор» батарейки</div></div>`),
+          card(`<div style="width:108px">${l36Dial(100,3,6,'сила тока','А','#7fd1ff')}<div class="wv-sml" style="font-size:10px;color:#cbb89a">⚡ «поток» зарядов</div></div>`),
+          card(`<div style="width:108px;position:relative"><div style="position:relative;width:100px;height:100px;border-radius:50%;border:2px solid #3c5170;background:#14233c;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto">
+              <svg width="58" height="30" viewBox="0 0 120 60" style="display:block"><path d="M6,30 h10 l7,-11 l7,22 l7,-22 l7,22 l7,-22 l7,11 h10" stroke="#e8a05a" stroke-width="4" fill="none" stroke-linejoin="round"/></svg>
+              <div style="font-size:20px;color:#fff;font-weight:bold">R</div></div><div class="wv-sml" style="font-size:10px;color:#cbb89a">🚧 «узкое место»</div></div>`))+
+        sml('U — вольты, I — амперы, R — омы. как напор, поток и узкое место в трубе'));
+    } else if(step===3){
+      h=col(big('Закон Ома'),
+        `<div style="font-size:44px;color:var(--brass);font-family:Georgia,serif;position:relative;display:inline-block;overflow:hidden;border-radius:10px;white-space:nowrap">I = U : R<span class="l35-shine"></span></div>`+
+        rowC(chip('напряжение U — «давит»','rgba(232,160,90,.5)'),chip('сопротивление R — «мешает»','rgba(232,106,90,.5)'))+
+        `<div style="font-size:17px" class="wv-pop">сила тока = напряжение ÷ сопротивление</div>`+
+        sml('напор больше → ток сильнее. преграда больше → ток слабее. так закон Ома связал все три!'));
+    } else if(step===4){
+      h=col(big('Разбираем на числах'),
+        `<div class="wv-row">${chip('U = 6 В','rgba(232,160,90,.5)')} ${chip('R = 2 Ом','rgba(232,106,90,.5)')}</div>`+
+        l36Board(6,2,'a')+
+        `<div style="font-size:19px" class="wv-pop">I = U : R = 6 : 2</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">I = 3 А</div>`+
+        sml('лампочка светится ярко: по цепи течёт ток 3 ампера'));
+    } else if(step===5){
+      const p=(U,R)=>`<div style="text-align:center;width:156px;border:1px solid rgba(127,209,255,.35);border-radius:14px;padding:6px;background:rgba(127,209,255,.04)">
+        ${l36Board(U,R,'m'+U+R,true)}<div style="font-size:12px;color:#d8ecff;margin-top:3px">${U} В · ${R} Ом → I = ${Math.round(U/R*10)/10} А</div></div>`;
+      h=col(big('Проверяем закон'),
+        rowC(p(12,2),p(6,4))+
+        sml('напряжение выросло в 2 раза → ток вырос в 2 раза (12:2 = 6 А). сопротивление выросло в 2 раза → ток упал в 2 раза (6:4 = 1,5 А)!'));
+    } else if(step===6){
+      h=col(big('Находим напряжение'),
+        `<div class="wv-row">${chip('I = 2 А','rgba(127,209,255,.5)')} ${chip('R = 3 Ом','rgba(232,106,90,.5)')}</div>`+
+        rowC(card(`<div style="width:104px">${l36Dial(100,6,12,'напряжение','В','#f0a35a')}</div>`))+
+        `<div style="font-size:20px" class="wv-pop">U = I · R = 2 · 3</div>`+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">U = 6 В</div>`+
+        sml('напряжение = ток × сопротивление: три ома «пропускают» по 2 ампера → нужно 6 вольт'));
+    } else if(step===7){
+      h=col(big('Находим сопротивление'),
+        `<div class="wv-row">${chip('U = 12 В','rgba(232,160,90,.5)')} ${chip('I = 3 А','rgba(127,209,255,.5)')}</div>`+
+        rowC(card(`<div style="width:104px">${l36Dial(100,4,8,'сопротивление','Ом','#7fd1a0')}</div>`))+
+        `<div style="font-size:20px" class="wv-pop">R = U : I = 12 : 3</div>`+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">R = 4 Ом</div>`+
+        sml('сопротивление = напряжение : ток: 12 вольт «разложили» на 3 ампера — каждому по 4 ома'));
+    } else if(step===8){
+      const kz=!!st.kz;
+      h=col(big('Почему опасно КЗ'),
+        l36KZ(kz,'z')+
+        btns(btn(kz?'✅ вернуть как было':'⚡ замкнуть накоротко',`l36Act('${lk}','kz')`))+
+        sml(kz?'провод раскалился, предохранитель перегорел — цепь разорвана и спасена!':'замкни провод накоротко — и увидишь, почему нельзя'));
+    } else if(step===9){
+      h=col(big('Разбираем задачку'),
+        `<div class="wv-row">${chip('U = 6 В','rgba(232,160,90,.5)')} ${chip('R = 2 Ом','rgba(232,106,90,.5)')}</div>`+
+        l36Board(6,2,'t')+
+        `<div style="font-size:20px" class="wv-pop">I = U : R = 6 : 2</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">I = 3 А ✓</div>`+
+        sml('такой вопрос будет дальше!'));
+    } else if(step===10){
+      // тренажёр
+      if(st.U==null) st.U=6; if(st.R==null) st.R=2;
+      const I=Math.round(st.U/st.R*100)/100;
+      h=col(big('Тренажёр: покрути закон!'),
+        `<div class="wv-row">${chip('U = '+st.U+' В','rgba(232,160,90,.5)')} ${chip('R = '+st.R+' Ом','rgba(232,106,90,.5)')}</div>`+
+        l36Board(st.U,st.R,'tr')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">I = ${st.U} : ${st.R} = ${I} А</div>`+
+        btns(btn('+1 В',`l36Act('${lk}','U+')`),btn('−1 В',`l36Act('${lk}','U-')`),btn('+1 Ом',`l36Act('${lk}','R+')`),btn('−1 Ом',`l36Act('${lk}','R-')`),btn('↺',`l36Act('${lk}','r')`))+
+        sml(I>=2.5?'ток большой — лампочка яркая, электроны быстрые!':'ток маленький — лампочка тусклая. увеличь U или уменьши R!'));
+    } else {
+      // памятка
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:250px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.8">
+            ⚡ <b>I = U : R</b> — главный закон электричества.<br>
+            🔋 U (В) — «напор» · ⚡ I (А) — «поток» · 🚧 R (Ом) — «узкое место».<br>
+            🔁 U = I·R · R = U:I — все три формулы из одной!<br>
+            💥 Больше R → меньше ток. R ≈ 0 → короткое замыкание!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 6 В и 2 Ом'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function l49Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const bump=(k,d,lo,hi)=> st[k]=Math.max(lo||1, Math.min(hi||20, (st[k]==null?1:st[k])+d));
@@ -2029,7 +2151,7 @@ function visL49(el){
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
     const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
     let h='';
     if(step===0){
       const on=!!st.closed;
@@ -2438,7 +2560,7 @@ function visL35(el){
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
     const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
     // плитка 1 м² с числом силы
     const sq=(w,n,del,col,extra)=>`<div class="l35-pop" style="animation-delay:${del||0}s;text-align:center">
       <div style="position:relative;width:${w}px;height:${w}px;border-radius:10px;background:linear-gradient(145deg,#ffffff,#d7e9f5);
@@ -2604,7 +2726,7 @@ function visL33(el){
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
     const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
     const item=(mat,rho,w,extra)=>`<div style="text-align:center">${l33CubeSvg(mat,w||52,rho)}${extra||''}</div>`;
     let h='';
     if(step===0){
