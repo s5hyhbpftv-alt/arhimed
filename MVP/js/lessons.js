@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,199 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l47Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const P=[[100,5],[1000,3],[100000,6],[100,8],[100000,12],[50,2],[1000,15]];
+  const Q=[[4,8,10],[3,5,15],[6,7,21],[10,5,2]];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break; case 's3': st.s3=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%P.length; st.s1=st.s2=st.s3=0; st.kind=0; break;
+    case 'q': st.q=((st.q==null?0:st.q)+1)%Q.length; st.s1=st.s2=st.s3=0; st.kind=1; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l47Map(scale,cm,uid){
+  // мини-карта: полоска на карте (план) с масштабной линейкой
+  const W=300;
+  const realCm=cm*scale;
+  const realM = realCm>=100? (realCm/100) : null;
+  const realKm = realCm>=100000? (realCm/100000) : null;
+  return `<div style="width:${W}px;margin:0 auto;text-align:center;background:rgba(255,255,255,.04);border:1px solid rgba(127,209,255,.18);border-radius:14px;padding:8px 6px">
+    <div style="font-size:11px;color:#cbb89a">🗺️ карта (масштаб 1:${scale.toLocaleString('ru')})</div>
+    <div style="position:relative;height:34px;background:linear-gradient(90deg,#e8d9a8,#f2e7c4);border-radius:6px;margin:4px 8px">
+      <div style="position:absolute;left:8px;top:0;bottom:0;display:flex;align-items:center;font-size:20px">🏰</div>
+      <div style="position:absolute;right:6px;top:-6px;font-size:16px;color:#1a4a6a;font-weight:bold">${cm} см</div>
+      <div style="position:absolute;left:50%;transform:translateX(-50%);top:-6px;font-size:16px;color:#7a5210;font-weight:bold" class="l35-pop">→</div>
+    </div>
+    <div style="font-size:13px;color:#ffd9a0;margin-top:2px">на карте ${cm} см = в жизни ${realKm? realKm+' км' : realM? realM+' м' : realCm+' см'}</div>
+  </div>`;
+}
+function l47Ruler(scale,uid){
+  // двойная линейка: верх — см на карте, низ — реальные метры/километры
+  const stepCm=1;
+  const realStep = scale; // см
+  const stepM = realStep>=100? realStep/100 : null;
+  const stepKm = realStep>=100000? realStep/100000 : null;
+  const cells=4;
+  let top='', bottom='';
+  for(let i=0;i<=cells;i++){
+    const x=8+i*60;
+    top+=`<div style="position:absolute;left:${x}px;bottom:0;font-size:11px;color:#1a4a6a;font-weight:bold">${i} см</div>`;
+    bottom+=`<div style="position:absolute;left:${x}px;top:4px;font-size:11px;color:#7a5210;font-weight:bold">${i*(stepKm||stepM||realStep/100)}${stepKm?' км':stepM?' м':' см'}</div>`;
+    if(i<cells) top+=`<div style="position:absolute;left:${x+16}px;bottom:2px;width:44px;height:2px;background:rgba(0,0,0,.35)"></div>`;
+  }
+  return `<div style="width:260px;margin:0 auto;position:relative;height:64px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)">
+    ${top}${bottom}
+    <div style="position:absolute;left:0;right:0;top:26px;border-top:2px solid rgba(255,255,255,.4)"></div>
+  </div>`;
+}
+function l47Room(uid){
+  // план комнаты: реальная 6×4 м, масштаб 1:50 → на плане 12×8 см
+  return `<div style="width:300px;margin:0 auto;display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;text-align:center">
+    <div><div style="font-size:11px;color:#cbb89a">в жизни</div>
+      <div style="width:96px;height:64px;border:3px solid #7fa3ba;border-radius:6px;display:flex;align-items:center;justify-content:center;background:rgba(127,163,186,.12);font-size:11px;color:#a9d2ec">6 м × 4 м</div></div>
+    <div style="font-size:22px;color:#cbb89a">➜ 1:50</div>
+    <div><div style="font-size:11px;color:#cbb89a">на плане</div>
+      <div style="width:48px;height:32px;border:3px solid #7fd1a0;border-radius:6px;display:flex;align-items:center;justify-content:center;background:rgba(127,209,160,.14);font-size:10px;color:#9fe8c0">12 см × 8 см</div></div>
+  </div>`;
+}
+function visL47(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Карта острова Архимеда'),
+        `<div style="font-size:48px" class="l35-pop">🗺️</div>`+
+        big('на карте остров маленький — а в жизни какой?')+
+        sml('на карте всё уменьшено «во столько-то раз». Число, которое говорит, во сколько раз, — называется масштабом!'));
+    } else if(step===1){
+      h=col(big('Что такое масштаб'),
+        `<div style="text-align:center;font-size:26px;font-family:Georgia,serif;color:#ffd9a0;font-weight:bold;margin:6px 0">1 : 100</div>`+
+        rowC(chip('на карте — 1 см','rgba(127,209,255,.5)'),chip('в жизни — 100 см = 1 м','rgba(127,184,160,.5)'))+
+        sml('масштаб 1:100 значит: всё нарисовано в 100 раз меньше, чем в жизни'));
+    } else if(step===2){
+      h=col(big('Во сколько раз?'),
+        rowC(chip('1:1 — как есть','rgba(127,184,160,.5)'),chip('1:100 — уменьшено в 100 раз','rgba(127,209,255,.5)'),chip('2:1 — увеличено в 2 раза','rgba(232,160,90,.5)'))+
+        sml('первое число — про карту, второе — про жизнь. если первое меньше — это уменьшение'));
+    } else if(step===3){
+      h=col(big('Линейка масштаба 1:100'),
+        l47Ruler(100,'a')+
+        sml('1 см на карте = 1 м в жизни. 2 см = 2 м, 3 см = 3 м… просто!'));
+    } else if(step===4){
+      h=col(big('Переводим единицы'),
+        rowC(chip('100 см = 1 м','rgba(127,184,160,.5)'),chip('1000 м = 1 км','rgba(127,209,255,.5)'),chip('100 000 см = 1 км','rgba(232,160,90,.5)'))+
+        sml('запомни: в 1 м — 100 см, в 1 км — 1000 м = 100 000 см'));
+    } else if(step===5){
+      h=col(big('Измеряем по плану'),
+        l47Map(100,5,'b')+
+        sml('на плане нарисовано 5 см. масштаб 1:100 — значит, в жизни в 100 раз больше!'));
+    } else if(step===6){
+      h=col(big('Формула: реальный размер'),
+        `<div style="text-align:center;font-size:22px" class="wv-pop">реальный = на плане × второе число</div>`+
+        l47Map(100,5,'c')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">5 · 100 = 500 см = 5 м ✓</div>`+
+        sml('умножь длину на карте на число масштаба — и получишь длину в жизни'));
+    } else if(step===7){
+      h=col(big('Обратная задача'),
+        rowC(chip('масштаб 1:100','rgba(127,209,255,.5)'),chip('в жизни 8 м = 800 см','rgba(127,184,160,.5)'))+
+        `<div style="text-align:center;font-size:20px" class="wv-pop">на плане = в жизни : число масштаба = 800 : 100 = 8 см</div>`+
+        sml('теперь делим: узнали реальный размер — найдём, сколько см на плане'));
+    } else if(step===8){
+      h=col(big('Карта города 1:100 000'),
+        l47Ruler(100000,'d')+
+        rowC(chip('1 см на карте = 1 км в жизни!','rgba(217,164,65,.45)'))+
+        sml('у карт масштаб большой: 1:100 000 значит, что 1 см = 100 000 см = 1 км'));
+    } else if(step===9){
+      h=col(big('По карте города'),
+        l47Map(100000,6,'e')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">6 см → 6 · 1 км = 6 км</div>`+
+        sml('удобно! при масштабе 1:100 000 каждый сантиметр карты — это километр дороги'));
+    } else if(step===10){
+      h=col(big('И обратно по карте'),
+        rowC(chip('масштаб 1:100 000','rgba(127,209,255,.5)'),chip('в жизни 12 км','rgba(127,184,160,.5)'))+
+        `<div style="text-align:center;font-size:20px" class="wv-pop">12 км = 1 200 000 см → на карте 1 200 000 : 100 000 = 12 см</div>`+
+        sml('километры в жизни превращаем в сантиметры и делим на масштаб'));
+    } else if(step===11){
+      h=col(big('Масштаб — это отношение'),
+        rowC(chip('1 : 100 = длина на карте : длина в жизни','rgba(127,209,255,.5)'))+
+        `<div style="text-align:center;font-size:20px" class="wv-pop">это пропорция: 1/100 = 5/x → x = 5·100</div>`+
+        sml('вспомни урок про пропорции: произведение крайних равно произведению средних!'));
+    } else if(step===12){
+      h=col(big('Через пропорцию'),
+        `<div style="display:flex;flex-direction:column;gap:6px;align-items:center;font-size:20px">
+          <div class="wv-pop">1/100 = 5/x</div>
+          <div class="wv-pop" style="animation-delay:.2s">1·x = 100·5</div>
+          <div class="wv-pop" style="animation-delay:.4s">x = 500 см</div>
+        </div>`+
+        sml('та же задача про 5 см и масштаб 1:100 — но записана пропорцией'));
+    } else if(step===13){
+      h=col(big('Как в задачках: 1:1000'),
+        l47Map(1000,3,'f')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">3 · 1000 = 3000 см = 30 м ✓</div>`+
+        sml('масштаб 1:1000 — в жизни в тысячу раз больше!'));
+    } else if(step===14){
+      h=col(big('Пропорция: x : 5 = 8 : 10'),
+        `<div style="display:flex;flex-direction:column;gap:6px;align-items:center;font-size:21px">
+          <div class="wv-pop">x : 5 = 8 : 10</div>
+          <div class="wv-pop" style="animation-delay:.2s">10 · x = 5 · 8 = 40</div>
+          <div class="wv-pop" style="animation-delay:.4s">x = 40 : 10 = <b style="color:#7fd1a0">4</b></div>
+        </div>`+
+        sml('как в наших задачках: произведение крайних = произведению средних, дальше делим'));
+    } else if(step===15){
+      h=col(big('План комнаты Архимеда'),
+        l47Room('g')+
+        sml('комната 6×4 м при масштабе 1:50: на плане 12×8 см. посчитай сам: 6 м = 600 см, 600:50 = 12 см!'));
+    } else if(step===16){
+      const P=[[100,5],[1000,3],[100000,6],[100,8],[100000,12],[50,2],[1000,15]];
+      const Q=[[4,8,10],[3,5,15],[6,7,21],[10,5,2]];
+      if(st.i==null) st.i=0;
+      if(st.kind===1){
+        const [x,y,k]=Q[st.q||0];
+        const ans=Math.round(x*k/y);
+        h=col(big('Тренажёр: пропорция'),
+          `<div class="wv-row">${chip(x+' : '+y+' = '+k+' : ?','rgba(217,164,65,.35)')}</div>`+
+          (st.s1? `<div class="l35-pop" style="font-size:19px;text-align:center;color:#ffd9a0">1) произведение крайних = произведению средних: ${y}·${k} = ${x}·?</div>`:'')+
+          (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">? = ${y}·${k} : ${x} = ${ans}</div>`:'')+
+          btns(btn('1️⃣ крест',`l47Act('${lk}','s1')`),btn('2️⃣ ответ',`l47Act('${lk}','s2')`),btn('🗺 к масштабу',`l47Act('${lk}','r')`),btn('🎲 другой',`l47Act('${lk}','q')`))+
+          sml('пропорция: неизвестное = диагональ : известное'));
+      } else {
+        const [scale,cm]=P[st.i];
+        const real=cm*scale;
+        const unit= real>=100000? (real/100000)+' км' : real>=100? (real/100)+' м' : real+' см';
+        h=col(big('Тренажёр: масштаб'),
+          `<div class="wv-row">${chip('масштаб 1:'+scale.toLocaleString('ru'),'rgba(127,209,255,.5)')} ${chip('на плане '+cm+' см','rgba(127,184,160,.5)')}</div>`+
+          (st.s1? `<div class="l35-pop" style="font-size:19px;text-align:center;color:#ffd9a0">1) реальный = на плане × масштаб = ${cm} · ${scale.toLocaleString('ru')}</div>`:'')+
+          (st.s2? `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">= ${real.toLocaleString('ru')} см = ${unit}</div>`:'')+
+          btns(btn('1️⃣ умножь',`l47Act('${lk}','s1')`),btn('2️⃣ ответ',`l47Act('${lk}','s2')`),btn('⚖ к пропорции',`l47Act('${lk}','q')`),btn('🎲 другой',`l47Act('${lk}','n')`),btn('↺',`l47Act('${lk}','r')`))+
+          sml('умножай длину на плане на число масштаба и переводи в метры или километры!'));
+      }
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🗺️ 1:N — в N раз меньше на карте.<br>
+            ✖️ Реальный = план × N.<br>
+            ➗ План = реальный : N.<br>
+            ⚖️ 1:100 000 → 1 см = 1 км · крайние × = средние ×</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там масштаб 1:100 и 5 см'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -5494,6 +5687,7 @@ function renderLessonVis(){
   else if(id===82) visL82(el);
   else if(id===83) visL83(el);
   else if(id===46) visL46(el);
+  else if(id===47) visL47(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
