@@ -1904,7 +1904,7 @@ function l50Road(vehicle,v,t,S,uid){
     </svg>
     ${dots}
     <!-- гонец -->
-    <div class="l50-drv" style="position:absolute;left:${x}px;top:60px;width:34px;height:30px;font-size:26px;line-height:1;z-index:3;--tx:${reach-x-8}px">${vehicle}</div>
+    <div class="l50-drv" style="position:absolute;left:${x}px;top:60px;width:40px;height:32px;font-size:26px;line-height:1;z-index:3;--tx:${reach-x-12}px"><span class="l50-mirror" style="display:inline-block">${vehicle}</span></div>
     <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:4px;background:rgba(20,50,70,.6);border-radius:10px;padding:2px 10px;font-size:12px;color:#fff;font-weight:bold;white-space:nowrap">v = ${v} · t = ${t} ч → S = ${S}</div>
   </div>`;
 }
@@ -1926,52 +1926,79 @@ function l50Compare(uid){
   return `<div style="display:flex;flex-direction:column;gap:8px;align-items:center">${lane(true)}${lane(false)}</div>`;
 }
 function l50Graph(uid,speeds){
-  // график пути: ось времени (ч) и пути (км); прямые v км/ч; движущаяся точка
-  const W=300,H=190, mx=46, my=18, gx=W-mx-8, gy=H-my-12;
+  // график пути: время (ч) — путь (км); прямые рисуются, точки бегут по линии
+  const W=300,H=200, mx=40, my=14, gx=W-16, gy=H-38;
   const T=4;
-  const X=(t)=>mx+ (gx-mx)*(t/T);
-  const Y=(s)=> gy- (gy-my)*(s/(speeds[0]*T+30));
+  const maxS=Math.max(...speeds.map(v=>v*T));
+  const step = maxS<=80?20: maxS<=200?40:60;
+  const Ymax=Math.ceil(maxS/step)*step;
+  const X=(t)=>mx+(gx-mx)*(t/T);
+  const Y=(s)=>gy-(gy-my)*(s/Ymax);
+  const cols=['#2f6fb0','#e0523d'];
   let lines='';
+  // сетка и подписи по оси пути
+  for(let s=0;s<=Ymax;s+=step){
+    lines+=`<line x1="${mx}" y1="${Y(s).toFixed(1)}" x2="${gx}" y2="${Y(s).toFixed(1)}" stroke="rgba(90,107,120,.18)" stroke-width="1"/>
+      <text x="${mx-6}" y="${Y(s).toFixed(1)+3}" text-anchor="end" font-size="9.5" fill="#5b6b78">${s}</text>`;
+  }
+  for(let t=0;t<=T;t++){
+    lines+=`<text x="${X(t)}" y="${gy+15}" text-anchor="middle" font-size="10" fill="#5b6b78">${t}</text>
+      <line x1="${X(t)}" y1="${my}" x2="${X(t)}" y2="${gy}" stroke="rgba(90,107,120,.12)" stroke-width="1"/>`;
+  }
   speeds.forEach((v,i)=>{
-    const col=['#2f6fb0','#e0523d','#7f8fa0'][i];
-    const pts=Array.from({length:5},(_,k)=>`${X(k)},${Y(v*k).toFixed(1)}`).join(' ');
-    lines+=`<polyline points="${X(0)},${Y(0)} ${pts}" fill="none" stroke="${col}" stroke-width="3.5" stroke-linecap="round"/>
-      ${Array.from({length:4},(_,k)=>`<circle cx="${X(k+1)}" cy="${Y(v*(k+1)).toFixed(1)}" r="4" fill="${col}"/>`).join('')}
-      <text x="${X(3.1)}" y="${Y(v*3.1).toFixed(1)-6}" font-size="11" fill="${col}" font-weight="bold">${v} км/ч</text>`;
+    const col=cols[i%cols.length];
+    const pts=[];
+    for(let k=0;k<=T;k++) pts.push(`${X(k).toFixed(1)},${Y(v*k).toFixed(1)}`);
+    lines+=`<polyline class="l50-draw" style="animation-delay:${(0.2+i*0.5).toFixed(2)}s" points="${pts.join(' ')}" fill="none" stroke="${col}" stroke-width="3.5" stroke-linecap="round"/>
+      ${Array.from({length:T},(_,k)=>`<circle cx="${X(k+1).toFixed(1)}" cy="${Y(v*(k+1)).toFixed(1)}" r="4" fill="${col}" stroke="#fff" stroke-width="1.5"/>`).join('')}
+      <circle r="6" fill="${col}" stroke="#fff" stroke-width="2"><animateMotion dur="${3.4-i*0.6}s" repeatCount="indefinite" begin="${(i*0.7).toFixed(2)}s" path="M${X(0)},${Y(0).toFixed(1)} L${X(T)},${Y(v*T).toFixed(1)}"/></circle>`;
   });
-  const moving = speeds.map((v,i)=>{
-    const col=['#2f6fb0','#e0523d'][i];
-    return `<circle r="7" fill="${col}"><animateMotion dur="${2.6+i*.9}s" repeatCount="indefinite" path="M${X(0)},${Y(0)} L${X(T)},${Y(v*T).toFixed(1)}"/></circle>`;
-  }).join('');
-  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.22);background:linear-gradient(180deg,#f4f8f5,#e8f1ec)">
-    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">
-      <!-- оси -->
-      <line x1="${mx}" y1="${my}" x2="${mx}" y2="${gy}" stroke="#5b6b78" stroke-width="2.5"/>
-      <line x1="${mx}" y1="${gy}" x2="${gx}" y2="${gy}" stroke="#5b6b78" stroke-width="2.5"/>
-      ${Array.from({length:5},(_,k)=>`<text x="${X(k)}" y="${gy+16}" text-anchor="middle" font-size="10" fill="#5b6b78">${k} ч</text>`).join('')}
-      ${[0,1,2,3].map(k=>`<text x="${mx-6}" y="${Y(20+k*60).toFixed(1)+4}" text-anchor="end" font-size="9" fill="#5b6b78">${20+k*60}</text><line x1="${mx-4}" y1="${Y(20+k*60).toFixed(1)}" x2="${mx}" y2="${Y(20+k*60).toFixed(1)}" stroke="#5b6b78" stroke-width="1"/>`).join('')}
-      ${lines}${moving}
-      <text x="${mx}" y="${my-4}" font-size="11" fill="#5b6b78" font-weight="bold">путь S, км</text>
-      <text x="${gx}" y="${gy+32}" text-anchor="end" font-size="11" fill="#5b6b78">время t, ч</text>
+  const leg=speeds.map((v,i)=>`<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d8ecff;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:2px 8px"><span style="width:16px;height:5px;border-radius:3px;background:${cols[i%2]};display:inline-block"></span>${v} км/ч</span>`).join('');
+  return `<div style="position:relative;width:${W}px;height:${H+8}px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.22);background:linear-gradient(180deg,#f7faf6,#e9f2ec)">
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;left:0;top:0">
+      <line x1="${mx}" y1="${my}" x2="${mx}" y2="${gy}" stroke="#5b6b78" stroke-width="2"/>
+      <line x1="${mx}" y1="${gy}" x2="${gx}" y2="${gy}" stroke="#5b6b78" stroke-width="2"/>
+      <text x="${mx}" y="${my-5}" font-size="10.5" fill="#5b6b78" font-weight="bold">путь S, км</text>
+      <text x="${gx-2}" y="${gy+30}" text-anchor="end" font-size="10.5" fill="#5b6b78">время t, ч</text>
+      ${lines}
     </svg>
+    <div style="position:absolute;left:0;right:0;bottom:2px;display:flex;gap:6px;justify-content:center">${leg}</div>
   </div>`;
 }
 function l50Sky(uid){
-  // самолёт 800 км/ч · 2 ч = 1600 км
+  // самолёт летит ПО ЭШЕЛОНУ: трасса-квадратичная кривая, движение CSS по точкам
   const W=300,H=150;
+  const P0=[14,110], PC=[150,52], P1=[286,108];
+  const keys=[]; let prev=[P0[0],P0[1]];
+  for(let i=0;i<=10;i++){
+    const u=i/10;
+    const x=(1-u)*(1-u)*P0[0]+2*(1-u)*u*PC[0]+u*u*P1[0];
+    const y=(1-u)*(1-u)*P0[1]+2*(1-u)*u*PC[1]+u*u*P1[1];
+    keys.push(`${(i*10)}%{transform:translate(${(x-P0[0]).toFixed(1)}px,${(y-P0[1]).toFixed(1)}px)}`);
+    prev=[x,y];
+  }
+  const plane=`<svg width="44" height="20" viewBox="-24 -12 48 24" style="overflow:visible">
+    <ellipse cx="0" cy="0" rx="19" ry="4.6" fill="#ffffff" stroke="#7fa3ba" stroke-width="1.4"/>
+    <path d="M17,-3.6 L27,0 L17,3.6 Z" fill="#ffffff" stroke="#7fa3ba" stroke-width="1.2"/>
+    <path d="M-16,-1.5 L-23,-10 L-14,-4.5 Z" fill="#dff0fb" stroke="#7fa3ba" stroke-width="1.2"/>
+    <path d="M-4,2 L4,15 L11,12 L6,1 Z" fill="#dff0fb" stroke="#7fa3ba" stroke-width="1.2"/>
+    <path d="M2,-2.5 L8,-12 L13,-9 L7,0 Z" fill="#cfe6f2" stroke="#7fa3ba" stroke-width="1.2"/>
+    <rect x="-19" y="-0.8" width="12" height="1.6" fill="#ff8a5a"/>
+  </svg>`;
   return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.22)">
+    <style>@keyframes l50fly${uid}{ ${keys.join('')} }</style>
     <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">
       <defs><linearGradient id="l50sky${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8ec9f0"/><stop offset="1" stop-color="#d6effc"/></linearGradient></defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#l50sky${uid})"/>
       <circle cx="258" cy="30" r="14" fill="#fff3c4"/>
       <g fill="#fff" opacity=".9"><ellipse cx="70" cy="36" rx="20" ry="8"/><ellipse cx="92" cy="31" rx="14" ry="6"/></g>
-      <!-- трасса с метками часов -->
-      <path d="M14,110 Q150,60 286,108" stroke="#ffffff" stroke-width="3" stroke-dasharray="16 14" fill="none" opacity=".9"/>
-      <circle cx="60" cy="99" r="5" fill="#fff"/><text x="60" y="128" text-anchor="middle" font-size="11" fill="#1a4a6a" font-weight="bold">1 ч · 800 км</text>
-      <circle cx="172" cy="82" r="5" fill="#fff"/><text x="172" y="112" text-anchor="middle" font-size="11" fill="#1a4a6a" font-weight="bold">2 ч · 1600 км</text>
+      <!-- эшелон -->
+      <path d="M${P0[0]},${P0[1]} Q${PC[0]},${PC[1]} ${P1[0]},${P1[1]}" stroke="#ffffff" stroke-width="3" stroke-dasharray="16 14" fill="none" opacity=".95"/>
+      <circle cx="64" cy="99" r="5" fill="#fff"/><text x="64" y="130" text-anchor="middle" font-size="11" fill="#1a4a6a" font-weight="bold">1 ч · 800 км</text>
+      <circle cx="172" cy="77" r="5" fill="#fff"/><text x="172" y="104" text-anchor="middle" font-size="11" fill="#1a4a6a" font-weight="bold">2 ч · 1600 км</text>
     </svg>
-    <div class="l50-drv" style="position:absolute;left:8px;top:88px;font-size:24px;line-height:1;--tx:250px;--td:1.6s">✈️</div>
-    <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:4px;background:rgba(20,50,70,.6);border-radius:10px;padding:2px 10px;font-size:12px;color:#fff;font-weight:bold;white-space:nowrap">S = 800 · 2 = 1600 км</div>
+    <div style="position:absolute;left:${P0[0]-22}px;top:${P0[1]-12}px;width:44px;height:24px;animation:l50fly${uid} 5.5s linear infinite;will-change:transform">${plane}</div>
+    <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:2px;background:rgba(20,50,70,.6);border-radius:10px;padding:2px 10px;font-size:12px;color:#fff;font-weight:bold;white-space:nowrap">S = 800 · 2 = 1600 км</div>
   </div>`;
 }
 function visL50(el){

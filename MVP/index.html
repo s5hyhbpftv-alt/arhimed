@@ -482,6 +482,10 @@
   @keyframes l50Bus { 0%{transform:translateX(0)} 16%{transform:translateX(40px)} 30%{transform:translateX(40px)}
     52%{transform:translateX(128px)} 66%{transform:translateX(128px)} 86%{transform:translateX(214px)} 100%{transform:translateX(268px)} }
   .l50-bus { animation:l50Bus 3.4s ease-in-out infinite; }
+  @keyframes l50Draw { from{stroke-dashoffset:1000} to{stroke-dashoffset:0} }
+  .l50-draw { stroke-dasharray:1000; stroke-dashoffset:1000; animation:l50Draw 1.5s ease-out both; }
+  .l50-mirror { transform:scaleX(-1); }
+
 
   /* урок 49 «Электрические цепи» */
   @keyframes l49Pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
@@ -538,21 +542,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=94"></script>
-<script src="data/lessons.js?v=94"></script>
-<script src="js/comic.js?v=94"></script>
-<script src="js/core.js?v=94"></script>
-<script src="js/engine.js?v=94"></script>
-<script src="js/app.js?v=94"></script>
-<script src="js/dashboard.js?v=94"></script>
-<script src="js/lessons.js?v=94"></script>
-<script src="js/legend.js?v=94"></script>
-<script src="js/simulator.js?v=94"></script>
-<script src="js/duel.js?v=94"></script>
-<script src="js/agent.js?v=94"></script>
-<script src="js/voice.js?v=94"></script>
-<script src="js/assistant.js?v=94"></script>
-<script src="js/agentlive.js?v=94"></script>
+<script src="data/tasks.js?v=95"></script>
+<script src="data/lessons.js?v=95"></script>
+<script src="js/comic.js?v=95"></script>
+<script src="js/core.js?v=95"></script>
+<script src="js/engine.js?v=95"></script>
+<script src="js/app.js?v=95"></script>
+<script src="js/dashboard.js?v=95"></script>
+<script src="js/lessons.js?v=95"></script>
+<script src="js/legend.js?v=95"></script>
+<script src="js/simulator.js?v=95"></script>
+<script src="js/duel.js?v=95"></script>
+<script src="js/agent.js?v=95"></script>
+<script src="js/voice.js?v=95"></script>
+<script src="js/assistant.js?v=95"></script>
+<script src="js/agentlive.js?v=95"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -567,7 +571,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=94').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=95').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
