@@ -763,14 +763,18 @@ function l33Bath(items, opts){
   const o=opts||{};
   const W=o.w||260, H=o.h||170, waterTop=o.waterTop||Math.round(H*.42);
   const bodies=(items||[]).map(it=>{
-    const floatY=H-waterTop-20;      // плавающий: погружён на ~1/3 (bottom от низа)
-    const botY=8;                     // тонущий: на дне ванны
+    const floatY=H-waterTop-18;      // плавающий: погружён на ~1/3 (bottom от низа)
+    const botY=6;                     // тонущий: на дне ванны
     const y = it.swim? floatY : botY;
     const w=it.size||64;
     const lbl=it.label!=null?it.label:(it.mat+(it.rho!=null?'  ρ='+it.rho:''));
-    return `<div class="wv-pop" style="position:absolute;left:${it.x!=null?it.x:'50%'};transform:translateX(-50%);bottom:${y}px;z-index:3;text-align:center;animation-delay:${it.delay||0}s">
-      <div style="font-size:11px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.85),0 0 2px rgba(0,0,0,.6);font-weight:bold;white-space:nowrap;margin-bottom:2px">${lbl}</div>
-      ${l33CubeSvg(it.mat,w)}
+    const delay=(it.delay||0);
+    // внешний слой: падение с высоты (или всплытие); внутренний: покачивание для плавающих
+    const inner = it.swim
+      ? `<div class="l33-bob2" style="animation-delay:${delay+1.7}s">${lbl?`<div style="font-size:11px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.85);font-weight:bold;white-space:nowrap;margin-bottom:2px">${lbl}</div>`:''}${l33CubeSvg(it.mat,w)}</div>`
+      : `${lbl?`<div style="font-size:11px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.85);font-weight:bold;white-space:nowrap;margin-bottom:2px">${lbl}</div>`:''}${l33CubeSvg(it.mat,w)}`;
+    return `<div style="position:absolute;left:${it.x!=null?it.x:'50%'};transform:translateX(-50%);bottom:${y}px;z-index:3;text-align:center">
+      <div class="l33-fall" style="animation-delay:${delay}s">${inner}</div>
     </div>`;
   }).join('');
   return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:10px 10px 26px 26px;border:3px solid #55463a;background:linear-gradient(180deg,#f6efe2 0%,#e8ddc9 100%);overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.3)">
@@ -786,6 +790,29 @@ function l33Bath(items, opts){
     <div style="position:absolute;bottom:-6px;left:18px;width:14px;height:14px;background:#8a6f4d;border-radius:0 0 6px 6px"></div>
     <div style="position:absolute;bottom:-6px;right:18px;width:14px;height:14px;background:#8a6f4d;border-radius:0 0 6px 6px"></div>
   </div>`;
+}
+function l33BoatSvg(w){
+  // векторный парусник: деревянный корпус, мачта, паруса, флажок
+  const W=w||84, H=Math.round(W*0.62);
+  return `<svg width="${W}" height="${H}" viewBox="0 0 140 88" style="display:block">
+    <!-- корпус (деревянная лодка) -->
+    <path d="M6,58 Q14,74 34,78 L108,78 Q128,76 134,60 Q128,54 108,50 L34,50 Q16,50 6,58 Z"
+          fill="#8a5a2b" stroke="#4a2f12" stroke-width="2"/>
+    <path d="M10,60 Q18,68 34,70 L106,70 Q122,68 130,60 L106,56 L34,56 Z" fill="#b07b43" opacity=".8"/>
+    <line x1="30" y1="52" x2="30" y2="76" stroke="rgba(74,47,18,.6)" stroke-width="1.6"/>
+    <line x1="70" y1="52" x2="70" y2="76" stroke="rgba(74,47,18,.6)" stroke-width="1.6"/>
+    <!-- мачта -->
+    <line x1="78" y1="76" x2="78" y2="6" stroke="#5a3a18" stroke-width="3"/>
+    <!-- задний парус -->
+    <path d="M78,12 Q108,24 114,44 L78,50 Z" fill="#e8e4da" stroke="#8a8470" stroke-width="1.4"/>
+    <path d="M78,14 Q96,22 100,34 L78,40 Z" fill="#f6f3ec" opacity=".9"/>
+    <!-- передний парус -->
+    <path d="M78,16 Q52,28 44,48 L78,52 Z" fill="#f0ece2" stroke="#8a8470" stroke-width="1.4"/>
+    <!-- флажок -->
+    <path d="M78,6 L102,12 L78,18 Z" fill="#e0523d"/>
+    <!-- ватерлиния -->
+    <path d="M6,64 Q40,60 134,60" stroke="rgba(255,255,255,.25)" stroke-width="2" fill="none"/>
+  </svg>`;
 }
 function visL33(el){
   // Урок 33 «Плотность»: сюжет «Ванна Архимеда», векторные сцены
@@ -892,7 +919,9 @@ function visL33(el){
         `<div style="position:relative;width:250px;height:${H2}px;margin:0 auto;border-radius:10px 10px 24px 24px;border:3px solid #55463a;background:linear-gradient(180deg,#f6efe2,#e8ddc9);overflow:hidden">
           <div style="position:absolute;left:6px;right:6px;bottom:6px;height:${H2-WT-6}px;background:linear-gradient(180deg,rgba(122,190,235,.92),rgba(40,110,180,.97))"></div>
           <div style="position:absolute;left:2px;right:2px;top:${WT}px;height:4px;background:rgba(210,240,255,.85);border-radius:50%"></div>
-          <div class="wv-pulse" style="position:absolute;left:50%;transform:translateX(-50%);bottom:${H2-WT-14}px;font-size:46px;line-height:1">🚢</div>
+          <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${H2-WT-22}px;z-index:3">
+            <div class="l33-bob2" style="display:inline-block">${l33BoatSvg(130)}</div>
+          </div>
           <div class="wv-sml" style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:10px;color:#8a6f4d">вода · воздух внутри</div>
         </div>`+
         big('сталь тяжелее воды — но внутри воздух!')+
