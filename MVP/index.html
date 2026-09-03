@@ -367,6 +367,18 @@
     animation:l10Dust 1s ease-out infinite; }
   @keyframes l10Dust { 0%{transform:translateX(0) scale(.6);opacity:0} 25%{opacity:.9}
     100%{transform:translateX(-46px) scale(1.5);opacity:0} }
+
+  /* ============ аквариум и плотность (урок 33, v76) ============ */
+  .l33-tank { position:relative; border-radius:4px 4px 18px 18px; overflow:hidden;
+    border:3px solid #33291e; background:linear-gradient(180deg,#cfe8fb,#6aa8dc 78%); }
+  .l33-tank .wave { position:absolute; left:-20%; right:-20%; height:8px; border-radius:50%;
+    background:rgba(255,255,255,.35); animation:l33Wave 3s ease-in-out infinite; }
+  @keyframes l33Wave { 0%,100%{transform:translateX(0)} 50%{transform:translateX(18px)} }
+  .l33-bub { position:absolute; width:7px; height:7px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#fff,#bfe6f7); animation:l33Rise 2s linear infinite; }
+  @keyframes l33Rise { 0%{transform:translateY(0);opacity:0} 12%{opacity:.9} 100%{transform:translateY(-70px);opacity:0} }
+  .l33-block { display:inline-block; border:2px solid #33291e; border-radius:6px;
+    background:linear-gradient(145deg,#fff 0%,rgba(255,255,255,.1) 60%); }
   @keyframes wvGrow { 0%{transform:scaleX(0)} 100%{transform:scaleX(1)} }
   @keyframes wvIn { 0%{transform:translateY(14px);opacity:0} 100%{transform:translateY(0);opacity:1} }
   .wv-bub { width:9px; height:9px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#eaf7ff,#9fd4f2);
@@ -409,21 +421,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=75"></script>
-<script src="data/lessons.js?v=75"></script>
-<script src="js/comic.js?v=75"></script>
-<script src="js/core.js?v=75"></script>
-<script src="js/engine.js?v=75"></script>
-<script src="js/app.js?v=75"></script>
-<script src="js/dashboard.js?v=75"></script>
-<script src="js/lessons.js?v=75"></script>
-<script src="js/legend.js?v=75"></script>
-<script src="js/simulator.js?v=75"></script>
-<script src="js/duel.js?v=75"></script>
-<script src="js/agent.js?v=75"></script>
-<script src="js/voice.js?v=75"></script>
-<script src="js/assistant.js?v=75"></script>
-<script src="js/agentlive.js?v=75"></script>
+<script src="data/tasks.js?v=76"></script>
+<script src="data/lessons.js?v=76"></script>
+<script src="js/comic.js?v=76"></script>
+<script src="js/core.js?v=76"></script>
+<script src="js/engine.js?v=76"></script>
+<script src="js/app.js?v=76"></script>
+<script src="js/dashboard.js?v=76"></script>
+<script src="js/lessons.js?v=76"></script>
+<script src="js/legend.js?v=76"></script>
+<script src="js/simulator.js?v=76"></script>
+<script src="js/duel.js?v=76"></script>
+<script src="js/agent.js?v=76"></script>
+<script src="js/voice.js?v=76"></script>
+<script src="js/assistant.js?v=76"></script>
+<script src="js/agentlive.js?v=76"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -438,7 +450,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=75').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=76').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>

@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -695,7 +695,7 @@ function l10Road(moving, v1, v2, dur, dist, start){
     <!-- машина (стоит на асфальте: низ фото = верх асфальта) -->
     <div style="position:absolute;bottom:${ASF}px;left:${stX}px;z-index:4;animation:wvDrive ${dur||1.6}s cubic-bezier(.45,0,.55,1) both;--dx:${dx}px;line-height:0">
       <div class="${moving?'l10-bob':''}" style="line-height:0">
-        <img src="img/car.png?v=75" alt="машина" style="width:${CARW}px;height:auto;display:block">
+        <img src="img/car.png?v=76" alt="машина" style="width:${CARW}px;height:auto;display:block">
       </div>
     </div>
     ${dust}
@@ -712,6 +712,185 @@ function l10Road(moving, v1, v2, dur, dist, start){
   </div>`;
 }
 
+function l33Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const bump=(k,d,lo)=> st[k]=Math.max(lo||1, Math.round(((st[k]==null?1:st[k])+d)*10)/10);
+  switch(act){
+    case 'm+': bump('m',1); break; case 'm-': bump('m',-1); break;
+    case 'V+': bump('V',1); break; case 'V-': bump('V',-1); break;
+    case 'w+': bump('m',5); break; case 'w-': bump('m',-5); break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l33BlockMat(mat){
+  // раскраска кубика по материалу
+  const M={
+    'пробка':{c:'#d9a97a',t:'пробка',rho:0.2},
+    'дерево':{c:'#b5814a',t:'дерево',rho:0.6},
+    'лёд':{c:'#bde6f5',t:'лёд',rho:0.9},
+    'вода':{c:'#6aa8dc',t:'вода',rho:1},
+    'стекло':{c:'#9fc5d8',t:'стекло',rho:2.5},
+    'железо':{c:'#7c8794',t:'железо',rho:7.8}
+  };
+  return M[mat]||M['вода'];
+}
+function l33Cube(mat,size){
+  // изометрический кубик-«кирпичик» с бликом
+  const M=l33BlockMat(mat); const s=size||52;
+  return `<div style="width:${s}px;height:${Math.round(s*.72)}px;position:relative">
+    <div style="position:absolute;left:0;top:${Math.round(s*.14)}px;width:${s}px;height:${Math.round(s*.58)}px;background:${M.c};border:2px solid #33291e;border-radius:4px"></div>
+    <div style="position:absolute;left:6px;top:${Math.round(s*.18)}px;width:${Math.round(s*.42)}px;height:${Math.round(s*.2)}px;background:rgba(255,255,255,.4);border-radius:3px"></div>
+    <div style="position:absolute;left:${Math.round(s*.28)}px;top:${Math.round(s*.05)}px;width:${Math.round(s*.4)}px;height:${Math.round(s*.2)}px;background:rgba(255,255,255,.55);border-radius:3px"></div>
+    <div style="position:absolute;left:${Math.round(s*.28)}px;top:${Math.round(s*.05)}px;width:${Math.round(s*.36)}px;height:${Math.round(s*.16)}px;transform:skewX(-38deg);background:rgba(255,255,255,.5);border-radius:2px"></div>
+  </div>`;
+}
+function l33Tank(items, opts){
+  // аквариум с водой: items = [{mat, y: 'top'|'mid'|'bot', delay}]
+  const o=opts||{};
+  const H=o.h||170, W=o.w||230;
+  const pos = { top: H-56, mid: H-90, bot: H-126 };
+  const els=(items||[]).map(it=>{
+    const M=l33BlockMat(it.mat);
+    const yy=pos[it.y]||pos.bot;
+    return `<div class="wv-pop" style="position:absolute;left:50%;transform:translateX(-50%);bottom:${yy}px;animation-delay:${it.delay||0}s;z-index:3;text-align:center">
+      <div style="width:58px;height:58px;border-radius:8px;background:${M.c};border:2px solid #33291e;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#0d1a13;font-weight:bold;font-size:11px;line-height:1.15">${it.mat}<br>ρ=${M.rho}</div>
+    </div>`;
+  }).join('');
+  return `<div class="l33-tank" style="width:${W}px;height:${H}px;margin:0 auto">
+    <div class="wave" style="top:2px"></div>
+    <span class="l33-bub" style="left:18%;bottom:6px"></span>
+    <span class="l33-bub" style="left:72%;bottom:4px;animation-delay:1s"></span>
+    <span class="l33-bub" style="left:48%;bottom:8px;animation-delay:.5s;width:5px;height:5px"></span>
+    ${els}
+    <div style="position:absolute;left:0;right:0;bottom:0;height:8px;background:rgba(51,41,30,.55)"></div>
+  </div>`;
+}
+function visL33(el){
+  // Урок 33 «Плотность»: пошаговый разбор с аквариумом и тренажёром
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      // два одинаковых кубика — разная масса
+      h=col(big('Два одинаковых кубика — а масса разная!'),
+        `<div style="display:flex;gap:24px;justify-content:center;align-items:flex-end;margin:6px 0">
+          <div style="text-align:center">${l33Cube('железо',54)}<div style="font-size:14px;color:#7fa88f">железо</div><div class="wv-ans" style="font-size:18px;color:#fff">тяжёлый</div></div>
+          <div style="font-size:30px;color:#cbb89a">vs</div>
+          <div style="text-align:center">${l33Cube('пробка',54)}<div style="font-size:14px;color:#7fa88f">пробка</div><div style="font-size:18px;color:#cbb89a">лёгкий</div></div></div>`+
+        big('размер одинаковый — масса разная')+sml('секрет в плотности вещества — разберём дальше ➜'));
+    } else if(step===1){
+      h=col(big('Что такое плотность?'),
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:flex-end;margin:4px 0">
+          <div style="text-align:center">${l33Cube('железо',44)}<div style="font-size:11px;color:#cbb89a">1 см³</div><div style="font-size:15px;color:#ffd9a0">7,8 г</div></div>
+          <div style="text-align:center">${l33Cube('дерево',44)}<div style="font-size:11px;color:#cbb89a">1 см³</div><div style="font-size:15px;color:#cbb89a">0,6 г</div></div></div>`+
+        big('ρ = m : V — масса в единице объёма')+
+        sml('плотность — сколько массы «упаковано» в одном кубике объёма'));
+    } else if(step===2){
+      // кубики 1 см³: вода 1, пробка 0.2, железо 7.8
+      h=col(big('Кубики ровно 1 см³'),
+        `<div style="display:flex;gap:8px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:4px 0">
+          ${[['пробка','0,2 г'],['дерево','0,6 г'],['вода','1 г'],['железо','7,8 г']].map(([m,w])=>`<div style="text-align:center;width:62px">${l33Cube(m,40)}<div style="font-size:10px;color:#7fa88f">${m}</div><div style="font-size:13px;color:#ffd9a0">${w}</div></div>`).join('')}</div>`+
+        big('один объём — разная масса')+sml('вода = 1 г/см³ — эталон для сравнения'));
+    } else if(step===3){
+      // правило: больше 1 — тонет, меньше — плавает
+      h=col(big('Сравниваем с водой'),
+        `<div style="display:flex;gap:10px;justify-content:center;margin:4px 0">
+          <div style="text-align:center;padding:8px 12px;border:2px solid #7fd1a0;border-radius:12px;background:rgba(127,209,160,.07)"><div style="font-size:13px">ρ > 1</div><div style="font-size:22px">⬇</div><b>тонет</b><div class="wv-sml" style="font-size:11px">железо 7,8</div></div>
+          <div style="text-align:center;padding:8px 12px;border:2px solid #7fd1ff;border-radius:12px;background:rgba(127,209,255,.07)"><div style="font-size:13px">ρ < 1</div><div style="font-size:22px">⬆</div><b>всплывает</b><div class="wv-sml" style="font-size:11px">пробка 0,2</div></div></div>`+
+        sml('вода = 1: плотность больше воды → тонет, меньше → плавает'));
+    } else if(step===4){
+      // аквариум: железо тонет, пробка плавает, дерево плавает, лёд плавает
+      h=col(big('Опыт: что тонет, что плавает?'),
+        l33Tank([{mat:'пробка',y:'top',delay:0},{mat:'лёд',y:'top',delay:.3},{mat:'дерево',y:'top',delay:.6},{mat:'железо',y:'bot',delay:.9}])+
+        sml('пробка, лёд и дерево плавают (ρ<1), железо утонуло (ρ>1)'));
+    } else if(step===5){
+      // задача из check: 3 см³, 6 г → 2
+      h=col(big('Разбираем задачу'),
+        `<div class="wv-row" style="margin:4px 0">${chip('V = 3 см³','rgba(127,184,160,.5)')} ${chip('m = 6 г','rgba(232,106,90,.5)')}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;margin:4px 0;font-size:19px">
+          <div class="wv-pop">ρ = m : V = 6 : 3</div>
+          <div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">ρ = 2 г/см³ ✓</div></div>`+
+        sml('2 > 1 — этот брусок утонет в воде. Такая задача будет дальше!'));
+    } else if(step===6){
+      // m = ρ·V
+      h=col(big('Находим массу'),
+        `<div style="display:flex;gap:8px;justify-content:center;align-items:center;margin:4px 0">
+          ${l33Cube('железо',46)}<div style="text-align:left;font-size:16px;color:#d8ecff">ρ = 7,8<br>V = 2 см³</div></div>`+
+        `<div style="font-size:19px" class="wv-pop">m = ρ · V = 7,8 · 2</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">m = 15,6 г</div>`+
+        sml('масса = плотность × объём — запомни формулу m = ρ·V'));
+    } else if(step===7){
+      // V = m:ρ
+      h=col(big('Находим объём'),
+        `<div class="wv-row" style="margin:4px 0">${chip('m = 12 г','rgba(232,106,90,.5)')} ${chip('ρ = 3 г/см³','rgba(127,184,160,.5)')}</div>`+
+        `<div style="font-size:19px" class="wv-pop">V = m : ρ = 12 : 3</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">V = 4 см³</div>`+
+        sml('объём = масса : плотность — V = m:ρ'));
+    } else if(step===8){
+      // треугольник
+      h=col(big('Треугольник-помощник'),
+        `<div style="position:relative;width:170px;height:150px;margin:6px auto">
+          <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:0;height:0;border-left:80px solid transparent;border-right:80px solid transparent;border-bottom:130px solid rgba(217,164,65,.16)"></div>
+          <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:24px;font-weight:bold;color:var(--brass)">m</div>
+          <div style="position:absolute;top:96px;left:50%;transform:translateX(-50%);display:flex;gap:34px;font-size:22px;font-weight:bold;color:#d8ecff"><span>ρ</span><span>·</span><span>V</span></div>
+          <div style="position:absolute;top:96px;left:50%;transform:translateX(-50%);width:96px;text-align:center;border-top:2px dashed rgba(232,224,204,.4);height:0"></div>
+        </div>`+
+        big('m сверху, ρ·V снизу')+
+        sml('закрой неизвестное пальцем: m = ρ·V · ρ = m:V · V = m:ρ'));
+    } else if(step===9){
+      h=col(big('Плотность — «упаковка массы»'),
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:flex-end;margin:4px 0">
+          <div style="text-align:center">${l33Cube('пробка',40)}<div style="font-size:11px;color:#cbb89a">пробка 0,2</div></div>
+          <div style="font-size:20px;color:#cbb89a">=</div>
+          <div style="text-align:center">${l33Cube('железо',40)}<div style="font-size:11px;color:#cbb89a">железо 7,8</div></div></div>`+
+        big('7,8 : 0,2 = 39 — в 39 раз тяжелее!')+
+        sml('одинаковый размер, а масса в 39 раз больше — вот что значит плотность'));
+    } else if(step===10){
+      // тренажёр
+      if(st.m==null) st.m=6; if(st.V==null) st.V=3;
+      const rho=Math.round(st.m/st.V*100)/100; const swim=rho<=1;
+      const colr = rho>4.5?'#7c8794': rho>1.4?'#9fb2c4': rho>1?'#bfd6e8':'#d9a97a';
+      const lbl = rho>1?'железо':'пробка';
+      const sub=(it)=>{ const yy=it.y==='top'?114:24;
+        return `<div class="wv-pop" style="position:absolute;left:50%;transform:translateX(-50%);bottom:${yy}px;z-index:3;text-align:center">
+          <div style="width:64px;height:64px;border-radius:8px;background:${colr};border:2px solid #33291e;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#0d1a13;font-weight:bold;font-size:12px;line-height:1.2">${lbl}<br>ρ=${rho}</div></div>`;
+      };
+      h=col(big('Тренажёр: крути и наблюдай'),
+        `<div class="wv-row">${chip('m = '+st.m+' г','rgba(232,106,90,.5)')} ${chip('V = '+st.V+' см³','rgba(127,184,160,.5)')}</div>`+
+        `<div class="l33-tank" style="width:200px;height:150px;margin:0 auto">
+          <div class="wave" style="top:2px"></div>
+          <span class="l33-bub" style="left:22%;bottom:6px"></span>
+          <span class="l33-bub" style="left:70%;bottom:4px;animation-delay:1s"></span>
+          ${sub({y:swim?'top':'bot'})}
+          <div style="position:absolute;left:0;right:0;bottom:0;height:8px;background:rgba(51,41,30,.55)"></div>
+        </div>`+
+        `<div style="font-size:22px" class="wv-ans">ρ = ${st.m} : ${st.V} = ${rho} г/см³</div>`+
+        btns(btn('+1 г',`l33Act('${lk}','m+')`),btn('−1 г',`l33Act('${lk}','m-')`),btn('+1 см³',`l33Act('${lk}','V+')`),btn('−1 см³',`l33Act('${lk}','V-')`),btn('↺',`l33Act('${lk}','r')`))+
+        sml(rho>1?'ρ > 1 — тело тяжелее воды и тонет на дно':'ρ ≤ 1 — тело легче воды и плавает. Вопрос дальше: 6 г и 3 см³ → 2 г/см³'));
+    } else {
+      // памятка
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:320px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.65">
+          ✅ <b>ρ = m : V</b> — плотность = масса : объём.<br>
+          💧 Сравнивай с водой: <b>ρ = 1 г/см³</b>.<br>
+          ⬇ ρ &gt; 1 — тонет · ⬆ ρ &lt; 1 — плавает.<br>
+          🔁 m = ρ·V и V = m:ρ — две другие стороны треугольника.<br>
+          📦 Плотность — «упаковка массы» в объёме.</div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там брусок 3 см³ и 6 г'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
 function visL10(el){
   // Урок 10 «Средняя скорость»: полный пошаговый разбор с анимацией
   try{
@@ -929,7 +1108,7 @@ function visPhysNew(el){
           const v=Math.round(st.p/st.t*10)/10; const px=Math.min(208, st.p*3);
           h=col(
             `<div class="wv-road" style="width:300px"><div class="wv-lane"></div>
-              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=75" style="width:88px;height:auto;display:block"></div>
+              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=76" style="width:88px;height:auto;display:block"></div>
               <div style="position:absolute;top:-4px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${st.p} км</div>
               <div style="position:absolute;top:1px;left:4px;font-size:12px;color:#9fc5f5">⏱ ${st.t} ч</div></div>`+
             big(`S = ${st.p} км · t = ${st.t} ч`)+big(`v = S : t = ${st.p} : ${st.t} = ${v} км/ч`)+
@@ -940,7 +1119,7 @@ function visPhysNew(el){
           const S=st.v*st.t; const px=Math.min(208, S*3);
           h=col(
             `<div class="wv-road" style="width:300px"><div class="wv-lane"></div>
-              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=75" style="width:88px;height:auto;display:block"></div>
+              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=76" style="width:88px;height:auto;display:block"></div>
               <div style="position:absolute;top:-4px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${S} км</div></div>`+
             big(`v=${st.v} км/ч · t=${st.t} ч`)+big(`S = v·t = ${S} км`)+
             btns(btn('🚗 +5 км/ч',`phAct('${lk}','v+')`),btn('−5 км/ч',`phAct('${lk}','v-')`),btn('⏱ +1 ч',`phAct('${lk}','t+')`),btn('⏱ −1 ч',`phAct('${lk}','t-')`),btn('↺',`phAct('${lk}','r')`))+
@@ -1149,6 +1328,7 @@ function renderLessonVis(){
   else if(id===5) visTourn(el);
   else if(id===6) visVillage(el);
   else if(id===10) visL10(el);
+  else if(id===33) visL33(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
