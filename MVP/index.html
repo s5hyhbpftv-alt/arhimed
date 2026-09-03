@@ -420,6 +420,60 @@
   .l48-bub { position:absolute; border-radius:50%; background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.95),rgba(190,230,250,.5));
     animation:l48Bub .95s ease-out both; }
   .l48-bob { animation:l48Bob 1.6s ease-in-out infinite; }
+
+  /* урок 35 «Давление»: зимние сцены, Архимед в снегу и на лыжах */
+  @keyframes l35SnowF { 0%{transform:translateY(-10px) translateX(0);opacity:0} 12%{opacity:.9}
+    100%{transform:translateY(var(--fh,230px)) translateX(var(--fx,8px)) rotate(240deg);opacity:0} }
+  .l35-flake { position:absolute; top:-10px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#fff,#dfeef7);
+    box-shadow:0 0 3px rgba(220,240,255,.8); animation:l35SnowF var(--fd,5s) linear infinite;
+    animation-delay:var(--d,0s); }
+  @keyframes l35FlakeBig { 0%{transform:translateY(-8px);opacity:0} 15%{opacity:.85}
+    100%{transform:translateY(var(--fh,230px));opacity:0} }
+  .l35-flake2 { position:absolute; border-radius:50%; animation:l35FlakeBig var(--fd,6s) linear infinite; animation-delay:var(--d,0s); }
+  @keyframes l35Wobble { 0%,100%{transform:rotate(-1.6deg)} 50%{transform:rotate(1.6deg)} }
+  .l35-wobble { animation:l35Wobble 2.4s ease-in-out infinite; transform-origin:50% 88%; }
+  @keyframes l35ArmWave { 0%,100%{transform:rotate(0)} 28%{transform:rotate(16deg)} 62%{transform:rotate(-9deg)} }
+  .l35-arm { transform-origin:50% 6%; animation:l35ArmWave 1.7s ease-in-out infinite; }
+  @keyframes l35Land { 0%{transform:translateY(-26px)} 55%{transform:translateY(3px)} 78%{transform:translateY(-2px)} 100%{transform:translateY(0)} }
+  .l35-land { animation:l35Land .75s cubic-bezier(.4,0,.3,1) both; }
+  @keyframes l35Puff { 0%{transform:translate(0,0) scale(.35);opacity:0} 25%{opacity:.85}
+    100%{transform:translate(var(--px,0px),var(--py,-22px)) scale(1.35);opacity:0} }
+  .l35-puff { position:absolute; border-radius:50%; background:radial-gradient(circle at 35% 30%,#fff,rgba(214,232,244,0));
+    animation:l35Puff .9s ease-out both; }
+  @keyframes l35Glide { 0%,100%{transform:translateY(0) rotate(-.8deg)} 50%{transform:translateY(-3px) rotate(-1.6deg)} }
+  .l35-glide { animation:l35Glide 1.5s ease-in-out infinite; transform-origin:30% 85%; }
+  @keyframes l35Scarf { 0%,100%{transform:rotate(0)} 50%{transform:rotate(9deg)} }
+  .l35-scarf { transform-origin:100% 50%; animation:l35Scarf 1.1s ease-in-out infinite; }
+  @keyframes l35Press { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3.5px)} }
+  .l35-press { animation:l35Press 1.25s ease-in-out infinite; }
+  @keyframes l35BrickDrop { 0%{transform:translateY(-16px)} 55%{transform:translateY(2px)} 80%{transform:translateY(-1px)} 100%{transform:translateY(0)} }
+  .l35-brickdrop { animation:l35BrickDrop .55s cubic-bezier(.35,0,.55,1) both; }
+  @keyframes l35Ring { 0%{transform:scale(.3);opacity:.9} 100%{transform:scale(1.9);opacity:0} }
+  .l35-ring { position:absolute; border-radius:50%; border:2px solid rgba(255,255,255,.75);
+    animation:l35Ring .6s ease-out both; }
+  @keyframes l35Shine { 0%{transform:translateX(-130%)} 55%{transform:translateX(130%)} 100%{transform:translateX(130%)} }
+  .l35-shine { position:absolute; top:0; bottom:0; width:46%; background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.5),rgba(255,255,255,0));
+    animation:l35Shine 2.2s ease-in-out infinite; pointer-events:none; }
+  @keyframes l35CutDown { 0%{transform:translateY(-36px)} 40%{transform:translateY(26px)} 55%{transform:translateY(18px)} 70%{transform:translateY(26px)} 100%{transform:translateY(24px)} }
+  .l35-knife { transform-origin:50% 100%; animation:l35CutDown 1.6s ease-in-out .25s both; }
+  @keyframes l35Halve { 0%{transform:translateX(0)} 55%{transform:translateX(0)} 100%{transform:translateX(26px)} }
+  .l35-halve { animation:l35Halve 1.1s ease-out 1.05s both; }
+  @keyframes l35Hammer { 0%{transform:rotate(34deg)} 30%{transform:rotate(-26deg)} 45%{transform:rotate(14deg)} 60%{transform:rotate(-18deg)} 75%{transform:rotate(8deg)} 100%{transform:rotate(0)} }
+  .l35-hammer { transform-origin:86% 90%; animation:l35Hammer 1.5s ease-in-out .3s both; }
+  @keyframes l35NailIn { 0%{transform:translateY(0)} 30%{transform:translateY(5px)} 45%{transform:translateY(5px)}
+    60%{transform:translateY(9px)} 75%{transform:translateY(9px)} 100%{transform:translateY(13px)} }
+  .l35-nail { animation:l35NailIn 1.5s ease-in-out .3s both; }
+  @keyframes l35Tread { 0%{background-position:0 0} 100%{background-position:-46px 0} }
+  .l35-tread { animation:l35Tread 1.1s linear infinite; }
+  @keyframes l35Spark { 0%{transform:scale(.2);opacity:0} 30%{opacity:1} 100%{transform:scale(1.2);opacity:0} }
+  .l35-spark { position:absolute; border-radius:50%; background:#fff; box-shadow:0 0 6px rgba(255,255,255,.9);
+    animation:l35Spark 1.3s ease-out infinite; }
+  @keyframes l35PopIn { 0%{transform:scale(.3);opacity:0} 60%{transform:scale(1.18);opacity:1} 100%{transform:scale(1);opacity:1} }
+  .l35-pop { animation:l35PopIn .55s cubic-bezier(.3,0,.4,1) both; }
+  @keyframes l35Step { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} 60%{transform:translateY(0)} }
+  .l35-step { animation:l35Step 1.9s ease-in-out infinite; }
+  @keyframes l35DriftIn { 0%{transform:scaleY(.4);opacity:.4} 100%{transform:scaleY(1);opacity:1} }
+  .l35-drift { transform-origin:50% 100%; animation:l35DriftIn .7s ease-out both; }
   @keyframes wvGrow { 0%{transform:scaleX(0)} 100%{transform:scaleX(1)} }
   @keyframes wvIn { 0%{transform:translateY(14px);opacity:0} 100%{transform:translateY(0);opacity:1} }
   .wv-bub { width:9px; height:9px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#eaf7ff,#9fd4f2);
@@ -462,21 +516,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=87"></script>
-<script src="data/lessons.js?v=87"></script>
-<script src="js/comic.js?v=87"></script>
-<script src="js/core.js?v=87"></script>
-<script src="js/engine.js?v=87"></script>
-<script src="js/app.js?v=87"></script>
-<script src="js/dashboard.js?v=87"></script>
-<script src="js/lessons.js?v=87"></script>
-<script src="js/legend.js?v=87"></script>
-<script src="js/simulator.js?v=87"></script>
-<script src="js/duel.js?v=87"></script>
-<script src="js/agent.js?v=87"></script>
-<script src="js/voice.js?v=87"></script>
-<script src="js/assistant.js?v=87"></script>
-<script src="js/agentlive.js?v=87"></script>
+<script src="data/tasks.js?v=88"></script>
+<script src="data/lessons.js?v=88"></script>
+<script src="js/comic.js?v=88"></script>
+<script src="js/core.js?v=88"></script>
+<script src="js/engine.js?v=88"></script>
+<script src="js/app.js?v=88"></script>
+<script src="js/dashboard.js?v=88"></script>
+<script src="js/lessons.js?v=88"></script>
+<script src="js/legend.js?v=88"></script>
+<script src="js/simulator.js?v=88"></script>
+<script src="js/duel.js?v=88"></script>
+<script src="js/agent.js?v=88"></script>
+<script src="js/voice.js?v=88"></script>
+<script src="js/assistant.js?v=88"></script>
+<script src="js/agentlive.js?v=88"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -491,7 +545,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=87').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=88').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>

@@ -853,45 +853,324 @@ function l35Brick(w,h){
     <rect x="${w*.06}" y="${h*.84}" width="${w*.88}" height="${h*.08}" rx="3" fill="rgba(0,0,0,.14)"/>
   </svg>`;
 }
-function l35SnowScene(orient, F, showP){
-  // кирпич на снежной подушке: чем больше давление, тем сильнее сжат снег
-  const W=250, H=190;
-  const S = orient==='narrow'? 0.5 : 2;      // м² (узкий торец vs широкая грань)
-  const p = Math.round(F/S);
-  const snowBase=52;                          // высота несжатого снега
-  const snowH=Math.max(14, Math.round(snowBase - p*0.28));
-  const bw = orient==='narrow'? 52 : 150;     // ширина кирпича на сцене
-  const bh = orient==='narrow'? 110 : 46;     // высота кирпича
-  const brickBottom = snowH+2;                // кирпич стоит на снегу
-  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:14px;overflow:hidden;
-      background:linear-gradient(180deg,#bcdff0 0%,#e8f6fd 45%)">
-    <div style="position:absolute;left:0;right:0;bottom:0;height:${snowH}px;transition:height .6s ease;
-      background:linear-gradient(180deg,#ffffff,#dce9f0);border-top:3px solid rgba(180,200,220,.6)"></div>
-    <div style="position:absolute;left:10px;right:10px;bottom:${snowH}px;transition:bottom .6s ease;
-      display:flex;justify-content:center">
-      <div style="position:relative;transition:all .6s ease">
-        ${l35Brick(bw,bh)}
-        <div style="position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);white-space:nowrap;
-          font-size:11px;color:#4a5a6a;font-weight:bold">${orient==='narrow'?'стоит на торце':'лежит плашмя'}</div>
-      </div>
-    </div>
-    ${showP?`<div class="wv-ans" style="position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:20px;color:#1a3a55;font-weight:bold;text-shadow:0 1px 0 #fff">p = ${F} : ${S} = ${p} Па</div>`:''}
-    <div style="position:absolute;top:6px;left:8px;font-size:10px;color:#5a7a8a">снег</div>
+function l35Flakes(n,h,big){
+  // декоративный снегопад: n снежинок падают по всей сцене (h — высота сцены)
+  let s='';
+  for(let i=0;i<n;i++){
+    const x=((i*53+11)%100);
+    const size=big? (2.4+(i%3)*1.2) : (1.8+(i%4)*1);
+    const cls= (i%3===0)?'l35-flake':'l35-flake2';
+    const dur=(3.2+(i%5)*1.15).toFixed(2);
+    const del=(-(i*.47)%3).toFixed(2);
+    s+=`<span class="${cls}" style="left:${x}%;width:${size}px;height:${size}px;--fd:${dur}s;--d:${del}s;--fh:${h+16}px;--fx:${((i%2?1:-1)*((i*7)%14+4)).toFixed(0)}px"></span>`;
+  }
+  return s;
+}
+function l35ArchSvg(w, pose){
+  // Архимед в полный рост (анфас). pose: 'down' — руки вдоль тела; 'up' — руки вверх («ой!»); 'ski' — +лыжи и палки
+  const H=Math.round(w*214/150);
+  const skin='#f6c391', skinD='#d99c67', skinL='#fbdab2';
+  const robe='#f4ead1', robeD='#e2cfaa', fold='#d9c196';
+  const drape='#b5d8ec', drapeD='#93bcd6';
+  const beard='#fbfdff', beardD='#e3ebf0';
+  const belt='#a5814c', beltD='#8a6937';
+  const boot='#8a5a34', bootD='#6a4122', sole='#4a2f18';
+  const skiC='#c0533c', skiD='#8e3a29';
+  const armUp = pose==='up';
+  const armL = armUp
+    ? `<path d="M61,62 L49,44 L42,30" stroke="${skinD}" stroke-width="13" fill="none" stroke-linecap="round"/>
+       <path d="M61,62 L49,44 L42,30" stroke="${skin}" stroke-width="9.5" fill="none" stroke-linecap="round"/>
+       <circle cx="41" cy="28" r="6.2" fill="${skin}"/>
+       <circle cx="41" cy="28" r="6.2" fill="none" stroke="${skinD}" stroke-width="1.4"/>
+       <circle cx="39" cy="26.5" r="1.3" fill="${skinL}"/>`
+    : `<path d="M61,61 Q53,76 48,92" stroke="${skinD}" stroke-width="13" fill="none" stroke-linecap="round"/>
+       <path d="M61,61 Q53,76 48,92" stroke="${skin}" stroke-width="9.5" fill="none" stroke-linecap="round"/>
+       <circle cx="47.5" cy="95" r="5.4" fill="${skin}"/>
+       <circle cx="47.5" cy="95" r="5.4" fill="none" stroke="${skinD}" stroke-width="1.3"/>`;
+  const armR = armUp
+    ? `<path d="M89,62 L101,44 L108,30" stroke="${skinD}" stroke-width="13" fill="none" stroke-linecap="round"/>
+       <path d="M89,62 L101,44 L108,30" stroke="${skin}" stroke-width="9.5" fill="none" stroke-linecap="round"/>
+       <circle cx="109" cy="28" r="6.2" fill="${skin}"/>
+       <circle cx="109" cy="28" r="6.2" fill="none" stroke="${skinD}" stroke-width="1.4"/>
+       <circle cx="111" cy="26.5" r="1.3" fill="${skinL}"/>`
+    : `<path d="M89,61 Q97,76 102,92" stroke="${skinD}" stroke-width="13" fill="none" stroke-linecap="round"/>
+       <path d="M89,61 Q97,76 102,92" stroke="${skin}" stroke-width="9.5" fill="none" stroke-linecap="round"/>
+       <circle cx="102.5" cy="95" r="5.4" fill="${skin}"/>
+       <circle cx="102.5" cy="95" r="5.4" fill="none" stroke="${skinD}" stroke-width="1.3"/>`;
+  const legs=`
+    <!-- левая нога -->
+    <rect x="61" y="122" width="13" height="48" rx="6" fill="url(#l35skin)"/>
+    <path d="M63,128 L63,168" stroke="${skinD}" stroke-width="2.2" opacity=".55"/>
+    <rect x="59.5" y="163" width="16" height="29" rx="7" fill="${boot}"/>
+    <rect x="59.5" y="163" width="16" height="7" rx="3.5" fill="${bootD}"/>
+    <rect x="58" y="188" width="19" height="7" rx="3.5" fill="${sole}"/>
+    <!-- правая нога -->
+    <rect x="76" y="122" width="13" height="48" rx="6" fill="url(#l35skin)"/>
+    <path d="M87,128 L87,168" stroke="${skinD}" stroke-width="2.2" opacity=".55"/>
+    <rect x="74.5" y="163" width="16" height="29" rx="7" fill="${boot}"/>
+    <rect x="74.5" y="163" width="16" height="7" rx="3.5" fill="${bootD}"/>
+    <rect x="73" y="188" width="19" height="7" rx="3.5" fill="${sole}"/>`;
+  const skis = pose==='ski' ? `
+    <!-- лыжи (веер от ботинок) -->
+    <path d="M66,199 L22,208" stroke="${skiC}" stroke-width="7" stroke-linecap="round"/>
+    <path d="M20,209 q-6,-2 -8,-9" stroke="${skiD}" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M84,199 L128,208" stroke="${skiC}" stroke-width="7" stroke-linecap="round"/>
+    <path d="M130,209 q6,-2 8,-9" stroke="${skiD}" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <!-- крепления -->
+    <rect x="60" y="196" width="12" height="5" rx="2" fill="${sole}"/>
+    <rect x="78" y="196" width="12" height="5" rx="2" fill="${sole}"/>
+    <!-- палки -->
+    <path d="M48,96 L26,182" stroke="#a0713f" stroke-width="2.8" stroke-linecap="round"/>
+    <circle cx="26" cy="182" r="3.6" fill="none" stroke="#c9a02c" stroke-width="2"/>
+    <path d="M102,96 L124,182" stroke="#a0713f" stroke-width="2.8" stroke-linecap="round"/>
+    <circle cx="124" cy="182" r="3.6" fill="none" stroke="#c9a02c" stroke-width="2"/>`
+ : '';
+  return `<svg width="${w}" height="${H}" viewBox="0 0 150 214" style="display:block">
+    <defs>
+      <linearGradient id="l35skin" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="${skin}"/><stop offset="1" stop-color="${skinD}"/></linearGradient>
+      <linearGradient id="l35robe" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#f8f0da"/><stop offset="1" stop-color="${robeD}"/></linearGradient>
+    </defs>
+    ${legs}
+    <!-- хитон -->
+    <path d="M59,58 L91,58 C99,60 101,66 101,73 L105,118 C105,128 96,130 88,130 L62,130 C54,130 45,128 45,118 L49,73 C49,66 51,60 59,58 Z" fill="url(#l35robe)"/>
+    <path d="M66,58 L75,71 L84,58" fill="none" stroke="${robeD}" stroke-width="3.2"/>
+    <path d="M63,62 C60,90 61,110 58,128" stroke="${fold}" stroke-width="2" fill="none" opacity=".8"/>
+    <path d="M72,60 C72,92 72,112 72,126" stroke="${fold}" stroke-width="2" fill="none" opacity=".8"/>
+    <path d="M81,62 C84,90 83,110 86,128" stroke="${fold}" stroke-width="2" fill="none" opacity=".8"/>
+    <path d="M93,66 C96,88 95,110 94,124" stroke="${fold}" stroke-width="1.6" fill="none" opacity=".6"/>
+    <path d="M57,66 C55,88 54,108 53,124" stroke="${fold}" stroke-width="1.6" fill="none" opacity=".6"/>
+    <!-- гиматий через плечо -->
+    <path d="M59,58 L88,58 L92,118 L78,126 L63,116 Z" fill="${drape}" opacity=".94"/>
+    <path d="M88,60 L90,116" stroke="${drapeD}" stroke-width="2" fill="none" opacity=".7"/>
+    <path d="M63,64 L64,110" stroke="${drapeD}" stroke-width="2" fill="none" opacity=".7"/>
+    <!-- пояс -->
+    <path d="M48,100 L102,100 L100,109 L50,109 Z" fill="${belt}"/>
+    <rect x="71" y="97" width="8" height="13" rx="2" fill="${beltD}"/>
+    <path d="M73,110 L70,118 M77,110 L80,118" stroke="${beltD}" stroke-width="2.4" stroke-linecap="round"/>
+    <!-- руки -->
+    ${armL}${armR}
+    <circle cx="59" cy="60" r="6.5" fill="${robe}"/>
+    <circle cx="91" cy="60" r="6.5" fill="${robe}"/>
+    <!-- шея и голова -->
+    <rect x="68" y="38" width="14" height="16" rx="5" fill="${skin}"/>
+    <path d="M79,40 L80,53" stroke="${skinD}" stroke-width="2" opacity=".5"/>
+    <circle cx="57" cy="28" r="3.6" fill="${skinD}"/>
+    <circle cx="93" cy="28" r="3.6" fill="${skinD}"/>
+    <circle cx="75" cy="25" r="16.6" fill="${skin}"/>
+    <ellipse cx="69" cy="17.5" rx="5.5" ry="3" fill="rgba(255,255,255,.22)"/>
+    <circle cx="62" cy="13" r="4" fill="#eef3f6"/>
+    <circle cx="75" cy="10.5" r="4.2" fill="#f2f6f8"/>
+    <circle cx="88" cy="13" r="4" fill="#eef3f6"/>
+    <path d="M64,24 q5,-3.4 10,0" stroke="#ffffff" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+    <path d="M76,24 q5,-3.4 10,0" stroke="#ffffff" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+    <circle cx="69" cy="29.5" r="2.15" fill="#3c3c4a"/>
+    <circle cx="81" cy="29.5" r="2.15" fill="#3c3c4a"/>
+    <circle cx="69.8" cy="28.9" r=".75" fill="#fff"/>
+    <circle cx="81.8" cy="28.9" r=".75" fill="#fff"/>
+    <path d="M73,31 q2,5 -1,8" stroke="${skinD}" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="64.5" cy="34.5" r="2.4" fill="rgba(224,120,90,.28)"/>
+    <circle cx="85.5" cy="34.5" r="2.4" fill="rgba(224,120,90,.28)"/>
+    <!-- борода -->
+    <path d="M60,35 C56.5,45 61.5,54 66,59 C70,65 80,65 84,59 C88.5,54 93.5,45 90,35 C84,43 66,43 60,35 Z" fill="${beard}"/>
+    <path d="M66,51 q4,3 8,0 M74,55 q5,2 8,-1" stroke="${beardD}" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+    <path d="M62,37 q10,4 18,1" stroke="${beardD}" stroke-width="1.6" fill="none" opacity=".5"/>
+    <!-- венок -->
+    <path d="M58,15 Q75,1 92,15" stroke="#6f9e4a" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <g fill="#7aa54f"><ellipse cx="64" cy="9.5" rx="4" ry="1.9" transform="rotate(-38 64 9.5)"/>
+      <ellipse cx="72" cy="6.2" rx="4" ry="1.9" transform="rotate(-12 72 6.2)"/>
+      <ellipse cx="80" cy="5.8" rx="4" ry="1.9" transform="rotate(12 80 5.8)"/>
+      <ellipse cx="87" cy="8.6" rx="4" ry="1.9" transform="rotate(38 87 8.6)"/></g>
+    <circle cx="60" cy="14.5" r="1.5" fill="#d9a92e"/>
+    <circle cx="90" cy="14" r="1.5" fill="#d9a92e"/>
+    ${skis}
+  </svg>`;
+}
+function l35WinterBg(w,h,gh){
+  // зимний фон: небо, солнце, облако, далёкие холмы, снег-основа
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="position:absolute;inset:0">
+    <defs>
+      <linearGradient id="l35sky${w}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#b9ddf2"/><stop offset="1" stop-color="#e4f4fb"/></linearGradient>
+      <linearGradient id="l35snow${w}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d6e7f2"/></linearGradient>
+    </defs>
+    <rect x="0" y="0" width="${w}" height="${h}" fill="url(#l35sky${w})"/>
+    <circle cx="${w*.82}" cy="${h*.13}" r="13" fill="#fff3c4" opacity=".95"/>
+    <circle cx="${w*.82}" cy="${h*.13}" r="13" fill="none" stroke="rgba(255,243,196,.55)" stroke-width="6"/>
+    <g fill="#ffffff" opacity=".9">
+      <ellipse cx="${w*.22}" cy="${h*.2}" rx="20" ry="8"/><ellipse cx="${w*.35}" cy="${h*.16}" rx="14" ry="7"/>
+    </g>
+    <g fill="#e3f1f9">
+      <path d="M0,${gh+6} Q${w*.18},${gh-16} ${w*.38},${gh+2} T${w},${gh-8} L${w},${h} L0,${h} Z" opacity=".55"/>
+    </g>
+    <rect x="0" y="${gh}" width="${w}" height="${h-gh}" fill="url(#l35snow${w})"/>
+    <path d="M0,${gh} Q${w*.2},${gh+5} ${w*.45},${gh} T${w},${gh+2}" stroke="rgba(255,255,255,.95)" stroke-width="3" fill="none"/>
+  </svg>`;
+}
+function l35SinkPanel(w){
+  // панель: Архимед провалился в снег ПО КОЛЕНО (сугроб до колен)
+  const h=Math.round(w*1.32);
+  const skyH=Math.round(h*.58);        // небо
+  const fw=Math.round(w*.61);          // ширина фигуры
+  const svgH=Math.round(fw*214/150);
+  const svgTop=Math.round(h*.1);
+  // уровень снега-сугроба у ног фигуры (колени чуть ниже кромки)
+  const mdTop=Math.round(h*.56);
+  return `<div style="position:relative;width:${w}px;height:${h}px;border-radius:14px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.25)">
+    <svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="position:absolute;inset:0">
+      <defs>
+        <linearGradient id="l35sks${w}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#bcdcf0"/><stop offset="1" stop-color="#e8f6fd"/></linearGradient>
+        <linearGradient id="l35sns${w}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d3e5f1"/></linearGradient>
+      </defs>
+      <rect x="0" y="0" width="${w}" height="${h}" fill="url(#l35sks${w})"/>
+      <circle cx="${Math.round(w*.8)}" cy="${Math.round(h*.1)}" r="10" fill="#fff3c4" opacity=".95"/>
+      <circle cx="${Math.round(w*.8)}" cy="${Math.round(h*.1)}" r="10" fill="none" stroke="rgba(255,243,196,.5)" stroke-width="5"/>
+      <g fill="#ffffff" opacity=".92">
+        <ellipse cx="${Math.round(w*.24)}" cy="${Math.round(h*.14)}" rx="16" ry="7"/><ellipse cx="${Math.round(w*.36)}" cy="${Math.round(h*.11)}" rx="11" ry="6"/>
+      </g>
+      <!-- снег за фигурой -->
+      <rect x="0" y="${skyH}" width="${w}" height="${h-skyH}" fill="url(#l35sns${w})"/>
+    </svg>
+    ${l35Flakes(8,h,false)}
+    <!-- Архимед (полный рост), нижняя часть скрыта сугробом -->
+    <div class="l35-land" style="position:absolute;left:${Math.round(w*.16)}px;top:${svgTop}px;width:${fw}px;z-index:2">${l35ArchSvg(fw,'up')}</div>
+    <!-- сугроб до колен -->
+    <svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="position:absolute;inset:0;z-index:3">
+      <defs><linearGradient id="l35mnd${w}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfe2ef"/></linearGradient></defs>
+      <path d="M0,${h} L0,${mdTop-6} Q${Math.round(w*.3)},${mdTop+10} ${Math.round(w*.75)},${mdTop-14} Q${w},${mdTop-8} ${w},${mdTop+2} L${w},${h} Z" fill="url(#l35mnd${w})"/>
+      <path d="M0,${mdTop-6} Q${Math.round(w*.3)},${mdTop+10} ${Math.round(w*.75)},${mdTop-14} Q${w},${mdTop-8} ${w},${mdTop+2}" stroke="#f7fbff" stroke-width="4" fill="none" opacity=".9"/>
+      <g fill="#ffffff" opacity=".95">
+        ${[0,1,2,3,4,5].map(i=>`<circle cx="${Math.round(w*(.06+i*.16))}" cy="${Math.round(h*(.7+i*.045))}" r="${1.5+(i%2)}"/>`).join('')}
+      </g>
+    </svg>
+    <div class="l35-puff" style="left:${Math.round(w*.34)}px;bottom:${h-mdTop-16}px;width:8px;height:8px;--px:-9px;--py:-14px;animation-delay:.5s;z-index:4"></div>
+    <div class="l35-puff" style="left:${Math.round(w*.6)}px;bottom:${h-mdTop-20}px;width:7px;height:7px;--px:8px;--py:-11px;animation-delay:.66s;z-index:4"></div>
+    <div class="l35-ring" style="left:${Math.round(w*.3)}px;bottom:${h-mdTop-6}px;width:22px;height:8px;animation-delay:.36s;z-index:4"></div>
   </div>`;
 }
-function l35Dual(){
-  // ботинок (провалился) vs лыжа (не провалилась) — сюжет
-  return `<div style="display:flex;gap:10px;justify-content:center">
-    <div style="text-align:center;width:116px;border-radius:12px;overflow:hidden;position:relative;height:150px;background:linear-gradient(#bcdff0,#e8f6fd)">
-      <div style="position:absolute;left:8px;right:8px;bottom:0;height:52px;background:#fff;border-top:2px solid #c9dbe8"></div>
-      <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:30px;width:34px;height:40px;background:#5a3a2a;border-radius:4px"></div>
-      <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:22px;font-size:11px;color:#e0523d;font-weight:bold;background:rgba(255,255,255,.85);border-radius:6px;padding:0 5px">провалился!</div>
+function l35SkiPanel(w){
+  // панель: Архимед на лыжах скользит по снегу (виден в полный рост)
+  const h=Math.round(w*1.24);
+  const gh=Math.round(h*.86);
+  const fw=Math.round(w*.62);
+  const svgH=Math.round(fw*214/150);
+  const skiBottom=Math.round((214-204)/214*svgH); // низ лыж выше низа svg на столько px
+  const cssBottom=Math.max(0,(h-gh)-skiBottom);   // так лыжи стоят ровно на снегу
+  return `<div style="position:relative;width:${w}px;height:${h}px;border-radius:14px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.25)">
+    <svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="position:absolute;inset:0">
+      <defs>
+        <linearGradient id="l35skk${w}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#bcdcf0"/><stop offset="1" stop-color="#e8f6fd"/></linearGradient>
+        <linearGradient id="l35snn${w}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d3e5f1"/></linearGradient>
+      </defs>
+      <rect x="0" y="0" width="${w}" height="${h}" fill="url(#l35skk${w})"/>
+      <circle cx="${Math.round(w*.82)}" cy="${Math.round(h*.12)}" r="11" fill="#fff3c4" opacity=".95"/>
+      <circle cx="${Math.round(w*.82)}" cy="${Math.round(h*.12)}" r="11" fill="none" stroke="rgba(255,243,196,.5)" stroke-width="5"/>
+      <g fill="#ffffff" opacity=".92">
+        <ellipse cx="${w*.2}" cy="${h*.15}" rx="15" ry="6.5"/><ellipse cx="${w*.31}" cy="${h*.12}" rx="10" ry="5.5"/>
+      </g>
+      <g fill="#e3f1f9">
+        <path d="M0,${gh+4} Q${w*.2},${gh-12} ${w*.5},${gh} T${w},${gh-6} L${w},${h} L0,${h} Z" opacity=".5"/>
+      </g>
+      <rect x="0" y="${gh}" width="${w}" height="${h-gh}" fill="url(#l35snn${w})"/>
+      <path d="M0,${gh} Q${w*.25},${gh+4} ${w*.55},${gh} T${w},${gh+2}" stroke="#f7fbff" stroke-width="3" fill="none"/>
+    </svg>
+    ${l35Flakes(7,h,false)}
+    <!-- снежная пыль за лыжами -->
+    <svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="position:absolute;inset:0;z-index:2">
+      <g fill="#fff" opacity=".9">
+        <ellipse cx="${w*.13}" cy="${gh+3}" rx="${w*.08}" ry="2.6"/>
+        <ellipse cx="${w*.2}" cy="${gh+1}" rx="${w*.05}" ry="1.8"/>
+        <ellipse cx="${w*.05}" cy="${gh+5}" rx="${w*.04}" ry="1.5"/>
+      </g>
+    </svg>
+    <div class="l35-glide" style="position:absolute;left:${Math.round(w*.32)}px;bottom:${cssBottom}px;width:${fw}px;z-index:3">${l35ArchSvg(fw,'ski')}</div>
+  </div>`;
+}
+function l35Duel(){
+  // шаг 0: оба состояния Архимеда
+  return `<div style="display:flex;gap:8px;justify-content:center;align-items:flex-start;flex-wrap:wrap">
+    <div style="text-align:center">
+      ${l35SinkPanel(152)}
+      <div style="margin-top:4px"><span style="background:rgba(232,106,90,.16);border:1px solid rgba(232,106,90,.6);border-radius:9px;padding:2px 9px;font-size:12px;color:#f0a89a;font-weight:bold">👢 по колено в снегу!</span></div>
     </div>
-    <div style="text-align:center;width:116px;border-radius:12px;overflow:hidden;position:relative;height:150px;background:linear-gradient(#bcdff0,#e8f6fd)">
-      <div style="position:absolute;left:4px;right:4px;bottom:0;height:44px;background:#fff;border-top:2px solid #c9dbe8"></div>
-      <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:44px;width:100px;height:12px;background:#4a90c9;border-radius:4px 4px 0 0"></div>
-      <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:34px;font-size:11px;color:#3a8a4a;font-weight:bold;background:rgba(255,255,255,.85);border-radius:6px;padding:0 5px">на лыжах — не провалился</div>
+    <div style="text-align:center">
+      ${l35SkiPanel(152)}
+      <div style="margin-top:4px"><span style="background:rgba(127,209,160,.14);border:1px solid rgba(127,209,160,.6);border-radius:9px;padding:2px 9px;font-size:12px;color:#9fe8c0;font-weight:bold">🎿 на лыжах — скользит!</span></div>
     </div>
+  </div>`;
+}
+function l35BrickScene(orient, F, showP){
+  // кирпич на снегу (детально): широкая грань vs узкий торец
+  const W=300, H=196;
+  const S = orient==='narrow'? 0.5 : 2;
+  const p = Math.round(F/S);
+  const snowBase=54;
+  const snowH=Math.max(15, Math.round(snowBase - p*0.3));
+  const narrow=orient==='narrow';
+  const bw=narrow?46:168, bh=narrow?94:44;
+  const brickTop=H-snowH-bh-4;
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.25)">
+    ${l35WinterBg(W,H,snowH-6)}
+    ${l35Flakes(9,H,false)}
+    <!-- снег под кирпичом -->
+    <div style="position:absolute;left:0;right:0;bottom:0;height:${snowH}px;background:linear-gradient(180deg,#ffffff,#d3e5f0);box-shadow:inset 0 -6px 10px rgba(140,180,205,.25)"></div>
+    <div style="position:absolute;left:${Math.round((W-bw)/2-6)}px;bottom:${snowH-3}px;width:${bw+12}px;height:7px;background:rgba(90,120,150,.35);border-radius:50%;filter:blur(3px)"></div>
+    <div class="l35-brickdrop" style="position:absolute;left:${Math.round((W-bw)/2)}px;top:${brickTop}px;width:${bw}px;z-index:3">${l35Brick(bw,bh)}</div>
+    ${narrow?`<div class="l35-ring" style="left:${Math.round((W-bw)/2-12)}px;bottom:${snowH-2}px;width:${bw+24}px;height:11px;animation-delay:.3s;z-index:4"></div>
+      <div class="l35-puff" style="left:${Math.round((W-bw)/2-8)}px;bottom:${snowH+8}px;width:8px;height:8px;--px:-12px;--py:6px;animation-delay:.5s;z-index:4"></div>
+      <div class="l35-puff" style="left:${Math.round((W-bw)/2+bw+2)}px;bottom:${snowH+6}px;width:7px;height:7px;--px:12px;--py:4px;animation-delay:.62s;z-index:4"></div>`:''}
+    <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:3px;z-index:5">
+      <span style="background:rgba(16,48,76,.55);border-radius:9px;padding:2px 10px;font-size:12px;color:#fff;font-weight:bold;white-space:nowrap">${narrow?'на торце — продавил снег!':'плашмя — почти не продавил'}</span>
+    </div>
+    ${showP?`<div style="position:absolute;top:4px;left:50%;transform:translateX(-50%);z-index:5;font-size:15px;color:#0d3a5c;font-weight:bold;text-shadow:0 1px 0 rgba(255,255,255,.6)">p = ${F} : ${S} = ${p} Па</div>`:''}
+  </div>`;
+}
+function l35UnitTile(w){
+  // плитка 1 м² с силой 1 Н — визуал паскаля
+  return `<div style="position:relative;width:${w}px;height:${w}px;margin:0 auto">
+    <svg width="${w}" height="${w}" viewBox="0 0 120 120" style="display:block">
+      <defs><linearGradient id="l35tile" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#cfe4f2"/></linearGradient></defs>
+      <rect x="12" y="12" width="96" height="96" rx="9" fill="url(#l35tile)" stroke="#8fb0c6" stroke-width="2.5" stroke-dasharray="7 5"/>
+      <path d="M6,58 L120,58 M58,6 L58,120" stroke="rgba(143,176,198,.4)" stroke-width="1.5" stroke-dasharray="3 5"/>
+      <text x="60" y="100" text-anchor="middle" font-size="15" font-weight="bold" fill="#2f6a92">1 м²</text>
+    </svg>
+    <div style="position:absolute;left:50%;top:-8px;transform:translateX(-50%);text-align:center">
+      <div class="l35-press" style="font-size:24px;line-height:1.1">⬇</div>
+      <div style="font-size:12px;color:#fff;font-weight:bold;background:#e0523d;border-radius:7px;padding:1px 6px;display:inline-block">1 Н</div>
+    </div>
+  </div>`;
+}
+function l35FootPanels(){
+  // шаг 1: разрезы снега: ботинок — глубоко, лыжа — мелко
+  const mk=(narrow)=>{
+    const W=narrow?96:148,H=136;
+    const deep=narrow;
+    return `<div style="position:relative;width:${W}px;height:${H}px;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.22);background:linear-gradient(180deg,#e6f4fb,#ffffff)">
+      <!-- небо/воздух -->
+      <!-- снег -->
+      <div style="position:absolute;left:0;right:0;bottom:0;height:${H-24}px;background:linear-gradient(180deg,#f4f9fd,#d3e4f0)"></div>
+      <div style="position:absolute;left:0;right:0;bottom:${H-24}px;height:5px;background:#ffffff"></div>
+      ${deep?`<div style="position:absolute;left:50%;transform:translateX(-50%);top:${H-100}px;bottom:0;width:34px;background:linear-gradient(180deg,#fff,#e6f0f8);border-radius:4px 4px 0 0"></div>`:''}
+      ${narrow
+        ? `<div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${H-92}px;width:24px;height:15px;background:#5a3a2a;border-radius:5px 5px 8px 8px;z-index:2"></div>
+           <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${H-98}px;width:30px;height:7px;background:#3f2818;border-radius:4px;z-index:2"></div>`
+        : `<div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${H-40}px;width:128px;height:10px;background:linear-gradient(180deg,#c0533c,#963f2e);border-radius:6px;z-index:2"></div>
+           <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${H-44}px;width:136px;height:4px;background:rgba(120,140,160,.25);border-radius:50%;z-index:2"></div>`}
+      <div style="position:absolute;left:50%;transform:translateX(-50%);top:5px;font-size:11px;color:#1a4a6a;font-weight:bold;text-shadow:0 1px 0 #fff;white-space:nowrap">${narrow?'площадь мала':'площадь велика'}</div>
+      <div class="l35-press" style="position:absolute;left:${narrow?6:10}px;top:8px;font-size:15px;color:#e0523d;font-weight:bold;z-index:3">⬇ вес</div>
+    </div>`;
+  };
+  return `<div style="display:flex;gap:9px;justify-content:center;align-items:flex-start;flex-wrap:wrap">
+    <div style="text-align:center">${mk(true)}<div style="margin-top:3px;font-size:11px;color:#e0523d;font-weight:bold">след глубокий</div></div>
+    <div style="text-align:center">${mk(false)}<div style="margin-top:3px;font-size:11px;color:#3a9a5a;font-weight:bold">след мелкий</div></div>
   </div>`;
 }
 function l37Act(lk,act){
@@ -1764,11 +2043,10 @@ function visL37(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 function visL35(el){
-  // Урок 35 «Давление твёрдых тел»: сюжет «Архимед в снегу», кирпич на снегу
+  // Урок 35 «Давление твёрдых тел»: Архимед в снегу, кирпич, нож/гвоздь, тренажёр
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    window.LK48=lk;
     const step=LV.step||0;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
@@ -1777,94 +2055,152 @@ function visL35(el){
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
     const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
     const rowC=(inner)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    // плитка 1 м² с числом силы
+    const sq=(w,n,del,col,extra)=>`<div class="l35-pop" style="animation-delay:${del||0}s;text-align:center">
+      <div style="position:relative;width:${w}px;height:${w}px;border-radius:10px;background:linear-gradient(145deg,#ffffff,#d7e9f5);
+        border:2px dashed ${col||'#8fb0c6'};display:flex;align-items:center;justify-content:center;font-size:${Math.round(w*.2)}px;font-weight:bold;color:${col||'#2f6a92'}">
+        ${extra||''}</div>
+      <div style="font-size:10px;color:#7fa3ba;margin-top:2px">1 м²</div></div>`;
+    // ряд плиток с силой сверху (для разборов F:S)
+    const rowTiles=(n,fn,ws)=>{ let r=''; for(let i=0;i<n;i++){ const f=fn(i); const w=ws||58;
+      r+=`<div class="l35-pop" style="animation-delay:${(0.25+i*.22).toFixed(2)}s;text-align:center">
+        <div class="l35-press" style="font-size:14px;color:#e0523d;font-weight:bold;line-height:1.3">${f} Н</div>
+        ${sq(w,1,0)}</div>`; } return r; };
     let h='';
     if(step===0){
       h=col(big('Архимед провалился в снег!'),
-        l35Dual()+
-        sml('вес одинаковый — а один провалился, другой нет. Почему? разгадка в площади! листай ➜'));
+        l35Duel()+
+        sml('вес одинаковый — а в ботинках провалился по колено, на лыжах — скользит. Почему? разгадка в площади! листай ➜'));
     } else if(step===1){
       h=col(big('Всё дело в площади'),
-        rowC(
-          `<div style="text-align:center;width:104px;border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:8px"><div style="font-size:30px">👟</div><b style="font-size:13px">ботинок</b><div class="wv-sml" style="font-size:10px">площадь маленькая<br>давление большое</div></div>`+
-          `<div style="text-align:center;width:104px;border:2px solid rgba(127,184,160,.5);border-radius:12px;padding:8px"><div style="font-size:30px">🎿</div><b style="font-size:13px">лыжи</b><div class="wv-sml" style="font-size:10px">площадь большая<br>давление малое</div></div>`)+
-        sml('сила (вес) та же, а площадь разная — вот и вся магия'));
+        l35FootPanels()+
+        rowC(chip('сила (вес) — та же','rgba(232,106,90,.5)'), chip('площадь — разная','rgba(127,184,160,.5)'))+
+        sml('на лыжах вес «размазан» по большой площади → на каждый м² давит мало. в ботинке весь вес на крошечной подошве → давит сильно!'));
     } else if(step===2){
       h=col(big('Что такое давление'),
-        `<div style="font-size:40px;color:var(--brass);font-family:Georgia,serif">p = F : S</div>`+
+        `<div style="font-size:42px;color:var(--brass);font-family:Georgia,serif;position:relative;display:inline-block;overflow:hidden;border-radius:8px">p = F : S<span class="l35-shine"></span></div>`+
         rowC(
-          `<div style="text-align:center;width:92px"><div style="font-size:15px;color:#cbb89a">сила F</div><div style="font-size:26px">⬇</div></div>`+
-          `<div style="text-align:center"><div style="font-size:34px">🧱</div><div style="font-size:11px;color:#7fa88f">площадь S</div></div>`)+
-        sml('давление — какая сила приходится на единицу площади. та же сила, меньше площадь → давление больше'));
+          `<div style="text-align:center;min-width:92px;border:1px solid rgba(232,106,90,.35);border-radius:12px;padding:6px 8px;background:rgba(232,106,90,.05)"><div class="l35-press" style="font-size:24px">⬇</div><b style="font-size:13px">сила F</b><div style="font-size:10px;color:#cbb89a">давит на снег</div></div>`+
+          `<div style="text-align:center;min-width:92px;border:1px solid rgba(127,209,255,.35);border-radius:12px;padding:6px 8px;background:rgba(127,209,255,.05)"><div style="font-size:24px">▦</div><b style="font-size:13px">площадь S</b><div style="font-size:10px;color:#cbb89a">на ней стоит вес</div></div>`+
+          `<div style="text-align:center;min-width:92px;border:1px solid rgba(127,209,160,.4);border-radius:12px;padding:6px 8px;background:rgba(127,209,160,.05)"><div class="l35-pop" style="font-size:24px">⚖️</div><b style="font-size:13px">давление p</b><div style="font-size:10px;color:#cbb89a">на каждый м²</div></div>`)+
+        sml('давление — какая сила приходится на ОДИН квадратный метр. та же сила, меньше площадь → давление больше'));
     } else if(step===3){
       // кирпич на снегу: узкая/широкая грань (интерактив)
       const o=st.orient||'wide';
       const F=60, S=o==='narrow'?0.5:2, p=Math.round(F/S);
       h=col(big('Опыт: кирпич на снегу'),
-        l35SnowScene(o,F,true)+
+        l35BrickScene(o,F,true)+
         `<div class="wv-row">${chip('сила F = '+F+' Н','rgba(232,106,90,.5)')} ${chip('площадь S = '+S+' м²','rgba(127,184,160,.5)')}</div>`+
-        `<div class="wv-ans" style="font-size:26px">p = ${F} : ${S} = ${p} Па</div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">p = ${F} : ${S} = ${p} Па</div>`+
         btns(btn('🟥 широкой гранью',`l35Act('${lk}','wide')`),btn('🟥 на торце',`l35Act('${lk}','narrow')`))+
-        sml(p>100?'узкий торец — маленькая площадь, снег продавлен глубоко!':'широкая грань — площадь большая, снег почти не продавлен'));
+        sml(p>100?'узкий торец — маленькая площадь: снег продавлен глубоко!':'широкая грань — площадь большая: снег почти не продавлен'));
     } else if(step===4){
       h=col(big('Единица — паскаль'),
-        rowC(chip('1 Па = 1 Н на 1 м²','rgba(127,209,255,.4)'))+
-        `<div style="font-size:26px" class="wv-pop">1 Па = 1 Н/м²</div>`+
-        sml('названа в честь Блеза Паскаля — учёного, изучавшего давление'));
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:4px 0">
+          <div style="text-align:center">${l35UnitTile(96)}
+            <div style="font-size:11px;color:#7fa3ba;margin-top:2px">1 Н на 1 м² = 1 Па</div></div>
+        </div>`+
+        `<div style="font-size:22px" class="wv-pop">1 Па = 1 Н/м²</div>`+
+        sml('названа в честь Блеза Паскаля — учёного, изучавшего давление жидкостей и газов'));
     } else if(step===5){
       h=col(big('Разбираем на числах'),
         `<div class="wv-row">${chip('F = 100 Н','rgba(232,106,90,.5)')} ${chip('S = 2 м²','rgba(127,184,160,.5)')}</div>`+
-        l35SnowScene('wide',100,false)+
-        `<div style="font-size:20px" class="wv-pop">p = 100 : 2 = 50 Па</div>`+
-        sml('меньше площадь — больше давление. запомни!'));
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:2px 0">${rowTiles(2,(i)=>50,62)}</div>`+
+        `<div style="font-size:19px" class="wv-pop">p = F : S = 100 : 2</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">p = 50 Па</div>`+
+        sml('100 Н разложили на 2 м² — на каждый метр по 50 Н. меньше площадь — больше давление!'));
     } else if(step===6){
+      // правила в жизни: нож, гвоздь, лыжи/гусеницы
       h=col(big('Правило в жизни'),
-        rowC(
-          `<div style="text-align:center;width:150px;border:2px solid rgba(127,184,160,.4);border-radius:12px;padding:8px"><div style="font-size:26px">🔪</div><b>нож острят</b><div class="wv-sml" style="font-size:10px">маленькая площадь → легко режет</div></div>`+
-          `<div style="text-align:center;width:150px;border:2px solid rgba(127,184,160,.4);border-radius:12px;padding:8px"><div style="font-size:26px">🎿</div><b>лыжи широкие</b><div class="wv-sml" style="font-size:10px">большая площадь → не провалишься</div></div>`)+
-        sml('гвоздь острый — чтобы войти в доску · гусеницы трактора широкие — чтобы не тонуть'));
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:2px 0">
+          <div style="width:150px;border:1px solid rgba(232,106,90,.4);border-radius:14px;padding:6px;background:rgba(232,106,90,.05);text-align:center">
+            <b style="font-size:13px">🔪 нож</b>
+            <div style="position:relative;width:132px;height:86px;margin:4px auto;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#f6e9d8,#e9d3ae)">
+              <div class="l35-knife" style="position:absolute;left:50%;transform:translateX(-50%);top:-6px;z-index:3;font-size:34px;line-height:1">🔪</div>
+              <div class="l35-halve" style="position:absolute;left:36px;top:52px;width:30px;height:24px;border-radius:50% 50% 8px 8px;background:linear-gradient(180deg,#e04b3a,#a5281f)"></div>
+              <div class="l35-halve" style="position:absolute;left:66px;top:52px;width:30px;height:24px;border-radius:50% 50% 8px 8px;background:linear-gradient(180deg,#e04b3a,#a5281f)"></div>
+              <div style="position:absolute;left:36px;top:50px;width:60px;height:4px;background:rgba(0,0,0,.25);border-radius:50%;bottom:2px"></div>
+            </div>
+            <div style="font-size:10px;color:#e0a99a">тонкое лезвие режет легко</div>
+          </div>
+          <div style="width:150px;border:1px solid rgba(127,184,160,.4);border-radius:14px;padding:6px;background:rgba(127,184,160,.05);text-align:center">
+            <b style="font-size:13px">🔨 гвоздь</b>
+            <div style="position:relative;width:132px;height:86px;margin:4px auto;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#fdf6e6,#f0e0bc)">
+              <div class="l35-hammer" style="position:absolute;right:14px;top:-2px;font-size:26px;z-index:3">🔨</div>
+              <div class="l35-nail" style="position:absolute;left:50%;transform:translateX(-50%);top:14px;font-size:15px;z-index:2">🔩</div>
+              <div style="position:absolute;left:8px;right:8px;bottom:0;height:16px;border-radius:4px;background:linear-gradient(180deg,#c99a63,#8a5a2e)"></div>
+              <div style="position:absolute;left:8px;right:8px;bottom:14px;height:2px;background:rgba(0,0,0,.25)"></div>
+            </div>
+            <div style="font-size:10px;color:#9fceb2">остриё входит в доску</div>
+          </div>
+          <div style="width:150px;border:1px solid rgba(127,209,255,.4);border-radius:14px;padding:6px;background:rgba(127,209,255,.05);text-align:center">
+            <b style="font-size:13px">🚜 гусеницы</b>
+            <div style="position:relative;width:132px;height:86px;margin:4px auto;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#e8f4fb,#ffffff)">
+              <div style="position:absolute;left:14px;right:14px;bottom:8px;height:30px;border-radius:8px;background:linear-gradient(180deg,#3c5a48,#27402f)"></div>
+              <div class="l35-tread" style="position:absolute;left:16px;right:16px;bottom:12px;height:8px;border-radius:4px;
+                background:repeating-linear-gradient(90deg,#8fb09a 0 5px,#5d7a64 5px 9px,#8fb09a 9px 14px)"></div>
+              <div style="position:absolute;left:26px;right:26px;bottom:20px;height:12px;border-radius:5px;background:#9db3a6"></div>
+              <div style="position:absolute;left:10px;right:10px;top:10px;font-size:13px;color:#1a4a6a;font-weight:bold">широкая лента →</div>
+              <div style="position:absolute;left:10px;right:10px;top:24px;font-size:10px;color:#3a6a8a">не тонет в снегу</div>
+            </div>
+            <div style="font-size:10px;color:#a9d2ec">площадь огромная — давление малое</div>
+          </div>
+        </div>`+
+        sml('гвоздь острый, нож острят — уменьшают площадь. лыжи и гусеницы — увеличивают. одно правило на всё!'));
     } else if(step===7){
       h=col(big('Находим силу'),
         `<div class="wv-row">${chip('p = 40 Па','rgba(127,209,255,.5)')} ${chip('S = 3 м²','rgba(127,184,160,.5)')}</div>`+
+        `<div style="display:flex;gap:8px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:2px 0">${rowTiles(3,(i)=>40,54)}</div>`+
         `<div style="font-size:20px" class="wv-pop">F = p · S = 40 · 3</div>`+
         `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">F = 120 Н</div>`+
-        sml('сила = давление × площадь'));
+        sml('три метра — по 40 Н на каждом. сила = давление × площадь'));
     } else if(step===8){
       h=col(big('Находим площадь'),
         `<div class="wv-row">${chip('F = 100 Н','rgba(232,106,90,.5)')} ${chip('p = 20 Па','rgba(127,209,255,.5)')}</div>`+
+        `<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${rowTiles(5,(i)=>20,42)}</div>`+
         `<div style="font-size:20px" class="wv-pop">S = F : p = 100 : 20</div>`+
         `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">S = 5 м²</div>`+
-        sml('площадь = сила : давление'));
+        sml('100 Н уложились по 20 Н на метр — понадобилось 5 метров'));
     } else if(step===9){
       h=col(big('Разбираем задачку'),
         `<div class="wv-row">${chip('F = 60 Н','rgba(232,106,90,.5)')} ${chip('S = 2 м²','rgba(127,184,160,.5)')}</div>`+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:2px 0">${rowTiles(2,(i)=>30,62)}</div>`+
         `<div style="font-size:20px" class="wv-pop">p = F : S = 60 : 2</div>`+
         `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">p = 30 Па ✓</div>`+
         sml('такой вопрос будет дальше!'));
     } else if(step===10){
-      // тренажёр
+      // тренажёр: сила и площадь → глубина продавливания снега
       if(st.F==null) st.F=60; if(st.S==null) st.S=2;
       const p=Math.round(st.F/st.S);
-      const snowH=Math.max(12, Math.min(46, 52-p*0.28));
+      const bw=Math.min(190, 58+st.S*26);
+      const snowH=Math.max(12, Math.min(56, 60-p*0.3));
+      const brickTop=196-snowH-40;
       h=col(big('Тренажёр: продави снег!'),
         `<div class="wv-row">${chip('F = '+st.F+' Н','rgba(232,106,90,.5)')} ${chip('S = '+st.S+' м²','rgba(127,184,160,.5)')}</div>`+
-        `<div style="position:relative;width:250px;height:170px;margin:0 auto;border-radius:14px;overflow:hidden;background:linear-gradient(#bcdff0,#e8f6fd)">
-          <div style="position:absolute;left:0;right:0;bottom:0;height:${snowH}px;transition:height .5s;background:linear-gradient(#fff,#dce9f0)"></div>
-          <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${snowH+2}px;transition:bottom .5s">
-            ${l35Brick(86,64)}
-          </div>
+        `<div style="position:relative;width:300px;height:196px;margin:2px auto;border-radius:16px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.25)">
+          ${l35WinterBg(300,196,snowH-6)}
+          ${l35Flakes(7,196,false)}
+          <div style="position:absolute;left:0;right:0;bottom:0;height:${snowH}px;background:linear-gradient(180deg,#ffffff,#d3e5f0);box-shadow:inset 0 -6px 10px rgba(140,180,205,.25)"></div>
+          <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${snowH-3}px;width:${bw+20}px;height:7px;background:rgba(90,120,150,.35);border-radius:50%;filter:blur(3px)"></div>
+          <div class="l35-brickdrop" style="position:absolute;left:50%;transform:translateX(-50%);top:${brickTop}px;width:${bw}px;z-index:3">${l35Brick(bw,40)}</div>
+          <div class="l35-ring" style="left:50%;margin-left:${-bw/2-10}px;bottom:${snowH-2}px;width:${bw+20}px;height:11px;z-index:4"></div>
+          <div class="l35-spark" style="left:${6+(p*7)%80}%;bottom:${snowH+14}px;width:5px;height:5px;animation-delay:${(p%10)*.2}s"></div>
           <div style="position:absolute;top:4px;left:8px;font-size:10px;color:#5a7a8a">снег</div>
         </div>`+
-        `<div class="wv-ans" style="font-size:24px">p = ${st.F} : ${st.S} = ${p} Па</div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">p = ${st.F} : ${st.S} = ${p} Па</div>`+
         btns(btn('+20 Н',`l35Act('${lk}','F+')`),btn('−20 Н',`l35Act('${lk}','F-')`),btn('+1 м²',`l35Act('${lk}','S+')`),btn('−1 м²',`l35Act('${lk}','S-')`),btn('↺',`l35Act('${lk}','r')`))+
-        sml('увеличь силу или уменьши площадь — снег сожмётся сильнее!'));
+        sml(p>120?'снег сжат сильно — глубокий след!':'снег почти не продавлен — площадь держит!'));
     } else {
       // памятка
       h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:320px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
-          🧱 <b>p = F : S</b> — давление = сила : площадь.<br>
-          🔪 Уменьши площадь — давление больше (нож!).<br>
-          🎿 Увеличь площадь — давление меньше (лыжи!).<br>
-          📏 1 Па = 1 Н/м² · F = p·S · S = F:p.</div>`+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:92px;opacity:.95">${l35ArchSvg(92,'down')}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:250px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+            🧱 <b>p = F : S</b> — давление = сила : площадь.<br>
+            🔪 Уменьши площадь — давление больше (нож!).<br>
+            🎿 Увеличь площадь — давление меньше (лыжи!).<br>
+            📏 1 Па = 1 Н/м² · F = p·S · S = F:p.</div>
+        </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 60 Н и 2 м²'));
     }
