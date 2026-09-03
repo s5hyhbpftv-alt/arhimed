@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2425,6 +2425,180 @@ function visL22(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там полоска 1×5'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l100Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['rho','8','2'],['rho','15','3'],['rho','21','7'],['rho','24','8'],['m','2','5'],['m','4','3'],['m','3','7'],['m','7','6'],['v','20','4'],['v','45','5'],['v','36','6'],['v','10','2']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l100Cube(m,cls,delay){
+  return `<div class="l35-pop" style="animation-delay:${delay||0}s;width:46px;height:46px;border-radius:6px;background:linear-gradient(145deg,${cls||'#7fb7d8'},${(cls||'#7fb7d8')==='#7fb7d8'?'#4f7fa0':'#8a6a2f'});display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:15px;color:#0d1f14;font-weight:bold;box-shadow:inset -3px -4px 0 rgba(0,0,0,.18),0 2px 4px rgba(0,0,0,.35)">${m}</div>`;
+}
+function l100Tank(rho,uid){
+  // аквариум: плавает если rho<1 (лёд/дерево), тонет если >1
+  const floats=rho<1;
+  const top=floats?8:52;
+  return `<div style="position:relative;width:170px;height:120px;border:3px solid #33291e;border-radius:6px 6px 16px 16px;background:linear-gradient(180deg,#cfe8fb,#7db2e0 82%);margin:4px auto;overflow:hidden">
+    <div style="position:absolute;left:0;right:0;top:46px;height:2px;background:rgba(255,255,255,.5)"></div>
+    <div class="wv-in" style="position:absolute;left:50%;top:${top}%;transform:translate(-50%,0);transition:top 1s ease">
+      <div style="width:40px;height:40px;border-radius:5px;background:${floats?'linear-gradient(145deg,#cfe8fb,#9cc8ea)':'linear-gradient(145deg,#8fa6b8,#5c7486)'};border:2px solid ${floats?'#5a8fb8':'#3c4d5a'};display:flex;align-items:center;justify-content:center;font-size:14px;color:#17324a;font-weight:bold">${rho}</div>
+    </div>
+    ${floats?'<div style="position:absolute;left:50%;top:62px;transform:translateX(-50%);font-size:11px;color:#1a4a6a">плавает (ρ&lt;1)</div>':'<div style="position:absolute;left:50%;top:100px;transform:translateX(-50%);font-size:11px;color:#1a4a6a">тонет (ρ&gt;1)</div>'}
+  </div>`;
+}
+function l100Bars(uid){
+  const data=[['пробка',0.25,'#d9a441'],['лёд',0.9,'#bfe3f5'],['вода',1,'#4f9fd8'],['стекло',2.5,'#7fd1a0'],['железо',7.8,'#8fa6b8'],['золото',19.3,'#ffd966']];
+  const max=20;
+  let rows='';
+  data.forEach((d,i)=>{
+    rows+=`<div class="l35-pop" style="animation-delay:${(i*0.1).toFixed(2)}s;display:flex;align-items:center;gap:6px;font-size:12.5px;color:#cbb89a">
+      <div style="width:52px;text-align:right">${d[0]}</div>
+      <div style="flex:1;background:#13251c;border-radius:4px;height:14px;overflow:hidden">
+        <div style="width:${(d[1]/max*100).toFixed(1)}%;height:100%;background:linear-gradient(90deg,${d[2]},${d[2]}cc);border-radius:4px"></div>
+      </div>
+      <div style="width:36px;color:#e8dcc8">${d[1]}</div>
+    </div>`;
+  });
+  return `<div style="display:flex;flex-direction:column;gap:3px;max-width:300px;margin:2px auto">${rows}</div>`;
+}
+function visL100(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Почему один кубик тяжелее другого?'),
+        rowC(l100Cube('дерево','#d9a441','0'),l100Cube('железо','#8fa6b8','.15'))+
+        `<div style="font-size:40px" class="wv-pop">⚖️</div>`+
+        sml('кубики одинаковые по размеру, но масса разная. В чём секрет? Сейчас узнаем!'));
+    } else if(step===1){
+      h=col(big('Масса в одном кубике 1 см³'),
+        rowC(l100Cube('0,7 г','#d9a441','0'),l100Cube('7,8 г','#8fa6b8','.15'))+
+        sml('в 1 см³ дерева 0,7 г, а в 1 см³ железа 7,8 г. Вот почему железо тяжелее!'));
+    } else if(step===2){
+      h=col(big('Плотность — это ρ = m : V'),
+        rowC(chip('ρ — плотность','rgba(127,209,255,.5)'),chip('m — масса','rgba(232,160,90,.5)'),chip('V — объём','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">ρ = m : V</div>`+
+        sml('плотность — сколько массы приходится на единицу объёма (на 1 см³)'));
+    } else if(step===3){
+      h=col(big('Считаем плотность'),
+        rowC(l100Cube('m=8 г','#8fa6b8','0'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">ρ = 8 : 2 = 4 г/см³</div>`+
+        sml('масса 8 г, объём 2 см³ → делим массу на объём!'));
+    } else if(step===4){
+      h=col(big('Магический треугольник'),
+        `<div style="text-align:center;font-size:16px;color:#e8dcc8" class="wv-pop">
+          <div style="display:inline-block;padding:4px 16px;border:2px solid rgba(217,164,65,.5);border-radius:10px;background:rgba(217,164,65,.06)">▲<br>m<br><span style="color:#7fd1a0">ρ</span> · <span style="color:#8fa6b8">V</span></div>
+        </div>`+
+        sml('масса наверху. Закрываешь неизвестное пальцем — остаётся формула: m=ρ·V, V=m:ρ, ρ=m:V'));
+    } else if(step===5){
+      h=col(big('Из ρ и V найдём массу'),
+        rowC(chip('ρ=2 г/см³','rgba(127,209,255,.5)'),chip('V=5 см³','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">m = 2 · 5 = 10 г</div>`+
+        sml('m = ρ · V — умножаем, как в наших задачках!'));
+    } else if(step===6){
+      h=col(big('А если известны m и ρ?'),
+        rowC(chip('m=10 г','rgba(232,160,90,.5)'),chip('ρ=2 г/см³','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">V = 10 : 2 = 5 см³</div>`+
+        sml('V = m : ρ — снова делим'));
+    } else if(step===7){
+      h=col(big('Запомни таблицу плотностей'),
+        l100Bars('b')+
+        sml('вода — ровно 1 г/см³. Всё, что легче воды (меньше 1), будет плавать!'));
+    } else if(step===8){
+      h=col(big('Почему лёд плавает?'),
+        rowC(chip('лёд: ρ = 0,9','rgba(127,209,255,.5)'),chip('вода: ρ = 1','rgba(127,184,160,.5)'))+
+        l100Tank(0.9,'t')+
+        sml('0,9 &lt; 1 — лёд легче воды, поэтому плавает, даже в стакане!'));
+    } else if(step===9){
+      h=col(big('Почему железо тонет?'),
+        rowC(chip('железо: ρ = 7,8','rgba(127,209,255,.5)'),chip('вода: ρ = 1','rgba(127,184,160,.5)'))+
+        l100Tank(7.8,'t2')+
+        sml('7,8 &gt; 1 — железо тяжелее воды. Корабль железный, но внутри воздух!'));
+    } else if(step===10){
+      h=col(big('Секрет железного корабля'),
+        rowC(chip('плотность корабля целиком','rgba(217,164,65,.4)'),chip('сталь+воздух &lt; 1','rgba(127,209,255,.5)'))+
+        `<div style="font-size:36px" class="wv-pop">🚢</div>`+
+        sml('корабль плавает, потому что средняя плотность со всем воздухом меньше воды'));
+    } else if(step===11){
+      h=col(big('Тот же объём — разная масса'),
+        rowC(l100Cube('1 см³ воды<br>1 г','#4f9fd8','0'),l100Cube('1 см³ золота<br>19,3 г','#ffd966','.15'))+
+        sml('золото в 19 раз плотнее воды! поэтому слиток тяжёлый, а кубик такого же размера из дерева — лёгкий'));
+    } else if(step===12){
+      h=col(big('Задача-проверка'),
+        rowC(chip('m = 6 г','rgba(232,160,90,.5)'),chip('V = 3 см³','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">ρ = 6 : 3 = 2 г/см³</div>`+
+        sml('как в проверке! Дели массу на объём и всё'));
+    } else if(step===13){
+      h=col(big('Задача 1: находим плотность'),
+        rowC(chip('m = 15 г','rgba(232,160,90,.5)'),chip('V = 3 см³','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">ρ = 15 : 3 = 5 г/см³</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===14){
+      h=col(big('Задача 2: находим массу'),
+        rowC(chip('ρ = 4 г/см³','rgba(127,209,255,.5)'),chip('V = 5 см³','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">m = 4 · 5 = 20 г</div>`+
+        sml('тоже как в задачках: m = ρ · V'));
+    } else if(step===15){
+      h=col(big('Где пригодится'),
+        rowC(chip('почему плавает лёд','rgba(127,209,255,.4)'),chip('корабль из стали','rgba(127,209,255,.4)'),chip('подделка золота?','rgba(217,164,65,.4)'),chip('ареометр в аквариуме','rgba(127,209,255,.4)'))+
+        sml('плотность — паспорт вещества. По ней можно даже проверить, настоящее ли золото!'));
+    } else if(step===16){
+      const POOL=[['rho','8','2'],['rho','15','3'],['rho','21','7'],['rho','24','8'],['m','2','5'],['m','4','3'],['m','3','7'],['m','7','6'],['v','20','4'],['v','45','5'],['v','36','6'],['v','10','2']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0];
+      let desc, firstStep, ans, vis='';
+      if(kind==='rho'){
+        const m=+e[1], v=+e[2];
+        desc='масса '+m+' г, объём '+v+' см³ → плотность?';
+        firstStep='ρ = m : V = '+m+' : '+v;
+        ans=m/v; vis=l100Cube('m='+m+' г','#8fa6b8','0');
+      } else if(kind==='m'){
+        const rho=+e[1], v=+e[2];
+        desc='плотность '+rho+' г/см³, объём '+v+' см³ → масса?';
+        firstStep='m = ρ · V = '+rho+' · '+v;
+        ans=rho*v; vis=l100Cube('ρ='+rho+'<br>V='+v,'#4f9fd8','0');
+      } else {
+        const m=+e[1], rho=+e[2];
+        desc='масса '+m+' г, плотность '+rho+' г/см³ → объём?';
+        firstStep='V = m : ρ = '+m+' : '+rho;
+        ans=m/rho; vis=l100Cube('m='+m+' г','#d9a441','0');
+      }
+      h=col(big('Тренажёр: плотность'),
+        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
+        (vis||'')+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l100Act('${lk}','s1')`),btn('2️⃣ ответ',`l100Act('${lk}','s2')`),btn('🎲 другая',`l100Act('${lk}','n')`),btn('↺',`l100Act('${lk}','r')`))+
+        sml('вспомни треугольник: ρ=m:V, m=ρ·V, V=m:ρ!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🧊 Плотность: ρ = m : V.<br>
+            ⚖️ Масса наверху: m = ρ·V, V = m:ρ.<br>
+            💧 Вода = 1 г/см³: легче — плавает, тяжелее — тонет.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 6 г и 3 см³'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -7050,6 +7224,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===100) visL100(el);
   else if(id===22) visL22(el);
   else if(id===21) visL21(el);
   else if(id===18) visL18(el);
