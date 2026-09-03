@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -1742,6 +1742,390 @@ function l36Water(){
     <text x="${W*.85}" y="${H-8}" text-anchor="middle" font-size="11" fill="#9fc5e8">ток I</text>
   </svg>`;
 }
+function l49Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const bump=(k,d,lo,hi)=> st[k]=Math.max(lo||1, Math.min(hi||20, (st[k]==null?1:st[k])+d));
+  switch(act){
+    case 'c1': st.closed=st.closed?0:1; break;
+    case 'c2': st.ring=st.ring?0:1; break;
+    case 'sA': st.outS='A'; break;
+    case 'sB': st.outS='B'; break;
+    case 'sR': st.outS=null; break;
+    case 'pA': st.outP='A'; break;
+    case 'pB': st.outP='B'; break;
+    case 'pR': st.outP=null; break;
+    case 'brn': st.brn=st.brn===2?null:2; break;
+    case 'kz': st.kz=st.kz?0:1; break;
+    case 'mode': st.tm=(st.tm==='par')?'ser':'par'; break;
+    case '1+': bump('t1',1,1,12); break;
+    case '1-': bump('t1',-1,1,12); break;
+    case '2+': bump('t2',1,1,12); break;
+    case '2-': bump('t2',-1,1,12); break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l49Board(W,H,uid){
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">
+    <defs><linearGradient id="l49bd${uid}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e2a44"/><stop offset="1" stop-color="#111a2b"/></linearGradient></defs>
+    <rect x="0" y="0" width="${W}" height="${H}" rx="14" fill="url(#l49bd${uid})"/>
+  </svg>`;
+}
+function l49BulbG(x,y,r,on,uid){
+  return `<g transform="translate(${x},${y})">
+    ${on?`<circle r="${r*1.9}" fill="rgba(255,224,120,.18)"/><circle r="${r*1.35}" fill="rgba(255,224,120,.32)"/>`:''}
+    <circle r="${r}" fill="${on?'#fff6c8':'#dfe4ea'}" stroke="${on?'#d9a52a':'#97a4b1'}" stroke-width="2.2"/>
+    ${on?`<path d="M${-r*.45},${-r*.15} q${r*.45},${-r*.75} ${r*.9},0" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/>`:''}
+    <path d="M${-r*.38},${-r*.1} q0,${r*.45} 0,${r*.55}" stroke="${on?'#8a5a10':'#6f7b88'}" stroke-width="2.4" fill="none"/>
+    <path d="M${-r*.5},${r*.5} L${r*.5},${r*.5} L${r*.28},${r*1.05} L${-r*.28},${r*1.05} Z" fill="#97a4b1"/>
+  </g>`;
+}
+function l49BatteryG(x,y,uid){
+  return `<g transform="translate(${x},${y})">
+    <line x1="0" y1="-11" x2="0" y2="11" stroke="#ece4c8" stroke-width="3"/>
+    <line x1="0" y1="2" x2="0" y2="11" stroke="#ece4c8" stroke-width="7"/>
+    <text x="13" y="3" font-size="10.5" fill="#ffd9a0" font-weight="bold">9 В</text>
+  </g>`;
+}
+function l49Ring(on,uid){
+  // одна лампочка, выключатель; замкнутый/разомкнутый контур
+  const W=300,H=196, railL=52, railR=W-26, yT=60, yB=150, bx=238;
+  const seg=(a1,a2,a3,a4,col,w)=>`<line x1="${a1}" y1="${a2}" x2="${a3}" y2="${a4}" stroke="${col||'#e8d9a8'}" stroke-width="${w||3.5}"/>`;
+  let html='';
+  html+=seg(railL,yT,bx-20,yT)+seg(bx+20,yT,railR,yT);
+  html+=seg(railR,yT,railR,yB)+seg(railR,yB,railL,yB)+seg(railL,yB,railL,yT);
+  const swX=Math.round((railL+railR)/2)+16;
+  if(on){
+    html+=`<path d="M${railL},${yB} L${railR},${yB}" stroke="#e8d9a8" stroke-width="3.5"/>
+      <circle cx="${swX-6}" cy="${yB-14}" r="3" fill="#7fd1a0"/><line x1="${swX-6}" y1="${yB-11}" x2="${swX-6}" y2="${yB-3}" stroke="#7fd1a0" stroke-width="2.4"/>`;
+  } else {
+    html+=seg(railL,yB,swX-10,yB)+seg(swX+10,yB,railR,yB);
+    html+=`<line x1="${swX-8}" y1="${yB}" x2="${swX+4}" y2="${yB-13}" stroke="#ffb04a" stroke-width="4.5" stroke-linecap="round"/>
+      <circle cx="${swX}" cy="${yB}" r="5" fill="#ffb04a"/><circle cx="${swX}" cy="${yB}" r="2.2" fill="#121a2b"/>`;
+  }
+  const electrons= on? [0,1,2,3].map(i=>`<circle r="3.2" fill="#7fd1ff"><animateMotion dur="1.7s" begin="${(-i*.42).toFixed(2)}s" repeatCount="indefinite" path="M${railL+10},${yT} L${railR-10},${yT} L${railR-10},${yB} L${railL+10},${yB} Z"/></circle>`).join('') : '';
+  html+=l49BatteryG(railL-1,97,uid);
+  html+=l49BulbG(bx,yT,16,on,uid);
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:14px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.3)">
+    ${l49Board(W,H,uid)}
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">${html}${electrons}
+      <text x="${W/2}" y="${H-12}" text-anchor="middle" font-size="12" fill="${on?'#7fd1a0':'#e8a05a'}" font-weight="bold">${on?'цепь замкнута — ток бежит по кругу!':'разрыв — тока нет, лампа погасла'}</text>
+    </svg>
+  </div>`;
+}
+function l49Series2(out,uid){
+  // две лампы последовательно; out 'A'|'B' — выкручена
+  const W=312,H=196, railL=52, railR=W-28, yT=60, yB=148;
+  const bxA=Math.round(W*.4), bxB=Math.round(W*.7), r=15;
+  const seg=(a,b,c,d,col,w)=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${col||'#e8d9a8'}" stroke-width="${w||3.5}"/>`;
+  let html='';
+  const lit = out===null;
+  if(out==='A'){
+    html+=seg(railL,yT,bxA-r-2,yT);
+    html+=seg(bxA+r+2,yT,bxB-r-2,yT)+seg(bxB+r+2,yT,railR,yT);
+  } else if(out==='B'){
+    html+=seg(railL,yT,bxA-r-2,yT)+seg(bxA+r+2,yT,bxB-r-2,yT);
+    html+=seg(bxB+r+2,yT,railR,yT);
+  } else {
+    html+=seg(railL,yT,bxA-r-2,yT)+seg(bxA+r+2,yT,bxB-r-2,yT)+seg(bxB+r+2,yT,railR,yT);
+  }
+  html+=seg(railR,yT,railR,yB)+seg(railR,yB,railL,yB)+seg(railL,yB,railL,yT);
+  html+=l49BatteryG(railL-1,95,uid);
+  const draw=(cx,isOut,tag)=>{
+    if(isOut){
+      html+=`<circle cx="${cx}" cy="${yT}" r="${r+3}" fill="none" stroke="#8fa8c0" stroke-width="2" stroke-dasharray="5 4"/>
+        <path d="M${cx-8},${yT-9} L${cx+8},${yT+9} M${cx+8},${yT-9} L${cx-8},${yT+9}" stroke="#8fa8c0" stroke-width="2"/>
+        <text x="${cx}" y="${yT-30}" text-anchor="middle" font-size="10.5" fill="#e8a05a">выкручена</text>`;
+    } else html+=l49BulbG(cx,yT,r,lit,tag);
+  };
+  draw(bxA,out==='A','a'); draw(bxB,out==='B','b');
+  const electrons= lit? [0,1,2].map(i=>`<circle r="3.2" fill="#7fd1ff"><animateMotion dur="1.6s" begin="${(-i*.5).toFixed(2)}s" repeatCount="indefinite" path="M${railL+10},${yT} L${railR-12},${yT} L${railR-12},${yB} L${railL+10},${yB} Z"/></circle>`).join('') : '';
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:14px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.3)">
+    ${l49Board(W,H,uid)}
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">${html}${electrons}
+      <text x="${W/2}" y="${H-10}" text-anchor="middle" font-size="12" fill="${lit?'#7fd1a0':'#e8a05a'}" font-weight="bold">${lit?'ток один на всех — обе светят!':'выкручена одна — круг разорван, обе погасли!'}</text>
+    </svg>
+  </div>`;
+}
+function l49Parallel2(out,uid){
+  // две ветви параллельно (лесенка с двумя перекладинами)
+  const W=312,H=236, xL=58, xR=W-36, yBot=192, yTop=64;
+  const rungA=98, rungB=156, bx=Math.round((xL+xR)/2)+14, r=14;
+  const seg=(a,b,c,d,col,w)=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${col||'#e8d9a8'}" stroke-width="${w||3.5}"/>`;
+  const pBat=Math.round(xL+(xR-xL)*.42);
+  let html='';
+  // шины
+  html+=seg(xL,yBot,xL,yTop)+seg(xR,yTop,xR,yBot)+seg(xL,yBot,xR,yBot)+seg(xL,yTop,xR,yTop);
+  // перекладины с лампами
+  const rung=(lane)=>{
+    const y=lane==='A'? rungA : rungB;
+    const isOut=out===lane;
+    if(isOut){
+      html+=seg(xL,y,bx-r-2,y)+seg(bx+r+2,y,xR,y);
+      html+=`<circle cx="${bx}" cy="${y}" r="${r+3}" fill="none" stroke="#8fa8c0" stroke-width="2" stroke-dasharray="5 4"/>
+        <path d="M${bx-8},${y-8} L${bx+8},${y+8} M${bx+8},${y-8} L${bx-8},${y+8}" stroke="#8fa8c0" stroke-width="2"/>`;
+    } else {
+      html+=seg(xL,y,bx-r-2,y)+seg(bx+r+2,y,xR,y);
+      html+=l49BulbG(bx,y,r,out===null,lane+uid);
+    }
+    html+=`<text x="${xR+2}" y="${y+4}" font-size="10" fill="#7fa3ba">${lane}</text>`;
+  };
+  rung('A'); rung('B');
+  // батарея на нижней шине
+  html+=`<line x1="${pBat}" y1="${yBot-12}" x2="${pBat}" y2="${yBot+12}" stroke="#ece4c8" stroke-width="4"/>
+    <line x1="${pBat+15}" y1="${yBot-9}" x2="${pBat+15}" y2="${yBot+9}" stroke="#ece4c8" stroke-width="8"/>
+    <text x="${pBat+7}" y="${yBot+26}" text-anchor="middle" font-size="11" fill="#ffd9a0" font-weight="bold">9 В</text>`;
+  // электроны по каждой живой ветке
+  const dots=(lane)=>{
+    const y=lane==='A'? rungA : rungB;
+    if(out===lane) return '';
+    const path=`M${pBat+2},${yBot} L${xL},${yBot} L${xL},${y} L${bx-r-2},${y} L${xR},${y} L${xR},${yBot} L${pBat+13},${yBot}`;
+    return [0,1].map(i=>`<circle r="3.1" fill="#7fd1ff"><animateMotion dur="2s" begin="${(-i).toFixed(1)}s" repeatCount="indefinite" path="${path}"/></circle>`).join('');
+  };
+  const msg= out===null? 'обе светят — у каждой своя дорожка'
+    : out==='A'? 'лампу А выкрутили — B продолжает светить!'
+    : 'лампу B выкрутили — А продолжает светить!';
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:14px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.3)">
+    ${l49Board(W,H,uid)}
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">${html}${dots('A')}${dots('B')}
+      <text x="${(xL+xR)/2}" y="${H-6}" text-anchor="middle" font-size="11.5" fill="#9fe8c0" font-weight="bold">${msg}</text>
+    </svg>
+  </div>`;
+}
+function l49ResRow(r1,r2,par,uid){
+  // ряд из двух резисторов: par=false → «сложить в линию», true → «две дорожки»
+  const W=300,H=par?170:120;
+  let html='';
+  const midY=par? Math.round(H*.5):Math.round(H*.5);
+  const boxW=W-40;
+  const rX=Math.round(W*.18), r2X=Math.round(W*.58);
+  const len=Math.round(boxW*.3);
+  const zig=(x0,y,rval,tag)=>{
+    const n=3, seg=len/(n*2);
+    let d=`M${x0},${y}`;
+    for(let i=0;i<n;i++){ d+=` l${seg},${-9} l${seg},${9}`; }
+    d+=` l${seg},${-9} l${seg},${9}`;
+    html+=`<path d="${d}" stroke="#f0a35a" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <text x="${x0+len/2}" y="${y-16}" text-anchor="middle" font-size="13" fill="#ffd9a0" font-weight="bold">${rval} Ом</text>`;
+  };
+  if(par){
+    const y1=Math.round(H*.32), y2=Math.round(H*.72);
+    zig(rX,y1,r1,'pa'); zig(rX,y2,r2,'pb');
+    html+=`<line x1="${rX-8}" y1="${y1}" x2="24" y2="${y1}" stroke="#8fb6cf" stroke-width="2.4"/>
+      <line x1="${rX-8}" y1="${y2}" x2="24" y2="${y2}" stroke="#8fb6cf" stroke-width="2.4"/>
+      <line x1="24" y1="${y1}" x2="24" y2="${y2}" stroke="#8fb6cf" stroke-width="2.4"/>
+      <line x1="${rX+len+6}" y1="${y1}" x2="${W-24}" y2="${y1}" stroke="#8fb6cf" stroke-width="2.4"/>
+      <line x1="${rX+len+6}" y1="${y2}" x2="${W-24}" y2="${y2}" stroke="#8fb6cf" stroke-width="2.4"/>
+      <line x1="${W-24}" y1="${y1}" x2="${W-24}" y2="${y2}" stroke="#8fb6cf" stroke-width="2.4"/>`;
+  } else {
+    zig(rX,midY,r1,'s1'); zig(r2X,midY,r2,'s2');
+    html+=`<line x1="22" y1="${midY}" x2="${rX-6}" y2="${midY}" stroke="#8fb6cf" stroke-width="2.4"/>
+      <line x1="${rX+len+6}" y1="${midY}" x2="${r2X-6}" y2="${midY}" stroke="#8fb6cf" stroke-width="2.4"/>`;
+  }
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block">${html}</svg>`;
+}
+function l49Compare(brn,uid){
+  // гирлянда (последовательно) vs фонари (параллельно): одна перегорела
+  const mk=(mode)=>{
+    const W=148,H=150, L=16,R=W-16;
+    const n=3, gap=(R-L)/(n*2+1);
+    let html='';
+    const lit = mode==='par' || brn===null;
+    const bulbs=[];
+    for(let i=0;i<n;i++){
+      const x=Math.round(L+gap*(i*2+1));
+      bulbs.push(x);
+    }
+    if(mode==='ser'){
+      // линия
+      const burntIdx= brn===null? -1 : 1; // перегорает средняя
+      if(brn!==null){
+        const bx=bulbs[1];
+        html+=`<line x1="${L}" y1="52" x2="${bx-11}" y2="52" stroke="#e8d9a8" stroke-width="3"/>
+          <line x1="${bx+11}" y1="52" x2="${R}" y2="52" stroke="#e8d9a8" stroke-width="3"/>`;
+        bulbs.forEach((x,i)=>{
+          if(i===1) html+=`<circle cx="${x}" cy="52" r="12" fill="none" stroke="#7f8b96" stroke-width="2.5"/><path d="M${x-6},${52-6} L${x+6},${52+6} M${x+6},${52-6} L${x-6},${52+6}" stroke="#7f8b96" stroke-width="2"/>`;
+          else html+=l49BulbG(x,52,10,false,'s'+i);
+        });
+      } else {
+        html+=`<line x1="${L}" y1="52" x2="${R}" y2="52" stroke="#e8d9a8" stroke-width="3"/>`;
+        bulbs.forEach((x,i)=> html+=l49BulbG(x,52,10,true,'s'+i));
+      }
+      html+=`<text x="${W/2}" y="18" text-anchor="middle" font-size="11" fill="#cbb89a">гирлянда</text>
+        <text x="${W/2}" y="${H-14}" text-anchor="middle" font-size="10.5" fill="${brn!==null?'#e8a05a':'#7fd1a0'}">${brn!==null?'одна сгорела — все погасли!':'все светят'}</text>`;
+    } else {
+      // фонари: три столбика-ветки
+      const yT=56,yB=118;
+      html+=`<line x1="${L}" y1="${yB}" x2="${L}" y2="${yT}" stroke="#e8d9a8" stroke-width="3"/>
+        <line x1="${R}" y1="${yB}" x2="${R}" y2="${yT}" stroke="#e8d9a8" stroke-width="3"/>
+        <line x1="${L}" y1="${yB}" x2="${R}" y2="${yB}" stroke="#e8d9a8" stroke-width="3"/>`;
+      const ys=[74,96,118];
+      bulbs.forEach((x,i)=>{
+        const y=ys[i];
+        const onHere = brn===null || i!==1;
+        html+=`<line x1="${L}" y1="${y}" x2="${R}" y2="${y}" stroke="#e8d9a8" stroke-width="3"/>`;
+        if(!onHere) html+=`<circle cx="${x}" cy="${y}" r="10" fill="none" stroke="#7f8b96" stroke-width="2.5"/><path d="M${x-5},${y-5} L${x+5},${y+5} M${x+5},${y-5} L${x-5},${y+5}" stroke="#7f8b96" stroke-width="2"/>`;
+        else html+=l49BulbG(x,y,9,true,'p'+i);
+      });
+      html+=`<text x="${W/2}" y="18" text-anchor="middle" font-size="11" fill="#cbb89a">фонари</text>
+        <text x="${W/2}" y="${H-8}" text-anchor="middle" font-size="10" fill="${brn!==null?'#9fe8c0':'#7fd1a0'}">${brn!==null?'одна перегорела — другие горят!':'все горят'}</text>`;
+    }
+    return `<div style="position:relative;width:${W}px;height:${H}px;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.28)">
+      ${l49Board(W,H,uid+mode)}
+      <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">${html}</svg>
+    </div>`;
+  };
+  return `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">${mk('ser')}${mk('par')}</div>`;
+}
+function l49KZ(kz,uid){
+  // короткое замыкание: нормальная ветка (лампа + предохранитель) и красная «обходная»
+  const W=312,H=236, xL=56, xR=W-34, yBot=190, yT=66;
+  const rungY=118, bx=Math.round(xL+(xR-xL)*.55), r=15;
+  const seg=(a,b,c,d,col,w)=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${col||'#e8d9a8'}" stroke-width="${w||3.5}"/>`;
+  let html='';
+  html+=seg(xL,yBot,xL,yT)+seg(xR,yT,xR,yBot)+seg(xL,yBot,xR,yBot);
+  // обычная перекладина: предохранитель — лампа
+  const fuseX=Math.round(xL+(xR-xL)*.3);
+  html+=seg(xL,rungY,fuseX-12,rungY)+seg(fuseX+12,rungY,bx-r-2,rungY)+seg(bx+r+2,rungY,xR,rungY);
+  html+=`<rect x="${fuseX-11}" y="${rungY-7}" width="22" height="14" rx="4" fill="${kz?'#b3543f':'#f0c060'}" stroke="#7a5a20" stroke-width="2"/>
+    <path d="M${fuseX-7},${rungY} L${fuseX+7},${rungY}" stroke="#7a5a20" stroke-width="2"/>
+    ${kz?`<path d="M${fuseX-6},${rungY-5} L${fuseX+6},${rungY+5} M${fuseX+6},${rungY-5} L${fuseX-6},${rungY+5}" stroke="#8a2f20" stroke-width="2.6"/>`:''}
+    <text x="${fuseX}" y="${rungY-14}" text-anchor="middle" font-size="9.5" fill="#e8d9a8">предохранитель</text>`;
+  html+=l49BulbG(bx,rungY,r,!kz,'k');
+  // красная обходная перекладина (КЗ)
+  if(kz){
+    html+=`<path d="M${xL},${yBot-30} L${xR},${yBot-30}" stroke="#e0523d" stroke-width="6" class="l49-heat"/>
+      <line x1="${xL}" y1="${yBot-30}" x2="${xL}" y2="${rungY}" stroke="#e0523d" stroke-width="6"/>
+      <line x1="${xR}" y1="${yBot-30}" x2="${xR}" y2="${rungY}" stroke="#e0523d" stroke-width="6"/>
+      <path d="M${xL+16},${yBot-37} q9,-10 18,0 M${xR-34},${yBot-37} q9,-10 18,0" class="l49-bolt" stroke="#ffe27a" stroke-width="3.5" fill="none"/>
+      <path d="M${xL+46},${yBot-37} q8,-9 16,0 M${xR-70},${yBot-37} q8,-9 16,0" class="l49-bolt" stroke="#ffe27a" stroke-width="3" fill="none"/>`;
+  } else {
+    html+=`<path d="M${xL},${yBot-24} L${xR},${yBot-24}" stroke="#3c5170" stroke-width="5" stroke-dasharray="7 6"/>
+      <text x="${(xL+xR)/2}" y="${yBot-34}" text-anchor="middle" font-size="10.5" fill="#7fa3ba">провода не соединены</text>`;
+  }
+  // батарея снизу
+  const pBat=Math.round(xL+(xR-xL)*.42);
+  html+=`<line x1="${pBat}" y1="${yBot-11}" x2="${pBat}" y2="${yBot+11}" stroke="#ece4c8" stroke-width="4"/>
+    <line x1="${pBat+15}" y1="${yBot-8}" x2="${pBat+15}" y2="${yBot+8}" stroke="#ece4c8" stroke-width="8"/>
+    <text x="${pBat+7}" y="${yBot+24}" text-anchor="middle" font-size="10.5" fill="#ffd9a0" font-weight="bold">9 В</text>`;
+  const msg= kz? 'R ≈ 0 — ток огромный, провод раскаляется!' : 'ток идёт только через лампу — предохранитель цел';
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:14px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.3)">
+    ${l49Board(W,H,uid)}
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">${html}
+      <text x="${(xL+xR)/2}" y="${H-14}" text-anchor="middle" font-size="11" fill="${kz?'#ffb0a0':'#9fe8c0'}" font-weight="bold">${msg}</text>
+    </svg>
+  </div>`;
+}
+function visL49(el){
+  // Урок 49 «Электрические цепи»: гирлянда Архимеда, последовательно/параллельно, КЗ
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      const on=!!st.closed;
+      h=col(big('Гирлянда Архимеда'),
+        (on
+          ? `<div style="font-size:46px" class="l49-on">✨🎄✨</div>`
+          : `<div style="font-size:46px">🎄</div>`)+
+        big(on?'лампочки загорелись!':'батарейка и лампочки — но цепь не замкнута')+
+        (on
+          ? sml('цепь замкнута — ток бежит, лампочки светят! а теперь вопрос: как они соединены? листай ➜')
+          : sml('сейчас разомкнута. замкни цепь — и гирлянда загорится!'))+
+        btns(btn(on?'🔌 разомкнуть цепь':`🔌 замкнуть цепь`, `l49Act('${lk}','c1')`)));
+    } else if(step===1){
+      const on=!!st.ring;
+      h=col(big('Цепь — это круг'),
+        l49Ring(on,'r')+
+        btns(btn(on?'✂️ разомкнуть':`🔌 замкнуть`, `l49Act('${lk}','c2')`))+
+        sml('ток выходит из батарейки и возвращается в неё. разорвёшь круг — всё погаснет!'));
+    } else if(step===2){
+      const out=st.outS||null;
+      h=col(big('Последовательно: одна линия'),
+        l49Series2(out,'s')+
+        btns(btn('💡 выкрутить лампу А',`l49Act('${lk}','sA')`),btn('💡 выкрутить лампу B',`l49Act('${lk}','sB')`),btn('🔧 вернуть',`l49Act('${lk}','sR')`))+
+        sml('лампы в одну линию — ток один на всех. выкрути одну: круг рвётся и гаснут ВСЕ!'));
+    } else if(step===3){
+      h=col(big('Последовательно'),
+        `<div style="font-size:27px;color:var(--brass);font-family:Georgia,serif;white-space:nowrap">R = R₁ + R₂</div>`+
+        rowC(chip('R₁ = 2 Ом','rgba(232,160,90,.5)'),chip('+',null),chip('R₂ = 3 Ом','rgba(232,160,90,.5)'))+
+        `<div style="max-width:300px;margin:0 auto">${l49ResRow(2,3,false,'n')}</div>`+
+        `<div style="font-size:20px" class="wv-pop">R = R₁ + R₂ = 2 + 3</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">R = 5 Ом</div>`+
+        sml('два резистора друг за другом — как одна длинная цепочка: сопротивления складываются'));
+    } else if(step===4){
+      const out=st.outP||null;
+      h=col(big('Параллельно: своя дорожка'),
+        l49Parallel2(out,'p')+
+        btns(btn('💡 выкрутить лампу А',`l49Act('${lk}','pA')`),btn('💡 выкрутить лампу B',`l49Act('${lk}','pB')`),btn('🔧 вернуть',`l49Act('${lk}','pR')`))+
+        sml('у каждой лампы своя дорожка к батарейке. выкрути одну — остальные продолжат светить!'));
+    } else if(step===5){
+      h=col(big('Параллельно одинаковых'),
+        rowC(chip('6 Ом','rgba(232,160,90,.5)'),chip('∥',null),chip('6 Ом','rgba(232,160,90,.5)'))+
+        `<div style="max-width:300px;margin:0 auto">${l49ResRow(6,6,true,'q')}</div>`+
+        `<div style="font-size:20px" class="wv-pop">току две дороги → вдвое легче</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">R = 6 : 2 = 3 Ом</div>`+
+        sml('две одинаковые лампы по 6 Ом параллельно: общее сопротивление вдвое меньше одной'));
+    } else if(step===6){
+      const brn=st.brn||null;
+      h=col(big('Гирлянда или фонари?'),
+        l49Compare(brn,'c')+
+        btns(btn('🔥 пережечь среднюю лампу',`l49Act('${lk}','brn')`))+
+        sml(brn?'слева гирлянда (последовательно): одна сгорела — погасла вся! справа фонари (параллельно): остальные горят!':'слева гирлянда, справа уличные фонари. нажми — и пережги одну лампу'));
+    } else if(step===7){
+      const kz=!!st.kz;
+      h=col(big('Короткое замыкание'),
+        l49KZ(kz,'z')+
+        btns(btn(kz?'✅ убрать обходной провод':`⚡ соединить провода напрямую`, `l49Act('${lk}','kz')`))+
+        sml(kz?'предохранитель перегорел (это он «пожертвовал» собой)! никогда так не делай в розетке!':'мимо лампы путь короче, но там НЕТ сопротивления — не соединяй так!'));
+    } else if(step===8){
+      h=col(big('Разбираем задачку'),
+        `<div style="font-size:22px;color:#d8ecff;white-space:nowrap">R = R₁ + R₂ = 2 + 3</div>`+
+        rowC(chip('2 Ом','rgba(232,160,90,.5)'),chip('+',null),chip('3 Ом','rgba(232,160,90,.5)'),chip('последовательно','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">R = 5 Ом ✓</div>`+
+        sml('такой вопрос будет дальше!'));
+    } else if(step===9){
+      // тренажёр
+      if(st.tm==null) st.tm='ser'; if(st.t1==null) st.t1=2; if(st.t2==null) st.t2=3;
+      const par=st.tm==='par';
+      if(par&&st.t1!==st.t2) st.t2=st.t1;
+      const R= par? Math.round(st.t1/2*10)/10 : st.t1+st.t2;
+      const form= par? `R = ${st.t1} : 2` : `R = ${st.t1} + ${st.t2}`;
+      h=col(big('Тренажёр: собери и посчитай'),
+        `<div class="wv-row">${chip(par?'∥ параллельно':'— последовательно', par?'rgba(127,209,255,.5)':'rgba(232,160,90,.5)')}
+           ${chip('R₁ = '+st.t1+' Ом','rgba(232,160,90,.5)')} ${chip('R₂ = '+st.t2+' Ом','rgba(232,160,90,.5)')}</div>`+
+        `<div style="max-width:300px;margin:2px auto">${l49ResRow(st.t1,st.t2,par,'t')}</div>`+
+        `<div style="font-size:18px" class="wv-pop">${form}</div>`+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">R общ = ${R} Ом</div>`+
+        btns(btn(par?'переключить на последовательно':'переключить на параллельно',`l49Act('${lk}','mode')`),
+          btn('R₁ +1',`l49Act('${lk}','1+')`),btn('R₁ −1',`l49Act('${lk}','1-')`),
+          par?null:btn('R₂ +1',`l49Act('${lk}','2+')`), par?null:btn('R₂ −1',`l49Act('${lk}','2-')`),
+          btn('↺',`l49Act('${lk}','r')`))+
+        sml(par?'параллельно двух одинаковых — делим пополам!':'последовательно — складываем!'));
+    } else {
+      // памятка
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:320px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.8">
+          🔗 <b>Последовательно</b> — одна линия: ток один на всех, R = R₁ + R₂.<br>
+          🪜 <b>Параллельно</b> — своя дорожка у каждой: напряжение общее, ток делится.<br>
+          🧮 Две одинаковые параллельно — сопротивление вдвое меньше.<br>
+          💥 Обход без лампы — короткое замыкание: огромный ток! Не соединяй провода напрямую.</div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 2 Ом и 3 Ом последовательно'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function l48Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   switch(act){
@@ -2887,6 +3271,7 @@ function renderLessonVis(){
   else if(id===36) visL36(el);
   else if(id===37) visL37(el);
   else if(id===48) visL48(el);
+  else if(id===49) visL49(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);

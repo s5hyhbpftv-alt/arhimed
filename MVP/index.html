@@ -474,6 +474,19 @@
   .l35-step { animation:l35Step 1.9s ease-in-out infinite; }
   @keyframes l35DriftIn { 0%{transform:scaleY(.4);opacity:.4} 100%{transform:scaleY(1);opacity:1} }
   .l35-drift { transform-origin:50% 100%; animation:l35DriftIn .7s ease-out both; }
+  /* урок 49 «Электрические цепи» */
+  @keyframes l49Pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+  .l49-on { animation:l49Pulse 1.5s ease-in-out infinite; }
+  @keyframes l49Flick { 0%,100%{opacity:.95} 22%{opacity:.25} 44%{opacity:.95} 66%{opacity:.35} 84%{opacity:.95} }
+  .l49-spark { animation:l49Flick .55s linear infinite; }
+  @keyframes l49Bolt { 0%{stroke-dashoffset:0;opacity:1} 100%{stroke-dashoffset:-56;opacity:1} }
+  .l49-bolt { stroke-dasharray:8 12; stroke-linecap:round; animation:l49Bolt .5s linear infinite; }
+  @keyframes l49Heat { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.5) saturate(1.6) drop-shadow(0 0 6px rgba(255,120,40,.8))} }
+  .l49-heat { animation:l49Heat .9s ease-in-out infinite; }
+  @keyframes l49Ripple { 0%{transform:translateY(0);opacity:0} 30%{opacity:.8} 100%{transform:translateY(10px);opacity:0} }
+  @keyframes l49Dash { 0%{stroke-dashoffset:0} 100%{stroke-dashoffset:-36} }
+  .l49-flow { stroke-dasharray:6 8; animation:l49Dash 1.4s linear infinite; }
+
   @keyframes wvGrow { 0%{transform:scaleX(0)} 100%{transform:scaleX(1)} }
   @keyframes wvIn { 0%{transform:translateY(14px);opacity:0} 100%{transform:translateY(0);opacity:1} }
   .wv-bub { width:9px; height:9px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#eaf7ff,#9fd4f2);
@@ -516,21 +529,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=88"></script>
-<script src="data/lessons.js?v=88"></script>
-<script src="js/comic.js?v=88"></script>
-<script src="js/core.js?v=88"></script>
-<script src="js/engine.js?v=88"></script>
-<script src="js/app.js?v=88"></script>
-<script src="js/dashboard.js?v=88"></script>
-<script src="js/lessons.js?v=88"></script>
-<script src="js/legend.js?v=88"></script>
-<script src="js/simulator.js?v=88"></script>
-<script src="js/duel.js?v=88"></script>
-<script src="js/agent.js?v=88"></script>
-<script src="js/voice.js?v=88"></script>
-<script src="js/assistant.js?v=88"></script>
-<script src="js/agentlive.js?v=88"></script>
+<script src="data/tasks.js?v=89"></script>
+<script src="data/lessons.js?v=89"></script>
+<script src="js/comic.js?v=89"></script>
+<script src="js/core.js?v=89"></script>
+<script src="js/engine.js?v=89"></script>
+<script src="js/app.js?v=89"></script>
+<script src="js/dashboard.js?v=89"></script>
+<script src="js/lessons.js?v=89"></script>
+<script src="js/legend.js?v=89"></script>
+<script src="js/simulator.js?v=89"></script>
+<script src="js/duel.js?v=89"></script>
+<script src="js/agent.js?v=89"></script>
+<script src="js/voice.js?v=89"></script>
+<script src="js/assistant.js?v=89"></script>
+<script src="js/agentlive.js?v=89"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -545,7 +558,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=88').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=89').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
