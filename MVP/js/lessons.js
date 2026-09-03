@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,168 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l16Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const EX=[
+    ['скидка','2000',20],['наценка','100',20],['скидка','500',10],['наценка','300',25],
+    ['два','2000',10,10],['два','1000',20,20],['два','800',50,20],['скидка','1600',25],['наценка','80',50],['два','400',10,20]];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break; case 's3': st.s3=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%EX.length; st.s1=st.s2=st.s3=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l16Bar(total,startCol,restCol,uid){
+  // полоса цены: зелёный = остаток после скидки; красный/золотой = скидка/добавка не нужен; покажем доли процента
+  return `<div style="width:300px;margin:4px auto;text-align:center">
+    <div style="position:relative;height:26px;background:rgba(255,255,255,.08);border-radius:13px;overflow:hidden">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:${startCol}%;background:linear-gradient(90deg,#4a90c9,#7fb8d8)"></div>
+      <div style="position:absolute;left:${startCol}%;top:0;bottom:0;right:0;background:${restCol||'rgba(224,82,61,.45)'}"></div>
+    </div>
+  </div>`;
+}
+function l16Table(uid){
+  const rows=[['−10%','× 0,9'],['+10%','× 1,1'],['−20%','× 0,8'],['+20%','× 1,2'],['−25%','× 0,75'],['+25%','× 1,25'],['−50%','× 0,5'],['+50%','× 1,5']];
+  return `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:300px;margin:0 auto">
+    ${rows.map(([p,m])=>`<div style="border:1px solid rgba(127,209,255,.3);border-radius:9px;padding:3px 8px;background:rgba(127,209,255,.05);font-size:14px"><span style="color:#f0a89a">${p}</span> <span style="color:#9fe8c0;font-weight:bold">${m}</span></div>`).join('')}
+  </div>`;
+}
+function l16Chain(uid){
+  // 2000 →(+10%)2200 →(−10%)1980: цепочка с множителями
+  const step=(num,lab,op,col)=>`<div style="text-align:center;min-width:84px">
+    <div style="font-size:22px;font-weight:bold;color:#fff">${num}</div>
+    <div style="font-size:11px;color:${col||'#cbb89a'}">${lab}</div></div>`;
+  const arrow=(t)=>`<div style="text-align:center;font-size:15px;color:#ffd9a0;font-weight:bold;min-width:54px">${t}</div>`;
+  return `<div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin:4px auto;width:300px">
+    ${step('2000','цена','')}${arrow('×1,1')}${step('2200','+10%','#7fd1a0')}${arrow('×0,9')}${step('1980','−10% от 2200','#f0a89a')}
+  </div>`;
+}
+function visL16(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Лавка Архимеда: наценка!'),
+        `<div style="font-size:48px" class="l35-pop">🏷️</div>`+
+        big('игрушка стоила 100, наценка +20% — сколько теперь?')+
+        sml('цены то падают (скидки), то растут (наценки). научимся не путаться!'));
+    } else if(step===1){
+      h=col(big('Процент — это сотые'),
+        rowC(chip('20% = 0,2','rgba(127,209,255,.5)'),chip('10% = 0,1','rgba(127,184,160,.5)'),chip('25% = 0,25','rgba(232,160,90,.5)'))+
+        sml('вспомни урок про проценты: p% — это p сотых. это нам пригодится!'));
+    } else if(step===2){
+      h=col(big('Скидка: цена падает'),
+        l16Bar(80,20,'c')+
+        `<div style="text-align:center;font-size:19px" class="wv-pop">скидка 20% → новая цена = 80% от старой</div>`+
+        sml('убрали 20% — осталось 80%. скидку ВЫЧИТАЕМ из цены'));
+    } else if(step===3){
+      h=col(big('Наценка: цена растёт'),
+        l16Bar(80,0,'d')+
+        `<div style="text-align:center;font-size:19px" class="wv-pop">наценка 20% → новая цена = 120% от старой</div>`+
+        sml('добавили 20% — стало 120%. наценку ПРИБАВЛЯЕМ к цене'));
+    } else if(step===4){
+      h=col(big('Хитрость: умножай на 0,8'),
+        `<div style="text-align:center;font-size:20px" class="wv-pop">−20% ⇔ × 0,8</div>`+
+        rowC(chip('2000 · 0,8 = 1600','rgba(127,184,160,.5)'))+
+        sml('вместо двух шагов — одно умножение! 0,8 = 1 − 0,2'));
+    } else if(step===5){
+      h=col(big('Хитрость: умножай на 1,2'),
+        `<div style="text-align:center;font-size:20px" class="wv-pop">+20% ⇔ × 1,2</div>`+
+        rowC(chip('100 · 1,2 = 120','rgba(127,184,160,.5)'))+
+        sml('1,2 = 1 + 0,2: цена целиком плюс добавка'));
+    } else if(step===6){
+      h=col(big('Таблица множителей'),
+        l16Table('t')+
+        sml('−10% → ×0,9 · −25% → ×0,75 · +50% → ×1,5. запомни главные!'));
+    } else if(step===7){
+      h=col(big('Способ «в два шага»'),
+        `<div style="display:flex;flex-direction:column;gap:5px;align-items:center;font-size:19px">
+          <div class="wv-pop">1) найди процент от цены: 20% от 2000 = 400</div>
+          <div class="wv-pop" style="animation-delay:.25s">2) отними (скидка) или прибавь (наценка): 2000 − 400 = 1600</div>
+        </div>`+
+        sml('так понятнее новичку, а умножение на 0,8 — быстрее для знатоков!'));
+    } else if(step===8){
+      h=col(big('Задача: скидка 20% на 2000'),
+        l16Bar(80,20,'a')+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">2000 · 0,8 = 1600 ✓</div>`+
+        sml('как в наших задачках: ответ 1600'));
+    } else if(step===9){
+      h=col(big('Задача: наценка 20% на 100'),
+        `<div style="text-align:center;font-size:20px" class="wv-pop">100 · 1,2 = 120</div>`+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">120 ✓ (как в проверке!)</div>`+
+        sml('было 100, стало 120 — наценка 20 рублей'));
+    } else if(step===10){
+      h=col(big('Важно! Процент — от ТЕКУЩЕЙ цены'),
+        `<div style="text-align:center;font-size:19px">2000 + 10% → 2200. теперь −10% считаем от 2200!</div>`+
+        sml('база каждый раз меняется — проценты «липнут» к новой цене'));
+    } else if(step===11){
+      h=col(big('Два шага подряд'),
+        l16Chain('c')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">2000 · 1,1 · 0,9 = 1980</div>`+
+        sml('умножаем один за другим: +10%, потом −10% от новой цены'));
+    } else if(step===12){
+      h=col(big('Почему не вернулось к 2000?'),
+        rowC(chip('+10%: 2000 → 2200 (добавили 200)','rgba(127,209,160,.5)'),chip('−10%: 2200 → 1980 (сняли 220!)','rgba(232,106,90,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">итог 1980 — меньше 2000!</div>`+
+        sml('скидка 10% от 2200 — это 220, а наценка дала только 200. десятка «потерялась»!'));
+    } else if(step===13){
+      h=col(big('Порядок не важен — база важна'),
+        rowC(chip('×0,8 ×1,2 = ×0,96','rgba(127,209,255,.5)'),chip('×1,2 ×0,8 = ×0,96','rgba(127,209,255,.5)'))+
+        `<div style="text-align:center;font-size:19px" class="wv-pop">−20% потом +20% → итог 0,96 (меньше старого!)</div>`+
+        sml('от перемены мест множители не меняются: ×0,96 всегда — значит, цена чуть упала'));
+    } else if(step===14){
+      h=col(big('Много «витков»'),
+        `<div style="text-align:center;font-size:19px">+10% и −10% каждый раз → каждый цикл умножаем на 0,99</div>`+
+        rowC(chip('1 цикл: 2000 → 1980','rgba(127,209,255,.4)'),chip('2 цикла: 1980 → 1960,2','rgba(127,209,255,.4)'))+
+        sml('1,1 · 0,9 = 0,99: цена медленно, но верно падает. забавно, правда?'));
+    } else if(step===15){
+      h=col(big('Классическая ловушка'),
+        rowC(chip('товар 2000','rgba(127,184,160,.5)'),chip('сначала +10%, потом −10%','rgba(232,106,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">2000 · 1,1 · 0,9 = 1980 ₽ — как в наших задачках!</div>`+
+        sml('запомни: «+p% и −p%» не возвращают цену — она чуть меньше'));
+    } else if(step===16){
+      const EX=[['скидка','2000',20],['наценка','100',20],['скидка','500',10],['наценка','300',25],['два','2000',10,10],['два','1000',20,20],['два','800',50,20],['скидка','1600',25],['наценка','80',50],['два','400',10,20]];
+      if(st.i==null) st.i=0;
+      const e=EX[st.i];
+      const kind=e[0], base=+e[1], p1=+e[2], p2= e.length>3? +e[3]:null;
+      const mul1 = kind==='скидка'? (100-p1)/100 : kind==='наценка'? (100+p1)/100 : (100+p1)/100;
+      const mul2 = kind==='два'? (100-p2)/100 : null;
+      const final= Math.round((kind==='два'? base*mul1*mul2 : base*mul1)*100)/100;
+      const desc= kind==='скидка'? `скидка −${p1}% от ${base}` : kind==='наценка'? `наценка +${p1}% к ${base}` : `+${p1}%, затем −${p2}% (от новой) от ${base}`;
+      h=col(big('Тренажёр: цена меняется'),
+        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) множитель: ${kind==='два'? '×'+mul1+' затем ×'+mul2 : '×'+mul1}</div>`:'')+
+        (st.s2? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">2) ${kind==='два'? base+' · '+mul1+' · '+mul2 : base+' · '+mul1} = ${final}</div>`:'')+
+        (st.s3? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">новая цена: ${final}</div>`:'')+
+        btns(btn('1️⃣ множитель',`l16Act('${lk}','s1')`),btn('2️⃣ посчитать',`l16Act('${lk}','s2')`),btn('3️⃣ ответ',`l16Act('${lk}','s3')`),btn('🎲 другой',`l16Act('${lk}','n')`),btn('↺',`l16Act('${lk}','r')`))+
+        sml('решай по шагам: переведи % в множитель, умножь цену, получи ответ!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🏷️ Скидка −p% → ×(1 − p/100).<br>
+            📈 Наценка +p% → ×(1 + p/100).<br>
+            🔄 Проценты — от ТЕКУЩЕЙ цены!<br>
+            ⚠️ +10% затем −10% → ×0,99 (меньше!).</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 100 и +20%'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -5860,6 +6022,7 @@ function renderLessonVis(){
   else if(id===46) visL46(el);
   else if(id===47) visL47(el);
   else if(id===13) visL13(el);
+  else if(id===16) visL16(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
