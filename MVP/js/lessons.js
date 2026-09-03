@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -3229,6 +3229,149 @@ function visL107(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 3 кг на 2 м'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l97Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['bass','60'],['bass','100'],['mid','200'],['mid','300'],['high','600'],['high','1000'],['high','1500'],['mid','250'],['bass','80'],['high','900'],['mid','150'],['high','2000']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l97Wave(f,uid){
+  // синусоида f волн в окне (приблизительно SVG-путь)
+  const W=200,H=44,amp=16;
+  const periods=f/100*2;
+  let d='';
+  const n=60;
+  for(let i=0;i<=n;i++){
+    const x=i/n*W;
+    const y=H/2-amp*Math.sin(i/n*periods*2*Math.PI);
+    d+=(i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);
+  }
+  return `<div class="wv-in" style="margin:2px auto;width:${W}px">
+    <svg width="${W}" height="${H}" style="display:block">
+      <path d="${d}" fill="none" stroke="${f<200?'#d98a3a':f<700?'#7fd1a0':'#7fb7d8'}" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <div style="text-align:center;font-size:11.5px;color:#cbb89a">${f} колебаний в секунду (Гц)</div>
+  </div>`;
+}
+function visL97(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Что такое звук?'),
+        `<div style="font-size:46px" class="wv-pulse">🔊</div>`+
+        sml('звук рождается, когда что-то КОЛЕБЛЕТСЯ: струна, голосовые связки, барабан. Нет колебаний — нет звука!'));
+    } else if(step===1){
+      h=col(big('Опыт: струна гитары'),
+        rowC(chip('дёрнули струну — она дрожит','rgba(127,209,255,.5)'),chip('дрожит — слышим звук','rgba(127,184,160,.5)'),chip('прижали — замолчала','rgba(232,160,90,.5)'))+
+        l97Wave(300,'a')+
+        sml('останови колебания пальцем — звук исчезнет! Как в нашей проверке: струна звучит, потому что колеблется'));
+    } else if(step===2){
+      h=col(big('Как звук доходит до уха?'),
+        rowC(chip('колебания передаются воздуху','rgba(127,209,255,.5)'),chip('волны бегут к уху','rgba(127,184,160,.5)'))+
+        `<div style="font-size:40px" class="wv-flow">〰️</div>`+
+        sml('струна толкает воздух — по воздуху бегут волны сжатия-разрежения — барабанная перепонка ловит их'));
+    } else if(step===3){
+      h=col(big('Почувствуй колебания сам'),
+        rowC(chip('пальцы на горло','rgba(127,209,255,.5)'),chip('скажи «а-а-а»','rgba(127,184,160,.5)'))+
+        sml('голосовые связки дрожат сотни раз в секунду — вот откуда твой голос!'));
+    } else if(step===4){
+      h=col(big('Громкость'),
+        rowC(chip('сильнее ударили — больше размах','rgba(232,160,90,.5)'),chip('звук громче','rgba(127,184,160,.5)'))+
+        `<div style="font-size:40px" class="wv-pop">🥁</div>`+
+        sml('громкость зависит от РАЗМАХА колебаний (амплитуды). Как в наших задачках!'));
+    } else if(step===5){
+      h=col(big('Высота звука'),
+        rowC(chip('частота — сколько колебаний в секунду','rgba(127,209,255,.5)'),chip('чаще — выше звук','rgba(127,184,160,.5)'),chip('реже — ниже','rgba(232,160,90,.5)'))+
+        sml('частота измеряется в герцах (Гц): 1 Гц = 1 колебание в секунду'));
+    } else if(step===6){
+      h=col(big('Низкий звук: редкие волны'),
+        l97Wave(60,'b')+
+        sml('бас-барабан или рык льва: колебания редкие — волны широкие, звук низкий'));
+    } else if(step===7){
+      h=col(big('Высокий звук: частые волны'),
+        l97Wave(1200,'c')+
+        sml('писк комара или свист: колебания частые — волны тесные, звук высокий. Как в наших задачках!'));
+    } else if(step===8){
+      h=col(big('Сравни: комар и лев'),
+        rowC(l97Wave(100,'d'),l97Wave(1000,'e'))+
+        sml('крылья комара машут сотни раз в секунду — писк высокий. Лев рычит редко — низко. Частота решает!'));
+    } else if(step===9){
+      h=col(big('Гитара: толстая и тонкая струна'),
+        rowC(chip('толстая струна колеблется медленно','rgba(232,160,90,.5)'),chip('тонкая — быстро','rgba(127,209,255,.5)'))+
+        sml('поэтому толстая струна звучит низко, тонкая — высоко. А прижал палец — струна стала короче и выше!'));
+    } else if(step===10){
+      h=col(big('Что слышит человек'),
+        rowC(chip('от 20 до 20 000 Гц','rgba(127,209,255,.5)'))+
+        sml('ниже 20 Гц — инфразвук (землетрясения), выше 20 000 Гц — ультразвук. Их мы не слышим!'));
+    } else if(step===11){
+      h=col(big('Кто слышит больше нас'),
+        rowC(chip('собака: до 45 000 Гц','rgba(127,209,255,.5)'),chip('дельфин и летучая мышь: ультразвук','rgba(127,184,160,.5)'))+
+        sml('собачий свисток «молчит» для нас, а собака слышит — потому что ультразвук!'));
+    } else if(step===12){
+      h=col(big('Звук в пустоте не идёт'),
+        rowC(chip('под колпаком нет воздуха','rgba(232,160,90,.5)'),chip('звонок не слышно','rgba(232,160,90,.5)'))+
+        sml('волнам нужна среда: воздух, вода, стена. В вакууме (пустоте) звуку нечем бежать!'));
+    } else if(step===13){
+      h=col(big('Скорость звука'),
+        rowC(chip('в воздухе ≈ 340 м/с','rgba(127,209,255,.5)'),chip('в воде быстрее','rgba(127,184,160,.5)'),chip('в стали ещё быстрее','rgba(127,184,160,.5)'))+
+        sml('поэтому молнию видно сразу, а гром приходит позже — звук бежит медленнее света!'));
+    } else if(step===14){
+      h=col(big('Эхо'),
+        rowC(chip('звук отражается от стены','rgba(127,209,255,.5)'),chip('возвращается — слышим «ау!» дважды','rgba(127,184,160,.5)'))+
+        `<div style="font-size:40px" class="wv-swing">🗻</div>`+
+        sml('эхо — это отражённый звук. В горах или большом зале он возвращается к нам'));
+    } else if(step===15){
+      h=col(big('Громкость и высота — не одно и то же!'),
+        rowC(chip('громкость = размах волн','rgba(127,209,255,.5)'),chip('высота = частота волн','rgba(127,184,160,.5)'))+
+        sml('можно пищать тихо и громко, можно гудеть тихо и громко — это разные свойства звука'));
+    } else if(step===16){
+      const POOL=[['bass','60'],['bass','100'],['mid','200'],['mid','300'],['high','600'],['high','1000'],['high','1500'],['mid','250'],['bass','80'],['high','900'],['mid','150'],['high','2000']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], band=e[0], f=+e[1];
+      const label=band==='bass'?'низкий (бас)':band==='mid'?'средний':'высокий';
+      const answer=band==='high'?'высокий':band==='mid'?'средний':'низкий';
+      let desc, firstStep;
+      if(f<200){ firstStep='мало колебаний в секунду → звук низкий'; }
+      else if(f<700){ firstStep='среднее число колебаний → звук средний'; }
+      else { firstStep='очень много колебаний в секунду → звук высокий'; }
+      h=col(big('Тренажёр: высота звука'),
+        `<div class="wv-row">${chip('частота '+f+' Гц — какой звук?','rgba(217,164,65,.35)')}</div>`+
+        l97Wave(f,'t')+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">${answer}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l97Act('${lk}','s1')`),btn('2️⃣ ответ',`l97Act('${lk}','s2')`),btn('🎲 другая',`l97Act('${lk}','n')`),btn('↺',`l97Act('${lk}','r')`))+
+        sml('чаще колебания — выше звук. Посмотри на волны: тесные = высокий!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🔊 Звук = колебания.<br>
+            📢 Громче = больше размах.<br>
+            🎵 Выше = чаще колебания (Гц).<br>
+            👂 Человек: 20–20 000 Гц.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там струна гитары'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -7854,6 +7997,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===97) visL97(el);
   else if(id===107) visL107(el);
   else if(id===103) visL103(el);
   else if(id===102) visL102(el);
