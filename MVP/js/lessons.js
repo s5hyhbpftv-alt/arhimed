@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,177 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l13Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const EX=[
+    ['7 + 9',true],['4 + 5',false],['6 + 8',true],['3 + 3',true],['10 + 7',false],['11 + 13',true],
+    ['15 - 8',false],['21 - 9',true],['12 - 5',false],['3 · 7',false],['4 · 5',true],['6 · 9',true],
+    ['1+2+3',true],['1+2+3+4',true],['1+2+3+4+5',false],['1·2·3·4·5',true],['1·3·5·7',false],['2·4·6',true],
+    ['1+3+5',false],['1+2+…+99',true],['1·2·…·100',true]];
+  switch(act){
+    case 'e': st.e=((st.e==null?0:st.e)+1)%EX.length; st.s1=0; st.guess=null; break;
+    case 'c': st.guess='чет'; break;
+    case 'n': st.guess='нечет'; break;
+    case 's1': st.s1=1; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l13Chips(n,uid){
+  // числа 1..n в цветных чипах по чётности
+  let s='';
+  for(let i=1;i<=n;i++) s+=`<div style="width:34px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;margin:1px;${i%2?'background:rgba(90,168,216,.25);border:1px solid rgba(90,168,216,.5);color:#a9d2ec':'background:rgba(224,82,61,.2);border:1px solid rgba(224,82,61,.45);color:#f0a89a'}">${i}</div>`;
+  return `<div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:300px;margin:0 auto">${s}</div>`;
+}
+function l13Par(op,uid){
+  // таблица 2×2 для + или ×
+  const mult=op==='×';
+  const data= mult
+    ? [[['чёт','чёт'],true],[['чёт','нечёт'],true],[['нечёт','чёт'],true],[['нечёт','нечёт'],false]]
+    : [[['чёт','чёт'],true],[['чёт','нечёт'],false],[['нечёт','чёт'],false],[['нечёт','нечёт'],true]];
+  const ex= mult
+    ? {e:['2·4=8','2·3=6','3·2=6','3·5=15'], col:['#7fd1a0','#7fd1a0','#7fd1a0','#e0523d']}
+    : {e:['2+4=6','2+3=5','3+2=5','3+5=8'], col:['#7fd1a0','#e0523d','#e0523d','#7fd1a0']};
+  const cells=data.map(([pair,even],i)=>`
+    <div style="display:flex;align-items:center;gap:6px;padding:4px 8px;margin:3px 0;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(255,255,255,.03)">
+      <span style="width:80px;font-size:15px;color:#d8ecff">${pair[0]} ${op} ${pair[1]}</span>
+      <span style="flex:1"></span>
+      <span style="font-size:16px;color:${even?'#7fd1a0':'#f0a89a'};font-weight:bold">${even?'чёт':'нечёт'}</span>
+      <span style="width:86px;text-align:right;font-size:12px;color:${ex.col[i]}">${ex.e[i]}</span>
+    </div>`).join('');
+  return `<div style="width:290px;margin:0 auto">${cells}</div>`;
+}
+function l13Grid(a,b,uid){
+  // сетка a×b клеток для a·b: «лишняя» клетка если оба нечётны
+  const col= a*b%2? 'odd':'even';
+  let h='';
+  let idx=0;
+  for(let r=0;r<b;r++) for(let c=0;c<a;c++){
+    const last= col==='odd' && c===a-1 && r===b-1;
+    h+=`<div style="width:14px;height:14px;margin:1px;border-radius:2px;${last?'background:#ffd9a0;box-shadow:0 0 5px rgba(255,217,160,.8)':'background:rgba(90,168,216,.55)'}"></div>`;
+  }
+  return `<div style="width:290px;margin:0 auto;text-align:center">
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:190px;margin:0 auto">${h}</div>
+    <div style="margin-top:5px;font-size:15px;color:#ffd9a0">${a} × ${b} = ${a*b} ${a*b%2?'— остаётся ОДНА «лишняя» клетка (нечёт!)':'— все клетки разбились на пары (чёт!)'}</div>
+  </div>`;
+}
+function visL13(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Академия чётности Архимеда'),
+        `<div style="font-size:46px" class="l35-pop">🔀</div>`+
+        big('11 конфет на двоих поровну? нет! 11 — нечётное')+
+        sml('чётность — «делится ли на 2». с ней решают задачи «можно ли?» без долгих вычислений!'));
+    } else if(step===1){
+      h=col(big('Чётные и нечётные'),
+        l13Chips(20,'a')+
+        `<div style="text-align:center;margin-top:4px">🔴 чётные (делятся на 2) · 🔵 нечётные</div>`+
+        sml('чётные: 2, 4, 6, 8… нечётные: 1, 3, 5, 7…'));
+    } else if(step===2){
+      h=col(big('Смотрим на последнюю цифру'),
+        rowC(chip('чётная: 0, 2, 4, 6, 8','rgba(224,82,61,.45)'),chip('нечётная: 1, 3, 5, 7, 9','rgba(90,168,216,.5)'))+
+        `<div style="text-align:center;font-size:18px">347 — кончается на 7 → <b style="color:#a9d2ec">нечётное</b> · 348 — на 8 → <b style="color:#f0a89a">чётное</b></div>`+
+        sml('вспомни урок про признаки делимости на 2!'));
+    } else if(step===3){
+      h=col(big('Сложение: чёт + чёт = чёт'),
+        rowC(chip('2 + 4 = 6','rgba(127,184,160,.5)'),chip('10 + 8 = 18','rgba(127,184,160,.5)'),chip('6 + 12 = 18','rgba(127,184,160,.5)'))+
+        sml('два чётных числа — и сумма чётная. всегда!'));
+    } else if(step===4){
+      h=col(big('чёт + нечёт = нечёт'),
+        rowC(chip('4 + 1 = 5','rgba(232,106,90,.5)'),chip('10 + 7 = 17','rgba(232,106,90,.5)'))+
+        sml('одно чётное и одно нечётное — сумма нечётная. пара не складывается целиком!'));
+    } else if(step===5){
+      h=col(big('нечёт + нечёт = чёт'),
+        rowC(chip('3 + 5 = 8','rgba(127,209,160,.5)'),chip('7 + 9 = 16','rgba(127,209,160,.5)'),chip('11 + 13 = 24','rgba(127,209,160,.5)'))+
+        sml('у каждого нечётного есть «лишняя единица» — две такие единицы складываются в пару!'));
+    } else if(step===6){
+      h=col(big('Карточка сложения'),
+        l13Par('+','p')+
+        sml('все четыре случая в одной карточке. запомни её — как таблицу умножения!'));
+    } else if(step===7){
+      h=col(big('Вычитание — как сложение'),
+        rowC(chip('10 − 4 = 6 (чёт − чёт)','rgba(127,184,160,.5)'),chip('10 − 3 = 7 (чёт − нечёт)','rgba(232,106,90,.5)'),chip('9 − 3 = 6 (нечёт − нечёт)','rgba(127,209,160,.5)'))+
+        sml('вычитание не меняет чётность — правила те же, что у сложения!'));
+    } else if(step===8){
+      h=col(big('Умножение: чётный множитель — всё чётно'),
+        rowC(chip('2 · 4 = 8','rgba(127,184,160,.5)'),chip('4 · 5 = 20','rgba(127,184,160,.5)'),chip('6 · 9 = 54','rgba(127,184,160,.5)'))+
+        sml('в произведении есть пара — значит, и результат делится на 2'));
+    } else if(step===9){
+      h=col(big('нечёт × нечёт = нечёт'),
+        rowC(chip('3 · 3 = 9','rgba(90,168,216,.5)'),chip('5 · 7 = 35','rgba(90,168,216,.5)'),chip('9 · 11 = 99','rgba(90,168,216,.5)'))+
+        sml('если ни у одного множителя нет пары — и у произведения нет!'));
+    } else if(step===10){
+      h=col(big('Почему? Смотрим клетки'),
+        l13Grid(3,3,'g')+
+        sml('3×3 = 9 клеток: 8 клеток разбиваются на пары, а одна остаётся «лишней». 9 — нечётное!'));
+    } else if(step===11){
+      h=col(big('Главное правило умножения'),
+        rowC(chip('произведение чётно ⇔ хоть один множитель чётный','rgba(127,209,255,.5)'))+
+        sml('а если все множители нечётные — произведение нечётное. проверять легко!'));
+    } else if(step===12){
+      h=col(big('Сумма многих чисел'),
+        rowC(chip('1+2+3 = 6 — чёт','rgba(127,209,160,.5)'),chip('нечётных слагаемых 2 (1 и 3) — чётное число','rgba(127,209,255,.5)'))+
+        `<div style="text-align:center;font-size:17px" class="wv-pop">чётность суммы решает число НЕчётных слагаемых</div>`+
+        sml('чётные ничего не меняют, каждый нечётный «переключает» чётность'));
+    } else if(step===13){
+      h=col(big('1 + 2 + … + 99'),
+        `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:2px">${Array.from({length:99},(_,i)=>`<div style="width:10px;height:10px;border-radius:2px;margin:.5px;${(i+1)%2?'background:rgba(90,168,216,.7)':'background:rgba(224,82,61,.35)'}"></div>`).join('')}</div>`+
+        `<div style="text-align:center;font-size:17px" class="wv-pop">нечётных чисел ровно 50 → сумма <b style="color:#7fd1a0">чётная</b> (50 — чётное!)</div>`+
+        sml('не считая всю сумму! как в наших задачках'));
+    } else if(step===14){
+      h=col(big('1 · 2 · … · 100'),
+        rowC(chip('среди множителей есть 2','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">произведение чётное — даже без счёта!</div>`+
+        sml('один чётный множитель делает всё произведение чётным'));
+    } else if(step===15){
+      h=col(big('Головоломки'),
+        rowC(
+          `<div style="text-align:center;width:140px;border:2px solid rgba(127,209,255,.35);border-radius:12px;padding:8px"><div style="font-size:17px;color:#a9d2ec">сумма ТРЁХ нечётных</div><div style="font-size:20px;font-weight:bold;color:#f0a89a">нечётная</div><div class="wv-sml" style="font-size:10px">3 нечётных «переключателя»</div></div>`+
+          `<div style="text-align:center;width:140px;border:2px solid rgba(127,209,160,.4);border-radius:12px;padding:8px"><div style="font-size:17px;color:#9fe8c0">если a·b нечётно</div><div style="font-size:20px;font-weight:bold;color:#a9d2ec">a и b оба нечётные</div><div class="wv-sml" style="font-size:10px">иначе был бы чётный множитель</div></div>`)+
+        sml('чётность умеет отвечать «можно ли?» — без единого вычисления!'));
+    } else if(step===16){
+      const EX=[['7 + 9',true],['4 + 5',false],['6 + 8',true],['3 + 3',true],['10 + 7',false],['11 + 13',true],['15 - 8',false],['21 - 9',true],['12 - 5',false],['3 · 7',false],['4 · 5',true],['6 · 9',true],['1+2+3',true],['1+2+3+4',true],['1+2+3+4+5',false],['1·2·3·4·5',true],['1·3·5·7',false],['2·4·6',true],['1+3+5',false],['1+2+…+99',true],['1·2·…·100',true]];
+      if(st.e==null) st.e=0;
+      const [expr,even]=EX[st.e];
+      let verdict='';
+      if(st.guess){
+        const good=(st.guess==='чет')===even;
+        verdict=`<div class="l35-pop" style="font-size:18px;font-weight:bold;color:${good?'#9fe8c0':'#ffb0a0'};text-align:center">${good?'✅ верно!':'❌ нет: '}${expr} — ${even?'чётное':'нечётное'}</div>`;
+      }
+      if(st.s1) verdict+=`<div class="l35-pop" style="font-size:14px;color:#cbb89a;text-align:center">разбор: ${EX[st.e][0].length<12?'посмотри правила чётности (карточки на шагах 6 и 8)': (expr==='1+2+…+99'?'нечётных слагаемых 50 — чётное количество':'в произведении есть чётный множитель')}</div>`;
+      h=col(big('Тренажёр: чёт или нечёт?'),
+        `<div style="font-size:30px;text-align:center;font-weight:bold;color:#fff;margin:4px 0">${expr}</div>`+
+        verdict+
+        btns(btn('🔴 чётное',`l13Act('${lk}','c')`),btn('🔵 нечётное',`l13Act('${lk}','n')`),btn('💡 разбор',`l13Act('${lk}','s1')`),btn('🎲 другой',`l13Act('${lk}','e')`),btn('↺',`l13Act('${lk}','r')`))+
+        sml('сначала прикинь по правилам, потом жми кнопку и проверь себя!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🔴 чёт+чёт=чёт · нечёт+нечёт=чёт · чёт+нечёт=нечёт.<br>
+            ✖️ Один чётный множитель — всё произведение чётно.<br>
+            🔄 Чётность суммы — это число нечётных слагаемых.<br>
+            💡 «Можно ли?» — проверь чётность до и после!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — сумма двух нечётных'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -5688,6 +5859,7 @@ function renderLessonVis(){
   else if(id===83) visL83(el);
   else if(id===46) visL46(el);
   else if(id===47) visL47(el);
+  else if(id===13) visL13(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
