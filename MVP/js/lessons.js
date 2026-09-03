@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,181 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l83Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['3','45','5'],['2','40','5'],['3','150','7'],['4','240','6'],['5','100','8'],['2','36','9'],['6','180','4'],['10','500','3']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l83Ratio(a,b,uid){
+  // «во сколько раз»: две группы значков
+  const big=Math.max(a,b), small=Math.min(a,b);
+  const times=big/small;
+  const icon='🍎';
+  return `<div style="width:300px;margin:0 auto;text-align:center;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:8px 6px">
+    <div style="font-size:11px;color:#cbb89a">${big} и ${small}</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap">
+      <div style="max-width:120px">${icon.repeat(big)}</div>
+      <div style="font-size:22px;color:#ffd9a0;font-weight:bold">${big} : ${small} = ${times}</div>
+      <div style="max-width:70px">${icon.repeat(small)}</div>
+    </div>
+    <div style="margin-top:4px;font-size:15px;color:#9fe8c0">${big} в ${times} раз${times===2?'а':''} больше, чем ${small}</div>
+  </div>`;
+}
+function l83Table(a,priceA,b,uid){
+  // табличка «штуки / цена» с ценой одной
+  const unit=priceA/a;
+  const ans=unit*b;
+  return `<div style="width:290px;margin:0 auto;border-radius:12px;overflow:hidden;border:1px solid rgba(127,209,255,.2)">
+    <div style="display:flex;background:rgba(127,209,255,.08)">
+      <div style="flex:1;text-align:center;padding:4px 0;color:#cbb89a;font-size:12px">штук</div>
+      <div style="flex:1;text-align:center;padding:4px 0;color:#cbb89a;font-size:12px">цена, ₽</div></div>
+    <div style="display:flex">
+      <div style="flex:1;text-align:center;padding:5px 0;font-size:18px;font-weight:bold;color:#fff">${a}</div>
+      <div style="flex:1;text-align:center;padding:5px 0;font-size:18px;font-weight:bold;color:#fff">${priceA}</div></div>
+    <div style="display:flex;background:rgba(255,255,255,.04)">
+      <div style="flex:1;text-align:center;padding:5px 0;font-size:18px;font-weight:bold;color:#ffd9a0">1</div>
+      <div style="flex:1;text-align:center;padding:5px 0;font-size:18px;font-weight:bold;color:#7fd1a0">${unit}</div></div>
+    <div style="display:flex">
+      <div style="flex:1;text-align:center;padding:5px 0;font-size:18px;font-weight:bold;color:#fff">${b}</div>
+      <div style="flex:1;text-align:center;padding:5px 0;font-size:18px;font-weight:bold;color:#7fd1a0">${ans}</div></div>
+  </div>`;
+}
+function l83Prop(a,b,c,d,uid){
+  // пропорция a:b = c:d + основное свойство (крест)
+  const pair=(x,y)=>`<span style="display:inline-flex;flex-direction:column;align-items:center;font-family:Georgia,serif;font-weight:bold;color:#fff;font-size:24px;line-height:1.05"><span>${x}</span><span style="border-top:2px solid #fff;padding:0 5px">${y}</span></span>`;
+  return `<div style="width:300px;margin:0 auto;text-align:center;background:rgba(255,255,255,.03);border:1px solid rgba(127,209,255,.15);border-radius:14px;padding:10px 6px">
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap">
+      ${pair(a,b)}<span style="font-size:20px;color:#cbb89a">=</span>${pair(c,d)}
+    </div>
+    <div style="margin-top:8px;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;font-size:12px;color:#cbb89a">
+      <span style="background:rgba(224,82,61,.12);border:1px solid rgba(224,82,61,.4);border-radius:8px;padding:2px 8px">крайние: ${a} и ${d}</span>
+      <span style="background:rgba(90,168,216,.12);border:1px solid rgba(90,168,216,.4);border-radius:8px;padding:2px 8px">средние: ${b} и ${c}</span>
+    </div>
+    <div style="margin-top:6px;font-size:15px;color:#9fe8c0">${a}·${d} = ${b}·${c} → ${a*d} = ${b*c} ✓</div>
+  </div>`;
+}
+function visL83(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Лавка Архимеда'),
+        `<div style="font-size:48px" class="l35-pop">🍎</div>`+
+        big('2 яблока стоят 40 ₽. А 5 яблок?')+
+        sml('мы уже умеем считать дроби и проценты — теперь научимся «одинаковому росту»: если яблок больше, цена тоже больше!'));
+    } else if(step===1){
+      h=col(big('Во сколько раз больше?'),
+        l83Ratio(6,2,'a')+
+        sml('6 яблок и 2 яблока. 6 : 2 = 3 — значит, 6 в 3 раза больше. деление и есть отношение!'));
+    } else if(step===2){
+      h=col(big('Отношение — это деление'),
+        rowC(chip('6 : 2 = 3','rgba(127,209,255,.5)'),chip('10 : 5 = 2','rgba(127,184,160,.5)'),chip('8 : 4 = 2','rgba(232,160,90,.5)'))+
+        `<div style="text-align:center;font-size:20px;margin:4px 0">a : b — «a относится к b»</div>`+
+        sml('отношение показывает, во сколько раз первое число больше второго (или меньше, если оно маленькое)'));
+    } else if(step===3){
+      h=col(big('Одинаковый рост — прямая пропорция'),
+        `<div style="text-align:center;font-size:20px;margin:4px 0">2 яблока → 40 ₽</div>`+
+        `<div style="text-align:center;font-size:20px;margin:2px 0">4 яблока → 80 ₽ (вдвое больше яблок — вдвое больше денег!)</div>`+
+        `<div style="text-align:center;font-size:20px;margin:2px 0">6 яблок → 120 ₽</div>`+
+        sml('растут вместе и одинаково: во сколько раз больше яблок, во столько же раз больше цена'));
+    } else if(step===4){
+      h=col(big('Секрет: цена ОДНОЙ штуки'),
+        l83Table(2,40,5,'t')+
+        `<div style="text-align:center;font-size:20px" class="wv-pop">1 яблоко = 40 : 2 = 20 ₽</div>`+
+        sml('если знаешь цену одной штуки — сможешь посчитать сколько угодно!'));
+    } else if(step===5){
+      h=col(big('Способ 1: через единицу'),
+        `<div style="display:flex;flex-direction:column;gap:6px;align-items:center;font-size:20px">
+          <div class="wv-pop">1) цена одной: 40 : 2 = 20 ₽</div>
+          <div class="wv-pop" style="animation-delay:.2s">2) на 5 яблок: 20 · 5 = 100 ₽</div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">Ответ: 100 ₽</div>`+
+        sml('два шага: сначала «цена одной», потом умножь. так решают почти все такие задачи!'));
+    } else if(step===6){
+      h=col(big('Другая запись: пропорция'),
+        `<div style="text-align:center;font-size:22px;margin:4px 0">2 яблока / 40 ₽ = 5 яблок / x ₽</div>`+
+        sml('запишем одинаковые отношения рядом: сколько стоит «одно яблоко» — одинаково. коротко: 2/40 = 5/x. x — неизвестная цена'));
+    } else if(step===7){
+      h=col(big('Главное свойство пропорции'),
+        l83Prop(2,40,5,100,'p')+
+        sml('если 2/40 = 5/x, то 2·x = 40·5. крайние перемножаются со средними — это закон пропорции!'));
+    } else if(step===8){
+      h=col(big('Почему так? Крест-накрест'),
+        rowC(chip('2/40 = 5/x','rgba(127,209,255,.5)'))+
+        `<div style="text-align:center;font-size:19px;margin:4px 0" class="wv-pop">умножаем «крестом»: 2 · x = 40 · 5</div>`+
+        sml('две равные дроби — значит, и «верх накрест с низом» равны. так дроби «перекрёстно» проверяют друг друга'));
+    } else if(step===9){
+      h=col(big('Находим x'),
+        `<div style="display:flex;flex-direction:column;gap:6px;align-items:center;font-size:20px">
+          <div class="wv-pop">2 · x = 200</div>
+          <div class="wv-pop" style="animation-delay:.2s">x = 200 : 2 = 100</div>
+        </div>`+
+        sml('x стоит в произведении — чтобы найти, делим на известный множитель'));
+    } else if(step===10){
+      h=col(big('Способ 2: через пропорцию'),
+        `<div style="text-align:center;font-size:20px;margin:4px 0" class="wv-pop">2/40 = 5/x → x = 40·5 : 2 = 100</div>`+
+        rowC(chip('способ 1 (через единицу): 100 ₽','rgba(127,184,160,.5)'),chip('способ 2 (пропорция): 100 ₽','rgba(127,209,255,.5)'))+
+        sml('оба способа дают один ответ — выбирай, какой нравится!'));
+    } else if(step===11){
+      h=col(big('Ручки (как в проверке)'),
+        rowC(chip('3 ручки — 45 ₽','rgba(127,184,160,.5)'),chip('5 ручек — ?','rgba(232,106,90,.5)'))+
+        l83Table(3,45,5,'r')+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">45 : 3 · 5 = 75 ₽ ✓</div>`+
+        sml('цена одной ручки 15 ₽, умножаем на 5 → 75'));
+    } else if(step===12){
+      h=col(big('Яблоки килограммами'),
+        rowC(chip('3 кг — 150 ₽','rgba(127,184,160,.5)'),chip('7 кг — ?','rgba(232,106,90,.5)'))+
+        l83Table(3,150,7,'y')+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">150 : 3 · 7 = 350 ₽</div>`+
+        sml('килограмм стоит 50 ₽; 7 килограммов — 350 ₽. как в наших задачках!'));
+    } else if(step===13){
+      h=col(big('Поезд едет ровно'),
+        rowC(chip('4 часа — 240 км','rgba(127,184,160,.5)'),chip('6 часов — ?','rgba(232,106,90,.5)'))+
+        l83Table(4,240,6,'z')+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">240 : 4 · 6 = 360 км ✓</div>`+
+        sml('скорость = путь за 1 час: 60 км/ч. за 6 часов — 360 км'));
+    } else if(step===14){
+      const POOL=[['3','45','5'],['2','40','5'],['3','150','7'],['4','240','6'],['5','100','8'],['2','36','9'],['6','180','4'],['10','500','3']];
+      if(st.i==null) st.i=0;
+      const [a,priceA,b]=POOL[st.i];
+      const unit=priceA/a, ans=unit*b;
+      h=col(big('Тренажёр: «сколько стоит?»'),
+        `<div class="wv-row">${chip(a+' шт = '+priceA+' ₽','rgba(127,184,160,.5)')} ${chip('сколько стоят '+b+' шт?','rgba(232,106,90,.5)')}</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:19px;text-align:center;color:#ffd9a0">1) цена одной: ${priceA} : ${a} = ${unit} ₽</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${b} шт = ${unit} · ${b} = ${ans} ₽</div>`:'')+
+        btns(btn('1️⃣ цена одной',`l83Act('${lk}','s1')`),btn('2️⃣ ответ',`l83Act('${lk}','s2')`),btn('🎲 другой',`l83Act('${lk}','n')`),btn('↺',`l83Act('${lk}','r')`))+
+        sml('простой план: сначала «сколько за 1 штуку», потом умножь на столько, сколько нужно. можно и пропорцией!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🍎 Растут одинаково — прямая пропорция.<br>
+            1️⃣ Найди «цену одной» (путь за 1 час).<br>
+            ✖️ Умножь на нужное количество.<br>
+            ⚖️ Или пропорция: a/b = c/x → a·x = b·c.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 3 ручки и 45 ₽'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -5117,6 +5292,7 @@ function renderLessonVis(){
   else if(id===80) visL80(el);
   else if(id===81) visL81(el);
   else if(id===82) visL82(el);
+  else if(id===83) visL83(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
