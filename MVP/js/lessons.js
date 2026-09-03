@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,193 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l79Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[[[2,7],[3,7]],[[5,8],[2,8]],[[3,8],[4,8]],[[2,3],[1,4]],[[5,6],[3,4]],[[1,4],[2,4]],[[3,10],[7,10]],[[1,6],[5,6]],[[1,3],[1,6]]];
+  switch(act){
+    case 'e+': st.eat=Math.min(8,(st.eat==null?0:st.eat)+1); break;
+    case 'e-': st.eat=Math.max(0,(st.eat==null?0:st.eat)-1); break;
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break; case 's3': st.s3=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=st.s3=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l79F(a,b){ // красивая дробь a/b
+  return `<span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-family:Georgia,serif;line-height:1.05">
+    <span style="padding:0 6px;font-size:${b? 'inherit':''}">${a}</span>
+    <span style="border-top:2px solid currentColor;padding:0 6px;">${b}</span>
+  </span>`;
+}
+function l79Bar(num,den,uid,opt){
+  const o=opt||{};
+  const W=o.w||270, H=o.h||44;
+  const seg=Math.floor(W/den);
+  const cells=[];
+  for(let i=0;i<den;i++){
+    const on=i<num;
+    cells.push(`<div class="l35-pop" style="animation-delay:${(0.06+i*0.06).toFixed(2)}s;width:${seg-2}px;height:${H-14}px;margin:1px;border-radius:4px;${on?`background:${o.col||'#e0523d'};box-shadow:0 1px 2px rgba(0,0,0,.2)`:'background:rgba(255,255,255,.09);border:1px dashed rgba(255,255,255,.25)'}"></div>`);
+  }
+  return `<div style="text-align:center">
+    <div style="width:${W}px;margin:0 auto;background:rgba(255,255,255,.05);border-radius:10px;display:flex;justify-content:center;padding:6px 2px;border:1px solid rgba(255,255,255,.1)">${cells.join('')}</div>
+    <div style="margin-top:3px;color:#d8ecff;font-size:15px">${num} из ${den} — это ${o.label||''}</div>
+  </div>`;
+}
+function l79Sector(cx,cy,r,a0,a1){
+  const rad=(d)=>d*Math.PI/180;
+  const x0=cx+r*Math.cos(rad(a0)), y0=cy+r*Math.sin(rad(a0));
+  const x1=cx+r*Math.cos(rad(a1)), y1=cy+r*Math.sin(rad(a1));
+  const large=a1-a0>180?1:0;
+  return `M${cx},${cy} L${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${large} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`;
+}
+function l79Pizza(num,den,uid,opt){
+  const o=opt||{};
+  const size=o.s||170, cx=size/2, cy=size/2+8, r=size/2-16;
+  const col=o.col||'#f0a35a';
+  const step=360/den;
+  let html='';
+  for(let i=0;i<den;i++){
+    const on=i<num;
+    html+=`<path d="${l79Sector(cx,cy,r,-90+i*step,-90+(i+1)*step)}" fill="${on?col:'#2b3a4a'}" stroke="#fffdf6" stroke-width="2"/>`;
+  }
+  html+=`<circle cx="${cx}" cy="${cy}" r="${r*0.22}" fill="#e0523d" stroke="#b3543f" stroke-width="2"/>`;
+  html+=`<text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="13" fill="#fff" font-weight="bold">${num}/${den}</text>`;
+  const marks=[];
+  for(let i=0;i<den;i++){
+    const a=-90+i*step+step/2;
+    marks.push(`${num>i?'':'×'}`);
+  }
+  return `<svg width="${size}" height="${size+8}" viewBox="0 0 ${size} ${size+8}" style="display:block;margin:0 auto;overflow:visible">
+    ${html}
+  </svg>`;
+}
+function l79Conv(a,b,uid){
+  // приведение к общему знаменателю НОК
+  const g=(()=>{let x=a,y=b; while(y){const t=x%y;x=y;y=t;} return x;})();
+  const l=a/g*b;
+  return {l, k1:l/a, k2:l/b};
+}
+function l79Frac(a,b,big){
+  return `<span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-family:Georgia,serif;font-weight:bold;color:#fff;font-size:${big?'32':'24'}px;line-height:1.05">
+    <span>${a}</span><span style="border-top:2px solid #fff;padding:0 8px;">${b}</span></span>`;
+}
+function visL79(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      const eat=Math.max(0,Math.min(8,st.eat==null?0:st.eat));
+      h=col(big('Пицца Архимеда'),
+        l79Pizza(eat,8,'p0',{col:'#e0523d'})+
+        btns(btn('🍕 взять кусок',`l79Act('${lk}','e+')`),btn('− кусок',`l79Act('${lk}','e-')`))+
+        sml('знаменатель — на сколько кусков разрезали (8), числитель — сколько взяли ('+eat+'). бери куски и смотри!'));
+    } else if(step===1){
+      h=col(big('Что говорит дробь'),
+        rowC(l79Pizza(3,5,'a',{s:140,col:'#5aa8d8'}),l79Pizza(4,7,'b',{s:140,col:'#8ab860'}))+
+        sml('знаменатель — на сколько равных частей делим · числитель — сколько берём'));
+    } else if(step===2){
+      h=col(big('Когда дробь — целое'),
+        rowC(chip('7/7 = 1','rgba(127,209,160,.5)'),chip('9/7 = 1 целая 2/7','rgba(127,209,255,.5)'))+
+        l79Pizza(7,7,'c',{s:150,col:'#f0a35a'})+
+        sml('взяли все 7 кусков — целая пицца! неправильная дробь 9/7 — это целая и ещё 2/7'));
+    } else if(step===3){
+      h=col(big('Складываем с одинаковым знаменателем'),
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:flex-end;flex-wrap:wrap">
+          ${l79Frac(2,7)}<span style="font-size:24px;color:#cbb89a">+</span>${l79Frac(3,7)}<span style="font-size:24px;color:#cbb89a">=</span>${l79Frac(5,7)}</div>`+
+        l79Bar(5,7,'d',{col:'#e0523d'})+
+        sml('куски одного размера: 2 седьмых + 3 седьмых = 5 седьмых. складываем ТОЛЬКО числители!'));
+    } else if(step===4){
+      h=col(big('Вычитаем'),
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:flex-end;flex-wrap:wrap">
+          ${l79Frac(5,8)}<span style="font-size:24px;color:#cbb89a">−</span>${l79Frac(2,8)}<span style="font-size:24px;color:#cbb89a">=</span>${l79Frac(3,8)}</div>`+
+        l79Bar(5,8,'e',{col:'#5aa8d8'})+
+        sml('убрали 2 восьмых из 5 — осталось 3 восьмых. знаменатель не меняется!'));
+    } else if(step===5){
+      h=col(big('Сокращаем: 6/8 = 3/4'),
+        l79Bar(6,8,'f',{col:'#8ab860'})+
+        `<div style="text-align:center;font-size:19px" class="wv-pop">6/8 → делим и верх и низ на 2 → 3/4</div>`+
+        l79Bar(3,4,'g',{col:'#f0a35a'})+
+        sml('куски крупнее — а пиццы одинаковые! 6 восьмых и 3 четверти — одно и то же количество'));
+    } else if(step===6){
+      h=col(big('Почему нельзя 2/3 + 1/4 напрямую'),
+        rowC(l79Pizza(2,3,'h',{s:120,col:'#e0523d'}),`<div style="font-size:22px;color:#cbb89a">+</div>`,l79Pizza(1,4,'i',{s:120,col:'#5aa8d8'}),`<div style="font-size:22px;color:#e0523d">✗</div>`,l79Frac(3,7))+
+        sml('куски РАЗНОГО размера: треть и четверть нельзя складывать как «3/7»! сначала — одинаковые дольки'));
+    } else if(step===7){
+      const cv=l79Conv(3,4);
+      h=col(big('Общий знаменатель — НОК'),
+        rowC(chip('НОК(3, 4) = 12','rgba(217,164,65,.45)'))+
+        l79Bar(8,12,'j',{col:'#e0523d'})+
+        l79Bar(3,12,'k',{col:'#5aa8d8'})+
+        sml('2/3 = 8/12 (дорезали на 12 долек), 1/4 = 3/12. теперь куски одинаковые — можно складывать!'));
+    } else if(step===8){
+      h=col(big('Складываем с разными знаменателями'),
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:flex-end;flex-wrap:wrap">
+          ${l79Frac(8,12)}<span style="font-size:22px;color:#cbb89a">+</span>${l79Frac(3,12)}<span style="font-size:22px;color:#cbb89a">=</span>${l79Frac(11,12,1)}</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">2/3 + 1/4 = 11/12 ✓</div>`+
+        sml('три шага: НОК знаменателей → приведи каждую дробь → сложи числители'));
+    } else if(step===9){
+      h=col(big('Вычитаем с разными знаменателями'),
+        rowC(chip('НОК(6, 4) = 12','rgba(217,164,65,.45)'))+
+        `<div style="font-size:22px;text-align:center">5/6 − 3/4 = 10/12 − 9/12 = <b style="color:#7fd1a0">1/12</b></div>`+
+        sml('5/6 = 10/12 (умножили на 2), 3/4 = 9/12 (на 3). 10 − 9 = 1 двенадцатая!'));
+    } else if(step===10){
+      h=col(big('Смешанные числа'),
+        rowC(chip('1 1/4 + 1 2/4 = 2 3/4','rgba(127,209,160,.5)'))+
+        `<div style="font-size:21px;text-align:center;margin:4px 0">3 1/4 − 1 3/4 = ? не хватает четверти → занимаем целое</div>`+
+        `<div style="font-size:21px;text-align:center" class="wv-pop">3 1/4 = 2 5/4 → 2 5/4 − 1 3/4 = 1 2/4 = <b style="color:#7fd1a0">1 1/2</b></div>`+
+        sml('целые складываем с целыми, дроби с дробями; не хватает — «размениваем» целое, как десяток в столбике!'));
+    } else if(step===11){
+      h=col(big('Ловушка: не складывай знаменатели!'),
+        rowC(`<div style="text-align:center;opacity:.6">${l79Frac(3,8)} + ${l79Frac(4,8)} = <span style="color:#e0523d;text-decoration:line-through">${l79Frac(7,16)}</span></div>`) +
+        `<div style="font-size:22px;text-align:center" class="l35-pop">правильно: <b style="color:#7fd1a0">7/8</b></div>`+
+        l79Bar(7,8,'l',{col:'#e0523d'})+
+        sml('кусков было 8 — и осталось 8! знаменатель не меняется: 3/8 + 4/8 = 7/8'));
+    } else if(step===12){
+      const POOL=[[[2,7],[3,7]],[[5,8],[2,8]],[[3,8],[4,8]],[[2,3],[1,4]],[[5,6],[3,4]],[[3,10],[7,10]],[[1,6],[5,6]],[[1,3],[1,6]]];
+      if(st.i==null) st.i=2;
+      const [[a1,a2],[b1,b2]]=POOL[st.i];
+      const cv=l79Conv(a2,b2);
+      const same=a2===b2;
+      const n1=same? a1 : a1*cv.k1, d1=same?a2:cv.l;
+      const n2=same? b1 : b1*cv.k2, d2=same?b2:cv.l;
+      const resN=n1+n2;
+      const resD=d1;
+      const g=(()=>{let x=resN,y=resD;while(y){const t=x%y;x=y;y=t;}return x||1;})();
+      h=col(big('Тренажёр: пиццы Архимеда'),
+        `<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap">
+          ${l79Pizza(a1,a2,'m1',{s:110,col:'#e0523d'})}${l79Pizza(b1,b2,'m2',{s:110,col:'#5aa8d8'})}</div>`+
+        `<div style="font-size:24px;text-align:center">${l79Frac(a1,a2)} + ${l79Frac(b1,b2)} = ?</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) общий знаменатель НОК(${a2}, ${b2}) = ${cv.l}${same?' (он уже есть!)':''}</div>`:'')+
+        (st.s2? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">2) ${l79Frac(a1,a2)} = ${l79Frac(n1,d1)} ${same?'':`· ${l79Frac(b1,b2)} = ${l79Frac(n2,d2)}`}</div>`:'')+
+        (st.s3? `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">${n1}+${n2} = ${resN} → ${g>1&&resN%g===0&&resD%g===0?`${l79Frac(resN/g,resD/g)} (сократили на ${g})`:l79Frac(resN,resD)}</div>`:'')+
+        btns(btn('1️⃣ знаменатель',`l79Act('${lk}','s1')`),btn('2️⃣ привести',`l79Act('${lk}','s2')`),btn('3️⃣ ответ',`l79Act('${lk}','s3')`),btn('🎲 другой пример',`l79Act('${lk}','n')`),btn('↺',`l79Act('${lk}','r')`))+
+        sml('решай по шагам: НОК → привести → сложить числители. потом открой ответ!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:258px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🍕 Одинаковые знаменатели — складывай числители.<br>
+            🔢 Разные — приведи к НОК знаменателей.<br>
+            ✂️ Не забудь сократить ответ, если можно.<br>
+            🥧 Не хватает дробной части — займи целое!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 3/8 + 4/8'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -4315,6 +4502,7 @@ function renderLessonVis(){
   else if(id===76) visL76(el);
   else if(id===77) visL77(el);
   else if(id===78) visL78(el);
+  else if(id===79) visL79(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
