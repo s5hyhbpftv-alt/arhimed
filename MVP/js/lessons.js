@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,159 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l11Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break; case 's3': st.s3=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%14; st.s1=st.s2=st.s3=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l11Graph(n,uid,opt){
+  // полный граф: n точек на окружности, все попарные линии; opt.last — подсветить линии от последней точки
+  const o=opt||{};
+  const size=o.s||180, cx=size/2, cy=size/2+6, r=size/2-26;
+  const pts=[];
+  for(let i=0;i<n;i++){ const a=-90+i*360/n; pts.push([cx+r*Math.cos(a*Math.PI/180), cy+r*Math.sin(a*Math.PI/180)]); }
+  let edges='';
+  const last=o.last!=null?o.last:n-1;
+  for(let i=0;i<n;i++) for(let j=i+1;j<n;j++){
+    const fromLast=(j===last||i===last)&&o.last!=null;
+    edges+=`<line x1="${pts[i][0].toFixed(1)}" y1="${pts[i][1].toFixed(1)}" x2="${pts[j][0].toFixed(1)}" y2="${pts[j][1].toFixed(1)}" stroke="${fromLast?'#ffd9a0':'rgba(127,209,255,.4)'}" stroke-width="${fromLast?2.6:1.4}"/>`;
+  }
+  const nodes=pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="11" fill="${i===last&&o.last!=null?'#ffd9a0':'#3a6fa8'}" stroke="#fff" stroke-width="1.5"/><text x="${p[0].toFixed(1)}" y="${(p[1]+4).toFixed(1)}" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">${i+1}</text>`).join('');
+  return `<div style="text-align:center"><svg width="${size}" height="${size+8}" viewBox="0 0 ${size} ${size+8}" style="display:block;margin:0 auto">${edges}${nodes}</svg>
+    <div style="font-size:13px;color:#9fe8c0;margin-top:-2px">линий-рукопожатий: ${n*(n-1)/2}</div></div>`;
+}
+function l11SumTiles(n,uid){
+  // ступеньки 1+2+…+n: колонки возрастающей высоты
+  let s='';
+  for(let i=1;i<=n;i++){
+    s+=`<div style="display:flex;flex-direction:column-reverse;gap:1px;width:18px;margin:0 1px">${Array.from({length:i},(_,k)=>`<div class="l35-pop" style="animation-delay:${((i-1)*0.12+k*0.05).toFixed(2)}s;width:18px;height:8px;border-radius:2px;background:${i===n?'#ffd9a0':'#7fb8d8'}"></div>`).join('')}</div>`;
+  }
+  return `<div style="display:flex;justify-content:center;align-items:flex-end;margin:0 auto">${s}</div>`;
+}
+function visL11(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Вечеринка Архимеда'),
+        `<div style="font-size:46px" class="l35-pop">🤝</div>`+
+        big('10 гостей пожали друг другу руки по одному разу. Сколько рукопожатий?')+
+        sml('кажется, что считать сложно. но есть красивый способ — давай начнём с маленьких компаний!'));
+    } else if(step===1){
+      h=col(big('Двое и трое'),
+        rowC(l11Graph(2,'a',{s:120}),l11Graph(3,'b',{s:120}))+
+        sml('2 человека — 1 рукопожатие. 3 человека — уже 3 (каждый с каждым!)'));
+    } else if(step===2){
+      h=col(big('Четверо: 6 рукопожатий'),
+        l11Graph(4,'c',{s:170})+
+        sml('посчитай линии: их ровно 6. попробуем понять, откуда берётся число'));
+    } else if(step===3){
+      h=col(big('Добавляем пятого'),
+        l11Graph(5,'d',{s:170,last:4})+
+        sml('новый гость (жёлтый) жмёт руку ВСЕМ четырём старым — плюс 4 линии!'));
+    } else if(step===4){
+      h=col(big('Правило «нового гостя»'),
+        `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:2px 0">
+          ${[[2,1],[3,2],[4,3],[5,4],[6,5],[7,6]].map(([n,add])=>chip(n+' человек: +'+add,'rgba(127,209,255,.35)')).join('')}
+        </div>`+
+        sml('когда приходит n-й гость, он добавляет n−1 рукопожатий. считаем накоплением!'));
+    } else if(step===5){
+      h=col(big('Сумма ступенек'),
+        rowC(chip('1 + 2 + 3 + 4 = 10 (пять гостей)','rgba(217,164,65,.4)'))+
+        l11SumTiles(5,'e')+
+        sml('5 гостей: 1+2+3+4 = 10 рукопожатий. видно, как растут «ступеньки»!'));
+    } else if(step===6){
+      h=col(big('Так сколько у десятерых?'),
+        `<div style="text-align:center;font-size:20px" class="wv-pop">1+2+3+…+9 = 45</div>`+
+        l11SumTiles(9,'f')+
+        sml('9 ступенек в сумме дают 45 — это и есть число рукопожатий десятерых!'));
+    } else if(step===7){
+      h=col(big('Другой способ: умножить и поделить'),
+        `<div style="text-align:center;font-size:20px">10 человек · по 9 рук = 90 — но это посчитано ДВАЖДЫ!</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">90 : 2 = 45 ✓</div>`+
+        sml('каждое рукопожатие считают оба участника — делим пополам!'));
+    } else if(step===8){
+      h=col(big('Почему делим на 2'),
+        l11Graph(4,'g',{s:160})+
+        sml('линия между гостями 1 и 2 принадлежит ОБОИМ. если считать «сколько рук пожал каждый», каждая линия попадёт дважды'));
+    } else if(step===9){
+      h=col(big('Формула'),
+        `<div style="font-size:30px;color:var(--brass);font-family:Georgia,serif;text-align:center">n · (n − 1) : 2</div>`+
+        rowC(chip('10 · 9 : 2 = 45','rgba(127,184,160,.5)'))+
+        sml('для n человек: каждый жмёт n−1 руку, умножаем и делим на 2'));
+    } else if(step===10){
+      h=col(big('Волшебный ряд'),
+        rowC(chip('2→1 · 3→3 · 4→6 · 5→10 · 6→15 · 7→21 · 8→28 · 9→36 · 10→45','rgba(217,164,65,.4)'))+
+        sml('числа 1, 3, 6, 10, 15, 21, 28… называют треугольными: каждый раз прибавляем следующее число!'));
+    } else if(step===11){
+      h=col(big('Задача: 12 человек'),
+        l11Graph(12,'h',{s:200})+
+        `<div style="text-align:center;font-size:19px" class="wv-pop">12 · 11 : 2 = 132 : 2 = 66</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">66 рукопожатий ✓</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===12){
+      h=col(big('Задача: 8 человек'),
+        `<div style="text-align:center;font-size:19px" class="wv-pop">8 · 7 : 2 = 56 : 2 = 28</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">28 рукопожатий ✓</div>`+
+        sml('восемь гостей — 28 линий. запомни ряд: 28 — «восьмёрное» треугольное число!'));
+    } else if(step===13){
+      h=col(big('То же самое: матчи в турнире'),
+        rowC(chip('10 команд играют «каждый с каждым» один раз','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">матчей = 10 · 9 : 2 = 45</div>`+
+        sml('турнир «в один круг» — это те же рукопожатия, только мяч вместо ладони!'));
+    } else if(step===14){
+      h=col(big('И ещё: звонки и переписка'),
+        rowC(chip('каждый позвонил каждому по разу','rgba(127,209,255,.4)'),chip('каждый написал каждому','rgba(127,209,255,.4)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0;font-weight:bold">всегда n·(n−1):2 «пар»</div>`+
+        sml('где «каждый с каждым по одному разу» — везде одна и та же формула!'));
+    } else if(step===15){
+      h=col(big('Ловушка: не дели пополам — ошибёшься'),
+        rowC(`<div style="text-align:center;opacity:.7"><div style="font-size:18px;text-decoration:line-through;color:#e0523d">10 · 9 = 90</div><div class="wv-sml" style="font-size:10px">так посчитали ДВА раза!</div></div>`+
+             `<div style="text-align:center"><div style="font-size:18px;color:#7fd1a0;font-weight:bold">90 : 2 = 45 ✓</div></div>`)+
+        sml('если каждый говорит «я пожал 9», то 90 — но каждое рукопожатие услышали двое. делим!'));
+    } else if(step===16){
+      const ns=[6,7,8,9,10,11,12,13,15,20,5,4,18,25];
+      if(st.i==null) st.i=2;
+      const n=ns[st.i];
+      const prod=n*(n-1);
+      const ans=prod/2;
+      h=col(big('Тренажёр: рукопожатия'),
+        `<div class="wv-row">${chip(n+' человек, каждый с каждым по разу','rgba(217,164,65,.35)')}</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) каждый жмёт руку ${n-1} другим</div>`:'')+
+        (st.s2? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">2) ${n} · ${n-1} = ${prod}, делим на 2</div>`:'')+
+        (st.s3? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">рукопожатий: ${ans}</div>`:'')+
+        btns(btn('1️⃣ каждый жмёт',`l11Act('${lk}','s1')`),btn('2️⃣ умножить',`l11Act('${lk}','s2')`),btn('3️⃣ ответ',`l11Act('${lk}','s3')`),btn('🎲 другой',`l11Act('${lk}','n')`),btn('↺',`l11Act('${lk}','r')`))+
+        sml('по шагам: каждый жмёт n−1 рук → умножаем → делим на 2 (каждое пожатие посчитано дважды)!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🤝 «Каждый с каждым по разу» → n·(n−1):2.<br>
+            🔢 Каждый жмёт n−1 рук, но пожатие считают двое.<br>
+            🔼 Ряд 1,3,6,10,15,21… — треугольные числа.<br>
+            ⚽ Турниры, звонки, письма — та же формула!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 10 человек'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -6023,6 +6176,7 @@ function renderLessonVis(){
   else if(id===47) visL47(el);
   else if(id===13) visL13(el);
   else if(id===16) visL16(el);
+  else if(id===11) visL11(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
