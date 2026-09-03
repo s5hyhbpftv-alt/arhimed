@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2754,6 +2754,172 @@ function visL101(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 4 кг'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l102Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['p','100','2'],['p','80','4'],['p','150','5'],['p','200','4'],['f','50','2'],['f','40','5'],['f','90','3'],['f','120','4'],['s','100','20'],['s','60','15'],['s','200','40'],['s','300','30']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l102Pad(S,uid){
+  // площадка из S клеток (м²) — сила давит на неё
+  const cols=Math.ceil(Math.sqrt(S));
+  let cells='';
+  for(let i=0;i<S;i++) cells+='<div style="width:15px;height:15px;border-radius:2px;background:linear-gradient(145deg,#7fa3b8,#4a6170);margin:1px"></div>';
+  for(let i=S;i<cols*cols;i++) cells+='<div style="width:15px;height:15px;margin:1px"></div>';
+  return `<div style="display:grid;grid-template-columns:repeat(${cols},17px);justify-content:center;gap:0;margin:4px auto">${cells}</div>`;
+}
+function l102Arrow(F){
+  // стрелка силы вниз на площадку
+  return `<div style="display:flex;flex-direction:column;align-items:center;margin:0 auto">
+    <div class="wv-pop" style="font-size:15px;color:#ffb46b">F = ${F} Н</div>
+    <div style="width:3px;height:26px;background:#ffb46b;position:relative">
+      <div style="position:absolute;left:-5px;bottom:-1px;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid #ffb46b"></div>
+    </div>
+  </div>`;
+}
+function l102Scene(F,S,p,uid){
+  // сила F давит на площадку S м² → p Па
+  return `<div style="display:flex;flex-direction:column;align-items:center;margin:2px auto">
+    ${l102Arrow(F)}
+    <div style="background:linear-gradient(180deg,#3d5c49,#2a4232);padding:5px 10px;border-radius:8px;border:1px solid #5a8a68">${l102Pad(S,'p')}</div>
+    <div class="wv-ans" style="font-size:24px;color:#7fd1a0">p = ${F} : ${S} = ${p} Па</div>
+  </div>`;
+}
+function visL102(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Почему на лыжах не проваливаешься в снег?'),
+        `<div style="font-size:44px" class="wv-pop">🎿</div>`+
+        sml('сила та же — твой вес. Но на лыжах она распределяется по большой площади! Сегодня разберёмся, что такое давление'));
+    } else if(step===1){
+      h=col(big('Давление p = F : S'),
+        rowC(chip('p — давление','rgba(127,209,255,.5)'),chip('F — сила (Н)','rgba(232,160,90,.5)'),chip('S — площадь (м²)','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">p = F : S</div>`+
+        sml('давление — сила, приходящаяся на 1 м² площади'));
+    } else if(step===2){
+      h=col(big('Единица — паскаль'),
+        rowC(chip('1 Па = 1 Н на 1 м²','rgba(217,164,65,.5)'))+
+        sml('названа в честь учёного Блеза Паскаля. Сила 1 Н на площадку 1 м² — это давление 1 Па'));
+    } else if(step===3){
+      h=col(big('Считаем давление'),
+        l102Scene(60,3,20,'a')+
+        sml('сила 60 Н давит на 3 м²: p = 60 : 3 = 20 Па'));
+    } else if(step===4){
+      h=col(big('Меньше площадь — больше давление'),
+        rowC(l102Scene(60,1,60,'b'),l102Scene(60,3,20,'c'))+
+        sml('та же сила 60 Н! На 1 м² давление 60 Па, а на 3 м² — всего 20 Па'));
+    } else if(step===5){
+      h=col(big('Почему нож режет?'),
+        rowC(chip('острое лезвие — крошечная площадь','rgba(217,164,65,.4)'),chip('сила руки та же','rgba(217,164,65,.4)'))+
+        `<div style="font-size:40px" class="wv-pop">🔪</div>`+
+        sml('чем тоньше лезвие, тем меньше площадь, тем больше давление на кромке — и нож легко режет'));
+    } else if(step===6){
+      h=col(big('А лыжи наоборот!'),
+        rowC(chip('лыжи — большая площадь','rgba(127,209,255,.4)'),chip('давление маленькое','rgba(127,209,255,.4)'))+
+        `<div style="font-size:40px" class="wv-swing">🎿</div>`+
+        sml('та же сила распределяется по большим лыжам — давление падает, снег не проваливается'));
+    } else if(step===7){
+      h=col(big('Задача-проверка'),
+        l102Scene(80,4,20,'d')+
+        sml('сила 80 Н, площадь 4 м² → p = 80 : 4 = 20 Па. Как в нашей проверке!'));
+    } else if(step===8){
+      h=col(big('Наоборот: сила из давления'),
+        rowC(chip('p = 40 Па','rgba(127,209,255,.5)'),chip('S = 5 м²','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">F = p · S = 40 · 5 = 200 Н</div>`+
+        sml('F = p · S — умножаем. Как в наших задачках!'));
+    } else if(step===9){
+      h=col(big('А если ищем площадь?'),
+        rowC(chip('p = 20 Па','rgba(127,209,255,.5)'),chip('F = 100 Н','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">S = F : p = 100 : 20 = 5 м²</div>`+
+        sml('S = F : p — треугольник: сила наверху, внизу p · S'));
+    } else if(step===10){
+      h=col(big('Треугольник давления'),
+        `<div style="text-align:center;font-size:16px;color:#e8dcc8" class="wv-pop">
+          <div style="display:inline-block;padding:4px 16px;border:2px solid rgba(217,164,65,.5);border-radius:10px;background:rgba(217,164,65,.06)">▲<br>F<br><span style="color:#7fd1a0">p</span> · <span style="color:#8fa6b8">S</span></div>
+        </div>`+
+        sml('сила наверху: F = p·S, p = F:S, S = F:p. Закрываешь неизвестное — получаешь формулу!'));
+    } else if(step===11){
+      h=col(big('Кнопки и гвозди'),
+        rowC(chip('кнопка: остриё входит легко','rgba(127,209,255,.4)'),chip('гвоздь: острый конец — большое давление','rgba(127,209,255,.4)'))+
+        sml('площадь острия крошечная → давление огромное → легко входит в стену'));
+    } else if(step===12){
+      h=col(big('Танк и трактор'),
+        rowC(chip('гусеницы — большая площадь','rgba(127,184,160,.4)'),chip('давление на грунт маленькое','rgba(127,184,160,.4)'))+
+        `<div style="font-size:40px" class="wv-pop">🚜</div>`+
+        sml('танк весит тонны, но гусеницы не дают ему провалиться — площадь огромная!'));
+    } else if(step===13){
+      h=col(big('Задача 1: давление'),
+        l102Scene(100,2,50,'e')+
+        sml('сила 100 Н, площадь 2 м² → p = 100 : 2 = 50 Па. Как в наших задачках!'));
+    } else if(step===14){
+      h=col(big('Задача 2: находим силу'),
+        rowC(chip('p = 40 Па','rgba(127,209,255,.5)'),chip('S = 5 м²','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 40 · 5 = 200 Н</div>`+
+        sml('тоже как в задачках: F = p · S'));
+    } else if(step===15){
+      h=col(big('Где пригодится'),
+        rowC(chip('зачем точат ножи','rgba(127,209,255,.4)'),chip('почему лыжи широкие','rgba(127,209,255,.4)'),chip('фундамент зданий широкий','rgba(127,209,255,.4)'),chip('иголка шприца','rgba(127,209,255,.4)'))+
+        sml('везде, где надо «вдавить» или «не провалиться» — меняют площадь!'));
+    } else if(step===16){
+      const POOL=[['p','100','2'],['p','80','4'],['p','150','5'],['p','200','4'],['f','50','2'],['f','40','5'],['f','90','3'],['f','120','4'],['s','100','20'],['s','60','15'],['s','200','40'],['s','300','30']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0];
+      let desc, firstStep, ans, vis='';
+      if(kind==='p'){
+        const F=+e[1], S=+e[2];
+        desc='сила '+F+' Н на площадь '+S+' м² → давление?';
+        firstStep='p = F : S = '+F+' : '+S;
+        ans=F/S; vis=l102Scene(F,S,ans,'t');
+      } else if(kind==='f'){
+        const p=+e[1], S=+e[2];
+        desc='давление '+p+' Па, площадь '+S+' м² → сила?';
+        firstStep='F = p · S = '+p+' · '+S;
+        ans=p*S; vis=l102Scene(ans,S,p,'t2');
+      } else {
+        const F=+e[1], p=+e[2];
+        desc='сила '+F+' Н, давление '+p+' Па → площадь?';
+        firstStep='S = F : p = '+F+' : '+p;
+        ans=F/p; vis=`<div style="text-align:center;font-size:26px">${l102Pad(ans,'t3')}</div>`;
+      }
+      h=col(big('Тренажёр: давление'),
+        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
+        vis+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l102Act('${lk}','s1')`),btn('2️⃣ ответ',`l102Act('${lk}','s2')`),btn('🎲 другая',`l102Act('${lk}','n')`),btn('↺',`l102Act('${lk}','r')`))+
+        sml('треугольник: F наверху, p·S внизу!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            📏 Давление: p = F : S (паскали).<br>
+            💪 Сила наверху: F = p·S, S = F:p.<br>
+            🎿 Площадь больше → давление меньше.<br>
+            🔪 Остриё тоньше → давление больше.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 80 Н и 4 м²'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -7379,6 +7545,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===102) visL102(el);
   else if(id===101) visL101(el);
   else if(id===100) visL100(el);
   else if(id===22) visL22(el);
