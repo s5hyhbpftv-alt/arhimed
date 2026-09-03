@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -814,6 +814,154 @@ function l33BoatSvg(w){
     <path d="M6,64 Q40,60 134,60" stroke="rgba(255,255,255,.25)" stroke-width="2" fill="none"/>
   </svg>`;
 }
+function l34Tree(){
+  // яблоня (сцена легенды Ньютона)
+  return `<svg viewBox="0 0 240 190" style="width:240px;height:190px;display:block">
+    <defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#aee0f5"/><stop offset="1" stop-color="#d8f0fa"/></linearGradient></defs>
+    <rect x="0" y="0" width="240" height="150" fill="url(#sk)"/>
+    <rect x="0" y="150" width="240" height="40" fill="#4a7a32"/>
+    <circle cx="60" cy="52" r="34" fill="#5d9c3a"/><circle cx="110" cy="38" r="40" fill="#68a844"/>
+    <circle cx="158" cy="52" r="32" fill="#5d9c3a"/><circle cx="84" cy="66" r="34" fill="#71b34e"/>
+    <circle cx="140" cy="68" r="32" fill="#71b34e"/>
+    <path d="M118,80 L118,170 L96,170 L96,80 Z" fill="#7a4a24"/>
+    <path d="M118,120 Q150,118 176,128" stroke="#7a4a24" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <circle cx="176" cy="126" r="6" fill="#e23b2e"/><circle cx="196" cy="122" r="5" fill="#d92f22"/>
+  </svg>`;
+}
+function visL34(el){
+  // Урок 34 «Сила тяжести и вес»: сюжет «Яблоко Ньютона»
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const girya=(kg,w)=>`<svg width="${w||64}" height="${Math.round((w||64)*.9)}" viewBox="0 0 80 72" style="display:block">
+      <path d="M28,6 a12,12 0 0 1 24,0 L52,20 a14,14 0 0 1 14,14 L66,58 a10,10 0 0 1 -10,10 L24,68 a10,10 0 0 1 -10,-10 L14,34 a14,14 0 0 1 14,-14 Z" fill="#8a94a2" stroke="#3a3f47" stroke-width="2"/>
+      <rect x="34" y="26" width="12" height="18" rx="3" fill="#5c6672"/>
+      <text x="40" y="47" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">${kg}</text>
+    </svg>`;
+    let h='';
+    if(step===0){
+      const dropped=!!st.fall;
+      h=col(big('Легенда о яблоке Ньютона'),
+        `<div style="position:relative;width:240px;height:190px;margin:0 auto;border-radius:14px;overflow:hidden">
+          ${l34Tree()}
+          <div class="wv-pop" style="position:absolute;left:158px;top:${dropped?120:58}px;transition:top .9s ease-in;z-index:3;width:44px">${l34AppleSVG(44)}</div>
+          <div class="wv-pop" style="position:absolute;left:120px;top:150px;font-size:34px;z-index:2;transition:opacity .5s;opacity:${dropped?1:0}">💥</div>
+        </div>`+
+        (dropped
+          ? big('Бам! Яблоко упало вниз')+sml('его притянула Земля — так родилась наука о силах. Почему вниз? Смотри дальше ➜')
+          : big('почему яблоко падает вниз?')+
+            btn('🍎 уронить яблоко', `l34Act('${lk}','drop')`)+
+            sml('Ньютон задумался… нажми и увидишь!'))
+      );
+    } else if(step===1){
+      h=col(big('Сила тяжести'),
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;margin:4px 0">
+          <div style="text-align:center">${girya(5,64)}<div style="font-size:11px;color:#7fa88f">груз 5 кг</div></div>
+          <div style="font-size:34px;color:#e86a5a;animation:wvPulse 1s infinite">⬇</div>
+          <div style="text-align:center">${l34Earth(64)}<div style="font-size:11px;color:#7fd1ff">Земля</div></div>
+        </div>`+
+        big('Земля притягивает всё — это сила тяжести')+
+        sml('направлена вниз, к центру Земли. Даже лежащее яблоко Земля тянет!'));
+    } else if(step===2){
+      h=col(big('Считаем по формуле'),
+        `<div style="font-size:40px;color:var(--brass);font-family:Georgia,serif">F = m · g</div>`+
+        rowC(
+          `<div style="text-align:center">${girya(1,60)}<div style="font-size:12px;color:#7fa88f">1 кг</div></div>`+
+          `<div style="font-size:28px;color:#cbb89a">×</div>`+
+          `<div style="text-align:center"><div style="font-size:26px">🌍</div><div style="font-size:12px;color:#7fd1ff">g ≈ 10</div></div>`+
+          `<div style="font-size:28px;color:#cbb89a">=</div>`+
+          `<div style="font-size:30px;color:#7fd1a0;font-weight:bold">10 Н</div>`)+
+        sml('g = 10 Н/кг — каждый килограмм Земля тянет с силой 10 Н'));
+    } else if(step===3){
+      h=col(big('Разбираем на числах'),
+        rowC(girya(5,84))+
+        `<div style="display:flex;flex-direction:column;gap:4px;margin:4px 0;font-size:20px">
+          <div class="wv-pop">F = m · g = 5 · 10</div>
+          <div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">F = 50 Н</div></div>`+
+        sml('5 кг давят на опору с силой 50 Н — как 5-литровая канистра воды'));
+    } else if(step===4){
+      h=col(big('Вес — давление на опору'),
+        `<div style="position:relative;width:230px;height:130px;margin:2px auto">
+          <div style="position:absolute;left:8px;right:8px;bottom:34px;height:6px;background:#8a6f4d;border-radius:3px"></div>
+          <div style="position:absolute;left:40px;right:40px;bottom:34px;height:4px;background:#b08968"></div>
+          <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:40px;z-index:2;width:56px">${l34AppleSVG(56)}</div>
+          <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:88px;font-size:26px;color:#7fd1a0">⬆</div>
+          <div style="position:absolute;left:16px;bottom:12px;font-size:11px;color:#7fd1a0">опора держит</div>
+          <div style="position:absolute;right:6px;bottom:44px;font-size:20px;color:#e86a5a">⬇</div>
+          <div style="position:absolute;right:10px;top:6px;font-size:11px;color:#e89a8f">сила тяжести</div>
+        </div>`+
+        big('вес — с какой силой тело давит на опору')+
+        sml('в покое вес = силе тяжести. яблоко давит на стол с силой ≈ 1 Н'));
+    } else if(step===5){
+      h=col(big('Измеряем динамометром'),
+        `<div style="display:flex;gap:12px;justify-content:center;align-items:flex-end">
+          ${l34Dyn(50,5,'Земля',96)}
+          <div style="max-width:120px;text-align:left"><div style="font-size:14px;color:#cbb89a">груз 5 кг</div><div style="font-size:13px;color:#7fa88f">пружина растянута стрелкой на 50 Н</div></div>
+        </div>`+
+        sml('динамометр — прибор для измерения силы. чем тяжелее груз, тем сильнее пружина'));
+    } else if(step===6){
+      h=col(big('Масса ≠ вес'),
+        rowC(
+          `<div style="text-align:center;width:120px;border:2px solid rgba(127,184,160,.4);border-radius:12px;padding:8px"><div style="font-size:22px">⚖️</div><b>Масса</b><div class="wv-sml" style="font-size:11px">сколько вещества<br>всегда одинакова</div><div style="color:#7fd1a0">кг</div></div>`+
+          `<div style="text-align:center;width:120px;border:2px solid rgba(232,106,90,.45);border-radius:12px;padding:8px"><div style="font-size:22px">💪</div><b>Вес</b><div class="wv-sml" style="font-size:11px">сила на опору<br>зависит от места</div><div style="color:#e89a8f">Н</div></div>`)+
+        sml('килограммы и ньютоны — разные вещи!'));
+    } else if(step===7){
+      h=col(big('А на Луне?'),
+        rowC(
+          `<div style="text-align:center">${l34Earth(60)}<div style="font-size:12px;color:#7fd1ff">Земля · g=10</div></div>`+
+          `<div style="text-align:center">${l34Moon(60)}<div style="font-size:12px;color:#cbb89a">Луна · g=1,6</div></div>`)+
+        big('на Луне притяжение в 6 раз слабее')+
+        sml('космонавт там весит в 6 раз меньше — хотя масса прежняя!'));
+    } else if(step===8){
+      h=col(big('Космонавт массой 60 кг'),
+        rowC(
+          `<div style="text-align:center">${l34Dyn(600,60,'Земля',88,600)}<div style="font-size:12px;color:#7fd1ff">Земля</div></div>`+
+          `<div style="text-align:center">${l34Dyn(96,60,'Луна',88,600)}<div style="font-size:12px;color:#cbb89a">Луна</div></div>`)+
+        big('Земля: 600 Н · Луна: 96 Н')+
+        sml('масса одна — 60 кг, а вес разный!'));
+    } else if(step===9){
+      h=col(big('Разбираем задачку'),
+        `<div class="wv-row">${chip('m = 3 кг','rgba(127,184,160,.5)')} ${chip('g = 10 Н/кг','rgba(127,209,255,.5)')}</div>`+
+        `<div style="font-size:20px;margin:4px 0" class="wv-pop">F = m · g = 3 · 10</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">F = 30 Н ✓</div>`+
+        sml('такой вопрос будет дальше! на Луне было бы 3·1,6 = 4,8 Н'));
+    } else if(step===10){
+      // тренажёр: масса и место
+      if(st.m==null) st.m=10; if(!st.place) st.place='Земля';
+      const g=st.place==='Луна'?1.6:10;
+      const F=Math.round(st.m*g*10)/10;
+      h=col(big('Тренажёр: Земля или Луна?'),
+        `<div class="wv-row">${chip('масса = '+st.m+' кг','rgba(127,184,160,.5)')} ${chip('место: '+st.place+(st.place==='Луна'?' · g=1,6':' · g=10'), st.place==='Луна'?'rgba(200,200,210,.5)':'rgba(127,209,255,.5)')}</div>`+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:flex-end;flex-wrap:wrap">
+          <div style="text-align:center">${st.place==='Луна'?l34Moon(46):l34Earth(46)}<div style="font-size:11px;color:#7fa88f">${st.place}</div></div>
+          ${l34Dyn(F,st.m,st.place,110)}
+        </div>`+
+        `<div style="font-size:22px" class="wv-ans">F = ${st.m} · ${g} = ${F} Н</div>`+
+        btns(btn('+1 кг',`l34Act('${lk}','m+')`),btn('−1 кг',`l34Act('${lk}','m-')`),btn('🌍 Земля',`l34Act('${lk}','earth')`),btn('🌙 Луна',`l34Act('${lk}','moon')`),btn('↺',`l34Act('${lk}','r')`))+
+        sml(F<100?'попробуй 60 кг — как космонавт!':'видишь: масса та же, а вес скачет!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:320px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+          🍎 Сила тяжести тянет всё к Земле: <b>F = m · g</b>, g ≈ 10 Н/кг.<br>
+          💪 <b>Вес</b> — сила давления на опору (Н).<br>
+          ⚖️ <b>Масса</b> (кг) не меняется, <b>вес</b> (Н) зависит от места.<br>
+          🌙 На Луне g = 1,6 — вес в 6 раз меньше.<br>
+          🔁 m = F : g · g = F : m.</div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там тело 3 кг'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
 function visL33(el){
   // Урок 33 «Плотность»: сюжет «Ванна Архимеда», векторные сцены
   try{
@@ -951,6 +1099,104 @@ function visL33(el){
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
+function l34Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const bump=(k,d,lo)=> st[k]=Math.max(lo||1, Math.round(((st[k]==null?1:st[k])+d)*10)/10);
+  switch(act){
+    case 'm+': bump('m',1); break; case 'm-': bump('m',-1); break;
+    case 'earth': st.place='Земля'; break;
+    case 'moon': st.place='Луна'; break;
+    case 'drop': st.fall=(st.fall||0)+1; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l34Apple(w){
+  // векторное яблоко
+  const W=w||44;
+  return `<svg width="${W}" height="${Math.round(W*1.08)}" viewBox="0 0 100 108" style="display:block">
+    <ellipse cx="50" cy="62" rx="40" ry="40" fill="#e23b2e"/>
+    <ellipse cx="50" cy="62" rx="40" ry="40" fill="url(#none)" opacity="0"/>
+    <path d="M50,28 Q30,10 12,18 Q18,38 40,36" fill="#3f8f3f"/>
+    <path d="M50,28 Q70,10 88,18 Q82,38 60,36" fill="#4aa24a"/>
+    <path d="M50,26 Q50,6 62,2" stroke="#7a4a1a" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <ellipse cx="34" cy="40" rx="13" ry="9" fill="rgba(255,255,255,.35)"/>
+    <ellipse cx="66" cy="84" rx="10" ry="7" fill="rgba(120,10,5,.4)"/>
+  </svg>`;
+}
+function l34AppleSVG(w){
+  const W=w||44, H=Math.round(W*1.1);
+  return `<svg width="${W}" height="${H}" viewBox="0 0 120 132">
+    <path d="M60,120 C20,120 6,96 10,70 C14,44 30,30 54,28 L60,26 L66,28 C90,30 106,44 110,70 C114,96 100,120 60,120 Z" fill="#d92f22"/>
+    <path d="M60,120 C34,120 22,104 22,84 C22,64 32,48 50,40 C36,52 30,66 32,84 C34,104 46,116 60,118 Z" fill="#a81f14"/>
+    <ellipse cx="42" cy="56" rx="16" ry="11" fill="rgba(255,255,255,.4)"/>
+    <path d="M60,32 Q56,10 78,4" stroke="#7a4a20" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M74,14 Q92,4 100,12 Q98,26 80,28 Z" fill="#4a9a3a"/>
+    <path d="M72,22 L90,10" stroke="#3c7a2e" stroke-width="2"/>
+  </svg>`;
+}
+function l34Earth(w){
+  const W=w||56, H=W;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 120 120">
+    <defs><radialGradient id="e${w}" cx=".35" cy=".3" r="1"><stop offset="0" stop-color="#7fd4ff"/><stop offset="1" stop-color="#1a5fae"/></radialGradient></defs>
+    <circle cx="60" cy="60" r="54" fill="url(#e${w})"/>
+    <path d="M24,52 Q38,40 52,46 Q60,30 74,34 Q88,38 92,50 Q100,58 92,66 Q80,72 70,66 Q56,72 44,64 Q30,64 24,52 Z" fill="#3f9a4a"/>
+    <path d="M30,80 Q44,88 60,84 Q78,90 92,82" fill="none" stroke="#3f9a4a" stroke-width="7"/>
+    <path d="M40,40 Q46,34 54,38" stroke="#bfe8ff" stroke-width="5" fill="none" opacity=".7"/>
+    <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/>
+  </svg>`;
+}
+function l34Moon(w){
+  const W=w||56, H=W;
+  const craters=[[38,40,9],[80,56,12],[60,86,8],[22,70,6],[92,24,5]].map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}" fill="rgba(0,0,0,.12)"/><circle cx="${x-r*.3}" cy="${y-r*.3}" r="${r*.35}" fill="rgba(255,255,255,.25)"/>`).join('');
+  return `<svg width="${W}" height="${H}" viewBox="0 0 120 120">
+    <defs><radialGradient id="m${w}" cx=".4" cy=".35" r="1"><stop offset="0" stop-color="#e8e8e8"/><stop offset="1" stop-color="#9a9a9a"/></radialGradient></defs>
+    <circle cx="60" cy="60" r="54" fill="url(#m${w})"/>
+    ${craters}
+    <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/>
+  </svg>`;
+}
+function l34Dyn(F,m,place,w,maxF){
+  // Динамометр: пружина растягивается пропорционально F, шкала честная (0..maxF).
+  const W=w||100, H=Math.round(W*1.9);
+  const cx=W*.58;
+  if(maxF==null) maxF=Math.max(60, Math.ceil(F*1.25/50)*50);
+  const frac=Math.min(1, F/maxF);
+  const topY=Math.round(H*.10), botY=Math.round(H*.74);
+  const range=botY-topY-8;
+  const sprTop=topY+6;
+  const endY=sprTop+frac*range;
+  const turns=9; const seg=(Math.max(12,endY-sprTop-4))/turns;
+  let d=`M${cx},${sprTop}`;
+  for(let i=0;i<turns;i++){ const y=sprTop+3+i*seg; d+=` L${cx-7},${y} L${cx+7},${y+seg*.5}`; }
+  d+=` L${cx},${Math.min(endY+6,botY-2)}`;
+  const loadY=Math.min(H-16, endY+12);
+  const G=Math.round(F*10)/10;
+  const half=Math.round(maxF/2);
+  const scaleMax=Math.round(maxF);
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block">
+    <defs><linearGradient id="dy${place}${w}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e4edf2"/><stop offset=".5" stop-color="#aeb9c2"/><stop offset="1" stop-color="#7d8890"/></linearGradient></defs>
+    <rect x="${cx-15}" y="${topY}" width="30" height="${H*.52}" rx="6" fill="url(#dy${place}${w})" stroke="#333" stroke-width="1.6"/>
+    <rect x="${cx-11}" y="${topY+4}" width="22" height="${H*.52-8}" rx="4" fill="rgba(255,255,255,.15)"/>
+    <circle cx="${cx}" cy="${topY-7}" r="7" fill="none" stroke="#8b98a2" stroke-width="5"/>
+    <path d="${d}" stroke="#9fb0b8" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+    <line x1="${cx}" y1="${Math.min(endY+4,botY)}" x2="${cx}" y2="${loadY}" stroke="#667" stroke-width="3"/>
+    <rect x="${cx-20}" y="${loadY+2}" width="40" height="${Math.min(20,H*.09)}" rx="7" fill="#d9a441" stroke="#8a6a1a" stroke-width="1.6"/>
+    <text x="${cx}" y="${loadY+16}" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a3608">${m} кг</text>
+    <g font-size="${Math.max(11,Math.round(W*.115))}" fill="#e8e0cc" text-anchor="middle">
+      <text x="${cx-34}" y="${topY+12}">0</text>
+      <line x1="${cx-37}" y1="${topY+7}" x2="${cx-16}" y2="${topY+7}" stroke="#cbb89a" stroke-width="1.4"/>
+      <text x="${cx-34}" y="${topY+14+range*.5}">${half}</text>
+      <line x1="${cx-37}" y1="${topY+9+range*.5}" x2="${cx-16}" y2="${topY+9+range*.5}" stroke="#cbb89a" stroke-width="1.4"/>
+      <text x="${cx-34}" y="${topY+18+range}">${scaleMax}</text>
+      <line x1="${cx-37}" y1="${topY+13+range}" x2="${cx-16}" y2="${topY+13+range}" stroke="#cbb89a" stroke-width="1.4"/>
+    </g>
+    <path d="M${cx-38},${topY+9+frac*range} l8,-2.5 l0,5 Z" fill="#ff5a3c" stroke="rgba(0,0,0,.5)" stroke-width=".8"/>
+    <text x="${cx}" y="${H-2}" text-anchor="middle" font-size="${Math.round(W*.13)}" fill="#ffd9a0" font-weight="bold">${G} Н</text>
+  </svg>`;
+}
+
 function visL10(el){
   // Урок 10 «Средняя скорость»: полный пошаговый разбор с анимацией
   try{
@@ -1389,6 +1635,7 @@ function renderLessonVis(){
   else if(id===6) visVillage(el);
   else if(id===10) visL10(el);
   else if(id===33) visL33(el);
+  else if(id===34) visL34(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
