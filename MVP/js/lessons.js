@@ -719,6 +719,7 @@ function l33Act(lk,act){
     case 'm+': bump('m',1); break; case 'm-': bump('m',-1); break;
     case 'V+': bump('V',1); break; case 'V-': bump('V',-1); break;
     case 'w+': bump('m',5); break; case 'w-': bump('m',-5); break;
+    case 'drop': st.drop=(st.drop||0)+1; break;
     case 'r': CHS[lk]={}; break;
   }
   chRender(0);
@@ -738,15 +739,23 @@ function l33Mat(mat){
   return M[mat]||'#b9b3a6';
 }
 function l33CubeSvg(mat,w,rho){
-  // изометрический векторный кубик с тремя гранями
+  // изометрический векторный кубик с текстурой материала и бликами
   const base=l33Mat(mat);
   const W=w||64, H=Math.round(W*112/124);
+  const id='t'+(Math.random()*1e6|0);
+  const grain = mat==='дерево' ? `<line x1="20" y1="56" x2="104" y2="48" stroke="rgba(90,52,20,.4)" stroke-width="2"/><line x1="14" y1="70" x2="110" y2="62" stroke="rgba(90,52,20,.3)" stroke-width="1.6"/><line x1="18" y1="86" x2="106" y2="78" stroke="rgba(90,52,20,.25)" stroke-width="1.4"/>` : '';
+  const pores = mat==='пробка' ? Array.from({length:9},(_,i)=>`<circle cx="${18+((i*37)%92)}" cy="${44+((i*29)%56)}" r="1.8" fill="rgba(120,70,30,.35)"/>`).join('') : '';
+  const ice= mat==='лёд' ? `<polygon points="62,10 116,36 116,44 62,19" fill="rgba(255,255,255,.5)"/>` : '';
+  const steel= mat==='железо'||mat==='сталь' ? `<circle cx="70" cy="52" r="3.4" fill="rgba(255,255,255,.75)"/><circle cx="70" cy="68" r="3.4" fill="rgba(255,255,255,.55)"/><circle cx="70" cy="84" r="3.4" fill="rgba(255,255,255,.4)"/>` : '';
+  const gold= mat==='золото' ? `<polygon points="62,10 116,36 62,62 8,36" fill="rgba(255,240,180,.5)"/>` : '';
   return `<svg width="${W}" height="${H}" viewBox="0 0 124 112" style="display:block">
-    <polygon points="62,10 116,36 62,62 8,36" fill="${l33HexColor(base,.42)}" stroke="rgba(0,0,0,.35)" stroke-width="1.6"/>
-    <polygon points="8,36 62,62 62,108 8,82" fill="${l33HexColor(base,-.45)}" stroke="rgba(0,0,0,.35)" stroke-width="1.6"/>
-    <polygon points="62,62 116,36 116,82 62,108" fill="${base}" stroke="rgba(0,0,0,.35)" stroke-width="1.6"/>
-    <polygon points="66,14 110,38 110,40 66,17" fill="rgba(255,255,255,.35)"/>
-    ${rho!=null?`<text x="62" y="98" text-anchor="middle" font-size="13" font-weight="bold" fill="rgba(255,255,255,.9)">${rho}</text>`:''}
+    <polygon points="62,10 116,36 62,62 8,36" fill="${l33HexColor(base,.55)}" stroke="rgba(0,0,0,.4)" stroke-width="1.6"/>
+    <polygon points="8,36 62,62 62,108 8,82" fill="${l33HexColor(base,-.55)}" stroke="rgba(0,0,0,.4)" stroke-width="1.6"/>
+    <polygon points="62,62 116,36 116,82 62,108" fill="${base}" stroke="rgba(0,0,0,.4)" stroke-width="1.6"/>
+    ${pores}${grain}${ice}${steel}${gold}
+    <polygon points="62,10 116,36 116,44 62,18" fill="rgba(255,255,255,.28)"/>
+    <polygon points="8,36 62,62 62,68 8,42" fill="rgba(255,255,255,.14)"/>
+    ${rho!=null?`<text x="62" y="101" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff" stroke="rgba(0,0,0,.5)" stroke-width=".5">${rho}</text>`:''}
   </svg>`;
 }
 function l33Bath(items, opts){
@@ -794,21 +803,32 @@ function visL33(el){
     const item=(mat,rho,w,extra)=>`<div style="text-align:center">${l33CubeSvg(mat,w||52,rho)}${extra||''}</div>`;
     let h='';
     if(step===0){
-      // ванна + игрушки рядом: кто утонет?
-      h=col(big('Ванна Архимеда: что утонет?'),
-        l33Bath([],{h:150,w:250}),
-        `<div style="margin-top:6px">${rowC(
-          `<div style="text-align:center;width:84px">${l33CubeSvg('железо',44)}<div style="font-size:11px;color:#cbb89a">железо</div></div>`+
-          `<div style="text-align:center;width:84px">${l33CubeSvg('дерево',44)}<div style="font-size:11px;color:#cbb89a">дерево</div></div>`+
-          `<div style="text-align:center;width:84px">${l33CubeSvg('лёд',44)}<div style="font-size:11px;color:#cbb89a">лёд</div></div>`)}</div>`+
-        sml('Архимед бросает их в воду. Что утонет, а что поплывёт?'));
+      // ванна + игрушки: сначала угадай, потом брось!
+      const dropped=!!st.drop;
+      h = dropped ? col(big('Плюх-плюх! Вот что вышло'),
+        l33Bath([
+          {mat:'железо',swim:false,x:'50%',delay:.1,size:56},
+          {mat:'дерево',swim:true,x:'24%',delay:.5,size:50},
+          {mat:'лёд',swim:true,x:'40%',delay:.7,size:46},
+          {mat:'пробка',swim:true,x:'74%',delay:.9,size:44}
+        ],{h:160,w:250})+
+        big('железо — на дно, остальные плывут!')+
+        sml('ты угадал? почему так — узнаем дальше ➜'))
+        : col(big('Ванна Архимеда: что утонет?'),
+        l33Bath([],{h:160,w:250}),
+        `<div style="margin-top:4px">${rowC(
+          `<div style="text-align:center;width:80px">${l33CubeSvg('железо',42)}<div style="font-size:11px;color:#cbb89a">железо</div></div>`+
+          `<div style="text-align:center;width:80px">${l33CubeSvg('дерево',42)}<div style="font-size:11px;color:#cbb89a">дерево</div></div>`+
+          `<div style="text-align:center;width:80px">${l33CubeSvg('лёд',42)}<div style="font-size:11px;color:#cbb89a">лёд</div></div>`)}</div>`+
+        btn('💦 бросить игрушки в воду', `l33Act('${lk}','drop')`)+
+        sml('сначала угадай, потом нажми и проверь!'));
     } else if(step===1){
       h=col(big('Бульк! Железо — на дно'),
         l33Bath([
-          {mat:'железо',swim:false,x:'50%',delay:.2,size:64},
-          {mat:'пробка',swim:true,x:'22%',delay:.5,size:52},
-          {mat:'лёд',swim:true,x:'38%',delay:.7,size:48},
-          {mat:'дерево',swim:true,x:'76%',delay:.9,size:56}
+          {mat:'железо',swim:false,x:'50%',delay:.2,size:58},
+          {mat:'пробка',swim:true,x:'20%',delay:.5,size:50},
+          {mat:'лёд',swim:true,x:'36%',delay:.7,size:46},
+          {mat:'дерево',swim:true,x:'70%',delay:.9,size:52}
         ],{h:170,w:260})+
         big('почему по-разному?')+sml('дело не в размере — дело в плотности вещества'));
     } else if(step===2){
@@ -866,10 +886,15 @@ function visL33(el){
         </div>`+
         sml('закрой неизвестное пальцем: m = ρ·V · ρ = m:V · V = m:ρ'));
     } else if(step===10){
-      // стальной корабль
+      // стальной корабль плывёт по воде (внутри ванны)
+      const H2=150, WT=Math.round(H2*.42);
       h=col(big('А корабль-то плавает!'),
-        l33Bath([],{h:150,w:250})+
-        `<div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${150-52}px;font-size:44px" class="wv-pulse">🚢</div>`+
+        `<div style="position:relative;width:250px;height:${H2}px;margin:0 auto;border-radius:10px 10px 24px 24px;border:3px solid #55463a;background:linear-gradient(180deg,#f6efe2,#e8ddc9);overflow:hidden">
+          <div style="position:absolute;left:6px;right:6px;bottom:6px;height:${H2-WT-6}px;background:linear-gradient(180deg,rgba(122,190,235,.92),rgba(40,110,180,.97))"></div>
+          <div style="position:absolute;left:2px;right:2px;top:${WT}px;height:4px;background:rgba(210,240,255,.85);border-radius:50%"></div>
+          <div class="wv-pulse" style="position:absolute;left:50%;transform:translateX(-50%);bottom:${H2-WT-14}px;font-size:46px;line-height:1">🚢</div>
+          <div class="wv-sml" style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:10px;color:#8a6f4d">вода · воздух внутри</div>
+        </div>`+
         big('сталь тяжелее воды — но внутри воздух!')+
         sml('средняя плотность корабля (металл + воздух) < 1 → плавает'));
     } else if(step===11){
