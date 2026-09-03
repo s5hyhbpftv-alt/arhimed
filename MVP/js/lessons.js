@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,176 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l82Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break; case 's3': st.s3=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%9; st.s1=st.s2=st.s3=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l82Grid100(pct,uid,col){
+  let h='';
+  for(let i=0;i<100;i++) h+=`<div style="width:9px;height:9px;margin:0.6px;border-radius:1.5px;background:${i<pct? col||'#e0523d':'rgba(255,255,255,.08)'}"></div>`;
+  return `<div style="display:flex;flex-wrap:wrap;width:214px;margin:0 auto">${h}</div>`;
+}
+function l82Bar(total,pct,uid,opt){
+  // полоса 100%: вся = total; pct% закрашено с подписью значения
+  const o=opt||{};
+  const W=o.w||300;
+  const val=Math.round(total*pct/100);
+  const labelTop=o.label||`${pct}% от ${total}`;
+  return `<div style="width:${W}px;margin:0 auto;text-align:center">
+    <div style="display:flex;gap:4px;align-items:center;font-size:11px;color:#cbb89a">${o.left||''}</div>
+    <div style="position:relative;height:34px;background:rgba(255,255,255,.07);border-radius:17px;overflow:hidden;border:1px solid rgba(255,255,255,.12)">
+      <div class="l35-pop" style="width:${Math.round(W*pct/100)}px;height:34px;background:linear-gradient(90deg,${o.c1||'#e0523d'},${o.c2||'#ff8a70'});border-radius:17px"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:12px;color:#fff;font-weight:bold">
+        <span>${val}</span><span>${labelTop}</span>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:#8aa08f;padding:0 6px"><span>0</span><span>100% = ${total}</span></div>
+  </div>`;
+}
+function l82Coin(n,uid){
+  // корзины монет для деления на части (процент = доля)
+  const parts=[];
+  return `<div style="width:300px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:4px">
+    ${Array.from({length:n},(_,i)=>`<span class="l35-pop" style="animation-delay:${(i*0.05).toFixed(2)}s;display:inline-flex;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#d9a52a);box-shadow:inset 0 -2px 3px rgba(0,0,0,.25);font-size:10px;align-items:center;justify-content:center;color:#7a5210">•</span>`).join('')}
+  </div>`;
+}
+function visL82(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Распродажа Архимеда'),
+        `<div style="font-size:50px" class="l35-pop">🏷️</div>`+
+        big('скидка 20% на игрушку за 40 монет — сколько скинут?')+
+        sml('проценты встречаются на каждом чеке! разберёмся, что они значат и как считать. листай ➜'));
+    } else if(step===1){
+      h=col(big('Процент — сотая часть'),
+        l82Grid100(1,'a','#5aa8d8')+
+        `<div style="text-align:center;font-size:19px" class="wv-pop">1% — это одна клетка из 100</div>`+
+        sml('1% числа = число : 100. а 40% — это 40 клеток из 100'));
+    } else if(step===2){
+      h=col(big('Процент — это десятичная дробь'),
+        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+          ${[['1%','0,01'],['10%','0,1'],['25%','0,25'],['50%','0,5'],['75%','0,75'],['100%','1']].map(([p,d],i)=>`
+            <div class="l35-pop" style="animation-delay:${(i*0.1).toFixed(2)}s;text-align:center;min-width:72px;border:1px solid rgba(127,209,255,.3);border-radius:10px;padding:6px 4px;background:rgba(127,209,255,.05)">
+              <div style="font-size:17px;color:#ffd9a0;font-weight:bold">${p}</div><div style="font-size:13px;color:#a9d2ec">= ${d}</div></div>`).join('')}
+        </div>`+
+        sml('% = поделить на 100: 25% = 0,25 = 1/4 · 50% = 0,5 = 1/2'));
+    } else if(step===3){
+      h=col(big('Как найти процент от числа'),
+        `<div style="font-size:23px;text-align:center;margin:4px 0">p% от N = N · p : 100</div>`+
+        l82Bar(80,25,'b',{label:'25% от 80'})+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">80 · 25 : 100 = 20 ✓</div>`+
+        sml('80 · 0,25 = 20 — это четверть!'));
+    } else if(step===4){
+      h=col(big('Удобные проценты'),
+        rowC(chip('10% → : 10','rgba(127,209,255,.5)'),chip('25% → : 4','rgba(127,184,160,.5)'),chip('50% → : 2','rgba(232,160,90,.5)'),chip('20% → : 5','rgba(217,164,65,.5)'))+
+        l82Bar(150,10,'c',{label:'10% от 150'})+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">10% от 150 = 15 · 50% от 60 = 30</div>`+
+        sml('запомни «ключи»: так проценты считаются в уме за секунду'));
+    } else if(step===5){
+      h=col(big('Как в проверке: 20% от 40'),
+        rowC(chip('20% = 1/5','rgba(232,160,90,.5)'))+
+        `<div style="text-align:center;font-size:14px;color:#cbb89a;margin:2px 0">40 монет раскладываем на 5 корзин (по 8)</div>`+
+        l82Coin(40,'d')+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">40 : 5 = 8 ✓</div>`+
+        sml('одна корзина из пяти — это и есть 20%!'));
+    } else if(step===6){
+      h=col(big('Девочки в классе'),
+        rowC(chip('30 учеников','rgba(127,184,160,.5)'),chip('40% — девочки','rgba(232,106,90,.5)'))+
+        l82Bar(30,40,'e',{label:'40% от 30'})+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">30 · 40 : 100 = 12 девочек</div>`+
+        sml('30 · 0,4 = 12 — как в наших задачках!'));
+    } else if(step===7){
+      h=col(big('Обратная задача: находим ВСЁ'),
+        rowC(chip('12 девочек — это 40%','rgba(127,209,255,.5)'),chip('сколько всего?','rgba(217,164,65,.5)'))+
+        `<div style="font-size:22px;text-align:center" class="wv-pop">всего = часть : p · 100 = 12 : 40 · 100 = 30</div>`+
+        l82Bar(30,40,'f',{label:'40% = 12'})+
+        sml('если 40 клеток = 12, то 1% = 0,3, а все 100% = 30. второй тип задач!'));
+    } else if(step===8){
+      h=col(big('Сколько процентов?'),
+        rowC(chip('6 из 24 — это сколько %?','rgba(127,209,255,.5)'))+
+        `<div style="font-size:22px;text-align:center" class="wv-pop">p = часть : целое · 100 = 6 : 24 · 100 = 25%</div>`+
+        l82Bar(24,25,'g',{label:'6 из 24'})+
+        sml('третий тип задач: какая часть — столько и процентов: 6 — это четверть, значит 25%'));
+    } else if(step===9){
+      h=col(big('Шпаргалка трёх типов'),
+        `<div style="display:flex;flex-direction:column;gap:6px;align-items:center">
+          ${[['1️⃣ процент от числа','N · p : 100','25% от 80 = 20'],['2️⃣ число по проценту','часть : p · 100','12 = 40% → всего 30'],['3️⃣ сколько процентов','часть : целое · 100','6 из 24 → 25%']].map(([t,f,ex],i)=>`
+            <div class="l35-pop" style="animation-delay:${(i*0.15).toFixed(2)}s;width:280px;border:1px solid rgba(127,209,255,.25);border-radius:12px;padding:6px 10px;background:rgba(127,209,255,.05);text-align:center">
+              <b style="color:#ffd9a0">${t}</b> · <span style="color:#a9d2ec;font-family:Georgia,serif">${f}</span>
+              <div style="font-size:12px;color:#9fe8c0">${ex}</div></div>`).join('')}
+        </div>`+
+        sml('в углублённых курсах эти три задачи решают вместе — так видно связь!'));
+    } else if(step===10){
+      h=col(big('Скидка в магазине'),
+        rowC(chip('товар 150 монет','rgba(232,106,90,.5)'),chip('скидка 10%','rgba(127,209,160,.5)'))+
+        `<div style="text-align:center;font-size:22px">старая цена <span style="text-decoration:line-through;color:#e0a99a">150</span> → скидка 15 → <b style="color:#7fd1a0">платим 135</b></div>`+
+        l82Bar(150,10,'h',{label:'−10%'})+
+        sml('сначала найди процент (10% = 15), потом вычти из цены'));
+    } else if(step===11){
+      h=col(big('Полоса-диаграмма класса'),
+        `<div style="width:300px;margin:0 auto">
+          <div style="display:flex;height:38px;border-radius:19px;overflow:hidden">
+            <div class="l35-pop" style="width:40%;background:#e0523d"></div>
+            <div class="l35-pop" style="animation-delay:.3s;width:60%;background:#5aa8d8"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#f0b0a0"><span>🔴 девочки 40% (12)</span><span style="color:#a9d2ec">🔵 мальчики 60% (18)</span></div>
+        </div>`+
+        sml('все проценты вместе всегда дают 100% — как целый класс!'));
+    } else if(step===12){
+      // тренажёр: три типа задач
+      const T=[
+        ['процент от числа','25% от 200',200*25/100,'25% от 200 = 200·25:100 = 50'],
+        ['процент от числа','40% от 30',12,'40% от 30 = 30·0,4 = 12'],
+        ['процент от числа','20% от 40',8,'20% от 40 = 40:5 = 8'],
+        ['процент от числа','75% от 80',60,'75% от 80 = 80·0,75 = 60'],
+        ['число по проценту','?  если 25% = 50',200,'число = 50:25·100 = 200'],
+        ['число по проценту','?  если 10% = 15',150,'число = 15:10·100 = 150'],
+        ['сколько процентов','8 из 40 — сколько %?',20,'p = 8:40·100 = 20%'],
+        ['сколько процентов','30 из 120 — сколько %?',25,'p = 30:120·100 = 25%'],
+        ['процент от числа','15% от 60',9,'15% от 60 = 60·15:100 = 9']];
+      if(st.i==null) st.i=0;
+      const [type,q,ans,sol]=T[st.i];
+      h=col(big('Тренажёр: три типа задач'),
+        `<div class="wv-row">${chip(type,'rgba(127,209,255,.4)')}</div>`+
+        `<div style="font-size:23px;text-align:center;margin:4px 0">${q}</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) вспомни формулу: ${type==='процент от числа'?'часть = целое · p : 100':type==='число по проценту'?'целое = часть : p · 100':'p = часть : целое · 100'}</div>`:'')+
+        (st.s2? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">2) ${sol.split('=')[0].trim()}</div>`:'')+
+        (st.s3? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">ответ: ${ans}${type==='сколько процентов'?'%':''}</div>`:'')+
+        btns(btn('1️⃣ формула',`l82Act('${lk}','s1')`),btn('2️⃣ решение',`l82Act('${lk}','s2')`),btn('3️⃣ ответ',`l82Act('${lk}','s3')`),btn('🎲 другой',`l82Act('${lk}','n')`),btn('↺',`l82Act('${lk}','r')`))+
+        sml('потренируй все три типа — так проценты запомнятся навсегда!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:256px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            💯 % — это сотая часть: 1% = 0,01.<br>
+            ✖️ % от числа: N · p : 100.<br>
+            🔄 Число по проценту: часть : p · 100.<br>
+            🧮 Сколько %: часть : целое · 100.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 20% от 40'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -4946,6 +5116,7 @@ function renderLessonVis(){
   else if(id===79) visL79(el);
   else if(id===80) visL80(el);
   else if(id===81) visL81(el);
+  else if(id===82) visL82(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
