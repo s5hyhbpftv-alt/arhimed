@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,167 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l12Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['ост','47','5'],['ост','38','6'],['ост','99','7'],['счёт','40','5','2'],['счёт','100','7','0'],['счёт','60','6','3'],['счёт','50','4','1'],['ост','123','10'],['счёт','30','4','0']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l12Seq(n,k,r,uid){
+  // числа 1..n чипами; остаток числа по k; «семья» r подсвечена золотом
+  const cols=['#e0523d','#5aa8d8','#8ab860','#b06ab8','#e8a35a','#7fb8d8','#c96a6a'];
+  let s='';
+  for(let i=1;i<=n;i++){
+    const rem=i%k;
+    const fam= r!=null && rem===r;
+    s+=`<div class="l35-pop" style="animation-delay:${(i*0.04).toFixed(2)}s;width:34px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;margin:1px;${fam?'background:#ffd9a0;color:#4a3200;font-weight:bold;box-shadow:0 0 6px rgba(255,217,160,.7)':'background:rgba(255,255,255,.05);color:#d8ecff'}">${i}</div>`;
+  }
+  return `<div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:320px;margin:0 auto">${s}</div>`;
+}
+function l12Bars(n,k,uid){
+  // столбики остатков для чисел 1..n при делении на k
+  const cols=['#e0523d','#5aa8d8','#8ab860','#b06ab8','#e8a35a','#7fb8d8'];
+  let row='';
+  for(let i=1;i<=n;i++){
+    const rem=i%k;
+    row+=`<div style="width:26px;margin:1px;border-radius:4px;display:flex;flex-direction:column;align-items:center"><div style="font-size:11px;color:#8aa08f">${rem}</div><div style="width:16px;height:26px;background:${cols[rem]||'#7f8fa0'}"></div><div style="font-size:9px;color:#6b7f6f">${i}</div></div>`;
+  }
+  return `<div style="display:flex;justify-content:center;flex-wrap:wrap">${row}</div>`;
+}
+function visL12(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Город остатков Архимеда'),
+        `<div style="font-size:46px" class="l35-pop">🧮</div>`+
+        big('17 конфет раскладываем по мешочкам по 5: три мешочка и… остаётся 2!')+
+        sml('эти «лишние» 2 — остаток. остатки умеют решать хитрые задачи!'));
+    } else if(step===1){
+      h=col(big('Что такое остаток'),
+        `<div style="text-align:center;font-size:22px" class="wv-pop">17 : 5 = 3 (остаток 2)</div>`+
+        rowC(chip('проверка: 5 · 3 + 2 = 17','rgba(127,184,160,.5)'))+
+        sml('делим, сколько помещается, а что осталось — остаток'));
+    } else if(step===2){
+      h=col(big('Запись: 17 = 5·3 + 2'),
+        rowC(chip('делимое = делитель · частное + остаток','rgba(127,209,255,.5)'))+
+        sml('такую запись удобно проверять: посчитай и сравни с исходным числом'));
+    } else if(step===3){
+      h=col(big('Остаток меньше делителя'),
+        rowC(chip('при делении на 5 остаток: 0, 1, 2, 3 или 4','rgba(127,184,160,.5)'))+
+        sml('больше или равно 5? тогда дели ещё раз! остаток всегда меньше делителя'));
+    } else if(step===4){
+      h=col(big('Цикл остатков (при делении на 5)'),
+        l12Bars(14,5,'b')+
+        sml('смотри на столбики: остатки идут по кругу 1,2,3,4,0,1,2… и повторяются каждые 5 чисел'));
+    } else if(step===5){
+      h=col(big('«Семьи» чисел'),
+        l12Seq(18,5,2,'c')+
+        `<div style="text-align:center;font-size:17px" class="wv-pop">золотые: 2, 7, 12, 17 — у всех остаток 2 при делении на 5!</div>`+
+        sml('следующее число семьи = предыдущее + 5'));
+    } else if(step===6){
+      h=col(big('Как построить семью'),
+        rowC(chip('начни с остатка: 2','rgba(127,209,160,.5)'),chip('и прибавляй делитель: +5 → 2, 7, 12, 17…','rgba(127,209,255,.5)'))+
+        sml('шаг семьи — это всегда делитель (здесь 5)'));
+    } else if(step===7){
+      h=col(big('Сколько чисел в семье?'),
+        `<div style="text-align:center;font-size:19px" class="wv-pop">числа 2, 7, …, 37 (шаг 5): (37 − 2) : 5 + 1 = 7 + 1 = 8</div>`+
+        l12Seq(40,5,2,'d')+
+        sml('всё как в наших задачках: от 1 до 40 таких чисел ровно 8!'));
+    } else if(step===8){
+      h=col(big('Проверка другим способом'),
+        rowC(chip('при делении на 5 остаток 2 → последняя цифра 2 или 7','rgba(217,164,65,.4)'))+
+        l12Seq(40,5,2,'e')+
+        sml('числа 2, 7, 12, 17, 22, 27, 32, 37 — снова 8 штук. сошлось!'));
+    } else if(step===9){
+      h=col(big('Остаток 0 — это «делится»'),
+        rowC(chip('остаток 0 ⇔ число делится нацело','rgba(127,184,160,.5)'))+
+        l12Seq(30,7,0,'f')+
+        sml('золотые 7, 14, 21, 28 — кратные 7 (остаток 0)'));
+    } else if(step===10){
+      h=col(big('Задача: кратные 7 до 100'),
+        `<div style="text-align:center;font-size:19px" class="wv-pop">это 7, 14, …, 98: (98 − 7) : 7 + 1 = 13 + 1 = 14</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">14 чисел ✓</div>`+
+        sml('или проще: 100 : 7 = 14 (остаток 2) — тоже 14 целых кратных!'));
+    } else if(step===11){
+      h=col(big('Простой способ: N : k'),
+        rowC(chip('кратных k от 1 до N почти всегда N : k','rgba(127,209,255,.5)'))+
+        sml('если начинаем с самого k, то кратных = сколько раз k помещается в N (целая часть деления)'));
+    } else if(step===12){
+      h=col(big('Откуда «+1» в формуле'),
+        rowC(chip('2 → 7 → 12 → … → 37: шагов 7, чисел 8','rgba(217,164,65,.4)'))+
+        sml('между 8 точками 7 промежутков. (37−2):5 = 7 — это промежутки, а точек на одну больше!'));
+    } else if(step===13){
+      h=col(big('Задача «делится ли?»'),
+        `<div style="text-align:center;font-size:20px">47 : 5 → 45 делится на 5, значит 47 − 45 = <b style="color:#7fd1a0">2</b></div>`+
+        rowC(chip('остаток 2 — как в нашей проверке!','rgba(127,184,160,.5)'))+
+        sml('не дели столбиком всё число: отними ближайшее кратное и посмотри остаток'));
+    } else if(step===14){
+      h=col(big('Календарь и остатки'),
+        rowC(chip('если 1-е число — понедельник…','rgba(127,209,255,.5)'))+
+        `<div style="text-align:center;font-size:18px" class="wv-pop">24-е: 24 = 21 + 3 → остаток 3 → понедельник + 3 = четверг!</div>`+
+        sml('дни недели повторяются каждые 7 — остаток от деления на 7 отвечает за день'));
+    } else if(step===15){
+      h=col(big('Раскладываем и перекладываем'),
+        rowC(chip('50 монет по кучкам по 6','rgba(127,184,160,.5)'))+
+        `<div style="text-align:center;font-size:18px" class="wv-pop">50 = 48 + 2 → 8 кучек и 2 монеты останутся</div>`+
+        sml('в задачах про «разложить поровну» остаток — это то, что не поместилось'));
+    } else if(step===16){
+      const POOL=[['ост','47','5'],['ост','38','6'],['ост','99','7'],['счёт','40','5','2'],['счёт','100','7','0'],['счёт','60','6','3'],['счёт','50','4','1'],['ост','123','10'],['счёт','30','4','0']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i];
+      if(e[0]==='ост'){
+        const N=+e[1], k=+e[2];
+        const rem=N%k;
+        const q=(N-rem)/k;
+        h=col(big('Тренажёр: найди остаток'),
+          `<div class="wv-row">${chip(N+' : '+k,'rgba(217,164,65,.35)')}</div>`+
+          (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) ближайшее кратное: ${k} · ${q} = ${N-rem}</div>`:'')+
+          (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">остаток = ${N} − ${N-rem} = ${rem}</div>`:'')+
+          btns(btn('1️⃣ кратное',`l12Act('${lk}','s1')`),btn('2️⃣ остаток',`l12Act('${lk}','s2')`),btn('🎲 другой',`l12Act('${lk}','n')`),btn('↺',`l12Act('${lk}','r')`))+
+          sml('отними ближайшее меньшее кратное — что осталось, то и остаток!'));
+      } else {
+        const N=+e[1], k=+e[2], r=+e[3];
+        let cnt=0, first=null, last=null;
+        for(let x=1;x<=N;x++) if(x%k===r){ if(first==null)first=x; last=x; cnt++; }
+        const byDiv= r===0? Math.floor(N/k) : null;
+        h=col(big('Тренажёр: сколько чисел?'),
+          `<div class="wv-row">${chip('1..'+N+' с остатком '+r+' при делении на '+k,'rgba(217,164,65,.35)')}</div>`+
+          (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) семья: ${first}, ${first+k}, …, ${last} (шаг ${k})</div>`:'')+
+          (st.s2? `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">число = (${last} − ${first}) : ${k} + 1 = ${cnt}${byDiv!=null?' (или N:k = '+byDiv+')':''}</div>`:'')+
+          btns(btn('1️⃣ семья',`l12Act('${lk}','s1')`),btn('2️⃣ ответ',`l12Act('${lk}','s2')`),btn('🎲 другой',`l12Act('${lk}','n')`),btn('↺',`l12Act('${lk}','r')`))+
+          sml('найди первое и последнее число семьи, посчитай шаги и прибавь один!'));
+      }
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🧮 Остаток меньше делителя: 0,1,…,k−1.<br>
+            👨‍👩‍👧 Числа с остатком r — «семья» с шагом k.<br>
+            📐 Счёт: (последнее − первое) : k + 1.<br>
+            🗓 Остаток 0 ⇔ делится · календарь — mod 7!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 47 : 5'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -6177,6 +6338,7 @@ function renderLessonVis(){
   else if(id===13) visL13(el);
   else if(id===16) visL16(el);
   else if(id===11) visL11(el);
+  else if(id===12) visL12(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
