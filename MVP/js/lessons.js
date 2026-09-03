@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2254,6 +2254,177 @@ function visL21(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там цифры 1,2,3'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l22Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const SHAPES=[['line','1×5'],['rect','3×4'],['rect','2×5'],['sq','5×5'],['L','3×3'],['plus','3×3'],['cross','3×3'],['hole','4×4'],['stairs','3×3'],['rect','2×6']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%SHAPES.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l22Grid(mask,uid,hl){
+  // маска: массив строк '#' — клетка, '.' — пусто; hl: набор 'r,c'
+  const R=mask.length, C=mask[0].length;
+  let out='<div style="display:grid;grid-template-columns:repeat('+C+',1fr);gap:1px;width:'+(C*24)+'px;margin:4px auto">';
+  const isHl=hl&&hl[''+(hl.r)+','+(hl.c)+'']&&false; // unused
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    const f=mask[r][c]==='#';
+    const key=r+','+c;
+    const hot=hl&&hl[key];
+    out+='<div style="width:22px;height:22px;'+(f?'background:'+(hot?'#8ad0ff':'#6db8e8')+';box-shadow:inset 0 0 0 1px rgba(20,60,90,.85)':'background:transparent')+';border-radius:2px"></div>';
+  }
+  out+='</div>';
+  return out;
+}
+function l22Cell(r,c,f,hot){
+  return '<div style="width:22px;height:22px;'+(f?'background:'+(hot?'#8ad0ff':'#6db8e8')+';box-shadow:inset 0 0 0 1px rgba(20,60,90,.85)':'background:transparent')+';border-radius:2px"></div>';
+}
+function l22P(mask){
+  // считает периметр: сумма внешних сторон клеток
+  const R=mask.length, C=mask[0].length; let p=0;
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    if(mask[r][c]!=='#')continue;
+    for(const [dr,dc] of [[0,1],[1,0],[0,-1],[-1,0]]){
+      const nr=r+dr,nc=c+dc;
+      if(nr<0||nr>=R||nc<0||nc>=C||mask[nr][nc]!=='#') p++;
+    }
+  }
+  return p;
+}
+function visL22(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const sq=(n)=>l22Grid(Array(n).fill('#'.repeat(n)));
+    let h='';
+    if(step===0){
+      h=col(big('Что такое периметр на клетках'),
+        rowC('<span style="font-size:42px">🧩</span>')+
+        `<div style="text-align:center;font-size:17px" class="wv-pop">каждая клетка — квадрат со стороной 1</div>`+
+        sml('периметр = длина границы фигуры: считаем внешние стороны клеток'));
+    } else if(step===1){
+      h=col(big('Одна клетка'),
+        l22Grid(['#'],'a')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 4</div>`+
+        sml('у клетки 4 внешние стороны по 1 → периметр 4'));
+    } else if(step===2){
+      h=col(big('Полоска 1×5'),
+        l22Grid(['#####'],'b')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 2·(1+5) = 12</div>`+
+        sml('две короткие стороны по 1 и две длинные по 5'));
+    } else if(step===3){
+      h=col(big('Прямоугольник 3×4'),
+        l22Grid(['####','####','####'],'c')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 2·(3+4) = 14</div>`+
+        sml('длина 4, ширина 3 → 2·(4+3) = 14. как в задачке!'));
+    } else if(step===4){
+      h=col(big('Квадрат 5×5'),
+        l22Grid(['#####','#####','#####','#####','#####'],'d')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 4·5 = 20</div>`+
+        sml('все 4 стороны по 5 → 4·5 = 20. тоже как в задачке!'));
+    } else if(step===5){
+      h=col(big('Не путай с площадью!'),
+        rowC(chip('площадь 3×4 = 12 клеток','rgba(127,209,255,.5)'),chip('периметр 3×4 = 14','rgba(127,184,160,.5)'))+
+        l22Grid(['####','####','####'],'e')+
+        sml('площадь — сколько клеток ВНУТРИ, периметр — длина ГРАНИЦЫ'));
+    } else if(step===6){
+      h=col(big('Две клетки в ряд'),
+        l22Grid(['##'],'f')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 6</div>`+
+        sml('общая сторона внутри — не граница! внешних сторон: 4+4−2 = 6'));
+    } else if(step===7){
+      h=col(big('Уголок из 3 клеток (буква Г)'),
+        l22Grid(['#.','##'],'g')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 8</div>`+
+        sml('3·4 = 12 сторон минус 2·2 общих = 8. обходи границу и считай!'));
+    } else if(step===8){
+      h=col(big('Способ: обходи границу'),
+        `<div class="wv-row">${chip('стартуй в любой угол','rgba(127,209,255,.5)')} ${chip('шагай по границе','rgba(127,184,160,.5)')} ${chip('считай шаги','rgba(232,160,90,.5)')}</div>`+
+        l22Grid(['###','###','###'],'h')+
+        sml('на 3×3 обход границы = 12 шагов: 3+3+3+3'));
+    } else if(step===9){
+      h=col(big('Буква Т из 5 клеток'),
+        l22Grid(['###','.#.','.#.'],'i')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 12</div>`+
+        sml('5·4 = 20 сторон, общих сторон 4 (каждая −2) → 20 − 8 = 12'));
+    } else if(step===10){
+      h=col(big('Выемка в квадрате'),
+        l22Grid(['##.','###'],'j')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 10</div>`+
+        sml('выемка добавляет границу: обходи — 10 внешних сторон. форма не прямоугольная, но периметр тот же приём'));
+    } else if(step===11){
+      h=col(big('Плюс из 5 клеток'),
+        l22Grid(['.#.','###','.#.'],'k')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 12</div>`+
+        sml('та же формула: 20 − 4·2 = 12. хитрые фигуры считаем так же'));
+    } else if(step===12){
+      h=col(big('Сколько внешних сторон?'),
+        `<div style="text-align:center;font-size:17px" class="wv-pop">N клеток, S общих сторон (внутри)</div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 4·N − 2·S</div>`+
+        sml('у каждой клетки 4 стороны, общая сторона у двоих — не считаем дважды'));
+    } else if(step===13){
+      h=col(big('Квадрат 4×4 с дыркой 2×2'),
+        l22Grid(['####','#..#','#..#','####'],'l')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 24</div>`+
+        sml('внешняя граница 16 + внутренняя у дырки 8 = 24. дырка удлиняет границу!'));
+    } else if(step===14){
+      h=col(big('Лесенка из 6 клеток'),
+        l22Grid(['#..','##.','###'],'m')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">P = 12</div>`+
+        sml('посчитай по формуле: 6 клеток · 4 − 2·6 общих = 12. общая сторона — не граница!'));
+    } else if(step===15){
+      h=col(big('Периметр одинаков — площадь разная!'),
+        rowC(l22Grid(['#..','##.','###'],'n'),l22Grid(['###','###','###'],'n2'))+
+        rowC(chip('лесенка: P=12, S=6','rgba(127,209,255,.5)'),chip('квадрат 3×3: P=12, S=9','rgba(232,160,90,.5)'))+
+        `<div style="text-align:center;font-size:16px" class="wv-pop">периметр не определяет площадь!</div>`+
+        sml('две разные фигуры с одинаковой границей — поэтому площадь считают отдельно'));
+    } else if(step===16){
+      const SHAPES=[['line','1×5'],['rect','3×4'],['rect','2×5'],['sq','5×5'],['L','3×3'],['plus','3×3'],['cross','3×3'],['hole','4×4'],['stairs','3×3'],['rect','2×6']];
+      if(st.i==null) st.i=0;
+      const sh=SHAPES[st.i][0];
+      let mask, desc, ans;
+      if(sh==='line'){mask=['#####'];desc='полоска 1×5';ans=12;}
+      else if(sh==='rect'){const w=SHAPES[st.i][1]==='3×4'?4:SHAPES[st.i][1]==='2×5'?5:6;const h=SHAPES[st.i][1]==='3×4'?3:SHAPES[st.i][1]==='2×5'?2:2;mask=Array(h).fill('#'.repeat(w));desc='прямоугольник '+h+'×'+w;ans=2*(h+w);}
+      else if(sh==='sq'){mask=Array(5).fill('#####');desc='квадрат 5×5';ans=20;}
+      else if(sh==='L'){mask=['#.','##'];desc='уголок Г из 3 клеток';ans=8;}
+      else if(sh==='plus'){mask=['.#.','###','.#.'];desc='плюс из 5 клеток';ans=12;}
+      else if(sh==='cross'){mask=['##.','.##'];desc='домик из 4 клеток';ans=10;}
+      else if(sh==='hole'){mask=['####','#..#','#..#','####'];desc='квадрат 4×4 с дыркой 2×2';ans=24;}
+      else {mask=['#..','##.','###'];desc='лесенка из 6 клеток';ans=12;}
+      h=col(big('Тренажёр: периметр на клетках'),
+        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
+        l22Grid(mask,'t')+
+        (st.s1? `<div style="text-align:center;font-size:17px" class="l35-pop">считаем клетки и общие стороны…</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">P = ${ans}</div>`:'')+
+        btns(btn('1️⃣ посчитай',`l22Act('${lk}','s1')`),btn('2️⃣ ответ',`l22Act('${lk}','s2')`),btn('🎲 другая',`l22Act('${lk}','n')`),btn('↺',`l22Act('${lk}','r')`))+
+        sml('обведи границу пальцем или посчитай: 4·N − 2·S!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            📏 Периметр — граница, не площадь!<br>
+            🧮 4·N − 2·S: клетки минус общие стороны.<br>
+            ▭ Прямоугольник: 2·(a+b), квадрат: 4·a.<br>
+            🔄 Обходи границу — не ошибёшься.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там полоска 1×5'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -6879,6 +7050,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===22) visL22(el);
   else if(id===21) visL21(el);
   else if(id===18) visL18(el);
   else if(visIsChem()) visChemNew(el);
