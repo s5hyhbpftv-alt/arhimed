@@ -568,6 +568,134 @@ function l10Act(lk,act){
   }
   chRender(0);
 }
+function carSVG(moving, color, w){
+  // Седан, строгий вид сбоку, едет ВПРАВО. Пропорции реального авто. moving=true — колёса крутятся.
+  const C=color||'#d43a2e';
+  const W=w||180, H=Math.round(W*140/320);
+  const sp1=moving? 'class="l10-wheel" style="--spin:.6s"':'style="animation:none"';
+  const sp2=moving? 'class="l10-wheel" style="--spin:.6s;animation-delay:-.3s"':'style="animation:none"';
+  return `<svg width="${W}" height="${H}" viewBox="0 0 320 140" style="display:block">
+  <defs>
+    <linearGradient id="cb" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff9d85"/><stop offset=".18" stop-color="${C}"/>
+      <stop offset=".5" stop-color="${C}"/><stop offset=".8" stop-color="#8c1f16"/>
+      <stop offset="1" stop-color="#3f0a06"/>
+    </linearGradient>
+    <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2fbff"/><stop offset=".5" stop-color="#8fc6e6"/>
+      <stop offset="1" stop-color="#1c4356"/>
+    </linearGradient>
+    <radialGradient id="hub" cx=".35" cy=".3" r="1.15">
+      <stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#c4cdd5"/>
+      <stop offset="1" stop-color="#626d78"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="166" cy="135" rx="132" ry="5.5" fill="rgba(0,0,0,.55)"/>
+  <!-- кузов: нижний силуэт с арками -->
+  <path d="M34,118 C24,118 18,112 21,103 C23,97 30,93 42,91
+           L58,85 C66,80 76,76 86,74
+           L108,70 C120,68 130,67 142,68
+           L168,69 C186,70 200,73 212,78
+           L232,86 C248,90 262,96 276,102
+           C290,108 300,114 298,120
+           L120,120 Z" fill="url(#cb)" stroke="rgba(0,0,0,.4)" stroke-width="1.5"/>
+  <!-- тёмная нижняя часть (порог) -->
+  <path d="M30,118 L120,120 L298,120 L298,126 L30,126 Z" fill="rgba(0,0,0,.32)"/>
+  <!-- верхний силуэт: капот/крыша/багажник -->
+  <path d="M86,74 C96,66 112,58 132,55
+           C150,52 170,52 188,55
+           C206,58 220,63 230,70
+           L240,78 L238,66 L214,50
+           C206,44 194,41 182,40
+           C166,39 150,40 140,42
+           C126,44 112,48 102,52
+           L86,74 Z" fill="${C}"/>
+  <!-- блик на крыше/капоте -->
+  <path d="M138,47 C156,44 176,45 194,50 L210,58 L176,58 L128,52 Z" fill="rgba(255,255,255,.22)"/>
+  <path d="M242,66 L252,72 L248,56 Z" fill="rgba(255,255,255,.14)"/>
+  <!-- стёкла -->
+  <path d="M108,70 C120,60 140,55 158,54 L186,56 C196,57 204,60 210,64 L232,84 L100,84 Z" fill="url(#cg)"/>
+  <!-- рама стёкол -->
+  <path d="M120,68 L160,56 L186,58 L216,66 L232,84 L228,86 L98,86 Z" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"/>
+  <!-- лобовое -->
+  <path d="M162,55 C172,55 182,57 190,61 L204,72 L150,72 L152,58 Z" fill="url(#cg)"/>
+  <!-- заднее окно -->
+  <path d="M112,68 C124,60 140,55 156,55 L152,72 L104,72 Z" fill="url(#cg)" opacity=".97"/>
+  <!-- блик на стекле -->
+  <path d="M128,62 L152,57 L150,66 L120,68 Z" fill="rgba(255,255,255,.45)"/>
+  <path d="M166,58 L184,60 L196,68 L162,68 Z" fill="rgba(255,255,255,.4)"/>
+  <!-- стойки B -->
+  <path d="M158,55 L162,55 L164,84 L158,84 Z" fill="${C}"/>
+  <!-- зеркало -->
+  <path d="M208,66 Q220,61 224,67 L218,74 L206,72 Z" fill="${C}" stroke="rgba(0,0,0,.35)"/>
+  <!-- линия дверей -->
+  <path d="M160,72 L160,102 M118,74 L118,100" stroke="rgba(0,0,0,.2)" stroke-width="1.5" fill="none"/>
+  <!-- молдинг хром -->
+  <path d="M52,110 L286,110 L286,112.5 L52,112.5 Z" fill="rgba(226,230,235,.75)"/>
+  <!-- ручки -->
+  <rect x="134" y="78" width="16" height="5" rx="2.5" fill="#260c08"/>
+  <!-- фары -->
+  <path d="M286,92 L300,98 L296,106 L282,102 Z" fill="#fffbe0"/>
+  <path d="M282,102 L296,106 L294,112 L278,108 Z" fill="#ffc46b"/>
+  <rect x="284" y="90" width="14" height="5" rx="2" fill="#e8f6ff"/>
+  <!-- решётка -->
+  <path d="M298,98 L312,104 L312,114 L300,108 Z" fill="#13161a"/>
+  <path d="M301,101 L310,105 M300,105 L309,109 M299,109 L308,113" stroke="#7e8a96" stroke-width="1.3"/>
+  <!-- задний фонарь -->
+  <path d="M22,84 L32,81 L32,92 L22,92 Z" fill="#ff2d1f"/>
+  <path d="M32,92 L22,92 L22,101 L34,98 Z" fill="#ff7a6c"/>
+  <!-- ЗАДНЕЕ колесо -->
+  <g>
+    <circle cx="104" cy="118" r="24" fill="#0b0e11"/>
+    <circle cx="104" cy="118" r="20" fill="#23272e"/>
+    <circle cx="104" cy="118" r="16" fill="none" stroke="#454e58" stroke-width="2.4"/>
+    <g ${sp1}>
+      <circle cx="104" cy="118" r="12.5" fill="url(#hub)"/>
+      <path d="M104,106 L104,130 M92,118 L116,118 M95.5,109.5 L112.5,126.5 M95.5,126.5 L112.5,109.5" stroke="#5c6771" stroke-width="3.4"/>
+      <circle cx="104" cy="118" r="4" fill="#343d47"/>
+    </g>
+  </g>
+  <!-- ПЕРЕДНЕЕ колесо -->
+  <g>
+    <circle cx="258" cy="118" r="24" fill="#0b0e11"/>
+    <circle cx="258" cy="118" r="20" fill="#23272e"/>
+    <circle cx="258" cy="118" r="16" fill="none" stroke="#454e58" stroke-width="2.4"/>
+    <g ${sp2}>
+      <circle cx="258" cy="118" r="12.5" fill="url(#hub)"/>
+      <path d="M258,106 L258,130 M246,118 L270,118 M249.5,109.5 L266.5,126.5 M249.5,126.5 L266.5,109.5" stroke="#5c6771" stroke-width="3.4"/>
+      <circle cx="258" cy="118" r="4" fill="#343d47"/>
+    </g>
+  </g>
+  <!-- арки: затемнение над колёсами -->
+  <path d="M80,118 A24,24 0 0 1 128,118 Z" fill="rgba(0,0,0,.34)"/>
+  <path d="M234,118 A24,24 0 0 1 282,118 Z" fill="rgba(0,0,0,.34)"/>
+  <!-- тень кузова на колёсах -->
+  <ellipse cx="160" cy="112" rx="120" ry="4" fill="rgba(0,0,0,.16)"/>
+</svg>`;
+}
+
+function l10Road(moving, v1, v2, dur, dist, start){
+  // реалистичная дорога: асфальт + разметка; разметка бежит, когда машина едет
+  const KM=292;
+  const stX=start==null? 10 : start;          // стартовая позиция машины (px)
+  const dx=Math.max(0, dist);                  // сколько проехать
+  const dash=moving? Math.max(.4, (dur||1.6)/2.4).toFixed(2)+'s' : '0s';
+  const mark=(x,lab)=>`<div style="position:absolute;bottom:1px;left:${x}px;transform:translateX(-50%);background:rgba(11,23,18,.75);border:1px solid rgba(217,164,65,.55);border-radius:6px;padding:0 5px;font-size:9px;color:#ffe9a8;z-index:4;white-space:nowrap">${lab}</div>`;
+  return `<div class="l10-asphalt" style="width:${KM}px;height:64px;margin:0 auto">
+    <div class="l10-noise"></div>
+    <div class="l10-edge" style="top:0;opacity:.5"></div>
+    <div class="l10-edge" style="bottom:0"></div>
+    <div class="l10-centerline" style="--dash:${dash};animation-play-state:${moving?'running':'paused'};opacity:${moving?1:.3}"></div>
+    <div style="position:absolute;top:0;left:${KM/2-1}px;bottom:0;width:2px;background:rgba(255,233,168,.4);z-index:1"></div>
+    ${mark(6,'0 км')}${mark(KM/2,'60 км')}${mark(KM-38,'120 км')}
+    <div style="position:absolute;bottom:0;left:${stX}px;z-index:3;animation:wvDrive ${dur||1.6}s cubic-bezier(.45,0,.55,1) both;--dx:${dx}px">
+      <div class="${moving?'l10-bob':''}" style="line-height:0">
+        <img src="img/car.png?v=73" alt="машина" style="width:${moving?122:122}px;height:auto;display:block;${moving?'filter:drop-shadow(0 2px 2px rgba(0,0,0,.45))':''}">
+      </div>
+    </div>
+    ${moving?'<div class="l10-dust" style="left:4px"></div><div class="l10-dust" style="left:12px;animation-delay:.5s"></div>':''}
+  </div>`;
+}
 function visL10(el){
   // Урок 10 «Средняя скорость»: полный пошаговый разбор с анимацией
   try{
@@ -580,25 +708,7 @@ function visL10(el){
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
     const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const KM=290, HALF=KM/2;
-    // дорога с километражем; машина едет translateX от 0 до dist px
-    const road=(dist,dur,opts)=>{
-      const o=opts||{};
-      const vA=o.v1!=null?o.v1:(st.v1!=null?st.v1:30), vB=o.v2!=null?o.v2:(st.v2!=null?st.v2:20);
-      const km=[0,15,30,45,60,75,90,105,120];
-      return `<div style="position:relative;width:${KM}px;height:56px;border-radius:12px;overflow:hidden;border:2px solid #3d5c49;background:
-        linear-gradient(90deg,#1e4a30 0 ${HALF}px,#4a3320 ${HALF}px ${KM}px)">
-        <div style="position:absolute;top:0;bottom:0;left:${HALF}px;width:2px;background:#ffe9a8;opacity:.55;z-index:1"></div>
-        ${km.map(k=>`<div style="position:absolute;top:${(k%30===0)?0:7}px;bottom:${(k%30===0)?7:0}px;left:${k/120*KM-1}px;width:2px;background:rgba(232,224,204,.28)"></div>`).join('')}
-        <div style="position:absolute;left:6px;top:3px;font-size:11px;color:#8fd4a0;font-weight:bold;z-index:2">${vA} км/ч</div>
-        <div style="position:absolute;right:6px;top:3px;font-size:11px;color:#f0a878;font-weight:bold;z-index:2">${vB} км/ч</div>
-        <div style="position:absolute;left:4px;bottom:1px;font-size:9px;color:#cbb89a;opacity:.85">0</div>
-        <div style="position:absolute;left:${HALF-4}px;bottom:1px;font-size:9px;color:#cbb89a;opacity:.85">60 км</div>
-        <div style="position:absolute;right:3px;bottom:1px;font-size:9px;color:#cbb89a;opacity:.85">120 км</div>
-        <div style="position:absolute;bottom:7px;left:${(o.at!=null?o.at:8)}px;font-size:32px;z-index:3;animation:wvDrive ${dur||1.6}s ${o.ease||'cubic-bezier(.5,0,.6,1)'} both;--dx:${Math.max(0,(o.to!=null?o.to:(dist||0))-(o.at!=null?o.at:8))}px">${o.car||'🚗'}</div>
-        ${o.extra||''}
-      </div>`;
-    };
+    const l10=(mv,v1,v2,dur,dist,extra)=>l10Road(mv, v1, v2, dur, dist, extra);
     // таймер времени (полоса, заполняется)
     const timer=(label,hours,col,fill)=>{
       return `<div style="flex:1;text-align:center;max-width:130px">
@@ -611,32 +721,32 @@ function visL10(el){
     if(step===0){
       h=col(
         `<div class="wv-row">${chip('в школу: 30 км/ч','rgba(127,184,160,.5)')} ${chip('обратно: 20 км/ч','rgba(232,106,90,.5)')}</div>`+
-        road(0,0)+
+        l10Road(false,30,20,0,10)+
         `<div style="font-size:30px;margin-top:2px" class="wv-pulse">🤔</div>`+
         big(`(30 + 20) : 2 = 25 км/ч — так ли?`)+
         sml('Кажется очевидным… но Архимед просит проверить на числах. Листай ➜'));
     } else if(step===1){
       h=col(big('Давай проверим на числах'),
-        road(0,0)+
+        l10Road(false,30,20,0,10)+
         `<div class="wv-pop" style="font-size:17px;color:#d8ecff">путь до школы = 60 км · обратно = 60 км</div>`+
         `<div style="font-size:24px">➕</div>`+
         big('весь путь = 120 км')+
         sml('половинки ОДИНАКОВЫЕ — по 60 км. Теперь посчитаем время на каждой'));
     } else if(step===2){
       h=col(big('Первая половина: едем 30 км/ч'),
-        road(HALF-10,1.1,{at:8,to:HALF-6})+
+        l10Road(true,30,20,1.1,77,10)+
         `<div class="wv-row" style="margin-top:4px">${timer('время в школу', '2 часа', '#7fb8a0', 40)}</div>`+
         big('t₁ = 60 : 30 = 2 часа')+
         sml('быстро! машина проезжает 60 км за 2 часа (анимация — как раз ~2 тика)'));
     } else if(step===3){
       h=col(big('Вторая половина: ползём 20 км/ч'),
-        road(KM-10,2.2,{at:HALF-4,to:KM-8})+
+        l10Road(true,30,20,2.2,83,87)+
         `<div class="wv-row" style="margin-top:4px">${timer('время обратно', '3 часа', '#c96f4a', 60)}</div>`+
         big('t₂ = 60 : 20 = 3 часа')+
         sml('заметь: машина едет медленнее и дольше! 3 часа против 2'));
     } else if(step===4){
       h=col(big('Вся поездка'),
-        road(KM-10,2.6,{at:8,to:KM-8})+
+        l10Road(true,30,20,2.4,160,10)+
         `<div class="wv-row" style="margin-top:6px">${chip('путь = 120 км','rgba(127,184,160,.5)')} ${chip('время = 2 + 3 = 5 ч','rgba(232,106,90,.5)')}</div>`+
         `<div class="wv-ans" style="font-size:30px;color:var(--brass);font-weight:bold">v = 120 : 5 = 24 км/ч</div>`+
         sml('средняя скорость = весь путь : всё время. Вот честный ответ!'));
@@ -684,7 +794,7 @@ function visL10(el){
       const frac1=Math.min(1, 2/t1), frac2=Math.min(1, 3/t2);
       h=col(big('Тренажёр: попробуй сам!'),
         `<div class="wv-row">${chip('v₁ = '+st.v1+' км/ч')} ${chip('v₂ = '+st.v2+' км/ч')}</div>`+
-        road(0,0,{v1:st.v1,v2:st.v2})+
+        l10Road(false,st.v1,st.v2,0,10)+
         `<div style="margin-top:4px">${chip('v = 2·'+st.v1+'·'+st.v2+'/('+st.v1+'+'+st.v2+')','rgba(217,164,65,.4)')}</div>`+
         `<div class="wv-ans" style="font-size:34px;color:var(--brass);font-weight:bold">v ср = ${v} км/ч</div>`+
         btns(btn('🚗 +5 км/ч', `l10Act('${lk}','v1+')`),btn('−5 км/ч', `l10Act('${lk}','v1-')`),
@@ -800,10 +910,10 @@ function visPhysNew(el){
         const findV=/скорость\?/.test(q)||hasT('скорость движения');
         if(findV){
           if(st.p==null) st.p=Math.max(nums[0]||40,1); if(st.t==null) st.t=Math.max(nums[1]||4,1);
-          const v=Math.round(st.p/st.t*10)/10; const px=Math.min(290, st.p*3);
+          const v=Math.round(st.p/st.t*10)/10; const px=Math.min(208, st.p*3);
           h=col(
             `<div class="wv-road" style="width:300px"><div class="wv-lane"></div>
-              <div style="position:absolute;bottom:-4px;left:2px;font-size:40px;transform:translateX(${px}px);transition:transform 1s ease">🚗</div>
+              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=73" style="width:88px;height:auto;display:block"></div>
               <div style="position:absolute;top:-4px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${st.p} км</div>
               <div style="position:absolute;top:1px;left:4px;font-size:12px;color:#9fc5f5">⏱ ${st.t} ч</div></div>`+
             big(`S = ${st.p} км · t = ${st.t} ч`)+big(`v = S : t = ${st.p} : ${st.t} = ${v} км/ч`)+
@@ -811,10 +921,10 @@ function visPhysNew(el){
             sml('машинка прошла путь S за время t — скорость = путь : время'));
         } else {
           if(st.v==null) st.v=Math.max(nums[0]||15,1); if(st.t==null) st.t=Math.max(nums[1]||2,1);
-          const S=st.v*st.t; const px=Math.min(290, S*3);
+          const S=st.v*st.t; const px=Math.min(208, S*3);
           h=col(
             `<div class="wv-road" style="width:300px"><div class="wv-lane"></div>
-              <div style="position:absolute;bottom:-4px;left:2px;font-size:40px;transform:translateX(${px}px);transition:transform 1s ease">🚗</div>
+              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=73" style="width:88px;height:auto;display:block"></div>
               <div style="position:absolute;top:-4px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${S} км</div></div>`+
             big(`v=${st.v} км/ч · t=${st.t} ч`)+big(`S = v·t = ${S} км`)+
             btns(btn('🚗 +5 км/ч',`phAct('${lk}','v+')`),btn('−5 км/ч',`phAct('${lk}','v-')`),btn('⏱ +1 ч',`phAct('${lk}','t+')`),btn('⏱ −1 ч',`phAct('${lk}','t-')`),btn('↺',`phAct('${lk}','r')`))+
