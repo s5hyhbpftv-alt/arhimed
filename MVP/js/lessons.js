@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -964,6 +964,129 @@ function l37Bars(p, animate){
   };
   return `<div style="width:232px;margin:0 auto">${bar('потенциальная','#7fd1a0',ep,0,'l37Shrink')}${bar('кинетическая','#f0a35a',ek,100,'l37Grow')}</div>`;
 }
+function visL48(el){
+  // Урок 48 «Архимедова сила»: легенда о короне Гиерона и «Эврика!»
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Корона царя Гиерона'),
+        rowC(l48Crown(110))+
+        big('золотая ли она на самом деле?')+
+        sml('ювелир мог подменить часть золота серебром. проверить, не ломая корону? — эту задачу дали Архимеду'));
+    } else if(step===1){
+      const dip=!!st.dip;
+      h=col(big('Эврика!'),
+        l48Cylinder(dip?0.45:0.05, l48Crown(64), {label:'полная ванна'}),
+        (dip? big('💦 вода выплеснулась! Эврика!') : btn('🛁 опуститься в ванну', `l48Act('${lk}','dip')`))+
+        (dip? sml('объём тела = объём вытесненной воды — так можно измерить корону!') : sml('Архимед садится в полную ванну…')));
+    } else if(step===2){
+      // опускаем корону в мензурку
+      const dip=!!st.dip2;
+      const p=dip?0.6:0.1;
+      h=col(big('Измеряем корону'),
+        l48Cylinder(p, l48Crown(56), {label:dip?'уровень поднялся!':'вода'}),
+        (dip? big('вытеснено 200 мл!') : btn('🔱 опустить корону', `l48Act('${lk}','dip2')`))+
+        sml('сколько воды вытеснила корона — таков её объём. корона цела!'));
+    } else if(step===3){
+      h=col(big('Сила Архимеда'),
+        `<div style="display:flex;gap:8px;justify-content:center;align-items:center;margin:4px 0">
+          <div style="font-size:36px">🍎</div><div style="font-size:26px;color:#7fd1ff">⬆</div><div style="font-size:30px">🌊</div></div>`+
+        big('вода толкает тело вверх!')+
+        sml('выталкивающая сила, или сила Архимеда — она равна весу вытесненной жидкости'));
+    } else if(step===4){
+      h=col(big('Формула'),
+        `<div style="font-size:30px;color:var(--brass);font-family:Georgia,serif">F = ρ·g·V</div>`+
+        `<div style="font-size:17px;color:#d8ecff">или F = m(вытесненной воды) · g</div>`+
+        sml('V — объём погружённой части тела. больше вытеснил — сильнее толкает!'));
+    } else if(step===5){
+      h=col(big('Разбираем на числах'),
+        `<div class="wv-row">${chip('V = 2 л','rgba(127,209,255,.5)')} ${chip('вытеснил 2 кг воды','rgba(127,184,160,.5)')}</div>`+
+        l48Cylinder(0.5, l48CubeBody(0.5), {label:'дерево в воде'})+
+        `<div style="font-size:19px" class="wv-pop">F = m·g = 2 · 10 = 20 Н</div>`+
+        sml('вода толкает дерево вверх с силой 20 Н'));
+    } else if(step===6){
+      h=col(big('Всплывает или тонет?'),
+        rowC(
+          `<div style="text-align:center;width:120px;border:2px solid rgba(127,209,160,.5);border-radius:12px;padding:6px"><div style="font-size:13px">Fa &gt; вес</div><div style="font-size:22px">⬆</div><b>всплывает</b></div>`+
+          `<div style="text-align:center;width:120px;border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:6px"><div style="font-size:13px">Fa &lt; вес</div><div style="font-size:22px">⬇</div><b>тонет</b></div>`+
+          `<div style="text-align:center;width:120px;border:2px solid rgba(127,209,255,.5);border-radius:12px;padding:6px"><div style="font-size:13px">Fa = вес</div><div style="font-size:22px">⏺</div><b>плавает внутри</b></div>`)+
+        sml('сравни выталкивающую силу с весом тела!'));
+    } else if(step===7){
+      h=col(big('Опыт в аквариуме'),
+        l33Bath([
+          {mat:'пробка',swim:true,x:'20%',delay:.2,size:50},
+          {mat:'дерево',swim:true,x:'38%',delay:.5,size:52},
+          {mat:'лёд',swim:true,x:'70%',delay:.8,size:48},
+          {mat:'железо',swim:false,x:'52%',delay:1.1,size:58}
+        ],{h:160,w:250})+
+        sml('пробка, дерево и лёд легче воды — Fa выталкивает их. железо тяжелее — тонет'));
+    } else if(step===8){
+      h=col(big('Почему корабль плавает?'),
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;margin:2px 0">
+          <div style="text-align:center">${l33BoatSvg(140)}</div>
+        </div>`+
+        big('корпус вытесняет много воды → Fa огромная')+
+        sml('сила Архимеда больше веса корабля — и он держится на воде!'));
+    } else if(step===9){
+      h=col(big('Айсберг'),
+        `<svg width="200" height="140" viewBox="0 0 200 140" style="display:block;margin:0 auto">
+          <rect x="0" y="60" width="200" height="80" fill="#2a5f9e"/>
+          <path d="M0,70 L30,55 L70,62 L110,40 L160,58 L200,50 L200,80 L0,80 Z" fill="#bfe0f0"/>
+          <path d="M0,72 L40,66 L90,72 L140,60 L200,66 L200,140 L0,140 Z" fill="#2a5f9e" opacity=".9"/>
+          <path d="M50,66 L70,70 L60,64 Z" fill="#fff" opacity=".5"/>
+          <path d="M120,60 L150,70 L138,60 Z" fill="#fff" opacity=".4"/>
+          <text x="100" y="88" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">9/10 под водой!</text>
+        </svg>`+
+        big('видна только макушка!')+sml('лёд чуть легче воды — под водой прячется около 9/10 айсберга'));
+    } else if(step===10){
+      h=col(big('Разбираем задачку'),
+        `<div class="wv-row">${chip('вытеснил 2 кг воды','rgba(127,184,160,.5)')} ${chip('g = 10','rgba(217,164,65,.5)')}</div>`+
+        `<div style="font-size:20px" class="wv-pop">F = m·g = 2 · 10</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">F = 20 Н ✓</div>`+
+        sml('такой вопрос будет дальше!'));
+    } else if(step===11){
+      // тренажёр: вес тела vs вытесненная вода
+      if(st.w==null) st.w=4; if(st.b==null) st.b=3;  // w = кг вытесненной воды, b = кг вес тела
+      const Fa=st.w*10, Wt=st.b*10;
+      const state = Fa>Wt ? 'up' : Fa<Wt ? 'down' : 'mid';
+      const yy = state==='up'? 108 : state==='down'? 8 : 58;
+      h=col(big('Тренажёр: всплывёт или утонет?'),
+        `<div class="wv-row">${chip('вода вытеснена: '+st.w+' кг','rgba(127,184,160,.5)')} ${chip('вес тела: '+st.b+' кг','rgba(232,106,90,.5)')}</div>`+
+        `<div style="position:relative;width:230px;height:170px;margin:0 auto;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#d8f0fa,transparent 40%,#9fc5e8 40%,#5d9fd6)">
+          <div style="position:absolute;left:8px;right:8px;top:40%;height:3px;background:rgba(255,255,255,.7);border-radius:2px"></div>
+          <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${yy}px;transition:bottom .6s ease;z-index:3;width:56px">${l33CubeSvg(state==='down'?'железо':'пробка',56)}</div>
+          <div style="position:absolute;top:2px;left:8px;font-size:10px;color:#1a3a55">вода</div>
+          <div style="position:absolute;right:6px;top:2px;font-size:15px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)">${state==='up'?'⬆ всплывает':state==='down'?'⬇ тонет':'⏺ плавает'}</div>
+        </div>`+
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:2px 0">
+          <span style="background:rgba(127,209,160,.12);border:1px solid rgba(127,209,160,.5);border-radius:9px;padding:3px 10px;font-size:17px;color:#9fe8c0">⬆ Fa = ${Fa} Н</span>
+          <span style="background:rgba(232,106,90,.12);border:1px solid rgba(232,106,90,.5);border-radius:9px;padding:3px 10px;font-size:17px;color:#f0a89a">⬇ вес = ${Wt} Н</span></div>`+
+        btns(btn('+1 кг воды выт.',`l48Act('${lk}','w+')`),btn('−1 кг',`l48Act('${lk}','w-')`),btn('+1 кг веса',`l48Act('${lk}','b+')`),btn('−1 кг',`l48Act('${lk}','b-')`),btn('↺',`l48Act('${lk}','r')`))+
+        sml(Fa>Wt?'Fa больше веса — тело всплывает!':'Fa меньше веса — тонет. добавь вытесненной воды!'));
+    } else {
+      // памятка
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:320px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+          🛁 <b>Эврика!</b> объём тела = объём вытесненной воды.<br>
+          ⬆ Сила Архимеда толкает вверх: <b>F = m(выт.)·g = ρ·g·V</b>.<br>
+          🚢 Fa &gt; вес — всплывает · Fa &lt; вес — тонет.<br>
+          🧊 Айсберг прячет под водой 9/10 объёма!</div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там дерево вытеснило 2 кг воды'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
 function visL36(el){
   // Урок 36 «Закон Ома»: сюжет «электричество — водопровод», цепь с электронами
   try{
@@ -1259,6 +1382,68 @@ function l36Water(){
       path="M${W*.16},${y} H${W*.9}" begin="${(-f*1.8).toFixed(2)}s"/></circle>`).join('')}
     <text x="${W*.85}" y="${H-8}" text-anchor="middle" font-size="11" fill="#9fc5e8">ток I</text>
   </svg>`;
+}
+function l48Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  switch(act){
+    case 'dip': st.dip=(st.dip||0)+1; break;
+    case 'dip2': st.dip2=(st.dip2||0)+1; break;
+    case 'w+': st.w=Math.min(12,(st.w==null?4:st.w)+1); break;
+    case 'w-': st.w=Math.max(1,(st.w==null?4:st.w)-1); break;
+    case 'b+': st.b=Math.min(12,(st.b==null?3:st.b)+1); break;
+    case 'b-': st.b=Math.max(1,(st.b==null?3:st.b)-1); break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l48Crown(w){
+  // золотая корона Гиерона с камнями
+  const W=w||76, H=Math.round(W*.9);
+  return `<svg width="${W}" height="${H}" viewBox="0 0 120 108" style="display:block">
+    <defs><linearGradient id="cr" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe28a"/><stop offset=".5" stop-color="#e6bf4a"/><stop offset="1" stop-color="#b8860b"/></linearGradient></defs>
+    <path d="M16,96 L104,96 L108,30 Q84,50 60,34 Q36,50 12,30 Z" fill="url(#cr)" stroke="#8a6a1a" stroke-width="2"/>
+    <path d="M12,30 L28,20 L34,38 L48,16 L60,36 L74,16 L86,38 L94,22 L108,30" fill="url(#cr)" stroke="#8a6a1a" stroke-width="2"/>
+    <circle cx="28" cy="26" r="4" fill="#ff5a5a"/><circle cx="48" cy="21" r="4" fill="#5aa0ff"/>
+    <circle cx="74" cy="21" r="4" fill="#5aff8a"/><circle cx="92" cy="28" r="4" fill="#ff5a5a"/>
+    <circle cx="60" cy="40" r="5" fill="#ffd94a" stroke="#b8860b"/>
+    <ellipse cx="40" cy="96" rx="26" ry="6" fill="rgba(0,0,0,.25)"/>
+  </svg>`;
+}
+function l48Cylinder(p, bodyHtml, opts){
+  // мензурка (вид сбоку): вода поднимается до уровня p (0..1), тело внутри
+  const o=opts||{};
+  const W=o.w||170, H=o.h||190;
+  const waterH=Math.round((H-40)*Math.min(1,p));     // высота воды от дна
+  const marks=[0,.25,.5,.75,1].map(f=>Math.round(f*(H-40)));
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto">
+    <!-- шкала -->
+    <div style="position:absolute;right:4px;top:4px;bottom:8px;width:14px;border-left:1px solid rgba(207,233,248,.5)">
+      ${marks.map((y,i)=>`<div style="position:absolute;left:0;top:${y-3}px;width:8px;border-top:1px solid rgba(207,233,248,.6)"></div>
+      <div style="position:absolute;left:10px;top:${y-6}px;font-size:8px;color:#9fc5e8">${Math.round(i*100)}</div>`).join('')}
+    </div>
+    <!-- стекло -->
+    <div style="position:absolute;left:10px;right:26px;top:0;bottom:8px;border-radius:4px 4px 18px 18px;
+      border:4px solid #cfe9f8;background:rgba(255,255,255,.04);overflow:hidden"></div>
+    <!-- вода -->
+    <div style="position:absolute;left:14px;right:30px;bottom:12px;height:${waterH}px;transition:height .7s ease;
+      background:linear-gradient(180deg,rgba(200,235,255,.95),rgba(80,160,230,.92));border-radius:2px 2px 14px 14px"></div>
+    <div style="position:absolute;left:14px;right:30px;bottom:${12+waterH-3}px;height:3px;background:rgba(235,248,255,.95);border-radius:2px;transition:bottom .7s ease"></div>
+    <!-- тело -->
+    <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${18+waterH}px;transition:bottom .7s ease;z-index:3">${bodyHtml||''}</div>
+    ${o.label?`<div style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:11px;color:#ffd9a0;font-weight:bold">${o.label}</div>`:''}
+  </div>`;
+}
+
+function l48CubeBody(p){
+  // тело в мензурке на уровне воды
+  const x0=55, iw=84, H=190, ih=137;
+  const waterY=(H-ih)+ih*(1-p);
+  const ty=waterY-18;
+  return `<g transform="translate(${x0+iw*.5-16},${ty})">
+    <rect x="0" y="0" width="32" height="32" rx="5" fill="#b5814a" stroke="#5a3a18" stroke-width="2"/>
+    <rect x="4" y="4" width="12" height="8" rx="2" fill="rgba(255,255,255,.3)"/>
+  </g>`;
 }
 function visL37(el){
   // Урок 37 «Энергия и работа»: сюжет «Волшебная горка», мяч катится, энергия перетекает
@@ -2148,6 +2333,7 @@ function renderLessonVis(){
   else if(id===35) visL35(el);
   else if(id===36) visL36(el);
   else if(id===37) visL37(el);
+  else if(id===48) visL48(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
