@@ -1183,6 +1183,66 @@ function visL36(el){
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
+function l34Scene0(dropped){
+  // Детальная сцена «яблоня Ньютона»: небо, солнце, облако, трава, дерево с яблоками.
+  // Падающее яблоко: до клика висит на ветке; после — падает на землю (анимация), 💥 в момент удара.
+  const W=258, H=210;
+  const GROUND=152;                 // верх травы
+  const appleH=40;
+  const fallY=GROUND-appleH+4;      // яблоко чуть «в траве» — лежит на земле
+  const tree=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0;z-index:1">
+    <!-- небо -->
+    <defs><linearGradient id="l34sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8ec9f0"/><stop offset="1" stop-color="#cfeaf9"/></linearGradient></defs>
+    <rect x="0" y="0" width="${W}" height="${H}" fill="url(#l34sky)"/>
+    <!-- трава -->
+    <rect x="0" y="${GROUND}" width="${W}" height="${H-GROUND}" fill="#5d9c4a"/>
+    <rect x="0" y="${GROUND}" width="${W}" height="7" fill="#71b35a"/>
+    ${[12,36,62,88,120,150,182,214,244].map(x=>`<path d="M${x},${GROUND+6} q3,-6 6,0" stroke="#4a8a3a" stroke-width="2" fill="none"/>`).join('')}
+    <!-- солнце -->
+    <circle cx="222" cy="26" r="16" fill="#ffd94a"/>
+    <circle cx="222" cy="26" r="16" fill="none" stroke="rgba(255,217,74,.5)" stroke-width="5"/>
+    <!-- облако -->
+    <g fill="#fff" opacity=".92">
+      <ellipse cx="54" cy="34" rx="24" ry="10"/>
+      <ellipse cx="76" cy="30" rx="18" ry="9"/>
+      <ellipse cx="38" cy="30" rx="16" ry="8"/>
+    </g>
+    <!-- ствол -->
+    <path d="M128,120 Q124,${GROUND+16} 122,${GROUND+40} L144,${GROUND+40} Q146,${GROUND+12} 142,120 Z" fill="#7a4a24"/>
+    <path d="M126,128 Q128,${GROUND+20} 130,${GROUND+34}" stroke="#5a3318" stroke-width="3" fill="none" opacity=".7"/>
+    <path d="M140,126 Q138,${GROUND+18} 136,${GROUND+32}" stroke="#8a5a2e" stroke-width="3" fill="none" opacity=".6"/>
+    <!-- ветки -->
+    <path d="M136,110 Q160,100 178,102" stroke="#7a4a24" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M134,116 Q108,104 92,108" stroke="#7a4a24" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M140,104 Q150,86 160,80" stroke="#6a3f1c" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <!-- крона -->
+    <circle cx="128" cy="74" r="34" fill="#4a9a3a"/>
+    <circle cx="160" cy="66" r="30" fill="#5aa848"/>
+    <circle cx="100" cy="80" r="28" fill="#4a9a3a"/>
+    <circle cx="178" cy="82" r="26" fill="#5aa848"/>
+    <circle cx="132" cy="58" r="24" fill="#63b051"/>
+    <circle cx="148" cy="90" r="22" fill="#3f8f2f"/>
+    <!-- блики на листве -->
+    <circle cx="122" cy="64" r="10" fill="rgba(255,255,255,.12)"/>
+    <circle cx="165" cy="58" r="8" fill="rgba(255,255,255,.12)"/>
+    <!-- яблоки на дереве -->
+    <circle cx="108" cy="96" r="7" fill="#e23b2e"/><circle cx="105" cy="94" r="2" fill="rgba(255,255,255,.4)"/>
+    <circle cx="172" cy="78" r="6.5" fill="#d92f22"/><circle cx="170" cy="76" r="2" fill="rgba(255,255,255,.4)"/>
+    <circle cx="146" cy="74" r="6" fill="#e23b2e"/><circle cx="144" cy="72" r="2" fill="rgba(255,255,255,.4)"/>
+    <circle cx="128" cy="96" r="6.5" fill="#c92f22"/>
+  </svg>`;
+  // падающее яблоко: конечная точка на земле; если dropped — анимация падения сверху
+  const appleEl = dropped
+    ? `<div class="l34-fall" style="position:absolute;left:176px;top:${fallY}px;z-index:3;--fy:-${116-fallY}px;width:${appleH}px">${l34AppleSVG(appleH)}</div>
+       <div style="position:absolute;left:176px;top:${GROUND-3}px;z-index:2;width:40px;height:7px;border-radius:50%;background:rgba(0,0,0,.3);filter:blur(2px)"></div>
+       <div class="l34-boom" style="position:absolute;left:196px;top:${fallY-10}px;z-index:3;font-size:26px;line-height:1">💥</div>
+       <div class="l34-boom" style="position:absolute;left:164px;top:${fallY-4}px;z-index:3;font-size:15px;line-height:1;animation-delay:1s">✦</div>`
+    : `<div style="position:absolute;left:172px;top:66px;z-index:3;width:${appleH}px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))">${l34AppleSVG(appleH)}</div>`;
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.3)">
+    ${tree}${appleEl}
+  </div>`;
+}
 function visL34(el){
   // Урок 34 «Сила тяжести и вес»: сюжет «Яблоко Ньютона»
   try{
@@ -1205,13 +1265,9 @@ function visL34(el){
     if(step===0){
       const dropped=!!st.fall;
       h=col(big('Легенда о яблоке Ньютона'),
-        `<div style="position:relative;width:240px;height:190px;margin:0 auto;border-radius:14px;overflow:hidden">
-          ${l34Tree()}
-          <div class="wv-pop" style="position:absolute;left:158px;top:${dropped?120:58}px;transition:top .9s ease-in;z-index:3;width:44px">${l34AppleSVG(44)}</div>
-          <div class="wv-pop" style="position:absolute;left:120px;top:150px;font-size:34px;z-index:2;transition:opacity .5s;opacity:${dropped?1:0}">💥</div>
-        </div>`+
+        l34Scene0(dropped)+
         (dropped
-          ? big('Бам! Яблоко упало вниз')+sml('его притянула Земля — так родилась наука о силах. Почему вниз? Смотри дальше ➜')
+          ? big('Бам! Яблоко упало на землю!')+sml('его притянула Земля — так родилась наука о силах. Почему вниз? Смотри дальше ➜')
           : big('почему яблоко падает вниз?')+
             btn('🍎 уронить яблоко', `l34Act('${lk}','drop')`)+
             sml('Ньютон задумался… нажми и увидишь!'))

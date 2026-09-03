@@ -392,6 +392,13 @@
   @keyframes l37Shrink { from{transform:scaleX(1)} to{transform:scaleX(0)} }
   @keyframes l37Grow { from{transform:scaleX(0)} to{transform:scaleX(1)} }
   .l37-slide { animation:l37Slide 1.3s cubic-bezier(.4,0,.8,1) both; }
+
+  /* падение яблока (урок 34) */
+  @keyframes l34FallApple { 0%{transform:translateY(var(--fy,0px))} 100%{transform:translateY(0)} }
+  @keyframes l34Wobble { 0%,100%{transform:rotate(0)} 30%{transform:rotate(14deg)} 70%{transform:rotate(-10deg)} }
+  @keyframes l34Boom { 0%{transform:scale(.2);opacity:0} 40%{transform:scale(1.35);opacity:1} 70%{transform:scale(.95)} 100%{transform:scale(1);opacity:.9} }
+  .l34-fall { animation:l34FallApple .85s cubic-bezier(.5,0,.85,.4) both; }
+  .l34-boom { animation:l34Boom .7s ease-out .8s both; }
   @keyframes wvGrow { 0%{transform:scaleX(0)} 100%{transform:scaleX(1)} }
   @keyframes wvIn { 0%{transform:translateY(14px);opacity:0} 100%{transform:translateY(0);opacity:1} }
   .wv-bub { width:9px; height:9px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#eaf7ff,#9fd4f2);
@@ -434,21 +441,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=85"></script>
-<script src="data/lessons.js?v=85"></script>
-<script src="js/comic.js?v=85"></script>
-<script src="js/core.js?v=85"></script>
-<script src="js/engine.js?v=85"></script>
-<script src="js/app.js?v=85"></script>
-<script src="js/dashboard.js?v=85"></script>
-<script src="js/lessons.js?v=85"></script>
-<script src="js/legend.js?v=85"></script>
-<script src="js/simulator.js?v=85"></script>
-<script src="js/duel.js?v=85"></script>
-<script src="js/agent.js?v=85"></script>
-<script src="js/voice.js?v=85"></script>
-<script src="js/assistant.js?v=85"></script>
-<script src="js/agentlive.js?v=85"></script>
+<script src="data/tasks.js?v=86"></script>
+<script src="data/lessons.js?v=86"></script>
+<script src="js/comic.js?v=86"></script>
+<script src="js/core.js?v=86"></script>
+<script src="js/engine.js?v=86"></script>
+<script src="js/app.js?v=86"></script>
+<script src="js/dashboard.js?v=86"></script>
+<script src="js/lessons.js?v=86"></script>
+<script src="js/legend.js?v=86"></script>
+<script src="js/simulator.js?v=86"></script>
+<script src="js/duel.js?v=86"></script>
+<script src="js/agent.js?v=86"></script>
+<script src="js/voice.js?v=86"></script>
+<script src="js/assistant.js?v=86"></script>
+<script src="js/agentlive.js?v=86"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -463,7 +470,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=85').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=86').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
