@@ -114,7 +114,9 @@ async def agent_relay(request):
 
 
 async def index(request):
-    return web.FileResponse(os.path.join(ROOT, 'index.html'))
+    resp = web.FileResponse(os.path.join(ROOT, 'index.html'))
+    resp.headers['Cache-Control'] = 'no-cache'
+    return resp
 
 
 def make_app():
@@ -128,7 +130,9 @@ def make_app():
 async def static_handler(request):
     rel = request.match_info['tail'] or ''
     if not rel:
-        return web.FileResponse(os.path.join(ROOT, 'index.html'))
+        resp = web.FileResponse(os.path.join(ROOT, 'index.html'))
+        resp.headers['Cache-Control'] = 'no-cache'
+        return resp
     path = os.path.normpath(os.path.join(ROOT, rel))
     if not path.startswith(ROOT):
         raise web.HTTPForbidden()
@@ -141,7 +145,12 @@ async def static_handler(request):
         links = ''.join(f'<div><a href="{rel.rstrip("/")}/{x}">{x}</a></div>' for x in items if not x.startswith('.'))
         return web.Response(text=f'<meta charset="utf-8"><body style="font-family:Georgia;background:#0b1712;color:#e8e0cc;padding:20px"><h2>АРХИМЕД</h2>{links}</body>', content_type='text/html')
     if os.path.isfile(path):
-        return web.FileResponse(path)
+        resp = web.FileResponse(path)
+        # HTML и service worker всегда перепроверяются (чтобы обновления доходили сразу)
+        low = path.lower()
+        if low.endswith(('.html', '.htm')) or low.endswith('sw.js') or low.endswith('manifest.webmanifest'):
+            resp.headers['Cache-Control'] = 'no-cache'
+        return resp
     raise web.HTTPNotFound()
 
 
