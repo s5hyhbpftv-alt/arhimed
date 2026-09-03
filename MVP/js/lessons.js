@@ -297,8 +297,8 @@ function visMathNew(el){
     const a=nums[0], b=nums[1], c=nums[2];
     const has=(...ws)=>ws.some(w=>all.includes(w));
     const dots=(n,col)=>n>0?Array.from({length:Math.min(n,72)},()=>`<span style="color:${col||'var(--amber)'};font-size:16px;line-height:1">●</span>`).join(''):'<span class="small">—</span>';
-    const card=(inner)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">${inner}</div>`;
-    const big=(t)=>`<div style="font-size:19px;color:var(--amber);font-family:Georgia,serif">${t}</div>`;
+    const card=(inner)=>`<div class="wv-col" style="gap:9px">${inner}</div>`;
+    const big=(t)=>`<div class="wv-big">${t}</div>`;
     let h='';
     if(has('окружност','длина окружности','площадь круга','круга радиуса')){
       const r=Math.max(a||b||4,1); const rp=Math.min(50, r*11);
@@ -365,7 +365,7 @@ function visMathNew(el){
       h=card(`<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center">${dots(x,'#7fb8a0')}<span style="color:#cbb89a;font-size:24px">${op}</span>${dots(y,'#c96f4a')}</div>`+big(`${x} ${op} ${y} = ${res}`));
     }
     else { const first=(L.explain&&L.explain[0])||''; h=card(`<div style="font-size:30px">🧮</div>`+big(L.title||'')+`<div class="small" style="color:#cbb89a;max-width:290px">${esc(first).slice(0,140)}…</div>`); }
-    el.innerHTML=`<div style="background:rgba(16,31,24,.75);border:1px solid #3d5c49;border-radius:12px;padding:10px;margin-top:10px">${h}</div>`;
+    el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
@@ -382,84 +382,162 @@ function visChemNew(el){
     const nums=(raw.match(/\d+(?:[.,]\d+)?/g)||[]).map(x=>parseFloat(x.replace(',','.')));
     const a=nums[0], b=nums[1], c=nums[2];
     const has=(...ws)=>ws.some(w=>all.includes(w));
-    const card=(inner)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">${inner}</div>`;
-    const big=(t)=>`<div style="font-size:19px;color:var(--amber);font-family:Georgia,serif">${t}</div>`;
-    const small=(t)=>`<div class="small" style="color:#cbb89a">${t}</div>`;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t)=>`<div class="wv-big">${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const icon=(e,extra)=>`<div class="wv-ic2 ${extra||''}" style="${extra?'':'line-height:1.2'}">${e}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
     const id=LV.id; const TARGET=12;
     let h='';
-    // --- интерактив по конкретным урокам ---
+    // ============ интерактив по конкретным урокам ============
     if(id===111){
-      const eff=['💨 пузырьки газа!','🧊 выпал осадок!','🎨 раствор изменил цвет!','🔥 выделилось тепло!'];
+      // пробирка с раствором + признак, который анимируется
+      const eff=['💨 газ!','🧊 осадок!','🎨 цвет!','🔥 тепло!'];
       const cur=(st.eff==null?0:st.eff)%eff.length;
-      h=card(`<div style="font-size:54px">🧪</div>`+big(eff[cur])+
-        `<button class="hint-btn" onclick="chReact('${lk}')">🧪 провести опыт</button>`+small('нажми — увидишь один из признаков химической реакции'));
+      const scene = cur===0 ? `<div style="position:absolute;left:14px;right:14px;bottom:10px;height:44px;background:linear-gradient(#bfe0c8,#8fc7a8);border-radius:4px"></div>
+        <span class="wv-bub wv-rise" style="left:30%"></span><span class="wv-bub wv-rise2" style="left:50%"></span><span class="wv-bub wv-rise3" style="left:70%"></span>`
+        : cur===1 ? `<div style="position:absolute;left:14px;right:14px;bottom:10px;height:44px;background:linear-gradient(#a8d8f0,#7fb8d8);border-radius:4px"></div>
+        <div class="wv-pop" style="position:absolute;left:20%;right:20%;bottom:4px;height:16px;background:#d9c9a8;border-radius:3px"></div>`
+        : cur===2 ? `<div class="wv-morph" style="position:absolute;left:14px;right:14px;bottom:10px;height:44px;background:linear-gradient(#e8b4d8,#c96f9f);border-radius:4px"></div>`
+        : `<div style="position:absolute;left:14px;right:14px;bottom:10px;height:44px;background:linear-gradient(#ffe9a8,#f0c75e);border-radius:4px"></div><div style="position:absolute;top:-30px;left:50%;transform:translateX(-50%);font-size:34px" class="wv-flick">🔥</div>`;
+      h=col(icon('🧪'), big(eff[cur]),
+        `<div class="wv-flask" style="width:110px;height:120px;background:linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.02))">${scene}</div>`+
+        btn('🧪 провести опыт', `chReact('${lk}')`)+
+        sml('нажми — увидишь один из признаков химической реакции'));
     } else if(id===112){
       const acts=[['Понюхать вещество','danger'],['Попробовать на вкус','danger'],['Плеснуть без перчаток','danger'],['Спросить взрослого','ok']];
       const cur=st.safe==null?-1:st.safe;
-      h=card(`<div style="font-size:44px">🧤</div>`+
-        `<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">${acts.map((x,i)=>`<button class="hint-btn" onclick="chSafe('${lk}',${i})" style="${cur===i?(x[1]==='ok'?'background:#3d8f4f':'background:#c96f4a'):''}">${x[0]}</button>`).join('')}</div>`+
-        (cur>=0? big(acts[cur][1]==='ok'?'✅ правильно!':'🚫 опасно — так нельзя!') : small('как поступишь в лаборатории?')));
+      const res = cur<0 ? sml('как поступишь в лаборатории?')
+        : big(acts[cur][1]==='ok'?'✅ правильно!':'🚫 опасно — так нельзя!', ) ;
+      h=col(icon('🧤'), res,
+        btns(...acts.map((x,i)=>btn(x[0], `chSafe('${lk}',${i})`, `style="${cur===i?(x[1]==='ok'?'background:#3d8f4f;animation:wvGlow 1s infinite':'background:#c96f4a;animation:wvShake .5s ease'):''}"`))));
     } else if(id===113){
       const sels=[['Железо','metal'],['Медь','metal'],['Кислород','nonmetal'],['Сера','nonmetal']];
       const cur=st.sel2==null?0:st.sel2; const [nm,kind]=sels[cur]; const lamp=!!st.tok;
-      h=card(`<div style="font-size:46px">${kind==='metal'?'🔩':'🎈'}</div>`+big(nm)+
-        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">${sels.map((x,i)=>`<button class="hint-btn" onclick="chMetal('${lk}','s',${i})">${x[0]}</button>`).join('')}</div>`+
-        `<button class="hint-btn" onclick="chMetal('${lk}','t')">🔌 проверить ток</button>`+
-        (lamp? big(kind==='metal'?'💡 проводит!':'💡 не горит — не проводит') : small('испытай: проводит ли ток?')));
+      h=col(
+        `<div class="wv-cable" style="width:190px">${lamp&&kind==='metal'?'<span class="wv-dot wv-flow" style="left:0"></span><span class="wv-dot wv-flow" style="left:0;animation-delay:.4s"></span>':''}</div>`+
+        `<div style="display:flex;align-items:center;gap:12px;justify-content:center">
+          <div style="font-size:44px">🔋</div><div style="font-size:30px;color:#cbb89a">⚡</div>
+          <div style="font-size:56px" class="${lamp&&kind==='metal'?'wv-glow':''}">${lamp?(kind==='metal'?'💡':'🚫'):'💡'}</div></div>`+
+        big(nm)+btns(...sels.map((x,i)=>btn(x[0], `chMetal('${lk}','s',${i})`)))+
+        btn('🔌 проверить ток', `chMetal('${lk}','t')`)+
+        (lamp? sml(kind==='metal'?'💡 металл проводит ток — цепь замкнута!':'💡 неметалл ток не проводит — лампа не горит') : sml('испытай: проводит ли ток?')));
     } else if(id===117){
-      const exs=['H₂O: O = 2, H = 1','CO₂: C = 4, O = 2','NH₃: N = 3, H = 1','HCl: Cl = 1, H = 1'];
-      const cur=(st.vx==null?0:st.vx)%exs.length;
-      h=card(`<div style="font-size:46px">🔗</div>`+big(exs[cur])+
-        `<button class="hint-btn" onclick="chValEx('${lk}')">показать ещё пример</button>`+small('валентность — число связей атома'));
+      // валентность: центральный атом, партнёры по кругу; двойные связи = 2 линии
+      const exs=[
+        {cen:'O', frm:'H₂O · вода', bonds:[['H',1],['H',1]], angs:[-52,52]},
+        {cen:'C', frm:'CO₂ · углекислый газ', bonds:[['O',2],['O',2]], angs:[0,180]},
+        {cen:'N', frm:'NH₃ · аммиак', bonds:[['H',1],['H',1],['H',1]], angs:[-90,30,150]},
+        {cen:'Cl', frm:'HCl · хлороводород', bonds:[['H',1]], angs:[0]}
+      ];
+      const cur=(st.vx==null?0:st.vx)%exs.length; const E=exs[cur];
+      const val=E.bonds.reduce((s,[p,k])=>s+k,0);
+      const CX=110, CY=92, R=58;
+      const lines=[];
+      E.bonds.forEach(([par,k],i)=>{
+        const a=E.angs[i]*Math.PI/180;
+        const x=CX+Math.cos(a)*R, y=CY+Math.sin(a)*R;
+        const L=Math.hypot(x-CX,y-CY), ang=Math.atan2(y-CY,x-CX)*180/Math.PI;
+        const offs = k===2 ? [-4,4] : [0];
+        offs.forEach((off,oi)=>{
+          const px = -Math.sin(a)*off, py = Math.cos(a)*off;
+          lines.push(`<div class="wv-pop" style="position:absolute;left:${CX+px}px;top:${CY+py}px;width:${L}px;height:3px;transform-origin:27px 50%;transform:rotate(${ang}deg);background:linear-gradient(90deg,#cbb89a,#8a94ad);border-radius:2px;animation-delay:${.22*i+oi*.06+.08}s"></div>`);
+        });
+        lines.push(`<div class="wv-pop" style="position:absolute;left:${x-20}px;top:${y-20}px;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#c96f4a);border:2px solid #33291e;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#33291e;font-size:18px;animation-delay:${.22*i+.14}s">${par}</div>`);
+      });
+      h=col(icon('🔗'), big(E.frm),
+        `<div style="position:relative;width:220px;height:184px;margin:0 auto">
+          <div class="wv-pop" style="position:absolute;left:${CX-29}px;top:${CY-29}px;width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#e8b4a0);border:3px solid #33291e;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#33291e;font-size:30px;font-family:Georgia,serif">${E.cen}</div>
+          ${lines.join('')}</div>`+
+        big(`валентность ${E.cen} = ${val}`)+
+        btn('показать ещё пример', `chValEx('${lk}')`)+
+        sml('валентность — число связей атома: '+val+' (двойная связь = 2 линии)'));
     } else if(id===123){
-      const eqs=[['2H₂ + O₂ → 2H₂O','соединение'],['CaCO₃ → CaO + CO₂','разложение'],['Fe + CuSO₄ → FeSO₄ + Cu','замещение'],['AgNO₃ + NaCl → AgCl↓ + NaNO₃','обмен']];
-      const cur=(st.tp==null?0:st.tp)%eqs.length; const [eq,ans]=eqs[cur];
+      const eqs=[['2H₂ + O₂ → 2H₂O','соединение','A + B → AB'],['CaCO₃ → CaO + CO₂','разложение','AB → A + B'],['Fe + CuSO₄ → FeSO₄ + Cu','замещение','A + BC → AC + B'],['AgNO₃ + NaCl → AgCl↓ + NaNO₃','обмен','AB + CD → AD + CB']];
+      const cur=(st.tp==null?0:st.tp)%eqs.length; const [eq,ans,scheme]=eqs[cur];
       const last=st.last;
-      h=card(big(eq)+
-        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">${['соединение','разложение','замещение','обмен'].map(t=>`<button class="hint-btn" onclick="chType('${lk}','${t}')" style="${st.msg&&ans===t?(last?'background:#3d8f4f':'background:#c96f4a'):''}">${t}</button>`).join('')}</div>`+
-        (st.msg?big(st.msg):small('выбери тип реакции'))+
-        `<button class="hint-btn" onclick="chTypeNext('${lk}')">следующее уравнение ➜</button>`);
+      h=col(
+        `<div class="wv-pop" style="background:rgba(127,209,255,.08);border:1px solid rgba(127,209,255,.3);border-radius:10px;padding:8px 14px;font-size:19px;color:#d8ecff">${eq}</div>`+
+        big(scheme)+
+        btns(...['соединение','разложение','замещение','обмен'].map(t=>btn(t, `chType('${lk}','${t}')`, `style="${st.msg&&ans===t?(last?'background:#3d8f4f':'background:#c96f4a'):''}"`)))+
+        (st.msg? `<div class="wv-big" style="${last?'color:#7fd1a0':'color:#e89a8f'}">${st.msg}</div>` : sml('выбери тип реакции'))+
+        btn('следующее уравнение ➜', `chTypeNext('${lk}')`));
     } else if(has('титрован')||(has('кислот')&&has('основан'))||has('лакмус')||has('индикатор')){
       const d=st.drops||0; const done=d>=TARGET;
       const color=d===0?'#f7f0e0':(done?'#ff9fb0':'#e8dff0'); st.drops=d;
-      h=card(`<div style="display:flex;align-items:flex-end;gap:14px">
-          <div style="width:46px;height:120px;border:3px solid #33291e;border-top:none;border-radius:0 0 16px 16px;background:linear-gradient(#fff,#dde8ff);overflow:hidden"><div style="position:absolute;bottom:0;left:0;right:0;height:${8+d*3}px;background:#9fc5f5;transition:.2s"></div><div style="font-size:16px">🫗</div></div>
-          <div style="width:52px;height:70px;border:3px solid #33291e;border-radius:0 0 14px 14px;background:${color};display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;font-size:12px;color:#33291e">${done?'розовый!':'кислота'}</div></div>`+
+      const lev=Math.min(d*3,40);
+      h=col(`<div style="display:flex;align-items:flex-end;gap:16px;justify-content:center">
+          <div class="wv-flask" style="width:52px;height:150px;background:linear-gradient(#fff,#dde8ff)">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:${lev}px;background:#9fc5f5;transition:height .6s"></div>
+            <div style="position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:22px" class="wv-pulse">🫗</div>
+            ${d>0&&!done?'<div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:#7fd1ff;animation:wvDrop .9s ease .1s both"></div>':''}</div>
+          <div class="wv-stand" style="width:74px;height:96px;background:${color};transition:background .7s;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-size:14px;color:#33291e;font-weight:bold">${done?'розовый!':'кислота'}</div></div>`+
         big(`капель щёлочи: ${Math.min(d,TARGET)}`)+
-        `<div style="display:flex;gap:8px;justify-content:center"><button class="hint-btn" onclick="chTitr('${lk}',1)" ${done?'disabled':''}>💧 капля</button><button class="hint-btn" onclick="chTitr('${lk}',0)">↺ сброс</button></div>`+
-        small(done?'нейтрализация: индикатор розовый!':'добавляй щёлочь по капле — следи за цветом'));
+        btns(btn('💧 капля', `chTitr('${lk}',1)`, done?'disabled':''), btn('↺ сброс', `chTitr('${lk}',0)`))+
+        sml(done?'нейтрализация: индикатор стал розовым!':'добавляй щёлочь по капле — следи за цветом'));
     } else if(has('молярная масса')||has('mr(')||has('относительн')){
       const parts=st.parts||[]; const M=st.M||0;
-      h=card(`<div style="display:flex;align-items:center;gap:12px;justify-content:center"><div style="font-size:40px">⚖️</div><div style="min-width:120px">${parts.length?parts.map(([nm,v])=>`<span style="display:inline-block;margin:1px;padding:0 6px;background:#13251c;border:1px solid #3d5c49;border-radius:8px;font-size:13px">${nm}(${v})</span>`).join(' '):'<span class="small">—</span>'}</div></div>`+big(`Mr = ${M||0}`)+
-        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">${[['H',1],['O',16],['C',12],['N',14],['Na',23],['Cl',35]].map(([nm,v])=>`<button class="hint-btn" onclick="chMr('${lk}','${nm}',${v})">+${nm}</button>`).join('')}<button class="hint-btn" onclick="chMr('${lk}','',0)">↺</button></div>`);
+      const chips=parts.map(([nm,v],i)=>`<span class="wv-chip wv-pop" style="animation-delay:${i*.08}s">${nm}(${v})</span>`).join(' ');
+      h=col(`<div style="display:flex;align-items:center;gap:14px;justify-content:center">
+          <div style="font-size:52px" class="wv-swing">⚖️</div>
+          <div style="min-width:140px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center">${parts.length?chips:'<span class="wv-sml">— нажми на атом —</span>'}</div></div>`+
+        big(`Mr = ${M}`)+
+        btns(...[['H',1],['O',16],['C',12],['N',14],['Na',23],['Cl',35]].map(([nm,v])=>btn(`+${nm}`, `chMr('${lk}','${nm}',${v})`)), btn('↺', `chMr('${lk}','',0)`)));
     } else if(has('моль')){ const n=st.n||0;
-      h=card(`<div style="font-size:44px">🧂</div>`+big(`${n} моль`)+`<div style="display:flex;gap:8px;justify-content:center"><button class="hint-btn" onclick="chMol('${lk}',1)">+1 моль</button><button class="hint-btn" onclick="chMol('${lk}',0)">↺</button></div>`+small('1 моль = 6·10²³ частиц'));
+      const dots=Array.from({length:Math.min(n,14)},()=>`<span class="wv-dot" style="position:static;display:inline-block;margin:2px"></span>`).join('');
+      h=col(icon('🧂'), big(`${n} моль`),
+        `<div style="max-width:240px;line-height:1.1;min-height:34px">${dots||'<span class="wv-sml">0 частиц</span>'}</div>`+
+        btns(btn('+1 моль', `chMol('${lk}',1)`), btn('↺', `chMol('${lk}',0)`))+
+        sml('1 моль = 6·10²³ частиц (число Авогадро)'));
     } else if(has('раствор')||has('массовая доля')){
       const salt=(st.salt==null?10:st.salt), water=st.water==null?90:st.water; st.salt=salt; st.water=water;
       const pct=Math.round(salt/(salt+water)*100);
-      h=card(`<div style="position:relative;width:90px;height:130px;border:3px solid #33291e;border-radius:0 0 18px 18px;background:linear-gradient(#bcd9f2,#7fb8d8);overflow:hidden">
-        <div style="position:absolute;bottom:0;left:0;right:0;height:${pct}%;background:#f4f4ee;display:flex;align-items:center;justify-content:center;font-size:11px;color:#8a94ad">соль</div>
-        <div style="position:absolute;top:4px;left:0;right:0;text-align:center;font-size:11px;color:#2a3b52">${water} г воды</div></div>`+
+      const grit=Array.from({length:Math.min(Math.ceil(salt/3),26)},()=>`<span style="display:inline-block;width:4px;height:4px;border-radius:50%;background:#fff;margin:1px"></span>`).join('');
+      h=col(`<div class="wv-stand" style="width:130px;height:160px;background:linear-gradient(#bcd9f2,#7fb8d8)">
+          <div style="position:absolute;top:6px;left:0;right:0;text-align:center;font-size:13px;color:#2a3b52;font-weight:bold">${water} г воды</div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:${Math.max(8,pct*1.4)}px;background:#f4f4ee;transition:height .6s;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;padding:4px">${grit}</div></div>`+
         big(`${salt} г соли · доля ${pct}%`)+
-        `<div style="display:flex;gap:6px;justify-content:center"><button class="hint-btn" onclick="chSalt('${lk}',10)">+10 г</button><button class="hint-btn" onclick="chSalt('${lk}',-10)">−10 г</button><button class="hint-btn" onclick="chSalt('${lk}',0)">↺</button></div>`+
-        small('массовая доля = соль : всё · 100%'));
+        btns(btn('+10 г', `chSalt('${lk}',10)`), btn('−10 г', `chSalt('${lk}',-10)`), btn('↺', `chSalt('${lk}',0)`))+
+        sml('массовая доля = соль : (соль+вода) · 100%'));
     } else if(has('горен')){ const on=st.fire==null?1:st.fire; st.fire=on;
-      h=card(`<div style="font-size:54px">${on?'🔥':'💨'}</div>`+big(on?'горит':'погас')+`<div style="display:flex;gap:8px;justify-content:center"><button class="hint-btn" onclick="chFire('${lk}',1)">🔥 зажечь</button><button class="hint-btn" onclick="chFire('${lk}',0)">🧯 потушить</button></div>`+small(on?'нужны горючее, кислород и тепло':'убрали условие — огонь погас'));
+      h=col(
+        `<div style="font-size:64px">${on?'<span class="wv-flick">🔥</span>':'💨'}</div>`+
+        big(on?'горит!':'погас…')+
+        (on?'<span class="wv-sml" style="color:#d9c9a8">🔥 пламя мерцает — идёт реакция горения</span>':'')+
+        btns(btn('🔥 зажечь', `chFire('${lk}',1)`), btn('🧯 потушить', `chFire('${lk}',0)`))+
+        sml(on?'нужны горючее, кислород и тепло':'убрали одно условие — огонь погас'));
     } else if(has('кислот')&&has('металл')){ const nz=st.zn||0;
-      h=card(`<div style="display:flex;gap:12px;align-items:center;justify-content:center;font-size:46px"><span>🧪</span><span>+</span><span>${nz?'🫧':'⚙️'}</span></div>`+big('Zn + 2HCl → ZnCl₂ + H₂')+`<button class="hint-btn" onclick="chZn('${lk}',1)">добавить цинк</button>`+small(nz?'выделяется водород — пузырьки!':'брось кусочек цинка в кислоту'));
+      h=col(
+        `<div class="wv-flask" style="width:130px;height:150px;background:linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.02))">
+          <div style="position:absolute;left:10px;right:10px;bottom:8px;height:56px;background:linear-gradient(#d8ecff,#9fc5f5);border-radius:4px"></div>
+          ${nz?'<span class="wv-bub wv-rise" style="left:30%"></span><span class="wv-bub wv-rise2" style="left:55%"></span><span class="wv-bub wv-rise3" style="left:72%"></span>':''}
+          <div style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-size:30px">${nz?'⚙️':'<span class="wv-sml" style="color:#cbb89a">кислота HCl</span>'}</div></div>`+
+        big('Zn + 2HCl → ZnCl₂ + H₂')+
+        btn('добавить цинк', `chZn('${lk}',1)`)+
+        sml(nz?'выделяется водород — пузырьки газа!':'брось кусочек цинка в кислоту'));
     } else if(has('молекул')||has('атом')||has('формул')||has('символ')||has('вода')||has('воздух')){ const m=st.mol==null?0:st.mol; st.mol=m;
-      h=card(`<div style="font-size:44px">${Array.from({length:Math.min(m+1,6)},()=>'🧪').join('')}</div>`+big(`${m} молекул`)+`<div style="display:flex;gap:8px;justify-content:center"><button class="hint-btn" onclick="chMol2('${lk}',1)">+молекула</button><button class="hint-btn" onclick="chMol2('${lk}',0)">↺</button></div>`+small('считаем молекулы — в них атомы'));
+      const mols=Array.from({length:Math.min(m,6)},(_,i)=>`<span class="wv-pop" style="display:inline-block;font-size:40px;animation-delay:${i*.1}s">🧪</span>`).join('');
+      h=col(`<div style="min-height:56px;display:flex;gap:6px;justify-content:center;align-items:center">${mols||'<span class="wv-sml">пока нет молекул</span>'}</div>`+
+        big(`${m} молекул`)+
+        btns(btn('+молекула', `chMol2('${lk}',1)`), btn('↺', `chMol2('${lk}',0)`))+
+        sml('молекулы состоят из атомов — считаем их'));
     } else if(has('металл')||has('неметалл')){
-      const cur=st.sel3==null?0:st.sel3; const sels=[['Железо','metal'],['Медь','metal'],['Сера','nonmetal']]; const [nm,kind]=sels[cur%3];
-      h=card(`<div style="font-size:44px">${kind==='metal'?'🔩':'🎈'}</div>`+big(nm)+`<div style="display:flex;gap:6px;justify-content:center">${sels.map((x,i)=>`<button class="hint-btn" onclick="chMetal('${lk}','s',${i})">${x[0]}</button>`).join('')}</div>`+small(kind==='metal'?'блестит, проводит ток':'не блестит, ток не проводит'));
+      const cur=st.sel3==null?0:st.sel3; const sels=[['Железо','metal','🔩'],['Медь','metal','🪙'],['Сера','nonmetal','🟡'],['Кислород','nonmetal','🎈']]; const [nm,kind,ic]=sels[cur%4];
+      h=col(`<div style="font-size:76px" class="${kind==='metal'?'wv-glow':''}">${ic}</div>`+big(nm)+
+        btns(...sels.map((x,i)=>btn(x[0], `chMetal('${lk}','s',${i})`)))+
+        sml(kind==='metal'?'блестит, проводит ток и тепло':'не блестит, ток не проводит'));
     } else {
       // гарантированный интерактив: листаем объяснения
       const lines=L.explain||[L.title]; const cur=(st.tip==null?0:st.tip)%lines.length;
-      h=card(`<div style="font-size:40px">🧪</div>`+`<div style="font-size:15px;color:#cbb89a;max-width:300px">${esc(lines[cur]).slice(0,160)}</div>`+`<button class="hint-btn" onclick="chTip('${lk}')">дальше по теме ➜</button>`+small('интересный факт урока'));
+      h=col(icon('🧪'), `<div class="wv-in" style="font-size:17px;color:#cbb89a;max-width:320px">${esc(lines[cur]).slice(0,180)}</div>`+
+        btn('дальше по теме ➜', `chTip('${lk}')`)+
+        sml('интересный факт урока'));
     }
-    el.innerHTML=`<div style="background:rgba(16,31,24,.75);border:1px solid #3d5c49;border-radius:12px;padding:10px;margin-top:10px">${h}</div>`;
+    el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
+
 function chReact(lk){ const st=CHS[lk]||(CHS[lk]={}); st.eff=((st.eff==null?0:st.eff)+1); chRender(0); }
 function chSafe(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.safe=i; chRender(0); }
 function chMetal(lk,kind,i){ const st=CHS[lk]||(CHS[lk]={}); if(kind==='s'){ st.sel2=i; st.sel3=i; st.tok=false; } else { st.tok=!st.tok; } chRender(0); }
@@ -485,136 +563,287 @@ function visPhysNew(el){
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={};
     const st=CHS[lk];
+    const T=(L.title||'').toLowerCase();
     const all=((L.explain||[]).join(' ')+' '+(L.check&&L.check.q||'')+' '+L.title).toLowerCase();
     const raw=(L.check&&L.check.q||'');
+    const q=(L.check&&L.check.q||'');
     const nums=(raw.match(/\d+(?:[.,]\d+)?/g)||[]).map(x=>parseFloat(x.replace(',','.')));
     const has=(...ws)=>ws.some(w=>all.includes(w));
-    const card=(inner)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">${inner}</div>`;
-    const big=(t)=>`<div style="font-size:19px;color:var(--amber);font-family:Georgia,serif">${t}</div>`;
-    const small=(t)=>`<div class="small" style="color:#cbb89a">${t}</div>`;
-    const btns=(...bs)=>`<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">${bs.map(b=>`<button class="hint-btn" onclick="phAct('${lk}','${b[0]}')">${b[1]}</button>`).join('')}</div>`;
+    const hasT=(...ws)=>ws.some(w=>T.includes(w));
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t)=>`<div class="wv-big">${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const icon=(e)=>`<div class="wv-ic2">${e}</div>`;
+    const id=LV.id; const i=st.i==null?0:st.i;
     let h='';
-    if(has('скорост','движен')){
-      if(st.v==null) st.v=Math.max(nums[0]||5,1); if(st.t==null) st.t=Math.max(nums[1]||2,1);
-      const S=st.v*st.t;
-      h=card(`<div style="width:250px;height:26px;border:2px solid #3d5c49;border-radius:6px;position:relative;background:#101f18">
-        <div style="position:absolute;top:2px;left:2px;width:${Math.min(240, S*4)}px;height:18px;background:linear-gradient(90deg,#7fd1ff,var(--brass));border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:4px;font-size:11px">🚗</div></div>`
-        + big(`v=${st.v} км/ч · t=${st.t} ч`)
-        + big(`S = v·t = ${S} км`)
-        + btns(['v+','🚗 быстрее +5'],['v-','медленнее −5'],['t+','⏱ +1 ч'],['t-','⏱ −1 ч'],['r','↺']));
+    // ======== обзорные/тематические уроки — по id (раньше ключей, чтобы не путать) ========
+    if(id===92){ const exs=[['движение','🚗','тела движутся — скорость, путь, время'],['свет','🌞','свет и тень, зеркала, радуга'],['звук','🔊','звук — волна, эхо'],['тепло','🔥','нагревание, плавление, кипение'],['электричество','⚡','ток, лампочка, магнит'],['силы','🪨','тяжесть, упругость, трение']];
+      const [nm,ic,ds]=exs[i%exs.length];
+      h=col(icon('🔭'), big(L.title), `<div style="font-size:64px" class="wv-pop">${ic}</div>`+big(nm)+sml(ds)+btn('показать ещё явление', `phAct('${lk}','nx')`));
     }
-    else if(has('плотност')){
-      if(st.m==null) st.m=Math.max(nums[0]||6,1); if(st.V==null) st.V=Math.max(nums[1]||2,1);
-      const ro=st.m/st.V; const swim=ro<=1;
-      h=card(`<div style="display:flex;gap:10px;align-items:center;justify-content:center">
-        <div style="font-size:52px">${swim?'🛟':'🪨'}</div>
-        <div style="width:110px;height:120px;border:3px solid #33291e;border-radius:0 0 16px 16px;background:linear-gradient(#9fc5f5,#6aa8dc);position:relative;overflow:hidden">
-          <div style="position:absolute;bottom:0;left:0;right:0;height:${Math.min(100,st.V*22)}px;background:#a06a3a;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px">${st.m} г / ${st.V} см³</div></div></div>`
-        + big(`ρ = ${st.m} : ${st.V} = ${ro} г/см³`)
-        + btns(['m+','+1 г'],['m-','−1 г'],['V+','+1 см³'],['V-','−1 см³'],['r','↺'])
-        + small(swim?'ρ ≤ 1 — тело плавает в воде':'ρ > 1 — тело тонет'));
+    else if(id===95){ const mats=[['Железо','притянулось!','🧷',1],['Сталь','притянулось!','🔩',1],['Дерево','не притягивается','🪵',0],['Стекло','не притягивается','🥛',0],['Пластик','не притягивается','🧴',0]];
+      const [nm,res,ic,ok]=mats[i%mats.length];
+      h=col(`<div style="font-size:64px">🧲</div>`+big(L.title)+
+        `<div style="display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap"><div style="font-size:52px" class="wv-pop">${ic}</div><div style="font-size:26px">→</div><div class="wv-big" style="color:${ok?'#7fd1a0':'#e89a8f'}">${res}</div></div>`+
+        sml('железо и сталь притягиваются, дерево и стекло — нет')+
+        btn('поднести другой предмет', `phAct('${lk}','nx')`));
     }
-    else if(has('сила тяжест','вес','тяжести')){
-      if(st.m==null) st.m=Math.max(nums[0]||3,1);
-      const F=st.m*10;
-      h=card(`<div style="display:flex;gap:14px;align-items:flex-end;justify-content:center">
-        <div style="width:60px;height:${Math.min(130,40+F*6)}px;background:linear-gradient(#f0c75e,#c96f4a);border:2px solid #33291e;border-radius:6px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-size:12px;color:#33291e;transition:.2s">${st.m} кг</div>
-        <div style="width:46px;height:140px;border:3px solid #33291e;border-radius:10px;position:relative;background:#fff">
-          <div style="position:absolute;bottom:6px;left:6px;right:6px;height:${Math.min(120,F*4)}px;background:#7fd1ff;border-radius:4px"></div>
-          <div style="position:absolute;top:4px;left:0;right:0;text-align:center;font-size:11px;color:#33291e">${F} Н</div></div></div>`
-        + big(`F = m·g = ${st.m}·10 = ${F} Н`)
-        + btns(['m+','+1 кг'],['m-','−1 кг'],['r','↺']));
+    else if(id===96){ const srcs=[['Солнце','светит само — источник света','🌞'],['Свеча','светит сама — источник света','🕯️'],['Луна','не светит — отражает свет Солнца','🌙'],['Зеркало','не светит — отражает','🪞'],['Светлячок','светится сам!','✨']];
+      const [nm,res,ic]=srcs[i%srcs.length];
+      h=col(`<div style="font-size:64px" class="wv-glow">💡</div>`+big(L.title)+`<div style="font-size:56px" class="wv-pop">${ic}</div>`+big(nm)+sml(res)+btn('проверить другой предмет', `phAct('${lk}','nx')`));
     }
-    else if(has('давление твёрдых')){
-      if(st.F==null) st.F=Math.max(nums[0]||60,1); if(st.S==null) st.S=Math.max(nums[1]||3,1);
-      const p=st.F/st.S;
-      h=card(`<div style="display:flex;align-items:flex-end;gap:10px;justify-content:center">
-        <div style="font-size:44px">🧱</div>
-        <div style="width:${Math.min(150,40+st.S*14)}px;height:26px;background:#8a94ad;border:2px solid #33291e;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff">S = ${st.S} м²</div></div>`
-        + big(`p = F : S = ${st.F} : ${st.S} = ${p} Па`)
-        + btns(['F+','+10 Н'],['F-','−10 Н'],['S+','+1 м²'],['S-','−1 м²'],['r','↺']));
+    else if(id===98){ const sts=[['лёд','0 °C и ниже','🧊'],['вода','выше 0 °C','💧'],['пар','100 °C','💨']];
+      const [nm,tmp,ic]=sts[i%sts.length];
+      h=col(`<div style="font-size:64px">💧</div>`+big(L.title)+`<div style="font-size:64px" class="wv-pop">${ic}</div>`+big(nm)+big(tmp)+sml('вода бывает твёрдой (лёд), жидкой и газообразной (пар)')+btn('изменить температуру', `phAct('${lk}','nx')`));
     }
-    else if(has('архимед','выталкива')){
-      if(st.d==null) st.d=1;
-      const F=1000*10*(st.d*0.1); // глубина 0.1..? объём погружённой части
-      h=card(`<div style="position:relative;width:150px;height:130px;border:3px solid #33291e;border-radius:0 0 16px 16px;background:linear-gradient(#9fc5f5,#6aa8dc);overflow:hidden">
-        <div style="position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:44px;height:${st.d*14}px;background:#a06a3a;border:2px solid #33291e;border-radius:4px"></div>
-        <div style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:11px;color:#123">F = ${F.toFixed(0)} Н</div></div>`
-        + big(`погружение: ${st.d*10}%`)
-        + btns(['d+','⬇ глубже'],['d-','⬆ выше'],['r','↺'])
-        + small('F = ρ·g·V погружённой части'));
-    }
-    else if(has('паскал','давление жидкости')){
-      if(st.h==null) st.h=Math.max(nums[1]||2,1);
-      const p=1000*10*st.h;
-      h=card(`<div style="position:relative;width:110px;height:150px;border:3px solid #33291e;border-radius:0 0 14px 14px;background:linear-gradient(#cfe8fb,#9fc5f5);overflow:hidden">
-        <div style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:12px;color:#123">h = ${st.h} м</div></div>`
-        + big(`p = ρ·g·h = 1000·10·${st.h} = ${p} Па = ${p/1000} кПа`)
-        + btns(['h+','⬆ глубже'],['h-','⬆ выше'],['r','↺']));
-    }
-    else if(has('ом','напряжен','сопротивлен','сила тока')){
-      if(st.U==null) st.U=Math.max(nums[0]||6,1); if(st.R==null) st.R=Math.max(nums[1]||2,1);
-      const I=st.U/st.R;
-      h=card(`<div style="display:flex;align-items:center;gap:12px;justify-content:center">
-        <div style="font-size:40px">💡</div>
-        <div style="text-align:left">
-          <div style="font-size:15px;color:#cbb89a">батарея: ${st.U} В</div>
-          <div style="font-size:15px;color:#cbb89a">сопротивление: ${st.R} Ом</div></div></div>`
-        + big(`I = U : R = ${st.U} : ${st.R} = ${I.toFixed(1)} А`)
-        + btns(['U+','+3 В'],['U-','−3 В'],['R+','+1 Ом'],['R-','−1 Ом'],['r','↺'])
-        + small(I>=1?'лампочка яркая 🔆':'лампочка тусклая 🔅'));
-    }
-    else if(has('энерг','кинетическ','потенциальн','высо')){
-      const kin=has('кинетическ');
-      if(st.a==null) st.a=Math.max(nums[0]||(kin?3:2),1); if(st.b==null) st.b=Math.max(nums[1]||(kin?2:5),1);
-      const E=kin? (st.a*st.b*st.b/2) : (st.a*10*st.b);
-      h=card(`<div style="font-size:44px">${kin?'⚡':'🚀'}</div>`
-        + (kin? big(`E = m·v²/2 = ${st.a}·${st.b}²/2 = ${E} Дж`) : big(`E = m·g·h = ${st.a}·10·${st.b} = ${E} Дж`))
-        + btns(['a+',kin?'+1 кг':'+1 кг'],['a-',kin?'−1 кг':'−1 кг'],['b+',kin?'+1 м/с':'+1 м'],['b-',kin?'−1 м/с':'−1 м'],['r','↺']));
-    }
-    else if(has('работ','мощност')){
-      if(st.a==null) st.a=Math.max(nums[0]||10,1); if(st.b==null) st.b=Math.max(nums[1]||5,1);
-      const A=st.a*st.b;
-      h=card(`<div style="font-size:44px">🏋️</div>`+big(`A = F·s = ${st.a}·${st.b} = ${A} Дж`)
-        + btns(['a+','+5 Н'],['a-','−5 Н'],['b+','+1 м'],['b-','−1 м'],['r','↺']));
-    }
-    else if(has('тепл','нагрев','температур','калор')){
-      if(st.dt==null) st.dt=Math.max(nums[1]||1,1); if(st.m==null) st.m=Math.max(nums[0]||1,1);
-      const Q=st.m*st.dt; // в калориях (1 кал = 1г·1°)
-      h=card(`<div style="font-size:44px">♨️</div>`+big(`Q = m·Δt = ${st.m}·${st.dt} = ${Q} кал`)
-        + btns(['m+','+1 г'],['m-','−1 г'],['dt+','+1°'],['dt-','−1°'],['r','↺'])
-        + small('чтобы нагреть 1 г воды на 1°, нужно 1 кал'));
-    }
-    else if(has('звук')){
-      if(st.t==null) st.t=Math.max(nums[0]||3,1);
-      const S=340*st.t;
-      h=card(`<div style="font-size:40px">📢</div>`+big(`S = v·t = 340·${st.t} = ${S} м`)
-        + btns(['t+','+1 с'],['t-','−1 с'],['r','↺'])
-        + small('скорость звука в воздухе ≈ 340 м/с'));
-    }
-    else if(has('измерен','метр','килограмм','единиц')){
-      if(st.v==null) st.v=Math.max(nums[0]||3,1);
-      h=card(`<div style="font-size:40px">📏</div>`+big(`${st.v} м = ${st.v*100} см`)
-        + btns(['v+','+1'],['v-','−1'],['r','↺'])
-        + small('1 м = 100 см; 1 кг = 1000 г'));
-    }
-    else if(has('трен')){
-      if(st.f==null) st.f=2; const srf=st.srf||'шершавый';
-      h=card(`<div style="font-size:44px">🧊</div>`+big(`тянуть по ${srf}: ${st.f} Н`)
-        + btns(['smooth','гладкий лёд'],['rough','шершавый асфальт'])
-        + small('трение больше на шершавой поверхности'));
+    else if(id===99){ const gases=[['Азот','≈ 78% — больше всего','🟦'],['Кислород','≈ 21% — им дышим','🟥'],['Прочие газы','≈ 1% — аргон, CO₂…','🟨']];
+      const [nm,pct,ic]=gases[i%gases.length];
+      h=col(`<div style="font-size:64px">🎈</div>`+big(L.title)+
+        `<div style="display:flex;align-items:flex-end;gap:8px;justify-content:center;height:110px">
+          <div style="width:52px;height:86px;background:linear-gradient(#9fc5f5,#6aa8dc);border-radius:6px 6px 0 0;text-align:center;font-size:10px;color:#fff;padding-top:3px">азот 78%</div>
+          <div style="width:38px;height:24px;background:#e86a5a;border-radius:6px 6px 0 0;text-align:center;font-size:10px;color:#fff;padding-top:2px">21%</div>
+          <div style="width:22px;height:6px;background:#d9a441;border-radius:3px 3px 0 0"></div></div>`+
+        `<div style="font-size:26px">${ic}</div>`+big(nm)+big(pct)+sml('воздух — смесь газов: больше всего азота')+btn('показать другой газ', `phAct('${lk}','nx')`));
     }
     else {
-      h=card(`<div style="font-size:36px">🔭</div>`+big(L.title||'')+`<div class="small" style="color:#cbb89a;max-width:300px">${esc(((L.explain&&L.explain[0])||'')).slice(0,150)}…</div>`);
+    // ======== тема по заголовку — точное попадание ========
+    const kind =
+      hasT('скорост','движени') ? 'speed' :
+      hasT('плотност') ? 'dens' :
+      hasT('архимед') ? 'arch' :
+      hasT('трени') ? 'fric' :
+      hasT('паскал','давление жидкост') ? 'pascal' :
+      hasT('давление') ? 'press' :
+      hasT('тяжест','вес') ? 'weight' :
+      hasT('ом','электрическ','ток','цеп') ? 'ohm' :
+      hasT('энерг') ? 'energy' :
+      hasT('работ') ? 'work' :
+      hasT('нагрев','охлажд','температур','тепл') ? 'heat' :
+      hasT('звук') ? 'sound' :
+      hasT('измерен','единиц','метр','длина') ? 'units' : '';
+    // если заголовок невнятный — уточняем по ключам текста (без «ом»-подстрок)
+    const kind2 = kind ? kind :
+      has('сила тока','напряжен','сопротивлен','вольт','ампер') ? 'ohm' :
+      has('выталкива','архимед') ? 'arch' :
+      has('скорост') ? 'speed' :
+      has('плотност') ? 'dens' :
+      has('трен') ? 'fric' :
+      has('давление жидкост','паскал') ? 'pascal' :
+      has('давление') ? 'press' :
+      has('тяжест','вес') ? 'weight' :
+      has('кинетическ','потенциальн') ? 'energy' :
+      has('калор','нагрев','температур') ? 'heat' :
+      has('звук') ? 'sound' :
+      has('измерен','сантиметр','килограмм') ? 'units' : '';
+    const sel=kind2||'generic';
+    if(sel==='speed'){
+      if(hasT('средняя скорост')||(has('гармоническ'))){
+        if(st.v1==null) st.v1=Math.max(nums[0]||12,1); if(st.v2==null) st.v2=Math.max(nums[1]||6,1);
+        const vs=Math.round(2*st.v1*st.v2/(st.v1+st.v2)*10)/10;
+        h=col(
+          `<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap">
+            <div class="wv-chip">участок 1: ${st.v1} км/ч</div><div style="font-size:20px">+</div>
+            <div class="wv-chip">участок 2: ${st.v2} км/ч</div></div>`+
+          big(`v ср = 2·${st.v1}·${st.v2}/(${st.v1}+${st.v2}) = ${vs} км/ч`)+
+          btns(btn('+5 км/ч (1)',`phAct('${lk}','V1+')`),btn('−5 км/ч (1)',`phAct('${lk}','V1-')`),btn('+5 км/ч (2)',`phAct('${lk}','V2+')`),btn('−5 км/ч (2)',`phAct('${lk}','V2-')`),btn('↺',`phAct('${lk}','r')`))+
+          sml('средняя скорость НЕ равна (v₁+v₂)/2 = '+Math.round((st.v1+st.v2)/2)+' — она меньше!'));
+      } else {
+        const findV=/скорость\?/.test(q)||hasT('скорость движения');
+        if(findV){
+          if(st.p==null) st.p=Math.max(nums[0]||40,1); if(st.t==null) st.t=Math.max(nums[1]||4,1);
+          const v=Math.round(st.p/st.t*10)/10; const px=Math.min(290, st.p*3);
+          h=col(
+            `<div class="wv-road" style="width:300px"><div class="wv-lane"></div>
+              <div style="position:absolute;bottom:-4px;left:2px;font-size:40px;transform:translateX(${px}px);transition:transform 1s ease">🚗</div>
+              <div style="position:absolute;top:-4px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${st.p} км</div>
+              <div style="position:absolute;top:1px;left:4px;font-size:12px;color:#9fc5f5">⏱ ${st.t} ч</div></div>`+
+            big(`S = ${st.p} км · t = ${st.t} ч`)+big(`v = S : t = ${st.p} : ${st.t} = ${v} км/ч`)+
+            btns(btn('+10 км',`phAct('${lk}','p+')`),btn('−10 км',`phAct('${lk}','p-')`),btn('⏱ +1 ч',`phAct('${lk}','t+')`),btn('⏱ −1 ч',`phAct('${lk}','t-')`),btn('↺',`phAct('${lk}','r')`))+
+            sml('машинка прошла путь S за время t — скорость = путь : время'));
+        } else {
+          if(st.v==null) st.v=Math.max(nums[0]||15,1); if(st.t==null) st.t=Math.max(nums[1]||2,1);
+          const S=st.v*st.t; const px=Math.min(290, S*3);
+          h=col(
+            `<div class="wv-road" style="width:300px"><div class="wv-lane"></div>
+              <div style="position:absolute;bottom:-4px;left:2px;font-size:40px;transform:translateX(${px}px);transition:transform 1s ease">🚗</div>
+              <div style="position:absolute;top:-4px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${S} км</div></div>`+
+            big(`v=${st.v} км/ч · t=${st.t} ч`)+big(`S = v·t = ${S} км`)+
+            btns(btn('🚗 +5 км/ч',`phAct('${lk}','v+')`),btn('−5 км/ч',`phAct('${lk}','v-')`),btn('⏱ +1 ч',`phAct('${lk}','t+')`),btn('⏱ −1 ч',`phAct('${lk}','t-')`),btn('↺',`phAct('${lk}','r')`))+
+            sml('машинка едет v км/ч t часов — путь S = v·t'));
+        }
+      }
     }
-    el.innerHTML=`<div style="background:rgba(16,31,24,.75);border:1px solid #3d5c49;border-radius:12px;padding:10px;margin-top:10px">${h}</div>`;
+    else if(sel==='dens'){
+      if(st.m==null) st.m=Math.max(nums[0]||6,1); if(st.V==null) st.V=Math.max(nums[1]||2,1);
+      const ro=Math.round(st.m/st.V*100)/100; const swim=ro<=1;
+      const waterH=Math.min(104, 34+st.V*12);
+      const bodyY = swim? waterH-24 : 4;
+      h=col(
+        `<div class="wv-stand" style="width:150px;height:120px;background:linear-gradient(#cfe8fb,#9fc5f5)">
+          <div style="position:absolute;bottom:0;left:0;right:0;height:${waterH}px;background:linear-gradient(#9fc5f5,#6aa8dc);transition:height .6s"></div>
+          <div class="wv-pop" style="position:absolute;left:50%;transform:translateX(-50%);bottom:${bodyY}px;width:40px;height:26px;background:${swim?'#7fb8a0':'#a06a3a'};border:2px solid #33291e;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;transition:bottom .7s ease">${st.m}г</div></div>`+
+        big(`ρ = ${st.m} : ${st.V} = ${ro} г/см³`)+
+        btns(btn('+1 г',`phAct('${lk}','m+')`),btn('−1 г',`phAct('${lk}','m-')`),btn('+1 см³',`phAct('${lk}','V+')`),btn('−1 см³',`phAct('${lk}','V-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml(swim?'ρ ≤ 1 г/см³ — тело легче воды и всплывает':'ρ > 1 г/см³ — тело тяжелее воды и тонет'));
+    }
+    else if(sel==='weight'){
+      if(st.m==null) st.m=Math.max(nums[0]||3,1);
+      const F=st.m*10; const ext=Math.min(100, F*3);
+      h=col(
+        `<div style="display:flex;gap:14px;align-items:flex-end;justify-content:center">
+          <div class="wv-stand" style="width:56px;height:150px;background:#fff">
+            <div style="position:absolute;top:4px;left:0;right:0;text-align:center;font-size:15px;color:#33291e;font-weight:bold">${F} Н</div>
+            <div style="position:absolute;top:24px;left:50%;width:6px;height:${ext}px;background:repeating-linear-gradient(0deg,#7fd1ff 0 5px,#fff 5px 9px);transform:translateX(-50%);transition:height .5s"></div>
+            <div class="wv-swing" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:34px;height:12px;background:#a06a3a;border-radius:4px;text-align:center;font-size:9px;color:#fff">${st.m} кг</div></div>
+          <div style="text-align:center"><div style="font-size:52px">🪨</div><div class="wv-sml" style="font-size:12px">${st.m} кг</div></div></div>`+
+        big(`F = m·g = ${st.m}·10 = ${F} Н`)+
+        btns(btn('+1 кг',`phAct('${lk}','m+')`),btn('−1 кг',`phAct('${lk}','m-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml('пружина динамометра растягивается сильнее с ростом массы'));
+    }
+    else if(sel==='press'){
+      if(st.F==null) st.F=Math.max(nums[0]||60,1); if(st.S==null) st.S=Math.max(nums[1]||3,1);
+      const p=Math.round(st.F/st.S); const sink=Math.min(36, p*2);
+      h=col(
+        `<div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+          <div style="width:${Math.min(180,50+st.S*16)}px;height:34px;background:linear-gradient(#8a94ad,#6a7288);border:2px solid #33291e;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff">${st.F} Н</div>
+          <div style="font-size:22px;margin:2px 0">⬇</div>
+          <div style="width:${Math.min(188,58+st.S*16)}px;height:12px;background:#d9c9a8;border:1px solid #33291e;border-radius:4px"></div>
+          <div style="width:${Math.min(188,58+st.S*16)}px;height:${sink}px;background:repeating-linear-gradient(90deg,#e8d9b8 0 6px,#d9c9a8 6px 10px);transition:height .6s"></div></div>`+
+        big(`p = F : S = ${st.F} : ${st.S} = ${p} Па`)+
+        btns(btn('+10 Н',`phAct('${lk}','F+')`),btn('−10 Н',`phAct('${lk}','F-')`),btn('+1 м²',`phAct('${lk}','S+')`),btn('−1 м²',`phAct('${lk}','S-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml('груз вдавливается в песок тем глубже, чем больше давление p = F:S'));
+    }
+    else if(sel==='arch'){
+      if(st.d==null) st.d=1;
+      const depth=6+(st.d-1)*10; const F=Math.round(st.d*10);
+      h=col(
+        `<div class="wv-stand" style="width:170px;height:140px;background:linear-gradient(#cfe8fb,#9fc5f5)">
+          <div class="wv-sml" style="position:absolute;top:2px;left:0;right:0;text-align:center;color:#123;font-weight:bold">F = ${F} Н</div>
+          <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${depth}px;width:46px;height:26px;background:#a06a3a;border:2px solid #33291e;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;transition:bottom .7s ease">${st.d*10}%</div>
+          <div style="position:absolute;bottom:2px;left:0;right:0;text-align:center;font-size:12px;color:#1a3a55">вода вытесняется ↑</div></div>`+
+        big(`глубина погружения: ${st.d*10}% · сила Архимеда: ${F} Н`)+
+        btns(btn('⬇ глубже',`phAct('${lk}','d+')`),btn('⬆ выше',`phAct('${lk}','d-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml('чем глубже погружено тело, тем больше вытесненной воды и сила Архимеда'));
+    }
+    else if(sel==='pascal'){
+      if(st.h==null) st.h=Math.max(nums[0]||nums[1]||2,1);
+      const p=1000*10*st.h; const lvl=Math.min(120, st.h*8);
+      h=col(
+        `<div style="display:flex;gap:12px;align-items:flex-end;justify-content:center">
+          <div class="wv-stand" style="width:80px;height:140px;background:linear-gradient(#cfe8fb,#9fc5f5)">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:${lvl}px;background:linear-gradient(#9fc5f5,#6aa8dc);transition:height .6s"></div>
+            <div style="position:absolute;top:4px;left:0;right:0;text-align:center;font-size:13px;color:#123;font-weight:bold">h = ${st.h} м</div></div>
+          <div style="text-align:center"><div style="font-size:40px">🌀</div><div class="wv-sml" style="font-size:11px">манометр<br>${p} Па</div></div></div>`+
+        big(`p = ρ·g·h = 1000·10·${st.h} = ${p} Па = ${p/1000} кПа`)+
+        btns(btn('⬇ глубже',`phAct('${lk}','h+')`),btn('⬆ выше',`phAct('${lk}','h-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml('на глубине h давление жидкости p = ρ·g·h — глубже = больше'));
+    }
+    else if(sel==='ohm'){
+      if(st.U==null) st.U=Math.max(nums[0]||6,1); if(st.R==null) st.R=Math.max(nums[1]||2,1);
+      const I=Math.round(st.U/st.R*10)/10; const bright=Math.min(1,I/3); const dur=Math.max(.3,1.3-I*.2);
+      h=col(
+        `<div style="display:flex;align-items:center;gap:10px;justify-content:center">
+          <div style="font-size:44px">🔋</div>
+          <div class="wv-cable" style="width:110px">${I>0?'<span class="wv-dot wv-flow" style="left:0"></span><span class="wv-dot wv-flow" style="left:0;animation-delay:.5s;animation-duration:'+dur+'s"></span>':''}</div>
+          <div style="font-size:54px;filter:brightness(${0.3+bright});transition:filter .5s">💡</div>
+          <div class="wv-sml" style="width:52px;font-size:12px">${I>=1.5?'ярко!':'тускло'}</div></div>`+
+        big(`I = U : R = ${st.U} : ${st.R} = ${I} А`)+
+        btns(btn('+3 В',`phAct('${lk}','U+')`),btn('−3 В',`phAct('${lk}','U-')`),btn('+1 Ом',`phAct('${lk}','R+')`),btn('−1 Ом',`phAct('${lk}','R-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml('электроны бегут: чем больше U или меньше R, тем больше ток I и ярче лампочка'));
+    }
+    else if(sel==='energy'){
+      const kin = has('кинетическ') && !has('потенциальн') && !/потенциальн/.test(q);
+      if(st.a==null) st.a=Math.max(nums[0]||(kin?3:2),1); if(st.b==null) st.b=Math.max(nums[1]||(kin?2:5),1);
+      const E=Math.round((kin? st.a*st.b*st.b/2 : st.a*10*st.b));
+      const px=kin? Math.min(290, st.b*30):0; const lift=kin?0:Math.min(90, st.b*9);
+      const scene = kin
+        ? `<div style="position:relative;width:300px;height:80px;border-bottom:2px solid #3d5c49">
+            <div style="position:absolute;bottom:-4px;left:2px;font-size:44px;transform:translateX(${px}px);transition:transform 1s ease">⚽</div>
+            <div class="wv-sml" style="position:absolute;bottom:14px;left:2px;font-size:11px">v = ${st.b} м/с</div></div>`
+        : `<div style="position:relative;width:150px;height:160px">
+            <div style="position:absolute;bottom:8px;left:6px;right:6px;height:2px;background:#3d5c49"></div>
+            <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${lift}px;font-size:46px;transition:bottom .8s ease">🎈</div>
+            <div class="wv-sml" style="position:absolute;top:18px;left:0;right:0;text-align:center;font-size:11px;color:#7fa88f">h = ${st.b} м</div></div>`;
+      h=col(scene+
+        (kin? big(`E = m·v²/2 = ${st.a}·${st.b}²/2 = ${E} Дж`) : big(`E = m·g·h = ${st.a}·10·${st.b} = ${E} Дж`))+
+        btns(btn('+1 кг',`phAct('${lk}','a+')`),btn('−1 кг',`phAct('${lk}','a-')`),btn(kin?'+1 м/с':'+1 м',`phAct('${lk}','b+')`),btn(kin?'−1 м/с':'−1 м',`phAct('${lk}','b-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml(kin?'мяч катится быстрее при росте v — кинетическая энергия E = mv²/2 растёт':'поднимем груз выше — потенциальная энергия E = mgh растёт'));
+    }
+    else if(sel==='work'){
+      if(st.a==null) st.a=Math.max(nums[0]||10,1); if(st.b==null) st.b=Math.max(nums[1]||5,1);
+      const A=st.a*st.b; const lift=Math.min(110, st.b*11);
+      h=col(
+        `<div style="position:relative;width:150px;height:150px">
+          <div style="position:absolute;bottom:6px;left:50%;transform:translateX(-50%);font-size:50px">🏋️</div>
+          <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${lift}px;width:52px;height:14px;background:#c96f4a;border:2px solid #33291e;border-radius:5px;text-align:center;font-size:10px;color:#fff;transition:bottom .7s ease">${st.b} м</div></div>`+
+        big(`A = F·s = ${st.a}·${st.b} = ${A} Дж`)+
+        btns(btn('+5 Н',`phAct('${lk}','a+')`),btn('−5 Н',`phAct('${lk}','a-')`),btn('+1 м',`phAct('${lk}','b+')`),btn('−1 м',`phAct('${lk}','b-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml('атлет поднимает груз на высоту s — работа A = F·s'));
+    }
+    else if(sel==='heat'){
+      if(st.dt==null) st.dt=Math.max(nums[1]||10,1); if(st.m==null) st.m=Math.max(nums[0]||1,1);
+      const Q=st.m*st.dt;
+      h=col(
+        `<div style="display:flex;align-items:flex-end;gap:12px;justify-content:center">
+          <div style="text-align:center"><div style="font-size:${st.dt>=6?'56px':'44px'}" class="${st.dt>=6?'wv-flick':''}">🔥</div><div class="wv-sml" style="font-size:11px">пламя</div></div>
+          <div class="wv-stand" style="width:60px;height:110px;background:linear-gradient(#cfe8fb,#9fc5f5)">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:${Math.min(96, 26+st.dt*5)}px;background:linear-gradient(#9fc5f5,#6aa8dc);transition:height .6s"></div>
+            <div class="wv-sml" style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:10px;color:#123">${st.m} г</div></div>
+          <div class="wv-sml" style="width:56px;font-size:12px">Δt = ${st.dt}°</div></div>`+
+        big(`Q = m·Δt = ${st.m}·${st.dt} = ${Q} кал`)+
+        btns(btn('+1 г',`phAct('${lk}','m+')`),btn('−1 г',`phAct('${lk}','m-')`),btn('+1°',`phAct('${lk}','dt+')`),btn('−1°',`phAct('${lk}','dt-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml('нагрев 1 г воды на 1° = 1 кал: Q = m·Δt'));
+    }
+    else if(sel==='sound'){
+      if(st.t==null) st.t=Math.max(nums[0]||3,1);
+      const S=340*st.t;
+      h=col(
+        `<div style="display:flex;align-items:center;gap:12px;justify-content:center">
+          <div style="font-size:56px" class="wv-pulse">📢</div>
+          <div style="position:relative;width:120px;height:60px">
+            ${[0,.4,.8].map(d=>`<span class="wv-wave" style="position:absolute;left:36px;top:50%;width:28px;height:28px;margin:-14px 0 0 -14px;border:2.5px solid #7fd1ff;border-radius:50%;animation-delay:${d}s"></span>`).join('')}</div></div>`+
+        big(`S = v·t = 340·${st.t} = ${S} м`)+
+        btns(btn('+1 с',`phAct('${lk}','t+')`),btn('−1 с',`phAct('${lk}','t-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml('звук — волна: за t секунд проходит S = 340·t м'));
+    }
+    else if(sel==='units'){
+      if(st.v==null) st.v=Math.max(nums[0]||3,1);
+      h=col(
+        `<div class="wv-road" style="width:240px;background:#13251c">
+          <div style="position:absolute;top:0;left:0;bottom:0;width:${Math.min(230,st.v*40)}px;background:linear-gradient(90deg,#7fd1ff,var(--brass));transition:width .6s;display:flex;align-items:center;justify-content:flex-end;padding-right:4px;font-size:13px;font-weight:bold;color:#0b1712">${st.v} м</div></div>`+
+        big(`${st.v} м = ${st.v*100} см`)+
+        btns(btn('+1 м',`phAct('${lk}','v+')`),btn('−1 м',`phAct('${lk}','v-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml('лента удлиняется: 1 м = 100 см'));
+    }
+    else if(sel==='fric'){
+      if(st.f==null) st.f=6; const srf=st.srf||'шершавый асфальт';
+      const rough=srf!=='гладкий лёд'; const px=rough?80:205;
+      h=col(
+        `<div style="position:relative;width:260px;height:64px;border-radius:8px;background:${rough?'repeating-linear-gradient(90deg,#5a4630 0 6px,#4a3622 6px 9px)':'linear-gradient(#cfe8fb,#9fc5f5)'};overflow:hidden">
+          <div style="position:absolute;bottom:4px;left:8px;font-size:40px;transform:translateX(${px}px);transition:transform 1s ease">🧊</div>
+          <div class="wv-sml" style="position:absolute;top:2px;left:6px;font-size:11px">${srf}</div></div>`+
+        big(`сила трения: ${st.f} Н`)+
+        btns(btn('🧊 гладкий лёд',`phAct('${lk}','smooth')`),btn('🪨 шершавый асфальт',`phAct('${lk}','rough')`))+
+        sml(rough?('шершавая поверхность → трение '+st.f+' Н, брусок еле едет'):('гладкий лёд → трение '+st.f+' Н, брусок скользит далеко')));
+    }
+    else {
+      h=col(`<div style="font-size:64px">🔭</div>`+big(L.title||'')+`<div class="wv-sml" style="max-width:320px">${esc(((L.explain&&L.explain[0])||'')).slice(0,170)}…</div>`+btn('дальше по теме ➜', `phAct('${lk}','nx')`));
+    }
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
+
 function phAct(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const bump=(k,d,min)=> st[k]=Math.max(min||1, Math.round(((st[k]==null?1:st[k])+d)*10)/10);
   switch(act){
     case 'v+': bump('v',5); break; case 'v-': bump('v',-5); break;
+    case 'p+': bump('p',10); break; case 'p-': bump('p',-10); break;
+    case 'V1+': bump('v1',5); break; case 'V1-': bump('v1',-5); break;
+    case 'V2+': bump('v2',5); break; case 'V2-': bump('v2',-5); break;
     case 't+': bump('t',1); break; case 't-': bump('t',-1); break;
     case 'm+': bump('m',1); break; case 'm-': bump('m',-1); break;
     case 'V+': bump('V',1); break; case 'V-': bump('V',-1); break;
@@ -630,6 +859,8 @@ function phAct(lk,act){
     case 'smooth': st.srf='гладкий лёд'; st.f=1; break;
     case 'rough': st.srf='шершавый асфальт'; st.f=6; break;
     case 'r': CHS[lk]={}; break;
+    default: if(/^i[0-9]$/.test(act)) st.i=parseInt(act.slice(1),10);
+             else if(act==='nx') st.i=(st.i==null?1:st.i+1);
   }
   chRender(0);
 }

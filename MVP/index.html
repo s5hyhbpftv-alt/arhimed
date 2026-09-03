@@ -12,6 +12,7 @@
 <style>
   :root { --deep:#0b1712; --panel:#13251c; --card:#182f24; --card2:#101f18;
     --brass:#d9a441; --brass-d:#a3762a; --ivory:#e8e0cc; --muted:#8fa08f;
+    --amber:#d9a441;
     --glass:#7fb8a0; --glow:#7fd1ff; --danger:#e86a5a; --ok:#5f9a6a;
     --hairline:rgba(217,164,65,.25); }
   * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
@@ -297,6 +298,59 @@
     border:1px solid rgba(127,209,255,.35); border-radius:14px; padding:14px 16px; margin:4px 0 8px; }
   .legend-hero b { font-size:16px; line-height:1.35; display:block; }
   .legend-hero .small { margin-top:3px; }
+
+  /* ================= интерактивные виджеты (v70): крупнее + анимации ================= */
+  #lvis { width:100%; }
+  #lvis .hint-btn { padding:10px 16px; font-size:14px; border-radius:10px; }
+  .wv { background:linear-gradient(180deg,rgba(24,47,36,.9),rgba(16,31,24,.9));
+    border:1px solid #3d5c49; border-radius:16px; padding:14px 12px; margin-top:12px; }
+  .wv-big { font-size:23px; color:var(--brass); font-family:Georgia,serif; line-height:1.25; }
+  .wv-sml { color:#cbb89a; font-size:13.5px; line-height:1.45; }
+  .wv-ic { font-size:64px; line-height:1.1; }
+  .wv-ic2 { font-size:80px; line-height:1; }
+  .wv-row { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; align-items:center; }
+  .wv-col { display:flex; flex-direction:column; align-items:center; gap:9px; text-align:center; }
+  .wv-chip { display:inline-block; margin:1px; padding:2px 9px; background:#13251c; border:1px solid #3d5c49;
+    border-radius:9px; font-size:15px; }
+  .wv-pop { animation:wvPop .38s ease both; }
+  .wv-pop2 { animation:wvPop .38s ease .12s both; }
+  .wv-pop3 { animation:wvPop .38s ease .24s both; }
+  .wv-flick { display:inline-block; animation:wvFlick 1s ease-in-out infinite; }
+  .wv-glow { animation:wvGlow 1.4s ease-in-out infinite; }
+  .wv-pulse { animation:wvPulse 1s ease-in-out infinite; }
+  .wv-swing { animation:wvSwing 1.6s ease-in-out infinite; transform-origin:top center; }
+  .wv-shake { animation:wvShake .5s ease; }
+  .wv-rise { animation:wvRise 1.3s linear infinite; }
+  .wv-rise2 { animation:wvRise 1.3s linear .45s infinite; }
+  .wv-rise3 { animation:wvRise 1.3s linear .9s infinite; }
+  .wv-flow { animation:wvFlow 1.2s linear infinite; }
+  .wv-wave { animation:wvWave 1.5s ease-out infinite; }
+  .wv-morph { transition:all .5s ease; }
+  .wv-in { animation:wvIn .5s ease both; }
+  @keyframes wvPop { 0%{transform:scale(.3);opacity:0} 70%{transform:scale(1.12);opacity:1} 100%{transform:scale(1);opacity:1} }
+  @keyframes wvFlick { 0%,100%{transform:scale(1) rotate(-2deg)} 50%{transform:scale(1.18) rotate(3deg)} }
+  @keyframes wvGlow { 0%,100%{filter:drop-shadow(0 0 2px rgba(255,220,120,.4))} 50%{filter:drop-shadow(0 0 14px rgba(255,220,120,.95))} }
+  @keyframes wvPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+  @keyframes wvSwing { 0%,100%{transform:rotate(3deg)} 50%{transform:rotate(-3deg)} }
+  @keyframes wvShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-7px)} 40%,80%{transform:translateX(7px)} }
+  @keyframes wvRise { 0%{transform:translateY(0);opacity:0} 15%{opacity:1} 100%{transform:translateY(-46px);opacity:0} }
+  @keyframes wvFlow { 0%{transform:translateX(0);opacity:0} 12%{opacity:1} 88%{opacity:1} 100%{transform:translateX(96px);opacity:0} }
+  @keyframes wvWave { 0%{transform:scale(.4);opacity:.9} 100%{transform:scale(1.5);opacity:0} }
+  @keyframes wvDrop { 0%{transform:translateY(0);opacity:1} 100%{transform:translateY(46px);opacity:0} }
+  @keyframes wvGrow { 0%{transform:scaleX(0)} 100%{transform:scaleX(1)} }
+  @keyframes wvIn { 0%{transform:translateY(14px);opacity:0} 100%{transform:translateY(0);opacity:1} }
+  .wv-bub { width:9px; height:9px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#eaf7ff,#9fd4f2);
+    position:absolute; bottom:26px; }
+  .wv-bub2 { width:13px; height:13px; }
+  .wv-flask { position:relative; border:3px solid #33291e; border-radius:0 0 22px 22px; overflow:hidden; }
+  .wv-stand { position:relative; border:3px solid #33291e; border-radius:0 0 20px 20px; overflow:hidden; }
+  .wv-road { position:relative; height:40px; border:2px solid #3d5c49; border-radius:8px; background:
+    repeating-linear-gradient(90deg,transparent 0 38px,rgba(127,209,255,.14) 38px 40px),#101f18; overflow:hidden; }
+  .wv-lane { position:absolute; top:0; left:0; right:0; height:1.5px; background:rgba(217,164,65,.3); }
+  .wv-dot { position:absolute; bottom:4px; width:9px; height:9px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#ffe9a8,#d9a441); }
+  .wv-cable { position:relative; height:34px; background:
+    repeating-linear-gradient(90deg,#3d5c49 0 7px,#182f24 7px 14px); border-radius:6px; overflow:hidden; }
 </style>
 </head>
 <body>
@@ -325,21 +379,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=69"></script>
-<script src="data/lessons.js?v=69"></script>
-<script src="js/comic.js?v=69"></script>
-<script src="js/core.js?v=69"></script>
-<script src="js/engine.js?v=69"></script>
-<script src="js/app.js?v=69"></script>
-<script src="js/dashboard.js?v=69"></script>
-<script src="js/lessons.js?v=69"></script>
-<script src="js/legend.js?v=69"></script>
-<script src="js/simulator.js?v=69"></script>
-<script src="js/duel.js?v=69"></script>
-<script src="js/agent.js?v=69"></script>
-<script src="js/voice.js?v=69"></script>
-<script src="js/assistant.js?v=69"></script>
-<script src="js/agentlive.js?v=69"></script>
+<script src="data/tasks.js?v=70"></script>
+<script src="data/lessons.js?v=70"></script>
+<script src="js/comic.js?v=70"></script>
+<script src="js/core.js?v=70"></script>
+<script src="js/engine.js?v=70"></script>
+<script src="js/app.js?v=70"></script>
+<script src="js/dashboard.js?v=70"></script>
+<script src="js/lessons.js?v=70"></script>
+<script src="js/legend.js?v=70"></script>
+<script src="js/simulator.js?v=70"></script>
+<script src="js/duel.js?v=70"></script>
+<script src="js/agent.js?v=70"></script>
+<script src="js/voice.js?v=70"></script>
+<script src="js/assistant.js?v=70"></script>
+<script src="js/agentlive.js?v=70"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -354,7 +408,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=69').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=70').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
