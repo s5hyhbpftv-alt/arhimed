@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,235 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l80Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[[2,3,'*',3,8],[3,4,':',3,8],[2,5,'*',10],[3,5,':',2,5],[1,2,'*',2,3],[2,3,'*',3,4],[7,10,':',7,10],[4,9,'*',3,8]];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break; case 's3': st.s3=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=st.s3=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l80Bar(num,den,uid){
+  const cells=[];
+  const W=270;
+  const seg=Math.floor(W/den);
+  for(let i=0;i<den;i++){
+    const on=i<num;
+    cells.push(`<div style="width:${Math.max(2,seg-2)}px;height:20px;margin:1px;border-radius:3px;${on?'background:#e0523d':'background:rgba(255,255,255,.08);border:1px dashed rgba(255,255,255,.25)'}"></div>`);
+  }
+  return `<div style="width:${W}px;margin:0 auto;display:flex;justify-content:center;padding:4px;background:rgba(255,255,255,.05);border-radius:8px">${cells.join('')}</div>`;
+}
+function l80Frac(a,b,opt){
+  const o=opt||{};
+  return `<span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-family:Georgia,serif;font-weight:bold;color:${o.col||'#fff'};font-size:${o.fs||26}px;line-height:1.05;${o.strike?`text-decoration:line-through;opacity:.55;color:#e0523d`:''}">
+    <span style="padding:0 6px">${a}</span><span style="border-top:2px solid ${o.col||'#fff'};padding:0 6px;">${b}</span></span>`;
+}
+function l80Grid(a,b,c,d,uid){
+  // прямоугольник-сетка: b столбцов × d рядов; пересечение a×c клеток
+  const W=300;
+  const cols=b, rows=d;
+  const colW=Math.floor((W-30)/cols);
+  const rowH=Math.max(9,Math.floor(138/rows));
+  const gx=Math.floor((W-30-cols*colW)/2);
+  let html='';
+  for(let r=0;r<rows;r++){
+    let row='';
+    for(let col=0;col<cols;col++){
+      const x=gx+col*colW, y=14+r*rowH;
+      const dark= col<a && r<c;
+      const v= col<a && !(r<c);
+      const h= (r<c) && !(col<a);
+      const fill= dark? '#e0523d' : v? 'rgba(224,82,61,.42)' : h? 'rgba(47,143,90,.42)' : 'rgba(255,255,255,.07)';
+      row+=`<div class="l35-pop" style="animation-delay:${((r*cols+col)*0.012).toFixed(3)}s;position:absolute;left:${x}px;top:${y}px;width:${colW-1}px;height:${rowH-1}px;border-radius:3px;background:${fill}"></div>`;
+    }
+    html+=row;
+  }
+  // рамка
+  const frame=`<div style="position:absolute;left:${gx-2}px;top:12px;width:${cols*colW+2}px;height:${rows*rowH+2}px;border:2px solid #7fa3ba;border-radius:6px"></div>`;
+  return `<div style="position:relative;width:${W}px;height:186px;margin:0 auto;text-align:center">
+    ${frame}${html}
+    <div style="position:absolute;bottom:2px;left:0;right:0;font-size:13px;color:#ffd9a0;font-weight:bold">${a}·${c} клеток из ${b}·${d} → ${l80Frac(a*c,b*d,{fs:20})}</div>
+  </div>`;
+}
+function l80Cross(a,b,c,d,uid){
+  // сокращение крест-накрест до умножения: показываем заменённые пары
+  const gcd=(x,y)=>{x=Math.abs(x);y=Math.abs(y);while(y){const t=x%y;x=y;y=t;}return x;};
+  const g1=gcd(a,d), g2=gcd(c,b);
+  const na=a/g1, nd=d/g1, nc=c/g2, nb=b/g2;
+  const pairLbl=(p,q,ga,naa,nqq,pad)=>{
+    // p над q; зачёркиваем и пишем уменьшенные
+    return `<span style="display:inline-flex;flex-direction:column;align-items:center;margin:0 ${pad||4}px;font-family:Georgia,serif;font-weight:bold;color:#fff">
+      <span style="position:relative;padding:0 4px;font-size:24px">${ga>1?`<span style="opacity:.45;text-decoration:line-through;color:#e0523d">${p}</span> <span style="color:#7fd1a0">${naa}</span>`:p}</span>
+      <span style="border-top:2px solid #fff;padding:0 4px;font-size:24px">${ga>1?`<span style="opacity:.45;text-decoration:line-through;color:#e0523d">${q}</span> <span style="color:#7fd1a0">${nqq}</span>`:q}</span>
+    </span>`;
+  };
+  return `<div style="width:300px;margin:0 auto;text-align:center;background:rgba(255,255,255,.03);border:1px solid rgba(127,209,255,.14);border-radius:14px;padding:10px 4px">
+    <div style="font-size:13px;color:#cbb89a;margin-bottom:6px">сокращаем «крест-накрест» ДО умножения:</div>
+    <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px">
+      ${pairLbl(a,d,g1,na,nd,2)}<span style="font-size:26px;color:#e0523d;font-weight:bold">×</span>
+      ${pairLbl(c,b,g2,nc,nb,2)}<span style="font-size:26px;color:#cbb89a">=</span>
+      ${l80Frac(na*nc,nb*nd,{fs:30,col:'#7fd1a0'})}
+    </div>
+    ${g1>1||g2>1?`<div style="margin-top:6px;font-size:12px;color:#8aa08f">тройки сократились, 2 и 8 — тоже. осталось ${na*nc}/${nb*nd}</div>`:''}
+  </div>`;
+}
+function l80Mirror(a,b,uid){
+  // взаимообратные: a/b и b/a, произведение 1
+  const W=300;
+  return `<div style="width:${W}px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap">
+    ${l80Frac(a,b,{fs:30,col:'#9fe8c0'})}<span style="font-size:20px;color:#cbb89a">⇄ зеркало ⇄</span>${l80Frac(b,a,{fs:30,col:'#a9d2ec'})}
+    <div style="width:100%;text-align:center;font-size:15px;color:#ffd9a0">${l80Frac(a,b,{fs:20})} · ${l80Frac(b,a,{fs:20})} = ${l80Frac(1,1,{fs:22,col:'#7fd1a0'})} = 1</div>
+  </div>`;
+}
+function l80DivGeo(a,b,c,d,uid){
+  // «сколько порций c/d помещается в a/b» — деление геометрически: a/b : c/d
+  const W=300;
+  const pie=(n,d2,col)=>{
+    const size=54, cx=size/2, cy=size/2+2, r=size/2-3;
+    const st=360/d2;
+    let s='';
+    for(let i=0;i<d2;i++){
+      const on=i<n;
+      s+=`<path d="${l79Sector(cx,cy,r,-90+i*st,-90+(i+1)*st)}" fill="${on?col:'#2b3a4a'}" stroke="#fff" stroke-width="2"/>`;
+    }
+    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="display:block;margin:0 auto">${s}</svg>`;
+  };
+  return `<div style="width:${W}px;margin:0 auto;text-align:center">
+    <div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+      <div><div style="font-size:11px;color:#cbb89a">у нас ${l80Frac(a,b,{fs:26})} торта</div>${pie(a,b,'#f0a35a')}</div>
+      <div style="font-size:22px;color:#cbb89a">:</div>
+      <div><div style="font-size:11px;color:#cbb89a">порция ${l80Frac(c,d,{fs:26})}</div>${pie(c,d,'#5aa8d8')}</div>
+      <div style="font-size:22px;color:#cbb89a">=</div>
+      <div><div style="font-size:30px;font-weight:bold;color:#7fd1a0">${l80Frac(a*d,b*c,{fs:30,col:'#7fd1a0'})}</div><div style="font-size:12px;color:#cbb89a">порций помещается</div></div>
+    </div>
+  </div>`;
+}
+function l80Cup(uid){
+  // стакан сахара 1/2 для задачи из жизни
+  const W=300;
+  return `<div style="width:${W}px;margin:0 auto;text-align:center">
+    <div style="display:flex;align-items:flex-end;justify-content:center;gap:10px">
+      <div style="position:relative;width:80px;height:120px;border:3px solid #b9c6d0;border-top:none;border-radius:0 0 12px 12px;overflow:hidden;background:rgba(255,255,255,.06)">
+        <div style="position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(#f6e7c0,#e8c98a)" class="l35-pop"></div>
+        <div style="position:absolute;left:0;right:0;bottom:60px;height:2px;background:rgba(255,255,255,.6)"></div>
+        <div style="position:absolute;top:8px;left:0;right:0;text-align:center;font-size:10px;color:#cbb89a">½ стакана</div>
+      </div>
+      <div style="text-align:left;font-size:14px;color:#d8ecff;max-width:180px">нужно 2/3 от 3/4 стакана сахара →<br><b style="color:#7fd1a0">2/3 · 3/4 = 6/12 = ½</b><br><span style="color:#8aa08f">ровно полстакана!</span></div>
+    </div>
+  </div>`;
+}
+function visL80(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Кафе Архимеда'),
+        `<div style="font-size:50px" class="l35-pop">🍰</div>`+
+        big('2/3 от 3/4 торта — это сколько?')+
+        sml('умножение дробей — это «часть от части»! разберёмся на прямоугольнике-сетке. листай ➜'));
+    } else if(step===1){
+      h=col(big('Часть от части (сетка)'),
+        l80Grid(2,3,3,4,'g')+
+        sml('красные полосы — это 2/3 по вертикали, зелёные — 3/4 по горизонтали. пересечение 2·3 = 6 клеток из 3·4 = 12'));
+    } else if(step===2){
+      h=col(big('Правило умножения'),
+        `<div style="text-align:center;font-size:24px">${l80Frac(2,3)} · ${l80Frac(3,4)} = ${l80Frac(6,12,{fs:34,col:'#7fd1a0'})} = ${l80Frac(1,2,{fs:34,col:'#7fd1a0'})}</div>`+
+        rowC(chip('числитель × числитель','rgba(224,82,61,.5)'),chip('знаменатель × знаменатель','rgba(127,184,160,.5)'))+
+        sml('перемножаем верха с верхами, низа с низами. 6/12 — это половина!'));
+    } else if(step===3){
+      h=col(big('Сокращай ДО умножения!'),
+        l80Cross(2,3,3,8,'c')+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">2/3 · 3/8 = 1/4 ✓</div>`+
+        sml('тройка с тройкой, двойка с восьмёркой — и считать почти нечего! как в нашей проверке'));
+    } else if(step===4){
+      h=col(big('Целое число — тоже дробь'),
+        `<div style="text-align:center;font-size:24px">${l80Frac(2,5)} · 10 = ${l80Frac(2,5)} · ${l80Frac(10,1,{col:'#a9d2ec'})} = ${l80Frac(20,5,{col:'#cbb89a'})} = <b style="color:#7fd1a0">4</b></div>`+
+        rowC(chip('20/5 = 4','rgba(127,209,160,.5)'))+
+        sml('любое целое — это дробь со знаменателем 1: 10 = 10/1. 20/5 = 4 целых!'));
+    } else if(step===5){
+      h=col(big('Смешанное → неправильная'),
+        `<div style="text-align:center;font-size:23px" class="wv-pop">1 1/2 · 2/3 = 3/2 · 2/3 = 1</div>`+
+        rowC(chip('1 1/2 = 3/2','rgba(127,209,160,.5)'),chip('тройки и двойки сократились!','rgba(232,160,90,.5)'))+
+        sml('перед умножением смешанное число переводим в неправильную дробь: целое × знаменатель + числитель'));
+    } else if(step===6){
+      h=col(big('Волшебное зеркало'),
+        l80Mirror(3,4,'m')+
+        sml('3/4 и 4/3 — взаимообратные: их произведение всегда 1. переверни дробь — и умножишь на 1!'));
+    } else if(step===7){
+      h=col(big('Делить — значит «сколько помещается»'),
+        l80DivGeo(3,4,3,8,'d')+
+        sml('в 3/4 торта помещается ровно 2 порции по 3/8. как это посчитать? умножим на перевёрнутую!'));
+    } else if(step===8){
+      h=col(big('Правило деления'),
+        `<div style="text-align:center;font-size:22px">${l80Frac(3,4)} : ${l80Frac(3,8)} = ${l80Frac(3,4)} · ${l80Frac(8,3,{col:'#a9d2ec'})} = ${l80Frac(24,12,{col:'#cbb89a'})} = <b style="color:#7fd1a0">2</b></div>`+
+        sml('деление на дробь = умножение на её «зеркало». первая дробь стоит на месте!'));
+    } else if(step===9){
+      h=col(big('Деление с сокращением'),
+        `<div style="text-align:center;font-size:22px">${l80Frac(3,5)} : ${l80Frac(2,5)} = ${l80Frac(3,5)} · ${l80Frac(5,2,{col:'#a9d2ec'})} = ${l80Frac(15,10,{col:'#cbb89a'})} = <b style="color:#7fd1a0">3/2</b></div>`+
+        sml('пятёрки сократились! 15/10 = 3/2. как в наших задачках'));
+    } else if(step===10){
+      h=col(big('Ловушки'),
+        rowC(
+          `<div style="text-align:center;width:140px;border:2px solid rgba(224,82,61,.5);border-radius:12px;padding:8px"><div style="font-size:20px">❌</div>${l80Frac(2,3)} · ${l80Frac(3,8)} ≠ ${l80Frac(5,11)}<div class="wv-sml" style="font-size:10px;color:#e0a99a">не складывай!</div></div>`+
+          `<div style="text-align:center;width:140px;border:2px solid rgba(224,82,61,.5);border-radius:12px;padding:8px"><div style="font-size:20px">❌</div>${l80Frac(3,4)} : ${l80Frac(2,3)} ≠ ${l80Frac(3,2,{col:'#e0523d'})}<div class="wv-sml" style="font-size:10px;color:#e0a99a">переверни ВТОРУЮ, а не первую!</div></div>`)+
+        sml('числители и знаменатели перемножаются, а при делении переворачиваем ТОЛЬКО вторую дробь'));
+    } else if(step===11){
+      h=col(big('Дроби в жизни'),
+        l80Cup('p')+
+        rowC(chip('в 3/5 пиццы порций по 2/5: 3/5:2/5 = 3/2','rgba(127,209,255,.4)'))+
+        sml('умножение — «сколько от», деление — «сколько раз помещается». и то, и другое — в кухне Архимеда!'));
+    } else if(step===12){
+      const POOL=[[2,3,'*',3,8],[3,4,':',3,8],[2,5,'*',10],[3,5,':',2,5],[1,2,'*',2,3],[2,3,'*',3,4],[7,10,':',7,10],[4,9,'*',3,8]];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i];
+      const [a,b,op,c,d]=e.length===5? e: [e[0],e[1],e[2],e[3],1];
+      const isDiv=op===':';
+      const isWhole=e.length===4;
+      let prodN, prodD;
+      if(isDiv){ prodN=a*d; prodD=b*c; } else if(isWhole){ prodN=a*c; prodD=b; } else { prodN=a*c; prodD=b*d; }
+      const gcd=(x,y)=>{x=Math.abs(x);y=Math.abs(y);while(y){const t=x%y;x=y;y=t;}return x||1;};
+      const g=gcd(prodN,prodD);
+      const baseN=prodN/g, baseD=prodD/g;
+      // сокращение крест-накрест (парами числитель↔чужой знаменатель)
+      let rf1N, rf1D, rf2N, rf2D;
+      if(isDiv){ const g1=gcd(a,c), g2=gcd(d,b); rf1N=a/g1; rf1D=b/g2; rf2N=d/g2; rf2D=c/g1; }
+      else if(isWhole){ const g2=gcd(c,b); rf1N=a; rf1D=b/g2; rf2N=c/g2; rf2D=1; }
+      else { const g1=gcd(a,d), g2=gcd(c,b); rf1N=a/g1; rf1D=b/g2; rf2N=c/g2; rf2D=d/g1; }
+      h=col(big('Тренажёр: перемножь или подели!'),
+        `<div style="font-size:24px;text-align:center">${l80Frac(a,b)} ${op} ${e.length===5? l80Frac(c,d) : c} = ?</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${isDiv?'деление = умножение на перевёрнутую: '+l80Frac(a,b)+' · '+l80Frac(d,c): isWhole? 'целое '+c+' записываем как '+c+'/1: '+l80Frac(a,b)+' · '+l80Frac(c,1): 'оставляем как есть: '+l80Frac(a,b)+' · '+l80Frac(c,d)}</div>`:'')+
+        (st.s2? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">2) сокращаем крест-накрест → ${l80Frac(rf1N,rf1D)} · ${l80Frac(rf2N,rf2D)}</div>`:'')+
+        (st.s3? `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">ответ: ${g>1? l80Frac(baseN,baseD)+'  (сократили на '+g+')' : l80Frac(prodN,prodD)}</div>`:'')+
+        btns(btn('1️⃣ записать',`l80Act('${lk}','s1')`),btn('2️⃣ сократить',`l80Act('${lk}','s2')`),btn('3️⃣ ответ',`l80Act('${lk}','s3')`),btn('🎲 другой',`l80Act('${lk}','n')`),btn('↺',`l80Act('${lk}','r')`))+
+        sml('по шагам: перепиши (переверни вторую при делении) → сократи крест-накрест → перемножь'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:258px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            ✖️ Умножение: верх × верх, низ × низ.<br>
+            ✂️ Сокращай «крест-накрест» ДО умножения.<br>
+            ➗ Деление: умножь на перевёрнутую вторую.<br>
+            🔁 3/4 и 4/3 — взаимообратные: вместе 1.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 2/3 · 3/8'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -4503,6 +4732,7 @@ function renderLessonVis(){
   else if(id===77) visL77(el);
   else if(id===78) visL78(el);
   else if(id===79) visL79(el);
+  else if(id===80) visL80(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
