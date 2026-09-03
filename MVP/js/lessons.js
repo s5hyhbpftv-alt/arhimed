@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2920,6 +2920,156 @@ function visL102(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 80 Н и 4 м²'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l103Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['m','2','6'],['m','3','6'],['m','5','10'],['m','2','3'],['m','4','2'],['m','6','4'],['h','2'],['h','3'],['h','5'],['h','10'],['h','7'],['h','4']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l103Block(m,uid){
+  // брусок с грузом m кг на поверхности; стрелка тяги F
+  const w=36+m*10;
+  return `<div style="display:flex;flex-direction:column;align-items:center;margin:2px auto">
+    <div style="font-size:12px;color:#cbb89a">тянем силой F</div>
+    <div class="wv-flow" style="font-size:20px;color:#7fd1a0">→</div>
+    <div style="width:${w}px;height:34px;border-radius:5px;background:linear-gradient(145deg,#a8733a,#7a4f22);border:1px solid #5a3a16;display:flex;align-items:center;justify-content:center;font-size:14px;color:#ffe9c4;font-weight:bold">${m} кг</div>
+    <div style="width:${w+16}px;height:6px;background:repeating-linear-gradient(90deg,#6a4a26 0 6px,#8a6a3a 6px 12px);border-radius:2px"></div>
+  </div>`;
+}
+function l103Surf(kind){
+  // шероховатость поверхности: гладкая (линии), шершавая (зубчики)
+  if(kind==='rough') return `<div style="width:120px;height:14px;margin:2px auto;background:repeating-linear-gradient(90deg,#5a7a3a 0 4px,#3a5226 4px 8px);border-radius:2px;border:1px solid #2a3a18"></div>`;
+  return `<div style="width:120px;height:6px;margin:2px auto;background:#6a8a9a;border-radius:3px"></div>`;
+}
+function visL103(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Почему шнурки развязываются не сами?'),
+        `<div style="font-size:44px" class="wv-pop">🧤</div>`+
+        sml('потому что есть сила трения! Сегодня узнаем, почему без неё нельзя ходить — и почему машинам нужны колёса'));
+    } else if(step===1){
+      h=col(big('Что такое сила трения'),
+        rowC(chip('возникает, когда тела касаются','rgba(127,209,255,.5)'),chip('мешает скольжению','rgba(232,160,90,.5)'))+
+        l103Block(1,'a')+
+        sml('тянешь брусок — а он сопротивляется: поверхности цепляются друг за друга. Это трение!'));
+    } else if(step===2){
+      h=col(big('Почему поверхности «цепляются»?'),
+        rowC(chip('даже гладкие на вид поверхности','rgba(127,209,255,.5)'),chip('под микроскопом — бугорки и ямки','rgba(127,184,160,.5)'))+
+        `<div style="font-size:40px" class="wv-pop">🔬</div>`+
+        sml('бугорки одной поверхности заходят в ямки другой — как «липучки». Вот и трение!'));
+    } else if(step===3){
+      h=col(big('Три вида трения'),
+        rowC(chip('покоя','rgba(127,209,255,.5)'),chip('скольжения','rgba(232,160,90,.5)'),chip('качения','rgba(127,184,160,.5)'))+
+        sml('покоя — шкаф стоит; скольжения — санки едут; качения — колёса машины'));
+    } else if(step===4){
+      h=col(big('Катить легче, чем тащить!'),
+        rowC(chip('тащить санки — трение скольжения','rgba(232,160,90,.5)'),chip('катить на колёсах — трение качения','rgba(127,184,160,.5)'))+
+        `<div style="font-size:40px" class="wv-swing">🛞</div>`+
+        sml('трение качения в разы меньше скольжения — поэтому у машин колёса, а не полозья!'));
+    } else if(step===5){
+      h=col(big('От чего зависит трение: №1 поверхность'),
+        rowC(l103Surf('smooth'),l103Surf('rough'))+
+        sml('шершавые поверхности цепляются сильнее → трение больше. Это как в нашей проверке!'));
+    } else if(step===6){
+      h=col(big('От чего зависит трение: №2 сила прижатия'),
+        l103Block(1,'b')+
+        l103Block(2,'c')+
+        sml('сильнее прижали груз к столу — бугорки глубже заходят → трение больше'));
+    } else if(step===7){
+      h=col(big('Как измерить трение'),
+        rowC(chip('динамометр тянет брусок равномерно','rgba(127,209,255,.5)'),chip('стрелка показывает силу трения','rgba(127,184,160,.5)'))+
+        `<div style="font-size:40px" class="wv-pop">🪝</div>`+
+        sml('тянешь равномерно — сила тяги равна силе трения. Читаешь по шкале!'));
+    } else if(step===8){
+      h=col(big('Задача про груз'),
+        rowC(chip('груз 2 кг, трение 4 Н','rgba(217,164,65,.4)'),chip('положили ещё 2 кг → 4 кг','rgba(217,164,65,.4)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">трение выросло в 2 раза: 4 · 2 = 8 Н</div>`+
+        sml('как в наших задачках: прижатие вдвое — трение вдвое!'));
+    } else if(step===9){
+      h=col(big('Трение — друг или враг?'),
+        rowC(chip('друг: идём, держим предметы','rgba(127,184,160,.4)'),chip('враг: детали стираются','rgba(232,160,90,.4)'))+
+        sml('без трения не сделаешь и шага — но машины «съедают» топливо на трение. Всё зависит от задачи!'));
+    } else if(step===10){
+      h=col(big('Увеличиваем трение'),
+        rowC(chip('песок на льду','rgba(127,209,255,.4)'),chip('резиновые подошвы','rgba(127,209,255,.4)'),chip('протектор шин','rgba(127,209,255,.4)'),chip('мел на пальцах','rgba(127,209,255,.4)'))+
+        sml('всё это делает поверхность шершавее — трение растёт, как зимой на дороге!'));
+    } else if(step===11){
+      h=col(big('Уменьшаем трение'),
+        rowC(chip('смазка (масло)','rgba(232,160,90,.4)'),chip('подшипники','rgba(232,160,90,.4)'),chip('полировка','rgba(232,160,90,.4)'),chip('обтекаемая форма','rgba(232,160,90,.4)'))+
+        sml('масло заполняет ямки — поверхности не цепляются. Как в наших задачках!'));
+    } else if(step===12){
+      h=col(big('Почему по льду скользко?'),
+        rowC(chip('лёд почти гладкий — бугорков нет','rgba(127,209,255,.5)'),chip('трение крошечное','rgba(232,160,90,.5)'))+
+        `<div style="font-size:40px" class="wv-flick">⛸️</div>`+
+        sml('конькобежцы как раз этим пользуются — а машины посыпают песком!'));
+    } else if(step===13){
+      h=col(big('Ходьба — это трение покоя'),
+        rowC(chip('нога упирается — не скользит','rgba(127,184,160,.5)'))+
+        sml('толкаешься ногой, трение «держит» её — и ты идёшь. На льду нога скользит — упасть легко!'));
+    } else if(step===14){
+      h=col(big('Тормоза — трение!'),
+        rowC(chip('колодки прижимаются к диску','rgba(127,209,255,.5)'),chip('трение останавливает колесо','rgba(127,184,160,.5)'))+
+        `<div style="font-size:40px" class="wv-pop">🚗</div>`+
+        sml('нажал педаль — колодки трутся о диск, машина замедляется. На мокрой дороге трение меньше — тормозной путь длиннее!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('шершавая поверхность → трение?','rgba(127,209,255,.5)'),chip('масло → трение?','rgba(232,160,90,.5)'))+
+        sml('больше/меньше. И запомни: трение покоя, скольжения, качения — качение меньше всех!'));
+    } else if(step===16){
+      const POOL=[['m','2','6'],['m','3','6'],['m','5','10'],['m','2','3'],['m','4','2'],['m','6','4'],['h','2'],['h','3'],['h','5'],['h','10'],['h','7'],['h','4']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0];
+      let desc, firstStep, ans;
+      if(kind==='m'){
+        const m1=+e[1], m2=+e[2];
+        desc='груз '+m1+' кг, трение '+m2+' Н. Положили ещё '+m1+' кг → трение?';
+        firstStep='масса выросла в 2 раза → трение ×2';
+        ans=m2*2;
+      } else {
+        const m=+e[1];
+        desc='груз '+m+' кг тянут: какой станет трение, если прижать вдвое сильнее?';
+        firstStep='если было '+m+' Н → теперь ×2';
+        ans=m*2;
+      }
+      h=col(big('Тренажёр: сила трения'),
+        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
+        `<div style="font-size:34px" class="wv-pop">🧤</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans} Н</div>`:'')+
+        btns(btn('1️⃣ подумай',`l103Act('${lk}','s1')`),btn('2️⃣ ответ',`l103Act('${lk}','s2')`),btn('🎲 другая',`l103Act('${lk}','n')`),btn('↺',`l103Act('${lk}','r')`))+
+        sml('прижатие ×2 → трение ×2. Просто!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🧤 Трение: покоя, скольжения, качения.<br>
+            🔬 Шершавее → трение больше.<br>
+            ⚖️ Прижали вдвое → трение вдвое.<br>
+            🛢️ Масло уменьшает трение.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там про шершавую поверхность'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -7545,6 +7695,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===103) visL103(el);
   else if(id===102) visL102(el);
   else if(id===101) visL101(el);
   else if(id===100) visL100(el);
