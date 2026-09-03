@@ -969,6 +969,7 @@ function visL48(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    window.LK48=lk;
     const step=LV.step||0;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
@@ -980,21 +981,42 @@ function visL48(el){
     let h='';
     if(step===0){
       h=col(big('Корона царя Гиерона'),
-        rowC(l48Crown(110))+
+        `<div style="position:relative;width:190px;height:160px;margin:2px auto;border-radius:16px;overflow:hidden;
+            background:radial-gradient(circle at 50% 28%,#34465c 0%,#1b2532 78%)">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 20%,rgba(255,215,140,.14),transparent 55%)"></div>
+          <div style="position:absolute;left:50%;transform:translateX(-50%);top:4px;filter:drop-shadow(0 6px 9px rgba(0,0,0,.55));z-index:2">${l48Crown(112)}</div>
+          <!-- бархатная подушка -->
+          <div style="position:absolute;left:50%;transform:translateX(-50%);top:104px;width:132px;height:16px;border-radius:50%;
+            background:radial-gradient(ellipse at 50% 35%,#b0455a,#7c2438 70%)"></div>
+          <div style="position:absolute;left:50%;transform:translateX(-50%);top:107px;width:104px;height:6px;border-radius:50%;
+            background:rgba(0,0,0,.35)"></div>
+          <!-- колонна-пьедестал -->
+          <div style="position:absolute;left:50%;transform:translateX(-50%);top:116px;width:56px;height:28px;border-radius:3px 3px 10px 10px;
+            background:linear-gradient(180deg,#7a5a34,#5c4024 60%,#4a3220);box-shadow:inset 4px 0 6px rgba(255,220,170,.18)"></div>
+          <div style="position:absolute;left:50%;transform:translateX(-50%);top:140px;width:86px;height:12px;border-radius:4px;
+            background:linear-gradient(180deg,#6a4c2c,#4e3820)"></div>
+          <!-- отражение на полу -->
+          <div style="position:absolute;left:50%;transform:translateX(-50%);top:150px;width:120px;height:6px;border-radius:50%;
+            background:rgba(0,0,0,.45)"></div>
+        </div>`+
         big('золотая ли она на самом деле?')+
         sml('ювелир мог подменить часть золота серебром. проверить, не ломая корону? — эту задачу дали Архимеду'));
     } else if(step===1){
-      const dip=!!st.dip;
+      const dip=!!st.dip3;
       h=col(big('Эврика!'),
-        l48Cylinder(dip?0.45:0.05, l48Crown(64), {label:'полная ванна'}),
-        (dip? big('💦 вода выплеснулась! Эврика!') : btn('🛁 опуститься в ванну', `l48Act('${lk}','dip')`))+
-        (dip? sml('объём тела = объём вытесненной воды — так можно измерить корону!') : sml('Архимед садится в полную ванну…')));
+        l48BathFull(dip)+
+        (dip
+          ? big('💦 Вода выплеснулась! Эврика!')
+          : big('потяни корону в полную ванну')+
+            btn('✨ (или просто нажми «опустить»)', `l48Act('${lk}','dip3')`))+
+        (dip? sml('объём тела = объём вытесненной воды — так Архимед измерил корону!') : sml('Архимед: вода выплеснется ровно на объём короны!')));
     } else if(step===2){
-      // опускаем корону в мензурку
+      // опускаем корону в мензурку: 150 мл → 350 мл (вытеснено 200 мл)
       const dip=!!st.dip2;
-      const p=dip?0.6:0.1;
+      const p=(dip?350:150)/400;              // вся шкала 0–400 мл
+      const bottom=dip?14:74;                  // dip: на дне под водой; иначе висит над водой на нити
       h=col(big('Измеряем корону'),
-        l48Cylinder(p, l48Crown(56), {label:dip?'уровень поднялся!':'вода'}),
+        l48Cylinder(p, l48Crown(56), {bottom, thread:!dip, bodyH:50})+
         (dip? big('вытеснено 200 мл!') : btn('🔱 опустить корону', `l48Act('${lk}','dip2')`))+
         sml('сколько воды вытеснила корона — таков её объём. корона цела!'));
     } else if(step===3){
@@ -1011,7 +1033,7 @@ function visL48(el){
     } else if(step===5){
       h=col(big('Разбираем на числах'),
         `<div class="wv-row">${chip('V = 2 л','rgba(127,209,255,.5)')} ${chip('вытеснил 2 кг воды','rgba(127,184,160,.5)')}</div>`+
-        l48Cylinder(0.5, l48CubeBody(0.5), {label:'дерево в воде'})+
+        l48Cylinder(0.5, l48CubeBody(0.5), {label:'дерево в воде', imm:18})+
         `<div style="font-size:19px" class="wv-pop">F = m·g = 2 · 10 = 20 Н</div>`+
         sml('вода толкает дерево вверх с силой 20 Н'));
     } else if(step===6){
@@ -1092,6 +1114,7 @@ function visL36(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    window.LK48=lk;
     const step=LV.step||0;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
@@ -1248,6 +1271,7 @@ function visL34(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    window.LK48=lk;
     const step=LV.step||0;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
@@ -1442,30 +1466,158 @@ function l36Water(){
 function l48Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   switch(act){
-    case 'dip': st.dip=(st.dip||0)+1; break;
-    case 'dip2': st.dip2=(st.dip2||0)+1; break;
-    case 'w+': st.w=Math.min(12,(st.w==null?4:st.w)+1); break;
+    case 'dip': st.dip=1; break;
+    case 'dip2': st.dip2=1; break;
+    case 'dip3': st.dip3=1; break;
+    case 'w+': st.w=Math.min(9,(st.w==null?4:st.w)+1); break;
     case 'w-': st.w=Math.max(1,(st.w==null?4:st.w)-1); break;
-    case 'b+': st.b=Math.min(12,(st.b==null?3:st.b)+1); break;
+    case 'b+': st.b=Math.min(9,(st.b==null?3:st.b)+1); break;
     case 'b-': st.b=Math.max(1,(st.b==null?3:st.b)-1); break;
     case 'r': CHS[lk]={}; break;
   }
   chRender(0);
 }
+let _dr=null;
 function l48Crown(w){
   // золотая корона Гиерона с камнями
   const W=w||76, H=Math.round(W*.9);
   return `<svg width="${W}" height="${H}" viewBox="0 0 120 108" style="display:block">
-    <defs><linearGradient id="cr" x1="0" y1="0" x2="0" y2="1">
+    <defs><linearGradient id="cr${w}" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#ffe28a"/><stop offset=".5" stop-color="#e6bf4a"/><stop offset="1" stop-color="#b8860b"/></linearGradient></defs>
-    <path d="M16,96 L104,96 L108,30 Q84,50 60,34 Q36,50 12,30 Z" fill="url(#cr)" stroke="#8a6a1a" stroke-width="2"/>
-    <path d="M12,30 L28,20 L34,38 L48,16 L60,36 L74,16 L86,38 L94,22 L108,30" fill="url(#cr)" stroke="#8a6a1a" stroke-width="2"/>
+    <path d="M16,96 L104,96 L108,30 Q84,50 60,34 Q36,50 12,30 Z" fill="url(#cr${w})" stroke="#8a6a1a" stroke-width="2"/>
+    <path d="M12,30 L28,20 L34,38 L48,16 L60,36 L74,16 L86,38 L94,22 L108,30" fill="url(#cr${w})" stroke="#8a6a1a" stroke-width="2"/>
     <circle cx="28" cy="26" r="4" fill="#ff5a5a"/><circle cx="48" cy="21" r="4" fill="#5aa0ff"/>
     <circle cx="74" cy="21" r="4" fill="#5aff8a"/><circle cx="92" cy="28" r="4" fill="#ff5a5a"/>
     <circle cx="60" cy="40" r="5" fill="#ffd94a" stroke="#b8860b"/>
     <ellipse cx="40" cy="96" rx="26" ry="6" fill="rgba(0,0,0,.25)"/>
   </svg>`;
 }
+function l48DStart(ev,el,lk){
+  ev.preventDefault(); ev.stopPropagation();
+  const host=el.closest('.l48host')||el.parentElement;
+  const hr=host.getBoundingClientRect(), r=el.getBoundingClientRect();
+  _dr={el,lk,offX:ev.clientX-r.left,offY:ev.clientY-r.top,hx:hr.left,hy:hr.top,ox:el.style.left,oy:el.style.top};
+  el.style.transition='none'; el.style.animation='none';
+  window.addEventListener('pointermove',l48DMove,{passive:false});
+  window.addEventListener('pointerup',l48DEnd);
+  window.addEventListener('pointercancel',l48DEnd);
+}
+function l48DMove(ev){
+  if(!_dr) return; ev.preventDefault();
+  const el=_dr.el;
+  el.style.left=(ev.clientX-_dr.hx-_dr.offX)+'px';
+  el.style.top=(ev.clientY-_dr.hy-_dr.offY)+'px';
+}
+function l48DEnd(ev){
+  if(!_dr) return;
+  const {el,lk}=_dr;
+  window.removeEventListener('pointermove',l48DMove);
+  window.removeEventListener('pointerup',l48DEnd);
+  window.removeEventListener('pointercancel',l48DEnd);
+  const er=el.getBoundingClientRect();
+  const bath=document.getElementById('l48bath');
+  const cx=er.left+er.width/2, cy=er.top+er.height*.35;
+  let inside=false;
+  if(bath){ const br=bath.getBoundingClientRect();
+    inside = cx>br.left && cx<br.right && cy>br.top && cy<br.top+br.height*.6; }
+  const ox=_dr.ox, oy=_dr.oy;
+  _dr=null;
+  if(inside){ l48Act(lk,'dip3'); }
+  else { el.style.transition='left .45s ease, top .45s ease'; el.style.left=ox; el.style.top=oy; }
+}
+function l48BathFull(dropped){
+  // Полная ванна Архимеда (вода ДО КРАЯ), корона — перетащить в воду → перелив + брызги.
+  const W=262, H=248;
+  const bx=36, bw=190, bt=92, bh=136, pad=5;   // ванна: лево/ширина/верх/высота/бортик
+  const wr=3;                                   // вода: 3px ниже внутреннего края — «до края»
+  const cx=bx+bw/2;                             // центр ванны (точка падения короны)
+  const splash = dropped ? (()=>{
+    // 1) центральный всплеск в точке падения короны
+    let a='';
+    for(let j=0;j<7;j++){ const s=5+(j%3)*2;
+      a+=`<span class="l48-splash" style="left:${cx+(j%2?1:-1)*(3+j*6)-s/2}px;top:${bt-5}px;width:${s}px;height:${s}px;--sx:${(j%2?1:-1)*(3+j*5)}px;--sy:${-(18+j*7)}px;animation-delay:${(j*.05).toFixed(3)}s"></span>`; }
+    // 2) капли вдоль всей кромки — вода выплёскивается через край
+    for(let k=0;k<9;k++){ const s=4+(k%3)*2;
+      a+=`<span class="l48-splash" style="left:${bx+7+k*(bw-14)/8-s/2}px;top:${bt-4}px;width:${s}px;height:${s}px;--sx:${(k%2?1:-1)*(8+k*3)}px;--sy:${-(10+((k*5)%4)*7)}px;animation-delay:${(.16+k*.05).toFixed(3)}s"></span>`; }
+    return a;
+  })() : '';
+  const bubbles = dropped ? [0,1,2,3,4,5].map(i=>{
+    const dx=[-20,-8,4,14,-14,6][i], b=[84,88,82,86,90,84][i], s=[4,5,3,5,4,3][i];
+    return `<span class="l48-bub" style="left:calc(50% + ${dx}px);bottom:${b}px;width:${s}px;height:${s}px;animation-delay:${(.5+i*.14).toFixed(2)}s"></span>`;
+  }).join('') : '';
+  const crownStartX=cx+18-34, crownStartY=bt-118;
+  const inCrown=`<div style="position:absolute;left:50%;bottom:10px;width:76px;opacity:.96;
+      filter:brightness(.82) saturate(.78);animation:l48Sink .95s cubic-bezier(.55,0,.9,.4) both">${l48Crown(76)}</div>`;
+  return `<div class="l48host" style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:18px;overflow:hidden;
+      background:linear-gradient(180deg,#cfe4f2 0%,#dbeef7 55%,#e4f2f8 100%);box-shadow:0 4px 12px rgba(0,0,0,.3)">
+    <!-- кафельная плитка с затиркой -->
+    <div style="position:absolute;inset:0 0 24px 0;background:
+        repeating-linear-gradient(0deg,transparent 0 37px,rgba(140,180,205,.45) 37px 38px),
+        repeating-linear-gradient(90deg,transparent 0 37px,rgba(140,180,205,.45) 37px 38px),
+        linear-gradient(180deg,#cfe4f2,#d9ecf5)"></div>
+    <!-- блики плитки -->
+    <div style="position:absolute;inset:0 0 24px 0;background:
+        linear-gradient(115deg,rgba(255,255,255,.0) 20%,rgba(255,255,255,.16) 34%,rgba(255,255,255,0) 48%,
+        rgba(255,255,255,.08) 70%,rgba(255,255,255,0) 82%)"></div>
+    <!-- пол -->
+    <div style="position:absolute;left:0;right:0;bottom:0;height:24px;background:linear-gradient(180deg,#b7cbd6,#a3bac9)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:11px;height:2px;background:rgba(255,255,255,.35)"></div>
+    <!-- тень от ванны на полу -->
+    <div style="position:absolute;left:${bx+8}px;right:${W-(bx+bw)-8}px;bottom:-2px;height:9px;border-radius:50%;
+      background:rgba(60,95,120,.28);filter:blur(2px)"></div>
+    <!-- кран (закрыт, хромированный, труба от стены) -->
+    <svg style="position:absolute;left:${bx-6}px;top:${bt-62}px;z-index:2" width="104" height="62" viewBox="-34 0 104 62">
+      <defs>
+        <linearGradient id="chrome48" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#dfe7ec"/><stop offset=".45" stop-color="#ffffff"/><stop offset="1" stop-color="#aebcc6"/></linearGradient>
+      </defs>
+      <rect x="-34" y="3" width="60" height="7" rx="3.5" fill="url(#chrome48)" stroke="#8fa0ac" stroke-width="1"/>
+      <circle cx="-36" cy="6.5" r="6" fill="#b7c4ce" stroke="#8fa0ac"/>
+      <rect x="26" y="0" width="16" height="10" rx="3" fill="#aab8c2"/>
+      <path d="M28,8 Q14,10 14,20 L23,20 Q23,15 28,15 Z" fill="url(#chrome48)" stroke="#8fa0ac" stroke-width="1"/>
+      <rect x="30" y="8" width="9" height="22" rx="3" fill="url(#chrome48)" stroke="#8fa0ac" stroke-width="1"/>
+      <circle cx="34.5" cy="22" r="6.5" fill="url(#chrome48)" stroke="#8fa0ac"/>
+      <circle cx="34.5" cy="22" r="2.6" fill="#dde6ea"/>
+      <rect x="32" y="30" width="6" height="18" rx="3" fill="url(#chrome48)" stroke="#8fa0ac" stroke-width="1"/>
+      <ellipse cx="35" cy="50" rx="7" ry="2.4" fill="#aab8c2"/>
+    </svg>
+    <!-- ванна -->
+    <div id="l48bath" style="position:absolute;left:${bx}px;top:${bt}px;width:${bw}px;height:${bh}px;z-index:1;
+      border-radius:9px 9px 34px 34px;background:linear-gradient(180deg,#ffffff 0%,#f2f7fa 55%,#dbe7ee 100%);
+      border:5px solid #b9cad6;overflow:hidden;box-shadow:inset 0 -10px 18px rgba(90,130,160,.12)">
+      <!-- вода до края -->
+      <div style="position:absolute;left:6px;right:6px;bottom:6px;top:${wr}px;
+        background:linear-gradient(180deg,rgba(146,211,246,.97) 0%,rgba(92,168,226,.95) 42%,rgba(64,140,205,.95) 75%,rgba(48,112,178,.98) 100%)"></div>
+      <!-- световые дорожки в воде -->
+      <div style="position:absolute;left:16px;right:16px;bottom:10px;height:64%;opacity:.5;
+        background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.16) 46%,transparent 60%,
+        rgba(255,255,255,.07) 74%,transparent 84%)"></div>
+      <!-- блик на поверхности -->
+      <div style="position:absolute;left:14px;right:14px;top:${wr-1}px;height:2px;border-radius:2px;
+        background:rgba(255,255,255,.85)"></div>
+      <!-- корона тонет в воду -->
+      ${dropped?inCrown:''}
+      <!-- пузырьки от короны -->
+      ${dropped?bubbles:''}
+      <!-- кольцо ряби на поверхности -->
+      ${dropped?`<div class="l48-rip" style="left:50%;margin-left:-23px;top:${wr-6}px;animation-delay:.12s"></div>`:''}
+    </div>
+    <!-- перелив-волна через передний край -->
+    ${dropped?`<div class="l48-overflow" style="left:${bx+1}px;width:${bw-2}px;top:${bt-4}px;z-index:4"></div>`:''}
+    ${splash}
+    <!-- подпись уровня воды -->
+    <div style="position:absolute;left:${bx+14}px;top:${bt+20}px;font-size:10px;color:#eaf6ff;z-index:3;font-weight:bold;
+      text-shadow:0 1px 2px rgba(20,70,110,.8);letter-spacing:.2px">${dropped?'💦 перелилась!':'вода до края'}</div>
+    <!-- корона (перетаскиваемая) -->
+    ${dropped?''
+      : `<div onpointerdown="l48DStart(event,this,LK48)" id="l48crown" class="l48-bob"
+          style="position:absolute;left:${crownStartX}px;top:${crownStartY}px;width:68px;cursor:grab;touch-action:none;z-index:6;filter:drop-shadow(0 3px 5px rgba(0,0,0,.35))">
+          <div style="font-size:10px;color:#6b4d10;text-align:center;background:rgba(255,250,225,.95);border:1px solid rgba(217,164,65,.5);border-radius:8px;margin-bottom:4px;padding:1px 0;font-weight:bold;box-shadow:0 1px 3px rgba(0,0,0,.15)">потяни меня ⬇</div>
+          ${l48Crown(66)}
+        </div>`}
+  </div>`;
+}
+
 function l48Cylinder(p, bodyHtml, opts){
   // мензурка (вид сбоку): вода поднимается до уровня p (0..1), тело внутри
   const o=opts||{};
@@ -1486,26 +1638,32 @@ function l48Cylinder(p, bodyHtml, opts){
       background:linear-gradient(180deg,rgba(200,235,255,.95),rgba(80,160,230,.92));border-radius:2px 2px 14px 14px"></div>
     <div style="position:absolute;left:14px;right:30px;bottom:${12+waterH-3}px;height:3px;background:rgba(235,248,255,.95);border-radius:2px;transition:bottom .7s ease"></div>
     <!-- тело -->
-    <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${18+waterH}px;transition:bottom .7s ease;z-index:3">${bodyHtml||''}</div>
+    <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${o.bottom!=null?o.bottom:(o.imm!=null?12+waterH-o.imm:18+waterH)}px;transition:bottom .7s ease;z-index:3">${bodyHtml||''}</div>
     ${o.label?`<div style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:11px;color:#ffd9a0;font-weight:bold">${o.label}</div>`:''}
+    ${o.thread?(()=>{ const tH=Math.max(4, H-(o.bottom!=null?o.bottom:18+waterH)-(o.bodyH||50)-6);
+      return `<div style="position:absolute;left:50%;transform:translateX(-50%);top:2px;width:2px;height:${tH}px;border-radius:1px;
+        background:linear-gradient(180deg,rgba(200,215,226,.95),rgba(160,180,195,.75))"></div>
+        <div style="position:absolute;left:50%;transform:translateX(-50%);top:${tH}px;width:7px;height:7px;border-radius:50%;
+          background:#c8d7e2;box-shadow:0 0 0 2px rgba(200,215,226,.4)"></div>`; })():''}
   </div>`;
 }
 
 function l48CubeBody(p){
-  // тело в мензурке на уровне воды
-  const x0=55, iw=84, H=190, ih=137;
-  const waterY=(H-ih)+ih*(1-p);
-  const ty=waterY-18;
-  return `<g transform="translate(${x0+iw*.5-16},${ty})">
-    <rect x="0" y="0" width="32" height="32" rx="5" fill="#b5814a" stroke="#5a3a18" stroke-width="2"/>
-    <rect x="4" y="4" width="12" height="8" rx="2" fill="rgba(255,255,255,.3)"/>
-  </g>`;
+  // деревянный брусок (фронтальный вид, текстура), плавает в мензурке
+  return `<svg width="38" height="38" viewBox="0 0 38 38" style="display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))">
+    <rect x="1" y="1" width="36" height="36" rx="5" fill="#cfa06a" stroke="#6b4522" stroke-width="2"/>
+    <rect x="7" y="5" width="11" height="8" rx="2" fill="rgba(255,255,255,.3)"/>
+    <rect x="23" y="27" width="9" height="6" rx="2" fill="rgba(90,55,25,.32)"/>
+    <path d="M2,21 Q10,17 19,21 T36,20" stroke="rgba(120,75,35,.35)" stroke-width="2" fill="none"/>
+    <path d="M8,33 Q16,29 30,33" stroke="rgba(120,75,35,.25)" stroke-width="2" fill="none"/>
+  </svg>`;
 }
 function visL37(el){
   // Урок 37 «Энергия и работа»: сюжет «Волшебная горка», мяч катится, энергия перетекает
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    window.LK48=lk;
     const step=LV.step||0;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
@@ -1610,6 +1768,7 @@ function visL35(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    window.LK48=lk;
     const step=LV.step||0;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
@@ -1717,6 +1876,7 @@ function visL33(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    window.LK48=lk;
     const step=LV.step||0;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
@@ -1952,6 +2112,7 @@ function visL10(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    window.LK48=lk;
     const step=LV.step||0;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,extra)=>`<div class="wv-big" ${extra||''}>${t}</div>`;
