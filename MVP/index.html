@@ -474,6 +474,15 @@
   .l35-step { animation:l35Step 1.9s ease-in-out infinite; }
   @keyframes l35DriftIn { 0%{transform:scaleY(.4);opacity:.4} 100%{transform:scaleY(1);opacity:1} }
   .l35-drift { transform-origin:50% 100%; animation:l35DriftIn .7s ease-out both; }
+  /* урок 50 «Равномерное движение» */
+  @keyframes l50Drv { from{transform:translateX(0)} to{transform:translateX(var(--tx,220px))} }
+  .l50-drv { animation:l50Drv var(--td,1.4s) cubic-bezier(.25,.6,.4,1) both; }
+  @keyframes l50Run { 0%{transform:translateX(0)} 100%{transform:translateX(268px)} }
+  .l50-run { animation:l50Run 2.4s linear infinite; }
+  @keyframes l50Bus { 0%{transform:translateX(0)} 16%{transform:translateX(40px)} 30%{transform:translateX(40px)}
+    52%{transform:translateX(128px)} 66%{transform:translateX(128px)} 86%{transform:translateX(214px)} 100%{transform:translateX(268px)} }
+  .l50-bus { animation:l50Bus 3.4s ease-in-out infinite; }
+
   /* урок 49 «Электрические цепи» */
   @keyframes l49Pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
   .l49-on { animation:l49Pulse 1.5s ease-in-out infinite; }
@@ -529,21 +538,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=91"></script>
-<script src="data/lessons.js?v=91"></script>
-<script src="js/comic.js?v=91"></script>
-<script src="js/core.js?v=91"></script>
-<script src="js/engine.js?v=91"></script>
-<script src="js/app.js?v=91"></script>
-<script src="js/dashboard.js?v=91"></script>
-<script src="js/lessons.js?v=91"></script>
-<script src="js/legend.js?v=91"></script>
-<script src="js/simulator.js?v=91"></script>
-<script src="js/duel.js?v=91"></script>
-<script src="js/agent.js?v=91"></script>
-<script src="js/voice.js?v=91"></script>
-<script src="js/assistant.js?v=91"></script>
-<script src="js/agentlive.js?v=91"></script>
+<script src="data/tasks.js?v=92"></script>
+<script src="data/lessons.js?v=92"></script>
+<script src="js/comic.js?v=92"></script>
+<script src="js/core.js?v=92"></script>
+<script src="js/engine.js?v=92"></script>
+<script src="js/app.js?v=92"></script>
+<script src="js/dashboard.js?v=92"></script>
+<script src="js/lessons.js?v=92"></script>
+<script src="js/legend.js?v=92"></script>
+<script src="js/simulator.js?v=92"></script>
+<script src="js/duel.js?v=92"></script>
+<script src="js/agent.js?v=92"></script>
+<script src="js/voice.js?v=92"></script>
+<script src="js/assistant.js?v=92"></script>
+<script src="js/agentlive.js?v=92"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -558,7 +567,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=91').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=92').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>

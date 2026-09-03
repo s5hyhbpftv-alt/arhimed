@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===76) visL76(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -1859,6 +1859,216 @@ function visL36(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 6 В и 2 Ом'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l50Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const bump=(k,d,lo,hi)=> st[k]=Math.max(lo||1, Math.min(hi||120, (st[k]==null?1:st[k])+d));
+  switch(act){
+    case 'v+': bump('v',10,10,120); break;
+    case 'v-': bump('v',-10,10,120); break;
+    case 't+': bump('t',1,1,6); break;
+    case 't-': bump('t',-1,1,6); break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l50Road(vehicle,v,t,S,uid){
+  // дорога: равные метки по времени, гонец проезжает путь S за t часов
+  const W=300,H=150, L=22, R=W-16;
+  const x=Math.round(L+ (R-L)*0.02); // старт
+  const reach=Math.round(L+ (R-L)*0.94);
+  const marks=Math.max(1,t);
+  const mstep=(R-L)/marks;
+  const dots=Array.from({length:marks},(_,k)=>`<div class="l35-pop" style="animation-delay:${(0.2+k*0.25).toFixed(2)}s;position:absolute;left:${Math.round(x+ (reach-x)*((k+1)/marks))}px;top:86px;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 4px rgba(255,255,255,.6)"></div>`).join('');
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.25)">
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">
+      <defs><linearGradient id="l50sk${uid}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#aee0f5"/><stop offset="1" stop-color="#e6f6fd"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#l50sk${uid})"/>
+      <rect x="0" y="108" width="${W}" height="${H-108}" fill="#7fb87a"/>
+      <rect x="0" y="104" width="${W}" height="7" fill="#9ed08f"/>
+      <!-- дорога -->
+      <rect x="0" y="66" width="${W}" height="34" fill="#5b6b78" rx="6"/>
+      <line x1="0" y1="83" x2="${W}" y2="83" stroke="#fff3c4" stroke-width="3" stroke-dasharray="18 12"/>
+      <!-- километровые столбики -->
+      ${Array.from({length:6},(_,i)=>`<rect x="${Math.round(L+((R-L)/5)*i)-2}" y="98" width="5" height="14" fill="#8a5a34"/><circle cx="${Math.round(L+((R-L)/5)*i)}" cy="98" r="5" fill="#c96a3a"/>`).join('')}
+      <!-- метки времени -->
+      <g font-size="11" fill="#1a4a6a" font-weight="bold">
+        ${Array.from({length:marks},(_,k)=>`<text x="${Math.round(x+ (reach-x)*((k+1)/marks))}" y="58" text-anchor="middle">${k+1} ч</text>`).join('')}
+      </g>
+      <text x="${W-8}" y="30" text-anchor="end" font-size="12" fill="#1a4a6a" font-weight="bold">равные часы — равные пути</text>
+    </svg>
+    ${dots}
+    <!-- гонец -->
+    <div class="l50-drv" style="position:absolute;left:${x}px;top:60px;width:34px;height:30px;font-size:26px;line-height:1;z-index:3;--tx:${reach-x-8}px">${vehicle}</div>
+    <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:4px;background:rgba(20,50,70,.6);border-radius:10px;padding:2px 10px;font-size:12px;color:#fff;font-weight:bold;white-space:nowrap">v = ${v} · t = ${t} ч → S = ${S}</div>
+  </div>`;
+}
+function l50Compare(uid){
+  // равномерно vs неравномерно: две дорожки с точками и бегущими огоньками
+  const lane=(uniform)=>{
+    const W=300,H=88;
+    return `<div style="position:relative;width:${W}px;height:${H}px;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#dff1fa,#ffffff);box-shadow:0 2px 8px rgba(0,0,0,.15)">
+      <div style="position:absolute;left:0;right:0;top:42px;height:26px;background:#5b6b78"></div>
+      <div style="position:absolute;left:0;right:0;top:55px;height:2px;background:#fff3c4"></div>
+      <!-- следы -->
+      ${uniform
+        ? Array.from({length:7},(_,i)=>`<div class="l35-pop" style="animation-delay:${(i*0.12).toFixed(2)}s;position:absolute;top:30px;left:${10+i*43}px;width:9px;height:9px;border-radius:50%;background:#3a8a5a;box-shadow:0 0 0 2px rgba(58,138,90,.2)"></div>`).join('')
+        : [[12,16],[60,64],[108,112],[154,168],[198,202],[244,286]].map(p=>`<div class="l35-pop" style="animation-delay:.2s;position:absolute;top:30px;left:${p[0]}px;width:9px;height:9px;border-radius:50%;background:#c96a3a;box-shadow:0 0 0 2px rgba(201,106,58,.2)"></div><div class="l35-pop" style="animation-delay:.34s;position:absolute;top:30px;left:${p[1]}px;width:9px;height:9px;border-radius:50%;background:#e8a35a;box-shadow:0 0 0 2px rgba(232,163,90,.2)"></div>`).join('')}
+      <div class="${uniform?'l50-run':'l50-bus'}" style="position:absolute;top:14px;left:8px;width:20px;height:20px;font-size:16px">${uniform?'🚴':'🚌'}</div>
+      <div style="position:absolute;top:2px;left:8px;font-size:10px;color:${uniform?'#1a6a3a':'#b04a2a'};font-weight:bold">${uniform?'следы ровные — равномерно!':'остановки и разгоны — неравномерно'}</div>
+    </div>`;
+  };
+  return `<div style="display:flex;flex-direction:column;gap:8px;align-items:center">${lane(true)}${lane(false)}</div>`;
+}
+function l50Graph(uid,speeds){
+  // график пути: ось времени (ч) и пути (км); прямые v км/ч; движущаяся точка
+  const W=300,H=190, mx=46, my=18, gx=W-mx-8, gy=H-my-12;
+  const T=4;
+  const X=(t)=>mx+ (gx-mx)*(t/T);
+  const Y=(s)=> gy- (gy-my)*(s/(speeds[0]*T+30));
+  let lines='';
+  speeds.forEach((v,i)=>{
+    const col=['#2f6fb0','#e0523d','#7f8fa0'][i];
+    const pts=Array.from({length:5},(_,k)=>`${X(k)},${Y(v*k).toFixed(1)}`).join(' ');
+    lines+=`<polyline points="${X(0)},${Y(0)} ${pts}" fill="none" stroke="${col}" stroke-width="3.5" stroke-linecap="round"/>
+      ${Array.from({length:4},(_,k)=>`<circle cx="${X(k+1)}" cy="${Y(v*(k+1)).toFixed(1)}" r="4" fill="${col}"/>`).join('')}
+      <text x="${X(3.1)}" y="${Y(v*3.1).toFixed(1)-6}" font-size="11" fill="${col}" font-weight="bold">${v} км/ч</text>`;
+  });
+  const moving = speeds.map((v,i)=>{
+    const col=['#2f6fb0','#e0523d'][i];
+    return `<circle r="7" fill="${col}"><animateMotion dur="${2.6+i*.9}s" repeatCount="indefinite" path="M${X(0)},${Y(0)} L${X(T)},${Y(v*T).toFixed(1)}"/></circle>`;
+  }).join('');
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.22);background:linear-gradient(180deg,#f4f8f5,#e8f1ec)">
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">
+      <!-- оси -->
+      <line x1="${mx}" y1="${my}" x2="${mx}" y2="${gy}" stroke="#5b6b78" stroke-width="2.5"/>
+      <line x1="${mx}" y1="${gy}" x2="${gx}" y2="${gy}" stroke="#5b6b78" stroke-width="2.5"/>
+      ${Array.from({length:5},(_,k)=>`<text x="${X(k)}" y="${gy+16}" text-anchor="middle" font-size="10" fill="#5b6b78">${k} ч</text>`).join('')}
+      ${[0,1,2,3].map(k=>`<text x="${mx-6}" y="${Y(20+k*60).toFixed(1)+4}" text-anchor="end" font-size="9" fill="#5b6b78">${20+k*60}</text><line x1="${mx-4}" y1="${Y(20+k*60).toFixed(1)}" x2="${mx}" y2="${Y(20+k*60).toFixed(1)}" stroke="#5b6b78" stroke-width="1"/>`).join('')}
+      ${lines}${moving}
+      <text x="${mx}" y="${my-4}" font-size="11" fill="#5b6b78" font-weight="bold">путь S, км</text>
+      <text x="${gx}" y="${gy+32}" text-anchor="end" font-size="11" fill="#5b6b78">время t, ч</text>
+    </svg>
+  </div>`;
+}
+function l50Sky(uid){
+  // самолёт 800 км/ч · 2 ч = 1600 км
+  const W=300,H=150;
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.22)">
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">
+      <defs><linearGradient id="l50sky${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8ec9f0"/><stop offset="1" stop-color="#d6effc"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#l50sky${uid})"/>
+      <circle cx="258" cy="30" r="14" fill="#fff3c4"/>
+      <g fill="#fff" opacity=".9"><ellipse cx="70" cy="36" rx="20" ry="8"/><ellipse cx="92" cy="31" rx="14" ry="6"/></g>
+      <!-- трасса с метками часов -->
+      <path d="M14,110 Q150,60 286,108" stroke="#ffffff" stroke-width="3" stroke-dasharray="16 14" fill="none" opacity=".9"/>
+      <circle cx="60" cy="99" r="5" fill="#fff"/><text x="60" y="128" text-anchor="middle" font-size="11" fill="#1a4a6a" font-weight="bold">1 ч · 800 км</text>
+      <circle cx="172" cy="82" r="5" fill="#fff"/><text x="172" y="112" text-anchor="middle" font-size="11" fill="#1a4a6a" font-weight="bold">2 ч · 1600 км</text>
+    </svg>
+    <div class="l50-drv" style="position:absolute;left:8px;top:88px;font-size:24px;line-height:1;--tx:250px;--td:1.6s">✈️</div>
+    <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:4px;background:rgba(20,50,70,.6);border-radius:10px;padding:2px 10px;font-size:12px;color:#fff;font-weight:bold;white-space:nowrap">S = 800 · 2 = 1600 км</div>
+  </div>`;
+}
+function visL50(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Дорога Архимеда'),
+        l50Road('🚗',60,2,120,'a')+
+        big('равномерное движение — скорость не меняется')+
+        sml('за каждый час — одинаковый путь! Архимед поставил метки каждый час и увидел: ровно, без сюрпризов. листай ➜'));
+    } else if(step===1){
+      h=col(big('Равномерно или нет?'),
+        l50Compare('c')+
+        sml('велосипед катится ровно — за равные времена равные пути. автобус тормозит и разгоняется — неравномерно!'));
+    } else if(step===2){
+      h=col(big('Три формулы движения'),
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${[['S = v · t','путь','#7fd1a0'],['v = S : t','скорость','#f0a35a'],['t = S : v','время','#7fd1ff']].map(([f,n,c],i)=>`
+            <div class="l35-pop" style="animation-delay:${(i*0.18).toFixed(2)}s;width:96px;border:2px solid ${c}66;border-radius:14px;padding:10px 6px;text-align:center;background:rgba(255,255,255,.02)">
+              <div style="font-size:22px;font-family:Georgia,serif;color:${c};font-weight:bold;white-space:nowrap">${f}</div>
+              <div style="font-size:12px;color:#cbb89a;margin-top:2px">${n}</div>
+            </div>`).join('')}
+        </div>`+
+        sml('знаешь две величины — найдёшь третью! путь = скорость × время'));
+    } else if(step===3){
+      h=col(big('Километры и метры'),
+        rowC(chip('1 м/с = 3,6 км/ч','rgba(127,209,255,.5)'))+
+        `<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="text-align:center;min-width:110px;border:1px solid rgba(127,184,160,.4);border-radius:12px;padding:8px"><div style="font-size:24px">🚶</div><b>1 м/с</b><div style="font-size:11px;color:#9fceb2">человек идёт</div></div>
+          <div style="font-size:24px" class="l35-press">→</div>
+          <div style="text-align:center;min-width:110px;border:1px solid rgba(232,160,90,.4);border-radius:12px;padding:8px"><div style="font-size:24px">🚴</div><b>3,6 км/ч</b><div style="font-size:11px;color:#f0d9a8">это же скорость!</div></div>
+        </div>`+
+        sml('10 м/с = 36 км/ч · 20 м/с = 72 км/ч: метры в секунду умножай на 3,6'));
+    } else if(step===4){
+      h=col(big('Велосипедист'),
+        l50Road('🚴',15,4,60,'b')+
+        `<div class="wv-row">${chip('v = 15 км/ч','rgba(127,184,160,.5)')} ${chip('t = 4 ч','rgba(127,209,255,.5)')}</div>`+
+        `<div style="font-size:20px" class="wv-pop">S = v · t = 15 · 4</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">S = 60 км</div>`+
+        sml('ровно по 15 км каждый час — 4 часа — и проехал 60 км'));
+    } else if(step===5){
+      h=col(big('Поезд'),
+        l50Road('🚆',40,3,120,'d')+
+        `<div class="wv-row">${chip('S = 120 км','rgba(232,106,90,.5)')} ${chip('t = 3 ч','rgba(127,209,255,.5)')}</div>`+
+        `<div style="font-size:20px" class="wv-pop">v = S : t = 120 : 3</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">v = 40 км/ч</div>`+
+        sml('поезд прошёл путь за 3 часа — значит, каждый час по 40 км'));
+    } else if(step===6){
+      h=col(big('Самолёт'),
+        l50Sky('p')+
+        `<div class="wv-row">${chip('v = 800 км/ч','rgba(127,184,160,.5)')} ${chip('t = 2 ч','rgba(127,209,255,.5)')}</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">S = 1600 км</div>`+
+        sml('за час — 800 км, за два — вдвое больше'));
+    } else if(step===7){
+      h=col(big('График пути — прямая'),
+        l50Graph('g',[40])+
+        sml('по горизонтали — часы, по вертикали — километры. ровная прямая = ровная скорость!'));
+    } else if(step===8){
+      h=col(big('Круче — быстрее'),
+        l50Graph('gg',[20,60])+
+        sml('синяя линия пологая — скорость 20 км/ч. красная крутая — 60 км/ч: чем круче, тем больше скорость!'));
+    } else if(step===9){
+      h=col(big('Разбираем задачку'),
+        l50Road('🚴',15,4,60,'q')+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">S = 60 км ✓</div>`+
+        sml('такой вопрос будет дальше!'));
+    } else if(step===10){
+      if(st.v==null) st.v=30; if(st.t==null) st.t=2;
+      const S=st.v*st.t;
+      h=col(big('Тренажёр: гонка!'),
+        `<div class="wv-row">${chip('v = '+st.v+' км/ч','rgba(127,184,160,.5)')} ${chip('t = '+st.t+' ч','rgba(127,209,255,.5)')}</div>`+
+        l50Road('🚗',st.v,st.t,S,'tr')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">S = v·t = ${st.v}·${st.t} = ${S} км</div>`+
+        btns(btn('🚗 +10 км/ч',`l50Act('${lk}','v+')`),btn('−10 км/ч',`l50Act('${lk}','v-')`),btn('⏱ +1 ч',`l50Act('${lk}','t+')`),btn('⏱ −1 ч',`l50Act('${lk}','t-')`),btn('↺',`l50Act('${lk}','r')`))+
+        sml('быстрее или дольше — путь растёт! а в м/с это '+Math.round(st.v/3.6*10)/10+' м/с'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:252px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            📏 Равномерно — за равные времена равные пути.<br>
+            🧮 S = v·t · v = S:t · t = S:v.<br>
+            📈 График пути — прямая: круче = быстрее.<br>
+            🔁 1 м/с = 3,6 км/ч.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -3636,6 +3846,7 @@ function renderLessonVis(){
   else if(id===37) visL37(el);
   else if(id===48) visL48(el);
   else if(id===49) visL49(el);
+  else if(id===50) visL50(el);
   else if(id===76) visL76(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
