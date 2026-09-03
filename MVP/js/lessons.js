@@ -819,12 +819,10 @@ function visL33(el){
           `<div style="text-align:center">${l33CubeSvg('дерево',46)}<div style="font-size:11px;color:#cbb89a">1 см³</div><div style="font-size:14px;color:#cbb89a">0,6 г</div></div>`)+
         sml('масса в единице объёма: в одинаковых кубиках разная масса'));
     } else if(step===3){
+      const cubes=[['пробка','0,2 г'],['дерево','0,6 г'],['лёд','0,9 г'],['железо','7,8 г']];
       h=col(big('Кубики ровно 1 см³'),
-        rowC(
-          `<div style="text-align:center;width:88px">${l33CubeSvg('пробка',44)}<div style="font-size:11px;color:#7fa88f">пробка</div><div style="font-size:14px;color:#ffd9a0">0,2 г</div></div>`+
-          `<div style="text-align:center;width:88px">${l33CubeSvg('дерево',44)}<div style="font-size:11px;color:#7fa88f">дерево</div><div style="font-size:14px;color:#ffd9a0">0,6 г</div></div>`+
-          `<div style="text-align:center;width:88px">${l33CubeSvg('лёд',44)}<div style="font-size:11px;color:#7fa88f">лёд</div><div style="font-size:14px;color:#ffd9a0">0,9 г</div></div>`+
-          `<div style="text-align:center;width:88px">${l33CubeSvg('железо',44)}<div style="font-size:11px;color:#7fa88f">железо</div><div style="font-size:14px;color:#ffd9a0">7,8 г</div></div>`)+
+        `<div style="display:flex;gap:5px;justify-content:center;margin:2px 0">
+          ${cubes.map(([m,w])=>`<div style="text-align:center;flex:0 0 76px">${l33CubeSvg(m,37)}<div style="font-size:10.5px;color:#7fa88f">${m}</div><div style="font-size:13px;color:#ffd9a0">${w}</div></div>`).join('')}</div>`+
         sml('один объём — разная масса. вода = 1 г/см³ — эталон'));
     } else if(step===4){
       h=col(big('Сравниваем с водой (ρ воды = 1)'),
