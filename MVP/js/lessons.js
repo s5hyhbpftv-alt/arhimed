@@ -1969,13 +1969,15 @@ function l50Sky(uid){
   // самолёт летит ПО ЭШЕЛОНУ: трасса-квадратичная кривая, движение CSS по точкам
   const W=300,H=150;
   const P0=[14,110], PC=[150,52], P1=[286,108];
-  const keys=[]; let prev=[P0[0],P0[1]];
+  const keys=[]; 
   for(let i=0;i<=10;i++){
     const u=i/10;
     const x=(1-u)*(1-u)*P0[0]+2*(1-u)*u*PC[0]+u*u*P1[0];
     const y=(1-u)*(1-u)*P0[1]+2*(1-u)*u*PC[1]+u*u*P1[1];
-    keys.push(`${(i*10)}%{transform:translate(${(x-P0[0]).toFixed(1)}px,${(y-P0[1]).toFixed(1)}px)}`);
-    prev=[x,y];
+    const dx=2*(1-u)*(PC[0]-P0[0])+2*u*(P1[0]-PC[0]);
+    const dy=2*(1-u)*(PC[1]-P0[1])+2*u*(P1[1]-PC[1]);
+    const rot=Math.round(Math.atan2(dy,dx)*180/Math.PI);
+    keys.push(`${(i*10)}%{transform:translate(${(x-P0[0]).toFixed(1)}px,${(y-P0[1]).toFixed(1)}px) rotate(${rot}deg)}`);
   }
   const plane=`<svg width="44" height="20" viewBox="-24 -12 48 24" style="overflow:visible">
     <ellipse cx="0" cy="0" rx="19" ry="4.6" fill="#ffffff" stroke="#7fa3ba" stroke-width="1.4"/>
@@ -1997,7 +1999,7 @@ function l50Sky(uid){
       <circle cx="64" cy="99" r="5" fill="#fff"/><text x="64" y="130" text-anchor="middle" font-size="11" fill="#1a4a6a" font-weight="bold">1 ч · 800 км</text>
       <circle cx="172" cy="77" r="5" fill="#fff"/><text x="172" y="104" text-anchor="middle" font-size="11" fill="#1a4a6a" font-weight="bold">2 ч · 1600 км</text>
     </svg>
-    <div style="position:absolute;left:${P0[0]-22}px;top:${P0[1]-12}px;width:44px;height:24px;animation:l50fly${uid} 5.5s linear infinite;will-change:transform">${plane}</div>
+    <div style="position:absolute;left:${P0[0]-22}px;top:${P0[1]-12}px;width:44px;height:24px;transform-origin:22px 12px;animation:l50fly${uid} 5.5s linear infinite;will-change:transform">${plane}</div>
     <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:2px;background:rgba(20,50,70,.6);border-radius:10px;padding:2px 10px;font-size:12px;color:#fff;font-weight:bold;white-space:nowrap">S = 800 · 2 = 1600 км</div>
   </div>`;
 }
