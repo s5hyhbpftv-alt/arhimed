@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===76) visL76(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -1859,6 +1859,248 @@ function visL36(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 6 В и 2 Ом'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l76Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  switch(act){
+    case 'next': st.pos=(st.pos==null?0:st.pos)+1; break;
+    case 'full': st.pos=99; break;
+    case 'ex': st.ex=((st.ex==null?0:st.ex)+1)%6; st.pos=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l76Digits(n,len){
+  const s=String(n); const out=[];
+  for(let i=s.length-1;i>=0;i--) out.push(+s[i]);
+  while(out.length<len) out.push(0);
+  return out.slice(0,len);
+}
+function l76Add(A,B){
+  const len=Math.max(String(A).length,String(B).length)+1;
+  const da=l76Digits(A,len), db=l76Digits(B,len), res=[], carry=[];
+  let c=0;
+  for(let i=0;i<len;i++){ const s=da[i]+db[i]+c; carry[i]=Math.floor(s/10); res.push(s%10); c=carry[i]; }
+  return {da,db,res,carry,len};
+}
+function l76Sub(A,B){
+  const len=Math.max(String(A).length,String(B).length);
+  const da=l76Digits(A,len), db=l76Digits(B,len), res=[], borrow=[];
+  let rem=0;
+  for(let i=0;i<len;i++){ let av=da[i]-rem; borrow.push(av<db[i]); if(av<db[i])av+=10; res.push(av-db[i]); rem=borrow[i]?1:0; }
+  return {da,db,res,borrow,len};
+}
+function l76Paper(w,h,uid){
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="position:absolute;inset:0">
+    <defs><pattern id="l76g${uid}" width="17" height="17" patternUnits="userSpaceOnUse">
+      <rect width="17" height="17" fill="#fffdf2"/><path d="M17 0H0V17" fill="none" stroke="#d7e3db" stroke-width="1"/></pattern></defs>
+    <rect width="${w}" height="${h}" fill="url(#l76g${uid})"/>
+    <rect x="0" y="0" width="${w}" height="${h}" rx="14" fill="none" stroke="#c3cfc8" stroke-width="2"/>
+  </svg>`;
+}
+function l76Column(A,op,B,uid,steps){
+  const m= op==='+'? l76Add(A,B): l76Sub(A,B);
+  const len=m.len;
+  const solved= steps==null? len : Math.max(0,Math.min(len,steps));
+  const W=300, H=op==='+'?188:210;
+  const cw=Math.min(64, Math.floor((W-30)/len));
+  const names=['единицы','десятки','сотни','тысячи','десятки тысяч','сотни тысяч'];
+  // дисплей слева направо (старший разряд первый); ведущие нули-подушки скрываем, но ширину оставляем
+  const aD=m.da.slice().reverse(), bD=m.db.slice().reverse(), rD=m.res.slice().reverse();
+  const fNZ=(arr)=>{ for(let i=0;i<arr.length;i++) if(arr[i]!==0) return i; return arr.length-1; };
+  const a0=fNZ(aD), b0=fNZ(bD), r0=fNZ(rD);
+  const topF=[];
+  if(op==='-'){ for(let i=0;i<len;i++){ topF[i]= m.da[i] - (i>0&&m.borrow[i-1]?1:0) + (m.borrow[i]?10:0); } }
+  const topFD=topF.slice().reverse();
+  const cell=(kind,i,d)=>{
+    const unitIdx=len-1-i;
+    const isSol= i<solved;
+    const base=`width:${cw}px;height:42px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:bold`;
+    if(kind==='res'){
+      if(i<r0) return `<div style="${base}"></div>`;
+      if(steps!=null && !isSol) return `<div style="${base}"></div>`;
+      return `<div class="l35-pop" style="animation-delay:${(0.08+(i-r0)*0.18).toFixed(2)}s;${base};font-size:30px;color:${op==='+'?'#1a6a4a':'#1a5a8a'}">${d}</div>`;
+    }
+    if(kind==='top'){
+      if(i<a0 && d===0) return `<div style="${base}"></div>`;
+      const show= steps==null || isSol;
+      if(!show) return `<div style="${base}"></div>`;
+      if(op==='-' && m.borrow[unitIdx]){
+        const v=topFD[i];
+        return `<div style="position:relative;${base}">
+          <div style="font-size:${v>9?20:30}px;color:#2a3a4a">${v>9? v : '·'+v}</div>
+          <div class="l35-pop" style="position:absolute;top:-8px;left:-4px;font-size:11px;color:#e0523d;font-weight:bold">←заняли</div>
+
+        </div>`;
+      }
+      if(op==='-' && !m.borrow[unitIdx] && unitIdx>0 && m.borrow[unitIdx-1]){
+        const v=topF[unitIdx];
+        return `<div style="position:relative;${base}">
+          <div style="font-size:30px;color:#9aa7b4;text-decoration:line-through;opacity:.8">${d}</div>
+          <div class="l35-pop" style="position:absolute;top:-8px;right:0;font-size:13px;color:#e0523d;font-weight:bold">${v}</div>
+        </div>`;
+      }
+      if(op==='+' && m.carry[unitIdx]>0 && d!==0){
+        return `<div style="position:relative;${base};font-size:30px;color:#2a3a4a">${d}
+          <div class="l35-pop" style="position:absolute;top:-8px;right:0;font-size:10.5px;color:#fff;background:#e0523d;border-radius:7px;padding:0 4px;font-weight:bold">+1→</div></div>`;
+      }
+      return `<div style="${base};font-size:30px;color:#2a3a4a">${d}</div>`;
+    }
+    if(kind==='bot'){
+      if(i<b0 && d===0) return `<div style="${base}"></div>`;
+      const show= steps==null || isSol;
+      if(!show) return `<div style="${base}"></div>`;
+      return `<div style="${base};font-size:30px;color:#2a3a4a">${d}</div>`;
+    }
+    return '';
+  };
+  const wrap=(inner)=>`<div style="display:flex;justify-content:center;align-items:center;position:relative">${inner}</div>`;
+  const opPos=Math.min(cw*1.4, Math.round(cw*.5));
+  const rowTop=wrap(aD.map((d,i)=>cell('top',i,d)).join(''));
+  const rowBot=wrap(`<div style="position:absolute;left:50%;transform:translateX(calc(-50% - ${(len*cw)/2}px + ${opPos}px));top:8px;font-size:28px;color:#c96a3a;font-weight:bold">${op}</div>`+bD.map((d,i)=>cell('bot',i,d)).join(''));
+  const line=`<div style="width:${Math.min(282,len*cw+26)}px;margin:2px auto 0;border-top:3px solid #2a3a4a"></div>`;
+  const rowRes=wrap(rD.map((d,i)=>cell('res',i,d)).join(''));
+  const labels=Array.from({length:len},(_,i)=>`<div style="width:${cw}px;font-size:9px;color:#8aa08f;text-align:center">${names[len-1-i]||''}</div>`).join('');
+  const labelsRow=`<div style="display:flex;justify-content:center;margin-top:1px">${labels}</div>`;
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:14px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.18)">
+    ${l76Paper(W,H,uid)}
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6px 0">
+      ${rowTop}${rowBot}${line}${rowRes}${labelsRow}
+    </div>
+  </div>`;
+}
+function l76Towers(N,uid,opts){
+  const o=opts||{}; const cols=o.cols||4;
+  const digs=l76Digits(N,cols);
+  const names=['единицы','десятки','сотни','тысячи'];
+  const colors=['#e8b04a','#5aa8d8','#8ab860','#b06ab8'];
+  const unit=Math.max(7,Math.floor((o.maxH||118)/9));
+  const cw=o.w? Math.round((o.w-30)/cols):64;
+  let html='';
+  for(let c=0;c<cols;c++){
+    const d=digs[cols-1-c];
+    const blocks=Array.from({length:d},(_,k)=>`<div class="l35-pop" style="animation-delay:${(0.15+k*0.05).toFixed(2)}s;width:${cw-16}px;height:${unit-2}px;border-radius:3px;background:${colors[cols-1-c]};box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)"></div>`).join('');
+    html+=`<div style="display:flex;flex-direction:column;align-items:center;flex:1">
+      <div style="min-height:${unit}px;display:flex;flex-direction:column-reverse;gap:1px">${blocks||`<div style="width:${cw-16}px;height:2px;background:rgba(0,0,0,.1)"></div>`}</div>
+      <div style="font-size:26px;font-family:Georgia,serif;font-weight:bold;color:${colors[cols-1-c]};line-height:1.05">${d}</div>
+      <div style="font-size:9px;color:#8aa08f">${names[cols-1-c]}</div>
+    </div>`;
+  }
+  return `<div style="display:flex;gap:4px;align-items:flex-end;justify-content:center;padding:2px 6px">${html}</div>`;
+}
+function l76Ride(uid){
+  const W=300,H=118;
+  const coins=Array.from({length:10},(_,i)=>`<circle cx="${58+i*19}" cy="66" r="8.5" fill="#e8b04a" stroke="#b8860b" stroke-width="1.6"/>`).join('');
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.15)">
+    ${l76Paper(W,H,uid)}
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="position:absolute;inset:0">
+      ${coins}
+      <g><animateTransform attributeName="transform" type="translate" values="0 0;-112 0" dur="1.2s" begin="0.5s" fill="freeze"/>
+        <circle cx="256" cy="66" r="15" fill="#d98a3a" stroke="#a05c18" stroke-width="2"/>
+        <text x="256" y="71" text-anchor="middle" font-size="14" fill="#fff" font-weight="bold">10</text>
+        <text x="256" y="95" text-anchor="middle" font-size="9" fill="#8aa08f">это один десяток</text></g>
+      <text x="150" y="22" text-anchor="middle" font-size="11.5" fill="#5a7a6a" font-weight="bold">10 единиц — всегда один десяток!</text>
+      <text x="163" y="111" text-anchor="middle" font-size="16" fill="#8aa08f">←</text>
+    </svg>
+  </div>`;
+}
+function visL76(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const EXAMPLES=[['1234','+','2444'],['1268','+','1744'],['4126','+','574'],['4763','−','2412'],['561','−','284'],['5000','−','2345']];
+    let h='';
+    if(step===0){
+      h=col(big('Казна Архимеда'),
+        `<div style="font-size:56px" class="l35-pop">💰</div>`+
+        big('большие числа считают по разрядам!')+
+        sml('монеты — к монетам, мешочки по десять — к мешочкам. и числа так же: единицы к единицам! листай ➜'));
+    } else if(step===1){
+      h=col(big('Разряды — как полки'),
+        l76Towers(1268,null,{})+
+        sml('1268 = 1 тысяча + 2 сотни + 6 десятков + 8 единиц. каждая цифра живёт на своей «полке»!'));
+    } else if(step===2){
+      h=col(big('Почему столбиком?'),
+        rowC(
+          `<div style="text-align:center;width:140px;border:2px solid rgba(224,82,61,.5);border-radius:12px;padding:8px;background:rgba(224,82,61,.06)"><div style="font-size:22px">❌</div><div style="font-size:18px;font-family:Georgia,serif;line-height:1.5">&#8195;12<br>+345</div><div class="wv-sml" style="font-size:10px;color:#e0a99a">единицы встали под десятки!</div></div>`+
+          `<div style="text-align:center;width:140px;border:2px solid rgba(127,209,160,.55);border-radius:12px;padding:8px;background:rgba(127,209,160,.06)"><div style="font-size:22px">✅</div><div style="font-size:18px;font-family:Georgia,serif;line-height:1.5">&#8195;&#8195;12<br>+&#8195;345</div><div class="wv-sml" style="font-size:10px;color:#9fceb2">столбик: разряд под разрядом</div></div>`)+
+        sml('выравниваем по правому краю — единицы под единицами, десятки под десятками!'));
+    } else if(step===3){
+      h=col(big('Складываем без переноса'),
+        l76Column(1234,'+',2444,'a',null)+
+        `<div class="wv-ans" style="font-size:28px;color:#1a6a4a;font-weight:bold">1234 + 2444 = 3678</div>`+
+        sml('каждую полку отдельно: 4+4=8, 3+4=7, 2+4=6, 1+2=3. переносов нет!'));
+    } else if(step===4){
+      h=col(big('Перенос через край'),
+        l76Ride('r')+
+        rowC(chip('7 + 5 = 12','rgba(224,82,61,.5)'))+
+        sml('в единицах больше десяти? пишем 2, а «десяток» уезжает влево, к десяткам!'));
+    } else if(step===5){
+      h=col(big('Пример с переносами'),
+        l76Column(1268,'+',1744,'b',null)+
+        `<div class="wv-ans" style="font-size:26px;color:#1a6a4a;font-weight:bold">1268 + 1744 = 3012</div>`+
+        sml('8+4=12 → перенос; 6+4+1=11 → снова; 2+7+1=10 → опять! перенос бежит дальше и не теряется'));
+    } else if(step===6){
+      h=col(big('Вычитаем без займа'),
+        l76Column(4763,'−',2412,'c',null)+
+        `<div class="wv-ans" style="font-size:28px;color:#1a5a8a;font-weight:bold">4763 − 2412 = 2351</div>`+
+        sml('по полкам: 3−2=1, 6−1=5, 7−4=3, 4−2=2'));
+    } else if(step===7){
+      h=col(big('Занимаем десяток'),
+        l76Column(561,'−',284,'d',null)+
+        `<div class="wv-ans" style="font-size:26px;color:#1a5a8a;font-weight:bold">561 − 284 = 277</div>`+
+        sml('в единицах 1 меньше 4 → занимаем десяток: 11−4=7. и десяткам пришлось занять у сотен!'));
+    } else if(step===8){
+      h=col(big('Ноль уступает дорогу'),
+        l76Column(5000,'−',2345,'e',null)+
+        `<div class="wv-ans" style="font-size:26px;color:#1a5a8a;font-weight:bold">5000 − 2345 = 2655</div>`+
+        sml('у нуля занимать нечего — он просит у тысячи: тысяча → 10 сотен → 10 десятков → 10 единиц. цепочка размена!'));
+    } else if(step===9){
+      h=col(big('Проверка — обратным действием'),
+        rowC(
+          `<div style="text-align:center"><div style="font-size:11px;color:#8aa08f;margin-bottom:2px">вычитание</div>${l76Column(5000,'−',2345,'f',null)}</div>`+
+          `<div style="font-size:22px">⇄</div>`+
+          `<div style="text-align:center"><div style="font-size:11px;color:#8aa08f;margin-bottom:2px">сложение</div>${l76Column(2655,'+',2345,'g',null)}</div>`)+
+        sml('2655 + 2345 = 5000 — сошлось! сложение и вычитание проверяют друг друга'));
+    } else if(step===10){
+      h=col(big('Решаем как в проверке'),
+        rowC(chip('4126','rgba(127,184,160,.5)'),chip('+',null),chip('574','rgba(127,184,160,.5)'))+
+        l76Column(4126,'+',574,'h',null)+
+        `<div class="wv-ans" style="font-size:28px;color:#1a6a4a;font-weight:bold">4126 + 574 = 4700 ✓</div>`+
+        sml('6+4=10 → пишем 0, единицу вперёд; 2+7+1=10 → снова перенос; 1+5+1=7; 4 списываем'));
+    } else if(step===11){
+      const ex=EXAMPLES[(st.ex||0)];
+      const A=+ex[0], op=ex[1], B=+ex[2];
+      const pos=st.pos==null?99:st.pos;
+      h=col(big('Тренажёр: реши столбиком!'),
+        `<div class="wv-row">${chip(A+' '+op+' '+B,'rgba(217,164,65,.35)')}</div>`+
+        l76Column(A,op,B,'t', pos===99?null:pos)+
+        btns(btn('🎲 другой пример',`l76Act('${lk}','ex')`),btn('▶ шаг',`l76Act('${lk}','next')`),btn('⚡ весь ответ',`l76Act('${lk}','full')`),btn('↺',`l76Act('${lk}','r')`))+
+        sml('жми «▶ шаг» — ответ раскрывается по разрядам справа налево. проверь себя обратным действием!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:258px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            ✍️ Пиши столбиком: разряд под разрядом!<br>
+            ➕ Сумма больше 9 → десяток «переезжает» влево.<br>
+            ➖ Мало в разряде → занимаем десяток у соседа.<br>
+            🔁 Проверяй обратным действием!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 4126 + 574'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -3394,6 +3636,7 @@ function renderLessonVis(){
   else if(id===37) visL37(el);
   else if(id===48) visL48(el);
   else if(id===49) visL49(el);
+  else if(id===76) visL76(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
