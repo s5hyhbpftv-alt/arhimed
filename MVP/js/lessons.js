@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,162 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l21Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['n','3','2'],['n','5','2'],['n','5','3'],['n','4','2'],['n','4','3'],['n','6','2'],['z','3','2'],['z','4','2'],['n','5','4'],['ten','2']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l21Chips(lo,hi,uid,sel){
+  // цифры lo..hi (или список), выделить sel
+  let s='';
+  for(let d=lo;d<=hi;d++) s+=`<div class="l35-pop" style="animation-delay:${((d-lo)*0.06).toFixed(2)}s;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;margin:3px;${sel===d?'background:#ffd9a0;color:#4a3200;font-weight:bold;box-shadow:0 0 8px rgba(255,217,160,.8)':'background:rgba(127,209,255,.15);border:1px solid rgba(127,209,255,.4);color:#a9d2ec'}">${d}</div>`;
+  return `<div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:240px;margin:0 auto">${s}</div>`;
+}
+function l21Grid(nums,uid){
+  const s=nums.map((n,i)=>`<div class="l35-pop" style="animation-delay:${(i*0.08).toFixed(2)}s;width:46px;height:30px;border-radius:8px;background:rgba(127,209,255,.1);border:1px solid rgba(127,209,255,.3);display:flex;align-items:center;justify-content:center;font-size:17px;margin:2px;font-family:Georgia,serif;color:#fff">${n}</div>`).join('');
+  return `<div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:200px;margin:0 auto">${s}</div>`;
+}
+function visL21(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Кодовый замок Архимеда'),
+        `<div style="font-size:46px" class="l35-pop">🔑</div>`+
+        big('из цифр 1, 2, 3 надо собрать двузначный код без повторов — сколько кодов?')+
+        sml('посчитаем варианты по шагам: сначала первая цифра, потом вторая…'));
+    } else if(step===1){
+      h=col(big('Первая цифра'),
+        l21Chips(1,3,'a',1)+
+        `<div style="text-align:center;font-size:17px" class="wv-pop">первую цифру выбираем 3 способами</div>`+
+        sml('любую из цифр можно поставить первой'));
+    } else if(step===2){
+      h=col(big('Вторая цифра — из оставшихся'),
+        l21Chips(1,3,'b',2)+
+        `<div style="text-align:center;font-size:17px" class="wv-pop">повторять нельзя → осталось 2 цифры</div>`+
+        sml('взяли одну цифру — осталось n−1. для второй уже меньше выбор'));
+    } else if(step===3){
+      h=col(big('Перемножаем: правило умножения'),
+        `<div style="text-align:center;font-size:26px" class="wv-pop">3 · 2 = 6 кодов</div>`+
+        l21Grid(['12','13','21','23','31','32'],'g')+
+        sml('вот все шесть: каждая пара цифр — отдельный код (порядок важен!)'));
+    } else if(step===4){
+      h=col(big('Цифр больше: 1..5, двузначные'),
+        rowC(chip('первая: 5 способов','rgba(127,209,255,.5)'),chip('вторая: 4 способа','rgba(127,209,160,.5)'))+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">5 · 4 = 20 кодов</div>`+
+        sml('каждая следующая цифра уменьшает выбор на 1'));
+    } else if(step===5){
+      h=col(big('Трёхзначные из 1..5'),
+        rowC(chip('первая: 5','rgba(127,209,255,.5)'),chip('вторая: 4','rgba(127,209,160,.5)'),chip('третья: 3','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">5 · 4 · 3 = 60 кодов</div>`+
+        sml('убывающие множители: 5, 4, 3 — как в наших задачках!'));
+    } else if(step===6){
+      h=col(big('А четырёхзначные?'),
+        rowC(chip('5 · 4 · 3 · 2 = 120','rgba(127,209,255,.5)'))+
+        sml('длиннее код — больше вариантов. но они растут всё медленнее: последний множитель уже 2'));
+    } else if(step===7){
+      h=col(big('Все пять цифр: 5!'),
+        `<div style="text-align:center;font-size:20px" class="wv-pop">5·4·3·2·1 = 120 перестановок</div>`+
+        sml('когда берём ВСЕ цифры без повторов — получаются перестановки: тоже 120'));
+    } else if(step===8){
+      h=col(big('Ловушка: ноль!'),
+        rowC(chip('цифры 0, 1, 2 — двузначные коды','rgba(232,106,90,.5)'))+
+        `<div style="text-align:center;font-size:19px">первая цифра не может быть 0 → 2 способа (1 или 2)</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">2 · 2 = 4 кода: 10, 12, 20, 21</div>`+
+        sml('ноль — особая цифра: в начале числа он «невидим»'));
+    } else if(step===9){
+      h=col(big('Из всех 10 цифр'),
+        rowC(chip('двузначных без повторов: 9 · 9 = 81','rgba(217,164,65,.4)'))+
+        sml('первая — любая из 9 (не 0!), вторая — любая кроме первой: ещё 9 вариантов'));
+    } else if(step===10){
+      h=col(big('Общий приём'),
+        `<div style="text-align:center;font-size:20px" class="wv-pop">код длины k из n цифр без повторов = n · (n−1) · … · (n−k+1)</div>`+
+        sml('k множителей, каждый на единицу меньше предыдущего'));
+    } else if(step===11){
+      h=col(big('Как в проверке'),
+        rowC(chip('из 1, 2, 3 двузначные: 3 · 2 = 6','rgba(127,184,160,.5)'))+
+        l21Grid(['12','13','21','23','31','32'],'h')+
+        sml('ответ 6 — как в нашей проверке!'));
+    } else if(step===12){
+      h=col(big('Задача: из 1..5 двузначные'),
+        rowC(chip('5 · 4 = 20','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">20 кодов ✓</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===13){
+      h=col(big('Задача: из 1..5 трёхзначные'),
+        rowC(chip('5 · 4 · 3 = 60','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">60 кодов ✓</div>`+
+        sml('и снова как в наших задачках!'));
+    } else if(step===14){
+      h=col(big('Зачем это нужно'),
+        rowC(chip('пароли','rgba(127,209,255,.4)'),chip('номера машин','rgba(127,209,255,.4)'),chip('расписания','rgba(127,209,255,.4)'),chip('турниры','rgba(127,209,255,.4)'))+
+        sml('везде, где надо посчитать «сколько разных упорядоченных наборов» — работает правило умножения'));
+    } else if(step===15){
+      h=col(big('Проверь себя быстро'),
+        rowC(chip('из 4 цифр двузначные: 4·3 = 12','rgba(127,184,160,.5)'),chip('из 4 цифр трёхзначные: 4·3·2 = 24','rgba(127,209,255,.5)'))+
+        sml('потренируйся в уме: множители убывают на 1'));
+    } else if(step===16){
+      const POOL=[['n','3','2'],['n','5','2'],['n','5','3'],['n','4','2'],['n','4','3'],['n','6','2'],['z','3','2'],['z','4','2'],['n','5','4'],['ten','2']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i];
+      let desc, firstStep, ans;
+      if(e[0]==='n'){
+        const n=+e[1], k=+e[2];
+        let prod=1; const fs=[];
+        for(let i=0;i<k;i++){ fs.push(n-i); prod*=n-i; }
+        desc='кодов длины '+k+' из цифр 1..'+n+' без повторов';
+        firstStep='множители: '+fs.join(' · ');
+        ans=prod;
+      } else if(e[0]==='z'){
+        const n=+e[1], k=2;
+        let prod=1; const fs=[]; fs.push(n-1);
+        for(let i=1;i<k;i++){ fs.push(n-1); prod*=(n-1); }
+        prod=1; fs.length=0; fs.push(n-1); prod*=(n-1); fs.push(n-1); prod*=(n-1);
+        desc='двузначных из цифр 0..'+(n-1)+' без повторов';
+        firstStep='первая — не 0: '+n+'−1 = '+(n-1)+' · вторая: тоже '+(n-1);
+        ans=(n-1)*(n-1);
+      } else {
+        desc='двузначных из всех 10 цифр без повторов';
+        firstStep='первая — 9 способов (не 0), вторая — 9 (не как первая)';
+        ans=81;
+      }
+      h=col(big('Тренажёр: сколько кодов?'),
+        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">кодов: ${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l21Act('${lk}','s1')`),btn('2️⃣ ответ',`l21Act('${lk}','s2')`),btn('🎲 другой',`l21Act('${lk}','n')`),btn('↺',`l21Act('${lk}','r')`))+
+        sml('записывай множители по очереди и перемножай!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🔑 Без повторов: выбор убывает на 1.<br>
+            ✖️ Длина k из n цифр: n·(n−1)·…·(n−k+1).<br>
+            0️⃣ Ноль не может стоять первым!<br>
+            🔢 Все 10 цифр, двузначные: 9·9 = 81.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там цифры 1,2,3'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -6723,6 +6879,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===21) visL21(el);
   else if(id===18) visL18(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
