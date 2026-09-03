@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -3070,6 +3070,165 @@ function visL103(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там про шершавую поверхность'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l107Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['p','2','5'],['p','3','2'],['p','5','4'],['p','4','10'],['p','6','3'],['p','1','20'],['k','4','3'],['k','2','2'],['k','3','4'],['k','6','5'],['k','8','2'],['k','10','1']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l107Hill(h,uid){
+  // горка: шарик на высоте h (0..10), высота в м
+  const topH=120-((h/Math.max(10,h))*88);
+  return `<div style="position:relative;width:190px;height:130px;margin:4px auto">
+    <div style="position:absolute;left:0;right:0;bottom:0;height:110px;clip-path:polygon(0 100%,0 78%,34% 30%,66% 55%,100% 12%,100% 100%);background:linear-gradient(160deg,#2c4a38,#1d3327);border:2px solid #4a6a52;border-radius:0 0 12px 12px"></div>
+    <div class="wv-in" style="position:absolute;left:${8+Math.round(h*7)}px;top:${topH}px;transition:all .8s ease">
+      <div style="width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffd9a0,#d98a3a);box-shadow:0 0 6px rgba(255,200,120,.5)"></div>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;text-align:center;font-size:12px;color:#9ec0a8">h = ${h} м</div>
+  </div>`;
+}
+function l107Meter(v,uid){
+  // спидометр скорости v
+  return `<div style="display:flex;flex-direction:column;align-items:center;margin:2px auto">
+    <div style="font-size:12px;color:#cbb89a">скорость</div>
+    <div style="position:relative;width:90px;height:44px;border:2px solid #d9a441;border-bottom:none;border-radius:44px 44px 0 0;overflow:hidden">
+      <div style="position:absolute;left:0;right:0;bottom:0;height:${Math.min(100,v*9)}%;background:linear-gradient(180deg,#7fd1a0,#3c8f5f);transition:height .6s ease"></div>
+    </div>
+    <div style="font-size:16px;color:#e8dcc8">v = ${v} м/с</div>
+  </div>`;
+}
+function visL107(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Откуда у шарика «силы»?'),
+        `<div style="font-size:46px" class="wv-swing">🎢</div>`+
+        sml('шарик наверху горки умеет делать работу — у него есть ЭНЕРГИЯ! Сегодня разберёмся, откуда она берётся'));
+    } else if(step===1){
+      h=col(big('Что такое энергия'),
+        rowC(chip('энергия — способность совершать работу','rgba(127,209,255,.5)'),chip('измеряется в джоулях (Дж)','rgba(127,184,160,.5)'))+
+        sml('чем больше энергии — тем больше работы может сделать тело: поднять груз, разогнать машину, согнуть пружину'));
+    } else if(step===2){
+      h=col(big('Два вида механической энергии'),
+        rowC(chip('потенциальная — энергия положения','rgba(217,164,65,.5)'),chip('кинетическая — энергия движения','rgba(127,184,160,.5)'))+
+        sml('поднятый камень и летящий мяч умеют делать работу по-разному!'));
+    } else if(step===3){
+      h=col(big('Потенциальная энергия Eп = m·g·h'),
+        rowC(chip('m — масса (кг)','rgba(232,160,90,.5)'),chip('h — высота (м)','rgba(127,209,255,.5)'),chip('g ≈ 10','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">Eп = m · g · h</div>`+
+        sml('выше поднял и тяжелее груз — больше потенциальная энергия!'));
+    } else if(step===4){
+      h=col(big('Считаем потенциальную'),
+        l107Hill(5,'a')+
+        rowC(chip('m=2 кг','rgba(232,160,90,.5)'),chip('h=5 м','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">Eп = 2 · 10 · 5 = 100 Дж</div>`+
+        sml('умножаем всё по очереди: 2·10=20, 20·5=100'));
+    } else if(step===5){
+      h=col(big('Задача-проверка'),
+        l107Hill(2,'b')+
+        rowC(chip('m=3 кг','rgba(232,160,90,.5)'),chip('h=2 м','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">Eп = 3 · 10 · 2 = 60 Дж</div>`+
+        sml('как в проверке: 3·10=30, 30·2=60!'));
+    } else if(step===6){
+      h=col(big('Кинетическая энергия Eк = m·v²:2'),
+        rowC(chip('m — масса (кг)','rgba(232,160,90,.5)'),chip('v — скорость (м/с)','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">Eк = m · v² : 2</div>`+
+        sml('сначала скорость в квадрате (v·v), потом умножь на массу и подели на 2'));
+    } else if(step===7){
+      h=col(big('Что такое v²'),
+        rowC(chip('v=2 м/с → v² = 2·2 = 4','rgba(127,209,255,.5)'),chip('v=3 м/с → v² = 3·3 = 9','rgba(127,184,160,.5)'))+
+        sml('квадрат — это число, умноженное само на себя. Как площадь квадрата со стороной v!'));
+    } else if(step===8){
+      h=col(big('Считаем кинетическую'),
+        l107Meter(2,'c')+
+        rowC(chip('m=2 кг','rgba(232,160,90,.5)'),chip('v=2 м/с','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">Eк = 2 · 2² : 2 = 2·4:2 = 4 Дж</div>`+
+        sml('v² = 2·2 = 4; 2·4 = 8; 8:2 = 4'));
+    } else if(step===9){
+      h=col(big('Задача 1: кинетическая'),
+        rowC(chip('m=4 кг','rgba(232,160,90,.5)'),chip('v=3 м/с','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">Eк = 4 · 9 : 2 = 36:2 = 18 Дж</div>`+
+        sml('как в наших задачках: v²=9, 4·9=36, 36:2=18!'));
+    } else if(step===10){
+      h=col(big('Наоборот: находим высоту'),
+        rowC(chip('Eп = 150 Дж','rgba(217,164,65,.5)'),chip('m=5 кг','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">h = 150 : (5·10) = 150:50 = 3 м</div>`+
+        sml('h = Eп : (m·g). Сначала 5·10=50, потом 150:50=3. Как в наших задачках!'));
+    } else if(step===11){
+      h=col(big('Горка: энергия переходит!'),
+        rowC(chip('наверху — вся потенциальная','rgba(217,164,65,.5)'),chip('внизу — вся кинетическая','rgba(127,184,160,.5)'))+
+        l107Hill(10,'d')+
+        sml('скатывается шарик: потенциальная убывает, кинетическая растёт — как на американских горках!'));
+    } else if(step===12){
+      h=col(big('Закон сохранения энергии'),
+        rowC(chip('Eп + Eк = const','rgba(217,164,65,.5)'))+
+        sml('энергия не исчезает и не появляется — только переходит из одного вида в другой. Потерялась высота — прибавилась скорость!'));
+    } else if(step===13){
+      h=col(big('Качели и маятник'),
+        rowC(chip('в крайней точке — Eп max','rgba(217,164,65,.5)'),chip('внизу — Eк max','rgba(127,184,160,.5)'))+
+        `<div style="font-size:44px" class="wv-swing">🪀</div>`+
+        sml('маятник всё время меняет: потенциальную на кинетическую и обратно. Как в качелях!'));
+    } else if(step===14){
+      h=col(big('Где пригодится'),
+        rowC(chip('плотина ГЭС','rgba(127,209,255,.4)'),chip('американские горки','rgba(127,209,255,.4)'),chip('прыжки на батуте','rgba(127,209,255,.4)'),chip('маятник часов','rgba(127,209,255,.4)'))+
+        sml('вода падает с высоты — потенциальная энергия превращается в движение турбин!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('Eп = m·g·h','rgba(217,164,65,.5)'),chip('Eк = m·v²:2','rgba(127,184,160,.5)'),chip('Eп+Eк = const','rgba(127,209,255,.5)'))+
+        sml('три формулы — и ты знаешь механику энергий!'));
+    } else if(step===16){
+      const POOL=[['p','2','5'],['p','3','2'],['p','5','4'],['p','4','10'],['p','6','3'],['p','1','20'],['k','4','3'],['k','2','2'],['k','3','4'],['k','6','5'],['k','8','2'],['k','10','1']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0];
+      let desc, firstStep, ans, vis='';
+      if(kind==='p'){
+        const m=+e[1], h=+e[2];
+        desc='потенциальная энергия: m='+m+' кг, h='+h+' м (g=10)?';
+        firstStep='Eп = m·g·h = '+m+'·10·'+h;
+        ans=m*10*h; vis=l107Hill(h,'t');
+      } else {
+        const m=+e[1], v=+e[2];
+        desc='кинетическая энергия: m='+m+' кг, v='+v+' м/с?';
+        firstStep='Eк = m·v²:2 = '+m+'·'+(v*v)+':2';
+        ans=m*v*v/2; vis=l107Meter(v,'t2');
+      }
+      h=col(big('Тренажёр: энергия'),
+        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
+        vis+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans} Дж</div>`:'')+
+        btns(btn('1️⃣ подумай',`l107Act('${lk}','s1')`),btn('2️⃣ ответ',`l107Act('${lk}','s2')`),btn('🎲 другая',`l107Act('${lk}','n')`),btn('↺',`l107Act('${lk}','r')`))+
+        sml('потенциальная: ×10×h; кинетическая: сначала v²!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🎢 Eп = m·g·h (подняли — запас).<br>
+            🚀 Eк = m·v²:2 (разогнали — запас).<br>
+            🔄 Eп + Eк не меняется — только переходит.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 3 кг на 2 м'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -7695,6 +7854,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===107) visL107(el);
   else if(id===103) visL103(el);
   else if(id===102) visL102(el);
   else if(id===101) visL101(el);
