@@ -569,109 +569,142 @@ function l10Act(lk,act){
   chRender(0);
 }
 function visL10(el){
-  // Пошаговый разбор «Средняя скорость»: каждый слайд объяснения = свой этап с анимацией
+  // Урок 10 «Средняя скорость»: полный пошаговый разбор с анимацией
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     const step=LV.step||0;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t)=>`<div class="wv-big">${t}</div>`;
+    const big=(t,extra)=>`<div class="wv-big" ${extra||''}>${t}</div>`;
     const sml=(t)=>`<div class="wv-sml">${t}</div>`;
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.08);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    // дорога из двух половин: v1 слева (зелёная), v2 справа (оранжевая), машина едет
-    const road=(drive,ticks)=>`<div style="position:relative;width:290px;height:52px;border-radius:12px;overflow:hidden;border:2px solid #3d5c49;margin:0 auto">
-      <div style="position:absolute;inset:0;background:linear-gradient(90deg,#1e3f2d 0 50%,#4a3320 50% 100%)"></div>
-      <div style="position:absolute;top:0;bottom:0;left:50%;width:2px;background:#e8e0cc;opacity:.35"></div>
-      <div style="position:absolute;top:0;bottom:0;left:50%;width:2px;background:#e8e0cc;opacity:.35"></div>
-      ${ticks||''}
-      <div style="position:absolute;left:2px;top:2px;font-size:11px;color:#9fd4a8;font-weight:bold">${st.v1==null?30:st.v1} км/ч</div>
-      <div style="position:absolute;right:4px;top:2px;font-size:11px;color:#f0b090;font-weight:bold">${st.v2==null?20:st.v2} км/ч</div>
-      <div style="position:absolute;bottom:0;left:0;font-size:10px;color:#cbb89a;opacity:.8">первая половина S</div>
-      <div style="position:absolute;bottom:0;right:0;font-size:10px;color:#cbb89a;opacity:.8">вторая половина S</div>
-      <div class="wv-drive" style="position:absolute;bottom:8px;left:8px;font-size:32px;--dx:${Math.max(2,drive-12)}px">🚗</div>
-      <div style="position:absolute;bottom:-6px;left:${Math.max(2,drive)}px;width:26px;height:16px;border-radius:50% 50% 50% 0;background:rgba(232,234,238,.28);opacity:.8;transform:rotate(-8deg)"></div></div>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const KM=290, HALF=KM/2;
+    // дорога с километражем; машина едет translateX от 0 до dist px
+    const road=(dist,dur,opts)=>{
+      const o=opts||{};
+      const vA=o.v1!=null?o.v1:(st.v1!=null?st.v1:30), vB=o.v2!=null?o.v2:(st.v2!=null?st.v2:20);
+      const km=[0,15,30,45,60,75,90,105,120];
+      return `<div style="position:relative;width:${KM}px;height:56px;border-radius:12px;overflow:hidden;border:2px solid #3d5c49;background:
+        linear-gradient(90deg,#1e4a30 0 ${HALF}px,#4a3320 ${HALF}px ${KM}px)">
+        <div style="position:absolute;top:0;bottom:0;left:${HALF}px;width:2px;background:#ffe9a8;opacity:.55;z-index:1"></div>
+        ${km.map(k=>`<div style="position:absolute;top:${(k%30===0)?0:7}px;bottom:${(k%30===0)?7:0}px;left:${k/120*KM-1}px;width:2px;background:rgba(232,224,204,.28)"></div>`).join('')}
+        <div style="position:absolute;left:6px;top:3px;font-size:11px;color:#8fd4a0;font-weight:bold;z-index:2">${vA} км/ч</div>
+        <div style="position:absolute;right:6px;top:3px;font-size:11px;color:#f0a878;font-weight:bold;z-index:2">${vB} км/ч</div>
+        <div style="position:absolute;left:4px;bottom:1px;font-size:9px;color:#cbb89a;opacity:.85">0</div>
+        <div style="position:absolute;left:${HALF-4}px;bottom:1px;font-size:9px;color:#cbb89a;opacity:.85">60 км</div>
+        <div style="position:absolute;right:3px;bottom:1px;font-size:9px;color:#cbb89a;opacity:.85">120 км</div>
+        <div style="position:absolute;bottom:7px;left:${(o.at!=null?o.at:8)}px;font-size:32px;z-index:3;animation:wvDrive ${dur||1.6}s ${o.ease||'cubic-bezier(.5,0,.6,1)'} both;--dx:${Math.max(0,(o.to!=null?o.to:(dist||0))-(o.at!=null?o.at:8))}px">${o.car||'🚗'}</div>
+        ${o.extra||''}
+      </div>`;
+    };
+    // таймер времени (полоса, заполняется)
+    const timer=(label,hours,col,fill)=>{
+      return `<div style="flex:1;text-align:center;max-width:130px">
+        <div style="font-size:12px;color:#cbb89a">${label}</div>
+        <div style="height:12px;background:#0d1a13;border:1px solid #3d5c49;border-radius:7px;overflow:hidden;margin:3px 0">
+          <div class="wv-pop" style="height:100%;width:${fill}%;background:${col};transform-origin:0 50%;animation:wvGrow .9s ease both"></div></div>
+        <div style="font-size:16px;color:#e8e0cc;font-weight:bold">⏱ ${hours}</div></div>`;
+    };
     let h='';
-    const n=(L.explain||[]).length;
     if(step===0){
-      // ловушка: 25?
-      h=col(road(8,''),
-        `<div class="wv-pop" style="margin-top:4px">${chip('v₁ = 30 км/ч')} ${chip('v₂ = 20 км/ч')}</div>`+
-        `<div style="font-size:26px" class="wv-pulse">🤔</div>`+big(`(30 + 20) : 2 = 25 — так ли?`)+
-        sml('Полпути ехали 30 км/ч, полпути — 20 км/ч. Средняя скорость = 25? Архимед сомневается… листай дальше ➜'));
-    } else if(step===1){
-      // почему 25 неверно: пути равны, время разное
-      const t1=90, t2=135;
-      h=col(road(86,''),
-        `<div class="wv-row" style="gap:16px;margin-top:6px">
-          <div style="text-align:center"><div style="font-size:13px;color:#9fd4a8">путь S</div><div style="width:120px;height:14px;background:#2e5c3e;border-radius:7px;overflow:hidden"><div style="width:50%;height:100%;background:#7fb8a0;transition:width .8s"></div></div><div style="font-size:12px;color:#cbb89a">t₁ = S:30 — мало</div></div>
-          <div style="text-align:center"><div style="font-size:13px;color:#f0b090">путь S</div><div style="width:120px;height:14px;background:#5c3a22;border-radius:7px;overflow:hidden"><div style="width:${Math.round(t2/135*100)}%;height:100%;background:#c96f4a;transition:width .8s"></div></div><div style="font-size:12px;color:#cbb89a">t₂ = S:20 — больше</div></div>
-        </div>`+
-        `<div style="font-size:24px">⚠️</div>`+big(`путь одинаковый, а время РАЗНОЕ`)+
-        sml('на 20 км/ч тратим больше времени → этот участок «весит» в средней сильнее, чем 30 км/ч'));
-    } else if(step===2){
-      // вводим 2S и времена
-      const t1=Math.round(st.v1==null?30:st.v1), t2=Math.round(st.v2==null?20:st.v2);
-      const tA=Math.round(1/t1*1200), tB=Math.round(1/t2*1200);
-      h=col(road(150,Array.from({length:5},(_,i)=>`<div class="wv-ticks" style="left:${10+i*68}px"></div>`).join('')),
-        `<div style="margin-top:6px">${chip('весь путь = 2S')} ${chip('половина = S')}</div>`+
-        `<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:4px">
-          ${chip('t₁ = S:'+t1+' = S/'+t1,'rgba(127,184,160,.5)')}
-          ${chip('t₂ = S:'+t2+' = S/'+t2,'rgba(232,106,90,.5)')}</div>`+
-        big(`всё время t = S/${t1} + S/${t2}`)+
-        sml('складываем время на двух половинах: чем меньше скорость, тем больше слагаемое'));
-    } else if(step===3){
-      // формула: v = 2S:(S/30+S/20) и сокращение S
-      h=col(road(210,''),`<div style="display:flex;flex-direction:column;gap:6px;margin:6px 0">
-        ${chip('v = весь путь : всё время','rgba(127,209,255,.35)')}
-        <div class="wv-pop" style="font-size:20px;color:#d8ecff">v = 2S : (S/30 + S/20)</div>
-        <div class="wv-pop" style="font-size:20px;color:#e8dcc8">v = 2S : S·(1/30 + 1/20)</div>
-        <div class="wv-pop" style="font-size:20px;color:#ffd9a0">v = 2 : (1/30 + 1/20)</div></div>`+
-        big(`S сократилось!`)+
-        sml('делим числитель и знаменатель на S — путь уходит, остаются только скорости'));
-    } else if(step===4){
-      // считаем: 1/30+1/20, затем формула 2·30·20/(30+20)
-      h=col(road(262,''),
-        `<div style="display:flex;flex-direction:column;gap:5px;margin:4px 0">
-          <div class="wv-pop">${chip('1/30 + 1/20 = 5/60 = 1/12')}</div>
-          <div class="wv-pop" style="color:#d8ecff;font-size:18px">v = 2 : 1/12 = 2·12 = 24</div></div>`+
-        big(`v = 2·v₁·v₂/(v₁+v₂) = 2·30·20/50 = 24 км/ч`)+
-        sml('гармоническое среднее — не арифметическое! 24, а не 25'));
-    } else if(step===5){
-      // проверка 24 < 25
       h=col(
-        `<div style="display:flex;gap:12px;justify-content:center;align-items:center;margin:6px 0;flex-wrap:wrap">
-          <div style="text-align:center;opacity:.55"><div style="font-size:30px">(30+20)/2</div><div style="font-size:26px;text-decoration:line-through;color:#e86a5a">25</div></div>
-          <div style="font-size:30px">❯</div>
-          <div style="text-align:center"><div style="font-size:30px">правильный ответ</div><div class="wv-ans" style="font-size:38px;color:#7fd1a0;font-weight:bold">24 ✓</div></div></div>`+
-        big(`24 &lt; 25 — всегда!`)+
-        sml('медленный участок занимает больше времени и тянет среднюю вниз. Запомни: v ср &lt; (v₁+v₂)/2'));
+        `<div class="wv-row">${chip('в школу: 30 км/ч','rgba(127,184,160,.5)')} ${chip('обратно: 20 км/ч','rgba(232,106,90,.5)')}</div>`+
+        road(0,0)+
+        `<div style="font-size:30px;margin-top:2px" class="wv-pulse">🤔</div>`+
+        big(`(30 + 20) : 2 = 25 км/ч — так ли?`)+
+        sml('Кажется очевидным… но Архимед просит проверить на числах. Листай ➜'));
+    } else if(step===1){
+      h=col(big('Давай проверим на числах'),
+        road(0,0)+
+        `<div class="wv-pop" style="font-size:17px;color:#d8ecff">путь до школы = 60 км · обратно = 60 км</div>`+
+        `<div style="font-size:24px">➕</div>`+
+        big('весь путь = 120 км')+
+        sml('половинки ОДИНАКОВЫЕ — по 60 км. Теперь посчитаем время на каждой'));
+    } else if(step===2){
+      h=col(big('Первая половина: едем 30 км/ч'),
+        road(HALF-10,1.1,{at:8,to:HALF-6})+
+        `<div class="wv-row" style="margin-top:4px">${timer('время в школу', '2 часа', '#7fb8a0', 40)}</div>`+
+        big('t₁ = 60 : 30 = 2 часа')+
+        sml('быстро! машина проезжает 60 км за 2 часа (анимация — как раз ~2 тика)'));
+    } else if(step===3){
+      h=col(big('Вторая половина: ползём 20 км/ч'),
+        road(KM-10,2.2,{at:HALF-4,to:KM-8})+
+        `<div class="wv-row" style="margin-top:4px">${timer('время обратно', '3 часа', '#c96f4a', 60)}</div>`+
+        big('t₂ = 60 : 20 = 3 часа')+
+        sml('заметь: машина едет медленнее и дольше! 3 часа против 2'));
+    } else if(step===4){
+      h=col(big('Вся поездка'),
+        road(KM-10,2.6,{at:8,to:KM-8})+
+        `<div class="wv-row" style="margin-top:6px">${chip('путь = 120 км','rgba(127,184,160,.5)')} ${chip('время = 2 + 3 = 5 ч','rgba(232,106,90,.5)')}</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:var(--brass);font-weight:bold">v = 120 : 5 = 24 км/ч</div>`+
+        sml('средняя скорость = весь путь : всё время. Вот честный ответ!'));
+    } else if(step===5){
+      h=col(big('Почему 24, а не 25?'),
+        `<div class="wv-row" style="gap:10px;justify-content:center">${timer('участок 30 км/ч', '2 часа', '#7fb8a0', 40)}${timer('участок 20 км/ч', '3 часа', '#c96f4a', 60)}</div>`+
+        `<div style="font-size:26px">⚖️</div>`+big(`медленный участок «весит» больше`)+
+        sml('3 часа на 20 км/ч тянут среднюю вниз сильнее, чем 2 часа на 30 км/ч поднимают вверх'));
     } else if(step===6){
-      // тренажёр: пример 12/6 — как в вопросе
+      h=col(big('Выводим формулу'),
+        `<div style="display:flex;flex-direction:column;gap:6px;margin:6px 0;font-size:18px">
+          <div class="wv-pop">пусть половина пути = S, скорости = v₁, v₂</div>
+          <div class="wv-pop" style="color:#d8ecff">время: t = S/v₁ + S/v₂</div>
+          <div class="wv-pop" style="color:#e8dcc8">средняя: v = 2S : (S/v₁ + S/v₂)</div></div>`+
+        big(`делим на S: v = 2 : (1/v₁ + 1/v₂)`)+
+        sml('S сокращается — путь уходит, остаются только скорости'));
+    } else if(step===7){
+      h=col(big('Складываем дроби'),
+        `<div style="display:flex;flex-direction:column;gap:6px;margin:6px 0;font-size:19px">
+          <div class="wv-pop" style="color:#d8ecff">1/v₁ + 1/v₂ = (v₁+v₂)/(v₁·v₂)</div>
+          <div class="wv-pop" style="color:#e8dcc8">v = 2 : (v₁+v₂)/(v₁·v₂)</div></div>`+
+        `<div class="wv-ans" style="font-size:24px;color:var(--brass);font-weight:bold;margin:4px 0">v = 2·v₁·v₂ : (v₁ + v₂)</div>`+
+        sml('гармоническое среднее — вот главная формула этого урока!'));
+    } else if(step===8){
+      const v1=30,v2=20,v=24;
+      h=col(big('Подставляем числа'),
+        `<div style="display:flex;flex-direction:column;gap:6px;margin:6px 0;font-size:19px">
+          <div class="wv-pop">v = 2·30·20 : (30 + 20)</div>
+          <div class="wv-pop" style="color:#d8ecff">v = 1200 : 50</div></div>`+
+        `<div class="wv-ans" style="font-size:32px;color:#7fd1a0;font-weight:bold">v = 24 км/ч ✓</div>`+
+        sml('совпало с честным подсчётом 120:5 — формула работает!'));
+    } else if(step===9){
+      h=col(big('Правило-проверка'),
+        `<div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:4px 0">
+          <div style="text-align:center;opacity:.6"><div style="font-size:22px">полусумма</div><div style="font-size:30px;text-decoration:line-through;color:#e86a5a">25</div></div>
+          <div style="font-size:28px">❯</div>
+          <div style="text-align:center"><div style="font-size:22px">средняя скорость</div><div style="font-size:34px;color:#7fd1a0;font-weight:bold">24 ✓</div></div></div>`+
+        big(`v ср &lt; (v₁+v₂)/2 — всегда!`)+
+        sml('если получил больше полусуммы — ищи ошибку. Медленный участок тянет вниз'));
+    } else if(step===10){
+      // тренажёр: 12 и 6 как в вопросе
       if(st.v1==null) st.v1=12; if(st.v2==null) st.v2=6;
       const v=Math.round(2*st.v1*st.v2/(st.v1+st.v2)*10)/10;
-      h=col(
+      const t1=Math.round(120/st.v1*10)/10, t2=Math.round(120/st.v2*10)/10;
+      const frac1=Math.min(1, 2/t1), frac2=Math.min(1, 3/t2);
+      h=col(big('Тренажёр: попробуй сам!'),
         `<div class="wv-row">${chip('v₁ = '+st.v1+' км/ч')} ${chip('v₂ = '+st.v2+' км/ч')}</div>`+
-        road(Math.min(280, (140+ (v>0? 0:0))),Array.from({length:4},(_,i)=>`<div class="wv-ticks" style="left:${16+i*72}px"></div>`).join(''))+
-        `<div style="margin-top:6px">${chip('v = 2·'+st.v1+'·'+st.v2+'/('+st.v1+'+'+st.v2+')','rgba(217,164,65,.4)')}</div>`+
-        `<div class="wv-ans" style="font-size:34px;color:var(--brass);font-weight:bold;font-family:Georgia,serif">v ср = ${v} км/ч</div>`+
+        road(0,0,{v1:st.v1,v2:st.v2})+
+        `<div style="margin-top:4px">${chip('v = 2·'+st.v1+'·'+st.v2+'/('+st.v1+'+'+st.v2+')','rgba(217,164,65,.4)')}</div>`+
+        `<div class="wv-ans" style="font-size:34px;color:var(--brass);font-weight:bold">v ср = ${v} км/ч</div>`+
         btns(btn('🚗 +5 км/ч', `l10Act('${lk}','v1+')`),btn('−5 км/ч', `l10Act('${lk}','v1-')`),
              btn('+5 км/ч', `l10Act('${lk}','v2+')`),btn('−5 км/ч', `l10Act('${lk}','v2-')`),btn('↺', `l10Act('${lk}','r')`))+
-        sml(v===8?'как в вопросе: 12 и 6 → 8, а не 9!':'покрути: начни с v₁=12, v₂=6 и увидишь ответ вопроса'));
+        sml(v===8?'вопрос дальше: 12 и 6 → 8, а не 9!':'стартуй с v₁=12, v₂=6 — увидишь ответ вопроса'));
     } else {
       // памятка Архимеда
-      h=col(`<div style="font-size:52px">📜</div>`+big(`Совет Архимеда`)+
-        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:310px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.6">
-          ✅ Формула <b>v = 2·v₁·v₂/(v₁+v₂)</b> работает, когда путь поделён на <b>две равные половины</b>.<br>
-          ⚠️ Если участки разные — считай честно: <b>v = S : t</b> (весь путь на всё время).<br>
-          🔍 Проверяй: v ср всегда <b>меньше</b> (v₁+v₂)/2.</div>`+
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:320px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.65">
+          ✅ Путь — две РАВНЫЕ половины (v₁ и v₂):<br>&nbsp;&nbsp;<b>v = 2·v₁·v₂/(v₁+v₂)</b> — гармоническое среднее.<br>
+          ⏱ Путь — РАВНЫЕ ВРЕМЕНА (час на 30 и час на 20):<br>&nbsp;&nbsp;<b>v = (30+20)/2 = 25</b> — арифметическое!<br>
+          ⚠️ Участки разные — считай честно: <b>v = S : t</b>.<br>
+          🔍 Проверка: v ср всегда меньше полусуммы.</div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там ровно такой пример: 12 и 6'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
+
 function visPhysNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
