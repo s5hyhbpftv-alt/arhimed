@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2069,6 +2069,234 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l78Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const PAIRS=[[12,18],[6,8],[18,24],[60,48],[4,6],[14,21],[20,30],[16,24],[35,49],[9,12]];
+  switch(act){
+    case 'n': st.i=((st.i==null?0:st.i)+1)%PAIRS.length; break;
+    case 'g': st.sho='g'; break;
+    case 'l': st.sho='l'; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l78Prime(n){
+  const out=[]; let x=n;
+  for(let d=2;d*d<=x;d++){ while(x%d===0){ out.push(d); x/=d; } }
+  if(x>1) out.push(x);
+  return out;
+}
+function l78Chip(t,c,delay){
+  return `<span class="l35-pop" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid ${c||'rgba(127,209,255,.4)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+}
+function l78Ladder(n,uid){
+  // «лесенка» разложения: делим на простые, пока не дойдём до 1
+  const steps=[]; let x=n; const d2=[]; let d=2;
+  while(x>1){
+    while(x%d===0){ d2.push(d); x/=d; }
+    d++;
+  }
+  let cur=n; let html='';
+  let i=0;
+  for(const p of d2){
+    const nx=cur/p;
+    html+=`<div class="l35-pop" style="animation-delay:${(i*0.28).toFixed(2)}s;display:flex;align-items:center;justify-content:center;gap:8px;margin:2px 0">
+      <span style="min-width:56px;text-align:right;font-size:22px;font-family:Georgia,serif;color:#fff;font-weight:bold">${cur}</span>
+      <span style="color:#e8a05a;font-weight:bold">÷ ${p}</span>
+      <span style="min-width:20px;text-align:center;color:#cbb89a">→</span>
+      <span style="min-width:56px;font-size:22px;font-family:Georgia,serif;color:#7fd1a0;font-weight:bold">${nx}</span>
+    </div>`;
+    cur=nx; i++;
+  }
+  return `<div style="width:260px;margin:0 auto;background:rgba(255,255,255,.03);border:1px solid rgba(127,209,255,.14);border-radius:14px;padding:8px 6px;text-align:center">
+    <div style="font-size:12px;color:#cbb89a;margin-bottom:4px">«лесенка» вниз — делим на простые, пока не останется 1</div>
+    ${html}
+    <div style="font-size:15px;color:#ffd9a0;margin-top:4px">${n} = ${d2.join(' · ')}</div>
+  </div>`;
+}
+function l78PowShow(a,b,uid){
+  // каноническое разложение двух чисел рядами степеней простых
+  const fa={}, fb={};
+  const add=(map,arr)=>{ arr.forEach(p=>map[p]=(map[p]||0)+1); };
+  add(fa,l78Prime(a)); add(fb,l78Prime(b));
+  const primes=Array.from(new Set([...Object.keys(fa),...Object.keys(fb)].map(Number))).sort((x,y)=>x-y);
+  const powStr=(f,p)=> f[p]? (f[p]===1? p : `${p}<sup>${f[p]}</sup>`) : null;
+  const row=(name,f,col)=>{
+    const cells=primes.map(p=>{
+      const s=powStr(f,p);
+      const hit=!!s;
+      return `<div style="min-width:46px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;${hit?`background:${col};color:#fff;font-weight:bold`:'background:rgba(255,255,255,.05);color:#8aa08f'}">${s||'—'}</div>`;
+    }).join('');
+    const cap=primes.map(p=>`<div style="min-width:46px;font-size:11px;color:#8aa08f;text-align:center">${p}</div>`).join('');
+    return `<div><div style="display:flex;justify-content:center;gap:4px">${cells}</div><div style="display:flex;justify-content:center;gap:4px">${cap}</div><div style="text-align:center;font-size:12px;color:#cbb89a;margin-top:2px">${name} = ${Object.keys(f).sort((x,y)=>x-y).map(p=>powStr(f,p)).join(' · ')}</div></div>`;
+  };
+  return `<div style="width:290px;margin:0 auto;text-align:center">
+    ${row(`${a}`,`${fa}`,'#3a6fa8')}
+    <div style="height:6px"></div>
+    ${row(`${b}`,`${fb}`,'#8a5a34')}
+  </div>`;
+}
+function l78Picks(a,b,uid,kind){
+  // выбрать общие в младших (НОД) или все в старших (НОК)
+  const fa={}, fb={};
+  const add=(map,arr)=>{ arr.forEach(p=>map[p]=(map[p]||0)+1); };
+  add(fa,l78Prime(a)); add(fb,l78Prime(b));
+  const primes=Array.from(new Set([...Object.keys(fa),...Object.keys(fb)].map(Number))).sort((x,y)=>x-y);
+  const val = kind==='nod'? Math.min : Math.max;
+  const stylePick=kind==='nod'? '#e0523d':'#2f8f5a';
+  let row='';
+  primes.forEach((p,idx)=>{
+    const pa=fa[p]||0, pb=fb[p]||0;
+    const show = kind==='nod'? (pa>0&&pb>0): true;
+    const s = kind==='nod'? (show? p : '—') : powt(p, val(pa,pb));
+    row+=`<div class="l35-pop" style="animation-delay:${(0.2+idx*0.22).toFixed(2)}s;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.04);border-radius:10px;padding:4px 10px;margin:3px 0">
+      <span style="width:74px;font-size:13px;color:#cbb89a">${a}: ${p}${pa>1?`<sup>${pa}</sup>`:''} · ${b}: ${p}${pb>1?`<sup>${pb}</sup>`:''}</span>
+      <span style="flex:1"></span>
+      <span style="font-size:19px;font-weight:bold;color:${show?stylePick:'#5b6b78'}">${show? (kind==='nod'? p : powt(p,val(pa,pb))) : '—'}</span>
+      <span style="font-size:11px;color:#8aa08f;width:86px">${kind==='nod'? (show?'общий — берём':'не общий — мимо'):(pa===pb? 'в старшей — берём':`${Math.max(pa,pb)} шт — берём`)}</span>
+    </div>`;
+    function powt(pp,k){ return k===1? pp : `${pp}<sup>${k}</sup>`; }
+  });
+  return `<div style="width:300px;margin:0 auto;text-align:center">${row}</div>`;
+}
+function l78DivRow(n,uid){
+  const divs=[]; for(let d=1;d<=n;d++) if(n%d===0) divs.push(d);
+  const caps=[];
+  const mark=divs.map((d,i)=>`<div class="l35-pop" style="animation-delay:${(i*0.1).toFixed(2)}s;display:inline-block;min-width:34px;text-align:center;font-size:16px;color:#d8ecff;border:1px solid rgba(127,209,255,.25);border-radius:8px;padding:3px 4px;margin:2px">${d}</div>`).join('');
+  caps.push(`<div style="text-align:center;font-size:13px;color:#9fc5e8;margin-bottom:2px">делители ${n}</div><div style="text-align:center">${mark}</div>`);
+  return `<div>${caps.join('')}</div>`;
+}
+function l78LCM(a,b,uid){
+  // шкалы кратных до общего: два ряда точек; первое общее — кружок
+  const L=[]; for(let k=1;;k++){ if((a*k)%b===0){ L.push(a*k); break; } }
+  const lcm=L[0];
+  const mk=(n,other,color)=>{
+    let s='';
+    let found=false;
+    for(let k=1; n*k<=lcm+ n; k++){
+      const v=n*k;
+      const hit=v===lcm;
+      if(v>lcm&&!found) break;
+      if(v>lcm&&found) break;
+      s+=`<span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:${v===lcm?46:34}px;height:30px;margin:2px;font-size:15px;${hit?`background:${color};color:#fff;font-weight:bold;border-radius:50%`:'color:#9fc5e8;border:1px dashed rgba(159,197,232,.3);border-radius:8px'}">${v}</span>`;
+      if(hit) found=true;
+    }
+    return s;
+  };
+  return `<div style="width:300px;margin:0 auto;text-align:center">
+    <div style="font-size:12px;color:#cbb89a">кратные ${a}:</div><div>${mk(a,b,'#2f8f5a')}</div>
+    <div style="font-size:12px;color:#cbb89a;margin-top:4px">кратные ${b}:</div><div>${mk(b,a,'#2f6fb0')}</div>
+    <div style="margin-top:6px;font-size:15px;color:#ffd9a0;font-weight:bold">первое общее — НОК(${a}, ${b}) = ${lcm}</div>
+  </div>`;
+}
+function visL78(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Мастерская Архимеда'),
+        `<div style="font-size:50px" class="l35-pop">🏛️</div>`+
+        big('плитку 24×18 — на сколько равных квадратов? маяки 3с и 4с — когда вспыхнут вместе?')+
+        sml('две загадки: «на сколько частей делим» и «когда совпадёт». их решают НОД и НОК! листай ➜'));
+    } else if(step===1){
+      h=col(big('Делители и кратные'),
+        rowC(
+          `<div style="flex:1;min-width:140px;border:1px solid rgba(224,82,61,.4);border-radius:12px;padding:8px;text-align:center"><div style="font-size:26px">➗</div><b>делитель</b><div class="wv-sml" style="font-size:10px">на него число делится без остатка</div><div style="font-size:15px;color:#f0a89a">6 | 12 · 6 | 18</div></div>`+
+          `<div style="flex:1;min-width:140px;border:1px solid rgba(127,209,255,.4);border-radius:12px;padding:8px;text-align:center"><div style="font-size:26px">🔁</div><b>кратное</b><div class="wv-sml" style="font-size:10px">делится на число без остатка</div><div style="font-size:15px;color:#a9d2ec">12 = 6·2 · 18 = 6·3</div></div>`)+
+        sml('делители числа — «на что делится», кратные — «что делится на него»'));
+    } else if(step===2){
+      h=col(big('Простые и составные'),
+        rowC(chip('2, 3, 5, 7, 11, 13, 17, 19 — простые','rgba(127,184,160,.5)'))+
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">${[2,3,4,5,6,7,8,9,10,11,12,13].map((n,i)=>{ const pr=l78Prime(n).length===1; return `<div class="l35-pop" style="animation-delay:${(i*0.07).toFixed(2)}s;width:44px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px;${pr?'background:#3a8a5a;color:#fff;font-weight:bold':'background:rgba(255,255,255,.06);color:#cbb89a'}">${n}</div>`; }).join('')}</div>`+
+        sml('простое делится только на 1 и на себя. из простых «собраны» все остальные числа!'));
+    } else if(step===3){
+      h=col(big('Лесенка разложения'),
+        rowC(chip('разложим 12','rgba(232,160,90,.5)'),chip('и 18','rgba(232,160,90,.5)'))+
+        `<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">${l78Ladder(12,'a')}${l78Ladder(18,'b')}</div>`+
+        sml('делим на простые, пока не дойдём до 1: 12 = 2·2·3, 18 = 2·3·3'));
+    } else if(step===4){
+      h=col(big('Канонический вид'),
+        rowC(chip('12 = 2²·3','rgba(232,160,90,.5)'),chip('18 = 2·3²','rgba(232,160,90,.5)'),chip('60 = 2²·3·5','rgba(127,184,160,.5)'))+
+        sml('одинаковые простые собираем в степень: маленькая цифра сверху — сколько раз взяли. так числа записывают в учебниках углублённого курса!'));
+    } else if(step===5){
+      h=col(big('НОД перебором'),
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">${l78DivRow(12,'c')}${l78DivRow(18,'d')}</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#e0523d;font-weight:bold">общие: 1, 2, 3, 6 → НОД(12, 18) = 6</div>`+
+        sml('выпиши делители обоих, найди общие — самый большой и есть НОД'));
+    } else if(step===6){
+      h=col(big('НОД через разложение'),
+        l78PowShow(12,18,'p')+
+        l78Picks(12,18,'q','nod')+
+        `<div class="wv-ans" style="font-size:24px;color:#e0523d;font-weight:bold">общие простые в МЛАДШЕЙ степени: 2¹·3¹ = 6</div>`+
+        sml('берём только ОБЩИЕ простые и каждый в меньшей из двух степеней'));
+    } else if(step===7){
+      h=col(big('Большой пример'),
+        l78PowShow(60,48,'r')+
+        `<div class="wv-ans" style="font-size:24px;color:#e0523d;font-weight:bold">НОД(60, 48) = 2²·3 = 12</div>`+
+        sml('60 = 2²·3·5, 48 = 2⁴·3: общие — 2 и 3, берём 2²·3 → 12. проверь перебором!'));
+    } else if(step===8){
+      h=col(big('НОК перебором'),
+        l78LCM(4,6,'m')+
+        sml('выписываем кратные: у 4 — 4, 8, 12…; у 6 — 6, 12… первое общее и есть НОК'));
+    } else if(step===9){
+      h=col(big('НОК через разложение'),
+        l78PowShow(6,8,'n')+
+        l78Picks(6,8,'o','lcm')+
+        `<div class="wv-ans" style="font-size:24px;color:#2f8f5a;font-weight:bold">все простые в СТАРШЕЙ степени: 2³·3 = 24</div>`+
+        sml('НОК(6, 8) = 24 — так и в нашей проверке! 6 = 2·3, 8 = 2³'));
+    } else if(step===10){
+      h=col(big('Взаимно простые'),
+        rowC(chip('НОД(4, 9) = 1','rgba(127,209,160,.5)'),chip('НОК(4, 9) = 4·9 = 36','rgba(127,209,255,.5)'))+
+        sml('нет общих простых — числа взаимно простые: НОД = 1, а НОК равен просто произведению!'));
+    } else if(step===11){
+      h=col(big('Связь НОД и НОК'),
+        rowC(chip('НОД(6, 8) · НОК(6, 8) = 2 · 24 = 48 = 6·8','rgba(217,164,65,.4)'))+
+        `<div style="font-size:22px;color:var(--brass);font-family:Georgia,serif">НОД · НОК = a · b</div>`+
+        sml('эта формула — в углублённых учебниках: знаешь НОД — сразу найдёшь НОК!'));
+    } else if(step===12){
+      const PAIRS=[[12,18],[6,8],[18,24],[60,48],[4,6],[14,21],[20,30],[16,24],[35,49],[9,12]];
+      if(st.i==null) st.i=0;
+      const [a,b]=PAIRS[st.i];
+      const g=(()=>{ let g=1; for(let d=2;d<=Math.min(a,b);d++) if(a%d===0&&b%d===0) g=d; return g; })();
+      const l= a/g*b;
+      let out='';
+      if(st.sho){
+        const isG=st.sho==='g';
+        out=`<div class="l35-pop" style="margin-top:6px;font-size:18px;font-weight:bold;color:${isG?'#f0a89a':'#9fe8c0'}">${isG? `НОД(${a}, ${b}) = ${g} — общие простые в младшей степени` : `НОК(${a}, ${b}) = ${l} — все простые в старшей степени`}</div>`;
+        out+=`<div style="font-size:12px;color:#cbb89a">${l78Prime(a).join('·')} и ${l78Prime(b).join('·')} → ${isG? `общие: ${(l78Prime(a).filter(p=>b%p===0)).join('·')||'—'}`:''}</div>`;
+      }
+      h=col(big('Тренажёр: НОД или НОК?'),
+        `<div class="wv-row">${chip(a+' и '+b,'rgba(217,164,65,.35)')}</div>`+
+        l78PowShow(a,b,'t')+
+        out+
+        btns(btn('🔴 покажи НОД',`l78Act('${lk}','g')`),btn('🟢 покажи НОК',`l78Act('${lk}','l')`),btn('🎲 другой пример',`l78Act('${lk}','n')`),btn('↺',`l78Act('${lk}','r')`))+
+        sml('сначала посчитай сам: разложи на простые, НОД — общие в младшей степени, НОК — все в старшей. потом проверь!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:256px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🔴 НОД — общие простые в МЛАДШЕЙ степени.<br>
+            🟢 НОК — все простые в СТАРШЕЙ степени.<br>
+            🤝 Взаимно простые: НОД=1, НОК = a·b.<br>
+            🔁 НОД · НОК = a·b · НОД — «делим», НОК — «когда совпадёт».</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там НОК(6, 8)'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -4057,6 +4285,7 @@ function renderLessonVis(){
   else if(id===50) visL50(el);
   else if(id===76) visL76(el);
   else if(id===77) visL77(el);
+  else if(id===78) visL78(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
