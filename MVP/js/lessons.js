@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2599,6 +2599,161 @@ function visL100(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 6 г и 3 см³'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l101Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['f','3'],['f','5'],['f','7'],['f','12'],['f','25'],['f','9'],['m','40'],['m','60'],['m','120'],['m','90'],['m','15'],['m','300']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l101Scale(){
+  // динамометр: шкала 0..10 Н с пружиной и крючком
+  return `<div style="display:flex;flex-direction:column;align-items:center;margin:2px auto">
+    <div style="width:6px;height:18px;background:#8a6a2f;border-radius:2px"></div>
+    <div style="width:52px;height:2px;background:#d9a441"></div>
+    <div class="wv-pop" style="position:relative;width:52px;height:150px;background:linear-gradient(180deg,#20352a,#16241c);border:2px solid #d9a441;border-radius:6px;overflow:hidden">
+      <div style="position:absolute;left:0;right:0;top:0;height:150px;background:repeating-linear-gradient(180deg,transparent 0 14px,rgba(217,164,65,.45) 14px 15px)"></div>
+      <div style="position:absolute;left:2px;right:2px;top:150px;height:0;background:linear-gradient(180deg,#7fd1a0,#3c8f5f);transition:top .6s ease"></div>
+    </div>
+  </div>`;
+}
+function l101Beam(m){
+  // груз m кг на пружине: N блоков по 10 Н
+  let blocks='';
+  for(let i=0;i<m;i++) blocks+=`<div class="l35-pop" style="animation-delay:${(i*0.08).toFixed(2)}s;width:20px;height:20px;border-radius:4px;background:linear-gradient(145deg,#7f9bb0,#4a5f70);display:flex;align-items:center;justify-content:center;font-size:10px;color:#eaf3f8">10</div>`;
+  return `<div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:180px;gap:2px;margin:2px auto">${blocks}</div>`;
+}
+function l101Moon(){
+  return `<div style="font-size:52px" class="wv-swing">🌙</div>`;
+}
+function visL101(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Почему яблоко падает вниз?'),
+        `<div style="font-size:46px" class="wv-flick">🍎</div>`+
+        sml('Земля притягивает к себе всё: и яблоко, и тебя, и Луну. Эта сила — сила тяжести!'));
+    } else if(step===1){
+      h=col(big('Сила тяжести F'),
+        rowC(chip('F — сила тяжести','rgba(127,209,255,.5)'),chip('направлена вниз','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">F = m · g</div>`+
+        sml('m — масса тела (в кг), g — «сколько Ньютонов на каждый кг»'));
+    } else if(step===2){
+      h=col(big('g ≈ 10 Н/кг на Земле'),
+        rowC(chip('1 кг → 10 Н','rgba(217,164,65,.5)'),chip('2 кг → 20 Н','rgba(217,164,65,.5)'),chip('3 кг → 30 Н','rgba(217,164,65,.5)'))+
+        sml('g (жэ) — ускорение свободного падения, на Земле ≈ 10 Н/кг. Удобно считать!'));
+    } else if(step===3){
+      h=col(big('Считаем: 3 кг → ?'),
+        l101Beam(3)+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 3 · 10 = 30 Н</div>`+
+        sml('каждый кг «тянет» на 10 Н: три кубика по 10 Н — вот и 30!'));
+    } else if(step===4){
+      h=col(big('Задача-проверка: 4 кг → ?'),
+        l101Beam(4)+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 4 · 10 = 40 Н</div>`+
+        sml('как в проверке! m · g = 4 · 10 = 40'));
+    } else if(step===5){
+      h=col(big('Наоборот: из силы в массу'),
+        rowC(chip('F = 120 Н','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">m = 120 : 10 = 12 кг</div>`+
+        sml('m = F : g. Делим на 10! Как в наших задачках: 120 Н → 12 кг'));
+    } else if(step===6){
+      h=col(big('Чем измеряют силу?'),
+        rowC(chip('динамометр — прибор для силы (Н)','rgba(127,209,255,.5)'),chip('весы — масса (кг)','rgba(127,184,160,.5)'))+
+        `<div style="font-size:44px" class="wv-pop">🪝</div>`+
+        sml('динамометр растягивает пружину: чем сильнее тянет груз, тем больше деление'));
+    } else if(step===7){
+      h=col(big('Вес тела P'),
+        rowC(chip('вес — сила, с которой тело давит на опору','rgba(217,164,65,.4)'),chip('или растягивает подвес','rgba(217,164,65,.4)'))+
+        `<div style="font-size:44px" class="wv-pop">🧍</div>`+
+        sml('стоишь на полу — давишь на пол весом. Пол давит на тебя с той же силой вверх!'));
+    } else if(step===8){
+      h=col(big('Вес = силе тяжести (в покое)'),
+        rowC(chip('F тяж = m · g','rgba(127,209,255,.5)'),chip('вес P = m · g','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">когда тело стоит, P = F</div>`+
+        sml('отличие: сила тяжести приложена к телу, а вес — к опоре. Но числа равны!'));
+    } else if(step===9){
+      h=col(big('А на Луне?'),
+        rowC(chip('Луна: g ≈ 1,6 Н/кг','rgba(127,209,255,.5)'),chip('Земля: g ≈ 10 Н/кг','rgba(127,184,160,.5)'))+
+        l101Moon()+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">6 кг на Луне → F ≈ 6 · 1,6 ≈ 10 Н</div>`+
+        sml('масса не меняется (6 кг и там и там), а сила тяжести в 6 раз меньше!'));
+    } else if(step===10){
+      h=col(big('Почему космонавты «летают»?'),
+        `<div style="font-size:44px" class="wv-swing">👨‍🚀</div>`+
+        sml('на орбите опора исчезает — невесомость! Вес пропал, а сила тяжести всё ещё действует (она держит корабль на орбите)'));
+    } else if(step===11){
+      h=col(big('Задача 1: 7 кг → ?'),
+        l101Beam(7)+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 7 · 10 = 70 Н</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===12){
+      h=col(big('Задача 2: 60 Н → ? кг'),
+        rowC(chip('F = 60 Н','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">m = 60 : 10 = 6 кг</div>`+
+        sml('m = F : g — делим силу на 10'));
+    } else if(step===13){
+      h=col(big('Где ещё встречается'),
+        rowC(chip('лифт: трогается — тяжелее','rgba(127,209,255,.4)'),chip('американские горки: «взлетаешь»','rgba(127,209,255,.4)'),chip('весы показывают кг','rgba(127,209,255,.4)'))+
+        sml('при разгоне лифта вверх вес растёт, при торможении — падает. Но масса всегда та же!'));
+    } else if(step===14){
+      h=col(big('Потренируйся в уме'),
+        rowC(chip('5 кг → 50 Н','rgba(127,184,160,.5)'),chip('20 кг → 200 Н','rgba(127,184,160,.5)'),chip('100 Н → 10 кг','rgba(127,184,160,.5)'))+
+        sml('всё просто: умножаешь на 10 или делишь на 10'));
+    } else if(step===15){
+      h=col(big('Схема-шпаргалка'),
+        rowC(chip('F = m · g','rgba(217,164,65,.5)'),chip('m = F : g','rgba(217,164,65,.5)'),chip('g ≈ 10 Н/кг','rgba(217,164,65,.5)'))+
+        sml('сила тяжести = масса × 10. Всё!'));
+    } else if(step===16){
+      const POOL=[['f','3'],['f','5'],['f','7'],['f','12'],['f','25'],['f','9'],['m','40'],['m','60'],['m','120'],['m','90'],['m','15'],['m','300']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0], x=+e[1];
+      let desc, firstStep, ans;
+      if(kind==='f'){
+        desc='сила тяжести для тела массой '+x+' кг (g = 10)?';
+        firstStep='F = m · g = '+x+' · 10';
+        ans=x*10;
+      } else {
+        desc='какая масса у тела, если сила тяжести '+x+' Н?';
+        firstStep='m = F : g = '+x+' : 10';
+        ans=x/10;
+      }
+      h=col(big('Тренажёр: сила тяжести'),
+        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
+        `<div style="font-size:34px" class="wv-flick">🏋️</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l101Act('${lk}','s1')`),btn('2️⃣ ответ',`l101Act('${lk}','s2')`),btn('🎲 другая',`l101Act('${lk}','n')`),btn('↺',`l101Act('${lk}','r')`))+
+        sml('F = m·g, g ≈ 10. Умножаешь или делишь на 10!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🍎 F = m · g, g ≈ 10 Н/кг.<br>
+            ⚖️ Вес = силе тяжести, когда тело стоит.<br>
+            🌙 На Луне сила в 6 раз меньше, масса та же!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 4 кг'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -7224,6 +7379,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===101) visL101(el);
   else if(id===100) visL100(el);
   else if(id===22) visL22(el);
   else if(id===21) visL21(el);
