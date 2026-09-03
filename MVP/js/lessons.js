@@ -695,7 +695,7 @@ function l10Road(moving, v1, v2, dur, dist, start){
     <!-- машина (стоит на асфальте: низ фото = верх асфальта) -->
     <div style="position:absolute;bottom:${ASF}px;left:${stX}px;z-index:4;animation:wvDrive ${dur||1.6}s cubic-bezier(.45,0,.55,1) both;--dx:${dx}px;line-height:0">
       <div class="${moving?'l10-bob':''}" style="line-height:0">
-        <img src="img/car.png?v=73" alt="машина" style="width:${CARW}px;height:auto;display:block">
+        <img src="img/car.png?v=75" alt="машина" style="width:${CARW}px;height:auto;display:block">
       </div>
     </div>
     ${dust}
@@ -929,7 +929,7 @@ function visPhysNew(el){
           const v=Math.round(st.p/st.t*10)/10; const px=Math.min(208, st.p*3);
           h=col(
             `<div class="wv-road" style="width:300px"><div class="wv-lane"></div>
-              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=73" style="width:88px;height:auto;display:block"></div>
+              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=75" style="width:88px;height:auto;display:block"></div>
               <div style="position:absolute;top:-4px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${st.p} км</div>
               <div style="position:absolute;top:1px;left:4px;font-size:12px;color:#9fc5f5">⏱ ${st.t} ч</div></div>`+
             big(`S = ${st.p} км · t = ${st.t} ч`)+big(`v = S : t = ${st.p} : ${st.t} = ${v} км/ч`)+
@@ -940,7 +940,7 @@ function visPhysNew(el){
           const S=st.v*st.t; const px=Math.min(208, S*3);
           h=col(
             `<div class="wv-road" style="width:300px"><div class="wv-lane"></div>
-              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=73" style="width:88px;height:auto;display:block"></div>
+              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=75" style="width:88px;height:auto;display:block"></div>
               <div style="position:absolute;top:-4px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${S} км</div></div>`+
             big(`v=${st.v} км/ч · t=${st.t} ч`)+big(`S = v·t = ${S} км`)+
             btns(btn('🚗 +5 км/ч',`phAct('${lk}','v+')`),btn('−5 км/ч',`phAct('${lk}','v-')`),btn('⏱ +1 ч',`phAct('${lk}','t+')`),btn('⏱ −1 ч',`phAct('${lk}','t-')`),btn('↺',`phAct('${lk}','r')`))+
