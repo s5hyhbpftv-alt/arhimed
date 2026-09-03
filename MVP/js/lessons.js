@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2069,6 +2069,214 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l77Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[150,275,306,480,505,610,720,845,908,990,1000,124,355,268,530,795,860,244,915,100];
+  switch(act){
+    case 'pick2': st.ans='2'; break;
+    case 'pick5': st.ans='5'; break;
+    case 'pick10': st.ans='10'; break;
+    case 'new': st.i=(st.i==null?0:(st.i+1))%POOL.length; st.ans=null; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l77Big(n,uid,opt){
+  // крупное число: последняя цифра в цветной рамке
+  const o=opt||{};
+  const s=String(n);
+  const digits=s.split('').map((d,i)=>{
+    const last=i===s.length-1;
+    const col=o.col||(last? (o.hot?'#e0523d':'#d9a52a') : '#2a3a4a');
+    return `<div style="width:${o.cw||52}px;height:${o.ch||62}px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:${o.fs||44}px;font-weight:bold;color:${col};${last?`background:${o.hot?'rgba(224,82,61,.12)':'rgba(217,165,42,.14)'};border:3px dashed ${o.hot?'#e0523d':'#d9a52a'};border-radius:12px;`:'margin:0 1px;'}" class="${last?'l35-pop':''}">${d}</div>`;
+  }).join('');
+  return `<div style="display:flex;justify-content:center;align-items:center">${digits}</div>`;
+}
+function l77Wheel(uid){
+  // кольцо последних цифр: цвет = на что делится число с такой цифрой
+  const W=300,H=300, cx=150, cy=150, r=96;
+  const dig=['0','1','2','3','4','5','6','7','8','9'];
+  const cls=['gold','none','two','none','two','five','two','none','two','none'];
+  const col={gold:'#e8b04a',two:'#7fb8d8',five:'#8ab860',none:'#9aa7b4'};
+  let html='';
+  dig.forEach((d,i)=>{
+    const a=-90+i*36;
+    const rad=a*Math.PI/180;
+    const x=cx+r*Math.cos(rad), y=cy+r*Math.sin(rad);
+    const c=col[cls[i]];
+    html+=`<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})"><circle r="24" fill="${c}" stroke="#ffffff" stroke-width="2"/>
+      <text y="7" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold">${d}</text></g>`;
+  });
+  html+=`<text x="${cx}" y="${cy-6}" text-anchor="middle" font-size="13" fill="#5b6b78" font-weight="bold">последняя цифра</text>
+    <text x="${cx}" y="${cy+12}" text-anchor="middle" font-size="11" fill="#8aa08f">решает всё!</text>`;
+  const leg=[['#e8b04a','0 → ÷10, ÷5, ÷2'],['#8ab860','5 → ÷5'],['#7fb8d8','2,4,6,8 → ÷2'],['#9aa7b4','1,3,7,9 — ни на что из трёх']];
+  const legend=leg.map(([c,t])=>`<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#e8e0cc"><span style="width:14px;height:14px;border-radius:4px;background:${c};display:inline-block"></span>${t}</div>`).join('');
+  return `<div style="width:${W}px;margin:0 auto;text-align:center">
+    <svg width="${W}" height="${W}" viewBox="0 0 ${W} ${W}" style="display:block">${html}</svg>
+    <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;background:rgba(255,255,255,.05);border-radius:12px;padding:8px 12px;max-width:280px;margin:0 auto">${legend}</div>
+  </div>`;
+}
+function l77Grid100(div,uid){
+  // сетка 1..100, подсвечены кратные div
+  const W=300;
+  const cell=(n)=>{
+    const hit=n%div===0;
+    return `<div style="width:27px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;${hit?'background:#e8b04a;color:#fff;font-weight:bold;box-shadow:0 0 6px rgba(232,176,74,.5)':'color:#8aa08f'}">${n}</div>`;
+  };
+  const rows=[];
+  for(let r=0;r<10;r++){
+    const cells=[];
+    for(let c=1;c<=10;c++) cells.push(cell(r*10+c));
+    rows.push(`<div style="display:flex;gap:2px">${cells.join('')}</div>`);
+  }
+  return `<div style="width:${W}px;margin:0 auto;text-align:center"><div style="display:inline-flex;flex-direction:column;gap:2px">${rows.join('')}</div>
+    <div style="margin-top:4px;font-size:13px;color:#e8d9a8;font-weight:bold">кратных ${div} от 1 до 100: ровно ${100/div}</div></div>`;
+}
+function l77Gates(uid){
+  // очередь чисел у трёх ворот (пропускной пункт)
+  const gate=(n,cond,pass,lab)=>{
+    return `<div style="text-align:center;flex:1;min-width:96px">
+      <div style="position:relative;height:86px;display:flex;align-items:flex-end;justify-content:center">
+        <div style="position:absolute;left:50%;transform:translateX(-50%);top:0;font-size:30px;font-family:Georgia,serif;font-weight:bold;color:${pass?'#7fd1a0':'#e0523d'}">${n}</div>
+        <svg width="80" height="52" viewBox="0 0 80 52" style="display:block">
+          <path d="M6,52 V26 A34,34 0 0 1 74,26 V52 Z" fill="${pass?'#7fd1a0':'#b05a4a'}" opacity="${pass?'.2':'.12'}"/>
+          <path d="M6,52 V26 A34,34 0 0 1 74,26 V52" fill="none" stroke="${pass?'#3a9a5a':'#c96a3a'}" stroke-width="4"/>
+          <text x="40" y="40" text-anchor="middle" font-size="13" fill="${pass?'#3a9a5a':'#c96a3a'}" font-weight="bold">${lab}</text>
+        </svg>
+      </div>
+      <div style="font-size:11px;color:#cbb89a">${pass?'✅ проходит':'❌ не проходит'}</div>
+    </div>`;
+  };
+  // число 480: проходит все трое
+  const row480=`<div style="display:flex;gap:6px;justify-content:center;margin:2px 0">${gate('480',true,true,'÷2')}${gate('480',true,true,'÷5')}${gate('480',true,true,'÷10')}</div>`;
+  // 125: только через ÷5
+  const row125=`<div style="display:flex;gap:6px;justify-content:center;margin:2px 0">${gate('125',false,false,'÷2')}${gate('125',true,true,'÷5')}${gate('125',false,false,'÷10')}</div>`;
+  return `<div style="background:rgba(255,255,255,.03);border:1px solid rgba(127,209,255,.14);border-radius:14px;padding:8px 6px;width:300px;margin:0 auto">${row480}${row125}</div>`;
+}
+function l77Sort(uid,N){
+  // корзины: ÷2 ÷5 ÷10; при клике l77Act set ans; показываем результат
+  const d2=N%2===0, d5=N%5===0, d10=N%10===0;
+  const targets=[['÷2',d2,'2'],['÷5',d5,'5'],['÷10',d10,'10']];
+  const ask = [d2,d5,d10].filter(Boolean).length===1 ? [true,true,true] : [d2,d5,d10];
+  return `<div style="width:300px;margin:0 auto;text-align:center">
+    <div style="font-size:15px;color:#cbb89a;margin-bottom:4px">куда пропустим число?</div>
+    ${l77Big(N,'s',{hot:true,cw:46,ch:54,fs:38})}
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
+      ${targets.map(([lab,ok,key])=>{
+        const base=`flex:1;border-radius:14px;padding:10px 4px;font-size:16px;font-weight:bold;cursor:pointer;`;
+        const style= ok? 'border:2px solid rgba(127,209,160,.6);background:rgba(127,209,160,.08);color:#9fe8c0;' : 'border:2px solid rgba(232,106,90,.45);background:rgba(232,106,90,.06);color:#e0a99a;';
+        return `<button class="hint-btn" style="${base}${style}" onclick="l77Act('${N? '':'x'}','pick${key==='2'?'2':key==='5'?'5':'10'}')">${lab}</button>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+function visL77(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const ok=c=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;font-size:14px;color:#9fe8c0;background:rgba(127,209,160,.1);border:1px solid rgba(127,209,160,.5)">${c}</span>`;
+    const no=c=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;font-size:14px;color:#e0a99a;background:rgba(232,106,90,.1);border:1px solid rgba(232,106,90,.5)">${c}</span>`;
+    let h='';
+    if(step===0){
+      h=col(big('Пропускной пункт Архимеда'),
+        `<div style="font-size:52px" class="l35-pop">🏛️</div>`+
+        big('стражник смотрит на ПОСЛЕДНЮЮ цифру!')+
+        sml('чтобы узнать, делится ли число на 2, 5 или 10, не надо делить всё число — достаточно одной последней цифры! листай ➜'));
+    } else if(step===1){
+      h=col(big('Из чего состоит число'),
+        l77Big(245,'a',{})+
+        `<div style="font-size:17px;text-align:center;margin:4px 0">245 = 24 десятка + <b style="color:#d9a52a">5 единиц</b></div>`+
+        sml('десятки всегда делятся на 10, 5 и 2. значит, всё решают единицы — последняя цифра!'));
+    } else if(step===2){
+      h=col(big('Делится на 10 — только …0'),
+        l77Big(480,'b',{hot:true})+
+        rowC(ok('480 ÷ 10 = 48'),no('473 ÷ 10 — нет'))+
+        sml('на 10 делятся числа, оканчивающиеся на 0'));
+    } else if(step===3){
+      h=col(big('Делится на 5 — …0 или …5'),
+        l77Big(125,'c',{hot:true})+
+        rowC(ok('125 ÷ 5 = 25'),ok('340 ÷ 5 = 68'),no('128 ÷ 5 — нет'))+
+        sml('смотрим на последнюю цифру: 0 или 5 — пропускаем!'));
+    } else if(step===4){
+      h=col(big('Делится на 2 — чётные'),
+        l77Big(306,'d',{hot:true})+
+        rowC(ok('306 ÷ 2 = 153'),ok('488 ÷ 2 = 244'),no('125 ÷ 2 — нет'))+
+        sml('чётная последняя цифра: 0, 2, 4, 6 или 8'));
+    } else if(step===5){
+      h=col(big('Карта цифр-ключей'),
+        l77Wheel('w')+
+        sml('запомни кольцо: золотая 0 — проходит все ворота; зелёная 5 — ворота ÷5; синие чётные — ворота ÷2; серые — стоят в сторонке'));
+    } else if(step===6){
+      h=col(big('Число-всезнайка 480'),
+        l77Gates('g')+
+        sml('480 кончается на 0: чётное (÷2), кончается на 0 или 5 (÷5) и на 0 (÷10) — проходит все три ворота!'));
+    } else if(step===7){
+      h=col(big('А 125?'),
+        `<div style="font-size:19px;text-align:center">125 = 12 десятков + <b style="color:#e0523d">5 единиц</b></div>`+
+        rowC(no('125 ÷ 2 — нечётное'),ok('125 ÷ 5 = 25'),no('125 ÷ 10 — нет'))+
+        sml('последняя цифра 5: пропуск только на ÷5. десятки тут ни при чём!'));
+    } else if(step===8){
+      h=col(big('Почему десятки не важны'),
+        rowC(chip('10·k делится и на 10, и на 5, и на 2','rgba(127,184,160,.5)'))+
+        l77Big(730,'e',{hot:true})+
+        sml('730 = 73·10 + 0: десятки делятся всегда, остаётся проверить последнюю цифру 0 — всё ворота открыты!'));
+    } else if(step===9){
+      h=col(big('Как в проверке'),
+        rowC(chip('305','rgba(232,106,90,.5)'),chip('462','rgba(232,106,90,.5)'),chip('500','rgba(127,209,160,.6)'))+
+        `<div style="text-align:center">${l77Big(500,'f',{hot:true})}</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">500: ÷2, ÷5 и ÷10 ✓</div>`+
+        sml('только у 500 последняя цифра 0 — ответ готов за секунду!'));
+    } else if(step===10){
+      if(st.i==null) st.i=3;
+      const N=[150,275,306,480,505,610,720,845,908,990,124,355,268,530,795,860,244,915,100][st.i];
+      const d2=N%2===0,d5=N%5===0,d10=N%10===0;
+      const truth={2:d2,5:d5,10:d10};
+      let verdict='';
+      if(st.ans){
+        const key=st.ans;
+        const good=truth[key];
+        verdict=`<div class="l35-pop" style="margin-top:6px;font-size:17px;font-weight:bold;color:${good?'#9fe8c0':'#ffb0a0'}">${good? '✅ верно! '+N+' делится на '+key : '❌ нет: '+N+' не делится на '+key}</div>`;
+        if(key==='10') verdict+= `<div style="font-size:12px;color:#cbb89a">подсказка: ÷10 — только цифра 0 на конце</div>`;
+        if(key==='5'&&!good) verdict+= `<div style="font-size:12px;color:#cbb89a">для ÷5 нужна цифра 0 или 5</div>`;
+        if(key==='2'&&!good) verdict+= `<div style="font-size:12px;color:#cbb89a">для ÷2 нужна чётная цифра</div>`;
+      }
+      const corr=[d2?'2':'',d5?'5':'',d10?'10':''].filter(Boolean).join(', ');
+      h=col(big('Тренажёр: к каким воротам?'),
+        `<div style="width:300px;margin:0 auto;text-align:center">
+          ${l77Big(N,'t',{hot:true,cw:46,ch:54,fs:40})}
+          <div style="margin:8px 0;font-size:13px;color:#cbb89a">на какие ворота делится ${N}? (верно: ${corr||'ни на какие'})</div>
+          <div style="display:flex;gap:8px;justify-content:center">
+            ${[['÷2','2'],['÷5','5'],['÷10','10']].map(kv=>btn(kv[0],`l77Act('${lk}','pick${kv[1]}')`)).join('')}
+          </div>
+          ${verdict}
+        </div>`+
+        btns(btn('🎲 следующее число',`l77Act('${lk}','new')`),btn('↺',`l77Act('${lk}','r')`))+
+        sml('ответ сразу виден по последней цифре — потом нажми «🎲» и проверь себя ещё раз!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:250px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🔟 ÷10 — только …0.<br>
+            5️⃣ ÷5 — …0 или …5.<br>
+            2️⃣ ÷2 — чётные: 0,2,4,6,8.<br>
+            👁 Смотри на последнюю цифру — и не дели столбиком!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — найди число, делящееся и на 2, и на 5, и на 10'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -3848,6 +4056,7 @@ function renderLessonVis(){
   else if(id===49) visL49(el);
   else if(id===50) visL50(el);
   else if(id===76) visL76(el);
+  else if(id===77) visL77(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
