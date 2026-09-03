@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2098,6 +2098,218 @@ function visL50(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — велосипедист 15 км/ч и 4 часа'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l81Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['2,5','+','1,75'],['3,2','+','2,85'],['5,3','-','1,8'],['9','-','3,25'],['1,8','+','0,75'],['7,4','-','2,65'],['4,05','+','1,9'],['6,5','-','4,25']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break; case 's3': st.s3=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=st.s3=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l81Parse(s){ // '2,75' -> {w:'2', f:'75'} ; целое '9' -> w:'9', f:''
+  const i=s.indexOf(','); 
+  if(i<0) return {w:s,f:''};
+  return {w:s.slice(0,i), f:s.slice(i+1)};
+}
+function l81Pad(A,B){ // дописать нули до равной дробной части; вернуть {a:{w,f},b:{w,f},lenW,lenF}
+  const a=l81Parse(A), b=l81Parse(B);
+  const lenF=Math.max(a.f.length,b.f.length);
+  a.f=(a.f+'0'.repeat(lenF)).slice(0,lenF);
+  b.f=(b.f+'0'.repeat(lenF)).slice(0,lenF);
+  const lenW=Math.max(a.w.length,b.w.length);
+  a.w=('0'.repeat(lenW)+a.w).slice(-lenW);
+  b.w=('0'.repeat(lenW)+b.w).slice(-lenW);
+  return {a,b,lenW,lenF};
+}
+function l81Calc(A,B,op){
+  const {a,b,lenW,lenF}=l81Pad(A,B);
+  // работаем с целыми числами как строки цифр len = lenW+lenF; dot между ними
+  const dA=(a.w+a.f).split('').map(Number);
+  const dB=(b.w+b.f).split('').map(Number);
+  const L=dA.length;
+  const res=[], carry=[], borrow=[];
+  if(op==='+'){
+    let c=0;
+    for(let i=L-1;i>=0;i--){ const s=dA[i]+dB[i]+c; carry[i]=Math.floor(s/10); res[i]=s%10; c=carry[i]; }
+  } else {
+    let rem=0;
+    for(let i=L-1;i>=0;i--){ let av=dA[i]-rem; borrow[i]=av<dB[i]; if(av<dB[i]) av+=10; res[i]=av-dB[i]; rem=borrow[i]?1:0; }
+  }
+  // собрать результат с учётом dot
+  const dotIdx=lenF===0? -1 : L-lenF; // индекс после этой цифры? dot между L-lenF-1 и L-lenF
+  const lead=op==='+'? (carry[0]? res[0]: res[0]): res[0];
+  return {res,carry,borrow,lenW,lenF,L,dotAfter:L-lenF-1};
+}
+function l81ColView(A,B,op,uid){
+  const {a,b,lenW,lenF}=l81Pad(A,B);
+  const m=l81Calc(A,B,op);
+  const L=m.L;
+  // массив ячеек слева направо: [целые... , ',', дроби...]
+  const names=(i)=>{ // i от 0 (лево) .. L-1 (право), индекс внутри объединённых
+    const fromRight=L-1-i; // 0 = самая правая (сотые если есть)
+    if(fromRight<lenF){ const nn=['','десятые','сотые','тысячные']; return nn[lenF-fromRight]||''; }
+    const wIdx=fromRight-lenF; // 0=единицы...
+    const wn=['единицы','десятки','сотни','тысячи','десятки тысяч'];
+    return wn[wIdx]||'';
+  };
+  const seqA=a.w.split('').map(Number).concat(a.f.split('').map(Number));
+  const seqB=b.w.split('').map(Number).concat(b.f.split('').map(Number));
+  const resDigits=m.res; // массив длины L
+  const cw=52;
+  const cellW=(val,kind,i)=>{
+    const iL= i>=lenW? i+1: i; // смещение для запятой: целые идут слева; после lenW цифр ставим ',' затем дроби
+    return `<div style="width:${cw}px;height:44px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:bold;font-size:28px;color:${kind==='res'?'#1a6a4a':kind==='b'?'#c96a3a':'#2a3a4a'}">${val}</div>`;
+  };
+  const row=(arr,kind)=>{
+    let cells='';
+    for(let i=0;i<L;i++){
+      const isFrac=i>=lenW;
+      if(!isFrac) cells+=cellW(arr[i],kind,i);
+      else { if(i===lenW) cells+=`<div style="width:16px;display:flex;align-items:flex-end;justify-content:center;font-size:30px;color:#e0523d;font-weight:bold;padding-bottom:6px">,</div>`; cells+=cellW(arr[i],kind,i); }
+    }
+    return cells;
+  };
+  const rowsTop=row(seqA,'a');
+  const rowsBot=row(seqB,'b');
+  const rowsRes=row(resDigits,'res');
+  const labels=Array.from({length:lenW+lenF},(_,i)=>{
+    const w=i===lenW? 16: cw;
+    return `<div style="width:${w}px;font-size:9px;color:#8aa08f;text-align:center">${i===lenW?'':names(i)}</div>`;
+  }).join('');
+  return `<div style="display:flex;justify-content:center;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;background:rgba(255,255,255,.03);border-radius:12px;padding:6px 8px">
+      <div style="display:flex;justify-content:flex-end">${rowsTop}</div>
+      <div style="display:flex;justify-content:flex-end;position:relative"><div style="position:absolute;left:-4px;top:8px;font-size:26px;color:#c96a3a;font-weight:bold">${op}</div>${rowsBot}</div>
+      <div style="border-top:3px solid #2a3a4a;margin:2px 4px 0 0"></div>
+      <div style="display:flex;justify-content:flex-end">${rowsRes}</div>
+      <div style="display:flex;justify-content:flex-end;margin-top:1px">${labels}</div>
+    </div>
+  </div>`;
+}
+function l81Hundred(num,uid,col){
+  // сетка 10×10 для сотых: num/100 закрашено
+  let h='';
+  for(let r=0;r<10;r++) for(let c=0;c<10;c++){
+    const idx=r*10+c;
+    h+=`<div style="width:13px;height:13px;margin:0.5px;border-radius:2px;background:${idx<num? col||'#5aa8d8' : 'rgba(255,255,255,.07)'}"></div>`;
+  }
+  return `<div style="display:flex;flex-wrap:wrap;width:150px;margin:0 auto">${h}</div>`;
+}
+function visL81(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Касса Архимеда'),
+        `<div style="font-size:48px" class="l35-pop">🧾</div>`+
+        big('2,50 + 1,75 — сколько заплатить?')+
+        sml('деньги — это десятичные дроби: рубли и копейки. посчитаем по-научному! листай ➜'));
+    } else if(step===1){
+      h=col(big('Разряды числа 2,857'),
+        `<div style="text-align:center;font-size:42px;font-family:Georgia,serif;color:#fff;font-weight:bold;letter-spacing:2px;margin:4px 0">2<span style="color:#e0523d">,</span>857</div>`+
+        rowC(chip('2 — единицы','rgba(127,184,160,.5)'),chip('8 — десятые','rgba(232,160,90,.5)'),chip('5 — сотые','rgba(127,209,255,.5)'),chip('7 — тысячные','rgba(217,164,65,.5)'))+
+        sml('запятая отделяет целую часть от дробной. после неё идут десятые, сотые, тысячные…'));
+    } else if(step===2){
+      h=col(big('Десятичная = обыкновенная'),
+        `<div style="font-size:22px;text-align:center">0,1 = 1/10 · 0,25 = 25/100 · 0,857 = 857/1000</div>`+
+        rowC(l81Hundred(25,'x','#5aa8d8'),`<div style="font-size:13px;color:#cbb89a;max-width:130px">25 клеток из 100 — это 25 сотых = 0,25</div>`)+
+        sml('знаменатель 10, 100, 1000… — сколько нулей, столько цифр после запятой!'));
+    } else if(step===3){
+      h=col(big('Как читать'),
+        rowC(chip('3,14 — три целых 14 сотых','rgba(127,209,255,.5)'),chip('0,05 — пять сотых','rgba(127,184,160,.5)'))+
+        `<div style="text-align:center;font-size:19px;margin:4px 0">«целых …» + последний разряд после запятой</div>`+
+        sml('0,5 — пять десятых · 2,7 — две целых семь десятых · 0,25 — двадцать пять сотых'));
+    } else if(step===4){
+      h=col(big('Сравниваем'),
+        `<div style="text-align:center;font-size:24px;margin:4px 0">3,2 <b style="color:#7fd1a0">›</b> 3,19? → 3,20 › 3,19 ✓</div>`+
+        `<div style="text-align:center;font-size:24px;margin:4px 0">2,5 <b style="color:#7fd1a0">=</b> 2,50</div>`+
+        sml('сначала целые, потом десятые, сотые… приписывай нули справа и сравнивай поразрядно'));
+    } else if(step===5){
+      h=col(big('Запятая под запятой!'),
+        rowC(
+          `<div style="text-align:center;width:150px;border:2px solid rgba(224,82,61,.5);border-radius:12px;padding:8px;background:rgba(224,82,61,.06)"><div style="font-size:19px;font-family:Georgia,serif;line-height:1.6">2,5<br>+&nbsp;&nbsp;1,75</div><div class="wv-sml" style="font-size:10px;color:#e0a99a">запятые врозь — каша!</div></div>`+
+          `<div style="text-align:center;width:150px;border:2px solid rgba(127,209,160,.55);border-radius:12px;padding:8px;background:rgba(127,209,160,.06)"><div style="font-size:19px;font-family:Georgia,serif;line-height:1.6">2,50<br>+1,75</div><div class="wv-sml" style="font-size:10px;color:#9fceb2">запятая под запятой</div></div>`)+
+        sml('как в обычном столбике, только по обе стороны от запятой — свои разряды'));
+    } else if(step===6){
+      h=col(big('Приписываем нули'),
+        rowC(chip('2,5 = 2,50 = 2,500','rgba(127,184,160,.5)'))+
+        `<div style="text-align:center;font-size:22px;margin:4px 0">1 = 1,0 = 1,00 = 1,000</div>`+
+        sml('нули справа ничего не меняют: 2,5 — это те же 2,50. зато удобно складывать!'));
+    } else if(step===7){
+      h=col(big('Складываем: 2,5 + 1,75'),
+        l81ColView('2,5','1,75','+','a')+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">2,50 + 1,75 = 4,25 ✓</div>`+
+        sml('сотые: 0+5=5; десятые: 5+7=12 — единица в уме; единицы: 2+1+1=4'));
+    } else if(step===8){
+      h=col(big('Как в проверке: 3,2 + 2,85'),
+        l81ColView('3,2','2,85','+','b')+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">3,20 + 2,85 = 6,05 ✓</div>`+
+        sml('сотые: 0+5=5; десятые: 2+8=10 → пишем 0, единица в уме; единицы: 3+2+1=6'));
+    } else if(step===9){
+      h=col(big('Вычитаем: 5,3 − 1,8'),
+        l81ColView('5,3','1,8','-','c')+
+        `<div class="wv-ans" style="font-size:28px;color:#1a5a8a;font-weight:bold">5,30 − 1,80 = 3,50 = 3,5</div>`+
+        sml('десятых не хватает (3 < 8) — занимаем у единиц, как в обычном столбике'));
+    } else if(step===10){
+      h=col(big('Из целого: 9 − 3,25'),
+        l81ColView('9','3,25','-','d')+
+        `<div class="wv-ans" style="font-size:28px;color:#1a5a8a;font-weight:bold">9,00 − 3,25 = 5,75 ✓</div>`+
+        sml('девятку пишем как 9,00 и занимаем через ноль — как в уроке про столбик!'));
+    } else if(step===11){
+      h=col(big('Маша в парке'),
+        rowC(chip('1,8 км до парка','rgba(127,184,160,.5)'),chip('0,75 км по парку','rgba(127,209,255,.5)'))+
+        l81ColView('1,8','0,75','+','e')+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">1,80 + 0,75 = 2,55 км</div>`+
+        sml('всего Маша прошла 2,55 км — как в наших задачках!'));
+    } else if(step===12){
+      const POOL=[['2,5','+','1,75'],['3,2','+','2,85'],['5,3','-','1,8'],['9','-','3,25'],['1,8','+','0,75'],['7,4','-','2,65'],['4,05','+','1,9'],['6,5','-','4,25']];
+      if(st.i==null) st.i=0;
+      const [A,op,B]=POOL[st.i];
+      const {a,b,lenW,lenF}=l81Pad(A,B);
+      const m=l81Calc(A,B,op);
+      const L=m.L;
+      let resStr='';
+      for(let i=0;i<L;i++){ resStr+=m.res[i]; if(i===lenW-1&&lenF>0) resStr+=','; }
+      resStr=resStr.replace(/^0+(?=\d)/,'').replace(/0+$/,'').replace(/,$/,'');
+      if(resStr===''||resStr==='-') resStr='0';
+      const paddedA=lenF? a.w+','+a.f : a.w;
+      const paddedB=lenF? b.w+','+b.f : b.w;
+      h=col(big('Тренажёр: касса Архимеда'),
+        `<div style="font-size:22px;text-align:center">${A} ${op} ${B} = ?</div>`+
+        l81ColView(A,B,op,'t')+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) выровняли: ${paddedA} и ${paddedB} — запятая под запятой</div>`:'')+
+        (st.s2? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">2) ${op==='+'?'сложили поразрядно (единица в уме — перенос)':'вычли поразрядно (занимали при нехватке)'}</div>`:'')+
+        (st.s3? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${A} ${op} ${B} = ${resStr}</div>`:'')+
+        btns(btn('1️⃣ выровнять',`l81Act('${lk}','s1')`),btn('2️⃣ посчитать',`l81Act('${lk}','s2')`),btn('3️⃣ ответ',`l81Act('${lk}','s3')`),btn('🎲 другой',`l81Act('${lk}','n')`),btn('↺',`l81Act('${lk}','r')`))+
+        sml('по шагам: допиши нули → сложи/вычти поразрядно, держа запятую под запятой → ответ'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:258px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            ✍️ Запятая ПОД запятой — столбиком!<br>
+            0️⃣ Приписывай нули справа: 2,5 = 2,50.<br>
+            ➕ 10 сотых = 1 десятая · 10 десятых = 1.<br>
+            🔍 Сравнивай поразрядно, от целых к сотым.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 3,2 + 2,85'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -4733,6 +4945,7 @@ function renderLessonVis(){
   else if(id===78) visL78(el);
   else if(id===79) visL79(el);
   else if(id===80) visL80(el);
+  else if(id===81) visL81(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
