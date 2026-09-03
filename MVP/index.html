@@ -387,6 +387,11 @@
     30%{transform:translateY(-2.5px) rotate(-2deg)} 70%{transform:translateY(2px) rotate(2.5deg)} }
   .l33-fall { animation:l33Fall 1.6s cubic-bezier(.25,.6,.35,1) both; }
   .l33-bob2 { animation:l33Bob 2.4s ease-in-out infinite; }
+
+  @keyframes l37Slide { from{transform:translate(var(--sx,0px),var(--sy,0px))} to{transform:translate(0,0)} }
+  @keyframes l37Shrink { from{transform:scaleX(1)} to{transform:scaleX(0)} }
+  @keyframes l37Grow { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+  .l37-slide { animation:l37Slide 1.3s cubic-bezier(.4,0,.8,1) both; }
   @keyframes wvGrow { 0%{transform:scaleX(0)} 100%{transform:scaleX(1)} }
   @keyframes wvIn { 0%{transform:translateY(14px);opacity:0} 100%{transform:translateY(0);opacity:1} }
   .wv-bub { width:9px; height:9px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#eaf7ff,#9fd4f2);
@@ -429,21 +434,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=83"></script>
-<script src="data/lessons.js?v=83"></script>
-<script src="js/comic.js?v=83"></script>
-<script src="js/core.js?v=83"></script>
-<script src="js/engine.js?v=83"></script>
-<script src="js/app.js?v=83"></script>
-<script src="js/dashboard.js?v=83"></script>
-<script src="js/lessons.js?v=83"></script>
-<script src="js/legend.js?v=83"></script>
-<script src="js/simulator.js?v=83"></script>
-<script src="js/duel.js?v=83"></script>
-<script src="js/agent.js?v=83"></script>
-<script src="js/voice.js?v=83"></script>
-<script src="js/assistant.js?v=83"></script>
-<script src="js/agentlive.js?v=83"></script>
+<script src="data/tasks.js?v=84"></script>
+<script src="data/lessons.js?v=84"></script>
+<script src="js/comic.js?v=84"></script>
+<script src="js/core.js?v=84"></script>
+<script src="js/engine.js?v=84"></script>
+<script src="js/app.js?v=84"></script>
+<script src="js/dashboard.js?v=84"></script>
+<script src="js/lessons.js?v=84"></script>
+<script src="js/legend.js?v=84"></script>
+<script src="js/simulator.js?v=84"></script>
+<script src="js/duel.js?v=84"></script>
+<script src="js/agent.js?v=84"></script>
+<script src="js/voice.js?v=84"></script>
+<script src="js/assistant.js?v=84"></script>
+<script src="js/agentlive.js?v=84"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -458,7 +463,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=83').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=84').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>

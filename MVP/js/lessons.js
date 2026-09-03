@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -894,6 +894,76 @@ function l35Dual(){
     </div>
   </div>`;
 }
+function l37Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  switch(act){
+    case 'roll': st.roll=1; break;
+    case 'up': st.roll=0; break;
+    case 'm+': st.m=Math.min(10,(st.m==null?2:st.m)+1); break;
+    case 'm-': st.m=Math.max(1,(st.m==null?2:st.m)-1); break;
+    case 'h+': st.h=Math.min(10,(st.h==null?5:st.h)+1); break;
+    case 'h-': st.h=Math.max(1,(st.h==null?5:st.h)-1); break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l37Ball(r){
+  // мячик с бликом
+  const rr=r||13;
+  return `<svg width="${rr*2}" height="${rr*2}" viewBox="0 0 ${rr*2} ${rr*2}">
+    <circle cx="${rr}" cy="${rr}" r="${rr-1}" fill="#e0523d" stroke="#7a1a10" stroke-width="1.5"/>
+    <ellipse cx="${rr-rr*.38}" cy="${rr-rr*.38}" rx="${rr*.32}" ry="${rr*.22}" fill="rgba(255,255,255,.55)"/>
+  </svg>`;
+}
+function l37Skittle(){
+  // кегля
+  return `<svg width="26" height="46" viewBox="0 0 26 46">
+    <path d="M8,2 a5,5 0 0 1 10,0 L20,20 a9,9 0 0 1 0,16 L6,36 a9,9 0 0 1 0,-16 Z" fill="#f4f4ee" stroke="#9a94a0" stroke-width="1.5"/>
+    <path d="M7,16 a11,11 0 0 1 12,0" stroke="#e0523d" stroke-width="3" fill="none"/>
+  </svg>`;
+}
+function l37Scene(p, hit, opts){
+  // горка: мяч катится по наклонной; p=0 верх, p=1 низ
+  const o=opts||{};
+  const W=252, H=150;
+  const topX=34, topY=22, botX=206, botY=100; // линия ската
+  const x=topX+(botX-topX)*p, y=topY+(botY-topY)*p;
+  const ballR=13;
+  const dur=o.dur||'1.3s';
+  return `<div style="position:relative;width:${W}px;height:${H}px;margin:0 auto;border-radius:14px;overflow:hidden;
+      background:linear-gradient(180deg,#aee0f5 0%,#d8f0fa 55%,#7fb87a 55%,#5d9c4a 100%)">
+    <!-- солнце -->
+    <div style="position:absolute;right:10px;top:8px;width:26px;height:26px;border-radius:50%;background:#ffd94a;box-shadow:0 0 14px rgba(255,217,74,.7)"></div>
+    <!-- горка (наклонная) -->
+    <svg width="${W}" height="${H}" style="position:absolute;inset:0">
+      <polygon points="${topX-14},${topY+20} ${topX},${topY} ${botX},${botY} ${botX},${botY+22}" fill="#b08968"/>
+      <line x1="${topX-2}" y1="${topY-2}" x2="${botX+2}" y2="${botY+2}" stroke="#8a6f4d" stroke-width="5"/>
+      <line x1="${topX-2}" y1="${topY-2}" x2="${botX+2}" y2="${botY+2}" stroke="#c9a878" stroke-width="2.5"/>
+    </svg>
+    <!-- мяч: если o.slide — анимация спуска от вершины к этой точке -->
+    ${o.slide
+      ? `<div class="l37-slide" style="position:absolute;left:${x-ballR}px;top:${y-ballR-14}px;z-index:3;--sx:${-(botX-topX)}px;--sy:${-(botY-topY)}px">${l37Ball(ballR)}</div>`
+      : `<div style="position:absolute;left:${x-ballR}px;top:${y-ballR-14}px;z-index:3">${l37Ball(ballR)}</div>`}
+    <!-- кегля: падает с задержкой (когда мяч приехал) -->
+    <div style="position:absolute;left:${botX+16}px;top:${botY-44}px;transform-origin:50% 100%;transform:${hit?'rotate(70deg) translateY(6px)':''};transition:transform .4s ease-in ${hit?'1s':''};z-index:2">${l37Skittle()}</div>
+    ${o.mark?`<div style="position:absolute;left:${o.mark.x}px;top:${o.mark.y}px;font-size:11px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);font-weight:bold">${o.mark.t}</div>`:''}
+  </div>`;
+}
+function l37Bars(p, animate){
+  // полоски энергии: зелёная (потенциальная) и оранжевая (кинетическая)
+  const ep=Math.round((1-p)*100), ek=Math.round(p*100);
+  const bar=(lab,col,val,animTo,animCls)=>{
+    const inner = animate
+      ? `width:100%;transform-origin:left center;animation:${animCls} 1.3s cubic-bezier(.4,0,.8,1) both;`
+      : `width:${val}%;`;
+    return `<div style="display:flex;align-items:center;gap:6px;margin:2px 0">
+      <span style="font-size:10.5px;color:#cbb89a;width:76px;text-align:right">${lab}</span>
+      <div style="flex:1;height:12px;background:rgba(0,0,0,.3);border-radius:6px;overflow:hidden">
+        <div style="height:100%;${inner}background:${col}"></div></div>
+      <span style="font-size:11px;color:#e8e0cc;width:36px;font-weight:bold">${val}%</span></div>`;
+  };
+  return `<div style="width:232px;margin:0 auto">${bar('потенциальная','#7fd1a0',ep,0,'l37Shrink')}${bar('кинетическая','#f0a35a',ek,100,'l37Grow')}</div>`;
+}
 function visL36(el){
   // Урок 36 «Закон Ома»: сюжет «электричество — водопровод», цепь с электронами
   try{
@@ -1189,6 +1259,110 @@ function l36Water(){
       path="M${W*.16},${y} H${W*.9}" begin="${(-f*1.8).toFixed(2)}s"/></circle>`).join('')}
     <text x="${W*.85}" y="${H-8}" text-anchor="middle" font-size="11" fill="#9fc5e8">ток I</text>
   </svg>`;
+}
+function visL37(el){
+  // Урок 37 «Энергия и работа»: сюжет «Волшебная горка», мяч катится, энергия перетекает
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=col(big('Мяч на вершине горки'),
+        l37Scene(0,false,{mark:{x:96,y:18,t:'высота h'}})+
+        sml('мяч стоит — а энергия у него ЕСТЬ. толкни его на следующем шаге и смотри!'));
+    } else if(step===1){
+      h=col(big('Что такое энергия'),
+        `<div style="font-size:44px">⚡</div>`+big('способность совершать работу')+
+        sml('поднятый мяч может упасть · летящая стрела — пробить цель · сжатая пружина — распрямиться'));
+    } else if(step===2){
+      h=col(big('Потенциальная энергия'),
+        `<div style="font-size:36px;color:var(--brass);font-family:Georgia,serif">E = m · g · h</div>`+
+        l37Scene(0,false,{mark:{x:96,y:18,t:'h'}})+
+        sml('масса × (g≈10) × высота. чем выше и тяжелее — тем больше энергии'));
+    } else if(step===3){
+      h=col(big('Разбираем на числах'),
+        `<div class="wv-row">${chip('m = 2 кг','rgba(127,184,160,.5)')} ${chip('h = 10 м','rgba(127,209,255,.5)')} ${chip('g = 10','rgba(217,164,65,.5)')}</div>`+
+        `<div style="font-size:19px" class="wv-pop">E = m·g·h = 2 · 10 · 10</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">E = 200 Дж</div>`+
+        sml('джоуль (Дж) — единица энергии'));
+    } else if(step===4){
+      // интерактив: запустить мяч (анимация спуска)
+      const p=st.roll?1:0;
+      h=col(big('Запускаем мяч!'),
+        l37Scene(p, p>0.5, {slide:!!st.roll, mark:{x:96,y:18,t:p?'низ!':'высота h'}})+
+        l37Bars(p, !!st.roll)+
+        (st.roll
+          ? big('энергия перетекла: Ep → Ek!')+sml('мяч катится — потенциальная убывает, кинетическая растёт')
+          : btn('▶ запустить мяч с горки', `l37Act('${lk}','roll')`)+sml('нажми и следи за полосками энергии!'))+
+        (st.roll? btn('↺ вернуть наверх', `l37Act('${lk}','up')`) : ''));
+    } else if(step===5){
+      h=col(big('Внизу — вся энергия кинетическая'),
+        l37Scene(1,true,{mark:{x:150,y:18,t:'Ek = 100%'}})+
+        l37Bars(1)+
+        big('Ep = 0 · Ek = максимум')+sml('высота ноль, зато скорость — и кинетическая энергия'));
+    } else if(step===6){
+      h=col(big('Мяч совершил работу!'),
+        l37Scene(1,true,{mark:{x:180,y:52,t:'Бам!'}})+
+        big('кегля сбита — работа совершена')+sml('кинетическая энергия мяча перешла в работу по сбиванию кегли'));
+    } else if(step===7){
+      h=col(big('Работа'),
+        `<div style="font-size:36px;color:var(--brass);font-family:Georgia,serif">A = F · s</div>`+
+        `<div class="wv-row">${chip('F = 50 Н','rgba(232,106,90,.5)')} ${chip('s = 2 м','rgba(127,209,255,.5)')}</div>`+
+        `<div class="wv-ans" style="font-size:26px">A = 50 · 2 = 100 Дж</div>`+
+        sml('работа = сила × путь'));
+    } else if(step===8){
+      h=col(big('Мощность'),
+        `<div style="font-size:36px;color:var(--brass);font-family:Georgia,serif">N = A : t</div>`+
+        `<div class="wv-row">${chip('A = 300 Дж','rgba(232,106,90,.5)')} ${chip('t = 10 с','rgba(127,209,255,.5)')}</div>`+
+        `<div class="wv-ans" style="font-size:26px">N = 300 : 10 = 30 Вт</div>`+
+        sml('мощность = работа за единицу времени (ватт)'));
+    } else if(step===9){
+      h=col(big('Энергия не исчезает!'),
+        `<div style="display:flex;gap:6px;justify-content:center;align-items:center;font-size:30px;margin:4px 0">
+          <span style="color:#7fd1a0">⬆</span><span>→</span><span style="color:#f0a35a">⚡</span><span>→</span><span>💪</span></div>`+
+        big('потенциальная → кинетическая → работа')+
+        sml('энергия переходит из вида в вид, но не исчезает — закон сохранения!'));
+    } else if(step===10){
+      h=col(big('Разбираем задачку'),
+        `<div class="wv-row">${chip('m = 2 кг','rgba(127,184,160,.5)')} ${chip('h = 10 м','rgba(127,209,255,.5)')}</div>`+
+        `<div style="font-size:20px" class="wv-pop">E = m·g·h = 2 · 10 · 10</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">E = 200 Дж ✓</div>`+
+        sml('такой вопрос будет дальше!'));
+    } else if(step===11){
+      // тренажёр
+      if(st.m==null) st.m=2; if(st.h==null) st.h=5;
+      const E=st.m*10*st.h;
+      h=col(big('Тренажёр: подними мяч'),
+        `<div class="wv-row">${chip('m = '+st.m+' кг','rgba(127,184,160,.5)')} ${chip('h = '+st.h+' м','rgba(127,209,255,.5)')}</div>`+
+        `<div style="position:relative;width:250px;height:160px;margin:0 auto;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#aee0f5,#d8f0fa 55%,#7fb87a 55%,#5d9c4a)">
+          <div style="position:absolute;left:10px;top:${130-Math.min(120,st.h*12)}px;transition:top .5s ease">${l37Ball(16)}</div>
+          <div style="position:absolute;left:2px;bottom:16px;font-size:10px;color:#fff;background:rgba(0,0,0,.4);border-radius:5px;padding:0 5px">h = ${st.h} м</div>
+          <div style="position:absolute;left:0;right:0;bottom:8px;height:5px;background:#8a6f4d;border-radius:3px"></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px">E = ${st.m}·10·${st.h} = ${E} Дж</div>`+
+        btns(btn('+1 кг',`l37Act('${lk}','m+')`),btn('−1 кг',`l37Act('${lk}','m-')`),btn('+1 м',`l37Act('${lk}','h+')`),btn('−1 м',`l37Act('${lk}','h-')`),btn('↺',`l37Act('${lk}','r')`))+
+        sml('подними выше или возьми тяжелее — энергия растёт!'));
+    } else {
+      // памятка
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:320px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+          ⚡ Энергия — способность делать работу.<br>
+          ⬆ Потенциальная: <b>E = m·g·h</b> (высота!).<br>
+          ⚡ Кинетическая растёт со скоростью.<br>
+          💪 Работа <b>A = F·s</b> · мощность <b>N = A:t</b>.<br>
+          🔄 Энергия не исчезает — она переходит из вида в вид!</div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там груз 2 кг на 10 м'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 function visL35(el){
   // Урок 35 «Давление твёрдых тел»: сюжет «Архимед в снегу», кирпич на снегу
@@ -1973,6 +2147,7 @@ function renderLessonVis(){
   else if(id===34) visL34(el);
   else if(id===35) visL35(el);
   else if(id===36) visL36(el);
+  else if(id===37) visL37(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
