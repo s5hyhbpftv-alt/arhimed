@@ -675,27 +675,43 @@ function carSVG(moving, color, w){
 }
 
 function l10Road(moving, v1, v2, dur, dist, start){
-  // реалистичная дорога: асфальт + разметка; разметка бежит, когда машина едет
-  const KM=292;
-  const stX=start==null? 10 : start;          // стартовая позиция машины (px)
-  const dx=Math.max(0, dist);                  // сколько проехать
-  const dash=moving? Math.max(.4, (dur||1.6)/2.4).toFixed(2)+'s' : '0s';
-  const mark=(x,lab)=>`<div style="position:absolute;bottom:1px;left:${x}px;transform:translateX(-50%);background:rgba(11,23,18,.75);border:1px solid rgba(217,164,65,.55);border-radius:6px;padding:0 5px;font-size:9px;color:#ffe9a8;z-index:4;white-space:nowrap">${lab}</div>`;
-  return `<div class="l10-asphalt" style="width:${KM}px;height:64px;margin:0 auto">
-    <div class="l10-noise"></div>
-    <div class="l10-edge" style="top:0;opacity:.5"></div>
-    <div class="l10-edge" style="bottom:0"></div>
-    <div class="l10-centerline" style="--dash:${dash};animation-play-state:${moving?'running':'paused'};opacity:${moving?1:.3}"></div>
-    <div style="position:absolute;top:0;left:${KM/2-1}px;bottom:0;width:2px;background:rgba(255,233,168,.4);z-index:1"></div>
-    ${mark(6,'0 км')}${mark(KM/2,'60 км')}${mark(KM-38,'120 км')}
-    <div style="position:absolute;bottom:0;left:${stX}px;z-index:3;animation:wvDrive ${dur||1.6}s cubic-bezier(.45,0,.55,1) both;--dx:${dx}px">
+  // «профиль дороги»: асфальт внизу, машина (вид сбоку) стоит НА нём и едет по нему.
+  // Километры — придорожные знаки. Никакой разметки «вид сверху».
+  const W=300, ASF=30;                 // ширина дороги, высота асфальтовой полосы
+  const CARW=86;                       // ширина машины
+  const stX=start==null? 8 : start;
+  const dx=Math.max(0, dist);
+  const sign=(x,lab)=>{ // придорожный знак километра: стойка от асфальта, табличка высоко
+    return `<div style="position:absolute;left:${x}px;bottom:${ASF-2}px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column-reverse;align-items:center">
+      <div style="width:2px;height:26px;background:rgba(217,164,65,.5)"></div>
+      <div style="background:rgba(11,23,18,.92);border:1px solid rgba(217,164,65,.7);border-radius:6px;padding:2px 7px;font-size:10px;color:#ffe9a8;white-space:nowrap;font-weight:bold">${lab}</div></div>`;
+  };
+  const dust=moving? '<div class="l10-dust" style="left:6px;bottom:26px"></div><div class="l10-dust" style="left:14px;bottom:24px;animation-delay:.5s"></div>':'';
+  return `<div style="position:relative;width:${W}px;height:104px;margin:0 auto;border-radius:14px;overflow:hidden;background:
+      linear-gradient(180deg,rgba(16,31,24,.25) 0%,rgba(20,38,30,.55) 60%,rgba(15,28,22,.9) 100%)">
+    <!-- линия горизонта/даль -->
+    <div style="position:absolute;left:0;right:0;top:${ASF-2}px;height:2px;background:rgba(127,184,160,.18)"></div>
+    ${sign(22,'0 км')}${sign(W/2+4,'60 км')}${sign(W-34,'120 км')}
+    <!-- машина (стоит на асфальте: низ фото = верх асфальта) -->
+    <div style="position:absolute;bottom:${ASF}px;left:${stX}px;z-index:4;animation:wvDrive ${dur||1.6}s cubic-bezier(.45,0,.55,1) both;--dx:${dx}px;line-height:0">
       <div class="${moving?'l10-bob':''}" style="line-height:0">
-        <img src="img/car.png?v=73" alt="машина" style="width:${moving?122:122}px;height:auto;display:block;${moving?'filter:drop-shadow(0 2px 2px rgba(0,0,0,.45))':''}">
+        <img src="img/car.png?v=73" alt="машина" style="width:${CARW}px;height:auto;display:block">
       </div>
     </div>
-    ${moving?'<div class="l10-dust" style="left:4px"></div><div class="l10-dust" style="left:12px;animation-delay:.5s"></div>':''}
+    ${dust}
+    <!-- асфальт -->
+    <div style="position:absolute;left:0;right:0;bottom:0;height:${ASF}px;z-index:1;
+      background:linear-gradient(180deg,#4a5159 0%,#33383e 55%,#23272c 100%)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:${ASF}px;z-index:1;opacity:.6;
+      background:repeating-linear-gradient(90deg,rgba(255,255,255,.02) 0 3px,transparent 3px 9px)"></div>
+    <!-- белая кромка асфальта -->
+    <div style="position:absolute;left:0;right:0;bottom:${ASF-2}px;height:2px;background:rgba(232,224,204,.5);z-index:2"></div>
+    <!-- тень машины на асфальте -->
+    <div style="position:absolute;left:${stX+4}px;bottom:${ASF-3}px;width:${CARW-8}px;height:5px;z-index:3;
+      border-radius:50%;background:rgba(0,0,0,.5);filter:blur(2px);animation:wvDrive ${dur||1.6}s cubic-bezier(.45,0,.55,1) both;--dx:${dx}px"></div>
   </div>`;
 }
+
 function visL10(el){
   // Урок 10 «Средняя скорость»: полный пошаговый разбор с анимацией
   try{
@@ -734,19 +750,19 @@ function visL10(el){
         sml('половинки ОДИНАКОВЫЕ — по 60 км. Теперь посчитаем время на каждой'));
     } else if(step===2){
       h=col(big('Первая половина: едем 30 км/ч'),
-        l10Road(true,30,20,1.1,77,10)+
+        l10Road(true,30,20,1.1,99,8)+
         `<div class="wv-row" style="margin-top:4px">${timer('время в школу', '2 часа', '#7fb8a0', 40)}</div>`+
         big('t₁ = 60 : 30 = 2 часа')+
         sml('быстро! машина проезжает 60 км за 2 часа (анимация — как раз ~2 тика)'));
     } else if(step===3){
       h=col(big('Вторая половина: ползём 20 км/ч'),
-        l10Road(true,30,20,2.2,83,87)+
+        l10Road(true,30,20,2.2,97,107)+
         `<div class="wv-row" style="margin-top:4px">${timer('время обратно', '3 часа', '#c96f4a', 60)}</div>`+
         big('t₂ = 60 : 20 = 3 часа')+
         sml('заметь: машина едет медленнее и дольше! 3 часа против 2'));
     } else if(step===4){
       h=col(big('Вся поездка'),
-        l10Road(true,30,20,2.4,160,10)+
+        l10Road(true,30,20,2.4,196,8)+
         `<div class="wv-row" style="margin-top:6px">${chip('путь = 120 км','rgba(127,184,160,.5)')} ${chip('время = 2 + 3 = 5 ч','rgba(232,106,90,.5)')}</div>`+
         `<div class="wv-ans" style="font-size:30px;color:var(--brass);font-weight:bold">v = 120 : 5 = 24 км/ч</div>`+
         sml('средняя скорость = весь путь : всё время. Вот честный ответ!'));
