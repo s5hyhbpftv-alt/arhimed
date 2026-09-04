@@ -2925,30 +2925,129 @@ function visL102(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+// ============ УРОК 103 v5 «Сила трения» 7 класс — легенда «Ледовый дворец Архимеда» ============
+var L103POOL=[['m','2','4'],['m','3','6'],['m','5','10'],['m','2','3'],['m','4','2'],['m','6','4'],['m','2','5'],['m','3','4']];
 function l103Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['m','2','6'],['m','3','6'],['m','5','10'],['m','2','3'],['m','4','2'],['m','6','4'],['h','2'],['h','3'],['h','5'],['h','10'],['h','7'],['h','4']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
+  if(st.i==null) st.i=Math.floor(Math.random()*L103POOL.length); if(st.score==null) st.score=0;
+  const m=act.match(/^pick(\d)$/);
+  if(m){
+    const kind=L103POOL[st.i][0];
+    const correct=kind==='m'?0:1;
+    st.last=(+m[1]===correct)?'ok':'no';
+    if(+m[1]===correct) st.score++;
   }
+  if(act==='n'){ st.i=(st.i+1)%L103POOL.length; st.last=''; }
+  if(act==='s1') st.s1=1;
+  if(act==='s2') st.s2=1;
+  if(act==='r'){ st.i=Math.floor(Math.random()*L103POOL.length); st.s1=st.s2=0; st.score=0; st.last=''; }
   chRender(0);
 }
-function l103Block(m,uid){
-  // брусок с грузом m кг на поверхности; стрелка тяги F
-  const w=36+m*10;
-  return `<div style="display:flex;flex-direction:column;align-items:center;margin:2px auto">
-    <div style="font-size:12px;color:#cbb89a">тянем силой F</div>
-    <div class="wv-flow" style="font-size:20px;color:#7fd1a0">→</div>
-    <div style="width:${w}px;height:34px;border-radius:5px;background:linear-gradient(145deg,#a8733a,#7a4f22);border:1px solid #5a3a16;display:flex;align-items:center;justify-content:center;font-size:14px;color:#ffe9c4;font-weight:bold">${m} кг</div>
-    <div style="width:${w+16}px;height:6px;background:repeating-linear-gradient(90deg,#6a4a26 0 6px,#8a6a3a 6px 12px);border-radius:2px"></div>
-  </div>`;
+function l103B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
+function l103Card(tag,emoji,title,lines,color){
+  let ls='';
+  for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:12.5px;color:#d8ecff;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
+  return `<div style="flex:1;min-width:150px;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <div style="font-size:22px">${emoji}</div>
+      <div style="flex:1"><div style="font-size:11px;color:${color};letter-spacing:.5px">${tag}</div><div style="font-size:15px;color:#fff;font-weight:bold;line-height:1.2">${title}</div></div>
+    </div>${ls}</div>`;
 }
-function l103Surf(kind){
-  // шероховатость поверхности: гладкая (линии), шершавая (зубчики)
-  if(kind==='rough') return `<div style="width:120px;height:14px;margin:2px auto;background:repeating-linear-gradient(90deg,#5a7a3a 0 4px,#3a5226 4px 8px);border-radius:2px;border:1px solid #2a3a18"></div>`;
-  return `<div style="width:120px;height:6px;margin:2px auto;background:#6a8a9a;border-radius:3px"></div>`;
+// ========= SVG-сцены =========
+function l103Microscope(rough,uid){
+  // две поверхности под микроскопом: гладкая (линии) и шершавая (зубцы)
+  if(rough){
+    return `<svg width="200" height="64" viewBox="0 0 200 64" style="display:block;margin:0 auto">
+      <rect x="4" y="6" width="96" height="26" rx="4" fill="#20352a" stroke="#d9a441" stroke-width="1.5"/>
+      <rect x="104" y="6" width="92" height="26" rx="4" fill="#20352a" stroke="#d9a441" stroke-width="1.5"/>
+      ${[0,1,2,3,4,5,6,7].map(i=>`<path d="M${10+i*12} 26 L${16+i*12} 14 L${22+i*12} 26 Z" fill="#8a9ab0" stroke="#5c7486" stroke-width="1"/>`).join('')}
+      <text x="52" y="52" fill="#cbb89a" font-size="9" text-anchor="middle">под микроскопом: бугорки и ямки</text>
+    </svg>`;
+  }
+  return `<svg width="200" height="64" viewBox="0 0 200 64" style="display:block;margin:0 auto">
+    <rect x="4" y="16" width="96" height="12" rx="3" fill="#7fa3b8" opacity=".8"/>
+    <rect x="104" y="16" width="92" height="12" rx="3" fill="#7fa3b8" opacity=".8"/>
+    <text x="52" y="52" fill="#cbb89a" font-size="9" text-anchor="middle">гладкие: почти без зацепок</text>
+  </svg>`;
+}
+function l103Dynamo(forceN,rough,uid){
+  // брусок на поверхности + динамометр со стрелкой
+  const x=rough?96:40; // шершавая — брусок стоит левее (трение больше)
+  return `<svg width="210" height="120" viewBox="0 0 210 120" style="display:block;margin:0 auto">
+    <defs><linearGradient id="w3b" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a8733a"/><stop offset="1" stop-color="#7a4f22"/></linearGradient></defs>
+    ${rough?[0,1,2,3,4,5,6].map(i=>`<path d="M${6+i*30} 104 L${11+i*30} 92 L${16+i*30} 104 Z" fill="#5a7a3a" opacity=".7"/>`).join(''):''}
+    <rect x="4" y="100" width="202" height="8" rx="2" fill="${rough?'#4a6230':'#8a9ab0'}"/>
+    <rect x="10" y="30" width="14" height="70" rx="3" fill="#8a6a2f"/>
+    <rect x="26" y="14" width="34" height="86" rx="5" fill="#20352a" stroke="#d9a441" stroke-width="2"/>
+    ${[0,1,2,3,4].map(i=>`<line x1="28" y1="${20+i*16}" x2="58" y2="${20+i*16}" stroke="#d9a441" stroke-width="1.2" opacity=".5"/>`).join('')}
+    <rect x="40" y="${102-forceN*9}" width="14" height="4" rx="2" fill="#7fd1a0"/>
+    <text x="47" y="${110-forceN*9}" fill="#7fd1a0" font-size="9" text-anchor="middle" font-weight="bold">${forceN} Н</text>
+    <line x1="60" y1="57" x2="${x}" y2="57" stroke="#ffd966" stroke-width="3" stroke-dasharray="6 4"/>
+    <rect x="${x}" y="40" width="52" height="34" rx="4" fill="url(#w3b)" stroke="#5a3a16" stroke-width="2"/>
+    <circle cx="${x+10}" cy="74" r="4" fill="#cbb89a"/>
+    <circle cx="${x+42}" cy="74" r="4" fill="#cbb89a"/>
+    <text x="${x+26}" y="62" fill="#ffe9c4" font-size="11" text-anchor="middle" font-weight="bold">брусок</text>
+    <text x="150" y="34" fill="${rough?'#ff9a8a':'#7fd1a0'}" font-size="10">${rough?'шершаво!':'гладко'}</text>
+  </svg>`;
+}
+function l103Wheel(uid){
+  // качение vs скольжение
+  return `<svg width="210" height="110" viewBox="0 0 210 110" style="display:block;margin:0 auto">
+    <g transform="translate(0 0)">
+      <rect x="6" y="92" width="200" height="6" fill="#3a3f45"/>
+      <path d="M10 88 L40 88 L34 78 L16 78 Z" fill="#8a5a2a" stroke="#5a3a16" stroke-width="1.5"/>
+      <text x="25" y="70" fill="#cbb89a" font-size="8" text-anchor="middle">сани</text>
+      <text x="25" y="104" fill="#ff9a8a" font-size="8" text-anchor="middle">скольжение</text>
+    </g>
+    <g transform="translate(120 0)">
+      <rect x="6" y="88" width="200" height="6" fill="#3a3f45"/>
+      <circle cx="52" cy="72" r="16" fill="#222" stroke="#888" stroke-width="3"/>
+      <circle cx="52" cy="72" r="5" fill="#555"/>
+      ${[0,1,2,3].map(i=>`<line x1="${52+16*Math.cos(i*1.57)}" y1="${72+16*Math.sin(i*1.57)}" x2="${52+22*Math.cos(i*1.57)}" y2="${72+22*Math.sin(i*1.57)}" stroke="#666" stroke-width="2"/>`).join('')}
+      <line x1="52" y1="56" x2="52" y2="40" stroke="#888" stroke-width="3"/>
+      <rect x="44" y="24" width="16" height="16" rx="3" fill="#d05a3a"/>
+      <text x="60" y="104" fill="#7fd1a0" font-size="8" text-anchor="middle">качение (легче!)</text>
+    </g>
+  </svg>`;
+}
+function l103Ball(uid){
+  // подшипник: шарики между кольцами
+  return `<svg width="150" height="90" viewBox="0 0 150 90" style="display:block;margin:0 auto">
+    <circle cx="75" cy="45" r="40" fill="none" stroke="#5c7486" stroke-width="5"/>
+    <circle cx="75" cy="45" r="24" fill="none" stroke="#8a9ab0" stroke-width="4"/>
+    <circle cx="75" cy="45" r="10" fill="#20352a" stroke="#8a9ab0" stroke-width="2"/>
+    ${[0,1,2,3,4,5].map(i=>{const a=i*1.047;return `<circle cx="${75+32*Math.cos(a)}" cy="${45+32*Math.sin(a)}" r="8" fill="#c9d6df" stroke="#5c7486" stroke-width="1.5"/>`}).join('')}
+    <text x="75" y="84" fill="#cbb89a" font-size="9" text-anchor="middle">шарики катятся — трение крошечное</text>
+  </svg>`;
+}
+function l103Skates(uid){
+  // лёд: коньки vs ботинки (давление плавит лёд)
+  return `<svg width="210" height="90" viewBox="0 0 210 90" style="display:block;margin:0 auto">
+    <rect x="0" y="76" width="210" height="12" fill="#bfe3f5" rx="3"/>
+    <rect x="0" y="74" width="210" height="4" fill="#fff" opacity=".6"/>
+    <path d="M24 72 L18 50 L38 46 L44 72 Z" fill="#8a5a2a"/>
+    <rect x="10" y="72" width="50" height="4" rx="2" fill="#c9d6df"/>
+    <text x="35" y="40" fill="#7fb7d8" font-size="8" text-anchor="middle">конёк: узкое лезвие</text>
+    <g transform="translate(120 0)">
+      <path d="M24 74 L16 46 L44 44 L48 74 Z" fill="#6a4a26"/>
+      <rect x="10" y="72" width="56" height="5" rx="3" fill="#5a4632"/>
+      <text x="35" y="38" fill="#9ec0a8" font-size="8" text-anchor="middle">ботинок: широкая подошва</text>
+    </g>
+  </svg>`;
+}
+function l103Brake(uid){
+  // тормоз: колодка прижата к диску
+  return `<svg width="200" height="100" viewBox="0 0 200 100" style="display:block;margin:0 auto">
+    <circle cx="80" cy="52" r="34" fill="#5c7486" stroke="#3c4d5a" stroke-width="3"/>
+    <circle cx="80" cy="52" r="8" fill="#3c4d5a"/>
+    ${[0,1,2,3,4,5,6,7].map(i=>`<line x1="${80+34*Math.cos(i*0.785)}" y1="${52+34*Math.sin(i*0.785)}" x2="${80+38*Math.cos(i*0.785)}" y2="${52+38*Math.sin(i*0.785)}" stroke="#3c4d5a" stroke-width="3"/>`).join('')}
+    <rect x="118" y="38" width="26" height="28" rx="4" fill="#d98a4a" stroke="#a86a2a" stroke-width="2"/>
+    <rect x="144" y="30" width="30" height="44" rx="6" fill="#8a9ab0" stroke="#5c7486" stroke-width="2"/>
+    <line x1="132" y1="52" x2="144" y2="52" stroke="#ffd966" stroke-width="3" stroke-dasharray="4 3"/>
+    <text x="178" y="46" fill="#cbb89a" font-size="8" text-anchor="middle">цилиндр</text>
+    <text x="178" y="58" fill="#cbb89a" font-size="8" text-anchor="middle">жмёт</text>
+    <text x="80" y="30" fill="#ff9a8a" font-size="8" text-anchor="middle">диск</text>
+  </svg>`;
 }
 function visL103(el){
   try{
@@ -2964,121 +3063,179 @@ function visL103(el){
     const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
     let h='';
     if(step===0){
-      h=col(big('Почему шнурки развязываются не сами?'),
-        `<div style="font-size:44px" class="wv-pop">🧤</div>`+
-        sml('потому что есть сила трения! Сегодня узнаем, почему без неё нельзя ходить — и почему машинам нужны колёса'));
-    } else if(step===1){
-      h=col(big('Что такое сила трения'),
-        rowC(chip('возникает, когда тела касаются','rgba(127,209,255,.5)'),chip('мешает скольжению','rgba(232,160,90,.5)'))+
-        l103Block(1,'a')+
-        sml('тянешь брусок — а он сопротивляется: поверхности цепляются друг за друга. Это трение!'));
-    } else if(step===2){
-      h=col(big('Почему поверхности «цепляются»?'),
-        rowC(chip('даже гладкие на вид поверхности','rgba(127,209,255,.5)'),chip('под микроскопом — бугорки и ямки','rgba(127,184,160,.5)'))+
-        `<div style="font-size:40px" class="wv-pop">🔬</div>`+
-        sml('бугорки одной поверхности заходят в ямки другой — как «липучки». Вот и трение!'));
-    } else if(step===3){
-      h=col(big('Три вида трения'),
-        rowC(chip('покоя','rgba(127,209,255,.5)'),chip('скольжения','rgba(232,160,90,.5)'),chip('качения','rgba(127,184,160,.5)'))+
-        sml('покоя — шкаф стоит; скольжения — санки едут; качения — колёса машины'));
-    } else if(step===4){
-      h=col(big('Катить легче, чем тащить!'),
-        rowC(chip('тащить санки — трение скольжения','rgba(232,160,90,.5)'),chip('катить на колёсах — трение качения','rgba(127,184,160,.5)'))+
-        `<div style="font-size:40px" class="wv-swing">🛞</div>`+
-        sml('трение качения в разы меньше скольжения — поэтому у машин колёса, а не полозья!'));
-    } else if(step===5){
-      h=col(big('От чего зависит трение: №1 поверхность'),
-        rowC(l103Surf('smooth'),l103Surf('rough'))+
-        sml('шершавые поверхности цепляются сильнее → трение больше. Это как в нашей проверке!'));
-    } else if(step===6){
-      h=col(big('От чего зависит трение: №2 сила прижатия'),
-        l103Block(1,'b')+
-        l103Block(2,'c')+
-        sml('сильнее прижали груз к столу — бугорки глубже заходят → трение больше'));
-    } else if(step===7){
-      h=col(big('Как измерить трение'),
-        rowC(chip('динамометр тянет брусок равномерно','rgba(127,209,255,.5)'),chip('стрелка показывает силу трения','rgba(127,184,160,.5)'))+
-        `<div style="font-size:40px" class="wv-pop">🪝</div>`+
-        sml('тянешь равномерно — сила тяги равна силе трения. Читаешь по шкале!'));
-    } else if(step===8){
-      h=col(big('Задача про груз'),
-        rowC(chip('груз 2 кг, трение 4 Н','rgba(217,164,65,.4)'),chip('положили ещё 2 кг → 4 кг','rgba(217,164,65,.4)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">трение выросло в 2 раза: 4 · 2 = 8 Н</div>`+
-        sml('как в наших задачках: прижатие вдвое — трение вдвое!'));
-    } else if(step===9){
-      h=col(big('Трение — друг или враг?'),
-        rowC(chip('друг: идём, держим предметы','rgba(127,184,160,.4)'),chip('враг: детали стираются','rgba(232,160,90,.4)'))+
-        sml('без трения не сделаешь и шага — но машины «съедают» топливо на трение. Всё зависит от задачи!'));
-    } else if(step===10){
-      h=col(big('Увеличиваем трение'),
-        rowC(chip('песок на льду','rgba(127,209,255,.4)'),chip('резиновые подошвы','rgba(127,209,255,.4)'),chip('протектор шин','rgba(127,209,255,.4)'),chip('мел на пальцах','rgba(127,209,255,.4)'))+
-        sml('всё это делает поверхность шершавее — трение растёт, как зимой на дороге!'));
-    } else if(step===11){
-      h=col(big('Уменьшаем трение'),
-        rowC(chip('смазка (масло)','rgba(232,160,90,.4)'),chip('подшипники','rgba(232,160,90,.4)'),chip('полировка','rgba(232,160,90,.4)'),chip('обтекаемая форма','rgba(232,160,90,.4)'))+
-        sml('масло заполняет ямки — поверхности не цепляются. Как в наших задачках!'));
-    } else if(step===12){
-      h=col(big('Почему по льду скользко?'),
-        rowC(chip('лёд почти гладкий — бугорков нет','rgba(127,209,255,.5)'),chip('трение крошечное','rgba(232,160,90,.5)'))+
+      h=col(`<div style="font-size:20px;color:#c9b28a;letter-spacing:1px">🌟 ЛЕГЕНДА · Эпизод 6</div>`+
+        big('Ледовый дворец Архимеда')+
         `<div style="font-size:40px" class="wv-flick">⛸️</div>`+
-        sml('конькобежцы как раз этим пользуются — а машины посыпают песком!'));
-    } else if(step===13){
-      h=col(big('Ходьба — это трение покоя'),
-        rowC(chip('нога упирается — не скользит','rgba(127,184,160,.5)'))+
-        sml('толкаешься ногой, трение «держит» её — и ты идёшь. На льду нога скользит — упасть легко!'));
-    } else if(step===14){
-      h=col(big('Тормоза — трение!'),
-        rowC(chip('колодки прижимаются к диску','rgba(127,209,255,.5)'),chip('трение останавливает колесо','rgba(127,184,160,.5)'))+
-        `<div style="font-size:40px" class="wv-pop">🚗</div>`+
-        sml('нажал педаль — колодки трутся о диск, машина замедляется. На мокрой дороге трение меньше — тормозной путь длиннее!'));
-    } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('шершавая поверхность → трение?','rgba(127,209,255,.5)'),chip('масло → трение?','rgba(232,160,90,.5)'))+
-        sml('больше/меньше. И запомни: трение покоя, скольжения, качения — качение меньше всех!'));
-    } else if(step===16){
-      const POOL=[['m','2','6'],['m','3','6'],['m','5','10'],['m','2','3'],['m','4','2'],['m','6','4'],['h','2'],['h','3'],['h','5'],['h','10'],['h','7'],['h','4']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0];
-      let desc, firstStep, ans;
-      if(kind==='m'){
-        const m1=+e[1], m2=+e[2];
-        desc='груз '+m1+' кг, трение '+m2+' Н. Положили ещё '+m1+' кг → трение?';
-        firstStep='масса выросла в 2 раза → трение ×2';
-        ans=m2*2;
-      } else {
-        const m=+e[1];
-        desc='груз '+m+' кг тянут: какой станет трение, если прижать вдвое сильнее?';
-        firstStep='если было '+m+' Н → теперь ×2';
-        ans=m*2;
-      }
-      h=col(big('Тренажёр: сила трения'),
-        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
-        `<div style="font-size:34px" class="wv-pop">🧤</div>`+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans} Н</div>`:'')+
-        btns(btn('1️⃣ подумай',`l103Act('${lk}','s1')`),btn('2️⃣ ответ',`l103Act('${lk}','s2')`),btn('🎲 другая',`l103Act('${lk}','n')`),btn('↺',`l103Act('${lk}','r')`))+
-        sml('прижатие ×2 → трение ×2. Просто!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🧤 Трение: покоя, скольжения, качения.<br>
-            🔬 Шершавее → трение больше.<br>
-            ⚖️ Прижали вдвое → трение вдвое.<br>
-            🛢️ Масло уменьшает трение.</div>
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:12px 14px;max-width:310px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+        Архимед построил ледовый дворец! Коньки легко скользят по льду, лыжники мчатся, а машины на льду буксуют и не могут тронуться. Что за невидимая сила то помогает, то мешает? Это <b>сила трения</b>! Сегодня ты разберёшься, откуда она берётся и как ей управлять.</div>`);
+    } else if(step===1){
+      h=col(l103B('ТЕОРИЯ · 7 КЛАСС','#7fb7d8')+
+        big('Что такое сила трения')+
+        l103Dynamo(3,false,'a')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('ОПРЕДЕЛЕНИЕ','🧤','Сила, мешающая движению','Сила трения возникает при СОПРИКОСНОВЕНИИ тел и всегда направлена ПРОТИВ движения (или против попытки сдвинуть тело).','#7fb7d8')}
+          ${l103Card('КАК ИЗМЕРИТЬ','🪝','Динамометр','Тяни брусок РАВНОМЕРНО — динамометр покажет силу трения: стрелка на шкале, деления в ньютонах! (Лабораторная работа по Перышкину)','#7fd1a0')}
+          ${l103Card('НАПРАВЛЕНИЕ','⬅️','Тянем вправо — трение влево','Сила трения всегда «возражает» движению: тянешь брусок вправо, а трение тянет его влево.','#7fd1a0')}
+        </div>`);
+    } else if(step===2){
+      h=col(l103B('ПОЧЕМУ ВОЗНИКАЕТ','#ff8a6a')+
+        big('Секрет: шероховатость')+
+        l103Microscope(true,'b')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('ПОД МИКРОСКОПОМ','🔬','Ни одна поверхность не гладкая','Даже отполированный металл под микроскопом — это бугорки и ямки. Как горы и овраги в миниатюре!','#ff8a6a')}
+          ${l103Card('КАК ЛИПУЧКА','🪢','Бугорки цепляются','Выступы одной поверхности заходят в углубления другой — как липучки на кроссовках. Отсюда и сопротивление!','#ff8a6a')}
+        </div>`);
+    } else if(step===3){
+      h=col(l103B('ТРИ ВИДА','#c9b28a')+
+        big('Покой, скольжение, качение')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('ТРЕНИЕ ПОКОЯ','🛋️','Шкаф стоит — трение «держит»','Пока сила не превысила предел, шкаф не сдвинуть: трение покоя удерживает тело на месте. Именно оно помогает ходить!','#ffd966')}
+          ${l103Card('ТРЕНИЕ СКОЛЬЖЕНИЯ','🛷','Санки едут','Когда тело скользит по поверхности: сани по снегу, коньки по льду, точильный камень по ножу.','#ff8a6a')}
+          ${l103Card('ТРЕНИЕ КАЧЕНИЯ','🛞','Колёса и шарики','Когда тело КАТИТСЯ: колёса машины, шарики в подшипнике. Оно в разы меньше трения скольжения!','#7fd1a0')}
+        </div>`);
+    } else if(step===4){
+      h=col(l103B('СРАВНЕНИЕ · КАТИТЬ ЛЕГЧЕ','#7fd1a0')+
+        big('Колесо против полозьев')+
+        l103Wheel('c')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('ПОЧЕМУ КОЛЁСА?','🛞','Качение меньше скольжения','Колесо «отрывает» точку контакта и перекатывает её — поверхность почти не трётся. Поэтому у машин колёса, а не полозья!','#7fd1a0')}
+          ${l103Card('ЧИСЛА','📊','Почти в 10 раз','Трение качения обычно в 5–10 раз меньше трения скольжения при той же нагрузке. Вот почему тележку катить легко, а тащить тяжело!','#7fd1a0')}
+        </div>`);
+    } else if(step===5){
+      h=col(l103B('ОТ ЧЕГО ЗАВИСИТ · №1','#ff8a6a')+
+        big('Шершавость поверхности')+
+        l103Microscope(false,'d')+
+        l103Microscope(true,'e')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('ГЛАДКО → МЕНЬШЕ','✨','Полировка и лёд','Гладкая поверхность — мало зацепок — трение маленькое. Поэтому по льду так легко скользить!','#7fd1a0')}
+          ${l103Card('ШЕРШАВО → БОЛЬШЕ','⛰️','Резина и песок','Шершавая поверхность — бугорки цепляются сильнее — трение большое. Как в нашей проверке!','#ff8a6a')}
+        </div>`);
+    } else if(step===6){
+      h=col(l103B('ОТ ЧЕГО ЗАВИСИТ · №2','#ffd966')+
+        big('Сила прижатия')+
+        l103Dynamo(2,true,'f')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('ПРИЖАЛИ СИЛЬНЕЕ','🏋️','Бугорки глубже','Чем сильнее тело прижато к опоре, тем глубже заходят бугорки и тем больше трение. Трение растёт ПРОПОРЦИОНАЛЬНО силе прижатия!','#ffd966')}
+          ${l103Card('НЕ ЗАВИСИТ','🤔','От площади!','Удивительно: сила трения скольжения НЕ зависит от площади соприкосновения — только от силы прижатия и шероховатости!','#7fb7d8')}
+        </div>`);
+    } else if(step===7){
+      h=col(l103B('ЗАДАЧА ПРО ГРУЗ','#c9b28a')+
+        big('Масса ×2 — трение ×2')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('УСЛОВИЕ','📦','Груз 2 кг, трение 4 Н','Груз массой 2 кг тянут по столу, сила трения 4 Н. Сверху положили ещё один такой же груз.','#7fb7d8')}
+          ${l103Card('РЕШЕНИЕ','✖️','Прижатие выросло вдвое','Масса стала 4 кг — сила прижатия выросла в 2 раза → трение тоже в 2 раза: 4 · 2 = 8 Н. Как в наших задачках!','#7fd1a0')}
         </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там про шершавую поверхность'));
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F тр = 8 Н</div>`);
+    } else if(step===8){
+      h=col(l103B('ТРЕНИЕ-ДРУГ','#7fd1a0')+
+        big('Без трения нельзя ходить!')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('ХОДЬБА','🚶','Трение покоя «держит» ногу','Нога упирается в землю, трение покоя не даёт ей скользить — ты отталкиваешься и идёшь. На льду нога скользит — падение!','#7fd1a0')}
+          ${l103Card('ДЕРЖИМ ВЕЩИ','✋','Узлы, гвозди, шурупы','Узел не развязывается, гвоздь держится в доске, шуруп не выпадает — всё благодаря трению!','#7fd1a0')}
+          ${l103Card('ПИШЕМ И СТИРАЕМ','✏️','Мел, ластик, спички','Карандаш оставляет след трением, спичка зажигается трением, ластик стирает трением!','#7fd1a0')}
+        </div>`);
+    } else if(step===9){
+      h=col(l103B('ТРЕНИЕ-ВРАГ','#ff8a6a')+
+        big('Детали стираются')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('ИЗНОС','⚙️','Детали машин снашиваются','Трущиеся детали стираются за тысячи километров: поршни, подшипники, шестерни. Трение «съедает» и топливо!','#ff8a6a')}
+          ${l103Card('ТЕПЛО','🔥','Поверхности нагреваются','При трении механическая энергия переходит в тепло: потри ладони — почувствуешь жар! Иногда это полезно (спички), иногда опасно (перегрев).','#ff8a6a')}
+        </div>`);
+    } else if(step===10){
+      h=col(l103B('УВЕЛИЧИВАЕМ ТРЕНИЕ','#ff8a6a')+
+        big('Когда нужно «держать»')+
+        `<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:340px">
+          ${[['🏜️','Песок на льду','зимой дороги посыпают'],['👟','Резиновые подошвы','не скользят на кафеле'],['🚗','Протектор шин','глубокий рисунок цепляется'],['🎸','Канифоль на смычок','скрипка «поёт» трением'],['🧗','Мелок на руках','скалолазы держатся'],['🪑','Резиновые накладки','стул не скользит']].map(f=>`<div style="flex:1;min-width:150px;background:rgba(255,138,106,.06);border:1px solid #ff8a6a33;border-radius:12px;padding:7px;text-align:center">
+            <div style="font-size:20px">${f[0]}</div>
+            <div style="font-size:12px;color:#fff;font-weight:bold">${f[1]}</div>
+            <div style="font-size:9.5px;color:#c9a898;margin-top:2px">${f[2]}</div>
+          </div>`).join('')}
+        </div>`+
+        sml('везде поверхности делают ШЕРШАВЕЕ — трение растёт!'));
+    } else if(step===11){
+      h=col(l103B('УМЕНЬШАЕМ ТРЕНИЕ','#7fd1a0')+
+        big('Когда нужно «скользить»')+
+        l103Ball('g')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('СМАЗКА','🛢️','Масло заполняет ямки','Масло затекает между бугорками — поверхности перестают цепляться, трение падает в разы! Как в наших задачках: смазка УМЕНЬШАЕТ трение.','#7fd1a0')}
+          ${l103Card('ПОДШИПНИКИ','🔵','Качение вместо скольжения','Шарики подшипника катятся между кольцами — трение качения крошечное. Везде, где что-то крутится: колесо, вентилятор, велосипед!','#7fd1a0')}
+          ${l103Card('ПОЛИРОВКА','✨','Гладче — меньше зацепок','Отполированные поверхности почти не имеют бугорков — трение минимально.','#7fd1a0')}
+        </div>`);
+    } else if(step===12){
+      h=col(l103B('ПОЧЕМУ ЛЁД СКОЛЬЗКИЙ','#7fb7d8')+
+        big('Коньки и давление')+
+        l103Skates('h')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('СЕКРЕТ КОНЬКА','⛸️','Узкое лезвие плавит лёд','Вес конькобежца давит на крошечную площадь лезвия — под ним лёд подплавляется, и конёк скользит по тонкой плёнке воды!','#7fb7d8')}
+          ${l103Card('БОТИНОК vs КОНЁК','👟','Площадь решает','Широкая подошва ботинка давит слабо — лёд не плавится, трение большое. Узкий конёк — давление огромное — лёд тает — скольжение!','#7fb7d8')}
+        </div>`);
+    } else if(step===13){
+      h=col(l103B('ТОРМОЗА','#ff8a6a')+
+        big('Тормоз — это трение!')+
+        l103Brake('i')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('КАК РАБОТАЕТ','🚗','Колодки прижимаются к диску','Нажал педаль — гидравлика прижимает колодки к вращающемуся диску — трение останавливает колесо!','#ff8a6a')}
+          ${l103Card('МОКРАЯ ДОРОГА','🌧️','Тормозной путь длиннее','Вода — как смазка: трение меньше → машина тормозит дольше. Поэтому на мокром асфальте держи дистанцию!','#ff8a6a')}
+        </div>`);
+    } else if(step===14){
+      h=col(l103B('ТРЕНИЕ В ПРИРОДЕ','#7fd1a0')+
+        big('Природа использует трение')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l103Card('ЛИАНЫ И УСЫ','🌿','Растения цепляются','Усики гороха и винограда обвивают опору — трение удерживает растение!','#7fd1a0')}
+          ${l103Card('ЛАПКИ','🦎','Геккон бегает по стене','Тончайшие волоски на лапках создают огромное трение — геккон держится на гладком стекле!','#7fd1a0')}
+          ${l103Card('ПАЛЬЦЫ','🙌','Держим предметы','Возьми мокрый и сухой стакан: сухой держится крепче — трение больше!','#7fd1a0')}
+        </div>`);
+    } else if(step===15){
+      h=col(l103B('ШПАРГАЛКА','#ffd966')+
+        big('Три закона трения')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['1','Трение зависит от ШЕРШАВОСТИ','гладко → меньше, шершаво → больше'],
+             ['2','Трение зависит от СИЛЫ ПРИЖАТИЯ','прижал вдвое → трение вдвое'],
+             ['3','Трение НЕ зависит от площади','удивительно, но факт!']].map((f,i)=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.07);border:1px solid rgba(255,217,102,.3);border-radius:10px;padding:6px 10px;text-align:left">
+            <span style="background:#ffd966;color:#4a3200;font-weight:bold;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:12px">${f[0]}</span>
+            <span style="font-size:13px;color:#e8dcc8"><b>${f[1]}</b><br><span style="color:#9ec0a8;font-size:11.5px">${f[2]}</span></span></div>`).join('')}
+        </div>`+
+        sml('плюс: качение < скольжения, а смазка уменьшает трение!'));
+    } else if(step===16){
+      if(st.i==null){ st.i=Math.floor(Math.random()*L103POOL.length); st.score=0; st.last=''; }
+      const e=L103POOL[st.i], kind=e[0];
+      const correct=kind==='m'?0:1;
+      let q, hint, ans;
+      if(kind==='m'){
+        q='груз '+e[1]+' кг, трение '+e[2]+' Н. Положили ещё '+e[1]+' кг → трение?';
+        hint='масса ×2 → трение ×2: '+e[2]+'·2';
+        ans=e[2]*2;
+      } else {
+        q='как изменить трение, если нужно больше сцепления?';
+        hint='сделай поверхность шершавее или прижми сильнее';
+        ans=null;
+      }
+      const resTxt=st.last==='ok'?(ans!==null?`✅ Верно! ${hint} = ${ans} Н`:'✅ Верно!'):st.last==='no'?'❌ Не угадал — вспомни законы трения!':'';
+      h=col(l103B('ИГРА · ИНЖЕНЕР ДВОРЦА','#ffd966')+
+        big(kind==='m'?'Посчитай трение!':'Что увеличит трение?')+
+        `<div class="wv-row">${chip(q,'rgba(217,164,65,.35)')}</div>`+
+        l103Dynamo(kind==='m'?e[2]:3,kind==='m'?true:true,'t')+
+        (resTxt?`<div class="l35-pop" style="font-size:14px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'}">${resTxt}</div>`:'')+
+        (st.s1?`<div class="l35-pop" style="font-size:15px;color:#ffd9a0">💡 ${hint}</div>`:'')+
+        (kind==='m'
+          ?btns(btn('×2 (масса удвоилась)',`l103Act('${lk}','pick0')`),btn('не изменится',`l103Act('${lk}','pick1')`),btn('💡',`l103Act('${lk}','s1')`),btn('🎲 задача',`l103Act('${lk}','n')`))
+          :btns(btn('смазка',`l103Act('${lk}','pick0')`),btn('шершавая поверхность',`l103Act('${lk}','pick1')`),btn('💡',`l103Act('${lk}','s1')`),btn('🎲 задача',`l103Act('${lk}','n')`)))+
+        sml('трение ×2 при удвоении массы; шершавость увеличивает трение!'));
+    } else {
+      h=col(l103B('ПАМЯТКА','#c9b28a')+
+        big('Три вида и три закона')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
+          ${l103Card('ВИДЫ','🛷🛞','Покой, скольжение, качение','Качение меньше скольжения в 5–10 раз — поэтому колёса и подшипники!','#7fd1a0')}
+          ${l103Card('ЗАВИСИТ','⚖️','Шершавость + прижатие','Шершавее → больше; прижали вдвое → трение вдвое; площадь НЕ влияет.','#ffd966')}
+          ${l103Card('УПРАВЛЯЕМ','🔧','Масло и песок','Смазка и подшипники уменьшают трение; песок, резина и протектор — увеличивают.','#ff8a6a')}
+        </div>`+
+        btn('⟲ вернуться к игре', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — что увеличивает трение?'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
-// ============ УРОК 107 v2 «Механическая энергия» — легенда «Парк Энергия-Лэнд» ============
-var L107POOL=[['p','2','5'],['p','3','2'],['p','5','4'],['p','4','10'],['p','6','3'],['p','1','20'],['k','4','3'],['k','2','2'],['k','3','4'],['k','6','5'],['k','8','2'],['k','10','1'],['h','150','5'],['h','100','2'],['h','200','5'],['h','60','3']];
-// ============ УРОК 107 v5 «Механическая энергия» 8–9 класс — легенда «Парк Энергия-Лэнд» ============
-var L107POOL=[['p','2','5'],['p','3','2'],['p','5','4'],['p','4','10'],['p','6','3'],['p','1','20'],['k','4','3'],['k','2','2'],['k','3','4'],['k','6','5'],['k','8','2'],['k','10','1'],['h','150','5'],['h','100','2'],['h','200','5'],['h','60','3']];
 function l107Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   if(st.i==null) st.i=Math.floor(Math.random()*L107POOL.length); if(st.score==null) st.score=0;
