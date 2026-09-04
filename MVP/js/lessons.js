@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -3685,6 +3685,166 @@ function visL90(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там катеты 9 и 12'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l8Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  if(st.fake==null){st.fake=Math.floor(Math.random()*3);st.used=0;st.win=0;}
+  const m=act.match(/^w(\d)(\d)$/); // взвесить монеты m1 vs m2
+  if(m){
+    const a=+m[1],b=+m[2]; st.used++;
+    if(a===st.fake&&b===st.fake){} // обе настоящие — не бывает, сравниваем разные
+    if(a===st.fake) st.res='left'; else if(b===st.fake) st.res='right'; else st.res='eq';
+  }
+  const p=act.match(/^pick(\d)$/);
+  if(p){ st.win=(+p[1]===st.fake)?1:2; }
+  if(act==='r'){ st.fake=Math.floor(Math.random()*3); st.used=0; st.win=0; st.res=''; }
+  chRender(0);
+}
+function l8Coin(letter,fake,reveal){
+  // монета: фальшивая чуть меньше/легче
+  const isFake=fake===letter;
+  return `<div class="l35-pop" style="width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#d9a441);border:2px solid #a67c1e;display:flex;align-items:center;justify-content:center;font-size:15px;color:#5a3a05;font-weight:bold;${isFake&&reveal?'box-shadow:0 0 10px rgba(255,120,90,.9)':''}">${letter}</div>`;
+}
+function l8Scale(res,uid){
+  // чашечные весы: res: 'left' (левая легче → поднялась), 'right', 'eq'
+  const tilt=res==='left'?-14:res==='right'?14:0;
+  return `<div style="position:relative;width:190px;height:86px;margin:4px auto">
+    <div style="position:absolute;left:50%;top:0;transform:translateX(-50%);width:4px;height:34px;background:#8a6a2f;border-radius:2px"></div>
+    <div style="position:absolute;left:50%;top:34px;transform:translateX(-50%);width:150px;height:5px;background:#c9a24f;border-radius:2px;transform-origin:50% 50%;rotate:${tilt/2}deg;transition:transform .5s ease"></div>
+    <div style="position:absolute;left:50%;top:39px;transform:translateX(-50%);width:10px;height:10px;background:#c9a24f;border-radius:50%"></div>
+    <div style="position:absolute;left:10px;top:${46-tilt}px;width:44px;height:30px;border-radius:4px 4px 14px 14px;background:linear-gradient(180deg,#8a6a2f,#6a4e20);display:flex;align-items:center;justify-content:center;transition:top .5s ease"></div>
+    <div style="position:absolute;right:10px;top:${46+tilt}px;width:44px;height:30px;border-radius:4px 4px 14px 14px;background:linear-gradient(180deg,#8a6a2f,#6a4e20);display:flex;align-items:center;justify-content:center;transition:top .5s ease"></div>
+    <div style="position:absolute;left:8px;top:${6-tilt}px;text-align:center;font-size:10px;color:#cbb89a">${res==='left'?'⬆ легче!':res==='right'?'':'левая'}</div>
+    <div style="position:absolute;right:8px;top:${6+tilt}px;text-align:center;font-size:10px;color:#cbb89a">${res==='right'?'⬆ легче!':''}</div>
+  </div>`;
+}
+function l8ScaleSimple(res,uid){
+  return `<div style="display:flex;justify-content:center;align-items:center;gap:6px;margin:4px auto">
+    <div style="text-align:center">${res==='left'?'<div style="font-size:20px;color:#ff9a8a">⬆ легче!</div>':''}<div class="wv-chip">чаша 1</div></div>
+    <div style="width:70px;height:4px;background:#c9a24f;border-radius:2px;transform:rotate(${res==='left'?-8:res==='right'?8:0}deg)"></div>
+    <div style="text-align:center">${res==='right'?'<div style="font-size:20px;color:#ff9a8a">⬆ легче!</div>':''}<div class="wv-chip">чаша 2</div></div>
+  </div>`;
+}
+function visL8(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const coins=(n,reveal,fake)=>`<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:2px auto">${[...Array(n)].map((_,i)=>String.fromCharCode(65+i)).map(l=>l8Coin(l,fake,reveal)).join('')}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Клад Архимеда: одна монета фальшивая!'),
+        `<div style="font-size:44px" class="wv-swing">⚖️</div>`+
+        sml('9 монет выглядят одинаково, но одна ЛЕГЧЕ остальных. Найди её всего за 2 взвешивания на чашечных весах!'));
+    } else if(step===1){
+      h=col(big('Чашечные весы без гирь'),
+        rowC(chip('сравнивают две кучки','rgba(127,209,255,.5)'),chip('нет гирь — только «легче/тяжелее/равно»','rgba(232,160,90,.5)'))+
+        l8Scale('eq','a')+
+        sml('весы показывают: левая легче, правая легче или равновесие. Больше ничего!'));
+    } else if(step===2){
+      h=col(big('Начнём с малого: 3 монеты'),
+        coins(3,false,-1)+
+        sml('одна из A, B, C — лёгкая. Взвесь две: например, A и B. Что покажут весы?'));
+    } else if(step===3){
+      h=col(big('Вариант 1: весы в равновесии'),
+        coins(3,false,-1)+
+        l8Scale('eq','b')+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">A = B → фальшивка C!</div>`+
+        sml('если A и B весят одинаково — обе настоящие, значит лёгкая — C'));
+    } else if(step===4){
+      h=col(big('Вариант 2: чаша поднялась'),
+        coins(3,false,-1)+
+        l8Scale('left','c')+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">A легче B → фальшивка A!</div>`+
+        sml('лёгкая монета поднимает свою чашу вверх. Поднялась чаша с A — значит A фальшивая'));
+    } else if(step===5){
+      h=col(big('Итог для 3 монет'),
+        rowC(chip('3 монеты','rgba(217,164,65,.4)'),chip('1 взвешивание','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">одного взвешивания хватает!</div>`+
+        sml('как в нашей проверке: положи 2 монеты — равновесие или лёгкая чашка скажут всё'));
+    } else if(step===6){
+      h=col(big('Теперь 9 монет'),
+        coins(9,false,-1)+
+        sml('как свести к уже решённой задаче? Разделим на 3 кучки по 3 монеты!'));
+    } else if(step===7){
+      h=col(big('Шаг 1: делим на 3 кучки'),
+        rowC(chip('кучка 1: A B C','rgba(127,209,255,.5)'),chip('кучка 2: D E F','rgba(127,184,160,.5)'),chip('кучка 3: G H I','rgba(232,160,90,.5)'))+
+        sml('взвешиваем кучку 1 против кучки 2. Если равны — фальшивка в кучке 3!'));
+    } else if(step===8){
+      h=col(big('Шаг 1 результат'),
+        rowC(chip('равновесие → кучка 3','rgba(127,209,255,.5)'),chip('поднялась → та кучка','rgba(232,160,90,.5)'))+
+        sml('одно взвешивание сузило поиск до 3 монет — а 3 монеты мы уже умеем!'));
+    } else if(step===9){
+      h=col(big('Шаг 2: внутри найденной кучки'),
+        coins(3,false,-1)+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">ещё 1 взвешивание → фальшивка!</div>`+
+        sml('взвесь 2 монеты из кучки: равновесие → третья, иначе → лёгкая. Итого 2 взвешивания!'));
+    } else if(step===10){
+      h=col(big('Схема для 9 монет'),
+        rowC(chip('9 монет','rgba(217,164,65,.5)'),chip('÷ 3 = 3 кучки','rgba(127,209,255,.5)'),chip('1 взвешивание → 3 монеты','rgba(127,184,160,.5)'),chip('1 взвешивание → 1 монета','rgba(232,160,90,.5)'))+
+        sml('каждое взвешивание делит число вариантов на 3! Как в наших задачках: ответ 2'));
+    } else if(step===11){
+      h=col(big('27 монет — тоже просто!'),
+        rowC(chip('27 ÷ 3 = 9','rgba(127,209,255,.5)'),chip('взвесь 2 кучки по 9','rgba(127,184,160,.5)'),chip('нашёл девятку — дальше как выше','rgba(232,160,90,.5)'))+
+        sml('1 взвешивание → 9 монет, ещё 2 → одна. Итого 3! Как в наших задачках'));
+    } else if(step===12){
+      h=col(big('Закономерность'),
+        rowC(chip('3 монеты = 3¹ → 1 взвешивание','rgba(127,209,255,.5)'),chip('9 монет = 3² → 2','rgba(127,184,160,.5)'),chip('27 монет = 3³ → 3','rgba(232,160,90,.5)'))+
+        sml('каждое взвешивание делит варианты на 3 части. Степени тройки — вот и весь секрет!'));
+    } else if(step===13){
+      h=col(big('Почему именно тройка?'),
+        rowC(chip('весы дают 3 ответа','rgba(127,209,255,.5)'),chip('левая легче','rgba(127,184,160,.5)'),chip('правая легче','rgba(232,160,90,.5)'),chip('равновесие','rgba(127,209,255,.5)'))+
+        sml('у весов 3 исхода — значит каждое взвешивание несёт максимум 3 варианта информации'));
+    } else if(step===14){
+      h=col(big('Хитрый приём с тремя кучками'),
+        rowC(chip('не 2 кучки, а 3!','rgba(217,164,65,.4)'),chip('третью не взвешиваем — она в резерве','rgba(217,164,65,.4)'))+
+        sml('дели на 3, а не на 2: третья кучка «отвечает» при равновесии. Вот почему 9 → 2, а не 3!'));
+    } else if(step===15){
+      h=col(big('Задача-проверка'),
+        rowC(chip('3 монеты, одна легче','rgba(217,164,65,.35)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">1 взвешивание!</div>`+
+        sml('как в проверке: взвесь две — всё ясно'));
+    } else if(step===16){
+      if(st.fake==null){st.fake=Math.floor(Math.random()*3);st.used=0;st.win=0;st.res='';}
+      const fakeLetter=String.fromCharCode(65+st.fake);
+      h=col(big('🎮 Игра: найди фальшивку!'),
+        rowC(chip('3 монеты A B C, одна легче. Взвесь и угадай!','rgba(217,164,65,.35)'))+
+        (st.win===1? coins(3,true,st.fake) : coins(3,false,-1))+
+        (st.res? l8Scale(st.res,'g'):'')+
+        (st.res==='left'? `<div style="font-size:14px;color:#ffd9a0">левая чаша поднялась → там лёгкая!</div>`:
+         st.res==='right'? `<div style="font-size:14px;color:#ffd9a0">правая чаша поднялась → там лёгкая!</div>`:
+         st.res==='eq'? `<div style="font-size:14px;color:#7fd1a0">равновесие → фальшивка — третья!</div>`:'')+
+        (st.win===1? `<div class="wv-ans" style="font-size:22px;color:#7fd1a0;font-weight:bold">🎉 Угадал! Фальшивка ${fakeLetter} (взвешиваний: ${st.used})</div>`:
+         st.win===2? `<div style="font-size:16px;color:#ff9a8a">не та монета — смотри на весы!</div>`:'')+
+        (st.win===1?'':btns(
+          btn('⚖️ A vs B',`l8Act('${lk}','w01')`),btn('⚖️ A vs C',`l8Act('${lk}','w02')`),btn('⚖️ B vs C',`l8Act('${lk}','w12')`)
+        ))+
+        btns(btn('🔎 фальшивка A',`l8Act('${lk}','pick0')`),btn('🔎 фальшивка B',`l8Act('${lk}','pick1')`),btn('🔎 фальшивка C',`l8Act('${lk}','pick2')`))+
+        (st.win===1?btn('🎲 новая монета',`l8Act('${lk}','r')`):'')+
+        sml('подсказка: одна монета легче — её чаша ПОДНИМЕТСЯ'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            ⚖️ Дели на 3 кучки, а не на 2!<br>
+            🔢 Весы дают 3 ответа: легче/легче/равно.<br>
+            💡 3¹=1 взв., 3²=9 → 2, 3³=27 → 3.<br>
+            🪙 Лёгкая монета поднимает чашу.</div>
+        </div>`+
+        btn('⟲ вернуться к игре', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 3 монеты'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -8310,6 +8470,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===8) visL8(el);
   else if(id===90) visL90(el);
   else if(id===7) visL7(el);
   else if(id===97) visL97(el);
