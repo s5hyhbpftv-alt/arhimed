@@ -686,7 +686,8 @@ function l10Road(moving, v1, v2, dur, dist, start){
       <div style="width:2px;height:26px;background:rgba(217,164,65,.5)"></div>
       <div style="background:rgba(11,23,18,.92);border:1px solid rgba(217,164,65,.7);border-radius:6px;padding:2px 7px;font-size:10px;color:#ffe9a8;white-space:nowrap;font-weight:bold">${lab}</div></div>`;
   };
-  const dust=moving? '<div class="l10-dust" style="left:6px;bottom:26px"></div><div class="l10-dust" style="left:14px;bottom:24px;animation-delay:.5s"></div>':'';
+  // пыль едет вместе с машиной и клубы отстают назад (анимация l10Dust уводит влево)
+  const dust=moving? '<div style="position:absolute;bottom:0;left:0;line-height:0;pointer-events:none"><div class="l10-dust" style="left:-6px;bottom:0"></div><div class="l10-dust" style="left:2px;bottom:1px;animation-delay:.5s"></div><div class="l10-dust" style="left:-14px;bottom:2px;animation-delay:.8s"></div></div>':'';
   return `<div style="position:relative;width:${W}px;height:104px;margin:0 auto;border-radius:14px;overflow:hidden;background:
       linear-gradient(180deg,rgba(16,31,24,.25) 0%,rgba(20,38,30,.55) 60%,rgba(15,28,22,.9) 100%)">
     <!-- линия горизонта/даль -->
@@ -697,8 +698,8 @@ function l10Road(moving, v1, v2, dur, dist, start){
       <div class="${moving?'l10-bob':''}" style="line-height:0">
         <img src="img/car.png?v=77" alt="машина" style="width:${CARW}px;height:auto;display:block">
       </div>
+      ${dust}
     </div>
-    ${dust}
     <!-- асфальт -->
     <div style="position:absolute;left:0;right:0;bottom:0;height:${ASF}px;z-index:1;
       background:linear-gradient(180deg,#4a5159 0%,#33383e 55%,#23272c 100%)"></div>
@@ -1919,7 +1920,7 @@ function l50Compare(uid){
       ${uniform
         ? Array.from({length:7},(_,i)=>`<div class="l35-pop" style="animation-delay:${(i*0.12).toFixed(2)}s;position:absolute;top:30px;left:${10+i*43}px;width:9px;height:9px;border-radius:50%;background:#3a8a5a;box-shadow:0 0 0 2px rgba(58,138,90,.2)"></div>`).join('')
         : [[12,16],[60,64],[108,112],[154,168],[198,202],[244,286]].map(p=>`<div class="l35-pop" style="animation-delay:.2s;position:absolute;top:30px;left:${p[0]}px;width:9px;height:9px;border-radius:50%;background:#c96a3a;box-shadow:0 0 0 2px rgba(201,106,58,.2)"></div><div class="l35-pop" style="animation-delay:.34s;position:absolute;top:30px;left:${p[1]}px;width:9px;height:9px;border-radius:50%;background:#e8a35a;box-shadow:0 0 0 2px rgba(232,163,90,.2)"></div>`).join('')}
-      <div class="${uniform?'l50-run':'l50-bus'}" style="position:absolute;top:14px;left:8px;width:20px;height:20px;font-size:16px">${uniform?'🚴':'🚌'}</div>
+      <div class="${uniform?'l50-run':'l50-bus'}" style="position:absolute;top:14px;left:8px;width:20px;height:20px;font-size:16px"><span style="display:inline-block;transform:scaleX(-1)">${uniform?'🚴':'🚌'}</span></div>
       <div style="position:absolute;top:2px;left:8px;font-size:10px;color:${uniform?'#1a6a3a':'#b04a2a'};font-weight:bold">${uniform?'следы ровные — равномерно!':'остановки и разгоны — неравномерно'}</div>
     </div>`;
   };

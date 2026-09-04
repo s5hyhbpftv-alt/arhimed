@@ -363,11 +363,11 @@
   @keyframes l10Spin { to{transform:rotate(360deg)} }
   .l10-bob { animation:l10Bob .35s ease-in-out infinite; }
   .l10-wheel { transform-origin:50% 50%; animation:l10Spin var(--spin,0s) linear infinite; }
-  .l10-dust { position:absolute; bottom:4px; width:26px; height:13px; border-radius:50%;
-    background:rgba(190,190,190,.35); filter:blur(3px); opacity:0;
-    animation:l10Dust 1s ease-out infinite; }
-  @keyframes l10Dust { 0%{transform:translateX(0) scale(.6);opacity:0} 25%{opacity:.9}
-    100%{transform:translateX(-46px) scale(1.5);opacity:0} }
+  .l10-dust { position:absolute; bottom:4px; width:34px; height:18px; border-radius:50%;
+    background:radial-gradient(circle,rgba(226,226,226,.85),rgba(180,180,180,.4) 60%,rgba(150,150,150,0));
+    filter:blur(2px); opacity:0; animation:l10Dust 1s ease-out infinite; }
+  @keyframes l10Dust { 0%{transform:translateX(0) scale(.5);opacity:0} 20%{opacity:1}
+    100%{transform:translateX(-58px) scale(1.7);opacity:0} }
 
   /* ============ аквариум и плотность (урок 33, v76) ============ */
   .l33-tank { position:relative; border-radius:4px 4px 18px 18px; overflow:hidden;
