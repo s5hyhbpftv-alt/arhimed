@@ -4813,24 +4813,48 @@ function visL19(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+// ============ УРОК 105 v3 «Закон Ома» — легенда «Город Электро-Сити» ============
+var L105POOL=[['I','15','5'],['I','12','6'],['I','20','4'],['I','30','10'],['I','24','8'],['I','40','5'],['R','20','4'],['R','30','5'],['R','36','6'],['R','45','9'],['U','3','7'],['U','4','5'],['U','5','8'],['U','6','4'],['U','2','9'],['U','3','12']];
 function l105Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['I','15','5'],['I','12','6'],['I','20','4'],['I','30','10'],['I','24','8'],['I','40','5'],['R','20','4'],['R','30','5'],['R','36','6'],['R','45','9'],['U','3','7'],['U','4','5'],['U','5','8'],['U','6','4'],['U','2','9'],['U','3','12']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
+  if(st.i==null) st.i=Math.floor(Math.random()*L105POOL.length); if(st.score==null) st.score=0;
+  const m=act.match(/^pick(\d)$/);
+  if(m){
+    const kind=L105POOL[st.i][0];
+    const correct=kind==='I'?0:kind==='R'?1:2;
+    st.last=(+m[1]===correct)?'ok':'no';
+    if(+m[1]===correct) st.score++;
   }
+  if(act==='n'){ st.i=(st.i+1)%L105POOL.length; st.last=''; }
+  if(act==='s1') st.s1=1;
+  if(act==='s2') st.s2=1;
+  if(act==='r'){ st.i=Math.floor(Math.random()*L105POOL.length); st.s1=st.s2=0; st.score=0; st.last=''; }
   chRender(0);
 }
+function l105Badge(txt,color){
+  return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${color}22;border:1px solid ${color};color:${color};margin-bottom:3px">${txt}</span>`;
+}
+function l105Card(tag,emoji,title,lines,color){
+  let ls='';
+  for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:13px;color:#d8ecff;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
+  return `<div style="flex:1;min-width:150px;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <div style="font-size:22px">${emoji}</div>
+      <div style="flex:1">
+        <div style="font-size:11px;color:${color};letter-spacing:.5px">${tag}</div>
+        <div style="font-size:15px;color:#fff;font-weight:bold;line-height:1.2">${title}</div>
+      </div>
+    </div>
+    ${ls}
+  </div>`;
+}
 function l105Circuit(U,R,I,uid){
-  // схема: батарея U, резистор R, амперметр показывает I
+  // живая цепь
   const W=210,H=64;
-  const bright=Math.min(1,U/15);
   return `<div style="margin:3px auto;position:relative;width:${W}px">
     <svg width="${W}" height="${H}" style="display:block">
       <rect x="4" y="6" width="30" height="30" rx="4" fill="#e8b03c" stroke="#8a6a10" stroke-width="1.5"/>
-      <text x="19" y="27" fill="#3a2a05" font-size="13" text-anchor="middle" font-weight="bold">🔋</text>
+      <text x="19" y="26" fill="#3a2a05" font-size="13" text-anchor="middle" font-weight="bold">🔋</text>
       <text x="19" y="48" fill="#cbb89a" font-size="9" text-anchor="middle">${U} В</text>
       <line x1="34" y1="21" x2="78" y2="21" stroke="#e8dcc8" stroke-width="2"/>
       <rect x="78" y="9" width="44" height="24" rx="4" fill="#5a4632" stroke="#d9a441" stroke-width="1.5"/>
@@ -4839,12 +4863,30 @@ function l105Circuit(U,R,I,uid){
       <circle cx="178" cy="21" r="14" fill="#13251c" stroke="#d9a441" stroke-width="1.5"/>
       <text x="178" y="24" fill="#7fd1a0" font-size="9" text-anchor="middle">A</text>
       <line x1="192" y1="21" x2="206" y2="21" stroke="#e8dcc8" stroke-width="2"/>
-      <circle cx="206" cy="6" r="3" fill="none" stroke="#e8dcc8" stroke-width="1.5"/>
       <line x1="178" y1="35" x2="178" y2="50" stroke="#e8dcc8" stroke-width="2"/>
       <line x1="19" y1="36" x2="19" y2="50" stroke="#e8dcc8" stroke-width="2"/>
       <line x1="19" y1="50" x2="178" y2="50" stroke="#e8dcc8" stroke-width="2"/>
     </svg>
     <div class="wv-ans" style="font-size:20px;color:#7fd1a0;font-weight:bold;text-align:center">I = ${I} А</div>
+  </div>`;
+}
+function l105Water(uid){
+  // аналогия с водой: напор, труба, поток
+  return `<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin:4px auto">
+    <div style="text-align:center">
+      <div style="font-size:26px" class="wv-pulse">🚰</div>
+      <div style="font-size:10px;color:#9ec0a8">кран открыт<br>напор U</div>
+    </div>
+    <div style="font-size:24px" class="wv-flow">💧💧💧</div>
+    <div style="text-align:center">
+      <div style="font-size:26px">🛢️</div>
+      <div style="font-size:10px;color:#9ec0a8">ведро: сколько<br>натекло I</div>
+    </div>
+  </div>`;
+}
+function l105Tri(uid){
+  return `<div style="text-align:center;font-size:16px;color:#e8dcc8" class="wv-pop">
+    <div style="display:inline-block;padding:6px 18px;border:2px solid rgba(217,164,65,.55);border-radius:12px;background:rgba(217,164,65,.08);font-family:Georgia,serif">▲<br><span style="font-size:20px;color:#ffd9a0">U</span><br><span style="color:#7fd1a0">I</span> · <span style="color:#8fa6b8">R</span></div>
   </div>`;
 }
 function visL105(el){
@@ -4861,115 +4903,174 @@ function visL105(el){
     const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
     let h='';
     if(step===0){
-      h=col(big('Почему лампочка светит по-разному?'),
-        `<div style="font-size:44px" class="wv-flick">💡</div>`+
-        sml('одна батарейка — тусклый свет, две — ярче. А длинный тонкий провод — слабее. Что управляет током?'));
+      h=col(`<div style="font-size:20px;color:#c9b28a;letter-spacing:1px">🌟 ЛЕГЕНДА · Эпизод 5</div>`+
+        big('Город Электро-Сити')+
+        `<div style="font-size:40px" class="wv-flick">⚡🏙️</div>`+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:12px 14px;max-width:310px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+        В городе Электро-Сити электричество бежит по проводам, как вода по трубам! Но почему в одной лампочке ток яркий, а в другой еле теплится? Архимед — главный инженер города — знает ответ. В 1827 году его нашёл немецкий учитель Георг Ом. Сегодня ты станешь электромонтёром и научишься управлять током!</div>`);
     } else if(step===1){
-      h=col(big('Три главных величины'),
-        rowC(chip('I — сила тока (А)','rgba(127,209,255,.5)'),chip('U — напряжение (В)','rgba(232,160,90,.5)'),chip('R — сопротивление (Ом)','rgba(127,184,160,.5)'))+
-        sml('ток «течёт» как вода, напряжение — «напор», сопротивление — «узкая труба»'));
+      h=col(l105Badge('СПРАВКА · ТРИ ВЕЛИЧИНЫ','#7fb7d8')+
+        big('Три главных «жителя» цепи')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
+          ${l105Card('СИЛА ТОКА','🔌','I — сколько «воды» течёт','Измеряется в амперах (А). Показывает, сколько заряда проходит через провод за 1 секунду. 1 А — это 6,25·10¹⁸ электронов в секунду!','#7fd1a0')}
+          ${l105Card('НАПРЯЖЕНИЕ','🔋','U — «напор» батарейки','Измеряется в вольтах (В). Показывает, как сильно батарейка «толкает» электроны. 1,5 В — обычная пальчиковая батарейка, 12 В — автомобильная!','#ffd966')}
+          ${l105Card('СОПРОТИВЛЕНИЕ','🧱','R — «узкая труба»','Измеряется в омах (Ом). Показывает, насколько провод мешает току: длинный и тонкий — мешает сильно!','#ff8a6a')}
+        </div>`);
     } else if(step===2){
-      h=col(big('Вода и электричество'),
-        rowC(chip('напор больше → воды больше','rgba(127,209,255,.5)'),chip('труба уже → воды меньше','rgba(232,160,90,.5)'))+
-        sml('больше напряжение → больше ток. Больше сопротивление → меньше ток. Точную связь нашёл Ом!'));
+      h=col(l105Badge('АНАЛОГИЯ · ВОДОПРОВОД','#7fb7d8')+
+        big('Электричество — как вода')+
+        l105Water('a')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['🔋','Напряжение U — напор воды','Батарейка — насос: чем сильнее жмёт, тем больше «напор». В розетке напор 220 В, в батарейке 1,5 В.'],
+             ['🧱','Сопротивление R — узость трубы','Тонкая и длинная труба пропускает меньше воды. Тонкий и длинный провод пропускает меньше тока!'],
+             ['🔌','Ток I — поток воды','Сколько литров в секунду — это сила тока. Чем больше напор и шире труба, тем больше поток.']].map(f=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(127,183,216,.07);border:1px solid rgba(127,183,216,.25);border-radius:10px;padding:6px 10px;text-align:left">
+            <span style="font-size:18px">${f[0]}</span>
+            <span style="font-size:12.5px;color:#d8ecff"><b style="color:#e8dcc8">${f[1]}</b><br><span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
+        </div>`);
     } else if(step===3){
-      h=col(big('Закон Ома'),
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-family:Georgia,serif">I = U : R</div>`+
-        sml('сила тока = напряжение делить на сопротивление. Как в нашей проверке!'));
+      h=col(l105Badge('ЗАКОН ОМА','#ffd966')+
+        big('Главный закон Электро-Сити')+
+        l105Card('ОПРЕДЕЛЕНИЕ','⚖️','Сила тока = напряжение : сопротивление','Георг Ом обнаружил: чем больше напряжение, тем больше ток; чем больше сопротивление, тем меньше ток.','#ffd966')+
+        `<div style="background:rgba(127,255,170,.09);border:1.5px solid #7fd1a066;border-radius:14px;padding:12px;max-width:300px;font-family:Georgia,serif;color:#7fd1a0;font-size:22px">I = U : R</div>`+
+        sml('ток = напряжение делить на сопротивление. Запомни этот треугольник!'));
+
     } else if(step===4){
-      h=col(big('Считаем ток'),
-        l105Circuit(12,6,2,'a')+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">I = 12 : 6 = 2 А</div>`+
-        sml('12 В и 6 Ом → ток 2 ампера. Делим напряжение на сопротивление!'));
+      h=col(l105Badge('ПОМОЩНИК · ТРЕУГОЛЬНИК','#c9b28a')+
+        big('Магический треугольник')+
+        l105Tri('b')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['U = I · R','напряжение = ток × сопротивление'],
+             ['I = U : R','ток = напряжение : сопротивление'],
+             ['R = U : I','сопротивление = напряжение : ток']].map(f=>`<div style="background:rgba(217,164,65,.07);border:1px solid rgba(217,164,65,.3);border-radius:10px;padding:6px 12px;text-align:center;font-size:13.5px;color:#e8dcc8"><b style="font-family:Georgia,serif;color:#ffd9a0">${f[0]}</b> — ${f[1]}</div>`).join('')}
+        </div>`+
+        sml('напряжение наверху. Закрываешь неизвестное пальцем — остаётся формула!'));
     } else if(step===5){
-      h=col(big('Задача-проверка'),
-        l105Circuit(15,5,3,'b')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">I = 15 : 5 = 3 А</div>`+
-        sml('как в проверке: 15 В, 5 Ом → 3 А!'));
+      h=col(l105Badge('РАСЧЁТ · ПО ШАГАМ','#7fd1a0')+
+        big('Считаем ток')+
+        l105Circuit(12,6,2,'c')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['ШАГ 1','Возьми напряжение U','Батарейка даёт 12 В.'],
+             ['ШАГ 2','Возьми сопротивление R','Проводник сопротивляется с силой 6 Ом.'],
+             ['ШАГ 3','Раздели: U : R','12 : 6 = 2 А — ток, который побежал по цепи!']].map((f,i)=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(127,208,160,.07);border:1px solid rgba(127,208,160,.3);border-radius:10px;padding:6px 10px;text-align:left">
+            <span style="background:#7fd1a0;color:#0d1f14;font-weight:bold;border-radius:8px;padding:2px 8px;font-size:11px;white-space:nowrap">${f[0]}</span>
+            <span style="font-size:13px;color:#e8dcc8"><b>${f[1]}</b><br><span style="color:#9ec0a8;font-size:12px">${f[2]}</span></span></div>`).join('')}
+        </div>`);
     } else if(step===6){
-      h=col(big('Магический треугольник'),
-        `<div style="text-align:center;font-size:16px;color:#e8dcc8" class="wv-pop">
-          <div style="display:inline-block;padding:4px 16px;border:2px solid rgba(217,164,65,.5);border-radius:10px;background:rgba(217,164,65,.06)">▲<br>U<br><span style="color:#7fd1a0">I</span> · <span style="color:#8fa6b8">R</span></div>
-        </div>`+
-        sml('напряжение наверху: U = I·R, I = U:R, R = U:I. Закрываешь неизвестное пальцем!'));
+      h=col(l105Badge('ПРОВЕРКА СМОТРИТЕЛЯ','#c9b28a')+
+        big('Задача-проверка')+
+        l105Circuit(15,5,3,'d')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">I = 15 : 5 = 3 А — как в нашей проверке!</div>`+
+        sml('напряжение 15 В, сопротивление 5 Ом → ток 3 ампера.'));
     } else if(step===7){
-      h=col(big('Задача 1: ищем сопротивление'),
-        l105Circuit(20,5,4,'c')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">R = U : I = 20 : 4 = 5 Ом</div>`+
-        sml('как в наших задачках!'));
-    } else if(step===8){
-      h=col(big('Задача 2: ищем напряжение'),
-        rowC(chip('I = 3 А','rgba(127,209,255,.5)'),chip('R = 7 Ом','rgba(127,184,160,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">U = I · R = 3 · 7 = 21 В</div>`+
-        sml('тоже как в задачках: умножаем ток на сопротивление!'));
-    } else if(step===9){
-      h=col(big('Напряжение больше — ток больше'),
-        l105Circuit(6,6,1,'d')+
-        l105Circuit(12,6,2,'e')+
-        sml('сопротивление то же (6 Ом), а напряжение выросло вдвое — ток тоже вдвое: 1 А → 2 А'));
-    } else if(step===10){
-      h=col(big('Сопротивление больше — ток меньше'),
-        l105Circuit(12,6,2,'f')+
-        l105Circuit(12,12,1,'g')+
-        sml('напряжение то же (12 В), сопротивление выросло вдвое — ток упал вдвое: 2 А → 1 А'));
-    } else if(step===11){
-      h=col(big('Прямая и обратная зависимость'),
-        rowC(chip('I растёт с U (прямо)','rgba(127,209,255,.5)'),chip('I падает с R (обратно)','rgba(232,160,90,.5)'))+
-        sml('удвоили напряжение — ток удвоился. Удвоили сопротивление — ток уменьшился вдвое'));
-    } else if(step===12){
-      h=col(big('Что такое 1 Ом'),
-        rowC(chip('1 Ом — сопротивление, при котором','rgba(127,209,255,.5)'),chip('1 В даёт ток 1 А','rgba(127,184,160,.5)'))+
-        sml('единица названа в честь Георга Ома — того самого учёного!'));
-    } else if(step===13){
-      h=col(big('От чего зависит сопротивление'),
-        rowC(chip('длиннее провод — больше R','rgba(127,209,255,.5)'),chip('тоньше — больше R','rgba(232,160,90,.5)'),chip('материал (медь vs никель)','rgba(127,184,160,.5)'))+
-        sml('поэтому длинные тонкие провода «душат» ток — как узкая труба воду'));
-    } else if(step===14){
-      h=col(big('Реостат — меняем R'),
-        rowC(chip('движок ползунка','rgba(127,209,255,.5)'),chip('меняет длину провода','rgba(232,160,90,.5)'),chip('меняется яркость лампы','rgba(127,184,160,.5)'))+
-        sml('так работает выключатель света с плавной регулировкой!'));
-    } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('10 В, 5 Ом → I = 2 А','rgba(127,184,160,.5)'),chip('20 В, 4 А → R = 5 Ом','rgba(127,184,160,.5)'),chip('2 А, 8 Ом → U = 16 В','rgba(127,184,160,.5)'))+
-        sml('треугольник U-I-R решает всё!'));
-    } else if(step===16){
-      const POOL=[['I','15','5'],['I','12','6'],['I','20','4'],['I','30','10'],['I','24','8'],['I','40','5'],['R','20','4'],['R','30','5'],['R','36','6'],['R','45','9'],['U','3','7'],['U','4','5'],['U','5','8'],['U','6','4'],['U','2','9'],['U','3','12']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0];
-      let desc, firstStep, ans, vis='';
-      if(kind==='I'){
-        const U=+e[1], R=+e[2];
-        desc='напряжение '+U+' В, сопротивление '+R+' Ом → сила тока?';
-        firstStep='I = U : R = '+U+' : '+R;
-        ans=U/R; vis=l105Circuit(U,R,U/R,'t');
-      } else if(kind==='R'){
-        const U=+e[1], I=+e[2];
-        desc='напряжение '+U+' В, ток '+I+' А → сопротивление?';
-        firstStep='R = U : I = '+U+' : '+I;
-        ans=U/I; vis=l105Circuit(U,ans,I,'t2');
-      } else {
-        const I=+e[1], R=+e[2];
-        desc='ток '+I+' А, сопротивление '+R+' Ом → напряжение?';
-        firstStep='U = I · R = '+I+' · '+R;
-        ans=I*R; vis=l105Circuit(ans,R,I,'t3');
-      }
-      h=col(big('🔋 Тренажёр: закон Ома'),
-        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
-        vis+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
-        btns(btn('1️⃣ подумай',`l105Act('${lk}','s1')`),btn('2️⃣ ответ',`l105Act('${lk}','s2')`),btn('🎲 другой',`l105Act('${lk}','n')`),btn('↺',`l105Act('${lk}','r')`))+
-        sml('треугольник: U наверху, I·R внизу!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🔋 I = U : R (закон Ома).<br>
-            🔺 U наверху: U = I·R, R = U:I.<br>
-            📈 U вдвое → I вдвое; R вдвое → I вдвое меньше.</div>
+      h=col(l105Badge('ЭКСПЕРИМЕНТ · НАПРЯЖЕНИЕ','#ffd966')+
+        big('Больше напряжение — больше ток!')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
+          ${[['6 В','R = 6 Ом','I = 1 А'],['12 В','R = 6 Ом','I = 2 А'],['24 В','R = 6 Ом','I = 4 А']].map((f,i)=>`<div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,217,102,.07);border:1px solid rgba(255,217,102,.3);border-radius:10px;padding:6px 12px">
+            <span style="font-size:13.5px;color:#ffd9a0;font-weight:bold">🔋 ${f[0]}</span>
+            <span style="font-size:12px;color:#9ec0a8">${f[1]}</span>
+            <span style="font-size:14px;color:#7fd1a0;font-weight:bold">${f[2]}</span></div>`).join('')}
         </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('сопротивление то же — а напряжение удвоилось → ток удвоился! Прямая зависимость.'));
+    } else if(step===8){
+      h=col(l105Badge('ЭКСПЕРИМЕНТ · СОПРОТИВЛЕНИЕ','#ff8a6a')+
+        big('Больше сопротивление — меньше ток!')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
+          ${[['12 В','R = 3 Ом','I = 4 А'],['12 В','R = 6 Ом','I = 2 А'],['12 В','R = 12 Ом','I = 1 А']].map((f,i)=>`<div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,138,106,.07);border:1px solid rgba(255,138,106,.3);border-radius:10px;padding:6px 12px">
+            <span style="font-size:13.5px;color:#ffd9a0;font-weight:bold">🔋 ${f[0]}</span>
+            <span style="font-size:12px;color:#9ec0a8">🧱 ${f[1]}</span>
+            <span style="font-size:14px;color:#7fd1a0;font-weight:bold">${f[2]}</span></div>`).join('')}
+        </div>`+
+        sml('напряжение то же — а сопротивление удвоилось → ток уменьшился вдвое! Обратная зависимость.'));
+    } else if(step===9){
+      h=col(l105Badge('ЗАДАЧА 1','#c9b28a')+
+        big('Ищем сопротивление')+
+        l105Circuit(20,5,4,'e')+
+        l105Card('УСЛОВИЕ','🔎','Напряжение 20 В, ток 4 А','Какое сопротивление у проводника?','#7fb7d8')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">R = U : I = 20 : 4 = 5 Ом</div>`+
+        sml('как в наших задачках: из треугольника закрываем R!'));
+    } else if(step===10){
+      h=col(l105Badge('ЗАДАЧА 2','#c9b28a')+
+        big('Ищем напряжение')+
+        l105Card('УСЛОВИЕ','🔎','Ток 3 А, сопротивление 7 Ом','Какое напряжение нужно, чтобы прогнать такой ток?','#7fb7d8')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">U = I · R = 3 · 7 = 21 В</div>`+
+        sml('как в наших задачках: умножаем ток на сопротивление!'));
+    } else if(step===11){
+      h=col(l105Badge('ЕДИНИЦЫ · ПОЗНАКОМИМСЯ','#7fb7d8')+
+        big('Ампер, вольт, ом')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['🔌','1 Ампер (А)','Сила тока, названа в честь Андре-Мари Ампера. В лампочке карманного фонаря ~0,3 А, в чайнике ~10 А!'],
+             ['🔋','1 Вольт (В)','Напряжение, названо в честь Алессандро Вольта. Он сделал первую батарейку — «вольтов столб»!'],
+             ['🧱','1 Ом (Ом)','Сопротивление, названо в честь Георга Ома. 1 Ом — когда 1 В даёт ток 1 А.']].map(f=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(127,183,216,.07);border:1px solid rgba(127,183,216,.25);border-radius:10px;padding:6px 10px;text-align:left">
+            <span style="font-size:18px">${f[0]}</span>
+            <span style="font-size:12.5px;color:#d8ecff"><b style="color:#e8dcc8">${f[1]}</b><br><span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
+        </div>`);
+    } else if(step===12){
+      h=col(l105Badge('ОТ ЧЕГО ЗАВИСИТ R','#ff8a6a')+
+        big('Почему провод сопротивляется?')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['📏','Длина','Провод длиннее → электронам дальше бежать → сопротивление больше. Поэтому длинные линии электропередач — толстые!'],
+             ['➗','Толщина','Провод толще → «дорога» шире → сопротивление меньше. Тонкая нить лампочки сопротивляется сильно и раскаляется!'],
+             ['🧪','Материал','Медь и алюминий — отличные проводники. У никелина и нихрома сопротивление в десятки раз больше — из них делают спирали!']].map(f=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(255,138,106,.07);border:1px solid rgba(255,138,106,.28);border-radius:10px;padding:6px 10px;text-align:left">
+            <span style="font-size:17px">${f[0]}</span>
+            <span style="font-size:12.5px;color:#d8ecff"><b style="color:#e8dcc8">${f[1]}</b><br><span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
+        </div>`);
+    } else if(step===13){
+      h=col(l105Badge('ЖИВОЙ ПРИМЕР · РЕОСТАТ','#7fd1a0')+
+        big('Регулятор яркости')+
+        `<div style="font-size:34px" class="wv-flick">💡</div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l105Card('КАК УСТРОЕН','🎚️','Ползунок меняет длину провода','Реостат — «переменное сопротивление». Двигаешь ползунок — включается больше или меньше витков провода — меняется R!','#7fd1a0')}
+          ${l105Card('ЧТО ПРОИСХОДИТ','💡','Меняется ток — меняется яркость','Больше R → меньше I → лампа тускнеет. Меньше R → больше I → лампа светит ярче. Так работают диммеры и регуляторы громкости!','#7fd1a0')}
+        </div>`);
+    } else if(step===14){
+      h=col(l105Badge('БЕЗОПАСНОСТЬ','#ff8a6a')+
+        big('Ток может быть опасен!')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['0,001 А','Щекотка — вы чувствуете ток.'],
+             ['0,01 А','Больно! Мышцы сжимаются — руку не оторвать!'],
+             ['0,1 А','Смертельно опасно для человека.'],
+             ['0,5 А','Смерть почти мгновенно.']].map((f,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,138,106,${i<2?'.05':'.12'});border:1px solid rgba(255,138,106,${i<2?'.2':'.5'});border-radius:10px;padding:5px 12px">
+            <span style="font-size:13px;color:${i<2?'#e8dcc8':'#ff9a8a'};font-weight:bold;font-family:Georgia,serif">${f[0]}</span>
+            <span style="font-size:12px;color:#9ec0a8;text-align:right">${f[1]}</span></div>`).join('')}
+        </div>`+
+        sml('никогда не суй пальцы и предметы в розетку! Даже 0,1 А опасен. Электричество уважай!'));
+    } else if(step===15){
+      h=col(l105Badge('ШПАРГАЛКА','#ffd966')+
+        big('Три шага для любой задачи')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['1','Определи, что спрашивают','ток I, напряжение U или сопротивление R?'],
+             ['2','Открой треугольник','закрой неизвестное пальцем'],
+             ['3','Подставь и посчитай','U = I·R; I = U:R; R = U:I']].map((f,i)=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(255,217,102,.07);border:1px solid rgba(255,217,102,.3);border-radius:10px;padding:6px 10px;text-align:left">
+            <span style="background:#ffd966;color:#4a3200;font-weight:bold;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:12px">${f[0]}</span>
+            <span style="font-size:13px;color:#e8dcc8"><b>${f[1]}</b> — <span style="color:#9ec0a8;font-size:12px">${f[2]}</span></span></div>`).join('')}
+        </div>`+
+        sml('проверь себя: 15 В и 5 Ом → 3 А (как в проверке)!'));
+    } else if(step===16){
+      if(st.i==null){ st.i=Math.floor(Math.random()*L105POOL.length); st.score=0; st.last=''; }
+      const e=L105POOL[st.i], kind=e[0];
+      const correct=kind==='I'?0:kind==='R'?1:2;
+      let q, hint, ans;
+      if(kind==='I'){ q='U = '+e[1]+' В, R = '+e[2]+' Ом → найди ток I'; hint='I = U:R = '+e[1]+':'+e[2]; ans=e[1]/e[2]; }
+      else if(kind==='R'){ q='U = '+e[1]+' В, I = '+e[2]+' А → найди R'; hint='R = U:I = '+e[1]+':'+e[2]; ans=e[1]/e[2]; }
+      else { q='I = '+e[1]+' А, R = '+e[2]+' Ом → найди U'; hint='U = I·R = '+e[1]+'·'+e[2]; ans=e[1]*e[2]; }
+      const resTxt=st.last==='ok'?`✅ Верно! ${hint} = ${ans}`:st.last==='no'?'❌ Не угадал — подумай, что делим, а что умножаем!':'';
+      h=col(l105Badge('ИГРА · ЭЛЕКТРОМОНТЁР','#ffd966')+
+        big('Что ищем?')+
+        `<div class="wv-row">${chip(q,'rgba(217,164,65,.35)')}</div>`+
+        l105Circuit(kind==='I'?+e[1]:kind==='R'?+e[1]:ans, kind==='R'?ans:+e[2], kind==='I'?ans:+e[2], 't')+
+        (resTxt?`<div class="l35-pop" style="font-size:14px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'}">${resTxt}</div>`:'')+
+        (st.s1?`<div class="l35-pop" style="font-size:15px;color:#ffd9a0">💡 ${hint}</div>`:'')+
+        btns(btn('🔌 ток I',`l105Act('${lk}','pick0')`),btn('🧱 сопротивление R',`l105Act('${lk}','pick1')`),btn('🔋 напряжение U',`l105Act('${lk}','pick2')`),btn('💡',`l105Act('${lk}','s1')`),btn('🎲 задача',`l105Act('${lk}','n')`))+
+        sml('сначала пойми, ЧТО ищем, потом открой треугольник!'));
+    } else {
+      h=col(l105Badge('ПАМЯТКА','#c9b28a')+
+        big('Три правила электромонтёра')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
+          ${l105Card('ЗАКОН ОМА','⚡','I = U : R','Ток = напряжение делить на сопротивление.','#7fd1a0')}
+          ${l105Card('ТРЕУГОЛЬНИК','🔺','U сверху, I·R снизу','U = I·R; I = U:R; R = U:I. Закрой неизвестное пальцем!','#ffd966')}
+          ${l105Card('ЗАВИСИМОСТИ','📈','U↑ → I↑; R↑ → I↓','Удвоил напряжение — ток удвоился. Удвоил сопротивление — ток уменьшился вдвое.','#ff8a6a')}
+        </div>`+
+        btn('⟲ вернуться к игре', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 15 В и 5 Ом'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
