@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -5414,6 +5414,162 @@ function visL106(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+function l96Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['left','полдень'],['top','полдень'],['right','полдень'],['left','вечер'],['top','утро'],['right','вечер'],['left','утро'],['top','вечер']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l96Scene(sunPos,uid){
+  // сцена: солнце sunPos 'left'|'top'|'right', дерево по центру, земля; тень от дерева
+  const W=200,H=120;
+  const sunXY={left:[24,22],top:[100,14],right:[176,22]}[sunPos];
+  // тень: направление от солнца через дерево(100,86) до земли (y=108)
+  // дерево в (100,86), верх дерева (100,44)
+  let shadow='';
+  const groundY=110;
+  const dir = sunPos==='left'?1:sunPos==='right'?-1:0;
+  const len = sunPos==='top'?14:44;
+  const sx=sunPos==='top'?100:100+dir*len;
+  shadow=`<ellipse cx="${sx}" cy="${groundY}" rx="${sunPos==='top'?7:26}" ry="3.5" fill="#1d3327" opacity=".45"/>`;
+  // лучи от солнца к дереву
+  let rays='';
+  if(sunPos==='top'){
+    for(let i=0;i<5;i++) rays+=`<line x1="${100-26+i*13}" y1="16" x2="${100-22+i*11}" y2="42" stroke="#ffd966" stroke-width="1.4" opacity=".7"/>`;
+  } else {
+    const dx=sunPos==='left'?1:-1;
+    for(let i=0;i<5;i++) rays+=`<line x1="${sunXY[0]+dx*4}" y1="${sunXY[1]+6+i*10}" x2="${100-dx*8}" y2="${40+i*12}" stroke="#ffd966" stroke-width="1.4" opacity=".65"/>`;
+  }
+  return `<svg width="${W}" height="${H}" style="display:block;margin:2px auto;background:linear-gradient(180deg,#bcd9f0,#e8f0e0 60%,#5a7a3a 60%,#4a6a30)">
+    <circle cx="${sunXY[0]}" cy="${sunXY[1]}" r="11" fill="#ffd966" stroke="#e8b03c" stroke-width="2"/>
+    ${rays}
+    <rect x="93" y="46" width="14" height="40" fill="#6a4a26"/>
+    <ellipse cx="100" cy="92" rx="22" ry="12" fill="#3c8f5f"/>
+    ${shadow}
+    <text x="${W-3}" y="${H-6}" fill="#eaf3f8" font-size="8.5" text-anchor="end">солнце: ${sunPos==='left'?'слева':sunPos==='right'?'справа':'высоко'}</text>
+  </svg>`;
+}
+function visL96(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Откуда берётся тень?'),
+        `<div style="font-size:44px" class="wv-pulse">🌞</div>`+
+        sml('в солнечный день за деревом появляется тень. Почему? Всё дело в том, как распространяется свет!'));
+    } else if(step===1){
+      h=col(big('Источники света'),
+        rowC(chip('Солнце','rgba(127,209,255,.5)'),chip('лампочка','rgba(127,184,160,.5)'),chip('свеча','rgba(232,160,90,.5)'),chip('звёзды','rgba(127,209,255,.5)'))+
+        sml('источник света светит САМ. Как в нашей проверке!'));
+    } else if(step===2){
+      h=col(big('А Луна?'),
+        rowC(chip('Луна НЕ светит сама','rgba(232,160,90,.5)'),chip('она отражает свет Солнца','rgba(127,209,255,.5)'),chip('как зеркало','rgba(127,184,160,.5)'))+
+        `<div style="font-size:40px" class="wv-flick">🌙</div>`+
+        sml('Луна и зеркало — не источники! Они лишь отражают чужой свет'));
+    } else if(step===3){
+      h=col(big('Свет идёт по прямой'),
+        rowC(chip('лучи — прямые линии','rgba(127,209,255,.5)'),chip('свет не огибает углы','rgba(232,160,90,.5)'))+
+        sml('свет распространяется прямолинейно — не сворачивает и не огибает предметы!'));
+    } else if(step===4){
+      h=col(big('Почему появляется тень'),
+        l96Scene('left','a')+
+        sml('дерево непрозрачное — лучи не проходят сквозь него. За деревом света нет — вот и тень!'));
+    } else if(step===5){
+      h=col(big('Тень — там, где нет света'),
+        rowC(chip('свет слева → тень справа','rgba(127,209,255,.5)'),chip('свет справа → тень слева','rgba(127,184,160,.5)'))+
+        l96Scene('right','b')+
+        sml('тень всегда ПРОТИВОПОЛОЖНА источнику света!'));
+    } else if(step===6){
+      h=col(big('Задача 1: дерево и солнце'),
+        l96Scene('left','c')+
+        rowC(chip('солнце слева от дерева','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">тень будет СПРАВА от дерева!</div>`+
+        sml('как в наших задачках: лучи идут слева направо — за деревом света нет'));
+    } else if(step===7){
+      h=col(big('Солнце движется по небу'),
+        rowC(chip('утро — солнце низко у горизонта','rgba(232,160,90,.5)'),chip('полдень — высоко над головой','rgba(127,209,255,.5)'),chip('вечер — снова низко','rgba(232,160,90,.5)'))+
+        sml('вместе с солнцем «гуляет» и тень!'));
+    } else if(step===8){
+      h=col(big('Утро: длинная тень'),
+        l96Scene('left','d')+
+        sml('солнце низко — лучи скользят по земле — тень длинная и вытянутая'));
+    } else if(step===9){
+      h=col(big('Полдень: тень короткая'),
+        l96Scene('top','e')+
+        sml('солнце высоко — лучи падают почти отвесно — тень коротенькая, почти под деревом!'));
+    } else if(step===10){
+      h=col(big('Задача 2: когда тень короче?'),
+        l96Scene('top','f')+
+        rowC(chip('утром — низко, тень длинная','rgba(232,160,90,.5)'),chip('в полдень — высоко, тень короткая','rgba(127,209,255,.5)'),chip('вечером — опять длинная','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">в полдень!</div>`+
+        sml('как в наших задачках: выше солнце — короче тень'));
+    } else if(step===11){
+      h=col(big('Солнечные часы'),
+        rowC(chip('тень от столбика','rgba(127,209,255,.5)'),chip('указывает время!','rgba(127,184,160,.5)'))+
+        sml('древние люди мерили время по тени: её направление меняется в течение дня'));
+    } else if(step===12){
+      h=col(big('Тень в туннеле?'),
+        rowC(chip('лампочка маленькая — тень резкая','rgba(127,209,255,.5)'),chip('большой свет — тень мягкая','rgba(127,184,160,.5)'))+
+        sml('в пасмурный день Солнце «размазано» облаками — теней почти нет!'));
+    } else if(step===13){
+      h=col(big('Полутень'),
+        rowC(chip('край тени не всегда чёткий','rgba(127,209,255,.5)'),chip('часть света всё же пробивается','rgba(127,184,160,.5)'))+
+        sml('у Солнца есть размер — поэтому у теней бывает мягкий размытый край (полутень)'));
+    } else if(step===14){
+      h=col(big('Свет в жизни'),
+        rowC(chip('солнечные очки','rgba(127,209,255,.4)'),chip('шторы','rgba(127,209,255,.4)'),chip('зонтик','rgba(127,209,255,.4)'),chip('кино-проектор','rgba(127,209,255,.4)'))+
+        sml('везде, где свет встречает преграду, — появляется тень: и это можно использовать!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('свет сверху → тень под предметом','rgba(127,184,160,.5)'),chip('свет слева → тень справа','rgba(127,184,160,.5)'))+
+        sml('тень всегда с противоположной от света стороны!'));
+    } else if(step===16){
+      const POOL=[['left','полдень'],['top','полдень'],['right','полдень'],['left','вечер'],['top','утро'],['right','вечер'],['left','утро'],['top','вечер']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], pos=e[0], time=e[1];
+      let side;
+      if(pos==='left') side='справа от дерева';
+      else if(pos==='right') side='слева от дерева';
+      else side='прямо под деревом (короткая)';
+      const ans=side;
+      const firstStep='лучи идут '+(pos==='left'?'слева → тень справа':pos==='right'?'справа → тень слева':'сверху → тень внизу, короткая');
+      h=col(big('🌞 Тренажёр: где тень?'),
+        `<div class="wv-row">${chip('солнце '+(pos==='left'?'слева':pos==='right'?'справа':'высоко')+' от дерева — где тень?','rgba(217,164,65,.35)')}</div>`+
+        l96Scene(pos,'t')+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0;max-width:280px">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:22px;color:#7fd1a0;font-weight:bold">тень — ${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l96Act('${lk}','s1')`),btn('2️⃣ ответ',`l96Act('${lk}','s2')`),btn('🎲 другой',`l96Act('${lk}','n')`),btn('↺',`l96Act('${lk}','r')`))+
+        sml('тень всегда с противоположной от солнца стороны!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🌞 Источники светят сами: Солнце, лампа.<br>
+            🌙 Луна и зеркало — отражают чужой свет.<br>
+            📏 Свет идёт по прямой → тень за преградой.<br>
+            ⏰ Выше солнце — короче тень (полдень).</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там про источники света'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function l18Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const POOL=[['sq','7'],['sq','12'],['sq','15'],['cb','2'],['cb','3'],['cb','5'],['back','81'],['back','144'],['back','125'],['back','64'],['cnt','sq'],['cnt','cb']];
@@ -10005,6 +10161,7 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
   if(id===1) visDigits(el);
+  else if(id===96) visL96(el);
   else if(id===106) visL106(el);
   else if(id===104) visL104(el);
   else if(id===51) visL51(el);
