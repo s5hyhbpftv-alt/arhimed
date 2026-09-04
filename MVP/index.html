@@ -539,6 +539,12 @@
   .l11-fade { opacity:0; animation:l11Fade .5s ease forwards; }
   @keyframes l11Fade { to { opacity:1 } }
   .l11-pop2 { animation:wvPop .4s ease .15s both; }
+  /* ============ остатки при делении (урок 12, v165) ============ */
+  .l12-fall { animation:l12Fall .55s ease both; }
+  @keyframes l12Fall { 0%{transform:translateY(-38px);opacity:0} 100%{transform:translateY(0);opacity:1} }
+  .l12-hop { animation:l12Hop .5s ease both; }
+  @keyframes l12Hop { 0%{transform:translateY(0)} 40%{transform:translateY(-13px)} 100%{transform:translateY(0)} }
+  .l12-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin:1px; }
 </style>
 </head>
 <body>
@@ -567,21 +573,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=164"></script>
-<script src="data/lessons.js?v=164"></script>
-<script src="js/comic.js?v=164"></script>
-<script src="js/core.js?v=164"></script>
-<script src="js/engine.js?v=164"></script>
-<script src="js/app.js?v=164"></script>
-<script src="js/dashboard.js?v=164"></script>
-<script src="js/lessons.js?v=164"></script>
-<script src="js/legend.js?v=164"></script>
-<script src="js/simulator.js?v=164"></script>
-<script src="js/duel.js?v=164"></script>
-<script src="js/agent.js?v=164"></script>
-<script src="js/voice.js?v=164"></script>
-<script src="js/assistant.js?v=164"></script>
-<script src="js/agentlive.js?v=164"></script>
+<script src="data/tasks.js?v=165"></script>
+<script src="data/lessons.js?v=165"></script>
+<script src="js/comic.js?v=165"></script>
+<script src="js/core.js?v=165"></script>
+<script src="js/engine.js?v=165"></script>
+<script src="js/app.js?v=165"></script>
+<script src="js/dashboard.js?v=165"></script>
+<script src="js/lessons.js?v=165"></script>
+<script src="js/legend.js?v=165"></script>
+<script src="js/simulator.js?v=165"></script>
+<script src="js/duel.js?v=165"></script>
+<script src="js/agent.js?v=165"></script>
+<script src="js/voice.js?v=165"></script>
+<script src="js/assistant.js?v=165"></script>
+<script src="js/agentlive.js?v=165"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -596,7 +602,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=164').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=165').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
