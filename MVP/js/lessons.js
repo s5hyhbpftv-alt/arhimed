@@ -8452,7 +8452,17 @@ function l15River(v,u,mode,opt){
     <div style="position:relative;height:56px;border-radius:16px;background:linear-gradient(180deg,#1d5f8f,#0e3a5e);border:2px solid #0a2740;overflow:hidden">
       <div class="l15-wave" style="position:absolute;inset:0;opacity:.5"></div>
       <div style="position:absolute;left:14px;top:14px;font-size:9px;color:#bfe9ff">течение u=${u}</div>
-      <div class="${mode==='по'?'l15-boat':'l15-boat-l'}" style="position:absolute;left:130px;top:8px;font-size:34px">${mode==='по'?`<span style="display:inline-block;transform:scaleX(-1)">${em}</span>`:em}<div style="font-size:9px;text-align:center;color:#fff;margin-top:-6px">${mode==='по'?'по течению →':'← против течения'}</div></div>
+      <div class="${mode==='по'?'l15-boat':'l15-boat-l'}" style="position:absolute;left:118px;top:4px">
+        <svg width="76" height="44" viewBox="0 0 76 44">
+          <g transform="${mode==='против'?'translate(76,0) scale(-1,1)':''}">
+            <path d="M6,30 Q14,14 30,10 L58,10 Q74,14 74,30 Z" fill="#e8b04a" stroke="#a05c18" stroke-width="2"/>
+            <rect x="28" y="4" width="16" height="9" rx="3" fill="#ffd9a0" stroke="#a05c18" stroke-width="1.6"/>
+            <path d="M58,30 Q64,38 70,36" fill="none" stroke="#a05c18" stroke-width="2.5"/>
+          </g>
+          <text x="76" y="16" text-anchor="end" font-size="13" font-weight="bold" fill="${mode==='по'?'#7fd1a0':'#ff9a8a'}">${mode==='по'?'→':'←'}</text>
+        </svg>
+        <div style="font-size:8.5px;text-align:center;color:#fff;margin-top:-2px">${mode==='по'?'по течению':'против течения'}</div>
+      </div>
       <div style="position:absolute;right:10px;top:34px;font-size:12px;color:${col};font-weight:bold">итог: ${tot} км/ч</div>
     </div>
     <div style="display:flex;justify-content:center;gap:6px;margin-top:2px">
