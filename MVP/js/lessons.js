@@ -5724,30 +5724,57 @@ function visL98(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+// ============ УРОК 92 v2 «Что изучает физика» — легенда «Три зала музея Архимеда» ============
+var L92POOL=[['body','гвоздь','🔨'],['body','молоток','🔨'],['body','стакан','🥛'],['body','мяч','⚽'],['body','карандаш','✏️'],['body','ложка','🥄'],['body','стул','🪑'],['body','книга','📖'],['sub','железо','🧱'],['sub','вода','💧'],['sub','стекло','🪟'],['sub','дерево','🪵'],['sub','медь','🟠'],['sub','золото','🟡'],['sub','воздух','🎈'],['sub','кислород','🫧'],['ev','таяние снега','☀️'],['ev','гром','💥'],['ev','дождь','🌧️'],['ev','молния','⚡'],['ev','кипение воды','♨️'],['ev','полёт мяча','🏀'],['ev','радуга','🌈'],['ev','горение свечи','🕯️']];
 function l92Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['body','гвоздь'],['body','молоток'],['body','стакан'],['body','мяч'],['sub','железо'],['sub','вода'],['sub','стекло'],['sub','дерево'],['ev','таяние снега'],['ev','гром'],['ev','дождь'],['ev','полёт мяча']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
+  if(st.i==null) st.i=0; if(st.score==null) st.score=0;
+  const m=act.match(/^pick(\d)$/);
+  if(m){
+    const want=+m[1];
+    const kind=L92POOL[st.i][0];
+    const correct=kind==='body'?0:kind==='sub'?1:2;
+    st.last=correct===want?'ok':'no';
+    if(correct===want) st.score++;
+    else { st.wrong=(st.wrong||0)+1; if(st.wrong>=2) st.help=1; }
   }
+  if(act==='n'){ st.i=(st.i+1)%L92POOL.length; st.last=''; st.wrong=0; st.help=0; }
+  if(act==='s1') st.s1=1;
+  if(act==='s2') st.s2=1;
+  if(act==='r'){ st.i=Math.floor(Math.random()*L92POOL.length); st.s1=st.s2=0; st.score=0; st.wrong=0; st.help=0; st.last=''; }
   chRender(0);
 }
-function l92Card(emoji,label,uid){
-  return `<div class="l35-pop" style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px;border-radius:12px;border:1px solid rgba(127,209,255,.35);background:rgba(127,209,255,.06);width:86px">
-    <div style="font-size:30px">${emoji}</div>
-    <div style="font-size:12.5px;color:#d8ecff">${label}</div>
+function l92Door(name,emoji,color,hot,uid){
+  // «дверь» зала музея
+  const glow=hot?`box-shadow:0 0 16px ${color}aa;transform:scale(1.06)`:''; 
+  return `<div class="wv-morph" style="width:76px;padding:8px 4px;border-radius:14px 14px 6px 6px;border:2px solid ${color};background:linear-gradient(180deg,${color}33,${color}11);text-align:center;${glow}">
+    <div style="font-size:26px">${emoji}</div>
+    <div style="font-size:10.5px;color:#d8ecff;margin-top:2px;line-height:1.3">${name}</div>
   </div>`;
 }
-function l92Check(word,uid){
-  const isEv=/(ение|ание|яние|ение|ание|ение|полёт|дождь|гром|молния|радуга|снегопад|ржавление)/i.test(word);
-  const isSub=/^железо|^вода|^стекло|^дерево|^медь|^золото|^воздух|^кислород/i.test(word);
-  return `<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin:2px auto">
-    <span style="font-size:20px;color:#e8dcc8">${word}</span>
-    <span style="font-size:22px">→</span>
-    <span class="wv-chip" style="color:${isEv?'#ff9a8a':isSub?'#ffd9a0':'#7fd1a0'}">${isEv?'явление':isSub?'вещество':'тело'}</span>
+function l92Halls(uid,hot){
+  // три двери-зала
+  return `<div style="display:flex;gap:6px;justify-content:center;margin:4px auto">
+    ${l92Door('Зал ТЕЛ','🔨','#7fd1a0','',hot===0?'x':'')}
+    ${l92Door('Зал ВЕЩЕСТВ','🧱','#ffd966','',hot===1?'x':'')}
+    ${l92Door('Зал ЯВЛЕНИЙ','⚡','#ff8a6a','',hot===2?'x':'')}
   </div>`;
+}
+function l92Item(emoji,word,uid){
+  return `<div class="wv-pop" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;border-radius:10px;border:1.5px solid rgba(217,164,65,.6);background:rgba(217,164,65,.08)">
+    <div style="font-size:30px">${emoji}</div>
+    <div style="font-size:14px;color:#ffe9c4">${word}</div>
+  </div>`;
+}
+function l92ShowKind(kind,uid){
+  const k=kind==='body'?'это ТЕЛО — предмет, который можно взять':kind==='sub'?'это ВЕЩЕСТВО — материал, из которого делают тела':'это ЯВЛЕНИЕ — процесс, изменение в природе';
+  const c=kind==='body'?'#7fd1a0':kind==='sub'?'#ffd966':'#ff8a6a';
+  return `<div style="display:inline-block;padding:4px 14px;border-radius:20px;border:1.5px solid ${c};color:${c};font-size:15px;margin:2px auto">${k}</div>`;
+}
+function l92Arrive(kind,uid){
+  // экспонат «летит» в нужный зал
+  const c=kind==='body'?'#7fd1a0':kind==='sub'?'#ffd966':'#ff8a6a';
+  return `<div style="font-size:34px" class="wv-drive" style="--dx:90px">${kind==='body'?'🔨':kind==='sub'?'🧱':'⚡'}</div>`;
 }
 function visL92(el){
   try{
@@ -5763,896 +5790,121 @@ function visL92(el){
     const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
     let h='';
     if(step===0){
-      h=col(big('Почему гремит гром?'),
-        `<div style="font-size:44px" class="wv-flick">⚡</div>`+
-        sml('молния, гром, радуга, падающий мяч — всё это природа. А наука, которая её изучает, — ФИЗИКА!'));
+      h=col(`<div style="font-size:20px;color:#c9b28a;letter-spacing:1px">🌟 ЛЕГЕНДА · Эпизод 1</div>`+
+        big('Три зала Музея природы Архимеда')+
+        `<div style="font-size:44px" class="wv-flick">🏛️</div>`+
+        sml('Сегодня Архимед открывает свой новый музей! В нём три зала: Зал Тел, Зал Веществ и Зал Явлений. Твоя задача — помочь Архимеду разложить все экспонаты по залам!'));
     } else if(step===1){
-      h=col(big('Физика изучает природу'),
-        rowC(chip('из чего состоят тела','rgba(127,209,255,.5)'),chip('какие явления происходят','rgba(127,184,160,.5)'))+
-        sml('физика отвечает: почему предметы падают, почему гроза, почему светит Солнце'));
+      h=col(big('Смотри на карту музея'),
+        l92Halls('m')+
+        rowC(chip('🔨 Зал Тел — предметы','rgba(127,209,255,.5)'),chip('🧱 Зал Веществ — материалы','rgba(232,160,90,.5)'),chip('⚡ Зал Явлений — процессы','rgba(127,184,160,.5)'))+
+        sml('нажимай на двери в тренажёре в конце урока! А пока — экскурсия по залам'));
     } else if(step===2){
-      h=col(big('Физическое тело'),
-        l92Card('🔨','гвоздь','a')+
-        l92Card('🏀','мяч','b')+
-        sml('тело — любой предмет вокруг нас: гвоздь, мяч, стакан, стол. Его можно взять в руки!'));
+      h=col(big('Физика — наука о природе'),
+        `<div style="font-size:40px" class="wv-pulse">🔬</div>`+
+        sml('физика изучает природу: из чего состоят тела (вещества) и какие явления с ними происходят. Это самый большой «музей» в мире!'));
     } else if(step===3){
-      h=col(big('Вещество'),
-        l92Card('🧱','железо','c')+
-        sml('вещество — то, ИЗ ЧЕГО сделано тело. Гвоздь — тело, а железо, из которого он сделан, — вещество!'));
+      h=col(big('Входим в Зал Тел'),
+        l92Item('🔨','гвоздь','a')+
+        l92Item('⚽','мяч','b')+
+        l92Item('🥛','стакан','c')+
+        `<div style="display:inline-block;padding:4px 14px;border-radius:20px;border:1.5px solid #7fd1a0;color:#7fd1a0;font-size:15px">тело — предмет, который можно взять</div>`+
+        sml('в этом зале — всё, что нас окружает: гвоздь, мяч, стакан, стол, книга…'));
     } else if(step===4){
-      h=col(big('Тело vs вещество'),
-        rowC(chip('тела: гвоздь, проволока','rgba(127,209,255,.5)'),chip('вещество: железо (из них)','rgba(232,160,90,.5)'))+
-        sml('из одного вещества можно сделать много тел: из железа — и гвоздь, и проволоку, и ложку!'));
+      h=col(big('Экспонаты Зала Тел'),
+        rowC(chip('🔨 гвоздь','rgba(127,209,255,.5)'),chip('🪑 стул','rgba(127,209,255,.5)'),chip('✏️ карандаш','rgba(127,209,255,.5)'),chip('📖 книга','rgba(127,209,255,.5)'))+
+        sml('любое тело можно потрогать, измерить линейкой и даже взвесить!'));
     } else if(step===5){
-      h=col(big('Физическое явление'),
-        `<div style="font-size:40px" class="wv-pop">🌧️</div>`+
-        l92Check('таяние снега','d')+
-        sml('явление — ИЗМЕНЕНИЕ в природе: снег тает, вода кипит, мяч летит. Это процессы!'));
+      h=col(big('Из чего сделаны тела?'),
+        l92Item('🧱','железо','d')+
+        l92Item('🪵','дерево','e')+
+        sml('все тела сделаны из чего-то. Это «вещество» — материал. Из дерева делают стулья, из железа — гвозди!'));
     } else if(step===6){
-      h=col(big('Явления вокруг нас'),
-        rowC(chip('⚡ молния','rgba(127,209,255,.5)'),chip('🌈 радуга','rgba(127,184,160,.5)'),chip('💥 гром','rgba(232,160,90,.5)'),chip('❄️ снегопад','rgba(127,209,255,.5)'))+
-        sml('гром и молния — не тела и не вещества, а явления! Как в нашей проверке'));
+      h=col(big('Входим в Зал Веществ'),
+        l92Item('🧱','железо','f')+
+        l92Item('💧','вода','g')+
+        l92Item('🪟','стекло','h')+
+        `<div style="display:inline-block;padding:4px 14px;border-radius:20px;border:1.5px solid #ffd966;color:#ffd966;font-size:15px">вещество — материал, из которого делают тела</div>`+
+        sml('вещества: железо, вода, стекло, дерево, медь, золото, воздух…'));
     } else if(step===7){
-      h=col(big('Задача-проверка'),
-        rowC(chip('дождь, гром, молния — это…','rgba(217,164,65,.35)'))+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">физические явления!</div>`+
-        sml('как в проверке: это изменения в природе'));
+      h=col(big('Одно вещество — много тел'),
+        rowC(l92Item('🔩','винт','i'),l92Item('🔗','цепь','j'),l92Item('🥄','ложка','k'),l92Item('🚢','корабль','l'))+
+        sml('из железа делают и винты, и цепи, и ложки, и даже корабли! Вещество одно — тел много. Как в наших задачках!'));
     } else if(step===8){
-      h=col(big('Три слова-помощника'),
-        rowC(chip('тело — предмет','rgba(127,209,255,.5)'),chip('вещество — материал','rgba(232,160,90,.5)'),chip('явление — процесс','rgba(127,184,160,.5)'))+
-        sml('предмет → материал → процесс. Теперь легко отличать!'));
+      h=col(big('Пора в Зал Явлений'),
+        `<div style="font-size:38px" class="wv-flick">⚡</div>`+
+        `<div style="font-size:38px" class="wv-pop">🌧️</div>`+
+        `<div style="font-size:38px" class="wv-pulse">🌈</div>`+
+        `<div style="display:inline-block;padding:4px 14px;border-radius:20px;border:1.5px solid #ff8a6a;color:#ff8a6a;font-size:15px">явление — процесс, изменение в природе</div>`+
+        sml('в этом зале всё ДВИЖЕТСЯ и МЕНЯЕТСЯ: гремит гром, идёт дождь, сверкает молния!'));
     } else if(step===9){
-      h=col(big('Разбираем по полочкам'),
-        l92Check('гвоздь','e')+
-        l92Check('ржавление гвоздя','f')+
-        l92Check('железо','g')+
-        sml('гвоздь — тело (можно взять); ржавление — явление (процесс); железо — вещество (материал)'));
+      h=col(big('Самые знаменитые явления'),
+        rowC(chip('⚡ молния','rgba(232,160,90,.5)'),chip('💥 гром','rgba(232,160,90,.5)'),chip('🌧️ дождь','rgba(127,184,160,.5)'),chip('🌈 радуга','rgba(127,209,255,.5)'),chip('☀️ таяние снега','rgba(232,160,90,.5)'))+
+        sml('гром и молния — не тела и не вещества, а ЯВЛЕНИЯ! Как в нашей проверке'));
     } else if(step===10){
-      h=col(big('Задача 1: сколько тел?'),
-        rowC(chip('гвоздь','rgba(127,209,255,.5)'),chip('ржавление','rgba(232,160,90,.5)'),chip('железо','rgba(127,184,160,.5)'),chip('молоток','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">тел: 2 (гвоздь и молоток)</div>`+
+      h=col(big('Задача-проверка: куда отнести?'),
+        l92Item('🌧️💥⚡','дождь, гром, молния','m')+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">дождь, гром, молния — физические ЯВЛЕНИЯ!</div>`+
+        sml('как в проверке: это изменения в природе — летим в Зал Явлений!'));
+    } else if(step===11){
+      h=col(big('Спор экспонатов'),
+        rowC(l92Item('🔨','гвоздь','n'),l92Item('🦠','ржавление гвоздя','o'),l92Item('🧱','железо','p'))+
+        sml('три экспоната спорят, кто в какой зал пойдёт. Разберёмся по порядку!'));
+    } else if(step===12){
+      h=col(big('Гвоздь — в Зал Тел'),
+        l92Item('🔨','гвоздь','q')+
+        `<div style="display:inline-block;padding:4px 14px;border-radius:20px;border:1.5px solid #7fd1a0;color:#7fd1a0;font-size:15px">гвоздь — ТЕЛО: его можно взять в руки</div>`+
+        sml('первый экспонат разобран — гвоздь отправляется в Зал Тел!'));
+    } else if(step===13){
+      h=col(big('Ржавление — в Зал Явлений'),
+        l92Item('🦠','ржавление гвоздя','r')+
+        `<div style="display:inline-block;padding:4px 14px;border-radius:20px;border:1.5px solid #ff8a6a;color:#ff8a6a;font-size:15px">ржавление — ЯВЛЕНИЕ: процесс изменения</div>`+
+        sml('ржавление — это процесс: гвоздь покрывается ржавчиной. Значит, это явление!'));
+    } else if(step===14){
+      h=col(big('Железо — в Зал Веществ'),
+        l92Item('🧱','железо','s')+
+        `<div style="display:inline-block;padding:4px 14px;border-radius:20px;border:1.5px solid #ffd966;color:#ffd966;font-size:15px">железо — ВЕЩЕСТВО: материал гвоздя</div>`+
+        sml('а вот железо — материал, из которого сделан гвоздь. Вещество — в свой зал!'));
+    } else if(step===15){
+      h=col(big('Задача 1: сколько ТЕЛ?'),
+        rowC(chip('🔨 гвоздь','rgba(127,209,255,.5)'),chip('🦠 ржавление','rgba(232,160,90,.5)'),chip('🧱 железо','rgba(127,184,160,.5)'),chip('🔨 молоток','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">тел: 2 — гвоздь и молоток!</div>`+
         sml('как в наших задачках: ржавление — явление, железо — вещество'));
-    } else if(step===11){
-      h=col(big('Задача 2: найди явление'),
-        rowC(chip('снежинка','rgba(127,184,160,.5)'),chip('таяние снега','rgba(127,209,255,.5)'),chip('лёд','rgba(127,184,160,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">таяние снега — явление!</div>`+
-        sml('как в наших задачках: снежинка и лёд — тела, а таяние — процесс'));
-    } else if(step===12){
-      h=col(big('Снежинка и лёд — одно вещество'),
-        rowC(chip('снежинка — тело','rgba(127,209,255,.5)'),chip('лёд — тело','rgba(127,184,160,.5)'),chip('вода — вещество','rgba(232,160,90,.5)'))+
-        sml('разные тела могут быть сделаны из одного вещества — воды!'));
-    } else if(step===13){
-      h=col(big('Физика в жизни'),
-        rowC(chip('почему радуга','rgba(127,209,255,.4)'),chip('почему лёд скользкий','rgba(127,209,255,.4)'),chip('почему гремит гром','rgba(127,209,255,.4)'),chip('почему самолёт летит','rgba(127,209,255,.4)'))+
-        sml('каждый «почему?» о природе — это вопрос к физике!'));
-    } else if(step===14){
-      h=col(big('Явления бывают разные'),
-        rowC(chip('механические: мяч летит','rgba(127,209,255,.5)'),chip('тепловые: чайник кипит','rgba(232,160,90,.5)'),chip('световые: радуга','rgba(127,184,160,.5)'),chip('звуковые: гром','rgba(127,209,255,.5)'))+
-        sml('физика изучает ВСЕ явления природы!'));
-    } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('стол — тело','rgba(127,184,160,.5)'),chip('дерево — вещество','rgba(127,184,160,.5)'),chip('горение свечи — явление','rgba(127,184,160,.5)'))+
-        sml('предмет — тело, материал — вещество, процесс — явление!'));
     } else if(step===16){
-      const POOL=[['body','гвоздь'],['body','молоток'],['body','стакан'],['body','мяч'],['sub','железо'],['sub','вода'],['sub','стекло'],['sub','дерево'],['ev','таяние снега'],['ev','гром'],['ev','дождь'],['ev','полёт мяча']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0], word=e[1];
-      const ans=kind==='body'?'тело':kind==='sub'?'вещество':'явление';
-      const firstStep=kind==='body'?'это предмет — его можно взять в руки':kind==='sub'?'это материал, из которого делают тела':'это процесс — изменение в природе';
-      h=col(big('🔬 Тренажёр: тело/вещество/явление'),
-        `<div class="wv-row">${chip('«'+word+'» — это тело, вещество или явление?','rgba(217,164,65,.35)')}</div>`+
-        `<div style="font-size:28px" class="wv-pop">${word}</div>`+
-        (st.s1? `<div class="l35-pop" style="font-size:16px;text-align:center;color:#ffd9a0;max-width:280px">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
-        btns(btn('1️⃣ подумай',`l92Act('${lk}','s1')`),btn('2️⃣ ответ',`l92Act('${lk}','s2')`),btn('🎲 другой',`l92Act('${lk}','n')`),btn('↺',`l92Act('${lk}','r')`))+
-        sml('предмет — тело, материал — вещество, процесс — явление!'));
+      h=col(big('Задача 2: найди ЯВЛЕНИЕ'),
+        rowC(chip('❄️ снежинка','rgba(127,184,160,.5)'),chip('☀️ таяние снега','rgba(232,160,90,.5)'),chip('🧊 лёд','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">таяние снега — ЯВЛЕНИЕ!</div>`+
+        sml('как в наших задачках: снежинка и лёд — тела, а таяние — процесс. Кстати, снежинка и лёд сделаны из одного вещества — воды!'));
+    } else if(step===17){
+      h=col(big('Физика — целая вселенная явлений'),
+        rowC(chip('🏃 механические: полёт мяча','rgba(127,209,255,.5)'),chip('🔥 тепловые: кипение','rgba(232,160,90,.5)'),chip('💡 световые: радуга','rgba(127,184,160,.5)'),chip('🔊 звуковые: гром','rgba(127,209,255,.5)'),chip('⚡ электрические: молния','rgba(232,160,90,.5)'))+
+        sml('у физики несколько «отделов» — как крылья музея! Каждый изучает свои явления'));
+    } else if(step===18){
+      if(st.i==null){ st.i=Math.floor(Math.random()*L92POOL.length); st.score=0; st.wrong=0; st.last=''; st.help=0; }
+      const e=L92POOL[st.i], kind=e[0], word=e[1], emoji=e[2];
+      const want=kind==='body'?0:kind==='sub'?1:2;
+      const hallName=want===0?'Зал Тел':want===1?'Зал Веществ':'Зал Явлений';
+      const okTxt=st.last==='ok'?`✅ Верно! «${word}» улетел в ${hallName}!`:st.last==='no'?`❌ Попробуй ещё — посмотри на подсказку`:st.help?`💡 подсказка: ${kind==='body'?'его можно взять в руки':kind==='sub'?'это материал, из которого делают тела':'это процесс — изменение в природе'}`:'';
+      h=col(big('🎮 Интерактив: разложи экспонаты!'),
+        `<div class="wv-row">${chip('Счёт: '+st.score+' ✅','rgba(127,209,255,.5)')}</div>`+
+        l92Item(emoji,word,'t')+
+        l92Halls('h')+
+        (okTxt?`<div class="l35-pop" style="font-size:15px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'};text-align:center;max-width:280px">${okTxt}</div>`:'')+
+        btns(btn('🔨 Зал Тел',`l92Act('${lk}','pick0')`),btn('🧱 Зал Веществ',`l92Act('${lk}','pick1')`),btn('⚡ Зал Явлений',`l92Act('${lk}','pick2')`),btn('🎲 следующий',`l92Act('${lk}','n')`),btn('↺',`l92Act('${lk}','r')`))+
+        sml('куда отправится экспонат? Жми на дверь зала!'));
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+      h=col(`<div style="font-size:50px">📜</div>`+big('Хранитель музея — Архимед')+
         `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
           <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🔬 Тело — предмет (гвоздь, мяч).<br>
-            🧱 Вещество — материал (железо, вода).<br>
-            ⚡ Явление — процесс (гром, таяние).<br>
-            🎯 Увидел природу — задай вопрос физике!</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:270px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🏛️ Три зала музея природы:<br>
+            🔨 Зал Тел — предметы (гвоздь, мяч).<br>
+            🧱 Зал Веществ — материалы (железо, вода).<br>
+            ⚡ Зал Явлений — процессы (гром, таяние).<br>
+            🎓 Загляни в тренажёр — стань смотрителем!</div>
         </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там про дождь и гром'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
-}
-
-function l93Act(lk,act){
-  const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['m','5','cm'],['m','3','cm'],['m','7','cm'],['m','2','cm'],['kg','4','g'],['kg','2','g'],['kg','7','g'],['kg','3','g'],['h','2','min'],['h','3','min'],['min','2','sec'],['min','5','sec']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
-  chRender(0);
-}
-function l93Ruler(cmLen,uid){
-  // линейка: показывает cmLen см (1..10)
-  let seg='';
-  for(let i=0;i<10;i++){
-    const fill=i<cmLen;
-    seg+=`<div style="flex:1;height:20px;border-right:1px solid #3d2f1c;${fill?'background:linear-gradient(180deg,#7fd1a0,#3c8f5f)':'background:#20352a'};display:flex;align-items:flex-start;justify-content:center;font-size:8px;color:#d8ecff">${i}</div>`;
-  }
-  return `<div style="margin:2px auto">
-    <div style="display:flex;width:230px;border:2px solid #cbb89a;border-radius:4px;overflow:hidden">${seg}</div>
-    <div style="display:flex;width:230px;margin:0 auto"><div style="flex:1;font-size:10px;color:#cbb89a">0 см</div><div style="font-size:10px;color:#cbb89a">10 см</div></div>
-  </div>`;
-}
-function l93Scale(g,uid){
-  // весы: г граммов
-  return `<div style="display:inline-block;text-align:center">
-    <div style="font-size:34px">⚖️</div>
-    <div style="font-size:15px;color:#ffd9a0">${g} г</div>
-  </div>`;
-}
-function l93Clock(h,uid){
-  // часы: h минут (0..60)
-  const ang=(h/60)*360-90;
-  return `<svg width="64" height="64" style="display:block;margin:0 auto">
-    <circle cx="32" cy="32" r="28" fill="#f2e8d0" stroke="#8a6a2f" stroke-width="2.5"/>
-    <line x1="32" y1="32" x2="${32+22*Math.cos(ang*Math.PI/180)}" y2="${32+22*Math.sin(ang*Math.PI/180)}" stroke="#a02818" stroke-width="3.5" stroke-linecap="round"/>
-    <circle cx="32" cy="32" r="2.5" fill="#8a6a2f"/>
-  </svg>`;
-}
-function visL93(el){
-  try{
-    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(big('Как измерить стол?'),
-        `<div style="font-size:44px" class="wv-pulse">📏</div>`+
-        sml('ладонями? шагами? Древние люди мерили локтями! Но чтобы все понимали друг друга, нужны ОДИНАКОВЫЕ единицы'));
-    } else if(step===1){
-      h=col(big('Величина и её единица'),
-        rowC(chip('величина: длина','rgba(127,209,255,.5)'),chip('единица: метр','rgba(127,184,160,.5)'))+
-        sml('измерить — значит СРАВНИТЬ с единицей: сколько метров в столе, сколько килограммов в арбузе'));
-    } else if(step===2){
-      h=col(big('Три главных измерения'),
-        rowC(chip('длина — метры (м)','rgba(127,209,255,.5)'),chip('масса — килограммы (кг)','rgba(232,160,90,.5)'),chip('время — секунды (с)','rgba(127,184,160,.5)'))+
-        sml('это основа! Их мерят линейкой, весами и часами'));
-    } else if(step===3){
-      h=col(big('Метр и сантиметр'),
-        l93Ruler(3,'a')+
-        rowC(chip('1 м = 100 см','rgba(127,209,255,.5)'),chip('3 м = 300 см','rgba(232,160,90,.5)'))+
-        sml('сантиметр — маленькая часть метра: их ровно 100!'));
-    } else if(step===4){
-      h=col(big('Задача-проверка'),
-        l93Ruler(10,'b')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">3 м = 3 · 100 = 300 см</div>`+
-        sml('как в проверке: умножаем метры на 100!'));
-    } else if(step===5){
-      h=col(big('Задача 1: 5 метров'),
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">5 м = 5 · 100 = 500 см</div>`+
-        sml('как в наших задачках!'));
-    } else if(step===6){
-      h=col(big('Килограмм и грамм'),
-        l93Scale(4000,'c')+
-        rowC(chip('1 кг = 1000 г','rgba(127,209,255,.5)'),chip('4 кг = 4000 г','rgba(232,160,90,.5)'))+
-        sml('грамм — маленькая часть килограмма: их ровно 1000!'));
-    } else if(step===7){
-      h=col(big('Задача 2: 4 килограмма'),
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">4 кг = 4 · 1000 = 4000 г</div>`+
-        sml('как в наших задачках: умножаем килограммы на 1000!'));
-    } else if(step===8){
-      h=col(big('Час и минута'),
-        l93Clock(30,'d')+
-        rowC(chip('1 час = 60 минут','rgba(127,209,255,.5)'),chip('полчаса = 30 минут','rgba(127,184,160,.5)'))+
-        sml('в часе 60 минут — не 100! Поэтому время особое'));
-    } else if(step===9){
-      h=col(big('Секунда — самая маленькая'),
-        rowC(chip('1 минута = 60 секунд','rgba(127,209,255,.5)'),chip('«раз-и-два-и» ≈ 2 секунды','rgba(127,184,160,.5)'))+
-        sml('секунды тикают на каждом шагу: тик-так, тик-так!'));
-    } else if(step===10){
-      h=col(big('Приставки-помощники'),
-        rowC(chip('санти- = 1/100 (см)','rgba(127,209,255,.5)'),chip('кило- = 1000 (кг, км)','rgba(232,160,90,.5)'))+
-        sml('санти — сотая часть, кило — тысяча. Запомнил — и единицы не страшны!'));
-    } else if(step===11){
-      h=col(big('Крупнее единица — меньше число'),
-        rowC(chip('3 м = 300 см','rgba(127,209,255,.5)'),chip('метр крупнее — число 3 маленькое','rgba(127,184,160,.5)'),chip('сантиметр мельче — число 300 большое','rgba(232,160,90,.5)'))+
-        sml('мерили крупной единицей — число меньше. Мельче единица — число больше!'));
-    } else if(step===12){
-      h=col(big('Умножаешь — дописывай нули'),
-        rowC(chip('×100 → допиши 2 нуля: 5 м = 500 см','rgba(127,209,255,.5)'),chip('×1000 → допиши 3 нуля: 4 кг = 4000 г','rgba(232,160,90,.5)'))+
-        sml('трюк Архимеда: 5 м = 500 см — два нуля, как в совете!'));
-    } else if(step===13){
-      h=col(big('Приборы измерения'),
-        rowC(chip('📏 линейка — длина','rgba(127,209,255,.5)'),chip('⚖️ весы — масса','rgba(127,184,160,.5)'),chip('⏰ часы — время','rgba(127,209,255,.5)'))+
-        sml('у каждой величины — свой прибор и своя единица!'));
-    } else if(step===14){
-      h=col(big('Где это в жизни'),
-        rowC(chip('рост 1 м 40 см','rgba(127,209,255,.4)'),chip('арбуз 3 кг 200 г','rgba(127,209,255,.4)'),chip('забег на 100 м за 12 с','rgba(127,209,255,.4)'))+
-        sml('мы постоянно измеряем — и теперь понимаем единицы!'));
-    } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('2 м = 200 см','rgba(127,184,160,.5)'),chip('3 кг = 3000 г','rgba(127,184,160,.5)'),chip('1 час = 60 мин','rgba(127,184,160,.5)'))+
-        sml('×100 для см, ×1000 для г — и не забудь про 60!'));
-    } else if(step===16){
-      const POOL=[['m','5','cm'],['m','3','cm'],['m','7','cm'],['m','2','cm'],['kg','4','g'],['kg','2','g'],['kg','7','g'],['kg','3','g'],['h','2','min'],['h','3','min'],['min','2','sec'],['min','5','sec']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0], n=+e[1];
-      let desc, firstStep, ans;
-      if(kind==='m'){
-        desc=n+' м → сколько сантиметров?';
-        firstStep='1 м = 100 см → '+n+'·100';
-        ans=n*100;
-      } else if(kind==='kg'){
-        desc=n+' кг → сколько граммов?';
-        firstStep='1 кг = 1000 г → '+n+'·1000';
-        ans=n*1000;
-      } else if(kind==='h'){
-        desc=n+' час(а) → сколько минут?';
-        firstStep='1 час = 60 минут → '+n+'·60';
-        ans=n*60;
-      } else {
-        desc=n+' минуты → сколько секунд?';
-        firstStep='1 мин = 60 с → '+n+'·60';
-        ans=n*60;
-      }
-      h=col(big('📏 Тренажёр: единицы измерения'),
-        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
-        `<div style="font-size:28px" class="wv-pop">${desc.split(' →')[0]}</div>`+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
-        btns(btn('1️⃣ подумай',`l93Act('${lk}','s1')`),btn('2️⃣ ответ',`l93Act('${lk}','s2')`),btn('🎲 другой',`l93Act('${lk}','n')`),btn('↺',`l93Act('${lk}','r')`))+
-        sml('в см — ×100, в г — ×1000, в минуты/секунды — ×60!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            📏 1 м = 100 см → ×100 (2 нуля).<br>
-            ⚖️ 1 кг = 1000 г → ×1000 (3 нуля).<br>
-            ⏰ 1 час = 60 мин, 1 мин = 60 с.<br>
-            🔍 Мерить = сравнивать с единицей.</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там 3 метра'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
-}
-
-function l94Act(lk,act){
-  const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['v','60','2'],['v','45','3'],['v','100','2'],['v','90','3'],['v','120','4'],['v','80','4'],['s','5','4'],['s','15','3'],['s','6','2'],['s','40','4'],['s','20','4'],['s','12','3']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
-  chRender(0);
-}
-function l94Road(speed,uid){
-  // дорога: человечек/машина движется со скоростью speed (км/ч)
-  const speedLabel=speed>=60?'🚗 машина':speed>=15?'🚲 велосипед':'🚶 пешеход';
-  return `<div style="position:relative;width:230px;height:52px;border:2px solid #3d5c49;border-radius:8px;background:linear-gradient(180deg,#2c3a30,#1d2b22);overflow:hidden;margin:2px auto">
-    <div style="position:absolute;top:50%;left:0;right:0;height:2px;background:repeating-linear-gradient(90deg,rgba(255,208,90,.6) 0 14px,transparent 14px 28px)"></div>
-    <div class="wv-drive" style="--dx:${Math.min(190,40+speed*2)}px;position:absolute;bottom:2px;left:4px;font-size:24px">${speedLabel.split(' ')[0]}</div>
-    <div style="position:absolute;right:6px;top:2px;font-size:13px;color:#ffd9a0;font-weight:bold">${speed} км/ч</div>
-  </div>`;
-}
-function l94Graph(km,uid){
-  // график пути: вертикаль — путь, у машины прямая
-  const H=110,W=210;
-  const hgt=Math.min(H-14,km/160*(H-20));
-  return `<svg width="${W}" height="${H}" style="display:block;margin:2px auto;background:#13251c;border:1px solid #3d5c49;border-radius:6px">
-    <line x1="24" y1="${H-18}" x2="${W-6}" y2="${H-18}" stroke="#cbb89a" stroke-width="1.5"/>
-    <line x1="24" y1="6" x2="24" y2="${H-18}" stroke="#cbb89a" stroke-width="1.5"/>
-    <text x="10" y="10" fill="#7fd1a0" font-size="8">путь, км</text>
-    <text x="${W-30}" y="${H-4}" fill="#cbb89a" font-size="8">время</text>
-    <line x1="24" y1="${H-18}" x2="${W-6}" y2="${H-18-hgt}" stroke="#7fd1a0" stroke-width="2.5"/>
-    <text x="${W-58}" y="${H-24-hgt}" fill="#7fd1a0" font-size="10">S = ${km} км</text>
-  </svg>`;
-}
-function visL94(el){
-  try{
-    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(big('Кто быстрее: ты или велосипед?'),
-        `<div style="font-size:44px" class="wv-flick">🏃</div>`+
-        sml('скорость — сколько километров проходит тело за 1 час. Узнаем, как её считать!'));
-    } else if(step===1){
-      h=col(big('Что такое скорость'),
-        rowC(chip('v = S : t','rgba(127,209,255,.5)'),chip('S — путь (км)','rgba(232,160,90,.5)'),chip('t — время (ч)','rgba(127,184,160,.5)'))+
-        sml('скорость = путь делить на время. Как в нашей проверке!'));
-    } else if(step===2){
-      h=col(big('Считаем скорость'),
-        l94Road(30,'a')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">v = 60 : 2 = 30 км/ч</div>`+
-        sml('проехали 60 км за 2 часа → 30 км каждый час!'));
-    } else if(step===3){
-      h=col(big('Задача-проверка: лыжник'),
-        l94Road(10,'b')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">v = 40 : 4 = 10 км/ч</div>`+
-        sml('как в проверке: 40 км за 4 часа → 10 км/ч!'));
-    } else if(step===4){
-      h=col(big('Задача 1: велосипедист'),
-        l94Road(15,'c')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">v = 45 : 3 = 15 км/ч</div>`+
-        sml('как в наших задачках!'));
-    } else if(step===5){
-      h=col(big('Путь из скорости'),
-        rowC(chip('S = v · t','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">S = 5 · 4 = 20 км</div>`+
-        sml('пешеход 5 км/ч идёт 4 часа → 5·4 = 20 км. Как в наших задачках!'));
-    } else if(step===6){
-      h=col(big('Время из скорости'),
-        rowC(chip('t = S : v','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">t = 60 : 15 = 4 часа</div>`+
-        sml('велосипедист 15 км/ч: 60 км за 4 часа'));
-    } else if(step===7){
-      h=col(big('Скорости в жизни'),
-        rowC(chip('пешеход: 4–5 км/ч','rgba(127,209,255,.5)'),chip('велосипед: 15 км/ч','rgba(127,184,160,.5)'),chip('машина: 60–90 км/ч','rgba(232,160,90,.5)'),chip('самолёт: 800 км/ч','rgba(127,209,255,.5)'))+
-        sml('у каждого своя скорость! Самолёт в 160 раз быстрее пешехода'));
-    } else if(step===8){
-      h=col(big('Сравниваем'),
-        rowC(chip('4 км/ч — пешком','rgba(127,184,160,.5)'),chip('15 км/ч — велосипед','rgba(127,209,255,.5)'),chip('90 км/ч — машина','rgba(232,160,90,.5)'))+
-        sml('одинаковое время — разный путь: скорость решает!'));
-    } else if(step===9){
-      h=col(big('График движения'),
-        l94Graph(60,'d')+
-        sml('по горизонтали — время, по вертикали — путь. Равномерное движение — прямая линия!'));
-    } else if(step===10){
-      h=col(big('Чем круче — тем быстрее'),
-        rowC(chip('крутая прямая — быстрая машина','rgba(232,160,90,.5)'),chip('пологая — медленный пешеход','rgba(127,184,160,.5)'))+
-        sml('наклон графика показывает скорость!'));
-    } else if(step===11){
-      h=col(big('Перевод единиц'),
-        rowC(chip('1 м/с = 3,6 км/ч','rgba(127,209,255,.5)'),chip('бегун 2 м/с = 7,2 км/ч','rgba(127,184,160,.5)'))+
-        sml('м/с → км/ч: умножай на 3,6 (потому что в часе 3600 секунд и в километре 1000 м)'));
-    } else if(step===12){
-      h=col(big('Почему 3,6?'),
-        rowC(chip('1 м/с = 1 м за 1 с','rgba(127,209,255,.5)'),chip('за час: 3600 м = 3,6 км','rgba(232,160,90,.5)'))+
-        sml('за секунду метр, за 3600 секунд — 3600 метров = 3,6 км!'));
-    } else if(step===13){
-      h=col(big('Треугольник S-v-t'),
-        `<div style="text-align:center;font-size:16px;color:#e8dcc8" class="wv-pop">
-          <div style="display:inline-block;padding:4px 16px;border:2px solid rgba(217,164,65,.5);border-radius:10px;background:rgba(217,164,65,.06)">▲<br>S<br><span style="color:#7fd1a0">v</span> · <span style="color:#8fa6b8">t</span></div>
-        </div>`+
-        sml('путь наверху: S = v·t, v = S:t, t = S:v. Закрываешь неизвестное!'));
-    } else if(step===14){
-      h=col(big('Где это в жизни'),
-        rowC(chip('спидометр машины','rgba(127,209,255,.4)'),chip('табличка «60 км/ч»','rgba(127,209,255,.4)'),chip('олимпийский рекорд','rgba(127,209,255,.4)'),chip('время в пути','rgba(127,209,255,.4)'))+
-        sml('спидометр показывает скорость прямо сейчас — и это v = S:t!'));
-    } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('120 км за 2 ч → 60 км/ч','rgba(127,184,160,.5)'),chip('5 км/ч за 3 ч → 15 км','rgba(127,184,160,.5)'),chip('60 км при 20 км/ч → 3 ч','rgba(127,184,160,.5)'))+
-        sml('три формулы: S = v·t, v = S:t, t = S:v!'));
-    } else if(step===16){
-      const POOL=[['v','60','2'],['v','45','3'],['v','100','2'],['v','90','3'],['v','120','4'],['v','80','4'],['s','5','4'],['s','15','3'],['s','6','2'],['s','40','4'],['s','20','4'],['s','12','3']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0];
-      let desc, firstStep, ans;
-      if(kind==='v'){
-        const S=+e[1], t=+e[2];
-        desc='проехали '+S+' км за '+t+' ч → скорость?';
-        firstStep='v = S : t = '+S+' : '+t;
-        ans=S/t;
-      } else {
-        const v=+e[1], t=+e[2];
-        desc='скорость '+v+' км/ч, время '+t+' ч → путь?';
-        firstStep='S = v · t = '+v+' · '+t;
-        ans=v*t;
-      }
-      h=col(big('🏃 Тренажёр: скорость движения'),
-        `<div class="wv-row">${chip(desc+' (в км/ч или км)','rgba(217,164,65,.35)')}</div>`+
-        l94Road(kind==='v'?+e[1]/+e[2]:+e[1],'t')+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
-        btns(btn('1️⃣ подумай',`l94Act('${lk}','s1')`),btn('2️⃣ ответ',`l94Act('${lk}','s2')`),btn('🎲 другой',`l94Act('${lk}','n')`),btn('↺',`l94Act('${lk}','r')`))+
-        sml('v = S:t, S = v·t — треугольник решает!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🏃 v = S : t (скорость).<br>
-            🔺 S наверху: S = v·t, t = S:v.<br>
-            📈 Равномерное движение — прямая на графике.<br>
-            🚗 1 м/с = 3,6 км/ч.</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там лыжник'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
-}
-
-function l95Act(lk,act){
-  const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['nn','N','N','оттолкнутся'],['ss','S','S','оттолкнутся'],['ns','N','S','притянутся'],['sn','S','N','притянутся'],['ns2','N','S','притянутся'],['nn2','N','N','оттолкнутся']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
-  chRender(0);
-}
-function l95Magnet(pole,color,uid){
-  // подковообразный/полосовой магнит с полюсом
-  return `<div style="text-align:center">
-    <div style="width:56px;height:30px;border-radius:6px;background:linear-gradient(145deg,${color==='N'?'#e05a5a':'#4f6fd8'},${color==='N'?'#a02828':'#2a4a9a'});display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,.4)">${pole}</div>
-  </div>`;
-}
-function l95Pair(p1,p2,result,uid){
-  // два магнита, между ними стрелка результата
-  const attract=result==='притянутся';
-  const gap=attract?10:40;
-  return `<div style="display:flex;align-items:center;justify-content:center;gap:${gap}px;margin:6px auto;transition:gap .6s ease">
-    ${l95Magnet(p1,p1==='N'?'N':'S','a')}
-    <div style="font-size:26px;color:${attract?'#7fd1a0':'#ff9a8a'}" class="wv-pulse">${attract?'⬅️➡️ притягиваются':'⬅️⬅️ отталкиваются'}</div>
-    ${l95Magnet(p2,p2==='N'?'N':'S','b')}
-  </div>`;
-}
-function visL95(el){
-  try{
-    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(big('Почему магнит прилипает к холодильнику?'),
-        `<div style="font-size:44px" class="wv-flick">🧲</div>`+
-        sml('магнит притягивает железо — и держит записку на холодильнике. Что за волшебная сила? Разберёмся!'));
-    } else if(step===1){
-      h=col(big('Что притягивает магнит'),
-        rowC(chip('железо ✅','rgba(127,184,160,.5)'),chip('сталь ✅','rgba(127,184,160,.5)'),chip('дерево ❌','rgba(232,160,90,.5)'),chip('стекло ❌','rgba(232,160,90,.5)'),chip('пластик ❌','rgba(232,160,90,.5)'))+
-        sml('магнит притягивает железо и сталь. Как в нашей проверке: железные тела!'));
-    } else if(step===2){
-      h=col(big('Проверь сам'),
-        rowC(chip('монета — притянется?','rgba(127,209,255,.5)'),chip('карандаш — нет','rgba(232,160,90,.5)'),chip('гвоздь — да!','rgba(127,184,160,.5)'))+
-        sml('если предмет притянулся — в нём есть железо! Так можно искать железо дома'));
-    } else if(step===3){
-      h=col(big('Два полюса'),
-        rowC(l95Magnet('N','N','a'),l95Magnet('S','S','b'))+
-        rowC(chip('N — северный','rgba(232,160,90,.5)'),chip('S — южный','rgba(127,209,255,.5)'))+
-        sml('у каждого магнита два полюса: красный N (север) и синий S (юг)'));
-    } else if(step===4){
-      h=col(big('Разноимённые притягиваются'),
-        l95Pair('N','S','притянутся','c')+
-        sml('N и S — разные полюса → притягиваются! Как в наших задачках'));
-    } else if(step===5){
-      h=col(big('Одноимённые отталкиваются'),
-        l95Pair('N','N','оттолкнутся','d')+
-        sml('N и N — одинаковые → отталкиваются! Как в наших задачках'));
-    } else if(step===6){
-      h=col(big('Правило магнитов'),
-        rowC(chip('разные (N-S) → притягиваются','rgba(127,184,160,.5)'),chip('одинаковые (N-N, S-S) → отталкиваются','rgba(232,160,90,.5)'))+
-        sml('как у людей: противоположности притягиваются!'));
-    } else if(step===7){
-      h=col(big('Задача 1: N к N'),
-        l95Pair('N','N','оттолкнутся','e')+
-        `<div class="wv-ans" style="font-size:22px;color:#ff9a8a">северные полюса → оттолкнутся!</div>`+
-        sml('как в наших задачках: одноимённые!'));
-    } else if(step===8){
-      h=col(big('Задача 2: S к N'),
-        l95Pair('S','N','притянутся','f')+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">S и N — разные → притянутся!</div>`+
-        sml('как в наших задачках: разноимённые!'));
-    } else if(step===9){
-      h=col(big('Магнитное поле'),
-        rowC(chip('невидимая сила вокруг магнита','rgba(127,209,255,.5)'),chip('железные опилки показывают линии','rgba(127,184,160,.5)'))+
-        sml('насыпь опилки — они выстроятся по линиям поля, как по невидимым дорожкам!'));
-    } else if(step===10){
-      h=col(big('Земля — огромный магнит'),
-        `<div style="font-size:40px" class="wv-swing">🌍</div>`+
-        sml('у Земли есть магнитное поле! Поэтому стрелка компаса всегда показывает на север'));
-    } else if(step===11){
-      h=col(big('Компас'),
-        rowC(chip('стрелка — маленький магнит','rgba(127,209,255,.5)'),chip('синий конец — на север','rgba(127,209,255,.5)'))+
-        sml('компас — магнитная стрелка, которая «дружит» с полем Земли!'));
-    } else if(step===12){
-      h=col(big('Северный магнитный полюс'),
-        rowC(chip('стрелка N тянется к северу Земли','rgba(127,209,255,.5)'),chip('значит там «южный» полюс магнита-Земли','rgba(232,160,90,.5)'))+
-        sml('противоположности притягиваются — N стрелки тянет к S Земли!'));
-    } else if(step===13){
-      h=col(big('Магниты в технике'),
-        rowC(chip('динамики и наушники','rgba(127,209,255,.4)'),chip('электродвигатели','rgba(127,209,255,.4)'),chip('карты с магнитной полосой','rgba(127,209,255,.4)'),chip('магнитные замки','rgba(127,209,255,.4)'))+
-        sml('магниты повсюду: от наушников до поездов на магнитной подушке!'));
-    } else if(step===14){
-      h=col(big('Электромагнит'),
-        rowC(chip('катушка + ток = магнит','rgba(127,209,255,.5)'),chip('можно включать и выключать!','rgba(127,184,160,.5)'))+
-        sml('по проводу течёт ток — катушка становится магнитом. Так работают краны на свалке!'));
-    } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('N-S → притягиваются','rgba(127,184,160,.5)'),chip('N-N → отталкиваются','rgba(127,184,160,.5)'),chip('магнит + дерево → ничего','rgba(127,184,160,.5)'))+
-        sml('разные — притягиваются, одинаковые — отталкиваются!'));
-    } else if(step===16){
-      const POOL=[['nn','N','N','оттолкнутся'],['ss','S','S','оттолкнутся'],['ns','N','S','притянутся'],['sn','S','N','притянутся'],['ns2','N','S','притянутся'],['nn2','N','N','оттолкнутся']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], p1=e[1], p2=e[2], result=e[3];
-      const firstStep=p1===p2?'полюса одинаковые ('+p1+' и '+p2+') → отталкиваются':'полюса разные ('+p1+' и '+p2+') → притягиваются';
-      h=col(big('🧲 Тренажёр: полюса магнитов'),
-        `<div class="wv-row">${chip('полюс '+p1+' поднесли к полюсу '+p2+' — что будет?','rgba(217,164,65,.35)')}</div>`+
-        l95Pair(p1,p2,result,'t')+
-        (st.s1? `<div class="l35-pop" style="font-size:16px;text-align:center;color:#ffd9a0;max-width:280px">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:24px;color:${result==='притянутся'?'#7fd1a0':'#ff9a8a'};font-weight:bold">${result}!</div>`:'')+
-        btns(btn('1️⃣ подумай',`l95Act('${lk}','s1')`),btn('2️⃣ ответ',`l95Act('${lk}','s2')`),btn('🎲 другой',`l95Act('${lk}','n')`),btn('↺',`l95Act('${lk}','r')`))+
-        sml('разные (N-S) — притягиваются, одинаковые — отталкиваются!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🧲 Притягивает железо и сталь.<br>
-            🔴 N и 🔵 S: разные — притягиваются.<br>
-            ⏫ Одинаковые (N-N) — отталкиваются.<br>
-            🌍 Земля — магнит: компас на север!</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там про железо'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
-}
-
-function l99Act(lk,act){
-  const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['warm','вверх'],['cold','вниз'],['warm','вверх'],['cold','вниз']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
-  chRender(0);
-}
-function l99Mol(n,color,rise,uid){
-  // молекулы газа
-  let out='';
-  for(let i=0;i<n;i++){
-    const cls=rise?['wv-rise','wv-rise2','wv-rise3'][i%3]:'';
-    out+=`<div class="${cls}" style="animation-delay:${(i*0.12).toFixed(2)}s;display:inline-block;width:${color==='big'?16:10}px;height:${color==='big'?16:10}px;border-radius:50%;background:${color==='n2'?'rgba(150,190,230,.55)':color==='big'?'rgba(230,120,90,.75)':'rgba(160,205,245,.5)'};border:1px solid rgba(255,255,255,.4);margin:2px"></div>`;
-  }
-  return `<div style="text-align:center;min-height:34px;line-height:26px">${out}</div>`;
-}
-function l99Wind(uid){
-  // стрелки ветра
-  return `<div style="text-align:center;font-size:34px" class="wv-flow">💨💨💨</div>`;
-}
-function l99Balloon(warm,uid){
-  // тёплый шарик поднимается / холодный опускается
-  return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:${warm?'flex-start':'flex-end'};height:120px;margin:2px auto">
-    <div class="wv-pop" style="font-size:38px;${warm?'':'transform:scaleY(-1)'}">${warm?'🎈':'🪨'}</div>
-  </div>`;
-}
-function visL99(el){
-  try{
-    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(big('Воздух есть? А невидимый!'),
-        `<div style="font-size:44px" class="wv-pulse">🎈</div>`+
-        sml('воздух не видно, но он повсюду! Помаши листом бумаги — почувствуешь. Сегодня познакомимся с воздухом поближе'));
-    } else if(step===1){
-      h=col(big('Что такое воздух'),
-        l99Mol(10,'n2','',false)+
-        rowC(chip('смесь газов','rgba(127,209,255,.5)'))+
-        sml('воздух — не один газ, а СМЕСЬ! Как в нашей проверке'));
-    } else if(step===2){
-      h=col(big('Из чего состоит воздух'),
-        rowC(chip('азот ~78%','rgba(127,209,255,.5)'),chip('кислород ~21%','rgba(127,184,160,.5)'),chip('другие газы ~1%','rgba(232,160,90,.5)'))+
-        sml('больше всего азота, потом кислород (им мы дышим), остальное — углекислый газ и другие'));
-    } else if(step===3){
-      h=col(big('Кислород — для дыхания'),
-        rowC(chip('дышим кислородом','rgba(127,184,160,.5)'),chip('огонь горит благодаря кислороду','rgba(232,160,90,.5)'))+
-        sml('без кислорода не горел бы огонь и мы не могли бы дышать!'));
-    } else if(step===4){
-      h=col(big('У воздуха есть вес'),
-        rowC(chip('1 м³ воздуха весит ~1,3 кг','rgba(127,209,255,.5)'),chip('воздух в комнате весит как человек!','rgba(232,160,90,.5)'))+
-        sml('кажется лёгким, но целая комната воздуха весит десятки килограммов!'));
-    } else if(step===5){
-      h=col(big('Воздух давит на нас'),
-        rowC(chip('атмосферное давление','rgba(127,209,255,.5)'),chip('≈ 100 000 Па на каждый м²','rgba(232,160,90,.5)'))+
-        sml('столб воздуха над нами давит — но мы не замечаем, потому что давление изнутри уравновешивает!'));
-    } else if(step===6){
-      h=col(big('Опыт со стаканом'),
-        rowC(chip('стакан вверх дном в воду','rgba(127,209,255,.5)'),chip('вода не заходит — там воздух!','rgba(127,184,160,.5)'))+
-        sml('опусти стакан вверх дном в воду — внутри останется воздух, и вода туда не попадёт!'));
-    } else if(step===7){
-      h=col(big('Воздух занимает место'),
-        rowC(chip('бутылка «пустая» — на самом деле с воздухом','rgba(127,209,255,.5)'))+
-        sml('«пустой» сосуд не пуст — он полон воздуха!'));
-    } else if(step===8){
-      h=col(big('Тёплый воздух легче'),
-        l99Balloon(true,'a')+
-        rowC(chip('нагрелся → расширился','rgba(127,209,255,.5)'),chip('стал легче холодного','rgba(232,160,90,.5)'))+
-        sml('тёплый воздух поднимается вверх! Как в наших задачках'));
-    } else if(step===9){
-      h=col(big('Холодный воздух тяжелее'),
-        l99Balloon(false,'b')+
-        rowC(chip('остыл → сжался','rgba(127,209,255,.5)'),chip('стал тяжелее → опускается вниз','rgba(127,184,160,.5)'))+
-        sml('холодный воздух стелется вниз — поэтому у пола холоднее!'));
-    } else if(step===10){
-      h=col(big('Что такое ветер'),
-        l99Wind('c')+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">ветер — движущийся воздух!</div>`+
-        sml('как в наших задачках: тёплый поднялся вверх, холодный пришёл на его место — вот и ветер!'));
-    } else if(step===11){
-      h=col(big('День и ночь у моря'),
-        rowC(chip('днём: с моря на сушу (бриз)','rgba(127,209,255,.5)'),chip('ночью: с суши на море','rgba(127,184,160,.5)'))+
-        sml('суша греется быстрее воды — воздух над ней поднимается, и с моря приходит прохладный ветерок!'));
-    } else if(step===12){
-      h=col(big('Воздух нужен для горения'),
-        rowC(chip('накрыли свечу банкой — погасла','rgba(127,209,255,.5)'),chip('кислород закончился','rgba(232,160,90,.5)'))+
-        sml('без кислорода огонь гаснет — попробуй дома с родителями!'));
-    } else if(step===13){
-      h=col(big('Воздух — плохой проводник тепла'),
-        rowC(chip('шерсть и пух держат воздух','rgba(127,209,255,.5)'),chip('воздух не выпускает тепло','rgba(127,184,160,.5)'))+
-        sml('поэтому в пуховике тепло: между ворсинками — воздух, он не пускает холод!'));
-    } else if(step===14){
-      h=col(big('Парашют и крылья'),
-        rowC(chip('парашют ловит воздух','rgba(127,209,255,.5)'),chip('крыло самолёта опирается на воздух','rgba(127,184,160,.5)'))+
-        sml('воздух может держать! Купол парашюта тормозит падение, крыло поднимает самолёт'));
-    } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('воздух — смесь газов','rgba(127,184,160,.5)'),chip('ветер — движение воздуха','rgba(127,184,160,.5)'),chip('тёплый воздух легче — поднимается','rgba(127,184,160,.5)'))+
-        sml('три главных факта о воздухе!'));
-    } else if(step===16){
-      const POOL=[['warm','вверх'],['cold','вниз'],['warm','вверх'],['cold','вниз']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0];
-      const warm=kind==='warm';
-      const q=warm?'тёплый воздух — что происходит?':'холодный воздух — что происходит?';
-      const firstStep=warm?'нагрелся → расширился → стал легче → поднимается вверх':'остыл → сжался → стал тяжелее → опускается вниз';
-      h=col(big('🎈 Тренажёр: тёплый и холодный воздух'),
-        `<div class="wv-row">${chip(q,'rgba(217,164,65,.35)')}</div>`+
-        l99Balloon(warm,'t')+
-        (st.s1? `<div class="l35-pop" style="font-size:16px;text-align:center;color:#ffd9a0;max-width:280px">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">${warm?'поднимается вверх':'опускается вниз'}!</div>`:'')+
-        btns(btn('1️⃣ подумай',`l99Act('${lk}','s1')`),btn('2️⃣ ответ',`l99Act('${lk}','s2')`),btn('🎲 другой',`l99Act('${lk}','n')`),btn('↺',`l99Act('${lk}','r')`))+
-        sml('тёплый легче — вверх! Холодный тяжелее — вниз!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🎈 Воздух — смесь газов (азот, кислород).<br>
-            💨 Ветер — движущийся воздух.<br>
-            🔥 Тёплый воздух легче — вверх!<br>
-            🧥 Воздух в одежде греет.</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там про воздух'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
-}
-
-function l87Act(lk,act){
-  const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['t','35','45'],['t','40','60'],['t','50','70'],['t','20','130'],['t','25','65'],['t','80','60'],['rt','30'],['rt','45'],['rt','55'],['iso','40'],['iso','30'],['iso','50']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
-  chRender(0);
-}
-function l87Tri(a,b,c,uid){
-  // треугольник с углами a,b,c градусов + дуги-углы
-  const W=210,H=120;
-  // вершины: A слева внизу, B справа внизу, C сверху
-  const A=[30,H-14], B=[W-24,H-14];
-  // находим C: из A под углом a, из B под углом 180-b
-  const radA=a*Math.PI/180, radB=b*Math.PI/180;
-  // направление из A: вверх-вправо (угол a от горизонтали)
-  const dx1=Math.cos(radA), dy1=-Math.sin(radA);
-  const dx2=-Math.cos(radB), dy2=-Math.sin(radB);
-  const t=((B[0]-A[0])*dy2-(B[1]-A[1])*dx2)/(dx1*dy2-dy1*dx2);
-  const C=[A[0]+dx1*t, A[1]+dy1*t];
-  const colA='#ffd9a0', colB='#7fd1a0', colC='#e8b3c8';
-  function arc(px,py,startDeg,endDeg,r,color){
-    const s=startDeg*Math.PI/180, e=endDeg*Math.PI/180;
-    const large=(endDeg-startDeg)>180?1:0;
-    const x0=px+r*Math.cos(s), y0=py+r*Math.sin(s);
-    const x1=px+r*Math.cos(e), y1=py+r*Math.sin(e);
-    return `<path d="M${px} ${py} L${x0.toFixed(1)} ${y0.toFixed(1)} A${r} ${r} 0 ${large} 1 ${x1.toFixed(1)} ${y1.toFixed(1)} Z" fill="${color}" opacity=".85" stroke="#1a120a" stroke-width="0.6"/>`;
-  }
-  const r=26;
-  // углы в вершинах: в A — между горизонталью вправо и лучом AC: a; в B — между BA(влево) и BC
-  const angA0=0, angA1=a; // дуга от горизонтали вправо к AC
-  const angB0=180-b, angB1=180; // от направления на A (180) к горизонтали влево
-  // для C: посчитаем направление CA и CB
-  const dirCA=Math.atan2(A[1]-C[1],A[0]-C[0])*180/Math.PI;
-  const dirCB=Math.atan2(B[1]-C[1],B[0]-C[0])*180/Math.PI;
-  let angC0=Math.min(dirCA,dirCB), angC1=Math.max(dirCA,dirCB);
-  const midA=(angA0+angA1)/2, midB=(angB0+angB1)/2, midC=(angC0+angC1)/2;
-  const labels=[[A,'A',a,colA],[B,'B',b,colB],[C,'C',c,colC]];
-  return `<svg width="${W}" height="${H}" style="display:block;margin:2px auto">
-    <polygon points="${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0].toFixed(1)},${C[1].toFixed(1)}" fill="rgba(127,209,255,.08)" stroke="#d8ecff" stroke-width="2"/>
-    ${arc(A[0],A[1],angA0,angA1,r,colA)}
-    ${arc(B[0],B[1],angB0,angB1,r,colB)}
-    ${arc(C[0],C[1],angC0,angC1,r,colC)}
-    <text x="${A[0]-8}" y="${A[1]+4}" fill="#ffd9a0" font-size="12" font-weight="bold">${a}°</text>
-    <text x="${B[0]+10}" y="${B[1]+4}" fill="#7fd1a0" font-size="12" font-weight="bold">${b}°</text>
-    <text x="${C[0]-10}" y="${C[1]-6}" fill="#e8b3c8" font-size="12" font-weight="bold">${c}°</text>
-  </svg>`;
-}
-function l87Line(a,b,c,uid){
-  // три угла «сложены» в развёрнутый угол 180° на прямой
-  const W=224,H=52, total=a+b+c;
-  const segs=[[a,'#ffd9a0'],[b,'#7fd1a0'],[c,'#e8b3c8']];
-  let acc=0, html='';
-  segs.forEach(sg=>{
-    const frac=sg[0]/180;
-    html+=`<path d="M0 0 L0 ${H} L${(W*frac).toFixed(1)} ${H} A${W*frac/2} ${H} 0 0 ${acc+sg[0]/2>90?1:0} ${(W*frac).toFixed(1)} 0 Z" fill="${sg[1]}" opacity=".85" transform="translate(${acc/180*W} 0)"/>`;
-    acc+=sg[0];
-  });
-  return `<svg width="${W}" height="${H}" style="display:block;margin:2px auto;background:#13251c;border-radius:8px">
-    <line x1="0" y1="${H-1}" x2="${W}" y2="${H-1}" stroke="#d8ecff" stroke-width="2"/>
-    <g>${html}</g>
-    <text x="${W/2}" y="${H-6}" fill="#ffd9a0" font-size="11" text-anchor="middle">${a}° + ${b}° + ${c}° = ${total}°</text>
-  </svg>`;
-}
-function visL87(el){
-  try{
-    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(big('Сколько градусов в треугольнике?'),
-        `<div style="font-size:44px" class="wv-swing">📐</div>`+
-        sml('измерь углы ЛЮБОГО треугольника и сложи их — всегда получится одно и то же число! Какое? Узнаем!'));
-    } else if(step===1){
-      h=col(big('Угол и его мера'),
-        rowC(chip('угол — «раствор» между лучами','rgba(127,209,255,.5)'),chip('измеряется в градусах (°)','rgba(232,160,90,.5)'))+
-        sml('прямой угол — 90° (угол тетради), развёрнутый — 180° (прямая линия)'));
-    } else if(step===2){
-      h=col(big('Волшебное число 180°'),
-        l87Tri(60,60,60,'a')+
-        rowC(chip('60° + 60° + 60° = 180°','rgba(217,164,65,.5)'))+
-        sml('у равностороннего треугольника все углы 60° — сумма 180°!'));
-    } else if(step===3){
-      h=col(big('Проверим другой треугольник'),
-        l87Tri(40,60,80,'b')+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">40° + 60° + 80° = 180°</div>`+
-        sml('другой треугольник, другие углы — а сумма та же! Совпадение?'));
-    } else if(step===4){
-      h=col(big('Секрет: отрежь углы!'),
-        `<div style="font-size:40px" class="wv-pop">✂️</div>`+
-        sml('вырежи треугольник из бумаги, отрежь три угла и сложи их рядом — они выстроятся в одну линию!'));
-    } else if(step===5){
-      h=col(big('Сложили — получился развёрнутый угол!'),
-        l87Line(40,60,80,'c')+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">три угла = 180° = прямая линия!</div>`+
-        sml('отрезанные углы складываются в развёрнутый угол — а он всегда 180°!'));
-    } else if(step===6){
-      h=col(big('Теорема'),
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-family:Georgia,serif">∠A + ∠B + ∠C = 180°</div>`+
-        sml('сумма углов ЛЮБОГО треугольника равна 180° — это теорема, доказанная ещё древними греками!'));
-    } else if(step===7){
-      h=col(big('Как найти третий угол'),
-        rowC(chip('сложи два известных угла','rgba(127,209,255,.5)'),chip('вычти из 180°','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">∠3 = 180° − ∠1 − ∠2</div>`+
-        sml('как в совете Архимеда: в одно действие!'));
-    } else if(step===8){
-      h=col(big('Задача-проверка'),
-        l87Tri(35,45,100,'d')+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">180° − 35° − 45° = 100°</div>`+
-        sml('как в проверке: углы 35° и 45° → третий 100°!'));
-    } else if(step===9){
-      h=col(big('Задача 1: прямоугольный'),
-        l87Tri(90,30,60,'e')+
-        rowC(chip('прямой угол = 90°','rgba(127,209,255,.5)'),chip('второй угол 30°','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">третий: 180° − 90° − 30° = 60°</div>`+
-        sml('как в наших задачках!'));
-    } else if(step===10){
-      h=col(big('Прямоугольный треугольник'),
-        l87Tri(90,50,40,'f')+
-        rowC(chip('один угол 90°','rgba(127,209,255,.5)'),chip('два других в сумме дают 90°','rgba(217,164,65,.5)'))+
-        sml('180° − 90° = 90° — на два острых угла остаётся 90°!'));
-    } else if(step===11){
-      h=col(big('Равнобедренный треугольник'),
-        l87Tri(40,70,70,'g')+
-        rowC(chip('углы при основании РАВНЫ','rgba(127,209,255,.5)'),chip('вершина 40°','rgba(232,160,90,.5)'))+
-        sml('как в наших задачках: (180° − 40°) : 2 = 70° — каждый угол при основании!'));
-    } else if(step===12){
-      h=col(big('Остроугольный и тупоугольный'),
-        rowC(chip('все углы < 90° — остроугольный','rgba(127,184,160,.5)'),chip('один угол > 90° — тупоугольный','rgba(232,160,90,.5)'))+
-        sml('и у того, и у другого сумма всё равно 180°!'));
-    } else if(step===13){
-      h=col(big('Равносторонний = 60° × 3'),
-        l87Tri(60,60,60,'h')+
-        rowC(chip('все углы равны','rgba(127,209,255,.5)'),chip('180° : 3 = 60°','rgba(217,164,65,.5)'))+
-        sml('если все углы равны, каждый — 180° : 3 = 60°!'));
-    } else if(step===14){
-      h=col(big('Где это в жизни'),
-        rowC(chip('крыши домов','rgba(127,209,255,.4)'),chip('пирамиды Египта','rgba(127,209,255,.4)'),chip('крылья самолёта','rgba(127,209,255,.4)'),chip('горы и палатки','rgba(127,209,255,.4)'))+
-        sml('строители и инженеры всегда знают: сумма углов 180°!'));
-    } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('углы 50° и 70° → третий 60°','rgba(127,184,160,.5)'),chip('прямоугольный: 90° и 40° → 50°','rgba(127,184,160,.5)'),chip('равнобедренный с вершиной 80° → 50° каждый','rgba(127,184,160,.5)'))+
-        sml('сложи известные углы и вычти из 180°!'));
-    } else if(step===16){
-      const POOL=[['t','35','45'],['t','40','60'],['t','50','70'],['t','20','130'],['t','25','65'],['t','80','60'],['rt','30'],['rt','45'],['rt','55'],['iso','40'],['iso','30'],['iso','50']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0];
-      let desc, firstStep, ans, tri='';
-      if(kind==='t'){
-        const x=+e[1], y=+e[2];
-        desc='углы '+x+'° и '+y+'° → третий угол?';
-        firstStep='180° − '+x+'° − '+y+'°';
-        ans=180-x-y; tri=l87Tri(x,y,ans,'t');
-      } else if(kind==='rt'){
-        const x=+e[1];
-        desc='прямоугольный: один угол 90°, другой '+x+'° → третий?';
-        firstStep='180° − 90° − '+x+'°';
-        ans=90-x; tri=l87Tri(90,x,ans,'t2');
-      } else {
-        const v=+e[1];
-        desc='равнобедренный: угол при вершине '+v+'° → угол при основании?';
-        firstStep='(180° − '+v+'°) : 2';
-        ans=(180-v)/2; tri=l87Tri(v,ans,ans,'t3');
-      }
-      h=col(big('📐 Тренажёр: сумма углов'),
-        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
-        tri+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}°</div>`:'')+
-        btns(btn('1️⃣ подумай',`l87Act('${lk}','s1')`),btn('2️⃣ ответ',`l87Act('${lk}','s2')`),btn('🎲 другая',`l87Act('${lk}','n')`),btn('↺',`l87Act('${lk}','r')`))+
-        sml('сумма углов = 180°. Равнобедренный: углы при основании равны!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            📐 ∠A+∠B+∠C = 180° всегда.<br>
-            ✂️ Отрежь углы — сложатся в линию.<br>
-            ➗ Третий угол: 180 − два известных.<br>
-            🔺 Равнобедр.: углы при основании равны.</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там 35° и 45°'));
+        btn('⟲ вернуться к игре', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — разложи дождь, гром и молнию'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
