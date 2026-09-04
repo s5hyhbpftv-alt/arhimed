@@ -6129,7 +6129,15 @@ function visL92(el){
           ${l92Hammer()}
         </div>`+
         `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:12px 14px;max-width:310px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
-        В мастерской Архимеда на верстаке лежат гвозди, молотки, слитки железа… а за окном сверкает молния. Архимед задумался: как разложить этот хаос по полочкам науки? Он придумал три зала: <b>Тел, Веществ и Явлений</b> — и зовёт тебя в помощники!</div>`);
+        В мастерской Архимеда на верстаке лежат гвозди, молотки, слитки железа… а за окном сверкает молния. Архимед задумался: как разложить этот хаос по полочкам науки? Он придумал три зала: <b>Тел, Веществ и Явлений</b> — и зовёт тебя в помощники!</div>`+
+        `<div style="background:rgba(127,183,216,.09);border:1.5px solid #7fb7d855;border-radius:14px;padding:12px 14px;max-width:330px;text-align:left;margin-top:8px">
+          <div style="font-size:11.5px;color:#7fb7d8;letter-spacing:1px;margin-bottom:6px">📖 ИЗ УЧЕБНИКА · ЧТО ТАКОЕ ФИЗИКА</div>
+          <div style="font-size:13px;color:#e8dcc8;line-height:1.65">Слово <b>«физика»</b> — от греческого «фюсис», что значит «природа». Физика — наука о природе: она изучает, из чего состоят тела и какие <b>явления</b> с ними происходят.</div>
+          <div style="font-size:11.5px;color:#b8c9d8;line-height:1.6;margin-top:6px">По учебнику А.В. Перышкина физика отвечает на вопрос «почему?»: почему падает яблоко, почему гремит гром, почему светит Солнце. Она открывает <b>законы</b> — правила, по которым живёт природа.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:7px">${['🍎 падение','⚡ молния','🌈 радуга','🎵 музыка','🚗 движение','🔥 нагрев','🧲 магнит','💡 свет'].map(x=>`<span style="font-size:10px;border:1px solid #7fb7d844;border-radius:8px;padding:2px 7px;color:#cfe4f2">${x}</span>`).join('')}</div>
+          <div style="font-size:11px;color:#9fb8c8;margin-top:7px;border-top:1px dashed #7fb7d833;padding-top:5px">💡 Физика — фундамент техники: без её законов не было бы машин, самолётов, компьютеров и телефонов!</div>
+        </div>`
+        );
     } else if(step===1){
       h=col(l92Badge('ПЛАН МАСТЕРСКОЙ','#c9b28a')+
         big('Три полки Архимеда')+
@@ -6190,14 +6198,34 @@ function visL92(el){
           <div style="background:rgba(255,138,106,.05);border-radius:10px;padding:4px">${l92RainCloud()}<div style="font-size:11px;color:#ffd9a0;text-align:center">дождь 🌧️</div></div>
           <div style="background:rgba(255,138,106,.05);border-radius:10px;padding:4px;grid-column:1/3">${l92Rainbow()}<div style="font-size:11px;color:#ffd9a0;text-align:center">радуга 🌈</div></div>
         </div>`+
-        sml('явления — это процессы: они ДЛЯТСЯ, в них что-то МЕНЯЕТСЯ.'));
+        sml('явления — это процессы: они ДЛЯТСЯ, в них что-то МЕНЯЕТСЯ.')+
+        `<div style="background:rgba(255,138,106,.06);border:1.5px solid #ff8a6a44;border-radius:14px;padding:12px;max-width:340px;text-align:left;margin-top:8px">
+          <div style="font-size:11.5px;color:#ff9a7a;letter-spacing:1px;margin-bottom:6px">📚 ШЕСТЬ СЕМЕЙСТВ ЯВЛЕНИЙ</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center">
+            ${[['🚗','Механические','движение: мяч летит, машина едет'],['🔥','Тепловые','нагрев, кипение, таяние'],['💡','Световые','радуга, тень, зеркало'],['🔊','Звуковые','гром, музыка, эхо'],['⚡','Электрические','молния, ток в проводах'],['🧲','Магнитные','магниты, компас']].map(f=>`<div style="flex:1;min-width:150px;background:rgba(0,0,0,.22);border:1px solid #ff8a6a33;border-radius:10px;padding:6px 8px;text-align:center">
+              <div style="font-size:17px">${f[0]}</div>
+              <div style="font-size:12px;color:#fff;font-weight:bold">${f[1]}</div>
+              <div style="font-size:9.5px;color:#c9a898;line-height:1.4">${f[2]}</div>
+            </div>`).join('')}
+          </div>
+          <div style="font-size:11px;color:#c9a898;margin-top:7px;border-top:1px dashed #ff8a6a33;padding-top:5px">💡 Эти изменения происходят САМИ в природе — именно их изучает физика!</div>
+        </div>`
+        );
     } else if(step===8){
       h=col(l92Badge('ЗАЛ 3 · КАК РАСПОЗНАТЬ','#ff8a6a')+
         big('Признаки явления')+
         `${l92Snow()}`+
         `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
           ${[['⏳','Длится во времени','снежинка → лужица: процесс идёт'],['🔄','Что-то меняется','вода превращается: твёрдая → жидкая'],['👀','Можно наблюдать','видим, слышим, чувствуем']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,138,106,.07);border:1px solid rgba(255,138,106,.3);border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:18px">${f[0]}</span><span style="font-size:12.5px;color:#d8ecff"><b style="color:#fff">${f[1]}</b> — <span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
-        </div>`);
+        </div>`+
+        `<div style="background:rgba(127,209,255,.07);border:1.5px solid #7fb7d844;border-radius:14px;padding:12px;max-width:340px;text-align:left;margin-top:8px">
+          <div style="font-size:11.5px;color:#7fb7d8;letter-spacing:1px;margin-bottom:6px">🔬 КАК ФИЗИКИ ИЗУЧАЮТ ЯВЛЕНИЯ</div>
+          <div style="display:flex;align-items:center;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:6px">
+            ${[['👀','наблюдают'],['❓','задают вопрос'],['💡','гипотеза'],['🧪','опыт'],['📜','закон']].map((f,i)=>`<div style="display:flex;align-items:center;gap:4px"><div style="background:rgba(127,209,255,.1);border:1px solid #7fb7d855;border-radius:8px;padding:3px 6px;font-size:9.5px;color:#cfe4f2;text-align:center"><div style="font-size:14px">${f[0]}</div>${f[1]}</div>${i<4?'<span style="color:#7fb7d8">→</span>':''}</div>`).join('')}
+          </div>
+          <div style="font-size:11.5px;color:#9fb8c8;line-height:1.6">Учёный <b style="color:#cfe4f2">Галилео Галилей</b> (1564–1642) первым стал проверять догадки опытами: по легенде, он бросал шары с Пизанской башни и изучал их падение! А <b style="color:#cfe4f2">Исаак Ньютон</b> открыл закон всемирного тяготения — почему яблоко падает на Землю.</div>
+        </div>`
+        );
     } else if(step===9){
       h=col(l92Badge('ПРОВЕРКА','#c9b28a')+
         big('Куда отнести гром и молнию?')+
@@ -6222,7 +6250,13 @@ function visL92(el){
         `${l92Nail(120,55,6,1.6)}`+
         `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
           ${[['✋','Можно взять в руку','твёрдый, имеет форму'],['📏','Можно измерить','длина 5 см, масса 3 г'],['🧱','Сделан из вещества','из железа']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(127,208,160,.07);border:1px solid rgba(127,208,160,.3);border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:18px">${f[0]}</span><span style="font-size:12.5px;color:#d8ecff"><b style="color:#fff">${f[1]}</b> — <span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
-        </div>`);
+        </div>`+
+        `<div style="background:rgba(127,208,160,.07);border:1.5px solid #7fd1a044;border-radius:14px;padding:12px;max-width:340px;text-align:left;margin-top:8px">
+          <div style="font-size:11.5px;color:#7fd1a0;letter-spacing:1px;margin-bottom:5px">📖 ОПРЕДЕЛЕНИЕ ИЗ УЧЕБНИКА</div>
+          <div style="font-size:12.5px;color:#d8ecc8;line-height:1.65"><b>Физическое тело</b> — любой предмет, который нас окружает: капля воды, книга, гвоздь… даже сам человек — тело! У каждого тела есть <b>форма, объём и масса</b>.</div>
+          <div style="font-size:11.5px;color:#9ec0a8;margin-top:6px">Тела могут быть из разных веществ: железный гвоздь, стеклянный стакан, бумажная книга.</div>
+        </div>`
+        );
     } else if(step===12){
       h=col(l92Badge('РАЗБОР 2','#ff8a6a')+
         big('Ржавление — ЯВЛЕНИЕ')+
@@ -6233,14 +6267,26 @@ function visL92(el){
         </div>`+
         `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
           ${[['⏳','Длится во времени','свежий гвоздь → покрывается пятнами'],['🧪','Химическая реакция','железо + кислород воздуха = ржавчина'],['🔄','Изменение навсегда','ржавчину соскоблишь — но гвоздь уже другой']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,138,106,.07);border:1px solid rgba(255,138,106,.3);border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:18px">${f[0]}</span><span style="font-size:12.5px;color:#d8ecff"><b style="color:#fff">${f[1]}</b> — <span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
-        </div>`);
+        </div>`+
+        `<div style="background:rgba(255,138,106,.07);border:1.5px solid #ff8a6a44;border-radius:14px;padding:12px;max-width:340px;text-align:left;margin-top:8px">
+          <div style="font-size:11.5px;color:#ff9a7a;letter-spacing:1px;margin-bottom:5px">📖 ОПРЕДЕЛЕНИЕ ИЗ УЧЕБНИКА</div>
+          <div style="font-size:12.5px;color:#f0d8cc;line-height:1.65"><b>Физическое явление</b> — это изменение, которое происходит с телами: движение, нагревание, таяние, горение… Явления делят на <b>шесть семейств</b>: механические, тепловые, световые, звуковые, электрические и магнитные.</div>
+          <div style="font-size:11.5px;color:#d0a898;margin-top:6px">Ржавление — процесс, при котором железо соединяется с кислородом воздуха, и металл постепенно разрушается.</div>
+        </div>`
+        );
     } else if(step===13){
       h=col(l92Badge('РАЗБОР 3','#ffd966')+
         big('Железо — ВЕЩЕСТВО')+
         `${l92Ingot()}`+
         `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
           ${[['🧱','Материал гвоздя','и цепей, ложек, кораблей'],['⚙️','Свойства железа','твёрдое, тяжёлое, притягивается магнитом'],['🔨','Из него делают тела','но само оно — не тело, а вещество']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.07);border:1px solid rgba(255,217,102,.3);border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:18px">${f[0]}</span><span style="font-size:12.5px;color:#d8ecff"><b style="color:#fff">${f[1]}</b> — <span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
-        </div>`);
+        </div>`+
+        `<div style="background:rgba(255,217,102,.07);border:1.5px solid #ffd96644;border-radius:14px;padding:12px;max-width:340px;text-align:left;margin-top:8px">
+          <div style="font-size:11.5px;color:#ffd966;letter-spacing:1px;margin-bottom:5px">📖 ОПРЕДЕЛЕНИЕ ИЗ УЧЕБНИКА</div>
+          <div style="font-size:12.5px;color:#f2e8c8;line-height:1.65"><b>Вещество</b> — это то, из чего состоят физические тела: вода, железо, воздух, стекло, дерево. Одно вещество может входить в разные тела, а тело — состоять из нескольких веществ.</div>
+          <div style="font-size:11.5px;color:#d8c088;margin-top:6px">У вещества есть свойства: плотность, температура плавления, твёрдость. Их изучают, проводя опыты.</div>
+        </div>`
+        );
     } else if(step===14){
       h=col(l92Badge('ЗАДАЧА 1','#c9b28a')+
         big('Сколько здесь ТЕЛ?')+
@@ -6312,6 +6358,7 @@ function l92Doors4(hot){
     </div>`).join('')}
   </div>`;
 }
+
 
 function l93Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
