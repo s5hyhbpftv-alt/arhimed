@@ -12383,11 +12383,12 @@ function l9Lane(good,label){
 // «плитка числа»: цифры крупно с подписями разрядов
 function l9Digits(digs,hotIdx,uid){
   const names=['единицы','десятки','сотни','тысячи','десятки тысяч','сотни тысяч'];
-  const arr=String(digs).split('').reverse();
+  const arr=String(digs).split('');
+  const L=arr.length;
   return `<div style="display:flex;justify-content:center;gap:3px;flex-wrap:wrap;margin:2px auto">
     ${arr.map((d,i)=>`<div class="wv-pop" style="text-align:center">
-      <div style="width:34px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;background:${hotIdx===i?'rgba(255,217,102,.3)':'linear-gradient(145deg,#2c4a3a,#1c3328)'};border:2px solid ${hotIdx===i?'#ffd966':'#3d5c49'};color:${hotIdx===i?'#ffd966':'#e8dcc8'};font-family:Georgia,serif">${d}</div>
-      <div style="font-size:7.5px;color:#9ec0a8;margin-top:2px">${names[i]}</div>
+      <div style="width:34px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;background:${hotIdx===L-1-i?'rgba(255,217,102,.3)':'linear-gradient(145deg,#2c4a3a,#1c3328)'};border:2px solid ${hotIdx===L-1-i?'#ffd966':'#3d5c49'};color:${hotIdx===L-1-i?'#ffd966':'#e8dcc8'};font-family:Georgia,serif">${d}</div>
+      <div style="font-size:7.5px;color:#9ec0a8;margin-top:2px">${names[L-1-i]}</div>
     </div>`).join('')}
   </div>`;
 }
