@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -4320,6 +4320,166 @@ function visL43(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 2/5 + 1/5'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l196Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['1'],['2'],['3'],['4'],['5'],['6'],['7'],['8'],['9'],['10'],['12'],['15']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l196Circle(r,uid,fillCells){
+  // круг из 8 секторов; вокруг показываем r (радиус)
+  const R=r*10+20;
+  let segs='';
+  const n=8;
+  for(let i=0;i<n;i++){
+    const a0=i/n*360-90, a1=(i+1)/n*360-90;
+    const x0=R+R*Math.cos(a0*Math.PI/180)*0.92, y0=R+R*Math.sin(a0*Math.PI/180)*0.92;
+    const x1=R+R*Math.cos(a1*Math.PI/180)*0.92, y1=R+R*Math.sin(a1*Math.PI/180)*0.92;
+    segs+=`<path d="M${R} ${R} L${x0.toFixed(1)} ${y0.toFixed(1)} A${R*0.92} ${R*0.92} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)} Z" fill="${i%2?'#4f9fd8':'#3c7fae'}" stroke="#1d3a52" stroke-width="1"/>`;
+  }
+  return `<svg width="${R*2}" height="${R*2}" style="display:block;margin:2px auto">
+    <circle cx="${R}" cy="${R}" r="${R*0.92}" fill="#162b40"/>
+    ${segs}
+    <line x1="${R}" y1="${R}" x2="${R+R*0.92}" y2="${R}" stroke="#ffd9a0" stroke-width="3"/>
+    <text x="${R+R*0.46}" y="${R-8}" fill="#ffd9a0" font-size="14" text-anchor="middle">r = ${r}</text>
+  </svg>`;
+}
+function l196Rect(r,uid){
+  // прямоугольник из «развёрнутых» секторов: ширина πr, высота r → площадь π·r·r
+  const w=210, h=34;
+  let teeth='';
+  const n=Math.max(6,Math.round(r*2));
+  for(let i=0;i<n;i++){
+    teeth+=`<div style="flex:1;height:100%;background:${i%2?'#4f9fd8':'#3c7fae'};clip-path:polygon(0 0,100% 0,100% 60%,50% 100%,0 60%)"></div>`;
+  }
+  return `<div style="margin:4px auto;width:${w}px">
+    <div style="font-size:11px;color:#cbb89a;text-align:center">секторы «сцепились» как прямоугольник</div>
+    <div style="display:flex;width:${w}px;height:${h}px;overflow:hidden;border-radius:4px">${teeth}</div>
+    <div style="text-align:center;font-size:12.5px;color:#9ec0a8">длина ≈ π·r, высота = r → S = π·r·r</div>
+  </div>`;
+}
+function l196Grid(r,uid){
+  // квадрат r×r клеток — что такое r²
+  let c='';
+  const n=Math.min(r,9);
+  for(let i=0;i<n*n;i++) c+='<div style="width:8px;height:8px;background:#4f9fd8;margin:0.5px;opacity:.8"></div>';
+  return `<div style="display:grid;grid-template-columns:repeat(${n},9px);gap:0;justify-content:center;margin:2px auto">${c}</div>`;
+}
+function visL196(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Сколько места занимает пицца?'),
+        `<div style="font-size:46px" class="wv-pulse">🔵</div>`+
+        sml('длину обода (2πr) мы уже умеем! А сколько квадратиков помещается ВНУТРИ круга — это площадь S'));
+    } else if(step===1){
+      h=col(big('Площадь — это квадратики внутри'),
+        l196Circle(2,'a')+
+        sml('площадь круга — сколько единичных квадратиков умещается внутри. У площади «квадратная» природа!'));
+    } else if(step===2){
+      h=col(big('Формула'),
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-family:Georgia,serif">S = π · r²</div>`+
+        sml('r² = r · r — радиус УМНОЖАЕТСЯ САМ НА СЕБЯ, а не на 2! Это ключ ко всей теме'));
+    } else if(step===3){
+      h=col(big('Что такое r²'),
+        l196Grid(3,'b')+
+        rowC(chip('r² — квадрат со стороной r','rgba(127,209,255,.5)'),chip('3² = 9 клеток','rgba(232,160,90,.5)'))+
+        sml('r² — это площадь квадрата со стороной r. Круг занимает примерно π таких квадратов!'));
+    } else if(step===4){
+      h=col(big('Ловушка: r² — не 2r!'),
+        rowC(chip('3² = 3 · 3 = 9','rgba(127,184,160,.5)'),chip('2·3 = 6 — это НЕ 3²!','rgba(232,160,90,.5)'))+
+        sml('квадрат — умножить на себя. «Радиус на 2» — это диаметр, а не квадрат!'));
+    } else if(step===5){
+      h=col(big('Считаем: радиус 3'),
+        rowC(chip('r² = 3 · 3 = 9','rgba(127,209,255,.5)'),chip('S = 3 · 9 = 27','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">S = 3 · 3 · 3 = 27</div>`+
+        sml('как в нашей проверке! π≈3, r² = 9, 3·9 = 27'));
+    } else if(step===6){
+      h=col(big('Откуда взялась формула?'),
+        rowC(chip('разрежем круг на тонкие секторы','rgba(127,209,255,.5)'),chip('как пиццу на много кусочков','rgba(217,164,65,.5)'))+
+        l196Circle(3,'c')+
+        sml('секрет раскроем — разрежем пиццу и переложим кусочки!'));
+    } else if(step===7){
+      h=col(big('Разрезали пиццу на 2 половинки'),
+        rowC(chip('разрезали вдоль на секторы','rgba(127,209,255,.5)'),chip('«зубчики» смотрят вверх-вниз','rgba(127,184,160,.5)'))+
+        sml('каждый сектор — треугольничек с «зубчиками». Теперь сцепим их вместе!'));
+    } else if(step===8){
+      h=col(big('Сцепили — получился прямоугольник!'),
+        l196Rect(3,'d')+
+        sml('зубчики вошли друг в друга — фигура стала почти прямоугольником!'));
+    } else if(step===9){
+      h=col(big('Стороны прямоугольника'),
+        rowC(chip('длина ≈ π · r (половина обода)','rgba(127,209,255,.5)'),chip('высота = r (радиус)','rgba(232,160,90,.5)'))+
+        sml('длина — это развёрнутые секторы ≈ πr, высота — радиус. Площадь = длина × высота = πr · r = πr²!'));
+    } else if(step===10){
+      h=col(big('Вот и формула!'),
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">S прямоугольника = πr · r = π · r²</div>`+
+        sml('площадь круга = площадь получившегося прямоугольника. Математика — красивая!'));
+    } else if(step===11){
+      h=col(big('Задача 1: радиус 2'),
+        rowC(chip('r² = 2 · 2 = 4','rgba(127,209,255,.5)'),chip('S = 3 · 4 = 12','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">S = 3 · 2 · 2 = 12</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===12){
+      h=col(big('Задача 2: радиус 4'),
+        rowC(chip('r² = 4 · 4 = 16','rgba(127,209,255,.5)'),chip('S = 3 · 16 = 48','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">S = 3 · 4 · 4 = 48</div>`+
+        sml('тоже как в задачках: ответ 48!'));
+    } else if(step===13){
+      h=col(big('Порядок действий'),
+        rowC(chip('1) r · r','rgba(127,209,255,.5)'),chip('2) × π (≈3)','rgba(232,160,90,.5)'),chip('3) ответ','rgba(127,184,160,.5)'))+
+        sml('сначала радиус в квадрате, потом умножь на 3. Не перепутай с длиной окружности!'));
+    } else if(step===14){
+      h=col(big('Длина и площадь — не путай!'),
+        rowC(chip('C = 2·π·r — длина ОБОДА (в см)','rgba(127,209,255,.5)'),chip('S = π·r² — площадь ВНУТРИ (в см²)','rgba(232,160,90,.5)'))+
+        sml('длина — «сколько верёвки», площадь — «сколько квадратиков». Радиус 3: C = 18, а S = 27!'));
+    } else if(step===15){
+      h=col(big('Где это в жизни'),
+        rowC(chip('сколько теста на пиццу','rgba(217,164,65,.4)'),chip('площадь бассейна круглого','rgba(127,209,255,.4)'),chip('ткань на круглую скатерть','rgba(127,209,255,.4)'),chip('клумба в парке','rgba(127,209,255,.4)'))+
+        sml('везде, где нужно «покрыть» круг или узнать, сколько внутри!'));
+    } else if(step===16){
+      const POOL=[['1'],['2'],['3'],['4'],['5'],['6'],['7'],['8'],['9'],['10'],['12'],['15']];
+      if(st.i==null) st.i=0;
+      const r=+POOL[st.i][0];
+      const ans=3*r*r;
+      h=col(big('🔵 Тренажёр: площадь круга'),
+        `<div class="wv-row">${chip('радиус '+r+' → площадь круга? (π ≈ 3)','rgba(217,164,65,.35)')}</div>`+
+        l196Circle(Math.min(r,6),'t')+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) r² = ${r}·${r} = ${r*r} → S = 3·${r*r}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l196Act('${lk}','s1')`),btn('2️⃣ ответ',`l196Act('${lk}','s2')`),btn('🎲 другой',`l196Act('${lk}','n')`),btn('↺',`l196Act('${lk}','r')`))+
+        sml('S = πr²: сначала r·r, потом ×3!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🔵 S = π·r² — радиус САМ НА СЕБЯ.<br>
+            🍕 Секторы → прямоугольник πr × r.<br>
+            📏 Не путай: C = 2πr (обод), S = πr² (внутри).<br>
+            🔢 Шаги: r·r, потом ×3.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там радиус 3'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -8945,6 +9105,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===196) visL196(el);
   else if(id===43) visL43(el);
   else if(id===195) visL195(el);
   else if(id===20) visL20(el);
