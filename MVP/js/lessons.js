@@ -8884,8 +8884,8 @@ function visL11(el){
         card('когда приходит <b>n-й гость</b>, он добавляет <b style="color:#ffd966">n − 1</b> рукопожатие — по одному на каждого старого гостя.')+
         l11Graph(n,{s:Math.min(210,70+n*18),delay:1,newN:n-1})+
         `<div style="background:rgba(255,217,102,.08);border:1px solid #ffd96644;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
-          <div style="font-size:13.5px;color:#e8dcc8">гостей: <b style="color:#ffd966">${n}</b> · последний добавил <b style="color:#7fd1a0">${n-1}</b> рукопожатий</div>
-          <div style="font-size:12px;color:#9ec0a8">накопленная сумма: ${[2,3,4,5,6,7,8,9].slice(0,n-1).map(x=>'1+2+…+'+(x-1)+'='+sumA(x)).join(' · ')}</div>
+          <div style="font-size:13.5px;color:#e8dcc8">гостей: <b style="color:#ffd966">${n}</b> · последний добавил <b style="color:#7fd1a0">${n-1}</b> рукопожатие</div>
+          <div style="font-size:12.5px;color:#9ec0a8">накопленная сумма ступенек: 1+2+…+${n-1} = <b style="color:#ffd966">${total}</b></div>
         </div>`+
         btns(btn('➕ пригласить следующего',`l11Act('${lk}','n')`),btn('↺ сначала',`l11Act('${lk}','r')`))+
         sml('считаем гостей по очереди: 2-й добавил 1, 3-й — 2, 4-й — 3… накапливаем сумму!'));
