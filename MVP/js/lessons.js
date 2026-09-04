@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(LV.id===30) visL30(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(LV.id===30) visL30(el); else if(LV.id===31) visL31(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -849,6 +849,235 @@ function l30Borrow(a,b){
     <div style="font-size:16px;color:#ffd966;font-family:Georgia,serif;text-align:center">${a} = ${da}0 + ${newE} &nbsp;(стало ${newE} единиц)</div>
   </div>`;
 }
+// ===================== УРОК 31 «ТАБЛИЦА УМНОЖЕНИЯ» (v172) =====================
+function l31Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  const EX=[[2,7],[3,4],[4,6],[5,8],[6,7],[7,8],[8,9],[9,6],[3,9],[6,8],[4,7],[5,6]];
+  if(a0==='e'){ st.e=((st.e==null?0:st.e)+1)%EX.length; st.guess=null; }
+  if(a0==='pick'){ st.guess=p; }
+  if(a0==='f9p'){ st.f9=Math.min(9,(st.f9==null?6:st.f9)+1); }
+  if(a0==='f9m'){ st.f9=Math.max(1,(st.f9==null?6:st.f9)-1); }
+  if(a0==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+// ряд предметов: n групп по m кружков (яблоки)
+function l31Groups(g,per,sz,opt){
+  const o=opt||{};
+  const s=sz||20;
+  let out='';
+  for(let gr=0;gr<g;gr++){
+    out+=`<div class="l12-fall" style="animation-delay:${(gr*0.12).toFixed(2)}s;display:inline-flex;gap:2px;border:2px solid ${o.bord||'#ff9a8a'};border-radius:12px;padding:3px 6px;margin:2px">
+      ${Array.from({length:per},()=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:${s}px;height:${s}px;border-radius:50%;background:radial-gradient(circle at 32% 28%,${o.col||'#ff8f8f'},${o.col2||'#d94848'});font-size:${Math.max(8,s*0.4)}px;color:#fff;font-weight:bold">${o.nums?per:''}</span>`).join('')}
+    </div>`;
+  }
+  return `<div style="display:flex;justify-content:center;flex-wrap:wrap;max-width:340px;margin:1px auto">${out}</div>`;
+}
+// пальцы для умножения на 9: загибаем n-й палец (n=1..9)
+function l31Fingers9(n){
+  const hands=[];
+  for(let h=0;h<2;h++){
+    let row='';
+    for(let f=0;f<5;f++){
+      const idx=h*5+f+1;
+      const down=idx===n;
+      row+=`<span class="${down?'l12-hop':''}" style="display:inline-block;font-size:${down?44:34}px;margin:0 2px;opacity:${down?1:.55}">${down?'👇':'☝️'}</span>`;
+    }
+    hands.push(`<div style="display:flex;justify-content:center">${row}</div>`);
+  }
+  const left=n-1, right=10-n;
+  return `<div style="text-align:center">${hands[0]}${hands[1]}
+    <div style="font-size:12px;color:#9ec0a8;margin-top:2px">загнули ${n}-й палец · слева ${left} · справа ${right}</div>
+  </div>`;
+}
+// таблица Пифагора 9×9 с подсветкой строки/столбца
+function l31Pif(a,b,opt){
+  const o=opt||{};
+  let html='<div style="overflow-x:auto"><table style="border-collapse:collapse;margin:0 auto;font-size:12px">';
+  // заголовок
+  html+='<tr><td style="width:26px;height:22px;text-align:center;color:#9ec0a8;font-size:9px">×</td>';
+  for(let c=1;c<=9;c++) html+=`<td style="width:26px;height:22px;text-align:center;color:${o.hotB===c?'#7fd1a0':'#cbb89a'};font-weight:bold;border:1px solid #3d5c49;background:${o.hotB===c?'#7fd1a022':'rgba(255,255,255,.03)'}">${c}</td>`;
+  html+='</tr>';
+  for(let r=1;r<=9;r++){
+    html+=`<tr><td style="width:26px;height:22px;text-align:center;color:${o.hotA===r?'#ffd966':'#cbb89a'};font-weight:bold;border:1px solid #3d5c49;background:${o.hotA===r?'#ffd96622':'rgba(255,255,255,.03)'}">${r}</td>`;
+    for(let c=1;c<=9;c++){
+      const hot=(a===r&&b===c)||(b===r&&a===c);
+      html+=`<td style="width:26px;height:22px;text-align:center;border:1px solid #3d5c49;background:${hot?'#ffd966':'rgba(255,255,255,.03)'};color:${hot?'#4a3200':'#e8dcc8'};font-weight:${hot?'bold':'normal'}">${r*c}</td>`;
+    }
+    html+='</tr>';
+  }
+  html+='</table></div>';
+  return html;
+}
+// «палочка»: +число n раз → ответ
+function l31Repeated(n,cnt){
+  const parts=Array.from({length:cnt},()=>''+n).join(' + ');
+  return `<div style="text-align:center;font-family:Georgia,serif;font-size:15px;color:#e8dcc8">${parts} = <b style="color:#7fd1a0;font-size:20px">${n*cnt}</b></div>`;
+}
+function visL31(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v31!==step) CHS[lk]={_v31:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const note=(t,c,d)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'}${d||'44'};border-radius:9px;padding:5px 12px;font-size:12.5px;color:#e8dcc8;text-align:left;line-height:1.45">${t}</div>`;
+    let h='';
+    if(step===0){
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#d9a0ff33;border:1px solid #d9a0ff;color:#e6c4ff;margin-bottom:2px">НАЧАЛЬНАЯ ШКОЛА · 3 КЛАСС</span>`+
+        big('Умножение — быстрое сложение!')+
+        `<div style="font-size:38px" class="wv-swing">✖️</div>`+
+        l31Groups(4,3,22)+
+        card('вместо длинного <b>3+3+3+3</b> пишем коротко: <b style="color:#ffd966">4 · 3</b>. Это «<b>четыре раза по три</b>». Коротко и понятно!')+
+        sml('сегодня разберём таблицу умножения — простыми словами и с картинками!'));
+    } else if(step===1){
+      h=col(big('Что такое 4 · 3?')+
+        l31Groups(4,3,24)+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:17px;color:#e8dcc8">4 · 3 = 3 + 3 + 3 + 3</div>`+
+        l31Repeated(3,4)+
+        card('берём число <b style="color:#7fd1a0">3</b> и складываем его <b style="color:#ffd966">4 раза</b>: 3+3=6, +3=9, +3=12. Число <b>4</b> говорит, СКОЛЬКО раз берём!')+
+        sml('первое число — сколько раз, второе — какое число берём!'));
+    } else if(step===2){
+      h=col(big('Считаем все яблоки')+
+        l31Groups(4,3,24,{nums:true})+
+        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap">
+          ${[['3','первая группа'],['6','две группы'],['9','три группы'],['12','четыре группы!']].map((x,i)=>`<span class="wv-pop" style="animation-delay:${i*0.2}s;display:inline-block;background:rgba(255,255,255,.05);border:1px solid ${i===3?'#7fd1a0':'#3d5c49'};border-radius:9px;padding:4px 10px;font-size:13px;color:${i===3?'#7fd1a0':'#e8dcc8'};font-weight:bold">${x[0]}</span>`).join('')}
+        </div>`+
+        card('в каждой группе по <b>3 яблока</b>, групп <b>4</b>. Считаем: 3, 6, 9, <b style="color:#7fd1a0">12</b>! Умножение заменило длинное сложение.')+
+        sml('4 группы по 3 — это 12 яблок. 4 · 3 = 12!'));
+    } else if(step===3){
+      h=col(big('Умножение на 1')+
+        l31Groups(1,7,22)+
+        `<div style="text-align:center;font-size:20px">7 · 1 = <b style="color:#7fd1a0">7</b> &nbsp;&nbsp;&nbsp; 25 · 1 = <b style="color:#7fd1a0">25</b> &nbsp;&nbsp;&nbsp; 100 · 1 = <b style="color:#7fd1a0">100</b></div>`+
+        card('умножить на <b style="color:#ffd966">1</b> — значит взять число <b>один раз</b>. Оно останется самим собой!')+
+        sml('запомни: ·1 ничего не меняет — число как было, так и осталось!'));
+    } else if(step===4){
+      h=col(big('Умножение на 0')+
+        `<div style="display:flex;justify-content:center;gap:8px;align-items:center;flex-wrap:wrap">
+          <div style="font-size:22px;color:#e8dcc8">9 раз по 0 яблок…</div>
+          <div style="font-size:20px">= 0 яблок!</div>
+        </div>`+
+        `<div style="text-align:center;font-size:22px">9 · 0 = <b style="color:#7fd1a0">0</b> &nbsp;&nbsp;&nbsp; 100 · 0 = <b style="color:#7fd1a0">0</b></div>`+
+        card('умножить на <b style="color:#ffd966">0</b> — значит взять число <b>ноль раз</b>, то есть не взять ничего! Ответ всегда 0.')+
+        sml('·0 — самый простой столбик таблицы: всегда ноль!'));
+    } else if(step===5){
+      h=col(big('Умножение на 2 — удвоить!')+
+        l31Groups(2,7,22)+
+        `<div style="text-align:center;font-size:20px">2 · 7 = 7 + 7 = <b style="color:#7fd1a0">14</b></div>`+
+        rowC(chip('2·1=2','#7fd1a0'),chip('2·2=4','#7fd1a0'),chip('2·3=6','#7fd1a0'),chip('2·4=8','#7fd1a0'),chip('2·5=10','#7fd1a0'),chip('…','#9ec0a8'),chip('2·9=18','#7fd1a0'))+
+        card('взять число <b>2 раза</b> — значит <b style="color:#7fd1a0">удвоить</b>! 2·7 = 7+7 = 14. Все ответы на 2 — <b>чётные</b>.')+
+        sml('умножение на 2 — это просто «сосчитать парами»!'));
+    } else if(step===6){
+      h=col(big('Секрет умножения на 5')+
+        l31Groups(5,4,20,{col:'#7fb7d8',col2:'#4f7fa0'})+
+        `<div style="text-align:center;font-size:19px">5 · 4 = <b style="color:#7fd1a0">20</b></div>`+
+        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;max-width:330px">
+          ${[1,2,3,4,5,6,7,8,9].map(n=>`<span class="wv-pop" style="animation-delay:${(n*0.06).toFixed(2)}s;display:inline-block;padding:3px 7px;margin:1px;border-radius:7px;background:rgba(127,183,216,.1);border:1px solid #7fb7d8;font-size:12px;color:#d8ecff">5·${n}=${5*n}</span>`).join('')}
+        </div>`+
+        card('ответ на 5 <b style="color:#ffd966">всегда кончается на 5 или 0</b>: 5, 10, 15, 20… Считай пятёрками — быстро!')+
+        sml('5·нечётное кончается на 5, 5·чётное — на 0!'));
+    } else if(step===7){
+      h=col(big('Умножение на 10 — проще не бывает!')+
+        rowC(l31Groups(3,10,14,{col:'#ffd966',col2:'#d9a441',bord:'#a67c1e'}),`<span style="font-size:24px">=</span>`,`<span style="font-size:36px;color:#7fd1a0;font-weight:bold">30</span>`)+
+        card('умножить на <b style="color:#ffd966">10</b> — просто <b>дописать 0</b> в конце числа: 3·10=30, 7·10=70, 9·10=90!')+
+        sml('десяток — это «палочка-нолик»: приписал 0 — и готово!'));
+    } else if(step===8){
+      // на 9 пальцами: интерактив
+      const n=(st.f9!=null?st.f9:6);
+      h=col(big('Фокус: умножение на 9 на пальцах')+
+        `<div style="font-size:13px;color:#e8dcc8;text-align:center">считаем <b style="color:#ffd966">9 · ${n}</b> — загни ${n}-й палец:</div>`+
+        l31Fingers9(n)+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">слева ${n-1}, справа ${10-n} → ответ ${(n-1)}${(10-n)} (9·${n})!</div>`+
+        btns(btn('⬅️ другой палец',`l31Act('${lk}','f9m')`),btn('➡️',`l31Act('${lk}','f9p')`))+
+        sml('слева от загнутого — десятки, справа — единицы. Весь столбик на 9 — на пальцах!'));
+    } else if(step===9){
+      h=col(big('Секрет девятки: цифры в сумме = 9')+
+        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;max-width:330px">
+          ${[1,2,3,4,5,6,7,8,9].map(n=>{const r=9*n;const s=(r/10|0)+(r%10);return `<span class="wv-pop" style="animation-delay:${(n*0.06).toFixed(2)}s;text-align:center;display:inline-block;background:rgba(255,154,138,.07);border:1px solid #ff9a8a55;border-radius:8px;padding:2px 6px;margin:1px;font-size:11.5px"><span style="color:#ffd966;font-weight:bold">9·${n}=${r}</span><br><span style="color:#9ec0a8">${s} → ${s===9?'✓ 9':'?'}</span></span>`;}).join('')}
+        </div>`+
+        card('у каждого ответа цифры <b style="color:#ffd966">складываются в 9</b>! 9·6=54 → 5+4=9. Проверяй так свои ответы!')+
+        sml('ошибся в девятке? Сложи цифры — если не 9, где-то промах!'));
+    } else if(step===10){
+      h=col(big('Таблица умножения — это квадрат')+
+        l31Pif(6,7)+
+        card('это <b style="color:#ffd966">таблица Пифагора</b>: сверху и слева числа 1–9, на пересечении — ответ. Как в морском бою: нашёл строку 6 и столбец 7 — там 42!')+
+        sml('жёлтая клетка: 6·7 = 42. Играй в «найди ответ» по таблице!'));
+    } else if(step===11){
+      h=col(big('Учим понемногу, как ступеньки')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['ступенька 1','на 1 и на 2 — легко!'],['ступенька 2','на 5 и на 10 — секреты!'],['ступенька 3','на 9 — пальцы и сумма 9'],['ступенька 4','на 3 и на 4 — по чуть-чуть'],['ступенька 5','на 6, 7, 8 — осталось мало!']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:5px solid ${['#7fd1a0','#ffd966','#d9a0ff','#7fb7d8','#ff9a8a'][i]};border-radius:9px;padding:5px 10px;max-width:336px;width:100%"><span style="font-size:16px">${i+1}️⃣</span><span style="font-size:13px;color:#ffd966;font-weight:bold;min-width:110px">${x[0]}</span><span style="font-size:11px;color:#9ec0a8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        sml('не зубри всё сразу — одна ступенька за раз, и таблица сама запомнится!'));
+    } else if(step===12){
+      h=col(big('Отличная новость: 3·4 = 4·3!')+
+        rowC(l31Groups(3,4,18),`<span style="font-size:26px" class="wv-pulse">=</span>`,l31Groups(4,3,18))+
+        card('слева <b>3 группы по 4</b>, справа <b>4 группы по 3</b> — яблок одинаково: <b style="color:#7fd1a0">12</b>! От перестановки ответ не меняется.')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">3 · 4 = 4 · 3 = 12</div>`+
+        sml('значит, учить надо вдвое меньше: 6·7 = 7·6 — один пример вместо двух!'));
+    } else if(step===13){
+      h=col(big('Умножение на 3: три раза!')+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:17px;color:#e8dcc8">3 · 4 = 4 + 4 + 4</div>`+
+        l31Repeated(4,3)+
+        rowC(chip('или так:','#9ec0a8'),chip('4 · 2 = 8 (удвоили)','#7fd1a0'),chip('8 + 4 = 12','#ffd966'))+
+        card('взять число <b>3 раза</b>. А ещё можно <b>удвоить и добавить ещё раз</b>: 4·2=8, 8+4=12. Удобно!')+
+        sml('на 3: сначала «два раза», потом «ещё один раз»!'));
+    } else if(step===14){
+      h=col(big('Деление — умножение наоборот')+
+        rowC(chip('7 · 8 = 56','#7fd1a0'))+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['56 : 7 = 8','делим на 7 — получаем 8'],['56 : 8 = 7','делим на 8 — получаем 7']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${i?'#7fb7d8':'#7fd1a0'}66;border-radius:11px;padding:8px 12px;min-width:150px"><div style="font-size:20px;color:#ffd966;font-family:Georgia,serif">${x[0]}</div><div style="font-size:10.5px;color:#9ec0a8;margin-top:2px">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('знаешь <b style="color:#7fd1a0">7·8=56</b>? Тогда сразу знаешь два деления! Умножение и деление — друзья наоборот.')+
+        sml('запомни «тройку»: 7·8=56, 56:7=8, 56:8=7!'));
+    } else if(step===15){
+      h=col(big('Задача: 45 конфет на 5 ребят 🍬')+
+        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap">${[1,2,3,4,5].map(i=>`<span class="l12-fall" style="animation-delay:${(i*0.1).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ffd9a0,#e8a35a);border:2px solid #a06a24;font-size:15px;color:#5a3a05;font-weight:bold;margin:2px">👦</span>`).join('')}</div>`+
+        `<div style="text-align:center;font-size:13.5px;color:#e8dcc8">каждому поровну… ищем: <b style="color:#7fd1a0">5 · ? = 45</b></div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">5 · 9 = 45 → каждому по 9 конфет!</div>`+
+        sml('деление 45 : 5 — это поиск «сколько раз по 5 в 45»: девять раз!'));
+    } else if(step===16){
+      // тренажёр
+      const EX=[[2,7],[3,4],[4,6],[5,8],[6,7],[7,8],[8,9],[9,6],[3,9],[6,8],[4,7],[5,6]];
+      const i=st.e!=null?st.e:0;
+      const e=EX[i%EX.length];
+      const a=e[0],b=e[1],res=a*b;
+      const opts=[res-2,res-1,res,res+1,res+2].filter(v=>v>=1&&v<=100);
+      if(opts.indexOf(res)<0) opts.push(res);
+      const done=st.guess!=null;
+      const right=done&&st.guess===res;
+      h=col(big('🎮 Тренажёр: таблица умножения')+
+        `<div style="font-size:42px;color:#ffd966;font-family:Georgia,serif;text-align:center" class="wv-ans">${a} · ${b} = ?</div>`+
+        (done?(right?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">🎉 Верно: ${res}!</div>`:`<div style="font-size:17px;color:#ff9a8a">не угадал — ${a}·${b} = ${res}</div>`):'')+
+        (done?'':btns(...opts.map(o=>btn(''+o,`l31Act('${lk}','pick:${o}')`))))+
+        (done?btns(btn('🎲 следующий пример',`l31Act('${lk}','e')`),btn('↺',`l31Act('${lk}','r')`)):'')+
+        sml('подсказки: на 2 — удвой, на 5 — пятёрками, на 9 — пальцы и сумма 9!'));
+    } else {
+      h=col(`<div style="font-size:48px">✖️</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:252px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            ➕ Умножение = быстрое сложение одинаковых.<br>
+            1️⃣ ·1 — то же ·0 — ноль ·2 — удвой.<br>
+            5️⃣ ·5 — 0 или 5 ·10 — допиши 0.<br>
+            9️⃣ ·9 — пальцы, цифры в сумме 9.<br>
+            🔄 3·4=4·3 · 7·8=56 → 56:7=8.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 4 · 3'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function visL30(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -14482,6 +14711,7 @@ function renderLessonVis(){
   else if(id===18) visL18(el);
   else if(id===29) visL29(el);
   else if(id===30) visL30(el);
+  else if(id===31) visL31(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
