@@ -9185,7 +9185,7 @@ function l15Highway(S,v1,v2,opt){
     <div class="l15-drive-r l15-runner" style="right:${W-x0-roadW-30-26}px;top:16px;--dx:${(-dx2).toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:26px">${em2}<div style="font-size:9px;text-align:center;color:#7fd1a0;margin-top:-4px">${v2} км/ч</div></div>
     <div class="wv-pop" style="position:absolute;left:${meetX.toFixed(0)}px;top:-2px;font-size:26px;animation-delay:${(o.dur||2.8)+0.2}s;opacity:0;animation:wvPop .5s ease ${(o.dur||2.8)+0.2}s forwards">🤝</div>
     <div style="position:absolute;left:${meetX.toFixed(0)}px;top:60px;transform:translateX(-50%);font-size:8.5px;color:#cbb89a;white-space:nowrap">встреча</div>
-    <div style="height:22px"></div>
+    <div style="height:76px"></div>
   </div>`;
 }
 // погоня: задний (v1, быстрый) догоняет переднего (v2)
