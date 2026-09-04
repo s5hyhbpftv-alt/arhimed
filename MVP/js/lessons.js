@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -5724,6 +5724,145 @@ function visL98(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+function l92Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['body','гвоздь'],['body','молоток'],['body','стакан'],['body','мяч'],['sub','железо'],['sub','вода'],['sub','стекло'],['sub','дерево'],['ev','таяние снега'],['ev','гром'],['ev','дождь'],['ev','полёт мяча']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l92Card(emoji,label,uid){
+  return `<div class="l35-pop" style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px;border-radius:12px;border:1px solid rgba(127,209,255,.35);background:rgba(127,209,255,.06);width:86px">
+    <div style="font-size:30px">${emoji}</div>
+    <div style="font-size:12.5px;color:#d8ecff">${label}</div>
+  </div>`;
+}
+function l92Check(word,uid){
+  const isEv=/(ение|ание|яние|ение|ание|ение|полёт|дождь|гром|молния|радуга|снегопад|ржавление)/i.test(word);
+  const isSub=/^железо|^вода|^стекло|^дерево|^медь|^золото|^воздух|^кислород/i.test(word);
+  return `<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin:2px auto">
+    <span style="font-size:20px;color:#e8dcc8">${word}</span>
+    <span style="font-size:22px">→</span>
+    <span class="wv-chip" style="color:${isEv?'#ff9a8a':isSub?'#ffd9a0':'#7fd1a0'}">${isEv?'явление':isSub?'вещество':'тело'}</span>
+  </div>`;
+}
+function visL92(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Почему гремит гром?'),
+        `<div style="font-size:44px" class="wv-flick">⚡</div>`+
+        sml('молния, гром, радуга, падающий мяч — всё это природа. А наука, которая её изучает, — ФИЗИКА!'));
+    } else if(step===1){
+      h=col(big('Физика изучает природу'),
+        rowC(chip('из чего состоят тела','rgba(127,209,255,.5)'),chip('какие явления происходят','rgba(127,184,160,.5)'))+
+        sml('физика отвечает: почему предметы падают, почему гроза, почему светит Солнце'));
+    } else if(step===2){
+      h=col(big('Физическое тело'),
+        l92Card('🔨','гвоздь','a')+
+        l92Card('🏀','мяч','b')+
+        sml('тело — любой предмет вокруг нас: гвоздь, мяч, стакан, стол. Его можно взять в руки!'));
+    } else if(step===3){
+      h=col(big('Вещество'),
+        l92Card('🧱','железо','c')+
+        sml('вещество — то, ИЗ ЧЕГО сделано тело. Гвоздь — тело, а железо, из которого он сделан, — вещество!'));
+    } else if(step===4){
+      h=col(big('Тело vs вещество'),
+        rowC(chip('тела: гвоздь, проволока','rgba(127,209,255,.5)'),chip('вещество: железо (из них)','rgba(232,160,90,.5)'))+
+        sml('из одного вещества можно сделать много тел: из железа — и гвоздь, и проволоку, и ложку!'));
+    } else if(step===5){
+      h=col(big('Физическое явление'),
+        `<div style="font-size:40px" class="wv-pop">🌧️</div>`+
+        l92Check('таяние снега','d')+
+        sml('явление — ИЗМЕНЕНИЕ в природе: снег тает, вода кипит, мяч летит. Это процессы!'));
+    } else if(step===6){
+      h=col(big('Явления вокруг нас'),
+        rowC(chip('⚡ молния','rgba(127,209,255,.5)'),chip('🌈 радуга','rgba(127,184,160,.5)'),chip('💥 гром','rgba(232,160,90,.5)'),chip('❄️ снегопад','rgba(127,209,255,.5)'))+
+        sml('гром и молния — не тела и не вещества, а явления! Как в нашей проверке'));
+    } else if(step===7){
+      h=col(big('Задача-проверка'),
+        rowC(chip('дождь, гром, молния — это…','rgba(217,164,65,.35)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">физические явления!</div>`+
+        sml('как в проверке: это изменения в природе'));
+    } else if(step===8){
+      h=col(big('Три слова-помощника'),
+        rowC(chip('тело — предмет','rgba(127,209,255,.5)'),chip('вещество — материал','rgba(232,160,90,.5)'),chip('явление — процесс','rgba(127,184,160,.5)'))+
+        sml('предмет → материал → процесс. Теперь легко отличать!'));
+    } else if(step===9){
+      h=col(big('Разбираем по полочкам'),
+        l92Check('гвоздь','e')+
+        l92Check('ржавление гвоздя','f')+
+        l92Check('железо','g')+
+        sml('гвоздь — тело (можно взять); ржавление — явление (процесс); железо — вещество (материал)'));
+    } else if(step===10){
+      h=col(big('Задача 1: сколько тел?'),
+        rowC(chip('гвоздь','rgba(127,209,255,.5)'),chip('ржавление','rgba(232,160,90,.5)'),chip('железо','rgba(127,184,160,.5)'),chip('молоток','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">тел: 2 (гвоздь и молоток)</div>`+
+        sml('как в наших задачках: ржавление — явление, железо — вещество'));
+    } else if(step===11){
+      h=col(big('Задача 2: найди явление'),
+        rowC(chip('снежинка','rgba(127,184,160,.5)'),chip('таяние снега','rgba(127,209,255,.5)'),chip('лёд','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">таяние снега — явление!</div>`+
+        sml('как в наших задачках: снежинка и лёд — тела, а таяние — процесс'));
+    } else if(step===12){
+      h=col(big('Снежинка и лёд — одно вещество'),
+        rowC(chip('снежинка — тело','rgba(127,209,255,.5)'),chip('лёд — тело','rgba(127,184,160,.5)'),chip('вода — вещество','rgba(232,160,90,.5)'))+
+        sml('разные тела могут быть сделаны из одного вещества — воды!'));
+    } else if(step===13){
+      h=col(big('Физика в жизни'),
+        rowC(chip('почему радуга','rgba(127,209,255,.4)'),chip('почему лёд скользкий','rgba(127,209,255,.4)'),chip('почему гремит гром','rgba(127,209,255,.4)'),chip('почему самолёт летит','rgba(127,209,255,.4)'))+
+        sml('каждый «почему?» о природе — это вопрос к физике!'));
+    } else if(step===14){
+      h=col(big('Явления бывают разные'),
+        rowC(chip('механические: мяч летит','rgba(127,209,255,.5)'),chip('тепловые: чайник кипит','rgba(232,160,90,.5)'),chip('световые: радуга','rgba(127,184,160,.5)'),chip('звуковые: гром','rgba(127,209,255,.5)'))+
+        sml('физика изучает ВСЕ явления природы!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('стол — тело','rgba(127,184,160,.5)'),chip('дерево — вещество','rgba(127,184,160,.5)'),chip('горение свечи — явление','rgba(127,184,160,.5)'))+
+        sml('предмет — тело, материал — вещество, процесс — явление!'));
+    } else if(step===16){
+      const POOL=[['body','гвоздь'],['body','молоток'],['body','стакан'],['body','мяч'],['sub','железо'],['sub','вода'],['sub','стекло'],['sub','дерево'],['ev','таяние снега'],['ev','гром'],['ev','дождь'],['ev','полёт мяча']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0], word=e[1];
+      const ans=kind==='body'?'тело':kind==='sub'?'вещество':'явление';
+      const firstStep=kind==='body'?'это предмет — его можно взять в руки':kind==='sub'?'это материал, из которого делают тела':'это процесс — изменение в природе';
+      h=col(big('🔬 Тренажёр: тело/вещество/явление'),
+        `<div class="wv-row">${chip('«'+word+'» — это тело, вещество или явление?','rgba(217,164,65,.35)')}</div>`+
+        `<div style="font-size:28px" class="wv-pop">${word}</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:16px;text-align:center;color:#ffd9a0;max-width:280px">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l92Act('${lk}','s1')`),btn('2️⃣ ответ',`l92Act('${lk}','s2')`),btn('🎲 другой',`l92Act('${lk}','n')`),btn('↺',`l92Act('${lk}','r')`))+
+        sml('предмет — тело, материал — вещество, процесс — явление!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🔬 Тело — предмет (гвоздь, мяч).<br>
+            🧱 Вещество — материал (железо, вода).<br>
+            ⚡ Явление — процесс (гром, таяние).<br>
+            🎯 Увидел природу — задай вопрос физике!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там про дождь и гром'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function l18Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const POOL=[['sq','7'],['sq','12'],['sq','15'],['cb','2'],['cb','3'],['cb','5'],['back','81'],['back','144'],['back','125'],['back','64'],['cnt','sq'],['cnt','cb']];
@@ -10315,6 +10454,7 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
   if(id===1) visDigits(el);
+  else if(id===92) visL92(el);
   else if(id===98) visL98(el);
   else if(id===96) visL96(el);
   else if(id===106) visL106(el);
