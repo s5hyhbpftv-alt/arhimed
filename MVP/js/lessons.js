@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -3372,6 +3372,154 @@ function visL97(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там струна гитары'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l7Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  if(st.a==null){st.a=0;st.b=0;st.n=0;st.win=0;}
+  const A=3,B=5;
+  switch(act){
+    case 'fA': st.a=A; st.n++; break;
+    case 'fB': st.b=B; st.n++; break;
+    case 'eA': st.a=0; st.n++; break;
+    case 'eB': st.b=0; st.n++; break;
+    case 'pAB': { const x=Math.min(st.a,B-st.b); st.a-=x; st.b+=x; st.n++; break; }
+    case 'pBA': { const x=Math.min(st.b,A-st.a); st.b-=x; st.a+=x; st.n++; break; }
+    case 'chk': st.win=(st.a===4||st.b===4)?1:2; break;
+    case 'r': st.a=0; st.b=0; st.n=0; st.win=0; break;
+  }
+  chRender(0);
+}
+function l7Jug(cap,val,color,label,uid){
+  // сосуд: cap — ёмкость, val — текущий уровень (литры)
+  const pct=Math.round(val/cap*100);
+  return `<div style="display:flex;flex-direction:column;align-items:center;margin:0 4px">
+    <div style="position:relative;width:64px;height:${34+cap*18}px;border:3px solid #cbb89a;border-top:none;border-radius:0 0 8px 8px;background:#20352a;overflow:hidden">
+      <div style="position:absolute;left:0;right:0;bottom:0;height:${pct}%;background:${color};transition:height .5s ease;opacity:.9"></div>
+      <div style="position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-size:13px;color:#fff;font-weight:bold;text-shadow:0 1px 2px rgba(0,0,0,.6)">${val}<span style="font-size:9px;margin-left:1px">л</span></div>
+    </div>
+    <div style="font-size:11px;color:#cbb89a;margin-top:2px">${label} (${cap} л)</div>
+  </div>`;
+}
+function l7Demo(a,b,stepno,uid){
+  // статичный показ состояния после шага
+  return `<div class="l35-pop" style="display:flex;justify-content:center;align-items:flex-end;margin:4px auto">
+    ${l7Jug(3,a,'#5fa8d8','кувшин 3 л','a')}${l7Jug(5,b,'#7fd1a0','кувшин 5 л','b')}
+  </div>`;
+}
+function visL7(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Задача Архимеда: отмерь 4 л!'),
+        rowC(l7Jug(3,0,'#5fa8d8','кувшин','a'),l7Jug(5,0,'#7fd1a0','кувшин','b'))+
+        `<div class="wv-ans" style="font-size:20px;color:#ffd9a0">есть кувшины на 3 л и 5 л — как отмерить ровно 4 л?</div>`+
+        sml('без отметок на стенках! Только наполнять до краёв, переливать и выливать. Уже интересно? Поехали!'));
+    } else if(step===1){
+      h=col(big('Три разрешённых действия'),
+        rowC(chip('наполнить кувшин до краёв','rgba(127,209,255,.5)'),chip('перелить из одного в другой','rgba(127,184,160,.5)'),chip('вылить воду','rgba(232,160,90,.5)'))+
+        sml('переливаем до конца: пока источник не опустеет ИЛИ приёмник не наполнится'));
+    } else if(step===2){
+      h=col(big('Главный приём: переливай «до конца»'),
+        rowC(l7Jug(3,3,'#5fa8d8','3 л полон','a'),l7Jug(5,2,'#7fd1a0','в 5 л осталось 2','b'))+
+        sml('налили 5 л в 5-литровый, перелили в 3-литровый до краёв — в большом осталось ровно 2 л. Остаток!'));
+    } else if(step===3){
+      h=col(big('План из 6 шагов'),
+        rowC(chip('1. набери 5 л','rgba(127,209,255,.5)'),chip('2. перелей в 3 л','rgba(127,184,160,.5)'),chip('3. вылей 3 л','rgba(232,160,90,.5)'),chip('4. перелей 2 л','rgba(127,184,160,.5)'),chip('5. набери 5 л','rgba(127,209,255,.5)'),chip('6. долей в 3 л','rgba(127,184,160,.5)'))+
+        sml('6 шагов — и в 5-литровом кувшине останется 4 л! Смотрим каждый шаг'));
+    } else if(step===4){
+      h=col(big('Шаг 1: наполняем 5-литровый'),
+        l7Demo(0,5,'1','d1')+
+        sml('оба пусты. Наливаем воду в большой кувшин до краёв — теперь там 5 л'));
+    } else if(step===5){
+      h=col(big('Шаг 2: переливаем в 3-литровый'),
+        l7Demo(3,2,'2','d2')+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">в 5 л осталось 2 л!</div>`+
+        sml('маленький наполнился (3 л), а в большом остался остаток: 5 − 3 = 2 л'));
+    } else if(step===6){
+      h=col(big('Шаг 3: выливаем 3-литровый'),
+        l7Demo(0,2,'3','d3')+
+        sml('выливаем воду из маленького — он снова пуст. А в большом всё ещё наши 2 л!'));
+    } else if(step===7){
+      h=col(big('Шаг 4: переливаем 2 л в маленький'),
+        l7Demo(2,0,'4','d4')+
+        sml('переливаем 2 л из большого в маленький. Теперь большой пуст, в маленьком 2 л'));
+    } else if(step===8){
+      h=col(big('Шаг 5: снова наполняем большой'),
+        l7Demo(2,5,'5','d5')+
+        sml('наливаем в 5-литровый до краёв. В маленьком 2 л, в большом 5 л'));
+    } else if(step===9){
+      h=col(big('Шаг 6: доливаем маленький до краёв!'),
+        l7Demo(3,4,'6','d6')+
+        `<div class="wv-ans" style="font-size:22px;color:#ffd9a0;font-weight:bold">🎉 в большом осталось ровно 4 л!</div>`+
+        sml('маленькому не хватало 1 л (3−2=1) — забрали из большого: 5 − 1 = 4. Готово!'));
+    } else if(step===10){
+      h=col(big('Секрет: откуда берётся остаток'),
+        rowC(chip('5 − 3 = 2 л','rgba(127,209,255,.5)'),chip('3 − 2 = 1 л','rgba(127,184,160,.5)'))+
+        sml('разница ёмкостей рождает остатки: 2 л, потом 1 л… и из них складывается 4 л!'));
+    } else if(step===11){
+      h=col(big('Большая кастрюля: отмеряем 7 л'),
+        rowC(chip('7 = 5 + 2','rgba(217,164,65,.5)'))+
+        `<div style="font-size:40px" class="wv-pop">🫕</div>`+
+        sml('наливаем в кастрюлю 5 л, а остаток 2 л (шаг 2!) доливаем туда же — в кастрюле 7 л'));
+    } else if(step===12){
+      h=col(big('Задача-проверка'),
+        rowC(chip('кувшины 3 л и 5 л — можно ли отмерить 4 л?','rgba(217,164,65,.35)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">Да! 6 шагов: 5→3, вылей, 2→3, набери 5, долей</div>`+
+        sml('как в нашей проверке: ответ «Да»'));
+    } else if(step===13){
+      h=col(big('Что можно отмерить кувшинами 3 и 5'),
+        rowC(chip('1 л: 5−3=2… и ещё раз','rgba(127,209,255,.4)'),chip('2 л: 5−3','rgba(127,184,160,.4)'),chip('3 л: наполнить','rgba(127,209,255,.4)'),chip('4 л: наш план','rgba(217,164,65,.4)'),chip('5 л: наполнить','rgba(127,184,160,.4)'))+
+        sml('почти любой объём до 8 л! Переливания — настоящий конструктор'));
+    } else if(step===14){
+      h=col(big('Где это в жизни'),
+        rowC(chip('старинные рынки без весов','rgba(127,209,255,.4)'),chip('рецепты: «ровно 150 мл»','rgba(127,209,255,.4)'),chip('заправка машины канистрами','rgba(127,209,255,.4)'),chip('олимпиадные задачи!','rgba(217,164,65,.4)'))+
+        sml('везде, где нужно отмерить точный объём без мерной шкалы'));
+    } else if(step===15){
+      h=col(big('Проверь: сможешь сам?'),
+        l7Demo(0,0,'s','chk')+
+        sml('дальше будет тренажёр-игра: отмерь 4 л сам, нажимая кнопки! Считай шаги — минимум 6'));
+    } else if(step===16){
+      if(st.a==null){st.a=0;st.b=0;st.n=0;st.win=0;}
+      const win=st.win;
+      h=col(big('🎮 Игра: отмерь ровно 4 л!'),
+        `<div style="display:flex;justify-content:center;align-items:flex-end;margin:2px auto">
+          ${l7Jug(3,st.a,'#5fa8d8','3 л','a')}${l7Jug(5,st.b,'#7fd1a0','5 л','b')}
+        </div>`+
+        (win===1? `<div class="wv-ans" style="font-size:22px;color:#7fd1a0;font-weight:bold">🎉 Верно! 4 л отмерены за ${st.n} шагов</div>`+sml('рекорд — 6 шагов. Попробуй ещё раз и побей его!') : win===2? `<div style="text-align:center;font-size:16px;color:#ff9a8a">пока нет 4 л ни в одном кувшине — продолжай! (шагов: ${st.n})</div>` : sml(`шагов сделано: ${st.n}. Цель — ровно 4 л в любом кувшине`))+
+        (win===1?'':btns(
+          btn('💧 налить 3 л',`l7Act('${lk}','fA')`),btn('💧 налить 5 л',`l7Act('${lk}','fB')`),
+          btn('🔄 3→5',`l7Act('${lk}','pAB')`),btn('🔄 5→3',`l7Act('${lk}','pBA')`),
+          btn('🚰 вылить 3',`l7Act('${lk}','eA')`),btn('🚰 вылить 5',`l7Act('${lk}','eB')`),
+          btn('✅ проверь',`l7Act('${lk}','chk')`),btn('↺ сброс',`l7Act('${lk}','r')`)
+        ))+
+        (win===1?btns(btn('↺ ещё раз',`l7Act('${lk}','r')`)):'')+
+        sml('подсказка: сначала набери 5 л, потом переливай — помни про остатки!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🫗 Переливай «до конца»: источник пуст или приёмник полон.<br>
+            🧮 Остаток = разность: 5−3 = 2, потом ещё раз → 1.<br>
+            🎯 4 л = 6 шагов: 5→3, вылей, 2→3, набери 5, долей.<br>
+            🫕 Кастрюля: 7 л = 5 л + остаток 2 л.</div>
+        </div>`+
+        btn('⟲ вернуться к игре', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там вопрос про 4 л'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -7997,6 +8145,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===7) visL7(el);
   else if(id===97) visL97(el);
   else if(id===107) visL107(el);
   else if(id===103) visL103(el);
