@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -12354,6 +12354,262 @@ function l34Dyn(F,m,place,w,maxF){
   </svg>`;
 }
 
+// ===================== УРОК 9 «ДЕЛИМОСТЬ: ПРИЗНАКИ» (v163) =====================
+function l9Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  if(a0==='n2'){ st.n2=(st.n2||0)+1; }            // шаг 2: новое число
+  if(a0==='sum'){ st.add=Math.min(4,(st.add||0)+1); } // шаг 5: складываем цифры по шагам
+  if(a0==='sum9'){ st.add9=Math.min(4,(st.add9||0)+1); } // шаг 7
+  if(a0==='t14'){                                     // шаг 14: тренажёр
+    const ok=[2,3,4,6,8,9];
+    if(!st.found) st.found=[];
+    if(st.found.indexOf(p)<0){
+      if(ok.indexOf(p)>=0){ st.found.push(p); st.bad=0; }
+      else { st.bad=p; }
+    } else { st.bad=0; }
+  }
+  if(a0==='n15'){ st.n15=(st.n15||0)+1; }          // шаг 15: следующее кратное
+  if(a0==='rst'){ CHS[lk]={}; }
+  chRender(0);
+}
+// цифровая лента 0..9 с подсветкой «хороших» последних цифр
+function l9Lane(good,label){
+  return `<div style="display:flex;justify-content:center;gap:3px;flex-wrap:wrap;max-width:330px;margin:2px auto">
+    ${[0,1,2,3,4,5,6,7,8,9].map(d=>`<span class="wv-pop" style="width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;background:${good.indexOf(d)>=0?'rgba(127,209,160,.25)':'rgba(255,255,255,.04)'};border:2px solid ${good.indexOf(d)>=0?'#7fd1a0':'#3d5c49'};color:${good.indexOf(d)>=0?'#7fd1a0':'#e8dcc8'}">${d}</span>`).join('')}
+  </div>
+  <div style="font-size:11px;color:#9ec0a8">${label}</div>`;
+}
+// «плитка числа»: цифры крупно с подписями разрядов
+function l9Digits(digs,hotIdx,uid){
+  const names=['единицы','десятки','сотни','тысячи','десятки тысяч','сотни тысяч'];
+  const arr=String(digs).split('').reverse();
+  return `<div style="display:flex;justify-content:center;gap:3px;flex-wrap:wrap;margin:2px auto">
+    ${arr.map((d,i)=>`<div class="wv-pop" style="text-align:center">
+      <div style="width:34px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;background:${hotIdx===i?'rgba(255,217,102,.3)':'linear-gradient(145deg,#2c4a3a,#1c3328)'};border:2px solid ${hotIdx===i?'#ffd966':'#3d5c49'};color:${hotIdx===i?'#ffd966':'#e8dcc8'};font-family:Georgia,serif">${d}</div>
+      <div style="font-size:7.5px;color:#9ec0a8;margin-top:2px">${names[i]}</div>
+    </div>`).join('')}
+  </div>`;
+}
+function visL9(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v9!==step) CHS[lk]={_v9:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const okx=(ok)=>`<span style="font-weight:bold;color:${ok?'#7fd1a0':'#ff9a8a'}">${ok?'✓ делится':'✗ не делится'}</span>`;
+    const sumDig=n=>String(n).split('').reduce((a,b)=>a+ +b,0);
+    let h='';
+    if(step===0){
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#7fd1a022;border:1px solid #7fd1a0;color:#7fd1a0;margin-bottom:2px">ВсОШ-СТИЛЬ · ДЕЛИМОСТЬ</span>`+
+        big('Признаки делимости — быстрые правила!')+
+        `<div style="font-size:40px" class="wv-flick">➗</div>`+
+        card('Чтобы узнать, делится ли число на <b>2, 3, 5, 9, 10</b>, не нужно делить в столбик! Есть <b style="color:#ffd966">признаки</b> — правила по цифрам числа. Проверим на числе <b>1236</b>:')+
+        l9Digits(1236)+
+        rowC(chip('на 2?','#7fd1a0'),chip('на 3?','#ffd966'),chip('на 5?','#7fb7d8'),chip('на 9?','#d9a0ff'))+
+        `<div style="font-size:13px;color:#9ec0a8">узнаем на этом уроке — и научимся проверять за секунды!</div>`+
+        sml('начнём с вопроса: что вообще значит «делится»?'));
+    } else if(step===1){
+      h=col(big('Что значит «делится на d»?')+
+        card('число <b>N делится на d</b> ⟺ <b>N = d × целое число</b> (без остатка).')+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:336px;width:100%">
+          ${[['12 : 3','12 = 3 × 4','делится ✓','#7fd1a0'],['14 : 3','14 = 3 × 4 + 2','остаток 2 — не делится ✗','#ff9a8a'],['15 : 5','15 = 5 × 3','делится ✓','#7fd1a0']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid ${x[2].includes('✓')?'#7fd1a044':'#ff9a8a44'};border-radius:9px;padding:5px 12px;max-width:336px;width:100%"><span style="font-size:15px;color:#e8dcc8;font-family:Georgia,serif">${x[0]}</span><span style="font-size:12px;color:#9ec0a8">${x[1]}</span><span style="font-size:12.5px;color:${x[2].includes('✓')?'#7fd1a0':'#ff9a8a'};font-weight:bold">${x[2]}</span></div>`).join('')}
+        </div>`+
+        sml('признаки помогут понять это БЕЗ деления — по одним цифрам!'));
+    } else if(step===2){
+      // признак на 2: чётность
+      const pool=[246,135,872,901,64,37];
+      const n=pool[(st.n2||0)%pool.length];
+      const last=n%10, even=last%2===0;
+      h=col(big('Признак на 2: последняя цифра чётная')+
+        l9Lane([0,2,4,6,8],'чётные цифры: 0, 2, 4, 6, 8')+
+        card('число делится на 2 ⟺ его <b>последняя цифра чётная</b> (0, 2, 4, 6, 8). Смотрим только на неё!')+
+        `<div style="background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap">${String(n).split('').map((d,i,arr)=>`<span style="width:30px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;font-family:Georgia,serif;background:${i===arr.length-1?(even?'rgba(127,209,160,.3)':'rgba(255,154,138,.3)'):'rgba(255,255,255,.05)'};border:2px solid ${i===arr.length-1?(even?'#7fd1a0':'#ff9a8a'):'#3d5c49'};color:#e8dcc8}">${d}</span>`).join('')}</div>
+          <div class="wv-ans" style="font-size:20px;color:${even?'#7fd1a0':'#ff9a8a'}">${n} — последняя цифра ${last} ${even?'чётная':'нечётная'} → ${okx(even)}</div>
+        </div>`+
+        btns(btn('🎲 другое число',`l9Act('${lk}','n2')`))+
+        sml('запомни: чётные = 0, 2, 4, 6, 8. Всё остальное — нечётное!'));
+    } else if(step===3){
+      // признак на 5
+      h=col(big('Признак на 5: кончается на 0 или 5')+
+        l9Lane([0,5],'подходят только 0 и 5!')+
+        card('число делится на 5 ⟺ последняя цифра <b>0</b> или <b>5</b>.')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['90','0 → делится ✓','#7fd1a0'],['135','5 → делится ✓','#7fd1a0'],['123','3 → не делится ✗','#ff9a8a']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:7px 9px;min-width:100px"><div style="font-size:24px;color:#ffd966;font-family:Georgia,serif">${x[0]}</div><div style="font-size:11px;color:${x[1].includes('✓')?'#7fd1a0':'#ff9a8a'};margin-top:2px">${x[1]}</div></div>`).join('')}
+        </div>`+
+        sml('0 и 5 — единственные «пятёрочные» цифры!'));
+    } else if(step===4){
+      // признак на 10
+      h=col(big('Признак на 10: кончается на 0')+
+        l9Lane([0],'только ноль!')+
+        card('число делится на 10 ⟺ <b>кончается на 0</b>. И заметь: 10 = 2 × 5 — значит число с 0 на конце делится и на 2, и на 5!')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['850','0 → на 10 ✓','#7fd1a0'],['850','на 2 ✓ и на 5 ✓','#7fb7d8'],['407','7 → не на 10 ✗','#ff9a8a']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:7px 9px;min-width:104px"><div style="font-size:22px;color:#ffd966;font-family:Georgia,serif">${x[0]}</div><div style="font-size:10.5px;color:${x[1].includes('✓')?'#7fd1a0':'#ff9a8a'};margin-top:2px">${x[1]}</div></div>`).join('')}
+        </div>`+
+        sml('число 850 = 85 × 10 — видно сразу!'));
+    } else if(step===5){
+      // признак на 3: сумма цифр
+      const ad=st.add||0;
+      const steps=[[1,2,3],[3,3,6],[6,6,12]];
+      const shown=ad===0?null:steps[Math.min(ad,3)-1];
+      h=col(big('Сюрприз: на 3 — сумма цифр!')+
+        l9Digits(1236)+
+        card('число делится на 3 ⟺ <b style="color:#ffd966">сумма его цифр делится на 3</b>. Проверим 1236:')+
+        (ad===0?`<div style="font-size:13.5px;color:#e8dcc8">нажимай — и сложим цифры по шагам!</div>`
+             :`<div style="display:flex;flex-direction:column;gap:3px;max-width:336px;width:100%">
+                ${steps.slice(0,Math.min(ad,3)).map((s,i)=>`<div class="wv-pop" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:4px 12px;max-width:336px;width:100%"><span style="font-size:14px;color:#e8dcc8;font-family:Georgia,serif">${s[0]} + ${s[1]} = ${s[2]}</span><span style="font-size:11px;color:#9ec0a8">шаг ${i+1}</span></div>`).join('')}
+              </div>`)+
+        (ad>=3?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0">сумма 12, а 12 делится на 3 → 1236 делится на 3! (1236 = 3 × 412)</div>`:'')+
+        btns(btn(ad===0?'➕ складываем цифры':ad>=3?'↺ сначала':'➕ ещё шаг',`l9Act('${lk}','sum')`),btn('↺ сброс',`l9Act('${lk}','rst')`))+
+        sml('вот это и есть «признак»: не делим, а складываем цифры!'));
+    } else if(step===6){
+      // почему: разложение по степеням 10
+      h=col(big('Почему так работает?')+
+        card('1236 = <b>1·1000</b> + <b>2·100</b> + <b>3·10</b> + <b>6</b>. А теперь фокус:')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['1·1000','= 1·(999+1)','999 делится на 3 → остаётся 1'],['2·100','= 2·(99+1)','99 делится на 3 → остаётся 2'],['3·10','= 3·(9+1)','9 делится на 3 → остаётся 3'],['6','= 6','остаётся 6']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#ffd966','#7fd1a0','#7fb7d8','#d9a0ff'][i]};border-radius:9px;padding:4px 12px;max-width:336px;width:100%"><span style="font-size:13.5px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:11.5px;color:#9ec0a8;text-align:right">${x[1]}<br>${x[2]}</span></div>`).join('')}
+        </div>`+
+        card('все «круглые» части (999, 99, 9) делятся на 3 — от них ничего не зависит! Остаются только <b>сами цифры</b>: 1 + 2 + 3 + 6.')+
+        sml('вот почему про 3 и 9 надо складывать цифры — «круглые» части всегда делятся!'));
+    } else if(step===7){
+      // признак на 9
+      const ad=st.add9||0;
+      const steps=[[7,2,9],[9,3,12],[12,6,18]];
+      h=col(big('Признак на 9: тот же секрет!')+
+        l9Digits(7236)+
+        card('999, 99, 9 делятся и на 9 → для девятки тоже работает <b style="color:#ffd966">сумма цифр</b>: 7236 делится на 9 ⟺ сумма 7+2+3+6 делится на 9.')+
+        (ad===0?`<div style="font-size:13.5px;color:#e8dcc8">сложим: 7+2+3+6 = ?</div>`
+             :`<div style="display:flex;flex-direction:column;gap:3px;max-width:336px;width:100%">
+                ${steps.slice(0,Math.min(ad,3)).map((s,i)=>`<div class="wv-pop" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:4px 12px;max-width:336px;width:100%"><span style="font-size:14px;color:#e8dcc8;font-family:Georgia,serif">${s[0]} + ${s[1]} = ${s[2]}</span><span style="font-size:11px;color:#9ec0a8">шаг ${i+1}</span></div>`).join('')}
+              </div>`)+
+        (ad>=3?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0">сумма 18, а 18 делится на 9 → 7236 делится на 9! (7236 = 9 × 804)</div>`:'')+
+        btns(btn(ad===0?'➕ складываем цифры':ad>=3?'↺ сначала':'➕ ещё шаг',`l9Act('${lk}','sum9')`),btn('↺ сброс',`l9Act('${lk}','rst')`))+
+        sml('одна и та же проверка для 3 и 9 — но делить сумму надо на своё число!'));
+    } else if(step===8){
+      // не путать 3 и 9: 2019
+      h=col(big('Не путай: на 3 и на 9 — разные вопросы!')+
+        l9Digits(2019)+
+        card('число <b>2019</b>: сумма цифр 2+0+1+9 = <b style="color:#ffd966">12</b>.')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['на 3?','12 делится на 3 → 2019 делится на 3 ✓','#7fd1a0'],['на 9?','12 НЕ делится на 9 → 2019 не делится на 9 ✗','#ff9a8a']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${i?'#ff9a8a66':'#7fd1a066'};border-radius:10px;padding:8px 9px;max-width:150px"><div style="font-size:15px;color:#ffd966;font-weight:bold">${x[0]}</div><div style="font-size:10.5px;color:${i?'#ff9a8a':'#7fd1a0'};margin-top:3px;line-height:1.4">${x[1]}</div></div>`).join('')}
+        </div>`+
+        rowC(chip('12 ⋮ 3 ✓','#7fd1a0'),chip('12 не ⋮ 9 ✗','#ff9a8a'))+
+        sml('2019 = 3 × 673, но на 9 не делится. Проверь в задачках!'));
+    } else if(step===9){
+      // признак на 6
+      h=col(big('Признак на 6: это 2 И 3 вместе')+
+        rowC(chip('6 = 2 × 3','#ffd966'))+
+        card('число делится на 6 ⟺ оно <b>чётное</b> (на 2 ✓) <b>и</b> <b style="color:#ffd966">сумма цифр делится на 3</b> (на 3 ✓). Обе проверки — и готово!')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['7236 — чётное?','последняя цифра 6 → на 2 ✓','#7fd1a0'],['7236 — сумма цифр?','7+2+3+6 = 18, 18 ⋮ 3 → на 3 ✓','#7fd1a0'],['вывод','делится и на 2, и на 3 → делится на 6 ✓','#ffd966']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:5px 12px;max-width:336px;width:100%"><span style="font-size:13px;color:#e8dcc8">${x[0]}</span><span style="font-size:12px;color:${i===2?'#ffd966':'#7fd1a0'};font-weight:bold;text-align:right">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">7236 = 6 × 1206 — делится!</div>`+
+        sml('запомни: делимость на 6 = делимость на 2 И на 3 одновременно!'));
+    } else if(step===10){
+      // признак на 4
+      h=col(big('Признак на 4: последние ДВЕ цифры')+
+        card('почему так? Потому что <b style="color:#ffd966">100 делится на 4</b> (100 = 4 × 25)! Всё, что до последних двух цифр — сотни и больше — кратно 100 и делится на 4 само собой.')+
+        l9Digits(7236,null)+
+        `<div style="background:rgba(127,183,216,.07);border:1px solid #7fb7d844;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:13.5px;color:#e8dcc8">смотрим на число из последних двух цифр: <b style="color:#7fb7d8;font-size:20px">36</b></div>
+          <div style="font-size:13.5px;color:#e8dcc8">36 = 4 × 9 → 36 делится на 4</div>
+          <div class="wv-ans" style="font-size:20px;color:#7fd1a0">7236 делится на 4 ✓ (7236 = 4 × 1809)</div>
+        </div>`+
+        sml('для проверки на 4 делим в уме только две последние цифры!'));
+    } else if(step===11){
+      // признак на 8
+      h=col(big('Признак на 8: последние ТРИ цифры')+
+        card('аналогично: <b style="color:#ffd966">1000 делится на 8</b> (1000 = 8 × 125) → смотрим на последние три цифры.')+
+        l9Digits(7236,null)+
+        `<div style="background:rgba(217,160,255,.07);border:1px solid #d9a0ff44;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:13.5px;color:#e8dcc8">последние три цифры: <b style="color:#d9a0ff;font-size:20px">236</b></div>
+          <div style="font-size:13.5px;color:#e8dcc8">8 × 29 = 232, а 236 = 232 + 4 → остаток 4!</div>
+          <div class="wv-ans" style="font-size:20px;color:#ff9a8a">236 не делится на 8 → 7236 не делится на 8 ✗</div>
+        </div>`+
+        sml('заметь: 7236 делится на 4, но не на 8 — признаки разные!'));
+    } else if(step===12){
+      // памятка всех признаков
+      h=col(big('Памятка: все признаки сразу')+
+        `<div style="display:flex;justify-content:center;gap:5px;flex-wrap:wrap">
+          ${[['на 2','последняя цифра чётная','#7fd1a0'],['на 3','сумма цифр ⋮ 3','#ffd966'],['на 4','2 последние ⋮ 4','#7fb7d8'],['на 5','0 или 5 в конце','#d9a0ff'],['на 6','на 2 И на 3','#ff9a8a'],['на 8','3 последние ⋮ 8','#8fd0f0'],['на 9','сумма цифр ⋮ 9','#f0c75e'],['на 10','кончается на 0','#9ae6b4']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.07}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[2]}66;border-radius:10px;padding:6px 8px;min-width:88px"><div style="font-size:14px;color:${x[2]};font-weight:bold">${x[0]}</div><div style="font-size:9.5px;color:#cbb89a;margin-top:2px;line-height:1.35">${x[1]}</div></div>`).join('')}
+        </div>`+
+        sml('красивая таблица! Но не зубри — пойми, почему каждая строка работает!'));
+    } else if(step===13){
+      // хитрость: отбрасывай девятки
+      h=col(big('Хитрость: отбрасывай «девятки»!')+
+        card('складывая цифры для проверки на 3 или 9, можно сразу <b style="color:#ffd966">вычёркивать</b> цифры 9 и пары, дающие в сумме 9 — они не меняют остаток!')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['7 + 2 + 3 + 6','7+2 = 9 → вычёркиваем!'],['осталось 3 + 6','3+6 = 9 → вычёркиваем!'],['осталось ничего','сумма ≡ 0 → делится и на 3, и на 9!']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.15}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#ffd966','#7fd1a0','#d9a0ff'][i]};border-radius:9px;padding:5px 12px;max-width:336px;width:100%"><span style="font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:12px;color:#e8dcc8;text-align:right">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:19px;color:#7fd1a0">7236 делится на 9 — и мы почти ничего не считали!</div>`+
+        sml('быстрый устный счёт для олимпиад!'));
+    } else if(step===14){
+      // тренажёр: 36288 — на что делится?
+      const N=36288, sum=sumDig(N);
+      const divs=[2,3,4,5,6,8,9,10];
+      const okD=[2,3,4,6,8,9];
+      const found=st.found||[];
+      const bad=st.bad||0;
+      h=col(big('Тренажёр: 36 288 — на что делится?')+
+        l9Digits(N)+
+        card('примени все признаки! Сумма цифр 3+6+2+8+8 = <b style="color:#ffd966">27</b> — она пригодится. Нажимай делители:')+
+        `<div style="display:flex;justify-content:center;gap:5px;flex-wrap:wrap">
+          ${divs.map(d=>{ const isOk=okD.indexOf(d)>=0; const done=found.indexOf(d)>=0;
+            return `<button class="hint-btn" style="${done?'background:#7fd1a0;color:#0d1a13;border-color:#7fd1a0':''};padding:7px 10px;font-size:14px" onclick="l9Act('${lk}','t14:${d}')">на ${d}${done?' ✓':''}</button>`;}).join('')}
+        </div>`+
+        (bad?`<div style="font-size:15px;color:#ff9a8a">на ${bad} НЕ делится (${N} : ${bad} — с остатком) ✗</div>`:'')+
+        (found.length===6?`<div class="wv-ans" style="font-size:20px;color:#7fd1a0;font-weight:bold">🎉 Все 6 делителей найдены: 2, 3, 4, 6, 8, 9!</div>`
+             :`<div style="font-size:12.5px;color:#9ec0a8">найдено: ${found.length} из 6 · подсказка: 88 ⋮ 4, 288 = 8 × 36</div>`)+
+        btns(btn('↺ сброс',`l9Act('${lk}','rst')`))+
+        sml('подсказка: 5 и 10 — мимо (последняя цифра 8). Проверь все остальные!'));
+    } else if(step===15){
+      // сколько от 1 до 100 делятся на 6?
+      h=col(big('Считаем: сколько чисел до 100 делятся на 6?')+
+        card('числа, делящиеся на 6, — это <b>6 × 1, 6 × 2, 6 × 3, …</b> Найдём самое большое такое число, не большее 100:')+
+        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;max-width:336px">
+          ${[6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96].map((x,i)=>`<span class="wv-pop" style="animation-delay:${i*0.05}s;width:40px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#e8dcc8;background:rgba(255,217,102,.12);border:1px solid #ffd96655;font-family:Georgia,serif">${x}</span>`).join('')}
+        </div>`+
+        rowC(chip('96 = 6 × 16','#ffd966'),chip('значит кратных: 16','#7fd1a0'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">16 чисел от 1 до 100 делятся на 6!</div>`+
+        sml('как в задачках: посчитай кратные — 6, 12, …, 96 — их ровно 16!'));
+    } else if(step===16){
+      // задача-проверка: 7236 на 3
+      h=col(big('Задача-проверка: 7236 делится на 3?')+
+        l9Digits(7236)+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['сложим цифры','7 + 2 + 3 + 6 = 18'],['18 делится на 3?','18 = 3 × 6 → да!'],['вывод','7236 делится на 3 (7236 = 3 × 2412)']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#ffd966','#7fd1a0','#7fd1a0'][i]};border-radius:9px;padding:5px 12px;max-width:336px;width:100%"><span style="font-size:13.5px;color:#e8dcc8">${x[0]}</span><span style="font-size:13px;color:${i?'#7fd1a0':'#ffd966'};font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">Ответ: ДА — 7236 делится на 3!</div>`+
+        sml('именно это спросят в проверке — смело отвечай!'));
+    } else {
+      h=col(`<div style="font-size:48px">➗</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:250px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            🟢 2, 5, 10 — смотри последнюю цифру.<br>
+            🔵 4 — две последние, 8 — три последние.<br>
+            🟡 3 и 9 — складывай все цифры.<br>
+            🔴 6 = на 2 И на 3.<br>
+            ⚡ Отбрасывай «девятки» — считай быстро!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там вопрос про 7236'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function visL10(el){
   // Урок 10 «Средняя скорость»: полный пошаговый разбор с анимацией
   try{
@@ -12833,6 +13089,7 @@ function renderLessonVis(){
   else if(id===195) visL195(el);
   else if(id===20) visL20(el);
   else if(id===8) visL8(el);
+  else if(id===9) visL9(el);
   else if(id===90) visL90(el);
   else if(id===7) visL7(el);
   else if(id===97) visL97(el);
