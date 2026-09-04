@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -5250,6 +5250,170 @@ function visL104(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+function l106Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['w','0.2'],['w','0.5'],['w','1'],['w','0.3'],['w','0.4'],['w','0.8'],['k','0.5'],['k','1'],['k','0.2'],['k','0.3'],['o','0.5'],['o','1']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l106Dunk(V,rho,uid,label){
+  // динамометр держит тело; часть погружена в воду; стрелка показывает FАрх
+  const F=rho*10*V;
+  const H=160;
+  const waterTop=95; // верх воды в сосуде
+  const bodyH=Math.min(46,24+V*60);
+  return `<div style="display:flex;justify-content:center;gap:4px;margin:2px auto">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div style="font-size:10px;color:#cbb89a">динамометр</div>
+      <div style="width:4px;height:16px;background:#8a6a2f;border-radius:2px"></div>
+      <div style="position:relative;width:34px;height:${H-30}px;background:#20352a;border:2px solid #d9a441;border-radius:4px;overflow:hidden">
+        <div style="position:absolute;left:0;right:0;top:0;bottom:0;background:repeating-linear-gradient(180deg,transparent 0 12px,rgba(217,164,65,.4) 12px 13px)"></div>
+        <div style="position:absolute;left:2px;right:2px;top:${H-58}px;height:0;background:#7fd1a0;transition:top .5s ease"></div>
+        <div style="position:absolute;left:0;right:0;top:${H-70}px;text-align:center;font-size:10px;color:#7fd1a0">${F} Н</div>
+      </div>
+      <div style="font-size:9px;color:#cbb89a">F Арх</div>
+    </div>
+    <div style="position:relative;width:120px;height:${H}px;margin-top:34px;border:3px solid #33291e;border-radius:0 0 12px 12px;background:linear-gradient(180deg,#cfe8fb 0%,#6aa8dc ${waterTop}%,#4a7fae ${waterTop}%);overflow:hidden">
+      <div style="position:absolute;left:0;right:0;top:${waterTop}px;height:2px;background:rgba(255,255,255,.7)"></div>
+      <div style="position:absolute;left:50%;top:${waterTop-8-bodyH}px;transform:translateX(-50%);width:44px;height:${bodyH}px;border-radius:5px;background:linear-gradient(145deg,#e0a05a,#a86a2a);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:bold">${label||('V='+V)}</div>
+      ${Array(Math.round(V*18)).fill(0).map((_,i)=>`<div style="position:absolute;left:${10+Math.random()*80}px;top:${waterTop-6-i*7}px;font-size:8px;color:#eaf3f8">${['●','○'][i%2]}</div>`).join('')}
+    </div>
+  </div>`;
+}
+function l106Sink(rho,uid){
+  // тонет/плавает по плотности тела (вода ρ=1000)
+  const floats=rho<1000;
+  return `<div style="position:relative;width:150px;height:110px;border:3px solid #33291e;border-radius:6px 6px 14px 14px;background:linear-gradient(180deg,#cfe8fb,#7db2e0 70%);margin:2px auto;overflow:hidden">
+    <div style="position:absolute;left:0;right:0;top:36px;height:2px;background:rgba(255,255,255,.6)"></div>
+    <div class="wv-in" style="position:absolute;left:50%;top:${floats?14:64}px;transform:translate(-50%,0);transition:top 1s ease">
+      <div style="width:46px;height:30px;border-radius:6px;background:${floats?'linear-gradient(145deg,#cfe0c0,#9ac08a)':'linear-gradient(145deg,#8fa6b8,#5c7486)'};border:2px solid ${floats?'#6a8a5a':'#3c4d5a'};display:flex;align-items:center;justify-content:center;font-size:12px;color:#17324a;font-weight:bold">${rho}</div>
+    </div>
+    ${floats?'<div style="position:absolute;left:50%;top:66px;transform:translateX(-50%);font-size:11px;color:#1a4a6a">всплывает!</div>':'<div style="position:absolute;left:50%;top:88px;transform:translateX(-50%);font-size:11px;color:#1a4a6a">тонет!</div>'}
+  </div>`;
+}
+function visL106(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Почему корабль не тонет?'),
+        `<div style="font-size:44px" class="wv-swing">⛵</div>`+
+        sml('железо тонет, а железный корабль плавает! Вода что-то выталкивает. Это открыл Архимед — и закричал «Эврика!»'));
+    } else if(step===1){
+      h=col(big('Опыт: тело в воде становится легче'),
+        rowC(chip('подними ведро из колодца — в воде оно легче!','rgba(127,209,255,.5)'))+
+        sml('вода выталкивает погружённое тело вверх — это сила Архимеда'));
+    } else if(step===2){
+      h=col(big('Сила Архимеда'),
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-family:Georgia,serif">F = ρ<sub>ж</sub> · g · V</div>`+
+        rowC(chip('ρ — плотность жидкости','rgba(127,209,255,.5)'),chip('g ≈ 10 Н/кг','rgba(232,160,90,.5)'),chip('V — объём погружённой части','rgba(127,184,160,.5)'))+
+        sml('выталкивает тем сильнее, чем плотнее жидкость и больше объём тела'));
+    } else if(step===3){
+      h=col(big('Вода: ρ = 1000, g = 10'),
+        rowC(chip('V = 0,2 м³','rgba(232,160,90,.5)'),chip('F = 1000 · 10 · 0,2','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 2000 Н</div>`+
+        sml('1000·10 = 10000, ·0,2 = 2000 Н'));
+    } else if(step===4){
+      h=col(big('Задача-проверка'),
+        l106Dunk(0.2,1000,'a','V=0.2')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 1000·10·0,2 = 2000 Н</div>`+
+        sml('как в проверке!'));
+    } else if(step===5){
+      h=col(big('Задача 1: V = 0,5 м³'),
+        l106Dunk(0.5,1000,'b','V=0.5')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 1000·10·0,5 = 5000 Н</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===6){
+      h=col(big('Другая жидкость: керосин'),
+        l106Dunk(0.5,800,'c','керосин')+
+        rowC(chip('керосин ρ = 800','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 800·10·0,5 = 4000 Н</div>`+
+        sml('как в наших задачках: менее плотная жидкость слабее выталкивает!'));
+    } else if(step===7){
+      h=col(big('Сравни: вода vs керосин'),
+        rowC(chip('V = 0,5: вода → 5000 Н','rgba(127,209,255,.5)'),chip('V = 0,5: керосин → 4000 Н','rgba(232,160,90,.5)'))+
+        sml('тот же объём, но керосин легче — и выталкивает меньше!'));
+    } else if(step===8){
+      h=col(big('Почему в солёном море легче плавать'),
+        rowC(chip('морская вода ρ ≈ 1030','rgba(127,209,255,.5)'),chip('пресная ρ = 1000','rgba(127,184,160,.5)'))+
+        sml('плотнее вода — сильнее выталкивает. В Мёртвом море можно лежать на воде и читать газету!'));
+    } else if(step===9){
+      h=col(big('Тонет или всплывает?'),
+        l106Sink(800,'d')+
+        l106Sink(1200,'e')+
+        sml('плотность тела меньше воды (800 < 1000) — всплывает. Больше (1200) — тонет!'));
+    } else if(step===10){
+      h=col(big('Правило плавания'),
+        rowC(chip('ρ тела &lt; ρ жидкости → всплывает','rgba(127,184,160,.5)'),chip('ρ тела &gt; ρ жидкости → тонет','rgba(232,160,90,.5)'),chip('равны → парит внутри','rgba(127,209,255,.5)'))+
+        sml('сравниваем плотности! Лёд (900) плавает в воде (1000), а в керосине (800) — тонет'));
+    } else if(step===11){
+      h=col(big('Секрет корабля'),
+        rowC(chip('сталь ρ ≈ 7800','rgba(232,160,90,.5)'),chip('но внутри воздух!','rgba(127,209,255,.5)'),chip('средняя плотность &lt; 1000','rgba(127,184,160,.5)'))+
+        `<div style="font-size:40px" class="wv-pop">🚢</div>`+
+        sml('корабль вытесняет огромный объём воды — сила Архимеда огромна и держит его на плаву!'));
+    } else if(step===12){
+      h=col(big('Откуда Архимед узнал?'),
+        rowC(chip('корона царя: золото или подделка?','rgba(127,209,255,.5)'),chip('объём тела = объём вытесненной воды','rgba(127,184,160,.5)'))+
+        sml('легенда: Архимед прыгнул в ванну, вода выплеснулась — и он понял, как измерить объём короны!'));
+    } else if(step===13){
+      h=col(big('Аэростаты — Архимед в воздухе'),
+        rowC(chip('воздух тоже выталкивает!','rgba(127,209,255,.5)'),chip('F = ρ воздуха · g · V','rgba(232,160,90,.5)'))+
+        sml('шар с лёгким газом легче воздуха — Архимедова сила поднимает его в небо!'));
+    } else if(step===14){
+      h=col(big('Порядок действий'),
+        rowC(chip('1) ρ жидкости','rgba(127,209,255,.5)'),chip('2) ·10','rgba(232,160,90,.5)'),chip('3) ·V','rgba(127,184,160,.5)'))+
+        sml('умножай по очереди: плотность, потом 10, потом объём'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('V=0,1 м³ в воде → 1000 Н','rgba(127,184,160,.5)'),chip('V=1 м³ в воде → 10000 Н','rgba(127,184,160,.5)'),chip('V=1 м³ в керосине → 8000 Н','rgba(127,184,160,.5)'))+
+        sml('для воды: объём × 10000!'));
+    } else if(step===16){
+      const POOL=[['w','0.2'],['w','0.5'],['w','1'],['w','0.3'],['w','0.4'],['w','0.8'],['k','0.5'],['k','1'],['k','0.2'],['k','0.3'],['o','0.5'],['o','1']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0], V=+e[1];
+      let rhoL, liq;
+      if(kind==='w'){rhoL=1000;liq='вода';}
+      else if(kind==='k'){rhoL=800;liq='керосин';}
+      else {rhoL=900;liq='масло';}
+      const ans=rhoL*10*V;
+      const desc='тело объёмом '+V+' м³ погружено в '+liq+' (ρ='+rhoL+') → сила Архимеда?';
+      h=col(big('⛵ Тренажёр: сила Архимеда'),
+        `<div class="wv-row">${chip(desc+' (в Н)','rgba(217,164,65,.35)')}</div>`+
+        l106Dunk(V,rhoL,'t',liq)+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) F = ρ·g·V = ${rhoL}·10·${V}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans} Н</div>`:'')+
+        btns(btn('1️⃣ подумай',`l106Act('${lk}','s1')`),btn('2️⃣ ответ',`l106Act('${lk}','s2')`),btn('🎲 другая',`l106Act('${lk}','n')`),btn('↺',`l106Act('${lk}','r')`))+
+        sml('F = ρ·g·V: плотность жидкости, 10 и объём!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            ⛵ F = ρ<sub>ж</sub>·g·V — выталкивает вода.<br>
+            💧 Вода 1000: V=0,2 → F=2000 Н.<br>
+            🚢 ρ тела &lt; ρ воды — всплывает.<br>
+            🎈 И воздух выталкивает — аэростаты!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там V=0,2 м³ в воде'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function l18Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const POOL=[['sq','7'],['sq','12'],['sq','15'],['cb','2'],['cb','3'],['cb','5'],['back','81'],['back','144'],['back','125'],['back','64'],['cnt','sq'],['cnt','cb']];
@@ -9841,6 +10005,7 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
   if(id===1) visDigits(el);
+  else if(id===106) visL106(el);
   else if(id===104) visL104(el);
   else if(id===51) visL51(el);
   else if(id===105) visL105(el);
