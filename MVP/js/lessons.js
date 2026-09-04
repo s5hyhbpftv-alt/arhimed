@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -4770,6 +4770,169 @@ function visL19(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 989'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l105Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['I','15','5'],['I','12','6'],['I','20','4'],['I','30','10'],['I','24','8'],['I','40','5'],['R','20','4'],['R','30','5'],['R','36','6'],['R','45','9'],['U','3','7'],['U','4','5'],['U','5','8'],['U','6','4'],['U','2','9'],['U','3','12']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l105Circuit(U,R,I,uid){
+  // схема: батарея U, резистор R, амперметр показывает I
+  const W=210,H=64;
+  const bright=Math.min(1,U/15);
+  return `<div style="margin:3px auto;position:relative;width:${W}px">
+    <svg width="${W}" height="${H}" style="display:block">
+      <rect x="4" y="6" width="30" height="30" rx="4" fill="#e8b03c" stroke="#8a6a10" stroke-width="1.5"/>
+      <text x="19" y="27" fill="#3a2a05" font-size="13" text-anchor="middle" font-weight="bold">🔋</text>
+      <text x="19" y="48" fill="#cbb89a" font-size="9" text-anchor="middle">${U} В</text>
+      <line x1="34" y1="21" x2="78" y2="21" stroke="#e8dcc8" stroke-width="2"/>
+      <rect x="78" y="9" width="44" height="24" rx="4" fill="#5a4632" stroke="#d9a441" stroke-width="1.5"/>
+      <text x="100" y="25" fill="#ffd9a0" font-size="10" text-anchor="middle">R ${R} Ом</text>
+      <line x1="122" y1="21" x2="166" y2="21" stroke="#e8dcc8" stroke-width="2"/>
+      <circle cx="178" cy="21" r="14" fill="#13251c" stroke="#d9a441" stroke-width="1.5"/>
+      <text x="178" y="24" fill="#7fd1a0" font-size="9" text-anchor="middle">A</text>
+      <line x1="192" y1="21" x2="206" y2="21" stroke="#e8dcc8" stroke-width="2"/>
+      <circle cx="206" cy="6" r="3" fill="none" stroke="#e8dcc8" stroke-width="1.5"/>
+      <line x1="178" y1="35" x2="178" y2="50" stroke="#e8dcc8" stroke-width="2"/>
+      <line x1="19" y1="36" x2="19" y2="50" stroke="#e8dcc8" stroke-width="2"/>
+      <line x1="19" y1="50" x2="178" y2="50" stroke="#e8dcc8" stroke-width="2"/>
+    </svg>
+    <div class="wv-ans" style="font-size:20px;color:#7fd1a0;font-weight:bold;text-align:center">I = ${I} А</div>
+  </div>`;
+}
+function visL105(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Почему лампочка светит по-разному?'),
+        `<div style="font-size:44px" class="wv-flick">💡</div>`+
+        sml('одна батарейка — тусклый свет, две — ярче. А длинный тонкий провод — слабее. Что управляет током?'));
+    } else if(step===1){
+      h=col(big('Три главных величины'),
+        rowC(chip('I — сила тока (А)','rgba(127,209,255,.5)'),chip('U — напряжение (В)','rgba(232,160,90,.5)'),chip('R — сопротивление (Ом)','rgba(127,184,160,.5)'))+
+        sml('ток «течёт» как вода, напряжение — «напор», сопротивление — «узкая труба»'));
+    } else if(step===2){
+      h=col(big('Вода и электричество'),
+        rowC(chip('напор больше → воды больше','rgba(127,209,255,.5)'),chip('труба уже → воды меньше','rgba(232,160,90,.5)'))+
+        sml('больше напряжение → больше ток. Больше сопротивление → меньше ток. Точную связь нашёл Ом!'));
+    } else if(step===3){
+      h=col(big('Закон Ома'),
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-family:Georgia,serif">I = U : R</div>`+
+        sml('сила тока = напряжение делить на сопротивление. Как в нашей проверке!'));
+    } else if(step===4){
+      h=col(big('Считаем ток'),
+        l105Circuit(12,6,2,'a')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">I = 12 : 6 = 2 А</div>`+
+        sml('12 В и 6 Ом → ток 2 ампера. Делим напряжение на сопротивление!'));
+    } else if(step===5){
+      h=col(big('Задача-проверка'),
+        l105Circuit(15,5,3,'b')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">I = 15 : 5 = 3 А</div>`+
+        sml('как в проверке: 15 В, 5 Ом → 3 А!'));
+    } else if(step===6){
+      h=col(big('Магический треугольник'),
+        `<div style="text-align:center;font-size:16px;color:#e8dcc8" class="wv-pop">
+          <div style="display:inline-block;padding:4px 16px;border:2px solid rgba(217,164,65,.5);border-radius:10px;background:rgba(217,164,65,.06)">▲<br>U<br><span style="color:#7fd1a0">I</span> · <span style="color:#8fa6b8">R</span></div>
+        </div>`+
+        sml('напряжение наверху: U = I·R, I = U:R, R = U:I. Закрываешь неизвестное пальцем!'));
+    } else if(step===7){
+      h=col(big('Задача 1: ищем сопротивление'),
+        l105Circuit(20,5,4,'c')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">R = U : I = 20 : 4 = 5 Ом</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===8){
+      h=col(big('Задача 2: ищем напряжение'),
+        rowC(chip('I = 3 А','rgba(127,209,255,.5)'),chip('R = 7 Ом','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">U = I · R = 3 · 7 = 21 В</div>`+
+        sml('тоже как в задачках: умножаем ток на сопротивление!'));
+    } else if(step===9){
+      h=col(big('Напряжение больше — ток больше'),
+        l105Circuit(6,6,1,'d')+
+        l105Circuit(12,6,2,'e')+
+        sml('сопротивление то же (6 Ом), а напряжение выросло вдвое — ток тоже вдвое: 1 А → 2 А'));
+    } else if(step===10){
+      h=col(big('Сопротивление больше — ток меньше'),
+        l105Circuit(12,6,2,'f')+
+        l105Circuit(12,12,1,'g')+
+        sml('напряжение то же (12 В), сопротивление выросло вдвое — ток упал вдвое: 2 А → 1 А'));
+    } else if(step===11){
+      h=col(big('Прямая и обратная зависимость'),
+        rowC(chip('I растёт с U (прямо)','rgba(127,209,255,.5)'),chip('I падает с R (обратно)','rgba(232,160,90,.5)'))+
+        sml('удвоили напряжение — ток удвоился. Удвоили сопротивление — ток уменьшился вдвое'));
+    } else if(step===12){
+      h=col(big('Что такое 1 Ом'),
+        rowC(chip('1 Ом — сопротивление, при котором','rgba(127,209,255,.5)'),chip('1 В даёт ток 1 А','rgba(127,184,160,.5)'))+
+        sml('единица названа в честь Георга Ома — того самого учёного!'));
+    } else if(step===13){
+      h=col(big('От чего зависит сопротивление'),
+        rowC(chip('длиннее провод — больше R','rgba(127,209,255,.5)'),chip('тоньше — больше R','rgba(232,160,90,.5)'),chip('материал (медь vs никель)','rgba(127,184,160,.5)'))+
+        sml('поэтому длинные тонкие провода «душат» ток — как узкая труба воду'));
+    } else if(step===14){
+      h=col(big('Реостат — меняем R'),
+        rowC(chip('движок ползунка','rgba(127,209,255,.5)'),chip('меняет длину провода','rgba(232,160,90,.5)'),chip('меняется яркость лампы','rgba(127,184,160,.5)'))+
+        sml('так работает выключатель света с плавной регулировкой!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('10 В, 5 Ом → I = 2 А','rgba(127,184,160,.5)'),chip('20 В, 4 А → R = 5 Ом','rgba(127,184,160,.5)'),chip('2 А, 8 Ом → U = 16 В','rgba(127,184,160,.5)'))+
+        sml('треугольник U-I-R решает всё!'));
+    } else if(step===16){
+      const POOL=[['I','15','5'],['I','12','6'],['I','20','4'],['I','30','10'],['I','24','8'],['I','40','5'],['R','20','4'],['R','30','5'],['R','36','6'],['R','45','9'],['U','3','7'],['U','4','5'],['U','5','8'],['U','6','4'],['U','2','9'],['U','3','12']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0];
+      let desc, firstStep, ans, vis='';
+      if(kind==='I'){
+        const U=+e[1], R=+e[2];
+        desc='напряжение '+U+' В, сопротивление '+R+' Ом → сила тока?';
+        firstStep='I = U : R = '+U+' : '+R;
+        ans=U/R; vis=l105Circuit(U,R,U/R,'t');
+      } else if(kind==='R'){
+        const U=+e[1], I=+e[2];
+        desc='напряжение '+U+' В, ток '+I+' А → сопротивление?';
+        firstStep='R = U : I = '+U+' : '+I;
+        ans=U/I; vis=l105Circuit(U,ans,I,'t2');
+      } else {
+        const I=+e[1], R=+e[2];
+        desc='ток '+I+' А, сопротивление '+R+' Ом → напряжение?';
+        firstStep='U = I · R = '+I+' · '+R;
+        ans=I*R; vis=l105Circuit(ans,R,I,'t3');
+      }
+      h=col(big('🔋 Тренажёр: закон Ома'),
+        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
+        vis+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l105Act('${lk}','s1')`),btn('2️⃣ ответ',`l105Act('${lk}','s2')`),btn('🎲 другой',`l105Act('${lk}','n')`),btn('↺',`l105Act('${lk}','r')`))+
+        sml('треугольник: U наверху, I·R внизу!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🔋 I = U : R (закон Ома).<br>
+            🔺 U наверху: U = I·R, R = U:I.<br>
+            📈 U вдвое → I вдвое; R вдвое → I вдвое меньше.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 15 В и 5 Ом'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -9366,6 +9529,7 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
   if(id===1) visDigits(el);
+  else if(id===105) visL105(el);
   else if(id===19) visL19(el);
   else if(id===2) visL2(el);
   else if(id===3) visSnail(el);
