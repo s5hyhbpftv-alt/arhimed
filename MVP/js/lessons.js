@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -6460,6 +6460,204 @@ function visL99(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+function l87Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['t','35','45'],['t','40','60'],['t','50','70'],['t','20','130'],['t','25','65'],['t','80','60'],['rt','30'],['rt','45'],['rt','55'],['iso','40'],['iso','30'],['iso','50']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l87Tri(a,b,c,uid){
+  // треугольник с углами a,b,c градусов + дуги-углы
+  const W=210,H=120;
+  // вершины: A слева внизу, B справа внизу, C сверху
+  const A=[30,H-14], B=[W-24,H-14];
+  // находим C: из A под углом a, из B под углом 180-b
+  const radA=a*Math.PI/180, radB=b*Math.PI/180;
+  // направление из A: вверх-вправо (угол a от горизонтали)
+  const dx1=Math.cos(radA), dy1=-Math.sin(radA);
+  const dx2=-Math.cos(radB), dy2=-Math.sin(radB);
+  const t=((B[0]-A[0])*dy2-(B[1]-A[1])*dx2)/(dx1*dy2-dy1*dx2);
+  const C=[A[0]+dx1*t, A[1]+dy1*t];
+  const colA='#ffd9a0', colB='#7fd1a0', colC='#e8b3c8';
+  function arc(px,py,startDeg,endDeg,r,color){
+    const s=startDeg*Math.PI/180, e=endDeg*Math.PI/180;
+    const large=(endDeg-startDeg)>180?1:0;
+    const x0=px+r*Math.cos(s), y0=py+r*Math.sin(s);
+    const x1=px+r*Math.cos(e), y1=py+r*Math.sin(e);
+    return `<path d="M${px} ${py} L${x0.toFixed(1)} ${y0.toFixed(1)} A${r} ${r} 0 ${large} 1 ${x1.toFixed(1)} ${y1.toFixed(1)} Z" fill="${color}" opacity=".85" stroke="#1a120a" stroke-width="0.6"/>`;
+  }
+  const r=26;
+  // углы в вершинах: в A — между горизонталью вправо и лучом AC: a; в B — между BA(влево) и BC
+  const angA0=0, angA1=a; // дуга от горизонтали вправо к AC
+  const angB0=180-b, angB1=180; // от направления на A (180) к горизонтали влево
+  // для C: посчитаем направление CA и CB
+  const dirCA=Math.atan2(A[1]-C[1],A[0]-C[0])*180/Math.PI;
+  const dirCB=Math.atan2(B[1]-C[1],B[0]-C[0])*180/Math.PI;
+  let angC0=Math.min(dirCA,dirCB), angC1=Math.max(dirCA,dirCB);
+  const midA=(angA0+angA1)/2, midB=(angB0+angB1)/2, midC=(angC0+angC1)/2;
+  const labels=[[A,'A',a,colA],[B,'B',b,colB],[C,'C',c,colC]];
+  return `<svg width="${W}" height="${H}" style="display:block;margin:2px auto">
+    <polygon points="${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0].toFixed(1)},${C[1].toFixed(1)}" fill="rgba(127,209,255,.08)" stroke="#d8ecff" stroke-width="2"/>
+    ${arc(A[0],A[1],angA0,angA1,r,colA)}
+    ${arc(B[0],B[1],angB0,angB1,r,colB)}
+    ${arc(C[0],C[1],angC0,angC1,r,colC)}
+    <text x="${A[0]-8}" y="${A[1]+4}" fill="#ffd9a0" font-size="12" font-weight="bold">${a}°</text>
+    <text x="${B[0]+10}" y="${B[1]+4}" fill="#7fd1a0" font-size="12" font-weight="bold">${b}°</text>
+    <text x="${C[0]-10}" y="${C[1]-6}" fill="#e8b3c8" font-size="12" font-weight="bold">${c}°</text>
+  </svg>`;
+}
+function l87Line(a,b,c,uid){
+  // три угла «сложены» в развёрнутый угол 180° на прямой
+  const W=224,H=52, total=a+b+c;
+  const segs=[[a,'#ffd9a0'],[b,'#7fd1a0'],[c,'#e8b3c8']];
+  let acc=0, html='';
+  segs.forEach(sg=>{
+    const frac=sg[0]/180;
+    html+=`<path d="M0 0 L0 ${H} L${(W*frac).toFixed(1)} ${H} A${W*frac/2} ${H} 0 0 ${acc+sg[0]/2>90?1:0} ${(W*frac).toFixed(1)} 0 Z" fill="${sg[1]}" opacity=".85" transform="translate(${acc/180*W} 0)"/>`;
+    acc+=sg[0];
+  });
+  return `<svg width="${W}" height="${H}" style="display:block;margin:2px auto;background:#13251c;border-radius:8px">
+    <line x1="0" y1="${H-1}" x2="${W}" y2="${H-1}" stroke="#d8ecff" stroke-width="2"/>
+    <g>${html}</g>
+    <text x="${W/2}" y="${H-6}" fill="#ffd9a0" font-size="11" text-anchor="middle">${a}° + ${b}° + ${c}° = ${total}°</text>
+  </svg>`;
+}
+function visL87(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Сколько градусов в треугольнике?'),
+        `<div style="font-size:44px" class="wv-swing">📐</div>`+
+        sml('измерь углы ЛЮБОГО треугольника и сложи их — всегда получится одно и то же число! Какое? Узнаем!'));
+    } else if(step===1){
+      h=col(big('Угол и его мера'),
+        rowC(chip('угол — «раствор» между лучами','rgba(127,209,255,.5)'),chip('измеряется в градусах (°)','rgba(232,160,90,.5)'))+
+        sml('прямой угол — 90° (угол тетради), развёрнутый — 180° (прямая линия)'));
+    } else if(step===2){
+      h=col(big('Волшебное число 180°'),
+        l87Tri(60,60,60,'a')+
+        rowC(chip('60° + 60° + 60° = 180°','rgba(217,164,65,.5)'))+
+        sml('у равностороннего треугольника все углы 60° — сумма 180°!'));
+    } else if(step===3){
+      h=col(big('Проверим другой треугольник'),
+        l87Tri(40,60,80,'b')+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">40° + 60° + 80° = 180°</div>`+
+        sml('другой треугольник, другие углы — а сумма та же! Совпадение?'));
+    } else if(step===4){
+      h=col(big('Секрет: отрежь углы!'),
+        `<div style="font-size:40px" class="wv-pop">✂️</div>`+
+        sml('вырежи треугольник из бумаги, отрежь три угла и сложи их рядом — они выстроятся в одну линию!'));
+    } else if(step===5){
+      h=col(big('Сложили — получился развёрнутый угол!'),
+        l87Line(40,60,80,'c')+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">три угла = 180° = прямая линия!</div>`+
+        sml('отрезанные углы складываются в развёрнутый угол — а он всегда 180°!'));
+    } else if(step===6){
+      h=col(big('Теорема'),
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-family:Georgia,serif">∠A + ∠B + ∠C = 180°</div>`+
+        sml('сумма углов ЛЮБОГО треугольника равна 180° — это теорема, доказанная ещё древними греками!'));
+    } else if(step===7){
+      h=col(big('Как найти третий угол'),
+        rowC(chip('сложи два известных угла','rgba(127,209,255,.5)'),chip('вычти из 180°','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">∠3 = 180° − ∠1 − ∠2</div>`+
+        sml('как в совете Архимеда: в одно действие!'));
+    } else if(step===8){
+      h=col(big('Задача-проверка'),
+        l87Tri(35,45,100,'d')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">180° − 35° − 45° = 100°</div>`+
+        sml('как в проверке: углы 35° и 45° → третий 100°!'));
+    } else if(step===9){
+      h=col(big('Задача 1: прямоугольный'),
+        l87Tri(90,30,60,'e')+
+        rowC(chip('прямой угол = 90°','rgba(127,209,255,.5)'),chip('второй угол 30°','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">третий: 180° − 90° − 30° = 60°</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===10){
+      h=col(big('Прямоугольный треугольник'),
+        l87Tri(90,50,40,'f')+
+        rowC(chip('один угол 90°','rgba(127,209,255,.5)'),chip('два других в сумме дают 90°','rgba(217,164,65,.5)'))+
+        sml('180° − 90° = 90° — на два острых угла остаётся 90°!'));
+    } else if(step===11){
+      h=col(big('Равнобедренный треугольник'),
+        l87Tri(40,70,70,'g')+
+        rowC(chip('углы при основании РАВНЫ','rgba(127,209,255,.5)'),chip('вершина 40°','rgba(232,160,90,.5)'))+
+        sml('как в наших задачках: (180° − 40°) : 2 = 70° — каждый угол при основании!'));
+    } else if(step===12){
+      h=col(big('Остроугольный и тупоугольный'),
+        rowC(chip('все углы < 90° — остроугольный','rgba(127,184,160,.5)'),chip('один угол > 90° — тупоугольный','rgba(232,160,90,.5)'))+
+        sml('и у того, и у другого сумма всё равно 180°!'));
+    } else if(step===13){
+      h=col(big('Равносторонний = 60° × 3'),
+        l87Tri(60,60,60,'h')+
+        rowC(chip('все углы равны','rgba(127,209,255,.5)'),chip('180° : 3 = 60°','rgba(217,164,65,.5)'))+
+        sml('если все углы равны, каждый — 180° : 3 = 60°!'));
+    } else if(step===14){
+      h=col(big('Где это в жизни'),
+        rowC(chip('крыши домов','rgba(127,209,255,.4)'),chip('пирамиды Египта','rgba(127,209,255,.4)'),chip('крылья самолёта','rgba(127,209,255,.4)'),chip('горы и палатки','rgba(127,209,255,.4)'))+
+        sml('строители и инженеры всегда знают: сумма углов 180°!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('углы 50° и 70° → третий 60°','rgba(127,184,160,.5)'),chip('прямоугольный: 90° и 40° → 50°','rgba(127,184,160,.5)'),chip('равнобедренный с вершиной 80° → 50° каждый','rgba(127,184,160,.5)'))+
+        sml('сложи известные углы и вычти из 180°!'));
+    } else if(step===16){
+      const POOL=[['t','35','45'],['t','40','60'],['t','50','70'],['t','20','130'],['t','25','65'],['t','80','60'],['rt','30'],['rt','45'],['rt','55'],['iso','40'],['iso','30'],['iso','50']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0];
+      let desc, firstStep, ans, tri='';
+      if(kind==='t'){
+        const x=+e[1], y=+e[2];
+        desc='углы '+x+'° и '+y+'° → третий угол?';
+        firstStep='180° − '+x+'° − '+y+'°';
+        ans=180-x-y; tri=l87Tri(x,y,ans,'t');
+      } else if(kind==='rt'){
+        const x=+e[1];
+        desc='прямоугольный: один угол 90°, другой '+x+'° → третий?';
+        firstStep='180° − 90° − '+x+'°';
+        ans=90-x; tri=l87Tri(90,x,ans,'t2');
+      } else {
+        const v=+e[1];
+        desc='равнобедренный: угол при вершине '+v+'° → угол при основании?';
+        firstStep='(180° − '+v+'°) : 2';
+        ans=(180-v)/2; tri=l87Tri(v,ans,ans,'t3');
+      }
+      h=col(big('📐 Тренажёр: сумма углов'),
+        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
+        tri+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}°</div>`:'')+
+        btns(btn('1️⃣ подумай',`l87Act('${lk}','s1')`),btn('2️⃣ ответ',`l87Act('${lk}','s2')`),btn('🎲 другая',`l87Act('${lk}','n')`),btn('↺',`l87Act('${lk}','r')`))+
+        sml('сумма углов = 180°. Равнобедренный: углы при основании равны!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            📐 ∠A+∠B+∠C = 180° всегда.<br>
+            ✂️ Отрежь углы — сложатся в линию.<br>
+            ➗ Третий угол: 180 − два известных.<br>
+            🔺 Равнобедр.: углы при основании равны.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 35° и 45°'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function l18Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const POOL=[['sq','7'],['sq','12'],['sq','15'],['cb','2'],['cb','3'],['cb','5'],['back','81'],['back','144'],['back','125'],['back','64'],['cnt','sq'],['cnt','cb']];
@@ -11051,6 +11249,7 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
   if(id===1) visDigits(el);
+  else if(id===87) visL87(el);
   else if(id===99) visL99(el);
   else if(id===95) visL95(el);
   else if(id===94) visL94(el);
