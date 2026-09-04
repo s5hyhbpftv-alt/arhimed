@@ -9526,160 +9526,278 @@ function visL11(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+// ===================== УРОК 16 «ПРОЦЕНТЫ: СКИДКИ И НАЦЕНКИ» (v169) =====================
 function l16Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  const EX=[
-    ['скидка','2000',20],['наценка','100',20],['скидка','500',10],['наценка','300',25],
-    ['два','2000',10,10],['два','1000',20,20],['два','800',50,20],['скидка','1600',25],['наценка','80',50],['два','400',10,20]];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break; case 's3': st.s3=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%EX.length; st.s1=st.s2=st.s3=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  const EX=[['скидка','2000',20],['наценка','100',20],['скидка','500',10],['наценка','300',25],['два','2000',10,10],['два','1000',20,20],['два','800',50,20],['скидка','1600',25],['наценка','80',50],['два','400',10,20]];
+  if(a0==='s1'){ st.s1=1; }
+  if(a0==='s2'){ st.s2=1; }
+  if(a0==='s3'){ st.s3=1; }
+  if(a0==='n'){ st.i=((st.i==null?0:st.i)+1)%EX.length; st.s1=st.s2=st.s3=0; }
+  if(a0==='r'){ CHS[lk]={}; }
   chRender(0);
 }
-function l16Bar(total,startCol,restCol,uid){
-  // полоса цены: зелёный = остаток после скидки; красный/золотой = скидка/добавка не нужен; покажем доли процента
-  return `<div style="width:300px;margin:4px auto;text-align:center">
-    <div style="position:relative;height:26px;background:rgba(255,255,255,.08);border-radius:13px;overflow:hidden">
-      <div style="position:absolute;left:0;top:0;bottom:0;width:${startCol}%;background:linear-gradient(90deg,#4a90c9,#7fb8d8)"></div>
-      <div style="position:absolute;left:${startCol}%;top:0;bottom:0;right:0;background:${restCol||'rgba(224,82,61,.45)'}"></div>
+// «ценник» магазина: старая цена зачёркнута, новая крупно
+function l16Tag(oldP,newP,disc){
+  return `<div style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;margin:2px auto">
+    <div class="l16-tag">
+      <div style="font-size:13px;color:#9ec0a8">было</div>
+      <div style="font-size:24px;color:#9ec0a8;text-decoration:line-through;font-family:Georgia,serif">${oldP}</div>
+    </div>
+    <div style="font-size:28px" class="wv-pulse">${disc?'➜':'➜'}</div>
+    <div class="l16-tag" style="border-color:${disc?'#7fd1a0':'#ff9a8a'}">
+      <div style="font-size:13px;color:${disc?'#7fd1a0':'#ff9a8a'}">${disc?'со скидкой':'с наценкой'}</div>
+      <div class="wv-ans" style="font-size:28px;color:#ffd966;font-family:Georgia,serif;font-weight:bold">${newP}</div>
     </div>
   </div>`;
 }
-function l16Table(uid){
-  const rows=[['−10%','× 0,9'],['+10%','× 1,1'],['−20%','× 0,8'],['+20%','× 1,2'],['−25%','× 0,75'],['+25%','× 1,25'],['−50%','× 0,5'],['+50%','× 1,5']];
-  return `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:300px;margin:0 auto">
-    ${rows.map(([p,m])=>`<div style="border:1px solid rgba(127,209,255,.3);border-radius:9px;padding:3px 8px;background:rgba(127,209,255,.05);font-size:14px"><span style="color:#f0a89a">${p}</span> <span style="color:#9fe8c0;font-weight:bold">${m}</span></div>`).join('')}
+// полоса 0..130%: база 100% (синяя), скидка — остаток (зелёный), наценка — добавка (красная)
+function l16Strip(pct,kind,opt){
+  const o=opt||{};
+  const W=o.w||312;
+  const isDisc=kind==='скидка';
+  const scale=130;             // шкала в процентах
+  const px=p=>Math.round(p/scale*W);
+  const baseX=px(100);
+  const seg=isDisc?100-pct:100+pct;
+  return `<div style="width:${W}px;margin:2px auto;text-align:center">
+    <div style="position:relative;height:26px;background:rgba(255,255,255,.08);border-radius:13px;overflow:hidden">
+      <div class="wv-pop" style="position:absolute;left:0;top:0;bottom:0;width:${px(100)}px;background:linear-gradient(90deg,#4a90c9,#7fb8d8);opacity:.5"></div>
+      ${isDisc
+        ? `<div class="wv-pop2" style="position:absolute;left:0;top:0;bottom:0;width:${px(seg)}px;background:linear-gradient(90deg,#7fd1a0,#2f8f5a)"></div>`
+        : `<div class="wv-pop2" style="position:absolute;left:${baseX}px;top:0;bottom:0;width:${px(pct)}px;background:linear-gradient(90deg,#ff9a8a,#c94a33);opacity:.85"></div>`}
+      <div style="position:absolute;left:${baseX}px;top:0;bottom:0;width:2px;background:#ffd966"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:9.5px;color:#9ec0a8;margin-top:2px">
+      <span>0%</span><span style="color:#cbb89a">100% (база)</span><span>${isDisc?`${seg}% остаётся`:`${seg}% стало`}</span>
+    </div>
   </div>`;
 }
-function l16Chain(uid){
-  // 2000 →(+10%)2200 →(−10%)1980: цепочка с множителями
-  const step=(num,lab,op,col)=>`<div style="text-align:center;min-width:84px">
-    <div style="font-size:22px;font-weight:bold;color:#fff">${num}</div>
-    <div style="font-size:11px;color:${col||'#cbb89a'}">${lab}</div></div>`;
-  const arrow=(t)=>`<div style="text-align:center;font-size:15px;color:#ffd9a0;font-weight:bold;min-width:54px">${t}</div>`;
-  return `<div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin:4px auto;width:300px">
-    ${step('2000','цена','')}${arrow('×1,1')}${step('2200','+10%','#7fd1a0')}${arrow('×0,9')}${step('1980','−10% от 2200','#f0a89a')}
-  </div>`;
+// полоска «10 монеток» = 100%: забираем/добавляем монетки
+function l16Coins(total,change,opt){
+  const o=opt||{};
+  const s=o.s||18;
+  const take=change<0;
+  const keep=Math.round(total*(100+change)/100);
+  let out='';
+  for(let i=0;i<total;i++){
+    const gone= take && i>=keep;
+    out+=`<span class="${gone?'wv-pop':'wv-pop'}" style="animation-delay:${(i*0.03).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:${s}px;height:${s}px;border-radius:50%;background:${gone?'radial-gradient(circle at 32% 28%,#6b6450,#4a4438)':'radial-gradient(circle at 32% 28%,#ffe9a8,#d9a441)'};border:2px solid ${gone?'#3a362a':'#a67c1e'};font-size:${Math.max(8,s*0.42)}px;color:${gone?'#77705e':'#5a3a05'};font-weight:bold;margin:1px">${gone?'✕':''}</span>`;
+  }
+  return `<div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:330px;margin:0 auto">${out}</div>`;
+}
+// цепочка цены с множителями: 2000 →×1,1→ 2200 →×0,9→ 1980
+function l16Chain(S0,ops,opt){
+  const o=opt||{};
+  const steps=[S0];
+  ops.forEach(([mul,lab])=>{ steps.push(Math.round(steps[steps.length-1]*mul*100)/100); });
+  const cw=Math.min(92,320/(steps.length+ops.length)-10);
+  let html='<div style="display:flex;align-items:center;justify-content:center;gap:2px;flex-wrap:wrap;max-width:340px;margin:0 auto">';
+  steps.forEach((v,i)=>{
+    html+=`<div style="text-align:center;min-width:${cw}px;margin:1px">
+      <div class="wv-pop" style="animation-delay:${(i*0.18).toFixed(2)}s;display:inline-block;font-size:${cw>66?18:15}px;font-weight:bold;color:#fff;font-family:Georgia,serif;background:rgba(255,255,255,.05);border:1.5px solid ${i===steps.length-1?'#ffd966':'#3d5c49'};border-radius:9px;padding:3px 7px">${v}</div>
+      ${i<ops.length?`<div style="font-size:8.5px;color:${ops[i][2]||'#cbb89a'};margin-top:1px">${ops[i][1]}</div>`:''}
+    </div>`;
+    if(i<ops.length) html+=`<div class="wv-pop" style="animation-delay:${((i+0.5)*0.18).toFixed(2)}s;font-size:15px;color:${ops[i][2]||'#ffd966'};font-weight:bold;min-width:30px;text-align:center">×${ops[i][0]}</div>`;
+  });
+  html+='</div>';
+  return html;
 }
 function visL16(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const lk=lidKey(LV.id);
     const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v16!==step) CHS[lk]={_v16:step};
+    const st=CHS[lk];
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
     const sml=(t)=>`<div class="wv-sml">${t}</div>`;
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const note=(t,c,d)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'}${d||'44'};border-radius:9px;padding:5px 12px;font-size:12.5px;color:#e8dcc8;text-align:left;line-height:1.45">${t}</div>`;
+    const money=n=>`<span style="font-family:Georgia,serif;color:#ffd966">${n}</span>`;
     let h='';
     if(step===0){
-      h=col(big('Лавка Архимеда: наценка!'),
-        `<div style="font-size:48px" class="l35-pop">🏷️</div>`+
-        big('игрушка стоила 100, наценка +20% — сколько теперь?')+
-        sml('цены то падают (скидки), то растут (наценки). научимся не путаться!'));
+      // легенда: лавка, ценник
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#ffd96622;border:1px solid #ffd966;color:#ffd966;margin-bottom:2px">ВСОШ-СТИЛЬ · ПРОЦЕНТЫ</span>`+
+        big('Лавка Архимеда: наценка +20%')+
+        `<div style="font-size:34px" class="l16-sway">🏷️</div>`+
+        l16Tag(100,120,false)+
+        card(`игрушка стоила <b>${money(100)} монет</b>, а теперь <b style="color:#ff9a8a">наценка +20%</b>. Сколько она теперь стоит?`)+
+        rowC(chip('цены падают — скидки','#7fd1a0'),chip('цены растут — наценки','#ff9a8a'))+
+        sml('научимся не путаться: скидка и наценка — два «зеркальных» движения цены!'));
     } else if(step===1){
-      h=col(big('Процент — это сотые'),
-        rowC(chip('20% = 0,2','rgba(127,209,255,.5)'),chip('10% = 0,1','rgba(127,184,160,.5)'),chip('25% = 0,25','rgba(232,160,90,.5)'))+
-        sml('вспомни урок про проценты: p% — это p сотых. это нам пригодится!'));
-    } else if(step===2){
-      h=col(big('Скидка: цена падает'),
-        l16Bar(80,20,'c')+
-        `<div style="text-align:center;font-size:19px" class="wv-pop">скидка 20% → новая цена = 80% от старой</div>`+
-        sml('убрали 20% — осталось 80%. скидку ВЫЧИТАЕМ из цены'));
-    } else if(step===3){
-      h=col(big('Наценка: цена растёт'),
-        l16Bar(80,0,'d')+
-        `<div style="text-align:center;font-size:19px" class="wv-pop">наценка 20% → новая цена = 120% от старой</div>`+
-        sml('добавили 20% — стало 120%. наценку ПРИБАВЛЯЕМ к цене'));
-    } else if(step===4){
-      h=col(big('Хитрость: умножай на 0,8'),
-        `<div style="text-align:center;font-size:20px" class="wv-pop">−20% ⇔ × 0,8</div>`+
-        rowC(chip('2000 · 0,8 = 1600','rgba(127,184,160,.5)'))+
-        sml('вместо двух шагов — одно умножение! 0,8 = 1 − 0,2'));
-    } else if(step===5){
-      h=col(big('Хитрость: умножай на 1,2'),
-        `<div style="text-align:center;font-size:20px" class="wv-pop">+20% ⇔ × 1,2</div>`+
-        rowC(chip('100 · 1,2 = 120','rgba(127,184,160,.5)'))+
-        sml('1,2 = 1 + 0,2: цена целиком плюс добавка'));
-    } else if(step===6){
-      h=col(big('Таблица множителей'),
-        l16Table('t')+
-        sml('−10% → ×0,9 · −25% → ×0,75 · +50% → ×1,5. запомни главные!'));
-    } else if(step===7){
-      h=col(big('Способ «в два шага»'),
-        `<div style="display:flex;flex-direction:column;gap:5px;align-items:center;font-size:19px">
-          <div class="wv-pop">1) найди процент от цены: 20% от 2000 = 400</div>
-          <div class="wv-pop" style="animation-delay:.25s">2) отними (скидка) или прибавь (наценка): 2000 − 400 = 1600</div>
+      // процент — сотая часть
+      h=col(big('Процент — это сотая часть')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['20%','= 0,2','20 сотых'],['10%','= 0,1','10 сотых'],['25%','= 0,25','25 сотых'],['5%','= 0,05','5 сотых']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 9px;min-width:82px"><div style="font-size:17px;color:#ffd966;font-family:Georgia,serif">${x[0]}</div><div style="font-size:13px;color:#7fd1a0;font-weight:bold">${x[1]}</div><div style="font-size:9px;color:#9ec0a8">${x[2]}</div></div>`).join('')}
         </div>`+
-        sml('так понятнее новичку, а умножение на 0,8 — быстрее для знатоков!'));
+        card('процент <b>%</b> — это «на сотню»: <b style="color:#ffd966">p% = p : 100</b>. Чтобы найти 20% от числа, умножаем его на <b>0,2</b>.')+
+        sml('запомни перевод процентов в десятичные дроби — он понадобится на каждом шаге!'));
+    } else if(step===2){
+      // скидка: цена падает
+      h=col(big('Скидка: цена падает')+
+        l16Strip(20,'скидка')+
+        l16Coins(10,-20)+
+        card('скидка <b>−20%</b> — убираем 20% цены. Остаётся <b style="color:#7fd1a0">80%</b> — это и есть новая цена!')+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">100% − 20% = 80% — платим только 80%!</div>`+
+        sml('смотри: 2 из 10 монеток «улетели» (серые ✕) — осталось 8 = 80%!'));
+    } else if(step===3){
+      // наценка: цена растёт
+      h=col(big('Наценка: цена растёт')+
+        l16Strip(20,'наценка')+
+        card('наценка <b style="color:#ff9a8a">+20%</b> — добавляем 20% к цене. Новая цена = <b style="color:#ff9a8a">120%</b> от старой!')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;align-items:center">
+          <span style="font-size:16px;color:#e8dcc8">было 100%</span>
+          <span style="font-size:20px" class="wv-pulse">➕</span>
+          <span style="font-size:16px;color:#ff9a8a">добавили 20%</span>
+          <span style="font-size:20px;color:#cbb89a">=</span>
+          <span class="wv-ans" style="font-size:20px;color:#ff9a8a;font-weight:bold">стало 120%</span>
+        </div>`+
+        sml('наценка — это «цена + добавка». Полная цена теперь 120%!'));
+    } else if(step===4){
+      // хитрость: ×0,8
+      h=col(big('Хитрость: скидка −20% ⇔ × 0,8')+
+        `<div style="text-align:center;font-size:34px;color:#7fd1a0;font-family:Georgia,serif" class="wv-ans">× 0,8</div>`+
+        rowC(chip('100% − 20% = 80% = 0,8','#7fd1a0'),chip('одно умножение вместо двух шагов!','#ffd966'))+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:24px;color:#ffd966;font-family:Georgia,serif">2000</div><div style="font-size:9px;color:#9ec0a8">старая цена</div></div>
+          <div style="font-size:20px;color:#7fd1a0;font-weight:bold">· 0,8</div>
+          <div style="font-size:20px;color:#cbb89a">=</div>
+          <div style="text-align:center"><div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">1600</div><div style="font-size:9px;color:#9ec0a8">новая цена</div></div>
+        </div>`+
+        sml('0,8 = 1 − 0,2: «вся цена минус скидка». Запомни этот множитель!'));
+    } else if(step===5){
+      // хитрость: ×1,2
+      h=col(big('Хитрость: наценка +20% ⇔ × 1,2')+
+        `<div style="text-align:center;font-size:34px;color:#ff9a8a;font-family:Georgia,serif" class="wv-ans">× 1,2</div>`+
+        rowC(chip('100% + 20% = 120% = 1,2','#ff9a8a'),chip('цена целиком + добавка','#ffd966'))+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:24px;color:#ffd966;font-family:Georgia,serif">100</div><div style="font-size:9px;color:#9ec0a8">старая цена</div></div>
+          <div style="font-size:20px;color:#ff9a8a;font-weight:bold">· 1,2</div>
+          <div style="font-size:20px;color:#cbb89a">=</div>
+          <div style="text-align:center"><div class="wv-ans" style="font-size:28px;color:#ff9a8a;font-weight:bold">120</div><div style="font-size:9px;color:#9ec0a8">новая цена</div></div>
+        </div>`+
+        sml('1,2 = 1 + 0,2 — как в нашей проверке: 100 · 1,2 = 120!'));
+    } else if(step===6){
+      // таблица множителей
+      h=col(big('Таблица множителей')+
+        `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:5px;max-width:330px;margin:0 auto">
+          ${[['−10%','× 0,9','#7fd1a0'],['+10%','× 1,1','#ff9a8a'],['−20%','× 0,8','#7fd1a0'],['+20%','× 1,2','#ff9a8a'],['−25%','× 0,75','#7fd1a0'],['+25%','× 1,25','#ff9a8a'],['−50%','× 0,5','#7fd1a0'],['+50%','× 1,5','#ff9a8a']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.06}s;border:1.5px solid ${x[2]}66;border-radius:9px;padding:4px 9px;background:rgba(255,255,255,.04);font-size:13.5px"><span style="color:${x[2]}">${x[0]}</span> <span style="color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('скидки — множители <b style="color:#7fd1a0">меньше 1</b> (0,9 · 0,8 …), наценки — <b style="color:#ff9a8a">больше 1</b> (1,1 · 1,2 …). Не перепутай!')+
+        sml('запомни хотя бы −10%→0,9, −20%→0,8, +10%→1,1, +20%→1,2!'));
+    } else if(step===7){
+      // способ в два шага
+      h=col(big('Способ «в два шага» (для новичка)')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['1️⃣ найди процент от цены','20% от 2000 = 2000 · 0,2 = 400','#7fb7d8'],['2️⃣ отними (скидка) или прибавь (наценка)','2000 − 400 = 1600 (скидка)','#7fd1a0']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.15}s;background:rgba(255,255,255,.03);border:1px solid ${x[2]}66;border-left:5px solid ${x[2]};border-radius:10px;padding:7px 12px;max-width:336px;width:100%;text-align:left"><div style="font-size:13px;color:#e8dcc8;font-weight:bold">${x[0]}</div><div style="font-size:14px;color:#ffd966;font-family:Georgia,serif">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('так понятнее новичку. Но умножение на <b style="color:#ffd966">0,8</b> — то же самое, только одним движением!')+
+        sml('выбери свой стиль: два шага или один множитель — ответ одинаковый!'));
     } else if(step===8){
-      h=col(big('Задача: скидка 20% на 2000'),
-        l16Bar(80,20,'a')+
-        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">2000 · 0,8 = 1600 ✓</div>`+
-        sml('как в наших задачках: ответ 1600'));
+      // задача 2000 −20%
+      h=col(big('Задача: скидка 20% на товар 2000')+
+        l16Strip(20,'скидка')+
+        l16Tag(2000,1600,true)+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:340px;width:100%">
+          ${[['множитель скидки','100% − 20% = 0,8'],['считаем','2000 · 0,8 = 1600']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:5px 12px;max-width:340px;width:100%"><span style="font-size:13.5px;color:#e8dcc8">${x[0]}</span><span style="font-size:14px;color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">ответ: 1600 ✓</div>`+
+        sml('как в наших задачках! Скидка 400 монет — товар теперь 1600.'));
     } else if(step===9){
-      h=col(big('Задача: наценка 20% на 100'),
-        `<div style="text-align:center;font-size:20px" class="wv-pop">100 · 1,2 = 120</div>`+
-        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">120 ✓ (как в проверке!)</div>`+
-        sml('было 100, стало 120 — наценка 20 рублей'));
+      // задача 100 +20%
+      h=col(big('Задача: наценка 20% на 100')+
+        l16Strip(20,'наценка')+
+        l16Tag(100,120,false)+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:340px;width:100%">
+          ${[['множитель наценки','100% + 20% = 1,2'],['считаем','100 · 1,2 = 120']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:5px 12px;max-width:340px;width:100%"><span style="font-size:13.5px;color:#e8dcc8">${x[0]}</span><span style="font-size:14px;color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#ff9a8a;font-weight:bold">ответ: 120 ✓ (как в проверке!)</div>`+
+        sml('было 100, наценка 20 монет → стало 120. Легко!'));
     } else if(step===10){
-      h=col(big('Важно! Процент — от ТЕКУЩЕЙ цены'),
-        `<div style="text-align:center;font-size:19px">2000 + 10% → 2200. теперь −10% считаем от 2200!</div>`+
-        sml('база каждый раз меняется — проценты «липнут» к новой цене'));
+      // процент от текущей цены
+      h=col(big('Важно! Процент — от ТЕКУЩЕЙ цены')+
+        l16Chain(2000,[[1.1,'+10%','#7fd1a0'],[0.9,'−10% от 2200','#ff9a8a']])+
+        card('сначала <b style="color:#7fd1a0">+10%</b> к 2000 → стало <b style="color:#ffd966">2200</b>. А теперь <b style="color:#ff9a8a">−10%</b> считаем от <b>2200</b>, а не от 2000!')+
+        `<div class="wv-ans" style="font-size:18px;color:#ffd966">база каждый раз меняется — проценты «липнут» к новой цене!</div>`+
+        sml('вот почему «+10% потом −10%» не возвращает цену назад — увидим дальше!'));
     } else if(step===11){
-      h=col(big('Два шага подряд'),
-        l16Chain('c')+
+      // два шага подряд
+      h=col(big('Два шага подряд: множители умножаются')+
+        l16Chain(2000,[[1.1,'×1,1','#7fd1a0'],[0.9,'×0,9','#ff9a8a']])+
         `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">2000 · 1,1 · 0,9 = 1980</div>`+
-        sml('умножаем один за другим: +10%, потом −10% от новой цены'));
+        card('оба изменения — просто <b style="color:#ffd966">умножения подряд</b>: ×1,1 (наценка) и ×0,9 (скидка от новой цены).')+
+        sml('перемножаем множители один за другим — и получаем итог!'));
     } else if(step===12){
-      h=col(big('Почему не вернулось к 2000?'),
-        rowC(chip('+10%: 2000 → 2200 (добавили 200)','rgba(127,209,160,.5)'),chip('−10%: 2200 → 1980 (сняли 220!)','rgba(232,106,90,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">итог 1980 — меньше 2000!</div>`+
-        sml('скидка 10% от 2200 — это 220, а наценка дала только 200. десятка «потерялась»!'));
+      // почему не вернулось
+      h=col(big('Почему не вернулось к 2000?')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['+10% дало','+200','к 2000 → 2200','#7fd1a0'],['−10% от 2200 сняло','−220','с 2200 → 1980','#ff9a8a']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[3]}55;border-radius:10px;padding:7px 9px;max-width:150px"><div style="font-size:12px;color:${x[3]}">${x[0]}</div><div style="font-size:22px;color:#ffd966;font-weight:bold">${x[1]}</div><div style="font-size:10px;color:#9ec0a8">${x[2]}</div></div>`).join('')}
+        </div>`+
+        card('добавили <b style="color:#7fd1a0">200</b>, а сняли <b style="color:#ff9a8a">220</b> — потому что 10% брали уже от <b>2200</b>! Десятка «потерялась».')+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">итог 1980 — на 20 меньше, чем было!</div>`+
+        sml('скидка с бóльшей суммы «весит» больше, чем такая же наценка с меньшей!'));
     } else if(step===13){
-      h=col(big('Порядок не важен — база важна'),
-        rowC(chip('×0,8 ×1,2 = ×0,96','rgba(127,209,255,.5)'),chip('×1,2 ×0,8 = ×0,96','rgba(127,209,255,.5)'))+
-        `<div style="text-align:center;font-size:19px" class="wv-pop">−20% потом +20% → итог 0,96 (меньше старого!)</div>`+
-        sml('от перемены мест множители не меняются: ×0,96 всегда — значит, цена чуть упала'));
+      // порядок не важен
+      h=col(big('Порядок не важен — база важна')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['×0,8 ×1,2','= ×0,96'],['×1,2 ×0,8','= ×0,96']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 10px;min-width:130px"><div style="font-size:16px;color:#e8dcc8;font-family:Georgia,serif">${x[0]}</div><div style="font-size:17px;color:#ffd966;font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('0,8 · 1,2 = 0,96 в любом порядке. Значит, «скидка 20%, потом наценка 20%» даёт <b style="color:#ffd966">×0,96</b> — цена всё равно чуть упала!')+
+        sml('множители можно менять местами, но итог ×0,96 < 1 — цена меньше старой!'));
     } else if(step===14){
-      h=col(big('Много «витков»'),
-        `<div style="text-align:center;font-size:19px">+10% и −10% каждый раз → каждый цикл умножаем на 0,99</div>`+
-        rowC(chip('1 цикл: 2000 → 1980','rgba(127,209,255,.4)'),chip('2 цикла: 1980 → 1960,2','rgba(127,209,255,.4)'))+
-        sml('1,1 · 0,9 = 0,99: цена медленно, но верно падает. забавно, правда?'));
+      // много витков
+      h=col(big('Много «витков»: цена тихо тает')+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:336px;width:100%">
+          ${[['1 цикл: +10% потом −10%','2000 · 1,1 · 0,9 = 1980'],['2 цикла','1980 · 0,99 ≈ 1960'],['3 цикла','1960 · 0,99 ≈ 1941']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.15}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:5px 12px;max-width:336px;width:100%"><span style="font-size:12.5px;color:#e8dcc8">${x[0]}</span><span style="font-size:12.5px;color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div style="text-align:center;font-size:20px" class="wv-ans">каждый цикл умножает цену на <b style="color:#ff9a8a">0,99</b></div>`+
+        sml('1,1 · 0,9 = 0,99 — цена медленно, но верно падает с каждым «витком»!'));
     } else if(step===15){
-      h=col(big('Классическая ловушка'),
-        rowC(chip('товар 2000','rgba(127,184,160,.5)'),chip('сначала +10%, потом −10%','rgba(232,106,90,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">2000 · 1,1 · 0,9 = 1980 ₽ — как в наших задачках!</div>`+
-        sml('запомни: «+p% и −p%» не возвращают цену — она чуть меньше'));
+      // классическая ловушка
+      h=col(big('Классическая ловушка')+
+        l16Chain(2000,[[1.1,'×1,1 +10%','#7fd1a0'],[0.9,'×0,9 −10%','#ff9a8a']])+
+        `<div style="background:rgba(224,82,61,.08);border:1px solid #e0523d66;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:14px;color:#e8dcc8">товар <b>2000</b>, сначала <b style="color:#7fd1a0">+10%</b>, потом <b style="color:#ff9a8a">−10%</b> от новой цены:</div>
+          <div style="font-size:18px;color:#ffd966;font-family:Georgia,serif">2000 · 1,1 · 0,9 = 1980 ₽</div>
+        </div>`+
+        card('«+10% и −10%» <b style="color:#ff9a8a">не возвращают</b> цену! Итог 1980 — на 20 меньше. Как в наших задачках!')+
+        sml('запомни эту ловушку — её любят на олимпиадах и в магазинных акциях!'));
     } else if(step===16){
+      // тренажёр
       const EX=[['скидка','2000',20],['наценка','100',20],['скидка','500',10],['наценка','300',25],['два','2000',10,10],['два','1000',20,20],['два','800',50,20],['скидка','1600',25],['наценка','80',50],['два','400',10,20]];
-      if(st.i==null) st.i=0;
-      const e=EX[st.i];
-      const kind=e[0], base=+e[1], p1=+e[2], p2= e.length>3? +e[3]:null;
-      const mul1 = kind==='скидка'? (100-p1)/100 : kind==='наценка'? (100+p1)/100 : (100+p1)/100;
-      const mul2 = kind==='два'? (100-p2)/100 : null;
-      const final= Math.round((kind==='два'? base*mul1*mul2 : base*mul1)*100)/100;
-      const desc= kind==='скидка'? `скидка −${p1}% от ${base}` : kind==='наценка'? `наценка +${p1}% к ${base}` : `+${p1}%, затем −${p2}% (от новой) от ${base}`;
-      h=col(big('Тренажёр: цена меняется'),
-        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
-        (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) множитель: ${kind==='два'? '×'+mul1+' затем ×'+mul2 : '×'+mul1}</div>`:'')+
-        (st.s2? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">2) ${kind==='два'? base+' · '+mul1+' · '+mul2 : base+' · '+mul1} = ${final}</div>`:'')+
-        (st.s3? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">новая цена: ${final}</div>`:'')+
+      const i=st.i!=null?st.i:0;
+      const e=EX[i%EX.length];
+      const kind=e[0], base=+e[1], p1=+e[2], p2=e.length>3?+e[3]:null;
+      const mul1=kind==='скидка'?(100-p1)/100:kind==='наценка'?(100+p1)/100:(100+p1)/100;
+      const mul2=kind==='два'?(100-p2)/100:null;
+      const final=Math.round((kind==='два'?base*mul1*mul2:base*mul1)*100)/100;
+      const desc=kind==='скидка'?`скидка −${p1}% от ${base}`:kind==='наценка'?`наценка +${p1}% к ${base}`:`+${p1}%, затем −${p2}% от новой (база ${base})`;
+      const disc=kind==='скидка'||kind==='два';
+      h=col(big('🎮 Тренажёр: цена меняется')+
+        rowC(chip(desc,'#ffd966'))+
+        (st.s1?`<div class="wv-pop" style="font-size:16px;text-align:center;color:#ffd9a0">1️⃣ множители: ${kind==='два'?'×'+mul1+' затем ×'+mul2:'×'+mul1}</div>`:'')+
+        (st.s2?`<div class="wv-pop" style="font-size:16px;text-align:center;color:#ffd9a0">2️⃣ ${kind==='два'?base+' · '+mul1+' · '+mul2:base+' · '+mul1} = ${final}</div>`:'')+
+        (st.s3?`<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">новая цена: ${final}${disc?' (скидка!)':''}</div>`:'')+
         btns(btn('1️⃣ множитель',`l16Act('${lk}','s1')`),btn('2️⃣ посчитать',`l16Act('${lk}','s2')`),btn('3️⃣ ответ',`l16Act('${lk}','s3')`),btn('🎲 другой',`l16Act('${lk}','n')`),btn('↺',`l16Act('${lk}','r')`))+
-        sml('решай по шагам: переведи % в множитель, умножь цену, получи ответ!'));
+        sml('по шагам: переведи % в множитель → умножь цену → получи ответ!'));
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+      h=col(`<div style="font-size:48px">🏷️</div>`+big('Совет Архимеда')+
         `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:250px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
             🏷️ Скидка −p% → ×(1 − p/100).<br>
             📈 Наценка +p% → ×(1 + p/100).<br>
             🔄 Проценты — от ТЕКУЩЕЙ цены!<br>
-            ⚠️ +10% затем −10% → ×0,99 (меньше!).</div>
+            ⚠️ +10% затем −10% → ×0,99.<br>
+            ✅ 2000·0,8=1600 · 100·1,2=120.</div>
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 100 и +20%'));

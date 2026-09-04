@@ -581,6 +581,17 @@
   @keyframes l15Flow { from{background-position-x:0} to{background-position-x:30px} }
   .l15-boat { animation:l15Boat 3s ease-in-out infinite; }
   @keyframes l15Boat { 0%,100%{transform:translateX(0) rotate(-1.5deg)} 50%{transform:translateX(16px) rotate(1.5deg)} }
+  /* ============ проценты: скидки и наценки (урок 16, v169) ============ */
+  .l16-tag { position:relative; border:2px solid #d9a441; border-radius:10px; background:#1a1206;
+    padding:8px 14px; display:inline-block; text-align:center; }
+  .l16-tag::before { content:'🏷️'; position:absolute; left:-12px; top:-10px; font-size:20px; }
+  .l16-grow { transition:width 1s cubic-bezier(.3,.7,.4,1); }
+  .l16-fall2 { animation:l16Fall .7s ease both; }
+  @keyframes l16Fall { 0%{transform:translateY(-30px);opacity:0} 100%{transform:translateY(0);opacity:1} }
+  .l16-slide { animation:l16Slide 1.2s cubic-bezier(.3,.6,.4,1) forwards; }
+  @keyframes l16Slide { 0%{transform:translateX(0)} 100%{transform:translateX(var(--dx,120px))} }
+  .l16-sway { animation:l16Sway 1.8s ease-in-out infinite; }
+  @keyframes l16Sway { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(3deg)} }
 </style>
 </head>
 <body>
@@ -609,21 +620,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=168"></script>
-<script src="data/lessons.js?v=168"></script>
-<script src="js/comic.js?v=168"></script>
-<script src="js/core.js?v=168"></script>
-<script src="js/engine.js?v=168"></script>
-<script src="js/app.js?v=168"></script>
-<script src="js/dashboard.js?v=168"></script>
-<script src="js/lessons.js?v=168"></script>
-<script src="js/legend.js?v=168"></script>
-<script src="js/simulator.js?v=168"></script>
-<script src="js/duel.js?v=168"></script>
-<script src="js/agent.js?v=168"></script>
-<script src="js/voice.js?v=168"></script>
-<script src="js/assistant.js?v=168"></script>
-<script src="js/agentlive.js?v=168"></script>
+<script src="data/tasks.js?v=169"></script>
+<script src="data/lessons.js?v=169"></script>
+<script src="js/comic.js?v=169"></script>
+<script src="js/core.js?v=169"></script>
+<script src="js/engine.js?v=169"></script>
+<script src="js/app.js?v=169"></script>
+<script src="js/dashboard.js?v=169"></script>
+<script src="js/lessons.js?v=169"></script>
+<script src="js/legend.js?v=169"></script>
+<script src="js/simulator.js?v=169"></script>
+<script src="js/duel.js?v=169"></script>
+<script src="js/agent.js?v=169"></script>
+<script src="js/voice.js?v=169"></script>
+<script src="js/assistant.js?v=169"></script>
+<script src="js/agentlive.js?v=169"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -638,7 +649,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=168').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=169').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
