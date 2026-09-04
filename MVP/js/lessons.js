@@ -6213,6 +6213,8 @@ var L92POOL=[['body','гвоздь','стальной стержень со шл
 var L92POOL=[['body','гвоздь','стальной стержень со шляпкой, им прибивают доски','nail'],['body','молоток','инструмент: деревянная ручка и стальной боёк','hammer'],['body','стакан','прозрачный стеклянный сосуд для воды','glass'],['body','мяч','резиновый шар, в него играют ногой','ball'],['body','карандаш','деревянный стержень с грифелем','pencil'],['body','ложка','металлическая ложка для супа','spoon'],['body','стул','мебель: сиденье, спинка и ножки','chair'],['body','книга','бумажные страницы в переплёте','book'],['sub','железо','серый металл, притягивается магнитом','iron'],['sub','вода','жидкость без цвета, замерзает при 0°','water'],['sub','стекло','прозрачный хрупкий материал','sheet'],['sub','дерево','материал от деревьев, лёгкий','wood'],['sub','медь','красноватый металл, проводит ток','copper'],['sub','золото','жёлтый металл, не ржавеет','gold'],['sub','воздух','смесь газов: азот и кислород','air'],['sub','кислород','газ, которым дышат','oxygen'],['ev','таяние снега','снежинки тают и становятся водой','melt'],['ev','гром','раскат звука после молнии','thunder'],['ev','дождь','капли воды падают из туч','rain'],['ev','молния','гигантская электрическая искра','bolt'],['ev','кипение воды','вода бурлит и становится паром','boil'],['ev','полёт мяча','мяч летит по дуге после удара','fly'],['ev','радуга','солнечный свет распадается на цвета','rainbow'],['ev','горение свечи','воск плавится, пламя горит','candle']];
 // ============ УРОК 92 v6 «Что изучает физика» — рисованные предметы + анимации ============
 var L92POOL=[['body','гвоздь','стальной стержень со шляпкой, им прибивают доски','nail'],['body','молоток','инструмент: деревянная ручка и стальной боёк','hammer'],['body','стакан','прозрачный стеклянный сосуд для воды','glass'],['body','мяч','резиновый шар, в него играют ногой','ball'],['body','карандаш','деревянный стержень с грифелем','pencil'],['body','ложка','металлическая ложка для супа','spoon'],['body','стул','мебель: сиденье, спинка и ножки','chair'],['body','книга','бумажные страницы в переплёте','book'],['sub','железо','серый металл, притягивается магнитом','iron'],['sub','вода','жидкость без цвета, замерзает при 0°','water'],['sub','стекло','прозрачный хрупкий материал','sheet'],['sub','дерево','материал от деревьев, лёгкий','wood'],['sub','медь','красноватый металл, проводит ток','copper'],['sub','золото','жёлтый металл, не ржавеет','gold'],['sub','воздух','смесь газов: азот и кислород','air'],['sub','кислород','газ, которым дышат','oxygen'],['ev','таяние снега','снежинки тают и становятся водой','melt'],['ev','гром','раскат звука после молнии','thunder'],['ev','дождь','капли воды падают из туч','rain'],['ev','молния','гигантская электрическая искра','bolt'],['ev','кипение воды','вода бурлит и становится паром','boil'],['ev','полёт мяча','мяч летит по дуге после удара','fly'],['ev','радуга','солнечный свет распадается на цвета','rainbow'],['ev','горение свечи','воск плавится, пламя горит','candle']];
+// ============ УРОК 92 v7 «Что изучает физика» — «Атлас чудес природы» ============
+var L92POOL=[['body','снежинка','кристаллик льда с шестью лучами, падает с неба','snow'],['body','планета','огромный шар, летит по орбите вокруг звезды','planet'],['body','комета','ледяное тело с хвостом, мчится в космосе','comet'],['body','капля','маленький шарик воды','drop'],['body','айсберг','ледяная гора, плавает в океане','iceberg'],['body','метеорит','камень, упавший из космоса','meteor'],['sub','вода','прозрачная жидкость: без неё нет жизни','water'],['sub','золото','жёлтый драгоценный металл','gold'],['sub','кислород','газ, которым мы дышим','oxygen'],['sub','воздух','смесь газов вокруг Земли','air'],['sub','лёд','твёрдая вода','ice'],['sub','алмаз','самый твёрдый минерал, блестит','diamond'],['ev','молния','гигантская электрическая искра в небе','bolt'],['ev','радуга','солнечный свет распадается в каплях','rainbow'],['ev','северное сияние','небо светится зелёным у полюсов','aurora'],['ev','гейзер','горячий фонтан бьёт из-под земли','geyser'],['ev','извержение','вулкан выбрасывает лаву','volcano'],['ev','гром','раскат звука после молнии','thunder'],['ev','таяние снега','снежинки становятся водой','melt'],['ev','дождь','капли падают из туч','rain'],['ev','кипение','вода становится паром','boil'],['ev','полёт кометы','комета мчится по небу','flycomet'],['ev','снегопад','снежинки кружатся с неба','snowfall'],['ev','гроза','молнии и гром бушуют в тучах','storm']];
 function l92Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   if(st.i==null) st.i=Math.floor(Math.random()*L92POOL.length); if(st.score==null) st.score=0;
@@ -6228,75 +6230,77 @@ function l92Act(lk,act){
   if(act==='r'){ st.i=Math.floor(Math.random()*L92POOL.length); st.score=0; st.done={}; st.last=''; st.hintShow=0; }
   chRender(0);
 }
-// ============== БИБЛИОТЕКА РИСОВАННЫХ ПРЕДМЕТОВ (каждый — свой SVG) ==============
+// ============== БИБЛИОТЕКА ЧУДЕС (каждый — свой SVG) ==============
 var L92ART={};
 function l92S(inner,w,h,vb){ return `<svg width="${w}" height="${h}" viewBox="${vb||('0 0 '+w+' '+h)}" style="display:block;max-width:100%">${inner}</svg>`; }
-L92ART.nail=l92S('<g transform="rotate(-6 60 56)"><defs><linearGradient id="na" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9fb4c4"/><stop offset=".5" stop-color="#dfe9f0"/><stop offset="1" stop-color="#7d93a5"/></linearGradient></defs><ellipse cx="18" cy="34" rx="11" ry="5" fill="#dfe9f0"/><path d="M26 31 L100 44 L106 56 L26 44 Z" fill="url(#na)"/><path d="M100 44 L112 62 L106 56 Z" fill="#8fa6b8"/><line x1="30" y1="32" x2="96" y2="45" stroke="#fff" stroke-width="2" opacity=".6"/></g>',120,66);
-L92ART.hammer=l92S('<g transform="rotate(14 60 46)"><defs><linearGradient id="hm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a5a2a"/><stop offset=".6" stop-color="#c08a4a"/><stop offset="1" stop-color="#6e3f1c"/></linearGradient></defs><rect x="34" y="30" width="12" height="46" rx="5" fill="url(#hm)"/><rect x="36" y="32" width="3" height="42" rx="1.5" fill="#5a3419" opacity=".55"/><rect x="14" y="10" width="50" height="22" rx="6" fill="#c9d6df"/><rect x="6" y="14" width="10" height="14" rx="3" fill="#a9bcc9"/><rect x="60" y="14" width="12" height="14" rx="3" fill="#8fa6b8"/><rect x="16" y="12" width="16" height="4" rx="2" fill="#fff" opacity=".6"/></g>',110,76);
-L92ART.glass=l92S('<g><path d="M30 12 L24 70 Q23 78 32 78 L88 78 Q97 78 96 70 L90 12 Z" fill="#bfe3f7" opacity=".5" stroke="#7fa3b8" stroke-width="3"/><rect x="34" y="46" width="52" height="30" fill="#4f9fd8" opacity=".55"/><path d="M34 46 Q60 54 86 46 L86 50 Q60 58 34 50 Z" fill="#8fd0f0" opacity=".8"/><line x1="42" y1="18" x2="40" y2="64" stroke="#fff" stroke-width="4" opacity=".9"/><line x1="50" y1="20" x2="49" y2="52" stroke="#fff" stroke-width="2" opacity=".5"/></g>',110,80);
-L92ART.ball=l92S('<g><defs><radialGradient id="bl" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ffe9a8"/><stop offset=".6" stop-color="#e89a3c"/><stop offset="1" stop-color="#a86a1e"/></radialGradient></defs><circle cx="60" cy="42" r="32" fill="url(#bl)"/><path d="M60 10 Q36 42 60 42 Q84 42 60 74 Q36 42 60 42 Q84 42 60 10" fill="none" stroke="#6e4410" stroke-width="3"/><line x1="52" y1="34" x2="40" y2="22" stroke="#fff" stroke-width="3" opacity=".55"/></g>',96,84);
-L92ART.pencil=l92S('<g transform="rotate(-16 60 45)"><rect x="16" y="30" width="88" height="14" fill="#ffd966"/><path d="M16 30 L8 37 L16 44 Z" fill="#e8a8b8"/><path d="M100 30 L106 37 L100 44 Z" fill="#e8dcc8"/><path d="M102 35 L112 39 L106 42 L100 39 Z" fill="#5a4a3a"/><rect x="20" y="32" width="80" height="3" fill="#d9a441" opacity=".5"/></g>',116,58);
-L92ART.spoon=l92S('<g transform="rotate(10 60 45)"><defs><linearGradient id="sp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c9d6df"/><stop offset=".5" stop-color="#eef4f8"/><stop offset="1" stop-color="#8fa6b8"/></linearGradient></defs><rect x="26" y="34" width="7" height="40" rx="3" fill="url(#sp)"/><path d="M10 10 Q46 -6 62 18 Q68 28 62 40 Q44 46 22 34 Q8 26 10 10 Z" fill="url(#sp)"/><line x1="26" y1="14" x2="40" y2="22" stroke="#fff" stroke-width="2" opacity=".8"/></g>',104,80);
-L92ART.chair=l92S('<g><rect x="34" y="28" width="52" height="8" rx="2" fill="#a86a2a"/><rect x="30" y="14" width="8" height="16" rx="2" fill="#8a5a2a"/><rect x="30" y="36" width="7" height="38" fill="#8a5a2a"/><rect x="83" y="36" width="7" height="38" fill="#8a5a2a"/><rect x="24" y="72" width="72" height="8" rx="2" fill="#7a4c22"/><rect x="36" y="30" width="48" height="6" fill="#6e3f1c" opacity=".5"/></g>',104,84);
-L92ART.book=l92S('<g transform="translate(6 8)"><rect x="42" y="18" width="6" height="60" rx="2" fill="#5a2a18"/><path d="M46 20 Q20 26 14 38 L14 76 Q20 66 46 70 Z" fill="#a02828"/><path d="M46 20 Q72 26 78 38 L78 76 Q72 66 46 70 Z" fill="#7a1f1f"/><rect x="20" y="38" width="18" height="2" fill="#e8dcc8" opacity=".7"/><rect x="20" y="44" width="18" height="2" fill="#e8dcc8" opacity=".7"/><rect x="52" y="38" width="18" height="2" fill="#e8dcc8" opacity=".7"/><path d="M44 16 Q42 8 46 4 L49 4 Q45 8 47 16 Z" fill="#ffd966"/></g>',100,84);
-L92ART.iron=l92S('<g><defs><linearGradient id="ir" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe9f0"/><stop offset=".45" stop-color="#8fa6b8"/><stop offset="1" stop-color="#5c7486"/></linearGradient></defs><path d="M18 64 L30 28 L90 28 L102 64 Z" fill="url(#ir)" stroke="#4a5f70" stroke-width="2"/><path d="M30 28 L27 18 L93 18 L90 28 Z" fill="#a9bcc9"/><rect x="36" y="50" width="48" height="8" fill="#5c7486" opacity=".6"/><line x1="34" y1="42" x2="74" y2="42" stroke="#fff" stroke-width="2" opacity=".4"/><circle cx="102" cy="16" r="3" fill="#ffd966" opacity=".9"/></g>',112,72);
+// ---- ЧУДЕСА-ТЕЛА ----
+L92ART.snow=l92S('<g><defs><radialGradient id="s1" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bfe3f7"/></radialGradient></defs>'+[0,60,120].map(a=>`<line x1="60" y1="46" x2="60" y2="12" stroke="#9cc9e4" stroke-width="5" stroke-linecap="round" transform="rotate(${a} 60 46)"/>`).join('')+[30,90,150].map(a=>`<line x1="60" y1="46" x2="60" y2="18" stroke="#d5ecf8" stroke-width="3" stroke-linecap="round" transform="rotate(${a} 60 46)" opacity=".8"/>`).join('')+'<circle cx="60" cy="46" r="5" fill="#ffffff"/></g>',120,92);
+L92ART.planet=l92S('<g><defs><radialGradient id="p1" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ffd9a0"/><stop offset=".55" stop-color="#e89a5c"/><stop offset="1" stop-color="#b06828"/></radialGradient></defs><ellipse cx="60" cy="52" rx="60" ry="14" fill="none" stroke="#e8cfa0" stroke-width="7" transform="rotate(-16 60 52)"/><circle cx="60" cy="52" r="26" fill="url(#p1)"/><path d="M52 40 Q60 34 68 38 M44 50 Q58 44 76 52" stroke="#c07030" stroke-width="4" fill="none" opacity=".7"/></g>',120,86);
+L92ART.comet=l92S('<g><path d="M10 76 Q50 40 92 20" stroke="#cfe4f2" stroke-width="7" stroke-linecap="round" opacity=".7"/><path d="M10 76 Q50 40 92 20" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity=".8"/><circle cx="96" cy="17" r="13" fill="#eaf6ff" stroke="#9cc9e4" stroke-width="2"/><circle cx="92" cy="13" r="4" fill="#ffffff"/></g>',112,88);
+L92ART.drop=l92S('<g><defs><linearGradient id="d1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf6ff"/><stop offset="1" stop-color="#4f9fd8"/></linearGradient></defs><path d="M60 8 Q76 30 78 44 Q80 66 60 68 Q40 66 42 44 Q44 30 60 8 Z" fill="url(#d1)"/><line x1="51" y1="30" x2="48" y2="48" stroke="#ffffff" stroke-width="3" opacity=".8" stroke-linecap="round"/></g>',100,76);
+L92ART.iceberg=l92S('<g><defs><linearGradient id="i1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#bfe3f5"/><stop offset="1" stop-color="#7fb7d8"/></linearGradient></defs><path d="M30 56 L22 76 L98 76 L86 56 L74 30 L46 34 Z" fill="url(#i1)" stroke="#5a8fb8" stroke-width="2"/><path d="M30 56 Q46 66 62 56 Q78 46 86 56" stroke="#ffffff" stroke-width="3" fill="none" opacity=".8"/><path d="M0 76 Q60 66 120 76 L120 90 L0 90 Z" fill="#4f9fd8" opacity=".8"/></g>',120,92);
+L92ART.meteor=l92S('<g><defs><linearGradient id="m1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#dfe9f0"/><stop offset=".6" stop-color="#8a9ab0"/><stop offset="1" stop-color="#5c6a80"/></linearGradient></defs><path d="M12 40 Q44 10 88 6" stroke="#ffb46b" stroke-width="6" stroke-linecap="round" opacity=".8"/><path d="M20 36 Q50 14 84 12" stroke="#ffd966" stroke-width="3" stroke-linecap="round" opacity=".9"/><path d="M86 6 Q98 4 104 14 Q96 20 86 14 Q80 8 86 6 Z" fill="url(#m1)" stroke="#4a5a6a" stroke-width="1.5"/><circle cx="90" cy="10" r="3" fill="#ffffff" opacity=".8"/></g>',112,60);
+// ---- ЧУДЕСА-ВЕЩЕСТВА ----
 L92ART.water=l92S('<g><path d="M60 6 Q76 26 78 40 Q80 60 60 62 Q40 60 42 40 Q44 26 60 6 Z" fill="#7fb7e8" stroke="#4f9fd8" stroke-width="2"/><line x1="52" y1="24" x2="48" y2="42" stroke="#fff" stroke-width="3" opacity=".8"/><path d="M12 76 Q36 70 60 76 Q84 82 108 76" stroke="#9cc9e4" stroke-width="2.5" fill="none" opacity=".7"/></g>',112,86);
-L92ART.sheet=l92S('<g><rect x="14" y="14" width="92" height="62" rx="4" fill="#bfe3f7" opacity=".55" stroke="#7fa3b8" stroke-width="3"/><line x1="24" y1="22" x2="34" y2="66" stroke="#fff" stroke-width="4" opacity=".9"/><line x1="34" y1="22" x2="44" y2="66" stroke="#fff" stroke-width="2" opacity=".5"/></g>',112,84);
-L92ART.wood=l92S('<g><defs><radialGradient id="wd" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#e8c48a"/><stop offset=".75" stop-color="#c08a4a"/><stop offset="1" stop-color="#8a5a2a"/></radialGradient></g><circle cx="60" cy="46" r="34" fill="url(#wd)" stroke="#6e3f1c" stroke-width="4"/><circle cx="60" cy="46" r="27" fill="none" stroke="#7a4c22" stroke-width="2" opacity=".7"/><circle cx="60" cy="46" r="19" fill="none" stroke="#8a5f2e" stroke-width="2" opacity=".6"/><circle cx="60" cy="46" r="10" fill="none" stroke="#6e4a22" stroke-width="2" opacity=".7"/><circle cx="60" cy="46" r="4" fill="#5a3419" opacity=".8"/></g>',104,92);
-L92ART.copper=l92S('<g><defs><linearGradient id="cp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8a878"/><stop offset=".5" stop-color="#c06a3a"/><stop offset="1" stop-color="#8a4a24"/></linearGradient></defs><rect x="24" y="30" width="72" height="30" rx="6" fill="url(#cp)" stroke="#6e3a1c" stroke-width="2"/><rect x="30" y="36" width="60" height="5" fill="#fff" opacity=".35"/><circle cx="66" cy="22" r="5" fill="none" stroke="#e8a878" stroke-width="2.5"/><circle cx="66" cy="22" r="2" fill="#c06a3a"/></g>',112,64);
-L92ART.gold=l92S('<g><defs><linearGradient id="gd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset=".55" stop-color="#ffd966"/><stop offset="1" stop-color="#d9a441"/></linearGradient></defs><rect x="22" y="36" width="76" height="30" rx="4" fill="url(#gd)" stroke="#b8860b" stroke-width="2"/><rect x="22" y="30" width="76" height="10" rx="3" fill="#ffe98a"/><rect x="30" y="42" width="52" height="4" fill="#fff" opacity=".5"/><path d="M30 66 L34 56 L38 66 Z M48 66 L52 56 L56 66 Z M66 66 L70 56 L74 66 Z" fill="#ffe98a"/></g>',112,70);
-L92ART.air=l92S('<g><circle cx="34" cy="40" r="14" fill="#cfe4f2" opacity=".6"/><circle cx="56" cy="28" r="10" fill="#cfe4f2" opacity=".5"/><circle cx="70" cy="42" r="12" fill="#cfe4f2" opacity=".55"/><circle cx="52" cy="52" r="9" fill="#cfe4f2" opacity=".4"/><path d="M20 62 L100 62" stroke="#bfd8ea" stroke-width="3" stroke-dasharray="8 6" opacity=".6"/><path d="M20 70 L100 70" stroke="#bfd8ea" stroke-width="2" stroke-dasharray="5 7" opacity=".4"/></g>',112,78);
-L92ART.oxygen=l92S('<g><circle cx="60" cy="42" r="26" fill="#9cc9e4" opacity=".5" stroke="#4f9fd8" stroke-width="3"/><text x="60" y="49" fill="#17324a" font-size="16" text-anchor="middle" font-weight="bold" font-family="Georgia,serif">O₂</text></g>',96,84);
-L92ART.melt=l92S('<g><g transform="translate(38 6)"><line x1="0" y1="-20" x2="0" y2="20" stroke="#bfe3f7" stroke-width="3.5" stroke-linecap="round" transform="rotate(0)"/><line x1="0" y1="-20" x2="0" y2="20" stroke="#bfe3f7" stroke-width="3.5" stroke-linecap="round" transform="rotate(60)"/><line x1="0" y1="-20" x2="0" y2="20" stroke="#bfe3f7" stroke-width="3.5" stroke-linecap="round" transform="rotate(120)"/><circle cx="0" cy="0" r="3" fill="#eaf6fd"/></g><ellipse cx="74" cy="66" rx="24" ry="8" fill="#4f9fd8" opacity=".75"/><path d="M50 62 Q74 70 98 60" stroke="#8fd0f0" stroke-width="2.5" fill="none" opacity=".8"/></g>',120,84);
-L92ART.thunder=l92S('<g><path d="M14 20 L96 20 L66 44 L86 44 L34 76 L52 44 L24 44 Z" fill="#8a9ab0" opacity=".85"/><circle cx="18" cy="16" r="6" fill="#8a9ab0"/><path d="M20 22 L38 30" stroke="#ffb400" stroke-width="3"/></g>',108,80);
-L92ART.rain=l92S('<g><ellipse cx="40" cy="26" rx="28" ry="16" fill="#6a7a90"/><ellipse cx="68" cy="20" rx="22" ry="13" fill="#7d8da5"/><ellipse cx="88" cy="30" rx="18" ry="11" fill="#5a6a80"/><path d="M30 40 L26 62 M44 40 L40 66 M58 42 L54 64 M72 42 L68 64 M86 42 L82 60" stroke="#4f9fd8" stroke-width="2.5" stroke-linecap="round" opacity=".85"/></g>',110,72);
-L92ART.rust=l92S('<g transform="rotate(-6 60 56)"><defs><linearGradient id="ru" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a5a3a"/><stop offset=".5" stop-color="#c98a5a"/><stop offset="1" stop-color="#6e4426"/></linearGradient></defs><ellipse cx="18" cy="34" rx="11" ry="5" fill="#8a5a3a"/><path d="M26 31 L100 44 L106 56 L26 44 Z" fill="url(#ru)"/><ellipse cx="46" cy="40" rx="9" ry="6" fill="#a86a3a" opacity=".9"/><ellipse cx="70" cy="44" rx="7" ry="5" fill="#c47a44" opacity=".85"/><ellipse cx="90" cy="48" rx="5" ry="3.5" fill="#7a4c2e"/><line x1="30" y1="33" x2="96" y2="46" stroke="#d8a878" stroke-width="1.5" opacity=".5"/></g>',120,66);
-L92ART.bolt=l92S('<g><defs><linearGradient id="bt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset="1" stop-color="#ffb400"/></linearGradient></defs><circle cx="96" cy="14" r="18" fill="#8a9ab0" opacity=".5"/><path d="M64 8 L46 10 L62 36 L40 36 L72 84 L58 44 L78 42 L64 8 Z" fill="url(#bt)" stroke="#d98a00" stroke-width="1.5"/></g>',110,92);
-L92ART.boil=l92S('<g><path d="M18 30 L14 76 Q14 82 20 82 L100 82 Q106 82 106 76 L102 30 Z" fill="#cfe8fb" opacity=".6" stroke="#7fa3b8" stroke-width="3"/><rect x="22" y="52" width="76" height="28" fill="#4f9fd8" opacity=".7"/><circle cx="46" cy="48" r="4" fill="#fff" opacity=".9" class="wv-rise" style="animation-delay:.1s"/><circle cx="64" cy="44" r="5" fill="#fff" opacity=".9" class="wv-rise2"/><circle cx="80" cy="50" r="3.5" fill="#fff" opacity=".9" class="wv-rise3"/><path d="M58 14 Q66 6 74 14 M38 18 Q46 10 54 18 M84 20 Q92 12 100 20" stroke="#fff" stroke-width="2.5" fill="none" opacity=".8" class="wv-flick"/></g>',112,88);
-L92ART.fly=l92S('<g><path d="M12 74 Q50 10 96 26" stroke="#9ec0a8" stroke-width="2" stroke-dasharray="6 5" fill="none"/><circle cx="80" cy="34" r="14" fill="#e89a3c" stroke="#a86a1e" stroke-width="2"/><path d="M80 20 Q68 30 80 34 Q92 38 80 48 Q68 38 80 20" stroke="#6e4410" stroke-width="2" fill="none"/><text x="58" y="14" fill="#9ec0a8" font-size="8">путь мяча</text></g>',112,84);
-L92ART.rainbow=l92S('<g><path d="M18 70 A46 46 0 0 1 102 70" stroke="#ff5a5a" stroke-width="7" fill="none"/><path d="M22 70 A42 42 0 0 1 98 70" stroke="#ffb400" stroke-width="6" fill="none"/><path d="M26 70 A38 38 0 0 1 94 70" stroke="#ffe14d" stroke-width="6" fill="none"/><path d="M30 70 A34 34 0 0 1 90 70" stroke="#7fd1a0" stroke-width="6" fill="none"/><path d="M34 70 A30 30 0 0 1 86 70" stroke="#4f9fd8" stroke-width="6" fill="none"/><rect x="0" y="70" width="120" height="16" fill="#5a7a3a"/></g>',120,88);
-L92ART.candle=l92S('<g><rect x="44" y="34" width="26" height="40" rx="4" fill="#f2e8d0" stroke="#d9c9a0" stroke-width="2"/><path d="M57 10 Q50 20 57 34 M57 10 Q64 20 57 34 Z" fill="#ffd966"/><ellipse cx="57" cy="10" rx="5" ry="3" fill="#fff3b0" class="wv-flick"/><rect x="50" y="40" width="14" height="3" fill="#d9a441" opacity=".5"/><path d="M20 76 L100 76 M26 80 L94 80" stroke="#8a6a2f" stroke-width="4"/></g>',112,86);
+L92ART.gold=l92S('<g><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset=".5" stop-color="#ffd966"/><stop offset="1" stop-color="#d9a441"/></linearGradient></defs><path d="M40 56 L40 40 L80 40 L80 56 Z" fill="url(#g1)"/><path d="M40 40 L44 30 L76 30 L80 40 Z" fill="#ffe98a"/><path d="M36 56 L40 48 L80 48 L84 56 Z" fill="#e8b03c"/><circle cx="96" cy="26" r="10" fill="#ffd966" opacity=".6"/><line x1="96" y1="18" x2="96" y2="10" stroke="#ffd966" stroke-width="2.5"/><line x1="90" y1="22" x2="83" y2="20" stroke="#ffd966" stroke-width="2"/></g>',110,70);
+L92ART.oxygen=l92S('<g><circle cx="60" cy="46" r="26" fill="#9cc9e4" opacity=".45" stroke="#4f9fd8" stroke-width="3"/><text x="60" y="54" fill="#17324a" font-size="17" text-anchor="middle" font-weight="bold" font-family="Georgia,serif">O₂</text><circle cx="20" cy="70" r="7" fill="#9cc9e4" opacity=".4"/><circle cx="100" cy="66" r="5" fill="#9cc9e4" opacity=".3"/></g>',110,84);
+L92ART.air=l92S('<g><circle cx="34" cy="40" r="14" fill="#cfe4f2" opacity=".6"/><circle cx="56" cy="28" r="10" fill="#cfe4f2" opacity=".5"/><circle cx="70" cy="42" r="12" fill="#cfe4f2" opacity=".55"/><circle cx="52" cy="52" r="9" fill="#cfe4f2" opacity=".4"/><path d="M20 66 Q60 58 100 66" stroke="#bfd8ea" stroke-width="3" fill="none" opacity=".7"/></g>',110,78);
+L92ART.ice=l92S('<g><rect x="26" y="28" width="58" height="44" rx="8" fill="#d5ecf8" opacity=".6" stroke="#7fb7d8" stroke-width="3"/><line x1="36" y1="36" x2="36" y2="64" stroke="#fff" stroke-width="4" opacity=".9"/><line x1="44" y1="34" x2="44" y2="58" stroke="#fff" stroke-width="2" opacity=".5"/><rect x="18" y="72" width="74" height="4" rx="2" fill="#cfe4f2" opacity=".5"/></g>',100,82);
+L92ART.diamond=l92S('<g><defs><linearGradient id="dm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#bfe8f5"/><stop offset="1" stop-color="#8fd0e8"/></linearGradient></defs><path d="M60 6 L96 40 L60 90 L24 40 Z" fill="url(#dm)" stroke="#5ab8d8" stroke-width="2"/><path d="M60 6 L60 90 M24 40 L96 40" stroke="#ffffff" stroke-width="1.5" opacity=".6"/><line x1="42" y1="28" x2="36" y2="52" stroke="#ffffff" stroke-width="3" opacity=".9"/></g>',110,96);
+// ---- ЧУДЕСА-ЯВЛЕНИЯ ----
+L92ART.bolt=l92S('<g><defs><linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset="1" stop-color="#ffb400"/></linearGradient></defs><circle cx="96" cy="14" r="18" fill="#8a9ab0" opacity=".45"/><circle cx="90" cy="10" r="12" fill="#aab8c8" opacity=".5"/><path d="M62 6 L42 8 L58 36 L36 36 L70 88 L56 44 L78 42 L62 6 Z" fill="url(#b1)" stroke="#d98a00" stroke-width="1.5"/></g>',110,94);
+L92ART.rainbow=l92S('<g><path d="M18 72 A46 46 0 0 1 102 72" stroke="#ff5a5a" stroke-width="7" fill="none"/><path d="M22 72 A42 42 0 0 1 98 72" stroke="#ffb400" stroke-width="6" fill="none"/><path d="M26 72 A38 38 0 0 1 94 72" stroke="#ffe14d" stroke-width="6" fill="none"/><path d="M30 72 A34 34 0 0 1 90 72" stroke="#7fd1a0" stroke-width="6" fill="none"/><path d="M34 72 A30 30 0 0 1 86 72" stroke="#4f9fd8" stroke-width="6" fill="none"/><path d="M38 72 A26 26 0 0 1 82 72" stroke="#8a5ad8" stroke-width="6" fill="none"/><rect x="0" y="72" width="120" height="16" fill="#5a7a3a"/><circle cx="100" cy="20" r="12" fill="#ffd966"/></g>',120,90);
+L92ART.aurora=l92S('<g><rect x="0" y="0" width="120" height="70" fill="#0a1a2e"/><path d="M10 62 Q30 30 50 56 Q70 20 90 52 Q105 34 118 48 L118 70 L10 70 Z" fill="#7fd1a0" opacity=".5"/><path d="M6 66 Q26 42 48 60 Q68 32 88 58 Q104 44 116 54 L116 70 L6 70 Z" fill="#4f9fd8" opacity=".45"/><path d="M8 70 Q30 50 52 64 Q74 44 96 60 Q108 52 116 60 L116 70 L8 70 Z" fill="#d98ae8" opacity=".35"/><circle cx="20" cy="16" r="3" fill="#fff" opacity=".8"/><circle cx="60" cy="10" r="2" fill="#fff" opacity=".6"/><circle cx="95" cy="18" r="2.5" fill="#fff" opacity=".7"/><rect x="0" y="70" width="120" height="16" fill="#12263a"/></g>',120,88);
+L92ART.geyser=l92S('<g><rect x="0" y="66" width="120" height="20" fill="#7a5a3a"/><path d="M52 66 L48 44 L72 44 L68 66 Z" fill="#8a6a4a" stroke="#6a4e2e" stroke-width="2"/><path d="M60 44 L60 20" stroke="#bfe3f7" stroke-width="6" stroke-linecap="round"/><path d="M60 20 Q48 14 54 6 M60 20 Q72 14 66 6" stroke="#cfe8fb" stroke-width="3" stroke-linecap="round" fill="none"/><circle cx="60" cy="12" r="4" fill="#eaf6ff"/><path d="M44 56 Q50 50 56 54 M66 54 Q72 50 78 54" stroke="#e8f6fd" stroke-width="2" fill="none" opacity=".8"/></g>',120,88);
+L92ART.volcano=l92S('<g><path d="M14 88 L44 34 Q50 24 60 20 Q70 24 76 34 L106 88 Z" fill="#7a4a2e" stroke="#5a3419" stroke-width="2"/><path d="M44 34 Q50 28 60 24 Q70 28 76 34 L68 50 Q60 44 52 50 Z" fill="#ff8a3a"/><path d="M52 50 Q60 44 68 50 L64 60 Q60 56 56 60 Z" fill="#ffb46b"/><path d="M60 20 L60 2 M56 12 L44 6 M64 12 L78 4" stroke="#ffd966" stroke-width="3" stroke-linecap="round" opacity=".9" class="none"/><rect x="0" y="84" width="120" height="8" fill="#4a6230"/></g>',120,92);
+L92ART.thunder=l92S('<g><path d="M16 30 L104 30 L96 48 L112 48 L52 88 L70 50 L38 50 Z" fill="#5a6a80" opacity=".85"/><ellipse cx="26" cy="26" rx="14" ry="9" fill="#7d8da5"/><ellipse cx="66" cy="22" rx="12" ry="8" fill="#8a9ab0"/><path d="M52 48 L60 60 L50 60 L58 78 L64 58 L72 58 Z" fill="#ffd966" opacity=".9"/></g>',120,92);
+L92ART.melt=l92S('<g><g transform="translate(38 8)">'+[0,60,120].map(a=>`<line x1="0" y1="-20" x2="0" y2="20" stroke="#bfe3f7" stroke-width="3.5" stroke-linecap="round" transform="rotate(${a})"/>`).join('')+'<circle cx="0" cy="0" r="3" fill="#eaf6fd"/></g><ellipse cx="76" cy="66" rx="24" ry="8" fill="#4f9fd8" opacity=".7"/><path d="M52 60 Q76 70 100 58" stroke="#8fd0f0" stroke-width="2.5" fill="none" opacity=".9"/></g>',120,84);
+L92ART.rain=l92S('<g><ellipse cx="38" cy="24" rx="26" ry="15" fill="#6a7a90"/><ellipse cx="66" cy="19" rx="20" ry="12" fill="#7d8da5"/><ellipse cx="88" cy="28" rx="17" ry="11" fill="#5a6a80"/><path d="M28 38 L24 60 M44 38 L40 64 M58 40 L54 62 M72 40 L68 62 M86 40 L82 60" stroke="#4f9fd8" stroke-width="2.5" stroke-linecap="round" opacity=".85"/></g>',108,70);
+L92ART.boil=l92S('<g><path d="M22 26 L18 72 Q18 80 24 80 L96 80 Q102 80 102 72 L98 26 Z" fill="#cfe8fb" opacity=".55" stroke="#7fa3b8" stroke-width="3"/><rect x="26" y="50" width="68" height="28" fill="#4f9fd8" opacity=".75"/><circle cx="46" cy="46" r="4" fill="#fff" opacity=".9" class="wv-rise"/><circle cx="64" cy="42" r="5" fill="#fff" opacity=".9" class="wv-rise2"/><circle cx="80" cy="48" r="3.5" fill="#fff" opacity=".9" class="wv-rise3"/><path d="M56 12 Q64 4 72 12 M36 16 Q44 8 52 16" stroke="#fff" stroke-width="2.5" fill="none" opacity=".8" class="wv-flick"/></g>',112,88);
+L92ART.flycomet=l92S('<g><path d="M8 72 Q44 18 88 12" stroke="#cfe4f2" stroke-width="3" stroke-dasharray="7 6" fill="none" opacity=".9"/><circle cx="84" cy="14" r="11" fill="#eaf6ff" stroke="#9cc9e4" stroke-width="2"/><path d="M70 26 Q52 16 40 8" stroke="#ffd966" stroke-width="2" fill="none" opacity=".8"/></g>',100,80);
+L92ART.snowfall=l92S('<g><rect x="0" y="0" width="120" height="70" fill="#8aa0b8"/><rect x="0" y="70" width="120" height="18" fill="#d5e8f5"/><g transform="translate(30 30)">'+[0,60,120].map(a=>`<line x1="0" y1="-10" x2="0" y2="10" stroke="#fff" stroke-width="2" transform="rotate(${a})"/>`).join('')+'</g><g transform="translate(70 20)">'+[0,60,120].map(a=>`<line x1="0" y1="-9" x2="0" y2="9" stroke="#fff" stroke-width="2" transform="rotate(${a})"/>`).join('')+'</g><g transform="translate(95 44)">'+[0,60,120].map(a=>`<line x1="0" y1="-8" x2="0" y2="8" stroke="#fff" stroke-width="2" transform="rotate(${a})"/>`).join('')+'</g><g transform="translate(52 52)">'+[0,60,120].map(a=>`<line x1="0" y1="-8" x2="0" y2="8" stroke="#fff" stroke-width="2" transform="rotate(${a})"/>`).join('')+'</g></g>',120,90);
+L92ART.storm=l92S('<g><rect x="0" y="0" width="120" height="70" fill="#46566e"/><ellipse cx="30" cy="22" rx="22" ry="13" fill="#57677f"/><ellipse cx="62" cy="17" rx="18" ry="11" fill="#64748c"/><ellipse cx="90" cy="24" rx="20" ry="12" fill="#4a5a72"/><path d="M30 34 L40 46 L34 46 L42 60 L48 44 L56 44 L30 34 Z" fill="#ffd966" opacity=".95" class="wv-flick"/><path d="M72 36 L80 48 L75 48 L82 60 L87 46 L94 46 Z" fill="#ffe98a" opacity=".9" class="wv-flick"/><rect x="0" y="70" width="120" height="18" fill="#2e3a4e"/></g>',120,90);
 function l92Art(id,w,h){
-  const s=L92ART[id]||L92ART.nail;
+  const s=L92ART[id]||L92ART.snow;
   if(!w) return s;
   const m=s.match(/viewBox="([^"]+)"/);
   const vb=m?m[1]:'0 0 120 90';
   const p=vb.split(' ').map(Number); const vw=p[2]-p[0]||120, vh=p[3]-p[1]||90;
   let W=w, H=h||Math.round(w*vh/vw);
-  if(h && w){ const k=Math.min(w/vw,h/vh); W=Math.round(vw*k); H=Math.round(vh*k); }
+  if(h&&w){ const k=Math.min(w/vw,h/vh); W=Math.round(vw*k); H=Math.round(vh*k); }
   const inner=s.replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'');
   return `<svg width="${W}" height="${H}" viewBox="${vb}" style="display:block;max-width:100%">${inner}</svg>`;
 }
+function l92B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
+function l92Card(tag,emoji,title,lines,color){
+  if(!Array.isArray(lines)) lines=[lines];
+  let ls='';
+  for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:12.5px;color:#d8ecff;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
+  return `<div style="flex:1;min-width:150px;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><div style="font-size:22px">${emoji}</div><div style="flex:1"><div style="font-size:11px;color:${color};letter-spacing:.5px">${tag}</div><div style="font-size:15px;color:#fff;font-weight:bold;line-height:1.2">${title}</div></div></div>${ls}</div>`;
+}
 function l92Pic(e,size){
-  // карточка-витрина: предмет на «постаменте» с этикеткой
   const [kind,word,desc,art]=e;
   const col=kind==='body'?'#7fd1a0':kind==='sub'?'#ffd966':'#ff8a6a';
   const w=size||76;
   const bg=kind==='body'?'rgba(127,208,160,.09)':kind==='sub'?'rgba(255,217,102,.09)':'rgba(255,138,106,.09)';
   return `<div style="flex:1;min-width:${w}px;max-width:${w+6}px;background:${bg};border:1px solid ${col}55;border-radius:14px 14px 8px 8px;padding:6px 4px 4px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.35)">
-    <div style="height:${w*0.62}px;display:flex;align-items:flex-end;justify-content:center;position:relative">
+    <div style="height:${w*0.58}px;display:flex;align-items:flex-end;justify-content:center;position:relative">
       <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:70%;height:7px;background:rgba(0,0,0,.4);border-radius:50%;filter:blur(2px)"></div>
       <div style="position:relative;z-index:1;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))">${l92Art(art,w-16)}</div>
     </div>
     <div style="background:${col}22;border-top:1px solid ${col}44;border-radius:0 0 6px 6px;padding:2px 0;margin-top:2px">
       <div style="font-size:10.5px;color:#fff;font-weight:bold">${word}</div>
-      <div style="font-size:7.5px;color:${col};letter-spacing:.5px">${kind==='body'?'ТЕЛО':kind==='sub'?'ВЕЩЕСТВО':'ЯВЛЕНИЕ'}</div>
+      <div style="font-size:7.5px;color:${col};letter-spacing:.5px">${kind==='body'?'ЧУДО-ТЕЛО':kind==='sub'?'ЧУДО-ВЕЩЕСТВО':'ЧУДО-ЯВЛЕНИЕ'}</div>
     </div>
   </div>`;
 }
-function l92Shelf(e,width){
-  // полка: предметы e[0..], показываем до 4, масштаб
-  return `<div style="display:flex;justify-content:center;gap:3px;align-items:flex-end;flex-wrap:wrap;max-width:${width||330}px;background:linear-gradient(180deg,rgba(60,44,20,.35),rgba(20,12,4,.5));border:1px solid #5a4432;border-radius:10px;padding:8px 4px 0">
-    ${e.map((x,i)=>`<div style="width:72px;text-align:center">${l92Art(x[3],66,50)}<div style="font-size:8.5px;color:#d8b88a;margin-top:-2px">${x[1]}</div></div>`).join('')}
-  </div>`;
-}
-function l92B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
 function l92Doors(hot){
-  const doors=[['Зал Тел','#7fd1a0','0'],['Зал Веществ','#ffd966','1'],['Зал Явлений','#ff8a6a','2']];
+  const doors=[['Чудеса-ТЕЛА','#7fd1a0','0'],['Чудеса-ВЕЩЕСТВА','#ffd966','1'],['Чудеса-ЯВЛЕНИЯ','#ff8a6a','2']];
   return `<div style="display:flex;gap:6px;justify-content:center;margin:6px auto">
-    ${doors.map((d,i)=>`<div class="wv-morph" style="flex:1;max-width:96px;padding:8px 4px;text-align:center;border-radius:12px 12px 4px 4px;border:2px solid ${d[1]};background:linear-gradient(180deg,${d[1]}2b,${d[1]}0a);${hot===i?'box-shadow:0 0 14px '+d[1]+'99;transform:scale(1.05)':''}">
+    ${doors.map((d,i)=>`<div class="wv-morph" style="flex:1;max-width:104px;padding:8px 4px;text-align:center;border-radius:12px 12px 4px 4px;border:2px solid ${d[1]};background:linear-gradient(180deg,${d[1]}2b,${d[1]}0a);${hot===i?'box-shadow:0 0 14px '+d[1]+'99;transform:scale(1.05)':''}">
       <div style="font-size:10px;color:#d8ecff">${d[0]}</div>
-      <div style="font-size:18px;margin-top:2px">${hot===i?'🚪➡️':'🚪'}</div>
+      <div style="font-size:18px;margin-top:2px">${hot===i?'🚀➡️':'🌍'}</div>
     </div>`).join('')}
   </div>`;
 }
@@ -6314,167 +6318,158 @@ function visL92(el){
     const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
     let h='';
     if(step===0){
-      h=col(`<div style="font-size:20px;color:#c9b28a;letter-spacing:1px">🌟 ЛЕГЕНДА · Эпизод 1</div>`+
-        big('Мастерская Архимеда')+
-        `<div style="font-size:38px" class="wv-swing">🔨⚒️</div>`+
-        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:12px 14px;max-width:310px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
-        В мастерской Архимеда на верстаке лежат гвозди и молотки, слитки железа… а за окном сверкает молния. Архимед придумал разложить всё по трём полкам науки: <b>Тела, Вещества, Явления</b>. Помоги ему!</div>`+
-        `<div style="background:rgba(127,183,216,.09);border:1.5px solid #7fb7d855;border-radius:14px;padding:10px 12px;max-width:320px;text-align:left">
-          <div style="font-size:12px;color:#7fb7d8;font-weight:bold">📖 ИЗ УЧЕБНИКА · ЧТО ТАКОЕ ФИЗИКА</div>
-          <div style="font-size:12.5px;color:#d8ecff;line-height:1.6;margin-top:4px">Слово «физика» — от греческого <b>«фюсис»</b> = природа. Физика изучает, из чего состоят тела и какие <b>явления</b> с ними происходят.</div>
+      h=col(`<div style="font-size:20px;color:#c9b28a;letter-spacing:1px">🌟 ЛЕГЕНДА · Атлас чудес</div>`+
+        big('Экспедиция Архимеда')+
+        `<div style="font-size:40px" class="wv-swing">🌌</div>`+
+        `<div style="background:rgba(127,183,216,.09);border:1.5px solid #7fb7d855;border-radius:16px;padding:12px 14px;max-width:320px;text-align:left">
+          <div style="font-size:14px;color:#e8dcc8;line-height:1.7">Архимед собрал экспедицию: от снежных вершин до вулканов, от дна океана до звёзд! В его рюкзаке — <b>«Атлас чудес природы»</b> с тремя разделами: <span style="color:#7fd1a0">Чудеса-тела</span>, <span style="color:#ffd966">Чудеса-вещества</span> и <span style="color:#ff8a6a">Чудеса-явления</span>. Помоги занести каждое чудо в свой раздел!</div>
         </div>`);
     } else if(step===1){
-      h=col(l92B('ПЛАН МАСТЕРСКОЙ','#c9b28a')+
-        big('Три полки Архимеда')+
+      h=col(l92B('ТРИ РАЗДЕЛА АТЛАСА','#c9b28a')+
+        big('Три вида чудес')+
         `<div style="display:flex;flex-direction:column;gap:8px;max-width:340px">
-          <div style="display:flex;align-items:center;gap:8px;background:rgba(127,208,160,.08);border:1px solid #7fd1a044;border-radius:12px;padding:6px 8px">${l92Art('nail',44,26)}<div style="text-align:left"><div style="font-size:13px;color:#7fd1a0;font-weight:bold">Зал Тел</div><div style="font-size:10.5px;color:#9ec0a8">гвоздь, мяч, стакан — можно взять</div></div></div>
-          <div style="display:flex;align-items:center;gap:8px;background:rgba(255,217,102,.08);border:1px solid #ffd96644;border-radius:12px;padding:6px 8px">${l92Art('iron',48,30)}<div style="text-align:left"><div style="font-size:13px;color:#ffd966;font-weight:bold">Зал Веществ</div><div style="font-size:10.5px;color:#9ec0a8">железо, вода, стекло — материалы</div></div></div>
-          <div style="display:flex;align-items:center;gap:8px;background:rgba(255,138,106,.08);border:1px solid #ff8a6a44;border-radius:12px;padding:6px 8px">${l92Art('bolt',46,34)}<div style="text-align:left"><div style="font-size:13px;color:#ff8a6a;font-weight:bold">Зал Явлений</div><div style="font-size:10.5px;color:#9ec0a8">гром, дождь, молния — процессы</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(127,208,160,.07);border:1px solid #7fd1a044;border-radius:14px;padding:8px 10px">${l92Art('snow',52,40)}<div style="text-align:left"><div style="font-size:13px;color:#7fd1a0;font-weight:bold">Чудеса-ТЕЛА</div><div style="font-size:10.5px;color:#9ec0a8">снежинка, планета, комета — их можно увидеть и измерить</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(255,217,102,.07);border:1px solid #ffd96644;border-radius:14px;padding:8px 10px">${l92Art('water',52,40)}<div style="text-align:left"><div style="font-size:13px;color:#ffd966;font-weight:bold">Чудеса-ВЕЩЕСТВА</div><div style="font-size:10.5px;color:#9ec0a8">вода, золото, кислород — материалы природы</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(255,138,106,.07);border:1px solid #ff8a6a44;border-radius:14px;padding:8px 10px">${l92Art('bolt',46,38)}<div style="text-align:left"><div style="font-size:13px;color:#ff8a6a;font-weight:bold">Чудеса-ЯВЛЕНИЯ</div><div style="font-size:10.5px;color:#9ec0a8">молния, радуга, гейзер — процессы природы</div></div></div>
         </div>`);
     } else if(step===2){
-      h=col(l92B('ЭКСКУРСИЯ · ЗАЛ 1','#7fd1a0')+
-        big('Зал Тел: полка предметов')+
-        `<div style="background:linear-gradient(180deg,rgba(60,44,20,.3),rgba(20,12,4,.4));border:1px solid #5a4432;border-radius:12px;padding:10px 6px 0;max-width:340px">
-          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:2px;align-items:flex-end">
-            ${[['body','гвоздь','','nail'],['body','молоток','','hammer'],['body','стакан','','glass'],['body','мяч','','ball'],['body','книга','','book']].map(x=>`<div style="width:64px;text-align:center">${l92Art(x[3],60,46)}<div style="font-size:8.5px;color:#d8b88a">${x[1]}</div></div>`).join('')}
-          </div>
-          <div style="height:6px;background:linear-gradient(90deg,#4a3418,#8a6a3a,#4a3418);border-radius:3px;margin-top:4px"></div>
+      h=col(l92B('СТРАНИЦА 1','#7fd1a0')+
+        big('Чудеса-тела: небесные и земные')+
+        `<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:flex-end;max-width:340px;background:rgba(20,30,50,.35);border:1px solid #3a5a7a44;border-radius:16px;padding:12px 6px 4px">
+          ${[['snow','снежинка'],['planet','планета'],['comet','комета'],['drop','капля'],['iceberg','айсберг']].map(x=>`<div style="text-align:center;width:64px">${l92Art(x[0],58,44)}<div style="font-size:8.5px;color:#cfe4f2;margin-top:2px">${x[1]}</div></div>`).join('')}
+          <div style="height:5px;width:92%;background:linear-gradient(90deg,#3a5a7a,#6a9ac0,#3a5a7a);border-radius:3px;margin:4px 0 2px"></div>
         </div>`+
-        sml('у каждого тела есть форма, размер и масса — его можно взять, измерить и взвесить!'));
+        sml('тело — любое чудо, которое можно увидеть, потрогать, измерить: от капли до планеты!'));
     } else if(step===3){
-      h=col(l92B('РАССМОТРИМ ГВОЗДЬ','#7fd1a0')+
-        big('Анатомия гвоздя')+
-        `<div style="background:#0f1f16;border:1px solid #2c4a38;border-radius:14px;padding:10px;max-width:330px">${l92Art('nail',300,52)}</div>`+
-        `<div style="display:flex;flex-direction:column;gap:4px;max-width:320px">
-          ${[['шляпка','по ней бьют молотком'],['стержень','гладкий блестящий металл'],['остриё','входит в доску']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(127,208,160,.07);border:1px solid #7fd1a033;border-radius:8px;padding:4px 10px"><b style="font-size:12px;color:#fff;width:64px">${f[0]}</b><span style="font-size:11px;color:#9ec0a8">${f[1]}</span></div>`).join('')}
+      h=col(l92B('СНЕЖИНКА-РЕКОРДСМЕН','#7fd1a0')+
+        big('Ни одной одинаковой снежинки')+
+        `<div style="text-align:center;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))">${l92Art('snow',200,154)}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
+          ${[['❄️','Каждая — кристалл льда','у неё всегда 6 лучей — шестиугольная симметрия!'],['📏','Снежинку можно измерить','размер ~5 мм, масса ~1 мг — но её можно рассмотреть'],['❓','Тело или вещество?','снежинка — ТЕЛО: кусочек льда с формой и размером']].map(f=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(127,208,160,.06);border:1px solid #7fd1a033;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:15px">${f[0]}</span><span style="font-size:12px;color:#d8ecff"><b style="color:#fff">${f[1]}</b><br><span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
         </div>`);
     } else if(step===4){
-      h=col(l92B('ЗАЛ 1 · ПОЛЕЗНО ЗНАТЬ','#7fd1a0')+
-        big('Одно тело — разные материалы')+
-        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;max-width:340px">
-          ${l92Pic(['body','молоток','','hammer'],120)}
-          ${l92Pic(['body','книга','','book'],120)}
-        </div>`+
-        sml('молоток: деревянная ручка + стальная головка. Книга: бумага + картон. Тело может соединять разные вещества!'));
+      h=col(l92B('САМОЕ БОЛЬШОЕ ТЕЛО','#7fd1a0')+
+        big('Планета — тоже тело!')+
+        `<div style="text-align:center">${l92Art('planet',200,144)}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
+          ${[['🌍','Земля — гигантское тело','диаметр 12 742 км, масса 6·10²⁴ кг!'],['🪐','У Сатурна есть кольца','изо льда и камней — тоже тела'],['📐','Тела можно измерять','от миллиметра до миллионов километров']].map(f=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(127,208,160,.06);border:1px solid #7fd1a033;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:15px">${f[0]}</span><span style="font-size:12px;color:#d8ecff"><b style="color:#fff">${f[1]}</b><br><span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
+        </div>`);
     } else if(step===5){
-      h=col(l92B('ЭКСКУРСИЯ · ЗАЛ 2','#ffd966')+
-        big('Зал Веществ: витрина')+
-        `<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:340px">
-          ${l92Pic(['sub','Железо','металл для гвоздей и кораблей','iron'],100)}
-          ${l92Pic(['sub','Вода','жидкость: из неё лёд и пар','water'],100)}
-          ${l92Pic(['sub','Дерево','мебель и бумага','wood'],100)}
+      h=col(l92B('СТРАНИЦА 2','#ffd966')+
+        big('Чудеса-вещества')+
+        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:340px">
+          ${l92Pic(['sub','Вода','жидкость: без неё нет жизни','water'],104)}
+          ${l92Pic(['sub','Золото','металл: блестит, не ржавеет','gold'],104)}
+          ${l92Pic(['sub','Кислород','газ: им мы дышим','oxygen'],104)}
         </div>`+
-        sml('вещества — «строительные материалы» природы. Из них делают тела!'));
+        sml('вещества — «материалы природы»: из них состоят все тела!'));
     } else if(step===6){
-      h=col(l92B('ГЛАВНЫЙ СЕКРЕТ','#ffd966')+
-        big('Одно вещество — много тел')+
-        `<div style="background:rgba(255,217,102,.07);border:1.5px solid #ffd96655;border-radius:14px;padding:8px;max-width:330px">
-          <div style="display:flex;align-items:center;gap:6px;justify-content:center;margin-bottom:6px"><span style="font-size:13px;color:#ffd966;font-weight:bold">ВЕЩЕСТВО: ЖЕЛЕЗО</span>${l92Art('iron',60,38)}</div>
-          <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center">
-            ${[['nail','винт'],['hammer','молоток'],['spoon','ложка'],['chair','каркас'],['fly','...']].map(x=>`<div style="border:1px solid #ffd96644;border-radius:8px;padding:3px 6px;text-align:center;background:#00000033">${l92Art(x[0],34,26)}<div style="font-size:8px;color:#d8c088">${x[1]}</div></div>`).join('')}
-          </div>
+      h=col(l92B('ВОДА-ЧАРОДЕЙКА','#ffd966')+
+        big('Одно вещество — три лица')+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;max-width:340px">
+          ${l92Pic(['body','Снежинка','твёрдая вода','snow'],92)}
+          <div style="font-size:20px" class="wv-flick">↔</div>
+          ${l92Pic(['sub','Вода','жидкая','water'],92)}
+          <div style="font-size:20px" class="wv-flick">↔</div>
+          ${l92Pic(['ev','Пар','газообразная','boil'],92)}
         </div>`+
-        sml('из железа делают и гвозди, и молотки, и ложки — вещество одно, тел много!'));
+        `<div style="background:rgba(255,217,102,.07);border:1px solid #ffd96644;border-radius:12px;padding:8px 12px;max-width:330px;text-align:left;font-size:12px;color:#e8dcc8;line-height:1.6">Снежинка и пар — РАЗНЫЕ тела, но сделаны из ОДНОГО вещества — воды! Тело — предмет, вещество — материал. Как в наших задачках!</div>`);
     } else if(step===7){
-      h=col(l92B('ЭКСКУРСИЯ · ЗАЛ 3','#ff8a6a')+
-        big('Зал Явлений: небо за окном')+
+      h=col(l92B('СТРАНИЦА 3','#ff8a6a')+
+        big('Чудеса-явления: небо и земля')+
         `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;align-items:flex-end;max-width:340px">
-          <div style="text-align:center"><div class="wv-flick">${l92Art('bolt',110,60)}</div><div style="font-size:9px;color:#ffd9a0">молния мигает</div></div>
-          <div style="text-align:center;position:relative">${l92Art('rain',100,50)}
-            <div style="position:absolute;left:18px;top:-6px;color:#9cc9e4;font-size:13px" class="wv-rise">💧</div>
-            <div style="position:absolute;left:46px;top:-10px;color:#9cc9e4;font-size:10px" class="wv-rise2">💧</div>
-            <div style="position:absolute;left:74px;top:-4px;color:#9cc9e4;font-size:12px" class="wv-rise3">💧</div>
-            <div style="font-size:9px;color:#ffd9a0">дождь идёт</div></div>
-          <div style="text-align:center"><div class="wv-pulse">${l92Art('rainbow',120,60)}</div><div style="font-size:9px;color:#ffd9a0">радуга</div></div>
+          <div style="text-align:center"><div class="wv-flick">${l92Art('bolt',90,72)}</div><div style="font-size:8.5px;color:#ffd9a0">молния</div></div>
+          <div style="text-align:center;position:relative">${l92Art('rain',84,52)}<div style="font-size:9px;color:#ffd9a0">дождь</div></div>
+          <div style="text-align:center"><div class="wv-pulse">${l92Art('rainbow',100,72)}</div><div style="font-size:8.5px;color:#ffd9a0">радуга</div></div>
         </div>`+
-        sml('явления — это процессы: они длятся, в них что-то меняется.'));
+        sml('явления — процессы: они длятся, в них что-то меняется!'));
     } else if(step===8){
-      h=col(l92B('ЗАЛ 3 · КАК РАСПОЗНАТЬ','#ff8a6a')+
-        big('Признаки явления')+
-        `<div style="display:flex;justify-content:center">${l92Art('melt',140,70)}</div>`+
-        `<div style="display:flex;flex-direction:column;gap:5px;max-width:320px">
-          ${[['⏳','Длится во времени','снежинка → лужица'],['🔄','Что-то меняется','вода из твёрдой стала жидкой'],['👀','Можно наблюдать','видим, слышим, чувствуем']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,138,106,.07);border:1px solid #ff8a6a33;border-radius:8px;padding:4px 10px"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
+      h=col(l92B('СЕВЕРНОЕ СИЯНИЕ','#ff8a6a')+
+        big('Небо танцует')+
+        `<div style="text-align:center;border-radius:14px;overflow:hidden">${l92Art('aurora',280,120)}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
+          ${[['🌌','Северное сияние — явление','солнечный ветер сталкивается с атмосферой — небо светится!'],['⏳','Оно длится','минуты и часы, меняя цвет и форму'],['❓','Явление или тело?','сияние — ПРОЦЕСС: его нельзя взять в руки!']].map(f=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(255,138,106,.06);border:1px solid #ff8a6a33;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:15px">${f[0]}</span><span style="font-size:12px;color:#d8ecff"><b style="color:#fff">${f[1]}</b><br><span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
         </div>`);
     } else if(step===9){
-      h=col(l92B('ПРОВЕРКА','#c9b28a')+
-        big('Гром, дождь и молния — это?')+
-        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;align-items:flex-end">${l92Art('bolt',100,54)}${l92Art('rain',90,44)}</div>`+
-        `<div class="wv-ans" style="font-size:20px;color:#ff8a6a;font-weight:bold">это ЯВЛЕНИЯ — процессы в природе!</div>`+
-        sml('как в нашей проверке!'));
+      h=col(l92B('ПРОВЕРКА ЭКСПЕДИЦИИ','#c9b28a')+
+        big('Гром, молния и дождь — это?')+
+        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;align-items:flex-end">${l92Art('bolt',90,70)}${l92Art('rain',80,48)}</div>`+
+        `<div class="wv-ans" style="font-size:20px;color:#ff8a6a;font-weight:bold">это ЧУДЕСА-ЯВЛЕНИЯ — процессы в природе!</div>`+
+        sml('как в нашей проверке: дождь, гром, молния — физические явления!'));
     } else if(step===10){
-      h=col(l92B('ИНТЕРАКТИВНАЯ СЦЕНА','#c9b28a')+
-        big('Спор трёх экспонатов')+
-        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:340px">${l92Pic(['body','гвоздь','предмет','nail'],100)}${l92Pic(['ev','ржавление','процесс','rust'],100)}${l92Pic(['sub','железо','материал','iron'],100)}</div>`+
-        sml('три «родственника» спорят: кто тело, кто вещество, а кто явление?'));
+      h=col(l92B('СПОР В ЭКСПЕДИЦИИ','#c9b28a')+
+        big('Три «родственника» воды')+
+        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:340px">
+          ${l92Pic(['body','Снежинка','кристалл льда','snow'],96)}
+          ${l92Pic(['ev','Таяние','лёд → вода','melt'],96)}
+          ${l92Pic(['sub','Вода','жидкое вещество','water'],96)}
+        </div>`+
+        sml('снежинка, её таяние и вода спорят: кто тело, кто вещество, а кто явление?'));
     } else if(step===11){
       h=col(l92B('РАЗБОР 1','#7fd1a0')+
-        big('Гвоздь — ТЕЛО')+
-        `<div style="text-align:center">${l92Art('nail',220,46)}</div>`+
-        `<div style="display:flex;flex-direction:column;gap:5px;max-width:320px">
-          ${[['✋','Можно взять в руку','твёрдый, имеет форму'],['📏','Можно измерить','длина 5 см, масса 3 г'],['🧱','Сделан из железа','вещество — материал']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(127,208,160,.07);border:1px solid #7fd1a033;border-radius:8px;padding:4px 10px"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
+        big('Снежинка — ЧУДО-ТЕЛО')+
+        `<div style="text-align:center;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))">${l92Art('snow',190,146)}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
+          ${[['✋','Можно рассмотреть','у неё форма, размер, масса'],['📏','Можно измерить','до 5 мм, до 1 мг'],['💧','Сделана из вещества','из замёрзшей воды — льда']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(127,208,160,.06);border:1px solid #7fd1a033;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
         </div>`);
     } else if(step===12){
       h=col(l92B('РАЗБОР 2','#ff8a6a')+
-        big('Ржавление — ЯВЛЕНИЕ')+
-        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
-          ${l92Art('nail',110,30)}
-          <div style="font-size:22px" class="wv-flick">→</div>
-          ${l92Art('rust',110,34)}
-        </div>`+
-        `<div style="display:flex;flex-direction:column;gap:5px;max-width:320px">
-          ${[['⏳','Длится во времени','свежий гвоздь → пятна'],['🧪','Химическая реакция','железо + кислород = ржавчина'],['🔄','Изменение навсегда','металл разрушается']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,138,106,.07);border:1px solid #ff8a6a33;border-radius:8px;padding:4px 10px"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
+        big('Таяние — ЧУДО-ЯВЛЕНИЕ')+
+        `<div style="text-align:center;display:flex;align-items:center;justify-content:center;gap:8px">${l92Art('snow',80,62)}<div style="font-size:22px" class="wv-flick">→</div>${l92Art('melt',80,56)}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
+          ${[['⏳','Длится во времени','снежинка → капля: процесс идёт'],['🔥','Нужно тепло','лёд тает при 0°C'],['🔄','Изменение','твёрдое стало жидким']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,138,106,.06);border:1px solid #ff8a6a33;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
         </div>`);
     } else if(step===13){
       h=col(l92B('РАЗБОР 3','#ffd966')+
-        big('Железо — ВЕЩЕСТВО')+
-        `<div style="text-align:center">${l92Art('iron',160,60)}</div>`+
-        `<div style="display:flex;flex-direction:column;gap:5px;max-width:320px">
-          ${[['🧱','Материал гвоздя','и цепей, ложек, кораблей'],['⚙️','Свойства','твёрдое, тяжёлое, магнит'],['🔨','Из него делают тела','но само — вещество']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.07);border:1px solid #ffd96633;border-radius:8px;padding:4px 10px"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
+        big('Вода — ЧУДО-ВЕЩЕСТВО')+
+        `<div style="text-align:center">${l92Art('water',120,84)}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
+          ${[['🧪','Материал природы','из воды состоят снежинки, капли, океаны'],['⚗️','Свойства воды','прозрачная, без запаха, замерзает при 0°'],['🌊','Из неё делают тела','лёд, пар, дождь — всё это вода в разных видах']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.06);border:1px solid #ffd96633;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
         </div>`);
     } else if(step===14){
       h=col(l92B('ЗАДАЧА 1','#c9b28a')+
-        big('Сколько здесь ТЕЛ?')+
+        big('Сколько здесь ЧУДЕС-ТЕЛ?')+
         `<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:340px">
-          ${l92Pic(['body','гвоздь','','nail'],92)}
-          ${l92Pic(['ev','ржавление','','rust'],92)}
-          ${l92Pic(['sub','железо','','iron'],92)}
-          ${l92Pic(['body','молоток','','hammer'],92)}
+          ${l92Pic(['body','снежинка','','snow'],88)}
+          ${l92Pic(['ev','таяние','','melt'],88)}
+          ${l92Pic(['sub','вода','','water'],88)}
+          ${l92Pic(['body','капля','','drop'],88)}
         </div>`+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">тел — 2: гвоздь и молоток!</div>`+
-        sml('как в наших задачках: ржавление — явление, железо — вещество.'));
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">тел — 2: снежинка и капля!</div>`+
+        sml('как в наших задачках: таяние — явление, вода — вещество.'));
     } else if(step===15){
       h=col(l92B('ЗАДАЧА 2','#c9b28a')+
         big('Найди ЯВЛЕНИЕ')+
-        `<div style="display:flex;justify-content:center">${l92Art('melt',180,80)}</div>`+
+        `<div style="display:flex;justify-content:center">${l92Art('melt',180,120)}</div>`+
         `<div class="wv-ans" style="font-size:22px;color:#ff8a6a">таяние снега — ЯВЛЕНИЕ!</div>`+
-        sml('снежинка и лёд — разные тела из одного вещества — воды! Как в наших задачках!'));
+        sml('снежинка и лёд — тела, а их превращение в воду — процесс. Как в наших задачках!'));
     } else if(step===16){
       if(st.i==null){ st.i=Math.floor(Math.random()*L92POOL.length); st.score=0; st.done={}; st.last=''; st.hintShow=0; }
       const e=L92POOL[st.i], kind=e[0], word=e[1], desc=e[2], art=e[3];
       const want=kind==='body'?0:kind==='sub'?1:2;
       const doneCount=Object.keys(st.done||{}).length;
-      const resTxt=st.last==='ok'?`✅ Верно! «${word}» — ${kind==='body'?'тело':kind==='sub'?'вещество':'явление'}! (${doneCount}/24)`:
+      const resTxt=st.last==='ok'?`✅ Верно! «${word}» — ${kind==='body'?'чудо-тело':kind==='sub'?'чудо-вещество':'чудо-явление'}! (${doneCount}/24)`:
         st.last==='no'?'❌ Не угадал — прочитай описание!':'';
-      h=col(l92B('ИГРА · СОРТИРОВЩИК','#ffd966')+
-        big('Разложи экспонаты!')+
-        `<div style="display:inline-block;background:rgba(217,164,65,.1);border:1.5px solid #d9a44177;border-radius:16px;padding:8px 14px;max-width:290px">
-          <div style="display:flex;justify-content:center">${l92Art(art,150,110)}</div>
+      h=col(l92B('ИГРА · ЗАНОСИМ В АТЛАС','#ffd966')+
+        big('Куда занести чудо?')+
+        `<div style="display:inline-block;background:rgba(127,183,216,.1);border:1.5px solid #7fb7d877;border-radius:18px;padding:8px 14px;max-width:290px;box-shadow:0 4px 14px rgba(0,0,0,.4)">
+          <div style="display:flex;justify-content:center;filter:drop-shadow(0 4px 5px rgba(0,0,0,.45))">${l92Art(art,130,100)}</div>
           <div style="font-size:16px;color:#fff;font-weight:bold">${word}</div>
-          <div style="font-size:10.5px;color:#cbb89a;line-height:1.5">${desc}</div>
+          <div style="font-size:10.5px;color:#b8c9d8;line-height:1.5">${desc}</div>
         </div>`+
-        (st.last==='ok'?`<div style="display:flex;justify-content:center;gap:6px"><span class="wv-rise" style="font-size:18px">✨</span><span class="wv-rise2" style="font-size:14px">✨</span><span class="wv-rise3" style="font-size:18px">✨</span></div>`:'')+
-        (resTxt?`<div class="l35-pop" style="font-size:14px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'}">${resTxt}</div>`:'')+
-        (st.hintShow?`<div class="l35-pop" style="font-size:12px;color:#ffd9a0;max-width:310px">💡 ${kind==='body'?'тело можно взять и измерить — это предмет':kind==='sub'?'вещество — материал: железо, вода, стекло':'явление — процесс, длится во времени'}</div>`:'')+
+        (st.last==='ok'?`<div style="display:flex;justify-content:center;gap:6px"><span class="wv-rise" style="font-size:16px">✨</span><span class="wv-rise2" style="font-size:12px">✨</span></div>`:'')+
+        (resTxt?`<div class="l35-pop" style="font-size:13.5px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'}">${resTxt}</div>`:'')+
+        (st.hintShow?`<div class="l35-pop" style="font-size:12px;color:#ffd9a0;max-width:310px">💡 ${kind==='body'?'тело можно увидеть и измерить':kind==='sub'?'вещество — материал: вода, золото, кислород':'явление — процесс, длится во времени'}</div>`:'')+
         l92Doors(want)+
-        `<div style="font-size:11.5px;color:#9ec0a8">счёт: ${st.score} ✅ · разложено ${doneCount}/24</div>`+
-        btns(btn('🔨 Зал Тел',`l92Act('${lk}','pick0')`),btn('🧱 Зал Веществ',`l92Act('${lk}','pick1')`),btn('⚡ Зал Явлений',`l92Act('${lk}','pick2')`),btn('🎲 следующий',`l92Act('${lk}','n')`),btn('↺',`l92Act('${lk}','r')`)));
+        `<div style="font-size:11.5px;color:#9ec0a8">счёт: ${st.score} ✅ · занесено ${doneCount}/24</div>`+
+        btns(btn('🌍 Тела',`l92Act('${lk}','pick0')`),btn('🧪 Вещества',`l92Act('${lk}','pick1')`),btn('⚡ Явления',`l92Act('${lk}','pick2')`),btn('🎲 чудо',`l92Act('${lk}','n')`),btn('↺',`l92Act('${lk}','r')`)));
     } else {
-      h=col(l92B('ПАМЯТКА МАСТЕРА','#c9b28a')+
-        big('Три полки Архимеда')+
+      h=col(l92B('ПАМЯТКА ПУТЕШЕСТВЕННИКА','#c9b28a')+
+        big('Три раздела Атласа')+
         `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
-          <div style="display:flex;align-items:center;gap:8px;background:rgba(127,208,160,.08);border:1px solid #7fd1a044;border-radius:12px;padding:6px 10px">${l92Art('nail',44,26)}<div style="text-align:left"><div style="font-size:12.5px;color:#7fd1a0;font-weight:bold">Зал Тел</div><div style="font-size:10px;color:#9ec0a8">предметы: гвоздь, мяч, стакан</div></div></div>
-          <div style="display:flex;align-items:center;gap:8px;background:rgba(255,217,102,.08);border:1px solid #ffd96644;border-radius:12px;padding:6px 10px">${l92Art('iron',48,30)}<div style="text-align:left"><div style="font-size:12.5px;color:#ffd966;font-weight:bold">Зал Веществ</div><div style="font-size:10px;color:#9ec0a8">материалы: железо, вода, стекло</div></div></div>
-          <div style="display:flex;align-items:center;gap:8px;background:rgba(255,138,106,.08);border:1px solid #ff8a6a44;border-radius:12px;padding:6px 10px">${l92Art('bolt',44,32)}<div style="text-align:left"><div style="font-size:12.5px;color:#ff8a6a;font-weight:bold">Зал Явлений</div><div style="font-size:10px;color:#9ec0a8">процессы: гром, дождь, молния</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(127,208,160,.07);border:1px solid #7fd1a044;border-radius:14px;padding:8px 10px">${l92Art('snow',52,40)}<div style="text-align:left"><div style="font-size:12.5px;color:#7fd1a0;font-weight:bold">Чудеса-ТЕЛА</div><div style="font-size:10px;color:#9ec0a8">снежинка, планета, капля — можно увидеть и измерить</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(255,217,102,.07);border:1px solid #ffd96644;border-radius:14px;padding:8px 10px">${l92Art('water',52,40)}<div style="text-align:left"><div style="font-size:12.5px;color:#ffd966;font-weight:bold">Чудеса-ВЕЩЕСТВА</div><div style="font-size:10px;color:#9ec0a8">вода, золото, кислород — материалы природы</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(255,138,106,.07);border:1px solid #ff8a6a44;border-radius:14px;padding:8px 10px">${l92Art('bolt',46,38)}<div style="text-align:left"><div style="font-size:12.5px;color:#ff8a6a;font-weight:bold">Чудеса-ЯВЛЕНИЯ</div><div style="font-size:10px;color:#9ec0a8">молния, радуга, гейзер — процессы природы</div></div></div>
         </div>`+
         btn('⟲ вернуться к игре', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя»!'));
