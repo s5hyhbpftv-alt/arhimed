@@ -3077,6 +3077,8 @@ function visL103(el){
 
 // ============ УРОК 107 v2 «Механическая энергия» — легенда «Парк Энергия-Лэнд» ============
 var L107POOL=[['p','2','5'],['p','3','2'],['p','5','4'],['p','4','10'],['p','6','3'],['p','1','20'],['k','4','3'],['k','2','2'],['k','3','4'],['k','6','5'],['k','8','2'],['k','10','1'],['h','150','5'],['h','100','2'],['h','200','5'],['h','60','3']];
+// ============ УРОК 107 v5 «Механическая энергия» 8–9 класс — легенда «Парк Энергия-Лэнд» ============
+var L107POOL=[['p','2','5'],['p','3','2'],['p','5','4'],['p','4','10'],['p','6','3'],['p','1','20'],['k','4','3'],['k','2','2'],['k','3','4'],['k','6','5'],['k','8','2'],['k','10','1'],['h','150','5'],['h','100','2'],['h','200','5'],['h','60','3']];
 function l107Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   if(st.i==null) st.i=Math.floor(Math.random()*L107POOL.length); if(st.score==null) st.score=0;
@@ -3093,53 +3095,106 @@ function l107Act(lk,act){
   if(act==='r'){ st.i=Math.floor(Math.random()*L107POOL.length); st.s1=st.s2=0; st.score=0; st.last=''; }
   chRender(0);
 }
-function l107Park(uid){
-  // вывеска парка
-  return `<div style="display:inline-block;padding:6px 18px;border-radius:24px;border:2px solid #ffd966;background:linear-gradient(180deg,rgba(255,217,102,.18),rgba(255,217,102,.05));font-size:15px;color:#ffd966;letter-spacing:1px">🎢 ЭНЕРГИЯ-ЛЭНД 🎢</div>`;
+function l107B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
+function l107Card(tag,emoji,title,lines,color){
+  let ls='';
+  for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:12.5px;color:#d8ecff;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
+  return `<div style="flex:1;min-width:150px;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <div style="font-size:22px">${emoji}</div>
+      <div style="flex:1"><div style="font-size:11px;color:${color};letter-spacing:.5px">${tag}</div><div style="font-size:15px;color:#fff;font-weight:bold;line-height:1.2">${title}</div></div>
+    </div>${ls}</div>`;
 }
-function l107HillSvg(hpx,ballTop,uid){
-  // горка: hpx — высота пика (px), шарик на ballTop
-  return `<svg width="210" height="${hpx+46}" style="display:block;margin:2px auto">
-    <path d="M4 ${hpx+18} L70 ${hpx-14} Q84 ${hpx-26} 98 ${hpx-20} L150 22 Q156 12 164 16 L206 ${hpx+18}" fill="none" stroke="#7fd1a0" stroke-width="4" stroke-linecap="round"/>
-    <line x1="4" y1="${hpx+18}" x2="206" y2="${hpx+18}" stroke="#3d5c49" stroke-width="2"/>
-    <circle cx="58" cy="${ballTop}" r="9" fill="#ffd966" stroke="#c9a24f" stroke-width="2"/>
-    <text x="170" y="${hpx+8}" fill="#9ec0a8" font-size="10">вагончик 🎢</text>
+// ========= SVG-сцены =========
+function l107Hill(h,ballTop,uid){
+  // профиль горки с вагончиком (жёлтый шарик) и сеткой высоты
+  return `<svg width="210" height="${h+50}" viewBox="0 0 210 ${h+50}" style="display:block;margin:0 auto">
+    <defs><linearGradient id="h7g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c4a38"/><stop offset="1" stop-color="#1a3024"/></linearGradient></defs>
+    <path d="M6 ${h+18} L60 ${h-10} Q78 ${h-26} 96 ${h-14} L150 24 Q158 12 168 18 L204 ${h+18}" fill="none" stroke="#7fd1a0" stroke-width="5" stroke-linecap="round"/>
+    <path d="M6 ${h+18} L60 ${h-10} Q78 ${h-26} 96 ${h-14} L150 24 Q158 12 168 18 L204 ${h+18} L204 ${h+34} L6 ${h+34} Z" fill="url(#h7g)" opacity=".5"/>
+    ${[0.25,0.5,0.75].map(f=>`<line x1="10" y1="${h+20-f*(h-30)}" x2="18" y2="${h+20-f*(h-30)}" stroke="#3d5c49" stroke-width="1.5"/><text x="22" y="${h+24-f*(h-30)}" fill="#5a7a68" font-size="8">${Math.round(f*(h-30)/10)}0</text>`).join('')}
+    <circle cx="52" cy="${ballTop}" r="10" fill="#ffd966" stroke="#c9a24f" stroke-width="2.5"/>
+    <circle cx="48" cy="${ballTop-4}" r="3" fill="#fff" opacity=".6"/>
+    <rect x="44" y="${ballTop+8}" width="16" height="7" rx="2" fill="#8a5a2a"/>
+    <text x="${h>120?170:150}" y="${h+8}" fill="#9ec0a8" font-size="9">h = ${Math.round((h-30)/10)} м</text>
   </svg>`;
 }
-function l107Bar(frac,color,label,uid){
-  // энергетическая полоска (frac 0..1)
-  return `<div style="width:200px;margin:2px auto;background:#13251c;border-radius:6px;height:16px;overflow:hidden;border:1px solid #3d5c49">
-    <div style="width:${Math.round(frac*100)}%;height:100%;background:${color};transition:width .7s ease"></div>
-  </div>`;
+function l107Pendulum(angle,uid){
+  // маятник: угол в градусах от вертикали
+  const a=angle*Math.PI/180;
+  const bx=100+70*Math.sin(a), by=28+70*Math.cos(a);
+  return `<svg width="200" height="150" viewBox="0 0 200 150" style="display:block;margin:0 auto">
+    <rect x="88" y="4" width="24" height="10" rx="3" fill="#8a6a2f"/>
+    <line x1="100" y1="12" x2="${bx}" y2="${by}" stroke="#cbb89a" stroke-width="3"/>
+    <circle cx="${bx}" cy="${by+8}" r="12" fill="#e05a5a" stroke="#a02828" stroke-width="2"/>
+    <circle cx="${bx-4}" cy="${by+5}" r="3" fill="#fff" opacity=".5"/>
+    <path d="M100 12 A70 70 0 0 1 ${bx} ${by}" fill="none" stroke="#ffd966" stroke-width="1.5" stroke-dasharray="4 4" opacity=".6"/>
+  </svg>`;
 }
-function l107Ride(pTop,kTop,uid){
-  // вагончик на вершине: потенциальная полная (pTop=1), кинетическая 0; внизу наоборот
-  return `<div style="text-align:center;margin:3px auto">
-    <div style="display:flex;justify-content:space-between;font-size:11px;color:#cbb89a;width:210px;margin:0 auto"><span>вершина горки</span><span>низ горки</span></div>
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin:2px auto;width:210px">
-      <div style="flex:1;text-align:center">
-        <div class="wv-pop" style="font-size:24px">⛰️</div>
-        <div style="font-size:16px;color:#ffd966">${Math.round(pTop*100)}%</div>
-        <div style="font-size:10.5px;color:#ffd966">потенциальная</div>
-      </div>
-      <div style="font-size:22px" class="wv-flick">➡️</div>
-      <div style="flex:1;text-align:center">
-        <div class="wv-pop" style="font-size:24px">🚀</div>
-        <div style="font-size:16px;color:#7fd1a0">${Math.round(kTop*100)}%</div>
-        <div style="font-size:10.5px;color:#7fd1a0">кинетическая</div>
-      </div>
+function l107Spring(compressed,uid){
+  // пружина: compressed ? сжата : растянута; груз на конце
+  const coils=compressed?6:10;
+  const topY=20, botY=compressed?92:120;
+  let path='';
+  for(let i=0;i<coils;i++){
+    const y0=topY+i*(botY-topY)/coils;
+    const y1=topY+(i+1)*(botY-topY)/coils;
+    path+=(i?'L':'M')+'88 '+y0+' C 70 '+((y0+y1)/2)+', 130 '+((y0+y1)/2)+', 112 '+y1+' ';
+  }
+  return `<svg width="200" height="150" viewBox="0 0 200 150" style="display:block;margin:0 auto">
+    <rect x="80" y="4" width="40" height="12" rx="3" fill="#8a6a2f"/>
+    <path d="${path}" fill="none" stroke="#c9a24f" stroke-width="4" stroke-linecap="round"/>
+    <rect x="82" y="${botY}" width="36" height="22" rx="4" fill="url(#h7s)" stroke="#5c7486" stroke-width="2"/>
+    <defs><linearGradient id="h7s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9bcc9"/><stop offset="1" stop-color="#5c7486"/></linearGradient></defs>
+    <text x="150" y="${(topY+botY)/2}" fill="${compressed?'#ff8a6a':'#7fd1a0'}" font-size="10">${compressed?'сжата!':'растянута'}</text>
+  </svg>`;
+}
+function l107Wheels(speed,uid){
+  // машинка с числом скорости (для Eк)
+  const dx=Math.min(170,20+speed*6);
+  return `<svg width="210" height="70" viewBox="0 0 210 70" style="display:block;margin:0 auto">
+    <rect x="6" y="52" width="198" height="6" fill="#3a3f45"/>
+    <g transform="translate(${dx} 0)">
+      <path d="M6 46 Q20 14 44 16 L52 44 Z" fill="#d05a3a" stroke="#a02828" stroke-width="2"/>
+      <rect x="8" y="44" width="34" height="6" fill="#7a4c22"/>
+      <circle cx="16" cy="52" r="6" fill="#222" stroke="#888" stroke-width="2"/>
+      <circle cx="42" cy="52" r="6" fill="#222" stroke="#888" stroke-width="2"/>
+    </g>
+    <text x="160" y="22" fill="#ffd966" font-size="11">v = ${speed} м/с</text>
+    <text x="160" y="34" fill="#9ec0a8" font-size="8.5">v² = ${speed*speed}</text>
+  </svg>`;
+}
+function l107Dam(uid){
+  // плотина ГЭС: вода падает на турбину
+  return `<svg width="210" height="120" viewBox="0 0 210 120" style="display:block;margin:0 auto">
+    <rect x="0" y="0" width="130" height="70" fill="#7db2e0" opacity=".8"/>
+    <rect x="130" y="0" width="80" height="20" fill="#bfe0f5" opacity=".8"/>
+    <line x1="6" y1="6" x2="124" y2="6" stroke="#fff" stroke-width="2" opacity=".5"/>
+    <rect x="118" y="0" width="16" height="70" fill="#8a8a8a" stroke="#666" stroke-width="2"/>
+    <rect x="118" y="66" width="16" height="8" fill="#666"/>
+    <path d="M126 40 q14 8 8 20" stroke="#8fd0f0" stroke-width="4" fill="none"/>
+    <circle cx="140" cy="86" r="12" fill="#ffd966" stroke="#c9a24f" stroke-width="2"/>
+    <path d="M150 80 L186 80" stroke="#4a7fae" stroke-width="12"/>
+    <text x="90" y="96" fill="#9ec0a8" font-size="9" text-anchor="middle">турбина + генератор ⚡</text>
+    <text x="60" y="18" fill="#fff" font-size="9">вода на высоте h</text>
+  </svg>`;
+}
+function l107Scale(percent,color,label,uid){
+  return `<div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+    <div style="font-size:${percent>50?26:20}px;color:${color}">${Math.round(percent)}%</div>
+    <div style="width:150px;height:12px;background:#13251c;border:1px solid #3d5c49;border-radius:6px;overflow:hidden">
+      <div style="width:${Math.round(percent)}%;height:100%;background:${color};transition:width .8s ease"></div>
     </div>
+    <div style="font-size:10.5px;color:#9ec0a8">${label}</div>
   </div>`;
 }
-function l107Coaster(full,uid){
-  // американские горки: полный цикл энергии
-  return `<svg width="210" height="96" style="display:block;margin:2px auto">
-    <path d="M4 80 Q40 10 80 34 Q100 44 104 60 Q110 80 140 46 Q160 24 206 60" fill="none" stroke="#7fd1a0" stroke-width="3.5"/>
-    <circle cx="10" cy="76" r="8" fill="#ffd966" stroke="#c9a24f" stroke-width="2"><animate attributeName="cx" values="10;80;104;150;200;10" dur="6s" repeatCount="indefinite"/><animate attributeName="cy" values="76;34;60;40;58;76" dur="6s" repeatCount="indefinite"/></circle>
-  </svg>`;
-}
-function l107Globe(uid){
-  return `<div style="font-size:46px" class="wv-swing">🏗️</div>`;
+function l107Cart(a,b,uid){
+  // вагончик на пути между вершиной и низом
+  return `<div style="display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap">
+    ${l107Scale(a,'#ffd966','потенциальная Eп')}
+    <div style="font-size:22px" class="wv-flick">➡️</div>
+    ${l107Scale(b,'#7fd1a0','кинетическая Eк')}
+  </div>`;
 }
 function visL107(el){
   try{
@@ -3157,113 +3212,155 @@ function visL107(el){
     if(step===0){
       h=col(`<div style="font-size:20px;color:#c9b28a;letter-spacing:1px">🌟 ЛЕГЕНДА · Эпизод 3</div>`+
         big('Парк аттракционов «Энергия-Лэнд»')+
-        `<div style="font-size:44px" class="wv-flick">🎢</div>`+
-        sml('Архимед открыл парк аттракционов! Самая высокая горка называется «Потенциальная», самая быстрая — «Кинетическая». Сегодня ты узнаешь секрет их работы — механическую энергию!'));
+        `<div style="font-size:40px" class="wv-flick">🎢</div>`+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:12px 14px;max-width:310px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+        В парке Архимеда главный аттракцион — гигантская горка: вагончик поднимают наверх, а потом он летит вниз с криком восторга! Что за «топливо» разгоняет вагончик? Это <b>энергия</b> — способность совершать работу. Сегодня ты разберёшься, как её считать и откуда она берётся!</div>`);
     } else if(step===1){
-      h=col(big('Что такое энергия?'),
-        l107Park('a')+
-        sml('энергия — способность тела совершать работу: поднять груз, разогнать вагончик, согнуть пружину. Без энергии аттракционы не работают! Измеряется в джоулях (Дж).'));
+      h=col(l107B('ТЕОРИЯ 8–9 КЛАСС','#7fb7d8')+
+        big('Работа и энергия')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
+          ${l107Card('РАБОТА','💪','A = F · s','Если сила F перемещает тело на расстояние s — совершается механическая работа: A = F·s. Единица — джоуль (Дж). Названа в честь английского физика Джеймса Джоуля.','#7fb7d8')}
+          ${l107Card('ЭНЕРГИЯ','⚡','Способность совершать работу','Энергия — запас, благодаря которому тело может совершить работу. Чем больше запас — тем больше работы можно сделать.','#ffd966')}
+          ${l107Card('СВЯЗЬ','🔗','Работа меняет энергию','Совершая работу, мы передаём телу энергию. И наоборот: тело, имеющее энергию, может совершить работу.','#7fd1a0')}
+        </div>`+
+        sml('📖 из учебника: энергия и работа связаны — работа измеряется изменением энергии.'));
     } else if(step===2){
-      h=col(big('Две звезды парка'),
-        rowC(chip('⛰️ потенциальная — энергия ВЫСОТЫ','rgba(127,209,255,.5)'),chip('🚀 кинетическая — энергия ДВИЖЕНИЯ','rgba(127,184,160,.5)'))+
-        sml('вагончик наверху горки «заряжен» высотой. Вагончик в разгоне «заряжен» скоростью!'));
+      h=col(l107B('ДВА ВИДА','#c9b28a')+
+        big('Потенциальная и кинетическая')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
+          ${l107Card('ПОТЕНЦИАЛЬНАЯ','⛰️','Eп — энергия положения','Запас «на высоте»: поднятый камень, натянутая тетива, сжатая пружина. Тело может совершить работу благодаря своему ПОЛОЖЕНИЮ.','#ffd966')}
+          ${l107Card('КИНЕТИЧЕСКАЯ','🚀','Eк — энергия движения','Запас «в скорости»: летящий мяч, едущая машина, бегущий человек. Тело совершает работу благодаря ДВИЖЕНИЮ.','#7fd1a0')}
+          ${l107Card('ПРИМЕР','🎢','Вагончик на горке','Наверху у вагончика вся энергия потенциальная. Внизу — вся кинетическая. По пути одна переходит в другую!','#7fb7d8')}
+        </div>`);
     } else if(step===3){
-      h=col(big('Аттракцион «Потенциальная»'),
-        l107HillSvg(120,24,'b')+
-        rowC(chip('подняли вагончик выше — запас больше','rgba(127,209,255,.5)'),chip('тяжелее вагончик — запас больше','rgba(232,160,90,.5)'))+
-        sml('потенциальная энергия — «запас на высоте»: чем выше и тяжелее, тем больше запас!'));
+      h=col(l107B('КИНЕТИЧЕСКАЯ ЭНЕРГИЯ','#7fd1a0')+
+        big('Формула: Eк = m·v²:2')+
+        l107Wheels(3,'a')+
+        `<div style="background:rgba(127,255,170,.09);border:1.5px solid #7fd1a066;border-radius:14px;padding:10px;max-width:300px;font-family:Georgia,serif;color:#7fd1a0;font-size:22px">Eк = m · v² : 2</div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l107Card('ПОЧЕМУ v В КВАДРАТЕ?','🔑','Главный секрет','Скорость стоит в квадрате! Удвоил скорость — энергия выросла в 4 раза (2²=4). Утроил — в 9 раз! Вот почему на большой скорости так опасны аварии.','#7fd1a0')}
+          ${l107Card('СЧИТАЕМ ПО ШАГАМ','🧮','Пример: m=2 кг, v=2 м/с','1) v² = 2·2 = 4; 2) m·v² = 2·4 = 8; 3) :2 → Eк = 4 Дж.','#7fd1a0')}
+        </div>`);
     } else if(step===4){
-      h=col(big('Формула потенциальной энергии'),
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-family:Georgia,serif">Eп = m · g · h</div>`+
-        rowC(chip('m — масса (кг)','rgba(232,160,90,.5)'),chip('g ≈ 10 Н/кг','rgba(127,184,160,.5)'),chip('h — высота (м)','rgba(127,209,255,.5)'))+
-        sml('три множителя «билета»: масса, сила тяжести и высота!'));
+      h=col(l107B('ЭКСПЕРИМЕНТ · СКОРОСТЬ','#7fd1a0')+
+        big('Скорость ×2 — энергия ×4!')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['v = 1 м/с','Eк = 1 Дж'],['v = 2 м/с','Eк = 4 Дж'],['v = 3 м/с','Eк = 9 Дж'],['v = 4 м/с','Eк = 16 Дж']].map((f,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(127,208,160,${i>1?'.12':'.06'});border:1px solid rgba(127,208,160,${i>1?'.5':'.25'});border-radius:10px;padding:6px 12px">
+            <span style="font-size:13.5px;color:#e8dcc8;font-weight:bold">${f[0]}</span>
+            <span style="font-size:13.5px;color:#7fd1a0;font-family:Georgia,serif">${f[1]}</span></div>`).join('')}
+        </div>`+
+        sml('m = 2 кг. Посмотри: скорость 4 м/с даёт энергию 16 Дж — в 16 раз больше, чем 1 м/с! (4² = 16)'));
     } else if(step===5){
-      h=col(big('Считаем запас высоты'),
-        l107HillSvg(120,24,'c')+
-        rowC(chip('m = 2 кг','rgba(232,160,90,.5)'),chip('h = 5 м','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">Eп = 2 · 10 · 5 = 100 Дж</div>`+
-        sml('умножаем по очереди: 2·10 = 20, 20·5 = 100 Дж'));
+      h=col(l107B('ПОТЕНЦИАЛЬНАЯ ЭНЕРГИЯ','#ffd966')+
+        big('Формула: Eп = m·g·h')+
+        l107Hill(80,50,'b')+
+        `<div style="background:rgba(255,217,102,.1);border:1.5px solid #ffd96666;border-radius:14px;padding:10px;max-width:300px;font-family:Georgia,serif;color:#ffd966;font-size:22px">Eп = m · g · h</div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l107Card('РАСШИФРОВКА','📖','Три множителя','m — масса (кг); g ≈ 10 Н/кг — ускорение свободного падения; h — высота над землёй (м).','#ffd966')}
+          ${l107Card('ПРИМЕР','🧮','m=2 кг, h=5 м','Eп = 2·10·5 = 100 Дж. Подняли выше или взяли тяжелее — запас вырос!','#ffd966')}
+        </div>`);
     } else if(step===6){
-      h=col(big('Задача-проверка: билет №1'),
-        rowC(chip('m = 3 кг','rgba(232,160,90,.5)'),chip('h = 2 м','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">Eп = 3 · 10 · 2 = 60 Дж</div>`+
-        sml('как в нашей проверке: 3·10 = 30, 30·2 = 60!'));
+      h=col(l107B('ПРОВЕРКА','#c9b28a')+
+        big('Задача-проверка')+
+        l107Card('УСЛОВИЕ','🧊','Груз 3 кг на высоте 2 м','Найди потенциальную энергию (g = 10).','#7fb7d8')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">Eп = 3 · 10 · 2 = 60 Дж — как в проверке!</div>`+
+        sml('умножаем по очереди: 3·10 = 30, 30·2 = 60.'));
     } else if(step===7){
-      h=col(big('Аттракцион «Кинетическая»'),
-        `<div style="font-size:36px" class="wv-drive" style="--dx:110px">🚀</div>`+
-        rowC(chip('быстрее вагончик — энергии больше','rgba(127,209,255,.5)'),chip('тяжелее — тоже больше','rgba(232,160,90,.5)'))+
-        sml('кинетическая энергия — «запас движения»: чем быстрее и тяжелее, тем больше!'));
+      h=col(l107B('УПРУГАЯ ДЕФОРМАЦИЯ · 9 КЛАСС','#ff8a6a')+
+        big('Энергия пружины и лука')+
+        l107Spring(true,'c')+
+        `<div style="background:rgba(255,138,106,.09);border:1.5px solid #ff8a6a55;border-radius:14px;padding:10px;max-width:300px;font-family:Georgia,serif;color:#ff8a6a;font-size:20px">Eп = k · x² : 2</div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l107Card('СЖАТАЯ ПРУЖИНА','🌀','Тоже потенциальная энергия','Сжатая или растянутая пружина запасает энергию упругой деформации. k — жёсткость пружины, x — деформация.','#ff8a6a')}
+          ${l107Card('ПРИМЕРЫ','🏹','Лук, батут, рогатка','Натянутая тетива лука хранит энергию — отпусти стрелу, и она полетит! Чем сильнее сжал — тем больше x² — тем больше запас.','#ff8a6a')}
+        </div>`);
     } else if(step===8){
-      h=col(big('Формула кинетической энергии'),
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-family:Georgia,serif">Eк = m · v² : 2</div>`+
-        rowC(chip('v² = v · v (скорость в квадрате)','rgba(127,209,255,.5)'))+
-        sml('сначала скорость умножь саму на себя (v²), потом на массу, потом подели на 2'));
+      h=col(l107B('ПРЕВРАЩЕНИЯ','#7fb7d8')+
+        big('Энергия перетекает')+
+        l107Pendulum(45,'d')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l107Card('МАЯТНИК','🪀','Туда-сюда','В крайней точке маятник останавливается — вся энергия потенциальная. Внизу летит быстрее всего — вся кинетическая. Цикл повторяется!','#7fb7d8')}
+          ${l107Card('ГОРКА','🎢','Высота → скорость','Скатываясь, вагончик обменивает высоту на скорость: Eп убывает, Eк растёт, их сумма не меняется.','#7fb7d8')}
+        </div>`);
     } else if(step===9){
-      h=col(big('Что такое v²'),
-        rowC(chip('v = 2 м/с → v² = 2·2 = 4','rgba(127,209,255,.5)'),chip('v = 3 м/с → v² = 3·3 = 9','rgba(127,184,160,.5)'))+
-        sml('квадрат — число, умноженное само на себя. Как площадь квадрата со стороной v!'));
+      h=col(l107B('ЗАКОН СОХРАНЕНИЯ · 9 КЛАСС','#c9b28a')+
+        big('Главный закон механики')+
+        `<div style="background:rgba(127,255,170,.09);border:1.5px solid #7fd1a066;border-radius:14px;padding:12px;max-width:310px;font-family:Georgia,serif;color:#7fd1a0;font-size:19px;line-height:1.5">Eп₁ + Eк₁ = Eп₂ + Eк₂</div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l107Card('ФОРМУЛИРОВКА','📖','Полная механическая энергия не меняется','Если действуют только сила тяжести и упругости (нет трения), сумма потенциальной и кинетической энергии остаётся ПОСТОЯННОЙ. (Перышкин, 9 класс, §28)','#7fd1a0')}
+          ${l107Card('НА ГЛАВНОЙ ГОРКЕ','🎢','Проверка законом','Наверху Eп = 100 Дж, Eк = 0. На середине Eп = 40 Дж, Eк = 60 Дж. Внизу Eп = 0, Eк = 100 Дж. Сумма всегда 100 Дж!','#7fd1a0')}
+        </div>`);
     } else if(step===10){
-      h=col(big('Считаем запас движения'),
-        rowC(chip('m = 2 кг, v = 2 м/с','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">Eк = 2 · 4 : 2 = 4 Дж</div>`+
-        sml('v² = 4; 2·4 = 8; 8:2 = 4'));
+      h=col(l107B('РЕАЛЬНЫЙ МИР','#ff8a6a')+
+        big('Куда «исчезает» энергия?')+
+        l107Cart(25,65,'e')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l107Card('ТРЕНИЕ','🔥','Энергия уходит в тепло','В реальности есть трение: вагончик нагревает рельсы, воздух сопротивляется. Часть механической энергии превращается во ВНУТРЕННЮЮ (тепло).','#ff8a6a')}
+          ${l107Card('ПОЛНЫЙ ЗАКОН','📖','Энергия не исчезает','Закон сохранения энергии — ВСЕОБЩИЙ: энергия лишь переходит из одного вида в другой (механическая → тепловая → световая...). Она никогда не пропадает!','#ff8a6a')}
+          ${l107Card('ПОЧЕМУ ГОРКА ЗАМЕДЛЯЕТСЯ','🎢','Трение съедает энергию','Поэтому настоящие вагончики со временем останавливаются: их механическая энергия ушла на нагрев рельсов и воздуха.','#ff8a6a')}
+        </div>`);
     } else if(step===11){
-      h=col(big('Задача 1: вагончик разогнался'),
-        rowC(chip('m = 4 кг, v = 3 м/с','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">Eк = 4 · 9 : 2 = 36:2 = 18 Дж</div>`+
-        sml('как в наших задачках: v² = 9, 4·9 = 36, 36:2 = 18!'));
+      h=col(l107B('ЗАДАЧА 1','#c9b28a')+
+        big('Кинетическая: m=4 кг, v=3 м/с')+
+        l107Wheels(3,'f')+
+        l107Card('УСЛОВИЕ','🚗','Найди Eк','Масса 4 кг, скорость 3 м/с.','#7fb7d8')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">Eк = 4 · 9 : 2 = 18 Дж — как в задачках!</div>`+
+        sml('1) v² = 3·3 = 9; 2) 4·9 = 36; 3) 36:2 = 18.'));
     } else if(step===12){
-      h=col(big('Главный аттракцион: горка!'),
-        l107Coaster('d')+
-        rowC(chip('наверху — вся потенциальная','rgba(127,209,255,.5)'),chip('внизу — вся кинетическая','rgba(127,184,160,.5)'))+
-        sml('вагончик скатывается: высота убывает, скорость растёт — энергия ПЕРЕТЕКАЕТ!'));
+      h=col(l107B('ЗАДАЧА 2','#c9b28a')+
+        big('Высота из энергии: Eп=150 Дж')+
+        l107Card('УСЛОВИЕ','🏗️','Груз 5 кг подняли, Eп = 150 Дж','На какую высоту подняли груз? (g = 10)','#7fb7d8')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">h = 150 : (5·10) = 150:50 = 3 м — как в задачках!</div>`+
+        sml('из формулы Eп = m·g·h выражаем h = Eп:(m·g). Сначала 5·10 = 50, потом 150:50 = 3.'));
     } else if(step===13){
-      h=col(big('Обмен энергий на горке'),
-        l107Ride(1,0,'e')+
-        sml('на вершине потенциальная = 100%, кинетическая = 0%. Вагончик стоит… и начинает разгон!'));
+      h=col(l107B('МОЩНОСТЬ · 9 КЛАСС','#7fb7d8')+
+        big('Как быстро совершается работа')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
+          ${l107Card('МОЩНОСТЬ','⚙️','N = A : t','Мощность показывает, какая работа совершается за 1 секунду. Единица — ватт (Вт), в честь Джеймса Уатта. 1 Вт = 1 Дж за 1 секунду.','#7fb7d8')}
+          ${l107Card('ПРИМЕРЫ МОЩНОСТИ','💡','От лампочки до ракеты','Лампочка ~60 Вт; человек при беге ~500 Вт; автомобиль ~100 000 Вт (100 кВт); ракета — миллиарды ватт!','#7fb7d8')}
+        </div>`+
+        sml('быстрая передача энергии = большая мощность.'));
     } else if(step===14){
-      h=col(big('Внизу — всё наоборот!'),
-        l107Ride(0,1,'f')+
-        sml('внизу потенциальная = 0%, кинетическая = 100% — вся высота превратилась в скорость!'));
+      h=col(l107B('ЭНЕРГИЯ В ТЕХНИКЕ','#7fd1a0')+
+        big('ГЭС: вода → ток')+
+        l107Dam('g')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l107Card('КАК РАБОТАЕТ ГЭС','🌊','Потенциальная → кинетическая → ток','Вода на плотине имеет потенциальную энергию (высота). Падая, превращает её в кинетическую. Поток крутит турбину, та — генератор: рождается электрический ток!','#7fd1a0')}
+          ${l107Card('ВЕЗДЕ ЭНЕРГИЯ','🏭','Превращения вокруг','Ветер крутит лопасти (Eк воздуха → Eк лопастей), маятник часов идёт (запас завода пружины), автомобиль разгоняется (энергия топлива → Eк).','#7fd1a0')}
+        </div>`);
     } else if(step===15){
-      h=col(big('Закон сохранения энергии'),
-        rowC(chip('Eп + Eк = const','rgba(217,164,65,.5)'))+
-        sml('энергия не исчезает и не появляется — только перетекает: потерял высоту, приобрёл скорость. Сумма всегда одинакова!'));
+      h=col(l107B('ШПАРГАЛКА','#ffd966')+
+        big('Все формулы разом')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['A = F·s','работа (Дж)'],['Eк = m·v²:2','кинетическая (Дж)'],['Eп = m·g·h','потенциальная (Дж)'],['Eп = k·x²:2','упругая (Дж)'],['N = A:t','мощность (Вт)'],['Eп₁+Eк₁ = Eп₂+Eк₂','закон сохранения']].map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,217,102,.06);border:1px solid rgba(255,217,102,.25);border-radius:10px;padding:5px 12px">
+            <span style="font-family:Georgia,serif;font-size:14px;color:#ffd966;font-weight:bold">${f[0]}</span>
+            <span style="font-size:11.5px;color:#9ec0a8">${f[1]}</span></div>`).join('')}
+        </div>`+
+        sml('проверь себя: 15 В и 5 Ом… нет, это другой урок! Здесь: Eк для 4 кг и 3 м/с = 18 Дж.'));
     } else if(step===16){
-      h=col(big('Задача 2: высота из энергии'),
-        rowC(chip('Eп = 150 Дж, m = 5 кг','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">h = 150 : (5·10) = 150:50 = 3 м</div>`+
-        sml('как в наших задачках: h = Eп : (m·g). Сначала 5·10 = 50, потом 150:50 = 3!'));
-    } else if(step===17){
-      h=col(big('Аттракционы-перевёртыши'),
-        rowC(chip('🪀 маятник: туда-сюда','rgba(127,209,255,.4)'),chip('🛝 качели: вверх-вниз','rgba(127,209,255,.4)'),chip('🏀 батут: прыг-скок','rgba(127,209,255,.4)'),chip('⚡ ГЭС: вода → ток','rgba(127,209,255,.4)'))+
-        sml('всё вокруг — «обменник» энергий: маятник, качели, плотина гидроэлектростанции, батут!'));
-    } else if(step===18){
       if(st.i==null){ st.i=Math.floor(Math.random()*L107POOL.length); st.score=0; st.last=''; }
       const e=L107POOL[st.i], kind=e[0];
       const correct=kind==='p'?0:kind==='k'?1:2;
-      let ans, hint;
-      if(kind==='p'){ ans=+e[1]*10*+e[2]; hint='Eп = m·g·h = '+e[1]+'·10·'+e[2]; }
-      else if(kind==='k'){ ans=+e[1]*(+e[2])*(+e[2])/2; hint='Eк = m·v²:2 = '+e[1]+'·'+(+e[2]*+e[2])+':2'; }
-      else { ans=(+e[1])/((+e[2])*10); hint='h = Eп:(m·g) = '+e[1]+':('+e[2]+'·10)'; }
-      const resTxt=st.last==='ok'?'✅ Верно!':st.last==='no'?'❌ Не угадал — попробуй ещё!':'';
-      h=col(big('🎮 Интерактив: выбери формулу!'),
-        `<div class="wv-row">${chip('Счёт: '+st.score+' ✅','rgba(127,209,255,.5)')}</div>`+
-        `<div style="font-size:15px;color:#ffd9a0;text-align:center;max-width:290px">${kind==='p'?'масса '+e[1]+' кг, высота '+e[2]+' м → какая энергия и чему равна?':kind==='k'?'масса '+e[1]+' кг, скорость '+e[2]+' м/с → какая энергия?':'энергия '+e[1]+' Дж, масса '+e[2]+' кг → какая величина?'}</div>`+
-        (resTxt?`<div class="l35-pop" style="font-size:15px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'}">${resTxt}</div>`:'')+
-        btns(btn('⛰️ Eп (высота)',`l107Act('${lk}','pick0')`),btn('🚀 Eк (скорость)',`l107Act('${lk}','pick1')`),btn('📏 h (высота из E)',`l107Act('${lk}','pick2')`),btn('🎲 задача',`l107Act('${lk}','n')`))+
-        (st.s1?`<div class="l35-pop" style="font-size:15px;color:#ffd9a0;max-width:280px">подсказка: ${h} ${kind==='p'?'= '+ans+' Дж':kind==='k'?'= '+ans+' Дж':'= '+ans+' м'}</div>`:'')+
-        btns(btn('💡 подсказка',`l107Act('${lk}','s1')`))+
-        sml('Eп = m·g·h — высота; Eк = m·v²:2 — скорость!'));
+      let q, hint, ans;
+      if(kind==='p'){ q='масса '+e[1]+' кг, высота '+e[2]+' м → найди Eп'; hint='Eп = m·g·h = '+e[1]+'·10·'+e[2]; ans=e[1]*10*e[2]; }
+      else if(kind==='k'){ q='масса '+e[1]+' кг, скорость '+e[2]+' м/с → найди Eк'; hint='Eк = m·v²:2 = '+e[1]+'·'+(e[2]*e[2])+':2'; ans=e[1]*e[2]*e[2]/2; }
+      else { q='Eп = '+e[1]+' Дж, масса '+e[2]+' кг → найди высоту h'; hint='h = Eп:(m·g) = '+e[1]+':('+e[2]+'·10)'; ans=e[1]/(e[2]*10); }
+      const resTxt=st.last==='ok'?`✅ Верно! ${hint} = ${ans}`:st.last==='no'?'❌ Не угадал — подумай, какая формула!':'';
+      h=col(l107B('ИГРА · ИНЖЕНЕР ПАРКА','#ffd966')+
+        big('Выбери формулу!')+
+        `<div class="wv-row">${chip(q,'rgba(217,164,65,.35)')}</div>`+
+        (kind==='p'?l107Hill(70,40,'t'):kind==='k'?l107Wheels(+e[2],'t2'):`<div style="font-size:34px" class="wv-pop">🏗️</div>`)+
+        (resTxt?`<div class="l35-pop" style="font-size:14px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'}">${resTxt}</div>`:'')+
+        (st.s1?`<div class="l35-pop" style="font-size:15px;color:#ffd9a0">💡 ${hint} = ${ans}</div>`:'')+
+        btns(btn('⛰️ Eп = mgh',`l107Act('${lk}','pick0')`),btn('🚀 Eк = mv²/2',`l107Act('${lk}','pick1')`),btn('📏 h = Eп:(mg)',`l107Act('${lk}','pick2')`),btn('💡',`l107Act('${lk}','s1')`),btn('🎲 задача',`l107Act('${lk}','n')`))+
+        sml('сначала пойми, ЧТО дано, потом выбирай формулу!'));
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Директор парка — Архимед')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:270px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            ⛰️ Eп = m·g·h — энергия высоты.<br>
-            🚀 Eк = m·v²:2 — энергия скорости.<br>
-            🔄 Eп + Eк не меняется — перетекает.<br>
-            🎢 Горка: высота уходит — скорость приходит!</div>
+      h=col(l107B('ПАМЯТКА','#c9b28a')+
+        big('Шпаргалка инженера парка')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
+          ${l107Card('КИНЕТИЧЕСКАЯ','🚀','Eк = m·v²:2','Энергия движения. Скорость в квадрате — удвоил v, получил Eк ×4!','#7fd1a0')}
+          ${l107Card('ПОТЕНЦИАЛЬНАЯ','⛰️','Eп = m·g·h','Энергия высоты. Также у пружины: Eп = k·x²:2.','#ffd966')}
+          ${l107Card('ЗАКОН СОХРАНЕНИЯ','🔗','Eп + Eк = const','Если нет трения — сумма не меняется. С трением часть энергии уходит в тепло, но не исчезает!','#ff8a6a')}
         </div>`+
         btn('⟲ вернуться к игре', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 3 кг на 2 м'));
