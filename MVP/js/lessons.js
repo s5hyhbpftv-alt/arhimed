@@ -3763,146 +3763,309 @@ function visL97(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+// ===================== УРОК 7 «ПЕРЕЛИВАНИЯ» (v161) =====================
+// ===================== УРОК 7 «ПЕРЕЛИВАНИЯ» (v161) =====================
 function l7Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  if(st.a==null){st.a=0;st.b=0;st.n=0;st.win=0;}
-  const A=3,B=5;
-  switch(act){
-    case 'fA': st.a=A; st.n++; break;
-    case 'fB': st.b=B; st.n++; break;
-    case 'eA': st.a=0; st.n++; break;
-    case 'eB': st.b=0; st.n++; break;
-    case 'pAB': { const x=Math.min(st.a,B-st.b); st.a-=x; st.b+=x; st.n++; break; }
-    case 'pBA': { const x=Math.min(st.b,A-st.a); st.b-=x; st.a+=x; st.n++; break; }
-    case 'chk': st.win=(st.a===4||st.b===4)?1:2; break;
-    case 'r': st.a=0; st.b=0; st.n=0; st.win=0; break;
-  }
+  const p=+act.split(':')[1];
+  const a0=act.split(':')[0];
+  if(a0==='p3'){ st.d3=(st.d3||0)+1; }        // шаг 3: показать перелив
+  if(a0==='plan'){ st.pl=p; }                 // шаг 4: выбор пункта плана
+  if(a0==='pot'){ st.pot=Math.min(2,(st.pot||0)+1); } // шаг 12: долить в кастрюлю
+  if(a0==='vol'){ st.v=p; }                   // шаг 14: выбор объёма
+  if(a0==='fA'){ if(st.a==null){st.a=0;st.b=0;st.n=0;st.win=0;} st.a=3; st.n=(st.n||0)+1; }
+  if(a0==='fB'){ if(st.a==null){st.a=0;st.b=0;st.n=0;st.win=0;} st.b=5; st.n=(st.n||0)+1; }
+  if(a0==='eA'){ if(st.a==null){st.a=0;st.b=0;st.n=0;st.win=0;} st.a=0; st.n=(st.n||0)+1; }
+  if(a0==='eB'){ if(st.a==null){st.a=0;st.b=0;st.n=0;st.win=0;} st.b=0; st.n=(st.n||0)+1; }
+  if(a0==='pAB'){ if(st.a==null){st.a=0;st.b=0;st.n=0;st.win=0;} const x=Math.min(st.a,5-st.b); st.a-=x; st.b+=x; st.n=(st.n||0)+1; }
+  if(a0==='pBA'){ if(st.a==null){st.a=0;st.b=0;st.n=0;st.win=0;} const x=Math.min(st.b,3-st.a); st.b-=x; st.a+=x; st.n=(st.n||0)+1; }
+  if(a0==='chk'){ if(st.a==null){st.a=0;st.b=0;st.n=0;st.win=0;} st.win=(st.a===4||st.b===4)?1:2; }
+  if(a0==='r'){ st.a=0; st.b=0; st.n=0; st.win=0; st.d3=0; st.pot=0; }
   chRender(0);
 }
-function l7Jug(cap,val,color,label,uid){
-  // сосуд: cap — ёмкость, val — текущий уровень (литры)
-  const pct=Math.round(val/cap*100);
-  return `<div style="display:flex;flex-direction:column;align-items:center;margin:0 4px">
-    <div style="position:relative;width:64px;height:${34+cap*18}px;border:3px solid #cbb89a;border-top:none;border-radius:0 0 8px 8px;background:#20352a;overflow:hidden">
-      <div style="position:absolute;left:0;right:0;bottom:0;height:${pct}%;background:${color};transition:height .5s ease;opacity:.9"></div>
-      <div style="position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-size:13px;color:#fff;font-weight:bold;text-shadow:0 1px 2px rgba(0,0,0,.6)">${val}<span style="font-size:9px;margin-left:1px">л</span></div>
-    </div>
-    <div style="font-size:11px;color:#cbb89a;margin-top:2px">${label} (${cap} л)</div>
+// стеклянный сосуд с водой: cap ёмкость, val уровень, вид 'tall'(5л)/'short'(3л)/'pot'(кастрюля)
+function l7Jug(cap,val,kind,big){
+  const H=big?150:132, W=big?104:96;
+  // геометрия корпуса
+  const bodyX=kind==='pot'?14:kind==='short'?16:26;
+  const bodyW=W-bodyX*2;
+  const neckH=kind==='pot'?0:kind==='short'?0:16;
+  const bodyTop=neckH+4, bodyBot=H-10;
+  const inH=bodyBot-bodyTop-8;
+  const vH=Math.max(0,Math.min(1,val/cap));
+  const waterTop=bodyBot-8-vH*inH;
+  const col='#5fc8f0';
+  const rim=kind==='pot'?'#cfd6dc':'#9fd8f2';
+  const glass=kind==='pot'?'#8a939b':(kind==='short'?'#c9b28a':'#7fc4e8');
+  // отметки литров слева (для tall/short)
+  let marks='';
+  if(kind!=='pot'&&big){
+    for(let lv=1;lv<cap;lv++){
+      const y=bodyBot-8-(lv/cap)*inH;
+      marks+=`<line x1="${bodyX-1}" y1="${y}" x2="${bodyX+6}" y2="${y}" stroke="#54705f" stroke-width="1.2"/><text x="${bodyX+9}" y="${y+3}" font-size="7.5" fill="#8aa89a">${lv}</text>`;
+    }
+  }
+  const shape=kind==='pot'
+    ? `<rect x="${bodyX}" y="${bodyTop}" width="${bodyW}" height="${bodyBot-bodyTop}" rx="10" fill="#141d24" stroke="${rim}" stroke-width="3"/>`
+    : `<path d="M ${bodyX} ${bodyTop} L ${bodyX+bodyW} ${bodyTop} L ${bodyX+bodyW} ${bodyBot-16} Q ${bodyX+bodyW} ${bodyBot} ${bodyX+bodyW-14} ${bodyBot} L ${bodyX+14} ${bodyBot} Q ${bodyX} ${bodyBot} ${bodyX} ${bodyBot-16} Z" fill="#141d24" stroke="${glass}" stroke-width="3"/>`;
+  const water= val>0 ? `<rect x="${bodyX+4}" y="${waterTop}" width="${bodyW-8}" height="${bodyBot-8-waterTop}" rx="5" fill="${col}" opacity=".85">
+      <animate attributeName="y" from="${bodyBot-8}" to="${waterTop}" dur=".8s" fill="freeze"/>
+    </rect>
+    <ellipse cx="${bodyX+bodyW/2}" cy="${waterTop}" rx="${bodyW/2-8}" ry="3.4" fill="#bfe9ff" opacity=".9">
+      <animate attributeName="cy" from="${bodyBot-8}" to="${waterTop}" dur=".8s" fill="freeze"/>
+    </ellipse>` : '';
+  const neck= kind==='tall' ? `<rect x="${bodyX+bodyW/2-9}" y="0" width="18" height="${neckH+6}" rx="3" fill="#141d24" stroke="${glass}" stroke-width="2.6"/>` : '';
+  const labelTxt=kind==='pot'?`кастрюля ${cap} л`:val+' / '+cap+' л';
+  return `<div style="display:inline-flex;flex-direction:column;align-items:center;margin:0 2px">
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${neck}${shape}${marks}${water}
+      <text x="${W/2}" y="${H-2}" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">${kind==='pot'?(val+' л'):''}</text>
+    </svg>
+    <div style="font-size:10.5px;color:#cbb89a;margin-top:1px;letter-spacing:.3px">${labelTxt}</div>
   </div>`;
 }
-function l7Demo(a,b,stepno,uid){
-  // статичный показ состояния после шага
-  return `<div class="l35-pop" style="display:flex;justify-content:center;align-items:flex-end;margin:4px auto">
-    ${l7Jug(3,a,'#5fa8d8','кувшин 3 л','a')}${l7Jug(5,b,'#7fd1a0','кувшин 5 л','b')}
+// «кран» над кувшином: капли падают вниз
+function l7Tap(label){
+  return `<div style="display:inline-flex;flex-direction:column;align-items:center;margin:0 6px">
+    <div style="width:34px;height:26px;background:linear-gradient(180deg,#6d7680,#3a4148);border-radius:6px 6px 0 0;border:2px solid #2a3036;position:relative">
+      <div style="position:absolute;left:11px;top:22px;width:9px;height:12px;background:#565f68;border-radius:0 0 4px 4px"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;height:34px;justify-content:flex-start">
+      <span style="width:5px;height:9px;background:#9fe4ff;border-radius:50%;opacity:.95;animation:wvDrop .62s linear infinite"></span>
+      <span style="width:5px;height:9px;background:#6fcdf2;border-radius:50%;opacity:.85;animation:wvDrop .62s linear .22s infinite"></span>
+      <span style="width:5px;height:9px;background:#bfe9ff;border-radius:50%;opacity:.7;animation:wvDrop .62s linear .44s infinite"></span>
+    </div>
+    <div style="font-size:9.5px;color:#8aa89a">${label||''}</div>
   </div>`;
 }
 function visL7(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const lk=lidKey(LV.id);
     const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v7!==step) CHS[lk]={_v7:step};
+    const st=CHS[lk];
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
     const sml=(t)=>`<div class="wv-sml">${t}</div>`;
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const state=(a,b)=>`<div style="display:inline-flex;gap:8px;align-items:center;background:#0d1a13;border:1px solid ${(a===4||b===4)?'#ffd966':'#3d5c49'};border-radius:9px;padding:4px 12px;font-size:13.5px;color:#e8dcc8">3 л: <b style="color:#7fd1a0">${a}</b>&nbsp;·&nbsp;5 л: <b style="color:${b===4?'#ffd966':'#5fc8f0'}">${b}</b></div>`;
     let h='';
     if(step===0){
-      h=col(big('Задача Архимеда: отмерь 4 л!'),
-        rowC(l7Jug(3,0,'#5fa8d8','кувшин','a'),l7Jug(5,0,'#7fd1a0','кувшин','b'))+
-        `<div class="wv-ans" style="font-size:20px;color:#ffd9a0">есть кувшины на 3 л и 5 л — как отмерить ровно 4 л?</div>`+
-        sml('без отметок на стенках! Только наполнять до краёв, переливать и выливать. Уже интересно? Поехали!'));
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#5fc8f022;border:1px solid #5fc8f0;color:#5fc8f0;margin-bottom:2px">КЛАССИКА · ПЕРЕЛИВАНИЯ</span>`+
+        big('Как отмерить ровно 4 л?')+
+        rowC(l7Jug(3,0,'short'),l7Jug(5,0,'tall'))+
+        `<div style="font-size:15px;color:#e8dcc8">есть кувшины на <b style="color:#ffd966">3 л</b> и <b style="color:#5fc8f0">5 л</b>…</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#ffd966">…а отмерить надо ровно 4 л!</div>`+
+        sml('отметок на стенках нет: только наливать, переливать и выливать. Как? Смотри дальше!'));
     } else if(step===1){
-      h=col(big('Три разрешённых действия'),
-        rowC(chip('наполнить кувшин до краёв','rgba(127,209,255,.5)'),chip('перелить из одного в другой','rgba(127,184,160,.5)'),chip('вылить воду','rgba(232,160,90,.5)'))+
-        sml('переливаем до конца: пока источник не опустеет ИЛИ приёмник не наполнится'));
+      h=col(big('Три разрешённых действия')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['💧','налить до краёв','воду берём из «крана» — можно сколько угодно'],['🔄','перелить','из одного кувшина в другой'],['🚰','вылить','воду можно просто выплеснуть']].map((d,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.12}s;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:8px 10px;max-width:150px;text-align:center"><div style="font-size:26px">${d[0]}</div><div style="font-size:13.5px;color:#fff;font-weight:bold;margin:2px 0">${d[1]}</div><div style="font-size:10.5px;color:#9ec0a8">${d[2]}</div></div>`).join('')}
+        </div>`+
+        rowC(chip('нельзя «на глазок»','#ff9a8a'),chip('нельзя наливать чуть-чуть','#ff9a8a'),chip('нельзя мерить на просвет','#ff9a8a'))+
+        sml('только эти три команды — больше ничего! Но их достаточно, чтобы отмерить 4 л'));
     } else if(step===2){
-      h=col(big('Главный приём: переливай «до конца»'),
-        rowC(l7Jug(3,3,'#5fa8d8','3 л полон','a'),l7Jug(5,2,'#7fd1a0','в 5 л осталось 2','b'))+
-        sml('налили 5 л в 5-литровый, перелили в 3-литровый до краёв — в большом осталось ровно 2 л. Остаток!'));
+      h=col(big('Главный приём: переливай «до конца»')+
+        card('<b style="color:#ffd966">Переливай, пока одно из двух не случится:</b><br>1) источник <b>опустеет</b>, или<br>2) приёмник <b>наполнится до краёв</b>.')+
+        `<div style="display:flex;justify-content:center;gap:6px;align-items:flex-end;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8;margin-bottom:2px">было: 5 л и пусто</div>${l7Jug(3,0,'short',1)}</div>
+          <div style="font-size:30px;color:#7fd1a0" class="wv-pulse">→</div>
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8;margin-bottom:2px">стало: 3 л полон + 2 л в большом</div>${l7Jug(5,2,'tall',1)}</div>
+        </div>`+
+        rowC(chip('маленький наполнился → стоп!','#7fd1a0'),chip('в большом осталось ровно 2 л','#ffd966'))+
+        sml('остановились, потому что приёмник полон. А остаток 2 л — наш будущий помощник!'));
     } else if(step===3){
-      h=col(big('План из 6 шагов'),
-        rowC(chip('1. набери 5 л','rgba(127,209,255,.5)'),chip('2. перелей в 3 л','rgba(127,184,160,.5)'),chip('3. вылей 3 л','rgba(232,160,90,.5)'),chip('4. перелей 2 л','rgba(127,184,160,.5)'),chip('5. набери 5 л','rgba(127,209,255,.5)'),chip('6. долей в 3 л','rgba(127,184,160,.5)'))+
-        sml('6 шагов — и в 5-литровом кувшине останется 4 л! Смотрим каждый шаг'));
+      const shown=st.d3%2===1;
+      h=col(big('Пример: 5 л − 3 л = остаток 2 л')+
+        `<div style="display:flex;justify-content:center;gap:6px;align-items:flex-end;flex-wrap:wrap">
+          ${shown?l7Jug(3,3,'short',1):l7Jug(3,0,'short',1)}
+          ${shown?'':'<span style="font-size:26px" class="wv-flick">💧</span>'}
+          ${shown?l7Jug(5,2,'tall',1):l7Jug(5,5,'tall',1)}
+        </div>`+
+        (shown?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0">налили 5 л → перелили в 3-литровый до краёв → осталось 5 − 3 = 2 л!</div>`
+              :`<div style="font-size:15px;color:#e8dcc8">сейчас: большой полон (5 л), маленький пуст. Нажми — и перельём!</div>`)+
+        btns(btn(shown?'↺ заново':'💧 перелить 5 л в 3-литровый',`l7Act('${lk}','p3')`))+
+        sml('перелили «до конца»: маленький наполнился (3 л), в большом остаток 2 л'));
     } else if(step===4){
-      h=col(big('Шаг 1: наполняем 5-литровый'),
-        l7Demo(0,5,'1','d1')+
-        sml('оба пусты. Наливаем воду в большой кувшин до краёв — теперь там 5 л'));
+      // план из 6 шагов: маршрутная карта
+      const plan=[
+        ['💧','набери 5 л','(0,0) → (5,0)'],
+        ['🔄','5 → 3','(5,0) → (2,3)'],
+        ['🚰','вылей 3','(2,3) → (2,0)'],
+        ['🔄','2 → 3','(2,0) → (0,2)'],
+        ['💧','набери 5','(0,2) → (5,2)'],
+        ['🔄','долей в 3','(5,2) → (4,3)']
+      ];
+      const pl=st.pl!=null?st.pl:-1;
+      h=col(big('План: 6 шагов до цели!')+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:336px;width:100%">
+          ${plan.map((p,i)=>`<div class="wv-pop" style="animation-delay:${i*0.08}s;display:flex;align-items:center;gap:8px;background:${pl===i?'rgba(255,217,102,.12)':'rgba(255,255,255,.03)'};border:1px solid ${pl===i?'#ffd966':'#3d5c49'};border-radius:9px;padding:4px 10px;max-width:336px;width:100%;cursor:pointer" onclick="l7Act('${lk}','plan:${i}')">
+            <span style="width:22px;height:22px;border-radius:50%;background:${pl===i?'#ffd966':'#2a4638'};display:flex;align-items:center;justify-content:center;font-size:12px;color:#0d1a13;font-weight:bold;flex-shrink:0">${i+1}</span>
+            <span style="font-size:15px;flex-shrink:0">${p[0]}</span>
+            <span style="font-size:13px;color:#e8dcc8;flex:1;text-align:left">${p[1]}</span>
+            <span style="font-size:10.5px;color:${pl===i?'#ffd966':'#8aa89a'};font-family:monospace">${p[2]}</span>
+          </div>`).join('')}
+        </div>`+
+        (pl>=0?`<div class="wv-ans" style="font-size:18px;color:#ffd966">шаг ${pl+1}: ${plan[pl][1]} → состояние ${plan[pl][2]}</div>`
+              :`<div style="font-size:12.5px;color:#8aa89a">нажимай на шаги плана — увидишь, как меняются кувшины</div>`)+
+        sml('красная цель — после шага 6 в большом кувшине ровно 4 л!'));
     } else if(step===5){
-      h=col(big('Шаг 2: переливаем в 3-литровый'),
-        l7Demo(3,2,'2','d2')+
-        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">в 5 л осталось 2 л!</div>`+
-        sml('маленький наполнился (3 л), а в большом остался остаток: 5 − 3 = 2 л'));
+      h=col(big('Шаг 1: набери 5 л в большой')+
+        `<div style="display:flex;justify-content:center;gap:12px;align-items:flex-end;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8;margin-bottom:2px">маленький ждёт (пуст)</div>${l7Jug(3,0,'short',1)}</div>
+          <div style="text-align:center">${l7Tap('кран открыт!')}${l7Jug(5,5,'tall',1)}</div>
+        </div>`+
+        rowC(chip('было: 0 и 0','#8aa89a'),chip('налили до краёв…','#7fd1a0'),chip('стало: 0 и 5','#ffd966'))+
+        `<div class="wv-ans" style="font-size:20px;color:#5fc8f0">5-литровый полон!</div>`+
+        sml('шаг 1 плана готов. Теперь перельём часть воды в маленький кувшин'));
     } else if(step===6){
-      h=col(big('Шаг 3: выливаем 3-литровый'),
-        l7Demo(0,2,'3','d3')+
-        sml('выливаем воду из маленького — он снова пуст. А в большом всё ещё наши 2 л!'));
+      h=col(big('Шаг 2: перелей из 5-литрового в 3-литровый')+
+        rowC(l7Jug(3,3,'short',1),l7Jug(5,2,'tall',1))+
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${[['в 5 л было:','5 л'],['налилось в 3 л:','3 л'],['осталось в 5 л:','2 л']].map(x=>`<div style="background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:4px 9px;text-align:center"><div style="font-size:10px;color:#9ec0a8">${x[0]}</div><div style="font-size:15px;color:#7fd1a0;font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#ffd966">5 − 3 = 2 л остатка!</div>`+
+        sml('маленький наполнился — перелив остановился. В большом теперь 2 л'));
     } else if(step===7){
-      h=col(big('Шаг 4: переливаем 2 л в маленький'),
-        l7Demo(2,0,'4','d4')+
-        sml('переливаем 2 л из большого в маленький. Теперь большой пуст, в маленьком 2 л'));
+      h=col(big('Шаг 3: вылей 3-литровый')+
+        rowC(l7Jug(3,0,'short',1),l7Jug(5,2,'tall',1))+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
+          <span style="font-size:17px" class="wv-flick">🚰</span><span style="font-size:13px;color:#e8dcc8">выливаем воду из маленького — в нём было 3 л</span>
+        </div>`+
+        rowC(chip('было: 3 и 2','#8aa89a'),chip('вылили 3 л','#ff9a8a'),chip('стало: 0 и 2','#ffd966'))+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">маленький пуст, а в большом всё ещё 2 л!</div>`+
+        sml('вылитая вода пропала — но остаток 2 л цел. Переносим его в маленький!'));
     } else if(step===8){
-      h=col(big('Шаг 5: снова наполняем большой'),
-        l7Demo(2,5,'5','d5')+
-        sml('наливаем в 5-литровый до краёв. В маленьком 2 л, в большом 5 л'));
+      h=col(big('Шаг 4: перелей 2 л в маленький')+
+        rowC(l7Jug(3,2,'short',1),l7Jug(5,0,'tall',1))+
+        rowC(chip('было: 0 и 2','#8aa89a'),chip('перелили всё — источник пуст!','#7fd1a0'),chip('стало: 2 и 0','#ffd966'))+
+        `<div class="wv-ans" style="font-size:22px;color:#ffd966">маленький наполовину полон: 2 л</div>`+
+        sml('тут остановка другая: источник (5-литровый) опустел. «До конца» — до пустого!'));
     } else if(step===9){
-      h=col(big('Шаг 6: доливаем маленький до краёв!'),
-        l7Demo(3,4,'6','d6')+
-        `<div class="wv-ans" style="font-size:22px;color:#ffd9a0;font-weight:bold">🎉 в большом осталось ровно 4 л!</div>`+
-        sml('маленькому не хватало 1 л (3−2=1) — забрали из большого: 5 − 1 = 4. Готово!'));
+      h=col(big('Шаг 5: снова набери 5 л')+
+        `<div style="display:flex;justify-content:center;gap:12px;align-items:flex-end;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8;margin-bottom:2px">в маленьком 2 л — ждут!</div>${l7Jug(3,2,'short',1)}</div>
+          <div style="text-align:center">${l7Tap('наливаем снова')}${l7Jug(5,5,'tall',1)}</div>
+        </div>`+
+        rowC(chip('большой снова полон: 5 л','#5fc8f0'),chip('маленький: 2 л','#7fd1a0'))+
+        `<div class="wv-ans" style="font-size:20px;color:#5fc8f0">теперь в запасе: 2 л + 5 л</div>`+
+        sml('большой наполнили до краёв. Остался последний штрих — и получим 4 л!'));
     } else if(step===10){
-      h=col(big('Секрет: откуда берётся остаток'),
-        rowC(chip('5 − 3 = 2 л','rgba(127,209,255,.5)'),chip('3 − 2 = 1 л','rgba(127,184,160,.5)'))+
-        sml('разница ёмкостей рождает остатки: 2 л, потом 1 л… и из них складывается 4 л!'));
+      h=col(big('Шаг 6: долей маленький до краёв!')+
+        rowC(l7Jug(3,3,'short',1),l7Jug(5,4,'tall',1))+
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${[['маленькому не хватало:','3 − 2 = 1 л',0],['взяли из большого:','1 л',0],['в большом осталось:','5 − 1 = 4 л',1]].map(x=>`<div class="wv-pop" style="background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:4px 9px;text-align:center"><div style="font-size:10px;color:#9ec0a8">${x[0]}</div><div style="font-size:15px;color:${x[2]?'#ffd966':'#7fd1a0'};font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#ffd966">🎉 В большом — ровно 4 л!</div>`+
+        sml('переливали «до конца», пока маленький не наполнился. 4 л отмерены за 6 шагов!'));
     } else if(step===11){
-      h=col(big('Большая кастрюля: отмеряем 7 л'),
-        rowC(chip('7 = 5 + 2','rgba(217,164,65,.5)'))+
-        `<div style="font-size:40px" class="wv-pop">🫕</div>`+
-        sml('наливаем в кастрюлю 5 л, а остаток 2 л (шаг 2!) доливаем туда же — в кастрюле 7 л'));
+      h=col(big('Секрет — в остатках!')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:336px;width:100%">
+          ${[['5 л − 3 л','= остаток 2 л','разница ёмкостей рождает остаток'],['3 л − 2 л','= не хватало 1 л','маленький «добрал» 1 л из большого'],['5 л − 1 л','= осталось 4 л!','вот он, наш ответ']].map((r,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.14}s;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid ${i===2?'#ffd966':'#3d5c49'};border-left:5px solid ${i===2?'#ffd966':i===1?'#7fd1a0':'#5fc8f0'};border-radius:10px;padding:6px 12px;max-width:336px;width:100%">
+            <span style="font-size:20px;color:#ffd966;font-family:Georgia,serif;min-width:84px;text-align:left">${r[0]}</span>
+            <span style="font-size:17px;color:#e8dcc8;font-family:Georgia,serif;min-width:92px">${r[1]}</span>
+            <span style="font-size:10.5px;color:#9ec0a8;flex:1;text-align:right">${r[2]}</span>
+          </div>`).join('')}
+        </div>`+
+        sml('не пытайся «угадать» 4 л — просто смотри, какие остатки рождает разница ёмкостей!'));
     } else if(step===12){
-      h=col(big('Задача-проверка'),
-        rowC(chip('кувшины 3 л и 5 л — можно ли отмерить 4 л?','rgba(217,164,65,.35)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">Да! 6 шагов: 5→3, вылей, 2→3, набери 5, долей</div>`+
-        sml('как в нашей проверке: ответ «Да»'));
+      // кастрюля 7 л
+      const pot=st.pot!=null?st.pot:0;
+      const potV=[0,5,7][Math.min(2,pot)];
+      const Hw=52; // внутренняя высота кастрюли (12..64 в viewBox)
+      const wY=64-(potV/7)*Hw;
+      const wH=(potV/7)*Hw;
+      h=col(big('Большая кастрюля: отмеряем 7 л')+
+        rowC(chip('7 = 5 + 2','#ffd966'))+
+        `<div style="display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="text-align:center">
+            <svg width="128" height="92" viewBox="0 0 128 92">
+              <rect x="38" y="4" width="52" height="12" rx="4" fill="#141d24" stroke="#cfd6dc" stroke-width="2.5"/>
+              <path d="M 16 16 L 112 16 L 112 62 Q 112 76 96 76 L 32 76 Q 16 76 16 62 Z" fill="#141d24" stroke="#cfd6dc" stroke-width="3"/>
+              <rect x="21" y="${wY.toFixed(1)}" width="86" height="${wH.toFixed(1)}" rx="5" fill="#5fc8f0" opacity=".8">
+                <animate attributeName="y" from="64" to="${wY.toFixed(1)}" dur=".7s" fill="freeze"/>
+              </rect>
+              ${potV>0?`<ellipse cx="64" cy="${(wY-1).toFixed(1)}" rx="42" ry="3" fill="#bfe9ff" opacity=".85"/>`:''}
+              <text x="64" y="66" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">${potV} л</text>
+            </svg>
+            <div style="font-size:10.5px;color:#cbb89a;margin-top:1px">кастрюля · без шкалы!</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            ${btn('➕ долить 5 л',`l7Act('${lk}','pot')`,pot>=1?'disabled':'')}
+            ${btn('➕ долить 2 л',`l7Act('${lk}','pot')`,pot>=2?'disabled':'')}
+            ${pot>0?btn('↺ сброс',`l7Act('${lk}','r')`):''}
+          </div>
+        </div>`+
+        (pot>=2?`<div class="wv-ans" style="font-size:22px;color:#ffd966">в кастрюле ровно 7 л — без всяких отметок!</div>`
+              :pot>=1?`<div style="font-size:13.5px;color:#e8dcc8">налили 5 л. Теперь добавь остаток 2 л (из шага 2)!</div>`
+              :`<div style="font-size:13.5px;color:#e8dcc8">в кастрюле нет шкалы? Неважно: нальём 5 л, а потом дольём туда же остаток 2 л.</div>`)+
+        sml('5 л из большого кувшина + 2 л остатка = ровно 7 л в кастрюле'));
     } else if(step===13){
-      h=col(big('Что можно отмерить кувшинами 3 и 5'),
-        rowC(chip('1 л: 5−3=2… и ещё раз','rgba(127,209,255,.4)'),chip('2 л: 5−3','rgba(127,184,160,.4)'),chip('3 л: наполнить','rgba(127,209,255,.4)'),chip('4 л: наш план','rgba(217,164,65,.4)'),chip('5 л: наполнить','rgba(127,184,160,.4)'))+
-        sml('почти любой объём до 8 л! Переливания — настоящий конструктор'));
+      h=col(big('Задача-проверка: можно ли отмерить 4 л?')+
+        rowC(l7Jug(3,3,'short',1),l7Jug(5,4,'tall',1))+
+        `<div class="wv-ans" style="font-size:32px;color:#7fd1a0">Да! Шесть шагов:</div>`+
+        `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:3px;max-width:340px;margin:0 auto">
+          ${[['набери 5','5→3'],['вылей 3','2→3'],['набери 5','долей в 3']].map(g=>`<div style="display:flex;flex-direction:column;gap:2px">${g.map(s=>`<span class="wv-pop" style="background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:8px;padding:3px 8px;font-size:11.5px;color:#e8dcc8">${s}</span>`).join('')}</div>`).join('')}
+        </div>`+
+        `<div style="font-size:13px;color:#9ec0a8">5→3, вылей 3, 2→3, набери 5, долей в 3 — и в большом 4 л!</div>`+
+        sml('именно это спросят в проверке — смело отвечай «Да»!'));
     } else if(step===14){
-      h=col(big('Где это в жизни'),
-        rowC(chip('старинные рынки без весов','rgba(127,209,255,.4)'),chip('рецепты: «ровно 150 мл»','rgba(127,209,255,.4)'),chip('заправка машины канистрами','rgba(127,209,255,.4)'),chip('олимпиадные задачи!','rgba(217,164,65,.4)'))+
-        sml('везде, где нужно отмерить точный объём без мерной шкалы'));
+      // что можно отмерить: интерактивные объёмы
+      const vol=st.v!=null?st.v:0;
+      const vols=[
+        ['1 л','из 4 л отлей в 3-литровый: 4 − 3 = 1','#d9a0ff'],
+        ['2 л','5 л → в 3-литровый: остаток 5 − 3 = 2','#7fd1a0'],
+        ['3 л','просто наполни 3-литровый до краёв!','#5fc8f0'],
+        ['4 л','наш план из 6 шагов!','#ffd966'],
+        ['5 л','наполни 5-литровый до краёв','#7fb7d8'],
+        ['7 л','5 л + 2 л в кастрюлю','#c9b28a'],
+        ['8 л','5 л + 3 л в кастрюлю','#ff9a8a']
+      ];
+      h=col(big('Что можно отмерить? Почти всё!')+
+        `<div style="display:flex;justify-content:center;gap:5px;flex-wrap:wrap">
+          ${vols.map((v,i)=>`<button class="hint-btn" style="${vol===i?'background:#ffd966;color:#0d1a13;border-color:#ffd966':''};padding:6px 8px;font-size:13px" onclick="l7Act('${lk}','vol:${i}')">${v[0]}</button>`).join('')}
+        </div>`+
+        (vols[vol]?`<div class="wv-pop" style="background:${vols[vol][2]}14;border:1px solid ${vols[vol][2]};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;font-size:14px;color:#e8dcc8">${vols[vol][0]}: ${vols[vol][1]}</div>`:'')+
+        rowC(chip('кувшины 3 и 5 дают: 1, 2, 3, 4, 5 л','#7fd1a0'),chip('а с кастрюлей — ещё 7 и 8 л','#c9b28a'))+
+        sml('переливания — конструктор из остатков! Нажимай на объёмы и смотри рецепты'));
     } else if(step===15){
-      h=col(big('Проверь: сможешь сам?'),
-        l7Demo(0,0,'s','chk')+
-        sml('дальше будет тренажёр-игра: отмерь 4 л сам, нажимая кнопки! Считай шаги — минимум 6'));
+      h=col(big('Где это в жизни?')+
+        `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:336px;width:100%">
+          ${[['🏺','Старый рынок','продавец без весов отмерял масло кувшинами'],['👩‍🍳','Рецепты','«ровно 150 мл» — мерным стаканом, как кувшином'],['⛽','Канистры','перелить бензин «до краёв» — и запас полон'],['🏆','Олимпиады','задачи про кувшины — классика жанра!']].map((d,i)=>`<div class="wv-pop${i%2?'2':''}" style="animation-delay:${i*0.1}s;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:9px 8px;text-align:center"><div style="font-size:24px">${d[0]}</div><div style="font-size:12.5px;color:#fff;font-weight:bold;margin:2px 0">${d[1]}</div><div style="font-size:10px;color:#9ec0a8;line-height:1.4">${d[2]}</div></div>`).join('')}
+        </div>`+
+        sml('везде, где нужен точный объём без мерной шкалы — работают остатки!'));
     } else if(step===16){
+      // игра-тренажёр
       if(st.a==null){st.a=0;st.b=0;st.n=0;st.win=0;}
       const win=st.win;
-      h=col(big('🎮 Игра: отмерь ровно 4 л!'),
-        `<div style="display:flex;justify-content:center;align-items:flex-end;margin:2px auto">
-          ${l7Jug(3,st.a,'#5fa8d8','3 л','a')}${l7Jug(5,st.b,'#7fd1a0','5 л','b')}
-        </div>`+
-        (win===1? `<div class="wv-ans" style="font-size:22px;color:#7fd1a0;font-weight:bold">🎉 Верно! 4 л отмерены за ${st.n} шагов</div>`+sml('рекорд — 6 шагов. Попробуй ещё раз и побей его!') : win===2? `<div style="text-align:center;font-size:16px;color:#ff9a8a">пока нет 4 л ни в одном кувшине — продолжай! (шагов: ${st.n})</div>` : sml(`шагов сделано: ${st.n}. Цель — ровно 4 л в любом кувшине`))+
+      h=col(big('🎮 Игра: отмерь ровно 4 л!')+
+        rowC(l7Jug(3,st.a,'short',1),l7Jug(5,st.b,'tall',1))+
+        state(st.a,st.b)+
+        (win===1?`<div class="wv-ans" style="font-size:23px;color:#7fd1a0;font-weight:bold">🎉 Верно! 4 л отмерены за ${st.n} шагов${st.n===6?' — минимально!':st.n<6?' — даже быстрее плана!':''}</div>`+sml(st.n===6?'идеально — ровно как в плане!':'план Архимеда — 6 шагов. Попробуй ещё и побей рекорд!')
+              :win===2?`<div style="text-align:center;font-size:15px;color:#ff9a8a">пока 4 л нигде нет… но ты близко! (шагов: ${st.n})</div>`
+              :`<div style="font-size:12.5px;color:#9ec0a8">сделано шагов: ${st.n} · цель — ровно 4 л в 5-литровом</div>`)+
         (win===1?'':btns(
-          btn('💧 налить 3 л',`l7Act('${lk}','fA')`),btn('💧 налить 5 л',`l7Act('${lk}','fB')`),
+          btn('💧 налить 3',`l7Act('${lk}','fA')`),btn('💧 налить 5',`l7Act('${lk}','fB')`),
           btn('🔄 3→5',`l7Act('${lk}','pAB')`),btn('🔄 5→3',`l7Act('${lk}','pBA')`),
           btn('🚰 вылить 3',`l7Act('${lk}','eA')`),btn('🚰 вылить 5',`l7Act('${lk}','eB')`),
-          btn('✅ проверь',`l7Act('${lk}','chk')`),btn('↺ сброс',`l7Act('${lk}','r')`)
+          btn('✅ проверить',`l7Act('${lk}','chk')`),btn('↺ сброс',`l7Act('${lk}','r')`)
         ))+
-        (win===1?btns(btn('↺ ещё раз',`l7Act('${lk}','r')`)):'')+
-        sml('подсказка: сначала набери 5 л, потом переливай — помни про остатки!'));
+        (win===1?btns(btn('↺ сыграть ещё раз',`l7Act('${lk}','r')`)):'')+
+        sml('подсказка: сначала набери 5, потом переливай «до конца» — и считай шаги!'));
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+      h=col(`<div style="font-size:48px">🫗</div>`+big('Совет Архимеда')+
         `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:250px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
             🫗 Переливай «до конца»: источник пуст или приёмник полон.<br>
-            🧮 Остаток = разность: 5−3 = 2, потом ещё раз → 1.<br>
+            🧮 Остаток = разность: 5−3 = 2, потом 3−2 = 1.<br>
             🎯 4 л = 6 шагов: 5→3, вылей, 2→3, набери 5, долей.<br>
-            🫕 Кастрюля: 7 л = 5 л + остаток 2 л.</div>
+            🫕 С кастрюлей: 7 л = 5 + 2.</div>
         </div>`+
         btn('⟲ вернуться к игре', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там вопрос про 4 л'));
