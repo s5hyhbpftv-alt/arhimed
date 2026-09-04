@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -3995,6 +3995,155 @@ function visL20(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 45·11'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l195Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['1'],['2'],['3'],['4'],['5'],['6'],['7'],['8'],['9'],['10'],['12'],['15']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l195Circle(r,uid){
+  // окружность радиуса r (px) + радиус-стрелка
+  const R=r*9;
+  return `<svg width="${R*2+24}" height="${R*2+24}" style="display:block;margin:2px auto">
+    <circle cx="${R+12}" cy="${R+12}" r="${R}" fill="none" stroke="#7fd1a0" stroke-width="3"/>
+    <line x1="${R+12}" y1="${R+12}" x2="${R+12+R}" y2="${R+12}" stroke="#ffd9a0" stroke-width="2.5"/>
+    <circle cx="${R+12}" cy="${R+12}" r="4" fill="#ffd9a0"/>
+    <text x="${R+12+R/2}" y="${R+22}" fill="#e8dcc8" font-size="13" text-anchor="middle">r = ${r}</text>
+  </svg>`;
+}
+function l195Unroll(r,uid){
+  // разворачивание: обод = 6·r (при π≈3 длина 2πr=6r) в линию с секторами
+  const total=6*r;
+  const segs=[];
+  for(let i=0;i<r;i++) segs.push(`<div style="flex:1;height:16px;background:${i%2?'#4f9fd8':'#3c7fae'};border-radius:2px;margin:0 1px"></div>`);
+  for(let i=0;i<r;i++) segs.push(`<div style="flex:1;height:16px;background:${i%2?'#4f9fd8':'#3c7fae'};border-radius:2px;margin:0 1px"></div>`);
+  for(let i=0;i<r;i++) segs.push(`<div style="flex:1;height:16px;background:${i%2?'#4f9fd8':'#3c7fae'};border-radius:2px;margin:0 1px"></div>`);
+  for(let i=0;i<r;i++) segs.push(`<div style="flex:1;height:16px;background:${i%2?'#4f9fd8':'#3c7fae'};border-radius:2px;margin:0 1px"></div>`);
+  for(let i=0;i<r;i++) segs.push(`<div style="flex:1;height:16px;background:${i%2?'#4f9fd8':'#3c7fae'};border-radius:2px;margin:0 1px"></div>`);
+  for(let i=0;i<r;i++) segs.push(`<div style="flex:1;height:16px;background:${i%2?'#4f9fd8':'#3c7fae'};border-radius:2px;margin:0 1px"></div>`);
+  return `<div style="margin:4px auto">
+    <div style="display:flex;align-items:center;gap:4px">
+      <div style="font-size:18px;color:#ff9a8a">🔧</div>
+      <div style="display:flex;width:210px;overflow:hidden">${segs.slice(0,6*r).join('')}</div>
+    </div>
+    <div style="text-align:center;font-size:12px;color:#9ec0a8">обод = ${total} (это 2πr ≈ 6·r)</div>
+  </div>`;
+}
+function visL195(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Сколько верёвки нужно для обруча?'),
+        `<div style="font-size:46px" class="wv-pulse">⭕</div>`+
+        sml('обруч радиусом 1 м — какой длины нужен обод? Сегодня узнаем про самое загадочное число π'));
+    } else if(step===1){
+      h=col(big('Что такое окружность'),
+        l195Circle(2,'a')+
+        rowC(chip('центр','rgba(127,209,255,.5)'),chip('радиус r — до края','rgba(232,160,90,.5)'))+
+        sml('окружность — линия на одинаковом расстоянии от центра. Радиус — «спица колеса»'));
+    } else if(step===2){
+      h=col(big('А что такое длина окружности?'),
+        rowC(chip('это длина «обода»','rgba(127,209,255,.5)'),chip('разрежь обруч и растяни в линию','rgba(127,184,160,.5)'))+
+        sml('если «разрезать» окружность в одной точке и выпрямить — получится отрезок. Его длина и есть C!'));
+    } else if(step===3){
+      h=col(big('Главное число π («пи»)'),
+        rowC(chip('π ≈ 3,14…','rgba(217,164,65,.5)'),chip('бесконечная дробь','rgba(217,164,65,.5)'))+
+        sml('в любом круге длина обода ровно в π раз больше диаметра. Для простоты будем брать π ≈ 3'));
+    } else if(step===4){
+      h=col(big('Диаметр d = 2r'),
+        rowC(chip('диаметр — «ширина» через центр','rgba(127,209,255,.5)'),chip('d = 2 · r','rgba(232,160,90,.5)'))+
+        sml('радиус 4 → диаметр 8. Диаметр — две «спицы» в ряд!'));
+    } else if(step===5){
+      h=col(big('Формула через диаметр'),
+        rowC(chip('C = π · d','rgba(217,164,65,.5)'))+
+        sml('обод = π диаметров! Радиус 4 → диаметр 8 → обод ≈ 3 · 8 = 24'));
+    } else if(step===6){
+      h=col(big('Формула через радиус'),
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-family:Georgia,serif">C = 2 · π · r</div>`+
+        sml('так как d = 2r, то C = π·d = π·2r = 2πr. Одна и та же формула в двух видах!'));
+    } else if(step===7){
+      h=col(big('Считаем: радиус 4'),
+        rowC(chip('2 · r = 8','rgba(127,209,255,.5)'),chip('× π ≈ 3','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">C = 2 · 3 · 4 = 24</div>`+
+        sml('как в нашей проверке! Сначала 2·r, потом умножаем на π'));
+    } else if(step===8){
+      h=col(big('Наглядно: разворачиваем обод'),
+        l195Circle(2,'b')+
+        l195Unroll(2,'c')+
+        sml('радиус 2 → обод 12. Шесть радиусов в линию: 2π ≈ 6, значит 2·6·… точнее 6·r'));
+    } else if(step===9){
+      h=col(big('Секрет: 2π ≈ 6'),
+        rowC(chip('π ≈ 3','rgba(217,164,65,.5)'),chip('2π ≈ 6','rgba(217,164,65,.5)'),chip('обод ≈ 6 · r','rgba(127,209,255,.5)'))+
+        sml('длина окружности примерно в 6 раз больше радиуса! Радиус 4 → обод ≈ 24'));
+    } else if(step===10){
+      h=col(big('Задача 1: радиус 5'),
+        rowC(chip('2 · r = 10','rgba(127,209,255,.5)'),chip('10 · 3 = 30','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">C = 2 · 3 · 5 = 30</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===11){
+      h=col(big('Задача 2: радиус 3'),
+        rowC(chip('2 · r = 6','rgba(127,209,255,.5)'),chip('6 · 3 = 18','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">C = 2 · 3 · 3 = 18</div>`+
+        sml('тоже как в задачках: ответ 18!'));
+    } else if(step===12){
+      h=col(big('Порядок действий'),
+        rowC(chip('1) 2 · r','rgba(127,209,255,.5)'),chip('2) × π (≈3)','rgba(232,160,90,.5)'),chip('3) ответ','rgba(127,184,160,.5)'))+
+        sml('сначала удвой радиус, потом умножь на 3 — быстро и без ошибок!'));
+    } else if(step===13){
+      h=col(big('А если дан диаметр?'),
+        rowC(chip('диаметр 10 → C = 10 · 3 = 30','rgba(127,209,255,.5)'))+
+        sml('C = π · d: просто умножь диаметр на π. Радиус 5 = диаметр 10 — тот же обод 30!'));
+    } else if(step===14){
+      h=col(big('Где это в жизни'),
+        rowC(chip('длина обруча','rgba(127,209,255,.4)'),chip('обод велосипедного колеса','rgba(127,209,255,.4)'),chip('лента вокруг торта','rgba(217,164,65,.4)'),chip('орбита спутника','rgba(127,209,255,.4)'))+
+        sml('везде, где есть круг — надо знать длину его «обода»!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('r=2 → C = 12','rgba(127,184,160,.5)'),chip('r=6 → C = 36','rgba(127,184,160,.5)'),chip('d=4 → C = 12','rgba(127,184,160,.5)'))+
+        sml('просто умножаем на 6 радиус или на 3 диаметр'));
+    } else if(step===16){
+      const POOL=[['1'],['2'],['3'],['4'],['5'],['6'],['7'],['8'],['9'],['10'],['12'],['15']];
+      if(st.i==null) st.i=0;
+      const r=+POOL[st.i][0];
+      const ans=6*r;
+      h=col(big('⭕ Тренажёр: длина окружности'),
+        `<div class="wv-row">${chip('радиус '+r+' → длина окружности? (π ≈ 3)','rgba(217,164,65,.35)')}</div>`+
+        l195Circle(Math.min(r,7),'t')+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) C = 2·π·r = 2·3·${r}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l195Act('${lk}','s1')`),btn('2️⃣ ответ',`l195Act('${lk}','s2')`),btn('🎲 другой',`l195Act('${lk}','n')`),btn('↺',`l195Act('${lk}','r')`))+
+        sml('C = 2πr: сначала 2·r, потом ×3!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            ⭕ C = 2·π·r = π·d.<br>
+            🔢 π ≈ 3 → обод ≈ 6·r или 3·d.<br>
+            📏 Шаги: 2·r, потом ×3.<br>
+            🛞 Радиус 4 → обод 24.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там радиус 4'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -8620,6 +8769,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===195) visL195(el);
   else if(id===20) visL20(el);
   else if(id===8) visL8(el);
   else if(id===90) visL90(el);
