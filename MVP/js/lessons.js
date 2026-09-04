@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -12535,7 +12535,7 @@ function renderLessonVis(){
   else if(id===2) visL2(el);
   else if(id===3) visL3(el);
   else if(id===4) visL4(el);
-  else if(id===5) visTourn(el);
+  else if(id===5) visL5(el);
   else if(id===6) visVillage(el);
   else if(id===10) visL10(el);
   else if(id===33) visL33(el);
@@ -13195,14 +13195,283 @@ function visL4(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
-function visTourn(el){
-  el.innerHTML=`${[['Настя',2,'12 очк.'],['Юля',4,'20 очк.'],['Саша',0,'0 очк.']].map(([nm,w,pt])=>`
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px">
-      <span style="width:64px">${nm}</span>
-      <span style="flex:1;height:14px;background:#101f18;border-radius:4px;overflow:hidden;max-width:300px"><i style="display:block;height:100%;width:${w/4*100}%;background:linear-gradient(90deg,#c96f4a,var(--brass))"></i></span>
-      <span style="width:56px;text-align:right;color:var(--amber)">${pt}</span></div>`).join('')}
-  <div style="text-align:center;font-size:12.5px;color:#8a94ad">победы (макс 4 игры): Настя 2, Юля 4, Саша 0</div>`;
+// ============ УРОК 5 «Круговой турнир» — Турнирная таблица Архимеда ============
+// Настя, Юля, Саша, Антон, Гордей; победа 5, ничья по 2, сумма 46.
+var L5N=['Юля','Настя','Саша','Антон','Гордей'];
+function l5Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const p=+act.split(':')[1];
+  if(act==='nP') st.n=Math.min(8,(st.n||5)+1);
+  if(act==='nM') st.n=Math.max(2,(st.n||5)-1);
+  if(act==='pick') st.pick=p;
+  if(act==='play') st.play=(st.play||0)+1;   // сыграть матч (демо очков)
+  if(act==='step') st.m=(st.m||0)+1;   // следующий шаг метода
+  if(act==='wins') st.wins=Math.min(4,(st.wins||0)+1);
+  if(act==='rst') CHS[lk]={};
+  chRender(0);
 }
+function l5B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
+function l5Ava(name,size,uid){
+  const col={Ю:'#ffd966',Н:'#7fd1a0',С:'#7fb7d8',А:'#d9a0ff',Г:'#ff9a8a'}[name[0]]||'#7fb7d8';
+  return `<div class="wv-pop" style="width:${size||46}px;height:${size||46}px;border-radius:50%;background:${col}33;border:2px solid ${col};display:flex;align-items:center;justify-content:center;font-size:${size?size*0.42:20}px;font-weight:bold;color:#fff">${name[0]}</div>`;
+}
+function l5Table(rows,uid){
+  // rows: [{n, w, d, l, pts, hot}]
+  let out='';
+  rows.forEach(r=>{
+    const ww=Math.round(r.pts/20*100);
+    out+=`<div class="wv-in" style="display:flex;align-items:center;gap:8px;width:100%;max-width:330px;margin:2px auto;background:${r.hot?'rgba(255,217,102,.08)':'rgba(255,255,255,.03)'};border:1px solid ${r.hot?'#ffd966':'#3d5c49'};border-radius:11px;padding:5px 10px">
+      ${l5Ava(r.n,34)}
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:#fff"><b>${r.n}</b><span style="color:${r.pts>=18?'#7fd1a0':r.pts>=10?'#ffd966':'#9ec0a8'};font-family:Georgia,serif;font-size:16px">${r.pts} очк.</span></div>
+        <div style="height:8px;background:#101f18;border-radius:5px;margin:2px 0;overflow:hidden"><div class="wv-pop" style="height:100%;width:${Math.max(2,ww)}%;background:linear-gradient(90deg,#c96f4a,#ffb74d);border-radius:5px"></div></div>
+        <div style="font-size:9.5px;color:#9ec0a8">побед: ${r.w} · ничьих: ${r.d} · поражений: ${r.l}</div>
+      </div>
+    </div>`;
+  });
+  return `<div style="display:flex;flex-direction:column;gap:3px">${out}</div>`;
+}
+function l5Grid(n,hot){
+  // сетка «каждый с каждым»: пары игроков как чипы (буквы)
+  const lab=i=>i<5?L5N[i][0]:String.fromCharCode(1040+i); // А=1040, Б=1041...
+  const pairs=[];
+  for(let i=0;i<n;i++) for(let j=i+1;j<n;j++) pairs.push([i,j]);
+  return `<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:340px;margin:2px auto">
+    ${pairs.map((pr,k)=>`<span class="wv-pop" style="animation-delay:${k*0.03}s;font-size:10.5px;color:#d8ecff;background:${hot&&hot(k)?'rgba(255,217,102,.2)':'rgba(255,255,255,.05)'};border:1px solid ${hot&&hot(k)?'#ffd966':'#3d5c49'};border-radius:9px;padding:2px 7px">${lab(pr[0])}–${lab(pr[1])}</span>`).join('')}
+  </div>`;
+}
+function l5Ring(n,ptsArr,uid){
+  // игроки по кругу + линии партий
+  const cx=92, cy=82, R=62;
+  const P=Array.from({length:n},(_,i)=>{ const a=-Math.PI/2+i*2*Math.PI/n; return [cx+R*Math.cos(a),cy+R*Math.sin(a)]; });
+  let lines='';
+  for(let i=0;i<n;i++) for(let j=i+1;j<n;j++){
+    lines+=`<line x1="${P[i][0].toFixed(1)}" y1="${P[i][1].toFixed(1)}" x2="${P[j][0].toFixed(1)}" y2="${P[j][1].toFixed(1)}" stroke="#3d5c49" stroke-width="1.3" opacity=".7"/>`;
+  }
+  const cols=['#ffd966','#7fd1a0','#7fb7d8','#d9a0ff','#ff9a8a','#c9b28a','#8fd0f0','#f0c75e'];
+  let nodes='';
+  for(let i=0;i<n;i++){
+    const pts=ptsArr?ptsArr[i]:null;
+    nodes+=`<circle cx="${P[i][0].toFixed(1)}" cy="${P[i][1].toFixed(1)}" r="22" fill="${cols[i%cols.length]}33" stroke="${cols[i%cols.length]}" stroke-width="2"/>
+      <text x="${P[i][0].toFixed(1)}" y="${(P[i][1]+4).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">${L5N[i][0]}</text>
+      ${pts!=null?`<text x="${P[i][0].toFixed(1)}" y="${(P[i][1]+18).toFixed(1)}" text-anchor="middle" font-size="10" fill="#9ec0a8">${pts}</text>`:''}`;
+  }
+  return `<div style="text-align:center;margin:0 auto"><svg width="190" height="172" viewBox="0 0 190 172" style="max-width:190px">${lines}${nodes}</svg></div>`;
+}
+function visL5(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v5!==step) CHS[lk]={_v5:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    let h='';
+    if(step===0){
+      h=col(`<div style="font-size:17px;color:#c9b28a;letter-spacing:1px">🏆 ТУРНИРНАЯ ТАБЛИЦА · ВсОШ 6 кл.</div>`+
+        big('Круговой турнир: каждый с каждым')+
+        `<div style="font-size:44px" class="wv-flick">🏆</div>`+
+        l5Ring(5,null,'a')+
+        rowC(chip('5 школьников','rgba(127,209,255,.4)'),chip('победа 5 очков','rgba(255,217,102,.4)'),chip('ничья — по 2','rgba(127,184,160,.4)'),chip('всего 46 очков','rgba(255,154,138,.4)'))+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:12px 14px;max-width:330px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+        Настя, Юля, Саша, Антон и Гордей сыграли круговой турнир: каждый с каждым <b>ровно один раз</b>. За победу — 5 очков, за поражение — 0, за ничью — по 2 каждому. Всего набрано <b style="color:#ffd966">46 очков</b>. Сколько партий сыграно и сколько очков у каждого?</div>`+
+        sml('начнём с простого: сколько всего партий в таком турнире?'));
+    } else if(step===1){
+      // сколько партий: сетка пар
+      h=col(l5B('ПАРТИИ «КАЖДЫЙ С КАЖДЫМ»','#7fb7d8')+
+        big('10 партий — и вот почему')+
+        `<div style="font-size:13px;color:#9ec0a8">все возможные пары игроков:</div>`+
+        l5Grid(5,null)+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          <div class="wv-pop" style="background:rgba(127,183,216,.06);border:1px solid rgba(127,183,216,.3);border-radius:9px;padding:5px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">каждый из 5 сыграл с 4 другими: 5 · 4 = 20 «полупартий»</div>
+          <div class="wv-pop2" style="background:rgba(127,209,160,.06);border:1px solid rgba(127,209,160,.3);border-radius:9px;padding:5px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">но партия Настя–Юля и Юля–Настя — это ОДНА игра! Делим на 2: 20 : 2 = <b style="color:#ffd966">10</b></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">5·4 : 2 = 10 партий</div>`+
+        sml('формула для n игроков: n·(n−1):2. Каждый сыграл ровно 4 партии!'));
+    } else if(step===2){
+      // очки за матч: интерактив «сыграй матч»
+      const play=st.play||0;
+      h=col(l5B('ОЧКИ ЗА МАТЧ','#ffd966')+
+        big('Победа 5 · ничья по 2')+
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${[['🏅 победа','5 : 0','5 очков победителю'],['🤝 ничья','2 : 2','по 2 каждому'],['📉 поражение','0 : 5','0 очков']].map((p,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:12px;padding:8px 10px;min-width:92px"><div style="font-size:22px">${p[0]}</div><div style="font-family:Georgia,serif;font-size:20px;color:#ffd966">${p[1]}</div><div style="font-size:10px;color:#9ec0a8">${p[2]}</div></div>`).join('')}
+        </div>`+
+        (play%3===0?`<div class="wv-pop" style="font-size:13.5px;color:#e8dcc8">пример: Настя выиграла у Саши → Настя +5, Саша +0</div>`
+        :play%3===1?`<div class="wv-pop" style="font-size:13.5px;color:#e8dcc8">пример: ничья Антона и Гордея → каждому по 2 (в сумме 4)</div>`
+        :`<div class="wv-pop" style="font-size:13.5px;color:#e8dcc8">одна победа «стоит» для таблицы 5 очков, одна ничья — 4 очка</div>`)+
+        btns(btn('🎮 сыграть матч',`l5Act('${lk}','play')`))+
+        sml('запомни: победа = 5, ничья = 4 (2+2). Эти «цены» помогут всё посчитать!'));
+    } else if(step===3){
+      // сумма 46 → 4 ничьи, 6 побед
+      h=col(l5B('ЧИТАЕМ СУММУ 46','#7fd1a0')+
+        big('10 побед дали бы 50… а у нас 46!')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop" style="background:rgba(255,217,102,.06);border:1px solid #ffd96644;border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">если бы все 10 партий закончились победой: 10 · 5 = <b style="color:#ffd966">50</b> очков</div>
+          <div class="wv-pop2" style="background:rgba(255,154,138,.06);border:1px solid #ff9a8a44;border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">а набрано 46 — на <b style="color:#ff9a8a">4 меньше</b>! Каждая ничья вместо победы «съедает» 1 очко (5 − 4 = 1)</div>
+          <div class="wv-pop3" style="background:rgba(127,209,160,.07);border:1px solid #7fd1a044;border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">значит ничьих 4, а побед: 10 − 4 = <b style="color:#7fd1a0">6</b></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:23px;color:#7fd1a0">в турнире 6 побед и 4 ничьи!</div>`+
+        sml('проверка: 6·5 + 4·4 = 30 + 16 = 46 ✓ Сходится!'));
+    } else if(step===4){
+      // условия про победы
+      h=col(l5B('КТО СКОЛЬКО ПОБЕДИЛ','#ffd966')+
+        big('Юля, Настя, Саша')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['Юля','в 2 раза больше побед, чем Настя'],['Настя','на 2 победы больше, чем Саша'],['Саша','побед меньше всех (может быть 0)']].map((p,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:12px;padding:8px 10px;max-width:150px"><div style="font-size:24px">${['👧','👩','👦'][i]}</div><div style="font-size:14px;color:#fff;font-weight:bold">${p[0]}</div><div style="font-size:10.5px;color:#9ec0a8">${p[1]}</div></div>`).join('')}
+        </div>`+
+        sml('обозначим победы буквами: Ю = 2·Н, Н = С + 2. Найдём их!'));
+    } else if(step===5){
+      // оценка с двух сторон: перебор побед Насти
+      const wins=st.wins!=null?st.wins:0;
+      h=col(l5B('ОЦЕНКА С ДВУХ СТОРОН','#7fb7d8')+
+        big('Сколько побед у Насти?')+
+        `<div style="font-size:13px;color:#9ec0a8">Настя = Саша + 2, а Саша не меньше 0 → побед у Насти НЕ МЕНЬШЕ 2</div>`+
+        `<div style="font-size:13px;color:#9ec0a8">Юля = 2·Настя, но у каждого не больше 4 партий → у Юли не больше 4 → у Насти НЕ БОЛЬШЕ 2</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#ffd966">не меньше 2 и не больше 2 → ровно 2!</div>`+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['Настя','2 победы'],['Юля','2·2 = 4 победы'],['Саша','2 − 2 = 0 побед']].map((p,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:12px;padding:8px 10px;min-width:92px"><div style="font-size:22px">${['👩','👧','👦'][i]}</div><div style="font-size:13px;color:#fff;font-weight:bold">${p[0]}</div><div style="font-size:10.5px;color:${i===1?'#7fd1a0':'#9ec0a8'}">${p[1]}</div></div>`).join('')}
+        </div>`+
+        sml('это и есть приём «оценка с двух сторон»: снизу и сверху — значит ровно!'));
+    } else if(step===6){
+      // проверка побед: 2+4+0=6
+      h=col(l5B('ПРОВЕРКА','#7fd1a0')+
+        big('Побед всего: 6 ✓')+
+        rowC(chip('Настя: 2','rgba(127,209,160,.5)'),chip('Юля: 4','rgba(255,217,102,.5)'),chip('Саша: 0','rgba(255,154,138,.5)'),chip('сумма: 2+4+0 = 6','rgba(127,183,216,.5)'))+
+        `<div class="wv-ans" style="font-size:21px;color:#7fd1a0">6 побед — как мы насчитали из суммы 46!</div>`+
+        `<div style="background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:12px;padding:8px 14px;max-width:320px;font-size:13px;color:#e8dcc8">Юля выиграла все 4 свои партии (больше просто не бывает!). Значит, она обыграла Настю, Сашу, Антона и Гордея.</div>`+
+        sml('раз Юля победила всех — у неё не было ничьих и поражений. Отличная зацепка!'));
+    } else if(step===7){
+      // очки Юли = 20
+      h=col(l5B('ОЧКИ ЮЛИ','#ffd966')+
+        big('4 победы → 20 очков')+
+        `<div style="display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:40px">👧</div><div style="font-size:14px;color:#fff;font-weight:bold">Юля</div><div style="font-size:12px;color:#9ec0a8">4 партии — все победы</div></div>
+          <div style="font-size:30px" class="wv-pulse">=</div>
+          <div class="wv-ans" style="font-size:34px;color:#ffd966">20 очков</div>
+        </div>`+
+        `<div style="font-size:13.5px;color:#e8dcc8;max-width:330px">4 победы по 5 очков = 20. Юля обыграла всех четверых — Настю, Сашу, Антона и Гордея.</div>`+
+        sml('Юля — чемпионка турнира! Теперь Настя.'));
+    } else if(step===8){
+      // очки Насти = 12
+      h=col(l5B('ОЧКИ НАСТИ','#7fd1a0')+
+        big('2 победы + ничья + поражение = 12')+
+        `<div style="display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:38px">👩</div><div style="font-size:13px;color:#fff;font-weight:bold">Настя · 4 партии</div></div>
+        </div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${[['🏅 победа','+5'],['🏅 победа','+5'],['🤝 ничья','+2'],['📉 поражение от Юли','+0']].map((p,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:4px 12px"><span style="font-size:13px;color:#e8dcc8">${p[0]}</span><span style="font-family:Georgia,serif;font-size:16px;color:#ffd966;font-weight:bold">${p[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">10 + 2 + 0 = 12 очков</div>`+
+        sml('Юля (20) + Настя (12) = 32 очка у «известных». Что осталось?'));
+    } else if(step===9){
+      // 46-32=14
+      h=col(l5B('ГЛАВНЫЙ ВОПРОС','#7fd1a0')+
+        big('Саша + Антон + Гордей = ?')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop" style="display:flex;justify-content:space-between;background:rgba(255,217,102,.06);border:1px solid #ffd96644;border-radius:9px;padding:6px 12px"><span style="font-size:13.5px;color:#e8dcc8">всего очков</span><span style="font-family:Georgia,serif;font-size:18px;color:#ffd966;font-weight:bold">46</span></div>
+          <div class="wv-pop2" style="display:flex;justify-content:space-between;background:rgba(127,209,160,.06);border:1px solid #7fd1a044;border-radius:9px;padding:6px 12px"><span style="font-size:13.5px;color:#e8dcc8">Юля + Настя</span><span style="font-family:Georgia,serif;font-size:18px;color:#7fd1a0;font-weight:bold">20 + 12 = 32</span></div>
+          <div class="wv-pop3" style="display:flex;justify-content:space-between;background:rgba(255,154,138,.07);border:1px solid #ff9a8a44;border-radius:9px;padding:6px 12px"><span style="font-size:13.5px;color:#e8dcc8">на троих (Саша, Антон, Гордей)</span><span style="font-family:Georgia,serif;font-size:18px;color:#ff9a8a;font-weight:bold">46 − 32 = 14</span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:32px;color:#7fd1a0">ответ: 14 очков</div>`+
+        sml('вот и решение задачи: 14 очков набрали Саша, Антон и Гордей вместе!'));
+    } else if(step===10){
+      // почему именно 14 — без побед у троих
+      h=col(l5B('РАЗБИРАЕМ ПОЧЕМУ','#7fb7d8')+
+        big('У троих не было побед!')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop" style="background:rgba(127,183,216,.06);border:1px solid rgba(127,183,216,.3);border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">все 6 побед турнира — у Юли (4) и Насти (2)</div>
+          <div class="wv-pop2" style="background:rgba(127,209,160,.06);border:1px solid rgba(127,209,160,.3);border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">значит Саша, Антон и Гордей Юле проиграли, а двоих из них обыграла Настя</div>
+          <div class="wv-pop3" style="background:rgba(255,217,102,.07);border:1px solid #ffd96644;border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">оставшиеся партии между этими тремя и Настей — ничьи (их ровно 4, мы это уже знали!)</div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">сумма очков троих = 46 − 20 − 12 = 14 — всегда!</div>`+
+        sml('конкретные очки могут отличаться (например, 4, 4 и 6) — но сумма неизменна!'));
+    } else if(step===11){
+      // полная таблица
+      h=col(l5B('ПОЛНАЯ ТАБЛИЦА','#ffd966')+
+        big('Пример распределения очков')+
+        l5Table([
+          {n:'Юля', w:4, d:0, l:0, pts:20, hot:true},
+          {n:'Настя', w:2, d:1, l:1, pts:12, hot:true},
+          {n:'Гордей', w:0, d:3, l:1, pts:6, hot:false},
+          {n:'Саша', w:0, d:2, l:2, pts:4, hot:false},
+          {n:'Антон', w:0, d:2, l:2, pts:4, hot:false}
+        ],'t')+
+        `<div class="wv-ans" style="font-size:19px;color:#7fd1a0">сумма: 20+12+6+4+4 = 46 ✓ · побед 6, ничьих 4 ✓</div>`+
+        sml('Саша, Антон и Гордей в сумме дают 14: 4 + 4 + 6 = 14 (или другое распределение)'));
+    } else if(step===12){
+      // приём оценка с двух сторон
+      const r=Math.min(4,st.m||0);
+      const steps=[
+        ['1️⃣','Пусть Н — победы Насти, С — Саши, Ю — Юли.','#7fb7d8'],
+        ['2️⃣','Ю = 2·Н и Н = С + 2 (по условию).','#7fb7d8'],
+        ['3️⃣','С ≥ 0 → Н ≥ 2. Но Ю = 2·Н ≤ 4 (всего 4 партии) → Н ≤ 2.','#7fd1a0'],
+        ['4️⃣','Раз Н ≥ 2 и Н ≤ 2 — значит Н = 2! Тогда Ю = 4, С = 0.','#ffd966']
+      ];
+      h=col(l5B('ПРИЁМ «ОЦЕНКА С ДВУХ СТОРОН»','#ffd966')+
+        big('Не меньше X и не больше X → ровно X')+
+        `<div style="display:flex;flex-direction:column;gap:7px;max-width:340px;width:100%">
+          ${steps.filter((s,i)=>i<r).map(s=>`<div class="wv-pop" style="background:rgba(255,255,255,.04);border:1px solid ${s[2]}55;border-left:5px solid ${s[2]};border-radius:10px;padding:7px 12px;text-align:left;font-size:13.5px;color:#e8dcc8">${s[0]} ${s[1]}</div>`).join('')}
+        </div>`+
+        btns(btn('▶ следующий шаг',`l5Act('${lk}','step')`,r>=4?'disabled':''),btn('↺',`l5Act('${lk}','rst')`))+
+        sml('сожми неизвестное «в тиски» снизу и сверху — и оно станет известным!'));
+    } else if(step===13){
+      // тренажёр сколько партий
+      const n=st.n||5;
+      const ans=n*(n-1)/2;
+      h=col(l5B('ТРЕНАЖЁР «СКОЛЬКО ПАРТИЙ?»','#7fd1a0')+
+        big('Турнир из '+n+' игроков')+
+        `<div style="display:flex;justify-content:center;gap:14px;align-items:center;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">игроков</div><div style="display:flex;align-items:center;gap:6px"><button class="hint-btn" onclick="l5Act('${lk}','nM')">−</button><span style="font-family:Georgia,serif;font-size:32px;color:#fff;min-width:34px">${n}</span><button class="hint-btn" onclick="l5Act('${lk}','nP')">+</button></div></div>
+        </div>`+
+        l5Grid(n,null)+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">${n}·${n-1} : 2 = ${ans} партий</div>`+
+        sml('крути! Каждый из '+n+' сыграл с '+(n-1)+', но партия посчитана дважды → делим на 2.'));
+    } else if(step===14){
+      // закрепление: 6 игроков → 15
+      h=col(l5B('ЗАКРЕПЛЕНИЕ','#7fd1a0')+
+        big('6 игроков → 15 партий')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">${Array.from({length:6},(_,i)=>`<span class="wv-pop" style="animation-delay:${i*0.09}s;width:42px;height:42px;border-radius:50%;background:${['#ffd966','#7fd1a0','#7fb7d8','#d9a0ff','#ff9a8a','#c9b28a'][i]}33;border:2px solid ${['#ffd966','#7fd1a0','#7fb7d8','#d9a0ff','#ff9a8a','#c9b28a'][i]};display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:bold;color:#fff">${'АБВГДЕ'[i]}</span>`).join('')}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          <div class="wv-pop" style="background:rgba(127,209,160,.06);border:1px solid #7fd1a044;border-radius:9px;padding:5px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">каждый из 6 сыграл с 5 другими → 6·5 = 30 «полупартий»</div>
+          <div class="wv-pop2" style="background:rgba(255,217,102,.07);border:1px solid #ffd96644;border-radius:9px;padding:5px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">делим на 2 → <b style="color:#ffd966">15 партий</b></div>
+        </div>`+
+        sml('проверь на тренажёре: поставь n = 6 — получишь 15!'));
+    } else if(step===15){
+      // бонус: почему круговой
+      h=col(l5B('БОНУС','#c9b28a')+
+        big('Почему «круговой»?')+
+        `<div style="display:flex;justify-content:center;gap:10px;align-items:center;flex-wrap:wrap">
+          <div style="text-align:center;max-width:150px"><div style="font-size:38px">🔁</div><div style="font-size:12.5px;color:#e8dcc8">круговой: все играют со всеми, никто не выбывает</div></div>
+          <div style="font-size:26px;color:#cbb89a">vs</div>
+          <div style="text-align:center;max-width:150px"><div style="font-size:38px">🎯</div><div style="font-size:12.5px;color:#e8dcc8">олимпийская система: проиграл — выбыл</div></div>
+        </div>`+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:8px 14px;max-width:330px;font-size:13.5px;color:#e8dcc8;line-height:1.6">в круговом турнире победитель — тот, кто набрал больше всех очков. Поэтому так важно уметь считать очки и партии!</div>`+
+        sml('теперь ты знаешь, как устроены настоящие турниры!'));
+    } else {
+      h=col(`<div style="font-size:54px">🏆</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🎾 Партий: n·(n−1):2.<br>
+            🏅 Победа 5, ничья 4 (2+2).<br>
+            📊 Сумма 46 → 4 ничьи, 6 побед.<br>
+            👧 Юля 20, Настя 12.<br>
+            🧮 Трое остальных: 14 очков.</div>
+        </div>`+
+        btn('⟲ вернуться к бонусу', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там число партий'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function visVillage(el){
   const grp=(nm,comp)=>`<div style="border:2px solid ${comp?'var(--glow)':'#3d5c49'};border-radius:10px;padding:6px 10px;background:#101f18;text-align:center;min-width:96px">
     <div class="small" style="font-size:10px">${nm}</div><div style="color:var(--amber);font-size:16px">20 шт</div>
