@@ -12647,8 +12647,9 @@ function l3Sim(n,total,h){
   return a;
 }
 function l3Ring(n,cells,opts){
-  // SVG: n ячеек по кругу; opts: {hot:idx-оранжевая, start:idx, mark:массив-подсветка, hide0}
-  const R=opts&&opts.r?opts.r:64, cx=90, cy=78;
+  // SVG: n ячеек по кругу; в кружках число улиток + мини-улитки, если их мало
+  const R=opts&&opts.r?opts.r:(n>7?52:(n===6?60:64)), cx=90, cy=80;
+  const rDot=opts&&opts.r?opts.r:64;
   const pts=Array.from({length:n},(_,i)=>{ const a=-Math.PI/2+i*2*Math.PI/n; return [cx+R*Math.cos(a),cy+R*Math.sin(a)]; });
   let edges='';
   for(let i=0;i<n;i++){ const p=pts[i],q=pts[(i+1)%n]; edges+=`<line x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${q[0].toFixed(1)}" y2="${q[1].toFixed(1)}" stroke="#3d5c49" stroke-width="2"/>`; }
@@ -12656,19 +12657,29 @@ function l3Ring(n,cells,opts){
   cells.forEach((v,i)=>{
     const hot=opts&&opts.hot===i;
     const st=opts&&opts.mark&&opts.mark[i];
-    const fill=hot?'rgba(255,183,77,.2)':st?st.f:'rgba(255,255,255,.05)';
+    const fill=hot?'rgba(255,183,77,.22)':st?st.f:'rgba(255,255,255,.05)';
     const bd=hot?'2.5px solid #ffb74d':st&&st.c?'2px solid '+st.c:'1.5px solid #8a94ad';
     const tc=hot?'#ffd9a0':'#e8dcc8';
-    const label=opts&&opts.labels?opts.labels[i]:'';
-    circ+=`<circle cx="${pts[i][0].toFixed(1)}" cy="${pts[i][1].toFixed(1)}" r="23" fill="${fill}" stroke="${bd}"/>
-      <text x="${pts[i][0].toFixed(1)}" y="${(pts[i][1]+5).toFixed(1)}" text-anchor="middle" font-size="15" font-weight="bold" fill="${tc}">${Math.round(v*100)/100}</text>
-      ${label?`<text x="${pts[i][0].toFixed(1)}" y="${(pts[i][1]-28).toFixed(1)}" text-anchor="middle" font-size="9" fill="#7f93a8">${label}</text>`:''}
-      ${hot?`<text x="${pts[i][0].toFixed(1)}" y="${(pts[i][1]-29).toFixed(1)}" text-anchor="middle" font-size="11" fill="#ffb74d">🎯</text>`:''}`;
+    const num=Math.round(v*100)/100;
+    // мини-улитки: показываем до 5 иконок в кружке при v<=24
+    let icons='';
+    if(v>0 && v<=30){
+      const cnt=Math.min(5,Math.ceil(v/6));
+      let ics='';
+      for(let k=0;k<cnt;k++) ics+='🐌';
+      icons=`<text x="${pts[i][0].toFixed(1)}" y="${(pts[i][1]+ (num>=10?16:num>=100?18:14)).toFixed(1)}" text-anchor="middle" font-size="${cnt>3?8:10}" opacity=".85">${ics}</text>`;
+    }
+    const numY=pts[i][1]-(v>0&&v<=30?6:0);
+    circ+=`<circle class="wv-pop" style="animation-delay:${(i*0.06).toFixed(2)}s" cx="${pts[i][0].toFixed(1)}" cy="${pts[i][1].toFixed(1)}" r="${rDot>64?20:23}" fill="${fill}" stroke="${bd}"/>
+      <text x="${pts[i][0].toFixed(1)}" y="${(numY+5).toFixed(1)}" text-anchor="middle" font-size="16" font-weight="bold" fill="${tc}">${num}</text>
+      ${icons}
+      ${hot?`<text x="${pts[i][0].toFixed(1)}" y="${(pts[i][1]-29).toFixed(1)}" text-anchor="middle" font-size="12" fill="#ffb74d">🎯</text>`:''}`;
   });
   const sum=cells.reduce((a,b)=>a+b,0);
-  return `<div style="text-align:center;margin:2px auto;max-width:100%">
-    <svg width="180" height="${R>64?170:158}" viewBox="0 0 180 ${R>64?170:158}" style="max-width:180px">${edges}${circ}
-      <text x="90" y="${R>64?162:150}" text-anchor="middle" font-size="11" fill="#7f93a8">сумма: ${Math.round(sum*100)/100}</text>
+  const H=rDot>64?172:162;
+  return `<div style="text-align:center;margin:0 auto;max-width:100%">
+    <svg width="186" height="${H}" viewBox="0 0 186 ${H}" style="max-width:186px">${edges}${circ}
+      <text x="93" y="${H-6}" text-anchor="middle" font-size="11" fill="#7f93a8">сумма: ${Math.round(sum*100)/100}</text>
     </svg>
   </div>`;
 }
