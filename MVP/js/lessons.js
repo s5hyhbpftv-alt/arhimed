@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -6184,6 +6184,141 @@ function visL94(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+function l95Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['nn','N','N','оттолкнутся'],['ss','S','S','оттолкнутся'],['ns','N','S','притянутся'],['sn','S','N','притянутся'],['ns2','N','S','притянутся'],['nn2','N','N','оттолкнутся']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l95Magnet(pole,color,uid){
+  // подковообразный/полосовой магнит с полюсом
+  return `<div style="text-align:center">
+    <div style="width:56px;height:30px;border-radius:6px;background:linear-gradient(145deg,${color==='N'?'#e05a5a':'#4f6fd8'},${color==='N'?'#a02828':'#2a4a9a'});display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,.4)">${pole}</div>
+  </div>`;
+}
+function l95Pair(p1,p2,result,uid){
+  // два магнита, между ними стрелка результата
+  const attract=result==='притянутся';
+  const gap=attract?10:40;
+  return `<div style="display:flex;align-items:center;justify-content:center;gap:${gap}px;margin:6px auto;transition:gap .6s ease">
+    ${l95Magnet(p1,p1==='N'?'N':'S','a')}
+    <div style="font-size:26px;color:${attract?'#7fd1a0':'#ff9a8a'}" class="wv-pulse">${attract?'⬅️➡️ притягиваются':'⬅️⬅️ отталкиваются'}</div>
+    ${l95Magnet(p2,p2==='N'?'N':'S','b')}
+  </div>`;
+}
+function visL95(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Почему магнит прилипает к холодильнику?'),
+        `<div style="font-size:44px" class="wv-flick">🧲</div>`+
+        sml('магнит притягивает железо — и держит записку на холодильнике. Что за волшебная сила? Разберёмся!'));
+    } else if(step===1){
+      h=col(big('Что притягивает магнит'),
+        rowC(chip('железо ✅','rgba(127,184,160,.5)'),chip('сталь ✅','rgba(127,184,160,.5)'),chip('дерево ❌','rgba(232,160,90,.5)'),chip('стекло ❌','rgba(232,160,90,.5)'),chip('пластик ❌','rgba(232,160,90,.5)'))+
+        sml('магнит притягивает железо и сталь. Как в нашей проверке: железные тела!'));
+    } else if(step===2){
+      h=col(big('Проверь сам'),
+        rowC(chip('монета — притянется?','rgba(127,209,255,.5)'),chip('карандаш — нет','rgba(232,160,90,.5)'),chip('гвоздь — да!','rgba(127,184,160,.5)'))+
+        sml('если предмет притянулся — в нём есть железо! Так можно искать железо дома'));
+    } else if(step===3){
+      h=col(big('Два полюса'),
+        rowC(l95Magnet('N','N','a'),l95Magnet('S','S','b'))+
+        rowC(chip('N — северный','rgba(232,160,90,.5)'),chip('S — южный','rgba(127,209,255,.5)'))+
+        sml('у каждого магнита два полюса: красный N (север) и синий S (юг)'));
+    } else if(step===4){
+      h=col(big('Разноимённые притягиваются'),
+        l95Pair('N','S','притянутся','c')+
+        sml('N и S — разные полюса → притягиваются! Как в наших задачках'));
+    } else if(step===5){
+      h=col(big('Одноимённые отталкиваются'),
+        l95Pair('N','N','оттолкнутся','d')+
+        sml('N и N — одинаковые → отталкиваются! Как в наших задачках'));
+    } else if(step===6){
+      h=col(big('Правило магнитов'),
+        rowC(chip('разные (N-S) → притягиваются','rgba(127,184,160,.5)'),chip('одинаковые (N-N, S-S) → отталкиваются','rgba(232,160,90,.5)'))+
+        sml('как у людей: противоположности притягиваются!'));
+    } else if(step===7){
+      h=col(big('Задача 1: N к N'),
+        l95Pair('N','N','оттолкнутся','e')+
+        `<div class="wv-ans" style="font-size:22px;color:#ff9a8a">северные полюса → оттолкнутся!</div>`+
+        sml('как в наших задачках: одноимённые!'));
+    } else if(step===8){
+      h=col(big('Задача 2: S к N'),
+        l95Pair('S','N','притянутся','f')+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">S и N — разные → притянутся!</div>`+
+        sml('как в наших задачках: разноимённые!'));
+    } else if(step===9){
+      h=col(big('Магнитное поле'),
+        rowC(chip('невидимая сила вокруг магнита','rgba(127,209,255,.5)'),chip('железные опилки показывают линии','rgba(127,184,160,.5)'))+
+        sml('насыпь опилки — они выстроятся по линиям поля, как по невидимым дорожкам!'));
+    } else if(step===10){
+      h=col(big('Земля — огромный магнит'),
+        `<div style="font-size:40px" class="wv-swing">🌍</div>`+
+        sml('у Земли есть магнитное поле! Поэтому стрелка компаса всегда показывает на север'));
+    } else if(step===11){
+      h=col(big('Компас'),
+        rowC(chip('стрелка — маленький магнит','rgba(127,209,255,.5)'),chip('синий конец — на север','rgba(127,209,255,.5)'))+
+        sml('компас — магнитная стрелка, которая «дружит» с полем Земли!'));
+    } else if(step===12){
+      h=col(big('Северный магнитный полюс'),
+        rowC(chip('стрелка N тянется к северу Земли','rgba(127,209,255,.5)'),chip('значит там «южный» полюс магнита-Земли','rgba(232,160,90,.5)'))+
+        sml('противоположности притягиваются — N стрелки тянет к S Земли!'));
+    } else if(step===13){
+      h=col(big('Магниты в технике'),
+        rowC(chip('динамики и наушники','rgba(127,209,255,.4)'),chip('электродвигатели','rgba(127,209,255,.4)'),chip('карты с магнитной полосой','rgba(127,209,255,.4)'),chip('магнитные замки','rgba(127,209,255,.4)'))+
+        sml('магниты повсюду: от наушников до поездов на магнитной подушке!'));
+    } else if(step===14){
+      h=col(big('Электромагнит'),
+        rowC(chip('катушка + ток = магнит','rgba(127,209,255,.5)'),chip('можно включать и выключать!','rgba(127,184,160,.5)'))+
+        sml('по проводу течёт ток — катушка становится магнитом. Так работают краны на свалке!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('N-S → притягиваются','rgba(127,184,160,.5)'),chip('N-N → отталкиваются','rgba(127,184,160,.5)'),chip('магнит + дерево → ничего','rgba(127,184,160,.5)'))+
+        sml('разные — притягиваются, одинаковые — отталкиваются!'));
+    } else if(step===16){
+      const POOL=[['nn','N','N','оттолкнутся'],['ss','S','S','оттолкнутся'],['ns','N','S','притянутся'],['sn','S','N','притянутся'],['ns2','N','S','притянутся'],['nn2','N','N','оттолкнутся']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], p1=e[1], p2=e[2], result=e[3];
+      const firstStep=p1===p2?'полюса одинаковые ('+p1+' и '+p2+') → отталкиваются':'полюса разные ('+p1+' и '+p2+') → притягиваются';
+      h=col(big('🧲 Тренажёр: полюса магнитов'),
+        `<div class="wv-row">${chip('полюс '+p1+' поднесли к полюсу '+p2+' — что будет?','rgba(217,164,65,.35)')}</div>`+
+        l95Pair(p1,p2,result,'t')+
+        (st.s1? `<div class="l35-pop" style="font-size:16px;text-align:center;color:#ffd9a0;max-width:280px">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:24px;color:${result==='притянутся'?'#7fd1a0':'#ff9a8a'};font-weight:bold">${result}!</div>`:'')+
+        btns(btn('1️⃣ подумай',`l95Act('${lk}','s1')`),btn('2️⃣ ответ',`l95Act('${lk}','s2')`),btn('🎲 другой',`l95Act('${lk}','n')`),btn('↺',`l95Act('${lk}','r')`))+
+        sml('разные (N-S) — притягиваются, одинаковые — отталкиваются!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🧲 Притягивает железо и сталь.<br>
+            🔴 N и 🔵 S: разные — притягиваются.<br>
+            ⏫ Одинаковые (N-N) — отталкиваются.<br>
+            🌍 Земля — магнит: компас на север!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там про железо'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function l18Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const POOL=[['sq','7'],['sq','12'],['sq','15'],['cb','2'],['cb','3'],['cb','5'],['back','81'],['back','144'],['back','125'],['back','64'],['cnt','sq'],['cnt','cb']];
@@ -10775,6 +10910,7 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
   if(id===1) visDigits(el);
+  else if(id===95) visL95(el);
   else if(id===94) visL94(el);
   else if(id===93) visL93(el);
   else if(id===92) visL92(el);
