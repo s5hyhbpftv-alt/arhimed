@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -711,6 +711,274 @@ function l10Road(moving, v1, v2, dur, dist, start){
     <div style="position:absolute;left:${stX+4}px;bottom:${ASF-3}px;width:${CARW-8}px;height:5px;z-index:3;
       border-radius:50%;background:rgba(0,0,0,.5);filter:blur(2px);animation:wvDrive ${dur||1.6}s cubic-bezier(.45,0,.55,1) both;--dx:${dx}px"></div>
   </div>`;
+}
+
+// ===================== УРОК 29 «СЧЁТ ДО 10: СКЛАДЫВАЕМ И ВЫЧИТАЕМ» (v170) =====================
+function l29Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  const EX=[['3 + 2','5'],['4 + 4','8'],['5 − 2','3'],['8 − 3','5'],['2 + 3','5'],['7 − 4','3'],['4 + 3','7'],['9 − 4','5'],['6 + 2','8'],['5 + 5','10'],['10 − 3','7'],['1 + 6','7']];
+  if(a0==='e'){ st.e=((st.e==null?0:st.e)+1)%EX.length; st.guess=null; }
+  if(a0==='pick'){ st.guess=p; }
+  if(a0==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+// яблоко-кружок
+function l29Apple(n,sz,cls){
+  const s=sz||26;
+  return `<span class="${cls||'wv-pop'}" style="display:inline-flex;align-items:center;justify-content:center;width:${s}px;height:${s}px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8f8f,#d94848);border:2px solid #a52f2f;font-size:${Math.max(9,s*0.42)}px;color:#fff;font-weight:bold;margin:2px;box-shadow:0 1px 3px rgba(0,0,0,.4)">${n||''}</span>`;
+}
+// ряд яблок
+function l29Row(n,sz,d0,opt){
+  const o=opt||{};
+  let out='';
+  for(let i=0;i<n;i++){
+    out+=`<span class="${o.cls||'l12-fall'}" style="animation-delay:${((d0||0)+i*0.07).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:${sz||24}px;height:${sz||24}px;border-radius:50%;background:radial-gradient(circle at 32% 28%,${o.col||'#ff8f8f'},${o.col2||'#d94848'});border:2px solid ${o.bord||'#a52f2f'};font-size:${Math.max(8,(sz||24)*0.4)}px;color:#fff;font-weight:bold;margin:1px">${o.mark&&i===n-1?'?':''}</span>`;
+  }
+  return `<div style="display:flex;justify-content:center;flex-wrap:wrap;max-width:330px;margin:1px auto">${out}</div>`;
+}
+// пальчик (эмодзи-палец вверх)
+function l29Finger(up,sz){
+  const s=sz||22;
+  return `<span class="wv-pop" style="display:inline-block;font-size:${s}px;margin:0 1px">${up?'☝️':'👇'}</span>`;
+}
+// числовая лента 1..10 с подсветкой шагов
+function l29Tape(stepNums,opt){
+  const o=opt||{};
+  const hot=o.hot||[];
+  return `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;max-width:340px;margin:2px auto">
+    ${[1,2,3,4,5,6,7,8,9,10].map(n=>{const on=hot.indexOf(n)>=0;return `<span class="${on?'l12-hop':''}" style="animation-delay:${(n*0.05).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:${on?'#ffd966':'rgba(255,255,255,.07)'};border:2px solid ${on?'#ffd966':'#3d5c49'};font-size:14px;font-weight:${on?'bold':'normal'};color:${on?'#4a3200':'#e8dcc8'}">${n}</span>`;}).join('')}
+  </div>`;
+}
+// «домик» числа: крыша с целым, два этажа с частями
+function l29House(total,part1,opt){
+  const o=opt||{};
+  const p2=total-part1;
+  return `<div style="display:inline-block;text-align:center">
+    <div style="font-size:12px;color:#9ec0a8">домик числа ${total}</div>
+    <div style="display:inline-flex;align-items:center;justify-content:center;width:52px;height:34px;background:rgba(255,217,102,.15);border:2px solid #ffd966;border-radius:8px 8px 0 0;font-size:20px;color:#ffd966;font-weight:bold">${total}</div>
+    <div style="display:flex;gap:6px;justify-content:center;margin-top:2px">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:46px;height:30px;background:${o.c1||'rgba(127,209,160,.15)'};border:2px solid ${o.c1b||'#7fd1a0'};border-radius:0 0 8px 8px;font-size:17px;color:#fff;font-weight:bold">${part1}</div>
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:46px;height:30px;background:${o.c2||'rgba(127,183,216,.15)'};border:2px solid ${o.c2b||'#7fb7d8'};border-radius:0 0 8px 8px;font-size:17px;color:#fff;font-weight:bold">${p2}</div>
+    </div>
+    <div style="font-size:9.5px;color:#9ec0a8">${part1} + ${p2} = ${total}</div>
+  </div>`;
+}
+function visL29(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v29!==step) CHS[lk]={_v29:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const note=(t,c,d)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'}${d||'44'};border-radius:9px;padding:5px 12px;font-size:12.5px;color:#e8dcc8;text-align:left;line-height:1.45">${t}</div>`;
+    let h='';
+    if(step===0){
+      // легенда
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#ff8f8f33;border:1px solid #ff8f8f;color:#ffb4a0;margin-bottom:2px">НАЧАЛЬНАЯ ШКОЛА · 1 КЛАСС</span>`+
+        big('Считать — соединять или убирать!')+
+        `<div style="font-size:38px" class="wv-swing">🍎</div>`+
+        l29Row(8,26,0)+
+        card('Архимед принёс корзину яблок. Считать — значит <b style="color:#7fd1a0">СОЕДИНЯТЬ</b> части в целое (это <b>сложение</b>) или <b style="color:#ff9a8a">УБИРАТЬ</b> часть (это <b>вычитание</b>).')+
+        sml('сегодня научимся считать до 10! Смотри на яблоки, пальцы и числовую ленту!'));
+    } else if(step===1){
+      // числа от 1 до 10
+      h=col(big('Числа от 1 до 10')+
+        l29Tape(0)+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:336px;width:100%">
+          ${[['1','🍎','одно яблоко'],['2','🍎🍎','два яблока'],['3','🍎🍎🍎','три яблока']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.15}s;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:4px 10px;max-width:320px;width:100%"><span style="font-size:16px;color:#ffd966;font-weight:bold;min-width:20px">${x[0]}</span><span style="font-size:16px">${x[1]}</span><span style="font-size:11px;color:#9ec0a8">${x[2]}</span></div>`).join('')}
+        </div>`+
+        sml('каждое число — это сколько предметов! Числа растут по одному: 1, 2, 3, …'));
+    } else if(step===2){
+      // пальцы
+      h=col(big('Считаем на пальцах!')+
+        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:4px 0">
+          ${Array.from({length:5},(_,i)=>l29Finger(true)).join('')}
+        </div>`+
+        `<div style="font-size:12.5px;color:#e8dcc8">на одной руке — <b style="color:#7fd1a0">5 пальцев</b>, на двух — <b style="color:#ffd966">10</b>!</div>`+
+        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:4px 0">
+          ${Array.from({length:5},(_,i)=>l29Finger(true)).join('')}${Array.from({length:5},(_,i)=>l29Finger(true)).join('')}
+        </div>`+
+        card('загни <b style="color:#ff9a8a">3 пальца</b> из 10 — и посчитай оставшиеся: <b style="color:#ffd966">7</b>! Пальцы — лучший счётный инструмент.')+
+        sml('у тебя всегда с собой 10 счётных палочек — твои пальцы!'));
+    } else if(step===3){
+      // состав числа 5
+      h=col(big('Состав числа 5: части и целое')+
+        rowC(l29House(5,1),l29House(5,2),l29House(5,3),l29House(5,4))+
+        card('пятёрку можно собрать по-разному: <b style="color:#7fd1a0">1 + 4</b>, <b style="color:#ffd966">2 + 3</b>, <b style="color:#7fb7d8">3 + 2</b>, <b style="color:#d9a0ff">4 + 1</b>. Две части вместе дают целое 5!')+
+        sml('запомни домики чисел: 5 = 2 + 3, 6 = 3 + 3, 7 = 3 + 4 — так считать быстрее!'));
+    } else if(step===4){
+      // сложение
+      h=col(big('Сложение: соединяем части ➕')+
+        `<div style="display:flex;justify-content:center;gap:6px;align-items:center;flex-wrap:wrap">
+          <div style="text-align:center">${l29Row(3,26,0)}<div style="font-size:10px;color:#9ec0a8">3 яблока</div></div>
+          <span style="font-size:26px" class="wv-pulse">➕</span>
+          <div style="text-align:center">${l29Row(2,26,0.3)}<div style="font-size:10px;color:#9ec0a8">ещё 2</div></div>
+          <span style="font-size:26px;color:#cbb89a">=</span>
+          <div style="text-align:center"><div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">5</div><div style="font-size:10px;color:#9ec0a8">вместе!</div></div>
+        </div>`+
+        card('было <b>3</b> яблока, положили ещё <b>2</b> — стало <b style="color:#7fd1a0">5</b>! «Плюс» ➕ значит «добавить, соединить».')+
+        sml('считаем вместе вслух: три, четыре, пять — получилось 5!'));
+    } else if(step===5){
+      // вычитание
+      h=col(big('Вычитание: убираем часть ➖')+
+        `<div style="display:flex;justify-content:center;gap:6px;align-items:center;flex-wrap:wrap">
+          <div style="text-align:center">${l29Row(5,26,0)}<div style="font-size:10px;color:#9ec0a8">было 5</div></div>
+          <span style="font-size:26px" class="wv-pulse">➖</span>
+          <div style="text-align:center">${l29Row(2,26,0.3,{cls:'wv-pop'})}<div style="font-size:10px;color:#ff9a8a">убрали 2</div></div>
+          <span style="font-size:26px;color:#cbb89a">=</span>
+          <div style="text-align:center"><div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">3</div><div style="font-size:10px;color:#9ec0a8">осталось</div></div>
+        </div>`+
+        card('было <b>5</b> яблок, <b style="color:#ff9a8a">2</b> съели — осталось <b style="color:#7fd1a0">3</b>! «Минус» ➖ значит «убрать, отнять».')+
+        sml('считаем назад: пять, четыре, три — осталось 3!'));
+    } else if(step===6){
+      // лента: сложение шагаем вправо
+      h=col(big('Числовая лента: при сложении — ВПРАВО ➜')+
+        l29Tape(0,{hot:[3,4,5]})+
+        card('пример <b style="color:#ffd966">3 + 2</b>: встань на <b>3</b> и сделай <b style="color:#7fd1a0">2 шага вправо</b>: 4, 5! Пришли на <b style="color:#7fd1a0">5</b>.')+
+        `<div style="display:flex;justify-content:center;gap:4px;align-items:center;flex-wrap:wrap">
+          ${[['3','старт','#ffd966'],['+1 → 4','шаг 1','#7fd1a0'],['+1 → 5','шаг 2','#7fd1a0']].map((x,i)=>`<span class="wv-pop" style="animation-delay:${i*0.2}s;display:inline-block;background:rgba(255,255,255,.05);border:1px solid ${x[2]};border-radius:9px;padding:3px 9px;font-size:12px;color:#e8dcc8">${x[0]}</span>`).join('')}
+        </div>`+
+        sml('сложение — это шаги вправо по ленте чисел!'));
+    } else if(step===7){
+      // лента: вычитание влево
+      h=col(big('Числовая лента: при вычитании — ВЛЕВО ◂')+
+        l29Tape(0,{hot:[5,4,3]})+
+        card('пример <b style="color:#ffd966">5 − 2</b>: встань на <b>5</b> и сделай <b style="color:#ff9a8a">2 шага влево</b>: 4, 3! Пришли на <b style="color:#ff9a8a">3</b>.')+
+        `<div style="display:flex;justify-content:center;gap:4px;align-items:center;flex-wrap:wrap">
+          ${[['5','старт','#ffd966'],['−1 → 4','шаг 1','#ff9a8a'],['−1 → 3','шаг 2','#ff9a8a']].map((x,i)=>`<span class="wv-pop" style="animation-delay:${i*0.2}s;display:inline-block;background:rgba(255,255,255,.05);border:1px solid ${x[2]};border-radius:9px;padding:3px 9px;font-size:12px;color:#e8dcc8">${x[0]}</span>`).join('')}
+        </div>`+
+        sml('вычитание — шаги влево по ленте. Вправо прибавляем, влево отнимаем!'));
+    } else if(step===8){
+      // сложение на пальцах
+      h=col(big('3 + 2 на пальцах')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">
+          <div style="text-align:center">
+            <div style="display:flex;justify-content:center">${[1,2,3].map(i=>l29Finger(true,30)).join('')}</div>
+            <div style="font-size:11px;color:#7fd1a0;margin-top:2px">показали 3 пальца</div>
+          </div>
+          <span style="font-size:26px" class="wv-pulse">➕</span>
+          <div style="text-align:center">
+            <div style="display:flex;justify-content:center">${[1,2].map(i=>l29Finger(true,30)).join('')}</div>
+            <div style="font-size:11px;color:#7fd1a0;margin-top:2px">добавили ещё 2</div>
+          </div>
+        </div>`+
+        `<div style="text-align:center;font-size:17px" class="wv-ans">считаем: 3, 4, 5 → получилось <b style="color:#7fd1a0">5</b>!</div>`+
+        sml('покажи пальцы, добавляй по одному и считай вслух: три, четыре, пять!'));
+    } else if(step===9){
+      // вычитание на пальцах
+      h=col(big('5 − 2 на пальцах')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">
+          <div style="text-align:center">
+            <div style="display:flex;justify-content:center">${[1,2,3,4,5].map(i=>l29Finger(true,26)).join('')}</div>
+            <div style="font-size:11px;color:#e8dcc8;margin-top:2px">показали 5 пальцев</div>
+          </div>
+          <span style="font-size:26px" class="wv-pulse">➖</span>
+          <div style="text-align:center">
+            <div style="display:flex;justify-content:center">${[1,2].map(i=>l29Finger(false,26)).join('')}</div>
+            <div style="font-size:11px;color:#ff9a8a;margin-top:2px">загнули 2</div>
+          </div>
+        </div>`+
+        `<div style="text-align:center;font-size:17px" class="wv-ans">считаем назад: 5, 4, 3 → осталось <b style="color:#7fd1a0">3</b>!</div>`+
+        sml('загибай пальцы и считай в обратную сторону — как по ленте влево!'));
+    } else if(step===10){
+      // домик числа 6
+      h=col(big('Домик числа 6')+
+        rowC(l29House(6,1,'#7fd1a0'),l29House(6,2,'#ffd966'),l29House(6,3,'#7fb7d8'),l29House(6,4,'#d9a0ff'),l29House(6,5,'#ff9a8a'))+
+        card('в домике числа <b style="color:#ffd966">6</b> живут две «комнатки»: <b>1 и 5</b>, <b>2 и 4</b>, <b>3 и 3</b>, <b>4 и 2</b>, <b>5 и 1</b>. Вместе всегда 6 жильцов!')+
+        sml('знаешь домики чисел — считаешь быстро, без пальцев!'));
+    } else if(step===11){
+      // 4+4
+      h=col(big('Складываем: 4 + 4 = 8')+
+        `<div style="display:flex;justify-content:center;gap:8px;align-items:center;flex-wrap:wrap">
+          <div style="text-align:center">${l29Row(4,24,0)}<div style="font-size:10px;color:#9ec0a8">четыре яблока</div></div>
+          <span style="font-size:24px;color:#cbb89a">➕</span>
+          <div style="text-align:center">${l29Row(4,24,0.3)}<div style="font-size:10px;color:#9ec0a8">и ещё четыре</div></div>
+        </div>`+
+        card('пересчитай все вместе: <b style="color:#7fd1a0">5, 6, 7, 8</b> — получилось <b style="color:#7fd1a0">8</b>! Это <b>два раза по четыре</b>.')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">4 + 4 = 8 ✓</div>`+
+        sml('как в наших задачках: 4 + 4 = 8!'));
+    } else if(step===12){
+      // 8-3
+      h=col(big('Вычитаем: 8 − 3 = 5')+
+        `<div style="text-align:center">${l29Row(8,22,0)}<div style="font-size:10px;color:#9ec0a8">было 8 яблок</div></div>`+
+        `<div style="text-align:center;font-size:15px;color:#ff9a8a">3 яблока убрали…</div>`+
+        `<div style="text-align:center">${l29Row(5,22,0.4)}<div style="font-size:10px;color:#7fd1a0">осталось 5!</div></div>`+
+        card('проверка: <b style="color:#7fd1a0">5 + 3 = 8</b> — сходится! Значит, вычли правильно.')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">8 − 3 = 5 ✓</div>`+
+        sml('всегда проверяй вычитание сложением — сложил обратно, и всё сошлось!'));
+    } else if(step===13){
+      // семейство примеров
+      h=col(big('Семейство примеров: родственники!')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;align-items:center">
+          ${[['3 + 2 = 5','сложили части','#7fd1a0'],['5 − 2 = 3','убрали часть','#ff9a8a'],['5 − 3 = 2','убрали другую','#7fb7d8']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.16}s;text-align:center;background:rgba(255,255,255,.04);border:2px solid ${x[2]};border-radius:12px;padding:8px 10px;min-width:110px"><div style="font-size:19px;color:#ffd966;font-family:Georgia,serif">${x[0]}</div><div style="font-size:10px;color:${x[2]};margin-top:3px">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('если <b style="color:#7fd1a0">3 + 2 = 5</b>, то обратно: <b style="color:#ff9a8a">5 − 2 = 3</b>! Сложение и вычитание — «друзья наоборот».')+
+        sml('зная один пример, ты знаешь целых три!'));
+    } else if(step===14){
+      // задача про птичек
+      h=col(big('Задача: птички на ветке 🐦')+
+        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:2px 0">
+          ${[1,2,3,4,5,6].map(i=>`<span class="l12-fall" style="animation-delay:${(i*0.1).toFixed(2)}s;font-size:30px">🐦</span>`).join('')}
+        </div>`+
+        `<div style="font-size:13px;color:#e8dcc8;text-align:center">сидели <b style="color:#ffd966">6 птичек</b>, <b style="color:#ff9a8a">2 улетели</b>…</div>`+
+        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:3px 0">
+          ${[1,2,3,4].map(i=>`<span class="l12-fall" style="animation-delay:${(0.5+i*0.12).toFixed(2)}s;font-size:30px">🐦</span>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">6 − 2 = 4 — осталось 4 птички!</div>`+
+        sml('было 6, улетели 2 → вычитаем: 6 − 2 = 4. Как в наших задачках!'));
+    } else if(step===15){
+      // задача про яблоки на тарелке
+      h=col(big('Задача: яблоки на тарелке 🍎')+
+        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:2px 0">
+          ${[1,2,3].map(i=>`<span class="l12-fall" style="animation-delay:${(i*0.1).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#9ae6b4,#3f9d62);border:2px solid #2c7a49;font-size:13px;color:#fff;font-weight:bold;margin:1px">${i}</span>`).join('')}
+          ${[1,2].map(i=>`<span class="l12-fall" style="animation-delay:${(0.35+i*0.1).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8f8f,#c93737);border:2px solid #942525;font-size:13px;color:#fff;font-weight:bold;margin:1px">${i+3}</span>`).join('')}
+        </div>`+
+        `<div style="font-size:13px;color:#e8dcc8;text-align:center">на тарелке <b style="color:#7fd1a0">3 зелёных</b> и <b style="color:#ff9a8a">2 красных</b> яблока</div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">3 + 2 = 5 яблок всего!</div>`+
+        sml('соединяем части: зелёные + красные = все яблоки на тарелке!'));
+    } else if(step===16){
+      // тренажёр
+      const EX=[['3 + 2','5'],['4 + 4','8'],['5 − 2','3'],['8 − 3','5'],['2 + 3','5'],['7 − 4','3'],['4 + 3','7'],['9 − 4','5'],['6 + 2','8'],['5 + 5','10'],['10 − 3','7'],['1 + 6','7']];
+      const i=st.e!=null?st.e:0;
+      const e=EX[i%EX.length];
+      const expr=e[0], ans=+e[1];
+      const opts=[1,2,3,4,5,6,7,8,9,10].filter(o=>Math.abs(o-ans)<=2);
+      if(opts.indexOf(ans)<0) opts.push(ans);
+      const done=st.guess!=null;
+      const right=done&&st.guess===ans;
+      h=col(big('🎮 Тренажёр: посчитай!')+
+        `<div style="font-size:44px;color:#ffd966;font-family:Georgia,serif;text-align:center" class="wv-ans">${expr} = ?</div>`+
+        `<div style="font-size:12.5px;color:#9ec0a8;text-align:center">посчитай на пальцах или по ленте!</div>`+
+        (done?(right?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">🎉 Верно: ${ans}!</div>`:`<div style="font-size:17px;color:#ff9a8a">не угадал — ответ ${ans}!</div>`):'')+
+        (done?'':btns(...opts.map(o=>btn(''+o,`l29Act('${lk}','pick:${o}')`))))+
+        (done?btns(btn('🎲 следующий пример',`l29Act('${lk}','e')`),btn('↺',`l29Act('${lk}','r')`)):'')+
+        sml('сложение — шагай вправо, вычитание — влево!'));
+    } else {
+      h=col(`<div style="font-size:48px">🍎</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:252px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            🍎 Сложение ➕ — соединяем, шагаем вправо.<br>
+            ➖ Вычитание — убираем, шагаем влево.<br>
+            🏠 Домики: 5=2+3, 6=3+3, 7=3+4.<br>
+            🤲 Считай на пальцах и вслух!<br>
+            ✅ 3+2=5 · 4+4=8 · 6−2=4.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 3 + 2'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
 function l33Act(lk,act){
@@ -13946,6 +14214,7 @@ function renderLessonVis(){
   else if(id===22) visL22(el);
   else if(id===21) visL21(el);
   else if(id===18) visL18(el);
+  else if(id===29) visL29(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
