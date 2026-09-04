@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(LV.id===30) visL30(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -764,6 +764,272 @@ function l29House(total,part1,opt){
     <div style="font-size:9.5px;color:#9ec0a8">${part1} + ${p2} = ${total}</div>
   </div>`;
 }
+// ===================== УРОК 30 «СЛОЖЕНИЕ И ВЫЧИТАНИЕ ДО 100» (v171) =====================
+function l30Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  const EX=[['25','37','+'],['60','24','−'],['48','15','+'],['43','27','−'],['36','28','+'],['70','35','−'],['54','19','+'],['82','47','−'],['29','44','+'],['90','56','−']];
+  if(a0==='e'){ st.e=((st.e==null?0:st.e)+1)%EX.length; st.guess=null; st.s1=0; st.s2=0; }
+  if(a0==='s1'){ st.s1=1; }
+  if(a0==='s2'){ st.s2=1; }
+  if(a0==='pick'){ st.guess=p; }
+  if(a0==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+// палочки: пучки по 10 (десятки) и отдельные (единицы)
+function l30Sticks(dec,one,opt){
+  const o=opt||{};
+  const decCol=o.decCol||'#ffd966', oneCol=o.oneCol||'#7fd1a0';
+  let out='';
+  for(let i=0;i<dec;i++){
+    out+=`<span class="l12-fall" style="animation-delay:${(i*0.08).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:44px;height:18px;border-radius:4px;background:${decCol}33;border:2px solid ${decCol};font-size:9px;color:${decCol};font-weight:bold;margin:2px">10</span>`;
+  }
+  for(let i=0;i<one;i++){
+    out+=`<span class="l12-fall" style="animation-delay:${(dec*0.08+i*0.05).toFixed(2)}s;display:inline-block;width:5px;height:20px;border-radius:2px;background:${oneCol};margin:0 3px"></span>`;
+  }
+  return `<div style="display:flex;justify-content:center;flex-wrap:wrap;max-width:330px;margin:1px auto">${out}</div>`;
+}
+// число по разрядам: две клетки дес/ед
+function l30Num(n,opt){
+  const o=opt||{};
+  const d=Math.floor(n/10), e=n%10;
+  const hotD=o.hotD, hotE=o.hotE;
+  return `<div style="display:inline-flex;gap:4px;align-items:flex-end">
+    <div style="text-align:center">
+      <div class="${hotD?'l12-hop':''}" style="display:flex;align-items:center;justify-content:center;width:${o.w||34}px;height:${o.h||38}px;border-radius:8px;background:${hotD?'#ffd966':'rgba(255,217,102,.12)'};border:2px solid ${hotD?'#ffd966':'#a67c1e'};font-size:${o.fs||20}px;color:${hotD?'#4a3200':'#ffd966'};font-weight:bold;font-family:Georgia,serif">${d}</div>
+      <div style="font-size:8px;color:#9ec0a8">десятки</div>
+    </div>
+    <div style="text-align:center">
+      <div class="${hotE?'l12-hop':''}" style="display:flex;align-items:center;justify-content:center;width:${o.w||34}px;height:${o.h||38}px;border-radius:8px;background:${hotE?'#7fd1a0':'rgba(127,209,160,.12)'};border:2px solid ${hotE?'#7fd1a0':'#2f8f5a'};font-size:${o.fs||20}px;color:${hotE?'#0d1a13':'#7fd1a0'};font-weight:bold;font-family:Georgia,serif">${e}</div>
+      <div style="font-size:8px;color:#9ec0a8">единицы</div>
+    </div>
+  </div>`;
+}
+// запись примера столбиком
+function l30Col(a,b,op,opt){
+  const o=opt||{};
+  const ah=o.ah!=null?o.ah:null;  // промежуточный результат единиц (для +)
+  const bh=o.bh!=null?o.bh:null;  // заняли десяток (для −)
+  const res=o.res;
+  const showRes=o.showRes;
+  const da=Math.floor(a/10), ea=a%10;
+  const db=Math.floor(b/10), eb=b%10;
+  const r=op==='+'?a+b:a-b;
+  const dr=Math.floor(Math.abs(r)/10), er=Math.abs(r)%10;
+  const cell=(v,col,mark)=>`<div style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:${col||'rgba(255,255,255,.05)'};border:2px solid ${mark?'#ffd966':'#3d5c49'};font-size:20px;color:${mark?'#ffd966':'#e8dcc8'};font-weight:bold;font-family:Georgia,serif;position:relative">${v}${mark?`<span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:9px;color:#ff9a8a">.</span>`:''}</div>`;
+  let rows='';
+  rows+=`<div style="display:flex;align-items:center;gap:4px">
+    ${op==='−'?`<span style="width:22px;font-size:20px;color:#ff9a8a;font-weight:bold;text-align:center">−</span>`:`<span style="width:22px"></span>`}
+    ${cell(da)}${cell(ea)}<span style="font-size:10px;color:#9ec0a8;margin-left:3px">=${a}</span>
+  </div>`;
+  rows+=`<div style="display:flex;align-items:center;gap:4px;margin-top:2px">
+    <span style="width:22px;font-size:16px;color:#7fd1a0;font-weight:bold;text-align:center">${op}</span>
+    ${cell(db,bh?'#ffd966':'',bh!=null)}${cell(eb)}
+    <span style="font-size:10px;color:#9ec0a8;margin-left:3px">=${b}</span>
+  </div>`;
+  rows+=`<div style="display:flex;align-items:center;gap:4px;margin-top:2px;border-top:2px solid #cbb89a;padding-top:3px">
+    <span style="width:22px"></span>
+    ${cell(showRes?dr:'?',showRes?'#7fd1a0':'rgba(127,209,160,.1)',showRes)}
+    ${cell(showRes?er:'?',showRes?'#7fd1a0':'rgba(127,209,160,.1)',showRes)}
+    ${showRes?`<span style="font-size:11px;color:#7fd1a0;font-weight:bold;margin-left:3px">=${res}</span>`:'<span style="font-size:10px;color:#54705f;margin-left:3px">?</span>'}
+  </div>`;
+  return `<div style="display:flex;flex-direction:column;align-items:center;max-width:300px;margin:0 auto;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:14px;padding:8px 12px">${rows}</div>`;
+}
+// карточка «заняли десяток» для вычитания
+function l30Borrow(a,b){
+  const ea=a%10, eb=b%10;
+  const da=Math.floor(a/10)-1, newE=ea+10;
+  return `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;align-items:center">
+    ${l30Num(a,{w:40,h:44,fs:24})}
+    <span style="font-size:22px;color:#ff9a8a" class="wv-pulse">➖</span>
+    ${l30Num(b,{w:40,h:44,fs:24})}
+  </div>
+  <div style="background:rgba(255,154,138,.08);border:1px solid #ff9a8a55;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+    <div style="font-size:13.5px;color:#e8dcc8">от <b style="color:#ffd966">${ea}</b> единиц нельзя отнять <b style="color:#ff9a8a">${eb}</b>! Занимаем <b style="color:#7fd1a0">1 десяток</b>:</div>
+    <div style="font-size:16px;color:#ffd966;font-family:Georgia,serif;text-align:center">${a} = ${da}0 + ${newE} &nbsp;(стало ${newE} единиц)</div>
+  </div>`;
+}
+function visL30(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v30!==step) CHS[lk]={_v30:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const note=(t,c,d)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'}${d||'44'};border-radius:9px;padding:5px 12px;font-size:12.5px;color:#e8dcc8;text-align:left;line-height:1.45">${t}</div>`;
+    let h='';
+    if(step===0){
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#ffd96633;border:1px solid #ffd966;color:#ffd966;margin-bottom:2px">НАЧАЛЬНАЯ ШКОЛА · 2 КЛАСС</span>`+
+        big('Числа до 100 — считаем по разрядам!')+
+        `<div style="font-size:36px" class="wv-swing">🧮</div>`+
+        rowC(l30Num(25),l30Num(37))+
+        card('числа стали большими — <b style="color:#ffd966">до 100</b>! Но считать легко, если складывать <b>по разрядам</b>: сначала <b style="color:#ffd966">десятки</b>, потом <b style="color:#7fd1a0">единицы</b>.')+
+        sml('сегодня научимся быстро складывать и вычитать любые числа до 100!'));
+    } else if(step===1){
+      h=col(big('Десятки и единицы')+
+        rowC(l30Num(25,{hotD:1}),l30Num(37,{hotD:1}))+
+        `<div style="font-size:13.5px;color:#e8dcc8">жёлтая клетка — <b style="color:#ffd966">десятки</b>: 25 = 20 + 5, а 37 = 30 + 7</div>`+
+        l30Sticks(2,5)+
+        l30Sticks(3,7)+
+        card('в числе <b>25</b> — <b style="color:#ffd966">2 десятка</b> (2 пучка по 10) и <b style="color:#7fd1a0">5 единиц</b>. В числе 37 — 3 десятка и 7 единиц.')+
+        sml('пучок палочек = 10. Десятки считаем как обычные числа: 2, 3, 4…'));
+    } else if(step===2){
+      h=col(big('Главный приём: по шагам!')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['1️⃣','сначала считаем ДЕСЯТКИ','как числа до 9: 20+30=50'],['2️⃣','потом ЕДИНИЦЫ','5+7=12'],['3️⃣','собираем вместе','50+12=62']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:5px solid ${['#ffd966','#7fd1a0','#7fb7d8'][i]};border-radius:9px;padding:6px 10px;max-width:336px;width:100%"><span style="font-size:15px">${x[0]}</span><span style="font-size:13px;color:#e8dcc8;font-weight:bold;min-width:132px">${x[1]}</span><span style="font-size:11px;color:#9ec0a8">${x[2]}</span></div>`).join('')}
+        </div>`+
+        sml('три шага — и готово! Так почти не ошибаешься.'));
+    } else if(step===3){
+      h=col(big('Шаг 1: складываем десятки')+
+        `<div style="text-align:center">25 + 37 = ?</div>`+
+        rowC(l30Num(25),`<span style="font-size:20px;color:#7fd1a0">+</span>`,l30Num(37))+
+        `<div style="display:flex;justify-content:center;gap:8px;align-items:center;flex-wrap:wrap">
+          <div class="wv-pop" style="text-align:center;background:rgba(255,217,102,.1);border:2px solid #ffd966;border-radius:10px;padding:6px 10px"><div style="font-size:11px;color:#ffd966">десятки</div><div style="font-size:22px;color:#ffd966;font-weight:bold">20 + 30</div></div>
+          <span style="font-size:22px;color:#cbb89a">=</span>
+          <div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">50</div>
+        </div>`+
+        sml('десятки считаем как обычные числа: 2 дес + 3 дес = 5 дес = 50!'));
+    } else if(step===4){
+      h=col(big('Шаг 2: складываем единицы')+
+        `<div style="text-align:center">25 + 37 = ?</div>`+
+        rowC(l30Num(25,{hotE:1}),`<span style="font-size:20px;color:#7fd1a0">+</span>`,l30Num(37,{hotE:1}))+
+        `<div style="display:flex;justify-content:center;gap:8px;align-items:center;flex-wrap:wrap">
+          <div class="wv-pop" style="text-align:center;background:rgba(127,209,160,.1);border:2px solid #7fd1a0;border-radius:10px;padding:6px 10px"><div style="font-size:11px;color:#7fd1a0">единицы</div><div style="font-size:22px;color:#7fd1a0;font-weight:bold">5 + 7</div></div>
+          <span style="font-size:22px;color:#cbb89a">=</span>
+          <div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">12</div>
+        </div>`+
+        card('единиц получилось <b style="color:#ffd966">12</b> — больше 9! Значит, это <b>1 десяток и 2 единицы</b>: 12 = 10 + 2.')+
+        sml('запомни: единицы могут «перерасти» в десяток!'));
+    } else if(step===5){
+      h=col(big('Шаг 3: собираем вместе')+
+        rowC(chip('десятки: 50','#ffd966'),chip('единицы-десяток: 12','#7fd1a0'),chip('50 + 12 = 62','#7fb7d8'))+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
+          <span style="font-size:26px;color:#ffd966;font-family:Georgia,serif">50</span>
+          <span style="font-size:24px;color:#cbb89a">+</span>
+          <span style="font-size:26px;color:#7fd1a0;font-family:Georgia,serif">12</span>
+          <span style="font-size:24px;color:#cbb89a">=</span>
+          <span class="wv-ans" style="font-size:34px;color:#7fd1a0;font-weight:bold">62</span>
+        </div>`+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">25 + 37 = 62 ✓ (как в нашей проверке!)</div>`+
+        sml('три шага сделаны: десятки 50, единицы 12, вместе 62!'));
+    } else if(step===6){
+      h=col(big('Другой способ: по частям')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['25 + 37','к 25 прибавим 30 (десятки 37)'],['= 25 + 30 + 7','потом ещё 7 (единицы)'],['= 55 + 7','сначала 25+30=55'],['= 62','теперь 55+7=62']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.15}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#ffd966','#7fd1a0','#7fb7d8','#d9a0ff'][i]};border-radius:9px;padding:5px 12px;max-width:336px;width:100%"><span style="font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:11.5px;color:#9ec0a8;text-align:right">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('сначала добавили <b>десятки</b> второго числа (30), потом его <b style="color:#7fd1a0">единицы</b> (7). Ответ тот же: <b style="color:#7fd1a0">62</b>!')+
+        sml('два способа — один ответ. Выбирай, какой удобнее!'));
+    } else if(step===7){
+      h=col(big('Вычитание: 60 − 24')+
+        `<div style="text-align:center">60 − 24 = ?</div>`+
+        rowC(l30Num(60),`<span style="font-size:20px;color:#ff9a8a">−</span>`,l30Num(24))+
+        `<div style="display:flex;justify-content:center;gap:8px;align-items:center;flex-wrap:wrap">
+          <div class="wv-pop" style="text-align:center;background:rgba(255,154,138,.1);border:2px solid #ff9a8a;border-radius:10px;padding:6px 10px"><div style="font-size:11px;color:#ff9a8a">шаг 1: десятки</div><div style="font-size:22px;color:#ff9a8a;font-weight:bold">60 − 20 = 40</div></div>
+        </div>`+
+        sml('сначала убираем десятки: 6 дес − 2 дес = 4 дес = 40!'));
+    } else if(step===8){
+      h=col(big('Вычитание: убираем единицы')+
+        `<div style="text-align:center">60 − 24 = ?</div>`+
+        `<div style="display:flex;justify-content:center;gap:8px;align-items:center;flex-wrap:wrap">
+          <div class="wv-pop" style="text-align:center;background:rgba(255,154,138,.1);border:2px solid #ff9a8a;border-radius:10px;padding:6px 10px"><div style="font-size:11px;color:#ff9a8a">шаг 1: десятки</div><div style="font-size:20px;color:#ff9a8a">60 − 20 = 40</div></div>
+          <span style="font-size:20px;color:#cbb89a">→</span>
+          <div class="wv-pop2" style="text-align:center;background:rgba(127,209,160,.1);border:2px solid #7fd1a0;border-radius:10px;padding:6px 10px"><div style="font-size:11px;color:#7fd1a0">шаг 2: единицы</div><div style="font-size:22px;color:#7fd1a0;font-weight:bold">40 − 4 = 36</div></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">60 − 24 = 36 ✓ (как в задачках!)</div>`+
+        sml('от 40 отняли 4 единицы — осталось 36!'));
+    } else if(step===9){
+      h=col(big('А если единиц не хватает?')+
+        `<div style="text-align:center">43 − 27 = ?</div>`+
+        l30Borrow(43,27)+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:336px;width:100%">
+          ${[['13 − 7 = 6','единицы: заняли десяток'],['30 − 20 = 10','десятки: осталось 3 дес'],['10 + 6 = 16','собираем!']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.16}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#7fd1a0','#ff9a8a','#ffd966'][i]};border-radius:9px;padding:5px 12px;max-width:336px;width:100%"><span style="font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:11px;color:#9ec0a8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">43 − 27 = 16</div>`+
+        sml('заняли десяток — и единиц хватило! Этот приём — как в тетради.'));
+    } else if(step===10){
+      h=col(big('Записываем в столбик: 25 + 37')+
+        l30Col(25,37,'+',{res:62,showRes:false})+
+        card('единицы под единицами, десятки под десятками. <b>Единицы:</b> 5+7=12 → пишем <b>2</b>, десяток запоминаем. <b>Десятки:</b> 2+3+1=<b>6</b>. Ответ <b style="color:#7fd1a0">62</b>!')+
+        sml('сначала всегда единицы, потом десятки (+ тот, что запомнили)!'));
+    } else if(step===11){
+      h=col(big('Столбик вычитания: 60 − 24')+
+        l30Col(60,24,'−',{res:36,showRes:false})+
+        card('от <b>0</b> единиц нельзя отнять 4 — <b style="color:#ff9a8a">занимаем десяток</b>: 10−4=<b>6</b>. Десятков осталось 5: 5−2=<b>3</b>. Ответ <b style="color:#7fd1a0">36</b>!')+
+        sml('в столбике «занять десяток» — поставить точку над десятками, как в тетради!'));
+    } else if(step===12){
+      h=col(big('Проверяем вычитанием!')+
+        rowC(l30Num(62),`<span style="font-size:20px;color:#ff9a8a">−</span>`,l30Num(37),`<span style="font-size:20px;color:#cbb89a">=</span>`,l30Num(25))+
+        card('если <b style="color:#7fd1a0">25 + 37 = 62</b>, то обратно: <b style="color:#ff9a8a">62 − 37 = 25</b>! Сложение и вычитание проверяют друг друга.')+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">62 − 37 = 25 ✓ — всё сходится!</div>`+
+        sml('всегда проверяй ответ обратным действием — как настоящий математик!'));
+    } else if(step===13){
+      h=col(big('Задача: наклейки 🍎')+
+        `<div style="font-size:13px;color:#e8dcc8;text-align:center">у Пети было <b style="color:#7fd1a0">48 наклеек</b>, подарили ещё <b style="color:#ffd966">15</b>:</div>`+
+        l30Sticks(4,8,{decCol:'#ffd966',oneCol:'#ffd966'})+
+        l30Sticks(1,5,{decCol:'#7fd1a0',oneCol:'#7fd1a0'})+
+        rowC(chip('40 + 10 = 50','#ffd966'),chip('8 + 5 = 13','#7fd1a0'),chip('50 + 13 = 63','#7fb7d8'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">48 + 15 = 63 наклейки!</div>`+
+        sml('как в наших задачках: 48 + 15 = 63!'));
+    } else if(step===14){
+      h=col(big('Задача: монеты в кассе 🏪')+
+        `<div style="font-size:13px;color:#e8dcc8;text-align:center">в кассе <b style="color:#ffd966">60 монет</b>, потратили <b style="color:#ff9a8a">24</b>:</div>`+
+        l30Sticks(6,0,{decCol:'#ffd966'})+
+        rowC(chip('60 − 20 = 40','#ff9a8a'),chip('40 − 4 = 36','#7fd1a0'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">60 − 24 = 36 монет осталось!</div>`+
+        sml('как в наших задачках: ответ 36!'));
+    } else if(step===15){
+      h=col(big('Где пригодится?')+
+        `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:336px;width:100%">
+          ${[['🛒','Сдача в магазине','купил на 37 — дал 50, сдача 13'],['📚','Наклейки и марки','48 + 15 = 63 в коллекции'],['🎯','Очки в игре','набрал 56, соперник 38 — кто больше?'],['📏','Длина и шаги','прошёл 45 + 30 = 75 шагов']].map((x,i)=>`<div class="wv-pop${i%2?'2':''}" style="animation-delay:${i*0.1}s;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:8px;text-align:center"><div style="font-size:22px">${x[0]}</div><div style="font-size:12px;color:#fff;font-weight:bold;margin:2px 0">${x[1]}</div><div style="font-size:10px;color:#9ec0a8;line-height:1.35">${x[2]}</div></div>`).join('')}
+        </div>`+
+        sml('везде, где числа до 100 — считай по разрядам, быстро и без ошибок!'));
+    } else if(step===16){
+      // тренажёр
+      const EX=[['25','37','+'],['60','24','−'],['48','15','+'],['43','27','−'],['36','28','+'],['70','35','−'],['54','19','+'],['82','47','−'],['29','44','+'],['90','56','−']];
+      const i=st.e!=null?st.e:0;
+      const e=EX[i%EX.length];
+      const a=+e[0], b=+e[1], op=e[2];
+      const res=op==='+'?a+b:a-b;
+      const opts=[res-2,res-1,res,res+1,res+2].filter(v=>v>=0&&v<=100);
+      if(opts.indexOf(res)<0) opts.push(res);
+      const done=st.guess!=null;
+      const right=done&&st.guess===res;
+      h=col(big('🎮 Тренажёр: посчитай!')+
+        `<div style="font-size:36px;color:#ffd966;font-family:Georgia,serif;text-align:center" class="wv-ans">${a} ${op} ${b} = ?</div>`+
+        (st.s1?`<div class="wv-pop" style="font-size:15px;text-align:center;color:#ffd9a0">1️⃣ десятки: ${op==='+'?Math.floor(a/10)*10+' + '+Math.floor(b/10)*10+' = '+(Math.floor(a/10)+Math.floor(b/10))*10:Math.floor(a/10)*10+' − '+Math.floor(b/10)*10+' = '+(Math.floor(a/10)-Math.floor(b/10))*10}</div>`:'')+
+        (st.s2?`<div class="wv-pop" style="font-size:15px;text-align:center;color:#ffd9a0">2️⃣ единицы: ${a%10} ${op==='+'?'+':'−'} ${b%10} … собери всё вместе!</div>`:'')+
+        (done?(right?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">🎉 Верно: ${res}!</div>`:`<div style="font-size:17px;color:#ff9a8a">не угадал — ответ ${res}</div>`):'')+
+        (done?'':btns(...opts.map(o=>btn(''+o,`l30Act('${lk}','pick:${o}')`))))+
+        (done?btns(btn('🎲 следующий пример',`l30Act('${lk}','e')`),btn('↺',`l30Act('${lk}','r')`)):'')+
+        (!done?btns(btn('1️⃣ десятки',`l30Act('${lk}','s1')`),btn('2️⃣ единицы',`l30Act('${lk}','s2')`)):'')+
+        sml('десятки → единицы → собери ответ!'));
+    } else {
+      h=col(`<div style="font-size:48px">🧮</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:252px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            🔟 Десятки с десятками, единицы с единицами.<br>
+            ➕ 25+37: 20+30=50, 5+7=12, 50+12=62.<br>
+            ➖ 60−24: 60−20=40, 40−4=36.<br>
+            ⚠️ Не хватает единиц — займи десяток!<br>
+            ✅ Проверяй вычитанием: 62−37=25.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 25 + 37'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function visL29(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -14215,6 +14481,7 @@ function renderLessonVis(){
   else if(id===21) visL21(el);
   else if(id===18) visL18(el);
   else if(id===29) visL29(el);
+  else if(id===30) visL30(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
