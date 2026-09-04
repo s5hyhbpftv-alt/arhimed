@@ -4239,158 +4239,262 @@ function visL90(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+// ===================== УРОК 8 «ВЗВЕШИВАНИЯ: ФАЛЬШИВАЯ МОНЕТА» (v162) =====================
+// ===================== УРОК 8 «ВЗВЕШИВАНИЯ: ФАЛЬШИВАЯ МОНЕТА» (v162) =====================
+// ===================== УРОК 8 «ВЗВЕШИВАНИЯ: ФАЛЬШИВАЯ МОНЕТА» (v162) =====================
 function l8Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  if(st.fake==null){st.fake=Math.floor(Math.random()*3);st.used=0;st.win=0;}
-  const m=act.match(/^w(\d)(\d)$/); // взвесить монеты m1 vs m2
-  if(m){
-    const a=+m[1],b=+m[2]; st.used++;
-    if(a===st.fake&&b===st.fake){} // обе настоящие — не бывает, сравниваем разные
-    if(a===st.fake) st.res='left'; else if(b===st.fake) st.res='right'; else st.res='eq';
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  if(a0==='res1'){ st.r1=p; }            // шаг 1: показать исход весов
+  if(a0==='res3'){ st.r3=((st.r3||0)+1)%4; }  // шаг 3: цикл исходов 0→1→2→3→1…
+  if(a0==='res8'){ st.r8=isNaN(p)?((st.r8||0)+1)%4:Math.min(3,p); }  // шаг 8: цикл исходов
+  if(a0==='rst'){ CHS[lk]={}; }
+  if(a0==='game'){
+    if(st.f==null){ st.f=Math.floor(Math.random()*3); st.gn=0; st.win=0; st.pair=-1; }
+    st.pair=p; st.gn=(st.gn||0)+1;
+    // 0=A,1=B,2=C. пары: 0: A-B, 1: A-C, 2: B-C
+    const f=st.f;
+    if(p===0) st.res=(f===0?'lu':f===1?'ru':'eq');
+    else if(p===1) st.res=(f===0?'lu':f===2?'ru':'eq');
+    else st.res=(f===1?'lu':f===2?'ru':'eq');
   }
-  const p=act.match(/^pick(\d)$/);
-  if(p){ st.win=(+p[1]===st.fake)?1:2; }
-  if(act==='r'){ st.fake=Math.floor(Math.random()*3); st.used=0; st.win=0; st.res=''; }
+  if(a0==='pick'){ st.win=(p===st.f)?1:2; st.guess=p; }
+  if(a0==='new'){ st.f=Math.floor(Math.random()*3); st.gn=0; st.win=0; st.pair=-1; st.res=''; st.guess=-1; }
   chRender(0);
 }
-function l8Coin(letter,fake,reveal){
-  // монета: фальшивая чуть меньше/легче
-  const isFake=fake===letter;
-  return `<div class="l35-pop" style="width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#d9a441);border:2px solid #a67c1e;display:flex;align-items:center;justify-content:center;font-size:15px;color:#5a3a05;font-weight:bold;${isFake&&reveal?'box-shadow:0 0 10px rgba(255,120,90,.9)':''}">${letter}</div>`;
+// монета (div): letter, sz; mode: '' | 'fake' | 'hot'
+function l8C(letter,sz,mode){
+  const s=sz||30;
+  const fake=mode==='fake';
+  return `<span class="wv-pop" style="display:inline-flex;align-items:center;justify-content:center;width:${s}px;height:${s}px;border-radius:50%;background:${fake?'linear-gradient(145deg,#c9c2a8,#8a8470)':'radial-gradient(circle at 35% 30%,#ffe9a8,#d9a441)'};border:2px solid ${fake?'#6b6450':'#a67c1e'};font-size:${Math.max(10,s*0.42)}px;color:${fake?'#3a362a':'#5a3a05'};font-weight:bold;box-shadow:${fake?'inset 0 0 6px rgba(0,0,0,.4)':'0 1px 3px rgba(0,0,0,.5)'};${mode==='hot'?'box-shadow:0 0 10px rgba(255,120,90,.9);border-color:#ff9a8a':''}">${letter}</span>`;
 }
-function l8Scale(res,uid){
-  // чашечные весы: res: 'left' (левая легче → поднялась), 'right', 'eq'
-  const tilt=res==='left'?-14:res==='right'?14:0;
-  return `<div style="position:relative;width:190px;height:86px;margin:4px auto">
-    <div style="position:absolute;left:50%;top:0;transform:translateX(-50%);width:4px;height:34px;background:#8a6a2f;border-radius:2px"></div>
-    <div style="position:absolute;left:50%;top:34px;transform:translateX(-50%);width:150px;height:5px;background:#c9a24f;border-radius:2px;transform-origin:50% 50%;rotate:${tilt/2}deg;transition:transform .5s ease"></div>
-    <div style="position:absolute;left:50%;top:39px;transform:translateX(-50%);width:10px;height:10px;background:#c9a24f;border-radius:50%"></div>
-    <div style="position:absolute;left:10px;top:${46-tilt}px;width:44px;height:30px;border-radius:4px 4px 14px 14px;background:linear-gradient(180deg,#8a6a2f,#6a4e20);display:flex;align-items:center;justify-content:center;transition:top .5s ease"></div>
-    <div style="position:absolute;right:10px;top:${46+tilt}px;width:44px;height:30px;border-radius:4px 4px 14px 14px;background:linear-gradient(180deg,#8a6a2f,#6a4e20);display:flex;align-items:center;justify-content:center;transition:top .5s ease"></div>
-    <div style="position:absolute;left:8px;top:${6-tilt}px;text-align:center;font-size:10px;color:#cbb89a">${res==='left'?'⬆ легче!':res==='right'?'':'левая'}</div>
-    <div style="position:absolute;right:8px;top:${6+tilt}px;text-align:center;font-size:10px;color:#cbb89a">${res==='right'?'⬆ легче!':''}</div>
-  </div>`;
+// ряд монет: mode может быть строкой (для всех) или функцией letter→mode
+function l8Row(letters,sz,mode){
+  const mf=typeof mode==='function'?mode:(()=>mode||'');
+  return `<div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:2px auto">${[...letters].map(l=>l8C(l,sz,mf(l))).join('')}</div>`;
 }
-function l8ScaleSimple(res,uid){
-  return `<div style="display:flex;justify-content:center;align-items:center;gap:6px;margin:4px auto">
-    <div style="text-align:center">${res==='left'?'<div style="font-size:20px;color:#ff9a8a">⬆ легче!</div>':''}<div class="wv-chip">чаша 1</div></div>
-    <div style="width:70px;height:4px;background:#c9a24f;border-radius:2px;transform:rotate(${res==='left'?-8:res==='right'?8:0}deg)"></div>
-    <div style="text-align:center">${res==='right'?'<div style="font-size:20px;color:#ff9a8a">⬆ легче!</div>':''}<div class="wv-chip">чаша 2</div></div>
+// чашечные весы: L,R — строки букв на чашах; res 'eq'|'lu'(левая легче/поднялась)|'ru'
+function l8Bal(L,R,res,hot){
+  const CX=140, BEAM=36;
+  const deg=res==='lu'?5.5:res==='ru'?-5.5:0;
+  const fade=res!=='eq';
+  // монеты на чашах
+  const mk=(letters,cx,y0,side)=>{
+    if(!letters) return '';
+    let o='';
+    const n=letters.length, r=10.5;
+    letters.split('').forEach((ch,i)=>{
+      const x=cx+(i-(n-1)/2)*(r*2+1);
+      o+=`<circle cx="${x}" cy="${y0}" r="${r}" fill="${side&&fade?'rgba(255,154,138,.25)':'url(#gol)'}" stroke="${side&&fade?'#ff9a8a':'#a67c1e'}" stroke-width="1.6"/><text x="${x}" y="${y0+3.6}" text-anchor="middle" font-size="10" font-weight="bold" fill="${side&&fade?'#ffd0c8':'#5a3a05'}">${ch}</text>`;
+    });
+    return o;
+  };
+  const LX=58, RX=222, dishY=88;
+  const Lm=mk(L,LX,dishY,res==='lu'?'L':''), Rm=mk(R,RX,dishY,res==='ru'?'R':'');
+  return `<div style="text-align:center;margin:2px auto">
+    <svg width="280" height="142" viewBox="0 0 280 142" style="max-width:280px">
+      <defs><radialGradient id="gol" cx="35%" cy="30%" r="80%"><stop offset="0%" stop-color="#ffe9a8"/><stop offset="100%" stop-color="#d9a441"/></radialGradient></defs>
+      <path d="M ${CX-16} 138 L ${CX} ${BEAM+30} L ${CX+16} 138 Z" fill="#6a4e20" opacity=".9"/>
+      <circle cx="${CX}" cy="${BEAM+30}" r="5" fill="#c9a24f"/>
+      <g transform="rotate(${deg} ${CX} ${BEAM})">
+        <line x1="${CX-92}" y1="${BEAM}" x2="${CX+92}" y2="${BEAM}" stroke="#c9a24f" stroke-width="5" stroke-linecap="round"/>
+        <line x1="${LX}" y1="${BEAM+2}" x2="${LX-26}" y2="${BEAM+34}" stroke="#8a6a2f" stroke-width="1.6"/>
+        <line x1="${LX}" y1="${BEAM+2}" x2="${LX+26}" y2="${BEAM+34}" stroke="#8a6a2f" stroke-width="1.6"/>
+        <line x1="${RX}" y1="${BEAM+2}" x2="${RX-26}" y2="${BEAM+34}" stroke="#8a6a2f" stroke-width="1.6"/>
+        <line x1="${RX}" y1="${BEAM+2}" x2="${RX+26}" y2="${BEAM+34}" stroke="#8a6a2f" stroke-width="1.6"/>
+        <path d="M ${LX-32} ${dishY} Q ${LX} ${dishY+16} ${LX+32} ${dishY}" fill="#8a6a2f" stroke="#6a4e20" stroke-width="2"/>
+        <path d="M ${RX-32} ${dishY} Q ${RX} ${dishY+16} ${RX+32} ${dishY}" fill="#8a6a2f" stroke="#6a4e20" stroke-width="2"/>
+        ${Lm}${Rm}
+      </g>
+      ${res!=='eq'?`<text x="${res==='lu'?LX:RX}" y="16" text-anchor="middle" font-size="13" font-weight="bold" fill="#ff9a8a">⬆ легче!</text>`:''}
+      ${hot?`<rect x="${CX-96}" y="2" width="192" height="136" rx="10" fill="none" stroke="#ffd966" stroke-width="1.5" stroke-dasharray="5 4"/>`:''}
+    </svg>
   </div>`;
 }
 function visL8(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const lk=lidKey(LV.id);
     const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v8!==step) CHS[lk]={_v8:step};
+    const st=CHS[lk];
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
     const sml=(t)=>`<div class="wv-sml">${t}</div>`;
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    const coins=(n,reveal,fake)=>`<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:2px auto">${[...Array(n)].map((_,i)=>String.fromCharCode(65+i)).map(l=>l8Coin(l,fake,reveal)).join('')}</div>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
     let h='';
     if(step===0){
-      h=col(big('Клад Архимеда: одна монета фальшивая!'),
-        `<div style="font-size:44px" class="wv-swing">⚖️</div>`+
-        sml('9 монет выглядят одинаково, но одна ЛЕГЧЕ остальных. Найди её всего за 2 взвешивания на чашечных весах!'));
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#d9a44122;border:1px solid #d9a441;color:#ffd966;margin-bottom:2px">КЛАССИКА · ВЗВЕШИВАНИЯ</span>`+
+        big('Клад Архимеда: найди фальшивку!')+
+        `<div style="font-size:40px" class="wv-swing">⚖️</div>`+
+        l8Row('ABCDEFGHI',27)+
+        card('<b>9 золотых монет</b> выглядят одинаково, но <b style="color:#ff9a8a">одна фальшивая</b> — она легче настоящих. Есть только чашечные весы <b>без гирь</b>.')+
+        `<div class="wv-ans" style="font-size:19px;color:#ffd966">Как найти фальшивку всего за 2 взвешивания?</div>`+
+        sml('сначала разберёмся, что умеют такие весы, а потом — главный секрет с кучками!'));
     } else if(step===1){
-      h=col(big('Чашечные весы без гирь'),
-        rowC(chip('сравнивают две кучки','rgba(127,209,255,.5)'),chip('нет гирь — только «легче/тяжелее/равно»','rgba(232,160,90,.5)'))+
-        l8Scale('eq','a')+
-        sml('весы показывают: левая легче, правая легче или равновесие. Больше ничего!'));
+      const r1=st.r1!=null?st.r1:0;
+      const res=['eq','lu','ru'][r1%3];
+      const label=res==='eq'?'равновесие':res==='lu'?'левая чаша легче':'правая чаша легче';
+      h=col(big('Что умеют чашечные весы?')+
+        l8Bal('A','B',res)+
+        `<div class="wv-ans" style="font-size:18px;color:#7fd1a0">сейчас: ${label}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${[['⚖️ равновесие','монеты весят одинаково'],['⬆ левая легче','она поднялась вверх'],['⬆ правая легче','поднялась правая']].map((x,i)=>`<div class="wv-pop" style="display:flex;justify-content:space-between;align-items:center;background:${r1%3===i?'rgba(255,217,102,.1)':'rgba(255,255,255,.03)'};border:1px solid ${r1%3===i?'#ffd966':'#3d5c49'};border-radius:9px;padding:4px 12px;max-width:330px;width:100%"><span style="font-size:13.5px;color:#e8dcc8">${x[0]}</span><span style="font-size:11px;color:#9ec0a8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        btns(btn('🔄 показать другой исход',`l8Act('${lk}','res1')`))+
+        sml('весы НЕ показывают вес в килограммах — только сравнивают. И это всё, что нам нужно!'));
     } else if(step===2){
-      h=col(big('Начнём с малого: 3 монеты'),
-        coins(3,false,-1)+
-        sml('одна из A, B, C — лёгкая. Взвесь две: например, A и B. Что покажут весы?'));
+      h=col(big('Ключ: лёгкая монета поднимает чашу')+
+        l8Bal('A','B','lu')+
+        card('На левой чаше монета <b>A</b>, на правой — <b>B</b>. Чаша с <b style="color:#ff9a8a">A поднялась</b> — значит A <b>легче</b>, и именно A фальшивая!')+
+        rowC(chip('поднялась = легче!','#ff9a8a'),chip('опустилась = тяжелее','#7fd1a0'))+
+        sml('это правило — фундамент всей задачи. Лёгкая монета всегда «всплывает» наверх!'));
     } else if(step===3){
-      h=col(big('Вариант 1: весы в равновесии'),
-        coins(3,false,-1)+
-        l8Scale('eq','b')+
-        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">A = B → фальшивка C!</div>`+
-        sml('если A и B весят одинаково — обе настоящие, значит лёгкая — C'));
+      const r3=st.r3!=null?st.r3:0; // 0=начало,1=равновесие,2=A поднялась,3=B поднялась
+      h=col(big('Начнём с малого: 3 монеты A, B, C')+
+        l8Row('ABC',32)+
+        `<div style="font-size:13.5px;color:#e8dcc8">одна из трёх — лёгкая. Взвесим <b>A</b> и <b>B</b>:</div>`+
+        (r3===0?`<div style="font-size:12.5px;color:#9ec0a8">нажми кнопку — и посмотрим, что покажут весы…</div>`
+             :r3===1?l8Bal('A','B','eq')+`<div class="wv-ans" style="font-size:18px;color:#7fd1a0">равновесие → фальшивка C!</div>`
+             :r3===2?l8Bal('A','B','lu')+`<div class="wv-ans" style="font-size:18px;color:#ff9a8a">A поднялась → фальшивка A!</div>`
+             :l8Bal('A','B','ru')+`<div class="wv-ans" style="font-size:18px;color:#ff9a8a">B поднялась → фальшивка B!</div>`)+
+        btns(btn(r3===0?'⚖️ взвесить A и B':'🔄 показать другой исход',`l8Act('${lk}','res3')`),btn('↺ сброс',`l8Act('${lk}','rst')`))+
+        sml('какой бы исход ни выпал — мы сразу знаем фальшивку! Разберём оба случая.'));
     } else if(step===4){
-      h=col(big('Вариант 2: чаша поднялась'),
-        coins(3,false,-1)+
-        l8Scale('left','c')+
-        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">A легче B → фальшивка A!</div>`+
-        sml('лёгкая монета поднимает свою чашу вверх. Поднялась чаша с A — значит A фальшивая'));
+      h=col(big('Вариант 1: весы в равновесии')+
+        l8Bal('A','B','eq')+
+        l8Row('C',36,'fake')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${[['A и B весят одинаково','значит обе монеты НАСТОЯЩИЕ'],['раз A и B настоящие','фальшивка — третья монета C!']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${i?'#ffd966':'#7fd1a0'};border-radius:9px;padding:5px 12px;max-width:330px;width:100%;text-align:left;font-size:13px;color:#e8dcc8">${x[0]} → <b style="color:#ffd966">${x[1]}</b></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:22px;color:#ffd966">фальшивка — C!</div>`+
+        sml('заметь: C даже не клали на весы, а ответ уже есть!'));
     } else if(step===5){
-      h=col(big('Итог для 3 монет'),
-        rowC(chip('3 монеты','rgba(217,164,65,.4)'),chip('1 взвешивание','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">одного взвешивания хватает!</div>`+
-        sml('как в нашей проверке: положи 2 монеты — равновесие или лёгкая чашка скажут всё'));
+      h=col(big('Вариант 2: чаша поднялась')+
+        l8Bal('A','B','lu')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${[['чаша с A поднялась вверх','значит A ЛЕГЧЕ B'],['лёгкая монета и есть фальшивка','ответ: A фальшивая!']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${i?'#ffd966':'#ff9a8a'};border-radius:9px;padding:5px 12px;max-width:330px;width:100%;text-align:left;font-size:13px;color:#e8dcc8">${x[0]} → <b style="color:#ffd966">${x[1]}</b></div>`).join('')}
+        </div>`+
+        rowC(l8C('A',34,'hot'),l8C('B',34),l8C('C',34))+
+        sml('а если бы поднялась чаша с B — фальшивкой была бы B!'));
     } else if(step===6){
-      h=col(big('Теперь 9 монет'),
-        coins(9,false,-1)+
-        sml('как свести к уже решённой задаче? Разделим на 3 кучки по 3 монеты!'));
+      h=col(big('Итог: 3 монеты — 1 взвешивание!')+
+        rowC(chip('3 монеты, 1 лёгкая','#ffd966'),chip('взвесь любые 2','#7fd1a0'),chip('равновесие → третья','#5fc8f0'),chip('поднялась → она','#ff9a8a'))+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['⚖️','равновесие','C фальшивая'],['⬆','A поднялась','A фальшивая'],['⬆','B поднялась','B фальшивая']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 8px;min-width:90px"><div style="font-size:18px">${x[0]}</div><div style="font-size:11.5px;color:#9ec0a8">${x[1]}</div><div style="font-size:12.5px;color:#ffd966;font-weight:bold">${x[2]}</div></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">1 взвешивания достаточно!</div>`+
+        sml('запомни этот «блок из 3 монет» — он станет кирпичиком для 9 и 27 монет!'));
     } else if(step===7){
-      h=col(big('Шаг 1: делим на 3 кучки'),
-        rowC(chip('кучка 1: A B C','rgba(127,209,255,.5)'),chip('кучка 2: D E F','rgba(127,184,160,.5)'),chip('кучка 3: G H I','rgba(232,160,90,.5)'))+
-        sml('взвешиваем кучку 1 против кучки 2. Если равны — фальшивка в кучке 3!'));
+      h=col(big('9 монет: делим на 3 кучки по 3')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          ${[['кучка 1','ABC','#7fd1a0'],['кучка 2','DEF','#5fc8f0'],['кучка 3','GHI','#d9a0ff']].map((k,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,.03);border:1px solid ${k[2]}66;border-radius:11px;padding:6px 10px;max-width:330px;width:100%"><span style="font-size:12px;color:${k[2]};font-weight:bold;min-width:64px">${k[0]}</span>${l8Row(k[1],26)}</div>`).join('')}
+        </div>`+
+        card('фальшивка где-то в одной из кучек. Если узнаем <b>какую кучку</b> она выбрала — останется разобрать всего <b>3 монеты</b>!')+
+        sml('это и есть главный приём: 9 = 3 кучки, а не 2! Почему — увидим дальше.'));
     } else if(step===8){
-      h=col(big('Шаг 1 результат'),
-        rowC(chip('равновесие → кучка 3','rgba(127,209,255,.5)'),chip('поднялась → та кучка','rgba(232,160,90,.5)'))+
-        sml('одно взвешивание сузило поиск до 3 монет — а 3 монеты мы уже умеем!'));
+      const r8=st.r8!=null?st.r8:0; // 0 ещё не взвесили, 1 равно, 2 ABC поднялась, 3 DEF поднялась
+      const guilty=r8===1?'GHI':r8===2?'ABC':r8===3?'DEF':'';
+      h=col(big('Шаг 1: взвешиваем кучку 1 против кучки 2')+
+        (r8===0?`<div style="font-size:13px;color:#e8dcc8">кладём ABC на левую чашу, DEF — на правую. GHI пока отдыхает в стороне…</div>`
+              :r8===1?l8Bal('ABC','DEF','eq')+`<div class="wv-ans" style="font-size:19px;color:#7fd1a0">равновесие → фальшивка в кучке GHI!</div>`
+              :r8===2?l8Bal('ABC','DEF','lu')+`<div class="wv-ans" style="font-size:19px;color:#ff9a8a">ABC поднялась → фальшивка среди ABC!</div>`
+              :l8Bal('ABC','DEF','ru')+`<div class="wv-ans" style="font-size:19px;color:#ff9a8a">DEF поднялась → фальшивка среди DEF!</div>`)+
+        btns(btn(r8===0?'⚖️ провести взвешивание':(r8===1?'⚖️ показать: ABC легче':r8===2?'⚖️ показать: DEF легче':'🔄 ещё раз'),`l8Act('${lk}','res8')`),btn('↺ сброс',`l8Act('${lk}','rst')`))+
+        (guilty?`<div style="font-size:13.5px;color:#9ec0a8">осталась кучка <b style="color:#ffd966">${guilty}</b> — ровно 3 монеты, а их мы умеем!</div>`:'')+
+        sml('третью кучку даже не взвешивали — а она может оказаться виноватой!'));
     } else if(step===9){
-      h=col(big('Шаг 2: внутри найденной кучки'),
-        coins(3,false,-1)+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">ещё 1 взвешивание → фальшивка!</div>`+
-        sml('взвесь 2 монеты из кучки: равновесие → третья, иначе → лёгкая. Итого 2 взвешивания!'));
+      h=col(big('Одно взвешивание = сузили до 3!')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;align-items:center">
+          ${l8Row('ABCDEF',24)}<span style="font-size:22px;color:#7fd1a0">→</span>${l8Row('GHI',30,'hot')}
+        </div>`+
+        card('после первого взвешивания мы знаем <b>кучку из 3 монет</b>, где прячется фальшивка. А задача «3 монеты, одна лёгкая» уже решена — это <b>1 взвешивание</b>!')+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">9 монет → осталось найти среди 3</div>`+
+        sml('приём «свести к меньшей задаче» — важнейший в олимпиадной математике!'));
     } else if(step===10){
-      h=col(big('Схема для 9 монет'),
-        rowC(chip('9 монет','rgba(217,164,65,.5)'),chip('÷ 3 = 3 кучки','rgba(127,209,255,.5)'),chip('1 взвешивание → 3 монеты','rgba(127,184,160,.5)'),chip('1 взвешивание → 1 монета','rgba(232,160,90,.5)'))+
-        sml('каждое взвешивание делит число вариантов на 3! Как в наших задачках: ответ 2'));
+      h=col(big('Шаг 2: внутри тройки — как раньше!')+
+        l8Bal('A','B','eq',true)+
+        l8Row('C',26)+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${[['взвешиваем A и B из найденной кучки','равновесие → фальшивка C'],['если A поднялась → A фальшивая','если B поднялась → B фальшивая']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:5px 12px;max-width:330px;width:100%;text-align:left;font-size:13px;color:#e8dcc8">${x[0]}: <b style="color:#ffd966">${x[1]}</b></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#ffd966">9 монет → 2 взвешивания!</div>`+
+        sml('первое взвешивание нашло кучку, второе — монету. Как в наших задачках!'));
     } else if(step===11){
-      h=col(big('27 монет — тоже просто!'),
-        rowC(chip('27 ÷ 3 = 9','rgba(127,209,255,.5)'),chip('взвесь 2 кучки по 9','rgba(127,184,160,.5)'),chip('нашёл девятку — дальше как выше','rgba(232,160,90,.5)'))+
-        sml('1 взвешивание → 9 монет, ещё 2 → одна. Итого 3! Как в наших задачках'));
+      h=col(big('Схема: 9 → 3 → 1 за 2 взвешивания')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${[['9 монет','все кандидаты','#d9a441'],['делим на 3 кучки по 3','⚖️ 1-е взвешивание: ABC vs DEF','#7fd1a0'],['3 монеты','фальшивка в одной кучке','#5fc8f0'],['⚖️ 2-е взвешивание внутри тройки','равновесие или лёгкая чаша','#7fd1a0'],['1 монета','фальшивка найдена! 🎯','#ffd966']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid ${x[2]}55;border-left:4px solid ${x[2]};border-radius:9px;padding:5px 12px;max-width:330px;width:100%"><span style="font-size:13.5px;color:#e8dcc8;font-weight:bold">${x[0]}</span><span style="font-size:11px;color:#9ec0a8;text-align:right">${x[1]}</span></div>`).join('')}
+        </div>`+
+        sml('каждая ступенька делит число монет на 3. Заметь: 9 → 3 → 1 — это 3² → 3 → 1!'));
     } else if(step===12){
-      h=col(big('Закономерность'),
-        rowC(chip('3 монеты = 3¹ → 1 взвешивание','rgba(127,209,255,.5)'),chip('9 монет = 3² → 2','rgba(127,184,160,.5)'),chip('27 монет = 3³ → 3','rgba(232,160,90,.5)'))+
-        sml('каждое взвешивание делит варианты на 3 части. Степени тройки — вот и весь секрет!'));
+      h=col(big('27 монет: 3 взвешивания!')+
+        rowC(chip('27 ÷ 3 = 9','#7fd1a0'),chip('взвесь 2 кучки по 9','#5fc8f0'),chip('нашли девятку','#d9a0ff'),chip('девятку умеем за 2!','#ffd966'))+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:340px;width:100%">
+          ${[['27 монет','⚖️ 1-е взвешивание: кучки по 9','#d9a441'],['9 монет','⚖️ 2-е: кучки по 3','#7fd1a0'],['3 монеты','⚖️ 3-е: A vs B','#5fc8f0'],['1 монета','фальшивка! 🎯','#ffd966']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid ${x[2]}55;border-left:4px solid ${x[2]};border-radius:9px;padding:4px 12px;max-width:330px;width:100%"><span style="font-size:14px;color:#e8dcc8;font-weight:bold">${x[0]}</span><span style="font-size:10.5px;color:#9ec0a8;text-align:right">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">27 монет → 3 взвешивания!</div>`+
+        sml('27 = 3³. Каждое взвешивание «съедает» одну тройку. Как в наших задачках!'));
     } else if(step===13){
-      h=col(big('Почему именно тройка?'),
-        rowC(chip('весы дают 3 ответа','rgba(127,209,255,.5)'),chip('левая легче','rgba(127,184,160,.5)'),chip('правая легче','rgba(232,160,90,.5)'),chip('равновесие','rgba(127,209,255,.5)'))+
-        sml('у весов 3 исхода — значит каждое взвешивание несёт максимум 3 варианта информации'));
+      h=col(big('Закономерность: степени тройки!')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${[['3¹ = 3','1 взвешивание','#7fd1a0'],['3² = 9','2 взвешивания','#5fc8f0'],['3³ = 27','3 взвешивания','#d9a0ff'],['3⁴ = 81','4 взвешивания!','#ffd966']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid ${x[2]}55;border-left:4px solid ${x[2]};border-radius:9px;padding:5px 12px;max-width:330px;width:100%"><span style="font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:14px;color:#e8dcc8">${x[1]}</span><span style="font-size:10.5px;color:#9ec0a8">монет хватает</span></div>`).join('')}
+        </div>`+
+        card('за <b>n</b> взвешиваний можно найти фальшивку среди <b style="color:#ffd966">3ⁿ монет</b>! Каждое взвешивание умножает «силу» на 3.')+
+        sml('проверь: 3⁵ = 243 монеты → хватит 5 взвешиваний. Вот это мощь!'));
     } else if(step===14){
-      h=col(big('Хитрый приём с тремя кучками'),
-        rowC(chip('не 2 кучки, а 3!','rgba(217,164,65,.4)'),chip('третью не взвешиваем — она в резерве','rgba(217,164,65,.4)'))+
-        sml('дели на 3, а не на 2: третья кучка «отвечает» при равновесии. Вот почему 9 → 2, а не 3!'));
+      h=col(big('Почему именно тройка?')+
+        rowC(chip('у весов 3 исхода','#ffd966'),chip('левая легче','#ff9a8a'),chip('правая легче','#ff9a8a'),chip('равновесие','#7fd1a0'))+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['1️⃣','левая легче','фальшивка слева'],['2️⃣','правая легче','фальшивка справа'],['3️⃣','равновесие','фальшивка — третья кучка']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.14}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:11px;padding:7px 8px;max-width:104px"><div style="font-size:17px">${x[0]}</div><div style="font-size:12.5px;color:#e8dcc8;font-weight:bold">${x[1]}</div><div style="font-size:9.5px;color:#9ec0a8">${x[2]}</div></div>`).join('')}
+        </div>`+
+        card('один опыт даёт сразу <b>3 ответа</b> — поэтому варианты делятся на 3. Вот почему работают степени тройки!')+
+        sml('запомни: 3 исхода → делим на 3. Два исхода делили бы на 2!'));
     } else if(step===15){
-      h=col(big('Задача-проверка'),
-        rowC(chip('3 монеты, одна легче','rgba(217,164,65,.35)'))+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">1 взвешивание!</div>`+
-        sml('как в проверке: взвесь две — всё ясно'));
+      h=col(big('А если бы ответов было 2?')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;align-items:stretch">
+          <div class="wv-pop" style="border:2px solid #7fb7d8;border-radius:12px;background:#7fb7d80d;padding:8px 10px;max-width:156px;text-align:center">
+            <div style="font-size:20px">🎲</div><div style="font-size:13px;color:#7fb7d8;font-weight:bold">2 ответа «да/нет»</div>
+            <div style="font-size:11.5px;color:#e8dcc8;line-height:1.5">делим на 2:<br>2, 4, 8, 16…<br>для 9 монет надо <b>4 проверки</b> (2⁴=16)</div></div>
+          <div class="wv-pop2" style="border:2px solid #ffd966;border-radius:12px;background:#ffd9660d;padding:8px 10px;max-width:156px;text-align:center">
+            <div style="font-size:20px">⚖️</div><div style="font-size:13px;color:#ffd966;font-weight:bold">3 ответа весов</div>
+            <div style="font-size:11.5px;color:#e8dcc8;line-height:1.5">делим на 3:<br>3, 9, 27…<br>для 9 монет хватит <b>2 взвешиваний</b> (3²=9)</div></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:19px;color:#7fd1a0">весы «сильнее» монетки: 3 ответа вместо 2!</div>`+
+        sml('именно поэтому весы так любят в олимпиадных задачах — они экономят взвешивания!'));
     } else if(step===16){
-      if(st.fake==null){st.fake=Math.floor(Math.random()*3);st.used=0;st.win=0;st.res='';}
-      const fakeLetter=String.fromCharCode(65+st.fake);
-      h=col(big('🎮 Игра: найди фальшивку!'),
-        rowC(chip('3 монеты A B C, одна легче. Взвесь и угадай!','rgba(217,164,65,.35)'))+
-        (st.win===1? coins(3,true,st.fake) : coins(3,false,-1))+
-        (st.res? l8Scale(st.res,'g'):'')+
-        (st.res==='left'? `<div style="font-size:14px;color:#ffd9a0">левая чаша поднялась → там лёгкая!</div>`:
-         st.res==='right'? `<div style="font-size:14px;color:#ffd9a0">правая чаша поднялась → там лёгкая!</div>`:
-         st.res==='eq'? `<div style="font-size:14px;color:#7fd1a0">равновесие → фальшивка — третья!</div>`:'')+
-        (st.win===1? `<div class="wv-ans" style="font-size:22px;color:#7fd1a0;font-weight:bold">🎉 Угадал! Фальшивка ${fakeLetter} (взвешиваний: ${st.used})</div>`:
-         st.win===2? `<div style="font-size:16px;color:#ff9a8a">не та монета — смотри на весы!</div>`:'')+
+      // игра: найди фальшивку среди 3
+      if(st.f==null){ st.f=Math.floor(Math.random()*3); st.gn=0; st.win=0; st.pair=-1; st.res=''; st.guess=-1; }
+      const fl='ABC'[st.f];
+      h=col(big('🎮 Игра: найди фальшивку!')+
+        card(`перед тобой монеты <b>A, B, C</b> — одна лёгкая. Взвешивай пары и угадай! Взвешиваний: <b style="color:#ffd966">${st.gn}</b>`)+
+        (st.pair>=0?l8Bal([['A','B'],['A','C'],['B','C']][st.pair][0],[['A','B'],['A','C'],['B','C']][st.pair][1],st.res):`<div style="font-size:12px;color:#9ec0a8">нажми пару для взвешивания…</div>`)+
+        (st.win===1?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0;font-weight:bold">🎉 Верно! Фальшивка ${st.guess>=0?'ABC'[st.guess]:''} за ${st.gn} взвеш.</div>`
+             :st.win===2?`<div style="font-size:15px;color:#ff9a8a">это не фальшивка! Смотри на весы…</div>`
+             :'')+
         (st.win===1?'':btns(
-          btn('⚖️ A vs B',`l8Act('${lk}','w01')`),btn('⚖️ A vs C',`l8Act('${lk}','w02')`),btn('⚖️ B vs C',`l8Act('${lk}','w12')`)
+          btn('⚖️ A vs B',`l8Act('${lk}','game:0')`),btn('⚖️ A vs C',`l8Act('${lk}','game:1')`),btn('⚖️ B vs C',`l8Act('${lk}','game:2')`)
         ))+
-        btns(btn('🔎 фальшивка A',`l8Act('${lk}','pick0')`),btn('🔎 фальшивка B',`l8Act('${lk}','pick1')`),btn('🔎 фальшивка C',`l8Act('${lk}','pick2')`))+
-        (st.win===1?btn('🎲 новая монета',`l8Act('${lk}','r')`):'')+
-        sml('подсказка: одна монета легче — её чаша ПОДНИМЕТСЯ'));
+        btns(btn('🔎 это A!',`l8Act('${lk}','pick:0')`),btn('🔎 это B!',`l8Act('${lk}','pick:1')`),btn('🔎 это C!',`l8Act('${lk}','pick:2')`))+
+        (st.win===1?btn('🎲 новая монета',`l8Act('${lk}','new')`):'')+
+        (st.res==='eq'?'<div style="font-size:13px;color:#7fd1a0">равновесие → фальшивка — третья монета!</div>':
+         st.res==='lu'?'<div style="font-size:13px;color:#ff9a8a">левая поднялась → она и фальшивая!</div>':
+         st.res==='ru'?'<div style="font-size:13px;color:#ff9a8a">правая поднялась → она и фальшивая!</div>':'')+
+        sml('подсказка: хватит ОДНОГО взвешивания — равновесие выдаёт третью монету!'));
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+      h=col(`<div style="font-size:48px">⚖️</div>`+big('Совет Архимеда')+
         `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            ⚖️ Дели на 3 кучки, а не на 2!<br>
-            🔢 Весы дают 3 ответа: легче/легче/равно.<br>
-            💡 3¹=1 взв., 3²=9 → 2, 3³=27 → 3.<br>
-            🪙 Лёгкая монета поднимает чашу.</div>
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:250px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            🪙 Лёгкая монета поднимает чашу.<br>
+            🔢 У весов 3 ответа: легче/легче/равно.<br>
+            🧱 Дели на 3 кучки, а не на 2!<br>
+            📐 3¹=3→1, 3²=9→2, 3³=27→3.<br>
+            🎯 9 монет = 2 взвешивания!</div>
         </div>`+
         btn('⟲ вернуться к игре', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 3 монеты'));
