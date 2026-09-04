@@ -357,7 +357,8 @@
     animation:l10Dash var(--dash,1s) linear infinite; }
   .l10-cat { position:absolute; width:10px; height:14px; border-radius:2px;
     background:linear-gradient(160deg,#ffe9a8,#d9a441); box-shadow:0 1px 2px rgba(0,0,0,.5); }
-  @keyframes l10Dash { from{background-position-x:0} to{background-position-x:-36px} }
+  @keyframes l51Bub { 0%,100%{transform:translateY(0);opacity:0} 25%{opacity:.9} 100%{transform:translateY(-16px);opacity:0} }
+@keyframes l10Dash { from{background-position-x:0} to{background-position-x:-36px} }
   @keyframes l10Bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-1.6px)} }
   @keyframes l10Spin { to{transform:rotate(360deg)} }
   .l10-bob { animation:l10Bob .35s ease-in-out infinite; }
@@ -542,21 +543,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=127"></script>
-<script src="data/lessons.js?v=127"></script>
-<script src="js/comic.js?v=127"></script>
-<script src="js/core.js?v=127"></script>
-<script src="js/engine.js?v=127"></script>
-<script src="js/app.js?v=127"></script>
-<script src="js/dashboard.js?v=127"></script>
-<script src="js/lessons.js?v=127"></script>
-<script src="js/legend.js?v=127"></script>
-<script src="js/simulator.js?v=127"></script>
-<script src="js/duel.js?v=127"></script>
-<script src="js/agent.js?v=127"></script>
-<script src="js/voice.js?v=127"></script>
-<script src="js/assistant.js?v=127"></script>
-<script src="js/agentlive.js?v=127"></script>
+<script src="data/tasks.js?v=128"></script>
+<script src="data/lessons.js?v=128"></script>
+<script src="js/comic.js?v=128"></script>
+<script src="js/core.js?v=128"></script>
+<script src="js/engine.js?v=128"></script>
+<script src="js/app.js?v=128"></script>
+<script src="js/dashboard.js?v=128"></script>
+<script src="js/lessons.js?v=128"></script>
+<script src="js/legend.js?v=128"></script>
+<script src="js/simulator.js?v=128"></script>
+<script src="js/duel.js?v=128"></script>
+<script src="js/agent.js?v=128"></script>
+<script src="js/voice.js?v=128"></script>
+<script src="js/assistant.js?v=128"></script>
+<script src="js/agentlive.js?v=128"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -571,7 +572,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=127').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=128').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>

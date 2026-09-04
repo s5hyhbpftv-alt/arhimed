@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -4933,6 +4933,151 @@ function visL105(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 15 В и 5 Ом'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l51Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['w','1','10'],['w','2','10'],['w','1','5'],['w','3','10'],['w','2','5'],['w','5','10'],['w','1','20'],['w','2','20'],['w','4','10'],['w','5','5'],['w','3','20'],['w','10','10']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l51Thermo(t,uid){
+  // термометр: t от -10 до 110 примерно, показываем шкалу
+  const H=150, top=8, bot=H-14;
+  const y=bot-(t/110)*(bot-top);
+  return `<div style="position:relative;width:46px;height:${H}px;margin:0 auto">
+    <div style="position:absolute;left:50%;top:0;bottom:14px;transform:translateX(-50%);width:14px;background:#e8e0d0;border-radius:7px;border:1.5px solid #8a6a2f;overflow:hidden">
+      <div style="position:absolute;left:0;right:0;top:${Math.min(y,H-20)}px;bottom:0;background:linear-gradient(180deg,#e05a4a,#a02818)"></div>
+      <div style="position:absolute;left:2px;right:2px;top:0;bottom:0;background:repeating-linear-gradient(180deg,transparent 0 9px,rgba(0,0,0,.25) 9px 10px)"></div>
+    </div>
+    <div style="position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:26px;height:26px;border-radius:50%;background:#e05a4a;border:1.5px solid #8a6a2f"></div>
+    <div style="position:absolute;left:52px;top:${Math.max(0,y-9)}px;font-size:15px;color:#ffd9a0;font-weight:bold;white-space:nowrap">${t}°C</div>
+  </div>`;
+}
+function l51Pot(level,heat,uid){
+  // кастрюля с водой level (0..1), heat — греем?
+  return `<div style="width:120px;margin:0 auto;position:relative">
+    <div style="width:120px;height:${20+level*70}px;border:3px solid #6a6a6a;border-top:none;border-radius:0 0 10px 10px;background:linear-gradient(180deg,${heat?'rgba(120,180,255,.85)':'rgba(90,140,200,.7)'},rgba(60,100,160,.6));position:relative;overflow:hidden">
+      ${heat?'<div style="position:absolute;left:0;right:0;top:0;height:4px;background:rgba(255,255,255,.5);animation:l51Bub 1s ease-in-out infinite"></div>':''}
+      <div style="position:absolute;right:4px;top:2px;font-size:14px">💧</div>
+    </div>
+    ${heat?'<div class="wv-rise" style="position:absolute;left:60%;top:-6px;font-size:16px">♨️</div>':'<div class="wv-rise" style="position:absolute;left:60%;top:-6px;font-size:16px;opacity:.3">♨️</div>'}
+  </div>`;
+}
+function visL51(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Почему чайник греется долго?'),
+        `<div style="font-size:44px" class="wv-pulse">🔥</div>`+
+        sml('чтобы нагреть воду, нужна ЭНЕРГИЯ. Сегодня узнаем, как её посчитать точно — формулой!'));
+    } else if(step===1){
+      h=col(big('Нагрев — это энергия внутрь'),
+        rowC(chip('нагрели — энергия пришла','rgba(232,160,90,.5)'),chip('остудили — энергия ушла','rgba(127,209,255,.5)'))+
+        sml('количество этой энергии называется КОЛИЧЕСТВОМ ТЕПЛОТЫ Q. Измеряется в джоулях (Дж)'));
+    } else if(step===2){
+      h=col(big('Формула теплоты'),
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-family:Georgia,serif">Q = c · m · Δt</div>`+
+        rowC(chip('c — удельная теплоёмкость','rgba(127,209,255,.5)'),chip('m — масса (кг)','rgba(232,160,90,.5)'),chip('Δt — изменение температуры','rgba(127,184,160,.5)'))+
+        sml('три множителя: вещество, масса, на сколько градусов'));
+    } else if(step===3){
+      h=col(big('Что такое Δt'),
+        rowC(chip('Δt = t₂ − t₁','rgba(127,209,255,.5)'),chip('было 20°, стало 30° → Δt = 10°','rgba(127,184,160,.5)'))+
+        sml('греческая «дельта» — разница. Δt — на сколько градусов изменилась температура!'));
+    } else if(step===4){
+      h=col(big('Секрет воды: c = 4200'),
+        rowC(chip('c воды = 4200 Дж/(кг·°C)','rgba(127,209,255,.5)'),chip('чтобы нагреть 1 кг на 1°C — 4200 Дж','rgba(127,184,160,.5)'))+
+        sml('это очень много! Вода — «чемпион» по запасанию тепла'));
+    } else if(step===5){
+      h=col(big('Считаем: 1 кг на 10°C'),
+        rowC(chip('Q = 4200 · 1 · 10','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">Q = 42000 Дж = 42 кДж</div>`+
+        sml('как в нашей проверке! 4200·10 = 42000 Дж = 42 кДж'));
+    } else if(step===6){
+      h=col(big('Задача 1: 2 кг на 10°C'),
+        rowC(chip('Q = 4200 · 2 · 10','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">Q = 84000 Дж = 84 кДж</div>`+
+        sml('как в наших задачках: масса вдвое — тепло вдвое!'));
+    } else if(step===7){
+      h=col(big('Масса больше — тепла больше'),
+        l51Thermo(40,'a')+
+        l51Pot(0.5,true,'b')+
+        rowC(chip('1 кг на 10° = 42 кДж','rgba(127,209,255,.5)'),chip('2 кг на 10° = 84 кДж','rgba(127,184,160,.5)'))+
+        sml('двойная порция воды — двойное тепло. m прямо в формуле!'));
+    } else if(step===8){
+      h=col(big('Δt больше — тепла больше'),
+        l51Thermo(60,'c')+
+        rowC(chip('на 5° — 21 кДж','rgba(127,209,255,.5)'),chip('на 10° — 42 кДж','rgba(127,184,160,.5)'),chip('на 20° — 84 кДж','rgba(232,160,90,.5)'))+
+        sml('сильнее нагрели — больше энергии ушло на нагрев!'));
+    } else if(step===9){
+      h=col(big('А другие вещества?'),
+        rowC(chip('вода: 4200','rgba(127,209,255,.5)'),chip('лёд: 2100','rgba(127,184,160,.5)'),chip('железо: 460','rgba(232,160,90,.5)'),chip('медь: 400','rgba(127,209,255,.5)'))+
+        sml('железо греется в 9 раз легче воды! Поэтому сковорода нагревается быстро, а суп — медленно'));
+    } else if(step===10){
+      h=col(big('Почему у моря мягкий климат'),
+        rowC(chip('вода запасает много тепла','rgba(127,209,255,.5)'),chip('летом греется медленно','rgba(232,160,90,.5)'),chip('зимой остывает медленно','rgba(127,184,160,.5)'))+
+        sml('огромная теплоёмкость воды сглаживает перепады температуры у побережий!'));
+    } else if(step===11){
+      h=col(big('Охлаждение — та же формула'),
+        rowC(chip('Q = c · m · Δt','rgba(127,209,255,.5)'),chip('Δt — тоже разница температур','rgba(127,184,160,.5)'))+
+        sml('остыла вода со 100° до 20° → Δt = 80°. Энергия ушла — количество теплоты то же самое по формуле!'));
+    } else if(step===12){
+      h=col(big('Термометр показывает Δt'),
+        l51Thermo(20,'d')+
+        sml('термометр измеряет температуру. Разница показаний — это и есть Δt для формулы!'));
+    } else if(step===13){
+      h=col(big('Единицы: Дж и кДж'),
+        rowC(chip('1 кДж = 1000 Дж','rgba(127,209,255,.5)'),chip('42000 Дж = 42 кДж','rgba(127,184,160,.5)'),chip('84000 Дж = 84 кДж','rgba(232,160,90,.5)'))+
+        sml('кило = тысяча. Большие числа удобно записывать в килоджоулях!'));
+    } else if(step===14){
+      h=col(big('Задача 2: теплоёмкость воды'),
+        rowC(chip('c воды = 4200 Дж/(кг·°C)','rgba(217,164,65,.35)'))+
+        sml('как в наших задачках: просто запомни это число — константу воды!'));
+    } else if(step===15){
+      h=col(big('Порядок действий'),
+        rowC(chip('1) найди Δt','rgba(127,209,255,.5)'),chip('2) m · Δt','rgba(232,160,90,.5)'),chip('3) × 4200','rgba(127,184,160,.5)'),chip('4) переведи в кДж','rgba(127,209,255,.5)'))+
+        sml('для воды: умножь массу на градусы, потом на 4200!'));
+    } else if(step===16){
+      const POOL=[['w','1','10'],['w','2','10'],['w','1','5'],['w','3','10'],['w','2','5'],['w','5','10'],['w','1','20'],['w','2','20'],['w','4','10'],['w','5','5'],['w','3','20'],['w','10','10']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], m=+e[1], dt=+e[2];
+      const ans=4200*m*dt/1000;
+      h=col(big('🔥 Тренажёр: количество теплоты'),
+        `<div class="wv-row">${chip('нагреть '+m+' кг воды на '+dt+'°C → Q? (в кДж)','rgba(217,164,65,.35)')}</div>`+
+        l51Thermo(20+dt,'t')+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) Q = 4200·${m}·${dt} = ${4200*m*dt} Дж → :1000</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans} кДж</div>`:'')+
+        btns(btn('1️⃣ подумай',`l51Act('${lk}','s1')`),btn('2️⃣ ответ',`l51Act('${lk}','s2')`),btn('🎲 другая',`l51Act('${lk}','n')`),btn('↺',`l51Act('${lk}','r')`))+
+        sml('Q = 4200·m·Δt, ответ в кДж — дели на 1000!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🔥 Q = c·m·Δt.<br>
+            💧 Вода: c = 4200 Дж/(кг·°C).<br>
+            📏 Δt — разница температур (t₂−t₁).<br>
+            🔢 42000 Дж = 42 кДж (дели на 1000).</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 1 кг на 10°'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -9529,6 +9674,7 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
   if(id===1) visDigits(el);
+  else if(id===51) visL51(el);
   else if(id===105) visL105(el);
   else if(id===19) visL19(el);
   else if(id===2) visL2(el);
