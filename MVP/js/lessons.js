@@ -8417,7 +8417,7 @@ function l15Highway(S,v1,v2,opt){
     <div style="position:absolute;left:${x0}px;right:${W-x0-roadW-30}px;top:22px;height:34px;background:linear-gradient(180deg,#3a3f45,#262a2f);border-radius:17px;border:2px solid #14161a;overflow:hidden">
       <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 44px,rgba(255,208,90,.35) 44px 46px);opacity:.5"></div>
     </div>
-    <div class="l15-drive-l l15-runner" style="left:${x0}px;top:16px;--dx:${dx1.toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:26px">${em1}<div style="font-size:9px;text-align:center;color:#ffd966;margin-top:-4px">${v1} км/ч</div></div>
+    <div class="l15-drive-l l15-runner" style="left:${x0}px;top:16px;--dx:${dx1.toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:26px"><span style="display:inline-block;transform:scaleX(-1)">${em1}</span><div style="font-size:9px;text-align:center;color:#ffd966;margin-top:-4px">${v1} км/ч</div></div>
     <div class="l15-drive-r l15-runner" style="right:${W-x0-roadW-30-26}px;top:16px;--dx:${(-dx2).toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:26px">${em2}<div style="font-size:9px;text-align:center;color:#7fd1a0;margin-top:-4px">${v2} км/ч</div></div>
     <div class="wv-pop" style="position:absolute;left:${meetX.toFixed(0)}px;top:-2px;font-size:26px;animation-delay:${(o.dur||2.8)+0.2}s;opacity:0;animation:wvPop .5s ease ${(o.dur||2.8)+0.2}s forwards">🤝</div>
     <div style="position:absolute;left:${meetX.toFixed(0)}px;top:60px;transform:translateX(-50%);font-size:8.5px;color:#cbb89a;white-space:nowrap">встреча</div>
@@ -8435,8 +8435,8 @@ function l15Chase(gap,v1,v2,opt){
     <div style="position:absolute;left:${xF}px;right:${W-xF-X-40}px;top:22px;height:34px;background:linear-gradient(180deg,#3a3f45,#262a2f);border-radius:17px;border:2px solid #14161a;overflow:hidden">
       <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 44px,rgba(255,208,90,.35) 44px 46px);opacity:.5"></div>
     </div>
-    <div class="l15-drive-l l15-runner" style="left:${xF}px;top:16px;--dx:${dxS.toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:24px;z-index:2">${emF}<div style="font-size:9px;text-align:center;color:#ffd966;margin-top:-4px">${v1} км/ч</div></div>
-    <div class="l15-drive-l l15-runner" style="left:${(xF+gapPx).toFixed(1)}px;top:16px;--dx:${dxF.toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:24px">${emS}<div style="font-size:9px;text-align:center;color:#7fb7d8;margin-top:-4px">${v2} км/ч</div></div>
+    <div class="l15-drive-l l15-runner" style="left:${xF}px;top:16px;--dx:${dxS.toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:24px;z-index:2"><span style="display:inline-block;transform:scaleX(-1)">${emF}</span><div style="font-size:9px;text-align:center;color:#ffd966;margin-top:-4px">${v1} км/ч</div></div>
+    <div class="l15-drive-l l15-runner" style="left:${(xF+gapPx).toFixed(1)}px;top:16px;--dx:${dxF.toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:24px"><span style="display:inline-block;transform:scaleX(-1)">${emS}</span><div style="font-size:9px;text-align:center;color:#7fb7d8;margin-top:-4px">${v2} км/ч</div></div>
     <div class="wv-pop" style="position:absolute;left:${(xF+gapPx+dxF).toFixed(0)}px;top:-2px;font-size:22px;animation-delay:${(o.dur||2.8)+0.2}s;opacity:0;animation:wvPop .5s ease ${(o.dur||2.8)+0.2}s forwards">🏁</div>
     <div style="font-size:9px;color:#cbb89a;text-align:center;margin-top:40px">разрыв ${gap} км · ${o.cap||'догоняет'}</div>
   </div>`;
@@ -8452,7 +8452,7 @@ function l15River(v,u,mode,opt){
     <div style="position:relative;height:56px;border-radius:16px;background:linear-gradient(180deg,#1d5f8f,#0e3a5e);border:2px solid #0a2740;overflow:hidden">
       <div class="l15-wave" style="position:absolute;inset:0;opacity:.5"></div>
       <div style="position:absolute;left:14px;top:14px;font-size:9px;color:#bfe9ff">течение u=${u}</div>
-      <div class="l15-boat" style="position:absolute;left:130px;top:8px;font-size:34px">${em}<div style="font-size:9px;text-align:center;color:#fff;margin-top:-6px">${mode==='по'?'по течению':'против течения'}</div></div>
+      <div class="${mode==='по'?'l15-boat':'l15-boat-l'}" style="position:absolute;left:130px;top:8px;font-size:34px">${mode==='по'?`<span style="display:inline-block;transform:scaleX(-1)">${em}</span>`:em}<div style="font-size:9px;text-align:center;color:#fff;margin-top:-6px">${mode==='по'?'по течению →':'← против течения'}</div></div>
       <div style="position:absolute;right:10px;top:34px;font-size:12px;color:${col};font-weight:bold">итог: ${tot} км/ч</div>
     </div>
     <div style="display:flex;justify-content:center;gap:6px;margin-top:2px">
