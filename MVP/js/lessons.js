@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -5863,6 +5863,171 @@ function visL92(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+function l93Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['m','5','cm'],['m','3','cm'],['m','7','cm'],['m','2','cm'],['kg','4','g'],['kg','2','g'],['kg','7','g'],['kg','3','g'],['h','2','min'],['h','3','min'],['min','2','sec'],['min','5','sec']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l93Ruler(cmLen,uid){
+  // линейка: показывает cmLen см (1..10)
+  let seg='';
+  for(let i=0;i<10;i++){
+    const fill=i<cmLen;
+    seg+=`<div style="flex:1;height:20px;border-right:1px solid #3d2f1c;${fill?'background:linear-gradient(180deg,#7fd1a0,#3c8f5f)':'background:#20352a'};display:flex;align-items:flex-start;justify-content:center;font-size:8px;color:#d8ecff">${i}</div>`;
+  }
+  return `<div style="margin:2px auto">
+    <div style="display:flex;width:230px;border:2px solid #cbb89a;border-radius:4px;overflow:hidden">${seg}</div>
+    <div style="display:flex;width:230px;margin:0 auto"><div style="flex:1;font-size:10px;color:#cbb89a">0 см</div><div style="font-size:10px;color:#cbb89a">10 см</div></div>
+  </div>`;
+}
+function l93Scale(g,uid){
+  // весы: г граммов
+  return `<div style="display:inline-block;text-align:center">
+    <div style="font-size:34px">⚖️</div>
+    <div style="font-size:15px;color:#ffd9a0">${g} г</div>
+  </div>`;
+}
+function l93Clock(h,uid){
+  // часы: h минут (0..60)
+  const ang=(h/60)*360-90;
+  return `<svg width="64" height="64" style="display:block;margin:0 auto">
+    <circle cx="32" cy="32" r="28" fill="#f2e8d0" stroke="#8a6a2f" stroke-width="2.5"/>
+    <line x1="32" y1="32" x2="${32+22*Math.cos(ang*Math.PI/180)}" y2="${32+22*Math.sin(ang*Math.PI/180)}" stroke="#a02818" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="2.5" fill="#8a6a2f"/>
+  </svg>`;
+}
+function visL93(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Как измерить стол?'),
+        `<div style="font-size:44px" class="wv-pulse">📏</div>`+
+        sml('ладонями? шагами? Древние люди мерили локтями! Но чтобы все понимали друг друга, нужны ОДИНАКОВЫЕ единицы'));
+    } else if(step===1){
+      h=col(big('Величина и её единица'),
+        rowC(chip('величина: длина','rgba(127,209,255,.5)'),chip('единица: метр','rgba(127,184,160,.5)'))+
+        sml('измерить — значит СРАВНИТЬ с единицей: сколько метров в столе, сколько килограммов в арбузе'));
+    } else if(step===2){
+      h=col(big('Три главных измерения'),
+        rowC(chip('длина — метры (м)','rgba(127,209,255,.5)'),chip('масса — килограммы (кг)','rgba(232,160,90,.5)'),chip('время — секунды (с)','rgba(127,184,160,.5)'))+
+        sml('это основа! Их мерят линейкой, весами и часами'));
+    } else if(step===3){
+      h=col(big('Метр и сантиметр'),
+        l93Ruler(3,'a')+
+        rowC(chip('1 м = 100 см','rgba(127,209,255,.5)'),chip('3 м = 300 см','rgba(232,160,90,.5)'))+
+        sml('сантиметр — маленькая часть метра: их ровно 100!'));
+    } else if(step===4){
+      h=col(big('Задача-проверка'),
+        l93Ruler(10,'b')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">3 м = 3 · 100 = 300 см</div>`+
+        sml('как в проверке: умножаем метры на 100!'));
+    } else if(step===5){
+      h=col(big('Задача 1: 5 метров'),
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">5 м = 5 · 100 = 500 см</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===6){
+      h=col(big('Килограмм и грамм'),
+        l93Scale(4000,'c')+
+        rowC(chip('1 кг = 1000 г','rgba(127,209,255,.5)'),chip('4 кг = 4000 г','rgba(232,160,90,.5)'))+
+        sml('грамм — маленькая часть килограмма: их ровно 1000!'));
+    } else if(step===7){
+      h=col(big('Задача 2: 4 килограмма'),
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">4 кг = 4 · 1000 = 4000 г</div>`+
+        sml('как в наших задачках: умножаем килограммы на 1000!'));
+    } else if(step===8){
+      h=col(big('Час и минута'),
+        l93Clock(30,'d')+
+        rowC(chip('1 час = 60 минут','rgba(127,209,255,.5)'),chip('полчаса = 30 минут','rgba(127,184,160,.5)'))+
+        sml('в часе 60 минут — не 100! Поэтому время особое'));
+    } else if(step===9){
+      h=col(big('Секунда — самая маленькая'),
+        rowC(chip('1 минута = 60 секунд','rgba(127,209,255,.5)'),chip('«раз-и-два-и» ≈ 2 секунды','rgba(127,184,160,.5)'))+
+        sml('секунды тикают на каждом шагу: тик-так, тик-так!'));
+    } else if(step===10){
+      h=col(big('Приставки-помощники'),
+        rowC(chip('санти- = 1/100 (см)','rgba(127,209,255,.5)'),chip('кило- = 1000 (кг, км)','rgba(232,160,90,.5)'))+
+        sml('санти — сотая часть, кило — тысяча. Запомнил — и единицы не страшны!'));
+    } else if(step===11){
+      h=col(big('Крупнее единица — меньше число'),
+        rowC(chip('3 м = 300 см','rgba(127,209,255,.5)'),chip('метр крупнее — число 3 маленькое','rgba(127,184,160,.5)'),chip('сантиметр мельче — число 300 большое','rgba(232,160,90,.5)'))+
+        sml('мерили крупной единицей — число меньше. Мельче единица — число больше!'));
+    } else if(step===12){
+      h=col(big('Умножаешь — дописывай нули'),
+        rowC(chip('×100 → допиши 2 нуля: 5 м = 500 см','rgba(127,209,255,.5)'),chip('×1000 → допиши 3 нуля: 4 кг = 4000 г','rgba(232,160,90,.5)'))+
+        sml('трюк Архимеда: 5 м = 500 см — два нуля, как в совете!'));
+    } else if(step===13){
+      h=col(big('Приборы измерения'),
+        rowC(chip('📏 линейка — длина','rgba(127,209,255,.5)'),chip('⚖️ весы — масса','rgba(127,184,160,.5)'),chip('⏰ часы — время','rgba(127,209,255,.5)'))+
+        sml('у каждой величины — свой прибор и своя единица!'));
+    } else if(step===14){
+      h=col(big('Где это в жизни'),
+        rowC(chip('рост 1 м 40 см','rgba(127,209,255,.4)'),chip('арбуз 3 кг 200 г','rgba(127,209,255,.4)'),chip('забег на 100 м за 12 с','rgba(127,209,255,.4)'))+
+        sml('мы постоянно измеряем — и теперь понимаем единицы!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('2 м = 200 см','rgba(127,184,160,.5)'),chip('3 кг = 3000 г','rgba(127,184,160,.5)'),chip('1 час = 60 мин','rgba(127,184,160,.5)'))+
+        sml('×100 для см, ×1000 для г — и не забудь про 60!'));
+    } else if(step===16){
+      const POOL=[['m','5','cm'],['m','3','cm'],['m','7','cm'],['m','2','cm'],['kg','4','g'],['kg','2','g'],['kg','7','g'],['kg','3','g'],['h','2','min'],['h','3','min'],['min','2','sec'],['min','5','sec']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0], n=+e[1];
+      let desc, firstStep, ans;
+      if(kind==='m'){
+        desc=n+' м → сколько сантиметров?';
+        firstStep='1 м = 100 см → '+n+'·100';
+        ans=n*100;
+      } else if(kind==='kg'){
+        desc=n+' кг → сколько граммов?';
+        firstStep='1 кг = 1000 г → '+n+'·1000';
+        ans=n*1000;
+      } else if(kind==='h'){
+        desc=n+' час(а) → сколько минут?';
+        firstStep='1 час = 60 минут → '+n+'·60';
+        ans=n*60;
+      } else {
+        desc=n+' минуты → сколько секунд?';
+        firstStep='1 мин = 60 с → '+n+'·60';
+        ans=n*60;
+      }
+      h=col(big('📏 Тренажёр: единицы измерения'),
+        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
+        `<div style="font-size:28px" class="wv-pop">${desc.split(' →')[0]}</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l93Act('${lk}','s1')`),btn('2️⃣ ответ',`l93Act('${lk}','s2')`),btn('🎲 другой',`l93Act('${lk}','n')`),btn('↺',`l93Act('${lk}','r')`))+
+        sml('в см — ×100, в г — ×1000, в минуты/секунды — ×60!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            📏 1 м = 100 см → ×100 (2 нуля).<br>
+            ⚖️ 1 кг = 1000 г → ×1000 (3 нуля).<br>
+            ⏰ 1 час = 60 мин, 1 мин = 60 с.<br>
+            🔍 Мерить = сравнивать с единицей.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 3 метра'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function l18Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const POOL=[['sq','7'],['sq','12'],['sq','15'],['cb','2'],['cb','3'],['cb','5'],['back','81'],['back','144'],['back','125'],['back','64'],['cnt','sq'],['cnt','cb']];
@@ -10454,6 +10619,7 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
   if(id===1) visDigits(el);
+  else if(id===93) visL93(el);
   else if(id===92) visL92(el);
   else if(id===98) visL98(el);
   else if(id===96) visL96(el);
