@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -6028,6 +6028,162 @@ function visL93(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+function l94Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['v','60','2'],['v','45','3'],['v','100','2'],['v','90','3'],['v','120','4'],['v','80','4'],['s','5','4'],['s','15','3'],['s','6','2'],['s','40','4'],['s','20','4'],['s','12','3']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l94Road(speed,uid){
+  // дорога: человечек/машина движется со скоростью speed (км/ч)
+  const speedLabel=speed>=60?'🚗 машина':speed>=15?'🚲 велосипед':'🚶 пешеход';
+  return `<div style="position:relative;width:230px;height:52px;border:2px solid #3d5c49;border-radius:8px;background:linear-gradient(180deg,#2c3a30,#1d2b22);overflow:hidden;margin:2px auto">
+    <div style="position:absolute;top:50%;left:0;right:0;height:2px;background:repeating-linear-gradient(90deg,rgba(255,208,90,.6) 0 14px,transparent 14px 28px)"></div>
+    <div class="wv-drive" style="--dx:${Math.min(190,40+speed*2)}px;position:absolute;bottom:2px;left:4px;font-size:24px">${speedLabel.split(' ')[0]}</div>
+    <div style="position:absolute;right:6px;top:2px;font-size:13px;color:#ffd9a0;font-weight:bold">${speed} км/ч</div>
+  </div>`;
+}
+function l94Graph(km,uid){
+  // график пути: вертикаль — путь, у машины прямая
+  const H=110,W=210;
+  const hgt=Math.min(H-14,km/160*(H-20));
+  return `<svg width="${W}" height="${H}" style="display:block;margin:2px auto;background:#13251c;border:1px solid #3d5c49;border-radius:6px">
+    <line x1="24" y1="${H-18}" x2="${W-6}" y2="${H-18}" stroke="#cbb89a" stroke-width="1.5"/>
+    <line x1="24" y1="6" x2="24" y2="${H-18}" stroke="#cbb89a" stroke-width="1.5"/>
+    <text x="10" y="10" fill="#7fd1a0" font-size="8">путь, км</text>
+    <text x="${W-30}" y="${H-4}" fill="#cbb89a" font-size="8">время</text>
+    <line x1="24" y1="${H-18}" x2="${W-6}" y2="${H-18-hgt}" stroke="#7fd1a0" stroke-width="2.5"/>
+    <text x="${W-58}" y="${H-24-hgt}" fill="#7fd1a0" font-size="10">S = ${km} км</text>
+  </svg>`;
+}
+function visL94(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Кто быстрее: ты или велосипед?'),
+        `<div style="font-size:44px" class="wv-flick">🏃</div>`+
+        sml('скорость — сколько километров проходит тело за 1 час. Узнаем, как её считать!'));
+    } else if(step===1){
+      h=col(big('Что такое скорость'),
+        rowC(chip('v = S : t','rgba(127,209,255,.5)'),chip('S — путь (км)','rgba(232,160,90,.5)'),chip('t — время (ч)','rgba(127,184,160,.5)'))+
+        sml('скорость = путь делить на время. Как в нашей проверке!'));
+    } else if(step===2){
+      h=col(big('Считаем скорость'),
+        l94Road(30,'a')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">v = 60 : 2 = 30 км/ч</div>`+
+        sml('проехали 60 км за 2 часа → 30 км каждый час!'));
+    } else if(step===3){
+      h=col(big('Задача-проверка: лыжник'),
+        l94Road(10,'b')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">v = 40 : 4 = 10 км/ч</div>`+
+        sml('как в проверке: 40 км за 4 часа → 10 км/ч!'));
+    } else if(step===4){
+      h=col(big('Задача 1: велосипедист'),
+        l94Road(15,'c')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">v = 45 : 3 = 15 км/ч</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===5){
+      h=col(big('Путь из скорости'),
+        rowC(chip('S = v · t','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">S = 5 · 4 = 20 км</div>`+
+        sml('пешеход 5 км/ч идёт 4 часа → 5·4 = 20 км. Как в наших задачках!'));
+    } else if(step===6){
+      h=col(big('Время из скорости'),
+        rowC(chip('t = S : v','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">t = 60 : 15 = 4 часа</div>`+
+        sml('велосипедист 15 км/ч: 60 км за 4 часа'));
+    } else if(step===7){
+      h=col(big('Скорости в жизни'),
+        rowC(chip('пешеход: 4–5 км/ч','rgba(127,209,255,.5)'),chip('велосипед: 15 км/ч','rgba(127,184,160,.5)'),chip('машина: 60–90 км/ч','rgba(232,160,90,.5)'),chip('самолёт: 800 км/ч','rgba(127,209,255,.5)'))+
+        sml('у каждого своя скорость! Самолёт в 160 раз быстрее пешехода'));
+    } else if(step===8){
+      h=col(big('Сравниваем'),
+        rowC(chip('4 км/ч — пешком','rgba(127,184,160,.5)'),chip('15 км/ч — велосипед','rgba(127,209,255,.5)'),chip('90 км/ч — машина','rgba(232,160,90,.5)'))+
+        sml('одинаковое время — разный путь: скорость решает!'));
+    } else if(step===9){
+      h=col(big('График движения'),
+        l94Graph(60,'d')+
+        sml('по горизонтали — время, по вертикали — путь. Равномерное движение — прямая линия!'));
+    } else if(step===10){
+      h=col(big('Чем круче — тем быстрее'),
+        rowC(chip('крутая прямая — быстрая машина','rgba(232,160,90,.5)'),chip('пологая — медленный пешеход','rgba(127,184,160,.5)'))+
+        sml('наклон графика показывает скорость!'));
+    } else if(step===11){
+      h=col(big('Перевод единиц'),
+        rowC(chip('1 м/с = 3,6 км/ч','rgba(127,209,255,.5)'),chip('бегун 2 м/с = 7,2 км/ч','rgba(127,184,160,.5)'))+
+        sml('м/с → км/ч: умножай на 3,6 (потому что в часе 3600 секунд и в километре 1000 м)'));
+    } else if(step===12){
+      h=col(big('Почему 3,6?'),
+        rowC(chip('1 м/с = 1 м за 1 с','rgba(127,209,255,.5)'),chip('за час: 3600 м = 3,6 км','rgba(232,160,90,.5)'))+
+        sml('за секунду метр, за 3600 секунд — 3600 метров = 3,6 км!'));
+    } else if(step===13){
+      h=col(big('Треугольник S-v-t'),
+        `<div style="text-align:center;font-size:16px;color:#e8dcc8" class="wv-pop">
+          <div style="display:inline-block;padding:4px 16px;border:2px solid rgba(217,164,65,.5);border-radius:10px;background:rgba(217,164,65,.06)">▲<br>S<br><span style="color:#7fd1a0">v</span> · <span style="color:#8fa6b8">t</span></div>
+        </div>`+
+        sml('путь наверху: S = v·t, v = S:t, t = S:v. Закрываешь неизвестное!'));
+    } else if(step===14){
+      h=col(big('Где это в жизни'),
+        rowC(chip('спидометр машины','rgba(127,209,255,.4)'),chip('табличка «60 км/ч»','rgba(127,209,255,.4)'),chip('олимпийский рекорд','rgba(127,209,255,.4)'),chip('время в пути','rgba(127,209,255,.4)'))+
+        sml('спидометр показывает скорость прямо сейчас — и это v = S:t!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('120 км за 2 ч → 60 км/ч','rgba(127,184,160,.5)'),chip('5 км/ч за 3 ч → 15 км','rgba(127,184,160,.5)'),chip('60 км при 20 км/ч → 3 ч','rgba(127,184,160,.5)'))+
+        sml('три формулы: S = v·t, v = S:t, t = S:v!'));
+    } else if(step===16){
+      const POOL=[['v','60','2'],['v','45','3'],['v','100','2'],['v','90','3'],['v','120','4'],['v','80','4'],['s','5','4'],['s','15','3'],['s','6','2'],['s','40','4'],['s','20','4'],['s','12','3']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0];
+      let desc, firstStep, ans;
+      if(kind==='v'){
+        const S=+e[1], t=+e[2];
+        desc='проехали '+S+' км за '+t+' ч → скорость?';
+        firstStep='v = S : t = '+S+' : '+t;
+        ans=S/t;
+      } else {
+        const v=+e[1], t=+e[2];
+        desc='скорость '+v+' км/ч, время '+t+' ч → путь?';
+        firstStep='S = v · t = '+v+' · '+t;
+        ans=v*t;
+      }
+      h=col(big('🏃 Тренажёр: скорость движения'),
+        `<div class="wv-row">${chip(desc+' (в км/ч или км)','rgba(217,164,65,.35)')}</div>`+
+        l94Road(kind==='v'?+e[1]/+e[2]:+e[1],'t')+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l94Act('${lk}','s1')`),btn('2️⃣ ответ',`l94Act('${lk}','s2')`),btn('🎲 другой',`l94Act('${lk}','n')`),btn('↺',`l94Act('${lk}','r')`))+
+        sml('v = S:t, S = v·t — треугольник решает!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🏃 v = S : t (скорость).<br>
+            🔺 S наверху: S = v·t, t = S:v.<br>
+            📈 Равномерное движение — прямая на графике.<br>
+            🚗 1 м/с = 3,6 км/ч.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там лыжник'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function l18Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const POOL=[['sq','7'],['sq','12'],['sq','15'],['cb','2'],['cb','3'],['cb','5'],['back','81'],['back','144'],['back','125'],['back','64'],['cnt','sq'],['cnt','cb']];
@@ -10619,6 +10775,7 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
   if(id===1) visDigits(el);
+  else if(id===94) visL94(el);
   else if(id===93) visL93(el);
   else if(id===92) visL92(el);
   else if(id===98) visL98(el);
