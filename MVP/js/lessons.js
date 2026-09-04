@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -4480,6 +4480,156 @@ function visL196(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там радиус 3'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l2Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['n','7','4'],['n','10','3'],['n','9','4'],['n','12','5'],['n','8','3'],['n','15','4'],['n','11','5'],['n','13','6'],['n','17','4'],['n','14','5'],['n','19','6'],['n','16','7']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l2Birds(n,uid,animated){
+  // голуби: n птиц; animated — парят (wv-rise)
+  let out='';
+  for(let i=0;i<n;i++){
+    const cls=animated?['wv-rise','wv-rise2','wv-rise3'][i%3]:'';
+    out+=`<div class="${cls}" style="display:inline-block;font-size:22px;margin:1px">🕊️</div>`;
+  }
+  return `<div style="text-align:center;min-height:34px;line-height:30px">${out}</div>`;
+}
+function l2Cages(m,fill,uid){
+  // m клеток; fill — массив количеств голубей в каждой
+  let out='';
+  for(let i=0;i<m;i++){
+    const c=fill&&fill[i]?fill[i]:0;
+    out+=`<div style="flex:1;text-align:center;margin:2px">
+      <div style="min-height:${c>0?c*24:22}px;display:flex;flex-direction:column-reverse;align-items:center;justify-content:flex-start">
+        ${c>0?Array(c).fill('<div class="l35-pop" style="font-size:16px;line-height:1">🕊️</div>').join(''):''}
+      </div>
+      <div style="height:26px;border:2px solid #8a6a2f;border-top:none;border-radius:0 0 6px 6px;background:repeating-linear-gradient(180deg,transparent 0 6px,rgba(138,106,47,.15) 6px 7px)"></div>
+    </div>`;
+  }
+  return `<div style="display:flex;width:240px;justify-content:center;margin:2px auto">${out}</div>`;
+}
+function visL2(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Голубиная задача Архимеда'),
+        `<div style="font-size:44px" class="wv-pulse">🕊️</div>`+
+        sml('7 клеток и 10 голубей. Сколько голубей ГАРАНТИРОВАННО окажутся в одной клетке? Хитрый вопрос!'));
+    } else if(step===1){
+      h=col(big('Попробуем «избежать» пары'),
+        l2Birds(4,'a',false)+
+        l2Cages(3,[1,1,1],'b')+
+        sml('4 голубя, 3 клетки. Сажаем по одному: 3 птицы заняли все клетки… а четвёртому некуда!'));
+    } else if(step===2){
+      h=col(big('Четвёртый голубь вынужден подселиться!'),
+        l2Birds(4,'c',false)+
+        l2Cages(3,[2,1,1],'d')+
+        `<div class="wv-ans" style="font-size:22px;color:#ffd9a0">в одной клетке — минимум 2 голубя!</div>`+
+        sml('куда бы он ни сел — в какой-то клетке уже есть голубь. Пара гарантирована!'));
+    } else if(step===3){
+      h=col(big('Принцип Дирихле'),
+        rowC(chip('n голубей','rgba(127,209,255,.5)'),chip('m клеток','rgba(232,160,90,.5)'),chip('n > m','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:21px;color:#7fd1a0">если голубей больше клеток — где-то есть «соседи»</div>`+
+        sml('немецкий математик Дирихле заметил: больше предметов, чем ящиков → в одном ящике не меньше двух!'));
+    } else if(step===4){
+      h=col(big('Почему «гарантированно»?'),
+        rowC(chip('самое «честное» размещение — по одному','rgba(127,209,255,.5)'),chip('если и тогда есть пара — пара будет всегда','rgba(217,164,65,.5)'))+
+        sml('мы проверили худший случай. Раз в худшем случае пара есть — она есть ВСЕГДА, как ни сажай!'));
+    } else if(step===5){
+      h=col(big('Формула: ⌈n/m⌉'),
+        rowC(chip('⌈⌉ — округлить ВВЕРХ','rgba(127,209,255,.5)'),chip('10 : 7 = 1,4… → ⌈⌉ = 2','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">⌈10/7⌉ = 2 голубя</div>`+
+        sml('делим голубей на клетки и округляем вверх — получаем гарантированный минимум!'));
+    } else if(step===6){
+      h=col(big('Смотрим на примере'),
+        l2Birds(10,'e',true)+
+        l2Cages(7,[2,2,2,1,1,1,1],'f')+
+        sml('10 голубей, 7 клеток: даже поровну — в трёх клетках по 2! ⌈10/7⌉ = 2'));
+    } else if(step===7){
+      h=col(big('Месяцы рождения'),
+        rowC(chip('12 месяцев — клетки','rgba(232,160,90,.5)'),chip('ученики — голуби','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">25 : 12 = 2,08… → ⌈⌉ = 3</div>`+
+        sml('как в нашей проверке: 25 учеников, 12 месяцев → гарантированно 3 родились в один месяц!'));
+    } else if(step===8){
+      h=col(big('Проверка «от противного»'),
+        rowC(chip('предположим: в каждом месяце ≤ 2','rgba(127,209,255,.5)'),chip('тогда всего ≤ 12·2 = 24','rgba(232,160,90,.5)'),chip('а у нас 25!','rgba(232,160,90,.5)'))+
+        sml('если бы нигде не было трёх — поместилось бы максимум 24. Раз 25 — тройка обязана быть!'));
+    } else if(step===9){
+      h=col(big('Носки и цвета'),
+        rowC(chip('13 носков, 6 цветов','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">⌈13/6⌉ = 3 носка одного цвета</div>`+
+        sml('цвета — клетки! Если бы каждого цвета было ≤2, всего было бы ≤12. А носков 13!'));
+    } else if(step===10){
+      h=col(big('Задача 1: 28 учеников'),
+        rowC(chip('28 учеников','rgba(127,209,255,.5)'),chip('12 месяцев','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">⌈28/12⌉ = ⌈2,33…⌉ = 3</div>`+
+        sml('как в наших задачках: 28 : 12 = 2,33 → округляем вверх → 3!'));
+    } else if(step===11){
+      h=col(big('Задача 2: 40 карандашей'),
+        rowC(chip('40 карандашей','rgba(127,209,255,.5)'),chip('7 цветов','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">⌈40/7⌉ = ⌈5,71…⌉ = 6</div>`+
+        sml('как в наших задачках: если бы каждого цвета было ≤5, всего ≤35 < 40. Значит, где-то 6!'));
+    } else if(step===12){
+      h=col(big('Почему округляем ВВЕРХ?'),
+        rowC(chip('5,71 «целых» карандаша не бывает','rgba(127,209,255,.5)'),chip('раз больше 5 — значит минимум 6','rgba(232,160,90,.5)'))+
+        sml('ответ «5 с хвостиком» невозможен — предметы целые! Поэтому берём следующее целое'));
+    } else if(step===13){
+      h=col(big('Три шага решения'),
+        rowC(chip('1) что голуби?','rgba(127,209,255,.5)'),chip('2) что клетки?','rgba(232,160,90,.5)'),chip('3) ⌈n/m⌉','rgba(217,164,65,.5)'))+
+        sml('главное — понять, что раскладываем и куда. Потом деление и округление вверх!'));
+    } else if(step===14){
+      h=col(big('Где пригодится'),
+        rowC(chip('дни рождения','rgba(127,209,255,.4)'),chip('носки из шкафа','rgba(127,209,255,.4)'),chip('карандаши по цветам','rgba(127,209,255,.4)'),chip('голуби в клетках','rgba(217,164,65,.4)'))+
+        sml('везде, где спрашивают «гарантированно» — Дирихле сразу говорит ответ!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('10 голубей, 3 клетки → ⌈10/3⌉ = 4','rgba(127,184,160,.5)'),chip('8 голубей, 5 клеток → 2','rgba(127,184,160,.5)'))+
+        sml('10 : 3 = 3,33 → 4! Проверь: 3·3 = 9 < 10 — четвёртый обязан появиться'));
+    } else if(step===16){
+      const POOL=[['n','7','4'],['n','10','3'],['n','9','4'],['n','12','5'],['n','8','3'],['n','15','4'],['n','11','5'],['n','13','6'],['n','17','4'],['n','14','5'],['n','19','6'],['n','16','7']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i];
+      const n=+e[1], m=+e[2];
+      const ans=Math.ceil(n/m);
+      h=col(big('🕊️ Тренажёр: принцип Дирихле'),
+        `<div class="wv-row">${chip(n+' голубей, '+m+' клеток → сколько гарантированно в одной?','rgba(217,164,65,.35)')}</div>`+
+        l2Cages(m,null,'t')+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) делим: ${n} : ${m} = ${(n/m).toFixed(2)}… → округляем ВВЕРХ</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l2Act('${lk}','s1')`),btn('2️⃣ ответ',`l2Act('${lk}','s2')`),btn('🎲 другие',`l2Act('${lk}','n')`),btn('↺',`l2Act('${lk}','r')`))+
+        sml('⌈n/m⌉: дели голубей на клетки и округляй вверх!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🕊️ Голубей больше клеток → есть пара.<br>
+            📊 Ответ: ⌈n/m⌉ — округли ВВЕРХ.<br>
+            🧦 13 носков, 6 цветов → 3 одного цвета.<br>
+            🎂 25 учеников, 12 месяцев → 3 в один месяц.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 25 учеников и 12 месяцев'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -9076,7 +9226,7 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
   if(id===1) visDigits(el);
-  else if(id===2) visPigeon(el);
+  else if(id===2) visL2(el);
   else if(id===3) visSnail(el);
   else if(id===4) visCandy(el);
   else if(id===5) visTourn(el);
