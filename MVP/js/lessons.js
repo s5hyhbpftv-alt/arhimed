@@ -2945,6 +2945,7 @@ function l103Act(lk,act){
 }
 function l103B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
 function l103Card(tag,emoji,title,lines,color){
+  if(!Array.isArray(lines)) lines=[lines];
   let ls='';
   for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:12.5px;color:#d8ecff;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
   return `<div style="flex:1;min-width:150px;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
@@ -3155,7 +3156,7 @@ function visL103(el){
     } else if(step===11){
       h=col(l103B('УМЕНЬШАЕМ ТРЕНИЕ','#7fd1a0')+
         big('Когда нужно «скользить»')+
-        l103Ball('g')+
+        `<div class="wv-pop">${l103Ball('g')}</div>`+
         `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
           ${l103Card('СМАЗКА','🛢️','Масло заполняет ямки','Масло затекает между бугорками — поверхности перестают цепляться, трение падает в разы! Как в наших задачках: смазка УМЕНЬШАЕТ трение.','#7fd1a0')}
           ${l103Card('ПОДШИПНИКИ','🔵','Качение вместо скольжения','Шарики подшипника катятся между кольцами — трение качения крошечное. Везде, где что-то крутится: колесо, вентилятор, велосипед!','#7fd1a0')}
@@ -3236,6 +3237,8 @@ function visL103(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+
+var L107POOL=[['p','2','5'],['p','3','2'],['p','5','4'],['p','4','10'],['p','6','3'],['p','1','20'],['k','4','3'],['k','2','2'],['k','3','4'],['k','6','5'],['k','8','2'],['k','10','1'],['h','150','5'],['h','100','2'],['h','200','5'],['h','60','3']];
 function l107Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   if(st.i==null) st.i=Math.floor(Math.random()*L107POOL.length); if(st.score==null) st.score=0;
@@ -3254,6 +3257,7 @@ function l107Act(lk,act){
 }
 function l107B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
 function l107Card(tag,emoji,title,lines,color){
+  if(!Array.isArray(lines)) lines=[lines];
   let ls='';
   for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:12.5px;color:#d8ecff;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
   return `<div style="flex:1;min-width:150px;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
@@ -3480,7 +3484,7 @@ function visL107(el){
     } else if(step===14){
       h=col(l107B('ЭНЕРГИЯ В ТЕХНИКЕ','#7fd1a0')+
         big('ГЭС: вода → ток')+
-        l107Dam('g')+
+        `<div style="position:relative">${l107Dam('g')}<div style="position:absolute;left:36%;top:30px;color:#9cc9e4;font-size:11px" class="wv-rise">💧</div><div style="position:absolute;left:44%;top:40px;color:#9cc9e4;font-size:8px" class="wv-rise2">💧</div></div>`+
         `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
           ${l107Card('КАК РАБОТАЕТ ГЭС','🌊','Потенциальная → кинетическая → ток','Вода на плотине имеет потенциальную энергию (высота). Падая, превращает её в кинетическую. Поток крутит турбину, та — генератор: рождается электрический ток!','#7fd1a0')}
           ${l107Card('ВЕЗДЕ ЭНЕРГИЯ','🏭','Превращения вокруг','Ветер крутит лопасти (Eк воздуха → Eк лопастей), маятник часов идёт (запас завода пружины), автомобиль разгоняется (энергия топлива → Eк).','#7fd1a0')}
@@ -3523,8 +3527,9 @@ function visL107(el){
         sml('готов? жми «Понял! Проверю себя» — там 3 кг на 2 м'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+  }catch(e){ try{ el.innerHTML='<div style="color:#ff8a8a;padding:10px">ERR: '+e.message+'</div>'; }catch(_){} }
 }
+
 
 function l97Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
