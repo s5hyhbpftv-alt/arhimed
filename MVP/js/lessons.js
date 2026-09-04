@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -12536,7 +12536,7 @@ function renderLessonVis(){
   else if(id===3) visL3(el);
   else if(id===4) visL4(el);
   else if(id===5) visL5(el);
-  else if(id===6) visVillage(el);
+  else if(id===6) visL6(el);
   else if(id===10) visL10(el);
   else if(id===33) visL33(el);
   else if(id===34) visL34(el);
@@ -13472,17 +13472,340 @@ function visL5(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
-function visVillage(el){
-  const grp=(nm,comp)=>`<div style="border:2px solid ${comp?'var(--glow)':'#3d5c49'};border-radius:10px;padding:6px 10px;background:#101f18;text-align:center;min-width:96px">
-    <div class="small" style="font-size:10px">${nm}</div><div style="color:var(--amber);font-size:16px">20 шт</div>
-    <div style="font-size:9.5px;color:${comp?'#7FD1FF':'#54705f'}">${comp||''}</div></div>`;
-  el.innerHTML=`<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-    ${grp('остаток 0', LV.step>=2?'остров A':'')}${grp('остаток 1', LV.step>=2?'остров B':'')}${grp('остаток 4', LV.step>=2?'остров B':'')}
-    ${grp('остаток 2', LV.step>=2?'остров C':'')}${grp('остаток 3', LV.step>=2?'остров C':'')}</div>
-    <div style="text-align:center;font-size:12.5px;color:#cbb89a;margin-top:6px">
-    ${LV.step<1?'Дороги: 1↔4 и 2↔3 (сумма кратна 5), кратные 5 — между собой.'
-      :LV.step===1?'Остаток 1 связан ТОЛЬКО с остатком 4.'
-      :LV.step===2?'Три острова: {0}, {1 и 4}, {2 и 3}.'
-      :LV.step===3?'Оценка: 3 острова → минимум 2 дороги.'
-      :'Пример: 2 дороги связали всё. Ответ: 2!'}</div>`;
+function l6Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a=act.split(':')[0], p=+act.split(':')[1];
+  if(a==='pair'){ const x=1+Math.floor(Math.random()*100), y=1+Math.floor(Math.random()*100); st.a=x; st.b=y; st.pair=(st.pair||0)+1; }
+  if(a==='n+') st.n=Math.min(30,(st.n||7)+1);
+  if(a==='n-') st.n=Math.max(1,(st.n||7)-1);
+  if(a==='try') st.try=(st.try||0)+1;
+  if(a==='br') st.br=Math.min(2,(st.br||0)+1);
+  if(a==='rst') st.br=0;
+  if(a==='m') st.m=p;
+  if(a==='show') st.show=Math.min(1,(st.show||0)+1);
+  chRender(0);
 }
+// цвет посёлка по остатку от деления на 5
+function l6c5(n){ return ['#ffd966','#7fd1a0','#7fb7d8','#d9a0ff','#ff9a8a'][((n%5)+5)%5]; }
+// «посёлок»: кружок с номером
+function l6Dot(n,sz,hot){
+  const s=sz||24, c=l6c5(n);
+  return `<span class="${hot?'wv-pulse':''}" style="display:inline-flex;align-items:center;justify-content:center;width:${s}px;height:${s}px;border-radius:50%;background:${c}22;border:2px solid ${hot?'#fff':c};font-size:${Math.max(8,s*0.34)}px;font-weight:bold;color:#fff;margin:1px">${n}</span>`;
+}
+function l6B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:2px">${txt}</span>`; }
+function l6Chip(t,c){ return `<span style="display:inline-block;padding:3px 10px;border-radius:10px;background:${c||'#13251c'}22;border:1px solid ${c||'#3d5c49'};font-size:13px;color:#e8dcc8;margin:2px">${t}</span>`; }
+// полный двудольный граф: слева остатки X, справа Y — линии всех пар
+function l6Bi(left,right,ht){
+  const n=Math.max(left.length,right.length);
+  const lx=46, rx=234, y0=30, gap=(ht-70)/Math.max(1,n-1);
+  let lines='';
+  const pos={};
+  left.forEach((u,i)=>{ pos['L'+u.n]={x:lx,y:y0+i*gap}; });
+  right.forEach((v,i)=>{ pos['R'+v.n]={x:rx,y:y0+i*gap}; });
+  left.forEach(u=>{ right.forEach(v=>{
+    const p1=pos['L'+u.n], p2=pos['R'+v.n];
+    lines+=`<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" stroke="#3d5c49" stroke-width="1" opacity=".45"/>`;
+  });});
+  let nodes='';
+  const node=(u,p)=>`<circle cx="${p.x}" cy="${p.y}" r="17" fill="${u.c}22" stroke="${u.c}" stroke-width="2"/><text x="${p.x}" y="${p.y+3.5}" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">${u.n}</text>`;
+  left.forEach(u=>{ nodes+=node(u,pos['L'+u.n]); });
+  right.forEach(v=>{ nodes+=node(v,pos['R'+v.n]); });
+  return `<div style="text-align:center;margin:0 auto"><svg width="284" height="${ht}" viewBox="0 0 284 ${ht}" style="max-width:284px">${lines}${nodes}</svg></div>`;
+}
+// кольцо полного графа (все со всеми) для кратных 5
+function l6Clique(nums,ht){
+  const cx=142, cy=ht/2, R=Math.min(86,(ht-64)/2);
+  const P=nums.map((n,i)=>{ const a=-Math.PI/2+i*2*Math.PI/nums.length; return {n,x:cx+R*Math.cos(a),y:cy+R*Math.sin(a)}; });
+  let lines='';
+  for(let i=0;i<P.length;i++) for(let j=i+1;j<P.length;j++)
+    lines+=`<line x1="${P[i].x.toFixed(1)}" y1="${P[i].y.toFixed(1)}" x2="${P[j].x.toFixed(1)}" y2="${P[j].y.toFixed(1)}" stroke="#3d5c49" stroke-width="1" opacity=".55"/>`;
+  let nodes='';
+  P.forEach(p=>{ nodes+=`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="19" fill="${l6c5(p.n)}22" stroke="${l6c5(p.n)}" stroke-width="2"/><text x="${p.x.toFixed(1)}" y="${(p.y+4).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#fff">${p.n}</text>`; });
+  return `<div style="text-align:center;margin:0 auto"><svg width="284" height="${ht}" viewBox="0 0 284 ${ht}" style="max-width:284px">${lines}${nodes}</svg></div>`;
+}
+// остров-«земля»: овальный контур с посёлками
+function l6Isle(nm,cols,dotns,sub){
+  return `<div class="wv-pop" style="border:2px solid ${cols};border-radius:120px 120px 20px 20px / 70px 70px 16px 16px;background:${cols}14;padding:9px 7px 6px;min-width:118px;text-align:center">
+    <div style="font-size:12.5px;color:${cols};font-weight:bold;letter-spacing:.5px">${nm}</div>
+    <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:1px;margin:3px 0">${dotns.map(n=>l6Dot(n,20)).join('')}</div>
+    <div style="font-size:9.5px;color:#9ec0a8">${sub||''}</div></div>`;
+}
+// остров-блок (компонента) с подписью
+function l6Comp(nm,c,cnt,txt){
+  return `<div class="wv-pop" style="border:2px solid ${c};border-radius:12px;background:${c}12;padding:7px 8px;min-width:100px;text-align:center">
+    <div style="font-size:13px;color:#fff;font-weight:bold">${nm}</div>
+    <div style="font-size:10.5px;color:${c};margin:1px 0">${cnt||''}</div>
+    <div style="font-size:9.5px;color:#9ec0a8;line-height:1.3">${txt||''}</div></div>`;
+}
+function visL6(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v6!==step) CHS[lk]={_v6:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const note=(t,c,d)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'}${d||'44'};border-radius:9px;padding:5px 12px;font-size:12.5px;color:#e8dcc8;text-align:left;line-height:1.45">${t}</div>`;
+    let h='';
+    if(step===0){
+      // легенда задачи
+      h=col(l6B('ВсОШ 2025/26 (Сириус) · 6 класс · №7','#c9b28a')+
+        big('«Оценка и пример»: посёлки')+
+        `<div style="font-size:42px" class="wv-flick">🏘️</div>`+
+        card('<b>В стране 100 посёлков</b> с номерами от <b>1 до 100</b>. Между двумя посёлками <b style="color:#ffd966">есть дорога</b>, только если <b>сумма их номеров делится на 5</b>.')+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;margin:3px 0">
+          <span style="font-size:11.5px;color:#9ec0a8">проверим пару:</span>${l6Dot(2,26)}<span style="color:#ffd966;font-size:16px">+</span>${l6Dot(3,26)}<span style="color:#7fd1a0;font-size:20px;font-weight:bold">= 5 ✓ дорога!</span>
+        </div>`+
+        rowC(l6Chip('3+8=11 ✗','#ff9a8a'),l6Chip('2+3=5 ✓','#7fd1a0'),l6Chip('7+8=15 ✓','#7fd1a0'))+
+        `<div class="wv-ans" style="font-size:19px;color:#ffd966">Вопрос: сколько дорог нужно построить, чтобы из любого посёлка добраться до любого?</div>`+
+        sml('ответим приёмом «оценка + пример» — сначала посмотрим на остатки чисел'));
+    } else if(step===1){
+      // остатки от деления на 5
+      const n=st.n!=null?st.n:7, r=((n%5)+5)%5, q=Math.floor(n/5);
+      h=col(l6B('ШАГ 1 · ОСТАТКИ','#7fb7d8')+
+        big('Смотрим на остаток от деления на 5')+
+        `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:3px;max-width:340px;margin:0 auto">${[1,2,3,4,5,6,7,8,9,10].map(nn=>`<span style="text-align:center"><span style="display:block">${l6Dot(nn,23)}</span><span style="font-size:8px;color:#9ec0a8">${nn}</span></span>`).join('')}</div>`+
+        `<div style="font-size:12.5px;color:#9ec0a8;max-width:330px">остатки бывают только 0, 1, 2, 3, 4 — цвет посёлка показывает его остаток</div>`+
+        rowC(l6Chip('делится на 5 → остаток 0','#ffd966'),l6Chip('остаток 1','#7fd1a0'),l6Chip('остаток 2','#7fb7d8'),l6Chip('остаток 3','#d9a0ff'),l6Chip('остаток 4','#ff9a8a'))+
+        `<div style="background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:13px;color:#e8dcc8">разложим посёлок на «пятёрки» и остаток:</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin:3px 0">${btn('−',`l6Act('${lk}','n-')`)}<span style="font-family:Georgia,serif;font-size:24px;color:#fff;min-width:24px">${n}</span>${btn('+',`l6Act('${lk}','n+')`)}</div>
+          <div class="wv-ans" style="font-size:21px;color:${l6c5(n)}">${n} = ${q}·5 + ${r}</div>
+          <div style="font-size:12.5px;color:#e8dcc8">остаток посёлка ${n} — <b style="color:${l6c5(n)}">${r}</b>${r===0?', значит номер делится на 5':''}</div>
+        </div>`+
+        sml('запомни: сумма делится на 5 ⟺ сумма остатков делится на 5!'));
+    } else if(step===2){
+      // какие пары остатков дают сумму, делящуюся на 5
+      const rows=[[0,0,'✓'],[1,4,'✓'],[2,3,'✓'],[1,1,'✗'],[1,2,'✗'],[3,4,'✗']];
+      h=col(l6B('ШАГ 2 · ПАРЫ ОСТАТКОВ','#ffd966')+
+        big('Какие пары остатков «работают»?')+
+        `<div style="display:flex;justify-content:center;gap:6px;align-items:center;flex-wrap:wrap"><span style="font-size:11.5px;color:#9ec0a8">остатки:</span>${[0,1,2,3,4].map(r=>l6Dot(r,25)).join('')}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${rows.map((p,i)=>`<div class="wv-pop${i<3?'':'2'}" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid ${p[2]==='✓'?(i===0?'#ffd96666':i===1?'#7fd1a066':'#7fb7d866'):'#ff9a8a55'};border-radius:9px;padding:4px 12px;max-width:330px;width:100%"><span style="font-size:14px;color:#e8dcc8">остатки ${p[0]} и ${p[1]}: ${p[0]}+${p[1]} = ${p[0]+p[1]}</span><span style="font-size:13px;color:${p[2]==='✓'?'#7fd1a0':'#ff9a8a'};font-weight:bold">${p[2]==='✓'?'делится на 5 ✓':'не делится ✗'}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:17px;color:#7fd1a0">дороги бывают только у пар (0,0), (1,4) и (2,3)!</div>`+
+        sml('три «волшебные пары» — на них держится вся задача!'));
+    } else if(step===3){
+      // первый остров: остатки 1 и 4
+      h=col(l6B('ШАГ 3 · ОСТРОВ №1','#7fd1a0')+
+        big('Остатки 1 и 4 связаны друг с другом')+
+        `<div style="font-size:13px;color:#9ec0a8;max-width:330px">посёлки 1, 6, 11, …, 96 (остаток 1) и 4, 9, 14, …, 99 (остаток 4): у каждого «единичного» есть дорога к каждому «четвёрочному» — ведь 1+4=5!</div>`+
+        l6Bi([{n:1,c:'#7fd1a0'},{n:6,c:'#7fd1a0'},{n:11,c:'#7fd1a0'},{n:16,c:'#7fd1a0'}],
+            [{n:4,c:'#ff9a8a'},{n:9,c:'#ff9a8a'},{n:14,c:'#ff9a8a'},{n:19,c:'#ff9a8a'}],150)+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${note('зелёные — остаток 1, розовые — остаток 4; тонкие линии — существующие дороги','#3d5c49','')}
+          ${note('как добраться из 1 в 6? <b>1 → 4</b> (1+4=5 ✓), затем <b>4 → 6</b> (4+6=10 ✓) — через «четвёрочный» посёлок!','#7fd1a0','66')}
+          ${note('таких посёлков 20+20 = <b>40</b> — и все они связаны между собой!','#ffd966','44')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:18px;color:#7fd1a0">40 посёлков = один связный «остров»</div>`+
+        sml('внутри острова из любого посёлка можно добраться до любого другого'));
+    } else if(step===4){
+      // второй остров: остатки 2 и 3
+      h=col(l6B('ШАГ 4 · ОСТРОВ №2','#7fb7d8')+
+        big('Остатки 2 и 3 — второй остров')+
+        `<div style="font-size:13px;color:#9ec0a8;max-width:330px">посёлки 2, 7, 12, …, 97 (остаток 2) и 3, 8, 13, …, 98 (остаток 3): дорога между ними есть, потому что 2+3=5!</div>`+
+        l6Bi([{n:2,c:'#7fb7d8'},{n:7,c:'#7fb7d8'},{n:12,c:'#7fb7d8'},{n:17,c:'#7fb7d8'}],
+            [{n:3,c:'#d9a0ff'},{n:8,c:'#d9a0ff'},{n:13,c:'#d9a0ff'},{n:18,c:'#d9a0ff'}],150)+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${note('голубые — остаток 2, фиолетовые — остаток 3; все попарно связаны дорогами','#3d5c49','')}
+          ${note('два «двоечника» соединяются через «троечника»: <b>2 → 3 → 7</b> (2+3=5, 3+7=10)','#7fb7d8','66')}
+          ${note('и снова целый связный кусок из <b>40 посёлков</b>!','#ffd966','44')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:18px;color:#7fb7d8">остров №2: 40 посёлков (остатки 2 и 3)</div>`+
+        sml('уже два острова. Осталось посмотреть на посёлки, кратные 5!'));
+    } else if(step===5){
+      // третий остров: кратные 5
+      h=col(l6B('ШАГ 5 · ОСТРОВ №3','#ffd966')+
+        big('Кратные 5 связаны все со всеми')+
+        `<div style="font-size:13px;color:#9ec0a8;max-width:330px">посёлки 5, 10, 15, …, 100: сумма двух кратных 5 всегда делится на 5!</div>`+
+        l6Clique([5,10,15,20,25,30],148)+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${note('5+10=15 ✓ · 10+25=35 ✓ · 15+30=45 ✓ — любая пара даёт сумму, кратную 5','#ffd966','44')}
+          ${note('это <b>полный граф</b>: из любого кратного 5 — прямая дорога в любое другое','#3d5c49','')}
+          ${note('кратных 5 среди 1..100 — ровно <b>20</b> (5, 10, 15, …, 100)','#ff9a8a','44')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:18px;color:#ffd966">остров №3: 20 посёлков (кратные 5)</div>`+
+        sml('итого: 40 + 40 + 20 = 100 посёлков — все распределились по трём островам!'));
+    } else if(step===6){
+      // между островами дорог нет!
+      const tries=[[1,2,'остров №1 ↔ остров №2'],[4,8,'остров №1 ↔ остров №2'],[1,5,'остров №1 ↔ остров №3'],[2,5,'остров №2 ↔ остров №3']];
+      const t=tries[(st.try||0)%tries.length], s=t[0]+t[1];
+      h=col(l6B('ШАГ 6 · МЕЖДУ ОСТРОВАМИ — НИЧЕГО!','#ff9a8a')+
+        big('Проверим: дорог между островами нет')+
+        rowC(l6Isle('остров №1','#7fd1a0',[1,4],'остатки 1,4 · 40 п.'),
+             l6Isle('остров №3','#ffd966',[5,10],'кратные 5 · 20 п.'),
+             l6Isle('остров №2','#7fb7d8',[2,3],'остатки 2,3 · 40 п.'))+
+        `<div style="background:rgba(255,154,138,.07);border:1px solid #ff9a8a55;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:13.5px;color:#e8dcc8">попробуем провести дорогу между <b>${t[2]}</b>:</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">${l6Dot(t[0],30)}<span style="font-size:18px;color:#e8dcc8">+</span>${l6Dot(t[1],30)}<span style="font-size:18px;color:#e8dcc8">=</span><span class="wv-ans" style="font-size:24px;color:#ff9a8a;font-weight:bold">${s}</span></div>
+          <div style="font-size:13.5px;color:#ff9a8a">${s} на 5 не делится → дороги НЕТ ✗ ${btn('🎲 другая пара',`l6Act('${lk}','try')`)}</div>
+        </div>`+
+        sml('никакая пара «из разных островов» не даёт сумму, кратную 5! Узнаем, почему так.'));
+    } else if(step===7){
+      // почему нет дорог между островами: пары не пересекаются
+      h=col(l6B('ШАГ 7 · ПОЧЕМУ ТАК ПОЛУЧИЛОСЬ','#d9a0ff')+
+        big('У разных островов — разные пары')+
+        rowC(l6Chip('пара (0,0) — остров №3','#ffd966'),l6Chip('пара (1,4) — остров №1','#7fd1a0'),l6Chip('пара (2,3) — остров №2','#7fb7d8'))+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${note('дорога есть только если остатки образуют пару из нашего списка: (0,0), (1,4) или (2,3)','#3d5c49','')}
+          ${note('остатки из <b>разных</b> пар (например 1 и 2) в сумме не дают 0 по модулю 5: 1+2=3','#ff9a8a','44')}
+          ${note('поэтому между островами дорог не существует — каждый остров живёт своей жизнью','#7fd1a0','44')}
+        </div>`+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${l6Comp('№1','#7fd1a0','40 п.','остатки 1,4')}
+          ${l6Comp('№2','#7fb7d8','40 п.','остатки 2,3')}
+          ${l6Comp('№3','#ffd966','20 п.','кратные 5')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:19px;color:#ff9a8a">3 изолированных острова — 3 компоненты связности!</div>`+
+        sml('такие куски называют «компонентами связности». Наша задача — соединить их в один!'));
+    } else if(step===8){
+      // задача: сколько дорог построить (оценка снизу)
+      h=col(l6B('ШАГ 8 · ОЦЕНКА СНИЗУ','#ffd966')+
+        big('Сколько дорог надо построить?')+
+        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:2px 0">${Array.from({length:3},(_,i)=>`<span class="wv-pop" style="animation-delay:${i*0.14}s;font-size:36px">🏝️</span>`).join('')}</div>`+
+        `<div style="font-size:13.5px;color:#e8dcc8;max-width:330px">сейчас 3 изолированных острова. <b>Одна новая дорога</b> соединяет только <b>2 посёлка</b> — максимум 2 острова!</div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${note('после 1 дороги: два острова склеились, а третий так и остался один — не хватает!','#ff9a8a','44')}
+          ${note('а вот после 2 дорог все три острова можно соединить в цепочку','#7fd1a0','44')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:22px;color:#ffd966">нужно НЕ МЕНЬШЕ 2 дорог (это «оценка»)</div>`+
+        sml('оценка снизу готова. Сформулируем её в общем виде — для любого числа островов!'));
+    } else if(step===9){
+      // общее правило: k островов → k−1 дорог
+      h=col(l6B('ШАГ 9 · ОБЩЕЕ ПРАВИЛО','#7fb7d8')+
+        big('k островов → минимум k−1 дорог')+
+        `<div style="font-size:13px;color:#e8dcc8;max-width:330px">каждая новая дорога уменьшает число островов <b>не больше чем на 1</b> (у неё всего 2 конца!)</div>`+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[[2,1],[3,2],[4,3],[5,4]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid ${i===1?'#ffd966':'#3d5c49'};border-radius:10px;padding:6px 9px;min-width:80px"><div style="font-size:12px;color:#9ec0a8">${x[0]} острова</div><div style="font-size:15px;color:#e8dcc8;margin:2px 0">${'🏝️'.repeat(x[0])}</div><div style="font-size:19px;color:${i===1?'#ffd966':'#7fd1a0'};font-weight:bold">минимум ${x[1]} дорог${x[1]>1?'и':''}</div></div>`).join('')}
+        </div>`+
+        `<div style="background:rgba(255,217,102,.08);border:1px solid #ffd96644;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:14px;color:#e8dcc8">у нас 3 острова → по правилу нужно <b style="color:#ffd966">не меньше 3 − 1 = 2 дорог</b></div>
+        </div>`+
+        sml('это и есть оценка снизу в общем виде. Теперь — главный вопрос: хватит ли 2 дорог?'));
+    } else if(step===10){
+      // пример: строим мосты
+      const br=st.br||0;
+      h=col(l6B('ШАГ 10 · ПРИМЕР: СТРОИМ МОСТЫ','#7fd1a0')+
+        big('Покажем, что 2 дорог достаточно!')+
+        `<div style="font-size:13px;color:#9ec0a8;max-width:330px">соединим остров №3 (посёлок 5) с островом №1 (посёлок 6) и с островом №2 (посёлок 7)</div>`+
+        `<div style="display:flex;flex-direction:column;align-items:center;gap:3px;margin:2px 0">
+          <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">${l6Isle('№1','#7fd1a0',[1,6],'40 п.')}${l6Isle('№2','#7fb7d8',[2,7],'40 п.')}</div>
+          ${br>=1?`<div class="wv-pop" style="font-size:12.5px;color:#9be8c0;background:#9be8c014;border:1px dashed #9be8c0;border-radius:9px;padding:3px 12px">🌉 мост 5–6 построен: остров №3 ↔ остров №1</div>`:`<div style="font-size:11.5px;color:#54705f">мостов пока нет…</div>`}
+          <div style="display:flex;justify-content:center">${l6Isle('№3','#ffd966',[5,10],'20 п.')}</div>
+          ${br>=2?`<div class="wv-pop" style="font-size:12.5px;color:#9be8c0;background:#9be8c014;border:1px dashed #9be8c0;border-radius:9px;padding:3px 12px">🌉 мост 5–7 построен: остров №3 ↔ остров №2</div>`:''}
+        </div>`+
+        (br===0?btns(btn('🌉 построить мост 5–6',`l6Act('${lk}','br')`))
+             :br===1?btns(btn('🌉 построить мост 5–7',`l6Act('${lk}','br')`),btn('↺ сброс',`l6Act('${lk}','rst')`))
+             :btns(btn('↺ сброс',`l6Act('${lk}','rst')`)))+
+        (br>=2?`<div class="wv-ans" style="font-size:20px;color:#7fd1a0">все 3 острова соединены в цепочку! 🎉</div>`:`<div style="font-size:12px;color:#54705f">нажми кнопку и построй мост!</div>`)+
+        sml('мосты — это НОВЫЕ дороги, их можно строить между любыми посёлками!'));
+    } else if(step===11){
+      // проверка связности
+      h=col(l6B('ШАГ 11 · ПРОВЕРКА: ВСЁ СВЯЗАНО','#c9b28a')+
+        big('Из любого посёлка — в любой!')+
+        `<div style="font-size:13px;color:#9ec0a8;max-width:330px">пример маршрута: из посёлка 1 (остров №1) в посёлок 8 (остров №2):</div>`+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:1px;flex-wrap:wrap;margin:3px 0">
+          ${l6Dot(1,24)}<span style="font-size:14px;color:#7fd1a0">→</span>${l6Dot(4,24)}<span style="font-size:14px;color:#7fd1a0">→</span>${l6Dot(6,24)}<span style="font-size:14px;color:#9be8c0">→</span>${l6Dot(5,24)}<span style="font-size:14px;color:#9be8c0">→</span>${l6Dot(7,24)}<span style="font-size:14px;color:#7fb7d8">→</span>${l6Dot(8,24)}
+        </div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${note('1→4: 1+4=5 ✓ и 4→6: 4+6=10 ✓ — внутри острова №1','#7fd1a0','66')}
+          ${note('6→5 и 5→7: наши новые мосты 🌉 — перепрыгиваем между островами','#9be8c0','66')}
+          ${note('7→8: 7+8=15 ✓ — внутри острова №2. Приехали!','#7fb7d8','66')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:18px;color:#7fd1a0">и так из любого посёлка можно добраться до любого другого!</div>`+
+        sml('двух мостов хватило. А меньше двух — нельзя (шаг 8). Значит ответ: ровно 2!'));
+    } else if(step===12){
+      // ответ + метод оценка+пример
+      h=col(l6B('ШАГ 12 · ОТВЕТ','#c9b28a')+
+        big('Минимум дорог = 2')+
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;align-items:stretch">
+          <div class="wv-pop" style="border:2px solid #ff9a8a;border-radius:12px;background:#ff9a8a0d;padding:8px 10px;max-width:148px;text-align:center">
+            <div style="font-size:22px">📉</div><div style="font-size:13px;color:#ff9a8a;font-weight:bold">ОЦЕНКА</div>
+            <div style="font-size:11.5px;color:#e8dcc8;line-height:1.4">меньше 2 нельзя: 3 острова связываются минимум 2 мостами</div></div>
+          <div class="wv-pop2" style="border:2px solid #7fd1a0;border-radius:12px;background:#7fd1a00d;padding:8px 10px;max-width:148px;text-align:center">
+            <div style="font-size:22px">📈</div><div style="font-size:13px;color:#7fd1a0;font-weight:bold">ПРИМЕР</div>
+            <div style="font-size:11.5px;color:#e8dcc8;line-height:1.4">2 моста (5–6 и 5–7) реально соединили все посёлки</div></div>
+        </div>`+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:2px 0">
+          <div style="font-size:26px" class="wv-pulse">⚖️</div>
+          <div class="wv-ans" style="font-size:34px;color:#ffd966">Ответ: 2 дороги</div>
+        </div>`+
+        sml('оценка снизу + пример сверху = точный ответ. Это и есть приём «оценка + пример»!'));
+    } else if(step===13){
+      // тренажёр: разные делители
+      const M=[3,4,5,6,10];
+      const m=st.m||5;
+      const pairs=[];
+      const used={};
+      for(let i=1;i<m;i++){ if(used[i]) continue; const j=(m-i)%m; if(j===i){ pairs.push('{'+i+'}'); used[i]=1; } else { pairs.push('{'+i+' и '+j+'}'); used[i]=used[j]=1; } }
+      const islands=1+pairs.length, need=islands-1;
+      h=col(l6B('ШАГ 13 · ТРЕНАЖЁР «ДРУГОЙ ДЕЛИТЕЛЬ»','#7fb7d8')+
+        big('Сколько островов при делителе m?')+
+        `<div style="font-size:12.5px;color:#9ec0a8;max-width:330px">посёлки 1..100, дорога если сумма делится на m. Выбери m:</div>`+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">${M.map(x=>btn(x===m?'✓ m='+x:'m='+x,`l6Act('${lk}','m:${x}')`,x===m?'':'')).join('')}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${note('остатки 0…'+(m-1)+': остаток 0 — всегда отдельный остров (посёлки, кратные '+m+')','#ffd966','44')}
+          ${note('остальные разбиваются на пары, дающие в сумме '+m+': '+pairs.join(', '),'#7fd1a0','44')}
+        </div>`+
+        rowC(l6Chip('остаток 0','#ffd966'),...pairs.map((pr,i)=>l6Chip(pr,i%2?'#d9a0ff':'#7fb7d8')))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">${islands} островов → минимум ${need} дорог${need>1?'и':''}</div>`+
+        sml('для m=5 получилось 3 острова и 2 дороги — как в нашей задаче! Сверься с правилом k−1.'));
+    } else if(step===14){
+      // аналог: посёлки 1..20, делимость на 4
+      const c4=n=>['#ffd966','#7fd1a0','#7fb7d8','#d9a0ff'][((n%4)+4)%4];
+      const dot4=(n,sz)=>`<span class="wv-pop" style="display:inline-flex;align-items:center;justify-content:center;width:${sz||22}px;height:${sz||22}px;border-radius:50%;background:${c4(n)}22;border:2px solid ${c4(n)};font-size:${Math.max(7,(sz||22)*0.33)}px;font-weight:bold;color:#fff;margin:1px">${n}</span>`;
+      h=col(l6B('ШАГ 14 · ПОПРОБУЙ САМ','#7fd1a0')+
+        big('А если делить на 4?')+
+        `<div style="font-size:13px;color:#9ec0a8;max-width:330px">посёлки с номерами <b>1..20</b>, дорога если сумма делится на 4. Цвет = остаток от деления на 4:</div>`+
+        `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:2px;max-width:330px;margin:2px auto">${Array.from({length:20},(_,i)=>dot4(i+1,21)).join('')}</div>`+
+        rowC(l6Chip('остаток 0','#ffd966'),l6Chip('остаток 1','#7fd1a0'),l6Chip('остаток 2','#7fb7d8'),l6Chip('остаток 3','#d9a0ff'))+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%">
+          ${note('пары остатков по модулю 4: (0,0), (1,3) и (2,2) — совсем как в нашей задаче с пятёркой!','#ffd966','44')}
+        </div>`+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${l6Comp('остаток 0','#ffd966','5 п.','4,8,12,16,20')}
+          ${l6Comp('остатки 1 и 3','#7fd1a0','10 п.','1+3=4 ✓')}
+          ${l6Comp('остаток 2','#7fb7d8','5 п.','2+2=4 ✓')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">тоже 3 острова → минимум 2 дороги!</div>`+
+        sml('та же схема: 3 острова и правило k−1 дают ответ 2. Проверь себя в конце урока!'));
+    } else if(step===15){
+      // вывод: приём оценка + пример
+      h=col(l6B('ШАГ 15 · ГЛАВНЫЙ ПРИЁМ','#c9b28a')+
+        big('Оценка + пример — суперсила!')+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap">
+          <div style="text-align:center;max-width:128px"><div style="font-size:38px" class="wv-pulse">🔍</div><div style="font-size:12px;color:#e8dcc8;font-weight:bold">1. ОЦЕНКА</div><div style="font-size:10.5px;color:#9ec0a8">докажи: меньше N нельзя</div></div>
+          <div style="font-size:24px;color:#cbb89a">+</div>
+          <div style="text-align:center;max-width:128px"><div style="font-size:38px" class="wv-pulse">🛠️</div><div style="font-size:12px;color:#e8dcc8;font-weight:bold">2. ПРИМЕР</div><div style="font-size:10.5px;color:#9ec0a8">покажи: N штук хватает</div></div>
+          <div style="font-size:24px;color:#cbb89a">=</div>
+          <div style="text-align:center;max-width:96px"><div style="font-size:38px" class="wv-flick">🎯</div><div style="font-size:12px;color:#ffd966;font-weight:bold">ТОЧНЫЙ ОТВЕТ</div></div>
+        </div>`+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:9px 13px;max-width:330px;font-size:13.5px;color:#e8dcc8;line-height:1.7">в задачах «наименьшее/наибольшее» не нужно перебирать всё подряд: сжимаем ответ <b>снизу</b> (оценка) и <b>сверху</b> (пример). Совпали — победа!</div>`+
+        `<div style="font-size:13px;color:#9ec0a8">в нашей задаче: оценка дала «не меньше 2», пример показал «2 хватает» → ответ ровно <b style="color:#ffd966">2</b>.</div>`+
+        sml('впереди — памятка и проверка себя!'));
+    } else {
+      // памятка
+      h=col(`<div style="font-size:48px">🏘️</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:250px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            🧮 Дорога есть: остатки (0,0), (1,4), (2,3).<br>
+            🏝️ Три острова: {1,4}, {2,3}, {кратные 5}.<br>
+            🚫 Между островами дорог нет.<br>
+            🌉 Правило: k островов → k−1 дорог.<br>
+            ⚖️ Оценка (≥2) + пример (2 хватит) = 2!</div>
+        </div>`+
+        btn('⟲ вернуться к главному приёму', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там вопрос про число островов'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
