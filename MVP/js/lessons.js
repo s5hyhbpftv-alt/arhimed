@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -4144,6 +4144,182 @@ function visL195(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там радиус 4'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l43Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['1','4','2','4'],['2','5','1','5'],['1','2','1','4'],['1','3','1','6'],['1','2','1','3'],['2','3','1','6'],['1','4','1','2'],['3','4','1','8'],['1','5','2','5'],['3','8','1','4'],['2','3','1','3'],['1','2','1','6']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l43Pizza(a,b,label,uid){
+  // пицца из b долек, закрашено a
+  const r=54;
+  let segs='';
+  for(let i=0;i<b;i++){
+    const a0=i/b*360-90, a1=(i+1)/b*360-90;
+    const x0=r+r*Math.cos(a0*Math.PI/180), y0=r+r*Math.sin(a0*Math.PI/180);
+    const x1=r+r*Math.cos(a1*Math.PI/180), y1=r+r*Math.sin(a1*Math.PI/180);
+    const filled=i<a;
+    segs+=`<path d="M${r} ${r} L${x0.toFixed(1)} ${y0.toFixed(1)} A${r} ${r} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)} Z" fill="${filled?'#f0b429':'#5a4632'}" stroke="#3d2f1c" stroke-width="1.2" ${filled?'class="l35-pop" style="animation-delay:'+(i*0.12).toFixed(2)+'s"':''}/>`;
+  }
+  return `<div style="text-align:center;margin:2px">
+    <svg width="${r*2}" height="${r*2}" style="display:block;margin:0 auto">
+      <circle cx="${r}" cy="${r}" r="${r}" fill="#7a2e16"/>
+      ${segs}
+    </svg>
+    <div style="font-size:15px;color:#e8dcc8">${label}: ${a}/${b}</div>
+  </div>`;
+}
+function l43Parts(a,b,color,uid){
+  // полоска из b частей, a закрашено
+  let out='';
+  for(let i=0;i<b;i++){
+    out+=`<div style="flex:1;height:26px;background:${i<a?color:'#3d2f1c'};border:1px solid #1a120a;${i<a?'':'opacity:.35'};${i===a-1&&a>0?'border-top-right-radius:6px;border-bottom-right-radius:6px':''}"></div>`;
+  }
+  return out;
+}
+function l43Bar(a,b,color,label,uid){
+  return `<div style="margin:3px auto">
+    <div style="display:flex;width:210px;margin:0 auto;overflow:hidden;border-radius:6px">${l43Parts(a,b,color,'x')}</div>
+    <div style="text-align:center;font-size:13px;color:#e8dcc8">${label}</div>
+  </div>`;
+}
+function visL43(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Пицца для двоих друзей'),
+        `<div style="font-size:46px" class="wv-flick">🍕</div>`+
+        sml('одна пицца разрезана на 4 куска. Один друг съел 1 кусок, второй — 2. Сколько съели вместе? Дроби приходят на помощь!'));
+    } else if(step===1){
+      h=col(big('Что такое дробь'),
+        rowC(l43Pizza(3,4,'3/4','a'))+
+        sml('дробь — часть целого. 3/4: пиццу разделили на 4 части (знаменатель), взяли 3 (числитель)'));
+    } else if(step===2){
+      h=col(big('Числитель и знаменатель'),
+        rowC(chip('числитель — СКОЛЬКО взяли','rgba(232,160,90,.5)'),chip('знаменатель — НА СКОЛЬКО делили','rgba(127,209,255,.5)'))+
+        l43Bar(3,4,'#f0b429','3 — сверху, 4 — снизу','b')+
+        sml('знаменатель «называет» части (четверти), числитель «считает» их'));
+    } else if(step===3){
+      h=col(big('Складываем одинаковые доли'),
+        rowC(l43Pizza(1,4,'1/4','c'),l43Pizza(2,4,'2/4','d'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">1/4 + 2/4 = 3/4</div>`+
+        sml('знаменатели одинаковые (4) — просто складываем числители: 1+2=3'));
+    } else if(step===4){
+      h=col(big('Смотри, как это на пиццах'),
+        rowC(l43Pizza(3,4,'сложили — 3 куска из 4','e'))+
+        sml('1 кусок + 2 куска = 3 куска. Пицца одна — знаменатель не меняется!'));
+    } else if(step===5){
+      h=col(big('Задача-проверка'),
+        rowC(l43Bar(2,5,'#f0b429','2/5','f'),l43Bar(1,5,'#f0b429','+ 1/5','g'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">2/5 + 1/5 = 3/5</div>`+
+        sml('как в проверке: (2+1)/5 = 3/5!'));
+    } else if(step===6){
+      h=col(big('Задача 1: 1/4 + 2/4'),
+        rowC(l43Bar(1,4,'#7fd1a0','1/4','h'),l43Bar(2,4,'#7fd1a0','+ 2/4','i'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">(1+2)/4 = 3/4 = 0,75</div>`+
+        sml('как в наших задачках! 3/4 = 0,75'));
+    } else if(step===7){
+      h=col(big('А если доли разные?'),
+        rowC(chip('1/2 + 1/4','rgba(217,164,65,.5)'),chip('половинки и четвертинки — как сложить?','rgba(127,209,255,.5)'))+
+        `<div style="font-size:40px" class="wv-pop">🤔</div>`+
+        sml('нельзя складывать «половинку» с «четвертинкой» напрямую — доли разные!'));
+    } else if(step===8){
+      h=col(big('Секрет: разрежь половинку на четвертинки'),
+        rowC(l43Pizza(1,2,'1/2','j'),l43Pizza(2,4,'1/2 = 2/4','k'))+
+        sml('1/2 — это то же самое, что 2/4! Просто разрезали каждый кусок ещё пополам'));
+    } else if(step===9){
+      h=col(big('Теперь складываем честно'),
+        rowC(l43Bar(2,4,'#f0b429','1/2 = 2/4','l'),l43Bar(1,4,'#7fd1a0','+ 1/4','m'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">2/4 + 1/4 = 3/4</div>`+
+        sml('привели к одинаковым долям (четвертям) — теперь можно складывать!'));
+    } else if(step===10){
+      h=col(big('Общий знаменатель'),
+        rowC(chip('нужно число, делящееся на оба знаменателя','rgba(127,209,255,.5)'),chip('для 2 и 4 это 4 (НОК)','rgba(217,164,65,.5)'))+
+        sml('знаменатели 2 и 4: общий — 4, потому что 4 делится и на 2, и на 4'));
+    } else if(step===11){
+      h=col(big('Как привести 1/2 к четвертям'),
+        rowC(chip('4 : 2 = 2 — во столько раз больше долей','rgba(127,209,255,.5)'),chip('1 · 2 = 2 — умножаем числитель','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">1/2 = (1·2)/(2·2) = 2/4</div>`+
+        sml('знаменатель ×2 и числитель ×2 — дробь не изменилась, но доли стали четвертями'));
+    } else if(step===12){
+      h=col(big('Задача 2: 1/2 + 1/4'),
+        rowC(l43Bar(1,2,'#7fd1a0','1/2','n'),l43Bar(1,4,'#f0b429','+ 1/4','o'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">2/4 + 1/4 = 3/4 = 0,75</div>`+
+        sml('как в наших задачках! Привели к 4-м, сложили, получили 3/4'));
+    } else if(step===13){
+      h=col(big('Целое — это тоже дробь'),
+        rowC(chip('1 = 4/4','rgba(127,209,255,.5)'),chip('целая пицца = 4 четвертинки','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">3/4 + 1 = 3/4 + 4/4 = 7/4</div>`+
+        sml('единицу записываем с тем же знаменателем: 1 = 4/4'));
+    } else if(step===14){
+      h=col(big('Схема-шпаргалка'),
+        rowC(chip('одинаковые знаменатели?','rgba(127,209,255,.5)'),chip('да → сложи числители','rgba(127,184,160,.5)'),chip('нет → общий знаменатель','rgba(232,160,90,.5)'))+
+        sml('всегда приводим к одинаковым долям, потом складываем числители'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('1/3 + 1/3 = 2/3','rgba(127,184,160,.5)'),chip('1/2 + 1/2 = 1','rgba(127,184,160,.5)'),chip('1/2 + 1/6 = 3/6+1/6 = 4/6','rgba(127,184,160,.5)'))+
+        sml('половинка + половинка = целая пицца!'));
+    } else if(step===16){
+      const POOL=[['1','4','2','4'],['2','5','1','5'],['1','2','1','4'],['1','3','1','6'],['1','2','1','3'],['2','3','1','6'],['1','4','1','2'],['3','4','1','8'],['1','5','2','5'],['3','8','1','4'],['2','3','1','3'],['1','2','1','6']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i];
+      const a1=+e[0],b1=+e[1],a2=+e[2],b2=+e[3];
+      // общий знаменатель
+      let lcm=Math.max(b1,b2);
+      while(lcm%b1||lcm%b2) lcm++;
+      const na=a1*(lcm/b1), nb=a2*(lcm/b2);
+      const sum=na+nb;
+      // упрощение
+      function red(x,y){let g=1;for(let i=2;i<=Math.min(x,y);i++){if(x%i===0&&y%i===0)g=i;}return [x/g,y/g];}
+      const [rs,rd]=red(sum,lcm);
+      const same=(b1===b2);
+      let desc, firstStep, ans;
+      desc=a1+'/'+b1+' + '+a2+'/'+b2;
+      if(same){
+        firstStep='знаменатели одинаковые → складываем числители: '+(a1+a2)+'/'+b1;
+        ans=(a1+a2)+'/'+b1;
+      } else {
+        firstStep='общий знаменатель '+lcm+': '+a1+'/'+b1+' = '+na+'/'+lcm+', '+a2+'/'+b2+' = '+nb+'/'+lcm;
+        ans=sum+'/'+lcm+(rs!==sum?' (упростим: '+rs+'/'+rd+')':'');
+      }
+      h=col(big('🍕 Тренажёр: складываем дроби'),
+        `<div class="wv-row">${chip(desc+' = ?','rgba(217,164,65,.35)')}</div>`+
+        rowC(l43Bar(a1,b1,'#f0b429',a1+'/'+b1,'t1'),l43Bar(a2,b2,'#7fd1a0','+ '+a2+'/'+b2,'t2'))+
+        (st.s1? `<div class="l35-pop" style="font-size:16px;text-align:center;color:#ffd9a0;max-width:280px">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l43Act('${lk}','s1')`),btn('2️⃣ ответ',`l43Act('${lk}','s2')`),btn('🎲 другая',`l43Act('${lk}','n')`),btn('↺',`l43Act('${lk}','r')`))+
+        sml('одинаковые доли — складывай; разные — приводи к общему знаменателю!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🍕 Одинаковые доли — складывай числители.<br>
+            🔄 Разные — приведи к общему знаменателю.<br>
+            ✂️ 1/2 = 2/4: делили мельче — долей больше.<br>
+            🎯 1 = 4/4: целое — это все доли.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 2/5 + 1/5'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -8769,6 +8945,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===43) visL43(el);
   else if(id===195) visL195(el);
   else if(id===20) visL20(el);
   else if(id===8) visL8(el);
