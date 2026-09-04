@@ -5288,50 +5288,66 @@ function visL104(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+// ============ УРОК 106 v3 «Сила Архимеда» — легенда «Аквапарк Эврика!» ============
+var L106POOL=[['w','0.2','вода','1000'],['w','0.5','вода','1000'],['w','1','вода','1000'],['w','0.3','вода','1000'],['w','0.4','вода','1000'],['w','0.8','вода','1000'],['k','0.5','керосин','800'],['k','1','керосин','800'],['k','0.2','керосин','800'],['k','0.3','керосин','800'],['s','0.5','морская вода','1030'],['s','1','морская вода','1030']];
 function l106Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['w','0.2'],['w','0.5'],['w','1'],['w','0.3'],['w','0.4'],['w','0.8'],['k','0.5'],['k','1'],['k','0.2'],['k','0.3'],['o','0.5'],['o','1']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
+  if(st.i==null) st.i=Math.floor(Math.random()*L106POOL.length); if(st.score==null) st.score=0;
+  const m=act.match(/^pick(\d)$/);
+  if(m){
+    const kind=L106POOL[st.i][0];
+    const correct=kind==='w'?0:kind==='k'?1:2;
+    st.last=(+m[1]===correct)?'ok':'no';
+    if(+m[1]===correct) st.score++;
   }
+  if(act==='n'){ st.i=(st.i+1)%L106POOL.length; st.last=''; }
+  if(act==='s1') st.s1=1;
+  if(act==='s2') st.s2=1;
+  if(act==='r'){ st.i=Math.floor(Math.random()*L106POOL.length); st.s1=st.s2=0; st.score=0; st.last=''; }
   chRender(0);
 }
-function l106Dunk(V,rho,uid,label){
-  // динамометр держит тело; часть погружена в воду; стрелка показывает FАрх
-  const F=rho*10*V;
-  const H=160;
-  const waterTop=95; // верх воды в сосуде
-  const bodyH=Math.min(46,24+V*60);
-  return `<div style="display:flex;justify-content:center;gap:4px;margin:2px auto">
-    <div style="display:flex;flex-direction:column;align-items:center">
-      <div style="font-size:10px;color:#cbb89a">динамометр</div>
-      <div style="width:4px;height:16px;background:#8a6a2f;border-radius:2px"></div>
-      <div style="position:relative;width:34px;height:${H-30}px;background:#20352a;border:2px solid #d9a441;border-radius:4px;overflow:hidden">
-        <div style="position:absolute;left:0;right:0;top:0;bottom:0;background:repeating-linear-gradient(180deg,transparent 0 12px,rgba(217,164,65,.4) 12px 13px)"></div>
-        <div style="position:absolute;left:2px;right:2px;top:${H-58}px;height:0;background:#7fd1a0;transition:top .5s ease"></div>
-        <div style="position:absolute;left:0;right:0;top:${H-70}px;text-align:center;font-size:10px;color:#7fd1a0">${F} Н</div>
+function l106Badge(txt,color){
+  return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${color}22;border:1px solid ${color};color:${color};margin-bottom:3px">${txt}</span>`;
+}
+function l106Card(tag,emoji,title,lines,color){
+  let ls='';
+  for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:13px;color:#d8ecff;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
+  return `<div style="flex:1;min-width:150px;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <div style="font-size:22px">${emoji}</div>
+      <div style="flex:1">
+        <div style="font-size:11px;color:${color};letter-spacing:.5px">${tag}</div>
+        <div style="font-size:15px;color:#fff;font-weight:bold;line-height:1.2">${title}</div>
       </div>
-      <div style="font-size:9px;color:#cbb89a">F Арх</div>
     </div>
-    <div style="position:relative;width:120px;height:${H}px;margin-top:34px;border:3px solid #33291e;border-radius:0 0 12px 12px;background:linear-gradient(180deg,#cfe8fb 0%,#6aa8dc ${waterTop}%,#4a7fae ${waterTop}%);overflow:hidden">
-      <div style="position:absolute;left:0;right:0;top:${waterTop}px;height:2px;background:rgba(255,255,255,.7)"></div>
-      <div style="position:absolute;left:50%;top:${waterTop-8-bodyH}px;transform:translateX(-50%);width:44px;height:${bodyH}px;border-radius:5px;background:linear-gradient(145deg,#e0a05a,#a86a2a);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:bold">${label||('V='+V)}</div>
-      ${Array(Math.round(V*18)).fill(0).map((_,i)=>`<div style="position:absolute;left:${10+Math.random()*80}px;top:${waterTop-6-i*7}px;font-size:8px;color:#eaf3f8">${['●','○'][i%2]}</div>`).join('')}
-    </div>
+    ${ls}
   </div>`;
 }
-function l106Sink(rho,uid){
-  // тонет/плавает по плотности тела (вода ρ=1000)
-  const floats=rho<1000;
-  return `<div style="position:relative;width:150px;height:110px;border:3px solid #33291e;border-radius:6px 6px 14px 14px;background:linear-gradient(180deg,#cfe8fb,#7db2e0 70%);margin:2px auto;overflow:hidden">
-    <div style="position:absolute;left:0;right:0;top:36px;height:2px;background:rgba(255,255,255,.6)"></div>
-    <div class="wv-in" style="position:absolute;left:50%;top:${floats?14:64}px;transform:translate(-50%,0);transition:top 1s ease">
-      <div style="width:46px;height:30px;border-radius:6px;background:${floats?'linear-gradient(145deg,#cfe0c0,#9ac08a)':'linear-gradient(145deg,#8fa6b8,#5c7486)'};border:2px solid ${floats?'#6a8a5a':'#3c4d5a'};display:flex;align-items:center;justify-content:center;font-size:12px;color:#17324a;font-weight:bold">${rho}</div>
+function l106TankH(uid){
+  // аквариум с телом в воде + пузырьки, для карточек-расчётов
+  return `<div style="position:relative;width:200px;height:120px;margin:4px auto;border:3px solid #33291e;border-radius:8px 8px 14px 14px;background:linear-gradient(180deg,#cfe8fb 0%,#7db2e0 52%,#4a7fae 52%);overflow:hidden">
+    <div style="position:absolute;left:0;right:0;top:52%;height:2px;background:rgba(255,255,255,.6)"></div>
+    <div style="position:absolute;left:50%;top:8px;transform:translateX(-50%)">
+      <div style="width:56px;height:38px;border-radius:6px;background:linear-gradient(145deg,#e0a05a,#a86a2a);border:2px solid #7a4a1a;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:bold">тело V</div>
+      <div style="width:3px;height:34px;background:#cbb89a;margin:0 auto"></div>
     </div>
-    ${floats?'<div style="position:absolute;left:50%;top:66px;transform:translateX(-50%);font-size:11px;color:#1a4a6a">всплывает!</div>':'<div style="position:absolute;left:50%;top:88px;transform:translateX(-50%);font-size:11px;color:#1a4a6a">тонет!</div>'}
+    <div style="position:absolute;left:14px;top:60px;font-size:12px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.4)">F↑</div>
+    ${[['30%','8px'],['48%','4px'],['64%','10px'],['76%','6px']].map((b,i)=>`<div style="position:absolute;left:${b[0]};top:64px;font-size:${b[1]}px;color:#eaf3f8;opacity:.85">${['○','●','○','●'][i]}</div>`).join('')}
   </div>`;
+}
+function l106SinkC(rho,uid){
+  // тонет/плавает: rho тела vs вода 1000
+  const floats=rho<1000;
+  return `<div style="position:relative;width:200px;height:110px;margin:3px auto;border:3px solid #33291e;border-radius:8px 8px 14px 14px;background:linear-gradient(180deg,#cfe8fb,#7db2e0 66%);overflow:hidden">
+    <div style="position:absolute;left:0;right:0;top:40%;height:2px;background:rgba(255,255,255,.6)"></div>
+    <div style="position:absolute;left:50%;top:${floats?10:64}px;transform:translateX(-50%);transition:top .8s ease">
+      <div style="width:52px;height:30px;border-radius:6px;background:${floats?'linear-gradient(145deg,#cfe0c0,#9ac08a)':'linear-gradient(145deg,#8fa6b8,#5c7486)'};border:2px solid ${floats?'#6a8a5a':'#3c4d5a'};display:flex;align-items:center;justify-content:center;font-size:12px;color:#17324a;font-weight:bold">ρ=${rho}</div>
+    </div>
+    <div style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);font-size:12px;color:${floats?'#1a4a6a':'#eaf3f8'};background:rgba(0,0,0,.15);border-radius:6px;padding:1px 8px">${floats?'🛟 всплывает! (ρ < 1000)':'⬇ тонет! (ρ > 1000)'}</div>
+  </div>`;
+}
+function l106Cols(a,b,uid){
+  return `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:340px">${a}${b}</div>`;
 }
 function visL106(el){
   try{
@@ -5347,106 +5363,167 @@ function visL106(el){
     const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
     let h='';
     if(step===0){
-      h=col(big('Почему корабль не тонет?'),
-        `<div style="font-size:44px" class="wv-swing">⛵</div>`+
-        sml('железо тонет, а железный корабль плавает! Вода что-то выталкивает. Это открыл Архимед — и закричал «Эврика!»'));
+      h=col(`<div style="font-size:20px;color:#c9b28a;letter-spacing:1px">🌟 ЛЕГЕНДА · Эпизод 4</div>`+
+        big('Аквапарк Архимеда «Эврика!»')+
+        `<div style="font-size:40px" class="wv-flick">🏊</div>`+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:12px 14px;max-width:310px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+        В аквапарке Архимеда есть горка, в которой вода <b>сама поднимает</b> вагончик наверх! А почему в бассейне так легко поднять друга? Потому что вода <b>выталкивает</b> всё погружённое. Сегодня ты узнаешь, как посчитать эту силу, — и откроешь тайну, которую 2300 лет назад открыл Архимед, прыгнув в ванну!</div>`);
     } else if(step===1){
-      h=col(big('Опыт: тело в воде становится легче'),
-        rowC(chip('подними ведро из колодца — в воде оно легче!','rgba(127,209,255,.5)'))+
-        sml('вода выталкивает погружённое тело вверх — это сила Архимеда'));
+      h=col(l106Badge('ИСТОРИЯ','#c9b28a')+
+        big('Легенда о короне и ванне')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
+          ${l106Card('ПРЕДАНИЕ','👑','Корона царя Гиерона','Древнегреческий царь заподозрил: ювелир подменил золото короны дешёвым серебром. Но как проверить, не расплавляя её?','#ffd966')}
+          ${l106Card('ОЗАРЕНИЕ','🛁','«Эврика!»','Садясь в полную ванну, Архимед заметил: вода выплёскивается! Объём вытесненной воды = объёму тела. Он выскочил на улицу с криком «Эврика!» — «Нашёл!»','#7fd1a0')}
+          ${l106Card('ВЫВОД','🌊','Вода толкает вверх','Погружённое тело теряет в весе ровно столько, сколько весит вытесненная им вода. Эту выталкивающую силу назвали силой Архимеда.','#7fb7d8')}
+        </div>`);
     } else if(step===2){
-      h=col(big('Сила Архимеда'),
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-family:Georgia,serif">F = ρ<sub>ж</sub> · g · V</div>`+
-        rowC(chip('ρ — плотность жидкости','rgba(127,209,255,.5)'),chip('g ≈ 10 Н/кг','rgba(232,160,90,.5)'),chip('V — объём погружённой части','rgba(127,184,160,.5)'))+
-        sml('выталкивает тем сильнее, чем плотнее жидкость и больше объём тела'));
+      h=col(l106Badge('СПРАВКА','#7fb7d8')+
+        big('Сила Архимеда')+
+        l106Card('ОПРЕДЕЛЕНИЕ','⛵','Выталкивающая сила','Сила Архимеда действует на любое тело, погружённое в жидкость или газ. Она всегда направлена ВВЕРХ — против силы тяжести.','#7fb7d8')+
+        `<div style="background:rgba(127,255,170,.09);border:1.5px solid #7fd1a066;border-radius:14px;padding:10px;max-width:320px;font-family:Georgia,serif;color:#7fd1a0;font-size:20px">F<sub>А</sub> = ρ<sub>ж</sub> · g · V</div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['ρ','плотность ЖИДКОСТИ','у воды 1000 кг/м³, у керосина 800, у морской воды 1030'],
+             ['g','сила тяжести на кг','на Земле ≈ 10 Н/кг'],
+             ['V','объём погружённой части','у полностью погружённого — весь объём тела, м³']].map(f=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(127,183,216,.07);border:1px solid rgba(127,183,216,.25);border-radius:10px;padding:6px 10px;text-align:left">
+            <span style="background:#7fb7d8;color:#0d1f14;font-weight:bold;border-radius:8px;padding:1px 9px;font-size:16px;font-family:Georgia,serif">${f[0]}</span>
+            <span><span style="font-size:13px;color:#e8dcc8;font-weight:bold">${f[1]}</span> — <span style="font-size:12.5px;color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
+        </div>`);
     } else if(step===3){
-      h=col(big('Вода: ρ = 1000, g = 10'),
-        rowC(chip('V = 0,2 м³','rgba(232,160,90,.5)'),chip('F = 1000 · 10 · 0,2','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 2000 Н</div>`+
-        sml('1000·10 = 10000, ·0,2 = 2000 Н'));
+      h=col(l106Badge('ОПЫТ · ВЕДРО В ВОДЕ','#7fd1a0')+
+        big('Ведро становится легче!')+
+        l106TankH('a')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l106Card('ПОПРОБУЙ','🪣','Подними ведро из колодца','Пока ведро в воде, оно кажется лёгким. Как только оно выходит из воды — становится заметно тяжелее!','#7fd1a0')}
+          ${l106Card('ОБЪЯСНЕНИЕ','💧','Вода держит ведро','Пока ведро погружено, вода толкает его вверх с силой Архимеда. Эта сила «помогает» твоим рукам.','#7fd1a0')}
+        </div>`);
     } else if(step===4){
-      h=col(big('Задача-проверка'),
-        l106Dunk(0.2,1000,'a','V=0.2')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 1000·10·0,2 = 2000 Н</div>`+
-        sml('как в проверке!'));
-    } else if(step===5){
-      h=col(big('Задача 1: V = 0,5 м³'),
-        l106Dunk(0.5,1000,'b','V=0.5')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 1000·10·0,5 = 5000 Н</div>`+
-        sml('как в наших задачках!'));
-    } else if(step===6){
-      h=col(big('Другая жидкость: керосин'),
-        l106Dunk(0.5,800,'c','керосин')+
-        rowC(chip('керосин ρ = 800','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 800·10·0,5 = 4000 Н</div>`+
-        sml('как в наших задачках: менее плотная жидкость слабее выталкивает!'));
-    } else if(step===7){
-      h=col(big('Сравни: вода vs керосин'),
-        rowC(chip('V = 0,5: вода → 5000 Н','rgba(127,209,255,.5)'),chip('V = 0,5: керосин → 4000 Н','rgba(232,160,90,.5)'))+
-        sml('тот же объём, но керосин легче — и выталкивает меньше!'));
-    } else if(step===8){
-      h=col(big('Почему в солёном море легче плавать'),
-        rowC(chip('морская вода ρ ≈ 1030','rgba(127,209,255,.5)'),chip('пресная ρ = 1000','rgba(127,184,160,.5)'))+
-        sml('плотнее вода — сильнее выталкивает. В Мёртвом море можно лежать на воде и читать газету!'));
-    } else if(step===9){
-      h=col(big('Тонет или всплывает?'),
-        l106Sink(800,'d')+
-        l106Sink(1200,'e')+
-        sml('плотность тела меньше воды (800 < 1000) — всплывает. Больше (1200) — тонет!'));
-    } else if(step===10){
-      h=col(big('Правило плавания'),
-        rowC(chip('ρ тела &lt; ρ жидкости → всплывает','rgba(127,184,160,.5)'),chip('ρ тела &gt; ρ жидкости → тонет','rgba(232,160,90,.5)'),chip('равны → парит внутри','rgba(127,209,255,.5)'))+
-        sml('сравниваем плотности! Лёд (900) плавает в воде (1000), а в керосине (800) — тонет'));
-    } else if(step===11){
-      h=col(big('Секрет корабля'),
-        rowC(chip('сталь ρ ≈ 7800','rgba(232,160,90,.5)'),chip('но внутри воздух!','rgba(127,209,255,.5)'),chip('средняя плотность &lt; 1000','rgba(127,184,160,.5)'))+
-        `<div style="font-size:40px" class="wv-pop">🚢</div>`+
-        sml('корабль вытесняет огромный объём воды — сила Архимеда огромна и держит его на плаву!'));
-    } else if(step===12){
-      h=col(big('Откуда Архимед узнал?'),
-        rowC(chip('корона царя: золото или подделка?','rgba(127,209,255,.5)'),chip('объём тела = объём вытесненной воды','rgba(127,184,160,.5)'))+
-        sml('легенда: Архимед прыгнул в ванну, вода выплеснулась — и он понял, как измерить объём короны!'));
-    } else if(step===13){
-      h=col(big('Аэростаты — Архимед в воздухе'),
-        rowC(chip('воздух тоже выталкивает!','rgba(127,209,255,.5)'),chip('F = ρ воздуха · g · V','rgba(232,160,90,.5)'))+
-        sml('шар с лёгким газом легче воздуха — Архимедова сила поднимает его в небо!'));
-    } else if(step===14){
-      h=col(big('Порядок действий'),
-        rowC(chip('1) ρ жидкости','rgba(127,209,255,.5)'),chip('2) ·10','rgba(232,160,90,.5)'),chip('3) ·V','rgba(127,184,160,.5)'))+
-        sml('умножай по очереди: плотность, потом 10, потом объём'));
-    } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('V=0,1 м³ в воде → 1000 Н','rgba(127,184,160,.5)'),chip('V=1 м³ в воде → 10000 Н','rgba(127,184,160,.5)'),chip('V=1 м³ в керосине → 8000 Н','rgba(127,184,160,.5)'))+
-        sml('для воды: объём × 10000!'));
-    } else if(step===16){
-      const POOL=[['w','0.2'],['w','0.5'],['w','1'],['w','0.3'],['w','0.4'],['w','0.8'],['k','0.5'],['k','1'],['k','0.2'],['k','0.3'],['o','0.5'],['o','1']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0], V=+e[1];
-      let rhoL, liq;
-      if(kind==='w'){rhoL=1000;liq='вода';}
-      else if(kind==='k'){rhoL=800;liq='керосин';}
-      else {rhoL=900;liq='масло';}
-      const ans=rhoL*10*V;
-      const desc='тело объёмом '+V+' м³ погружено в '+liq+' (ρ='+rhoL+') → сила Архимеда?';
-      h=col(big('⛵ Тренажёр: сила Архимеда'),
-        `<div class="wv-row">${chip(desc+' (в Н)','rgba(217,164,65,.35)')}</div>`+
-        l106Dunk(V,rhoL,'t',liq)+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) F = ρ·g·V = ${rhoL}·10·${V}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans} Н</div>`:'')+
-        btns(btn('1️⃣ подумай',`l106Act('${lk}','s1')`),btn('2️⃣ ответ',`l106Act('${lk}','s2')`),btn('🎲 другая',`l106Act('${lk}','n')`),btn('↺',`l106Act('${lk}','r')`))+
-        sml('F = ρ·g·V: плотность жидкости, 10 и объём!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            ⛵ F = ρ<sub>ж</sub>·g·V — выталкивает вода.<br>
-            💧 Вода 1000: V=0,2 → F=2000 Н.<br>
-            🚢 ρ тела &lt; ρ воды — всплывает.<br>
-            🎈 И воздух выталкивает — аэростаты!</div>
+      h=col(l106Badge('РАСЧЁТ · ПО ШАГАМ','#ffd966')+
+        big('Считаем силу Архимеда')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['ШАГ 1','Возьми плотность жидкости','Вода: ρ = 1000 кг/м³.'],
+             ['ШАГ 2','Умножь на g = 10','1000 · 10 = 10000 — столько Н на каждый кубометр.'],
+             ['ШАГ 3','Умножь на объём V','V = 0,2 м³: 10000 · 0,2 = 2000 Н.']].map((f,i)=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(255,217,102,.07);border:1px solid rgba(255,217,102,.3);border-radius:10px;padding:6px 10px;text-align:left">
+            <span style="background:#ffd966;color:#4a3200;font-weight:bold;border-radius:8px;padding:2px 8px;font-size:11px;white-space:nowrap">${f[0]}</span>
+            <span><span style="font-size:13px;color:#e8dcc8;font-weight:bold">${f[1]}</span> — <span style="font-size:12.5px;color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
         </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там V=0,2 м³ в воде'));
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">F = 1000 · 10 · 0,2 = 2000 Н</div>`);
+    } else if(step===5){
+      h=col(l106Badge('ПРОВЕРКА СМОТРИТЕЛЯ','#c9b28a')+
+        big('Задача-проверка')+
+        l106Card('УСЛОВИЕ','🧊','Тело объёмом 0,2 м³','Полностью погружено в воду (ρ = 1000 кг/м³). Найди силу Архимеда (g = 10).','#7fb7d8')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l106Card('РЕШЕНИЕ','✏️','Подставляем в формулу','ρ·g = 1000·10 = 10000; 10000 · V = 10000 · 0,2 = 2000.','#7fd1a0')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 2000 Н — как в нашей проверке!</div>`);
+    } else if(step===6){
+      h=col(l106Badge('ЭКСПЕРИМЕНТ · ОБЪЁМ','#7fd1a0')+
+        big('Больше объём — сильнее толкает')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['V = 0,1 м³','1000 · 10 · 0,1 = 1000 Н'],['V = 0,2 м³','1000 · 10 · 0,2 = 2000 Н'],['V = 0,5 м³','1000 · 10 · 0,5 = 5000 Н'],['V = 1 м³','1000 · 10 · 1 = 10000 Н']].map((f,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(127,208,160,.07);border:1px solid rgba(127,208,160,.3);border-radius:10px;padding:6px 12px">
+            <span style="font-size:13.5px;color:#e8dcc8;font-weight:bold">${f[0]}</span>
+            <span style="font-size:13.5px;color:#7fd1a0;font-family:Georgia,serif">${f[1]}</span></div>`).join('')}
+        </div>`+
+        sml('объём вырос вдвое — сила выросла вдвое! Объём стоит прямо в формуле.'));
+    } else if(step===7){
+      h=col(l106Badge('ЭКСПЕРИМЕНТ · ЖИДКОСТЬ','#7fb7d8')+
+        big('Плотнее жидкость — сильнее толкает')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['⛽','Керосин','ρ = 800','800·10·0,5 = 4000 Н'],['💧','Пресная вода','ρ = 1000','1000·10·0,5 = 5000 Н'],['🌊','Морская вода','ρ = 1030','1030·10·0,5 = 5150 Н']].map(f=>`<div style="display:flex;align-items:center;gap:8px;background:rgba(127,183,216,.07);border:1px solid rgba(127,183,216,.28);border-radius:10px;padding:6px 10px;text-align:left">
+            <span style="font-size:20px">${f[0]}</span>
+            <span style="flex:1;font-size:13px;color:#e8dcc8;font-weight:bold">${f[1]}<div style="font-size:11px;color:#9ec0a8;font-weight:normal">${f[2]}</div></span>
+            <span style="font-size:13px;color:#7fd1a0;font-family:Georgia,serif">${f[3]}</span></div>`).join('')}
+        </div>`+
+        sml('одно и то же тело (V = 0,5 м³) — а сила разная: всё решает плотность жидкости!'));
+    } else if(step===8){
+      h=col(l106Badge('ЗАДАЧА 1','#c9b28a')+
+        big('Тело в воде: V = 0,5 м³')+
+        l106Card('УСЛОВИЕ','🧊','Найди силу Архимеда','Тело объёмом 0,5 м³ полностью погружено в воду (ρ = 1000). g = 10.','#7fb7d8')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 1000 · 10 · 0,5 = 5000 Н</div>`+
+        sml('как в наших задачках! Умножаем по очереди: 1000·10 = 10000, 10000·0,5 = 5000.'));
+    } else if(step===9){
+      h=col(l106Badge('ЗАДАЧА 2','#c9b28a')+
+        big('Тело в керосине: V = 0,5 м³')+
+        l106Card('УСЛОВИЕ','🛢️','Жидкость — керосин','То же тело объёмом 0,5 м³, но теперь в керосине (ρ = 800 кг/м³).','#7fb7d8')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">F = 800 · 10 · 0,5 = 4000 Н</div>`+
+        sml('как в наших задачках: керосин легче воды (800 < 1000) — и выталкивает слабее: 4000 < 5000!'));
+    } else if(step===10){
+      h=col(l106Badge('ИНТЕРЕСНЫЙ ФАКТ','#7fd1a0')+
+        big('Почему в море легче плавать?')+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin:4px auto">
+          <span style="font-size:40px" class="wv-swing">🏖️</span>
+        </div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l106Card('СОЛЬ ДЕЛАЕТ ВОДУ ТЯЖЕЛЕЕ','🧂','Мёртвое море, Израиль','Солёность там 34% — в 10 раз больше океана! Плотность воды 1240 кг/м³. Человек не тонет: можно лежать на спине и читать газету!','#7fd1a0')}
+          ${l106Card('ЧЕМ СОЛОНЕЕ — ТЕМ ЛЕГЧЕ ПЛАВАТЬ','🌊','Морская вода 1030','В море плотность выше, чем в реке (1000). Поэтому в море пловец «сидит» выше и грести легче!','#7fd1a0')}
+        </div>`);
+    } else if(step===11){
+      h=col(l106Badge('ТОНЕТ ИЛИ ПЛЫВЁТ?','#ff8a6a')+
+        big('Всё решает плотность!')+
+        l106SinkC(900,'b')+
+        l106SinkC(1200,'c')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l106Card('ПРАВИЛО','⚖️','Сравни плотности','Если плотность тела МЕНЬШЕ плотности жидкости (ρ тела < ρ ж) — тело всплывает. Если БОЛЬШЕ — тонет. Если равны — парит внутри!','#ff8a6a')}
+          ${l106Card('ПРИМЕРЫ','🧊','Лёд и железо','Лёд: ρ = 900 < 1000 → плавает в воде, но ТОНЕТ в керосине (800)! Железо: ρ = 7800 > 1000 → тонет.','#ff8a6a')}
+        </div>`);
+    } else if(step===12){
+      h=col(l106Badge('ГЛАВНАЯ ЗАГАДКА','#7fd1a0')+
+        big('Почему железный корабль не тонет?')+
+        `<div style="font-size:44px" class="wv-swing">🚢</div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l106Card('СЕКРЕТ','🎈','Воздух внутри корпуса','Сталь плотная (7800), но корабль внутри ПОЛЫЙ — там воздух. Вместе сталь+воздух в среднем легче воды!','#7fd1a0')}
+          ${l106Card('РАСЧЁТ','🧮','Средняя плотность','Подводная часть корабля вытесняет ОГРОМНЫЙ объём воды — и сила Архимеда становится огромной, больше веса корабля. Поэтому он держится на плаву!','#7fd1a0')}
+          ${l106Card('СРАВНЕНИЕ','⚓','Сплошной брусок','А вот если бросить в воду сплошной стальной брусок — он утонет: воздух внутри не поможет!','#ff8a6a')}
+        </div>`);
+    } else if(step===13){
+      h=col(l106Badge('ЖИВЫЕ ПРИМЕРЫ','#7fd1a0')+
+        big('Рыбы и подводные лодки')+
+        l106Cols(
+          l106Card('🐟','Рыба','Как рыба ныряет?','У рыбы есть плавательный пузырь — мешочек с газом. Надула — объём больше → Архимед сильнее → всплывает. Сжала — опускается!','#7fd1a0'),
+          l106Card('🚤','Подводная лодка','Тот же приём','Лодка набирает воду в балластные цистерны — становится «тяжелее» и погружается. Выдувает воду — всплывает!','#7fd1a0')
+        ));
+    } else if(step===14){
+      h=col(l106Badge('АРХИМЕД В ВОЗДУХЕ','#7fb7d8')+
+        big('Аэростаты: воздух тоже толкает!')+
+        `<div style="font-size:40px" class="wv-drive" style="--dx:90px">🎈</div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l106Card('ФОРМУЛА ТА ЖЕ','🎈','F = ρ воздуха · g · V','Воздух — тоже «жидкость» для Архимеда: он выталкивает тела! Плотность воздуха ≈ 1,3 кг/м³ — маленькая, поэтому сила слабая.','#7fb7d8')}
+          ${l106Card('ПОЧЕМУ ШАР ЛЕТИТ','🔥','Гелий и горячий воздух','Внутри шара — газ легче воздуха (гелий) или горячий воздух. Вес шара меньше силы Архимеда — и шар поднимается в небо!','#7fb7d8')}
+        </div>`);
+    } else if(step===15){
+      h=col(l106Badge('ШПАРГАЛКА','#ffd966')+
+        big('Три шага для любой задачи')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${[['1','Найди плотность жидкости','вода 1000 · керосин 800 · море 1030'],
+             ['2','Умножь на g = 10','получаешь силу на каждый м³'],
+             ['3','Умножь на объём тела V','объём погружённой части, в м³']].map((f,i)=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(255,217,102,.07);border:1px solid rgba(255,217,102,.3);border-radius:10px;padding:6px 10px;text-align:left">
+            <span style="background:#ffd966;color:#4a3200;font-weight:bold;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:12px">${f[0]}</span>
+            <span><span style="font-size:13px;color:#e8dcc8;font-weight:bold">${f[1]}</span><br><span style="font-size:12px;color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
+        </div>`+
+        sml('проверь себя: вода V=0,2 → 2000 Н; керосин V=0,5 → 4000 Н. Сходится с задачками!'));
+    } else if(step===16){
+      if(st.i==null){ st.i=Math.floor(Math.random()*L106POOL.length); st.score=0; st.last=''; }
+      const e=L106POOL[st.i], kind=e[0], V=+e[1], liq=e[2], rho=+e[3];
+      const correct=kind==='w'?0:kind==='k'?1:2;
+      const ans=rho*10*V;
+      const resTxt=st.last==='ok'?`✅ Верно! F = ${rho}·10·${V} = ${ans} Н`:st.last==='no'?'❌ Не угадал — вспомни плотность жидкости!':'';
+      h=col(l106Badge('ИГРА · ИНЖЕНЕР АКВАПАРКА','#ffd966')+
+        big('Выбери жидкость и посчитай!')+
+        `<div class="wv-row">${chip('Тело V = '+V+' м³ погружено в '+liq+' → F = ?','rgba(217,164,65,.35)')}</div>`+
+        l106TankH('t')+
+        (resTxt?`<div class="l35-pop" style="font-size:14px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'}">${resTxt}</div>`:'')+
+        (st.s1?`<div class="l35-pop" style="font-size:15px;color:#ffd9a0">💡 F = ρ·g·V = ${rho}·10·${V} = ${rho*10*V} Н</div>`:'')+
+        btns(btn('💧 вода 1000',`l106Act('${lk}','pick0')`),btn('⛽ керосин 800',`l106Act('${lk}','pick1')`),btn('🌊 море 1030',`l106Act('${lk}','pick2')`),btn('💡',`l106Act('${lk}','s1')`),btn('🎲 тело',`l106Act('${lk}','n')`))+
+        sml('плотность жидкости стоит в формуле первой: ρ · 10 · V!'));
+    } else {
+      h=col(l106Badge('ПАМЯТКА','#c9b28a')+
+        big('Три правила Архимеда')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
+          ${l106Card('ФОРМУЛА','⛵','F = ρ<sub>ж</sub> · g · V','Вода: 1000 · 10 · V. Керосин: 800 · 10 · V. Море: 1030 · 10 · V.','#7fb7d8')}
+          ${l106Card('ПЛЫВЁТ ИЛИ ТОНЕТ','⚖️','Сравни плотности','ρ тела < ρ жидкости → всплывает (лёд 900 в воде). ρ тела > ρ жидкости → тонет (железо 7800).','#7fd1a0')}
+          ${l106Card('КОРАБЛЬ','🚢','Полый = плавучий','Сталь + воздух внутри = средняя плотность меньше воды. Корабль вытесняет огромный объём — и плывёт!','#ffd966')}
+        </div>`+
+        btn('⟲ вернуться к игре', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там V = 0,2 м³ в воде'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
