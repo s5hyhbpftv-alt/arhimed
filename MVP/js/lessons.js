@@ -8385,70 +8385,322 @@ function visL18(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+
+
+
+
+// ===================== УРОК 14 «СКОЛЬКО ПРЯМОУГОЛЬНИКОВ» (v167) =====================
+// ===================== УРОК 15 «ВСТРЕЧА И ПОГОНЯ» (v168) =====================
 function l15Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
   const POOL=[['meet','90','20','25'],['meet','10','3','2'],['meet','120','30','50'],['chase','30','50','40'],['chase','20','12','8'],['chase','60','70','50'],['river','18','12'],['river','14','8'],['meet','45','10','5'],['chase','15','9','6']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break; case 's3': st.s3=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=st.s3=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
+  if(a0==='s1'){ st.s1=1; }
+  if(a0==='s2'){ st.s2=1; }
+  if(a0==='s3'){ st.s3=1; }
+  if(a0==='n'){ st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=st.s3=0; }
+  if(a0==='r'){ CHS[lk]={}; }
   chRender(0);
 }
-function l15Meet(S,v1,v2,uid){
-  // полоса пути: час за часом отмечаем, где каждый
-  const t=S/(v1+v2);
-  const W=300;
-  let rows='';
-  for(let h=0;h<=t+0.001;h++){
-    const k=Math.min(h,t);
-    const d1=Math.round(v1*k), d2=Math.round(v2*k);
-    const x1=d1/S*(W-40)+8, x2=(W-40)-d2/S*(W-40)+8;
-    const meet=Math.abs(x1-x2)<14;
-    rows+=`<div style="display:flex;align-items:center;margin:1px 0;font-size:10px;color:#8aa08f">
-      <span style="width:26px">${h} ч</span>
-      <span style="position:relative;flex:1;height:16px;background:rgba(255,255,255,.05);border-radius:8px">
-        <span style="position:absolute;left:${x1.toFixed(1)}px;top:2px;width:12px;height:12px;border-radius:50%;background:#e0523d;transform:translateX(-50%)"></span>
-        <span style="position:absolute;left:${x2.toFixed(1)}px;top:2px;width:12px;height:12px;border-radius:50%;background:#2f8f5a;transform:translateX(-50%)"></span>
-        ${meet?`<span style="position:absolute;left:50%;top:-3px;transform:translateX(-50%);font-size:12px">🤝</span>`:''}
-      </span>
-    </div>`;
-  }
-  return `<div style="width:${W}px;margin:0 auto">${rows}
-    <div style="text-align:center;font-size:12px;color:#ffd9a0;margin-top:2px">🔴 первый (${v1} км/ч) · 🟢 второй (${v2} км/ч) → встреча в ${t} ч</div></div>`;
-}
-function l15Road(uid,kind,v1,v2){
-  // простая дорожка с двумя стрелками
-  const txt= kind==='meet'? 'навстречу друг другу' : 'один догоняет другого';
-  const act= kind==='meet'? `${v1} + ${v2} = ${v1+v2} км/ч (сближение)` : `${v1} − ${v2} = ${v1-v2} км/ч (сокращение разрыва)`;
-  return `<div style="width:300px;margin:0 auto;text-align:center">
-    <div style="position:relative;height:34px;background:rgba(255,255,255,.06);border-radius:17px;overflow:hidden">
-      ${kind==='meet'
-        ? `<div style="position:absolute;left:6px;top:4px;font-size:22px">🔴</div><div style="position:absolute;left:34px;top:14px;font-size:16px;color:#f0a89a">➜</div>
-           <div style="position:absolute;right:6px;top:4px;font-size:22px">🟢</div><div style="position:absolute;right:34px;top:14px;font-size:16px;color:#9fe8c0">➜</div>`
-        : `<div style="position:absolute;left:6px;top:4px;font-size:22px">🔴</div><div style="position:absolute;left:34px;top:14px;font-size:16px;color:#f0a89a">➜➜</div>
-           <div style="position:absolute;right:40px;top:4px;font-size:20px">🟢</div>`}
-      <div style="position:absolute;left:50%;top:6px;transform:translateX(-50%);font-size:16px;color:#fff;font-weight:bold">${v1} км/ч → ${v2} км/ч</div>
+// «шоссе» между двумя городами: машины едут навстречу и встречаются
+function l15Highway(S,v1,v2,opt){
+  const o=opt||{};
+  const W=312, roadW=W-70, x0=40;
+  const T=S/(v1+v2);
+  const p1=v1*T/S, p2=v2*T/S;
+  const dx1=(roadW-40)*p1, dx2=(roadW-40)*p2;
+  const meetX=x0+dx1;
+  const em1=o.e1||'🚗', em2=o.e2||'🚙';
+  return `<div style="position:relative;width:${W}px;margin:2px auto">
+    <div style="position:absolute;left:0;top:18px;font-size:22px" class="wv-swing">🏠</div>
+    <div style="position:absolute;right:0;top:18px;font-size:22px" class="wv-swing">🏙️</div>
+    <div style="position:absolute;left:${x0}px;right:${W-x0-roadW-30}px;top:22px;height:34px;background:linear-gradient(180deg,#3a3f45,#262a2f);border-radius:17px;border:2px solid #14161a;overflow:hidden">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 44px,rgba(255,208,90,.35) 44px 46px);opacity:.5"></div>
     </div>
-    <div style="font-size:13px;color:#ffd9a0;margin-top:3px">${txt}: ${act}</div>
+    <div class="l15-drive-l l15-runner" style="left:${x0}px;top:16px;--dx:${dx1.toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:26px">${em1}<div style="font-size:9px;text-align:center;color:#ffd966;margin-top:-4px">${v1} км/ч</div></div>
+    <div class="l15-drive-r l15-runner" style="right:${W-x0-roadW-30-26}px;top:16px;--dx:${(-dx2).toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:26px">${em2}<div style="font-size:9px;text-align:center;color:#7fd1a0;margin-top:-4px">${v2} км/ч</div></div>
+    <div class="wv-pop" style="position:absolute;left:${meetX.toFixed(0)}px;top:-2px;font-size:26px;animation-delay:${(o.dur||2.8)+0.2}s;opacity:0;animation:wvPop .5s ease ${(o.dur||2.8)+0.2}s forwards">🤝</div>
+    <div style="position:absolute;left:${meetX.toFixed(0)}px;top:60px;transform:translateX(-50%);font-size:8.5px;color:#cbb89a;white-space:nowrap">встреча</div>
+    <div style="height:22px"></div>
   </div>`;
 }
-function l15River(uid,pos,prot){
-  // река: лодка v; pos='по' течению (вправо) или 'против'
-  return `<div style="width:300px;margin:0 auto;text-align:center">
-    <svg width="300" height="70" viewBox="0 0 300 70">
-      <path d="M10,40 Q60,28 150,40 T290,38" stroke="#7fd1ff" stroke-width="10" fill="none" opacity=".55"/>
-      <path d="M10,52 Q60,44 150,52 T290,50" stroke="#5aa8d8" stroke-width="3" fill="none" opacity=".4"/>
-      <g transform="translate(150,38)">
-        ${pos==='по'?`<path d="M-9,0 L9,0 M4,-5 L9,0 L4,5" fill="none" stroke="#e0523d" stroke-width="2.5"/>`:`<path d="M9,0 L-9,0 M-4,-5 L-9,0 L-4,5" fill="none" stroke="#e0523d" stroke-width="2.5"/>`}
-        <rect x="-7" y="-6" width="14" height="10" rx="3" fill="#e8b04a" stroke="#a05c18" stroke-width="1.5"/>
-      </g>
+// погоня: задний (v1, быстрый) догоняет переднего (v2)
+function l15Chase(gap,v1,v2,opt){
+  const o=opt||{};
+  const W=312, X=158, xF=14;
+  const gapPx=X*(v1-v2)/v1;
+  const dxS=X, dxF=X*v2/v1;
+  const emF=o.eFast||'🚓', emS=o.eSlow||'🚙';
+  return `<div style="position:relative;width:${W}px;margin:2px auto">
+    <div style="position:absolute;left:${xF}px;right:${W-xF-X-40}px;top:22px;height:34px;background:linear-gradient(180deg,#3a3f45,#262a2f);border-radius:17px;border:2px solid #14161a;overflow:hidden">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 44px,rgba(255,208,90,.35) 44px 46px);opacity:.5"></div>
+    </div>
+    <div class="l15-drive-l l15-runner" style="left:${xF}px;top:16px;--dx:${dxS.toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:24px;z-index:2">${emF}<div style="font-size:9px;text-align:center;color:#ffd966;margin-top:-4px">${v1} км/ч</div></div>
+    <div class="l15-drive-l l15-runner" style="left:${(xF+gapPx).toFixed(1)}px;top:16px;--dx:${dxF.toFixed(1)}px;animation-duration:${o.dur||2.8}s;font-size:24px">${emS}<div style="font-size:9px;text-align:center;color:#7fb7d8;margin-top:-4px">${v2} км/ч</div></div>
+    <div class="wv-pop" style="position:absolute;left:${(xF+gapPx+dxF).toFixed(0)}px;top:-2px;font-size:22px;animation-delay:${(o.dur||2.8)+0.2}s;opacity:0;animation:wvPop .5s ease ${(o.dur||2.8)+0.2}s forwards">🏁</div>
+    <div style="font-size:9px;color:#cbb89a;text-align:center;margin-top:40px">разрыв ${gap} км · ${o.cap||'догоняет'}</div>
+  </div>`;
+}
+// река с лодкой: mode 'по' или 'против'
+function l15River(v,u,mode,opt){
+  const o=opt||{};
+  const W=312;
+  const tot=mode==='по'?v+u:v-u;
+  const col=tot>v?'#7fd1a0':'#ff9a8a';
+  const em=o.boat||'🛶';
+  return `<div style="position:relative;width:${W}px;margin:2px auto">
+    <div style="position:relative;height:56px;border-radius:16px;background:linear-gradient(180deg,#1d5f8f,#0e3a5e);border:2px solid #0a2740;overflow:hidden">
+      <div class="l15-wave" style="position:absolute;inset:0;opacity:.5"></div>
+      <div style="position:absolute;left:14px;top:14px;font-size:9px;color:#bfe9ff">течение u=${u}</div>
+      <div class="l15-boat" style="position:absolute;left:130px;top:8px;font-size:34px">${em}<div style="font-size:9px;text-align:center;color:#fff;margin-top:-6px">${mode==='по'?'по течению':'против течения'}</div></div>
+      <div style="position:absolute;right:10px;top:34px;font-size:12px;color:${col};font-weight:bold">итог: ${tot} км/ч</div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:6px;margin-top:2px">
+      <span style="font-size:10px;color:#9ec0a8">собственная v=${v}</span>
+      <span style="font-size:11px;color:#cbb89a">${mode==='по'?'➕':'➖'}</span>
+      <span style="font-size:10px;color:#9ec0a8">течение u=${u}</span>
+      <span style="font-size:11px;color:#cbb89a">=</span>
+      <span style="font-size:11px;color:${col};font-weight:bold">${tot}</span>
+    </div>
+  </div>`;
+}
+// «магический треугольник» S = v·t
+function l15Tri(){
+  return `<div style="text-align:center;margin:2px auto">
+    <svg width="190" height="150" viewBox="0 0 190 150">
+      <polygon points="95,10 178,136 12,136" fill="none" stroke="#ffd966" stroke-width="3"/>
+      <line x1="30" y1="136" x2="160" y2="136" stroke="#7fd1a0" stroke-width="3"/>
+      <text x="95" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#ffd966">S</text>
+      <text x="95" y="120" text-anchor="middle" font-size="15" fill="#e8dcc8">S : t</text>
+      <text x="95" y="134" text-anchor="middle" font-size="15" fill="#e8dcc8">S : v</text>
+      <text x="52" y="96" text-anchor="middle" font-size="17" font-weight="bold" fill="#7fd1a0">v</text>
+      <text x="140" y="96" text-anchor="middle" font-size="17" font-weight="bold" fill="#7fd1a0">t</text>
+      <text x="95" y="74" text-anchor="middle" font-size="10" fill="#cbb89a">v · t</text>
     </svg>
-    <div style="font-size:13px;color:#ffd9a0">${pos==='по'? 'по течению: скорость = v + u (река помогает!)':'против течения: скорость = v − u (река мешает!)'}</div>
-    <div style="font-size:11px;color:#8aa08f">стрелка ↦ — направление лодки; синие линии — поток реки (течение u)</div>
   </div>`;
 }
-// ===================== УРОК 14 «СКОЛЬКО ПРЯМОУГОЛЬНИКОВ» (v167) =====================
+function visL15(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v15!==step) CHS[lk]={_v15:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const note=(t,c,d)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'}${d||'44'};border-radius:9px;padding:5px 12px;font-size:12.5px;color:#e8dcc8;text-align:left;line-height:1.45">${t}</div>`;
+    let h='';
+    if(step===0){
+      // легенда
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#ffd96622;border:1px solid #ffd966;color:#ffd966;margin-bottom:2px">ВСОШ-СТИЛЬ · ДВИЖЕНИЕ</span>`+
+        big('Встреча и погоня')+
+        l15Highway(90,20,25,{dur:3.2})+
+        card('два друга Архимеда бегут <b style="color:#ffd966">навстречу друг другу</b> из двух городов: расстояние <b>90 км</b>, скорости <b>20</b> и <b>25 км/ч</b>. Через сколько часов они встретятся?')+
+        sml('научимся «скорости сближения» — и такие задачи станут лёгкими!'));
+    } else if(step===1){
+      h=col(big('Повторим: путь, скорость, время')+
+        l15Tri()+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['S = v · t','путь'],['v = S : t','скорость'],['t = S : v','время']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:7px 10px;min-width:88px"><div style="font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[0]}</div><div style="font-size:10px;color:#9ec0a8">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('закрой пальцем то, что ищешь — оставшиеся две величины покажут формулу! (как в учебнике)')+
+        sml('сегодня используем эти формулы в гонках навстречу и вдогонку!'));
+    } else if(step===2){
+      h=col(big('Навстречу: что происходит за 1 час?')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['🚗 первый','20 км за час','#ffd966'],['🚙 второй','25 км за час','#7fd1a0']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:7px 10px;min-width:108px"><div style="font-size:22px">${x[0]}</div><div style="font-size:13px;color:${x[2]};font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:4px;margin:4px 0">
+          <span style="font-size:22px" class="wv-pulse">20</span><span style="font-size:18px;color:#cbb89a">+</span><span style="font-size:22px" class="wv-pulse">25</span><span style="font-size:18px;color:#cbb89a">=</span><span class="wv-ans" style="font-size:26px;color:#ffd966;font-weight:bold">45 км</span>
+        </div>`+
+        card('вместе за час они сокращают расстояние на <b style="color:#ffd966">45 км</b> — весь путь «тает» быстрее!')+
+        sml('скорость, с которой они сближаются, называется скоростью сближения!'));
+    } else if(step===3){
+      h=col(big('Скорость сближения: складываем!')+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:13px;color:#ffd966">v₁</div><div style="font-size:24px;color:#ffd966;font-weight:bold">20</div><div style="font-size:9px;color:#9ec0a8">км/ч</div></div>
+          <div style="font-size:22px" class="wv-pulse">➕</div>
+          <div style="text-align:center"><div style="font-size:13px;color:#7fd1a0">v₂</div><div style="font-size:24px;color:#7fd1a0;font-weight:bold">25</div><div style="font-size:9px;color:#9ec0a8">км/ч</div></div>
+          <div style="font-size:22px;color:#cbb89a">=</div>
+          <div style="text-align:center"><div style="font-size:13px;color:#d9a0ff">v сближения</div><div class="wv-ans" style="font-size:28px;color:#d9a0ff;font-weight:bold">45 км/ч</div></div>
+        </div>`+
+        card('едем <b style="color:#ffd966">навстречу</b> — скорости <b>складываем</b>: v₁ + v₂ = 20 + 25 = <b>45 км/ч</b>!')+
+        sml('запомни: навстречу → плюс! Теперь найдём время встречи.'));
+    } else if(step===4){
+      h=col(big('Время встречи: делим расстояние!')+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:13px;color:#e8dcc8">S</div><div style="font-size:26px;color:#ffd966;font-weight:bold">90</div><div style="font-size:9px;color:#9ec0a8">км</div></div>
+          <div style="font-size:22px;color:#cbb89a">:</div>
+          <div style="text-align:center"><div style="font-size:13px;color:#d9a0ff">v сближения</div><div style="font-size:26px;color:#d9a0ff;font-weight:bold">45</div><div style="font-size:9px;color:#9ec0a8">км/ч</div></div>
+          <div style="font-size:22px;color:#cbb89a">=</div>
+          <div style="text-align:center"><div style="font-size:13px;color:#7fd1a0">t</div><div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">2 ч</div></div>
+        </div>`+
+        `<div style="background:rgba(127,209,160,.07);border:1px solid #7fd1a044;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:14px;color:#e8dcc8">t = S : v сближения = 90 : 45 = <b style="color:#7fd1a0;font-size:17px">2 часа</b></div>
+        </div>`+
+        sml('делим всё расстояние на скорость сближения — и время встречи в кармане!'));
+    } else if(step===5){
+      // по часам
+      h=col(big('Смотрим по часам')+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:336px;width:100%">
+          ${[['0 ч','старт: оба у своих городов','0','90'],['1 ч','прошли 20 + 25 = 45 км, осталось 45','20','65'],['2 ч','прошли ещё 45 — встретились!','45','45']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.2}s;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.03);border:1px solid ${i===2?'#ffd966':'#3d5c49'};border-radius:10px;padding:4px 10px;max-width:336px;width:100%">
+            <span style="width:26px;font-size:11px;color:#cbb89a">${x[0]}</span>
+            <span style="position:relative;flex:1;height:18px;background:linear-gradient(90deg,#2a4638,#0d1a13);border-radius:9px;overflow:hidden">
+              <span style="position:absolute;left:${(x[2]/90*100).toFixed(1)}%;top:2px;width:12px;height:12px;border-radius:50%;background:#e0523d;transform:translateX(-50%);transition:left .4s"></span>
+              <span style="position:absolute;left:${(x[3]/90*100).toFixed(1)}%;top:2px;width:12px;height:12px;border-radius:50%;background:#2f8f5a;transform:translateX(-50%);transition:left .4s"></span>
+            </span>
+            <span style="width:118px;font-size:9px;color:${i===2?'#ffd966':'#9ec0a8'};text-align:right">${x[1]}${i===2?' 🤝':''}</span>
+          </div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">через 2 часа красная и зелёная точки встретились 🤝</div>`+
+        sml('смотри: каждый час точки сближаются на 45 км — путь тает на глазах!'));
+    } else if(step===6){
+      // как в проверке: 10 км, 3 и 2
+      h=col(big('Как в проверке: бегуны')+
+        l15Highway(10,3,2,{dur:3,dur2:3,e1:'🏃',e2:'🏃‍♀️'})+
+        rowC(chip('расстояние 10 км','#7fb7d8'),chip('скорости 3 и 2 км/ч','#7fd1a0'))+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:340px;width:100%">
+          ${[['скорость сближения','3 + 2 = 5 км/ч'],['время встречи','10 : 5 = 2 часа']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #7fd1a0;border-radius:9px;padding:5px 12px;max-width:340px;width:100%"><span style="font-size:13.5px;color:#e8dcc8">${x[0]}</span><span style="font-size:13.5px;color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">ответ: 2 часа ✓</div>`+
+        sml('именно это спросят в проверке — смело отвечай!'));
+    } else if(step===7){
+      // проверка кто сколько прошёл
+      h=col(big('Проверка: кто сколько прошёл?')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['🚗 первый','20 · 2 = 40 км','#ffd966'],['🚙 второй','25 · 2 = 50 км','#7fd1a0']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:7px 10px;min-width:108px"><div style="font-size:22px">${x[0]}</div><div style="font-size:16px;color:${x[2]};font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:4px 0">
+          <span style="font-size:20px;color:#ffd966">40</span><span style="font-size:16px;color:#cbb89a">+</span><span style="font-size:20px;color:#7fd1a0">50</span><span style="font-size:16px;color:#cbb89a">=</span><span class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">90 км ✓</span>
+        </div>`+
+        card('вместе они прошли <b>весь путь 90 км</b> — значит, встретились ровно там, где нужно! Отличная проверка.')+
+        sml('запомни приём: пути участников в сумме дают всё расстояние!'));
+    } else if(step===8){
+      // погоня
+      h=col(big('Погоня: один догоняет другого')+
+        l15Chase(30,50,40,{dur:3})+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:340px;width:100%">
+          ${[['разрыв между ними','30 км'],['🚓 быстрый (50 км/ч)','догоняет 🚙 медленного (40)']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:5px 12px;max-width:340px;width:100%"><span style="font-size:13px;color:#e8dcc8">${x[0]}</span><span style="font-size:12px;color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('за 1 час быстрый проезжает 50 км, медленный — 40. Разрыв сокращается на <b style="color:#ffd966">10 км/ч</b>!')+
+        sml('здесь скорости не складываются, а вычитаются — разберём!'));
+    } else if(step===9){
+      h=col(big('Скорость сближения при погоне: вычитаем!')+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:13px;color:#ffd966">v₁ (быстрый)</div><div style="font-size:24px;color:#ffd966;font-weight:bold">50</div></div>
+          <div style="font-size:22px" class="wv-pulse">➖</div>
+          <div style="text-align:center"><div style="font-size:13px;color:#7fb7d8">v₂ (медленный)</div><div style="font-size:24px;color:#7fb7d8;font-weight:bold">40</div></div>
+          <div style="font-size:22px;color:#cbb89a">=</div>
+          <div style="text-align:center"><div style="font-size:13px;color:#d9a0ff">сокращение разрыва</div><div class="wv-ans" style="font-size:26px;color:#d9a0ff;font-weight:bold">10 км/ч</div></div>
+        </div>`+
+        card('догоняем — скорости <b style="color:#ffd966">вычитаем</b>: v₁ − v₂ = 50 − 40 = <b>10 км/ч</b> — на столько разрыв уменьшается каждый час!')+
+        sml('навстречу → плюс, вдогонку → минус. Главное отличие!'));
+    } else if(step===10){
+      h=col(big('Время догона')+
+        l15Chase(30,50,40,{dur:2.4})+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:340px;width:100%">
+          ${[['разрыв 30 км, сокращение 10 км/ч','30 : 10 = 3 часа'],['через 3 часа быстрый поравняется','с медленным! 🏁']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#7fd1a0','#ffd966'][i]};border-radius:9px;padding:5px 12px;max-width:340px;width:100%"><span style="font-size:12.5px;color:#e8dcc8">${x[0]}</span><span style="font-size:13px;color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">t = разрыв : v сближения = 30 : 10 = 3 ч</div>`+
+        sml('та же формула, только «расстояние» — это разрыв, а скорость — разность!'));
+    } else if(step===11){
+      h=col(big('Ловушка: не догонит никогда!')+
+        l15Chase(20,40,40,{dur:2.4,eFast:'🚙',eSlow:'🚗'})+
+        `<div style="background:rgba(224,82,61,.08);border:1px solid #e0523d66;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:14px;color:#e8dcc8">если догоняющий <b style="color:#ff9a8a">медленнее</b> или едет <b style="color:#ff9a8a">с той же скоростью</b> — он никогда не догонит!</div>
+          <div style="font-size:13px;color:#ff9a8a">40 − 40 = 0 км/ч — разрыв не уменьшается ✗</div>
+        </div>`+
+        card('вычитание скоростей должно давать <b style="color:#ffd966">положительное число</b>. Если получилось 0 или минус — догона не будет!')+
+        sml('вот почему в задачах на погоню всегда есть «кто быстрее»!'));
+    } else if(step===12){
+      // река
+      h=col(big('Река: течение помогает и мешает')+
+        l15River(9,3,'по')+
+        card('у лодки есть <b style="color:#ffd966">собственная скорость v</b> (в стоячей воде), а река несёт её со скоростью <b style="color:#7fd1a0">u</b>. Волны на картинке — поток течения.')+
+        rowC(chip('по течению: река ПОМОГАЕТ','#7fd1a0'),chip('против течения: МЕШАЕТ','#ff9a8a'))+
+        sml('скорость лодки зависит от того, куда она плывёт — по течению или против!'));
+    } else if(step===13){
+      h=col(big('По течению и против: формулы')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['по течению','v + u','река помогает — быстрее!','#7fd1a0'],['против течения','v − u','река мешает — медленнее','#ff9a8a']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${x[3]};border-radius:11px;padding:8px 10px;min-width:148px"><div style="font-size:12px;color:#9ec0a8">${x[0]}</div><div style="font-size:24px;color:#ffd966;font-family:Georgia,serif">${x[1]}</div><div style="font-size:10px;color:${x[3]}">${x[2]}</div></div>`).join('')}
+        </div>`+
+        l15River(9,3,'против')+
+        sml('всегда: по течению быстрее, против — медленнее. Разница — ровно 2u!'));
+    } else if(step===14){
+      // два уравнения
+      h=col(big('Два уравнения: находим v и u')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['по течению','v + u = 18','#7fd1a0'],['против течения','v − u = 12','#ff9a8a']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid ${x[2]}66;border-left:5px solid ${x[2]};border-radius:10px;padding:6px 12px;max-width:336px;width:100%"><span style="font-size:13.5px;color:#e8dcc8">${x[0]}</span><span style="font-size:19px;color:#ffd966;font-family:Georgia,serif">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:3px 0">
+          ${[['сложим уравнения','(v+u)+(v−u) = 18+12 → 2v = 30 → v = 15','#7fd1a0'],['вычтем уравнения','(v+u)−(v−u) = 18−12 → 2u = 6 → u = 3','#ff9a8a']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[2]}55;border-radius:10px;padding:6px 9px;max-width:320px;width:100%"><div style="font-size:13px;color:#e8dcc8;font-weight:bold">${x[0]}</div><div style="font-size:12.5px;color:${x[2]};margin-top:2px">${x[1]}</div></div>`).join('')}
+        </div>`+
+        sml('сложил → собственная скорость, вычел → скорость течения!'));
+    } else if(step===15){
+      h=col(big('Формулы реки: полусумма и полуразность')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['собственная скорость лодки','v = (по + против) : 2 = (18 + 12) : 2 = 15 км/ч','#7fd1a0'],['скорость течения','u = (по − против) : 2 = (18 − 12) : 2 = 3 км/ч','#7fb7d8']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;flex-direction:column;gap:3px;background:rgba(255,255,255,.03);border:1px solid ${x[2]}66;border-left:5px solid ${x[2]};border-radius:10px;padding:7px 12px;max-width:336px;width:100%"><span style="font-size:13px;color:#e8dcc8;font-weight:bold">${x[0]}</span><span style="font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">проверка: 15 + 3 = 18 ✓ · 15 − 3 = 12 ✓</div>`+
+        sml('полусумма — лодка, полуразность — течение. Как в наших задачках!'));
+    } else if(step===16){
+      // тренажёр
+      const POOL=[['meet','90','20','25'],['meet','10','3','2'],['meet','120','30','50'],['chase','30','50','40'],['chase','20','12','8'],['chase','60','70','50'],['river','18','12'],['river','14','8'],['meet','45','10','5'],['chase','15','9','6']];
+      const i=st.i!=null?st.i:0;
+      const e=POOL[i%POOL.length];
+      if(e[0]==='meet'){
+        const S=+e[1], v1=+e[2], v2=+e[3];
+        const t=S/(v1+v2);
+        h=col(big('🎮 Тренажёр: встреча 🤝')+
+          rowC(chip('расстояние '+S+' км','#7fb7d8'),chip(v1+' и '+v2+' км/ч навстречу','#7fd1a0'))+
+          (st.s1?`<div class="wv-pop" style="font-size:16px;text-align:center;color:#ffd9a0">1️⃣ скорость сближения: ${v1} + ${v2} = ${v1+v2} км/ч (навстречу — плюс!)</div>`:'')+
+          (st.s2?`<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">время = ${S} : ${v1+v2} = ${t} ч</div>`:'')+
+          btns(btn('1️⃣ сближение',`l15Act('${lk}','s1')`),btn('2️⃣ время',`l15Act('${lk}','s2')`),btn('🎲 другой',`l15Act('${lk}','n')`),btn('↺',`l15Act('${lk}','r')`))+
+          sml('навстречу: скорости складываем, расстояние делим на сумму!'));
+      } else if(e[0]==='chase'){
+        const d=+e[1], v1=+e[2], v2=+e[3];
+        const t=d/(v1-v2);
+        h=col(big('🎮 Тренажёр: погоня 🏁')+
+          rowC(chip('разрыв '+d+' км','#ff9a8a'),chip(v1+' догоняет '+v2,'#7fd1a0'))+
+          (st.s1?`<div class="wv-pop" style="font-size:16px;text-align:center;color:#ffd9a0">1️⃣ сокращение разрыва: ${v1} − ${v2} = ${v1-v2} км/ч (вдогонку — минус!)</div>`:'')+
+          (st.s2?`<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">время = ${d} : ${v1-v2} = ${t} ч</div>`:'')+
+          btns(btn('1️⃣ разница',`l15Act('${lk}','s1')`),btn('2️⃣ время',`l15Act('${lk}','s2')`),btn('🎲 другой',`l15Act('${lk}','n')`),btn('↺',`l15Act('${lk}','r')`))+
+          sml('погоня: скорости вычитаем, разрыв делим на разность!'));
+      } else {
+        const po=+e[1], pr=+e[2];
+        const u=(po-pr)/2, v=(po+pr)/2;
+        h=col(big('🎮 Тренажёр: река 🚤')+
+          rowC(chip('по течению '+po+' км/ч','#7fd1a0'),chip('против '+pr+' км/ч','#ff9a8a'))+
+          (st.s1?`<div class="wv-pop" style="font-size:16px;text-align:center;color:#ffd9a0">1️⃣ лодка: v = (${po} + ${pr}) : 2 = ${v} км/ч</div>`:'')+
+          (st.s2?`<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">течение: u = (${po} − ${pr}) : 2 = ${u} км/ч</div>`:'')+
+          btns(btn('1️⃣ v лодки',`l15Act('${lk}','s1')`),btn('2️⃣ течение',`l15Act('${lk}','s2')`),btn('🎲 другой',`l15Act('${lk}','n')`),btn('↺',`l15Act('${lk}','r')`))+
+          sml('полусумма — лодка, полуразность — течение!'));
+      }
+    } else {
+      h=col(`<div style="font-size:48px">🏃</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:250px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            🤝 Навстречу: v = v₁+v₂ · t = S : v.<br>
+            🏁 Погоня: v = v₁−v₂ · t = разрыв : v.<br>
+            🚤 Река: по = v+u · против = v−u.<br>
+            🧮 v = (по+против):2 · u = (по−против):2.<br>
+            🏃 10 км, 3 и 2 → 2 часа!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там бегуны навстречу'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function l14Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const a0=act.split(':')[0], p=+act.split(':')[1];
@@ -8708,135 +8960,7 @@ function l14ChipBad(t,c){
   return `<span style="display:inline-block;padding:3px 10px;border-radius:9px;background:rgba(224,82,61,.08);border:1px solid ${c||'#e0523d'};font-size:13px;color:${c||'#ff9a8a'};margin:2px">${t}</span>`;
 }
 
-function visL15(el){
-  try{
-    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(big('Дорога Архимеда'),
-        `<div style="font-size:46px" class="l35-pop">🏃</div>`+
-        big('двое бегут навстречу: расстояние 90 км, скорости 20 и 25. через сколько встретятся?')+
-        sml('научимся «скорости сближения» — и такие задачи станут лёгкими!'));
-    } else if(step===1){
-      h=col(big('Повторим: путь, скорость, время'),
-        rowC(chip('S = v · t','rgba(127,209,255,.5)'),chip('v = S : t','rgba(127,184,160,.5)'),chip('t = S : v','rgba(232,160,90,.5)'))+
-        sml('всё из урока про равномерное движение — сегодня используем это в гонках'));
-    } else if(step===2){
-      h=col(big('Навстречу: что за час?'),
-        l15Road('a','meet',20,25)+
-        sml('за один час первый проезжает 20 км, второй — 25 км. вместе они сокращают путь на 45 км!'));
-    } else if(step===3){
-      h=col(big('Скорость сближения'),
-        `<div style="text-align:center;font-size:22px" class="wv-pop">v сближения = v₁ + v₂ = 20 + 25 = 45 км/ч</div>`+
-        sml('когда едут навстречу — скорости складываем: путь «тает» быстрее'));
-    } else if(step===4){
-      h=col(big('Время встречи'),
-        `<div style="text-align:center;font-size:22px" class="wv-pop">t = S : v сближения = 90 : 45 = 2 часа</div>`+
-        sml('делим всё расстояние на скорость сближения — и узнаём время!'));
-    } else if(step===5){
-      h=col(big('Смотрим по часам'),
-        l15Meet(90,20,25,'m')+
-        sml('красная и зелёная точки сближаются каждый час — на второй час встреча 🤝!'));
-    } else if(step===6){
-      h=col(big('Как в проверке'),
-        rowC(chip('расстояние 10 км','rgba(127,184,160,.5)'),chip('скорости 3 и 2 км/ч','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">10 : (3+2) = 2 часа ✓</div>`+
-        sml('скорость сближения 5 км/ч → 2 часа до встречи'));
-    } else if(step===7){
-      h=col(big('Проверка: кто сколько прошёл'),
-        rowC(chip('первый: 20 · 2 = 40 км','rgba(232,106,90,.5)'),chip('второй: 25 · 2 = 50 км','rgba(127,184,160,.5)'),chip('40 + 50 = 90 км ✓','rgba(217,164,65,.45)'))+
-        sml('вместе они прошли весь путь — хорошая проверка!'));
-    } else if(step===8){
-      h=col(big('Погоня: кто догоняет'),
-        l15Road('b','chase',50,40)+
-        sml('разрыв 30 км: за час быстрый нагоняет на 50 − 40 = 10 км'));
-    } else if(step===9){
-      h=col(big('Скорость сближения при погоне'),
-        `<div style="text-align:center;font-size:22px" class="wv-pop">v сближения = v₁ − v₂ = 50 − 40 = 10 км/ч</div>`+
-        sml('когда один догоняет — скорости ВЫЧИТАЕМ'));
-    } else if(step===10){
-      h=col(big('Время догона'),
-        `<div style="text-align:center;font-size:22px" class="wv-pop">t = разрыв : v сближения = 30 : 10 = 3 часа</div>`+
-        sml('за 3 часа разрыв 30 км исчезнет — догнал!'));
-    } else if(step===11){
-      h=col(big('Ловушка: не догонит никогда'),
-        rowC(chip('если догоняющий медленнее или равен — догона не будет','rgba(232,106,90,.5)'))+
-        sml('вычитание скоростей должно давать положительное число!'));
-    } else if(step===12){
-      h=col(big('Река: течение помогает или мешает'),
-        l15River('r1','по')+
-        sml('лодка имеет собственную скорость v, а река несёт её со скоростью u'));
-    } else if(step===13){
-      h=col(big('По течению и против'),
-        rowC(chip('по течению: v + u','rgba(127,209,160,.5)'),chip('против течения: v − u','rgba(232,106,90,.5)'))+
-        l15River('r2','против')+
-        sml('по течению река помогает и скорость больше; против — мешает и скорость меньше'));
-    } else if(step===14){
-      h=col(big('Два уравнения'),
-        rowC(chip('v + u = 18','rgba(127,209,160,.5)'),chip('v − u = 12','rgba(232,106,90,.5)'))+
-        `<div style="text-align:center;font-size:19px" class="wv-pop">сложим: 2v = 30 → v = 15 · вычтем: 2u = 6 → u = 3</div>`+
-        sml('складываем уравнения — находим собственную скорость; вычитаем — скорость течения'));
-    } else if(step===15){
-      h=col(big('Формулы реки'),
-        rowC(chip('v = (по + против) : 2 = (18+12):2 = 15','rgba(127,184,160,.5)'),chip('u = (по − против) : 2 = (18−12):2 = 3','rgba(127,209,255,.5)'))+
-        sml('как в наших задачках: скорость течения 3 км/ч ✓'));
-    } else if(step===16){
-      const POOL=[['meet','90','20','25'],['meet','10','3','2'],['meet','120','30','50'],['chase','30','50','40'],['chase','20','12','8'],['chase','60','70','50'],['river','18','12'],['river','14','8'],['meet','45','10','5'],['chase','15','9','6']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i];
-      if(e[0]==='meet'){
-        const S=+e[1], v1=+e[2], v2=+e[3];
-        const t=S/(v1+v2);
-        h=col(big('Тренажёр: встреча'),
-          `<div class="wv-row">${chip('расстояние '+S+' км','rgba(127,184,160,.5)')} ${chip(v1+' и '+v2+' км/ч навстречу','rgba(127,209,255,.5)')}</div>`+
-          (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) скорость сближения: ${v1}+${v2} = ${v1+v2} км/ч</div>`:'')+
-          (st.s2? `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">время = ${S} : ${v1+v2} = ${t} ч</div>`:'')+
-          btns(btn('1️⃣ сближение',`l15Act('${lk}','s1')`),btn('2️⃣ время',`l15Act('${lk}','s2')`),btn('🎲 другой',`l15Act('${lk}','n')`),btn('↺',`l15Act('${lk}','r')`))+
-          sml('навстречу: скорости складываем, расстояние делим на сумму!'));
-      } else if(e[0]==='chase'){
-        const d=+e[1], v1=+e[2], v2=+e[3];
-        const t=d/(v1-v2);
-        h=col(big('Тренажёр: погоня'),
-          `<div class="wv-row">${chip('разрыв '+d+' км','rgba(232,106,90,.5)')} ${chip(v1+' догоняет '+v2,'rgba(127,209,255,.5)')}</div>`+
-          (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) сокращение разрыва: ${v1}−${v2} = ${v1-v2} км/ч</div>`:'')+
-          (st.s2? `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">время = ${d} : ${v1-v2} = ${t} ч</div>`:'')+
-          btns(btn('1️⃣ разница',`l15Act('${lk}','s1')`),btn('2️⃣ время',`l15Act('${lk}','s2')`),btn('🎲 другой',`l15Act('${lk}','n')`),btn('↺',`l15Act('${lk}','r')`))+
-          sml('погоня: скорости вычитаем, разрыв делим на разность!'));
-      } else {
-        const po=+e[1], pr=+e[2];
-        const u=(po-pr)/2, v=(po+pr)/2;
-        h=col(big('Тренажёр: река'),
-          `<div class="wv-row">${chip('по течению '+po,'rgba(127,209,160,.5)')} ${chip('против '+pr,'rgba(232,106,90,.5)')}</div>`+
-          (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) v = (${po}+${pr}):2 = ${v}</div>`:'')+
-          (st.s2? `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">течение u = (${po}−${pr}):2 = ${u} км/ч</div>`:'')+
-          btns(btn('1️⃣ v лодки',`l15Act('${lk}','s1')`),btn('2️⃣ течение',`l15Act('${lk}','s2')`),btn('🎲 другой',`l15Act('${lk}','n')`),btn('↺',`l15Act('${lk}','r')`))+
-          sml('полусумма — лодка, полуразность — течение!'));
-      }
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🤝 Навстречу: v = v₁+v₂ · t = S : v.<br>
-            🏃 Погоня: v = v₁−v₂ · t = разрыв : v.<br>
-            🚤 Река: по = v+u, против = v−u.<br>
-            🧮 v = (по+против):2 · u = (по−против):2.</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там бегуны навстречу'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
-}
+
 
 // ===================== УРОК 12 «ОСТАТКИ ПРИ ДЕЛЕНИИ» (v165) =====================
 function l12Act(lk,act){

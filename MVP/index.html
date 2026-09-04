@@ -567,6 +567,20 @@
   @keyframes l14Rect { 0%{opacity:0} 100%{opacity:1} }
   .l14-hop { animation:l14Hop .5s ease both; }
   @keyframes l14Hop { 0%{transform:translateY(0)} 40%{transform:translateY(-12px)} 100%{transform:translateY(0)} }
+  /* ============ встреча и погоня (урок 15, v168) ============ */
+  .l15-runner { position:absolute; top:2px; will-change:transform; }
+  .l15-drive-l { animation:l15DriveL 2.6s cubic-bezier(.35,.1,.4,1) forwards; }
+  @keyframes l15DriveL { from{transform:translateX(0)} to{transform:translateX(var(--dx,120px))} }
+  .l15-drive-r { animation:l15DriveR 2.6s cubic-bezier(.35,.1,.4,1) forwards; }
+  @keyframes l15DriveR { from{transform:translateX(0)} to{transform:translateX(var(--dx,-120px))} }
+  .l15-bob { animation:l15Bob .5s ease-in-out infinite; }
+  @keyframes l15Bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+  .l15-bob2 { animation:l15Bob .5s ease-in-out .25s infinite; }
+  .l15-wave { background-image:repeating-linear-gradient(90deg,rgba(127,209,255,.5) 0 14px,transparent 14px 30px);
+    animation:l15Flow 1.6s linear infinite; }
+  @keyframes l15Flow { from{background-position-x:0} to{background-position-x:30px} }
+  .l15-boat { animation:l15Boat 3s ease-in-out infinite; }
+  @keyframes l15Boat { 0%,100%{transform:translateX(0) rotate(-1.5deg)} 50%{transform:translateX(16px) rotate(1.5deg)} }
 </style>
 </head>
 <body>
@@ -595,21 +609,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=167"></script>
-<script src="data/lessons.js?v=167"></script>
-<script src="js/comic.js?v=167"></script>
-<script src="js/core.js?v=167"></script>
-<script src="js/engine.js?v=167"></script>
-<script src="js/app.js?v=167"></script>
-<script src="js/dashboard.js?v=167"></script>
-<script src="js/lessons.js?v=167"></script>
-<script src="js/legend.js?v=167"></script>
-<script src="js/simulator.js?v=167"></script>
-<script src="js/duel.js?v=167"></script>
-<script src="js/agent.js?v=167"></script>
-<script src="js/voice.js?v=167"></script>
-<script src="js/assistant.js?v=167"></script>
-<script src="js/agentlive.js?v=167"></script>
+<script src="data/tasks.js?v=168"></script>
+<script src="data/lessons.js?v=168"></script>
+<script src="js/comic.js?v=168"></script>
+<script src="js/core.js?v=168"></script>
+<script src="js/engine.js?v=168"></script>
+<script src="js/app.js?v=168"></script>
+<script src="js/dashboard.js?v=168"></script>
+<script src="js/lessons.js?v=168"></script>
+<script src="js/legend.js?v=168"></script>
+<script src="js/simulator.js?v=168"></script>
+<script src="js/duel.js?v=168"></script>
+<script src="js/agent.js?v=168"></script>
+<script src="js/voice.js?v=168"></script>
+<script src="js/assistant.js?v=168"></script>
+<script src="js/agentlive.js?v=168"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -624,7 +638,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=167').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=168').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
