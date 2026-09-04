@@ -4871,150 +4871,359 @@ function visL196(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+// ============ УРОК 2 «Принцип Дирихле» — Голубиная лаборатория Архимеда ============
+// Каждый слайд — интерактив или анимация: посадка голубей, доказательство по шагам,
+// выбор «кроликов и ящиков», слайдер ⌈n/k⌉, раскладки, носки в темноте, даты, геометрия, игры.
 function l2Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['n','7','4'],['n','10','3'],['n','9','4'],['n','12','5'],['n','8','3'],['n','15','4'],['n','11','5'],['n','13','6'],['n','17','4'],['n','14','5'],['n','19','6'],['n','16','7']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
+  const p=+act.split(':')[1];
+  if(act==='sit0') st.s0=Math.min(10,(st.s0||0)+1);
+  if(act==='sit1') st.s1=Math.min(11,(st.s1||0)+1);
+  if(act==='stp') st.r=(st.r||0)+1;
+  if(act==='pick'+'') {}
+  if(/^pick:\d/.test(act)) st.pick=+act.split(':')[1];
+  if(act==='add4') st.p4=Math.min(25,(st.p4||0)+1);
+  if(act==='set4') st.p4=25;
+  if(act==='add6') st.p6=Math.min(25,(st.p6||0)+1);
+  if(act==='set6') st.p6=25;
+  if(act==='add7') st.p7=Math.min(29,(st.p7||0)+1);
+  if(act==='set7') st.p7=29;
+  if(act==='add8') st.p8=Math.min(8,(st.p8||0)+1);
+  if(act==='set8') st.p8=8;
+  if(/^num:\d/.test(act)){ const v=+act.split(':')[1]; if(isFinite(v)){ const arr=st.nums||[]; if(arr.length<6&&arr.indexOf(v)<0){ arr.push(v); st.nums=arr; } } }
+  if(/^sock:\d/.test(act)){ const arr=st.socks||[]; if(arr.length<12){ arr.push(+act.split(':')[1]); st.socks=arr; } }
+  if(/^pt:/.test(act)){ const xy=act.split(':')[1].split(',').map(Number); const arr=st.pts||[]; if(arr.length<5) arr.push(xy); st.pts=arr; }
+  if(act==='dnP') st.dn=Math.min(16,(st.dn||8)+1);
+  if(act==='dnM') st.dn=Math.max((st.ck||5)+1,(st.dn||8)-1);
+  if(act==='ckP') st.ck=Math.min(Math.max(2,(st.dn||8)-1),(st.ck||5)+1);
+  if(act==='ckM') st.ck=Math.max(2,(st.ck||5)-1);
+  if(act==='peP') st.pe=Math.min(380,(st.pe||13)+1);
+  if(act==='peM') st.pe=Math.max(2,(st.pe||13)-1);
+  if(act==='tmP') st.tm=Math.min(10,(st.tm||6)+1);
+  if(act==='tmM') st.tm=Math.max(2,(st.tm||6)-1);
+  if(act==='exam') st.ei=((st.ei==null?0:st.ei)+1)%L2EXAM.length, st.pick=null;
+  if(act==='newq'){ st.gn=4+Math.floor(Math.random()*8); st.gk=2+Math.floor(Math.random()*(Math.min(6,st.gn-1)-2+1)); st.pick=null; }
+  if(act==='rst') CHS[lk]={};
   chRender(0);
 }
-function l2Birds(n,uid,animated){
-  // голуби: n птиц; animated — парят (wv-rise)
-  let out='';
-  for(let i=0;i<n;i++){
-    const cls=animated?['wv-rise','wv-rise2','wv-rise3'][i%3]:'';
-    out+=`<div class="${cls}" style="display:inline-block;font-size:22px;margin:1px">🕊️</div>`;
-  }
-  return `<div style="text-align:center;min-height:34px;line-height:30px">${out}</div>`;
+var L2EXAM=[
+  {t:'13 человек собрались в комнате. Докажи: двое родились в один месяц.', w:'месяцы рождения (12)', w2:'числа от 1 до 13', w3:'дни недели (7)', an:0, exp:'Ящики — 12 месяцев, «кролики» — 13 человек: 13 > 12 → двое в одном месяце!'},
+  {t:'В мешке носки 6 цветов, тянем не глядя. Сколько нужно для пары?', w:'цвета носков (6)', w2:'сами носки', w3:'карманы одежды (8)', an:0, exp:'Ящики — 6 цветов: седьмой носок гарантирует пару!'},
+  {t:'В классе 30 человек: у Паши 13 ошибок, у остальных — меньше. Докажи: трое набрали одинаково.', w:'числа ошибок 0–12 (13 ящиков)', w2:'буквы алфавита', w3:'дни недели', an:0, exp:'Ящики — 13 возможных чисел ошибок: 29 учеников по 13 ящикам → ⌈29/13⌉ = 3!'},
+  {t:'25 конфет трёх сортов. Докажи: одного сорта не меньше 9.', w:'сорта конфет (3)', w2:'коробки из-под конфет', w3:'карманы (2)', an:0, exp:'Ящики — 3 сорта: ⌈25/3⌉ = 9 конфет одного сорта!'},
+  {t:'В лесу 800 000 елей, на каждой не более 500 000 иголок. Докажи: две ели с одинаковым числом иголок.', w:'числа иголок (1…500 000)', w2:'ветки елей', w3:'шишки', an:0, exp:'Ящики — возможные числа иголок: елей больше, чем чисел → совпадение!'},
+  {t:'2000 зрителей в Большом театре. Докажи: двое родились в один день года.', w:'дни года (366)', w2:'ряды кресел', w3:'спектакли (3)', an:0, exp:'Ящики — 366 дней: 2000 > 366 → двое в один день!'}
+];
+function l2B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
+function l2Card(tag,emoji,title,lines,color){
+  if(!Array.isArray(lines)) lines=[lines];
+  let ls='';
+  for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:12.5px;color:#e8dcc8;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
+  return `<div style="width:100%;max-width:330px;margin:0 auto;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <div style="font-size:22px">${emoji}</div>
+      <div style="flex:1"><div style="font-size:11px;color:${color};letter-spacing:.5px">${tag}</div><div style="font-size:15px;color:#fff;font-weight:bold;line-height:1.2">${title}</div></div>
+    </div>${ls}</div>`;
 }
-function l2Cages(m,fill,uid){
-  // m клеток; fill — массив количеств голубей в каждой
+function l2Fly(n,size){
+  const cls=['wv-rise','wv-rise2','wv-rise3'];
   let out='';
-  for(let i=0;i<m;i++){
-    const c=fill&&fill[i]?fill[i]:0;
-    out+=`<div style="flex:1;text-align:center;margin:2px">
-      <div style="min-height:${c>0?c*24:22}px;display:flex;flex-direction:column-reverse;align-items:center;justify-content:flex-start">
-        ${c>0?Array(c).fill('<div class="l35-pop" style="font-size:16px;line-height:1">🕊️</div>').join(''):''}
-      </div>
-      <div style="height:26px;border:2px solid #8a6a2f;border-top:none;border-radius:0 0 6px 6px;background:repeating-linear-gradient(180deg,transparent 0 6px,rgba(138,106,47,.15) 6px 7px)"></div>
+  for(let i=0;i<n;i++) out+=`<span class="${cls[i%3]}" style="display:inline-block;font-size:${size||22}px;margin:0 1px">🕊️</span>`;
+  return `<div style="text-align:center;line-height:1.1;min-height:${(size||22)+6}px">${out}</div>`;
+}
+function l2Rack(cells,uid,mark2){
+  // клетки: массив [{n: число, t: подпись}], mark2 — какие подсветить жёлтым (>=2/нужно)
+  const mx=Math.max(1,...cells.map(c=>c.n));
+  let out='';
+  cells.forEach((c,i)=>{
+    const hot=c.n>=2;
+    out+=`<div class="wv-in" style="flex:1;min-width:30px;text-align:center;background:${hot?'rgba(255,217,102,.15)':'rgba(255,255,255,.04)'};border:${hot?'1.5px solid #ffd966':'1px solid #3d5c49'};border-radius:10px;padding:4px 1px 2px">
+      <div style="display:flex;flex-direction:column-reverse;justify-content:flex-start;min-height:${Math.min(60,mx*16+4)}px;align-items:center">${'🕊️'.repeat(c.n).split('').map((x,k)=>`<span class="wv-pop" style="animation-delay:${k*0.06}s;font-size:13px;line-height:1">${x}</span>`).join('')}</div>
+      <div style="font-size:8.5px;color:#9ec0a8;border-top:1px dashed #3d5c49;margin-top:2px;padding-top:1px">${c.t||''}</div>
     </div>`;
-  }
-  return `<div style="display:flex;width:240px;justify-content:center;margin:2px auto">${out}</div>`;
+  });
+  return `<div style="display:flex;gap:3px;justify-content:center;max-width:340px;margin:2px auto">${out}</div>`;
+}
+function l2Tri(pts,uid){
+  const V=[[0,0],[60,0],[30,52]];
+  const mid=(a,b)=>[(V[a][0]+V[b][0])/2,(V[a][1]+V[b][1])/2];
+  const M=[mid(0,1),mid(1,2),mid(2,0)];
+  const T=[
+    [V[0],M[0],M[2]],
+    [M[0],V[1],M[1]],
+    [M[2],M[1],V[2]],
+    [M[0],M[1],M[2]]
+  ];
+  const sign=(a,b,c)=>((b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]));
+  const inside=(x,y,tri)=>{ const A=sign(tri[0],tri[1],[x,y])>=0, B=sign(tri[1],tri[2],[x,y])>=0, C=sign(tri[2],tri[0],[x,y])>=0; return A&&B&&C; };
+  const buck=[0,0,0,0];
+  pts.forEach(pt=>{ for(let i=0;i<4;i++) if(inside(pt[0],pt[1],T[i])) buck[i]++; });
+  const hasPair=buck.some(b=>b>=2);
+  const cols=['rgba(127,209,160,.14)','rgba(127,183,216,.14)','rgba(217,160,255,.14)','rgba(255,217,102,.18)'];
+  const poly=(a,b,c,i)=>`<polygon points="${a[0]},${a[1]} ${b[0]},${b[1]} ${c[0]},${c[1]}" fill="${cols[i]}" stroke="#5a8a6a" stroke-width="1"/>`;
+  const dcol=['#7fd1a0','#7fb7d8','#d9a0ff','#ff9a8a'];
+  let svg=poly(V[0],V[1],V[2],3);
+  for(let i=0;i<4;i++) svg+=poly(T[i][0],T[i][1],T[i][2],i);
+  pts.forEach((pt,i)=>{ svg+=`<circle cx="${pt[0]}" cy="${pt[1]}" r="3.6" fill="${dcol[i%4]}" stroke="#0d1f14" stroke-width=".8" class="wv-pop" style="animation-delay:${i*0.14}s"/>`; });
+  svg+=`<text x="30" y="60" text-anchor="middle" fill="#8a94ad" font-size="4">4 треугольника со стороной 0,5</text>`;
+  return `<div style="text-align:center;margin:2px auto;max-width:300px">
+    <svg width="250" height="105" viewBox="-8 -4 76 68" style="max-width:100%">${svg}</svg>
+    <div style="font-size:12.5px;color:${hasPair?'#7fd1a0':'#cbb89a'}" class="${hasPair?'wv-ans':''}">${hasPair?'✅ два «соседа» в одном маленьком треугольнике — расстояние < 0,5!':'брось 5 точек и проверь!'}</div>
+  </div>`;
 }
 function visL2(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const lk=lidKey(LV.id);
+    // состояние на шаг (сбрасывается при смене слайда)
     const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v2!==step) CHS[lk]={_v2:step};
+    const st=CHS[lk];
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
     const sml=(t)=>`<div class="wv-sml">${t}</div>`;
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
     const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
     let h='';
     if(step===0){
-      h=col(big('Голубиная задача Архимеда'),
-        `<div style="font-size:44px" class="wv-pulse">🕊️</div>`+
-        sml('7 клеток и 10 голубей. Сколько голубей ГАРАНТИРОВАННО окажутся в одной клетке? Хитрый вопрос!'));
+      const done=st.s0||0;
+      const sub=Math.max(0,done-7); // голуби, которым пришлось подселиться
+      const cells=Array.from({length:7},(_,i)=>({n:(done>i?1:0)+(i<sub?1:0),t:''+(i+1)}));
+      const all=done>=10;
+      const some=done>=8;
+      h=col(`<div style="font-size:17px;color:#c9b28a;letter-spacing:1px">🕊️ ГОЛУБИНАЯ ЛАБОРАТОРИЯ</div>`+
+        big('7 клеток, 10 голубей: сколько гарантированно в одной?')+
+        l2Fly(Math.max(0,10-done),24)+
+        (done>0?l2Rack(cells,'a'):'')+
+        (all?`<div class="wv-ans" style="font-size:22px;color:#ffd966">⌈10/7⌉ = 2 — где-то сидят двое!</div>`:
+          `<div style="min-height:26px"></div>`)+
+        btns(btn('🕊️ посадить одного',`l2Act('${lk}','sit0')`,done>=10?'disabled':''),btn('↺ заново',`l2Act('${lk}','rst')`))+
+        (some&&!all?`<div style="font-size:13px;color:#ffd9a0">уже не получается без «соседей»!</div>`:'')+
+        sml('сажай по одному в новую клетку: 7 хватит на всех… а 8-му, 9-му, 10-му придётся подселяться!'));
     } else if(step===1){
-      h=col(big('Попробуем «избежать» пары'),
-        l2Birds(4,'a',false)+
-        l2Cages(3,[1,1,1],'b')+
-        sml('4 голубя, 3 клетки. Сажаем по одному: 3 птицы заняли все клетки… а четвёртому некуда!'));
+      const done=st.s1||0;
+      const sub=Math.max(0,done-10);
+      const cells=Array.from({length:10},(_,i)=>({n:(done>i?1:0)+(i<sub?1:0),t:''+(i+1)}));
+      h=col(l2B('ПРИНЦИП В ДЕЙСТВИИ','#7fd1a0')+
+        big('(n+1) в n: 11 голубей, 10 клеток')+
+        l2Fly(Math.max(0,11-done),20)+
+        (done>0?l2Rack(cells,'b'):'')+
+        (done>=11?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0">11-му некуда — он подселяется к кому-то!</div>`:'')+
+        btns(btn('🕊️ посадить',`l2Act('${lk}','sit1')`,done>=11?'disabled':''),btn('↺',`l2Act('${lk}','rst')`))+
+        sml('классика Дирихле: если голубей больше клеток, в какой-то клетке их минимум двое!'));
     } else if(step===2){
-      h=col(big('Четвёртый голубь вынужден подселиться!'),
-        l2Birds(4,'c',false)+
-        l2Cages(3,[2,1,1],'d')+
-        `<div class="wv-ans" style="font-size:22px;color:#ffd9a0">в одной клетке — минимум 2 голубя!</div>`+
-        sml('куда бы он ни сел — в какой-то клетке уже есть голубь. Пара гарантирована!'));
+      const r=Math.min(4,st.r||0);
+      const steps=[
+        ['1️⃣','Предположим ПРОТИВНОЕ: в каждой клетке сидит не больше 1 голубя.','#7fb7d8'],
+        ['2️⃣','Тогда во всех 7 клетках поместится не больше 7 голубей.','#7fd1a0'],
+        ['3️⃣','Но у нас 10 голубей — 10 > 7! Противоречие.','#ff9a8a'],
+        ['4️⃣','Значит, предположение неверно: где-то обязательно 2 голубя. Доказано!','#ffd966']
+      ];
+      h=col(l2B('ДОКАЗАТЕЛЬСТВО','#7fb7d8')+
+        big('Рассуждаем «от противного»')+
+        `<div style="display:flex;flex-direction:column;gap:7px;max-width:340px;width:100%">
+          ${steps.filter((s,i)=>i<r).map(s=>`<div class="wv-pop" style="background:rgba(255,255,255,.04);border:1px solid ${s[2]}55;border-left:5px solid ${s[2]};border-radius:10px;padding:8px 12px;text-align:left;font-size:14px;color:#e8dcc8"><b style="color:${s[2]}">${s[0]}</b> ${s[1]}</div>`).join('')}
+        </div>`+
+        btns(btn('▶ следующий шаг',`l2Act('${lk}','stp')`,r>=4?'disabled':''),btn('↺ заново',`l2Act('${lk}','rst')`))+
+        sml('так доказывают «гарантированно»: допусти, что НЕ так — и получи противоречие!'));
     } else if(step===3){
-      h=col(big('Принцип Дирихле'),
-        rowC(chip('n голубей','rgba(127,209,255,.5)'),chip('m клеток','rgba(232,160,90,.5)'),chip('n > m','rgba(127,184,160,.5)'))+
-        `<div class="wv-ans" style="font-size:21px;color:#7fd1a0">если голубей больше клеток — где-то есть «соседи»</div>`+
-        sml('немецкий математик Дирихле заметил: больше предметов, чем ящиков → в одном ящике не меньше двух!'));
+      const pick=st.pick;
+      h=col(l2B('ГЛАВНЫЙ СЕКРЕТ','#c9b28a')+
+        big('Сначала выбери «ящики»!')+
+        `<div style="background:rgba(127,183,216,.06);border:1px solid rgba(127,183,216,.3);border-radius:12px;padding:8px 14px;max-width:330px;font-size:15px;color:#e8dcc8">Задача: «В классе 25 учеников. Докажи, что какие-то двое родились в один месяц».</div>`+
+        `<div style="font-size:13px;color:#9ec0a8">Что здесь «ящики» (куда раскладываем)?</div>`+
+        btns(btn('🧒 ученики',`l2Act('${lk}','pick:0')`),btn('📅 месяцы года',`l2Act('${lk}','pick:1')`),btn('🍎 яблоки',`l2Act('${lk}','pick:2')`))+
+        (pick===1?`<div class="wv-ans" style="font-size:19px;color:#7fd1a0">✅ Точно! Ящики — 12 месяцев, «кролики» — 25 учеников. 25 > 12 → двое в один месяц!</div>`:'')+
+        (pick===0||pick===2?`<div class="l35-pop" style="font-size:15px;color:#ff9a8a">❌ Не то! Куда мы раскладываем людей? По месяцам рождения!</div>`:'')+
+        sml('кто «кролики» — предметы, что «ящики» — корзины, куда их кладут. Правильный выбор — половина решения!'));
     } else if(step===4){
-      h=col(big('Почему «гарантированно»?'),
-        rowC(chip('самое «честное» размещение — по одному','rgba(127,209,255,.5)'),chip('если и тогда есть пара — пара будет всегда','rgba(217,164,65,.5)'))+
-        sml('мы проверили худший случай. Раз в худшем случае пара есть — она есть ВСЕГДА, как ни сажай!'));
+      const n=st.p4||0;
+      const cells=Array.from({length:12},(_,i)=>{ const full=Math.floor(n/12)+(i<n%12?1:0); return {n:full,t:['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'][i]}; });
+      const trip=cells.some(c=>c.n>=3);
+      h=col(l2B('КЛАССИКА: МЕСЯЦЫ','#ffd966')+
+        big('25 учеников · 12 месяцев → ⌈25/12⌉ = 3')+
+        `<div style="font-size:12.5px;color:#9ec0a8">раскладываем «честно», по кругу: месяц за месяцем</div>`+
+        (n>0?l2Rack(cells,'c'):`<div style="min-height:44px"></div>`)+
+        (trip?`<div class="wv-ans" style="font-size:20px;color:#ffd966">появился месяц с 3 учениками — гарантированно!</div>`:'')+
+        btns(btn('👦 + ученик',`l2Act('${lk}','add4')`,n>=25?'disabled':''),btn('⚡ сразу 25',`l2Act('${lk}','set4')`,n>=25?'disabled':''))+
+        sml('кликай: 24 ученика разложатся по 2 в месяц, а 25-му некуда — где-то станет 3!'));
     } else if(step===5){
-      h=col(big('Формула: ⌈n/m⌉'),
-        rowC(chip('⌈⌉ — округлить ВВЕРХ','rgba(127,209,255,.5)'),chip('10 : 7 = 1,4… → ⌈⌉ = 2','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">⌈10/7⌉ = 2 голубя</div>`+
-        sml('делим голубей на клетки и округляем вверх — получаем гарантированный минимум!'));
+      const dn=st.dn||8, ck=st.ck||5;
+      const ans=Math.ceil(dn/ck);
+      const cells=Array.from({length:ck},(_,i)=>({n:Math.floor(dn/ck)+(i<dn%ck?1:0),t:''+(i+1)}));
+      h=col(l2B('ОБОБЩЕНИЕ','#7fd1a0')+
+        big('Минимум в одной клетке: ⌈n/k⌉')+
+        `<div style="display:flex;gap:18px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">голуби n</div><div style="display:flex;align-items:center;gap:6px"><button class="hint-btn" onclick="l2Act('${lk}','dnM')">−</button><span style="font-family:Georgia,serif;font-size:32px;color:#fff;min-width:38px">${dn}</span><button class="hint-btn" onclick="l2Act('${lk}','dnP')">+</button></div></div>
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">клетки k</div><div style="display:flex;align-items:center;gap:6px"><button class="hint-btn" onclick="l2Act('${lk}','ckM')">−</button><span style="font-family:Georgia,serif;font-size:32px;color:#fff;min-width:38px">${ck}</span><button class="hint-btn" onclick="l2Act('${lk}','ckP')">+</button></div></div>
+        </div>`+
+        `<div style="background:rgba(127,255,170,.09);border:1.5px solid #7fd1a066;border-radius:14px;padding:10px;max-width:300px;font-family:Georgia,serif;color:#7fd1a0;font-size:26px">⌈${dn}/${ck}⌉ = ${ans}</div>`+
+        l2Rack(cells,'e')+
+        sml('крути ползунки! «Честный» расклад показан на клетках: в какой-то всегда не меньше ⌈n/k⌉.'));
     } else if(step===6){
-      h=col(big('Смотрим на примере'),
-        l2Birds(10,'e',true)+
-        l2Cages(7,[2,2,2,1,1,1,1],'f')+
-        sml('10 голубей, 7 клеток: даже поровну — в трёх клетках по 2! ⌈10/7⌉ = 2'));
+      const n=st.p6||0;
+      const parts=[Math.floor(n/3)+(n%3>0?1:0),Math.floor(n/3)+(n%3>1?1:0),Math.floor(n/3)];
+      const names=[['🍬','карамель'],['🍫','шоколад'],['🍭','леденец']];
+      h=col(l2B('КОНФЕТЫ','#ff9a8a')+
+        big('25 конфет 3 сортов → ⌈25/3⌉ = 9')+
+        `<div style="font-size:12.5px;color:#9ec0a8">сорта — «ящики»! Раскладываем по кругу: сорт 1, 2, 3, 1, 2, 3…</div>`+
+        `<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:3px 0">
+          ${[0,1,2].map(i=>`<div class="wv-in" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${parts[i]>=9?'#ffd966':'#3d5c49'};border-radius:12px;padding:6px 12px;min-width:86px">
+            <div style="font-size:34px">${names[i][0]}</div>
+            <div style="font-size:10px;color:#9ec0a8">${names[i][1]}</div>
+            <div style="font-family:Georgia,serif;font-size:30px;color:${parts[i]>=9?'#ffd966':'#e8dcc8'}">${parts[i]||''}</div>
+            <div style="font-size:9px;color:#7f93a8">${'⬤'.repeat(Math.min(parts[i],9))}</div>
+          </div>`).join('')}
+        </div>`+
+        btns(btn('🍬 разложить по одной',`l2Act('${lk}','add6')`,n>=25?'disabled':''),btn('⚡ все 25',`l2Act('${lk}','set6')`,n>=25?'disabled':''))+
+        (n>=25?`<div class="wv-ans" style="font-size:22px;color:#ff9a8a">в одном сорте 9! «Худший случай»: 8+8+8 = 24 — а 25-я даёт 9.</div>`:'')+
+        sml('как ни раскладывай 25 конфет по 3 сортам — один сорт наберёт не меньше 9!'));
     } else if(step===7){
-      h=col(big('Месяцы рождения'),
-        rowC(chip('12 месяцев — клетки','rgba(232,160,90,.5)'),chip('ученики — голуби','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">25 : 12 = 2,08… → ⌈⌉ = 3</div>`+
-        sml('как в нашей проверке: 25 учеников, 12 месяцев → гарантированно 3 родились в один месяц!'));
+      const n=st.p7||0;
+      const cells=Array.from({length:13},(_,i)=>{ const full=Math.floor(n/13)+(i<n%13?1:0); return {n:full,t:''+i}; });
+      const trip=cells.some(c=>c.n>=3);
+      h=col(l2B('ОШИБКИ В ДИКТАНТЕ','#7fb7d8')+
+        big('30 учеников → трое с одинаковым числом ошибок')+
+        `<div style="font-size:12.5px;color:#9ec0a8">у Паши 13 ошибок, у остальных 29 — от 0 до 12. Ящики: 13 чисел ошибок!</div>`+
+        (n>0?l2Rack(cells,'f'):`<div style="min-height:44px"></div>`)+
+        (trip||n>=29?`<div class="wv-ans" style="font-size:19px;color:#7fb7d8">⌈29/13⌉ = 3 — трое набрали одинаково!</div>`:'')+
+        btns(btn('✏️ + ученик',`l2Act('${lk}','add7')`,n>=29?'disabled':''),btn('⚡ все 29',`l2Act('${lk}','set7')`,n>=29?'disabled':''))+
+        sml('«ящики» — возможные результаты (0, 1, …, 12 ошибок). 29 «кроликов» по 13 ящикам → где-то 3!'));
     } else if(step===8){
-      h=col(big('Проверка «от противного»'),
-        rowC(chip('предположим: в каждом месяце ≤ 2','rgba(127,209,255,.5)'),chip('тогда всего ≤ 12·2 = 24','rgba(232,160,90,.5)'),chip('а у нас 25!','rgba(232,160,90,.5)'))+
-        sml('если бы нигде не было трёх — поместилось бы максимум 24. Раз 25 — тройка обязана быть!'));
+      const n=st.p8||0;
+      const cells=Array.from({length:5},(_,i)=>({n:Math.floor(n/5)+(i<n%5?1:0),t:'число '+(i+1)}));
+      const dup=cells.some(c=>c.n>=2);
+      h=col(l2B('ЕЛИ И ИГОЛКИ','#7fd1a0')+
+        big('800 000 елей → две с одинаковым числом иголок')+
+        `<div style="font-size:12.5px;color:#9ec0a8">мини-модель: 8 елей, чисел иголок 5 (от 1 до 5). Ели — «кролики», числа — «ящики»!</div>`+
+        `<div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin:2px 0">${Array.from({length:8},(_,i)=>`<span class="wv-pop" style="animation-delay:${i*0.1}s;font-size:30px;opacity:${i<n?1:.12}">🌲</span>`).join('')}</div>`+
+        (n>0?l2Rack(cells,'g'):`<div style="min-height:44px"></div>`)+
+        (dup?`<div class="wv-ans" style="font-size:19px;color:#7fd1a0">две ели попали в одно число иголок!</div>`:'')+
+        btns(btn('🌲 посадить ель',`l2Act('${lk}','add8')`,n>=8?'disabled':''),btn('⚡ все 8',`l2Act('${lk}','set8')`,n>=8?'disabled':''))+
+        sml('ели (800 000) больше, чем чисел (500 000) → совпадение неизбежно, как в учебнике!'));
     } else if(step===9){
-      h=col(big('Носки и цвета'),
-        rowC(chip('13 носков, 6 цветов','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">⌈13/6⌉ = 3 носка одного цвета</div>`+
-        sml('цвета — клетки! Если бы каждого цвета было ≤2, всего было бы ≤12. А носков 13!'));
+      const nums=[17,9,22,5,31,14];
+      const got=st.nums||[];
+      const cnt=[0,0,0,0,0];
+      got.forEach(x=>cnt[x%5]++);
+      const dup=cnt.some(c=>c>=2);
+      const next=nums[got.length];
+      h=col(l2B('ЧИСЛА И ОСТАТКИ','#c9b28a')+
+        big('6 чисел → два с разностью, кратной 5')+
+        `<div style="font-size:12.5px;color:#9ec0a8">ящики — 5 остатков от деления на 5 (0,1,2,3,4). Бросаем числа по одному!</div>`+
+        `<div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:2px 0">${nums.map((x,i)=>`<span class="${i<got.length?'wv-pop':''}" style="font-family:Georgia,serif;font-size:20px;color:${i<got.length?'#ffd966':'#4a5c52'};border:1px solid ${i<got.length?'#ffd96666':'#3d5c49'};border-radius:9px;padding:3px 8px">${x}</span>`).join('')}</div>`+
+        (got.length>0?l2Rack([0,1,2,3,4].map(i=>({n:cnt[i],t:'ост. '+i})),'h'):`<div style="min-height:44px"></div>`)+
+        btns(btn('🎲 бросить '+(next!=null?next:'—'),`l2Act('${lk}','num:'+next)`,next==null?'disabled':''),btn('↺',`l2Act('${lk}','rst')`))+
+        (dup?`<div class="wv-ans" style="font-size:18px;color:#cbb89a">два числа в одном остатке: их разность делится на 5! (например, остатки равны → разность кратна 5)</div>`:'')+
+        sml('6 предметов, 5 ящиков: шестое число обязано попасть в занятый остаток!'));
     } else if(step===10){
-      h=col(big('Задача 1: 28 учеников'),
-        rowC(chip('28 учеников','rgba(127,209,255,.5)'),chip('12 месяцев','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">⌈28/12⌉ = ⌈2,33…⌉ = 3</div>`+
-        sml('как в наших задачках: 28 : 12 = 2,33 → округляем вверх → 3!'));
+      const socks=st.socks||[];
+      const cnt=[0,0,0,0,0,0];
+      socks.forEach(c=>cnt[c]++);
+      const pair=cnt.some(v=>v>=2);
+      const cols10=['#ff8a6a','#7fb7d8','#7fd1a0','#ffd966','#d9a0ff','#c9b28a'];
+      const names=['красный','синий','зелёный','жёлтый','фиолет','коричневый'];
+      h=col(l2B('ПОИСКИ В ТЕМНОТЕ','#ff8a6a')+
+        big('6 цветов носков → хватит 7 носков')+
+        `<div style="background:linear-gradient(180deg,#1c2733,#0f1721);border:1px solid #3d5c49;border-radius:14px;padding:8px 10px;max-width:330px">
+          <div style="font-size:11px;color:#7f93a8;text-align:center;margin-bottom:3px">🌑 темнота… тянем носки не глядя</div>
+          <div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;min-height:28px">${socks.map((c,i)=>`<span class="wv-pop" style="font-size:26px">🧦</span>`).join('')||'<span style="color:#4a5c52;font-size:13px;align-self:center">— пока пусто —</span>'}</div>
+          <div style="display:flex;justify-content:center;gap:5px;margin-top:4px">${names.map((nm,i)=>`<button class="hint-btn" style="background:${cols10[i]}33;border:1px solid ${cols10[i]};font-size:12px;padding:3px 6px" onclick="l2Act('${lk}','sock:${i}')">${nm}</button>`).join('')}</div>
+        </div>`+
+        (socks.length>0?`<div style="font-size:13px;color:#e8dcc8">вытянуто носков: <b style="color:#ffd966">${socks.length}</b></div>`:'')+
+        (pair?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0">пара есть — на ${socks.length}-м носке!</div>`:'')+
+        sml('как ни тяни: 6 носков могут оказаться всех цветов, но 7-й обязан повторить цвет — ящиков всего 6!'));
     } else if(step===11){
-      h=col(big('Задача 2: 40 карандашей'),
-        rowC(chip('40 карандашей','rgba(127,209,255,.5)'),chip('7 цветов','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">⌈40/7⌉ = ⌈5,71…⌉ = 6</div>`+
-        sml('как в наших задачках: если бы каждого цвета было ≤5, всего ≤35 < 40. Значит, где-то 6!'));
+      const pe=st.pe||13;
+      const clash=pe>366;
+      const fill=Math.min(pe,366);
+      h=col(l2B('ДНИ РОЖДЕНИЯ','#7fb7d8')+
+        big('Сколько человек нужно, чтобы двое родились в один день?')+
+        `<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">человек в комнате</div><div style="display:flex;align-items:center;gap:8px"><button class="hint-btn" onclick="l2Act('${lk}','peM')">−</button><span style="font-family:Georgia,serif;font-size:34px;color:#fff;min-width:52px">${pe}</span><button class="hint-btn" onclick="l2Act('${lk}','peP')">+</button></div></div>
+        </div>`+
+        `<div style="font-size:12px;color:#9ec0a8">дней-«ящиков»: 366. При ${pe} людях: ${pe<=366?'можно избежать совпадения (в теории)':'дней не хватит!'}</div>`+
+        `<div style="width:100%;max-width:330px;height:15px;background:#13251c;border:1px solid #3d5c49;border-radius:8px;overflow:hidden;margin:3px auto"><div style="width:${Math.min(100,fill/366*100)}%;height:100%;background:linear-gradient(90deg,#3d8ab0,#8fd0f0);transition:width .2s"></div></div>`+
+        (clash?`<div class="wv-ans" style="font-size:21px;color:#7fd1a0">${pe} > 366 → двое родились в один день! (а в театре 2000 зрителей!)</div>`:'')+
+        (pe===366?`<div style="font-size:13px;color:#ffd9a0">366 — предел без совпадений… добавь ещё одного!</div>`:'')+
+        sml('крути! Ответ: 367 человек гарантируют совпадение (366 ящиков + 1 «кролик»).'));
     } else if(step===12){
-      h=col(big('Почему округляем ВВЕРХ?'),
-        rowC(chip('5,71 «целых» карандаша не бывает','rgba(127,209,255,.5)'),chip('раз больше 5 — значит минимум 6','rgba(232,160,90,.5)'))+
-        sml('ответ «5 с хвостиком» невозможен — предметы целые! Поэтому берём следующее целое'));
+      h=col(l2B('ТЕСТ ИЗ 100 ЗАДАНИЙ','#ffd966')+
+        big('1800 учеников → 59 с одинаковым счётом')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop" style="background:rgba(127,183,216,.06);border:1px solid rgba(127,183,216,.3);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8">у Сидорова 31 ошибка, у остальных — меньше: результаты 0…30. «Ящиков» — 31!</div>
+          <div class="wv-pop2" style="background:rgba(127,209,160,.06);border:1px solid rgba(127,209,160,.3);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8">остальных учеников: 1800 − 1 = 1799 «кроликов»</div>
+          <div class="wv-pop3" style="background:rgba(255,217,102,.08);border:1px solid rgba(255,217,102,.4);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8">31 ящик · по 58 = 1798 мест. Куда сядет 1799-й? В ящик с 59-м!</div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:34px;color:#7fd1a0">⌈1799/31⌉ = 59</div>`+
+        sml('проверь: 58·31 = 1798 < 1799. Если бы везде было ≤58 — мест бы не хватило!'));
     } else if(step===13){
-      h=col(big('Три шага решения'),
-        rowC(chip('1) что голуби?','rgba(127,209,255,.5)'),chip('2) что клетки?','rgba(232,160,90,.5)'),chip('3) ⌈n/m⌉','rgba(217,164,65,.5)'))+
-        sml('главное — понять, что раскладываем и куда. Потом деление и округление вверх!'));
+      const pts=st.pts||[];
+      const fixed=[[14,12],[45,14],[30,30],[22,22],[38,20]];
+      h=col(l2B('ГЕОМЕТРИЯ','#7fd1a0')+
+        big('5 точек в треугольнике → 2 ближе 0,5')+
+        l2Tri(pts,'i')+
+        `<div style="display:flex;justify-content:center;gap:5px;flex-wrap:wrap">${fixed.map((p,i)=>`<button class="hint-btn" style="${pts.length>i?'opacity:.35':''}" ${pts.length>i?'disabled':''} onclick="l2Act('${lk}','pt:${p[0]},${p[1]}')">точка ${i+1}</button>`).join('')}</div>`+
+        (pts.length>=5?`<div class="wv-ans" style="font-size:18px;color:#ffd966">в каком-то из 4 треугольников две точки — они ближе 0,5!</div>`:'')+
+        sml('разбили на 4 «ящика»-треугольника со стороной 0,5: 5 точек → два «соседа»!'));
     } else if(step===14){
-      h=col(big('Где пригодится'),
-        rowC(chip('дни рождения','rgba(127,209,255,.4)'),chip('носки из шкафа','rgba(127,209,255,.4)'),chip('карандаши по цветам','rgba(127,209,255,.4)'),chip('голуби в клетках','rgba(217,164,65,.4)'))+
-        sml('везде, где спрашивают «гарантированно» — Дирихле сразу говорит ответ!'));
+      const tm=st.tm||6;
+      h=col(l2B('ТУРНИР','#7fb7d8')+
+        big('n команд → две сыграли одинаково')+
+        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:4px 0">${Array.from({length:tm},(_,i)=>`<span class="wv-pop" style="animation-delay:${i*0.09}s;font-size:36px">${['⚽','🏀','🏐','🎾','🏉','🥎','⚾','🏏','🎱','🏓'][i]}</span>`).join('')}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop" style="background:rgba(127,183,216,.06);border:1px solid rgba(127,183,216,.3);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8">каждая команда сыграла от 0 до ${tm-1} матчей — вроде ${tm} вариантов на ${tm} команд…</div>
+          <div class="wv-pop2" style="background:rgba(255,217,102,.08);border:1px solid rgba(255,217,102,.4);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8">но «0 матчей» и «${tm-1} матчей» не могут быть одновременно! → вариантов ${tm-1}, команд ${tm}</div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:21px;color:#7fd1a0">две команды сыграли одинаковое число матчей!</div>`+
+        btns(btn('− команда',`l2Act('${lk}','tmM')`),btn('+ команда',`l2Act('${lk}','tmP')`))+
+        sml('если кто-то ещё не играл — никто не мог сыграть все матчи! Ящиков n−1, команд n.'));
     } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('10 голубей, 3 клетки → ⌈10/3⌉ = 4','rgba(127,184,160,.5)'),chip('8 голубей, 5 клеток → 2','rgba(127,184,160,.5)'))+
-        sml('10 : 3 = 3,33 → 4! Проверь: 3·3 = 9 < 10 — четвёртый обязан появиться'));
+      if(st.ei==null) st.ei=0;
+      const e=L2EXAM[st.ei%L2EXAM.length];
+      const pick=st.pick;
+      const opts=[[e.w,'A'],[e.w2,'B'],[e.w3,'C']];
+      h=col(l2B('ТРЕНАЖЁР: НАЙДИ ЯЩИКИ','#ffd966')+
+        big('Что здесь «ящики»?')+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:330px;font-size:15px;color:#e8dcc8;line-height:1.6">${e.t}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:7px;max-width:330px;width:100%">
+          ${opts.map((o,i)=>`<button class="hint-btn" onclick="l2Act('${lk}','pick:${i}')" style="text-align:left;${pick===i?'border-color:#ffd966':''}">${o[1]}. ${o[0]}</button>`).join('')}
+        </div>`+
+        (pick===e.an?`<div class="wv-ans" style="font-size:17px;color:#7fd1a0">✅ ${e.exp}</div>`:'')+
+        (pick!==null&&pick!==e.an?`<div class="l35-pop" style="font-size:14px;color:#ff9a8a">❌ Не те ящики! ${e.exp}</div>`:'')+
+        btns(btn('🎲 другая ситуация',`l2Act('${lk}','exam')`))+
+        sml('ящики — «полочки», по которым раскладываем предметы. Найди их — принцип сработает!'));
     } else if(step===16){
-      const POOL=[['n','7','4'],['n','10','3'],['n','9','4'],['n','12','5'],['n','8','3'],['n','15','4'],['n','11','5'],['n','13','6'],['n','17','4'],['n','14','5'],['n','19','6'],['n','16','7']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i];
-      const n=+e[1], m=+e[2];
-      const ans=Math.ceil(n/m);
-      h=col(big('🕊️ Тренажёр: принцип Дирихле'),
-        `<div class="wv-row">${chip(n+' голубей, '+m+' клеток → сколько гарантированно в одной?','rgba(217,164,65,.35)')}</div>`+
-        l2Cages(m,null,'t')+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) делим: ${n} : ${m} = ${(n/m).toFixed(2)}… → округляем ВВЕРХ</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
-        btns(btn('1️⃣ подумай',`l2Act('${lk}','s1')`),btn('2️⃣ ответ',`l2Act('${lk}','s2')`),btn('🎲 другие',`l2Act('${lk}','n')`),btn('↺',`l2Act('${lk}','r')`))+
-        sml('⌈n/m⌉: дели голубей на клетки и округляй вверх!'));
+      if(st.gn==null){ st.gn=7; st.gk=3; }
+      const gn=st.gn, gk=st.gk, ans=Math.ceil(gn/gk);
+      const cells=Array.from({length:gk},(_,i)=>({n:Math.floor(gn/gk)+(i<gn%gk?1:0),t:''+(i+1)}));
+      const opts=[ans,Math.max(1,ans-1),ans+1,Math.max(1,Math.floor(gn/gk))];
+      const uniq=[]; opts.forEach(o=>{ if(uniq.indexOf(o)<0) uniq.push(o); });
+      while(uniq.length<4) uniq.push(Math.max(1,ans+uniq.length+3));
+      h=col(l2B('ИГРА «СКОЛЬКО ГАРАНТИРОВАННО?»','#7fd1a0')+
+        big(`${gn} голубей в ${gk} клетках: минимум в одной?`)+
+        l2Rack(cells,'j')+
+        `<div style="font-size:12.5px;color:#9ec0a8">самый «честный» расклад показан. Дели и округляй вверх!</div>`+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">${uniq.map((o,i)=>`<button class="hint-btn" onclick="l2Act('${lk}','pick:${o}')" style="font-size:21px;min-width:56px;${st.pick===o?'border-color:#7fd1a0':''}">${o}</button>`).join('')}</div>`+
+        (st.pick===ans?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0">✅ ⌈${gn}/${gk}⌉ = ${ans} — верно!</div>`:'')+
+        (st.pick!==null&&st.pick!==undefined&&st.pick!==ans?`<div class="l35-pop" style="font-size:15px;color:#ff9a8a">❌ ${gn} : ${gk} = ${(gn/gk).toFixed(2)}… Округляем ВВЕРХ!</div>`:'')+
+        btns(btn('🎲 другие числа',`l2Act('${lk}','newq')`),btn('↺',`l2Act('${lk}','rst')`))+
+        sml('голубей больше клеток — в какой-то клетке не меньше ⌈n/k⌉!'));
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+      h=col(`<div style="font-size:54px">🕊️</div>`+big('Совет Архимеда')+
         `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
           <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
           <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🕊️ Голубей больше клеток → есть пара.<br>
-            📊 Ответ: ⌈n/m⌉ — округли ВВЕРХ.<br>
-            🧦 13 носков, 6 цветов → 3 одного цвета.<br>
-            🎂 25 учеников, 12 месяцев → 3 в один месяц.</div>
+            🕊️ n+1 предмет в n ящиков → пара.<br>
+            📊 Обобщение: минимум ⌈n/k⌉.<br>
+            🧦 6 цветов носков → 7-й даёт пару.<br>
+            📅 366 дней → 367 человек = совпадение.<br>
+            ✏️ Сначала выбери «ящики»!</div>
         </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        btn('⟲ вернуться к игре', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 25 учеников и 12 месяцев'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
