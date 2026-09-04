@@ -515,6 +515,30 @@
     background:radial-gradient(circle at 35% 30%,#ffe9a8,#d9a441); }
   .wv-cable { position:relative; height:34px; background:
     repeating-linear-gradient(90deg,#3d5c49 0 7px,#182f24 7px 14px); border-radius:6px; overflow:hidden; }
+  /* ============ рукопожатия (урок 11, v163) ============ */
+  .l11-draw { stroke-dasharray:520; stroke-dashoffset:520; animation:l11Draw 1s ease forwards; }
+  @keyframes l11Draw { to { stroke-dashoffset:0 } }
+  .l11-hand { display:inline-block; animation:l11Hand .55s cubic-bezier(.2,.8,.3,1.2) both; }
+  @keyframes l11Hand { 0%{transform:translateX(-46px);opacity:0} 60%{transform:translateX(6px)} 100%{transform:translateX(0);opacity:1} }
+  .l11-hand-r { display:inline-block; animation:l11HandR .55s cubic-bezier(.2,.8,.3,1.2) both; }
+  @keyframes l11HandR { 0%{transform:translateX(46px);opacity:0} 60%{transform:translateX(-6px)} 100%{transform:translateX(0);opacity:1} }
+  .l11-tile { animation:l11Tile .4s ease both; }
+  @keyframes l11Tile { 0%{transform:translateY(16px) scale(.5);opacity:0} 100%{transform:translateY(0) scale(1);opacity:1} }
+  .l11-grow { animation:l11Grow .6s ease both; }
+  @keyframes l11Grow { 0%{transform:scaleY(.1);opacity:.4} 100%{transform:scaleY(1);opacity:1} }
+  .l11-sway { animation:l11Sway 1.6s ease-in-out infinite; }
+  @keyframes l11Sway { 0%,100%{transform:rotate(-2.5deg)} 50%{transform:rotate(2.5deg)} }
+  .l11-guest { display:inline-flex; align-items:center; justify-content:center; border-radius:50%;
+    font-weight:bold; color:#fff; position:relative; }
+  .l11-guest::after { content:''; position:absolute; inset:-4px; border-radius:50%;
+    border:2px solid transparent; }
+  @keyframes l11Hi { 0%,100%{transform:translateY(0)} 25%{transform:translateY(-4px)} 75%{transform:translateY(1px)} }
+  .l11-hi { animation:l11Hi 1.1s ease-in-out infinite; }
+  .l11-in { animation:l11In .6s ease both; }
+  @keyframes l11In { 0%{transform:translateX(-70px);opacity:0} 100%{transform:translateX(0);opacity:1} }
+  .l11-fade { opacity:0; animation:l11Fade .5s ease forwards; }
+  @keyframes l11Fade { to { opacity:1 } }
+  .l11-pop2 { animation:wvPop .4s ease .15s both; }
 </style>
 </head>
 <body>
@@ -543,21 +567,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=163"></script>
-<script src="data/lessons.js?v=163"></script>
-<script src="js/comic.js?v=163"></script>
-<script src="js/core.js?v=163"></script>
-<script src="js/engine.js?v=163"></script>
-<script src="js/app.js?v=163"></script>
-<script src="js/dashboard.js?v=163"></script>
-<script src="js/lessons.js?v=163"></script>
-<script src="js/legend.js?v=163"></script>
-<script src="js/simulator.js?v=163"></script>
-<script src="js/duel.js?v=163"></script>
-<script src="js/agent.js?v=163"></script>
-<script src="js/voice.js?v=163"></script>
-<script src="js/assistant.js?v=163"></script>
-<script src="js/agentlive.js?v=163"></script>
+<script src="data/tasks.js?v=164"></script>
+<script src="data/lessons.js?v=164"></script>
+<script src="js/comic.js?v=164"></script>
+<script src="js/core.js?v=164"></script>
+<script src="js/engine.js?v=164"></script>
+<script src="js/app.js?v=164"></script>
+<script src="js/dashboard.js?v=164"></script>
+<script src="js/lessons.js?v=164"></script>
+<script src="js/legend.js?v=164"></script>
+<script src="js/simulator.js?v=164"></script>
+<script src="js/duel.js?v=164"></script>
+<script src="js/agent.js?v=164"></script>
+<script src="js/voice.js?v=164"></script>
+<script src="js/assistant.js?v=164"></script>
+<script src="js/agentlive.js?v=164"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -572,7 +596,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=163').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=164').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>

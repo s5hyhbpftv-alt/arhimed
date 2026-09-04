@@ -8739,150 +8739,269 @@ function visL12(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+// ===================== УРОК 11 «РУКОПОЖАТИЯ» (v164) =====================
 function l11Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break; case 's3': st.s3=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%14; st.s1=st.s2=st.s3=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  if(a0==='s1'){ st.s1=1; }
+  if(a0==='s2'){ st.s2=1; }
+  if(a0==='s3'){ st.s3=1; }
+  if(a0==='n'){ st.i=((st.i==null?0:st.i)+1); st.s1=st.s2=st.s3=0; }
+  if(a0==='r'){ CHS[lk]={}; }
   chRender(0);
 }
-function l11Graph(n,uid,opt){
-  // полный граф: n точек на окружности, все попарные линии; opt.last — подсветить линии от последней точки
-  const o=opt||{};
-  const size=o.s||180, cx=size/2, cy=size/2+6, r=size/2-26;
-  const pts=[];
-  for(let i=0;i<n;i++){ const a=-90+i*360/n; pts.push([cx+r*Math.cos(a*Math.PI/180), cy+r*Math.sin(a*Math.PI/180)]); }
-  let edges='';
-  const last=o.last!=null?o.last:n-1;
-  for(let i=0;i<n;i++) for(let j=i+1;j<n;j++){
-    const fromLast=(j===last||i===last)&&o.last!=null;
-    edges+=`<line x1="${pts[i][0].toFixed(1)}" y1="${pts[i][1].toFixed(1)}" x2="${pts[j][0].toFixed(1)}" y2="${pts[j][1].toFixed(1)}" stroke="${fromLast?'#ffd9a0':'rgba(127,209,255,.4)'}" stroke-width="${fromLast?2.6:1.4}"/>`;
-  }
-  const nodes=pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="11" fill="${i===last&&o.last!=null?'#ffd9a0':'#3a6fa8'}" stroke="#fff" stroke-width="1.5"/><text x="${p[0].toFixed(1)}" y="${(p[1]+4).toFixed(1)}" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">${i+1}</text>`).join('');
-  return `<div style="text-align:center"><svg width="${size}" height="${size+8}" viewBox="0 0 ${size} ${size+8}" style="display:block;margin:0 auto">${edges}${nodes}</svg>
-    <div style="font-size:13px;color:#9fe8c0;margin-top:-2px">линий-рукопожатий: ${n*(n-1)/2}</div></div>`;
+const l11COLS=['#ffd966','#7fd1a0','#7fb7d8','#d9a0ff','#ff9a8a','#8fd0f0','#f0c75e','#9ae6b4','#e6a8ff','#ffb4a0','#7fe0c8','#c9b28a'];
+// гость-аватар: круг с номером и «лицом»
+function l11Guest(n,hot,sz){
+  const s=sz||30;
+  const c=l11COLS[n%l11COLS.length];
+  return `<span class="wv-pop ${hot?'l11-hi':''}" style="display:inline-flex;flex-direction:column;align-items:center;margin:1px">
+    <span style="width:${s}px;height:${s}px;border-radius:50%;background:radial-gradient(circle at 32% 28%,${c}66,${c}33);border:2.5px solid ${hot?'#fff':c};display:flex;align-items:center;justify-content:center;font-size:${Math.max(11,s*0.4)}px;font-weight:bold;color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4)">${n}</span>
+    <span style="font-size:8px;color:#9ec0a8;margin-top:1px">гость ${n}</span>
+  </span>`;
 }
-function l11SumTiles(n,uid){
-  // ступеньки 1+2+…+n: колонки возрастающей высоты
-  let s='';
-  for(let i=1;i<=n;i++){
-    s+=`<div style="display:flex;flex-direction:column-reverse;gap:1px;width:18px;margin:0 1px">${Array.from({length:i},(_,k)=>`<div class="l35-pop" style="animation-delay:${((i-1)*0.12+k*0.05).toFixed(2)}s;width:18px;height:8px;border-radius:2px;background:${i===n?'#ffd9a0':'#7fb8d8'}"></div>`).join('')}</div>`;
+// граф «каждый с каждым»: n точек по кругу, линии; opt.only — только линии от гостя from; opt.newN — подсветить нового гостя
+function l11Graph(n,opt){
+  const o=opt||{};
+  const S=o.s||200, cx=S/2, cy=S/2+2, R=S/2-26;
+  const pts=[];
+  for(let i=0;i<n;i++){ const a=-90+i*360/n; pts.push([cx+R*Math.cos(a*Math.PI/180), cy+R*Math.sin(a*Math.PI/180)]); }
+  let lines='', k=0;
+  const isNew=i=>o.newN!=null&&i>=o.newN;
+  const only=o.only; // рисовать линии только от этого гостя
+  for(let i=0;i<n;i++) for(let j=i+1;j<n;j++){
+    if(only!=null && i!==only && j!==only) continue;
+    const touchNew=isNew(i)||isNew(j);
+    const st1=touchNew?'#ffd966':(only!=null?'#ff9a8a':'rgba(127,209,255,.55)');
+    const w1=touchNew?3:(only!=null?2.2:1.6);
+    const del=(o.delay?o.delay*k*0.05:0)+ (touchNew?0.5:0);
+    lines+=`<line x1="${pts[i][0].toFixed(1)}" y1="${pts[i][1].toFixed(1)}" x2="${pts[j][0].toFixed(1)}" y2="${pts[j][1].toFixed(1)}" stroke="${st1}" stroke-width="${w1}" class="l11-fade" style="animation-delay:${del.toFixed(2)}s;${touchNew?'stroke-dasharray:400;stroke-dashoffset:400;animation:l11Fade .5s ease '+(0.6+o.delay*0.05).toFixed(2)+'s forwards, l11Draw .8s ease '+(0.6+o.delay*0.05).toFixed(2)+'s forwards;':''}"/>`;
+    k++;
   }
-  return `<div style="display:flex;justify-content:center;align-items:flex-end;margin:0 auto">${s}</div>`;
+  let nodes='';
+  for(let i=0;i<n;i++){
+    const hot=o.newN!=null&&i>=o.newN;
+    const c=hot?'#ffd966':l11COLS[i%l11COLS.length];
+    nodes+=`<circle cx="${pts[i][0].toFixed(1)}" cy="${pts[i][1].toFixed(1)}" r="15" fill="${c}44" stroke="${hot?'#fff':c}" stroke-width="2.4" class="${hot?'l11-in':''}" style="${hot?'animation-delay:.5s':''}"/>
+      <text x="${pts[i][0].toFixed(1)}" y="${(pts[i][1]+4.5).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">${i+1}</text>`;
+  }
+  return `<div style="text-align:center;margin:0 auto"><svg width="${S}" height="${S+6}" viewBox="0 0 ${S} ${S+6}" style="max-width:${S}px">${lines}${nodes}</svg></div>`;
+}
+// руки-«рукопожатие»: две ладони летят навстречу
+function l11Hands(sz,shake){
+  const s=sz||40;
+  return `<div style="display:flex;align-items:center;justify-content:center;gap:2px;margin:2px auto">
+    <span class="l11-hand" style="font-size:${s}px">🤚</span>
+    <span class="wv-pulse" style="font-size:${Math.round(s*0.55)}px">${shake?'💥':'✋'}</span>
+    <span class="l11-hand-r" style="font-size:${s}px">🤚</span>
+  </div>`;
+}
+// лесенка-«ступеньки»: столбики из плиток 1..n (значения cols)
+function l11Tiles(vals,uid){
+  const mx=Math.max(...vals);
+  let out='';
+  vals.forEach((v,i)=>{
+    out+=`<div style="display:flex;flex-direction:column;align-items:center;margin:0 1px">
+      <div style="font-size:11px;color:#ffd966;font-weight:bold;height:15px">${v}</div>
+      <div style="display:flex;flex-direction:column-reverse;gap:1px;height:${mx*9}px">
+        ${Array.from({length:v},(_,k)=>`<div class="l11-tile" style="animation-delay:${(i*0.09+k*0.05).toFixed(2)}s;width:${i===vals.length-1?22:18}px;height:${i===vals.length-1?10:8}px;border-radius:2px;background:${i===vals.length-1?'linear-gradient(180deg,#ffe9a8,#d9a441)':'linear-gradient(180deg,#7fb8d8,#4f7fa0)'};border:1px solid ${i===vals.length-1?'#a67c1e':'#2f5c80'}"></div>`).join('')}
+      </div>
+    </div>`;
+  });
+  return `<div style="display:flex;justify-content:center;align-items:flex-end;margin:2px auto;max-width:340px">${out}</div>`;
+}
+// сетка «кружков-рук» n×n без диагонали (n·(n-1)): показать двойной счёт
+function l11Grid(n,opt){
+  const o=opt||{};
+  const half=o.half!=null?o.half:null; // 1 — подсветить верхнюю половину (одну «сторону»)
+  let c='';
+  for(let i=0;i<n;i++) for(let j=0;j<n;j++){
+    if(i===j){ c+=`<div style="width:11px;height:11px;border-radius:3px;background:rgba(255,255,255,.05);margin:.5px"></div>`; continue; }
+    const up=i<j;
+    const dim=half===1&&!up;
+    c+=`<div class="l11-tile" style="animation-delay:${((i*n+j)*0.004).toFixed(2)}s;width:11px;height:11px;border-radius:3px;background:${dim?'rgba(255,255,255,.06)':(up?'#7fd1a055':'#d9a0ff55')};border:1px solid ${dim?'transparent':(up?'#7fd1a0':'#d9a0ff')};margin:.5px"></div>`;
+  }
+  return `<div style="display:grid;grid-template-columns:repeat(${n},12px);justify-content:center;gap:0;margin:2px auto;max-width:340px">${c}</div>`;
 }
 function visL11(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const lk=lidKey(LV.id);
     const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v11!==step) CHS[lk]={_v11:step};
+    const st=CHS[lk];
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
     const sml=(t)=>`<div class="wv-sml">${t}</div>`;
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const sumA=n=>{ let s=0; for(let i=1;i<n;i++) s+=i; return s; };
     let h='';
     if(step===0){
-      h=col(big('Вечеринка Архимеда'),
-        `<div style="font-size:46px" class="l35-pop">🤝</div>`+
-        big('10 гостей пожали друг другу руки по одному разу. Сколько рукопожатий?')+
-        sml('кажется, что считать сложно. но есть красивый способ — давай начнём с маленьких компаний!'));
+      // легенда: вечеринка
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#ffd96622;border:1px solid #ffd966;color:#ffd966;margin-bottom:2px">КЛАССИКА · КОМБИНАТОРИКА</span>`+
+        big('Вечеринка Архимеда: сколько рукопожатий?')+
+        `<div style="font-size:40px" class="wv-swing">🎉</div>`+
+        l11Hands(38,false)+
+        card('<b>На праздник пришли 10 гостей</b>, и <b style="color:#ffd966">каждый поздоровался с каждым</b> ровно один раз — рукопожатием. Сколько всего было рукопожатий?')+
+        rowC(l11Guest(1,false,26),l11Guest(2,false,26),l11Guest(3,false,26),l11Guest(4,false,26),l11Guest(5,false,26))+
+        rowC(l11Guest(6,false,26),l11Guest(7,false,26),l11Guest(8,false,26),l11Guest(9,false,26),l11Guest(10,false,26))+
+        `<div style="font-size:12px;color:#9ec0a8">10 гостей · каждый с каждым · ровно один раз</div>`+
+        sml('кажется, считать муторно… но есть красивый способ! Начнём с маленьких компаний.'));
     } else if(step===1){
-      h=col(big('Двое и трое'),
-        rowC(l11Graph(2,'a',{s:120}),l11Graph(3,'b',{s:120}))+
-        sml('2 человека — 1 рукопожатие. 3 человека — уже 3 (каждый с каждым!)'));
-    } else if(step===2){
-      h=col(big('Четверо: 6 рукопожатий'),
-        l11Graph(4,'c',{s:170})+
-        sml('посчитай линии: их ровно 6. попробуем понять, откуда берётся число'));
-    } else if(step===3){
-      h=col(big('Добавляем пятого'),
-        l11Graph(5,'d',{s:170,last:4})+
-        sml('новый гость (жёлтый) жмёт руку ВСЕМ четырём старым — плюс 4 линии!'));
-    } else if(step===4){
-      h=col(big('Правило «нового гостя»'),
-        `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:2px 0">
-          ${[[2,1],[3,2],[4,3],[5,4],[6,5],[7,6]].map(([n,add])=>chip(n+' человек: +'+add,'rgba(127,209,255,.35)')).join('')}
+      h=col(big('Начнём с малого: двое и трое')+
+        rowC(chip('2 гостя','#7fd1a0'),l11Graph(2,{s:120}),`<span style="font-size:24px;color:#ffd966;font-weight:bold">= 1</span>`)+
+        rowC(chip('3 гостя','#7fb7d8'),l11Graph(3,{s:140,delay:1}),`<span style="font-size:24px;color:#ffd966;font-weight:bold">= 3</span>`)+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['двое A и B','они здороваются друг с другом — 1 линия'],['трое A, B, C','пары A–B, A–C и B–C — уже 3 линии']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${i?'#7fb7d8':'#7fd1a0'};border-radius:9px;padding:5px 12px;max-width:336px;width:100%;text-align:left;font-size:13px;color:#e8dcc8">${x[0]}: <b style="color:#ffd966">${x[1]}</b></div>`).join('')}
         </div>`+
-        sml('когда приходит n-й гость, он добавляет n−1 рукопожатий. считаем накоплением!'));
+        sml('каждая линия между двумя точками — одно рукопожатие!'));
+    } else if(step===2){
+      h=col(big('Четверо: считаем линии')+
+        l11Graph(4,{s:200,delay:1})+
+        `<div class="wv-ans" style="font-size:24px;color:#ffd966">линий ровно 6!</div>`+
+        rowC(chip('A–B','#7fd1a0'),chip('A–C','#7fd1a0'),chip('A–D','#7fd1a0'),chip('B–C','#7fb7d8'),chip('B–D','#7fb7d8'),chip('C–D','#d9a0ff'))+
+        card('все пары гостей соединены: <b>A–B, A–C, A–D, B–C, B–D, C–D</b> — это и есть все 6 рукопожатий. Но считать «по парам» для 10 гостей неудобно…')+
+        sml('давай найдём закономерность — как растёт это число!'));
+    } else if(step===3){
+      h=col(big('Приходит пятый гость!')+
+        l11Graph(5,{s:220,delay:1,newN:4})+
+        `<div class="wv-ans" style="font-size:20px;color:#ffd966">новый гость жмёт руку 4 старым → +4</div>`+
+        card('было 6 рукопожатий (четверо), а гость №5 добавляет по одному на каждого старого: <b>6 + 4 = 10</b>!')+
+        rowC(l11Guest(5,true,34))+
+        sml('обрати внимание: гость №5 добавил ровно 4 = 5 − 1 новых рукопожатий!'));
+    } else if(step===4){
+      // правило нового гостя: интерактив «приглашай по одному»
+      const maxN=st.n?Math.min(9,2+((st.n||0)%8)):3;
+      const nArr=[2,3,4,5,6,7,8,9];
+      const n=nArr[(st.n||0)%nArr.length];
+      const total=sumA(n);
+      h=col(big('Правило «нового гостя»')+
+        card('когда приходит <b>n-й гость</b>, он добавляет <b style="color:#ffd966">n − 1</b> рукопожатие — по одному на каждого старого гостя.')+
+        l11Graph(n,{s:Math.min(210,70+n*18),delay:1,newN:n-1})+
+        `<div style="background:rgba(255,217,102,.08);border:1px solid #ffd96644;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:13.5px;color:#e8dcc8">гостей: <b style="color:#ffd966">${n}</b> · последний добавил <b style="color:#7fd1a0">${n-1}</b> рукопожатий</div>
+          <div style="font-size:12px;color:#9ec0a8">накопленная сумма: ${[2,3,4,5,6,7,8,9].slice(0,n-1).map(x=>'1+2+…+'+(x-1)+'='+sumA(x)).join(' · ')}</div>
+        </div>`+
+        btns(btn('➕ пригласить следующего',`l11Act('${lk}','n')`),btn('↺ сначала',`l11Act('${lk}','r')`))+
+        sml('считаем гостей по очереди: 2-й добавил 1, 3-й — 2, 4-й — 3… накапливаем сумму!'));
     } else if(step===5){
-      h=col(big('Сумма ступенек'),
-        rowC(chip('1 + 2 + 3 + 4 = 10 (пять гостей)','rgba(217,164,65,.4)'))+
-        l11SumTiles(5,'e')+
-        sml('5 гостей: 1+2+3+4 = 10 рукопожатий. видно, как растут «ступеньки»!'));
+      h=col(big('Ступеньки: 1 + 2 + 3 + 4 = 10')+
+        l11Tiles([1,2,3,4],'t5')+
+        rowC(chip('1','#7fd1a0'),chip('+ 2','#7fb7d8'),chip('+ 3','#d9a0ff'),chip('+ 4','#ffd966'),chip('= 10','#ff9a8a'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">5 гостей → 1+2+3+4 = 10 рукопожатий</div>`+
+        sml('гость №2 дал 1, №3 — 2, №4 — 3, №5 — 4. Складываем «ступеньки»!'));
     } else if(step===6){
-      h=col(big('Так сколько у десятерых?'),
-        `<div style="text-align:center;font-size:20px" class="wv-pop">1+2+3+…+9 = 45</div>`+
-        l11SumTiles(9,'f')+
-        sml('9 ступенек в сумме дают 45 — это и есть число рукопожатий десятерых!'));
+      h=col(big('10 гостей: ступеньки до 9')+
+        l11Tiles([1,2,3,4,5,6,7,8,9],'t6')+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">1+2+3+…+9 = 45 рукопожатий</div>`+
+        card('у 10 гостей ступеньки идут от 1 до 9 (десятый добавляет 9). Сложи: 1+2+3+4+5+6+7+8+9 = <b style="color:#ffd966">45</b>!')+
+        sml('суммировать 9 чисел можно, но есть способ ещё короче — смотри дальше!'));
     } else if(step===7){
-      h=col(big('Другой способ: умножить и поделить'),
-        `<div style="text-align:center;font-size:20px">10 человек · по 9 рук = 90 — но это посчитано ДВАЖДЫ!</div>`+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">90 : 2 = 45 ✓</div>`+
-        sml('каждое рукопожатие считают оба участника — делим пополам!'));
+      h=col(big('Хитрый способ: умножить!')+
+        `<div style="font-size:13.5px;color:#e8dcc8">каждый из 10 гостей пожал руку 9 другим (всем, кроме себя):</div>`+
+        l11Graph(10,{s:230,only:0})+
+        rowC(chip('10 гостей','#ffd966'),chip('· 9 рук каждому','#7fd1a0'),chip('= 90 «пожатий»','#ff9a8a'))+
+        `<div style="background:rgba(255,154,138,.07);border:1px solid #ff9a8a55;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:14px;color:#e8dcc8">розовые линии — 9 рукопожатий гостя №1. Таких «пожатий рук»: <b style="color:#ff9a8a">10 · 9 = 90</b></div>
+          <div style="font-size:12.5px;color:#9ec0a8">но 90 — слишком много! Что-то посчитали дважды…</div>
+        </div>`+
+        sml('а теперь — самый важный шаг: почему нужно делить на 2!'));
     } else if(step===8){
-      h=col(big('Почему делим на 2'),
-        l11Graph(4,'g',{s:160})+
-        sml('линия между гостями 1 и 2 принадлежит ОБОИМ. если считать «сколько рук пожал каждый», каждая линия попадёт дважды'));
+      h=col(big('Делим пополам: 90 : 2 = 45')+
+        l11Grid(10,{half:1})+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
+          <span style="font-size:14px;color:#7fd1a0">90 пожатий рук</span><span style="font-size:22px" class="wv-pulse">➗2</span><span class="wv-ans" style="font-size:26px;color:#ffd966;font-weight:bold">= 45</span>
+        </div>`+
+        card('зелёные клетки — рукопожатия «по одному разу» (верхняя половина), фиолетовые — те же, но посчитанные с другой стороны. <b style="color:#ffd966">Каждое рукопожатие видно дважды!</b>')+
+        sml('поэтому настоящих рукопожатий вдвое меньше: 45!'));
     } else if(step===9){
-      h=col(big('Формула'),
-        `<div style="font-size:30px;color:var(--brass);font-family:Georgia,serif;text-align:center">n · (n − 1) : 2</div>`+
-        rowC(chip('10 · 9 : 2 = 45','rgba(127,184,160,.5)'))+
-        sml('для n человек: каждый жмёт n−1 руку, умножаем и делим на 2'));
+      h=col(big('Почему именно пополам?')+
+        l11Graph(3,{s:170})+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${l11Guest(1,false,40)}<span style="font-size:18px;color:#e8dcc8">— одна линия —</span>${l11Guest(2,false,40)}
+        </div>`+
+        card('гость №1 скажет «я пожал руку», и гость №2 тоже скажет «я пожал руку» — а рукопожатие-то <b style="color:#ffd966">одно</b>! Линия между 1 и 2 принадлежит ОБОИМ.')+
+        rowC(chip('1 говорит: «я пожал 1 руку»','#7fd1a0'),chip('2 говорит: «я пожал 1 руку»','#7fb7d8'),chip('а рукопожатий — 1!','#ffd966'))+
+        sml('каждую линию считают двое — поэтому результат умножаем, а потом делим на 2!'));
     } else if(step===10){
-      h=col(big('Волшебный ряд'),
-        rowC(chip('2→1 · 3→3 · 4→6 · 5→10 · 6→15 · 7→21 · 8→28 · 9→36 · 10→45','rgba(217,164,65,.4)'))+
-        sml('числа 1, 3, 6, 10, 15, 21, 28… называют треугольными: каждый раз прибавляем следующее число!'));
+      h=col(big('Формула: n · (n − 1) : 2')+
+        `<div style="font-size:34px;color:#ffd966;font-family:Georgia,serif;text-align:center" class="wv-ans">n · (n − 1) : 2</div>`+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['n','гостей на празднике'],['n − 1','рук жмёт каждый'],[': 2','пожатие считают двое']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 8px;min-width:88px"><div style="font-size:17px;color:#ffd966;font-family:Georgia,serif">${x[0]}</div><div style="font-size:9.5px;color:#9ec0a8">${x[1]}</div></div>`).join('')}
+        </div>`+
+        `<div style="background:rgba(127,209,160,.07);border:1px solid #7fd1a044;border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:15px;color:#e8dcc8">проверка для 10 гостей:</div>
+          <div style="font-size:20px;color:#ffd966;font-family:Georgia,serif">10 · 9 : 2 = 90 : 2 = 45 ✓</div>
+        </div>`+
+        sml('запомни формулу — она решает задачу в одно действие!'));
     } else if(step===11){
-      h=col(big('Задача: 12 человек'),
-        l11Graph(12,'h',{s:200})+
-        `<div style="text-align:center;font-size:19px" class="wv-pop">12 · 11 : 2 = 132 : 2 = 66</div>`+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">66 рукопожатий ✓</div>`+
-        sml('как в наших задачках!'));
+      h=col(big('Волшебный ряд: треугольные числа')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[[2,1],[3,3],[4,6],[5,10]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;text-align:center"><div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:78px;margin:0 auto">${Array.from({length:x[1]},()=>`<span style="width:8px;height:8px;border-radius:50%;background:#ffd966;margin:1px"></span>`).join('')}</div><div style="font-size:11px;color:#9ec0a8;margin-top:2px">${x[0]} гостей</div><div style="font-size:16px;color:#ffd966;font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        rowC(chip('2→1','#7fd1a0'),chip('3→3','#7fb7d8'),chip('4→6','#d9a0ff'),chip('5→10','#ff9a8a'),chip('6→15','#f0c75e'),chip('…','#9ec0a8'),chip('10→45','#ffd966'))+
+        card('числа 1, 3, 6, 10, 15, 21, 28, 36, 45 называют <b style="color:#ffd966">треугольными</b>: каждое следующее больше на 2, потом на 3, на 4…')+
+        sml('каждое — это сумма ступенек 1+2+…+(n−1). Красиво, правда?'));
     } else if(step===12){
-      h=col(big('Задача: 8 человек'),
-        `<div style="text-align:center;font-size:19px" class="wv-pop">8 · 7 : 2 = 56 : 2 = 28</div>`+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">28 рукопожатий ✓</div>`+
-        sml('восемь гостей — 28 линий. запомни ряд: 28 — «восьмёрное» треугольное число!'));
+      h=col(big('Задача: 12 человек')+
+        rowC(l11Guest(1,false,22),l11Guest(2,false,22),l11Guest(3,false,22),l11Guest(4,false,22),l11Guest(5,false,22),l11Guest(6,false,22))+
+        rowC(l11Guest(7,false,22),l11Guest(8,false,22),l11Guest(9,false,22),l11Guest(10,false,22),l11Guest(11,false,22),l11Guest(12,false,22))+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:336px;width:100%">
+          ${[['n = 12','каждый жмёт руку 11 другим'],['12 · 11 = 132','«пожатий рук»'],['132 : 2 = 66','делим — каждое пожатие считали дважды!']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.14}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#ffd966','#7fd1a0','#7fd1a0'][i]};border-radius:9px;padding:5px 12px;max-width:336px;width:100%"><span style="font-size:14px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:12px;color:#e8dcc8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">66 рукопожатий ✓</div>`+
+        sml('как в наших задачках: подставляй в формулу и считай!'));
     } else if(step===13){
-      h=col(big('То же самое: матчи в турнире'),
-        rowC(chip('10 команд играют «каждый с каждым» один раз','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">матчей = 10 · 9 : 2 = 45</div>`+
-        sml('турнир «в один круг» — это те же рукопожатия, только мяч вместо ладони!'));
+      h=col(big('Задача: 8 человек')+
+        l11Graph(8,{s:210,delay:1})+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:336px;width:100%">
+          ${[['8 · 7 = 56','каждый жмёт 7 рук'],['56 : 2 = 28','делим на 2!']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #7fd1a0;border-radius:9px;padding:5px 12px;max-width:336px;width:100%"><span style="font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:12px;color:#e8dcc8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">28 рукопожатий ✓</div>`+
+        sml('на графе выше — все 28 линий! 28 — «восьмёрное» треугольное число'));
     } else if(step===14){
-      h=col(big('И ещё: звонки и переписка'),
-        rowC(chip('каждый позвонил каждому по разу','rgba(127,209,255,.4)'),chip('каждый написал каждому','rgba(127,209,255,.4)'))+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0;font-weight:bold">всегда n·(n−1):2 «пар»</div>`+
-        sml('где «каждый с каждым по одному разу» — везде одна и та же формула!'));
+      h=col(big('То же самое: матчи в турнире')+
+        `<div style="font-size:44px" class="wv-swing">⚽</div>`+
+        card('10 команд играют «каждый с каждым» один раз. Пара команд — как рукопожатие двух гостей!')+
+        rowC(l11Guest(1,false,26),l11Guest(2,false,26),l11Guest(3,false,26),l11Guest(4,false,26),l11Guest(5,false,26))+
+        rowC(l11Guest(6,false,26),l11Guest(7,false,26),l11Guest(8,false,26),l11Guest(9,false,26),l11Guest(10,false,26))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">матчей = 10 · 9 : 2 = 45</div>`+
+        sml('турнир «в один круг» — это те же рукопожатия, только мяч вместо ладони!'));
     } else if(step===15){
-      h=col(big('Ловушка: не дели пополам — ошибёшься'),
-        rowC(`<div style="text-align:center;opacity:.7"><div style="font-size:18px;text-decoration:line-through;color:#e0523d">10 · 9 = 90</div><div class="wv-sml" style="font-size:10px">так посчитали ДВА раза!</div></div>`+
-             `<div style="text-align:center"><div style="font-size:18px;color:#7fd1a0;font-weight:bold">90 : 2 = 45 ✓</div></div>`)+
-        sml('если каждый говорит «я пожал 9», то 90 — но каждое рукопожатие услышали двое. делим!'));
+      h=col(big('Звонки и переписка — та же формула!')+
+        rowC(`<div style="font-size:42px" class="wv-swing">📞</div>`,`<div style="font-size:42px" class="wv-swing">📱</div>`,`<div style="font-size:42px" class="wv-swing">✉️</div>`)+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:336px;width:100%">
+          ${[['каждый из 10 позвонил каждому по разу','звонков: 10·9:2 = 45'],['каждый написал каждому письмо','писем-пар: 10·9:2 = 45'],['каждый отправил каждому открытку','тоже 45 пар!']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#7fd1a0','#7fb7d8','#d9a0ff'][i]};border-radius:9px;padding:5px 12px;max-width:336px;width:100%"><span style="font-size:12.5px;color:#e8dcc8">${x[0]}</span><span style="font-size:12px;color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        sml('везде, где «каждый с каждым по одному разу» — работает одна и та же формула!'));
     } else if(step===16){
-      const ns=[6,7,8,9,10,11,12,13,15,20,5,4,18,25];
-      if(st.i==null) st.i=2;
-      const n=ns[st.i];
+      // тренажёр
+      const pool=[6,7,8,9,10,12,15,20,5,11,14,18];
+      const n=pool[(st.i||0)%pool.length];
       const prod=n*(n-1);
-      const ans=prod/2;
-      h=col(big('Тренажёр: рукопожатия'),
-        `<div class="wv-row">${chip(n+' человек, каждый с каждым по разу','rgba(217,164,65,.35)')}</div>`+
-        (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) каждый жмёт руку ${n-1} другим</div>`:'')+
-        (st.s2? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">2) ${n} · ${n-1} = ${prod}, делим на 2</div>`:'')+
-        (st.s3? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">рукопожатий: ${ans}</div>`:'')+
+      h=col(big('🎮 Тренажёр: рукопожатия')+
+        card(`гостей: <b style="color:#ffd966">${n}</b> — каждый с каждым по одному разу. Решай по шагам!`)+
+        rowC(l11Guest(1,false,24),l11Guest(2,false,24),l11Guest(3,false,24),l11Guest(4,false,24),l11Guest(5,false,24))+
+        (n>5?rowC(`<span style="font-size:11px;color:#9ec0a8">… и ещё ${n-5} гостей</span>`):'')+
+        (st.s1?`<div class="wv-pop" style="font-size:15px;color:#ffd9a0">1️⃣ каждый жмёт руку <b>${n-1}</b> другим</div>`:'')+
+        (st.s2?`<div class="wv-pop" style="font-size:15px;color:#ffd9a0">2️⃣ ${n} · ${n-1} = <b>${prod}</b>, но пожатие считают двое</div>`:'')+
+        (st.s3?`<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">рукопожатий: ${prod/2}</div>`:'')+
         btns(btn('1️⃣ каждый жмёт',`l11Act('${lk}','s1')`),btn('2️⃣ умножить',`l11Act('${lk}','s2')`),btn('3️⃣ ответ',`l11Act('${lk}','s3')`),btn('🎲 другой',`l11Act('${lk}','n')`),btn('↺',`l11Act('${lk}','r')`))+
-        sml('по шагам: каждый жмёт n−1 рук → умножаем → делим на 2 (каждое пожатие посчитано дважды)!'));
+        sml('по шагам: n·(n−1) → подели на 2. Попробуй побить рекорд скорости!'));
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+      h=col(`<div style="font-size:48px">🤝</div>`+big('Совет Архимеда')+
         `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:250px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
             🤝 «Каждый с каждым по разу» → n·(n−1):2.<br>
-            🔢 Каждый жмёт n−1 рук, но пожатие считают двое.<br>
-            🔼 Ряд 1,3,6,10,15,21… — треугольные числа.<br>
+            🔢 Каждый жмёт n−1 рук — 90 «пожатий».<br>
+            ➗ Пожатие считают двое → делим на 2.<br>
+            🔺 Ряд 1, 3, 6, 10, 15… — треугольные.<br>
             ⚽ Турниры, звонки, письма — та же формула!</div>
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
