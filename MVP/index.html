@@ -560,6 +560,13 @@
     background:#ff9a8a; transition:left .25s; left:17px; }
   .l13-switch.on { background:#2f5c46; border-color:#7fd1a0; }
   .l13-switch.on::after { left:1px; background:#7fd1a0; }
+  /* ============ сколько прямоугольников (урок 14, v167) ============ */
+  .l14-line { stroke-dasharray:520; stroke-dashoffset:520; animation:l14Draw .7s ease forwards; }
+  @keyframes l14Draw { to { stroke-dashoffset:0 } }
+  .l14-rect { opacity:0; animation:l14Rect .6s ease forwards; }
+  @keyframes l14Rect { 0%{opacity:0} 100%{opacity:1} }
+  .l14-hop { animation:l14Hop .5s ease both; }
+  @keyframes l14Hop { 0%{transform:translateY(0)} 40%{transform:translateY(-12px)} 100%{transform:translateY(0)} }
 </style>
 </head>
 <body>
@@ -588,21 +595,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=166"></script>
-<script src="data/lessons.js?v=166"></script>
-<script src="js/comic.js?v=166"></script>
-<script src="js/core.js?v=166"></script>
-<script src="js/engine.js?v=166"></script>
-<script src="js/app.js?v=166"></script>
-<script src="js/dashboard.js?v=166"></script>
-<script src="js/lessons.js?v=166"></script>
-<script src="js/legend.js?v=166"></script>
-<script src="js/simulator.js?v=166"></script>
-<script src="js/duel.js?v=166"></script>
-<script src="js/agent.js?v=166"></script>
-<script src="js/voice.js?v=166"></script>
-<script src="js/assistant.js?v=166"></script>
-<script src="js/agentlive.js?v=166"></script>
+<script src="data/tasks.js?v=167"></script>
+<script src="data/lessons.js?v=167"></script>
+<script src="js/comic.js?v=167"></script>
+<script src="js/core.js?v=167"></script>
+<script src="js/engine.js?v=167"></script>
+<script src="js/app.js?v=167"></script>
+<script src="js/dashboard.js?v=167"></script>
+<script src="js/lessons.js?v=167"></script>
+<script src="js/legend.js?v=167"></script>
+<script src="js/simulator.js?v=167"></script>
+<script src="js/duel.js?v=167"></script>
+<script src="js/agent.js?v=167"></script>
+<script src="js/voice.js?v=167"></script>
+<script src="js/assistant.js?v=167"></script>
+<script src="js/agentlive.js?v=167"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -617,7 +624,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=166').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=167').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>

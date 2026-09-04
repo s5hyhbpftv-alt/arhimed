@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -8448,6 +8448,266 @@ function l15River(uid,pos,prot){
     <div style="font-size:11px;color:#8aa08f">стрелка ↦ — направление лодки; синие линии — поток реки (течение u)</div>
   </div>`;
 }
+// ===================== УРОК 14 «СКОЛЬКО ПРЯМОУГОЛЬНИКОВ» (v167) =====================
+function l14Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  const POOL=[[2,3],[3,4],[1,3],[4,4],[2,4],[3,3],[2,2],[1,4]];
+  if(a0==='s1'){ st.s1=1; }
+  if(a0==='s2'){ st.s2=1; }
+  if(a0==='s3'){ st.s3=1; }
+  if(a0==='n'){ st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=st.s3=0; }
+  if(a0==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+// SVG-сетка nCol×nRow клеток с линиями; opt: hlV — подсветить вертикальные линии [idx], hlH — горизонтальные, rect — заливка [v1,v2,h1,h2], labels — подписи линий
+function l14Grid(nCol,nRow,opt){
+  const o=opt||{};
+  const cell=o.cell||26;
+  const padL=o.labels?30:8, padT=o.labels?22:8;
+  const W=nCol*cell+padL+8, H=nRow*cell+padT+8;
+  const hlV=o.hlV||[], hlH=o.hlH||[];
+  let lines='';
+  const isIn=(idx,arr,lo,hi)=>arr.indexOf(idx)>=0||(lo!=null&&idx>=lo&&idx<=hi);
+  for(let i=0;i<=nCol;i++){
+    const x=padL+i*cell;
+    const hot=isIn(i,hlV,o.rect?o.rect[0]:null,o.rect?o.rect[1]:null);
+    lines+=`<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT+nRow*cell}" stroke="${hot?'#ffd966':'rgba(200,200,200,.4)'}" stroke-width="${hot?3.5:1.5}" class="${o.draw&&!hot?'l14-line':''}" style="${o.draw?'animation-delay:'+((i*0.1)+(o.delay||0)).toFixed(2)+'s':''}"/>`;
+    if(o.labels) lines+=`<text x="${x}" y="${padT-5}" text-anchor="middle" font-size="9" fill="${hot?'#ffd966':'#9ec0a8'}" font-weight="${hot?'bold':'normal'}">V${i+1}</text>`;
+  }
+  for(let j=0;j<=nRow;j++){
+    const y=padT+j*cell;
+    const hot=isIn(j,hlH,o.rect?o.rect[2]:null,o.rect?o.rect[3]:null);
+    lines+=`<line x1="${padL}" y1="${y}" x2="${padL+nCol*cell}" y2="${y}" stroke="${hot?'#7fd1a0':'rgba(200,200,200,.4)'}" stroke-width="${hot?3.5:1.5}" class="${o.draw&&!hot?'l14-line':''}" style="${o.draw?'animation-delay:'+((j*0.1+0.4)+(o.delay||0)).toFixed(2)+'s':''}"/>`;
+    if(o.labels) lines+=`<text x="${padL-4}" y="${y+3}" text-anchor="end" font-size="9" fill="${hot?'#7fd1a0':'#9ec0a8'}" font-weight="${hot?'bold':'normal'}">H${j+1}</text>`;
+  }
+  let fill='';
+  if(o.rect){
+    const [v1,v2,h1,h2]=o.rect;
+    const x=padL+Math.min(v1,v2)*cell, y=padT+Math.min(h1,h2)*cell;
+    const w=Math.abs(v2-v1)*cell, hh=Math.abs(h2-h1)*cell;
+    fill+=`<rect x="${x}" y="${y}" width="${w}" height="${hh}" fill="#ffd96633" stroke="#ffd966" stroke-width="2" rx="2" class="l14-rect" style="animation-delay:${(o.delay||0)+0.3}s"/>`;
+  }
+  return `<div style="text-align:center;margin:0 auto"><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="max-width:${W}px">${lines}${fill}</svg></div>`;
+}
+// список пар «линия i — линия j» чипами
+function l14Pairs(n,hotPair){
+  const out=[];
+  for(let i=0;i<n;i++) for(let j=i+1;j<n;j++){
+    const hot=hotPair&&i===hotPair[0]&&j===hotPair[1];
+    out.push(`<span class="${hot?'l14-hop':''}" style="display:inline-block;padding:2px 7px;margin:2px;border-radius:8px;font-size:11.5px;background:${hot?'#ffd966':'rgba(255,255,255,.05)'};border:1px solid ${hot?'#ffd966':'#3d5c49'};color:${hot?'#4a3200':'#d8ecff'}">${i+1}–${j+1}</span>`);
+  }
+  return `<div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:330px;margin:0 auto">${out.join('')}</div>`;
+}
+// сочетание из k по 2 = 1+2+…+(k-1) — лесенка
+function l14Stairs(k,opt){
+  const o=opt||{};
+  let rows='';
+  for(let i=1;i<k;i++){
+    rows+=`<div style="display:flex;align-items:center;justify-content:center;gap:2px">
+      <span style="font-size:10px;color:#9ec0a8;min-width:30px;text-align:right">${i}:</span>
+      ${Array.from({length:i},(_,j)=>`<span class="l14-hop" style="animation-delay:${(i*0.08+j*0.04).toFixed(2)}s;width:10px;height:10px;border-radius:2px;background:${o.gold&&i===k-1?'#ffd966':'#7fd1a0'};margin:1px"></span>`).join('')}
+    </div>`;
+  }
+  return `<div style="display:flex;flex-direction:column;gap:2px;margin:0 auto;max-width:300px">${rows}</div>`;
+}
+function visL14(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v14!==step) CHS[lk]={_v14:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const note=(t,c,d)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'}${d||'44'};border-radius:9px;padding:5px 12px;font-size:12.5px;color:#e8dcc8;text-align:left;line-height:1.45">${t}</div>`;
+    const C2=k=>k*(k-1)/2;
+    let h='';
+    if(step===0){
+      // легенда: сетка 3×4
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#d9a0ff22;border:1px solid #d9a0ff;color:#d9a0ff;margin-bottom:2px">ВСОШ-СТИЛЬ · КЛЕТКИ</span>`+
+        big('Сколько прямоугольников в сетке 3×4?')+
+        l14Grid(3,4,{labels:true,hlV:[0,3],hlH:[1,3],rect:[0,3,1,3],draw:true})+
+        card('на клетчатой бумаге нарисован прямоугольник <b>3×4 клетки</b>. Сколько всего прямоугольников <b style="color:#ffd966">по линиям сетки</b> в нём спрятано?')+
+        rowC(chip('3 клетки в ряд','#7fb7d8'),chip('4 клетки в высоту','#7fb7d8'),chip('жёлтый — один из них','#ffd966'))+
+        sml('считать вручную — долго и легко сбиться. Найдём красивую формулу!'));
+    } else if(step===1){
+      // ключ: 2 вертикальные + 2 горизонтальные
+      h=col(big('Ключевая идея: 2 + 2 линии!')+
+        l14Grid(3,4,{labels:true,hlV:[1,3],hlH:[0,2],rect:[1,3,0,2]})+
+        card('любой прямоугольник по линиям сетки задаётся <b style="color:#ffd966">двумя вертикальными</b> линиями (левая и правая сторона) и <b style="color:#7fd1a0">двумя горизонтальными</b> (низ и верх).')+
+        rowC(chip('выбрал 2 вертикальные линии','#ffd966'),chip('выбрал 2 горизонтальные','#7fd1a0'),chip('получил прямоугольник!','#d9a0ff'))+
+        sml('жёлтые линии — стороны, зелёные — верх и низ. Задача превратилась в «сколько способов выбрать пары линий»!'));
+    } else if(step===2){
+      // линии сетки: n+1 и m+1
+      h=col(big('Сколько линий у сетки?')+
+        l14Grid(3,4,{labels:true})+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['вертикальных','4 линии','3 клетки + 1','#ffd966'],['горизонтальных','5 линий','4 клетки + 1','#7fd1a0']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[3]}55;border-radius:10px;padding:6px 10px;min-width:108px"><div style="font-size:11px;color:#9ec0a8">${x[0]}</div><div style="font-size:19px;color:${x[3]};font-weight:bold">${x[1]}</div><div style="font-size:10px;color:#9ec0a8">${x[2]}</div></div>`).join('')}
+        </div>`+
+        card('клеток <b>n</b> → линий <b>n + 1</b>! У 3 клеток в ряд — 4 вертикальные линии (V1…V4), у 4 клеток в высоту — 5 горизонтальных (H1…H5).')+
+        sml('линии сетки — как «полочки», между которыми мы будем выбирать пары!'));
+    } else if(step===3){
+      // пары вертикальных: C(4,2)=6
+      h=col(big('Пары вертикальных линий: C(4,2) = 6')+
+        l14Grid(3,1,{labels:true,hlV:[0,1],rect:[0,1,0,1]})+
+        `<div style="font-size:13px;color:#e8dcc8">выбираем 2 линии из 4 вертикальных — вот все 6 пар:</div>`+
+        l14Pairs(4,null)+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">C(4,2) = 4·3 : 2 = 6 пар</div>`+
+        sml('каждая пара вертикальных линий станет «левой и правой стенкой» будущего прямоугольника!'));
+    } else if(step===4){
+      // пары горизонтальных: C(5,2)=10
+      h=col(big('Пары горизонтальных линий: C(5,2) = 10')+
+        l14Grid(1,4,{labels:true,hlH:[0,1],rect:[0,1,0,1]})+
+        `<div style="font-size:13px;color:#e8dcc8">теперь 2 линии из 5 горизонтальных — 10 пар:</div>`+
+        l14Pairs(5,null)+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">C(5,2) = 5·4 : 2 = 10 пар</div>`+
+        sml('считаем пары «по первой линии»: 4+3+2+1 = 10 — каждая линия с каждой следующей!'));
+    } else if(step===5){
+      // перемножаем: 6·10=60
+      h=col(big('Каждая с каждой: 6 · 10 = 60')+
+        `<div style="display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:30px;color:#ffd966;font-weight:bold">6</div><div style="font-size:10.5px;color:#9ec0a8">пар вертикальных</div><div style="font-size:9px;color:#9ec0a8">левая + правая стенка</div></div>
+          <div style="font-size:26px;color:#e8dcc8" class="wv-pulse">×</div>
+          <div style="text-align:center"><div style="font-size:30px;color:#7fd1a0;font-weight:bold">10</div><div style="font-size:10.5px;color:#9ec0a8">пар горизонтальных</div><div style="font-size:9px;color:#9ec0a8">низ + верх</div></div>
+          <div style="font-size:26px;color:#e8dcc8">=</div>
+          <div style="text-align:center"><div class="wv-ans" style="font-size:36px;color:#ffd966;font-weight:bold">60</div><div style="font-size:10.5px;color:#9ec0a8">прямоугольников!</div></div>
+        </div>`+
+        `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:3px;max-width:330px;margin:0 auto">
+          ${Array.from({length:60},(_,i)=>`<span class="wv-pop" style="animation-delay:${(i*0.02).toFixed(2)}s;width:14px;height:10px;border-radius:2px;background:${i%10<6?'#ffd966':'#7fd1a0'};margin:1px"></span>`).join('')}
+        </div>`+
+        sml('каждая из 6 вертикальных пар сочетается с каждой из 10 горизонтальных — вот и все прямоугольники!'));
+    } else if(step===6){
+      // формула
+      h=col(big('Формула: C(n+1,2) · C(m+1,2)')+
+        `<div style="font-size:30px;color:#ffd966;font-family:Georgia,serif;text-align:center" class="wv-ans">C(n+1, 2) · C(m+1, 2)</div>`+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['n+1','вертикальных линий','у n клеток в ряд'],['m+1','горизонтальных линий','у m клеток в высоту'],['C(k,2)=k·(k−1):2','пар из k линий','выбор «двух из k»']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 8px;max-width:150px"><div style="font-size:16px;color:#ffd966;font-family:Georgia,serif">${x[0]}</div><div style="font-size:10px;color:#e8dcc8;font-weight:bold">${x[1]}</div><div style="font-size:9px;color:#9ec0a8">${x[2]}</div></div>`).join('')}
+        </div>`+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:8px 12px;max-width:330px;width:100%">
+          <div style="font-size:13.5px;color:#e8dcc8">наша сетка 3×4: C(4,2) · C(5,2) = 6 · 10 = <b style="color:#ffd966;font-size:17px">60</b></div>
+        </div>`+
+        sml('число сочетаний C(k,2) — это «сколько способов выбрать 2 линии из k». Запомни формулу!'));
+    } else if(step===7){
+      // C(k,2) значения: треугольные числа
+      h=col(big('Считаем C(k,2): треугольные числа')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[[4,6],[5,10],[6,15],[7,21]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 9px;min-width:64px"><div style="font-size:12px;color:#9ec0a8">C(${x[0]},2)</div><div style="font-size:20px;color:#ffd966;font-weight:bold">${x[1]}</div><div style="font-size:9px;color:#9ec0a8">${x[0]}·${x[0]-1}:2</div></div>`).join('')}
+        </div>`+
+        card('числа 6, 10, 15, 21 — это <b style="color:#ffd966">треугольные числа</b>: 1+2+3=6, 1+2+3+4=10, 1+2+…+5=15! Пара линий выбирается «по нарастающей».')+
+        sml('C(4,2)=6, C(5,2)=10 — эти два числа и дают наш ответ 60!'));
+    } else if(step===8){
+      // проверка полоска 1×3
+      h=col(big('Проверка: полоска 1×3')+
+        l14Grid(3,1,{labels:true})+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:340px;width:100%">
+          ${[['3 клетки в ряд → вертикальных линий 4','C(4,2) = 6 пар'],['1 клетка в высоту → горизонтальных линий 2','C(2,2) = 1 пара'],['перемножаем','6 · 1 = 6 прямоугольников']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#ffd966','#7fd1a0','#d9a0ff'][i]};border-radius:9px;padding:5px 12px;max-width:340px;width:100%"><span style="font-size:12.5px;color:#e8dcc8">${x[0]}</span><span style="font-size:12.5px;color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">в полоске 1×3 — ровно 6 прямоугольников!</div>`+
+        sml('как в нашей проверке! Теперь посмотрим на них вживую.'));
+    } else if(step===9){
+      // полоска 1×3: прямоугольники по очереди
+      const strips=[[0,1,0,1],[1,2,0,1],[2,3,0,1],[0,2,0,1],[1,3,0,1],[0,3,0,1]];
+      h=col(big('Полоска 1×3: все 6 прямоугольников')+
+        l14Grid(3,1,{labels:true,hlV:[0,1],hlH:[0,1],rect:[0,1,0,1]})+
+        `<div style="font-size:13px;color:#e8dcc8">вот они: длины 1, 2 и 3 клетки:</div>`+
+        rowC(chip('3 штуки длины 1','#7fd1a0'),chip('2 штуки длины 2','#ffd966'),chip('1 штука длины 3','#d9a0ff'))+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">3 + 2 + 1 = 6 — сходится с C(4,2) = 6!</div>`+
+        sml('каждая пара вертикальных линий «нарезает» полоску на свой прямоугольник!'));
+    } else if(step===10){
+      // задача 2×3
+      h=col(big('Задача: сетка 2×3')+
+        l14Grid(3,2,{labels:true})+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:340px;width:100%">
+          ${[['3 клетки в ряд → C(4,2)','6 вертикальных пар'],['2 клетки в высоту → C(3,2)','3 горизонтальные пары'],['6 · 3 = 18','прямоугольников!']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#ffd966','#7fd1a0','#7fd1a0'][i]};border-radius:9px;padding:5px 12px;max-width:340px;width:100%"><span style="font-size:13px;color:#e8dcc8">${x[0]}</span><span style="font-size:13px;color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">C(4,2) · C(3,2) = 6 · 3 = 18 ✓</div>`+
+        sml('как в наших задачках: 18 прямоугольников!'));
+    } else if(step===11){
+      // задача 4×4
+      h=col(big('Задача: квадрат 4×4')+
+        l14Grid(4,4,{labels:true})+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:340px;width:100%">
+          ${[['4 клетки → 5 вертикальных линий','C(5,2) = 10 пар'],['4 клетки → 5 горизонтальных','C(5,2) = 10 пар'],['10 · 10 = 100','прямоугольников!']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#ffd966','#7fd1a0','#7fd1a0'][i]};border-radius:9px;padding:5px 12px;max-width:340px;width:100%"><span style="font-size:13px;color:#e8dcc8">${x[0]}</span><span style="font-size:13px;color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">C(5,2) · C(5,2) = 10 · 10 = 100 ✓</div>`+
+        sml('да, квадрат — это тоже прямоугольник, считаем его!'));
+    } else if(step===12){
+      // почему C(5,2)=10
+      h=col(big('Почему C(5,2) = 10? Ступеньки пар!')+
+        l14Stairs(5)+
+        `<div style="font-size:13px;color:#e8dcc8">1-я линия образует пары с 4 следующими, 2-я — с 3, 3-я — с 2, 4-я — с 1:</div>`+
+        rowC(chip('4 + 3 + 2 + 1 = 10','#7fd1a0'))+
+        `<div class="wv-ans" style="font-size:22px;color:#ffd966">C(5,2) = 5·4 : 2 = 10 — то же самое!</div>`+
+        sml('каждая линия «здоровается» только со следующими — чтобы пару не посчитать дважды!'));
+    } else if(step===13){
+      // хитрость C(k,2)=1+2+…+(k−1)
+      h=col(big('Хитрость: C(k,2) = 1+2+…+(k−1)')+
+        l14Stairs(6,{gold:true})+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[[4,6],[5,10],[6,15]].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:5px 9px;min-width:110px"><div style="font-size:12px;color:#9ec0a8">C(${x[0]},2)</div><div style="font-size:15px;color:#ffd966">1+2+…+${x[0]-1} = ${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('лесенка выше — это и есть C(k,2): нижний ряд из <b style="color:#7fd1a0">k−1</b> клеток, и каждая линия добавляет ступеньку. Красиво, правда?')+
+        sml('треугольные числа: 1, 3, 6, 10, 15, 21… — пары линий считаются точно так же!'));
+    } else if(step===14){
+      // ловушка «по линиям сетки»
+      h=col(big('Ловушка: «по линиям сетки»!')+
+        l14Grid(3,3,{labels:false})+
+        rowC(l14ChipBad('кривая фигура ✗','#ff9a8a'),l14ChipBad('сторона посередине клетки ✗','#ff9a8a'))+
+        card('«по линиям сетки» значит: все стороны идут <b style="color:#ffd966">только по клеточным линиям</b>, углы — на пересечениях. Фигуры «наискосок» не считаем!')+
+        sml('поэтому каждая сторона = целая линия сетки, и выбор «2 вертикальные + 2 горизонтальные» работает!'));
+    } else if(step===15){
+      // главный секрет
+      h=col(big('Главный секрет: считай ВЫБОРЫ!')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['1️⃣','найди n и m','клетки в ряд и в высоту'],['2️⃣','посчитай пары','C(n+1,2) и C(m+1,2)'],['3️⃣','перемножь','вот и ответ!']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.14}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:11px;padding:8px 9px;min-width:96px"><div style="font-size:17px">${x[0]}</div><div style="font-size:12.5px;color:#ffd966;font-weight:bold">${x[1]}</div><div style="font-size:9.5px;color:#9ec0a8">${x[2]}</div></div>`).join('')}
+        </div>`+
+        card('не перебирай прямоугольники по одному! Считай, <b style="color:#ffd966">сколько способов выбрать</b> две вертикальные линии и две горизонтальные — это и есть все прямоугольники.')+
+        sml('3×4: C(4,2)·C(5,2) = 6·10 = 60. Теперь любая сетка — за секунды!'));
+    } else if(step===16){
+      // тренажёр
+      const POOL=[[2,3],[3,4],[1,3],[4,4],[2,4],[3,3],[2,2],[1,4]];
+      const i=st.i!=null?st.i:0;
+      const e=POOL[i%POOL.length];
+      const n=e[0], m=e[1];
+      const cv=C2(n+1), chh=C2(m+1), ans=cv*chh;
+      h=col(big('🎮 Тренажёр: сколько прямоугольников?')+
+        l14Grid(n,m,{labels:true,cell:n>3||m>3?20:26})+
+        `<div style="font-size:14px;color:#e8dcc8;text-align:center">сетка <b style="color:#ffd966">${n}×${m}</b> клеток — считаем по шагам!</div>`+
+        (st.s1?`<div class="wv-pop" style="font-size:15px;text-align:center;color:#ffd9a0">1️⃣ вертикальных линий ${n+1} → C(${n+1},2) = ${cv}; горизонтальных ${m+1} → C(${m+1},2) = ${chh}</div>`:'')+
+        (st.s2?`<div class="wv-pop" style="font-size:15px;text-align:center;color:#ffd9a0">2️⃣ перемножаем пары: ${cv} · ${chh} = ${cv*chh}</div>`:'')+
+        (st.s3?`<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">прямоугольников: ${ans}</div>`:'')+
+        btns(btn('1️⃣ пары линий',`l14Act('${lk}','s1')`),btn('2️⃣ перемножить',`l14Act('${lk}','s2')`),btn('3️⃣ ответ',`l14Act('${lk}','s3')`),btn('🎲 другая сетка',`l14Act('${lk}','n')`),btn('↺',`l14Act('${lk}','r')`))+
+        sml('по шагам: n+1 линий → пары → перемножь. Попробуй побить рекорд скорости!'));
+    } else {
+      h=col(`<div style="font-size:48px">▦</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:250px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            ▦ Прямоугольник = 2 вертикальные + 2 горизонтальные.<br>
+            📏 Линий: n+1 и m+1 (клеток n и m).<br>
+            🧮 Пар: C(n+1,2) и C(m+1,2) = k·(k−1):2.<br>
+            ✖️ Перемножь пары — вот и ответ!<br>
+            ✅ 3×4 → 6·10 = 60.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там полоска 1×3'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+// чип-«плохо»
+function l14ChipBad(t,c){
+  return `<span style="display:inline-block;padding:3px 10px;border-radius:9px;background:rgba(224,82,61,.08);border:1px solid ${c||'#e0523d'};font-size:13px;color:${c||'#ff9a8a'};margin:2px">${t}</span>`;
+}
+
 function visL15(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -13411,6 +13671,7 @@ function renderLessonVis(){
   else if(id===46) visL46(el);
   else if(id===47) visL47(el);
   else if(id===13) visL13(el);
+  else if(id===14) visL14(el);
   else if(id===16) visL16(el);
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
