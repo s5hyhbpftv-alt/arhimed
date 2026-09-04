@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -5021,6 +5021,243 @@ function visL2(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+// ============ УРОК 1 «Числа-перевёртыши» — Зеркальная лаборатория ============
+var L1GAME=[['172','271'],['123','321'],['341','143'],['234','432'],['513','315'],['682','286'],['907','709'],['275','572'],['398','893'],['764','467'],['581','185'],['246','642']];
+function l1B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
+function l1Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  if(act==='a+') st.a=Math.min(9,(st.a==null?1:st.a)+1);
+  if(act==='a-') st.a=Math.max(1,(st.a==null?1:st.a)-1);
+  if(act==='b+') st.b=Math.min(9,(st.b==null?7:st.b)+1);
+  if(act==='b-') st.b=Math.max(0,(st.b==null?7:st.b)-1);
+  if(act==='c+') st.c=Math.min(9,(st.c==null?2:st.c)+1);
+  if(act==='c-') st.c=Math.max(1,(st.c==null?2:st.c)-1);
+  const m=act.match(/^pick(\d)$/);
+  if(m){ st.got=(+m[1]===st.correct)?'ok':'no'; }
+  if(act==='n'){ st.i=((st.i==null?0:st.i)+1)%L1GAME.length; st.got=''; const g=L1GAME[st.i]; st.correct=0; }
+  if(act==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+function l1Digit(d,color,big){
+  return `<div class="wv-pop" style="width:${big?54:46}px;height:${big?62:52}px;border-radius:13px;background:${color||'#ffd966'};display:flex;align-items:center;justify-content:center;font-size:${big?32:26}px;font-weight:bold;color:#0d1f14;box-shadow:0 3px 0 rgba(0,0,0,.35)">${d}</div>`;
+}
+function l1NumRow(n,cls,colorFn){
+  const s=''+n;
+  const pal=['#ffd966','#7fd1a0','#7fb7d8','#ff9a8a','#d9a0ff'];
+  return `<div style="display:flex;justify-content:center;gap:7px;margin:3px 0">${s.split('').map((d,i)=>`<div class="${cls||'wv-pop'}" style="width:46px;height:52px;border-radius:13px;background:${(colorFn?colorFn(i):pal[i%pal.length])};display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:bold;color:#0d1f14;box-shadow:0 3px 0 rgba(0,0,0,.35)">${d}</div>`).join('')}</div>`;
+}
+function l1Mirror(n,uid){
+  // число над зеркалом, перевёртыш под ним
+  const s=''+n, rev=s.split('').reverse().join('');
+  return `<div style="text-align:center;margin:2px auto;max-width:340px">
+    ${l1NumRow(n,'wv-pop')}
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin:3px 0">
+      <div style="font-size:22px" class="wv-pulse">🪞</div>
+      <div style="font-size:12px;color:#cbb89a">перевернули</div>
+      <div style="font-size:22px" class="wv-flick">🔁</div>
+    </div>
+    <div class="wv-pop2" style="font-family:Georgia,serif;font-size:30px;color:#ffd966;letter-spacing:8px">${rev}</div>
+  </div>`;
+}
+function l1SumRow(n,rev,sum,uid){
+  return `<div style="display:flex;flex-direction:column;gap:4px;align-items:center;margin:3px auto">
+    <div style="font-size:11px;color:#9ec0a8">число + перевёртыш</div>
+    <div style="font-family:Georgia,serif;font-size:30px;color:#e8dcc8;letter-spacing:5px">${n} + ${rev}</div>
+    <div style="font-size:15px" class="wv-pulse">👇</div>
+    <div style="font-family:Georgia,serif;font-size:36px;color:#7fd1a0;font-weight:bold">${sum}</div>
+  </div>`;
+}
+function l1SubRow(bigN,smallN,diff,uid){
+  return `<div style="display:flex;flex-direction:column;gap:4px;align-items:center;margin:3px auto">
+    <div style="font-size:11px;color:#9ec0a8">разность (большее − меньшее)</div>
+    <div style="font-family:Georgia,serif;font-size:30px;color:#e8dcc8;letter-spacing:5px">${bigN} − ${smallN}</div>
+    <div style="font-size:15px" class="wv-pulse">👇</div>
+    <div style="font-family:Georgia,serif;font-size:40px;color:#ffd966;font-weight:bold">${diff}</div>
+  </div>`;
+}
+function l1Card(tag,emoji,title,lines,color){
+  if(!Array.isArray(lines)) lines=[lines];
+  let ls='';
+  for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:12.5px;color:#e8dcc8;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
+  return `<div style="width:100%;max-width:330px;margin:0 auto;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <div style="font-size:22px">${emoji}</div>
+      <div style="flex:1"><div style="font-size:11px;color:${color};letter-spacing:.5px">${tag}</div><div style="font-size:15px;color:#fff;font-weight:bold;line-height:1.2">${title}</div></div>
+    </div>${ls}</div>`;
+}
+function visL1(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    let h='';
+    if(step===0){
+      h=col(`<div style="font-size:17px;color:#c9b28a;letter-spacing:1px">🔁 ЗЕРКАЛЬНАЯ ЛАБОРАТОРИЯ · ВсОШ 6 кл.</div>`+
+        big('Числа-перевёртыши')+
+        `<div style="font-size:54px" class="wv-flick">🔁</div>`+
+        rowC(chip('Аня: 172','rgba(127,209,255,.4)'),chip('Яна: 271','rgba(255,217,102,.4)'),chip('сумма 443','rgba(127,184,160,.4)'))+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:12px 14px;max-width:320px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+        Аня записала трёхзначное число, Яна — то же число, но <b>наоборот</b>. Сумма получилась <b style="color:#ffd966">443</b>. Какая разность между ними? Решим без перебора — одной красивой формулой!</div>`+
+        sml('сначала разберёмся, что такое перевёртыш!'));
+    } else if(step===1){
+      h=col(l1B('ШАГ 1 · ПЕРЕВЁРТЫШ','#7fb7d8')+
+        big('Число, записанное наоборот')+
+        l1Mirror(123,'a')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
+          ${l1Card('ПРАВИЛО','🔁','Читаем справа налево','Возьми число и прочитай его наоборот: 123 → 321. Крайние цифры меняются местами, серединка остаётся!','#7fb7d8')}
+          ${l1Card('ЕЩЁ ПРИМЕРЫ','✨','45 → 54, 172 → 271','А если число читается одинаково (909)? Это уже не просто перевёртыш, а палиндром!','#7fd1a0')}
+        </div>`);
+    } else if(step===2){
+      h=col(l1B('ШАГ 2 · ЗАПИСЬ БУКВАМИ','#c9b28a')+
+        big('АБВ — это не умножение!')+
+        `<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:4px 0">
+          ${[['А','сотни','#ff9a8a'],['Б','десятки','#7fd1a0'],['В','единицы','#7fb7d8']].map((p,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center">
+            <div style="font-size:44px;color:#fff;font-weight:bold;font-family:Georgia,serif">${p[0]}</div>
+            <div style="font-size:12px;color:${p[2]}">${p[1]}</div>
+          </div>`).join('')}
+        </div>`+
+        `<div style="background:rgba(127,255,170,.09);border:1.5px solid #7fd1a066;border-radius:14px;padding:10px;max-width:320px;font-family:Georgia,serif;color:#e8dcc8;font-size:21px">АБВ = А сотен + Б десятков + В единиц</div>`+
+        sml('важно: АБВ — разрядная запись числа, а не А·Б·В! Каждая буква «стоит» в своём разряде.'));
+    } else if(step===3){
+      h=col(l1B('ШАГ 3 · РАЗЛОЖЕНИЕ','#7fd1a0')+
+        big('172 = 100 + 70 + 2')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;align-items:center">
+          ${[['1','1 сотня','#ff9a8a'],['7','7 десятков','#7fd1a0'],['2','2 единицы','#7fb7d8']].map((p,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center">
+            <div style="font-size:38px;color:#fff;font-weight:bold;font-family:Georgia,serif">${p[0]}</div>
+            <div style="font-size:11px;color:${p[2]}">${p[1]}</div>
+          </div>`).join('')}
+        </div>`+
+        `<div style="font-family:Georgia,serif;font-size:32px;color:#e8dcc8;letter-spacing:3px">100 + 70 + 2 = <span style="color:#ffd966;font-weight:bold">172</span></div>`+
+        sml('формула: АБВ = 100·А + 10·Б + В. Всё число — это сумма «цифра × разряд»!'));
+    } else if(step===4){
+      h=col(l1B('ШАГ 4 · ЧИСЛО ЯНЫ','#ffd966')+
+        big('Перевёртыш: ВБА')+
+        l1Mirror(172,'c')+
+        `<div style="background:rgba(255,217,102,.09);border:1.5px solid #ffd96666;border-radius:14px;padding:10px;max-width:320px;font-family:Georgia,serif;color:#ffd966;font-size:21px">ВБА = 100·В + 10·Б + А</div>`+
+        sml('Яна записала число Ани наоборот: 172 → 271. Сотни и единицы поменялись, а десятки остались на месте!'));
+    } else if(step===5){
+      h=col(l1B('ШАГ 5 · СКЛАДЫВАЕМ','#7fb7d8')+
+        big('АБВ + ВБА: по разрядам')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:340px">
+          ${[['единицы','В + А','#7fb7d8','пример: 2+1'],['десятки','Б + Б = 2Б','#7fd1a0','пример: 7+7'],['сотни','А + В','#ff9a8a','пример: 1+2']].map((p,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.04);border:1px solid ${p[2]}44;border-radius:10px;padding:5px 14px">
+            <span style="font-size:12px;color:#9ec0a8;width:64px;text-align:left">${p[0]}</span>
+            <span style="font-family:Georgia,serif;font-size:20px;color:${p[2]};font-weight:bold">${p[1]}</span>
+            <span style="font-size:12px;color:#e8dcc8">${p[3]}</span></div>`).join('')}
+        </div>`+
+        sml('складываем одинаковые разряды: единицы с единицами, десятки с десятками, сотни с сотнями!'));
+    } else if(step===6){
+      h=col(l1B('ШАГ 6 · ГЛАВНАЯ ФОРМУЛА','#7fd1a0')+
+        big('Сумма = 101·(А+В) + 20·Б')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px">
+          <div class="wv-pop" style="background:rgba(255,154,138,.06);border:1px solid #ff9a8a44;border-radius:10px;padding:5px 12px;font-size:14px;color:#e8dcc8">сотни+единицы: 100А+А+100В+В = <b style="color:#ff9a8a">101·(А+В)</b></div>
+          <div class="wv-pop2" style="background:rgba(127,209,160,.06);border:1px solid #7fd1a044;border-radius:10px;padding:5px 12px;font-size:14px;color:#e8dcc8">десятки: 10Б + 10Б = <b style="color:#7fd1a0">20·Б</b></div>
+        </div>`+
+        `<div style="background:rgba(127,255,170,.09);border:1.5px solid #7fd1a066;border-radius:14px;padding:10px;max-width:320px;font-family:Georgia,serif;color:#7fd1a0;font-size:23px">АБВ + ВБА = 101·(А+В) + 20·Б</div>`+
+        sml('проверим на 172+271: 101·3 + 20·7 = 303 + 140 = 443! Формула работает!'));
+    } else if(step===7){
+      h=col(l1B('ШАГ 7 · СМОТРИМ НА СУММУ','#c9b28a')+
+        big('Сумма 443 → последняя цифра 3')+
+        `<div style="font-family:Georgia,serif;font-size:48px;color:#fff;letter-spacing:6px">44<span style="color:#ffd966;border-bottom:5px solid #ffd966">3</span></div>`+
+        rowC(chip('101·(А+В) оканчивается на А+В','rgba(127,209,255,.35)'),chip('20·Б оканчивается на 0','rgba(127,184,160,.35)'))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">значит, А + В = 3</div>`+
+        sml('последняя цифра суммы — это А+В (ведь 20·Б даёт ноль в конце). А у 443 последняя цифра 3!'));
+    } else if(step===8){
+      h=col(l1B('ШАГ 8 · А ВДРУГ 13?','#ff9a8a')+
+        big('Проверяем: А+В = 3 или 13?')+
+        rowC(chip('если А+В = 13','rgba(255,154,138,.4)'),chip('101·13 = 1313','rgba(255,217,102,.4)'),chip('1313 > 443','rgba(255,154,138,.4)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">слишком много → А + В = 3</div>`+
+        sml('крайние цифры в сумме дают не больше 18, но даже 13 дало бы 101·13 = 1313 — больше нашей суммы! Значит только 3.'));
+    } else if(step===9){
+      h=col(l1B('ШАГ 9 · НАХОДИМ Б','#7fb7d8')+
+        big('443 − 303 = 140 → Б = 7')+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:340px">
+          ${['443 = 101·3 + 20·Б','101·3 = 303 → 443 − 303 = 140','140 = 20·Б → Б = 140 : 20 = 7'].map((t,i)=>`<div class="wv-pop${i?'2':''}" style="background:rgba(127,183,216,.06);border:1px solid rgba(127,183,216,.35);border-radius:10px;padding:5px 12px;font-size:15px;color:#e8dcc8">${t}</div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#ffd966">Б = 7 — в обоих числах!</div>`+
+        sml('значит, у числа Ани и у перевёртыша посередине стоит семёрка: А7В и В7А.'));
+    } else if(step===10){
+      h=col(l1B('ШАГ 10 · ПОДБИРАЕМ ЦИФРЫ','#7fd1a0')+
+        big('А + В = 3 → 1 и 2')+
+        rowC(chip('А=1, В=2 (или наоборот)','rgba(255,217,102,.4)'),chip('разные цифры — иначе перевёртыш тот же','rgba(127,184,160,.4)'))+
+        l1Mirror(172,'e')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">получились числа 172 и 271</div>`+
+        sml('проверяем: 172 + 271 = 443! Всё сходится с условием задачи.'));
+    } else if(step===11){
+      h=col(l1B('ШАГ 11 · НАША ЦЕЛЬ — РАЗНОСТЬ','#c9b28a')+
+        big('271 − 172 = ?')+
+        l1SubRow(271,172,99,'f')+
+        sml('вот и ответ задачи: разность чисел Ани и Яны равна 99! Но почему именно 99? Это не случайность!'));
+    } else if(step===12){
+      h=col(l1B('ШАГ 12 · СЕКРЕТ','#ffd966')+
+        big('Разность всегда делится на 99!')+
+        `<div style="background:rgba(255,217,102,.08);border:1px solid #ffd96644;border-radius:12px;padding:8px 14px;max-width:330px;font-family:Georgia,serif;font-size:17px;color:#e8dcc8;line-height:1.7">АБВ − ВБА = (100А+10Б+В) − (100В+10Б+А)</div>`+
+        `<div class="wv-pop2" style="background:rgba(127,209,160,.08);border:1px solid #7fd1a044;border-radius:12px;padding:8px 14px;max-width:330px;font-size:15px;color:#e8dcc8;line-height:1.8">десятки <s style="color:#7fd1a0">10Б − 10Б</s> сокращаются!<br>остаётся 100А − 100В + В − А = <b style="color:#ffd966;font-size:17px">99·(А − В)</b></div>`+
+        `<div class="wv-ans" style="font-size:25px;color:#7fd1a0">разность всегда кратна 99!</div>`+
+        sml('для 172 и 271: 99·(1−2) = −99 (по модулю 99). Крайние цифры отличаются на 1 → разность 99!'));
+    } else if(step===13){
+      if(st.a==null) st.a=1; if(st.b==null) st.b=7; if(st.c==null) st.c=2;
+      const A=st.a, B=st.b, C=st.c;
+      const n=100*A+10*B+C, rev=100*C+10*B+A, diff=Math.abs(99*(A-C));
+      const sum=101*(A+C)+20*B;
+      const ctrl=(label,val,plus,minus)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+        <div style="font-size:10.5px;color:#9ec0a8">${label}</div>
+        <div style="font-family:Georgia,serif;font-size:34px;color:#ffd966;font-weight:bold">${val}</div>
+        <div style="display:flex;gap:6px">${btn('−',`l1Act('${lk}','${minus}')`)}${btn('+',`l1Act('${lk}','${plus}')`)}</div>
+      </div>`;
+      h=col(l1B('ШАГ 13 · ПОКРУТИ ЦИФРЫ','#7fd1a0')+
+        big('Конструктор перевёртышей')+
+        `<div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:6px 0">
+          ${ctrl('сотни А',A,'a+','a-')}${ctrl('десятки Б',B,'b+','b-')}${ctrl('единицы В',C,'c+','c-')}
+        </div>`+
+        `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop" style="background:rgba(127,183,216,.06);border:1px solid rgba(127,183,216,.3);border-radius:10px;padding:6px;text-align:center"><div style="font-size:10px;color:#9ec0a8">число</div><div style="font-family:Georgia,serif;font-size:20px;color:#fff">${n}</div></div>
+          <div class="wv-pop2" style="background:rgba(255,217,102,.06);border:1px solid rgba(255,217,102,.3);border-radius:10px;padding:6px;text-align:center"><div style="font-size:10px;color:#9ec0a8">перевёртыш</div><div style="font-family:Georgia,serif;font-size:20px;color:#ffd966">${rev}</div></div>
+          <div class="wv-pop" style="background:rgba(127,209,160,.06);border:1px solid rgba(127,209,160,.3);border-radius:10px;padding:6px;text-align:center"><div style="font-size:10px;color:#9ec0a8">сумма</div><div style="font-family:Georgia,serif;font-size:20px;color:#7fd1a0">${sum}</div></div>
+          <div class="wv-pop2" style="background:rgba(255,154,138,.06);border:1px solid rgba(255,154,138,.3);border-radius:10px;padding:6px;text-align:center"><div style="font-size:10px;color:#9ec0a8">разность</div><div style="font-family:Georgia,serif;font-size:20px;color:#ff9a8a">${diff}</div></div>
+        </div>`+
+        sml('крути цифры! Разность всегда = 99·|А−В| — а десятки Б на неё не влияют!'));
+    } else if(step===14){
+      if(st.i==null){ st.i=0; const g=L1GAME[0]; st.correct=0; }
+      const g=L1GAME[st.i%L1GAME.length];
+      const num=g[0], right=g[1];
+      // варианты: верный + 2 чужих перевёртыша
+      const others=L1GAME.filter((x,k)=>k!==st.i%L1GAME.length&&x[1]!==right).map(x=>x[1]);
+      const o1=others[0]||'999', o2=others[1]||'888';
+      const opts=st.correct===0?[right,o1,o2]:st.correct===1?[o1,right,o2]:[o1,o2,right];
+      const resTxt=st.got==='ok'?`<div class="l35-pop" style="font-size:16px;color:#7fd1a0">✅ Верно! ${num} → ${right}</div>`:st.got==='no'?`<div class="l35-pop" style="font-size:16px;color:#ff9a8a">❌ Не угадал! Перевёртыш числа ${num} — это ${right}</div>`:'';
+      h=col(l1B('ШАГ 14 · ИГРА «УГАДАЙ ПЕРЕВЁРТЫШ»','#7fd1a0')+
+        big('Найди перевёртыш числа '+num)+
+        `<div style="font-family:Georgia,serif;font-size:56px;color:#fff;letter-spacing:8px">${num}</div>`+
+        `<div style="font-size:13px;color:#9ec0a8;margin:2px 0">какое число получится, если записать его наоборот?</div>`+
+        btns(btn('🔁 '+opts[0],`l1Act('${lk}','pick0')`),btn('🔁 '+opts[1],`l1Act('${lk}','pick1')`),btn('🔁 '+opts[2],`l1Act('${lk}','pick2')`))+
+        resTxt+
+        btns(btn('🎲 другое число',`l1Act('${lk}','n')`),btn('↺',`l1Act('${lk}','r')`))+
+        sml('подсказка: просто прочитай число справа налево!'));
+    } else {
+      h=col(`<div style="font-size:54px">🔁</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🔁 АБВ и ВБА — перевёртыши.<br>
+            ➕ Сумма: 101·(А+В) + 20·Б.<br>
+            ➖ Разность: 99·(А−В) — всегда на 99!<br>
+            🧮 172 + 271 = 443; разность = 99.</div>
+        </div>`+
+        btn('⟲ вернуться к игре', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 271 − 172'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+
 function l19Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const POOL=[['121','Да'],['989','Да'],['343','Да'],['2002','Да'],['1221','Да'],['909','Да'],['525','Да'],['1001','Да'],['123','Нет'],['456','Нет'],['990','Нет'],['1021','Нет']];
@@ -5041,6 +5278,28 @@ function l19Mirror(n,uid){
     <div class="wv-pop2" style="font-family:Georgia,serif;font-size:34px;color:#7fd1a0;letter-spacing:3px">${rev}</div>
   </div>`;
 }
+
+function l19Edge(num,uid,showPair){
+  // палиндром-проверка от краёв: цифры-плитки, крайние пары подсвечиваются одинаково
+  const s=''+num, n=s.length;
+  const pal=['#ffd966','#7fd1a0','#7fb7d8','#ff9a8a','#d9a0ff'];
+  const ok=s===s.split('').reverse().join('');
+  let tiles='';
+  for(let i=0;i<n;i++){
+    const pair=Math.min(i,n-1-i);          // номер пары от края
+    const col=pal[pair%pal.length];
+    tiles+=`<div class="wv-pop" style="animation-delay:${i*0.08}s;width:${n>3?40:50}px;height:${n>3?46:56}px;border-radius:${n>3?10:13}px;background:${col};display:flex;align-items:center;justify-content:center;font-size:${n>3?22:28}px;font-weight:bold;color:#0d1f14;box-shadow:0 3px 0 rgba(0,0,0,.35)">${s[i]}</div>`;
+  }
+  const mark=ok
+    ? `<div style="font-size:14px;color:#7fd1a0;margin-top:3px">✅ палиндром!</div>`
+    : `<div style="font-size:14px;color:#ff9a8a;margin-top:3px">❌ не палиндром</div>`;
+  return `<div style="text-align:center;margin:4px auto">
+    <div style="font-size:11px;color:#9ec0a8;margin-bottom:2px">${num} · сравниваем от краёв к центру</div>
+    <div style="display:flex;justify-content:center;gap:7px;flex-wrap:wrap">${tiles}</div>
+    ${showPair?`<div style="font-size:11.5px;color:#cbb89a;margin-top:4px">крайние пары — одного цвета: ${showPair}</div>`:''}
+    ${mark}</div>`;
+}
+
 function l19Chip(d,color,uid){
   return `<div style="width:34px;height:44px;border-radius:7px;background:${color};display:flex;align-items:center;justify-content:center;font-size:22px;color:#0d1f14;font-weight:bold;margin:2px">${d}</div>`;
 }
@@ -5055,63 +5314,89 @@ function visL19(el){
     const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
     const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
     const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join("")}</div>`;
     let h='';
     if(step===0){
       h=col(big('Слова-перевёртыши'),
-        rowC(chip('КОМОК','rgba(127,209,255,.5)'),chip('ПОТОП','rgba(232,160,90,.5)'),chip('ДОХОД','rgba(127,184,160,.5)'))+
-        `<div style="font-size:40px" class="wv-pop">🔁</div>`+
-        sml('есть слова, которые читаются одинаково в обе стороны. А бывают ли такие ЧИСЛА? Конечно!'));
+        `<div style="display:flex;flex-direction:column;gap:4px;margin:2px auto">
+          ${['КОМОК','ПОТОП','ДОХОД','ШАЛАШ','КАЗАК'].map((w,i)=>`<div class="wv-pop${i?'2':''}" style="font-size:15px;letter-spacing:5px;color:${i%2?'#7fd1a0':'#7fb7d8'};background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:3px 14px">${w} <span style="font-size:11px;color:#cbb89a;letter-spacing:0">— и туда, и обратно!</span></div>`).join('')}
+        </div>`+
+        `<div style="font-size:40px" class="wv-flick">🔁</div>`+
+        sml('эти слова читаются одинаково в обе стороны! А бывают ли такие ЧИСЛА? Конечно — их называют ПАЛИНДРОМАМИ!'));
     } else if(step===1){
       h=col(big('Число-палиндром'),
-        l19Mirror(121,'a')+
+        l19Edge(121,'a','1 и 1, 2 и 2')+
         `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">121 читается одинаково!</div>`+
         sml('слева направо: 1-2-1. Справа налево: 1-2-1. Одно и то же!'));
     } else if(step===2){
       h=col(big('Зеркало не врёт'),
-        rowC(chip('123 → 321 — не совпали','rgba(232,160,90,.5)'),chip('121 → 121 — совпали!','rgba(127,184,160,.5)'))+
-        l19Mirror(123,'b')+
-        sml('подставь число к зеркалу: если отражение то же — это палиндром!'));
+        l19Edge(123,'b','1 и 3 — НЕ совпали')+
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          <div class="wv-pop" style="font-family:Georgia,serif;font-size:26px;color:#7fd1a0;border:1.5px solid #7fd1a066;border-radius:12px;padding:6px 12px">121 ✅</div>
+          <div class="wv-pop2" style="font-family:Georgia,serif;font-size:26px;color:#ff9a8a;border:1.5px solid #ff9a8a66;border-radius:12px;padding:6px 12px">123 ❌</div>
+        </div>`+
+        sml('подставь число к зеркалу: отражение 123 → 321 — не совпало! А 121 → 121 — совпало!'));
     } else if(step===3){
       h=col(big('Ещё примеры'),
-        rowC(l19Mirror(2002,'c'),l19Mirror(909,'d'))+
-        sml('2002 читается одинаково! И 909, и 1221, и 5 — любое однозначное тоже палиндром'));
+        `<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+          ${[2002,909,1221,5].map((n,i)=>{const s=''+n; const cols=n===5?['#7fd1a0']:s.split('').map((d,k)=>k<s.length-1-k?'#ffd966':'#7fd1a0'); return `<div class="wv-pop${i?'2':''}" style="font-family:Georgia,serif;font-size:26px;color:#ffd966;border:1px solid #3d5c49;border-radius:12px;padding:6px 14px;background:rgba(255,255,255,.03)">${s}</div>`;}).join('')}
+        </div>`+
+        sml('2002, 909, 1221 — читаются одинаково! И любое однозначное (5, 7) — тоже палиндром!'));
     } else if(step===4){
       h=col(big('Как проверить?'),
-        rowC(chip('сравни первую и последнюю цифру','rgba(127,209,255,.5)'),chip('потом вторую и предпоследнюю','rgba(232,160,90,.5)'))+
+        l19Edge(12321,'d','1 и 1, 2 и 2, середина 3')+
         sml('иди от краёв к центру: 1…1, потом 2…2. Всё совпало — палиндром!'));
     } else if(step===5){
       h=col(big('Задача-проверка: 989'),
-        l19Mirror(989,'e')+
+        l19Edge(989,'e','9 и 9, середина 8')+
         `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">989 — палиндром: ДА!</div>`+
-        sml('как в нашей проверке: 9…9, потом 8…8 — совпадает!'));
+        sml('как в нашей проверке: 9…9, середина 8 — совпадает!'));
     } else if(step===6){
       h=col(big('Двузначные палиндромы'),
-        rowC(chip('вид aa: 11, 22, 33…','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">9 штук: 11, 22, …, 99</div>`+
-        sml('первая цифра a от 1 до 9 — 9 вариантов. Вторая обязана быть такой же! Как в наших задачках'));
+        `<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:340px">
+          ${['11','22','33','44','55','66','77','88','99'].map((n,i)=>`<div class="wv-pop${i%3===1?'2':i%3===2?'3':''}" style="width:44px;height:44px;border-radius:10px;background:${i%2?'#7fd1a0':'#7fb7d8'};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:bold;color:#0d1f14">${n}</div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">всего 9: 11, 22, …, 99</div>`+
+        sml('первая цифра a от 1 до 9 — 9 вариантов, вторая обязана быть такой же!'));
     } else if(step===7){
       h=col(big('Трёхзначные: вид aba'),
-        rowC(l19Chip('a','#7fb7d8','f'),l19Chip('b','#ffd9a0','g'),l19Chip('a','#7fb7d8','h'))+
-        sml('крайние цифры одинаковые (a), серединка любая (b). Пример: 1-2-1, 3-4-3, 9-0-9'));
+        `<div style="display:flex;justify-content:center;gap:6px">${['a','b','a'].map((x,k)=>`<div class="wv-pop${k?'2':''}" style="width:52px;height:58px;border-radius:12px;background:${k===1?'#ffd9a0':'#7fb7d8'};display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:bold;color:#0d1f14">${x}</div>`).join('')}</div>`+
+        `<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:4px 0">
+          ${['121','343','909'].map((n,k)=>`<div class="wv-pop${k?'2':''}" style="font-family:Georgia,serif;font-size:24px;color:#ffd966;border:1px solid #3d5c49;border-radius:10px;padding:4px 12px;background:rgba(255,255,255,.03)">${n}</div>`).join('')}
+        </div>`+
+        sml('крайние цифры одинаковые (a), серединка любая (b) — от 0 до 9!'));
     } else if(step===8){
       h=col(big('Считаем трёхзначные'),
-        rowC(chip('a — от 1 до 9: 9 способов','rgba(127,209,255,.5)'),chip('b — от 0 до 9: 10 способов','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">9 · 10 = 90 палиндромов</div>`+
-        sml('a не может быть 0 (иначе число не трёхзначное). Как в наших задачках!'));
+        `<div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div class="wv-pop" style="text-align:center"><div style="font-size:15px;color:#7fb7d8">a — первая</div><div style="font-family:Georgia,serif;font-size:30px;color:#fff">1..9</div><div style="font-size:12px;color:#9ec0a8">9 способов</div></div>
+          <div style="font-size:26px;color:#cbb89a">×</div>
+          <div class="wv-pop2" style="text-align:center"><div style="font-size:15px;color:#ffd9a0">b — середина</div><div style="font-family:Georgia,serif;font-size:30px;color:#fff">0..9</div><div style="font-size:12px;color:#9ec0a8">10 способов</div></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0">9 · 10 = 90 палиндромов</div>`+
+        sml('a не может быть 0 — иначе число не трёхзначное!'));
     } else if(step===9){
       h=col(big('Четырёхзначные: вид abba'),
-        rowC(l19Chip('a','#7fb7d8','i'),l19Chip('b','#ffd9a0','j'),l19Chip('b','#ffd9a0','k'),l19Chip('a','#7fb7d8','l'))+
-        sml('первая и последняя — a, вторая и третья — b. Пример: 1-2-2-1 = 1221'));
+        `<div style="display:flex;justify-content:center;gap:6px">${['a','b','b','a'].map((x,k)=>`<div class="wv-pop${k?'2':''}" style="width:48px;height:54px;border-radius:12px;background:${k===0||k===3?'#7fb7d8':'#ffd9a0'};display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold;color:#0d1f14">${x}</div>`).join('')}</div>`+
+        `<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:4px 0">
+          ${['1221','2002','3443'].map((n,k)=>`<div class="wv-pop${k?'2':''}" style="font-family:Georgia,serif;font-size:24px;color:#ffd966;border:1px solid #3d5c49;border-radius:10px;padding:4px 12px;background:rgba(255,255,255,.03)">${n}</div>`).join('')}
+        </div>`+
+        sml('первая и последняя — a, вторая и третья — b!'));
     } else if(step===10){
       h=col(big('Считаем четырёхзначные'),
-        rowC(chip('a — 9 способов (1..9)','rgba(127,209,255,.5)'),chip('b — 10 способов (0..9)','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">9 · 10 = 90 палиндромов</div>`+
-        sml('та же логика! Столько же, сколько трёхзначных'));
+        `<div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div class="wv-pop" style="text-align:center"><div style="font-size:15px;color:#7fb7d8">a — первая</div><div style="font-family:Georgia,serif;font-size:30px;color:#fff">1..9</div><div style="font-size:12px;color:#9ec0a8">9 способов</div></div>
+          <div style="font-size:26px;color:#cbb89a">×</div>
+          <div class="wv-pop2" style="text-align:center"><div style="font-size:15px;color:#ffd9a0">b — вторая</div><div style="font-family:Georgia,serif;font-size:30px;color:#fff">0..9</div><div style="font-size:12px;color:#9ec0a8">10 способов</div></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:28px;color:#7fd1a0">9 · 10 = 90 палиндромов</div>`+
+        sml('та же логика! Четырёхзначных столько же, сколько трёхзначных'));
     } else if(step===11){
       h=col(big('Симметрия вокруг'),
-        rowC(chip('121','rgba(127,209,255,.5)'),chip('1221','rgba(232,160,90,.5)'),chip('12321','rgba(127,184,160,.5)'))+
-        sml('центр может быть цифрой (нечётная длина) или «швом» между цифрами (чётная длина)'));
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px">
+          <div class="wv-pop" style="display:flex;justify-content:center;gap:5px">${'121'.split('').map((d,k)=>`<div style="width:40px;height:44px;border-radius:10px;background:${k===1?'#ffd966':'#7fb7d8'};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:bold;color:#0d1f14">${d}</div>`).join('')}<span style="font-size:12px;color:#9ec0a8;margin-left:6px;align-self:center">центр — цифра</span></div>
+          <div class="wv-pop2" style="display:flex;justify-content:center;gap:5px">${'1221'.split('').map((d,k)=>`<div style="width:40px;height:44px;border-radius:10px;background:${k===1||k===2?'#ffd966':'#7fb7d8'};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:bold;color:#0d1f14">${d}</div>`).join('')}<span style="font-size:12px;color:#9ec0a8;margin-left:6px;align-self:center">«шов» между цифрами</span></div>
+        </div>`+
+        sml('нечётная длина — центр-цифра; чётная — центр-«шов»!'));
     } else if(step===12){
       h=col(big('Где встречаются палиндромы'),
         rowC(chip('номера машин','rgba(127,209,255,.4)'),chip('даты: 20.02.2002','rgba(217,164,65,.4)'),chip('зеркальные слова','rgba(127,209,255,.4)'),chip('циферблат 12:21','rgba(127,209,255,.4)'))+
@@ -5123,12 +5408,15 @@ function visL19(el){
         sml('больше цифр — больше свободы для середины!'));
     } else if(step===14){
       h=col(big('Закономерность'),
-        rowC(chip('2-значные: 9','rgba(127,209,255,.5)'),chip('3-значные: 90','rgba(127,184,160,.5)'),chip('4-значные: 90','rgba(232,160,90,.5)'),chip('5-значные: 900','rgba(127,184,160,.5)'))+
+        `<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:340px">
+          ${[['2-значные','9'],['3-значные','90'],['4-значные','90'],['5-значные','900']].map((p,k)=>`<div class="wv-pop${k?'2':''}" style="text-align:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:10px;padding:6px 10px"><div style="font-size:11px;color:#9ec0a8">${p[0]}</div><div style="font-family:Georgia,serif;font-size:24px;color:${k%2?'#7fd1a0':'#ffd966'};font-weight:bold">${p[1]}</div></div>`).join('')}
+        </div>`+
         sml('первые и последние цифры «держат» симметрию, остальные свободны'));
     } else if(step===15){
       h=col(big('Проверь себя'),
-        rowC(chip('353 — палиндром? Да!','rgba(127,184,160,.5)'),chip('12321 — палиндром? Да!','rgba(127,184,160,.5)'),chip('987 — палиндром? Нет','rgba(232,160,90,.5)'))+
-        sml('сравнивай цифры от краёв к центру!'));
+        l19Edge(353,'m','3 и 3, середина 5 — Да!')+
+        l19Edge(987,'n','9 и 7 — НЕ совпали — Нет!')+
+        sml('353 — палиндром (Да!), 12321 — палиндром (Да!), 987 — нет. Сравнивай от краёв к центру!'));
     } else if(step===16){
       const POOL=[['121','Да'],['989','Да'],['343','Да'],['2002','Да'],['1221','Да'],['909','Да'],['525','Да'],['1001','Да'],['123','Нет'],['456','Нет'],['990','Нет'],['1021','Нет']];
       if(st.i==null) st.i=0;
@@ -12015,7 +12303,7 @@ function visIsPhys(){ try{ const L=lessonById(LV.id); return !!L && L.subj==='ph
 function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
-  if(id===1) visDigits(el);
+  if(id===1) visL1(el);
   else if(id===87) visL87(el);
   else if(id===99) visL99(el);
   else if(id===95) visL95(el);
