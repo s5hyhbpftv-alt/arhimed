@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -12534,7 +12534,7 @@ function renderLessonVis(){
   else if(id===19) visL19(el);
   else if(id===2) visL2(el);
   else if(id===3) visL3(el);
-  else if(id===4) visCandy(el);
+  else if(id===4) visL4(el);
   else if(id===5) visTourn(el);
   else if(id===6) visVillage(el);
   else if(id===10) visL10(el);
@@ -12930,14 +12930,271 @@ function visL3(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
-function visCandy(el){
-  el.innerHTML=`<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-    ${[['Ваня',2,'чёт → правда'],['Стёпа',1,'нечёт → соврал'],['Лёша',3,'нечёт → соврал']].map(([nm,c,st])=>`
-      <div style="width:130px;background:#13251c;border:1px solid #3d5c49;border-radius:10px;padding:10px;text-align:center">
-      <div style="font-size:24px">🍬</div><div style="font-size:26px;color:var(--brass)">${c}</div>
-      <div style="font-weight:bold">${nm}</div><div class="small" style="font-size:10.5px">${st}</div></div>`).join('')}
-  </div><div style="text-align:center;font-size:12.5px;color:#cbb89a;margin-top:6px">2+1+3 = 6 ✓ · «вместе 6» — правда (Ваня, чёт)</div>`;
+// ============ УРОК 4 «Конфеты: чёт — правда, нечёт — ложь» — Конфетный детектив ============
+// Ваня, Стёпа и Лёша; правило: чётное число → правда, нечётное → ложь.
+var L4T=[['5','Аня','2','Боря','Витя'],['8','Аня','2','Боря','Витя'],['7','Макс','3','Ника','Оля'],['10','Петя','4','Кира','Лёва']];
+function l4Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const parts=act.split(':'); const a=parts[0], p=+parts[1];
+  if(a==='q') st.q=((st.q||0)+1)%6;                 // следующий случай тренажёра
+  if(a==='pick') st.pick=p;
+  if(a==='flip') st.flip=st.flip?0:1;               // переключатель правила
+  if(a==='step') st.m=(st.m||0)+1;                  // следующий шаг метода
+  if(a==='rst') CHS[lk]={};
+  chRender(0);
 }
+function l4B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
+function l4Candy(n,sz){
+  const s=sz||24;
+  return `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;min-height:${s+4}px">${Array.from({length:n},(_,i)=>`<span class="wv-pop" style="animation-delay:${i*0.08}s;font-size:${s}px;line-height:1">🍬</span>`).join('')||'<span style="color:#4a5c52;font-size:13px">0</span>'}</div>`;
+}
+function l4Hero(name,emoji,n,words,ok,color){
+  // карточка героя: имя, аватар, конфеты, реплика, статус правды/лжи
+  const col=color||'#7fb7d8';
+  return `<div style="flex:1;min-width:96px;max-width:150px;text-align:center;background:rgba(255,255,255,.04);border:1px solid ${col}66;border-radius:14px;padding:8px 6px">
+    <div style="font-size:26px">${emoji}</div>
+    <div style="font-size:14px;color:#fff;font-weight:bold">${name}</div>
+    ${l4Candy(n,20)}
+    <div style="font-size:9.5px;color:#9ec0a8;margin-top:2px">${n} ${n===1?'конфета':n<5?'конфеты':'конфет'}</div>
+    ${words?`<div style="font-size:10.5px;color:#e8dcc8;background:rgba(255,255,255,.06);border-radius:8px;padding:3px 5px;margin-top:4px">💬 ${words}</div>`:''}
+    ${ok!==undefined?`<div class="${ok?'wv-ans':''}" style="font-size:11.5px;color:${ok?'#7fd1a0':'#ff9a8a'};margin-top:3px;font-weight:bold">${ok?'✅ правда':'❌ ложь'}</div>`:''}
+  </div>`;
+}
+function l4Replica(who,emoji,txt,uid){
+  return `<div class="wv-pop" style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid #3d5c49;border-left:4px solid ${uid==='v'?'#7fd1a0':uid==='s'?'#ff9a8a':'#7fb7d8'};border-radius:12px;padding:6px 10px;max-width:330px;text-align:left">
+    <span style="font-size:24px">${emoji}</span>
+    <span style="font-size:12px;color:#e8dcc8"><b style="color:#fff">${who}:</b> «${txt}»</span>
+  </div>`;
+}
+function l4EvenRow(uid){
+  // ряд чётных/нечётных конфет-плиток 1..6
+  const even=n=>n%2===0;
+  return `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:4px 0">${[1,2,3,4,5,6].map(n=>`<div class="wv-pop" style="width:44px;height:54px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:${even(n)?'rgba(127,209,160,.2)':'rgba(255,138,106,.2)'};border:1.5px solid ${even(n)?'#7fd1a0':'#ff9a8a'}"><div style="font-family:Georgia,serif;font-size:20px;color:#fff;font-weight:bold">${n}</div><div style="font-size:8.5px;color:${even(n)?'#7fd1a0':'#ff9a8a'}">${even(n)?'чётное':'нечётное'}</div></div>`).join('')}</div>`;
+}
+function l4CheckAll(v,s,l){
+  // полная проверка решения: true если всё сходится
+  const sum=v+s+l;
+  const okV = (sum===6) && (v%2===0) && v>=1;
+  const okS = (sum%2!==0)===false && (s%2!==0); // Стёпа соврал: сумма НЕ нечётная (6 чёт) и s нечётное
+  const okL = (l!==1) && (l%2!==0);
+  return {sum, okV, okS: (s%2!==0) && (sum%2===0), okL:(l%2!==0)&&(l!==1)};
+}
+function l4Giver(v,s,l){
+  // возвращает конфеты для слайдеров
+  return [v,s,l];
+}
+function visL4(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v4!==step) CHS[lk]={_v4:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    let h='';
+    if(step===0){
+      h=col(`<div style="font-size:17px;color:#c9b28a;letter-spacing:1px">🍬 КОНФЕТНЫЙ ДЕТЕКТИВ · ВсОШ 6 кл.</div>`+
+        big('Чёт — правда, нечёт — ложь')+
+        `<div style="font-size:44px" class="wv-flick">🕵️</div>`+
+        rowC(chip('Ваня, Стёпа, Лёша','rgba(127,209,255,.4)'),chip('взяли конфеты со стола','rgba(255,217,102,.4)'),chip('кто-то прав, кто-то врёт','rgba(127,184,160,.4)'))+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:12px 14px;max-width:330px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+        Ребята взяли конфеты и заявили: Ваня — «вместе <b style="color:#ffd966">6</b>» и «каждый взял хотя бы одну»; Стёпа — «вместе нечётное количество»; Лёша — «я взял одну». А правило такое: у кого <b style="color:#7fd1a0">чётное</b> число конфет — тот сказал правду, у кого <b style="color:#ff9a8a">нечётное</b> — соврал. Кто сколько взял?</div>`+
+        sml('похоже на детектив: разберём реплики по одной и найдём лжеца!'));
+    } else if(step===1){
+      h=col(l4B('ПОВТОРИМ ЧЁТНОСТЬ','#7fd1a0')+
+        big('Чётное и нечётное')+
+        l4EvenRow('a')+
+        `<div style="background:rgba(127,255,170,.09);border:1.5px solid #7fd1a066;border-radius:14px;padding:10px;max-width:330px;font-size:15px;color:#e8dcc8;line-height:1.7">правило задачи: <b style="color:#7fd1a0">чётное число → сказал правду</b>, <b style="color:#ff9a8a">нечётное → соврал</b></div>`+
+        sml('чётные: 2, 4, 6 — делятся на 2. Нечётные: 1, 3, 5 — не делятся. Запомни, это ключ к задаче!'));
+    } else if(step===2){
+      h=col(l4B('КТО ЧТО СКАЗАЛ','#c9b28a')+
+        big('Три реплики')+
+        `<div style="display:flex;flex-direction:column;gap:7px;max-width:340px;width:100%">
+          ${l4Replica('Ваня','👦','Мы взяли вместе 6 конфет','v')}
+          ${l4Replica('Ваня','👦','Каждый взял хотя бы одну','v')}
+          ${l4Replica('Стёпа','🧒','Нет, мы взяли нечётное количество','s')}
+          ${l4Replica('Лёша','👶','Я взял одну конфету','l')}
+        </div>`+
+        sml('четыре высказывания, три человека. Начнём с самого подозрительного — с Лёши!'));
+    } else if(step===3){
+      // логика правда↔чётное: интерактив выбора числа
+      const pick=st.pick;
+      const nums=[1,2,3,4,5,6];
+      const chosen=pick!=null?nums[pick]:null;
+      h=col(l4B('ЛОГИКА «ПРАВДА ↔ ЧЁТНОЕ»','#7fb7d8')+
+        big('Если человек прав — у него чётное!')+
+        `<div style="font-size:13px;color:#9ec0a8">выбери, сколько конфет взял загадочный человек</div>`+
+        `<div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap">${nums.map((n,i)=>btn(n+' 🍬',`l4Act('${lk}','pick:${i}')`,st.pick===i?'style="border-color:#7fd1a0"':'')).join('')}</div>`+
+        (chosen!=null?`<div class="wv-ans" style="font-size:19px;color:${chosen%2===0?'#7fd1a0':'#ff9a8a'}">${chosen} — ${chosen%2===0?'чётное':"нечётное"} → ${chosen%2===0?'он сказал ПРАВДУ':'он СОВРАЛ'}</div>`:'')+
+        sml('проверка человека: посчитай его конфеты! Чётное — верим, нечётное — не верим.'));
+    } else if(step===4){
+      h=col(l4B('СЛЕДСТВИЕ №1 · ЛЁША','#ff9a8a')+
+        big('«Я взял одну» — правда или ложь?')+
+        `<div style="display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap">
+          ${l4Hero('Лёша','👶',1,'я взял одну',undefined,'#ff9a8a')}
+        </div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop" style="background:rgba(255,154,138,.07);border:1px solid #ff9a8a44;border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8;text-align:left">если бы Лёша сказал правду — у него было бы <b style="color:#7fd1a0">чётное</b> число конфет</div>
+          <div class="wv-pop2" style="background:rgba(255,154,138,.07);border:1px solid #ff9a8a44;border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8;text-align:left">но он говорит «одна» = <b style="color:#ff9a8a">1</b>, а 1 — <b style="color:#ff9a8a">нечётное</b>!</div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:20px;color:#ff9a8a">противоречие → Лёша соврал!</div>`+
+        sml('правда и «одна конфета» несовместимы: правдивому нужен чётный счёт.'));
+    } else if(step===5){
+      h=col(l4B('ВЫВОД ПРО ЛЁШУ','#ffd966')+
+        big('Лёша соврал → у него нечётное, но не 1')+
+        rowC(chip('соврал → нечётное','rgba(255,138,106,.5)'),chip('«я взял одну» — ложь → не 1','rgba(127,209,160,.5)'),chip('вместе 6 → не больше 6','rgba(127,183,216,.5)'))+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">${[1,3,5].map(n=>`<div class="wv-pop" style="width:52px;height:58px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:${n===3?'rgba(255,217,102,.25)':'rgba(255,255,255,.04)'};border:2px solid ${n===3?'#ffd966':'#3d5c49'}"><div style="font-family:Georgia,serif;font-size:24px;color:#fff">${n}</div><div style="font-size:8px;color:#9ec0a8">${n===1?'нельзя':'можно'}</div></div>`).join('')}</div>`+
+        `<div class="wv-ans" style="font-size:22px;color:#ffd966">из нечётных подходит 3!</div>`+
+        sml('запомним: у Лёши, скорее всего, 3 конфеты. Проверим остальных!'));
+    } else if(step===6){
+      h=col(l4B('СПОР ВАНИ И СТЁПЫ','#7fb7d8')+
+        big('Они противоречат друг другу!')+
+        `<div style="display:flex;flex-direction:column;gap:7px;max-width:340px;width:100%">
+          ${l4Replica('Ваня','👦','Мы взяли вместе 6 конфет','v')}
+          ${l4Replica('Стёпа','🧒','Нет, мы взяли нечётное количество','s')}
+        </div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop" style="background:rgba(127,183,216,.06);border:1px solid rgba(127,183,216,.3);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8;text-align:left">6 — число <b style="color:#7fd1a0">чётное</b>. Ваня говорит «6», Стёпа — «нечётное».</div>
+          <div class="wv-pop2" style="background:rgba(255,217,102,.08);border:1px solid rgba(255,217,102,.4);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8;text-align:left">одновременно они правы быть не могут: 6 не бывает нечётным! Значит, <b style="color:#ffd966">ровно один из них прав</b>.</div>
+        </div>`+
+        sml('спорщики — как чаши весов: поднимется одна. Разберём оба случая!'));
+    } else if(step===7){
+      h=col(l4B('СЛУЧАЙ 1 · «ПРАВ СТЁПА»?','#ff9a8a')+
+        big('Пробуем — и ловим противоречие')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop" style="background:rgba(255,154,138,.06);border:1px solid #ff9a8a44;border-radius:10px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">пусть прав Стёпа: у него <b>чётное</b>, а «вместе нечётное» — правда</div>
+          <div class="wv-pop2" style="background:rgba(255,154,138,.06);border:1px solid #ff9a8a44;border-radius:10px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">тогда Ваня соврал → у Вани <b style="color:#ff9a8a">нечётное</b>; Лёша соврал → у Лёши <b style="color:#ff9a8a">нечётное</b></div>
+          <div class="wv-pop3" style="background:rgba(127,209,160,.07);border:1px solid #7fd1a044;border-radius:10px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">сумма: нечётное + чётное + нечётное = <b style="color:#ffd966">чётное</b>… а Стёпа сказал «нечётное»! ❌</div>
+        </div>`+
+        `<div class="l35-pop" style="font-size:17px;color:#ff9a8a">противоречие — случай «прав Стёпа» невозможен!</div>`+
+        sml('отбросили случай. Остаётся один: прав Ваня!'));
+    } else if(step===8){
+      h=col(l4B('СЛУЧАЙ 2 · ПРАВ ВАНЯ','#7fd1a0')+
+        big('Вместе действительно 6')+
+        rowC(chip('Ваня прав → у него чётное','rgba(127,209,160,.5)'),chip('вместе 6','rgba(255,217,102,.5)'),chip('Стёпа соврал → нечётное','rgba(255,138,106,.5)'),chip('Лёша соврал → нечётное, не 1','rgba(255,138,106,.5)'))+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['Ваня','чётное'],['Стёпа','нечётное'],['Лёша','нечётное, не 1']].map((p,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:12px;padding:8px 12px;min-width:92px"><div style="font-size:26px">${['👦','🧒','👶'][i]}</div><div style="font-size:13px;color:#fff;font-weight:bold">${p[0]}</div><div style="font-size:10.5px;color:${i===0?'#7fd1a0':'#ff9a8a'}">${p[1]}</div></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:21px;color:#7fd1a0">осталось подобрать числа! Сумма 6, каждый ≥ 1.</div>`+
+        sml('Ваня прав: вместе 6 и «каждый взял хотя бы одну» — тоже правда.'));
+    } else if(step===9){
+      // подбор чисел: слайдеры? простой интерактив: нажми на число для Лёши 3, потом Ваня/Стёпа
+      const pick=st.pick; // 0..5 вариантов раскладки
+      const combos=[[2,1,3],[2,3,1],[4,1,1],[1,1,4],[2,2,2],[1,2,3]];
+      const c=pick!=null?combos[pick]:null;
+      h=col(l4B('ПОДБИРАЕМ ЧИСЛА','#7fd1a0')+
+        big('Найди верную раскладку (сумма 6)')+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${combos.map((c,i)=>`<button class="hint-btn" onclick="l4Act('${lk}','pick:${i}')" style="display:flex;justify-content:space-between;align-items:center;text-align:left;${st.pick===i?'border-color:#7fd1a0':''}"><span>👦 ${c[0]} · 🧒 ${c[1]} · 👶 ${c[2]}</span><span style="font-size:11px;color:#9ec0a8">проверить</span></button>`).join('')}
+        </div>`+
+        (c&&c[0]%2===0&&c[1]%2!==0&&c[2]%2!==0&&c[2]!==1?`<div class="wv-ans" style="font-size:20px;color:#7fd1a0">✅ Ваня 2 (чёт, правда), Стёпа 1 (нечёт, ложь), Лёша 3 (нечёт, ложь)!</div>`:'')+
+        (c&&!(c[0]%2===0&&c[1]%2!==0&&c[2]%2!==0&&c[2]!==1)?`<div class="l35-pop" style="font-size:14px;color:#ff9a8a">❌ Не подходит — проверь чётность!</div>`:'')+
+        sml('подсказка: у Вани чётное, у Стёпы и Лёши нечётное, у Лёши не 1!'));
+    } else if(step===10){
+      h=col(l4B('ИТОГ РАССЛЕДОВАНИЯ','#ffd966')+
+        big('Ваня 2 · Стёпа 1 · Лёша 3')+
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${l4Hero('Ваня','👦',2,'вместе 6',true,'#7fd1a0')}
+          ${l4Hero('Стёпа','🧒',1,'вместе нечётное',false,'#ff9a8a')}
+          ${l4Hero('Лёша','👶',3,'я взял одну',false,'#ff9a8a')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:22px;color:#ffd966">2 + 1 + 3 = 6 ✓ каждый не пуст ✓</div>`+
+        sml('разложи конфеты: 2 у Вани, 1 у Стёпы, 3 у Лёши. Детектив раскрыт!'));
+    } else if(step===11){
+      h=col(l4B('ПРОВЕРКА ПО ПРАВИЛУ','#7fd1a0')+
+        big('Все три условия сходятся')+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop" style="background:rgba(127,209,160,.07);border:1px solid #7fd1a044;border-radius:10px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">👦 Ваня: 2 — <b style="color:#7fd1a0">чётное</b> → правда. «Вместе 6»? 2+1+3=6 ✓</div>
+          <div class="wv-pop2" style="background:rgba(255,154,138,.06);border:1px solid #ff9a8a44;border-radius:10px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">🧒 Стёпа: 1 — <b style="color:#ff9a8a">нечётное</b> → соврал. «Вместе нечётное»? 6 чётное — ложь ✓</div>
+          <div class="wv-pop3" style="background:rgba(255,154,138,.06);border:1px solid #ff9a8a44;border-radius:10px;padding:6px 12px;font-size:13.5px;color:#e8dcc8;text-align:left">👶 Лёша: 3 — <b style="color:#ff9a8a">нечётное</b> → соврал. «Я взял одну»? У него 3 — ложь ✓</div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:21px;color:#7fd1a0">всё сходится — решение верное!</div>`+
+        sml('проверка — обязательный шаг детектива: решение должно объяснять каждую реплику!'));
+    } else if(step===12){
+      // секрет приёма: от противного (пошагово)
+      const r=Math.min(5,st.m||0);
+      h=col(l4B('СЕКРЕТ ПРИЁМА','#ffd966')+
+        big('Детективный метод «от противного»')+
+        `<div style="display:flex;flex-direction:column;gap:7px;max-width:340px;width:100%">
+          ${[['1️⃣','Спорщики: если двое противоречат (6 чёт или нечёт?) — прав ровно один.','#7fb7d8'],['2️⃣','Предположи, что прав один из них.','#7fd1a0'],['3️⃣','Проверь чётность всех участников.','#7fd1a0'],['4️⃣','Нашёл противоречие (сумма не сходится)? Отбрось случай!','#ff9a8a'],['5️⃣','Оставшийся случай и есть решение.','#ffd966']].filter((s,i)=>i<r).map(s=>`<div class="wv-pop" style="background:rgba(255,255,255,.04);border:1px solid ${s[2]}55;border-left:5px solid ${s[2]};border-radius:10px;padding:7px 12px;text-align:left;font-size:13.5px;color:#e8dcc8">${s[0]} ${s[1]}</div>`).join('')}
+        </div>`+
+        btns(btn('▶ следующий шаг метода',`l4Act('${lk}','step')`,r>=5?'disabled':''),btn('↺',`l4Act('${lk}','rst')`))+
+        sml('этот метод работает в любых задачах про «правду и ложь» — не только с конфетами!'));
+    } else if(step===13){
+      // тренажёр «правда или ложь?»: дано число и реплика, угадай правда/ложь (по числу человека)
+      if(st.q==null) st.q=0;
+      const qs=[
+        {who:'👦 Ваня', n:2, says:'вместе 6', exp:'у Вани 2 — чётное → он сказал правду'},
+        {who:'🧒 Стёпа', n:1, says:'вместе нечётное', exp:'у Стёпы 1 — нечётное → он соврал'},
+        {who:'👶 Лёша', n:3, says:'я взял одну', exp:'у Лёши 3 — нечётное → он соврал'},
+        {who:'👦 Ваня', n:4, says:'вместе 6', exp:'у Вани 4 — чётное → правда (но сумма тогда не 6!)'},
+        {who:'🧒 Гоша', n:5, says:'я взял две', exp:'у Гоши 5 — нечётное → он соврал'},
+        {who:'👦 Дима', n:6, says:'у меня чётное число', exp:'у Димы 6 — чётное → правда'}
+      ];
+      const q=qs[st.q%qs.length];
+      const pick=st.pick;
+      const truth=q.n%2===0;
+      h=col(l4B('ТРЕНАЖЁР «ПРАВДА ИЛИ ЛОЖЬ?»','#7fb7d8')+
+        big('Угадай по числу конфет')+
+        `<div style="display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap">${l4Hero(q.who.replace(/^[^ ]+ /,''),q.who.includes('Ваня')||q.who.includes('Дима')?'👦':q.who.includes('Гоша')?'🧒':'👶',q.n,q.says,undefined)}</div>`+
+        `<div style="font-size:14px;color:#e8dcc8">${q.who} сказал: «${q.says}». Сказал ли он правду?</div>`+
+        btns(btn('✅ правда',`l4Act('${lk}','pick:1')`),btn('❌ ложь',`l4Act('${lk}','pick:0')`))+
+        (pick!==null?(pick===1?truth:!truth)?`<div class="wv-ans" style="font-size:17px;color:#7fd1a0">✅ Верно! ${q.exp}</div>`:`<div class="l35-pop" style="font-size:15px;color:#ff9a8a">❌ Не угадал! ${q.exp}</div>`:'')+
+        btns(btn('🎲 другой случай',`l4Act('${lk}','q')`))+
+        sml('правило: чётное число у говорящего → правда; нечётное → ложь.'));
+    } else if(step===14){
+      // игра: новая задача, слайдер суммы (вариант)
+      const sum=st.sum||6;
+      const okSum=sum===6;
+      const m=sum===6?3:(sum===5?2:sum===4?1:4);
+      // подскажем числа: для sum 6 → 2/1/3; для 5 → нельзя; сделаем «найди верную тройку»
+      const combos=sum===6?[[2,1,3],[2,3,1],[4,1,0]]:[[1,2,2],[3,1,1],[2,2,1]];
+      const pick=st.pick;
+      const ok=pick!=null&&combos[pick]&&combos[pick][0]%2===0&&combos[pick][1]%2!==0&&combos[pick][2]%2!==0&&combos[pick][2]!==1&&combos[pick].reduce((a,b)=>a+b,0)===sum;
+      h=col(l4B('ИГРА «НАЙДИ РАСКЛАДКУ»','#ffd966')+
+        big('Сумма 6: какая тройка верная?')+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${combos.map((c,i)=>`<button class="hint-btn" onclick="l4Act('${lk}','pick:${i}')" style="display:flex;justify-content:space-between;text-align:left;${st.pick===i?'border-color:#7fd1a0':''}"><span>👦 ${c[0]} · 🧒 ${c[1]} · 👶 ${c[2]}</span><span style="font-size:11px;color:#9ec0a8">проверить</span></button>`).join('')}
+        </div>`+
+        (ok?`<div class="wv-ans" style="font-size:18px;color:#7fd1a0">✅ Верно: Ваня 2, Стёпа 1, Лёша 3!</div>`:'')+
+        (pick!=null&&!ok?`<div class="l35-pop" style="font-size:14px;color:#ff9a8a">❌ Проверь чётность и сумму!</div>`:'')+
+        sml('у Вани чётное, у Стёпы и Лёши нечётное, у Лёши не 1, сумма 6.'));
+    } else if(step===15){
+      // бонус: переключатель правила
+      const fl=st.flip||0;
+      h=col(l4B('БОНУС: А ЕСЛИ ПРАВИЛО НАОБОРОТ?','#d9a0ff')+
+        big('Чёт → ложь, нечёт → правда')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">${[0,1].map(i=>btn(i===0?'🧮 чёт → правда':'🔄 чёт → ложь',`l4Act('${lk}','flip')`,fl===i?'style="border-color:#d9a0ff"':'')).join('')}</div>`+
+        (fl===0?
+          `<div style="font-size:13.5px;color:#e8dcc8;max-width:330px">при обычном правиле Лёша (1) не мог быть прав — 1 нечётное. Поэтому он взял 3 и соврал.</div>`:
+          `<div style="font-size:13.5px;color:#e8dcc8;max-width:330px">а если бы правду говорили с НЕчётным — Лёша с «я взял одну» (1 нечётное) был бы прав! Решение поменялось бы.</div>`)+
+        `<div style="background:rgba(217,160,255,.08);border:1px solid #d9a0ff44;border-radius:12px;padding:8px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8;line-height:1.6">💡 понимание чётности — главный инструмент: меняется правило — меняется ответ. А метод (от противного) работает всегда!</div>`+
+        sml('попробуй щёлкнуть переключатель и подумай, как изменился бы ответ.'));
+    } else {
+      h=col(`<div style="font-size:54px">🍬</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🍬 Чётное число → правда.<br>
+            🎲 Нечётное → ложь.<br>
+            ⚔️ Спорщики: прав ровно один.<br>
+            🔍 От противного: предположи — проверь — отбрось.<br>
+            🏆 Ваня 2, Стёпа 1, Лёша 3.</div>
+        </div>`+
+        btn('⟲ вернуться к бонусу', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там вопрос про Лёшу'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function visTourn(el){
   el.innerHTML=`${[['Настя',2,'12 очк.'],['Юля',4,'20 очк.'],['Саша',0,'0 очк.']].map(([nm,w,pt])=>`
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px">
