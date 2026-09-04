@@ -6231,31 +6231,84 @@ function visL94(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+// ============ УРОК 95 v2 «Магниты и притяжение» — легенда «Город Архимагнетия» ============
+var L95POOL=[['nn','N','N'],['ss','S','S'],['ns','N','S'],['sn','S','N'],['ns2','N','S'],['nn2','N','N'],['sn2','S','N'],['ss2','S','S']];
 function l95Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['nn','N','N','оттолкнутся'],['ss','S','S','оттолкнутся'],['ns','N','S','притянутся'],['sn','S','N','притянутся'],['ns2','N','S','притянутся'],['nn2','N','N','оттолкнутся']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
+  if(st.i==null) st.i=Math.floor(Math.random()*L95POOL.length); if(st.score==null) st.score=0;
+  const m=act.match(/^pick(\d)$/);
+  if(m){
+    const e=L95POOL[st.i];
+    const correct=(e[1]===e[2])?0:1; // 0=отталкиваются, 1=притягиваются
+    st.last=(+m[1]===correct)?'ok':'no';
+    if(+m[1]===correct) st.score++;
   }
+  if(act==='n'){ st.i=(st.i+1)%L95POOL.length; st.last=''; }
+  if(act==='s1') st.s1=1;
+  if(act==='s2') st.s2=1;
+  if(act==='r'){ st.i=Math.floor(Math.random()*L95POOL.length); st.s1=st.s2=0; st.score=0; st.last=''; }
   chRender(0);
 }
-function l95Magnet(pole,color,uid){
-  // подковообразный/полосовой магнит с полюсом
-  return `<div style="text-align:center">
-    <div style="width:56px;height:30px;border-radius:6px;background:linear-gradient(145deg,${color==='N'?'#e05a5a':'#4f6fd8'},${color==='N'?'#a02828':'#2a4a9a'});display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,.4)">${pole}</div>
+function l95Mag(pole,size,uid){
+  // магнит-подкова/стержень с полюсом
+  const s=size||'m';
+  const w=s==='l'?62:s==='s'?44:52;
+  const isN=pole==='N';
+  return `<div style="display:flex;flex-direction:column;align-items:center">
+    <div style="width:${w}px;height:34px;border-radius:8px;background:linear-gradient(145deg,${isN?'#e05a5a':'#4f6fd8'},${isN?'#a02828':'#2a4a9a'});display:flex;align-items:center;justify-content:center;font-size:${s==='s'?13:17}px;color:#fff;font-weight:bold;box-shadow:0 3px 8px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.25)">${pole}</div>
+    <div style="font-size:9.5px;color:#9ec0a8;margin-top:2px">${isN?'северный':'южный'}</div>
   </div>`;
 }
+function l95Field(uid){
+  // магнитное поле: силовые линии (эллипсы)
+  return `<svg width="150" height="64" style="display:block;margin:2px auto">
+    <rect x="4" y="22" width="24" height="24" rx="5" fill="#e05a5a"/>
+    <text x="16" y="38" fill="#fff" font-size="12" text-anchor="middle" font-weight="bold">N</text>
+    <rect x="122" y="22" width="24" height="24" rx="5" fill="#4f6fd8"/>
+    <text x="134" y="38" fill="#fff" font-size="12" text-anchor="middle" font-weight="bold">S</text>
+    <path d="M32 34 Q50 6 70 34 Q90 62 118 34" fill="none" stroke="#ffd966" stroke-width="1.6" opacity=".8"/>
+    <path d="M32 34 Q50 18 70 34 Q90 50 118 34" fill="none" stroke="#ffd966" stroke-width="1.2" opacity=".5"/>
+    <path d="M32 34 Q50 50 70 34 Q90 18 118 34" fill="none" stroke="#ffd966" stroke-width="1.2" opacity=".5"/>
+  </svg>`;
+}
 function l95Pair(p1,p2,result,uid){
-  // два магнита, между ними стрелка результата
-  const attract=result==='притянутся';
-  const gap=attract?10:40;
-  return `<div style="display:flex;align-items:center;justify-content:center;gap:${gap}px;margin:6px auto;transition:gap .6s ease">
-    ${l95Magnet(p1,p1==='N'?'N':'S','a')}
-    <div style="font-size:26px;color:${attract?'#7fd1a0':'#ff9a8a'}" class="wv-pulse">${attract?'⬅️➡️ притягиваются':'⬅️⬅️ отталкиваются'}</div>
-    ${l95Magnet(p2,p2==='N'?'N':'S','b')}
+  const attract=result==='притягиваются';
+  const gap=attract?14:52;
+  return `<div style="display:flex;align-items:center;justify-content:center;gap:${gap}px;margin:8px auto;transition:gap .7s ease">
+    ${l95Mag(p1,'l','a')}
+    <div style="font-size:22px;color:${attract?'#7fd1a0':'#ff9a8a'}" class="wv-pulse">${attract?'❤️':'💥'}</div>
+    ${l95Mag(p2,'l','b')}
   </div>`;
+}
+function l95Compass(deg,uid){
+  // компас со стрелкой (deg — поворот)
+  return `<div style="text-align:center">
+    <svg width="70" height="70" style="display:block;margin:0 auto">
+      <circle cx="35" cy="35" r="30" fill="#f2e8d0" stroke="#8a6a2f" stroke-width="2.5"/>
+      <text x="35" y="12" fill="#a02828" font-size="11" text-anchor="middle" font-weight="bold">С</text>
+      <text x="60" y="38" fill="#8a6a2f" font-size="10" text-anchor="middle">В</text>
+      <text x="35" y="64" fill="#4f6fd8" font-size="11" text-anchor="middle" font-weight="bold">Ю</text>
+      <text x="10" y="38" fill="#8a6a2f" font-size="10" text-anchor="middle">З</text>
+      <g transform="rotate(${deg} 35 35)">
+        <polygon points="35,8 39,38 35,35 31,38" fill="#a02828"/>
+        <polygon points="35,62 31,32 35,35 39,32" fill="#4f6fd8"/>
+      </g>
+      <circle cx="35" cy="35" r="2.5" fill="#8a6a2f"/>
+    </svg>
+  </div>`;
+}
+function l95Pickup(uid){
+  // магнит поднимает скрепку
+  return `<svg width="120" height="86" style="display:block;margin:0 auto">
+    <rect x="44" y="6" width="26" height="24" rx="6" fill="#e05a5a"/>
+    <text x="57" y="22" fill="#fff" font-size="11" text-anchor="middle" font-weight="bold">N</text>
+    <line x1="57" y1="30" x2="57" y2="46" stroke="#cbb89a" stroke-width="1.5"/>
+    <path d="M57 46 q10 12 0 22 q-10 -10 0 -22" fill="none" stroke="#d8ecff" stroke-width="2"/>
+    <text x="88" y="70" fill="#ffd966" font-size="10">скрепка!</text>
+  </svg>`;
+}
+function l95Earth(uid){
+  return `<div style="font-size:52px" class="wv-swing">🌍</div>`;
 }
 function visL95(el){
   try{
@@ -6271,96 +6324,106 @@ function visL95(el){
     const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
     let h='';
     if(step===0){
-      h=col(big('Почему магнит прилипает к холодильнику?'),
-        `<div style="font-size:44px" class="wv-flick">🧲</div>`+
-        sml('магнит притягивает железо — и держит записку на холодильнике. Что за волшебная сила? Разберёмся!'));
+      h=col(`<div style="font-size:20px;color:#c9b28a;letter-spacing:1px">🌟 ЛЕГЕНДА · Эпизод 2</div>`+
+        big('Город Архимагнетия')+
+        `<div style="font-size:44px" class="wv-flick">🏙️🧲</div>`+
+        sml('В волшебном городе Архимагнетии поезда летают над рельсами, двери сами открываются, а холодильники держат записки! Всё это — благодаря магнитам. Архимед приглашает тебя на экскурсию!'));
     } else if(step===1){
-      h=col(big('Что притягивает магнит'),
-        rowC(chip('железо ✅','rgba(127,184,160,.5)'),chip('сталь ✅','rgba(127,184,160,.5)'),chip('дерево ❌','rgba(232,160,90,.5)'),chip('стекло ❌','rgba(232,160,90,.5)'),chip('пластик ❌','rgba(232,160,90,.5)'))+
-        sml('магнит притягивает железо и сталь. Как в нашей проверке: железные тела!'));
+      h=col(big('Первый экспонат: магнит-стержень'),
+        rowC(l95Mag('N','l','a'),l95Mag('S','l','b'))+
+        sml('вот он, главный житель города — МАГНИТ! У него два конца-полюса: красный N (северный) и синий S (южный). Даже если разломить — у каждой половинки снова будут N и S!'));
     } else if(step===2){
-      h=col(big('Проверь сам'),
-        rowC(chip('монета — притянется?','rgba(127,209,255,.5)'),chip('карандаш — нет','rgba(232,160,90,.5)'),chip('гвоздь — да!','rgba(127,184,160,.5)'))+
-        sml('если предмет притянулся — в нём есть железо! Так можно искать железо дома'));
+      h=col(big('Кого притягивает магнит?'),
+        rowC(chip('🔩 железо ✅','rgba(127,184,160,.5)'),chip('🥄 сталь ✅','rgba(127,184,160,.5)'),chip('🪵 дерево ❌','rgba(232,160,90,.5)'),chip('🥛 стекло ❌','rgba(232,160,90,.5)'),chip('🪀 пластик ❌','rgba(232,160,90,.5)'))+
+        sml('магнит «дружит» только с железом и сталью. Как в нашей проверке — железные тела!'));
     } else if(step===3){
-      h=col(big('Два полюса'),
-        rowC(l95Magnet('N','N','a'),l95Magnet('S','S','b'))+
-        rowC(chip('N — северный','rgba(232,160,90,.5)'),chip('S — южный','rgba(127,209,255,.5)'))+
-        sml('у каждого магнита два полюса: красный N (север) и синий S (юг)'));
+      h=col(big('Проверка: монетка-незнакомка'),
+        l95Pickup('c')+
+        sml('поднеси магнит к разным предметам: гвоздь прилип — там железо! Карандаш нет — дерево. Так можно «искать» железо дома!'));
     } else if(step===4){
-      h=col(big('Разноимённые притягиваются'),
-        l95Pair('N','S','притянутся','c')+
-        sml('N и S — разные полюса → притягиваются! Как в наших задачках'));
+      h=col(big('Невидимая сила: магнитное поле'),
+        l95Field('d')+
+        sml('вокруг магнита — невидимое магнитное поле. Насыпь железные опилки — они выстроятся по золотым линиям, как по дорожкам!'));
     } else if(step===5){
-      h=col(big('Одноимённые отталкиваются'),
-        l95Pair('N','N','оттолкнутся','d')+
-        sml('N и N — одинаковые → отталкиваются! Как в наших задачках'));
+      h=col(big('Главное правило города'),
+        rowC(chip('разные полюса (N и S) — ПРИТЯГИВАЮТСЯ ❤️','rgba(127,184,160,.5)'),chip('одинаковые (N и N) — ОТТАЛКИВАЮТСЯ 💥','rgba(232,160,90,.5)'))+
+        sml('закон Архимагнетии: противоположности притягиваются, одинаковые — разбегаются!'));
     } else if(step===6){
-      h=col(big('Правило магнитов'),
-        rowC(chip('разные (N-S) → притягиваются','rgba(127,184,160,.5)'),chip('одинаковые (N-N, S-S) → отталкиваются','rgba(232,160,90,.5)'))+
-        sml('как у людей: противоположности притягиваются!'));
+      h=col(big('Разные полюса — встреча!'),
+        l95Pair('N','S','притягиваются','e')+
+        sml('N и S — как старые друзья: бегут навстречу друг другу и обнимаются! Как в наших задачках.'));
     } else if(step===7){
-      h=col(big('Задача 1: N к N'),
-        l95Pair('N','N','оттолкнутся','e')+
-        `<div class="wv-ans" style="font-size:22px;color:#ff9a8a">северные полюса → оттолкнутся!</div>`+
-        sml('как в наших задачках: одноимённые!'));
+      h=col(big('Одинаковые — расходятся!'),
+        l95Pair('N','N','отталкиваются','f')+
+        sml('N и N — одинаковые, как два упрямца: не хотят сближаться, расталкивают друг друга! Как в наших задачках.'));
     } else if(step===8){
-      h=col(big('Задача 2: S к N'),
-        l95Pair('S','N','притянутся','f')+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">S и N — разные → притянутся!</div>`+
-        sml('как в наших задачках: разноимённые!'));
+      h=col(big('Задача 1: N к N'),
+        l95Pair('N','N','отталкиваются','g')+
+        `<div class="wv-ans" style="font-size:22px;color:#ff9a8a">северные полюса → ОТТОЛКНУТСЯ 💥</div>`+
+        sml('как в наших задачках: одноимённые полюса!'));
     } else if(step===9){
-      h=col(big('Магнитное поле'),
-        rowC(chip('невидимая сила вокруг магнита','rgba(127,209,255,.5)'),chip('железные опилки показывают линии','rgba(127,184,160,.5)'))+
-        sml('насыпь опилки — они выстроятся по линиям поля, как по невидимым дорожкам!'));
+      h=col(big('Задача 2: S к N'),
+        l95Pair('S','N','притягиваются','h')+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">S и N → ПРИТЯНУТСЯ ❤️</div>`+
+        sml('как в наших задачках: разноимённые полюса!'));
     } else if(step===10){
-      h=col(big('Земля — огромный магнит'),
-        `<div style="font-size:40px" class="wv-swing">🌍</div>`+
-        sml('у Земли есть магнитное поле! Поэтому стрелка компаса всегда показывает на север'));
+      h=col(big('Экскурсия: компас-площадь'),
+        l95Compass(-8,'i')+
+        sml('на площади города стоит компас. Его стрелка — маленький магнит! Она всегда показывает на север — потому что…'));
     } else if(step===11){
-      h=col(big('Компас'),
-        rowC(chip('стрелка — маленький магнит','rgba(127,209,255,.5)'),chip('синий конец — на север','rgba(127,209,255,.5)'))+
-        sml('компас — магнитная стрелка, которая «дружит» с полем Земли!'));
+      h=col(big('Земля — гигантский магнит'),
+        l95Earth('j')+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">наша планета — огромный магнит!</div>`+
+        sml('в центре Земли — раскалённое железо, оно создаёт магнитное поле всей планеты!'));
     } else if(step===12){
-      h=col(big('Северный магнитный полюс'),
-        rowC(chip('стрелка N тянется к северу Земли','rgba(127,209,255,.5)'),chip('значит там «южный» полюс магнита-Земли','rgba(232,160,90,.5)'))+
-        sml('противоположности притягиваются — N стрелки тянет к S Земли!'));
+      h=col(big('Секрет компаса'),
+        rowC(chip('стрелка N тянется к северу','rgba(127,209,255,.5)'),chip('значит там «южный» полюс Земли-магнита','rgba(232,160,90,.5)'))+
+        sml('противоположности притягиваются: красный N стрелки тянет к южному полюсу Земли-магнита, который находится на севере планеты!'));
     } else if(step===13){
-      h=col(big('Магниты в технике'),
-        rowC(chip('динамики и наушники','rgba(127,209,255,.4)'),chip('электродвигатели','rgba(127,209,255,.4)'),chip('карты с магнитной полосой','rgba(127,209,255,.4)'),chip('магнитные замки','rgba(127,209,255,.4)'))+
-        sml('магниты повсюду: от наушников до поездов на магнитной подушке!'));
+      h=col(big('Городские чудеса: поезд на подушке'),
+        `<div style="font-size:40px" class="wv-drive" style="--dx:120px">🚝</div>`+
+        sml('поезд парит над рельсами! Под ним такие же магниты, которые отталкиваются — трение исчезает, и поезд летит со скоростью 600 км/ч!'));
     } else if(step===14){
-      h=col(big('Электромагнит'),
-        rowC(chip('катушка + ток = магнит','rgba(127,209,255,.5)'),chip('можно включать и выключать!','rgba(127,184,160,.5)'))+
-        sml('по проводу течёт ток — катушка становится магнитом. Так работают краны на свалке!'));
+      h=col(big('Электромагнит — управляемый магнит'),
+        rowC(chip('катушка + ток = магнит','rgba(127,209,255,.5)'),chip('выключили ток — магнит «выключился»','rgba(232,160,90,.5)'))+
+        sml('на заводе Архимагнетии огромные электромагниты поднимают целые автомобили, а потом отпускают их по команде!'));
     } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('N-S → притягиваются','rgba(127,184,160,.5)'),chip('N-N → отталкиваются','rgba(127,184,160,.5)'),chip('магнит + дерево → ничего','rgba(127,184,160,.5)'))+
-        sml('разные — притягиваются, одинаковые — отталкиваются!'));
+      h=col(big('Магниты вокруг тебя'),
+        rowC(chip('🎧 наушники','rgba(127,209,255,.4)'),chip('🔊 динамики','rgba(127,209,255,.4)'),chip('💳 банковская карта','rgba(127,209,255,.4)'),chip('🧲 дверца холодильника','rgba(127,209,255,.4)'),chip('🔔 звонок','rgba(127,209,255,.4)'))+
+        sml('в каждом динамике — магнит, который двигает мембрану и создаёт звук!'));
     } else if(step===16){
-      const POOL=[['nn','N','N','оттолкнутся'],['ss','S','S','оттолкнутся'],['ns','N','S','притянутся'],['sn','S','N','притянутся'],['ns2','N','S','притянутся'],['nn2','N','N','оттолкнутся']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], p1=e[1], p2=e[2], result=e[3];
-      const firstStep=p1===p2?'полюса одинаковые ('+p1+' и '+p2+') → отталкиваются':'полюса разные ('+p1+' и '+p2+') → притягиваются';
-      h=col(big('🧲 Тренажёр: полюса магнитов'),
-        `<div class="wv-row">${chip('полюс '+p1+' поднесли к полюсу '+p2+' — что будет?','rgba(217,164,65,.35)')}</div>`+
-        l95Pair(p1,p2,result,'t')+
-        (st.s1? `<div class="l35-pop" style="font-size:16px;text-align:center;color:#ffd9a0;max-width:280px">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:24px;color:${result==='притянутся'?'#7fd1a0':'#ff9a8a'};font-weight:bold">${result}!</div>`:'')+
-        btns(btn('1️⃣ подумай',`l95Act('${lk}','s1')`),btn('2️⃣ ответ',`l95Act('${lk}','s2')`),btn('🎲 другой',`l95Act('${lk}','n')`),btn('↺',`l95Act('${lk}','r')`))+
-        sml('разные (N-S) — притягиваются, одинаковые — отталкиваются!'));
+      h=col(big('Проверь себя'),
+        rowC(chip('N-S → притягиваются ❤️','rgba(127,184,160,.5)'),chip('N-N → отталкиваются 💥','rgba(127,184,160,.5)'),chip('магнит + дерево → ничего','rgba(127,184,160,.5)'))+
+        sml('три закона Архимагнетии — и ты местный житель!'));
+    } else if(step===17){
+      h=col(big('Как разломить магнит?'),
+        rowC(chip('разломал пополам — и что?','rgba(127,209,255,.5)'),chip('у каждой половинки свои N и S!','rgba(217,164,65,.5)'))+
+        sml('магнит нельзя «отделить» от полюса: сколько ни дели — у каждого кусочка будет и север, и юг!'));
+    } else if(step===18){
+      if(st.i==null){ st.i=Math.floor(Math.random()*L95POOL.length); st.score=0; st.last=''; }
+      const e=L95POOL[st.i], p1=e[1], p2=e[2];
+      const correct=(p1===p2)?0:1;
+      const hint=p1===p2?'полюса одинаковые ('+p1+' и '+p2+') → отталкиваются 💥':'полюса разные ('+p1+' и '+p2+') → притягиваются ❤️';
+      const resTxt=st.last==='ok'?`✅ Верно! ${hint.split('→')[1]||''}`:st.last==='no'?`❌ Не угадал — ${hint}`:'';
+      h=col(big('🎮 Интерактив: закон пар!'),
+        `<div class="wv-row">${chip('Счёт: '+st.score+' ✅','rgba(127,209,255,.5)')}</div>`+
+        rowC(l95Mag(p1,'l','t1'),l95Mag(p2,'l','t2'))+
+        (resTxt?`<div class="l35-pop" style="font-size:15px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'};text-align:center;max-width:300px">${resTxt}</div>`:'')+
+        btns(btn('❤️ притянутся',`l95Act('${lk}','pick1')`),btn('💥 оттолкнутся',`l95Act('${lk}','pick0')`),btn('🎲 пара',`l95Act('${lk}','n')`),btn('↺',`l95Act('${lk}','r')`))+
+        sml('следи за полюсами: N и S — друзья, N и N — соперники!'));
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+      h=col(`<div style="font-size:50px">📜</div>`+big('Мэр города — Архимед')+
         `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
           <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🧲 Притягивает железо и сталь.<br>
-            🔴 N и 🔵 S: разные — притягиваются.<br>
-            ⏫ Одинаковые (N-N) — отталкиваются.<br>
-            🌍 Земля — магнит: компас на север!</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:270px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🧲 Магнит дружит с железом и сталью.<br>
+            ❤️ N и S (разные) — притягиваются.<br>
+            💥 N и N (одинаковые) — отталкиваются.<br>
+            🌍 Земля — магнит: компас на север!<br>
+            🎓 Загляни в тренажёр — закон пар!</div>
         </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там про железо'));
+        btn('⟲ вернуться к игре', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — какие тела притягивает магнит?'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
