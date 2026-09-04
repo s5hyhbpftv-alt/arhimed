@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -3845,6 +3845,156 @@ function visL8(el){
         </div>`+
         btn('⟲ вернуться к игре', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 3 монеты'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+function l20Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['45','9'],['63','9'],['34','7'],['72','9'],['81','9'],['52','7'],['58','13'],['37','10'],['76','13'],['94','13'],['67','13'],['89','17']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l20Split(n,uid){
+  // раздвигаем цифры двузначного n: [a] [sum] [b]
+  const s=''+n;
+  const a=+s[0], b=+s[1], sum=a+b;
+  const carry=sum>=10;
+  return `<div style="display:flex;justify-content:center;align-items:center;gap:8px;margin:4px auto">
+    <div class="l35-pop" style="width:38px;height:46px;border-radius:8px;background:linear-gradient(145deg,#7fb7d8,#4f7fa0);display:flex;align-items:center;justify-content:center;font-size:24px;color:#0d1f14;font-weight:bold">${a}</div>
+    <div style="font-size:22px;color:#ffd9a0">← ${a}+${b}=${sum} →</div>
+    <div class="l35-pop" style="width:38px;height:46px;border-radius:8px;background:linear-gradient(145deg,#ffd9a0,#d9a441);display:flex;align-items:center;justify-content:center;font-size:24px;color:#4a3200;font-weight:bold">${carry?sum-10:sum}</div>
+    <div class="l35-pop" style="width:38px;height:46px;border-radius:8px;background:linear-gradient(145deg,#7fb7d8,#4f7fa0);display:flex;align-items:center;justify-content:center;font-size:24px;color:#0d1f14;font-weight:bold">${b}</div>
+  </div>`;
+}
+function l20Digit(d,color,uid){
+  return `<div style="width:40px;height:50px;border-radius:8px;background:${color};display:flex;align-items:center;justify-content:center;font-size:26px;color:#0d1f14;font-weight:bold">${d}</div>`;
+}
+function l20Flick(){
+  return `<div style="font-size:44px" class="wv-flick">🎩</div>`;
+}
+function visL20(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Математический фокус'),
+        l20Flick()+
+        sml('могу умножить любое двузначное число на 11 быстрее калькулятора! Хочешь узнать секрет? Это проще, чем кажется'));
+    } else if(step===1){
+      h=col(big('Смотри фокус: 45 · 11'),
+        rowC(chip('45 · 10 = 450','rgba(127,209,255,.5)'),chip('45 · 1 = 45','rgba(127,184,160,.5)'),chip('450 + 45 = 495','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">45 · 11 = 495</div>`+
+        sml('умножить на 11 = умножить на 10 и прибавить само число. Но есть способ ещё быстрее!'));
+    } else if(step===2){
+      h=col(big('Секрет: раздвинь цифры!'),
+        rowC(l20Digit(4,'#7fb7d8','a'),l20Digit(5,'#7fb7d8','b'))+
+        `<div style="font-size:26px" class="wv-pulse">← раздвигаем →</div>`+
+        sml('у числа 45 раздвинем цифры 4 и 5 — между ними появится место для их суммы'));
+    } else if(step===3){
+      h=col(big('Впиши сумму в середину'),
+        rowC(l20Digit(4,'#7fb7d8','c'),l20Digit(9,'#ffd9a0','d'),l20Digit(5,'#7fb7d8','e'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">4 (4+5) 5 = 495</div>`+
+        sml('4+5 = 9 — вставляем девятку между цифрами. Готово: 495! Как в нашей проверке!'));
+    } else if(step===4){
+      h=col(big('Ещё пример: 63 · 11'),
+        l20Split(63,'f')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">6 (6+3) 3 = 693</div>`+
+        sml('6+3 = 9 → 693. Как в наших задачках!'));
+    } else if(step===5){
+      h=col(big('Почему это работает?'),
+        rowC(chip('45 · 11 = 45·10 + 45','rgba(127,209,255,.5)'))+
+        sml('45·10 = 450 — цифры сдвинулись влево. Прибавляем 45: единицы и десятки складываются в середине!'));
+    } else if(step===6){
+      h=col(big('Секрет на пальцах: 52 · 11'),
+        rowC(chip('5 и 2','rgba(127,209,255,.5)'),chip('5+2 = 7','rgba(232,160,90,.5)'),chip('572','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">52 · 11 = 572</div>`+
+        sml('проверь: 52·10 = 520, +52 = 572. Сходится!'));
+    } else if(step===7){
+      h=col(big('Ловушка: сумма больше 9!'),
+        rowC(chip('58 · 11','rgba(217,164,65,.4)'),chip('5+8 = 13','rgba(232,160,90,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#ffd9a0">не 5 13 8!</div>`+
+        sml('тринадцать не помещается в одну цифру — нужен перенос! Смотри следующий шаг'));
+    } else if(step===8){
+      h=col(big('Перенос единицы'),
+        rowC(l20Digit(5,'#7fb7d8','g'),l20Digit(1,'#ff9a8a','h'),l20Digit(3,'#ffd9a0','i'),l20Digit(8,'#7fb7d8','j'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">5+1=6 → 638</div>`+
+        sml('пишем 3, а единицу прибавляем к первой цифре: 5+1 = 6. Получается 638'));
+    } else if(step===9){
+      h=col(big('Проверяем перенос'),
+        rowC(chip('58 · 10 = 580','rgba(127,209,255,.5)'),chip('+ 58 = 638','rgba(127,184,160,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">58 · 11 = 638 ✓</div>`+
+        sml('обычное умножение подтверждает фокус!'));
+    } else if(step===10){
+      h=col(big('Ещё с переносом: 37 · 11'),
+        l20Split(37,'k')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">3+7 = 10 → 3+1=4 → 407</div>`+
+        sml('как в наших задачках: 10 → пишем 0, переносим 1: 3+1 = 4 → 407'));
+    } else if(step===11){
+      h=col(big('Схема: когда переносить'),
+        rowC(chip('сумма &lt; 10 → просто вставь','rgba(127,184,160,.5)'),chip('сумма ≥ 10 → перенос +1','rgba(232,160,90,.5)'))+
+        sml('меньше десяти — легко; больше — не забудь единичку к первой цифре!'));
+    } else if(step===12){
+      h=col(big('Тренируемся: 72 · 11'),
+        l20Split(72,'m')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">7+2 = 9 → 792</div>`+
+        sml('простой случай: 792'));
+    } else if(step===13){
+      h=col(big('Тренируемся: 76 · 11'),
+        l20Split(76,'n')+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">7+6 = 13 → 7+1=8 → 836</div>`+
+        sml('с переносом: 836'));
+    } else if(step===14){
+      h=col(big('Фокус для друзей'),
+        rowC(chip('попроси назвать число','rgba(127,209,255,.4)'),chip('мгновенно умножь на 11','rgba(127,184,160,.4)'),chip('все удивятся!','rgba(217,164,65,.4)'))+
+        sml('теперь ты можешь считать быстрее калькулятора — потренируйся на друзьях!'));
+    } else if(step===15){
+      h=col(big('А если число трёхзначное?'),
+        rowC(chip('123 · 11 = 1353','rgba(127,209,255,.5)'))+
+        sml('сложнее, но работает: 1 (1+2) (2+3) 3 = 1 3 5 3. Но это для продвинутых — начни с двузначных!'));
+    } else if(step===16){
+      const POOL=[['45','9'],['63','9'],['34','7'],['72','9'],['81','9'],['52','7'],['58','13'],['37','10'],['76','13'],['94','13'],['67','13'],['89','17']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i];
+      const n=+e[0], s=''+n, a=+s[0], b=+s[1], sum=+e[1];
+      const carry=sum>=10;
+      let firstStep;
+      if(carry){ firstStep=''+a+'+'+b+' = '+sum+' → пишем '+sum%10+', переносим 1: '+(a+1)+' '+sum%10+' '+b; }
+      else { firstStep=''+a+'+'+b+' = '+sum+' → вставляем между цифрами'; }
+      const ans=carry?(''+(a+1)+''+(sum%10)+''+b):(''+a+''+sum+''+b);
+      h=col(big('🎩 Тренажёр-фокус'),
+        `<div class="wv-row">${chip(n+' · 11 = ?','rgba(217,164,65,.35)')}</div>`+
+        `<div style="font-size:30px;letter-spacing:4px" class="wv-pop">${n} · 11</div>`+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:30px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
+        btns(btn('1️⃣ подумай',`l20Act('${lk}','s1')`),btn('2️⃣ ответ',`l20Act('${lk}','s2')`),btn('🎲 другой',`l20Act('${lk}','n')`),btn('↺',`l20Act('${lk}','r')`))+
+        sml('раздвинь цифры, впиши сумму. Больше 9? Переноси единицу!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            ✖️ ab·11 = a (a+b) b.<br>
+            💡 Сумма &lt; 10 — просто вставь.<br>
+            ⬆️ Сумма ≥ 10 — перенеси 1 к первой.<br>
+            🎩 58·11: 5+8=13 → 638.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 45·11'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -8470,6 +8620,7 @@ function renderLessonVis(){
   else if(id===11) visL11(el);
   else if(id===12) visL12(el);
   else if(id===15) visL15(el);
+  else if(id===20) visL20(el);
   else if(id===8) visL8(el);
   else if(id===90) visL90(el);
   else if(id===7) visL7(el);
