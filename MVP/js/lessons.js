@@ -6200,6 +6200,14 @@ var L92POOL=[['body','гвоздь','🔨'],['body','молоток','🔨'],['b
 var L92POOL=[['body','гвоздь','🔨','предмет с острым концом, им прибивают доски'],['body','молоток','🔨','инструмент, которым забивают гвозди'],['body','стакан','🥛','в него наливают воду или чай'],['body','мяч','⚽','им играют в футбол и баскетбол'],['body','карандаш','✏️','им рисуют и пишут на бумаге'],['body','ложка','🥄','ей едят суп и кашу'],['body','стул','🪑','на нём сидят за столом'],['body','книга','📖','в ней напечатаны рассказы и задачи'],['sub','железо','🧱','серый металл: из него гвозди и корабли'],['sub','вода','💧','жидкость без цвета и запаха, нужна всему живому'],['sub','стекло','🪟','прозрачный материал для окон и стаканов'],['sub','дерево','🪵','материал деревьев: из него мебель и бумага'],['sub','медь','🟠','красноватый металл для проводов и монет'],['sub','золото','🟡','жёлтый драгоценный металл для украшений'],['sub','воздух','🎈','смесь газов вокруг нас, невидимый'],['sub','кислород','🫧','газ, которым дышат люди и животные'],['ev','таяние снега','☀️','снег превращается в воду при тепле'],['ev','гром','💥','раскатистый звук после молнии'],['ev','дождь','🌧️','с неба падают капли воды'],['ev','молния','⚡','гигантская электрическая искра в небе'],['ev','кипение воды','♨️','вода бурлит и превращается в пар'],['ev','полёт мяча','🏀','мяч летит по дуге после броска'],['ev','радуга','🌈','разноцветная дуга после дождя'],['ev','горение свечи','🕯️','свеча светит и плавит воск']];
 // ============ УРОК 92 v4 «Что изучает физика» — детализированные SVG-сцены ============
 var L92POOL=[['body','гвоздь','описание: стальной стержень со шляпкой, им прибивают доски'],['body','молоток','инструмент с деревянной ручкой и стальным бойком'],['body','стакан','прозрачный сосуд для воды — из стекла'],['body','мяч','резиновый шар с камерой, им играют'],['body','карандаш','деревянный стержень с грифелем для письма'],['body','ложка','металлическая ложка для супа'],['body','стул','предмет мебели: сиденье, спинка, ножки'],['body','книга','листы бумаги в переплёте с обложкой'],['sub','железо','серый металл: твёрдый, блестит, притягивается магнитом'],['sub','вода','прозрачная жидкость без запаха, замерзает при 0°'],['sub','стекло','прозрачный твёрдый материал: хрупкий, пропускает свет'],['sub','дерево','твёрдый материал от деревьев: лёгкий, горит'],['sub','медь','красноватый металл: мягкий, хорошо проводит ток'],['sub','золото','жёлтый металл: тяжёлый, не ржавеет'],['sub','воздух','смесь газов: азот и кислород, невидимый'],['sub','кислород','газ, которым дышат — без цвета и запаха'],['ev','таяние снега','процесс: снежинки превращаются в воду под теплом'],['ev','гром','звук: раскат после молнии, воздух сотрясается'],['ev','дождь','процесс: капли воды падают из туч'],['ev','молния','гигантская электрическая искра между облаками'],['ev','кипение воды','процесс: вода бурлит и становится паром при 100°'],['ev','полёт мяча','движение: мяч летит по дуге после удара'],['ev','радуга','свет: солнечные лучи распадаются на цвета в каплях'],['ev','горение свечи','процесс: воск плавится, пламя даёт свет и тепло']];
+// ============ УРОК 92 v6 «Что изучает физика» — рисованные предметы + анимации ============
+var L92POOL=[['body','гвоздь','стальной стержень со шляпкой, им прибивают доски','nail'],['body','молоток','инструмент: деревянная ручка и стальной боёк','hammer'],['body','стакан','прозрачный стеклянный сосуд для воды','glass'],['body','мяч','резиновый шар, в него играют ногой','ball'],['body','карандаш','деревянный стержень с грифелем','pencil'],['body','ложка','металлическая ложка для супа','spoon'],['body','стул','мебель: сиденье, спинка и ножки','chair'],['body','книга','бумажные страницы в переплёте','book'],['sub','железо','серый металл, притягивается магнитом','iron'],['sub','вода','жидкость без цвета, замерзает при 0°','water'],['sub','стекло','прозрачный хрупкий материал','sheet'],['sub','дерево','материал от деревьев, лёгкий','wood'],['sub','медь','красноватый металл, проводит ток','copper'],['sub','золото','жёлтый металл, не ржавеет','gold'],['sub','воздух','смесь газов: азот и кислород','air'],['sub','кислород','газ, которым дышат','oxygen'],['ev','таяние снега','снежинки тают и становятся водой','melt'],['ev','гром','раскат звука после молнии','thunder'],['ev','дождь','капли воды падают из туч','rain'],['ev','молния','гигантская электрическая искра','bolt'],['ev','кипение воды','вода бурлит и становится паром','boil'],['ev','полёт мяча','мяч летит по дуге после удара','fly'],['ev','радуга','солнечный свет распадается на цвета','rainbow'],['ev','горение свечи','воск плавится, пламя горит','candle']];
+// ============ УРОК 92 v6 «Что изучает физика» — рисованные предметы + анимации ============
+var L92POOL=[['body','гвоздь','стальной стержень со шляпкой, им прибивают доски','nail'],['body','молоток','инструмент: деревянная ручка и стальной боёк','hammer'],['body','стакан','прозрачный стеклянный сосуд для воды','glass'],['body','мяч','резиновый шар, в него играют ногой','ball'],['body','карандаш','деревянный стержень с грифелем','pencil'],['body','ложка','металлическая ложка для супа','spoon'],['body','стул','мебель: сиденье, спинка и ножки','chair'],['body','книга','бумажные страницы в переплёте','book'],['sub','железо','серый металл, притягивается магнитом','iron'],['sub','вода','жидкость без цвета, замерзает при 0°','water'],['sub','стекло','прозрачный хрупкий материал','sheet'],['sub','дерево','материал от деревьев, лёгкий','wood'],['sub','медь','красноватый металл, проводит ток','copper'],['sub','золото','жёлтый металл, не ржавеет','gold'],['sub','воздух','смесь газов: азот и кислород','air'],['sub','кислород','газ, которым дышат','oxygen'],['ev','таяние снега','снежинки тают и становятся водой','melt'],['ev','гром','раскат звука после молнии','thunder'],['ev','дождь','капли воды падают из туч','rain'],['ev','молния','гигантская электрическая искра','bolt'],['ev','кипение воды','вода бурлит и становится паром','boil'],['ev','полёт мяча','мяч летит по дуге после удара','fly'],['ev','радуга','солнечный свет распадается на цвета','rainbow'],['ev','горение свечи','воск плавится, пламя горит','candle']];
+// ============ УРОК 92 v6 «Что изучает физика» — рисованные предметы + анимации ============
+var L92POOL=[['body','гвоздь','стальной стержень со шляпкой, им прибивают доски','nail'],['body','молоток','инструмент: деревянная ручка и стальной боёк','hammer'],['body','стакан','прозрачный стеклянный сосуд для воды','glass'],['body','мяч','резиновый шар, в него играют ногой','ball'],['body','карандаш','деревянный стержень с грифелем','pencil'],['body','ложка','металлическая ложка для супа','spoon'],['body','стул','мебель: сиденье, спинка и ножки','chair'],['body','книга','бумажные страницы в переплёте','book'],['sub','железо','серый металл, притягивается магнитом','iron'],['sub','вода','жидкость без цвета, замерзает при 0°','water'],['sub','стекло','прозрачный хрупкий материал','sheet'],['sub','дерево','материал от деревьев, лёгкий','wood'],['sub','медь','красноватый металл, проводит ток','copper'],['sub','золото','жёлтый металл, не ржавеет','gold'],['sub','воздух','смесь газов: азот и кислород','air'],['sub','кислород','газ, которым дышат','oxygen'],['ev','таяние снега','снежинки тают и становятся водой','melt'],['ev','гром','раскат звука после молнии','thunder'],['ev','дождь','капли воды падают из туч','rain'],['ev','молния','гигантская электрическая искра','bolt'],['ev','кипение воды','вода бурлит и становится паром','boil'],['ev','полёт мяча','мяч летит по дуге после удара','fly'],['ev','радуга','солнечный свет распадается на цвета','rainbow'],['ev','горение свечи','воск плавится, пламя горит','candle']];
+// ============ УРОК 92 v6 «Что изучает физика» — рисованные предметы + анимации ============
+var L92POOL=[['body','гвоздь','стальной стержень со шляпкой, им прибивают доски','nail'],['body','молоток','инструмент: деревянная ручка и стальной боёк','hammer'],['body','стакан','прозрачный стеклянный сосуд для воды','glass'],['body','мяч','резиновый шар, в него играют ногой','ball'],['body','карандаш','деревянный стержень с грифелем','pencil'],['body','ложка','металлическая ложка для супа','spoon'],['body','стул','мебель: сиденье, спинка и ножки','chair'],['body','книга','бумажные страницы в переплёте','book'],['sub','железо','серый металл, притягивается магнитом','iron'],['sub','вода','жидкость без цвета, замерзает при 0°','water'],['sub','стекло','прозрачный хрупкий материал','sheet'],['sub','дерево','материал от деревьев, лёгкий','wood'],['sub','медь','красноватый металл, проводит ток','copper'],['sub','золото','жёлтый металл, не ржавеет','gold'],['sub','воздух','смесь газов: азот и кислород','air'],['sub','кислород','газ, которым дышат','oxygen'],['ev','таяние снега','снежинки тают и становятся водой','melt'],['ev','гром','раскат звука после молнии','thunder'],['ev','дождь','капли воды падают из туч','rain'],['ev','молния','гигантская электрическая искра','bolt'],['ev','кипение воды','вода бурлит и становится паром','boil'],['ev','полёт мяча','мяч летит по дуге после удара','fly'],['ev','радуга','солнечный свет распадается на цвета','rainbow'],['ev','горение свечи','воск плавится, пламя горит','candle']];
 function l92Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   if(st.i==null) st.i=Math.floor(Math.random()*L92POOL.length); if(st.score==null) st.score=0;
@@ -6215,154 +6223,78 @@ function l92Act(lk,act){
   if(act==='r'){ st.i=Math.floor(Math.random()*L92POOL.length); st.score=0; st.done={}; st.last=''; st.hintShow=0; }
   chRender(0);
 }
-// =============== SVG-предметы (детализированные) ===============
-function l92G(inner,w,h){ return `<svg width="${w||'100%'}" height="${h||'auto'}" viewBox="0 0 200 160" style="display:block;max-width:${w||260}px;margin:0 auto">${inner}</svg>`; }
-function l92Nail(cx,cy,angle,scale,rusty){
-  // детальный гвоздь: шляпка + стержень с бликом и остриём
-  const g=`<g transform="translate(${cx||100},${cy||60}) rotate(${angle||0}) scale(${scale||1.4})">
-    <defs><linearGradient id="ng${rusty?'r':'s'}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${rusty?'#8a5a3a':'#9fb4c4'}"/><stop offset=".45" stop-color="${rusty?'#6e4426':'#d5e2ec'}"/><stop offset="1" stop-color="${rusty?'#5a3419':'#7d93a5'}"/></linearGradient></defs>
-    <ellipse cx="0" cy="0" rx="13" ry="4.5" fill="#1a120a" opacity=".35"/>
-    <ellipse cx="0" cy="-2" rx="13" ry="4.5" fill="${rusty?'#8a5a3a':'#c3d2dd'}"/>
-    <ellipse cx="-3" cy="-3.5" rx="5" ry="2" fill="#ffffff" opacity=".5"/>
-    <path d="M-3 0 L${rusty?46:60} ${rusty?6:8} L${rusty?48:64} ${rusty?10:13} L-3 4 Z" fill="url(#ng${rusty?'r':'s'})"/>
-    <path d="M${rusty?46:60} ${rusty?6:8} L${rusty?56:76} ${rusty?18:24} L${rusty?48:64} ${rusty?10:13} Z" fill="${rusty?'#7a4c2e':'#8fa6b8'}"/>
-    <line x1="-2" y1="0" x2="${rusty?44:58}" y2="${rusty?6:8}" stroke="#ffffff" stroke-width="1.6" opacity=".55"/>
-  </g>`;
-  return l92G(g,200,110);
+// ============== БИБЛИОТЕКА РИСОВАННЫХ ПРЕДМЕТОВ (каждый — свой SVG) ==============
+var L92ART={};
+function l92S(inner,w,h,vb){ return `<svg width="${w}" height="${h}" viewBox="${vb||('0 0 '+w+' '+h)}" style="display:block;max-width:100%">${inner}</svg>`; }
+L92ART.nail=l92S('<g transform="rotate(-6 60 56)"><defs><linearGradient id="na" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9fb4c4"/><stop offset=".5" stop-color="#dfe9f0"/><stop offset="1" stop-color="#7d93a5"/></linearGradient></defs><ellipse cx="18" cy="34" rx="11" ry="5" fill="#dfe9f0"/><path d="M26 31 L100 44 L106 56 L26 44 Z" fill="url(#na)"/><path d="M100 44 L112 62 L106 56 Z" fill="#8fa6b8"/><line x1="30" y1="32" x2="96" y2="45" stroke="#fff" stroke-width="2" opacity=".6"/></g>',120,66);
+L92ART.hammer=l92S('<g transform="rotate(14 60 46)"><defs><linearGradient id="hm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a5a2a"/><stop offset=".6" stop-color="#c08a4a"/><stop offset="1" stop-color="#6e3f1c"/></linearGradient></defs><rect x="34" y="30" width="12" height="46" rx="5" fill="url(#hm)"/><rect x="36" y="32" width="3" height="42" rx="1.5" fill="#5a3419" opacity=".55"/><rect x="14" y="10" width="50" height="22" rx="6" fill="#c9d6df"/><rect x="6" y="14" width="10" height="14" rx="3" fill="#a9bcc9"/><rect x="60" y="14" width="12" height="14" rx="3" fill="#8fa6b8"/><rect x="16" y="12" width="16" height="4" rx="2" fill="#fff" opacity=".6"/></g>',110,76);
+L92ART.glass=l92S('<g><path d="M30 12 L24 70 Q23 78 32 78 L88 78 Q97 78 96 70 L90 12 Z" fill="#bfe3f7" opacity=".5" stroke="#7fa3b8" stroke-width="3"/><rect x="34" y="46" width="52" height="30" fill="#4f9fd8" opacity=".55"/><path d="M34 46 Q60 54 86 46 L86 50 Q60 58 34 50 Z" fill="#8fd0f0" opacity=".8"/><line x1="42" y1="18" x2="40" y2="64" stroke="#fff" stroke-width="4" opacity=".9"/><line x1="50" y1="20" x2="49" y2="52" stroke="#fff" stroke-width="2" opacity=".5"/></g>',110,80);
+L92ART.ball=l92S('<g><defs><radialGradient id="bl" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ffe9a8"/><stop offset=".6" stop-color="#e89a3c"/><stop offset="1" stop-color="#a86a1e"/></radialGradient></defs><circle cx="60" cy="42" r="32" fill="url(#bl)"/><path d="M60 10 Q36 42 60 42 Q84 42 60 74 Q36 42 60 42 Q84 42 60 10" fill="none" stroke="#6e4410" stroke-width="3"/><line x1="52" y1="34" x2="40" y2="22" stroke="#fff" stroke-width="3" opacity=".55"/></g>',96,84);
+L92ART.pencil=l92S('<g transform="rotate(-16 60 45)"><rect x="16" y="30" width="88" height="14" fill="#ffd966"/><path d="M16 30 L8 37 L16 44 Z" fill="#e8a8b8"/><path d="M100 30 L106 37 L100 44 Z" fill="#e8dcc8"/><path d="M102 35 L112 39 L106 42 L100 39 Z" fill="#5a4a3a"/><rect x="20" y="32" width="80" height="3" fill="#d9a441" opacity=".5"/></g>',116,58);
+L92ART.spoon=l92S('<g transform="rotate(10 60 45)"><defs><linearGradient id="sp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c9d6df"/><stop offset=".5" stop-color="#eef4f8"/><stop offset="1" stop-color="#8fa6b8"/></linearGradient></defs><rect x="26" y="34" width="7" height="40" rx="3" fill="url(#sp)"/><path d="M10 10 Q46 -6 62 18 Q68 28 62 40 Q44 46 22 34 Q8 26 10 10 Z" fill="url(#sp)"/><line x1="26" y1="14" x2="40" y2="22" stroke="#fff" stroke-width="2" opacity=".8"/></g>',104,80);
+L92ART.chair=l92S('<g><rect x="34" y="28" width="52" height="8" rx="2" fill="#a86a2a"/><rect x="30" y="14" width="8" height="16" rx="2" fill="#8a5a2a"/><rect x="30" y="36" width="7" height="38" fill="#8a5a2a"/><rect x="83" y="36" width="7" height="38" fill="#8a5a2a"/><rect x="24" y="72" width="72" height="8" rx="2" fill="#7a4c22"/><rect x="36" y="30" width="48" height="6" fill="#6e3f1c" opacity=".5"/></g>',104,84);
+L92ART.book=l92S('<g transform="translate(6 8)"><rect x="42" y="18" width="6" height="60" rx="2" fill="#5a2a18"/><path d="M46 20 Q20 26 14 38 L14 76 Q20 66 46 70 Z" fill="#a02828"/><path d="M46 20 Q72 26 78 38 L78 76 Q72 66 46 70 Z" fill="#7a1f1f"/><rect x="20" y="38" width="18" height="2" fill="#e8dcc8" opacity=".7"/><rect x="20" y="44" width="18" height="2" fill="#e8dcc8" opacity=".7"/><rect x="52" y="38" width="18" height="2" fill="#e8dcc8" opacity=".7"/><path d="M44 16 Q42 8 46 4 L49 4 Q45 8 47 16 Z" fill="#ffd966"/></g>',100,84);
+L92ART.iron=l92S('<g><defs><linearGradient id="ir" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe9f0"/><stop offset=".45" stop-color="#8fa6b8"/><stop offset="1" stop-color="#5c7486"/></linearGradient></defs><path d="M18 64 L30 28 L90 28 L102 64 Z" fill="url(#ir)" stroke="#4a5f70" stroke-width="2"/><path d="M30 28 L27 18 L93 18 L90 28 Z" fill="#a9bcc9"/><rect x="36" y="50" width="48" height="8" fill="#5c7486" opacity=".6"/><line x1="34" y1="42" x2="74" y2="42" stroke="#fff" stroke-width="2" opacity=".4"/><circle cx="102" cy="16" r="3" fill="#ffd966" opacity=".9"/></g>',112,72);
+L92ART.water=l92S('<g><path d="M60 6 Q76 26 78 40 Q80 60 60 62 Q40 60 42 40 Q44 26 60 6 Z" fill="#7fb7e8" stroke="#4f9fd8" stroke-width="2"/><line x1="52" y1="24" x2="48" y2="42" stroke="#fff" stroke-width="3" opacity=".8"/><path d="M12 76 Q36 70 60 76 Q84 82 108 76" stroke="#9cc9e4" stroke-width="2.5" fill="none" opacity=".7"/></g>',112,86);
+L92ART.sheet=l92S('<g><rect x="14" y="14" width="92" height="62" rx="4" fill="#bfe3f7" opacity=".55" stroke="#7fa3b8" stroke-width="3"/><line x1="24" y1="22" x2="34" y2="66" stroke="#fff" stroke-width="4" opacity=".9"/><line x1="34" y1="22" x2="44" y2="66" stroke="#fff" stroke-width="2" opacity=".5"/></g>',112,84);
+L92ART.wood=l92S('<g><defs><radialGradient id="wd" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#e8c48a"/><stop offset=".75" stop-color="#c08a4a"/><stop offset="1" stop-color="#8a5a2a"/></radialGradient></g><circle cx="60" cy="46" r="34" fill="url(#wd)" stroke="#6e3f1c" stroke-width="4"/><circle cx="60" cy="46" r="27" fill="none" stroke="#7a4c22" stroke-width="2" opacity=".7"/><circle cx="60" cy="46" r="19" fill="none" stroke="#8a5f2e" stroke-width="2" opacity=".6"/><circle cx="60" cy="46" r="10" fill="none" stroke="#6e4a22" stroke-width="2" opacity=".7"/><circle cx="60" cy="46" r="4" fill="#5a3419" opacity=".8"/></g>',104,92);
+L92ART.copper=l92S('<g><defs><linearGradient id="cp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8a878"/><stop offset=".5" stop-color="#c06a3a"/><stop offset="1" stop-color="#8a4a24"/></linearGradient></defs><rect x="24" y="30" width="72" height="30" rx="6" fill="url(#cp)" stroke="#6e3a1c" stroke-width="2"/><rect x="30" y="36" width="60" height="5" fill="#fff" opacity=".35"/><circle cx="66" cy="22" r="5" fill="none" stroke="#e8a878" stroke-width="2.5"/><circle cx="66" cy="22" r="2" fill="#c06a3a"/></g>',112,64);
+L92ART.gold=l92S('<g><defs><linearGradient id="gd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset=".55" stop-color="#ffd966"/><stop offset="1" stop-color="#d9a441"/></linearGradient></defs><rect x="22" y="36" width="76" height="30" rx="4" fill="url(#gd)" stroke="#b8860b" stroke-width="2"/><rect x="22" y="30" width="76" height="10" rx="3" fill="#ffe98a"/><rect x="30" y="42" width="52" height="4" fill="#fff" opacity=".5"/><path d="M30 66 L34 56 L38 66 Z M48 66 L52 56 L56 66 Z M66 66 L70 56 L74 66 Z" fill="#ffe98a"/></g>',112,70);
+L92ART.air=l92S('<g><circle cx="34" cy="40" r="14" fill="#cfe4f2" opacity=".6"/><circle cx="56" cy="28" r="10" fill="#cfe4f2" opacity=".5"/><circle cx="70" cy="42" r="12" fill="#cfe4f2" opacity=".55"/><circle cx="52" cy="52" r="9" fill="#cfe4f2" opacity=".4"/><path d="M20 62 L100 62" stroke="#bfd8ea" stroke-width="3" stroke-dasharray="8 6" opacity=".6"/><path d="M20 70 L100 70" stroke="#bfd8ea" stroke-width="2" stroke-dasharray="5 7" opacity=".4"/></g>',112,78);
+L92ART.oxygen=l92S('<g><circle cx="60" cy="42" r="26" fill="#9cc9e4" opacity=".5" stroke="#4f9fd8" stroke-width="3"/><text x="60" y="49" fill="#17324a" font-size="16" text-anchor="middle" font-weight="bold" font-family="Georgia,serif">O₂</text></g>',96,84);
+L92ART.melt=l92S('<g><g transform="translate(38 6)"><line x1="0" y1="-20" x2="0" y2="20" stroke="#bfe3f7" stroke-width="3.5" stroke-linecap="round" transform="rotate(0)"/><line x1="0" y1="-20" x2="0" y2="20" stroke="#bfe3f7" stroke-width="3.5" stroke-linecap="round" transform="rotate(60)"/><line x1="0" y1="-20" x2="0" y2="20" stroke="#bfe3f7" stroke-width="3.5" stroke-linecap="round" transform="rotate(120)"/><circle cx="0" cy="0" r="3" fill="#eaf6fd"/></g><ellipse cx="74" cy="66" rx="24" ry="8" fill="#4f9fd8" opacity=".75"/><path d="M50 62 Q74 70 98 60" stroke="#8fd0f0" stroke-width="2.5" fill="none" opacity=".8"/></g>',120,84);
+L92ART.thunder=l92S('<g><path d="M14 20 L96 20 L66 44 L86 44 L34 76 L52 44 L24 44 Z" fill="#8a9ab0" opacity=".85"/><circle cx="18" cy="16" r="6" fill="#8a9ab0"/><path d="M20 22 L38 30" stroke="#ffb400" stroke-width="3"/></g>',108,80);
+L92ART.rain=l92S('<g><ellipse cx="40" cy="26" rx="28" ry="16" fill="#6a7a90"/><ellipse cx="68" cy="20" rx="22" ry="13" fill="#7d8da5"/><ellipse cx="88" cy="30" rx="18" ry="11" fill="#5a6a80"/><path d="M30 40 L26 62 M44 40 L40 66 M58 42 L54 64 M72 42 L68 64 M86 42 L82 60" stroke="#4f9fd8" stroke-width="2.5" stroke-linecap="round" opacity=".85"/></g>',110,72);
+L92ART.rust=l92S('<g transform="rotate(-6 60 56)"><defs><linearGradient id="ru" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a5a3a"/><stop offset=".5" stop-color="#c98a5a"/><stop offset="1" stop-color="#6e4426"/></linearGradient></defs><ellipse cx="18" cy="34" rx="11" ry="5" fill="#8a5a3a"/><path d="M26 31 L100 44 L106 56 L26 44 Z" fill="url(#ru)"/><ellipse cx="46" cy="40" rx="9" ry="6" fill="#a86a3a" opacity=".9"/><ellipse cx="70" cy="44" rx="7" ry="5" fill="#c47a44" opacity=".85"/><ellipse cx="90" cy="48" rx="5" ry="3.5" fill="#7a4c2e"/><line x1="30" y1="33" x2="96" y2="46" stroke="#d8a878" stroke-width="1.5" opacity=".5"/></g>',120,66);
+L92ART.bolt=l92S('<g><defs><linearGradient id="bt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset="1" stop-color="#ffb400"/></linearGradient></defs><circle cx="96" cy="14" r="18" fill="#8a9ab0" opacity=".5"/><path d="M64 8 L46 10 L62 36 L40 36 L72 84 L58 44 L78 42 L64 8 Z" fill="url(#bt)" stroke="#d98a00" stroke-width="1.5"/></g>',110,92);
+L92ART.boil=l92S('<g><path d="M18 30 L14 76 Q14 82 20 82 L100 82 Q106 82 106 76 L102 30 Z" fill="#cfe8fb" opacity=".6" stroke="#7fa3b8" stroke-width="3"/><rect x="22" y="52" width="76" height="28" fill="#4f9fd8" opacity=".7"/><circle cx="46" cy="48" r="4" fill="#fff" opacity=".9" class="wv-rise" style="animation-delay:.1s"/><circle cx="64" cy="44" r="5" fill="#fff" opacity=".9" class="wv-rise2"/><circle cx="80" cy="50" r="3.5" fill="#fff" opacity=".9" class="wv-rise3"/><path d="M58 14 Q66 6 74 14 M38 18 Q46 10 54 18 M84 20 Q92 12 100 20" stroke="#fff" stroke-width="2.5" fill="none" opacity=".8" class="wv-flick"/></g>',112,88);
+L92ART.fly=l92S('<g><path d="M12 74 Q50 10 96 26" stroke="#9ec0a8" stroke-width="2" stroke-dasharray="6 5" fill="none"/><circle cx="80" cy="34" r="14" fill="#e89a3c" stroke="#a86a1e" stroke-width="2"/><path d="M80 20 Q68 30 80 34 Q92 38 80 48 Q68 38 80 20" stroke="#6e4410" stroke-width="2" fill="none"/><text x="58" y="14" fill="#9ec0a8" font-size="8">путь мяча</text></g>',112,84);
+L92ART.rainbow=l92S('<g><path d="M18 70 A46 46 0 0 1 102 70" stroke="#ff5a5a" stroke-width="7" fill="none"/><path d="M22 70 A42 42 0 0 1 98 70" stroke="#ffb400" stroke-width="6" fill="none"/><path d="M26 70 A38 38 0 0 1 94 70" stroke="#ffe14d" stroke-width="6" fill="none"/><path d="M30 70 A34 34 0 0 1 90 70" stroke="#7fd1a0" stroke-width="6" fill="none"/><path d="M34 70 A30 30 0 0 1 86 70" stroke="#4f9fd8" stroke-width="6" fill="none"/><rect x="0" y="70" width="120" height="16" fill="#5a7a3a"/></g>',120,88);
+L92ART.candle=l92S('<g><rect x="44" y="34" width="26" height="40" rx="4" fill="#f2e8d0" stroke="#d9c9a0" stroke-width="2"/><path d="M57 10 Q50 20 57 34 M57 10 Q64 20 57 34 Z" fill="#ffd966"/><ellipse cx="57" cy="10" rx="5" ry="3" fill="#fff3b0" class="wv-flick"/><rect x="50" y="40" width="14" height="3" fill="#d9a441" opacity=".5"/><path d="M20 76 L100 76 M26 80 L94 80" stroke="#8a6a2f" stroke-width="4"/></g>',112,86);
+function l92Art(id,w,h){
+  const s=L92ART[id]||L92ART.nail;
+  if(!w) return s;
+  const m=s.match(/viewBox="([^"]+)"/);
+  const vb=m?m[1]:'0 0 120 90';
+  const p=vb.split(' ').map(Number); const vw=p[2]-p[0]||120, vh=p[3]-p[1]||90;
+  let W=w, H=h||Math.round(w*vh/vw);
+  if(h && w){ const k=Math.min(w/vw,h/vh); W=Math.round(vw*k); H=Math.round(vh*k); }
+  const inner=s.replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'');
+  return `<svg width="${W}" height="${H}" viewBox="${vb}" style="display:block;max-width:100%">${inner}</svg>`;
 }
-function l92Hammer(){
-  // молоток: ручка из дерева + стальная головка
-  return l92G(`<g transform="rotate(-18 100 110)">
-    <defs><linearGradient id="hmw" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a5a2a"/><stop offset=".5" stop-color="#c08a4a"/><stop offset="1" stop-color="#7a4c22"/></linearGradient>
-    <linearGradient id="hms" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe9f0"/><stop offset=".5" stop-color="#a9bcc9"/><stop offset="1" stop-color="#6f8596"/></linearGradient></defs>
-    <rect x="86" y="70" width="16" height="95" rx="7" fill="url(#hmw)"/>
-    <rect x="88" y="74" width="4" height="88" rx="2" fill="#6e3f1c" opacity=".5"/>
-    <rect x="70" y="40" width="48" height="34" rx="6" fill="url(#hms)"/>
-    <rect x="58" y="44" width="16" height="26" rx="4" fill="url(#hms)"/>
-    <rect x="114" y="44" width="18" height="26" rx="4" fill="url(#hms)"/>
-    <rect x="71" y="42" width="20" height="6" rx="3" fill="#ffffff" opacity=".5"/>
-    <rect x="78" y="52" width="32" height="8" rx="4" fill="#5a4432"/>
-  </g>`,220,150);
-}
-function l92Glass(fill){
-  // стакан с водой (fill 0..1)
-  return l92G(`<g>
-    <defs><linearGradient id="gsw" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#bfe3f7"/><stop offset=".4" stop-color="#eaf6fd"/><stop offset="1" stop-color="#9cc9e4"/></linearGradient></defs>
-    <ellipse cx="100" cy="118" rx="52" ry="9" fill="#1a120a" opacity=".3"/>
-    <path d="M66 28 L58 112 Q58 122 70 122 L130 122 Q142 122 142 112 L134 28 Z" fill="url(#gsw)" opacity=".85" stroke="#7fa3b8" stroke-width="3"/>
-    <rect x="72" y="${118-fill*62}" width="56" height="${fill*62}" fill="#4f9fd8" opacity=".55"/>
-    <rect x="72" y="${112-fill*62}" width="56" height="6" fill="#8fd0f0" opacity=".8"/>
-    <line x1="80" y1="34" x2="79" y2="108" stroke="#ffffff" stroke-width="3" opacity=".85"/>
-    <line x1="88" y1="36" x2="87" y2="100" stroke="#ffffff" stroke-width="2" opacity=".45"/>
-    <ellipse cx="100" cy="28" rx="34" ry="5" fill="#ffffff" opacity=".35" stroke="#7fa3b8" stroke-width="2"/>
-  </g>`,190,140);
-}
-function l92Book(){
-  return l92G(`<g transform="translate(40 20)">
-    <rect x="40" y="36" width="8" height="110" rx="3" fill="#5a2a18"/>
-    <path d="M44 40 Q10 46 4 60 L4 146 Q10 132 44 138 Z" fill="#a02828"/>
-    <path d="M44 40 Q78 46 84 60 L84 146 Q78 132 44 138 Z" fill="#8a1f1f"/>
-    <rect x="12" y="70" width="24" height="3" fill="#e8dcc8" opacity=".7"/>
-    <rect x="12" y="80" width="24" height="3" fill="#e8dcc8" opacity=".7"/>
-    <rect x="12" y="90" width="20" height="3" fill="#e8dcc8" opacity=".6"/>
-    <rect x="50" y="70" width="24" height="3" fill="#e8dcc8" opacity=".7"/>
-    <rect x="50" y="80" width="24" height="3" fill="#e8dcc8" opacity=".7"/>
-    <path d="M44 36 Q40 26 44 20 L48 20 Q44 26 48 36 Z" fill="#ffd966"/>
-  </g>`,150,150);
-}
-function l92Ball(){
-  return l92G(`<g>
-    <defs><radialGradient id="blg" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ffe9a8"/><stop offset=".6" stop-color="#e89a3c"/><stop offset="1" stop-color="#b06a1e"/></radialGradient></defs>
-    <ellipse cx="100" cy="132" rx="44" ry="10" fill="#1a120a" opacity=".3"/>
-    <circle cx="100" cy="74" r="52" fill="url(#blg)"/>
-    <path d="M100 22 Q66 60 100 74 Q134 88 100 126 Q66 88 100 74 Q134 60 100 22" fill="none" stroke="#7a4a10" stroke-width="4"/>
-    <circle cx="100" cy="74" r="6" fill="#7a4a10"/>
-    <line x1="94" y1="68" x2="70" y2="50" stroke="#ffffff" stroke-width="3" opacity=".6" stroke-linecap="round"/>
-  </g>`,190,150);
-}
-function l92Ingot(){
-  // слиток железа с искрами
-  return l92G(`<g>
-    <defs><linearGradient id="ing" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe9f0"/><stop offset=".4" stop-color="#8fa6b8"/><stop offset="1" stop-color="#5c7486"/></linearGradient></defs>
-    <ellipse cx="100" cy="128" rx="70" ry="10" fill="#1a120a" opacity=".3"/>
-    <path d="M34 104 L50 60 L150 60 L166 104 Z" fill="url(#ing)" stroke="#4a5f70" stroke-width="2"/>
-    <path d="M50 60 L46 48 L154 48 L150 60 Z" fill="#a9bcc9"/>
-    <path d="M58 96 L66 70 L134 70 L142 96 Z" fill="#7d93a5" opacity=".6"/>
-    <line x1="62" y1="88" x2="120" y2="88" stroke="#ffffff" stroke-width="3" opacity=".4"/>
-    <g class="wv-rise" style="animation-delay:.2s"><path d="M168 46 l4 10 -4 10 -4 -10 Z" fill="#ffd966" opacity=".9"/></g>
-    <g class="wv-rise2"><circle cx="176" cy="30" r="3" fill="#ffb46b"/></g>
-  </g>`,200,150);
-}
-function l92Wood(){
-  // спил дерева с кольцами
-  return l92G(`<g>
-    <defs><radialGradient id="wdd" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#e8c48a"/><stop offset=".7" stop-color="#c08a4a"/><stop offset="1" stop-color="#8a5a2a"/></radialGradient></defs>
-    <ellipse cx="100" cy="130" rx="60" ry="9" fill="#1a120a" opacity=".3"/>
-    <circle cx="100" cy="72" r="54" fill="url(#wdd)" stroke="#6e3f1c" stroke-width="5"/>
-    <circle cx="100" cy="72" r="44" fill="none" stroke="#7a4c22" stroke-width="2" opacity=".7"/>
-    <circle cx="100" cy="72" r="33" fill="none" stroke="#8a5f2e" stroke-width="2" opacity=".6"/>
-    <circle cx="100" cy="72" r="21" fill="none" stroke="#6e4a22" stroke-width="2" opacity=".7"/>
-    <circle cx="100" cy="72" r="9" fill="#5a3419" opacity=".8"/>
-    <line x1="52" y1="72" x2="100" y2="72" stroke="#000" stroke-width="1.5" opacity=".25"/>
-  </g>`,190,150);
-}
-function l92Lightning(){
-  // молния с ветвлениями
-  return l92G(`<g>
-    <defs><linearGradient id="lng" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset="1" stop-color="#ffb400"/></linearGradient></defs>
-    <circle cx="150" cy="20" r="26" fill="#8a9ab0" opacity=".5"/>
-    <circle cx="150" cy="20" r="18" fill="#6a7a90" opacity=".6"/>
-    <path d="M118 20 L96 18 L116 54 L90 52 L128 118 L110 66 L140 64 L118 20 Z" fill="url(#lng)" stroke="#d98a00" stroke-width="1.5"/>
-    <path d="M118 20 L104 44" stroke="#fff" stroke-width="2.5" opacity=".8"/>
-  </g>`,190,140);
-}
-function l92RainCloud(){
-  // туча с дождём
-  return l92G(`<g>
-    <ellipse cx="70" cy="40" rx="44" ry="24" fill="#6a7a90"/>
-    <ellipse cx="105" cy="32" rx="36" ry="20" fill="#7d8da5"/>
-    <ellipse cx="135" cy="44" rx="30" ry="18" fill="#5a6a80"/>
-    ${[0,1,2,3,4,5].map(i=>`<line x1="${60+i*14}" y1="58" x2="${56+i*14}" y2="${88+(i%2)*8}" stroke="#4f9fd8" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>`).join('')}
-    <line x1="100" y1="60" x2="96" y2="92" stroke="#4f9fd8" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
-  </g>`,190,120);
-}
-function l92Rainbow(){
-  return l92G(`<g>
-    ${[['#ff5a5a',0],['#ffb400',11],['#ffe14d',22],['#7fd1a0',33],['#4f9fd8',44],['#7a5ad8',55]].map(c=>`<path d="M20 130 A80 ${80-c[1]} 0 0 1 180 130" fill="none" stroke="${c[0]}" stroke-width="11" opacity=".95"/>`).join('')}
-    <rect x="0" y="132" width="200" height="26" fill="#5a7a3a"/>
-  </g>`,200,150);
-}
-function l92Snow(){
-  // снежинка + тающая лужа
-  return l92G(`<g transform="translate(60 20)">
-    ${[0,60,120].map(a=>`<line x1="0" y1="-34" x2="0" y2="34" stroke="#bfe3f7" stroke-width="4" stroke-linecap="round" transform="rotate(${a})"/>`).join('')}
-    ${[30,90,150].map(a=>`<line x1="0" y1="-30" x2="0" y2="30" stroke="#9cc9e4" stroke-width="2.5" stroke-linecap="round" transform="rotate(${a})" opacity=".8"/>`).join('')}
-    <circle cx="0" cy="0" r="4" fill="#eaf6fd"/>
-    <ellipse cx="90" cy="110" rx="34" ry="12" fill="#4f9fd8" opacity=".8"/>
-    <path d="M56 104 Q90 116 124 102" stroke="#8fd0f0" stroke-width="3" fill="none" opacity=".7"/>
-  </g>`,190,140);
-}
-function l92Rust(){
-  // ржавый гвоздь с пятнами
-  return l92G(`<g transform="translate(20 40) rotate(14) scale(1.9)">
-    <ellipse cx="0" cy="0" rx="13" ry="4.5" fill="#1a120a" opacity=".35"/>
-    <ellipse cx="0" cy="-2" rx="13" ry="4.5" fill="#8a5a3a"/>
-    <path d="M-3 0 L44 6 L48 11 L-3 4 Z" fill="#8a5a3a"/>
-    <path d="M44 6 L56 18 L48 11 Z" fill="#6e4426"/>
-    <ellipse cx="10" cy="3" rx="6" ry="4" fill="#b06a3a" opacity=".9"/>
-    <ellipse cx="26" cy="6" rx="4" ry="3" fill="#c47a44" opacity=".85"/>
-    <ellipse cx="36" cy="8" rx="3" ry="2" fill="#7a4c2e"/>
-    <line x1="-2" y1="0" x2="40" y2="5" stroke="#c98a5a" stroke-width="1.5" opacity=".6"/>
-  </g>`,170,110);
-}
-function l92ShelfSVG(items){
-  // полка с SVG-предметами
-  return `<div style="margin:4px auto;background:linear-gradient(180deg,rgba(60,44,20,.5),rgba(20,12,4,.6));border-radius:12px;padding:12px 8px 2px;border:1px solid #5a4432">
-    <div style="display:flex;justify-content:center;gap:2px;align-items:flex-end;flex-wrap:wrap">${items.map((f,i)=>`<div style="width:84px;text-align:center">${f()}<div style="font-size:10px;color:#d8b88a;margin-top:-6px">${['гвоздь','молоток','стакан','мяч','книга','слиток'][i]||''}</div></div>`).join('')}</div>
-    <div style="height:7px;background:linear-gradient(90deg,#4a3418,#8a6a3a,#4a3418);border-radius:4px;box-shadow:0 3px 6px rgba(0,0,0,.5)"></div>
+function l92Pic(e,size){
+  // карточка-витрина: предмет на «постаменте» с этикеткой
+  const [kind,word,desc,art]=e;
+  const col=kind==='body'?'#7fd1a0':kind==='sub'?'#ffd966':'#ff8a6a';
+  const w=size||76;
+  const bg=kind==='body'?'rgba(127,208,160,.09)':kind==='sub'?'rgba(255,217,102,.09)':'rgba(255,138,106,.09)';
+  return `<div style="flex:1;min-width:${w}px;max-width:${w+6}px;background:${bg};border:1px solid ${col}55;border-radius:14px 14px 8px 8px;padding:6px 4px 4px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.35)">
+    <div style="height:${w*0.62}px;display:flex;align-items:flex-end;justify-content:center;position:relative">
+      <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:70%;height:7px;background:rgba(0,0,0,.4);border-radius:50%;filter:blur(2px)"></div>
+      <div style="position:relative;z-index:1;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))">${l92Art(art,w-16)}</div>
+    </div>
+    <div style="background:${col}22;border-top:1px solid ${col}44;border-radius:0 0 6px 6px;padding:2px 0;margin-top:2px">
+      <div style="font-size:10.5px;color:#fff;font-weight:bold">${word}</div>
+      <div style="font-size:7.5px;color:${col};letter-spacing:.5px">${kind==='body'?'ТЕЛО':kind==='sub'?'ВЕЩЕСТВО':'ЯВЛЕНИЕ'}</div>
+    </div>
   </div>`;
 }
-// =============== композиции ===============
+function l92Shelf(e,width){
+  // полка: предметы e[0..], показываем до 4, масштаб
+  return `<div style="display:flex;justify-content:center;gap:3px;align-items:flex-end;flex-wrap:wrap;max-width:${width||330}px;background:linear-gradient(180deg,rgba(60,44,20,.35),rgba(20,12,4,.5));border:1px solid #5a4432;border-radius:10px;padding:8px 4px 0">
+    ${e.map((x,i)=>`<div style="width:72px;text-align:center">${l92Art(x[3],66,50)}<div style="font-size:8.5px;color:#d8b88a;margin-top:-2px">${x[1]}</div></div>`).join('')}
+  </div>`;
+}
+function l92B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
+function l92Doors(hot){
+  const doors=[['Зал Тел','#7fd1a0','0'],['Зал Веществ','#ffd966','1'],['Зал Явлений','#ff8a6a','2']];
+  return `<div style="display:flex;gap:6px;justify-content:center;margin:6px auto">
+    ${doors.map((d,i)=>`<div class="wv-morph" style="flex:1;max-width:96px;padding:8px 4px;text-align:center;border-radius:12px 12px 4px 4px;border:2px solid ${d[1]};background:linear-gradient(180deg,${d[1]}2b,${d[1]}0a);${hot===i?'box-shadow:0 0 14px '+d[1]+'99;transform:scale(1.05)':''}">
+      <div style="font-size:10px;color:#d8ecff">${d[0]}</div>
+      <div style="font-size:18px;margin-top:2px">${hot===i?'🚪➡️':'🚪'}</div>
+    </div>`).join('')}
+  </div>`;
+}
 function visL92(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -6379,213 +6311,165 @@ function visL92(el){
     if(step===0){
       h=col(`<div style="font-size:20px;color:#c9b28a;letter-spacing:1px">🌟 ЛЕГЕНДА · Эпизод 1</div>`+
         big('Мастерская Архимеда')+
-        `<div style="position:relative;margin:2px auto">
-          ${l92Hammer()}
-        </div>`+
+        `<div style="font-size:38px" class="wv-swing">🔨⚒️</div>`+
         `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:12px 14px;max-width:310px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
-        В мастерской Архимеда на верстаке лежат гвозди, молотки, слитки железа… а за окном сверкает молния. Архимед задумался: как разложить этот хаос по полочкам науки? Он придумал три зала: <b>Тел, Веществ и Явлений</b> — и зовёт тебя в помощники!</div>`+
-        `<div style="background:rgba(127,183,216,.09);border:1.5px solid #7fb7d855;border-radius:14px;padding:12px 14px;max-width:330px;text-align:left;margin-top:8px">
-          <div style="font-size:11.5px;color:#7fb7d8;letter-spacing:1px;margin-bottom:6px">📖 ИЗ УЧЕБНИКА · ЧТО ТАКОЕ ФИЗИКА</div>
-          <div style="font-size:13px;color:#e8dcc8;line-height:1.65">Слово <b>«физика»</b> — от греческого «фюсис», что значит «природа». Физика — наука о природе: она изучает, из чего состоят тела и какие <b>явления</b> с ними происходят.</div>
-          <div style="font-size:11.5px;color:#b8c9d8;line-height:1.6;margin-top:6px">По учебнику А.В. Перышкина физика отвечает на вопрос «почему?»: почему падает яблоко, почему гремит гром, почему светит Солнце. Она открывает <b>законы</b> — правила, по которым живёт природа.</div>
-          <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:7px">${['🍎 падение','⚡ молния','🌈 радуга','🎵 музыка','🚗 движение','🔥 нагрев','🧲 магнит','💡 свет'].map(x=>`<span style="font-size:10px;border:1px solid #7fb7d844;border-radius:8px;padding:2px 7px;color:#cfe4f2">${x}</span>`).join('')}</div>
-          <div style="font-size:11px;color:#9fb8c8;margin-top:7px;border-top:1px dashed #7fb7d833;padding-top:5px">💡 Физика — фундамент техники: без её законов не было бы машин, самолётов, компьютеров и телефонов!</div>
-        </div>`
-        );
+        В мастерской Архимеда на верстаке лежат гвозди и молотки, слитки железа… а за окном сверкает молния. Архимед придумал разложить всё по трём полкам науки: <b>Тела, Вещества, Явления</b>. Помоги ему!</div>`+
+        `<div style="background:rgba(127,183,216,.09);border:1.5px solid #7fb7d855;border-radius:14px;padding:10px 12px;max-width:320px;text-align:left">
+          <div style="font-size:12px;color:#7fb7d8;font-weight:bold">📖 ИЗ УЧЕБНИКА · ЧТО ТАКОЕ ФИЗИКА</div>
+          <div style="font-size:12.5px;color:#d8ecff;line-height:1.6;margin-top:4px">Слово «физика» — от греческого <b>«фюсис»</b> = природа. Физика изучает, из чего состоят тела и какие <b>явления</b> с ними происходят.</div>
+        </div>`);
     } else if(step===1){
-      h=col(l92Badge('ПЛАН МАСТЕРСКОЙ','#c9b28a')+
+      h=col(l92B('ПЛАН МАСТЕРСКОЙ','#c9b28a')+
         big('Три полки Архимеда')+
-        `<div style="display:flex;flex-direction:column;gap:10px;max-width:320px">
-          ${l92ShelfRow('🔨','Зал Тел','гвоздь, мяч, стакан — их можно взять','#7fd1a0',()=>l92Hammer())}
-          ${l92ShelfRow('🧱','Зал Веществ','железо, вода, стекло — материалы','#ffd966',()=>l92Ingot())}
-          ${l92ShelfRow('⚡','Зал Явлений','гром, дождь, молния — процессы','#ff8a6a',()=>l92Lightning())}
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:340px">
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(127,208,160,.08);border:1px solid #7fd1a044;border-radius:12px;padding:6px 8px">${l92Art('nail',44,26)}<div style="text-align:left"><div style="font-size:13px;color:#7fd1a0;font-weight:bold">Зал Тел</div><div style="font-size:10.5px;color:#9ec0a8">гвоздь, мяч, стакан — можно взять</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(255,217,102,.08);border:1px solid #ffd96644;border-radius:12px;padding:6px 8px">${l92Art('iron',48,30)}<div style="text-align:left"><div style="font-size:13px;color:#ffd966;font-weight:bold">Зал Веществ</div><div style="font-size:10.5px;color:#9ec0a8">железо, вода, стекло — материалы</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(255,138,106,.08);border:1px solid #ff8a6a44;border-radius:12px;padding:6px 8px">${l92Art('bolt',46,34)}<div style="text-align:left"><div style="font-size:13px;color:#ff8a6a;font-weight:bold">Зал Явлений</div><div style="font-size:10.5px;color:#9ec0a8">гром, дождь, молния — процессы</div></div></div>
         </div>`);
     } else if(step===2){
-      h=col(l92Badge('ЭКСКУРСИЯ · ЗАЛ 1','#7fd1a0')+
+      h=col(l92B('ЭКСКУРСИЯ · ЗАЛ 1','#7fd1a0')+
         big('Зал Тел: полка предметов')+
-        l92ShelfSVG([l92Nail,l92Hammer,l92Glass,l92Ball,l92Book])+
-        `<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:330px">
-          ${[['📏','Форма','у каждого тела своя'],['⚖️','Масса','есть у любого тела'],['📐','Размер','измеряется линейкой']].map(f=>`<div style="background:rgba(127,208,160,.09);border:1px solid #7fd1a055;border-radius:10px;padding:5px 10px;text-align:center;font-size:12px;color:#d8ecff"><b>${f[0]} ${f[1]}</b><br><span style="color:#9ec0a8;font-size:10.5px">${f[2]}</span></div>`).join('')}
-        </div>`);
-    } else if(step===3){
-      h=col(l92Badge('РАССМОТРИМ ГВОЗДЬ','#7fd1a0')+
-        big('Анатомия гвоздя')+
-        `<div style="display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap">
-          <div style="flex:1;min-width:150px">${l92Nail(120,55,6,1.5)}</div>
-          <div style="flex:1;min-width:130px;display:flex;flex-direction:column;gap:6px">
-            ${[['шляпка','по ней бьют молотком'],['стержень','гладкий металл'],['остриё','входит в доску']].map(f=>`<div style="background:rgba(127,208,160,.08);border-left:3px solid #7fd1a0;padding:5px 8px;text-align:left;border-radius:4px"><b style="font-size:12.5px;color:#fff">${f[0]}</b><br><span style="font-size:11px;color:#9ec0a8">${f[1]}</span></div>`).join('')}
+        `<div style="background:linear-gradient(180deg,rgba(60,44,20,.3),rgba(20,12,4,.4));border:1px solid #5a4432;border-radius:12px;padding:10px 6px 0;max-width:340px">
+          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:2px;align-items:flex-end">
+            ${[['body','гвоздь','','nail'],['body','молоток','','hammer'],['body','стакан','','glass'],['body','мяч','','ball'],['body','книга','','book']].map(x=>`<div style="width:64px;text-align:center">${l92Art(x[3],60,46)}<div style="font-size:8.5px;color:#d8b88a">${x[1]}</div></div>`).join('')}
           </div>
+          <div style="height:6px;background:linear-gradient(90deg,#4a3418,#8a6a3a,#4a3418);border-radius:3px;margin-top:4px"></div>
         </div>`+
-        sml('гвоздь — ТЕЛО: у него есть форма, размер, масса. Его можно взять в руку!'));
+        sml('у каждого тела есть форма, размер и масса — его можно взять, измерить и взвесить!'));
+    } else if(step===3){
+      h=col(l92B('РАССМОТРИМ ГВОЗДЬ','#7fd1a0')+
+        big('Анатомия гвоздя')+
+        `<div style="background:#0f1f16;border:1px solid #2c4a38;border-radius:14px;padding:10px;max-width:330px">${l92Art('nail',300,52)}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:320px">
+          ${[['шляпка','по ней бьют молотком'],['стержень','гладкий блестящий металл'],['остриё','входит в доску']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(127,208,160,.07);border:1px solid #7fd1a033;border-radius:8px;padding:4px 10px"><b style="font-size:12px;color:#fff;width:64px">${f[0]}</b><span style="font-size:11px;color:#9ec0a8">${f[1]}</span></div>`).join('')}
+        </div>`);
     } else if(step===4){
-      h=col(l92Badge('ЗАЛ 1 · ПОЛЕЗНО ЗНАТЬ','#7fd1a0')+
-        big('Разные тела — разные материалы')+
+      h=col(l92B('ЗАЛ 1 · ПОЛЕЗНО ЗНАТЬ','#7fd1a0')+
+        big('Одно тело — разные материалы')+
         `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;max-width:340px">
-          <div style="flex:1;min-width:150px;background:rgba(127,208,160,.07);border:1px solid #7fd1a044;border-radius:12px;padding:8px;text-align:center">${l92Hammer()}<div style="font-size:11px;color:#9ec0a8;margin-top:4px">молоток: ручка <b>деревянная</b>, головка <b>стальная</b></div></div>
-          <div style="flex:1;min-width:150px;background:rgba(127,208,160,.07);border:1px solid #7fd1a044;border-radius:12px;padding:8px;text-align:center">${l92Book()}<div style="font-size:11px;color:#9ec0a8;margin-top:4px">книга: страницы <b>бумажные</b>, обложка <b>картонная</b></div></div>
+          ${l92Pic(['body','молоток','','hammer'],120)}
+          ${l92Pic(['body','книга','','book'],120)}
         </div>`+
-        sml('одно тело может соединять разные вещества!'));
+        sml('молоток: деревянная ручка + стальная головка. Книга: бумага + картон. Тело может соединять разные вещества!'));
     } else if(step===5){
-      h=col(l92Badge('ЭКСКУРСИЯ · ЗАЛ 2','#ffd966')+
-        big('Зал Веществ: витрина материалов')+
-        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:340px">
-          ${[[l92Ingot(),'Железо','металл: гвозди, корабли'],[l92Glass(0.5),'Вода','жидкость: лёд и пар'],[l92Wood(),'Дерево','мебель, бумага']].map(f=>`<div style="flex:1;min-width:140px;background:rgba(255,217,102,.06);border:1px solid #ffd96644;border-radius:14px;padding:6px;text-align:center"><div style="transform:scale(.8);margin:-6px">${f[0]}</div><div style="font-size:13px;color:#ffd966;font-weight:bold">${f[1]}</div><div style="font-size:10px;color:#9ec0a8">${f[2]}</div></div>`).join('')}
+      h=col(l92B('ЭКСКУРСИЯ · ЗАЛ 2','#ffd966')+
+        big('Зал Веществ: витрина')+
+        `<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:340px">
+          ${l92Pic(['sub','Железо','металл для гвоздей и кораблей','iron'],100)}
+          ${l92Pic(['sub','Вода','жидкость: из неё лёд и пар','water'],100)}
+          ${l92Pic(['sub','Дерево','мебель и бумага','wood'],100)}
         </div>`+
         sml('вещества — «строительные материалы» природы. Из них делают тела!'));
     } else if(step===6){
-      h=col(l92Badge('ЗАЛ 2 · ГЛАВНЫЙ СЕКРЕТ','#ffd966')+
+      h=col(l92B('ГЛАВНЫЙ СЕКРЕТ','#ffd966')+
         big('Одно вещество — много тел')+
-        `<div style="background:rgba(255,217,102,.07);border:1.5px solid #ffd96655;border-radius:16px;padding:10px;max-width:340px">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-            ${l92Ingot()}
-            <div style="flex:1;font-size:13.5px;color:#ffd966;font-weight:bold;text-align:left">ВЕЩЕСТВО:<br>ЖЕЛЕЗО</div>
+        `<div style="background:rgba(255,217,102,.07);border:1.5px solid #ffd96655;border-radius:14px;padding:8px;max-width:330px">
+          <div style="display:flex;align-items:center;gap:6px;justify-content:center;margin-bottom:6px"><span style="font-size:13px;color:#ffd966;font-weight:bold">ВЕЩЕСТВО: ЖЕЛЕЗО</span>${l92Art('iron',60,38)}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center">
+            ${[['nail','винт'],['hammer','молоток'],['spoon','ложка'],['chair','каркас'],['fly','...']].map(x=>`<div style="border:1px solid #ffd96644;border-radius:8px;padding:3px 6px;text-align:center;background:#00000033">${l92Art(x[0],34,26)}<div style="font-size:8px;color:#d8c088">${x[1]}</div></div>`).join('')}
           </div>
-          <div style="font-size:12px;color:#9ec0a8;text-align:left">из расплавленного железа отливают разные тела:</div>
-          <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:6px">${['🔩 винт','🔗 цепь','🥄 ложка','🚢 корабль','⚙️ шестерня'].map(x=>`<span style="border:1px solid #ffd96655;background:#00022;border-radius:8px;padding:2px 7px;font-size:11px;color:#e8dcc8">${x}</span>`).join('')}</div>
         </div>`+
-        sml('вещество одно — а тел из него можно сделать сколько угодно!'));
+        sml('из железа делают и гвозди, и молотки, и ложки — вещество одно, тел много!'));
     } else if(step===7){
-      h=col(l92Badge('ЭКСКУРСИЯ · ЗАЛ 3','#ff8a6a')+
+      h=col(l92B('ЭКСКУРСИЯ · ЗАЛ 3','#ff8a6a')+
         big('Зал Явлений: небо за окном')+
-        `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:340px">
-          <div style="background:rgba(255,138,106,.05);border-radius:10px;padding:4px">${l92Lightning()}<div style="font-size:11px;color:#ffd9a0;text-align:center">молния ⚡</div></div>
-          <div style="background:rgba(255,138,106,.05);border-radius:10px;padding:4px">${l92RainCloud()}<div style="font-size:11px;color:#ffd9a0;text-align:center">дождь 🌧️</div></div>
-          <div style="background:rgba(255,138,106,.05);border-radius:10px;padding:4px;grid-column:1/3">${l92Rainbow()}<div style="font-size:11px;color:#ffd9a0;text-align:center">радуга 🌈</div></div>
+        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;align-items:flex-end;max-width:340px">
+          <div style="text-align:center"><div class="wv-flick">${l92Art('bolt',110,60)}</div><div style="font-size:9px;color:#ffd9a0">молния мигает</div></div>
+          <div style="text-align:center;position:relative">${l92Art('rain',100,50)}
+            <div style="position:absolute;left:18px;top:-6px;color:#9cc9e4;font-size:13px" class="wv-rise">💧</div>
+            <div style="position:absolute;left:46px;top:-10px;color:#9cc9e4;font-size:10px" class="wv-rise2">💧</div>
+            <div style="position:absolute;left:74px;top:-4px;color:#9cc9e4;font-size:12px" class="wv-rise3">💧</div>
+            <div style="font-size:9px;color:#ffd9a0">дождь идёт</div></div>
+          <div style="text-align:center"><div class="wv-pulse">${l92Art('rainbow',120,60)}</div><div style="font-size:9px;color:#ffd9a0">радуга</div></div>
         </div>`+
-        sml('явления — это процессы: они ДЛЯТСЯ, в них что-то МЕНЯЕТСЯ.')+
-        `<div style="background:rgba(255,138,106,.06);border:1.5px solid #ff8a6a44;border-radius:14px;padding:12px;max-width:340px;text-align:left;margin-top:8px">
-          <div style="font-size:11.5px;color:#ff9a7a;letter-spacing:1px;margin-bottom:6px">📚 ШЕСТЬ СЕМЕЙСТВ ЯВЛЕНИЙ</div>
-          <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center">
-            ${[['🚗','Механические','движение: мяч летит, машина едет'],['🔥','Тепловые','нагрев, кипение, таяние'],['💡','Световые','радуга, тень, зеркало'],['🔊','Звуковые','гром, музыка, эхо'],['⚡','Электрические','молния, ток в проводах'],['🧲','Магнитные','магниты, компас']].map(f=>`<div style="flex:1;min-width:150px;background:rgba(0,0,0,.22);border:1px solid #ff8a6a33;border-radius:10px;padding:6px 8px;text-align:center">
-              <div style="font-size:17px">${f[0]}</div>
-              <div style="font-size:12px;color:#fff;font-weight:bold">${f[1]}</div>
-              <div style="font-size:9.5px;color:#c9a898;line-height:1.4">${f[2]}</div>
-            </div>`).join('')}
-          </div>
-          <div style="font-size:11px;color:#c9a898;margin-top:7px;border-top:1px dashed #ff8a6a33;padding-top:5px">💡 Эти изменения происходят САМИ в природе — именно их изучает физика!</div>
-        </div>`
-        );
+        sml('явления — это процессы: они длятся, в них что-то меняется.'));
     } else if(step===8){
-      h=col(l92Badge('ЗАЛ 3 · КАК РАСПОЗНАТЬ','#ff8a6a')+
+      h=col(l92B('ЗАЛ 3 · КАК РАСПОЗНАТЬ','#ff8a6a')+
         big('Признаки явления')+
-        `${l92Snow()}`+
-        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
-          ${[['⏳','Длится во времени','снежинка → лужица: процесс идёт'],['🔄','Что-то меняется','вода превращается: твёрдая → жидкая'],['👀','Можно наблюдать','видим, слышим, чувствуем']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,138,106,.07);border:1px solid rgba(255,138,106,.3);border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:18px">${f[0]}</span><span style="font-size:12.5px;color:#d8ecff"><b style="color:#fff">${f[1]}</b> — <span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
-        </div>`+
-        `<div style="background:rgba(127,209,255,.07);border:1.5px solid #7fb7d844;border-radius:14px;padding:12px;max-width:340px;text-align:left;margin-top:8px">
-          <div style="font-size:11.5px;color:#7fb7d8;letter-spacing:1px;margin-bottom:6px">🔬 КАК ФИЗИКИ ИЗУЧАЮТ ЯВЛЕНИЯ</div>
-          <div style="display:flex;align-items:center;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:6px">
-            ${[['👀','наблюдают'],['❓','задают вопрос'],['💡','гипотеза'],['🧪','опыт'],['📜','закон']].map((f,i)=>`<div style="display:flex;align-items:center;gap:4px"><div style="background:rgba(127,209,255,.1);border:1px solid #7fb7d855;border-radius:8px;padding:3px 6px;font-size:9.5px;color:#cfe4f2;text-align:center"><div style="font-size:14px">${f[0]}</div>${f[1]}</div>${i<4?'<span style="color:#7fb7d8">→</span>':''}</div>`).join('')}
-          </div>
-          <div style="font-size:11.5px;color:#9fb8c8;line-height:1.6">Учёный <b style="color:#cfe4f2">Галилео Галилей</b> (1564–1642) первым стал проверять догадки опытами: по легенде, он бросал шары с Пизанской башни и изучал их падение! А <b style="color:#cfe4f2">Исаак Ньютон</b> открыл закон всемирного тяготения — почему яблоко падает на Землю.</div>
-        </div>`
-        );
+        `<div style="display:flex;justify-content:center">${l92Art('melt',140,70)}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:320px">
+          ${[['⏳','Длится во времени','снежинка → лужица'],['🔄','Что-то меняется','вода из твёрдой стала жидкой'],['👀','Можно наблюдать','видим, слышим, чувствуем']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,138,106,.07);border:1px solid #ff8a6a33;border-radius:8px;padding:4px 10px"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
+        </div>`);
     } else if(step===9){
-      h=col(l92Badge('ПРОВЕРКА','#c9b28a')+
-        big('Куда отнести гром и молнию?')+
-        `<div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;align-items:flex-end">
-          <div style="width:90px">${l92Lightning()}</div>
-          <div style="width:90px">${l92RainCloud()}</div>
-        </div>`+
+      h=col(l92B('ПРОВЕРКА','#c9b28a')+
+        big('Гром, дождь и молния — это?')+
+        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;align-items:flex-end">${l92Art('bolt',100,54)}${l92Art('rain',90,44)}</div>`+
         `<div class="wv-ans" style="font-size:20px;color:#ff8a6a;font-weight:bold">это ЯВЛЕНИЯ — процессы в природе!</div>`+
-        sml('как в нашей проверке: дождь, гром, молния — физические явления!'));
+        sml('как в нашей проверке!'));
     } else if(step===10){
-      h=col(l92Badge('ИНТЕРАКТИВНАЯ СЦЕНА','#c9b28a')+
+      h=col(l92B('ИНТЕРАКТИВНАЯ СЦЕНА','#c9b28a')+
         big('Спор трёх экспонатов')+
-        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;align-items:flex-end">
-          <div style="text-align:center;width:96px;background:rgba(127,208,160,.06);border:1px solid #7fd1a044;border-radius:12px;padding:6px">${l92Nail(100,40,-10,1.4)}<div style="font-size:11px;color:#7fd1a0;font-weight:bold;margin-top:6px">гвоздь</div></div>
-          <div style="text-align:center;width:96px;background:rgba(255,138,106,.06);border:1px solid #ff8a6a44;border-radius:12px;padding:6px">${l92Rust()}<div style="font-size:11px;color:#ff8a6a;font-weight:bold;margin-top:6px">ржавление</div></div>
-          <div style="text-align:center;width:96px;background:rgba(255,217,102,.06);border:1px solid #ffd96644;border-radius:12px;padding:6px">${l92Ingot()}<div style="font-size:11px;color:#ffd966;font-weight:bold;margin-top:6px">железо</div></div>
-        </div>`+
+        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:340px">${l92Pic(['body','гвоздь','предмет','nail'],100)}${l92Pic(['ev','ржавление','процесс','rust'],100)}${l92Pic(['sub','железо','материал','iron'],100)}</div>`+
         sml('три «родственника» спорят: кто тело, кто вещество, а кто явление?'));
     } else if(step===11){
-      h=col(l92Badge('РАЗБОР 1','#7fd1a0')+
+      h=col(l92B('РАЗБОР 1','#7fd1a0')+
         big('Гвоздь — ТЕЛО')+
-        `${l92Nail(120,55,6,1.6)}`+
-        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
-          ${[['✋','Можно взять в руку','твёрдый, имеет форму'],['📏','Можно измерить','длина 5 см, масса 3 г'],['🧱','Сделан из вещества','из железа']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(127,208,160,.07);border:1px solid rgba(127,208,160,.3);border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:18px">${f[0]}</span><span style="font-size:12.5px;color:#d8ecff"><b style="color:#fff">${f[1]}</b> — <span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
-        </div>`+
-        `<div style="background:rgba(127,208,160,.07);border:1.5px solid #7fd1a044;border-radius:14px;padding:12px;max-width:340px;text-align:left;margin-top:8px">
-          <div style="font-size:11.5px;color:#7fd1a0;letter-spacing:1px;margin-bottom:5px">📖 ОПРЕДЕЛЕНИЕ ИЗ УЧЕБНИКА</div>
-          <div style="font-size:12.5px;color:#d8ecc8;line-height:1.65"><b>Физическое тело</b> — любой предмет, который нас окружает: капля воды, книга, гвоздь… даже сам человек — тело! У каждого тела есть <b>форма, объём и масса</b>.</div>
-          <div style="font-size:11.5px;color:#9ec0a8;margin-top:6px">Тела могут быть из разных веществ: железный гвоздь, стеклянный стакан, бумажная книга.</div>
-        </div>`
-        );
+        `<div style="text-align:center">${l92Art('nail',220,46)}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:320px">
+          ${[['✋','Можно взять в руку','твёрдый, имеет форму'],['📏','Можно измерить','длина 5 см, масса 3 г'],['🧱','Сделан из железа','вещество — материал']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(127,208,160,.07);border:1px solid #7fd1a033;border-radius:8px;padding:4px 10px"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
+        </div>`);
     } else if(step===12){
-      h=col(l92Badge('РАЗБОР 2','#ff8a6a')+
+      h=col(l92B('РАЗБОР 2','#ff8a6a')+
         big('Ржавление — ЯВЛЕНИЕ')+
         `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
-          ${l92Nail(70,55,6,1.3)}
-          <div style="font-size:24px" class="wv-flick">→</div>
-          ${l92Rust()}
+          ${l92Art('nail',110,30)}
+          <div style="font-size:22px" class="wv-flick">→</div>
+          ${l92Art('rust',110,34)}
         </div>`+
-        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
-          ${[['⏳','Длится во времени','свежий гвоздь → покрывается пятнами'],['🧪','Химическая реакция','железо + кислород воздуха = ржавчина'],['🔄','Изменение навсегда','ржавчину соскоблишь — но гвоздь уже другой']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,138,106,.07);border:1px solid rgba(255,138,106,.3);border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:18px">${f[0]}</span><span style="font-size:12.5px;color:#d8ecff"><b style="color:#fff">${f[1]}</b> — <span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
-        </div>`+
-        `<div style="background:rgba(255,138,106,.07);border:1.5px solid #ff8a6a44;border-radius:14px;padding:12px;max-width:340px;text-align:left;margin-top:8px">
-          <div style="font-size:11.5px;color:#ff9a7a;letter-spacing:1px;margin-bottom:5px">📖 ОПРЕДЕЛЕНИЕ ИЗ УЧЕБНИКА</div>
-          <div style="font-size:12.5px;color:#f0d8cc;line-height:1.65"><b>Физическое явление</b> — это изменение, которое происходит с телами: движение, нагревание, таяние, горение… Явления делят на <b>шесть семейств</b>: механические, тепловые, световые, звуковые, электрические и магнитные.</div>
-          <div style="font-size:11.5px;color:#d0a898;margin-top:6px">Ржавление — процесс, при котором железо соединяется с кислородом воздуха, и металл постепенно разрушается.</div>
-        </div>`
-        );
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:320px">
+          ${[['⏳','Длится во времени','свежий гвоздь → пятна'],['🧪','Химическая реакция','железо + кислород = ржавчина'],['🔄','Изменение навсегда','металл разрушается']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,138,106,.07);border:1px solid #ff8a6a33;border-radius:8px;padding:4px 10px"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
+        </div>`);
     } else if(step===13){
-      h=col(l92Badge('РАЗБОР 3','#ffd966')+
+      h=col(l92B('РАЗБОР 3','#ffd966')+
         big('Железо — ВЕЩЕСТВО')+
-        `${l92Ingot()}`+
-        `<div style="display:flex;flex-direction:column;gap:6px;max-width:330px">
-          ${[['🧱','Материал гвоздя','и цепей, ложек, кораблей'],['⚙️','Свойства железа','твёрдое, тяжёлое, притягивается магнитом'],['🔨','Из него делают тела','но само оно — не тело, а вещество']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.07);border:1px solid rgba(255,217,102,.3);border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:18px">${f[0]}</span><span style="font-size:12.5px;color:#d8ecff"><b style="color:#fff">${f[1]}</b> — <span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
-        </div>`+
-        `<div style="background:rgba(255,217,102,.07);border:1.5px solid #ffd96644;border-radius:14px;padding:12px;max-width:340px;text-align:left;margin-top:8px">
-          <div style="font-size:11.5px;color:#ffd966;letter-spacing:1px;margin-bottom:5px">📖 ОПРЕДЕЛЕНИЕ ИЗ УЧЕБНИКА</div>
-          <div style="font-size:12.5px;color:#f2e8c8;line-height:1.65"><b>Вещество</b> — это то, из чего состоят физические тела: вода, железо, воздух, стекло, дерево. Одно вещество может входить в разные тела, а тело — состоять из нескольких веществ.</div>
-          <div style="font-size:11.5px;color:#d8c088;margin-top:6px">У вещества есть свойства: плотность, температура плавления, твёрдость. Их изучают, проводя опыты.</div>
-        </div>`
-        );
+        `<div style="text-align:center">${l92Art('iron',160,60)}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:320px">
+          ${[['🧱','Материал гвоздя','и цепей, ложек, кораблей'],['⚙️','Свойства','твёрдое, тяжёлое, магнит'],['🔨','Из него делают тела','но само — вещество']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.07);border:1px solid #ffd96633;border-radius:8px;padding:4px 10px"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
+        </div>`);
     } else if(step===14){
-      h=col(l92Badge('ЗАДАЧА 1','#c9b28a')+
+      h=col(l92B('ЗАДАЧА 1','#c9b28a')+
         big('Сколько здесь ТЕЛ?')+
-        `<div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;align-items:flex-end">
-          ${[[l92Nail(100,40,-10,1.2),'гвоздь','ТЕЛО','#7fd1a0'],[l92Rust(),'ржавление','явление','#ff8a6a'],[l92Ingot(),'железо','вещество','#ffd966'],[l92Hammer(),'молоток','ТЕЛО','#7fd1a0']].map(f=>`<div style="text-align:center;width:92px;background:${f[3]}0d;border:1px solid ${f[3]}55;border-radius:12px;padding:6px"><div style="transform:scale(.72);margin:-10px 0">${f[0]}</div><div style="font-size:10.5px;color:#fff;font-weight:bold">${f[1]}</div><div style="font-size:9px;color:${f[3]}">${f[2]}</div></div>`).join('')}
+        `<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:340px">
+          ${l92Pic(['body','гвоздь','','nail'],92)}
+          ${l92Pic(['ev','ржавление','','rust'],92)}
+          ${l92Pic(['sub','железо','','iron'],92)}
+          ${l92Pic(['body','молоток','','hammer'],92)}
         </div>`+
         `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">тел — 2: гвоздь и молоток!</div>`+
-        sml('как в наших задачках!'));
+        sml('как в наших задачках: ржавление — явление, железо — вещество.'));
     } else if(step===15){
-      h=col(l92Badge('ЗАДАЧА 2','#c9b28a')+
+      h=col(l92B('ЗАДАЧА 2','#c9b28a')+
         big('Найди ЯВЛЕНИЕ')+
-        `${l92Snow()}`+
+        `<div style="display:flex;justify-content:center">${l92Art('melt',180,80)}</div>`+
         `<div class="wv-ans" style="font-size:22px;color:#ff8a6a">таяние снега — ЯВЛЕНИЕ!</div>`+
-        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:330px">
-          ${[['❄️ снежинка','ТЕЛО'],['🧊 лёд','ТЕЛО'],['💧 вода','ВЕЩЕСТВО']].map(f=>`<div style="background:rgba(127,183,216,.08);border:1px solid #7fb7d844;border-radius:10px;padding:4px 8px;font-size:11px;color:#d8ecff"><b>${f[0]}</b> — <span style="color:#9ec0a8">${f[1]}</span></div>`).join('')}
-        </div>`+
-        sml('снежинка и лёд — РАЗНЫЕ тела из ОДНОГО вещества — воды! Как в наших задачках!'));
+        sml('снежинка и лёд — разные тела из одного вещества — воды! Как в наших задачках!'));
     } else if(step===16){
       if(st.i==null){ st.i=Math.floor(Math.random()*L92POOL.length); st.score=0; st.done={}; st.last=''; st.hintShow=0; }
-      const e=L92POOL[st.i], kind=e[0], word=e[1], desc=e[2];
+      const e=L92POOL[st.i], kind=e[0], word=e[1], desc=e[2], art=e[3];
       const want=kind==='body'?0:kind==='sub'?1:2;
       const doneCount=Object.keys(st.done||{}).length;
-      const icon=kind==='body'?l92Nail(100,42,-12,1.2):kind==='sub'?l92Ingot():l92Lightning();
       const resTxt=st.last==='ok'?`✅ Верно! «${word}» — ${kind==='body'?'тело':kind==='sub'?'вещество':'явление'}! (${doneCount}/24)`:
         st.last==='no'?'❌ Не угадал — прочитай описание!':'';
-      h=col(l92Badge('ИГРА · СОРТИРОВЩИК','#ffd966')+
+      h=col(l92B('ИГРА · СОРТИРОВЩИК','#ffd966')+
         big('Разложи экспонаты!')+
-        `<div style="display:inline-block;background:rgba(217,164,65,.1);border:1.5px solid #d9a44177;border-radius:16px;padding:6px 16px;max-width:290px;margin:0 auto">
-          <div style="transform:scale(.95)">${icon}</div>
-          <div style="font-size:17px;color:#fff;font-weight:bold">${word}</div>
-          <div style="font-size:11px;color:#cbb89a;line-height:1.5;margin-top:2px">${desc}</div>
+        `<div style="display:inline-block;background:rgba(217,164,65,.1);border:1.5px solid #d9a44177;border-radius:16px;padding:8px 14px;max-width:290px">
+          <div style="display:flex;justify-content:center">${l92Art(art,150,110)}</div>
+          <div style="font-size:16px;color:#fff;font-weight:bold">${word}</div>
+          <div style="font-size:10.5px;color:#cbb89a;line-height:1.5">${desc}</div>
         </div>`+
+        (st.last==='ok'?`<div style="display:flex;justify-content:center;gap:6px"><span class="wv-rise" style="font-size:18px">✨</span><span class="wv-rise2" style="font-size:14px">✨</span><span class="wv-rise3" style="font-size:18px">✨</span></div>`:'')+
         (resTxt?`<div class="l35-pop" style="font-size:14px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'}">${resTxt}</div>`:'')+
-        (st.hintShow?`<div class="l35-pop" style="font-size:12.5px;color:#ffd9a0;max-width:310px">💡 ${kind==='body'?'тело можно взять, измерить — оно предмет':kind==='sub'?'вещество — материал: железо, вода, стекло':'явление — процесс, длится во времени'}</div>`:'')+
-        l92Doors4(want)+
-        `<div style="font-size:12px;color:#9ec0a8">счёт: ${st.score} ✅ · разложено ${doneCount}/24</div>`+
+        (st.hintShow?`<div class="l35-pop" style="font-size:12px;color:#ffd9a0;max-width:310px">💡 ${kind==='body'?'тело можно взять и измерить — это предмет':kind==='sub'?'вещество — материал: железо, вода, стекло':'явление — процесс, длится во времени'}</div>`:'')+
+        l92Doors(want)+
+        `<div style="font-size:11.5px;color:#9ec0a8">счёт: ${st.score} ✅ · разложено ${doneCount}/24</div>`+
         btns(btn('🔨 Зал Тел',`l92Act('${lk}','pick0')`),btn('🧱 Зал Веществ',`l92Act('${lk}','pick1')`),btn('⚡ Зал Явлений',`l92Act('${lk}','pick2')`),btn('🎲 следующий',`l92Act('${lk}','n')`),btn('↺',`l92Act('${lk}','r')`)));
     } else {
-      h=col(l92Badge('ПАМЯТКА МАСТЕРА','#c9b28a')+
+      h=col(l92B('ПАМЯТКА МАСТЕРА','#c9b28a')+
         big('Три полки Архимеда')+
         `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
-          ${[['Зал Тел','#7fd1a0',l92Nail],['Зал Веществ','#ffd966',l92Ingot],['Зал Явлений','#ff8a6a',l92Lightning]].map(f=>`<div style="display:flex;align-items:center;gap:10px;background:${f[1]}0a;border:1px solid ${f[1]}55;border-radius:12px;padding:6px 10px;text-align:left">
-            <div style="width:64px;flex-shrink:0">${f[2]()}</div>
-            <div><div style="font-size:13px;color:${f[1]};font-weight:bold">${f[0]}</div><div style="font-size:11px;color:#9ec0a8">${f[0]==='Зал Тел'?'предметы: гвоздь, мяч, стакан':f[0]==='Зал Веществ'?'материалы: железо, вода, стекло':'процессы: гром, дождь, молния'}</div></div>
-          </div>`).join('')}
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(127,208,160,.08);border:1px solid #7fd1a044;border-radius:12px;padding:6px 10px">${l92Art('nail',44,26)}<div style="text-align:left"><div style="font-size:12.5px;color:#7fd1a0;font-weight:bold">Зал Тел</div><div style="font-size:10px;color:#9ec0a8">предметы: гвоздь, мяч, стакан</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(255,217,102,.08);border:1px solid #ffd96644;border-radius:12px;padding:6px 10px">${l92Art('iron',48,30)}<div style="text-align:left"><div style="font-size:12.5px;color:#ffd966;font-weight:bold">Зал Веществ</div><div style="font-size:10px;color:#9ec0a8">материалы: железо, вода, стекло</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(255,138,106,.08);border:1px solid #ff8a6a44;border-radius:12px;padding:6px 10px">${l92Art('bolt',44,32)}<div style="text-align:left"><div style="font-size:12.5px;color:#ff8a6a;font-weight:bold">Зал Явлений</div><div style="font-size:10px;color:#9ec0a8">процессы: гром, дождь, молния</div></div></div>
         </div>`+
         btn('⟲ вернуться к игре', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя»!'));
@@ -6593,26 +6477,6 @@ function visL92(el){
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
-function l92Badge(txt,color){
-  return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${color}22;border:1px solid ${color};color:${color};margin-bottom:3px">${txt}</span>`;
-}
-function l92ShelfRow(emoji,title,sub,color,art){
-  return `<div style="display:flex;align-items:center;gap:10px;background:${color}0a;border:1px solid ${color}44;border-radius:12px;padding:6px 10px;text-align:left">
-    <div style="font-size:24px;min-width:30px;text-align:center">${emoji}</div>
-    <div style="flex:1"><div style="font-size:14px;color:${color};font-weight:bold">${title}</div><div style="font-size:11px;color:#9ec0a8">${sub}</div></div>
-    <div style="width:52px">${art()}</div>
-  </div>`;
-}
-function l92Doors4(hot){
-  const doors=[['Зал Тел','🔨','#7fd1a0','0'],['Зал Веществ','🧱','#ffd966','1'],['Зал Явлений','⚡','#ff8a6a','2']];
-  return `<div style="display:flex;gap:6px;justify-content:center;margin:6px auto">
-    ${doors.map((d,i)=>`<div class="wv-morph" style="flex:1;max-width:92px;padding:8px 4px;text-align:center;border-radius:12px 12px 4px 4px;border:2px solid ${d[2]};background:linear-gradient(180deg,${d[2]}2b,${d[2]}0a);${hot===i?'box-shadow:0 0 14px '+d[2]+'99;transform:scale(1.05)':''}">
-      <div style="font-size:20px">${d[1]}</div>
-      <div style="font-size:9.5px;color:#d8ecff;margin-top:2px">${d[0]}</div>
-    </div>`).join('')}
-  </div>`;
-}
-
 
 function l93Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
