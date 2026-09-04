@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -5083,6 +5083,173 @@ function visL51(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+function l104Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const POOL=[['w','1'],['w','2'],['w','3'],['w','4'],['w','5'],['w','10'],['w','8'],['w','6'],['o','2'],['o','3'],['o','4'],['o','1']];
+  switch(act){
+    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
+    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
+    case 'r': CHS[lk]={}; break;
+  }
+  chRender(0);
+}
+function l104Tank(h,uid,rho){
+  // бассейн глубиной до hmax=10 м; показываем уровень h (глубина, где тело)
+  const H=150, top=10;
+  const rhoL=rho||1000;
+  const yLevel=H-18-(h/10)*(H-40); // глубина h → точка
+  return `<div style="position:relative;width:150px;height:${H}px;margin:2px auto;border:3px solid #33291e;border-radius:6px;background:linear-gradient(180deg,#cfe8fb 0%,#6aa8dc ${(h/10*80+8)}%,#4a7fae ${(h/10*80+8)}%);overflow:hidden">
+    <div style="position:absolute;left:4px;right:4px;top:0;height:2px;background:rgba(255,255,255,.6)"></div>
+    <div style="position:absolute;left:0;right:0;top:0;height:18px;background:#f2e8d0;display:flex;align-items:center;justify-content:center;font-size:9px;color:#8a6a2f">уровень воды</div>
+    <div class="wv-pop" style="position:absolute;left:50%;top:${Math.min(H-24,yLevel)}px;transform:translateX(-50%);width:30px;height:22px;border-radius:4px;background:linear-gradient(145deg,#e05a4a,#a02818);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:bold">🤿</div>
+    <div style="position:absolute;right:4px;top:${Math.min(H-20,yLevel-4)}px;font-size:11px;color:#fff;font-weight:bold;text-shadow:0 1px 2px rgba(0,0,0,.5)">${h} м</div>
+    <div style="position:absolute;left:0;right:0;bottom:2px;text-align:center;font-size:10px;color:#eaf3f8">дно</div>
+  </div>`;
+}
+function l104Fountain(h,uid){
+  // сосуд с отверстиями на разной глубине: струи бьют дальше с глубиной
+  return `<svg width="170" height="130" style="display:block;margin:2px auto">
+    <rect x="10" y="10" width="90" height="100" fill="#4a7fae" stroke="#33291e" stroke-width="2" opacity=".5"/>
+    <rect x="10" y="10" width="90" height="100" fill="none" stroke="#33291e" stroke-width="2"/>
+    <line x1="10" y1="30" x2="100" y2="30" stroke="#cfe8fb" stroke-width="14" opacity=".5"/>
+    <line x1="10" y1="60" x2="100" y2="60" stroke="#cfe8fb" stroke-width="14" opacity=".5"/>
+    <line x1="10" y1="90" x2="100" y2="90" stroke="#cfe8fb" stroke-width="14" opacity=".5"/>
+    <rect x="100" y="27" width="60" height="3" fill="#7fd1a0"/>
+    <rect x="100" y="57" width="42" height="3" fill="#7fd1a0"/>
+    <rect x="100" y="87" width="20" height="3" fill="#7fd1a0"/>
+    <text x="112" y="22" fill="#cbb89a" font-size="9">верх: слабо</text>
+    <text x="112" y="52" fill="#cbb89a" font-size="9">середина</text>
+    <text x="112" y="82" fill="#cbb89a" font-size="9">дно: сильно!</text>
+  </svg>`;
+}
+function l104Hydra(uid){
+  // гидравлический пресс: малый поршень, большой
+  return `<svg width="190" height="110" style="display:block;margin:2px auto">
+    <rect x="10" y="40" width="60" height="50" fill="#4a7fae" opacity=".45" stroke="#33291e" stroke-width="2"/>
+    <rect x="120" y="40" width="60" height="50" fill="#4a7fae" opacity=".45" stroke="#33291e" stroke-width="2"/>
+    <rect x="55" y="50" width="20" height="10" fill="none"/>
+    <rect x="20" y="26" width="24" height="10" fill="#8a6a2f"/>
+    <rect x="135" y="16" width="30" height="10" fill="#8a6a2f"/>
+    <text x="26" y="40" fill="#cbb89a" font-size="9" text-anchor="middle">малый</text>
+    <text x="150" y="38" fill="#cbb89a" font-size="9" text-anchor="middle">большой</text>
+    <text x="45" y="104" fill="#9ec0a8" font-size="8.5" text-anchor="middle">жму слабо ↓</text>
+    <text x="150" y="104" fill="#ffd9a0" font-size="8.5" text-anchor="middle">поднимает сильно ↑</text>
+  </svg>`;
+}
+function visL104(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Почему в ушах «закладывает» на глубине?'),
+        `<div style="font-size:44px" class="wv-pulse">🌊</div>`+
+        sml('нырнул глубже — вода сильнее давит. Сегодня узнаем, как посчитать это давление точно!'));
+    } else if(step===1){
+      h=col(big('Жидкость давит!'),
+        rowC(chip('вода давит на дно','rgba(127,209,255,.5)'),chip('давит на стенки','rgba(127,184,160,.5)'),chip('давит даже снизу вверх','rgba(232,160,90,.5)'))+
+        sml('жидкость давит ВО ВСЕ стороны. Ныряльщик чувствует это в ушах!'));
+    } else if(step===2){
+      h=col(big('Формула давления жидкости'),
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-family:Georgia,serif">p = ρ · g · h</div>`+
+        rowC(chip('ρ — плотность (кг/м³)','rgba(127,209,255,.5)'),chip('g ≈ 10 Н/кг','rgba(232,160,90,.5)'),chip('h — глубина (м)','rgba(127,184,160,.5)'))+
+        sml('три множителя: жидкость, сила тяжести, глубина'));
+    } else if(step===3){
+      h=col(big('Плотность воды ρ = 1000'),
+        rowC(chip('1 м³ воды весит 1000 кг','rgba(127,209,255,.5)'))+
+        sml('плотность воды 1000 кг/м³ — запомни! У масла 900, у керосина 800'));
+    } else if(step===4){
+      h=col(big('Считаем: глубина 2 м'),
+        rowC(chip('p = 1000 · 10 · 2','rgba(127,209,255,.5)'))+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0">p = 20000 Па = 20 кПа</div>`+
+        sml('1000·10 = 10000, ·2 = 20000 Па. В килопаскалях: 20 кПа'));
+    } else if(step===5){
+      h=col(big('Глубже — давление больше'),
+        l104Tank(2,'a')+
+        rowC(chip('2 м → 20 кПа','rgba(127,209,255,.5)'),chip('5 м → 50 кПа','rgba(232,160,90,.5)'),chip('10 м → 100 кПа','rgba(127,184,160,.5)'))+
+        sml('каждые 10 м воды — примерно как атмосфера!'));
+    } else if(step===6){
+      h=col(big('Задача-проверка'),
+        l104Tank(5,'b')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">p = 1000·10·5 = 50000 Па = 50 кПа</div>`+
+        sml('как в проверке! Ответ 50'));
+    } else if(step===7){
+      h=col(big('Задача 1: глубина 3 м'),
+        l104Tank(3,'c')+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">p = 1000·10·3 = 30000 Па = 30 кПа</div>`+
+        sml('как в наших задачках!'));
+    } else if(step===8){
+      h=col(big('Другая жидкость: масло'),
+        l104Tank(2,'d')+
+        rowC(chip('масло ρ = 900','rgba(232,160,90,.5)'),chip('p = 900·10·2 = 18000 Па = 18 кПа','rgba(127,209,255,.5)'))+
+        sml('как в наших задачках: легче жидкость — меньше давление!'));
+    } else if(step===9){
+      h=col(big('Фонтан из отверстий'),
+        l104Fountain('f')+
+        sml('отверстия на разной глубине: из нижнего струя бьёт ДАЛЬШЕ всех — там давление больше!'));
+    } else if(step===10){
+      h=col(big('Закон Паскаля'),
+        rowC(chip('давление передаётся во все стороны ОДИНАКОВО','rgba(127,209,255,.5)'))+
+        sml('надавил на жидкость в одном месте — давление мгновенно разошлось по всему объёму!'));
+    } else if(step===11){
+      h=col(big('Опыт с шаром Паскаля'),
+        rowC(chip('шар с дырочками','rgba(127,209,255,.5)'),chip('надавили поршнем','rgba(232,160,90,.5)'),chip('струйки бьют одинаково во все стороны','rgba(127,184,160,.5)'))+
+        sml('все струйки одинаковой длины — давление во все стороны равное!'));
+    } else if(step===12){
+      h=col(big('Гидравлический домкрат'),
+        l104Hydra('g')+
+        sml('маленький поршень + жидкость + большой поршень. Давление одинаковое, площадь разная — выигрыш в силе!'));
+    } else if(step===13){
+      h=col(big('Почему гидравлика усиливает'),
+        rowC(chip('p = F : S одинаково в обеих трубках','rgba(127,209,255,.5)'),chip('площадь больше → сила больше','rgba(232,160,90,.5)'))+
+        sml('жмёшь слабо на малый поршень — большой поднимает машину! Так работает домкрат и тормоза'));
+    } else if(step===14){
+      h=col(big('Давление газа — тоже Паскаль'),
+        rowC(chip('воздух в мяче давит на стенки','rgba(127,209,255,.5)'),chip('шина держит машину','rgba(127,184,160,.5)'))+
+        sml('газы тоже передают давление во все стороны — поэтому надутый мяч упругий!'));
+    } else if(step===15){
+      h=col(big('Проверь себя'),
+        rowC(chip('глубина 1 м → 10 кПа','rgba(127,184,160,.5)'),chip('глубина 4 м → 40 кПа','rgba(127,184,160,.5)'),chip('масло 900, 2 м → 18 кПа','rgba(127,184,160,.5)'))+
+        sml('просто умножаем: для воды каждые 1 м глубины — 10 кПа!'));
+    } else if(step===16){
+      const POOL=[['w','1'],['w','2'],['w','3'],['w','4'],['w','5'],['w','10'],['w','8'],['w','6'],['o','2'],['o','3'],['o','4'],['o','1']];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i], kind=e[0], hnum=+e[1];
+      const rhoL=kind==='o'?900:1000;
+      const ans=rhoL*10*hnum/1000;
+      const desc=kind==='o'?'масло (ρ=900) налито до '+hnum+' м → давление на дно?':'давление воды на глубине '+hnum+' м?';
+      h=col(big('🌊 Тренажёр: давление жидкости'),
+        `<div class="wv-row">${chip(desc+' (в кПа)','rgba(217,164,65,.35)')}</div>`+
+        l104Tank(Math.min(hnum,10),'t')+
+        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) p = ρ·g·h = ${rhoL}·10·${hnum} = ${rhoL*10*hnum} Па → :1000</div>`:'')+
+        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans} кПа</div>`:'')+
+        btns(btn('1️⃣ подумай',`l104Act('${lk}','s1')`),btn('2️⃣ ответ',`l104Act('${lk}','s2')`),btn('🎲 другая',`l104Act('${lk}','n')`),btn('↺',`l104Act('${lk}','r')`))+
+        sml('p = ρ·g·h, ответ в кПа — дели на 1000!'));
+    } else {
+      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🌊 p = ρ·g·h (жидкость).<br>
+            💧 Вода: ρ = 1000, 1 м → 10 кПа.<br>
+            🔁 Паскаль: давление во все стороны одинаково.<br>
+            🛠️ Гидравлика: малый поршень → большая сила.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там глубина 5 м'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function l18Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const POOL=[['sq','7'],['sq','12'],['sq','15'],['cb','2'],['cb','3'],['cb','5'],['back','81'],['back','144'],['back','125'],['back','64'],['cnt','sq'],['cnt','cb']];
@@ -9674,6 +9841,7 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   const id=LV.id;
   if(id===1) visDigits(el);
+  else if(id===104) visL104(el);
   else if(id===51) visL51(el);
   else if(id===105) visL105(el);
   else if(id===19) visL19(el);
