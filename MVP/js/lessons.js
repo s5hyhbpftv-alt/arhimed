@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -4874,38 +4874,9 @@ function visL196(el){
 // ============ УРОК 2 «Принцип Дирихле» — Голубиная лаборатория Архимеда ============
 // Каждый слайд — интерактив или анимация: посадка голубей, доказательство по шагам,
 // выбор «кроликов и ящиков», слайдер ⌈n/k⌉, раскладки, носки в темноте, даты, геометрия, игры.
-function l2Act(lk,act){
-  const st=CHS[lk]||(CHS[lk]={});
-  const p=+act.split(':')[1];
-  if(act==='sit0') st.s0=Math.min(10,(st.s0||0)+1);
-  if(act==='sit1') st.s1=Math.min(11,(st.s1||0)+1);
-  if(act==='stp') st.r=(st.r||0)+1;
-  if(act==='pick'+'') {}
-  if(/^pick:\d/.test(act)) st.pick=+act.split(':')[1];
-  if(act==='add4') st.p4=Math.min(25,(st.p4||0)+1);
-  if(act==='set4') st.p4=25;
-  if(act==='add6') st.p6=Math.min(25,(st.p6||0)+1);
-  if(act==='set6') st.p6=25;
-  if(act==='add7') st.p7=Math.min(29,(st.p7||0)+1);
-  if(act==='set7') st.p7=29;
-  if(act==='add8') st.p8=Math.min(8,(st.p8||0)+1);
-  if(act==='set8') st.p8=8;
-  if(/^num:\d/.test(act)){ const v=+act.split(':')[1]; if(isFinite(v)){ const arr=st.nums||[]; if(arr.length<6&&arr.indexOf(v)<0){ arr.push(v); st.nums=arr; } } }
-  if(/^sock:\d/.test(act)){ const arr=st.socks||[]; if(arr.length<12){ arr.push(+act.split(':')[1]); st.socks=arr; } }
-  if(/^pt:/.test(act)){ const xy=act.split(':')[1].split(',').map(Number); const arr=st.pts||[]; if(arr.length<5) arr.push(xy); st.pts=arr; }
-  if(act==='dnP') st.dn=Math.min(16,(st.dn||8)+1);
-  if(act==='dnM') st.dn=Math.max((st.ck||5)+1,(st.dn||8)-1);
-  if(act==='ckP') st.ck=Math.min(Math.max(2,(st.dn||8)-1),(st.ck||5)+1);
-  if(act==='ckM') st.ck=Math.max(2,(st.ck||5)-1);
-  if(act==='peP') st.pe=Math.min(380,(st.pe||13)+1);
-  if(act==='peM') st.pe=Math.max(2,(st.pe||13)-1);
-  if(act==='tmP') st.tm=Math.min(10,(st.tm||6)+1);
-  if(act==='tmM') st.tm=Math.max(2,(st.tm||6)-1);
-  if(act==='exam') st.ei=((st.ei==null?0:st.ei)+1)%L2EXAM.length, st.pick=null;
-  if(act==='newq'){ st.gn=4+Math.floor(Math.random()*8); st.gk=2+Math.floor(Math.random()*(Math.min(6,st.gn-1)-2+1)); st.pick=null; }
-  if(act==='rst') CHS[lk]={};
-  chRender(0);
-}
+// ============ УРОК 2 «Принцип Дирихле» — Голубиная лаборатория Архимеда (v2) ============
+// Каждый шаг — своя живая сцена: посадка голубей по одному, ученики в месяцах,
+// конфеты по сортам, носки в темноте (цветные!), ели, остатки, даты, точки в треугольнике.
 var L2EXAM=[
   {t:'13 человек собрались в комнате. Докажи: двое родились в один месяц.', w:'месяцы рождения (12)', w2:'числа от 1 до 13', w3:'дни недели (7)', an:0, exp:'Ящики — 12 месяцев, «кролики» — 13 человек: 13 > 12 → двое в одном месяце!'},
   {t:'В мешке носки 6 цветов, тянем не глядя. Сколько нужно для пары?', w:'цвета носков (6)', w2:'сами носки', w3:'карманы одежды (8)', an:0, exp:'Ящики — 6 цветов: седьмой носок гарантирует пару!'},
@@ -4914,71 +4885,89 @@ var L2EXAM=[
   {t:'В лесу 800 000 елей, на каждой не более 500 000 иголок. Докажи: две ели с одинаковым числом иголок.', w:'числа иголок (1…500 000)', w2:'ветки елей', w3:'шишки', an:0, exp:'Ящики — возможные числа иголок: елей больше, чем чисел → совпадение!'},
   {t:'2000 зрителей в Большом театре. Докажи: двое родились в один день года.', w:'дни года (366)', w2:'ряды кресел', w3:'спектакли (3)', an:0, exp:'Ящики — 366 дней: 2000 > 366 → двое в один день!'}
 ];
+function l2Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const parts=act.split(':'); const a=parts[0], p=+parts[1];
+  if(a==='sit'){ st.k=Math.min(st.lim||10,(st.k||0)+1); }     // посадить голубя (лимит lim в состоянии шага)
+  if(a==='stp') st.r=(st.r||0)+1;
+  if(a==='pick') st.pick=p;
+  if(a==='add'){ st.k=Math.min(parts[2]?+parts[2]:29,(st.k||0)+1); }  // add:лимит
+  if(a==='fill') st.k=p;                              // заполнить сразу (fill:25)
+  if(a==='exam') st.ei=((st.ei==null?0:st.ei)+1)%L2EXAM.length, st.pick=null;
+  if(a==='newq'){ st.gn=4+Math.floor(Math.random()*9); st.gk=2+Math.floor(Math.random()*Math.max(1,Math.min(6,st.gn-2))); st.pick=null; }
+  if(a==='rst') CHS[lk]={};
+  if(a==='sock'){ const s=st.socks||[]; if(s.length<12) s.push(p); st.socks=s; }
+  if(a==='num'){ const v=p; if(isFinite(v)){ const s=st.nums||[]; if(s.length<6&&s.indexOf(v)<0) s.push(v); st.nums=s; } }
+  if(a==='dnP') st.dn=Math.min(16,(st.dn||9)+1);
+  if(a==='dnM') st.dn=Math.max((st.ck||5)+1,(st.dn||9)-1);
+  if(a==='ckP') st.ck=Math.min(Math.min(8,(st.dn||9)-1),(st.ck||5)+1);
+  if(a==='ckM') st.ck=Math.max(2,(st.ck||5)-1);
+  if(a==='peP') st.pe=Math.min(380,(st.pe||14)+1);
+  if(a==='peM') st.pe=Math.max(2,(st.pe||14)-1);
+  if(a==='tmP') st.tm=Math.min(10,(st.tm||6)+1);
+  if(a==='tmM') st.tm=Math.max(3,(st.tm||6)-1);
+  if(a==='pt'){ const s=st.pts||[]; if(s.length<5) s.push([+(parts[1].split(',')[0]),+(parts[1].split(',')[1])]); st.pts=s; }
+  chRender(0);
+}
 function l2B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
+// универсальная «полка с предметами»: клетки — столбики с эмодзи-предметами
+function l2Rack(cells,opts){
+  // cells: [{n, t}]; opts: {e: эмодзи, max: макс показать в столбик, hot: номер клетки, которую подсветить, w: ширина клетки}
+  const e=opts&&opts.e?opts.e:'🕊️';
+  const maxShow=opts&&opts.max?opts.max:6;
+  const mx=Math.max(1,...cells.map(c=>c.n));
+  let out='';
+  cells.forEach((c,i)=>{
+    const hot=opts&&opts.hot===i;
+    const show=Math.min(c.n,maxShow);
+    const more=c.n-show;
+    const inner=Array.from({length:show},(_,k)=>`<div class="wv-pop" style="animation-delay:${k*0.05}s;font-size:${maxShow>4?11:14}px;line-height:1.05;text-align:center">${e}</div>`).join('');
+    out+=`<div class="wv-in" style="flex:1;min-width:${opts&&opts.w?opts.w:34}px;text-align:center;background:${hot?'rgba(255,217,102,.16)':'rgba(255,255,255,.04)'};border:${hot?'1.5px solid #ffd966':'1px solid #3d5c49'};border-radius:10px;padding:3px 1px">
+      <div style="display:flex;flex-direction:column-reverse;justify-content:flex-end;min-height:${Math.min(58,mx*(maxShow>4?12:16)+8)}px;align-items:center">${inner}${more>0?`<div style="font-size:9px;color:#9ec0a8">+${more}</div>`:''}</div>
+      <div style="font-size:9px;color:#9ec0a8;border-top:1px dashed #3d5c49;margin-top:1px;padding-top:1px">${c.t||''}</div>
+    </div>`;
+  });
+  return `<div style="display:flex;gap:3px;justify-content:center;max-width:340px;margin:2px auto;flex-wrap:wrap">${out}</div>`;
+}
+// SVG-треугольник для геометрии
+function l2Tri(pts,uid){
+  const V=[[0,0],[60,0],[30,52]];
+  const mid=(a,b)=>[(V[a][0]+V[b][0])/2,(V[a][1]+V[b][1])/2];
+  const M=[mid(0,1),mid(1,2),mid(2,0)];
+  const T=[[V[0],M[0],M[2]],[M[0],V[1],M[1]],[M[2],M[1],V[2]],[M[0],M[1],M[2]]];
+  const sign=(a,b,c)=>((b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]));
+  const inside=(x,y,tr)=>{ const A=sign(tr[0],tr[1],[x,y])>=0, B=sign(tr[1],tr[2],[x,y])>=0, C=sign(tr[2],tr[0],[x,y])>=0; return A&&B&&C; };
+  const buck=[0,0,0,0];
+  pts.forEach(pt=>{ for(let i=0;i<4;i++) if(inside(pt[0],pt[1],T[i])) buck[i]++; });
+  const pairIdx=buck.findIndex(b=>b>=2);
+  const cols=['rgba(127,209,160,.16)','rgba(127,183,216,.16)','rgba(217,160,255,.16)','rgba(255,217,102,.2)'];
+  const dcol=['#7fd1a0','#7fb7d8','#d9a0ff','#ffb74d'];
+  let svg=`<polygon points="${V[0]},${V[1]} ${V[1]},${V[2]} ${V[2]},${V[0]}" fill="rgba(255,255,255,.02)" stroke="#5a8a6a" stroke-width="1.5"/>`;
+  T.forEach((tr,i)=>{ svg+=`<polygon points="${tr[0]},${tr[1]} ${tr[1]},${tr[2]} ${tr[2]},${tr[0]}" fill="${cols[i]}" stroke="#5a8a6a" stroke-width="1"/>`; });
+  pts.forEach((pt,i)=>{ svg+=`<circle cx="${pt[0]}" cy="${pt[1]}" r="3.6" fill="${dcol[i%4]}" stroke="#0d1f14" stroke-width=".8" class="wv-pop"/>`; });
+  svg+=`<text x="30" y="60" text-anchor="middle" fill="#8a94ad" font-size="4">сторона 1 · четыре треугольника по 0,5</text>`;
+  return `<div style="text-align:center;margin:2px auto">
+    <svg width="240" height="100" viewBox="-8 -4 76 68" style="max-width:100%">${svg}</svg>
+    ${pairIdx>=0?`<div class="wv-ans" style="font-size:15px;color:#ffd966">✅ две точки в одном маленьком треугольнике!</div>`:''}
+  </div>`;
+}
 function l2Card(tag,emoji,title,lines,color){
   if(!Array.isArray(lines)) lines=[lines];
   let ls='';
-  for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:12.5px;color:#e8dcc8;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
-  return `<div style="width:100%;max-width:330px;margin:0 auto;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
+  for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:13px;color:#e8dcc8;line-height:1.55;text-align:left;padding:3px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
+  return `<div style="width:100%;max-width:330px;margin:2px auto;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
       <div style="font-size:22px">${emoji}</div>
       <div style="flex:1"><div style="font-size:11px;color:${color};letter-spacing:.5px">${tag}</div><div style="font-size:15px;color:#fff;font-weight:bold;line-height:1.2">${title}</div></div>
     </div>${ls}</div>`;
 }
-function l2Fly(n,size){
-  const cls=['wv-rise','wv-rise2','wv-rise3'];
-  let out='';
-  for(let i=0;i<n;i++) out+=`<span class="${cls[i%3]}" style="display:inline-block;font-size:${size||22}px;margin:0 1px">🕊️</span>`;
-  return `<div style="text-align:center;line-height:1.1;min-height:${(size||22)+6}px">${out}</div>`;
-}
-function l2Rack(cells,uid,mark2){
-  // клетки: массив [{n: число, t: подпись}], mark2 — какие подсветить жёлтым (>=2/нужно)
-  const mx=Math.max(1,...cells.map(c=>c.n));
-  let out='';
-  cells.forEach((c,i)=>{
-    const hot=c.n>=2;
-    out+=`<div class="wv-in" style="flex:1;min-width:30px;text-align:center;background:${hot?'rgba(255,217,102,.15)':'rgba(255,255,255,.04)'};border:${hot?'1.5px solid #ffd966':'1px solid #3d5c49'};border-radius:10px;padding:4px 1px 2px">
-      <div style="display:flex;flex-direction:column-reverse;justify-content:flex-start;min-height:${Math.min(60,mx*16+4)}px;align-items:center">${'🕊️'.repeat(c.n).split('').map((x,k)=>`<span class="wv-pop" style="animation-delay:${k*0.06}s;font-size:13px;line-height:1">${x}</span>`).join('')}</div>
-      <div style="font-size:8.5px;color:#9ec0a8;border-top:1px dashed #3d5c49;margin-top:2px;padding-top:1px">${c.t||''}</div>
-    </div>`;
-  });
-  return `<div style="display:flex;gap:3px;justify-content:center;max-width:340px;margin:2px auto">${out}</div>`;
-}
-function l2Tri(pts,uid){
-  const V=[[0,0],[60,0],[30,52]];
-  const mid=(a,b)=>[(V[a][0]+V[b][0])/2,(V[a][1]+V[b][1])/2];
-  const M=[mid(0,1),mid(1,2),mid(2,0)];
-  const T=[
-    [V[0],M[0],M[2]],
-    [M[0],V[1],M[1]],
-    [M[2],M[1],V[2]],
-    [M[0],M[1],M[2]]
-  ];
-  const sign=(a,b,c)=>((b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]));
-  const inside=(x,y,tri)=>{ const A=sign(tri[0],tri[1],[x,y])>=0, B=sign(tri[1],tri[2],[x,y])>=0, C=sign(tri[2],tri[0],[x,y])>=0; return A&&B&&C; };
-  const buck=[0,0,0,0];
-  pts.forEach(pt=>{ for(let i=0;i<4;i++) if(inside(pt[0],pt[1],T[i])) buck[i]++; });
-  const hasPair=buck.some(b=>b>=2);
-  const cols=['rgba(127,209,160,.14)','rgba(127,183,216,.14)','rgba(217,160,255,.14)','rgba(255,217,102,.18)'];
-  const poly=(a,b,c,i)=>`<polygon points="${a[0]},${a[1]} ${b[0]},${b[1]} ${c[0]},${c[1]}" fill="${cols[i]}" stroke="#5a8a6a" stroke-width="1"/>`;
-  const dcol=['#7fd1a0','#7fb7d8','#d9a0ff','#ff9a8a'];
-  let svg=poly(V[0],V[1],V[2],3);
-  for(let i=0;i<4;i++) svg+=poly(T[i][0],T[i][1],T[i][2],i);
-  pts.forEach((pt,i)=>{ svg+=`<circle cx="${pt[0]}" cy="${pt[1]}" r="3.6" fill="${dcol[i%4]}" stroke="#0d1f14" stroke-width=".8" class="wv-pop" style="animation-delay:${i*0.14}s"/>`; });
-  svg+=`<text x="30" y="60" text-anchor="middle" fill="#8a94ad" font-size="4">4 треугольника со стороной 0,5</text>`;
-  return `<div style="text-align:center;margin:2px auto;max-width:300px">
-    <svg width="250" height="105" viewBox="-8 -4 76 68" style="max-width:100%">${svg}</svg>
-    <div style="font-size:12.5px;color:${hasPair?'#7fd1a0':'#cbb89a'}" class="${hasPair?'wv-ans':''}">${hasPair?'✅ два «соседа» в одном маленьком треугольнике — расстояние < 0,5!':'брось 5 точек и проверь!'}</div>
-  </div>`;
-}
 function visL2(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id);
-    // состояние на шаг (сбрасывается при смене слайда)
     const step=LV.step||0;
     if(!CHS[lk]) CHS[lk]={};
-    if(CHS[lk]._v2!==step) CHS[lk]={_v2:step};
+    if(CHS[lk]._v2!==step) CHS[lk]={_v2:step,lim:(step===1?11:10)};
     const st=CHS[lk];
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
@@ -4989,32 +4978,37 @@ function visL2(el){
     const rowC=(...ps)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
     let h='';
     if(step===0){
-      const done=st.s0||0;
-      const sub=Math.max(0,done-7); // голуби, которым пришлось подселиться
-      const cells=Array.from({length:7},(_,i)=>({n:(done>i?1:0)+(i<sub?1:0),t:''+(i+1)}));
-      const all=done>=10;
-      const some=done>=8;
+      // легенда: стайка и 7 клеток; кнопка сажает голубей по одному в свободные клетки, потом подселяет
+      const sat=st.k||0;
+      const cells=Array.from({length:7},(_,i)=>{
+        const n=(sat>i?1:0)+(Math.max(0,sat-7)>i?1:0)+(Math.max(0,sat-7)>i+3?1:0);
+        return {n:n,t:'№'+(i+1)};
+      });
+      const left=10-sat;
+      const full=sat>=10;
+      const pair=cells.some(c=>c.n>=2);
       h=col(`<div style="font-size:17px;color:#c9b28a;letter-spacing:1px">🕊️ ГОЛУБИНАЯ ЛАБОРАТОРИЯ</div>`+
         big('7 клеток, 10 голубей: сколько гарантированно в одной?')+
-        l2Fly(Math.max(0,10-done),24)+
-        (done>0?l2Rack(cells,'a'):'')+
-        (all?`<div class="wv-ans" style="font-size:22px;color:#ffd966">⌈10/7⌉ = 2 — где-то сидят двое!</div>`:
-          `<div style="min-height:26px"></div>`)+
-        btns(btn('🕊️ посадить одного',`l2Act('${lk}','sit0')`,done>=10?'disabled':''),btn('↺ заново',`l2Act('${lk}','rst')`))+
-        (some&&!all?`<div style="font-size:13px;color:#ffd9a0">уже не получается без «соседей»!</div>`:'')+
-        sml('сажай по одному в новую клетку: 7 хватит на всех… а 8-му, 9-му, 10-му придётся подселяться!'));
+        (left>0?`<div style="font-size:12px;color:#9ec0a8">ждёт посадки: ${left} ${left===1?'голубь':'голубя'}</div>`+`<div style="display:flex;justify-content:center;gap:1px;flex-wrap:wrap;margin:2px 0">${Array.from({length:left},()=>`<span class="wv-flick" style="font-size:20px;line-height:1.1">🕊️</span>`).join('')}</div>`:'')+
+        (sat>0?l2Rack(cells,{e:'🕊️',w:40}):`<div style="min-height:52px"></div>`)+
+        btns(btn('🕊️ посадить голубя',`l2Act('${lk}','sit')`,left<=0?'disabled':''),btn('↺ заново',`l2Act('${lk}','rst')`))+
+        (pair&&!full?`<div class="l35-pop" style="font-size:15px;color:#ffd966">уже есть клетка с двумя — а впереди ещё голуби!</div>`:'')+
+        (full?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0">⌈10/7⌉ = 2 — где-то сидят двое!</div>`:'')+
+        sml('сажай по одному в новую клетку. 7 голубей сядут по одному… а 8-му, 9-му и 10-му придётся подселяться!'));
     } else if(step===1){
-      const done=st.s1||0;
-      const sub=Math.max(0,done-10);
-      const cells=Array.from({length:10},(_,i)=>({n:(done>i?1:0)+(i<sub?1:0),t:''+(i+1)}));
-      h=col(l2B('ПРИНЦИП В ДЕЙСТВИИ','#7fd1a0')+
-        big('(n+1) в n: 11 голубей, 10 клеток')+
-        l2Fly(Math.max(0,11-done),20)+
-        (done>0?l2Rack(cells,'b'):'')+
-        (done>=11?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0">11-му некуда — он подселяется к кому-то!</div>`:'')+
-        btns(btn('🕊️ посадить',`l2Act('${lk}','sit1')`,done>=11?'disabled':''),btn('↺',`l2Act('${lk}','rst')`))+
-        sml('классика Дирихле: если голубей больше клеток, в какой-то клетке их минимум двое!'));
+      // (n+1) в n: 11 голубей, 10 клеток
+      const sat=st.k||0;
+      const cells=Array.from({length:10},(_,i)=>{ const n=(sat>i?1:0)+(Math.max(0,sat-10)>i?1:0); return {n:n,t:'№'+(i+1)}; });
+      const left=11-sat;
+      h=col(l2B('ПРИНЦИП: (n+1) В n','#7fd1a0')+
+        big('11 голубей, 10 клеток → есть пара')+
+        (left>0?`<div style="font-size:12px;color:#9ec0a8">осталось посадить: ${left}</div>`+`<div style="display:flex;justify-content:center;gap:1px;flex-wrap:wrap;margin:2px 0">${Array.from({length:Math.min(left,11)},()=>`<span class="wv-flick" style="font-size:18px;line-height:1.1">🕊️</span>`).join('')}</div>`:'')+
+        (sat>0?l2Rack(cells,{e:'🕊️',w:26}):`<div style="min-height:52px"></div>`)+
+        btns(btn('🕊️ посадить',`l2Act('${lk}','sit')`,left<=0?'disabled':''),btn('↺ заново',`l2Act('${lk}','rst')`))+
+        (sat>=11?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0">11-му некуда — он подселяется!</div>`:'')+
+        sml('10 клеток можно занять по одному голубю, а 11-му места нет — где-то окажется двое!'));
     } else if(step===2){
+      // доказательство от противного по шагам
       const r=Math.min(4,st.r||0);
       const steps=[
         ['1️⃣','Предположим ПРОТИВНОЕ: в каждой клетке сидит не больше 1 голубя.','#7fb7d8'],
@@ -5028,7 +5022,7 @@ function visL2(el){
           ${steps.filter((s,i)=>i<r).map(s=>`<div class="wv-pop" style="background:rgba(255,255,255,.04);border:1px solid ${s[2]}55;border-left:5px solid ${s[2]};border-radius:10px;padding:8px 12px;text-align:left;font-size:14px;color:#e8dcc8"><b style="color:${s[2]}">${s[0]}</b> ${s[1]}</div>`).join('')}
         </div>`+
         btns(btn('▶ следующий шаг',`l2Act('${lk}','stp')`,r>=4?'disabled':''),btn('↺ заново',`l2Act('${lk}','rst')`))+
-        sml('так доказывают «гарантированно»: допусти, что НЕ так — и получи противоречие!'));
+        sml('математики так и доказывают «гарантированно»: допусти, что НЕ так — и получи противоречие!'));
     } else if(step===3){
       const pick=st.pick;
       h=col(l2B('ГЛАВНЫЙ СЕКРЕТ','#c9b28a')+
@@ -5036,75 +5030,84 @@ function visL2(el){
         `<div style="background:rgba(127,183,216,.06);border:1px solid rgba(127,183,216,.3);border-radius:12px;padding:8px 14px;max-width:330px;font-size:15px;color:#e8dcc8">Задача: «В классе 25 учеников. Докажи, что какие-то двое родились в один месяц».</div>`+
         `<div style="font-size:13px;color:#9ec0a8">Что здесь «ящики» (куда раскладываем)?</div>`+
         btns(btn('🧒 ученики',`l2Act('${lk}','pick:0')`),btn('📅 месяцы года',`l2Act('${lk}','pick:1')`),btn('🍎 яблоки',`l2Act('${lk}','pick:2')`))+
-        (pick===1?`<div class="wv-ans" style="font-size:19px;color:#7fd1a0">✅ Точно! Ящики — 12 месяцев, «кролики» — 25 учеников. 25 > 12 → двое в один месяц!</div>`:'')+
+        (pick===1?`<div class="wv-ans" style="font-size:18px;color:#7fd1a0">✅ Точно! Ящики — 12 месяцев, «кролики» — 25 учеников. 25 > 12 → двое в один месяц!</div>`:'')+
         (pick===0||pick===2?`<div class="l35-pop" style="font-size:15px;color:#ff9a8a">❌ Не то! Куда мы раскладываем людей? По месяцам рождения!</div>`:'')+
         sml('кто «кролики» — предметы, что «ящики» — корзины, куда их кладут. Правильный выбор — половина решения!'));
     } else if(step===4){
-      const n=st.p4||0;
-      const cells=Array.from({length:12},(_,i)=>{ const full=Math.floor(n/12)+(i<n%12?1:0); return {n:full,t:['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'][i]}; });
+      // 25 учеников, 12 месяцев: раскладка учеников по кругу
+      const n=st.k||0;
+      const cells=Array.from({length:12},(_,i)=>({n:Math.floor(n/12)+(i<n%12?1:0),t:['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'][i]}));
       const trip=cells.some(c=>c.n>=3);
       h=col(l2B('КЛАССИКА: МЕСЯЦЫ','#ffd966')+
         big('25 учеников · 12 месяцев → ⌈25/12⌉ = 3')+
-        `<div style="font-size:12.5px;color:#9ec0a8">раскладываем «честно», по кругу: месяц за месяцем</div>`+
-        (n>0?l2Rack(cells,'c'):`<div style="min-height:44px"></div>`)+
-        (trip?`<div class="wv-ans" style="font-size:20px;color:#ffd966">появился месяц с 3 учениками — гарантированно!</div>`:'')+
-        btns(btn('👦 + ученик',`l2Act('${lk}','add4')`,n>=25?'disabled':''),btn('⚡ сразу 25',`l2Act('${lk}','set4')`,n>=25?'disabled':''))+
-        sml('кликай: 24 ученика разложатся по 2 в месяц, а 25-му некуда — где-то станет 3!'));
+        `<div style="font-size:12.5px;color:#9ec0a8">ученики 👦 по очереди «рождаются» в месяцы по кругу</div>`+
+        (n>0?l2Rack(cells,{e:'👦',w:26,max:4}):`<div style="min-height:48px"></div>`)+
+        (n<25?btns(btn('👦 добавить ученика',`l2Act('${lk}','add:25')`),btn('⚡ сразу 25',`l2Act('${lk}','fill:25')`)):'')+
+        (trip?`<div class="wv-ans" style="font-size:20px;color:#ffd966">нашёлся месяц с 3 учениками — гарантированно!</div>`:'')+
+        sml('кликай «добавить»: 24 ученика лягут по 2 в месяц, а 25-му некуда — где-то станет 3!'));
     } else if(step===5){
-      const dn=st.dn||8, ck=st.ck||5;
+      // обобщение: слайдер голубей/клеток
+      const dn=st.dn||9, ck=st.ck||5;
       const ans=Math.ceil(dn/ck);
       const cells=Array.from({length:ck},(_,i)=>({n:Math.floor(dn/ck)+(i<dn%ck?1:0),t:''+(i+1)}));
       h=col(l2B('ОБОБЩЕНИЕ','#7fd1a0')+
         big('Минимум в одной клетке: ⌈n/k⌉')+
         `<div style="display:flex;gap:18px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">голуби n</div><div style="display:flex;align-items:center;gap:6px"><button class="hint-btn" onclick="l2Act('${lk}','dnM')">−</button><span style="font-family:Georgia,serif;font-size:32px;color:#fff;min-width:38px">${dn}</span><button class="hint-btn" onclick="l2Act('${lk}','dnP')">+</button></div></div>
-          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">клетки k</div><div style="display:flex;align-items:center;gap:6px"><button class="hint-btn" onclick="l2Act('${lk}','ckM')">−</button><span style="font-family:Georgia,serif;font-size:32px;color:#fff;min-width:38px">${ck}</span><button class="hint-btn" onclick="l2Act('${lk}','ckP')">+</button></div></div>
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">голуби n</div><div style="display:flex;align-items:center;gap:6px"><button class="hint-btn" onclick="l2Act('${lk}','dnM')">−</button><span style="font-family:Georgia,serif;font-size:32px;color:#fff;min-width:34px">${dn}</span><button class="hint-btn" onclick="l2Act('${lk}','dnP')">+</button></div></div>
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">клетки k</div><div style="display:flex;align-items:center;gap:6px"><button class="hint-btn" onclick="l2Act('${lk}','ckM')">−</button><span style="font-family:Georgia,serif;font-size:32px;color:#fff;min-width:34px">${ck}</span><button class="hint-btn" onclick="l2Act('${lk}','ckP')">+</button></div></div>
         </div>`+
-        `<div style="background:rgba(127,255,170,.09);border:1.5px solid #7fd1a066;border-radius:14px;padding:10px;max-width:300px;font-family:Georgia,serif;color:#7fd1a0;font-size:26px">⌈${dn}/${ck}⌉ = ${ans}</div>`+
-        l2Rack(cells,'e')+
-        sml('крути ползунки! «Честный» расклад показан на клетках: в какой-то всегда не меньше ⌈n/k⌉.'));
+        `<div style="background:rgba(127,255,170,.09);border:1.5px solid #7fd1a066;border-radius:14px;padding:8px;max-width:300px;font-family:Georgia,serif;color:#7fd1a0;font-size:24px">⌈${dn}/${ck}⌉ = ${ans}</div>`+
+        l2Rack(cells,{e:'🕊️',w:38,max:8})+
+        sml('«честный» расклад — поровну, остаток по одному. В самой набитой клетке всегда ⌈n/k⌉!'));
     } else if(step===6){
-      const n=st.p6||0;
-      const parts=[Math.floor(n/3)+(n%3>0?1:0),Math.floor(n/3)+(n%3>1?1:0),Math.floor(n/3)];
-      const names=[['🍬','карамель'],['🍫','шоколад'],['🍭','леденец']];
-      h=col(l2B('КОНФЕТЫ','#ff9a8a')+
-        big('25 конфет 3 сортов → ⌈25/3⌉ = 9')+
-        `<div style="font-size:12.5px;color:#9ec0a8">сорта — «ящики»! Раскладываем по кругу: сорт 1, 2, 3, 1, 2, 3…</div>`+
-        `<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:3px 0">
-          ${[0,1,2].map(i=>`<div class="wv-in" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${parts[i]>=9?'#ffd966':'#3d5c49'};border-radius:12px;padding:6px 12px;min-width:86px">
-            <div style="font-size:34px">${names[i][0]}</div>
-            <div style="font-size:10px;color:#9ec0a8">${names[i][1]}</div>
-            <div style="font-family:Georgia,serif;font-size:30px;color:${parts[i]>=9?'#ffd966':'#e8dcc8'}">${parts[i]||''}</div>
-            <div style="font-size:9px;color:#7f93a8">${'⬤'.repeat(Math.min(parts[i],9))}</div>
+      // конфеты 3 сортов
+      const n=st.k||0;
+      const cand=[['🍬','карамель'],['🍫','шоколад'],['🍭','леденец']];
+      const cnt=[0,0,0];
+      for(let i=0;i<n;i++) cnt[i%3]++;
+      const nine=cnt.some(c=>c>=9);
+      const cols=['rgba(255,138,106,.12)','rgba(127,183,216,.12)','rgba(217,160,255,.12)'];
+      h=col(l2B('КОНФЕТЫ 3 СОРТОВ','#ff9a8a')+
+        big('25 конфет → 9 одного сорта')+
+        `<div style="font-size:12.5px;color:#9ec0a8">кладём по кругу: карамель → шоколад → леденец…</div>`+
+        `<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:4px 0">
+          ${[0,1,2].map(i=>`<div style="text-align:center;background:${cols[i]};border:1px solid ${cnt[i]>=9?'#ffd966':'#3d5c49'};border-radius:12px;padding:6px 10px;min-width:86px">
+            <div style="font-size:30px">${cand[i][0]}</div>
+            <div style="font-size:10px;color:#9ec0a8">${cand[i][1]}</div>
+            <div style="font-family:Georgia,serif;font-size:26px;color:${cnt[i]>=9?'#ffd966':'#e8dcc8'}">${cnt[i]}</div>
+            <div style="display:flex;justify-content:center;gap:1px;flex-wrap:wrap;min-height:14px">${Array.from({length:Math.min(cnt[i],9)},()=>`<span style="font-size:10px">${cand[i][0]}</span>`).join('')}</div>
           </div>`).join('')}
         </div>`+
-        btns(btn('🍬 разложить по одной',`l2Act('${lk}','add6')`,n>=25?'disabled':''),btn('⚡ все 25',`l2Act('${lk}','set6')`,n>=25?'disabled':''))+
-        (n>=25?`<div class="wv-ans" style="font-size:22px;color:#ff9a8a">в одном сорте 9! «Худший случай»: 8+8+8 = 24 — а 25-я даёт 9.</div>`:'')+
+        (n<25?btns(btn('🍬 разложить по одной',`l2Act('${lk}','add:25')`),btn('⚡ все 25',`l2Act('${lk}','fill:25')`)):'')+
+        (nine?`<div class="wv-ans" style="font-size:20px;color:#ff9a8a">в одном сорте 9! «Худший случай»: 8+8+8 = 24 — а 25-я даёт 9.</div>`:'')+
         sml('как ни раскладывай 25 конфет по 3 сортам — один сорт наберёт не меньше 9!'));
     } else if(step===7){
-      const n=st.p7||0;
-      const cells=Array.from({length:13},(_,i)=>{ const full=Math.floor(n/13)+(i<n%13?1:0); return {n:full,t:''+i}; });
+      // ошибки в диктанте
+      const n=st.k||0;
+      const cells=Array.from({length:13},(_,i)=>({n:Math.floor(n/13)+(i<n%13?1:0),t:''+i}));
       const trip=cells.some(c=>c.n>=3);
       h=col(l2B('ОШИБКИ В ДИКТАНТЕ','#7fb7d8')+
         big('30 учеников → трое с одинаковым числом ошибок')+
-        `<div style="font-size:12.5px;color:#9ec0a8">у Паши 13 ошибок, у остальных 29 — от 0 до 12. Ящики: 13 чисел ошибок!</div>`+
-        (n>0?l2Rack(cells,'f'):`<div style="min-height:44px"></div>`)+
+        `<div style="font-size:12.5px;color:#9ec0a8">у Паши 13 ошибок, у остальных 29 — от 0 до 12. Добавляй учеников!</div>`+
+        (n>0?l2Rack(cells,{e:'👦',w:22,max:4}):`<div style="min-height:48px"></div>`)+
+        (n<29?btns(btn('✏️ + ученик',`l2Act('${lk}','add:29')`),btn('⚡ все 29',`l2Act('${lk}','fill:29')`)):'')+
         (trip||n>=29?`<div class="wv-ans" style="font-size:19px;color:#7fb7d8">⌈29/13⌉ = 3 — трое набрали одинаково!</div>`:'')+
-        btns(btn('✏️ + ученик',`l2Act('${lk}','add7')`,n>=29?'disabled':''),btn('⚡ все 29',`l2Act('${lk}','set7')`,n>=29?'disabled':''))+
-        sml('«ящики» — возможные результаты (0, 1, …, 12 ошибок). 29 «кроликов» по 13 ящикам → где-то 3!'));
+        sml('ящики — результаты 0…12. Если бы в каждом было ≤2, поместилось бы 26, а учеников 29!'));
     } else if(step===8){
-      const n=st.p8||0;
+      // ели: 8 елей, 5 чисел иголок — мини-модель
+      const n=Math.min(8,st.k||0);
       const cells=Array.from({length:5},(_,i)=>({n:Math.floor(n/5)+(i<n%5?1:0),t:'число '+(i+1)}));
       const dup=cells.some(c=>c.n>=2);
       h=col(l2B('ЕЛИ И ИГОЛКИ','#7fd1a0')+
         big('800 000 елей → две с одинаковым числом иголок')+
-        `<div style="font-size:12.5px;color:#9ec0a8">мини-модель: 8 елей, чисел иголок 5 (от 1 до 5). Ели — «кролики», числа — «ящики»!</div>`+
-        `<div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin:2px 0">${Array.from({length:8},(_,i)=>`<span class="wv-pop" style="animation-delay:${i*0.1}s;font-size:30px;opacity:${i<n?1:.12}">🌲</span>`).join('')}</div>`+
-        (n>0?l2Rack(cells,'g'):`<div style="min-height:44px"></div>`)+
-        (dup?`<div class="wv-ans" style="font-size:19px;color:#7fd1a0">две ели попали в одно число иголок!</div>`:'')+
-        btns(btn('🌲 посадить ель',`l2Act('${lk}','add8')`,n>=8?'disabled':''),btn('⚡ все 8',`l2Act('${lk}','set8')`,n>=8?'disabled':''))+
+        `<div style="font-size:12.5px;color:#9ec0a8">мини-модель: 8 елей 🌲, возможных чисел иголок 5. Сажай ели!</div>`+
+        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:3px 0">${Array.from({length:8},(_,i)=>`<span class="${i<n?'wv-pop':''}" style="animation-delay:${i*0.1}s;font-size:30px;line-height:1.1;opacity:${i<n?1:.12}">🌲</span>`).join('')}</div>`+
+        (n>0?l2Rack(cells,{e:'🌲',w:46,max:3}):`<div style="min-height:48px"></div>`)+
+        (n<8?btns(btn('🌲 посадить ель',`l2Act('${lk}','add:8')`),btn('⚡ все 8',`l2Act('${lk}','fill:8')`)):'')+
+        (dup?`<div class="wv-ans" style="font-size:18px;color:#7fd1a0">две ели попали в одно число иголок!</div>`:'')+
         sml('ели (800 000) больше, чем чисел (500 000) → совпадение неизбежно, как в учебнике!'));
     } else if(step===9){
+      // числа и остатки: бросаем по одному (готовый список)
       const nums=[17,9,22,5,31,14];
       const got=st.nums||[];
       const cnt=[0,0,0,0,0];
@@ -5113,52 +5116,55 @@ function visL2(el){
       const next=nums[got.length];
       h=col(l2B('ЧИСЛА И ОСТАТКИ','#c9b28a')+
         big('6 чисел → два с разностью, кратной 5')+
-        `<div style="font-size:12.5px;color:#9ec0a8">ящики — 5 остатков от деления на 5 (0,1,2,3,4). Бросаем числа по одному!</div>`+
-        `<div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:2px 0">${nums.map((x,i)=>`<span class="${i<got.length?'wv-pop':''}" style="font-family:Georgia,serif;font-size:20px;color:${i<got.length?'#ffd966':'#4a5c52'};border:1px solid ${i<got.length?'#ffd96666':'#3d5c49'};border-radius:9px;padding:3px 8px">${x}</span>`).join('')}</div>`+
-        (got.length>0?l2Rack([0,1,2,3,4].map(i=>({n:cnt[i],t:'ост. '+i})),'h'):`<div style="min-height:44px"></div>`)+
+        `<div style="font-size:12.5px;color:#9ec0a8">ящики — 5 остатков (0,1,2,3,4). Бросаем числа!</div>`+
+        `<div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:2px 0">${nums.map((x,i)=>`<span class="${i<got.length?'wv-pop':''}" style="font-family:Georgia,serif;font-size:19px;color:${i<got.length?'#7fd1a0':'#4a5c52'};border:1px solid ${i<got.length?'#7fd1a066':'#3d5c49'};border-radius:9px;padding:3px 9px;background:${i<got.length?'rgba(127,209,160,.08)':'transparent'}">${i<got.length?'✓ '+x:x}</span>`).join('')}</div>`+
+        (got.length>0?l2Rack([0,1,2,3,4].map(i=>({n:cnt[i],t:'ост. '+i})),{e:'🔢',w:48,max:3}):`<div style="min-height:48px"></div>`)+
         btns(btn('🎲 бросить '+(next!=null?next:'—'),`l2Act('${lk}','num:'+next)`,next==null?'disabled':''),btn('↺',`l2Act('${lk}','rst')`))+
-        (dup?`<div class="wv-ans" style="font-size:18px;color:#cbb89a">два числа в одном остатке: их разность делится на 5! (например, остатки равны → разность кратна 5)</div>`:'')+
-        sml('6 предметов, 5 ящиков: шестое число обязано попасть в занятый остаток!'));
+        (dup?`<div class="wv-ans" style="font-size:17px;color:#cbb89a">два числа в одном остатке: их разность делится на 5!</div>`:'')+
+        sml('6 чисел, 5 ящиков: шестое обязано попасть в занятый остаток!'));
     } else if(step===10){
+      // носки: цветные
       const socks=st.socks||[];
       const cnt=[0,0,0,0,0,0];
       socks.forEach(c=>cnt[c]++);
-      const pair=cnt.some(v=>v>=2);
-      const cols10=['#ff8a6a','#7fb7d8','#7fd1a0','#ffd966','#d9a0ff','#c9b28a'];
+      const pair=cnt.findIndex(v=>v>=2);
+      const cols=['#ff8a6a','#7fb7d8','#7fd1a0','#ffd966','#d9a0ff','#c9b28a'];
       const names=['красный','синий','зелёный','жёлтый','фиолет','коричневый'];
       h=col(l2B('ПОИСКИ В ТЕМНОТЕ','#ff8a6a')+
         big('6 цветов носков → хватит 7 носков')+
         `<div style="background:linear-gradient(180deg,#1c2733,#0f1721);border:1px solid #3d5c49;border-radius:14px;padding:8px 10px;max-width:330px">
           <div style="font-size:11px;color:#7f93a8;text-align:center;margin-bottom:3px">🌑 темнота… тянем носки не глядя</div>
-          <div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;min-height:28px">${socks.map((c,i)=>`<span class="wv-pop" style="font-size:26px">🧦</span>`).join('')||'<span style="color:#4a5c52;font-size:13px;align-self:center">— пока пусто —</span>'}</div>
-          <div style="display:flex;justify-content:center;gap:5px;margin-top:4px">${names.map((nm,i)=>`<button class="hint-btn" style="background:${cols10[i]}33;border:1px solid ${cols10[i]};font-size:12px;padding:3px 6px" onclick="l2Act('${lk}','sock:${i}')">${nm}</button>`).join('')}</div>
+          <div style="display:flex;justify-content:center;gap:3px;flex-wrap:wrap;min-height:34px;align-items:center">${socks.map((c,i)=>`<span class="wv-pop" style="width:26px;height:30px;border-radius:9px;background:${cols[c]};border:2px solid #0d1f14;display:inline-block;position:relative"><span style="position:absolute;top:3px;left:5px;font-size:11px">🧦</span></span>`).join('')||'<span style="color:#4a5c52;font-size:13px">— пока пусто —</span>'}</div>
         </div>`+
-        (socks.length>0?`<div style="font-size:13px;color:#e8dcc8">вытянуто носков: <b style="color:#ffd966">${socks.length}</b></div>`:'')+
-        (pair?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0">пара есть — на ${socks.length}-м носке!</div>`:'')+
-        sml('как ни тяни: 6 носков могут оказаться всех цветов, но 7-й обязан повторить цвет — ящиков всего 6!'));
+        `<div style="font-size:12px;color:#9ec0a8">какого цвета вытянем?</div>`+
+        btns(...names.map((nm,i)=>btn('● '+nm,`l2Act('${lk}','sock:${i}')`).replace('●',`<span style="color:${cols[i]}">●</span>`)))+
+        (socks.length>0?`<div style="font-size:13px;color:#e8dcc8">вытянуто: <b style="color:#ffd966">${socks.length}</b></div>`:'')+
+        (pair>=0?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0">пара ${names[pair]} есть — на ${socks.length}-м носке!</div>`:'')+
+        sml('6 цветов = 6 «ящиков». Шесть носков могут быть разных цветов, но 7-й обязан повторить цвет!'));
     } else if(step===11){
-      const pe=st.pe||13;
+      // дни рождения: слайдер
+      const pe=st.pe||14;
       const clash=pe>366;
       const fill=Math.min(pe,366);
       h=col(l2B('ДНИ РОЖДЕНИЯ','#7fb7d8')+
-        big('Сколько человек нужно, чтобы двое родились в один день?')+
+        big('Сколько человек нужно для совпадения дня?')+
         `<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap">
           <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">человек в комнате</div><div style="display:flex;align-items:center;gap:8px"><button class="hint-btn" onclick="l2Act('${lk}','peM')">−</button><span style="font-family:Georgia,serif;font-size:34px;color:#fff;min-width:52px">${pe}</span><button class="hint-btn" onclick="l2Act('${lk}','peP')">+</button></div></div>
         </div>`+
-        `<div style="font-size:12px;color:#9ec0a8">дней-«ящиков»: 366. При ${pe} людях: ${pe<=366?'можно избежать совпадения (в теории)':'дней не хватит!'}</div>`+
+        `<div style="font-size:12px;color:#9ec0a8">дней-«ящиков»: 366. Уже занято: ${fill} из 366</div>`+
         `<div style="width:100%;max-width:330px;height:15px;background:#13251c;border:1px solid #3d5c49;border-radius:8px;overflow:hidden;margin:3px auto"><div style="width:${Math.min(100,fill/366*100)}%;height:100%;background:linear-gradient(90deg,#3d8ab0,#8fd0f0);transition:width .2s"></div></div>`+
-        (clash?`<div class="wv-ans" style="font-size:21px;color:#7fd1a0">${pe} > 366 → двое родились в один день! (а в театре 2000 зрителей!)</div>`:'')+
+        (clash?`<div class="wv-ans" style="font-size:21px;color:#7fd1a0">${pe} > 366 → двое родились в один день!</div>`:'')+
         (pe===366?`<div style="font-size:13px;color:#ffd9a0">366 — предел без совпадений… добавь ещё одного!</div>`:'')+
-        sml('крути! Ответ: 367 человек гарантируют совпадение (366 ящиков + 1 «кролик»).'));
+        sml('крути! Ответ: 367 человек гарантируют совпадение (366 ящиков + 1 «кролик»). В театре их 2000!'));
     } else if(step===12){
       h=col(l2B('ТЕСТ ИЗ 100 ЗАДАНИЙ','#ffd966')+
         big('1800 учеников → 59 с одинаковым счётом')+
         `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
           <div class="wv-pop" style="background:rgba(127,183,216,.06);border:1px solid rgba(127,183,216,.3);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8">у Сидорова 31 ошибка, у остальных — меньше: результаты 0…30. «Ящиков» — 31!</div>
           <div class="wv-pop2" style="background:rgba(127,209,160,.06);border:1px solid rgba(127,209,160,.3);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8">остальных учеников: 1800 − 1 = 1799 «кроликов»</div>
-          <div class="wv-pop3" style="background:rgba(255,217,102,.08);border:1px solid rgba(255,217,102,.4);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8">31 ящик · по 58 = 1798 мест. Куда сядет 1799-й? В ящик с 59-м!</div>
+          <div class="wv-pop3" style="background:rgba(255,217,102,.08);border:1px solid rgba(255,217,102,.4);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8">31 ящик · по 58 = 1798 мест. Куда сядет 1799-й? В ящик, где уже 58 → станет 59!</div>
         </div>`+
-        `<div class="wv-ans" style="font-size:34px;color:#7fd1a0">⌈1799/31⌉ = 59</div>`+
+        `<div class="wv-ans" style="font-size:32px;color:#7fd1a0">⌈1799/31⌉ = 59</div>`+
         sml('проверь: 58·31 = 1798 < 1799. Если бы везде было ≤58 — мест бы не хватило!'));
     } else if(step===13){
       const pts=st.pts||[];
@@ -5167,18 +5173,18 @@ function visL2(el){
         big('5 точек в треугольнике → 2 ближе 0,5')+
         l2Tri(pts,'i')+
         `<div style="display:flex;justify-content:center;gap:5px;flex-wrap:wrap">${fixed.map((p,i)=>`<button class="hint-btn" style="${pts.length>i?'opacity:.35':''}" ${pts.length>i?'disabled':''} onclick="l2Act('${lk}','pt:${p[0]},${p[1]}')">точка ${i+1}</button>`).join('')}</div>`+
-        (pts.length>=5?`<div class="wv-ans" style="font-size:18px;color:#ffd966">в каком-то из 4 треугольников две точки — они ближе 0,5!</div>`:'')+
-        sml('разбили на 4 «ящика»-треугольника со стороной 0,5: 5 точек → два «соседа»!'));
+        (pts.length>=5?`<div class="wv-ans" style="font-size:18px;color:#ffd966">в каком-то из 4 треугольников две точки!</div>`:'')+
+        sml('разбили треугольник на 4 «ящика» со стороной 0,5: 5 точек → два «соседа»!'));
     } else if(step===14){
       const tm=st.tm||6;
       h=col(l2B('ТУРНИР','#7fb7d8')+
         big('n команд → две сыграли одинаково')+
-        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:4px 0">${Array.from({length:tm},(_,i)=>`<span class="wv-pop" style="animation-delay:${i*0.09}s;font-size:36px">${['⚽','🏀','🏐','🎾','🏉','🥎','⚾','🏏','🎱','🏓'][i]}</span>`).join('')}</div>`+
+        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:4px 0">${Array.from({length:tm},(_,i)=>`<span class="wv-pop" style="animation-delay:${i*0.09}s;font-size:34px;line-height:1.1">${['⚽','🏀','🏐','🎾','🏉','🥎','⚾','🏏','🎱','🏓'][i]}</span>`).join('')}</div>`+
         `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
           <div class="wv-pop" style="background:rgba(127,183,216,.06);border:1px solid rgba(127,183,216,.3);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8">каждая команда сыграла от 0 до ${tm-1} матчей — вроде ${tm} вариантов на ${tm} команд…</div>
           <div class="wv-pop2" style="background:rgba(255,217,102,.08);border:1px solid rgba(255,217,102,.4);border-radius:10px;padding:6px 12px;font-size:14px;color:#e8dcc8">но «0 матчей» и «${tm-1} матчей» не могут быть одновременно! → вариантов ${tm-1}, команд ${tm}</div>
         </div>`+
-        `<div class="wv-ans" style="font-size:21px;color:#7fd1a0">две команды сыграли одинаковое число матчей!</div>`+
+        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">две команды сыграли одинаковое число матчей!</div>`+
         btns(btn('− команда',`l2Act('${lk}','tmM')`),btn('+ команда',`l2Act('${lk}','tmP')`))+
         sml('если кто-то ещё не играл — никто не мог сыграть все матчи! Ящиков n−1, команд n.'));
     } else if(step===15){
@@ -5205,7 +5211,7 @@ function visL2(el){
       while(uniq.length<4) uniq.push(Math.max(1,ans+uniq.length+3));
       h=col(l2B('ИГРА «СКОЛЬКО ГАРАНТИРОВАННО?»','#7fd1a0')+
         big(`${gn} голубей в ${gk} клетках: минимум в одной?`)+
-        l2Rack(cells,'j')+
+        l2Rack(cells,{e:'🕊️',w:52,max:9})+
         `<div style="font-size:12.5px;color:#9ec0a8">самый «честный» расклад показан. Дели и округляй вверх!</div>`+
         `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">${uniq.map((o,i)=>`<button class="hint-btn" onclick="l2Act('${lk}','pick:${o}')" style="font-size:21px;min-width:56px;${st.pick===o?'border-color:#7fd1a0':''}">${o}</button>`).join('')}</div>`+
         (st.pick===ans?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0">✅ ⌈${gn}/${gk}⌉ = ${ans} — верно!</div>`:'')+
@@ -5230,7 +5236,7 @@ function visL2(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
-// ============ УРОК 1 «Числа-перевёртыши» — Зеркальная лаборатория ============
+
 var L1GAME=[['172','271'],['123','321'],['341','143'],['234','432'],['513','315'],['682','286'],['907','709'],['275','572'],['398','893'],['764','467'],['581','185'],['246','642']];
 function l1B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
 function l1Act(lk,act){
@@ -12527,7 +12533,7 @@ function renderLessonVis(){
   else if(id===105) visL105(el);
   else if(id===19) visL19(el);
   else if(id===2) visL2(el);
-  else if(id===3) visSnail(el);
+  else if(id===3) visL3(el);
   else if(id===4) visCandy(el);
   else if(id===5) visTourn(el);
   else if(id===6) visVillage(el);
@@ -12602,21 +12608,317 @@ function visPigeon(el){
       <span style="position:absolute;bottom:2px;left:0;right:0;text-align:center;font-size:9px;color:#8a94ad">${i+1} · ${c.length}</span></div>`).join('')}</div>
     <div style="text-align:center;margin-top:6px;color:#cbb89a;font-size:12.5px">10 голубей · 7 клеток → где-то точно двое! ⌈10/7⌉ = 2</div>`;
 }
-function visSnail(el){
-  const c=LX.cells, pts=Array.from({length:7},(_,i)=>{const a=-Math.PI/2+i*2*Math.PI/7;return [150+62*Math.cos(a),104+62*Math.sin(a)];});
-  el.innerHTML=`<svg width="300" height="200" viewBox="0 0 300 200" style="max-width:100%;display:block;margin:0 auto">
-    ${pts.map((p,i)=>{const q=pts[(i+1)%7];return `<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" stroke="#3d5c49" stroke-width="2"/>`;}).join('')}
-    ${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="24" fill="#1b2f24" stroke="${i===3?'var(--brass)':'#8a94ad'}" stroke-width="${i===3?2.5:1.5}"/>
-      <text x="${p[0]}" y="${p[1]+4}" text-anchor="middle" font-size="12" fill="${i===3?'#E8A33D':'#cbb89a'}">${c[i]}</text>`).join('')}
-    <text x="150" y="20" text-anchor="middle" font-size="11" fill="#8a94ad">прошло часов: ${LV.step>=0?LX.hour:0} · сумма всегда 64</text></svg>
-    <div style="display:flex;gap:8px;justify-content:center;margin-top:4px">
-      <button class="hint-btn" onclick="snailHour()" ${LX.hour>=5?'disabled':''}>⏱ Час +</button>
-      <button class="hint-btn" onclick="snailReset()">↺ Сброс</button></div>
-    ${LX.hour>=5?'<div style="text-align:center;color:var(--amber);font-size:13px;margin-top:6px">Через 5 часов в оранжевой ячейке — 10 улиток ✓</div>':''}`;
+// ============ УРОК 3 «Улитки в ячейках» — Улиточная лаборатория ============
+// Живой симулятор: многоугольник с ячейками, улитки делятся пополам каждый час.
+// Инвариант суммы, симметрия, «шахматная» раскраска (чётные многоугольники),
+// почему для 7-угольника она не работает, таблица по часам, игры-предсказания.
+var L3G=[['7','64','5','3'],['7','64','3','1'],['7','128','5','3'],['6','64','4','3'],['6','32','5','3'],['6','64','2','2'],['7','64','4','2'],['7','32','3','1'],['6','128','5','3'],['7','64','2','2'],['6','64','3','1'],['7','32','5','3']];
+function l3Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const m=act.split(':');
+  if(m[0]==='h') st.h=Math.max(0,Math.min(6,(st.h==null?0:st.h)+ (+m[1]||0)));
+  if(m[0]==='n') st.n=+m[1];
+  if(m[0]==='tot') st.total=+m[1];
+  if(m[0]==='pick') st.pick=+m[1];
+  if(m[0]==='exam'){ st.ei=((st.ei==null?0:st.ei)+1)%L3G.length; st.pick=null; st.h=0; }
+  if(m[0]==='show') st.show=+m[1];            // показать ячейку
+  if(m[0]==='rst') CHS[lk]={};
+  chRender(0);
 }
-function snailHour(){ if(LX.hour>=5) return; const c=LX.cells,n=7,out=Array(n).fill(0);
-  c.forEach((x,i)=>{ if(x>0){ out[(i-1+n)%n]+=x/2; out[(i+1)%n]+=x/2; } }); LX.hour++; LX.cells=out; renderLessonView(); }
-function snailReset(){ LX.hour=0; LX.cells=[64,0,0,0,0,0,0]; renderLessonView(); }
+function l3B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
+function l3Card(tag,emoji,title,lines,color){
+  if(!Array.isArray(lines)) lines=[lines];
+  let ls='';
+  for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:12.5px;color:#e8dcc8;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
+  return `<div style="width:100%;max-width:330px;margin:0 auto;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <div style="font-size:22px">${emoji}</div>
+      <div style="flex:1"><div style="font-size:11px;color:${color};letter-spacing:.5px">${tag}</div><div style="font-size:15px;color:#fff;font-weight:bold;line-height:1.2">${title}</div></div>
+    </div>${ls}</div>`;
+}
+function l3Sim(n,total,h){
+  // распределение улиток после h часов: new[i]=old[i-1]/2+old[i+1]/2
+  let a=Array(n).fill(0); a[0]=total;
+  for(let t=0;t<h;t++){
+    const out=Array(n).fill(0);
+    for(let i=0;i<n;i++){ out[(i-1+n)%n]+=a[i]/2; out[(i+1)%n]+=a[i]/2; }
+    a=out;
+  }
+  return a;
+}
+function l3Ring(n,cells,opts){
+  // SVG: n ячеек по кругу; opts: {hot:idx-оранжевая, start:idx, mark:массив-подсветка, hide0}
+  const R=opts&&opts.r?opts.r:64, cx=90, cy=78;
+  const pts=Array.from({length:n},(_,i)=>{ const a=-Math.PI/2+i*2*Math.PI/n; return [cx+R*Math.cos(a),cy+R*Math.sin(a)]; });
+  let edges='';
+  for(let i=0;i<n;i++){ const p=pts[i],q=pts[(i+1)%n]; edges+=`<line x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${q[0].toFixed(1)}" y2="${q[1].toFixed(1)}" stroke="#3d5c49" stroke-width="2"/>`; }
+  let circ='';
+  cells.forEach((v,i)=>{
+    const hot=opts&&opts.hot===i;
+    const st=opts&&opts.mark&&opts.mark[i];
+    const fill=hot?'rgba(255,183,77,.2)':st?st.f:'rgba(255,255,255,.05)';
+    const bd=hot?'2.5px solid #ffb74d':st&&st.c?'2px solid '+st.c:'1.5px solid #8a94ad';
+    const tc=hot?'#ffd9a0':'#e8dcc8';
+    const label=opts&&opts.labels?opts.labels[i]:'';
+    circ+=`<circle cx="${pts[i][0].toFixed(1)}" cy="${pts[i][1].toFixed(1)}" r="23" fill="${fill}" stroke="${bd}"/>
+      <text x="${pts[i][0].toFixed(1)}" y="${(pts[i][1]+5).toFixed(1)}" text-anchor="middle" font-size="15" font-weight="bold" fill="${tc}">${Math.round(v*100)/100}</text>
+      ${label?`<text x="${pts[i][0].toFixed(1)}" y="${(pts[i][1]-28).toFixed(1)}" text-anchor="middle" font-size="9" fill="#7f93a8">${label}</text>`:''}
+      ${hot?`<text x="${pts[i][0].toFixed(1)}" y="${(pts[i][1]-29).toFixed(1)}" text-anchor="middle" font-size="11" fill="#ffb74d">🎯</text>`:''}`;
+  });
+  const sum=cells.reduce((a,b)=>a+b,0);
+  return `<div style="text-align:center;margin:2px auto;max-width:100%">
+    <svg width="180" height="${R>64?170:158}" viewBox="0 0 180 ${R>64?170:158}" style="max-width:180px">${edges}${circ}
+      <text x="90" y="${R>64?162:150}" text-anchor="middle" font-size="11" fill="#7f93a8">сумма: ${Math.round(sum*100)/100}</text>
+    </svg>
+  </div>`;
+}
+function l3HourCtrl(lk,h,max,total,disabled){
+  return `<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap">
+    <button class="hint-btn" onclick="l3Act('${lk}','h:-1')" ${h<=0?'disabled':''}>⏪ час −</button>
+    <span style="font-family:Georgia,serif;font-size:20px;color:#ffd966;min-width:74px;text-align:center">${h} ч · ${total} 🐌</span>
+    <button class="hint-btn" onclick="l3Act('${lk}','h:1')" ${h>=max?'disabled':''}>⏩ час +</button>
+    <button class="hint-btn" onclick="l3Act('${lk}','rst')">↺</button>
+  </div>`;
+}
+function l3Mini(n,total,h,uid,label){
+  // маленькая сводка-строка для таблицы: числа по кругу, компактно
+  const a=l3Sim(n,total,h);
+  const tiles=a.map((v,i)=>`<div style="flex:1;text-align:center;background:${v>0?'rgba(127,209,160,.12)':'rgba(255,255,255,.03)'};border:1px solid ${v>0?'#7fd1a066':'#3d5c49'};border-radius:7px;padding:2px 0;font-size:${n>7?9:11}px;color:${v>0?'#7fd1a0':'#4a5c52'};font-weight:bold">${Math.round(v)}</div>`).join('');
+  return `<div style="width:100%;max-width:330px;margin:2px auto">
+    <div style="font-size:10.5px;color:#9ec0a8;text-align:center">${label||('час '+h)}</div>
+    <div style="display:flex;gap:2px;justify-content:center">${tiles}</div>
+  </div>`;
+}
+function visL3(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v3!==step) CHS[lk]={_v3:step,n:7,total:64,h:0};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    let h='';
+    if(step===0){
+      const cells=l3Sim(7,64,1);
+      h=col(`<div style="font-size:17px;color:#c9b28a;letter-spacing:1px">🐌 УЛИТОЧНАЯ ЛАБОРАТОРИЯ · ВсОШ 6 кл.</div>`+
+        big('64 улитки · 7 ячеек · 5 часов')+
+        `<div style="font-size:46px" class="wv-flick">🐌</div>`+
+        rowC(chip('каждый час все уходят','rgba(127,209,255,.4)'),chip('половина налево, половина направо','rgba(127,184,160,.4)'),chip('оранжевая ячейка — №3','rgba(255,183,77,.5)'))+
+        l3Ring(7,cells,{hot:3,start:0,labels:['старт','','','🎯','','','']})+
+        `<div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:12px 14px;max-width:330px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.7">
+        В вершинах семиугольника — ячейки. В одну посадили <b style="color:#ffd966">64 улитки</b>. Каждый час все улитки каждой ячейки перебираются в соседние: <b>половина — в одну, половина — в другую</b>. Сколько улиток окажется в оранжевой ячейке через 5 часов?</div>`+
+        sml('посмотри: после 1 часа стартовая опустела — 32 улитки уползли налево и 32 направо!'));
+    } else if(step===1){
+      // правило: 8 улиток делятся
+      const s8=[0,8,0], a8=l3Sim(3,8,1);
+      h=col(l3B('ПРАВИЛО ДВИЖЕНИЯ','#7fd1a0')+
+        big('Из ячейки уходят ВСЕ улитки')+
+        `<div style="display:flex;justify-content:center;gap:14px;align-items:center;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:12px;color:#9ec0a8">было</div>${l3Ring(3,s8,{r:44,hot:1})}</div>
+          <div style="font-size:30px" class="wv-pulse">➜</div>
+          <div style="text-align:center"><div style="font-size:12px;color:#9ec0a8">через час</div>${l3Ring(3,a8,{r:44})}</div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:21px;color:#7fd1a0">8 : 2 = 4 → четырежды налево, четырежды направо!</div>`+
+        sml('важно: никто не остаётся «дома»! В ячейке с 8 улитками через час — 0, а соседи получили по 4.'));
+    } else if(step===2){
+      const a=l3Sim(7,64,1);
+      h=col(l3B('ЧАС 1','#7fb7d8')+
+        big('64 → по 32 в обе стороны')+
+        `<div style="display:flex;justify-content:center;gap:10px;align-items:center;flex-wrap:wrap">
+          ${[['старт','64 🐌'],['',''],['','']].map((p,i)=>`<span class="wv-pop" style="font-size:17px;color:#e8dcc8">${p[0]?p[0]+': '+p[1]:''}</span>`).join('')}
+        </div>`+
+        l3Ring(7,a,{hot:3,start:0})+
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${['0 ч: 64 в стартовой','1 ч: стартовая = 0','соседи: 32 и 32','сумма: 64 ✓'].map((t,i)=>chip(t,['rgba(255,217,102,.4)','rgba(255,154,138,.4)','rgba(127,209,160,.4)','rgba(127,184,160,.5)'][i]))}
+        </div>`+
+        sml('стартовая ячейка опустела! Сумма не изменилась — просто 64 улитки разъехались поровну.'));
+    } else if(step===3){
+      const a1=l3Sim(7,64,1), a2=l3Sim(7,64,2);
+      h=col(l3B('ЧАС 2','#7fd1a0')+
+        big('Снова делим каждую кучку пополам')+
+        l3Mini(7,64,1,'a','1-й час')+
+        `<div style="font-size:22px" class="wv-pulse">⬇</div>`+
+        l3Mini(7,64,2,'b','2-й час')+
+        l3Ring(7,a2,{hot:3,start:0})+
+        sml('у каждой ячейки с 32 улитками — по 16 на соседа. Стартовая снова получила 16+16 = 32, дальние — по 16.'));
+    } else if(step===4){
+      // инвариант суммы: крутим часы
+      const hs=[0,1,2,3,4,5];
+      h=col(l3B('ГЛАВНЫЙ ИНВАРИАНТ','#ffd966')+
+        big('Сумма всегда 64!')+
+        `<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:340px">
+          ${hs.map(t=>{const a=l3Sim(7,64,t); const s=a.reduce((x,y)=>x+y,0); return `<div class="wv-pop" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:4px 10px"><div style="font-size:10px;color:#9ec0a8">${t} ч</div><div style="font-family:Georgia,serif;font-size:19px;color:${s===64?'#7fd1a0':'#ff9a8a'};font-weight:bold">${s}</div></div>`;}).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">сумма не меняется — улитки не пропадают!</div>`+
+        sml('сколько ни крути часы, всего в ячейках ровно 64 улитки. Этот «закон сохранения» помогает проверять расчёты!'));
+    } else if(step===5){
+      // симметрия
+      const a5=l3Sim(7,64,5);
+      const pairMark=[{c:'#7fd1a0',f:'rgba(127,209,160,.15)'},{c:'#7fd1a0',f:'rgba(127,209,160,.15)'},{c:'#7fb7d8',f:'rgba(127,183,216,.15)'},{c:'#7fb7d8',f:'rgba(127,183,216,.15)'},{c:'#d9a0ff',f:'rgba(217,160,255,.15)'},{c:'#d9a0ff',f:'rgba(217,160,255,.15)'},{c:'#ffd966',f:'rgba(255,217,102,.15)'}];
+      h=col(l3B('СИММЕТРИЯ','#c9b28a')+
+        big('Слева = справа!')+
+        l3Ring(7,a5,{hot:3,start:0,mark:pairMark})+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px">
+          ${[['1 и 6','одинаковы','#7fd1a0'],['2 и 5','одинаковы','#7fb7d8'],['3 и 4','одинаковы','#d9a0ff'],['0','старт','#ffd966']].map(p=>`<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid ${p[2]}44;border-radius:9px;padding:3px 12px"><span style="font-size:13px;color:#e8dcc8">${p[0]}</span><span style="font-size:12px;color:${p[2]}">${p[1]}</span></div>`).join('')}
+        </div>`+
+        sml('после 5 часов: 20, 2, 10, 10, 2, 20 — зеркально! Можно считать половину ячеек, вторую дописывать симметрично.'));
+    } else if(step===6){
+      // проследим оранжевую: 0,0,0,8,4,10
+      const hist=[0,1,2,3,4,5].map(t=>l3Sim(7,64,t)[3]);
+      h=col(l3B('СЛЕДИМ ЗА ОРАНЖЕВОЙ','#ffb74d')+
+        big('Оранжевая ячейка час за часом')+
+        `<div style="display:flex;gap:6px;align-items:flex-end;justify-content:center;max-width:330px;height:120px">
+          ${hist.map((v,t)=>`<div style="flex:1;text-align:center"><div class="wv-pop" style="animation-delay:${t*0.12}s;margin:0 auto;width:34px;height:${Math.max(4,v*9)}px;background:${t===5?'#ffb74d':'#7fb7d8'};border-radius:6px 6px 2px 2px;border:1px solid ${t===5?'#ffb74d':'#7fb7d8'}88"></div><div style="font-size:13px;color:${v>0?'#e8dcc8':'#4a5c52'};margin-top:3px;font-family:Georgia,serif">${v}</div><div style="font-size:9.5px;color:#9ec0a8">${t} ч</div></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#ffb74d">0 → 0 → 0 → 8 → 4 → 10</div>`+
+        sml('первые два часа оранжевая пуста (улитки ещё далеко), потом 8, 4 — и на 5-м часу 10! Это и есть ответ.'));
+    } else if(step===7){
+      // почему 10: вклады соседей на 4→5
+      h=col(l3B('ОТКУДА 10?','#7fd1a0')+
+        big('Вклад двух соседей')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[[2,16,'№2 даёт половину'], [4,4,'№4 даёт половину']].map(p=>`<div style="text-align:center;background:rgba(127,209,160,.07);border:1px solid #7fd1a044;border-radius:12px;padding:8px 14px"><div style="font-size:12px;color:#9ec0a8">ячейка ${p[0]} · 4 ч</div><div style="font-family:Georgia,serif;font-size:34px;color:#fff">${p[1]}</div><div style="font-size:13px;color:#7fd1a0">${p[2]} → ${p[1]/2}</div></div>`).join('')}
+        </div>`+
+        `<div style="font-size:26px;color:#cbb89a;text-align:center;margin:2px">+</div>`+
+        `<div class="wv-ans" style="font-size:30px;color:#7fd1a0">8 + 2 = 10 🐌</div>`+
+        sml('на 4-м часу у оранжевой (№3) соседи №2 и №4: 16 и 4 улитки. Каждый отдаёт половину: 8 и 2 → в оранжевой 10!'));
+    } else if(step===8){
+      // шахматная раскраска шестиугольника
+      const a=l3Sim(6,64,st.h||0);
+      const mark6=[0,1,2,3,4,5].map(i=>({c:i%2?'#7fd1a0':'#d9a0ff',f:i%2?'rgba(127,209,160,.12)':'rgba(217,160,255,.12)'}));
+      const hh=st.h==null?0:st.h;
+      const oppositeOk=hh%2===0?0:l3Sim(6,64,hh)[3];
+      h=col(l3B('ШАХМАТНАЯ РАСКРАСКА','#d9a0ff')+
+        big('Секрет для ШЕСТИугольника')+
+        `<div style="font-size:13px;color:#9ec0a8">раскрась ячейки как шахматную доску: каждый час улитка меняет цвет!</div>`+
+        l3Ring(6,l3Sim(6,64,hh),{hot:3,start:0,mark:mark6,r:56})+
+        l3HourCtrl(lk,hh,6,64)+
+        (hh%2===0?`<div style="font-size:13px;color:#e8dcc8">${hh} ч — чётное: улитки в ячейках своего цвета. Оранжевая (чужая) пуста: <b style="color:#7fd1a0">0</b></div>`:`<div style="font-size:13px;color:#e8dcc8">${hh} ч — нечётное: улитки в чужих ячейках. В оранжевой: <b style="color:#ffd966">${oppositeOk}</b></div>`)+
+        sml('в шестиугольнике это работает: чёт/нечет времени = свой/чужой цвет! Противоположная вершина через 4 часа пуста.'));
+    } else if(step===9){
+      // почему в семиугольнике не работает
+      h=col(l3B('А В СЕМИУГОЛЬНИКЕ?','#ff9a8a')+
+        big('7 — нечётное: раскраска «ломается»')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">${Array.from({length:7},(_,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;width:38px;height:46px;border-radius:9px;background:${i%2?'rgba(127,209,160,.2)':'rgba(217,160,255,.2)'};border:1px solid ${i===0?'#ffd966':'#3d5c49'};display:flex;align-items:center;justify-content:center;font-size:17px;color:#e8dcc8">${i}</div>`).join('')}</div>`+
+        `<div class="l35-pop" style="font-size:15px;color:#ff9a8a">после ячейки 6 снова идёт 0 — два «соседа» одного цвета!</div>`+
+        `<div style="display:flex;flex-direction:column;gap:6px;max-width:340px">
+          ${l3Card('ПРОВЕРКА','🔍','4 часа, ячейка №3','В семиугольнике на 4-м часу в ячейке №3 оказались 4 улитки — хотя 4 чётное, а №3 «чужого» цвета. Обойдя круг (6→0), улитка сбивает раскраску!','#ff9a8a')}
+        </div>`+
+        sml('вывод: для нечётных многоугольников шахматная раскраска не работает — считаем таблицей по часам!'));
+    } else if(step===10){
+      // таблица 0..5
+      const hs=[0,1,2,3,4,5];
+      const rows=hs.map(t=>{
+        const a=l3Sim(7,64,t);
+        const hot=a[3];
+        return `<div class="wv-pop" style="animation-delay:${t*0.1}s;display:flex;gap:2px;align-items:center;max-width:340px">
+          <div style="width:30px;font-size:10.5px;color:#9ec0a8;text-align:right;padding-right:4px">${t} ч</div>
+          ${a.map((v,i)=>`<div style="flex:1;text-align:center;background:${i===3?(v>0?'rgba(255,183,77,.3)':'rgba(255,183,77,.1)'):v>0?'rgba(127,209,160,.14)':'rgba(255,255,255,.03)'};border:1px solid ${i===3?'#ffb74d':'#3d5c49'};border-radius:6px;padding:2px 0;font-size:12px;color:${v>0?'#e8dcc8':'#4a5c52'};font-weight:${i===3?'bold':'normal'}">${Math.round(v)}</div>`).join('')}
+        </div>`;
+      }).join('');
+      h=col(l3B('ТАБЛИЦА ПО ЧАСАМ','#7fb7d8')+
+        big('Считаем честно, шаг за шагом')+
+        `<div style="display:flex;gap:2px;max-width:340px;padding-left:30px"><div style="flex:1;text-align:center;font-size:9px;color:#7f93a8">№0</div><div style="flex:1;text-align:center;font-size:9px;color:#7f93a8">№1</div><div style="flex:1;text-align:center;font-size:9px;color:#7f93a8">№2</div><div style="flex:1;text-align:center;font-size:9px;color:#ffb74d">№3🎯</div><div style="flex:1;text-align:center;font-size:9px;color:#7f93a8">№4</div><div style="flex:1;text-align:center;font-size:9px;color:#7f93a8">№5</div><div style="flex:1;text-align:center;font-size:9px;color:#7f93a8">№6</div></div>`+
+        rows+
+        `<div class="wv-ans" style="font-size:22px;color:#ffb74d">на 5-м часу в оранжевой — 10!</div>`+
+        sml('видишь, как числа «перетекают»? Сумма каждой строки — 64. Таблица — самый надёжный способ!'));
+    } else if(step===11){
+      // самопроверка: 8+2 и симметрия
+      const a5=l3Sim(7,64,5);
+      h=col(l3B('САМОПРОВЕРКА','#7fd1a0')+
+        big('Два способа убедиться')+
+        `<div style="display:flex;flex-direction:column;gap:8px;max-width:340px">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(127,209,160,.07);border:1px solid #7fd1a044;border-radius:12px;padding:8px 12px"><span style="font-size:26px">➗</span><span style="font-size:13.5px;color:#e8dcc8;text-align:left">половины соседей на 4-м часу: 16:2 = <b style="color:#7fd1a0">8</b> (из №2) и 4:2 = <b style="color:#7fd1a0">2</b> (из №4) → 8+2 = 10</span></div>
+          <div class="wv-pop2" style="display:flex;gap:8px;align-items:center;background:rgba(217,160,255,.07);border:1px solid #d9a0ff44;border-radius:12px;padding:8px 12px"><span style="font-size:26px">🪞</span><span style="font-size:13.5px;color:#e8dcc8;text-align:left">симметрия: №3 = №4. Проверим 5-й час: №3 = <b style="color:#d9a0ff">10</b>, №4 = <b style="color:#d9a0ff">10</b> ✓</span></div>
+        </div>`+
+        l3Ring(7,a5,{hot:3,start:0})+
+        sml('два независимых способа дали 10 — можно смело отвечать!'));
+    } else if(step===12){
+      // формула-шпаргалка: 2^k и t<=k; поиск симметрии
+      h=col(l3B('ФОРМУЛА-ШПАРГАЛКА','#ffd966')+
+        big('Когда числа целые?')+
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${[[64,'64 = 2⁶','хватит на 6 часов без дробей'], [128,'128 = 2⁷','хватит на 7 часов'], [32,'32 = 2⁵','хватит на 5 часов']].map(p=>`<div class="wv-pop" style="text-align:center;background:rgba(255,217,102,.06);border:1px solid #ffd96644;border-radius:12px;padding:8px 12px;min-width:96px"><div style="font-family:Georgia,serif;font-size:24px;color:#ffd966">${p[0]}</div><div style="font-size:11px;color:#9ec0a8">${p[1]}</div><div style="font-size:10px;color:#e8dcc8">${p[2]}</div></div>`).join('')}
+        </div>`+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:340px">
+          ${['1) если 2ᵏ улиток и t ≤ k — все числа целые','2) сумма всегда 2ᵏ (инвариант)','3) ищи симметрию — считай половину','4) чётный многоугольник → шахматная раскраска','5) нечётный → таблица по часам'].map((s,i)=>`<div class="wv-pop${i?'2':''}" style="background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-left:4px solid ${['#ffd966','#7fd1a0','#7fb7d8','#d9a0ff','#ff9a8a'][i]};border-radius:9px;padding:5px 10px;font-size:13px;color:#e8dcc8;text-align:left">${s}</div>`).join('')}
+        </div>`+
+        sml('эти приёмы решают почти любую задачу про «расходящихся улиток»!'));
+    } else if(step===13){
+      // песочница: n 5..8, total 32/64/128, часы 0..6
+      const n=st.n||7, total=st.total||64, hh=st.h||0;
+      const a=l3Sim(n,total,hh);
+      const sum=a.reduce((x,y)=>x+y,0);
+      const histCell=st.show!=null?st.show:3;
+      const hist=[0,1,2,3,4,5,6].map(t=>l3Sim(n,total,t)[histCell%n]);
+      h=col(l3B('ПЕСОЧНИЦА','#7fd1a0')+
+        big('Крути всё сам!')+
+        `<div style="display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">углов</div><div style="display:flex;align-items:center;gap:4px">${[5,6,7,8].map(x=>btn(x,`l3Act('${lk}','n:${x}')`,st.n===x?'style="border-color:#7fd1a0"':'')).join('')}</div></div>
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">улиток</div><div style="display:flex;align-items:center;gap:4px">${[32,64,128].map(x=>btn(x,`l3Act('${lk}','tot:${x}')`,st.total===x?'style="border-color:#ffd966"':'')).join('')}</div></div>
+        </div>`+
+        l3HourCtrl(lk,hh,6,total)+
+        l3Ring(n,a,{hot:histCell%n,start:0})+
+        (Math.abs(sum-total)<0.01?`<div class="wv-ans" style="font-size:20px;color:#7fd1a0">сумма = ${total} — инвариант держится!</div>`:'')+
+        `<div style="font-size:12px;color:#9ec0a8">следим за ячейкой №${histCell%n}:</div>`+
+        `<div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap">${[0,1,2,3,4,5,6].map((t,i)=>`<div style="text-align:center;min-width:26px"><div style="font-size:10px;color:#7f93a8">${t}ч</div><div style="font-family:Georgia,serif;font-size:16px;color:${hist[i]>0?'#ffd966':'#4a5c52'}">${Math.round(hist[i])}</div></div>`).join('')}</div>`+
+        sml('меняй форму и число улиток: сумма не меняется, а оранжевая ячейка наполняется по-своему!'));
+    } else if(step===14){
+      // игра «Предскажи»
+      if(st.ei==null) st.ei=0;
+      const g=L3G[st.ei%L3G.length];
+      const n=+g[0], total=+g[1], hh=+g[2], cell=+g[3];
+      const ans=Math.round(l3Sim(n,total,hh)[cell]);
+      const variants=[ans];
+      [ans+2,ans-2,ans+4,ans-4,ans+8,ans-8,ans+1].forEach(v=>{ if(v>=0&&variants.indexOf(v)<0) variants.push(v); });
+      const shown=variants.slice(0,4);
+      const a=l3Sim(n,total,Math.min(hh,3));
+      h=col(l3B('ИГРА «ПРЕДСКАЖИ УЛИТОК»','#ffd966')+
+        big(`${n}-угольник · ${total} улиток · ${hh} часа`)+
+        `<div style="font-size:14px;color:#e8dcc8">Сколько улиток окажется в ячейке <b style="color:#ffb74d">№${cell}</b> через ${hh} часа?</div>`+
+        l3Ring(n,l3Sim(n,total,hh),{hot:cell,start:0,r:n>6?56:64})+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">${shown.map((v,i)=>`<button class="hint-btn" onclick="l3Act('${lk}','pick:${v}')" style="font-size:19px;min-width:52px;${st.pick===v?'border-color:#ffd966':''}">${v}</button>`).join('')}</div>`+
+        (st.pick===ans?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0">✅ Верно! В ячейке №${cell} — ${ans} улиток</div>`:'')+
+        (st.pick!==null&&st.pick!==undefined&&st.pick!==ans?`<div class="l35-pop" style="font-size:15px;color:#ff9a8a">❌ Не угадал! Правильно: ${ans}. Построй таблицу или используй симметрию!</div>`:'')+
+        btns(btn('🎲 другая задача',`l3Act('${lk}','exam')`),btn('↺',`l3Act('${lk}','rst')`))+
+        sml('подсказка: таблица по часам, симметрия и шахматная раскраска — твоё оружие!'));
+    } else if(step===15){
+      // бонус: шестиугольник 32, 5 часов, противоположная
+      const a=l3Sim(6,32,5);
+      const ans=Math.round(a[3]);
+      h=col(l3B('БОНУС-ЗАДАЧА','#ffb74d')+
+        big('Шестиугольник · 32 улитки · 5 часов')+
+        `<div style="font-size:14px;color:#e8dcc8">Сколько улиток в ячейке, <b style="color:#ffb74d">противоположной</b> стартовой (№3)?</div>`+
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">${[5,10,16,0].map((v,i)=>`<button class="hint-btn" onclick="l3Act('${lk}','pick:${v}')" style="font-size:19px;min-width:56px;${st.pick===v?'border-color:#ffb74d':''}">${v}</button>`).join('')}</div>`+
+        (st.pick===ans?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0">✅ ${ans}! 5 — нечётное → улитки в «чужих» ячейках, а №3 как раз чужая!</div>`:'')+
+        (st.pick!==null&&st.pick!==undefined&&st.pick!==ans?`<div class="l35-pop" style="font-size:15px;color:#ff9a8a">❌ Попробуй ещё! (подсказка: посчитай таблицу до 5 часов или вспомни про чётность)</div>`:'')+
+        l3Ring(6,a,{hot:3,start:0,r:56})+
+        sml('раскрась 6 ячеек в шахматном порядке: через 1, 3, 5 часов улитки в «чужих» ячейках!'));
+    } else {
+      h=col(`<div style="font-size:54px">🐌</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
+            🐌 Все уходят, половина туда-сюда.<br>
+            💎 Сумма всегда 64 — инвариант.<br>
+            🪞 Симметрия: 1=6, 2=5, 3=4.<br>
+            ♟ Шахматная раскраска — для чётных n.<br>
+            📊 Нечётный n → таблица. Ответ: 10!</div>
+        </div>`+
+        btn('⟲ вернуться к бонусу', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там инвариант суммы'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
 function visCandy(el){
   el.innerHTML=`<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
     ${[['Ваня',2,'чёт → правда'],['Стёпа',1,'нечёт → соврал'],['Лёша',3,'нечёт → соврал']].map(([nm,c,st])=>`
