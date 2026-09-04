@@ -4921,9 +4921,9 @@ function l2Rack(cells,opts){
     const hot=opts&&opts.hot===i;
     const show=Math.min(c.n,maxShow);
     const more=c.n-show;
-    const inner=Array.from({length:show},(_,k)=>`<div class="wv-pop" style="animation-delay:${k*0.05}s;font-size:${maxShow>4?11:14}px;line-height:1.05;text-align:center">${e}</div>`).join('');
+    const inner=Array.from({length:show},(_,k)=>`<div class="wv-pop" style="animation-delay:${k*0.05}s;font-size:${maxShow>4?12:15}px;line-height:1.25;text-align:center;padding:0 1px">${e}</div>`).join('');
     out+=`<div class="wv-in" style="flex:1;min-width:${opts&&opts.w?opts.w:34}px;text-align:center;background:${hot?'rgba(255,217,102,.16)':'rgba(255,255,255,.04)'};border:${hot?'1.5px solid #ffd966':'1px solid #3d5c49'};border-radius:10px;padding:3px 1px">
-      <div style="display:flex;flex-direction:column-reverse;justify-content:flex-end;min-height:${Math.min(58,mx*(maxShow>4?12:16)+8)}px;align-items:center">${inner}${more>0?`<div style="font-size:9px;color:#9ec0a8">+${more}</div>`:''}</div>
+      <div style="display:flex;flex-direction:column-reverse;justify-content:flex-end;min-height:${Math.min(64,mx*(maxShow>4?15:19)+10)}px;align-items:center;padding-bottom:1px">${inner}${more>0?`<div style="font-size:9px;color:#9ec0a8">+${more}</div>`:''}</div>
       <div style="font-size:9px;color:#9ec0a8;border-top:1px dashed #3d5c49;margin-top:1px;padding-top:1px">${c.t||''}</div>
     </div>`;
   });
@@ -4967,7 +4967,7 @@ function visL2(el){
     const lk=lidKey(LV.id);
     const step=LV.step||0;
     if(!CHS[lk]) CHS[lk]={};
-    if(CHS[lk]._v2!==step) CHS[lk]={_v2:step,lim:(step===1?11:10)};
+    if(CHS[lk]._v2!==step) CHS[lk]={_v2:step,lim:(step===1?6:10)};
     const st=CHS[lk];
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
@@ -4996,25 +4996,25 @@ function visL2(el){
         (full?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0">⌈10/7⌉ = 2 — где-то сидят двое!</div>`:'')+
         sml('сажай по одному в новую клетку. 7 голубей сядут по одному… а 8-му, 9-му и 10-му придётся подселяться!'));
     } else if(step===1){
-      // (n+1) в n: 11 голубей, 10 клеток
+      // (n+1) в n: классика Дирихле — кролики в ящиках (6 кроликов, 5 ящиков)
       const sat=st.k||0;
-      const cells=Array.from({length:10},(_,i)=>{ const n=(sat>i?1:0)+(Math.max(0,sat-10)>i?1:0); return {n:n,t:'№'+(i+1)}; });
-      const left=11-sat;
+      const cells=Array.from({length:5},(_,i)=>{ const n=(sat>i?1:0)+(Math.max(0,sat-5)>i?1:0); return {n:n,t:'ящик '+(i+1)}; });
+      const left=6-sat;
       h=col(l2B('ПРИНЦИП: (n+1) В n','#7fd1a0')+
-        big('11 голубей, 10 клеток → есть пара')+
-        (left>0?`<div style="font-size:12px;color:#9ec0a8">осталось посадить: ${left}</div>`+`<div style="display:flex;justify-content:center;gap:1px;flex-wrap:wrap;margin:2px 0">${Array.from({length:Math.min(left,11)},()=>`<span class="wv-flick" style="font-size:18px;line-height:1.1">🕊️</span>`).join('')}</div>`:'')+
-        (sat>0?l2Rack(cells,{e:'🕊️',w:26}):`<div style="min-height:52px"></div>`)+
-        btns(btn('🕊️ посадить',`l2Act('${lk}','sit')`,left<=0?'disabled':''),btn('↺ заново',`l2Act('${lk}','rst')`))+
-        (sat>=11?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0">11-му некуда — он подселяется!</div>`:'')+
-        sml('10 клеток можно занять по одному голубю, а 11-му места нет — где-то окажется двое!'));
+        big('6 кроликов, 5 ящиков → есть пара')+
+        (left>0?`<div style="font-size:12px;color:#9ec0a8">ждут посадки: ${left} кролик${left===1?'':'а'}</div>`+`<div style="display:flex;justify-content:center;gap:1px;flex-wrap:wrap;margin:2px 0">${Array.from({length:left},()=>`<span class="wv-flick" style="font-size:20px;line-height:1.1">🐇</span>`).join('')}</div>`:'')+
+        (sat>0?l2Rack(cells,{e:'🐇',w:44}):`<div style="min-height:52px"></div>`)+
+        btns(btn('🐇 посадить кролика',`l2Act('${lk}','sit')`,left<=0?'disabled':''),btn('↺ заново',`l2Act('${lk}','rst')`))+
+        (sat>=6?`<div class="wv-ans" style="font-size:22px;color:#7fd1a0">6-му некуда — он подселяется к соседу!</div>`:'')+
+        sml('5 ящиков можно занять по одному кролику, а 6-му места нет — где-то окажется двое!'));
     } else if(step===2){
       // доказательство от противного по шагам
       const r=Math.min(4,st.r||0);
       const steps=[
-        ['1️⃣','Предположим ПРОТИВНОЕ: в каждой клетке сидит не больше 1 голубя.','#7fb7d8'],
-        ['2️⃣','Тогда во всех 7 клетках поместится не больше 7 голубей.','#7fd1a0'],
-        ['3️⃣','Но у нас 10 голубей — 10 > 7! Противоречие.','#ff9a8a'],
-        ['4️⃣','Значит, предположение неверно: где-то обязательно 2 голубя. Доказано!','#ffd966']
+        ['1️⃣','Предположим ПРОТИВНОЕ: в каждом ящике сидит не больше 1 кролика.','#7fb7d8'],
+        ['2️⃣','Тогда во всех 5 ящиках поместится не больше 5 кроликов.','#7fd1a0'],
+        ['3️⃣','Но у нас 6 кроликов — 6 > 5! Противоречие.','#ff9a8a'],
+        ['4️⃣','Значит, предположение неверно: где-то обязательно 2 кролика. Доказано!','#ffd966']
       ];
       h=col(l2B('ДОКАЗАТЕЛЬСТВО','#7fb7d8')+
         big('Рассуждаем «от противного»')+
@@ -5046,19 +5046,19 @@ function visL2(el){
         (trip?`<div class="wv-ans" style="font-size:20px;color:#ffd966">нашёлся месяц с 3 учениками — гарантированно!</div>`:'')+
         sml('кликай «добавить»: 24 ученика лягут по 2 в месяц, а 25-му некуда — где-то станет 3!'));
     } else if(step===5){
-      // обобщение: слайдер голубей/клеток
+      // обобщение: слайдер кроликов/ящиков
       const dn=st.dn||9, ck=st.ck||5;
       const ans=Math.ceil(dn/ck);
-      const cells=Array.from({length:ck},(_,i)=>({n:Math.floor(dn/ck)+(i<dn%ck?1:0),t:''+(i+1)}));
+      const cells=Array.from({length:ck},(_,i)=>({n:Math.floor(dn/ck)+(i<dn%ck?1:0),t:'ящик '+(i+1)}));
       h=col(l2B('ОБОБЩЕНИЕ','#7fd1a0')+
-        big('Минимум в одной клетке: ⌈n/k⌉')+
+        big('Минимум в одном ящике: ⌈n/k⌉')+
         `<div style="display:flex;gap:18px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">голуби n</div><div style="display:flex;align-items:center;gap:6px"><button class="hint-btn" onclick="l2Act('${lk}','dnM')">−</button><span style="font-family:Georgia,serif;font-size:32px;color:#fff;min-width:34px">${dn}</span><button class="hint-btn" onclick="l2Act('${lk}','dnP')">+</button></div></div>
-          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">клетки k</div><div style="display:flex;align-items:center;gap:6px"><button class="hint-btn" onclick="l2Act('${lk}','ckM')">−</button><span style="font-family:Georgia,serif;font-size:32px;color:#fff;min-width:34px">${ck}</span><button class="hint-btn" onclick="l2Act('${lk}','ckP')">+</button></div></div>
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">кролики n</div><div style="display:flex;align-items:center;gap:6px"><button class="hint-btn" onclick="l2Act('${lk}','dnM')">−</button><span style="font-family:Georgia,serif;font-size:32px;color:#fff;min-width:34px">${dn}</span><button class="hint-btn" onclick="l2Act('${lk}','dnP')">+</button></div></div>
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">ящики k</div><div style="display:flex;align-items:center;gap:6px"><button class="hint-btn" onclick="l2Act('${lk}','ckM')">−</button><span style="font-family:Georgia,serif;font-size:32px;color:#fff;min-width:34px">${ck}</span><button class="hint-btn" onclick="l2Act('${lk}','ckP')">+</button></div></div>
         </div>`+
         `<div style="background:rgba(127,255,170,.09);border:1.5px solid #7fd1a066;border-radius:14px;padding:8px;max-width:300px;font-family:Georgia,serif;color:#7fd1a0;font-size:24px">⌈${dn}/${ck}⌉ = ${ans}</div>`+
-        l2Rack(cells,{e:'🕊️',w:38,max:8})+
-        sml('«честный» расклад — поровну, остаток по одному. В самой набитой клетке всегда ⌈n/k⌉!'));
+        l2Rack(cells,{e:'🐇',w:38,max:8})+
+        sml('«честный» расклад — поровну, остаток по одному. В самом набитом ящике всегда ⌈n/k⌉!'));
     } else if(step===6){
       // конфеты 3 сортов
       const n=st.k||0;
@@ -5119,7 +5119,7 @@ function visL2(el){
         `<div style="font-size:12.5px;color:#9ec0a8">ящики — 5 остатков (0,1,2,3,4). Бросаем числа!</div>`+
         `<div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:2px 0">${nums.map((x,i)=>`<span class="${i<got.length?'wv-pop':''}" style="font-family:Georgia,serif;font-size:19px;color:${i<got.length?'#7fd1a0':'#4a5c52'};border:1px solid ${i<got.length?'#7fd1a066':'#3d5c49'};border-radius:9px;padding:3px 9px;background:${i<got.length?'rgba(127,209,160,.08)':'transparent'}">${i<got.length?'✓ '+x:x}</span>`).join('')}</div>`+
         (got.length>0?l2Rack([0,1,2,3,4].map(i=>({n:cnt[i],t:'ост. '+i})),{e:'🔢',w:48,max:3}):`<div style="min-height:48px"></div>`)+
-        btns(btn('🎲 бросить '+(next!=null?next:'—'),`l2Act('${lk}','num:'+next)`,next==null?'disabled':''),btn('↺',`l2Act('${lk}','rst')`))+
+        btns(btn('🎲 бросить '+(next!=null?next:'—'),`l2Act('${lk}','num:${next}')`,next==null?'disabled':''),btn('↺',`l2Act('${lk}','rst')`))+
         (dup?`<div class="wv-ans" style="font-size:17px;color:#cbb89a">два числа в одном остатке: их разность делится на 5!</div>`:'')+
         sml('6 чисел, 5 ящиков: шестое обязано попасть в занятый остаток!'));
     } else if(step===10){
