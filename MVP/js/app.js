@@ -296,48 +296,61 @@ function _obTrace(ch, fontPx){
     const ink=new Uint8Array(W*H);
     for(let i=0;i<W*H;i++){ ink[i] = img[i*4+3] > 60 ? 1 : 0; }
     const isInk=(px,py)=> px>=0&&py>=0&&px<W&&py<H&&ink[py*W+px]===1;
-    // граничные пиксели (сосед с пустотой)
     const bound=new Uint8Array(W*H);
     for(let y=0;y<H;y++)for(let px=0;px<W;px++){
       if(!ink[y*W+px]) continue;
       if(!isInk(px-1,y)||!isInk(px+1,y)||!isInk(px,y-1)||!isInk(px,y+1)) bound[y*W+px]=1;
     }
     const visited=new Uint8Array(W*H);
-    const nbr=[[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1],[1,-1]]; // по часовой
+    // по часовой, начиная с востока: 0=E 1=SE 2=S 3=SW 4=W 5=NW 6=N 7=NE
+    const nbr=[[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1],[1,-1]];
     for(let sy=0;sy<H;sy++)for(let sx=0;sx<W;sx++){
       if(!bound[sy*W+sx]||visited[sy*W+sx]) continue;
-      // стартовая точка — граничная; идём по Moore
-      const chain=[];
-      let cx0=sx, cy0=sy, cx=sx, cy=sy, dir=0;
-      let guard=0;
-      do{
+      const chain=[]; let cx=sx, cy=sy, prevDir=4; // «пришли» с запада (на старте сверху-слева)
+      let guard=0, closed=false;
+      while(guard<W*H*2){
         chain.push([cx,cy]);
         visited[cy*W+cx]=1;
-        // ищем следующий граничный пиксель по часовой, начиная с направления назад+1
+        // поиск следующего: против часовой от (prevDir+1) => идём вдоль внешней кромки
         let found=false;
-        for(let k=0;k<8;k++){
-          const d=(dir+7-k+8)%8; // против часовой = следуем по внешней кромке
+        for(let k=1;k<=8;k++){
+          const d=(prevDir+8-k)%8;
           const nx=cx+nbr[d][0], ny=cy+nbr[d][1];
-          if(nx>=0&&ny>=0&&nx<W&&ny<H&&bound[ny*W+nx]&&!visited[ny*W+nx]){
-            // не разрешаем диагональ через угол
-            if(nbr[d][0]!==0&&nbr[d][1]!==0){
-              if(!isInk(cx+nbr[d][0],cy)&&!isInk(cx,cy+nbr[d][1])) continue;
-            }
-            cx=nx; cy=ny; dir=d; found=true; break;
+          if(nx<0||ny<0||nx>=W||ny>=H) continue;
+          if(!bound[ny*W+nx]) continue;
+          if(visited[ny*W+nx]){
+            if(nx===sx&&ny===sy){ closed=true; }
+            continue;
           }
+          // диагональ не должна проходить «сквозь угол» (оба ортогональных соседа пусты)
+          if(nbr[d][0]!==0&&nbr[d][1]!==0){
+            if(!isInk(cx+nbr[d][0],cy)&&!isInk(cx,cy+nbr[d][1])) continue;
+          }
+          cx=nx; cy=ny; prevDir=(d+4)%8; found=true; break;
         }
+        if(closed) break;
         if(!found) break;
         guard++;
-      }while(!(cx===sx&&cy===sy)&&guard<W*H);
-      if(chain.length<6) continue;
-      // сглаживание: убираем почти коллинеарные точки
+      }
+      if(chain.length<12) continue;      // слишком коротко — мусор
+      // сглаживание: убираем коллинеарные и почти-коллинеарные, шаг по цепочке
       const pts=[];
       for(let i=0;i<chain.length;i++){
-        const p=chain[i], q=chain[(i+1)%chain.length], r=chain[(i+2)%chain.length];
-        const cross=(q[0]-p[0])*(r[1]-q[1])-(q[1]-p[1])*(r[0]-q[0]);
-        if(Math.abs(cross)>0.15*S*S || Math.hypot(q[0]-p[0],q[1]-p[1])>S*1.6) pts.push([(q[0]-bx)/S,(by-q[1])/S]);
+        const q=chain[i];
+        const p=chain[(i+chain.length-1)%chain.length];
+        const r=chain[(i+1)%chain.length];
+        const ax=q[0]-p[0], ay=q[1]-p[1], bx2=r[0]-q[0], by2=r[1]-q[1];
+        const cross=ax*by2-ay*bx2;
+        const same=Math.abs(ax)+Math.abs(ay);
+        if(cross===0 && same<=1) continue;          // строго прямой шаг
+        if(same===0) continue;                       // дубль
+        pts.push([(q[0]-bx)/S,(by-q[1])/S]);
       }
-      if(pts.length>4) res.contours.push(pts);
+      // добавляем первую точку в конец, чтобы контур был замкнут
+      if(pts.length>4){
+        const first=pts[0];
+        res.contours.push(pts.concat([first]));
+      }
     }
     res.adv=adv;
   }catch(e){ res={adv:0,contours:[]}; }
@@ -395,53 +408,51 @@ function obStarRun(str){
     traces.push(t);
     cx+=adv;
   }
-  // строим единый путь: полёты между буквами + контуры букв
-  const path=[]; // [ {x,y} ]
-  const dust=[]; let P=null;
-  const segs=[];
-  const fly=(from,to)=>{
-    if(!from){ path.push({x:to.x,y:to.y}); return; }
-    const steps=Math.max(4,Math.round(Math.hypot(to.x-from.x,to.y-from.y)/7));
+  // внешний контур буквы = самый длинный (периметр больше → это внешняя граница)
+  const outerOf=(t)=> t.contours.length? t.contours.reduce((a,b)=> b.length>a.length?b:a) : null;
+  const topPoint=(lt,loop)=>{
+    let best=0;
+    for(let q=1;q<loop.length;q++){
+      const yq=loop[q][1];                       // p[1] — вверх от базовой линии
+      if(yq>loop[best][1]) best=q;
+    }
+    return {x:lt.x+loop[best][0], y:lt.base-loop[best][1], idx:best};
+  };
+  // путь: для каждой буквы — полный обход внешнего контура (от верхней точки),
+  // между буквами — короткая дуга-«перелёт» поверх букв
+  const path=[]; const dust=[];
+  const arc=(a,b)=>{
+    if(!a){ path.push({x:b.x,y:b.y}); return; }
+    const dx=b.x-a.x, dy=b.y-a.y;
+    const steps=Math.max(6,Math.round(Math.hypot(dx,dy)/6));
     for(let i=1;i<=steps;i++){
-      path.push({x:from.x+(to.x-from.x)*i/steps, y:from.y+(to.y-from.y)*i/steps});
+      const t=i/steps;
+      const lift=Math.sin(t*Math.PI)*10;         // дуга вверх
+      path.push({x:a.x+dx*t, y:a.y+dy*t-lift});
     }
   };
-  let i=0;
+  let last=null; let idx=0;
   for(const L of traces){
-    const lt=letters[i];
-    // точка входа: верх контура первой буквы (или центр)
-    let entry=null;
-    if(L.contours.length){
-      // верхняя точка первого контура
-      let best=null;
-      for(const p of L.contours[0]){
-        const gx=lt.x+p[0], gy=lt.base-p[1];
-        if(!best||gy<best.y) best={x:gx,y:gy};
-      }
-      entry=best||{x:lt.x+lt.adv/2,y:lt.base};
-    } else {
-      entry={x:lt.x+lt.adv/2,y:lt.base};
+    const lt=letters[idx]; idx++;
+    const loop=outerOf(L);
+    if(!loop){ // пробел или нет контура — просто перелетаем
+      const c={x:lt.x+lt.adv/2, y:lt.base};
+      arc(last,c); last=c; continue;
     }
-    fly(P,entry);
-    // контур буквы
-    for(const loop of L.contours){
-      // начало — верхняя точка контура
-      let si=0;
-      for(let q=0;q<loop.length;q++){
-        const gx=lt.x+loop[q][0], gy=lt.base-loop[q][1];
-        if(gy<lt.base-loop[si][1] || (Math.abs(gy-(lt.base-loop[si][1]))<0.01&&gx<lt.x+loop[si][0])) si=q;
-      }
-      for(let q=0;q<=loop.length;q++){
-        const p=loop[(si+q)%loop.length];
-        path.push({x:lt.x+p[0], y:lt.base-p[1]});
-      }
+    const tp=topPoint(lt,loop);
+    arc(last,tp);
+    // обход внешнего контура целиком, по порядку от верхней точки
+    const n=loop.length;
+    for(let q=0;q<=n;q++){
+      const p=loop[(tp.idx+q)%n];
+      path.push({x:lt.x+p[0], y:lt.base-p[1]});
     }
-    P=path[path.length-1]||entry;
-    i++;
+    last=path[path.length-1];
   }
   // звезда + пыль
   const total=path.length;
-  let t=0, speed=0.012, dustTimer=0;
+  // скорость постоянна: t растёт так, чтобы весь путь занимал ~3.2 c при 60 fps
+  let t=0, speed=1/(3.2*60), dustTimer=0;
   const prevRaf=_obRun; if(prevRaf&&prevRaf.cancel) prevRaf.cancel();
   let cancelled=false;
   const run={cancel:()=>{cancelled=true;}};
@@ -465,10 +476,10 @@ function obStarRun(str){
     if(t>=1){ // финал: звёздочка-огонёк в конце имени
       const endX=x0+totalW+6;
       const al=0.55+0.45*Math.sin(Date.now()/180);
-      ctx.font='15px Georgia'; ctx.textAlign='left';
-      ctx.shadowColor='rgba(217,164,65,.9)'; ctx.shadowBlur=8;
+      ctx.font='10px Georgia'; ctx.textAlign='left';
+      ctx.shadowColor='rgba(217,164,65,.9)'; ctx.shadowBlur=6;
       ctx.fillStyle='rgba(255,224,140,'+al+')';
-      ctx.fillText(starSvg,endX,base+5);
+      ctx.fillText(starSvg,endX,base+3);
       ctx.shadowBlur=0;
       // медленно гаснущая пыль
       _obStepDust(ctx,dust,0.02);
@@ -483,9 +494,9 @@ function obStarRun(str){
       for(let k=1;k<=3;k++){
         const bi=Math.max(0,idx-k*3);
         const bp=path[bi];
-        dust.push({x:bp.x+(Math.random()-.5)*4, y:bp.y+(Math.random()-.5)*4,
-                   vx:(Math.random()-.5)*0.6, vy:-0.3-Math.random()*0.7,
-                   life:1, decay:0.02+Math.random()*0.03, r:1+Math.random()*1.8});
+        dust.push({x:bp.x+(Math.random()-.5)*3, y:bp.y+(Math.random()-.5)*3,
+                   vx:(Math.random()-.5)*0.5, vy:-0.2-Math.random()*0.5,
+                   life:1, decay:0.03+Math.random()*0.04, r:0.7+Math.random()*1.1});
       }
     }
     // рисуем лёгкий золотой след
@@ -494,10 +505,10 @@ function obStarRun(str){
     for(let k=Math.max(0,idx-14);k<=idx;k++){ const q=path[k]; k===Math.max(0,idx-14)?ctx.moveTo(q.x,q.y):ctx.lineTo(q.x,q.y); }
     ctx.stroke();
     // звезда
-    ctx.font='16px Georgia'; ctx.textAlign='left';
-    ctx.shadowColor='rgba(255,225,150,1)'; ctx.shadowBlur=10;
+    ctx.font='10px Georgia'; ctx.textAlign='left';
+    ctx.shadowColor='rgba(255,225,150,1)'; ctx.shadowBlur=6;
     ctx.fillStyle='#fff3c4';
-    ctx.fillText(starSvg,p.x-4,p.y+5);
+    ctx.fillText(starSvg,p.x-2.5,p.y+3);
     ctx.shadowBlur=0;
     _obStepDust(ctx,dust,1);
     _obRaf=requestAnimationFrame(frame);
