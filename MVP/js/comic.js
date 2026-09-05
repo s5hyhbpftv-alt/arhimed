@@ -1504,6 +1504,47 @@ function coinsSVG(){
       <text x="180" y="222" text-anchor="middle" font-size="15" fill="#e86a5a">(40+70):2 = 55 — неверно!</text>
     </svg>`; }
 
+  function pourSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#16243a"/>
+      <text x="26" y="40" font-size="21" font-weight="bold" fill="#ffd76a">Ведро 7 л и банка 3 л → 1 л</text>
+      <!-- ведро 7 л -->
+      <rect x="60" y="70" width="100" height="120" rx="8" fill="none" stroke="#7fd1ff" stroke-width="4"/>
+      <rect x="62" y="106" width="96" height="82" fill="rgba(127,209,255,.25)"/>
+      <text x="110" y="176" text-anchor="middle" font-size="16" fill="#c4e6ff">7 л</text>
+      <!-- банка 3 л -->
+      <rect x="220" y="120" width="70" height="70" rx="6" fill="none" stroke="#ffd76a" stroke-width="4"/>
+      <rect x="222" y="150" width="66" height="38" fill="rgba(255,215,106,.25)"/>
+      <text x="255" y="180" text-anchor="middle" font-size="15" fill="#ffe9b0">3 л</text>
+      <text x="110" y="230" text-anchor="middle" font-size="18" fill="#f4e9c8">7 − 3 − 3 = 1</text>
+    </svg>`; }
+  function divmodSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2a3d"/>
+      <rect x="10" y="10" width="340" height="220" rx="8" fill="none" stroke="#3f6a9f" stroke-width="4"/>
+      <text x="30" y="48" font-size="21" font-weight="bold" fill="#ffd76a">48 : 5 — деление с остатком</text>
+      <text x="60" y="96" font-size="40" fill="#f4e9c8">48 = 9·5 + 3</text>
+      <text x="60" y="136" font-size="26" fill="#7fd1ff">частное 9 · остаток 3</text>
+      <rect x="30" y="156" width="300" height="50" rx="12" fill="rgba(232,106,90,.14)" stroke="#e86a5a" stroke-width="3"/>
+      <text x="180" y="189" text-anchor="middle" font-size="20" font-weight="bold" fill="#ffcfc2">остаток всегда меньше делителя!</text>
+    </svg>`; }
+  function pctSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#231a10"/>
+      <text x="26" y="40" font-size="21" font-weight="bold" fill="#ffd76a">Проценты — от разных чисел</text>
+      <rect x="30" y="64" width="80" height="44" rx="8" fill="#4a93d0" stroke="#9fd0e8" stroke-width="3"/>
+      <text x="70" y="92" text-anchor="middle" font-size="22" fill="#fff">100</text>
+      <text x="122" y="92" font-size="24" fill="#8fd1a8">+10% →</text>
+      <rect x="182" y="64" width="80" height="44" rx="8" fill="#5f9a6a" stroke="#8fd1a8" stroke-width="3"/>
+      <text x="222" y="92" text-anchor="middle" font-size="22" fill="#fff">110</text>
+      <text x="274" y="92" font-size="24" fill="#ffcfc2">−10% →</text>
+      <rect x="38" y="122" width="80" height="44" rx="8" fill="#e86a5a" stroke="#ffcfc2" stroke-width="3"/>
+      <text x="78" y="150" text-anchor="middle" font-size="22" fill="#fff">99</text>
+      <text x="140" y="150" font-size="20" fill="#ffcfc2">99 < 100 !</text>
+      <text x="40" y="200" font-size="18" fill="#f4e9c8">скидка 20% от 200 = 40 → 160</text>
+      <text x="40" y="226" font-size="18" fill="#8fd1a8">+50% = ×1,5</text>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1553,6 +1594,9 @@ function coinsSVG(){
     else if(scene==='prob') base=probSVG();
     else if(scene==='est') base=estSVG();
     else if(scene==='avg') base=avgSVG();
+    else if(scene==='pour') base=pourSVG();
+    else if(scene==='divmod') base=divmodSVG();
+    else if(scene==='pct') base=pctSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1663,6 +1707,9 @@ function coinsSVG(){
       .c2-stage.c2-bg-prob { background:linear-gradient(#14241c,#101c15 45%,#0a140f); }
       .c2-stage.c2-bg-est { background:linear-gradient(#1e2a3d,#182338 45%,#101a2c); }
       .c2-stage.c2-bg-avg { background:linear-gradient(#16251c,#122017 45%,#0c1a11); }
+      .c2-stage.c2-bg-pour { background:linear-gradient(#16243a,#122038 45%,#0c1628); }
+      .c2-stage.c2-bg-divmod { background:linear-gradient(#1e2a3d,#182338 45%,#101a2c); }
+      .c2-stage.c2-bg-pct { background:linear-gradient(#231a10,#1c140c 45%,#140d08); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
