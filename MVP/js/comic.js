@@ -1886,6 +1886,227 @@ function coinsSVG(){
       <text x="18" y="54" font-size="18" font-weight="bold" fill="#c9a8ff">Системы линейных уравнений</text>
       ${m}</svg>`; }
 
+  /* --- 402: линейная функция y=kx+b (оси, прямые, k и b) --- */
+  function linfSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    const axes=`<line x1="30" y1="146" x2="330" y2="146" stroke="#f4e9c8" stroke-width="3"/>
+      <line x1="180" y1="40" x2="180" y2="220" stroke="#f4e9c8" stroke-width="3"/>
+      <polygon points="330,146 322,140 322,152" fill="#f4e9c8"/>
+      <polygon points="180,40 174,48 186,48" fill="#f4e9c8"/>
+      <text x="318" y="162" font-size="13" fill="#9fc0e8">x</text>
+      <text x="168" y="46" font-size="13" fill="#9fc0e8">y</text>`;
+    const grid=`<g stroke="rgba(255,255,255,.09)" stroke-width="1">
+      <line x1="60" y1="40" x2="60" y2="220"/><line x1="110" y1="40" x2="110" y2="220"/><line x1="250" y1="40" x2="250" y2="220"/><line x1="300" y1="40" x2="300" y2="220"/>
+      <line x1="30" y1="106" x2="330" y2="106"/><line x1="30" y1="66" x2="330" y2="66"/><line x1="30" y1="186" x2="330" y2="186"/><line x1="30" y1="226" x2="330" y2="226"/>
+    </g>`;
+    if(v===0){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">график y = kx + b — всегда прямая</text>
+        ${grid}${axes}
+        <line x1="70" y1="186" x2="290" y2="106" stroke="#ffd76a" stroke-width="5" stroke-linecap="round"/>
+        <text x="180" y="210" text-anchor="middle" font-size="17" font-weight="bold" fill="#ffd76a">прямая линия!</text>
+        <text x="180" y="232" text-anchor="middle" font-size="14" fill="#8fa08f">x растёт → y меняется равномерно</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">k — угловой коэффициент: наклон</text>
+        ${grid}${axes}
+        <line x1="70" y1="186" x2="290" y2="80" stroke="#8fd1a8" stroke-width="5" stroke-linecap="round"/>
+        <text x="292" y="76" font-size="15" fill="#8fd1a8">k &gt; 0</text>
+        <line x1="70" y1="80" x2="290" y2="186" stroke="#e86a5a" stroke-width="5" stroke-linecap="round"/>
+        <text x="60" y="74" font-size="15" fill="#e86a5a">k &lt; 0</text>
+        <text x="180" y="214" text-anchor="middle" font-size="15" fill="#8fa08f">k &gt; 0 — растёт · k &lt; 0 — убывает</text>
+        <text x="180" y="234" text-anchor="middle" font-size="13" fill="#8fa08f">чем больше |k|, тем круче прямая</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">b — пересечение с осью y</text>
+        ${grid}${axes}
+        <line x1="70" y1="146" x2="290" y2="146" stroke="#7fd1ff" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="180" cy="146" r="8" fill="#ffd76a"/>
+        <text x="188" y="142" font-size="15" fill="#ffd76a">(0; b)</text>
+        <text x="180" y="206" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffd76a">x = 0 → y = k·0 + b = b</text>
+        <text x="180" y="230" text-anchor="middle" font-size="14" fill="#8fa08f">прямая встречает ось y в точке (0; b)</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">строим по двум точкам: y = 2x + 1</text>
+        ${grid}${axes}
+        <line x1="70" y1="186" x2="290" y2="106" stroke="#ffd76a" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="140" cy="166" r="8" fill="#7fd1ff"/><text x="112" y="162" font-size="14" fill="#7fd1ff">(0;1)</text>
+        <circle cx="220" cy="126" r="8" fill="#8fd1a8"/><text x="226" y="120" font-size="14" fill="#8fd1a8">(1;3)</text>
+        <text x="180" y="216" text-anchor="middle" font-size="16" fill="#f4e9c8">x=0 → y=1 · x=1 → y=3</text>
+        <text x="180" y="236" text-anchor="middle" font-size="14" fill="#8fa08f">двух точек достаточно, чтобы нарисовать прямую</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">таблица значений y = 2x + 1</text>
+        ${grid}${axes}
+        <line x1="70" y1="186" x2="290" y2="106" stroke="#ffd76a" stroke-width="5" stroke-linecap="round"/>
+        <g font-size="17" fill="#f4e9c8" text-anchor="middle">
+          <rect x="62" y="92" width="236" height="30" rx="8" fill="rgba(79,141,255,.22)"/>
+          <text x="95" y="113">x</text><text x="180" y="113">0</text><text x="265" y="113">1</text>
+          <rect x="62" y="122" width="236" height="30" rx="8" fill="rgba(143,209,168,.16)"/>
+          <text x="95" y="143">y</text><text x="180" y="143">1</text><text x="265" y="143">3</text>
+        </g>
+        <text x="180" y="222" text-anchor="middle" font-size="15" fill="#8fd1a8">подставляем x в формулу — получаем y</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">в жизни: k — цена, b — начальная плата</text>
+        ${grid}${axes}
+        <line x1="70" y1="176" x2="290" y2="96" stroke="#8fd1a8" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="120" cy="156" r="7" fill="#ffd76a"/>
+        <text x="180" y="206" text-anchor="middle" font-size="15" fill="#f4e9c8">такси: y = 30x + 70</text>
+        <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">70 ₽ посадка + 30 ₽ за каждый км — прямая!</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">главное о k и b — одной картинкой</text>
+        ${grid}${axes}
+        <line x1="80" y1="166" x2="280" y2="126" stroke="#8fd1a8" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="180" cy="146" r="7" fill="#ffd76a"/>
+        <text x="180" y="206" text-anchor="middle" font-size="15" fill="#8fd1a8">k — наклон (как быстро растёт)</text>
+        <text x="180" y="228" text-anchor="middle" font-size="15" fill="#7fd1ff">b — старт на оси y (0; b)</text>`;
+    } else {
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">подставь x = 3 в формулу y = 2x + 1</text>
+        ${grid}${axes}
+        <line x1="70" y1="186" x2="290" y2="106" stroke="#ffd76a" stroke-width="5" stroke-linecap="round"/>
+        <text x="180" y="176" text-anchor="middle" font-size="24" font-weight="bold" fill="#ffd76a" class="c2a-spark">y = 2·3 + 1 = ?</text>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fa08f">считай: сначала умножь, потом прибавь</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#17253d"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#3f6a9f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#ffd76a">Линейная функция y = kx + b</text>
+      ${m}</svg>`; }
+
+  /* --- 403: линейные неравенства (числовая ось, знак) --- */
+  function neqSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    const axis=(big,fill,xRight)=>`<line x1="40" y1="150" x2="320" y2="150" stroke="#f4e9c8" stroke-width="4"/>
+      <polygon points="320,150 312,144 312,156" fill="#f4e9c8"/>
+      <g font-size="13" fill="#8fa7c8" text-anchor="middle">
+        <text x="60" y="138">−4</text><text x="100" y="138">−2</text><text x="140" y="138">0</text>
+        <text x="180" y="138">2</text><text x="220" y="138">4</text><text x="260" y="138">6</text><text x="300" y="138">8</text>
+      </g>
+      <line x1="${xRight}" y1="150" x2="316" y2="150" stroke="${big? '#8fd1a8':'#e86a5a'}" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="${xRight}" cy="150" r="9" fill="${fill? '#8fd1a8':'#231a2a'}" stroke="${big? '#8fd1a8':'#e86a5a'}" stroke-width="4"/>`;
+    if(v===0){
+      m=`<text x="180" y="84" text-anchor="middle" font-size="16" fill="#b6d4e8">решаем почти как уравнение!</text>
+        <text x="180" y="126" text-anchor="middle" font-size="26" font-weight="bold" fill="#f4e9c8">2x + 1 &gt; 7</text>
+        <text x="180" y="158" text-anchor="middle" font-size="20" fill="#7fd1ff">переносим: 2x &gt; 7 − 1</text>
+        <text x="180" y="190" text-anchor="middle" font-size="20" fill="#8fd1a8">2x &gt; 6</text>
+        <text x="180" y="222" text-anchor="middle" font-size="15" fill="#8fa08f">знак при переносе через = не меняется</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="84" text-anchor="middle" font-size="16" fill="#b6d4e8">делим на положительное 2 — знак тот же</text>
+        <text x="180" y="126" text-anchor="middle" font-size="26" font-weight="bold" fill="#f4e9c8">2x &gt; 6  |  : 2</text>
+        <text x="180" y="160" text-anchor="middle" font-size="26" font-weight="bold" fill="#8fd1a8">x &gt; 3</text>
+        ${axis(true,true,240)}
+        <text x="180" y="224" text-anchor="middle" font-size="14" fill="#8fa08f">кружок на 3 пустой: само число 3 не подходит</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="84" text-anchor="middle" font-size="16" fill="#ffd0c0">а теперь ВНИМАНИЕ: делим на отрицательное!</text>
+        <text x="180" y="126" text-anchor="middle" font-size="24" font-weight="bold" fill="#f4e9c8">−3x &lt; 9  |  : (−3)</text>
+        <text x="180" y="162" text-anchor="middle" font-size="22" font-weight="bold" fill="#ffd76a">x &gt; −3</text>
+        <text x="180" y="190" text-anchor="middle" font-size="16" fill="#e86a5a">знак ПЕРЕВЕРНУЛСЯ: &lt; стал &gt;</text>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fa08f">минус «развернул» неравенство — как зеркало</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">почему так? проверяем на числах</text>
+        <text x="180" y="116" text-anchor="middle" font-size="20" fill="#f4e9c8">−3·(−2) = 6 и 6 &lt; 9 — верно</text>
+        <text x="180" y="146" text-anchor="middle" font-size="20" fill="#f4e9c8">−3·(−4) = 12 и 12 &lt; 9 — НЕВЕРНО</text>
+        <text x="180" y="182" text-anchor="middle" font-size="18" fill="#8fd1a8">x = −2 подходит, x = −4 — нет</text>
+        <text x="180" y="212" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffd76a">значит x &gt; −3, а не x &lt; −3!</text>
+        <text x="180" y="232" text-anchor="middle" font-size="13" fill="#8fa08f">проверка числом — лучшая страховка</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="84" text-anchor="middle" font-size="16" fill="#b6d4e8">рисуем ответ x &gt; −3 на оси</text>
+        ${axis(true,true,124)}
+        <text x="180" y="196" text-anchor="middle" font-size="18" font-weight="bold" fill="#8fd1a8">x &gt; −3</text>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fa08f">луч вправо: все числа больше −3</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="84" text-anchor="middle" font-size="16" fill="#b6d4e8">если знак ≥ или ≤ — кружок закрашиваем</text>
+        ${axis(true,true,124)}
+        <text x="180" y="196" text-anchor="middle" font-size="16" fill="#8fd1a8">x ≥ −3 — число −3 ТОЖЕ подходит</text>
+        <text x="180" y="220" text-anchor="middle" font-size="14" fill="#8fa08f">закрашенный кружок = число включаем</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">главное правило — запомни навсегда</text>
+        <text x="180" y="120" text-anchor="middle" font-size="21" fill="#f4e9c8">делим на положительное → знак прежний</text>
+        <text x="180" y="152" text-anchor="middle" font-size="21" fill="#ffd76a">делим на отрицательное → знак наоборот</text>
+        <text x="180" y="190" text-anchor="middle" font-size="16" fill="#8fd1a8">умножение на минус — то же самое</text>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fa08f">проверяй ответ подстановкой одного числа!</text>`;
+    } else {
+      m=`<text x="180" y="86" text-anchor="middle" font-size="16" fill="#b6d4e8">делим на −3 — не забудь про знак!</text>
+        <text x="180" y="140" text-anchor="middle" font-size="30" font-weight="bold" fill="#ffd76a" class="c2a-spark">−3x &lt; 9</text>
+        <text x="180" y="188" text-anchor="middle" font-size="20" fill="#7fd1ff">x ? −3</text>
+        <text x="180" y="220" text-anchor="middle" font-size="14" fill="#8fa08f">какой знак поставишь?</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2433"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#a05a9f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#ff8ac0">Линейные неравенства</text>
+      ${m}</svg>`; }
+
+  /* --- 404: признаки равенства треугольников --- */
+  function congSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    const triL=`<polygon points="180,60 90,190 270,190" fill="rgba(127,209,255,.15)" stroke="#7fd1ff" stroke-width="4"/>`;
+    if(v===0){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">два треугольника равны, если их можно совместить</text>
+        ${triL}
+        <text x="180" y="60" text-anchor="middle" font-size="13" fill="#ffd76a">A</text>
+        <text x="78" y="204" text-anchor="middle" font-size="13" fill="#8fd1a8">B</text>
+        <text x="282" y="204" text-anchor="middle" font-size="13" fill="#8fd1a8">C</text>
+        <text x="180" y="126" text-anchor="middle" font-size="15" fill="#9fc0e8">равные стороны и углы —</text>
+        <text x="180" y="150" text-anchor="middle" font-size="15" fill="#9fc0e8">как две одинаковые детали пазла</text>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fa08f">проверять все 6 элементов не обязательно!</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">1-й признак: две стороны и угол МЕЖДУ ними</text>
+        ${triL}
+        <line x1="180" y1="60" x2="90" y2="190" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="180" y1="60" x2="270" y2="190" stroke="#e86a5a" stroke-width="5"/>
+        <path d="M180 60 L160 82 A 34 34 0 0 1 188 76 Z" fill="rgba(255,215,106,.7)"/>
+        <text x="180" y="96" text-anchor="middle" font-size="13" fill="#ffd76a">угол</text>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fa08f">сторона·угол·сторона — как «замок»</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">2-й признак: сторона и два прилежащих угла</text>
+        ${triL}
+        <line x1="90" y1="190" x2="270" y2="190" stroke="#8fd1a8" stroke-width="6"/>
+        <path d="M180 60 L142 78 A 60 60 0 0 1 118 122 Z" fill="rgba(255,215,106,.55)"/>
+        <path d="M180 60 L218 78 A 60 60 0 0 0 242 122 Z" fill="rgba(127,209,255,.55)"/>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fa08f">сторона между углами — «полка» для углов</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">3-й признак: три стороны</text>
+        <polygon points="180,60 90,190 270,190" fill="rgba(143,209,168,.15)" stroke="#8fd1a8" stroke-width="4"/>
+        <line x1="180" y1="60" x2="90" y2="190" stroke="#e86a5a" stroke-width="5"/>
+        <line x1="90" y1="190" x2="270" y2="190" stroke="#7fd1ff" stroke-width="5"/>
+        <line x1="270" y1="190" x2="180" y2="60" stroke="#ffd76a" stroke-width="5"/>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fa08f">стороны определяют треугольник полностью</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">почему «сторона + угол + сторона» хватает?</text>
+        <polygon points="180,60 90,190 270,190" fill="rgba(127,209,255,.15)" stroke="#7fd1ff" stroke-width="4"/>
+        <line x1="180" y1="60" x2="90" y2="190" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="180" y1="60" x2="270" y2="190" stroke="#e86a5a" stroke-width="5"/>
+        <path d="M180 60 L160 82 A 34 34 0 0 1 188 76 Z" fill="rgba(255,215,106,.7)"/>
+        <text x="180" y="126" text-anchor="middle" font-size="14" fill="#9fc0e8">две «палочки» выходят из A под углом —</text>
+        <text x="180" y="150" text-anchor="middle" font-size="14" fill="#9fc0e8">их концы B и C жёстко заданы!</text>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fa08f">третья сторона BC «дорисуется» сама</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">считаем недостающие углы</text>
+        <polygon points="180,60 90,190 270,190" fill="rgba(255,215,106,.13)" stroke="#ffd76a" stroke-width="4"/>
+        <text x="180" y="74" text-anchor="middle" font-size="14" fill="#ffd76a">60°</text>
+        <text x="112" y="182" text-anchor="middle" font-size="14" fill="#8fd1a8">70°</text>
+        <text x="248" y="182" text-anchor="middle" font-size="14" fill="#7fd1ff">?°</text>
+        <text x="180" y="200" text-anchor="middle" font-size="17" fill="#f4e9c8">сумма углов = 180°</text>
+        <text x="180" y="222" text-anchor="middle" font-size="15" fill="#8fd1a8">угол C = 180 − 60 − 70 = 50°</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">в задачах ищем пары равных элементов</text>
+        <text x="180" y="120" text-anchor="middle" font-size="17" fill="#f4e9c8">1-й: сторона — угол — сторона</text>
+        <text x="180" y="148" text-anchor="middle" font-size="17" fill="#f4e9c8">2-й: угол — сторона — угол</text>
+        <text x="180" y="176" text-anchor="middle" font-size="17" fill="#f4e9c8">3-й: сторона — сторона — сторона</text>
+        <text x="180" y="210" text-anchor="middle" font-size="14" fill="#8fa08f">пометь равные элементы галочками — сразу видно</text>`;
+    } else {
+      m=`<text x="180" y="84" text-anchor="middle" font-size="16" fill="#b6d4e8">две стороны и угол между ними — это…</text>
+        <polygon points="180,70 100,180 260,180" fill="rgba(127,209,255,.15)" stroke="#7fd1ff" stroke-width="4"/>
+        <line x1="180" y1="70" x2="100" y2="180" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="180" y1="70" x2="260" y2="180" stroke="#e86a5a" stroke-width="5"/>
+        <path d="M180 70 L162 90 A 30 30 0 0 1 187 86 Z" fill="rgba(255,215,106,.7)"/>
+        <text x="180" y="226" text-anchor="middle" font-size="17" fill="#ffd76a" class="c2a-spark">какой признак?</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2a3d"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#3f7a9f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#8fd1a8">Признаки равенства треугольников</text>
+      ${m}</svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1952,6 +2173,9 @@ function coinsSVG(){
     else if(scene==='poly') base=polySVG(fr);
     else if(scene==='fact') base=factSVG(fr);
     else if(scene==='syst') base=systSVG(fr);
+    else if(scene==='linf') base=linfSVG(fr);
+    else if(scene==='neq') base=neqSVG(fr);
+    else if(scene==='cong') base=congSVG(fr);
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
