@@ -86,6 +86,7 @@ function hud(){
 }
 /* ---------- ОНБОРДИНГ ---------- */
 let chosenCol=COLORS[0], chosenGender='boy';
+let chosenKlass=7, chosenLevel='novice';
 function figSVG(g){
   return g==='girl' ? girlSVG(chosenCol) : boySVG(chosenCol);
 }
@@ -209,10 +210,12 @@ function renderOnboard(){
       <div class="arch"><span class="who">◈ Архимед</span>
         «Назови себя, Исследователь. Острова Познания ждут — а я объясню каждый приём перед тем, как дать тебе задачу».</div>
       <label>Имя героя</label><input id="obName" maxlength="20" placeholder="Как тебя зовут?">
-      <label>Класс</label>
-      <select id="obClass"><option value="1">1 класс</option><option value="2">2 класс</option><option value="3">3 класс</option><option value="4">4 класс</option><option value="5">5 класс</option><option value="6">6 класс</option><option selected value="7">7 класс</option><option value="8">8 класс</option><option value="9">9 класс</option></select>
-      <label>Уровень</label>
-      <select id="obLevel"><option value="novice">🌱 Новичок — объясняй побольше</option><option value="pro">⚡ Уже решал олимпиады</option></select>
+      <div class="ob-cap">🎓 Мой класс</div>
+      <div class="obk-grid">${[1,2,3,4,5,6,7,8,9].map(k=>`<button type="button" class="obk ${k===chosenKlass?'sel':''}" data-k="${k}" onclick="pickKlass(this)"><b>${k}</b><span>КЛАСС</span></button>`).join('')}</div>
+      <div class="ob-hint" id="klassTip">${chosenKlass===6?'🎁 Для 6 класса открыты задачи 5–8 классов':'Уроки и задания — только твоего класса'}</div>
+      <div class="ob-cap">⚡ Уровень сложности</div>
+      <button type="button" class="obl ${chosenLevel==='novice'?'sel':''}" data-l="novice" onclick="pickLevel(this)"><span class="ob-ico">🌱</span><span style="flex:1"><span class="ob-t">Новичок</span><span class="ob-d">Только начинаешь? Архимед подробно объяснит каждый приём и подскажет, если трудно.</span></span></button>
+      <button type="button" class="obl ${chosenLevel==='pro'?'sel':''}" data-l="pro" onclick="pickLevel(this)"><span class="ob-ico">⚡</span><span style="flex:1"><span class="ob-t">Олимпиец</span><span class="ob-d">Уже решал олимпиадные задачи — объяснения короче, задания смелее.</span></span></button>
       <label>Герой</label>
       <div class="gender-pick">
         <button type="button" class="gender-btn ${chosenGender==='boy'?'sel':''}" onclick="pickGender('boy')">👦 Мальчик</button>
@@ -224,6 +227,16 @@ function renderOnboard(){
       <button class="btn" style="width:100%" onclick="finishOnboard()">В путь →</button>
     </div></div>`;
   hud();
+}
+function pickKlass(el){
+  chosenKlass=+el.dataset.k;
+  document.querySelectorAll('.obk').forEach(b=>b.classList.toggle('sel', +b.dataset.k===chosenKlass));
+  const tip=document.getElementById('klassTip');
+  if(tip) tip.textContent = chosenKlass===6 ? '🎁 Для 6 класса открыты задачи 5–8 классов' : 'Уроки и задания — только твоего класса';
+}
+function pickLevel(el){
+  chosenLevel=el.dataset.l;
+  document.querySelectorAll('.obl').forEach(b=>b.classList.toggle('sel', b.dataset.l===chosenLevel));
 }
 function pickGender(g){
   chosenGender=g;
@@ -247,8 +260,8 @@ function finishOnboard(){
   const name=document.getElementById('obName').value.trim();
   if(!name){ toast('Архимед ждёт твоё имя!'); return; }
   DB.profile={ name, color:chosenCol, gender:chosenGender,
-    klass:document.getElementById('obClass').value,
-    level:document.getElementById('obLevel').value,
+    klass:String(chosenKlass),
+    level:chosenLevel,
     limitMin:45, createdAt:Date.now() };
   DB.sessionStart=Date.now(); save(); showNav(true); go('path'); toast('Добро пожаловать, '+name+'!');
 }

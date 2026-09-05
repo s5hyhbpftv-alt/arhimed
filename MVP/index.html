@@ -212,6 +212,26 @@
   .gender-btn { background:#20382b; color:var(--ivory); border:2px solid var(--hairline); border-radius:999px;
     font-family:inherit; font-size:14px; padding:8px 16px; cursor:pointer; transition:.15s; }
   .gender-btn.sel { border-color:var(--brass); background:rgba(217,164,65,.18); color:var(--brass); font-weight:bold; }
+  /* онбординг: классы и уровни в фирменном стиле */
+  .obk-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:6px 0 2px; }
+  .obk { background:linear-gradient(180deg,#20382b,#1a2f24); color:var(--ivory); border:2px solid var(--hairline);
+    border-radius:14px; font-family:inherit; cursor:pointer; padding:8px 4px; text-align:center; transition:.15s; }
+  .obk b { display:block; font-size:24px; color:var(--brass); line-height:1.05; font-family:Georgia,serif; }
+  .obk span { font-size:10px; color:var(--muted); letter-spacing:.04em; }
+  .obk.sel { border-color:var(--brass); background:rgba(217,164,65,.22);
+    box-shadow:0 0 0 2px rgba(217,164,65,.3), 0 0 16px rgba(217,164,65,.4); }
+  .obk.sel b { color:#ffe9ad; } .obk.sel span { color:var(--brass); }
+  .obl { display:flex; gap:11px; align-items:flex-start; width:100%; text-align:left; font-family:inherit;
+    background:linear-gradient(180deg,#20382b,#1a2f24); color:var(--ivory); border:2px solid var(--hairline);
+    border-radius:14px; padding:11px 13px; cursor:pointer; transition:.15s; margin:5px 0; }
+  .obl .ob-ico { font-size:24px; line-height:1.2; }
+  .obl .ob-t { font-weight:bold; font-size:15px; color:var(--ivory); display:block; }
+  .obl .ob-d { font-size:11.5px; color:var(--muted); line-height:1.4; margin-top:2px; }
+  .obl.sel { border-color:var(--brass); background:rgba(217,164,65,.18); }
+  .obl.sel .ob-t { color:var(--brass); }
+  .ob-hint { font-size:11px; color:var(--muted); text-align:center; margin:2px 0 6px; min-height:14px; }
+  .ob-cap { font-size:11px; color:var(--glass); letter-spacing:.06em; text-transform:uppercase; margin:10px 0 2px; }
+
   .confetti { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:80; }
   .confetti-piece { position:absolute; top:-12px; width:8px; height:14px; border-radius:2px; opacity:.9; animation:fall linear forwards; }
   @keyframes fall { to { transform:translateY(110vh) rotate(720deg); } }
@@ -622,21 +642,21 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=184"></script>
-<script src="data/lessons.js?v=184"></script>
-<script src="js/comic.js?v=184"></script>
-<script src="js/core.js?v=184"></script>
-<script src="js/engine.js?v=184"></script>
-<script src="js/app.js?v=184"></script>
-<script src="js/dashboard.js?v=184"></script>
-<script src="js/lessons.js?v=184"></script>
-<script src="js/legend.js?v=184"></script>
-<script src="js/simulator.js?v=184"></script>
-<script src="js/duel.js?v=184"></script>
-<script src="js/agent.js?v=184"></script>
-<script src="js/voice.js?v=184"></script>
-<script src="js/assistant.js?v=184"></script>
-<script src="js/agentlive.js?v=184"></script>
+<script src="data/tasks.js?v=185"></script>
+<script src="data/lessons.js?v=185"></script>
+<script src="js/comic.js?v=185"></script>
+<script src="js/core.js?v=185"></script>
+<script src="js/engine.js?v=185"></script>
+<script src="js/app.js?v=185"></script>
+<script src="js/dashboard.js?v=185"></script>
+<script src="js/lessons.js?v=185"></script>
+<script src="js/legend.js?v=185"></script>
+<script src="js/simulator.js?v=185"></script>
+<script src="js/duel.js?v=185"></script>
+<script src="js/agent.js?v=185"></script>
+<script src="js/voice.js?v=185"></script>
+<script src="js/assistant.js?v=185"></script>
+<script src="js/agentlive.js?v=185"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -651,7 +671,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=184').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=185').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
