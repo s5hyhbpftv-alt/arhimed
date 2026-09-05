@@ -306,12 +306,30 @@ def to_lesson(i, d):
       'tasks': [d['t1'], d['t2']],
     }
 
+def merge_drafts(blocks, out):
+    import re as _re
+    js=open(out,encoding='utf-8').read() if os.path.exists(out) else ''
+    existing=set(int(x) for x in _re.findall(r'"id":\s*(\d+)', js)) if js else set()
+    fresh=[b for b in blocks if b['id'] not in existing]
+    if not fresh:
+        print('новых нет (все id уже есть)'); return 0
+    body=',\n'.join(_json.dumps(b,ensure_ascii=False) for b in fresh)
+    if js and 'concat([' in js:
+        i=js.index('concat([')+len('concat([')
+        j=js.rindex(']);')
+        inner=js[i:j].rstrip()
+        if inner and not inner.endswith('{'):
+            inner=inner+','
+        js=js[:i]+inner+'\n'+body+'\n'+js[j:]
+    else:
+        js='window.ARH_LESSONS=(window.ARH_LESSONS||[]).concat([\n'+body+'\n]);'
+    open(out,'w',encoding='utf-8').write(js)
+    print('добавлено уроков:',len(fresh),'id',fresh[0]['id'],'–',fresh[-1]['id'])
+    return len(fresh)
+
 def main():
     blocks=[to_lesson(i,d) for i,d in enumerate(ITEMS)]
-    body=',\n'.join(_json.dumps(b,ensure_ascii=False) for b in blocks)
-    out=('window.ARH_LESSONS=(window.ARH_LESSONS||[]).concat([\n'+body+'\n]);')
-    open(OUT,'w',encoding='utf-8').write(out)
-    print('уроков в набросках:',len(blocks),'id',START_ID,'–',START_ID+len(blocks)-1,'->',OUT)
+    merge_drafts(blocks, OUT)
 
 if __name__=='__main__':
     main()
