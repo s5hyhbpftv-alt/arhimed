@@ -1545,6 +1545,54 @@ function coinsSVG(){
       <text x="40" y="226" font-size="18" fill="#8fd1a8">+50% = ×1,5</text>
     </svg>`; }
 
+  function cutSVG(){
+    let grid='', sq='';
+    for(let r=0;r<4;r++){ for(let c=0;c<6;c++){ grid+=`<rect x="${40+c*34}" y="${60+r*34}" width="34" height="34" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2"/>`; } }
+    for(let r=0;r<2;r++){ for(let c=0;c<3;c++){ sq+=`<rect x="${40+c*68}" y="${60+r*68}" width="68" height="68" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="3"/>`; } }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#16251c"/>
+      <text x="26" y="38" font-size="21" font-weight="bold" fill="#ffd76a">Разрезания и площади</text>
+      ${grid}${sq}
+      <text x="245" y="70" font-size="18" fill="#f4e9c8">6 · 4 = 24 клетки</text>
+      <text x="245" y="98" font-size="18" fill="#7fd1ff">24 : 4 = 6 квадратов 2×2</text>
+      <text x="245" y="140" font-size="18" fill="#8fd1a8">3 полоски по 5 = 15</text>
+      <text x="245" y="168" font-size="18" fill="#8fd1a8">квадрат 5×5 = 25 клеток</text>
+    </svg>`; }
+  function triSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2a3d"/>
+      <text x="26" y="40" font-size="21" font-weight="bold" fill="#ffd76a">Углы треугольника: сумма 180°</text>
+      <polygon points="180,44 66,196 294,196" fill="rgba(127,209,255,.16)" stroke="#7fd1ff" stroke-width="4"/>
+      <text x="180" y="60" text-anchor="middle" font-size="18" fill="#ffd76a">40°</text>
+      <text x="84" y="188" text-anchor="middle" font-size="17" fill="#8fd1a8">70°</text>
+      <text x="276" y="188" text-anchor="middle" font-size="17" fill="#8fd1a8">70°</text>
+      <path d="M180 44 L120 62 A 44 44 0 0 1 154 38 Z" fill="rgba(255,215,106,.35)"/>
+      <text x="120" y="176" font-size="26" fill="#f4e9c8">40 + 70 + 70 = 180</text>
+      <text x="60" y="214" font-size="17" fill="#9fc0e8">у равнобедренного углы при основании равны</text>
+    </svg>`; }
+  function prodSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#231a10"/>
+      <text x="26" y="38" font-size="21" font-weight="bold" fill="#ffd76a">Правило произведения: умножаем</text>
+      <circle cx="180" cy="56" r="16" fill="#e86a5a"/>
+      <text x="180" y="62" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">×</text>
+      <g stroke="#d9a441" stroke-width="3">
+        <line x1="172" y1="70" x2="80" y2="120"/><line x1="180" y1="70" x2="180" y2="120"/><line x1="188" y1="70" x2="280" y2="120"/>
+        <line x1="80" y1="130" x2="50" y2="176"/><line x1="80" y1="130" x2="110" y2="176"/>
+        <line x1="180" y1="130" x2="160" y2="176"/><line x1="180" y1="130" x2="200" y2="176"/>
+        <line x1="280" y1="130" x2="250" y2="176"/><line x1="280" y1="130" x2="310" y2="176"/>
+      </g>
+      <g font-size="16" fill="#f4e9c8">
+        <text x="70" y="128">👕</text><text x="172" y="128">👕</text><text x="272" y="128">👕</text>
+        <text x="50" y="112">👔</text><text x="292" y="112">👔</text>
+      </g>
+      <g font-size="15" fill="#8fd1a8">
+        <text x="36" y="190">👔</text><text x="96" y="190">👔</text><text x="146" y="190">👔</text>
+        <text x="186" y="190">👔</text><text x="238" y="190">👔</text><text x="296" y="190">👔</text>
+      </g>
+      <text x="180" y="222" text-anchor="middle" font-size="19" font-weight="bold" fill="#ffd76a">4 · 3 = 12 комплектов</text>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1597,6 +1645,9 @@ function coinsSVG(){
     else if(scene==='pour') base=pourSVG();
     else if(scene==='divmod') base=divmodSVG();
     else if(scene==='pct') base=pctSVG();
+    else if(scene==='cut') base=cutSVG();
+    else if(scene==='tri') base=triSVG();
+    else if(scene==='prod') base=prodSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1710,6 +1761,9 @@ function coinsSVG(){
       .c2-stage.c2-bg-pour { background:linear-gradient(#16243a,#122038 45%,#0c1628); }
       .c2-stage.c2-bg-divmod { background:linear-gradient(#1e2a3d,#182338 45%,#101a2c); }
       .c2-stage.c2-bg-pct { background:linear-gradient(#231a10,#1c140c 45%,#140d08); }
+      .c2-stage.c2-bg-cut { background:linear-gradient(#16251c,#122017 45%,#0c1a11); }
+      .c2-stage.c2-bg-tri { background:linear-gradient(#1e2a3d,#182338 45%,#101a2c); }
+      .c2-stage.c2-bg-prod { background:linear-gradient(#231a10,#1c140c 45%,#140d08); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
