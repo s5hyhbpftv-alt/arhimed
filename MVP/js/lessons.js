@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(LV.id===30) visL30(el); else if(LV.id===31) visL31(el); else if(LV.id===32) visL32(el); else if(LV.id===250) visL250(el); else if(LV.id===251) visL251(el); else if(LV.id===60) visL60(el); else if(LV.id===61) visL61(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(LV.id===30) visL30(el); else if(LV.id===31) visL31(el); else if(LV.id===32) visL32(el); else if(LV.id===250) visL250(el); else if(LV.id===251) visL251(el); else if(LV.id===60) visL60(el); else if(LV.id===61) visL61(el); else if(LV.id===59) visL59(el); else if(LV.id===62) visL62(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2558,6 +2558,361 @@ function visL61(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там см в метре'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+// ===================== УРОК 59 «ГЕОМЕТРИЧЕСКИЕ ФИГУРЫ» (1–2 класс) =====================
+function l59Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], raw=act.split(':')[1]; const p=isNaN(+raw)?raw:(+raw);
+  if(a0==='e'){ st.e=((st.e==null?0:st.e)+1)%L59_EX.length; st.guess=null; }
+  if(a0==='pick'){ st.guess=p; }
+  if(a0==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+const L59_EX=[
+  {q:'Сколько сторон у квадрата?',a:'4'},
+  {q:'Сколько углов у треугольника?',a:'3'},
+  {q:'Какая фигура без углов?',a:'Круг'},
+  {q:'У какой фигуры все 4 стороны равны?',a:'Квадрат'},
+  {q:'Сколько сторон у пятиугольника?',a:'5'},
+  {q:'Какая фигура — как вытянутый круг?',a:'Овал'},
+  {q:'Сколько углов у прямоугольника?',a:'4'}
+];
+// рисованная фигура kind: dot,line,seg,ray,lom,ang90,angO,angT,tri,sq,rect,circle,oval,pent,hex
+function l59Fig(kind,o){
+  const O=o||{}; const c=O.c||'#ffd966'; const s=O.s||86;
+  const stk=O.w||4;
+  let body='';
+  if(kind==='dot') body=`<circle cx="50" cy="50" r="6" fill="${c}"/>`;
+  else if(kind==='line') body=`<line x1="10" y1="60" x2="90" y2="40" stroke="${c}" stroke-width="${stk}"/><circle cx="6" cy="61" r="2.4" fill="${c}"/><circle cx="94" cy="39" r="2.4" fill="${c}"/>`;
+  else if(kind==='seg') body=`<line x1="14" y1="66" x2="86" y2="34" stroke="${c}" stroke-width="${stk}"/><circle cx="14" cy="66" r="5" fill="${c}"/><circle cx="86" cy="34" r="5" fill="${c}"/>`;
+  else if(kind==='ray') body=`<line x1="14" y1="62" x2="90" y2="42" stroke="${c}" stroke-width="${stk}"/><circle cx="14" cy="62" r="5" fill="${c}"/><circle cx="95" cy="40" r="2.4" fill="${c}"/>`;
+  else if(kind==='lom') body=`<polyline points="12,66 34,34 56,66 78,34 90,52" fill="none" stroke="${c}" stroke-width="${stk}" stroke-linejoin="round"/>`;
+  else if(kind==='ang90') body=`<path d="M18 76 L18 26 M18 76 L68 76" stroke="${c}" stroke-width="${stk}" stroke-linecap="round"/><path d="M24 76 L24 32 L68 32" fill="none" stroke="${c}" stroke-width="3"/>`;
+  else if(kind==='angO') body=`<path d="M14 74 L62 22 M14 74 L70 74" stroke="${c}" stroke-width="${stk}" stroke-linecap="round"/>`;
+  else if(kind==='angT') body=`<path d="M14 74 L80 74 M14 74 L24 30" stroke="${c}" stroke-width="${stk}" stroke-linecap="round"/>`;
+  else if(kind==='tri') body=`<polygon points="50,12 88,82 12,82" fill="${O.fill||'rgba(255,217,102,.25)'}" stroke="${c}" stroke-width="${stk}" stroke-linejoin="round"/>`;
+  else if(kind==='sq') body=`<rect x="20" y="20" width="60" height="60" fill="${O.fill||'rgba(127,209,160,.25)'}" stroke="${c}" stroke-width="${stk}"/>`;
+  else if(kind==='rect') body=`<rect x="10" y="28" width="80" height="44" fill="${O.fill||'rgba(127,183,216,.25)'}" stroke="${c}" stroke-width="${stk}"/>`;
+  else if(kind==='circle') body=`<circle cx="50" cy="50" r="38" fill="${O.fill||'rgba(217,160,255,.25)'}" stroke="${c}" stroke-width="${stk}"/>`;
+  else if(kind==='oval') body=`<ellipse cx="50" cy="50" rx="38" ry="24" fill="${O.fill||'rgba(255,154,138,.22)'}" stroke="${c}" stroke-width="${stk}"/>`;
+  else if(kind==='pent') body=`<polygon points="50,14 82,34 72,70 28,70 18,34" fill="${O.fill||'rgba(127,209,160,.2)'}" stroke="${c}" stroke-width="${stk}" stroke-linejoin="round"/>`;
+  else if(kind==='hex') body=`<polygon points="50,12 78,28 78,56 50,72 22,56 22,28" fill="${O.fill||'rgba(217,160,255,.2)'}" stroke="${c}" stroke-width="${stk}" stroke-linejoin="round"/>`;
+  else if(kind==='house') body=`<rect x="22" y="46" width="56" height="40" fill="rgba(255,217,102,.25)" stroke="${c}" stroke-width="${stk}"/><polygon points="14,48 50,14 86,48" fill="rgba(255,154,138,.25)" stroke="#ff9a8a" stroke-width="${stk}" stroke-linejoin="round"/>`;
+  return `<svg width="${s}" height="${s}" viewBox="0 0 100 100" style="display:inline-block;vertical-align:middle">${body}</svg>`;
+}
+function visL59(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v59!==step) CHS[lk]={_v59:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const fig=(k,name,c)=>`<div style="text-align:center"><div style="font-size:10.5px;color:#9ec0a8;min-height:13px">${name||''}</div>${l59Fig(k,{c:c||'#ffd966',s:84})}</div>`;
+    let h='';
+    if(step===0){
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#7fd1a033;border:1px solid #7fd1a0;color:#a8e8c0;margin-bottom:2px">НАЧАЛЬНАЯ ШКОЛА · 1–2 КЛАСС</span>`+
+        big('Фигуры вокруг нас')+
+        rowC(fig('sq','','#7fd1a0'),fig('tri','','#ffd966'),fig('circle','','#d9a0ff'),fig('rect','','#7fb7d8'))+
+        card('Архимед огляделся: мяч — <b style="color:#ffd966">круг</b>, окно — <b style="color:#7fb7d8">прямоугольник</b>, крыша — <b style="color:#7fd1a0">треугольник</b>. Фигуры повсюду! Сегодня узнаем их секреты.')+
+        sml('геометрия — наука о фигурах!'));
+    } else if(step===1){
+      h=col(big('Точка и линии')+
+        rowC(fig('dot','точка','#ffd966'),fig('line','прямая','#7fd1a0'),fig('seg','отрезок','#7fb7d8'),fig('ray','луч','#d9a0ff'))+
+        card('точка — след карандаша. <b style="color:#7fd1a0">Прямая</b> — без конца и края. <b style="color:#7fb7d8">Отрезок</b> — часть прямой между двумя точками. <b style="color:#d9a0ff">Луч</b> — начинается в точке и идёт в одну сторону.')+
+        sml('у отрезка есть начало и конец, у луча — только начало!'));
+    } else if(step===2){
+      h=col(big('Ломаная линия')+
+        rowC(fig('lom','ломаная','#ffd966'))+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['⚡ молния','зигзаг'],['🪜 лесенка','ступеньки'],['📍 маршрут','повороты']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:5px 10px;font-size:12px;color:#e8dcc8"><span style="font-size:16px">${x[0]}</span><div style="font-size:10px;color:#9ec0a8">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('ломаная — это отрезки, соединённые <b style="color:#ffd966">под углом</b>: как молния или маршрут с поворотами. Каждый излом — новая вершина!')+
+        sml('изломали прямую — получили ломаную!'));
+    } else if(step===3){
+      h=col(big('Углы: острый, прямой, тупой')+
+        rowC(fig('ang90','прямой (90°)','#7fd1a0'),fig('angO','острый','#ffd966'),fig('angT','тупой','#ff9a8a'))+
+        card('угол — где встречаются две линии. <b style="color:#7fd1a0">Прямой</b> — как угол книги или тетради. <b style="color:#ffd966">Острый</b> — меньше прямого (горка). <b style="color:#ff9a8a">Тупой</b> — больше прямого (раскрытая книга).')+
+        sml('прямой угол — угол тетради!'));
+    } else if(step===4){
+      h=col(big('Треугольник')+
+        rowC(fig('tri','3 стороны','#ffd966'))+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['🔺 крыша'],['🍕 кусок пиццы'],['⚠️ дорожный знак']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:4px 10px;font-size:12px;color:#e8dcc8">${x[0]}</div>`).join('')}
+        </div>`+
+        card('у треугольника <b style="color:#ffd966">3 стороны, 3 вершины и 3 угла</b>. Три — его любимое число! «Три» даже в названии.')+
+        sml('треугольник = три угла!'));
+    } else if(step===5){
+      h=col(big('Квадрат')+
+        rowC(fig('sq','4 равные стороны','#7fd1a0'))+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['⬜ плитка'],['📦 клетка тетради'],['🪟 окно']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:4px 10px;font-size:12px;color:#e8dcc8">${x[0]}</div>`).join('')}
+        </div>`+
+        card('у квадрата <b style="color:#7fd1a0">4 стороны, и все ОДИНАКОВЫЕ</b>, и 4 прямых угла. Переверни квадрат — он останется квадратом!')+
+        sml('у квадрата все стороны равны!'));
+    } else if(step===6){
+      h=col(big('Прямоугольник')+
+        rowC(fig('rect','стороны попарно равны','#7fb7d8'))+
+        card('у прямоугольника <b style="color:#7fb7d8">4 прямых угла</b>, а стороны равны <b>парами</b>: две длинные и две короткие. Дверь, книга, экран телефона — прямоугольники!')+
+        sml('две длинные + две короткие = прямоугольник!'));
+    } else if(step===7){
+      h=col(big('Круг и овал')+
+        rowC(fig('circle','круг — без углов','#d9a0ff'),fig('oval','овал — вытянутый круг','#ff9a8a'))+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['⚽ мяч — круг'],['☀️ солнце — круг'],['🥚 яйцо — овал'],['🎈 шарик — овал']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.08}s;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:4px 10px;font-size:12px;color:#e8dcc8">${x[0]}</div>`).join('')}
+        </div>`+
+        card('у круга <b style="color:#d9a0ff">нет углов и нет концов</b> — катись хоть вечность! Овал — круг, который потянули за бока: как яйцо.')+
+        sml('круг без углов — самый гладкий!'));
+    } else if(step===8){
+      h=col(big('Многоугольники')+
+        rowC(fig('pent','пятиугольник: 5','#7fd1a0'),fig('hex','шестиугольник: 6','#ffd966'))+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['🐝 соты — шестиугольники'],['🛑 знак — восьмиугольник']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:4px 10px;font-size:12px;color:#e8dcc8">${x[0]}</div>`).join('')}
+        </div>`+
+        card('у многоугольника <b style="color:#ffd966">столько же сторон, сколько углов</b>. Пять сторон — пятиугольник, шесть — шестиугольник. Пчёлы строят соты из шестиугольников!')+
+        sml('сосчитай стороны — узнаешь имя фигуры!'));
+    } else if(step===9){
+      h=col(big('Секрет: квадрат — это прямоугольник!')+
+        rowC(fig('rect','прямоугольник','#7fb7d8'),`<span style="font-size:26px" class="wv-pulse">=</span>`,fig('sq','квадрат','#7fd1a0'))+
+        card('у квадрата, как у прямоугольника, <b>4 прямых угла</b>. Просто у квадрата все стороны ещё и равны. Значит, квадрат — <b style="color:#7fd1a0">особенный прямоугольник</b>!')+
+        sml('все квадраты — прямоугольники, но не наоборот!'));
+    } else if(step===10){
+      h=col(big('Из чего состоит фигура?')+
+        rowC(`<div style="text-align:center"><div style="font-size:10.5px;color:#9ec0a8">вершины — уголки</div>${l59Fig('tri',{c:'#ffd966',s:96})}</div>`)+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['🔸 вершина','уголок'],['📏 сторона','линия между вершинами'],['📐 угол','между сторонами']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:5px 10px;font-size:12px;color:#e8dcc8"><span style="font-size:15px">${x[0]}</span><div style="font-size:10px;color:#9ec0a8">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('у треугольника 3 <b style="color:#ffd966">вершины</b> (уголки), 3 <b style="color:#7fd1a0">стороны</b> и 3 <b style="color:#d9a0ff">угла</b>. У любой фигуры вершин столько же, сколько сторон!')+
+        sml('вершина — точка, где сходятся стороны!'));
+    } else if(step===11){
+      h=col(big('Фигуры в жизни')+
+        rowC(fig('house','дом = квадрат + треугольник','#ffd966'))+
+        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap">
+          ${[['☀️ круг'],['🏠 квадрат + треугольник'],['🚌 прямоугольник + круги'],['🎪 треугольник'],['🎂 круг (сверху)']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.08}s;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:4px 9px;font-size:11.5px;color:#e8dcc8">${x[0]}</div>`).join('')}
+        </div>`+
+        card('дом — это <b>квадрат</b> и <b>треугольник</b>-крыша. Автобус — <b>прямоугольник</b> с <b>кругами</b>-колёсами. Математика прячется во всём!')+
+        sml('найди 5 фигур у себя в комнате!'));
+    } else if(step===12){
+      const i=st.e!=null?st.e:0;
+      const e=L59_EX[i%L59_EX.length];
+      const ansStr=e.a;
+      const opts= e.a==='4'?['3','4','5'] : e.a==='3'?['2','3','4'] : e.a==='Круг'?['Квадрат','Круг','Треугольник'] : e.a==='Квадрат'?['Прямоугольник','Квадрат','Треугольник'] : e.a==='5'?['4','5','6'] : e.a==='Овал'?['Овал','Круг','Яйцо'] : ['3','4','5'];
+      const done=st.guess!=null;
+      const right=done&&String(st.guess)===e.a;
+      h=col(big('🎮 Тренажёр: фигуры')+
+        `<div style="text-align:center;font-size:16px;color:#e8dcc8">${e.q}</div>`+
+        (done?(right?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">🎉 Верно!</div>`:`<div style="font-size:16px;color:#ff9a8a">не угадал — ответ: ${e.a}</div>`):'')+
+        (done?'':btns(...opts.map(o=>btn(o,`l59Act('${lk}','pick:${o}')`))))+
+        (done?btns(btn('🎲 следующий вопрос',`l59Act('${lk}','e')`),btn('↺',`l59Act('${lk}','r')`)):'')+
+        sml('считай стороны и углы внимательно!'));
+    } else {
+      h=col(`<div style="font-size:48px">🔷</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:252px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            🔺 Треугольник — 3 стороны.<br>
+            🟩 Квадрат — 4 РАВНЫЕ стороны.<br>
+            🟧 Прямоугольник — 4 угла, пары равны.<br>
+            🔵 Круг и овал — без углов.<br>
+            📐 Сторон столько же, сколько углов.<br>
+            ✅ Квадрат — тоже прямоугольник!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там стороны квадрата'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+// ===================== УРОК 62 «НАХОДИМ ЧАСТЬ ЧИСЛА» (3–4 класс) =====================
+function l62Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  if(a0==='e'){ st.e=((st.e==null?0:st.e)+1)%L62_EX.length; st.guess=null; }
+  if(a0==='pick'){ st.guess=p; }
+  if(a0==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+const L62_EX=[['⅔ от 9',6],['¾ от 16',12],['⅖ от 20',8],['⅚ от 30',25],['⅔ от 27',18],['¾ от 20',15],['⅗ от 25',15],['⅘ от 35',28]];
+// полоска из n долей, взято k (слева)
+function l62PartBar(n,k,o){
+  const O=o||{};
+  const w=O.w||30;
+  let out='';
+  for(let i=0;i<n;i++){
+    const on=i<k;
+    out+=`<div class="l12-fall" style="animation-delay:${(i*0.06).toFixed(2)}s;width:${w}px;height:${O.h||40}px;border-radius:4px;margin:1px 1.5px;background:${on?'#ffd966':(O.cold||'#7fd1a0')};border:1.5px solid ${on?'#b88a1e':(O.bord||'#2e7a4a')}"></div>`;
+  }
+  return `<div style="display:flex;justify-content:center;flex-wrap:wrap;max-width:340px">${out}</div>`;
+}
+function visL62(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v62!==step) CHS[lk]={_v62:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const frac=(a,b,sz)=>`<span style="display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;font-family:Georgia,serif;line-height:1;margin:0 2px"><span style="font-size:${sz||26}px;color:#ffd966;padding:0 3px">${a}</span><span style="border-top:2.5px solid #ffd966;font-size:${sz||26}px;color:#ffd966;padding:0 3px;margin-top:2px">${b}</span></span>`;
+    let h='';
+    if(step===0){
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#d9a0ff33;border:1px solid #d9a0ff;color:#e6c4ff;margin-bottom:2px">НАЧАЛЬНАЯ ШКОЛА · 3–4 КЛАСС</span>`+
+        big('Находим часть числа')+
+        rowC(l62PartBar(3,2,{w:44,h:54}),`<span style="font-size:28px" class="wv-swing">➗</span>`)+
+        card('Архимед делит шоколадку на 3 части и берёт <b style="color:#ffd966">2 из них</b> — это <b style="color:#ffd966">две трети</b> (2/3). Сегодня научимся находить любую часть числа!')+
+        sml('не одну долю, а несколько — числитель больше 1!'));
+    } else if(step===1){
+      h=col(big('Вспоминаем доли')+
+        rowC(
+          `<div style="text-align:center">${l62PartBar(2,1,{w:36,h:40})}<div style="font-size:13px;color:#ffd966">половина ${frac(1,2,20)}</div></div>`,
+          `<div style="text-align:center">${l62PartBar(3,1,{w:28,h:40})}<div style="font-size:13px;color:#ffd966">треть ${frac(1,3,20)}</div></div>`,
+          `<div style="text-align:center">${l62PartBar(4,1,{w:22,h:40})}<div style="font-size:13px;color:#ffd966">четверть ${frac(1,4,20)}</div></div>`
+        )+
+        card('<b style="color:#ffd966">Нижнее</b> число — на сколько частей делим. <b style="color:#7fd1a0">Верхнее</b> — сколько частей берём. Половина — 1/2, треть — 1/3, четверть — 1/4.')+
+        sml('знаменатель — «на сколько», числитель — «сколько берём»!'));
+    } else if(step===2){
+      h=col(big('Числитель 1 — просто делим')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          ${[['⅓ от 60','60 : 3 = 20','#7fd1a0'],['¼ от 100','100 : 4 = 25','#ffd966'],['½ от 90','90 : 2 = 45','#7fb7d8']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:5px 12px"><span style="font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:13px;color:#e8dcc8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('если сверху стоит <b style="color:#7fd1a0">1</b> (берём одну часть) — просто <b>делим на знаменатель</b>: 1/3 от 60 = 60 : 3.')+
+        sml('числитель 1 → только деление!'));
+    } else if(step===3){
+      h=col(big('А теперь: две трети!')+
+        `<div style="text-align:center;font-size:16px;color:#e8dcc8">Найди ${frac(2,3,24)} от 9</div>`+
+        l62PartBar(3,2,{w:52,h:56})+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['шаг 1: одна треть','9 : 3 = 3','#7fd1a0'],['шаг 2: взять две','3 · 2 = 6','#ffd966']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[2]};border-radius:10px;padding:6px 12px"><div style="font-size:11px;color:#9ec0a8">${x[0]}</div><div style="font-size:18px;color:${x[2]};font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">⅔ от 9 = 6 ✓</div>`+
+        card('делим 9 на <b>3</b> части — в каждой по <b>3</b>. Берём <b style="color:#ffd966">2</b> такие части: 3 + 3 = <b style="color:#ffd966">6</b>. Сначала делим, потом умножаем!')+
+        sml('полоска: жёлтые 2 части из 3 — это и есть ⅔!'));
+    } else if(step===4){
+      h=col(big('Правило')+
+        `<div style="display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap">
+          <div class="wv-pop" style="text-align:center;background:rgba(127,209,160,.1);border:2px solid #7fd1a0;border-radius:12px;padding:8px 12px;min-width:130px"><div style="font-size:18px">①</div><div style="font-size:13px;color:#ffd966">дели на знаменатель</div><div style="font-size:10px;color:#9ec0a8">узнай ОДНУ часть</div></div>
+          <span style="font-size:24px" class="wv-pulse">➜</span>
+          <div class="wv-pop2" style="text-align:center;background:rgba(255,217,102,.1);border:2px solid #ffd966;border-radius:12px;padding:8px 12px;min-width:130px"><div style="font-size:18px">②</div><div style="font-size:13px;color:#ffd966">умножай на числитель</div><div style="font-size:10px;color:#9ec0a8">возьми столько частей</div></div>
+        </div>`+
+        card('часть числа: <b style="color:#7fd1a0">① делим на нижнее число</b> (одна часть), <b style="color:#ffd966">② умножаем на верхнее</b> (берём нужное число частей). Два шага — и готово!')+
+        sml('дели на знаменатель, умножай на числитель!'));
+    } else if(step===5){
+      h=col(big('Пример: три четверти')+
+        `<div style="text-align:center;font-size:16px;color:#e8dcc8">Найди ${frac(3,4,24)} от 16</div>`+
+        l62PartBar(4,3,{w:40,h:52})+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['шаг 1: одна четверть','16 : 4 = 4','#7fd1a0'],['шаг 2: взять три','4 · 3 = 12','#ffd966']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[2]};border-radius:10px;padding:6px 12px"><div style="font-size:11px;color:#9ec0a8">${x[0]}</div><div style="font-size:18px;color:${x[2]};font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">¾ от 16 = 12 ✓</div>`+
+        card('16 : 4 = <b>4</b> (одна четверть), 4 · 3 = <b style="color:#ffd966">12</b> (три четверти). На полоске жёлтые 3 части из 4!')+
+        sml('три четверти — берём 3 из 4 частей!'));
+    } else if(step===6){
+      h=col(big('На конфетах')+
+        `<div style="text-align:center;font-size:14.5px;color:#e8dcc8">16 конфет → 4 кучки по 4, взяли 3 кучки</div>`+
+        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:3px 0">
+          ${[0,1,2,3].map(k=>`<div class="l12-fall" style="animation-delay:${(k*0.1).toFixed(2)}s;background:${k<3?'rgba(255,217,102,.14)':'rgba(127,209,160,.1)'};border:2px solid ${k<3?'#ffd966':'#7fd1a0'};border-radius:9px;padding:3px 5px"><div style="display:flex;gap:1px">${[1,2,3,4].map(()=>'<span style="font-size:11px">🍬</span>').join('')}</div><div style="font-size:8.5px;color:${k<3?'#ffd966':'#9ec0a8'};text-align:center">${k<3?'взяли':'осталась'}</div></div>`).join('')}
+        </div>`+
+        `<div style="text-align:center;font-size:15px">4 + 4 + 4 = <b style="color:#ffd966">12</b> конфет взяли</div>`+
+        card('разложили 16 на <b>4</b> кучки по 4. Взяли <b>3</b> кучки — это ¾: 4 · 3 = <b style="color:#ffd966">12</b>. Видно прямо на конфетах!')+
+        sml('¾ — это 3 кучки из 4!'));
+    } else if(step===7){
+      h=col(big('Ещё примеры')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          ${[['⅖ от 20','(20 : 5) · 2 = 4 · 2 = 8','#7fd1a0'],['⅚ от 30','(30 : 6) · 5 = 5 · 5 = 25','#ffd966'],['⅔ от 27','(27 : 3) · 2 = 9 · 2 = 18','#7fb7d8']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:5px 12px"><span style="font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:12.5px;color:#e8dcc8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('везде одинаково: <b style="color:#7fd1a0">делим на нижнее</b>, потом <b style="color:#ffd966">умножаем на верхнее</b>. В скобках — одна часть, дальше — нужное число частей!')+
+        sml('скобки показывают «одну часть»!'));
+    } else if(step===8){
+      h=col(big('Задача: конфеты в коробке')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">в коробке <b style="color:#ffd966">24 конфеты</b>, ${frac(3,4,20)} — шоколадные</div>`+
+        l62PartBar(4,3,{w:34,h:44})+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.07);border:1px solid #ffd966;border-radius:10px;padding:6px 12px"><span style="font-size:16px">①</span><span style="font-size:13px;color:#e8dcc8">одна четверть: 24 : 4 = <b style="color:#ffd966">6</b></span></div>
+          <div class="wv-pop2" style="display:flex;gap:8px;align-items:center;background:rgba(127,209,160,.07);border:1px solid #7fd1a0;border-radius:10px;padding:6px 12px"><span style="font-size:16px">②</span><span style="font-size:13px;color:#e8dcc8">три четверти: 6 · 3 = <b style="color:#ffd966">18</b></span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">18 шоколадных конфет ✓</div>`+
+        sml('¾ от 24 = 18 — делим на 4, умножаем на 3!'));
+    } else if(step===9){
+      h=col(big('Задача: спортсмены')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">в классе <b style="color:#ffd966">30 учеников</b>, ${frac(3,5,20)} занимаются спортом</div>`+
+        l62PartBar(5,3,{w:26,h:44})+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.07);border:1px solid #ffd966;border-radius:10px;padding:6px 12px"><span style="font-size:16px">①</span><span style="font-size:13px;color:#e8dcc8">одна пятая: 30 : 5 = <b style="color:#ffd966">6</b></span></div>
+          <div class="wv-pop2" style="display:flex;gap:8px;align-items:center;background:rgba(127,209,160,.07);border:1px solid #7fd1a0;border-radius:10px;padding:6px 12px"><span style="font-size:16px">②</span><span style="font-size:13px;color:#e8dcc8">три пятых: 6 · 3 = <b style="color:#ffd966">18</b></span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">18 спортсменов ✓</div>`+
+        sml('⅗ от 30 = 18 — пять частей по 6, берём три!'));
+    } else if(step===10){
+      h=col(big('Тренируемся')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          ${[['4/7 от 21','21 : 7 = 3, 3 · 4 = 12','#7fd1a0'],['2/3 от 27','27 : 3 = 9, 9 · 2 = 18','#ffd966'],['3/4 от 20','20 : 4 = 5, 5 · 3 = 15','#7fb7d8'],['5/8 от 16','16 : 8 = 2, 2 · 5 = 10','#d9a0ff']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:5px 12px"><span style="font-size:14.5px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:12px;color:#e8dcc8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('4/7 от 21: сначала <b style="color:#7fd1a0">21 : 7 = 3</b> (одна седьмая), потом <b style="color:#ffd966">3 · 4 = 12</b> (четыре седьмых). Сначала дели — потом умножай!')+
+        sml('чем больше знаменатель, тем меньше одна часть!'));
+    } else if(step===11){
+      h=col(big('Проверяем себя')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">Найди ${frac(2,5,22)} от 35</div>`+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['одна пятая','35 : 5 = 7','#7fd1a0'],['две пятых','7 · 2 = 14','#ffd966']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[2]};border-radius:10px;padding:6px 12px"><div style="font-size:11.5px;color:#9ec0a8">${x[0]}</div><div style="font-size:19px;color:${x[2]};font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">⅖ от 35 = 14 ✓</div>`+
+        card('проверка: <b style="color:#ffd966">14 · 5 = 70, 70 : 2 = 35</b> — вернулись к исходному числу! Если так вышло — часть найдена правильно.')+
+        sml('проверка: ответ «собери обратно» — должно получиться число!'));
+    } else if(step===12){
+      h=col(big('Ловушка: числитель не 1!')+
+        `<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <div style="text-align:center;background:rgba(255,154,138,.08);border:2px solid #ff9a8a;border-radius:12px;padding:8px 12px;max-width:155px"><div style="font-size:10.5px;color:#ff9a8a">так НЕЛЬЗЯ ❌</div><div style="font-size:15px;color:#e8dcc8;font-family:Georgia,serif">⅔ от 9 = 9 : 3 = 3?</div><div style="font-size:11px;color:#ff9a8a">это только ОДНА треть!</div></div>
+          <div style="text-align:center;background:rgba(127,209,160,.08);border:2px solid #7fd1a0;border-radius:12px;padding:8px 12px;max-width:155px"><div style="font-size:10.5px;color:#7fd1a0">так ПРАВИЛЬНО ✅</div><div style="font-size:15px;color:#ffd966;font-family:Georgia,serif">⅔ от 9 = 9:3·2 = 6</div><div style="font-size:11px;color:#7fd1a0">разделил И умножил!</div></div>
+        </div>`+
+        card('если сверху <b style="color:#ffd966">не 1</b> — одного деления мало! ⅔ значит «взять <b>две</b> трети»: сначала 9 : 3 = 3, потом <b>3 · 2 = 6</b>. Деление + умножение!')+
+        sml('⅔ ≠ просто делить на 3 — ещё и умножить на 2!'));
+    } else if(step===13){
+      const i=st.e!=null?st.e:0;
+      const e=L62_EX[i%L62_EX.length];
+      const res=e[1];
+      const opts=[res-2,res-1,res,res+1,res+2].filter(v=>v>=1);
+      if(opts.indexOf(res)<0) opts.push(res);
+      const done=st.guess!=null;
+      const right=done&&st.guess===res;
+      h=col(big('🎮 Тренажёр: часть числа')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">Найди: <b style="color:#ffd966;font-family:Georgia,serif;font-size:26px">${e[0]}</b></div>`+
+        `<div style="text-align:center;font-size:12px;color:#9ec0a8;margin:2px 0">сначала подели на знаменатель, потом умножь на числитель</div>`+
+        (done?(right?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">🎉 Верно: ${res}!</div>`:`<div style="font-size:16px;color:#ff9a8a">не угадал — ${e[0]} = ${res}</div>`):'')+
+        (done?'':btns(...opts.map(o=>btn(''+o,`l62Act('${lk}','pick:${o}')`))))+
+        (done?btns(btn('🎲 следующий пример',`l62Act('${lk}','e')`),btn('↺',`l62Act('${lk}','r')`)):'')+
+        sml('дели на нижнее, умножай на верхнее!'));
+    } else {
+      h=col(`<div style="font-size:48px">🍰</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:252px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            🍰 Часть числа: дели и умножай.<br>
+            ① Подели на знаменатель.<br>
+            ② Умножь на числитель.<br>
+            ✅ ⅔ от 9 = 6 · ¾ от 16 = 12.<br>
+            ⚠️ Числитель не 1 — умножай!</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 2/3 от 9'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -16018,6 +16373,8 @@ function renderLessonVis(){
   else if(id===251) visL251(el);
   else if(id===60) visL60(el);
   else if(id===61) visL61(el);
+  else if(id===59) visL59(el);
+  else if(id===62) visL62(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
