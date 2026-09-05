@@ -2685,6 +2685,258 @@ function coinsSVG(){
       <text x="18" y="54" font-size="18" font-weight="bold" fill="#7fd1ff">Игры и раскраски · доска 7×7</text>
       ${m}</svg>`; }
 
+  /* --- 13: чётность (чёт/нечет: пары, суммы, произведения) --- */
+  function paritySVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    if(v===0){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">поделить на 2 без остатка — можно или нет?</text>
+        <g font-size="22">
+          <text x="60" y="122" fill="#8fd1a8">2 4 6 8 10…</text>
+          <text x="60" y="152" fill="#ff8ac0">1 3 5 7 9…</text>
+        </g>
+        <rect x="52" y="98" width="120" height="30" rx="8" fill="rgba(143,209,168,.14)"/>
+        <rect x="52" y="128" width="120" height="30" rx="8" fill="rgba(255,138,192,.14)"/>
+        <text x="180" y="200" text-anchor="middle" font-size="16" fill="#ffd76a">11 конфет на двоих? 11:2 не делится!</text>
+        <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">чётные делятся на 2 · нечётные — нет</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">признак: смотрим на ПОСЛЕДНЮЮ цифру</text>
+        <g font-size="24">
+          <text x="52" y="124" fill="#8fd1a8">0 2 4 6 8 → чётное</text>
+          <text x="52" y="158" fill="#ff8ac0">1 3 5 7 9 → нечётное</text>
+        </g>
+        <text x="180" y="200" text-anchor="middle" font-size="17" fill="#f4e9c8">847? кончается на 7 → нечётное!</text>
+        <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">быстрый способ — и не надо делить</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">чёт + чёт = чёт</text>
+        <g font-size="24" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="122" fill="#8fd1a8">2 + 4 = 6</text>
+          <text x="180" y="154" fill="#8fd1a8">10 + 8 = 18</text>
+        </g>
+        <text x="180" y="196" text-anchor="middle" font-size="16" fill="#f4e9c8">пары никуда не деваются!</text>
+        <text x="180" y="226" text-anchor="middle" font-size="14" fill="#8fa08f">два чётных складываются в чётное — всегда</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">чёт + нечёт = нечёт</text>
+        <g font-size="24" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="122" fill="#8fd1a8">4 + 1 = 5</text>
+          <text x="180" y="154" fill="#ffd76a">10 + 7 = 17</text>
+        </g>
+        <text x="180" y="196" text-anchor="middle" font-size="16" fill="#f4e9c8">у нечётного остаётся «лишняя единица»</text>
+        <text x="180" y="226" text-anchor="middle" font-size="14" fill="#8fa08f">паре не с кем составиться — она и лишняя</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">нечёт + нечёт = чёт!</text>
+        <g font-size="24" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="122" fill="#ffd76a">3 + 5 = 8</text>
+          <text x="180" y="154" fill="#ffd76a">11 + 13 = 24</text>
+        </g>
+        <text x="180" y="196" text-anchor="middle" font-size="16" fill="#f4e9c8">две «лишние единицы» складываются в пару!</text>
+        <text x="180" y="226" text-anchor="middle" font-size="14" fill="#8fa08f">лишняя+лишняя = ровно пара</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">вычитание — как сложение</text>
+        <g font-size="22" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="118" fill="#8fd1a8">чёт − чёт = чёт · 10−4 = 6</text>
+          <text x="180" y="150" fill="#ff8ac0">чёт − нечёт = нечёт · 10−3 = 7</text>
+          <text x="180" y="182" fill="#ffd76a">нечёт − нечёт = чёт · 9−3 = 6</text>
+        </g>
+        <text x="180" y="226" text-anchor="middle" font-size="14" fill="#8fa08f">правила те же — минус пары не ломает</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">умножение: один чётный — всё чётное!</text>
+        <g font-size="24" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="122" fill="#8fd1a8">2·4 = 8 · 4·5 = 20 · 6·9 = 54</text>
+        </g>
+        <text x="180" y="164" text-anchor="middle" font-size="17" fill="#ffd76a">чётный множитель → произведение чётное</text>
+        <text x="180" y="200" text-anchor="middle" font-size="15" fill="#8fa08f">пара в одном множителе «размножается»</text>
+        <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">3·4·5: четвёрка делает всё произведение чётным</text>`;
+    } else if(v===7){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">нечёт × нечёт = нечёт (клетки 3×3)</text>
+        <g font-size="24" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="118" fill="#8fd1a8">3·3 = 9 · 5·7 = 35</text>
+        </g>
+        <rect x="140" y="136" width="80" height="80" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2"/>
+        <g fill="#ffd76a">
+          <circle cx="154" cy="150" r="4"/><circle cx="172" cy="150" r="4"/><circle cx="190" cy="150" r="4"/>
+          <circle cx="154" cy="168" r="4"/><circle cx="172" cy="168" r="4"/><circle cx="190" cy="168" r="4"/>
+          <circle cx="154" cy="186" r="4"/><circle cx="172" cy="186" r="4"/><circle cx="190" cy="186" r="4"/>
+        </g>
+        <text x="180" y="232" text-anchor="middle" font-size="13" fill="#8fa08f">все клетки парные, кроме одной «лишней»</text>`;
+    } else if(v===8){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">сумма многих: считаем НЕЧЁТНЫЕ слагаемые</text>
+        <g font-size="20" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="116" fill="#f4e9c8">1+2+…+99: нечётных ровно 50</text>
+          <text x="180" y="148" fill="#8fd1a8">50 — чётно → сумма чётная!</text>
+          <text x="180" y="182" fill="#f4e9c8">1·2·…·100: есть множитель 2</text>
+          <text x="180" y="214" fill="#ffd76a">→ произведение чётное, считать не надо!</text>
+        </g>`;
+    } else {
+      m=`<text x="180" y="92" text-anchor="middle" font-size="16" fill="#b6d4e8">два нечётных числа складываем</text>
+        <text x="180" y="150" text-anchor="middle" font-size="38" font-weight="bold" fill="#ffd76a" class="c2a-spark">нечёт+нечёт = ?</text>
+        <text x="180" y="204" text-anchor="middle" font-size="16" fill="#8fd1a8">две лишние единицы — они дают пару!</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2433"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#a05a9f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#ff8ac0">Чётность: суммы и произведения</text>
+      ${m}</svg>`; }
+
+  /* --- 17: дни недели и остатки (круг-неделя, mod 7) --- */
+  function weekSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    const days=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+    let ring='';
+    for(let i=0;i<7;i++){
+      const a=-90+i*(360/7), a2=a+360/7;
+      const x1=180+86*Math.cos(a*Math.PI/180), y1=120+86*Math.sin(a*Math.PI/180);
+      const x2=180+86*Math.cos(a2*Math.PI/180), y2=120+86*Math.sin(a2*Math.PI/180);
+      const lx=180+58*Math.cos((a+a2)/2*Math.PI/180), ly=120+58*Math.sin((a+a2)/2*Math.PI/180);
+      ring+=`<path d="M180 120 L${x1.toFixed(1)} ${y1.toFixed(1)} A86 86 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)} Z" fill="rgba(127,209,255,${i===0?0.22:0.08})" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
+        <text x="${lx.toFixed(1)}" y="${(ly+5).toFixed(1)}" text-anchor="middle" font-size="12" fill="${i===0?'#ffd76a':'#cfe0ff'}">${days[i]}</text>`;
+    }
+    if(v===0){
+      m=`<text x="180" y="52" text-anchor="middle" font-size="15" fill="#b6d4e8">неделя — «часы» с 7 делениями</text>
+        ${ring}
+        <text x="180" y="226" text-anchor="middle" font-size="15" fill="#f4e9c8">через 7 дней — тот же день!</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="52" text-anchor="middle" font-size="15" fill="#b6d4e8">10 дней = 1 неделя + 3 дня</text>
+        ${ring}
+        <text x="180" y="226" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffd76a">сдвигаемся на 3 дня — не на 10!</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="52" text-anchor="middle" font-size="15" fill="#b6d4e8">остаток от деления на 7</text>
+        ${ring}
+        <g font-size="17" fill="#f4e9c8" text-anchor="middle">
+          <text x="180" y="210">10 = 7·1 + 3 → плюс 3 дня</text>
+        </g>
+        <text x="180" y="232" text-anchor="middle" font-size="13" fill="#8fa08f">работает только остаток!</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="52" text-anchor="middle" font-size="15" fill="#b6d4e8">понедельник + 10 дней</text>
+        ${ring}
+        <g font-size="17" fill="#f4e9c8" text-anchor="middle">
+          <text x="180" y="210">Пн + 3 = Чт</text>
+          <text x="180" y="230" font-size="14" fill="#8fd1a8">четверг — 4-й день недели</text>
+        </g>`;
+    } else if(v===4){
+      m=`<text x="180" y="52" text-anchor="middle" font-size="15" fill="#b6d4e8">через 30 дней</text>
+        ${ring}
+        <g font-size="17" fill="#f4e9c8" text-anchor="middle">
+          <text x="180" y="208">30 = 4·7 + 2 → +2 дня</text>
+          <text x="180" y="230" font-size="15" fill="#ffd76a">Пн + 2 = Ср</text>
+        </g>`;
+    } else if(v===5){
+      m=`<text x="180" y="52" text-anchor="middle" font-size="15" fill="#b6d4e8">через 100 дней?</text>
+        ${ring}
+        <g font-size="17" fill="#f4e9c8" text-anchor="middle">
+          <text x="180" y="208">100 = 14·7 + 2 → +2 дня</text>
+          <text x="180" y="230" font-size="15" fill="#ffd76a">Пн + 2 = Ср</text>
+        </g>`;
+    } else if(v===6){
+      m=`<text x="180" y="52" text-anchor="middle" font-size="15" fill="#b6d4e8">главный секрет — остаток!</text>
+        ${ring}
+        <text x="180" y="210" text-anchor="middle" font-size="15" fill="#8fd1a8">день = сдвиг на остаток от N : 7</text>
+        <text x="180" y="232" text-anchor="middle" font-size="13" fill="#8fa08f">полные недели ничего не меняют</text>`;
+    } else {
+      m=`<text x="180" y="60" text-anchor="middle" font-size="15" fill="#b6d4e8">сегодня понедельник</text>
+        ${ring}
+        <text x="180" y="216" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffd76a" class="c2a-spark">+7 дней → ?</text>
+        <text x="180" y="238" text-anchor="middle" font-size="13" fill="#8fa08f">полная неделя = тот же день</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#17253d"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#3f6a9f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#7fd1ff">Дни недели и остатки</text>
+      ${m}</svg>`; }
+
+  /* --- 21: числа из цифр без повторов (замок, правило умножения) --- */
+  function lockSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    const lock=`<rect x="150" y="52" width="60" height="44" rx="8" fill="rgba(217,164,65,.18)" stroke="#d9a441" stroke-width="3"/>
+      <circle cx="180" cy="80" r="4" fill="#d9a441"/>
+      <path d="M172 60 v-8 a8 8 0 0 1 16 0 v8" fill="none" stroke="#d9a441" stroke-width="3"/>
+      <text x="180" y="44" text-anchor="middle" font-size="13" fill="#ffd76a">код</text>`;
+    if(v===0){
+      m=`<text x="180" y="88" text-anchor="middle" font-size="16" fill="#b6d4e8">из цифр 1, 2, 3 — двузначный код без повторов</text>
+        ${lock}
+        <g font-size="26">
+          <text x="100" y="132" fill="#7fd1ff">1</text><text x="172" y="132" fill="#7fd1ff">2</text><text x="244" y="132" fill="#7fd1ff">3</text>
+        </g>
+        <text x="180" y="176" text-anchor="middle" font-size="15" fill="#8fd1a8">сколько кодов? считаем по шагам!</text>
+        <text x="180" y="214" text-anchor="middle" font-size="14" fill="#8fa08f">повторять цифры нельзя</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">шаг 1: выбираем ПЕРВУЮ цифру</text>
+        <g font-size="30">
+          <text x="90" y="140" fill="#7fd1ff">1</text><text x="170" y="140" fill="#8fd1a8">2</text><text x="250" y="140" fill="#ffd76a">3</text>
+        </g>
+        <text x="180" y="188" text-anchor="middle" font-size="19" font-weight="bold" fill="#ffd76a">3 способа</text>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fa08f">любая цифра может стоять первой</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">шаг 2: вторая — из ОСТАВШИХСЯ</text>
+        <g font-size="30">
+          <text x="110" y="140" fill="#8fa08f">?</text><text x="170" y="140" fill="#8fd1a8">?</text>
+        </g>
+        <text x="180" y="190" text-anchor="middle" font-size="19" font-weight="bold" fill="#ffd76a">осталось 2 цифры</text>
+        <text x="180" y="224" text-anchor="middle" font-size="14" fill="#8fa08f">повторять нельзя — одну уже поставили</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">правило умножения: 3 · 2</text>
+        <g font-size="34" text-anchor="middle">
+          <text x="180" y="128" fill="#ffd76a">3 · 2 = 6</text>
+        </g>
+        <g font-size="20" fill="#8fd1a8" text-anchor="middle">
+          <text x="180" y="160">12 13 · 21 23 · 31 32</text>
+        </g>
+        <text x="180" y="200" text-anchor="middle" font-size="15" fill="#f4e9c8">порядок важен: 12 ≠ 21!</text>
+        <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">первый выбор m, второй n → m·n</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">из цифр 1..5: двузначные</text>
+        <g font-size="24" text-anchor="middle">
+          <text x="180" y="126" fill="#f4e9c8">первая — 5 способов</text>
+          <text x="180" y="158" fill="#7fd1ff">вторая — 4 (без повторов)</text>
+          <text x="180" y="196" fill="#ffd76a">5 · 4 = 20 чисел</text>
+        </g>
+        <text x="180" y="230" text-anchor="middle" font-size="14" fill="#8fa08f">каждый выбор уменьшает число вариантов</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">трёхзначные из 1..5</text>
+        <g font-size="22" text-anchor="middle">
+          <text x="180" y="124" fill="#8fd1a8">первая: 5 · вторая: 4 · третья: 3</text>
+          <text x="180" y="160" fill="#ffd76a">5 · 4 · 3 = 60 чисел</text>
+        </g>
+        <text x="180" y="200" text-anchor="middle" font-size="15" fill="#f4e9c8">множители убывают: 5, 4, 3…</text>
+        <text x="180" y="228" text-anchor="middle" font-size="13" fill="#8fa08f">умножай по очереди: 5·4=20, 20·3=60</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">берём ВСЕ 5 цифр — перестановки</text>
+        <g font-size="24" text-anchor="middle">
+          <text x="180" y="128" fill="#f4e9c8">5·4·3·2·1</text>
+          <text x="180" y="166" fill="#ffd76a">= 120 перестановок</text>
+        </g>
+        <text x="180" y="208" text-anchor="middle" font-size="15" fill="#8fd1a8">число 5! читается «пять факториал»</text>
+        <text x="180" y="232" text-anchor="middle" font-size="13" fill="#8fa08f">единица в конце ничего не меняет</text>`;
+    } else if(v===7){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#ffd0c0">ЛОВУШКА: цифра 0!</text>
+        <g font-size="21" text-anchor="middle">
+          <text x="180" y="114" fill="#f4e9c8">из 0, 1, 2 двузначные?</text>
+          <text x="180" y="146" fill="#ffd0c0">первая не может быть 0 (01 = 1)</text>
+          <text x="180" y="178" fill="#ffd76a">первая: 2 способа · вторая: 2</text>
+          <text x="180" y="210" fill="#8fd1a8">2 · 2 = 4: 10, 12, 20, 21</text>
+        </g>`;
+    } else if(v===8){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">из всех 10 цифр (0..9)</text>
+        <g font-size="24" text-anchor="middle">
+          <text x="180" y="126" fill="#f4e9c8">двузначных без повторов</text>
+          <text x="180" y="162" fill="#7fd1ff">первая — 9 (не 0) · вторая — 9</text>
+          <text x="180" y="200" fill="#ffd76a">9 · 9 = 81 число</text>
+        </g>
+        <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">ноль в начале запрещён — он «невидим»</text>`;
+    } else {
+      m=`<text x="180" y="92" text-anchor="middle" font-size="16" fill="#b6d4e8">цифры 1, 2, 3 · двузначные · без повторов</text>
+        ${lock}
+        <text x="180" y="150" text-anchor="middle" font-size="30" font-weight="bold" fill="#ffd76a" class="c2a-spark">3 · 2 = ?</text>
+        <text x="180" y="200" text-anchor="middle" font-size="15" fill="#8fd1a8">первая — 3 способа, вторая — 2</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#14242e"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#2f8fc4" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#7fd1ff">Числа из цифр без повторов</text>
+      ${m}</svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -2762,6 +3014,9 @@ function coinsSVG(){
     else if(scene==='avg7') base=avg7SVG(fr);
     else if(scene==='ext') base=extSVG(fr);
     else if(scene==='game7') base=game7SVG(fr);
+    else if(scene==='parity') base=paritySVG(fr);
+    else if(scene==='week') base=weekSVG(fr);
+    else if(scene==='lock') base=lockSVG(fr);
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
