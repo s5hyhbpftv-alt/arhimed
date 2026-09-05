@@ -1036,6 +1036,105 @@ function coinsSVG(){
       <g font-size="20"><text x="60" y="196">📏</text><text x="120" y="196">📐</text></g>
     </svg>`; }
 
+  function hiveSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skHv" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#bfe3a8"/><stop offset="1" stop-color="#8fc46a"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="120" fill="url(#skHv)"/>
+      <g class="c2a-cloud"><text x="30" y="36" font-size="26">☁️</text><text x="260" y="40" font-size="22">☁️</text></g>
+      <text x="312" y="50" font-size="26">🌞</text>
+      <g class="c2a-coin" font-size="18"><text x="80" y="80">🐝</text><text x="220" y="70">🐝</text><text x="150" y="56">🐝</text></g>
+      <rect x="0" y="120" width="360" height="90" fill="#7fb45c"/>
+      <!-- ульи -->
+      <g>
+        <rect x="40" y="128" width="70" height="46" rx="6" fill="#e8b04c" stroke="#a3762a" stroke-width="3"/>
+        <rect x="40" y="150" width="70" height="8" fill="#a3762a"/>
+        <rect x="48" y="134" width="18" height="12" rx="3" fill="#7a4f26"/>
+        <rect x="140" y="120" width="70" height="46" rx="6" fill="#e8b04c" stroke="#a3762a" stroke-width="3"/>
+        <rect x="140" y="142" width="70" height="8" fill="#a3762a"/>
+        <rect x="148" y="126" width="18" height="12" rx="3" fill="#7a4f26"/>
+      </g>
+      <!-- банки мёда -->
+      <g font-size="22">
+        <text x="250" y="150">🍯</text><text x="286" y="146">🍯</text><text x="268" y="178">🍯</text>
+      </g>
+      <g font-size="18"><text x="120" y="196">🌼</text><text x="230" y="200">🌼</text><text x="60" y="200">🌼</text></g>
+    </svg>`; }
+  function librarySVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="210" fill="#c8b490"/>
+      <text x="20" y="36" font-size="22">🕰️</text>
+      <!-- стеллажи с книгами -->
+      <rect x="24" y="24" width="200" height="150" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="4"/>
+      <rect x="24" y="74" width="200" height="8" fill="#5f3a1a"/>
+      <rect x="24" y="124" width="200" height="8" fill="#5f3a1a"/>
+      <g font-size="15">
+        <text x="36" y="50">📕📗📘📙📕📗📘📙📕📗📘📙</text>
+        <text x="36" y="100">📘📙📕📗📘📙📕📗📘📙📕📗</text>
+        <text x="36" y="150">📗📘📙📕📗📘📙📕📗📘📙📕</text>
+      </g>
+      <!-- стопки книг -->
+      <g>
+        <rect x="260" y="150" width="66" height="12" rx="3" fill="#4a93d0" stroke="#2c5f8a" stroke-width="2"/>
+        <rect x="260" y="138" width="66" height="12" rx="3" fill="#e86a5a" stroke="#a3442f" stroke-width="2"/>
+        <rect x="260" y="126" width="66" height="12" rx="3" fill="#5f9a6a" stroke="#3a6b46" stroke-width="2"/>
+        <rect x="260" y="114" width="66" height="12" rx="3" fill="#e8b04c" stroke="#a3762a" stroke-width="2"/>
+      </g>
+      <rect x="0" y="176" width="360" height="34" fill="#9c6c3a"/>
+      <text x="300" y="200" font-size="22">🔔</text>
+    </svg>`; }
+  function flatSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="210" fill="#f0e0c0"/>
+      <rect x="0" y="0" width="360" height="96" fill="#e0cfa8"/>
+      <!-- окно -->
+      <rect x="250" y="14" width="90" height="60" rx="5" fill="#bfe6f7" stroke="#7c5a34" stroke-width="5"/>
+      <line x1="295" y1="14" x2="295" y2="74" stroke="#7c5a34" stroke-width="4"/>
+      <!-- пол-плитка -->
+      <g stroke="#b3905f" stroke-width="2">
+        <line x1="0" y1="96" x2="360" y2="96"/>
+        <line x1="0" y1="130" x2="360" y2="130"/>
+        <line x1="0" y1="164" x2="360" y2="164"/>
+        <line x1="0" y1="198" x2="360" y2="198"/>
+      </g>
+      <!-- ковёр 5x2 (условно) -->
+      <rect x="30" y="104" width="170" height="60" rx="8" fill="#5f9a6a" stroke="#3a6b46" stroke-width="4"/>
+      <rect x="46" y="120" width="26" height="26" fill="#7fb45c"/>
+      <rect x="86" y="120" width="26" height="26" fill="#7fb45c"/>
+      <rect x="126" y="120" width="26" height="26" fill="#7fb45c"/>
+      <rect x="166" y="120" width="26" height="26" fill="#7fb45c"/>
+      <rect x="46" y="160" width="26" height="26" fill="#7fb45c" opacity=".6"/>
+      <!-- квадрат-образец -->
+      <rect x="250" y="118" width="40" height="40" fill="#d9a441" stroke="#a3762a" stroke-width="3"/>
+      <text x="258" y="144" font-size="14" fill="#5f3a1a">1 м²</text>
+      <text x="120" y="192" font-size="18">📏</text>
+    </svg>`; }
+  function toysSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="210" fill="#f6e3c5"/>
+      <rect x="0" y="0" width="360" height="90" fill="#eacfa3"/>
+      <g font-size="24"><text x="24" y="54">🎈</text><text x="316" y="46">🧸</text><text x="280" y="60" font-size="18">✈️</text></g>
+      <!-- пол -->
+      <rect x="0" y="90" width="360" height="120" fill="#c89a6a"/>
+      <!-- большой куб 3x3x3 -->
+      <g>
+        <rect x="60" y="140" width="120" height="50" fill="#4a93d0" stroke="#2c5f8a" stroke-width="3"/>
+        <rect x="60" y="122" width="120" height="18" fill="#7fb4d8" stroke="#2c5f8a" stroke-width="3"/>
+        <rect x="60" y="104" width="120" height="18" fill="#4a93d0" stroke="#2c5f8a" stroke-width="3"/>
+        <rect x="66" y="108" width="14" height="14" fill="#fff" opacity=".5"/>
+        <rect x="66" y="126" width="14" height="14" fill="#fff" opacity=".5"/>
+        <rect x="66" y="144" width="14" height="14" fill="#fff" opacity=".5"/>
+        <rect x="86" y="108" width="14" height="14" fill="#fff" opacity=".5"/>
+        <rect x="86" y="126" width="14" height="14" fill="#fff" opacity=".5"/>
+      </g>
+      <!-- параллелепипед 2x2x5 -->
+      <rect x="210" y="160" width="100" height="30" fill="#e8b04c" stroke="#a3762a" stroke-width="3"/>
+      <rect x="210" y="130" width="100" height="30" fill="#f2c26a" stroke="#a3762a" stroke-width="3"/>
+      <rect x="216" y="136" width="12" height="12" fill="#fff" opacity=".6"/>
+      <rect x="216" y="166" width="12" height="12" fill="#fff" opacity=".6"/>
+      <text x="160" y="200" font-size="22">🧱</text>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1063,6 +1162,10 @@ function coinsSVG(){
     else if(scene==='factory') base=factorySVG();
     else if(scene==='table') base=tableSVG();
     else if(scene==='lab') base=labSVG();
+    else if(scene==='hive') base=hiveSVG();
+    else if(scene==='library') base=librarySVG();
+    else if(scene==='flat') base=flatSVG();
+    else if(scene==='toys') base=toysSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1151,6 +1254,10 @@ function coinsSVG(){
       .c2-stage.c2-bg-factory { background:linear-gradient(#a8b4c8,#d8d2c8 45%,#8a8a92); }
       .c2-stage.c2-bg-table { background:linear-gradient(#ffe9c9,#f0d3a0 45%,#c89a6a); }
       .c2-stage.c2-bg-lab { background:linear-gradient(#b8c6da,#dbe4ee 45%,#8fa0b0); }
+      .c2-stage.c2-bg-hive { background:linear-gradient(#bfe3a8,#8fc46a 45%,#7fb45c); }
+      .c2-stage.c2-bg-library { background:linear-gradient(#c8b490,#b39a72 45%,#9c6c3a); }
+      .c2-stage.c2-bg-flat { background:linear-gradient(#e0cfa8,#f0e0c0 45%,#c89a6a); }
+      .c2-stage.c2-bg-toys { background:linear-gradient(#eacfa3,#f6e3c5 45%,#c89a6a); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
