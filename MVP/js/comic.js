@@ -1593,6 +1593,52 @@ function coinsSVG(){
       <text x="180" y="222" text-anchor="middle" font-size="19" font-weight="bold" fill="#ffd76a">4 · 3 = 12 комплектов</text>
     </svg>`; }
 
+  function game20SVG(){
+    let row='';
+    for(let g=0;g<5;g++){ for(let k=0;k<4;k++){ const x=40+g*60+k*13, y=104; row+=`<circle cx="${x}" cy="${y}" r="5" fill="#ffd76a"/>`; } }
+    let groups='';
+    for(let g=0;g<5;g++){ groups+=`<rect x="${30+g*60}" y="88" width="60" height="34" fill="none" stroke="rgba(255,215,106,.4)" stroke-width="2" rx="8"/>`; }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2433"/>
+      <text x="26" y="42" font-size="21" font-weight="bold" fill="#ffd76a">Игра «дополняй до 4»</text>
+      ${groups}${row}
+      <text x="180" y="158" text-anchor="middle" font-size="19" fill="#f4e9c8">20 = 4 + 4 + 4 + 4 + 4</text>
+      <text x="180" y="188" text-anchor="middle" font-size="19" fill="#7fd1ff">каждая четвёрка — ловушка</text>
+      <text x="180" y="222" text-anchor="middle" font-size="19" font-weight="bold" fill="#8fd1a8">второй дополняет до 4 → выигрывает</text>
+    </svg>`; }
+  function eulerSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#14241c"/>
+      <text x="24" y="38" font-size="20" font-weight="bold" fill="#ffd76a">Одним росчерком?</text>
+      <!-- квадрат с диагональю -->
+      <g stroke="#8fd1a8" stroke-width="4">
+        <rect x="40" y="66" width="96" height="96" fill="rgba(143,209,168,.1)"/>
+        <line x1="40" y1="66" x2="136" y2="162"/>
+      </g>
+      <circle cx="40" cy="66" r="7" fill="#e86a5a"/><circle cx="136" cy="66" r="7" fill="#ffd76a"/>
+      <circle cx="40" cy="162" r="7" fill="#ffd76a"/><circle cx="136" cy="162" r="7" fill="#e86a5a"/>
+      <text x="88" y="196" text-anchor="middle" font-size="16" fill="#8fd1a8">можно: 2 нечётные</text>
+      <!-- плюс -->
+      <g stroke="#e86a5a" stroke-width="4">
+        <line x1="240" y1="114" x2="320" y2="114"/>
+        <line x1="280" y1="66" x2="280" y2="162"/>
+      </g>
+      <circle cx="240" cy="114" r="7" fill="#ffd76a"/><circle cx="320" cy="114" r="7" fill="#ffd76a"/>
+      <circle cx="280" cy="66" r="7" fill="#ffd76a"/><circle cx="280" cy="162" r="7" fill="#ffd76a"/>
+      <text x="280" y="196" text-anchor="middle" font-size="16" fill="#ffcfc2">нельзя: 4 нечётные</text>
+    </svg>`; }
+  function pickSVG(){
+    const dots=[];
+    for(let r=0;r<7;r++){ for(let c=0;c<7;c++){ const inL=(c>=1&&c<=5&&r>=1&&r<=5);
+      dots.push(`<circle cx="${40+c*40}" cy="${40+r*28}" r="3.4" fill="${inL?'#7fd1ff':'#5f6a75'}"/>`); } }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1a1f2e"/>
+      <text x="24" y="34" font-size="20" font-weight="bold" fill="#ffd76a">Формула Пика: S = В + Г/2 − 1</text>
+      ${dots.join('')}
+      <polygon points="120,40 200,40 240,96 200,180 120,180 80,96" fill="rgba(127,209,255,.18)" stroke="#7fd1ff" stroke-width="3"/>
+      <text x="180" y="232" text-anchor="middle" font-size="18" fill="#f4e9c8">В = 5, Г = 4 → S = 5 + 2 − 1 = 6</text>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1648,6 +1694,9 @@ function coinsSVG(){
     else if(scene==='cut') base=cutSVG();
     else if(scene==='tri') base=triSVG();
     else if(scene==='prod') base=prodSVG();
+    else if(scene==='game20') base=game20SVG();
+    else if(scene==='euler') base=eulerSVG();
+    else if(scene==='pick') base=pickSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1764,6 +1813,9 @@ function coinsSVG(){
       .c2-stage.c2-bg-cut { background:linear-gradient(#16251c,#122017 45%,#0c1a11); }
       .c2-stage.c2-bg-tri { background:linear-gradient(#1e2a3d,#182338 45%,#101a2c); }
       .c2-stage.c2-bg-prod { background:linear-gradient(#231a10,#1c140c 45%,#140d08); }
+      .c2-stage.c2-bg-game20 { background:linear-gradient(#1e2433,#191f2c 45%,#12171f); }
+      .c2-stage.c2-bg-euler { background:linear-gradient(#14241c,#101c15 45%,#0a140f); }
+      .c2-stage.c2-bg-pick { background:linear-gradient(#1a1f2e,#151a26 45%,#0f131c); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
