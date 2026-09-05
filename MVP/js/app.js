@@ -2,7 +2,49 @@
 'use strict';
 const UI = { tab:'path', backTab:'path', islName:null };
 
+
+/* ---------- свайп-переключение карточек (телефон) ---------- */
+let _swipe={x:0,y:0,on:false,just:false,until:0};
+function swipeCard(dir){
+  try{
+    if(typeof COMIC!=='undefined'&&COMIC.isOpen&&COMIC.isOpen()){
+      if(dir>0) COMIC.next(); else COMIC.step(-1);
+      return;
+    }
+    const lv=document.getElementById('lvis');
+    if(lv&&lv.offsetParent!==null&&typeof LV!=='undefined'&&LV&&LV.id){
+      const L=typeof lessonById==='function'?lessonById(LV.id):null;
+      if(!L) return;
+      if(LV.phase==='explain'){
+        const n=(typeof lessonSteps==='function')?lessonSteps(L):L.explain.length;
+        if(dir>0){ if(LV.step>=n-1){ if(typeof lvToCheck==='function') lvToCheck(); } else if(typeof lvStep==='function') lvStep(1); }
+        else { if(LV.step>0&&typeof lvStep==='function') lvStep(-1); }
+      }
+    }
+  }catch(e){}
+}
+function initSwipe(){
+  document.addEventListener('touchstart',e=>{
+    if(e.touches.length!==1){ _swipe.on=false; return; }
+    const t=e.touches[0]; _swipe.x=t.clientX; _swipe.y=t.clientY; _swipe.on=true; _swipe.just=false;
+  },{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(!_swipe.on) return; _swipe.on=false;
+    const t=e.changedTouches[0];
+    const dx=t.clientX-_swipe.x, dy=t.clientY-_swipe.y;
+    if(Math.abs(dx)<48||Math.abs(dy)>Math.abs(dx)*1.4) return;
+    _swipe.just=true; _swipe.until=Date.now()+400;
+    try{ e.preventDefault(); }catch(_){}
+    swipeCard(dx<0?1:-1);
+  },{passive:false});
+  // гасим случайный клик сразу после свайпа
+  document.addEventListener('click',e=>{
+    if(_swipe.just&&Date.now()<_swipe.until){ e.stopPropagation(); e.preventDefault(); _swipe.just=false; }
+  },true);
+}
+
 function init(){
+  initSwipe();
   document.querySelectorAll('#navBar button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.tab)));
   window.addEventListener('beforeunload', save);
   setInterval(()=>{ DB.today.minutes=Math.min(600,Math.max(DB.today.minutes,Math.round((Date.now()-DB.sessionStart)/60000))); save(); hud(); }, 60000);
