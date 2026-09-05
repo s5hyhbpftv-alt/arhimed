@@ -1941,10 +1941,22 @@ const L251_EX=[[5,3,'P',16],[6,4,'S',24],[4,4,'P',16],[5,5,'S',25],[6,4,'P',20],
 // прямоугольник a×b: mode 'per' — рамка, 'area' — клетки площади
 function l251Rect(a,b,o){
   const O=o||{};
-  const C=Math.min(26,Math.floor(230/Math.max(a,b)));
+  const C=Math.min(26,Math.floor(210/Math.max(a,b)));
   const W=a*C, H=b*C;
-  const colP='#ffd966', colA='#7fd1a0';
-  const main=O.mode==='area'?colA:'#7fb7d8';
+  const colA='#7fd1a0', colP='#ffd966';
+  const x0=52, y0=40;                 // отступы под размерные стрелки и подписи
+  // размерные стрелки + подписи сторон (видны всегда)
+  const dims=`
+    <g stroke="#d8ecff" stroke-width="2.2" fill="none" opacity=".9">
+      <line x1="${x0}" y1="${y0-16}" x2="${x0+W}" y2="${y0-16}"/>
+      <line x1="${x0}" y1="${y0-22}" x2="${x0}" y2="${y0-10}"/>
+      <line x1="${x0+W}" y1="${y0-22}" x2="${x0+W}" y2="${y0-10}"/>
+      <line x1="${x0-16}" y1="${y0}" x2="${x0-16}" y2="${y0+H}"/>
+      <line x1="${x0-22}" y1="${y0}" x2="${x0-10}" y2="${y0}"/>
+      <line x1="${x0-22}" y1="${y0+H}" x2="${x0-10}" y2="${y0+H}"/>
+    </g>
+    <text x="${x0+W/2}" y="${y0-24}" text-anchor="middle" font-size="15" font-weight="bold" fill="${colP}">${a} см</text>
+    <text x="${x0-20}" y="${y0+H/2}" text-anchor="middle" font-size="15" font-weight="bold" fill="${colP}" transform="rotate(-90 ${x0-20} ${y0+H/2})">${b} см</text>`;
   let inner='';
   if(O.mode==='area'){
     let cells='';
@@ -1952,26 +1964,20 @@ function l251Rect(a,b,o){
     for(let y=0;y<b;y++){
       for(let x=0;x<a;x++){
         const n=y*a+x+1;
-        cells+=`<rect x="${8+x*C}" y="${8+y*C}" width="${C}" height="${C}" fill="${n===total?'#ffd966':'rgba(127,209,160,.14)'}" stroke="rgba(20,50,35,.5)" stroke-width=".7"/>`;
+        cells+=`<rect x="${x0+x*C}" y="${y0+y*C}" width="${C}" height="${C}" fill="${n===total?'#ffd966':'rgba(127,209,160,.16)'}" stroke="rgba(20,50,35,.55)" stroke-width=".8"/>`;
       }
     }
-    inner=`<rect x="8" y="8" width="${W}" height="${H}" fill="none" stroke="${colA}" stroke-width="2.5"/>
+    // выделить первый ряд жёлтым пунктиром и подписать «ряд»
+    inner=`<rect x="${x0}" y="${y0}" width="${W}" height="${H}" fill="none" stroke="${colA}" stroke-width="3"/>
       ${cells}
-      ${O.count?`<text x="${8+W/2}" y="${8+H/2+5}" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">${a}·${b} = ${total}</text>`:''}`;
+      <rect x="${x0}" y="${y0}" width="${W}" height="${C}" fill="none" stroke="#ffd966" stroke-width="2.4" stroke-dasharray="6 4"/>
+      ${O.count?`<text x="${x0+W/2}" y="${y0+H/2+6}" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff" stroke="rgba(0,0,0,.35)" stroke-width=".6">${a}·${b} = ${total} см²</text>`:''}`;
   }else{
-    // периметр: прямоугольник + размерные стрелки
-    const w2=W/2+8, h2=H/2+8;
-    inner=`<rect x="8" y="8" width="${W}" height="${H}" fill="rgba(127,183,216,.12)" stroke="${O.mode==='per'?'#ffd966':'#7fb7d8'}" stroke-width="3.5"/>
-      ${O.mode==='per'?`<rect x="5" y="5" width="${W+6}" height="${H+6}" fill="none" stroke="#ffd96655" stroke-width="1.6" stroke-dasharray="5 4"/>`:''}
-      <!-- размерные стрелки -->
-      <g stroke="#e8dcc8" stroke-width="1.4" fill="none">
-        <line x1="8" y1="-2" x2="${8+W}" y2="-2"/><line x1="8" y1="-6" x2="8" y2="2"/><line x1="${8+W}" y1="-6" x2="${8+W}" y2="2"/>
-        <line x1="-2" y1="8" x2="-2" y2="${8+H}"/><line x1="-6" y1="8" x2="2" y2="8"/><line x1="-6" y1="${8+H}" x2="2" y2="${8+H}"/>
-      </g>
-      <text x="${8+W/2}" y="-7" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffd966">${a} см</text>
-      <text x="-12" y="${8+H/2+4}" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffd966" transform="rotate(-90 -12 ${8+H/2+4})">${b} см</text>`;
+    inner=`<rect x="${x0}" y="${y0}" width="${W}" height="${H}" fill="rgba(255,217,102,.10)" stroke="${O.mode==='per'?colP:'#7fb7d8'}" stroke-width="4"/>
+      ${O.mode==='per'?`<rect x="${x0-3}" y="${y0-3}" width="${W+6}" height="${H+6}" fill="none" stroke="${colP}88" stroke-width="1.8" stroke-dasharray="7 5"/>`:''}`;
   }
-  return `<svg width="${Math.max(W,1)+24}" height="${H+26}" viewBox="-10 -8 ${Math.max(W,1)+40} ${H+34}" style="display:inline-block;vertical-align:middle">${inner}</svg>`;
+  const vbW=x0+W+18, vbH=y0+H+18;
+  return `<svg width="${vbW}" height="${vbH}" viewBox="0 0 ${vbW} ${vbH}" style="display:inline-block;vertical-align:middle">${dims}${inner}</svg>`;
 }
 function visL251(el){
   try{
@@ -2034,23 +2040,36 @@ function visL251(el){
         card('периметр — это <b style="color:#ffd966">обычная длина</b>, её меряют в сантиметрах, метрах… Забор вокруг огорода 16 м — это 16 «шагов по одному метру» вдоль границы.')+
         sml('периметр — линейная длина, как у линейки!'));
     } else if(step===6){
-      h=col(big('Площадь — это «внутри»')+
+      h=col(big('Площадь — что внутри?')+
         rowC(l251Rect(4,3,{mode:'area',count:false}))+
-        `<div style="text-align:center;font-size:13px;color:#e8dcc8">внутри помещается <b style="color:#7fd1a0">4 · 3 = 12</b> квадратиков 1×1 см → площадь <b style="color:#7fd1a0">12 см²</b></div>`+
-        card('площадь — <b style="color:#7fd1a0">сколько квадратиков 1×1 помещается внутри</b>. Маленькая двойка в «см²» значит «квадратные сантиметры» — считаем квадратики!')+
-        sml('см² — это не «см в квадрате», а «квадратные см»!'));
+        `<div style="display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin:3px 0">
+          <div style="text-align:center">
+            <svg width="54" height="54" viewBox="0 0 54 54"><rect x="4" y="4" width="46" height="46" fill="#7fd1a0" stroke="#2e7a4a" stroke-width="2.5"/><rect x="4" y="4" width="46" height="46" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1" stroke-dasharray="4 4"/></svg>
+            <div style="font-size:11px;color:#7fd1a0;margin-top:2px">1 клетка = 1 см²</div>
+          </div>
+          <div style="max-width:220px;font-size:13px;color:#e8dcc8;text-align:left">квадратик со стороной <b style="color:#ffd966">1 см</b> — это <b style="color:#7fd1a0">1 квадратный сантиметр (1 см²)</b>. Площадь — сколько таких квадратиков поместилось внутри!</div>
+        </div>`+
+        card('площадь — <b style="color:#7fd1a0">сколько квадратиков 1×1 см внутри</b>. Внутри прямоугольника 4 × 3 помещается 12 таких квадратиков → площадь <b style="color:#7fd1a0">12 см²</b>. Маленькая «2» в см² — как значок «квадратики»!')+
+        sml('см² = «квадратные сантиметры»: считаем квадратики!'));
     } else if(step===7){
       h=col(big('Площадь прямоугольника: S = a · b')+
         rowC(l251Rect(5,3,{mode:'area',count:true}))+
+        `<div style="display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap">
+          <div style="text-align:center;background:rgba(255,217,102,.1);border:1.5px dashed #ffd966;border-radius:9px;padding:4px 10px;font-size:12.5px;color:#ffd966">жёлтая рамка — первый ряд: 5 квадратиков</div>
+        </div>`+
+        `<div style="text-align:center;font-size:14px;color:#e8dcc8">3 ряда по 5 → 5 + 5 + 5 = <b style="color:#7fd1a0">15</b></div>`+
         `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold;font-family:Georgia,serif">S = 5 · 3 = 15 см²</div>`+
-        card('в прямоугольнике 5×3 см: <b>3 ряда</b> по <b>5 квадратиков</b>. 5 · 3 = <b style="color:#7fd1a0">15</b>. Умножаем длину на ширину — и площадь готова!')+
-        sml('S = a · b — главная формула площади!'));
+        card('смотрим на сетку: <b style="color:#ffd966">5 квадратиков</b> в ширину (длина a) и <b>3 ряда</b> в высоту (ширина b). Каждый ряд — 5 квадратиков, рядов 3: 5 · 3 = <b style="color:#7fd1a0">15 см²</b>. Умножаем длину на ширину!')+
+        sml('S = a · b: длина × ширина = квадратики!'));
     } else if(step===8){
       h=col(big('Почему умножаем?')+
         rowC(l251Rect(5,3,{mode:'area'}))+
-        `<div style="text-align:center;font-family:Georgia,serif;font-size:16px;color:#e8dcc8">3 ряда по 5 = 5 + 5 + 5 = <b style="color:#7fd1a0">15</b></div>`+
-        card('считать по одному долго: 1, 2, 3… 15. А умножение — <b style="color:#ffd966">быстрое сложение</b>: 3 раза по 5. Для больших чисел — например 30 × 20 — сложением не насчитаешься!')+
-        sml('умножение = быстрое сложение одинаковых рядов!'));
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:300px;width:100%;margin:2px auto">
+          ${[['ряд 1','5 квадратиков'],['ряд 2','5 квадратиков'],['ряд 3','5 квадратиков']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-left:4px solid ${['#ffd966','#7fd1a0','#7fb7d8'][i]};border-radius:8px;padding:3px 10px;font-size:12.5px;color:#e8dcc8"><span>${x[0]}</span><span style="color:#9ec0a8">${x[1]}</span></div>`).join('')}
+          <div style="text-align:center;font-family:Georgia,serif;font-size:16px;color:#ffd966;margin-top:2px">5 + 5 + 5 = 15</div>
+        </div>`+
+        card('считать по одному квадратику долго. Умножение — это <b style="color:#ffd966">быстрое сложение</b>: 3 одинаковых ряда по 5 = 3 · 5 = <b style="color:#7fd1a0">15</b>. А для большого прямоугольника 30 × 20 по одному и не насчитаешься!')+
+        sml('умножение = «сложить одинаковые ряды»!'));
     } else if(step===9){
       h=col(big('Площадь квадрата: S = a · a')+
         rowC(l251Rect(4,4,{mode:'area',count:true}))+
