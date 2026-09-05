@@ -739,6 +739,110 @@ function coinsSVG(){
       <g class="c2a-spark"><text x="150" y="200" font-size="18">💧</text></g>
     </svg>`; }
 
+  function winterSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skW2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#9fb8e8"/><stop offset="1" stop-color="#7f9ed8"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="150" fill="url(#skW2)"/>
+      <g class="c2a-cloud"><text x="30" y="36" font-size="26">☁️</text><text x="200" y="46" font-size="22">☁️</text></g>
+      <text x="60" y="30" font-size="20">❄️</text><text x="150" y="60" font-size="16">❄️</text>
+      <text x="300" y="34" font-size="20">❄️</text><text x="120" y="92" font-size="14">❄️</text>
+      <rect x="0" y="150" width="360" height="60" fill="#eef3fb"/>
+      <ellipse cx="80" cy="176" rx="46" ry="12" fill="#ffffff" opacity=".85"/>
+      <ellipse cx="300" cy="188" rx="60" ry="14" fill="#ffffff" opacity=".8"/>
+      <!-- ёлка -->
+      <rect x="196" y="180" width="10" height="20" fill="#7c4a33"/>
+      <polygon points="201,44 160,112 242,112" fill="#2f7d4e" stroke="#1f5c38" stroke-width="3"/>
+      <polygon points="201,78 166,140 236,140" fill="#357f4f" stroke="#1f5c38" stroke-width="3"/>
+      <polygon points="201,108 172,168 230,168" fill="#3a8a58" stroke="#1f5c38" stroke-width="3"/>
+      <polygon points="201,26 174,70 228,70" fill="#2f7d4e" stroke="#1f5c38" stroke-width="2.5"/>
+      <text x="178" y="52" font-size="22">⭐</text>
+      <g class="c2a-coin" font-size="20">
+        <text x="190" y="86">🟡</text><text x="212" y="100">🔴</text><text x="188" y="126">🟡</text><text x="214" y="142">🔵</text>
+      </g>
+      <!-- сугроб и подарок -->
+      <path d="M0 196 Q60 186 120 196 T240 196 T360 196 L360 210 L0 210 Z" fill="#ffffff"/>
+      <rect x="252" y="168" width="30" height="22" rx="4" fill="#e86a5a" stroke="#33291e" stroke-width="2.5"/>
+      <path d="M267 168 L267 190 M252 179 L282 179" stroke="#f4e9c8" stroke-width="3"/>
+    </svg>`; }
+  function roomSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="210" fill="#f6e3c5"/>
+      <rect x="0" y="0" width="360" height="120" fill="#eacfa3"/>
+      <!-- окно -->
+      <rect x="240" y="18" width="84" height="70" rx="6" fill="#bfe6f7" stroke="#8a5a2b" stroke-width="5"/>
+      <line x1="282" y1="18" x2="282" y2="88" stroke="#8a5a2b" stroke-width="4"/>
+      <line x1="240" y1="53" x2="324" y2="53" stroke="#8a5a2b" stroke-width="4"/>
+      <text x="252" y="44" font-size="18">🌞</text>
+      <!-- пол -->
+      <rect x="0" y="120" width="360" height="90" fill="#c89a6a"/>
+      <path d="M0 120 L360 120" stroke="#a87c4f" stroke-width="4"/>
+      <rect x="0" y="150" width="360" height="6" fill="#a87c4f" opacity=".5"/>
+      <rect x="0" y="180" width="360" height="6" fill="#a87c4f" opacity=".5"/>
+      <!-- ковёр -->
+      <ellipse cx="150" cy="184" rx="90" ry="16" fill="#d97f6a" opacity=".75"/>
+      <!-- полка с игрушками -->
+      <rect x="18" y="40" width="120" height="8" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="2"/>
+      <g font-size="26">
+        <text x="26" y="76">🧸</text><text x="60" y="74">🚗</text><text x="96" y="76">⚽</text>
+        <text x="126" y="74">🧩</text>
+      </g>
+      <!-- кубики на полу -->
+      <g font-size="22"><text x="230" y="176">🧱</text><text x="258" y="182">🧱</text><text x="286" y="188">🧱</text></g>
+    </svg>`; }
+  function circusSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skC3" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffd76a"/><stop offset="1" stop-color="#f2b04c"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="150" fill="url(#skC3)"/>
+      <!-- флажки -->
+      <g font-size="26"><text x="16" y="40">🚩</text><text x="320" y="36">🚩</text></g>
+      <!-- шатёр -->
+      <path d="M40 150 L96 26 L180 6 L264 26 L320 150 Z" fill="#e86a5a" stroke="#7c2f24" stroke-width="4"/>
+      <path d="M96 26 L264 26 L180 6 Z" fill="#f2a24c"/>
+      <path d="M96 26 L180 6 L180 26 Z" fill="#c94f3f"/>
+      <path d="M180 6 L264 26 L180 26 Z" fill="#d9a441"/>
+      <path d="M40 150 L96 26 L180 26 L180 150 Z" fill="#e86a5a" stroke="rgba(0,0,0,.08)" stroke-width="2"/>
+      <path d="M320 150 L264 26 L180 26 L180 150 Z" fill="#d95545" stroke="rgba(0,0,0,.08)" stroke-width="2"/>
+      <!-- арена -->
+      <ellipse cx="180" cy="150" rx="150" ry="18" fill="#c98a3a"/>
+      <ellipse cx="180" cy="150" rx="130" ry="12" fill="#d9a441" opacity=".6"/>
+      <!-- мячи -->
+      <g class="c2a-coin" font-size="22"><text x="120" y="140">🔴</text><text x="160" y="132">🟡</text><text x="200" y="132">🔵</text><text x="238" y="142">🟢</text></g>
+      <text x="150" y="196" font-size="28">🎪</text>
+    </svg>`; }
+  function campSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skCp" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1c2450"/><stop offset="1" stop-color="#3d4d94"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="140" fill="url(#skCp)"/>
+      <g class="c2a-star" font-size="18">
+        <text x="40" y="34">⭐</text><text x="120" y="52">✨</text><text x="210" y="30">⭐</text>
+        <text x="300" y="56">✨</text><text x="160" y="86">⭐</text>
+      </g>
+      <circle cx="330" cy="30" r="16" fill="#f4e9c8"/>
+      <circle cx="330" cy="30" r="14" fill="#e8e0cc"/>
+      <path d="M320 22 Q330 16 340 22 M318 30 Q330 22 342 30" stroke="#a8b4d0" stroke-width="2" fill="none" opacity=".7"/>
+      <!-- холм и трава -->
+      <path d="M0 120 Q90 104 180 120 T360 118 L360 150 L0 150 Z" fill="#3a6b46"/>
+      <rect x="0" y="150" width="360" height="60" fill="#2f5738"/>
+      <!-- костёр -->
+      <path d="M168 150 L180 132 L192 150 Z" fill="#c96b2a" stroke="#7c3a14" stroke-width="2.5"/>
+      <path d="M172 150 L180 138 L188 150 Z" fill="#ffcf6a"/>
+      <g class="c2a-smoke" font-size="22"><text x="178" y="118">🔥</text><text x="168" y="96">🔥</text></g>
+      <!-- брёвнышки -->
+      <rect x="146" y="158" width="40" height="9" rx="4" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="2" transform="rotate(-8 166 162)"/>
+      <rect x="176" y="158" width="40" height="9" rx="4" fill="#9c6c3a" stroke="#5f3a1a" stroke-width="2" transform="rotate(8 196 162)"/>
+      <!-- камни вокруг -->
+      <g font-size="18"><text x="120" y="180">🪨</text><text x="212" y="176">🪨</text><text x="160" y="190">🪨</text><text x="200" y="192">🪨</text></g>
+      <!-- палатка -->
+      <path d="M40 196 L80 132 L120 196 Z" fill="#4a93d0" stroke="#2c5f8a" stroke-width="3"/>
+      <path d="M80 132 L120 196 L80 196 Z" fill="#2c5f8a"/>
+      <!-- пень -->
+      <ellipse cx="258" cy="196" rx="22" ry="8" fill="#9c6c3a"/>
+      <rect x="236" y="180" width="44" height="16" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="2"/>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -754,6 +858,10 @@ function coinsSVG(){
     else if(scene==='train') base=trainSVG();
     else if(scene==='workshop') base=workshopSVG();
     else if(scene==='beach') base=beachSVG();
+    else if(scene==='winter') base=winterSVG();
+    else if(scene==='room') base=roomSVG();
+    else if(scene==='circus') base=circusSVG();
+    else if(scene==='camp') base=campSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -830,6 +938,10 @@ function coinsSVG(){
       .c2-stage.c2-bg-train { background:linear-gradient(#cfe6f5,#a8d2ea 45%,#8fb8d8); }
       .c2-stage.c2-bg-workshop { background:linear-gradient(#e8d5ae,#c9a86a 45%,#a5824e); }
       .c2-stage.c2-bg-beach { background:linear-gradient(#8fd3f0,#5fb8e0 45%,#f0d9a8); }
+      .c2-stage.c2-bg-winter { background:linear-gradient(#9fb8e8,#7f9ed8 45%,#eef3fb); }
+      .c2-stage.c2-bg-room { background:linear-gradient(#f6e3c5,#eacfa3 45%,#c89a6a); }
+      .c2-stage.c2-bg-circus { background:linear-gradient(#ffd76a,#f2b04c 45%,#c98a3a); }
+      .c2-stage.c2-bg-camp { background:linear-gradient(#1c2450,#3d4d94 45%,#2f5738); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
