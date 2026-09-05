@@ -1352,6 +1352,54 @@ function coinsSVG(){
       <g font-size="34"><text x="280" y="150">🌳</text></g>
     </svg>`; }
 
+  function boardFrame(title, lines){
+    let body='';
+    lines.forEach((ln,i)=>{ body+=`<text x="60" y="${74+i*46}" font-size="30" font-weight="bold" fill="#f4e9c8">${ln}</text>`; });
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" rx="10" fill="#1e3a2f"/>
+      <rect x="10" y="10" width="340" height="220" rx="8" fill="none" stroke="#3f7a5f" stroke-width="4"/>
+      <rect x="0" y="226" width="360" height="14" fill="#2c543f"/>
+      <text x="40" y="52" font-size="26" font-weight="bold" fill="#ffd76a">${escHtml(title)}</text>
+      ${body}
+    </svg>`; }
+  function div39SVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e3a2f"/>
+      <rect x="10" y="10" width="340" height="220" rx="8" fill="none" stroke="#3f7a5f" stroke-width="4"/>
+      <text x="40" y="52" font-size="26" font-weight="bold" fill="#ffd76a">Сумма цифр — главный признак</text>
+      <text x="46" y="96" font-size="34" fill="#f4e9c8">7</text><text x="86" y="96" font-size="34" fill="#7fd1ff">2</text>
+      <text x="126" y="96" font-size="34" fill="#f4e9c8">3</text><text x="166" y="96" font-size="34" fill="#7fd1ff">6</text>
+      <text x="196" y="96" font-size="26" fill="#9fc0e8">→ сумма</text>
+      <rect x="296" y="62" width="44" height="34" rx="8" fill="#d9a441"/>
+      <text x="318" y="86" text-anchor="middle" font-size="22" font-weight="bold" fill="#33291e">18</text>
+      <text x="40" y="138" font-size="24" fill="#b6e0bd">18 делится на 9 → число делится на 9</text>
+      <text x="40" y="172" font-size="24" fill="#b6e0bd">и на 3 (9 кратно 3)</text>
+      <text x="40" y="212" font-size="20" fill="#9fc0e8">7236 : 9 = 804 ✔</text>
+    </svg>`; }
+  function sieveSVG(){
+    const P=new Set([2,3,5,7,11,13,17,19,23,29]);
+    let cells='';
+    const x0=24, y0=56, cw=52, ch=34;
+    for(let n=1;n<=30;n++){
+      const col=(n-1)%6, row=Math.floor((n-1)/6);
+      const x=x0+col*cw, y=y0+row*ch;
+      if(P.has(n)){
+        cells+=`<rect x="${x-8}" y="${y-6}" width="${cw-10}" height="${ch-8}" rx="8" fill="rgba(217,164,65,.25)" stroke="#d9a441" stroke-width="3"/>`;
+        cells+=`<text x="${x+9}" y="${y+19}" text-anchor="middle" font-size="20" font-weight="bold" fill="#ffd76a">${n}</text>`;
+      } else if(n===1){
+        cells+=`<text x="${x+9}" y="${y+19}" text-anchor="middle" font-size="18" fill="#8fa08f">1</text>`;
+      } else {
+        cells+=`<text x="${x+9}" y="${y+19}" text-anchor="middle" font-size="18" fill="#7a8f86">${n}</text>`;
+        cells+=`<line x1="${x-4}" y1="${y+2}" x2="${x+20}" y2="${y+28}" stroke="#e86a5a" stroke-width="2.5" opacity=".85"/>`;
+      }
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#14241c"/>
+      <text x="24" y="38" font-size="20" font-weight="bold" fill="#ffd76a">Решето Эратосфена: числа 1–30</text>
+      ${cells}
+      <text x="24" y="228" font-size="15" fill="#8fa08f">золото — простые · серое зачёркнутое — составные</text>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1393,6 +1441,8 @@ function coinsSVG(){
     else if(scene==='scale') base=scaleSVG();
     else if(scene==='sandbox') base=sandboxSVG();
     else if(scene==='road') base=roadSVG();
+    else if(scene==='div39') base=div39SVG();
+    else if(scene==='sieve') base=sieveSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1495,6 +1545,8 @@ function coinsSVG(){
       .c2-stage.c2-bg-scale { background:linear-gradient(#e0c8a0,#f0dcc0 45%,#c89a6a); }
       .c2-stage.c2-bg-sandbox { background:linear-gradient(#a8dcf0,#7fb45c 45%,#7fb45c); }
       .c2-stage.c2-bg-road { background:linear-gradient(#a8dcf0,#8fc9e8 45%,#7fb45c); }
+      .c2-stage.c2-bg-div39 { background:linear-gradient(#1e3a2f,#17302a 45%,#0f241c); }
+      .c2-stage.c2-bg-sieve { background:linear-gradient(#14241c,#0f1c16 45%,#0a140f); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
@@ -1530,6 +1582,14 @@ function coinsSVG(){
         border:10px solid transparent; border-top:16px solid #33291e; border-bottom:0; }
       .c2-talk::after { content:""; position:absolute; left:50%; top:100%; margin-left:-6px;
         border:6px solid transparent; border-top:12px solid #fff; border-bottom:0; }
+      .c2-page.st .c2-stage { min-height:0; }
+      .c2-stepbar { box-sizing:border-box; min-height:120px; max-height:38%; overflow:auto;
+        background:#182a3d; color:#eef2f7; padding:12px 18px 14px; border-top:5px solid #d9a441;
+        display:flex; flex-direction:column; gap:6px; }
+      .c2-stepbar h3 { color:#ffd76a; font-size:20px; line-height:1.3; margin:0; }
+      .c2-stepbar p { font-size:16px; line-height:1.55; margin:0; color:#f2f5fa; }
+      .c2-stepbar .c2cap-tag { color:#9fc0e8; font-weight:bold; letter-spacing:.08em; }
+
       .c2-talk .c2-caret { display:inline-block; width:2px; background:#33291e;
         animation:c2blink .8s steps(1) infinite; }
       @keyframes c2blink { 50%{ opacity:0; } }
@@ -1560,6 +1620,7 @@ function coinsSVG(){
 
   function render(){
     if(!L) return;
+    if(L.mode==='steps'){ renderSteps(); return; }
     const frs=L.comic; const fr=frs[idx];
     const scene=L.scene||'pond';
     const pers=PERS[fr.who]||PERS.arch;
@@ -1630,6 +1691,34 @@ function coinsSVG(){
         try{ document.getElementById('c2cur').classList.add('ready'); }catch(e){} } };
     if(tmr){clearTimeout(tmr);} tmr=setTimeout(tick,160);
   }
+
+  function renderSteps(){
+    const frs=L.comic; const fr=frs[idx]; const scene=L.scene||'board';
+    const last=idx>=frs.length-1;
+    const dots=frs.map((_,i)=>`<span class="cn-dot ${i===idx?'on':''}"></span>`).join('');
+    root.innerHTML=`<div class="comic-top">
+        <span class="ct-book">🧮 ВИЗУАЛЬНЫЙ УРОК</span>
+        <span class="ct-title">${escHtml(L.title)}</span>
+        <button class="ct-x" onclick="COMIC.close()">✕</button>
+      </div>
+      <div class="c2-page st">
+        <div class="c2-stage c2-fresh c2-bg-${scene}" id="c2stage">${sceneArt(scene, fr)}</div>
+        <div class="c2-stepbar"><span class="c2cap-tag">${idx+1}/${frs.length}</span>
+          <h3>${escHtml(fr.t||'')}</h3>
+          <p>${escHtml(fr.say||'')}</p>
+        </div>
+      </div>
+      <div class="comic-nav">
+        <span class="cn-dots">${dots}</span>
+        <div class="cn-row">
+          <button class="cbtn" onclick="COMIC.step(-1)" ${idx===0?'disabled':''}>◀ Назад</button>
+          ${last
+            ? `<button class="cbtn primary" onclick="COMIC.done()">Понял! Проверю себя →</button>`
+            : `<button class="cbtn primary" onclick="COMIC.next()">Дальше ▶</button>`}
+        </div>
+      </div>`;
+  }
+
   function step(d){ idx=Math.max(0,Math.min(L.comic.length-1,idx+d)); render(); }
   function next(){ if(idx<L.comic.length-1){ idx++; render(); } }
   function done(){ close(); try{ if(typeof lvToCheck==='function') lvToCheck(); }catch(e){} }
