@@ -838,3 +838,373 @@ window.WAVE_B = window.WAVE_B || {};
   window.WAVE_B[382]=visB382;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===382){ window.ARH_LESSONS[i]=L382; break; } } })();
 })();
+/* ================= УРОК 383 · Оценка + пример ================= */
+(function(){
+  const L383 = {
+    id: 383, title: 'Оценка + пример: уровень 2', ico: '⚖️',
+    src: 'Математика · 5–6 класс · Оценка и пример', subj: 'math',
+    explain: [
+      'В олимпиадных задачах часто спрашивают: «Какое самое маленькое?», «Какое самое большое?» Для таких задач есть золотая схема из двух шагов: сначала докажи, что меньше (или больше) НЕЛЬЗЯ — это оценка, а потом покажи пример, где это получается.',
+      'Разберём на задаче: какое наименьшее двузначное число имеет сумму цифр 10? Сначала ОЦЕНКА: если число меньше 19, то оно начинается с 1 и имеет вид 1?. Чтобы сумма была 10, нужна цифра 9: 19. Числа 10–18 дают сумму меньше 10. Значит, меньше 19 — никак!',
+      'Теперь ПРИМЕР: число 19 имеет сумму цифр 1 + 9 = 10 — условие выполняется. Раз меньше нельзя, а 19 подходит, то ответ — 19. Оценка + пример = точное решение без перебора!',
+      'Ещё одна задача из учебника: задумали число, умножили на 3 и получили 24. Какое число задумали? Двигаемся ОБРАТНО: было умножение на 3 — значит, делим 24 на 3. 24 : 3 = 8. Проверка: 8 · 3 = 24. Всё сходится!',
+      'Приём «обратный ход»: чтобы найти исходное число, выполняем действия в обратном порядке. Умножали — делим, прибавляли — вычитаем. Как будто перематываем запись задачи назад!',
+      'Задача посложнее: сумма двух чисел 50, а их разность 10. Найди большее число. Ключевая идея: если к сумме прибавить разность, получится удвоенное большее число: (50 + 10) : 2 = 30. Проверка: 30 + 20 = 50 и 30 − 20 = 10.',
+      'Почему так? Пусть a — большее число, b — меньшее. Тогда a + b = 50 и a − b = 10. Сложим уравнения: (a + b) + (a − b) = 50 + 10 → 2a = 60 → a = 30. Вот и формула: большее = (сумма + разность) : 2!',
+      'Запомни схему «оценка + пример»: 1) докажи границу (меньше/больше нельзя); 2) приведи пример, который её достигает. А для задач «задумали число» — иди обратным ходом, и всё получится!',
+      'Теперь проверь себя: какое наименьшее двузначное число имеет сумму цифр 10? Вспомни схему: сначала оценка (меньше 19 нельзя), потом пример (19 подходит).'
+    ],
+    check: { q: 'Какое наименьшее двузначное число имеет сумму цифр 10?', choices: ['19', '28', '37', '91'], ans: 0,
+      exp: 'Меньше 19 нельзя: числа 10–18 дают сумму меньше 10. А 19: 1+9=10.' },
+    tasks: [
+      { q: 'Задумали число, умножили на 3 и получили 24. Какое число задумали?', kind: 'unit', ans: 8, tol: 0,
+        hints: ['Действуем обратно: делим.', '24 : 3 = 8.'], sol: '8' },
+      { q: 'Сумма двух чисел 50, а разность 10. Чему равно большее число?', kind: 'choice', choices: ['30', '20', '25', '40'], ans: 0, tol: 0,
+        hints: ['(50 + 10) : 2.', '60 : 2 = 30.'], sol: '30' }
+    ]
+  };
+  function visB383(el){
+    const step=LV.step||0;
+    const numTiles=(num)=>String(num).split('').map((d,i)=>`<span class="wv-pop" style="animation-delay:${i*0.08}s;display:inline-flex;align-items:center;justify-content:center;width:40px;height:44px;border-radius:9px;background:rgba(217,164,65,.14);border:2px solid #d9a441;font-size:24px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">${d}</span>`).join('');
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Схема «оценка + пример»</div>
+        <div style="display:flex;gap:10px;align-items:stretch;max-width:330px;width:100%">
+          <div style="flex:1;background:rgba(127,209,255,.08);border:2px solid #7fd1ff;border-radius:12px;padding:10px;text-align:center">
+            <div style="font-size:22px">1️⃣</div><b style="font-size:13.5px;color:#7fd1ff">ОЦЕНКА</b>
+            <div style="font-size:11.5px;color:#9ec0a8;margin-top:4px">докажи, что меньше нельзя</div>
+          </div>
+          <div style="flex:1;background:rgba(143,209,168,.08);border:2px solid #8fd1a8;border-radius:12px;padding:10px;text-align:center">
+            <div style="font-size:22px">2️⃣</div><b style="font-size:13.5px;color:#8fd1a8">ПРИМЕР</b>
+            <div style="font-size:11.5px;color:#9ec0a8;margin-top:4px">покажи, что это получается</div>
+          </div>
+        </div>
+        <div class="wv-sml">оценка + пример = точный ответ без перебора!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Оценка: меньше 19 нельзя</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:center;max-width:330px">
+          ${Array.from({length:10},(_,i)=>{const n=10+i; const sum=1+i;
+            return `<span style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;background:rgba(232,106,90,.08);border:1px solid rgba(232,106,90,.35);font-size:12px;color:#8f5a50;margin:1px">${n}</span>`;}).join('')}
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #7fd1ff;border-radius:9px;padding:6px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8">числа 10–18: сумма цифр 1+? меньше 10 → <b style="color:#7fd1ff">не подходят!</b></div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Пример: 19 подходит!</div>
+        ${numTiles(19)}
+        <div style="display:flex;align-items:center;gap:6px;margin:6px 0;font-size:20px;color:#e8dcc8">1 + 9 = <b style="color:#ffd76a;font-family:Georgia,serif">10</b></div>
+        <div style="background:rgba(127,209,160,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 14px;font-size:17px;color:#8fd1a8;font-weight:bold">меньше нельзя + пример есть → ответ 19!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Задумали число</div>
+        <div style="display:flex;flex-direction:column;gap:6px;align-items:center">
+          <div class="wv-row" style="gap:8px"><span style="background:#101f18;border:1px solid #3d5c49;border-radius:9px;padding:4px 12px;font-size:20px;color:#8fa08f">?</span><b style="color:#ffd76a;font-size:22px">×3</b><span style="background:#101f18;border:1px solid #3d5c49;border-radius:9px;padding:4px 12px;font-size:20px;color:#8fa08f">?</span><b style="color:#ffd76a;font-size:22px">=</b><span style="background:rgba(217,164,65,.14);border:2px solid #d9a441;border-radius:9px;padding:4px 12px;font-size:20px;color:#ffd76a;font-weight:bold">24</span></div>
+          <div style="font-size:15px;color:#8fa08f">ищем ? — идём обратно</div>
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:6px 12px;max-width:330px;font-size:14px;color:#e8dcc8">было умножение → делаем деление: <b style="color:#8fd1a8">24 : 3 = 8</b></div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Обратный ход</div>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:center;font-size:18px;color:#e8dcc8">
+          <div>задумали <b style="color:#ffd76a">8</b> → ×3 → 24</div>
+          <div style="color:#8fa08f;font-size:14px">↑ проверка: 8·3 = 24 ✔</div>
+          <div style="margin-top:6px">найти 24 → :3 → <b style="color:#8fd1a8">8</b></div>
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:6px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8">умножали — делим · прибавляли — вычитаем: как перемотка назад!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Сумма 50, разность 10</div>
+        <div class="wv-row" style="gap:10px">
+          <div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid #3d5c49;border-radius:12px;padding:8px 14px"><b style="font-size:24px;color:#7fd1ff;font-family:Georgia,serif">30</b><div style="font-size:11px;color:#8fd1a8">большее</div></div>
+          <div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid #3d5c49;border-radius:12px;padding:8px 14px"><b style="font-size:24px;color:#8fd1a8;font-family:Georgia,serif">20</b><div style="font-size:11px;color:#8fa08f">меньшее</div></div>
+        </div>
+        <div class="wv-row" style="gap:12px;font-size:15px;color:#e8dcc8"><span>30+20=<b style="color:#ffd76a">50</b></span><span>30−20=<b style="color:#ffd76a">10</b></span></div>
+        <div class="wv-sml">большее = (сумма + разность) : 2 = (50+10):2 = 30</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Почему так работает</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:330px;width:100%;font-size:15px;color:#e8dcc8;font-family:Georgia,serif">
+          <div class="wv-pop">a + b = 50 &nbsp;·&nbsp; a − b = 10</div>
+          <div class="wv-pop2" style="color:#8fa08f;font-size:13px">сложим оба уравнения:</div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">2a = 60 → a = 30</div>
+        </div>
+        <div class="wv-sml">удвоенное большее = сумма + разность!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Памятка</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['1️⃣','докажи границу (оценка)','#7fd1ff'],
+            ['2️⃣','приведи пример','#8fd1a8'],
+            ['3️⃣','задумали число → обратный ход','#e8a0d8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;text-align:left;font-size:14px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-sml">наименьшее двузначное с суммой цифр 10?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 20px;font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? ?</div>
+        <div class="wv-sml">подсказка: число 19 — 1 + 9 = 10</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[383]=visB383;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===383){ window.ARH_LESSONS[i]=L383; break; } } })();
+})();
+/* ================= УРОК 384 · Средняя скорость ================= */
+(function(){
+  const L384 = {
+    id: 384, title: 'Средняя скорость: путь и время', ico: '🚌',
+    src: 'Математика · 5–6 класс · Средняя скорость', subj: 'math',
+    explain: [
+      'Автобус Архимеда едет в соседний город. Первые 2 часа — со скоростью 40 км/ч, а потом 1 час — со скоростью 70 км/ч. Какова СРЕДНЯЯ скорость? Это не среднее арифметическое 40 и 70! Сейчас разберёмся, как считать правильно.',
+      'Сначала вспомним главную формулу пути: путь = скорость · время. Если ехать 2 часа по 40 км/ч, проедешь 40 · 2 = 80 км. Обрати внимание: умножаем скорость на время, а не просто берём скорость!',
+      'Теперь второй участок: 1 час по 70 км/ч — это 70 · 1 = 70 км. Весь путь: 80 + 70 = 150 км. А всё время движения: 2 + 1 = 3 часа. Запишем это — скоро понадобится.',
+      'Средняя скорость = весь путь : всё время. Делим 150 км на 3 часа: 150 : 3 = 50 км/ч. Вот правильный ответ! Средняя скорость автобуса — 50 км/ч.',
+      'Почему нельзя просто взять (40 + 70) : 2 = 55? Потому что на скорости 40 км/ч автобус ехал ДОЛЬШЕ (2 часа), чем на 70 км/ч (1 час). Быстрая езда «весит» меньше в общем времени!',
+      'Запомни формулу: средняя скорость = весь путь : всё время. Не усредняй скорости напрямую — сначала найди весь путь и всё время!',
+      'Проверим на простом примере: весь путь 120 км, время 3 часа. Средняя скорость = 120 : 3 = 40 км/ч. Всё просто, когда известны путь и время!',
+      'А если ехать одинаковое время на разных скоростях — тогда средняя скорость и есть среднее арифметическое. Но в нашей задаче времена разные — поэтому считаем через путь!',
+      'Теперь проверь себя: автобус ехал 2 часа по 40 км/ч и 1 час по 70 км/ч. Какова средняя скорость? Вспомни: весь путь 150 км, всё время 3 часа.'
+    ],
+    check: { q: '2 часа по 40 км/ч и 1 час по 70 км/ч. Средняя скорость?', choices: ['50 км/ч', '55 км/ч', '45 км/ч', '60 км/ч'], ans: 0,
+      exp: 'Путь 40·2 + 70 = 150 км, время 3 ч → 150:3 = 50 км/ч.' },
+    tasks: [
+      { q: 'Весь путь 120 км, время 3 часа. Средняя скорость?', kind: 'unit', ans: 40, tol: 0,
+        hints: ['Средняя = путь : время.', '120 : 3 = 40 км/ч.'], sol: '40' },
+      { q: 'Почему нельзя просто усреднить 40 и 70?', kind: 'choice', choices: ['времена движения разные', 'числа слишком большие', 'дорога кривая', 'можно усреднять'], ans: 0, tol: 0,
+        hints: ['Средняя — это путь, делённый на время.', 'Времена разные → берём весь путь и всё время.'], sol: 'времена разные' }
+    ]
+  };
+  const road=(k1,h1,k2,h2)=>`<div style="position:relative;width:100%;max-width:340px;height:56px;background:linear-gradient(180deg,#3a3f45,#23272c);border-radius:10px;overflow:hidden">
+    <div style="position:absolute;top:24px;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,rgba(255,208,90,.7) 0 14px,transparent 14px 28px)"></div>
+    <div style="position:absolute;left:6px;top:20px;font-size:22px" class="wv-drive" style="--dx:${Math.round((k1*h1+k2*h2)/10)}px">🚌</div>
+  </div>`;
+  function visB384(el){
+    const step=LV.step||0;
+    const card=(k,t,color)=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${color};border-radius:12px;padding:8px 12px;min-width:92px"><b style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">${k}</b><div style="font-size:12px;color:${color};margin-top:2px">${t}</div></div>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Поездка автобуса</div>
+        <div style="font-size:52px" class="wv-swing">🚌</div>
+        <div class="wv-sml" style="max-width:330px">2 часа по <b style="color:#7fd1ff">40 км/ч</b>, потом 1 час по <b style="color:#8fd1a8">70 км/ч</b>. Какая средняя скорость?</div>
+        <div style="background:rgba(232,106,90,.1);border:1px solid rgba(232,106,90,.4);border-radius:10px;padding:6px 12px;max-width:320px;font-size:13.5px;color:#ffcfc2">это НЕ среднее арифметическое 40 и 70!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Формула пути</div>
+        <div style="background:rgba(217,164,65,.09);border:2px solid #d9a441;border-radius:14px;padding:10px 16px">
+          <div style="font-size:19px;color:#e8dcc8">путь = скорость <b style="color:#ffd76a">·</b> время</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+          ${card('40 км/ч','· 2 часа = 80 км','#7fd1ff')}
+          ${card('70 км/ч','· 1 час = 70 км','#8fd1a8')}
+        </div>
+        <div class="wv-sml">скорость умножаем на время!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Весь путь и всё время</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['путь 1', '40 · 2 = 80 км', '#7fd1ff'],
+            ['путь 2', '70 · 1 = 70 км', '#8fd1a8'],
+            ['весь путь', '80 + 70 = 150 км', '#ffd76a'],
+            ['всё время', '2 + 1 = 3 часа', '#e8a0d8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Делим: 150 : 3</div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:24px;color:#e8dcc8;margin:6px 0">
+          <b style="color:#ffd76a;font-family:Georgia,serif;font-size:30px">150</b>
+          <span style="color:#8fa08f">км :</span>
+          <b style="color:#ffd76a;font-family:Georgia,serif;font-size:30px">3</b>
+          <span style="color:#8fa08f">ч =</span>
+          <b style="color:#8fd1a8;font-family:Georgia,serif;font-size:34px" class="wv-ans">50</b>
+        </div>
+        <div style="background:rgba(127,209,160,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 14px;font-size:17px;color:#8fd1a8;font-weight:bold">средняя скорость = 50 км/ч</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ловушка: (40+70):2 = 55 ✘</div>
+        <div style="display:flex;gap:10px;justify-content:center">
+          <div style="text-align:center"><div style="font-size:15px;color:#e86a5a;text-decoration:line-through">55 км/ч</div><div style="font-size:11px;color:#8f5a50">неправильно!</div></div>
+          <div style="text-align:center"><div style="font-size:15px;color:#8fd1a8;font-weight:bold">50 км/ч ✔</div><div style="font-size:11px;color:#8fa08f">правильно</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin:6px 0">
+          <span style="display:inline-block;width:54px;height:16px;background:#7fd1ff;border-radius:3px"></span><span style="color:#8fa08f;font-size:12px">2 часа по 40</span>
+          <span style="display:inline-block;width:27px;height:16px;background:#8fd1a8;border-radius:3px"></span><span style="color:#8fa08f;font-size:12px">1 час по 70</span>
+        </div>
+        <div class="wv-sml">полоски разной длины: медленная езда длилась дольше!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Главная формула</div>
+        <div style="background:rgba(217,164,65,.1);border:2px solid #ffd76a;border-radius:14px;padding:10px 16px;max-width:330px;width:100%">
+          <div style="font-size:17px;color:#ffd76a;font-weight:bold;text-align:center">средняя скорость = весь путь : всё время</div>
+        </div>
+        <div class="wv-sml">не усредняй скорости — считай путь и время!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Простой пример</div>
+        <div style="display:flex;gap:10px;justify-content:center;margin:4px 0">
+          ${card('120 км','весь путь','#ffd76a')}
+          ${card('3 часа','всё время','#7fd1ff')}
+        </div>
+        <div style="font-size:22px;color:#e8dcc8">120 : 3 = <b style="color:#8fd1a8;font-family:Georgia,serif" class="wv-ans">40 км/ч</b></div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Когда можно усреднять?</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:7px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8;line-height:1.5">если ехать <b style="color:#8fd1a8">одинаковое время</b> — средняя = среднее арифметическое скоростей. У нас времена разные → через путь!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-sml" style="max-width:320px">2 часа по 40 км/ч и 1 час по 70 км/ч — средняя скорость?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 18px;font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? км/ч</div>
+        <div class="wv-sml">подсказка: 150 : 3</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[384]=visB384;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===384){ window.ARH_LESSONS[i]=L384; break; } } })();
+})();
+/* ================= УРОК 385 · Переливания ================= */
+(function(){
+  const L385 = {
+    id: 385, title: 'Переливания: оптимум', ico: '🪣',
+    src: 'Математика · 5–6 класс · Переливания', subj: 'math',
+    explain: [
+      'Классическая задача! У Архимеда есть полное ведро на 7 литров и пустая банка на 3 литра. Нужно отмерить ровно 1 литр воды. Других ёмкостей нет. Как это сделать? Звучит невозможно, но всего за несколько переливаний — получится!',
+      'Шаг 1. В ведре 7 литров. Отливаем из ведра воду в банку (3 литра) до краёв. Теперь в ведре осталось 7 − 3 = 4 литра, а банка полная — 3 литра.',
+      'Шаг 2. Выливаем банку полностью (например, в раковину). Банка снова пустая, а в ведре по-прежнему 4 литра.',
+      'Шаг 3. Снова отливаем из ведра в банку 3 литра. В ведре осталось 4 − 3 = 1 литр! Вот он, заветный литр — задача решена!',
+      'Секрет в записи: 7 − 3 − 3 = 1. Мы дважды «отняли» по 3 литра от полного ведра. Переливания — это просто вычитание объёмов, только с правилом: банка не больше ведра и льём до краёв.',
+      'Общий приём: чтобы отмерить маленький объём, отнимай от большого маленький несколько раз, каждый раз выливая накопившееся. Как будто «вычитаем по частям».',
+      'Проверим другой пример: ведро 5 л и банка 2 л. Можно ли отмерить 1 л? Конечно! 5 − 2 = 3 (в ведре 3 л), выливаем банку, снова отливаем 2 л: 3 − 2 = 1. Получился 1 литр!',
+      'Запомни: задачи на переливания решаются аккуратной последовательностью шагов. Не торопись, следи, сколько воды в каждой ёмкости после каждого действия, — и ответ найдётся!',
+      'Теперь проверь себя: в ведре 7 л, отлили в банку 3 л. Сколько литров осталось в ведре?'
+    ],
+    check: { q: 'Ведро 7 л и банка 3 л: наполнили 7 л и отлили в банку 3 л. Сколько осталось в ведре?', choices: ['4 л', '3 л', '1 л', '5 л'], ans: 0,
+      exp: '7 − 3 = 4 л.' },
+    tasks: [
+      { q: 'После этого банку вылили и снова отлили из ведра 3 л. Сколько осталось в ведре?', kind: 'unit', ans: 1, tol: 0,
+        hints: ['Было 4 л.', '4 − 3 = 1 л.'], sol: '1 л' },
+      { q: 'Ведро 5 л и банка 2 л. Можно ли отмерить 1 л?', kind: 'choice', choices: ['да', 'нет', 'только 3 л', 'только чётные объёмы'], ans: 0, tol: 0,
+        hints: ['5 − 2 − 2 = 1.', 'Отлили 2 л (осталось 3), вылили, отлили ещё 2 → 1 л.'], sol: 'да' }
+    ]
+  };
+  const bucket=(liters,full,label,color)=>{ const h=Math.round(full/liters*90);
+    return `<div style="display:flex;flex-direction:column;align-items:center">
+      <div style="position:relative;width:52px;height:100px;border:3px solid ${color};border-top:none;border-radius:0 0 8px 8px;background:rgba(255,255,255,.02);overflow:hidden">
+        <div style="position:absolute;bottom:0;left:0;right:0;height:${h}px;background:linear-gradient(180deg,rgba(127,209,255,.55),rgba(79,141,255,.65));transition:height .5s"></div>
+        <div style="position:absolute;top:${100-h-4}px;left:-3px;right:-3px;height:3px;background:rgba(200,235,255,.8)"></div>
+      </div>
+      <div style="font-size:12px;color:${color};margin-top:4px">${label}</div>
+      <div style="font-size:16px;color:#ffd76a;font-weight:bold">${full} л</div>
+    </div>`;
+  };
+  function visB385(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Задача Архимеда</div>
+        <div style="display:flex;gap:20px;justify-content:center;align-items:flex-end;margin:4px 0">
+          ${bucket(7,7,'ведро 7 л','#7fd1ff')}
+          ${bucket(3,0,'банка 3 л','#8fd1a8')}
+        </div>
+        <div style="background:rgba(217,164,65,.09);border:2px solid #d9a441;border-radius:12px;padding:8px 14px;max-width:330px;font-size:14px;color:#e8dcc8">нужно отмерить ровно <b style="color:#ffd76a">1 литр</b>! Других ёмкостей нет…</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Шаг 1: отливаем 3 л</div>
+        <div style="display:flex;gap:20px;justify-content:center;align-items:flex-end">
+          ${bucket(7,4,'в ведре 4 л','#7fd1ff')}
+          ${bucket(3,3,'банка полная','#8fd1a8')}
+        </div>
+        <div class="wv-ans" style="font-size:18px;color:#ffd76a">7 − 3 = 4 л осталось в ведре</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Шаг 2: выливаем банку</div>
+        <div style="display:flex;gap:20px;justify-content:center;align-items:flex-end">
+          ${bucket(7,4,'в ведре 4 л','#7fd1ff')}
+          ${bucket(3,0,'банка пустая','#8fd1a8')}
+        </div>
+        <div class="wv-sml">банку вылили — она готова снова набирать!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Шаг 3: ещё раз отливаем 3 л!</div>
+        <div style="display:flex;gap:20px;justify-content:center;align-items:flex-end">
+          ${bucket(7,1,'в ведре 1 л!','#ffd76a')}
+          ${bucket(3,3,'банка полная','#8fd1a8')}
+        </div>
+        <div style="background:rgba(127,209,160,.14);border:2px solid #4c8a5a;border-radius:12px;padding:8px 14px;font-size:18px;color:#8fd1a8;font-weight:bold" class="wv-ans">4 − 3 = 1 л — готово!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Секрет в записи</div>
+        <div style="font-size:30px;color:#ffd76a;font-family:Georgia,serif">7 − 3 − 3 = 1</div>
+        <div class="wv-sml">дважды отняли по 3 л от полного ведра</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:7px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8;line-height:1.5">переливание = <b style="color:#ffd76a">вычитание объёмов</b> · льём до краёв и выливаем лишнее</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Общий приём</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['1️⃣','от большого объёма отнимай маленький'],
+            ['2️⃣','накопившееся в банке — выливай'],
+            ['3️⃣','повторяй, пока не получится нужный объём']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:7px 12px;text-align:left;font-size:14px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ещё пример: 5 л и 2 л</div>
+        <div style="display:flex;gap:20px;justify-content:center;align-items:flex-end">
+          ${bucket(5,5,'ведро 5 л','#7fd1ff')}
+          ${bucket(2,0,'банка 2 л','#8fd1a8')}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%;font-size:14px;color:#e8dcc8">
+          <div class="wv-pop">5 − 2 = 3 л в ведре</div>
+          <div class="wv-pop2">вылили банку → снова отливаем 2 л</div>
+          <div class="wv-pop2" style="color:#8fd1a8;font-weight:bold">3 − 2 = 1 л — получилось!</div>
+        </div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Совет Архимеда</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">не торопись! После каждого действия записывай, сколько воды в каждой ёмкости. Аккуратная цепочка шагов приведёт к ответу!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${bucket(7,4,'ведро','#7fd1ff')}
+        <div class="wv-sml">было 7 л, отлили в банку 3 л — сколько осталось?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 18px;font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? л</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[385]=visB385;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===385){ window.ARH_LESSONS[i]=L385; break; } } })();
+})();
