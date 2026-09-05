@@ -843,6 +843,112 @@ function coinsSVG(){
       <rect x="236" y="180" width="44" height="16" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="2"/>
     </svg>`; }
 
+  function deskSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="210" fill="#d9c39a"/>
+      <rect x="0" y="0" width="360" height="96" fill="#b89a70"/>
+      <text x="20" y="60" font-size="26">🖼️</text><text x="300" y="64" font-size="26">🪔</text>
+      <!-- окно -->
+      <rect x="120" y="16" width="90" height="64" rx="5" fill="#cfe6f5" stroke="#7c5a34" stroke-width="5"/>
+      <line x1="165" y1="16" x2="165" y2="80" stroke="#7c5a34" stroke-width="4"/>
+      <line x1="120" y1="48" x2="210" y2="48" stroke="#7c5a34" stroke-width="4"/>
+      <!-- стол -->
+      <rect x="24" y="104" width="312" height="16" rx="5" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="3"/>
+      <rect x="36" y="120" width="18" height="70" fill="#6e4520"/>
+      <rect x="306" y="120" width="18" height="70" fill="#6e4520"/>
+      <!-- бумаги и письмо -->
+      <rect x="60" y="72" width="70" height="34" rx="4" fill="#fffef4" stroke="#5f3a1a" stroke-width="2"/>
+      <path d="M96 72 L96 106" stroke="#d9a441" stroke-width="3"/>
+      <g font-size="18"><text x="70" y="94">🍎=1</text><text x="100" y="94">🍐=2</text></g>
+      <rect x="210" y="78" width="80" height="30" rx="4" fill="#fffef4" stroke="#5f3a1a" stroke-width="2"/>
+      <text x="220" y="98" font-size="18">🍊=3 ?</text>
+      <!-- лупа и чернила -->
+      <text x="150" y="120" font-size="24">🔍</text>
+      <rect x="176" y="112" width="26" height="18" rx="3" fill="#3a5a8a" stroke="#2c3a5f" stroke-width="2"/>
+      <text x="282" y="120" font-size="24">✉️</text>
+      <rect x="0" y="190" width="360" height="20" fill="#8a6a44"/>
+    </svg>`; }
+  function parkSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skPk" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#a8dcf0"/><stop offset="1" stop-color="#7fc3e0"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="110" fill="url(#skPk)"/>
+      <g class="c2a-cloud"><text x="30" y="36" font-size="26">☁️</text><text x="240" y="44" font-size="22">☁️</text></g>
+      <text x="310" y="36" font-size="26">🌞</text>
+      <rect x="0" y="110" width="360" height="100" fill="#7fb45c"/>
+      <path d="M0 110 Q90 100 180 110 T360 108 L360 130 L0 130 Z" fill="#6aa34e"/>
+      <!-- дорожка -->
+      <path d="M60 210 Q120 160 180 140 Q240 130 300 210 Z" fill="#c9a86a"/>
+      <!-- клумба 2x3 -->
+      <g stroke="#5f3a1a" stroke-width="3">
+        <rect x="96" y="148" width="120" height="40" rx="6" fill="#9c6c3a"/>
+      </g>
+      <g font-size="20">
+        <text x="104" y="176">🌷</text><text x="128" y="176">🌷</text><text x="152" y="176">🌷</text>
+        <text x="104" y="156">🌷</text><text x="128" y="156">🌷</text><text x="152" y="156">🌷</text>
+        <text x="104" y="196">🌸</text><text x="128" y="196">🌸</text><text x="152" y="196">🌸</text>
+      </g>
+      <!-- полоска вдоль дорожки -->
+      <text x="216" y="180" font-size="18">🌼</text><text x="240" y="186" font-size="18">🌼</text><text x="262" y="192" font-size="18">🌼</text>
+      <g font-size="44"><text x="12" y="150">🌳</text><text x="316" y="158">🌳</text></g>
+    </svg>`; }
+  function shelfSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="210" fill="#b9a07a"/>
+      <rect x="0" y="0" width="360" height="150" fill="#cbb38c"/>
+      <text x="20" y="40" font-size="22">💡</text>
+      <!-- стеллаж -->
+      <rect x="34" y="30" width="292" height="150" fill="#9c6c3a" stroke="#5f3a1a" stroke-width="4"/>
+      <rect x="34" y="80" width="292" height="8" fill="#7a4f26"/>
+      <rect x="34" y="130" width="292" height="8" fill="#7a4f26"/>
+      <!-- коробки по 10 (ряды шариков) -->
+      <g font-size="14">
+        <text x="52" y="56">🔴🔵🟡🔴🔵🟡🔴🔵🟡🔴</text>
+        <text x="52" y="72">🔴🔵🟡🔴🔵🟡🔴🔵🟡🔴</text>
+        <text x="52" y="112">🔴🔵🟡🔴🔵🟡🔴🔵🟡🔴</text>
+        <text x="52" y="128">🔴🔵🟡🔴🔵🟡🔴🔵🟡🔴</text>
+      </g>
+      <!-- коробки-рамки -->
+      <rect x="44" y="42" width="160" height="36" rx="5" fill="none" stroke="#5f3a1a" stroke-width="3" stroke-dasharray="6 4"/>
+      <rect x="44" y="98" width="160" height="36" rx="5" fill="none" stroke="#5f3a1a" stroke-width="3" stroke-dasharray="6 4"/>
+      <!-- отдельные шарики -->
+      <g font-size="20"><text x="240" y="60">🔵</text><text x="266" y="60">🟡</text><text x="292" y="60">🔴</text>
+        <text x="240" y="120">🔴</text><text x="266" y="120">🟡</text><text x="292" y="120">🔵</text></g>
+      <rect x="0" y="180" width="360" height="30" fill="#7a5a34"/>
+    </svg>`; }
+  function citySVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skCt" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#bfe3f0"/><stop offset="1" stop-color="#9fd0e8"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="120" fill="url(#skCt)"/>
+      <g class="c2a-cloud"><text x="30" y="34" font-size="24">☁️</text><text x="250" y="30" font-size="20">☁️</text></g>
+      <text x="316" y="52" font-size="24">🌞</text>
+      <!-- дома на заднем плане -->
+      <rect x="16" y="86" width="70" height="70" fill="#c9a86a" stroke="#8a6a44" stroke-width="2"/>
+      <rect x="30" y="106" width="16" height="16" fill="#7fc4a6"/>
+      <rect x="58" y="106" width="16" height="16" fill="#7fc4a6"/>
+      <rect x="280" y="80" width="64" height="76" fill="#e0b48c" stroke="#8a6a44" stroke-width="2"/>
+      <rect x="292" y="100" width="14" height="14" fill="#7fc4a6"/>
+      <rect x="318" y="100" width="14" height="14" fill="#7fc4a6"/>
+      <!-- земля/стройплощадка -->
+      <rect x="0" y="156" width="360" height="54" fill="#c89a6a"/>
+      <rect x="0" y="120" width="360" height="36" fill="#b98a5c"/>
+      <!-- башня из «кирпичей» -->
+      <g>
+        <rect x="110" y="128" width="120" height="20" rx="4" fill="#e8a24c" stroke="#a35f1f" stroke-width="2.5"/>
+        <rect x="110" y="108" width="120" height="20" rx="4" fill="#d9a441" stroke="#a35f1f" stroke-width="2.5"/>
+        <rect x="110" y="88" width="120" height="20" rx="4" fill="#e8a24c" stroke="#a35f1f" stroke-width="2.5"/>
+        <rect x="118" y="68" width="104" height="20" rx="4" fill="#d9a441" stroke="#a35f1f" stroke-width="2.5"/>
+        <text x="170" y="124" text-anchor="middle" font-size="14" font-weight="bold" fill="#5f3a1a">27</text>
+        <text x="170" y="104" text-anchor="middle" font-size="14" font-weight="bold" fill="#5f3a1a">36</text>
+      </g>
+      <!-- кран -->
+      <rect x="258" y="70" width="10" height="60" fill="#e86a5a" stroke="#7c2f24" stroke-width="2"/>
+      <rect x="240" y="60" width="46" height="10" fill="#d95545" stroke="#7c2f24" stroke-width="2"/>
+      <line x1="258" y1="70" x2="290" y2="84" stroke="#7c2f24" stroke-width="2"/>
+      <text x="48" y="196" font-size="22">🟫</text><text x="320" y="196" font-size="20">🟫</text>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -862,6 +968,10 @@ function coinsSVG(){
     else if(scene==='room') base=roomSVG();
     else if(scene==='circus') base=circusSVG();
     else if(scene==='camp') base=campSVG();
+    else if(scene==='desk') base=deskSVG();
+    else if(scene==='park') base=parkSVG();
+    else if(scene==='shelf') base=shelfSVG();
+    else if(scene==='city') base=citySVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -942,6 +1052,10 @@ function coinsSVG(){
       .c2-stage.c2-bg-room { background:linear-gradient(#f6e3c5,#eacfa3 45%,#c89a6a); }
       .c2-stage.c2-bg-circus { background:linear-gradient(#ffd76a,#f2b04c 45%,#c98a3a); }
       .c2-stage.c2-bg-camp { background:linear-gradient(#1c2450,#3d4d94 45%,#2f5738); }
+      .c2-stage.c2-bg-desk { background:linear-gradient(#d9c39a,#b89a70 45%,#8a6a44); }
+      .c2-stage.c2-bg-park { background:linear-gradient(#a8dcf0,#7fb45c 45%,#6aa34e); }
+      .c2-stage.c2-bg-shelf { background:linear-gradient(#cbb38c,#b9a07a 45%,#7a5a34); }
+      .c2-stage.c2-bg-city { background:linear-gradient(#bfe3f0,#9fd0e8 45%,#b98a5c); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
