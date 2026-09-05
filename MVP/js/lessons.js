@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(LV.id===30) visL30(el); else if(LV.id===31) visL31(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(LV.id===30) visL30(el); else if(LV.id===31) visL31(el); else if(LV.id===32) visL32(el); else if(LV.id===250) visL250(el); else if(LV.id===251) visL251(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -1456,6 +1456,668 @@ function visL30(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там 25 + 37'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+// ===================== УРОК 32 «ДОЛИ И ЗАДАЧИ В ДВА ДЕЙСТВИЯ» (3 класс) =====================
+function l32Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  if(a0==='e'){ st.e=((st.e==null?0:st.e)+1)%L32_EX.length; st.guess=null; }
+  if(a0==='pick'){ st.guess=p; }
+  if(a0==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+const L32_EX=[['¼ от 16',4],['⅓ от 15',5],['½ от 18',9],['⅔ от 9',6],['⅓ от 30',10],['¼ от 20',5],['⅔ от 12',8],['½ от 26',13]];
+function l32Frac(a,b,sz){
+  const s=sz||26;
+  return `<span style="display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;font-family:Georgia,serif;line-height:1;margin:0 2px">
+    <span style="font-size:${s}px;color:#ffd966;padding:0 3px">${a}</span>
+    <span style="border-top:2.5px solid #ffd966;font-size:${s}px;color:#ffd966;padding:0 3px;margin-top:2px">${b}</span>
+  </span>`;
+}
+function l32Pie(n,hot,o){
+  const O=o||{}; const s=O.s||108;
+  let parts='';
+  for(let i=0;i<n;i++){
+    const a0=i/n*2*Math.PI-Math.PI/2, a1=(i+1)/n*2*Math.PI-Math.PI/2;
+    const x0=50+44*Math.cos(a0), y0=50+44*Math.sin(a0);
+    const x1=50+44*Math.cos(a1), y1=50+44*Math.sin(a1);
+    const col = i===hot? '#ffd966' : (O.cols? O.cols[i%O.cols.length] : ['#7fd1a0','#7fb7d8','#d9a0ff','#ff9a8a','#8fd0a0','#e8c46a'][i%6]);
+    parts+=`<path d="M50 50 L${x0.toFixed(1)} ${y0.toFixed(1)} A44 44 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)} Z" fill="${col}" stroke="#0e2a1a" stroke-width="1.6"/>`;
+  }
+  if(hot>=0){
+    const am=(hot+0.5)/n*2*Math.PI-Math.PI/2;
+    const lx=50+25*Math.cos(am), ly=50+25*Math.sin(am);
+    parts+=`<text x="${lx.toFixed(1)}" y="${(ly+5).toFixed(1)}" text-anchor="middle" font-size="13" font-weight="bold" fill="#3a2a00">${O.mark||''}</text>`;
+  }
+  return `<svg width="${s}" height="${s}" viewBox="0 0 100 100" style="display:inline-block;vertical-align:middle">${parts}</svg>`;
+}
+function l32Bar(n,o){
+  const O=o||{}; const w=O.w||8, gap=2;
+  let out='';
+  for(let i=0;i<n;i++){
+    const on = O.hotFrom!=null && i>=O.hotFrom && i<=(O.hotTo!=null?O.hotTo:O.hotFrom);
+    out+=`<div class="l12-fall" style="animation-delay:${(i*0.05).toFixed(2)}s;width:${w}px;height:${O.h||34}px;border-radius:3px;background:${on?(O.hotCol||'#ffd966'):(O.cold||'#7fd1a0')};border:1px solid ${on?'#b88a1e':'#2e7a4a'};margin:1px ${gap/2}px"></div>`;
+  }
+  return `<div style="display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;max-width:340px">${out}</div>`;
+}
+function visL32(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v32!==step) CHS[lk]={_v32:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    const stepCard=(t)=>`<div class="wv-pop2" style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 12px;max-width:320px;width:100%;text-align:left"><span style="font-size:18px;color:#ffd966;font-weight:bold;min-width:26px">${''}</span><span style="font-size:13px;color:#e8dcc8">${t}</span></div>`;
+    let h='';
+    if(step===0){
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#ffd96633;border:1px solid #ffd966;color:#ffd966;margin-bottom:2px">НАЧАЛЬНАЯ ШКОЛА · 3 КЛАСС</span>`+
+        big('Доли — честно делим целое!')+
+        rowC(l32Pie(8,2,{s:120}),`<span style="font-size:30px" class="wv-swing">🔪</span>`)+
+        card('Архимед принёс пирог и режет его на <b>равные</b> куски — чтобы всем досталось <b style="color:#ffd966">поровну</b>. Каждый честный кусок — это <b style="color:#7fd1a0">доля</b> целого пирога.')+
+        sml('сегодня научимся называть доли и решать задачи в два действия!'));
+    } else if(step===1){
+      h=col(big('Что такое доля?')+
+        rowC(
+          `<div style="text-align:center"><div style="font-size:10px;color:#9ec0a8;margin-bottom:2px">на 2 части</div>${l32Pie(2,0,{s:88})}<div style="font-size:13px;color:#ffd966;font-weight:bold">половина</div></div>`,
+          `<div style="text-align:center"><div style="font-size:10px;color:#9ec0a8;margin-bottom:2px">на 3 части</div>${l32Pie(3,0,{s:88})}<div style="font-size:13px;color:#ffd966;font-weight:bold">треть</div></div>`,
+          `<div style="text-align:center"><div style="font-size:10px;color:#9ec0a8;margin-bottom:2px">на 4 части</div>${l32Pie(4,0,{s:88})}<div style="font-size:13px;color:#ffd966;font-weight:bold">четверть</div></div>`
+        )+
+        card('доля — это <b style="color:#7fd1a0">одна из равных частей</b> целого. Разрезали пирог на <b>2</b> равные части — каждая это <b style="color:#ffd966">половина</b>; на <b>4</b> — <b style="color:#ffd966">четверть</b>; на <b>3</b> — <b style="color:#ffd966">треть</b>!')+
+        sml('доли всегда одинаковые по размеру — делим ЧЕСТНО!'));
+    } else if(step===2){
+      h=col(big('Как записывают доли')+
+        `<div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:6px 0">
+          ${[['1','2','половина'],['1','3','треть'],['1','4','четверть']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:12px;padding:8px 14px">
+            <div style="font-size:11px;color:#9ec0a8">${x[2]}</div>${l32Frac(x[0],x[1],30)}
+          </div>`).join('')}
+        </div>`+
+        card('<b style="color:#ffd966">Нижнее</b> число (знаменатель) — <b>на сколько</b> частей делили. <b style="color:#7fd1a0">Верхнее</b> (числитель) — <b>сколько</b> таких частей взяли. Берём одну часть — сверху пишем <b>1</b>.')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['1','числитель: сколько взяли','#7fd1a0'],['4','знаменатель: на сколько делили','#ffd966']].map((x,i)=>`<div style="text-align:center;background:rgba(255,255,255,.03);border:1px solid ${x[2]};border-radius:10px;padding:4px 12px"><div style="font-size:20px;color:${x[2]};font-weight:bold">${x[0]}</div><div style="font-size:9.5px;color:#9ec0a8">${x[1]}</div></div>`).join('')}
+        </div>`+
+        sml('1/4 читаем: «одна четвёртая», по-другому — «четверть»!'));
+    } else if(step===3){
+      h=col(big('Доли на картинках')+
+        `<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;align-items:center">
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">половина круга</div>${l32Pie(2,0,{s:96,mark:'½'})}</div>
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">треть полоски</div>${l32Bar(3,{hotFrom:0,hotTo:0,w:22,h:44,hotCol:'#ffd966'})}</div>
+          <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">четверть квадрата</div>
+            <svg width="96" height="96" viewBox="0 0 100 100"><rect x="8" y="8" width="42" height="42" fill="#ffd966" stroke="#b88a1e" stroke-width="2"/><rect x="50" y="8" width="42" height="42" fill="#7fd1a0" stroke="#2e7a4a" stroke-width="2"/><rect x="8" y="50" width="42" height="42" fill="#7fb7d8" stroke="#2e6a9a" stroke-width="2"/><rect x="50" y="50" width="42" height="42" fill="#d9a0ff" stroke="#8a5ab8" stroke-width="2"/></svg></div>
+        </div>`+
+        card('видишь: каждая доля — <b>ровно такая же</b>, как соседняя. Круг пополам — две одинаковые половины. Полоска на три — три равные трети.')+
+        sml('«равные части» — главное слово! Неровные куски — это уже не доли.'));
+    } else if(step===4){
+      h=col(big('Как найти долю от числа')+
+        `<div style="text-align:center;font-size:14px;color:#e8dcc8;margin:2px 0">половина от 8 яблок = 8 : 2 = <b style="color:#7fd1a0;font-size:20px">4</b></div>`+
+        wvApples(8,{s:22})+
+        `<div style="text-align:center;margin:2px 0">делим 8 яблок на <b style="color:#ffd966">2</b> равные кучки → в каждой <b style="color:#7fd1a0">4</b></div>`+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['¼ от 12','12 : 4 = 3'],['⅓ от 9','9 : 3 = 3'],['½ от 10','10 : 2 = 5']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 12px"><div style="font-size:15px;color:#ffd966">${x[0]}</div><div style="font-size:12.5px;color:#7fd1a0">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('взяли <b style="color:#ffd966">одну</b> долю (числитель 1) — просто <b style="color:#7fd1a0">делим на знаменатель</b>: ½ от 8 → 8 : 2.')+
+        sml('«половина от 8» — это вопрос «сколько в 8 спрятано двоек-половинок?»: 4!'));
+    } else if(step===5){
+      h=col(big('Ещё примеры долей')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:320px;width:100%">
+          ${[['⅓ от 15','15 : 3 = 5','три кучки по 5'],['¼ от 20','20 : 4 = 5','четыре кучки по 5'],['½ от 14','14 : 2 = 7','две кучки по 7'],['⅓ от 27','27 : 3 = 9','три кучки по 9']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${['#ffd966','#7fd1a0','#7fb7d8','#d9a0ff'][i]};border-radius:9px;padding:5px 12px"><span style="font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:13.5px;color:#e8dcc8">${x[1]}</span><span style="font-size:10.5px;color:#9ec0a8">${x[2]}</span></div>`).join('')}
+        </div>`+
+        card('знаменатель показывает, <b>на сколько кучек делим</b>. 27 : 3 = 9 — как разложить 27 конфет на троих поровну!')+
+        sml('дели на знаменатель — и доля готова!'));
+    } else if(step===6){
+      h=col(big('Доли вокруг нас')+
+        rowC(
+          `<div style="text-align:center"><div style="font-size:26px" class="wv-pulse">🕐</div><div style="font-size:13px;color:#ffd966">полчаса = 30 мин</div><div style="font-size:10px;color:#9ec0a8">60 : 2 = 30</div></div>`,
+          `<div style="text-align:center"><div style="font-size:26px" class="wv-pulse">🕒</div><div style="font-size:13px;color:#ffd966">четверть часа = 15 мин</div><div style="font-size:10px;color:#9ec0a8">60 : 4 = 15</div></div>`,
+          `<div style="text-align:center"><div style="font-size:26px" class="wv-pulse">🕘</div><div style="font-size:13px;color:#ffd966">треть часа = 20 мин</div><div style="font-size:10px;color:#9ec0a8">60 : 3 = 20</div></div>`
+        )+
+        rowC(
+          `<div style="text-align:center"><div style="font-size:22px">💶</div><div style="font-size:12.5px;color:#7fd1a0">½ от 100 ₽ = 50 ₽</div></div>`,
+          `<div style="text-align:center"><div style="font-size:22px">🪙</div><div style="font-size:12.5px;color:#7fd1a0">¼ от 100 ₽ = 25 ₽</div></div>`
+        )+
+        card('«полтинник» — монета в <b>50 копеек</b>: половина рубля! А стрелка часов, прошедшая полкруга, — это полчаса. Доли повсюду!')+
+        sml('время и деньги отлично делятся на доли!'));
+    } else if(step===7){
+      h=col(big('Задача в два действия')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">в вазе <b style="color:#ffd966">12 конфет</b>, съели <b style="color:#ff9a8a">четверть</b>. Сколько осталось?</div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(127,209,160,.07);border:1px solid #7fd1a0;border-radius:10px;padding:6px 12px"><span style="font-size:16px">①</span><span style="font-size:13px;color:#e8dcc8">сначала найдём, <b style="color:#7fd1a0">сколько съели</b>: 12 : 4 = <b style="color:#ffd966">3</b></span></div>
+          <div class="wv-pop2" style="display:flex;gap:8px;align-items:center;background:rgba(255,154,138,.07);border:1px solid #ff9a8a;border-radius:10px;padding:6px 12px"><span style="font-size:16px">②</span><span style="font-size:13px;color:#e8dcc8">потом <b style="color:#ff9a8a">вычтем съеденное</b>: 12 − 3 = <b style="color:#ffd966">9</b></span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">ответ: 9 конфет осталось ✓</div>`+
+        card('два действия — как два шага по лесенке: <b style="color:#7fd1a0">① найти долю</b> → <b style="color:#ff9a8a">② отнять или прибавить</b>. Каждый шаг — маленькая простая задача!')+
+        sml('не спеши: сначала подели, потом вычти!'));
+    } else if(step===8){
+      h=col(big('Разбираем на картинке')+
+        `<div style="font-size:13.5px;color:#e8dcc8;text-align:center">12 конфет → 4 РАВНЫЕ кучки по <b style="color:#ffd966">3</b></div>`+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">
+          ${[0,1,2,3].map(k=>`<div class="l12-fall" style="animation-delay:${(k*0.12).toFixed(2)}s;text-align:center;background:${k===0?'rgba(255,154,138,.1)':'rgba(127,209,160,.08)'};border:2px solid ${k===0?'#ff9a8a':'#7fd1a0'};border-radius:10px;padding:5px 8px">
+            <div style="display:flex;gap:2px">${[1,2,3].map(()=>'<span style="font-size:16px">🍬</span>').join('')}</div>
+            <div style="font-size:9.5px;color:${k===0?'#ff9a8a':'#9ec0a8'};margin-top:2px">${k===0?'съели':'осталась'}</div>
+          </div>`).join('')}
+        </div>`+
+        `<div style="text-align:center;font-size:14px">съели <b style="color:#ff9a8a">3</b>, осталось 3 + 3 + 3 = <b style="color:#7fd1a0;font-size:18px">9</b></div>`+
+        card('четверть — это <b style="color:#ff9a8a">1 кучка из 4</b>. Съели одну кучку — осталось три, а 3 · 3 = <b style="color:#7fd1a0">9</b>. Видно прямо на конфетах!')+
+        sml('доля — это «одна кучка», а дальше считай, что осталось!'));
+    } else if(step===9){
+      h=col(big('Второй вид: нашли долю — и прибавили')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">в книге <b style="color:#ffd966">90 страниц</b>. Прочитал треть, потом ещё <b style="color:#7fb7d8">10</b>. Сколько всего?</div>`+
+        `<div style="max-width:300px;margin:6px auto">
+          <div style="height:14px;border-radius:7px;background:#1c2f22;overflow:hidden;position:relative">
+            <div style="position:absolute;left:0;top:0;bottom:0;width:${40/90*100}%;background:linear-gradient(90deg,#7fd1a0,#ffd966)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:9.5px;color:#9ec0a8"><span>0</span><span>30 (треть)</span><span>40</span><span>90 стр</span></div>
+        </div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(127,209,160,.07);border:1px solid #7fd1a0;border-radius:10px;padding:6px 12px"><span style="font-size:16px">①</span><span style="font-size:13px;color:#e8dcc8">треть книги: 90 : 3 = <b style="color:#ffd966">30</b></span></div>
+          <div class="wv-pop2" style="display:flex;gap:8px;align-items:center;background:rgba(127,183,216,.07);border:1px solid #7fb7d8;border-radius:10px;padding:6px 12px"><span style="font-size:16px">②</span><span style="font-size:13px;color:#e8dcc8">прибавили ещё 10: 30 + 10 = <b style="color:#ffd966">40</b></span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">прочитал 40 страниц ✓</div>`+
+        card('второй шаг зависит от <b>вопроса задачи</b>: «сколько всего?» — складываем. «Сколько осталось?» — вычитаем.')+
+        sml('прочитай вопрос задачи — он подскажет, что делать на шаге ②!'));
+    } else if(step===10){
+      h=col(big('Схема-помощник')+
+        `<div style="display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap">
+          <div class="wv-pop" style="text-align:center;background:rgba(127,209,160,.1);border:2px solid #7fd1a0;border-radius:12px;padding:8px 12px;max-width:150px"><div style="font-size:20px">①</div><div style="font-size:13px;color:#ffd966">найди долю</div><div style="font-size:11px;color:#9ec0a8">подели на знаменатель</div></div>
+          <span style="font-size:24px" class="wv-pulse">➜</span>
+          <div class="wv-pop2" style="text-align:center;background:rgba(255,154,138,.1);border:2px solid #ff9a8a;border-radius:12px;padding:8px 12px;max-width:150px"><div style="font-size:20px">②</div><div style="font-size:13px;color:#ffd966">по вопросу задачи</div><div style="font-size:11px;color:#9ec0a8">прибавь или вычти</div></div>
+        </div>`+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:330px;width:100%">
+          ${[['«Сколько осталось?»','вычитаем долю','12 − 3 = 9'],['«Сколько всего?»','прибавляем к доле','30 + 10 = 40'],['«На сколько больше?»','вычитаем меньшее','20 − 14 = 6']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:8px;padding:4px 10px;font-size:12px;color:#e8dcc8"><span>${x[0]}</span><span style="color:#9ec0a8">${x[1]}</span><span style="color:#ffd966;font-family:Georgia,serif">${x[2]}</span></div>`).join('')}
+        </div>`+
+        sml('два шага — и задача решена!'));
+    } else if(step===11){
+      h=col(big('Проверяем себя')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          ${[['¼ от 100 = ?','100 : 4 = 25','#ffd966'],['½ от 18 = ?','18 : 2 = 9','#7fd1a0'],['⅓ от 21 = ?','21 : 3 = 7','#7fb7d8'],['⅕ от 30 = ?','30 : 5 = 6','#d9a0ff']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:5px 12px"><span style="font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span class="wv-ans" style="font-size:15px;color:${x[2]}">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('слово <b style="color:#ffd966">«от»</b> в математике часто значит «умножь», но для <b>долей</b> — особый случай: ¼ от N = <b style="color:#7fd1a0">N : 4</b>! Запомни это.')+
+        sml('потренируйся: ⅕ от 30 = 6 — как у нас получилось!'));
+    } else if(step===12){
+      h=col(big('А если долей несколько?')+
+        `<div style="font-size:14px;color:#e8dcc8;text-align:center">две трети от 9 = ?</div>`+
+        l32Bar(3,{hotFrom:0,hotTo:1,w:34,h:46,hotCol:'#ffd966'})+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['шаг 1: одна треть','9 : 3 = 3','#7fd1a0'],['шаг 2: взять 2 такие','3 · 2 = 6','#ffd966']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[2]};border-radius:10px;padding:6px 12px"><div style="font-size:11.5px;color:#9ec0a8">${x[0]}</div><div style="font-size:17px;color:${x[2]};font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">⅔ от 9 = 6 ✓</div>`+
+        card('полоска из 3 частей: одна треть = 9 : 3 = <b>3</b>. Две трети — берём <b>две</b> такие части: 3 + 3 = <b style="color:#ffd966">6</b>. Сначала делим, потом умножаем на верхнее число!')+
+        sml('числитель 2 — значит, берём ДВЕ доли!'));
+    } else if(step===13){
+      h=col(big('Задача с шоколадкой')+
+        `<div style="text-align:center;font-size:14.5px;color:#e8dcc8">плитка из <b style="color:#ffd966">15 долек</b>, треть — белый шоколад</div>`+
+        l32Bar(15,{hotFrom:0,hotTo:4,w:11,h:40,hotCol:'#fff3e0',cold:'#6b4423'})+
+        `<div style="text-align:center;font-size:12px;color:#9ec0a8">5 белых долек · 10 молочных</div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.04);border:1px solid #9ec0a8;border-radius:10px;padding:6px 12px"><span style="font-size:16px">①</span><span style="font-size:13px;color:#e8dcc8">треть плитки: 15 : 3 = <b style="color:#ffd966">5</b> белых</span></div>
+          <div class="wv-pop2" style="display:flex;gap:8px;align-items:center;background:rgba(127,209,160,.07);border:1px solid #7fd1a0;border-radius:10px;padding:6px 12px"><span style="font-size:16px">②</span><span style="font-size:13px;color:#e8dcc8">остальное — молочный: 15 − 5 = <b style="color:#7fd1a0">10</b></span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0;font-weight:bold">10 молочных долек ✓</div>`+
+        sml('целое минус белая доля = молочная часть!'));
+    } else if(step===14){
+      h=col(big('Ещё задача в два действия')+
+        `<div style="text-align:center;font-size:14.5px;color:#e8dcc8">у Маши <b style="color:#ffd966">40 наклеек</b>. Половину подарила, а <b style="color:#ff9a8a">6 потеряла</b>. Сколько осталось?</div>`+
+        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:2px 0">${Array.from({length:40},(_,i)=>`<span class="l12-fall" style="animation-delay:${(i*0.03).toFixed(2)}s;font-size:9px">⭐</span>`).join('')}</div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(127,209,160,.07);border:1px solid #7fd1a0;border-radius:10px;padding:6px 12px"><span style="font-size:16px">①</span><span style="font-size:13px;color:#e8dcc8">подарила половину: 40 : 2 = <b style="color:#ffd966">20</b></span></div>
+          <div class="wv-pop2" style="display:flex;gap:8px;align-items:center;background:rgba(255,154,138,.07);border:1px solid #ff9a8a;border-radius:10px;padding:6px 12px"><span style="font-size:16px">②</span><span style="font-size:13px;color:#e8dcc8">минус потерянные: 20 − 6 = <b style="color:#ffd966">14</b></span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">осталось 14 наклеек ✓</div>`+
+        sml('сначала «половина» — делим на 2, потом «потеряла» — вычитаем!'));
+    } else if(step===15){
+      h=col(big('Ловушка: не вычитай вместо деления!')+
+        `<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <div style="text-align:center;background:rgba(255,154,138,.08);border:2px solid #ff9a8a;border-radius:12px;padding:8px 14px;max-width:150px"><div style="font-size:10.5px;color:#ff9a8a">так НЕЛЬЗЯ ❌</div><div style="font-size:16px;color:#e8dcc8">¼ от 12 = 12 − 4 = 8?</div><div style="font-size:12px;color:#ff9a8a">это вычитание, а не доля!</div></div>
+          <div style="text-align:center;background:rgba(127,209,160,.08);border:2px solid #7fd1a0;border-radius:12px;padding:8px 14px;max-width:150px"><div style="font-size:10.5px;color:#7fd1a0">так ПРАВИЛЬНО ✅</div><div style="font-size:16px;color:#ffd966">¼ от 12 = 12 : 4 = 3</div><div style="font-size:12px;color:#7fd1a0">делим на 4!</div></div>
+        </div>`+
+        card('доля от числа — это всегда <b style="color:#ff9a8a">ДЕЛЕНИЕ</b> на знаменатель (если числитель 1). ¼ — значит «разделить на 4», а не «вычесть 4»! И в задачах в два действия шаги не переставляй — у каждого свой смысл.')+
+        sml('¼ от 12 = 3 (12:4), ¼ числа 12 — НЕ 8!'));
+    } else if(step===16){
+      const i=st.e!=null?st.e:0;
+      const e=L32_EX[i%L32_EX.length];
+      const q=e[0], res=e[1];
+      const opts=[res-2,res-1,res,res+1,res+2].filter(v=>v>=1);
+      if(opts.indexOf(res)<0) opts.push(res);
+      const done=st.guess!=null;
+      const right=done&&st.guess===res;
+      h=col(big('🎮 Тренажёр: доли')+
+        `<div style="font-size:15px;color:#e8dcc8;text-align:center">Найди: <b style="color:#ffd966;font-family:Georgia,serif;font-size:26px">${q}</b></div>`+
+        `<div style="text-align:center;font-size:12.5px;color:#9ec0a8;margin:2px 0">вспомни: доля от числа = делить на знаменатель (числитель 1)</div>`+
+        (done?(right?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">🎉 Верно: ${res}!</div>`:`<div style="font-size:17px;color:#ff9a8a">не угадал — ${q} = ${res}</div>`):'')+
+        (done?'':btns(...opts.map(o=>btn(''+o,`l32Act('${lk}','pick:${o}')`))))+
+        (done?btns(btn('🎲 следующий пример',`l32Act('${lk}','e')`),btn('↺',`l32Act('${lk}','r')`)):'')+
+        sml('две трети: сначала :3, потом ·2!'));
+    } else {
+      h=col(`<div style="font-size:48px">🍰</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:252px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            🍰 Доля = 1 из N равных частей.<br>
+            ½ половина · ⅓ треть · ¼ четверть.<br>
+            ➗ «Доля от числа» = делить на знаменатель.<br>
+            🧩 2 действия: ① найти долю, ② сложить/вычесть.<br>
+            ✅ ¼ от 12 = 3 · ⅔ от 9 = 6.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там треть от 12'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+// ===================== УРОК 250 «ВНЕТАБЛИЧНОЕ ДЕЛЕНИЕ» (3–4 класс) =====================
+function l250Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  if(a0==='e'){ st.e=((st.e==null?0:st.e)+1)%L250_EX.length; st.guess=null; }
+  if(a0==='pick'){ st.guess=p; }
+  if(a0==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+const L250_EX=[[84,7],[96,8],[78,6],[51,3],[92,4],[90,6],[80,5],[128,4]];
+// карточка-разложение: total : d = (a+b):d = x + y = ans
+function l250Split(total,d,a,b){
+  const x=a/d, y=b/d, ans=x+y;
+  return `<div style="display:flex;flex-direction:column;gap:4px;align-items:center;max-width:330px;width:100%;margin:2px auto">
+    <div class="wv-pop" style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid #ffd966;border-radius:10px;padding:6px 12px;font-size:18px;font-family:Georgia,serif">
+      <span style="color:#fff">${total}</span><span style="color:#9ec0a8">=</span>
+      <span class="wv-pop" style="background:#3a5c49;border-radius:7px;padding:1px 9px;color:#7fd1a0">${a}</span>
+      <span style="color:#9ec0a8">+</span>
+      <span class="wv-pop2" style="background:#4a3a5c;border-radius:7px;padding:1px 9px;color:#d9a0ff">${b}</span>
+    </div>
+    <div style="font-size:14px;color:#cbb89a">делим каждую часть на ${d} ➘</div>
+    <div style="display:flex;align-items:center;gap:6px;font-family:Georgia,serif">
+      <span class="wv-pop" style="background:#3a5c49;border-radius:9px;padding:3px 12px;font-size:16px;color:#7fd1a0">${a} : ${d} = ${x}</span>
+      <span style="font-size:18px" class="wv-pulse">➕</span>
+      <span class="wv-pop2" style="background:#4a3a5c;border-radius:9px;padding:3px 12px;font-size:16px;color:#d9a0ff">${b} : ${d} = ${y}</span>
+    </div>
+    <div class="wv-ans" style="font-size:30px;color:#ffd966;font-weight:bold;font-family:Georgia,serif">${x} + ${y} = ${ans}</div>
+  </div>`;
+}
+function visL250(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v250!==step) CHS[lk]={_v250:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    let h='';
+    if(step===0){
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#d9a0ff33;border:1px solid #d9a0ff;color:#e6c4ff;margin-bottom:2px">НАЧАЛЬНАЯ ШКОЛА · 3–4 КЛАСС</span>`+
+        big('Внетабличное деление — это легко!')+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:34px;color:#ffd966" class="wv-swing">84 : 7 = ?</div>`+
+        card('в таблице умножения ответа на <b style="color:#ffd966">84 : 7</b> нет — пример «внетабличный». Но Архимед знает хитрость: <b style="color:#7fd1a0">разложить число на удобные части</b> и поделить каждую.')+
+        sml('сегодня научимся делить 84:7, 96:8, 78:6 — без таблицы и без калькулятора!'));
+    } else if(step===1){
+      h=col(big('Какие примеры — «внетабличные»?')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">
+          ${['84 : 7','96 : 8','78 : 6','51 : 3','92 : 4'].map((x,i)=>`<span class="wv-pop" style="animation-delay:${i*0.1}s;display:inline-block;background:rgba(217,160,255,.1);border:1.5px solid #d9a0ff;border-radius:9px;padding:4px 10px;font-size:15px;color:#e6c4ff;font-family:Georgia,serif">${x}</span>`).join('')}
+        </div>`+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['табличные: 72 : 8','помним: 8·9 = 72','#7fd1a0'],['внетабличные: 84 : 7','в таблице такого нет!','#d9a0ff']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[2]};border-radius:10px;padding:7px 10px;max-width:150px"><div style="font-size:14px;color:#ffd966;font-family:Georgia,serif">${x[0]}</div><div style="font-size:10px;color:#9ec0a8;margin-top:2px">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('7 · 9 = 63 мы помним из таблицы. А вот 7 · 12 = 84 — это уже <b>не таблица</b>. Но такие примеры встречаются в задачах! Нужен приём.')+
+        sml('таблицу знаем — а внетабличные решаем приёмом!'));
+    } else if(step===2){
+      h=col(big('Главный приём: разложи на удобные!')+
+        l250Split(84,7,70,14)+
+        card('84 = <b style="color:#7fd1a0">70 + 14</b>: обе части делятся на 7! 70 : 7 = 10, 14 : 7 = 2. Осталось <b style="color:#ffd966">сложить</b>: 10 + 2 = <b style="color:#ffd966">12</b>.')+
+        sml('разложили → разделили каждую → сложили. Три шага!'));
+    } else if(step===3){
+      h=col(big('Почему так можно?')+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:19px;color:#e8dcc8;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:11px;padding:8px 14px;max-width:300px;width:100%;margin:2px auto">(a + b) : c = a : c + b : c</div>`+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:4px 0">
+          ${[['(70 + 14) : 7','#7fd1a0'],['70 : 7 + 14 : 7','#d9a0ff'],['10 + 2 = 12','#ffd966']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1.5px solid ${x[1]};border-radius:10px;padding:6px 10px;font-size:15px;color:#e8dcc8;font-family:Georgia,serif">${x[0]}</div>`).join('')}
+        </div>`+
+        card('если делим <b>сумму</b> — можно разделить <b>каждое слагаемое</b> отдельно, а результаты сложить. Это свойство деления! Оно и спасает нас.')+
+        sml('делим поровну: сначала 70 конфет на 7, потом 14 на 7!'));
+    } else if(step===4){
+      h=col(big('Как подбирать удобные слагаемые?')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          ${[['84 : 7','ищем круглый десяток, который делится на 7: это 70','#7fd1a0'],['остаток','84 − 70 = 14 — тоже делится на 7 ✓','#d9a0ff']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.03);border:1px solid ${x[2]};border-radius:9px;padding:5px 12px;max-width:330px;width:100%"><span style="font-size:13px;color:#ffd966;min-width:70px">${x[0]}</span><span style="font-size:11.5px;color:#9ec0a8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        rowC(chip('10, 20, 30…','#9ec0a8'),chip('70 делится на 7!','#7fd1a0'),chip('80 делится на 8!','#d9a0ff'))+
+        card('пробуем <b style="color:#ffd966">круглые десятки</b>: 10, 20, 30… Какой делится на 7? <b style="color:#7fd1a0">70</b>! Остаток 84 − 70 = 14 — тоже делится. Оба кусочка — удобные!')+
+        sml('первое слагаемое — круглый десяток, второе — остаток. Оба должны делиться!'));
+    } else if(step===5){
+      h=col(big('Пример: 96 : 8')+
+        l250Split(96,8,80,16)+
+        card('круглый десяток, делящийся на 8, — это <b style="color:#7fd1a0">80</b> (8 · 10). Остаток: 96 − 80 = <b style="color:#d9a0ff">16</b>. 80 : 8 = 10, 16 : 8 = 2, вместе <b style="color:#ffd966">12</b>!')+
+        sml('запомни пары: 80 = 8·10, 16 = 8·2 — всё из таблицы!'));
+    } else if(step===6){
+      h=col(big('Пример: 78 : 6')+
+        l250Split(78,6,60,18)+
+        card('на 6 делится круглый десяток <b style="color:#7fd1a0">60</b> (6 · 10). Остаток: 78 − 60 = <b style="color:#d9a0ff">18</b> = 6 · 3. 60 : 6 = 10, 18 : 6 = 3 → <b style="color:#ffd966">13</b>.')+
+        sml('10 + 3 = 13 — и никакой таблицы на 13 не нужно!'));
+    } else if(step===7){
+      h=col(big('Пример: 51 : 3')+
+        l250Split(51,3,30,21)+
+        card('берём <b style="color:#7fd1a0">30</b> (делится на 3!), остаток 51 − 30 = <b style="color:#d9a0ff">21</b> = 3 · 7. 30 : 3 = 10, 21 : 3 = 7 → <b style="color:#ffd966">17</b>.')+
+        sml('30 и 21 — оба из таблицы умножения на 3!'));
+    } else if(step===8){
+      h=col(big('Пример: 92 : 4')+
+        l250Split(92,4,80,12)+
+        card('<b style="color:#7fd1a0">80</b> делится на 4 (4 · 20), остаток 92 − 80 = <b style="color:#d9a0ff">12</b> (4 · 3). 80 : 4 = 20, 12 : 4 = 3 → <b style="color:#ffd966">23</b>. Даже 20 + 3 — легче лёгкого!')+
+        sml('чем больше делимое, тем крупнее «удобный десяток» — можно и 80!'));
+    } else if(step===9){
+      h=col(big('Второй способ: подбор умножением')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">84 : 7 → думаем: <b style="color:#ffd966">7 · ? = 84</b></div>`+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">
+          ${[['7 · 10 = 70','мало','#ff9a8a'],['7 · 11 = 77','ещё мало','#ff9a8a'],['7 · 12 = 84','точно! ✓','#7fd1a0']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1.5px solid ${x[2]};border-radius:10px;padding:6px 12px"><div style="font-size:14px;color:#e8dcc8;font-family:Georgia,serif">${x[0]}</div><div style="font-size:10.5px;color:${x[2]}">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('деление — это поиск: <b style="color:#7fd1a0">на сколько умножить делитель, чтобы получить делимое</b>? 7 · 12 = 84, значит 84 : 7 = <b style="color:#ffd966">12</b>.')+
+        sml('умножение и деление — друзья наоборот!'));
+    } else if(step===10){
+      h=col(big('Проверка умножением')+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:22px;color:#ffd966" class="wv-ans">78 : 6 = 13</div>`+
+        `<div style="display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;margin:2px 0">
+          <span style="font-size:15px;color:#e8dcc8">проверка:</span>
+          <span style="font-size:19px;color:#7fd1a0;font-weight:bold">13 · 6</span>
+          <span style="font-size:19px;color:#cbb89a">=</span>
+          <span style="font-size:19px;color:#ffd966;font-weight:bold">78 ✓</span>
+        </div>`+
+        `<div style="display:flex;flex-direction:column;gap:3px;max-width:330px;width:100%">
+          ${[['84 : 7 = 12','12 · 7 = 84 ✓','#7fd1a0'],['96 : 8 = 12','12 · 8 = 96 ✓','#d9a0ff'],['51 : 3 = 17','17 · 3 = 51 ✓','#ffd966']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:8px;padding:4px 10px;font-size:12.5px;color:#e8dcc8"><span>${x[0]}</span><span style="color:#9ec0a8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('сомневаешься в ответе? <b style="color:#7fd1a0">Умножь его на делитель</b>! Если получилось делимое — всё верно. Проверка — лучший друг математика.')+
+        sml('ответ · делитель = делимое → значит, верно!'));
+    } else if(step===11){
+      h=col(big('Примеры с нулём в конце')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          <div style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:12px;padding:8px 12px;max-width:160px"><div style="font-family:Georgia,serif;font-size:17px;color:#ffd966">90 : 6</div><div style="font-size:12px;color:#9ec0a8">90 = 60 + 30</div><div style="font-size:12px;color:#e8dcc8">60:6=10 · 30:6=5</div><div style="font-size:20px;color:#7fd1a0;font-weight:bold">15</div></div>
+          <div style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:12px;padding:8px 12px;max-width:160px"><div style="font-family:Georgia,serif;font-size:17px;color:#ffd966">80 : 5</div><div style="font-size:12px;color:#9ec0a8">80 = 50 + 30</div><div style="font-size:12px;color:#e8dcc8">50:5=10 · 30:5=6</div><div style="font-size:20px;color:#7fd1a0;font-weight:bold">16</div></div>
+        </div>`+
+        card('числа с нулём в конце удобно разлагать: <b style="color:#7fd1a0">90 = 60 + 30</b> (оба делятся на 6!). Или сразу 90 : 6 = 15 — знаешь, что 6 · 15 = 90?')+
+        sml('круглые числа — лучшие друзья внетабличного деления!'));
+    } else if(step===12){
+      h=col(big('Чуть больше: 128 : 4')+
+        l250Split(128,4,120,8)+
+        card('приём работает и для <b>трёхзначных</b>: берём <b style="color:#7fd1a0">120</b> (4 · 30), остаток 128 − 120 = <b style="color:#d9a0ff">8</b>. 120 : 4 = 30, 8 : 4 = 2 → <b style="color:#ffd966">32</b>.')+
+        sml('120:4 = 30 — как 12:4=3, только с нулём!'));
+    } else if(step===13){
+      h=col(big('Задача: конфеты по коробкам')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">84 конфеты разложили в <b style="color:#ffd966">7 коробок</b> поровну.</div>`+
+        `<div style="text-align:center;font-size:13px;color:#9ec0a8;margin:2px 0">сколько конфет в каждой коробке?</div>`+
+        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:2px 0">${[1,2,3,4,5,6,7].map(k=>`<div class="l12-fall" style="animation-delay:${(k*0.08).toFixed(2)}s;text-align:center;background:rgba(127,209,160,.07);border:1.5px solid #7fd1a0;border-radius:8px;padding:3px 5px;min-width:34px"><div style="font-size:11px">📦</div><div style="font-size:10px;color:#7fd1a0">${k}</div></div>`).join('')}</div>`+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">84 : 7 = 12 конфет ✓</div>`+
+        card('делим поровну: 84 = <b>70 + 14</b>, 70 : 7 = 10, 14 : 7 = 2, всего <b style="color:#ffd966">12</b>. Проверка: 12 · 7 = 84 ✓.')+
+        sml('«поровну разложили» — это деление!'));
+    } else if(step===14){
+      h=col(big('Задача: яблоки по пакетам')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">96 яблок разложили в <b style="color:#ffd966">8 пакетов</b> поровну.</div>`+
+        wvApples(96,{s:12})+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">96 : 8 = 12 яблок ✓</div>`+
+        card('96 = <b>80 + 16</b>: 80 : 8 = 10, 16 : 8 = 2 → <b style="color:#ffd966">12</b>. А обратная задача: 12 яблок в 8 пакетах = 12 · 8 = <b style="color:#7fd1a0">96</b> — сошлось!')+
+        sml('деление проверяем умножением — и наоборот!'));
+    } else if(step===15){
+      h=col(big('Ловушка: только удобные слагаемые!')+
+        `<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <div style="text-align:center;background:rgba(255,154,138,.08);border:2px solid #ff9a8a;border-radius:12px;padding:8px 12px;max-width:150px"><div style="font-size:10.5px;color:#ff9a8a">так НЕЛЬЗЯ ❌</div><div style="font-size:14px;color:#e8dcc8;font-family:Georgia,serif">84 : 7 = (50+34):7</div><div style="font-size:11px;color:#ff9a8a">50 и 34 не делятся на 7!</div></div>
+          <div style="text-align:center;background:rgba(127,209,160,.08);border:2px solid #7fd1a0;border-radius:12px;padding:8px 12px;max-width:150px"><div style="font-size:10.5px;color:#7fd1a0">так ПРАВИЛЬНО ✅</div><div style="font-size:14px;color:#ffd966;font-family:Georgia,serif">84 : 7 = (70+14):7</div><div style="font-size:11px;color:#7fd1a0">70:7=10 · 14:7=2</div></div>
+        </div>`+
+        card('если слагаемое <b style="color:#ff9a8a">не делится</b> на делитель — приём ломается! Всегда проверяй: каждое слагаемое должно делиться нацело. Иначе — остаток запутает ответ.')+
+        sml('50 : 7 = 7 (ост. 1) — с остатком так просто уже не выйдет!'));
+    } else if(step===16){
+      const i=st.e!=null?st.e:0;
+      const e=L250_EX[i%L250_EX.length];
+      const total=e[0], d=e[1], res=total/d;
+      const opts=[res-2,res-1,res,res+1,res+2].filter(v=>v>=1);
+      if(opts.indexOf(res)<0) opts.push(res);
+      const done=st.guess!=null;
+      const right=done&&st.guess===res;
+      h=col(big('🎮 Тренажёр: внетабличное деление')+
+        `<div style="font-family:Georgia,serif;font-size:40px;color:#ffd966;text-align:center" class="wv-ans">${total} : ${d} = ?</div>`+
+        (done?(right?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">🎉 Верно: ${res}!</div>`:`<div style="font-size:17px;color:#ff9a8a">не угадал — ${total} : ${d} = ${res}</div>`):'')+
+        (done?'':btns(...opts.map(o=>btn(''+o,`l250Act('${lk}','pick:${o}')`))))+
+        (done?btns(btn('🎲 следующий пример',`l250Act('${lk}','e')`),btn('↺',`l250Act('${lk}','r')`)):'')+
+        sml('разложи на удобные: круглый десяток + остаток!'));
+    } else {
+      h=col(`<div style="font-size:48px">➗</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:252px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            ➗ Внетабличное деление:<br>
+            🧩 Разложи делимое на удобные: 84=70+14.<br>
+            ✂️ Подели каждую часть: 10 и 2.<br>
+            ➕ Сложи: 12. Проверь умножением!<br>
+            ✅ 84:7=12 · 96:8=12 · 78:6=13.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там 84 : 7'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+// ===================== УРОК 251 «ПЕРИМЕТР И ПЛОЩАДЬ» (3–4 класс) =====================
+function l251Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  if(a0==='e'){ st.e=((st.e==null?0:st.e)+1)%L251_EX.length; st.guess=null; }
+  if(a0==='pick'){ st.guess=p; }
+  if(a0==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+// задачи тренажёра: [a, b, 'P'|'S', ответ]
+const L251_EX=[[5,3,'P',16],[6,4,'S',24],[4,4,'P',16],[5,5,'S',25],[6,4,'P',20],[8,3,'P',22],[7,3,'S',21],[9,4,'S',36],[3,3,'P',12]];
+// прямоугольник a×b: mode 'per' — рамка, 'area' — клетки площади
+function l251Rect(a,b,o){
+  const O=o||{};
+  const C=Math.min(26,Math.floor(230/Math.max(a,b)));
+  const W=a*C, H=b*C;
+  const colP='#ffd966', colA='#7fd1a0';
+  const main=O.mode==='area'?colA:'#7fb7d8';
+  let inner='';
+  if(O.mode==='area'){
+    let cells='';
+    const total=a*b;
+    for(let y=0;y<b;y++){
+      for(let x=0;x<a;x++){
+        const n=y*a+x+1;
+        cells+=`<rect x="${8+x*C}" y="${8+y*C}" width="${C}" height="${C}" fill="${n===total?'#ffd966':'rgba(127,209,160,.14)'}" stroke="rgba(20,50,35,.5)" stroke-width=".7"/>`;
+      }
+    }
+    inner=`<rect x="8" y="8" width="${W}" height="${H}" fill="none" stroke="${colA}" stroke-width="2.5"/>
+      ${cells}
+      ${O.count?`<text x="${8+W/2}" y="${8+H/2+5}" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">${a}·${b} = ${total}</text>`:''}`;
+  }else{
+    // периметр: прямоугольник + размерные стрелки
+    const w2=W/2+8, h2=H/2+8;
+    inner=`<rect x="8" y="8" width="${W}" height="${H}" fill="rgba(127,183,216,.12)" stroke="${O.mode==='per'?'#ffd966':'#7fb7d8'}" stroke-width="3.5"/>
+      ${O.mode==='per'?`<rect x="5" y="5" width="${W+6}" height="${H+6}" fill="none" stroke="#ffd96655" stroke-width="1.6" stroke-dasharray="5 4"/>`:''}
+      <!-- размерные стрелки -->
+      <g stroke="#e8dcc8" stroke-width="1.4" fill="none">
+        <line x1="8" y1="-2" x2="${8+W}" y2="-2"/><line x1="8" y1="-6" x2="8" y2="2"/><line x1="${8+W}" y1="-6" x2="${8+W}" y2="2"/>
+        <line x1="-2" y1="8" x2="-2" y2="${8+H}"/><line x1="-6" y1="8" x2="2" y2="8"/><line x1="-6" y1="${8+H}" x2="2" y2="${8+H}"/>
+      </g>
+      <text x="${8+W/2}" y="-7" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffd966">${a} см</text>
+      <text x="-12" y="${8+H/2+4}" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffd966" transform="rotate(-90 -12 ${8+H/2+4})">${b} см</text>`;
+  }
+  return `<svg width="${Math.max(W,1)+24}" height="${H+26}" viewBox="-10 -8 ${Math.max(W,1)+40} ${H+34}" style="display:inline-block;vertical-align:middle">${inner}</svg>`;
+}
+function visL251(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v251!==step) CHS[lk]={_v251:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    let h='';
+    if(step===0){
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#7fb7d833;border:1px solid #7fb7d8;color:#bfe4ff;margin-bottom:2px">НАЧАЛЬНАЯ ШКОЛА · 3–4 КЛАСС</span>`+
+        big('Периметр и площадь')+
+        rowC(l251Rect(5,3,{mode:'per'}),`<span style="font-size:22px">vs</span>`,l251Rect(5,3,{mode:'area',count:true}))+
+        card('слева — <b style="color:#ffd966">периметр</b>: длина забора <b>вокруг</b> участка. Справа — <b style="color:#7fd1a0">площадь</b>: сколько места <b>внутри</b>. Две разные величины — и обе нужны!')+
+        sml('сегодня научимся считать и то и другое!'));
+    } else if(step===1){
+      h=col(big('Периметр — это граница')+
+        rowC(l251Rect(5,3,{mode:'per'}))+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:17px;color:#e8dcc8">P = 5 + 3 + 5 + 3 = <b style="color:#ffd966">16 см</b></div>`+
+        card('периметр — <b style="color:#ffd966">сумма длин всех сторон</b>. Как если бы ты прошёл по границе фигуры и посчитал шаги. У прямоугольника 4 стороны — складываем все 4!')+
+        sml('P от слова «пери» — вокруг!'));
+    } else if(step===2){
+      h=col(big('Формула: P = (a + b) · 2')+
+        rowC(`<div style="text-align:center">${l251Rect(6,4,{mode:'per'})}</div>`,
+             `<div style="display:flex;flex-direction:column;gap:4px">
+                <div class="wv-pop" style="background:rgba(255,255,255,.04);border:1px solid #7fd1a0;border-radius:8px;padding:3px 9px;font-size:12.5px;color:#7fd1a0">сторона a = 6</div>
+                <div class="wv-pop2" style="background:rgba(255,255,255,.04);border:1px solid #d9a0ff;border-radius:8px;padding:3px 9px;font-size:12.5px;color:#d9a0ff">сторона b = 4</div>
+                <div style="font-size:11.5px;color:#9ec0a8">противоположные РАВНЫ:<br>две a и две b</div>
+              </div>`)+
+        `<div class="wv-ans" style="font-size:22px;color:#ffd966;font-weight:bold;font-family:Georgia,serif">P = (6 + 4) · 2 = 20 см</div>`+
+        card('противоположные стороны прямоугольника <b>равны</b>: две по a и две по b. Поэтому складываем только <b style="color:#ffd966">a + b</b> (две разные) и умножаем на 2!')+
+        sml('(a+b)·2 — главная формула периметра!'));
+    } else if(step===3){
+      h=col(big('Пример: 5 и 3 см')+
+        rowC(l251Rect(5,3,{mode:'per'}))+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:18px;color:#e8dcc8">P = (5 + 3) · 2 = 8 · 2 = <b style="color:#ffd966" class="wv-ans">16 см</b></div>`+
+        card('сначала складываем в скобках: 5 + 3 = <b>8</b>. Потом умножаем на 2: 8 · 2 = <b style="color:#ffd966">16</b>. Периметр — это длина «маршрута» по краю!')+
+        sml('действия по порядку: сначала скобки, потом умножение!'));
+    } else if(step===4){
+      h=col(big('Квадрат: P = 4 · a')+
+        rowC(l251Rect(4,4,{mode:'per'}))+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:18px;color:#e8dcc8">P = 4 · 4 = <b style="color:#ffd966" class="wv-ans">16 см</b></div>`+
+        card('у квадрата <b style="color:#ffd966">все 4 стороны одинаковые</b> — значит, умножаем сторону на 4: <b style="color:#ffd966">P = 4 · a</b>.')+
+        sml('квадрат — это прямоугольник, у которого a = b!'));
+    } else if(step===5){
+      h=col(big('Единицы периметра')+
+        rowC(chip('мм','#9ec0a8'),chip('см','#7fb7d8'),chip('дм','#7fd1a0'),chip('м','#ffd966'),chip('км','#d9a0ff'))+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['спичка','~4 см'],['тетрадь','~17 см'],['дверь','~2 м'],['футбольное поле','~300 м']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:5px 9px;font-size:11px;color:#9ec0a8">${x[0]}<div style="color:#e8dcc8">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('периметр — это <b style="color:#ffd966">обычная длина</b>, её меряют в сантиметрах, метрах… Забор вокруг огорода 16 м — это 16 «шагов по одному метру» вдоль границы.')+
+        sml('периметр — линейная длина, как у линейки!'));
+    } else if(step===6){
+      h=col(big('Площадь — это «внутри»')+
+        rowC(l251Rect(4,3,{mode:'area',count:false}))+
+        `<div style="text-align:center;font-size:13px;color:#e8dcc8">внутри помещается <b style="color:#7fd1a0">4 · 3 = 12</b> квадратиков 1×1 см → площадь <b style="color:#7fd1a0">12 см²</b></div>`+
+        card('площадь — <b style="color:#7fd1a0">сколько квадратиков 1×1 помещается внутри</b>. Маленькая двойка в «см²» значит «квадратные сантиметры» — считаем квадратики!')+
+        sml('см² — это не «см в квадрате», а «квадратные см»!'));
+    } else if(step===7){
+      h=col(big('Площадь прямоугольника: S = a · b')+
+        rowC(l251Rect(5,3,{mode:'area',count:true}))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold;font-family:Georgia,serif">S = 5 · 3 = 15 см²</div>`+
+        card('в прямоугольнике 5×3 см: <b>3 ряда</b> по <b>5 квадратиков</b>. 5 · 3 = <b style="color:#7fd1a0">15</b>. Умножаем длину на ширину — и площадь готова!')+
+        sml('S = a · b — главная формула площади!'));
+    } else if(step===8){
+      h=col(big('Почему умножаем?')+
+        rowC(l251Rect(5,3,{mode:'area'}))+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:16px;color:#e8dcc8">3 ряда по 5 = 5 + 5 + 5 = <b style="color:#7fd1a0">15</b></div>`+
+        card('считать по одному долго: 1, 2, 3… 15. А умножение — <b style="color:#ffd966">быстрое сложение</b>: 3 раза по 5. Для больших чисел — например 30 × 20 — сложением не насчитаешься!')+
+        sml('умножение = быстрое сложение одинаковых рядов!'));
+    } else if(step===9){
+      h=col(big('Площадь квадрата: S = a · a')+
+        rowC(l251Rect(4,4,{mode:'area',count:true}))+
+        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold;font-family:Georgia,serif">S = 4 · 4 = 16 см²</div>`+
+        card('у квадрата стороны равны, поэтому <b style="color:#ffd966">S = a · a</b> — умножаем сторону саму на себя. 4 · 4 = <b style="color:#7fd1a0">16</b> квадратиков.')+
+        sml('a · a — это ещё называют «a в квадрате»!'));
+    } else if(step===10){
+      h=col(big('Не путай: периметр ≠ площадь!')+
+        rowC(
+          `<div style="text-align:center"><div style="font-size:11px;color:#ffd966;margin-bottom:2px">забор ВОКРУГ — периметр</div>${l251Rect(5,3,{mode:'per'})}<div style="font-family:Georgia,serif;font-size:15px;color:#ffd966">P = 16 см</div></div>`,
+          `<div style="text-align:center"><div style="font-size:11px;color:#7fd1a0;margin-bottom:2px">ковёр ВНУТРИ — площадь</div>${l251Rect(5,3,{mode:'area',count:false})}<div style="font-family:Georgia,serif;font-size:15px;color:#7fd1a0">S = 15 см²</div></div>`
+        )+
+        card('один и тот же прямоугольник 5×3: периметр <b style="color:#ffd966">16 см</b> (обойти по краю), площадь <b style="color:#7fd1a0">15 см²</b> (застелить внутри). Разные числа и разные единицы!')+
+        sml('забор меряем в см, ковёр — в см²!'));
+    } else if(step===11){
+      h=col(big('Задача: комната 6 × 4 м')+
+        rowC(l251Rect(6,4,{mode:'per'}),l251Rect(6,4,{mode:'area'}))+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['плинтус по периметру','P = (6+4)·2 = 20 м','#ffd966'],['ламинат на пол','S = 6·4 = 24 м²','#7fd1a0']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[2]};border-radius:10px;padding:6px 12px"><div style="font-size:11px;color:#9ec0a8">${x[0]}</div><div style="font-size:15px;color:${x[2]};font-family:Georgia,serif">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('вопрос задачи подсказывает формулу: <b style="color:#ffd966">«по периметру/вокруг»</b> → P = (a+b)·2. <b style="color:#7fd1a0">«на пол/внутри»</b> → S = a·b.')+
+        sml('плинтус — вокруг (P), ламинат — внутри (S)!'));
+    } else if(step===12){
+      h=col(big('Задача: квадратный участок')+
+        rowC(l251Rect(7,7,{mode:'per'}),l251Rect(7,7,{mode:'area',count:false}))+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['забор вокруг','P = 4·7 = 28 м','#ffd966'],['площадь участка','S = 7·7 = 49 м²','#7fd1a0']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[2]};border-radius:10px;padding:6px 12px"><div style="font-size:11px;color:#9ec0a8">${x[0]}</div><div style="font-size:15px;color:${x[2]};font-family:Georgia,serif">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('квадрат: периметр — сторону умножаем на <b style="color:#ffd966">4</b>, площадь — сторону умножаем <b style="color:#7fd1a0">саму на себя</b>: 7 · 7 = 49.')+
+        sml('P = 4a, S = a·a — две разные формулы квадрата!'));
+    } else if(step===13){
+      h=col(big('Обратная задача')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">периметр прямоугольника <b style="color:#ffd966">20 см</b>, одна сторона <b style="color:#7fd1a0">6 см</b>. Найди вторую.</div>`+
+        rowC(l251Rect(6,4,{mode:'per'}))+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.07);border:1px solid #ffd966;border-radius:10px;padding:6px 12px"><span style="font-size:16px">①</span><span style="font-size:13px;color:#e8dcc8">P : 2 = сумма двух разных сторон: 20 : 2 = <b style="color:#ffd966">10</b></span></div>
+          <div class="wv-pop2" style="display:flex;gap:8px;align-items:center;background:rgba(127,183,216,.07);border:1px solid #7fb7d8;border-radius:10px;padding:6px 12px"><span style="font-size:16px">②</span><span style="font-size:13px;color:#e8dcc8">минус известная сторона: 10 − 6 = <b style="color:#ffd966">4 см</b></span></div>
+        </div>`+
+        card('из формулы наоборот: <b style="color:#ffd966">a + b = P : 2</b>. Раз P = (a+b)·2, то a+b = P:2. Дальше просто вычитаем известную сторону!')+
+        sml('проверка: (6+4)·2 = 20 ✓'));
+    } else if(step===14){
+      h=col(big('Практика: картина 30 × 20 см')+
+        rowC(chip('рамка по краю → периметр','#ffd966'),chip('стекло внутри → площадь','#7fd1a0'))+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['рейка для рамки','P = (30+20)·2 = 100 см','#ffd966'],['стекло','S = 30·20 = 600 см²','#7fd1a0']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[2]};border-radius:10px;padding:6px 12px;min-width:150px"><div style="font-size:11px;color:#9ec0a8">${x[0]}</div><div style="font-size:15px;color:${x[2]};font-family:Georgia,serif">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('большие числа — те же формулы: <b style="color:#ffd966">(30+20)·2 = 100 см</b> рамки и <b style="color:#7fd1a0">30·20 = 600 см²</b> стекла. Ничего сложного — просто больше числа!')+
+        sml('умножение 30·20: 3·2=6 и два нуля → 600!'));
+    } else if(step===15){
+      h=col(big('Ловушка: умножаем, а не складываем!')+
+        `<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <div style="text-align:center;background:rgba(255,154,138,.08);border:2px solid #ff9a8a;border-radius:12px;padding:8px 12px;max-width:160px"><div style="font-size:10.5px;color:#ff9a8a">так НЕЛЬЗЯ ❌</div><div style="font-size:15px;color:#e8dcc8;font-family:Georgia,serif">площадь 6×4 = 6+4=10?</div><div style="font-size:11px;color:#ff9a8a">это сумма сторон!</div></div>
+          <div style="text-align:center;background:rgba(127,209,160,.08);border:2px solid #7fd1a0;border-radius:12px;padding:8px 12px;max-width:160px"><div style="font-size:10.5px;color:#7fd1a0">так ПРАВИЛЬНО ✅</div><div style="font-size:15px;color:#ffd966;font-family:Georgia,serif">S = 6 · 4 = 24 см²</div><div style="font-size:11px;color:#7fd1a0">перемножаем стороны!</div></div>
+        </div>`+
+        card('площадь — это <b style="color:#ff9a8a">умножение</b> сторон (квадратики!), а не сложение. Сложение сторон — это периметр! И единицы не путай: P в см, S в см².')+
+        sml('P — складываем, S — умножаем!'));
+    } else if(step===16){
+      const i=st.e!=null?st.e:0;
+      const e=L251_EX[i%L251_EX.length];
+      const a=e[0],b=e[1],mode=e[2],res=e[3];
+      const what=mode==='P'?'периметр':'площадь';
+      const isSq=a===b;
+      const opts=[res-2,res-1,res,res+1,res+2].filter(v=>v>=1);
+      if(opts.indexOf(res)<0) opts.push(res);
+      const done=st.guess!=null;
+      const right=done&&st.guess===res;
+      h=col(big('🎮 Тренажёр: периметр и площадь')+
+        rowC(l251Rect(a,b,{mode:mode==='P'?'per':'area',count:mode==='S'}))+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">${isSq?'квадрат':'прямоугольник'} ${a} × ${b} см: найди <b style="color:${mode==='P'?'#ffd966':'#7fd1a0'}">${what}</b></div>`+
+        (done?(right?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">🎉 Верно: ${res} ${mode==='P'?'см':'см²'}!</div>`:`<div style="font-size:16px;color:#ff9a8a">не угадал — ${what} = ${res} ${mode==='P'?'см':'см²'}</div>`):'')+
+        (done?'':btns(...opts.map(o=>btn(''+o,`l251Act('${lk}','pick:${o}')`))))+
+        (done?btns(btn('🎲 следующий пример',`l251Act('${lk}','e')`),btn('↺',`l251Act('${lk}','r')`)):'')+
+        sml(mode==='P'?'периметр: (a+b)·2':'площадь: a·b'));
+    } else {
+      h=col(`<div style="font-size:48px">📐</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:252px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            📏 Периметр — рамка: P = (a+b)·2.<br>
+            ⬛ Квадрат: P = 4·a · S = a·a.<br>
+            🟩 Площадь — ковёр: S = a·b.<br>
+            ⚠️ P в см, S в см² — не путай!<br>
+            ✅ 5×3: P=16 см, S=15 см².</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там прямоугольник 6 × 4'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -14911,6 +15573,9 @@ function renderLessonVis(){
   else if(id===29) visL29(el);
   else if(id===30) visL30(el);
   else if(id===31) visL31(el);
+  else if(id===32) visL32(el);
+  else if(id===250) visL250(el);
+  else if(id===251) visL251(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
