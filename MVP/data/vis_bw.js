@@ -1553,3 +1553,382 @@ window.WAVE_B = window.WAVE_B || {};
   window.WAVE_B[388]=visB388;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===388){ window.ARH_LESSONS[i]=L388; break; } } })();
 })();
+/* ================= УРОК 389 · Углы и треугольники ================= */
+(function(){
+  const L389 = {
+    id: 389, title: 'Углы и треугольники: приёмы', ico: '📐',
+    src: 'Математика · 5–6 класс · Треугольники', subj: 'math',
+    explain: [
+      'Архимед строит шалаш треугольной формы. Один угол — 40° у вершины. А какие углы у основания, если шалаш симметричный (равнобедренный)? Чтобы ответить, нужно знать главный секрет треугольников!',
+      'Главный секрет: сумма углов ЛЮБОГО треугольника равна 180 градусам. Это как развёрнутый угол — половина полного круга. Проверь на любом треугольнике: сложи все три угла — всегда получишь 180°!',
+      'Почему так? Отрежь углы треугольника и сложи их вместе — они составят ровно развёрнутый угол 180°. Можно проверить на бумаге: вырежи треугольник, оторви уголки и приложи друг к другу!',
+      'Если знаешь два угла, третий находим вычитанием: третий = 180° − первый − второй. Например, углы 90° и 45°: третий = 180 − 90 − 45 = 45°. Вот и всё!',
+      'Вернёмся к шалашу. Он равнобедренный: две стороны равны. А у равнобедренного треугольника углы при ОСНОВАНИИ тоже равны! Это очень удобное свойство.',
+      'Итак, угол при вершине 40°. Сумма двух углов при основании: 180 − 40 = 140°. А раз они равны, каждый = 140 : 2 = 70°. Углы шалаша при основании — по 70 градусов!',
+      'Равносторонний треугольник — ещё проще: все три стороны равны, значит, и все углы равны. Каждый угол = 180 : 3 = 60°. Поэтому равносторонний называют ещё «правильным».',
+      'Прямоугольный треугольник: один угол 90°. Тогда два других в сумме дают 90° (ведь 180 − 90 = 90). Если один из них 45°, то и второй 45° — такой треугольник равнобедренный!',
+      'Теперь проверь себя: чему равна сумма углов любого треугольника? Вспомни главный секрет — 180 градусов!'
+    ],
+    check: { q: 'Чему равна сумма углов треугольника?', choices: ['180°', '90°', '360°', '100°'], ans: 0,
+      exp: 'Сумма углов любого треугольника — 180°.' },
+    tasks: [
+      { q: 'У равнобедренного треугольника угол при вершине 40°. Чему равен угол при основании?', kind: 'unit', ans: 70, tol: 0,
+        hints: ['(180 − 40) : 2.', '140 : 2 = 70°.'], sol: '70°' },
+      { q: 'Углы треугольника 90° и 45°. Чему равен третий?', kind: 'choice', choices: ['45°', '90°', '135°', '55°'], ans: 0, tol: 0,
+        hints: ['180 − 90 − 45.', '45°.'], sol: '45°' }
+    ]
+  };
+  const triSVG=(top,left,right,cls)=>`<svg viewBox="0 0 180 150" style="width:${cls==='big'?210:170}px;height:${cls==='big'?175:141}px">
+    <polygon points="90,10 20,140 160,140" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="2.5"/>
+    <path d="M90 10 L112 40 A 44 44 0 0 1 84 42 Z" fill="rgba(255,215,106,.4)"/>
+    <text x="96" y="22" font-size="13" fill="#ffd76a">${top}°</text>
+    <text x="38" y="130" font-size="13" fill="#8fd1a8">${left}°</text>
+    <text x="140" y="130" font-size="13" fill="#8fd1a8">${right}°</text>
+  </svg>`;
+  function visB389(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Шалаш Архимеда</div>
+        <div style="font-size:60px" class="wv-swing">⛺</div>
+        <div class="wv-sml" style="max-width:330px">симметричный шалаш = <b style="color:#ffd76a">равнобедренный треугольник</b>: две стороны равны. Угол наверху 40° — какие углы внизу?</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Главный секрет: 180°</div>
+        ${triSVG(50,60,70,'')}
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:9px 14px;font-size:18px;color:#ffd76a;font-weight:bold">50° + 60° + 70° = 180°</div>
+        <div class="wv-sml">сумма углов любого треугольника — 180°!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Почему так? Оторви уголки!</div>
+        <div style="display:flex;gap:10px;justify-content:center;align-items:center">
+          <div style="font-size:44px" class="wv-flick">✂️</div>
+          <div style="display:flex;gap:2px">
+            <span style="width:44px;height:44px;background:rgba(127,209,255,.5);clip-path:polygon(0 0,100% 100%,0 100%);display:inline-block"></span>
+            <span style="width:44px;height:44px;background:rgba(143,209,168,.5);clip-path:polygon(0 0,100% 0,100% 100%);display:inline-block"></span>
+            <span style="width:44px;height:44px;background:rgba(232,106,90,.5);clip-path:polygon(100% 0,100% 100%,0 100%);display:inline-block"></span>
+          </div>
+        </div>
+        <div class="wv-sml">оторванные уголки вместе дают ровно развёрнутый угол — 180°</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Находим третий угол</div>
+        <div style="font-size:22px;color:#e8dcc8;font-family:Georgia,serif">третий = 180° − первый − второй</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:330px;width:100%">
+          ${[
+            ['углы 90° и 45°', '180 − 90 − 45 = 45°', '#8fd1a8'],
+            ['углы 70° и 50°', '180 − 70 − 50 = 60°', '#7fd1ff']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Равнобедренный треугольник</div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <svg viewBox="0 0 150 140" style="width:150px;height:140px">
+            <polygon points="75,10 20,130 130,130" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2.5"/>
+            <line x1="20" y1="130" x2="130" y2="130" stroke="#ffd76a" stroke-width="3"/>
+            <text x="45" y="140" font-size="12" fill="#8fd1a8">равные</text>
+            <text x="112" y="140" font-size="12" fill="#8fd1a8">стороны</text>
+          </svg>
+          <div style="text-align:left;font-size:14px;color:#e8dcc8;max-width:190px;line-height:1.55">у равнобедренного треугольника <b style="color:#8fd1a8">углы при основании равны</b></div>
+        </div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Считаем шалаш: вершина 40°</div>
+        <svg viewBox="0 0 180 150" style="width:180px;height:150px">
+          <polygon points="90,10 20,140 160,140" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="2.5"/>
+          <text x="96" y="26" font-size="15" fill="#ffd76a">40°</text>
+          <text x="70" y="135" font-size="15" fill="#8fd1a8">?°</text>
+          <text x="150" y="135" font-size="15" fill="#8fd1a8">?°</text>
+        </svg>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:330px;width:100%;font-size:15px;color:#e8dcc8">
+          <div class="wv-pop">180 − 40 = 140° — на два угла вместе</div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">140 : 2 = 70° каждый</div>
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Равносторонний — «правильный»</div>
+        <div style="display:flex;gap:10px;align-items:center;justify-content:center">
+          <svg viewBox="0 0 140 130" style="width:150px;height:139px">
+            <polygon points="70,10 10,125 130,125" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="2.5"/>
+            <text x="70" y="28" text-anchor="middle" font-size="13" fill="#ffd76a">60°</text>
+            <text x="34" y="118" text-anchor="middle" font-size="13" fill="#ffd76a">60°</text>
+            <text x="106" y="118" text-anchor="middle" font-size="13" fill="#ffd76a">60°</text>
+          </svg>
+        </div>
+        <div class="wv-sml">все стороны равны → все углы по 180:3 = 60°</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Прямоугольный треугольник</div>
+        <div style="display:flex;gap:8px;justify-content:center">
+          <svg viewBox="0 0 150 130" style="width:160px;height:139px">
+            <polygon points="20,115 130,115 20,20" fill="rgba(232,106,90,.1)" stroke="#e86a5a" stroke-width="2.5"/>
+            <path d="M20 115 L32 115 L32 103 Z" fill="#e86a5a"/>
+            <text x="90" y="130" font-size="13" fill="#e86a5a">90°</text>
+            <text x="26" y="40" font-size="13" fill="#ffd76a">45°</text>
+            <text x="120" y="105" font-size="13" fill="#8fd1a8">45°</text>
+          </svg>
+        </div>
+        <div class="wv-sml">90° + 45° + 45° = 180° · острые углы в сумме 90°</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="display:flex;gap:10px;justify-content:center">
+          ${['🔺','📐','⛺'].map(e=>`<span style="font-size:40px" class="wv-pulse">${e}</span>`).join('')}
+        </div>
+        <div class="wv-sml">сумма углов любого треугольника?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 18px;font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? °</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[389]=visB389;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===389){ window.ARH_LESSONS[i]=L389; break; } } })();
+})();
+/* ================= УРОК 390 · Правило произведения ================= */
+(function(){
+  const L390 = {
+    id: 390, title: 'Правило произведения: задачи', ico: '👔',
+    src: 'Математика · 5–6 класс · Комбинаторика', subj: 'math',
+    explain: [
+      'Архимед собирается на праздник. У него 4 рубашки и 3 галстука. Сколько разных комплектов «рубашка + галстук» можно собрать? Перебирать долго — комбинаторика даёт быстрый ответ!',
+      'Представь дерево выбора. Из каждой рубашки выходят 3 веточки — по одной на каждый галстук. Рубашек 4, значит, веточек всего 4 · 3 = 12. Каждая веточка — свой комплект!',
+      'Это и есть ПРАВИЛО ПРОИЗВЕДЕНИЯ: если первый выбор можно сделать m способами, а второй — n способами, то вместе m · n способов. Выборы независимы — перемножаем!',
+      'Теперь задача с цифрами. Сколько двузначных чисел начинается с цифры 5? Первая цифра уже выбрана — это 5 (1 способ). Вторая цифра — любая из десяти: 0, 1, 2, …, 9 (10 способов). Итого 1 · 10 = 10 чисел: 50, 51, …, 59.',
+      'Сложнее: из города А в город Б ведут 3 дороги, из Б в В — 2 дороги, из В в Г — 4 дороги. Сколько маршрутов из А в Г? Каждый участок выбираем независимо: 3 · 2 · 4 = 24 маршрута!',
+      'Правило работает для ЛЮБОГО числа шагов: перемножай количества вариантов на каждом шаге. 3 шага → три множителя: 3 · 2 · 4. Десять шагов → десять множителей!',
+      'Проверим на меню: 3 супа, 4 вторых, 2 десерта. Комплексный обед (суп + второе + десерт): 3 · 4 · 2 = 24 варианта! Каждый день можно есть новый — почти месяц!',
+      'Запомни: правило произведения применяется, когда выборы НЕЗАВИСИМЫ — результат первого выбора не влияет на число вариантов второго. Тогда просто перемножай!',
+      'Теперь проверь себя: 4 рубашки и 3 галстука — сколько комплектов? Вспомни: 4 · 3.'
+    ],
+    check: { q: '4 рубашки и 3 галстука. Сколько комплектов «рубашка + галстук»?', choices: ['12', '7', '34', '43'], ans: 0,
+      exp: '4 · 3 = 12.' },
+    tasks: [
+      { q: 'Сколько двузначных чисел начинается с цифры 5?', kind: 'unit', ans: 10, tol: 0,
+        hints: ['Вторая цифра — любая из 10.', '50…59 — 10 чисел.'], sol: '10' },
+      { q: 'Из А в Б 3 дороги, из Б в В 2, из В в Г 4. Сколько маршрутов А→Г?', kind: 'choice', choices: ['24', '9', '12', '6'], ans: 0, tol: 0,
+        hints: ['Перемножаем.', '3 · 2 · 4 = 24.'], sol: '24' }
+    ]
+  };
+  const treeSVG=(branches)=>`<svg viewBox="0 0 200 160" style="width:${branches===4?230:200}px">
+    <circle cx="100" cy="16" r="13" fill="#e86a5a"/><text x="100" y="21" text-anchor="middle" font-size="11" fill="#fff">👕</text>
+    <g stroke="#d9a441" stroke-width="2.5">
+      ${Array.from({length:branches},(_,i)=>{const x1=70+i*20,y1=40,x2=40+i*40,y2=120;
+        return `<line x1="100" y1="29" x2="${x1+20}" y2="${y1}" />`;}).join('')}
+    </g>
+    <g font-size="16">
+      ${Array.from({length:branches},(_,i)=>{const x=40+i*40,y=130; return `<text x="${x}" y="${y}">👔</text>`;}).join('')}
+    </g>
+  </svg>`;
+  function visB390(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Гардероб Архимеда</div>
+        <div style="font-size:52px" class="wv-swing">👔</div>
+        <div class="wv-sml">4 рубашки и 3 галстука — сколько комплектов?</div>
+        <div class="wv-row" style="gap:4px;margin:4px 0">${['👕','👕','👕','👕'].join('')}</div>
+        <div class="wv-row" style="gap:4px">${['👔','👔','👔'].join('')}</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Дерево выбора</div>
+        ${treeSVG(3)}
+        <div class="wv-sml">каждая рубашка сочетается с каждым галстуком</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Правило произведения</div>
+        <div style="background:rgba(217,164,65,.1);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;max-width:330px;width:100%">
+          <div style="font-size:15px;line-height:1.55;color:#e8dcc8;text-align:center">первый выбор — <b style="color:#7fd1ff">m</b> способов, второй — <b style="color:#8fd1a8">n</b> → вместе <b style="color:#ffd76a">m · n</b></div>
+        </div>
+        <div class="wv-ans" style="font-size:20px;color:#ffd76a">4 · 3 = 12 комплектов</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Двузначные с цифры 5</div>
+        <div class="wv-row" style="gap:6px;margin:4px 0">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:44px;border-radius:9px;background:rgba(217,164,65,.2);border:2px solid #d9a441;font-size:22px;color:#ffd76a;font-weight:bold">5</span>
+          <span style="font-size:22px;color:#8fa08f">+</span>
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:46px;height:44px;border-radius:9px;background:rgba(127,209,255,.14);border:2px solid #7fd1ff;font-size:20px;color:#7fd1ff;font-weight:bold">0–9</span>
+        </div>
+        <div class="wv-ans" style="font-size:19px;color:#8fd1a8">1 · 10 = 10 чисел: 50, 51, …, 59</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Маршруты А → Б → В → Г</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:26px">
+          <span style="background:rgba(127,209,255,.14);border:2px solid #7fd1ff;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#7fd1ff">А</span>
+          <b style="color:#ffd76a">3</b>
+          <span style="background:rgba(143,209,168,.14);border:2px solid #8fd1a8;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#8fd1a8">Б</span>
+          <b style="color:#ffd76a">2</b>
+          <span style="background:rgba(255,215,106,.14);border:2px solid #ffd76a;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#ffd76a">В</span>
+          <b style="color:#ffd76a">4</b>
+          <span style="background:rgba(232,160,90,.14);border:2px solid #e8a05a;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#e8a05a">Г</span>
+        </div>
+        <div class="wv-ans" style="font-size:19px;color:#ffd76a">3 · 2 · 4 = 24 маршрута</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Сколько шагов — столько множителей</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:330px;width:100%">
+          ${[
+            ['2 шага', 'm · n'],
+            ['3 шага', 'm · n · k'],
+            ['10 шагов', 'десять множителей!']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:6px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:#ffd76a">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Комплексный обед</div>
+        <div class="wv-row" style="gap:8px;margin:4px 0">
+          ${[['🍲','3 супа'],['🍗','4 вторых'],['🍰','2 десерта']].map(x=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid #3d5c49;border-radius:12px;padding:8px 10px"><div style="font-size:26px">${x[0]}</div><div style="font-size:11px;color:#8fa08f">${x[1]}</div></div>`).join('')}
+        </div>
+        <div class="wv-ans" style="font-size:20px;color:#ffd76a">3 · 4 · 2 = 24 обеда!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Когда применять</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">правило работает, когда выборы <b style="color:#8fd1a8">независимы</b>: первый выбор не меняет число вариантов второго → просто <b style="color:#ffd76a">перемножай!</b></div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-row" style="gap:4px">${['👕','👕','👕','👕'].join('')}</div>
+        <div class="wv-row" style="gap:4px">${['👔','👔','👔'].join('')}</div>
+        <div class="wv-sml">сколько комплектов рубашка + галстук?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">4 · 3 = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[390]=visB390;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===390){ window.ARH_LESSONS[i]=L390; break; } } })();
+})();
+/* ================= УРОК 391 · Игры и стратегии ================= */
+(function(){
+  const L391 = {
+    id: 391, title: 'Игры и стратегии: анализ с конца', ico: '🎯',
+    src: 'Математика · 5–6 класс · Игры', subj: 'math',
+    explain: [
+      'На столе 20 предметов. Двое по очереди берут от 1 до 3 предметов. Выигрывает тот, кто взял последний предмет. Можно ли гарантировать победу? Да — есть хитрая стратегия!',
+      'Секрет — анализировать игру С КОНЦА. Спроси себя: какую позицию выгодно оставить противнику перед его ходом, чтобы он точно проиграл?',
+      'Ловушка: если оставить противнику ровно 4 предмета, он обречён! Что бы он ни взял (1, 2 или 3), ты забираешь все оставшиеся: 4−1=3, 4−2=2, 4−3=1. Последний предмет — твой!',
+      'Раз 4 — ловушка, то и 8, 12, 16, 20 — тоже ловушки! Ведь если противник оставляет тебе 8, ты берёшь столько, чтобы оставить ему 4, и так далее. Все позиции, кратные 4, — выигрышные для тебя.',
+      'В нашей игре 20 предметов. 20 = 4 · 5 — это позиция-ловушка для ТОГО, кто ходит первым! Значит, при правильной игре выигрывает ВТОРОЙ игрок.',
+      'Стратегия второго: что бы ни взял первый (1, 2 или 3), второй дополняет ход до 4. Взял 1 — дополни до 4 (возьми 3). Взял 2 — возьми 2. Взял 3 — возьми 1. После каждой пары ходов уходит ровно 4 предмета!',
+      'Проверим: 20 → первый берёт 2 → осталось 18. Второй берёт 2 (2+2=4) → 16. Первый берёт 3 → 13. Второй берёт 1 → 12. И так далее… последние 4 предмета останутся первому — и он проиграет!',
+      'Запомни рецепт: 1) найди «ловушку» — позицию, с которой противник обречён (4); 2) все кратные ловушки тоже выигрышные; 3) в каждом своём ходе дополняй ход противника до ловушки.',
+      'Теперь проверь себя: 20 предметов, берут 1–3, выигрывает взявший последний. Кто выиграет при правильной игре? Подсказка: 20 кратно 4!'
+    ],
+    check: { q: '20 предметов, за ход берут 1–3, выигрывает взявший последний. Кто выиграет при правильной игре?', choices: ['второй', 'первый', 'ничья', 'нельзя узнать'], ans: 0,
+      exp: '20 кратно 4 — ловушка для первого → выигрывает второй.' },
+    tasks: [
+      { q: 'В игре «берут 1–3, дополняй до 4» сколько предметов выгодно оставить противнику?', kind: 'unit', ans: 4, tol: 0,
+        hints: ['Это «ловушка».', 'Позиция, кратная 4: 4 предмета.'], sol: '4' },
+      { q: 'Противник оставил 4 предмета и взял 2. Сколько взять, чтобы выиграть?', kind: 'choice', choices: ['2', '1', '3', '4'], ans: 0, tol: 0,
+        hints: ['4 − 2 = 2.', 'Забираем 2 — последние предметы.'], sol: '2' }
+    ]
+  };
+  const dotsRow=(n,highlight)=>`<div class="wv-row" style="gap:4px;margin:6px 0">${Array.from({length:n},(_,i)=>`<span style="width:13px;height:13px;border-radius:50%;background:${highlight===i?'#ffd76a':'rgba(127,209,160,.55)'};box-shadow:${highlight===i?'0 0 8px rgba(255,215,106,.8)':'none'};display:inline-block"></span>`).join('')}</div>`;
+  function visB391(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Игра: 20 предметов</div>
+        ${dotsRow(20)}
+        <div class="wv-sml">берут от 1 до 3 · кто взял последний — победил!</div>
+        <div style="background:rgba(217,164,65,.09);border:1px solid #d9a441;border-radius:10px;padding:6px 12px;max-width:320px;font-size:13.5px;color:#e8dcc8">можно ли гарантировать победу? Да! Анализируем с конца…</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Анализ с конца</div>
+        <div style="font-size:40px" class="wv-swing">🔍</div>
+        <div class="wv-sml" style="max-width:330px">не смотри на начало игры — спроси: какую позицию выгодно <b style="color:#ffd76a">оставить противнику</b> перед его ходом?</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ловушка: 4 предмета</div>
+        ${dotsRow(4,3)}
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:330px;width:100%">
+          ${[
+            ['противник взял 1', 'ты забираешь 3 — победа!'],
+            ['противник взял 2', 'ты забираешь 2 — победа!'],
+            ['противник взял 3', 'ты забираешь 1 — победа!']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${i===2?'#4c8a5a':'#d9a441'};border-radius:9px;padding:6px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:#8fd1a8">${x[1]}</b></div>`).join('')}
+        </div>
+        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:7px 12px;font-size:15px;color:#ffcfc2;font-weight:bold" class="wv-ans">4 — смертельная ловушка!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Кратные 4 — тоже ловушки</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[4,8,12,16,20].map((n,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:5px 12px"><b style="font-size:19px;color:#ffd76a;font-family:Georgia,serif">${n}</b><span style="font-size:12px;color:#8fa08f">= ${n/4}·4 — ловушка</span></div>`).join('')}
+        </div>
+        <div class="wv-sml">оставь противнику 4 → потом 8 → потом 12…</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">20 = 4 · 5</div>
+        ${dotsRow(20)}
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:9px 12px;font-size:16px;color:#ffd76a;font-weight:bold" class="wv-ans">20 кратно 4 → ловушка для ПЕРВОГО → выигрывает ВТОРОЙ!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Стратегия второго</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['первый взял 1','второй берёт 3','1+3=4'],
+            ['первый взял 2','второй берёт 2','2+2=4'],
+            ['первый взял 3','второй берёт 1','3+1=4']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:#8fd1a8">${x[1]}</b><span style="color:#ffd76a">${x[2]}</span></div>`).join('')}
+        </div>
+        <div class="wv-sml">каждая пара ходов забирает ровно 4 предмета — «дополняй до 4»!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверяем на числах</div>
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:15px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">20 → первый −2 → 18</div>
+          <div class="wv-pop2" style="color:#8fd1a8">второй −2 → 16 (2+2=4)</div>
+          <div class="wv-pop">16 → первый −3 → 13</div>
+          <div class="wv-pop2" style="color:#8fd1a8">второй −1 → 12 (3+1=4)</div>
+          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">… последние 4 — первому → он проиграл!</div>
+        </div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Рецепт победы</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['1️⃣','найди «ловушку» — обречённую позицию (4)','#7fd1ff'],
+            ['2️⃣','все кратные ловушки — выигрышные','#8fd1a8'],
+            ['3️⃣','дополняй ход противника до ловушки','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;text-align:left;font-size:14px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${dotsRow(20)}
+        <div class="wv-sml">20 предметов, берут 1–3, выигрывает взявший последний. Кто победит?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 18px;font-size:20px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">первый или второй?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[391]=visB391;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===391){ window.ARH_LESSONS[i]=L391; break; } } })();
+})();
