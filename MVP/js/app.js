@@ -230,12 +230,27 @@ const ISLANDS=[
   {name:'Лавуазье', ico:'⚗️', dsc:'Химия · молекулы, растворы, газы'},
   {name:'Информатика', ico:'💻', dsc:'Информатика · двоичный код, алгоритмы, логика'}];
 function isJunior(){ try{ return !!DB.profile&&/^[1-4]$/.test(String(DB.profile.klass||'').trim()); }catch(e){ return false; } }
-function taskPool(){ return isJunior()? window.ARH_TASKS.filter(t=>t.island==='Начальная школа') : window.ARH_TASKS.filter(t=>t.island!=='Начальная школа'); }
-function islandVisible(I){ return isJunior()? (I.name==='Начальная школа') : (I.name!=='Начальная школа'); }
-function nextTask(){ return taskPool().filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0] || window.ARH_TASKS.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0] || null; }
+/* ---------- фильтр задач по классу ---------- */
+function taskClassRange(t){
+  if(t&&t.island==='Начальная школа'){
+    const th=String(t.theme||'');
+    const m=th.match(/(\d{1,2})\s*(?:[\u2013-]\s*(\d{1,2}))?\s*класс/);
+    if(m) return [ +m[1], m[2]? +m[2] : +m[1] ];
+    return [1,4];
+  }
+  const R={Сиракузы:[5,9],Ньютон:[7,9],Лавуазье:[8,9],Информатика:[7,9]};
+  return R[(t&&t.island)||'']||[1,9];
+}
+function taskFits(t){ const r=taskClassRange(t),o=openClassRange(); return !(r[1]<o[0]||r[0]>o[1]); }
+function tasksFit(arr){ return (arr||[]).filter(taskFits); }
+function islandHasTasks(name){ return tasksFit(window.ARH_TASKS.filter(t=>t.island===name)).length>0; }
+
+function taskPool(){ return tasksFit(isJunior()? window.ARH_TASKS.filter(t=>t.island==='Начальная школа') : window.ARH_TASKS.filter(t=>t.island!=='Начальная школа')); }
+function islandVisible(I){ if(isJunior()) return I.name==='Начальная школа'; if(I.name==='Начальная школа') return false; return islandHasTasks(I.name); }
+function nextTask(){ return taskPool().filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0] || window.ARH_TASKS.filter(t=>taskFits(t)&&(!DB.tasks[t.id]||!DB.tasks[t.id].done))[0] || null; }
 function poolDone(){ const ts=taskPool(); return ts.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length; }
 function islStats(name){
-  const ts=window.ARH_TASKS.filter(t=>t.island===name);
+  const ts=tasksFit(window.ARH_TASKS.filter(t=>t.island===name));
   const done=ts.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
   return {total:ts.length, done};
 }
@@ -255,7 +270,7 @@ function renderPath(){
   const doneN=pool.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
   const pctAll=pool.length? Math.round(doneN/pool.length*100):0;
   const next = pool.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0]
-            || window.ARH_TASKS.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0];
+            || window.ARH_TASKS.filter(t=>taskFits(t)&&(!DB.tasks[t.id]||!DB.tasks[t.id].done))[0];
   const s=document.getElementById('screen');
   const rank=rankName();
   const heroName=esc(DB.profile?DB.profile.name:'');
@@ -281,7 +296,7 @@ function renderPath(){
       <span style="color:var(--brass)">→</span></div>`;
   const cards=ISLANDS.filter(islandVisible).map((I,i)=>{
     const st=islStats(I.name); const pct=st.total? Math.round(st.done/st.total*100):0;
-    const islSorted=window.ARH_TASKS.filter(t=>t.island===I.name).sort((a,b)=>clsSort(a)-clsSort(b)||a.diff-b.diff||a.id.localeCompare(b.id));
+    const islSorted=tasksFit(window.ARH_TASKS.filter(t=>t.island===I.name)).sort((a,b)=>clsSort(a)-clsSort(b)||a.diff-b.diff||a.id.localeCompare(b.id));
     const themes=[...new Set(islSorted.map(t=>themeOf(t)))];
     const themeRows=themes.map(th=>{
       const tt=islSorted.filter(t=>themeOf(t)===th);
@@ -308,7 +323,7 @@ function renderPath(){
 /* ---------- ОСТРОВ ---------- */
 function renderIsland(name){
   const s=document.getElementById('screen');
-  const ts=window.ARH_TASKS.filter(t=>t.island===name).sort((a,b)=>clsSort(a)-clsSort(b)||a.diff-b.diff||a.id.localeCompare(b.id));
+  const ts=tasksFit(window.ARH_TASKS.filter(t=>t.island===name)).sort((a,b)=>clsSort(a)-clsSort(b)||a.diff-b.diff||a.id.localeCompare(b.id));
   let prevCls=null;
   const rows=ts.map(t=>{
     const cl=clsKey(t);
@@ -365,14 +380,14 @@ function renderLibrary(){
   const statFilter=t=> status==='all'? true : status==='todo'? !(DB.tasks[t.id]&&DB.tasks[t.id].done) : !!(DB.tasks[t.id]&&DB.tasks[t.id].done);
   const clsFilter=t=> LB.cls==='all' || clsKey(t)===LB.cls;
   const selIsl=libIsland();
-  const allFit = window.ARH_TASKS.filter(t=>islandVisible({name:t.island})).filter(statFilter).filter(clsFilter);
+  const allFit = tasksFit(window.ARH_TASKS).filter(t=>islandVisible({name:t.island})).filter(statFilter).filter(clsFilter);
   const doneFit=allFit.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
   const todoFit=allFit.length-doneFit;
   const statBadge = status==='all'? `всего ${allFit.length}` : status==='todo'? `осталось ${todoFit}` : `решено ${doneFit}`;
   // доступные классы для чипов — из задач текущего выбора
   const clsSource = selIsl==='all'
-    ? window.ARH_TASKS.filter(t=>islandVisible({name:t.island})).filter(statFilter)
-    : window.ARH_TASKS.filter(t=>t.island===selIsl).filter(statFilter);
+    ? tasksFit(window.ARH_TASKS).filter(t=>islandVisible({name:t.island})).filter(statFilter)
+    : tasksFit(window.ARH_TASKS.filter(t=>t.island===selIsl)).filter(statFilter);
   const clsOpts=[...new Set(clsSource.map(clsKey).filter(Boolean))].sort((a,b)=>+a.split('-')[0]-+b.split('-')[0]);
   const clsChips = clsOpts.length
     ? `<div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
@@ -384,7 +399,7 @@ function renderLibrary(){
     items: allFit,
     done: doneFit, total: allFit.length }];
   const tabIsls = islands.map(I=>{
-    const items=window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t));
+    const items=tasksFit(window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t)));
     return { key:I.name, ico:I.ico, name:I.name, items, done: items.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length, total: items.length };
   }).filter(g=>g.total>0);
   const tabs=[...tabAll, ...tabIsls];
@@ -397,7 +412,7 @@ function renderLibrary(){
       <span class="bt-bar"><i style="width:${p}%"></i></span>
     </button>`;}).join('');
   const groups = (selIsl==='all'? islands : islands.filter(I=>I.name===selIsl))
-    .map(I=>({ I, items: window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t)&&clsFilter(t))
+    .map(I=>({ I, items: tasksFit(window.ARH_TASKS.filter(t=>t.island===I.name&&statFilter(t)&&clsFilter(t)))
       .sort((a,b)=>clsSort(a)-clsSort(b)||a.diff-b.diff||a.id.localeCompare(b.id)) }))
     .filter(g=>g.items.length);
   const content = selIsl!=='all'

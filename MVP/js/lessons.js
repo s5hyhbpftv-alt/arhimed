@@ -13,11 +13,38 @@ const SUBJ_META={
   phys:{ico:'🍎', name:'Физика', dsc:'Ньютон · движение, силы, энергия'},
   chem:{ico:'⚗️', name:'Химия', dsc:'Лавуазье · вещества, реакции, растворы'},
   inf:{ico:'💻', name:'Информатика', dsc:'Код, алгоритмы, логика'}};
+
+/* ---------- фильтр по классу профиля ---------- */
+function profileClassNum(){ try{ const k=parseInt(String((typeof DB!=='undefined'&&DB.profile)?DB.profile.klass:''),10); return isNaN(k)?7:k; }catch(e){ return 7; } }
+// выбранный класс открывает диапазон: 6 класс — задания 5–8 классов
+function openClassRange(){ const k=profileClassNum(); return k===6?[5,8]:[k,k]; }
+function lessonClassRange(L){
+  try{
+    const src=L.src||'';
+    if(L.subj==='jun'||/Начальная школа/.test(src)){
+      const cm={63:[1,2],64:[1,2],65:[1,2],66:[1,2],67:[1,2],68:[1,2],69:[1,2],70:[1,2],71:[2,3],72:[2,3],73:[2,3],74:[3,3],75:[2,3]};
+      if(cm[L.id]) return cm[L.id];
+      const m=String(src).match(/(\d{1,2})\s*(?:[\u2013-]\s*(\d{1,2}))?\s*класс/);
+      if(m) return [ +m[1], m[2]? +m[2] : +m[1] ];
+      return [1,4];
+    }
+    const m=String(src).match(/(\d{1,2})\s*(?:[\u2013-]\s*(\d{1,2}))?\s*класс/);
+    if(m) return [ +m[1], m[2]? +m[2] : +m[1] ];
+    const sub=(L.subj)||(/физика/i.test(src)?'phys':/Химия|химия/.test(src)?'chem':/Информатика/.test(src)?'inf':'math');
+    if(sub==='jun') return [1,4];
+    return sub==='phys'?[7,9] : sub==='chem'?[8,9] : sub==='inf'?[7,9] : [5,9];
+  }catch(e){ return [5,9]; }
+}
+function lessonFits(L){ const r=lessonClassRange(L), o=openClassRange(); return !(r[1]<o[0]||r[0]>o[1]); }
+
 function subjOf(L){ return (L&&L.subj) || (/Начальная школа/.test(L.src||'')?'jun':/Информатика/.test(L.src||'')?'inf':/физика/i.test(L.src||'')?'phys':'math'); }
 function lessonPool(){
   try{
-    if(typeof isJunior==='function'&&isJunior()) return window.ARH_LESSONS.filter(L=>subjOf(L)==='jun');
-    return window.ARH_LESSONS.filter(L=>subjOf(L)!=='jun');
+    const junior=typeof isJunior==='function'&&isJunior();
+    const pool= junior
+      ? window.ARH_LESSONS.filter(L=>subjOf(L)==='jun')
+      : window.ARH_LESSONS.filter(L=>subjOf(L)!=='jun');
+    return pool.filter(lessonFits);
   }catch(e){ return window.ARH_LESSONS; }
 }
 let BK={ subj:'all', open:{} };   // фильтр по предмету + раскрытые секции
