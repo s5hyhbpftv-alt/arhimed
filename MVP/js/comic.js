@@ -1676,6 +1676,36 @@ function coinsSVG(){
       <text x="180" y="200" text-anchor="middle" font-size="20" fill="#8fd1a8">есть коробка минимум с 12</text>
     </svg>`; }
 
+  function dominoSVG(){
+    let cells='';
+    for(let r=0;r<8;r++){ for(let c=0;c<8;c++){ const black=(r+c)%2===1;
+      const cut=(r===0&&c===0)||(r===0&&c===7);
+      const x=24+c*30, y=44+r*30;
+      if(cut){ cells+=`<rect x="${x}" y="${y}" width="30" height="30" fill="#14241c" stroke="#e86a5a" stroke-width="3"/>`; }
+      else { cells+=`<rect x="${x}" y="${y}" width="30" height="30" fill="${black?'#4a4a55':'#e8e0cc'}"/>`; } } }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#16251c"/>
+      <text x="24" y="30" font-size="18" font-weight="bold" fill="#ffd76a">Доска 8×8, два белых угла убраны</text>
+      ${cells}
+      <rect x="270" y="60" width="40" height="14" fill="#e8e0cc"/><text x="272" y="48" font-size="13" fill="#e8e0cc">белых 30</text>
+      <rect x="270" y="96" width="40" height="14" fill="#4a4a55"/><text x="272" y="84" font-size="13" fill="#9fc0e8">чёрных 32</text>
+      <text x="270" y="130" font-size="13" fill="#ffcfc2">домино:</text>
+      <text x="270" y="148" font-size="13" fill="#ffcfc2">1 белая + 1 чёрная</text>
+      <text x="270" y="178" font-size="14" fill="#ffd76a">30 ≠ 32</text>
+    </svg>`; }
+  function invSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2433"/>
+      <text x="24" y="40" font-size="21" font-weight="bold" fill="#ffd76a">Полуинвариант: чётность суммы</text>
+      <g font-size="40" fill="#f4e9c8">
+        <text x="40" y="100">1</text><text x="100" y="100">2</text><text x="160" y="100">3</text><text x="220" y="100">4</text>
+      </g>
+      <text x="280" y="100" font-size="26" fill="#9fc0e8">→ a − b</text>
+      <text x="40" y="146" font-size="20" fill="#8fd1a8">сумма = 10 — чётная</text>
+      <text x="40" y="178" font-size="20" fill="#7fd1ff">a + b и a − b одной чётности</text>
+      <text x="40" y="214" font-size="22" font-weight="bold" fill="#ffd76a">итоговое число — чётное</text>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1737,6 +1767,8 @@ function coinsSVG(){
     else if(scene==='div10') base=div10SVG();
     else if(scene==='comb') base=combSVG();
     else if(scene==='dir') base=dirSVG();
+    else if(scene==='domino') base=dominoSVG();
+    else if(scene==='inv') base=invSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1859,6 +1891,8 @@ function coinsSVG(){
       .c2-stage.c2-bg-div10 { background:linear-gradient(#1e2a3d,#182338 45%,#101a2c); }
       .c2-stage.c2-bg-comb { background:linear-gradient(#231a10,#1c140c 45%,#140d08); }
       .c2-stage.c2-bg-dir { background:linear-gradient(#14241c,#101c15 45%,#0a140f); }
+      .c2-stage.c2-bg-domino { background:linear-gradient(#16251c,#122017 45%,#0c1a11); }
+      .c2-stage.c2-bg-inv { background:linear-gradient(#1e2433,#191f2c 45%,#12171f); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
