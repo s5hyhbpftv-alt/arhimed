@@ -1208,3 +1208,348 @@ window.WAVE_B = window.WAVE_B || {};
   window.WAVE_B[385]=visB385;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===385){ window.ARH_LESSONS[i]=L385; break; } } })();
 })();
+/* ================= УРОК 386 · Деление с остатком ================= */
+(function(){
+  const L386 = {
+    id: 386, title: 'Деление с остатком: задачи', ico: '🍬',
+    src: 'Математика · 5–6 класс · Деление с остатком', subj: 'math',
+    explain: [
+      'Архимед раскладывает 48 конфет в коробочки по 5 штук. Сколько коробочек получится и сколько конфет останется? Это деление с остатком — когда разделить нацело не получается.',
+      'Ищем самое большое число, кратное 5, но не большее 48. Кратные 5: 5, 10, 15… 45. Дальше идёт 50 — уже больше 48. Значит, берём 45. Сколько это коробочек? 45 : 5 = 9.',
+      'Теперь считаем остаток: 48 − 45 = 3 конфеты. Итог: 48 : 5 = 9 (остаток 3). Коротко записывают: 48 = 9·5 + 3. Девять полных коробочек и 3 конфеты лишние!',
+      'Главное правило деления с остатком: ОСТАТОК ВСЕГДА МЕНЬШЕ ДЕЛИТЕЛЯ! При делении на 5 остаток может быть только 0, 1, 2, 3 или 4. Остаток 5 невозможен — ведь 5 снова уместилось бы в коробочку!',
+      'Проверка всегда спасает: частное · делитель + остаток = исходное число. Для 48 : 5: 9 · 5 + 3 = 45 + 3 = 48. Всё сходится! Всегда проверяй себя такой формулой.',
+      'Обратная задача: какое наименьшее число при делении на 7 даёт остаток 4? Берём самое маленькое частное — 1: 7·1 + 4 = 11. Проверка: 11 : 7 = 1 (остаток 4). Меньше 11 уже нельзя — 4 само по себе меньше 7!',
+      'Ещё пример: найдём наименьшее число, которое при делении на 5 даёт остаток 3. Это 5·1 + 3 = 8. Проверка: 8 : 5 = 1 (остаток 3). Заметь: 3 — это и есть остаток, а 8 = 5 + 3.',
+      'В задачах «на остаток» всегда начинай с самого маленького частного (обычно 1) и прибавляй остаток. А если нужны все такие числа — прибавляй делитель: 8, 13, 18…',
+      'Теперь проверь себя: чему равны частное и остаток при делении 48 на 5? Вспомни: 48 = 9·5 + 3.'
+    ],
+    check: { q: 'Чему равны частное и остаток: 48 : 5?', choices: ['9 и 3', '8 и 8', '9 и 5', '10 и 2'], ans: 0,
+      exp: '48 = 9·5 + 3 → частное 9, остаток 3.' },
+    tasks: [
+      { q: 'Какое наименьшее натуральное число при делении на 7 даёт остаток 4?', kind: 'unit', ans: 11, tol: 0,
+        hints: ['7·1 + 4.', '11.'], sol: '11' },
+      { q: 'Может ли остаток при делении на 5 быть равен 5?', kind: 'choice', choices: ['нет', 'да', 'если число большое', 'иногда'], ans: 0, tol: 0,
+        hints: ['Остаток меньше делителя.', 'Остаток всегда меньше 5.'], sol: 'нет' }
+    ]
+  };
+  const candies=(n)=>{ let out='';
+    for(let i=0;i<n;i++) out+=`<span style="font-size:15px">🍬</span>`;
+    return `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1px;max-width:340px">${out}</div>`;
+  };
+  const boxRow=(full,rest)=>{ let s=`<div class="wv-row" style="gap:4px;flex-wrap:wrap;margin:6px 0">`;
+    for(let i=0;i<full;i++) s+=`<div style="border:1.5px solid #8a6d1e;border-radius:8px;padding:2px 6px;background:rgba(217,164,65,.08);display:flex;gap:1px">${Array.from({length:5},()=>'🍬').join('')}</div>`;
+    if(rest>0) s+=`<div style="border:1.5px dashed #e86a5a;border-radius:8px;padding:2px 6px;display:flex;gap:1px">${Array.from({length:rest},()=>'🍬').join('')}</div>`;
+    s+=`</div>`; return s;
+  };
+  function visB386(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">48 конфет по 5 в коробке</div>
+        ${candies(48)}
+        <div class="wv-sml">сколько коробочек и сколько конфет останется?</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ищем кратное 5</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;max-width:340px">
+          ${[5,10,15,20,25,30,35,40,45,50].map((n,i)=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:34px;border-radius:8px;background:${n<=45?'rgba(143,209,168,.14)':'rgba(232,106,90,.12)'};border:2px solid ${n<=45?'#4c8a5a':'#b0635a'};font-size:15px;color:${n<=45?'#8fd1a8':'#ff9a8a'};font-weight:bold">${n}</span>`).join('')}
+        </div>
+        <div class="wv-ans" style="font-size:16px;color:#8fd1a8">45 — самое большое кратное 5, не большее 48 · 45 : 5 = 9</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Девять коробочек + остаток</div>
+        ${boxRow(9,3)}
+        <div style="font-size:20px;color:#ffd76a;font-family:Georgia,serif">48 = 9 · 5 + 3</div>
+        <div class="wv-sml">9 коробочек по 5 и 3 конфеты лишние</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Главное правило</div>
+        <div style="background:rgba(232,106,90,.1);border:2px solid rgba(232,106,90,.5);border-radius:14px;padding:10px 14px;max-width:330px;width:100%">
+          <div style="font-size:16px;color:#ffcfc2;text-align:center">остаток <b>всегда меньше делителя</b>!</div>
+        </div>
+        <div class="wv-sml">делим на 5 → остатки: 0, 1, 2, 3, 4 · остаток 5 невозможен!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверка</div>
+        <div style="font-size:24px;color:#e8dcc8;font-family:Georgia,serif">9·5 + 3 = 45 + 3 = <b style="color:#8fd1a8" class="wv-ans">48</b></div>
+        <div style="background:rgba(127,209,160,.1);border:1px solid #4c8a5a;border-radius:10px;padding:7px 12px;max-width:330px;font-size:14px;color:#b8e0c4">частное · делитель + остаток = исходное число — всегда проверяй!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Обратная задача</div>
+        <div class="wv-sml">наименьшее число, которое при делении на 7 даёт остаток 4</div>
+        <div style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">7·1 + 4 = <b class="wv-ans" style="color:#8fd1a8">11</b></div>
+        <div class="wv-sml">проверка: 11 : 7 = 1 (остаток 4) ✔</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ещё пример</div>
+        <div class="wv-sml">наименьшее число с остатком 3 при делении на 5</div>
+        <div style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">5·1 + 3 = <b class="wv-ans" style="color:#8fd1a8">8</b></div>
+        <div class="wv-row" style="gap:4px;margin:4px 0">${[8,13,18,23].map(n=>`<span style="border:1px solid #3d5c49;border-radius:8px;padding:3px 9px;font-size:15px;color:#cfe0cf">${n}</span>`).join('')}</div>
+        <div class="wv-sml">дальше прибавляем делитель 5: 8, 13, 18…</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Памятка</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['1️⃣','найди кратное делителя, не большее числа','#7fd1ff'],
+            ['2️⃣','частное = сколько раз уместилось','#8fd1a8'],
+            ['3️⃣','остаток = число минус это кратное','#ffd76a'],
+            ['4️⃣','проверка: частное·делитель + остаток','#e8a0d8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;text-align:left;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${boxRow(9,3)}
+        <div class="wv-sml">48 : 5 — частное и остаток?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:20px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? и ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[386]=visB386;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===386){ window.ARH_LESSONS[i]=L386; break; } } })();
+})();
+/* ================= УРОК 387 · Проценты ================= */
+(function(){
+  const L387 = {
+    id: 387, title: 'Проценты: олимпиадные задачи', ico: '🏷️',
+    src: 'Математика · 5–6 класс · Проценты', subj: 'math',
+    explain: [
+      'В магазине Архимеда цена товара 100 рублей. Сначала цену повысили на 10%, а потом — внимание! — понизили на 10%. Вернулась ли цена к 100 рублям? Интуиция говорит «да», но математика удивит!',
+      'Сначала повышение. 10% от 100 рублей — это 10 рублей (ведь 10% = 0,1, а 100·0,1 = 10). Новая цена: 100 + 10 = 110 рублей. Пока всё просто.',
+      'Теперь понижение на 10% — но от какой цены? От НОВОЙ, то есть от 110 рублей! 10% от 110 = 110·0,1 = 11 рублей. Новая цена: 110 − 11 = 99 рублей!',
+      'Смотри, что получилось: 100 → 110 → 99. Итоговая цена 99 рублей — МЕНЬШЕ исходных 100! Вот это поворот! Проценты считались от разных чисел: повышение от 100, а понижение от 110.',
+      'Запомни главное правило: проценты всегда считаются от ТЕКУЩЕЙ величины. После повышения база изменилась, и следующее понижение считается уже от новой цены.',
+      'Потренируемся со скидкой: товар стоил 200 рублей, скидка 20%. Сколько стоит теперь? 20% от 200 = 200·0,2 = 40 рублей. Новая цена: 200 − 40 = 160 рублей.',
+      'А увеличение на 50%? Увеличить число на 50% — значит прибавить половину, то есть умножить на 1,5. 100 → 150. Запомни: +50% это ×1,5, +25% это ×1,25, +100% это ×2!',
+      'Быстрый способ: чтобы найти цену после скидки p%, умножь на (100 − p)/100. После скидки 20%: ×0,8. 200·0,8 = 160. Проверь: 200 − 40 = 160 — сходится!',
+      'Теперь проверь себя: цена 100 руб. выросла на 10%, затем упала на 10%. Какая итоговая цена? Вспомни: сначала 110, потом минус 10% от 110.'
+    ],
+    check: { q: 'Цена 100 руб. выросла на 10%, затем упала на 10%. Итоговая цена?', choices: ['99 руб.', '100 руб.', '110 руб.', '90 руб.'], ans: 0,
+      exp: '100+10=110, затем 110−11=99.' },
+    tasks: [
+      { q: 'Товар стоил 200 руб., скидка 20%. Новая цена?', kind: 'unit', ans: 160, tol: 0,
+        hints: ['20% от 200 = 40 руб.', '200 − 40 = 160 руб.'], sol: '160' },
+      { q: 'Число увеличили на 50%. Во сколько раз оно выросло?', kind: 'choice', choices: ['в 1,5 раза', 'в 2 раза', 'в 5 раз', 'в 0,5 раза'], ans: 0, tol: 0,
+        hints: ['+50% = ×1,5.', '100 → 150 — в 1,5 раза.'], sol: 'в 1,5 раза' }
+    ]
+  };
+  const tag=(price,label,color)=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${color};border-radius:14px;padding:10px 14px;min-width:86px"><div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">${price}</div><div style="font-size:11px;color:${color}">${label}</div></div>`;
+  function visB387(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Загадка магазина</div>
+        <div style="display:flex;gap:10px;justify-content:center;align-items:center">
+          ${tag('100 ₽','было','#8fd1a8')}
+          <span style="font-size:20px;color:#8fa08f">+10% → −10% → ?</span>
+        </div>
+        <div style="background:rgba(232,106,90,.1);border:1px solid rgba(232,106,90,.4);border-radius:10px;padding:7px 12px;max-width:330px;font-size:14px;color:#ffcfc2">вернётся ли цена к 100 рублям? Сейчас удивимся!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Повышение на 10%</div>
+        <div class="wv-row" style="gap:8px">${tag('100 ₽','было','#8fd1a8')}<span style="font-size:20px;color:#8fa08f">+10</span>${tag('110 ₽','стало','#ffd76a')}</div>
+        <div class="wv-sml">10% от 100 = 100·0,1 = 10 ₽ · 100 + 10 = 110</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Понижение — от НОВОЙ цены!</div>
+        <div class="wv-row" style="gap:8px">${tag('110 ₽','новая база','#ffd76a')}<span style="font-size:20px;color:#8fa08f">−11</span>${tag('99 ₽','итог','#e86a5a')}</div>
+        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:8px 12px;max-width:330px;font-size:14px;color:#ffcfc2">10% теперь от 110: 110·0,1 = 11 ₽! Не от 100!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Сюрприз: 100 → 99</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${tag('100 ₽','','#8fd1a8')}<span style="font-size:18px;color:#8fa08f">→</span>${tag('110 ₽','','#ffd76a')}<span style="font-size:18px;color:#8fa08f">→</span>${tag('99 ₽','','#e86a5a')}
+        </div>
+        <div style="background:rgba(217,164,65,.1);border:2px solid #d9a441;border-radius:12px;padding:8px 12px;max-width:330px;font-size:15px;color:#ffd76a;font-weight:bold" class="wv-ans">99 < 100 — цена упала!</div>
+        <div class="wv-sml">проценты считались от разных чисел!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Главное правило</div>
+        <div style="background:rgba(127,209,255,.08);border:2px solid #7fd1ff;border-radius:14px;padding:10px 14px;max-width:330px;width:100%">
+          <div style="font-size:15.5px;line-height:1.5;color:#e8dcc8;text-align:center">проценты всегда считаются от <b style="color:#7fd1ff">текущей</b> величины</div>
+        </div>
+        <div class="wv-sml">после повышения база изменилась — дальше считаем от новой!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Скидка 20%</div>
+        <div class="wv-row" style="gap:8px">${tag('200 ₽','было','#8fd1a8')}<span style="font-size:20px;color:#8fa08f">−40</span>${tag('160 ₽','стало','#ffd76a')}</div>
+        <div class="wv-sml">20% от 200 = 40 ₽ · 200 − 40 = 160</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Увеличение = умножение</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:330px;width:100%">
+          ${[
+            ['+50%','×1,5','100 → 150'],
+            ['+25%','×1,25','100 → 125'],
+            ['+100%','×2','100 → 200']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:6px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:#8fd1a8">${x[1]}</b><span style="color:#8fa08f;font-size:12.5px">${x[2]}</span></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Быстрый способ со скидкой</div>
+        <div style="background:rgba(217,164,65,.09);border:2px solid #d9a441;border-radius:14px;padding:10px 14px;max-width:330px;width:100%">
+          <div style="font-size:15.5px;color:#e8dcc8;text-align:center">цена после скидки p% = цена <b style="color:#ffd76a">× (100 − p) : 100</b></div>
+        </div>
+        <div class="wv-row" style="gap:8px">${tag('200 ₽','×0,8','#8fd1a8')}${tag('160 ₽','= 200·0,8','#ffd76a')}</div>
+        <div class="wv-sml">скидка 20% → множитель 0,8!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-sml">100 ₽ → +10% → −10% → ?</div>
+        <div style="display:flex;align-items:center;gap:6px;justify-content:center">
+          ${tag('100 ₽','','#8fd1a8')}<span style="font-size:18px;color:#8fa08f">→</span>${tag('110 ₽','','#ffd76a')}<span style="font-size:18px;color:#8fa08f">→</span><span style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:14px;padding:8px 12px;font-size:22px;color:#ffd76a" class="wv-pulse">? ₽</span>
+        </div>
+        <div class="wv-sml">минус 10% от 110!</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[387]=visB387;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===387){ window.ARH_LESSONS[i]=L387; break; } } })();
+})();
+/* ================= УРОК 388 · Разрезания и площади ================= */
+(function(){
+  const L388 = {
+    id: 388, title: 'Разрезания и площади', ico: '✂️',
+    src: 'Математика · 5–6 класс · Площади', subj: 'math',
+    explain: [
+      'Архимед склеил прямоугольник 6 на 4 из бумажных клеток и хочет разрезать его на одинаковые квадраты 2×2. Сколько квадратов получится? Считать по одному долго — посчитаем площадью!',
+      'Сначала найдём площадь прямоугольника. Площадь = длина × ширина = 6 · 4 = 24 клетки. Это как посчитать все клетки внутри — их ровно 24.',
+      'Теперь площадь одного квадрата 2×2: 2 · 2 = 4 клетки. Каждый такой квадрат занимает 4 клетки.',
+      'Делим площадь прямоугольника на площадь квадрата: 24 : 4 = 6. Значит, из прямоугольника 6×4 получится ровно 6 квадратов 2×2! Проверь глазами на картинке.',
+      'Почему так? Разрезание не теряет и не создаёт площадь: сумма площадей частей равна площади целого. Поэтому делим общую площадь на площадь одной части — и готово!',
+      'Потренируемся со «счётом полосками»: фигура — это 3 полоски по 5 клеток. Площадь = 3 · 5 = 15 клеток. Умножение вместо пересчёта каждой клетки!',
+      'А квадрат 5×5: площадь 5 · 5 = 25 клеток. Квадрат — это прямоугольник, у которого стороны равны, поэтому площадь = сторона · сторона.',
+      'Запомни формулы: площадь прямоугольника = длина × ширина; площадь квадрата = сторона × сторона. А при разрезании: число частей = площадь целого : площадь части.',
+      'Теперь проверь себя: прямоугольник 6×4 разрезали на квадраты 2×2. Сколько квадратов получится? Вспомни: 24 : 4.'
+    ],
+    check: { q: 'Прямоугольник 6×4 разрезали на квадраты 2×2. Сколько квадратов?', choices: ['6', '8', '12', '24'], ans: 0,
+      exp: 'Площадь 6·4=24, квадрат 2·2=4 → 24:4=6.' },
+    tasks: [
+      { q: 'Площадь фигуры из 3 полосок по 5 клеток?', kind: 'unit', ans: 15, tol: 0,
+        hints: ['3 · 5.', '15 клеток.'], sol: '15' },
+      { q: 'Сколько квадратиков 1×1 в квадрате 5×5?', kind: 'choice', choices: ['25', '20', '10', '5'], ans: 0, tol: 0,
+        hints: ['5 · 5.', '25 квадратиков.'], sol: '25' }
+    ]
+  };
+  const rectCells=(w,h,cell,offX,offY)=>{ let out='';
+    for(let r=0;r<h;r++){ for(let c=0;c<w;c++){
+      const x=(offX||0)+c*cell, y=(offY||0)+r*cell;
+      out+=`<rect x="${x}" y="${y}" width="${cell}" height="${cell}" fill="${(r+c)%2?'rgba(127,209,160,.5)':'rgba(127,209,160,.25)'}" stroke="#2c4a38" stroke-width="1"/>`;
+    }}
+    return out;
+  };
+  function visB388(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Прямоугольник 6×4 из клеток</div>
+        <svg viewBox="0 0 200 140" style="width:220px;height:154px;background:#101f18;border-radius:10px">${rectCells(6,4,20)}</svg>
+        <div class="wv-sml">разрежем на квадраты 2×2 — сколько выйдет?</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Площадь прямоугольника</div>
+        <svg viewBox="0 0 200 140" style="width:200px;height:140px;background:#101f18;border-radius:10px">
+          <rect x="5" y="5" width="120" height="80" fill="rgba(127,209,160,.15)" stroke="#8fd1a8" stroke-width="2"/>
+          <text x="65" y="50" text-anchor="middle" font-size="15" fill="#ffd76a">6</text>
+          <text x="70" y="112" text-anchor="middle" font-size="15" fill="#ffd76a">4</text>
+          <line x1="5" y1="45" x2="125" y2="45" stroke="#8fd1a8" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <line x1="68" y1="5" x2="68" y2="85" stroke="#8fd1a8" stroke-width="1.5" stroke-dasharray="4 3"/>
+        </svg>
+        <div class="wv-ans" style="font-size:18px;color:#8fd1a8">площадь = 6 · 4 = 24 клетки</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Квадрат 2×2</div>
+        <svg viewBox="0 0 100 100" style="width:110px;height:110px;background:#101f18;border-radius:10px">
+          <rect x="10" y="10" width="80" height="80" fill="rgba(217,164,65,.2)" stroke="#d9a441" stroke-width="2"/>
+          <line x1="10" y1="50" x2="90" y2="50" stroke="#d9a441" stroke-width="1" stroke-dasharray="3 2"/>
+          <line x1="50" y1="10" x2="50" y2="90" stroke="#d9a441" stroke-width="1" stroke-dasharray="3 2"/>
+          <text x="50" y="48" text-anchor="middle" font-size="13" fill="#ffd76a">2</text>
+          <text x="72" y="96" text-anchor="middle" font-size="13" fill="#ffd76a">2</text>
+        </svg>
+        <div class="wv-sml">площадь квадрата = 2 · 2 = 4 клетки</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Делим: 24 : 4</div>
+        <svg viewBox="0 0 200 140" style="width:220px;height:154px;background:#101f18;border-radius:10px">
+          ${rectCells(6,4,20)}
+          <g stroke="#ffd76a" stroke-width="3">
+            <line x1="40" y1="0" x2="40" y2="80"/><line x1="80" y1="0" x2="80" y2="80"/><line x1="120" y1="0" x2="120" y2="80"/>
+            <line x1="0" y1="40" x2="160" y2="40"/>
+          </g>
+        </svg>
+        <div class="wv-ans" style="font-size:20px;color:#ffd76a">24 : 4 = 6 квадратов!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Секрет: площадь сохраняется</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.55">разрезание <b style="color:#ffd76a">не теряет и не создаёт</b> площадь: сумма площадей частей = площадь целого</div>
+        <div class="wv-sml">поэтому: число частей = площадь целого : площадь части</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Считаем полосками</div>
+        <svg viewBox="0 0 200 140" style="width:200px;height:140px;background:#101f18;border-radius:10px">
+          <rect x="5" y="5" width="160" height="20" fill="rgba(127,209,160,.3)" stroke="#8fd1a8" stroke-width="1.5"/>
+          <rect x="5" y="27" width="160" height="20" fill="rgba(127,209,160,.5)" stroke="#8fd1a8" stroke-width="1.5"/>
+          <rect x="5" y="49" width="160" height="20" fill="rgba(127,209,160,.3)" stroke="#8fd1a8" stroke-width="1.5"/>
+          <text x="85" y="20" text-anchor="middle" font-size="10" fill="#0d1a13">1 2 3 4 5</text>
+          <text x="85" y="42" text-anchor="middle" font-size="10" fill="#0d1a13">1 2 3 4 5</text>
+          <text x="85" y="64" text-anchor="middle" font-size="10" fill="#0d1a13">1 2 3 4 5</text>
+        </svg>
+        <div class="wv-ans" style="font-size:18px;color:#8fd1a8">3 полоски по 5 = 3 · 5 = 15</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Квадрат 5×5</div>
+        <svg viewBox="0 0 130 130" style="width:130px;height:130px;background:#101f18;border-radius:10px">${rectCells(5,5,20,5,5)}</svg>
+        <div class="wv-ans" style="font-size:18px;color:#8fd1a8">5 · 5 = 25 квадратиков</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Памятка формул</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['площадь прямоугольника','длина × ширина','▭','#8fd1a8'],
+            ['площадь квадрата','сторона × сторона','⬜','#7fd1ff'],
+            ['число частей при разрезании','площадь целого : площадь части','✂️','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[3]};border-radius:9px;padding:7px 12px;text-align:left;font-size:13.5px;color:#e8dcc8"><span style="font-size:20px">${x[2]}</span><span><b style="color:${x[3]}">${x[0]}</b> = ${x[1]}</span></div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-sml">прямоугольник 6×4 → квадраты 2×2 — сколько?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">24 : 4 = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[388]=visB388;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===388){ window.ARH_LESSONS[i]=L388; break; } } })();
+})();
