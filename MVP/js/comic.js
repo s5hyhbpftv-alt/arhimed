@@ -678,6 +678,67 @@ function coinsSVG(){
       <circle cx="328" cy="146" r="9" fill="#3a3a3a" stroke="#33291e" stroke-width="2.5"/>
     </svg>`; }
 
+  function workshopSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skW" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#e8d5ae"/><stop offset="1" stop-color="#c9a86a"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="120" fill="url(#skW)"/>
+      <!-- полки с инструментами -->
+      <rect x="8" y="16" width="130" height="8" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="2"/>
+      <g font-size="20">
+        <text x="18" y="44">🔩</text><text x="52" y="40">⚙️</text><text x="86" y="44">🔧</text><text x="118" y="42">🔨</text>
+      </g>
+      <rect x="222" y="16" width="130" height="8" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="2"/>
+      <g font-size="20">
+        <text x="234" y="42">📐</text><text x="270" y="42">🪛</text><text x="306" y="42">⚙️</text><text x="336" y="44">🛠️</text>
+      </g>
+      <!-- висящая лампа -->
+      <line x1="180" y1="0" x2="180" y2="10" stroke="#5f3a1a" stroke-width="2"/>
+      <circle cx="180" cy="18" r="9" fill="#ffd76a" stroke="#5f3a1a" stroke-width="2"/>
+      <!-- верстак -->
+      <rect x="30" y="120" width="300" height="16" fill="#9c6c3a" stroke="#5f3a1a" stroke-width="3"/>
+      <rect x="40" y="136" width="20" height="50" fill="#7a4f26" stroke="#5f3a1a" stroke-width="2"/>
+      <rect x="300" y="136" width="20" height="50" fill="#7a4f26" stroke="#5f3a1a" stroke-width="2"/>
+      <rect x="150" y="136" width="22" height="50" fill="#7a4f26" stroke="#5f3a1a" stroke-width="2"/>
+      <!-- детали на верстаке -->
+      <g font-size="22">
+        <text x="60" y="116">⚙️</text><text x="96" y="114">🔩</text><text x="150" y="116">🧩</text>
+        <text x="196" y="114">⚙️</text><text x="240" y="116">🔧</text><text x="286" y="114">🧱</text>
+      </g>
+      <!-- коробка-окошко x -->
+      <g class="c2a-spark">
+        <rect x="70" y="62" width="46" height="40" rx="6" fill="#fffef4" stroke="#33291e" stroke-width="3"/>
+        <text x="93" y="90" text-anchor="middle" font-size="26" font-weight="bold" fill="#a3762a" font-family="Georgia,serif">x</text>
+      </g>
+      <rect x="0" y="186" width="360" height="24" fill="#7a5a34"/>
+    </svg>`; }
+  function beachSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skB" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8fd3f0"/><stop offset="1" stop-color="#5fb8e0"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="120" fill="url(#skB)"/>
+      <text x="310" y="42" font-size="30">🌞</text>
+      <g class="c2a-cloud"><text x="30" y="40" font-size="26">☁️</text><text x="150" y="64" font-size="22">☁️</text></g>
+      <!-- море с волнами -->
+      <path d="M0 96 Q40 88 80 96 T160 96 T240 96 T320 96 T360 96 L360 132 L0 132 Z" fill="#3f9ed6"/>
+      <path d="M0 112 Q50 104 100 112 T200 112 T300 112 T360 112" stroke="#bfe6f7" stroke-width="3" fill="none"/>
+      <!-- пляж -->
+      <rect x="0" y="132" width="360" height="78" fill="#f0d9a8"/>
+      <path d="M0 132 Q90 126 180 132 T360 132" fill="#e3c88e"/>
+      <g font-size="22">
+        <text x="36" y="172">🐚</text><text x="96" y="188">⭐</text><text x="180" y="180">🐚</text><text x="262" y="170">🐚</text>
+        <text x="318" y="190" font-size="16">⭐</text>
+      </g>
+      <!-- ведёрко и зонтик -->
+      <rect x="268" y="118" width="26" height="24" rx="3" fill="#e86a5a" stroke="#33291e" stroke-width="2.5"/>
+      <path d="M274 118 Q281 110 288 118" stroke="#33291e" stroke-width="2.5" fill="none"/>
+      <line x1="120" y1="140" x2="110" y2="96" stroke="#7c4a33" stroke-width="3"/>
+      <path d="M110 96 Q132 78 158 92 Q140 102 122 100 Z" fill="#e86a5a" stroke="#33291e" stroke-width="2"/>
+      <!-- вода в ведёрке -->
+      <rect x="270" y="120" width="22" height="8" fill="#7fd1ff"/>
+      <g class="c2a-spark"><text x="150" y="200" font-size="18">💧</text></g>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -691,6 +752,8 @@ function coinsSVG(){
     else if(scene==='cosmos') base=cosmosSVG();
     else if(scene==='les') base=lesSVG();
     else if(scene==='train') base=trainSVG();
+    else if(scene==='workshop') base=workshopSVG();
+    else if(scene==='beach') base=beachSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -765,6 +828,8 @@ function coinsSVG(){
       .c2-stage.c2-bg-cosmos { background:linear-gradient(#9aa0b8,#7f859e 45%,#565c73); }
       .c2-stage.c2-bg-les { background:linear-gradient(#7fb45c,#5c8f3e 50%,#4a7a33); }
       .c2-stage.c2-bg-train { background:linear-gradient(#cfe6f5,#a8d2ea 45%,#8fb8d8); }
+      .c2-stage.c2-bg-workshop { background:linear-gradient(#e8d5ae,#c9a86a 45%,#a5824e); }
+      .c2-stage.c2-bg-beach { background:linear-gradient(#8fd3f0,#5fb8e0 45%,#f0d9a8); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
