@@ -713,6 +713,104 @@ function l10Road(moving, v1, v2, dur, dist, start){
   </div>`;
 }
 
+// ===================== ОБЩИЕ РИСОВАННЫЕ ЭЛЕМЕНТЫ: ЯБЛОКИ И РУКИ =====================
+// Яблоко (SVG), сорта v: 0 красное, 1 зелёное, 2 жёлтое, 3 полосатое (штрифель), 4 оранжевое
+function wvAppleSVG(v,s){
+  const W=s||24, H=Math.round(W*1.22);
+  const pal=[
+    {a:'#ff7a5e',b:'#e23b2e',c:'#c81f1a'},   // красное
+    {a:'#a6e06a',b:'#5cb84a',c:'#2e8b3c'},   // зелёное
+    {a:'#ffe07a',b:'#f0b22e',c:'#d98a12'},   // жёлтое
+    {a:'#ff7a5e',b:'#e23b2e',c:'#c81f1a'},   // полосатое (база красная)
+    {a:'#ffb066',b:'#f0802a',c:'#cf5c10'}    // оранжевое
+  ];
+  const p=pal[v%pal.length];
+  const stripes=(v%pal.length)===3
+    ? `<path d="M13 10 C 10 18, 11 30, 15 44" stroke="rgba(255,240,190,.75)" stroke-width="3" fill="none" stroke-linecap="round"/>
+       <path d="M21 8 C 19 20, 20 34, 24 46" stroke="rgba(255,240,190,.65)" stroke-width="3" fill="none" stroke-linecap="round"/>
+       <path d="M30 13 C 29 22, 30 32, 32 40" stroke="rgba(255,240,190,.5)" stroke-width="2.6" fill="none" stroke-linecap="round"/>`
+    : '';
+  const leaf = v%2===0
+    ? `<path d="M25 6 C 31 2, 38 2, 42 5 C 37 8, 30 10, 25 6 Z" fill="#57a83e" stroke="#3c7c2a" stroke-width="1"/>
+       <path d="M27 6 C 32 4, 36 4, 40 5" stroke="#3c7c2a" stroke-width=".8" fill="none"/>`
+    : `<path d="M21 5 C 16 1, 9 2, 6 6 C 11 9, 17 10, 21 5 Z" fill="#5fb348" stroke="#3c7c2a" stroke-width="1"/>
+       <path d="M19 5 C 14 4, 10 4, 7 6" stroke="#3c7c2a" stroke-width=".8" fill="none"/>`;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 44 54" style="display:inline-block;vertical-align:middle">
+    <!-- черенок -->
+    <path d="M22 15 C 21 10, 22 6, 24 3" stroke="#7a4a21" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    ${leaf}
+    <!-- тело яблока: две дольки с выемкой сверху -->
+    <path d="M22 15
+             C 18 10, 9 10, 6 15
+             C 2.5 20, 2 28, 4.5 35
+             C 7 42.5, 13 49, 22 52
+             C 31 49, 37 42.5, 39.5 35
+             C 42 28, 41.5 20, 38 15
+             C 35 10, 26 10, 22 15 Z"
+          fill="${p.a}" stroke="${p.c}" stroke-width="1.6"/>
+    <!-- нижнее затемнение -->
+    <path d="M6 35 C 8 42, 14 48, 22 51 C 30 48, 36 42, 38 35
+             C 36 44, 29 49, 22 49.5 C 15 49, 8 44, 6 35 Z" fill="rgba(120,10,5,.28)"/>
+    ${stripes}
+    <!-- блик -->
+    <ellipse cx="13.5" cy="23" rx="3.6" ry="6" fill="rgba(255,255,255,.55)" transform="rotate(-18 13.5 23)"/>
+    <ellipse cx="11" cy="20" rx="1.7" ry="2.6" fill="rgba(255,255,255,.65)"/>
+  </svg>`;
+}
+// n яблок в ряд: o.s размер, o.v все одного сорта (иначе чередуем сорта), o.cls, o.d0 задержка
+function wvApples(n,o){
+  const O=o||{};
+  const out=[];
+  for(let i=0;i<n;i++){
+    const v=(O.v!=null)?O.v:(i%5);
+    out.push(`<span class="${O.cls||'l12-fall'}" style="animation-delay:${((O.d0||0)+i*0.09).toFixed(2)}s;display:inline-block;margin:1px 1.5px">${wvAppleSVG(v,O.s||24)}</span>`);
+  }
+  return `<div style="display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;max-width:340px;margin:1px auto">${out.join('')}</div>`;
+}
+// Рука (SVG): states = [5 булевых]: true — палец поднят, false — зажат в кулак
+function wvHandStatesSVG(states,s){
+  const W=s||58, H=Math.round(W*1.42);
+  const skin='#f6c08e', skin2='#e9a96f', edge='#c98a52', nail='#ffefdf';
+  const tops=[46,34,27,33,45]; // верх поднятого пальца (y в viewBox)
+  const cx=[35,47.5,60,72.5,85];
+  let fingers='';
+  for(let i=0;i<5;i++){
+    if(states[i]){
+      const t=tops[i];
+      fingers+=`<rect x="${cx[i]-5.5}" y="${t}" width="11" height="${98-t}" rx="5.5" fill="${skin}" stroke="${edge}" stroke-width="1.5"/>
+        <ellipse cx="${cx[i]}" cy="${t+7}" rx="3" ry="4.6" fill="${nail}"/>`;
+    }else{
+      fingers+=`<path d="M ${cx[i]-6} 96 Q ${cx[i]} 84 ${cx[i]+6} 96" fill="${skin2}" stroke="${edge}" stroke-width="1.5"/>
+        <path d="M ${cx[i]-5} 96 Q ${cx[i]} 86.5 ${cx[i]+5} 96" fill="rgba(180,120,70,.35)"/>`;
+    }
+  }
+  return `<svg width="${W}" height="${H}" viewBox="0 0 120 170" style="display:inline-block;vertical-align:bottom">
+    <!-- запястье -->
+    <path d="M42 148 L78 148 C82 148 84 154 84 162 L84 170 L36 170 L36 162 C36 154 38 148 42 148 Z" fill="${skin}" stroke="${edge}" stroke-width="1.5"/>
+    <!-- ладонь -->
+    <path d="M23 96 C18 96 16 102 16 110 L16 138 C16 148 22 154 32 154 L88 154 C98 154 104 148 104 138 L104 110 C104 102 102 96 97 96 Z" fill="${skin}" stroke="${edge}" stroke-width="1.6"/>
+    <!-- складки ладони -->
+    <path d="M30 122 Q 60 132 90 122" stroke="rgba(180,120,70,.3)" stroke-width="1.4" fill="none"/>
+    <path d="M34 134 Q 60 142 86 134" stroke="rgba(180,120,70,.22)" stroke-width="1.2" fill="none"/>
+    ${fingers}
+  </svg>`;
+}
+// Рука: up = сколько пальцев поднято (0..5), остальные зажаты в кулак
+function wvHandSVG(up,s){
+  const states=[];
+  for(let i=0;i<5;i++) states.push(i<up);
+  return wvHandStatesSVG(states,s);
+}
+// подпись под рукой (для аккуратности внешних вызовов)
+function wvHand(up,o){
+  const O=o||{};
+  const s=O.s||58;
+  return `<span style="display:inline-flex;flex-direction:column;align-items:center;gap:3px">
+    ${wvHandSVG(up,s)}
+    ${O.cap?`<span style="font-size:${O.capS||11}px;color:${O.capC||'#9ec0a8'}">${O.cap}</span>`:''}
+  </span>`;
+}
+
 // ===================== УРОК 29 «СЧЁТ ДО 10: СКЛАДЫВАЕМ И ВЫЧИТАЕМ» (v170) =====================
 function l29Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
@@ -723,24 +821,23 @@ function l29Act(lk,act){
   if(a0==='r'){ CHS[lk]={}; }
   chRender(0);
 }
-// яблоко-кружок
-function l29Apple(n,sz,cls){
+// одно яблоко (совместимость со старым именем; n-цифра больше не рисуется)
+function l29Apple(n,sz,cls,v){
   const s=sz||26;
-  return `<span class="${cls||'wv-pop'}" style="display:inline-flex;align-items:center;justify-content:center;width:${s}px;height:${s}px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8f8f,#d94848);border:2px solid #a52f2f;font-size:${Math.max(9,s*0.42)}px;color:#fff;font-weight:bold;margin:2px;box-shadow:0 1px 3px rgba(0,0,0,.4)">${n||''}</span>`;
+  return `<span class="${cls||'wv-pop'}" style="display:inline-block;margin:1px">${wvAppleSVG(v!=null?v:(n||0)%5,s)}</span>`;
 }
-// ряд яблок
+// ряд яблок (настоящие, разных сортов)
 function l29Row(n,sz,d0,opt){
   const o=opt||{};
   let out='';
   for(let i=0;i<n;i++){
-    out+=`<span class="${o.cls||'l12-fall'}" style="animation-delay:${((d0||0)+i*0.07).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:${sz||24}px;height:${sz||24}px;border-radius:50%;background:radial-gradient(circle at 32% 28%,${o.col||'#ff8f8f'},${o.col2||'#d94848'});border:2px solid ${o.bord||'#a52f2f'};font-size:${Math.max(8,(sz||24)*0.4)}px;color:#fff;font-weight:bold;margin:1px">${o.mark&&i===n-1?'?':''}</span>`;
+    out+=`<span class="${o.cls||'l12-fall'}" style="animation-delay:${((d0||0)+i*0.09).toFixed(2)}s;display:inline-block;margin:1px 1.5px">${wvAppleSVG((o.v!=null?o.v:(i%5)),sz||24)}</span>`;
   }
   return `<div style="display:flex;justify-content:center;flex-wrap:wrap;max-width:330px;margin:1px auto">${out}</div>`;
 }
-// пальчик (эмодзи-палец вверх)
+// рука с поднятыми пальцами: up — сколько пальцев показываем
 function l29Finger(up,sz){
-  const s=sz||22;
-  return `<span class="wv-pop" style="display:inline-block;font-size:${s}px;margin:0 1px">${up?'☝️':'👇'}</span>`;
+  return wvHandSVG(up,sz||58);
 }
 // числовая лента 1..10 с подсветкой шагов
 function l29Tape(stepNums,opt){
@@ -861,33 +958,39 @@ function l31Act(lk,act){
   if(a0==='r'){ CHS[lk]={}; }
   chRender(0);
 }
-// ряд предметов: n групп по m кружков (яблоки)
+// ряд предметов: n групп по m настоящих яблок (разных сортов)
 function l31Groups(g,per,sz,opt){
   const o=opt||{};
   const s=sz||20;
   let out='';
   for(let gr=0;gr<g;gr++){
-    out+=`<div class="l12-fall" style="animation-delay:${(gr*0.12).toFixed(2)}s;display:inline-flex;gap:2px;border:2px solid ${o.bord||'#ff9a8a'};border-radius:12px;padding:3px 6px;margin:2px">
-      ${Array.from({length:per},()=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:${s}px;height:${s}px;border-radius:50%;background:radial-gradient(circle at 32% 28%,${o.col||'#ff8f8f'},${o.col2||'#d94848'});font-size:${Math.max(8,s*0.4)}px;color:#fff;font-weight:bold">${o.nums?per:''}</span>`).join('')}
-    </div>`;
-  }
-  return `<div style="display:flex;justify-content:center;flex-wrap:wrap;max-width:340px;margin:1px auto">${out}</div>`;
-}
-// пальцы для умножения на 9: загибаем n-й палец (n=1..9)
-function l31Fingers9(n){
-  const hands=[];
-  for(let h=0;h<2;h++){
-    let row='';
-    for(let f=0;f<5;f++){
-      const idx=h*5+f+1;
-      const down=idx===n;
-      row+=`<span class="${down?'l12-hop':''}" style="display:inline-block;font-size:${down?44:34}px;margin:0 2px;opacity:${down?1:.55}">${down?'👇':'☝️'}</span>`;
+    let items='';
+    for(let j=0;j<per;j++){
+      // если o.v задан — все яблоки одного сорта; иначе чередуем сорта (группы чуть сдвинуты)
+      const v=(o.v!=null)?o.v:((gr*2+j)%5);
+      items+=`<span style="display:inline-block;margin:1px">${wvAppleSVG(v,s)}</span>`;
     }
-    hands.push(`<div style="display:flex;justify-content:center">${row}</div>`);
+    out+=`<div class="l12-fall" style="animation-delay:${(gr*0.12).toFixed(2)}s;display:inline-flex;align-items:center;gap:1px;border:2px solid ${o.bord||'rgba(255,154,138,.65)'};border-radius:12px;padding:3px 7px;margin:2px">${items}</div>`;
   }
+  return `<div style="display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;max-width:340px;margin:1px auto">${out}</div>`;
+}
+// пальцы для умножения на 9: загибаем n-й палец (n=1..9) — рисованные руки
+function l31Fingers9(n){
+  const L=[true,true,true,true,true], R=[true,true,true,true,true];
+  if(n>=1&&n<=5) L[n-1]=false; else if(n<=10) R[n-6]=false;
   const left=n-1, right=10-n;
-  return `<div style="text-align:center">${hands[0]}${hands[1]}
-    <div style="font-size:12px;color:#9ec0a8;margin-top:2px">загнули ${n}-й палец · слева ${left} · справа ${right}</div>
+  const numArr=Array.from({length:10},(_,i)=>{
+    const k=i+1;
+    return `<span style="display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;margin:0 1px;font-size:9.5px;background:${k===n?'rgba(255,217,102,.25)':'rgba(255,255,255,.05)'};border:1.5px solid ${k===n?'#ffd966':'#3d5c49'};color:${k===n?'#ffd966':'#9ec0a8'};font-weight:${k===n?'bold':'normal'}">${k}</span>`;
+  });
+  return `<div style="text-align:center">
+    <div style="display:flex;justify-content:center;gap:10px;align-items:flex-end">
+      ${wvHandStatesSVG(L,56)}
+      <span style="width:6px"></span>
+      ${wvHandStatesSVG(R,56)}
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:2px">${numArr.join('')}</div>
+    <div style="font-size:12px;color:#9ec0a8;margin-top:3px">загнули ${n}-й палец · слева ${left} · справа ${right}</div>
   </div>`;
 }
 // таблица Пифагора 9×9 с подсветкой строки/столбца
@@ -1290,18 +1393,18 @@ function visL29(el){
       h=col(big('Числа от 1 до 10')+
         l29Tape(0)+
         `<div style="display:flex;flex-direction:column;gap:3px;max-width:336px;width:100%">
-          ${[['1','🍎','одно яблоко'],['2','🍎🍎','два яблока'],['3','🍎🍎🍎','три яблока']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.15}s;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:4px 10px;max-width:320px;width:100%"><span style="font-size:16px;color:#ffd966;font-weight:bold;min-width:20px">${x[0]}</span><span style="font-size:16px">${x[1]}</span><span style="font-size:11px;color:#9ec0a8">${x[2]}</span></div>`).join('')}
+          ${[['1','одно яблоко'],['2','два яблока'],['3','три яблока']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="animation-delay:${i*0.15}s;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:4px 10px;max-width:320px;width:100%"><span style="font-size:16px;color:#ffd966;font-weight:bold;min-width:20px">${x[0]}</span><span style="display:inline-flex;align-items:flex-end;gap:1px">${Array.from({length:+x[0]},(_,j)=>wvAppleSVG(j%4,15)).join('')}</span><span style="font-size:11px;color:#9ec0a8">${x[1]}</span></div>`).join('')}
         </div>`+
         sml('каждое число — это сколько предметов! Числа растут по одному: 1, 2, 3, …'));
     } else if(step===2){
       // пальцы
       h=col(big('Считаем на пальцах!')+
-        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:4px 0">
-          ${Array.from({length:5},(_,i)=>l29Finger(true)).join('')}
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:4px 0">
+          ${wvHandSVG(5,56)}
         </div>`+
         `<div style="font-size:12.5px;color:#e8dcc8">на одной руке — <b style="color:#7fd1a0">5 пальцев</b>, на двух — <b style="color:#ffd966">10</b>!</div>`+
-        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:4px 0">
-          ${Array.from({length:5},(_,i)=>l29Finger(true)).join('')}${Array.from({length:5},(_,i)=>l29Finger(true)).join('')}
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:4px 0">
+          ${wvHandSVG(5,56)}${wvHandSVG(5,56)}
         </div>`+
         card('загни <b style="color:#ff9a8a">3 пальца</b> из 10 — и посчитай оставшиеся: <b style="color:#ffd966">7</b>! Пальцы — лучший счётный инструмент.')+
         sml('у тебя всегда с собой 10 счётных палочек — твои пальцы!'));
@@ -1358,12 +1461,12 @@ function visL29(el){
       h=col(big('3 + 2 на пальцах')+
         `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">
           <div style="text-align:center">
-            <div style="display:flex;justify-content:center">${[1,2,3].map(i=>l29Finger(true,30)).join('')}</div>
+            <div style="display:flex;justify-content:center">${wvHandSVG(3,48)}</div>
             <div style="font-size:11px;color:#7fd1a0;margin-top:2px">показали 3 пальца</div>
           </div>
           <span style="font-size:26px" class="wv-pulse">➕</span>
           <div style="text-align:center">
-            <div style="display:flex;justify-content:center">${[1,2].map(i=>l29Finger(true,30)).join('')}</div>
+            <div style="display:flex;justify-content:center">${wvHandSVG(2,48)}</div>
             <div style="font-size:11px;color:#7fd1a0;margin-top:2px">добавили ещё 2</div>
           </div>
         </div>`+
@@ -1374,13 +1477,13 @@ function visL29(el){
       h=col(big('5 − 2 на пальцах')+
         `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">
           <div style="text-align:center">
-            <div style="display:flex;justify-content:center">${[1,2,3,4,5].map(i=>l29Finger(true,26)).join('')}</div>
+            <div style="display:flex;justify-content:center">${wvHandSVG(5,46)}</div>
             <div style="font-size:11px;color:#e8dcc8;margin-top:2px">показали 5 пальцев</div>
           </div>
           <span style="font-size:26px" class="wv-pulse">➖</span>
           <div style="text-align:center">
-            <div style="display:flex;justify-content:center">${[1,2].map(i=>l29Finger(false,26)).join('')}</div>
-            <div style="font-size:11px;color:#ff9a8a;margin-top:2px">загнули 2</div>
+            <div style="display:flex;justify-content:center">${wvHandSVG(3,46)}</div>
+            <div style="font-size:11px;color:#ff9a8a;margin-top:2px">загнули 2 — осталось 3</div>
           </div>
         </div>`+
         `<div style="text-align:center;font-size:17px" class="wv-ans">считаем назад: 5, 4, 3 → осталось <b style="color:#7fd1a0">3</b>!</div>`+
@@ -1434,9 +1537,10 @@ function visL29(el){
     } else if(step===15){
       // задача про яблоки на тарелке
       h=col(big('Задача: яблоки на тарелке 🍎')+
-        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:2px 0">
-          ${[1,2,3].map(i=>`<span class="l12-fall" style="animation-delay:${(i*0.1).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#9ae6b4,#3f9d62);border:2px solid #2c7a49;font-size:13px;color:#fff;font-weight:bold;margin:1px">${i}</span>`).join('')}
-          ${[1,2].map(i=>`<span class="l12-fall" style="animation-delay:${(0.35+i*0.1).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8f8f,#c93737);border:2px solid #942525;font-size:13px;color:#fff;font-weight:bold;margin:1px">${i+3}</span>`).join('')}
+        `<div style="display:flex;justify-content:center;gap:2px;align-items:flex-end;flex-wrap:wrap;margin:2px 0">
+          ${wvApples(3,{v:1,s:32,d0:0})}
+          <span style="width:10px"></span>
+          ${wvApples(2,{v:0,s:32,d0:0.35})}
         </div>`+
         `<div style="font-size:13px;color:#e8dcc8;text-align:center">на тарелке <b style="color:#7fd1a0">3 зелёных</b> и <b style="color:#ff9a8a">2 красных</b> яблока</div>`+
         `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">3 + 2 = 5 яблок всего!</div>`+
