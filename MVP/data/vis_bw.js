@@ -1932,3 +1932,338 @@ window.WAVE_B = window.WAVE_B || {};
   window.WAVE_B[391]=visB391;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===391){ window.ARH_LESSONS[i]=L391; break; } } })();
 })();
+/* ================= УРОК 392 · Эйлеровы пути ================= */
+(function(){
+  const L392 = {
+    id: 392, title: 'Эйлеровы пути: одним росчерком', ico: '✏️',
+    src: 'Математика · 5–6 класс · Графы', subj: 'math',
+    explain: [
+      'Можно ли нарисовать фигуру одним росчерком — не отрывая карандаша и не проходя по одной линии дважды? Архимед любит такие головоломки! Оказывается, ответ даёт красивое правило, найденное Эйлером.',
+      'Назовём точки, где сходятся линии, ВЕРШИНАМИ. Степень вершины — сколько линий из неё выходит. Например, у квадрата каждая вершина соединяет 2 линии — степень 2 (чётная).',
+      'Теперь главное правило Эйлера: фигуру можно нарисовать одним росчерком, если в ней 0 или 2 вершины НЕЧЁТНОЙ степени. Если нечётных вершин больше двух — одним росчерком не выйдет!',
+      'Почему? Входя в вершину и выходя из неё, мы «тратим» по 2 линии. Остаться «неиспользованной» может только линия в начале и в конце пути — значит, нечётных вершин максимум две.',
+      'Проверим на квадрате с диагональю. Без диагонали все степени 2. Диагональ добавляет по одному ребру двум вершинам — их степени становятся 3 (нечётные). Нечётных вершин ровно 2 → нарисовать можно!',
+      'С чего начать? Если нечётных вершин две — начинай с одной из них и закончишь в другой. Если нечётных нет — можно начинать с любой вершины и вернёшься в неё же.',
+      'А теперь «плюс» — 4 луча из центра. Центр имеет степень 4 (чётная), а четыре конца лучей — степень 1 (нечётная). Нечётных вершин четыре! Правило говорит: одним росчерком НЕ получится.',
+      'Проверь сам: конверт (прямоугольник с двумя диагоналями «X») — у него 4 вершины степени 3 (нечётные) → одним росчерком нельзя. А «домик» без крыши-перекладины — можно!',
+      'Теперь проверь себя: сколько вершин нечётной степени может иметь фигура, которую рисуют одним росчерком? Вспомни правило Эйлера: 0 или 2!'
+    ],
+    check: { q: 'Сколько вершин нечётной степени может иметь граф, который рисуется одним росчерком?', choices: ['0 или 2', 'только 2', 'только 0', 'сколько угодно'], ans: 0,
+      exp: 'Правило Эйлера: 0 или 2 нечётные вершины.' },
+    tasks: [
+      { q: 'Сколько нечётных вершин у квадрата с одной диагональю?', kind: 'unit', ans: 2, tol: 0,
+        hints: ['Диагональ добавляет ребро двум вершинам.', 'У двух вершин степень 3 → две нечётные.'], sol: '2' },
+      { q: 'Можно ли нарисовать «плюс» (4 луча из центра) одним росчерком?', kind: 'choice', choices: ['нет', 'да', 'только за 2 прохода', 'нельзя узнать'], ans: 0, tol: 0,
+        hints: ['4 нечётные вершины.', '4 > 2 → одним росчерком нельзя.'], sol: 'нет' }
+    ]
+  };
+  const figSVG=(kind)=>`<svg viewBox="0 0 190 150" style="width:200px;height:158px;background:#101f18;border-radius:12px">
+    ${kind==='sq'?`<rect x="30" y="30" width="120" height="90" fill="none" stroke="#8fd1a8" stroke-width="3"/>
+      <circle cx="30" cy="30" r="5" fill="#7fd1ff"/><circle cx="150" cy="30" r="5" fill="#7fd1ff"/>
+      <circle cx="30" cy="120" r="5" fill="#7fd1ff"/><circle cx="150" cy="120" r="5" fill="#7fd1ff"/>`:
+    kind==='sqd'?`<rect x="30" y="30" width="120" height="90" fill="none" stroke="#8fd1a8" stroke-width="3"/>
+      <line x1="30" y1="30" x2="150" y2="120" stroke="#ffd76a" stroke-width="3"/>
+      <circle cx="30" cy="30" r="6" fill="#ff9a8a"/><circle cx="150" cy="120" r="6" fill="#ff9a8a"/>
+      <circle cx="150" cy="30" r="5" fill="#7fd1ff"/><circle cx="30" cy="120" r="5" fill="#7fd1ff"/>`:
+    kind==='plus'?`<line x1="95" y1="20" x2="95" y2="130" stroke="#8fd1a8" stroke-width="5"/><line x1="40" y1="75" x2="150" y2="75" stroke="#8fd1a8" stroke-width="5"/>
+      <circle cx="95" cy="20" r="6" fill="#ff9a8a"/><circle cx="95" cy="130" r="6" fill="#ff9a8a"/><circle cx="40" cy="75" r="6" fill="#ff9a8a"/><circle cx="150" cy="75" r="6" fill="#ff9a8a"/>`:''}
+  </svg>`;
+  function visB392(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Одним росчерком?</div>
+        <div style="font-size:50px" class="wv-swing">✏️</div>
+        <div class="wv-sml" style="max-width:330px">нарисовать фигуру, не отрывая карандаша и не проводя линию дважды — можно? Эйлер нашёл правило!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Вершины и степени</div>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${[['квадрат','4 вершины по 2 линии — степень 2','#8fd1a8'],['квадрат с диагональю','2 вершины по 3 линии — степень 3','#ff9a8a']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;text-align:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:10px;padding:6px 10px;max-width:150px"><b style="font-size:12.5px;color:${x[2]}">${x[0]}</b><div style="font-size:10.5px;color:#8fa08f;margin-top:2px">${x[1]}</div></div>`).join('')}
+        </div>
+        <div class="wv-sml">степень вершины = сколько линий из неё выходит</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Правило Эйлера</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;max-width:340px;width:100%">
+          <div style="font-size:15.5px;color:#e8dcc8;text-align:center">одним росчерком можно, если нечётных вершин <b style="color:#ffd76a">0 или 2</b></div>
+        </div>
+        <div class="wv-sml">больше двух нечётных → нельзя!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Почему так?</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8;line-height:1.6">входя в вершину и выходя из неё, мы тратим <b style="color:#8fd1a8">по 2 линии</b>. «Неиспользованной» остаётся линия только в начале и в конце пути → нечётных вершин <b style="color:#ffd76a">не больше двух</b>.</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Квадрат с диагональю</div>
+        ${figSVG('sqd')}
+        <div class="wv-sml">диагональ добавила по ребру двум вершинам → степени 3 (красные)</div>
+        <div class="wv-ans" style="font-size:16px;color:#8fd1a8">нечётных ровно 2 → нарисовать МОЖНО!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">С чего начать?</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['2 нечётные', 'начинай с одной — закончишь в другой'],
+            ['0 нечётных', 'начинай с любой — вернёшься в неё же']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${i?'#7fd1ff':'#8fd1a8'};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><b style="color:${i?'#7fd1ff':'#8fd1a8'}">${x[0]}</b><span style="max-width:220px;text-align:right">${x[1]}</span></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">«Плюс» — не получится!</div>
+        ${figSVG('plus')}
+        <div class="wv-sml">центр — степень 4 (чётная), но 4 конца лучей — степень 1</div>
+        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:8px 12px;font-size:15px;color:#ffcfc2;font-weight:bold" class="wv-ans">4 нечётные > 2 → одним росчерком НЕЛЬЗЯ</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Тренируемся</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['конверт (2 диагонали X)','4 вершины степени 3 → нельзя','#e86a5a'],
+            ['домик без перекладины','0 нечётных → можно!','#8fd1a8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-sml">сколько нечётных вершин допускает росчерк?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">0 или ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[392]=visB392;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===392){ window.ARH_LESSONS[i]=L392; break; } } })();
+})();
+/* ================= УРОК 393 · Формула Пика ================= */
+(function(){
+  const L393 = {
+    id: 393, title: 'Формула Пика', ico: '📏',
+    src: 'Математика · 5–6 класс · Формула Пика', subj: 'math',
+    explain: [
+      'На клетчатой бумаге нарисована фигура с вершинами в узлах сетки. Как найти её площадь, если считать клетки неудобно? Есть волшебная формула Пика — она считает площадь по точкам-узлам!',
+      'Что такое узлы? Это точки пересечения линий сетки. Они бывают двух видов: В — узлы ВНУТРИ фигуры, и Г — узлы на ГРАНИЦЕ фигуры. Именно их количество и нужно посчитать.',
+      'Считаем В — узлы внутри. На нашей фигуре внутри 5 узлов: В = 5. Считаем Г — узлы на границе (по контуру): Г = 4. Запомни эти два числа.',
+      'Формула Пика: площадь S = В + Г/2 − 1. Подставляем: S = 5 + 4/2 − 1 = 5 + 2 − 1 = 6. Площадь равна 6 клеткам! Проверь подсчётом клеток — сойдётся!',
+      'Почему в формуле −1? Математики доказали: если у фигуры нет дырок и вершины в узлах, то «половинки» граничных узлов и целые внутренние складываются так, что остаётся минус одна клетка. Формула работает всегда!',
+      'Ещё пример: В = 3, Г = 4. Считаем: S = 3 + 4/2 − 1 = 3 + 2 − 1 = 4. Площадь 4 клетки. Попробуй нарисовать такую фигуру и проверить!',
+      'А если В = 0, Г = 4? Это треугольник без внутренних узлов: S = 0 + 2 − 1 = 1. Прямоугольный треугольник на 2 клетки? Нет — это треугольник площадью 1, например с вершинами (0,0), (1,0), (0,2)... проверь!',
+      'Запомни формулу Пика навсегда: S = В + Г/2 − 1. В — узлы внутри, Г — узлы на границе. Она спасает на олимпиадах, когда фигура кривая, а считать надо точно!',
+      'Теперь проверь себя: В = 3, Г = 4. Чему равна площадь по формуле Пика? Подставь в формулу: 3 + 4/2 − 1.'
+    ],
+    check: { q: 'В = 3, Г = 4. Чему равна площадь по формуле Пика?', choices: ['4', '5', '6', '7'], ans: 0,
+      exp: '3 + 4/2 − 1 = 3 + 2 − 1 = 4.' },
+    tasks: [
+      { q: 'В = 5, Г = 4. Площадь?', kind: 'unit', ans: 6, tol: 0,
+        hints: ['5 + 2 − 1.', '6.'], sol: '6' },
+      { q: 'Что обозначает В в формуле Пика?', kind: 'choice', choices: ['узлы сетки внутри фигуры', 'узлы на границе', 'клетки внутри', 'стороны фигуры'], ans: 0, tol: 0,
+        hints: ['В — внутри (внутренние).', 'Внутренние узлы.'], sol: 'узлы внутри' }
+    ]
+  };
+  const pickFig=(shape)=>`<svg viewBox="0 0 200 160" style="width:220px;height:176px;background:#eef3e2;border-radius:10px">
+    ${(()=>{ let g=''; for(let i=0;i<=9;i++){ g+=`<line x1="${10+i*18}" y1="8" x2="${10+i*18}" y2="152" stroke="#c9d4b8" stroke-width="1"/>`; g+=`<line x1="8" y1="${10+i*18}" x2="182" y2="${10+i*18}" stroke="#c9d4b8" stroke-width="1"/>`; } return g; })()}
+    ${shape==='hex'?`<polygon points="64,28 118,28 146,82 118,136 64,136 36,82" fill="rgba(127,209,255,.22)" stroke="#2f6f9f" stroke-width="2.5"/>`:
+      shape==='tri'?`<polygon points="46,118 100,46 154,118" fill="rgba(143,209,168,.25)" stroke="#2f7a4a" stroke-width="2.5"/>`:''}
+  </svg>`;
+  function visB393(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Площадь на клетчатой бумаге</div>
+        <div style="font-size:50px" class="wv-swing">📏</div>
+        <div class="wv-sml" style="max-width:330px">фигура с вершинами в узлах сетки — как найти площадь? Формула Пика считает по точкам!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Узлы: В и Г</div>
+        ${pickFig('hex')}
+        <div class="wv-row" style="gap:8px">
+          <span class="wv-chip" style="border-color:#2f6f9f;color:#7fd1ff">В — внутри</span>
+          <span class="wv-chip" style="border-color:#2f7a4a;color:#8fd1a8">Г — на границе</span>
+        </div>
+        <div class="wv-sml">узлы = точки пересечения линий сетки</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Считаем В и Г</div>
+        <div style="display:flex;gap:10px;justify-content:center">
+          <div style="text-align:center;background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:12px;padding:8px 16px"><b style="font-size:28px;color:#7fd1ff;font-family:Georgia,serif">В = 5</b><div style="font-size:11px;color:#9ec0a8">узлов внутри</div></div>
+          <div style="text-align:center;background:rgba(143,209,168,.1);border:2px solid #8fd1a8;border-radius:12px;padding:8px 16px"><b style="font-size:28px;color:#8fd1a8;font-family:Georgia,serif">Г = 4</b><div style="font-size:11px;color:#9ec0a8">узлов на границе</div></div>
+        </div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Формула Пика</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 16px;font-size:21px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">S = В + Г/2 − 1</div>
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%;font-size:16px;color:#e8dcc8;text-align:center;font-family:Georgia,serif">
+          <div class="wv-pop">5 + 4/2 − 1</div>
+          <div class="wv-pop2">= 5 + 2 − 1 = <b style="color:#8fd1a8">6</b></div>
+        </div>
+        <div class="wv-sml">площадь 6 клеток — проверь подсчётом!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Почему −1?</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:8px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8;line-height:1.6">граничные узлы дают «половинки», внутренние — целые клетки. Учёный Пик доказал: для фигуры без дырок получается ровно <b style="color:#ffd76a">минус одна клетка</b> — формула работает всегда!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Пример: В = 3, Г = 4</div>
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">S = 3 + 4/2 − 1 = 3 + 2 − 1 = <b style="color:#8fd1a8" class="wv-ans">4</b></div>
+        <div class="wv-sml">нарисуй такую фигуру и проверь клетками!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Особый случай: В = 0</div>
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">S = 0 + 4/2 − 1 = <b style="color:#8fd1a8">1</b></div>
+        <div class="wv-sml">треугольник без внутренних узлов — площадь 1</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Памятка</div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <div style="text-align:center;background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:12px;padding:8px 14px"><b style="font-size:22px;color:#7fd1ff;font-family:Georgia,serif">В</b><div style="font-size:10.5px;color:#9ec0a8">узлы внутри</div></div>
+          <div style="text-align:center;background:rgba(143,209,168,.1);border:2px solid #8fd1a8;border-radius:12px;padding:8px 14px"><b style="font-size:22px;color:#8fd1a8;font-family:Georgia,serif">Г</b><div style="font-size:10.5px;color:#9ec0a8">узлы на границе</div></div>
+          <div style="text-align:center;background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 14px"><b style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">S=В+Г/2−1</b><div style="font-size:10.5px;color:#cbb89a">формула Пика</div></div>
+        </div>
+        <div class="wv-sml">спасает на олимпиадах при «кривых» фигурах!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-sml">В = 3, Г = 4 → S = ?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">3 + 2 − 1 = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[393]=visB393;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===393){ window.ARH_LESSONS[i]=L393; break; } } })();
+})();
+/* ================= УРОК 394 · Делимость и десятичная запись ================= */
+(function(){
+  const L394 = {
+    id: 394, title: 'Делимость и десятичная запись', ico: '🔢',
+    src: 'Математика · 5–6 класс · Делимость', subj: 'math',
+    explain: [
+      'Архимед рассматривает число 124 и хочет узнать, делится ли оно на 4. Делить не обязательно — есть признак по последним двум цифрам! Сегодня изучим признаки делимости по записи числа.',
+      'Признак делимости на 4: число делится на 4, если делятся его ПОСЛЕДНИЕ ДВЕ ЦИФРЫ. У числа 124 последние две цифры — 24, а 24 делится на 4 (24 : 4 = 6). Значит, и 124 делится на 4! Проверь: 124 : 4 = 31.',
+      'Почему так? Ведь 100 делится на 4 (100 : 4 = 25). Любое число — это «сотни + последние две цифры». Сотни всегда делятся на 4, остаются только последние две цифры. Вот и весь секрет!',
+      'Признак на 2 и на 5: смотрим на ПОСЛЕДНЮЮ цифру. На 2 делятся числа, кончающиеся на 0, 2, 4, 6, 8. На 5 — кончающиеся на 0 или 5. На 10 — только на 0.',
+      'Признак на 3 и на 9: складываем ВСЕ цифры. Если сумма делится на 3 — число делится на 3. Если на 9 — делится на 9. Помнишь этот признак из урока про делимость?',
+      'Теперь про НОК — наименьшее общее кратное. НОК(6, 8) — самое маленькое число, которое делится и на 6, и на 8. Перебираем кратные 8: 8, 16, 24… 24 делится на 6! Значит, НОК(6, 8) = 24.',
+      'Как найти НОК перебором? Выписывай кратные большего числа (8, 16, 24…) и проверяй, делятся ли они на меньшее (6). Первое подходящее и есть НОК. Для 6 и 8: 8 нет, 16 нет, 24 — да!',
+      'Проверим наименьшее двузначное число, кратное 7: 7·1 = 7 (однозначное), 7·2 = 14 — двузначное! Значит, ответ 14. Кратные 7: 7, 14, 21, 28…',
+      'Теперь проверь себя: чему равно НОК(6, 8)? Вспомни: кратные 8 — 8, 16, 24… Какое первое делится на 6?'
+    ],
+    check: { q: 'Чему равно НОК(6, 8)?', choices: ['24', '48', '12', '16'], ans: 0,
+      exp: '24 делится и на 6, и на 8 — самое маленькое такое.' },
+    tasks: [
+      { q: 'Какое наименьшее двузначное число кратно 7?', kind: 'unit', ans: 14, tol: 0,
+        hints: ['7 · 2.', '14.'], sol: '14' },
+      { q: 'Число делится на 4, если…', kind: 'choice', choices: ['делятся его последние две цифры', 'последняя цифра чётная', 'сумма цифр делится на 4', 'последняя цифра 4'], ans: 0, tol: 0,
+        hints: ['Проверяем по последним двум цифрам.', '124 → 24 делится на 4 → 124 делится на 4.'], sol: 'делятся его последние две цифры' }
+    ]
+  };
+  const digitsOf=(num)=>String(num).split('').map((d,i,arr)=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:38px;border-radius:8px;background:${i>=arr.length-2?'rgba(127,209,255,.2)':'rgba(255,255,255,.04)'};border:2px solid ${i>=arr.length-2?'#7fd1ff':'#3d5c49'};font-size:19px;color:${i>=arr.length-2?'#7fd1ff':'#e8dcc8'};font-weight:bold;font-family:Georgia,serif">${d}</span>`).join('');
+  function visB394(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Делится ли 124 на 4?</div>
+        <div style="display:flex;gap:4px;justify-content:center;margin:6px 0">${digitsOf(124)}</div>
+        <div class="wv-sml">голубые — последние две цифры: 24</div>
+        <div style="background:rgba(217,164,65,.09);border:1px solid #d9a441;border-radius:10px;padding:6px 12px;max-width:320px;font-size:13.5px;color:#e8dcc8">24 : 4 = 6 — делится! А само число 124?</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Признак на 4</div>
+        <div style="background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:14px;padding:10px 14px;max-width:340px;width:100%">
+          <div style="font-size:15.5px;color:#e8dcc8;text-align:center">число ⋮ 4 ⟺ делятся <b style="color:#7fd1ff">последние две цифры</b></div>
+        </div>
+        <div class="wv-ans" style="font-size:18px;color:#8fd1a8">124: 24 ⋮ 4 → 124 ⋮ 4 (124:4=31) ✔</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Почему последние две?</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:330px;width:100%">
+          ${[
+            ['100 ⋮ 4', '100 : 4 = 25 — сотни делятся всегда!'],
+            ['124 = 100 + 24', 'сотни ⋮ 4 + последние 24 ⋮ 4']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${i?'#ffd76a':'#7fd1ff'};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><b style="color:${i?'#ffd76a':'#7fd1ff'}">${x[0]}</b><span style="max-width:200px;text-align:right;font-size:12.5px">${x[1]}</span></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Последняя цифра: 2, 5, 10</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['⋮ 2', 'последняя цифра 0, 2, 4, 6, 8', '#8fd1a8'],
+            ['⋮ 5', 'последняя цифра 0 или 5', '#7fd1ff'],
+            ['⋮ 10', 'последняя цифра 0', '#e8a0d8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span style="font-size:13px">${x[1]}</span></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Сумма цифр: 3 и 9</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['⋮ 3', 'сумма всех цифр ⋮ 3', '#8fd1a8'],
+            ['⋮ 9', 'сумма всех цифр ⋮ 9', '#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span style="font-size:13px">${x[1]}</span></div>`).join('')}
+        </div>
+        <div class="wv-sml">пример: 258 → 2+5+8=15 ⋮ 3 → 258 ⋮ 3</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">НОК — что это?</div>
+        <div style="display:flex;gap:8px;justify-content:center">
+          ${[['6','6, 12, 18, 24…'],['8','8, 16, 24…']].map(x=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid #3d5c49;border-radius:12px;padding:8px 12px"><b style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">${x[0]}</b><div style="font-size:11px;color:#8fa08f">${x[1]}</div></div>`).join('')}
+        </div>
+        <div class="wv-sml">НОК — самое маленькое число, кратное обоим</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ищем НОК(6, 8)</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:330px;width:100%">
+          ${[
+            ['8', '8 : 6 — нет'],
+            ['16', '16 : 6 — нет'],
+            ['24', '24 : 6 = 4 — ДА!', true]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;display:flex;align-items:center;justify-content:space-between;background:${x[2]?'rgba(127,209,160,.12)':'rgba(255,255,255,.03)'};border:1px solid #3d5c49;border-left:4px solid ${x[2]?'#4c8a5a':'#3d5c49'};border-radius:9px;padding:7px 12px;font-size:15px;color:#e8dcc8"><b style="color:${x[2]?'#8fd1a8':'#e8dcc8'};font-family:Georgia,serif">кратное ${x[0]}</b><span style="font-size:13px;color:${x[2]?'#8fd1a8':'#8f9a8f'}">${x[1]}</span></div>`).join('')}
+        </div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:18px;color:#ffd76a;font-weight:bold" class="wv-ans">НОК(6, 8) = 24</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Кратное 7 — двузначное</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;max-width:340px">
+          ${['7','14','21','28'].map((n,i)=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:36px;border-radius:8px;background:${i===1?'rgba(143,209,168,.2)':'rgba(255,255,255,.04)'};border:2px solid ${i===1?'#8fd1a8':'#3d5c49'};font-size:17px;color:${i===1?'#8fd1a8':'#e8dcc8'};font-weight:bold">${n}</span>`).join('')}
+        </div>
+        <div class="wv-sml">7·1 = 7 (однозначное) · 7·2 = <b style="color:#8fd1a8">14</b> — первое двузначное!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-sml">НОК(6, 8) = ?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? </div>
+        <div class="wv-sml">кратные 8: 8, 16, 24…</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[394]=visB394;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===394){ window.ARH_LESSONS[i]=L394; break; } } })();
+})();
