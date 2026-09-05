@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>План обучения математике 1–9 · АРХИМЕД</title>
+<style>
+  :root{ --deep:#0b1712; --panel:#13251c; --card:#182f24; --card2:#101f18;
+    --brass:#d9a441; --brass-d:#a3762a; --ivory:#e8e0cc; --muted:#8fa08f;
+    --glass:#7fb8a0; --glow:#7fd1ff; --danger:#e86a5a; --ok:#5f9a6a; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:Georgia,'Times New Roman',serif; background:radial-gradient(ellipse at 50% -10%,#1a3226 0%,transparent 55%),var(--deep);
+    color:var(--ivory); }
+  .deck{ max-width:1000px; margin:0 auto; padding:18px; }
+  .slide{ display:none; background:linear-gradient(160deg,var(--card),var(--card2)); border:1px solid rgba(217,164,65,.25);
+    border-radius:18px; padding:26px 30px; min-height:520px; }
+  .slide.on{ display:block; animation:fade .25s ease; }
+  @keyframes fade{ from{opacity:0; transform:translateY(8px);} to{opacity:1;} }
+  h1{ color:var(--brass); font-size:30px; letter-spacing:.02em; }
+  h2{ color:var(--brass); font-size:22px; margin:0 0 8px; }
+  .kicker{ font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--glass); margin-bottom:4px; }
+  .sub{ color:var(--muted); font-size:14px; margin-bottom:12px; }
+  .cols{ display:flex; gap:16px; flex-wrap:wrap; }
+  .col{ flex:1; min-width:260px; }
+  .chip-row{ display:flex; gap:6px; flex-wrap:wrap; margin:4px 0 10px; }
+  .chip{ font-size:12px; padding:3px 10px; border-radius:999px; border:1px solid var(--hairline,rgba(217,164,65,.3)); }
+  .chip.have{ background:rgba(95,154,106,.22); border-color:var(--ok); color:#b6e0bd; }
+  .chip.gap{ background:rgba(232,106,90,.16); border-color:var(--danger); color:#ffc0b5; }
+  .chip.olym{ background:rgba(127,209,255,.14); border-color:var(--glow); color:#bfe9ff; }
+  ul{ list-style:none; }
+  li{ padding:3px 0 3px 18px; position:relative; font-size:14px; line-height:1.5; }
+  li:before{ content:"▸"; position:absolute; left:0; color:var(--brass); }
+  li.have:before{ content:"✔"; color:var(--ok); }
+  li.gap:before{ content:"✚"; color:var(--danger); }
+  .legend{ font-size:12px; color:var(--muted); margin-bottom:8px; }
+  .legend span{ margin-right:14px; }
+  .nav{ display:flex; justify-content:center; align-items:center; gap:14px; margin-top:16px; }
+  button{ font-family:inherit; background:var(--panel); color:var(--ivory); border:1.5px solid rgba(217,164,65,.4);
+    border-radius:10px; padding:8px 16px; font-size:15px; cursor:pointer; }
+  button:hover{ background:rgba(217,164,65,.15); }
+  .cnt{ color:var(--muted); font-size:13px; }
+  .badge{ display:inline-block; background:rgba(217,164,65,.18); color:var(--brass); border-radius:999px;
+    padding:2px 10px; font-size:12px; font-weight:bold; margin-right:6px; }
+  table{ width:100%; border-collapse:collapse; font-size:13px; }
+  td,th{ border:1px solid rgba(217,164,65,.2); padding:5px 8px; text-align:left; vertical-align:top; }
+  th{ color:var(--brass); }
+  .big{ font-size:40px; color:var(--brass); }
+</style>
+</head>
+<body>
+<div class="deck" id="deck"><!-- slides injected --></div>
+<div class="nav">
+  <button onclick="mv(-1)">← Назад</button>
+  <span class="cnt" id="cnt">1 / N</span>
+  <button onclick="mv(1)">Вперёд →</button>
+</div>
+<script>
+var SLIDES=[];
+function render(){
+  var d=document.getElementById('deck'); d.innerHTML='';
+  SLIDES.forEach(function(s,i){
+    var el=document.createElement('div'); el.className='slide'+(i===0?' on':'');
+    el.id='s'+i; el.innerHTML=s; d.appendChild(el);
+  });
+  upd();
+}
+function mv(k){
+  var cur=0; for(var i=0;i<SLIDES.length;i++){ if(document.getElementById('s'+i).classList.contains('on')){cur=i;break;} }
+  var n=Math.max(0,Math.min(SLIDES.length-1,cur+k));
+  document.getElementById('s'+cur).classList.remove('on');
+  document.getElementById('s'+n).classList.add('on');
+  upd(); window.scrollTo(0,0);
+}
+function upd(){ var on=0; for(var i=0;i<SLIDES.length;i++){ if(document.getElementById('s'+i).classList.contains('on')){on=i;break;} }
+  document.getElementById('cnt').textContent=(on+1)+' / '+SLIDES.length; }
+document.addEventListener('keydown',function(e){ if(e.key==='ArrowRight') mv(1); if(e.key==='ArrowLeft') mv(-1); });
+var TS=0, TE=0;
+document.addEventListener('touchstart',function(e){ TS=e.touches[0].clientX; },{passive:true});
+render();
+document.addEventListener('touchend',function(e){ var dx=e.changedTouches[0].clientX-TS; if(dx<-40) mv(1); else if(dx>40) mv(-1); },{passive:true});
+</script>
+</body>
+</html>

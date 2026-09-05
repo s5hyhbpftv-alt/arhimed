@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Информатика: инвесторская презентация 2026</title>
+<style>
+  :root{
+    --deep:#07130d; --panel:#0f2318; --card:#122a1d; --card2:#0b1e13;
+    --brass:#e3b04c; --brass-d:#b0832f; --ivory:#efe7d2; --muted:#93a893;
+    --glass:#7fc4a6; --glow:#7fd1ff;
+    --ok:#58b368; --okbg:rgba(88,179,104,.16); --warn:#e6b84a; --warnbg:rgba(230,184,74,.15);
+    --danger:#e07a63; --dangerbg:rgba(224,122,99,.14);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:Georgia,'Times New Roman',serif;
+    background:
+      radial-gradient(1100px 500px at 85% -10%, rgba(63,122,89,.35), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(217,164,65,.12), transparent 55%),
+      var(--deep);
+    color:var(--ivory); min-height:100vh;
+  }
+  .deck{ max-width:1080px; margin:0 auto; padding:18px 18px 96px; }
+  .slide{
+    display:none; position:relative; overflow:hidden;
+    background:linear-gradient(160deg, rgba(18,42,29,.94), rgba(11,30,19,.97));
+    border:1px solid rgba(217,164,65,.28); border-radius:20px;
+    padding:clamp(20px,3.4vw,44px) clamp(18px,3.6vw,46px);
+    min-height:calc(100vh - 150px);
+    box-shadow:0 24px 60px -30px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .slide.on{ display:block; }
+  /* декоративное свечение слайда */
+  .slide::after{ content:""; position:absolute; right:-120px; top:-120px; width:340px; height:340px;
+    background:radial-gradient(circle, rgba(127,196,166,.14), transparent 65%); pointer-events:none; }
+  h1{ color:var(--brass); font-size:clamp(24px,4.2vw,44px); line-height:1.12; letter-spacing:.015em; font-weight:normal; }
+  h2{ color:var(--brass); font-size:clamp(19px,2.8vw,30px); margin:0 0 10px; font-weight:normal; line-height:1.2; }
+  h3{ font-weight:normal; }
+  .kicker{ font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--glass); margin-bottom:6px; }
+  .sub{ color:var(--muted); font-size:clamp(12.5px,1.4vw,15px); line-height:1.55; margin:6px 0 10px; }
+  .cols{ display:flex; gap:clamp(10px,1.6vw,18px); flex-wrap:wrap; }
+  .col{ flex:1 1 230px; min-width:0; }
+  .card{ background:rgba(255,255,255,.035); border:1px solid rgba(217,164,65,.18); border-radius:14px; padding:12px 14px; }
+  .card h3{ color:var(--glass); font-size:clamp(13px,1.5vw,16px); margin-bottom:6px; }
+  ul{ list-style:none; }
+  li{ position:relative; padding:3.5px 0 3.5px 18px; font-size:clamp(13px,1.45vw,15.5px); line-height:1.5; }
+  li:before{ content:"▸"; position:absolute; left:0; top:3px; color:var(--brass); }
+  li.have:before{ content:"✔"; color:var(--ok); }
+  li.gap:before{ content:"✚"; color:var(--danger); }
+  li.part:before{ content:"◐"; color:var(--warn); }
+  b{ color:var(--ivory); }
+  .accent{ color:var(--brass); }
+  .glow{ color:var(--glass); }
+  .chip-row{ display:flex; gap:6px; flex-wrap:wrap; margin:6px 0 12px; }
+  .chip{ font-size:clamp(11px,1.2vw,13px); padding:3px 11px; border-radius:999px; border:1px solid rgba(217,164,65,.35); background:rgba(217,164,65,.07); }
+  .chip.have{ background:var(--okbg); border-color:var(--ok); color:#c3ecc8; }
+  .chip.part{ background:var(--warnbg); border-color:var(--warn); color:#f6dfa2; }
+  .chip.gap{ background:var(--dangerbg); border-color:var(--danger); color:#ffcfbe; }
+  .chip.olym{ background:rgba(127,209,255,.12); border-color:var(--glow); color:#c4ecff; }
+  .big{ font-size:clamp(40px,6vw,64px); line-height:1; }
+  table{ width:100%; border-collapse:collapse; font-size:clamp(11.5px,1.25vw,13.5px); }
+  th,td{ border:1px solid rgba(217,164,65,.18); padding:6px 9px; text-align:left; vertical-align:top; }
+  th{ color:var(--brass); background:rgba(217,164,65,.06); }
+  tr:nth-child(even) td{ background:rgba(255,255,255,.02); }
+  .wrap-x{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  /* ---- анимации: запускаются при показе слайда (display none->block перезапускает CSS-анимации) ---- */
+  @keyframes rise{ from{ opacity:0; transform:translateY(14px);} to{ opacity:1; transform:none;} }
+  @keyframes fade{ from{ opacity:0;} to{ opacity:1;} }
+  @keyframes growW{ from{ width:0 !important;} }
+  @keyframes growH{ from{ height:0 !important;} }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+  @keyframes pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(227,176,76,.55);} 60%{ box-shadow:0 0 0 9px rgba(227,176,76,0);} }
+  @keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-9px);} }
+  .slide.on h1,.slide.on h2,.slide.on .kicker,.slide.on .lead{ animation:fade .5s ease both; }
+  .slide.on li{ animation:rise .55s ease both; }
+  .slide.on tr{ animation:fade .6s ease both; }
+  .slide.on .hbar i{ animation:growW 1s cubic-bezier(.22,.9,.3,1) both; transform-origin:left; display:block; }
+  .slide.on .vbar i{ animation:growH 1s cubic-bezier(.22,.9,.3,1) both; }
+  .slide.on .ring circle{ animation:dash 1.4s cubic-bezier(.3,.8,.3,1) both; }
+  @keyframes dash{ from{ stroke-dashoffset:var(--full);} }
+  .slide.on .floaty{ animation:floaty 5s ease-in-out infinite; }
+  .slide.on .timeline .tl-item{ animation:rise .6s ease both; }
+  .slide.on .dot-pulse{ animation:pulse 2.2s ease-out infinite; }
+  .slide.on .stat-big{ animation:rise .7s ease both; }
+  /* ---- бары ---- */
+  .hbar{ display:flex; align-items:center; gap:10px; margin:9px 0; }
+  .hbar .lb{ flex:0 0 118px; font-size:clamp(12px,1.3vw,14px); color:var(--glass); text-align:right; }
+  .hbar .track{ flex:1; background:rgba(255,255,255,.06); border-radius:8px; height:22px; overflow:hidden; }
+  .hbar i{ height:100%; border-radius:8px; background:linear-gradient(90deg,var(--brass-d),var(--brass)); width:0; min-width:0; }
+  .hbar.green i{ background:linear-gradient(90deg,#2e7d4e,var(--ok)); }
+  .hbar.red i{ background:linear-gradient(90deg,#a34b3a,var(--danger)); }
+  .hbar.blue i{ background:linear-gradient(90deg,#2a6d9a,var(--glow)); }
+  .hbar .val{ flex:0 0 64px; font-size:clamp(12px,1.3vw,14px); color:var(--ivory); }
+  .vbar-row{ display:flex; align-items:flex-end; gap:clamp(6px,1.4vw,14px); height:200px; }
+  .vbar{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; }
+  .vbar .track{ flex:1; width:min(54px,9vw); display:flex; align-items:flex-end; background:rgba(255,255,255,.05); border-radius:8px; overflow:hidden; }
+  .vbar i{ width:100%; height:0; background:linear-gradient(0deg,var(--brass-d),var(--brass)); border-radius:8px; }
+  .vbar.green i{ background:linear-gradient(0deg,#2e7d4e,var(--ok)); }
+  .vbar .t{ font-size:clamp(10px,1.1vw,12.5px); color:var(--ivory); text-align:center; }
+  /* ---- кольца ---- */
+  .rings{ display:flex; gap:clamp(14px,2.4vw,34px); flex-wrap:wrap; justify-content:center; margin:10px 0; }
+  .ringbox{ text-align:center; }
+  .ringbox .cap{ font-size:clamp(12px,1.3vw,14px); color:var(--glass); margin-top:4px; }
+  .ring{ transform:rotate(-90deg); }
+  .ring .bg{ stroke:rgba(255,255,255,.09); }
+  .ring circle{ fill:none; stroke-width:11; stroke-linecap:round; }
+  /* ---- таймлайн ---- */
+  .timeline{ position:relative; margin:18px 0 4px; padding-left:26px; }
+  .timeline:before{ content:""; position:absolute; left:7px; top:4px; bottom:4px; width:2px;
+    background:linear-gradient(180deg,var(--brass),rgba(127,196,166,.25)); }
+  .tl-item{ position:relative; margin:0 0 15px; }
+  .tl-item:before{ content:""; position:absolute; left:-26px; top:6px; width:14px; height:14px; border-radius:50%;
+    background:var(--card); border:2.5px solid var(--brass); }
+  .tl-item.live:before{ animation:pulse 2s ease-out infinite; }
+  .tl-item h3{ color:var(--brass); font-size:clamp(14px,1.6vw,17px); }
+  .tl-item .when{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--glow); margin-bottom:2px; }
+  /* ---- статусы матрицы ---- */
+  .st{ font-weight:bold; font-size:14px; text-align:center; }
+  .st.have{ color:#7bd488; } .st.part{ color:var(--warn); } .st.gap{ color:var(--danger); }
+  /* ---- навигация ---- */
+  .nav{ position:fixed; left:0; right:0; bottom:0; z-index:50;
+    background:linear-gradient(0deg, rgba(7,19,13,.98), rgba(7,19,13,.86)); backdrop-filter:blur(8px);
+    border-top:1px solid rgba(217,164,65,.25); padding:9px 14px calc(9px + env(safe-area-inset-bottom)); }
+  .nav-in{ max-width:1080px; margin:0 auto; display:flex; align-items:center; gap:12px; }
+  button{ font-family:inherit; background:var(--panel); color:var(--ivory); border:1.5px solid rgba(217,164,65,.45);
+    border-radius:11px; padding:8px 18px; font-size:clamp(13px,1.4vw,15px); cursor:pointer; transition:background .2s,transform .1s; }
+  button:hover{ background:rgba(217,164,65,.16); }
+  button:active{ transform:scale(.96); }
+  .cnt{ color:var(--muted); font-size:13px; white-space:nowrap; }
+  .dots{ flex:1; display:flex; justify-content:center; gap:6px; flex-wrap:wrap; }
+  .dot{ width:9px; height:9px; border-radius:50%; background:rgba(239,231,210,.22); cursor:pointer; border:none; padding:0; transition:background .2s, transform .2s; }
+  .dot.on{ background:var(--brass); transform:scale(1.25); }
+  .progress{ position:fixed; top:0; left:0; right:0; height:3px; z-index:60; background:rgba(255,255,255,.05); }
+  .progress i{ display:block; height:100%; width:0; background:linear-gradient(90deg,var(--brass-d),var(--brass)); }
+  .stat-big{ font-size:clamp(34px,5.6vw,62px); color:var(--brass); line-height:1; }
+  .hero-center{ text-align:center; }
+  .hero-center .big{ animation:floaty 6s ease-in-out infinite; display:inline-block; }
+  .badge{ display:inline-block; background:rgba(217,164,65,.16); color:var(--brass); border-radius:999px;
+    padding:4px 14px; font-size:clamp(11px,1.2vw,13px); letter-spacing:.06em; margin-bottom:14px; }
+  .lead{ font-size:clamp(15px,1.9vw,20px); color:var(--ivory); line-height:1.5; margin:10px 0 4px; }
+  .grid-kpi{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:18px; }
+  .kpi{ background:rgba(255,255,255,.04); border:1px solid rgba(217,164,65,.2); border-radius:14px; padding:12px; text-align:center; }
+  .kpi .n{ font-size:clamp(24px,3.4vw,38px); color:var(--brass); line-height:1.05; }
+  .kpi .d{ font-size:clamp(11px,1.2vw,13px); color:var(--muted); margin-top:4px; }
+  .logo-line{ display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap; margin-bottom:8px; }
+  .logo-line span{ font-size:clamp(13px,1.5vw,16px); color:var(--glass); padding:2px 10px; border:1px dashed rgba(127,196,166,.35); border-radius:10px; }
+  @media (max-width:760px){
+    .slide{ border-radius:14px; min-height:calc(100vh - 130px); }
+    .hbar .lb{ flex-basis:86px; }
+    .hbar .val{ flex-basis:52px; }
+    .nav-in{ gap:8px; }
+    .cnt{ font-size:11px; }
+  }
+  @media (max-width:430px){
+    .deck{ padding:10px 8px 84px; }
+    .hbar .lb{ flex-basis:74px; font-size:11.5px; }
+    .hbar .val{ flex-basis:44px; font-size:11.5px; }
+    button{ padding:7px 11px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .slide.on *, .slide.on h1, .slide.on h2 { animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="progress"><i id="prog"></i></div>
+<div class="deck" id="deck"><!-- slides --></div>
+<div class="nav"><div class="nav-in">
+  <button onclick="mv(-1)">←</button>
+  <span class="cnt" id="cnt">1 / N</span>
+  <button onclick="mv(1)">→</button>
+  <span class="dots" id="dots"></span>
+</div></div>
+<script>
+var SLIDES=["<div class=\"hero-center\" style=\"padding-top:clamp(10px,4vh,44px)\">\n  <span class=\"badge\">Инвесторская презентация · информатика · сентябрь 2026</span>\n  <div class=\"big floaty\">💻</div>\n  <div class=\"kicker\" style=\"margin-top:10px\">АРХИМЕД · информатика в школе и на олимпиадах</div>\n  <h1>От школьной информатики —<br>к победам на ВсОШ и IOI</h1>\n  <p class=\"lead\">104 визуальных урока информатики 5–9 уже закрывают школу.\n  Строим <span class=\"accent\">олимпиадную линию по реальным задачам сезона-2026</span>:\n  ВсОШ (4 профиля) · МОШ · IOI 38 (Ташкент) · EGOI · CEOI · USACO.</p>\n  <div class=\"chip-row\" style=\"justify-content:center\">\n    <span class=\"chip have\">104 урока информатики</span><span class=\"chip gap\">олимп-уроков по реальным задачам: 0</span>\n    <span class=\"chip olym\">план: +54 урока до 10–11</span><span class=\"chip part\">Python уже в 8–9 · дальше C++</span>\n  </div>\n  <div class=\"grid-kpi\">\n    <div class=\"kpi\"><div class=\"n stat-big\" data-to=\"104\">0</div><div class=\"d\">урока информатики сегодня (5–9)</div></div>\n    <div class=\"kpi\"><div class=\"n stat-big\" data-to=\"38\">0</div><div class=\"d\">уроков базовой линии 5–6 (алгоритмы, логика, кодирование)</div></div>\n    <div class=\"kpi\"><div class=\"n stat-big\" data-to=\"54\">0</div><div class=\"d\">новых олимпиадных уроков в плане</div></div>\n    <div class=\"kpi\"><div class=\"n stat-big\" data-to=\"10\">0</div><div class=\"d\">классов полного охвата после плана (5–11 + мат. связка)</div></div>\n  </div>\n  <p class=\"sub\" style=\"margin-top:16px\">teramont.pro · демо: 123.teramont.pro/MVP</p>\n</div>", "<div class=\"kicker\">Рынок и проблема</div><h2>Информатика — главный предмет ИИ-века. Олимпиад в разы больше, чем готовят школы</h2>\n<div class=\"cols\">\n  <div class=\"col\"><div class=\"card col\"><h3>🎯 Масштаб сезона-2026</h3><ul class=\"\"><li>Финал ВсОШ по информатике (Москва, 22–28.03.2026): <b>впервые 4 профиля</b> — программирование, ИБ, ИИ, робототехника</li><li>~1227+ участников из 77 регионов · <b>99 победителей + 463 призёра</b> (562 диплома)</li><li>Профиль «Программирование»: 2 тура по 5 часов, по 4 задачи (C++/Python/Java); региональный этап — 17/19.01.2026</li><li>IOI 38 (Ташкент, август 2026): 92 делегации; сборная России — <b>2 золота + 2 серебра</b> (Жиганов — 2-е личное в мире)</li></ul></div></div>\n  <div class=\"col\"><div class=\"card col\"><h3>⚠️ Где разрыв</h3><ul class=\"\"><li>Школьный курс (ОГЭ/ЕГЭ-стиль) и олимпиады — разные миры: на финале нужны C++ (STL), динамика, графы, структуры данных</li><li>Международный тренд-2026: <b>4–5 задач из 6 на IOI — интерактив/конструктив/two-steps</b>; тактика подзадач — отдельный навык</li><li>USACO-2026: «платиновый сброс» + прокторинг + запрет ИИ — подготовка стала жёстче</li><li>Репетиторов по олимпиадному программированию мало и дорого; системных онлайн-продуктов почти нет</li></ul></div></div>\n</div>\n<div class=\"chip-row\">\n  <span class=\"chip gap\">ВсОШ-2026: 4 профиля, 562 диплома</span>\n  <span class=\"chip part\">IOI-2026: интерактив — 4–5 из 6 задач</span>\n  <span class=\"chip gap\">олимп-уроков в АРХИМЕД сегодня: 0</span>\n</div>\n<p class=\"sub\">Вывод: школьная база у нас уже сильная (104 урока), а олимпиадная линия — чистый лист: это и есть точка роста и главная потребность рынка.</p>", "<div class=\"kicker\">Продукт</div><h2>АРХИМЕД: школа закрыта — строим олимпиадный контур</h2>\n<div class=\"cols\">\n  <div class=\"col\"><div class=\"card col\"><h3>🖥 Что есть сегодня (информатика)</h3><ul class=\"\"><li>104 урока 5–9: алгоритмы и исполнители, блок-схемы, кодирование/шифры, логика (И/ИЛИ/НЕ), системы счисления, основы программирования, Python 8–9 (функции, списки, строки), бинарный поиск, сортировки, графы-введение, сети и безопасность</li><li>Фирменный визуальный формат «объясни → реши» + комиксы в смежных предметах</li><li>Единая платформа: математика + физика + химия + информатика (251 урок)</li></ul></div></div>\n  <div class=\"col\"><div class=\"card col\"><h3>🧭 Методика</h3><ul class=\"\"><li>Школьная линия — по ФОП и углублённым программам; олимпиадная — по реальным задачам сезона</li><li>Связка «математика ↔ информатика»: графы, комбинаторика, логика, теория чисел — одни приёмы на двух линиях (28 олимп-уроков математики уже есть)</li><li>Мостик Python → C++ для олимпиад: язык, ДП, графы, структуры данных — по шагам</li><li>Каждый сезон сверяем контент с реальными комплектами (этот аудит — доказательство)</li></ul></div></div>\n</div>\n<div class=\"col card\" style=\"margin-top:12px\"><h3>📈 Что добавляем (олимпиадная линия, +54 урока)</h3>\n<ul class=\"\"><li>«Олимп-инф 5–6» (10): задачи школьного этапа Сириус — перебор, кодирование, головоломки, игры</li><li>«Олимп-инф 7–8» (14): язык для олимпа, BFS/DFS, ДП-1, жадные, теория игр, set/map</li><li>«Олимп-инф 9» (14): C++ (STL), ДП-2 (рюкзак/LIS), Дейкстра, DSU, дерево отрезков/Фенвик</li><li>«Клуб 10–11 / IOI-тренажёр» (16): продвинутая ДП, LCA, персистентные СД, интерактив, two-steps — на реальных задачах IOI/EGOI/USACO-2026</li></ul></div>", "<div class=\"kicker\">Как проверяли себя</div><h2>Аудит на олимпиадах сезона 2025/26 по информатике</h2>\n<div class=\"timeline\">\n  <div class=\"tl-item live\"><div class=\"when\">Шаг 1 · сентябрь 2026</div><h3>Собрали комплекты года 2026</h3>\n    <p class=\"sub\" style=\"margin:2px 0 0\">ВсОШ-2026 (школьный/региональный/финал, профиль «Программирование») · МОШ 2025/26 (6–9 и 10–11) · IOI 38 (Ташкент) · EGOI 2026 (Чезенатико) · CEOI 2026 (Любляна) · Baltic OI 2026 (Эспоо) · USACO 2025/26 (3 раунда + US Open)</p></div>\n  <div class=\"tl-item\"><div class=\"when\">Шаг 2</div><h3>Извлекли приёмы</h3>\n    <p class=\"sub\" style=\"margin:2px 0 0\">ДП всех типов (рюкзак, LIS, на деревьях, вероятностное), BFS/DFS/Дейкстра/DSU, LCA, дерево отрезков и Фенвик (lazy/персистентные), функциональные графы, жадность с обменом, комбинаторика подсчёта, интерактив, конструктив, two-steps, тактика подзадач</p></div>\n  <div class=\"tl-item\"><div class=\"when\">Шаг 3</div><h3>Сверили с уроками</h3>\n    <p class=\"sub\" style=\"margin:2px 0 0\">104 урока информатики → статусы ✔/◐/✚. Итог: школа 5–9 закрыта, олимпиадного контура нет (0 уроков по реальным задачам)</p></div>\n  <div class=\"tl-item\"><div class=\"when\">Шаг 4</div><h3>Составили план на каждый класс</h3>\n    <p class=\"sub\" style=\"margin:2px 0 0\">Серии «Олимп-инф 5–6/7–8/9» + «Клуб 10–11» — +54 урока по кварталам (слайды 8–12)</p></div>\n</div>", "<div class=\"kicker\">Аудит · матрица готовности</div><h2>Карта олимпиадной готовности 5–9 (информатика)</h2>\n<p class=\"sub\">Олимпиадные приёмы по классам: <span class=\"accent\">✔ есть урок</span> ·\n<span class=\"accent\">◐ частично (школьный уровень)</span> · <span class=\"accent\">✚ нет — в плане добавления</span>.</p>\n<div class=\"wrap-x\"><table>\n<tr><th>Класс</th><th style=\"text-align:center\">Логика и кодирование</th><th style=\"text-align:center\">Алгоритмы (поиск, сортировки)</th><th style=\"text-align:center\">Графы и деревья</th><th style=\"text-align:center\">Динамическое программирование</th><th style=\"text-align:center\">Структуры данных</th><th style=\"text-align:center\">Язык программирования</th><th style=\"text-align:center\">Интерактив · конструктив · игры</th></tr><tr><td><b>5 класс</b></td><td style=\"text-align:center\"><span class=\"st have\">✔</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td></tr><tr><td><b>6 класс</b></td><td style=\"text-align:center\"><span class=\"st have\">✔</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td></tr><tr><td><b>7 класс</b></td><td style=\"text-align:center\"><span class=\"st have\">✔</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td></tr><tr><td><b>8 класс</b></td><td style=\"text-align:center\"><span class=\"st have\">✔</span></td><td style=\"text-align:center\"><span class=\"st have\">✔</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td><td style=\"text-align:center\"><span class=\"st have\">✔</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td></tr><tr><td><b>9 класс</b></td><td style=\"text-align:center\"><span class=\"st have\">✔</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td><td style=\"text-align:center\"><span class=\"st part\">◐</span></td><td style=\"text-align:center\"><span class=\"st gap\">✚</span></td></tr>\n</table></div>\n<div class=\"cols\" style=\"margin-top:12px\">\n  <div class=\"col\"><div class=\"card col\"><h3>🔵 Сильная зона — школьная база 5–9</h3><ul class=\"\"><li>104 урока: логика, кодирование/шифры, счисление, алгоритмы-введение, Python 8–9</li><li>Логика и кодирование 5–6 закрыты (✔); бинарный поиск и сортировки — школьный уровень 8–9</li><li>Мостик к олимпиадам готов: база алгоритмов и языка уже внутри платформы</li></ul></div></div>\n  <div class=\"col\"><div class=\"card col\"><h3>🔴 Зона роста — олимпиадный контур (0 уроков)</h3><ul class=\"\"><li>BFS/DFS, Дейкстра, DSU, функциональные графы — нет</li><li>ДП: рюкзак/LIS/на деревьях — нет (есть только «+1/+2» база)</li><li>Дерево отрезков/Фенвик, LCA, интерактив, конструктив, two-steps, C++ — нет</li><li>Олимп-уроков по реальным задачам: 0 (у математики — 28)</li></ul></div></div>\n</div>", "<div class=\"kicker\">Аудит · сильные стороны</div><h2>Школьная информатика 5–9 уже в АРХИМЕДЕ</h2>\n<div class=\"cols\">\n  <div class=\"col\" style=\"flex:1.4\">\n    <div class=\"hbar green\"><span class=\"lb\">Школа 5–6 (база)</span><div class=\"track\"><i style=\"width:36.53846153846153%;animation-delay:0ms\"></i></div><span class=\"val\">38</span></div><div class=\"hbar blue\"><span class=\"lb\">Школа 7</span><div class=\"track\"><i style=\"width:27.884615384615387%;animation-delay:110ms\"></i></div><span class=\"val\">29</span></div><div class=\"hbar \"><span class=\"lb\">Школа 8–9 (Python)</span><div class=\"track\"><i style=\"width:27.884615384615387%;animation-delay:220ms\"></i></div><span class=\"val\">29</span></div><div class=\"hbar red\"><span class=\"lb\">Олимп-база 5–7 (логика)</span><div class=\"track\"><i style=\"width:7.6923076923076925%;animation-delay:330ms\"></i></div><span class=\"val\">8</span></div>\n    <p class=\"sub\" style=\"margin-top:8px\">Уроков информатики: <b>104</b> из 251 на платформе. Олимп-уроков по реальным задачам: <b>0</b>.</p>\n  </div>\n  <div class=\"col\"><div class=\"card col\"><h3>⭐ Что уже работает</h3><ul class=\"\"><li>Кодирование и шифры: Цезарь, перестановка, декодирование, пиксели (5–6)</li><li>Логика: И/ИЛИ/НЕ, истина/ложь, детективы (5–6); таблицы истинности (7)</li><li>Системы счисления 2/8/16 и арифметика (7)</li><li>Python 8–9: функции, списки, строки; рекурсия, бинарный поиск, сортировки — школьный уровень</li><li>Графы и деревья — введение (маршруты, связи, IP-адресация)</li></ul></div></div>\n</div>", "<div class=\"kicker\">Аудит · разрывы</div><h2>Готовность к олимпиадам-2026: сегодня</h2>\n<div class=\"rings\">\n  <div class=\"ringbox\"><svg class=\"ring\" width=\"168\" height=\"168\" viewBox=\"0 0 150 150\"><circle class=\"bg\" cx=\"75\" cy=\"75\" r=\"62\" stroke-width=\"11\" fill=\"none\"/><circle cx=\"75\" cy=\"75\" r=\"62\" stroke=\"#e6b84a\" stroke-width=\"11\" fill=\"none\" style=\"stroke-dasharray:389.6px;stroke-dashoffset:194.8px;--full:389.6px\"/></svg><div class=\"cap\"><b style=\"color:#e6b84a;font-size:26px\">50%</b><br>школьный этап ВсОШ · 5–8</div><div class=\"sub\" style=\"margin-top:2px\">логика/алгоритмика Сириус — база есть, задач-формата нет</div></div>\n  <div class=\"ringbox\"><svg class=\"ring\" width=\"168\" height=\"168\" viewBox=\"0 0 150 150\"><circle class=\"bg\" cx=\"75\" cy=\"75\" r=\"62\" stroke-width=\"11\" fill=\"none\"/><circle cx=\"75\" cy=\"75\" r=\"62\" stroke=\"#e07a63\" stroke-width=\"11\" fill=\"none\" style=\"stroke-dasharray:389.6px;stroke-dashoffset:350.6px;--full:389.6px\"/></svg><div class=\"cap\"><b style=\"color:#e07a63;font-size:26px\">10%</b><br>регион и финал ВсОШ «Программирование» · 9–11</div><div class=\"sub\" style=\"margin-top:2px\">нужны C++, ДП, графы, СД — почти нет</div></div>\n  <div class=\"ringbox\"><svg class=\"ring\" width=\"168\" height=\"168\" viewBox=\"0 0 150 150\"><circle class=\"bg\" cx=\"75\" cy=\"75\" r=\"62\" stroke-width=\"11\" fill=\"none\"/><circle cx=\"75\" cy=\"75\" r=\"62\" stroke=\"#e07a63\" stroke-width=\"11\" fill=\"none\" style=\"stroke-dasharray:389.6px;stroke-dashoffset:370.1px;--full:389.6px\"/></svg><div class=\"cap\"><b style=\"color:#e07a63;font-size:26px\">5%</b><br>IOI / EGOI / USACO · 10–11</div><div class=\"sub\" style=\"margin-top:2px\">международный уровень — интерактив, продвинутая ДП</div></div>\n</div>\n<p class=\"sub\">Доля приёмов сезона-2026, для которых есть урок АРХИМЕД нужного уровня (редакционная оценка по аудиту).</p>\n<div class=\"cols\">\n  <div class=\"col\"><div class=\"card col\"><h3>Что отсутствует (олимп-линия)</h3><ul class=\"\"><li>C++ для олимпиад (STL: set/map, priority_queue) — Python не хватает скорости/структур</li><li>Графы: BFS/DFS, топсорт, Дейкстра, DSU (+offline), функциональные графы (USACO C2)</li><li>ДП: рюкзак, LIS, по профилям, на деревьях/reroot, вероятностное (USACO Platinum)</li><li>Структуры данных: дерево отрезков (lazy, персистентное — Monuments IOI-2026), Фенвик, LCA</li><li>Интерактив (бюджет запросов, без состояния) · конструктив · two-steps (Partition)</li><li>Тактика подзадач/частичных баллов — отдельный навык финала и IOI</li></ul></div></div>\n  <div class=\"col\"><div class=\"card col\"><h3>Почему это критично</h3><ul class=\"\"><li>IOI-2026: 4–5 из 6 задач — интерактив/конструктив; чемпион решил полностью лишь 2 из 6</li><li>USACO-2026: «платиновый сброс» + прокторинг — конкуренция выросла</li><li>Финал ВсОШ-2026: 562 диплома из ~1249 участников — отбор жёстче, но и возможностей больше</li><li>Школьный курс эти приёмы не даёт — без отдельной линии ребёнок упирается в потолок</li></ul></div></div>\n</div>", "<div class=\"kicker\">План · 5–6</div><h2>«Олимп-инф 5–6» — 10 уроков</h2><div class=\"cols\"><div class=\"col\"><div class=\"card col\"><h3>Задачи школьного этапа</h3><ul class=\"\"><li>Разборы реальных задач Сириус (5–6, 60 мин)</li><li>Перебор и деревья вариантов</li><li>«Оценка + пример» в вычислениях</li><li>Таблицы и диаграммы — задачи</li><li>Быстрые прикидки и проверка ответа</li></ul></div></div><div class=\"col\"><div class=\"card col\"><h3>Алгоритмическое мышление</h3><ul class=\"\"><li>Кодирование — олимпиадные задачи</li><li>Графы-маршруты: поиск пути</li><li>Алгоритмические головоломки</li><li>Игры-стратегии на клетках</li><li>Закономерности и шифры — финальные боссы</li></ul></div></div></div><div class=\"chip-row\"><span class=\"chip have\">Волна A · Q4 2026</span></div><p class=\"sub\">Прототипы: школьный этап ВсОШ по информатике (Сириус, 21–24.10.2025, группа 5–6). База уже есть — серия учит решать задачи формата олимпиады.</p>", "<div class=\"kicker\">План · 7–8</div><h2>«Олимп-инф 7–8» — 14 уроков</h2><div class=\"cols\"><div class=\"col\"><div class=\"card col\"><h3>Язык и перебор</h3><ul class=\"\"><li>Олимпиадный ввод/вывод, массивы</li><li>Строки и символы — задачи</li><li>Перебор с возвратом</li><li>Рекурсия глубже (не только факториал)</li><li>Жадные алгоритмы</li><li>Префиксные суммы</li></ul></div></div><div class=\"col\"><div class=\"card col\"><h3>Графы и первые алгоритмы</h3><ul class=\"\"><li>BFS и DFS: обходы, связность</li><li>Бинарный поиск — олимп-задачи</li><li>Сортировки — олимп-уровень</li><li>Динамика-1: по шагам, простой рюкзак</li><li>Теория игр: выигрышные позиции</li><li>set/map и словари</li><li>Комбинаторика-подсчёт в задачах</li><li>Работа с подзадачами</li></ul></div></div></div><div class=\"chip-row\"><span class=\"chip have\">Волна B · Q1 2027</span></div><p class=\"sub\">Прототипы: школьный этап 7–8 (120 мин) и МОШ по информатике (параллель 6–9, очный тур 08.02.2026).</p>", "<div class=\"kicker\">План · 9</div><h2>«Олимп-инф 9» — 14 уроков (+ C++)</h2><div class=\"cols\"><div class=\"col\"><div class=\"card col\"><h3>C++ и структуры данных</h3><ul class=\"\"><li>C++ для олимпиад: ввод/вывод, STL (vector, sort)</li><li>set/map, priority_queue</li><li>Дерево отрезков и Фенвик — минимум</li><li>DSU (+offline «в обратном времени»)</li><li>Бинарный поиск по ответу</li></ul></div></div><div class=\"col\"><div class=\"card col\"><h3>Графы, ДП, комбинаторика</h3><ul class=\"\"><li>Дейкстра и кратчайшие пути</li><li>Топсорт, функциональные графы (циклы+деревья)</li><li>ДП-2: рюкзак, LIS, по профилям</li><li>Жадность с обменным аргументом</li><li>Комбинаторика подсчёта</li><li>Конструктив и интерактив — введение</li><li>Тактика подзадач и частичных баллов</li><li>Разборы регионального этапа и финала ВсОШ-2026</li></ul></div></div></div><div class=\"chip-row\"><span class=\"chip have\">Волна C · Q2–Q3 2027</span></div><p class=\"sub\">Прототипы: регион-2026 (17/19.01: ДП по подмножествам, цифровое ДП, дерево отрезков/sparse table, двоичные подъёмы) и финал ВсОШ-2026 «Программирование» (24/26.03: ДП на дереве, meet-in-the-middle/SOS-DP, интерактив «двойного запуска»).</p>", "<div class=\"kicker\">План · 10–11</div><h2>«Клуб 10–11 / IOI-тренажёр» — 16 уроков</h2><div class=\"cols\"><div class=\"col\"><div class=\"card col\"><h3>Продвинутые алгоритмы</h3><ul class=\"\"><li>ДП на деревьях и reroot</li><li>Вероятностное и интервальное ДП</li><li>LCA: двоичный подъём, Euler-порядок</li><li>Персистентные и lazy-структуры (Monuments)</li><li>SOS-DP и meet-in-the-middle («Марсианский рюкзак»)</li><li>ДП-рюкзак на дереве («Расследование в Темерии»)</li><li>Сложные графы: мосты, компоненты</li><li>Комбинаторика подсчёта и производящие функции</li></ul></div></div><div class=\"col\"><div class=\"card col\"><h3>Форматы-2026</h3><ul class=\"\"><li>Интерактив: бюджет запросов (Ball Machine)</li><li>Конструктив с частичным баллом (Magic City)</li><li>Two-steps: два запуска одной программы (Classroom/Partition)</li><li>Функциональные графы и игры с запросами (Biscuits)</li><li>Разборы IOI 38 · EGOI 2026 · USACO Platinum 2026 · CEOI/Baltic-2026 · финал ВсОШ-2026</li></ul></div></div></div><div class=\"chip-row\"><span class=\"chip have\">Волна D · H2 2027–Q1 2028</span></div><p class=\"sub\">Каждый урок — на реальной задаче сезона-2026: задача → идея → полное решение шаг за шагом → вариации.</p>", "<div class=\"kicker\">План развития</div><h2>Дорожная карта: +54 олимпиадных урока</h2>\n<div class=\"cols\">\n <div class=\"col\" style=\"flex:1.5\"><div class=\"timeline\"><div class=\"tl-item live\"><div class=\"when\">Q4 2026</div><h3>Волна A</h3><p class=\"sub\" style=\"margin:2px 0 0\">«Олимп-инф 5–6»: 10 уроков</p></div><div class=\"tl-item \"><div class=\"when\">Q1 2027</div><h3>Волна B</h3><p class=\"sub\" style=\"margin:2px 0 0\">«Олимп-инф 7–8»: 14 уроков</p></div><div class=\"tl-item \"><div class=\"when\">Q2–Q3 2027</div><h3>Волна C</h3><p class=\"sub\" style=\"margin:2px 0 0\">«Олимп-инф 9» (+C++): 14 уроков</p></div><div class=\"tl-item \"><div class=\"when\">H2 2027–Q1 2028</div><h3>Волна D</h3><p class=\"sub\" style=\"margin:2px 0 0\">«Клуб 10–11 / IOI-тренажёр»: 16 уроков</p></div><div class=\"tl-item \"><div class=\"when\">2026–2028</div><h3>Сквозное</h3><p class=\"sub\" style=\"margin:2px 0 0\">тренажёр подзадач · разборы сезона · аналитика прогресса</p></div></div></div>\n <div class=\"col\"><div class=\"card col\"><h3>Правила производства</h3><ul class=\"\"><li>Каждый урок: сюжет + визуальные шаги + «реши сам» + разбор — единый стандарт</li><li>Прототип — реальная задача сезона (ВсОШ/МОШ/IOI/USACO), приём проверяем</li><li>Синергия с математической линией: графы, комбинаторика, логика — общие уроки-приёмы</li><li>KPI волны: покрытие приёмов целевой олимпиады ≥ 85 %</li></ul></div>\n <div class=\"card col\"><h3>Сравнение с математикой</h3><ul class=\"\"><li>Математика: школа 7–9 пуста → план +180 уроков (школа + олимп)</li><li>Информатика: школа 5–9 закрыта (104) → план +54 (только олимп-линия)</li><li>Обе линии дают полный охват 1–11 и международный трек</li></ul></div></div>\n</div>", "<div class=\"kicker\">Результат плана</div><h2>Что изменится для ученика</h2>\n<div class=\"grid-kpi\">\n  <div class=\"kpi\"><div class=\"n stat-big\" data-to=\"54\" data-suf=\"+\">0</div><div class=\"d\">новых олимпиадных уроков</div></div>\n  <div class=\"kpi\"><div class=\"n stat-big\" data-to=\"158\">0</div><div class=\"d\">уроков информатики всего (было 104)</div></div>\n  <div class=\"kpi\"><div class=\"n stat-big\" data-to=\"54\">0</div><div class=\"d\">олимп-уроков (было 0)</div></div>\n  <div class=\"kpi\"><div class=\"n stat-big\" data-to=\"11\">0</div><div class=\"d\">классов охвата: 5–11 + мат. связка</div></div>\n</div>\n<div class=\"rings\">\n  <div class=\"ringbox\"><svg class=\"ring\" width=\"168\" height=\"168\" viewBox=\"0 0 150 150\"><circle class=\"bg\" cx=\"75\" cy=\"75\" r=\"62\" stroke-width=\"11\" fill=\"none\"/><circle cx=\"75\" cy=\"75\" r=\"62\" stroke=\"#58b368\" stroke-width=\"11\" fill=\"none\" style=\"stroke-dasharray:389.6px;stroke-dashoffset:39.0px;--full:389.6px\"/></svg><div class=\"cap\"><b style=\"color:#58b368;font-size:26px\">90%</b><br>школьный этап ВсОШ · 5–8</div><div class=\"sub\" style=\"margin-top:2px\">было 50%</div></div>\n  <div class=\"ringbox\"><svg class=\"ring\" width=\"168\" height=\"168\" viewBox=\"0 0 150 150\"><circle class=\"bg\" cx=\"75\" cy=\"75\" r=\"62\" stroke-width=\"11\" fill=\"none\"/><circle cx=\"75\" cy=\"75\" r=\"62\" stroke=\"#58b368\" stroke-width=\"11\" fill=\"none\" style=\"stroke-dasharray:389.6px;stroke-dashoffset:85.7px;--full:389.6px\"/></svg><div class=\"cap\"><b style=\"color:#58b368;font-size:26px\">78%</b><br>регион и финал ВсОШ «Программирование» · 9–11</div><div class=\"sub\" style=\"margin-top:2px\">было 10%</div></div>\n  <div class=\"ringbox\"><svg class=\"ring\" width=\"168\" height=\"168\" viewBox=\"0 0 150 150\"><circle class=\"bg\" cx=\"75\" cy=\"75\" r=\"62\" stroke-width=\"11\" fill=\"none\"/><circle cx=\"75\" cy=\"75\" r=\"62\" stroke=\"#7fc4a6\" stroke-width=\"11\" fill=\"none\" style=\"stroke-dasharray:389.6px;stroke-dashoffset:155.8px;--full:389.6px\"/></svg><div class=\"cap\"><b style=\"color:#7fc4a6;font-size:26px\">60%</b><br>IOI / EGOI / USACO · клуб 10–11</div><div class=\"sub\" style=\"margin-top:2px\">было 5%</div></div>\n</div>\n<p class=\"sub\" style=\"text-align:center\">Целевое покрытие приёмов олимпиад-2026 после выполнения плана (редакционная оценка). Проверяем повторным аудитом на комплектах следующего сезона.</p>", "<div class=\"kicker\">Преимущества</div><h2>Почему АРХИМЕД для олимпиадной информатики</h2>\n<div class=\"cols\">\n  <div class=\"col\"><div class=\"card col\"><h3>✅ Системность</h3><ul class=\"\"><li>Единая линия «школа → олимп» 5–11: от блок-схем и Python до C++ и IOI</li><li>Сверка с реальными комплектами каждый сезон (аудит-2026 — доказательство)</li><li>Математический фундамент внутри: графы, комбинаторика, логика — два продукта, одна методика</li></ul></div></div>\n  <div class=\"col\"><div class=\"card col\"><h3>🎮 Вовлечение</h3><ul class=\"\"><li>Визуальные пошаговые уроки с анимацией — как в математике (удержание доказано)</li><li>Задачи «реши сам» с автопроверкой и разбором</li><li>Прогресс по классам и уровням «Новичок/Олимпиец»</li></ul></div></div>\n  <div class=\"col\"><div class=\"card col\"><h3>💰 Доступность и рынок</h3><ul class=\"\"><li>Работает в браузере: телефон, планшет, ПК</li><li>Олимпиадный контур в разы дешевле репетитора по алгоритмам</li><li>Информатика — самый быстрорастущий спрос: ИИ-век, БВИ в ВШЭ/МФТИ/ИТМО</li></ul></div></div>\n</div>\n<div class=\"col card\" style=\"margin-top:12px\"><h3>🆚 Конкурентное окно</h3>\n<ul class=\"\"><li>Кружки олимпиадного программирования — очно, дефицит тренеров, в основном Москва/Питер</li><li>Онлайн-школы — общие курсы ЕГЭ/ОГЭ; олимпиадного трека с реальными задачами сезона нет</li><li>Codeforces/AtCoder — архивы задач, но без обучения и без плана по классам; АРХИМЕД даёт путь «1 урок → 1 приём → победа»</li></ul></div>", "<div class=\"hero-center\" style=\"padding-top:clamp(6px,3vh,30px)\">\n  <div class=\"big floaty\">🚀</div>\n  <div class=\"kicker\" style=\"margin-top:8px\">АРХИМЕД · приглашаем к партнёрству</div>\n  <h1>Школа + олимпиады по информатике<br>в одной платформе</h1>\n  <div class=\"cols\" style=\"text-align:left;margin-top:14px\">\n    <div class=\"col\"><div class=\"card col\"><h3>Что нам нужно</h3><ul class=\"\"><li>Инвестиции в контент-команду: методисты олимпиадного программирования, дизайнеры анимаций</li><li>Пилоты: школы, кружки, региональные сборы к ВсОШ/МОШ</li><li>Каналы: B2B2C через школы и регионы, C-подписка</li></ul></div></div>\n    <div class=\"col\"><div class=\"card col\"><h3>Что получает инвестор</h3><ul class=\"\"><li>Продукт с доказанной методикой: аудит на реальных олимпиадах-2026 (ВсОШ, IOI, USACO)</li><li>Ясную дорожную карту: +54 урока за 5 кварталов, измеримые KPI</li><li>Два смежных продукта (математика + информатика) на одной платформе и одной аудитории</li></ul></div></div>\n  </div>\n  <div class=\"chip-row\" style=\"justify-content:center;margin-top:12px\">\n    <span class=\"chip have\">демо: 123.teramont.pro/MVP</span><span class=\"chip olym\">инвестор-математика: …/инвестор-2026.html</span>\n    <span class=\"chip part\">аудит-2026 информатики: приложение</span><span class=\"chip olym\">прогноз олимпиад 2026/27 (математика): …/прогноз-олимпиад-2026.html</span>\n  </div>\n  <p class=\"sub\" style=\"margin-top:14px;max-width:880px;margin-left:auto;margin-right:auto\">Примечание: классификация приёмов и оценки покрытия — редакционные, по условиям и разборам открытых комплектов\n  ВсОШ-2026 (Сириус/ЦПМК), МОШ, IOI 38 (ioi2026.uz, stats.ioinformatics.org), EGOI 2026 (egoi2026.it), CEOI 2026 (ceoi2026.acm.si),\n  Baltic OI 2026 (boi2026.cses.fi), USACO 2025/26 (usaco.org); цифры плана — цели контент-производства.</p>\n</div>"];
+var COUNTERS=[];
+function render(){
+  var d=document.getElementById('deck'); d.innerHTML='';
+  var dots=document.getElementById('dots'); dots.innerHTML='';
+  SLIDES.forEach(function(s,i){
+    var el=document.createElement('div'); el.className='slide'+(i===0?' on':'');
+    el.id='s'+i; el.innerHTML=s; d.appendChild(el);
+    var b=document.createElement('button'); b.className='dot'+(i===0?' on':'');
+    b.setAttribute('aria-label','Слайд '+(i+1)); b.onclick=function(){goto(i);}; dots.appendChild(b);
+  });
+  upd();
+}
+function cur(){ for(var i=0;i<SLIDES.length;i++){ if(document.getElementById('s'+i).classList.contains('on')) return i; } return 0; }
+function goto(n){
+  var c=cur();
+  document.getElementById('s'+c).classList.remove('on');
+  document.querySelectorAll('.dot')[c].classList.remove('on');
+  document.getElementById('s'+n).classList.add('on');
+  document.querySelectorAll('.dot')[n].classList.add('on');
+  upd();
+}
+function mv(k){ goto(Math.max(0,Math.min(SLIDES.length-1,cur()+k))); }
+function upd(){
+  var on=cur(), i;
+  document.getElementById('cnt').textContent=(on+1)+' / '+SLIDES.length;
+  document.getElementById('prog').style.width=(((on+1)/SLIDES.length)*100)+'%';
+  window.scrollTo(0,0);
+  // счётчики
+  var nums=document.querySelectorAll('#s'+on+' [data-to]');
+  for(i=0;i<nums.length;i++){ (function(el){
+    var to=parseFloat(el.getAttribute('data-to')), suf=el.getAttribute('data-suf')||'',
+        dur=1400, t0=null;
+    function step(ts){ if(!t0)t0=ts; var p=Math.min(1,(ts-t0)/dur); p=1-Math.pow(1-p,3);
+      el.textContent=Math.round(to*p)+(p>=1?suf:''); if(p<1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  })(nums[i]); }
+  // звёздочки-задержки для списков (стаггер)
+  var lis=document.querySelectorAll('#s'+on+' li');
+  for(i=0;i<lis.length && i<24;i++){ lis[i].style.animationDelay=(i*40)+'ms'; }
+}
+var TS=0;
+document.addEventListener('touchstart',function(e){ TS=e.touches[0].clientX; },{passive:true});
+document.addEventListener('touchend',function(e){ var dx=e.changedTouches[0].clientX-TS;
+  if(dx<-40) mv(1); else if(dx>40) mv(-1); },{passive:true});
+document.addEventListener('keydown',function(e){ if(e.key==='ArrowRight'||e.key==='PageDown') mv(1);
+  else if(e.key==='ArrowLeft'||e.key==='PageUp') mv(-1);
+  else if(e.key==='Home') goto(0); else if(e.key==='End') goto(SLIDES.length-1); });
+render();
+</script>
+</body>
+</html>
