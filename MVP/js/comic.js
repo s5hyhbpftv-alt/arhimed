@@ -1223,6 +1223,69 @@ function coinsSVG(){
       <text x="30" y="110" font-size="22">📏</text><text x="296" y="110" font-size="22">📐</text><text x="60" y="176" font-size="20">✏️</text>
     </svg>`; }
 
+  function schoolSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skSc" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#f6e3c5"/><stop offset="1" stop-color="#e6cfa0"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="150" fill="url(#skSc)"/>
+      <!-- доска -->
+      <rect x="24" y="14" width="200" height="96" rx="6" fill="#2f4a3a" stroke="#1f3328" stroke-width="5"/>
+      <text x="40" y="50" font-size="22" fill="#f4e9c8">7 + 8 = ?</text>
+      
+      <rect x="24" y="118" width="200" height="10" fill="#8a5a2b"/>
+      <text x="250" y="48" font-size="24">🖼️</text>
+      <text x="300" y="60" font-size="22">🌐</text>
+      <!-- парты -->
+      <rect x="30" y="160" width="120" height="14" rx="4" fill="#c89a6a" stroke="#8a5a2b" stroke-width="3"/>
+      <rect x="46" y="174" width="12" height="30" fill="#8a5a2b"/>
+      <rect x="120" y="174" width="12" height="30" fill="#8a5a2b"/>
+      <rect x="210" y="160" width="120" height="14" rx="4" fill="#c89a6a" stroke="#8a5a2b" stroke-width="3"/>
+      <rect x="226" y="174" width="12" height="30" fill="#8a5a2b"/>
+      <rect x="300" y="174" width="12" height="30" fill="#8a5a2b"/>
+      <rect x="0" y="196" width="360" height="14" fill="#b3905f"/>
+    </svg>`; }
+  function iceSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skIc" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#d8e8f8"/><stop offset="1" stop-color="#9fc4e8"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="120" fill="url(#skIc)"/>
+      <g class="c2a-spark" font-size="16"><text x="40" y="40">❄️</text><text x="160" y="30">❄️</text><text x="300" y="44">❄️</text></g>
+      <!-- море -->
+      <rect x="0" y="120" width="360" height="90" fill="#4a90c8"/>
+      <path d="M0 120 Q60 112 120 120 T240 120 T360 120" stroke="#9fd0e8" stroke-width="4" fill="none"/>
+      <!-- льдины -->
+      <path d="M20 160 L80 146 L140 160 L120 196 L30 196 Z" fill="#e8f2fa" stroke="#a8c8e0" stroke-width="3"/>
+      <path d="M170 170 L230 158 L300 174 L284 200 L196 200 Z" fill="#e8f2fa" stroke="#a8c8e0" stroke-width="3"/>
+      <!-- пингвины-эмодзи -->
+      <g font-size="26">
+        <text x="46" y="150">🐧</text><text x="96" y="158">🐧</text>
+        <text x="200" y="164">🐧</text><text x="256" y="176">🐧</text>
+      </g>
+      <text x="330" y="140" font-size="24">🐧</text>
+    </svg>`; }
+  function tileSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skTl" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#a8d2ea"/><stop offset="1" stop-color="#7fb8d8"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="110" fill="url(#skTl)"/>
+      <g class="c2a-cloud"><text x="30" y="34" font-size="24">☁️</text><text x="270" y="36" font-size="20">☁️</text></g>
+      <text x="318" y="50" font-size="26">🌞</text>
+      <!-- земля -->
+      <rect x="0" y="110" width="360" height="100" fill="#c89a6a"/>
+      <!-- дорожка из плиток БЧБЧБ -->
+      <g stroke="#8a6a44" stroke-width="3">
+        <rect x="30" y="140" width="56" height="44" fill="#fffef4"/>
+        <rect x="88" y="140" width="56" height="44" fill="#4a4a52"/>
+        <rect x="146" y="140" width="56" height="44" fill="#fffef4"/>
+        <rect x="204" y="140" width="56" height="44" fill="#4a4a52"/>
+        <rect x="262" y="140" width="56" height="44" fill="#fffef4"/>
+      </g>
+      <!-- домино -->
+      <rect x="40" y="74" width="46" height="22" rx="6" fill="#d9a441" stroke="#8a5a2b" stroke-width="3" transform="rotate(-12 63 85)"/>
+      <line x1="63" y1="78" x2="63" y2="92" stroke="#8a5a2b" stroke-width="2" transform="rotate(-12 63 85)"/>
+      <text x="90" y="120" font-size="20">🛠️</text>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1258,6 +1321,9 @@ function coinsSVG(){
     else if(scene==='ship') base=shipSVG();
     else if(scene==='yard') base=yardSVG();
     else if(scene==='blueprint') base=blueprintSVG();
+    else if(scene==='school') base=schoolSVG();
+    else if(scene==='ice') base=iceSVG();
+    else if(scene==='tile') base=tileSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1354,6 +1420,9 @@ function coinsSVG(){
       .c2-stage.c2-bg-ship { background:linear-gradient(#8fd3f0,#4aa8d8 45%,#2f8fc4); }
       .c2-stage.c2-bg-yard { background:linear-gradient(#a8dcf0,#7fb45c 45%,#6aa34e); }
       .c2-stage.c2-bg-blueprint { background:linear-gradient(#b8d4c8,#9ab8a8 45%,#7a8a6a); }
+      .c2-stage.c2-bg-school { background:linear-gradient(#f6e3c5,#e6cfa0 45%,#b3905f); }
+      .c2-stage.c2-bg-ice { background:linear-gradient(#d8e8f8,#9fc4e8 45%,#4a90c8); }
+      .c2-stage.c2-bg-tile { background:linear-gradient(#a8d2ea,#7fb8d8 45%,#c89a6a); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
