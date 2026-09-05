@@ -2107,6 +2107,311 @@ function coinsSVG(){
       <text x="18" y="54" font-size="18" font-weight="bold" fill="#8fd1a8">Признаки равенства треугольников</text>
       ${m}</svg>`; }
 
+  /* --- 405: медианы, биссектрисы, высоты треугольника --- */
+  function medSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    const baseTri=(col)=>`<polygon points="180,52 80,196 280,196" fill="rgba(127,209,255,.10)" stroke="${col}" stroke-width="4"/>`;
+    if(v===0){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">три особых отрезка в каждом треугольнике</text>
+        ${baseTri('#7fd1ff')}
+        <text x="180" y="52" text-anchor="middle" font-size="13" fill="#ffd76a">A</text>
+        <text x="70" y="210" text-anchor="middle" font-size="13" fill="#8fd1a8">B</text>
+        <text x="290" y="210" text-anchor="middle" font-size="13" fill="#8fd1a8">C</text>
+        <text x="180" y="224" text-anchor="middle" font-size="14" fill="#8fa08f">медиана · биссектриса · высота</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">медиана: из вершины в СЕРЕДИНУ стороны</text>
+        ${baseTri('#8fd1a8')}
+        <line x1="180" y1="52" x2="180" y2="196" stroke="#ffd76a" stroke-width="5"/>
+        <circle cx="180" cy="196" r="7" fill="#e86a5a"/>
+        <text x="172" y="212" font-size="13" fill="#e86a5a">середина</text>
+        <rect x="118" y="96" width="124" height="30" rx="8" fill="rgba(255,215,106,.2)"/>
+        <text x="180" y="117" text-anchor="middle" font-size="15" fill="#ffd76a">AM — медиана</text>
+        <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">делит сторону BC пополам: BM = MC</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">биссектриса: делит УГОЛ пополам</text>
+        ${baseTri('#ffd76a')}
+        <line x1="180" y1="52" x2="120" y2="196" stroke="#e86a5a" stroke-width="5" opacity=".25"/>
+        <line x1="180" y1="52" x2="240" y2="196" stroke="#e86a5a" stroke-width="5" opacity=".25"/>
+        <line x1="180" y1="52" x2="180" y2="180" stroke="#ff8ac0" stroke-width="5"/>
+        <path d="M180 52 L166 74 A 30 30 0 0 1 190 70 Z" fill="rgba(255,138,192,.6)"/>
+        <text x="196" y="66" font-size="13" fill="#ff8ac0">∠1 = ∠2</text>
+        <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">биссектриса — «луч-справедливость»: делит угол поровну</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">высота: ПЕРПЕНДИКУЛЯР к стороне</text>
+        ${baseTri('#e86a5a')}
+        <line x1="180" y1="52" x2="252" y2="196" stroke="#7fd1ff" stroke-width="5" opacity=".2"/>
+        <line x1="212" y1="52" x2="252" y2="196" stroke="#7fd1ff" stroke-width="4" stroke-dasharray="6 5"/>
+        <line x1="212" y1="52" x2="252" y2="146" stroke="#7fd1ff" stroke-width="5"/>
+        <rect x="228" y="144" width="20" height="14" fill="none" stroke="#7fd1ff" stroke-width="2"/>
+        <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">высота падает на сторону под прямым углом (90°)</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">равнобедренный треугольник — особый случай</text>
+        <polygon points="180,52 90,196 270,196" fill="rgba(255,215,106,.10)" stroke="#ffd76a" stroke-width="4"/>
+        <line x1="180" y1="52" x2="180" y2="196" stroke="#ff8ac0" stroke-width="5"/>
+        <line x1="90" y1="196" x2="270" y2="196" stroke="#8fd1a8" stroke-width="3" opacity=".4"/>
+        <circle cx="180" cy="196" r="7" fill="#e86a5a"/>
+        <text x="180" y="220" text-anchor="middle" font-size="14" fill="#ffd76a">медиана из вершины = высота = биссектриса!</text>
+        <text x="180" y="238" text-anchor="middle" font-size="12" fill="#8fa08f">у равнобедренного все три отрезка сливаются в один</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">точки пересечения — тоже интересно!</text>
+        ${baseTri('#7fd1ff')}
+        <line x1="180" y1="52" x2="210" y2="196" stroke="#8fd1a8" stroke-width="3" opacity=".5"/>
+        <line x1="120" y1="120" x2="260" y2="120" stroke="#e86a5a" stroke-width="3" opacity=".5"/>
+        <line x1="100" y1="150" x2="262" y2="150" stroke="#ff8ac0" stroke-width="3" opacity=".5"/>
+        <circle cx="180" cy="138" r="7" fill="#ffd76a"/>
+        <text x="188" y="132" font-size="13" fill="#ffd76a">O</text>
+        <text x="180" y="216" text-anchor="middle" font-size="14" fill="#cfe0ff">три медианы пересекаются в одной точке</text>
+        <text x="180" y="234" text-anchor="middle" font-size="12" fill="#8fa08f">она делит каждую медиану в отношении 2:1</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="84" text-anchor="middle" font-size="16" fill="#b6d4e8">запоминаем по ролям</text>
+        <text x="180" y="126" text-anchor="middle" font-size="18" fill="#8fd1a8">медиана — к СЕРЕДИНЕ стороны</text>
+        <text x="180" y="156" text-anchor="middle" font-size="18" fill="#ff8ac0">биссектриса — делит УГОЛ пополам</text>
+        <text x="180" y="186" text-anchor="middle" font-size="18" fill="#7fd1ff">высота — ПЕРПЕНДИКУЛЯР (90°)</text>
+        <text x="180" y="224" text-anchor="middle" font-size="13" fill="#8fa08f">«медиана делит сторону, биссектриса — угол»</text>`;
+    } else {
+      m=`<text x="180" y="92" text-anchor="middle" font-size="16" fill="#b6d4e8">какой отрезок делит угол пополам?</text>
+        <text x="180" y="152" text-anchor="middle" font-size="34" font-weight="bold" fill="#ffd76a" class="c2a-spark">?</text>
+        <text x="180" y="204" text-anchor="middle" font-size="17" fill="#8fd1a8">медиана · биссектриса · высота</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#14242e"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#2f8fc4" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#ffd76a">Медианы, биссектрисы, высоты</text>
+      ${m}</svg>`; }
+
+  /* --- 406: параллельные прямые и секущая (углы) --- */
+  function parSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    if(v===0){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">параллельные прямые никогда не встречаются</text>
+        <line x1="40" y1="100" x2="320" y2="100" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="40" y1="170" x2="320" y2="170" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="120" y1="40" x2="240" y2="230" stroke="#ffd76a" stroke-width="4"/>
+        <text x="180" y="222" text-anchor="middle" font-size="15" fill="#cfe0ff">a ∥ b, секущая c пересекает обе</text>
+        <text x="180" y="240" text-anchor="middle" font-size="12" fill="#8fa08f">рельсы, строчки в тетради — параллельные прямые</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="72" text-anchor="middle" font-size="16" fill="#b6d4e8">накрест лежащие углы — РАВНЫ</text>
+        <line x1="40" y1="100" x2="320" y2="100" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="40" y1="170" x2="320" y2="170" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="120" y1="40" x2="240" y2="230" stroke="#ffd76a" stroke-width="4"/>
+        <path d="M150 62 A 40 40 0 0 0 134 92 Z" fill="rgba(232,106,90,.65)"/>
+        <path d="M206 208 A 40 40 0 0 0 222 178 Z" fill="rgba(232,106,90,.65)"/>
+        <text x="180" y="140" text-anchor="middle" font-size="17" fill="#ffb0a0">∠1 = ∠2</text>
+        <text x="180" y="236" text-anchor="middle" font-size="13" fill="#8fa08f">углы «внутри», по разные стороны секущей</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="72" text-anchor="middle" font-size="16" fill="#b6d4e8">соответственные углы — РАВНЫ</text>
+        <line x1="40" y1="100" x2="320" y2="100" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="40" y1="170" x2="320" y2="170" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="120" y1="40" x2="240" y2="230" stroke="#ffd76a" stroke-width="4"/>
+        <path d="M150 62 A 40 40 0 0 0 134 92 Z" fill="rgba(127,209,255,.65)"/>
+        <path d="M222 208 A 40 40 0 0 1 206 178 Z" fill="rgba(127,209,255,.65)"/>
+        <text x="180" y="140" text-anchor="middle" font-size="17" fill="#7fd1ff">∠1 = ∠2</text>
+        <text x="180" y="236" text-anchor="middle" font-size="13" fill="#8fa08f">углы «в одном углу» по одну сторону секущей</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="72" text-anchor="middle" font-size="16" fill="#b6d4e8">односторонние углы: сумма 180°</text>
+        <line x1="40" y1="100" x2="320" y2="100" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="40" y1="170" x2="320" y2="170" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="120" y1="40" x2="240" y2="230" stroke="#ffd76a" stroke-width="4"/>
+        <path d="M150 62 A 40 40 0 0 0 134 92 Z" fill="rgba(143,209,168,.65)"/>
+        <path d="M206 208 A 40 40 0 0 0 190 178 Z" fill="rgba(143,209,168,.65)"/>
+        <text x="180" y="140" text-anchor="middle" font-size="16" fill="#8fd1a8">∠1 + ∠2 = 180°</text>
+        <text x="180" y="236" text-anchor="middle" font-size="13" fill="#8fa08f">оба угла внутри, по одну сторону секущей</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">вертикальные углы тоже равны</text>
+        <line x1="80" y1="120" x2="280" y2="120" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="120" y1="60" x2="240" y2="180" stroke="#ffd76a" stroke-width="5"/>
+        <path d="M150 78 A 44 44 0 0 1 132 106 Z" fill="rgba(232,106,90,.6)"/>
+        <path d="M210 162 A 44 44 0 0 1 228 134 Z" fill="rgba(232,106,90,.6)"/>
+        <text x="180" y="140" text-anchor="middle" font-size="17" fill="#ffb0a0">∠1 = ∠2 (вертикальные)</text>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#cfe0ff">крест-накрест у пересечения двух прямых</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="72" text-anchor="middle" font-size="16" fill="#b6d4e8">признак: углы равны → прямые параллельны</text>
+        <line x1="40" y1="90" x2="320" y2="90" stroke="#8fd1a8" stroke-width="4" opacity=".25"/>
+        <line x1="40" y1="180" x2="320" y2="180" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="120" y1="40" x2="240" y2="230" stroke="#ffd76a" stroke-width="4"/>
+        <path d="M150 62 A 40 40 0 0 0 134 92 Z" fill="rgba(127,209,255,.65)"/>
+        <path d="M206 208 A 40 40 0 0 0 222 178 Z" fill="rgba(232,106,90,.65)"/>
+        <text x="180" y="140" text-anchor="middle" font-size="16" fill="#8fd1a8">если накрест лежащие равны → a ∥ b</text>
+        <text x="180" y="236" text-anchor="middle" font-size="12" fill="#8fa08f">так доказывают параллельность прямых</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">считаем угол по картинке</text>
+        <line x1="40" y1="100" x2="320" y2="100" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="40" y1="170" x2="320" y2="170" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="120" y1="40" x2="240" y2="230" stroke="#ffd76a" stroke-width="4"/>
+        <path d="M150 62 A 40 40 0 0 0 134 92 Z" fill="rgba(232,106,90,.65)"/>
+        <text x="150" y="86" text-anchor="middle" font-size="13" fill="#fff">70°</text>
+        <path d="M206 208 A 40 40 0 0 0 222 178 Z" fill="rgba(127,209,255,.65)"/>
+        <text x="222" y="192" text-anchor="middle" font-size="13" fill="#fff">?</text>
+        <text x="180" y="140" text-anchor="middle" font-size="16" fill="#ffd76a">накрест лежащие равны → ? = 70°</text>
+        <text x="180" y="236" text-anchor="middle" font-size="12" fill="#8fa08f">соседний с 70° по прямой = 110°</text>`;
+    } else {
+      m=`<text x="180" y="92" text-anchor="middle" font-size="16" fill="#b6d4e8">накрест лежащие углы при a ∥ b…</text>
+        <line x1="40" y1="105" x2="320" y2="105" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="40" y1="175" x2="320" y2="175" stroke="#8fd1a8" stroke-width="5"/>
+        <line x1="120" y1="40" x2="240" y2="230" stroke="#ffd76a" stroke-width="4"/>
+        <path d="M150 62 A 40 40 0 0 0 134 92 Z" fill="rgba(232,106,90,.65)"/>
+        <path d="M206 208 A 40 40 0 0 0 222 178 Z" fill="rgba(232,106,90,.65)"/>
+        <text x="180" y="232" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffd76a" class="c2a-spark">равны? или 180°?</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#14241c"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#3f7a5f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#8fd1a8">Параллельные прямые и углы</text>
+      ${m}</svg>`; }
+
+  /* --- 407: модуль числа (числовая ось, расстояние) --- */
+  function modSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    const axis=(extra)=>`<line x1="40" y1="150" x2="320" y2="150" stroke="#f4e9c8" stroke-width="4"/>
+      <polygon points="320,150 312,144 312,156" fill="#f4e9c8"/>
+      <g font-size="14" fill="#8fa7c8" text-anchor="middle">
+        <text x="60" y="138">−4</text><text x="100" y="138">−2</text><text x="140" y="138">0</text>
+        <text x="180" y="138">2</text><text x="220" y="138">4</text><text x="260" y="138">6</text><text x="300" y="138">8</text>
+      </g>${extra||''}`;
+    if(v===0){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">|x| — расстояние от числа x до нуля</text>
+        ${axis('')}
+        <line x1="140" y1="176" x2="140" y2="128" stroke="#e86a5a" stroke-width="3"/>
+        <circle cx="140" cy="150" r="7" fill="#ffd76a"/>
+        <text x="180" y="186" text-anchor="middle" font-size="17" fill="#f4e9c8">|0| = 0</text>
+        <text x="180" y="222" text-anchor="middle" font-size="15" fill="#8fd1a8">расстояние не бывает отрицательным!</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">|−7| = 7 и |7| = 7 — оба на расстоянии 7</text>
+        ${axis('')}
+        <line x1="140" y1="176" x2="60" y2="176" stroke="#8fd1a8" stroke-width="4"/>
+        <line x1="140" y1="176" x2="300" y2="176" stroke="#8fd1a8" stroke-width="4"/>
+        <circle cx="60" cy="150" r="8" fill="#7fd1ff"/><text x="52" y="142" font-size="12" fill="#7fd1ff">−7</text>
+        <circle cx="300" cy="150" r="8" fill="#8fd1a8"/><text x="296" y="142" font-size="12" fill="#8fd1a8">7</text>
+        <circle cx="140" cy="150" r="5" fill="#ffd76a"/>
+        <text x="180" y="216" text-anchor="middle" font-size="17" font-weight="bold" fill="#ffd76a">|−7| = 7</text>
+        <text x="180" y="240" text-anchor="middle" font-size="13" fill="#8fa08f">минус «отрезается»: остаётся только расстояние</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">|x| = 4: кто на расстоянии 4 от нуля?</text>
+        ${axis('')}
+        <line x1="140" y1="176" x2="60" y2="176" stroke="#ffd76a" stroke-width="4"/>
+        <line x1="140" y1="176" x2="220" y2="176" stroke="#ffd76a" stroke-width="4"/>
+        <circle cx="60" cy="150" r="8" fill="#7fd1ff"/><text x="52" y="142" font-size="12" fill="#7fd1ff">−4</text>
+        <circle cx="220" cy="150" r="8" fill="#8fd1a8"/><text x="216" y="142" font-size="12" fill="#8fd1a8">4</text>
+        <circle cx="140" cy="150" r="5" fill="#ffd76a"/>
+        <text x="180" y="216" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffd76a">x = 4 или x = −4</text>
+        <text x="180" y="240" text-anchor="middle" font-size="13" fill="#8fa08f">уравнение с модулем: ДВА ответа!</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">|x| = 0: только само число 0</text>
+        ${axis('')}
+        <circle cx="140" cy="150" r="9" fill="#ffd76a"/>
+        <text x="180" y="196" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffd76a">x = 0 — единственное решение</text>
+        <text x="180" y="222" text-anchor="middle" font-size="15" fill="#8fa08f">расстояние 0 бывает только у самого нуля</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">|x − 3| = 2: расстояние до точки 3 равно 2</text>
+        ${axis('')}
+        <line x1="180" y1="176" x2="180" y2="128" stroke="#ffd76a" stroke-width="3"/>
+        <circle cx="180" cy="150" r="6" fill="#e86a5a"/><text x="174" y="170" font-size="12" fill="#e86a5a">3</text>
+        <line x1="180" y1="176" x2="140" y2="176" stroke="#7fd1ff" stroke-width="4"/>
+        <line x1="180" y1="176" x2="220" y2="176" stroke="#8fd1a8" stroke-width="4"/>
+        <circle cx="140" cy="150" r="8" fill="#7fd1ff"/><text x="132" y="142" font-size="12" fill="#7fd1ff">1</text>
+        <circle cx="220" cy="150" r="8" fill="#8fd1a8"/><text x="216" y="142" font-size="12" fill="#8fd1a8">5</text>
+        <text x="180" y="216" text-anchor="middle" font-size="17" font-weight="bold" fill="#ffd76a">x = 5 или x = 1</text>
+        <text x="180" y="240" text-anchor="middle" font-size="13" fill="#8fa08f">влево 2 шага и вправо 2 шага от числа 3</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">примеры: считаем модули</text>
+        <g font-size="23" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="126" fill="#7fd1ff">|−5| = 5</text>
+          <text x="180" y="160" fill="#8fd1a8">|12| = 12</text>
+          <text x="180" y="194" fill="#ffd76a">|0| = 0</text>
+        </g>
+        <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">отрицательное → убираем минус; положительное → как есть</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">главное о модуле</text>
+        <g font-size="19" fill="#f4e9c8" text-anchor="middle">
+          <text x="180" y="124">модуль — это РАССТОЯНИЕ до нуля</text>
+          <text x="180" y="152" fill="#7fd1ff">|x| = a → x = a или x = −a</text>
+          <text x="180" y="180" fill="#8fd1a8">|x − a| — расстояние до точки a</text>
+        </g>
+        <text x="180" y="220" text-anchor="middle" font-size="14" fill="#8fa08f">в задачах-ловушках: модуль никогда не равен минусу!</text>`;
+    } else {
+      m=`<text x="180" y="92" text-anchor="middle" font-size="16" fill="#b6d4e8">расстояние от −7 до нуля?</text>
+        <text x="180" y="152" text-anchor="middle" font-size="38" font-weight="bold" fill="#ffd76a" class="c2a-spark">|−7| = ?</text>
+        <text x="180" y="204" text-anchor="middle" font-size="16" fill="#8fa08f">минус отрезаем — сколько останется?</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#231a2a"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#a05a9f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#e8a0d8">Модуль числа |x|</text>
+      ${m}</svg>`; }
+
+  /* --- 408: сравнения по модулю (остатки) --- */
+  function cmpSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    if(v===0){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">делим с остатком: 17 : 5 = 3 и остаток 2</text>
+        <g font-size="26" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="126" fill="#f4e9c8">17 = 3·5 + 2</text>
+        </g>
+        <text x="180" y="168" text-anchor="middle" font-size="20" fill="#ffd76a">остаток 2</text>
+        <text x="180" y="216" text-anchor="middle" font-size="15" fill="#8fa08f">остаток всегда меньше делителя: 2 < 5</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">запись a ≡ b (mod m): одинаковые остатки</text>
+        <g font-size="25" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="124" fill="#f4e9c8">17 ≡ 2 (mod 5)</text>
+          <text x="180" y="160" fill="#7fd1ff">17 − 2 = 15, а 15 ⋮ 5</text>
+        </g>
+        <text x="180" y="206" text-anchor="middle" font-size="17" font-weight="bold" fill="#8fd1a8">разность делится на модуль!</text>
+        <text x="180" y="232" text-anchor="middle" font-size="13" fill="#8fa08f">«≡» читается «сравнимо по модулю»</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">на «часах»: mod 5 считает кругами по 5</text>
+        <circle cx="180" cy="140" r="70" fill="none" stroke="#8fd1a8" stroke-width="4"/>
+        <g font-size="17" fill="#cfe0ff" text-anchor="middle">
+          <text x="180" y="60">0</text><text x="250" y="132">1</text><text x="234" y="202">2</text>
+          <text x="126" y="202">3</text><text x="110" y="132">4</text>
+        </g>
+        <text x="180" y="232" text-anchor="middle" font-size="14" fill="#8fa08f">числа 2, 7, 12, 17 — «та же точка» 2 по mod 5</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">находим остаток: 23 : 4</text>
+        <g font-size="26" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="126" fill="#f4e9c8">23 = 5·4 + 3</text>
+          <text x="180" y="164" fill="#ffd76a">23 ≡ 3 (mod 4)</text>
+        </g>
+        <text x="180" y="210" text-anchor="middle" font-size="17" fill="#8fd1a8">берём самое большое кратное 4, не большее 23</text>
+        <text x="180" y="234" text-anchor="middle" font-size="13" fill="#8fa08f">это 20 = 5·4, остаток 23 − 20 = 3</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">проверяем через разность</text>
+        <g font-size="24" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="122" fill="#f4e9c8">29 ≡ ? (mod 6)</text>
+          <text x="180" y="156" fill="#7fd1ff">29 − 5 = 24, 24 ⋮ 6 → 5</text>
+        </g>
+        <text x="180" y="196" text-anchor="middle" font-size="20" font-weight="bold" fill="#ffd76a">29 ≡ 5 (mod 6)</text>
+        <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">29 = 4·6 + 5 — остаток 5</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">зачем это нужно: остатки удобно складывать</text>
+        <g font-size="21" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="122" fill="#f4e9c8">17 ≡ 2, 23 ≡ 3 (mod 5)</text>
+          <text x="180" y="154" fill="#7fd1ff">17 + 23 ≡ 2 + 3 = 5 ≡ 0</text>
+        </g>
+        <text x="180" y="196" text-anchor="middle" font-size="16" fill="#8fd1a8">значит, 17 + 23 = 40 делится на 5!</text>
+        <text x="180" y="226" text-anchor="middle" font-size="13" fill="#8fa08f">проверь: 40 : 5 = 8 без остатка ✔</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="82" text-anchor="middle" font-size="16" fill="#b6d4e8">главное о сравнениях</text>
+        <g font-size="19" fill="#f4e9c8" text-anchor="middle">
+          <text x="180" y="126">a ≡ b (mod m) ⟺ одинаковые остатки</text>
+          <text x="180" y="156" fill="#7fd1ff">⟺ a − b делится на m</text>
+          <text x="180" y="186" fill="#8fd1a8">остатки можно складывать и умножать</text>
+        </g>
+        <text x="180" y="222" text-anchor="middle" font-size="13" fill="#8fa08f">мощный инструмент олимпиадных задач!</text>`;
+    } else {
+      m=`<text x="180" y="92" text-anchor="middle" font-size="16" fill="#b6d4e8">найди остаток от деления 23 на 4</text>
+        <text x="180" y="152" text-anchor="middle" font-size="34" font-weight="bold" fill="#ffd76a" class="c2a-spark">23 mod 4 = ?</text>
+        <text x="180" y="204" text-anchor="middle" font-size="15" fill="#8fa08f">самое большое кратное 4, не большее 23…</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2433"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#3f6a9f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#7fd1ff">Сравнения по модулю</text>
+      ${m}</svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -2176,6 +2481,10 @@ function coinsSVG(){
     else if(scene==='linf') base=linfSVG(fr);
     else if(scene==='neq') base=neqSVG(fr);
     else if(scene==='cong') base=congSVG(fr);
+    else if(scene==='med') base=medSVG(fr);
+    else if(scene==='par') base=parSVG(fr);
+    else if(scene==='mod') base=modSVG(fr);
+    else if(scene==='cmp') base=cmpSVG(fr);
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
