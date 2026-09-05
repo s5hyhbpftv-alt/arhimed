@@ -1639,6 +1639,43 @@ function coinsSVG(){
       <text x="180" y="232" text-anchor="middle" font-size="18" fill="#f4e9c8">В = 5, Г = 4 → S = 5 + 2 − 1 = 6</text>
     </svg>`; }
 
+  function div10SVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2a3d"/>
+      <rect x="10" y="10" width="340" height="220" rx="8" fill="none" stroke="#3f6a9f" stroke-width="4"/>
+      <text x="30" y="48" font-size="21" font-weight="bold" fill="#ffd76a">Делимость — по записи числа</text>
+      <text x="60" y="92" font-size="36" fill="#f4e9c8">12<span fill="#7fd1ff">4</span></text>
+      <text x="110" y="92" font-size="24" fill="#9fc0e8">→ 24 ⋮ 4 → число ⋮ 4</text>
+      <text x="60" y="136" font-size="24" fill="#7fd1ff">НОК(6; 8) = 24</text>
+      <text x="60" y="172" font-size="24" fill="#8fd1a8">кратное 7: 14 = 7·2</text>
+      <text x="60" y="206" font-size="17" fill="#9fc0e8">на 2, 5, 10 — последняя цифра · на 3, 9 — сумма цифр</text>
+    </svg>`; }
+  function combSVG(){
+    const F=['🍎','🍐','🍇','🍒']; let els='';
+    F.forEach((f,i)=>{ const x=60+i*66; els+=`<text x="${x}" y="90" font-size="40">${f}</text>`; });
+    const lines=['0,1','0,2','0,3','1,2','1,3','2,3'];
+    const coords={0:[60,100],1:[126,100],2:[192,100],3:[258,100]};
+    let ls='';
+    lines.forEach((p)=>{ const a=p.split(','); ls+=`<line x1="${coords[a[0]][0]}" y1="${coords[a[0]][1]}" x2="${coords[a[1]][0]}" y2="${coords[a[1]][1]}" stroke="#d9a441" stroke-width="3" opacity=".8"/>`; });
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#231a10"/>
+      <text x="24" y="38" font-size="21" font-weight="bold" fill="#ffd76a">Сочетания: пары из 4</text>
+      ${els}${ls}
+      <text x="180" y="180" text-anchor="middle" font-size="24" fill="#f4e9c8">6 пар</text>
+      <text x="180" y="212" text-anchor="middle" font-size="18" fill="#8fd1a8">формула: n·(n−1)/2 = 4·3/2</text>
+    </svg>`; }
+  function dirSVG(){
+    let boxes='';
+    for(let i=0;i<9;i++){ const x=24+i*36; boxes+=`<rect x="${x}" y="96" width="30" height="40" rx="5" fill="none" stroke="#7fd1ff" stroke-width="2.5"/>`; }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#14241c"/>
+      <text x="24" y="38" font-size="21" font-weight="bold" fill="#ffd76a">Усиленный Дирихле</text>
+      ${boxes}
+      <text x="180" y="82" text-anchor="middle" font-size="17" fill="#8fa08f">100 шаров в 9 коробок</text>
+      <text x="180" y="166" text-anchor="middle" font-size="22" fill="#ffd76a">100 = 9·11 + 1</text>
+      <text x="180" y="200" text-anchor="middle" font-size="20" fill="#8fd1a8">есть коробка минимум с 12</text>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1697,6 +1734,9 @@ function coinsSVG(){
     else if(scene==='game20') base=game20SVG();
     else if(scene==='euler') base=eulerSVG();
     else if(scene==='pick') base=pickSVG();
+    else if(scene==='div10') base=div10SVG();
+    else if(scene==='comb') base=combSVG();
+    else if(scene==='dir') base=dirSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1816,6 +1856,9 @@ function coinsSVG(){
       .c2-stage.c2-bg-game20 { background:linear-gradient(#1e2433,#191f2c 45%,#12171f); }
       .c2-stage.c2-bg-euler { background:linear-gradient(#14241c,#101c15 45%,#0a140f); }
       .c2-stage.c2-bg-pick { background:linear-gradient(#1a1f2e,#151a26 45%,#0f131c); }
+      .c2-stage.c2-bg-div10 { background:linear-gradient(#1e2a3d,#182338 45%,#101a2c); }
+      .c2-stage.c2-bg-comb { background:linear-gradient(#231a10,#1c140c 45%,#140d08); }
+      .c2-stage.c2-bg-dir { background:linear-gradient(#14241c,#101c15 45%,#0a140f); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
