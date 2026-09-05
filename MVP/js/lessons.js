@@ -843,62 +843,81 @@ function wvApples(n,o){
   }
   return `<div style="display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;max-width:340px;margin:1px auto">${out.join('')}</div>`;
 }
-// Рука (SVG, детализированная): states = [5 булевых]: true — палец поднят, false — согнут к ладони
-// Палец 0 — большой (толще, короче, оттопырен вбок), 1-4 — указательный…мизинец (разной длины)
-function wvHandStatesSVG(states,s){
-  const W=s||58, H=Math.round(W*190/140);
-  const skin='#f8c896', skinHi='#ffdbb0', skinSh='#e0a86e', skinDk='#c98a52', knuckle='#efb77e', nail='#ffecdd';
-  const cxs=[50,63,76,89,102];
-  const tops=[54,40,33,40,54];      // верх кончика (y; меньше = длиннее)
-  const widths=[14,11,11,11,10];
-  const spread=[-7,-3.5,0,3.5,7];   // наклон кончика наружу (веер)
-  let fingers='';
-  for(let i=0;i<5;i++){
-    const c=cxs[i], hw=widths[i]/2, t=tops[i], sp=spread[i];
-    if(states[i]){
-      // поднятый палец: три фаланги с суставами, скруглённый кончик, ноготь
-      const y1=t+(100-t)*0.42, y2=t+(100-t)*0.72;
-      fingers+=`<path d="M ${c-hw} 100 L ${c-hw} ${t+11} Q ${c-hw+sp*0.35} ${t-1.5} ${c+sp} ${t-1} Q ${c+hw+sp*0.35} ${t-1.5} ${c+hw} ${t+11} L ${c+hw} 100 Z"
-          fill="${skin}" stroke="${skinDk}" stroke-width="1.6" stroke-linejoin="round"/>
-        <path d="M ${c-hw+1.6} ${t+10} L ${c-hw+1.6} 99" stroke="rgba(255,235,210,.6)" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M ${c-hw+1} ${y1} Q ${c} ${y1-2.6} ${c+hw-1} ${y1}" stroke="rgba(165,100,52,.45)" stroke-width="1.7" fill="none"/>
-        <path d="M ${c-hw+1} ${y2} Q ${c} ${y2-2} ${c+hw-1} ${y2}" stroke="rgba(165,100,52,.3)" stroke-width="1.5" fill="none"/>
-        <ellipse cx="${c+sp*0.55}" cy="${t+7.5}" rx="${i===0?4.6:3.6}" ry="${i===0?6.4:5.4}" fill="${nail}" stroke="rgba(190,125,75,.5)" stroke-width="1" transform="rotate(-6 ${c+sp*0.55} ${t+7.5})"/>
-        <ellipse cx="${c+sp*0.55-1}" cy="${t+5.5}" rx="1.2" ry="1.8" fill="rgba(255,255,255,.75)"/>`;
+// Рука (SVG, детский мультяшный стиль): states = [5 булевых] — true палец поднят, false согнут.
+// states[0] — большой палец (толще, оттопырен), states[1..4] — указательный…мизинец.
+// o.thumb=false — без большого: рисуем 5 одинаковых «пальчиков» (для счёта до 10).
+function wvHandStatesSVG(states,s,o){
+  const O=o||{};
+  const W=s||64, H=Math.round(W*210/160);
+  const skin='#ffd3a4', skinL='#ffe9cd', skinSh='#e8ab74', line='rgba(190,110,60,.38)';
+  const nail='#fff2e4';
+  const thumb=false!==O.thumb;
+  const hasBig = thumb && states[0];
+  // конфигурация пальцев: при большом — 4 пальца правее; без большого — 5 равных
+  const cfg = thumb
+    ? {n:4, cxs:[75,90,105,120], tops:[52,47,50,62], off:1}
+    : {n:5, cxs:[59,74,89,104,119], tops:[55,49,45,49,64], off:0};
+  let parts='';
+  // ---- большой палец ----
+  if(hasBig){
+    const tx=46, ty=112;
+    parts+=`<path d="M ${tx+4} 100 C ${tx-8} 96 ${tx-18} 82 ${tx-20} 66 C ${tx-21} 56 ${tx-16} 50 ${tx-9} 50 C ${tx-2} 50 ${tx+2} 57 ${tx+2} 65 C ${tx+3} 80 ${tx+8} 92 ${tx+14} 100 Z"
+        fill="${skin}" stroke="${line}" stroke-width="1.6"/>
+      <ellipse cx="${tx-13}" cy="60" rx="5" ry="7" fill="${nail}" transform="rotate(-18 ${tx-13} 60)"/>
+      <path d="M ${tx+10} 98 Q ${tx-6} 90 ${tx-16} 66" stroke="${line}" stroke-width="1.3" fill="none"/>`;
+  }
+  // ---- пальцы ----
+  for(let i=0;i<cfg.n;i++){
+    const c=cfg.cxs[i], t=cfg.tops[i], hw=7.1, tip=4.6;
+    const y1=t+(102-t)*0.34, y2=t+(102-t)*0.62;
+    const up = states[i+cfg.off];
+    if(up){
+      // пухлый пальчик: выпуклые бока, круглый кончик, мягкие перетяжки-суставы
+      parts+=`<path d="M ${c-hw} 102
+              C ${c-hw-2.6} ${t+22} ${c-hw-1.2} ${t+9} ${c-hw+1.4} ${t}
+              Q ${c} ${t-5.5} ${c+hw-1.4} ${t}
+              C ${c+hw+1.2} ${t+9} ${c+hw+2.6} ${t+22} ${c+hw} 102 Z"
+          fill="${skin}" stroke="${line}" stroke-width="1.5"/>
+        <!-- блик слева -->
+        <path d="M ${c-hw+2} 100 C ${c-hw+0.8} ${t+18} ${c-hw+1.6} ${t+9} ${c-hw+1.2} ${t+2}" stroke="rgba(255,240,220,.65)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- перетяжки-суставы -->
+        <path d="M ${c-hw+1.6} ${y1} Q ${c} ${y1+2.6} ${c+hw-1.6} ${y1}" stroke="${line}" stroke-width="1.3" fill="none"/>
+        <path d="M ${c-hw+1.6} ${y2} Q ${c} ${y2+2} ${c+hw-1.6} ${y2}" stroke="${line}" stroke-width="1.1" fill="none"/>
+        <!-- ноготь -->
+        <ellipse cx="${c}" cy="${t+5.6}" rx="3.8" ry="5.2" fill="${nail}"/>
+        <path d="M ${c-1.8} ${t+4.6} L ${c-1.8} ${t+8.6}" stroke="rgba(255,255,255,.8)" stroke-width="1" fill="none"/>`;
     }else{
-      // согнутый палец: костяшка-подушечка с линией сгиба и ногтем
-      fingers+=`<path d="M ${c-hw} 98 Q ${c} 82 ${c+hw} 98 Z" fill="${knuckle}" stroke="${skinDk}" stroke-width="1.5"/>
-        <path d="M ${c-hw+1.2} 98 Q ${c} 84.5 ${c+hw-1.2} 98" stroke="rgba(170,105,60,.3)" stroke-width="1.2" fill="none"/>
-        <ellipse cx="${c}" cy="${88.5}" rx="${i===0?3.6:2.9}" ry="${i===0?5:4.2}" fill="${nail}" stroke="rgba(200,140,90,.4)" stroke-width=".7"/>
-        <path d="M ${c-hw+2} 94 Q ${c} 87.5 ${c+hw-2} 94" stroke="rgba(255,235,215,.5)" stroke-width="1" fill="none"/>`;
+      // согнутый палец: плоская прижатая костяшка (не торчит как палец)
+      parts+=`<path d="M ${c-hw} 101 Q ${c-hw-0.8} 95.5 ${c} 95 Q ${c+hw+0.8} 95.5 ${c+hw} 101 Z" fill="${skin}" stroke="${line}" stroke-width="1.1"/>
+        <path d="M ${c-hw+1} 100 Q ${c} 96.5 ${c+hw-1} 100" stroke="${line}" stroke-width=".9" fill="none"/>`;
     }
   }
-  return `<svg width="${W}" height="${H}" viewBox="0 0 140 190" style="display:inline-block;vertical-align:bottom">
+  const knuckles=cfg.cxs.map(c=>`<ellipse cx="${c}" cy="105" rx="7" ry="5.4" fill="rgba(190,110,60,.09)"/>`).join('');
+  return `<svg width="${W}" height="${H}" viewBox="0 0 164 210" style="display:inline-block;vertical-align:bottom">
     <!-- запястье -->
-    <path d="M50 158 L90 158 C94 158 96 164 96 172 L96 190 L44 190 L44 172 C44 164 46 158 50 158 Z" fill="${skinSh}" stroke="${skinDk}" stroke-width="1.4"/>
-    <ellipse cx="70" cy="166" rx="22" ry="9" fill="rgba(255,240,222,.35)"/>
-    <!-- ладонь (с лёгким градиентом: тень снизу и справа) -->
-    <path d="M38 98 C31 98 29 104 29 112 L29 142 C29 152 36 158 47 158 L96 158 C107 158 113 152 113 142 L113 112 C113 104 110 98 103 98 Z" fill="${skin}" stroke="${skinDk}" stroke-width="1.6"/>
-    <!-- тень снизу ладони -->
-    <path d="M36 138 C50 152 96 152 112 136 L112 143 C112 152 106 158 96 158 L47 158 C37 158 30 152 30 144 Z" fill="rgba(150,85,45,.16)"/>
-    <!-- мышца большого пальца -->
-    <path d="M36 106 C28 112 27 122 31 130 C33 134 37 136 40 135 C43 128 44 116 41 107 Z" fill="${skinHi}" stroke="${skinDk}" stroke-width="1" opacity=".55"/>
-    <!-- тень между пальцами у оснований -->
-    ${[0,1,2,3].map(i=>{const x=(cxs[i]+cxs[i+1])/2;return `<path d="M ${cxs[i]+widths[i]/2-1} 100 Q ${x} 106 ${cxs[i+1]-widths[i+1]/2+1} 100" stroke="rgba(150,85,45,.18)" stroke-width="1.3" fill="none"/>`;}).join('')}
-    <!-- линии ладони -->
-    <path d="M42 124 Q 66 136 100 122" stroke="rgba(170,105,60,.26)" stroke-width="1.5" fill="none"/>
-    <path d="M44 136 Q 70 146 98 134" stroke="rgba(170,105,60,.2)" stroke-width="1.3" fill="none"/>
-    <path d="M50 112 Q 60 117 62 130" stroke="rgba(170,105,60,.16)" stroke-width="1.2" fill="none"/>
-    ${fingers}
-    <!-- мягкая тень под пальцами на ладони -->
-    <path d="M43 101 Q 70 110 106 101 L106 105 Q 80 113 43 105 Z" fill="rgba(150,85,45,.10)"/>
+    <path d="M60 176 L100 176 C104 176 106 182 106 190 L106 210 L54 210 L54 190 C54 182 56 176 60 176 Z" fill="${skinSh}"/>
+    <path d="M58 178 Q 80 190 102 178 L102 210 L58 210 Z" fill="rgba(255,255,255,.18)"/>
+    <!-- ладонь (тыльная сторона, мягкая) -->
+    <path d="M52 102 C44 102 41 109 41 118 L41 146 C41 158 48 166 60 166 L108 166 C120 166 127 158 127 146 L127 118 C127 109 124 102 116 102 Z"
+      fill="${skin}" stroke="${line}" stroke-width="1.8"/>
+    <!-- мягкий свет и тени на ладони -->
+    <path d="M52 102 C44 102 41 109 41 118 L41 132 C54 150 112 152 127 134 L127 118 C127 109 124 102 116 102 Z" fill="rgba(255,255,255,.30)"/>
+    <path d="M46 150 C58 162 110 162 122 150 L122 156 C122 164 116 166 106 166 L62 166 C52 166 46 164 46 156 Z" fill="rgba(190,110,60,.14)"/>
+    ${thumb?`<ellipse cx="58" cy="110" rx="9" ry="7" fill="rgba(190,110,60,.10)"/>`:''}
+    ${knuckles}
+    ${parts}
   </svg>`;
 }
-// Рука: up = сколько пальцев поднято (0..5), остальные зажаты в кулак
-function wvHandSVG(up,s){
+// Рука: up = сколько пальцев поднято (0..5). Большой поднят только при up=5;
+// иначе он прижат к ладони, а подняты up первых из четырёх пальцев (указательный…).
+function wvHandSVG(up,s,o){
+  const O=o||{};
   const states=[];
-  for(let i=0;i<5;i++) states.push(i<up);
-  return wvHandStatesSVG(states,s);
+  // [0] большой
+  states.push(O.big!=null?!!O.big:(up>=5));
+  // [1..4] четыре пальца: подняты первые up
+  for(let i=1;i<=4;i++) states.push(i<=up);
+  return wvHandStatesSVG(states,s,O);
 }
 // подпись под рукой (для аккуратности внешних вызовов)
 function wvHand(up,o){
@@ -1083,10 +1102,10 @@ function l31Fingers9(n){
     return `<span style="display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;margin:0 1px;font-size:9.5px;background:${k===n?'rgba(255,217,102,.25)':'rgba(255,255,255,.05)'};border:1.5px solid ${k===n?'#ffd966':'#3d5c49'};color:${k===n?'#ffd966':'#9ec0a8'};font-weight:${k===n?'bold':'normal'}">${k}</span>`;
   });
   return `<div style="text-align:center">
-    <div style="display:flex;justify-content:center;gap:10px;align-items:flex-end">
-      ${wvHandStatesSVG(L,62)}
-      <span style="width:6px"></span>
-      ${wvHandStatesSVG(R,62)}
+    <div style="display:flex;justify-content:center;gap:4px;align-items:flex-end">
+      ${wvHandStatesSVG(L,56,{thumb:false})}
+      <span style="width:14px"></span>
+      ${wvHandStatesSVG(R,56,{thumb:false})}
     </div>
     <div style="display:flex;justify-content:center;margin-top:2px">${numArr.join('')}</div>
     <div style="font-size:12px;color:#9ec0a8;margin-top:3px">загнули ${n}-й палец · слева ${left} · справа ${right}</div>
