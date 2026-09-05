@@ -949,6 +949,93 @@ function coinsSVG(){
       <text x="48" y="196" font-size="22">🟫</text><text x="320" y="196" font-size="20">🟫</text>
     </svg>`; }
 
+  function stageSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skSt" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8a5ac0"/><stop offset="1" stop-color="#6b3f9e"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="110" fill="url(#skSt)"/>
+      <text x="18" y="40" font-size="24">🎵</text><text x="320" y="36" font-size="20">🎵</text>
+      <text x="60" y="60" font-size="16">♪</text><text x="290" y="66" font-size="16">♪</text>
+      <!-- занавес -->
+      <path d="M0 0 Q40 60 0 110 Z" fill="#c0392b"/>
+      <path d="M360 0 Q320 60 360 110 Z" fill="#c0392b"/>
+      <path d="M360 0 L330 0 Q360 55 330 110 L360 110 Z" fill="#a93226"/>
+      <!-- пол сцены -->
+      <rect x="0" y="110" width="360" height="40" fill="#8a5a2b"/>
+      <path d="M0 110 Q180 100 360 110" stroke="#6e4520" stroke-width="4" fill="none"/>
+      <!-- ряды стульев 3 ряда по 4 -->
+      <g font-size="22">
+        <text x="60" y="140">🪑</text><text x="100" y="140">🪑</text><text x="140" y="140">🪑</text><text x="180" y="140">🪑</text>
+        <text x="60" y="170">🪑</text><text x="100" y="170">🪑</text><text x="140" y="170">🪑</text><text x="180" y="170">🪑</text>
+        <text x="60" y="200">🪑</text><text x="100" y="200">🪑</text><text x="140" y="200">🪑</text><text x="180" y="200">🪑</text>
+      </g>
+      <g font-size="18"><text x="250" y="150">🎼</text><text x="250" y="180">🎻</text><text x="286" y="200">🎺</text></g>
+    </svg>`; }
+  function factorySVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="210" fill="#d8d2c8"/>
+      <rect x="0" y="0" width="360" height="70" fill="#a8b4c8"/>
+      <rect x="14" y="18" width="60" height="36" rx="4" fill="#7f96b8" stroke="#4a5a78" stroke-width="3"/>
+      <rect x="24" y="28" width="18" height="16" fill="#d9e8f5"/>
+      <rect x="52" y="28" width="14" height="16" fill="#d9e8f5"/>
+      <text x="200" y="44" font-size="20">🏭</text>
+      <!-- конвейер -->
+      <rect x="0" y="120" width="360" height="22" fill="#9aa0a8" stroke="#5f666e" stroke-width="3"/>
+      <g class="c2a-coin" font-size="18">
+        <text x="60" y="138">🍬</text><text x="110" y="138">🍬</text><text x="160" y="138">🍬</text>
+        <text x="210" y="138">🍬</text><text x="260" y="138">🍬</text>
+      </g>
+      <!-- коробки -->
+      <g>
+        <rect x="30" y="166" width="70" height="26" rx="5" fill="#e8b04c" stroke="#a3762a" stroke-width="3"/>
+        <rect x="120" y="166" width="70" height="26" rx="5" fill="#e86a5a" stroke="#a3442f" stroke-width="3"/>
+        <rect x="210" y="166" width="70" height="26" rx="5" fill="#5f9a6a" stroke="#3a6b46" stroke-width="3"/>
+      </g>
+      <rect x="0" y="196" width="360" height="14" fill="#8a8a92"/>
+    </svg>`; }
+  function tableSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skTb" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffe9c9"/><stop offset="1" stop-color="#f0d3a0"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="100" fill="url(#skTb)"/>
+      <text x="40" y="46" font-size="26">🎈</text><text x="300" y="40" font-size="26">🎈</text>
+      <!-- стол -->
+      <rect x="16" y="96" width="328" height="22" rx="6" fill="#c89a6a" stroke="#8a5a2b" stroke-width="3"/>
+      <rect x="30" y="118" width="16" height="72" fill="#8a5a2b"/>
+      <rect x="314" y="118" width="16" height="72" fill="#8a5a2b"/>
+      <!-- тарелки -->
+      <g font-size="26">
+        <text x="40" y="134">🍽️</text><text x="100" y="134">🍽️</text><text x="160" y="134">🍽️</text>
+        <text x="220" y="134">🍽️</text><text x="280" y="134">🍽️</text>
+      </g>
+      <!-- конфеты на тарелке -->
+      <g font-size="16">
+        <text x="46" y="122">🍬</text><text x="60" y="122">🍬</text><text x="53" y="112">🍬</text><text x="67" y="114">🍬</text>
+      </g>
+      <text x="250" y="176" font-size="20">🍰</text><text x="90" y="180" font-size="22">🥮</text>
+      <rect x="0" y="190" width="360" height="20" fill="#c89a6a"/>
+    </svg>`; }
+  function labSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="210" fill="#dbe4ee"/>
+      <rect x="0" y="0" width="360" height="70" fill="#b8c6da"/>
+      <text x="20" y="44" font-size="20">💡</text>
+      <!-- доска с примерами -->
+      <rect x="30" y="14" width="180" height="78" rx="6" fill="#2f4a3a" stroke="#1f3328" stroke-width="4"/>
+      <text x="44" y="44" font-size="18" fill="#e8e0cc">10 + 2 · 3 = ?</text>
+      <text x="44" y="68" font-size="18" fill="#e8e0cc">(8 + 4) : 2 = ?</text>
+      <!-- стол с колбами -->
+      <rect x="240" y="120" width="110" height="14" rx="4" fill="#7f96a8"/>
+      <rect x="250" y="120" width="12" height="60" fill="#7f96a8"/>
+      <rect x="330" y="120" width="12" height="60" fill="#7f96a8"/>
+      <g font-size="24">
+        <text x="256" y="112">🧪</text><text x="292" y="106">⚗️</text><text x="326" y="112">🧫</text>
+      </g>
+      <!-- пол -->
+      <rect x="0" y="180" width="360" height="30" fill="#8fa0b0"/>
+      <g font-size="20"><text x="60" y="196">📏</text><text x="120" y="196">📐</text></g>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -972,6 +1059,10 @@ function coinsSVG(){
     else if(scene==='park') base=parkSVG();
     else if(scene==='shelf') base=shelfSVG();
     else if(scene==='city') base=citySVG();
+    else if(scene==='stage') base=stageSVG();
+    else if(scene==='factory') base=factorySVG();
+    else if(scene==='table') base=tableSVG();
+    else if(scene==='lab') base=labSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1056,6 +1147,10 @@ function coinsSVG(){
       .c2-stage.c2-bg-park { background:linear-gradient(#a8dcf0,#7fb45c 45%,#6aa34e); }
       .c2-stage.c2-bg-shelf { background:linear-gradient(#cbb38c,#b9a07a 45%,#7a5a34); }
       .c2-stage.c2-bg-city { background:linear-gradient(#bfe3f0,#9fd0e8 45%,#b98a5c); }
+      .c2-stage.c2-bg-stage { background:linear-gradient(#8a5ac0,#6b3f9e 45%,#8a5a2b); }
+      .c2-stage.c2-bg-factory { background:linear-gradient(#a8b4c8,#d8d2c8 45%,#8a8a92); }
+      .c2-stage.c2-bg-table { background:linear-gradient(#ffe9c9,#f0d3a0 45%,#c89a6a); }
+      .c2-stage.c2-bg-lab { background:linear-gradient(#b8c6da,#dbe4ee 45%,#8fa0b0); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
