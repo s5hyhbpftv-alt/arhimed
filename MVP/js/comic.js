@@ -1400,6 +1400,58 @@ function coinsSVG(){
       <text x="24" y="228" font-size="15" fill="#8fa08f">золото — простые · серое зачёркнутое — составные</text>
     </svg>`; }
 
+  function euclidSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e3a2f"/>
+      <rect x="10" y="10" width="340" height="220" rx="8" fill="none" stroke="#3f7a5f" stroke-width="4"/>
+      <text x="30" y="46" font-size="22" font-weight="bold" fill="#ffd76a">НОД(48; 30) — алгоритм Евклида</text>
+      <g font-size="20" fill="#f4e9c8" font-family="Georgia,serif">
+        <text x="30" y="78">48 = 30·1 + 18</text>
+        <text x="30" y="106">30 = 18·1 + 12</text>
+        <text x="30" y="134">18 = 12·1 + 6</text>
+        <text x="30" y="162">12 = 6·2 + 0</text>
+      </g>
+      <rect x="30" y="176" width="150" height="36" rx="18" fill="#d9a441"/>
+      <text x="105" y="201" text-anchor="middle" font-size="22" font-weight="bold" fill="#33291e">НОД = 6</text>
+      <text x="210" y="96" font-size="18" fill="#7fd1ff">делим,</text>
+      <text x="210" y="122" font-size="18" fill="#7fd1ff">пока остаток</text>
+      <text x="210" y="148" font-size="18" fill="#7fd1ff">не станет 0</text>
+    </svg>`; }
+  function coordSVG(){
+    let grid='';
+    for(let i=-6;i<=6;i++){ grid+=`<line x1="${180+i*26}" y1="20" x2="${180+i*26}" y2="220" stroke="rgba(255,255,255,.08)"/>`;
+      grid+=`<line x1="20" y1="${120-i*26}" x2="340" y2="${120-i*26}" stroke="rgba(255,255,255,.08)"/>`; }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#17253d"/>
+      ${grid}
+      <line x1="20" y1="120" x2="340" y2="120" stroke="#f4e9c8" stroke-width="3"/>
+      <line x1="180" y1="20" x2="180" y2="220" stroke="#f4e9c8" stroke-width="3"/>
+      <polygon points="340,120 332,114 332,126" fill="#f4e9c8"/>
+      <polygon points="180,20 174,28 186,28" fill="#f4e9c8"/>
+      <text x="330" y="138" font-size="18" fill="#9fc0e8">x</text>
+      <text x="164" y="30" font-size="18" fill="#9fc0e8">y</text>
+      <g font-size="13" fill="#8fa7c8">
+        <text x="175" y="132">0</text><text x="198" y="132">1</text><text x="224" y="132">2</text><text x="250" y="132">3</text>
+        <text x="156" y="132">−1</text><text x="130" y="132">−2</text><text x="104" y="132">−3</text>
+      </g>
+      <circle cx="258" cy="68" r="7" fill="#7fd1ff"/><text x="266" y="62" font-size="15" fill="#7fd1ff">(3; 2)</text>
+      <circle cx="102" cy="68" r="7" fill="#ffd76a"/><text x="44" y="62" font-size="15" fill="#ffd76a">(−3; 2)</text>
+    </svg>`; }
+  function symSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#2a1f4a"/>
+      <text x="30" y="40" font-size="20" font-weight="bold" fill="#ffd76a">Осевая симметрия (зеркало)</text>
+      <line x1="180" y1="54" x2="180" y2="118" stroke="#7fd1ff" stroke-width="3" stroke-dasharray="8 5"/>
+      <polygon points="120,96 150,62 158,106" fill="#5f9a6a" stroke="#8fd1a8" stroke-width="3"/>
+      <polygon points="240,96 210,62 202,106" fill="#5f9a6a" stroke="#8fd1a8" stroke-width="3"/>
+      <text x="60" y="132" font-size="15" fill="#8fa7c8">Δ</text><text x="276" y="132" font-size="15" fill="#8fa7c8">Δ</text>
+      <text x="30" y="160" font-size="20" font-weight="bold" fill="#ffd76a">Центральная симметрия (180°)</text>
+      <circle cx="180" cy="190" r="5" fill="#e86a5a"/>
+      <polygon points="140,216 170,178 178,214" fill="#7fc4a6" stroke="#a8e0c8" stroke-width="3"/>
+      <polygon points="220,164 190,202 182,166" fill="#7fc4a6" stroke="#a8e0c8" stroke-width="3"/>
+      <line x1="150" y1="196" x2="210" y2="184" stroke="#e86a5a" stroke-width="2" stroke-dasharray="5 4"/>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1443,6 +1495,9 @@ function coinsSVG(){
     else if(scene==='road') base=roadSVG();
     else if(scene==='div39') base=div39SVG();
     else if(scene==='sieve') base=sieveSVG();
+    else if(scene==='euclid') base=euclidSVG();
+    else if(scene==='coord') base=coordSVG();
+    else if(scene==='sym') base=symSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1547,6 +1602,9 @@ function coinsSVG(){
       .c2-stage.c2-bg-road { background:linear-gradient(#a8dcf0,#8fc9e8 45%,#7fb45c); }
       .c2-stage.c2-bg-div39 { background:linear-gradient(#1e3a2f,#17302a 45%,#0f241c); }
       .c2-stage.c2-bg-sieve { background:linear-gradient(#14241c,#0f1c16 45%,#0a140f); }
+      .c2-stage.c2-bg-euclid { background:linear-gradient(#1e3a2f,#17302a 45%,#0f241c); }
+      .c2-stage.c2-bg-coord { background:linear-gradient(#17253d,#12203a 45%,#0c1730); }
+      .c2-stage.c2-bg-sym { background:linear-gradient(#2a1f4a,#241a3e 45%,#180f30); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
