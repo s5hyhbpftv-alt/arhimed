@@ -1286,6 +1286,72 @@ function coinsSVG(){
       <text x="90" y="120" font-size="20">🛠️</text>
     </svg>`; }
 
+  function scaleSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="210" fill="#f0dcc0"/>
+      <rect x="0" y="0" width="360" height="90" fill="#e0c8a0"/>
+      <text x="26" y="56" font-size="22">🧵</text>
+      <!-- весы -->
+      <line x1="180" y1="60" x2="180" y2="120" stroke="#33291e" stroke-width="5"/>
+      <rect x="168" y="112" width="24" height="26" rx="4" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="3"/>
+      <line x1="108" y1="80" x2="252" y2="80" stroke="#33291e" stroke-width="5"/>
+      <line x1="108" y1="80" x2="108" y2="118" stroke="#33291e" stroke-width="4"/>
+      <line x1="252" y1="80" x2="252" y2="118" stroke="#33291e" stroke-width="4"/>
+      <g font-size="30">
+        <text x="86" y="140">🧶</text><text x="234" y="140">🧶</text>
+      </g>
+      <text x="164" y="140" font-size="28">🧶</text>
+      <!-- посуда с водой -->
+      <rect x="280" y="120" width="44" height="34" rx="5" fill="#7fc4a6" stroke="#2c5f4a" stroke-width="3"/>
+      <rect x="284" y="126" width="36" height="12" fill="#bfe6d8"/>
+      <rect x="44" y="128" width="34" height="26" rx="4" fill="#4a93d0" stroke="#2c5f8a" stroke-width="3"/>
+      <rect x="0" y="170" width="360" height="40" fill="#c89a6a"/>
+    </svg>`; }
+  function sandboxSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skSb" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#a8dcf0"/><stop offset="1" stop-color="#7fb45c"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="120" fill="url(#skSb)"/>
+      <g class="c2a-cloud"><text x="30" y="36" font-size="24">☁️</text><text x="260" y="40" font-size="20">☁️</text></g>
+      <text x="312" y="48" font-size="26">🌞</text>
+      <!-- песочница -->
+      <rect x="40" y="104" width="280" height="76" rx="10" fill="#d9b878" stroke="#8a5a2b" stroke-width="5"/>
+      <rect x="40" y="96" width="280" height="12" rx="6" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="3"/>
+      <!-- две кучки -->
+      <path d="M110 176 Q100 140 130 136 Q158 140 152 176 Z" fill="#e8cf94"/>
+      <path d="M230 176 Q220 140 250 136 Q278 140 272 176 Z" fill="#e8cf94"/>
+      <g font-size="24">
+        <text x="116" y="140">🏖️</text><text x="140" y="140">🏖️</text>
+        <text x="236" y="140">🏖️</text><text x="260" y="140">🏖️</text>
+      </g>
+      <g font-size="20"><text x="60" y="160">🪣</text><text x="300" y="168">🪀</text></g>
+      <rect x="0" y="180" width="360" height="30" fill="#7fb45c"/>
+    </svg>`; }
+  function roadSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skRd" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#a8dcf0"/><stop offset="1" stop-color="#8fc9e8"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="100" fill="url(#skRd)"/>
+      <g class="c2a-cloud"><text x="30" y="34" font-size="24">☁️</text><text x="250" y="30" font-size="20">☁️</text></g>
+      <text x="314" y="46" font-size="24">🌞</text>
+      <!-- даль -->
+      <rect x="0" y="100" width="360" height="40" fill="#7fb45c"/>
+      <!-- дорога -->
+      <polygon points="0,196 360,196 250,140 110,140" fill="#8a8a92"/>
+      <polygon points="0,210 360,210 330,196 30,196" fill="#7a7a82"/>
+      <g stroke="#f4e9c8" stroke-width="4">
+        <line x1="40" y1="196" x2="150" y2="150"/>
+        <line x1="200" y1="196" x2="240" y2="162"/>
+      </g>
+      <!-- километровые столбы -->
+      <rect x="90" y="116" width="8" height="28" fill="#8a5a2b"/>
+      <rect x="84" y="112" width="20" height="10" rx="3" fill="#fffef4" stroke="#8a5a2b" stroke-width="2"/>
+      <rect x="300" y="150" width="8" height="26" fill="#8a5a2b"/>
+      <rect x="294" y="146" width="20" height="10" rx="3" fill="#fffef4" stroke="#8a5a2b" stroke-width="2"/>
+      <g font-size="46"><text x="120" y="170">🚲</text></g>
+      <g font-size="34"><text x="280" y="150">🌳</text></g>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1324,6 +1390,9 @@ function coinsSVG(){
     else if(scene==='school') base=schoolSVG();
     else if(scene==='ice') base=iceSVG();
     else if(scene==='tile') base=tileSVG();
+    else if(scene==='scale') base=scaleSVG();
+    else if(scene==='sandbox') base=sandboxSVG();
+    else if(scene==='road') base=roadSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1423,6 +1492,9 @@ function coinsSVG(){
       .c2-stage.c2-bg-school { background:linear-gradient(#f6e3c5,#e6cfa0 45%,#b3905f); }
       .c2-stage.c2-bg-ice { background:linear-gradient(#d8e8f8,#9fc4e8 45%,#4a90c8); }
       .c2-stage.c2-bg-tile { background:linear-gradient(#a8d2ea,#7fb8d8 45%,#c89a6a); }
+      .c2-stage.c2-bg-scale { background:linear-gradient(#e0c8a0,#f0dcc0 45%,#c89a6a); }
+      .c2-stage.c2-bg-sandbox { background:linear-gradient(#a8dcf0,#7fb45c 45%,#7fb45c); }
+      .c2-stage.c2-bg-road { background:linear-gradient(#a8dcf0,#8fc9e8 45%,#7fb45c); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
