@@ -1729,7 +1729,7 @@ function coinsSVG(){
       m=`<text x="180" y="78" text-anchor="middle" font-size="17" fill="#b6e0bd">берём коробки с x: 3 штуки + 5 штук</text>
         <text x="180" y="140" text-anchor="middle" font-size="40" font-weight="bold" fill="#f4e9c8">3x + 5x = 8x</text>
         <rect x="64" y="168" width="232" height="40" rx="20" fill="rgba(217,164,65,.22)" stroke="#d9a441" stroke-width="3"/>
-        <text x="180" y="196" text-anchor="middle" font-size="22" font-weight="bold" fill="#ffd76a">числа: 3+5=8 · букву x не трогаем</text>`;
+        <text x="180" y="196" text-anchor="middle" font-size="22" font-weight="bold" fill="#ffd76a">числа: 3+5=8 · букву x не трогай!</text>`;
     } else if(v===3){
       m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#ffb0a0">минус перед скобкой меняет знаки</text>
         <text x="180" y="128" text-anchor="middle" font-size="34" font-weight="bold" fill="#f4e9c8">−(2x + 3) = −2x − 3</text>
@@ -1832,7 +1832,7 @@ function coinsSVG(){
         </g>
         <path d="M210 96 v64" stroke="#d9a441" stroke-width="4"/>
         <text x="232" y="136" font-size="26">{</text>
-        <text x="180" y="216" text-anchor="middle" font-size="16" fill="#8fa08f">ищем пару чисел, подходящую в ОБА сразу</text>`;
+        <text x="180" y="216" text-anchor="middle" font-size="16" fill="#8fa08f">ищем пару для ОБОИХ сразу</text>`;
     } else if(v===1){
       m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#b6d4e8">+y и −y — гасят друг друга!</text>
         <g font-size="30" font-family="Georgia,serif" text-anchor="middle">
@@ -1850,7 +1850,7 @@ function coinsSVG(){
         <rect x="88" y="196" width="184" height="34" rx="17" fill="rgba(79,141,255,.3)"/>
         <text x="180" y="220" text-anchor="middle" font-size="22" font-weight="bold" fill="#7fd1ff">2x = 14 → x = 7</text>`;
     } else if(v===3){
-      m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#b6d4e8">x = 7 подставляем в первое уравнение</text>
+      m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#b6d4e8">x=7 — в первое уравнение</text>
         <text x="180" y="132" text-anchor="middle" font-size="30" font-weight="bold" fill="#f4e9c8">7 + y = 10</text>
         <text x="180" y="176" text-anchor="middle" font-size="24" fill="#7fd1ff">y = 10 − 7 = 3</text>
         <rect x="112" y="196" width="136" height="34" rx="17" fill="#d9a441"/>
@@ -1994,7 +1994,7 @@ function coinsSVG(){
         ${axis(true,true,240)}
         <text x="180" y="224" text-anchor="middle" font-size="14" fill="#8fa08f">кружок на 3 пустой: само число 3 не подходит</text>`;
     } else if(v===2){
-      m=`<text x="180" y="84" text-anchor="middle" font-size="16" fill="#ffd0c0">а теперь ВНИМАНИЕ: делим на отрицательное!</text>
+      m=`<text x="180" y="84" text-anchor="middle" font-size="16" fill="#ffd0c0">ВНИМАНИЕ: делим на минус!</text>
         <text x="180" y="126" text-anchor="middle" font-size="24" font-weight="bold" fill="#f4e9c8">−3x &lt; 9  |  : (−3)</text>
         <text x="180" y="162" text-anchor="middle" font-size="22" font-weight="bold" fill="#ffd76a">x &gt; −3</text>
         <text x="180" y="190" text-anchor="middle" font-size="16" fill="#e86a5a">знак ПЕРЕВЕРНУЛСЯ: &lt; стал &gt;</text>
@@ -2018,8 +2018,8 @@ function coinsSVG(){
         <text x="180" y="220" text-anchor="middle" font-size="14" fill="#8fa08f">закрашенный кружок = число включаем</text>`;
     } else if(v===6){
       m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">главное правило — запомни навсегда</text>
-        <text x="180" y="120" text-anchor="middle" font-size="21" fill="#f4e9c8">делим на положительное → знак прежний</text>
-        <text x="180" y="152" text-anchor="middle" font-size="21" fill="#ffd76a">делим на отрицательное → знак наоборот</text>
+        <text x="180" y="120" text-anchor="middle" font-size="21" fill="#f4e9c8">делим на плюс → знак прежний</text>
+        <text x="180" y="152" text-anchor="middle" font-size="21" fill="#ffd76a">делим на минус → знак наоборот</text>
         <text x="180" y="190" text-anchor="middle" font-size="16" fill="#8fd1a8">умножение на минус — то же самое</text>
         <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fa08f">проверяй ответ подстановкой одного числа!</text>`;
     } else {
@@ -2040,7 +2040,7 @@ function coinsSVG(){
     let m='';
     const triL=`<polygon points="180,60 90,190 270,190" fill="rgba(127,209,255,.15)" stroke="#7fd1ff" stroke-width="4"/>`;
     if(v===0){
-      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">два треугольника равны, если их можно совместить</text>
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">равны — можно совместить наложением</text>
         ${triL}
         <text x="180" y="60" text-anchor="middle" font-size="13" fill="#ffd76a">A</text>
         <text x="78" y="204" text-anchor="middle" font-size="13" fill="#8fd1a8">B</text>
@@ -2136,7 +2136,7 @@ function coinsSVG(){
         <line x1="180" y1="52" x2="180" y2="180" stroke="#ff8ac0" stroke-width="5"/>
         <path d="M180 52 L166 74 A 30 30 0 0 1 190 70 Z" fill="rgba(255,138,192,.6)"/>
         <text x="196" y="66" font-size="13" fill="#ff8ac0">∠1 = ∠2</text>
-        <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">биссектриса — «луч-справедливость»: делит угол поровну</text>`;
+        <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">биссектриса делит угол поровну</text>`;
     } else if(v===3){
       m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">высота: ПЕРПЕНДИКУЛЯР к стороне</text>
         ${baseTri('#e86a5a')}
@@ -2146,7 +2146,7 @@ function coinsSVG(){
         <rect x="228" y="144" width="20" height="14" fill="none" stroke="#7fd1ff" stroke-width="2"/>
         <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">высота падает на сторону под прямым углом (90°)</text>`;
     } else if(v===4){
-      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">равнобедренный треугольник — особый случай</text>
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">равнобедренный — особый случай</text>
         <polygon points="180,52 90,196 270,196" fill="rgba(255,215,106,.10)" stroke="#ffd76a" stroke-width="4"/>
         <line x1="180" y1="52" x2="180" y2="196" stroke="#ff8ac0" stroke-width="5"/>
         <line x1="90" y1="196" x2="270" y2="196" stroke="#8fd1a8" stroke-width="3" opacity=".4"/>
@@ -2185,7 +2185,7 @@ function coinsSVG(){
     const v=(fr&&fr.v)||0;
     let m='';
     if(v===0){
-      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">параллельные прямые никогда не встречаются</text>
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">параллельные не встречаются</text>
         <line x1="40" y1="100" x2="320" y2="100" stroke="#8fd1a8" stroke-width="5"/>
         <line x1="40" y1="170" x2="320" y2="170" stroke="#8fd1a8" stroke-width="5"/>
         <line x1="120" y1="40" x2="240" y2="230" stroke="#ffd76a" stroke-width="4"/>
@@ -2297,7 +2297,7 @@ function coinsSVG(){
         <circle cx="220" cy="150" r="8" fill="#8fd1a8"/><text x="216" y="142" font-size="12" fill="#8fd1a8">4</text>
         <circle cx="140" cy="150" r="5" fill="#ffd76a"/>
         <text x="180" y="216" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffd76a">x = 4 или x = −4</text>
-        <text x="180" y="240" text-anchor="middle" font-size="13" fill="#8fa08f">уравнение с модулем: ДВА ответа!</text>`;
+        <text x="180" y="240" text-anchor="middle" font-size="13" fill="#8fa08f">уравнение с модулем → ДВА ответа!</text>`;
     } else if(v===3){
       m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">|x| = 0: только само число 0</text>
         ${axis('')}
@@ -2322,7 +2322,7 @@ function coinsSVG(){
           <text x="180" y="160" fill="#8fd1a8">|12| = 12</text>
           <text x="180" y="194" fill="#ffd76a">|0| = 0</text>
         </g>
-        <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">отрицательное → убираем минус; положительное → как есть</text>`;
+        <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">минус убираем, плюс — как есть</text>`;
     } else if(v===6){
       m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">главное о модуле</text>
         <g font-size="19" fill="#f4e9c8" text-anchor="middle">
@@ -2330,7 +2330,7 @@ function coinsSVG(){
           <text x="180" y="152" fill="#7fd1ff">|x| = a → x = a или x = −a</text>
           <text x="180" y="180" fill="#8fd1a8">|x − a| — расстояние до точки a</text>
         </g>
-        <text x="180" y="220" text-anchor="middle" font-size="14" fill="#8fa08f">в задачах-ловушках: модуль никогда не равен минусу!</text>`;
+        <text x="180" y="220" text-anchor="middle" font-size="14" fill="#8fa08f">ловушка: модуль ≠ минусу!</text>`;
     } else {
       m=`<text x="180" y="92" text-anchor="middle" font-size="16" fill="#b6d4e8">расстояние от −7 до нуля?</text>
         <text x="180" y="152" text-anchor="middle" font-size="38" font-weight="bold" fill="#ffd76a" class="c2a-spark">|−7| = ?</text>
@@ -2375,7 +2375,7 @@ function coinsSVG(){
           <text x="180" y="126" fill="#f4e9c8">23 = 5·4 + 3</text>
           <text x="180" y="164" fill="#ffd76a">23 ≡ 3 (mod 4)</text>
         </g>
-        <text x="180" y="210" text-anchor="middle" font-size="17" fill="#8fd1a8">берём самое большое кратное 4, не большее 23</text>
+        <text x="180" y="210" text-anchor="middle" font-size="17" fill="#8fd1a8">кратное 4 не больше 23 — это 20</text>
         <text x="180" y="234" text-anchor="middle" font-size="13" fill="#8fa08f">это 20 = 5·4, остаток 23 − 20 = 3</text>`;
     } else if(v===4){
       m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">проверяем через разность</text>
@@ -2386,7 +2386,7 @@ function coinsSVG(){
         <text x="180" y="196" text-anchor="middle" font-size="20" font-weight="bold" fill="#ffd76a">29 ≡ 5 (mod 6)</text>
         <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">29 = 4·6 + 5 — остаток 5</text>`;
     } else if(v===5){
-      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">зачем это нужно: остатки удобно складывать</text>
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">остатки удобно складывать</text>
         <g font-size="21" font-family="Georgia,serif" text-anchor="middle">
           <text x="180" y="122" fill="#f4e9c8">17 ≡ 2, 23 ≡ 3 (mod 5)</text>
           <text x="180" y="154" fill="#7fd1ff">17 + 23 ≡ 2 + 3 = 5 ≡ 0</text>
@@ -2410,6 +2410,279 @@ function coinsSVG(){
       <rect x="0" y="0" width="360" height="240" fill="#1e2433"/>
       <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#3f6a9f" stroke-width="4"/>
       <text x="18" y="54" font-size="18" font-weight="bold" fill="#7fd1ff">Сравнения по модулю</text>
+      ${m}</svg>`; }
+
+  /* --- 409: уравнения с параметром ax = b (три случая) --- */
+  function prmSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    if(v===0){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">параметр a — «ручка настройки» уравнения</text>
+        <g font-size="28" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="128" fill="#f4e9c8">ax = b</text>
+        </g>
+        <text x="180" y="170" text-anchor="middle" font-size="17" fill="#7fd1ff">a и b — буквы-числа, x — неизвестное</text>
+        <text x="180" y="216" text-anchor="middle" font-size="15" fill="#8fa08f">задача: понять, как ответ зависит от a и b</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#8fd1a8">случай 1: a ≠ 0 — делим смело!</text>
+        <g font-size="26" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="124" fill="#f4e9c8">ax = b, a ≠ 0</text>
+          <text x="180" y="160" fill="#ffd76a">x = b : a — одно решение</text>
+        </g>
+        <text x="180" y="200" text-anchor="middle" font-size="18" fill="#8fd1a8">пример: 3x = 6 → x = 2</text>
+        <text x="180" y="232" text-anchor="middle" font-size="14" fill="#8fa08f">на a делить можно — оно не ноль</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">случай 2: a = 0 и b = 0 — всегда верно</text>
+        <g font-size="26" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="124" fill="#f4e9c8">0·x = 0</text>
+          <text x="180" y="160" fill="#ffd76a">0 = 0 — верно при ЛЮБОМ x</text>
+        </g>
+        <text x="180" y="200" text-anchor="middle" font-size="18" fill="#8fd1a8">бесконечно много решений</text>
+        <text x="180" y="232" text-anchor="middle" font-size="14" fill="#8fa08f">подставь любое число — ноль везде ноль</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#ffb0a0">случай 3: a = 0 и b ≠ 0 — решений нет</text>
+        <g font-size="26" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="124" fill="#f4e9c8">0·x = 5</text>
+          <text x="180" y="160" fill="#e86a5a">0 = 5 — ложь!</text>
+        </g>
+        <text x="180" y="200" text-anchor="middle" font-size="18" fill="#ffb0a0">ни одно число не подойдёт</text>
+        <text x="180" y="232" text-anchor="middle" font-size="14" fill="#8fa08f">ноль умножить на что угодно — всегда 0</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">сводим к виду ax = b</text>
+        <g font-size="22" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="116" fill="#f4e9c8">ax + 1 = 5  (x с a слева)</text>
+          <text x="180" y="148" fill="#7fd1ff">ax = 5 − 1 = 4</text>
+          <text x="180" y="180" fill="#8fd1a8">при a ≠ 0: x = 4/a</text>
+        </g>
+        <text x="180" y="220" text-anchor="middle" font-size="14" fill="#8fa08f">всегда приводи уравнение к виду ax = b</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">пример из олимпиады</text>
+        <g font-size="22" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="114" fill="#f4e9c8">ax = 6. При каком a решений нет?</text>
+          <text x="180" y="148" fill="#7fd1ff">если a = 0: 0 = 6 — ложь!</text>
+        </g>
+        <text x="180" y="188" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffd76a">ответ: a = 0 — решений нет</text>
+        <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">а при a = 0, b = 0 — решений бесконечно много</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">шпаргалка: ax = b</text>
+        <g font-size="19" fill="#f4e9c8" text-anchor="middle">
+          <text x="180" y="122" fill="#8fd1a8">a ≠ 0 → x = b/a (одно)</text>
+          <text x="180" y="152" fill="#7fd1ff">a = 0, b = 0 → ∞ решений</text>
+          <text x="180" y="182" fill="#e86a5a">a = 0, b ≠ 0 → решений нет</text>
+        </g>
+        <text x="180" y="222" text-anchor="middle" font-size="13" fill="#8fa08f">три случая — и все задачи на параметры открыты</text>`;
+    } else {
+      m=`<text x="180" y="92" text-anchor="middle" font-size="16" fill="#b6d4e8">ax = 6, a = 3: делим?</text>
+        <text x="180" y="152" text-anchor="middle" font-size="36" font-weight="bold" fill="#ffd76a" class="c2a-spark">x = ?</text>
+        <text x="180" y="204" text-anchor="middle" font-size="16" fill="#8fa08f">3x = 6 → x = 6 : 3</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2a3d"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#a05a9f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#e8a0d8">Уравнения с параметром ax = b</text>
+      ${m}</svg>`; }
+
+  /* --- 410: неравенство о средних (AM ≥ GM) --- */
+  function avg7SVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    if(v===0){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">два вида среднего для чисел a и b</text>
+        <g font-size="22" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="124" fill="#7fd1ff">среднее арифметическое: (a+b)/2</text>
+          <text x="180" y="158" fill="#8fd1a8">среднее геометрическое: √(a·b)</text>
+        </g>
+        <text x="180" y="204" text-anchor="middle" font-size="15" fill="#f4e9c8">для 4 и 9: (4+9)/2 = 6,5 · √36 = 6</text>
+        <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">арифметическое всегда не меньше геометрического</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#ffd76a">главное неравенство о средних</text>
+        <g font-size="24" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="128" fill="#f4e9c8">(a+b)/2 ≥ √(a·b)</text>
+        </g>
+        <text x="180" y="172" text-anchor="middle" font-size="16" fill="#8fd1a8">для положительных a и b</text>
+        <text x="180" y="204" text-anchor="middle" font-size="16" fill="#8fd1a8">равенство только при a = b</text>
+        <text x="180" y="232" text-anchor="middle" font-size="13" fill="#8fa08f">проверка на 4 и 9: 6,5 ≥ 6 ✔</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">почему это правда: квадрат разности</text>
+        <g font-size="20" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="118" fill="#f4e9c8">(√a − √b)² ≥ 0 — всегда!</text>
+          <text x="180" y="148" fill="#7fd1ff">a − 2√(ab) + b ≥ 0</text>
+          <text x="180" y="178" fill="#8fd1a8">a + b ≥ 2√(ab)</text>
+        </g>
+        <text x="180" y="216" text-anchor="middle" font-size="16" fill="#ffd76a">делим на 2 — получаем (a+b)/2 ≥ √(ab)</text>
+        <text x="180" y="238" text-anchor="middle" font-size="12" fill="#8fa08f">квадрат любого числа неотрицателен — вот и всё!</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">применяем: x + 4/x при x > 0</text>
+        <g font-size="22" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="116" fill="#f4e9c8">x + 4/x — сумма двух чисел</text>
+          <text x="180" y="148" fill="#7fd1ff">их произведение: x·(4/x) = 4</text>
+          <text x="180" y="180" fill="#8fd1a8">значит, x + 4/x ≥ 2·√4 = 4</text>
+        </g>
+        <text x="180" y="222" text-anchor="middle" font-size="15" fill="#ffd76a">минимум равен 4 при x = 2</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="16" fill="#b6d4e8">когда достигается минимум: a = b</text>
+        <g font-size="22" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="118" fill="#f4e9c8">x = 4/x → x² = 4 → x = 2</text>
+          <text x="180" y="152" fill="#7fd1ff">при x = 2: 2 + 4/2 = 2 + 2 = 4</text>
+        </g>
+        <text x="180" y="196" text-anchor="middle" font-size="17" font-weight="bold" fill="#8fd1a8">равенство → минимум достигнут</text>
+        <text x="180" y="228" text-anchor="middle" font-size="13" fill="#8fa08f">в точке минимума оба числа равны друг другу</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">средние для 8 и 12</text>
+        <g font-size="24" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="122" fill="#7fd1ff">(8 + 12)/2 = 10</text>
+          <text x="180" y="158" fill="#8fd1a8">√(8·12) = √96 ≈ 9,8</text>
+        </g>
+        <text x="180" y="198" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffd76a">10 ≥ 9,8 — неравенство работает!</text>
+        <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">арифметическое чуть больше — они равны лишь при a=b</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">где это применяют в олимпиадах</text>
+        <g font-size="19" fill="#f4e9c8" text-anchor="middle">
+          <text x="180" y="122">доказать x + 1/x ≥ 2 (при x>0)</text>
+          <text x="180" y="152" fill="#7fd1ff">найти минимум a + b при a·b = const</text>
+          <text x="180" y="182" fill="#8fd1a8">оценить площадь при заданном периметре</text>
+        </g>
+        <text x="180" y="220" text-anchor="middle" font-size="14" fill="#ffd76a">главный инструмент задач на минимум и максимум</text>`;
+    } else {
+      m=`<text x="180" y="92" text-anchor="middle" font-size="16" fill="#b6d4e8">среднее арифметическое чисел 8 и 12</text>
+        <text x="180" y="152" text-anchor="middle" font-size="36" font-weight="bold" fill="#ffd76a" class="c2a-spark">(8+12)/2 = ?</text>
+        <text x="180" y="204" text-anchor="middle" font-size="15" fill="#8fa08f">сложи и раздели на два</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#14241c"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#3f7a5f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#8fd1a8">Неравенство о средних</text>
+      ${m}</svg>`; }
+
+  /* --- 411: принцип крайнего (выбираем крайний элемент) --- */
+  function extSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    if(v===0){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">крайний элемент — самый-самый</text>
+        <g font-size="30">
+          <text x="40" y="136" fill="#f4e9c8">5</text><text x="110" y="136" fill="#f4e9c8">2</text>
+          <text x="180" y="136" fill="#f4e9c8">7</text><text x="250" y="136" fill="#f4e9c8">4</text>
+        </g>
+        <rect x="232" y="106" width="46" height="46" rx="10" fill="rgba(255,215,106,.25)" stroke="#ffd76a" stroke-width="3"/>
+        <text x="255" y="104" text-anchor="middle" font-size="12" fill="#ffd76a">самое большое!</text>
+        <text x="180" y="200" text-anchor="middle" font-size="15" fill="#8fd1a8">изучаем крайний — обычно он и есть ключ</text>
+        <text x="180" y="228" text-anchor="middle" font-size="13" fill="#8fa08f">самый большой, самый маленький, самый близкий…</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">из трёх чисел два — одной чётности</text>
+        <g font-size="28">
+          <text x="60" y="132" fill="#7fd1ff">чёт</text><text x="150" y="132" fill="#7fd1ff">чёт</text><text x="250" y="132" fill="#e86a5a">нечет</text>
+        </g>
+        <rect x="40" y="150" width="60" height="34" rx="8" fill="rgba(79,141,255,.2)" stroke="#7fd1ff" stroke-width="2"/>
+        <rect x="130" y="150" width="60" height="34" rx="8" fill="rgba(79,141,255,.2)" stroke="#7fd1ff" stroke-width="2"/>
+        <text x="180" y="200" text-anchor="middle" font-size="16" fill="#ffd76a">клеток чётности всего 2 — а чисел 3!</text>
+        <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">по принципу Дирихле двое попадут в одну клетку</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">обобщение: остатки по модулю m</text>
+        <g font-size="24" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="124" fill="#f4e9c8">остатков по mod m — ровно m</text>
+          <text x="180" y="158" fill="#7fd1ff">0, 1, 2, …, m−1</text>
+        </g>
+        <text x="180" y="198" text-anchor="middle" font-size="17" fill="#8fd1a8">m+1 чисел → два с одним остатком!</text>
+        <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">их разность делится на m — мощный приём</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">пример: 4 числа, остатки по mod 3</text>
+        <g font-size="22">
+          <text x="60" y="130" fill="#f4e9c8">ост.0</text><text x="150" y="130" fill="#f4e9c8">ост.1</text><text x="240" y="130" fill="#f4e9c8">ост.2</text>
+        </g>
+        <g font-size="26">
+          <text x="96" y="176" fill="#ffd76a">a</text><text x="186" y="176" fill="#ffd76a">b</text>
+        </g>
+        <rect x="40" y="150" width="120" height="40" rx="10" fill="rgba(79,141,255,.2)" stroke="#7fd1ff" stroke-width="2"/>
+        <text x="180" y="222" text-anchor="middle" font-size="16" fill="#8fd1a8">a и b имеют одинаковый остаток → a − b ⋮ 3</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">выбираем крайний: наибольший делитель</text>
+        <g font-size="22" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="120" fill="#f4e9c8">у числа n больше 1 есть простой делитель</text>
+          <text x="180" y="154" fill="#7fd1ff">возьмём его НАИМЕНЬШИЙ делитель d &gt; 1</text>
+        </g>
+        <text x="180" y="192" text-anchor="middle" font-size="16" fill="#8fd1a8">d — простой: иначе был бы делитель меньше</text>
+        <text x="180" y="230" text-anchor="middle" font-size="13" fill="#8fa08f">противоречие с выбором — классика принципа крайнего</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">идея «наименьший контрпример»</text>
+        <g font-size="20" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="120" fill="#f4e9c8">доказываем про ВСЕ числа</text>
+          <text x="180" y="150" fill="#7fd1ff">есть контрпример — берём наименьший</text>
+          <text x="180" y="180" fill="#8fd1a8">из него построим меньший — противоречие!</text>
+        </g>
+        <text x="180" y="222" text-anchor="middle" font-size="15" fill="#ffd76a">контрпримеров нет — доказано!</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">когда применять принцип крайнего</text>
+        <g font-size="19" fill="#f4e9c8" text-anchor="middle">
+          <text x="180" y="122">нужно доказать, что «что-то всегда есть»</text>
+          <text x="180" y="152" fill="#7fd1ff">надо найти максимум или минимум</text>
+          <text x="180" y="182" fill="#8fd1a8">доказательство от противного зашло в тупик</text>
+        </g>
+        <text x="180" y="222" text-anchor="middle" font-size="14" fill="#8fd1a8">выбери крайний и разгляди его</text>`;
+    } else {
+      m=`<text x="180" y="92" text-anchor="middle" font-size="16" fill="#b6d4e8">остатков при делении на 2 — сколько?</text>
+        <text x="180" y="152" text-anchor="middle" font-size="36" font-weight="bold" fill="#ffd76a" class="c2a-spark">mod 2: ?</text>
+        <text x="180" y="204" text-anchor="middle" font-size="15" fill="#8fa08f">чётные и нечётные — их два: 0 и 1</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#231a2a"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#a05a9f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#ff8ac0">Принцип крайнего</text>
+      ${m}</svg>`; }
+
+  /* --- 412: игры и раскраски (доска 7×7, домино) --- */
+  function game7SVG(fr){
+    const v=(fr&&fr.v)||0;
+    let board='';
+    for(let r=0;r<7;r++){ for(let c=0;c<7;c++){ const x=96+c*21, y=64+r*21;
+      board+=`<rect x="${x}" y="${y}" width="21" height="21" fill="${(r+c)%2?'#2f8fc4':'#cfe0ff'}" stroke="#0f1a24" stroke-width="1"/>`; } }
+    let m='';
+    if(v===0){
+      m=`
+        ${board}
+        <text x="180" y="228" text-anchor="middle" font-size="17" font-weight="bold" fill="#ffd76a">7·7 = 49 клеток</text>`;
+    } else if(v===1){
+      m=`
+        ${board}
+        <rect x="92" y="64" width="50" height="25" rx="6" fill="rgba(255,215,106,.5)" stroke="#ffd76a" stroke-width="3"/>
+        <text x="180" y="230" text-anchor="middle" font-size="14" fill="#8fd1a8">одна плитка = ровно 2 клетки (белая + чёрная)</text>`;
+    } else if(v===2){
+      m=`
+        ${board}
+        <text x="180" y="228" text-anchor="middle" font-size="16" font-weight="bold" fill="#e86a5a">49 : 2 — не делится нацело → НЕЛЬЗЯ!</text>`;
+    } else if(v===3){
+      m=`
+        ${board}
+        <text x="180" y="228" text-anchor="middle" font-size="15" fill="#8fd1a8">плитка: 1 синяя + 1 голубая</text>`;
+    } else if(v===4){
+      m=`
+        ${board}
+        <text x="180" y="228" text-anchor="middle" font-size="15" fill="#8fd1a8">25 синих, 24 голубых — не поровну!</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="16" fill="#b6d4e8">игра: кто не сходит — проиграл</text>
+        <g font-size="22" text-anchor="middle">
+          <text x="180" y="124" fill="#f4e9c8">49 ходов — последний делает первый</text>
+          <text x="180" y="158" fill="#7fd1ff">нечётное число ходов → победа первого</text>
+        </g>
+        <text x="180" y="206" text-anchor="middle" font-size="17" font-weight="bold" fill="#8fd1a8">первый красит 49-ю → выигрывает</text>
+        <text x="180" y="234" text-anchor="middle" font-size="13" fill="#8fa08f">чёт — второй, нечёт — первый: вот и вся стратегия</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="16" fill="#b6d4e8">рецепт для игр и раскрасок</text>
+        <g font-size="19" fill="#f4e9c8" text-anchor="middle">
+          <text x="180" y="122">раскрась доску (шахматно, по цветам)</text>
+          <text x="180" y="152" fill="#7fd1ff">посчитай клетки каждого цвета</text>
+          <text x="180" y="182" fill="#8fd1a8">сравни с тем, что накрывает плитка/ход</text>
+        </g>
+        <text x="180" y="224" text-anchor="middle" font-size="15" fill="#ffd76a">не сходится → «нельзя»!</text>`;
+    } else {
+      m=`<text x="180" y="86" text-anchor="middle" font-size="16" fill="#b6d4e8">сколько клеток в доске 7×7?</text>
+        <text x="180" y="146" text-anchor="middle" font-size="36" font-weight="bold" fill="#ffd76a" class="c2a-spark">7·7 = ?</text>
+        <text x="180" y="198" text-anchor="middle" font-size="15" fill="#8fa08f">семь рядов по семь клеток</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#14242e"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#2f8fc4" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#7fd1ff">Игры и раскраски · доска 7×7</text>
       ${m}</svg>`; }
 
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
@@ -2485,6 +2758,10 @@ function coinsSVG(){
     else if(scene==='par') base=parSVG(fr);
     else if(scene==='mod') base=modSVG(fr);
     else if(scene==='cmp') base=cmpSVG(fr);
+    else if(scene==='prm') base=prmSVG(fr);
+    else if(scene==='avg7') base=avg7SVG(fr);
+    else if(scene==='ext') base=extSVG(fr);
+    else if(scene==='game7') base=game7SVG(fr);
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
