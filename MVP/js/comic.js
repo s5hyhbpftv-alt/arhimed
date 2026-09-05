@@ -1452,6 +1452,58 @@ function coinsSVG(){
       <line x1="150" y1="196" x2="210" y2="184" stroke="#e86a5a" stroke-width="2" stroke-dasharray="5 4"/>
     </svg>`; }
 
+  function probSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#14241c"/>
+      <text x="26" y="38" font-size="21" font-weight="bold" fill="#ffd76a">Вероятность = благоприятные : все</text>
+      <!-- мешок -->
+      <path d="M40 150 Q60 110 120 108 Q180 110 190 150 Q170 196 115 196 Q60 196 40 150 Z" fill="#8a5a2b" stroke="#5f3a1a" stroke-width="4"/>
+      <g font-size="34">
+        <text x="70" y="150">🔴</text><text x="112" y="140">🔵</text>
+        <text x="118" y="166">🔴</text><text x="150" y="146">🔵</text><text x="156" y="172">🔵</text>
+      </g>
+      <text x="46" y="216" font-size="18" fill="#8fa08f">2 красных + 3 синих = 5</text>
+      <!-- диаграмма -->
+      <rect x="240" y="120" width="34" height="56" fill="#e86a5a"/>
+      <rect x="292" y="96" width="34" height="80" fill="#4a93d0"/>
+      <text x="250" y="196" font-size="15" fill="#ffcfc2">2</text>
+      <text x="302" y="196" font-size="15" fill="#c4e6ff">3</text>
+      <text x="240" y="92" font-size="15" fill="#9fc0e8">диаграмма</text>
+    </svg>`; }
+  function estSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2a3d"/>
+      <rect x="10" y="10" width="340" height="220" rx="8" fill="none" stroke="#3f6a9f" stroke-width="4"/>
+      <text x="30" y="46" font-size="21" font-weight="bold" fill="#ffd76a">Оценка + пример</text>
+      <g font-size="24" fill="#f4e9c8">
+        <text x="30" y="84">38 + 39 + 40 ≈ 40·3 = 120</text>
+        <text x="30" y="114">точная сумма = 39·3 = 117</text>
+      </g>
+      <g font-size="20" fill="#7fd1ff">
+        <text x="30" y="152">наименьшее с суммой цифр 10:</text>
+        <text x="30" y="180">19 → 1 + 9 = 10</text>
+      </g>
+      <rect x="30" y="196" width="210" height="26" rx="13" fill="rgba(127,209,255,.18)" stroke="#7fd1ff" stroke-width="2"/>
+      <text x="135" y="215" text-anchor="middle" font-size="17" fill="#c4e6ff">(50 + 10) : 2 = 30 — большее</text>
+    </svg>`; }
+  function avgSVG(){
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#16251c"/>
+      <text x="26" y="40" font-size="21" font-weight="bold" fill="#ffd76a">Средняя скорость = путь : время</text>
+      <!-- участки -->
+      <rect x="30" y="70" width="130" height="44" fill="#5f9a6a" stroke="#8fd1a8" stroke-width="3"/>
+      <text x="95" y="84" text-anchor="middle" font-size="15" fill="#eafff0">40 км/ч · 2 ч</text>
+      <text x="95" y="106" text-anchor="middle" font-size="17" fill="#eafff0">= 80 км</text>
+      <rect x="160" y="70" width="170" height="44" fill="#4a93d0" stroke="#9fd0e8" stroke-width="3"/>
+      <text x="245" y="84" text-anchor="middle" font-size="15" fill="#e6f4ff">70 км/ч · 1 ч</text>
+      <text x="245" y="106" text-anchor="middle" font-size="17" fill="#e6f4ff">= 70 км</text>
+      <text x="95" y="140" text-anchor="middle" font-size="18" fill="#f4e9c8">путь 150 км</text>
+      <text x="245" y="140" text-anchor="middle" font-size="18" fill="#f4e9c8">время 3 ч</text>
+      <rect x="90" y="158" width="180" height="44" rx="22" fill="#d9a441"/>
+      <text x="180" y="187" text-anchor="middle" font-size="22" font-weight="bold" fill="#33291e">150 : 3 = 50 км/ч</text>
+      <text x="180" y="222" text-anchor="middle" font-size="15" fill="#e86a5a">(40+70):2 = 55 — неверно!</text>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1498,6 +1550,9 @@ function coinsSVG(){
     else if(scene==='euclid') base=euclidSVG();
     else if(scene==='coord') base=coordSVG();
     else if(scene==='sym') base=symSVG();
+    else if(scene==='prob') base=probSVG();
+    else if(scene==='est') base=estSVG();
+    else if(scene==='avg') base=avgSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -1605,6 +1660,9 @@ function coinsSVG(){
       .c2-stage.c2-bg-euclid { background:linear-gradient(#1e3a2f,#17302a 45%,#0f241c); }
       .c2-stage.c2-bg-coord { background:linear-gradient(#17253d,#12203a 45%,#0c1730); }
       .c2-stage.c2-bg-sym { background:linear-gradient(#2a1f4a,#241a3e 45%,#180f30); }
+      .c2-stage.c2-bg-prob { background:linear-gradient(#14241c,#101c15 45%,#0a140f); }
+      .c2-stage.c2-bg-est { background:linear-gradient(#1e2a3d,#182338 45%,#101a2c); }
+      .c2-stage.c2-bg-avg { background:linear-gradient(#16251c,#122017 45%,#0c1a11); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
