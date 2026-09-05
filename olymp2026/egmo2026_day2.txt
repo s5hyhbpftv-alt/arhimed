@@ -1,0 +1,33 @@
+                                                                              Language: English
+EG
+MO                                                                                                Day: 2
+
+
+
+
+                                                                                    Sunday, April 12, 2026
+
+Problem 4. Let 1 = a1 ≥ a2 ≥ a3 ≥ · · · be an infinite sequence of real numbers such that
+an = a2n + a2n+1 for all positive integers n. For r = 20262026 , prove that
+                                              1         2
+                                                ≤ ar ≤     .
+                                              r        r+1
+
+Problem 5. Let ABC be an acute triangle with AC > AB. Denote by ω its circumcircle and by O
+its circumcentre. Let K be the intersection of the tangents to ω at B and C. Circle ABK intersects
+line BC again at Z ̸= B. Let L be the midpoint of KZ. Let X be the intersection of lines KZ and AB.
+Let V be the point on circle ABL on the same side of BC as A such that OV is perpendicular to KZ.
+Prove that LV is perpendicular to CX.
+
+Problem 6. Let p be a prime number and let n be a positive integer such that p does not divide n.
+Denote by k the number of positive divisors of n, and by 1 = d1 < d2 < · · · < dk = n the positive
+divisors of n. For i = 1, 2, . . . , k, let ci be the number of positive divisors ℓ of d2i such that di − ℓ is
+divisible by p. Prove that
+                                        (p − 1) (c1 + c2 + · · · + ck ) ≥ k 2 .
+
+
+
+
+Language: English                                                           Time: 4 hours and 30 minutes
+                                                                           Each problem is worth 7 points
+

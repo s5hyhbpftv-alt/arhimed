@@ -1,0 +1,204 @@
+Contest Results
+(Analysis by Kai Jiang)
+Problem Statement (restated): Find an array $a$ of $N$ elements that
+satisfies $Q$ given constraints.
+Each constraint $h$,
+$1 \le h \le Q$,
+is represented by a tuple
+$(t_h, l_h, r_h, k_h)$:
+If $t_h = 1$, then we must have
+$\min\{a_i \mid l_h \le i \le r_h\} = k_h$.
+If $t_h = 2$, then we must have
+$\max\{a_i \mid l_h \le i \le r_h\} = k_h$.
+All $k_h$ are distinct.
+A constraint with $t_h = 1$ (respectively, $t_h = 2$) is satisfied if
+$\min\{a_i \mid l_h \le i \le r_h\} = k_h$
+(respectively, $\max\{a_i \mid l_h \le i \le r_h\} = k_h$), and is partially
+satisfied if
+$\min\{a_i \mid l_h \le i \le r_h\} \ge k_h$
+(respectively, $\max\{a_i \mid l_h \le i \le r_h\} \le k_h$).
+Subtask 1: $N, Q \le 100$ and all $t_h$ are equal.
+Assume that $t_h = 1$ for all $h$. The case when $t_h = 2$ is symmetric.
+For each array index $i$, if there is no constraint $h$ such that
+$l_h \le i \le r_h$, then $a_i$ can be set to an arbitrary value. Otherwise,
+consider the unique constraint $h$ with the maximum $k_h$ such that
+$l_h \le i \le r_h$. To partially satisfy this constraint, we must have
+$\min\{a_j \mid l_h \le j \le r_h\} \ge k_h$.
+In particular, since $l_h \le i \le r_h$, we must have $a_i \ge k_h$. Setting
+$a_i = k_h$ satisfies the constraint. Moreover, this choice for $a_i$ is optimal
+because setting $a_i$ to any greater value would not satisfy any constraint.
+After setting $a_i$ for all $i$ as described above, if there are still
+constraints that are not fully satisfied, print $-1$. Otherwise $a$ is a valid
+solution.
+Finding the unique constraint $h$ for each array index $i$ can be done in $O(Q)$
+time. The total time complexity is $O(NQ)$.
+Subtask 3: $N, Q \le 100$.
+Consider an undirected graph with $Q$ vertices corresponding to the $Q$
+constraints, initially without edges. In the following, for each array index
+$i$, we may add an edge between two vertices $u$ and $v$ corresponding to a
+choice for $a_i$ that satisfies either constraint $u$ or $v$.
+For each array index $i$, let $p$ be the constraint with the maximum $k_p$ such
+that $t_p = 1$ and $l_p \le i \le r_p$, and let $q$ be the constraint with the
+minimum $k_q$ such that $t_q = 2$ and $l_q \le i \le r_q$. We consider four
+cases:
+Case 1: Neither $p$ nor $q$ exists. Then $a_i$ can be set to an arbitrary value.
+Do not add any edges in this case.
+Case 2: $p$ exists, but $q$ does not. To partially satisfy constraint $p$, we
+need
+$\min\{a_j \mid l_p \le j \le r_p\} \ge k_p$.
+In particular, since $l_p \le i \le r_p$, we need $a_i \ge k_p$. Then $a_i$ can
+be set to $k_p$ for the same reason as in Subtask 1. Add a loop from $p$ to
+itself.
+Case 3: $q$ exists, but $p$ does not. To partially satisfy constraint $q$, we
+need
+$\max\{a_j \mid l_q \le j \le r_q\} \le k_q$.
+In particular, since $l_q \le i \le r_q$, we need $a_i \le k_q$. Then $a_i$ can
+be set to $k_q$ for a similar reason as in Subtask 1. Add a loop from $q$ to
+itself.
+Case 4: Both $p$ and $q$ exist. Combining the two inequalities for $a_i$ from
+cases 2 and 3, we have $k_p \le a_i \le k_q$. If $k_p \gt k_q$, then no such
+$a_i$ exists, and we print $-1$. Otherwise, setting $a_i$ to $k_p$ satisfies
+constraint $p$, setting $a_i$ to $k_q$ satisfies constraint $q$, and setting
+$a_i$ to any value in between does not satisfy any constraint. Thus it is
+optimal to set $a_i$ to either $k_p$ or $k_q$. Add an edge between $p$ and $q$.
+The problem is now reduced to setting edges in order to satisfy all constraints.
+If any connected component of this graph has fewer edges than vertices, we print
+$-1$. Otherwise, we will construct a valid solution for each connected component
+$C$ of this graph as follows. Since $C$ has at least as many edges as vertices,
+it must contain a cycle. Let $(u, v)$ be any edge on a cycle in $C$. Set this
+edge to satisfy $u$, then remove it. The resulting component $C'$ remains
+connected. Find a spanning tree $T$ of $C'$ rooted at $u$. Set each edge in $T$
+to satisfy the child vertex, and set the other edges of $C'$ arbitrarily.
+Finding the constraints $p$ and $q$ for each array index $i$ can be done in
+$O(Q)$ time. Building the graph takes linear time. Constructing the solution for
+the graph also takes linear time. The total time complexity is $O(NQ)$.
+Subtasks 2, 4: No constraints on $N$ or $Q$.
+The running time of our solution for Subtask 1 can be optimized from $O(NQ)$ to
+$O((N + Q) \log Q)$ using either a sweepline or a segment tree. Assume that
+$t_h = 1$ for all $h$. The case when $t_h = 2$ is symmetric.
+The sweepline solution is as follows. Sweep in increasing array index $i$ and
+maintain a priority queue of constraints with $k_h$ as the key. When the left
+endpoint $l_h$ of a constraint $h$ is encountered, add it to the priority queue.
+Similarly, when the right endpoint $r_h$ of a constraint $h$ is encountered,
+remove it from the priority queue. The unique constraint is the topmost element
+in the priority queue.
+For the segment tree solution, maintain a range-update-point-query segment tree,
+where each node represents a subarray $[l, r]$ of the array $a$, and stores the
+unique constraint $h$ with the maximum $k_h$ such that
+$l_h \le l \le r \le r_h$. For each constraint $h$, do a range update over the
+interval $[l_h, r_h]$. Then, for each array index $i$, the unique constraint can
+be found by a point query.
+To achieve full credit, apply the above optimization twice, for $t_h = 1$ and
+for $t_h = 2$ independently.
+Kai Jiang's C++ code using sweepline:
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <set>
+using namespace std;
+const int N = 200000;
+const int M = 200000;
+int tt[M], rr[M], aa[M];
+vector<int> hh[N];
+set<pair<int, int>> qul, qur;
+vector<int> ei[M];
+int hhl[N], hhr[N], bb[N];
+int visited[M], i_;
+void dfs(int p, int h) {
+ if (visited[h]) {
+ i_ = p;
+ return;
+ }
+ visited[h] = 1;
+ for (int i : ei[h])
+ if (i != p)
+ dfs(i, h ^ hhl[i] ^ hhr[i]);
+}
+void dfs_(int h) {
+ if (visited[h] == 2)
+ return;
+ visited[h] = 2;
+ for (int i : ei[h])
+ if (bb[i] == -1) {
+ int g = h ^ hhl[i] ^ hhr[i];
+ bb[i] = aa[g];
+ dfs_(g);
+ }
+}
+int main() {
+ ios_base::sync_with_stdio(false), cin.tie(NULL);
+ int tc; cin >> tc;
+ while (tc--) {
+ int n, m; cin >> n >> m;
+ for (int i = 0; i < n; i++)
+ hh[i].clear();
+ for (int h = 0; h < m; h++) {
+ int t, l, r, a; cin >> t >> l >> r >> a, l--;
+ tt[h] = t, rr[h] = r, aa[h] = a;
+ hh[l].push_back(h << 1 ^ 0);
+ if (r < n)
+ hh[r].push_back(h << 1 ^ 1);
+ }
+ bool yes = true;
+ qul.clear(), qur.clear();
+ for (int h = 0; h < m; h++)
+ ei[h].clear();
+ for (int i = 0; i < n; i++) {
+ for (int h_ : hh[i]) {
+ int h = h_ >> 1;
+ if (!(h_ & 1)) {
+ if (tt[h] == 1)
+ qul.insert({ aa[h], h });
+ else
+ qur.insert({ aa[h], h });
+ } else {
+ if (tt[h] == 1)
+ qul.erase({ aa[h], h });
+ else
+ qur.erase({ aa[h], h });
+ }
+ }
+ int hl = qul.empty() ? -1 : (*prev(qul.end())).second;
+ int hr = qur.empty() ? -1 : (*qur.begin()).second;
+ bb[i] = -1;
+ if (hl != -1 && hr != -1) {
+ if (aa[hl] > aa[hr]) {
+ yes = false;
+ break;
+ }
+ ei[hhl[i] = hl].push_back(i);
+ ei[hhr[i] = hr].push_back(i);
+ } else if (hl != -1) {
+ ei[hhl[i] = hl].push_back(i);
+ ei[hhr[i] = hl].push_back(i);
+ } else if (hr != -1) {
+ ei[hhl[i] = hr].push_back(i);
+ ei[hhr[i] = hr].push_back(i);
+ }
+ }
+ if (!yes) {
+ cout << "-1\n";
+ continue;
+ }
+ for (int h = 0; h < m; h++)
+ visited[h] = 0;
+ for (int h_ = 0; h_ < m; h_++)
+ if (!visited[h_]) {
+ i_ = -1, dfs(-1, h_);
+ if (i_ == -1) {
+ yes = false;
+ break;
+ }
+ int hl = hhl[i_];
+ bb[i_] = aa[hl];
+ dfs_(hl);
+ }
+ if (!yes) {
+ cout << "-1\n";
+ continue;
+ }
+ for (int i = 0; i < n; i++)
+ cout << (bb[i] != -1 ? bb[i] : 0) << " \n"[i + 1 == n];
+ }
+ return 0;
+}

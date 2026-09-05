@@ -1,0 +1,44 @@
+ The 17th Romanian Master of Mathematics Competition
+                  Day 2: The 26th of February, 2026, Bucharest
+
+
+
+
+                                                                 Language: English
+
+
+Problem 4. For any positive integer m, let φ(m) be the number of positive
+integers less than or equal to m and coprime to m. Define φ0 (m) = m and,
+for each positive integer k, φk (m) = φ(φk−1 (m)). For any integer n ≥ 3,
+prove that
+
+             φ0 (2n − 3) · φ1 (2n − 3) · φ2 (2n − 3) · . . . · φn (2n − 3)
+
+has at most n distinct prime divisors.
+
+Problem 5. Let ABC be a triangle with AB < AC, let O be its circum-
+centre and let XY ZT be a parallelogram inside triangle ABC such that
+
+                     ∠AXB = ∠AZC, ∠AZB = ∠AXC,
+
+                      ∠AY B = ∠AT C, ∠AT B = ∠AY C.
+Prove that the diagonals XZ and Y T of the parallelogram intersect on the
+circumcircle of BOC.
+
+Problem 6. Let k > 1 be an integer, and let S denote the set of all (k + 1)-
+tuples of integers X = (x1 , . . . , xk+1 ) such that 1 ≤ x1 < · · · < xk+1 ≤ k 2 +1.
+If σ is a permutation of the numbers 1, 2, . . . , k 2 + 1, say that an element X
+of S is σ-nice if the sequence σ(x1 ), σ(x2 ), . . . , σ(xk+1 ) is monotone. Prove
+that                                         2          
+                       jx k
+                         i                    k + 2 − xi
+                  min         + min                        ≥k+1
+                 1≤i≤k i          2≤i≤k+1      k+2−i
+if and only if there exists a permutation σ such that X is the unique σ-nice
+tuple in S.
+
+
+
+Each problem is worth 7 marks.
+Time allowed: 4 21 hours.
+

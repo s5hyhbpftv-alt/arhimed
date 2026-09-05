@@ -1706,6 +1706,186 @@ function coinsSVG(){
       <text x="40" y="214" font-size="22" font-weight="bold" fill="#ffd76a">итоговое число — чётное</text>
     </svg>`; }
 
+  /* ================= ВОЛНА C · класс 7 (доска меняется по кадрам fr.v) ================= */
+  function chipCard(x,y,txt,fill,edge,fs){
+    const w=64+(txt.length)*13;
+    return `<rect x="${x}" y="${y}" width="${w}" height="56" rx="12" fill="${fill}" stroke="${edge}" stroke-width="3"/>
+      <text x="${x+w/2}" y="${y+37}" text-anchor="middle" font-size="${fs||26}" font-weight="bold" fill="#fff" font-family="Georgia,serif">${txt}</text>`;
+  }
+  function polySVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    if(v===0){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="17" fill="#b6e0bd">одночлены — «коробочки»: число · буквы</text>
+        ${chipCard(28,96,'3x','#4a93d0','#7fb8f0')}${chipCard(124,96,'5x²','#5f9a6a','#8fd1a8')}${chipCard(236,96,'−2ab','#c98a3a','#e8b25c',23)}
+        <text x="180" y="196" text-anchor="middle" font-size="24" font-weight="bold" fill="#ffd76a">2x + 3x² − 1 — многочлен</text>
+        <text x="180" y="224" text-anchor="middle" font-size="15" fill="#8fa08f">сумма одночленов · каждый член — коробочка</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="74" text-anchor="middle" font-size="17" fill="#b6e0bd">подобные — одинаковые буквы</text>
+        ${chipCard(40,92,'3x','#5f9a6a','#8fd1a8')}<text x="142" y="126" font-size="30" fill="#ffd76a">+</text>${chipCard(158,92,'5x','#5f9a6a','#8fd1a8')}
+        <text x="180" y="196" text-anchor="middle" font-size="24" font-weight="bold" fill="#ffd76a">3x и 5x — подобные ✔</text>
+        <text x="180" y="222" text-anchor="middle" font-size="16" fill="#8fa08f">а 3x и 3x² — НЕТ (x ≠ x²)</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="17" fill="#b6e0bd">берём коробки с x: 3 штуки + 5 штук</text>
+        <text x="180" y="140" text-anchor="middle" font-size="40" font-weight="bold" fill="#f4e9c8">3x + 5x = 8x</text>
+        <rect x="64" y="168" width="232" height="40" rx="20" fill="rgba(217,164,65,.22)" stroke="#d9a441" stroke-width="3"/>
+        <text x="180" y="196" text-anchor="middle" font-size="22" font-weight="bold" fill="#ffd76a">числа: 3+5=8 · букву x не трогаем</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#ffb0a0">минус перед скобкой меняет знаки</text>
+        <text x="180" y="128" text-anchor="middle" font-size="34" font-weight="bold" fill="#f4e9c8">−(2x + 3) = −2x − 3</text>
+        <text x="180" y="170" text-anchor="middle" font-size="20" fill="#8fd1a8">+2x → −2x</text>
+        <text x="180" y="196" text-anchor="middle" font-size="20" fill="#8fd1a8">+3 → −3</text>
+        <text x="180" y="224" text-anchor="middle" font-size="15" fill="#8fa08f">как вычесть всю пачку коробок целиком</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#b6e0bd">умножаем на каждый член скобки</text>
+        <text x="180" y="128" text-anchor="middle" font-size="30" font-weight="bold" fill="#f4e9c8">2x · (x + 3)</text>
+        <text x="180" y="168" text-anchor="middle" font-size="26" fill="#7fd1ff">2x·x = 2x²</text>
+        <text x="180" y="196" text-anchor="middle" font-size="26" fill="#8fd1a8">2x·3 = 6x</text>
+        <rect x="86" y="120" width="188" height="92" rx="12" fill="none" stroke="#d9a441" stroke-width="3" opacity=".5"/>
+        <text x="180" y="228" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffd76a">итог: 2x² + 6x</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="17" fill="#b6e0bd">каждый с каждым — четыре произведения</text>
+        <g font-size="22" fill="#f4e9c8" font-family="Georgia,serif">
+          <text x="42" y="112">x·x = x²</text><text x="198" y="112">x·2 = 2x</text>
+          <text x="42" y="146">1·x = x</text><text x="198" y="146">1·2 = 2</text>
+        </g>
+        <text x="180" y="184" text-anchor="middle" font-size="17" fill="#9fc0e8">(x + 1) · (x + 2) — каждый с каждым!</text>
+        <rect x="34" y="196" width="292" height="30" rx="15" fill="rgba(79,141,255,.25)"/>
+        <text x="180" y="218" text-anchor="middle" font-size="19" fill="#7fd1ff">сложили 4 кусочка → x² + 2x + x + 2</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#b6e0bd">2x и x — подобные! складываем</text>
+        <text x="180" y="136" text-anchor="middle" font-size="38" font-weight="bold" fill="#f4e9c8">x² + 3x + 2</text>
+        <text x="180" y="178" text-anchor="middle" font-size="20" fill="#8fd1a8">2x + x = 3x — привели подобные</text>
+        <text x="180" y="220" text-anchor="middle" font-size="16" fill="#8fa08f">(x+1)(x+2) = x² + 3x + 2 ✔</text>`;
+    } else {
+      m=`<text x="180" y="96" text-anchor="middle" font-size="17" fill="#b6e0bd">числа складываем, букву оставляем</text>
+        <text x="180" y="158" text-anchor="middle" font-size="44" font-weight="bold" fill="#ffd76a" class="c2a-spark">3x + 5x = ?</text>
+        <text x="180" y="208" text-anchor="middle" font-size="16" fill="#8fa08f">подсказка: 3 + 5 = 8…</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#17302a"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#3f7a5f" stroke-width="4"/>
+      <text x="18" y="54" font-size="15" font-weight="bold" fill="#ffd76a">Многочлены · коробочки с буквами</text>
+      ${m}</svg>`; }
+  function factSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    if(v===0){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#b6d4e8">число → множители: 12 = 3 · 4</text>
+        <text x="180" y="132" text-anchor="middle" font-size="34" font-weight="bold" fill="#f4e9c8">6x + 12 = 6·(x + 2)</text>
+        <text x="180" y="176" text-anchor="middle" font-size="19" fill="#ffd76a">выносим общий множитель за скобку</text>
+        <text x="180" y="208" text-anchor="middle" font-size="16" fill="#8fa08f">общее у 6x и 12 — число 6</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="17" fill="#b6d4e8">делим каждый член на 6</text>
+        <g font-size="24" fill="#f4e9c8" font-family="Georgia,serif">
+          <text x="60" y="122">6x : 6 = x</text>
+          <text x="60" y="158">12 : 6 = 2</text>
+        </g>
+        <text x="210" y="152" font-size="26" font-weight="bold" fill="#ffd76a">→ 6(x + 2)</text>
+        <text x="180" y="216" text-anchor="middle" font-size="16" fill="#8fa08f">общий множитель 6 — «на входе»</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#8fd1a8">проверка — раскрываем обратно</text>
+        <text x="180" y="134" text-anchor="middle" font-size="32" font-weight="bold" fill="#f4e9c8">6·(x + 2) = 6x + 12 ✔</text>
+        <text x="180" y="180" text-anchor="middle" font-size="20" fill="#b6d4e8">6·x = 6x и 6·2 = 12</text>
+        <text x="180" y="216" text-anchor="middle" font-size="16" fill="#8fa08f">сошлось с исходным — разложение верное!</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="17" fill="#ffd76a">формула-волшебница: разность квадратов</text>
+        <text x="180" y="122" text-anchor="middle" font-size="30" font-weight="bold" fill="#f4e9c8">a² − b² = (a−b)(a+b)</text>
+        <text x="180" y="164" text-anchor="middle" font-size="24" fill="#7fd1ff">x² − 16 = (x−4)(x+4)</text>
+        <text x="180" y="204" text-anchor="middle" font-size="17" fill="#8fd1a8">16 = 4² → 4 и в минус, и в плюс</text>
+        <text x="180" y="228" text-anchor="middle" font-size="14" fill="#8fa08f">проверь: x²+4x−4x−16 = x²−16 ✔</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="17" fill="#b6d4e8">квадрат суммы — тоже формула!</text>
+        <text x="180" y="124" text-anchor="middle" font-size="30" font-weight="bold" fill="#f4e9c8">(a+b)² = a² + 2ab + b²</text>
+        <text x="180" y="166" text-anchor="middle" font-size="19" fill="#8fd1a8">(a+b)(a+b): ab появляется дважды!</text>
+        <text x="180" y="196" text-anchor="middle" font-size="19" fill="#8fd1a8">a² + ab + ab + b² = a² + 2ab + b²</text>
+        <text x="180" y="224" text-anchor="middle" font-size="15" fill="#8fa08f">двойка перед ab — как два одинаковых кусочка</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="17" fill="#ffd76a">считаем быстро, не раскрывая скобки</text>
+        <text x="180" y="126" text-anchor="middle" font-size="28" font-weight="bold" fill="#f4e9c8">(x−3)(x+3) = x² − 9</text>
+        <text x="180" y="170" text-anchor="middle" font-size="24" fill="#7fd1ff">x = 5 → 25 − 9 = 16</text>
+        <rect x="128" y="188" width="104" height="36" rx="18" fill="#d9a441"/>
+        <text x="180" y="213" text-anchor="middle" font-size="20" font-weight="bold" fill="#17302a">ответ: 16</text>`;
+    } else if(v===6){
+      m=`<text x="180" y="92" text-anchor="middle" font-size="17" fill="#b6d4e8">увидел x² − число² → формула!</text>
+        <text x="180" y="148" text-anchor="middle" font-size="20" fill="#8fd1a8">общий множитель — выносим</text>
+        <text x="180" y="180" text-anchor="middle" font-size="20" fill="#8fd1a8">разность квадратов — формула</text>
+        <text x="180" y="216" text-anchor="middle" font-size="16" fill="#8fa08f">двух приёмов хватит почти на всё</text>`;
+    } else {
+      m=`<text x="180" y="96" text-anchor="middle" font-size="17" fill="#b6d4e8">16 = 4² → скобки с 4</text>
+        <text x="180" y="158" text-anchor="middle" font-size="40" font-weight="bold" fill="#ffd76a" class="c2a-spark">x² − 16 = ?</text>
+        <text x="180" y="208" text-anchor="middle" font-size="16" fill="#8fa08f">(x − ?)(x + ?)</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#1e2a3d"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#3f6a9f" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#7fd1ff">Разложение на множители</text>
+      ${m}</svg>`; }
+  function systSVG(fr){
+    const v=(fr&&fr.v)||0;
+    let m='';
+    if(v===0){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#b6d4e8">два условия про ОДНИ И ТЕ ЖЕ x и y</text>
+        <g font-size="30" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="126" fill="#7fd1ff">x + y = 10</text>
+          <text x="180" y="168" fill="#ffb0a0">x − y = 4</text>
+        </g>
+        <path d="M210 96 v64" stroke="#d9a441" stroke-width="4"/>
+        <text x="232" y="136" font-size="26">{</text>
+        <text x="180" y="216" text-anchor="middle" font-size="16" fill="#8fa08f">ищем пару чисел, подходящую в ОБА сразу</text>`;
+    } else if(v===1){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#b6d4e8">+y и −y — гасят друг друга!</text>
+        <g font-size="30" font-family="Georgia,serif" text-anchor="middle">
+          <text x="150" y="128" fill="#7fd1ff">x + y = 10</text>
+          <text x="150" y="170" fill="#ffb0a0">x − y = 4</text>
+        </g>
+        <text x="180" y="212" text-anchor="middle" font-size="22" font-weight="bold" fill="#8fd1a8">сложим → y исчезнет</text>`;
+    } else if(v===2){
+      m=`<text x="180" y="78" text-anchor="middle" font-size="17" fill="#b6d4e8">складываем левые и правые части</text>
+        <g font-size="26" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="118" fill="#f4e9c8">x + x = 2x</text>
+          <text x="180" y="150" fill="#f4e9c8">y − y = 0</text>
+          <text x="180" y="182" fill="#ffd76a">10 + 4 = 14</text>
+        </g>
+        <rect x="88" y="196" width="184" height="34" rx="17" fill="rgba(79,141,255,.3)"/>
+        <text x="180" y="220" text-anchor="middle" font-size="22" font-weight="bold" fill="#7fd1ff">2x = 14 → x = 7</text>`;
+    } else if(v===3){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#b6d4e8">x = 7 подставляем в первое уравнение</text>
+        <text x="180" y="132" text-anchor="middle" font-size="30" font-weight="bold" fill="#f4e9c8">7 + y = 10</text>
+        <text x="180" y="176" text-anchor="middle" font-size="24" fill="#7fd1ff">y = 10 − 7 = 3</text>
+        <rect x="112" y="196" width="136" height="34" rx="17" fill="#d9a441"/>
+        <text x="180" y="220" text-anchor="middle" font-size="21" font-weight="bold" fill="#1e2a3d">y = 3</text>`;
+    } else if(v===4){
+      m=`<text x="180" y="80" text-anchor="middle" font-size="17" fill="#8fd1a8">проверяем в ОБОИХ уравнениях</text>
+        <text x="180" y="126" text-anchor="middle" font-size="26" font-weight="bold" fill="#f4e9c8">(7; 3)</text>
+        <text x="180" y="162" text-anchor="middle" font-size="21" fill="#8fd1a8">7 + 3 = 10 ✔</text>
+        <text x="180" y="192" text-anchor="middle" font-size="21" fill="#8fd1a8">7 − 3 = 4 ✔</text>
+        <text x="180" y="222" text-anchor="middle" font-size="17" fill="#ffd76a">всё сошлось — ответ верный!</text>`;
+    } else if(v===5){
+      m=`<text x="180" y="76" text-anchor="middle" font-size="17" fill="#b6d4e8">второй способ — подстановка</text>
+        <g font-size="22" font-family="Georgia,serif" text-anchor="middle">
+          <text x="180" y="114" fill="#7fd1ff">из 1-го: y = 10 − x</text>
+          <text x="180" y="146" fill="#f4e9c8">x − (10 − x) = 4</text>
+          <text x="180" y="178" fill="#f4e9c8">2x − 10 = 4</text>
+          <text x="180" y="210" fill="#ffd76a">2x = 14 → x = 7</text>
+        </g>`;
+    } else if(v===6){
+      m=`<text x="180" y="84" text-anchor="middle" font-size="17" fill="#b6d4e8">два условия → система → ответ</text>
+        <text x="180" y="132" text-anchor="middle" font-size="19" fill="#8fd1a8">возраст двух братьев</text>
+        <text x="180" y="162" text-anchor="middle" font-size="19" fill="#8fd1a8">длина и ширина участка</text>
+        <text x="180" y="192" text-anchor="middle" font-size="19" fill="#8fd1a8">цена ручки и тетради</text>
+        <text x="180" y="222" text-anchor="middle" font-size="16" fill="#8fa08f">жизнь часто даёт два условия сразу!</text>`;
+    } else {
+      m=`<text x="180" y="96" text-anchor="middle" font-size="17" fill="#b6d4e8">x = 7 уже нашли — ищем y</text>
+        <text x="180" y="158" text-anchor="middle" font-size="40" font-weight="bold" fill="#ffd76a" class="c2a-spark">x + y = 10 → y = ?</text>
+        <text x="180" y="208" text-anchor="middle" font-size="16" fill="#8fa08f">7 + y = 10</text>`;
+    }
+    return `<svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <rect x="0" y="0" width="360" height="240" fill="#221a3d"/>
+      <rect x="8" y="8" width="344" height="224" rx="10" fill="none" stroke="#7a5ac0" stroke-width="4"/>
+      <text x="18" y="54" font-size="18" font-weight="bold" fill="#c9a8ff">Системы линейных уравнений</text>
+      ${m}</svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -1769,6 +1949,9 @@ function coinsSVG(){
     else if(scene==='dir') base=dirSVG();
     else if(scene==='domino') base=dominoSVG();
     else if(scene==='inv') base=invSVG();
+    else if(scene==='poly') base=polySVG(fr);
+    else if(scene==='fact') base=factSVG(fr);
+    else if(scene==='syst') base=systSVG(fr);
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';

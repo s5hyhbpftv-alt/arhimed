@@ -1,0 +1,40 @@
+ The 17th Romanian Master of Mathematics Competition
+                 Day 1: The 25th of February, 2026, Bucharest
+
+
+
+
+                                                            Language: English
+
+
+Problem 1. Let n be a positive integer. Alice draws a unit area triangle
+on the board. Then she draws additional triangles by performing n moves
+in a row. On each move, she chooses a drawn triangle ∆ with no marked
+points in its interior, marks a point P in its interior, and draws three smaller
+triangles by joining P to each vertex of ∆ with a segment.
+       Once these n moves have been performed, Bob chooses three distinct
+drawn triangles ∆1 , ∆2 , and ∆3 which contain no marked points in their
+interiors, such that ∆2 shares one side with ∆1 and another with ∆3 . In
+terms of n, determine the largest possible constant c such that Bob can
+guarantee that the sum of the areas of ∆1 , ∆2 , and ∆3 is at least c, regardless
+of Alice’s choices.
+
+Problem 2. Let p ≥ 11 be a prime. Suppose that, if a and b are integers
+such that 1 ≤ a < b ≤ p − 3, then b! − a! is not divisible by p. Prove that
+p − 5 is divisible by 8.
+
+Problem 3. Let S be a finite subset of R3 . Prove that there exist three
+polynomials P (x, y, z), Q(x, y, z) and R(x, y, z) with real coefficients, such
+that a triple of real numbers (a, b, c) is in S if and only if the system of
+equations
+                                P (x, y, z) = a,
+                                Q(x, y, z) = b,
+                                 R(x, y, z) = c,
+does not have a solution in real numbers x, y, and z.
+
+
+
+
+Each problem is worth 7 marks.
+Time allowed: 4 21 hours.
+

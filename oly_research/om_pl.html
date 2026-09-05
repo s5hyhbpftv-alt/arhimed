@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<meta charset="UTF-8"><title>Olimpiada Matematyczna</title>
+<meta property="og:image" content="https://om.sem.edu.pl/static/app_main/img/OM-logo.png" />
+<meta property="og:url:secure_url" content="https://om.sem.edu.pl" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132388883-1"></script>
+<script src="/static/app_main/js/jquery-3.3.1.js"></script>
+<script src="/static/app_main/js/jquery.cookie.js"></script>
+<script src="/static/app_main/js/lists_slide.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="/static/app_main/js/menu-mobile.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/app_main/css/post_content.css">
+<link rel="stylesheet" type="text/css" href="/static/app_main/css/margin_content.css">
+<link rel="stylesheet" type="text/css" href="/static/app_main/css/public/base.css">
+<link rel="stylesheet" type="text/css" href="/static/app_main/css/public/navbar_and_menu.css">
+<link rel="stylesheet" type="text/css" href="/static/app_main/css/footer.css">
+<link rel="stylesheet" href="/static/app_main/css/tables.css">
+
+
+<link rel="icon" href="/static/app_main/img/OM-logo.png">
+
+
+    <link rel="stylesheet" href="/static/app_main/css/public/about.css">
+    <link rel="stylesheet" href="/static/app_main/css/public/schedule.css">
+    <style>
+        .above_navbar {
+            width: 100vw;
+            height: 88vh;
+        }
+
+        .navbar {
+            box-shadow: 0 15px 20px -15px #111;
+        }
+
+        .background_photos {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: row;
+            flex-flow: wrap;
+            width: 100%;
+        }
+        .shape > img {
+            position: absolute;
+            top: 58vh;
+            height: 30vh;
+            width: 100vw;
+            opacity: 100%;
+        }
+
+        .logo_and_title {
+            position: absolute;
+            top: 68vh;
+            height: 20vh;
+            left: 10vw;
+            color: white;
+            font-size: 40px;
+            font-family: 'Raleway', sans-serif;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo_and_title > img {
+            margin-right: 30px;
+        }
+
+        .section {
+            width: 100%;
+            min-height: 50vh;
+        }
+
+        .sticky {
+          position: fixed;
+          top: 0;
+          width: 100%;
+            left: 0;
+            z-index: 10;
+        }
+
+        .text > h2 {
+            font-size: 40px;
+
+        }
+
+        .text > p{
+            background-image: -webkit-linear-gradient(-30deg, rgb(13, 79, 38) 32%, rgb(7, 21, 6) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 100;
+
+            font-family: Helvetica, sans-serif;
+        }
+
+
+        .post-title {
+            margin: 15px;;
+            border-bottom: 1px solid var(--main-color);
+        }
+
+
+        .animation {
+            transition: opacity 0.25s;
+        }
+
+        .container {
+            margin-bottom: -25%;
+        }
+
+
+
+        .image, .text {
+            text-align: center;
+        }
+
+
+        .fb {
+            cursor: pointer;
+        }
+
+        .fb:hover {
+            opacity: 90%;
+        }
+
+        .image_about {
+            min-height: 55vh !important;
+            max-height: 55vh !important;
+            max-width: initial !important;
+            width: 100% !important;
+            object-fit: cover;
+            z-index: 100;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .image_links {
+        }
+
+        .image_links > .link {
+            display: block;
+            margin: 10px;
+            object-fit: cover;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold !important;
+        }
+
+         .image_links > .link:hover {
+             text-decoration: none;
+             opacity: 0.9;
+         }
+
+
+        .image_links > .link > span {
+            display: block;
+            margin: 20px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        @media only screen and (max-width: 900px) {
+            .section.presentation {
+                padding: 0 10%;
+            }
+
+            .section.presentation  > .text {
+                padding: 0;
+                margin: 10px ;
+            }
+            .section.presentation  > .image {
+                padding: 0;
+                margin: 10px ;
+            }
+
+
+            .text > p{
+                font-family: Arial, sans-serif;
+                font-weight: 1 !important;
+            }
+
+
+            .above_navbar {
+                height: 85vh;
+            }
+
+
+            .background_photos > img:nth-of-type(2) {
+                display: none !important;
+            }
+
+
+            .background_photos > img:nth-of-type(4) {
+                display: none !important;
+            }
+
+            .logo_and_title {
+                max-width: 30%;
+                font-size: 20px;
+
+                top: 68vh;
+            }
+
+            .logo_and_title > img {
+                height: 15vh;
+            }
+
+
+            .shape > img {
+                top: 57vh;
+            }
+
+            .link > span {
+                font-size: 16px;
+                font-family: Arial, sans-serif;
+            }
+
+            .read-more-button {
+                font-size: 13px;
+            }
+
+            .section.presentation img
+            {
+                min-height: 50%;
+                object-fit: cover;
+            }
+
+            .container {
+                margin: 0 0 30px;
+                padding: 0;
+                width: 100%;
+            }
+
+            .timeline {
+                max-width: 80vw;
+                width: 100%;
+                margin: 0;
+            }
+
+            .fb {
+                min-width: 100px !important;
+                max-width: 100px !important;
+                min-height: 100px !important;
+                max-height: 100px !important;
+            }
+
+            .text > h2 {
+                font-size: 26px;
+                padding: 0;
+                margin: 0 0 10px;
+            }
+
+            .text > p {
+                font-size: 16px !important;
+                padding: 0;
+                margin: 0 !important;
+                font-weight: 2 !important;
+                font-family: Raleway, sans-serif;
+                color: black !important;
+                background-image: none !important;
+                -webkit-background-clip: initial !important;
+                -webkit-text-fill-color: initial !important;
+            }
+
+            .text > p a {
+                color: var(--main-color) !important;
+            }
+
+            .sponsor-img {
+                display: flex !important;
+                justify-content: center;
+                align-items: center;
+                min-height: 50vh !important;
+                max-height: 50vh !important;
+            }
+
+
+            .image_about {
+                min-height: 35vh !important;
+                max-height: 35vh !important;
+                max-width: initial !important;
+            }
+
+            .text > a {
+                display: block;
+                margin: 40px;
+            }
+        }
+
+        .above_navbar {
+            display: none;
+        }
+
+    </style>
+
+    <script>
+        let lang = 'pl';
+    </script>
+    <script src="/static/app_main/js/logo_animation.js"></script>
+    <script>
+        // onload
+        let myFunction = undefined;
+
+        $(document).ready(
+            function (){
+                /*document.getElementById("left-navbar").style.display = "none";
+                let navbar = document.getElementById("navbar");
+                let sticky = navbar.offsetTop;
+                document.getElementById("right-navbar").style.margin = "0 10%";
+                      document.getElementById("content").style.paddingTop = "0px";
+
+                myFunction = function () {
+                  if (window.scrollY >= sticky) {
+                      document.getElementById("content").style.paddingTop = "100px";
+                      document.getElementById("left-navbar").style.display = "flex";
+                      document.getElementById("right-navbar").style.margin = "0";
+                      navbar.classList.add("sticky")
+                  } else {
+                      document.getElementById("content").style.paddingTop = "0px";
+                      document.getElementById("left-navbar").style.display = "none";
+                      document.getElementById("right-navbar").style.margin = "0 10%";
+                    navbar.classList.remove("sticky");
+                  }
+                }
+
+                window.onscroll = myFunction;*/
+
+
+                let image_prefix = "/static/app_main/img";
+                let images = [
+                    [image_prefix + '/about/bw.jpg', "Zawody Matematyczne Państw Bałtyckich"],
+                    [image_prefix + '/about/egmo.jpg', "Europejska Olimpiada Matematyczna Dziewcząt"],
+                    [image_prefix + '/about/imo.jpg', "Międzynarodowa Olimpiada Matematyczna"],
+                    [image_prefix + '/about/second_stage/warszawa.jpg', "Zawody II stopnia – Warszawa"],
+                    [image_prefix + '/about/final.jpg', "Zawody III stopnia – Stalowa Wola"],
+                    [image_prefix + '/about/memo.jpg', "Środkowoeuropejska Olimpiada Matematyczna"],
+                    [image_prefix + '/about/oboz.jpg', "Obóz Naukowy OM"],
+                ]
+
+                set_animation("animation_image", images, 6)()
+                getDonorsTable().then(function(photos) {
+                    set_animation("sponsors", photos, 4)()
+                }).catch(function(err) {
+                    console.error('Failed to load donors:', err);
+                });
+
+            }
+        )
+
+
+    </script>
+
+
+<div id="pop_up_background"></div>
+
+<span class="above_navbar">
+    <span class = "background_photos">
+        <img src="/static/app_main/img/about/discussion.png">
+        <img src="/static/app_main/img/about/egmo.jpg">
+        <img src="/static/app_main/img/about/imo.jpg">
+        <img src="/static/app_main/img/about/second_stage/torun.jpg">
+    </span>
+    <span class = "shape">
+        <img src="/static/app_main/img/landing.png">
+    </span>
+    <span class = "logo_and_title">
+        <img src="/static/app_main/img/OM-logo-przezroczyste.svg">
+        Olimpiada Matematyczna
+    </span>
+</span>
+
+<div class="navbar" id="navbar">
+    <div class="left-navbar" id="left-navbar">
+    <img src="/static/app_main/img/OM-logo-przezroczyste.svg" alt="logo" style="display: inline">
+    <a href="/" class="main-title">
+        Olimpiada <br>Matematyczna
+    </a>
+    </div>
+    <div class="right-navbar" id="right-navbar">
+    <ul class="menu">
+        
+
+<li><a href="/articles" class="main" >Aktualności</a></li>
+<li><a href="/general/about" class="main" >O Olimpiadzie</a></li>
+<li><a href="/schedule/" class="main" >Terminarz</a></li>
+
+
+<li><a href="/previous_olympiads/" class="main" >Poprzednie olimpiady</a></li>
+<li><a href="/problems/">Zadania</a></li>
+<li><a href="/camps/">Obóz naukowy</a></li>
+
+
+
+<li class="non-mobile-flex"><a href="/for_student">Dla ucznia</a></li>
+
+<li class="mobile">
+    <a onClick="$(this).next().toggle()" style="cursor: pointer">Dla ucznia</a>
+    <div class="for_student_links" style="display: none">
+        
+
+<span class = "left_title" >Dla ucznia</span>
+<a href="/for_student">Wprowadzenie</a>
+<a href="/for_student/for_student_grades"> Skala ocen </a>
+<a href="/faq"> Najczęściej zadawane pytania </a>
+
+<span class = "options_title" >Zawody I stopnia</span>
+<a href="/for_student/quiz_stage_description">Część testowa</a>
+<a href="/for_student/open_first_stage_description">Część otwarta</a>
+
+<span class = "options_title" >Zawody II i III stopnia</span>
+<a href="/for_student/second_and_third_stage">Przebieg</a>
+<a href="/for_student/appeals">Składanie odwołań</a>
+
+<span class = "options_title" >Materiały przygotowawcze</span>
+<a href="/for_student/previous_olympiads"> Zadania z ubiegłych olimpiad</a>
+<a href="/for_student/books"> Książki </a>
+<a href="/for_student/websites"> Strony internetowe </a>
+<a href="/for_student/camps"> Obozy Naukowe </a>
+<a href="/for_student/articles"> Artykuły </a>
+<a href="/for_student/other_sources"> Inne </a>
+
+    </div>
+</li>
+
+<li><a href="/for_teacher" class="main" >Dla nauczyciela</a></li>
+<li><a href="/documents">Dokumenty</a></li>
+<li><a href="/committees">Komitety</a></li>
+
+<li><a href="/donation/"  class="main" >Darowizna</a></li>
+
+
+<li><a href="/contact/" class="main" >Kontakt</a></li>
+<li><a href="/donors" class="main" >Wspierający</a></li>
+<li><a href="https://www.facebook.com/olimpiada.matematyczna" >Facebook</a></li>
+
+
+
+
+
+    <li><a href="/login/" id="login_button">
+      Logowanie
+    </a></li>
+
+<!--
+</div>
+
+  -->
+    </ul>
+    <div class="language-wrapper">
+        <div class="language active">
+            PL
+        </div>
+        <a href="/english_templates/about/">
+        <div class="language">
+            EN
+        </div>
+        </a>
+    </div>
+    <div class="menu-for-mobile">
+        <img src="/static/app_main/img/mobile_menu.png" id="menu-for-mobile">
+    </div>
+    </div>
+</div>
+
+<div class="mobile-menu-modal" id="mobile-menu-modal" style="display: none">
+    <ul class="menu">
+        
+
+<li><a href="/articles" class="main" >Aktualności</a></li>
+<li><a href="/general/about" class="main" >O Olimpiadzie</a></li>
+<li><a href="/schedule/" class="main" >Terminarz</a></li>
+
+
+<li><a href="/previous_olympiads/" class="main" >Poprzednie olimpiady</a></li>
+<li><a href="/problems/">Zadania</a></li>
+<li><a href="/camps/">Obóz naukowy</a></li>
+
+
+
+<li class="non-mobile-flex"><a href="/for_student">Dla ucznia</a></li>
+
+<li class="mobile">
+    <a onClick="$(this).next().toggle()" style="cursor: pointer">Dla ucznia</a>
+    <div class="for_student_links" style="display: none">
+        
+
+<span class = "left_title" >Dla ucznia</span>
+<a href="/for_student">Wprowadzenie</a>
+<a href="/for_student/for_student_grades"> Skala ocen </a>
+<a href="/faq"> Najczęściej zadawane pytania </a>
+
+<span class = "options_title" >Zawody I stopnia</span>
+<a href="/for_student/quiz_stage_description">Część testowa</a>
+<a href="/for_student/open_first_stage_description">Część otwarta</a>
+
+<span class = "options_title" >Zawody II i III stopnia</span>
+<a href="/for_student/second_and_third_stage">Przebieg</a>
+<a href="/for_student/appeals">Składanie odwołań</a>
+
+<span class = "options_title" >Materiały przygotowawcze</span>
+<a href="/for_student/previous_olympiads"> Zadania z ubiegłych olimpiad</a>
+<a href="/for_student/books"> Książki </a>
+<a href="/for_student/websites"> Strony internetowe </a>
+<a href="/for_student/camps"> Obozy Naukowe </a>
+<a href="/for_student/articles"> Artykuły </a>
+<a href="/for_student/other_sources"> Inne </a>
+
+    </div>
+</li>
+
+<li><a href="/for_teacher" class="main" >Dla nauczyciela</a></li>
+<li><a href="/documents">Dokumenty</a></li>
+<li><a href="/committees">Komitety</a></li>
+
+<li><a href="/donation/"  class="main" >Darowizna</a></li>
+
+
+<li><a href="/contact/" class="main" >Kontakt</a></li>
+<li><a href="/donors" class="main" >Wspierający</a></li>
+<li><a href="https://www.facebook.com/olimpiada.matematyczna" >Facebook</a></li>
+
+
+
+
+
+    <li><a href="/login/" id="login_button">
+      Logowanie
+    </a></li>
+
+<!--
+</div>
+
+  -->
+    </ul>
+    <div class="language-wrapper">
+        <div class="language active">
+                PL
+        </div>
+        <div class="language">
+        <a href="/english_templates/about/">
+            EN
+        </a>
+        </div>
+    </div>
+</div>
+
+<div class="content" id="content">
+
+    <div class="section presentation" style="min-height: 90vh">
+        <div class="text">
+        <h2>Olimpiada Matematyczna</h2>
+        <br>
+        <p style="text-align: left; font-size: 24px; margin-bottom: 100px;">
+            to ogólnopolskie zawody
+            matematyczne dla uczniów szkół ponadpodstawowych.
+            Kontynuujemy polskie tradycje matematyczne, budując społeczność fascynującą się
+            Królową&nbsp;Nauk.
+        </p>
+            <a href='/general/about'>Poznaj Olimpiadę</a>
+        </div>
+
+        <div class="image">
+            <img class="animation image_about" src="" id="animation_image" style="">
+            <br>
+            <label id="animation_image-label" style=""></label>
+        </div>
+    </div>
+    <div class="section presentation">
+        <div class="text">
+            <h2>Aktualności</h2>
+        </div>
+    <span style="text-align: center">
+        <div class="image_links">
+            
+                <a class="link" href="/post/231"><span>Wyniki Środkowoeuropejskiej Olimpiady Matematycznej</span></a>
+            
+                <a class="link" href="/post/230"><span>I etap Olimpiady Matematycznej</span></a>
+            
+                <a class="link" href="/post/229"><span>67. Międzynarodowa Olimpiada Matematyczna</span></a>
+            
+                <a class="link" href="/post/228"><span>Broszura z obozu naukowego</span></a>
+            
+        </div>
+        <a href='/articles' style="display: block; margin-top: 40px; margin-bottom: 40px">
+            Wszystkie aktualności
+        </a>
+
+    </span>
+    </div>
+
+    <div class="section presentation">
+
+        <div class="text">
+            <h2>Terminarz</h2>
+            <p style="font-size: 24px">
+                78 Olimpiady Matematycznej
+            </p>
+        </div>
+
+        <div class="image">
+    <div class="timeline">
+        <div class="container">
+            <div class="content">
+                <h2>Część testowa zawodów I stopnia</h2>
+                <p>15 października 2026</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="content">
+                <h2>Część otwarta zawodów I stopnia</h2>
+                <p>06 listopada 2026</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="content">
+                <h2>Zawody II stopnia</h2>
+                <p>29 - 30 stycznia 2027</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="content">
+                <h2>Zawody III stopnia</h2>
+                <p>17 - 18 marca 2027</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="content">
+                <h2>Obóz naukowy</h2>
+                <p>przełom maja i czerwca 2027</p>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    <div class="section presentation">
+        <div class="text">
+            <h2>Poprzednie edycje</h2>
+            <p>
+                Zachęcamy do zapoznania się z&nbsp;<a href="/problems/">zadaniami</a> oraz
+                <a href="/previous_olympiads/">wynikami</a> poprzednich edycji Olimpiady Matematycznej.
+            </p>
+        </div>
+        <div class="image">
+            <img src="/static/app_main/img/about/geo.png">
+            <label> Zadanie&nbsp;3&nbsp;z&nbsp;zawodów I&nbsp;stopnia 74&nbsp;OM </label>
+        </div>
+    </div>
+
+    <div class="section presentation">
+        <div class="text">
+            <h2>Przygotowania</h2>
+            <p>
+                Dla uczniów przygotowujących się do Olimpiady Matematycznej przygotowaliśmy
+                poradnik dostępny w sekcji <a href="/for_student">dla ucznia</a>.
+            </p>
+        </div>
+        <div class="image">
+            <img src="/static/app_main/img/about/think.jpg">
+            <label> Osoba uczestnicząca w finale 70 OM w Tarnowie </label>
+        </div>
+    </div>
+
+    <div class="section presentation" style="min-height: 90vh">
+        <div class="text">
+            <h2>Seminarium dla nauczycieli</h2>
+             <p>Komitet Główny Olimpiady Matematycznej, przy współpracy z&nbsp;Uniwersytetem Warszawskim,
+            organizuje seminarium dla nauczycieli poświęcone Olimpiadzie Matematycznej.
+            Więcej informacji na ten temat można znaleźć w zakładce <a href="/for_teacher">dla&nbsp;nauczyciela</a>.
+             </p>
+        </div>
+
+        <div class="image">
+            <img class="animation image_about" src="/static/app_main/img/jen.png" id="animation_image" style="object-fit: contain">
+            <label id="animation_image-label" style="">Fragment notatek ze spotkania na temat Nierówności Jensena prowadzonego przez dr.&nbsp;Tomasza Cieślę</label>
+        </div>
+    </div>
+
+    <div class="section presentation">
+        <div class="text">
+            <a href="/donors"><h2>Wspierają nas</h2></a>
+        </div>
+
+        <div class="image sponsor-img">
+            <img class="animation" src="/static/app_main/img/logo_jane_street.png" id="sponsors" style="max-width: 400px; max-height: 200px; object-fit: contain" >
+            <br>
+            <label id="sponsors-label" style="display: none"></label>
+        </div>
+    </div>
+
+    <div class="section presentation">
+        <div class="text">
+            <h2>Polub naszą stronę na&nbsp;Facebooku</h2>
+            <p>
+                aby być na bieżąco z&nbsp;Olimpiadą oraz aby zobaczyć zdjęcia z&nbsp;zawodów.
+            </p>
+        </div>
+        <div class="image sponsor-img">
+            <a href="https://www.facebook.com/olimpiada.matematyczna" target="blank">
+                <img src="/static/app_main/img/fb_logo.png" style="width: 100px" class="fb">
+            </a>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="cookie-info-wrapper" id="cookie-info-wrapper">
+    <div class="cookie-info">
+        <span class="cookie-info-text">
+            <p> Strona internetowa Olimpiady Matematycznej korzysta z plików cookies niezbędnych dla jej poprawnego działania.  </p>
+        </span>
+        <span class="cookie-info-buttons">
+            <button class="cookie-info__button cookie-info__button--accept" onclick="hide_cookie()"><b>Akceptuj</b></button>
+        </span>
+    </div>
+</div>
+
+<div id="footer">
+  
+<div class="footer">
+    <div class="logotypes-wrapper">
+        <div class="logotype">
+            <a href="https://men.gov.pl/"><img src="/static/app_main/img/logo_men.png?v=1.2"></a>
+            <p>Olimpiada Matematyczna
+                jest finansowana ze środków Ministerstwa Edukacji Narodowej</p>
+        </div>
+        <div class="logotype">
+            <a href="http://sem.edu.pl/"><img src="/static/app_main/img/logo_sem.png"></a>
+            <p>Organizatorem Olimpiady Matematycznej<br>
+                jest Stowarzyszenie na rzecz Edukacji Matematycznej</p>
+        </div>
+        <div class="logotype">
+            <a href="http://ptm.org.pl/"><img src="/static/app_main/img/logo_ptm.png"></a>
+            <p>Olimpiada Matematyczna
+                objęta <br>jest honorowym patronatem
+                Polskiego Towarzystwa Matematycznego</p>
+        </div>
+    </div>
+    <div class="authors">
+        Autorzy strony: <br> Mikołaj Leonarski, Rafał Godlewski, Marcin Michorzewski, Daniel Oklesiński, Paweł Gadziński,
+        Krzysztof Salata, Michał Margos
+    </div>
+</div>
+</div>
+
+
+<script>
+  function show_pop_up(content) {
+    let close_button_html = "<img src='/static/app_main/img/x.png' onclick='close_pop_up()' id='pop_up_close_button'>";
+    let pop_up_content = "<div id='pop_up_content'>" + close_button_html + content + "</div>";
+    let pop_up_background = $("#pop_up_background");
+    pop_up_background.html(pop_up_content).css("display", "flex");
+  }
+
+  function close_pop_up() {
+    $("#pop_up_background").empty().hide();
+  }
+
+  var clicks_counter = 0;
+
+  function clickUserOptions() {
+    clicks_counter++;
+    if (clicks_counter % 2) {
+      $(".user-option").each(function () {
+        $(this).css('display', 'flex');
+      });
+      $("#user_button").html("<img src='/static/app_main/img/caret-top.svg'>");
+      $("#user_options").css("box-shadow", "0 5px 8px 2px rgba(0, 0, 0, .3)");
+    } else {
+      $(".user-option").each(function () {
+        $(this).hide();
+      });
+      $("#user_button").html("<img src='/static/app_main/img/caret-bottom.svg'>");
+      $("#user_options").css("box-shadow", "none");
+    }
+  }
+</script>
+
+<script>
+    $(document).ready(
+        function(){
+            if(localStorage.getItem('cookie-info-wrapper') === null) {
+                document.getElementById("cookie-info-wrapper").style.display = "flex";
+            }
+        }
+    )
+
+    function hide_cookie(){
+        document.getElementById("cookie-info-wrapper").style.display = "none";
+        localStorage.setItem('cookie-info-wrapper', true);
+    }
+</script>
+

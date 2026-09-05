@@ -1,0 +1,208 @@
+Contest Results
+(Analysis by Aakash Gokhale)
+Let $\text{dist}(v)$ denote the length of shortest path from $1$ to $v$. This
+can be computed with a bfs.
+Claim: If $v$ is on a pretty path, the distance from $1$ to $v$ along this path
+must be $\text{dist}(v)$.
+Proof: Let $x$ be the destination farm for the path passing through $v$. This
+path must have total length $\text{dist}(x)$. If the length from $1$ to $v$
+along the pretty path is greater than $\text{dist}(v)$, then the length of the
+pretty path from $v$ to $x$ along the path must be less than
+$\text{dist}(x) - \text{dist}(v)$ to compensate. However, this means that a
+shorter path from $1$ to $x$ exists: take the shortest path from $1$ to $v$ and
+then take the path of length less than $\text{dist}(x) - \text{dist}(v)$ from
+$v$ to $x$. This is a contradiction thus the claim must be true.
+We can rephrase the condition in the statement to "does there exist a pretty
+path passing through farm $i$ for each $i$ from $2$ to $n$?".
+Subtask 1:
+Let $d$ be the single destination farm. We just need to check for each farm $i$,
+whether there exists a path of length $\text{dist}(d) - \text{dist}(i)$ from
+$d$ to $i$. We can do this by performing a bfs with the source $d$ for the
+shortest paths from $d$ to be able to quickly check this for each farm.
+#include <bits/stdc++.h>
+using namespace std;
+#define int int64_t
+using vi = vector<int>;
+#define FOR(i, a, b) for (int i = (a); i < (b); i++)
+#define all(x) x.begin(), x.end()
+#define nl '\n'
+void solve() {
+ int n, m, k, l; cin >> n >> m >> k >> l;
+ int d; cin >> d;
+ vector<vi> g(n + 1);
+ FOR(_, 0, m) {
+ int u, v; cin >> u >> v;
+ g[u].push_back(v); g[v].push_back(u);
+ }
+ queue<int> q;
+ q.push(1);
+ vi dist(n + 1, -1); dist[1] = 0;
+ while (q.size()) {
+ int u = q.front(); q.pop();
+ for (int v : g[u]) if (dist[v] == -1) {
+ dist[v] = dist[u] + 1;
+ q.push(v);
+ }
+ }
+ q.push(d);
+ vi dist2(n + 1, -1); dist2[d] = 0;
+ while (q.size()) {
+ int u = q.front(); q.pop();
+ for (int v : g[u]) if (dist2[v] == -1) {
+ dist2[v] = dist2[u] + 1;
+ q.push(v);
+ }
+ }
+ FOR(i, 2, n + 1) cout << "01"[dist2[i] == dist[d] - dist[i]];
+ cout << nl;
+}
+signed main() {
+ ios::sync_with_stdio(0); cin.tie(0);
+ int t; cin >> t; while (t--) solve();
+}
+Subtask 2:
+We can partition the farms into layers by $\text{dist}$. Any pretty path must
+take one farm per layer until the destination farm.
+Let $\text{dp}[i]$ denote whether farm $i$ can reach a destination path using a
+shortest possible path. We can process the farms in reverse order of layer. For
+a farms $i$ on layer $l$, $\text{dp}[i]$ is true if $i$ is a destination farm or
+if there exists a farm $j$ on layer $l + 1$ such that $\text{dp}[j]$ is true.
+#include <bits/stdc++.h>
+using namespace std;
+#define int int64_t
+using vi = vector<int>;
+#define FOR(i, a, b) for (int i = (a); i < (b); i++)
+#define all(x) x.begin(), x.end()
+#define nl '\n'
+void solve() {
+ int n, m, k, l; cin >> n >> m >> k >> l;
+ vector<int> d(l);
+ for (auto& i : d) cin >> i;
+ vector<vi> g(n + 1);
+ FOR(_, 0, m) {
+ int u, v; cin >> u >> v;
+ g[u].push_back(v); g[v].push_back(u);
+ }
+ vi layer[n];
+ queue<int> q;
+ q.push(1);
+ vi dist(n + 1, -1); dist[1] = 0;
+ while (q.size()) {
+ int u = q.front(); q.pop();
+ layer[dist[u]].push_back(u);
+ for (int v : g[u]) if (dist[v] == -1) {
+ dist[v] = dist[u] + 1;
+ q.push(v);
+ }
+ }
+ vi dp(n + 1);
+ for (auto i : d) dp[i] = 1;
+ for (int i = n - 2; i >= 0; i--) {
+ for (int j : layer[i]) for (int k : g[j])
+ if (dist[j] + 1 == dist[k]) dp[j] |= dp[k];
+ }
+ FOR(i, 2, n + 1) cout << dp[i];
+ cout << nl;
+}
+signed main() {
+ ios::sync_with_stdio(0); cin.tie(0);
+ int t; cin >> t; while (t--) solve();
+}
+Subtask 3:
+Now we must consider what happens when there are flower fields.
+If there are $2$ or more flower fields on a layer, the answer is immediately $0$
+for all cases because any pretty path cannot pass through both fields because it
+can only visit one farm per layer.
+If there is $1$ flower field in a layer, all pretty paths must pass through it.
+Otherwise, if there are $0$ flower fields on a layer, the pretty path can pass
+through any farm on that layer.
+Now we need to tweak our $\text{dp}$ definition to include this.
+Let $mx$ denote the max $\text{dist}$ of any flower field. Now for all
+destination farms $i$, if $\text{dist}(i) < mx$, this destination farm is
+unusuable because the pretty path must pass through all flower fields. If
+$\text{dist}(i) = mx$ and it is not a flower field as well, it is unusuable for
+the same reason. All other destinations are usuable.
+Then for farm $i$ on layer $l$, $\text{dp}[i]$ is true if it is a usuable
+destination. If there is a flower field $j$ on layer $l + 1$, $\text{dp}[i]$ is
+true if there is an edge from $i$ to $j$ and $\text{dp}[j]$ is true. If there
+are no flower fields on layer $l + 1$, $\text{dp}[i]$ is true if there exists
+farm $j$ on layer $l + 1$ such that $\text{dp}[j]$ is true.
+However, we also need to check that farm $i$ is reachable from $1$ with the
+addition of flower fields. We can check this independently. Let $\text{dp2}[i]$
+denote if $i$ is reachable from $1$. $\text{dp2}[1]$ is trivially true.
+Then we can process the layers in increasing order. For farm $i$ on layer $l$,
+if $\text{dp2}[i]$ is true then we consider whether layer $l + 1$ has a flower
+field. If farm $j$ on layer $l + 1$ is a flower field and there exists an edge
+from $i$ to $j$, then $\text{dp2}[j]$ is true. If there is no flower field on
+layer $l + 1$, for farm $j$ on layer $l + 1$, $\text{dp2}[j]$ is true if there
+is an edge from $i$ to $j$.
+Then for all farms if $\text{dp}[i]$ and $\text{dp2}[i]$ are both true then
+there is a pretty path passing through farm $i$.
+Refer to the implementation for more details.
+#include <bits/stdc++.h>
+using namespace std;
+#define int int64_t
+using vi = vector<int>;
+#define FOR(i, a, b) for (int i = (a); i < (b); i++)
+#define all(x) x.begin(), x.end()
+#define nl '\n'
+void solve() {
+ int n, m, k, l; cin >> n >> m >> k >> l;
+ vector<int> s(k); for (auto& i : s) cin >> i;
+ vector<int> d(l); for (auto& i : d) cin >> i;
+ vector<vi> g(n + 1);
+ FOR(_, 0, m) {
+ int u, v; cin >> u >> v;
+ g[u].push_back(v); g[v].push_back(u);
+ }
+ vi layer[n];
+ queue<int> q; q.push(1);
+ vi dist(n + 1, -1); dist[1] = 0;
+ while (q.size()) {
+ int u = q.front(); q.pop();
+ layer[dist[u]].push_back(u);
+ for (int v : g[u]) if (dist[v] == -1) {
+ dist[v] = dist[u] + 1;
+ q.push(v);
+ }
+ }
+ vi flower(n);
+ int mx = 0;
+ for (int i : s) {
+ mx = max(mx, dist[i]);
+ if (flower[dist[i]]) {
+ cout << string(n - 1, '0') << nl;
+ return;
+ }
+ flower[dist[i]] = i;
+ }
+ vi dp(n + 1);
+ for (int i : d) {
+ if (dist[i] > mx) dp[i] = 1;
+ if (dist[i] == mx and flower[dist[i]]) dp[i] = 1;
+ }
+ for (int l = n - 2; l >= 0; l--) {
+ for (int i : layer[l]) for (int j : g[i])
+ if (flower[l + 1]) {
+ if (j == flower[l + 1]) dp[i] |= dp[j];
+ } else {
+ if (dist[i] + 1 == dist[j]) dp[i] |= dp[j];
+ }
+ }
+ vi dp2(n + 1);
+ dp2[1] = 1;
+ FOR(l, 0, n - 1) {
+ for (int i : layer[l]) for (int j : g[i])
+ if (flower[l + 1]) {
+ if (j == flower[l + 1]) dp2[j] |= dp2[i];
+ } else {
+ if (dist[i] + 1 == dist[j]) dp2[j] |= dp2[i];
+ }
+ }
+ FOR(i, 2, n + 1) cout << "01"[dp[i] and dp2[i]];
+ cout << nl;
+}
+signed main() {
+ ios::sync_with_stdio(0); cin.tie(0);
+ int t; cin >> t; while (t--) solve();
+}

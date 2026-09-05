@@ -1,0 +1,131 @@
+Contest Results
+(Analysis by Alex Liang)
+Subtask 1:
+The key observation is that it is optimal for Bessie to do all her rest steps at
+the start before moving indefinitely. Let there exists some sequence of time
+steps $w_1, w_2, \ldots, w_k$ where Bessie rests and is able to avoid the
+farmers indefinitely. Now suppose Bessie were to rest for the first $k$ time
+steps at the starting farm. Bessie will be able to avoid the farmers
+indefinitely since if she is caught by some farmer, then that same will have
+also caught Bessie if she were to wait at time steps $w_1, w_2, \ldots, w_k$.
+This is since Bessie will asymptotically have the same path and being able to
+rest at $w_1, w_2, \ldots, w_k$ ensures that no farmer is within distance $k$ of
+her starting farm.
+With this observation, we can solve for each starting farm by enumerating the
+amount of time Bessie spends resting (which will all be done at the starting
+farm) and simulate the process. We only have to simulate for $N$ additional time
+steps since that is when Bessie and all the farmers are guaranteed to have
+reached the cycle. This can be implemented in $\mathcal{O}(N^4)$ naively.
+Subtask 2:
+Subtask 2 is intended to award partial credit to solutions with the correct idea
+but suboptimal implementation.
+Full Solution:
+It will be helpful to view each component of the functional graph as a cycle
+where each cycle node is the root of a tree. Specifically, for each cycle node
+$i$, the tree involving $i$ contains $i$ and all non-cycle nodes with $i$ as
+some successor. All nodes in the tree will be directed towards the root which
+is node $i$.
+Let's solve for some component. Let $t_i$ denote the minimum amount of time it
+takes for a farmer to reach node $i$. We know that Bessie can rest for at most
+$t_i-1$ time steps if she starts at node $i$. We can find $t_i$ with a
+multisource BFS or by doing a DFS for each tree and finding the closest farmer
+in each subtree and relaxing cycle nodes.
+Define a cycle node $c$ as "good at time $t$" if Bessie can avoid the farmers
+indefinitely if she is at node $c$ at time $t$ and continues moving
+indefinitely.
+Let's solve for some node $i$ at depth $d_i$ in its tree. We know that Bessie
+can rest for at most $t_i-1$ time steps before a farmer reaches node $i$.
+Suppose Bessie were to rest for $0 \le k \le t_i-1$ time steps. Then Bessie
+will be able to evade the farmers indefinitely if the cycle node (i.e., root of
+the tree) will be good at time $k+d_i$. These constraints ensure that Bessie
+will be safe while resting and also safe when she starts moving continuously in
+the cycle (which also guarantees that she will not run into any farmers as she
+moves up the tree, if applicable).
+We reduce the problem to finding the largest $0 \le k \le t_i-1$ such that
+Bessie reaches a good cycle node at time $k+d_i$. Let the cycles be
+$c_1, c_2, \ldots, c_x$ in any cyclic order and let the root of the tree be
+$c_r$. We can mark which cycle nodes will be good at time $0$ (prior to any
+moves). Now, Bessie reaches a good cycle node if $c_{(r-(k+d_i)) \% x}$ is
+marked. 
+Suppose Bessie were to rest the full $t_i-1$ time steps. Then she is able to
+evade indefinitely if $c_{(r-(t_i-1+d_i)) \% x}$ is marked. If it is not marked,
+then we want to find the minimum waiting time Bessie can sacrifice which will be
+the closest distance from $c_{(r-(t_i-1+d_i)) \% x}$ to a marked cycle node
+(following cyclic order, so moving right cyclically on the array
+$c_1, c_2, \ldots, c_x$) which could be precalculated for all cycle nodes. Let
+the minimum such distance for some cycle node $c_i$ be $y_i$. Then the answer
+for node $i$ is $t_i-1-y_{(r-(t_i-1+d_i)) \% x}$ if it is not a special case.
+The special cases we need to check are if $t_i = \infty$ (Bessie can rest
+indefinitely) and if $t_i-1-w_{(r-(t_i-1+d_i)) \% x}$ is negative (it is
+impossible for Bessie to evade the farmers). In all, this solution runs in
+$\mathcal{O}(N)$ time.
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+ ios_base::sync_with_stdio(0); cin.tie(0);
+ int n, f;
+ cin >> n >> f;
+ vector<int> nxt(n + 1), hasFarmer(n + 1, 0);
+ vector<vector<int>> radj(n + 1);
+ for (int i = 1; i <= n; i++) {
+ cin >> nxt[i];
+ radj[nxt[i]].push_back(i);
+ }
+ for (int i = 1; i <= f; i++) {
+ int s;
+ cin >> s;
+ hasFarmer[s] = 1;
+ }
+ vector<int> vis(n + 1, 0), close(n + 1, (int)1e9), ans(n + 1);
+ for (int start = 1; start <= n; start++) {
+ if (vis[start])
+ continue;
+ // Get cycle
+ int cur = start;
+ vector<int> cycle;
+ while (vis[cur] != 2) {
+ if (++vis[cur] == 2)
+ cycle.push_back(cur);
+ cur = nxt[cur];
+ }
+ // Get tree info
+ int csz = cycle.size();
+ vector<int> good(csz, 1), chop(csz, 1e9);
+ vector<pair<int, int>> relevant;
+ for (int i = 0; i < csz; i++) {
+ function<void(int, int)> dfs = [&](int cur, int d){
+ int pos = (i - d % csz + csz) % csz;
+ vis[cur] = 1;
+ relevant.push_back({cur, pos});
+ if (hasFarmer[cur]) {
+ good[pos] = 0;
+ close[cur] = 0;
+ }
+ for (int to : radj[cur]) {
+ if (cur == cycle[i] && to == cycle[(i - 1 + csz) % csz])
+ continue;
+ dfs(to, d + 1);
+ close[cur] = min(close[cur], close[to] + 1);
+ }
+ };
+ dfs(cycle[i], 0);
+ }
+ // Get distances to nearest good waiting spot
+ for (int i = 2 * csz - 1; i >= 0; i--) 
+ chop[i % csz] = good[i % csz] ? 0 : chop[(i + 1) % csz] + 1;
+ // Adjust close for cycle nodes
+ for (int i = 0; i < 2 * csz - 1; i++)
+ close[cycle[i % csz]] = min(close[cycle[i % csz]], close[cycle[(i - 1 + csz) % csz]] + 1);
+ // Solve for each node
+ for (auto [cur, st] : relevant) {
+ if (close[cur] >= (int)1e8) {
+ ans[cur] = -2;
+ continue;
+ }
+ int ret = close[cur] - 1 - chop[(st - close[cur] % csz + 1 + csz) % csz];
+ ans[cur] = ret >= 0 ? ret : -1;
+ }
+ }
+ for (int i = 1; i <= n; i++)
+ cout << ans[i] << "\n";
+}

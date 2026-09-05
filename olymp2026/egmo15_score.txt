@@ -1,0 +1,687 @@
+ 
+ European Girls’ Mathematical Olympiad: Scoreboard for EGMO 2026 in France 
+ HOME TIMELINE COUNTRIES PEOPLE REGULATIONS HISTORY CONTACT US 
+ Past and future EGMOs 
+ EGMO 2028 , Vilnius, Lithuania 
+ EGMO 2027 , Šibenik, Croatia ( home page ) 
+ EGMO 2026 , Bordeaux, France ( home page ) 
+ EGMO 2025 , Prishtina, Kosovo ( home page ) 
+ EGMO 2024 , Tskaltubo, Georgia ( home page ) 
+ EGMO 2023 , Portorož, Slovenia ( home page ) 
+ EGMO 2022 , Eger, Hungary (hybrid) ( home page ) 
+ EGMO 2021 , Kutaisi, Georgia (virtual) ( home page ) 
+ EGMO 2020 , Egmond aan Zee, Netherlands (virtual) ( home page ) 
+ EGMO 2019 , Kyiv, Ukraine 
+ EGMO 2018 , Florence, Italy ( home page ) 
+ EGMO 2017 , Zürich, Switzerland 
+ EGMO 2016 , Bușteni, Romania ( home page ) 
+ EGMO 2015 , Minsk, Belarus 
+ EGMO 2014 , Antalya, Türkiye ( home page ) 
+ EGMO 2013 , Luxembourg City, Luxembourg 
+ EGMO 2012 , Cambridge, United Kingdom ( home page ) 
+ EGMO: Scoreboard for EGMO 2026 in France 
+ The table of scores may also be downloaded in CSV format. An RSS feed of the scores as they were published is also available. 
+ Scores by contestant code 
+ # # O Code Name P1 P2 P3 P4 P5 P6 Σ Award 
+ 236 153 ALB1 Asia Bedalli 1 0 0 0 0 0 1 
+ 247 158 ALB2 Erola Mati 0 0 0 0 0 0 0 
+ 217 139 ALB3 Evia Nezha 0 0 0 3 0 0 3 
+ 247 158 ALB4 Erika Meçaj 0 0 0 0 0 0 0 
+ 77 44 ARM1 Elen Keshishyan 7 0 0 7 2 0 16 Bronze Medal 
+ 77 44 ARM2 Nare Smbatyan 0 2 0 7 7 0 16 Bronze Medal 
+ 159 98 ARM3 Mane Yeritsyan 1 0 0 7 0 0 8 Honourable Mention 
+ 107 66 ARM4 Mariam Karagulyan 4 1 0 7 0 0 12 Bronze Medal 
+ 8 AUS1 Amber Li 7 5 4 5 7 0 28 Gold Medal 
+ 77 AUS2 Chuyu (Anna) Luo 7 3 1 3 2 0 16 Bronze Medal 
+ 70 AUS3 Christine Ou 7 1 0 7 2 0 17 Bronze Medal 
+ 18 AUS4 Olivia Sun 7 4 1 7 5 0 24 Gold Medal 
+ 107 66 AZE1 Leman Nabiyeva 7 1 0 4 0 0 12 Bronze Medal 
+ 117 73 AZE2 Zeynab Umudlu 7 0 0 4 0 0 11 Bronze Medal 
+ 173 106 AZE3 Zahra Ibishova 1 0 0 4 2 0 7 
+ 102 64 AZE4 Gulay Alizada 6 0 0 7 0 0 13 Bronze Medal 
+ 193 120 BEL1 Noa Heremans 1 0 0 3 1 0 5 
+ 193 120 BEL2 Anna Huysmans 3 0 0 1 1 0 5 
+ 217 139 BEL3 Kashika Sinha 0 2 0 1 0 0 3 
+ 202 128 BEL4 Wenxi Zhou 1 0 0 2 1 0 4 
+ 58 BGD1 Monamy Zaman 7 2 0 7 2 0 18 Silver Medal 
+ 173 BGD2 Krittika Chakraborty 0 1 1 3 2 0 7 
+ 202 BGD3 Nahian Parin Ifa 0 0 0 4 0 0 4 
+ 77 BGD4 Saaji Sehnai 7 0 1 4 4 0 16 Bronze Medal 
+ 70 40 BGR1 Yoana Mladenova 7 3 2 1 4 0 17 Bronze Medal 
+ 36 19 BGR2 Adelina Dorovska 7 7 0 7 0 0 21 Silver Medal 
+ 202 128 BGR3 Stanislava Petrova 1 1 0 1 1 0 4 
+ 173 106 BGR4 Yanilia Terpo 4 0 0 2 1 0 7 
+ 16 6 BIH1 Anja Tešević 7 3 1 7 7 0 25 Gold Medal 
+ 159 98 BIH2 Amila Pašić 1 3 1 2 1 0 8 
+ 236 153 BIH3 Farah Demirović 0 0 0 1 0 0 1 
+ 117 73 BIH4 Ajla Ćuprija 4 1 0 4 2 0 11 Bronze Medal 
+ 107 66 BLR1 Stefaniya Shuturminskaya 7 3 0 1 1 0 12 Bronze Medal 
+ 117 73 BLR2 Aliaksandra Sakharchuk 2 2 0 7 0 0 11 Bronze Medal 
+ 95 57 BLR3 Maryia Narbina 7 3 1 2 1 0 14 Bronze Medal 
+ 58 31 BLR4 Yauheniya Maslenikava 7 2 0 2 7 0 18 Silver Medal 
+ 31 BRA1 Maria Clara Fontes 7 7 0 7 1 0 22 Silver Medal 
+ 24 BRA2 Julia Leguiza 7 1 1 7 7 0 23 Gold Medal 
+ 102 BRA3 Heloísa Mysczak 7 2 0 4 0 0 13 Bronze Medal 
+ 159 BRA4 Maria Cecília Ribeiro Pereira de Melo 1 0 0 7 0 0 8 Honourable Mention 
+ 129 CAN1 Cora Cong 7 0 0 1 2 0 10 Honourable Mention 
+ 236 CAN2 Riley Jin 0 0 0 1 0 0 1 
+ 48 CAN3 Greta Qu 4 7 0 7 1 0 19 Silver Medal 
+ 10 CAN4 Sophie Zhang 7 5 0 7 7 0 26 Gold Medal 
+ 2 CHN1 Ziyu Tang 7 7 7 7 7 1 36 Gold Medal 
+ 3 CHN2 Minqi Xu 7 7 0 7 7 7 35 Gold Medal 
+ 3 CHN3 Yuke Zhuo 7 7 6 7 7 1 35 Gold Medal 
+ 1 CHN4 Huaijin Lou 7 7 7 7 7 7 42 Gold Medal 
+ 129 COL1 Maria José Aristizabal 6 0 0 3 1 0 10 
+ 225 COL2 Daniela Estrada 1 1 0 0 0 0 2 
+ 117 COL3 Sofía González 3 0 0 5 3 0 11 Bronze Medal 
+ 247 COL4 Maria Juliana Gómez 0 0 0 0 0 0 0 
+ 217 139 CYP1 Anna Rouva 0 0 0 3 0 0 3 
+ 129 81 CYP2 Polina Varlamova 7 2 0 1 0 0 10 Honourable Mention 
+ 217 139 CYP3 Ekaterina Frolova 2 0 0 1 0 0 3 
+ 217 139 CYP4 Kira Narovlianskaia 0 0 0 3 0 0 3 
+ 117 73 CZE1 Tereza Kubínová 7 3 0 1 0 0 11 Bronze Medal 
+ 58 31 CZE2 Veronika Menšíková 2 6 0 7 3 0 18 Silver Medal 
+ 90 53 CZE3 Helena Muchová 7 3 0 3 2 0 15 Bronze Medal 
+ 31 16 CZE4 Svatava Šimečková 7 7 0 7 0 1 22 Silver Medal 
+ 202 128 DEN1 Emilie Marie Nouard 2 0 0 2 0 0 4 
+ 173 106 DEN2 Maria Rumenova Maneva 2 0 0 5 0 0 7 
+ 173 106 DEN3 Molly Østergaard 6 0 0 1 0 0 7 
+ 159 98 DEN4 Vic Rytter Kjelde 7 0 0 1 0 0 8 Honourable Mention 
+ 217 ECU1 María Paz Rodríguez 1 0 0 1 1 0 3 
+ 202 ECU2 Mia Dunn 0 1 0 3 0 0 4 
+ 247 ECU3 Paulina Morales 0 0 0 0 0 0 0 
+ 225 ECU4 Linna Shen 2 0 0 0 0 0 2 
+ 70 40 ESP1 Vera Morancho Bargas 7 4 0 1 5 0 17 Bronze Medal 
+ 147 91 ESP2 Violeta Jaikin Zlobina 7 1 0 1 0 0 9 Honourable Mention 
+ 193 120 ESP3 Claudia García Navarro 2 2 0 1 0 0 5 
+ 159 98 ESP4 Liss Marian Estevez Suárez 2 0 0 5 1 0 8 
+ 202 128 EST1 Kaisa Joala 1 0 0 3 0 0 4 
+ 173 106 EST2 Marie Elise Kuristik 1 1 0 5 0 0 7 
+ 129 81 EST3 Paula Russak 7 1 0 2 0 0 10 Honourable Mention 
+ 202 128 EST4 Triinu Valdvee 2 1 0 1 0 0 4 
+ 48 25 FIN1 Amelie Hao 7 2 0 7 3 0 19 Silver Medal 
+ 193 120 FIN2 Mariia Kurdina 1 2 0 2 0 0 5 
+ 58 31 FIN3 Mariia Akimova 7 7 0 2 2 0 18 Silver Medal 
+ 173 106 FIN4 Louna Kiuru 5 2 0 0 0 0 7 
+ 18 8 FRA1 Ruirong Li 7 3 0 7 7 0 24 Gold Medal 
+ 236 153 FRA2 Thaïs Champetier 0 0 0 1 0 0 1 
+ 77 44 FRA3 Inès Fischler 7 2 0 7 0 0 16 Bronze Medal 
+ 90 53 FRA4 Noemi Kempe Regev 7 3 0 5 0 0 15 Bronze Medal 
+ 147 FRAB1 Aminaa Batsaikhan 7 1 0 1 0 0 9 Honourable Mention 
+ 48 FRAB2 Louise Deloye 7 0 0 7 5 0 19 Silver Medal 
+ 48 FRAB3 Sidonie Marquer Buffon 7 0 0 7 5 0 19 Silver Medal 
+ 70 FRAB4 Clémence Pham 7 3 0 3 4 0 17 Bronze Medal 
+ 193 120 GEO1 Barbare Kuchava 3 0 0 2 0 0 5 
+ 193 120 GEO2 Mariam Tsagareli 0 0 0 5 0 0 5 
+ 202 128 GEO3 Eliso Machitidze 0 0 0 4 0 0 4 
+ 173 106 GEO4 Rusudani Kupatadze 2 0 1 4 0 0 7 
+ 36 19 GER1 Ilsa Freysoldt 7 7 0 7 0 0 21 Silver Medal 
+ 40 21 GER2 Rafiga Gambarova 7 1 1 4 7 0 20 Silver Medal 
+ 31 16 GER3 Maike Konang 7 7 0 7 1 0 22 Silver Medal 
+ 70 40 GER4 Dora Yang 6 2 0 7 2 0 17 Bronze Medal 
+ 173 106 HEL1 Maria Stefania Koletta 0 1 0 4 2 0 7 
+ 190 118 HEL2 Lydia Kratsa 1 0 0 4 1 0 6 
+ 225 146 HEL3 Maria Karolina Vasilatou 1 0 0 1 0 0 2 
+ 129 81 HEL4 Ioanna Zachou 2 0 0 1 7 0 10 Honourable Mention 
+ 24 11 HRV1 Maša Dobrić 7 7 0 7 2 0 23 Gold Medal 
+ 10 2 HRV2 Mila Maretić 6 7 1 5 7 0 26 Gold Medal 
+ 159 98 HRV3 Ita Blašković 2 0 0 5 1 0 8 
+ 117 73 HRV4 Antonela Božić 7 0 0 4 0 0 11 Bronze Medal 
+ 58 31 HUN1 Noémi Bodor 6 4 0 7 1 0 18 Silver Medal 
+ 77 44 HUN2 Dóra Sárdinecz 7 4 2 1 2 0 16 Bronze Medal 
+ 95 57 HUN3 Vivien Varga 7 3 1 2 1 0 14 Bronze Medal 
+ 70 40 HUN4 Yufan Zhai 7 2 0 7 1 0 17 Bronze Medal 
+ 6 IDN1 Danica Odelia 7 7 4 7 7 0 32 Gold Medal 
+ 40 IND1 Sanjana Philo Chacko 7 2 3 7 1 0 20 Silver Medal 
+ 3 IND2 Shreya Shantanu Mundhada 7 7 5 7 2 7 35 Gold Medal 
+ 147 IND3 Shrimoyee Bera 0 0 3 4 2 0 9 
+ 70 IND4 Shivani Barath Kumar 6 4 0 7 0 0 17 Bronze Medal 
+ 225 146 IRL1 Siobhan McGale 0 0 0 2 0 0 2 
+ 147 91 IRL2 Aifric Barron 6 2 0 1 0 0 9 
+ 147 91 IRL3 Charlotte Walmsley 5 0 0 3 1 0 9 
+ 117 73 IRL4 Roisin Spratt 6 1 0 4 0 0 11 Bronze Medal 
+ 247 158 ISL1 Mary Lilja Ingimundarson 0 0 0 0 0 0 0 
+ 236 153 ISL2 Snædís Hanna Jensdóttir 0 1 0 0 0 0 1 
+ 193 120 ISL3 Snædís Jökulsdóttir 2 2 0 1 0 0 5 
+ 217 139 ISL4 Nicole Jóna Jóhannsdóttir 1 0 0 2 0 0 3 
+ 102 ISR1 Maya Cohen 7 4 0 2 0 0 13 Bronze Medal 
+ 159 ISR2 Maya Sarig 3 3 0 1 1 0 8 
+ 159 ISR3 Ruth Kozlovsky 0 2 5 1 0 0 8 
+ 247 ISR4 Tamar Stern 0 0 0 0 0 0 0 
+ 95 57 ITA1 Barbara Catino 7 2 0 1 4 0 14 Bronze Medal 
+ 58 31 ITA2 Alice Gemma 7 3 0 7 1 0 18 Silver Medal 
+ 10 2 ITA3 Anna Kazhamiakina 7 7 4 7 1 0 26 Gold Medal 
+ 48 25 ITA4 Miriam Pividori 7 3 0 1 1 7 19 Silver Medal 
+ 10 JPN1 Rina Hatachi 2 5 5 7 7 0 26 Gold Medal 
+ 9 JPN2 Haruka Kimura 7 6 0 7 7 0 27 Gold Medal 
+ 159 JPN3 Nanami Kurahashi 0 2 0 4 2 0 8 
+ 107 JPN4 Yukina Nakamoto 6 2 0 4 0 0 12 Bronze Medal 
+ 40 21 KAZ1 Iuliia Katunina 6 1 1 7 5 0 20 Silver Medal 
+ 202 128 KAZ2 Aruzhan Batyrkhan 2 0 0 2 0 0 4 
+ 77 44 KAZ3 Vera Kotorova 6 2 0 7 1 0 16 Bronze Medal 
+ 48 25 KAZ4 Aruzhan Kairat 7 3 0 2 7 0 19 Silver Medal 
+ 225 KGZ1 Ramilya Bozova 0 0 0 2 0 0 2 
+ 190 KGZ2 Diana Valerevna Kim 1 0 0 4 1 0 6 
+ 236 KGZ3 Angelina Kim 1 0 0 0 0 0 1 
+ 107 KGZ4 Kamila Aliyarova 6 0 0 1 5 0 12 Bronze Medal 
+ 147 91 KSV1 Vesa Xhymshiti 2 0 0 7 0 0 9 Honourable Mention 
+ 202 128 KSV2 Entela Mirena 0 0 0 4 0 0 4 
+ 159 98 KSV3 Adela Llapashtica 1 0 0 7 0 0 8 Honourable Mention 
+ 225 146 KSV4 Dina Maliqi 2 0 0 0 0 0 2 
+ 247 LKA1 Yara Daneen Abu Zanaz 0 0 0 0 0 0 0 
+ 247 LKA2 Vidasi Gayansa Jayasinghe Arachchi 0 0 0 0 0 0 0 
+ 225 LKA3 Tenuki Sinelika Bosirini Manannalage 0 0 0 1 1 0 2 
+ 173 106 LTU1 Saulė Vaidelytė 6 0 0 1 0 0 7 
+ 159 98 LTU2 Miglė Vydmontaitė 0 2 0 6 0 0 8 
+ 90 53 LTU3 Rugilė Dzindzalietaitė 6 3 0 2 4 0 15 Bronze Medal 
+ 107 66 LTU4 Dovilė Saunorytė 7 1 0 4 0 0 12 Bronze Medal 
+ 147 91 LUX1 Kiah Shah 0 0 0 7 2 0 9 Honourable Mention 
+ 190 118 LVA1 Diāna Stecka 2 2 0 0 2 0 6 
+ 225 146 LVA2 Jelizaveta Deņisova 0 1 0 1 0 0 2 
+ 129 81 LVA3 Tīna Muceniece 2 1 0 7 0 0 10 Honourable Mention 
+ 129 81 LVA4 Kitija Kampiņa 3 0 0 7 0 0 10 Honourable Mention 
+ 129 81 MDA1 Laura Șestacov 3 0 0 7 0 0 10 Honourable Mention 
+ 129 81 MDA2 Paulina Danu 2 0 0 7 1 0 10 Honourable Mention 
+ 202 128 MDA3 Laura Iachimov 0 0 0 4 0 0 4 
+ 173 106 MDA4 Ana Manea 0 0 0 7 0 0 7 Honourable Mention 
+ 40 MEX1 Andrea Sarahí Cascante Duarte 7 1 1 7 4 0 20 Silver Medal 
+ 102 MEX2 Elisa Villarreal Corona 4 1 1 7 0 0 13 Bronze Medal 
+ 129 MEX3 Sofía Constanza Santisteban Dávila 1 0 0 7 2 0 10 Honourable Mention 
+ 58 MEX4 Dana Karen Medina González 7 3 0 7 1 0 18 Silver Medal 
+ 173 106 MKD1 Ana Mitevska 5 0 0 1 1 0 7 
+ 225 146 MKD2 Ilina Arsovska 0 0 0 1 1 0 2 
+ 217 139 MKD3 Tea Angelova 0 0 0 3 0 0 3 
+ 129 81 MKD4 Kalina Grashkoska 6 0 0 4 0 0 10 
+ 147 MNG1 Bolor Naranbaatar 7 0 0 1 1 0 9 Honourable Mention 
+ 77 MNG2 Anu Altangerel 2 2 4 1 7 0 16 Bronze Medal 
+ 40 MNG3 Amin-Erdene Munkhbayar 7 5 0 1 7 0 20 Silver Medal 
+ 31 MNG4 Javkhlanzaya Turmunkh 6 2 0 7 7 0 22 Silver Medal 
+ 247 NGA1 Damaris Oluwasemilore Oyerinde 0 0 0 0 0 0 0 
+ 202 NGA2 Abasiofon Otobong Sampson 0 0 0 4 0 0 4 
+ 247 NGA3 Chimfumnanya Stephanie Aghaduno 0 0 0 0 0 0 0 
+ 40 21 NLD1 Alina Ju 7 2 0 7 4 0 20 Silver Medal 
+ 102 64 NLD2 Lisa Meij 0 1 3 7 2 0 13 Bronze Medal 
+ 58 31 NLD3 Fenne Meijer 7 3 0 7 1 0 18 Silver Medal 
+ 202 128 NLD4 Emily Wen 1 0 0 3 0 0 4 
+ 77 44 NOR1 Victoria Lund Søraas 7 2 0 7 0 0 16 Bronze Medal 
+ 247 158 NOR2 Mariam Eltrissi 0 0 0 0 0 0 0 
+ 236 153 NOR3 Cathy Rong 1 0 0 0 0 0 1 
+ 107 66 NOR4 Ingrid Lærum Winsnes 4 1 0 7 0 0 12 Bronze Medal 
+ 147 NZL1 Ruishan Bella Chen 7 1 0 1 0 0 9 Honourable Mention 
+ 129 NZL2 Isabelle Yixuan Ning 7 2 0 1 0 0 10 Honourable Mention 
+ 193 NZL3 Jackie Xu 0 1 0 4 0 0 5 
+ 173 NZL4 Sophie Xu 7 0 0 0 0 0 7 Honourable Mention 
+ 18 PER1 Dhamaris Alarcon 7 0 3 7 7 0 24 Gold Medal 
+ 117 PER2 Delia Faviana Esteban 2 0 0 7 2 0 11 Bronze Medal 
+ 129 PER3 Joyce Matias 4 0 0 4 2 0 10 
+ 129 PER4 Gianella Camacho 1 0 0 7 2 0 10 Honourable Mention 
+ 95 57 POL1 Maria Janyska 7 1 0 4 2 0 14 Bronze Medal 
+ 107 66 POL2 Daria Lobas 1 7 0 4 0 0 12 Bronze Medal 
+ 48 25 POL3 Łucja Łyziak 7 2 5 1 4 0 19 Silver Medal 
+ 129 81 POL4 Zuzanna Mosionek 6 1 1 2 0 0 10 
+ 10 2 ROU1 Aida Mitroi 7 3 2 7 7 0 26 Gold Medal 
+ 95 57 ROU2 Ioana Stroe 7 0 0 7 0 0 14 Bronze Medal 
+ 18 8 ROU3 Carina Maria Viespescu 7 0 3 7 7 0 24 Gold Medal 
+ 7 1 ROU4 Mălina-Carla Pavel 7 7 0 7 7 2 30 Gold Medal 
+ 236 RWA1 Audrey Irakoze 0 0 1 0 0 0 1 
+ 236 RWA2 Sonia Keza 0 0 0 1 0 0 1 
+ 159 RWA3 Imelda Ikuzwe 5 0 0 2 1 0 8 
+ 236 RWA4 Flora Elyse Ineza 0 0 0 1 0 0 1 
+ 159 SAF1 Olivia Castleden 7 0 0 1 0 0 8 Honourable Mention 
+ 173 SAF2 Zixuan Liu 2 1 0 4 0 0 7 
+ 173 SAF3 Anni Luo 5 1 0 1 0 0 7 
+ 129 SAF4 Ruth Marguerite Trimble 7 2 0 1 0 0 10 Honourable Mention 
+ 117 SAU1 Tala Tulbah 1 1 0 7 2 0 11 Bronze Medal 
+ 107 SAU2 Albatool Alaidarous 2 2 0 7 1 0 12 Bronze Medal 
+ 202 SAU3 Lana Nouri 3 0 0 0 1 0 4 
+ 147 SAU4 Fatimah Almarhoun 1 0 0 7 1 0 9 Honourable Mention 
+ 18 8 SRB1 Vanja Jelovac 7 3 0 7 7 0 24 Gold Medal 
+ 95 57 SRB2 Irina Stanišić 7 2 0 4 1 0 14 Bronze Medal 
+ 31 16 SRB3 Nina Šušić 7 7 3 5 0 0 22 Silver Medal 
+ 147 91 SRB4 Mina Pavlović 6 0 0 1 1 1 9 
+ 24 11 SUI1 Hongjia Meng 7 2 0 7 7 0 23 Gold Medal 
+ 77 44 SUI2 Svenja Felber 7 3 0 4 2 0 16 Bronze Medal 
+ 129 81 SUI3 Xiaomei Xu 2 3 0 4 1 0 10 
+ 147 91 SUI4 Myriam Faltin 0 2 0 7 0 0 9 Honourable Mention 
+ 58 31 SVK1 Alena Bálintová 7 3 0 7 1 0 18 Silver Medal 
+ 117 73 SVK2 Alica Jenčová 6 3 0 2 0 0 11 Bronze Medal 
+ 193 120 SVK3 Ivana Kováčová 2 1 0 1 1 0 5 
+ 202 128 SVK4 Jana Oswaldová 1 2 0 1 0 0 4 
+ 24 11 SVN1 Ekaterina Chizhova 7 2 0 7 7 0 23 Gold Medal 
+ 95 57 SVN2 Tisa Lombar 7 0 1 1 5 0 14 Bronze Medal 
+ 90 53 SVN3 Naja Oblak 7 0 0 7 1 0 15 Bronze Medal 
+ 173 106 SVN4 Maja Rihtaršič 3 0 0 4 0 0 7 
+ 225 146 SWE1 Ellen Engman Hytti 1 0 0 1 0 0 2 
+ 77 44 SWE2 Jiayi Liu 7 2 0 7 0 0 16 Bronze Medal 
+ 107 66 SWE3 Anastasiia Saranchina 7 3 0 2 0 0 12 Bronze Medal 
+ 117 73 SWE4 Leshi Zhang 6 0 0 0 5 0 11 Bronze Medal 
+ 236 TUN1 Asma Mejbri 0 0 0 1 0 0 1 
+ 247 TUN2 Chahed Temtem 0 0 0 0 0 0 0 
+ 247 TUN3 Aya Ben Yahia 0 0 0 0 0 0 0 
+ 247 TUN4 Emna Chelly Jbelia 0 0 0 0 0 0 0 
+ 24 11 TUR1 Bengisu Demirbaş 7 5 0 4 7 0 23 Gold Medal 
+ 10 2 TUR2 Defne Hergül 7 2 1 7 7 2 26 Gold Medal 
+ 48 25 TUR3 Elif Kiraz 7 3 1 7 1 0 19 Silver Medal 
+ 58 31 TUR4 Ilgın Şekerli 6 5 0 7 0 0 18 Silver Medal 
+ 129 TWN1 Yun-Chao Liu 4 2 0 4 0 0 10 
+ 36 TWN2 Peng-En Lu 7 2 1 4 7 0 21 Silver Medal 
+ 36 TWN3 Victoria Sheung 6 7 0 7 0 1 21 Silver Medal 
+ 90 TWN4 Chen-Fei Wu 7 0 0 4 4 0 15 Bronze Medal 
+ 48 25 UKR1 Dariia Balan 7 3 0 7 2 0 19 Silver Medal 
+ 24 11 UKR2 Viktoriia Goncharenko 7 7 0 7 2 0 23 Gold Medal 
+ 77 44 UKR3 Kateryna Sydorenko 2 0 2 5 7 0 16 Bronze Medal 
+ 58 31 UKR4 Alisa Zagorodnieva 7 2 0 7 2 0 18 Silver Medal 
+ 159 98 UNK1 Keisha Kwok 3 2 0 1 2 0 8 
+ 225 146 UNK2 Leila Liu 0 0 0 1 1 0 2 
+ 40 21 UNK3 Emily Shi 7 7 0 5 1 0 20 Silver Medal 
+ 16 6 UNK4 Teri Xu 7 7 2 7 2 0 25 Gold Medal 
+ 18 USA1 Catherine Xu 7 7 1 7 2 0 24 Gold Medal 
+ 24 USA2 Ekam Kaur 7 7 0 5 4 0 23 Gold Medal 
+ 58 USA3 Kailua Cheng 7 7 0 2 2 0 18 Silver Medal 
+ 48 USA4 Xinyi Li 7 7 1 2 2 0 19 Silver Medal 
+ 77 UZB1 Dildora Makhkamova 6 4 0 4 2 0 16 Bronze Medal 
+ 40 UZB2 Nastarin Kamolova 6 3 2 7 2 0 20 Silver Medal 
+ 173 UZB3 Dilnura Safarova 0 0 1 4 2 0 7 
+ 117 UZB4 Nihola Yuldosheva 6 2 0 1 2 0 11 Bronze Medal 
+ Ranked scores 
+ # # O Code Name P1 P2 P3 P4 P5 P6 Σ Award 
+ 1 CHN4 Huaijin Lou 7 7 7 7 7 7 42 Gold Medal 
+ 2 CHN1 Ziyu Tang 7 7 7 7 7 1 36 Gold Medal 
+ 3 CHN2 Minqi Xu 7 7 0 7 7 7 35 Gold Medal 
+ 3 CHN3 Yuke Zhuo 7 7 6 7 7 1 35 Gold Medal 
+ 3 IND2 Shreya Shantanu Mundhada 7 7 5 7 2 7 35 Gold Medal 
+ 6 IDN1 Danica Odelia 7 7 4 7 7 0 32 Gold Medal 
+ 7 1 ROU4 Mălina-Carla Pavel 7 7 0 7 7 2 30 Gold Medal 
+ 8 AUS1 Amber Li 7 5 4 5 7 0 28 Gold Medal 
+ 9 JPN2 Haruka Kimura 7 6 0 7 7 0 27 Gold Medal 
+ 10 CAN4 Sophie Zhang 7 5 0 7 7 0 26 Gold Medal 
+ 10 2 HRV2 Mila Maretić 6 7 1 5 7 0 26 Gold Medal 
+ 10 2 ITA3 Anna Kazhamiakina 7 7 4 7 1 0 26 Gold Medal 
+ 10 JPN1 Rina Hatachi 2 5 5 7 7 0 26 Gold Medal 
+ 10 2 ROU1 Aida Mitroi 7 3 2 7 7 0 26 Gold Medal 
+ 10 2 TUR2 Defne Hergül 7 2 1 7 7 2 26 Gold Medal 
+ 16 6 BIH1 Anja Tešević 7 3 1 7 7 0 25 Gold Medal 
+ 16 6 UNK4 Teri Xu 7 7 2 7 2 0 25 Gold Medal 
+ 18 AUS4 Olivia Sun 7 4 1 7 5 0 24 Gold Medal 
+ 18 8 FRA1 Ruirong Li 7 3 0 7 7 0 24 Gold Medal 
+ 18 PER1 Dhamaris Alarcon 7 0 3 7 7 0 24 Gold Medal 
+ 18 8 ROU3 Carina Maria Viespescu 7 0 3 7 7 0 24 Gold Medal 
+ 18 8 SRB1 Vanja Jelovac 7 3 0 7 7 0 24 Gold Medal 
+ 18 USA1 Catherine Xu 7 7 1 7 2 0 24 Gold Medal 
+ 24 BRA2 Julia Leguiza 7 1 1 7 7 0 23 Gold Medal 
+ 24 11 HRV1 Maša Dobrić 7 7 0 7 2 0 23 Gold Medal 
+ 24 11 SUI1 Hongjia Meng 7 2 0 7 7 0 23 Gold Medal 
+ 24 11 SVN1 Ekaterina Chizhova 7 2 0 7 7 0 23 Gold Medal 
+ 24 11 TUR1 Bengisu Demirbaş 7 5 0 4 7 0 23 Gold Medal 
+ 24 11 UKR2 Viktoriia Goncharenko 7 7 0 7 2 0 23 Gold Medal 
+ 24 USA2 Ekam Kaur 7 7 0 5 4 0 23 Gold Medal 
+ 31 BRA1 Maria Clara Fontes 7 7 0 7 1 0 22 Silver Medal 
+ 31 16 CZE4 Svatava Šimečková 7 7 0 7 0 1 22 Silver Medal 
+ 31 16 GER3 Maike Konang 7 7 0 7 1 0 22 Silver Medal 
+ 31 MNG4 Javkhlanzaya Turmunkh 6 2 0 7 7 0 22 Silver Medal 
+ 31 16 SRB3 Nina Šušić 7 7 3 5 0 0 22 Silver Medal 
+ 36 19 BGR2 Adelina Dorovska 7 7 0 7 0 0 21 Silver Medal 
+ 36 19 GER1 Ilsa Freysoldt 7 7 0 7 0 0 21 Silver Medal 
+ 36 TWN2 Peng-En Lu 7 2 1 4 7 0 21 Silver Medal 
+ 36 TWN3 Victoria Sheung 6 7 0 7 0 1 21 Silver Medal 
+ 40 21 GER2 Rafiga Gambarova 7 1 1 4 7 0 20 Silver Medal 
+ 40 IND1 Sanjana Philo Chacko 7 2 3 7 1 0 20 Silver Medal 
+ 40 21 KAZ1 Iuliia Katunina 6 1 1 7 5 0 20 Silver Medal 
+ 40 MEX1 Andrea Sarahí Cascante Duarte 7 1 1 7 4 0 20 Silver Medal 
+ 40 MNG3 Amin-Erdene Munkhbayar 7 5 0 1 7 0 20 Silver Medal 
+ 40 21 NLD1 Alina Ju 7 2 0 7 4 0 20 Silver Medal 
+ 40 21 UNK3 Emily Shi 7 7 0 5 1 0 20 Silver Medal 
+ 40 UZB2 Nastarin Kamolova 6 3 2 7 2 0 20 Silver Medal 
+ 48 CAN3 Greta Qu 4 7 0 7 1 0 19 Silver Medal 
+ 48 25 FIN1 Amelie Hao 7 2 0 7 3 0 19 Silver Medal 
+ 48 FRAB2 Louise Deloye 7 0 0 7 5 0 19 Silver Medal 
+ 48 FRAB3 Sidonie Marquer Buffon 7 0 0 7 5 0 19 Silver Medal 
+ 48 25 ITA4 Miriam Pividori 7 3 0 1 1 7 19 Silver Medal 
+ 48 25 KAZ4 Aruzhan Kairat 7 3 0 2 7 0 19 Silver Medal 
+ 48 25 POL3 Łucja Łyziak 7 2 5 1 4 0 19 Silver Medal 
+ 48 25 TUR3 Elif Kiraz 7 3 1 7 1 0 19 Silver Medal 
+ 48 25 UKR1 Dariia Balan 7 3 0 7 2 0 19 Silver Medal 
+ 48 USA4 Xinyi Li 7 7 1 2 2 0 19 Silver Medal 
+ 58 BGD1 Monamy Zaman 7 2 0 7 2 0 18 Silver Medal 
+ 58 31 BLR4 Yauheniya Maslenikava 7 2 0 2 7 0 18 Silver Medal 
+ 58 31 CZE2 Veronika Menšíková 2 6 0 7 3 0 18 Silver Medal 
+ 58 31 FIN3 Mariia Akimova 7 7 0 2 2 0 18 Silver Medal 
+ 58 31 HUN1 Noémi Bodor 6 4 0 7 1 0 18 Silver Medal 
+ 58 31 ITA2 Alice Gemma 7 3 0 7 1 0 18 Silver Medal 
+ 58 MEX4 Dana Karen Medina González 7 3 0 7 1 0 18 Silver Medal 
+ 58 31 NLD3 Fenne Meijer 7 3 0 7 1 0 18 Silver Medal 
+ 58 31 SVK1 Alena Bálintová 7 3 0 7 1 0 18 Silver Medal 
+ 58 31 TUR4 Ilgın Şekerli 6 5 0 7 0 0 18 Silver Medal 
+ 58 31 UKR4 Alisa Zagorodnieva 7 2 0 7 2 0 18 Silver Medal 
+ 58 USA3 Kailua Cheng 7 7 0 2 2 0 18 Silver Medal 
+ 70 AUS3 Christine Ou 7 1 0 7 2 0 17 Bronze Medal 
+ 70 40 BGR1 Yoana Mladenova 7 3 2 1 4 0 17 Bronze Medal 
+ 70 40 ESP1 Vera Morancho Bargas 7 4 0 1 5 0 17 Bronze Medal 
+ 70 FRAB4 Clémence Pham 7 3 0 3 4 0 17 Bronze Medal 
+ 70 40 GER4 Dora Yang 6 2 0 7 2 0 17 Bronze Medal 
+ 70 40 HUN4 Yufan Zhai 7 2 0 7 1 0 17 Bronze Medal 
+ 70 IND4 Shivani Barath Kumar 6 4 0 7 0 0 17 Bronze Medal 
+ 77 44 ARM1 Elen Keshishyan 7 0 0 7 2 0 16 Bronze Medal 
+ 77 44 ARM2 Nare Smbatyan 0 2 0 7 7 0 16 Bronze Medal 
+ 77 AUS2 Chuyu (Anna) Luo 7 3 1 3 2 0 16 Bronze Medal 
+ 77 BGD4 Saaji Sehnai 7 0 1 4 4 0 16 Bronze Medal 
+ 77 44 FRA3 Inès Fischler 7 2 0 7 0 0 16 Bronze Medal 
+ 77 44 HUN2 Dóra Sárdinecz 7 4 2 1 2 0 16 Bronze Medal 
+ 77 44 KAZ3 Vera Kotorova 6 2 0 7 1 0 16 Bronze Medal 
+ 77 MNG2 Anu Altangerel 2 2 4 1 7 0 16 Bronze Medal 
+ 77 44 NOR1 Victoria Lund Søraas 7 2 0 7 0 0 16 Bronze Medal 
+ 77 44 SUI2 Svenja Felber 7 3 0 4 2 0 16 Bronze Medal 
+ 77 44 SWE2 Jiayi Liu 7 2 0 7 0 0 16 Bronze Medal 
+ 77 44 UKR3 Kateryna Sydorenko 2 0 2 5 7 0 16 Bronze Medal 
+ 77 UZB1 Dildora Makhkamova 6 4 0 4 2 0 16 Bronze Medal 
+ 90 53 CZE3 Helena Muchová 7 3 0 3 2 0 15 Bronze Medal 
+ 90 53 FRA4 Noemi Kempe Regev 7 3 0 5 0 0 15 Bronze Medal 
+ 90 53 LTU3 Rugilė Dzindzalietaitė 6 3 0 2 4 0 15 Bronze Medal 
+ 90 53 SVN3 Naja Oblak 7 0 0 7 1 0 15 Bronze Medal 
+ 90 TWN4 Chen-Fei Wu 7 0 0 4 4 0 15 Bronze Medal 
+ 95 57 BLR3 Maryia Narbina 7 3 1 2 1 0 14 Bronze Medal 
+ 95 57 HUN3 Vivien Varga 7 3 1 2 1 0 14 Bronze Medal 
+ 95 57 ITA1 Barbara Catino 7 2 0 1 4 0 14 Bronze Medal 
+ 95 57 POL1 Maria Janyska 7 1 0 4 2 0 14 Bronze Medal 
+ 95 57 ROU2 Ioana Stroe 7 0 0 7 0 0 14 Bronze Medal 
+ 95 57 SRB2 Irina Stanišić 7 2 0 4 1 0 14 Bronze Medal 
+ 95 57 SVN2 Tisa Lombar 7 0 1 1 5 0 14 Bronze Medal 
+ 102 64 AZE4 Gulay Alizada 6 0 0 7 0 0 13 Bronze Medal 
+ 102 BRA3 Heloísa Mysczak 7 2 0 4 0 0 13 Bronze Medal 
+ 102 ISR1 Maya Cohen 7 4 0 2 0 0 13 Bronze Medal 
+ 102 MEX2 Elisa Villarreal Corona 4 1 1 7 0 0 13 Bronze Medal 
+ 102 64 NLD2 Lisa Meij 0 1 3 7 2 0 13 Bronze Medal 
+ 107 66 ARM4 Mariam Karagulyan 4 1 0 7 0 0 12 Bronze Medal 
+ 107 66 AZE1 Leman Nabiyeva 7 1 0 4 0 0 12 Bronze Medal 
+ 107 66 BLR1 Stefaniya Shuturminskaya 7 3 0 1 1 0 12 Bronze Medal 
+ 107 JPN4 Yukina Nakamoto 6 2 0 4 0 0 12 Bronze Medal 
+ 107 KGZ4 Kamila Aliyarova 6 0 0 1 5 0 12 Bronze Medal 
+ 107 66 LTU4 Dovilė Saunorytė 7 1 0 4 0 0 12 Bronze Medal 
+ 107 66 NOR4 Ingrid Lærum Winsnes 4 1 0 7 0 0 12 Bronze Medal 
+ 107 66 POL2 Daria Lobas 1 7 0 4 0 0 12 Bronze Medal 
+ 107 SAU2 Albatool Alaidarous 2 2 0 7 1 0 12 Bronze Medal 
+ 107 66 SWE3 Anastasiia Saranchina 7 3 0 2 0 0 12 Bronze Medal 
+ 117 73 AZE2 Zeynab Umudlu 7 0 0 4 0 0 11 Bronze Medal 
+ 117 73 BIH4 Ajla Ćuprija 4 1 0 4 2 0 11 Bronze Medal 
+ 117 73 BLR2 Aliaksandra Sakharchuk 2 2 0 7 0 0 11 Bronze Medal 
+ 117 COL3 Sofía González 3 0 0 5 3 0 11 Bronze Medal 
+ 117 73 CZE1 Tereza Kubínová 7 3 0 1 0 0 11 Bronze Medal 
+ 117 73 HRV4 Antonela Božić 7 0 0 4 0 0 11 Bronze Medal 
+ 117 73 IRL4 Roisin Spratt 6 1 0 4 0 0 11 Bronze Medal 
+ 117 PER2 Delia Faviana Esteban 2 0 0 7 2 0 11 Bronze Medal 
+ 117 SAU1 Tala Tulbah 1 1 0 7 2 0 11 Bronze Medal 
+ 117 73 SVK2 Alica Jenčová 6 3 0 2 0 0 11 Bronze Medal 
+ 117 73 SWE4 Leshi Zhang 6 0 0 0 5 0 11 Bronze Medal 
+ 117 UZB4 Nihola Yuldosheva 6 2 0 1 2 0 11 Bronze Medal 
+ 129 CAN1 Cora Cong 7 0 0 1 2 0 10 Honourable Mention 
+ 129 COL1 Maria José Aristizabal 6 0 0 3 1 0 10 
+ 129 81 CYP2 Polina Varlamova 7 2 0 1 0 0 10 Honourable Mention 
+ 129 81 EST3 Paula Russak 7 1 0 2 0 0 10 Honourable Mention 
+ 129 81 HEL4 Ioanna Zachou 2 0 0 1 7 0 10 Honourable Mention 
+ 129 81 LVA3 Tīna Muceniece 2 1 0 7 0 0 10 Honourable Mention 
+ 129 81 LVA4 Kitija Kampiņa 3 0 0 7 0 0 10 Honourable Mention 
+ 129 81 MDA1 Laura Șestacov 3 0 0 7 0 0 10 Honourable Mention 
+ 129 81 MDA2 Paulina Danu 2 0 0 7 1 0 10 Honourable Mention 
+ 129 MEX3 Sofía Constanza Santisteban Dávila 1 0 0 7 2 0 10 Honourable Mention 
+ 129 81 MKD4 Kalina Grashkoska 6 0 0 4 0 0 10 
+ 129 NZL2 Isabelle Yixuan Ning 7 2 0 1 0 0 10 Honourable Mention 
+ 129 PER3 Joyce Matias 4 0 0 4 2 0 10 
+ 129 PER4 Gianella Camacho 1 0 0 7 2 0 10 Honourable Mention 
+ 129 81 POL4 Zuzanna Mosionek 6 1 1 2 0 0 10 
+ 129 SAF4 Ruth Marguerite Trimble 7 2 0 1 0 0 10 Honourable Mention 
+ 129 81 SUI3 Xiaomei Xu 2 3 0 4 1 0 10 
+ 129 TWN1 Yun-Chao Liu 4 2 0 4 0 0 10 
+ 147 91 ESP2 Violeta Jaikin Zlobina 7 1 0 1 0 0 9 Honourable Mention 
+ 147 FRAB1 Aminaa Batsaikhan 7 1 0 1 0 0 9 Honourable Mention 
+ 147 IND3 Shrimoyee Bera 0 0 3 4 2 0 9 
+ 147 91 IRL2 Aifric Barron 6 2 0 1 0 0 9 
+ 147 91 IRL3 Charlotte Walmsley 5 0 0 3 1 0 9 
+ 147 91 KSV1 Vesa Xhymshiti 2 0 0 7 0 0 9 Honourable Mention 
+ 147 91 LUX1 Kiah Shah 0 0 0 7 2 0 9 Honourable Mention 
+ 147 MNG1 Bolor Naranbaatar 7 0 0 1 1 0 9 Honourable Mention 
+ 147 NZL1 Ruishan Bella Chen 7 1 0 1 0 0 9 Honourable Mention 
+ 147 SAU4 Fatimah Almarhoun 1 0 0 7 1 0 9 Honourable Mention 
+ 147 91 SRB4 Mina Pavlović 6 0 0 1 1 1 9 
+ 147 91 SUI4 Myriam Faltin 0 2 0 7 0 0 9 Honourable Mention 
+ 159 98 ARM3 Mane Yeritsyan 1 0 0 7 0 0 8 Honourable Mention 
+ 159 98 BIH2 Amila Pašić 1 3 1 2 1 0 8 
+ 159 BRA4 Maria Cecília Ribeiro Pereira de Melo 1 0 0 7 0 0 8 Honourable Mention 
+ 159 98 DEN4 Vic Rytter Kjelde 7 0 0 1 0 0 8 Honourable Mention 
+ 159 98 ESP4 Liss Marian Estevez Suárez 2 0 0 5 1 0 8 
+ 159 98 HRV3 Ita Blašković 2 0 0 5 1 0 8 
+ 159 ISR2 Maya Sarig 3 3 0 1 1 0 8 
+ 159 ISR3 Ruth Kozlovsky 0 2 5 1 0 0 8 
+ 159 JPN3 Nanami Kurahashi 0 2 0 4 2 0 8 
+ 159 98 KSV3 Adela Llapashtica 1 0 0 7 0 0 8 Honourable Mention 
+ 159 98 LTU2 Miglė Vydmontaitė 0 2 0 6 0 0 8 
+ 159 RWA3 Imelda Ikuzwe 5 0 0 2 1 0 8 
+ 159 SAF1 Olivia Castleden 7 0 0 1 0 0 8 Honourable Mention 
+ 159 98 UNK1 Keisha Kwok 3 2 0 1 2 0 8 
+ 173 106 AZE3 Zahra Ibishova 1 0 0 4 2 0 7 
+ 173 BGD2 Krittika Chakraborty 0 1 1 3 2 0 7 
+ 173 106 BGR4 Yanilia Terpo 4 0 0 2 1 0 7 
+ 173 106 DEN2 Maria Rumenova Maneva 2 0 0 5 0 0 7 
+ 173 106 DEN3 Molly Østergaard 6 0 0 1 0 0 7 
+ 173 106 EST2 Marie Elise Kuristik 1 1 0 5 0 0 7 
+ 173 106 FIN4 Louna Kiuru 5 2 0 0 0 0 7 
+ 173 106 GEO4 Rusudani Kupatadze 2 0 1 4 0 0 7 
+ 173 106 HEL1 Maria Stefania Koletta 0 1 0 4 2 0 7 
+ 173 106 LTU1 Saulė Vaidelytė 6 0 0 1 0 0 7 
+ 173 106 MDA4 Ana Manea 0 0 0 7 0 0 7 Honourable Mention 
+ 173 106 MKD1 Ana Mitevska 5 0 0 1 1 0 7 
+ 173 NZL4 Sophie Xu 7 0 0 0 0 0 7 Honourable Mention 
+ 173 SAF2 Zixuan Liu 2 1 0 4 0 0 7 
+ 173 SAF3 Anni Luo 5 1 0 1 0 0 7 
+ 173 106 SVN4 Maja Rihtaršič 3 0 0 4 0 0 7 
+ 173 UZB3 Dilnura Safarova 0 0 1 4 2 0 7 
+ 190 118 HEL2 Lydia Kratsa 1 0 0 4 1 0 6 
+ 190 KGZ2 Diana Valerevna Kim 1 0 0 4 1 0 6 
+ 190 118 LVA1 Diāna Stecka 2 2 0 0 2 0 6 
+ 193 120 BEL1 Noa Heremans 1 0 0 3 1 0 5 
+ 193 120 BEL2 Anna Huysmans 3 0 0 1 1 0 5 
+ 193 120 ESP3 Claudia García Navarro 2 2 0 1 0 0 5 
+ 193 120 FIN2 Mariia Kurdina 1 2 0 2 0 0 5 
+ 193 120 GEO1 Barbare Kuchava 3 0 0 2 0 0 5 
+ 193 120 GEO2 Mariam Tsagareli 0 0 0 5 0 0 5 
+ 193 120 ISL3 Snædís Jökulsdóttir 2 2 0 1 0 0 5 
+ 193 NZL3 Jackie Xu 0 1 0 4 0 0 5 
+ 193 120 SVK3 Ivana Kováčová 2 1 0 1 1 0 5 
+ 202 128 BEL4 Wenxi Zhou 1 0 0 2 1 0 4 
+ 202 BGD3 Nahian Parin Ifa 0 0 0 4 0 0 4 
+ 202 128 BGR3 Stanislava Petrova 1 1 0 1 1 0 4 
+ 202 128 DEN1 Emilie Marie Nouard 2 0 0 2 0 0 4 
+ 202 ECU2 Mia Dunn 0 1 0 3 0 0 4 
+ 202 128 EST1 Kaisa Joala 1 0 0 3 0 0 4 
+ 202 128 EST4 Triinu Valdvee 2 1 0 1 0 0 4 
+ 202 128 GEO3 Eliso Machitidze 0 0 0 4 0 0 4 
+ 202 128 KAZ2 Aruzhan Batyrkhan 2 0 0 2 0 0 4 
+ 202 128 KSV2 Entela Mirena 0 0 0 4 0 0 4 
+ 202 128 MDA3 Laura Iachimov 0 0 0 4 0 0 4 
+ 202 NGA2 Abasiofon Otobong Sampson 0 0 0 4 0 0 4 
+ 202 128 NLD4 Emily Wen 1 0 0 3 0 0 4 
+ 202 SAU3 Lana Nouri 3 0 0 0 1 0 4 
+ 202 128 SVK4 Jana Oswaldová 1 2 0 1 0 0 4 
+ 217 139 ALB3 Evia Nezha 0 0 0 3 0 0 3 
+ 217 139 BEL3 Kashika Sinha 0 2 0 1 0 0 3 
+ 217 139 CYP1 Anna Rouva 0 0 0 3 0 0 3 
+ 217 139 CYP3 Ekaterina Frolova 2 0 0 1 0 0 3 
+ 217 139 CYP4 Kira Narovlianskaia 0 0 0 3 0 0 3 
+ 217 ECU1 María Paz Rodríguez 1 0 0 1 1 0 3 
+ 217 139 ISL4 Nicole Jóna Jóhannsdóttir 1 0 0 2 0 0 3 
+ 217 139 MKD3 Tea Angelova 0 0 0 3 0 0 3 
+ 225 COL2 Daniela Estrada 1 1 0 0 0 0 2 
+ 225 ECU4 Linna Shen 2 0 0 0 0 0 2 
+ 225 146 HEL3 Maria Karolina Vasilatou 1 0 0 1 0 0 2 
+ 225 146 IRL1 Siobhan McGale 0 0 0 2 0 0 2 
+ 225 KGZ1 Ramilya Bozova 0 0 0 2 0 0 2 
+ 225 146 KSV4 Dina Maliqi 2 0 0 0 0 0 2 
+ 225 LKA3 Tenuki Sinelika Bosirini Manannalage 0 0 0 1 1 0 2 
+ 225 146 LVA2 Jelizaveta Deņisova 0 1 0 1 0 0 2 
+ 225 146 MKD2 Ilina Arsovska 0 0 0 1 1 0 2 
+ 225 146 SWE1 Ellen Engman Hytti 1 0 0 1 0 0 2 
+ 225 146 UNK2 Leila Liu 0 0 0 1 1 0 2 
+ 236 153 ALB1 Asia Bedalli 1 0 0 0 0 0 1 
+ 236 153 BIH3 Farah Demirović 0 0 0 1 0 0 1 
+ 236 CAN2 Riley Jin 0 0 0 1 0 0 1 
+ 236 153 FRA2 Thaïs Champetier 0 0 0 1 0 0 1 
+ 236 153 ISL2 Snædís Hanna Jensdóttir 0 1 0 0 0 0 1 
+ 236 KGZ3 Angelina Kim 1 0 0 0 0 0 1 
+ 236 153 NOR3 Cathy Rong 1 0 0 0 0 0 1 
+ 236 RWA1 Audrey Irakoze 0 0 1 0 0 0 1 
+ 236 RWA2 Sonia Keza 0 0 0 1 0 0 1 
+ 236 RWA4 Flora Elyse Ineza 0 0 0 1 0 0 1 
+ 236 TUN1 Asma Mejbri 0 0 0 1 0 0 1 
+ 247 158 ALB2 Erola Mati 0 0 0 0 0 0 0 
+ 247 158 ALB4 Erika Meçaj 0 0 0 0 0 0 0 
+ 247 COL4 Maria Juliana Gómez 0 0 0 0 0 0 0 
+ 247 ECU3 Paulina Morales 0 0 0 0 0 0 0 
+ 247 158 ISL1 Mary Lilja Ingimundarson 0 0 0 0 0 0 0 
+ 247 ISR4 Tamar Stern 0 0 0 0 0 0 0 
+ 247 LKA1 Yara Daneen Abu Zanaz 0 0 0 0 0 0 0 
+ 247 LKA2 Vidasi Gayansa Jayasinghe Arachchi 0 0 0 0 0 0 0 
+ 247 NGA1 Damaris Oluwasemilore Oyerinde 0 0 0 0 0 0 0 
+ 247 NGA3 Chimfumnanya Stephanie Aghaduno 0 0 0 0 0 0 0 
+ 247 158 NOR2 Mariam Eltrissi 0 0 0 0 0 0 0 
+ 247 TUN2 Chahed Temtem 0 0 0 0 0 0 0 
+ 247 TUN3 Aya Ben Yahia 0 0 0 0 0 0 0 
+ 247 TUN4 Emna Chelly Jbelia 0 0 0 0 0 0 0 
+ Statistics 
+ 30 gold medals (scores ≥ 23), 39 silver medals (scores ≥ 18), 59 bronze medals (scores ≥ 11), 27 honourable mentions from 260 contestants total. 
+ From official European teams: 15 gold medals, 24 silver medals, 41 bronze medals, 15 honourable mentions from 161 contestants total. 
+ Total score Candidates Cumulative Cumulative (official European) 
+ 42 1 1 0 
+ 41 0 1 0 
+ 40 0 1 0 
+ 39 0 1 0 
+ 38 0 1 0 
+ 37 0 1 0 
+ 36 1 2 0 
+ 35 3 5 0 
+ 34 0 5 0 
+ 33 0 5 0 
+ 32 1 6 0 
+ 31 0 6 0 
+ 30 1 7 1 
+ 29 0 7 1 
+ 28 1 8 1 
+ 27 1 9 1 
+ 26 6 15 5 
+ 25 2 17 7 
+ 24 6 23 10 
+ 23 7 30 15 
+ 22 5 35 18 
+ 21 4 39 20 
+ 20 8 47 24 
+ 19 10 57 30 
+ 18 12 69 39 
+ 17 7 76 43 
+ 16 13 89 52 
+ 15 5 94 56 
+ 14 7 101 63 
+ 13 5 106 65 
+ 12 10 116 72 
+ 11 12 128 80 
+ 10 18 146 90 
+ 9 12 158 97 
+ 8 14 172 105 
+ 7 17 189 117 
+ 6 3 192 119 
+ 5 9 201 127 
+ 4 15 216 138 
+ 3 8 224 145 
+ 2 11 235 152 
+ 1 11 246 157 
+ 0 14 260 161 
+ Mean score = 11.873; standard deviation = 8.240. 
+ Statistics by problem 
+ P1 P2 P3 P4 P5 P6 
+ Score = 0 53 111 213 27 121 249 
+ Score = 1 28 34 24 55 47 5 
+ Score = 2 27 44 6 24 39 2 
+ Score = 3 9 29 6 14 3 0 
+ Score = 4 8 7 4 38 10 0 
+ Score = 5 5 6 4 13 8 0 
+ Score = 6 26 2 1 1 0 0 
+ Score = 7 104 27 2 88 32 4 
+ Mean(Score) 4.038 1.800 0.423 3.785 1.685 0.142 
+ σ(Score) 2.949 2.224 1.166 2.656 2.337 0.885 
+ Corr(Score, Total) 0.759 0.747 0.508 0.670 0.700 0.376 
+ Correlation coefficients between problems 
+ P1 P2 P3 P4 P5 P6 
+ P1 0.513 0.172 0.329 0.406 0.158 
+ P2 0.513 0.341 0.371 0.333 0.288 
+ P3 0.172 0.341 0.193 0.412 0.311 
+ P4 0.329 0.371 0.193 0.319 0.116 
+ P5 0.406 0.333 0.412 0.319 0.185 
+ P6 0.158 0.288 0.311 0.116 0.185 
+ Country results 
+ # # O Country Size P1 P2 P3 P4 P5 P6 Σ G S B HM 
+ 1 People's Republic of China (CHN) 4 28 28 20 28 28 16 148 4 0 0 0 
+ 2 1 Romania (ROU) 4 28 10 5 28 21 2 94 3 0 1 0 
+ 3 2 Türkiye (TUR) 4 27 15 2 25 15 2 86 2 2 0 0 
+ 4 Australia (AUS) 4 28 13 6 22 16 0 85 2 0 2 0 
+ 5 United States of America (USA) 4 28 28 2 16 10 0 84 2 2 0 0 
+ 6 India (IND) 4 20 13 11 25 5 7 81 1 1 1 0 
+ 7 3 Germany (GER) 4 27 17 1 25 10 0 80 0 3 1 0 
+ 8 4 Italy (ITA) 4 28 15 4 16 7 7 77 1 2 1 0 
+ 9 5 Ukraine (UKR) 4 23 12 2 26 13 0 76 1 2 1 0 
+ 10 Japan (JPN) 4 15 15 5 22 16 0 73 2 0 1 0 
+ 11 6 Serbia (SRB) 4 27 12 3 17 9 1 69 1 1 1 0 
+ 12 7 Croatia (HRV) 4 22 14 1 21 10 0 68 2 0 1 0 
+ 13 Mongolia (MNG) 4 22 9 4 10 22 0 67 0 2 1 1 
+ 13 Taiwan (TWN) 4 24 11 1 19 11 1 67 0 2 1 0 
+ 15 Brazil (BRA) 4 22 10 1 25 8 0 66 1 1 1 1 
+ 15 8 Czechia (CZE) 4 23 19 0 18 5 1 66 0 2 2 0 
+ 17 9 Hungary (HUN) 4 27 13 3 17 5 0 65 0 1 3 0 
+ 18 France B (FRAB) 4 28 4 0 18 14 0 64 0 2 1 1 
+ 19 Mexico (MEX) 4 19 5 2 28 7 0 61 0 2 1 1 
+ 20 10 Kazakhstan (KAZ) 4 21 6 1 18 13 0 59 0 2 1 0 
+ 20 10 Slovenia (SVN) 4 24 2 1 19 13 0 59 1 0 2 0 
+ 22 12 Switzerland (SUI) 4 16 10 0 22 10 0 58 1 0 1 1 
+ 23 Canada (CAN) 4 18 12 0 16 10 0 56 1 1 0 1 
+ 23 13 France (FRA) 4 21 8 0 20 7 0 56 1 0 2 0 
+ 25 14 Belarus (BLR) 4 23 10 1 12 9 0 55 0 1 3 0 
+ 25 14 Netherlands (NLD) 4 15 6 3 24 7 0 55 0 2 1 0 
+ 25 Peru (PER) 4 14 0 3 25 13 0 55 1 0 1 1 
+ 25 14 Poland (POL) 4 21 11 6 11 6 0 55 0 1 2 0 
+ 25 14 United Kingdom (UNK) 4 17 16 2 14 6 0 55 1 1 0 0 
+ 30 Uzbekistan (UZB) 4 18 9 3 16 8 0 54 0 1 2 0 
+ 31 18 Armenia (ARM) 4 12 3 0 28 9 0 52 0 0 3 1 
+ 32 19 Bulgaria (BGR) 4 19 11 2 11 6 0 49 0 1 1 0 
+ 32 19 Finland (FIN) 4 20 13 0 11 5 0 49 0 2 0 0 
+ 34 Bangladesh (BGD) 4 14 3 2 18 8 0 45 0 1 1 0 
+ 34 21 Bosnia and Herzegovina (BIH) 4 12 7 2 14 10 0 45 1 0 1 0 
+ 36 22 Azerbaijan (AZE) 4 21 1 0 19 2 0 43 0 0 3 0 
+ 37 23 Lithuania (LTU) 4 19 6 0 13 4 0 42 0 0 2 0 
+ 38 24 Sweden (SWE) 4 21 5 0 10 5 0 41 0 0 3 0 
+ 39 25 Spain (ESP) 4 18 7 0 8 6 0 39 0 0 1 1 
+ 40 26 Slovakia (SVK) 4 16 9 0 11 2 0 38 0 1 1 0 
+ 41 Saudi Arabia (SAU) 4 7 3 0 21 5 0 36 0 0 2 1 
+ 42 Indonesia (IDN) 1 7 7 4 7 7 0 32 1 0 0 0 
+ 42 South Africa (SAF) 4 21 4 0 7 0 0 32 0 0 0 2 
+ 44 27 Ireland (IRL) 4 17 3 0 10 1 0 31 0 0 1 0 
+ 44 27 Republic of Moldova (MDA) 4 5 0 0 25 1 0 31 0 0 0 3 
+ 44 New Zealand (NZL) 4 21 4 0 6 0 0 31 0 0 0 3 
+ 47 Israel (ISR) 4 10 9 5 4 1 0 29 0 0 1 0 
+ 47 29 Norway (NOR) 4 12 3 0 14 0 0 29 0 0 2 0 
+ 49 30 Latvia (LVA) 4 7 4 0 15 2 0 28 0 0 0 2 
+ 50 31 Denmark (DEN) 4 17 0 0 9 0 0 26 0 0 0 1 
+ 51 32 Estonia (EST) 4 11 3 0 11 0 0 25 0 0 0 1 
+ 51 32 Greece (HEL) 4 4 1 0 10 10 0 25 0 0 0 1 
+ 53 Colombia (COL) 4 10 1 0 8 4 0 23 0 0 1 0 
+ 53 34 Kosovo (KSV) 4 5 0 0 18 0 0 23 0 0 0 2 
+ 55 35 North Macedonia (MKD) 4 11 0 0 9 2 0 22 0 0 0 0 
+ 56 36 Georgia (GEO) 4 5 0 1 15 0 0 21 0 0 0 0 
+ 56 Kyrgyzstan (KGZ) 4 8 0 0 7 6 0 21 0 0 1 0 
+ 58 37 Cyprus (CYP) 4 9 2 0 8 0 0 19 0 0 0 1 
+ 59 38 Belgium (BEL) 4 5 2 0 7 3 0 17 0 0 0 0 
+ 60 Rwanda (RWA) 4 5 0 1 4 1 0 11 0 0 0 0 
+ 61 Ecuador (ECU) 4 3 1 0 4 1 0 9 0 0 0 0 
+ 61 39 Iceland (ISL) 4 3 3 0 3 0 0 9 0 0 0 0 
+ 61 39 Luxembourg (LUX) 1 0 0 0 7 2 0 9 0 0 0 1 
+ 64 41 Albania (ALB) 4 1 0 0 3 0 0 4 0 0 0 0 
+ 64 Nigeria (NGA) 3 0 0 0 4 0 0 4 0 0 0 0 
+ 66 Sri Lanka (LKA) 3 0 0 0 1 1 0 2 0 0 0 0 
+ 67 Tunisia (TUN) 4 0 0 0 1 0 0 1 0 0 0 0 
+ Based on a design by: 
+ EGMO data protection information 

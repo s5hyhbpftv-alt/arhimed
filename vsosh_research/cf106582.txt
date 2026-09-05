@@ -1,0 +1,799 @@
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Dashboard - 2025-2026 Всероссийская олимпиада школьников по информатике, первый тур - Codeforces 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+
+ 
+ 
+
+ 
+ 
+ 
+
+
+
+
+ 
+   
+
+ 
+ 
+ 
+ 
+
+ 
+
+
+
+
+
+
+
+
+ 
+
+
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ Enter 
+ | 
+ Register 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+ 
+ Home 
+ Top 
+ Catalog 
+ Contests 
+ Gym 
+ Problemset 
+ Groups 
+ Rating 
+ Edu 
+ API 
+ Calendar 
+ Help 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+
+
+
+
+
+
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 2025-2026 Всероссийская олимпиада школьников по информатике, первый тур 
+ 
+ 
+ Finished 
+ 
+ 
+ 
+ 
+
+
+
+
+
+ 
+ → Virtual participation 
+
+ 
+ 
+ 
+ 
+ 
+ Virtual contest is a way to take part in past contest, as close as possible to participation on time. It is supported only ICPC mode for virtual contests.
+
+If you've seen these problems, a virtual contest is not for you - solve these problems in the archive.
+
+If you just want to solve some problem from a contest, a virtual contest is not for you - solve this problem in the archive.
+
+Never use someone else's code, read the tutorials or communicate with other person during a virtual contest.
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+ 
+ → Practice?
+ 
+ 
+ 
+ 
+ 
+ Want to solve the contest problems after the official contest ends? Just register for practice and you will be able to submit solutions.
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ → Contest materials
+ 
+ 
+ 
+ 
+ 
+ 
+ Statements (ru) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Tutorial (ru) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Problems 
+ Submit Code 
+ My Submissions 
+ Status 
+ Standings 
+ Custom Invocation 
+ 
+ 
+
+
+
+
+
+
+ 
+   
+   
+   
+   
+
+ 
+ Problems
+
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   
+   
+ 
+
+ 
+ # 
+ Name 
+   
+   
+ 
+ 
+ 
+ 
+ 1
+ 
+ 
+ 
+ 
+ 
+ Распределённые системы 
+ 
+ 
+
+ 
+ standard input/output
+ 
+ 1 s, 1024 MB
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+
+ 
+ 
+  x70 
+ 
+ 
+ 
+ 
+ 2
+ 
+ 
+ 
+ 
+ 
+ Расследование в Темерии 
+ 
+ 
+
+ 
+ standard input/output
+ 
+ 2 s, 1024 MB
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+
+ 
+ 
+  x21 
+ 
+ 
+ 
+ 
+ 3
+ 
+ 
+ 
+ 
+ 
+ Скобки и деревья 
+ 
+ 
+
+ 
+ standard input/output
+ 
+ 2 s, 1024 MB
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+
+ 
+ 
+  x2 
+ 
+ 
+ 
+ 
+ 4
+ 
+ 
+ 
+ 
+ 
+ Спортивная тренировка 
+ 
+ 
+
+ 
+ standard input/output
+ 
+ 2 s, 1024 MB
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+
+ 
+ 
+  x2 
+ 
+
+ 
+ 
+ 
+ 
+
+
+
+
+ 
+ 
+ 
+
+ 
+
+
+ 
+
+ 
+ 
+ Complete problemset
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+
+
+ 
+   
+   
+   
+   
+
+ 
+ Questions about problems
+
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   
+   
+ 
+ 
+   
+ Question 
+ Answer 
+ 
+
+ 
+ 
+ 
+ 
+
+
+
+ 
+ Ask a question 
+ 
+ 
+ 
+
+ 
+ 
+ Problem: 
+ 
+ 
+ Choose problem 
+ 1 - Распределённые системы 
+ 2 - Расследование в Темерии 
+ 3 - Скобки и деревья 
+ 4 - Спортивная тренировка 
+ 
+ 
+ 
+ 
+   
+ 
+ 
+   
+   
+ 
+ 
+ 
+
+ 
+ Question: 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+ 
+   
+ At most 1000 characters  
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ Add announcement 
+ 
+ 
+ 
+ 
+ Problem: 
+ 
+ 
+ Choose problem 
+ General announcement 
+ 1 - Распределённые системы 
+ 2 - Расследование в Темерии 
+ 3 - Скобки и деревья 
+ 4 - Спортивная тренировка 
+ 
+ 
+ 
+ 
+   
+ 
+ 
+   
+   
+ 
+ 
+ 
+
+ 
+   
+ 
+ 
+ Add a copy of announcement for problem 
+ Add a copy of announcement for contest 
+ 
+ 
+ 
+   
+ 
+ 
+   
+   
+ 
+ 
+ 
+
+ 
+   
+ 
+ Fields below will be interpreted as plain text. 
+ 
+ 
+
+ 
+ English text: 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+ 
+   
+   
+ 
+ 
+ 
+
+ 
+ Russian text: 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+ 
+   
+   
+ 
+ 
+ 
+
+ 
+ Target user: 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+ 
+   
+ Leave blank if you want to announce all participants  
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Codeforces (c) Copyright 2010-2026 Mike Mirzayanov 
+ The only programming contests Web 2.0 platform 
+ Server time: Sep/05/2026 21:23:46 (k2). 
+ Desktop version, switch to mobile version . 
+ 
+ Privacy Policy 
+ |
+ Terms and Conditions 
+ 
+
+ 
+ Supported by
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   
+   
+   
+   
+
+ 
+ User lists
+
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   
+   
+ 
+ 
+ 
+ Name 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
