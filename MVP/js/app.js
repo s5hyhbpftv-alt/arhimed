@@ -168,7 +168,7 @@ function renderOnboard(){
         «Назови себя, Исследователь. Острова Познания ждут — а я объясню каждый приём перед тем, как дать тебе задачу».</div>
       <label>Имя героя</label><input id="obName" maxlength="20" placeholder="Как тебя зовут?">
       <label>Класс</label>
-      <select id="obClass"><option>1–2</option><option>3–4</option><option>5–6</option><option selected>7</option><option>8+</option></select>
+      <select id="obClass"><option value="1">1 класс</option><option value="2">2 класс</option><option value="3">3 класс</option><option value="4">4 класс</option><option value="5">5 класс</option><option value="6">6 класс</option><option selected value="7">7 класс</option><option value="8">8 класс</option><option value="9">9 класс</option></select>
       <label>Уровень</label>
       <select id="obLevel"><option value="novice">🌱 Новичок — объясняй побольше</option><option value="pro">⚡ Уже решал олимпиады</option></select>
       <label>Герой</label>
@@ -229,7 +229,7 @@ const ISLANDS=[
   {name:'Ньютон', ico:'🍎', dsc:'Физика · механика, энергия, электричество'},
   {name:'Лавуазье', ico:'⚗️', dsc:'Химия · молекулы, растворы, газы'},
   {name:'Информатика', ico:'💻', dsc:'Информатика · двоичный код, алгоритмы, логика'}];
-function isJunior(){ try{ return !!DB.profile&&/(^|\s)(1–2|3–4)(\s|$)/.test(DB.profile.klass||''); }catch(e){ return false; } }
+function isJunior(){ try{ return !!DB.profile&&/^[1-4]$/.test(String(DB.profile.klass||'').trim()); }catch(e){ return false; } }
 function taskPool(){ return isJunior()? window.ARH_TASKS.filter(t=>t.island==='Начальная школа') : window.ARH_TASKS.filter(t=>t.island!=='Начальная школа'); }
 function islandVisible(I){ return isJunior()? (I.name==='Начальная школа') : (I.name!=='Начальная школа'); }
 function nextTask(){ return taskPool().filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0] || window.ARH_TASKS.filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0] || null; }
@@ -265,7 +265,7 @@ function renderPath(){
       <div style="flex:1">
         <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Острова Познания</div>
         <div style="font-size:22px;font-weight:bold;color:var(--ivory);margin:2px 0">${heroName||'Исследователь'} <span class="rank-badge">${esc(rank)}</span></div>
-        <div style="font-size:12.5px;color:var(--muted);line-height:1.5">Решено <b style="color:var(--brass)">${doneN}</b> из ${pool.length}${isJunior()?' в разделе 1–4 класс':' на карте'} · серия ${DB.streak}🔥</div>
+        <div style="font-size:12.5px;color:var(--muted);line-height:1.5">Решено <b style="color:var(--brass)">${doneN}</b> из ${pool.length}${isJunior()?' в начальной школе':' на карте'} · серия ${DB.streak}🔥</div>
         <div class="spark-row">
           ${doneN>0?`<span class="spark done">✦</span>`:''}${(DB.streak||0)>=3?`<span class="spark done">🔥</span>`:''}${pctAll>=50?`<span class="spark done">🏆</span>`:''}
         </div>

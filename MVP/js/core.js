@@ -14,7 +14,14 @@ function emptyState(){
 }
 let DB = emptyState();
 try{ const s = JSON.parse(localStorage.getItem(KEY));
-  if(s && s.profile){ DB = Object.assign(emptyState(), s); if(!DB.today || DB.today.date!==todayStr()) DB.today={date:todayStr(),minutes:0}; }
+  if(s && s.profile){
+    // миграция старых диапазонов классов → конкретный класс
+    if(s.profile.klass==='1–2') s.profile.klass='1';
+    else if(s.profile.klass==='3–4') s.profile.klass='3';
+    else if(s.profile.klass==='5–6') s.profile.klass='5';
+    else if(s.profile.klass==='8+') s.profile.klass='9';
+    DB = Object.assign(emptyState(), s); if(!DB.today || DB.today.date!==todayStr()) DB.today={date:todayStr(),minutes:0};
+  }
 }catch(e){}
 
 function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
