@@ -1,5 +1,5 @@
 /* АРХИМЕД MVP · service worker (офлайн) */
-const CACHE='arhimed-mvp-v177';
+const CACHE='arhimed-mvp-v178';
 const ASSETS=['index.html','img/car.png','data/tasks.js','data/lessons.js',
  'js/core.js','js/engine.js','js/app.js','js/dashboard.js','js/lessons.js','js/legend.js','js/comic.js','js/simulator.js','js/duel.js',
  'manifest.webmanifest','../МОБ_ПРИЛОЖЕНИЕ/icons/icon-192.png'];

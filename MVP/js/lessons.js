@@ -371,7 +371,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(LV.id===30) visL30(el); else if(LV.id===31) visL31(el); else if(LV.id===32) visL32(el); else if(LV.id===250) visL250(el); else if(LV.id===251) visL251(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(LV.id===30) visL30(el); else if(LV.id===31) visL31(el); else if(LV.id===32) visL32(el); else if(LV.id===250) visL250(el); else if(LV.id===251) visL251(el); else if(LV.id===60) visL60(el); else if(LV.id===61) visL61(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -2137,6 +2137,427 @@ function visL251(el){
         </div>`+
         btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
         sml('готов? жми «Понял! Проверю себя» — там прямоугольник 6 × 4'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+
+// ===================== УРОК 60 «ЧАСЫ И ВРЕМЯ» (2–3 класс) =====================
+function l60Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  if(a0==='e'){ st.e=((st.e==null?0:st.e)+1)%L60_EX.length; st.guess=null; }
+  if(a0==='pick'){ st.guess=p; }
+  if(a0==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+const L60_EX=[['2 часа = ? минут',120],['3 часа = ? минут',180],['полчаса = ? минут',30],['четверть часа = ? минут',15],['1 час 30 мин = ? минут',90],['90 минут = ? часов',1],['120 минут = ? часов',2],['в сутках ? часов',24]];
+// циферблат: h часы (1..12), m минуты (0..59)
+function l60Clock(h,m,o){
+  const O=o||{};
+  const s=O.s||120;
+  const minAngle=m*6, hourAngle=(h%12)*30+m*0.5;
+  const rad=function(deg,r){ const a=(deg-90)*Math.PI/180; return [50+r*Math.cos(a),50+r*Math.sin(a)]; };
+  const h1=rad(hourAngle,24), h2=rad(hourAngle,0);
+  const m1=rad(minAngle,33), m2=rad(minAngle,0);
+  return `<svg width="${s}" height="${s}" viewBox="0 0 100 100" style="display:inline-block;vertical-align:middle">
+    <circle cx="50" cy="50" r="46" fill="${O.bg||'#f7f2e6'}" stroke="#8a6a35" stroke-width="3"/>
+    ${[12,1,2,3,4,5,6,7,8,9,10,11].map(n=>{const p=rad(n*30,38);return `<text x="${p[0]}" y="${p[1]+3.5}" text-anchor="middle" font-size="11" font-weight="bold" fill="#5a4420">${n}</text>`;}).join('')}
+    ${[0,1,2,3,4,5,6,7,8,9,10,11].map(i=>{const p=rad(i*30,43);const q=rad(i*30,i%5===0?47:45);return `<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" stroke="#8a6a35" stroke-width="${i%5===0?2.4:1}"/>`;}).join('')}
+    <line x1="${h2[0]}" y1="${h2[1]}" x2="${h1[0]}" y2="${h1[1]}" stroke="#333" stroke-width="5.5" stroke-linecap="round"/>
+    <line x1="${m2[0]}" y1="${m2[1]}" x2="${m1[0]}" y2="${m1[1]}" stroke="#d23c2a" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="50" cy="50" r="3.4" fill="#d23c2a"/>
+  </svg>`;
+}
+// пара часов для задач «началось/закончилось»
+function l60Pair(h1,m1,h2,m2,o){
+  const O=o||{};
+  const s=O.s||86;
+  return `<div style="display:flex;justify-content:center;gap:12px;align-items:center;flex-wrap:wrap">
+    <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8;margin-bottom:2px">${O.l1||'начало'}</div>${l60Clock(h1,m1,{s})}<div style="font-size:14px;color:#ffd966;font-weight:bold;margin-top:2px">${h1}:${String(m1).padStart(2,'0')}</div></div>
+    <span style="font-size:24px" class="wv-pulse">➜</span>
+    <div style="text-align:center"><div style="font-size:11px;color:#9ec0a8;margin-bottom:2px">${O.l2||'конец'}</div>${l60Clock(h2,m2,{s})}<div style="font-size:14px;color:#7fd1a0;font-weight:bold;margin-top:2px">${h2}:${String(m2).padStart(2,'0')}</div></div>
+  </div>`;
+}
+function visL60(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v60!==step) CHS[lk]={_v60:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    let h='';
+    if(step===0){
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#7fd1a033;border:1px solid #7fd1a0;color:#a8e8c0;margin-bottom:2px">НАЧАЛЬНАЯ ШКОЛА · 2–3 КЛАСС</span>`+
+        big('Учимся понимать время')+
+        rowC(l60Clock(9,30,{s:130}),`<span style="font-size:30px" class="wv-swing">⏳</span>`)+
+        card('Архимед смотрит на часы: короткая стрелка — <b style="color:#ffd966">часовая</b>, длинная — <b style="color:#ff9a8a">минутная</b>. Уметь читать время — значит никогда не опаздывать!')+
+        sml('сегодня: часы, минуты, секунды и календарь!'));
+    } else if(step===1){
+      h=col(big('Единицы времени')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">
+          ${[['секунда','⏱️','самая короткая'],['минута','🕐','60 секунд'],['час','⏰','60 минут'],['сутки','🌞','24 часа'],['неделя','📅','7 дней'],['месяц','🗓️','28–31 день'],['год','🎉','12 месяцев']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.08}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:5px 8px;min-width:82px"><div style="font-size:17px">${x[1]}</div><div style="font-size:12px;color:#ffd966;font-weight:bold">${x[0]}</div><div style="font-size:9px;color:#9ec0a8">${x[2]}</div></div>`).join('')}
+        </div>`+
+        card('время меряют <b>по возрастанию</b>: секунда → минута → час → сутки → неделя → месяц → год. Каждая следующая единица больше предыдущей.')+
+        sml('секунда «тик», минута «тик-так ×60», час — это 60 минут!'));
+    } else if(step===2){
+      h=col(big('Главное: 1 час = 60 минут')+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:26px;color:#ffd966" class="wv-ans">1 час = 60 минут</div>`+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['1 минута','60 секунд'],['полчаса','30 минут'],['четверть часа','15 минут']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:7px 12px"><div style="font-size:14px;color:#ffd966">${x[0]}</div><div style="font-size:13px;color:#7fd1a0">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('почему 60, а не 100? Так договорились очень давно! <b style="color:#ffd966">Полчаса</b> — половина от 60 = <b>30 минут</b>. <b style="color:#ffd966">Четверть часа</b> — 60 : 4 = <b>15 минут</b>.')+
+        sml('запомни: 60, 30, 15 — эти числа встретятся везде!'));
+    } else if(step===3){
+      h=col(big('Что показывают стрелки?')+
+        rowC(l60Clock(3,0,{s:120}),
+          `<div style="display:flex;flex-direction:column;gap:5px;max-width:190px">
+            <div class="wv-pop" style="background:rgba(255,255,255,.04);border:1px solid #333;border-radius:9px;padding:5px 10px;font-size:12px;color:#e8dcc8;border-left:4px solid #333">короткая — <b style="color:#fff">часовая</b>: показывает часы</div>
+            <div class="wv-pop2" style="background:rgba(255,255,255,.04);border:1px solid #d23c2a;border-radius:9px;padding:5px 10px;font-size:12px;color:#e8dcc8;border-left:4px solid #d23c2a">длинная — <b style="color:#ff9a8a">минутная</b>: показывает минуты</div>
+          </div>`)+
+        card('на циферблате <b>12 делений</b>. Пока минутная стрелка обходит круг, часовая переходит от одной цифры к другой — ровно <b style="color:#ffd966">1 час</b>.')+
+        sml('часовая медленная, минутная быстрая!'));
+    } else if(step===4){
+      h=col(big('Ровно час: минутная на 12')+
+        `<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          ${[[3,'3:00'],[7,'7:00'],[10,'10:00']].map((x,i)=>`<div style="text-align:center"><div style="font-size:12px;color:#9ec0a8">часовая на ${x[0]}</div>${l60Clock(x[0],0,{s:92})}<div style="font-size:15px;color:#ffd966;font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('если <b style="color:#ff9a8a">минутная стрелка</b> стоит ровно на <b>12</b> — часы показывают <b style="color:#ffd966">ровно час</b>: сколько на часовой, столько и часов.')+
+        sml('минутная на 12 → «ровно»!'));
+    } else if(step===5){
+      h=col(big('Полчаса и четверть')+
+        `<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          ${[[3,0,'3:00','ровно час'], [3,30,'3:30','половина четвёртого'], [3,15,'3:15','четверть четвёртого']].map((x,i)=>`<div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">${x[3]}</div>${l60Clock(x[0],x[1],{s:80})}<div style="font-size:13.5px;color:${i===1?'#ff9a8a':'#7fd1a0'};font-weight:bold">${x[2]}</div></div>`).join('')}
+        </div>`+
+        card('минутная на <b style="color:#ff9a8a">6</b> — прошло <b>30 минут</b> (полчаса). На <b style="color:#7fd1a0">3</b> — <b>15 минут</b> (четверть). Каждое деление циферблата — <b style="color:#ffd966">5 минут</b>: 5, 10, 15, 20…')+
+        sml('считай деления пятёрками от 12!'));
+    } else if(step===6){
+      h=col(big('Сутки = 24 часа')+
+        `<div style="position:relative;width:290px;height:26px;border-radius:13px;overflow:hidden;background:#1a2a3a;margin:4px auto">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:25%;background:linear-gradient(90deg,#2b4a8f,#6fb0e8)"></div>
+          <div style="position:absolute;left:25%;top:0;bottom:0;width:25%;background:linear-gradient(90deg,#ffe98a,#ffd24d)"></div>
+          <div style="position:absolute;left:50%;top:0;bottom:0;width:25%;background:linear-gradient(90deg,#ff9a5a,#e86a3a)"></div>
+          <div style="position:absolute;left:75%;top:0;bottom:0;width:25%;background:linear-gradient(90deg,#22315a,#0e1830)"></div>
+        </div>
+        <div style="display:flex;justify-content:center;gap:4px;font-size:10.5px;color:#9ec0a8;max-width:300px;margin:0 auto">
+          <span style="width:25%;text-align:center">🌙 ночь</span><span style="width:25%;text-align:center">☀️ утро</span><span style="width:25%;text-align:center">🌤 день</span><span style="width:25%;text-align:center">🌆 вечер</span>
+        </div>`+
+        card('сутки — это <b style="color:#ffd966">24 часа</b>: ночь, утро, день и вечер. Часы за сутки обходят циферблат <b>два раза</b>: 12 часов дня и 12 часов ночи.')+
+        sml('на часах 3:00 бывает днём и ночью!'));
+    } else if(step===7){
+      h=col(big('Неделя и год')+
+        `<div style="display:flex;justify-content:center;gap:3px;flex-wrap:wrap;margin:4px 0">
+          ${['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map((d,i)=>`<span class="l12-fall" style="animation-delay:${(i*0.1).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:9px;background:${i>=5?'rgba(255,154,138,.2)':'rgba(127,209,160,.15)'};border:1.5px solid ${i>=5?'#ff9a8a':'#7fd1a0'};font-size:12px;color:${i>=5?'#ff9a8a':'#7fd1a0'};font-weight:bold">${d}</span>`).join('')}
+        </div>`+
+        card('в неделе <b style="color:#ffd966">7 дней</b> (выходные — суббота и воскресенье). В году <b>12 месяцев</b>: в месяце 30 или 31 день, в феврале 28 (иногда 29). Всего в году <b style="color:#ffd966">365 дней</b>.')+
+        sml('неделя — 7 дней, год — 365!'));
+    } else if(step===8){
+      h=col(big('Переводим часы в минуты')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          ${[['2 часа','2 · 60 = 120 минут','#7fd1a0'],['1 час 20 минут','60 + 20 = 80 минут','#ffd966'],['3 часа','3 · 60 = 180 минут','#7fb7d8']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:5px 12px"><span style="font-size:14px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:12.5px;color:#e8dcc8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('из часов в минуты — <b style="color:#7fd1a0">умножаем на 60</b>! «1 час 20 минут» — это час (60) плюс ещё 20: 60 + 20 = <b style="color:#ffd966">80</b>.')+
+        sml('часы × 60 = минуты!'));
+    } else if(step===9){
+      h=col(big('Обратно: минуты → часы')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          ${[['90 минут','это 60 + 30 = 1 ч 30 мин','#7fd1a0'],['75 минут','это 60 + 15 = 1 ч 15 мин','#ffd966'],['120 минут','это 2 часа (120 : 60 = 2)','#7fb7d8']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:5px 12px"><span style="font-size:14px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:12px;color:#e8dcc8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('из минут в часы — <b style="color:#ffd966">делим на 60</b>: 120 : 60 = 2 часа. А если есть остаток — это минуты: 90 = 1 час и 30 минут.')+
+        sml('минуты : 60 = часы (остаток — минуты)!'));
+    } else if(step===10){
+      h=col(big('Календарь и время')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['неделя','7 дней','📅'],['месяц','30 или 31 день','🗓️'],['год','12 месяцев · 365 дней','🎉']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 10px"><div style="font-size:18px">${x[2]}</div><div style="font-size:12.5px;color:#ffd966">${x[0]}</div><div style="font-size:10.5px;color:#9ec0a8">${x[1]}</div></div>`).join('')}
+        </div>`+
+        `<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;max-width:330px">
+          ${['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'].map((m,i)=>`<span style="width:46px;text-align:center;font-size:10px;color:${i===1?'#ff9a8a':'#9ec0a8'};background:rgba(255,255,255,.03);border:1px solid #2e4638;border-radius:5px;padding:2px 0;margin:1px">${m}</span>`).join('')}
+        </div>`+
+        sml('февраль — самый короткий месяц: 28 дней (в високосный год 29)!'));
+    } else if(step===11){
+      h=col(big('Учимся читать время')+
+        `<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          ${[[9,0,'9:00','минутная на 12'], [10,30,'10:30','минутная на 6'], [4,45,'4:45','минутная на 9']].map((x,i)=>`<div style="text-align:center"><div style="font-size:11px;color:#9ec0a8">${x[3]}</div>${l60Clock(x[0],x[1],{s:88})}<div style="font-size:15px;color:#ffd966;font-weight:bold">${x[2]}</div></div>`).join('')}
+        </div>`+
+        card('читаем так: сначала <b style="color:#ffd966">часовая</b> (сколько часов), потом <b style="color:#ff9a8a">минутная</b> (сколько минут). Минутная на 9 — это 45 минут: «без четверти пять»!')+
+        sml('9 делений по 5 минут = 45 минут!'));
+    } else if(step===12){
+      h=col(big('Задача: когда закончился урок?')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">урок начался в <b style="color:#ffd966">9:00</b> и длился <b style="color:#7fd1a0">45 минут</b></div>`+
+        l60Pair(9,0,9,45,{l1:'начало 9:00',l2:'конец 9:45'})+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:5px 12px"><span style="font-size:15px;color:#9ec0a8">9:00</span><span style="font-size:15px" class="wv-pulse">➕</span><span style="font-size:15px;color:#7fd1a0">45 мин</span><span style="font-size:15px;color:#cbb89a">=</span><span style="font-size:16px;color:#ffd966;font-weight:bold">9:45</span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">урок закончился в 9:45 ✓</div>`+
+        sml('прибавляем минуты к минутам!'));
+    } else if(step===13){
+      h=col(big('Задача: поезд')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">поезд отправился в <b style="color:#ffd966">10:15</b> и ехал <b style="color:#7fd1a0">2 часа</b></div>`+
+        l60Pair(10,15,12,15,{l1:'отправление',l2:'прибытие'})+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:5px 12px"><span style="font-size:14px;color:#9ec0a8">10:15</span><span style="font-size:14px" class="wv-pulse">➕</span><span style="font-size:14px;color:#7fd1a0">2 ч</span><span style="font-size:14px;color:#cbb89a">=</span><span style="font-size:15px;color:#ffd966;font-weight:bold">12:15</span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">прибыл в 12:15 ✓</div>`+
+        sml('часы прибавляем к часам: 10 + 2 = 12!'));
+    } else if(step===14){
+      h=col(big('Сколько прошло времени?')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['с 2:30 до 4:30','2 часа','#7fd1a0'],['с 3:15 до 3:45','30 минут','#ffd966'],['с 9:00 до 11:30','2 ч 30 мин','#7fb7d8']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[2]};border-radius:11px;padding:8px 12px"><div style="font-size:14px;color:#e8dcc8;font-family:Georgia,serif">${x[0]}</div><div style="font-size:19px;color:${x[2]};font-weight:bold">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('смотрим на часы: <b style="color:#ffd966">4:30 − 2:30 = 2 часа</b> (минуты одинаковые). <b style="color:#7fd1a0">3:45 − 3:15 = 30 минут</b>. Отнимаем часы от часов, минуты от минут!')+
+        sml('разница стрелок = сколько прошло!'));
+    } else if(step===15){
+      h=col(big('Ловушка: не 100 минут!')+
+        `<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <div style="text-align:center;background:rgba(255,154,138,.08);border:2px solid #ff9a8a;border-radius:12px;padding:8px 12px;max-width:150px"><div style="font-size:10.5px;color:#ff9a8a">так НЕЛЬЗЯ ❌</div><div style="font-size:15px;color:#e8dcc8;font-family:Georgia,serif">1 час = 100 минут?</div><div style="font-size:11px;color:#ff9a8a">нет! В часе 60!</div></div>
+          <div style="text-align:center;background:rgba(127,209,160,.08);border:2px solid #7fd1a0;border-radius:12px;padding:8px 12px;max-width:150px"><div style="font-size:10.5px;color:#7fd1a0">так ПРАВИЛЬНО ✅</div><div style="font-size:15px;color:#ffd966;font-family:Georgia,serif">1 час = 60 минут</div><div style="font-size:11px;color:#7fd1a0">60 с = 1 минута</div></div>
+        </div>`+
+        card('время — не десятичное! <b style="color:#ffd966">60</b> — магическое число: 60 минут в часе, 60 секунд в минуте. И часовая стрелка двигается плавно, а не прыгает по цифрам.')+
+        sml('60, а не 100! Четверть часа — 15 минут!'));
+    } else if(step===16){
+      const i=st.e!=null?st.e:0;
+      const e=L60_EX[i%L60_EX.length];
+      const q=e[0], res=e[1];
+      const opts=[res-2,res-1,res,res+1,res+2].filter(v=>v>=0);
+      if(opts.indexOf(res)<0) opts.push(res);
+      const done=st.guess!=null;
+      const right=done&&st.guess===res;
+      h=col(big('🎮 Тренажёр: время')+
+        `<div style="text-align:center;font-size:17px;color:#e8dcc8">Сколько: <b style="color:#ffd966;font-size:22px">${q}</b></div>`+
+        (done?(right?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">🎉 Верно: ${res}!</div>`:`<div style="font-size:16px;color:#ff9a8a">не угадал — ${q} = ${res}</div>`):'')+
+        (done?'':btns(...opts.map(o=>btn(''+o,`l60Act('${lk}','pick:${o}')`))))+
+        (done?btns(btn('🎲 следующий пример',`l60Act('${lk}','e')`),btn('↺',`l60Act('${lk}','r')`)):'')+
+        sml('часы × 60 = минуты, минуты : 60 = часы!'));
+    } else {
+      h=col(`<div style="font-size:48px">⏰</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:252px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            ⏰ 1 час = 60 минут.<br>
+            🕐 Полчаса 30 · четверть 15.<br>
+            🌞 Сутки = 24 часа · неделя = 7 дней.<br>
+            ➗ Часы→минуты: ×60. Обратно: :60.<br>
+            ✅ 2 ч = 120 мин · 90 мин = 1 ч 30 мин.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там минуты в 2 часах'));
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+}
+// ===================== УРОК 61 «ДЛИНА И МАССА» (2–3 класс) =====================
+function l61Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  const a0=act.split(':')[0], p=+act.split(':')[1];
+  if(a0==='e'){ st.e=((st.e==null?0:st.e)+1)%L61_EX.length; st.guess=null; }
+  if(a0==='pick'){ st.guess=p; }
+  if(a0==='r'){ CHS[lk]={}; }
+  chRender(0);
+}
+const L61_EX=[['2 м = ? см',200],['3 дм = ? см',30],['5 см = ? мм',50],['4 м = ? дм',40],['1 км = ? м',1000],['3 кг = ? г',3000],['2 т = ? кг',2000],['5000 г = ? кг',5]];
+// линейка: деления 0..n см
+function l61Ruler(n,o){
+  const O=o||{};
+  const cell=O.cell||22;
+  const W=n*cell;
+  let marks='', nums='';
+  for(let i=0;i<=n;i++){
+    marks+=`<line x1="${i*cell}" y1="10" x2="${i*cell}" y2="${i%10===0?26:i%5===0?22:16}" stroke="#333" stroke-width="1.4"/>`;
+    if(i%5===0) nums+=`<text x="${i*cell}" y="38" text-anchor="middle" font-size="10" fill="#333">${i}</text>`;
+  }
+  return `<svg width="${W+4}" height="46" viewBox="0 0 ${W+4} 46" style="display:inline-block;vertical-align:bottom">
+    <rect x="0" y="8" width="${W+4}" height="22" fill="${O.bg||'#f7f2e6'}" stroke="#8a6a35" stroke-width="1.6" rx="3"/>
+    ${marks}${nums}
+    ${O.hot!=null?`<rect x="${O.hot*cell}" y="8" width="${O.len!=null?O.len*cell:cell}" height="22" fill="rgba(255,90,60,.35)"/>`:''}
+  </svg>`;
+}
+// весы: гиря-карточка с массой (простая схема)
+function l61Scale(items,o){
+  const O=o||{};
+  return `<div style="display:flex;justify-content:center;gap:8px;align-items:center;flex-wrap:wrap">
+    <div style="font-size:34px" class="wv-swing">⚖️</div>
+    ${(items||[]).map((it,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.05);border:1.6px solid ${it.c||'#7fb7d8'};border-radius:11px;padding:6px 12px;min-width:74px"><div style="font-size:22px">${it.e||'🧊'}</div><div style="font-size:13px;color:${it.c||'#7fb7d8'};font-weight:bold">${it.t}</div><div style="font-size:10px;color:#9ec0a8">${it.s||''}</div></div>`).join('')}
+  </div>`;
+}
+function visL61(el){
+  try{
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id);
+    const step=LV.step||0;
+    if(!CHS[lk]) CHS[lk]={};
+    if(CHS[lk]._v61!==step) CHS[lk]={_v61:step};
+    const st=CHS[lk];
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
+    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
+    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
+    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${t}</span>`;
+    const rowC=(...ps)=>`<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${ps.join('')}</div>`;
+    const card=(t,ex,c)=>`<div class="wv-pop" style="background:rgba(255,255,255,.03);border:1px solid ${c||'#3d5c49'};border-left:4px solid ${c||'#3d5c49'};border-radius:11px;padding:8px 12px;max-width:330px;width:100%;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.55">${t}${ex||''}</div>`;
+    let h='';
+    if(step===0){
+      h=col(`<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 9px;border-radius:10px;background:#7fb7d833;border:1px solid #7fb7d8;color:#bfe4ff;margin-bottom:2px">НАЧАЛЬНАЯ ШКОЛА · 2–3 КЛАСС</span>`+
+        big('Длина и масса')+
+        rowC(`<div style="text-align:center"><div style="font-size:30px" class="wv-swing">📏</div><div style="font-size:12px;color:#9ec0a8">длина — линейкой</div></div>`,
+             `<div style="text-align:center"><div style="font-size:30px" class="wv-swing">⚖️</div><div style="font-size:12px;color:#9ec0a8">масса — весами</div></div>`)+
+        card('длину предмета меряют <b style="color:#7fb7d8">линейкой</b> (см, м), а массу — <b style="color:#ffd966">весами</b> (г, кг). Сегодня научимся переводить единицы: 1 м = 100 см, 1 кг = 1000 г!')+
+        sml('длина — сколько «в длину», масса — сколько «весит»!'));
+    } else if(step===1){
+      h=col(big('Единицы длины')+
+        `<div style="display:flex;justify-content:center;gap:5px;flex-wrap:wrap">
+          ${[['мм','миллиметр','🔬'],['см','сантиметр','✏️'],['дм','дециметр','🖐️'],['м','метр','📏'],['км','километр','🛣️']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.09}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 9px;min-width:64px"><div style="font-size:17px">${x[2]}</div><div style="font-size:16px;color:#ffd966;font-weight:bold">${x[0]}</div><div style="font-size:9px;color:#9ec0a8">${x[1]}</div></div>`).join('')}
+        </div>`+
+        card('длина растёт от <b>миллиметра</b> до <b>километра</b>. Крошечные предметы — в мм, карандаш — в см, комната — в м, дорога между городами — в км.')+
+        sml('выбирай единицу под размер предмета!'));
+    } else if(step===2){
+      h=col(big('1 см = 10 мм')+
+        l61Ruler(5,{hot:1,len:1})+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:20px;color:#ffd966">1 см = <b>10 мм</b></div>`+
+        card('на линейке видно: между делениями <b style="color:#ffd966">1 см</b> помещается <b>10 маленьких миллиметров</b>. Толщина монетки — примерно 1 мм!')+
+        sml('см больше мм в 10 раз!'));
+    } else if(step===3){
+      h=col(big('Дециметр')+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['1 дм = 10 см','🖐️'],['1 м = 10 дм','📏']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${i?'#7fd1a0':'#7fb7d8'};border-radius:11px;padding:8px 14px;font-size:16px;color:#ffd966;font-family:Georgia,serif">${x[0]}</div>`).join('')}
+        </div>`+
+        l61Ruler(10,{hot:0,len:10})+
+        card('дециметр — это <b style="color:#ffd966">10 см</b>, примерно ширина ладони. А в одном метре — <b style="color:#7fd1a0">10 дециметров</b>: 10 ладоней подряд!')+
+        sml('«деци» — значит десять!'));
+    } else if(step===4){
+      h=col(big('Метр — главная единица')+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:24px;color:#ffd966" class="wv-ans">1 м = 100 см = 10 дм</div>`+
+        l61Ruler(10,{hot:0,len:10})+
+        `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+          ${[['2 м','200 см'],['3 м','300 см'],['5 м','500 см']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:4px 10px;font-size:13px;color:#e8dcc8"><span style="color:#ffd966">${x[0]}</span> = <span style="color:#7fd1a0">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('метр — как <b style="color:#ffd966">10 линеек по 10 см</b>. Рост первоклассника примерно 1 м 20 см. Переводим: 2 м = 2 · 100 = <b style="color:#7fd1a0">200 см</b>.')+
+        sml('метр = 100 см — умножаем на 100!'));
+    } else if(step===5){
+      h=col(big('Километр')+
+        rowC(chip('1 км = 1000 м','#7fb7d8'),chip('2 км = 2000 м','#7fd1a0'),chip('5 км = 5000 м','#ffd966'))+
+        card('километрами меряют <b style="color:#ffd966">дальние расстояния</b>: 1 км = <b>1000 метров</b>. От дома до школы может быть 2 км — это 2000 метров, если идти пешком — минут 30!')+
+        sml('кило = тысяча: 1 км = 1000 м!'));
+    } else if(step===6){
+      h=col(big('Переводим длину')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          ${[['2 м = ? см','2 · 100 = 200 см','#7fd1a0'],['3 дм = ? см','3 · 10 = 30 см','#ffd966'],['5 см = ? мм','5 · 10 = 50 мм','#7fb7d8'],['4 м = ? дм','4 · 10 = 40 дм','#d9a0ff']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:5px 12px"><span style="font-size:14px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:12.5px;color:#e8dcc8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('из <b style="color:#ffd966">большой</b> единицы в <b style="color:#7fd1a0">маленькую</b> — <b>умножаем</b>: метров в см — на 100, дм в см — на 10, см в мм — на 10.')+
+        sml('большая → маленькая: умножай!'));
+    } else if(step===7){
+      h=col(big('Единицы массы')+
+        `<div style="display:flex;justify-content:center;gap:5px;flex-wrap:wrap">
+          ${[['г','грамм','🧂'],['кг','килограмм','🍉'],['ц','центнер','📦'],['т','тонна','🚛']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.09}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 9px;min-width:66px"><div style="font-size:17px">${x[2]}</div><div style="font-size:16px;color:#ffd966;font-weight:bold">${x[0]}</div><div style="font-size:9px;color:#9ec0a8">${x[1]}</div></div>`).join('')}
+        </div>`+
+        l61Scale([{t:'1 г',e:'🧂',s:'щепотка соли'},{t:'1 кг',e:'🍉',s:'небольшой арбуз'},{t:'1 ц',e:'📦',s:'100 кг'},{t:'1 т',e:'🚛',s:'1000 кг'}])+
+        card('масса — это <b style="color:#ffd966">сколько весит предмет</b>. Граммы — для лёгкого (конфета), килограммы — для арбуза, тонны — для грузовика!')+
+        sml('чем тяжелее предмет, тем больше единица!'));
+    } else if(step===8){
+      h=col(big('1 кг = 1000 г')+
+        `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[['1 кг = 1000 г','#ffd966'],['1 т = 1000 кг','#7fd1a0'],['1 ц = 100 кг','#7fb7d8']].map((x,i)=>`<div class="wv-pop${i?'2':''}" style="text-align:center;background:rgba(255,255,255,.04);border:1px solid ${x[1]};border-radius:11px;padding:8px 12px;font-size:15px;color:#ffd966;font-family:Georgia,serif">${x[0]}</div>`).join('')}
+        </div>`+
+        l61Scale([{t:'200 г',e:'🧈',s:'пачка масла'},{t:'1 кг',e:'🍚',s:'пакет сахара'},{t:'1 кг = 1000 г',e:'🧂',s:'пять пачек по 200 г!'}])+
+        card('килограмм — это <b style="color:#ffd966">1000 граммов</b>. Пакет сахара 1 кг = 5 пачек масла по 200 г! А тонна — это <b style="color:#7fd1a0">1000 кг</b>: целый грузовик!')+
+        sml('кило = тысяча: 1 кг = 1000 г!'));
+    } else if(step===9){
+      h=col(big('Переводим массу')+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          ${[['3 кг = ? г','3 · 1000 = 3000 г','#7fd1a0'],['2 т = ? кг','2 · 1000 = 2000 кг','#ffd966'],['5000 г = ? кг','5000 : 1000 = 5 кг','#7fb7d8'],['1 кг 200 г','1000 + 200 = 1200 г','#d9a0ff']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:5px 12px"><span style="font-size:14px;color:#ffd966;font-family:Georgia,serif">${x[0]}</span><span style="font-size:12.5px;color:#e8dcc8">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('кг → г: <b style="color:#7fd1a0">умножаем на 1000</b>. г → кг: <b style="color:#ffd966">делим на 1000</b>. И «1 кг 200 г» — это 1000 + 200 = <b>1200 г</b>.')+
+        sml('×1000 вниз, :1000 вверх!'));
+    } else if(step===10){
+      h=col(big('Выбираем правильную единицу')+
+        `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:340px">
+          ${[['✏️ карандаш','см'],['🚌 автобус','м'],['🛣️ Москва–Питер','км'],['🧂 таблетка','г'],['🍉 арбуз','кг'],['🚛 грузовик с песком','т']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.08}s;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:9px;padding:4px 9px;font-size:12px;color:#e8dcc8"><span>${x[0]}</span><span style="color:#ffd966;font-weight:bold">${x[1]}</span></div>`).join('')}
+        </div>`+
+        card('карандаш — в <b>см</b>, автобус — в <b>м</b>, между городами — в <b>км</b>. Таблетка — в <b>г</b>, арбуз — в <b>кг</b>, грузовик — в <b>т</b>. Выбирай по размеру!')+
+        sml('кто тяжелее — та и единица больше!'));
+    } else if(step===11){
+      h=col(big('Задача: лента')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">лента длиной <b style="color:#ffd966">1 метр</b>, отрезали <b style="color:#ff9a8a">40 см</b></div>`+
+        l61Ruler(10,{hot:0,len:10,bg:'#ffe9d0'})+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.07);border:1px solid #ffd966;border-radius:10px;padding:6px 12px"><span style="font-size:16px">①</span><span style="font-size:13px;color:#e8dcc8">переведём: 1 м = <b style="color:#ffd966">100 см</b></span></div>
+          <div class="wv-pop2" style="display:flex;gap:8px;align-items:center;background:rgba(127,209,160,.07);border:1px solid #7fd1a0;border-radius:10px;padding:6px 12px"><span style="font-size:16px">②</span><span style="font-size:13px;color:#e8dcc8">100 − 40 = <b style="color:#7fd1a0">60 см</b> осталось</span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">осталось 60 см = 6 дм ✓</div>`+
+        sml('сначала переведи в одну единицу, потом вычитай!'));
+    } else if(step===12){
+      h=col(big('Задача: доска')+
+        `<div style="text-align:center;font-size:15px;color:#e8dcc8">доска длиной <b style="color:#ffd966">3 метра</b>, распилили на <b style="color:#7fd1a0">2 равные</b> части</div>`+
+        `<div style="display:flex;justify-content:center;gap:4px">
+          <div style="width:120px;height:16px;background:linear-gradient(90deg,#c98a4a,#a06a2e);border-radius:4px;margin-top:8px"></div>
+          <div style="width:120px;height:16px;background:linear-gradient(90deg,#c98a4a,#a06a2e);border-radius:4px;margin-top:8px"></div>
+        </div>`+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.07);border:1px solid #ffd966;border-radius:10px;padding:6px 12px"><span style="font-size:16px">①</span><span style="font-size:13px;color:#e8dcc8">3 м = <b style="color:#ffd966">300 см</b></span></div>
+          <div class="wv-pop2" style="display:flex;gap:8px;align-items:center;background:rgba(127,209,160,.07);border:1px solid #7fd1a0;border-radius:10px;padding:6px 12px"><span style="font-size:16px">②</span><span style="font-size:13px;color:#e8dcc8">300 : 2 = <b style="color:#7fd1a0">150 см</b> = 1 м 50 см</span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0;font-weight:bold">каждая часть — 1 м 50 см ✓</div>`+
+        sml('пополам — значит делим на 2!'));
+    } else if(step===13){
+      h=col(big('Задача: арбуз и дыня')+
+        l61Scale([{t:'6 кг',e:'🍉',s:'арбуз'},{t:'3 кг',e:'🍈',s:'дыня'}])+
+        `<div style="display:flex;flex-direction:column;gap:4px;max-width:330px;width:100%">
+          <div class="wv-pop" style="display:flex;gap:8px;align-items:center;background:rgba(127,209,160,.07);border:1px solid #7fd1a0;border-radius:10px;padding:6px 12px"><span style="font-size:13px;color:#e8dcc8">вместе: 6 + 3 = <b style="color:#7fd1a0">9 кг</b></span></div>
+          <div class="wv-pop2" style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.07);border:1px solid #ffd966;border-radius:10px;padding:6px 12px"><span style="font-size:13px;color:#e8dcc8">а 6 кг — это <b style="color:#ffd966">6000 г</b>!</span></div>
+        </div>`+
+        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">вместе весят 9 кг ✓</div>`+
+        sml('кг складываем с кг, г — с г!'));
+    } else if(step===14){
+      h=col(big('Задача: покупка')+
+        l61Scale([{t:'500 г',e:'🍬',s:'конфеты'},{t:'300 г',e:'🍪',s:'печенье'}])+
+        `<div style="text-align:center;font-family:Georgia,serif;font-size:20px;color:#ffd966" class="wv-ans">500 + 300 = 800 г</div>`+
+        card('купили <b>500 г</b> конфет и <b>300 г</b> печенья. Складываем граммы: 500 + 300 = <b style="color:#ffd966">800 г</b>. Это меньше килограмма (1000 г)!')+
+        sml('800 г < 1 кг — ещё не целый килограмм!'));
+    } else if(step===15){
+      h=col(big('Ловушка: переведи сначала!')+
+        `<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <div style="text-align:center;background:rgba(255,154,138,.08);border:2px solid #ff9a8a;border-radius:12px;padding:8px 12px;max-width:150px"><div style="font-size:10.5px;color:#ff9a8a">так НЕЛЬЗЯ ❌</div><div style="font-size:14px;color:#e8dcc8">1 м = 100 дм?</div><div style="font-size:11px;color:#ff9a8a">нет: 1 м = 10 дм!</div></div>
+          <div style="text-align:center;background:rgba(127,209,160,.08);border:2px solid #7fd1a0;border-radius:12px;padding:8px 12px;max-width:150px"><div style="font-size:10.5px;color:#7fd1a0">так ПРАВИЛЬНО ✅</div><div style="font-size:14px;color:#ffd966">2 кг или 1500 г?</div><div style="font-size:11px;color:#7fd1a0">2 кг = 2000 г > 1500 г</div></div>
+        </div>`+
+        card('сравнивать можно только <b style="color:#ffd966">одинаковые единицы</b>: переведи всё в см или в г — и сравнивай. И помни: 1 м = <b>100 см</b> (не 100 дм!), 1 т = <b>1000 кг</b>.')+
+        sml('перевёл — сравнил — ответил!'));
+    } else if(step===16){
+      const i=st.e!=null?st.e:0;
+      const e=L61_EX[i%L61_EX.length];
+      const q=e[0], res=e[1];
+      const opts=[res-2,res-1,res,res+1,res+2].filter(v=>v>=0);
+      if(opts.indexOf(res)<0) opts.push(res);
+      const done=st.guess!=null;
+      const right=done&&st.guess===res;
+      h=col(big('🎮 Тренажёр: переводы')+
+        `<div style="text-align:center;font-size:17px;color:#e8dcc8">Сколько: <b style="color:#ffd966;font-size:22px">${q}</b></div>`+
+        (done?(right?`<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">🎉 Верно: ${res}!</div>`:`<div style="font-size:16px;color:#ff9a8a">не угадал — ${q} = ${res}</div>`):'')+
+        (done?'':btns(...opts.map(o=>btn(''+o,`l61Act('${lk}','pick:${o}')`))))+
+        (done?btns(btn('🎲 следующий пример',`l61Act('${lk}','e')`),btn('↺',`l61Act('${lk}','r')`)):'')+
+        sml('большая → маленькая: умножай! Маленькая → большая: дели!'));
+    } else {
+      h=col(`<div style="font-size:48px">📏</div>`+big('Совет Архимеда')+
+        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+          <div style="width:84px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(84,'down'):''}</div>
+          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:252px;text-align:left;font-size:13.5px;color:#e8dcc8;line-height:1.85">
+            📏 1 см = 10 мм · 1 дм = 10 см.<br>
+            📐 1 м = 100 см · 1 км = 1000 м.<br>
+            ⚖️ 1 кг = 1000 г · 1 т = 1000 кг.<br>
+            🔁 Большая → маленькая: ×.<br>
+            🔁 Маленькая → большая: :.<br>
+            ✅ 2 м = 200 см · 3 кг = 3000 г.</div>
+        </div>`+
+        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
+        sml('готов? жми «Понял! Проверю себя» — там см в метре'));
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
@@ -15595,6 +16016,8 @@ function renderLessonVis(){
   else if(id===32) visL32(el);
   else if(id===250) visL250(el);
   else if(id===251) visL251(el);
+  else if(id===60) visL60(el);
+  else if(id===61) visL61(el);
   else if(visIsChem()) visChemNew(el);
   else if(visIsPhys()) visPhysNew(el);
   else if(visIsMath()) visMathNew(el);
