@@ -714,6 +714,82 @@ function l10Road(moving, v1, v2, dur, dist, start){
 }
 
 // ===================== ОБЩИЕ РИСОВАННЫЕ ЭЛЕМЕНТЫ: ЯБЛОКИ И РУКИ =====================
+// Птичка (SVG, вид сбоку, сидит на ветке или летит), v — окраска, s — высота
+// v: 0 синица, 1 воробей, 2 снегирь, 3 зелёная пеночка, 4 серый
+function wvBirdSVG(v,s,fly){
+  const pal=[
+    {b:'#7ba33f',be:'#ffd94d',w:'#3f6ba8',t:'#2c3f63',k:'#4a4a55',w2:'#33517f',ch:'#fff'}, // синица
+    {b:'#a5793f',be:'#ecd9b4',w:'#8a5a2e',t:'#7a522a',k:'#c9a14e',w2:'#6b4423',ch:'#f2e2c6'}, // воробей
+    {b:'#3d3d49',be:'#e0553d',w:'#26262e',t:'#1b1b22',k:'#e8e2cf',w2:'#14141a',ch:'#6d6d78'}, // снегирь
+    {b:'#74a344',be:'#e4ef8a',w:'#5c8f33',t:'#4a7a28',k:'#c9a14e',w2:'#48711f',ch:'#cfe39a'}, // пеночка
+    {b:'#9aa6b2',be:'#eef2f6',w:'#7e8b99',t:'#6c7886',k:'#d9a33c',w2:'#5f6b78',ch:'#dfe5ea'}  // серая
+  ];
+  const p=pal[v%pal.length];
+  const s2=s||40, W=Math.round(s2*68/60);
+  // летящая: крылья подняты, лапки поджаты
+  const wing = fly
+    ? `<path d="M34 26 C 40 6, 52 -2, 60 1 C 57 12, 48 20, 40 25 Z" fill="${p.w}" stroke="${p.w2}" stroke-width="1.4"/>
+       <path d="M30 28 C 30 14, 28 4, 22 -1 C 18 8, 22 20, 28 27 Z" fill="${p.w}" stroke="${p.w2}" stroke-width="1.4"/>
+       <path d="M36 22 L 54 3 M 30 24 L 24 6" stroke="rgba(255,255,255,.28)" stroke-width="1.2" fill="none"/>`
+    : `<path d="M33 29 C 38 24.5, 47 26, 52 31 C 55.5 35, 55 40, 51 42.5 C 46.5 46, 38.5 45.5, 34.5 42 C 31 39, 30.5 33, 33 29 Z" fill="${p.w}" stroke="${p.w2}" stroke-width="1.4"/>
+       <path d="M35 32 Q 43 34 50 36 M 35.5 36 Q 43 38 49 39.5 M 36 40 Q 42 41.5 47 42.5" stroke="rgba(255,255,255,.35)" stroke-width="1.1" fill="none"/>`;
+  const legs = fly ? '' :
+    `<path d="M35 47 L 33 56 M 33 56 L 29 58 M 33 56 L 36 58" stroke="#e0a33c" stroke-width="2" fill="none" stroke-linecap="round"/>
+     <path d="M43 47.5 L 45 56 M 45 56 L 41 58 M 45 56 L 48 58" stroke="#e0a33c" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+  return `<svg width="${W}" height="${s2}" viewBox="0 0 68 60" style="display:inline-block;vertical-align:bottom">
+    <!-- хвост -->
+    <path d="M52 40 L 66 44 L 65 50 L 53 46 Z" fill="${p.b}" stroke="${p.w2}" stroke-width="1" stroke-linejoin="round"/>
+    <path d="M53 42 L 63 45.5" stroke="rgba(255,255,255,.3)" stroke-width="1" fill="none"/>
+    <!-- тело -->
+    <ellipse cx="39" cy="35.5" rx="15.5" ry="12" fill="${p.b}" transform="rotate(-7 39 35.5)"/>
+    <!-- животик -->
+    <ellipse cx="38" cy="39.5" rx="11.5" ry="8" fill="${p.be}" transform="rotate(-6 38 39.5)"/>
+    <!-- голова -->
+    <circle cx="24" cy="18.5" r="10" fill="${p.b}"/>
+    <!-- шапочка/затылок -->
+    <path d="M15 17 A 10 10 0 0 1 33 14.5 L 32 10.5 A 10 10 0 0 0 16 13 Z" fill="${p.t}"/>
+    <path d="M24 8.5 A 10 10 0 0 1 33 14.5 L 32 10.5 A 10 10 0 0 0 26 8.4 Z" fill="${p.t}" opacity=".9"/>
+    <!-- щёчка -->
+    <ellipse cx="22" cy="22" rx="5" ry="3.6" fill="${p.ch}"/>
+    <!-- полоска на грудке (синица) -->
+    ${v%5===0?`<path d="M22 25 L 50 38" stroke="#3a3a45" stroke-width="2.4" stroke-linecap="round" opacity=".8"/>`:''}
+    <!-- клюв -->
+    <polygon points="14.5,17.5 3,20.5 14.5,23" fill="${p.k}" stroke="rgba(0,0,0,.25)" stroke-width=".6"/>
+    <!-- глаз -->
+    <circle cx="21" cy="15.8" r="2.6" fill="#191919"/>
+    <circle cx="20.2" cy="15" r=".95" fill="#fff"/>
+    <!-- крыло -->
+    ${wing}
+    <!-- лапки -->
+    ${legs}
+  </svg>`;
+}
+// ветка с птичками: count птиц (sitting), colors чередуются; fly — сколько улетает (маленькие сверху)
+function wvBranchBirds(count,opt){
+  const o=opt||{};
+  const w=o.w||312;
+  const rows=[];
+  // птички сидят на ветке
+  const birds=[];
+  for(let i=0;i<count;i++){
+    birds.push(`<span class="l12-fall" style="animation-delay:${(o.d0||0+i*0.1).toFixed(2)}s;display:inline-flex;margin:0 -1px;${i%2?'transform:scaleX(-1)':''}">${wvBirdSVG(i%5,40)}</span>`);
+  }
+  const branch=`<div style="height:8px;border-radius:4px;background:linear-gradient(180deg,#a3743f,#6b4423 60%,#55341a);box-shadow:0 3px 5px rgba(0,0,0,.3);position:relative;margin:0 10px">
+      <div style="position:absolute;left:26px;top:-3px;width:14px;height:5px;border-radius:3px;background:#6b4423;transform:rotate(-14deg)"></div>
+      <div style="position:absolute;right:58px;top:-2px;width:10px;height:4px;border-radius:3px;background:#6b4423;transform:rotate(18deg)"></div>
+      <div style="position:absolute;left:120px;top:5px;width:18px;height:4px;border-radius:3px;background:#7a522a;transform:rotate(6deg)"></div>
+    </div>`;
+  return `<div style="width:${w}px;margin:2px auto;text-align:center">
+    ${o.fly?`<div style="display:flex;justify-content:flex-end;align-items:flex-end;gap:2px;padding-right:6px;height:26px">
+      <span style="font-size:11px;color:#9ec0a8;letter-spacing:2px;margin-right:2px">· · ·</span>
+      <span class="l12-fall" style="animation-delay:.5s;display:inline-block">${wvBirdSVG(1,20,true)}</span>
+      <span class="l12-fall" style="animation-delay:.65s;display:inline-block;transform:scaleX(-1)">${wvBirdSVG(4,16,true)}</span>
+    </div>`:''}
+    <div style="display:flex;justify-content:center;align-items:flex-end;min-height:42px">${birds.join('')}</div>
+    ${branch}
+  </div>`;
+}
+
 // Яблоко (SVG), сорта v: 0 красное, 1 зелёное, 2 жёлтое, 3 полосатое (штрифель), 4 оранжевое
 function wvAppleSVG(v,s){
   const W=s||24, H=Math.round(W*1.22);
@@ -767,32 +843,55 @@ function wvApples(n,o){
   }
   return `<div style="display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;max-width:340px;margin:1px auto">${out.join('')}</div>`;
 }
-// Рука (SVG): states = [5 булевых]: true — палец поднят, false — зажат в кулак
+// Рука (SVG, детализированная): states = [5 булевых]: true — палец поднят, false — согнут к ладони
+// Палец 0 — большой (толще, короче, оттопырен вбок), 1-4 — указательный…мизинец (разной длины)
 function wvHandStatesSVG(states,s){
-  const W=s||58, H=Math.round(W*1.42);
-  const skin='#f6c08e', skin2='#e9a96f', edge='#c98a52', nail='#ffefdf';
-  const tops=[46,34,27,33,45]; // верх поднятого пальца (y в viewBox)
-  const cx=[35,47.5,60,72.5,85];
+  const W=s||58, H=Math.round(W*190/140);
+  const skin='#f8c896', skinHi='#ffdbb0', skinSh='#e0a86e', skinDk='#c98a52', knuckle='#efb77e', nail='#ffecdd';
+  const cxs=[50,63,76,89,102];
+  const tops=[54,40,33,40,54];      // верх кончика (y; меньше = длиннее)
+  const widths=[14,11,11,11,10];
+  const spread=[-7,-3.5,0,3.5,7];   // наклон кончика наружу (веер)
   let fingers='';
   for(let i=0;i<5;i++){
+    const c=cxs[i], hw=widths[i]/2, t=tops[i], sp=spread[i];
     if(states[i]){
-      const t=tops[i];
-      fingers+=`<rect x="${cx[i]-5.5}" y="${t}" width="11" height="${98-t}" rx="5.5" fill="${skin}" stroke="${edge}" stroke-width="1.5"/>
-        <ellipse cx="${cx[i]}" cy="${t+7}" rx="3" ry="4.6" fill="${nail}"/>`;
+      // поднятый палец: три фаланги с суставами, скруглённый кончик, ноготь
+      const y1=t+(100-t)*0.42, y2=t+(100-t)*0.72;
+      fingers+=`<path d="M ${c-hw} 100 L ${c-hw} ${t+11} Q ${c-hw+sp*0.35} ${t-1.5} ${c+sp} ${t-1} Q ${c+hw+sp*0.35} ${t-1.5} ${c+hw} ${t+11} L ${c+hw} 100 Z"
+          fill="${skin}" stroke="${skinDk}" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M ${c-hw+1.6} ${t+10} L ${c-hw+1.6} 99" stroke="rgba(255,235,210,.6)" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M ${c-hw+1} ${y1} Q ${c} ${y1-2.6} ${c+hw-1} ${y1}" stroke="rgba(165,100,52,.45)" stroke-width="1.7" fill="none"/>
+        <path d="M ${c-hw+1} ${y2} Q ${c} ${y2-2} ${c+hw-1} ${y2}" stroke="rgba(165,100,52,.3)" stroke-width="1.5" fill="none"/>
+        <ellipse cx="${c+sp*0.55}" cy="${t+7.5}" rx="${i===0?4.6:3.6}" ry="${i===0?6.4:5.4}" fill="${nail}" stroke="rgba(190,125,75,.5)" stroke-width="1" transform="rotate(-6 ${c+sp*0.55} ${t+7.5})"/>
+        <ellipse cx="${c+sp*0.55-1}" cy="${t+5.5}" rx="1.2" ry="1.8" fill="rgba(255,255,255,.75)"/>`;
     }else{
-      fingers+=`<path d="M ${cx[i]-6} 96 Q ${cx[i]} 84 ${cx[i]+6} 96" fill="${skin2}" stroke="${edge}" stroke-width="1.5"/>
-        <path d="M ${cx[i]-5} 96 Q ${cx[i]} 86.5 ${cx[i]+5} 96" fill="rgba(180,120,70,.35)"/>`;
+      // согнутый палец: костяшка-подушечка с линией сгиба и ногтем
+      fingers+=`<path d="M ${c-hw} 98 Q ${c} 82 ${c+hw} 98 Z" fill="${knuckle}" stroke="${skinDk}" stroke-width="1.5"/>
+        <path d="M ${c-hw+1.2} 98 Q ${c} 84.5 ${c+hw-1.2} 98" stroke="rgba(170,105,60,.3)" stroke-width="1.2" fill="none"/>
+        <ellipse cx="${c}" cy="${88.5}" rx="${i===0?3.6:2.9}" ry="${i===0?5:4.2}" fill="${nail}" stroke="rgba(200,140,90,.4)" stroke-width=".7"/>
+        <path d="M ${c-hw+2} 94 Q ${c} 87.5 ${c+hw-2} 94" stroke="rgba(255,235,215,.5)" stroke-width="1" fill="none"/>`;
     }
   }
-  return `<svg width="${W}" height="${H}" viewBox="0 0 120 170" style="display:inline-block;vertical-align:bottom">
+  return `<svg width="${W}" height="${H}" viewBox="0 0 140 190" style="display:inline-block;vertical-align:bottom">
     <!-- запястье -->
-    <path d="M42 148 L78 148 C82 148 84 154 84 162 L84 170 L36 170 L36 162 C36 154 38 148 42 148 Z" fill="${skin}" stroke="${edge}" stroke-width="1.5"/>
-    <!-- ладонь -->
-    <path d="M23 96 C18 96 16 102 16 110 L16 138 C16 148 22 154 32 154 L88 154 C98 154 104 148 104 138 L104 110 C104 102 102 96 97 96 Z" fill="${skin}" stroke="${edge}" stroke-width="1.6"/>
-    <!-- складки ладони -->
-    <path d="M30 122 Q 60 132 90 122" stroke="rgba(180,120,70,.3)" stroke-width="1.4" fill="none"/>
-    <path d="M34 134 Q 60 142 86 134" stroke="rgba(180,120,70,.22)" stroke-width="1.2" fill="none"/>
+    <path d="M50 158 L90 158 C94 158 96 164 96 172 L96 190 L44 190 L44 172 C44 164 46 158 50 158 Z" fill="${skinSh}" stroke="${skinDk}" stroke-width="1.4"/>
+    <ellipse cx="70" cy="166" rx="22" ry="9" fill="rgba(255,240,222,.35)"/>
+    <!-- ладонь (с лёгким градиентом: тень снизу и справа) -->
+    <path d="M38 98 C31 98 29 104 29 112 L29 142 C29 152 36 158 47 158 L96 158 C107 158 113 152 113 142 L113 112 C113 104 110 98 103 98 Z" fill="${skin}" stroke="${skinDk}" stroke-width="1.6"/>
+    <!-- тень снизу ладони -->
+    <path d="M36 138 C50 152 96 152 112 136 L112 143 C112 152 106 158 96 158 L47 158 C37 158 30 152 30 144 Z" fill="rgba(150,85,45,.16)"/>
+    <!-- мышца большого пальца -->
+    <path d="M36 106 C28 112 27 122 31 130 C33 134 37 136 40 135 C43 128 44 116 41 107 Z" fill="${skinHi}" stroke="${skinDk}" stroke-width="1" opacity=".55"/>
+    <!-- тень между пальцами у оснований -->
+    ${[0,1,2,3].map(i=>{const x=(cxs[i]+cxs[i+1])/2;return `<path d="M ${cxs[i]+widths[i]/2-1} 100 Q ${x} 106 ${cxs[i+1]-widths[i+1]/2+1} 100" stroke="rgba(150,85,45,.18)" stroke-width="1.3" fill="none"/>`;}).join('')}
+    <!-- линии ладони -->
+    <path d="M42 124 Q 66 136 100 122" stroke="rgba(170,105,60,.26)" stroke-width="1.5" fill="none"/>
+    <path d="M44 136 Q 70 146 98 134" stroke="rgba(170,105,60,.2)" stroke-width="1.3" fill="none"/>
+    <path d="M50 112 Q 60 117 62 130" stroke="rgba(170,105,60,.16)" stroke-width="1.2" fill="none"/>
     ${fingers}
+    <!-- мягкая тень под пальцами на ладони -->
+    <path d="M43 101 Q 70 110 106 101 L106 105 Q 80 113 43 105 Z" fill="rgba(150,85,45,.10)"/>
   </svg>`;
 }
 // Рука: up = сколько пальцев поднято (0..5), остальные зажаты в кулак
@@ -985,9 +1084,9 @@ function l31Fingers9(n){
   });
   return `<div style="text-align:center">
     <div style="display:flex;justify-content:center;gap:10px;align-items:flex-end">
-      ${wvHandStatesSVG(L,56)}
+      ${wvHandStatesSVG(L,62)}
       <span style="width:6px"></span>
-      ${wvHandStatesSVG(R,56)}
+      ${wvHandStatesSVG(R,62)}
     </div>
     <div style="display:flex;justify-content:center;margin-top:2px">${numArr.join('')}</div>
     <div style="font-size:12px;color:#9ec0a8;margin-top:3px">загнули ${n}-й палец · слева ${left} · справа ${right}</div>
@@ -1400,11 +1499,11 @@ function visL29(el){
       // пальцы
       h=col(big('Считаем на пальцах!')+
         `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:4px 0">
-          ${wvHandSVG(5,56)}
+          ${wvHandSVG(5,68)}
         </div>`+
         `<div style="font-size:12.5px;color:#e8dcc8">на одной руке — <b style="color:#7fd1a0">5 пальцев</b>, на двух — <b style="color:#ffd966">10</b>!</div>`+
         `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:4px 0">
-          ${wvHandSVG(5,56)}${wvHandSVG(5,56)}
+          ${wvHandSVG(5,68)}${wvHandSVG(5,68)}
         </div>`+
         card('загни <b style="color:#ff9a8a">3 пальца</b> из 10 — и посчитай оставшиеся: <b style="color:#ffd966">7</b>! Пальцы — лучший счётный инструмент.')+
         sml('у тебя всегда с собой 10 счётных палочек — твои пальцы!'));
@@ -1461,12 +1560,12 @@ function visL29(el){
       h=col(big('3 + 2 на пальцах')+
         `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">
           <div style="text-align:center">
-            <div style="display:flex;justify-content:center">${wvHandSVG(3,48)}</div>
+            <div style="display:flex;justify-content:center">${wvHandSVG(3,58)}</div>
             <div style="font-size:11px;color:#7fd1a0;margin-top:2px">показали 3 пальца</div>
           </div>
           <span style="font-size:26px" class="wv-pulse">➕</span>
           <div style="text-align:center">
-            <div style="display:flex;justify-content:center">${wvHandSVG(2,48)}</div>
+            <div style="display:flex;justify-content:center">${wvHandSVG(2,58)}</div>
             <div style="font-size:11px;color:#7fd1a0;margin-top:2px">добавили ещё 2</div>
           </div>
         </div>`+
@@ -1477,12 +1576,12 @@ function visL29(el){
       h=col(big('5 − 2 на пальцах')+
         `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0">
           <div style="text-align:center">
-            <div style="display:flex;justify-content:center">${wvHandSVG(5,46)}</div>
+            <div style="display:flex;justify-content:center">${wvHandSVG(5,56)}</div>
             <div style="font-size:11px;color:#e8dcc8;margin-top:2px">показали 5 пальцев</div>
           </div>
           <span style="font-size:26px" class="wv-pulse">➖</span>
           <div style="text-align:center">
-            <div style="display:flex;justify-content:center">${wvHandSVG(3,46)}</div>
+            <div style="display:flex;justify-content:center">${wvHandSVG(3,56)}</div>
             <div style="font-size:11px;color:#ff9a8a;margin-top:2px">загнули 2 — осталось 3</div>
           </div>
         </div>`+
@@ -1523,15 +1622,11 @@ function visL29(el){
         card('если <b style="color:#7fd1a0">3 + 2 = 5</b>, то обратно: <b style="color:#ff9a8a">5 − 2 = 3</b>! Сложение и вычитание — «друзья наоборот».')+
         sml('зная один пример, ты знаешь целых три!'));
     } else if(step===14){
-      // задача про птичек
-      h=col(big('Задача: птички на ветке 🐦')+
-        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:2px 0">
-          ${[1,2,3,4,5,6].map(i=>`<span class="l12-fall" style="animation-delay:${(i*0.1).toFixed(2)}s;font-size:30px">🐦</span>`).join('')}
-        </div>`+
-        `<div style="font-size:13px;color:#e8dcc8;text-align:center">сидели <b style="color:#ffd966">6 птичек</b>, <b style="color:#ff9a8a">2 улетели</b>…</div>`+
-        `<div style="display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin:3px 0">
-          ${[1,2,3,4].map(i=>`<span class="l12-fall" style="animation-delay:${(0.5+i*0.12).toFixed(2)}s;font-size:30px">🐦</span>`).join('')}
-        </div>`+
+      // задача про птичек: ветка с 6, потом 2 улетают — остаются 4
+      h=col(big('Задача: птички на ветке')+
+        wvBranchBirds(6)+
+        `<div style="font-size:13px;color:#e8dcc8;text-align:center;margin-top:2px">сидели <b style="color:#ffd966">6 птичек</b>, <b style="color:#ff9a8a">2 улетели</b>…</div>`+
+        wvBranchBirds(4,{fly:true,d0:0.5})+
         `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">6 − 2 = 4 — осталось 4 птички!</div>`+
         sml('было 6, улетели 2 → вычитаем: 6 − 2 = 4. Как в наших задачках!'));
     } else if(step===15){
