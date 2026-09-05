@@ -203,31 +203,85 @@ function girlSVG(c){
 }
 function renderOnboard(){
   const s=document.getElementById('screen');
-  s.innerHTML=`<div class="onboard">
-    <div class="card" style="text-align:center">
-      <div style="font-size:44px">🏛</div>
-      <h2 style="margin:6px 0">Добро пожаловать в АРХИМЕД!</h2>
-      <div class="arch"><span class="who">◈ Архимед</span>
-        «Назови себя, Исследователь. Острова Познания ждут — а я объясню каждый приём перед тем, как дать тебе задачу».</div>
-      <label>Имя героя</label><input id="obName" maxlength="20" placeholder="Как тебя зовут?">
+  s.innerHTML=`<div class="onboard"><div class="card">
+    <div class="ob-top">
+      <div style="font-size:36px">🏛</div>
+      <div style="text-align:left">
+        <h2 style="margin:0">Добро пожаловать в АРХИМЕД!</h2>
+        <div class="ob-sub">«Назови себя — и Архимед поведёт тебя по Островам Познания»</div>
+      </div>
+    </div>
+    <div class="ob-steps"><span class="ob-step-dot on" id="d1"></span><span class="ob-step-dot" id="d2"></span></div>
+
+    <div class="ob-page on" id="obPage1">
+      <label>Имя героя</label>
+      <div class="ob-magic" onclick="focusObName()">
+        <div class="ob-ph" id="obPh">✨ напиши своё имя…</div>
+        <div class="ob-letters" id="obLetters"></div>
+        <input id="obName" maxlength="12" autocomplete="off" oninput="obMagic()">
+      </div>
       <div class="ob-cap">🎓 Мой класс</div>
       <div class="obk-grid">${[1,2,3,4,5,6,7,8,9].map(k=>`<button type="button" class="obk ${k===chosenKlass?'sel':''}" data-k="${k}" onclick="pickKlass(this)"><b>${k}</b><span>КЛАСС</span></button>`).join('')}</div>
       <div class="ob-hint" id="klassTip">${chosenKlass===6?'🎁 Для 6 класса открыты задачи 5–8 классов':'Уроки и задания — только твоего класса'}</div>
-      <div class="ob-cap">⚡ Уровень сложности</div>
+      <div class="ob-cta"><button class="btn" onclick="obNext()">Далее →</button></div>
+    </div>
+
+    <div class="ob-page" id="obPage2">
+      <div class="ob-cap">⚡ Режим занятий</div>
       <button type="button" class="obl ${chosenLevel==='novice'?'sel':''}" data-l="novice" onclick="pickLevel(this)"><span class="ob-ico">🌱</span><span style="flex:1"><span class="ob-t">Новичок</span><span class="ob-d">Только начинаешь? Архимед подробно объяснит каждый приём и подскажет, если трудно.</span></span></button>
       <button type="button" class="obl ${chosenLevel==='pro'?'sel':''}" data-l="pro" onclick="pickLevel(this)"><span class="ob-ico">⚡</span><span style="flex:1"><span class="ob-t">Олимпиец</span><span class="ob-d">Уже решал олимпиадные задачи — объяснения короче, задания смелее.</span></span></button>
-      <label>Герой</label>
+      <div class="ob-cap">🦸 Твой герой</div>
       <div class="gender-pick">
         <button type="button" class="gender-btn ${chosenGender==='boy'?'sel':''}" onclick="pickGender('boy')">👦 Мальчик</button>
         <button type="button" class="gender-btn ${chosenGender==='girl'?'sel':''}" onclick="pickGender('girl')">👧 Девочка</button>
       </div>
-      <div id="chitPrev" style="display:flex;justify-content:center;margin:2px 0 6px">${figSVG(chosenGender)}</div>
+      <div id="chitPrev" style="display:flex;justify-content:center;height:92px;overflow:hidden;margin:0">${figSVG(chosenGender)}</div>
       <label>Цвет хитона</label>
       <div class="swatches" style="justify-content:center">${COLORS.map((c,i)=>`<div class="sw ${i===0?'sel':''}" style="background:${c}" data-c="${c}" onclick="pickCol(this)"></div>`).join('')}</div>
-      <button class="btn" style="width:100%" onclick="finishOnboard()">В путь →</button>
-    </div></div>`;
-  hud();
+      <div class="ob-foot">
+        <button class="btn" onclick="obGo(1)">← Назад</button>
+        <button class="btn" onclick="finishOnboard()">В путь →</button>
+      </div>
+    </div>
+  </div></div>`;
+  obMagic(); hud();
 }
+let obStep=1;
+function obGo(n){
+  obStep=n;
+  const p1=document.getElementById('obPage1'), p2=document.getElementById('obPage2');
+  const d1=document.getElementById('d1'), d2=document.getElementById('d2');
+  if(p1) p1.classList.toggle('on', n===1);
+  if(p2) p2.classList.toggle('on', n===2);
+  if(d1) d1.classList.toggle('on', n===1);
+  if(d2) d2.classList.toggle('on', n===2);
+}
+function obNext(){
+  const inp=document.getElementById('obName');
+  if(inp && !inp.value.trim()){ toast('Архимед ждёт твоё имя!'); focusObName(); return; }
+  obGo(2);
+}
+function focusObName(){ try{ const el=document.getElementById('obName'); if(el) el.focus(); }catch(e){} }
+function obMagic(){
+  try{
+    const inp=document.getElementById('obName'); if(!inp) return;
+    const ph=document.getElementById('obPh'); const box=document.getElementById('obLetters');
+    const val=inp.value;
+    if(ph) ph.style.display = val ? 'none' : '';
+    const cur=box.children.length;
+    if(val.length<cur){
+      box.innerHTML='';
+      for(const ch of val){ const sp=document.createElement('span'); sp.className='ob-let'; sp.textContent=ch; box.appendChild(sp); }
+    } else {
+      for(let i=cur;i<val.length;i++){
+        const sp=document.createElement('span'); sp.className='ob-let fresh'; sp.textContent=val[i]; box.appendChild(sp);
+      }
+    }
+    const kids=box.children;
+    for(let i=0;i<kids.length;i++) kids[i].classList.toggle('caret', i===kids.length-1);
+  }catch(e){}
+}
+
 function pickKlass(el){
   chosenKlass=+el.dataset.k;
   document.querySelectorAll('.obk').forEach(b=>b.classList.toggle('sel', +b.dataset.k===chosenKlass));
@@ -248,6 +302,7 @@ function pickCol(el){
   document.querySelectorAll('.sw').forEach(x=>x.classList.toggle('sel',x===el));
   const p=document.getElementById('chitPrev'); if(p) p.innerHTML=figSVG(chosenGender);
 }
+
 /* затемнение цвета для тени хитона */
 function shade(hex){
   try{

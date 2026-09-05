@@ -232,6 +232,43 @@
   .ob-hint { font-size:11px; color:var(--muted); text-align:center; margin:2px 0 6px; min-height:14px; }
   .ob-cap { font-size:11px; color:var(--glass); letter-spacing:.06em; text-transform:uppercase; margin:10px 0 2px; }
 
+  /* --- ОНБОРДИНГ v2: два шага, волшебное имя --- */
+  .onboard { max-width:480px; margin:8px auto; }
+  .onboard .card { padding:14px 16px 12px; }
+  .onboard h2 { font-size:21px; }
+  .ob-top { display:flex; align-items:center; gap:12px; justify-content:center; }
+  .ob-sub { font-size:11.5px; color:var(--muted); margin:2px 0 0; }
+  .ob-steps { display:flex; align-items:center; justify-content:center; gap:8px; margin:6px 0 2px; }
+  .ob-step-dot { width:30px; height:4px; border-radius:3px; background:rgba(239,231,210,.16); transition:background .25s, box-shadow .25s; }
+  .ob-step-dot.on { background:var(--brass); box-shadow:0 0 10px rgba(217,164,65,.75); }
+  .ob-page { display:none; }
+  .ob-page.on { display:block; animation:obFade .28s ease; }
+  @keyframes obFade { from{ opacity:0; transform:translateX(14px);} to{ opacity:1; transform:none;} }
+  .ob-magic { position:relative; width:100%; margin:6px 0 2px; }
+  .ob-magic input { position:relative; z-index:2; width:100%; box-sizing:border-box; background:transparent;
+    border:2px dashed rgba(217,164,65,.5); border-radius:16px; padding:22px 12px 20px; font-size:18px; color:transparent;
+    caret-color:var(--brass); outline:none; min-height:66px; font-family:inherit; transition:border-color .2s, box-shadow .2s; }
+  .ob-magic:focus-within input { border-color:var(--brass); box-shadow:0 0 0 3px rgba(217,164,65,.18); border-style:solid; }
+  .ob-ph { position:absolute; z-index:1; inset:0; display:flex; align-items:center; justify-content:center;
+    color:var(--muted); font-size:16px; font-style:italic; pointer-events:none; }
+  .ob-letters { position:absolute; z-index:3; inset:0; display:flex; align-items:center; justify-content:center;
+    flex-wrap:wrap; padding:0 14px; pointer-events:none; }
+  .ob-let { display:inline-block; font-family:Georgia,serif; font-weight:bold; font-size:36px; line-height:1;
+    color:var(--brass); text-shadow:0 0 12px rgba(217,164,65,.6), 0 2px 0 rgba(0,0,0,.25); }
+  .ob-let.fresh { animation:obMagic .55s cubic-bezier(.2,1.5,.35,1) both; }
+  .ob-let.caret::after { content:"✦"; font-size:14px; color:var(--glow); margin-left:3px; animation:obPulse .9s ease-in-out infinite; }
+  @keyframes obMagic { 0%{ opacity:0; transform:scale(2.6) rotate(12deg); filter:blur(6px); color:#fff; }
+    60%{ opacity:1; transform:scale(.9) rotate(-3deg); filter:none; }
+    100%{ opacity:1; transform:scale(1) rotate(0); } }
+  @keyframes obPulse { 0%,100%{ opacity:.15; transform:translateY(-1px);} 50%{ opacity:1; transform:translateY(1px);} }
+  .ob-cta, .ob-foot { display:flex; gap:8px; margin-top:10px; }
+  .ob-cta .btn, .ob-foot .btn { flex:1; }
+  .ob-foot .btn:first-child { flex:.8; background:transparent; color:var(--muted); }
+  .obk-grid { gap:6px; }
+  .obk { padding:7px 4px; }
+  .obk b { font-size:20px; }
+
+
   .confetti { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:80; }
   .confetti-piece { position:absolute; top:-12px; width:8px; height:14px; border-radius:2px; opacity:.9; animation:fall linear forwards; }
   @keyframes fall { to { transform:translateY(110vh) rotate(720deg); } }
@@ -642,24 +679,24 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=210"></script>
-<script src="data/lessons.js?v=210"></script>
-<script src="data/lessons_draft.js?v=210"></script>
-<script src="data/comics_12.js?v=210"></script>
-<script src="data/vis56.js?v=210"></script>
-<script src="js/comic.js?v=210"></script>
-<script src="js/core.js?v=210"></script>
-<script src="js/engine.js?v=210"></script>
-<script src="js/app.js?v=210"></script>
-<script src="js/dashboard.js?v=210"></script>
-<script src="js/lessons.js?v=210"></script>
-<script src="js/legend.js?v=210"></script>
-<script src="js/simulator.js?v=210"></script>
-<script src="js/duel.js?v=210"></script>
-<script src="js/agent.js?v=210"></script>
-<script src="js/voice.js?v=210"></script>
-<script src="js/assistant.js?v=210"></script>
-<script src="js/agentlive.js?v=210"></script>
+<script src="data/tasks.js?v=211"></script>
+<script src="data/lessons.js?v=211"></script>
+<script src="data/lessons_draft.js?v=211"></script>
+<script src="data/comics_12.js?v=211"></script>
+<script src="data/vis56.js?v=211"></script>
+<script src="js/comic.js?v=211"></script>
+<script src="js/core.js?v=211"></script>
+<script src="js/engine.js?v=211"></script>
+<script src="js/app.js?v=211"></script>
+<script src="js/dashboard.js?v=211"></script>
+<script src="js/lessons.js?v=211"></script>
+<script src="js/legend.js?v=211"></script>
+<script src="js/simulator.js?v=211"></script>
+<script src="js/duel.js?v=211"></script>
+<script src="js/agent.js?v=211"></script>
+<script src="js/voice.js?v=211"></script>
+<script src="js/assistant.js?v=211"></script>
+<script src="js/agentlive.js?v=211"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -674,7 +711,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=210').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=211').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
