@@ -235,7 +235,7 @@ function renderOnboard(){
         <button type="button" class="gender-btn ${chosenGender==='boy'?'sel':''}" onclick="pickGender('boy')">👦 Мальчик</button>
         <button type="button" class="gender-btn ${chosenGender==='girl'?'sel':''}" onclick="pickGender('girl')">👧 Девочка</button>
       </div>
-      <div id="chitPrev" style="display:flex;justify-content:center;height:92px;overflow:hidden;margin:0">${figSVG(chosenGender)}</div>
+      <div id="chitPrev" style="display:flex;justify-content:center;margin:2px 0 0">${figSVG(chosenGender)}</div>
       <label>Цвет хитона</label>
       <div class="swatches" style="justify-content:center">${COLORS.map((c,i)=>`<div class="sw ${i===0?'sel':''}" style="background:${c}" data-c="${c}" onclick="pickCol(this)"></div>`).join('')}</div>
       <div class="ob-foot">
@@ -262,25 +262,270 @@ function obNext(){
   obGo(2);
 }
 function focusObName(){ try{ const el=document.getElementById('obName'); if(el) el.focus(); }catch(e){} }
+
+/* ================= ВОЛШЕБНОЕ ИМЯ v2: canvas + золотая звезда по контуру букв =================
+   Буквы рисуются на canvas-слое .ob-fx; для каждой буквы строим реальный контур глифа
+   (растровая трассировка), и звезда обходит контур каждой буквы по очереди, оставляя пыль. */
+const _obCache=new Map();   // char -> {adv, contours:[ [ [x,y], ... ], ... ]}  (координаты в css px, y вниз от базовой линии)
+let _obRaf=null, _obRun=null, _obCvs=null, _obCtx=null;
+
+function _obFont(px){ return 'bold '+px+'px Georgia, "Times New Roman", serif'; }
+
+/* Растровая трассировка контура буквы (Moore). Возвращает список замкнутых контуров
+   в координатах: x от левого края advance-бокса, y вниз от базовой линии (css px). */
+function _obTrace(ch, fontPx){
+  const key=ch+'@'+Math.round(fontPx);
+  if(_obCache.has(key)) return _obCache.get(key);
+  let res={adv:0, contours:[]};
+  try{
+    const S=4; // суперсэмплинг для гладкости
+    const m=document.createElement('canvas').getContext('2d');
+    m.font=_obFont(fontPx);
+    const adv=m.measureText(ch).width;
+    const asc=m.measureText(ch).actualBoundingBoxAscent||fontPx*0.75;
+    const desc=m.measureText(ch).actualBoundingBoxDescent||fontPx*0.2;
+    const W=Math.ceil((adv+2)*S)+6, H=Math.ceil((asc+desc+2)*S)+6;
+    const c=document.createElement('canvas'); c.width=W; c.height=H;
+    const x=c.getContext('2d',{willReadFrequently:true});
+    x.font=_obFont(fontPx*S);
+    x.textBaseline='alphabetic';
+    x.fillStyle='#000';
+    const bx=3, by=3+asc*S;
+    x.fillText(ch,bx,by);
+    const img=x.getImageData(0,0,W,H).data;
+    const ink=new Uint8Array(W*H);
+    for(let i=0;i<W*H;i++){ ink[i] = img[i*4+3] > 60 ? 1 : 0; }
+    const isInk=(px,py)=> px>=0&&py>=0&&px<W&&py<H&&ink[py*W+px]===1;
+    // граничные пиксели (сосед с пустотой)
+    const bound=new Uint8Array(W*H);
+    for(let y=0;y<H;y++)for(let px=0;px<W;px++){
+      if(!ink[y*W+px]) continue;
+      if(!isInk(px-1,y)||!isInk(px+1,y)||!isInk(px,y-1)||!isInk(px,y+1)) bound[y*W+px]=1;
+    }
+    const visited=new Uint8Array(W*H);
+    const nbr=[[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1],[1,-1]]; // по часовой
+    for(let sy=0;sy<H;sy++)for(let sx=0;sx<W;sx++){
+      if(!bound[sy*W+sx]||visited[sy*W+sx]) continue;
+      // стартовая точка — граничная; идём по Moore
+      const chain=[];
+      let cx0=sx, cy0=sy, cx=sx, cy=sy, dir=0;
+      let guard=0;
+      do{
+        chain.push([cx,cy]);
+        visited[cy*W+cx]=1;
+        // ищем следующий граничный пиксель по часовой, начиная с направления назад+1
+        let found=false;
+        for(let k=0;k<8;k++){
+          const d=(dir+7-k+8)%8; // против часовой = следуем по внешней кромке
+          const nx=cx+nbr[d][0], ny=cy+nbr[d][1];
+          if(nx>=0&&ny>=0&&nx<W&&ny<H&&bound[ny*W+nx]&&!visited[ny*W+nx]){
+            // не разрешаем диагональ через угол
+            if(nbr[d][0]!==0&&nbr[d][1]!==0){
+              if(!isInk(cx+nbr[d][0],cy)&&!isInk(cx,cy+nbr[d][1])) continue;
+            }
+            cx=nx; cy=ny; dir=d; found=true; break;
+          }
+        }
+        if(!found) break;
+        guard++;
+      }while(!(cx===sx&&cy===sy)&&guard<W*H);
+      if(chain.length<6) continue;
+      // сглаживание: убираем почти коллинеарные точки
+      const pts=[];
+      for(let i=0;i<chain.length;i++){
+        const p=chain[i], q=chain[(i+1)%chain.length], r=chain[(i+2)%chain.length];
+        const cross=(q[0]-p[0])*(r[1]-q[1])-(q[1]-p[1])*(r[0]-q[0]);
+        if(Math.abs(cross)>0.15*S*S || Math.hypot(q[0]-p[0],q[1]-p[1])>S*1.6) pts.push([(q[0]-bx)/S,(by-q[1])/S]);
+      }
+      if(pts.length>4) res.contours.push(pts);
+    }
+    res.adv=adv;
+  }catch(e){ res={adv:0,contours:[]}; }
+  _obCache.set(key,res);
+  return res;
+}
+
+function _obEnsure(){
+  const box=document.getElementById('obLetters'); if(!box) return null;
+  const magic=box.parentElement;
+  let cvs=document.getElementById('obFx');
+  if(!cvs){
+    cvs=document.createElement('canvas');
+    cvs.id='obFx'; cvs.className='ob-fx';
+    magic.appendChild(cvs);
+  }
+  const r=magic.getBoundingClientRect();
+  const dpr=Math.min(window.devicePixelRatio||1,2.5);
+  cvs.width=Math.round(r.width*dpr); cvs.height=Math.round(r.height*dpr);
+  cvs.style.width=r.width+'px'; cvs.style.height=r.height+'px';
+  const ctx=cvs.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,r.width,r.height);
+  _obCvs=cvs; _obCtx=ctx;
+  return {ctx, W:r.width, H:r.height};
+}
+
+/* Запуск анимации: звезда бежит по контуру каждой буквы слева направо */
+function obStarRun(str){
+  const st=_obEnsure(); if(!st||!str) return;
+  const {ctx,W,H}=st;
+  const padX=14;
+  const avail=W-padX*2;
+  // подбираем размер шрифта, чтобы имя влезало
+  let fontPx=36;
+  const pm=document.createElement('canvas').getContext('2d');
+  for(let k=0;k<8;k++){
+    pm.font=_obFont(fontPx);
+    const w=pm.measureText(str).width;
+    if(w>avail && fontPx>16){ fontPx=Math.max(16,fontPx*avail/w*0.98); } else break;
+  }
+  pm.font=_obFont(fontPx);
+  const totalW=pm.measureText(str).width;
+  const asc=pm.measureText(str).actualBoundingBoxAscent||fontPx*0.72;
+  const desc=pm.measureText(str).actualBoundingBoxDescent||fontPx*0.2;
+  const base=H/2+(asc-desc)/2;   // базовая линия по центру
+  const x0=padX+(avail-totalW)/2;
+  // буквы: позиции и контуры
+  const letters=[]; let cx=x0;
+  const traces=[];
+  for(const ch of str){
+    const adv=pm.measureText(ch).width;
+    letters.push({ch, x:cx, adv, base});
+    const t=_obTrace(ch,fontPx);
+    traces.push(t);
+    cx+=adv;
+  }
+  // строим единый путь: полёты между буквами + контуры букв
+  const path=[]; // [ {x,y} ]
+  const dust=[]; let P=null;
+  const segs=[];
+  const fly=(from,to)=>{
+    if(!from){ path.push({x:to.x,y:to.y}); return; }
+    const steps=Math.max(4,Math.round(Math.hypot(to.x-from.x,to.y-from.y)/7));
+    for(let i=1;i<=steps;i++){
+      path.push({x:from.x+(to.x-from.x)*i/steps, y:from.y+(to.y-from.y)*i/steps});
+    }
+  };
+  let i=0;
+  for(const L of traces){
+    const lt=letters[i];
+    // точка входа: верх контура первой буквы (или центр)
+    let entry=null;
+    if(L.contours.length){
+      // верхняя точка первого контура
+      let best=null;
+      for(const p of L.contours[0]){
+        const gx=lt.x+p[0], gy=lt.base-p[1];
+        if(!best||gy<best.y) best={x:gx,y:gy};
+      }
+      entry=best||{x:lt.x+lt.adv/2,y:lt.base};
+    } else {
+      entry={x:lt.x+lt.adv/2,y:lt.base};
+    }
+    fly(P,entry);
+    // контур буквы
+    for(const loop of L.contours){
+      // начало — верхняя точка контура
+      let si=0;
+      for(let q=0;q<loop.length;q++){
+        const gx=lt.x+loop[q][0], gy=lt.base-loop[q][1];
+        if(gy<lt.base-loop[si][1] || (Math.abs(gy-(lt.base-loop[si][1]))<0.01&&gx<lt.x+loop[si][0])) si=q;
+      }
+      for(let q=0;q<=loop.length;q++){
+        const p=loop[(si+q)%loop.length];
+        path.push({x:lt.x+p[0], y:lt.base-p[1]});
+      }
+    }
+    P=path[path.length-1]||entry;
+    i++;
+  }
+  // звезда + пыль
+  const total=path.length;
+  let t=0, speed=0.012, dustTimer=0;
+  const prevRaf=_obRun; if(prevRaf&&prevRaf.cancel) prevRaf.cancel();
+  let cancelled=false;
+  const run={cancel:()=>{cancelled=true;}};
+  _obRun=run;
+  if(_obRaf){ cancelAnimationFrame(_obRaf); _obRaf=null; }
+  const starSvg='✦';
+  const drawLetterFills=()=>{
+    ctx.font=_obFont(fontPx); ctx.textBaseline='alphabetic';
+    ctx.shadowColor='rgba(217,164,65,.65)'; ctx.shadowBlur=12;
+    ctx.fillStyle='#f3c968';
+    ctx.fillText(str,x0,base);
+    ctx.shadowBlur=0;
+  };
+  const frame=()=>{
+    if(cancelled||!document.getElementById('obPage1')||!document.getElementById('obPage1').classList.contains('on')){
+      _obRaf=null; return;
+    }
+    ctx.clearRect(0,0,W,H);
+    drawLetterFills();
+    t+=speed;
+    if(t>=1){ // финал: звёздочка-огонёк в конце имени
+      const endX=x0+totalW+6;
+      const al=0.55+0.45*Math.sin(Date.now()/180);
+      ctx.font='15px Georgia'; ctx.textAlign='left';
+      ctx.shadowColor='rgba(217,164,65,.9)'; ctx.shadowBlur=8;
+      ctx.fillStyle='rgba(255,224,140,'+al+')';
+      ctx.fillText(starSvg,endX,base+5);
+      ctx.shadowBlur=0;
+      // медленно гаснущая пыль
+      _obStepDust(ctx,dust,0.02);
+      _obRaf=requestAnimationFrame(frame);
+      return;
+    }
+    const idx=Math.min(path.length-1,Math.floor(t*(path.length-1)));
+    const p=path[idx];
+    // пыль вдоль хвоста
+    dustTimer++;
+    if(dustTimer%2===0){
+      for(let k=1;k<=3;k++){
+        const bi=Math.max(0,idx-k*3);
+        const bp=path[bi];
+        dust.push({x:bp.x+(Math.random()-.5)*4, y:bp.y+(Math.random()-.5)*4,
+                   vx:(Math.random()-.5)*0.6, vy:-0.3-Math.random()*0.7,
+                   life:1, decay:0.02+Math.random()*0.03, r:1+Math.random()*1.8});
+      }
+    }
+    // рисуем лёгкий золотой след
+    ctx.lineWidth=1.4; ctx.strokeStyle='rgba(240,200,110,.35)';
+    ctx.beginPath();
+    for(let k=Math.max(0,idx-14);k<=idx;k++){ const q=path[k]; k===Math.max(0,idx-14)?ctx.moveTo(q.x,q.y):ctx.lineTo(q.x,q.y); }
+    ctx.stroke();
+    // звезда
+    ctx.font='16px Georgia'; ctx.textAlign='left';
+    ctx.shadowColor='rgba(255,225,150,1)'; ctx.shadowBlur=10;
+    ctx.fillStyle='#fff3c4';
+    ctx.fillText(starSvg,p.x-4,p.y+5);
+    ctx.shadowBlur=0;
+    _obStepDust(ctx,dust,1);
+    _obRaf=requestAnimationFrame(frame);
+  };
+  _obRaf=requestAnimationFrame(frame);
+}
+function _obStepDust(ctx,dust,alphaMul){
+  for(let k=dust.length-1;k>=0;k--){
+    const d=dust[k];
+    d.x+=d.vx; d.y+=d.vy; d.vy+=0.02; d.life-=d.decay;
+    if(d.life<=0){ dust.splice(k,1); continue; }
+    ctx.fillStyle='rgba(255,215,120,'+(d.life*0.9).toFixed(3)+')';
+    ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,6.283); ctx.fill();
+  }
+}
 function obMagic(){
   try{
     const inp=document.getElementById('obName'); if(!inp) return;
     const ph=document.getElementById('obPh'); const box=document.getElementById('obLetters');
     const val=inp.value;
     if(ph) ph.style.display = val ? 'none' : '';
-    const cur=box.children.length;
-    if(val.length<cur){
-      box.innerHTML='';
-      for(const ch of val){ const sp=document.createElement('span'); sp.className='ob-let'; sp.textContent=ch; box.appendChild(sp); }
-    } else {
-      for(let i=cur;i<val.length;i++){
-        const sp=document.createElement('span'); sp.className='ob-let fresh'; sp.textContent=val[i]; box.appendChild(sp);
-      }
-    }
-    const kids=box.children;
-    for(let i=0;i<kids.length;i++) kids[i].classList.toggle('caret', i===kids.length-1);
+    if(box) box.innerHTML='';   // буквы рисует canvas
+    if(_obRaf){ cancelAnimationFrame(_obRaf); _obRaf=null; }
+    if(!val.trim()){ const cvs=document.getElementById('obFx'); if(cvs){ const c2=cvs.getContext('2d'); c2.clearRect(0,0,cvs.width,cvs.height);} return; }
+    obStarRun(val);
   }catch(e){}
 }
+
 
 function pickKlass(el){
   chosenKlass=+el.dataset.k;
