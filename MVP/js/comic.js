@@ -126,6 +126,36 @@ const COMIC = (function(){
     </svg>`;
   }
   /* ---- АРХИМЕД v2: мудрый грек — белая борода, брови, лысина с лавром, гиматий ---- */
+  function squirrelSVG(emo){
+    const sad=emo==='sad';
+    return `<svg viewBox="0 0 120 140">
+      <ellipse cx="58" cy="133" rx="30" ry="5" fill="rgba(0,0,0,.15)"/>
+      <!-- хвост -->
+      <path d="M84 96 C118 86 124 52 104 40 C96 34 86 36 80 44 C92 46 98 56 94 66 C84 78 78 88 76 98 Z" fill="#c97b2d" stroke="#33291e" stroke-width="2.4"/>
+      <path d="M88 58 C96 50 100 44 98 40" stroke="#e8b06b" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- тело -->
+      <ellipse cx="58" cy="112" rx="30" ry="24" fill="#e29a45" stroke="#33291e" stroke-width="2.5"/>
+      <ellipse cx="50" cy="106" rx="14" ry="11" fill="#f6d9a8" stroke="#33291e" stroke-width="2"/>
+      <ellipse cx="70" cy="112" rx="7" ry="5" fill="#f2c89a" stroke="#33291e" stroke-width="1.8"/>
+      <ellipse cx="44" cy="118" rx="5" ry="3.4" fill="#f2c89a" stroke="#33291e" stroke-width="1.6"/>
+      <!-- голова -->
+      <circle cx="52" cy="66" r="26" fill="#e29a45" stroke="#33291e" stroke-width="2.5"/>
+      <path d="M36 58 L22 40 L44 50 Z" fill="#d98f3f" stroke="#33291e" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M60 44 L58 22 L74 38 Z" fill="#d98f3f" stroke="#33291e" stroke-width="2.2" stroke-linejoin="round"/>
+      <circle cx="28" cy="64" r="5" fill="#d98f3f" stroke="#33291e" stroke-width="1.8"/>
+      <!-- глаза -->
+      <ellipse cx="43" cy="62" rx="5.6" ry="6.6" fill="#fff" stroke="#33291e" stroke-width="1.6"/>
+      <ellipse cx="63" cy="62" rx="5.6" ry="6.6" fill="#fff" stroke="#33291e" stroke-width="1.6"/>
+      <circle cx="44.3" cy="63.5" r="3" fill="#33291e"/><circle cx="61.7" cy="63.5" r="3" fill="#33291e"/>
+      <circle cx="45.5" cy="61" r="1.2" fill="#fff"/><circle cx="60.5" cy="61" r="1.2" fill="#fff"/>
+      <path d="M34 52 Q43 47 52 51" stroke="#8a5420" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M54 51 Q63 47 72 52" stroke="#8a5420" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <!-- нос и рот -->
+      <circle cx="53" cy="70" r="3.2" fill="#7c4a33"/>
+      ${sad?`<path d="M45 80 Q52 74 60 80" stroke="#7c4a33" stroke-width="3" fill="none" stroke-linecap="round"/>`:(emo==='wow'?`<ellipse cx="53" cy="78" rx="6" ry="6" fill="#8a3b33"/>`:`<path d="M45 76 Q53 84 61 76" stroke="#7c4a33" stroke-width="3.4" fill="none" stroke-linecap="round"/>`)}
+    </svg>`;
+  }
+
   function archSVG(emo){
     const skin='#f4c9a3', skinD='#d9a87e';
     const robe='#f6ecd2', robeD='#e0d0a4', hem='#d9a441';
@@ -240,7 +270,8 @@ const COMIC = (function(){
     cat:{ svg:catSVG, name:'Барсик', color:'#c07a30' },
     fish:{ svg:fishSVG, name:'Рыбка', color:'#4a93d0' },
     coin:{ svg:coinSVG, name:'Монетка', color:'#8a6d1e' },
-    pig:{ svg:pigSVG, name:'Пятачок', color:'#a05a50' }
+    pig:{ svg:pigSVG, name:'Пятачок', color:'#a05a50' },
+    squirrel:{ svg:squirrelSVG, name:'Рыжик', color:'#c97b2d' }
   };
 
   /* плашка-надпись сцены (как реплика комикса) */
@@ -579,6 +610,74 @@ function coinsSVG(){
         <circle cx="130" cy="200" r="5"/><circle cx="240" cy="202" r="6"/></g>
     </svg>`; }
 
+  function lesSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skL" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#a8dcf0"/><stop offset="1" stop-color="#7fc3e0"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="140" fill="url(#skL)"/>
+      <g class="c2a-cloud"><text x="40" y="40" font-size="30">☁️</text><text x="250" y="60" font-size="26">☁️</text></g>
+      <text x="306" y="40" font-size="26">🌞</text>
+      <path d="M0 118 Q90 92 180 116 T360 112 L360 150 L0 150 Z" fill="#7fb45c"/>
+      <path d="M0 140 Q120 118 360 146 L360 168 L0 168 Z" fill="#5c8f3e"/>
+      <rect x="0" y="150" width="360" height="60" fill="#4a7a33"/>
+      <g font-size="52">
+        <text x="18" y="172">🌲</text><text x="70" y="188">🌳</text>
+        <text x="288" y="168">🌲</text><text x="330" y="186">🌳</text>
+        <text x="150" y="186" font-size="40">🌳</text>
+      </g>
+      <g font-size="24">
+        <text x="30" y="196">🍄</text><text x="208" y="200">🍄</text>
+        <text x="262" y="200" font-size="18">🌼</text><text x="120" y="196" font-size="18">🌼</text>
+      </g>
+      <g class="c2a-spark"><text x="98" y="150" font-size="22">🌰</text><text x="240" y="158" font-size="18">🌰</text></g>
+    </svg>`; }
+  function trainSVG(){
+    return `<svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" class="c2-scene">
+      <defs><linearGradient id="skT" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#cfe6f5"/><stop offset="1" stop-color="#a8d2ea"/></linearGradient></defs>
+      <rect x="0" y="0" width="360" height="120" fill="url(#skT)"/>
+      <g class="c2a-cloud"><text x="30" y="36" font-size="28">☁️</text><text x="240" y="30" font-size="24">☁️</text></g>
+      <text x="310" y="52" font-size="24">🌞</text>
+      <rect x="0" y="120" width="360" height="14" fill="#8a9a5a"/>
+      <rect x="0" y="134" width="360" height="10" fill="#7c6b4a"/>
+      <!-- рельсы -->
+      <path d="M0 158 L360 158" stroke="#5a4a33" stroke-width="3"/>
+      <path d="M0 166 L360 166" stroke="#5a4a33" stroke-width="3"/>
+      <g stroke="#5a4a33" stroke-width="2">
+        <line x1="30" y1="158" x2="30" y2="166"/><line x1="70" y1="158" x2="70" y2="166"/>
+        <line x1="110" y1="158" x2="110" y2="166"/><line x1="150" y1="158" x2="150" y2="166"/>
+        <line x1="190" y1="158" x2="190" y2="166"/><line x1="230" y1="158" x2="230" y2="166"/>
+        <line x1="270" y1="158" x2="270" y2="166"/><line x1="310" y1="158" x2="310" y2="166"/>
+      </g>
+      <!-- паровоз -->
+      <rect x="14" y="96" width="86" height="52" rx="8" fill="#c0392b" stroke="#33291e" stroke-width="3"/>
+      <rect x="8" y="112" width="18" height="24" rx="5" fill="#a93226" stroke="#33291e" stroke-width="2.5"/>
+      <circle cx="34" cy="140" r="12" fill="#3a3a3a" stroke="#33291e" stroke-width="3"/>
+      <circle cx="78" cy="140" r="12" fill="#3a3a3a" stroke="#33291e" stroke-width="3"/>
+      <circle cx="34" cy="140" r="5" fill="#9aa0b8"/><circle cx="78" cy="140" r="5" fill="#9aa0b8"/>
+      <rect x="26" y="80" width="34" height="16" rx="6" fill="#e67e22" stroke="#33291e" stroke-width="2.5"/>
+      <g class="c2a-smoke" font-size="26"><text x="52" y="74">💨</text><text x="40" y="52">💨</text></g>
+      <rect x="30" y="102" width="26" height="20" rx="4" fill="#d9e8f5" stroke="#33291e" stroke-width="2"/>
+      <!-- вагон 1 -->
+      <rect x="112" y="104" width="70" height="44" rx="7" fill="#e8b04c" stroke="#33291e" stroke-width="3"/>
+      <rect x="122" y="112" width="22" height="18" rx="4" fill="#d9e8f5" stroke="#33291e" stroke-width="2"/>
+      <rect x="150" y="112" width="22" height="18" rx="4" fill="#d9e8f5" stroke="#33291e" stroke-width="2"/>
+      <circle cx="126" cy="146" r="9" fill="#3a3a3a" stroke="#33291e" stroke-width="2.5"/>
+      <circle cx="168" cy="146" r="9" fill="#3a3a3a" stroke="#33291e" stroke-width="2.5"/>
+      <!-- вагон 2 -->
+      <rect x="192" y="104" width="70" height="44" rx="7" fill="#4a93d0" stroke="#33291e" stroke-width="3"/>
+      <rect x="202" y="112" width="22" height="18" rx="4" fill="#d9e8f5" stroke="#33291e" stroke-width="2"/>
+      <rect x="230" y="112" width="22" height="18" rx="4" fill="#d9e8f5" stroke="#33291e" stroke-width="2"/>
+      <circle cx="206" cy="146" r="9" fill="#3a3a3a" stroke="#33291e" stroke-width="2.5"/>
+      <circle cx="248" cy="146" r="9" fill="#3a3a3a" stroke="#33291e" stroke-width="2.5"/>
+      <!-- вагон 3 -->
+      <rect x="272" y="104" width="70" height="44" rx="7" fill="#5f9a6a" stroke="#33291e" stroke-width="3"/>
+      <rect x="282" y="112" width="22" height="18" rx="4" fill="#d9e8f5" stroke="#33291e" stroke-width="2"/>
+      <rect x="310" y="112" width="22" height="18" rx="4" fill="#d9e8f5" stroke="#33291e" stroke-width="2"/>
+      <circle cx="286" cy="146" r="9" fill="#3a3a3a" stroke="#33291e" stroke-width="2.5"/>
+      <circle cx="328" cy="146" r="9" fill="#3a3a3a" stroke="#33291e" stroke-width="2.5"/>
+    </svg>`; }
+
   /* ================= ФОН-ПАНОРАМА (meet: видна целиком, без кропа по бокам) ================= */
   function sceneArt(scene, fr){
     let base='';
@@ -590,6 +689,8 @@ function coinsSVG(){
     else if(scene==='ferma') base=fermaSVG();
     else if(scene==='magazin') base=magazinSVG();
     else if(scene==='cosmos') base=cosmosSVG();
+    else if(scene==='les') base=lesSVG();
+    else if(scene==='train') base=trainSVG();
     else base=pondSVG();
     let s = base;
     const prop = (fr && fr.prop) || '';
@@ -627,7 +728,7 @@ function coinsSVG(){
       .comic-top .ct-title { font-size:16px; font-weight:bold; flex:1; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; }
       .comic-top .ct-x { background:none; border:2px solid #33291e; border-radius:50%; width:30px; height:30px;
         font-size:15px; line-height:1; color:#33291e; cursor:pointer; font-family:inherit; flex-shrink:0; }
-      .c2-page { flex:1 1 auto; width:100%; max-width:620px; margin:4px auto 10px; background:#fffdf4;
+      .c2-page { flex:1 1 auto; width:100%; max-width:760px; margin:4px auto 10px; background:#fffdf4;
         border:6px solid #33291e; border-radius:10px; overflow:hidden; box-shadow:0 12px 34px rgba(0,0,0,.28);
         display:flex; flex-direction:column; position:relative; }
       .c2-scene { width:100%; height:auto; display:block; }
@@ -641,9 +742,11 @@ function coinsSVG(){
       .c2a-coin text:nth-child(2){ animation-delay:-.8s; } .c2a-coin text:nth-child(3){ animation-delay:-1.6s; }
       @keyframes c2glint { 0%,100%{ transform:translateY(0); opacity:1;} 50%{ transform:translateY(-3px); opacity:.85;} }
       .c2a-spark { animation:c2twinkle 1.7s ease-in-out infinite; }
+      .c2a-smoke text { animation:c2smoke 2.2s ease-in-out infinite; }
+      @keyframes c2smoke { 0%{ transform:translateY(0); opacity:.9;} 100%{ transform:translateY(-14px); opacity:.4;} }
       @keyframes c2twinkle { 0%,100%{opacity:.25; transform:scale(.7);} 50%{opacity:1; transform:scale(1.2);} }
-      .c2-capbar { box-sizing:border-box; min-height:60px; background:#33291e; color:#f4e9c8;
-        font-size:13px; line-height:1.45; padding:8px 14px; display:flex; gap:8px; align-items:center; }
+      .c2-capbar { box-sizing:border-box; min-height:66px; background:#33291e; color:#f4e9c8;
+        font-size:14px; line-height:1.45; padding:8px 14px; display:flex; gap:8px; align-items:center; }
       .c2-capbar .c2cap-tag { color:#d9a441; font-weight:bold; flex-shrink:0; }
       .c2-capbar .c2cap-in { animation:c2capup .45s ease both; }
       @keyframes c2capup { from{ opacity:0; transform:translateY(9px);} to{ opacity:1; transform:none;} }
@@ -660,18 +763,20 @@ function coinsSVG(){
       .c2-stage.c2-bg-kitchen, .c2-stage.c2-bg-magazin { background:linear-gradient(#c2915b,#9c6c3a 45%,#7a4f26); }
       .c2-stage.c2-bg-ogorod { background:linear-gradient(#a06a3a,#7a4a26 55%,#5f3a1a); }
       .c2-stage.c2-bg-cosmos { background:linear-gradient(#9aa0b8,#7f859e 45%,#565c73); }
+      .c2-stage.c2-bg-les { background:linear-gradient(#7fb45c,#5c8f3e 50%,#4a7a33); }
+      .c2-stage.c2-bg-train { background:linear-gradient(#cfe6f5,#a8d2ea 45%,#8fb8d8); }
       .c2-stage .c2-scene { position:absolute; top:0; left:0; width:100%; height:auto; display:block;
         box-shadow:0 12px 18px -12px rgba(0,0,0,.45); }
       .c2-cast { position:absolute; left:0; right:0; bottom:10px; display:flex; align-items:flex-end;
         justify-content:space-between; padding:0 10px; pointer-events:none; z-index:4; }
       .c2-hero { pointer-events:auto; display:flex; flex-direction:column; align-items:center;
-        width:118px; animation:c2hIn .5s cubic-bezier(.2,1.4,.4,1) both; }
-      .c2-hero.listener-1 { width:96px; animation-delay:.1s; }
-      .c2-hero.listener-2 { width:96px; animation-delay:.16s; }
-      .c2-cast.c2-many .c2-hero.talker { width:122px; }
-      .c2-cast.c2-many .c2-hero { width:92px; }
+        width:142px; animation:c2hIn .5s cubic-bezier(.2,1.4,.4,1) both; }
+      .c2-hero.listener-1 { width:116px; animation-delay:.1s; }
+      .c2-hero.listener-2 { width:116px; animation-delay:.16s; }
+      .c2-cast.c2-many .c2-hero.talker { width:146px; }
+      .c2-cast.c2-many .c2-hero { width:110px; }
       .c2-cast.c2-solo { justify-content:center; }
-      .c2-cast.c2-solo .c2-hero.talker { width:150px; }
+      .c2-cast.c2-solo .c2-hero.talker { width:182px; }
       .c2-deco { position:absolute; left:0; right:0; bottom:0; height:100%; pointer-events:none; z-index:2; }
       .c2-deco span { position:absolute; line-height:1; filter:drop-shadow(0 2px 2px rgba(0,0,0,.15)); }
       .c2-deco .d1 { left:10px; bottom:16px; }
@@ -681,15 +786,15 @@ function coinsSVG(){
       .c2-hero .c2h-card { width:100%; border-radius:16px 16px 6px 6px; overflow:hidden;
         border:4px solid #33291e; background:#fff; box-shadow:0 8px 20px rgba(0,0,0,.25); }
       .c2-hero .c2h-card svg { display:block; width:100%; height:auto; }
-      .c2-hero .c2h-name { margin-top:3px; font-size:12px; font-weight:bold; background:#fffdf4;
+      .c2-hero .c2h-name { margin-top:4px; font-size:13px; font-weight:bold; background:#fffdf4;
         padding:1px 8px; border-radius:999px; border:2px solid #33291e;
         max-width:100%; box-sizing:border-box; white-space:nowrap; overflow:hidden;
         text-overflow:ellipsis; text-align:center; }
-      .c2-hero.talker { width:138px; }
-      .c2-hero.talker .c2h-name { font-size:13px; }
+      .c2-hero.talker { width:166px; }
+      .c2-hero.talker .c2h-name { font-size:14px; }
       @keyframes c2hIn { from{ opacity:0; transform:translateY(34px);} to{ opacity:1; transform:none;} }
       .c2-talk { position:absolute; z-index:6; background:#fff; border:4px solid #33291e;
-        border-radius:18px; padding:9px 14px 11px; font-size:14px; line-height:1.5;
+        border-radius:18px; padding:11px 16px 13px; font-size:16px; line-height:1.5;
         box-shadow:0 6px 16px rgba(0,0,0,.22); animation:c2talk .3s cubic-bezier(.2,1.6,.4,1) both; }
       .c2-talk::before { content:""; position:absolute; left:50%; top:100%; margin-left:-10px;
         border:10px solid transparent; border-top:16px solid #33291e; border-bottom:0; }
