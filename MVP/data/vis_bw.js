@@ -2267,3 +2267,443 @@ window.WAVE_B = window.WAVE_B || {};
   window.WAVE_B[394]=visB394;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===394){ window.ARH_LESSONS[i]=L394; break; } } })();
 })();
+/* ================= УРОК 395 · Сочетания ================= */
+(function(){
+  const L395 = {
+    id: 395, title: 'Сочетания: начало', ico: '🤝',
+    src: 'Математика · 5–6 класс · Сочетания', subj: 'math',
+    explain: [
+      'Архимед положил на стол 4 фрукта: яблоко, грушу, виноград и вишню. Сколькими способами можно выбрать 2 фрукта? Порядок не важен — «яблоко и груша» это то же самое, что «груша и яблоко». Такие выборы называют сочетаниями.',
+      'Сначала перечислим все пары вручную: яблоко-груша (ЯГ), яблоко-виноград (ЯВ), яблоко-вишня (ЯЧ), груша-виноград (ГВ), груша-вишня (ГЧ), виноград-вишня (ВЧ). Всего 6 пар!',
+      'Как посчитать без перечисления? Если бы порядок был важен, пар было бы 4 · 3 = 12 (первый фрукт — 4 способа, второй — 3). Но каждая пара посчитана дважды: ЯГ и ГЯ — одно и то же! Поэтому делим на 2: 12 : 2 = 6.',
+      'Формула сочетаний: выбрать 2 предмета из n можно n · (n−1) : 2 способами. Для 4 фруктов: 4 · 3 : 2 = 6. Проверь на списке пар — ровно 6!',
+      'Выбрать 2 из 5: 5 · 4 : 2 = 10 способов. Представь 5 друзей: каждый пожимает руку каждому. Сколько всего рукопожатий? Каждое рукопожатие — это выбор пары: 5 · 4 : 2 = 10 рукопожатий!',
+      'Почему делим на 2? В паре порядок неважен: «А и Б» = «Б и А». При подсчёте 5 · 4 каждая пара встретилась дважды (АБ и БА), поэтому делим пополам.',
+      'Рукопожатия — классика: 4 человека жмут друг другу руки. Это выбор 2 из 4: 4 · 3 : 2 = 6 рукопожатий. Проверь: каждый из 4 жмёт руку 3 другим, но каждое рукопожатие считаем один раз.',
+      'Запомни: правило произведения (4·3) считает УПОРЯДОЧЕННЫЕ пары, а сочетания (4·3:2) — НЕупорядоченные. Если порядок неважен — дели на 2!',
+      'Теперь проверь себя: сколькими способами можно выбрать 2 предмета из 4? Вспомни формулу: 4 · 3 : 2.'
+    ],
+    check: { q: 'Сколькими способами можно выбрать 2 предмета из 4?', choices: ['6', '12', '4', '8'], ans: 0,
+      exp: '4·3:2 = 6.' },
+    tasks: [
+      { q: 'Сколькими способами выбрать 2 из 5?', kind: 'unit', ans: 10, tol: 0,
+        hints: ['5 · 4 : 2.', '10 способов.'], sol: '10' },
+      { q: 'Сколько рукопожатий сделают 4 человека (каждый с каждым)?', kind: 'choice', choices: ['6', '4', '8', '12'], ans: 0, tol: 0,
+        hints: ['Это выбор 2 из 4.', '4·3:2 = 6 рукопожатий.'], sol: '6' }
+    ]
+  };
+  const fruits=['🍎','🍐','🍇','🍒'];
+  function visB395(el){
+    const step=LV.step||0;
+    const emoRow=()=>`<div class="wv-row" style="gap:6px">${fruits.map((f,i)=>`<span class="wv-pop" style="animation-delay:${i*0.08}s;font-size:36px">${f}</span>`).join('')}</div>`;
+    const pairs=[['🍎🍐','ЯГ'],['🍎🍇','ЯВ'],['🍎🍒','ЯЧ'],['🍐🍇','ГВ'],['🍐🍒','ГЧ'],['🍇🍒','ВЧ']];
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Выбираем 2 фрукта из 4</div>
+        ${emoRow()}
+        <div class="wv-sml" style="max-width:330px">порядок неважен: «яблоко и груша» = «груша и яблоко». Такие выборы — <b style="color:#ffd76a">сочетания</b>!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Все пары вручную</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:330px;width:100%">
+          ${pairs.map((p,i)=>`<div class="wv-pop" style="animation-delay:${i*0.08}s;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 8px;display:flex;align-items:center;gap:6px;justify-content:center;font-size:20px">${p[0]}<span style="font-size:11px;color:#8fa08f">${p[1]}</span></div>`).join('')}
+        </div>
+        <div class="wv-ans" style="font-size:18px;color:#8fd1a8">всего 6 пар!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Считаем умно: 4 · 3 : 2</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['с порядком: 4 · 3 = 12','первый 4 способа, второй 3'],
+            ['каждая пара посчитана 2 раза','ЯГ и ГЯ — одно и то же'],
+            ['делим: 12 : 2 = 6','вот ответ!']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${i===2?'#4c8a5a':'#d9a441'};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${i===2?'#8fd1a8':'#9ec0a8'};font-size:12px;max-width:140px;text-align:right">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Формула сочетаний</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;max-width:340px;width:100%">
+          <div style="font-size:16px;color:#ffd76a;text-align:center;font-weight:bold;font-family:Georgia,serif">выбрать 2 из n = n·(n−1) : 2</div>
+        </div>
+        <div class="wv-ans" style="font-size:19px;color:#8fd1a8">для 4: 4·3:2 = 6 ✔</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Рукопожатия!</div>
+        <div style="font-size:44px" class="wv-swing">🤝</div>
+        <div class="wv-sml">5 человек жмут руки друг другу — сколько рукопожатий?</div>
+        <div class="wv-ans" style="font-size:20px;color:#ffd76a">5 · 4 : 2 = 10 рукопожатий</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Почему делим на 2?</div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <div style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:8px 12px"><b style="font-size:17px;color:#7fd1ff">А → Б</b><div style="font-size:10px;color:#8fa08f">одна пара</div></div>
+          <div style="text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:8px 12px"><b style="font-size:17px;color:#8fd1a8">Б → А</b><div style="font-size:10px;color:#8fa08f">та же пара!</div></div>
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:7px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8">5·4 посчитал каждую пару дважды (АБ и БА) → <b style="color:#ffd76a">делим пополам</b></div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">4 человека — 6 рукопожатий</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:300px;width:100%">
+          ${[['1-2','1-3','1-4','2-3','2-4','3-4']].flat().map((p,i)=>`<div class="wv-pop" style="animation-delay:${i*0.08}s;background:rgba(127,209,160,.08);border:1px solid #4c8a5a;border-radius:8px;padding:4px;font-size:13px;color:#8fd1a8;text-align:center">🤝 ${p}</div>`).join('')}
+        </div>
+        <div class="wv-sml">это выбор 2 из 4 = 4·3:2 = 6</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Запомни разницу</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['4 · 3', 'упорядоченные пары (порядок важен)','#7fd1ff'],
+            ['4 · 3 : 2', 'сочетания (порядок не важен)','#8fd1a8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span style="max-width:200px;text-align:right;font-size:12px">${x[1]}</span></div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${emoRow()}
+        <div class="wv-sml">выбрать 2 фрукта из 4 — сколько способов?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">4 · 3 : 2 = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[395]=visB395;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===395){ window.ARH_LESSONS[i]=L395; break; } } })();
+})();
+/* ================= УРОК 396 · Принцип Дирихле ================= */
+(function(){
+  const L396 = {
+    id: 396, title: 'Усиленный принцип Дирихле', ico: '📦',
+    src: 'Математика · 5–6 класс · Дирихле', subj: 'math',
+    explain: [
+      'У Архимеда 100 шаров и 9 коробок. Он раскладывает шары как хочет. Утверждение: в КАКОЙ-ТО коробке обязательно окажется минимум 12 шаров. Почему? Это знаменитый принцип Дирихле!',
+      'Простой принцип Дирихле: если 10 кроликов рассадить в 9 клеток, в какой-то клетке окажется минимум 2 кролика. Ведь если бы в каждой было не больше 1, кроликов было бы не больше 9!',
+      'Усиленный принцип: если n предметов разложить в k мест, найдётся место минимум с ⌈n/k⌉ предметами (округляем вверх). Для 100 шаров и 9 коробок: 100 : 9 = 11 и остаток 1.',
+      'Считаем: 11 шаров в каждой коробке — это 9 · 11 = 99 шаров. У нас 100 шаров! Один лишний шар обязательно попадёт в какую-то коробку → в ней станет 11 + 1 = 12 шаров.',
+      'Запишем красиво: 100 = 9 · 11 + 1. Частное 11, остаток 1. Значит, минимум ⌈100/9⌉ = 12 шаров в какой-то коробке. Округлили 11,11… вверх — получили 12!',
+      'Проверим максимум: ровно по 11 шаров в 9 коробках — это 99 шаров. Больше 99 шаров без «переполнения» не разложить: сотый шар уже требует коробку с 12!',
+      'Другой пример — носки. В ящике носки двух цветов. Сколько носков нужно достать, чтобы ГАРАНТИРОВАННО была пара одного цвета? Достаём 3: даже если первые два разных, третий совпадёт с одним из них!',
+      'Запомни формулу: если n предметов в k мест, то где-то ≥ ⌈n/k⌉ предметов. А для «пары из цветов»: цветов 2 → нужно 2 + 1 = 3 предмета. Принцип Дирихле — король задач «докажи, что найдётся»!',
+      'Теперь проверь себя: 100 шаров в 9 коробках — сколько шаров минимум в какой-то коробке? Вспомни: 100 = 9·11 + 1 → 11 + 1.'
+    ],
+    check: { q: '100 шаров разложили в 9 коробок. Сколько шаров минимум в какой-то коробке?', choices: ['12', '11', '10', '13'], ans: 0,
+      exp: '100 = 9·11 + 1 → в какой-то коробке ≥ 12.' },
+    tasks: [
+      { q: 'Сколько шаров максимум можно разложить в 9 коробок поровну (не больше 100)?', kind: 'unit', ans: 99, tol: 0,
+        hints: ['9 · 11.', '99 шаров.'], sol: '99' },
+      { q: 'Сколько носков нужно взять (2 цвета), чтобы гарантированно достать пару одного цвета?', kind: 'choice', choices: ['3', '2', '4', '1'], ans: 0, tol: 0,
+        hints: ['Цветов 2.', '3 носка: два окажутся одного цвета.'], sol: '3' }
+    ]
+  };
+  const ballsRow=(n)=>`<div class="wv-row" style="gap:3px;max-width:340px">${Array.from({length:n},(_,i)=>`<span style="font-size:13px">⚪</span>`).join('')}</div>`;
+  function visB396(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">100 шаров, 9 коробок</div>
+        <div style="font-size:44px" class="wv-swing">📦</div>
+        <div style="background:rgba(217,164,65,.09);border:1px solid #d9a441;border-radius:10px;padding:7px 12px;max-width:330px;font-size:14px;color:#e8dcc8">докажем: в какой-то коробке точно есть <b style="color:#ffd76a">минимум 12 шаров</b>!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Простой принцип: кролики</div>
+        <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap">${Array.from({length:10},()=>'🐰').join('')}</div>
+        <div class="wv-sml">10 кроликов в 9 клетках → где-то 2 кролика!</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:7px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8">если бы в каждой клетке было ≤ 1, кроликов было бы ≤ 9 — противоречие!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Усиленный принцип</div>
+        <div style="background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:14px;padding:10px 14px;max-width:340px;width:100%">
+          <div style="font-size:15.5px;color:#e8dcc8;text-align:center">n предметов в k мест → где-то ≥ <b style="color:#7fd1ff">⌈n/k⌉</b> (вверх)</div>
+        </div>
+        <div class="wv-ans" style="font-size:18px;color:#8fd1a8">100 : 9 = 11 и остаток 1</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Один лишний шар</div>
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-size:14.5px;color:#e8dcc8">
+          <div class="wv-pop">9 коробок по 11 = 9 · 11 = <b style="color:#8fd1a8">99 шаров</b></div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">у нас 100 — один лишний!</div>
+          <div class="wv-pop2">лишний попадёт в коробку → там <b style="color:#ffd76a">11 + 1 = 12</b></div>
+        </div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Красивая запись</div>
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">100 = 9 · 11 + 1</div>
+        <div class="wv-sml">частное 11, остаток 1 → ⌈100/9⌉ = 12</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:16px;color:#ffd76a;font-weight:bold" class="wv-ans">где-то минимум 12 шаров!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверка максимума</div>
+        ${ballsRow(99)}
+        <div class="wv-ans" style="font-size:18px;color:#8fd1a8">ровно по 11 в 9 коробках = 99 — больше нельзя!</div>
+        <div class="wv-sml">сотый шар уже требует коробку с 12</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Носки двух цветов</div>
+        <div style="display:flex;gap:6px;justify-content:center;font-size:30px">
+          <span>🧦</span><span style="opacity:.5">🧦</span>
+        </div>
+        <div class="wv-sml">достаём 3 носка: даже если первые два разные, третий совпадёт с одним!</div>
+        <div class="wv-ans" style="font-size:18px;color:#8fd1a8">2 цвета → нужно 3 носка</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Памятка</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['n в k мест','где-то ≥ ⌈n/k⌉ предметов','#7fd1ff'],
+            ['2 цвета носков','нужно 2+1 = 3','#8fd1a8'],
+            ['задачи «докажи, что найдётся»','принцип Дирихле — король!','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]};max-width:200px;text-align:right">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-sml">100 шаров в 9 коробках — минимум в какой-то?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">11 + 1 = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[396]=visB396;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===396){ window.ARH_LESSONS[i]=L396; break; } } })();
+})();
+/* ================= УРОК 397 · Домино и раскраски ================= */
+(function(){
+  const L397 = {
+    id: 397, title: 'Домино и раскраски', ico: '🁫',
+    src: 'Математика · 5–6 класс · Раскраски', subj: 'math',
+    explain: [
+      'Архимед взял шахматную доску 8×8 и плитки-домино размером 1×2. Можно ли замостить доску домино? Конечно — 64 клетки делятся на 2! Но что если убрать две угловые клетки? Вот тут начинается магия!',
+      'Сначала раскрасим доску в шахматном порядке: 32 белые и 32 чёрные клетки. Каждая плитка домино накрывает ровно одну белую и одну чёрную клетку — они всегда соседние!',
+      'Запомни ключевой факт: любое домино накрывает 1 белую + 1 чёрную клетку. Значит, если белых и чёрных клеток поровну — замостить можно, а если нет — нельзя!',
+      'Уберём две УГЛОВЫЕ клетки. Углы шахматной доски одного цвета — обе белые! Белых стало 32 − 2 = 30, а чёрных осталось 32.',
+      'Теперь смотри: белых 30, чёрных 32. Но каждое домино накрывает поровну — по одной клетке каждого цвета! Раз цветов не поровну, замостить доску НЕЛЬЗЯ.',
+      'Раскраска превратила геометрическую задачу в простой подсчёт. Не нужно перебирать варианты — достаточно сравнить количество клеток разных цветов!',
+      'Как это запомнить? Домино = «белая + чёрная» пара. Если цвета не в балансе — задача неразрешима. Этот приём работает в сотнях олимпиадных задач!',
+      'Попробуем другой пример: доска 7×7 (49 клеток). Домино накрывает 2 клетки, а 49 нечётно → замостить нельзя! И не нужно рисовать — просто подели 49 на 2.',
+      'Теперь проверь себя: с доски 8×8 убрали две белые угловые клетки. Сколько стало белых и чёрных? Вспомни: белых было 32, убрали 2.'
+    ],
+    check: { q: 'С доски 8×8 убрали две белые угловые клетки. Сколько белых и чёрных клеток осталось?', choices: ['30 белых, 32 чёрных', '32 белых, 30 чёрных', '31 и 31', '30 и 30'], ans: 0,
+      exp: '32−2 = 30 белых, чёрных 32.' },
+    tasks: [
+      { q: 'Сколько клеток накрывает одно домино?', kind: 'unit', ans: 2, tol: 0,
+        hints: ['Домино — прямоугольник 1×2.', '2 клетки.'], sol: '2' },
+      { q: 'Можно ли покрыть домино доску, где белых 30, а чёрных 32?', kind: 'choice', choices: ['нет', 'да', 'да, если повернуть', 'нельзя узнать'], ans: 0, tol: 0,
+        hints: ['Домино накрывает поровну.', 'Клеток разное число → нельзя.'], sol: 'нет' }
+    ]
+  };
+  const board8=(cutCorners)=>`<svg viewBox="0 0 200 200" style="width:200px;height:200px">
+    ${(()=>{ let out=''; for(let r=0;r<8;r++) for(let c=0;c<8;c++){
+      const isCorner=(r===0&&c===0)||(r===0&&c===7)||(r===7&&c===0)||(r===7&&c===7);
+      const cut=cutCorners&&isCorner;
+      const col = ((r+c)%2===0) ? '#efe9d0' : '#3f4a42';
+      out+=`<rect x="${5+c*24}" y="${5+r*24}" width="24" height="24" fill="${cut?'rgba(232,106,90,.25)':col}" stroke="#0f1a24" stroke-width="1"/>`;
+      if(cut) out+=`<text x="${5+c*24+12}" y="${5+r*24+16}" text-anchor="middle" font-size="10" fill="#ff9a8a">✂</text>`;
+    } return out; })()}
+  </svg>`;
+  function visB397(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Доска 8×8 и домино</div>
+        <div style="font-size:44px" class="wv-swing">🁫</div>
+        <div class="wv-sml" style="max-width:330px">замостить доску домино 1×2 — легко: 64 : 2 = 32 плитки. А если убрать две угловые клетки?</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Раскрашиваем в шахматном порядке</div>
+        ${board8(false)}
+        <div class="wv-ans" style="font-size:16px;color:#8fd1a8">32 белых + 32 чёрных</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Домино = белая + чёрная</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="display:inline-block;width:36px;height:36px;background:#efe9d0;border:1px solid #3f4a42"></span>
+          <span style="display:inline-block;width:36px;height:36px;background:#3f4a42;border:1px solid #0f1a24"></span>
+          <span style="font-size:13px;color:#8fd1a8;max-width:150px;text-align:left">одна плитка = 1 белая + 1 чёрная</span>
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:7px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8">цветов поровну → можно · не поровну → <b style="color:#ff9a8a">нельзя!</b></div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Убираем два угла</div>
+        ${board8(true)}
+        <div class="wv-sml">углы одного цвета — оба белые!</div>
+        <div class="wv-ans" style="font-size:17px;color:#8fd1a8">белых: 32 − 2 = 30 · чёрных: 32</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">30 ≠ 32 → нельзя!</div>
+        <div style="display:flex;gap:12px;justify-content:center">
+          <div style="text-align:center;background:rgba(239,233,208,.1);border:2px solid #efe9d0;border-radius:12px;padding:8px 16px"><b style="font-size:26px;color:#efe9d0;font-family:Georgia,serif">30</b><div style="font-size:11px;color:#9ec0a8">белых</div></div>
+          <div style="text-align:center;background:rgba(63,74,66,.4);border:2px solid #3f4a42;border-radius:12px;padding:8px 16px"><b style="font-size:26px;color:#cfe0cf;font-family:Georgia,serif">32</b><div style="font-size:11px;color:#9ec0a8">чёрных</div></div>
+        </div>
+        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:8px 12px;font-size:15px;color:#ffcfc2;font-weight:bold" class="wv-ans">каждое домино берёт поровну → замостить НЕЛЬЗЯ!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Раскраска = простой подсчёт</div>
+        <div style="background:rgba(127,209,255,.08);border:2px solid #7fd1ff;border-radius:14px;padding:10px 14px;max-width:340px;width:100%">
+          <div style="font-size:15px;color:#e8dcc8;text-align:center;line-height:1.5">раскраска превращает геометрию в <b style="color:#7fd1ff">сравнение количеств цветов</b></div>
+        </div>
+        <div class="wv-sml">не перебирай варианты — просто сравни клетки!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ещё пример: 7×7</div>
+        <div style="display:grid;grid-template-columns:repeat(7,20px);gap:2px;justify-content:center;background:#101f18;padding:8px;border-radius:10px">
+          ${Array.from({length:49},(_,i)=>`<span style="width:20px;height:20px;background:${i%2?'#3f4a42':'#efe9d0'};border-radius:2px"></span>`).join('')}
+        </div>
+        <div class="wv-ans" style="font-size:17px;color:#8fd1a8">49 клеток — нечётно! 49 : 2 не делится → нельзя!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Памятка</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:330px;width:100%">
+          ${[
+            ['1️⃣','раскрась доску (шахматно)','#7fd1ff'],
+            ['2️⃣','посчитай клетки каждого цвета','#8fd1a8'],
+            ['3️⃣','домино берёт поровну → сравни!','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;text-align:left;font-size:14px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${board8(true)}
+        <div class="wv-sml">убрали 2 белых угла: сколько белых и чёрных?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 14px;font-size:20px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? белых · ? чёрных</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[397]=visB397;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===397){ window.ARH_LESSONS[i]=L397; break; } } })();
+})();
+/* ================= УРОК 398 · Полуинварианты ================= */
+(function(){
+  const L398 = {
+    id: 398, title: 'Полуинварианты: процессы', ico: '♻️',
+    src: 'Математика · 5–6 класс · Полуинварианты', subj: 'math',
+    explain: [
+      'На доске записаны числа 1, 2, 3, 4. Каждый ход стирают два числа a и b и записывают вместо них их разность a − b. Так делают, пока не останется одно число. Можно ли заранее узнать, каким оно будет — чётным или нечётным?',
+      'Попробуем на примере. Возьмём 1 и 2: 1 − 2 = −1. Числа стали: −1, 3, 4. Теперь 3 и 4: 3 − 4 = −1. Остались −1, −1. Наконец, −1 − (−1) = 0. Итог: 0 — чётное!',
+      'Совпадение? Проверим другим порядком. 1 и 3: 1 − 3 = −2 → −2, 2, 4. Потом 2 и 4: 2 − 4 = −2 → −2, −2. Наконец −2 − (−2) = 0. Опять 0! Похоже, итог всегда одинаковый…',
+      'Секрет в том, что при замене a и b на a − b что-то НЕ меняется. Смотрим: сумма a + b и разность a − b имеют ОДИНАКОВУЮ чётность! Ведь a+b и a−b отличаются на 2b — чётное число.',
+      'Раз a + b и a − b одной чётности, то замена не меняет ЧЁТНОСТЬ общей суммы всех чисел на доске! Это и есть полуинвариант — величина, которая сохраняется в процессе.',
+      'Посчитаем начальную сумму: 1 + 2 + 3 + 4 = 10. Десять — чётное число! Чётность суммы не меняется ни на одном шаге, значит, и финальное единственное число будет чётным.',
+      'Проверим наш эксперимент: итог был 0 — чётное! Удивительно: мы не знаем, какие именно числа стирали, но точно знаем чётность ответа. Вот сила полуинварианта!',
+      'Запомни приём: в задачах «повторяй операцию, пока не останется одно число» ищи величину, которая сохраняется или меняется предсказуемо. Сумма, разность, чётность, произведение — частые кандидаты!',
+      'Теперь проверь себя: из чисел 1, 2, 3, 4 операцией «заменить пару на разность» останется одно число. Каким оно будет по чётности? Вспомни: сумма 10 чётная и сохраняется!'
+    ],
+    check: { q: 'Стирают a и b, записывают a − b. Что сохраняется?', choices: ['чётность суммы', 'сама сумма', 'число чисел', 'произведение'], ans: 0,
+      exp: 'a+b и a−b одной чётности → чётность суммы сохраняется.' },
+    tasks: [
+      { q: 'Чему равна сумма 1 + 2 + 3 + 4?', kind: 'unit', ans: 10, tol: 0,
+        hints: ['Сложи по порядку.', '10.'], sol: '10' },
+      { q: 'Из чисел 1, 2, 3, 4 операцией «разность» останется одно число. Каким оно будет по чётности?', kind: 'choice', choices: ['чётным', 'нечётным', 'любым', 'нельзя узнать'], ans: 0, tol: 0,
+        hints: ['Сумма 10 чётна.', 'Чётность сохраняется → итог чётный.'], sol: 'чётным' }
+    ]
+  };
+  const numChip=(n,state)=>{ const col=state==='rem'?'#8f5a50':(state==='new'?'#ffd76a':'#cfe0cf');
+    return `<span style="display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.05);border:2px solid ${col};font-size:18px;color:${col};font-weight:bold;font-family:Georgia,serif;margin:2px">${n}</span>`; };
+  function visB398(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Процесс с числами</div>
+        <div class="wv-row" style="gap:4px">${[1,2,3,4].map(n=>numChip(n)).join('')}</div>
+        <div class="wv-sml" style="max-width:330px">каждый ход: стираем a и b, пишем <b style="color:#ffd76a">a − b</b> — пока не останется одно число</div>
+        <div style="background:rgba(217,164,65,.09);border:1px solid #d9a441;border-radius:10px;padding:6px 12px;max-width:320px;font-size:13.5px;color:#e8dcc8">можно ли заранее узнать чётность итога?</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Пробуем: порядок 1</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop">${numChip(1)} ${numChip(2)} ${numChip(3)} ${numChip(4)}</div>
+          <div class="wv-pop2" style="color:#8fa08f;font-size:13px">1 − 2 = −1</div>
+          <div class="wv-pop2">${numChip(-1,'new')} ${numChip(3)} ${numChip(4)}</div>
+          <div class="wv-pop3" style="color:#8fa08f;font-size:13px">3 − 4 = −1</div>
+          <div class="wv-pop3">${numChip(-1)} ${numChip(-1,'new')}</div>
+          <div class="wv-pop3" style="color:#8fa08f;font-size:13px">−1 − (−1) = 0</div>
+        </div>
+        <div class="wv-ans" style="font-size:17px;color:#8fd1a8">итог 0 — чётное!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Другой порядок</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          <div class="wv-pop">${numChip(1)} ${numChip(3)} → ${numChip(-2,'new')}</div>
+          <div class="wv-pop2">${numChip(-2)} ${numChip(2)} ${numChip(4)}</div>
+          <div class="wv-pop2" style="color:#8fa08f;font-size:13px">2 − 4 = −2</div>
+          <div class="wv-pop3">${numChip(-2)} ${numChip(-2,'new')} → ${numChip(0,'new')}</div>
+        </div>
+        <div class="wv-ans" style="font-size:17px;color:#8fd1a8">опять 0 — чётное! Не совпадение!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Секрет: a+b и a−b</div>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${[['a + b','разность на 2b меньше'],['a − b','(a+b) − (a−b) = 2b']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;text-align:center;background:rgba(127,209,255,.08);border:2px solid #7fd1ff;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#7fd1ff;font-family:Georgia,serif">${x[0]}</b><div style="font-size:10.5px;color:#9ec0a8;max-width:120px;margin-top:2px">${x[1]}</div></div>`).join('')}
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:7px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8">числа отличаются на <b style="color:#ffd76a">2b</b> — чётное → <b style="color:#8fd1a8">одной чётности!</b></div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Что сохраняется?</div>
+        <div style="background:rgba(143,209,168,.1);border:2px solid #8fd1a8;border-radius:14px;padding:10px 14px;max-width:340px;width:100%">
+          <div style="font-size:15.5px;color:#e8dcc8;text-align:center;line-height:1.5">замена пары на разность <b style="color:#8fd1a8">не меняет чётность суммы</b> всех чисел!</div>
+        </div>
+        <div class="wv-sml">это полуинвариант — величина, которая сохраняется в процессе</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Считаем начальную сумму</div>
+        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">1 + 2 + 3 + 4 = <b style="color:#8fd1a8" class="wv-ans">10</b></div>
+        <div class="wv-sml">10 — чётное!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Вывод</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;max-width:340px;width:100%">
+          <div style="font-size:16px;color:#ffd76a;font-weight:bold;text-align:center">сумма чётная и сохраняется → итог чётный!</div>
+        </div>
+        <div class="wv-sml">мы не знаем, какие числа стирали, но чётность ответа — знаем!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Памятка</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">в задачах «повторяй операцию, пока не останется одно» ищи, что <b style="color:#8fd1a8">сохраняется</b>: сумма, чётность, произведение, разность… Это и есть ключ!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-row" style="gap:4px">${[1,2,3,4].map(n=>numChip(n)).join('')}</div>
+        <div class="wv-sml">сумма = 10 (чётная). Итог будет …?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:20px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">чётным или нечётным?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[398]=visB398;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===398){ window.ARH_LESSONS[i]=L398; break; } } })();
+})();
