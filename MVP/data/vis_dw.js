@@ -341,3 +341,345 @@ window.WAVE_D = window.WAVE_D || {};
   window.WAVE_D[415]=visD415;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===415){ window.ARH_LESSONS[i]=L415; break; } } })();
 })();
+/* ================= УРОК 416 · Квадратные неравенства: метод интервалов ================= */
+(function(){
+  const L416 = {
+    id: 416, title: 'Квадратные неравенства: метод интервалов', ico: '📊',
+    src: 'Математика · 8 класс · Алгебра 8: неравенства', subj: 'math',
+    explain: [
+      'Квадратное неравенство — это неравенство с x², например x² − 4 > 0. Решить его — найти все x, при которых оно верно. Мощный способ — метод интервалов!',
+      'Шаг 1: решаем уравнение x² − 4 = 0. x² = 4 → x = 2 или x = −2. Эти корни разбивают числовую ось на три интервала: (−∞; −2), (−2; 2), (2; +∞).',
+      'Шаг 2: берём пробную точку из каждого интервала и смотрим знак выражения. Из левого возьмём x = −3: (−3)² − 4 = 9 − 4 = 5 > 0 — плюс! Из среднего x = 0: 0 − 4 = −4 < 0 — минус! Из правого x = 3: 9 − 4 = 5 > 0 — плюс!',
+      'Шаг 3: нам нужно x² − 4 > 0, то есть знак «+». Плюсы на крайних интервалах → ответ: x < −2 или x > 2. Готово!',
+      'Почему знак не меняется внутри интервала? Выражение x² − 4 непрерывно и меняет знак только в корнях. Внутри интервала между корнями знак постоянный — достаточно проверить одну точку!',
+      'Что если неравенство нестрогое, x² − 4 ≥ 0? Тогда корни ВКЛЮЧАЕМ: x ≤ −2 или x ≥ 2. Кружки на оси закрашиваем!',
+      'А если x² − 4 < 0? Нужен знак «−», он в среднем интервале: −2 < x < 2. Красиво: парабола y = x² − 4 ниже оси x ровно между корнями!',
+      'Связь с параболой: неравенство x² − 4 > 0 — это «где парабола выше оси x». Ветви вверх → снаружи корней плюс, внутри минус. Запомни эту картинку — и метод интервалов станет наглядным!',
+      'Теперь проверь себя: реши x² − 4 > 0. Вспомни: корни ±2, плюсы снаружи!'
+    ],
+    check: { q: 'Реши: x² − 4 > 0', choices: ['x < −2 или x > 2', '−2 < x < 2', 'x > 2', 'x < 2'], ans: 0,
+      exp: 'Произведение положительно вне отрезка [−2; 2].' },
+    tasks: [
+      { q: 'Какие корни у уравнения x² − 9 = 0? Введи положительный корень.', kind: 'unit', ans: 3, tol: 0,
+        hints: ['x² = 9.', 'x = ±3 → положительный 3.'], sol: '3' },
+      { q: 'Методом интервалов обычно решают…', kind: 'choice', choices: ['неравенства', 'уравнения с модулем', 'системы сложением', 'дроби'], ans: 0, tol: 0,
+        hints: ['Расстановка знаков по интервалам.', 'Квадратные и дробные неравенства.'], sol: 'неравенства' }
+    ]
+  };
+  const axisIntervals=()=>`<svg viewBox="0 0 260 80" style="width:230px;height:71px;background:#101f18;border-radius:10px">
+    <line x1="10" y1="42" x2="250" y2="42" stroke="#cfe0cf" stroke-width="2.5"/>
+    ${[-3,-2,-1,0,1,2,3].map(n=>`<text x="${130+n*26}" y="64" text-anchor="middle" font-size="12" fill="#8fa08f">${n}</text>`).join('')}
+    <circle cx="${130-2*26}" cy="42" r="7" fill="none" stroke="#ffd76a" stroke-width="3"/>
+    <circle cx="${130+2*26}" cy="42" r="7" fill="none" stroke="#ffd76a" stroke-width="3"/>
+    <line x1="10" y1="42" x2="${130-2*26-8}" y2="42" stroke="#8fd1a8" stroke-width="5" stroke-linecap="round"/>
+    <line x1="${130+2*26+8}" y1="42" x2="250" y2="42" stroke="#8fd1a8" stroke-width="5" stroke-linecap="round"/>
+    <line x1="${130-2*26+8}" y1="42" x2="${130+2*26-8}" y2="42" stroke="#ff9a8a" stroke-width="5" stroke-linecap="round"/>
+  </svg>`;
+  function visD416(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Квадратное неравенство</div>
+        <div style="font-size:28px;color:#ffd76a;font-family:Georgia,serif">x² − 4 > 0</div>
+        <div class="wv-sml">найти все x, при которых верно — метод интервалов!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Шаг 1: корни уравнения</div>
+        <div style="font-size:24px;color:#e8dcc8;font-family:Georgia,serif">x² − 4 = 0</div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:4px">
+          ${chip('x = 2','#8fd1a8')}${chip('x = −2','#7fd1ff')}
+        </div>
+        <div class="wv-sml">корни разбивают ось на три интервала!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Шаг 2: пробные точки</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['x = −3','(−3)² − 4 = 5 > 0 → +','#8fd1a8'],
+            ['x = 0','0 − 4 = −4 < 0 → −','#ff9a8a'],
+            ['x = 3','9 − 4 = 5 > 0 → +','#8fd1a8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><b>${x[0]}</b><span style="font-size:12px;color:${x[2]}">${x[1]}</span></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Шаг 3: ответ</div>
+        ${axisIntervals()}
+        <div class="wv-sml">зелёный — плюс (нужен нам) · красный — минус</div>
+        <div style="background:rgba(127,209,160,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 12px;font-size:18px;color:#8fd1a8;font-weight:bold" class="wv-ans">x < −2 или x > 2</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Почему знак не меняется?</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">выражение меняет знак <b style="color:#ffd76a">только в корнях</b>. Внутри интервала знак постоянный → проверь одну точку!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Нестрогое ≥</div>
+        <div class="wv-sml">x² − 4 ≥ 0 → корни включаем!</div>
+        <div style="font-size:20px;color:#8fd1a8;font-family:Georgia,serif">x ≤ −2 или x ≥ 2</div>
+        <div class="wv-sml">кружки на оси закрашиваем</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">А если < 0?</div>
+        <div class="wv-sml">x² − 4 < 0 → нужен минус — он в середине!</div>
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">−2 < x < 2</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Связь с параболой</div>
+        <div style="font-size:20px;color:#e8dcc8;font-family:Georgia,serif">x² − 4 > 0 ⟺ парабола выше оси x</div>
+        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
+          ${chip('ветви вверх','#8fd1a8')}${chip('снаружи — плюс','#8fd1a8')}${chip('внутри — минус','#ff9a8a')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${axisIntervals()}
+        <div class="wv-sml">x² − 4 > 0 → ответ?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">x < −2 или x > ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_D[416]=visD416;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===416){ window.ARH_LESSONS[i]=L416; break; } } })();
+})();
+/* ================= УРОК 417 · Четырёхугольники ================= */
+(function(){
+  const L417 = {
+    id: 417, title: 'Четырёхугольники', ico: '▰',
+    src: 'Математика · 8 класс · Геометрия 8: четырёхугольники', subj: 'math',
+    explain: [
+      'Четырёхугольник — фигура с четырьмя сторонами и четырьмя углами. Самые известные: квадрат, прямоугольник, ромб, параллелограмм, трапеция. У каждого свои особые свойства!',
+      'Сумма углов любого четырёхугольника равна 360°. Почему? Разрежь его диагональю на два треугольника — у каждого сумма 180°, вместе 360°!',
+      'Параллелограмм — четырёхугольник, у которого противоположные стороны параллельны. Свойства: противоположные стороны РАВНЫ, противоположные углы равны, диагонали делятся пополам.',
+      'Прямоугольник — параллелограмм с прямыми углами. У него, кроме свойств параллелограмма, диагонали РАВНЫ. А оси симметрии — две, через середины сторон.',
+      'Ромб — параллелограмм с равными сторонами. У ромба диагонали ПЕРПЕНДИКУЛЯРНЫ и делят углы пополам. Оси симметрии — его диагонали.',
+      'Квадрат — одновременно прямоугольник и ромб: все стороны равны и все углы прямые. Он вобрал свойства всех! Диагонали равны, перпендикулярны и делят углы пополам.',
+      'Трапеция — четырёхугольник, у которого только одна пара противоположных сторон параллельна. Эти стороны — основания. Равнобедренная трапеция имеет равные боковые стороны и углы при основании.',
+      'Как не запутаться? Параллелограмм — «родитель»: прямоугольник и ромб — его «дети», а квадрат — «внук», сочетающий всё. Схема-дерево поможет запомнить!',
+      'Теперь проверь себя: у какой фигуры все стороны равны и все углы прямые? Это квадрат — наследник прямоугольника и ромба!'
+    ],
+    check: { q: 'У какой фигуры все стороны равны и все углы прямые?', choices: ['квадрат', 'прямоугольник', 'ромб', 'параллелограмм'], ans: 0,
+      exp: 'Квадрат сочетает свойства прямоугольника и ромба.' },
+    tasks: [
+      { q: 'Чему равна сумма углов четырёхугольника?', kind: 'unit', ans: 360, tol: 0,
+        hints: ['(4 − 2) · 180°.', '360°.'], sol: '360°' },
+      { q: 'У параллелограмма противоположные стороны…', kind: 'choice', choices: ['равны', 'перпендикулярны', 'всегда разные', 'являются диагоналями'], ans: 0, tol: 0,
+        hints: ['Свойство параллелограмма.', 'Противоположные стороны равны.'], sol: 'равны' }
+    ]
+  };
+  const shape=(kind)=>`<svg viewBox="0 0 140 110" style="width:${kind==='tr'?150:130}px;height:110px">
+    ${kind==='par'?`<polygon points="20,30 120,30 100,90 10,90" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="3"/>`:
+    kind==='rec'?`<rect x="15" y="25" width="110" height="65" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="3"/>`:
+    kind==='rom'?`<polygon points="70,12 120,55 70,98 20,55" fill="rgba(255,138,192,.12)" stroke="#ff8ac0" stroke-width="3"/>`:
+    kind==='sq'?`<rect x="25" y="20" width="80" height="80" fill="rgba(255,215,106,.14)" stroke="#ffd76a" stroke-width="3"/>`:
+    `<polygon points="15,85 50,20 125,20 95,85" fill="rgba(232,160,90,.12)" stroke="#e8a05a" stroke-width="3"/>`}
+  </svg>`;
+  function visD417(el){
+    const step=LV.step||0;
+    const card=(name,desc,color,svg)=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${color};border-radius:14px;padding:8px 10px;min-width:130px">${svg}<b style="font-size:14px;color:${color}">${name}</b><div style="font-size:10.5px;color:#8fa08f;margin-top:2px">${desc}</div></div>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Четырёхугольники</div>
+        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
+          ${card('квадрат','всё равное','#ffd76a',shape('sq'))}
+          ${card('прямоугольник','углы 90°','#8fd1a8',shape('rec'))}
+        </div>
+        <div class="wv-sml">четыре стороны, четыре угла — и куча свойств!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Сумма углов 360°</div>
+        <div style="display:flex;align-items:center;gap:8px;justify-content:center">
+          ${shape('par')}<span style="font-size:22px;color:#8fa08f">= 2 Δ</span>
+        </div>
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">2 · 180° = 360°</div>
+        <div class="wv-sml">диагональ делит на два треугольника!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Параллелограмм</div>
+        ${shape('par')}
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-size:14px;color:#e8dcc8">
+          <div class="wv-pop">✔ противоположные стороны равны и параллельны</div>
+          <div class="wv-pop2">✔ противоположные углы равны</div>
+          <div class="wv-pop2">✔ диагонали делятся пополам</div>
+        </div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Прямоугольник</div>
+        ${shape('rec')}
+        <div class="wv-sml">параллелограмм с прямыми углами</div>
+        <div style="background:rgba(143,209,168,.12);border:1px solid #4c8a5a;border-radius:9px;padding:6px 12px;max-width:330px;font-size:14px;color:#8fd1a8">особое: диагонали РАВНЫ!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ромб</div>
+        ${shape('rom')}
+        <div class="wv-sml">параллелограмм с равными сторонами</div>
+        <div style="background:rgba(255,138,192,.1);border:1px solid rgba(255,138,192,.4);border-radius:9px;padding:6px 12px;max-width:330px;font-size:14px;color:#ff8ac0">особое: диагонали ПЕРПЕНДИКУЛЯРНЫ и делят углы!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Квадрат — всё сразу!</div>
+        ${shape('sq')}
+        <div class="wv-row" style="gap:5px;flex-wrap:wrap">
+          ${[['стороны равны','#ffd76a'],['углы 90°','#8fd1a8'],['диагонали равны','#7fd1ff'],['диагонали ⊥','#ff8ac0']].map(x=>`<span class="wv-chip" style="border-color:${x[1]};color:${x[1]}">${x[0]}</span>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Трапеция</div>
+        ${shape('tr')}
+        <div class="wv-sml">одна пара параллельных сторон — основания</div>
+        <div class="wv-sml">равнобедренная: боковые стороны равны, углы при основании равны</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Дерево семейства</div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:14px;color:#e8dcc8">
+          <div class="wv-chip" style="border-color:#7fd1ff;color:#7fd1ff">параллелограмм</div>
+          <div style="display:flex;gap:20px;margin-top:4px">
+            <div class="wv-chip" style="border-color:#8fd1a8;color:#8fd1a8">прямоугольник</div>
+            <div class="wv-chip" style="border-color:#ff8ac0;color:#ff8ac0">ромб</div>
+          </div>
+          <div class="wv-chip" style="border-color:#ffd76a;color:#ffd76a;margin-top:4px">квадрат = их сын!</div>
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${shape('sq')}
+        <div class="wv-sml">все стороны равны И все углы прямые — кто это?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? </div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_D[417]=visD417;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===417){ window.ARH_LESSONS[i]=L417; break; } } })();
+})();
+/* ================= УРОК 418 · Подобие треугольников ================= */
+(function(){
+  const L418 = {
+    id: 418, title: 'Подобие треугольников', ico: '🔺',
+    src: 'Математика · 8 класс · Геометрия 8: подобие', subj: 'math',
+    explain: [
+      'Два треугольника подобны, если они «одинаковые по форме, но разные по размеру» — как фотография и её увеличение. У подобных треугольников углы равны, а стороны пропорциональны.',
+      'Коэффициент подобия k — во сколько раз стороны одного треугольника больше сторон другого. Если k = 2, каждая сторона второго в 2 раза больше соответствующей стороны первого.',
+      'Признаки подобия как у равенства, только мягче: 1) два угла равны; 2) две стороны пропорциональны и угол между ними равен; 3) три стороны пропорциональны. Для подобия достаточно двух равных углов!',
+      'Зачем это нужно? Подобие позволяет найти НЕИЗВЕСТНУЮ сторону: если треугольники подобны с k = 3, а сторона первого равна 4, то сторона второго = 4·3 = 12. Пропорция решает!',
+      'Средняя линия треугольника — отрезок, соединяющий середины двух сторон. Она ПАРАЛЛЕЛЬНА третьей стороне и равна её половине. Средняя линия отсекает подобный треугольник с k = 1/2!',
+      'Площади подобных треугольников относятся как k². Если k = 2, площадь второго в 4 раза больше! Почему? Площадь = (основание·высоту)/2, а обе величины выросли в k раз: k·k = k².',
+      'Проверим: k = 2 → стороны ×2 → площадь ×4. k = 3 → площадь ×9. Запомни: площади растут КВАДРАТИЧНО от коэффициента!',
+      'Подобие в жизни: карта и местность, модель и настоящий корабль, тень человека и тень дерева. Измерив тень, находим высоту дерева — через подобие треугольников!',
+      'Теперь проверь себя: треугольники подобны с k = 2. Во сколько раз площадь второго больше? Вспомни: площади относятся как k²!'
+    ],
+    check: { q: 'Треугольники подобны с коэффициентом 2. Во сколько раз площадь второго больше?', choices: ['в 4 раза', 'в 2 раза', 'в 8 раз', 'в √2 раз'], ans: 0,
+      exp: 'Площади относятся как k² = 4.' },
+    tasks: [
+      { q: 'Коэффициент подобия 3. Во сколько раз стороны одного больше другого?', kind: 'unit', ans: 3, tol: 0,
+        hints: ['Стороны пропорциональны k.', 'В 3 раза.'], sol: '3' },
+      { q: 'Средняя линия треугольника соединяет…', kind: 'choice', choices: ['середины двух сторон', 'вершину с серединой стороны', 'две вершины', 'центр с вершиной'], ans: 0, tol: 0,
+        hints: ['Средняя линия.', 'Середины двух сторон; она параллельна третьей стороне.'], sol: 'середины двух сторон' }
+    ]
+  };
+  const triSmall=()=>`<svg viewBox="0 0 140 120" style="width:120px;height:103px"><polygon points="70,10 15,110 125,110" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="3"/></svg>`;
+  const triBig=()=>`<svg viewBox="0 0 190 170" style="width:170px;height:152px"><polygon points="95,10 10,160 180,160" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="3"/></svg>`;
+  function visD418(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Подобные треугольники</div>
+        <div style="display:flex;align-items:center;gap:10px;justify-content:center">
+          ${triSmall()}<span style="font-size:22px;color:#8fa08f">≈</span>${triBig()}
+        </div>
+        <div class="wv-sml">одинаковая форма, разный размер · углы равны, стороны пропорциональны</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Коэффициент подобия k</div>
+        <div style="display:flex;align-items:center;gap:10px;justify-content:center">
+          ${triSmall()}<span style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">×2</span>${triBig()}
+        </div>
+        <div class="wv-sml">k = 2: каждая сторона второго в 2 раза больше!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Признаки подобия</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['1️⃣','два угла равны','#8fd1a8'],
+            ['2️⃣','2 стороны пропорциональны + угол между ними','#7fd1ff'],
+            ['3️⃣','3 стороны пропорциональны','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;text-align:left;font-size:13px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        </div>
+        <div class="wv-sml">для подобия достаточно ДВУХ равных углов!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Находим сторону</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-size:17px;color:#e8dcc8;text-align:center;font-family:Georgia,serif">
+          <div class="wv-pop">k = 3, сторона первого = 4</div>
+          <div class="wv-pop2">сторона второго = 4 · 3 = <b style="color:#ffd76a">12</b></div>
+        </div>
+        <div class="wv-sml">пропорция решает!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Средняя линия</div>
+        <svg viewBox="0 0 180 140" style="width:170px;height:132px">
+          <polygon points="90,12 20,128 160,128" fill="rgba(127,209,255,.06)" stroke="#7fd1ff" stroke-width="2.5"/>
+          <line x1="55" y1="70" x2="125" y2="70" stroke="#ffd76a" stroke-width="4"/>
+          <circle cx="55" cy="70" r="5" fill="#ff9a8a"/><circle cx="125" cy="70" r="5" fill="#ff9a8a"/>
+          <text x="62" y="64" font-size="11" fill="#ff9a8a">середины</text>
+        </svg>
+        <div class="wv-sml">средняя линия ∥ третьей стороне и = её половине!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Площади: как k²!</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;font-size:19px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">площади относятся как k²</div>
+        <div class="wv-sml">площадь = (основание·высота)/2 — оба выросли в k раз!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверяем</div>
+        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
+          ${[['k = 2','площадь ×4','#8fd1a8'],['k = 3','площадь ×9','#7fd1ff'],['k = 5','площадь ×25','#ffd76a']].map(x=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${x[2]};border-radius:12px;padding:7px 12px"><b style="font-size:17px;color:${x[2]};font-family:Georgia,serif">${x[0]}</b><div style="font-size:11px;color:#8fa08f">${x[1]}</div></div>`).join('')}
+        </div>
+        <div class="wv-sml">площади растут квадратично!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Подобие в жизни</div>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+          ${['🗺️','🚢','🌳'].map((e,i)=>`<span style="font-size:42px" class="wv-pop" style="animation-delay:${i*0.1}s">${e}</span>`).join('')}
+        </div>
+        <div class="wv-sml">карта, модель корабля, тень дерева — всюду подобие!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${triSmall()}
+        <div class="wv-sml">k = 2 — площадь второго во сколько раз больше?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">в ? раз (k²)</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_D[418]=visD418;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===418){ window.ARH_LESSONS[i]=L418; break; } } })();
+})();
