@@ -1299,3 +1299,215 @@ window.WAVE_E = window.WAVE_E || {};
   window.WAVE_E[438]=visE438;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===438){ window.ARH_LESSONS[i]=L438; break; } } })();
 })();
+/* ================= УРОК 439 · Теоремы Менелая и Чевы ================= */
+(function(){
+  const L439 = {
+    id: 439, title: 'Теоремы Менелая и Чевы', ico: '📐',
+    src: 'Математика · 9 класс · Олимп-9: геометрия', subj: 'math',
+    explain: [
+      'Две великие теоремы о треугольнике: Менелая и Чевы. Они позволяют доказывать, что точки лежат на одной прямой или что отрезки пересекаются в одной точке — не рисуя ничего сложного!',
+      'Чевиана — отрезок из вершины треугольника к точке на противоположной стороне (или её продолжении). Медианы, биссектрисы, высоты — всё это чевианы!',
+      'Теорема Чевы: три чевианы (из вершин A, B, C к точкам на сторонах) пересекаются в ОДНОЙ точке тогда и только тогда, когда выполняется равенство произведений отношений отрезков.',
+      'Запишем Чевы: (AF/FB)·(BD/DC)·(CE/EA) = 1, где F, D, E — точки на сторонах. Произведение трёх отношений равно единице — и чевианы сошлись в одной точке!',
+      'Проверка на медианах: каждая медиана делит сторону пополам, значит, каждое отношение = 1. Произведение 1·1·1 = 1 → медианы пересекаются в одной точке! Мы это уже знали — теперь доказали формулой!',
+      'Теорема Менелая: если прямая пересекает стороны (или продолжения) треугольника в точках F, D, E, то произведение отношений равно −1 (с учётом знаков): (AF/FB)·(BD/DC)·(CE/EA) = −1.',
+      'Менелай отвечает на вопрос «лежат ли три точки на одной прямой?»: если произведение отношений равно −1 — лежат! Это как «Чева для прямой вместо точки».',
+      'Запомни пару: Чева — про пересечение в одной точке (произведение = 1), Менелай — про точки на одной прямой (произведение = −1). Два инструмента — два вопроса!',
+      'Теперь проверь себя: теорема Чевы связывает чевианы, которые… Вспомни: пересекаются в одной точке!'
+    ],
+    check: { q: 'Теорема Чевы связывает чевианы, которые…', choices: ['пересекаются в одной точке', 'попарно параллельны', 'лежат на сторонах', 'не пересекаются'], ans: 0,
+      exp: 'Условие пересечения чевиан в одной точке.' },
+    tasks: [
+      { q: 'Сколько вершин у треугольника?', kind: 'unit', ans: 3, tol: 0,
+        hints: ['Три.', '3 вершины.'], sol: '3' },
+      { q: 'В теореме Менелая рассматривают…', kind: 'choice', choices: ['секущую, пересекающую стороны', 'только высоты', 'только медианы', 'окружность'], ans: 0, tol: 0,
+        hints: ['Секущая прямая.', 'Прямая, пересекающая стороны (или продолжения).'], sol: 'секущую' }
+    ]
+  };
+  const ceva=()=>`<svg viewBox="0 0 200 170" style="width:180px;height:153px;background:#101f18;border-radius:12px">
+    <polygon points="100,15 20,150 180,150" fill="rgba(127,209,255,.05)" stroke="#7fd1ff" stroke-width="2.5"/>
+    <line x1="100" y1="15" x2="70" y2="150" stroke="#ffd76a" stroke-width="2.5"/>
+    <line x1="20" y1="150" x2="150" y2="60" stroke="#8fd1a8" stroke-width="2.5"/>
+    <line x1="180" y1="150" x2="55" y2="60" stroke="#ff8ac0" stroke-width="2.5"/>
+    <circle cx="92" cy="85" r="6" fill="#fff"/>
+    <text x="100" y="12" text-anchor="middle" font-size="12" fill="#ffd76a">A</text>
+    <text x="14" y="155" font-size="12" fill="#8fd1a8">B</text>
+    <text x="186" y="155" font-size="12" fill="#e8a0d8">C</text>
+  </svg>`;
+  function visE439(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:13.5px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Две великие теоремы</div>
+        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
+          ${chip('Чева — пересечение в точке','#ffd76a')}${chip('Менелай — точки на прямой','#8fd1a8')}
+        </div>
+        <div class="wv-sml">доказывают без сложных чертежей!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Чевиана</div>
+        ${ceva()}
+        <div class="wv-sml">отрезок из вершины к точке на противоположной стороне</div>
+        <div class="wv-sml">медианы, биссектрисы, высоты — всё чевианы!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Теорема Чевы</div>
+        ${ceva()}
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:15px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">чевианы в одной точке ⟺ произведение отношений = 1</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Формула Чевы</div>
+        <div style="background:rgba(127,209,255,.12);border:2px solid #7fd1ff;border-radius:12px;padding:8px 12px;font-size:16px;color:#7fd1ff;font-weight:bold;font-family:Georgia,serif">(AF/FB)·(BD/DC)·(CE/EA) = 1</div>
+        <div class="wv-sml">произведение трёх отношений равно единице!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверка на медианах</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:16px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">каждое отношение = 1 (половины)</div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">1·1·1 = 1 → медианы в одной точке!</div>
+        </div>
+        <div class="wv-sml">мы знали — теперь доказали формулой!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Теорема Менелая</div>
+        <svg viewBox="0 0 200 170" style="width:180px;height:153px;background:#101f18;border-radius:12px">
+          <polygon points="100,15 20,150 180,150" fill="rgba(127,209,255,.05)" stroke="#7fd1ff" stroke-width="2.5"/>
+          <line x1="40" y1="30" x2="180" y2="160" stroke="#e86a5a" stroke-width="2.5" stroke-dasharray="6 4"/>
+        </svg>
+        <div style="background:rgba(143,209,168,.12);border:2px solid #8fd1a8;border-radius:12px;padding:8px 12px;font-size:14.5px;color:#8fd1a8;font-weight:bold;font-family:Georgia,serif">секущая пересекает стороны → произведение = −1</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Менелай — для прямой</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.7">лежат ли три точки на одной прямой? Произведение = −1 → <b style="color:#8fd1a8">лежат!</b> Как «Чева для прямой»</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Пара</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          ${[
+            ['Чева','пересечение в точке · = 1','#ffd76a'],
+            ['Менелай','точки на прямой · = −1','#8fd1a8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span style="font-size:12px">${x[1]}</span></div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${ceva()}
+        <div class="wv-sml">Чева связывает чевианы, которые…?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:15px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">пересекаются в ? точке</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_E[439]=visE439;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===439){ window.ARH_LESSONS[i]=L439; break; } } })();
+})();
+/* ================= УРОК 440 · Планарность: формула Эйлера ================= */
+(function(){
+  const L440 = {
+    id: 440, title: 'Планарность: формула Эйлера', ico: '🕸️',
+    src: 'Математика · 9 класс · Олимп-9: графы', subj: 'math',
+    explain: [
+      'Планарный граф — такой, который можно нарисовать на плоскости БЕЗ пересечения рёбер. Как схема метро без наложений! Не все графы планарны — некоторые не рисуются без пересечений.',
+      'Формула Эйлера для планарного графа: В − Р + Г = 2. В — вершины, Р — рёбра, Г — грани (области, на которые граф делит плоскость). Проверим на простых примерах!',
+      'Проверка: один треугольник. В = 3, Р = 3. Сколько граней? Внутренняя + внешняя (вся остальная плоскость) = 2. Считаем: 3 − 3 + 2 = 2 ✔!',
+      'Квадрат с диагональю: В = 4, Р = 5. Грани: два внутренних треугольника + внешняя = 3. Проверка: 4 − 5 + 3 = 2 ✔! Работает!',
+      'Почему всегда 2? Нарисуй граф по шагам: добавление вершины и ребра сохраняет В − Р + Г. В конце «стяни» всё к одному — получится 2. Инвариант!',
+      'Применяем: в планарном графе В = 4, Р = 6. Найдём Г: 4 − 6 + Г = 2 → Г = 4. Формула находит неизвестное!',
+      'Есть графы, которые НЕ планарны! Самый известный — K₅ (пять вершин, каждая соединена с каждой, всего 10 рёбер). Попробуй нарисовать без пересечений — не получится!',
+      'Почему K₅ не планарен? Если бы был, для него В = 5, Р = 10. По формуле Эйлера Г = 7. Но каждая грань K₅ имеет минимум 3 ребра, а это даёт противоречие с подсчётом рёбер. Формула ловит невозможное!',
+      'Теперь проверь себя: формула Эйлера для планарного графа — какая? Вспомни: В − Р + Г = 2!'
+    ],
+    check: { q: 'Формула Эйлера для планарного графа:', choices: ['В − Р + Г = 2', 'В + Р = Г', 'В − Р = 2', 'В + Г = 2'], ans: 0,
+      exp: 'Вершины − рёбра + грани = 2.' },
+    tasks: [
+      { q: 'В планарном графе В = 4, Р = 6. Чему равно Г?', kind: 'unit', ans: 4, tol: 0,
+        hints: ['4 − 6 + Г = 2.', 'Г = 4.'], sol: '4' },
+      { q: 'Какой граф НЕ является планарным?', kind: 'choice', choices: ['K₅', 'дерево', 'цикл', 'звезда'], ans: 0, tol: 0,
+        hints: ['K₅ не рисуется без пересечений.', 'K₅ — не планарен.'], sol: 'K₅' }
+    ]
+  };
+  const graph=(kind)=>`<svg viewBox="0 0 200 150" style="width:170px;height:128px;background:#101f18;border-radius:12px">
+    ${kind==='tri'?`<polygon points="100,20 30,125 170,125" fill="none" stroke="#7fd1ff" stroke-width="3"/>`:
+    kind==='sq'?`<polygon points="40,40 160,40 160,115 40,115" fill="none" stroke="#7fd1ff" stroke-width="3"/><line x1="40" y1="40" x2="160" y2="115" stroke="#ffd76a" stroke-width="2.5"/>`:
+    kind==='k5'?`<g stroke="#ff8ac0" stroke-width="2">${[0,1,2,3,4].map((a,i)=>[1,2,3,4].slice(i+1).map(b=>{const x1=100+55*Math.cos((a-2)*1.26), y1=75+55*Math.sin((a-2)*1.26); const x2=100+55*Math.cos((b-2)*1.26), y2=75+55*Math.sin((b-2)*1.26); return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;}).join('')).join('')}</g>${[0,1,2,3,4].map(i=>{const x=100+55*Math.cos((i-2)*1.26),y=75+55*Math.sin((i-2)*1.26);return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="#ff8ac0"/>`;}).join('')}`:''}
+  </svg>`;
+  function visE440(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Планарный граф</div>
+        <div style="font-size:44px" class="wv-swing">🗺️</div>
+        <div class="wv-sml">можно нарисовать без пересечения рёбер — как схема метро!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Формула Эйлера</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 14px;font-size:19px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">В − Р + Г = 2</div>
+        <div class="wv-sml">вершины − рёбра + грани = 2</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверка: треугольник</div>
+        ${graph('tri')}
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${[['В = 3','вершины','#8fd1a8'],['Р = 3','рёбра','#7fd1ff'],['Г = 2','внутр. + внешняя','#ffd76a']].map(x=>`<span class="wv-chip" style="border-color:${x[2]};color:${x[2]}">${x[0]} — ${x[1]}</span>`).join('')}
+        </div>
+        <div style="font-size:17px;color:#8fd1a8;font-family:Georgia,serif">3 − 3 + 2 = 2 ✔</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Квадрат с диагональю</div>
+        ${graph('sq')}
+        <div style="font-size:17px;color:#8fd1a8;font-family:Georgia,serif">4 − 5 + 3 = 2 ✔</div>
+        <div class="wv-sml">В=4, Р=5, Г=3 (2 внутренних + внешняя)</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Почему всегда 2?</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.7">добавление вершины с ребром сохраняет В − Р + Г. В конце «стяни» всё → 2. <b style="color:#8fd1a8">Инвариант!</b></div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Находим неизвестное</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:17px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">В = 4, Р = 6</div>
+          <div class="wv-pop2">4 − 6 + Г = 2</div>
+          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">Г = 4</div>
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">K₅ — НЕ планарный!</div>
+        ${graph('k5')}
+        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:8px 12px;font-size:15px;color:#ffcfc2;font-weight:bold" class="wv-ans">5 вершин, 10 рёбер — не нарисовать без пересечений!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Формула ловит невозможное</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:340px;font-size:13.5px;color:#e8dcc8;line-height:1.7">если бы K₅ был планарным: В=5, Р=10 → Г=7. Но каждая грань ≥ 3 рёбер — <b style="color:#ffd76a">противоречие!</b></div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${graph('sq')}
+        <div class="wv-sml">формула Эйлера?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">В − Р + Г = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_E[440]=visE440;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===440){ window.ARH_LESSONS[i]=L440; break; } } })();
+})();
