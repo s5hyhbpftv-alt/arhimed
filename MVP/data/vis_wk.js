@@ -1887,21 +1887,35 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW179Act=visW179Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===179){ window.ARH_LESSONS[i]=L179; break; } } })();
 })();
-/* ================= УРОК 13 · Чётность: суммы и произведения (v3) ================= */
+/* ================= УРОК 13 · Чётность: суммы и произведения (v5, без эмодзи) ================= */
 (function(){
+  if(!window.__wk13v5css){
+    window.__wk13v5css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .n5in{animation:n5In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes n5In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .n5pop{animation:n5Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes n5Pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .n5float{animation:n5Float 1.6s ease-in-out infinite;}'+
+      '@keyframes n5Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}'+
+      '#lvis .n5join{stroke-dasharray:8 6;animation:n5Join .9s linear infinite;}'+
+      '@keyframes n5Join{to{stroke-dashoffset:-28}}';
+    document.head.appendChild(st);
+  }
   const L13 = {
-    id: 13, title: 'Чётность: суммы и произведения', ico: '💃',
+    id: 13, title: 'Чётность: суммы и произведения', ico: '✦',
     src: 'Математика · Чёт и нечет: пары и «сироты»', subj: 'math',
     explain: [
-      'Бал в Числовом королевстве: числа танцуют парами. 8 = 4 пары — чётное число, у него нет ни одной «сироты». А 9 — это 4 пары и один лишний, которому не с кем танцевать: 9 нечётное. Чётность решает задачи «можно ли раздать поровну?» без единого вычисления!',
-      'Узнать чётность легко по последней цифре: 0, 2, 4, 6, 8 — чётные, а 1, 3, 5, 7, 9 — нечётные. 847 кончается на 7 → нечётное. Проверять всё число не нужно — достаточно хвостика!',
-      'Чёт + чёт = чёт: две компании пар танцуют вместе — снова только пары, без сирот. 2 + 4 = 6, 10 + 8 = 18. Сложение не ломает пары.',
-      'Чёт + нечёт = нечёт: к полным парам приходит гость-сирота — он так и остаётся один. 4 + 1 = 5, 10 + 7 = 17. Одна сирота не исчезает!',
-      'Удивительно: нечёт + нечёт = чёт! У каждого нечётного числа есть своя сирота. Две сироты знакомятся — и танцуют вместе парой! 3 + 5 = 8, 11 + 13 = 24.',
+      'Бал в Числовом королевстве: числа танцуют парами. Число 8 — это четыре пары: у него нет ни одного одинокого участника, поэтому 8 чётное. А число 9 — четыре пары и один лишний, которому не с кем танцевать: 9 нечётное. Чётность сразу отвечает на вопрос «можно ли раздать поровну?»',
+      'Узнать чётность легко по последней цифре. Чётные числа кончаются на 0, 2, 4, 6 или 8. Нечётные — на 1, 3, 5, 7 или 9. Число 847 кончается на 7 — значит, оно нечётное. Смотреть на всё число не нужно, достаточно хвостика!',
+      'Чёт + чёт = чёт: две компании пар танцуют вместе — снова получаются только пары, сирот нет. 2 + 4 = 6, 10 + 8 = 18. Сложение пар не создаёт одиноких участников.',
+      'Чёт + нечёт = нечёт: к полным парам приходит одинокий гость — он так и остаётся один. 4 + 1 = 5, 10 + 7 = 17. Одинокая «сирота» не исчезает при сложении.',
+      'Самое удивительное: нечёт + нечёт = чёт! У каждого нечётного числа есть своя «сирота». Две сироты знакомятся на балу и танцуют вместе — образуют пару! 3 + 5 = 8, 11 + 13 = 24.',
       'Вычитание ведёт себя так же: чёт − чёт = чёт, чёт − нечёт = нечёт, нечёт − нечёт = чёт. Минус не создаёт и не уничтожает сирот — он только уводит или добавляет пары.',
       'Умножение: если ХОТЯ БЫ ОДИН множитель чётный — произведение чётное. Пары «размножаются»: 2 · 4 = 8, 4 · 5 = 20, 6 · 9 = 54. Один чётный множитель делает всё произведение чётным.',
-      'А если все множители нечётные? Тогда и произведение нечётное: 3 · 3 = 9, 5 · 7 = 35. В сетке 3 × 3 клеток все разбиваются на пары, кроме одной лишней в углу — как сирота на балу.',
-      'Проверь себя: сумма 1 + 2 + … + 99 — чётная или нечётная? Каждое нечётное слагаемое «переключает» чётность, их ровно 50 — чётное число, значит сумма чётная. А 1 · 2 · 3 · … · 100 — там есть множитель 2, значит произведение чётное!'
+      'А если все множители нечётные — произведение нечётное: 3 · 3 = 9, 5 · 7 = 35. В сетке 3 × 3 клетки все разбиваются на пары, кроме одной лишней в углу — как сирота на балу.',
+      'Проверь себя: сумма 1 + 2 + … + 99 — чётная, ведь нечётных слагаемых ровно 50 (чётное число). А 1 · 2 · 3 · … · 100 — чётное, потому что среди множителей есть 2. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Сумма двух нечётных чисел…', choices: ['чётная', 'нечётная'], ans: 0,
       exp: 'Нечёт + нечёт = чёт: например, 3+5=8.' },
@@ -1912,25 +1926,33 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Среди множителей есть 2.', 'Произведение с чётным множителем — чётное.'], sol: 'Множитель 2 делает произведение чётным.' }
     ]
   };
-  const C={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',pink:'#f2a7d8',red:'#ff8a7a'};
-  function pairs(n,uid){
-    const W=322, cols=6, r=7, x0=16, y0=22, gx=44, gy=18;
-    const pairsN=Math.floor(n/2), odd=n%2;
+  const C={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a',dark:'#0d1a13'};
+  const BC=['#7fd1ff','#8fd1a8','#ffd76a','#e8a0d8','#ff9a7a'];
+  /* пары из кругов (без эмодзи): n участников → пары + сирота */
+  function pairs(n,opt){
+    const o=opt||{};
+    const cols=o.cols||5, r=o.r||9, gx=o.gx||24, gy=o.gy||24;
+    const W=o.w||318, x0=Math.round((W-(cols*gx))/2), y0=o.y||16;
+    const pN=Math.floor(n/2), odd=n%2;
     let s='';
-    let idx=0;
-    for(let k=0;k<pairsN;k++){
-      const c1=idx%cols, r1=Math.floor(idx/cols), c2=c1+1<cols?c1+1:0;
-      const x1=x0+c1*gx, y1=y0+r1*gy;
-      const x2=x0+((c1+1)%cols)*gx, y2=y0+Math.floor((idx+1)/cols)*gy;
-      s+=`<g class="wv-pop" style="animation-delay:${(k*0.06).toFixed(2)}s"><circle cx="${x1}" cy="${y1}" r="${r}" fill="#7fd1ff"/><circle cx="${x2}" cy="${y2}" r="${r}" fill="#8fd1a8"/><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#d9a441" stroke-width="1.4" stroke-dasharray="3 2"/></g>`;
-      idx+=2;
+    for(let k=0;k<pN;k++){
+      const c=(k*2)%cols, rr=Math.floor((k*2)/cols);
+      const x1=x0+c*gx, y1=y0+rr*gy;
+      const x2=x1+gx, y2=y1;
+      s+=`<g class="n5pop" style="animation-delay:${(k*0.06).toFixed(2)}s">
+        <circle cx="${x1}" cy="${y1}" r="${r}" fill="${BC[(k*2)%5]}"/>
+        <circle cx="${x2}" cy="${y2}" r="${r}" fill="${BC[(k*2+1)%5]}"/>
+        <path d="M${x1} ${y1} L${x2} ${y2}" stroke="${C.gold}" stroke-width="2.4" class="n5join"/>
+      </g>`;
     }
     if(odd){
-      const c=idx%cols, rr=Math.floor(idx/cols);
-      s+=`<g class="wv-pop" style="animation-delay:${(pairsN*0.06+0.1).toFixed(2)}s"><circle cx="${x0+c*gx}" cy="${y0+rr*gy}" r="${r+2}" fill="#e0523d"/><text x="${x0+c*gx}" y="${y0+rr*gy+22}" text-anchor="middle" font-size="9" fill="#ff9a8a">сирота!</text></g>`;
+      const c=(pN*2)%cols, rr=Math.floor((pN*2)/cols);
+      const x=x0+c*gx, y=y0+rr*gy;
+      s+=`<g class="n5pop" style="animation-delay:${(pN*0.06+0.12).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="${r+4}" fill="none" stroke="${C.red}" stroke-width="2.6"/><circle cx="${x}" cy="${y}" r="${r}" fill="${C.red}"/></g>`;
     }
-    return `<svg width="${W}" height="96" viewBox="0 0 ${W} 96" style="display:block;margin:0 auto">${s}</svg>`;
+    return `<svg width="${W}" height="${o.h||72}" viewBox="0 0 ${W} ${o.h||72}" style="display:block;margin:0 auto">${s}</svg>`;
   }
+  const cap=(t,c)=>`<div style="font-size:13.5px;color:${c||'#d8c9a8'};text-align:center;font-weight:bold;line-height:1.4">${t}</div>`;
   const Q13=[
     {q:'Нечёт + нечёт = ?',opts:['чётное','нечётное'],ans:0},
     {q:'Произведение 1·2·3·…·100 чётно?',opts:['да','нет'],ans:0}
@@ -1938,20 +1960,22 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   function quiz(lk,st){
     const T=Q13[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.05)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.2)':'rgba(232,106,90,.2)'; bd=i===T.ans?C.green:C.red; tc=i===T.ans?C.green:C.red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:70px;font-size:15px" onclick="visW13T('${lk}',${i})">${o}</button>`;
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?C.green:C.red; tc=i===T.ans?C.green:C.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:90px;font-size:17px" onclick="visW13T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">🎉 верно! Множитель 2 — всё чётное</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">✅ верно! Две сироты образовали пару!</div>')
-        : '<div class="wk-ans" style="color:#ff8a7a;font-size:15px">❌ вспомни: у каждого нечётного есть одна «сирота»</div>';
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! Множитель 2 делает всё чётным</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! Две «сироты» образовали пару</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. У каждого нечётного числа есть одна «сирота»</div>';
     }
-    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW13Act('${lk}','nq')`):'';
-    const rst=wkBtn('↺',`visW13Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий вопрос →',`visW13Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW13Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:12px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
+  const op=(t)=>`<span style="font-size:30px;color:#cfe0cf;font-weight:bold;padding:0 3px">${t}</span>`;
+  const pill=(t,c,delay)=>`<span class="n5in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 12px;border-radius:12px;border:2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:20px;color:${c};font-weight:bold">${t}</span>`;
   function visW13(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
@@ -1959,87 +1983,79 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     if(step===0){
       if(st.n==null) st.n=9;
       const n=st.n;
-      h=wkFrame(wkBig('Бал чисел: пары и «сироты» 💃')+
-        wkHero(pairs(n,'a'))+
-        wkRow(wkPill(n+(n%2===0?' = чётное (только пары)':' = нечётное (есть сирота)'), n%2===0?C.green:C.red))+
-        wkRow(wkBtn('−1',`visW13Act('${lk}','m')`),wkBtn('+1',`visW13Act('${lk}','p')`),wkBtn('↺',`visW13Act('${lk}','rst')`))+
-        wkSml('8 = 4 пары — чётное; 9 = 4 пары и одна сирота — нечётное'));
+      h=wkFrame(wkBig('Бал чисел: пары и «сироты»')+
+                wkHero(pairs(n,{cols:6,r:10,gx:22,gy:24,h:56}))+
+        (n%2===0
+          ? wkAns(n+' — чётное: только пары, ни одной «сироты»', C.green)
+          : wkAns(n+' — нечётное: пары и одна «сирота»', C.red))+
+        wkRow(wkBtn('уменьшить на 1',`visW13Act('${lk}','m')`),wkBtn('увеличить на 1',`visW13Act('${lk}','p')`),wkBtn('сброс',`visW13Act('${lk}','rst')`))+
+        wkSml('8 — только пары · 9 — пары и одинокий кружок'));
     } else if(step===1){
-      h=wkFrame(wkBig('Быстрый признак: последняя цифра')+
-        wkHero(`<svg width="322" height="88" viewBox="0 0 322 88" style="display:block">
-          ${[0,2,4,6,8].map((d,i)=>`<g class="wv-pop" style="animation-delay:${(i*0.09).toFixed(2)}s"><circle cx="${24+i*60}" cy="30" r="21" fill="rgba(143,209,168,.14)" stroke="${C.green}" stroke-width="2.4"/><text x="${24+i*60}" y="37" text-anchor="middle" font-size="20" fill="${C.green}" font-weight="bold" font-family="Georgia,serif">${d}</text></g>`).join('')}
-          <text x="161" y="72" text-anchor="middle" font-size="12" fill="${C.green}">чётные</text>
-          ${[1,3,5,7,9].map((d,i)=>`<g class="wv-pop" style="animation-delay:${(0.3+i*0.09).toFixed(2)}s"><circle cx="${14+i*34}" cy="74" r="0" fill="none"/></g>`).join('')}
-        </svg>`)+
-        wkRow(wkChip('0 2 4 6 8 — чётные', C.green),wkChip('1 3 5 7 9 — нечётные', C.red))+
-        wkSml('847 кончается на 7 → нечётное. Хвостик числа всё расскажет!'));
+      const ev=[0,2,4,6,8], od=[1,3,5,7,9];
+      const row=(arr,label,color,offset)=>{
+        const cells=arr.map((d,i)=>`<div class="n5pop" style="animation-delay:${((offset||0)+i*0.08).toFixed(2)}s;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid ${color};font-family:Georgia,serif;font-size:21px;color:#fff;font-weight:bold">${d}</div>`).join('');
+        return `<div style="display:flex;flex-direction:column;align-items:center;gap:3px"><span style="font-size:13px;color:${color};font-weight:bold">${label}</span><div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center">${cells}</div></div>`;
+      };
+      h=wkFrame(wkBig('Последняя цифра всё расскажет')+
+        `<div class="wk-row" style="gap:16px;align-items:flex-start">${row(ev,'чётные','#8fd1a8')}${row(od,'нечётные','#ff8a7a',0.3)}</div>`+
+        wkRow(wkChip('847 кончается на 7 → нечётное', C.cream))+
+        wkSml('смотри на последнюю цифру — остальное число считать не нужно'));
     } else if(step===2){
+      const g=(cols,color,label,delay)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:2px"><svg width="120" height="66" viewBox="0 0 120 66"><g class="n5pop" style="animation-delay:${(delay||0).toFixed(2)}s">${[0,1,2,3].map(i=>`<circle cx="${12+(i%2)*18}" cy="${16+Math.floor(i/2)*20}" r="7" fill="${color}"/>`).join('')}</g></svg><span style="font-size:13px;color:#d8c9a8">${label}</span></div>`;
       h=wkFrame(wkBig('Чёт + чёт = чёт')+
-        wkHero(`<svg width="322" height="96" viewBox="0 0 322 96" style="display:block">
-          <g class="wv-pop"><rect x="10" y="14" width="88" height="66" rx="13" fill="rgba(127,209,160,.08)" stroke="${C.green}" stroke-width="2"/><text x="54" y="40" text-anchor="middle" font-size="13" fill="#9ec0a8">чёт</text><text x="54" y="68" text-anchor="middle" font-size="26" fill="${C.green}" font-weight="bold" font-family="Georgia,serif">2 + 4</text></g>
-          <text x="110" y="52" font-size="24" fill="#8fa08f">=</text>
-          <g class="wv-pop2"><rect x="124" y="14" width="88" height="66" rx="13" fill="rgba(143,209,168,.12)" stroke="${C.green}" stroke-width="2.4"/><text x="168" y="40" text-anchor="middle" font-size="13" fill="#9ec0a8">пары+пары</text><text x="168" y="68" text-anchor="middle" font-size="26" fill="${C.green}" font-weight="bold" font-family="Georgia,serif">6</text></g>
-          <text x="224" y="40" text-anchor="middle" font-size="30">💃</text>
-          <g class="wv-pop3"><rect x="248" y="14" width="66" height="66" rx="13" fill="rgba(217,164,65,.1)" stroke="${C.gold}" stroke-width="2.4"/><text x="281" y="52" text-anchor="middle" font-size="20" fill="${C.gold}" font-weight="bold">чёт!</text></g>
-        </svg>`)+
-        wkSml('две компании пар танцуют вместе — снова только пары, сирот нет'));
+        wkHero(`<div class="wk-row" style="gap:6px;align-items:center">${g(4,'#7fd1ff','чёт',0)}${op('+')}${g(4,'#8fd1a8','чёт',0.1)}${op('=')}${g(4,'#ffd76a','чёт',0.2)}</div>`)+
+        wkRow(pill('2 + 4 = 6', C.green,0.25))+
+        wkSml('две компании пар танцуют вместе — снова только пары, без сирот'));
     } else if(step===3){
+      const grp=(label,color,delay)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:2px"><svg width="118" height="60" viewBox="0 0 118 60"><g class="n5pop" style="animation-delay:${(delay||0).toFixed(2)}s"><circle cx="26" cy="18" r="9" fill="${color}"/><circle cx="54" cy="18" r="9" fill="${color}"/><path d="M26 18 L54 18" stroke="#ffd76a" stroke-width="2.6" class="n5join"/><circle cx="40" cy="44" r="9" fill="#ff8a7a"/></g></svg><span style="font-size:13px;color:#d8c9a8">${label}</span></div>`;
       h=wkFrame(wkBig('Чёт + нечёт = нечёт')+
-        wkHero(`<svg width="322" height="96" viewBox="0 0 322 96" style="display:block">
-          <g class="wv-pop"><rect x="10" y="14" width="100" height="66" rx="13" fill="rgba(127,209,160,.08)" stroke="${C.green}" stroke-width="2"/><text x="60" y="40" text-anchor="middle" font-size="13" fill="#9ec0a8">чёт</text><text x="60" y="68" text-anchor="middle" font-size="22" fill="${C.green}" font-weight="bold" font-family="Georgia,serif">4</text></g>
-          <text x="120" y="52" font-size="24" fill="#8fa08f">+</text>
-          <g class="wv-pop2"><rect x="134" y="14" width="100" height="66" rx="13" fill="rgba(232,106,90,.08)" stroke="${C.red}" stroke-width="2"/><text x="184" y="40" text-anchor="middle" font-size="13" fill="#ff9a8a">нечёт</text><text x="184" y="68" text-anchor="middle" font-size="22" fill="${C.red}" font-weight="bold" font-family="Georgia,serif">1</text></g>
-          <text x="246" y="52" font-size="26" fill="#8fa08f">=</text>
-          <g class="wv-pop3"><rect x="258" y="14" width="56" height="66" rx="13" fill="rgba(217,164,65,.1)" stroke="${C.gold}" stroke-width="2.4"/><text x="286" y="52" text-anchor="middle" font-size="19" fill="${C.gold}" font-weight="bold">5</text></g>
-          <text x="286" y="78" text-anchor="middle" font-size="10" fill="#ff9a8a">сирота!</text>
-        </svg>`)+
-        wkSml('к парам приходит гость-сирота — он так и остаётся один: 4+1=5 нечётное'));
+        wkHero(`<div class="wk-row" style="gap:6px;align-items:center">${grp('пара и сирота','#7fd1ff',0)}${op('+')}${grp('пара и сирота','#8fd1a8',0.1)}${op('=')}${grp('пара и сирота','#ffd76a',0.2)}</div>`)+
+        wkRow(pill('4 + 1 = 5', C.red,0.25))+
+        wkSml('одинокий гость приходит к парам и остаётся один — сумма нечётная'));
     } else if(step===4){
       h=wkFrame(wkBig('Нечёт + нечёт = чёт!')+
-        wkHero(`<svg width="322" height="100" viewBox="0 0 322 100" style="display:block">
-          <g class="wv-pop"><rect x="10" y="16" width="92" height="64" rx="13" fill="rgba(232,106,90,.08)" stroke="${C.red}" stroke-width="2"/><text x="56" y="40" text-anchor="middle" font-size="13" fill="#ff9a8a">нечёт</text><text x="56" y="66" text-anchor="middle" font-size="20" fill="${C.red}" font-weight="bold" font-family="Georgia,serif">3</text></g>
-          <text x="112" y="54" font-size="24" fill="#8fa08f">+</text>
-          <g class="wv-pop2"><rect x="126" y="16" width="92" height="64" rx="13" fill="rgba(232,106,90,.08)" stroke="${C.red}" stroke-width="2"/><text x="172" y="40" text-anchor="middle" font-size="13" fill="#ff9a8a">нечёт</text><text x="172" y="66" text-anchor="middle" font-size="20" fill="${C.red}" font-weight="bold" font-family="Georgia,serif">5</text></g>
-          <text x="228" y="54" font-size="26" fill="#8fa08f">=</text>
-          <g class="wv-pop3"><rect x="242" y="12" width="72" height="72" rx="14" fill="rgba(217,164,65,.14)" stroke="${C.gold}" stroke-width="3"/><text x="278" y="52" text-anchor="middle" font-size="28" fill="${C.gold}" font-weight="bold" font-family="Georgia,serif">8</text><text x="278" y="72" text-anchor="middle" font-size="11" fill="#8fd1a8">чёт!</text></g>
-          <text x="56" y="94" text-anchor="middle" font-size="10" fill="#ff9a8a">сирота</text><text x="172" y="94" text-anchor="middle" font-size="10" fill="#ff9a8a">сирота</text>
+        wkHero(`<svg width="318" height="120" viewBox="0 0 318 120" style="display:block">
+          <g class="n5pop"><circle cx="70" cy="60" r="16" fill="none" stroke="#ff8a7a" stroke-width="3"/><circle cx="70" cy="60" r="10" fill="#ff8a7a"/></g>
+          <g class="n5pop" style="animation-delay:.2s"><circle cx="130" cy="60" r="16" fill="none" stroke="#ff8a7a" stroke-width="3"/><circle cx="130" cy="60" r="10" fill="#ff8a7a"/></g>
+          <text class="n5pop" style="animation-delay:.1s" x="100" y="88" text-anchor="middle" font-size="22" fill="#cfe0cf" font-weight="bold">+</text>
+          ${'<g class="n5pop" style="animation-delay:.45s"><circle cx="200" cy="60" r="15" fill="#8fd1a8"/><circle cx="230" cy="60" r="15" fill="#8fd1a8"/><path d="M200 60 L230 60" stroke="#ffd76a" stroke-width="3" class="n5join"/></g>'}
+          <text class="n5pop" style="animation-delay:.4s" x="180" y="88" text-anchor="middle" font-size="22" fill="#cfe0cf" font-weight="bold">=</text>
+          <g class="n5pop" style="animation-delay:.6s"><circle cx="280" cy="60" r="24" fill="#ffd76a"/><text x="280" y="70" text-anchor="middle" font-size="26" fill="#0d1a13" font-weight="bold" font-family="Georgia,serif">8</text></g>
         </svg>`)+
-        wkAns('две сироты знакомятся — и танцуют парой! 3 + 5 = 8', C.green)+
-        wkSml('два нечётных числа всегда дают чётную сумму'));
+        wkRow(pill('3 + 5 = 8', C.green,0.3))+
+        wkSml('две «сироты» знакомятся и образуют пару — сумма становится чётной'));
     } else if(step===5){
+      const rules=[['чёт − чёт','= чёт','10 − 4 = 6','#8fd1a8'],['чёт − нечёт','= нечёт','10 − 3 = 7','#ff8a7a'],['нечёт − нечёт','= чёт','9 − 3 = 6','#8fd1a8']];
+      const cards=rules.map((r,i)=>`<div class="n5in" style="animation-delay:${(i*0.15).toFixed(2)}s;text-align:center;border:2px solid ${r[3]};border-radius:12px;padding:8px 6px;flex:1;min-width:84px"><div style="font-size:14px;color:#e8dcc8;font-weight:bold">${r[0]}</div><div style="font-size:16px;color:${r[3]};font-weight:bold;margin:2px 0">${r[1]}</div><div style="font-size:12.5px;color:#9ec0a8">${r[2]}</div></div>`).join('');
       h=wkFrame(wkBig('Вычитание — то же самое')+
-        wkHero(`<svg width="322" height="96" viewBox="0 0 322 96" style="display:block">
-          ${[['чёт−чёт = чёт','10−4=6',C.green,8],['чёт−нечёт = нечёт','10−3=7',C.red,112],['нечёт−нечёт = чёт','9−3=6',C.green,216]].map((d,i)=>`
-            <g class="wv-pop" style="animation-delay:${(i*0.15).toFixed(2)}s"><rect x="${d[3]}" y="14" width="100" height="70" rx="13" fill="rgba(255,255,255,.04)" stroke="${d[2]}" stroke-width="2"/>
-              <text x="${d[3]+50}" y="38" text-anchor="middle" font-size="10.5" fill="#9ec0a8">${d[0]}</text>
-              <text x="${d[3]+50}" y="68" text-anchor="middle" font-size="19" fill="${d[2]}" font-weight="bold" font-family="Georgia,serif">${d[1]}</text></g>`).join('')}
-        </svg>`)+
+        `<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;width:100%">${cards}</div>`+
         wkSml('минус не создаёт и не уничтожает сирот — только уводит или добавляет пары'));
     } else if(step===6){
       h=wkFrame(wkBig('Умножение: один чётный — всё чётное')+
-        wkHero(`<svg width="322" height="106" viewBox="0 0 322 106" style="display:block">
-          <g class="wv-pop"><rect x="10" y="16" width="92" height="70" rx="13" fill="rgba(127,209,160,.08)" stroke="${C.green}" stroke-width="2.4"/><text x="56" y="42" text-anchor="middle" font-size="12" fill="#9ec0a8">чётный</text><text x="56" y="70" text-anchor="middle" font-size="22" fill="${C.green}" font-weight="bold" font-family="Georgia,serif">2 · 4</text></g>
-          <g class="wv-pop2"><rect x="114" y="16" width="92" height="70" rx="13" fill="rgba(217,164,65,.12)" stroke="${C.gold}" stroke-width="2.4"/><text x="160" y="42" text-anchor="middle" font-size="12" fill="#d9c088">пары «размножаются»</text><text x="160" y="70" text-anchor="middle" font-size="24" fill="${C.gold}" font-weight="bold" font-family="Georgia,serif">= 8</text></g>
-          <text x="218" y="54" font-size="30">🎉</text>
-          <g class="wv-pop3"><rect x="240" y="16" width="74" height="70" rx="13" fill="rgba(143,209,168,.1)" stroke="${C.green}" stroke-width="2.4"/><text x="277" y="56" text-anchor="middle" font-size="17" fill="${C.green}" font-weight="bold">чёт!</text></g>
+        wkHero(`<svg width="318" height="120" viewBox="0 0 318 120" style="display:block">
+          <rect x="6" y="6" width="306" height="108" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="159" y="26" text-anchor="middle" font-size="13" fill="#9ec0a8">2 · 4 — две пары в каждом ряду</text>
+          ${[0,1].map(r=>[0,1,2,3].map(c=>`<circle class="n5pop" style="animation-delay:${((r*4+c)*0.05).toFixed(2)}s" cx="${60+c*30}" cy="${50+r*24}" r="10" fill="${r%2?'#7fd1ff':'#8fd1a8'}"/>`).join('')).join('')}
+          <g class="n5pop" style="animation-delay:.45s"><rect x="196" y="34" width="108" height="52" rx="13" fill="rgba(255,255,255,.05)" stroke="#ffd76a" stroke-width="2.6"/><text x="250" y="66" text-anchor="middle" font-size="24" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">= 8</text><text x="250" y="82" text-anchor="middle" font-size="11" fill="#9ec0a8">чётное</text></g>
         </svg>`)+
-        wkSml('2·4=8, 4·5=20, 6·9=54 — один чётный множитель решает всё'));
+        wkRow(pill('2·4=8 · 4·5=20 · 6·9=54', C.green,0.3))+
+        wkSml('пары «размножаются»: один чётный множитель делает произведение чётным'));
     } else if(step===7){
       h=wkFrame(wkBig('Все множители нечётные → нечёт')+
-        wkHero(`<svg width="322" height="120" viewBox="0 0 322 120" style="display:block">
-          <text x="161" y="18" text-anchor="middle" font-size="13" fill="#9ec0a8">клетки 3 × 3 = 9 — одна лишняя, как сирота</text>
-          ${[0,1,2,3,4,5,6,7].map(i=>{const r=Math.floor(i/3),c=i%3;return `<circle class="wv-pop" style="animation-delay:${(i*0.05).toFixed(2)}s" cx="${120+c*30}" cy="${34+r*24}" r="9" fill="rgba(127,209,160,.5)" stroke="${C.green}" stroke-width="1.6"/>`;}).join('')}
-          <circle class="wv-pop3" cx="278" cy="82" r="12" fill="rgba(232,106,90,.4)" stroke="${C.red}" stroke-width="2"/>
-          <text x="278" y="87" text-anchor="middle" font-size="12" fill="${C.red}" font-weight="bold">9</text>
-          <rect x="80" y="96" width="164" height="20" rx="10" fill="rgba(217,164,65,.1)" stroke="${C.gold}"/>
-          <text x="162" y="110" text-anchor="middle" font-size="12.5" fill="${C.gold}" font-weight="bold">3 · 3 = 9 — нечётное</text>
+        wkHero(`<svg width="318" height="130" viewBox="0 0 318 130" style="display:block">
+          <rect x="6" y="6" width="306" height="118" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="159" y="26" text-anchor="middle" font-size="13" fill="#9ec0a8">сетка 3 × 3 = 9 клеток</text>
+          ${[0,1,2].map(r=>[0,1,2].map(c=>`<circle class="n5pop" style="animation-delay:${((r*3+c)*0.05).toFixed(2)}s" cx="${60+c*30}" cy="${52+r*22}" r="9" fill="#8fd1a8"/>`).join('')).join('')}
+          <g class="n5pop" style="animation-delay:.5s"><circle cx="238" cy="74" r="16" fill="none" stroke="#ff8a7a" stroke-width="3"/><text x="238" y="80" text-anchor="middle" font-size="18" fill="#ff8a7a" font-weight="bold">1</text></g>
+          <g class="n5pop" style="animation-delay:.6s"><rect x="120" y="96" width="100" height="20" rx="10" fill="rgba(217,164,65,.12)" stroke="#ffd76a"/><text x="170" y="110" text-anchor="middle" font-size="13" fill="#ffd76a" font-weight="bold">одна клетка лишняя</text></g>
         </svg>`)+
-        wkSml('5·7=35 тоже нечётное: всегда остаётся одна лишняя клетка'));
+        wkRow(pill('3·3 = 9 · 5·7 = 35 — нечётные', C.red,0.3))+
+        wkSml('все клетки разбились на пары, кроме одной «сироты» в углу'));
     } else {
-      h=wkFrame(wkBig('Проверь себя 📝')+
-        wkHero(pairs(8,'z'))+
+      h=wkFrame(wkBig('Проверь себя')+
+        wkHero(pairs(8,{r:13,gx:32,gy:30,h:86}))+
         quiz(lk,st)+
-        wkSml('нечётных от 1 до 99 — ровно 50 (чётно) → сумма чётная; в 1·2·…·100 есть 2 → чётно. Жми «Понял! Проверю себя»!'));
+        wkSml('нечётных от 1 до 99 — 50 (чётно) → сумма чётная · в 1·2·…·100 есть 2 → чётно'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
@@ -2051,7 +2067,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW13T=visW13T;
   function visW13Act(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
-    if(act==='p') st.n=Math.min(16,(st.n==null?9:st.n)+1);
+    if(act==='p') st.n=Math.min(12,(st.n==null?9:st.n)+1);
     if(act==='m') st.n=Math.max(1,(st.n==null?9:st.n)-1);
     if(act==='nq'){ st.q=1; st.sel=null; }
     if(act==='rst') CHS[lk]={};
