@@ -1421,3 +1421,145 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW45Act=visW45Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===45){ window.ARH_LESSONS[i]=L45; break; } } })();
 })();
+/* ================= УРОК 43 · Обыкновенные дроби: складываем (v2, по Петерсону) ================= */
+(function(){
+  const L43 = {
+    id: 43, title: 'Обыкновенные дроби: складываем', ico: '🍕',
+    src: 'Математика · Начальная школа (Петерсон) · Доли и дроби', subj: 'math',
+    explain: [
+      'У Архимеда пицца — и её разрезали на 4 РАВНЫХ куска. Целая пицца — это все 4 куска на месте: вместе они снова образуют круг! Один друг съел 1 кусок, второй — 2. Сколько кусков съели вместе? Ответить помогут дроби.',
+      'Как учит Петерсон: чтобы получить дробь, целое делят на равные части, и каждая часть — доля. Дроби называют по долям: половина 1/2, треть 1/3, четверть 1/4. В дроби 3/4 знаменатель 4 говорит: целое разделили на 4 доли, числитель 3 — взяли 3 такие доли.',
+      'Складываем одинаковые доли: 1/4 + 2/4 = 3/4. Один кусок и два куска — вместе три куска из тех же четырёх. Знаменатель не меняется: пицца одна, куски одного размера — складываем только числители 1 + 2 = 3!',
+      'Пицца одна — значит, и знаменатель тот же: 4. А целая пицца — это 4/4: все четыре четвертинки на месте и образуют круг. Петерсон подсказывает: 2 четверти — это половина пиццы, а 4 четверти — вся пицца.',
+      'А если доли разные? Например, 1/2 + 1/4. Половинка и четвертинка — куски РАЗНОГО размера, складывать их напрямую нельзя. Нужно сначала нарезать пиццу одинаково — на одинаковые доли.',
+      'Секрет Петерсона — равные дроби: 1/2 и 2/4 — это ОДНА И ТА ЖЕ порция! Просто половинку разрезали пополам: кусков стало больше, но еды столько же. Доли мельче — значит, их больше: 2 четвертинки вместо 1 половинки.',
+      'Приводим к общему знаменателю: 1/2 = 2/4, значит 2/4 + 1/4 = 3/4. Общий знаменатель 4 — число, которое делится и на 2, и на 4 (это НОК). Получили 3/4, а 3/4 — это 0,75. Запомни: 3 куска из 4 — три четверти!',
+      'Целое — это тоже дробь: 1 = 4/4. Целая пицца — 4 четвертинки, собранные в круг. Поэтому 3/4 + 1 = 3/4 + 4/4 = 7/4 — это семь четвертинок: целая пицца и ещё 3 куска.',
+      'Проверь себя: 2/5 + 1/5 = ? Пицца разрезана на 5 кусков: берём 2 куска и добавляем 1 — получается 3 куска из пяти. А две половинки всегда соберутся в целый круг: 1/2 + 1/2 = 1!'
+    ],
+    check: { q: 'Сколько будет 2/5 + 1/5?', choices: ['3/5', '3/10', '2/10'], ans: 0,
+      exp: 'Знаменатели одинаковые: (2+1)/5 = 3/5.' },
+    tasks: [
+      { q: 'Сколько будет 1/4 + 2/4?', kind: 'unit', ans: 0.75, tol: 0.01,
+        hints: ['(1+2)/4 = 3/4.', '3/4 = 0,75.'], sol: '3/4 = 0,75.' },
+      { q: 'Сколько будет 1/2 + 1/4? (ответ десятичной дробью)', kind: 'unit', ans: 0.75, tol: 0.01,
+        hints: ['1/2 = 2/4.', '2/4 + 1/4 = 3/4.'], sol: '1/2 + 1/4 = 3/4 = 0,75.' }
+    ]
+  };
+  const C={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',cream:'#e8dcc8',red:'#e0523d'};
+  const rad=(d)=>d*Math.PI/180;
+  function wedge(cx,cy,r,a0,a1){
+    const x0=cx+r*Math.cos(rad(a0)), y0=cy+r*Math.sin(rad(a0));
+    const x1=cx+r*Math.cos(rad(a1)), y1=cy+r*Math.sin(rad(a1));
+    const large=(a1-a0)>180?1:0;
+    return `M${cx},${cy} L${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${large} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`;
+  }
+  /* Пицца ВСЕГДА из кусков, образующих круг (целая — тоже!). den кусков, hl «взятых» подсвечены. */
+  function pizza(den,hl,uid,opt){
+    const o=opt||{};
+    const s=o.s||150;
+    const pad=Math.max(10,s*0.11);
+    const W=s+2*pad, cx=W/2, cy=W/2;
+    const R=s/2-7, Rc=R-9;
+    const step=360/den, gapD=Math.min(2.4, Math.max(0.9, 8/den));
+    const hlN=Math.max(0,Math.min(den,hl==null?0:hl));
+    const whole=hlN===den;
+    const pr=Math.max(3,Math.min(6,Rc*0.42*Math.sin(rad(step/2))-1.5));
+    let s2='';
+    s2+=`<circle cx="${cx}" cy="${cy}" r="${R+1.5}" fill="#0e1812" stroke="#1e2f24" stroke-width="1.5"/>`;
+    for(let i=0;i<den;i++){
+      const a0=-90+i*step+gapD/2, a1=-90+(i+1)*step-gapD/2;
+      const on=hlN>0&&i<hlN;
+      const crustFill=on?'#f5b767':'#e9a14c';
+      const crustStroke=on?C.gold:'#b8782a';
+      const sw=on?3:1.6;
+      const mid=rad(-90+i*step+step/2);
+      s2+=`<g class="wv-pop" style="animation-delay:${(i*0.09).toFixed(2)}s">
+        <path d="${wedge(cx,cy,R,a0,a1)}" fill="${crustFill}" stroke="${crustStroke}" stroke-width="${sw}"/>
+        <path d="${wedge(cx,cy,Rc,a0+0.2,a1-0.2)}" fill="#fbc95f"/>
+        <circle cx="${(cx+Rc*0.52*Math.cos(mid)).toFixed(1)}" cy="${(cy+Rc*0.52*Math.sin(mid)).toFixed(1)}" r="${pr.toFixed(1)}" fill="#c9352a" stroke="#8e1f16" stroke-width="1.2"/>
+        <circle cx="${(cx+Rc*0.85*Math.cos(mid+rad(step*0.28))).toFixed(1)}" cy="${(cy+Rc*0.85*Math.sin(mid+rad(step*0.28))).toFixed(1)}" r="1.8" fill="#4f9a44"/>
+      </g>`;
+    }
+    if(whole&&den>=2&&den<=8){
+      s2+=`<circle cx="${cx}" cy="${cy}" r="${Math.max(8,R*0.16)}" fill="#c9352a" stroke="#8e1f16" stroke-width="1.4"/>`;
+    }
+    return `<svg width="${W}" height="${W}" viewBox="0 0 ${W} ${W}" style="display:block;margin:0 auto">${s2}</svg>`;
+  }
+  const sign=(t,c)=>`<span style="font-size:24px;color:${c||'#8fa08f'};font-weight:bold;padding:0 1px">${t}</span>`;
+  function chain(pizzas,signs){
+    let inner='';
+    pizzas.forEach((p,i)=>{
+      if(i>0) inner+=sign(signs[i-1]);
+      inner+=p;
+    });
+    return `<div class="wk-row" style="gap:3px">${inner}</div>`;
+  }
+  function visW43(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    let h='';
+    if(step===0){
+      h=wkFrame(wkBig('Пицца для двоих друзей 🍕')+
+        wkHero(pizza(4,4,'a',{s:150}))+
+        wkRow(wkChip('целая пицца = 4/4',C.gold),wkChip('4 куска образуют круг',C.green))+
+        wkAns('1 кусок + 2 куска = сколько вместе?',C.gold)+
+        wkSml('куски одного размера — их можно складывать! Листай, и дроби всё объяснят'));
+    } else if(step===1){
+      if(st.n==null) st.n=3;
+      h=wkFrame(wkBig('Дробь — часть целого')+
+        wkRow(wkChip('половина 1/2',C.blue),wkChip('треть 1/3',C.green),wkChip('четверть 1/4',C.gold))+
+        wkHero(pizza(4,st.n,'b',{s:150}))+
+        wkRow(wkPill(st.n+' из 4',C.gold))+
+        wkRow(wkBtn('1 кусок',`visW43Act('${lk}','s1')`),wkBtn('2 куска',`visW43Act('${lk}','s2')`),wkBtn('3 куска',`visW43Act('${lk}','s3')`),wkBtn('целая',`visW43Act('${lk}','s4')`))+
+        wkSml('знаменатель 4 — на сколько долей делили; числитель — сколько долей взяли'));
+    } else if(step===2){
+      h=wkFrame(wkBig('1/4 + 2/4 = 3/4')+
+        wkHero(chain([pizza(4,1,'c1',{s:74}),pizza(4,2,'c2',{s:74}),pizza(4,3,'c3',{s:74})],['+','=']))+
+        wkRow(wkPill('1 + 2 = 3',C.blue),wkPill('знаменатель 4 не меняется',C.gold))+
+        wkSml('1 кусок и 2 куска — вместе 3 куска из четырёх: складываем только числители'));
+    } else if(step===3){
+      h=wkFrame(wkBig('Целая пицца = 4/4')+
+        wkHero(pizza(4,4,'d',{s:158}))+
+        wkRow(wkPill('4/4 = 1',C.green),wkChip('2 четверти = половина',C.gold))+
+        wkAns('все четыре куска на месте — они образуют круг!',C.green)+
+        wkSml('знаменатель не меняется: куски одной пиццы, размер долей одинаковый'));
+    } else if(step===4){
+      h=wkFrame(wkBig('Разные доли — нельзя так складывать')+
+        wkHero(chain([pizza(2,1,'e1',{s:108}),pizza(4,1,'e2',{s:108})],['+']))+
+        wkRow(wkPill('1/2 + 1/4 ≠ 2/6!',C.red))+
+        wkSml('половинка и четвертинка — куски РАЗНОГО размера. Сначала нарежем одинаково!'));
+    } else if(step===5){
+      h=wkFrame(wkBig('Секрет: 1/2 = 2/4')+
+        wkHero(chain([pizza(2,1,'f1',{s:116}),pizza(4,2,'f2',{s:116})],['=']))+
+        wkRow(wkPill('1/2 = 2/4',C.green),wkChip('равные дроби (Петерсон)',C.gold))+
+        wkSml('разрезали половинку пополам — доли мельче, а порция та же самая'));
+    } else if(step===6){
+      h=wkFrame(wkBig('Приводим к общему знаменателю')+
+        wkHero(chain([pizza(4,2,'g1',{s:74}),pizza(4,1,'g2',{s:74}),pizza(4,3,'g3',{s:74})],['+','=']))+
+        wkRow(wkPill('1/2 = 2/4',C.blue),wkPill('2/4 + 1/4 = 3/4',C.gold),wkPill('3/4 = 0,75',C.green))+
+        wkSml('общий знаменатель 4 делится и на 2, и на 4: НОК(2, 4) = 4 — доли стали одинаковыми'));
+    } else if(step===7){
+      h=wkFrame(wkBig('Целое — это 4/4')+
+        wkHero(chain([pizza(4,4,'h1',{s:108}),pizza(4,3,'h2',{s:108})],['+']))+
+        wkRow(wkPill('1 = 4/4',C.green),wkPill('3/4 + 4/4 = 7/4',C.gold))+
+        wkSml('семь четвертинок: целая пицца (4 куска в круге) и ещё 3 куска'));
+    } else {
+      h=wkFrame(wkBig('Проверь себя: 2/5 + 1/5')+
+        wkHero(chain([pizza(5,2,'i1',{s:74}),pizza(5,1,'i2',{s:74}),pizza(5,3,'i3',{s:74})],['+','=']))+
+        wkRow(wkPill('2 + 1 = 3',C.blue),wkPill('2/5 + 1/5 = 3/5',C.gold))+
+        wkRow(wkPill('1/2 + 1/2 = 1',C.green),wkChip('две половинки — целый круг',C.gold))+
+        wkSml('готов? жми «Понял! Проверю себя» — там 2/5 + 1/5'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[43]=visW43;
+  function visW43Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const map={s1:1,s2:2,s3:3,s4:4};
+    if(map[act]!=null) st.n=map[act];
+    chRender(0);
+  }
+  window.visW43Act=visW43Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===43){ window.ARH_LESSONS[i]=L43; break; } } })();
+})();
