@@ -520,3 +520,430 @@ window.VISKW = window.VISKW || {};
   window.visW17Act=visW17Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===17){ window.ARH_LESSONS[i]=L17; break; } } })();
 })();
+
+/* ================= УРОК 24 · Цепочки сравнений ================= */
+(function(){
+  const L24 = {
+    id: 24, title: 'Цепочки сравнений', ico: '📏',
+    src: 'Логика · транзитивность · кто выше/тяжелее всех', subj: 'math',
+    explain: [
+      'Лесная линейка Архимеда: Лиса выше Зайца, а Волк выше Лисы. Можно ли узнать, кто выше всех, не измеряя? Можно! Сравнения складываются в цепочку: если Лиса выше Зайца, а Волк выше Лисы, то Волк выше и Зайца тоже.',
+      'Строим цепочку: запиши условия друг за другом — Лиса > Заяц и Волк > Лиса. Соединяем звенья: Волк > Лиса > Заяц. Сразу виден порядок: выше всех тот, кто стоит в цепочке первым, — Волк!',
+      'Это свойство называют транзитивностью: если A > B и B > C, то A > C. Оно работает для роста, массы, длины, возраста — для любых сравнений «больше/меньше». Промежуточное звено можно «выбросить»!',
+      'Весы работают так же: X легче Y, а Y легче Z. Значит, X < Y < Z — тяжелее всех Z, а легче всех X. Стрелка сравнения всегда указывает от более лёгкого к более тяжёлому.',
+      'Пиши всю цепочку одной строкой: Волк > Лиса > Заяц. Кто первый — самый высокий, кто последний — самый низкий. Порядок звеньев — это готовый ответ на вопрос «кто выше/ниже всех».',
+      'Четыре зверя: Медведь выше Волка, Волк выше Лисы, Лиса выше Зайца. Соединяем: Медведь > Волк > Лиса > Заяц. Медведь — самый высокий, Заяц — самый низкий. Длинная цепочка работает так же, как короткая!',
+      'А если данных не хватает? Лиса выше Зайца и Волк выше Зайца — кто выше: Лиса или Волк? Неизвестно! Мы знаем только, что оба выше Зайца. Отвечай ровно на то, что следует из цепочки, и не додумывай лишнего.',
+      'Сравнивать можно что угодно: Аня старше Бори, Боря старше Васи — старшая Аня. Дорога до школы длиннее дороги до парка, парк — дальше стадиона? Собери звенья — и ответ найдётся сам. Правило одно: звенья должны идти в одну сторону!',
+      'Проверь себя: X легче Y, а Y легче Z. Кто тяжелее всех? Собери цепочку X < Y < Z — и ответ готов. Вперёд, к проверке!'
+    ],
+    check: { q: 'X легче Y, а Y легче Z. Кто тяжелее всех?', choices: ['X', 'Y', 'Z'], ans: 2,
+      exp: 'X < Y < Z — тяжелее всех Z.' },
+    tasks: [
+      { q: 'A выше B, B выше C. Кто выше всех?', choices: ['A', 'B', 'C'], ans: 0, tol: 0,
+        hints: ['Цепочка: A > B > C.'], sol: 'A > B > C — выше всех A.', kind: 'choice' },
+      { q: 'A выше B, B выше C, C выше D. Кто ниже всех?', choices: ['A', 'B', 'C', 'D'], ans: 3, tol: 0,
+        hints: ['Цепочка: A > B > C > D.', 'Ниже всех — последний.'], sol: 'A > B > C > D — ниже всех D.', kind: 'choice' }
+    ]
+  };
+
+  const big=(t)=>`<div class="wv-big" style="font-size:22px">${t}</div>`;
+  const sml=(t)=>`<div class="wv-sml" style="max-width:330px">${t}</div>`;
+  const chip=(t,c)=>`<span class="wv-chip" style="border-color:${c||'#3d5c49'};color:#e8dcc8;font-size:14px">${t}</span>`;
+  const ans=(t,c)=>`<div class="wv-ans" style="font-size:20px;color:${c||'#8fd1a8'};font-weight:bold;font-family:Georgia,serif">${t}</div>`;
+  const kv=(t,c)=>`<span style="display:inline-block;padding:3px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-family:Georgia,serif;font-size:19px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+
+  // «башни» зверей: seq=[{e,t,h,c}]
+  function towers(seq,opts){
+    const o=opts||{};
+    const W=o.w||330, x0=14, bw=54, gap=(W-28-54*seq.length)/Math.max(1,seq.length-1);
+    const ground=o.ground||150, top=o.top||8;
+    let s='';
+    seq.forEach((it,i)=>{
+      const x=x0+i*(bw+gap);
+      s+=`<rect x="${x}" y="${ground-it.h}" width="${bw}" height="${it.h}" rx="12" fill="rgba(255,255,255,.05)" stroke="${it.c}" stroke-width="2.4"/>`;
+      s+=`<text x="${x+bw/2}" y="${ground-it.h-8}" text-anchor="middle" font-size="22">${it.e}</text>`;
+      s+=`<text x="${x+bw/2}" y="${ground+16}" text-anchor="middle" font-size="12" fill="${it.c}" font-weight="bold">${it.t}</text>`;
+      if(i<seq.length-1){
+        s+=`<text x="${x+bw+(gap)/2}" y="${ground-it.h-14}" text-anchor="middle" font-size="22" fill="#8fa08f" font-weight="bold">&gt;</text>`;
+      }
+    });
+    s+=`<line x1="${x0-2}" y1="${ground+4}" x2="${x0+seq.length*bw+(seq.length-1)*gap+4}" y2="${ground+4}" stroke="#3d5c49" stroke-width="2"/>`;
+    return `<svg width="${W}" height="${ground+26}" viewBox="0 0 ${W} ${ground+26}" style="display:block;margin:0 auto">${s}</svg>`;
+  }
+  function chainArrows(items,opts){ // горизонтальные карточки A > B > C
+    const o=opts||{};
+    const W=o.w||322;
+    const n=items.length;
+    const cw=Math.min(96,(W-28-(n-1)*34)/n);
+    let s='';
+    items.forEach((it,i)=>{
+      const x=14+i*(cw+34);
+      const hl=o.hl&&o.hl.indexOf(i)>=0;
+      s+=`<rect x="${x}" y="10" width="${cw}" height="64" rx="13" fill="${hl?'rgba(217,164,65,.12)':'rgba(255,255,255,.05)'}" stroke="${hl?'#ffd76a':'#3d5c49'}" stroke-width="${hl?2.4:1.6}"/>`;
+      s+=`<text x="${x+cw/2}" y="36" text-anchor="middle" font-size="20" fill="${hl?'#ffd76a':'#cfe0cf'}" font-weight="bold">${it.a}</text>`;
+      s+=`<text x="${x+cw/2}" y="58" text-anchor="middle" font-size="11.5" fill="#9ec0a8">${it.t}</text>`;
+      if(i<n-1){
+        const ax=x+cw+2;
+        s+=`<text x="${ax+15}" y="50" text-anchor="middle" font-size="22" fill="#ff8a7a" font-weight="bold">&gt;</text>`;
+        if(o.hlStep&&o.hlStep[i]){ s+=`<circle cx="${ax+15}" cy="18" r="10" fill="#1d3a2c"/><text x="${ax+15}" y="22" text-anchor="middle" font-size="11" fill="#8fd1a8" font-weight="bold">${o.hlStep[i]}</text>`; }
+      }
+    });
+    return `<svg width="${W}" height="86" viewBox="0 0 ${W} 86" style="display:block;margin:0 auto">${s}</svg>`;
+  }
+
+  function visW24(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const btns=(...b)=>`<div class="wv-row" style="margin-top:2px">${b.join('')}</div>`;
+    const btn=(t,act)=>`<button class="hint-btn" onclick="visW24Act('${lk}','${act}')">${t}</button>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        ${big('Лесная линейка Архимеда 🐾')}
+        ${towers([{e:'🐰',t:'Заяц',h:52,c:'#c9a06a'},{e:'🦊',t:'Лиса',h:82,c:'#e08a4a'},{e:'🐺',t:'Волк',h:116,c:'#7f9bb8'}],{ground:120,top:6})}
+        <div class="wv-row">${kv('Лиса > Заяц','#ffd76a')}${kv('Волк > Лиса','#7fd1ff')}</div>
+        <div class="wv-pop3 wv-ans" style="color:#ffd76a">кто выше всех — сразу видно после сборки цепочки?</div>
+        ${sml('известно только два сравнения — но они уже складываются в ответ. листай!')}
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        ${big('Собираем цепочку')}
+        <div class="wv-row">
+          ${kv('Лиса > Заяц','#ffd76a')}<span class="wv-sml" style="margin:0">+</span>${kv('Волк > Лиса','#7fd1ff')}
+        </div>
+        ${chainArrows([{a:'Волк',t:'🐺'},{a:'Лиса',t:'🦊'},{a:'Заяц',t:'🐰'}],{hl:[0]})}
+        ${ans('Волк > Лиса > Заяц — выше всех Волк!','#8fd1a8')}
+        ${sml('сравнения встают в ряд, как звенья цепи: середина соединяет края')}
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        ${big('Секрет — транзитивность')}
+        ${chainArrows([{a:'A',t:'больше'},{a:'B',t:'середина'},{a:'C',t:'меньше'}],{hlStep:['1','2']})}
+        <svg width="300" height="66" viewBox="0 0 300 66" style="display:block;margin:0 auto">
+          <rect x="8" y="6" width="284" height="54" rx="13" fill="rgba(143,209,168,.07)" stroke="#8fd1a8" stroke-width="1.8"/>
+          <text x="150" y="30" text-anchor="middle" font-size="16" fill="#8fd1a8" font-weight="bold">если A &gt; B и B &gt; C, то A &gt; C</text>
+          <text x="150" y="50" text-anchor="middle" font-size="12" fill="#9ec0a8">промежуточное звено можно «выбросить»</text>
+        </svg>
+        <div class="wv-row">${chip('рост','rgba(127,209,255,.5)')}${chip('масса','rgba(127,209,160,.5)')}${chip('длина','rgba(217,164,65,.5)')}${chip('возраст','rgba(232,160,216,.5)')}</div>
+        ${sml('правило работает для любых сравнений «больше/меньше»!')}
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        ${big('Весы: X, Y и Z')}
+        <svg width="320" height="120" viewBox="0 0 320 120" style="display:block;margin:0 auto">
+          <circle cx="160" cy="26" r="14" fill="rgba(255,255,255,.07)" stroke="#cbb89a" stroke-width="2"/>
+          <line x1="160" y1="40" x2="160" y2="64" stroke="#cbb89a" stroke-width="2"/>
+          <line x1="70" y1="66" x2="250" y2="66" stroke="#cbb89a" stroke-width="3"/>
+          <line x1="70" y1="66" x2="70" y2="84" stroke="#cbb89a" stroke-width="3"/>
+          <line x1="250" y1="66" x2="250" y2="84" stroke="#cbb89a" stroke-width="3"/>
+          <rect x="46" y="84" width="48" height="26" rx="7" fill="rgba(255,255,255,.05)" stroke="#7fd1ff" stroke-width="2"/>
+          <text x="70" y="101" text-anchor="middle" font-size="14" fill="#7fd1ff" font-weight="bold">X</text>
+          <rect x="226" y="84" width="48" height="26" rx="7" fill="rgba(255,255,255,.05)" stroke="#ffd76a" stroke-width="2"/>
+          <text x="250" y="101" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">Z</text>
+          <text x="160" y="112" text-anchor="middle" font-size="11" fill="#8fa08f">X легче Y · Y легче Z</text>
+        </svg>
+        <div class="wv-row">${kv('X < Y < Z','#ffd76a')}</div>
+        ${ans('тяжелее всех — Z, легче всех — X','#8fd1a8')}
+        ${sml('стрелка всегда указывает от лёгкого к тяжёлому — идём по ней до конца')}
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        ${big('Цепочка одной строкой')}
+        ${chainArrows([{a:'Волк',t:'🐺'},{a:'Лиса',t:'🦊'},{a:'Заяц',t:'🐰'}],{hl:[0,2]})}
+        <div class="wv-row">
+          <span class="wv-chip" style="border-color:#ffd76a;color:#ffd76a">первый — выше всех</span>
+          <span class="wv-chip" style="border-color:#8fd1a8;color:#8fd1a8">последний — ниже всех</span>
+        </div>
+        ${sml('кто в цепочке первый — самый высокий; кто последний — самый низкий')}
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        ${big('Четыре зверя по росту')}
+        ${towers([{e:'🐻',t:'Медведь',h:128,c:'#b98a5a'},{e:'🐺',t:'Волк',h:96,c:'#7f9bb8'},{e:'🦊',t:'Лиса',h:70,c:'#e08a4a'},{e:'🐰',t:'Заяц',h:46,c:'#c9a06a'}],{ground:150})}
+        ${ans('Медведь > Волк > Лиса > Заяц','#8fd1a8')}
+        ${sml('длинная цепочка работает так же, как короткая: звено за звеном')}
+      </div>`;
+    } else if(step===6){
+      // данных не хватает — интерактив: добавить условие
+      if(st.mode==null) st.mode=0;
+      h=`<div class="wv-col">
+        ${big('Данных не хватает?')}
+        ${towers([{e:'🦊',t:'Лиса',h:70,c:'#e08a4a'},{e:'🐰',t:'Заяц',h:46,c:'#c9a06a'}],{ground:96,top:10})}
+        <div class="wv-row">${kv('Лиса > Заяц','#ffd76a')}${kv('Волк > Заяц','#7fd1ff')}</div>
+        ${st.mode===0
+          ? `<svg width="300" height="54" viewBox="0 0 300 54" style="display:block;margin:0 auto"><rect x="8" y="4" width="284" height="46" rx="12" fill="rgba(232,106,90,.07)" stroke="#b0635a"/><text x="150" y="31" text-anchor="middle" font-size="15" fill="#ffcfc2">кто выше: Лиса или Волк? пока не знаем!</text></svg>
+             ${btns(btn('➕ добавить: Волк выше Лисы','w'))}`
+          : `<div class="wv-row">${chainArrows([{a:'Волк',t:'🐺'},{a:'Лиса',t:'🦊'},{a:'Заяц',t:'🐰'}],{})}</div>
+             ${ans('теперь ясно: Волк выше Лисы и оба выше Зайца!','#8fd1a8')}
+             ${btns(btn('↺ сброс','r'))}`}
+        ${sml('если данных не хватает — отвечай только на то, что следует из цепочки')}
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        ${big('Любые величины — те же звенья')}
+        ${chainArrows([{a:'Аня',t:'старше'},{a:'Боря',t:'средний'},{a:'Вася',t:'младше'}],{hl:[0]})}
+        <svg width="300" height="58" viewBox="0 0 300 58" style="display:block;margin:0 auto">
+          <rect x="8" y="6" width="284" height="46" rx="12" fill="rgba(127,209,255,.06)" stroke="#7fd1ff" stroke-width="1.6"/>
+          <text x="150" y="26" text-anchor="middle" font-size="14.5" fill="#cfe0cf">Аня старше Бори · Боря старше Васи</text>
+          <text x="150" y="45" text-anchor="middle" font-size="14" fill="#7fd1ff" font-weight="bold">Аня > Боря > Вася → старшая Аня</text>
+        </svg>
+        <div class="wv-row">${chip('старше/младше','rgba(127,209,255,.5)')}${chip('длиннее/короче','rgba(127,209,160,.5)')}${chip('быстрее/медленнее','rgba(217,164,65,.5)')}</div>
+        ${sml('главное — все звенья должны смотреть в одну сторону!')}
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        ${big('Проверь себя')}
+        ${chainArrows([{a:'X',t:'легче'},{a:'Y',t:'средний'},{a:'Z',t:'тяжелее'}],{})}
+        <div class="wv-row">${kv('X легче Y','#7fd1ff')}${kv('Y легче Z','#7fd1ff')}</div>
+        <div class="wv-pulse" style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 14px;font-size:18px;color:#ffd76a;font-family:Georgia,serif">кто тяжелее всех?</div>
+        ${sml('собери цепочку X < Y < Z — и ответ готов!')}
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.VISKW[24]=visW24;
+  function visW24Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='w') st.mode=1;
+    if(act==='r') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW24Act=visW24Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===24){ window.ARH_LESSONS[i]=L24; break; } } })();
+})();
+
+/* ================= УРОК 45 · НОД и НОК ================= */
+(function(){
+  const L45 = {
+    id: 45, title: 'НОД и НОК', ico: '🔗',
+    src: 'Математика · 6 класс · Делимость: НОД и НОК', subj: 'math',
+    explain: [
+      'Мастерская Архимеда: два задания. Первое — застелить пол 24×36 квадратной плиткой одного размера, самой большой из возможных. Второе — два автобуса: один приезжает каждые 4 минуты, другой каждые 6 — когда они снова встретятся на остановке? Для таких задач нужны два инструмента: НОД и НОК.',
+      'НОД — наибольший общий делитель: самое большое число, на которое делятся оба числа. Делители 12: 1, 2, 3, 4, 6, 12. Делители 18: 1, 2, 3, 6, 9, 18. Общие: 1, 2, 3, 6. Наибольший из общих — 6. Значит, НОД(12, 18) = 6.',
+      'Находим НОД перебором: выпиши все делители каждого числа, найди общие и возьми наибольший. Для 24 и 36: общие делители 1, 2, 3, 4, 6, 12 — наибольший 12. НОД(24, 36) = 12. Это и есть сторона самой большой квадратной плитки!',
+      'НОК — наименьшее общее кратное: самое маленькое число, которое делится на оба числа. Кратные 6: 6, 12, 18, 24, 30… Кратные 8: 8, 16, 24, 32… Первое общее — 24. Значит, НОК(6, 8) = 24.',
+      'Автобусы снова вместе! Один приезжает каждые 4 минуты: 4, 8, 12, 16… Другой — каждые 6: 6, 12, 18… Первый раз они встретятся через 12 минут: НОК(4, 6) = 12. Наименьшее общее кратное отвечает на вопрос «когда совпадёт».',
+      'Быстрый способ — разложение на простые множители. 24 = 2 · 2 · 2 · 3 = 2³·3, а 36 = 2 · 2 · 3 · 3 = 2²·3². НОД берёт общие множители с наименьшей степенью: 2²·3 = 12. НОК берёт ВСЕ множители с наибольшей степенью: 2³·3² = 72.',
+      'Красивая связь: НОД(24, 36) · НОК(24, 36) = 12 · 72 = 864 — и 24 · 36 = 864! Произведение НОД и НОК двух чисел равно произведению самих чисел. Удобная проверка!',
+      'НОД и НОК в деле. Плитка: пол 24 на 36, плитка 12×12 — кладём 2 по ширине и 3 по высоте: ровно 6 плиток! Автобусы: 4 и 6 минут → вместе через НОК(4,6) = 12 минут. Один режет на крупные равные части, другой ищет момент совпадения.',
+      'И дроби они чинят! Сократить 18/24: делим верх и низ на НОД(18, 24) = 6 → получаем 3/4. Привести к общему знаменателю 1/4 и 1/6: берём НОК(4, 6) = 12 → 3/12 и 2/12. НОД и НОК — главные помощники дробей!'
+    ],
+    check: { q: 'Найди НОД чисел 12 и 18.', choices: ['3', '6', '9', '36'], ans: 1,
+      exp: 'Общие делители 1,2,3,6 — наибольший 6.' },
+    tasks: [
+      { q: 'Найди НОД чисел 24 и 36.', kind: 'unit', ans: 12, tol: 0,
+        hints: ['24 = 2³·3, 36 = 2²·3².', 'Общее: 2²·3 = 12.'], sol: 'НОД(24,36) = 12.' },
+      { q: 'Найди НОК чисел 4 и 6.', kind: 'unit', ans: 12, tol: 0,
+        hints: ['Кратные 4: 4,8,12…', 'Кратные 6: 6,12…', 'Первое общее — 12.'], sol: 'НОК(4,6) = 12.' }
+    ]
+  };
+
+  const big=(t)=>`<div class="wv-big" style="font-size:22px">${t}</div>`;
+  const sml=(t)=>`<div class="wv-sml" style="max-width:330px">${t}</div>`;
+  const chip=(t,c)=>`<span class="wv-chip" style="border-color:${c||'#3d5c49'};color:#e8dcc8;font-size:14px">${t}</span>`;
+  const ans=(t,c)=>`<div class="wv-ans" style="font-size:20px;color:${c||'#8fd1a8'};font-weight:bold;font-family:Georgia,serif">${t}</div>`;
+  const kv=(t,c)=>`<span style="display:inline-block;padding:3px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-family:Georgia,serif;font-size:19px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+  const divs=(n)=>Array.from({length:n},(_,i)=>i+1).filter(d=>n%d===0);
+  function divRow(n,color,label){
+    const ds=divs(n);
+    const cells=ds.map((d,i)=>`<span class="wv-pop" style="animation-delay:${(i*0.07).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:30px;margin:2px;border-radius:8px;background:rgba(255,255,255,.05);border:1.5px solid ${color};font-size:15px;color:#e8dcc8;font-family:Georgia,serif">${d}</span>`).join('');
+    return `<div style="display:flex;flex-direction:column;align-items:center"><div style="font-size:12px;color:${color};margin-bottom:2px">${label}</div><div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:250px">${cells}</div></div>`;
+  }
+  function lane(a,upTo,color,cy,mark,uid){
+    let s='';
+    for(let m=1;a*m<=upTo;m++){
+      const x=14+a*m*(288/upTo);
+      const isMark=mark.indexOf(a*m)>=0;
+      s+=`<circle cx="${x.toFixed(1)}" cy="${cy}" r="${isMark?9:7}" fill="${isMark?'rgba(217,164,65,.25)':'rgba(255,255,255,.06)'}" stroke="${isMark?'#ffd76a':color}" stroke-width="${isMark?2.6:1.8}"/>`;
+      if(isMark) s+=`<text x="${x.toFixed(1)}" y="${cy-13}" text-anchor="middle" font-size="11" fill="#ffd76a" font-weight="bold">${a*m}</text>`;
+    }
+    s+=`<text x="10" y="${cy+4}" font-size="13" fill="${color}" font-weight="bold">${a}·</text>`;
+    return s;
+  }
+  function ladder(n,cx,color,top){
+    // лесенка деления на простые
+    const steps=[]; let x=n;
+    for(let d=2;d*d<=x||x>1;d++){
+      while(x%d===0){ steps.push([x,d]); x/=d; }
+      if(x===1) break;
+    }
+    if(x>1&&x!==n) steps.push([x,x]);
+    let s='';
+    steps.forEach((st,i)=>{
+      const y=top+i*30;
+      const cur=st[0], d=st[1], nx=cur/d;
+      s+=`<rect x="${cx-88}" y="${y-16}" width="176" height="26" rx="9" fill="rgba(255,255,255,.04)" stroke="${color}" stroke-width="1.4"/>`;
+      s+=`<text x="${cx-66}" y="${y+1}" text-anchor="middle" font-size="15" fill="#fff" font-family="Georgia,serif">${cur}</text>`;
+      s+=`<text x="${cx-30}" y="${y+1}" text-anchor="middle" font-size="13" fill="#ffd76a">÷ ${d}</text>`;
+      s+=`<text x="${cx+4}" y="${y+1}" text-anchor="middle" font-size="10" fill="#8fa08f">→</text>`;
+      s+=`<text x="${cx+44}" y="${y+1}" text-anchor="middle" font-size="15" fill="${color}" font-weight="bold" font-family="Georgia,serif">${nx}</text>`;
+    });
+    return s;
+  }
+
+  function visW45(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const btns=(...b)=>`<div class="wv-row" style="margin-top:2px">${b.join('')}</div>`;
+    const btn=(t,act)=>`<button class="hint-btn" onclick="visW45Act('${lk}','${act}')">${t}</button>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        ${big('Мастерская Архимеда 🔧')}
+        <svg width="320" height="150" viewBox="0 0 320 150" style="display:block;margin:0 auto">
+          <rect x="8" y="10" width="146" height="130" rx="13" fill="rgba(127,209,255,.05)" stroke="#7fd1ff" stroke-width="1.8"/>
+          <text x="81" y="32" text-anchor="middle" font-size="13" fill="#9fc5e8">задание 1 · плитка</text>
+          ${[0,1,2,3,4,5].map(i=>{const r=Math.floor(i/2),c2=i%2; return `<rect x="${26+c2*56}" y="${44+r*40}" width="48" height="32" rx="6" fill="rgba(255,255,255,.05)" stroke="#3d5c49" stroke-width="1.3"/><text x="${50+c2*56}" y="${63+r*40}" text-anchor="middle" font-size="12" fill="#9ec0a8">?</text>`;}).join('')}
+          <text x="81" y="136" text-anchor="middle" font-size="12" fill="#7fd1ff">пол 24 × 36</text>
+          <rect x="166" y="10" width="146" height="130" rx="13" fill="rgba(217,164,65,.05)" stroke="#d9a441" stroke-width="1.8"/>
+          <text x="239" y="32" text-anchor="middle" font-size="13" fill="#d9c088">задание 2 · автобусы</text>
+          <circle cx="239" cy="72" r="26" fill="none" stroke="#ffd76a" stroke-width="5"/>
+          <circle cx="239" cy="72" r="14" fill="none" stroke="#ffd76a" stroke-width="2"/>
+          <text x="239" y="76" text-anchor="middle" font-size="12" fill="#ffd76a">4</text>
+          <circle cx="290" cy="120" r="0" fill="none"/>
+          <circle cx="196" cy="114" r="16" fill="none" stroke="#7fd1ff" stroke-width="4"/>
+          <text x="196" y="119" text-anchor="middle" font-size="10" fill="#7fd1ff">6</text>
+          <text x="239" y="132" text-anchor="middle" font-size="11" fill="#d9c088">4 и 6 минут</text>
+        </svg>
+        <div class="wv-row">${chip('НОД — режет на равные части','rgba(127,209,255,.5)')}${chip('НОК — ищет совпадение','rgba(217,164,65,.5)')}</div>
+        ${sml('два инструмента на два вопроса: «какой самый большой общий кусок?» и «когда снова совпадёт?»')}
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        ${big('НОД(12, 18) = ?')}
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+          ${divRow(12,'#7fd1ff','делители 12')}
+          ${divRow(18,'#8fd1a8','делители 18')}
+        </div>
+        <svg width="320" height="86" viewBox="0 0 320 86" style="display:block;margin:0 auto">
+          <circle cx="108" cy="46" r="44" fill="rgba(127,209,255,.07)" stroke="#7fd1ff" stroke-width="1.6"/>
+          <circle cx="212" cy="46" r="44" fill="rgba(143,209,168,.07)" stroke="#8fd1a8" stroke-width="1.6"/>
+          <text x="150" y="40" text-anchor="middle" font-size="12" fill="#cfe0cf">общие</text>
+          <text x="150" y="56" text-anchor="middle" font-size="12" fill="#ffd76a" font-weight="bold">1, 2, 3, 6</text>
+          <text x="58" y="20" text-anchor="middle" font-size="11" fill="#7fd1ff">4, 12</text>
+          <text x="242" y="20" text-anchor="middle" font-size="11" fill="#8fd1a8">9, 18</text>
+        </svg>
+        ${ans('НОД(12, 18) = 6 — самый большой общий делитель','#8fd1a8')}
+        ${sml('общие делители 1, 2, 3, 6 — берём наибольший: 6')}
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        ${big('Перебор: НОД(24, 36)')}
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+          ${divRow(24,'#7fd1ff','делители 24')}
+          ${divRow(36,'#8fd1a8','делители 36')}
+        </div>
+        <svg width="320" height="72" viewBox="0 0 320 72" style="display:block;margin:0 auto">
+          <rect x="8" y="6" width="304" height="60" rx="13" fill="rgba(217,164,65,.07)" stroke="#d9a441" stroke-width="1.8"/>
+          <text x="160" y="30" text-anchor="middle" font-size="14.5" fill="#ffd76a">общие: 1, 2, 3, 4, 6, 12</text>
+          <text x="160" y="52" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold" font-family="Georgia,serif">наибольший → НОД(24, 36) = <tspan fill="#ffd76a">12</tspan></text>
+        </svg>
+        ${ans('сторона самой большой квадратной плитки — 12!','#8fd1a8')}
+        ${sml('перебор всегда работает: делители → общие → наибольший')}
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        ${big('НОК: когда числа «встретятся»')}
+        <svg width="320" height="96" viewBox="0 0 320 96" style="display:block;margin:0 auto">
+          <text x="6" y="24" font-size="12" fill="#8fa08f">кратные 6:</text>
+          ${lane(6,24,'#7fd1ff',28,[24],'a')}
+          <text x="6" y="58" font-size="12" fill="#8fa08f">кратные 8:</text>
+          ${lane(8,24,'#8fd1a8',62,[24],'b')}
+          <rect x="60" y="70" width="200" height="22" rx="11" fill="rgba(217,164,65,.12)" stroke="#d9a441"/>
+          <text x="160" y="85" text-anchor="middle" font-size="13" fill="#ffd76a" font-weight="bold">первое общее — 24!</text>
+        </svg>
+        <div class="wv-row">${chip('кратные 6: 6, 12, 18, 24…','rgba(127,209,255,.5)')}${chip('кратные 8: 8, 16, 24…','rgba(127,209,160,.5)')}</div>
+        ${ans('НОК(6, 8) = 24','#ffd76a')}
+        ${sml('НОК — наименьшее общее кратное: первое число, кратное обоим')}
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        ${big('Автобусы: 4 и 6 минут 🚌')}
+        <svg width="320" height="96" viewBox="0 0 320 96" style="display:block;margin:0 auto">
+          <text x="6" y="24" font-size="12" fill="#8fa08f">автобус А (4 мин):</text>
+          ${lane(4,12,'#7fd1ff',28,[12],'c')}
+          <text x="6" y="58" font-size="12" fill="#8fa08f">автобус Б (6 мин):</text>
+          ${lane(6,12,'#8fd1a8',62,[12],'d')}
+        </svg>
+        <div class="wv-row">${chip('4: 4, 8, 12…','rgba(127,209,255,.5)')}${chip('6: 6, 12…','rgba(127,209,160,.5)')}</div>
+        ${ans('встретятся через НОК(4, 6) = 12 минут!','#ffd76a')}
+        ${sml('наименьшее общее кратное — ответ на вопрос «когда снова совпадёт»')}
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        ${big('Разложение на простые')}
+        <svg width="330" height="210" viewBox="0 0 330 210" style="display:block;margin:0 auto">
+          <text x="90" y="20" text-anchor="middle" font-size="13" fill="#7fd1ff" font-weight="bold">24 = 2³ · 3</text>
+          ${ladder(24,90,'#7fd1ff',34)}
+          <text x="240" y="20" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">36 = 2² · 3²</text>
+          ${ladder(36,240,'#8fd1a8',34)}
+        </svg>
+        <div class="wv-row">
+          <span class="wv-chip" style="border-color:#4c8a5a;color:#8fd1a8">НОД: общие с меньшей степенью 2²·3 = 12</span>
+          <span class="wv-chip" style="border-color:#d9a441;color:#ffd76a">НОК: все с большей степенью 2³·3² = 72</span>
+        </div>
+        ${ans('НОД(24,36)=12 · НОК(24,36)=72','#8fd1a8')}
+        ${sml('общие множители — в НОД, все множители — в НОК')}
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        ${big('Волшебная связь')}
+        <svg width="320" height="130" viewBox="0 0 320 130" style="display:block;margin:0 auto">
+          <rect x="8" y="8" width="304" height="114" rx="14" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <rect x="24" y="22" width="88" height="44" rx="10" fill="rgba(143,209,168,.1)" stroke="#8fd1a8"/>
+          <text x="68" y="40" text-anchor="middle" font-size="11" fill="#9ec0a8">НОД(24,36)</text>
+          <text x="68" y="59" text-anchor="middle" font-size="18" fill="#8fd1a8" font-weight="bold">12</text>
+          <text x="118" y="52" font-size="20" fill="#8fa08f">·</text>
+          <rect x="128" y="22" width="88" height="44" rx="10" fill="rgba(217,164,65,.1)" stroke="#d9a441"/>
+          <text x="172" y="40" text-anchor="middle" font-size="11" fill="#d9c088">НОК(24,36)</text>
+          <text x="172" y="59" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">72</text>
+          <text x="222" y="52" font-size="20" fill="#8fa08f">=</text>
+          <text x="282" y="52" text-anchor="middle" font-size="17" fill="#fff" font-weight="bold" font-family="Georgia,serif">864</text>
+          <text x="160" y="92" text-anchor="middle" font-size="14" fill="#cfe0cf">и 24 · 36 = 864 тоже!</text>
+          <text x="160" y="112" text-anchor="middle" font-size="12.5" fill="#ffd76a">НОД · НОК = a · b</text>
+        </svg>
+        ${sml('перемножь НОД и НОК — получишь произведение самих чисел. удобная проверка!')}
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        ${big('НОД и НОК в деле')}
+        <svg width="320" height="150" viewBox="0 0 320 150" style="display:block;margin:0 auto">
+          <text x="90" y="18" text-anchor="middle" font-size="13" fill="#7fd1ff" font-weight="bold">плитка 12×12 для пола 24×36</text>
+          ${[0,1,2,3,4,5].map(i=>{const r=Math.floor(i/2),c2=i%2; return `<rect x="${24+c2*72}" y="${28+r*46}" width="64" height="38" rx="8" fill="rgba(127,209,255,.08)" stroke="#7fd1ff" stroke-width="1.8"/><text x="${56+c2*72}" y="${51+r*46}" text-anchor="middle" font-size="10.5" fill="#7fd1ff">12</text>`;}).join('')}
+          <text x="90" y="118" text-anchor="middle" font-size="11.5" fill="#9fc5e8">(24:12)·(36:12) = 2·3 = 6 плиток</text>
+          <text x="246" y="18" text-anchor="middle" font-size="13" fill="#d9a441" font-weight="bold">автобусы 4 и 6 мин</text>
+          <line x1="180" y1="60" x2="300" y2="60" stroke="#3d5c49" stroke-width="2"/>
+          ${[4,8,12].map(m=>`<circle cx="${168+m*11}" cy="60" r="6" fill="rgba(127,209,255,.2)" stroke="#7fd1ff" stroke-width="1.8"/>`).join('')}
+          ${[6,12].map(m=>`<circle cx="${168+m*11}" cy="86" r="6" fill="rgba(143,209,168,.2)" stroke="#8fd1a8" stroke-width="1.8"/>`).join('')}
+          <circle cx="300" cy="60" r="10" fill="rgba(217,164,65,.25)" stroke="#ffd76a" stroke-width="2.4"/>
+          <circle cx="300" cy="86" r="10" fill="rgba(217,164,65,.25)" stroke="#ffd76a" stroke-width="2.4"/>
+          <text x="300" y="64" text-anchor="middle" font-size="11" fill="#ffd76a" font-weight="bold">12</text>
+          <text x="300" y="90" text-anchor="middle" font-size="11" fill="#ffd76a" font-weight="bold">12</text>
+          <text x="240" y="118" text-anchor="middle" font-size="11.5" fill="#d9c088">вместе через 12 минут</text>
+        </svg>
+        ${sml('НОД нарезает пол на 6 одинаковых плиток, НОК сводит автобусы в 12-ю минуту')}
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        ${big('НОД и НОК чинят дроби')}
+        <svg width="320" height="120" viewBox="0 0 320 120" style="display:block;margin:0 auto">
+          <text x="160" y="16" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">сокращаем 18/24 на НОД = 6</text>
+          ${[0,1,2,3,4,5,6,7].map(i=>`<rect x="${14+i*19}" y="26" width="16" height="22" rx="3" fill="${i<6?'#e0523d':'rgba(255,255,255,.06)'}" stroke="${i<6?'#8f2f22':'#3d5c49'}" stroke-width="1"/>`).join('')}
+          <text x="150" y="66" text-anchor="middle" font-size="13" fill="#cfe0cf">↓</text>
+          ${[0,1,2,3].map(i=>`<rect x="${62+i*52}" y="74" width="44" height="30" rx="6" fill="${i<3?'#8fd1a8':'rgba(255,255,255,.06)'}" stroke="${i<3?'#3d7a55':'#3d5c49'}" stroke-width="1.2"/>`).join('')}
+          <text x="160" y="93" text-anchor="middle" font-size="10.5" fill="#8fd1a8">3/4</text>
+          <text x="160" y="112" text-anchor="middle" font-size="12" fill="#9ec0a8">18:6 = 3 · 24:6 = 4</text>
+        </svg>
+        <div class="wv-row">${chip('1/4 + 1/6: НОК(4,6)=12 → 3/12 + 2/12','rgba(217,164,65,.5)')}</div>
+        ${ans('НОД — сокращать дроби, НОК — общий знаменатель','#ffd76a')}
+        ${sml('готов? теперь проверь себя: НОД(12, 18) = ?')}
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.VISKW[45]=visW45;
+  function visW45Act(lk,act){ chRender(0); }
+  window.visW45Act=visW45Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===45){ window.ARH_LESSONS[i]=L45; break; } } })();
+})();
