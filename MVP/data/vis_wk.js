@@ -1083,21 +1083,35 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===43){ window.ARH_LESSONS[i]=L43; break; } } })();
 })();
 
-/* ================= УРОК 20 · Секрет умножения на 11 (v3) ================= */
+/* ================= УРОК 20 · Секрет умножения на 11 (v6) ================= */
 (function(){
+  if(!window.__wk20v6css){
+    window.__wk20v6css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .k6in{animation:k6In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes k6In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .k6pop{animation:k6Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k6Pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .k6float{animation:k6Float 1.5s ease-in-out infinite;}'+
+      '@keyframes k6Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}'+
+      '#lvis .k6flow{stroke-dasharray:8 6;animation:k6Flow .8s linear infinite;}'+
+      '@keyframes k6Flow{to{stroke-dashoffset:-28}}';
+    document.head.appendChild(st);
+  }
   const L20 = {
-    id: 20, title: 'Секрет умножения на 11', ico: '✖️',
+    id: 20, title: 'Секрет умножения на 11', ico: '🚂',
     src: 'Математика · Устный счёт · Умножение на 11', subj: 'math',
     explain: [
-      'Магический поезд Архимеда: как мгновенно посчитать 45 · 11? Обычным столбиком — долго, а есть красивый устный фокус! Это приём быстрого устного счёта. Секрет простой — 11 = 10 + 1.',
-      'Фокус: берём двузначное число ab и «раздвигаем» его цифры. В середину ставим их сумму: 45 · 11 → 4 (4+5) 5 → 4 9 5 → 495! Сумма 4+5=9 — меньше десяти, значит переносить не нужно.',
-      'Почему так получается? Умножить на 11 — это умножить на 10 и прибавить само число: 45 · 11 = 45 · 10 + 45 = 450 + 45. Смотри: 450 и 45 записаны друг под другом — единицы и десятки складываются, и в середине оказывается сумма цифр 4+5!',
-      'Потренируемся: 63 · 11. Шаг 1: цифры 6 и 3. Шаг 2: сумма 6+3 = 9. Шаг 3: вставляем 9 в середину → 693. Проверка: 63 · 10 = 630, плюс 63 → 693. Всё сходится!',
-      'А если сумма цифр больше 9? Например, 37 · 11: 3+7 = 10. Десять не помещается в одну клетку! Пишем в середину 0, а единицу переносим к первой цифре: 3+1 = 4. Получаем 407.',
-      'Ещё пример с переносом: 76 · 11. Сумма 7+6 = 13: пишем 3, единицу переносим — 7+1 = 8. Получаем 836. Проверь: 76·10 = 760, +76 = 836 ✔. Один перенос — и фокус работает!',
-      'Тренажёр: тебе дадут число ab. Сначала раздвинь цифры, потом сложи их — и вставь сумму в середину. Если сумма больше 9 — перенеси единицу. Нажимай кнопки и открывай ответ!',
-      'Тест из учебника: чему равно 45 · 11? А 63 · 11? Помни: раздвинь цифры и вставь в середину их сумму (с переносом, если нужно). Ответь в виджете ниже!',
-      'Проверь себя: 45 · 11 = ? Сумма 4+5 = 9, вставляем в середину → 495. Готов? Жми «Понял! Проверю себя»!'
+      'По перрону мчится магический поезд Архимеда. На его табло задача: 45 · 11. Решать столбиком долго, но есть красивый фокус: умножить на 11 — это умножить на 10 и прибавить само число, ведь 11 = 10 + 1. Поэтому 45 · 11 = 450 + 45. А ещё у этого есть простой устный секрет!',
+      'Фокус: возьмём двузначное число, например 45. Раздвинь цифры 4 и 5 — между ними появится пустой вагончик. В него мы «посадим» их сумму: 4 + 5 = 9. Получается 495. Проверь: 45 · 11 = 495 — верно!',
+      'Почему фокус работает? 11 = 10 + 1, значит 45 · 11 = 45 · 10 + 45 = 450 + 45. Запиши их друг под другом: единицы 0 + 5 = 5, десятки 5 + 4 = 9, сотни — 4. Читаем по разрядам: 4, 9, 5 — та самая сумма соседних цифр в серединке!',
+      'Тренируемся без переноса: 63 · 11. Цифры 6 и 3, сумма 6 + 3 = 9. Ставим 9 в середину: 693. Проверка: 63 · 10 = 630, плюс 63 → 693. Всё сходится!',
+      'А если сумма цифр больше 9? Например, 37 · 11: 3 + 7 = 10. Десять не помещается в один вагончик! Пишем в середину цифру 0, а единицу переносим вперёд: 3 + 1 = 4. Получается 407. Проверь: 370 + 37 = 407.',
+      'Ещё пример с переносом: 76 · 11. Сумма 7 + 6 = 13: в середину пишем 3, а единицу переносим — 7 + 1 = 8. Получаем 836. Проверка: 760 + 76 = 836. Один перенос — и фокус снова работает!',
+      'Тренажёр: тебе дадут число ab. Шаг 1 — сложи цифры a + b. Шаг 2 — поставь сумму в середину. Если сумма больше 9 — в середину пиши её последнюю цифру, а единицу переноси к первой. Нажимай кнопки и открывай ответ!',
+      'Тест: чему равно 45 · 11? А 63 · 11? Помни фокус: раздвинь цифры и посади в середину их сумму (с переносом, если нужно). Ответь в тесте ниже!',
+      'Проверь себя: 45 · 11 = ? Цифры 4 и 5, сумма 9 в середину → 495. Жми «Понял! Проверю себя» — там ждёт этот пример!'
     ],
     check: { q: '45·11 = ?', choices: ['450', '495', '504', '945'], ans: 1,
       exp: '4 (4+5) 5 → 495.' },
@@ -1108,16 +1122,20 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['3+7 = 10 — больше 9.', 'Переносим: 3+1=4, в середине 0.'], sol: '3+7=10 → 407.' }
     ]
   };
-  const C={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a'};
-  function digitCards(a,b,m,carry){
-    // a,b — крайние цифры, m — сумма (или строка), carry — перенесённая к a
-    const f=(x,c,h)=>`<g class="wv-pop" style="animation-delay:${(h*0.12).toFixed(2)}s"><rect x="${0}" y="0" width="46" height="56" rx="11" fill="rgba(255,255,255,.05)" stroke="${c||C.blue}" stroke-width="2.4"/><text x="23" y="37" text-anchor="middle" font-size="28" fill="${c||C.blue}" font-weight="bold" font-family="Georgia,serif">${x}</text></g>`;
-    const row=[];
-    row.push(f(carry!=null?carry:a, C.blue, 0));
-    row.push(f(m, C.gold, 1));
-    row.push(f(b, C.green, 2));
-    return `<div class="wk-row" style="gap:6px">${row.join('<span style="font-size:20px;color:#8fa08f">·</span>')}</div>`;
+  const CC=['#7fd1ff','#8fd1a8','#ffd76a','#e8a0d8','#ff9a7a'];
+  const G={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a'};
+  /* большой круг-«колесо» с цифрой, точно по центру */
+  function disc(cx,cy,r,txt,fill,stroke,opt){
+    const o=opt||{};
+    const fs=Math.max(15,Math.min(38,Math.floor((r*2-8)/(String(txt).length*0.64))));
+    return `<g class="k6pop" style="${o.delay?'animation-delay:'+o.delay+'s':''}">
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="3"/>
+      ${o.glow?`<circle class="k6float" cx="${cx}" cy="${cy}" r="${r+5}" fill="none" stroke="${stroke}" stroke-width="1.6" opacity=".5"/>`:''}
+      <text x="${cx}" y="${(cy+fs*0.36).toFixed(1)}" text-anchor="middle" font-size="${fs}" fill="#0d1a13" font-weight="bold" font-family="Georgia,serif">${txt}</text>
+    </g>`;
   }
+  const sign=(x,y,t,big)=>`<text class="k6pop" x="${x}" y="${y}" text-anchor="middle" font-size="${big||30}" fill="#cfe0cf" font-weight="bold">${t}</text>`;
+  const cap=(t,c)=>`<div style="font-size:13.5px;color:${c||'#d8c9a8'};text-align:center;font-weight:bold;line-height:1.4">${t}</div>`;
   const Q20=[
     {q:'45 · 11 = ?',opts:['450','495','504','945'],ans:1},
     {q:'63 · 11 = ?',opts:['630','636','693','963'],ans:2}
@@ -1125,135 +1143,133 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   function quiz(lk,st){
     const T=Q20[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.05)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.2)':'rgba(232,106,90,.2)'; bd=i===T.ans?C.green:C.red; tc=i===T.ans?C.green:C.red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:56px;font-size:15px" onclick="visW20T('${lk}',${i})">${o}</button>`;
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?G.green:G.red; tc=i===T.ans?G.green:G.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:70px;font-size:17px" onclick="visW20T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">🎉 верно! Оба теста решены!</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">✅ верно! 4(4+5)5 = 495</div>')
-        : '<div class="wk-ans" style="color:#ff8a7a;font-size:15px">❌ раздвинь цифры и вставь их сумму в середину</div>';
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">🎉 верно! Оба теста решены!</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">✅ верно! 4(4+5)5 = 495</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:15.5px">❌ раздвинь цифры и вставь их сумму в середину</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW20Act('${lk}','nq')`):'';
-    const rst=wkBtn('↺',`visW20Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    const rst=wkBtn('↺ заново',`visW20Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW20(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     let h='';
     if(step===0){
-      h=wkFrame(wkBig('Магический поезд: 45 · 11')+
-        wkHero(`<svg width="322" height="130" viewBox="0 0 322 130" style="display:block">
-          <rect x="6" y="6" width="310" height="118" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="70" y="40" text-anchor="middle" font-size="13" fill="#9ec0a8">локомотив «45»</text>
-          <rect x="16" y="50" width="62" height="44" rx="10" fill="rgba(127,209,255,.1)" stroke="${C.blue}" stroke-width="2.4"/>
-          <text x="47" y="78" text-anchor="middle" font-size="24" fill="${C.blue}" font-weight="bold" font-family="Georgia,serif">45</text>
-          <text x="140" y="78" text-anchor="middle" font-size="30" fill="#8fa08f">× 11</text>
-          <rect x="176" y="44" width="130" height="56" rx="13" fill="rgba(217,164,65,.08)" stroke="${C.gold}" stroke-width="2"/>
-          <text x="241" y="70" text-anchor="middle" font-size="13" fill="#d9c088">секрет:</text>
-          <text x="241" y="90" text-anchor="middle" font-size="15" fill="${C.gold}" font-weight="bold">11 = 10 + 1</text>
-          <text x="161" y="116" text-anchor="middle" font-size="11.5" fill="#9ec0a8">посчитаем в уме за секунду!</text>
+      h=wkFrame(wkBig('Магический поезд: 45 · 11 🚂')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
+          <text x="161" y="26" text-anchor="middle" font-size="13" fill="#9ec0a8">локомотив везёт задачу на табло</text>
+          <g class="k6float"><rect x="20" y="40" width="120" height="64" rx="14" fill="#c9a06a"/><rect x="26" y="46" width="108" height="52" rx="10" fill="#22315a"/><circle cx="40" cy="72" r="4" fill="#ffd76a"/><circle cx="54" cy="72" r="4" fill="#8fd1a8"/><text x="86" y="80" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">45</text></g>
+          ${disc(178,72,36,'×','#ffd76a','#ffd76a',{delay:.15,glow:true})}
+          ${disc(250,72,40,'11','#8fd1a8','#8fd1a8',{delay:.3,glow:true})}
+          <text x="161" y="128" text-anchor="middle" font-size="14" fill="#ffdfa0" font-weight="bold">45 · 11 = ? · посчитаем в уме за секунду!</text>
         </svg>`)+
-        wkAns('45 · 11 = 450 + 45 = 495', C.green)+
+        wkRow(wkChip('секрет: 11 = 10 + 1', G.blue))+
         wkSml('умножить на 11 — это умножить на 10 и прибавить само число'));
     } else if(step===1){
-      h=wkFrame(wkBig('Фокус: раздвигаем цифры')+
-        wkHero(`<svg width="322" height="96" viewBox="0 0 322 96" style="display:block">
-          <text x="161" y="18" text-anchor="middle" font-size="13" fill="#9ec0a8">4 и 5 раздвигаем — в середину их сумму</text>
-          ${[['4',40,C.blue],['4+5=9',161,C.gold],['5',282,C.green]].map((d,i)=>`
-            <g class="wv-pop" style="animation-delay:${(i*0.15).toFixed(2)}s">
-              <rect x="${d[1]-34}" y="30" width="68" height="52" rx="12" fill="rgba(255,255,255,.05)" stroke="${d[2]}" stroke-width="2.6"/>
-              <text x="${d[1]}" y="63" text-anchor="middle" font-size="24" fill="${d[2]}" font-weight="bold" font-family="Georgia,serif">${d[0]}</text>
-            </g>`).join('')}
+      if(st.r==null) st.r=0;
+      const show=st.r;
+      h=wkFrame(wkBig('Фокус: вставляем сумму в середину')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
+          <text x="161" y="24" text-anchor="middle" font-size="12.5" fill="#9ec0a8">цифры 4 и 5 раздвинулись — между ними вагончик</text>
+          ${disc(74,84,40,'4','#7fd1ff','#7fd1ff')}
+          ${show>=1?`<g class="k6pop" style="animation-delay:.1s"><circle cx="161" cy="84" r="40" fill="rgba(255,255,255,.06)"/><text x="161" y="76" text-anchor="middle" font-size="13" fill="#ffdfa0">4+5</text><text x="161" y="98" text-anchor="middle" font-size="34" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">9</text></g>`:`<circle cx="161" cy="84" r="40" fill="none" stroke="#5a6f7f" stroke-width="2.4" stroke-dasharray="7 6"/>`}
+          ${disc(248,84,40,'5','#8fd1a8','#8fd1a8',{delay:.2})}
+          ${show>=2?`<g class="k6pop" style="animation-delay:.25s"><rect x="40" y="118" width="242" height="18" rx="9" fill="rgba(143,209,168,.14)" stroke="#8fd1a8"/><text x="161" y="131" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">получилось: 4 9 5 = 495!</text></g>`:''}
         </svg>`)+
-        wkRow(wkPill('45 · 11 = 495', C.gold))+
-        wkAns('в середину вставили сумму 4 + 5 = 9', C.green)+
-        wkSml('получилось 4 9 5 — три цифры подряд, и ответ готов!'));
+        wkRow(wkBtn('1️⃣ вставить сумму 4+5=9',`visW20Act('${lk}','r1')`),wkBtn('2️⃣ готово!',`visW20Act('${lk}','r2')`),wkBtn('↺',`visW20Act('${lk}','rst')`))+
+        (show===2?wkAns('45 · 11 = 495 ✔', G.green):'')+
+        wkSml('в пустой вагончик садится сумма соседних цифр'));
     } else if(step===2){
-      h=wkFrame(wkBig('Почему так работает?')+
-        wkHero(`<svg width="322" height="120" viewBox="0 0 322 120" style="display:block">
-          <rect x="6" y="6" width="310" height="108" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="wv-pop"><rect x="16" y="20" width="120" height="40" rx="10" fill="rgba(127,209,255,.08)" stroke="${C.blue}" stroke-width="2"/>
-            <text x="76" y="46" text-anchor="middle" font-size="16" fill="${C.blue}" font-weight="bold" font-family="Georgia,serif">45·10 = 450</text></g>
-          <g class="wv-pop2"><rect x="16" y="68" width="120" height="40" rx="10" fill="rgba(127,209,160,.08)" stroke="${C.green}" stroke-width="2"/>
-            <text x="76" y="94" text-anchor="middle" font-size="16" fill="${C.green}" font-weight="bold" font-family="Georgia,serif">+ 45</text></g>
-          <g class="wv-pop3"><line x1="150" y1="22" x2="150" y2="106" stroke="#3d5c49" stroke-width="2"/><text x="150" y="20" text-anchor="middle" font-size="15" fill="#8fa08f">+</text>
-            <rect x="170" y="44" width="140" height="40" rx="10" fill="rgba(217,164,65,.1)" stroke="${C.gold}" stroke-width="2.4"/>
-            <text x="240" y="70" text-anchor="middle" font-size="18" fill="${C.gold}" font-weight="bold" font-family="Georgia,serif">495</text></g>
+      h=wkFrame(wkBig('Почему так выходит?')+
+        wkHero(`<svg width="322" height="160" viewBox="0 0 322 160" style="display:block">
+          <rect x="6" y="6" width="310" height="148" rx="20" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
+          <text x="161" y="26" text-anchor="middle" font-size="12.5" fill="#9ec0a8">11 = 10 + 1 → складываем столбиком</text>
+          ${disc(70,86,36,'4','#7fd1ff','#7fd1ff')}
+          ${disc(130,86,32,'5','#7fd1ff','#7fd1ff',{delay:.1})}
+          <text x="178" y="84" text-anchor="middle" font-size="20" fill="#cfe0cf">×11</text>
+          <line x1="196" y1="58" x2="196" y2="118" stroke="#3d5c49" stroke-width="2"/>
+          <g class="k6pop" style="animation-delay:.25s"><rect x="206" y="40" width="106" height="26" rx="10" fill="rgba(127,209,255,.12)" stroke="#7fd1ff"/><text x="259" y="58" text-anchor="middle" font-size="16" fill="#7fd1ff" font-weight="bold">450</text></g>
+          <g class="k6pop" style="animation-delay:.35s"><rect x="206" y="72" width="106" height="26" rx="10" fill="rgba(143,209,168,.12)" stroke="#8fd1a8"/><text x="259" y="90" text-anchor="middle" font-size="16" fill="#8fd1a8" font-weight="bold">+ 45</text></g>
+          <g class="k6pop" style="animation-delay:.5s"><rect x="206" y="104" width="106" height="30" rx="10" fill="rgba(217,164,65,.16)" stroke="#ffd76a" stroke-width="2.4"/><text x="259" y="124" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">495</text></g>
+          <text x="161" y="146" text-anchor="middle" font-size="12" fill="#9ec0a8">единицы:0+5 · десятки:5+4 · сотни:4</text>
         </svg>`)+
-        wkSml('450 + 45: единицы и десятки складываются — в середине сумма цифр 4+5'));
+        wkSml('сложение столбиком и даёт «сумму соседей» в середине числа'));
     } else if(step===3){
-      h=wkFrame(wkBig('Пример: 63 · 11')+
-        wkHero(`<svg width="322" height="104" viewBox="0 0 322 104" style="display:block">
-          ${[['6',46,C.blue],['9',161,C.gold],['3',276,C.green]].map((d,i)=>`
-            <g class="wv-pop" style="animation-delay:${(i*0.16).toFixed(2)}s">
-              <rect x="${d[1]-38}" y="22" width="76" height="58" rx="13" fill="rgba(255,255,255,.05)" stroke="${d[2]}" stroke-width="2.6"/>
-              <text x="${d[1]}" y="42" text-anchor="middle" font-size="11" fill="#9ec0a8">${i===0?'шаг 1: цифра':(i===1?'шаг 2: сумма':'шаг 3: цифра')}</text>
-              <text x="${d[1]}" y="72" text-anchor="middle" font-size="30" fill="${d[2]}" font-weight="bold" font-family="Georgia,serif">${d[0]}</text>
-            </g>`).join('')}
-          <text x="161" y="96" text-anchor="middle" font-size="12" fill="#9ec0a8">6 + 3 = 9 — вставляем в середину</text>
+      if(st.r==null) st.r=0;
+      const show=st.r;
+      h=wkFrame(wkBig('Без переноса: 63 · 11')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
+          ${disc(70,86,38,'6','#7fd1ff','#7fd1ff')}
+          ${show>=1?`<g class="k6pop"><circle cx="161" cy="86" r="38" fill="rgba(255,255,255,.06)"/><text x="161" y="98" text-anchor="middle" font-size="34" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">9</text><text x="161" y="70" text-anchor="middle" font-size="11" fill="#ffdfa0">6+3</text></g>`:`<circle cx="161" cy="86" r="38" fill="none" stroke="#5a6f7f" stroke-width="2.4" stroke-dasharray="7 6"/>`}
+          ${disc(252,86,38,'3','#8fd1a8','#8fd1a8',{delay:.2})}
+          ${show>=2?`<g class="k6pop" style="animation-delay:.2s"><rect x="40" y="122" width="242" height="18" rx="9" fill="rgba(143,209,168,.14)" stroke="#8fd1a8"/><text x="161" y="135" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">63 · 11 = 693</text></g>`:''}
         </svg>`)+
-        wkRow(wkPill('63 · 11 = 693', C.green))+
-        wkSml('проверка: 63 · 10 = 630, + 63 = 693 ✔'));
+        wkRow(wkBtn('1️⃣ сумма 6+3=9',`visW20Act('${lk}','r1')`),wkBtn('2️⃣ ответ',`visW20Act('${lk}','r2')`),wkBtn('↺',`visW20Act('${lk}','rst')`))+
+        (show===2?wkAns('проверка: 630 + 63 = 693 ✔', G.green):'')+
+        wkSml('сумма меньше 10 — переносить не нужно'));
     } else if(step===4){
       h=wkFrame(wkBig('Перенос: 37 · 11')+
-        wkHero(`<svg width="322" height="112" viewBox="0 0 322 112" style="display:block">
-          <g class="wv-pop"><rect x="16" y="20" width="88" height="52" rx="12" fill="rgba(255,255,255,.05)" stroke="#3d5c49"/>
-            <text x="60" y="54" text-anchor="middle" font-size="13" fill="#9ec0a8">3 + 7 = 10</text></g>
-          <g class="wv-pop2"><rect x="118" y="20" width="90" height="52" rx="12" fill="rgba(232,106,90,.1)" stroke="${C.red}" stroke-width="2.4"/>
-            <text x="163" y="54" text-anchor="middle" font-size="13.5" fill="${C.red}" font-weight="bold">10 > 9!</text></g>
-          <g class="wv-pop3"><rect x="222" y="14" width="88" height="64" rx="12" fill="rgba(217,164,65,.1)" stroke="${C.gold}" stroke-width="2.6"/>
-            <text x="266" y="36" text-anchor="middle" font-size="12" fill="#d9c088">единица — вперёд!</text>
-            <text x="266" y="66" text-anchor="middle" font-size="24" fill="${C.gold}" font-weight="bold" font-family="Georgia,serif">407</text></g>
-          <text x="161" y="104" text-anchor="middle" font-size="12" fill="#9ec0a8">в середину пишем 0, единицу переносим: 3+1 = 4</text>
+        wkHero(`<svg width="322" height="128" viewBox="0 0 322 128" style="display:block">
+          <rect x="6" y="6" width="310" height="116" rx="20" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
+          ${disc(64,72,30,'3','#7fd1ff','#7fd1ff')}
+          <circle cx="161" cy="72" r="30" fill="rgba(255,255,255,.05)"/>
+          <text x="161" y="24" text-anchor="middle" font-size="11" fill="#ff9a8a">3 + 7 = 10</text>
+          <text x="161" y="86" text-anchor="middle" font-size="28" fill="#ff8a7a" font-weight="bold" font-family="Georgia,serif">10!</text>
+          ${disc(258,72,30,'7','#8fd1a8','#8fd1a8',{delay:.2})}
+                    <path class="k6flow" d="M146 108 C 120 114, 86 96, 80 84" fill="none" stroke="#ffd76a" stroke-width="3"/>
         </svg>`)+
-        wkRow(wkPill('37 · 11 = 407', C.green))+
-        wkSml('сумма 10 не помещается — переносим единицу к первой цифре'));
+        wkRow(wkPill('3+1 = 4', G.blue),wkPill('в середину: 0', G.gold),wkPill('ответ: 407', G.green))+
+        wkSml('сумма 10 больше 9: в середину пишем 0, а единицу переносим к тройке → 407'));
     } else if(step===5){
       h=wkFrame(wkBig('Ещё перенос: 76 · 11')+
-        wkHero(`<svg width="322" height="104" viewBox="0 0 322 104" style="display:block">
-          ${[['7+1=8',76,C.blue],['3',161,C.gold],['6',276,C.green]].map((d,i)=>`
-            <g class="wv-pop" style="animation-delay:${(i*0.16).toFixed(2)}s">
-              <rect x="${d[1]-44}" y="22" width="88" height="58" rx="13" fill="rgba(255,255,255,.05)" stroke="${d[2]}" stroke-width="2.6"/>
-              <text x="${d[1]}" y="42" text-anchor="middle" font-size="11" fill="#9ec0a8">${i===0?'перенос: 7+1':(i===1?'сумма 7+6=13':'цифра')}</text>
-              <text x="${d[1]}" y="72" text-anchor="middle" font-size="26" fill="${d[2]}" font-weight="bold" font-family="Georgia,serif">${d[0]}</text>
-            </g>`).join('')}
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
+          ${disc(62,86,36,'7','#7fd1ff','#7fd1ff')}
+          <g class="k6pop" style="animation-delay:.3s"><circle cx="161" cy="86" r="36" fill="rgba(255,255,255,.06)"/><text x="161" y="98" text-anchor="middle" font-size="32" fill="#ff8a7a" font-weight="bold" font-family="Georgia,serif">3</text><text x="161" y="70" text-anchor="middle" font-size="11" fill="#ff9a8a">7+6=13</text></g>
+          ${disc(260,86,36,'6','#8fd1a8','#8fd1a8',{delay:.2})}
+          <g class="k6pop" style="animation-delay:.5s"><rect x="30" y="118" width="262" height="20" rx="10" fill="rgba(217,164,65,.14)" stroke="#ffd76a"/><text x="161" y="132" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">перенос: 7+1 = 8 → 76 · 11 = 836</text></g>
+          <path class="k6flow" d="M180 74 C 200 64, 130 52, 78 62" fill="none" stroke="#ffd76a" stroke-width="2.6"/>
         </svg>`)+
-        wkRow(wkPill('76 · 11 = 836', C.green))+
-        wkSml('7+6 = 13: пишем 3, единица к 7 → 8. Проверка: 760+76 = 836 ✔'));
+        wkAns('проверка: 760 + 76 = 836 ✔', G.green)+
+        wkSml('в середину — последняя цифра суммы, единица — к первой'));
     } else if(step===6){
       if(st.tr==null) st.tr=0;
       const POOL=[[4,5],[6,3],[3,7],[7,6],[9,2],[5,8]];
       const [a,b]=POOL[st.tr%POOL.length];
-      const sum=a+b;
-      const hi=sum>=10;
-      const res=(hi?(a+1):a)*100+(sum%10)*10+b;
-      h=wkFrame(wkBig('Тренажёр умножения на 11')+
-        wkHero(`<svg width="322" height="84" viewBox="0 0 322 84" style="display:block">
-          <text x="161" y="16" text-anchor="middle" font-size="13" fill="#9ec0a8">${a}${b} · 11 = ?</text>
-          <rect x="86" y="24" width="50" height="44" rx="10" fill="rgba(127,209,255,.1)" stroke="${C.blue}" stroke-width="2.4"/><text x="111" y="53" text-anchor="middle" font-size="24" fill="${C.blue}" font-weight="bold" font-family="Georgia,serif">${a}</text>
-          <rect x="150" y="24" width="86" height="44" rx="10" fill="rgba(217,164,65,.1)" stroke="${C.gold}" stroke-width="2.4"/><text x="193" y="53" text-anchor="middle" font-size="16" fill="${C.gold}" font-weight="bold">${st.s1?'сумма = '+sum:'?'}</text>
-          <rect x="250" y="24" width="50" height="44" rx="10" fill="rgba(127,209,160,.12)" stroke="${C.green}" stroke-width="2.4"/><text x="275" y="53" text-anchor="middle" font-size="24" fill="${C.green}" font-weight="bold" font-family="Georgia,serif">${b}</text>
+      const sum=a+b, hi=sum>=10;
+      const res=(hi? (a+1):a)*100 + (sum%10)*10 + b;
+      h=wkFrame(wkBig('Тренажёр устного счёта 🎯')+
+        wkHero(`<svg width="322" height="140" viewBox="0 0 322 140" style="display:block">
+          <rect x="6" y="6" width="310" height="128" rx="20" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
+          ${disc(74,76,38,a,'#7fd1ff','#7fd1ff')}
+          ${st.s1?`<g class="k6pop"><circle cx="161" cy="76" r="38" fill="rgba(255,255,255,.06)"/><text x="161" y="88" text-anchor="middle" font-size="34" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">${sum%10}</text><text x="161" y="58" text-anchor="middle" font-size="11" fill="#ffdfa0">${a}+${b}=${sum}</text></g>`:`<circle cx="161" cy="76" r="38" fill="none" stroke="#5a6f7f" stroke-width="2.4" stroke-dasharray="7 6"/>`}
+          ${disc(248,76,38,b,'#8fd1a8','#8fd1a8',{delay:.15})}
+          ${st.s2?`<g class="k6pop" style="animation-delay:.15s"><rect x="30" y="118" width="262" height="16" rx="8" fill="rgba(143,209,168,.14)" stroke="#8fd1a8"/><text x="161" y="130" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">${a}${b} · 11 = ${res}${hi?' (был перенос!)':''}</text></g>`:''}
         </svg>`)+
-        (st.s2? wkAns('ответ: '+a+b+' · 11 = '+res+(hi?' (перенос!)':''), C.gold):'')+
         wkRow(wkBtn('1️⃣ сумма',`visW20Act('${lk}','s1')`),wkBtn('2️⃣ ответ',`visW20Act('${lk}','s2')`),wkBtn('🎲 новый',`visW20Act('${lk}','n')`),wkBtn('↺',`visW20Act('${lk}','rst')`))+
-        wkSml('раздвинь цифры и вставь сумму в середину'+(hi?' — она больше 9, перенеси единицу!':'')));
+        wkSml(hi?'сумма больше 9 — перенеси единицу вперёд!':'сумма меньше 10 — просто вставь её в середину'));
     } else if(step===7){
-      h=wkFrame(wkBig('Тест из учебника 📝')+quiz(lk,st)+
-        wkSml('вопросы из учебника по устному счёту: раздвинь цифры, вставь сумму'));
+      h=wkFrame(wkBig('Тест 📝')+
+        quiz(lk,st)+
+        wkSml('раздвинь цифры и посади в середину их сумму'));
     } else {
       h=wkFrame(wkBig('Проверь себя: 45 · 11')+
-        wkHero(`<svg width="322" height="88" viewBox="0 0 322 88" style="display:block">
-          ${[['4',50,C.blue],['4+5=9',161,C.gold],['5',272,C.green]].map((d,i)=>`
-            <g class="wv-pop" style="animation-delay:${(i*0.15).toFixed(2)}s">
-              <rect x="${d[1]-36}" y="16" width="72" height="52" rx="12" fill="rgba(255,255,255,.05)" stroke="${d[2]}" stroke-width="2.6"/>
-              <text x="${d[1]}" y="50" text-anchor="middle" font-size="24" fill="${d[2]}" font-weight="bold" font-family="Georgia,serif">${d[0]}</text>
-            </g>`).join('')}
-          <text x="161" y="82" text-anchor="middle" font-size="12.5" fill="#9ec0a8">в середину — сумму 4+5 = 9</text>
+        wkHero(`<svg width="322" height="120" viewBox="0 0 322 120" style="display:block">
+          ${disc(66,60,38,'4','#7fd1ff','#7fd1ff')}
+          ${disc(161,60,38,'9','#ffd76a','#ffd76a',{delay:.15,glow:true})}
+          ${disc(256,60,38,'5','#8fd1a8','#8fd1a8',{delay:.3})}
+          <text x="161" y="106" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">4 + 5 = 9 · ответ: 495!</text>
         </svg>`)+
-        wkAns('45 · 11 = 495!', C.green)+
         wkSml('жми «Понял! Проверю себя» — там вопрос 45 · 11'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
@@ -1266,9 +1282,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW20T=visW20T;
   function visW20Act(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
+    if(act==='r1') st.r=1;
+    if(act==='r2') st.r=2;
     if(act==='s1') st.s1=1;
     if(act==='s2') st.s2=1;
-    if(act==='n'){ st.tr=(st.tr==null?0:st.tr)+1; st.s1=st.s2=0; }
+    if(act==='n'){ st.tr=(st.tr==null?0:st.tr)+1; st.s1=st.s2=0; st.r=0; }
     if(act==='nq'){ st.q=1; st.sel=null; }
     if(act==='rst') CHS[lk]={};
     chRender(0);
@@ -1276,6 +1294,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW20Act=visW20Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===20){ window.ARH_LESSONS[i]=L20; break; } } })();
 })();
+
 /* ================= УРОК 21 · Числа из цифр без повторов (v5) ================= */
 (function(){
   if(!window.__wk21v5css){
