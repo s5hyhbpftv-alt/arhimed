@@ -2906,3 +2906,287 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW173Act=visW173Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===173){ window.ARH_LESSONS[i]=L173; break; } } })();
 })();
+/* ================= УРОК 46 · Среднее арифметическое (v2, крупные SVG, без эмодзи) ================= */
+(function(){
+  if(!window.__wk46v2css){
+    window.__wk46v2css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .a6in{animation:a6In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes a6In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .a6pop{animation:a6Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes a6Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .a6float{animation:a6Float 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes a6Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}'+
+      '#lvis .a6flow{stroke-dasharray:8 6;animation:a6Flow .85s linear infinite;}'+
+      '@keyframes a6Flow{to{stroke-dashoffset:-28}}'+
+      '#lvis .a6bump{animation:a6Bump .9s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes a6Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}'+
+      '#lvis .a6grow{animation:a6Grow 1s cubic-bezier(.2,.8,.2,1) both;transform-box:fill-box;}'+
+      '@keyframes a6Grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}';
+    document.head.appendChild(st);
+  }
+  const L46 = {
+    id: 46, title: 'Среднее арифметическое', ico: '∑',
+    src: 'Математика · 5 класс · Среднее арифметическое', subj: 'math',
+    explain: [
+      'У Архимеда 12 конфет и 3 друга. Чтобы не обидеть никого, он делит поровну: каждому по 4. Это и есть среднее арифметическое — «поровну на всех»!',
+      'Что мы делаем? Сначала всё складываем (12 конфет), потом делим на количество (на 3 друзей). Среднее = сумма : количество. Всего два шага!',
+      'Пример с оценками: 4, 5, 3. Это три числа, значит делим на 3. Сначала сумма: 4 + 5 + 3 = 12.',
+      'Теперь делим: 12 : 3 = 4. Среднее арифметическое оценок 4, 5 и 3 равно 4. Сначала сложи, потом подели — и всё!',
+      'Среднее всегда посередине: оно не меньше самого маленького числа и не больше самого большого. Для чисел 3 и 5 среднее 4 — ровно между ними.',
+      'Бывает и половинка: оценки 4 и 5 дают (4 + 5) : 2 = 4,5. Две оценки — делим на 2. «Четыре с половиной»!',
+      'Можно идти и обратно: если знаешь среднее и количество, найди сумму: сумма = среднее · количество. Средний балл 4 при 5 оценках — сумма 20.',
+      'Средняя скорость — тоже среднее: 240 км за 4 часа — это 240 : 4 = 60 км «на каждый час». Средняя скорость 60 км/ч.',
+      'Средний балл за четверть: оценки 5, 4, 3, 5, 3. Сумма 5+4+3+5+3 = 20, делим на 5 оценок → 4. Средний балл 4.',
+      'Средняя температура за неделю: 20, 22, 21, 23, 19 градусов. Сумма 105, делим на 5 дней → 21°. Столбики покажут: что-то теплее, что-то холоднее, а в среднем 21°!',
+      'Ловушка: в классе А три ученика со средним баллом 4, в классе Б один ученик с баллом 2. Нельзя просто взять (4+2):2 = 3 — учеников же не поровну! Правильно: (3·4 + 1·2) : 4 = 3,5.',
+      'Проверь себя: среднее чисел 4, 5, 3 равно 4, а сумма при среднем 4 и пяти оценках равна 20. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Найди среднее чисел 4, 5, 3.', choices: ['3', '4', '5', '12'], ans: 1,
+      exp: '(4+5+3):3 = 12:3 = 4.' },
+    tasks: [
+      { q: 'Найди среднее чисел 6, 8, 10, 12.', kind: 'unit', ans: 9, tol: 0,
+        hints: ['Сумма: 6+8+10+12 = 36.', 'Чисел 4.', '36 : 4 = 9.'], sol: '36 : 4 = 9.' },
+      { q: 'Средний балл 5 оценок равен 4. Какова их сумма?', kind: 'unit', ans: 20, tol: 0,
+        hints: ['Сумма = среднее · количество.', '4 · 5 = 20.'], sol: '4 · 5 = 20.' }
+    ]
+  };
+  const A={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a',ivory:'#e8e0cc',mut:'#9ec0a8'};
+  const AP=['#7fd1ff','#8fd1a8','#ffd76a','#e8a0d8','#ff9a7a','#5aa0d8'];
+  /* столбик с числом */
+  function bar(x,w,h,v,c,opt){
+    const o=opt||{};
+    return `<g class="a6pop" style="animation-delay:${(o.delay||0).toFixed(2)}s">
+      <rect x="${x}" y="${108-h}" width="${w}" height="${h}" rx="${Math.min(10,w*0.24)}" fill="${c}" opacity=".22"/>
+      <rect x="${x}" y="${108-h}" width="${w}" height="${h}" rx="${Math.min(10,w*0.24)}" fill="none" stroke="${c}" stroke-width="2.6"/>
+      <text x="${x+w/2}" y="${106-h}" text-anchor="middle" font-size="${o.fs||22}" fill="#fff" font-weight="bold" font-family="Georgia,serif">${v}</text>
+    </g>`;
+  }
+  /* шкала 0..N с отметкой среднего */
+  function scaleSVG(min,max,mid,c,opt){
+    const o=opt||{};
+    const W=318, x0=22, x1=296, y=70;
+    const px=v=> x0+(x1-x0)*(v-min)/(max-min);
+    const ticks=[];
+    for(let v=Math.ceil(min); v<=Math.floor(max); v++){
+      ticks.push(`<text x="${px(v)}" y="104" text-anchor="middle" font-size="17" fill="#e8dcc8" font-weight="bold">${v}</text>`);
+    }
+    return `<svg viewBox="0 0 318 118" style="display:block;width:100%;height:auto">
+      <rect x="4" y="4" width="310" height="110" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+      <line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="#8a94ad" stroke-width="4"/>
+      ${ticks.join('')}
+      <line x1="${px(min)}" y1="${y-14}" x2="${px(min)}" y2="${y+10}" stroke="#7fd1ff" stroke-width="3"/>
+      <line x1="${px(max)}" y1="${y-14}" x2="${px(max)}" y2="${y+10}" stroke="#7fd1ff" stroke-width="3"/>
+      <g class="a6float"><circle cx="${px(mid)}" cy="${y}" r="14" fill="${c}"/><text x="${px(mid)}" y="${y+5}" text-anchor="middle" font-size="15" fill="#0d1a13" font-weight="bold" font-family="Georgia,serif">${mid}</text></g>
+      <text x="${px(mid)}" y="${y-22}" text-anchor="middle" font-size="12" fill="${c}" font-weight="bold">среднее</text>
+    </svg>`;
+  }
+  const sign=(t,c,delay)=>`<span class="a6in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:7px 15px;border-radius:13px;border:2.2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:23px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c)=>`<span class="a6in" style="display:inline-block;padding:5px 13px;border-radius:11px;background:rgba(255,255,255,.05);border:1.8px solid ${c||'#4a6a54'};font-size:14.5px;color:#e8dcc8">${t}</span>`;
+  const Q46=[
+    {q:'Найди среднее чисел 4, 5, 3.',opts:['3','4','5','12'],ans:1},
+    {q:'Средний балл 4, оценок 5. Какова сумма?',opts:['9','20','45'],ans:1}
+  ];
+  function quiz(lk,st){
+    const T=Q46[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?A.green:A.red; tc=i===T.ans?A.green:A.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:18px" onclick="visW46T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:18px">Верно! Сумма = 4 · 5 = 20</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:18px">Верно! (4+5+3):3 = 12:3 = 4</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:17px">Не так. Сначала сложи всё, потом раздели на количество</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW46Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW46Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW46(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; if(step===0){ if(st.mode==null) st.mode=0; } if(step===3){ st.mode=0; } if(step===10){ st.mode=0; } if(step===11){ st.sel=null; st.q=0; } }
+    let h='';
+    if(step===0){
+      const cnt=12, fr=3, each=4;
+      const rows=[];
+      for(let g=0;g<fr;g++){
+        const dots=[];
+        for(let j=0;j<each;j++) dots.push(`<circle class="a6pop" style="animation-delay:${(0.1+g*0.12+j*0.06).toFixed(2)}s" cx="${14+g*6+j*17}" cy="30" r="6.5" fill="${AP[(g+j)%AP.length]}"/>`);
+        rows.push(`<div class="a6in" style="animation-delay:${(g*0.15+0.1).toFixed(2)}s;flex:1;min-width:0;border:2px solid ${A.blue};border-radius:14px;padding:6px 4px;text-align:center;background:rgba(127,209,255,.06)">
+          <svg viewBox="0 0 84 60" style="display:block;width:100%;height:auto">${dots.join('')}<text x="42" y="52" text-anchor="middle" font-size="13" fill="#b9cdc0">друг ${g+1} · по ${each}</text></svg></div>`);
+      }
+      h=wkFrame(wkBig('Поровну на всех')+
+        wkHero(`<div class="wk-row" style="gap:6px;align-items:stretch">${rows.join('')}</div>`)+
+        wkRow(sign('12 конфет : 3 друзей = по 4',A.gold,0.4))+
+        wkSml('среднее арифметическое — это «поровну на всех»'));
+    } else if(step===1){
+      h=wkFrame(wkBig('Два простых шага')+
+        wkHero(`<svg viewBox="0 0 318 168" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="158" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <rect x="22" y="24" width="120" height="58" rx="14" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="3"/>
+          <text x="82" y="50" text-anchor="middle" font-size="15" fill="#cfe0cf">шаг 1</text>
+          <text x="82" y="72" text-anchor="middle" font-size="21" fill="#fff" font-weight="bold" font-family="Georgia,serif">сложи всё</text>
+          <rect x="176" y="24" width="120" height="58" rx="14" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="3"/>
+          <text x="236" y="50" text-anchor="middle" font-size="15" fill="#cfe0cf">шаг 2</text>
+          <text x="236" y="72" text-anchor="middle" font-size="21" fill="#fff" font-weight="bold" font-family="Georgia,serif">раздели</text>
+          <path class="a6flow" d="M150 52 Q 160 40 172 52" fill="none" stroke="#ffd76a" stroke-width="4"/>
+          <rect x="42" y="100" width="234" height="46" rx="18" fill="rgba(217,164,65,.1)" stroke="#ffd76a" stroke-width="2.6"/>
+          <text x="159" y="129" text-anchor="middle" font-size="23" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">сумма : количество</text>
+        </svg>`)+
+        wkSml('среднее = сумма : количество — запомни формулу'));
+    } else if(step===2){
+      const vals=[4,5,3];
+      h=wkFrame(wkBig('Оценки: 4, 5, 3')+
+        wkHero(`<svg viewBox="0 0 318 152" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="144" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <text x="159" y="26" text-anchor="middle" font-size="14" fill="#9ec0a8">три оценки — делим на 3</text>
+          ${vals.map((v,i)=>{ const x=56+i*76; return bar(x,58,Math.max(20,v*15),v,AP[i],{delay:i*0.15}); }).join('')}
+          <line x1="28" y1="110" x2="290" y2="110" stroke="#3d5c49" stroke-width="2"/>
+          <text x="88" y="134" text-anchor="middle" font-size="17" fill="#9ec0a8">+</text>
+          <text x="164" y="134" text-anchor="middle" font-size="17" fill="#9ec0a8">+</text>
+        </svg>`)+
+        wkRow(sign('4 + 5 + 3',A.blue),sign('= 12',A.gold,0.2))+
+        wkSml('сначала считаем сумму всех чисел'));
+    } else if(step===3){
+      const sh=st.mode;
+      h=wkFrame(wkBig('Два шага подробно')+
+        wkHero(`<svg viewBox="0 0 318 168" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="158" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          ${sh===0
+            ? `<rect x="26" y="30" width="100" height="64" rx="14" fill="rgba(127,209,255,.14)" stroke="#7fd1ff" stroke-width="3"/>
+               <text x="76" y="60" text-anchor="middle" font-size="18" fill="#cfe0cf">сумма</text>
+               <text x="76" y="82" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">12</text>
+               <text x="170" y="70" text-anchor="middle" font-size="30" fill="#cfe0cf" font-weight="bold">:</text>
+               <circle class="a6bump" cx="230" cy="70" r="36" fill="none" stroke="#8fd1a8" stroke-width="3.5"/>
+               <text x="230" y="78" text-anchor="middle" font-size="24" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">3</text>
+               <text x="230" y="118" text-anchor="middle" font-size="12" fill="#9ec0a8">сколько чисел</text>`
+            : `<rect x="26" y="30" width="100" height="64" rx="14" fill="rgba(127,209,255,.14)" stroke="#7fd1ff" stroke-width="3"/>
+               <text x="76" y="60" text-anchor="middle" font-size="18" fill="#cfe0cf">сумма</text>
+               <text x="76" y="82" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">12</text>
+               <text x="146" y="70" text-anchor="middle" font-size="30" fill="#cfe0cf" font-weight="bold">:</text>
+               <rect x="166" y="30" width="64" height="64" rx="14" fill="rgba(143,209,168,.14)" stroke="#8fd1a8" stroke-width="3"/>
+               <text x="198" y="60" text-anchor="middle" font-size="18" fill="#cfe0cf">чисел</text>
+               <text x="198" y="82" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">3</text>
+               <text x="246" y="70" text-anchor="middle" font-size="30" fill="#cfe0cf" font-weight="bold">=</text>
+               <circle class="a6float" cx="286" cy="70" r="30" fill="#ffd76a"/><text x="286" y="79" text-anchor="middle" font-size="24" fill="#0d1a13" font-weight="bold" font-family="Georgia,serif">4</text>`}
+          <text x="159" y="142" text-anchor="middle" font-size="14" fill="${sh===0?'#cfe0cf':'#8fd1a8'}" font-weight="bold">${sh===0?'шаг 1 · сумма = 12':'среднее = 12 : 3 = 4'}</text>
+        </svg>`)+
+        wkRow(sh===0
+          ? wkBtn('шаг 2 · разделить',`visW46Act('${lk}','go')`)
+          : wkRow(wkBtn('сначала',`visW46Act('${lk}','rst')`)))+
+        (sh===1? wkAns('среднее = 4!',A.green):'')+
+        wkSml('сначала сложи, потом подели — и всё'));
+    } else if(step===4){
+      h=wkFrame(wkBig('Среднее всегда посередине')+
+        wkHero(scaleSVG(0,8,4,A.gold))+
+        wkRow(chip('числа 3 и 5'),sign('среднее 4',A.green,0.2))+
+        wkSml('среднее не меньше самого маленького и не больше самого большого'));
+    } else if(step===5){
+      h=wkFrame(wkBig('Бывает и половинка')+
+        wkHero(`<svg viewBox="0 0 318 128" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="120" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          ${[4,5].map((v,i)=>{ const x=58+i*76; return bar(x,58,Math.max(22,v*16),v,AP[i],{delay:i*0.15}); }).join('')}
+          <g class="a6pop" style="animation-delay:.35s"><line x1="48" y1="62" x2="262" y2="62" stroke="#3d5c49" stroke-width="2"/>
+          <text x="282" y="70" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold">?</text></g>
+        </svg>`)+
+        wkRow(sign('(4 + 5) : 2 = 4,5',A.gold,0.3))+
+        wkSml('две оценки — делим на 2. среднее 4,5 — «четыре с половиной»!'));
+    } else if(step===6){
+      h=wkFrame(wkBig('Обратно: находим сумму')+
+        wkHero(`<svg viewBox="0 0 318 120" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="110" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <rect x="20" y="24" width="88" height="70" rx="13" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="3"/>
+          <text x="64" y="52" text-anchor="middle" font-size="14" fill="#cfe0cf">среднее</text>
+          <text x="64" y="80" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">4</text>
+          <text x="128" y="64" text-anchor="middle" font-size="28" fill="#cfe0cf" font-weight="bold">·</text>
+          <rect x="148" y="24" width="88" height="70" rx="13" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="3"/>
+          <text x="192" y="52" text-anchor="middle" font-size="14" fill="#cfe0cf">чисел</text>
+          <text x="192" y="80" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">5</text>
+          <text x="256" y="64" text-anchor="middle" font-size="28" fill="#cfe0cf" font-weight="bold">=</text>
+          <circle class="a6float" cx="290" cy="62" r="24" fill="#ffd76a"/><text x="290" y="70" text-anchor="middle" font-size="22" fill="#0d1a13" font-weight="bold" font-family="Georgia,serif">20</text>
+        </svg>`)+
+        wkRow(sign('сумма = 4 · 5 = 20',A.green,0.3))+
+        wkSml('знаешь среднее и количество — умножь и узнаешь сумму'));
+    } else if(step===7){
+      h=wkFrame(wkBig('Средняя скорость')+
+        wkHero(`<svg viewBox="0 0 318 140" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="130" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          ${[60,60,60,60].map((v,i)=>{ const x=24+i*66; return bar(x,56,Math.max(24,v*0.42),v,AP[i%AP.length],{delay:i*0.12,fs:18}); }).join('')}
+          <line x1="12" y1="108" x2="306" y2="108" stroke="#3d5c49" stroke-width="2.4"/>
+          <g class="a6pop" style="animation-delay:.5s"><text x="159" y="40" text-anchor="middle" font-size="13" fill="#9ec0a8">4 часа — каждый по 60 км</text></g>
+        </svg>`)+
+        wkRow(sign('240 км : 4 ч = 60 км/ч',A.green,0.4))+
+        wkSml('средняя скорость = весь путь, разложенный на все часы'));
+    } else if(step===8){
+      const vals=[5,4,3,5,3];
+      h=wkFrame(wkBig('Средний балл за четверть')+
+        wkHero(`<svg viewBox="0 0 318 158" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="148" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <text x="159" y="26" text-anchor="middle" font-size="13" fill="#9ec0a8">пять оценок — делим на 5</text>
+          ${vals.map((v,i)=>{ const x=22+i*55; return bar(x,42,Math.max(18,v*13),v,AP[i%AP.length],{delay:i*0.12,fs:19}); }).join('')}
+          <g class="a6pop" style="animation-delay:.6s"><rect x="30" y="118" width="258" height="22" rx="11" fill="rgba(217,164,65,.12)" stroke="#ffd76a"/><text x="159" y="133" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">5+4+3+5+3 = 20 → 20 : 5 = 4</text></g>
+        </svg>`)+
+        wkAns('средний балл 4',A.green)+
+        wkSml('пять оценок — делим на 5!'));
+    } else if(step===9){
+      const vals=[20,22,21,23,19];
+      h=wkFrame(wkBig('Средняя температура за неделю')+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="162" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <text x="159" y="26" text-anchor="middle" font-size="13" fill="#9ec0a8">пн · вт · ср · чт · пт</text>
+          ${vals.map((v,i)=>{ const x=26+i*56; return bar(x,42,Math.max(20,(v-14)*7),v,AP[i%AP.length],{delay:i*0.12,fs:18}); }).join('')}
+          <line x1="20" y1="${108-(21-14)*7}" x2="298" y2="${108-(21-14)*7}" stroke="#ffd76a" stroke-width="2.6" stroke-dasharray="9 7"/>
+          <g class="a6pop" style="animation-delay:.6s"><text x="159" y="${108-(21-14)*7-8}" text-anchor="middle" font-size="13" fill="#ffd76a" font-weight="bold">среднее 21°</text></g>
+        </svg>`)+
+        wkRow(sign('105 : 5 = 21°',A.green,0.4))+
+        wkSml('что-то теплее, что-то холоднее, а в среднем 21°'));
+    } else if(step===10){
+      const sh=st.mode;
+      h=wkFrame(wkBig('Ловушка: средние разных «кучек»')+
+        wkHero(`<svg viewBox="0 0 318 158" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="150" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <rect x="14" y="16" width="142" height="120" rx="13" fill="rgba(143,209,168,.08)" stroke="#8fd1a8" stroke-width="2.4"/>
+          <text x="85" y="34" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">класс А · 3 ученика</text>
+          ${[0,1,2].map(i=>`<g class="a6pop" style="animation-delay:${(i*0.1).toFixed(2)}s"><circle cx="${40+i*44}" cy="70" r="19" fill="#8fd1a8" opacity=".25"/><circle cx="${40+i*44}" cy="70" r="19" fill="none" stroke="#8fd1a8" stroke-width="2.4"/><text x="${40+i*44}" y="76" text-anchor="middle" font-size="16" fill="#fff" font-weight="bold">4</text></g>`).join('')}
+          <rect x="162" y="16" width="142" height="120" rx="13" fill="rgba(255,138,122,.07)" stroke="#ff8a7a" stroke-width="2.4"/>
+          <text x="233" y="34" text-anchor="middle" font-size="13" fill="#ff8a7a" font-weight="bold">класс Б · 1 ученик</text>
+          <g class="a6pop" style="animation-delay:.3s"><circle cx="233" cy="70" r="19" fill="#ff8a7a" opacity=".25"/><circle cx="233" cy="70" r="19" fill="none" stroke="#ff8a7a" stroke-width="2.4"/><text x="233" y="76" text-anchor="middle" font-size="16" fill="#fff" font-weight="bold">2</text></g>
+          ${sh? `<g class="a6pop" style="animation-delay:.2s"><rect x="30" y="104" width="258" height="26" rx="12" fill="rgba(217,164,65,.14)" stroke="#ffd76a" stroke-width="2.4"/><text x="159" y="121" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">(3·4 + 1·2) : 4 = 14 : 4 = 3,5</text></g>`:''}
+        </svg>`)+
+        (sh
+          ? wkAns('правильно: 3,5 — по количеству учеников!',A.green)+wkRow(wkBtn('сначала',`visW46Act('${lk}','rst')`))
+          : `<div class="wk-ans" style="color:#ffcfc2">(4+2):2 = 3 — неверно!</div>`+wkRow(wkBtn('решить по весу',`visW46Act('${lk}','go')`)))+
+        wkSml('нельзя усреднять «4 и 2» поровну: учеников 3 и 1 — считай по количеству'));
+    } else {
+      h=wkFrame(wkBig('Проверь себя')+
+        wkHero(`<svg viewBox="0 0 318 108" style="display:block;width:100%;height:auto">
+          ${[4,5,3].map((v,i)=>{ const x=36+i*88; return `<g class="a6pop" style="animation-delay:${(i*0.14).toFixed(2)}s"><circle cx="${x+30}" cy="44" r="30" fill="rgba(255,255,255,.05)" stroke="${AP[i]}" stroke-width="3"/><text x="${x+30}" y="52" text-anchor="middle" font-size="24" fill="#fff" font-weight="bold" font-family="Georgia,serif">${v}</text></g>`; }).join('')}
+          <text x="100" y="88" text-anchor="middle" font-size="19" fill="#ffd76a" font-weight="bold">&gt;</text>
+          <text x="190" y="88" text-anchor="middle" font-size="19" fill="#ffd76a" font-weight="bold">&gt;</text>
+          <text x="159" y="100" text-anchor="middle" font-size="13" fill="#9ec0a8">сумма 12 · чисел 3</text>
+        </svg>`)+
+        quiz(lk,st)+
+        wkSml('4, 5, 3 → (4+5+3):3 = 4 · среднее 4 и 5 оценок → сумма 20'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[46]=visW46;
+  function visW46T(lk,i){
+    const st=CHS[lk]||(CHS[lk]={});
+    st.sel=i; chRender(0);
+  }
+  window.visW46T=visW46T;
+  function visW46Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go') st.mode=1;
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW46Act=visW46Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===46){ window.ARH_LESSONS[i]=L46; break; } } })();
+})();
