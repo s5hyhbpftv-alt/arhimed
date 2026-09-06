@@ -3506,3 +3506,247 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW398Act=visW398Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===398){ window.ARH_LESSONS[i]=L398; break; } } })();
 })();
+/* ================= УРОК 22 · Периметр фигур на клетках (v2, 13 слайдов, крупные SVG-сетки, без эмодзи) ================= */
+(function(){
+  if(!window.__wk22v2css){
+    window.__wk22v2css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .m2in{animation:m2In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes m2In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .m2pop{animation:m2Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes m2Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .m2edge{stroke-dasharray:7 5;animation:m2Edge .7s linear infinite;}'+
+      '@keyframes m2Edge{to{stroke-dashoffset:-24}}'+
+      '#lvis .m2seg{opacity:0;animation:m2Seg .4s ease forwards;}'+
+      '@keyframes m2Seg{to{opacity:1}}'+
+      '#lvis .m2bump{animation:m2Bump .9s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes m2Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}';
+    document.head.appendChild(st);
+  }
+  const L22 = {
+    id: 22, title: 'Периметр фигур на клетках', ico: '▭',
+    src: 'Математика · 5 класс · Периметр фигур на клетчатой бумаге', subj: 'math',
+    explain: [
+      'Периметр фигуры на клетчатой бумаге — это длина её границы. Каждая клетка — квадратик со стороной 1. Чтобы найти периметр, считаем внешние стороны клеток — те, что смотрят наружу.',
+      'Начнём с одной клетки: у неё 4 стороны по 1. Периметр одной клетки равен 4. Запомни: сторона клетки = 1 единица.',
+      'Полоска 1×5: пять клеток в ряд. Сверху 5 сторон, снизу 5, слева 1 и справа 1. Итого 5+5+1+1 = 12. Проверь по рисунку: граница светится!',
+      'Прямоугольник 3×4 клетки: формула P = 2·(a+b). Здесь a=3, b=4: 2·(3+4) = 2·7 = 14. Длина границы — как в задачке!',
+      'Квадрат 5×5: все стороны равны, P = 4·a = 4·5 = 20. Тоже как в задачке!',
+      'Смотри не перепутай: площадь — сколько клеток ВНУТРИ фигуры (3×4 = 12 клеток), а периметр — длина границы (14). Площадь в клетках, периметр в единицах длины.',
+      'Две клетки в ряд: общая внутренняя сторона границей НЕ считается — она спрятана между клетками. Внешних сторон: 4 + 4 − 2 = 6.',
+      'Уголок Г из 3 клеток: клетки соприкасаются двумя сторонами. Периметр: 4·3 − 2·2 = 12 − 4 = 8. Обойди границу пальцем — получится 8.',
+      'Универсальный способ — обойти границу шагами. Квадрат 3×3: идём 3 вниз, 3 вправо, 3 вверх, 3 влево — всего 12 шагов. Каждый шаг — одна сторона клетки.',
+      'Буква Т из 5 клеток: фигура не прямоугольная, но приём тот же. N = 5 клеток, общих сторон S = 4: P = 4·5 − 2·4 = 20 − 8 = 12.',
+      'Выемка в фигуре: клетка «вдавлена» — граница огибает её и становится длиннее. N = 5, S = 5: P = 20 − 10 = 10. Формула не подводит!',
+      'Дырка внутри фигуры — это вторая граница! У квадрата 4×4 с дыркой 2×2: внешняя граница 16, граница дырки 8, всего P = 24.',
+      'Проверь себя: периметр полоски 1×5 равен 12, а прямоугольника 3×4 — 14. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Периметр полоски 1×5 клеток?', choices: ['6', '10', '12', '20'], ans: 2,
+      exp: '2·(1+5) = 12.' },
+    tasks: [
+      { q: 'Периметр прямоугольника 3×4 клетки?', kind: 'unit', ans: 14, tol: 0,
+        hints: ['P = 2·(a+b)', '2·(3+4) = 14.'], sol: '2·(3+4) = 14.' },
+      { q: 'Периметр квадрата 5×5 клеток?', kind: 'unit', ans: 20, tol: 0,
+        hints: ['P = 4·a', '4·5 = 20.'], sol: '4·5 = 20.' }
+    ]
+  };
+  const M={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a',cell:'#6fb7e8',cellD:'#549bcb',net:'rgba(18,52,80,.4)'};
+  /* рисуем клетчатую фигуру по маске + подсвечиваем внешние стороны (периметр)
+     mask: массив строк: '#' клетка, '.' пусто. out=1 — показать внешние стороны сразу. */
+  function fig(mask,opt){
+    const o=opt||{};
+    const cell=o.cell||30;
+    const R=mask.length, C=mask[0].length;
+    const W=318, totalW=C*cell, x0=Math.round((W-totalW)/2);
+    const H=o.h||(R*cell);
+    let cells='', outer='', inner='', grid='';
+    for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+      if(mask[r][c]!=='#') continue;
+      const x=x0+c*cell, y=r*cell;
+      cells+=`<rect x="${x}" y="${y}" width="${cell}" height="${cell}" fill="${M.cell}" opacity=".92"/>`;
+      grid+=`<rect x="${x}" y="${y}" width="${cell}" height="${cell}" fill="none" stroke="${M.net}" stroke-width="1"/>`;
+      // соседи: внешняя сторона если за краем или рядом пусто
+      const sides=[[0,-1,'U'],[0,1,'D'],[-1,0,'L'],[1,0,'R']];
+      sides.forEach((s)=>{
+        const nr=r+s[0], nc=c+s[1];
+        const outside = nr<0||nr>=R||nc<0||nc>=C;
+        const isOuterEdge = outside || mask[nr][nc]!=='#';
+        if(!isOuterEdge) return;
+        const kind = outside ? 'o' : 'i'; // o — внешняя, i — внутренняя (дырка/выемка)
+        const lx=x, ly=y, rx=x+cell, ry=y+cell;
+        const p1 = s[2]==='U'? [lx,ly,rx,ly] : s[2]==='D'? [lx,ry,rx,ry] : s[2]==='L'? [lx,ly,lx,ry] : [rx,ly,rx,ry];
+        const col = kind==='o' ? M.gold : (o.innerCol||M.red);
+        const cls = (kind==='o') ? 'm2seg' : 'm2seg';
+        const delay = o.d0!=null ? o.d0 : 0.08;
+        const seg = `<line class="${cls}" style="animation-delay:${(delay+(o.idx||0)*0.03).toFixed(2)}s" x1="${p1[0]}" y1="${p1[1]}" x2="${p1[2]}" y2="${p1[3]}" stroke="${col}" stroke-width="4.2" stroke-linecap="butt"/>`;
+        if(kind==='o') outer+=seg; else inner+=seg;
+        o.idx=(o.idx||0)+1;
+      });
+    }
+    const reveal = o.reveal!==undefined ? o.reveal : 1;
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <rect x="${x0-4}" y="-2" width="${totalW+8}" height="${H+4}" fill="rgba(8,20,30,.35)" rx="8"/>
+      ${cells}${grid}${reveal? outer:''}${reveal? inner:''}
+    </svg>`;
+  }
+  /* периметр фигуры по маске */
+  function perim(mask){
+    const R=mask.length, C=mask[0].length; let p=0;
+    for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+      if(mask[r][c]!=='#')continue;
+      for(const [dr,dc] of [[0,1],[1,0],[0,-1],[-1,0]]){
+        const nr=r+dr,nc=c+dc;
+        if(nr<0||nr>=R||nc<0||nc>=C||mask[nr][nc]!=='#') p++;
+      }
+    }
+    return p;
+  }
+  const big=(t)=>`<div class="m2in" style="font-size:17px;color:#fff;font-weight:bold;text-align:center;line-height:1.3">${t}</div>`;
+  const ans=(t,c)=>`<div class="wk-ans" style="color:${c||'#8fd1a8'}">${t}</div>`;
+  const note=(t)=>`<div style="font-size:12.5px;color:#9ec0a8;text-align:center;line-height:1.5;max-width:300px">${t}</div>`;
+  const sign=(t,c,delay)=>`<span class="m2in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 13px;border-radius:12px;border:2px solid ${c||'#ffd76a'};font-family:Georgia,serif;font-size:21px;color:${c||'#ffd76a'};font-weight:bold">${t}</span>`;
+  const Q22=[
+    {q:'Периметр полоски 1×5 клеток?',opts:['6','10','12','20'],ans:2},
+    {q:'Периметр прямоугольника 3×4 клетки?',opts:['10','12','14','24'],ans:2}
+  ];
+  function quiz(lk,st){
+    const T=Q22[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?M.green:M.red; tc=i===T.ans?M.green:M.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:60px;font-size:18px" onclick="visW22T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! P = 2·(3+4) = 14</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 5+5+1+1 = 12</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Сосчитай внешние стороны клеток</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW22Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW22Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:9px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW22(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; if(step===0){ st.sh=0; } if(step===2){ st.sh=0; } if(step===6){ st.sh=0; } if(step===8){ st.sh=0; } if(step===11){ st.sh=0; } if(step===12){ st.sel=null; st.q=0; } }
+    let h='';
+    if(step===0){
+      const m=['#.','##','.#','##'];
+      const show=st.sh===1;
+      h=wkFrame(big('Периметр — длина границы')+
+        `<div class="wk-hero">${fig(m,{cell:26,reveal:1,h:104,innerCol:M.blue})}</div>`+
+        `<div class="wk-row" style="gap:6px;margin-top:2px">
+          <span class="m2seg" style="opacity:1;display:inline-block;padding:3px 10px;border-radius:8px;border:2px solid #ffd76a;font-size:12px;color:#ffd76a">золото — граница</span>
+          <span class="m2seg" style="animation-delay:.2s;opacity:1;display:inline-block;padding:3px 10px;border-radius:8px;border:2px solid #7fd1ff;font-size:12px;color:#7fd1ff">синее — углубления</span>
+        </div>`+
+        note('каждая клетка — квадрат со стороной 1 · периметр = внешние стороны клеток')+
+        (show? ans('это фигура-змейка: её границу мы и будем считать!',M.green):'')+
+        `<div class="wk-row">${show? wkBtn('сброс',`visW22Act('${lk}','rst')`) : wkBtn('показать границу',`visW22Act('${lk}','go')`)}</div>`);
+    } else if(step===1){
+      h=wkFrame(big('Одна клетка')+
+        `<div class="wk-hero">${fig(['#'],{cell:34,h:34})}</div>`+
+        `<div class="wk-row">${sign('P = 4',M.green,0.3)}</div>`+
+        note('4 внешние стороны по 1 · сторона клетки = 1 единица'));
+    } else if(step===2){
+      const show=st.sh===1;
+      h=wkFrame(big('Полоска 1×5')+
+        `<div class="wk-hero">${fig(['#####'],{cell:34,h:34,reveal:show?1:0})}</div>`+
+        (show
+          ? `<div class="wk-row">${sign('5',M.gold,0)}<span style="color:#9ec0a8;font-size:18px">+</span>${sign('5',M.gold,.08)}<span style="color:#9ec0a8;font-size:18px">+</span>${sign('1',M.gold,.16)}<span style="color:#9ec0a8;font-size:18px">+</span>${sign('1',M.gold,.24)}</div>`+ans('P = 12',M.green)
+          : `<div class="wk-row">${wkBtn('показать границу',`visW22Act('${lk}','go')`)}</div>`)+
+        note(show?'сверху 5 сторон, снизу 5, слева и справа по 1':'пять клеток в ряд — где граница?'));
+    } else if(step===3){
+      const m=['####','####','####'];
+      h=wkFrame(big('Прямоугольник 3×4')+
+        `<div class="wk-hero">${fig(m,{cell:30,h:90})}</div>`+
+        `<div class="wk-row"><span class="m2in" style="display:inline-block;font-size:14px;color:#8fd1a8;font-weight:bold">длина 4 · ширина 3</span></div>`+
+        `<div class="wk-row">${sign('P = 2·(3+4) = 14',M.green,0.2)}</div>`+
+        note('две длины и две ширины: 4+3+4+3 = 14'));
+    } else if(step===4){
+      const m=['#####','#####','#####','#####','#####'];
+      h=wkFrame(big('Квадрат 5×5')+
+        `<div class="wk-hero">${fig(m,{cell:26,h:130})}</div>`+
+        `<div class="wk-row">${sign('P = 4·5 = 20',M.green,0.3)}</div>`+
+        note('все 4 стороны по 5 · 4 стороны × 5 = 20'));
+    } else if(step===5){
+      const m=['####','####','####'];
+      h=wkFrame(big('Не путай с площадью!')+
+        `<div class="wk-hero" style="position:relative">${fig(m,{cell:30,h:90})}</div>`+
+        `<div class="wk-row" style="gap:8px">
+          <span class="m2in" style="display:inline-block;padding:5px 12px;border-radius:11px;border:2px solid #7fd1ff;font-size:15px;color:#7fd1ff;font-weight:bold">площадь: 3·4 = 12 клеток</span>
+          <span class="m2in" style="animation-delay:.15s;display:inline-block;padding:5px 12px;border-radius:11px;border:2px solid #ffd76a;font-size:15px;color:#ffd76a;font-weight:bold">периметр: 14</span>
+        </div>`+
+        note('площадь — клетки ВНУТРИ, периметр — длина ГРАНИЦЫ'));
+    } else if(step===6){
+      const show=st.sh===1;
+      h=wkFrame(big('Две клетки в ряд')+
+        `<div class="wk-hero">${fig(['##'],{cell:34,h:34,reveal:1})}</div>`+
+        (show
+          ? `<div class="m2in" style="margin-top:2px"><svg viewBox="0 0 318 20" style="display:block;width:100%;height:auto"><rect x="${Math.round((318-68)/2)+34}" y="6" width="2" height="8" fill="#8fd1a8"/><text x="${Math.round((318-68)/2)+52}" y="15" text-anchor="middle" font-size="11" fill="#8fd1a8">общая — не граница</text></svg></div>`+ans('P = 6',M.green)
+          : `<div class="wk-row">${wkBtn('где общая сторона?',`visW22Act('${lk}','go')`)}</div>`)+
+        note('общая внутренняя сторона спрятана — границей она не считается'));
+    } else if(step===7){
+      const m=['#.','##'];
+      h=wkFrame(big('Уголок Г из 3 клеток')+
+        `<div class="wk-hero">${fig(m,{cell:36,h:72})}</div>`+
+        `<div class="wk-row">${sign('P = 8',M.green,0.25)}</div>`+
+        note('общие стороны две · N=3, S=2 → 4·3 − 2·2 = 8'));
+    } else if(step===8){
+      const show=st.sh===1;
+      const m=['###','###','###'];
+      h=wkFrame(big('Обходим границу шагами')+
+        `<div class="wk-hero">${fig(m,{cell:28,h:84,reveal:show?1:0})}</div>`+
+        (show
+          ? `<div class="wk-row" style="gap:4px">${[1,2,3,4].map(i=>`<span class="m2seg" style="animation-delay:${(i*0.3).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:2.5px solid #ffd76a;color:#ffd76a;font-weight:bold">${i}</span>`).join('<span style="color:#9ec0a8">+</span>')}</div>`+ans('3+3+3+3 = 12 шагов',M.green)
+          : `<div class="wk-row">${wkBtn('пройти по границе',`visW22Act('${lk}','go')`)}</div>`)+
+        note('каждый шаг — одна внешняя сторона клетки'));
+    } else if(step===9){
+      const m=['###','.#.','.#.'];
+      h=wkFrame(big('Буква Т из 5 клеток')+
+        `<div class="wk-hero">${fig(m,{cell:28,h:84})}</div>`+
+        `<div class="wk-row">${sign('P = 12',M.green,0.25)}</div>`+
+        note('N=5 клеток · общих сторон S=4 → 20 − 8 = 12'));
+    } else if(step===10){
+      const m=['##.','###'];
+      h=wkFrame(big('Выемка удлиняет границу')+
+        `<div class="wk-hero">${fig(m,{cell:30,h:60})}</div>`+
+        `<div class="wk-row">${sign('P = 10',M.green,0.2)}</div>`+
+        note('N=5, S=5 → 20 − 10 = 10 · граница огибает выемку'));
+    } else if(step===11){
+      const show=st.sh===1;
+      const m=['####','#..#','#..#','####'];
+      h=wkFrame(big('Дырка — вторая граница')+
+        `<div class="wk-hero">${fig(m,{cell:28,h:112,reveal:1,innerCol:M.red})}</div>`+
+        (show
+          ? `<div class="wk-row" style="gap:8px">
+              <span class="m2in" style="padding:5px 10px;border-radius:10px;border:2px solid #ffd76a;font-size:13.5px;color:#ffd76a;font-weight:bold">внешняя 16</span>
+              <span class="m2in" style="animation-delay:.15s;padding:5px 10px;border-radius:10px;border:2px solid #ff8a7a;font-size:13.5px;color:#ff8a7a;font-weight:bold">внутренняя 8</span>
+            </div>`+ans('P = 16 + 8 = 24',M.green)
+          : `<div class="wk-row">${wkBtn('показать границу дырки',`visW22Act('${lk}','go')`)}</div>`)+
+        note('клетки 16 − 4 = 12 · дырка добавляет свою границу 8'));
+    } else {
+      h=wkFrame(big('Проверь себя: периметр на клетках')+
+        `<div class="wk-hero">${fig(['#####'],{cell:28,h:28})}</div>`+
+        quiz(lk,st)+
+        note('полоска 1×5 → 12 · прямоугольник 3×4 → 14 · квадрат 5×5 → 20'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[22]=visW22;
+  function visW22T(lk,i){
+    const st=CHS[lk]||(CHS[lk]={});
+    st.sel=i; chRender(0);
+  }
+  window.visW22T=visW22T;
+  function visW22Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go') st.sh=1;
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW22Act=visW22Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===22){ window.ARH_LESSONS[i]=L22; break; } } })();
+})();
