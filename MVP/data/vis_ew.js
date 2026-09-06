@@ -655,3 +655,328 @@ window.WAVE_E = window.WAVE_E || {};
   window.WAVE_E[432]=visE432;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===432){ window.ARH_LESSONS[i]=L432; break; } } })();
 })();
+/* ================= УРОК 433 · Стереометрия: тела вращения ================= */
+(function(){
+  const L433 = {
+    id: 433, title: 'Стереометрия: тела вращения', ico: '🔄',
+    src: 'Математика · 9 класс · Алгебра 9: тела вращения', subj: 'math',
+    explain: [
+      'Тела вращения получаются, когда плоскую фигуру вращают вокруг оси. Вращаем прямоугольник — получаем ЦИЛИНДР, треугольник — КОНУС, полукруг — ШАР! Как гончар на круге!',
+      'Цилиндр: вращение прямоугольника. У него два основания-круга (радиус r) и высота h. Объём цилиндра: V = πr²h. Площадь круга πr² умножаем на высоту!',
+      'Проверим: цилиндр с r = 2 и h = 3: V = π·4·3 = 12π ≈ 37,7. Площадь основания πr² = 4π «накрывает» высоту 3 — как стопка блинов!',
+      'Конус: вращение прямоугольного треугольника. У него одно основание-круг и вершина. Объём конуса: V = ⅓πr²h — ровно треть цилиндра с теми же r и h!',
+      'Почему треть? Три одинаковых конуса заполняют цилиндр! Это легко проверить с водой: налей конус в цилиндр три раза — заполнится доверху.',
+      'Шар: вращение полукруга. Объём шара: V = 4/3·πr³. Для r = 1: V = 4π/3 ≈ 4,19. Формула с кубом — радиус в третьей степени!',
+      'Площадь поверхности: у цилиндра S = 2πrh + 2πr² (боковая + два основания). Боковая поверхность цилиндра — это прямоугольник: разверни банку — получишь прямоугольник 2πr на h!',
+      'Тела вращения вокруг нас: банки и трубы (цилиндр), мороженое-рожок и пирамидки (конус), мячи и планеты (шар). Гончарный круг — живая иллюстрация вращения!',
+      'Теперь проверь себя: чему равен объём цилиндра с радиусом r и высотой h? Вспомни: площадь круга × высоту!'
+    ],
+    check: { q: 'Чему равен объём цилиндра (радиус r, высота h)?', choices: ['πr²h', '2πrh', 'πr²', '4πr²'], ans: 0,
+      exp: 'V = πr²h.' },
+    tasks: [
+      { q: 'Сколько граней у куба?', kind: 'unit', ans: 6, tol: 0,
+        hints: ['Как у игрального кубика.', '6 граней.'], sol: '6' },
+      { q: 'Какая фигура является телом вращения?', kind: 'choice', choices: ['конус', 'призма', 'пирамида', 'куб'], ans: 0, tol: 0,
+        hints: ['Получается вращением плоской фигуры.', 'Конус — вращением прямоугольного треугольника.'], sol: 'конус' }
+    ]
+  };
+  function visE433(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Тела вращения</div>
+        <div style="display:flex;gap:14px;justify-content:center;align-items:flex-end">
+          ${[['🥫','цилиндр'],['🍦','конус'],['⚽','шар']].map(x=>`<div style="text-align:center"><div style="font-size:44px" class="wv-swing">${x[0]}</div><div style="font-size:12px;color:#8fd1a8">${x[1]}</div></div>`).join('')}
+        </div>
+        <div class="wv-sml">вращаем плоскую фигуру — получаем тело!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Цилиндр</div>
+        <svg viewBox="0 0 160 150" style="width:140px;height:131px">
+          <ellipse cx="80" cy="30" rx="55" ry="16" fill="rgba(127,209,255,.2)" stroke="#7fd1ff" stroke-width="3"/>
+          <ellipse cx="80" cy="120" rx="55" ry="16" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="3"/>
+          <rect x="25" y="30" width="110" height="90" fill="rgba(127,209,255,.05)"/>
+          <text x="80" y="78" text-anchor="middle" font-size="12" fill="#ffd76a">h</text>
+          <text x="112" y="26" font-size="12" fill="#8fd1a8">r</text>
+        </svg>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:18px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">V = πr²h</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Считаем цилиндр</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-family:Georgia,serif;font-size:18px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">r = 2, h = 3</div>
+          <div class="wv-pop2">V = π·4·3 = 12π ≈ 37,7</div>
+        </div>
+        <div class="wv-sml">площадь круга «накрывает» высоту — как стопка блинов!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Конус — треть цилиндра!</div>
+        <svg viewBox="0 0 160 150" style="width:140px;height:131px">
+          <ellipse cx="80" cy="120" rx="55" ry="16" fill="rgba(255,138,192,.1)" stroke="#ff8ac0" stroke-width="3"/>
+          <polygon points="80,15 25,120 135,120" fill="rgba(255,138,192,.05)"/>
+          <text x="80" y="75" text-anchor="middle" font-size="12" fill="#ffd76a">h</text>
+        </svg>
+        <div style="background:rgba(255,138,192,.12);border:2px solid #ff8ac0;border-radius:12px;padding:8px 12px;font-size:18px;color:#ff8ac0;font-weight:bold;font-family:Georgia,serif">V = ⅓πr²h</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Почему треть?</div>
+        <div class="wv-sml">три конуса заполняют цилиндр — проверь водой!</div>
+        <div style="display:flex;gap:10px;justify-content:center;align-items:flex-end">
+          ${[1,2,3].map(()=>'<svg viewBox="0 0 60 100" style="width:44px;height:74px"><ellipse cx="30" cy="88" rx="22" ry="7" fill="rgba(127,209,255,.2)" stroke="#7fd1ff" stroke-width="2"/><polygon points="30,8 8,88 52,88" fill="rgba(127,209,255,.08)"/></svg>').join('')}
+          <span style="font-size:20px;color:#8fa08f">=</span>
+          <svg viewBox="0 0 70 100" style="width:52px;height:74px"><ellipse cx="35" cy="20" rx="26" ry="7" fill="rgba(127,209,255,.2)" stroke="#7fd1ff" stroke-width="2"/><ellipse cx="35" cy="88" rx="26" ry="7" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="2"/><rect x="9" y="20" width="52" height="68" fill="rgba(127,209,255,.05)"/></svg>
+        </div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Шар</div>
+        <div style="font-size:60px" class="wv-glow">⚽</div>
+        <div style="background:rgba(143,209,168,.12);border:2px solid #8fd1a8;border-radius:12px;padding:8px 12px;font-size:18px;color:#8fd1a8;font-weight:bold;font-family:Georgia,serif">V = 4/3·πr³</div>
+        <div class="wv-sml">r в кубе! r = 1 → V = 4π/3 ≈ 4,19</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Площадь поверхности цилиндра</div>
+        <div style="font-size:19px;color:#ffd76a;font-family:Georgia,serif">S = 2πrh + 2πr²</div>
+        <div class="wv-sml">разверни банку — боковая = прямоугольник 2πr на h!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Вокруг нас</div>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+          ${['🥫','🍦','⚽','🏺'].map((e,i)=>`<span style="font-size:40px" class="wv-pop" style="animation-delay:${i*0.1}s">${e}</span>`).join('')}
+        </div>
+        <div class="wv-sml">банки, рожки, мячи, амфоры — гончарный круг в жизни!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <svg viewBox="0 0 160 150" style="width:130px;height:122px">
+          <ellipse cx="80" cy="30" rx="55" ry="16" fill="rgba(127,209,255,.2)" stroke="#7fd1ff" stroke-width="3"/>
+          <ellipse cx="80" cy="120" rx="55" ry="16" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="3"/>
+          <rect x="25" y="30" width="110" height="90" fill="rgba(127,209,255,.05)"/>
+        </svg>
+        <div class="wv-sml">V цилиндра = ?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:17px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">π?²h</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_E[433]=visE433;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===433){ window.ARH_LESSONS[i]=L433; break; } } })();
+})();
+/* ================= УРОК 434 · Комбинаторика: включение–исключение ================= */
+(function(){
+  const L434 = {
+    id: 434, title: 'Комбинаторика: включение–исключение', ico: '🔀',
+    src: 'Математика · 9 класс · Алгебра 9: комбинаторика', subj: 'math',
+    explain: [
+      'В классе 20 человек любят математику, 15 — физику, а 10 любят ОБА предмета. Сколько человек любят хотя бы один? Если просто сложить 20 + 15 = 35, тех, кто любит оба, посчитаем ДВАЖДЫ!',
+      'Принцип включения-исключения: сначала складываем (включаем), потом вычитаем то, что посчитали дважды (исключаем): |A ∪ B| = |A| + |B| − |A ∩ B|.',
+      'Считаем: 20 + 15 − 10 = 25. Ровно 25 человек любят хотя бы один предмет! Десять «общих» были посчитаны дважды — один раз убрали.',
+      'Представь два круга Эйлера: математики (20) и физики (15), пересечение — любители обоих (10). Общая область: |A∪B| = сумма площадей минус пересечение!',
+      'Ещё пример: 15 ходят на математику, 12 — на информатику, 7 — на обе. Хотя бы на одну: 15 + 12 − 7 = 20. Дважды посчитанных семерых вычитаем!',
+      'А сколько НЕ ходят никуда? В классе 25, хотя бы на один кружок ходят 20. Не ходящих: 25 − 20 = 5. Вычитаем из всего класса тех, кто ходит!',
+      'Для трёх множеств формула сложнее: |A∪B∪C| = |A|+|B|+|C| − |A∩B| − |A∩C| − |B∩C| + |A∩B∩C|. Плюс тройное пересечение возвращается!',
+      'Как решать? 1) нарисуй круги Эйлера; 2) подпиши каждую область; 3) начни с самого «внутреннего» пересечения и двигайся наружу. Круги делают задачу наглядной!',
+      'Теперь проверь себя: 20 и 15 любят предметы, общих 10. Сколько любят хотя бы один? Вспомни: сложи и вычти общих!'
+    ],
+    check: { q: '20 и 15 учеников любят предметы, общих 10. Сколько любят хотя бы один?', choices: ['25', '35', '45', '15'], ans: 0,
+      exp: '20 + 15 − 10 = 25.' },
+    tasks: [
+      { q: '15 ходят на математику, 12 — на информатику, 7 — на обе. Сколько ходят хотя бы на одну?', kind: 'unit', ans: 20, tol: 0,
+        hints: ['15 + 12 − 7.', '20.'], sol: '20' },
+      { q: 'В классе 25, хотя бы на один кружок ходят 20. Сколько не ходят никуда?', kind: 'choice', choices: ['5', '20', '25', '45'], ans: 0, tol: 0,
+        hints: ['25 − 20.', '5.'], sol: '5' }
+    ]
+  };
+  const venn=(a,b,inter)=>`<div style="position:relative;width:230px;height:150px;margin:0 auto">
+    <div style="position:absolute;left:20px;top:25px;width:120px;height:100px;border-radius:50%;background:rgba(127,209,255,.18);border:3px solid #7fd1ff"></div>
+    <div style="position:absolute;right:20px;top:25px;width:120px;height:100px;border-radius:50%;background:rgba(255,138,192,.15);border:3px solid #ff8ac0"></div>
+    <div style="position:absolute;left:38px;top:70px;width:60px;text-align:center;font-size:15px;color:#7fd1ff;font-weight:bold">${a}</div>
+    <div style="position:absolute;right:38px;top:70px;width:60px;text-align:center;font-size:15px;color:#ff8ac0;font-weight:bold">${b}</div>
+    <div style="position:absolute;left:92px;top:70px;width:46px;text-align:center;font-size:14px;color:#ffd76a;font-weight:bold">${inter}</div>
+  </div>`;
+  function visE434(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Дважды посчитали!</div>
+        ${venn(20,15,10)}
+        <div class="wv-sml">20 + 15 = 35, но 10 любителей обоих — в обоих кругах!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Включение–исключение</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:17px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">|A∪B| = |A| + |B| − |A∩B|</div>
+        <div class="wv-sml">сложили (включили) → вычли дважды посчитанных!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Считаем</div>
+        ${venn(20,15,10)}
+        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif" class="wv-ans">20 + 15 − 10 = 25</div>
+        <div class="wv-sml">25 человек любят хотя бы один предмет!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Круги Эйлера</div>
+        ${venn('математики','физики','оба')}
+        <div class="wv-sml">сумма площадей минус пересечение — наглядно!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ещё пример</div>
+        ${venn(15,12,7)}
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-ans">15 + 12 − 7 = 20</div>
+        <div class="wv-sml">ходят хотя бы на один кружок: 20</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Кто не ходит?</div>
+        <div style="display:flex;gap:10px;justify-content:center">
+          <div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid #3d5c49;border-radius:12px;padding:8px 12px"><b style="font-size:20px;color:#e8dcc8;font-family:Georgia,serif">25</b><div style="font-size:10px;color:#8fa08f">в классе</div></div>
+          <div style="text-align:center;background:rgba(127,209,160,.1);border:2px solid #8fd1a8;border-radius:12px;padding:8px 12px"><b style="font-size:20px;color:#8fd1a8;font-family:Georgia,serif">20</b><div style="font-size:10px;color:#9ec0a8">ходят</div></div>
+        </div>
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif" class="wv-ans">25 − 20 = 5 не ходят!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Три множества</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #7fd1ff;border-radius:9px;padding:8px 12px;max-width:340px;font-size:12.5px;color:#e8dcc8;line-height:1.7">|A∪B∪C| = |A|+|B|+|C| − пары пересечений + <b style="color:#ffd76a">тройное пересечение</b></div>
+        <div class="wv-sml">плюс тройное возвращается!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Рецепт</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['1️⃣','нарисуй круги Эйлера','#7fd1ff'],
+            ['2️⃣','начни с самого внутреннего','#8fd1a8'],
+            ['3️⃣','двигайся наружу','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;text-align:left;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${venn(20,15,10)}
+        <div class="wv-sml">хотя бы один любят?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:17px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">20 + 15 − 10 = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_E[434]=visE434;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===434){ window.ARH_LESSONS[i]=L434; break; } } })();
+})();
+/* ================= УРОК 435 · Метод математической индукции ================= */
+(function(){
+  const L435 = {
+    id: 435, title: 'Метод математической индукции', ico: '🪜',
+    src: 'Математика · 9 класс · Алгебра 9: индукция', subj: 'math',
+    explain: [
+      'Метод математической индукции — способ доказать утверждение для ВСЕХ натуральных чисел. Идея как у лестницы: если умеешь встать на первую ступеньку и с каждой ступеньки можешь подняться на следующую — доберёшься до любой!',
+      'Классический пример: сумма 1 + 2 + 3 + … + n = n(n+1)/2. Докажем это для всех n! Сначала проверим маленькие: n = 1: 1 = 1·2/2 = 1 ✔. n = 2: 3 = 2·3/2 = 3 ✔. Работает!',
+      'База индукции: проверяем утверждение для n = 1. Это «первая ступенька». Для суммы: 1 = 1·2/2 — верно! База есть.',
+      'Шаг индукции: ПРЕДПОЛОЖИМ, что формула верна для n (гипотеза), и ДОКАЖЕМ её для n+1. Если получится — лестница работает: с каждой ступеньки поднимаемся на следующую!',
+      'Делаем шаг: пусть 1+2+…+n = n(n+1)/2. Прибавим n+1: 1+2+…+n+(n+1) = n(n+1)/2 + (n+1) = (n+1)(n/2 + 1) = (n+1)(n+2)/2. А это формула для n+1! Шаг доказан!',
+      'Раз база есть и шаг работает — утверждение верно для ВСЕХ n! Проверим для n = 100: 100·101/2 = 5050. Знаменитая сумма Гаусса!',
+      'Заметь: маленький Гаусс нашёл это в 7 лет: 1+100 = 101, 2+99 = 101… таких пар 50 → 50·101 = 5050. Тот же ответ, другой путь!',
+      'Метод индукции в двух шагах: 1) база — проверь n = 1; 2) шаг — из верности для n выведи верность для n+1. Оба есть → доказано для всех!',
+      'Теперь проверь себя: чему равна сумма 1 + 2 + … + 100? Вспомни формулу n(n+1)/2!'
+    ],
+    check: { q: 'Чему равна сумма 1 + 2 + 3 + … + 100?', choices: ['5050', '5000', '505', '10000'], ans: 0,
+      exp: '100·101/2 = 5050.' },
+    tasks: [
+      { q: 'Чему равно 1 + 2 + 3 = 3·4/2 = …?', kind: 'unit', ans: 6, tol: 0,
+        hints: ['3 · 4 : 2.', '6.'], sol: '6' },
+      { q: 'База индукции для утверждения о натуральных n — проверка при…', kind: 'choice', choices: ['n = 1', 'n = 100', 'всех n сразу', 'n = 0'], ans: 0, tol: 0,
+        hints: ['Начинаем с наименьшего.', 'Проверяем n = 1.'], sol: 'n = 1' }
+    ]
+  };
+  const sumEq=(n,res,c)=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${c};border-radius:12px;padding:7px 12px;font-size:16px;color:#e8dcc8;font-family:Georgia,serif">1+2+…+${n} = ${res}</div>`;
+  function visE435(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Лестница индукции</div>
+        <div style="font-size:52px" class="wv-swing">🪜</div>
+        <div class="wv-sml" style="max-width:330px">умеешь на первую ступеньку + поднимаешься с любой → доберёшься до любой!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверяем маленькие n</div>
+        <div style="display:flex;gap:8px;flex-direction:column;max-width:340px;width:100%">
+          ${sumEq(1,'1·2/2 = 1 ✔','#8fd1a8')}
+          ${sumEq(2,'2·3/2 = 3 ✔','#8fd1a8')}
+        </div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">База: n = 1</div>
+        ${sumEq(1,'1 = 1·2/2 — верно!','#ffd76a')}
+        <div class="wv-sml">первая ступенька — на ней стоим!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Шаг индукции</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:15px;color:#e8dcc8;font-family:Georgia,serif">верно для n → докажем для n+1</div>
+        <div class="wv-sml">«с этой ступеньки поднимемся на следующую»</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Делаем шаг</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:15px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">1+…+n = n(n+1)/2 (гипотеза)</div>
+          <div class="wv-pop2">+ (n+1): n(n+1)/2 + (n+1)</div>
+          <div class="wv-pop2">= (n+1)(n/2 + 1)</div>
+          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">= (n+1)(n+2)/2 — формула для n+1!</div>
+        </div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Доказано для всех!</div>
+        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
+          ${chip('база есть','#8fd1a8')}${chip('шаг работает','#7fd1ff')}${chip('→ верно для всех n','#ffd76a')}
+        </div>
+        <div style="font-size:20px;color:#ffd76a;font-family:Georgia,serif;margin-top:4px">1+2+…+100 = 100·101/2 = 5050</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Способ Гаусса</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.7">1+100 = 101, 2+99 = 101… <b style="color:#8fd1a8">50 пар</b> → 50·101 = 5050. Гаусс нашёл это в 7 лет!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Два шага индукции</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['1️⃣','база: проверь n = 1','#8fd1a8'],
+            ['2️⃣','шаг: из n выведи n+1','#7fd1ff']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;text-align:left;font-size:14px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">1 + 2 + … + 100 = ?</div>
+        <div class="wv-sml">формула n(n+1)/2 при n = 100</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:17px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">100·101/2 = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_E[435]=visE435;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===435){ window.ARH_LESSONS[i]=L435; break; } } })();
+})();
