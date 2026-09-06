@@ -2323,3 +2323,227 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW83Act=visW83Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===83){ window.ARH_LESSONS[i]=L83; break; } } })();
 })();
+/* ================= УРОК 173 · Степень: квадрат и куб числа (v1, без эмодзи) ================= */
+(function(){
+  if(!window.__wk173css){
+    window.__wk173css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .k2in{animation:k2In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes k2In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .k2pop{animation:k2Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k2Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .k2flow{stroke-dasharray:7 6;animation:k2Flow .8s linear infinite;}'+
+      '@keyframes k2Flow{to{stroke-dashoffset:-26}}'+
+      '#lvis .k2tile{animation:k2Pop .5s ease both;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1.5px solid #4a6a54;border-radius:12px;cursor:pointer;padding:6px 4px 5px;min-width:44px;transition:border-color .15s}'+
+      '#lvis .k2tile.on{border-color:#ffd76a;background:rgba(217,164,65,.12)}';
+    document.head.appendChild(st);
+  }
+  const L173 = {
+    id: 173, title: 'Степень: квадрат и куб числа', ico: '²',
+    src: 'Математика · 5 класс · Степень', subj: 'math',
+    explain: [
+      'Квадрат числа — это число, умноженное само на себя: 5² = 5 · 5 = 25. Маленькая двойка говорит: «возьми число два раза». Покрути основание и посмотри, как растёт квадрат.',
+      'Куб числа — число, взятое три раза: 2³ = 2 · 2 · 2 = 8. Два этажа по четыре кубика — вот и весь объём.',
+      'Почему так называются? 5² — это площадь квадрата со стороной 5, а 2³ — объём куба с ребром 2. Квадрат отвечает за площадь, куб — за объём.',
+      'Сначала возводим в степень, потом складываем: 3² + 2² = 9 + 4 = 13. Нельзя сложить 3 + 2 = 5 и потом возводить — степень сильнее сложения.',
+      'Ловушка: 2³ — это не 2 · 3 = 6! Куб берёт число три раза: 2 · 2 · 2 = 8. Показатель 3 означает, сколько раз число умножается само на себя.',
+      'Совет Архимеда: запиши степень развёрнуто и перемножь по шагам: 5² = 5 · 5 = 25. Так легко найти и 6², и любую другую степень.',
+      'Квадраты удобно помнить наизусть: 1² = 1, 2² = 4, 3² = 9, 4² = 16, 5² = 25, 6² = 36. Нажми на плитку и посмотри, как число «квадратится».',
+      'Степени десятки — это просто нули: 10² = 100 (два нуля), 10³ = 1000 (три нуля). Приписывай нулей столько, сколько показывает степень.',
+      'Проверь себя: чему равен квадрат 5 (5²) и куб 2 (2³)? Ответь на оба вопроса — и жми «Понял! Проверю себя».'
+    ],
+    check: { q: 'Чему равен квадрат числа 5 (5²)?', choices: ['10', '20', '25'], ans: 2,
+      exp: '5² = 5 · 5 = 25.' },
+    tasks: [
+      { q: 'Чему равен куб числа 2 (2³)?', kind: 'unit', ans: 8, tol: 0,
+        hints: ['Куб — число взятое три раза.', '2 · 2 · 2 = 8.'], sol: '2³ = 2 · 2 · 2 = 8.' },
+      { q: 'Чему равно 3² + 2²?', kind: 'choice', choices: ['10', '13', '25'], ans: 1, tol: 0,
+        hints: ['Сначала степени: 3² = 9, 2² = 4.', '9 + 4 = 13.'], sol: '3² = 9, 2² = 4, 9 + 4 = 13.' }
+    ]
+  };
+  const G2={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a',cream:'#f2e7c9'};
+  const BC2=['#e8b34b','#6fbf7a','#5aa0d8','#d98ab0','#e08a55'];
+  /* сетка n×n квадратиков (SVG): квадрат числа */
+  function sqGrid(n,opt){
+    const o=opt||{};
+    const W=o.w||318;
+    const cell=o.cell||Math.min(34,Math.floor((W-22)/n));
+    const gap=2, x0=Math.round((W-(n*cell+(n-1)*gap))/2), y0=o.y0||12;
+    let s='';
+    for(let r=0;r<n;r++)for(let c=0;c<n;c++){
+      const i=r*n+c;
+      s+=`<rect class="k2pop" style="animation-delay:${(o.d0||0.02+i*0.018).toFixed(2)}s" x="${x0+c*(cell+gap)}" y="${y0+r*(cell+gap)}" width="${cell}" height="${cell}" rx="${Math.max(2,cell*0.12)}" fill="${BC2[(i%BC2.length)]}" opacity=".95"/>`;
+    }
+    const h=y0+n*(cell+gap)+4;
+    return o.pct
+      ? `<svg viewBox="0 0 ${W} ${h}" style="display:block;width:100%;height:auto">${s}</svg>`
+      : `<svg width="${W}" height="${h}" viewBox="0 0 ${W} ${h}" style="display:block">${s}</svg>`;
+  }
+  /* два этажа по 2×2 кубика = 2³ (вид с лёгким смещением верхнего этажа) */
+  function cubeLayers(opt){
+    const o=opt||{};
+    const W=o.w||318, s=o.s||30;
+    const x0=Math.round((W- (s*2+ (o.shift||8) ))/2), yTop=o.yTop||26;
+    const bot=[];
+    for(let r=0;r<2;r++)for(let c=0;c<2;c++){
+      bot.push(`<rect class="k2pop" style="animation-delay:${(0.05+(r*2+c)*0.08).toFixed(2)}s" x="${x0+c*(s+3)}" y="${yTop+s-4+(r)*(s+3)}" width="${s}" height="${s}" rx="4" fill="#c98f2e" stroke="#6f4f14" stroke-width="1.6"/>`);
+    }
+    const sh=o.shift||8, up=[];
+    for(let r=0;r<2;r++)for(let c=0;c<2;c++){
+      up.push(`<rect class="k2pop" style="animation-delay:${(0.35+(r*2+c)*0.08).toFixed(2)}s" x="${x0-sh+c*(s+3)}" y="${yTop-s+sh+r*(s+3)}" width="${s}" height="${s}" rx="4" fill="${o.topCol||'#ffd76a'}" stroke="#8a5f16" stroke-width="1.6"/>`);
+    }
+    const h=yTop+2*(s+3)+8;
+    return o.pct
+      ? `<svg viewBox="0 0 ${W} ${h}" style="display:block;width:100%;height:auto">${bot.join('')}${up.join('')}</svg>`
+      : `<svg width="${W}" height="${h}" viewBox="0 0 ${W} ${h}" style="display:block">${bot.join('')}${up.join('')}</svg>`;
+  }
+  const cap2=(t,c)=>`<div style="font-size:13.5px;color:${c||'#d8c9a8'};text-align:center;font-weight:bold;line-height:1.4">${t}</div>`;
+  const pill2=(t,c,delay)=>`<span class="k2in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 13px;border-radius:13px;border:2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const num2=(t,c)=>`<span style="display:inline-block;min-width:46px;text-align:center;font-family:Georgia,serif;font-size:40px;color:${c||'#ffd76a'};font-weight:bold;line-height:1">${t}</span>`;
+  const Q173=[
+    {q:'Чему равен квадрат числа 5, то есть 5²?',opts:['10','20','25'],ans:2},
+    {q:'Чему равен куб числа 2, то есть 2³?',opts:['4','6','8'],ans:2}
+  ];
+  function quiz(lk,st){
+    const T=Q173[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?G2.green:G2.red; tc=i===T.ans?G2.green:G2.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:70px;font-size:18px" onclick="visW173T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 2 · 2 · 2 = 8 — не путай с 2 · 3 = 6</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 5 · 5 = 25 — двойка сверху значит «два раза»</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Степень — число, умноженное само на себя нужное число раз</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий вопрос →',`visW173Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW173Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:12px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW173(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; if(step===0||step===5){ st.n=5; } if(step===6){ if(st.tile==null) st.tile=3; } if(step===7){ st.ten=2; } if(step===8){ st.sel=null; st.q=0; } }
+    let h='';
+    if(step===0){
+      const n=st.n||5;
+      h=wkFrame(wkBig('Квадрат: число умножаем само на себя')+
+        wkHero(sqGrid(n))+
+        wkRow(pill2(n+'² = '+n+' · '+n+' = '+(n*n), G2.gold,0.25))+
+        wkRow(wkBtn('− 1',`visW173Act('${lk}','dec')`),wkBtn('+ 1',`visW173Act('${lk}','inc')`))+
+        wkSml('сторона '+n+' — квадрат из '+n*n+' клеток: ровно столько, сколько даёт '+n+'²'));
+    } else if(step===1){
+      h=wkFrame(wkBig('Куб: число берём три раза')+
+        wkHero(cubeLayers({w:318,s:32,shift:10,yTop:44,topCol:'#ffd76a'}))+
+        wkRow(pill2('2³ = 2 · 2 · 2 = 8', G2.gold,0.4))+
+        wkAns('нижний этаж 2×2 = 4 и верхний 2×2 = 4 — всего 8', G2.green)+
+        wkSml('показатель 3 — сколько раз умножаем: 2 · 2 · 2, а не 2 · 3'));
+    } else if(step===2){
+      h=wkFrame(wkBig('Почему «квадрат» и «куб»?')+
+        `<div class="wk-row" style="gap:8px;align-items:stretch">
+          <div class="k2in" style="flex:1 1 128px;min-width:0;text-align:center;border:1.5px solid #4a6a54;border-radius:14px;padding:6px 6px 8px">
+            <div style="font-size:12px;color:#9ec0a8;margin-bottom:2px">площадь 5²</div>${sqGrid(5,{w:150,cell:18,y0:8,pct:1})}
+            <div style="font-size:20px;color:#ffd76a;font-weight:bold;margin-top:2px">= 25</div></div>
+          <div class="k2in" style="animation-delay:.15s;flex:1 1 128px;min-width:0;text-align:center;border:1.5px solid #4a6a54;border-radius:14px;padding:6px 4px 8px">
+            <div style="font-size:12px;color:#9ec0a8;margin-bottom:2px">объём 2³</div>${cubeLayers({w:150,s:15,shift:5,yTop:22,topCol:'#8fd1a8',pct:1})}
+            <div style="font-size:20px;color:#8fd1a8;font-weight:bold;margin-top:2px">= 8</div></div>
+        </div>`+
+        wkSml('5² — площадь квадрата со стороной 5 · 2³ — объём куба с ребром 2'));
+    } else if(step===3){
+      h=wkFrame(wkBig('Сначала степень, потом сложение')+
+        `<div class="wk-row" style="gap:8px;align-items:center">
+          <div class="k2in" style="text-align:center;flex:0 1 120px;min-width:0"><div style="font-size:13px;color:#ffd76a;font-weight:bold">3² = 9</div>${sqGrid(3,{w:120,cell:18,y0:6,pct:1})}</div>
+          <span class="k2in" style="animation-delay:.12s;font-size:24px;color:#cfe0cf;font-weight:bold">+</span>
+          <div class="k2in" style="animation-delay:.2s;text-align:center;flex:0 1 120px;min-width:0"><div style="font-size:13px;color:#7fd1ff;font-weight:bold">2² = 4</div>${sqGrid(2,{w:120,cell:18,y0:16,pct:1})}</div>
+        </div>`+
+        wkHero(`<svg width="318" height="34" viewBox="0 0 318 34" style="display:block"><line class="k2flow" x1="120" y1="17" x2="198" y2="17" stroke="#ffd76a" stroke-width="3"/></svg>`)+
+        `<div class="wk-row">${num2('9','#ffd76a')}<span class="k2in" style="animation-delay:.3s;font-size:26px;color:#cfe0cf;font-weight:bold">+</span>${num2('4','#7fd1ff')}<span class="k2in" style="animation-delay:.4s;font-size:26px;color:#cfe0cf;font-weight:bold">=</span>${num2('13','#8fd1a8')}</div>`+
+        wkSml('сначала возвели в степень (9 и 4), потом сложили — как в выражении 3² + 2²'));
+    } else if(step===4){
+      const chosen=st.sel!=null;
+      h=wkFrame(wkBig('Ловушка: 2³ — это не 6!')+
+        (chosen
+          ? (st.sel===1
+              ? wkHero(cubeLayers({w:318,s:26,shift:8,yTop:34,topCol:'#8fd1a8'}))
+              : `<div class="wk-row" style="gap:10px;align-items:center">
+                  <span class="k2in" style="display:inline-block;padding:8px 14px;border:2.5px solid #ff8a7a;border-radius:14px;font-size:22px;color:#ff8a7a;font-weight:bold">2·3 = 6</span>
+                  <span class="k2in" style="animation-delay:.15s;font-size:24px;color:#cfe0cf;font-weight:bold">≠</span>
+                  <span class="k2in" style="animation-delay:.3s;display:inline-block;padding:8px 14px;border:2.5px solid #8fd1a8;border-radius:14px;font-size:22px;color:#8fd1a8;font-weight:bold">2·2·2 = 8</span></div>`)
+          : wkHero(`<svg width="318" height="120" viewBox="0 0 318 120" style="display:block">
+              <text x="70" y="74" text-anchor="middle" font-size="56" fill="#ffd76a" font-weight="bold">2³</text>
+              <rect class="k2pop" x="140" y="22" width="150" height="78" rx="14" fill="rgba(255,255,255,.04)" stroke="#3d5c49"/>
+              <text x="215" y="74" text-anchor="middle" font-size="48" fill="#cfe0cf" font-weight="bold">?</text></svg>`))+
+        (chosen
+          ? (st.sel===1
+              ? wkAns('Верно! 2 · 2 · 2 = 8 — показатель говорит, сколько раз умножаем', G2.green)
+              : wkAns('Нет: 6 — это 2 · 3. А куб — 2 · 2 · 2 = 8', G2.red))
+          : wkNote('Чему равно 2³? Выбери верный вариант','#cfe0cf'))+
+        (chosen
+          ? wkRow(wkBtn('заново',`visW173Act('${lk}','rst')`))
+          : wkRow(wkBtn('6',`visW173T('${lk}',0)`),wkBtn('8',`visW173T('${lk}',1)`)))+
+        wkSml('показатель 3 — это количество множителей, а не «умножить на 3»'));
+    } else if(step===5){
+      const n=st.n||5;
+      const prod=[];
+      for(let i=0;i<2;i++) prod.push(`<span class="k2pop" style="animation-delay:${(0.15+i*0.15).toFixed(2)}s;display:inline-flex;align-items:center;justify-content:center;min-width:52px;height:52px;border:3px solid #ffd76a;border-radius:14px;font-family:Georgia,serif;font-size:30px;color:#fff;font-weight:bold">${n}</span>`);
+      h=wkFrame(wkBig('Совет: запиши развёрнуто')+
+        wkRow(pill2(n+'²', G2.blue,0))+
+        wkHero(`<svg width="318" height="26" viewBox="0 0 318 26" style="display:block"><line x1="120" y1="13" x2="198" y2="13" stroke="#ffd76a" stroke-width="3" stroke-dasharray="8 6" class="k2flow"/></svg>`)+
+        `<div class="wk-row">${prod.join('')}</div>`+
+        wkHero(`<svg width="318" height="26" viewBox="0 0 318 26" style="display:block"><line x1="120" y1="13" x2="198" y2="13" stroke="#ffd76a" stroke-width="3" stroke-dasharray="8 6" class="k2flow" style="animation-delay:.3s"/></svg>`)+
+        num2(n*n, G2.green)+
+        wkRow(wkBtn('− 1',`visW173Act('${lk}','dec')`),wkBtn('+ 1',`visW173Act('${lk}','inc')`))+
+        wkSml('разверни степень в умножение: '+n+' · '+n+' = '+n*n+' — так не запутаешься'));
+    } else if(step===6){
+      const tiles=[1,2,3,4,5,6].map(n=>{
+        const on=st.tile===n;
+        return `<button class="k2tile ${on?'on':''}" onclick="visW173Act('${lk}','t${n}')" style="animation-delay:${(0.05+n*0.06).toFixed(2)}s">
+          <div style="font-size:15px;color:#e8dcc8;font-weight:bold">${n}²</div>
+          <div style="font-size:22px;color:${on?'#ffd76a':'#8fd1a8'};font-weight:bold;font-family:Georgia,serif">${n*n}</div>
+          ${on?`<div style="font-size:10px;color:#ffd76a">${n}·${n}</div>`:`<div style="height:13px"></div>`}
+        </button>`;
+      }).join('');
+      h=wkFrame(wkBig('Квадраты — наизусть')+
+        `<div class="wk-row" style="gap:5px">${tiles}</div>`+
+        (st.tile? `<div class="k2in" style="width:100%">${sqGrid(st.tile,{w:318,cell:Math.min(40,Math.floor(300/st.tile)),y0:8,pct:1})}</div>`:'')+
+        wkSml('1²=1 · 2²=4 · 3²=9 · 4²=16 · 5²=25 · 6²=36 — нажми, чтобы увидеть квадрат'));
+    } else if(step===7){
+      const k=st.ten||2;
+      const zeros=Array.from({length:k},(_,i)=>`<span class="k2pop" style="animation-delay:${(0.2+i*0.14).toFixed(2)}s;display:inline-block;min-width:44px;text-align:center;font-family:Georgia,serif;font-size:44px;color:${i===0?'#ffd76a':'#8fd1a8'};font-weight:bold">0</span>`).join('');
+      const mults=Array.from({length:k},()=>'<span style="font-family:Georgia,serif;font-size:24px;color:#cfe0cf;font-weight:bold">10</span>').join('<span style="font-size:20px;color:#cfe0cf;font-weight:bold;padding:0 3px">·</span>');
+      h=wkFrame(wkBig('Степени десятки — это нули')+
+        `<div class="wk-row">${mults}</div>`+
+        wkHero(`<svg width="318" height="22" viewBox="0 0 318 22" style="display:block"><line x1="120" y1="11" x2="198" y2="11" stroke="#ffd76a" stroke-width="3" stroke-dasharray="8 6" class="k2flow"/></svg>`)+
+        `<div class="wk-row"><span style="font-family:Georgia,serif;font-size:44px;color:#fff;font-weight:bold">1</span>${zeros}</div>`+
+        wkRow(wkBtn('10²',`visW173Act('${lk}','ten2')`),wkBtn('10³',`visW173Act('${lk}','ten3')`))+
+        wkSml('10² = 100 — два нуля · 10³ = 1000 — три нуля: сколько в показателе, столько и нулей'));
+    } else {
+      h=wkFrame(wkBig('Проверь себя')+
+        wkHero(sqGrid(5,{w:318,cell:22,y0:8}))+
+        quiz(lk,st)+
+        wkSml('5² = 25 · 2³ = 8 — а теперь жми «Понял! Проверю себя» и реши обе задачи'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[173]=visW173;
+  function visW173T(lk,i){
+    const st=CHS[lk]||(CHS[lk]={});
+    st.sel=i; chRender(0);
+  }
+  window.visW173T=visW173T;
+  function visW173Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='inc'){ const n=(st.n||5)+1; st.n=Math.min(9,n); }
+    if(act==='dec'){ const n=(st.n||5)-1; st.n=Math.max(2,n); }
+    if(act==='ten2') st.ten=2;
+    if(act==='ten3') st.ten=3;
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    if(/^t[1-6]$/.test(act)) st.tile=+act.slice(1);
+    chRender(0);
+  }
+  window.visW173Act=visW173Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===173){ window.ARH_LESSONS[i]=L173; break; } } })();
+})();
