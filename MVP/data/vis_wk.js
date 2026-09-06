@@ -1546,33 +1546,33 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===21){ window.ARH_LESSONS[i]=L21; break; } } })();
 })();
 
-/* ================= УРОК 79 · Сложение и вычитание дробей (v4) ================= */
+/* ================= УРОК 79 · Сложение и вычитание дробей (v5, эталон урока 2) ================= */
 (function(){
-  if(!window.__wk79css){
-    window.__wk79css=1;
+  if(!window.__wk79v5css){
+    window.__wk79v5css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .wk-fall{animation:wkF79 .55s cubic-bezier(.2,.8,.3,1.1) both;}'+
-      '@keyframes wkF79{0%{transform:translateY(-16px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .wk-grow{animation:wkG79 .6s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes wkG79{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1);opacity:1}}'+
-      '#lvis .wk-dash{stroke-dasharray:6 5;animation:wkD79 .8s linear infinite;}'+
-      '@keyframes wkD79{to{stroke-dashoffset:-18}}';
+      '#lvis .v5in{animation:v5In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes v5In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .v5pop{animation:v5Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes v5Pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .v5flow{stroke-dasharray:8 6;animation:v5Flow .9s linear infinite;}'+
+      '@keyframes v5Flow{to{stroke-dashoffset:-28}}';
     document.head.appendChild(st);
   }
   const L79 = {
     id: 79, title: 'Сложение и вычитание дробей', ico: '🍕',
     src: 'Математика · 5 класс · Дроби: сложение и вычитание', subj: 'math',
     explain: [
-      'Пиццерия Архимеда: одна большая пицца разрезана на 8 РАВНЫХ кусков. Два друга заказали её на двоих: первый взял 3 куска, второй — 4. Сколько кусков они съели вместе? Это пример на сложение дробей: 3/8 + 4/8 = ?',
-      'Вспомним, что говорит дробь: знаменатель — на сколько равных частей разделили целое (пиццу, пирог или шоколадку), а числитель — сколько таких частей взяли. В дроби 3/8 знаменатель 8: пицца на 8 кусков; числитель 3: взяли 3 куска.',
-      'Складываем одинаковые доли: 2/7 + 3/7 = 5/7. Куски одной пиццы, одного размера — можно соединять. Знаменатель НЕ меняется: складываем только числители 2 + 3 = 5, а «седьмых» по-прежнему семь.',
-      'Наш пример: 3/8 + 4/8. Кусков всего 8, значит и в ответе знаменатель 8. Складываем числители: 3 + 4 = 7. Получаем 7/8! Ошибка-ловушка: некоторые складывают и знаменатели — 7/16 — так делать НЕЛЬЗЯ: кусков по-прежнему 8.',
-      'Вычитание — то же самое, только наоборот: 5/8 − 2/8 = 3/8. Было 5 кусков, два убрали — осталось 3 из тех же восьми. Ещё пример: 7/10 − 3/10 = 4/10 (семь десятых минус три десятых — четыре десятых).',
-      'Задача «сколько осталось»: пирог разрезали на 9 равных кусков. Маша съела 2/9, Петя — 3/9. Вместе съели 2/9 + 3/9 = 5/9 — это 5 кусков. Осталось 9 − 5 = 4 куска, то есть 4/9 пирога.',
-      'А если доли разные? 2/3 + 1/4 напрямую не сложить: треть и четверть — куски разного размера. Сначала нарезаем пиццу на ОДИНАКОВЫЕ дольки: общий знаменатель 12 (это НОК чисел 3 и 4). Получаем 2/3 = 8/12 и 1/4 = 3/12.',
-      'Теперь всё просто: 8/12 + 3/12 = 11/12. И вычитание так же: 5/6 − 3/4 → общий знаменатель 12: 5/6 = 10/12, 3/4 = 9/12 → 10/12 − 9/12 = 1/12. Три шага: НОК → привести каждую дробь → сложить (вычесть) числители.',
-      'Проверь себя: 3/8 + 4/8 = ? Помни: кусков 8, складываем только числители! Ответь в тесте и жми «Понял! Проверю себя».'
+      'Пиццерия Архимеда: одна пицца разрезана на 8 РАВНЫХ кусков. Два друга заказали её на двоих: первый взял 3 куска, второй — 4. Сколько кусков они съели вместе? Вопрос простой: 3 куска плюс 4 куска из одной пиццы — сколько всего? Это и есть сложение дробей: 3/8 + 4/8 = ?',
+      'Сначала вспомним язык дробей. Знаменатель (число внизу) говорит, на сколько РАВНЫХ частей разделили целое: у нас 8 кусков. Числитель (число сверху) говорит, сколько таких частей взяли: например, 3. Значит, 3/8 — это «три куска из восьми». Целая пицца — 8/8.',
+      'Правило сложения одинаковых долей: если куски ОДНОГО размера, их можно соединять. 2/7 + 3/7: взяли 2 седьмых и ещё 3 седьмых — всего 5 седьмых, но «седьмых» по-прежнему 7. Знаменатель НЕ меняется, складываем только числители: 2 + 3 = 5. Ответ 5/7.',
+      'Теперь наш пример: 3/8 + 4/8. Пицца одна, кусков в ней 8 — значит, и в ответе знаменатель 8. Складываем числители: 3 + 4 = 7. Получаем 7/8! Ловушка: некоторые складывают и знаменатели (8+8=16) и пишут 7/16. Так нельзя: кусков в пицце по-прежнему восемь!',
+      'Вычитание — то же сложение, только наоборот: 5/8 − 2/8. Было 5 кусков, два убрали — осталось 3 из тех же восьми: 5/8 − 2/8 = 3/8. Ещё пример: 7/10 − 3/10 = 4/10. Знаменатель не меняется, вычитаем только числители.',
+      'Задача «сколько осталось»: пирог разрезали на 9 равных кусков. Маша съела 2/9, Петя — 3/9. Вместе они съели 2/9 + 3/9 = 5/9, то есть 5 кусков из 9. Сколько осталось? Из 9 кусков убрали 5 — осталось 4 куска, то есть 4/9 пирога.',
+      'А если доли РАЗНЫЕ? Например, 2/3 + 1/4: треть и четверть — куски разного размера, их нельзя складывать как 3/7. Сначала приводим к одинаковым долям: общий знаменатель 12 (это НОК чисел 3 и 4). Тогда 2/3 = 8/12, а 1/4 = 3/12.',
+      'Теперь всё просто: 8/12 + 3/12 = 11/12. И вычитание с разными знаменателями: 5/6 − 3/4. НОК чисел 6 и 4 — это 12: 5/6 = 10/12, 3/4 = 9/12, значит 10/12 − 9/12 = 1/12. Всегда три шага: найди НОК → приведи каждую дробь → посчитай числители.',
+      'Проверь себя: 3/8 + 4/8 = ? Пицца на 8 кусков, складываем только числители: 3 + 4 = 7, знаменатель остаётся 8. Ответ: 7/8! Жми «Понял! Проверю себя» — там ждёт этот пример.'
     ],
     check: { q: 'Сколько будет 3/8 + 4/8?', choices: ['7', '7/8', '7/16'], ans: 1,
       exp: 'Числители складываем: 3 + 4 = 7, а знаменатель 8 остаётся → 3/8 + 4/8 = 7/8.' },
@@ -1583,113 +1583,137 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Числители вычитаем: 7 - 3.', 'Знаменатель 10 не меняется.'], sol: '7 - 3 = 4, знаменатель прежний → 7/10 - 3/10 = 4/10.' }
     ]
   };
-  const P=['#ffd76a','#8fd1a8','#7fd1ff','#e8a0d8','#ff9a7a'];
+  const SLICE_COL=['#ffd76a','#ffb35c','#ff8f6b','#ff7fa8','#c9a0ff','#9fd1ff','#8fd1a8','#e8e0c8'];
+  const G={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a'};
   const rad=(d)=>d*Math.PI/180;
-  function pie(den,hl,uid,opt){
+  /* пицца из кусков без цифр внутри: только цвет и золотая корочка у «взятых» */
+  function pizza(den,hl,uid,opt){
     const o=opt||{};
     const s=o.s||120;
-    const W=s+14, cx=W/2, cy=W/2, R=s/2-2;
+    const W=s+12, cx=W/2, cy=W/2, R=s/2-2;
     const step=360/den, gapD=Math.min(2.2,Math.max(0.8,7/den));
     const hlN=Math.max(0,Math.min(den,hl==null?0:hl));
-    let svg=`<svg width="${W}" height="${W}" viewBox="0 0 ${W} ${W}" style="display:block;margin:0 auto"><circle cx="${cx}" cy="${cy}" r="${R+1.5}" fill="#101a13"/>`;
+    let svg=`<svg width="${W}" height="${W}" viewBox="0 0 ${W} ${W}" style="display:block;margin:0 auto"><circle cx="${cx}" cy="${cy}" r="${R+2}" fill="#161f18" stroke="#2a3f30"/>`;
     for(let i=0;i<den;i++){
       const a0=-90+i*step+gapD/2, a1=-90+(i+1)*step-gapD/2;
       const on=hlN>0&&i<hlN;
       const x0=cx+R*Math.cos(rad(a0)),y0=cy+R*Math.sin(rad(a0));
       const x1=cx+R*Math.cos(rad(a1)),y1=cy+R*Math.sin(rad(a1));
       const large=(a1-a0)>180?1:0;
-      const mid=rad(-90+i*step+step/2);
       const d=`M${cx},${cy} L${x0.toFixed(1)},${y0.toFixed(1)} A${R},${R} 0 ${large} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`;
-      svg+=`<g class="${on?'wk-grow':''}" style="${on?'animation-delay:'+(i*0.1).toFixed(2)+'s':''}" filter="${on?'drop-shadow(0 0 5px rgba(255,215,106,.9))':'none'}">
-        <path d="${d}" fill="${on?P[i%5]:'#22362a'}" stroke="${on?'#ffd76a':'#3d5c49'}" stroke-width="${on?2.2:1.2}"/>
-        ${on?`<text x="${(cx+R*0.55*Math.cos(mid)).toFixed(1)}" y="${(cy+R*0.55*Math.sin(mid)+4).toFixed(1)}" text-anchor="middle" font-size="11" fill="#0d1a13" font-weight="bold">${i+1}</text>`:''}
+      svg+=`<g class="${on?'v5pop':''}" style="${on?'animation-delay:'+(i*0.09).toFixed(2)+'s':''}">
+        <path d="${d}" fill="${on?SLICE_COL[i%SLICE_COL.length]:'#24382c'}" stroke="${on?'#ffd76a':'#3d5c49'}" stroke-width="${on?2.6:1.2}"/>
+        ${on?`<path d="${d}" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1"/>`:''}
       </g>`;
     }
     svg+='</svg>';
     return svg;
   }
-  const cap=(t)=>`<div style="font-size:12.5px;color:#cfe0cf;text-align:center;font-weight:bold;font-family:Georgia,serif">${t}</div>`;
+  const banner=(t,c)=>`<div class="v5in" style="font-size:12.5px;letter-spacing:1.5px;color:${c||'#c9b28a'};font-weight:bold;text-align:center">${t}</div>`;
+  const cap=(t)=>`<div style="font-size:13px;color:#e8dcc8;text-align:center;font-family:Georgia,serif;font-weight:bold">${t}</div>`;
   const Q79=[
     {q:'3/8 + 4/8 = ?',opts:['7/16','7/8','7'],ans:1},
-    {q:'5/8 − 2/8 = ?',opts:['3/8','3/0','7/8'],ans:0}
+    {q:'5/8 − 2/8 = ?',opts:['3/0','3/8','7/8'],ans:0}
   ];
   function quiz(lk,st){
     const T=Q79[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.05)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.2)':'rgba(232,106,90,.2)'; bd=i===T.ans?'#8fd1a8':'#ff8a7a'; tc=i===T.ans?'#8fd1a8':'#ff8a7a'; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:16px" onclick="visW79T('${lk}',${i})">${o}</button>`;
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?G.green:G.red; tc=i===T.ans?G.green:G.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:70px;font-size:17px" onclick="visW79T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">🎉 верно! Оба примера решены!</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">✅ верно! 3+4=7, знаменатель 8</div>')
-        : '<div class="wk-ans" style="color:#ff8a7a;font-size:15px">❌ складывай только числители, знаменатель тот же</div>';
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">🎉 верно! Оба примера решены!</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">✅ верно! 3+4 = 7, знаменатель 8</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:15.5px">❌ складывай числители, знаменатель не трогай</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW79Act('${lk}','nq')`):'';
-    const rst=wkBtn('↺',`visW79Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    const rst=wkBtn('↺ заново',`visW79Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW79(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     let h='';
     if(step===0){
-      if(st.eat==null) st.eat=7;
-      h=wkFrame(wkBig('Пиццерия Архимеда 🍕')+
-        wkHero(`<div class="wk-row" style="gap:14px">${pie(8,3,'a',{s:118})}<span style="font-size:30px;color:#8fa08f;font-weight:bold">+</span>${pie(8,4,'b',{s:118})}</div>`)+
-        cap('первый друг: 3 куска · второй: 4 куска')+
-        wkAns('сколько съели вместе — 3/8 + 4/8 = ?', '#ffd76a')+
-        wkSml('пицца одна — разрезана на 8 равных кусков, как в дроби 3/8'));
+      if(st.a==null) st.a=3;
+      if(st.b==null) st.b=4;
+      h=wkFrame(banner('🍕 ПИЦЦЕРИЯ АРХИМЕДА · ПИЦЦА НА 8 КУСКОВ','#ffd76a')+
+        wkBig('Сколько кусков съели вместе?')+
+        wkHero(`<div class="wk-row" style="gap:8px"><div style="text-align:center">${pizza(8,st.a,'a',{s:98})}${cap('друг №1: '+st.a+'/8')}</div><span class="v5pop" style="font-size:34px;color:#cfe0cf;font-weight:bold">+</span><div style="text-align:center">${pizza(8,st.b,'b',{s:98})}${cap('друг №2: '+st.b+'/8')}</div></div>`)+
+        wkRow(wkBtn('🍕 друг №1: ещё кусок',`visW79Act('${lk}','a+')`),wkBtn('🍕 друг №2: ещё кусок',`visW79Act('${lk}','b+')`),wkBtn('↺ заново',`visW79Act('${lk}','rst')`))+
+        wkNote('оба едят одну пиццу из 8 кусков: 3 + 4 = сколько?','#9ec0a8'));
     } else if(step===1){
-      h=wkFrame(wkBig('Что говорит дробь')+
-        wkHero(`<div class="wk-row" style="gap:12px"><div style="text-align:center">${pie(8,3,'c',{s:96})}${cap('3/8')}</div><div style="text-align:center">${pie(8,8,'d',{s:96})}${cap('8/8 = целая')}</div></div>`)+
-        wkRow(wkPill('знаменатель 8 — кусков', '#7fd1ff'),wkPill('числитель 3 — взяли', '#ffd76a'))+
-        wkSml('пиццу, пирог или шоколадку делят на равные части — и считают, сколько взяли'));
+      if(st.h==null) st.h=3;
+      h=wkFrame(banner('ЯЗЫК ДРОБЕЙ','#7fd1ff')+
+        wkBig('Знаменатель и числитель')+
+        wkHero(`<div style="text-align:center">${pizza(8,st.h,'c',{s:140})}${cap(st.h+' кусков из 8 — это '+st.h+'/8')}</div>`)+
+        wkRow(wkBtn('3 куска',`visW79Act('${lk}','h3')`),wkBtn('5 кусков',`visW79Act('${lk}','h5')`),wkBtn('целая 8/8',`visW79Act('${lk}','h8')`))+
+        wkRow(wkPill('знаменатель 8 — всего кусков', G.blue),wkPill('числитель '+st.h+' — взяли', G.gold))+
+        wkSml('8/8 — вся пицца, одно целое. Дроби — это «сколько из скольких».'));
     } else if(step===2){
-      h=wkFrame(wkBig('Складываем одинаковые доли')+
-        wkHero(`<div class="wk-row" style="gap:12px">${pie(7,2,'e',{s:68})}<span style="font-size:22px;color:#8fa08f">+</span>${pie(7,3,'f',{s:68})}<span style="font-size:22px;color:#8fa08f">=</span>${pie(7,5,'g',{s:68})}</div>`)+
-        wkRow(wkPill('2 + 3 = 5', '#8fd1a8'),wkChip('седьмых по-прежнему 7', '#cbb89a'))+
-        wkAns('2/7 + 3/7 = 5/7', '#8fd1a8')+
-        wkSml('куски одной пиццы — одного размера: складываем только числители'));
+      if(st.one==null) st.one=2;
+      h=wkFrame(banner('СКЛАДЫВАЕМ ОДИНАКОВЫЕ ДОЛИ','#8fd1a8')+
+        wkBig('2/7 + 3/7 = 5/7')+
+        wkHero(`<div class="wk-row" style="gap:6px"><div style="text-align:center">${pizza(7,st.one,'d',{s:104})}${cap('2/7')}</div><span class="v5in" style="font-size:28px;color:#cfe0cf;font-weight:bold">+</span><div style="text-align:center">${pizza(7,st.one,'e',{s:104})}${cap('ещё 2/7?')}</div><span class="v5in" style="font-size:28px;color:#cfe0cf;font-weight:bold">→</span></div>`)+
+        wkRow(wkBtn('➕ добавить ещё 1/7',`visW79Act('${lk}','one+')`),wkBtn('↺',`visW79Act('${lk}','one0')`))+
+        (st.one>=5?wkAns('2/7 + 3/7 = 5/7 — только числители!', G.green):'')+
+        wkSml('добавляй куски, пока их не станет 5 — знаменатель 7 не меняется'));
     } else if(step===3){
-      h=wkFrame(wkBig('Ловушка: знаменатели не складываем!')+
-        wkHero(`<div class="wk-row" style="gap:12px">${pie(8,3,'h',{s:112})}<span style="font-size:26px;color:#8fa08f">+</span>${pie(8,4,'i',{s:112})}</div>`)+
-        wkRow(wkChip('3/8 + 4/8', '#9ec0a8'),wkPill('≠ 7/16!', '#ff8a7a'))+
-        wkAns('3/8 + 4/8 = 7/8 — кусков по-прежнему 8!', '#8fd1a8')+
-        wkSml('кто складывает знаменатели — получает 7/16 и ошибку: куски одной пиццы!'));
+      if(st.pick==null) st.pick=-1;
+      const right=1;
+      h=wkFrame(banner('ЛОВУШКА: ЗНАМЕНАТЕЛИ НЕ СКЛАДЫВАЕМ','#ff8a7a')+
+        wkBig('3/8 + 4/8 = ?')+
+        wkHero(`<div class="wk-row" style="gap:8px"><div style="text-align:center">${pizza(8,3,'f',{s:96})}${cap('3/8')}</div><span style="font-size:26px;color:#cfe0cf">+</span><div style="text-align:center">${pizza(8,4,'g',{s:96})}${cap('4/8')}</div></div>`)+
+        wkRow(wkBtn('7/16',`visW79Act('${lk}','p0')`),wkBtn('7/8',`visW79Act('${lk}','p1')`),wkBtn('7',`visW79Act('${lk}','p2')`))+
+        (st.pick===right?wkAns('✅ верно! Кусков в пицце 8 — ответ 7/8', G.green):(st.pick>=0?wkAns('❌ посчитай куски: их 8, а не 16!', G.red):''))+
+        wkSml('кто складывает знаменатели (8+8=16) — получает 7/16 и ошибку'));
     } else if(step===4){
-      h=wkFrame(wkBig('Вычитаем: убираем куски')+
-        wkHero(`<div class="wk-row" style="gap:12px">${pie(8,5,'j',{s:76})}<span style="font-size:22px;color:#8fa08f">−</span>${pie(8,2,'k',{s:76})}<span style="font-size:22px;color:#8fa08f">=</span>${pie(8,3,'l',{s:76})}</div>`)+
-        wkRow(wkPill('5 − 2 = 3', '#8fd1a8'),wkChip('7/10 − 3/10 = 4/10', '#7fd1ff'))+
-        wkAns('5/8 − 2/8 = 3/8', '#8fd1a8')+
-        wkSml('было 5 кусков, 2 убрали — осталось 3 из тех же восьми'));
+      if(st.left==null) st.left=5;
+      const rem=Math.max(0,st.left);
+      h=wkFrame(banner('ВЫЧИТАЕМ: УБИРАЕМ КУСКИ','#7fd1ff')+
+        wkBig('5/8 − 2/8 = 3/8')+
+        wkHero(`<div style="text-align:center">${pizza(8,rem,'i',{s:132})}${cap('осталось: '+rem+'/8')}</div>`)+
+        wkRow(wkBtn('➖ убрать кусок',`visW79Act('${lk}','take')`,rem<=0?'disabled':''),wkBtn('↺ 5 кусков',`visW79Act('${lk}','five')`))+
+        (rem===3?wkAns('5 − 2 = 3 — осталось 3/8!', G.green):'')+
+        wkSml('убирай куски по одному: 5/8 → 4/8 → 3/8. И 7/10 − 3/10 = 4/10 тоже!'));
     } else if(step===5){
-      h=wkFrame(wkBig('Задача: сколько осталось? 🥧')+
-        wkHero(`<div class="wk-row" style="gap:10px"><div style="text-align:center">${pie(9,2,'m',{s:96})}${cap('Маша: 2/9')}</div><div style="text-align:center">${pie(9,3,'n',{s:96})}${cap('Петя: 3/9')}</div></div>`)+
-        wkRow(wkPill('съели 2/9 + 3/9 = 5/9', '#ffd76a'))+
-        wkAns('осталось 9 − 5 = 4 куска (4/9)', '#8fd1a8')+
-        wkSml('пирог на 9 кусков: съели 5 — осталось 4'));
+      h=wkFrame(banner('ЗАДАЧА: ПИРОГ НА 9 КУСКОВ 🥧','#ffd76a')+
+        wkBig('Маша 2/9, Петя 3/9 — сколько осталось?')+
+        wkHero(`<div class="wk-row" style="gap:6px"><div style="text-align:center">${pizza(9,2,'j',{s:90})}${cap('2/9')}</div><span style="font-size:24px;color:#cfe0cf">+</span><div style="text-align:center">${pizza(9,3,'k',{s:90})}${cap('3/9')}</div></div>`)+
+        wkRow(wkPill('съели 2/9 + 3/9 = 5/9', G.gold))+
+        wkAns('осталось: 9 − 5 = 4 куска (4/9)', G.green)+
+        wkSml('из 9 кусков съели 5 — осталось 4. «Осталось» — это вычитание!'));
     } else if(step===6){
-      h=wkFrame(wkBig('Разные доли: режем одинаково')+
-        wkHero(`<div class="wk-row" style="gap:10px">${pie(3,2,'o',{s:86})}<span style="font-size:22px;color:#8fa08f">+</span>${pie(4,1,'p',{s:86})}<span style="font-size:22px;color:#ff8a7a">✗</span></div>`)+
-        wkRow(wkChip('треть ≠ четверти — размер разный!', '#ffcfc2'))+
-        wkRow(wkPill('общий знаменатель 12 (НОК)', '#7fd1ff'),wkChip('2/3 = 8/12 · 1/4 = 3/12', '#cbb89a'))+
-        wkSml('дорезаем пиццу на одинаковые двенадцатые доли'));
+      if(st.r==null) st.r=0;
+      const steps=[
+        ['1️⃣','Найди общий знаменатель: НОК чисел 3 и 4 = 12.','#7fd1ff'],
+        ['2️⃣','Приведи дроби: 2/3 = 8/12, 1/4 = 3/12.','#8fd1a8'],
+        ['3️⃣','Сложи числители: 8 + 3 = 11 → 11/12.','#ffd76a']
+      ];
+      h=wkFrame(banner('РАЗНЫЕ ДОЛИ: ПРИВОДИМ К НОК','#c9a0ff')+
+        wkBig('2/3 + 1/4 = ?')+
+        wkHero(`<div class="wk-row" style="gap:6px"><div style="text-align:center">${pizza(3,2,'m',{s:84})}${cap('2/3')}</div><span style="font-size:22px;color:#cfe0cf">+</span><div style="text-align:center">${pizza(4,1,'n',{s:84})}${cap('1/4')}</div></div>`)+
+        `<div style="display:flex;flex-direction:column;gap:5px;max-width:320px;width:100%">${steps.filter((s,i)=>i<st.r).map(s=>`<div class="v5in" style="background:rgba(255,255,255,.04);border:1px solid ${s[2]}66;border-left:5px solid ${s[2]};border-radius:9px;padding:6px 11px;text-align:left;font-size:13.5px;color:#e8dcc8"><b style="color:${s[2]}">${s[0]}</b> ${s[1]}</div>`).join('')}</div>`+
+        wkRow(wkBtn('▶ следующий шаг',`visW79Act('${lk}','stp')`,st.r>=3?'disabled':''),wkBtn('↺',`visW79Act('${lk}','rst')`))+
+        wkSml('треть и четверть — разного размера: сначала режем всё на двенадцатые'));
     } else if(step===7){
-      h=wkFrame(wkBig('Складываем и вычитаем с НОК')+
-        wkHero(`<svg width="322" height="86" viewBox="0 0 322 86" style="display:block">
-          <rect x="6" y="6" width="310" height="74" rx="15" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="wk-fall"><rect x="14" y="16" width="140" height="54" rx="11" fill="rgba(127,209,255,.08)" stroke="#7fd1ff" stroke-width="2"/><text x="84" y="38" text-anchor="middle" font-size="12" fill="#9fc5e8">разные знаменатели</text><text x="84" y="61" text-anchor="middle" font-size="16" fill="#7fd1ff" font-weight="bold">8/12 + 3/12 = 11/12</text></g>
-          <g class="wk-fall" style="animation-delay:.2s"><rect x="166" y="16" width="146" height="54" rx="11" fill="rgba(217,164,65,.1)" stroke="#ffd76a" stroke-width="2"/><text x="239" y="38" text-anchor="middle" font-size="12" fill="#d9c088">вычитание</text><text x="239" y="61" text-anchor="middle" font-size="16" fill="#ffd76a" font-weight="bold">10/12 − 9/12 = 1/12</text></g>
+      h=wkFrame(banner('ВЫЧИТАНИЕ С РАЗНЫМИ ЗНАМЕНАТЕЛЯМИ','#c9a0ff')+
+        wkBig('5/6 − 3/4 = ?')+
+        wkHero(`<svg width="330" height="96" viewBox="0 0 330 96" style="display:block">
+          <rect x="6" y="6" width="318" height="84" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="165" y="26" text-anchor="middle" font-size="12.5" fill="#9ec0a8">НОК(6, 4) = 12</text>
+          <text x="165" y="52" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold">5/6 = 10/12 · 3/4 = 9/12</text>
+          <text x="165" y="78" text-anchor="middle" font-size="19" fill="#8fd1a8" font-weight="bold">10/12 − 9/12 = 1/12</text>
         </svg>`)+
-        wkAns('три шага: НОК → привести → посчитать числители', '#8fd1a8')+
-        wkSml('5/6 = 10/12, 3/4 = 9/12 — теперь доли одинаковые'));
+        wkRow(wkPill('ответ: 1/12', G.green))+
+        wkSml('три шага всегда одинаковы: НОК → привести → посчитать числители'));
     } else {
-      h=wkFrame(wkBig('Проверь себя 📝')+
-        wkHero(`<div class="wk-row" style="gap:12px">${pie(8,3,'q',{s:108})}<span style="font-size:26px;color:#8fa08f">+</span>${pie(8,4,'r',{s:108})}</div>`)+
-        quiz(lk,st)+
-        wkSml('3+4 = 7, знаменатель 8. Жми «Понял! Проверю себя»!'));
+      h=wkFrame(banner('ПРОВЕРЬ СЕБЯ','#8fd1a8')+
+        wkBig('3/8 + 4/8 = ?')+
+        wkHero(`<div class="wk-row" style="gap:8px"><div style="text-align:center">${pizza(8,3,'p',{s:96})}${cap('3/8')}</div><span style="font-size:26px;color:#cfe0cf">+</span><div style="text-align:center">${pizza(8,4,'q',{s:96})}${cap('4/8')}</div></div>`)+
+        quiz(lk,st));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
@@ -1701,6 +1725,19 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW79T=visW79T;
   function visW79Act(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
+    if(act==='a+') st.a=Math.min(8,(st.a==null?3:st.a)+1);
+    if(act==='b+') st.b=Math.min(8,(st.b==null?4:st.b)+1);
+    if(act==='h3') st.h=3;
+    if(act==='h5') st.h=5;
+    if(act==='h8') st.h=8;
+    if(act==='one+') st.one=Math.min(7,(st.one==null?2:st.one)+1);
+    if(act==='one0') st.one=0;
+    if(act==='p0') st.pick=0;
+    if(act==='p1') st.pick=1;
+    if(act==='p2') st.pick=2;
+    if(act==='take') st.left=Math.max(0,(st.left==null?5:st.left)-1);
+    if(act==='five') st.left=5;
+    if(act==='stp') st.r=Math.min(3,(st.r==null?0:st.r)+1);
     if(act==='nq'){ st.q=1; st.sel=null; }
     if(act==='rst') CHS[lk]={};
     chRender(0);
@@ -1708,6 +1745,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW79Act=visW79Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===79){ window.ARH_LESSONS[i]=L79; break; } } })();
 })();
+
 /* ================= УРОК 179 · Правильные, неправильные дроби и смешанные числа (v4) ================= */
 (function(){
   if(!window.__wk179css){
