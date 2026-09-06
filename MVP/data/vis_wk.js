@@ -4231,3 +4231,460 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW44Act=visW44Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===44){ window.ARH_LESSONS[i]=L44; break; } } })();
 })();
+/* ================= УРОК 87 · Сумма углов треугольника (v2 · «Мостостроительная верфь», 14 слайдов, 3D, анимированные замеры) ================= */
+(function(){
+  if(!window.__wk87v2css){
+    window.__wk87v2css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .m9in{animation:m9In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes m9In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .m9pop{animation:m9Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes m9Pop{0%{transform:scale(.12);opacity:0}70%{transform:scale(1.09);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .m9sw{animation:m9Sw 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes m9Sw{0%,100%{transform:rotate(0)}25%{transform:rotate(-5deg)}75%{transform:rotate(4deg)}}'+
+      '#lvis .m9sun{animation:m9Sun 3.5s ease-in-out infinite;}'+
+      '@keyframes m9Sun{0%,100%{opacity:.85}50%{opacity:1}}'+
+      '#lvis .m9wave{animation:m9Wave 2.6s ease-in-out infinite;}'+
+      '@keyframes m9Wave{0%,100%{transform:translateX(0)}50%{transform:translateX(7px)}}'+
+      '#lvis .m9spin{animation:m9Spin 5s linear infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes m9Spin{to{transform:rotate(360deg)}}'+
+      '#lvis .m9fly{animation:m9Fly 1.4s cubic-bezier(.3,.7,.4,1) both;}'+
+      '@keyframes m9Fly{0%{transform:translate(0,0) rotate(0);opacity:0}20%{opacity:1}100%{transform:translate(var(--tx),var(--ty)) rotate(var(--rot));opacity:1}}'+
+      '#lvis .m9bump{animation:m9Bump .8s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes m9Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}'+
+      '#lvis .m9dash{stroke-dasharray:7 5;animation:m9Dash .9s linear infinite;}'+
+      '@keyframes m9Dash{to{stroke-dashoffset:-24}}'+
+      '#lvis .m9sway{animation:m9Sway 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes m9Sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}';
+    document.head.appendChild(st);
+  }
+  const L87 = {
+    id: 87, title: 'Сумма углов треугольника', ico: '∠',
+    src: 'Математика · 7 класс · Геометрия: сумма углов треугольника', subj: 'math',
+    explain: [
+      'На закате Архимед стоит на берегу пролива. Он строит мост — и весь мост держится на треугольных фермах. Почему именно треугольники? Сейчас ты узнаешь главный секрет любого треугольника — и мост будет стоять века!',
+      'Попробуй покачать квадратную раму — она шатается из стороны в сторону! А треугольник не сдвинуть: три стороны жёстко скрепляют углы. Поэтому инженеры и выбирают треугольники для мостов и крыш.',
+      'Что такое угол? Это «раствор» между двумя лучами, его измеряют в градусах. Прямой угол — 90° (угол тетрадки). Развёрнутый угол — 180°: два луча вытянулись в одну прямую линию.',
+      'Самый честный треугольник — равносторонний: у него все углы по 60°. Измерим: 60° + 60° + 60° = 180°. Запомни это число — оно появится у каждого треугольника!',
+      'Возьмём ферму с углами 40°, 60° и 80°. Приложим транспортир к каждому углу и аккуратно измерим — а потом сложим: 40° + 60° + 80° = 180°. Совпадение? Нет — это закон!',
+      'Секрет виден на бумаге: вырежи треугольник и отрежь три угла. Сложи их рядом — они выстроятся ровно вдоль одной прямой! Три угла вместе дают развёрнутый угол — 180°.',
+      'Вот и теорема: ∠A + ∠B + ∠C = 180° — сумма углов любого треугольника. Её доказали ещё в Древней Греции, и с тех пор на ней стоят все мосты и крыши мира.',
+      'Если два угла известны, третий находится в одно действие: ∠3 = 180° − ∠1 − ∠2. Углы 35° и 45° → третий = 180° − 35° − 45° = 100°.',
+      'Прямоугольный треугольник: один угол — 90°. Значит, на два острых угла остаётся 180° − 90° = 90°. Углы 90° и 30° → третий = 60°.',
+      'Равнобедренный треугольник: углы при основании равны. Вершина 40° → на два основания остаётся 140°, значит, каждое = 140° : 2 = 70°. Как у крыши-шатра!',
+      'Треугольник объёмен! Треугольная призма — это тело из двух треугольников и трёх прямоугольников. Именно такие фермы Архимед поднимает на мост. Смотри, как они встают на место!',
+      'Треугольники вокруг нас: крыши домов, пирамиды, палатки, крылья самолёта. Везде инженер помнит одно: сумма углов треугольника равна 180° — иначе конструкция не сойдётся.',
+      'Тренажёр: тебе дадут треугольник с двумя известными углами (или расскажут про прямоугольный или равнобедренный). Найди третий угол — и мост встанет на место!',
+      'Проверь себя: углы 35° и 45° дают третий 100°. Прямоугольный с углом 30° даёт третий 60°. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'В треугольнике углы 35° и 45°. Чему равен третий угол?', choices: ['80°', '90°', '100°'], ans: 2,
+      exp: '35° + 45° = 80°, третий: 180° − 80° = 100°.' },
+    tasks: [
+      { q: 'Один угол треугольника равен 90°, другой — 30°. Найди третий угол.', kind: 'unit', ans: 60, tol: 0,
+        hints: ['Сумма углов — 180°.', '90° + 30° = 120°, остаётся 60°.'], sol: '180° − 90° − 30° = 60°.' },
+      { q: 'В равнобедренном треугольнике угол при вершине равен 40°. Чему равен каждый угол при основании?', kind: 'choice', choices: ['50°', '70°', '140°'], ans: 1, tol: 0,
+        hints: ['Углы при основании равны.', 'Остаётся 140° на два угла.'], sol: '(180° − 40°) : 2 = 70°.' }
+    ]
+  };
+  const M={steel:'#8fa4d8',steelD:'#5b6d9e',gold:'#ffd76a',paper:'#f4e8c8',ink:'#2b4a8a',sky:'#ff9a5a',sun:'#ffdf9a',sea:'#2a5a8a',cream:'#f2e7c9'};
+  /* закат над проливом: фоновая сцена */
+  function sunset(inner,opt){
+    const o=opt||{};
+    const W=318, H=o.h||190;
+    const seaY=H-44;
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs><linearGradient id="m9sky${o.uid||0}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7a5a9e"/><stop offset=".55" stop-color="#d97a8a"/><stop offset="1" stop-color="#ffb36b"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#m9sky${o.uid||0})"/>
+      <g class="m9sun"><circle cx="${W-52}" cy="46" r="17" fill="#ffe9b0" opacity=".95"/></g>
+      <rect x="0" y="${seaY}" width="${W}" height="${H-seaY}" fill="${M.sea}"/>
+      <g class="m9wave"><path d="M0 ${seaY+10} Q 30 ${seaY+5} 60 ${seaY+10} T 120 ${seaY+10} T 180 ${seaY+10} T 240 ${seaY+10} T 318 ${seaY+10}" fill="none" stroke="#7fb7d8" stroke-width="2" opacity=".7"/></g>
+      <rect x="1" y="1" width="${W-2}" height="${H-2}" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.6" rx="14"/>
+      ${inner}
+    </svg>`;
+  }
+  /* чертёжный лист */
+  function sheet(inner,opt){
+    const o=opt||{};
+    const W=318, H=o.h||170;
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <rect x="8" y="6" width="302" height="${H-12}" rx="10" fill="${M.paper}" stroke="#b89a5a" stroke-width="2"/>
+      <line x1="14" y1="${H-18}" x2="304" y2="${H-18}" stroke="#d9c08a" stroke-width="1"/>
+      ${inner}
+    </svg>`;
+  }
+  /* треугольник по точкам [{x,y,label,ang}] где ang — угол в этой вершине; мелом на чертеже */
+  function triShape(pts,opt){
+    const o=opt||{};
+    const d=`M ${pts[0].x} ${pts[0].y} L ${pts[1].x} ${pts[1].y} L ${pts[2].x} ${pts[2].y} Z`;
+    let s=`<g class="${o.sway?'m9sway':''}"><path d="${d}" fill="${o.fill||'rgba(127,209,255,.14)'}" stroke="${o.stroke||M.ink}" stroke-width="3.4" stroke-linejoin="round" ${o.dash?'stroke-dasharray="9 6"':''}/></g>`;
+    pts.forEach((p,i)=>{
+      s+=`<circle cx="${p.x}" cy="${p.y}" r="5.5" fill="${o.rivet||M.gold}"/><circle cx="${p.x}" cy="${p.y}" r="2.2" fill="#5a4a2a"/>
+      <text x="${p.x}" y="${p.y-12}" text-anchor="middle" font-size="15" fill="${o.lbl||'#2b4a8a'}" font-weight="bold">${p.l}</text>`;
+    });
+    return s;
+  }
+  /* дуга угла между двумя точками при вершине v */
+  function angArc(v,a,b,opt){
+    const o=opt||{};
+    const r=o.r||34;
+    const ang=pt=>Math.atan2(pt.y-v.y, pt.x-v.x);
+    const a1=ang(a), a2=ang(b);
+    // нормализуем разность в (-π, π]: дуга всегда по малому пути (внутренний угол)
+    let d=a2-a1;
+    while(d>Math.PI) d-=2*Math.PI;
+    while(d<-Math.PI) d+=2*Math.PI;
+    const sweep = d>0?1:0;
+    const x1=v.x+r*Math.cos(a1), y1=v.y+r*Math.sin(a1);
+    const x2=v.x+r*Math.cos(a1+d), y2=v.y+r*Math.sin(a1+d);
+    const deg=Math.round(Math.abs(d)*180/Math.PI);
+    const mid=a1+d/2;
+    return `<path d="M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 0 ${sweep} ${x2.toFixed(1)} ${y2.toFixed(1)}" fill="none" stroke="${o.c||M.gold}" stroke-width="${o.w||3.4}" ${o.dash?'class="m9dash"':''}/>
+      <text x="${(v.x+(r+13)*Math.cos(mid)).toFixed(1)}" y="${(v.y+(r+13)*Math.sin(mid)+4).toFixed(1)}" text-anchor="middle" font-size="${o.fs||15}" fill="${o.c||'#c9812a'}" font-weight="bold">${deg}°</text>`;
+  }
+  /* строим треугольник: основание по горизонтали, левый угол = al, правый = ar (градусы).
+     Возвращает массив вершин [A(верх), B(лево-низ), C(право-низ)] с координатами. */
+  /* треугольник с вершиной A ровно над центром cx; h — высота A над основанием;
+     al — угол при B (левый низ), ar — угол при C (правый низ). */
+  function triByAngles(cx,yBase,h,al,ar){
+    const bl=al*Math.PI/180, br=ar*Math.PI/180, s=bl+br;
+    const L=h*Math.sin(s)/(Math.sin(bl)*Math.sin(br));
+    const t=h/Math.sin(bl);
+    const x0=cx-t*Math.cos(bl);
+    return [{x:cx,y:yBase-h,l:'A'},{x:x0,y:yBase,l:'B'},{x:x0+L,y:yBase,l:'C'}];
+  }
+  /* большой полукруглый транспортир с делениями */
+  function prot(x,y,R,ang,opt){
+    const o=opt||{};
+    const deg=ang*Math.PI/180;
+    // шкала: дуга от -180 до 0 (верхняя полуокружность) стандартный транспортир
+    let ticks='';
+    for(let d=0;d<=180;d+=10){
+      const rad=(180-d)*Math.PI/180;
+      const x1=x-R*Math.cos(rad), y1=y-R*Math.sin(rad);
+      const x2=x-(R+(d%30===0?7:3.5))*Math.cos(rad), y2=y-(R+(d%30===0?7:3.5))*Math.sin(rad);
+      ticks+=`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#5b6d9e" stroke-width="${d%30===0?2:1.1}"/>`;
+      if(d%30===0&&d>0&&d<180){
+        const lx=x-(R+16)*Math.cos(rad), ly=y-(R+16)*Math.sin(rad);
+        ticks+=`<text x="${lx.toFixed(1)}" y="${(ly+3).toFixed(1)}" text-anchor="middle" font-size="9.5" fill="#5b6d9e">${d}</text>`;
+      }
+    }
+    // луч-указатель, вращается до ang
+    const rot=180-ang; // от направления влево
+    const c=o.c||'#d94f2a';
+    let ray='';
+    if(ang>0&&ang<180){
+      ray=`<line x1="${x}" y1="${y}" x2="${(x+R*Math.cos(deg)).toFixed(1)}" y2="${(y-R*Math.sin(deg)).toFixed(1)}" stroke="${c}" stroke-width="3.4" stroke-linecap="round" class="m9pop"/>
+      <circle cx="${(x+R*0.86*Math.cos(deg)).toFixed(1)}" cy="${(y-R*0.86*Math.sin(deg)).toFixed(1)}" r="4" fill="${c}" class="m9pop"/>`;
+    }
+    return `<g>
+      <path d="M ${x-R} ${y} A ${R} ${R} 0 0 1 ${x+R} ${y} L ${x} ${y} Z" fill="rgba(255,255,255,.16)" stroke="#8fa4d8" stroke-width="2"/>
+      <line x1="${x-R}" y1="${y}" x2="${x+R}" y2="${y}" stroke="#8fa4d8" stroke-width="2"/>
+      ${ticks}
+      ${ang>0? `<path d="M ${x} ${y} L ${x+R*Math.cos(deg)} ${y-R*Math.sin(deg)}" stroke="${c}" stroke-width="0" opacity="0"/>`:''}
+      <text x="${x}" y="${y-4}" text-anchor="middle" font-size="12" fill="#fff" opacity="0"></text>
+      ${ray}
+    </g>`;
+  }
+  const sign=(t,c,delay,fs)=>`<span class="m9in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 13px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:${fs||21}px;color:${c};font-weight:bold">${t}</span>`;
+  const Q87=[
+    {q:'В треугольнике углы 40° и 60°. Третий угол?',opts:['60°','80°','100°'],ans:1},
+    {q:'В равнобедренном вершина 80°. Углы при основании?',opts:['40°','50°','80°'],ans:1}
+  ];
+  function quiz(lk,st){
+    const T=Q87[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?'#7fe8b8':'#ff9a8a'; tc=i===T.ans?'#7fe8b8':'#ff9a8a'; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:18px" onclick="visW87T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! (180° − 80°) : 2 = 50°</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 180° − 100° = 80°</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Сумма углов = 180°</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW87Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW87Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:9px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW87(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; if(step===4){ st.c=0; } if(step===7||step===8||step===9){ st.sh=0; } if(step===10){ st.sh=0; } if(step===12){ if(st.tr==null) st.tr=0; st.s1=0; st.s2=0; } if(step===13){ st.sel=null; st.q=0; } }
+    let h='';
+    if(step===0){
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Мост Архимеда через пролив</div>`+
+        wkHero(sunset(`
+          <g class="m9pop"><rect x="16" y="86" width="120" height="46" rx="8" fill="#7a5233"/><rect x="16" y="96" width="120" height="7" fill="#8a6243"/>
+          <rect x="26" y="70" width="16" height="16" rx="3" fill="#ffd76a" opacity=".8"/><rect x="108" y="70" width="16" height="16" rx="3" fill="#ffd76a" opacity=".8"/>
+          <line x1="40" y1="132" x2="40" y2="150" stroke="#5a452a" stroke-width="4"/><line x1="114" y1="132" x2="114" y2="150" stroke="#5a452a" stroke-width="4"/></g>
+          <rect x="14" y="150" width="290" height="9" fill="#7a5a33"/>
+          <g class="m9pop" style="animation-delay:.3s">
+            <path d="M 60 150 L 130 118 L 200 150 Z" fill="rgba(200,214,250,.16)" stroke="#e9eefc" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M 200 150 L 270 118 L 200 118 Z" fill="rgba(200,214,250,.1)" stroke="#c6d2f0" stroke-width="2.4"/>
+            <line x1="130" y1="118" x2="270" y2="118" stroke="#c6d2f0" stroke-width="2.4"/>
+            <circle cx="130" cy="118" r="4" fill="#ffd76a"/><circle cx="200" cy="118" r="4" fill="#ffd76a"/><circle cx="200" cy="150" r="4" fill="#ffd76a"/><circle cx="270" cy="118" r="4" fill="#ffd76a"/>
+          </g>
+          <g class="m9pop" style="animation-delay:.5s"><circle cx="292" cy="80" r="6" fill="#ff8a5a"/><circle cx="304" cy="72" r="4.6" fill="#ff8a5a"/></g>
+        `,{h:190,uid:1}))+
+        wkRow(sign('мост держится на треугольниках',M.gold,0.5))+
+        wkSml('почему инженеры выбирают треугольники? · секрет — в сумме углов'));
+    } else if(step===1){
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Жёсткость: квадрат шатается</div>`+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="142" rx="14" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="m9sw"><path d="M 40 110 L 40 58 L 116 58 L 116 110 Z" fill="rgba(255,138,122,.12)" stroke="#ff9a8a" stroke-width="3"/>
+          <circle cx="40" cy="58" r="4.5" fill="#ffd76a"/><circle cx="116" cy="58" r="4.5" fill="#ffd76a"/><circle cx="40" cy="110" r="4.5" fill="#ffd76a"/><circle cx="116" cy="110" r="4.5" fill="#ffd76a"/></g>
+          <text x="78" y="132" text-anchor="middle" font-size="14" fill="#ff9a8a" font-weight="bold">квадрат шатается!</text>
+          <g class="m9pop" style="animation-delay:.4s"><path d="M 180 110 L 228 44 L 290 110 Z" fill="rgba(127,232,184,.1)" stroke="#7fe8b8" stroke-width="3.2" stroke-linejoin="round"/>
+          <circle cx="180" cy="110" r="4.5" fill="#ffd76a"/><circle cx="228" cy="44" r="4.5" fill="#ffd76a"/><circle cx="290" cy="110" r="4.5" fill="#ffd76a"/></g>
+          <text x="235" y="132" text-anchor="middle" font-size="14" fill="#7fe8b8" font-weight="bold">треугольник не сдвинуть!</text>
+        </svg>`)+
+        wkSml('три стороны жёстко скрепляют углы · поэтому фермы моста — треугольные'));
+    } else if(step===2){
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Что такое угол?</div>`+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="142" rx="14" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <circle cx="52" cy="112" r="5" fill="#ffd76a"/>
+          <line x1="52" y1="112" x2="150" y2="112" stroke="#fff" stroke-width="3.4"/>
+          <line x1="52" y1="112" x2="240" y2="40" stroke="#fff" stroke-width="3.4"/>
+          <path d="M 80 112 A 28 28 0 0 0 71.5 86" fill="none" stroke="#ffd76a" stroke-width="3.4"/>
+          <g class="m9pop" style="animation-delay:.35s"><rect x="26" y="14" width="112" height="44" rx="12" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="2.2"/>
+          <text x="82" y="33" text-anchor="middle" font-size="12" fill="#cfe0ff">прямой угол</text><text x="82" y="50" text-anchor="middle" font-size="18" fill="#fff" font-weight="bold">90°</text></g>
+          <g class="m9pop" style="animation-delay:.5s"><rect x="176" y="14" width="124" height="44" rx="12" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="2.2"/>
+          <text x="238" y="33" text-anchor="middle" font-size="12" fill="#ffe9c9">развёрнутый</text><text x="238" y="50" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">180°</text></g>
+          <line x1="240" y1="112" x2="318" y2="112" stroke="#ffd76a" stroke-width="3.4" opacity=".8" stroke-dasharray="6 4"/>
+          <text x="284" y="103" text-anchor="middle" font-size="11" fill="#ffe9c9">прямая</text>
+        </svg>`)+
+        wkSml('угол — «раствор» между двумя лучами · градусы — его мера'));
+    } else if(step===3){
+      const pts=triByAngles(159,150,132,60,60);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Равносторонний: три по 60°</div>`+
+        wkHero(sheet(`${triShape(pts)}
+          ${angArc(pts[1],pts[0],pts[2],{r:24,c:'#c93a1a'})}
+          ${angArc(pts[2],pts[1],pts[0],{r:24,c:'#c93a1a'})}
+          ${angArc(pts[0],pts[2],pts[1],{r:24,c:'#c93a1a'})}
+        `,{h:168}))+
+        wkRow(sign('60° + 60° + 60° = 180°',M.gold,0.4))+
+        wkSml('все стороны равны → все углы равны · 180° : 3 = 60°'));
+    } else if(step===4){
+      const pick=st.c||0;
+      const tri=triByAngles(159,156,108,40,80);
+      const A=tri[0],B=tri[1],C=tri[2];
+      const curArc = pick===0? angArc(A,B,C,{r:26,c:'#c93a1a'}) : (pick===1? angArc(B,A,C,{r:26,c:'#c93a1a'}) : angArc(C,A,B,{r:30,c:'#c93a1a'}));
+      const pickLbl = pick===0? '∠A = 60°' : (pick===1? '∠B = 40°' : '∠C = 80°');
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Измеряем ферму транспортиром</div>`+
+        wkHero(sheet(`${triShape(tri)}
+          ${curArc}
+          <text x="159" y="176" text-anchor="middle" font-size="15" fill="#2b4a8a" font-weight="bold">углы 40° · 60° · 80° · сейчас: ${pickLbl}</text>
+        `,{h:204}))+
+        wkRow(
+          wkBtn('измерить ∠A (60°)',`visW87Act('${lk}','c0')`),
+          wkBtn('измерить ∠B (40°)',`visW87Act('${lk}','c1')`),
+          wkBtn('измерить ∠C (80°)',`visW87Act('${lk}','c2')`))+
+        wkSml('прикладывай транспортир к вершине и читай градусы на шкале'));
+    } else if(step===5){
+      const sh=st.sh||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Складываем отрезанные углы</div>`+
+        wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="168" rx="14" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          ${sh===0
+            ? `<g class="m9pop"><path d="M 70 140 L 120 50 L 250 140 Z" fill="rgba(244,232,200,.16)" stroke="#e8dcc8" stroke-width="3" stroke-linejoin="round"/>
+               <line x1="70" y1="140" x2="120" y2="50" stroke="#c93a1a" stroke-width="2.6" stroke-dasharray="6 4" opacity=".8"/>
+               <line x1="120" y1="50" x2="250" y2="140" stroke="#c93a1a" stroke-width="2.6" stroke-dasharray="6 4" opacity=".8"/>
+               <text x="159" y="158" text-anchor="middle" font-size="13" fill="#cfe0cf">бумажный треугольник · режем по пунктиру</text></g>`
+            : `<g>
+                <line x1="24" y1="150" x2="294" y2="150" stroke="#e8dcc8" stroke-width="3.6"/>
+                <!-- веер: из точки O на линии три сектора 40+60+80 = 180° -->
+                <g class="m9pop"><circle cx="74" cy="150" r="5" fill="#e8dcc8"/></g>
+                <g class="m9pop" style="animation-delay:.1s"><path d="M 74 150 L 74 106 A 44 44 0 0 1 107 117 Z" fill="rgba(201,58,26,.4)" stroke="#c93a1a" stroke-width="2.2"/>
+                  <text x="92" y="126" text-anchor="middle" font-size="11" fill="#ffe9c9">40°</text></g>
+                <g class="m9pop" style="animation-delay:.3s"><path d="M 74 150 L 107 117 A 44 44 0 0 1 159 103 Z" fill="rgba(43,74,138,.42)" stroke="#2b4a8a" stroke-width="2.2"/>
+                  <text x="136" y="116" text-anchor="middle" font-size="11" fill="#ffe9c9">60°</text></g>
+                <g class="m9pop" style="animation-delay:.5s"><path d="M 74 150 L 159 103 A 44 44 0 0 1 214 126 Z" fill="rgba(201,138,42,.42)" stroke="#c9812a" stroke-width="2.2"/>
+                  <text x="188" y="126" text-anchor="middle" font-size="11" fill="#ffe9c9">80°</text></g>
+                <g class="m9pop" style="animation-delay:.7s"><line x1="74" y1="150" x2="214" y2="126" stroke="#e8dcc8" stroke-width="1.6" opacity=".7"/>
+                  <circle cx="74" cy="150" r="4" fill="#8fd1a8"/>
+                  <text x="145" y="160" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">40° + 60° + 80° = 180° — прямая!</text></g>
+              </g>`}
+        </svg>`)+
+        wkRow(sh===0? wkBtn('отрезать углы и сложить',`visW87Act('${lk}','go')`) : wkBtn('сброс',`visW87Act('${lk}','rst')`))+
+        wkSml(sh? 'три угла вместе = развёрнутый угол 180°' : 'отрезанные углы приложи друг к другу'));
+    } else if(step===6){
+      const pts=triByAngles(159,150,104,50,70);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Теорема: сумма = 180°</div>`+
+        wkHero(sheet(`${triShape(pts,{stroke:'#2b4a8a'})}
+          ${angArc(pts[1],pts[0],pts[2],{r:22,c:'#c93a1a',fs:12})}
+          ${angArc(pts[2],pts[1],pts[0],{r:22,c:'#2b4a8a',fs:12})}
+          ${angArc(pts[0],pts[2],pts[1],{r:22,c:'#c9812a',fs:12})}
+        `,{h:160}))+
+        wkRow(sign('∠A + ∠B + ∠C = 180°',M.gold,0.3))+
+        wkSml('доказано ещё в Древней Греции · работает для любого треугольника'));
+    } else if(step===7){
+      const sh=st.sh||0;
+      const p7=triByAngles(159,150,58,35,45);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Третий угол: 35° и 45°</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="162" rx="14" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="m9pop"><path d="M ${p7[1].x} ${p7[1].y} L ${p7[2].x} ${p7[2].y} L ${p7[0].x} ${p7[0].y} Z" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="3" stroke-linejoin="round"/>
+          <circle cx="${p7[1].x}" cy="${p7[1].y}" r="4" fill="#ffd76a"/><circle cx="${p7[2].x}" cy="${p7[2].y}" r="4" fill="#ffd76a"/><circle cx="${p7[0].x}" cy="${p7[0].y}" r="4" fill="#ffd76a"/>
+          ${angArc(p7[1],p7[0],p7[2],{r:22,c:'#ffd76a',fs:12})}
+          ${angArc(p7[2],p7[1],p7[0],{r:22,c:'#ff9a8a',fs:12})}
+          ${angArc(p7[0],p7[1],p7[2],{r:24,c:'#8fd1a8',fs:13})}</g>
+          ${sh? `<g class="m9pop" style="animation-delay:.2s">
+            <rect x="36" y="60" width="240" height="74" rx="14" fill="rgba(255,255,255,.04)" stroke="#4a6a54" stroke-width="1.8"/>
+            <text x="156" y="84" text-anchor="middle" font-size="15" fill="#cfe0cf">35° + 45° = 80°</text>
+            <text x="156" y="106" text-anchor="middle" font-size="15" fill="#cfe0cf">180° − 80° = ?</text>
+            <text x="156" y="128" text-anchor="middle" font-size="26" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">третий = 100°</text></g>`:''}
+        </svg>`)+
+        wkRow(sh===0? wkBtn('найти третий угол',`visW87Act('${lk}','go')`) : wkBtn('сброс',`visW87Act('${lk}','rst')`))+
+        wkSml('∠3 = 180° − ∠1 − ∠2 · вычти оба известных из 180°'));
+    } else if(step===8){
+      const sh=st.sh||0;
+      // прямоугольный: прямой угол в B (слева внизу), 30° при C (справа внизу), 60° наверху в A
+      const w8=180, h8=Math.round(w8*Math.tan(30*Math.PI/180));
+      const X0=50, Y0=140;
+      const bx={x:X0,y:Y0,l:'B'}, cx={x:X0+w8,y:Y0,l:'C'}, ax={x:X0,y:Y0-h8,l:'A'};
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Прямоугольный: 90° и 30°</div>`+
+        wkHero(`<svg viewBox="0 0 318 160" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="152" rx="14" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="m9pop"><path d="M ${bx.x} ${bx.y} L ${cx.x} ${cx.y} L ${ax.x} ${ax.y} Z" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="3.2" stroke-linejoin="round"/>
+          <rect x="${bx.x-14}" y="${bx.y-14}" width="14" height="14" fill="none" stroke="#7fd1ff" stroke-width="2.2"/>
+          ${angArc(cx,ax,bx,{r:26,c:'#ffd76a',fs:13})}
+          ${sh? angArc(ax,cx,bx,{r:26,c:'#8fd1a8',fs:14}):''}
+          <circle cx="${bx.x}" cy="${bx.y}" r="4" fill="#ffd76a"/><circle cx="${cx.x}" cy="${cx.y}" r="4" fill="#ffd76a"/><circle cx="${ax.x}" cy="${ax.y}" r="4" fill="#ffd76a"/>
+          <text x="${bx.x-24}" y="${bx.y-8}" text-anchor="middle" font-size="13" fill="#7fd1ff" font-weight="bold">90°</text></g>
+          <text x="159" y="36" text-anchor="middle" font-size="15" fill="${sh?'#8fd1a8':'#cfe0cf'}" font-weight="bold">${sh?'третий угол = 60°':'на острые углы остаётся 90°'}</text>
+        </svg>`)+
+        wkRow(sh===0? wkBtn('найти третий',`visW87Act('${lk}','go')`) : wkBtn('сброс',`visW87Act('${lk}','rst')`))+
+        wkSml('180° − 90° − 30° = 60° · острые углы в сумме всегда 90°'));
+    } else if(step===9){
+      const sh=st.sh||0;
+      const p9=triByAngles(159,152,126,70,70); // основания по 70 → вершина 40
+      const A9=p9[0],B9=p9[1],C9=p9[2];
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Равнобедренный: вершина 40°</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="162" rx="14" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="m9sway"><path d="M ${B9.x} ${B9.y} L ${A9.x} ${A9.y} L ${C9.x} ${C9.y} Z" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="3.2" stroke-linejoin="round"/>
+          <line x1="${B9.x}" y1="${B9.y}" x2="${C9.x}" y2="${C9.y}" stroke="#8fd1a8" stroke-width="2.4" stroke-dasharray="6 4" opacity=".7"/>
+          ${angArc(A9,B9,C9,{r:22,c:'#ffd76a',fs:13})}
+          ${sh? angArc(B9,A9,C9,{r:20,c:'#8fd1a8',fs:12}) : ''}
+          ${sh? angArc(C9,A9,B9,{r:20,c:'#8fd1a8',fs:12}) : ''}
+          <circle cx="${B9.x}" cy="${B9.y}" r="4" fill="#ffd76a"/><circle cx="${A9.x}" cy="${A9.y}" r="4" fill="#ffd76a"/><circle cx="${C9.x}" cy="${C9.y}" r="4" fill="#ffd76a"/>
+          <text x="${B9.x}" y="${B9.y-8}" text-anchor="middle" font-size="12" fill="#8fd1a8" font-weight="bold">B</text>
+          <text x="${A9.x}" y="${A9.y-10}" text-anchor="middle" font-size="12" fill="#8fd1a8" font-weight="bold">A</text>
+          <text x="${C9.x}" y="${C9.y-8}" text-anchor="middle" font-size="12" fill="#8fd1a8" font-weight="bold">C</text></g>
+          ${sh? `<g class="m9pop"><rect x="40" y="76" width="238" height="40" rx="13" fill="rgba(143,209,168,.08)" stroke="#8fd1a8" stroke-width="2"/>
+            <text x="159" y="101" text-anchor="middle" font-size="18" fill="#8fd1a8" font-weight="bold">каждый угол = 70°</text></g>`:''}
+        </svg>`)+
+        wkRow(sh===0? wkBtn('найти углы основания',`visW87Act('${lk}','go')`) : wkBtn('сброс',`visW87Act('${lk}','rst')`))+
+        wkSml('(180° − 40°) : 2 = 70° · два равных угла у основания'));
+    } else if(step===10){
+      const sh=st.sh||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">3D: ферма-призма на мосту</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="162" rx="14" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="m9pop">
+            <rect x="30" y="118" width="258" height="9" fill="#7a5a33"/>
+            <line x1="40" y1="44" x2="96" y2="44" stroke="#c6d2f0" stroke-width="0"/>
+            ${sh===0? '' : `
+            <g>
+              <path d="M 62 118 L 106 40 L 150 118 Z" fill="rgba(200,214,250,.13)" stroke="#e9eefc" stroke-width="3"/>
+              <path d="M 106 40 L 150 118 L 106 118 Z" fill="rgba(200,214,250,.2)" stroke="#c6d2f0" stroke-width="2.4"/>
+              <path d="M 106 40 L 106 118" stroke="#c6d2f0" stroke-width="2.4"/>
+              <circle cx="62" cy="118" r="4" fill="#ffd76a"/><circle cx="106" cy="40" r="4" fill="#ffd76a"/><circle cx="150" cy="118" r="4" fill="#ffd76a"/>
+            </g>
+            <g>
+              <path d="M 168 118 L 212 40 L 256 118 Z" fill="rgba(200,214,250,.13)" stroke="#e9eefc" stroke-width="3"/>
+              <path d="M 212 40 L 256 118 L 212 118 Z" fill="rgba(200,214,250,.2)" stroke="#c6d2f0" stroke-width="2.4"/>
+              <path d="M 212 40 L 212 118" stroke="#c6d2f0" stroke-width="2.4"/>
+              <circle cx="168" cy="118" r="4" fill="#ffd76a"/><circle cx="212" cy="40" r="4" fill="#ffd76a"/><circle cx="256" cy="118" r="4" fill="#ffd76a"/>
+            </g>`}
+            <text x="159" y="150" text-anchor="middle" font-size="13" fill="#cfe0cf">${sh?'две треугольные призмы подняты на мост!':'пустое место на мосту · ждём фермы'}</text>
+          </g>
+        </svg>`)+
+        wkRow(sh===0? wkBtn('поднять фермы на мост',`visW87Act('${lk}','go')`) : wkBtn('сброс',`visW87Act('${lk}','rst')`))+
+        wkSml('призма — тело из двух треугольников · фермы встают жёстко'));
+    } else if(step===11){
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Треугольники вокруг нас</div>`+
+        wkHero(`<svg viewBox="0 0 318 160" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="152" rx="14" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="m9pop"><rect x="20" y="96" width="76" height="44" rx="5" fill="#8a5a2e"/>
+            <path d="M 26 96 L 58 62 L 90 96 Z" fill="rgba(255,215,106,.25)" stroke="#ffd76a" stroke-width="2.6"/>
+            <text x="58" y="130" text-anchor="middle" font-size="11" fill="#e8dcc8">дом</text></g>
+          <g class="m9pop" style="animation-delay:.15s"><path d="M 130 140 L 160 80 L 190 140 Z" fill="rgba(255,215,106,.2)" stroke="#ffd76a" stroke-width="2.6"/>
+            <text x="160" y="132" text-anchor="middle" font-size="11" fill="#e8dcc8">палатка</text></g>
+          <g class="m9pop" style="animation-delay:.3s"><path d="M 216 140 L 282 140 L 249 84 Z" fill="rgba(127,209,255,.18)" stroke="#7fd1ff" stroke-width="2.6"/>
+            <line x1="216" y1="140" x2="249" y2="84" stroke="#7fd1ff" stroke-width="1.6"/><line x1="282" y1="140" x2="249" y2="84" stroke="#7fd1ff" stroke-width="1.6"/>
+            <text x="249" y="132" text-anchor="middle" font-size="11" fill="#cfe0ff">пирамида</text></g>
+          <g class="m9pop" style="animation-delay:.45s"><rect x="30" y="30" width="60" height="10" rx="5" fill="#8fa4d8"/>
+            <rect x="38" y="30" width="44" height="26" fill="none" stroke="#8fa4d8" stroke-width="2"/>
+            <path d="M 38 30 L 52 12 L 66 30 Z" fill="#8fa4d8"/><text x="100" y="42" text-anchor="middle" font-size="11" fill="#cfe0ff">крыло</text></g>
+        </svg>`)+
+        wkSml('крыши, пирамиды, палатки, крылья — везде закон 180°'));
+    } else if(step===12){
+      if(st.tr==null) st.tr=0;
+      const POOL=[
+        {kind:'обычный', a:40, b:70, c:70},
+        {kind:'прямоугольный', a:90, b:35, c:55},
+        {kind:'равнобедренный', a:100, b:40, c:40},
+        {kind:'обычный', a:50, b:60, c:70}
+      ];
+      const T=POOL[st.tr%POOL.length];
+      const pts=triByAngles(159,150,96,T.b,T.c);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: найди третий угол</div>`+
+        wkHero(sheet(`${triShape(pts)}
+          ${st.s1? angArc(pts[1],pts[0],pts[2],{r:22,c:'#c93a1a',fs:12}):''}
+          ${st.s1? angArc(pts[2],pts[1],pts[0],{r:22,c:'#2b4a8a',fs:12}):''}
+          <text x="159" y="172" text-anchor="middle" font-size="14" fill="#2b4a8a" font-weight="bold">${T.kind} · ∠A = ${T.a}°, ∠B = ${T.b}°</text>
+          ${st.s2? `<text x="159" y="156" text-anchor="middle" font-size="22" fill="#c93a1a" font-weight="bold">∠C = ${T.c}°</text>`:''}
+        `,{h:198}))+
+        wkRow(
+          !st.s1? wkBtn('показать известные углы',`visW87Act('${lk}','s1')`) : '',
+          (st.s1&&!st.s2)? wkBtn('найти ∠C = 180° − A − B',`visW87Act('${lk}','s2')`) : '',
+          st.s2? wkBtn('новая ферма',`visW87Act('${lk}','n')`) : '',
+          st.s1? wkBtn('сброс',`visW87Act('${lk}','rst')`) : '')+
+        wkSml('вычти оба известных угла из 180° · для равнобедренного подели пополам'));
+    } else {
+      const pF=triByAngles(159,124,64,35,45);
+      const AF=pF[0],BF=pF[1],CF=pF[2];
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: мост Архимеда</div>`+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          <path d="M ${BF.x} ${BF.y} L ${CF.x} ${CF.y} L ${AF.x} ${AF.y} Z" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="3" stroke-linejoin="round"/>
+          <circle cx="${BF.x}" cy="${BF.y}" r="4" fill="#ffd76a"/><circle cx="${CF.x}" cy="${CF.y}" r="4" fill="#ffd76a"/><circle cx="${AF.x}" cy="${AF.y}" r="4" fill="#ffd76a"/>
+          ${angArc(AF,BF,CF,{r:24,c:'#8fd1a8',fs:14})}
+          ${angArc(BF,AF,CF,{r:20,c:'#ffd76a',fs:12})}
+          ${angArc(CF,AF,BF,{r:20,c:'#ff9a8a',fs:12})}
+          <text x="${BF.x-16}" y="${BF.y-10}" text-anchor="middle" font-size="12" fill="#ffd76a">B</text>
+          <text x="${AF.x}" y="${AF.y-12}" text-anchor="middle" font-size="12" fill="#8fd1a8">A</text>
+          <text x="${CF.x+16}" y="${CF.y-10}" text-anchor="middle" font-size="12" fill="#ff9a8a">C</text>
+        </svg>`)+
+        quiz(lk,st)+
+        wkSml('35° + 45° → третий 100° · жми «Понял! Проверю себя»'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[87]=visW87;
+  function visW87T(lk,i){
+    const st=CHS[lk]||(CHS[lk]={});
+    st.sel=i; chRender(0);
+  }
+  window.visW87T=visW87T;
+  function visW87Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go') st.sh=1;
+    if(act==='c0') st.c=0;
+    if(act==='c1') st.c=1;
+    if(act==='c2') st.c=2;
+    if(act==='s1') st.s1=1;
+    if(act==='s2') st.s2=1;
+    if(act==='n'){ st.tr=(st.tr==null?0:st.tr)+1; st.s1=0; st.s2=0; }
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW87Act=visW87Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===87){ window.ARH_LESSONS[i]=L87; break; } } })();
+})();
