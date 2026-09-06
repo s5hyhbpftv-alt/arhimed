@@ -1329,35 +1329,37 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW20Act=visW20Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===20){ window.ARH_LESSONS[i]=L20; break; } } })();
 })();
-/* ================= УРОК 21 · Числа из цифр без повторов (v4) ================= */
+/* ================= УРОК 21 · Числа из цифр без повторов (v5) ================= */
 (function(){
-  if(!window.__wk21css){
-    window.__wk21css=1;
+  if(!window.__wk21v5css){
+    window.__wk21v5css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .wk-fall{animation:wkFall .55s cubic-bezier(.2,.8,.3,1.1) both;}'+
-      '@keyframes wkFall{0%{transform:translateY(-16px) scale(.9);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .wk-bob{animation:wkBob 1.4s ease-in-out infinite;}'+
-      '@keyframes wkBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}'+
-      '#lvis .wk-dash{stroke-dasharray:6 5;animation:wkDash2 .9s linear infinite;}'+
-      '@keyframes wkDash2{to{stroke-dashoffset:-22}}'+
-      '#lvis .wk-grow{animation:wkGrow .6s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes wkGrow{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1);opacity:1}}';
+      '#lvis .f5in{animation:f5In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes f5In{0%{transform:translateY(-14px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .f5pop{animation:f5Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes f5Pop{0%{transform:scale(.1);opacity:0}75%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .f5flow{stroke-dasharray:8 6;animation:f5Flow .9s linear infinite;}'+
+      '@keyframes f5Flow{to{stroke-dashoffset:-28}}'+
+      '#lvis .f5float{animation:f5Float 1.6s ease-in-out infinite;}'+
+      '@keyframes f5Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}'+
+      '#lvis .f5ring{animation:f5Ring 1.1s ease-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes f5Ring{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.6);opacity:0}}';
     document.head.appendChild(st);
   }
   const L21 = {
     id: 21, title: 'Числа из цифр без повторов', ico: '🔑',
     src: 'Математика · Комбинаторика · Правило умножения', subj: 'math',
     explain: [
-      'Секретный сейф Архимеда: на нём три барабана с цифрами 1, 2, 3, а код — из ДВУХ цифр. Важное правило: цифры в коде не должны повторяться. Сколько разных кодов можно составить? Если перебирать все варианты вслепую — легко запутаться. Мы посчитаем красиво и без ошибок — по шагам.',
-      'Шаг 1 — первая цифра кода. Она может быть любой из трёх: 1, 2 или 3. Представь: перед тобой три ключа, и ты берёшь первый из них — 3 способа выбрать. Запомни число 3 — это первый множитель нашего будущего умножения.',
-      'Шаг 2 — вторая цифра. Повторять нельзя: одну цифру мы уже поставили на первое место. Если первой стоит 1, для второго места остаются только 2 и 3. Какую бы цифру мы ни взяли первой, для второй всегда останется ровно 2 варианта.',
-      'Правило умножения: если первый выбор можно сделать m способами, а второй — n способами, то общее число вариантов равно m · n. У нас 3 · 2 = 6 кодов. Давай проверим: 12, 13, 21, 23, 31, 32 — ровно шесть. И помни: 12 и 21 — РАЗНЫЕ коды, порядок цифр важен!',
-      'Усложняем: барабанов уже пять — цифры 1, 2, 3, 4, 5, а код всё ещё из двух цифр. Первую цифру выбираем 5 способами, вторую — 4 способами (одну цифру первая уже заняла). Перемножаем: 5 · 4 = 20. Каждый следующий выбор уменьшает число возможностей на 1 — как ступеньки лестницы.',
-      'Теперь код из ТРЁХ цифр на тех же пяти барабанах. Первая цифра — 5 способов, вторая — 4, третья — уже 3. Умножаем по порядку: сначала 5 · 4 = 20, потом 20 · 3 = 60. Получается 60 трёхзначных чисел. Видишь закономерность: множители спускаются вниз: 5, 4, 3.',
-      'А если взять ВСЕ пять цифр по одному разу? Тогда каждая цифра занимает своё место — это перестановки. Считаем: 5 · 4 · 3 · 2 · 1 = 120. Такое произведение математики записывают коротко: 5! и называют «факториал». Каждое новое место отбирает у нас одну цифру.',
-      'Осторожно, ловушка! Составляем двузначные числа из цифр 0, 1, 2 без повторов. Первой цифрой НОЛЬ быть не может: число 01 — это просто 1, ноль в начале «невидим». Поэтому первую цифру выбираем только 2 способами (1 или 2), вторую — из 2 оставшихся. Итог: 2 · 2 = 4 числа: 10, 12, 20, 21.',
-      'Проверь себя: сколько двузначных чисел можно составить из цифр 1, 2, 3 без повторов? Первая цифра — 3 способа, вторая — 2. 3 · 2 = 6. Теперь жми «Понял! Проверю себя» — этот же вопрос ждёт тебя там!'
+      'Сейф Архимеда заперт на код из ДВУХ цифр. На барабанах сейфа три цифры: 1, 2 и 3. Правило сейфа: цифры в коде не должны повторяться. Сколько же разных кодов может быть? Считать перебором долго и легко ошибиться — но есть красивый способ посчитать точно, шаг за шагом.',
+      'Подумаем про ПЕРВУЮ цифру кода. Она может быть любой из трёх: 1, 2 или 3. Это как выбрать первый ключ из связки из трёх ключей — вариантов ровно 3. Запомним: первый выбор даёт 3 варианта.',
+      'Теперь ВТОРАЯ цифра. Повторять нельзя! Одну цифру мы уже поставили первой. Если первой стоит 1, то второй может быть только 2 или 3. А если первой стоит 2 — то только 1 или 3. В любом случае для второй цифры остаётся ровно 2 варианта.',
+      'Вот главное правило: если первый выбор можно сделать m способами, а второй — n способами, то ВСЕГО вариантов m · n. У нас: 3 варианта первой цифры и 2 варианта второй → 3 · 2 = 6 кодов. Проверим руками: 12, 13, 21, 23, 31, 32 — ровно шесть! Важно: 12 и 21 — это разные коды.',
+      'Усложним: цифр уже пять — 1, 2, 3, 4, 5 — а код всё ещё из двух цифр. Первую цифру выбираем 5 способами. Вторую — из оставшихся четырёх: 4 способа. Получаем 5 · 4 = 20 чисел. Заметь закономерность: после каждого выбора остаётся на один вариант меньше.',
+      'А теперь код из ТРЁХ цифр на тех же пяти цифрах. Первая — 5 способов, вторая — 4, третья — 3. Умножаем по шагам: 5 · 4 = 20, затем 20 · 3 = 60. Итого 60 трёхзначных чисел. Множители спускаются вниз, как ступеньки: 5, 4, 3.',
+      'Если использовать ВСЕ пять цифр — по одной на каждую позицию — получатся перестановки. Считаем так: 5 · 4 · 3 · 2 · 1 = 120. Коротко это записывают 5! и называют «факториал». Каждая новая позиция «забирает» одну цифру из набора.',
+      'Внимание, ловушка с нулём! Берём цифры 0, 1, 2 и составляем двузначные числа без повторов. Цифра 0 НЕ может стоять первой: число 01 — это просто 1, ноль в начале «невидим». Значит, первую цифру выбираем 2 способами (1 или 2), а вторую — из двух оставшихся. Итог: 2 · 2 = 4 числа: 10, 12, 20, 21.',
+      'Подведём итог: из цифр 1, 2, 3 без повторов двузначных чисел ровно 3 · 2 = 6. Проверь себя в тесте ниже и жми «Понял! Проверю себя» — там ждёт этот же вопрос!'
     ],
     check: { q: 'Сколько двузначных чисел можно составить из цифр 1,2,3 без повторов?', choices: ['3', '6', '9', '12'], ans: 1,
       exp: '3·2 = 6.' },
@@ -1368,9 +1370,23 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Первая — 5, вторая — 4, третья — 3.', '5·4·3 = 60.'], sol: '5·4·3 = 60.' }
     ]
   };
-  const COL=['#7fd1ff','#8fd1a8','#ffd76a','#e8a0d8','#ff9a7a'];
-  const G={green:'#8fd1a8',gold:'#ffd76a',blue:'#7fd1ff',red:'#ff8a7a',cream:'#e8dcc8'};
-  const digit=(d,i,c,big)=>`<g class="wk-grow" style="animation-delay:${(i*0.12).toFixed(2)}s"><rect x="${d[1]-22}" y="10" width="44" height="54" rx="13" fill="rgba(255,255,255,.06)" stroke="${c||COL[i%5]}" stroke-width="2.6"/><text x="${d[1]}" y="46" text-anchor="middle" font-size="${big||26}" fill="${c||COL[i%5]}" font-weight="bold" font-family="Georgia,serif">${d[0]}</text></g>`;
+  const C=['#5aa0d8','#6fbf7a','#e0b64d','#d98ab0','#e08a55','#8fc7e8'];
+  const G={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a'};
+  const rad=(d)=>d*Math.PI/180;
+  /* большой круг с цифрой, текст идеально по центру */
+  function disc(cx,cy,r,digit,fill,stroke,opt){
+    const o=opt||{};
+    const size=o.size||Math.min(40, Math.floor((r*2-6)/(String(digit).length*0.62)));
+    const fs=Math.max(14,size);
+    return `<g class="f5pop" style="${o.delay?'animation-delay:'+o.delay+'s':''}">
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="3"/>
+      ${o.glow?`<circle class="f5ring" cx="${cx}" cy="${cy}" r="${r-2}" fill="none" stroke="${stroke}" stroke-width="2"/>`:''}
+      <text x="${cx}" y="${(cy+fs*0.36).toFixed(1)}" text-anchor="middle" font-size="${fs}" fill="#0d1a13" font-weight="bold" font-family="Georgia,serif">${digit}</text>
+    </g>`;
+  }
+  function opSign(x,y,t,big){
+    return `<text class="f5pop" style="${big?'':'animation-delay:.15s'}" x="${x}" y="${y}" text-anchor="middle" font-size="${big||30}" fill="#cfe0cf" font-weight="bold">${t}</text>`;
+  }
   const Q21=[
     {q:'Сколько двузначных чисел из цифр 1,2,3 без повторов?',opts:['3','6','9'],ans:1},
     {q:'Сколько трёхзначных чисел из цифр 1,2,3,4,5 без повторов?',opts:['20','60','120'],ans:1}
@@ -1378,135 +1394,135 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   function quiz(lk,st){
     const T=Q21[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.05)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.2)':'rgba(232,106,90,.2)'; bd=i===T.ans?G.green:G.red; tc=i===T.ans?G.green:G.red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:16px" onclick="visW21T('${lk}',${i})">${o}</button>`;
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?G.green:G.red; tc=i===T.ans?G.green:G.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:60px;font-size:17px" onclick="visW21T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">🎉 верно! 5·4·3 = 60</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">✅ верно! 3 · 2 = 6 кодов</div>')
-        : '<div class="wk-ans" style="color:#ff8a7a;font-size:15px">❌ перемножь способы: первая × вторая (и третья)</div>';
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">🎉 верно! 5·4·3 = 60</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">✅ верно! 3 · 2 = 6</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:15.5px">❌ перемножь способы выбора: первую × вторую (× третью)</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW21Act('${lk}','nq')`):'';
-    const rst=wkBtn('↺',`visW21Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    const rst=wkBtn('↺ заново',`visW21Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW21(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     let h='';
     if(step===0){
-      if(st.safe==null) st.safe=0;
-      const c1=(st.safe)%3, c2=(st.safe+1)%3;
-      const bar=(cx,val,on)=>`<g class="wk-bob"><circle cx="${cx}" cy="52" r="30" fill="rgba(0,0,0,.25)" stroke="#3d5c49" stroke-width="2"/><text x="${cx}" y="${on?34:52}" text-anchor="middle" font-size="13" fill="#5b6b58">${(val+2)%3+1}</text><text x="${cx}" y="${on?78:70}" text-anchor="middle" font-size="26" fill="${on?G.gold:'#9aa8a0'}" font-weight="bold" font-family="Georgia,serif">${val+1}</text><text x="${cx}" y="${on?90:88}" text-anchor="middle" font-size="13" fill="#5b6b58">${(val+1)%3+1}</text></g>`;
-      h=wkFrame(wkBig('Сейф Архимеда: код из двух цифр 🔐')+
-        wkHero(`<svg width="322" height="118" viewBox="0 0 322 118" style="display:block">
-          <rect x="4" y="4" width="314" height="110" rx="18" fill="rgba(0,0,0,.22)" stroke="#c9a06a" stroke-width="2"/>
-          <rect x="14" y="26" width="100" height="70" rx="12" fill="#2b2013" stroke="#8a6a3a" stroke-width="2"/>
-          ${bar(64,c1,true)}<text x="64" y="16" text-anchor="middle" font-size="9" fill="#c9a06a">1-я цифра</text>
-          <g class="wv-pop2"><circle cx="148" cy="61" r="17" fill="rgba(217,164,65,.15)" stroke="${G.gold}" stroke-width="2.4"/><text x="148" y="67" text-anchor="middle" font-size="17" fill="${G.gold}" font-weight="bold">+</text></g>
-          <rect x="176" y="26" width="100" height="70" rx="12" fill="#2b2013" stroke="#8a6a3a" stroke-width="2"/>
-          ${bar(226,c2,true)}<text x="226" y="16" text-anchor="middle" font-size="9" fill="#c9a06a">2-я цифра</text>
-          <rect x="288" y="40" width="24" height="42" rx="6" fill="rgba(232,106,90,.12)" stroke="${G.red}" stroke-width="1.6"/>
-          <rect x="292" y="52" width="16" height="8" rx="3" fill="${G.red}"/>
-          <text x="161" y="112" text-anchor="middle" font-size="11" fill="#9ec0a8">цифры 1·2·3 · не повторяются · сколько кодов?</text>
+      if(st.pair==null) st.pair=0;
+      const p1=st.pair%3+1, p2=(st.pair+1)%3+1;
+      h=wkFrame(wkBig('Сейф Архимеда 🔐')+
+        wkHero(`<svg width="330" height="150" viewBox="0 0 330 150" style="display:block">
+          <rect x="6" y="6" width="318" height="138" rx="22" fill="#241a10" stroke="#c9a06a" stroke-width="3"/>
+          <rect x="24" y="20" width="116" height="84" rx="14" fill="#17110a" stroke="#8a6a3a" stroke-width="2"/>
+          <text x="82" y="32" text-anchor="middle" font-size="10" fill="#c9a06a" font-weight="bold">первая цифра</text>
+          ${disc(82,72,30,p1,'#ffd76a','#ffd76a')}
+          <g class="f5float"><text x="156" y="80" text-anchor="middle" font-size="34" fill="#ffd76a">+</text></g>
+          <rect x="188" y="20" width="116" height="84" rx="14" fill="#17110a" stroke="#8a6a3a" stroke-width="2"/>
+          <text x="246" y="32" text-anchor="middle" font-size="10" fill="#c9a06a" font-weight="bold">вторая цифра</text>
+          ${disc(246,72,30,p2,'#8fd1a8','#8fd1a8',{delay:.15})}
+          <circle cx="303" cy="58" r="9" fill="#ff8a7a"/>
+          <circle cx="303" cy="86" r="9" fill="#ff8a7a"/>
+          <text x="165" y="124" text-anchor="middle" font-size="13" fill="#ffdfa0">код из двух цифр · цифры не повторяются</text>
         </svg>`)+
-        wkRow(wkBtn('🔀 покрутить барабан',`visW21Act('${lk}','spin')`),wkChip('1, 2, 3',G.blue))+
-        wkSml('перебирать вслепую долго — посчитаем красиво, по шагам!'));
+        wkRow(wkBtn('🔀 покрутить барабаны',`visW21Act('${lk}','spin')`),wkChip('на барабанах: 1, 2, 3', G.blue))+
+        wkSml('кодов может быть много — посчитаем их точно и без перебора, шаг за шагом'));
     } else if(step===1){
-      h=wkFrame(wkBig('Шаг 1: берём первую цифру')+
-        wkHero(`<svg width="322" height="120" viewBox="0 0 322 120" style="display:block">
-          <rect x="4" y="4" width="314" height="112" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="161" y="24" text-anchor="middle" font-size="12.5" fill="#9ec0a8">три волшебных ключа — берём любой</text>
-          ${[1,2,3].map((d,i)=>{const x=70+i*92;return `<g class="wk-bob" style="animation-delay:${(i*0.18).toFixed(2)}s"><circle cx="${x}" cy="76" r="27" fill="rgba(127,209,255,.08)" stroke="${COL[i]}" stroke-width="3"/><circle cx="${x}" cy="104" r="7" fill="${COL[i]}"/><text x="${x}" y="84" text-anchor="middle" font-size="26" fill="${COL[i]}" font-weight="bold" font-family="Georgia,serif">${d}</text></g>`;}).join('')}
-          <text x="161" y="116" text-anchor="middle" font-size="11" fill="#8fa08f">выбор первой цифры</text>
+      h=wkFrame(wkBig('Шаг 1: первая цифра — 3 способа')+
+        wkHero(`<svg width="330" height="150" viewBox="0 0 330 150" style="display:block">
+          <rect x="6" y="6" width="318" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="165" y="26" text-anchor="middle" font-size="12" fill="#9ec0a8">связка из трёх ключей — берём любой</text>
+          ${[1,2,3].map((d,i)=>{const x=70+i*96;return `<g class="f5float" style="animation-delay:${(i*0.15).toFixed(2)}s"><circle cx="${x}" cy="86" r="30" fill="rgba(255,255,255,.06)" stroke="#4c8a5a" stroke-width="2"/><text x="${x}" y="92" text-anchor="middle" font-size="13" fill="#9ec0a8">ключ</text><text x="${x}" y="66" text-anchor="middle" font-size="13" fill="#9ec0a8">№${i+1}</text></g><g class="f5pop" style="animation-delay:${(0.2+i*0.15).toFixed(2)}s"><circle cx="${x}" cy="80" r="30" fill="${C[i]}" opacity=".9"/><text x="${x}" y="90" text-anchor="middle" font-size="34" fill="#0d1a13" font-weight="bold" font-family="Georgia,serif">${d}</text></g>`;}).join('')}
         </svg>`)+
-        wkRow(wkPill('3 способа', G.gold))+
-        wkAns('первая цифра — любая из трёх!', G.blue)+
-        wkSml('это первый множитель будущего умножения. Запоминаем тройку!'));
+        wkAns('первая цифра — любая из трёх: 3 способа', G.gold)+
+        wkSml('это первый множитель будущего умножения — запомни число 3'));
     } else if(step===2){
-      h=wkFrame(wkBig('Шаг 2: дерево выбора')+
-        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
-          <rect x="4" y="4" width="314" height="142" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <circle cx="161" cy="30" r="15" fill="rgba(127,209,255,.15)" stroke="${G.blue}" stroke-width="2.4"/>
-          <text x="161" y="36" text-anchor="middle" font-size="15" fill="${G.blue}" font-weight="bold" font-family="Georgia,serif">?</text>
-          ${[0,1,2].map(i=>{const x=60+i*102;return `<g><line class="wk-dash" x1="161" y1="45" x2="${x}" y2="72" stroke="#3d7a55" stroke-width="2"/></g>`;}).join('')}
-          ${[0,1,2].map(i=>{const x=60+i*102;return `<g class="wk-grow" style="animation-delay:${(0.3+i*0.2).toFixed(2)}s"><circle cx="${x}" cy="88" r="20" fill="rgba(143,209,168,.12)" stroke="${COL[i]}" stroke-width="2.6"/><text x="${x}" y="94" text-anchor="middle" font-size="18" fill="${COL[i]}" font-weight="bold" font-family="Georgia,serif">${i+1}</text></g>`;}).join('')}
-          ${[0,1,2].map(i=>{const x=60+i*102;const b1=x-38,b2=x+38;return `<g><line class="wk-dash" x1="${x}" y1="108" x2="${b1}" y2="128" stroke="#5aa883" stroke-width="1.8"/><line class="wk-dash" x1="${x}" y1="108" x2="${b2}" y2="128" stroke="#5aa883" stroke-width="1.8"/></g>`;}).join('')}
-          <text x="161" y="24" text-anchor="middle" font-size="11" fill="#9ec0a8">после первой — 2 ветки на каждую</text>
+      h=wkFrame(wkBig('Шаг 2: вторая цифра — 2 способа')+
+        wkHero(`<svg width="330" height="160" viewBox="0 0 330 160" style="display:block">
+          <rect x="6" y="6" width="318" height="148" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="165" y="24" text-anchor="middle" font-size="12" fill="#9ec0a8">дерево выбора: после любой первой — по 2 ветки</text>
+          <circle cx="165" cy="52" r="16" fill="rgba(255,255,255,.08)" stroke="#5aa883" stroke-width="2.4"/>
+          <text x="165" y="58" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">?</text>
+          ${[0,1,2].map(i=>{const x=60+i*106;return `<line class="f5flow" x1="165" y1="68" x2="${x}" y2="94" stroke="#7fae8f" stroke-width="2"/>`;}).join('')}
+          ${[0,1,2].map(i=>{const x=60+i*106;return `<g class="f5pop" style="animation-delay:${(0.25+i*0.18).toFixed(2)}s"><circle cx="${x}" cy="104" r="20" fill="${C[i]}" opacity=".92"/><text x="${x}" y="112" text-anchor="middle" font-size="24" fill="#0d1a13" font-weight="bold" font-family="Georgia,serif">${i+1}</text></g>`;}).join('')}
+          ${[0,1,2].map(i=>{const x=60+i*106;return [0,1].map(j=>{const b2=x+(j?26:-26);return `<line class="f5flow" x1="${x}" y1="124" x2="${b2}" y2="140" stroke="#7fae8f" stroke-width="2"/>`;}).join('');}).join('')}
+          <text x="165" y="158" text-anchor="middle" font-size="11" fill="#8fa08f">6 листьев — 6 кодов</text>
         </svg>`)+
-        wkRow(wkPill('3 ветки', G.blue),wkChip('у каждой — по 2 листика', G.green))+
-        wkAns('вторая цифра — 2 способа из оставшихся', G.green)+
-        wkSml('повторять нельзя: одну цифру уже заняло первое место'));
+        wkSml('какую цифру ни поставим первой — для второй всегда остаются 2 варианта'));
     } else if(step===3){
       h=wkFrame(wkBig('Правило умножения: 3 · 2 = 6')+
-        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
-          <rect x="4" y="4" width="314" height="142" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="161" y="24" text-anchor="middle" font-size="12" fill="#9ec0a8">коды выстраиваются в очередь</text>
-          ${['12','13','21','23','31','32'].map((s,i)=>{
-            const x=16+(i%3)*98, y=40+Math.floor(i/3)*48;
-            return `<g class="wk-fall" style="animation-delay:${(i*0.14).toFixed(2)}s"><rect x="${x}" y="${y}" width="86" height="38" rx="11" fill="${i===0||i===5?'rgba(217,164,65,.14)':'rgba(255,255,255,.05)'}" stroke="${i===0||i===5?G.gold:'#4c8a5a'}" stroke-width="2.2"/>
-            <text x="${x+43}" y="${y+26}" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold" font-family="Georgia,serif">${s[0]}</text><text x="${x+58}" y="${y+26}" text-anchor="middle" font-size="22" fill="${G.gold}" font-weight="bold" font-family="Georgia,serif">${s[1]}</text></g>`;
-          }).join('')}
-          <text x="161" y="138" text-anchor="middle" font-size="11.5" fill="#8fa08f">12 и 21 — разные коды: порядок важен!</text>
+        wkHero(`<svg width="330" height="150" viewBox="0 0 330 150" style="display:block">
+          <rect x="6" y="6" width="318" height="126" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          ${disc(74,70,33,'3','#7fd1ff','#7fd1ff',{glow:true})}
+          ${opSign(126,82,'×',26)}
+          ${disc(152,70,33,'2','#8fd1a8','#8fd1a8',{delay:.15,glow:true})}
+          ${opSign(204,82,'=',26)}
+          ${disc(248,70,40,'6','#ffd76a','#ffd76a',{delay:.3,glow:true})}
+          <text x="165" y="120" text-anchor="middle" font-size="12" fill="#9ec0a8">первый выбор × второй выбор</text>
         </svg>`)+
-        wkRow(wkPill('3 · 2 = 6 кодов', G.gold))+
-        wkAns('ровно шесть: 12, 13, 21, 23, 31, 32', G.green)+
-        wkSml('первый выбор m способов, второй n → всего m · n'));
+        wkRow(`<span class="f5in" style="display:inline-block;margin:2px 6px;font-size:15px;color:#e8dcc8;background:rgba(255,255,255,.06);border-radius:999px;padding:3px 12px;border:1.5px solid #4c8a5a">12</span><span class="f5in" style="animation-delay:.1s;display:inline-block;margin:2px 6px;font-size:15px;color:#e8dcc8;background:rgba(255,255,255,.06);border-radius:999px;padding:3px 12px;border:1.5px solid #4c8a5a">13</span><span class="f5in" style="animation-delay:.2s;display:inline-block;margin:2px 6px;font-size:15px;color:#e8dcc8;background:rgba(255,255,255,.06);border-radius:999px;padding:3px 12px;border:1.5px solid #4c8a5a">21</span><span class="f5in" style="animation-delay:.3s;display:inline-block;margin:2px 6px;font-size:15px;color:#e8dcc8;background:rgba(255,255,255,.06);border-radius:999px;padding:3px 12px;border:1.5px solid #4c8a5a">23</span><span class="f5in" style="animation-delay:.4s;display:inline-block;margin:2px 6px;font-size:15px;color:#e8dcc8;background:rgba(255,255,255,.06);border-radius:999px;padding:3px 12px;border:1.5px solid #4c8a5a">31</span><span class="f5in" style="animation-delay:.5s;display:inline-block;margin:2px 6px;font-size:15px;color:#e8dcc8;background:rgba(255,255,255,.06);border-radius:999px;padding:3px 12px;border:1.5px solid #4c8a5a">32</span>`)+
+        wkAns('ровно 6 кодов — и 12 ≠ 21: порядок важен!', G.green));
     } else if(step===4){
-      h=wkFrame(wkBig('Пять барабанов: 5 · 4 = 20')+
-        wkHero(`<svg width="322" height="140" viewBox="0 0 322 140" style="display:block">
-          <rect x="4" y="4" width="314" height="132" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="161" y="22" text-anchor="middle" font-size="12" fill="#9ec0a8">первая цифра (5) → вторая (4) — сетка кодов</text>
-          ${[0,1,2,3,4].map(i=>{const x=26+i*56;return `<g class="wk-fall" style="animation-delay:${(i*0.1).toFixed(2)}s"><circle cx="${x}" cy="46" r="16" fill="rgba(127,209,255,.12)" stroke="${COL[i]}" stroke-width="2.4"/><text x="${x}" y="52" text-anchor="middle" font-size="17" fill="${COL[i]}" font-weight="bold" font-family="Georgia,serif">${i+1}</text></g>`;}).join('')}
-          ${[0,1,2,3,4].map(i=>[0,1,2,3].map(j=>{const x=26+i*56+((j-1.5)*6), y=78+j*13;return `<circle cx="${x}" cy="${y}" r="3" fill="rgba(255,255,255,.35)" class="wk-fall" style="animation-delay:${(0.2+i*0.06+j*0.05).toFixed(2)}s"/>`;}).join('')).join('')}
-          <text x="161" y="126" text-anchor="middle" font-size="12.5" fill="#9ec0a8">под каждой первой цифрой — 4 возможные вторые</text>
+      h=wkFrame(wkBig('Пять цифр, код из двух: 5 · 4')+
+        wkHero(`<svg width="330" height="160" viewBox="0 0 330 160" style="display:block">
+          <rect x="6" y="6" width="318" height="148" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="165" y="24" text-anchor="middle" font-size="12" fill="#9ec0a8">выбрали первую цифру 1 — остались 4</text>
+          ${[1,2,3,4,5].map((d,i)=>{const x=48+i*58;return `<g class="f5pop" style="animation-delay:${(i*0.08).toFixed(2)}s"><circle cx="${x}" cy="60" r="${i===0?28:22}" fill="${i===0?'#ffd76a':C[i%5]}" opacity="${i===0?1:.55}"/><text x="${x}" y="${i===0?68:66}" text-anchor="middle" font-size="${i===0?30:22}" fill="#0d1a13" font-weight="bold" font-family="Georgia,serif">${d}</text></g>`;}).join('')}
+          <text x="272" y="64" text-anchor="middle" font-size="11" fill="#9ec0a8">5 выборов</text>
+          ${[2,3,4,5].map((d,i)=>{const x=38+i*62;return `<g class="f5pop" style="animation-delay:${(0.3+i*0.1).toFixed(2)}s"><circle cx="${x}" cy="118" r="24" fill="${C[i+1]}" opacity=".9"/><text x="${x}" y="125" text-anchor="middle" font-size="26" fill="#0d1a13" font-weight="bold" font-family="Georgia,serif">${d}</text></g>`;}).join('')}
+          <text x="302" y="124" text-anchor="middle" font-size="11" fill="#9ec0a8">4 способа</text>
+          <path class="f5flow" d="M48 92 C 110 102, 170 100, 240 94" fill="none" stroke="#ffd76a" stroke-width="2.6"/>
         </svg>`)+
         wkRow(wkPill('5 · 4 = 20 чисел', G.green))+
-        wkSml('множители спускаются, как ступеньки лестницы: 5, 4, 3, …'));
+        wkSml('вторую цифру выбираем из оставшихся четырёх — каждый выбор уменьшает варианты'));
     } else if(step===5){
       h=wkFrame(wkBig('Код из трёх цифр: 5 · 4 · 3')+
-        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
-          <rect x="4" y="4" width="314" height="142" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="161" y="24" text-anchor="middle" font-size="12" fill="#9ec0a8">три ступеньки: 1-я, 2-я и 3-я цифра</text>
-          ${[[5,40,'#7fd1ff'],[4,161,'#8fd1a8'],[3,282,'#e8a0d8']].map((d,i)=>`
-            <g class="wk-fall" style="animation-delay:${(i*0.2).toFixed(2)}s">
-              <path d="M${d[1]-40},${120-i*34} h80 v-${26-i*2} h-80 z" fill="rgba(255,255,255,.05)" stroke="${d[2]}" stroke-width="2.4"/>
-              <text x="${d[1]}" y="${108-i*34}" text-anchor="middle" font-size="26" fill="${d[2]}" font-weight="bold" font-family="Georgia,serif">${d[0]}</text>
-              <text x="${d[1]}" y="${120-i*34+16}" text-anchor="middle" font-size="10" fill="#9ec0a8">${i===0?'первая':(i===1?'вторая':'третья')}</text>
-            </g>`).join('')}
-          <g class="wk-fall" style="animation-delay:0.7s"><circle cx="161" cy="24" r="0" fill="none"/><text x="161" y="96" text-anchor="middle" font-size="13" fill="#8fa08f">×</text></g>
+        wkHero(`<svg width="330" height="160" viewBox="0 0 330 160" style="display:block">
+          <rect x="6" y="6" width="318" height="148" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="165" y="24" text-anchor="middle" font-size="12" fill="#9ec0a8">три позиции кода · множители спускаются вниз</text>
+          ${[[5,70,'#5aa0d8','1-я цифра'],[4,165,'#6fbf7a','2-я цифра'],[3,260,'#d98ab0','3-я цифра']].map((d,i)=>`
+            <g class="f5pop" style="animation-delay:${(i*0.2).toFixed(2)}s"><circle cx="${d[1]}" cy="92" r="36" fill="rgba(255,255,255,.06)" stroke="${d[2]}" stroke-width="3"/><text x="${d[1]}" y="70" text-anchor="middle" font-size="11" fill="#9ec0a8">${d[3]}</text><text x="${d[1]}" y="102" text-anchor="middle" font-size="40" fill="${d[2]}" font-weight="bold" font-family="Georgia,serif">${d[0]}</text></g>`).join('')}
+          ${[[130,'×'],[232,'×']].map((d,i)=>`<text class="f5pop" style="animation-delay:${(0.25+i*0.2).toFixed(2)}s" x="${d[0]}" y="104" text-anchor="middle" font-size="32" fill="#cfe0cf" font-weight="bold">${d[1]}</text>`).join('')}
+          <rect x="96" y="130" width="138" height="20" rx="10" fill="rgba(217,164,65,.12)" stroke="#ffd76a"/>
+          <text x="165" y="144" text-anchor="middle" font-size="13.5" fill="#ffd76a" font-weight="bold">5·4 = 20 → 20·3 = 60</text>
         </svg>`)+
-        wkRow(wkPill('5·4 = 20', G.blue),wkPill('20 · 3 = 60', G.gold))+
         wkAns('60 трёхзначных чисел!', G.green)+
-        wkSml('множители спускаются вниз: 5, 4, 3 — как ступеньки'));
-    } else if(step===6){
-      h=wkFrame(wkBig('Все пять цифр: перестановки 5!')+
-        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
-          <rect x="4" y="4" width="314" height="142" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="161" y="22" text-anchor="middle" font-size="12" fill="#9ec0a8">пять мест — пять гостей рассаживаются</text>
-          ${[0,1,2,3,4].map(i=>{const x=52+i*58;return `<g class="wk-fall" style="animation-delay:${(0.15+i*0.18).toFixed(2)}s"><rect x="${x-20}" y="86" width="40" height="34" rx="9" fill="rgba(255,255,255,.05)" stroke="#4c8a5a" stroke-width="2"/><text x="${x}" y="104" text-anchor="middle" font-size="11" fill="#9ec0a8">место ${i+1}</text><text x="${x}" y="52" text-anchor="middle" font-size="24">${['🐰','🦊','🐻','🐺','🐱'][i]}</text></g>`;}).join('')}
-          <text x="161" y="138" text-anchor="middle" font-size="11.5" fill="#9ec0a8">5 гостей → 5 · 4 · 3 · 2 · 1 расстановок</text>
+        wkSml('позиции заполняются по очереди: сперва 5 вариантов, потом 4, потом 3'));
+} else if(step===6){
+      h=wkFrame(wkBig('Все пять цифр: 5! = 120')+
+        wkHero(`<svg width="330" height="160" viewBox="0 0 330 160" style="display:block">
+          <rect x="6" y="6" width="318" height="148" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="165" y="22" text-anchor="middle" font-size="12" fill="#9ec0a8">пять гостей садятся на пять мест — по очереди</text>
+          ${[0,1,2,3,4].map(i=>{const x=46+i*62;return `<g><circle cx="${x}" cy="124" r="24" fill="rgba(255,255,255,.05)" stroke="#4c8a5a" stroke-width="2.4"/><text x="${x}" y="131" text-anchor="middle" font-size="16" fill="#cfe0cf" font-weight="bold">${i+1}</text></g>`;}).join('')}
+          ${[0,1,2,3,4].map(i=>{const x=46+i*62;return `<g class="f5in" style="animation-delay:${(0.2+i*0.2).toFixed(2)}s"><text x="${x}" y="52" text-anchor="middle" font-size="26">${['🐰','🦊','🐻','🐺','🐱'][i]}</text></g>`;}).join('')}
+          ${[0,1,2,3,4].map(i=>{const x=46+i*62;return `<line class="f5flow" x1="${x}" y1="60" x2="${x}" y2="96" stroke="#5aa883" stroke-width="2"/>`;}).join('')}
         </svg>`)+
         wkRow(wkPill('5 · 4 · 3 · 2 · 1 = 120', '#e8a0d8'),wkChip('коротко: 5! = 120', G.gold))+
-        wkSml('каждое новое место отбирает одну цифру-гостя'));
+        wkSml('каждое новое место забирает одну цифру-гостя: так считаются перестановки'));
     } else if(step===7){
-      h=wkFrame(wkBig('Ловушка: ноль не может быть первым')+
-        wkHero(`<svg width="322" height="140" viewBox="0 0 322 140" style="display:block">
-          <rect x="4" y="4" width="314" height="132" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="wk-fall"><rect x="16" y="20" width="80" height="54" rx="11" fill="rgba(232,106,90,.1)" stroke="${G.red}" stroke-width="2.4"/><text x="56" y="38" text-anchor="middle" font-size="11" fill="#ff9a8a">первая?</text><text x="56" y="64" text-anchor="middle" font-size="28" fill="${G.red}" font-weight="bold" font-family="Georgia,serif">0</text><text x="56" y="90" text-anchor="middle" font-size="9.5" fill="#ff9a8a">01 = 1 — ноль невидим!</text></g>
-          <g class="wk-fall" style="animation-delay:0.25s"><rect x="120" y="20" width="70" height="54" rx="11" fill="rgba(127,209,255,.1)" stroke="${G.blue}" stroke-width="2.4"/><text x="155" y="38" text-anchor="middle" font-size="11" fill="#9fc5e8">можно</text><text x="155" y="64" text-anchor="middle" font-size="28" fill="${G.blue}" font-weight="bold" font-family="Georgia,serif">1</text></g>
-          <g class="wk-fall" style="animation-delay:0.35s"><rect x="200" y="20" width="70" height="54" rx="11" fill="rgba(127,209,255,.1)" stroke="${G.blue}" stroke-width="2.4"/><text x="235" y="38" text-anchor="middle" font-size="11" fill="#9fc5e8">можно</text><text x="235" y="64" text-anchor="middle" font-size="28" fill="${G.blue}" font-weight="bold" font-family="Georgia,serif">2</text></g>
-          <g class="wk-fall" style="animation-delay:0.5s"><rect x="16" y="96" width="290" height="30" rx="10" fill="rgba(217,164,65,.1)" stroke="${G.gold}" stroke-width="1.8"/><text x="161" y="116" text-anchor="middle" font-size="13.5" fill="${G.gold}" font-weight="bold">2 · 2 = 4 числа: 10 · 12 · 20 · 21</text></g>
+      h=wkFrame(wkBig('Ловушка: ноль в начале невидим')+
+        wkHero(`<svg width="330" height="150" viewBox="0 0 330 150" style="display:block">
+          <rect x="6" y="6" width="318" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="165" y="24" text-anchor="middle" font-size="12" fill="#9ec0a8">первая позиция заперта: ноль не пускаем!</text>
+          <g class="f5pop"><rect x="40" y="44" width="74" height="66" rx="14" fill="rgba(232,106,90,.1)" stroke="#ff8a7a" stroke-width="3" stroke-dasharray="8 5"/><text x="77" y="86" text-anchor="middle" font-size="38" fill="#ff8a7a" font-weight="bold" font-family="Georgia,serif">0</text><text x="77" y="102" text-anchor="middle" font-size="10" fill="#ff9a8a">замок ✕</text></g>
+          <g class="f5pop" style="animation-delay:.2s"><rect x="128" y="44" width="74" height="66" rx="14" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="3"/><text x="165" y="86" text-anchor="middle" font-size="38" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">1</text><text x="165" y="102" text-anchor="middle" font-size="10" fill="#9fc5e8">можно</text></g>
+          <g class="f5pop" style="animation-delay:.3s"><rect x="216" y="44" width="74" height="66" rx="14" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="3"/><text x="253" y="86" text-anchor="middle" font-size="38" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">2</text><text x="253" y="102" text-anchor="middle" font-size="10" fill="#9fc5e8">можно</text></g>
+          <g class="f5in" style="animation-delay:.5s"><text x="165" y="132" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">2 · 2 = 4 числа: 10, 12, 20, 21</text></g>
         </svg>`)+
-        wkSml('первая цифра — 2 способа (без нуля!), вторая — 2 из оставшихся'));
+        wkSml('первая цифра — 2 способа (без нуля!), вторая — из двух оставшихся'));
     } else {
       h=wkFrame(wkBig('Проверь себя 📝')+
-        wkHero(`<svg width="322" height="74" viewBox="0 0 322 74" style="display:block">
-          <rect x="4" y="4" width="314" height="66" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="161" y="30" text-anchor="middle" font-size="14" fill="#9ec0a8">из 1, 2, 3 · код из двух цифр · без повторов</text>
-          ${['12','13','21','23','31','32'].map((s,i)=>{const x=14+i*50;return `<g class="wk-grow" style="animation-delay:${(i*0.1).toFixed(2)}s"><circle cx="${x+22}" cy="52" r="18" fill="rgba(217,164,65,.1)" stroke="${i%2?G.green:G.blue}" stroke-width="2"/><text x="${x+22}" y="57" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold" font-family="Georgia,serif">${s}</text></g>`;}).join('')}
+        wkHero(`<svg width="330" height="96" viewBox="0 0 330 96" style="display:block">
+          ${disc(58,50,34,'3','#7fd1ff','#7fd1ff')}
+          ${opSign(104,60,'×',26)}
+          ${disc(130,50,34,'2','#8fd1a8','#8fd1a8',{delay:.12})}
+          ${opSign(178,60,'=',26)}
+          ${disc(224,50,42,'6','#ffd76a','#ffd76a',{delay:.24,glow:true})}
+          <text x="165" y="88" text-anchor="middle" font-size="11.5" fill="#9ec0a8">из цифр 1·2·3 · без повторов · код из двух</text>
         </svg>`)+
         quiz(lk,st)+
         wkSml('3 · 2 = 6 — жми «Понял! Проверю себя»!'));
@@ -1521,7 +1537,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW21T=visW21T;
   function visW21Act(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
-    if(act==='spin') st.safe=((st.safe==null?0:st.safe)+1)%3;
+    if(act==='spin') st.pair=((st.pair==null?0:st.pair)+1)%3;
     if(act==='nq'){ st.q=1; st.sel=null; }
     if(act==='rst') CHS[lk]={};
     chRender(0);
@@ -1529,6 +1545,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW21Act=visW21Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===21){ window.ARH_LESSONS[i]=L21; break; } } })();
 })();
+
 /* ================= УРОК 79 · Сложение и вычитание дробей (v4) ================= */
 (function(){
   if(!window.__wk79css){
