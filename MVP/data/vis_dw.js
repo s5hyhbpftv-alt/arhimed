@@ -683,3 +683,343 @@ window.WAVE_D = window.WAVE_D || {};
   window.WAVE_D[418]=visD418;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===418){ window.ARH_LESSONS[i]=L418; break; } } })();
 })();
+/* ================= УРОК 419 · Окружность: касательная и углы ================= */
+(function(){
+  const L419 = {
+    id: 419, title: 'Окружность: касательная и углы', ico: '⭕',
+    src: 'Математика · 8 класс · Геометрия 8: окружность', subj: 'math',
+    explain: [
+      'Касательная — прямая, которая касается окружности ровно в одной точке. Как колесо касается дороги! У касательной есть удивительное свойство с радиусом.',
+      'Главное свойство: радиус, проведённый в точку касания, ПЕРПЕНДИКУЛЯРЕН касательной. Они образуют прямой угол 90°. Это как спица колеса, перпендикулярная дороге!',
+      'Из одной точки к окружности можно провести две касательные. Их отрезки от точки до точек касания РАВНЫ! Это свойство часто используется в задачах.',
+      'Теперь про углы. Вписанный угол — угол с вершиной НА окружности, стороны которого пересекают окружность. Он «опирается» на дугу между своими сторонами.',
+      'Теорема о вписанном угле: вписанный угол равен ПОЛОВИНЕ дуги, на которую он опирается. Если дуга 100°, вписанный угол = 50°. Вдвое меньше!',
+      'А центральный угол (вершина в центре окружности) равен самой дуге. Значит, вписанный угол — половина центрального, опирающегося на ту же дугу. Это связывает оба угла!',
+      'Следствие: вписанный угол, опирающийся на ДИАМЕТР (дуга 180°), равен 90° — он прямой! Это помогает доказывать прямоугольные треугольники в окружности.',
+      'Запомни связку: дуга = центральный угол · вписанный = половина дуги = половина центрального. Вписанный на диаметре — всегда 90°!',
+      'Теперь проверь себя: касательная и радиус в точке касания… Вспомни про прямой угол!'
+    ],
+    check: { q: 'Касательная и радиус в точке касания…', choices: ['перпендикулярны', 'параллельны', 'равны', 'образуют угол 45°'], ans: 0,
+      exp: 'Радиус ⊥ касательной в точке касания.' },
+    tasks: [
+      { q: 'Вписанный угол опирается на дугу 100°. Чему равен угол?', kind: 'unit', ans: 50, tol: 0,
+        hints: ['Вписанный — половина дуги.', '100 : 2 = 50°.'], sol: '50°' },
+      { q: 'Из одной точки к окружности проведены две касательные. Их отрезки…', kind: 'choice', choices: ['равны', 'разные', 'перпендикулярны', 'в сумме равны диаметру'], ans: 0, tol: 0,
+        hints: ['Свойство касательных.', 'Отрезки касательных из одной точки равны.'], sol: 'равны' }
+    ]
+  };
+  const circle=(mode)=>`<svg viewBox="0 0 220 200" style="width:190px;height:173px;background:#101f18;border-radius:12px">
+    <circle cx="110" cy="100" r="70" fill="rgba(127,209,255,.05)" stroke="#7fd1ff" stroke-width="3"/>
+    ${mode==='tan'?`<line x1="20" y1="170" x2="210" y2="60" stroke="#ffd76a" stroke-width="4"/>
+      <line x1="110" y1="100" x2="150" y2="83" stroke="#8fd1a8" stroke-width="3"/>
+      <rect x="138" y="78" width="14" height="14" fill="none" stroke="#8fd1a8" stroke-width="2"/>`:
+    mode==='ins'?`<path d="M110 100 L45 60 A70 70 0 0 1 165 55 Z" fill="rgba(255,215,106,.15)"/>
+      <text x="70" y="52" font-size="13" fill="#ffd76a">α</text>`:
+    mode==='cent'?`<path d="M110 100 L45 60 A70 70 0 0 1 165 55 Z" fill="rgba(255,138,192,.1)"/>
+      <line x1="110" y1="100" x2="45" y2="60" stroke="#ffd76a" stroke-width="3"/>
+      <text x="92" y="90" font-size="13" fill="#ffd76a">β</text>`:''}
+  </svg>`;
+  function visD419(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Касательная</div>
+        <div style="font-size:44px" class="wv-swing">🛞</div>
+        <div class="wv-sml">прямая касается окружности ровно в одной точке — как колесо дороги!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Радиус ⊥ касательной</div>
+        ${circle('tan')}
+        <div style="background:rgba(143,209,168,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 12px;font-size:16px;color:#8fd1a8;font-weight:bold" class="wv-ans">прямой угол 90°!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Две касательные из точки</div>
+        <svg viewBox="0 0 220 200" style="width:190px;height:173px;background:#101f18;border-radius:12px">
+          <circle cx="130" cy="110" r="60" fill="rgba(127,209,255,.05)" stroke="#7fd1ff" stroke-width="3"/>
+          <line x1="40" y1="180" x2="150" y2="82" stroke="#ffd76a" stroke-width="3.5"/>
+          <line x1="40" y1="180" x2="190" y2="120" stroke="#8fd1a8" stroke-width="3.5"/>
+          <text x="20" y="195" font-size="13" fill="#ffd76a">A</text>
+        </svg>
+        <div class="wv-sml">отрезки касательных из одной точки РАВНЫ!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Вписанный угол</div>
+        ${circle('ins')}
+        <div class="wv-sml">вершина НА окружности, стороны пересекают её</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Теорема о вписанном угле</div>
+        ${circle('ins')}
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:16px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">угол = половина дуги!</div>
+        <div class="wv-sml">дуга 100° → угол 50°</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Центральный угол</div>
+        ${circle('cent')}
+        <div class="wv-sml">центральный = дуге · вписанный = половина центрального</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Угол на диаметре = 90°</div>
+        <svg viewBox="0 0 220 200" style="width:190px;height:173px;background:#101f18;border-radius:12px">
+          <circle cx="110" cy="100" r="70" fill="rgba(127,209,255,.05)" stroke="#7fd1ff" stroke-width="3"/>
+          <line x1="40" y1="100" x2="180" y2="100" stroke="#8fd1a8" stroke-width="3"/>
+          <polygon points="110,100 40,100 158,46" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="2"/>
+          <rect x="96" y="86" width="12" height="12" fill="none" stroke="#ffd76a" stroke-width="2"/>
+        </svg>
+        <div class="wv-sml">дуга 180° → вписанный угол 90° — всегда прямой!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Памятка</div>
+        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
+          ${chip('дуга = центральный','#ff8ac0')}${chip('вписанный = дуга/2','#ffd76a')}${chip('на диаметре — 90°','#8fd1a8')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${circle('tan')}
+        <div class="wv-sml">касательная и радиус в точке касания — что?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:15px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">⊥ или ∥?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_D[419]=visD419;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===419){ window.ARH_LESSONS[i]=L419; break; } } })();
+})();
+/* ================= УРОК 420 · Векторы: начало ================= */
+(function(){
+  const L420 = {
+    id: 420, title: 'Векторы: начало', ico: '➡️',
+    src: 'Математика · 8 класс · Геометрия 8: векторы', subj: 'math',
+    explain: [
+      'Вектор — это отрезок со стрелкой: у него есть НАПРАВЛЕНИЕ и ДЛИНА. Вектор из точки A в точку B обозначают AB⃗. Вектор показывает не только «сколько», но и «куда»!',
+      'У вектора есть начало (A) и конец (B). Длина вектора (её называют модулем) — это расстояние между A и B, записывают |AB⃗|. Как у отрезка, только со стрелкой!',
+      'Зачем векторы? Они описывают движение: скорость ветра, силу, перемещение. «5 км на север» — это вектор: и величина (5 км), и направление (север)!',
+      'Векторы можно СКЛАДЫВАТЬ. Правило треугольника: приставь начало второго вектора к концу первого — сумма идёт от начала первого к концу второго. Как шаги по дороге!',
+      'Правило параллелограмма — другой способ: приложи векторы к одной точке и дострой параллелограмм — его диагональ и есть сумма. Оба правила дают один результат!',
+      'Противоположный вектор −a — такой же по длине, но направлен наоборот. Сумма a + (−a) = 0 — нулевой вектор: вернулись в начало!',
+      'Векторы бывают коллинеарными (лежат на параллельных прямых) и равными (одинаковая длина И одинаковое направление). Равные векторы можно переносить параллельно!',
+      'Координаты вектора: если вектор идёт из (0;0) в (x; y), его записывают {x; y}. Длина по теореме Пифагора: |a| = √(x² + y²). Например, {3; 4} имеет длину 5.',
+      'Теперь проверь себя: как обозначают вектор из точки A в точку B? Вспомни — AB со стрелкой!'
+    ],
+    check: { q: 'Как обозначают вектор из точки A в точку B?', choices: ['AB⃗', '|AB|', 'A + B', 'AB²'], ans: 0,
+      exp: 'Вектор с началом A и концом B — AB⃗.' },
+    tasks: [
+      { q: 'Чему равна сумма вектора a и противоположного ему вектора −a?', kind: 'unit', ans: 0, tol: 0,
+        hints: ['Они гасят друг друга.', 'Нулевой вектор: 0.'], sol: '0' },
+      { q: 'Длина вектора — это…', kind: 'choice', choices: ['расстояние между его концами', 'его направление', 'координата x', 'удвоенная длина отрезка'], ans: 0, tol: 0,
+        hints: ['Модуль вектора.', 'Длина вектора = расстояние между концами.'], sol: 'расстояние между концами' }
+    ]
+  };
+  function visD420(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Что такое вектор?</div>
+        <svg viewBox="0 0 220 100" style="width:200px;height:91px;background:#101f18;border-radius:12px">
+          <line x1="30" y1="60" x2="180" y2="40" stroke="#ffd76a" stroke-width="4"/>
+          <polygon points="180,40 168,38 174,50" fill="#ffd76a"/>
+          <circle cx="30" cy="60" r="6" fill="#8fd1a8"/><text x="18" y="80" font-size="13" fill="#8fd1a8">A</text>
+          <text x="176" y="32" font-size="13" fill="#ffd76a">B</text>
+        </svg>
+        <div class="wv-sml">направление + длина · «сколько» и «куда»!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Начало, конец, длина</div>
+        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
+          ${chip('A — начало','#8fd1a8')}${chip('B — конец','#ffd76a')}${chip('|AB⃗| — длина (модуль)','#7fd1ff')}
+        </div>
+        <div class="wv-sml">длина = расстояние между A и B</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Векторы в жизни</div>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+          ${['💨','💪','🚶'].map((e,i)=>`<span style="font-size:40px" class="wv-pop" style="animation-delay:${i*0.1}s">${e}</span>`).join('')}
+        </div>
+        <div class="wv-sml">ветер, сила, перемещение — «5 км на север» это вектор!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Сложение: правило треугольника</div>
+        <svg viewBox="0 0 220 130" style="width:200px;height:118px;background:#101f18;border-radius:12px">
+          <line x1="30" y1="100" x2="110" y2="60" stroke="#8fd1a8" stroke-width="4"/>
+          <polygon points="110,60 98,58 106,70" fill="#8fd1a8"/>
+          <line x1="110" y1="60" x2="190" y2="30" stroke="#ff8ac0" stroke-width="4"/>
+          <polygon points="190,30 178,28 186,40" fill="#ff8ac0"/>
+          <line x1="30" y1="100" x2="190" y2="30" stroke="#ffd76a" stroke-width="4" stroke-dasharray="6 4"/>
+        </svg>
+        <div class="wv-sml">приставь конец к началу · сумма = из начала в конец!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Правило параллелограмма</div>
+        <svg viewBox="0 0 220 140" style="width:200px;height:127px;background:#101f18;border-radius:12px">
+          <polygon points="30,100 110,60 190,100 110,140" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <line x1="30" y1="100" x2="110" y2="60" stroke="#8fd1a8" stroke-width="4"/><polygon points="110,60 98,58 106,70" fill="#8fd1a8"/>
+          <line x1="30" y1="100" x2="110" y2="140" stroke="#ff8ac0" stroke-width="4"/><polygon points="110,140 108,128 120,136" fill="#ff8ac0"/>
+          <line x1="30" y1="100" x2="190" y2="100" stroke="#ffd76a" stroke-width="4"/><polygon points="190,100 178,96 178,104" fill="#ffd76a"/>
+        </svg>
+        <div class="wv-sml">диагональ параллелограмма = сумма!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Противоположный вектор</div>
+        <div style="display:flex;align-items:center;gap:8px;justify-content:center">
+          <svg viewBox="0 0 90 40" style="width:80px;height:36px"><line x1="10" y1="20" x2="80" y2="20" stroke="#8fd1a8" stroke-width="3.5"/><polygon points="80,20 71,16 71,24" fill="#8fd1a8"/></svg>
+          <svg viewBox="0 0 90 40" style="width:80px;height:36px"><line x1="80" y1="20" x2="10" y2="20" stroke="#ff8ac0" stroke-width="3.5"/><polygon points="10,20 19,16 19,24" fill="#ff8ac0"/></svg>
+        </div>
+        <div class="wv-sml">a + (−a) = 0 — нулевой вектор, вернулись!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Коллинеарные и равные</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['коллинеарные','лежат на параллельных прямых','#7fd1ff'],
+            ['равные','одинаковая длина И направление','#8fd1a8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span style="font-size:12px">${x[1]}</span></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Координаты и длина</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:17px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">вектор {3; 4}</div>
+          <div class="wv-pop2">длина = √(3² + 4²) = <b style="color:#ffd76a">5</b></div>
+        </div>
+        <div class="wv-sml">теорема Пифагора — лучший друг длины вектора!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <svg viewBox="0 0 220 100" style="width:180px;height:82px;background:#101f18;border-radius:12px">
+          <line x1="30" y1="60" x2="180" y2="40" stroke="#ffd76a" stroke-width="4"/>
+          <polygon points="180,40 168,38 174,50" fill="#ffd76a"/>
+          <circle cx="30" cy="60" r="6" fill="#8fd1a8"/><text x="18" y="80" font-size="13" fill="#8fd1a8">A</text>
+          <text x="176" y="32" font-size="13" fill="#ffd76a">B</text>
+        </svg>
+        <div class="wv-sml">как обозначить вектор из A в B?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? ⃗</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_D[420]=visD420;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===420){ window.ARH_LESSONS[i]=L420; break; } } })();
+})();
+/* ================= УРОК 421 · Уравнения в целых числах ================= */
+(function(){
+  const L421 = {
+    id: 421, title: 'Уравнения в целых числах', ico: '🔢',
+    src: 'Математика · 8 класс · Олимп-8: уравнения в целых', subj: 'math',
+    explain: [
+      'Уравнение в целых числах — это уравнение, где x и y должны быть ЦЕЛЫМИ числами (…, −2, −1, 0, 1, 2, …). Пример: xy = 6. Сколько целых решений? Перебор маленький — найдём все!',
+      'Разложим 6 на множители: 6 = 1·6 = 2·3. Положительные пары (x; y): (1;6), (2;3), (3;2), (6;1). Уже четыре! Порядок важен — x и y разные роли.',
+      'А если разрешить отрицательные? (−1)·(−6) = 6 тоже! Минус на минус даёт плюс. Добавляются (−1;−6), (−2;−3), (−3;−2), (−6;−1) — ещё четыре. Всего 8 решений!',
+      'Главный приём для xy = n: разложи n на множители и перебери все пары (делители). У 6 делители: ±1, ±2, ±3, ±6. Каждая пара множителей — решение!',
+      'Произведение равно нулю: xy = 0 означает, что x = 0 ИЛИ y = 0. Это ключевой приём! Если произведение равно нулю — хотя бы один множитель ноль.',
+      'Линейное уравнение: x + 2y = 5. Если зафиксировать y, x выражается: x = 5 − 2y. При y = 0 → x = 5, при y = 1 → x = 3, при y = 2 → x = 1. Бесконечно много решений!',
+      'Почему бесконечно? Берём любое целое y — и получаем целое x. Все пары (5−2y; y) — решения. Например, y = −1 → x = 7. Сколько хочешь — столько и решений!',
+      'На олимпиадах часто спрашивают «найди все целые решения». План: 1) если xy = n — перебирай делители n; 2) если xy = 0 — один множитель ноль; 3) если линейное — выражай одну переменную через другую.',
+      'Теперь проверь себя: сколько положительных целых пар (x; y) с xy = 6? Вспомни делители шестёрки!'
+    ],
+    check: { q: 'Сколько положительных целых пар (x; y) с xy = 6?', choices: ['4', '2', '6', '3'], ans: 0,
+      exp: '(1,6), (2,3), (3,2), (6,1) — четыре пары.' },
+    tasks: [
+      { q: 'Целое решение x + 2y = 5 при y = 1: чему равен x?', kind: 'unit', ans: 3, tol: 0,
+        hints: ['x = 5 − 2.', 'x = 3.'], sol: '3' },
+      { q: 'Уравнение xy = 0 в целых числах означает…', kind: 'choice', choices: ['x = 0 или y = 0', 'x = y = 1', 'x + y = 0', 'решений нет'], ans: 0, tol: 0,
+        hints: ['Произведение равно нулю.', 'Один из множителей равен нулю.'], sol: 'x = 0 или y = 0' }
+    ]
+  };
+  function visD421(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 10px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Уравнение в целых числах</div>
+        <div style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">xy = 6</div>
+        <div class="wv-sml">x и y — целые: …, −2, −1, 0, 1, 2, …</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Разложим 6</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${[['1','6'],['2','3'],['3','2'],['6','1']].map(p=>`<div class="wv-pop" style="text-align:center;background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:10px;padding:6px 10px;min-width:64px"><div style="font-size:17px;color:#ffd76a;font-family:Georgia,serif">(${p[0]}; ${p[1]})</div></div>`).join('')}
+        </div>
+        <div class="wv-sml">порядок важен — четыре пары!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Отрицательные тоже!</div>
+        <div class="wv-row" style="gap:5px;flex-wrap:wrap">
+          ${[['−1','−6'],['−2','−3'],['−3','−2'],['−6','−1']].map(p=>`<span class="wv-chip" style="border-color:#ff8ac0;color:#ff8ac0">(${p[0]}; ${p[1]})</span>`).join('')}
+        </div>
+        <div class="wv-sml">минус на минус = плюс → ещё 4 решения, всего 8!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Главный приём</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.6">xy = n → разложи n и перебери пары делителей. Делители 6: <b style="color:#ffd76a">±1, ±2, ±3, ±6</b></div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Произведение = 0</div>
+        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">xy = 0</div>
+        <div style="background:rgba(143,209,168,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 12px;font-size:16px;color:#8fd1a8;font-weight:bold" class="wv-ans">x = 0 или y = 0!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Линейное: x + 2y = 5</div>
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-size:16px;color:#e8dcc8;text-align:center;font-family:Georgia,serif">
+          <div class="wv-pop">x = 5 − 2y</div>
+          <div class="wv-pop2">y=0 → x=5 · y=1 → x=3 · y=2 → x=1</div>
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Бесконечно много!</div>
+        <div class="wv-row" style="gap:5px;flex-wrap:wrap">
+          ${[['y=−1','x=7'],['y=0','x=5'],['y=1','x=3'],['y=2','x=1']].map(p=>`<span class="wv-chip" style="border-color:#7fd1ff;color:#7fd1ff">${p[0]} → ${p[1]}</span>`).join('')}
+        </div>
+        <div class="wv-sml">любое целое y даёт целое x — решений сколько хочешь!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">План решения</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['xy = n','перебирай делители','#7fd1ff'],
+            ['xy = 0','один множитель ноль','#8fd1a8'],
+            ['линейное','вырази одну переменную','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><b style="font-family:Georgia,serif;color:${x[2]}">${x[0]}</b><span style="font-size:12px">${x[1]}</span></div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">xy = 6</div>
+        <div class="wv-sml">положительные целые пары — сколько?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? пары</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_D[421]=visD421;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===421){ window.ARH_LESSONS[i]=L421; break; } } })();
+})();
