@@ -598,13 +598,12 @@ const ISLANDS=[
 function isJunior(){ try{ return !!DB.profile&&/^[1-4]$/.test(String(DB.profile.klass||'').trim()); }catch(e){ return false; } }
 /* ---------- фильтр задач по классу ---------- */
 function taskClassRange(t){
-  if(t&&t.island==='Начальная школа'){
-    const th=String(t.theme||'');
-    const m=th.match(/(\d{1,2})\s*(?:[\u2013-]\s*(\d{1,2}))?\s*класс/);
-    if(m) return [ +m[1], m[2]? +m[2] : +m[1] ];
-    return [1,4];
-  }
-  const R={Сиракузы:[5,9],Ньютон:[7,9],Лавуазье:[8,9],Информатика:[7,9]};
+  // тема несёт пометку класса («1 класс · …», «5–6 кл · …») — она главнее острова
+  const th=String((t&&t.theme)||'');
+  const m=/^(\d{1,2})\s*(?:[-–—]\s*(\d{1,2}))?\s*(?:класс|кл)/.exec(th);
+  if(m) return [ +m[1], m[2]? +m[2] : +m[1] ];
+  // без пометки — островной диапазон (старшая линия: Гл.N, Инф. · …, БОСС)
+  const R={'Начальная школа':[1,4],Сиракузы:[5,9],Ньютон:[7,9],Лавуазье:[8,9],Информатика:[7,9]};
   return R[(t&&t.island)||'']||[1,9];
 }
 function taskFits(t){ const r=taskClassRange(t),o=openClassRange(); return !(r[1]<o[0]||r[0]>o[1]); }
@@ -612,7 +611,19 @@ function tasksFit(arr){ return (arr||[]).filter(taskFits); }
 function islandHasTasks(name){ return tasksFit(window.ARH_TASKS.filter(t=>t.island===name)).length>0; }
 
 function taskPool(){ return tasksFit(isJunior()? window.ARH_TASKS.filter(t=>t.island==='Начальная школа') : window.ARH_TASKS.filter(t=>t.island!=='Начальная школа')); }
-function islandVisible(I){ if(isJunior()) return I.name==='Начальная школа'; if(I.name==='Начальная школа') return false; return islandHasTasks(I.name); }
+/* карта путешествий: все острова всегда на месте (младшие — только Начальная школа) */
+function islandVisible(I){
+  if(isJunior()) return I.name==='Начальная школа';
+  if(I.name==='Начальная школа') return false;
+  return true;
+}
+/* с какого класса (не раньше класса ученика) на острове появятся задачи — для подписи «откроется в N классе» */
+function islandOpenAt(name){
+  const ts=window.ARH_TASKS.filter(t=>t.island===name);
+  const from=profileClassNum();
+  for(let k=Math.max(1,from);k<=9;k++){ if(ts.some(t=>{ const r=taskClassRange(t); return !(r[1]<k||r[0]>k); })) return k; }
+  return null;
+}
 function nextTask(){ return taskPool().filter(t=>!DB.tasks[t.id]||!DB.tasks[t.id].done)[0] || window.ARH_TASKS.filter(t=>taskFits(t)&&(!DB.tasks[t.id]||!DB.tasks[t.id].done))[0] || null; }
 function poolDone(){ const ts=taskPool(); return ts.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length; }
 function islStats(name){
@@ -637,21 +648,11 @@ function pdCss(){
   if(document.getElementById('pdCss')) return;
   const st=document.createElement('style'); st.id='pdCss';
   st.textContent=`
-  .pd-title{display:flex;align-items:center;gap:10px;margin:16px 2px 6px}
+  .pd-title{display:flex;align-items:center;gap:8px;margin:16px 2px 6px;flex-wrap:wrap}
   .pd-title .h{font-size:16px;font-weight:bold;color:var(--ivory)}
   .pd-title .s{font-size:11.5px;color:var(--muted)}
-  .plan-card{background:linear-gradient(180deg,rgba(30,58,45,.85),rgba(18,36,27,.92));border:1px solid var(--cardb,#3d5c49);border-radius:18px;padding:12px;margin:6px 0 14px}
-  .skill-row{display:flex;align-items:center;gap:8px;margin:3px 0;font-size:12.5px}
-  .skill-row .tn{width:96px;flex:0 0 96px;color:#e8dcc8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
-  .skill-row .bar{flex:1;height:10px;background:rgba(255,255,255,.07);border-radius:6px;overflow:hidden}
-  .skill-row .bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#4c8a5a,#8fd1a8)}
-  .skill-row .pc{width:44px;flex:0 0 44px;text-align:right;color:#cfe0cf;font-weight:bold}
-  .plan-step{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.04);border:1px solid rgba(127,184,160,.25);border-radius:12px;padding:7px 10px;margin:4px 0;cursor:pointer}
-  .plan-step .n{flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:var(--brass,#d9a441);color:#0d1a13;font-weight:bold;font-size:13px;display:flex;align-items:center;justify-content:center}
-  .plan-step .tt{flex:1;min-width:0;text-align:left}
-  .plan-step .tt b{font-size:13.5px;color:#fff}
-  .plan-step .tt div{font-size:11px;color:var(--muted,#8a94ad)}
-  .plan-step .lvl{font-size:11px;color:#ffd76a}
+  .pd-title .l{flex:1 1 200px;min-width:0;text-align:left}
+  .pd-title .btns{flex:0 0 auto;display:flex;gap:6px;flex-wrap:wrap}
   .dash-mini-row{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:thin}
   .dash-mini{flex:0 0 148px;background:rgba(255,255,255,.045);border:1.5px solid rgba(127,184,160,.3);border-radius:15px;padding:8px 8px 6px;cursor:pointer;text-align:center;transition:transform .15s ease,border-color .15s}
   .dash-mini:hover{transform:translateY(-2px)}
@@ -659,7 +660,7 @@ function pdCss(){
   .dash-mini .nm{font-size:12.5px;font-weight:bold;color:#fff;margin-top:2px;line-height:1.25}
   .dash-mini .pc{font-size:11.5px;color:#8fd1a8}
   .expand-hint{font-size:11px;color:var(--muted,#8a94ad);margin-top:2px}
-  .island-fold .fold-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .fold-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
   .chip.pd{background:rgba(255,255,255,.05);border:1.5px solid rgba(127,184,160,.4);color:#e8dcc8}
   .chip.pd.on{background:rgba(217,164,65,.2);border-color:var(--brass,#d9a441);color:#ffd76a}
   .plan-arena{position:relative}
@@ -669,125 +670,136 @@ function pdCss(){
   .plan-kicker{font-size:10px;letter-spacing:3px;color:#8fd1a8;text-transform:uppercase;text-align:left;position:relative}
   .plan-title{font-size:23px;font-weight:bold;color:#fff;font-family:Georgia,serif;text-align:left;margin:2px 0 1px;position:relative}
   .plan-sub{font-size:12px;color:#cfe0cf;text-align:left;margin-bottom:9px;position:relative;line-height:1.4}
-  .kls-bar{display:flex;gap:6px;flex-wrap:wrap;position:relative}
-  .kls-chip{border:1.5px solid rgba(143,209,168,.45);background:rgba(255,255,255,.05);color:#e8dcc8;border-radius:999px;padding:5px 13px;font-size:13px;cursor:pointer;font-weight:bold}
-  .kls-chip.on{background:#d9a441;border-color:#ffd76a;color:#0d1a13}
-  .plan-ringrow{display:flex;align-items:center;justify-content:space-between;margin:10px 2px 2px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:6px 12px}
-  .plan-ringrow .lbl{font-size:12px;color:#cfe0cf;font-weight:bold;letter-spacing:.03em}
-  .sec-cap{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8fd1a8;text-align:left;margin:12px 2px 7px;font-weight:bold}
-  .skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-  .skill-tile{animation:pdIn .5s ease both;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(127,184,160,.22);border-radius:13px;padding:7px 8px;text-align:left}
-  .skill-tile .st-top{display:flex;justify-content:space-between;gap:5px;align-items:baseline}
-  .skill-tile .st-name{font-size:11.5px;color:#e8dcc8;font-weight:bold;line-height:1.25}
-  .skill-tile .st-pct{font-size:14px;color:#ffd76a;font-weight:bold}
-  .skill-tile .st-bar{height:7px;margin:5px 0 3px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
-  .skill-tile .st-bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#d9a441,#8fd1a8)}
-  .skill-tile .st-count{font-size:10px;color:#8a94ad}
-  .rt-route{position:relative}
-  .rt-route::before{content:'';position:absolute;left:11px;top:10px;bottom:10px;width:2px;background:repeating-linear-gradient(180deg,#6fa886 0 6px,transparent 6px 12px);opacity:.75}
-  .rt-stop{display:grid;grid-template-columns:26px 1fr;gap:9px;align-items:start;margin:8px 0;cursor:pointer;position:relative}
-  .rt-node{width:24px;height:24px;border-radius:50%;background:#d9a441;color:#0d1a13;font-weight:bold;font-size:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(217,164,65,.14)}
-  .rt-node.now{animation:pdPulse 1.5s ease-in-out infinite}
-  @keyframes pdPulse{0%,100%{box-shadow:0 0 0 4px rgba(217,164,65,.14)}50%{box-shadow:0 0 0 8px rgba(217,164,65,.3)}}
-  .rt-card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(127,184,160,.25);border-left:3px solid #d9a441;border-radius:12px;padding:7px 10px;text-align:left;transition:background .15s}
-  .rt-stop:hover .rt-card{background:rgba(217,164,65,.08)}
-  .rt-title{font-size:13.5px;color:#fff;font-weight:bold;line-height:1.25}
-  .rt-meta{font-size:11px;color:#8a94ad;margin-top:2px}
   @keyframes pdIn{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
   .plan-band{animation:pdIn .5s ease both}
-  .plan-ringrow{animation:pdIn .5s ease .12s both}
-  .skill-tile .st-bar i{width:0;animation:stGrow 1s cubic-bezier(.2,.8,.2,1) forwards}
   @keyframes stGrow{to{width:var(--w,0%)}}
-  .rt-node{animation:pdNode .45s ease both;transform-origin:center}
-  @keyframes pdNode{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.18);opacity:1}100%{transform:scale(1)}}
-  .rt-route::before{opacity:0;animation:pdLineIn .8s ease .25s forwards}
-  @keyframes pdLineIn{to{opacity:.75}}
+  .plan-prog{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin:8px 2px 2px;position:relative}
+  .plan-prog i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#d9a441,#8fd1a8);animation:stGrow 1s cubic-bezier(.2,.8,.2,1) forwards}
+  .pl-sec{margin:10px 0 2px}
+  .pl-sec-h{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid rgba(127,184,160,.28);border-radius:12px;padding:7px 10px;position:relative}
+  .pl-sec-h .pl-ico{font-size:16px;line-height:1}
+  .pl-sec-h .pl-th{flex:1;text-align:left;font-size:13.5px;font-weight:bold;color:#fff}
+  .pl-sec-h .pl-st{font-size:11.5px;color:#8fd1a8;font-weight:bold;background:rgba(143,209,168,.12);border-radius:99px;padding:2px 9px}
+  .pl-list{margin-top:4px}
+  .pl-task{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:6px 10px;margin:4px 0;cursor:pointer;text-align:left;animation:pdIn .35s ease both}
+  .pl-task .pl-ic{flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.07);color:#cfe0cf;font-size:11.5px;font-weight:bold;display:flex;align-items:center;justify-content:center}
+  .pl-task .pl-ti{flex:1;min-width:0;text-align:left}
+  .pl-task .pl-ti b{font-size:13px;color:#fff;display:block;line-height:1.3}
+  .pl-task .pl-meta{font-size:10.5px;color:#8a94ad}
+  .pl-task.done{opacity:.55}
+  .pl-task.done .pl-ic{background:rgba(95,154,106,.3);color:#9fd8ab}
+  .pl-task.next{border-color:#d9a441;background:rgba(217,164,65,.12);box-shadow:0 0 0 1px rgba(217,164,65,.35)}
+  .pl-task.next .pl-ic{background:#d9a441;color:#0d1a13}
+  .pl-flag{flex:0 0 auto;font-size:10px;color:#0d1a13;background:#ffd76a;border-radius:99px;padding:2px 8px;font-weight:bold;letter-spacing:.04em;text-transform:uppercase}
+  .dash-mini.locked{opacity:.75;border-style:dashed}
+  .dash-mini.locked .nm{color:#b9c4bd}
   `;
   document.head.appendChild(st);
 }
-function planAllowedCls(){
-  const pool=taskPool();
-  const set={};
-  pool.forEach(t=>{ const k=clsKey(t); if(k) set[k]=1; });
-  return Object.keys(set).sort((x,y)=>(+x.split('-')[0]||+x.match(/\d+/)?.[0]||99)- (+y.split('-')[0]||+y.match(/\d+/)?.[0]||99)||x.localeCompare(y));
-}
-function planClsNow(){
-  const arr=planAllowedCls();
-  if(arr.indexOf(PLAN.cls)>=0) return PLAN.cls;
-  const prof=DB.profile&&DB.profile.klass!=null? String(DB.profile.klass):null;
-  if(prof&&arr.indexOf(prof)>=0) return prof;
-  return arr[0]||null;
-}
-function planPickCls(k){ PLAN.cls=k; renderPath(); }
 function planOpenIsland(name){ var i=PLAN.open.indexOf(name); if(i>=0){PLAN.open.splice(i,1);}else{PLAN.open.push(name);} renderPath(); }
-function planOpenAll(){ PLAN.open=ISLANDS.filter(islandVisible).map(function(I){return encodeURIComponent(I.name);}); renderPath(); }
+function planOpenAll(){ PLAN.open=ISLANDS.filter(function(I){return islandVisible(I)&&islandHasTasks(I.name);}).map(function(I){return encodeURIComponent(I.name);}); renderPath(); }
 function planCloseAll(){ PLAN.open=[]; renderPath(); }
-function planStatFor(kls){
-  const pool=taskPool().filter(t=>clsKey(t)===kls);
-  const by={};
-  pool.forEach(t=>{ const th=themeOf(t)||'Разное'; (by[th]=by[th]||[]).push(t); });
-  let doneAll=0;
-  const rows=Object.keys(by).map(th=>{
-    const ts=by[th].sort((x,y)=>x.diff-y.diff||x.id.localeCompare(y.id));
-    const d=ts.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
-    doneAll+=d;
-    return {th,d,total:ts.length,pct:Math.round(d/ts.length*100),ts};
-  }).sort((x,y)=>x.pct-y.pct);
-  const undone=[];
-  rows.forEach(r=>r.ts.forEach(t=>{ if(!(DB.tasks[t.id]&&DB.tasks[t.id].done)) undone.push(t); }));
-  return {pool,done:doneAll,total:pool.length,rows,undone};
+/* чистое имя темы: «Гл.2 · Дроби»→«Дроби», «5–6 кл · Дроби»→«Дроби», «Инф. · Кодирование»→«Кодирование» */
+function planTheme(t){
+  const raw=String((t&&t.theme)||'');
+  if(/^БОСС/.test(raw)) return 'Босс-испытание';
+  const clean=raw.replace(/^Гл\.\d+\s*·\s*/,'');
+  return thClean(clean).replace(/^Инф\.\s*·\s*/,'') || 'Задачи';
 }
+/* План обучения = выборка задач по методике для класса: темы по порядку островов, внутри — задачи с галочками и подсвеченной следующей */
 function planDash(){
-  const kls=planClsNow();
-  if(!kls) return '';
-  const st=planStatFor(kls);
-  const pct=st.total? Math.round(st.done/st.total*100):0;
-  const next=st.undone.slice(0,5);
-  const clsLabel=clsFromKey(kls);
-  const chips=planAllowedCls().map(k=>`<button class="kls-chip ${k===kls?'on':''}" onclick="planPickCls('${k}')">${esc(clsFromKey(k))}</button>`).join('');
-  const tiles=st.rows.slice(0,6).map((r,i)=>`
-    <div class="skill-tile" style="animation-delay:${(0.05+i*0.06).toFixed(2)}s">
-      <div class="st-top"><span class="st-name">${esc(r.th)}</span><span class="st-pct">${r.pct}%</span></div>
-      <div class="st-bar"><i style="--w:${r.pct}%;animation-delay:${(0.22+i*0.06).toFixed(2)}s"></i></div>
-      <div class="st-count">решено ${r.d} из ${r.total}</div>
-    </div>`).join('') || '<div class="small" style="color:var(--muted)">В этом классе задач пока нет.</div>';
-  const steps = next.length
-    ? `<div class="rt-route">`+next.map((t,i)=>`
-      <div class="rt-stop" onclick="go('task-${t.id}')">
-        <span class="rt-node ${i===0?'now':''}" style="animation-delay:${(0.3+i*0.12).toFixed(2)}s">${i+1}</span>
-        <div class="rt-card">
-          <div class="rt-title">${esc(t.title)}</div>
-          <div class="rt-meta">${esc(themeOf(t))} · остров «${esc(t.island)}» · ур. ${t.diff}</div>
-        </div>
-      </div>`).join('')+`</div>`
-    : '<div class="small" style="color:var(--ok);text-align:center">Этот класс пройден полностью — отличная работа!</div>';
-  const ringC=ringHTML(pct,64,pct+'%');
+  const pool=taskPool();
+  if(!pool.length) return '';
+  const doneN=pool.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
+  const pct=pool.length? Math.round(doneN/pool.length*100):0;
+  const profK=DB.profile&&DB.profile.klass!=null? String(DB.profile.klass):'';
+  const islOrd={}; ISLANDS.forEach((I,i)=>islOrd[I.name]=i);
+  const ordIdx={}; window.ARH_TASKS.forEach((t,i)=>{ ordIdx[t.id]=i; });
+  const ordered=pool.slice().sort((a,b)=>{
+    const io=(islOrd[a.island]??99)-(islOrd[b.island]??99);
+    if(io) return io;
+    return (ordIdx[a.id]??0)-(ordIdx[b.id]??0);
+  });
+  // секции по (остров, тема) — задачи в методическом порядке файла
+  const secs=[]; const secMap={};
+  ordered.forEach(t=>{
+    const th=planTheme(t);
+    const key=t.island+'|'+th;
+    if(!secMap[key]){ secMap[key]={island:t.island,th,ts:[]}; secs.push(secMap[key]); }
+    secMap[key].ts.push(t);
+  });
+  const nextT=ordered.find(t=>!(DB.tasks[t.id]&&DB.tasks[t.id].done))||null;
+  let step=0;
+  const blocks=secs.map(s=>{
+    const doneS=s.ts.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
+    const meta=ISLANDS.find(I=>I.name===s.island);
+    const inner=s.ts.map(t=>{
+      const done=!!(DB.tasks[t.id]&&DB.tasks[t.id].done);
+      const isNext=nextT&&t.id===nextT.id;
+      if(!done) step++;
+      return `<div class="pl-task ${done?'done':''} ${isNext?'next':''}" style="animation-delay:${Math.min(0.04+step*0.012,0.8).toFixed(2)}s" onclick="go('task-${t.id}')">
+        <span class="pl-ic">${done?'✓':(isNext?'▶':step)}</span>
+        <span class="pl-ti"><b>${esc(t.title)}</b><span class="pl-meta">${esc(planTheme(t))} · ур. ${t.diff}${isNext?' · следующая':''}</span></span>
+        ${isNext?'<span class="pl-flag">дальше</span>':''}
+      </div>`;
+    }).join('');
+    return `<div class="pl-sec">
+      <div class="pl-sec-h"><span class="pl-ico">${meta?meta.ico:'🧭'}</span><span class="pl-th">${esc(s.th)}</span><span class="pl-st">${doneS}/${s.ts.length}</span></div>
+      <div class="pl-list">${inner}</div>
+    </div>`;
+  }).join('');
+  const rangeLbl = (function(){
+    const o=openClassRange();
+    if(isJunior()) return 'класс '+esc(profK)+' · начальная школа';
+    return o[0]===o[1]? 'класс '+esc(profK)
+      : 'класс '+esc(profK)+' · открыты задачи '+o[0]+'–'+o[1]+' классов';
+  })();
   return `<div class="plan-arena">
     <div class="plan-band">
       <div class="plan-kicker">Личный маршрут</div>
       <div class="plan-title">План обучения</div>
-      <div class="plan-sub">${pct===100? 'класс '+esc(clsLabel)+' пройден целиком': 'класс '+esc(clsLabel)+' · начинаем с навыков, которые ещё укрепляем'}</div>
-      <div class="kls-bar">${chips}</div>
+      <div class="plan-sub">${pct===100? rangeLbl+' пройден целиком — отличная работа!': rangeLbl+' · выборка задач под тебя: решено '+doneN+' из '+pool.length+' ('+pct+'%)'}</div>
+      <div class="plan-prog"><i style="--w:${pct}%"></i></div>
     </div>
-    <div class="plan-ringrow"><span class="lbl">навыки класса</span><span style="margin-left:auto"></span>${ringC}</div>
-    <div class="sec-cap">Копилка навыков</div>
-    <div class="skill-grid">${tiles}</div>
-    <div class="sec-cap">Ближайшие остановки маршрута</div>
-    ${steps}
+    ${blocks}
   </div>`;
 }
 function dashMini(I,i){
   const st=islStats(I.name); const pct=st.total? Math.round(st.done/st.total*100):0;
   const on=PLAN.open.indexOf(encodeURIComponent(I.name))>=0;
-  return `<div class="dash-mini ${on?'on':''}" style="animation-delay:${0.05*i}s" onclick="planOpenIsland('${encodeURIComponent(I.name)}')">
-    <div style="display:flex;justify-content:center">${ringHTML(pct,44,I.ico)}</div>
-    <div class="nm">${esc(I.name)}</div>
-    <div class="pc">${st.done}/${st.total} · ${pct}%</div>
-    <div class="expand-hint">${on?'карта развёрнута · нажми, чтобы свернуть':'нажми — развернуть карту'}</div>
+  const locked=st.total===0;
+  const openAt=locked? islandOpenAt(I.name):null;
+  const inner = locked
+    ? `<div style="display:flex;justify-content:center;opacity:.55">${ringHTML(0,44,I.ico)}</div>
+       <div class="nm">${esc(I.name)}</div>
+       <div class="pc">🔒 ${openAt? 'откроется в '+openAt+' классе':'задач пока нет'}</div>
+       <div class="expand-hint">остров закрыт — вернёшься позже</div>`
+    : `<div style="display:flex;justify-content:center">${ringHTML(pct,44,I.ico)}</div>
+       <div class="nm">${esc(I.name)}</div>
+       <div class="pc">${st.done}/${st.total} · ${pct}%</div>
+       <div class="expand-hint">${on?'карта развёрнута · нажми, чтобы свернуть':'нажми — развернуть карту'}</div>`;
+  return `<div class="dash-mini ${on?'on':''} ${locked?'locked':''}" style="animation-delay:${0.05*i}s" onclick="${locked? '':'planOpenIsland(\''+encodeURIComponent(I.name)+'\')'}">
+    ${inner}
   </div>`;
 }
 function dashExpanded(I){
-  const st=islStats(I.name); const pct=st.total? Math.round(st.done/st.total*100):0;
+  const st=islStats(I.name);
+  const locked=st.total===0;
+  if(locked){
+    const openAt=islandOpenAt(I.name);
+    return `<div class="island path-island" style="margin-top:8px">
+      <div class="fold-top"><button class="chip pd" onclick="planOpenIsland('${encodeURIComponent(I.name)}')">− свернуть</button><span style="font-size:11.5px;color:var(--muted)">остров «${esc(I.name)}»</span></div>
+      <div class="pi-head">
+        ${ringHTML(0,58,I.ico)}
+        <div style="flex:1;min-width:0">
+          <div class="nm">${esc(I.name)}</div>
+          <div class="sub">${esc(I.dsc)}</div>
+        </div>
+      </div>
+      <div style="margin-top:8px;font-size:12.5px;color:var(--muted);line-height:1.5">🔒 На этом острове пока нет задач для твоего класса. ${openAt? 'Он откроется, когда дорастёшь до '+openAt+' класса.':''} А пока — решай задачи на доступных островах в плане обучения выше.</div>
+    </div>`;
+  }
+  const pct=st.total? Math.round(st.done/st.total*100):0;
   const islSorted=tasksFit(window.ARH_TASKS.filter(t=>t.island===I.name)).sort((a,b)=>clsSort(a)-clsSort(b)||a.diff-b.diff||a.id.localeCompare(b.id));
   const themes=[...new Set(islSorted.map(t=>themeOf(t)))];
   const themeRows=themes.map(th=>{
@@ -840,10 +852,11 @@ function renderPath(){
   const minis=islands.map(dashMini).join('');
   const openedI = (PLAN.open||[]).map(function(enc){ try{ var nm=decodeURIComponent(enc); return islands.find(function(I){ return I.name===nm; }); }catch(err){ return null; } }).filter(Boolean);
   const expanded = openedI.map(dashExpanded).join('');
-  s.innerHTML=hero+legendCard+nextBtn+plan+
-    `<div class="pd-title" style="margin-bottom:2px"><div style="flex:1;text-align:left"><div class="h">Карта путешествий по островам</div><div class="s">открытых карт: ${PLAN.open.length} — нажми на остров или разверни все</div></div><div style="flex:0 0 auto"><button class="chip pd" onclick="planOpenAll()">развернуть все</button> <button class="chip pd" onclick="planCloseAll()">свернуть все</button></div></div>
+  s.innerHTML=hero+legendCard+nextBtn+
+    `<div class="pd-title" style="margin-bottom:2px"><div class="l"><div class="h">Карта путешествий по островам</div><div class="s">открытых карт: ${PLAN.open.length} — нажми на остров или разверни все</div></div><div class="btns"><button class="chip pd" onclick="planOpenAll()">развернуть все</button> <button class="chip pd" onclick="planCloseAll()">свернуть все</button></div></div>
      <div class="dash-mini-row">${minis}</div>
-     ${expanded}`;
+     ${expanded}`+
+    plan;
   requestAnimationFrame(()=>{ document.querySelectorAll('.ring-fg').forEach(el=>{ el.style.strokeDashoffset=getComputedStyle(el.parentNode).getPropertyValue('--off'); }); });
   hud();
 }
