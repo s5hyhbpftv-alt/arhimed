@@ -631,7 +631,126 @@ function ringHTML(pct, size, label){
     <text x="50%" y="53%" text-anchor="middle" dominant-baseline="middle" fill="#e8e0cc" font-size="${size*0.21}" font-family="Georgia,serif">${label}</text>
   </svg>`;
 }
+/* ================= ПУТЬ: план обучения + дашборды ================= */
+if(typeof window.PLAN==='undefined') window.PLAN={cls:null,open:null};
+function pdCss(){
+  if(document.getElementById('pdCss')) return;
+  const st=document.createElement('style'); st.id='pdCss';
+  st.textContent=`
+  .pd-title{display:flex;align-items:center;gap:10px;margin:16px 2px 6px}
+  .pd-title .h{font-size:16px;font-weight:bold;color:var(--ivory)}
+  .pd-title .s{font-size:11.5px;color:var(--muted)}
+  .plan-card{background:linear-gradient(180deg,rgba(30,58,45,.85),rgba(18,36,27,.92));border:1px solid var(--cardb,#3d5c49);border-radius:18px;padding:12px;margin:6px 0 14px}
+  .skill-row{display:flex;align-items:center;gap:8px;margin:3px 0;font-size:12.5px}
+  .skill-row .tn{width:96px;flex:0 0 96px;color:#e8dcc8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
+  .skill-row .bar{flex:1;height:10px;background:rgba(255,255,255,.07);border-radius:6px;overflow:hidden}
+  .skill-row .bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#4c8a5a,#8fd1a8)}
+  .skill-row .pc{width:44px;flex:0 0 44px;text-align:right;color:#cfe0cf;font-weight:bold}
+  .plan-step{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.04);border:1px solid rgba(127,184,160,.25);border-radius:12px;padding:7px 10px;margin:4px 0;cursor:pointer}
+  .plan-step .n{flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:var(--brass,#d9a441);color:#0d1a13;font-weight:bold;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .plan-step .tt{flex:1;min-width:0;text-align:left}
+  .plan-step .tt b{font-size:13.5px;color:#fff}
+  .plan-step .tt div{font-size:11px;color:var(--muted,#8a94ad)}
+  .plan-step .lvl{font-size:11px;color:#ffd76a}
+  .dash-mini-row{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:thin}
+  .dash-mini{flex:0 0 148px;background:rgba(255,255,255,.045);border:1.5px solid rgba(127,184,160,.3);border-radius:15px;padding:8px 8px 6px;cursor:pointer;text-align:center;transition:transform .15s ease,border-color .15s}
+  .dash-mini:hover{transform:translateY(-2px)}
+  .dash-mini.on{border-color:var(--brass,#d9a441);background:rgba(217,164,65,.08)}
+  .dash-mini .nm{font-size:12.5px;font-weight:bold;color:#fff;margin-top:2px;line-height:1.25}
+  .dash-mini .pc{font-size:11.5px;color:#8fd1a8}
+  .expand-hint{font-size:11px;color:var(--muted,#8a94ad);margin-top:2px}
+  .island-fold .fold-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .chip.pd{background:rgba(255,255,255,.05);border:1.5px solid rgba(127,184,160,.4);color:#e8dcc8}
+  .chip.pd.on{background:rgba(217,164,65,.2);border-color:var(--brass,#d9a441);color:#ffd76a}
+  `;
+  document.head.appendChild(st);
+}
+function planAllowedCls(){
+  const pool=taskPool();
+  const set={};
+  pool.forEach(t=>{ const k=clsKey(t); if(k) set[k]=1; });
+  return Object.keys(set).sort((x,y)=>(+x.split('-')[0]||+x.match(/\d+/)?.[0]||99)- (+y.split('-')[0]||+y.match(/\d+/)?.[0]||99)||x.localeCompare(y));
+}
+function planClsNow(){
+  const arr=planAllowedCls();
+  if(arr.indexOf(PLAN.cls)>=0) return PLAN.cls;
+  const prof=DB.profile&&DB.profile.klass!=null? String(DB.profile.klass):null;
+  if(prof&&arr.indexOf(prof)>=0) return prof;
+  return arr[0]||null;
+}
+function planPickCls(k){ PLAN.cls=k; renderPath(); }
+function planOpenIsland(name){ PLAN.open = (PLAN.open===name? null:name); renderPath(); }
+function planStatFor(kls){
+  const pool=taskPool().filter(t=>clsKey(t)===kls);
+  const by={};
+  pool.forEach(t=>{ const th=themeOf(t)||'Разное'; (by[th]=by[th]||[]).push(t); });
+  let doneAll=0;
+  const rows=Object.keys(by).map(th=>{
+    const ts=by[th].sort((x,y)=>x.diff-y.diff||x.id.localeCompare(y.id));
+    const d=ts.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
+    doneAll+=d;
+    return {th,d,total:ts.length,pct:Math.round(d/ts.length*100),ts};
+  }).sort((x,y)=>x.pct-y.pct);
+  const undone=[];
+  rows.forEach(r=>r.ts.forEach(t=>{ if(!(DB.tasks[t.id]&&DB.tasks[t.id].done)) undone.push(t); }));
+  return {pool,done:doneAll,total:pool.length,rows,undone};
+}
+function planDash(){
+  const kls=planClsNow();
+  if(!kls) return '';
+  const st=planStatFor(kls);
+  const pct=st.total? Math.round(st.done/st.total*100):0;
+  const next=st.undone.slice(0,6);
+  const clsLabel=clsFromKey(kls);
+  const chips=planAllowedCls().map(k=>`<button class="chip pd ${k===kls?'on':''}" onclick="planPickCls('${k}')">${esc(clsFromKey(k))}</button>`).join('');
+  const skillRows=st.rows.slice(0,6).map((r,i)=>`<div class="skill-row"><span class="tn">${esc(r.th)}</span><div class="bar"><i style="width:${r.pct}%"></i></div><span class="pc">${r.d}/${r.total}</span></div>`).join('')||'<div class="small" style="color:var(--muted)">В этом классе задач пока нет.</div>';
+  const steps=next.length? next.map((t,i)=>`<div class="plan-step" onclick="go('task-${t.id}')"><span class="n">${i+1}</span><span class="tt"><b>${esc(t.title)}</b><div>${esc(themeOf(t))} · остров «${esc(t.island)}»</div></span><span class="lvl">ур. ${t.diff}</span></div>`).join('')
+    : '<div class="small" style="color:var(--ok);text-align:center">Все задачи этого класса решены — отличная работа!</div>';
+  const subTxt = pct===100? 'Класс полностью пройден!' : 'составлено по твоим навыкам: сначала темы, где меньше всего решено';
+  return `<div class="pd-title"><div style="flex:1;text-align:left"><div class="h">План обучения</div><div class="s">класс ${esc(clsLabel)} · ${subTxt}</div></div><div style="flex:0 0 auto">${ringHTML(pct,54,pct+'%')}</div></div>
+  <div class="plan-card">
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">${chips}</div>
+    <div style="font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin:6px 2px 2px;text-align:left">Навыки · сколько решено по темам</div>
+    ${skillRows}
+    <div style="font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin:10px 2px 4px;text-align:left">Следующие шаги</div>
+    ${steps}
+  </div>`;
+}
+function dashMini(I,i){
+  const st=islStats(I.name); const pct=st.total? Math.round(st.done/st.total*100):0;
+  const on=PLAN.open===I.name;
+  return `<div class="dash-mini ${on?'on':''}" style="animation-delay:${0.05*i}s" onclick="planOpenIsland('${encodeURIComponent(I.name)}')">
+    <div style="display:flex;justify-content:center">${ringHTML(pct,44,I.ico)}</div>
+    <div class="nm">${esc(I.name)}</div>
+    <div class="pc">${st.done}/${st.total} · ${pct}%</div>
+    <div class="expand-hint">${on?'раскрыт · нажми, чтобы свернуть':'нажми — раскрыть'}</div>
+  </div>`;
+}
+function dashExpanded(I){
+  const st=islStats(I.name); const pct=st.total? Math.round(st.done/st.total*100):0;
+  const islSorted=tasksFit(window.ARH_TASKS.filter(t=>t.island===I.name)).sort((a,b)=>clsSort(a)-clsSort(b)||a.diff-b.diff||a.id.localeCompare(b.id));
+  const themes=[...new Set(islSorted.map(t=>themeOf(t)))];
+  const themeRows=themes.map(th=>{
+    const tt=islSorted.filter(t=>themeOf(t)===th);
+    const d=tt.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
+    return `<div class="theme-row"><span class="tn">${esc(th)}</span><div class="bar"><i style="width:${d/tt.length*100}%"></i></div><span class="pc">${d}/${tt.length}</span></div>`;
+  }).join('');
+  return `<div class="island path-island" style="margin-top:8px">
+    <div class="fold-top"><button class="chip pd" onclick="planOpenIsland('${encodeURIComponent(I.name)}')">− свернуть</button><span style="font-size:11.5px;color:var(--muted)">дашборд «${esc(I.name)}» — развёрнут</span></div>
+    <div class="pi-head">
+      ${ringHTML(pct,58,I.ico)}
+      <div style="flex:1;min-width:0">
+        <div class="nm">${esc(I.name)}</div>
+        <div class="sub">${esc(I.dsc)}</div>
+        <div class="small" style="margin-top:5px;color:var(--glass)">${st.done}/${st.total} · <span class="pct">${pct}%</span></div>
+      </div>
+    </div>
+    ${themeRows}
+    <div style="margin-top:6px"><button class="btn" style="width:100%" onclick="go('island-${encodeURIComponent(I.name)}')">Открыть полный список задач →</button></div>
+  </div>`;
+}
 function renderPath(){
+  pdCss();
   const pool=taskPool();
   const doneN=pool.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
   const pctAll=pool.length? Math.round(doneN/pool.length*100):0;
@@ -640,49 +759,31 @@ function renderPath(){
   const s=document.getElementById('screen');
   const rank=rankName();
   const heroName=esc(DB.profile?DB.profile.name:'');
-  // общее кольцо с именем
   const hero=`<div class="path-hero card" style="display:flex;align-items:center;gap:16px">
       ${ringHTML(pctAll, 92, pctAll+'%')}
       <div style="flex:1">
         <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Острова Познания</div>
         <div style="font-size:22px;font-weight:bold;color:var(--ivory);margin:2px 0">${heroName||'Исследователь'} <span class="rank-badge">${esc(rank)}</span></div>
         <div style="font-size:12.5px;color:var(--muted);line-height:1.5">Решено <b style="color:var(--brass)">${doneN}</b> из ${pool.length}${isJunior()?' в начальной школе':' на карте'} · серия ${DB.streak}🔥</div>
-        <div class="spark-row">
-          ${doneN>0?`<span class="spark done">✦</span>`:''}${(DB.streak||0)>=3?`<span class="spark done">🔥</span>`:''}${pctAll>=50?`<span class="spark done">🏆</span>`:''}
-        </div>
       </div>
     </div>`;
   const nextBtn = next
     ? `<button class="btn pulse" style="width:100%;margin:12px 0 4px" onclick="go('task-${next.id}')">🎯 Продолжить: ${esc(next.title)}</button>`
     : `<div class="card" style="text-align:center;color:var(--ok);font-size:14px">🏆 Все задачи решены! Ты — настоящий ${esc(rank)}!</div>`;
-  const legendCard=`<div class="path-legend" onclick="go('legend')">
+  const plan = planDash();
+  const legendCard=`<div class="path-legend" onclick="go('legend')" style="margin-top:14px">
       <span style="font-size:26px">📜</span>
       <span style="flex:1;text-align:left"><b style="color:var(--glow)">Легенда об Архимеде</b><br>
       <span class="small" style="color:var(--muted)">Кто он и откуда острова — читай историю</span></span>
       <span style="color:var(--brass)">→</span></div>`;
-  const cards=ISLANDS.filter(islandVisible).map((I,i)=>{
-    const st=islStats(I.name); const pct=st.total? Math.round(st.done/st.total*100):0;
-    const islSorted=tasksFit(window.ARH_TASKS.filter(t=>t.island===I.name)).sort((a,b)=>clsSort(a)-clsSort(b)||a.diff-b.diff||a.id.localeCompare(b.id));
-    const themes=[...new Set(islSorted.map(t=>themeOf(t)))];
-    const themeRows=themes.map(th=>{
-      const tt=islSorted.filter(t=>themeOf(t)===th);
-      const d=tt.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
-      return `<div class="theme-row"><span class="tn">${esc(th)}</span><div class="bar"><i style="width:${d/tt.length*100}%"></i></div><span class="pc">${d}/${tt.length}</span></div>`;
-    }).join('');
-    const glow = pct===100? 'rgba(95,154,106,.5)' : 'rgba(217,164,65,.18)';
-    return `<div class="island path-island" style="animation-delay:${0.06*i}s" onclick="go('island-${encodeURIComponent(I.name)}')">
-      <div class="pi-head">
-        ${ringHTML(pct, 58, I.ico)}
-        <div style="flex:1;min-width:0">
-          <div class="nm">${esc(I.name)}</div>
-          <div class="sub">${esc(I.dsc)}</div>
-          <div class="small" style="margin-top:5px;color:var(--glass)">${st.done}/${st.total} · <span class="pct">${pct}%</span></div>
-        </div>
-      </div>
-      ${themeRows}</div>`;
-  }).join('');
-  s.innerHTML=hero+nextBtn+legendCard+`<div class="path-map">${cards}</div>`;
-  // запускаем анимацию колец после отрисовки
+  const islands=ISLANDS.filter(islandVisible);
+  const minis=islands.map(dashMini).join('');
+  const openI = PLAN.open? islands.find(i=>i.name===decodeURIComponent(PLAN.open||'')) : null;
+  const expanded = openI? dashExpanded(openI) : '';
+  s.innerHTML=hero+nextBtn+plan+
+    `<div class="pd-title" style="margin-bottom:2px"><div style="flex:1;text-align:left"><div class="h">Дашборды островов</div><div class="s">мини-копии — нажми, чтобы раскрыть</div></div></div>
+     <div class="dash-mini-row">${minis}</div>${expanded}`+
+    legendCard;
   requestAnimationFrame(()=>{ document.querySelectorAll('.ring-fg').forEach(el=>{ el.style.strokeDashoffset=getComputedStyle(el.parentNode).getPropertyValue('--off'); }); });
   hud();
 }
