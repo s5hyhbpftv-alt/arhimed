@@ -521,6 +521,498 @@ window.VISKW = window.VISKW || {};
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===17){ window.ARH_LESSONS[i]=L17; break; } } })();
 })();
 
+/* ===== Общий UI-кит «АРХИМЕД»: аккуратная типографика, ничего не вылезает ===== */
+(function(){
+  if(window.__wkCssDone) return; window.__wkCssDone=1;
+  const st=document.createElement('style');
+  st.textContent=
+    '#lvis g.wv-pop,#lvis rect.wv-pop,#lvis circle.wv-pop,#lvis text.wv-pop{transform-box:fill-box;transform-origin:center;}'+
+    '.wk-frame{background:linear-gradient(180deg,rgba(26,52,40,.92),rgba(15,30,23,.95));border:1px solid #3d5c49;border-radius:18px;padding:12px 10px 13px;max-width:344px;margin:0 auto;overflow:hidden;}'+
+    '.wk-hero{display:flex;justify-content:center;}'+
+    '.wk-big{font-size:20px;color:#ffd76a;font-family:Georgia,serif;line-height:1.25;text-align:center;padding:0 4px;}'+
+    '.wk-sml{color:#c9b795;font-size:13px;line-height:1.5;max-width:322px;text-align:center;margin:0 auto;}'+
+    '.wk-row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;align-items:center;}'+
+    '.wk-chip{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1.5px solid #3d5c49;font-size:13.5px;color:#e8dcc8;}'+
+    '.wk-ans{font-size:19px;font-weight:bold;font-family:Georgia,serif;text-align:center;line-height:1.3;}'+
+    '.wk-btn{padding:9px 14px;font-size:13.5px;border-radius:10px;border:1px solid #3d5c49;background:rgba(255,255,255,.06);color:#ffe9c9;cursor:pointer;font-weight:bold;}'+
+    '.wk-btn:active{transform:scale(.96);}';
+  document.head.appendChild(st);
+})();
+const wkBig=t=>`<div class="wk-big">${t}</div>`;
+const wkSml=t=>`<div class="wk-sml">${t}</div>`;
+const wkChip=(t,c)=>`<span class="wk-chip" style="border-color:${c||'#3d5c49'}">${t}</span>`;
+const wkPill=(t,c)=>`<span style="display:inline-block;padding:4px 13px;border-radius:12px;background:rgba(255,255,255,.06);border:2px solid ${c||'#ffd76a'};font-family:Georgia,serif;font-size:18px;font-weight:bold;color:${c||'#ffd76a'}">${t}</span>`;
+const wkAns=(t,c)=>`<div class="wk-ans" style="color:${c||'#8fd1a8'}">${t}</div>`;
+const wkRow=(...x)=>`<div class="wk-row">${x.join('')}</div>`;
+const wkBtn=(t,on)=>`<button class="wk-btn" onclick="${on}">${t}</button>`;
+const wkFrame=(inner)=>`<div class="wk-frame"><div class="wk-col" style="display:flex;flex-direction:column;gap:9px;align-items:center">${inner}</div></div>`;
+const wkHero=(svg)=>`<div class="wk-hero" style="width:100%">${svg}</div>`;
+const wkNote=(t,c)=>`<div style="font-size:13px;color:${c||'#cfe0cf'};text-align:center;line-height:1.45">${t}</div>`;
+const wkP=(t)=>`<div class="wv-pop">${t}</div>`;
+const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62+4;if(est>boxW)s=Math.max(8.5,Math.floor((boxW-4)/(txt.length*0.62)));return `<text x="${x}" y="${y}" text-anchor="middle" font-size="${s}" fill="${fill}"${w?' font-weight="bold"':''} font-family="Georgia,serif">${txt}</text>`;};
+
+/* ================= УРОК 12 · Остатки при делении (v2, качественная) ================= */
+(function(){
+  const L12 = {
+    id: 12, title: 'Остатки при делении', ico: '🍬',
+    src: 'ВсОШ-стиль · остатки', subj: 'math',
+    explain: [
+      'Архимед раскладывает 17 конфет в мешочки по 5 конфет. Получается 3 полных мешочка — это 15 конфет — и остаются 2 конфеты, которые ни в один мешочек не поместились. Эти «лишние» конфеты и есть остаток. Остатки помогают решать очень хитрые задачи!',
+      'Что такое остаток? Делим 17 на 5: 17 = 5 · 3 + 2. Говорят: 17 : 5 = 3 и остаток 2. Проверка: 5 · 3 + 2 = 17 — всё сходится! Частное 3 показывает, сколько раз по 5 поместилось, а остаток 2 — что не поместилось.',
+      'Запомни запись-помощник: делимое = делитель · частное + остаток. Для 17 : 5: делимое 17 = делитель 5 · частное 3 + остаток 2. Проверяй так любую задачу с остатком!',
+      'Главное правило: остаток всегда МЕНЬШЕ делителя. При делении на 5 остаток бывает только 0, 1, 2, 3 или 4. Остаток 5 невозможен: 5 конфет снова собрались бы в целый мешочек!',
+      'Остатки идут по кругу: 6 : 5 = 1 и остаток 1, 7 : 5 — остаток 2, 8 — остаток 3, 9 — остаток 4, 10 — остаток 0, а 11 — снова остаток 1. Каждые 5 чисел всё повторяется!',
+      'Числа с одинаковым остатком образуют «семью». Остаток 2 при делении на 5 дают числа 2, 7, 12, 17, 22… Следующее число семьи получается прибавлением 5: шаг семьи равен делителю!',
+      'Считаем членов семьи: сколько чисел от 1 до 40 дают остаток 2 при делении на 5? Это числа 2, 7, 12, …, 37. Формула: (37 − 2) : 5 + 1 = 7 + 1 = 8. Промежутков между числами 7, а точек — на одну больше!',
+      'Остаток 0 — это когда число делится нацело. Кратные 7: 7, 14, 21, …, 98 — у всех остаток 0 при делении на 7. Сколько таких чисел от 1 до 100? 100 : 7 = 14 и остаток 2 → ровно 14 кратных!',
+      'Проверь себя: найди остаток при делении 47 на 5. Ближайшее кратное 5, не большее 47, — это 45. 47 − 45 = 2. Остаток 2! Теперь — вперёд, к проверке!'
+    ],
+    check: { q: 'Остаток при делении 47 на 5 равен…', choices: ['1', '2', '3', '4'], ans: 1,
+      exp: '45 делится на 5, значит 47 − 45 = 2.' },
+    tasks: [
+      { q: 'Сколько чисел от 1 до 40 дают остаток 2 при делении на 5?', kind: 'unit', ans: 8, tol: 0,
+        hints: ['Это числа 2, 7, 12, …, 37.', 'Шаг 5: (37 − 2) : 5 + 1', '35 : 5 + 1 = 8.'], sol: '(37 − 2)/5 + 1 = 8 чисел с остатком 2.' },
+      { q: 'Сколько чисел от 1 до 100 делятся на 7?', kind: 'unit', ans: 14, tol: 0,
+        hints: ['Это кратные 7: 7, 14, …, 98.', '98 : 7 = 14.', 'Ответ: 14 чисел.'], sol: 'Кратные 7 до 100: 98 : 7 = 14 чисел.' }
+    ]
+  };
+  const C={red:'#e0523d',green:'#8fd1a8',blue:'#7fd1ff',gold:'#ffd76a',dim:'#8fa08f',cream:'#e8dcc8'};
+  const TX=(cx,cy,s,size,fill,w)=>`<text x="${cx}" y="${cy}" text-anchor="middle" font-size="${size}" fill="${fill||C.cream}"${w?' font-weight="bold"':''} font-family="Georgia,serif">${s}</text>`;
+
+  function visW12(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    let h='';
+    if(step===0){
+      if(st.n==null) st.n=17;
+      const n=st.n, b=Math.floor(n/5), rem=n%5;
+      const showB=Math.min(b,4);
+      const W=320, bx0=14, bw=52, bh=52, gapx=8, y=14;
+      let bags='';
+      for(let g=0;g<showB;g++){
+        const x=bx0+g*(bw+gapx);
+        bags+=`<g class="wv-pop" style="animation-delay:${(g*0.12).toFixed(2)}s">
+          <rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="12" fill="rgba(255,255,255,.05)" stroke="${C.green}" stroke-width="2"/>
+          <text x="${x+bw/2}" y="${y+21}" text-anchor="middle" font-size="11" fill="${C.green}">мешочек ${g+1}</text>
+          ${[0,1,2,3,4].map(j=>`<circle cx="${x+13+(j%3)*13}" cy="${y+(j<3?33:44)}" r="4.6" fill="${C.red}"/>`).join('')}
+        </g>`;
+      }
+      let extra='';
+      if(b>showB) extra=wkNote('и ещё '+(b-showB)+' мешочек по 5', C.blue);
+      let remSvg='';
+      if(rem>0){
+        const rx=bx0+showB*(bw+gapx)+2;
+        remSvg=`<g class="wv-pop" style="animation-delay:${(showB*0.12+0.15).toFixed(2)}s">
+          <rect x="${rx}" y="${y}" width="58" height="${bh}" rx="12" fill="rgba(217,164,65,.1)" stroke="${C.gold}" stroke-width="2.4"/>
+          <text x="${rx+29}" y="${y+21}" text-anchor="middle" font-size="11" fill="${C.gold}">остаток</text>
+          ${[0,1,2,3].slice(0,rem).map(j=>`<circle cx="${rx+14+j*12}" cy="${y+37}" r="4.6" fill="${C.gold}"/>`).join('')}
+        </g>`;
+      } else {
+        remSvg=`<text x="160" y="${y+34}" text-anchor="middle" font-size="14" fill="${C.green}">всё разложилось ровно!</text>`;
+      }
+      const W2=Math.min(330,bx0*2+(showB*(bw+gapx))+70);
+      h=wkFrame(wkBig('Конфеты Архимеда 🍬')+
+        wkRow(wkChip('горсть: '+n+' конфет', C.blue), wkChip('кладём по 5', C.green))+
+        wkHero(`<svg width="${Math.min(W2,330)}" height="${y+bh+10}" viewBox="0 0 ${Math.min(W2,330)} ${y+bh+10}" style="display:block;max-width:100%">${bags}${remSvg}</svg>`)+
+        extra+
+        wkRow(wkPill(n+' = 5·'+b+' + '+rem, C.gold))+
+        wkRow(wkBtn('🍬 новая горсть',`visW12Act('${lk}','n')`))+
+        wkSml('полных мешочков: '+b+' — это '+b*5+' конфет. Остаток: '+rem+'. Остаток — то, что не поместилось в мешочки!'));
+    } else if(step===1){
+      h=wkFrame(wkBig('Делим: частное и остаток')+
+        wkHero(`<svg width="322" height="132" viewBox="0 0 322 132" style="display:block">
+          <rect x="4" y="6" width="314" height="120" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49" stroke-width="1.5"/>
+          <g class="wv-pop">
+            <rect x="16" y="18" width="88" height="96" rx="13" fill="rgba(255,255,255,.05)" stroke="#5a6f7f"/>
+            <text x="60" y="56" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">17</text>
+            <line x1="34" y1="68" x2="86" y2="68" stroke="#9ec0a8" stroke-width="2"/>
+            <text x="60" y="94" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">5</text>
+            <text x="60" y="110" text-anchor="middle" font-size="11" fill="#9ec0a8">делим</text>
+          </g>
+          <text x="126" y="70" font-size="24" fill="#8fa08f">→</text>
+          <g class="wv-pop2">
+            <rect x="146" y="18" width="76" height="96" rx="13" fill="rgba(127,209,255,.08)" stroke="${C.blue}" stroke-width="2"/>
+            <text x="184" y="52" text-anchor="middle" font-size="13" fill="${C.blue}">частное</text>
+            <text x="184" y="92" text-anchor="middle" font-size="30" fill="${C.blue}" font-weight="bold" font-family="Georgia,serif">3</text>
+            
+          </g>
+          <g class="wv-pop3">
+            <rect x="240" y="18" width="70" height="96" rx="13" fill="rgba(217,164,65,.1)" stroke="${C.gold}" stroke-width="2.4"/>
+            <text x="275" y="52" text-anchor="middle" font-size="13" fill="${C.gold}">остаток</text>
+            <text x="275" y="92" text-anchor="middle" font-size="30" fill="${C.gold}" font-weight="bold" font-family="Georgia,serif">2</text>
+            
+          </g>
+        </svg>`)+
+        wkAns('проверка: 5 · 3 + 2 = 17 ✔', C.green)+
+        wkSml('частное — сколько раз поместилось по 5, остаток — что осталось «лишним»'));
+    } else if(step===2){
+      h=wkFrame(wkBig('Запись-помощник')+
+        wkHero(`<svg width="322" height="120" viewBox="0 0 322 120" style="display:block">
+          <rect x="4" y="4" width="314" height="112" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
+          ${[['делимое','17',C.blue,22,76],['делитель','5',C.green,118,76],['частное','3',C.gold,206,76]].map((b,i)=>`
+            <g class="wv-pop" style="animation-delay:${(i*0.15).toFixed(2)}s">
+              <rect x="${b[3]-8}" y="18" width="76" height="56" rx="12" fill="rgba(255,255,255,.05)" stroke="${b[2]}" stroke-width="2"/>
+              <text x="${b[3]+30}" y="36" text-anchor="middle" font-size="12" fill="${b[2]}">${b[0]}</text>
+              <text x="${b[3]+30}" y="62" text-anchor="middle" font-size="24" fill="${b[2]}" font-weight="bold" font-family="Georgia,serif">${b[1]}</text>
+            </g>`).join('')}
+          <text x="104" y="56" font-size="20" fill="#8fa08f">=</text>
+          <text x="196" y="56" font-size="20" fill="#8fa08f">·</text>
+          <text x="284" y="56" font-size="20" fill="#8fa08f">+</text>
+          <g class="wv-pop3">
+            <rect x="268" y="18" width="44" height="56" rx="12" fill="rgba(255,215,106,.12)" stroke="${C.gold}" stroke-width="2"/>
+            <text x="290" y="36" text-anchor="middle" font-size="11" fill="${C.gold}">ост.</text>
+            <text x="290" y="62" text-anchor="middle" font-size="24" fill="${C.gold}" font-weight="bold" font-family="Georgia,serif">2</text>
+          </g>
+          <rect x="86" y="86" width="150" height="26" rx="13" fill="rgba(143,209,168,.1)" stroke="${C.green}"/>
+          <text x="161" y="104" text-anchor="middle" font-size="15" fill="${C.green}" font-weight="bold">17 = 5·3 + 2 ✓</text>
+        </svg>`)+
+        wkSml('делимое = делитель · частное + остаток. Подставляй числа и проверяй любой ответ!'));
+    } else if(step===3){
+      // 5 коробок-карманов с остатками, аккуратная сетка
+      const cols=[C.blue,C.green,C.gold,'#e8a0d8','#ff8a7a'];
+      const data=[[],[],[],[],[]];
+      for(let nn=1;nn<=13;nn++) data[nn%5].push(nn);
+      const W=324, x0=8, cw=60, gap=3.5, y0=12, ch=88;
+      let cells='';
+      for(let p=0;p<5;p++){
+        const x=x0+p*(cw+gap);
+        const last=p===4;
+        cells+=`<g class="wv-pop" style="animation-delay:${(p*0.1).toFixed(2)}s">
+          <rect x="${x}" y="${y0}" width="${cw}" height="${ch}" rx="13" fill="${last?'rgba(232,106,90,.05)':'rgba(255,255,255,.04)'}" stroke="${last?'#c0564c':'#3d7a55'}" stroke-width="${last?2.2:1.8}" ${last?'stroke-dasharray="6 4"':''}/>
+          ${fitTxt(x+cw/2,y0+22,cw-6,'остаток '+p,last?'#ff9a8a':cols[p],false)}
+          <text x="${x+cw/2}" y="${y0+48}" text-anchor="middle" font-size="26" fill="${last?'#ff9a8a':C.cream}" font-weight="bold" font-family="Georgia,serif">${last?'✗':p}</text>
+          <text x="${x+cw/2}" y="${y0+72}" text-anchor="middle" font-size="9.5" fill="#9ec0a8">${last?'—':data[p].slice(0,4).join('·')}</text>
+        </g>`;
+      }
+      h=wkFrame(wkBig('Карманы остатков · делим на 5')+
+        wkHero(`<svg width="${W}" height="${y0+ch+8}" viewBox="0 0 ${W} ${y0+ch+8}" style="display:block">${cells}</svg>`)+
+        wkRow(wkChip('остаток всегда < делителя', C.green), wkChip('остаток 5 не бывает ✗', '#c0564c'))+
+        wkSml('в карманы разложены числа 1…13: у каждого свой остаток — 0, 1, 2, 3 или 4'));
+    } else if(step===4){
+      // лента 6..15: крупные плитки, остаток снизу отдельно
+      const cols=[C.blue,C.green,C.gold,'#e8a0d8','#ff8a7a'];
+      const nums=[6,7,8,9,10,11,12,13,14,15];
+      const W=330, x0=8, cw=30.5, gap=0.5, y0=14, th=44;
+      let cells='';
+      nums.forEach((nn,i)=>{
+        const x=x0+i*(cw+gap), c=cols[nn%5];
+        cells+=`<g class="wv-pop" style="animation-delay:${(i*0.06).toFixed(2)}s">
+          <rect x="${x}" y="${y0}" width="${cw-1.5}" height="${th}" rx="9" fill="rgba(255,255,255,.05)" stroke="${c}" stroke-width="2"/>
+          <text x="${x+(cw-1.5)/2}" y="${y0+26}" text-anchor="middle" font-size="17" fill="#fff" font-weight="bold" font-family="Georgia,serif">${nn}</text>
+          <circle cx="${x+(cw-1.5)/2}" cy="${y0+38}" r="8" fill="${c}"/>
+          <text x="${x+(cw-1.5)/2}" y="${y0+42}" text-anchor="middle" font-size="10" fill="#0d1a13" font-weight="bold">${nn%5}</text>
+        </g>`;
+      });
+      h=wkFrame(wkBig('Остатки идут по кругу')+
+        wkHero(`<svg width="${W}" height="${y0+th+6}" viewBox="0 0 ${W} ${y0+th+6}" style="display:block">${cells}</svg>`)+
+        wkRow(wkChip('6 → остаток 1', cols[1]), wkChip('10 → остаток 0', cols[0]), wkChip('11 → снова 1', cols[1]))+
+        wkAns('каждые 5 чисел остатки повторяются!', C.gold)+
+        wkSml('под каждым числом — цветной кружок с его остатком при делении на 5'));
+    } else if(step===5){
+      // семья с шагом 5: крупные круги по центру
+      const mem=[2,7,12,17];
+      const W=326, cx=36, d=84;
+      let s='';
+      mem.forEach((m,i)=>{
+        const x=18+i*d;
+        s+=`<g class="wv-pop" style="animation-delay:${(i*0.15).toFixed(2)}s">
+          <circle cx="${x+42}" cy="52" r="36" fill="rgba(217,164,65,.1)" stroke="${C.gold}" stroke-width="2.6"/>
+          <text x="${x+42}" y="${x?60:60}" text-anchor="middle" font-size="24" fill="${C.gold}" font-weight="bold" font-family="Georgia,serif">${m}</text>
+        </g>`;
+        if(i<mem.length-1){
+          const ax=x+78;
+          s+=`<g class="wv-pop" style="animation-delay:${(i*0.15+0.1).toFixed(2)}s">
+            <line x1="${ax}" y1="52" x2="${ax+24}" y2="52" stroke="${C.blue}" stroke-width="3"/>
+            <polygon points="${ax+28},52 ${ax+20},47 ${ax+20},57" fill="${C.blue}"/>
+            <text x="${ax+12}" y="40" text-anchor="middle" font-size="14" fill="${C.blue}" font-weight="bold">+5</text>
+          </g>`;
+        }
+      });
+      h=wkFrame(wkBig('Семья чисел с остатком 2')+
+        wkHero(`<svg width="${W}" height="110" viewBox="0 0 ${W} 110" style="display:block">${s}</svg>`)+
+        wkRow(wkChip('2 = 5·0 + 2', C.blue), wkChip('7 = 5·1 + 2', C.blue), wkChip('12 = 5·2 + 2', C.blue), wkChip('17 = 5·3 + 2', C.blue))+
+        wkAns('все дают остаток 2 при делении на 5', C.green)+
+        wkSml('шаг семьи равен делителю: каждое следующее число — плюс 5'));
+    } else if(step===6){
+      // члены семьи на шкале 1..40: точки + формула
+      const mem=[2,7,12,17,22,27,32,37];
+      const W=330, x0=14, L=302, y0=40;
+      let s='';
+      for(let k=1;k<=40;k++){
+        const x=x0+L*k/41;
+        const on=mem.indexOf(k)>=0;
+        s+=`<circle cx="${x.toFixed(1)}" cy="${y0}" r="${on?9:3}" fill="${on?'#ffd76a':'rgba(255,255,255,.12)'}" class="${on?'wv-pop':''}"/>`;
+        if(on) s+=`<text x="${x.toFixed(1)}" y="${y0+22}" text-anchor="middle" font-size="9.5" fill="#ffd76a">${k}</text>`;
+        else if(k%10===0) s+=`<text x="${x.toFixed(1)}" y="${y0+20}" text-anchor="middle" font-size="8.5" fill="#5b6b58">${k}</text>`;
+      }
+      s+=`<line x1="${x0}" y1="${y0}" x2="${x0+L}" y2="${y0}" stroke="#3d5c49" stroke-width="3"/>`;
+      h=wkFrame(wkBig('Сколько членов до 40?')+
+        wkHero(`<svg width="${W}" height="80" viewBox="0 0 ${W} 80" style="display:block">${s}</svg>`)+
+        wkAns('2, 7, 12, …, 37 — ровно 8 чисел!', C.gold)+
+        wkRow(wkPill('(37 − 2) : 5 + 1', C.blue), wkPill('= 8', C.green))+
+        wkSml('промежутков между числами 7, а самих чисел — на одно больше: 8'));
+    } else if(step===7){
+      // кратные 7 до 100 — шкала
+      const W=330, x0=16, L=298, y0=36;
+      let s='';
+      s+=`<line x1="${x0}" y1="${y0}" x2="${x0+L}" y2="${y0}" stroke="#3d5c49" stroke-width="3"/>`;
+      for(let k=0;k<=100;k+=10){
+        const x=x0+L*k/100;
+        s+=`<line x1="${x}" y1="${y0-7}" x2="${x}" y2="${y0+7}" stroke="#5b6b58" stroke-width="1.6"/>`;
+        if(k%20===0) s+=`<text x="${x}" y="${y0+24}" text-anchor="middle" font-size="10" fill="#7a8a80">${k}</text>`;
+      }
+      for(let k=7;k<=98;k+=7){
+        const x=x0+L*k/100;
+        s+=`<circle cx="${x.toFixed(1)}" cy="${y0}" r="8" fill="${C.green}" class="wv-pop"/>`;
+      }
+      h=wkFrame(wkBig('Кратные 7 — это остаток 0')+
+        wkHero(`<svg width="${W}" height="70" viewBox="0 0 ${W} 70" style="display:block">${s}</svg>`)+
+        wkRow(wkChip('7, 14, 21, …, 98 — делятся нацело', C.green))+
+        wkRow(wkPill('100 : 7 = 14 (ост. 2)', C.blue), wkPill('→ кратных 14', C.gold))+
+        wkSml('остаток 0 ⇔ число делится нацело. Считаем так: сколько раз 7 помещается в 100'));
+    } else {
+      // проверь себя: 47 : 5
+      h=wkFrame(wkBig('Проверь себя: 47 : 5')+
+        wkHero(`<svg width="322" height="132" viewBox="0 0 322 132" style="display:block">
+          <rect x="4" y="4" width="314" height="124" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
+          <g class="wv-pop">
+            <rect x="16" y="18" width="120" height="52" rx="12" fill="rgba(127,209,160,.1)" stroke="${C.green}" stroke-width="2"/>
+            <text x="76" y="40" text-anchor="middle" font-size="12.5" fill="#9ec0a8">кратное 5:</text>
+            <text x="76" y="62" text-anchor="middle" font-size="20" fill="${C.green}" font-weight="bold" font-family="Georgia,serif">45 = 5 · 9</text>
+          </g>
+          <g class="wv-pop2">
+            <rect x="150" y="18" width="156" height="52" rx="12" fill="rgba(255,255,255,.05)" stroke="#3d5c49"/>
+            <text x="228" y="40" text-anchor="middle" font-size="12.5" fill="#9ec0a8">отнимаем от 47</text>
+            <text x="228" y="62" text-anchor="middle" font-size="20" fill="#fff" font-weight="bold" font-family="Georgia,serif">47 − 45 = 2</text>
+          </g>
+          <g class="wv-pop3">
+            <rect x="96" y="84" width="130" height="32" rx="16" fill="rgba(217,164,65,.12)" stroke="${C.gold}" stroke-width="2"/>
+            <text x="161" y="105" text-anchor="middle" font-size="16" fill="${C.gold}" font-weight="bold" font-family="Georgia,serif">остаток 2!</text>
+          </g>
+        </svg>`)+
+        wkSml('готов? жми «Понял! Проверю себя» — там вопрос про остаток 47 на 5!'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[12]=visW12;
+  function visW12Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const POOL=[17,22,27,32,18,23];
+    const i0=POOL.indexOf(st.n==null?17:st.n);
+    st.n=POOL[(i0+1)%POOL.length];
+    chRender(0);
+  }
+  window.visW12Act=visW12Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===12){ window.ARH_LESSONS[i]=L12; break; } } })();
+})();
+
+/* ================= УРОК 17 · Дни недели и остатки (v2, качественная) ================= */
+(function(){
+  const L17 = {
+    id: 17, title: 'Дни недели и остатки', ico: '📅',
+    src: 'ВсОШ-стиль · остатки', subj: 'math',
+    explain: [
+      'Дни недели повторяются каждые 7 дней: понедельник, вторник, среда, четверг, пятница, суббота, воскресенье — и снова понедельник. Это как часы, на циферблате которых 7 делений. Через 7 дней наступит ТОТ ЖЕ день недели!',
+      'Сегодня понедельник. Какой день будет через 10 дней? 10 дней — это 1 полная неделя (7 дней) и ещё 3 дня. Полная неделя возвращает нас в понедельник, значит, важен только остаток — 3 дня.',
+      'Удобно делить с остатком на 7: 10 = 7 · 1 + 3. Частное 1 — это полные недели, их выбрасываем. Остаток 3 — на столько дней сдвигаемся вперёд по кругу недели.',
+      'Сдвигаемся на 3 дня от понедельника: понедельник → вторник (1) → среда (2) → четверг (3). Значит, через 10 дней будет ЧЕТВЕРГ! Остаток 3 честно показал день.',
+      'А через 30 дней? 30 = 4 · 7 + 2. Четыре полные недели (28 дней) выбрасываем, остаток 2. От понедельника +2 дня: вторник, среда. Через 30 дней будет среда!',
+      'Даже 100 дней — легко! 100 = 14 · 7 + 2, ведь 14 · 7 = 98. Полных недель 14, остаток 2 — сдвиг всего на 2 дня. От понедельника через 100 дней снова среда. Остаток экономит время!',
+      'Главный секрет: при счёте дней важны только остатки от деления на 7. Остаток 0 — тот же день, остаток 1 — следующий, …, остаток 6 — день через шесть дней. Полные недели ничего не меняют — выбрасывай их!',
+      'Потренируйся: нажимай кнопки и смотри, как остаток двигает подсветку по кругу недели. Сколько дней добавить — 10, 30 или 100? Круг покажет день!',
+      'Проверь себя: сегодня понедельник. Какой день будет через 7 дней? 7 — это полная неделя, остаток 0. День не изменится! Вперёд, к проверке!'
+    ],
+    check: { q: 'Сегодня понедельник. Какой день будет через 7 дней?', choices: ['Понедельник', 'Вторник', 'Суббота', 'Воскресенье'], ans: 0,
+      exp: '7 дней — полная неделя, день тот же.' },
+    tasks: [
+      { q: 'Сегодня понедельник. Какой день будет через 10 дней?', choices: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'], ans: 3, tol: 0,
+        hints: ['10 = 7 + 3 — сдвиг на 3 дня.', 'Понедельник +3 = четверг.'], sol: '10 ≡ 3 (по модулю 7): понедельник + 3 дня = четверг.', kind: 'choice' },
+      { q: 'Сегодня понедельник. Какой день будет через 30 дней?', choices: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'], ans: 2, tol: 0,
+        hints: ['30 = 28 + 2 — сдвиг на 2 дня.', 'Понедельник + 2 = среда.'], sol: '30 ≡ 2 (mod 7): понедельник + 2 дня = среда.', kind: 'choice' }
+    ]
+  };
+  const DAYS=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+  const DFULL=['понедельник','вторник','среда','четверг','пятница','суббота','воскресенье'];
+  const C2={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',dim:'#8fa08f',cream:'#e8dcc8'};
+  const rad=(d)=>d*Math.PI/180;
+  function fitTxt(x,y,boxW,txt,size,fill,w){
+    let s=size;
+    const estW=txt.length*s*0.62+4;
+    if(estW>boxW) s=Math.max(8.5,Math.floor((boxW-4)/(txt.length*0.62)));
+    return `<text x="${x}" y="${y}" text-anchor="middle" font-size="${s}" fill="${fill}"${w?' font-weight="bold"':''} font-family="Georgia,serif">${txt}</text>`;
+  }
+  // Кольцо недели: today — золотой, target — зелёный, hl — дополнительные подсвеченные
+  function ring17(opts){
+    const o=opts||{};
+    const S=252, cx=S/2, cy=S/2, R=80, r=27;
+    const gold=o.today!=null?o.today:-1;
+    const target=o.target!=null?o.target:-1;
+    const hl=o.hl||[];
+    let s='';
+    s+=`<circle cx="${cx}" cy="${cy}" r="110" fill="rgba(0,0,0,.22)" stroke="#3d5c49" stroke-width="1.6"/>`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="96" fill="none" stroke="#2c4738" stroke-width="1.2"/>`;
+    for(let i=0;i<7;i++){
+      const a=rad(-90+i*45);
+      const x=cx+R*Math.cos(a), y=cy+R*Math.sin(a);
+      const isGold=i===gold, isTarget=i===target, isHl=hl.indexOf(i)>=0;
+      const fill=isGold?C2.gold:(isTarget?C2.green:(isHl?'rgba(127,209,160,.14)':'rgba(255,255,255,.05)'));
+      const stroke=isGold?C2.gold:(isTarget?C2.green:(isHl?'#5aa883':'#3d5c49'));
+      const txtFill=isGold||isTarget?'#0d1a13':'#e8dcc8';
+      s+=`<g class="${isTarget||isGold?'wv-pop':''}" style="${isTarget||isGold?`animation-delay:${(isTarget?0.3:0.1).toFixed(2)}s`:''}">
+        <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${isGold||isTarget?3:1.6}"/>
+        <text x="${x.toFixed(1)}" y="${(y+5).toFixed(1)}" text-anchor="middle" font-size="15.5" fill="${txtFill}" font-weight="bold">${DAYS[i]}</text>
+      </g>`;
+    }
+    s+=`<circle cx="${cx}" cy="${cy}" r="26" fill="rgba(255,255,255,.05)" stroke="#3d5c49" stroke-width="1.6"/>`;
+    s+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="11" fill="#9ec0a8">неделя</text>`;
+    s+=`<text x="${cx}" y="${cy+13}" text-anchor="middle" font-size="17" fill="#cfe0cf" font-weight="bold">7 дней</text>`;
+    return `<svg width="${S}" height="${S}" viewBox="0 0 ${S} ${S}" style="display:block;margin:0 auto">${s}</svg>`;
+  }
+  function stepChips(arr,color){
+    return arr.map((t,i)=>`<span class="wv-pop" style="animation-delay:${(i*0.22).toFixed(2)}s;display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:999px;background:rgba(255,255,255,.05);border:1.5px solid ${color||C2.green};font-size:13.5px;color:#e8dcc8">${t}</span>`).join('');
+  }
+
+  function visW17(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    let h='';
+    if(step===0){
+      if(st.cur==null) st.cur=0;
+      const c=st.cur;
+      const day=c%7;
+      const note=c===0? 'нажми кнопку и посмотри, как меняется день!'
+        : (day===0? 'полная неделя — снова понедельник! ✔' : '+'+c+' '+(c%10===1&&c%100!==11?'день':((c%10<5&&c%10>1)||c%10===0?'дней':'дня'))+' → '+DFULL[day]);
+      h=wkFrame(wkBig('Неделя — часы с 7 делениями')+
+        wkHero(ring17({today:0,target:c>0?day:-1}))+
+        wkAns(note, day===0&&c>0?C2.green:C2.gold)+
+        wkRow(wkBtn('+1 день →',`visW17Act('${lk}','d')`),wkBtn('+7 дней',`visW17Act('${lk}','w')`),wkBtn('↺',`visW17Act('${lk}','r')`))+
+        wkSml('через 7 дней — тот же день: полная неделя возвращает в начало круга'));
+    } else if(step===1){
+      const W=330, x0=10, cw=30, gap=1.4, y0=26, r2=13.5;
+      let s='';
+      for(let i=0;i<10;i++){
+        const x=x0+i*(cw+gap);
+        const week=i<7, extra=i>=7;
+        s+=`<g class="wv-pop" style="animation-delay:${(i*0.08).toFixed(2)}s">
+          <circle cx="${x+cw/2}" cy="${y0}" r="${r2}" fill="${week?'rgba(127,209,255,.12)':(extra?'rgba(217,164,65,.16)':'rgba(255,255,255,.05)')}" stroke="${week?C2.blue:(extra?C2.gold:'#3d5c49')}" stroke-width="2.2"/>
+          <text x="${x+cw/2}" y="${y0+5}" text-anchor="middle" font-size="11" fill="${extra?'#ffd76a':'#cfe0cf'}" font-weight="bold">${DAYS[i%7]}</text>
+          <text x="${x+cw/2}" y="${y0+26}" text-anchor="middle" font-size="9.5" fill="#7a8a80">${i+1}</text>
+        </g>`;
+      }
+      s+=`<rect x="${x0-6}" y="${y0-24}" width="${7*(cw+gap)+4}" height="18" rx="9" fill="rgba(127,209,255,.08)" stroke="${C2.blue}" stroke-width="1.6"/>`;
+      s+=`<text x="${x0-6+7*(cw+gap)/2+2}" y="${y0-11}" text-anchor="middle" font-size="11" fill="${C2.blue}">полная неделя — выбросили</text>`;
+      s+=`<rect x="${x0+7*(cw+gap)-4}" y="${y0+30}" width="${3*(cw+gap)+8}" height="18" rx="9" fill="rgba(217,164,65,.08)" stroke="${C2.gold}" stroke-width="1.6"/>`;
+      s+=`<text x="${x0+7*(cw+gap)+3*(cw+gap)/2}" y="${y0+43}" text-anchor="middle" font-size="11" fill="${C2.gold}">осталось 3 дня</text>`;
+      h=wkFrame(wkBig('Через 10 дней = неделя + 3')+
+        wkHero(`<svg width="${W}" height="${y0+52}" viewBox="0 0 ${W} ${y0+52}" style="display:block">${s}</svg>`)+
+        wkRow(wkPill('10 = 7 + 3', C2.blue), wkChip('важен только остаток — 3', C2.gold))+
+        wkSml('полная неделя возвращает в понедельник, дальше двигаемся на 3 дня'));
+    } else if(step===2){
+      h=wkFrame(wkBig('Делим с остатком на 7')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <g class="wv-pop"><rect x="10" y="18" width="84" height="92" rx="14" fill="rgba(255,255,255,.05)" stroke="#5a6f7f" stroke-width="1.8"/>
+            <text x="52" y="52" text-anchor="middle" font-size="13" fill="#9ec0a8">сколько дней?</text>
+            <text x="52" y="90" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">10</text></g>
+          <g class="wv-pop2"><circle cx="136" cy="64" r="27" fill="rgba(217,164,65,.1)" stroke="${C2.gold}" stroke-width="2.4"/>
+            <text x="136" y="70" text-anchor="middle" font-size="14" fill="${C2.gold}" font-weight="bold">÷7</text></g>
+          <g class="wv-pop3"><rect x="196" y="18" width="118" height="40" rx="11" fill="rgba(127,209,255,.09)" stroke="${C2.blue}" stroke-width="2"/>
+            <text x="255" y="44" text-anchor="middle" font-size="15" fill="${C2.blue}" font-weight="bold">1 неделя</text></g>
+          <g class="wv-pop3"><rect x="196" y="70" width="118" height="40" rx="11" fill="rgba(217,164,65,.1)" stroke="${C2.gold}" stroke-width="2.4"/>
+            <text x="255" y="96" text-anchor="middle" font-size="15" fill="${C2.gold}" font-weight="bold">остаток 3</text></g>
+          <rect x="30" y="126" width="262" height="18" rx="9" fill="rgba(255,255,255,.04)" stroke="#3d5c49"/>
+          <text x="161" y="139" text-anchor="middle" font-size="12" fill="#9ec0a8">1 неделя = 7 дней — её выбрасываем</text>
+        </svg>`)+
+        wkRow(wkPill('10 = 7 · 1 + 3', C2.gold))+
+        wkSml('частное 1 — полные недели, остаток 3 — рабочий сдвиг'));
+    } else if(step===3){
+      h=wkFrame(wkBig('Понедельник + 3 = четверг')+
+        wkHero(ring17({today:0,target:3,hl:[1,2]}))+
+        wkRow(stepChips(['шаг 1 → Вт','шаг 2 → Ср','шаг 3 → Чт'],C2.green))+
+        wkAns('через 10 дней — четверг! 🎯', C2.green)+
+        wkSml('шагаем от понедельника по кругу на остаток 3'));
+    } else if(step===4){
+      h=wkFrame(wkBig('Через 30 дней')+
+        wkHero(`<svg width="322" height="140" viewBox="0 0 322 140" style="display:block">
+          <g class="wv-pop"><rect x="10" y="16" width="142" height="58" rx="13" fill="rgba(127,209,255,.08)" stroke="${C2.blue}" stroke-width="2.2"/>
+            <text x="81" y="40" text-anchor="middle" font-size="13" fill="#9fc5e8">4 полные недели</text>
+            <text x="81" y="64" text-anchor="middle" font-size="19" fill="${C2.blue}" font-weight="bold" font-family="Georgia,serif">4 · 7 = 28 дней</text></g>
+          <g class="wv-pop2"><rect x="168" y="16" width="144" height="58" rx="13" fill="rgba(217,164,65,.1)" stroke="${C2.gold}" stroke-width="2.4"/>
+            <text x="240" y="40" text-anchor="middle" font-size="13" fill="#d9c088">и остаток</text>
+            <text x="240" y="64" text-anchor="middle" font-size="19" fill="${C2.gold}" font-weight="bold" font-family="Georgia,serif">2 дня</text></g>
+          <rect x="46" y="90" width="230" height="36" rx="18" fill="rgba(143,209,168,.1)" stroke="${C2.green}" stroke-width="2"/>
+          <text x="161" y="113" text-anchor="middle" font-size="15" fill="${C2.green}" font-weight="bold" font-family="Georgia,serif">Пн + 2 → среда!</text>
+        </svg>`)+
+        wkRow(wkPill('30 = 4 · 7 + 2', C2.gold), wkPill('→ среда', C2.green))+
+        wkSml('28 дней — ровно 4 недели: выбрасываем их, остаток 2 двигает день'));
+    } else if(step===5){
+      h=wkFrame(wkBig('Даже 100 дней — легко!')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <g class="wv-pop"><rect x="10" y="16" width="96" height="60" rx="13" fill="rgba(255,255,255,.05)" stroke="#5a6f7f" stroke-width="1.8"/>
+            <text x="58" y="42" text-anchor="middle" font-size="13" fill="#9ec0a8">дней</text>
+            <text x="58" y="66" text-anchor="middle" font-size="24" fill="#fff" font-weight="bold" font-family="Georgia,serif">100</text></g>
+          <g class="wv-pop2"><rect x="124" y="16" width="86" height="60" rx="13" fill="rgba(127,209,255,.08)" stroke="${C2.blue}" stroke-width="2"/>
+            <text x="167" y="42" text-anchor="middle" font-size="13" fill="#9fc5e8">14 · 7</text>
+            <text x="167" y="66" text-anchor="middle" font-size="20" fill="${C2.blue}" font-weight="bold" font-family="Georgia,serif">= 98</text></g>
+          <g class="wv-pop3"><rect x="228" y="16" width="84" height="60" rx="13" fill="rgba(217,164,65,.1)" stroke="${C2.gold}" stroke-width="2.4"/>
+            <text x="270" y="42" text-anchor="middle" font-size="13" fill="#d9c088">остаток</text>
+            <text x="270" y="66" text-anchor="middle" font-size="20" fill="${C2.gold}" font-weight="bold" font-family="Georgia,serif">2</text></g>
+          <rect x="36" y="96" width="250" height="40" rx="20" fill="rgba(143,209,168,.1)" stroke="${C2.green}" stroke-width="2"/>
+          <text x="161" y="121" text-anchor="middle" font-size="15.5" fill="${C2.green}" font-weight="bold" font-family="Georgia,serif">сдвиг на 2 дня → среда</text>
+        </svg>`)+
+        wkRow(wkChip('14 полных недель (98 дней) выбрасываем', C2.blue))+
+        wkSml('не нужно считать все 100 дней — остаток от деления на 7 всё решает'));
+    } else if(step===6){
+      const W=326, x0=6, cw=62, gap=3, y0=14, ch=64;
+      let s='';
+      for(let r=0;r<7;r++){
+        const x=x0+r*(cw+gap);
+        const gold=r===0;
+        s+=`<g class="wv-pop" style="animation-delay:${(r*0.09).toFixed(2)}s">
+          <rect x="${x}" y="${y0}" width="${cw}" height="${ch}" rx="12" fill="${gold?'rgba(143,209,168,.12)':'rgba(255,255,255,.04)'}" stroke="${gold?C2.green:'#3d5c49'}" stroke-width="2"/>
+          ${fitTxt(x+cw/2,y0+24,cw-8,'остаток '+r,gold?C2.green:'#9ec0a8')}
+          <circle cx="${x+cw/2}" cy="${y0+45}" r="16" fill="${gold?C2.green:'rgba(255,255,255,.06)'}" stroke="${gold?C2.green:'#4c8a5a'}"/>
+          <text x="${x+cw/2}" y="${y0+50}" text-anchor="middle" font-size="13" fill="#e8dcc8" font-weight="bold">${DAYS[r]}</text>
+        </g>`;
+      }
+      h=wkFrame(wkBig('Остаток решает день!')+
+        wkHero(`<svg width="${W}" height="${y0+ch+8}" viewBox="0 0 ${W} ${y0+ch+8}" style="display:block">${s}</svg>`)+
+        wkRow(wkChip('остаток 0 → Пн', C2.green), wkChip('остаток 1 → Вт', C2.cream), wkChip('… остаток 6 → Вс', C2.cream))+
+        wkSml('остаток 0 — тот же день; остаток r — день номер r от понедельника'));
+    } else if(step===7){
+      if(st.n==null) st.n=10;
+      const n=st.n, k=Math.floor(n/7), r=n%7;
+      h=wkFrame(wkBig('Тренажёр: подсветка по кругу')+
+        wkHero(ring17({today:0,target:r>0?r:-1,hl:r>0?[r]:[]}))+
+        wkAns('+'+n+' дней → '+DFULL[r]+' ('+DAYS[r]+')', C2.gold)+
+        wkRow(wkPill(n+' = '+k+' · 7 + '+r, C2.blue))+
+        wkRow(wkBtn('+10 дней',`visW17Act('${lk}','n10')`),wkBtn('+30 дней',`visW17Act('${lk}','n30')`),wkBtn('+100 дней',`visW17Act('${lk}','n100')`),wkBtn('↺',`visW17Act('${lk}','r')`))+
+        wkSml('полные недели (их '+k+') выброшены — двигаемся на остаток '+r));
+    } else {
+      h=wkFrame(wkBig('Проверь себя: +7 дней')+
+        wkHero(ring17({today:0,target:-1}))+
+        wkRow(wkPill('7 = 1 · 7 + 0', C2.green), wkChip('остаток 0 → день не меняется', C2.green))+
+        wkAns('через 7 дней — снова понедельник!', C2.green)+
+        wkSml('полная неделя не двигает стрелку. Готов к проверке?'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[17]=visW17;
+  function visW17Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    switch(act){
+      case 'd': st.cur=((st.cur==null?0:st.cur)+1)%15; break;
+      case 'w': st.cur=((st.cur==null?0:st.cur)+7)%22; break;
+      case 'n10': st.n=10; break;
+      case 'n30': st.n=30; break;
+      case 'n100': st.n=100; break;
+      case 'r': CHS[lk]={}; break;
+    }
+    chRender(0);
+  }
+  window.visW17Act=visW17Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===17){ window.ARH_LESSONS[i]=L17; break; } } })();
+})();
+
 /* ================= УРОК 24 · Цепочки сравнений ================= */
 (function(){
   const L24 = {
