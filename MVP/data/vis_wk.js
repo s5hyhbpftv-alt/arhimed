@@ -14,7 +14,7 @@ window.VISKW = window.VISKW || {};
     '.wk-frame{background:linear-gradient(180deg,rgba(26,52,40,.92),rgba(15,30,23,.95));border:1px solid #3d5c49;border-radius:18px;padding:9px 10px 10px;max-width:344px;margin:0 auto;overflow:hidden;}'+
     '.wk-hero{display:flex;justify-content:center;}'+
     '.wk-big{font-size:19px;color:#ffd76a;font-family:Georgia,serif;line-height:1.25;text-align:center;padding:0 4px;}'+
-    '.wk-sml{color:#c9b795;font-size:12.5px;line-height:1.5;max-width:272px;text-align:center;margin:0 auto;}'+
+    '.wk-sml{color:#d8c9a8;font-size:13.5px;line-height:1.55;max-width:236px;text-align:center;margin:0 auto;}'+
     '.wk-row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;align-items:center;}'+
     '.wk-chip{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1.5px solid #3d5c49;font-size:13.5px;color:#e8dcc8;}'+
     '.wk-ans{font-size:19px;font-weight:bold;font-family:Georgia,serif;text-align:center;line-height:1.3;}'+
@@ -35,33 +35,29 @@ const wkNote=(t,c)=>`<div style="font-size:13px;color:${c||'#cfe0cf'};text-align
 const wkP=(t)=>`<div class="wv-pop">${t}</div>`;
 const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62+4;if(est>boxW)s=Math.max(8.5,Math.floor((boxW-4)/(txt.length*0.62)));return `<text x="${x}" y="${y}" text-anchor="middle" font-size="${s}" fill="${fill}"${w?' font-weight="bold"':''} font-family="Georgia,serif">${txt}</text>`;};
 
-/* ================= УРОК 12 · Остатки при делении (v4) ================= */
+/* ================= УРОК 12 · Остатки при делении (v6) ================= */
 (function(){
-  if(!window.__wk12css){
-    window.__wk12css=1;
+  if(!window.__wk12v6css){
+    window.__wk12v6css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .wk-fall{animation:wkF12 .55s cubic-bezier(.2,.8,.3,1.1) both;}'+
-      '@keyframes wkF12{0%{transform:translateY(-16px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .wk-grow{animation:wkG12 .6s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes wkG12{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1);opacity:1}}'+
-      '#lvis .wk-dash{stroke-dasharray:6 5;animation:wkD12 .8s linear infinite;}'+
-      '@keyframes wkD12{to{stroke-dashoffset:-18}}'+
-      '#lvis .wk-bob{animation:wkB12 1.3s ease-in-out infinite;}'+
-      '@keyframes wkB12{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}';
+      '#lvis .w6in{animation:w6In .5s ease both;}'+
+      '@keyframes w6In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .w6pop{animation:w6Pop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes w6Pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}';
     document.head.appendChild(st);
   }
   const L12 = {
     id: 12, title: 'Остатки при делении', ico: '🧱',
     src: 'Математика · 5 класс · Деление с остатком', subj: 'math',
     explain: [
-      'Склад конструктора Архимеда: нужно разложить 17 кубиков в коробки по 5 кубиков. Получается 3 полные коробки — это 15 кубиков — и остаются 2 кубика, которым коробки не хватило. Эти «лишние» кубики и есть ОСТАТОК. Запишем: 17 = 5 · 3 + 2.',
-      'Что такое остаток? Делим 17 на 5: по 5 кубиков помещается 3 раза — это частное 3, и остаётся 2 кубика — это остаток. Проверка всегда одна: делитель умножить на частное и прибавить остаток: 5 · 3 + 2 = 17. Всё сошлось!',
-      'Запомни главную формулу деления с остатком: делимое = делитель · частное + остаток. Для наших кубиков: 17 (делимое) = 5 (делитель) · 3 (частное) + 2 (остаток). И обязательное правило: остаток всегда МЕНЬШЕ делителя.',
-      'Остаток всегда меньше делителя: при делении на 5 остаток бывает только 0, 1, 2, 3 или 4. Остаток 5 невозможен: пять кубиков снова собрались бы в целую коробку! Посмотри, как меняются остатки при делении на разные числа — покрути кнопками.',
-      'Остатки идут по кругу: 6 : 5 = 1 и остаток 1, 7 : 5 — остаток 2, 8 — остаток 3, 9 — остаток 4, 10 — остаток 0, а 11 — снова остаток 1. Каждые 5 чисел всё повторяется — как смена цветов на светофоре.',
-      'Числа с одинаковым остатком образуют «семью» — они живут на одной улице! Остаток 2 при делении на 5 дают числа 2, 7, 12, 17, 22… Дома семьи стоят через 5 номеров: шаг семьи равен делителю. Соседний дом — это прибавить 5.',
-      'Считаем членов семьи: сколько чисел от 1 до 40 дают остаток 2 при делении на 5? Это дома с номерами 2, 7, 12, …, 37 — всего 8. Формула: (37 − 2) : 5 + 1 = 7 + 1 = 8. Промежутков между домами 7, а самих домов — на один больше!',
+      'Склад конструктора Архимеда: надо разложить 17 кубиков в коробки по 5 кубиков. Получается 3 полные коробки (15 кубиков) и остаются 2 кубика, которым коробки не хватило. Эти «лишние» кубики и есть ОСТАТОК. Записываем так: 17 = 5 · 3 + 2.',
+      'Что такое остаток? Делим 17 на 5: по 5 кубиков помещается 3 раза — это частное 3, и остаётся 2 кубика — остаток. Проверка всегда одна: делитель умножить на частное и прибавить остаток: 5 · 3 + 2 = 17. Всё сходится!',
+      'Запомни формулу деления с остатком: делимое = делитель · частное + остаток. У нас: 17 = 5 · 3 + 2. И обязательное правило: остаток всегда меньше делителя. Эту формулу используют в любой задаче с остатком.',
+      'Остаток всегда меньше делителя: при делении на 5 остаток бывает только 0, 1, 2, 3 или 4. Остаток 5 невозможен: пять кубиков снова собрались бы в целую коробку! Покрути кнопки и посмотри, как остатки меняются при делении на 4 и на 3.',
+      'Остатки идут по кругу: 6 : 5 = 1 и остаток 1, 7 : 5 — остаток 2, 8 — остаток 3, 9 — остаток 4, 10 — остаток 0, а 11 — снова остаток 1. Каждые 5 чисел всё повторяется!',
+      'Числа с одинаковым остатком образуют «семью» — они живут на одной улице! Остаток 2 при делении на 5 дают числа 2, 7, 12, 17, 22… Дома семьи стоят через 5 номеров: шаг семьи равен делителю.',
+      'Считаем членов семьи: сколько чисел от 1 до 40 дают остаток 2 при делении на 5? Это числа 2, 7, 12, …, 37 — всего 8. Формула: (37 − 2) : 5 + 1 = 7 + 1 = 8. Промежутков между домами 7, а самих домов — на один больше!',
       'Остаток 0 — это когда число делится нацело. Кратные 7: 7, 14, 21, …, 98 — у всех остаток 0 при делении на 7. Сколько таких чисел от 1 до 100? 100 : 7 = 14 и остаток 2 → ровно 14! Проверь себя в тесте ниже.',
       'Проверь себя: найди остаток при делении 47 на 5. Ближайшее кратное 5, не большее 47, — это 45 = 5 · 9. 47 − 45 = 2. Остаток 2! Теперь жми «Понял! Проверю себя».'
     ],
@@ -74,20 +70,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Это кратные 7: 7, 14, …, 98.', '98 : 7 = 14.', 'Ответ: 14 чисел.'], sol: 'Кратные 7 до 100: 98 : 7 = 14 чисел.' }
     ]
   };
-  const BCOL=['#5aa0d8','#6fbf7a','#e0b64d','#d98ab0','#e08a55'];
   const G={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a'};
-  const brick=(x,y,c)=>`<g class="wk-grow" style="animation-delay:${(Math.random()*0).toFixed(0)}s"><rect x="${x}" y="${y}" width="13" height="10" rx="2.5" fill="${c}" stroke="rgba(0,0,0,.25)" stroke-width=".8"/><rect x="${x+2}" y="${y+1.6}" width="9" height="3.4" rx="1.5" fill="rgba(255,255,255,.35)"/><circle cx="${x+3.4}" cy="${y+6.6}" r="1.1" fill="rgba(255,255,255,.5)"/><circle cx="${x+9.6}" cy="${y+6.6}" r="1.1" fill="rgba(255,255,255,.5)"/></g>`;
-  function rowBricks(n,colorFn,opt){
-    const o=opt||{};
-    const cols=o.cols||9, cw=16, y0=o.y||14;
-    let s='';
-    for(let i=0;i<n;i++){
-      const x=14+(i%cols)*cw, y=y0+Math.floor(i/cols)*14;
-      const c=colorFn?colorFn(i):BCOL[i%5];
-      s+=`<g class="wk-fall" style="animation-delay:${(i*0.05).toFixed(2)}s"><rect x="${x}" y="${y}" width="13" height="10" rx="2.5" fill="${c}" stroke="rgba(0,0,0,.25)"/><rect x="${x+2}" y="${y+1.6}" width="9" height="3.4" rx="1.5" fill="rgba(255,255,255,.35)"/></g>`;
-    }
-    return `<svg width="${n>cols? (cols*cw+28):(n*cw+28)}" height="${y0+Math.ceil(n/cols)*14+4}" viewBox="0 0 ${n>cols?(cols*cw+28):(n*cw+28)} ${y0+Math.ceil(n/cols)*14+4}" style="display:block;margin:0 auto">${s}</svg>`;
-  }
+  const BC=['#5aa0d8','#6fbf7a','#e0b64d','#d98ab0','#e08a55'];
   const Q12=[
     {q:'Сколько чисел от 1 до 40 дают остаток 2 при делении на 5?',opts:['7','8','9'],ans:1},
     {q:'Сколько чисел от 1 до 100 делятся на 7?',opts:['13','14','15'],ans:1}
@@ -95,19 +79,19 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   function quiz(lk,st){
     const T=Q12[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.05)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.2)':'rgba(232,106,90,.2)'; bd=i===T.ans?G.green:G.red; tc=i===T.ans?G.green:G.red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:54px;font-size:16px" onclick="visW12T('${lk}',${i})">${o}</button>`;
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?G.green:G.red; tc=i===T.ans?G.green:G.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:70px;font-size:18px" onclick="visW12T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">🎉 верно! Оба теста решены!</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">✅ верно! Домов-членов семьи 8</div>')
-        : '<div class="wk-ans" style="color:#ff8a7a;font-size:15px">❌ посчитай по формуле: (последнее − первое) : шаг + 1</div>';
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:18px">🎉 верно! Оба теста решены!</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:18px">✅ верно! Домов-членов семьи 8</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">❌ формула: (последнее − первое) : шаг + 1</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW12Act('${lk}','nq')`):'';
-    const rst=wkBtn('↺',`visW12Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    const rst=wkBtn('↺ заново',`visW12Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:12px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW12(el){
     const step=LV.step||0;
@@ -117,171 +101,127 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       if(st.n==null) st.n=17;
       const n=st.n, b=Math.floor(n/5), rem=n%5;
       const showB=Math.min(b,4);
-      const W=330, bx=10, bw=66, bh=64, gapx=10, top=20;
-      let s='';
-      s+=`<text x="${W/2}" y="14" text-anchor="middle" font-size="11" fill="#9ec0a8">коробки по 5 кубиков</text>`;
+      let boxes='';
       for(let g=0;g<showB;g++){
-        const x=bx+g*(bw+gapx);
-        s+=`<g class="wk-fall" style="animation-delay:${(g*0.12).toFixed(2)}s"><rect x="${x}" y="${top}" width="${bw}" height="${bh}" rx="9" fill="rgba(255,255,255,.04)" stroke="#7fae8f" stroke-width="2"/>
-        <rect x="${x+4}" y="${top+4}" width="${bw-8}" height="10" rx="3" fill="#223a2c"/>
-        <text x="${x+bw/2}" y="${top+40}" text-anchor="middle" font-size="10" fill="#9ec0a8">коробка ${g+1}</text>
-        ${[0,1,2,3,4].map(j=>brick(x+8+(j%3)*18, top+14+(j<3?0:13), BCOL[(g*5+j)%5])).join('')}
-        </g>`;
+        boxes+=`<div class="w6in" style="animation-delay:${(g*0.12).toFixed(2)}s;display:flex;flex-direction:column;align-items:center;gap:2px">
+          <div style="width:80px;min-height:56px;border:2px solid #7fae8f;border-radius:12px;background:rgba(255,255,255,.04);padding:6px;display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start">
+            ${[0,1,2,3,4].map(j=>`<div class="w6pop" style="width:15px;height:11px;border-radius:3px;background:${BC[(g*5+j)%5]}"></div>`).join('')}
+          </div>
+          <span style="font-size:13px;color:#9ec0a8">коробка ${g+1}</span></div>`;
       }
-      if(b>showB) s+=`<text x="${bx+showB*(bw+gapx)+12}" y="${top+34}" font-size="11" fill="#9ec0a8">… ещё ${b-showB}</text>`;
-      if(rem>0){
-        const rx=bx+Math.min(showB,b)*(bw+gapx)+2;
-        s+=`<g class="wk-fall" style="animation-delay:${(showB*0.12+0.1).toFixed(2)}s"><rect x="${rx}" y="${top}" width="66" height="${bh}" rx="9" fill="rgba(217,164,65,.1)" stroke="${G.gold}" stroke-width="2.4" stroke-dasharray="6 4"/>
-        <text x="${rx+33}" y="${top+40}" text-anchor="middle" font-size="10" fill="${G.gold}">остаток</text>
-        ${[0,1,2,3].slice(0,rem).map(j=>brick(rx+8+j*16, top+14, '#ffd76a')).join('')}</g>`;
-      }
+      const remHtml = rem>0
+        ? `<div class="w6in" style="animation-delay:${(showB*0.12+0.1).toFixed(2)}s;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <div style="width:80px;min-height:56px;border:2px dashed ${G.gold};border-radius:12px;background:rgba(217,164,65,.07);padding:6px;display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start">${[0,1,2,3].slice(0,rem).map(j=>`<div style="width:15px;height:11px;border-radius:3px;background:${G.gold}"></div>`).join('')}</div>
+            <span style="font-size:13px;color:${G.gold}">остаток ${rem}</span></div>`
+        : `<span style="font-size:13px;color:#8fd1a8">всё разложилось ровно!</span>`;
       h=wkFrame(wkBig('Склад конструктора 🧱')+
         wkRow(wkChip('кубиков: '+n, G.blue),wkChip('по 5 в коробку', G.green))+
-        wkHero(`<svg width="${W}" height="${top+bh+12}" viewBox="0 0 ${W} ${top+bh+12}" style="display:block">${s}</svg>`)+
+        `<div class="wk-row" style="gap:10px;align-items:flex-start">${boxes}${remHtml}</div>`+
         wkRow(wkPill(n+' = 5·'+b+' + '+rem, G.gold))+
         wkRow(wkBtn('➕ ещё 5 кубиков',`visW12Act('${lk}','n')`),wkBtn('↺ 17',`visW12Act('${lk}','rst')`))+
-        wkSml('полные коробки: '+b+' ('+b*5+' кубиков), остаток: '+rem+' — то, что не поместилось'));
+        wkSml('полных коробок: '+b+' · остаток: '+rem+' — то, что не поместилось'));
     } else if(step===1){
-      h=wkFrame(wkBig('Делим: частное и остаток')+
-        wkHero(`<svg width="330" height="150" viewBox="0 0 330 150" style="display:block">
-          <rect x="4" y="4" width="322" height="142" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="165" y="22" text-anchor="middle" font-size="12" fill="#9ec0a8">17 кубиков собираются в группы по 5</text>
-          ${[0,1,2].map(g=>[0,1,2,3,4].map(j=>{const x=20+g*62+j*12.4; return `<g class="wk-fall" style="animation-delay:${((g*5+j)*0.05).toFixed(2)}s"><rect x="${x}" y="${36+(g%2)*13}" width="11" height="10" rx="2.5" fill="${BCOL[(g*5+j)%5]}"/></g>`;}).join('')).join('')}
-          ${[0,1].map(j=>brick(206+j*16,70,BCOL[3])).join('')}
-          <line x1="192" y1="30" x2="192" y2="112" stroke="#3d5c49" stroke-width="1.4"/>
-          <g class="wk-grow" style="animation-delay:.3s"><rect x="10" y="108" width="120" height="28" rx="9" fill="rgba(127,209,255,.1)" stroke="${G.blue}" stroke-width="2"/><text x="70" y="127" text-anchor="middle" font-size="13.5" fill="${G.blue}" font-weight="bold">частное 3 (группы)</text></g>
-          <g class="wk-grow" style="animation-delay:.5s"><rect x="140" y="108" width="120" height="28" rx="9" fill="rgba(217,164,65,.12)" stroke="${G.gold}" stroke-width="2.4"/><text x="200" y="127" text-anchor="middle" font-size="13.5" fill="${G.gold}" font-weight="bold">остаток 2</text></g>
-        </svg>`)+
-        wkRow(wkPill('5 · 3 + 2 = 17 ✔', G.green))+
-        wkSml('проверка: делитель · частное + остаток = делимое'));
+      const W=318, top=18;
+      let s='';
+      for(let g=0;g<3;g++) for(let j=0;j<5;j++){
+        const x=16+g*72+j*14, y=top+(g%2?22:0);
+        s+=`<rect class="w6pop" x="${x}" y="${y}" width="12" height="10" rx="2.5" fill="${BC[(g*5+j)%5]}" style="animation-delay:${((g*5+j)*0.04).toFixed(2)}s"/>`;
+      }
+      for(let j=0;j<2;j++) s+=`<rect class="w6pop" x="244"+'' y="${top+22}" width="12" height="10" rx="2.5" fill="${G.gold}" style="animation-delay:.4s"/>`;
+      h=wkFrame(wkBig('17 кубиков делим на 5')+
+        wkHero(`<svg width="${W}" height="70" viewBox="0 0 ${W} 70" style="display:block">${s}</svg>`)+
+        wkRow(wkPill('частное 3 — группы по 5', G.blue),wkPill('остаток 2', G.gold))+
+        wkAns('проверка: 5 · 3 + 2 = 17 ✔', G.green)+
+        wkSml('частное — сколько раз поместилось по 5, остаток — что осталось'));
     } else if(step===2){
+      const box=(t,c,delay)=>`<span class="w6in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:10px 14px;border-radius:14px;border:2.5px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:22px;color:${c};font-weight:bold;min-width:74px">${t}</span>`;
+      const op=(t)=>`<span style="font-size:30px;color:#cfe0cf;font-weight:bold;padding:0 2px">${t}</span>`;
       h=wkFrame(wkBig('Формула деления с остатком')+
-        wkHero(`<svg width="330" height="140" viewBox="0 0 330 140" style="display:block">
-          <rect x="4" y="4" width="322" height="132" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="165" y="22" text-anchor="middle" font-size="12" fill="#9ec0a8">три коробки по 5 = 15 кубиков + 2</text>
-          ${[0,1,2].map(g=>[0,1,2,3,4].map(j=>{const x=14+g*52+j*10.4; return `<g class="wk-grow" style="animation-delay:${((g*5+j)*0.04).toFixed(2)}s"><rect x="${x}" y="${42+Math.floor(j/3)*11}" width="9" height="9" rx="2" fill="${BCOL[(g*5+j)%5]}"/></g>`;}).join('')).join('')}
-          ${[0,1].map(j=>brick(182+j*16,78,'#ffd76a')).join('')}
-          <g class="wk-grow" style="animation-delay:.4s"><rect x="40" y="100" width="250" height="30" rx="15" fill="rgba(217,164,65,.12)" stroke="#ffd76a" stroke-width="2"/>
-          <text x="165" y="120" text-anchor="middle" font-size="16" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">17 = 5·3 + 2</text></g>
-        </svg>`)+
-        wkSml('делимое = делитель · частное + остаток · 0 ≤ остаток < делитель'));
+        `<div class="wk-row" style="gap:6px">${box('17',G.blue)}${op('=')}${box('5',G.green,0.1)}${op('·')}${box('3',G.gold,0.2)}${op('+')}${box('2',G.red,0.3)}</div>`+
+        wkRow(wkPill('делимое 17', G.blue),wkPill('делитель 5', G.green),wkPill('частное 3', G.gold),wkPill('остаток 2', G.red))+
+        wkAns('остаток всегда меньше делителя: 2 < 5', G.green)+
+        wkSml('делимое = делитель · частное + остаток'));
     } else if(step===3){
       if(st.d==null) st.d=5;
       const k=st.d;
-      const cols=[G.blue,G.green,G.gold,'#e8a0d8','#ff9a7a','#7fd1ff'];
-      const data=[[],[],[],[],[],[]];
+      const cols=[G.blue,G.green,G.gold,'#e8a0d8','#ff9a7a'];
+      const data=[[],[],[],[],[]];
       for(let nn=1;nn<=15;nn++) data[nn%k].push(nn);
-      const W=330, x0=8, cw=Math.min(64,(330-16-4)/k), gap=3, y0=20, ch=74;
-      let s='';
+      const cells='';
+      let boxes='';
       for(let p=0;p<k;p++){
-        const x=x0+p*(cw+gap);
-        const last=p===k-1&&false;
-        s+=`<g class="wk-fall" style="animation-delay:${(p*0.08).toFixed(2)}s">
-          <rect x="${x}" y="${y0}" width="${cw}" height="${ch}" rx="10" fill="rgba(255,255,255,.04)" stroke="${p===k-1?G.red:cols[p]}" stroke-width="2"/>
-          <rect x="${x}" y="${y0}" width="${cw}" height="14" rx="7" fill="rgba(255,255,255,.07)"/>
-          <text x="${x+cw/2}" y="${y0+10}" text-anchor="middle" font-size="10" fill="${p===k-1?G.red:cols[p]}">ост. ${p}</text>
-          <text x="${x+cw/2}" y="${y0+34}" text-anchor="middle" font-size="19" fill="#fff" font-weight="bold" font-family="Georgia,serif">${p===k-1&&p>=5?'✗':p}</text>
-          <text x="${x+cw/2}" y="${y0+54}" text-anchor="middle" font-size="9.5" fill="#9ec0a8">${data[p].slice(0,3).join('·')}</text>
-        </g>`;
+        boxes+=`<div class="w6in" style="animation-delay:${(p*0.07).toFixed(2)}s;flex:1;min-width:52px;text-align:center;border:2px solid ${cols[p]};border-radius:12px;padding:6px 2px;background:rgba(255,255,255,.04)">
+          <div style="font-size:13px;color:${cols[p]};font-weight:bold">остаток ${p}</div>
+          <div style="font-family:Georgia,serif;font-size:24px;color:#fff;font-weight:bold;margin:2px 0">${p}</div>
+          <div style="font-size:12px;color:#9ec0a8">${data[p].slice(0,3).join('·')}</div>
+        </div>`;
       }
-      if(k===3) s+=`<rect x="6" y="100" width="318" height="24" rx="12" fill="rgba(232,106,90,.08)" stroke="${G.red}"/><text x="165" y="116" text-anchor="middle" font-size="12" fill="#ffcfc2">ост. 5 и больше — не бывают!</text>`;
       h=wkFrame(wkBig('Остаток меньше делителя')+
         wkRow(wkChip('делим на '+k, G.gold))+
-        wkHero(`<svg width="${W}" height="${k===3?130:y0+ch+8}" viewBox="0 0 ${W} ${k===3?130:y0+ch+8}" style="display:block">${s}</svg>`)+
+        `<div style="display:flex;gap:6px;width:100%;justify-content:center">${boxes}</div>`+
         wkRow(wkBtn('делим на 5',`visW12Act('${lk}','d5')`),wkBtn('делим на 4',`visW12Act('${lk}','d4')`),wkBtn('делим на 3',`visW12Act('${lk}','d3')`))+
-        wkSml('остаток всегда меньше делителя — больше его взять нельзя, всё снова стало бы целой частью'));
+        wkSml('остаток 5 не бывает: 5 кубиков снова собрались бы в коробку!'));
     } else if(step===4){
       const cols=[G.blue,G.green,G.gold,'#e8a0d8','#ff9a7a'];
       const nums=[6,7,8,9,10,11,12,13,14,15];
-      const W=330, x0=16, cw=29.5, y0=30, th=52;
-      let s='';
+      let tiles='';
       nums.forEach((nn,i)=>{
-        const x=x0+i*(cw+0.6), c=cols[nn%5];
-        s+=`<g class="wk-fall" style="animation-delay:${(i*0.05).toFixed(2)}s">
-          <rect x="${x}" y="${y0}" width="${cw-2}" height="${th}" rx="8" fill="rgba(255,255,255,.05)" stroke="${c}" stroke-width="2"/>
-          <text x="${x+(cw-2)/2}" y="${y0+24}" text-anchor="middle" font-size="16" fill="#fff" font-weight="bold" font-family="Georgia,serif">${nn}</text>
-          <text x="${x+(cw-2)/2}" y="${y0+44}" text-anchor="middle" font-size="15" fill="${c}" font-weight="bold">${nn%5}</text>
-        </g>`;
+        tiles+=`<div class="w6in" style="animation-delay:${(i*0.05).toFixed(2)}s;display:flex;flex-direction:column;align-items:center;border:2px solid ${cols[nn%5]};border-radius:10px;padding:4px 8px;min-width:44px">
+          <span style="font-family:Georgia,serif;font-size:19px;color:#fff;font-weight:bold">${nn}</span>
+          <span style="font-size:14px;color:${cols[nn%5]};font-weight:bold">${nn%5}</span></div>`;
       });
-      
       h=wkFrame(wkBig('Остатки идут по кругу')+
-        wkHero(`<svg width="${W}" height="${y0+th+16}" viewBox="0 0 ${W} ${y0+th+16}" style="display:block">
-          ${s}
-          <text x="${W/2}" y="${y0+th+14}" text-anchor="middle" font-size="11.5" fill="#ffd76a">нижний цвет — остаток: 1,2,3,4,0 — и снова 1!</text>
-        </svg>`)+
-        wkSml('каждые 5 чисел остатки повторяются — как круговорот на светофоре'));
+        `<div class="wk-row" style="gap:5px">${tiles}</div>`+
+        wkAns('цвет числа — его остаток при делении на 5', G.gold)+
+        wkSml('6→1 · 7→2 · … · 10→0 · 11→1 — каждые 5 чисел всё повторяется'));
     } else if(step===5){
       const mem=[2,7,12,17];
-      const W=330, road=86, hx=44, gap=40;
+      const W=318, top=34;
       let s='';
-      s+=`<rect x="8" y="64" width="314" height="34" rx="8" fill="#24372c" stroke="#3d5c49"/>`;
-      s+=`<line x1="10" y1="80" x2="320" y2="80" stroke="#ffd76a" stroke-width="2" stroke-dasharray="14 10"/>`;
+      s+=`<rect x="6" y="86" width="306" height="26" rx="6" fill="#24372c"/><line x1="8" y1="98" x2="310" y2="98" stroke="#ffd76a" stroke-width="2" stroke-dasharray="12 9"/>`;
       mem.forEach((m,i)=>{
-        const x=24+i*(hx+gap);
-        s+=`<g class="wk-fall" style="animation-delay:${(i*0.16).toFixed(2)}s">
-          <polygon points="${x},46 ${x+52},46 ${x+26},28" fill="${i%2?G.green:G.blue}"/>
-          <rect x="${x+6}" y="46" width="40" height="26" rx="4" fill="${i%2?'#4f8a63':'#4a7da8'}"/>
-          <text x="${x+26}" y="63" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold" font-family="Georgia,serif">${m}</text>
-          <text x="${x+26}" y="76" text-anchor="middle" font-size="8" fill="#cfe0cf">д. ${i+1}</text>
-          ${i<mem.length-1?`<g class="wk-bob"><text x="${x+hx+gap-10}" y="88" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">+5</text></g>`:''}
-        </g>`;
+        const x=14+i*76;
+        s+=`<g class="w6pop" style="animation-delay:${(i*0.15).toFixed(2)}s"><polygon points="${x},52 ${x+52},52 ${x+26},34" fill="${i%2?'#4f8a63':'#4a7da8'}"/><rect x="${x+6}" y="52" width="40" height="36" rx="4" fill="${i%2?'#3a6b4c':'#38618c'}"/><text x="${x+26}" y="72" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold" font-family="Georgia,serif">${m}</text></g>`;
+        if(i<mem.length-1) s+=`<text x="${x+60}" y="72" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold">+5</text>`;
       });
       h=wkFrame(wkBig('Улица семьи «остаток 2» 🏘')+
-        wkHero(`<svg width="${W}" height="112" viewBox="0 0 ${W} 112" style="display:block">
-          ${s}
-          <text x="${W/2}" y="108" text-anchor="middle" font-size="11" fill="#9ec0a8">дома стоят через 5 номеров — шаг семьи = делитель</text>
-        </svg>`)+
+        wkHero(`<svg width="${W}" height="118" viewBox="0 0 ${W} 118" style="display:block">${s}</svg>`)+
         wkRow(wkPill('2 = 5·0+2', G.blue),wkPill('7 = 5·1+2', G.green),wkPill('12 = 5·2+2', G.gold))+
-        wkSml('все дома улицы дают остаток 2 при делении на 5'));
+        wkSml('дома стоят через 5 номеров: шаг семьи равен делителю'));
     } else if(step===6){
       const mem=[2,7,12,17,22,27,32,37];
-      const W=330, x0=14, L=302, y0=46;
+      const W=318, x0=14, L=290, y0=34;
       let s='';
-      s+=`<rect x="${x0-6}" y="34" width="${L+12}" height="24" rx="7" fill="#24372c"/>`;
-      s+=`<line x1="${x0}" y1="46" x2="${x0+L}" y2="46" stroke="#ffd76a" stroke-width="1.6" stroke-dasharray="10 8"/>`;
-      for(let k=1;k<=40;k++){
-        const x=x0+L*k/41;
-        const on=mem.indexOf(k)>=0;
-        if(on){
-          s+=`<g class="wk-grow" style="animation-delay:${(mem.indexOf(k)*0.1).toFixed(2)}s"><rect x="${x-9}" y="18" width="18" height="16" rx="3" fill="#ffd76a"/><text x="${x}" y="30" text-anchor="middle" font-size="9" fill="#0d1a13" font-weight="bold">${k}</text></g>`;
-        }
-      }
-      h=wkFrame(wkBig('Считаем дома улицы до 40')+
-        wkHero(`<svg width="${W}" height="70" viewBox="0 0 ${W} 70" style="display:block">${s}</svg>`)+
+      s+=`<rect x="${x0-8}" y="24" width="${L+16}" height="22" rx="7" fill="#24372c"/><line x1="${x0}" y1="35" x2="${x0+L}" y2="35" stroke="#ffd76a" stroke-width="1.5" stroke-dasharray="10 8"/>`;
+      mem.forEach((m,i)=>{
+        const x=x0+L*m/41;
+        s+=`<g class="w6pop" style="animation-delay:${(i*0.09).toFixed(2)}s"><rect x="${x-10}" y="8" width="20" height="16" rx="3" fill="#ffd76a"/><text x="${x}" y="20" text-anchor="middle" font-size="11" fill="#0d1a13" font-weight="bold">${m}</text></g>`;
+      });
+      h=wkFrame(wkBig('Сколько домов до 40?')+
+        wkHero(`<svg width="${W}" height="58" viewBox="0 0 ${W} 58" style="display:block">${s}</svg>`)+
         wkRow(wkPill('(37−2):5 + 1', G.blue),wkPill('= 8 домов', G.green))+
-        wkAns('2, 7, 12, …, 37 — ровно 8!', G.gold)+
         wkSml('промежутков 7, домов на один больше — 8'));
     } else if(step===7){
-      const W=330, x0=16, L=298, y0=34;
+      const W=318, x0=18, L=282, y0=30;
       let s='';
-      s+=`<circle cx="16" cy="${y0}" r="12" fill="rgba(232,106,90,.2)" stroke="${G.red}" stroke-width="2"/><text x="16" y="${y0+4}" text-anchor="middle" font-size="10" fill="#ffcfc2">0</text>`;
-      s+=`<line x1="${x0+8}" y1="${y0}" x2="${x0+L}" y2="${y0}" stroke="#3d5c49" stroke-width="3"/>`;
-      for(let k=0;k<=100;k+=10){
-        const x=x0+L*k/100;
-        s+=`<line x1="${x}" y1="${y0-5}" x2="${x}" y2="${y0+5}" stroke="#5b6b58" stroke-width="1.3"/>`;
-        if(k%20===0) s+=`<text x="${x}" y="${y0+18}" text-anchor="middle" font-size="8.5" fill="#7a8a80">${k}</text>`;
-      }
+      s+=`<circle cx="${x0}" cy="${y0}" r="11" fill="rgba(232,106,90,.2)" stroke="${G.red}" stroke-width="2"/><text x="${x0}" y="${y0+4}" text-anchor="middle" font-size="11" fill="#ffcfc2">0</text>`;
+      s+=`<line x1="${x0+12}" y1="${y0}" x2="${x0+L}" y2="${y0}" stroke="#3d5c49" stroke-width="3"/>`;
+      for(let k=0;k<=100;k+=10){ const x=x0+L*k/100; s+=`<line x1="${x}" y1="${y0-5}" x2="${x}" y2="${y0+5}" stroke="#5b6b58" stroke-width="1.3"/>`; }
       for(let k=7;k<=98;k+=7){
         const x=x0+L*k/100;
-        s+=`<g class="wk-grow" style="animation-delay:${((k/7-1)*0.05).toFixed(2)}s"><path d="M${x} ${y0-9} l4 7 h-8 z" fill="${G.green}"/><line x1="${x}" y1="${y0+1}" x2="${x}" y2="${y0-7}" stroke="${G.green}" stroke-width="1.6"/></g>`;
+        s+=`<g class="w6pop" style="animation-delay:${((k/7-1)*0.05).toFixed(2)}s"><path d="M${x} ${y0-9} l4 7 h-8 z" fill="${G.green}"/><line x1="${x}" y1="${y0+1}" x2="${x}" y2="${y0-7}" stroke="${G.green}" stroke-width="1.6"/></g>`;
       }
       h=wkFrame(wkBig('Поезд кратных 7 🚂')+
-        wkHero(`<svg width="${W}" height="60" viewBox="0 0 ${W} 60" style="display:block">${s}
-          <text x="${W/2}" y="58" text-anchor="middle" font-size="10.5" fill="#9ec0a8">флажки на 7, 14, …, 98 — ровно 14</text></svg>`)+
+        wkHero(`<svg width="${W}" height="52" viewBox="0 0 ${W} 52" style="display:block">${s}</svg>`)+
         quiz(lk,st)+
-        wkSml('остаток 0 ⇔ число делится нацело: 100 : 7 = 14 (остаток 2)'));
+        wkSml('флажки на 7, 14, …, 98 — 14 штук · 100 : 7 = 14 (остаток 2)'));
     } else {
       h=wkFrame(wkBig('Проверь себя: 47 : 5')+
-        wkHero(`<svg width="330" height="118" viewBox="0 0 330 118" style="display:block">
-          <rect x="4" y="4" width="322" height="110" rx="18" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="165" y="24" text-anchor="middle" font-size="12" fill="#9ec0a8">кубик 47 ищем ближайшее кратное 5</text>
-          <g class="wk-grow"><rect x="16" y="34" width="140" height="52" rx="11" fill="rgba(127,209,160,.1)" stroke="${G.green}" stroke-width="2.4"/>
-            <text x="86" y="52" text-anchor="middle" font-size="11" fill="#9ec0a8">45 = 5 · 9 (9 коробок)</text>
-            <text x="86" y="74" text-anchor="middle" font-size="19" fill="${G.green}" font-weight="bold" font-family="Georgia,serif">45 ✓</text></g>
-          <g class="wk-fall" style="animation-delay:.25s"><rect x="172" y="34" width="142" height="52" rx="11" fill="rgba(217,164,65,.12)" stroke="${G.gold}" stroke-width="2.4"/>
-            <text x="243" y="52" text-anchor="middle" font-size="11" fill="#d9c088">47 − 45</text>
-            <text x="243" y="74" text-anchor="middle" font-size="19" fill="${G.gold}" font-weight="bold" font-family="Georgia,serif">= 2 остаток</text></g>
-          <text x="165" y="106" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">ответ: остаток 2!</text>
+        wkHero(`<svg width="322" height="96" viewBox="0 0 322 96" style="display:block">
+          <g class="w6pop"><rect x="16" y="16" width="140" height="58" rx="13" fill="rgba(127,209,160,.1)" stroke="${G.green}" stroke-width="2.6"/><text x="86" y="38" text-anchor="middle" font-size="13" fill="#9ec0a8">кратное 5 ≤ 47</text><text x="86" y="62" text-anchor="middle" font-size="24" fill="${G.green}" font-weight="bold" font-family="Georgia,serif">45</text></g>
+          <text x="166" y="52" text-anchor="middle" font-size="28" fill="#cfe0cf" font-weight="bold">−</text>
+          <g class="w6pop" style="animation-delay:.2s"><rect x="178" y="16" width="130" height="58" rx="13" fill="rgba(255,255,255,.05)" stroke="#3d5c49" stroke-width="2"/><text x="243" y="38" text-anchor="middle" font-size="13" fill="#9ec0a8">47 − 45</text><text x="243" y="62" text-anchor="middle" font-size="24" fill="${G.gold}" font-weight="bold" font-family="Georgia,serif">= 2</text></g>
+          <text x="165" y="90" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">остаток 2!</text>
         </svg>`)+
         wkSml('жми «Понял! Проверю себя» — там остаток 47 на 5'));
     }
