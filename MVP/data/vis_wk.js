@@ -2076,3 +2076,252 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW13Act=visW13Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===13){ window.ARH_LESSONS[i]=L13; break; } } })();
 })();
+/* ================= УРОК 83 · Пропорции (v1, игра «Лавка Архимеда») ================= */
+(function(){
+  if(!window.__wk83css){
+    window.__wk83css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .p8in{animation:p8In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes p8In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .p8pop{animation:p8Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes p8Pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .p8flow{stroke-dasharray:8 6;animation:p8Flow .9s linear infinite;}'+
+      '@keyframes p8Flow{to{stroke-dashoffset:-28}}';
+    document.head.appendChild(st);
+  }
+  const L83 = {
+    id: 83, title: 'Пропорции', ico: '≈',
+    src: 'Математика · 5–6 класс · Пропорции и задачи', subj: 'math',
+    explain: [
+      'Лавка Архимеда, утро: 2 пакета сока стоят 40 рублей. Прибегает покупатель и просит 5 таких пакетов. Сколько он заплатит? Если пакетов больше в 2,5 раза — и цена вырастет во столько же раз. Такие задачи решает пропорция — сегодня ты научишься ей на всю жизнь.',
+      'Начнём с «отношения»: это просто деление. Запись a : b читается «a относится к b» и показывает, во сколько раз a больше b. Пример: 6 пакетов и 2 пакета — 6 : 2 = 3, значит, пакетов в 3 раза больше. И денег тогда тоже нужно в 3 раза больше — это называется прямая пропорция: обе величины растут одинаково.',
+      'Способ 1 — «через единицу». Сначала узнаём цену ОДНОГО пакета: 40 : 2 = 20 рублей. Теперь легко посчитать любую покупку: 5 пакетов — это 20 · 5 = 100 рублей, а 7 пакетов — 20 · 7 = 140 рублей. Цена одной штуки — ключ ко всем задачам такого типа.',
+      'Способ 2 — «пропорция». Цена одного пакета не меняется, значит, отношения одинаковые: 2 пакета так относятся к 40 рублям, как 5 пакетов к неизвестной сумме x. Записываем: 2 : 40 = 5 : x. Это и есть пропорция — равенство двух отношений. Числа 2 и x — крайние члены, 40 и 5 — средние.',
+      'Главное свойство пропорции: произведение КРАЙНИХ членов равно произведению СРЕДНИХ: a·d = b·c, если a : b = c : d. Проверим на нашей пропорции 2 : 40 = 5 : x: перемножим крест-накрест — 2 · x = 40 · 5. Оба произведения равны между собой.',
+      'Находим x: 2 · x = 40 · 5 = 200. Значит, x = 200 : 2 = 100. Пять пакетов стоят 100 рублей! Сравни со способом 1: там мы получили 20 · 5 = 100. Оба пути ведут к одному ответу — пропорция работает.',
+      'Потренируемся с ручками: 3 ручки стоят 45 рублей. Сколько стоят 5 таких ручек? Цена одной: 45 : 3 = 15. Пять ручек: 15 · 5 = 75. А пропорцией: 3 : 45 = 5 : x → 3x = 45·5 = 225 → x = 75. Ответ: 75 рублей!',
+      'Пропорция вокруг нас: 3 кг яблок стоят 150 рублей — килограмм стоит 50, значит, 7 кг стоят 350. Поезд за 4 часа проехал 240 км — его скорость 60 км/ч, значит, за 6 часов он проедет 360 км. Везде один приём: найди «цену единицы» или составь пропорцию 3 : 150 = 7 : x.',
+      'Проверь себя: 3 ручки стоят 45 рублей — сколько стоят 5 ручек? Цена одной 15, значит 5 ручек — 75. Ответь в тесте ниже и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: '3 одинаковые ручки стоят 45 рублей. Сколько стоят 5 таких ручек?', choices: ['75', '60', '90'], ans: 0,
+      exp: 'Одна ручка стоит 45 : 3 = 15 ₽, а пять ручек: 15 · 5 = 75 ₽ → 45 : 3 · 5 = 75.' },
+    tasks: [
+      { q: '3 кг яблок стоят 150 рублей. Сколько стоят 7 кг таких яблок?', kind: 'unit', ans: 350, tol: 0,
+        hints: ['Один килограмм стоит 150 : 3 = 50 ₽.', 'Теперь умножь цену килограмма на 7.'], sol: '150 : 3 = 50 ₽ за килограмм; 50 · 7 = 350 ₽.' },
+      { q: 'Поезд за 4 часа проехал 240 км. Сколько километров он проедет за 6 часов с той же скоростью?', kind: 'choice', choices: ['300', '360', '480'], ans: 1, tol: 0,
+        hints: ['Скорость поезда: 240 : 4 = 60 км/ч.', 'За 6 часов: 60 · 6 = 360 км.'], sol: '240 : 4 = 60 км/ч; за 6 часов поезд проедет 60 · 6 = 360 км.' }
+    ]
+  };
+  const P=['#e8a24e','#6fbf7a','#5aa0d8','#e8a0d8','#e08a55'];
+  /* коробка-пакет сока */
+  function carton(x,y,label,opt){
+    const o=opt||{};
+    const col=o.col||P[0];
+    return `<g class="p8pop" style="${o.delay?'animation-delay:'+o.delay+'s':''}">
+      <path d="M${x} ${y+44} L${x} ${y+16} L${x+6} ${y+8} L${x+18} ${y+4} L${x+30} ${y+8} L${x+36} ${y+16} L${x+36} ${y+44} Z" fill="${col}" stroke="#5d3a1f" stroke-width="1.6" stroke-linejoin="round"/>
+      <rect x="${x+12}" y="${y+16}" width="12" height="22" rx="2" fill="rgba(255,255,255,.28)"/>
+      ${o.big?`<text x="${x+18}" y="${y+52}" text-anchor="middle" font-size="15" fill="#ffe9c9" font-weight="bold">${label}</text>`:`<text x="${x+18}" y="${y+34}" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">${label}</text>`}
+    </g>`;
+  }
+  /* купюра */
+  function bill(x,y,txt,opt){
+    const o=opt||{};
+    return `<g class="p8pop" style="${o.delay?'animation-delay:'+o.delay+'s':''}">
+      <rect x="${x}" y="${y}" width="46" height="24" rx="5" fill="${o.col||'#7fae8f'}" stroke="#33553f" stroke-width="1.4"/>
+      <rect x="${x+3}" y="${y+3}" width="40" height="18" rx="3" fill="none" stroke="rgba(255,255,255,.5)" stroke-dasharray="3 2"/>
+      <text x="${x+23}" y="${y+17}" text-anchor="middle" font-size="13" fill="#fff" font-weight="bold">${txt}</text>
+    </g>`;
+  }
+  const cap=(t,c)=>`<div style="font-size:13.5px;color:${c||'#d8c9a8'};text-align:center;font-weight:bold;line-height:1.4">${t}</div>`;
+  const Q83=[
+    {q:'3 ручки стоят 45 ₽. Сколько стоят 5 ручек?',opts:['75 ₽','60 ₽','90 ₽'],ans:0},
+    {q:'3 кг яблок стоят 150 ₽. Сколько стоят 7 кг?',opts:['300 ₽','350 ₽','400 ₽'],ans:1}
+  ];
+  function quiz(lk,st){
+    const T=Q83[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?'#8fd1a8':'#ff8a7a'; tc=i===T.ans?'#8fd1a8':'#ff8a7a'; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:86px;font-size:16px" onclick="visW83T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 150 : 3 = 50, затем 50 · 7 = 350</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 45 : 3 = 15, затем 15 · 5 = 75</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Сначала цена одной штуки, потом умножь на количество</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий вопрос →',`visW83Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW83Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:12px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW83(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    let h='';
+    if(step===0){
+      if(st.guess==null) st.guess=-1;
+      h=wkFrame(wkBig('Лавка Архимеда: утренний покупатель')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="161" y="26" text-anchor="middle" font-size="12.5" fill="#9ec0a8">2 пакета сока · цена 40 ₽</text>
+          ${carton(44,38,'2',{delay:0})}${carton(88,38,'',{delay:.1})}
+          ${bill(140,44,'40 ₽',{delay:.2})}
+          <path class="p8flow" d="M64 104 C 150 122, 180 122, 256 100" fill="none" stroke="#ffd76a" stroke-width="3"/>
+          <text x="258" y="26" text-anchor="middle" font-size="12.5" fill="#ffdfa0">5 пакетов · цена ?</text>
+          ${[0,1,2,3,4].map(i=>carton(226+i*16,44,'',{delay:.3+i*0.06})).join('')}
+          <text x="280" y="104" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold">?</text>
+        </svg>`)+
+        wkRow(wkBtn('80 ₽',`visW83Act('${lk}','g80')`),wkBtn('100 ₽',`visW83Act('${lk}','g100')`),wkBtn('120 ₽',`visW83Act('${lk}','g120')`))+
+        (st.guess===100? wkAns('Верно! Сегодня ты узнаешь, как посчитать точно', '#8fd1a8')
+          : st.guess>100? wkAns('Многовато: 5 пакетов — это в 2,5 раза больше, чем 2', '#ffdfa0')
+          : st.guess>0? wkAns('Слишком мало: пакетов больше чем вдвое — и цена больше', '#ffdfa0') : '')+
+        wkSml('если пакетов больше в 2,5 раза — цена вырастет во столько же раз'));
+    } else if(step===1){
+      h=wkFrame(wkBig('Отношение: во сколько раз больше?')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="88" y="26" text-anchor="middle" font-size="12.5" fill="#9ec0a8">было: 2 пакета</text>
+          ${carton(56,46,'2',{col:P[0]})}${carton(96,46,'',{col:P[0],delay:.08})}
+          <text x="161" y="96" text-anchor="middle" font-size="30" fill="#cfe0cf" font-weight="bold">×3</text>
+          <text x="246" y="26" text-anchor="middle" font-size="12.5" fill="#9ec0a8">стало: 6 пакетов</text>
+          ${[0,1,2,3,4,5].map(i=>carton(196+i*18,50,'',{col:P[1],delay:.15+i*0.05})).join('')}
+          <text x="246" y="118" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">6 : 2 = 3</text>
+        </svg>`)+
+        wkRow(wkPill('a : b — «a относится к b»', '#7fd1ff'))+
+        wkSml('пакетов в 3 раза больше — значит, и цена будет в 3 раза больше. Это прямая пропорция'));
+    } else if(step===2){
+      h=wkFrame(wkBig('Способ 1: цена одной штуки')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="161" y="24" text-anchor="middle" font-size="12.5" fill="#9ec0a8">40 ₽ за 2 пакета → один пакет стоит?</text>
+          ${carton(40,50,'2',{col:P[0]})}
+          <text x="100" y="88" text-anchor="middle" font-size="30" fill="#cfe0cf" font-weight="bold">:</text>
+          <g class="p8pop" style="animation-delay:.2s"><text x="118" y="80" text-anchor="middle" font-size="15" fill="#ffdfa0">2</text><line x1="96" y1="86" x2="140" y2="86" stroke="#3d5c49" stroke-width="2"/></g>
+          <text x="161" y="88" text-anchor="middle" font-size="26" fill="#cfe0cf">=</text>
+          ${bill(176,56,'40 ₽',{delay:.1})}
+          <text x="240" y="84" text-anchor="middle" font-size="30" fill="#8fd1a8" font-weight="bold">20 ₽</text>
+          <text x="161" y="126" text-anchor="middle" font-size="13.5" fill="#8fd1a8" font-weight="bold">40 : 2 = 20 рублей за пакет</text>
+        </svg>`)+
+        wkSml('зная цену одной штуки, посчитаешь любую покупку: 5 пакетов — 20 · 5 = 100'));
+    } else if(step===3){
+      h=wkFrame(wkBig('Способ 2: записываем пропорцию')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="161" y="24" text-anchor="middle" font-size="12.5" fill="#9ec0a8">цена пакета не меняется → отношения равны</text>
+          <g class="p8pop"><text x="70" y="58" text-anchor="middle" font-size="34" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">2</text>
+            <text x="70" y="82" text-anchor="middle" font-size="12" fill="#9ec0a8">крайний</text>
+            <line x1="46" y1="66" x2="94" y2="66" stroke="#3d5c49" stroke-width="2"/>
+            <text x="70" y="104" text-anchor="middle" font-size="34" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">40</text></g>
+          <text x="118" y="92" text-anchor="middle" font-size="26" fill="#cfe0cf" font-weight="bold">=</text>
+          <g class="p8pop" style="animation-delay:.15s"><text x="170" y="58" text-anchor="middle" font-size="34" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">5</text>
+            <text x="170" y="82" text-anchor="middle" font-size="12" fill="#9ec0a8">средний</text>
+            <line x1="146" y1="66" x2="194" y2="66" stroke="#3d5c49" stroke-width="2"/>
+            <text x="170" y="104" text-anchor="middle" font-size="34" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">x</text></g>
+          <g class="p8pop" style="animation-delay:.3s"><text x="248" y="92" text-anchor="middle" font-size="24" fill="#8fd1a8" font-weight="bold">пропорция</text><text x="248" y="112" text-anchor="middle" font-size="12" fill="#9ec0a8">2:40 = 5:x</text></g>
+        </svg>`)+
+        wkRow(wkPill('крайние: 2 и x', '#7fd1ff'),wkPill('средние: 40 и 5', '#ffd76a'))+
+        wkSml('равенство двух отношений называется пропорцией'));
+    } else if(step===4){
+      h=wkFrame(wkBig('Главное свойство: крест-накрест')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="70" y="44" text-anchor="middle" font-size="36" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">2</text>
+          <text x="70" y="86" text-anchor="middle" font-size="36" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">40</text>
+          <text x="161" y="70" text-anchor="middle" font-size="26" fill="#cfe0cf" font-weight="bold">=</text>
+          <text x="252" y="44" text-anchor="middle" font-size="36" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">5</text>
+          <text x="252" y="86" text-anchor="middle" font-size="36" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">x</text>
+          <path class="p8flow" d="M76 50 C 160 20, 200 20, 246 40" fill="none" stroke="#ff8a7a" stroke-width="3"/>
+          <path class="p8flow" d="M246 96 C 190 120, 120 120, 76 94" fill="none" stroke="#8fd1a8" stroke-width="3"/>
+          <text x="70" y="132" text-anchor="middle" font-size="11" fill="#ff9a8a">2 · x</text>
+          <text x="252" y="132" text-anchor="middle" font-size="11" fill="#8fd1a8">40 · 5</text>
+        </svg>`)+
+        wkRow(wkPill('2 · x = 40 · 5', '#ffd76a'))+
+        wkSml('произведение крайних равно произведению средних: a·d = b·c'));
+    } else if(step===5){
+      h=wkFrame(wkBig('Находим x')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="161" y="28" text-anchor="middle" font-size="13" fill="#9ec0a8">2 · x = 200 → x = 200 : 2</text>
+          <g class="p8pop"><rect x="70" y="44" width="70" height="50" rx="12" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="2.4"/><text x="105" y="75" text-anchor="middle" font-size="26" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">2x=200</text></g>
+          <g class="p8pop" style="animation-delay:.25s"><text x="180" y="74" text-anchor="middle" font-size="30" fill="#cfe0cf" font-weight="bold">→</text></g>
+          <g class="p8pop" style="animation-delay:.4s"><rect x="200" y="44" width="100" height="50" rx="12" fill="rgba(217,164,65,.14)" stroke="#ffd76a" stroke-width="2.8"/><text x="250" y="75" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">x=100</text></g>
+          
+        </svg>`)+
+        wkSml('в пропорции 2:40 = 5:x неизвестное x = 40·5 : 2 = 100'));
+    } else if(step===6){
+      if(st.r==null) st.r=0;
+      const show=st.r;
+      h=wkFrame(wkBig('Ручки: 3 штуки за 45 ₽')+
+        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
+          <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="161" y="24" text-anchor="middle" font-size="12.5" fill="#9ec0a8">сколько стоят 5 таких ручек?</text>
+          ${[0,1,2].map(i=>pen(36+i*52,44,'',{delay:i*0.06})).join('')}
+          ${bill(180,52,'45 ₽',{delay:.2})}
+          ${show>=1?`<g class="p8in"><text x="200" y="112" text-anchor="middle" font-size="12" fill="#ffdfa0">одна ручка: 45 : 3 = 15</text></g>`:''}
+          ${show>=1?`${[0,1,2,3,4].map(i=>pen(18+i*44,96,'',{col:P[1],delay:.3+i*0.06})).join('')}`:''}
+          ${show>=2?`<g class="p8in"><text x="268" y="130" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">15 · 5 = 75 ₽</text></g>`:''}
+        </svg>`)+
+        wkRow(wkBtn('шаг 1: цена одной ручки',`visW83Act('${lk}','r1')`),wkBtn('шаг 2: цена пяти',`visW83Act('${lk}','r2')`),wkBtn('сброс',`visW83Act('${lk}','rst')`))+
+        wkSml('45 : 3 = 15 за ручку · 15 · 5 = 75 за пять'));
+    } else if(step===7){
+      if(st.r==null) st.r=0;
+      const show=st.r;
+      const examples=[
+        ['3 кг яблок — 150 ₽','килограмм: 150:3 = 50 ₽','7 кг: 50·7 = 350 ₽'],
+        ['поезд: 4 ч — 240 км','за час: 240:4 = 60 км','6 ч: 60·6 = 360 км']
+      ];
+      const ex=examples[(st.i||0)%2];
+      h=wkFrame(wkBig('Пропорция вокруг нас')+
+        wkHero(`<svg width="322" height="130" viewBox="0 0 322 130" style="display:block">
+          <rect x="6" y="6" width="310" height="118" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
+          <text x="161" y="26" text-anchor="middle" font-size="12.5" fill="#9ec0a8">${ex[0]}</text>
+          ${show>=1?`<g class="p8in"><text x="161" y="56" text-anchor="middle" font-size="15" fill="#ffdfa0">${ex[1]}</text></g>`:''}
+          ${show>=2?`<g class="p8in"><text x="161" y="88" text-anchor="middle" font-size="18" fill="#8fd1a8" font-weight="bold">${ex[2]}</text></g>`:''}
+        </svg>`)+
+        wkRow(wkBtn('шаг 1: цена единицы',`visW83Act('${lk}','r1')`),wkBtn('шаг 2: ответ',`visW83Act('${lk}','r2')`),wkBtn('новый пример',`visW83Act('${lk}','n')`),wkBtn('сброс',`visW83Act('${lk}','rst')`))+
+        wkSml('везде один приём: найди цену единицы (или составь пропорцию)'));
+    } else {
+      h=wkFrame(wkBig('Проверь себя')+
+        wkHero(`<svg width="322" height="86" viewBox="0 0 322 86" style="display:block">
+          <text x="161" y="24" text-anchor="middle" font-size="13" fill="#9ec0a8">3 ручки = 45 ₽ · 5 ручек = ?</text>
+          <text x="60" y="62" text-anchor="middle" font-size="30" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">3</text>
+          <text x="161" y="62" text-anchor="middle" font-size="30" fill="#cfe0cf" font-weight="bold">→</text>
+          <text x="262" y="62" text-anchor="middle" font-size="30" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">5</text>
+        </svg>`)+
+        quiz(lk,st)+
+        wkSml('45 : 3 = 15 за одну · 15 · 5 = 75 за пять'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+    function pen(x,y,label,opt){
+      const o=opt||{};
+      const col=o.col||'#e0523d';
+      return `<g class="p8pop" style="${o.delay?'animation-delay:'+o.delay+'s':''}">
+        <rect x="${x}" y="${y+2}" width="34" height="8" rx="4" fill="${col}" stroke="#7a2a1c" stroke-width="1.2"/>
+        <path d="M${x} ${y+6} L${x-8} ${y+6} L${x-4} ${y+12} L${x+2} ${y+8} Z" fill="${col}" stroke="#7a2a1c" stroke-width="1.1"/>
+        <path d="M${x+34} ${y+6} L${x+42} ${y+3} L${x+44} ${y+11} Z" fill="#f2e8d0" stroke="#7a2a1c" stroke-width="1.1"/>
+        <text x="${x+17}" y="${y+30}" text-anchor="middle" font-size="10" fill="#cfe0cf">${label||''}</text>
+      </g>`;
+    }
+  }
+  window.VISKW[83]=visW83;
+  function visW83T(lk,i){
+    const st=CHS[lk]||(CHS[lk]={});
+    st.sel=i; chRender(0);
+  }
+  window.visW83T=visW83T;
+  function visW83Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='g80') st.guess=80;
+    if(act==='g100') st.guess=100;
+    if(act==='g120') st.guess=120;
+    if(act==='r1') st.r=1;
+    if(act==='r2') st.r=2;
+    if(act==='n'){ st.i=(st.i||0)+1; st.r=0; }
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW83Act=visW83Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===83){ window.ARH_LESSONS[i]=L83; break; } } })();
+})();
