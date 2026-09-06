@@ -1212,44 +1212,46 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===43){ window.ARH_LESSONS[i]=L43; break; } } })();
 })();
 
-/* ================= УРОК 20 · Секрет умножения на 11 (v7, крупные SVG, больше слайдов, без эмодзи) ================= */
+/* ================= УРОК 20 · Секрет умножения на 11 (v8, поезд-паровоз, аккуратные табло) ================= */
 (function(){
-  if(!window.__wk20v7css){
-    window.__wk20v7css=1;
+  if(!window.__wk20v8css){
+    window.__wk20v8css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .m7in{animation:m7In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
-      '@keyframes m7In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .m7pop{animation:m7Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes m7Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .m7float{animation:m7Float 2.4s ease-in-out infinite;}'+
-      '@keyframes m7Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}'+
-      '#lvis .m7chug{animation:m7Chug 1.1s ease-in-out infinite;}'+
-      '@keyframes m7Chug{0%,100%{transform:translateX(0)}50%{transform:translateX(-4px)}}'+
-      '#lvis .m7flow{stroke-dasharray:9 7;animation:m7Flow .8s linear infinite;}'+
-      '@keyframes m7Flow{to{stroke-dashoffset:-32}}'+
-      '#lvis .m7bump{animation:m7Bump .9s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes m7Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.16)}}'+
-      '#lvis .m7wob{animation:m7Wob 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes m7Wob{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}';
+      '#lvis .t8in{animation:t8In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes t8In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .t8pop{animation:t8Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes t8Pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .t8smoke{animation:t8Smoke 2.6s ease-in-out infinite;}'+
+      '@keyframes t8Smoke{0%,100%{transform:translate(0,0) scale(1);opacity:.75}50%{transform:translate(5px,-6px) scale(1.12);opacity:.5}}'+
+      '#lvis .t8wob{animation:t8Wob 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes t8Wob{0%,100%{transform:rotate(-1.4deg)}50%{transform:rotate(1.4deg)}}'+
+      '#lvis .t8bump{animation:t8Bump .85s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes t8Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}'+
+      '#lvis .t8flow{stroke-dasharray:9 7;animation:t8Flow .85s linear infinite;}'+
+      '@keyframes t8Flow{to{stroke-dashoffset:-32}}'+
+      '#lvis .t8seg{opacity:0;animation:t8Seg .35s ease forwards;}'+
+      '@keyframes t8Seg{to{opacity:1}}';
     document.head.appendChild(st);
   }
   const L20 = {
     id: 20, title: 'Секрет умножения на 11', ico: '✕',
     src: 'Математика · Устный счёт · Умножение на 11', subj: 'math',
     explain: [
-      'По перрону мчится магический поезд Архимеда. На его табло задача: 45 · 11. Решать столбиком долго, но есть красивый фокус: умножить на 11 — это умножить на 10 и прибавить само число, ведь 11 = 10 + 1. Поэтому 45 · 11 = 450 + 45. А ещё у этого есть простой устный секрет!',
-      'Разложим 11 на 10 и 1. Умножить на 10 легко: к числу просто приписываем ноль — 45 · 10 = 450. Теперь прибавляем само число: 450 + 45 = 495. Вот и ответ! Это надёжная проверка для любого примера.',
-      'Теперь фокус: возьмём двузначное число, например 45. Раздвинь цифры 4 и 5 — между ними появится пустой вагончик. В него мы «посадим» их сумму: 4 + 5 = 9. Получается 495. Проверь: 45 · 11 = 495 — верно!',
-      'Почему фокус работает? 11 = 10 + 1, значит 45 · 11 = 45 · 10 + 45 = 450 + 45. Запиши их столбиком: единицы 0 + 5 = 5, десятки 5 + 4 = 9, сотни — 4. Читаем по разрядам: 4, 9, 5 — та самая сумма соседних цифр в серединке!',
-      'Тренируемся без переноса: 63 · 11. Цифры 6 и 3, сумма 6 + 3 = 9. Ставим 9 в середину: 693. Проверка: 63 · 10 = 630, плюс 63 → 693. Всё сходится!',
-      'Ещё пример без переноса: 24 · 11. Цифры 2 и 4, их сумма 2 + 4 = 6. Пишем 6 между ними — и читаем 264. Проверь сам: 240 + 24 = 264. Фокус не подводит.',
-      'А если сумма цифр больше 9? Например, 37 · 11: 3 + 7 = 10. Десять не помещается в один вагончик! Пишем в середину цифру 0, а единицу переносим вперёд: 3 + 1 = 4. Получается 407. Проверь: 370 + 37 = 407.',
+      'По перрону мчится магический поезд Архимеда — его называют «экспресс одиннадцати». На табло локомотива задача: 45 · 11. Столбиком решать долго, но машинист знает фокус: умножить на 11 — это умножить на 10 и прибавить само число, ведь 11 = 10 + 1.',
+      'Разберём секрет по частям. Умножить на 10 легко: к числу просто приписываем ноль — 45 · 10 = 450. Теперь прибавляем само число: 450 + 45 = 495. Вот и ответ! Это надёжная проверка для любого примера.',
+      'Теперь сам фокус. Возьмём двузначное число, например 45. Раздвинь цифры 4 и 5 — между ними появится пустой вагончик. Туда мы «посадим» их сумму: 4 + 5 = 9. Получается 495.',
+      'Проверим, что фокус не обманывает: 45 · 11 = 495 — а по шагу «умножить на 10 и прибавить» мы получили ровно то же самое: 450 + 45 = 495. Два способа сошлись!',
+      'Почему фокус работает? 11 = 10 + 1, значит 45 · 11 = 45 · 10 + 45 = 450 + 45. Запиши сложение столбиком: единицы 0 + 5 = 5, десятки 5 + 4 = 9, сотни — просто 4. Читаем по разрядам: 4, 9, 5 — та самая сумма соседних цифр в серединке!',
+      'Тренируемся без переноса: 63 · 11. Цифры 6 и 3, их сумма 6 + 3 = 9 меньше десяти — просто ставим её в середину: 693. Проверка: 630 + 63 = 693. Всё сходится!',
+      'Ещё пример без переноса: 24 · 11. Цифры 2 и 4, сумма 2 + 4 = 6. Пишем 6 между ними — и читаем 264. Проверь сам: 240 + 24 = 264. Фокус не подводит.',
+      'Правило для суммы меньше 10: если a + b меньше десяти, цифры просто «раздвигаются», а сумма встаёт в середину. Переносить ничего не нужно — ответ готов за секунду!',
+      'А если сумма цифр больше 9? Например, 37 · 11: 3 + 7 = 10. Десять не помещается в один вагончик! В середину пишем цифру 0, а единицу переносим вперёд: 3 + 1 = 4. Получается 407. Проверь: 370 + 37 = 407.',
       'Ещё пример с переносом: 76 · 11. Сумма 7 + 6 = 13: в середину пишем 3, а единицу переносим — 7 + 1 = 8. Получаем 836. Проверка: 760 + 76 = 836. Один перенос — и фокус снова работает!',
-      'Хитрый случай — 99 · 11. Сумма 9 + 9 = 18: в середину пишем 8 и переносим единицу, но и слева 9 + 1 = 10! Снова переносим — впереди появляется 1. Получается 1089. Проверь: 990 + 99 = 1089. Двойной перенос!',
+      'Хитрый случай — 99 · 11. Сумма 9 + 9 = 18: в середину пишем 8 и переносим единицу, но слева 9 + 1 = 10! Снова переносим — впереди появляется новый разряд 1. Получается 1089. Проверь: 990 + 99 = 1089. Двойной перенос!',
+      'А если в числе есть ноль? 10 · 11: цифры 1 и 0, их сумма 1 + 0 = 1. Ставим единицу в середину: 110. Проверка: 100 + 10 = 110. Ноль — обычная цифра, фокус работает и с ним!',
       'Тренажёр: тебе дадут число ab. Шаг 1 — сложи цифры a + b. Шаг 2 — поставь сумму в середину. Если сумма больше 9 — в середину пиши её последнюю цифру, а единицу переноси к первой (и проверяй, не нужен ли ещё перенос). Нажимай кнопки и открывай ответ!',
-      'Тест: чему равно 58 · 11? А 72 · 11? Помни фокус: раздвинь цифры и посади в середину их сумму (с переносом, если нужно). Ответь в тесте ниже!',
-      'Проверь себя: 45 · 11 = ? Цифры 4 и 5, сумма 9 в середину → 495. Жми «Понял! Проверю себя» — там ждёт этот пример!'
+      'Проверь себя: 45 · 11 = 495 (раздвинь 4 и 5, вставь сумму 9). А ещё проверь проверкой: 450 + 45 = 495. Жми «Понял! Проверю себя» — там ждёт этот пример!'
     ],
     check: { q: '45·11 = ?', choices: ['450', '495', '504', '945'], ans: 1,
       exp: '4 (4+5) 5 → 495.' },
@@ -1260,46 +1262,98 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['3+7 = 10 — больше 9.', 'Переносим: 3+1=4, в середине 0.'], sol: '3+7=10 → 407.' }
     ]
   };
-  const C7={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a',ivory:'#e8e0cc',mut:'#9ec0a8',night:'#22315a',wood:'#c9a06a'};
-  const C7P=['#7fd1ff','#8fd1a8','#ffd76a','#e8a0d8','#ff9a7a','#5aa0d8','#6fbf7a'];
-  /* большой круг-«колесо» с цифрой, точно по центру */
-  function disc(cx,cy,r,txt,fill,stroke,opt){
-    const o=opt||{};
-    const fs=Math.max(15,Math.min(40,Math.floor((r*2-8)/(String(txt).length*0.66))));
-    return `<g class="m7pop" style="${o.delay?'animation-delay:'+o.delay+'s':''}">
-      <circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="3.2"/>
-      ${o.glow?`<circle class="m7float" cx="${cx}" cy="${cy}" r="${r+6}" fill="none" stroke="${stroke}" stroke-width="2" opacity=".55"/>`:''}
-      <text x="${cx}" y="${(cy+fs*0.37).toFixed(1)}" text-anchor="middle" font-size="${fs}" fill="#0d1a13" font-weight="bold" font-family="Georgia,serif">${txt}</text>
-    </g>`;
+  const T={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a',cream:'#f2e7c9',night:'#1d2f57',boiler:'#3e6f9e',wheel:'#23384d',smoke:'#cfd8dd'};
+  const TP=['#ffd76a','#8fd1a8','#7fd1ff','#e8a0d8','#ff9a7a','#6fbf7a','#5aa0d8'];
+  /* ==== настоящий паровоз на рельсах (вид сбоку) ==== */
+  function tracks(y){
+    let shp='';
+    for(let x=8;x<312;x+=22){ shp+=`<rect x="${x}" y="${y+12}" width="12" height="3" rx="1.5" fill="#1c2a22"/>`; }
+    return `<rect x="6" y="${y+10}" width="306" height="7" rx="3" fill="#0e1812"/>
+      <rect x="6" y="${y+12}" width="306" height="2.4" fill="#16241c"/>
+      ${shp}
+      <rect x="4" y="${y-2}" width="310" height="4.5" rx="2" fill="#8a94ad"/>
+      <rect x="4" y="${y+5}" width="310" height="4.5" rx="2" fill="#6b7686"/>`;
   }
-  /* вагончик поезда: прямоугольник-«карточка» с цифрой */
-  function wagon(x,y,w,h,txt,fill,opt){
+  function engineSVG(opt){
     const o=opt||{};
-    const col=o.stroke||'#4a6a54';
-    const fs=Math.max(16,Math.min(52,Math.floor((h-14)/(String(txt).length*0.66))));
-    return `<g class="${o.wob?'m7wob':'m7pop'}" style="${o.delay?'animation-delay:'+o.delay+'s':''}">
-      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.rx||13}" fill="${fill}" stroke="${col}" stroke-width="${o.strokeW||3}"/>
-      ${o.dash?`<line x1="${x+4}" y1="${y+h-12}" x2="${x+w-4}" y2="${y+h-12}" stroke="${col}" stroke-width="1.6" stroke-dasharray="4 3" opacity=".6"/>`:''}
-      <text x="${x+w/2}" y="${(y+h/2+fs*0.37).toFixed(1)}" text-anchor="middle" font-size="${fs}" fill="${o.tc||'#fff'}" font-weight="bold" font-family="Georgia,serif">${txt}</text>
+    const gx=o.x||10, gy=o.y||34, s=o.s||1;
+    const sx=(v)=>gx+v*s, sy=(v)=>gy+v*s;
+    let out=`<g class="t8wob">`;
+    // колёса
+    const wheels=[[14,54],[46,54],[78,54],[108,54]];
+    wheels.forEach((w,i)=>{
+      out+=`<g class="t8seg" style="animation-delay:${(i*0.1).toFixed(2)}s">
+        <circle cx="${sx(w[0])}" cy="${sy(w[1])}" r="${13*s}" fill="${T.wheel}" stroke="#0d1a22" stroke-width="2.5"/>
+        <circle cx="${sx(w[0])}" cy="${sy(w[1])}" r="${5*s}" fill="#c8d2da"/>
+        <circle cx="${sx(w[0])}" cy="${sy(w[1])}" r="${1.6*s}" fill="#0d1a22"/></g>`;
+    });
+    // рама
+    out+=`<rect x="${sx(4)}" y="${sy(34)}" width="${140*s}" height="${10*s}" rx="${3*s}" fill="#241a10"/>`;
+    // котёл (бочка)
+    out+=`<rect x="${sx(14)}" y="${sy(20)}" width="${98*s}" height="${26*s}" rx="${12*s}" fill="${T.boiler}"/>
+      <rect x="${sx(14)}" y="${sy(20)}" width="${98*s}" height="${26*s}" rx="${12*s}" fill="none" stroke="#16324d" stroke-width="2"/>
+      <rect x="${sx(20)}" y="${sy(24)}" width="${86*s}" height="${5*s}" rx="2.5" fill="#ffd76a" opacity=".85"/>
+      <line x1="${sx(40)}" y1="${sy(22)}" x2="${sx(40)}" y2="${sy(44)}" stroke="#d9c08a" stroke-width="2" opacity=".7"/>
+      <line x1="${sx(66)}" y1="${sy(22)}" x2="${sx(66)}" y2="${sy(44)}" stroke="#d9c08a" stroke-width="2" opacity=".7"/>
+      <line x1="${sx(92)}" y1="${sy(22)}" x2="${sx(92)}" y2="${sy(44)}" stroke="#d9c08a" stroke-width="2" opacity=".7"/>`;
+    // кабина машиниста
+    out+=`<rect x="${sx(112)}" y="${sy(8)}" width="${32*s}" height="${34*s}" rx="${5*s}" fill="#24405c"/>
+      <rect x="${sx(112)}" y="${sy(8)}" width="${32*s}" height="${34*s}" rx="${5*s}" fill="none" stroke="#16324d" stroke-width="2"/>
+      <rect x="${sx(117)}" y="${sy(13)}" width="${22*s}" height="${13*s}" rx="${3*s}" fill="#ffe9a8" opacity=".9"/>
+      <rect x="${sx(117)}" y="${sy(30)}" width="${22*s}" height="${8*s}" rx="${2*s}" fill="#3a2b16"/>`;
+    // труба
+    out+=`<rect x="${sx(14)}" y="${sy(6)}" width="${12*s}" height="${15*s}" rx="${2.5*s}" fill="#16324d"/>`;
+    // дым
+    out+=`<g class="t8smoke">
+      <circle cx="${sx(9)}" cy="${sy(-2)}" r="${9*s}" fill="${T.smoke}" opacity=".55"/>
+      <circle cx="${sx(-6)}" cy="${sy(-10)}" r="${13*s}" fill="${T.smoke}" opacity=".4" style="animation-delay:.6s"/>
+      <circle cx="${sx(-16)}" cy="${sy(-20)}" r="${16*s}" fill="${T.smoke}" opacity=".3" style="animation-delay:1.2s"/>
+      <circle cx="${sx(-28)}" cy="${sy(-30)}" r="${18*s}" fill="${T.smoke}" opacity=".2" style="animation-delay:1.8s"/>
     </g>`;
+    // буфер спереди
+    out+=`<rect x="${sx(146)}" y="${sy(26)}" width="${8*s}" height="${14*s}" rx="${2*s}" fill="#16324d"/>`;
+    out+=`<g class="t8seg" style="animation-delay:.35s"><text x="${sx(82)}" y="${sy(4)}" text-anchor="middle" font-size="${13*s}" fill="#ffd76a" font-weight="bold" letter-spacing="1">ЭКСПРЕСС 11</text></g>`;
+    out+=`</g>`;
+    return out;
   }
-  /* рельсы */
-  const rails=(y)=>`<line x1="8" y1="${y}" x2="310" y2="${y}" stroke="#2c3e33" stroke-width="4"/>`+
-    `<line x1="8" y1="${y+7}" x2="310" y2="${y+7}" stroke="#3d5c49" stroke-width="2"/>`+
-    `<g class="m7flow"><line x1="20" y1="${y-4}" x2="298" y2="${y-4}" stroke="#8fd1a8" stroke-width="2" opacity=".7" stroke-dasharray="18 26"/></g>`;
-  /* локомотив с табло: x,y — левый верх корпуса */
-  function engine(x,y,opt){
+  /* ==== табло-вагон с цифрой (аккуратная плашка на колёсах) ==== */
+  function coach(x,y,digit,color,opt){
     const o=opt||{};
-    return `<g class="m7chug">
-      <circle cx="${x+22}" cy="${y+84}" r="12" fill="#1b2a20" stroke="#3d5c49" stroke-width="3"/>
-      <circle cx="${x+74}" cy="${y+84}" r="12" fill="#1b2a20" stroke="#3d5c49" stroke-width="3"/>
-      <rect x="${x}" y="${y}" width="96" height="58" rx="12" fill="${C7.wood}" stroke="#5d3a1f" stroke-width="2.6"/>
-      <rect x="${x+8}" y="${y+8}" width="80" height="42" rx="8" fill="${C7.night}"/>
-      ${o.smoke?`<g class="m7float"><circle cx="${x+84}" cy="${y-12}" r="8" fill="rgba(255,255,255,.35)"/></g>`:''}
+    const w=o.w||62, h=o.h||50, fs=o.fs||34;
+    const col=color||T.gold;
+    const stroke=o.stroke||col;
+    const delay=o.delay!=null?o.delay:0.08;
+    const cls = o.bump? 't8bump' : (o.dash? 't8pop': 't8pop');
+    const cy=y+h/2;
+    let out=`<g class="${cls}" style="animation-delay:${delay.toFixed(2)}s">
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="11" fill="rgba(255,255,255,.06)" stroke="${stroke}" stroke-width="2.6"/>
+      <rect x="${x+6}" y="${y+6}" width="${w-12}" height="${h-12}" rx="7" fill="rgba(10,20,30,.72)"/>
+      <text x="${x+w/2}" y="${(cy+fs*0.36).toFixed(1)}" text-anchor="middle" font-size="${fs}" fill="${o.tc||col}" font-weight="bold" font-family="Georgia,serif">${digit}</text>
+      <circle cx="${x+13}" cy="${y+h+8}" r="6" fill="${T.wheel}" stroke="#0d1a22" stroke-width="2"/>
+      <circle cx="${x+w-13}" cy="${y+h+8}" r="6" fill="${T.wheel}" stroke="#0d1a22" stroke-width="2"/>
     </g>`;
+    return out;
   }
-  const sign=(x,y,t,big,fill)=>`<text class="m7pop" x="${x}" y="${y}" text-anchor="middle" font-size="${big||30}" fill="${fill||'#cfe0cf'}" font-weight="bold">${t}</text>`;
-  const pill=(t,c,delay)=>`<span class="m7in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:7px 14px;border-radius:13px;border:2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  /* рельсы под составом вагонов */
+  function rowSVG(items,opt){
+    const o=opt||{};
+    const W=318, y=o.y||34, w=o.w||62, gap=o.gap||8;
+    const n=items.length;
+    const total=n*w+(n-1)*gap;
+    const x0=Math.round((W-total)/2);
+    const H=y+70;
+    let s=tracks(y+62);
+    items.forEach((it,i)=>{
+      const x=x0+i*(w+gap);
+      const col=it.c||TP[i%TP.length];
+      s+=coach(x,y,it.d,col,{delay:i*0.14,fs:o.fs,w,stroke:it.stroke});
+      if(it.bump) {} // переиспользуем ниже
+    });
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">${s}</svg>`;
+  }
+  /* знак между вагонами: рисуем отдельно */
+  const signT=(x,y,ch,c,fs,delay)=>`<text class="t8in" style="animation-delay:${(delay||0).toFixed(2)}s" x="${x}" y="${y}" text-anchor="middle" font-size="${fs||34}" fill="${c||T.gold}" font-weight="bold">${ch}</text>`;
+  const pill=(t,c,delay)=>`<span class="t8in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:7px 14px;border-radius:13px;border:2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q20=[
     {q:'58 · 11 = ?',opts:['580','583','638'],ans:2},
     {q:'72 · 11 = ?',opts:['782','792','772'],ans:1}
@@ -1308,7 +1362,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const T=Q20[st.q||0];
     const opts=T.opts.map((o,i)=>{
       let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?C7.green:C7.red; tc=i===T.ans?C7.green:C7.red; }
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?T.green:T.red; tc=i===T.ans?T.green:T.red; }
       return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:74px;font-size:18px" onclick="visW20T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
@@ -1321,179 +1375,236 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const rst=wkBtn('заново',`visW20Act('${lk}','rst')`);
     return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
-  /* сцена «два числа + середина»: показывает a, середину (или «?»), b на рельсах */
-  function trainRow(a,mid,b,opt){
-    const o=opt||{};
-    const ax=o.ax||58, mx=o.mx||161, bx=o.bx||264;
-    const ay=o.ay||60;
-    return `<svg viewBox="0 0 318 ${o.h||150}" style="display:block;width:100%;height:auto">
-      <rect x="6" y="6" width="306" height="${(o.h||150)-12}" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
-      ${rails((o.h||150)-16)}
-      ${disc(ax,ay,44,a,C7.blue,C7.blue,{delay:0})}
-      ${mid===null
-        ? `<circle class="m7bump" cx="${mx}" cy="${ay}" r="44" fill="none" stroke="#5a6f7f" stroke-width="2.6" stroke-dasharray="8 7"/>
-           <text x="${mx}" y="${(ay+12)}" text-anchor="middle" font-size="20" fill="#9ec0a8" font-weight="bold">?</text>`
-        : disc(mx,ay,44,mid,C7.gold,C7.gold,{delay:.2,glow:true})}
-      ${disc(bx,ay,44,b,C7.green,C7.green,{delay:.35})}
-    </svg>`;
-  }
   function visW20(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step; if(step===0||step===1){ st.engine=0; } if(step===2){ st.step=0; } if(step===4){ st.step=0; } if(step===5){ st.step=0; } if(step===6){ st.step=0; } if(step===7){ st.step=0; } if(step===8){ st.step=0; } if(step===9){ if(st.tr==null) st.tr=0; st.s1=0; st.s2=0; } if(step===10){ st.sel=null; st.q=0; } }
+    if(st._at!==step){ st._at=step; if(step===2){ st.step=0; } if(step===3){ st.step=0; } if(step===5){ st.step=0; } if(step===6){ st.step=0; } if(step===8){ st.step=0; } if(step===9){ st.step=0; } if(step===10){ st.step=0; } if(step===12){ if(st.tr==null) st.tr=0; st.s1=0; st.s2=0; } if(step===13){ st.sel=null; st.q=0; } }
     let h='';
     if(step===0){
-      h=wkFrame(wkBig('Магический поезд: 45 · 11')+
-        wkHero(`<svg viewBox="0 0 318 160" style="display:block;width:100%;height:auto">
-          <rect x="6" y="6" width="306" height="148" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          ${rails(142)}
-          ${engine(10,46,{smoke:1})}
-          <rect x="118" y="42" width="112" height="64" rx="14" fill="${C7.wood}" stroke="#5d3a1f" stroke-width="2.6"/>
-          <rect x="126" y="50" width="96" height="48" rx="9" fill="${C7.night}"/>
-          <text x="174" y="68" text-anchor="middle" font-size="14" fill="#ffdfa0">задача</text>
-          <text x="174" y="90" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">45 · 11</text>
-          <text x="240" y="84" text-anchor="middle" font-size="40" fill="#cfe0cf" font-weight="bold">?</text>
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Магический поезд: 45 · 11</div>`+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          ${engineSVG({x:52,y:52,s:1.05})}
+          ${tracks(142)}
+          <g class="t8seg" style="animation-delay:.4s"><text x="238" y="86" text-anchor="middle" font-size="15" fill="#cfe0cf">на табло</text>
+          <rect x="206" y="54" width="64" height="58" rx="10" fill="rgba(255,255,255,.05)" stroke="#ffd76a" stroke-width="2.6"/>
+          <text x="238" y="80" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold" font-family="Georgia,serif">45</text>
+          <text x="238" y="102" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">× 11 = ?</text></g>
         </svg>`)+
-        wkRow(wkBtn('поехали!',`visW20Act('${lk}','go')`))+
         wkSml('умножить на 11 — это умножить на 10 и прибавить само число'));
     } else if(step===1){
-      h=wkFrame(wkBig('Секрет: 11 = 10 + 1')+
-        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
-          <rect x="6" y="6" width="306" height="158" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
-          ${rails(148)}
-          ${wagon(20,52,64,52,'45','#7fd1ff')}
-          ${sign(104,84,'×11',30)}
-          ${wagon(128,52,70,52,'10','#8fd1a8',{delay:.15})}
-          ${sign(214,78,'=',26)}
-          <g class="m7pop" style="animation-delay:.25s"><rect x="222" y="42" width="84" height="72" rx="13" fill="rgba(217,164,65,.12)" stroke="#ffd76a" stroke-width="3"/><text x="264" y="66" text-anchor="middle" font-size="13" fill="#ffdfa0">45 · 10</text><text x="264" y="94" text-anchor="middle" font-size="30" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">450</text></g>
-          <g class="m7pop" style="animation-delay:.4s"><rect x="40" y="116" width="238" height="26" rx="11" fill="rgba(143,209,168,.12)" stroke="#8fd1a8"/><text x="159" y="134" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">+ 45 → 495</text></g>
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Секрет: 11 = 10 + 1</div>`+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          ${tracks(142)}
+          ${coach(34,34,45,'#7fd1ff',{delay:0,fs:30})}
+          <text x="126" y="76" text-anchor="middle" font-size="34" fill="#cfe0cf" font-weight="bold">×</text>
+          <text x="154" y="74" text-anchor="middle" font-size="24" fill="#8fd1a8" font-weight="bold">10</text>
+          ${signT(196,74,'+',T.gold,36,.2)}
+          <text x="240" y="74" text-anchor="middle" font-size="24" fill="#8fd1a8" font-weight="bold">45</text>
+          ${signT(282,74,'=',T.gold,32,.3)}
+          <g class="t8pop" style="animation-delay:.4s"><rect x="252" y="96" width="56" height="34" rx="10" fill="rgba(255,215,106,.14)" stroke="#ffd76a" stroke-width="2.6"/>
+          <text x="280" y="119" text-anchor="middle" font-size="22" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">495</text></g>
+          <text x="60" y="120" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">45 · 10 = 450</text>
         </svg>`)+
-        wkRow(pill('450 + 45 = 495', C7.green,0.4))+
-        wkSml('умножить на 10 — приписать ноль, потом прибавить само число'));
+        wkRow(pill('450 + 45 = 495', T.green,0.5))+
+        wkSml('сначала приписываем ноль (умножить на 10), потом прибавляем само число'));
     } else if(step===2){
       const sh=st.step||0;
-      h=wkFrame(wkBig('Фокус: вставляем сумму в середину')+
-        wkHero(trainRow(4, sh>=1? 9 : null, 5, {ax:56,mx:159,bx:262,ay:64,h:150}))+
-        (sh>=2? wkAns('читаем: 4 · 9 · 5 → 495!', C7.green):'')+
+      const gapX=72;
+      const x0=Math.round((318-(3*72-8))/2);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Фокус: раздвигаем цифры</div>`+
+        wkHero(`<svg viewBox="0 0 318 130" style="display:block;width:100%;height:auto">
+          ${tracks(118)}
+          ${coach(x0,28,4,'#7fd1ff',{delay:0})}
+          ${sh>=1? coach(x0+72,28,'?','#ffd76a',{delay:.2,stroke:'#8f9aa6',dash:1}):''}
+          ${coach(x0+144,28,5,'#8fd1a8',{delay:.15})}
+          ${sh>=1? signT(x0+114,60,'→',T.gold,28,.3):''}
+        </svg>`)+
+        (sh>=2? wkAns('между 4 и 5 появился пустой вагончик!',T.gold):'')+
         wkRow(
           sh===0? wkBtn('раздвинуть цифры',`visW20Act('${lk}','f1')`) : '',
-          sh===1? wkBtn('посадить сумму 4+5=9',`visW20Act('${lk}','f2')`) : '',
-          sh>=1? wkBtn('заново',`visW20Act('${lk}','rst')`) : '')+
-        wkSml('в пустой вагончик садится сумма соседних цифр'));
+          sh===1? wkBtn('вставить сумму 4+5=9',`visW20Act('${lk}','f2')`) : '',
+          sh>=1? wkBtn('сброс',`visW20Act('${lk}','rst')`) : '')+
+        wkSml('в пустой вагончик мы посадим сумму соседних цифр'));
     } else if(step===3){
-      h=wkFrame(wkBig('Почему так выходит?')+
-        wkHero(`<svg viewBox="0 0 318 168" style="display:block;width:100%;height:auto">
-          <rect x="6" y="6" width="306" height="156" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
-          ${rails(146)}
-          ${disc(56,60,36,'4','#7fd1ff','#7fd1ff')}
-          ${disc(110,60,30,'5','#7fd1ff','#7fd1ff',{delay:.1})}
-          <text x="146" y="62" text-anchor="middle" font-size="20" fill="#cfe0cf">·11</text>
-          <line x1="162" y1="36" x2="162" y2="104" stroke="#3d5c49" stroke-width="2"/>
-          <g class="m7pop" style="animation-delay:.2s"><rect x="172" y="22" width="116" height="30" rx="10" fill="rgba(127,209,255,.12)" stroke="#7fd1ff"/><text x="230" y="42" text-anchor="middle" font-size="17" fill="#7fd1ff" font-weight="bold">45 · 10 = 450</text></g>
-          <g class="m7pop" style="animation-delay:.32s"><rect x="172" y="58" width="116" height="30" rx="10" fill="rgba(143,209,168,.12)" stroke="#8fd1a8"/><text x="230" y="78" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold">+ 45</text></g>
-          <g class="m7pop" style="animation-delay:.48s"><rect x="172" y="94" width="116" height="34" rx="10" fill="rgba(217,164,65,.16)" stroke="#ffd76a" stroke-width="2.6"/><text x="230" y="116" text-anchor="middle" font-size="19" fill="#ffd76a" font-weight="bold">495</text></g>
-          <text x="150" y="132" text-anchor="middle" font-size="12" fill="#9ec0a8">0+5 · 5+4 · 4</text>
-        </svg>`)+
-        wkSml('сложение столбиком и даёт «сумму соседей» в середине числа'));
-    } else if(step===4){
       const sh=st.step||0;
-      h=wkFrame(wkBig('Без переноса: 63 · 11')+
-        wkHero(trainRow(6, sh>=1? 9 : null, 3, {ax:56,mx:159,bx:262,ay:64,h:150}))+
-        (sh>=2? wkAns('63 · 11 = 693 · проверка: 630 + 63 = 693', C7.green):'')+
+      const x0=Math.round((318-(3*72-8))/2);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сумма в серединке: 495</div>`+
+        wkHero(`<svg viewBox="0 0 318 130" style="display:block;width:100%;height:auto">
+          ${tracks(118)}
+          ${coach(x0,28,4,'#7fd1ff',{delay:0})}
+          ${sh>=1? coach(x0+72,28,'9','#ffd76a',{delay:.2,bump:1}):''}
+          ${coach(x0+144,28,5,'#8fd1a8',{delay:.15})}
+          ${sh>=1? `<g class="t8seg" style="animation-delay:.4s"><text x="${x0+36}" y="92" text-anchor="middle" font-size="14" fill="#8fd1a8">4</text><text x="${x0+108}" y="92" text-anchor="middle" font-size="14" fill="#ffd76a">+</text><text x="${x0+180}" y="92" text-anchor="middle" font-size="14" fill="#8fd1a8">5</text><text x="${x0+108}" y="76" text-anchor="middle" font-size="13" fill="#cfe0cf">4+5=9</text></g>`:''}
+        </svg>`)+
+        (sh>=2? wkAns('45 · 11 = 495!',T.green):'')+
+        wkRow(
+          sh===0? wkBtn('вставить 9',`visW20Act('${lk}','f1')`) : '',
+          sh===1? wkBtn('прочитать ответ',`visW20Act('${lk}','f2')`) : '',
+          sh>=1? wkBtn('сброс',`visW20Act('${lk}','rst')`) : '')+
+        wkSml('цифры 4 · 9 · 5 — это и есть 495: 4, затем сумма, затем 5'));
+    } else if(step===4){
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему так выходит?</div>`+
+        wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="168" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="t8seg"><text x="44" y="34" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">450</text>
+          <text x="44" y="58" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">+ 45</text>
+          <line x1="16" y1="68" x2="76" y2="68" stroke="#cfe0cf" stroke-width="2"/>
+          <text x="44" y="90" text-anchor="middle" font-size="16" fill="#cfe0cf" font-weight="bold">495</text></g>
+          <g class="t8seg" style="animation-delay:.2s"><text x="166" y="30" text-anchor="middle" font-size="13" fill="#9ec0a8">единицы: 0 + 5 = 5</text>
+          <text x="166" y="54" text-anchor="middle" font-size="13" fill="#9ec0a8">десятки: 5 + 4 = 9</text>
+          <text x="166" y="78" text-anchor="middle" font-size="13" fill="#9ec0a8">сотни: 4</text>
+          <text x="166" y="108" text-anchor="middle" font-size="16" fill="#ffd76a" font-weight="bold">4 · 9 · 5 → 495</text></g>
+        </svg>`)+
+        wkSml('в середине числа всегда «сумма соседей» — это не магия, а сложение'));
+    } else if(step===5){
+      const sh=st.step||0;
+      const x0=Math.round((318-(3*72-8))/2);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Без переноса: 63 · 11</div>`+
+        wkHero(`<svg viewBox="0 0 318 130" style="display:block;width:100%;height:auto">
+          ${tracks(118)}
+          ${coach(x0,28,6,'#7fd1ff',{delay:0})}
+          ${sh>=1? coach(x0+72,28,sh>=2?'9':'?',sh>=2?'#ffd76a':'#8fa0ad',{delay:.2,bump:sh>=2}):''}
+          ${coach(x0+144,28,3,'#8fd1a8',{delay:.15})}
+          ${sh>=2? `<g class="t8seg" style="animation-delay:.35s"><text x="${x0+108}" y="98" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">6+3=9</text></g>`:''}
+        </svg>`)+
+        (sh>=2? wkAns('63 · 11 = 693',T.green):'')+
         wkRow(
           sh===0? wkBtn('1 · сумма 6+3',`visW20Act('${lk}','f1')`) : '',
           sh===1? wkBtn('2 · ответ',`visW20Act('${lk}','f2')`) : '',
-          sh>=1? wkBtn('заново',`visW20Act('${lk}','rst')`) : '')+
-        wkSml('сумма меньше 10 — переносить не нужно'));
-    } else if(step===5){
+          sh>=1? wkBtn('сброс',`visW20Act('${lk}','rst')`) : '')+
+        wkSml('сумма меньше 10 — переносить не нужно: 6 · 9 · 3'));
+    } else if(step===6){
       const sh=st.step||0;
-      h=wkFrame(wkBig('Ещё без переноса: 24 · 11')+
-        wkHero(trainRow(2, sh>=1? 6 : null, 4, {ax:56,mx:159,bx:262,ay:64,h:150}))+
-        (sh>=2? wkAns('24 · 11 = 264 · проверка: 240 + 24 = 264', C7.green):'')+
+      const x0=Math.round((318-(3*72-8))/2);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ещё без переноса: 24 · 11</div>`+
+        wkHero(`<svg viewBox="0 0 318 130" style="display:block;width:100%;height:auto">
+          ${tracks(118)}
+          ${coach(x0,28,2,'#7fd1ff',{delay:0})}
+          ${sh>=1? coach(x0+72,28,sh>=2?'6':'?',sh>=2?'#ffd76a':'#8fa0ad',{delay:.2,bump:sh>=2}):''}
+          ${coach(x0+144,28,4,'#8fd1a8',{delay:.15})}
+          ${sh>=2? `<g class="t8seg" style="animation-delay:.35s"><text x="${x0+108}" y="98" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">2+4=6</text></g>`:''}
+        </svg>`)+
+        (sh>=2? wkAns('24 · 11 = 264',T.green):'')+
         wkRow(
           sh===0? wkBtn('1 · сумма 2+4',`visW20Act('${lk}','f1')`) : '',
           sh===1? wkBtn('2 · ответ',`visW20Act('${lk}','f2')`) : '',
-          sh>=1? wkBtn('заново',`visW20Act('${lk}','rst')`) : '')+
-        wkSml('цифры маленькие, сумма 6 — всё помещается'));
-    } else if(step===6){
-      const sh=st.step||0;
-      h=wkFrame(wkBig('Перенос: 37 · 11')+
-        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
-          <rect x="6" y="6" width="306" height="158" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
-          ${rails(148)}
-          ${disc(52,64,40,'3','#7fd1ff','#7fd1ff')}
-          ${sh===0
-            ? `<circle class="m7bump" cx="159" cy="64" r="40" fill="none" stroke="#5a6f7f" stroke-width="2.6" stroke-dasharray="8 7"/><text x="159" y="72" text-anchor="middle" font-size="18" fill="#9ec0a8" font-weight="bold">?</text>`
-            : `<circle cx="159" cy="64" r="40" fill="rgba(255,255,255,.05)"/><text x="159" y="40" text-anchor="middle" font-size="12" fill="#ff9a8a">3+7=10</text><text x="159" y="78" text-anchor="middle" font-size="30" fill="#ff8a7a" font-weight="bold" font-family="Georgia,serif">10!</text>`}
-          ${disc(266,64,40,'7','#8fd1a8','#8fd1a8',{delay:.15})}
-          ${sh>=1? `<g class="m7pop"><text x="52" y="40" text-anchor="middle" font-size="30" fill="#ffd76a" font-weight="bold">4</text><path class="m7flow" d="M96 66 C 120 40, 70 26, 56 30" fill="none" stroke="#ffd76a" stroke-width="3"/></g>`:''}
-          ${sh>=2? `<g class="m7pop" style="animation-delay:.2s"><rect x="30" y="120" width="258" height="24" rx="11" fill="rgba(143,209,168,.12)" stroke="#8fd1a8"/><text x="159" y="136" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">3+1 = 4 · в середину 0 → 407</text></g>`:''}
-        </svg>`)+
-        (sh>=2? wkAns('проверка: 370 + 37 = 407', C7.green):'')+
-        wkRow(
-          sh===0? wkBtn('сложить 3+7',`visW20Act('${lk}','f1')`) : '',
-          sh===1? wkBtn('перенести единицу',`visW20Act('${lk}','f2')`) : '',
-          sh>=1? wkBtn('заново',`visW20Act('${lk}','rst')`) : '')+
-        wkSml('сумма 10 больше 9: в середину пишем 0, единицу — вперёд'));
+          sh>=1? wkBtn('сброс',`visW20Act('${lk}','rst')`) : '')+
+        wkSml('2 · 6 · 4 — сумма 6 встала в середину, всё сошлось'));
     } else if(step===7){
-      const sh=st.step||0;
-      h=wkFrame(wkBig('Ещё перенос: 76 · 11')+
-        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
-          <rect x="6" y="6" width="306" height="158" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
-          ${rails(148)}
-          ${disc(52,64,40,'7','#7fd1ff','#7fd1ff')}
-          ${sh===0
-            ? `<circle class="m7bump" cx="159" cy="64" r="40" fill="none" stroke="#5a6f7f" stroke-width="2.6" stroke-dasharray="8 7"/><text x="159" y="72" text-anchor="middle" font-size="18" fill="#9ec0a8" font-weight="bold">?</text>`
-            : `<circle cx="159" cy="64" r="40" fill="rgba(255,255,255,.05)"/><text x="159" y="40" text-anchor="middle" font-size="12" fill="#ff9a8a">7+6=13</text><text x="159" y="78" text-anchor="middle" font-size="30" fill="#ff8a7a" font-weight="bold" font-family="Georgia,serif">3</text>`}
-          ${disc(266,64,40,'6','#8fd1a8','#8fd1a8',{delay:.15})}
-          ${sh>=1? `<g class="m7pop"><text x="52" y="40" text-anchor="middle" font-size="30" fill="#ffd76a" font-weight="bold">8</text><path class="m7flow" d="M96 66 C 120 40, 70 26, 56 30" fill="none" stroke="#ffd76a" stroke-width="3"/></g>`:''}
-          ${sh>=2? `<g class="m7pop" style="animation-delay:.2s"><rect x="30" y="120" width="258" height="24" rx="11" fill="rgba(143,209,168,.12)" stroke="#8fd1a8"/><text x="159" y="136" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">7+1 = 8 · в середину 3 → 836</text></g>`:''}
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Правило: сумма меньше 10</div>`+
+        wkHero(`<svg viewBox="0 0 318 140" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="128" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="t8pop"><rect x="20" y="16" width="60" height="60" rx="12" fill="rgba(255,255,255,.05)" stroke="#7fd1ff" stroke-width="2.6"/>
+          <text x="50" y="54" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">a</text></g>
+          <g class="t8pop" style="animation-delay:.2s"><rect x="120" y="16" width="78" height="60" rx="12" fill="rgba(255,255,255,.05)" stroke="#ffd76a" stroke-width="2.6"/>
+          <text x="159" y="54" text-anchor="middle" font-size="30" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">a+b</text></g>
+          <g class="t8pop" style="animation-delay:.4s"><rect x="238" y="16" width="60" height="60" rx="12" fill="rgba(255,255,255,.05)" stroke="#8fd1a8" stroke-width="2.6"/>
+          <text x="268" y="54" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">b</text></g>
+          ${signT(95,55,'+',T.gold,30,0)}
+          ${signT(212,55,'=',T.gold,28,.3)}
         </svg>`)+
-        (sh>=2? wkAns('проверка: 760 + 76 = 836', C7.green):'')+
-        wkRow(
-          sh===0? wkBtn('сложить 7+6',`visW20Act('${lk}','f1')`) : '',
-          sh===1? wkBtn('перенести единицу',`visW20Act('${lk}','f2')`) : '',
-          sh>=1? wkBtn('заново',`visW20Act('${lk}','rst')`) : '')+
-        wkSml('в середину — последняя цифра суммы, единица — к первой'));
+        wkSml('цифры «раздвигаются», сумма встаёт между ними — без всяких переносов'));
     } else if(step===8){
       const sh=st.step||0;
-      h=wkFrame(wkBig('Хитрый случай: 99 · 11')+
-        wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
-          <rect x="6" y="6" width="306" height="164" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
-          ${rails(154)}
-          ${disc(46,60,36,'9','#7fd1ff','#7fd1ff')}
-          ${disc(140,60,30,'9','#8fd1a8','#8fd1a8',{delay:.1})}
-          ${sh===0
-            ? `<circle class="m7bump" cx="252" cy="60" r="36" fill="none" stroke="#5a6f7f" stroke-width="2.6" stroke-dasharray="8 7"/><text x="252" y="68" text-anchor="middle" font-size="16" fill="#9ec0a8" font-weight="bold">?</text>`
-            : `<circle cx="252" cy="60" r="36" fill="rgba(255,255,255,.05)"/><text x="252" y="36" text-anchor="middle" font-size="11" fill="#ff9a8a">9+9=18</text><text x="252" y="73" text-anchor="middle" font-size="30" fill="#ff8a7a" font-weight="bold" font-family="Georgia,serif">18</text>`}
-          ${sh>=1? `<g class="m7pop"><path class="m7flow" d="M110 76 C 96 100, 70 92, 60 78" fill="none" stroke="#ffd76a" stroke-width="3"/><text x="36" y="104" text-anchor="middle" font-size="28" fill="#ffd76a" font-weight="bold">0</text><text x="72" y="118" text-anchor="middle" font-size="13" fill="#ffdfa0">+1</text></g>`:''}
-          ${sh>=2? `<g class="m7pop"><path class="m7flow" d="M190 90 C 200 110, 240 108, 250 94" fill="none" stroke="#8fd1a8" stroke-width="3"/><text x="250" y="124" text-anchor="middle" font-size="26" fill="#8fd1a8" font-weight="bold">1</text><text x="216" y="140" text-anchor="middle" font-size="13" fill="#cfe0cf">ещё перенос!</text></g>`:''}
-          ${sh>=3? `<g class="m7pop" style="animation-delay:.15s"><rect x="30" y="150" width="258" height="20" rx="10" fill="rgba(217,164,65,.14)" stroke="#ffd76a"/><text x="159" y="164" text-anchor="middle" font-size="13" fill="#ffd76a" font-weight="bold">1089 · проверка: 990 + 99 = 1089</text></g>`:''}
+      const x0=Math.round((318-(3*72-8))/2);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Перенос: 37 · 11</div>`+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          ${tracks(140)}
+          ${coach(x0,28,sh>=3?'4':'3',sh>=3?'#ffd76a':'#7fd1ff',{delay:0,bump:sh>=3})}
+          ${sh>=1? coach(x0+72,28,sh>=2?'0':'10',sh>=2?'#ffd76a':'#ff8a7a',{delay:.2,bump:1}):''}
+          ${coach(x0+144,28,7,'#8fd1a8',{delay:.15})}
+          ${sh>=1? `<g class="t8seg" style="animation-delay:.3s"><path class="t8flow" d="M${x0+118} 92 C ${x0+118} 108, ${x0+40} 112, ${x0+42} 96" fill="none" stroke="#ffd76a" stroke-width="3"/><text x="${x0+44}" y="104" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">+1</text></g>`:''}
         </svg>`)+
+        (sh>=3? wkAns('3+7=10 → в середину 0, единица вперёд: 407',T.green):'')+
+        wkRow(
+          sh===0? wkBtn('сложить 3+7',`visW20Act('${lk}','f1')`) : '',
+          sh===1? wkBtn('в середину 0',`visW20Act('${lk}','f2')`) : '',
+          sh===2? wkBtn('перенести единицу',`visW20Act('${lk}','f3')`) : '',
+          sh>=1? wkBtn('сброс',`visW20Act('${lk}','rst')`) : '')+
+        wkSml('сумма 10 больше 9: в середину пишем 0, единицу — вперёд'));
+    } else if(step===9){
+      const sh=st.step||0;
+      const x0=Math.round((318-(3*72-8))/2);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ещё перенос: 76 · 11</div>`+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          ${tracks(140)}
+          ${coach(x0,28,sh>=3?'8':'7',sh>=3?'#ffd76a':'#7fd1ff',{delay:0,bump:sh>=3})}
+          ${sh>=1? coach(x0+72,28,sh>=2?'3':'13',sh>=2?'#ffd76a':'#ff8a7a',{delay:.2,bump:1}):''}
+          ${coach(x0+144,28,6,'#8fd1a8',{delay:.15})}
+          ${sh>=1? `<g class="t8seg" style="animation-delay:.3s"><path class="t8flow" d="M${x0+118} 92 C ${x0+118} 108, ${x0+40} 112, ${x0+42} 96" fill="none" stroke="#ffd76a" stroke-width="3"/><text x="${x0+44}" y="104" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">+1</text></g>`:''}
+        </svg>`)+
+        (sh>=3? wkAns('7+6=13 → в середину 3, единица вперёд: 836',T.green):'')+
+        wkRow(
+          sh===0? wkBtn('сложить 7+6',`visW20Act('${lk}','f1')`) : '',
+          sh===1? wkBtn('в середину 3',`visW20Act('${lk}','f2')`) : '',
+          sh===2? wkBtn('перенести единицу',`visW20Act('${lk}','f3')`) : '',
+          sh>=1? wkBtn('сброс',`visW20Act('${lk}','rst')`) : '')+
+        wkSml('7 + 6 = 13: в середину последняя цифра 3, единица — к первой'));
+    } else if(step===10){
+      const sh=st.step||0;
+      const x0=Math.round((318-(4*56+3*8))/2);
+      // 99·11: sh0 [9][?][9] · sh1 [9][18][9] · sh2 [9][8][9] +1 → [10][8][9]? нет:
+      //   sh2 — показали 8 в середине, стрелка переноса к левой 9
+      //   sh3 — левая 9 стала 10 (красная, двузначная) — ждём ещё перенос
+      //   sh4 — 10 распалось на [1][0] → 1 0 8 9
+      let left='9'; let leftCol='#7fd1ff';
+      if(sh===3){ left='10'; leftCol='#ff8a7a'; }
+      if(sh===4){ left='0'; leftCol='#7fd1ff'; }
+      const off = (sh>=4)? 56 : 0;   // при sh4 добавляем единицу слева
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Хитрый случай: 99 · 11</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          ${tracks(158)}
+          ${sh>=4? coach(x0,42,1,'#e8a0d8',{delay:0,w:48,fs:26,bump:1}):''}
+          ${coach(x0+off,42,left,leftCol,{delay:.05,w:48,fs:26,bump:(sh===3||sh===4)})}
+          ${sh>=1? coach(x0+56+off,42,sh>=2?'8':'18',sh>=2?'#ffd76a':'#ff8a7a',{delay:.2,w:48,fs:26,bump:sh>=2}):''}
+          ${coach(x0+112+off,42,9,'#8fd1a8',{delay:.15,w:48,fs:26})}
+          ${sh>=2&&sh<3? `<g class="t8seg" style="animation-delay:.3s"><path class="t8flow" d="M${x0+70} 120 C ${x0+70} 138, ${x0+4} 140, ${x0+6} 122" fill="none" stroke="#ffd76a" stroke-width="3"/><text x="${x0+10}" y="134" text-anchor="middle" font-size="13" fill="#ffd76a" font-weight="bold">+1</text></g>`:''}
+          ${sh>=3? `<g class="t8seg" style="animation-delay:.35s"><path class="t8flow" d="M${x0+120} 116 C ${x0+132} 134, ${x0+0} 148, ${x0-6} 140" fill="none" stroke="#e8a0d8" stroke-width="3"/><text x="${x0+6}" y="150" text-anchor="middle" font-size="12" fill="#e8a0d8" font-weight="bold">9+1=10</text></g>`:''}
+        </svg>`)+
+        (sh>=4? wkAns('99 · 11 = 1089 · проверка: 990 + 99 = 1089',T.green):'')+
         wkRow(
           sh===0? wkBtn('сложить 9+9',`visW20Act('${lk}','f1')`) : '',
-          sh===1? wkBtn('перенос 1',`visW20Act('${lk}','f2')`) : '',
-          sh===2? wkBtn('ещё перенос',`visW20Act('${lk}','f3')`) : '',
-          sh>=1? wkBtn('заново',`visW20Act('${lk}','rst')`) : '')+
-        wkSml('двойной перенос: 9+1=10 — единица уходит в новый разряд'));
-    } else if(step===9){
+          sh===1? wkBtn('в середину 8',`visW20Act('${lk}','f2')`) : '',
+          sh===2? wkBtn('перенос +1 к 9',`visW20Act('${lk}','f3')`) : '',
+          sh===3? wkBtn('ещё перенос: 10 → 1 и 0',`visW20Act('${lk}','f4')`) : '',
+          sh>=1? wkBtn('сброс',`visW20Act('${lk}','rst')`) : '')+
+        wkSml('9+9=18 → в середину 8; 9+1=10 → пишем 0 и единицу в новый разряд'));
+    } else if(step===11){
+      const sh=st.step||0;
+      const x0=Math.round((318-(3*72-8))/2);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ноль в числе: 10 · 11</div>`+
+        wkHero(`<svg viewBox="0 0 318 130" style="display:block;width:100%;height:auto">
+          ${tracks(118)}
+          ${coach(x0,28,1,'#7fd1ff',{delay:0})}
+          ${sh>=1? coach(x0+72,28,sh>=2?'1':'?',sh>=2?'#ffd76a':'#8fa0ad',{delay:.2,bump:sh>=2}):''}
+          ${coach(x0+144,28,0,'#8fd1a8',{delay:.15})}
+          ${sh>=2? `<g class="t8seg" style="animation-delay:.35s"><text x="${x0+108}" y="98" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">1+0=1</text></g>`:''}
+        </svg>`)+
+        (sh>=2? wkAns('10 · 11 = 110 · и 20 · 11 = 220',T.green):'')+
+        wkRow(
+          sh===0? wkBtn('1 · сумма 1+0',`visW20Act('${lk}','f1')`) : '',
+          sh===1? wkBtn('2 · ответ',`visW20Act('${lk}','f2')`) : '',
+          sh>=1? wkBtn('сброс',`visW20Act('${lk}','rst')`) : '')+
+        wkSml('ноль — обычная цифра: 1 · 1 · 0 = 110, фокус работает и с ним'));
+    } else if(step===12){
       if(st.tr==null) st.tr=0;
-      const POOL=[[4,5],[6,3],[3,7],[7,6],[9,2],[5,8],[1,9],[8,4]];
+      const POOL=[[4,5],[6,3],[3,7],[7,6],[9,2],[5,8],[1,9],[8,4],[2,4],[1,0]];
       const [a,b]=POOL[st.tr%POOL.length];
       const sum=a+b, hi=sum>=10;
-      let res;
-      if(hi){ const left=a+1; if(left>=10){ res=String(left)+String(sum%10)+String(b); } else res=(left*100)+(sum%10)*10+b; }
-      else res=a*100+sum*10+b;
-      h=wkFrame(wkBig('Тренажёр устного счёта')+
-        wkHero(`<svg viewBox="0 0 318 160" style="display:block;width:100%;height:auto">
-          <rect x="6" y="6" width="306" height="148" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
-          ${rails(142)}
-          ${disc(58,64,42,a,'#7fd1ff','#7fd1ff')}
+      let res='';
+      if(hi){ const left=a+1; res= left>=10 ? ''+(left)+((sum%10))+''+b : String(left*100+(sum%10)*10+b); }
+      else res=String(a*100+sum*10+b);
+      const x0=Math.round((318-(3*72-8))/2);
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр устного счёта</div>`+
+        wkHero(`<svg viewBox="0 0 318 140" style="display:block;width:100%;height:auto">
+          ${tracks(132)}
+          ${coach(x0,30,a,'#7fd1ff',{delay:0})}
           ${st.s1
-            ? `<g class="m7pop"><circle cx="159" cy="64" r="42" fill="rgba(255,255,255,.05)"/><text x="159" y="40" text-anchor="middle" font-size="12" fill="${hi?'#ff9a8a':'#ffdfa0'}">${a}+${b}=${sum}</text><text x="159" y="78" text-anchor="middle" font-size="34" fill="${hi?'#ff8a7a':'#ffd76a'}" font-weight="bold" font-family="Georgia,serif">${sum%10}</text></g>`
-            : `<circle class="m7bump" cx="159" cy="64" r="42" fill="none" stroke="#5a6f7f" stroke-width="2.6" stroke-dasharray="8 7"/><text x="159" y="72" text-anchor="middle" font-size="18" fill="#9ec0a8" font-weight="bold">?</text>`}
-          ${disc(260,64,42,b,'#8fd1a8','#8fd1a8',{delay:.15})}
-          ${st.s2? `<g class="m7pop" style="animation-delay:.15s"><rect x="24" y="120" width="270" height="18" rx="9" fill="rgba(143,209,168,.14)" stroke="#8fd1a8"/><text x="159" y="133" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">${a}${b} · 11 = ${res}${hi?' · был перенос':''}</text></g>`:''}
+            ? coach(x0+72,30,st.s2? (hi? String(sum%10): sum) : (hi? '10':'?'), st.s2?(hi?'#ffd76a':'#8fd1a8'):'#8fa0ad',{delay:.2,bump:st.s2})
+            : ''}
+          ${coach(x0+144,30,b,'#8fd1a8',{delay:.15})}
+          ${st.s1? `<g class="t8seg" style="animation-delay:.25s"><text x="${x0+108}" y="104" text-anchor="middle" font-size="15" fill="${hi?'#ff8a7a':'#8fd1a8'}" font-weight="bold">${a}+${b}=${sum}</text></g>`:''}
+          ${st.s2? `<g class="t8seg" style="animation-delay:.35s"><text x="159" y="128" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">ответ: ${res}${hi?' · был перенос':''}</text></g>`:''}
         </svg>`)+
         wkRow(
           !st.s1? wkBtn('1 · сумма',`visW20Act('${lk}','s1')`) : '',
@@ -1501,25 +1612,16 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           st.s2? wkBtn('новый пример',`visW20Act('${lk}','n')`) : '',
           st.s1? wkBtn('заново',`visW20Act('${lk}','rst')`) : '')+
         wkSml(hi?'сумма больше 9 — перенеси единицу вперёд!':'сумма меньше 10 — просто вставь её в середину'));
-    } else if(step===10){
-      h=wkFrame(wkBig('Тест: примеры на 11')+
-        wkHero(`<svg viewBox="0 0 318 120" style="display:block;width:100%;height:auto">
-          ${disc(72,58,40,'5','#7fd1ff','#7fd1ff')}
-          ${disc(159,58,40,'8','#ffd76a','#ffd76a',{delay:.15,glow:true})}
-          ${disc(246,58,40,'7','#8fd1a8','#8fd1a8',{delay:.3})}
-          <text x="159" y="106" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">5 + 8 = 13: в середину 3, единица вперёд → 638</text>
+    } else {
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: 45 · 11</div>`+
+        wkHero(`<svg viewBox="0 0 318 110" style="display:block;width:100%;height:auto">
+          ${tracks(100)}
+          ${coach(52,20,4,'#7fd1ff',{delay:0,w:60,fs:32})}
+          ${coach(128,20,9,'#ffd76a',{delay:.2,w:60,fs:32,bump:1})}
+          ${coach(204,20,5,'#8fd1a8',{delay:.4,w:60,fs:32})}
         </svg>`)+
         quiz(lk,st)+
-        wkSml('раздвинь цифры и посади в середину их сумму (с переносом, если нужно)'));
-    } else {
-      h=wkFrame(wkBig('Проверь себя: 45 · 11')+
-        wkHero(`<svg viewBox="0 0 318 128" style="display:block;width:100%;height:auto">
-          ${disc(60,62,42,'4','#7fd1ff','#7fd1ff')}
-          ${disc(159,62,46,'9','#ffd76a','#ffd76a',{delay:.15,glow:true})}
-          ${disc(258,62,42,'5','#8fd1a8','#8fd1a8',{delay:.3})}
-          <text x="159" y="118" text-anchor="middle" font-size="16" fill="#ffd76a" font-weight="bold">4 + 5 = 9 · ответ: 495!</text>
-        </svg>`)+
-        wkSml('жми «Понял! Проверю себя» — там вопрос 45 · 11'));
+        wkSml('4 + 5 = 9 в серединку → 495 · жми «Понял! Проверю себя»'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
@@ -1531,10 +1633,10 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW20T=visW20T;
   function visW20Act(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
-    if(act==='go'){ /* ничего не делает — поезд уже поехал */ }
     if(act==='f1') st.step=1;
     if(act==='f2') st.step=2;
     if(act==='f3') st.step=3;
+    if(act==='f4') st.step=4;
     if(act==='s1') st.s1=1;
     if(act==='s2') st.s2=1;
     if(act==='n'){ st.tr=(st.tr==null?0:st.tr)+1; st.s1=0; st.s2=0; }
