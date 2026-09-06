@@ -980,3 +980,322 @@ window.WAVE_E = window.WAVE_E || {};
   window.WAVE_E[435]=visE435;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===435){ window.ARH_LESSONS[i]=L435; break; } } })();
 })();
+/* ================= УРОК 436 · Малая теорема Ферма и функция Эйлера ================= */
+(function(){
+  const L436 = {
+    id: 436, title: 'Малая теорема Ферма и функция Эйлера', ico: '🎩',
+    src: 'Математика · 9 класс · Олимп-9: теория чисел', subj: 'math',
+    explain: [
+      'Малая теорема Ферма — жемчужина теории чисел: если p ПРОСТОЕ и a не делится на p, то a^(p−1) ≡ 1 (mod p). Проверим на p = 5, a = 2: 2⁴ = 16, а 16 при делении на 5 даёт остаток 1!',
+      'Разберём: 2⁴ = 16, а 16 = 3·5 + 1 → 16 ≡ 1 (mod 5). Теорема говорит: для простого 5 и любого a, не кратного 5, a⁴ даёт остаток 1 при делении на 5. Удивительно!',
+      'Проверим ещё: p = 7, a = 3. По теореме 3⁶ ≡ 1 (mod 7). Считаем: 3² = 9 ≡ 2, 3³ ≡ 6, 3⁶ = (3³)² ≡ 36 ≡ 1 (mod 7). Верно!',
+      'Почему это полезно? Огромные степени становятся простыми: 2^100 (mod 7): 7 простое, 2⁶ ≡ 1, а 100 = 16·6 + 4 → 2^100 ≡ 2⁴ = 16 ≡ 2 (mod 7). Мгновенно!',
+      'Функция Эйлера φ(n) — сколько чисел от 1 до n взаимно просты с n (не имеют общих делителей, кроме 1). Для простого p: φ(p) = p − 1, ведь все числа 1…p−1 взаимно просты с p!',
+      'Считаем: φ(7) = 6 (числа 1,2,3,4,5,6 — все взаимно просты с 7). φ(5) = 4. Для простого числа всё просто: минус один!',
+      'Обобщение Ферма — теорема Эйлера: если a взаимно просто с n, то a^φ(n) ≡ 1 (mod n). При n = p (простом) φ(p) = p−1 — получаем малую теорему Ферма!',
+      'Запомни связку: Ферма — частный случай Эйлера для простых. Обе позволяют «схлопывать» огромные степени по модулю — главный инструмент олимпиадной теории чисел!',
+      'Теперь проверь себя: чему равно 2⁴ mod 5? Вспомни: 2⁴ = 16, какой остаток при делении на 5?'
+    ],
+    check: { q: 'Чему равно 2⁴ mod 5?', choices: ['1', '2', '4', '0'], ans: 0,
+      exp: '2⁴ = 16, а 16 ≡ 1 (mod 5).' },
+    tasks: [
+      { q: 'Чему равна φ(7) для простого 7?', kind: 'unit', ans: 6, tol: 0,
+        hints: ['φ(p) = p − 1.', '6.'], sol: '6' },
+      { q: 'Малая теорема Ферма верна, когда p…', kind: 'choice', choices: ['простое и a не кратно p', 'любое число', 'чётное', 'a кратно p'], ans: 0, tol: 0,
+        hints: ['Условие теоремы.', 'p простое, a не делится на p.'], sol: 'простое и a не кратно p' }
+    ]
+  };
+  const modChip=(a,p,res)=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid #3d5c49;border-radius:12px;padding:8px 14px;font-size:18px;color:#e8dcc8;font-family:Georgia,serif">${a} ≡ ${res} <span style="font-size:12px;color:#8fa08f">(mod ${p})</span></div>`;
+  function visE436(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Малая теорема Ферма</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:16px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">p простое, a не ⋮ p → a^(p−1) ≡ 1 (mod p)</div>
+        <div class="wv-row" style="gap:6px;margin-top:4px">${chip('p = 5, a = 2','#8fd1a8')}${chip('2⁴ = 16 ≡ 1 (mod 5)','#7fd1ff')}</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Разбираем</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:17px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">2⁴ = 16</div>
+          <div class="wv-pop2">16 = 3·5 + 1</div>
+          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">16 ≡ 1 (mod 5)</div>
+        </div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ещё проверка: p = 7, a = 3</div>
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:16px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">3² = 9 ≡ 2</div>
+          <div class="wv-pop2">3³ ≡ 6, 3⁶ ≡ 36 ≡ 1 ✔</div>
+        </div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Огромные степени — легко!</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:15px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">2^100 (mod 7): 2⁶ ≡ 1</div>
+          <div class="wv-pop2">100 = 16·6 + 4</div>
+          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">2^100 ≡ 2⁴ = 16 ≡ 2 (mod 7)</div>
+        </div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Функция Эйлера φ(n)</div>
+        <div style="background:rgba(127,209,255,.12);border:2px solid #7fd1ff;border-radius:12px;padding:8px 12px;font-size:15px;color:#7fd1ff;font-weight:bold;font-family:Georgia,serif">φ(n) = сколько чисел 1…n взаимно просты с n</div>
+        <div class="wv-sml">для простого p: φ(p) = p − 1</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Считаем</div>
+        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
+          ${[['φ(7)','6','все 1..6 взаимно просты'],['φ(5)','4','1,2,3,4']].map(x=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid #3d5c49;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#ffd76a;font-family:Georgia,serif">${x[0]} = ${x[1]}</b><div style="font-size:10px;color:#8fa08f">${x[2]}</div></div>`).join('')}
+        </div>
+        <div class="wv-sml">для простого — просто минус один!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Теорема Эйлера — обобщение</div>
+        <div style="background:rgba(143,209,168,.12);border:2px solid #8fd1a8;border-radius:12px;padding:8px 12px;font-size:15px;color:#8fd1a8;font-weight:bold;font-family:Georgia,serif">a^φ(n) ≡ 1 (mod n), если a взаимно просто с n</div>
+        <div class="wv-sml">при n = p: φ(p) = p−1 → теорема Ферма!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Связка</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['Ферма','p простое: a^(p−1) ≡ 1','#ffd76a'],
+            ['Эйлер','любое n: a^φ(n) ≡ 1','#8fd1a8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span style="font-size:12px">${x[1]}</span></div>`).join('')}
+        </div>
+        <div class="wv-sml">схлопывают огромные степени по модулю!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">2⁴ mod 5 = ?</div>
+        <div class="wv-sml">2⁴ = 16 · остаток при делении на 5?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:17px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_E[436]=visE436;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===436){ window.ARH_LESSONS[i]=L436; break; } } })();
+})();
+/* ================= УРОК 437 · Пифагоровы тройки ================= */
+(function(){
+  const L437 = {
+    id: 437, title: 'Пифагоровы тройки', ico: '📐',
+    src: 'Математика · 9 класс · Олимп-9: Пифагоровы тройки', subj: 'math',
+    explain: [
+      'Пифагорова тройка — три целых числа, которые могут быть сторонами прямоугольного треугольника: a² + b² = c². Самая знаменитая: 3, 4, 5! Проверь: 9 + 16 = 25.',
+      'Проверяем: 3² = 9, 4² = 16, 5² = 25. 9 + 16 = 25 — равенство выполнено! Треугольник со сторонами 3, 4, 5 — прямоугольный. Это самая первая и главная тройка!',
+      'Ещё тройки: 5, 12, 13: 25 + 144 = 169 ✔. И 6, 8, 10: 36 + 64 = 100 ✔ (это 3, 4, 5, умноженная на 2!). Тройки можно умножать на любое число — снова тройка!',
+      'Если тройку умножить на 2, получим 6, 8, 10 — тоже пифагорова! Умножение на k: (ka)² + (kb)² = k²(a² + b²) = k²c². Любая тройка «размножается» умножением!',
+      'Как находить тройки? Формулы: a = m² − n², b = 2mn, c = m² + n² (при m > n). Возьмём m = 2, n = 1: a = 4 − 1 = 3, b = 4, c = 5 — получили 3, 4, 5!',
+      'Проверим m = 3, n = 1: a = 9 − 1 = 8, b = 2·3·1 = 6, c = 9 + 1 = 10. Тройка 6, 8, 10! Опять работает. Формулы дают все тройки!',
+      'А m = 3, n = 2: a = 9 − 4 = 5, b = 12, c = 13 → тройка 5, 12, 13! Видишь, как формулы рождают все знакомые тройки?',
+      'Зачем это на олимпиадах? Если в задаче прямоугольный треугольник с целыми сторонами — ищи пифагорову тройку! Зная один катет, угадываешь всю тройку: катет 12 → тройка 5, 12, 13!',
+      'Теперь проверь себя: какая тройка пифагорова — 5, 12, 13 или 2, 3, 4? Проверь: 25 + 144 = 169?'
+    ],
+    check: { q: 'Какая тройка пифагорова?', choices: ['5, 12, 13', '2, 3, 4', '4, 5, 6', '1, 2, 3'], ans: 0,
+      exp: '25 + 144 = 169.' },
+    tasks: [
+      { q: 'Чему равна гипотенуза тройки 6, 8, …?', kind: 'unit', ans: 10, tol: 0,
+        hints: ['6² + 8² = 100.', '√100 = 10.'], sol: '10' },
+      { q: 'Формулы m = 2, n = 1 дают тройку…', kind: 'choice', choices: ['3, 4, 5', '5, 12, 13', '6, 8, 10', '1, 2, 3'], ans: 0, tol: 0,
+        hints: ['a = m² − n² и т.д.', 'a = 3, b = 4, c = 5.'], sol: '3, 4, 5' }
+    ]
+  };
+  const tri=(a,b,c,big)=>`<svg viewBox="0 0 200 130" style="width:${big?190:150}px;height:124px">
+    <polygon points="20,115 175,115 20,25" fill="rgba(127,209,255,.06)" stroke="#7fd1ff" stroke-width="3"/>
+    <path d="M20 115 L32 115 L32 103 Z" fill="#7fd1ff"/>
+    <text x="96" y="128" text-anchor="middle" font-size="13" fill="#8fd1a8">${a}</text>
+    <text x="24" y="70" font-size="13" fill="#ffd76a">${b}</text>
+    <text x="110" y="78" font-size="14" fill="#ff8ac0">${c}</text>
+  </svg>`;
+  function visE437(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Пифагорова тройка</div>
+        ${tri(3,4,5,true)}
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:18px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">3² + 4² = 5² · 9 + 16 = 25!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверяем 3, 4, 5</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+          ${[['3² = 9','#7fd1ff'],['4² = 16','#8fd1a8'],['5² = 25','#ffd76a']].map(x=>`<span class="wv-chip" style="border-color:${x[1]};color:${x[1]};font-size:16px">${x[0]}</span>`).join('')}
+        </div>
+        <div style="font-size:20px;color:#ffd76a;font-family:Georgia,serif" class="wv-ans">9 + 16 = 25 ✔</div>
+        <div class="wv-sml">прямоугольный треугольник!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ещё тройки</div>
+        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
+          ${[['5, 12, 13','25+144=169','#8fd1a8'],['6, 8, 10','36+64=100','#7fd1ff']].map(x=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${x[2]};border-radius:12px;padding:8px 12px"><b style="font-size:18px;color:${x[2]};font-family:Georgia,serif">${x[0]}</b><div style="font-size:11px;color:#8fa08f">${x[1]}</div></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Тройки размножаются!</div>
+        <div class="wv-row" style="gap:8px;justify-content:center;flex-wrap:wrap">
+          ${chip('3, 4, 5','#8fd1a8')}<span style="font-size:20px;color:#8fa08f">×2</span>${chip('6, 8, 10','#ffd76a')}
+        </div>
+        <div class="wv-sml">умножь тройку на k — снова тройка: (ka)²+(kb)² = k²c²!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Формулы троек</div>
+        <div style="background:rgba(127,209,255,.12);border:2px solid #7fd1ff;border-radius:12px;padding:8px 12px;font-size:16px;color:#7fd1ff;font-weight:bold;font-family:Georgia,serif">a=m²−n² · b=2mn · c=m²+n²</div>
+        <div class="wv-sml">m = 2, n = 1: a = 3, b = 4, c = 5!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверяем формулы</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-size:16px;color:#e8dcc8;text-align:center;font-family:Georgia,serif">
+          <div class="wv-pop">m=3, n=1: a = 8, b = 6, c = 10</div>
+          <div class="wv-pop2" style="color:#8fd1a8">6, 8, 10 — работает!</div>
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ещё: m = 3, n = 2</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-size:16px;color:#e8dcc8;text-align:center;font-family:Georgia,serif">
+          <div class="wv-pop">a = 9−4 = 5, b = 12, c = 13</div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">тройка 5, 12, 13!</div>
+        </div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">На олимпиадах</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.6">прямоугольный треугольник с целыми сторонами → ищи тройку! Катет 12 → тройка <b style="color:#8fd1a8">5, 12, 13</b>!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
+          ${[['5, 12, 13','25+144=169 ✔','#8fd1a8'],['2, 3, 4','4+9=13 ≠ 16 ✘','#ff9a8a']].map(x=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${x[2]};border-radius:12px;padding:8px 12px"><b style="font-size:17px;color:${x[2]};font-family:Georgia,serif">${x[0]}</b><div style="font-size:10px;color:#8fa08f">${x[1]}</div></div>`).join('')}
+        </div>
+        <div class="wv-sml">какая тройка пифагорова?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_E[437]=visE437;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===437){ window.ARH_LESSONS[i]=L437; break; } } })();
+})();
+/* ================= УРОК 438 · Неравенство Коши–Буняковского ================= */
+(function(){
+  const L438 = {
+    id: 438, title: 'Неравенство Коши–Буняковского', ico: '⚡',
+    src: 'Математика · 9 класс · Олимп-9: КБШ', subj: 'math',
+    explain: [
+      'Неравенство Коши–Буняковского–Шварца (КБШ) — могучее оружие олимпиад. Одна из форм: (a² + b²)(c² + d²) ≥ (ac + bd)². Произведение сумм квадратов ≥ квадрата суммы произведений!',
+      'Проверим на числах: a=1, b=1, c=x, d=y. Получаем (1+1)(x²+y²) ≥ (x+y)², то есть 2(x²+y²) ≥ (x+y)². Именно это применяется чаще всего!',
+      'Почему так? Это следует из «квадрат неотрицателен»: (ay − bx)² ≥ 0. Раскрываем и преобразуем — получаем КБШ. Всё из одного простого факта!',
+      'Применяем: докажи, что (x + y)² ≤ 2(x² + y²). По КБШ с a=1, b=1: (1+1)(x²+y²) ≥ (1·x + 1·y)² = (x+y)². Готово — неравенство доказано!',
+      'Когда равенство? Когда векторы пропорциональны: для нашей формы при x = y. Проверь: (x+x)² = 4x² и 2(x²+x²) = 4x² — равны!',
+      'КБШ в геометрии — это «скалярное произведение не больше произведения длин»: |a·b| ≤ |a|·|b|. Отсюда и cos между векторами ∈ [−1; 1]!',
+      'Задача: найди минимум x + 9/x при x > 0. Это уже неравенство о средних: x + 9/x ≥ 2√(x·9/x) = 2·3 = 6. Равенство при x = 3. Минимум 6!',
+      'Запомни: КБШ связывает суммы квадратов и квадраты сумм. На олимпиадах он «выдаёт» оценки вида «≥ (что-то)²», когда нужно доказать неравенство с двумя переменными.',
+      'Теперь проверь себя: по КБШ, чему не превосходит (x + y)²? Вспомни формулу с двойкой!'
+    ],
+    check: { q: 'По КБШ: (x + y)² ≤ …', choices: ['2(x² + y²)', 'x² + y²', '4(x² + y²)', 'x² − y²'], ans: 0,
+      exp: '(1·x + 1·y)² ≤ (1+1)(x²+y²) = 2(x²+y²).' },
+    tasks: [
+      { q: 'Чему равен минимум x + 9/x при x > 0?', kind: 'unit', ans: 6, tol: 0,
+        hints: ['2√(x·9/x).', '2·3 = 6.'], sol: '6' },
+      { q: 'Неравенство (a² + b²)(c² + d²) ≥ (ac + bd)² — это…', kind: 'choice', choices: ['КБШ', 'неравенство о средних', 'Бернулли', 'неравенство треугольника'], ans: 0, tol: 0,
+        hints: ['Стандартная форма.', 'Это неравенство Коши–Буняковского–Шварца.'], sol: 'КБШ' }
+    ]
+  };
+  function visE438(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:13.5px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Неравенство КБШ</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 10px;font-size:15px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">(a²+b²)(c²+d²) ≥ (ac+bd)²</div>
+        <div class="wv-sml">произведение сумм квадратов ≥ квадрата суммы!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Частный случай</div>
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:16px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">a=1, b=1, c=x, d=y</div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">2(x² + y²) ≥ (x + y)²</div>
+        </div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Откуда берётся</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:340px;font-size:13.5px;color:#e8dcc8;line-height:1.7">(ay − bx)² ≥ 0 — квадрат неотрицателен! Раскрой и преобразуй → КБШ. Всё из одного факта!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Доказываем</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:15px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">по КБШ: (1+1)(x²+y²) ≥ (x+y)²</div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">2(x²+y²) ≥ (x+y)² ✔</div>
+        </div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Равенство при x = y</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:15px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">x = y: (2x)² = 4x²</div>
+          <div class="wv-pop2">2(x²+x²) = 4x²</div>
+          <div class="wv-pop3" style="color:#8fd1a8;font-weight:bold">равны — равенство!</div>
+        </div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Геометрический смысл</div>
+        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
+          ${chip('|a·b| ≤ |a|·|b|','#8fd1a8')}${chip('→ cos между векторами ∈ [−1; 1]','#7fd1ff')}
+        </div>
+        <div class="wv-sml">скалярное произведение ≤ произведения длин!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Минимум x + 9/x</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:16px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">произведение x·(9/x) = 9</div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">x + 9/x ≥ 2√9 = 6</div>
+          <div class="wv-pop3" style="color:#8fd1a8">равенство при x = 3</div>
+        </div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Где применяется</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['оценка (x+y)²','через 2(x²+y²)','#7fd1ff'],
+            ['связь с cos','|a·b| ≤ |a||b|','#8fd1a8'],
+            ['доказательства','с двумя переменными','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:13px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">(x + y)² ≤ ?</div>
+        <div class="wv-sml">по КБШ с a=1, b=1</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">?(x² + y²)</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_E[438]=visE438;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===438){ window.ARH_LESSONS[i]=L438; break; } } })();
+})();
