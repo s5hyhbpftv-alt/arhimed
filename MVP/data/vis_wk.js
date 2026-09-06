@@ -679,7 +679,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         const last=p===4;
         cells+=`<g class="wv-pop" style="animation-delay:${(p*0.1).toFixed(2)}s">
           <rect x="${x}" y="${y0}" width="${cw}" height="${ch}" rx="13" fill="${last?'rgba(232,106,90,.05)':'rgba(255,255,255,.04)'}" stroke="${last?'#c0564c':'#3d7a55'}" stroke-width="${last?2.2:1.8}" ${last?'stroke-dasharray="6 4"':''}/>
-          ${fitTxt(x+cw/2,y0+22,cw-6,'остаток '+p,last?'#ff9a8a':cols[p],false)}
+          ${fitTxt(x+cw/2,y0+22,cw-6,'остаток '+p,12,last?'#ff9a8a':cols[p],false)}
           <text x="${x+cw/2}" y="${y0+48}" text-anchor="middle" font-size="26" fill="${last?'#ff9a8a':C.cream}" font-weight="bold" font-family="Georgia,serif">${last?'✗':p}</text>
           <text x="${x+cw/2}" y="${y0+72}" text-anchor="middle" font-size="9.5" fill="#9ec0a8">${last?'—':data[p].slice(0,4).join('·')}</text>
         </g>`;
@@ -962,15 +962,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(wkChip('14 полных недель (98 дней) выбрасываем', C2.blue))+
         wkSml('не нужно считать все 100 дней — остаток от деления на 7 всё решает'));
     } else if(step===6){
-      const W=326, x0=6, cw=62, gap=3, y0=14, ch=64;
+      const W=326, x0=6, cw=42, gap=2, y0=14, ch=64;
       let s='';
       for(let r=0;r<7;r++){
         const x=x0+r*(cw+gap);
         const gold=r===0;
         s+=`<g class="wv-pop" style="animation-delay:${(r*0.09).toFixed(2)}s">
           <rect x="${x}" y="${y0}" width="${cw}" height="${ch}" rx="12" fill="${gold?'rgba(143,209,168,.12)':'rgba(255,255,255,.04)'}" stroke="${gold?C2.green:'#3d5c49'}" stroke-width="2"/>
-          ${fitTxt(x+cw/2,y0+24,cw-8,'остаток '+r,gold?C2.green:'#9ec0a8')}
-          <circle cx="${x+cw/2}" cy="${y0+45}" r="16" fill="${gold?C2.green:'rgba(255,255,255,.06)'}" stroke="${gold?C2.green:'#4c8a5a'}"/>
+          ${fitTxt(x+cw/2,y0+24,cw-8,'ост. '+r,12,gold?C2.green:'#9ec0a8')}
+          <circle cx="${x+cw/2}" cy="${y0+45}" r="15" fill="${gold?C2.green:'rgba(255,255,255,.06)'}" stroke="${gold?C2.green:'#4c8a5a'}"/>
           <text x="${x+cw/2}" y="${y0+50}" text-anchor="middle" font-size="13" fill="#e8dcc8" font-weight="bold">${DAYS[r]}</text>
         </g>`;
       }
