@@ -13732,16 +13732,22 @@ function l79F(a,b){ // красивая дробь a/b
 }
 function l79Bar(num,den,uid,opt){
   const o=opt||{};
-  const W=o.w||270, H=o.h||44;
+  const W=o.w||272, H=o.h||48;
   const seg=Math.floor(W/den);
+  const col=o.col||'#e0523d';
   const cells=[];
   for(let i=0;i<den;i++){
     const on=i<num;
-    cells.push(`<div class="l35-pop" style="animation-delay:${(0.06+i*0.06).toFixed(2)}s;width:${seg-2}px;height:${H-14}px;margin:1px;border-radius:4px;${on?`background:${o.col||'#e0523d'};box-shadow:0 1px 2px rgba(0,0,0,.2)`:'background:rgba(255,255,255,.09);border:1px dashed rgba(255,255,255,.25)'}"></div>`);
+    cells.push(`<div class="l35-pop" style="animation-delay:${(0.05+i*0.07).toFixed(2)}s;width:${seg-3}px;height:${H-16}px;margin:1px;border-radius:7px;${on?
+      `background:${col};box-shadow:inset 0 2px 2px rgba(255,255,255,.38), inset 0 -3px 4px rgba(0,0,0,.18), 0 2px 4px rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.22)`
+      :'background:rgba(255,255,255,.06);border:1.5px dashed rgba(255,255,255,.28);box-shadow:inset 0 1px 2px rgba(0,0,0,.25)'}"></div>`);
   }
   return `<div style="text-align:center">
-    <div style="width:${W}px;margin:0 auto;background:rgba(255,255,255,.05);border-radius:10px;display:flex;justify-content:center;padding:6px 2px;border:1px solid rgba(255,255,255,.1)">${cells.join('')}</div>
-    <div style="margin-top:3px;color:#d8ecff;font-size:15px">${num} из ${den} — это ${o.label||''}</div>
+    <div style="width:${W}px;margin:0 auto;background:rgba(0,0,0,.18);border-radius:12px;display:flex;justify-content:center;align-items:center;padding:7px 3px;border:1px solid rgba(255,255,255,.12)">${cells.join('')}</div>
+    <div style="margin-top:4px;display:flex;justify-content:center;align-items:center;gap:8px;font-size:14.5px">
+      <span style="display:inline-flex;align-items:center;gap:5px;padding:1px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid ${col};color:#ffe9c9;font-weight:bold;font-family:Georgia,serif">${num} из ${den}</span>
+      ${o.label?`<span style="color:#cfe0cf;font-size:13px">${o.label}</span>`:''}
+    </div>
   </div>`;
 }
 function l79Sector(cx,cy,r,a0,a1){
@@ -13752,25 +13758,73 @@ function l79Sector(cx,cy,r,a0,a1){
   return `M${cx},${cy} L${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${large} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`;
 }
 function l79Pizza(num,den,uid,opt){
+  /* Настоящая пицца-пепперони: корочка, сыр, пепперони и базилик на каждом куске.
+     «Взятые» куски (num из den) выдвинуты из пиццы — видно, сколько съели. */
   const o=opt||{};
-  const size=o.s||170, cx=size/2, cy=size/2+8, r=size/2-16;
-  const col=o.col||'#f0a35a';
-  const step=360/den;
-  let html='';
-  for(let i=0;i<den;i++){
-    const on=i<num;
-    html+=`<path d="${l79Sector(cx,cy,r,-90+i*step,-90+(i+1)*step)}" fill="${on?col:'#2b3a4a'}" stroke="#fffdf6" stroke-width="2"/>`;
-  }
-  html+=`<circle cx="${cx}" cy="${cy}" r="${r*0.22}" fill="#e0523d" stroke="#b3543f" stroke-width="2"/>`;
-  html+=`<text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="13" fill="#fff" font-weight="bold">${num}/${den}</text>`;
-  const marks=[];
-  for(let i=0;i<den;i++){
-    const a=-90+i*step+step/2;
-    marks.push(`${num>i?'':'×'}`);
-  }
-  return `<svg width="${size}" height="${size+8}" viewBox="0 0 ${size} ${size+8}" style="display:block;margin:0 auto;overflow:visible">
-    ${html}
-  </svg>`;
+  const s=o.s||170;                       // диаметр пиццы
+  const pad=Math.max(13, s*0.15);         // запас под выдвинутые куски
+  const W=s+pad*2, cx=W/2, cy=W/2;
+  const R=s/2-6, Rc=R-9;                  // R — край корочки, Rc — край сыра
+  const col=o.col||'#ff9a5c';
+  const rad=(d)=>d*Math.PI/180;
+  const step=360/den, gap=Math.max(1.1, 12/den);
+  const take=o.whole? 0 : Math.max(0, Math.min(den, num));
+  const slice=(a0,a1,r)=>{
+    const x0=cx+r*Math.cos(rad(a0)), y0=cy+r*Math.sin(rad(a0));
+    const x1=cx+r*Math.cos(rad(a1)), y1=cy+r*Math.sin(rad(a1));
+    const large=(a1-a0)>180?1:0;
+    return `M${cx},${cy} L${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${large} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`;
+  };
+  const pr=Math.max(2.7, Math.min(5.8, Rc*0.55*Math.sin(rad(step/2))-1.8)); // радиус пепперони
+  const deco=(i)=>{
+    const mid=(-90+i*step+step/2)*Math.PI/180;
+    let s='';
+    const pp=(rr,off)=>{ const x=cx+rr*Math.cos(mid+off), y=cy+rr*Math.sin(mid+off);
+      const r2=pr.toFixed(1);
+      return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r2}" fill="#c9352a" stroke="#8e1f16" stroke-width="1.3"/>`+
+        `<circle cx="${(x-pr*0.32).toFixed(1)}" cy="${(y-pr*0.3).toFixed(1)}" r="${Math.max(.8,pr*0.16).toFixed(1)}" fill="#7e1a10"/>`+
+        `<circle cx="${(x+pr*0.18).toFixed(1)}" cy="${(y+pr*0.42).toFixed(1)}" r="${Math.max(.7,pr*0.13).toFixed(1)}" fill="#7e1a10"/>`+
+        `<circle cx="${(x+pr*0.45).toFixed(1)}" cy="${(y-pr*0.18).toFixed(1)}" r="${Math.max(.6,pr*0.1).toFixed(1)}" fill="#f09a7c"/>`; };
+    // пепперони: 1–2 на кусок (на широких кусках — два)
+    s+=pp(Rc*0.52, 0);
+    if(den<=5 && Rc*0.5>22) s+=pp(Rc*0.27, rad(step*0.42));
+    // листик базилика у корочки
+    const bx=cx+Rc*0.84*Math.cos(mid+rad(step*0.3)), by=cy+Rc*0.84*Math.sin(mid+rad(step*0.3));
+    s+=`<ellipse cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" rx="3.4" ry="2" transform="rotate(${(-90+i*step+step*0.3).toFixed(0)} ${bx.toFixed(1)} ${by.toFixed(1)})" fill="#4f9a44"/>`;
+    // «запечённое» пятнышко на сыре
+    const sx=cx+Rc*0.72*Math.cos(mid-rad(step*0.3)), sy=cy+Rc*0.72*Math.sin(mid-rad(step*0.3));
+    s+=`<circle cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="2.2" fill="#e39a33" opacity=".45"/>`;
+    return s;
+  };
+  const oneSlice=(i,disp)=>{
+    const A0=-90+i*step+gap/2, A1=-90+(i+1)*step-gap/2;
+    let g=`<path d="${slice(A0,A1,R)}" fill="#e9a14c" stroke="#b8782a" stroke-width="1.4"/>`+
+          `<path d="${slice(A0,A1,Rc)}" fill="#fbc95f"/>`+
+          deco(i);
+    if(disp){
+      const mid=(-90+i*step+step/2)*Math.PI/180;
+      const t=R*0.16+4;
+      const dx=Math.cos(mid)*t, dy=Math.sin(mid)*t;
+      g=`<g transform="translate(${dx.toFixed(1)},${dy.toFixed(1)})" filter="url(#sh${uid})">${g}</g>`;
+    }
+    return g;
+  };
+  let html=`<defs><filter id="sh${uid}" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="1" dy="2.4" stdDeviation="2.2" flood-color="#000" flood-opacity="0.5"/></filter></defs>`;
+  // «тарелка»-подложка (видна в дырках от съеденных кусков)
+  html+=`<circle cx="${cx}" cy="${cy}" r="${R+1.5}" fill="#0e1812" stroke="#1e2f24" stroke-width="1.5"/>`;
+  html+=`<circle cx="${cx}" cy="${cy}" r="${R-2}" fill="#141f18"/>`;
+  // оставшиеся куски
+  for(let i=take;i<den;i++) html+=oneSlice(i,false);
+  // съеденные — выдвинуты наружу
+  for(let i=0;i<take;i++) html+=oneSlice(i,true);
+  // центральный кусочек пепперони (только когда пицца целая)
+  if(take===0&&den>3) html+=`<circle cx="${cx}" cy="${cy}" r="${Math.max(9,R*0.17)}" fill="#c9352a" stroke="#8e1f16" stroke-width="1.6"/>`+
+    `<circle cx="${cx-pr*0.3}" cy="${cy-pr*0.2}" r="1.4" fill="#7e1a10"/><circle cx="${cx+pr*0.3}" cy="${cy+pr*0.4}" r="1.2" fill="#7e1a10"/>`;
+  const capText=o.cap!=null? o.cap : (take>0? `${take} из ${den}` : `${num}/${den}`);
+  return `<div style="display:inline-flex;flex-direction:column;align-items:center;gap:5px">
+    <svg width="${W}" height="${W}" viewBox="0 0 ${W} ${W}" style="display:block;overflow:visible">${html}</svg>
+    <span style="display:inline-flex;align-items:center;gap:6px;padding:3px 13px;border-radius:999px;background:rgba(255,255,255,.07);border:1.5px solid ${col};font-size:14.5px;color:#ffe9c9;font-weight:bold;font-family:Georgia,serif">${capText}</span>
+  </div>`;
 }
 function l79Conv(a,b,uid){
   // приведение к общему знаменателю НОК
@@ -13779,8 +13833,10 @@ function l79Conv(a,b,uid){
   return {l, k1:l/a, k2:l/b};
 }
 function l79Frac(a,b,big){
-  return `<span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-family:Georgia,serif;font-weight:bold;color:#fff;font-size:${big?'32':'24'}px;line-height:1.05">
-    <span>${a}</span><span style="border-top:2px solid #fff;padding:0 8px;">${b}</span></span>`;
+  return `<span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-family:Georgia,serif;font-weight:bold;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,215,106,.45);border-radius:12px;padding:5px 10px 7px;line-height:1.1;font-size:${big?'31':'23'}px;box-shadow:0 2px 6px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.12)">
+    <span style="color:#ffd76a">${a}</span>
+    <span style="border-top:2px solid #ffd76a;margin-top:2px;padding-top:2px;color:#fff">${b}</span>
+  </span>`;
 }
 function visL79(el){
   try{
@@ -13797,18 +13853,18 @@ function visL79(el){
     let h='';
     if(step===0){
       const eat=Math.max(0,Math.min(8,st.eat==null?0:st.eat));
-      h=col(big('Пицца Архимеда'),
-        l79Pizza(eat,8,'p0',{col:'#e0523d'})+
+      h=col(big('Пицца Архимеда 🍕'),
+        l79Pizza(eat,8,'p0',{col:'#ff9a5c',cap: eat===0? 'целая пицца — пока не взяли ни кусочка' : 'взято '+eat+' из 8 кусков'})+
         btns(btn('🍕 взять кусок',`l79Act('${lk}','e+')`),btn('− кусок',`l79Act('${lk}','e-')`))+
-        sml('знаменатель — на сколько кусков разрезали (8), числитель — сколько взяли ('+eat+'). бери куски и смотри!'));
+        sml('знаменатель — на сколько кусков разрезали (8), числитель — сколько взяли ('+eat+'). жми кнопки и смотри, как куски уходят из пиццы!'));
     } else if(step===1){
       h=col(big('Что говорит дробь'),
-        rowC(l79Pizza(3,5,'a',{s:140,col:'#5aa8d8'}),l79Pizza(4,7,'b',{s:140,col:'#8ab860'}))+
+        rowC(l79Pizza(3,5,'a',{s:104,col:'#5aa8d8',cap:'3 из 5'})+l79Pizza(4,7,'b',{s:104,col:'#8ab860',cap:'4 из 7'}))+
         sml('знаменатель — на сколько равных частей делим · числитель — сколько берём'));
     } else if(step===2){
       h=col(big('Когда дробь — целое'),
-        rowC(chip('7/7 = 1','rgba(127,209,160,.5)'),chip('9/7 = 1 целая 2/7','rgba(127,209,255,.5)'))+
-        l79Pizza(7,7,'c',{s:150,col:'#f0a35a'})+
+        rowC(chip('7/7 = 1','rgba(127,209,160,.5)')+chip('9/7 = 1 целая 2/7','rgba(127,209,255,.5)'))+
+        l79Pizza(7,7,'c',{s:150,col:'#ffd76a',whole:1,cap:'7/7 — вся пицца на месте!'})+
         sml('взяли все 7 кусков — целая пицца! неправильная дробь 9/7 — это целая и ещё 2/7'));
     } else if(step===3){
       h=col(big('Складываем с одинаковым знаменателем'),
@@ -13830,7 +13886,7 @@ function visL79(el){
         sml('куски крупнее — а пиццы одинаковые! 6 восьмых и 3 четверти — одно и то же количество'));
     } else if(step===6){
       h=col(big('Почему нельзя 2/3 + 1/4 напрямую'),
-        rowC(l79Pizza(2,3,'h',{s:120,col:'#e0523d'}),`<div style="font-size:22px;color:#cbb89a">+</div>`,l79Pizza(1,4,'i',{s:120,col:'#5aa8d8'}),`<div style="font-size:22px;color:#e0523d">✗</div>`,l79Frac(3,7))+
+        rowC(l79Pizza(2,3,'h',{s:92,col:'#ff6a4d',cap:'2/3'})+`<div style="font-size:22px;color:#cbb89a">+</div>`+l79Pizza(1,4,'i',{s:92,col:'#5aa8d8',cap:'1/4'})+`<div style="font-size:22px;color:#e0523d">✗</div>`+l79Frac(3,7))+
         sml('куски РАЗНОГО размера: треть и четверть нельзя складывать как «3/7»! сначала — одинаковые дольки'));
     } else if(step===7){
       const cv=l79Conv(3,4);
@@ -13875,7 +13931,7 @@ function visL79(el){
       const g=(()=>{let x=resN,y=resD;while(y){const t=x%y;x=y;y=t;}return x||1;})();
       h=col(big('Тренажёр: пиццы Архимеда'),
         `<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap">
-          ${l79Pizza(a1,a2,'m1',{s:110,col:'#e0523d'})}${l79Pizza(b1,b2,'m2',{s:110,col:'#5aa8d8'})}</div>`+
+          ${l79Pizza(a1,a2,'m1',{s:92,col:'#ff6a4d'})}${l79Pizza(b1,b2,'m2',{s:92,col:'#5aa8d8'})}</div>`+
         `<div style="font-size:24px;text-align:center">${l79Frac(a1,a2)} + ${l79Frac(b1,b2)} = ?</div>`+
         (st.s1? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">1) общий знаменатель НОК(${a2}, ${b2}) = ${cv.l}${same?' (он уже есть!)':''}</div>`:'')+
         (st.s2? `<div class="l35-pop" style="font-size:18px;text-align:center;color:#ffd9a0">2) ${l79Frac(a1,a2)} = ${l79Frac(n1,d1)} ${same?'':`· ${l79Frac(b1,b2)} = ${l79Frac(n2,d2)}`}</div>`:'')+
