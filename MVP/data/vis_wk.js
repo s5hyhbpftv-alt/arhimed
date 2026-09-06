@@ -2158,6 +2158,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   function visW83(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; if(step===0){ st.guess=-1; } if(step===6||step===7){ st.r=0; } if(step===8){ st.sel=null; st.q=0; } }
     let h='';
     if(step===0){
       if(st.guess==null) st.guess=-1;
