@@ -1002,3 +1002,345 @@ window.WAVE_C = window.WAVE_C || {};
   window.WAVE_C[407]=visC407;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===407){ window.ARH_LESSONS[i]=L407; break; } } })();
 })();
+/* ================= УРОК 408 · Сравнения по модулю ================= */
+(function(){
+  const L408 = {
+    id: 408, title: 'Сравнения по модулю: введение', ico: '➗',
+    src: 'Математика · 7 класс · Олимп-7: сравнения', subj: 'math',
+    explain: [
+      'Начнём с простого: разделим 17 на 5 с остатком. 17 = 3·5 + 2 — частное 3, остаток 2. Запомни этот пример — он станет главным героем урока! Остаток всегда меньше делителя: 2 < 5.',
+      'Запись a ≡ b (mod m) читается «a сравнимо с b по модулю m» и означает: у a и b ОДИНАКОВЫЕ остатки при делении на m. Проверка: a − b должно делиться на m. Пример: 17 ≡ 2 (mod 5), ведь 17 − 2 = 15, а 15 делится на 5!',
+      'Наглядная модель — часы с m делениями. Числа «заворачиваются» по кругу: 2, 7, 12, 17 при делении на 5 дают остаток 2 — все они «одна и та же точка» на циферблате mod 5!',
+      'Находим остаток: сколько будет 23 (mod 4)? Ищем самое большое кратное 4, не большее 23: это 20 = 5·4. Остаток 23 − 20 = 3. Ответ: 23 ≡ 3 (mod 4).',
+      'Проверка через разность: верно ли, что 29 ≡ 5 (mod 6)? Считаем 29 − 5 = 24, а 24 делится на 6 (24 : 6 = 4). Значит, сравнение верное! Оба способа — «остаток» и «разность делится» — равносильны.',
+      'Магия сравнений: остатки можно СКЛАДЫВАТЬ! 17 ≡ 2 (mod 5) и 23 ≡ 3 (mod 5), значит, 17 + 23 ≡ 2 + 3 = 5 ≡ 0 (mod 5). То есть 17 + 23 = 40 делится на 5 — проверь: 40 : 5 = 8!',
+      'Остатки можно и УМНОЖАТЬ: 17 ≡ 2 (mod 5), 23 ≡ 3 (mod 5) → 17·23 ≡ 2·3 = 6 ≡ 1 (mod 5). Огромные вычисления превращаются в маленькие — вот сила сравнений!',
+      'Зачем это на олимпиадах? Доказать, что число не делится на 7, найти последнюю цифру степени, узнать день недели через 100 дней — всё через остатки. Запомни: a ≡ b (mod m) ⟺ a − b ⋮ m.',
+      'Теперь проверь себя: чему равен остаток 17 при делении на 5? Вспомни: 17 = 3·5 + 2.'
+    ],
+    check: { q: 'Чему равен остаток 17 при делении на 5?', choices: ['2', '7', '1', '0'], ans: 0,
+      exp: '17 = 3·5 + 2 → остаток 2, т.е. 17 ≡ 2 (mod 5).' },
+    tasks: [
+      { q: 'Найди остаток от деления 23 на 4.', kind: 'unit', ans: 3, tol: 0,
+        hints: ['23 = 5·4 + 3.', 'Остаток 3.'], sol: '3' },
+      { q: 'Запиши остаток: 29 ≡ … (mod 6)', kind: 'choice', choices: ['5', '6', '1', '3'], ans: 0, tol: 0,
+        hints: ['29 = 4·6 + 5.', '29 ≡ 5 (mod 6).'], sol: '5' }
+    ]
+  };
+  const clock=(m)=>`<svg viewBox="0 0 160 160" style="width:150px;height:150px;background:#101f18;border-radius:50%">
+    ${Array.from({length:m},(_,i)=>{ const a=-90+i*(360/m); const x1=80+62*Math.cos(a*Math.PI/180), y1=80+62*Math.sin(a*Math.PI/180);
+      const x2=80+52*Math.cos(a*Math.PI/180), y2=80+52*Math.sin(a*Math.PI/180);
+      const lx=80+44*Math.cos(a*Math.PI/180), ly=80+44*Math.sin(a*Math.PI/180);
+      return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#3d5c49" stroke-width="3"/>
+      <text x="${lx.toFixed(1)}" y="${(ly+5).toFixed(1)}" text-anchor="middle" font-size="13" fill="#cfe0cf">${i}</text>`; }).join('')}
+    <circle cx="80" cy="80" r="70" fill="none" stroke="#5c8a6a" stroke-width="3"/>
+  </svg>`;
+  function visC408(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">17 : 5 с остатком</div>
+        <div style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">17 = 3·5 + 2</div>
+        <div class="wv-row" style="gap:6px">${chip('частное 3','#7fd1ff')}${chip('остаток 2','#8fd1a8')}</div>
+        <div class="wv-sml">остаток всегда меньше делителя: 2 < 5</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Запись a ≡ b (mod m)</div>
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">17 ≡ 2 (mod 5)</div>
+        <div style="font-size:17px;color:#8fd1a8;font-family:Georgia,serif">17 − 2 = 15, а 15 ⋮ 5</div>
+        <div class="wv-sml">одинаковые остатки ⟺ разность делится на m</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">«Часы» mod 5</div>
+        ${clock(5)}
+        <div class="wv-sml">2, 7, 12, 17 — «одна и та же точка» по модулю 5!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">23 (mod 4)</div>
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:19px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">кратное 4, не большее 23 → 20 = 5·4</div>
+          <div class="wv-pop2">23 − 20 = 3</div>
+          <div class="wv-pop3" style="font-size:24px;color:#ffd76a;font-weight:bold">23 ≡ 3 (mod 4)</div>
+        </div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверка через разность</div>
+        <div style="font-size:22px;color:#e8dcc8;font-family:Georgia,serif">29 ≡ 5 (mod 6)?</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:18px;color:#8fd1a8;text-align:center;font-family:Georgia,serif">
+          <div class="wv-pop">29 − 5 = 24</div>
+          <div class="wv-pop2">24 : 6 = 4 — делится! ✔</div>
+        </div>
+        <div class="wv-sml">29 = 4·6 + 5 → остаток 5</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Складываем остатки!</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:18px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">17 ≡ 2 (mod 5) · 23 ≡ 3 (mod 5)</div>
+          <div class="wv-pop2">17 + 23 ≡ 2 + 3 = <b style="color:#8fd1a8">5 ≡ 0</b></div>
+          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">40 : 5 = 8 — делится! ✔</div>
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Умножаем остатки</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:18px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">17 ≡ 2, 23 ≡ 3 (mod 5)</div>
+          <div class="wv-pop2">17·23 ≡ 2·3 = 6 ≡ <b style="color:#ffd76a">1</b> (mod 5)</div>
+        </div>
+        <div class="wv-sml">огромные вычисления → маленькие остатки!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Зачем это нужно</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          ${[
+            ['доказать, что число не ⋮ 7','проверь остаток','#7fd1ff'],
+            ['последняя цифра степени','степень по mod 10','#8fd1a8'],
+            ['день недели через 100 дней','mod 7!','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">17 = 3·5 + 2</div>
+        <div class="wv-sml">остаток 17 при делении на 5?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:20px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? (mod 5)</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_C[408]=visC408;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===408){ window.ARH_LESSONS[i]=L408; break; } } })();
+})();
+/* ================= УРОК 409 · Параметры: линейные уравнения ================= */
+(function(){
+  const L409 = {
+    id: 409, title: 'Параметры: линейные уравнения', ico: '⚙️',
+    src: 'Математика · 7 класс · Олимп-7: параметры', subj: 'math',
+    explain: [
+      'Уравнение с параметром выглядит как обычное: ax = b. Но a и b — это БУКВЫ, за которыми прячутся числа. Параметр a — как «ручка настройки»: крутишь её — уравнение меняется. Наша задача — понять, как ответ зависит от ручки!',
+      'Случай 1: a ≠ 0. Всё просто — делим обе части на a: x = b/a. Например, 3x = 6 → x = 2. При a ≠ 0 уравнение всегда имеет РОВНО ОДНО решение.',
+      'Случай 2: a = 0 и b = 0. Уравнение превращается в 0·x = 0, то есть 0 = 0 — верно при ЛЮБОМ x! Подставь 5, 100, −7 — всё подойдёт. Решений бесконечно много.',
+      'Случай 3: a = 0 и b ≠ 0, например 0·x = 5. Слева всегда 0, а справа 5. Ноль не равен пяти никогда! Значит, уравнение НЕ имеет решений.',
+      'Сводим к виду ax = b. В задачах уравнение дают не готовым: ax + 1 = 5. Упрощаем как обычно: переносим 1 вправо с минусом: ax = 4. Теперь видно: при a ≠ 0 → x = 4/a, при a = 0 решений нет (4 ≠ 0).',
+      'Олимпиадный пример: при каком a уравнение ax = 6 не имеет решений? По правилу: решений нет, когда a = 0 (0·x = 6 — ложь). А при a = 0 и b = 0 (0·x = 0) решений, наоборот, бесконечно много.',
+      'Запомни три строки-шпаргалку: 1) a ≠ 0 → x = b/a (одно решение); 2) a = 0, b = 0 → бесконечно много; 3) a = 0, b ≠ 0 → ни одного. Сведи к виду ax = b — и смотри на a и b!',
+      'Параметры — это «уравнения с секретом»: ответ зависит от буквы. На олимпиадах любят спрашивать: «при каком значении параметра…» — теперь ты знаешь все три случая!',
+      'Теперь проверь себя: реши ax = 6 при a = 3. Просто раздели 6 на 3 — параметр «превратился» в обычное число!'
+    ],
+    check: { q: 'Уравнение ax = 6. При a = 3 чему равен x?', choices: ['2', '3', '6', '18'], ans: 0,
+      exp: 'x = 6 : 3 = 2.' },
+    tasks: [
+      { q: 'При каком a уравнение ax = 0 имеет бесконечно много решений?', kind: 'unit', ans: 0, tol: 0,
+        hints: ['0·x = 0 верно при любом x.', 'a = 0.'], sol: '0' },
+      { q: 'Сколько решений у уравнения 0·x = 5?', kind: 'choice', choices: ['ни одного', 'x = 5', 'бесконечно много', 'x = 0'], ans: 0, tol: 0,
+        hints: ['0 ≠ 5.', 'Решений нет.'], sol: 'ни одного' }
+    ]
+  };
+  const caseCard=(title,body,color,ok)=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${color};border-radius:14px;padding:10px 12px;max-width:320px;width:100%">
+    <b style="font-size:15px;color:${color}">${title}</b>
+    <div style="font-family:Georgia,serif;font-size:19px;color:#e8dcc8;margin-top:4px">${body}</div>
+    <div style="font-size:13px;color:${ok?'#8fd1a8':'#ff9a8a'};font-weight:bold;margin-top:3px">${ok?'✔ одно решение':'✘ решений нет'}</div>
+  </div>`;
+  function visC409(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Уравнение с параметром</div>
+        <div style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">ax = b</div>
+        <div class="wv-row" style="gap:5px;flex-wrap:wrap">
+          ${chip('a — «ручка настройки»','#7fd1ff')}${chip('b — число','#8fd1a8')}${chip('x — неизвестное','#ffd76a')}
+        </div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Случай 1: a ≠ 0</div>
+        ${caseCard('a ≠ 0', 'x = b/a', '#8fd1a8', true)}
+        <div class="wv-sml" style="color:#8fd1a8">пример: 3x = 6 → x = 2</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Случай 2: a = 0, b = 0</div>
+        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">0·x = 0 → 0 = 0</div>
+        <div style="background:rgba(127,209,160,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 12px;font-size:16px;color:#8fd1a8;font-weight:bold" class="wv-ans">бесконечно много решений!</div>
+        <div class="wv-sml">подставь 5, 100, −7 — всё подойдёт</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Случай 3: a = 0, b ≠ 0</div>
+        <div style="font-size:24px;color:#ff9a8a;font-family:Georgia,serif">0·x = 5</div>
+        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:8px 12px;font-size:16px;color:#ffcfc2;font-weight:bold" class="wv-ans">0 = 5 — ложь → решений НЕТ</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Сводим к виду ax = b</div>
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:19px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">ax + 1 = 5</div>
+          <div class="wv-pop2">ax = 5 − 1 = <b style="color:#ffd76a">4</b></div>
+        </div>
+        <div class="wv-sml">a ≠ 0 → x = 4/a · a = 0 → решений нет (4 ≠ 0)</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Олимпиадный пример</div>
+        <div class="wv-sml">при каком a уравнение ax = 6 не имеет решений?</div>
+        <div style="background:rgba(232,106,90,.1);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:8px 12px;font-size:17px;color:#ffcfc2;font-weight:bold" class="wv-ans">a = 0: 0·x = 6 — решений нет!</div>
+        <div class="wv-sml">а при a = 0, b = 0 — бесконечно много</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Шпаргалка: три случая</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          ${[
+            ['a ≠ 0','x = b/a — одно решение','#8fd1a8'],
+            ['a = 0, b = 0','0 = 0 — ∞ решений','#7fd1ff'],
+            ['a = 0, b ≠ 0','0 = b — нет решений','#ff9a8a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><b style="color:${x[2]};font-family:Georgia,serif">${x[0]}</b><span style="font-size:12.5px">${x[1]}</span></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Что такое параметры</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">«уравнения с секретом»: ответ зависит от буквы a. На олимпиадах спрашивают «при каком значении параметра…» — теперь знаешь все случаи!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">3x = 6</div>
+        <div class="wv-sml">a = 3 — делим: x = ?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:20px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">x = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_C[409]=visC409;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===409){ window.ARH_LESSONS[i]=L409; break; } } })();
+})();
+/* ================= УРОК 410 · Средние: неравенство о средних ================= */
+(function(){
+  const L410 = {
+    id: 410, title: 'Средние: неравенство о средних', ico: '📊',
+    src: 'Математика · 7 класс · Олимп-7: средние', subj: 'math',
+    explain: [
+      'Для двух чисел a и b есть два знаменитых средних. Среднее арифметическое: (a + b)/2 — складываем и делим на 2. Среднее геометрическое: √(a·b) — перемножаем и извлекаем корень. Для 4 и 9: (4+9)/2 = 6,5, а √(4·9) = √36 = 6.',
+      'Великое неравенство о средних: для положительных a и b всегда (a + b)/2 ≥ √(a·b). Среднее арифметическое НЕ МЕНЬШЕ среднего геометрического! Проверим на 4 и 9: 6,5 ≥ 6 — верно.',
+      'Когда достигается равенство? Только когда a = b! Например, при a = b = 9: (9+9)/2 = 9 и √81 = 9 — оба средних равны. Разница между ними показывает, насколько числа отличаются.',
+      'Почему неравенство верно? Квадрат любого числа неотрицателен: (√a − √b)² ≥ 0. Раскрываем: a − 2√(ab) + b ≥ 0 → a + b ≥ 2√(ab). Делим на 2 — получаем наше неравенство!',
+      'Применяем: найди минимум x + 4/x при x > 0. Это сумма двух чисел: x и 4/x. Их произведение: x·(4/x) = 4. По неравенству сумма ≥ 2·√4 = 4. Минимум равен 4!',
+      'Когда достигается минимум? Равенство при a = b, то есть x = 4/x → x² = 4 → x = 2 (x > 0). Проверяем: 2 + 4/2 = 2 + 2 = 4. Минимум достигнут при x = 2!',
+      'Ещё проверка: среднее арифметическое 8 и 12: (8+12)/2 = 10. Среднее геометрическое: √(8·12) = √96 ≈ 9,8. Видим: 10 ≥ 9,8 — неравенство снова работает!',
+      'Где применяется на олимпиадах: доказать x + 1/x ≥ 2 при x > 0, найти наименьшее a + b при заданном произведении, оценить площадь при данном периметре. Главный инструмент задач на минимум и максимум!',
+      'Теперь проверь себя: что больше при a = b = 9 — (a+b)/2 или √(ab)? Вспомни: при равных числах средние равны!'
+    ],
+    check: { q: 'Что больше при a = b = 9: (a+b)/2 или √(ab)?', choices: ['они равны', 'среднее арифметическое', 'среднее геометрическое', 'нельзя сравнить'], ans: 0,
+      exp: '(9+9)/2 = 9 и √81 = 9 — равны.' },
+    tasks: [
+      { q: 'Найди среднее арифметическое чисел 8 и 12.', kind: 'unit', ans: 10, tol: 0,
+        hints: ['(8 + 12) : 2.', '10.'], sol: '10' },
+      { q: 'Для положительных a и b всегда верно…', kind: 'choice', choices: ['(a+b)/2 ≥ √(ab)', '(a+b)/2 < √(ab)', '(a+b)/2 = √(ab) всегда', 'сравнить нельзя'], ans: 0, tol: 0,
+        hints: ['Неравенство о средних.', 'Среднее арифметическое ≥ среднего геометрического.'], sol: '(a+b)/2 ≥ √(ab)' }
+    ]
+  };
+  const bar2=(a,b,labelA,labelB)=>`<div style="display:flex;align-items:flex-end;gap:14px;justify-content:center;height:110px;padding:6px 10px;background:#101f18;border-radius:12px">
+    <div style="display:flex;flex-direction:column;align-items:center"><div style="width:36px;height:${a*2}px;background:linear-gradient(#7fd1ff,#4a93d0);border-radius:4px 4px 0 0"></div><span style="font-size:12px;color:#7fd1ff;margin-top:2px">${labelA||a}</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center"><div style="width:36px;height:${b*2}px;background:linear-gradient(#8fd1a8,#4c8a5a);border-radius:4px 4px 0 0"></div><span style="font-size:12px;color:#8fd1a8;margin-top:2px">${labelB||b}</span></div>
+  </div>`;
+  function visC410(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Два средних</div>
+        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
+          ${chip('(a+b)/2 — арифметическое','#7fd1ff')}${chip('√(a·b) — геометрическое','#8fd1a8')}
+        </div>
+        <div class="wv-sml">для 4 и 9: (4+9)/2 = 6,5 · √36 = 6</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Неравенство о средних</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;max-width:340px;width:100%">
+          <div style="font-size:19px;color:#ffd76a;font-weight:bold;text-align:center;font-family:Georgia,serif">(a+b)/2 ≥ √(a·b)</div>
+        </div>
+        <div class="wv-sml">для положительных a и b · проверка: 6,5 ≥ 6 ✔</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Равенство при a = b</div>
+        <div class="wv-row" style="gap:8px">
+          <div style="text-align:center;background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#7fd1ff;font-family:Georgia,serif">(9+9)/2 = 9</b><div style="font-size:10px;color:#9ec0a8">арифметическое</div></div>
+          <div style="text-align:center;background:rgba(143,209,168,.1);border:2px solid #8fd1a8;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#8fd1a8;font-family:Georgia,serif">√81 = 9</b><div style="font-size:10px;color:#9ec0a8">геометрическое</div></div>
+        </div>
+        <div class="wv-sml">при a = b средние равны!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Почему это правда?</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:17px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">(√a − √b)² ≥ 0</div>
+          <div class="wv-pop2">a − 2√(ab) + b ≥ 0</div>
+          <div class="wv-pop2">a + b ≥ 2√(ab)</div>
+          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">делим на 2 — готово!</div>
+        </div>
+        <div class="wv-sml">квадрат числа не бывает отрицательным!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Минимум x + 4/x</div>
+        <div class="wv-sml">x и 4/x — сумма двух чисел, произведение = x·(4/x) = 4</div>
+        <div style="font-size:22px;color:#e8dcc8;font-family:Georgia,serif">x + 4/x ≥ 2·√4 = <b style="color:#8fd1a8" class="wv-ans">4</b></div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Когда минимум?</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:18px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">равенство при x = 4/x</div>
+          <div class="wv-pop2">x² = 4 → x = 2 (x > 0)</div>
+          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">2 + 4/2 = 4 ✔ минимум!</div>
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверка: 8 и 12</div>
+        ${bar2(10,9.8,'(8+12)/2 = 10','√96 ≈ 9,8')}
+        <div class="wv-sml">10 ≥ 9,8 — неравенство работает!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Где применяется</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          ${[
+            ['x + 1/x ≥ 2','при x > 0','#7fd1ff'],
+            ['минимум a + b','при a·b = const','#8fd1a8'],
+            ['оценка площади','при данном периметре','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        <div class="wv-sml">главный инструмент задач на минимум и максимум!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div class="wv-sml">a = b = 9: (a+b)/2 или √(ab)?</div>
+        <div class="wv-row" style="gap:8px">
+          <div style="text-align:center;background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#7fd1ff;font-family:Georgia,serif">(9+9)/2 = 9</b></div>
+          <div style="text-align:center;background:rgba(143,209,168,.1);border:2px solid #8fd1a8;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#8fd1a8;font-family:Georgia,serif">√81 = 9</b></div>
+        </div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">что больше?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_C[410]=visC410;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===410){ window.ARH_LESSONS[i]=L410; break; } } })();
+})();
