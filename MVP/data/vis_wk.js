@@ -2165,14 +2165,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       h=wkFrame(wkBig('Лавка Архимеда: утренний покупатель')+
         wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
           <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="161" y="26" text-anchor="middle" font-size="12.5" fill="#9ec0a8">2 пакета сока · цена 40 ₽</text>
+          <text x="88" y="24" text-anchor="middle" font-size="12.5" fill="#9ec0a8">2 пакета = 40 ₽</text>
           ${carton(44,38,'2',{delay:0})}${carton(88,38,'',{delay:.1})}
           ${bill(140,44,'40 ₽',{delay:.2})}
           <path class="p8flow" d="M64 104 C 150 122, 180 122, 256 100" fill="none" stroke="#ffd76a" stroke-width="3"/>
-          <text x="258" y="26" text-anchor="middle" font-size="12.5" fill="#ffdfa0">5 пакетов · цена ?</text>
-          ${[0,1,2,3,4].map(i=>carton(226+i*16,44,'',{delay:.3+i*0.06})).join('')}
-          <text x="280" y="104" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold">?</text>
-        </svg>`)+
+          <text x="252" y="24" text-anchor="middle" font-size="12.5" fill="#ffdfa0">5 пакетов = ?</text>
+          ${carton(252,56,'5',{delay:.3,col:P[1],big:true})}
+                  </svg>`)+
         wkRow(wkBtn('80 ₽',`visW83Act('${lk}','g80')`),wkBtn('100 ₽',`visW83Act('${lk}','g100')`),wkBtn('120 ₽',`visW83Act('${lk}','g120')`))+
         (st.guess===100? wkAns('Верно! Сегодня ты узнаешь, как посчитать точно', '#8fd1a8')
           : st.guess>100? wkAns('Многовато: 5 пакетов — это в 2,5 раза больше, чем 2', '#ffdfa0')
@@ -2196,12 +2195,10 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
           <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
           <text x="161" y="24" text-anchor="middle" font-size="12.5" fill="#9ec0a8">40 ₽ за 2 пакета → один пакет стоит?</text>
-          ${carton(40,50,'2',{col:P[0]})}
-          <text x="100" y="88" text-anchor="middle" font-size="30" fill="#cfe0cf" font-weight="bold">:</text>
-          <g class="p8pop" style="animation-delay:.2s"><text x="118" y="80" text-anchor="middle" font-size="15" fill="#ffdfa0">2</text><line x1="96" y1="86" x2="140" y2="86" stroke="#3d5c49" stroke-width="2"/></g>
-          <text x="161" y="88" text-anchor="middle" font-size="26" fill="#cfe0cf">=</text>
-          ${bill(176,56,'40 ₽',{delay:.1})}
-          <text x="240" y="84" text-anchor="middle" font-size="30" fill="#8fd1a8" font-weight="bold">20 ₽</text>
+          ${carton(34,52,'2',{col:P[0]})}${carton(76,52,'',{col:P[0],delay:.08})}
+          ${bill(118,58,'40 ₽',{delay:.12})}
+          <text x="186" y="94" text-anchor="middle" font-size="28" fill="#cfe0cf" font-weight="bold">=</text>
+          <text x="252" y="94" text-anchor="middle" font-size="28" fill="#8fd1a8" font-weight="bold">20 ₽</text>
           <text x="161" y="126" text-anchor="middle" font-size="13.5" fill="#8fd1a8" font-weight="bold">40 : 2 = 20 рублей за пакет</text>
         </svg>`)+
         wkSml('зная цену одной штуки, посчитаешь любую покупку: 5 пакетов — 20 · 5 = 100'));
@@ -2211,14 +2208,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           <rect x="6" y="6" width="310" height="138" rx="20" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
           <text x="161" y="24" text-anchor="middle" font-size="12.5" fill="#9ec0a8">цена пакета не меняется → отношения равны</text>
           <g class="p8pop"><text x="70" y="58" text-anchor="middle" font-size="34" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">2</text>
-            <text x="70" y="82" text-anchor="middle" font-size="12" fill="#9ec0a8">крайний</text>
+            <text x="70" y="86" text-anchor="middle" font-size="12" fill="#9ec0a8">крайний</text>
             <line x1="46" y1="66" x2="94" y2="66" stroke="#3d5c49" stroke-width="2"/>
-            <text x="70" y="104" text-anchor="middle" font-size="34" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">40</text></g>
-          <text x="118" y="92" text-anchor="middle" font-size="26" fill="#cfe0cf" font-weight="bold">=</text>
+            <text x="70" y="124" text-anchor="middle" font-size="34" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">40</text></g>
+          <text x="118" y="102" text-anchor="middle" font-size="26" fill="#cfe0cf" font-weight="bold">=</text>
           <g class="p8pop" style="animation-delay:.15s"><text x="170" y="58" text-anchor="middle" font-size="34" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">5</text>
-            <text x="170" y="82" text-anchor="middle" font-size="12" fill="#9ec0a8">средний</text>
+            <text x="170" y="86" text-anchor="middle" font-size="12" fill="#9ec0a8">средний</text>
             <line x1="146" y1="66" x2="194" y2="66" stroke="#3d5c49" stroke-width="2"/>
-            <text x="170" y="104" text-anchor="middle" font-size="34" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">x</text></g>
+            <text x="170" y="124" text-anchor="middle" font-size="34" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">x</text></g>
           <g class="p8pop" style="animation-delay:.3s"><text x="248" y="92" text-anchor="middle" font-size="24" fill="#8fd1a8" font-weight="bold">пропорция</text><text x="248" y="112" text-anchor="middle" font-size="12" fill="#9ec0a8">2:40 = 5:x</text></g>
         </svg>`)+
         wkRow(wkPill('крайние: 2 и x', '#7fd1ff'),wkPill('средние: 40 и 5', '#ffd76a'))+
