@@ -723,7 +723,7 @@ function dashMini(I,i){
     <div style="display:flex;justify-content:center">${ringHTML(pct,44,I.ico)}</div>
     <div class="nm">${esc(I.name)}</div>
     <div class="pc">${st.done}/${st.total} · ${pct}%</div>
-    <div class="expand-hint">${on?'раскрыт · нажми, чтобы свернуть':'нажми — раскрыть'}</div>
+    <div class="expand-hint">${on?'карта развёрнута · нажми, чтобы свернуть':'нажми — развернуть карту'}</div>
   </div>`;
 }
 function dashExpanded(I){
@@ -736,7 +736,7 @@ function dashExpanded(I){
     return `<div class="theme-row"><span class="tn">${esc(th)}</span><div class="bar"><i style="width:${d/tt.length*100}%"></i></div><span class="pc">${d}/${tt.length}</span></div>`;
   }).join('');
   return `<div class="island path-island" style="margin-top:8px">
-    <div class="fold-top"><button class="chip pd" onclick="planOpenIsland('${encodeURIComponent(I.name)}')">− свернуть</button><span style="font-size:11.5px;color:var(--muted)">дашборд «${esc(I.name)}» — развёрнут</span></div>
+    <div class="fold-top"><button class="chip pd" onclick="planOpenIsland('${encodeURIComponent(I.name)}')">− свернуть</button><span style="font-size:11.5px;color:var(--muted)">остров «${esc(I.name)}» — карта развёрнута</span></div>
     <div class="pi-head">
       ${ringHTML(pct,58,I.ico)}
       <div style="flex:1;min-width:0">
@@ -780,10 +780,9 @@ function renderPath(){
   const minis=islands.map(dashMini).join('');
   const openI = PLAN.open? islands.find(i=>i.name===decodeURIComponent(PLAN.open||'')) : null;
   const expanded = openI? dashExpanded(openI) : '';
-  s.innerHTML=hero+nextBtn+plan+
-    `<div class="pd-title" style="margin-bottom:2px"><div style="flex:1;text-align:left"><div class="h">Дашборды островов</div><div class="s">мини-копии — нажми, чтобы раскрыть</div></div></div>
-     <div class="dash-mini-row">${minis}</div>${expanded}`+
-    legendCard;
+  s.innerHTML=hero+legendCard+nextBtn+plan+
+    `<div class="pd-title" style="margin-bottom:2px"><div style="flex:1;text-align:left"><div class="h">Карта путешествий по островам</div><div class="s">мини-карты — нажми на остров, чтобы развернуть</div></div></div>
+     <div class="dash-mini-row">${minis}</div>${expanded}`;
   requestAnimationFrame(()=>{ document.querySelectorAll('.ring-fg').forEach(el=>{ el.style.strokeDashoffset=getComputedStyle(el.parentNode).getPropertyValue('--off'); }); });
   hud();
 }
