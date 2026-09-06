@@ -662,6 +662,38 @@ function pdCss(){
   .island-fold .fold-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
   .chip.pd{background:rgba(255,255,255,.05);border:1.5px solid rgba(127,184,160,.4);color:#e8dcc8}
   .chip.pd.on{background:rgba(217,164,65,.2);border-color:var(--brass,#d9a441);color:#ffd76a}
+  .plan-arena{position:relative}
+  .plan-band{position:relative;border-radius:20px;padding:14px 15px 10px;overflow:hidden;background:linear-gradient(135deg,rgba(52,96,74,.92),rgba(19,39,29,.95));border:1px solid rgba(127,184,160,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 8px 18px rgba(0,0,0,.25)}
+  .plan-band::before{content:'';position:absolute;left:-40px;top:-60px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle at center, rgba(127,209,160,.16), transparent 65%)}
+  .plan-band::after{content:'';position:absolute;right:-30px;bottom:-50px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at center, rgba(217,164,65,.18), transparent 65%)}
+  .plan-kicker{font-size:10px;letter-spacing:3px;color:#8fd1a8;text-transform:uppercase;text-align:left;position:relative}
+  .plan-title{font-size:23px;font-weight:bold;color:#fff;font-family:Georgia,serif;text-align:left;margin:2px 0 1px;position:relative}
+  .plan-sub{font-size:12px;color:#cfe0cf;text-align:left;margin-bottom:9px;position:relative;line-height:1.4}
+  .kls-bar{display:flex;gap:6px;flex-wrap:wrap;position:relative}
+  .kls-chip{border:1.5px solid rgba(143,209,168,.45);background:rgba(255,255,255,.05);color:#e8dcc8;border-radius:999px;padding:5px 13px;font-size:13px;cursor:pointer;font-weight:bold}
+  .kls-chip.on{background:#d9a441;border-color:#ffd76a;color:#0d1a13}
+  .plan-ringrow{display:flex;align-items:center;justify-content:space-between;margin:10px 2px 2px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:6px 12px}
+  .plan-ringrow .lbl{font-size:12px;color:#cfe0cf;font-weight:bold;letter-spacing:.03em}
+  .sec-cap{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8fd1a8;text-align:left;margin:12px 2px 7px;font-weight:bold}
+  .skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .skill-tile{animation:pdIn .5s ease both;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(127,184,160,.22);border-radius:13px;padding:7px 8px;text-align:left}
+  .skill-tile .st-top{display:flex;justify-content:space-between;gap:5px;align-items:baseline}
+  .skill-tile .st-name{font-size:11.5px;color:#e8dcc8;font-weight:bold;line-height:1.25}
+  .skill-tile .st-pct{font-size:14px;color:#ffd76a;font-weight:bold}
+  .skill-tile .st-bar{height:7px;margin:5px 0 3px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+  .skill-tile .st-bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#d9a441,#8fd1a8)}
+  .skill-tile .st-count{font-size:10px;color:#8a94ad}
+  .rt-route{position:relative}
+  .rt-route::before{content:'';position:absolute;left:11px;top:10px;bottom:10px;width:2px;background:repeating-linear-gradient(180deg,#6fa886 0 6px,transparent 6px 12px);opacity:.75}
+  .rt-stop{display:grid;grid-template-columns:26px 1fr;gap:9px;align-items:start;margin:8px 0;cursor:pointer;position:relative}
+  .rt-node{width:24px;height:24px;border-radius:50%;background:#d9a441;color:#0d1a13;font-weight:bold;font-size:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(217,164,65,.14)}
+  .rt-node.now{animation:pdPulse 1.5s ease-in-out infinite}
+  @keyframes pdPulse{0%,100%{box-shadow:0 0 0 4px rgba(217,164,65,.14)}50%{box-shadow:0 0 0 8px rgba(217,164,65,.3)}}
+  .rt-card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(127,184,160,.25);border-left:3px solid #d9a441;border-radius:12px;padding:7px 10px;text-align:left;transition:background .15s}
+  .rt-stop:hover .rt-card{background:rgba(217,164,65,.08)}
+  .rt-title{font-size:13.5px;color:#fff;font-weight:bold;line-height:1.25}
+  .rt-meta{font-size:11px;color:#8a94ad;margin-top:2px}
+  @keyframes pdIn{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
   `;
   document.head.appendChild(st);
 }
@@ -700,19 +732,37 @@ function planDash(){
   if(!kls) return '';
   const st=planStatFor(kls);
   const pct=st.total? Math.round(st.done/st.total*100):0;
-  const next=st.undone.slice(0,6);
+  const next=st.undone.slice(0,5);
   const clsLabel=clsFromKey(kls);
-  const chips=planAllowedCls().map(k=>`<button class="chip pd ${k===kls?'on':''}" onclick="planPickCls('${k}')">${esc(clsFromKey(k))}</button>`).join('');
-  const skillRows=st.rows.slice(0,6).map((r,i)=>`<div class="skill-row"><span class="tn">${esc(r.th)}</span><div class="bar"><i style="width:${r.pct}%"></i></div><span class="pc">${r.d}/${r.total}</span></div>`).join('')||'<div class="small" style="color:var(--muted)">В этом классе задач пока нет.</div>';
-  const steps=next.length? next.map((t,i)=>`<div class="plan-step" onclick="go('task-${t.id}')"><span class="n">${i+1}</span><span class="tt"><b>${esc(t.title)}</b><div>${esc(themeOf(t))} · остров «${esc(t.island)}»</div></span><span class="lvl">ур. ${t.diff}</span></div>`).join('')
-    : '<div class="small" style="color:var(--ok);text-align:center">Все задачи этого класса решены — отличная работа!</div>';
-  const subTxt = pct===100? 'Класс полностью пройден!' : 'составлено по твоим навыкам: сначала темы, где меньше всего решено';
-  return `<div class="pd-title"><div style="flex:1;text-align:left"><div class="h">План обучения</div><div class="s">класс ${esc(clsLabel)} · ${subTxt}</div></div><div style="flex:0 0 auto">${ringHTML(pct,54,pct+'%')}</div></div>
-  <div class="plan-card">
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">${chips}</div>
-    <div style="font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin:6px 2px 2px;text-align:left">Навыки · сколько решено по темам</div>
-    ${skillRows}
-    <div style="font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin:10px 2px 4px;text-align:left">Следующие шаги</div>
+  const chips=planAllowedCls().map(k=>`<button class="kls-chip ${k===kls?'on':''}" onclick="planPickCls('${k}')">${esc(clsFromKey(k))}</button>`).join('');
+  const tiles=st.rows.slice(0,6).map((r,i)=>`
+    <div class="skill-tile" style="animation-delay:${(0.05+i*0.06).toFixed(2)}s">
+      <div class="st-top"><span class="st-name">${esc(r.th)}</span><span class="st-pct">${r.pct}%</span></div>
+      <div class="st-bar"><i style="width:${r.pct}%"></i></div>
+      <div class="st-count">решено ${r.d} из ${r.total}</div>
+    </div>`).join('') || '<div class="small" style="color:var(--muted)">В этом классе задач пока нет.</div>';
+  const steps = next.length
+    ? `<div class="rt-route">`+next.map((t,i)=>`
+      <div class="rt-stop" onclick="go('task-${t.id}')">
+        <span class="rt-node ${i===0?'now':''}">${i+1}</span>
+        <div class="rt-card">
+          <div class="rt-title">${esc(t.title)}</div>
+          <div class="rt-meta">${esc(themeOf(t))} · остров «${esc(t.island)}» · ур. ${t.diff}</div>
+        </div>
+      </div>`).join('')+`</div>`
+    : '<div class="small" style="color:var(--ok);text-align:center">Этот класс пройден полностью — отличная работа!</div>';
+  const ringC=ringHTML(pct,64,pct+'%');
+  return `<div class="plan-arena">
+    <div class="plan-band">
+      <div class="plan-kicker">Личный маршрут</div>
+      <div class="plan-title">План обучения</div>
+      <div class="plan-sub">${pct===100? 'класс '+esc(clsLabel)+' пройден целиком': 'класс '+esc(clsLabel)+' · начинаем с навыков, которые ещё укрепляем'}</div>
+      <div class="kls-bar">${chips}</div>
+    </div>
+    <div class="plan-ringrow"><span class="lbl">навыки класса</span><span style="margin-left:auto"></span>${ringC}</div>
+    <div class="sec-cap">Что уже умею</div>
+    <div class="skill-grid">${tiles}</div>
+    <div class="sec-cap">Куда идти дальше</div>
     ${steps}
   </div>`;
 }
