@@ -468,10 +468,28 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===17){ window.ARH_LESSONS[i]=L17; break; } } })();
 })();
 
-/* ================= УРОК 24 · Цепочки сравнений (v2) ================= */
+/* ================= УРОК 24 · Цепочки сравнений (v3, крупные SVG, больше слайдов, без эмодзи) ================= */
 (function(){
+  if(!window.__wk24v3css){
+    window.__wk24v3css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .c9in{animation:c9In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes c9In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .c9pop{animation:c9Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes c9Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .c9float{animation:c9Float 1.9s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes c9Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}'+
+      '#lvis .c9flow{stroke-dasharray:9 7;animation:c9Flow .85s linear infinite;}'+
+      '@keyframes c9Flow{to{stroke-dashoffset:-32}}'+
+      '#lvis .c9bump{animation:c9Bump .85s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes c9Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}'+
+      '#lvis .c9sway{animation:c9Sway 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes c9Sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}';
+    document.head.appendChild(st);
+  }
   const L24 = {
-    id: 24, title: 'Цепочки сравнений', ico: '📏',
+    id: 24, title: 'Цепочки сравнений', ico: '⇢',
     src: 'Логика · транзитивность · кто выше/тяжелее всех', subj: 'math',
     explain: [
       'Лесная линейка Архимеда: Лиса выше Зайца, а Волк выше Лисы. Можно ли узнать, кто выше всех, даже не измеряя их? Можно! Если Лиса выше Зайца, а Волк выше Лисы, то Волк выше и Зайца тоже — сравнения выстраиваются в цепочку.',
@@ -481,8 +499,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Пиши цепочку одной строкой: Волк > Лиса > Заяц. Кто первый — самый высокий, кто последний — самый низкий. Порядок звеньев — это готовый ответ на вопрос «кто выше или ниже всех».',
       'Четыре зверя: Медведь выше Волка, Волк выше Лисы, Лиса выше Зайца. Соединяем: Медведь > Волк > Лиса > Заяц. Медведь — самый высокий, Заяц — самый низкий. Длинная цепочка работает так же, как короткая.',
       'А если данных не хватает? Лиса выше Зайца и Волк выше Зайца. Кто выше — Лиса или Волк? Неизвестно! Мы знаем только, что оба выше Зайца. Отвечай ровно на то, что следует из цепочки, и не додумывай лишнего.',
-      'Тест из учебника: A выше B, B выше C — кто выше всех? Правильный ответ A: A > B > C. А если A выше B, B выше C, C выше D — кто ниже всех? Правильный ответ D. Попробуй ответить сам в виджете ниже!',
-      'Проверь себя: X легче Y, а Y легче Z. Кто тяжелее всех? Собери цепочку X < Y < Z — и ответ готов. Вперёд, к проверке!'
+      'Сравнения бывают не только по росту: тяжелее, длиннее, старше, быстрее. Правило всегда одно: если A больше B, а B больше C — A больше C. Стрелка показывает направление, и цепочка ведёт от «меньше» к «больше».',
+      'Тренажёр: тебе дадут несколько сравнений. Шаг 1 — выстрой звенья в цепочку. Шаг 2 — найди, кто первый (самый высокий/тяжёлый), а кто последний. Нажимай кнопки и проверяй себя!',
+      'Очень длинная цепочка: A выше B, B выше C, C выше D, D выше E. Кто выше всех? Первый — A. Кто ниже всех? Последний — E. Сколько бы ни было звеньев, ответ всегда на концах цепочки.',
+      'Тест: A выше B, B выше C — кто выше всех? А если добавить C выше D — кто ниже всех? Собери цепочку и посмотри на её концы. Ответь в тесте ниже!',
+      'Проверь себя: X легче Y, а Y легче Z. Кто тяжелее всех? Собери цепочку X < Y < Z — и ответ готов. Жми «Понял! Проверю себя»!'
     ],
     check: { q: 'X легче Y, а Y легче Z. Кто тяжелее всех?', choices: ['X', 'Y', 'Z'], ans: 2,
       exp: 'X < Y < Z — тяжелее всех Z.' },
@@ -493,148 +514,256 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Цепочка: A > B > C > D.', 'Ниже всех — последний.'], sol: 'A > B > C > D — ниже всех D.', kind: 'choice' }
     ]
   };
-  const C={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',dim:'#8fa08f',cream:'#e8dcc8',red:'#ff8a7a'};
-  // башни-звери: seq=[{e,t,h,c}]
-  function towers(seq,opts){
-    const o=opts||{};
-    const colW=o.colW||58, gap=o.gap||10, base=o.base||124, top=o.top||10;
-    const W=seq.length*colW+(seq.length-1)*gap+12;
-    const x0=6;
-    let s='';
-    seq.forEach((it,i)=>{
-      const x=x0+i*(colW+gap);
-      const hh=it.h;
-      s+=`<g class="wv-pop" style="animation-delay:${(i*0.13).toFixed(2)}s">
-        <rect x="${x}" y="${base-hh}" width="${colW}" height="${hh}" rx="12" fill="rgba(255,255,255,.05)" stroke="${it.c}" stroke-width="2.4"/>
-        <text x="${x+colW/2}" y="${base-hh+30}" text-anchor="middle" font-size="24">${it.e}</text>
-        <text x="${x+colW/2}" y="${base+16}" text-anchor="middle" font-size="12.5" fill="${it.c}" font-weight="bold">${it.t}</text>
-      </g>`;
+  const H9={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a',ivory:'#e8e0cc',mut:'#9ec0a8'};
+  const H9P=['#7fd1ff','#8fd1a8','#ffd76a','#e8a0d8','#ff9a7a','#5aa0d8'];
+  /* персонаж-«зверь»: столбец роста с крупной буквой-«головой» наверху (без эмодзи) */
+  function beast(x,ground,h,letter,color,opt){
+    const o=opt||{};
+    const w=o.w||58;
+    const headR=o.headR||16;
+    const cy=ground-h-headR-2;
+    return `<g class="${o.sway?'c9sway':'c9pop'}" style="${o.delay?'animation-delay:'+o.delay+'s':''}">
+      <rect x="${x}" y="${ground-h}" width="${w}" height="${h}" rx="${Math.min(14,w*0.24)}" fill="${color}" opacity=".16"/>
+      <rect x="${x+3}" y="${ground-h}" width="${w-6}" height="${h}" rx="${Math.min(11,w*0.2)}" fill="none" stroke="${color}" stroke-width="2.6"/>
+      <line x1="${x+Math.round(w/2)}" y1="${ground-h}" x2="${x+Math.round(w/2)}" y2="${cy+headR}" stroke="${color}" stroke-width="2.6"/>
+      <circle cx="${x+Math.round(w/2)}" cy="${cy}" r="${headR}" fill="${color}" opacity=".2"/>
+      <circle cx="${x+Math.round(w/2)}" cy="${cy}" r="${headR}" fill="none" stroke="${color}" stroke-width="3"/>
+      <text x="${x+Math.round(w/2)}" y="${(cy+headR*0.5).toFixed(1)}" text-anchor="middle" font-size="${o.fs||22}" fill="#fff" font-weight="bold" font-family="Georgia,serif">${letter}</text>
+    </g>`;
+  }
+  /* сцена «звери по росту» + стрелки > между ними */
+  function rowBeasts(items,opt){
+    const o=opt||{};
+    const ground=o.ground||118;
+    const W=o.w||318, headR=o.headR||15, w=o.wcol||54;
+    const step=o.stepX||78;
+    const x0=Math.round((W-(items.length*step-step))/2);
+    let body='';
+    items.forEach((it,i)=>{
+      const x=x0+i*step;
+      body+=beast(x,ground,it.h,it.letter,it.c,{w:headR*2.2,headR,delay:i*0.14,sway:it.sway});
+      if(i<items.length-1){
+        const mx=x+headR*2.2+ (step-headR*2.2)/2;
+        body+=`<g class="c9pop" style="animation-delay:${(i*0.14+0.2).toFixed(2)}s"><text x="${mx}" y="${ground-8}" text-anchor="middle" font-size="26" fill="${H9.red}" font-weight="bold">&gt;</text></g>`;
+      }
     });
-    s+=`<line x1="4" y1="${base+3}" x2="${W-4}" y2="${base+3}" stroke="#3d5c49" stroke-width="2"/>`;
-    return `<svg width="${W}" height="${base+26}" viewBox="0 0 ${W} ${base+26}" style="display:block;margin:0 auto">${s}</svg>`;
+    const H=ground+20;
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">${body}<line x1="${x0-8}" y1="${ground+1}" x2="${x0+(items.length-1)*step+headR*2.2+8}" y2="${ground+1}" stroke="#3d5c49" stroke-width="2.4"/></svg>`;
   }
-  function chain24(arr,hlIdx){
-    const cells=arr.map((a,i)=>{
-      const hl=hlIdx&&hlIdx.indexOf(i)>=0;
-      return `<span class="wv-pop" style="animation-delay:${(i*0.15).toFixed(2)}s;display:inline-flex;flex-direction:column;align-items:center;gap:2px;padding:7px 13px;border-radius:13px;background:${hl?'rgba(217,164,65,.14)':'rgba(255,255,255,.05)'};border:2px solid ${hl?C.gold:'#4c8a5a'};min-width:64px">
-        <span style="font-size:24px">${a.e}</span><span style="font-size:13px;color:#e8dcc8">${a.t}</span></span>`;
-    }).join(`<span style="font-size:24px;color:${C.red};font-weight:bold"> &gt; </span>`);
-    return `<div class="wk-row" style="gap:6px">${cells}</div>`;
-  }
+  const sign=(t,c,delay)=>`<span class="c9in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:7px 15px;border-radius:13px;border:2.2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:22px;color:${c};font-weight:bold">${t}</span>`;
+  const blkA=(label,bg,color,opt)=>`<div class="c9pop" style="animation-delay:${((opt&&opt.delay)||0).toFixed(2)}s;flex:1 1 0;min-width:0;text-align:center;border:2.5px solid ${color};border-radius:15px;padding:6px 4px;background:${bg||'rgba(255,255,255,.05)'}">
+    <div style="font-size:13px;color:${color};font-weight:bold;margin-bottom:2px">${label}</div>
+    <div style="font-size:${(opt&&opt.fs)||30}px;color:#fff;font-weight:bold;font-family:Georgia,serif;line-height:1.15">${(opt&&opt.big)||label}</div>
+  </div>`;
   const Q24=[
     {q:'A выше B, B выше C. Кто выше всех?',opts:['A','B','C'],ans:0},
     {q:'A выше B, B выше C, C выше D. Кто ниже всех?',opts:['A','B','C','D'],ans:3}
   ];
-  function testUI(lk,st){
+  function quiz(lk,st){
     const T=Q24[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.05)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.2)':'rgba(232,106,90,.2)'; bd=i===T.ans?C.green:C.red; tc=i===T.ans?C.green:C.red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:17px" onclick="visW24T('${lk}',${i})">${o}</button>`;
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?H9.green:H9.red; tc=i===T.ans?H9.green:H9.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:62px;font-size:18px" onclick="visW24T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1? '<div class="wk-ans" style="color:#8fd1a8">🎉 верно! Оба теста решены!</div>' : '<div class="wk-ans" style="color:#8fd1a8">✅ верно! Цепочка работает!</div>')
-        : '<div class="wk-ans" style="color:#ff8a7a">❌ не так. Собери цепочку и посмотри, кто первый, а кто последний.</div>';
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:18px">Верно! Ниже всех — последний в цепочке: D</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:18px">Верно! A > B > C — выше всех первый: A</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:17px">Не так. Собери цепочку: ответ на её концах</div>';
     }
-    const next = st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий вопрос →',`visW24Act('${lk}','nq')`):'';
-    const rst = wkBtn('↺ заново',`visW24Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row">${opts}</div>${msg}<div class="wk-row">${next}${rst}</div>`;
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW24Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW24Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW24(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; if(step===0||step===5||step===8){ st.mode=0; } if(step===6){ st.mode=0; } if(step===9){ st.mode=0; } if(step===10){ st.sel=null; st.q=0; } if(step===11){ st.sel=null; st.q=0; } }
     let h='';
     if(step===0){
-      h=wkFrame(wkBig('Лесная линейка Архимеда 🐾')+
-        wkHero(towers([{e:'🐰',t:'Заяц',h:46,c:'#c9a06a'},{e:'🦊',t:'Лиса',h:76,c:'#e08a4a'},{e:'🐺',t:'Волк',h:108,c:'#7f9bb8'}],{base:118}))+
-        wkRow(wkPill('Лиса > Заяц',C.gold),wkPill('Волк > Лиса',C.blue))+
-        `<div class="wk-ans wv-pulse" style="color:#ffd76a">кто выше всех — видно сразу после сборки цепочки?</div>`+
-        wkSml('известно только два сравнения, но они уже складываются в ответ. Листай дальше!'));
+      h=wkFrame(wkBig('Лесная линейка Архимеда')+
+        wkHero(rowBeasts([
+          {letter:'З',h:42,c:'#c9a06a',sway:1},
+          {letter:'Л',h:70,c:'#e08a4a'},
+          {letter:'В',h:100,c:'#7f9bb8'}
+        ],{ground:118,w:318}))+
+        `<div class="c9in" style="animation-delay:.5s;text-align:center;font-size:13px;color:#e8dcc8;font-weight:bold">З — Заяц · Л — Лиса · В — Волк</div>`+
+        wkRow(sign('Лиса > Заяц',H9.gold),sign('Волк > Лиса',H9.blue,0.2))+
+        wkSml('кто выше всех — можно узнать, даже не измеряя! Листай дальше'));
     } else if(step===1){
       h=wkFrame(wkBig('Собираем цепочку')+
-        wkHero(towers([{e:'🐺',t:'Волк',h:108,c:'#7f9bb8'},{e:'🦊',t:'Лиса',h:76,c:'#e08a4a'},{e:'🐰',t:'Заяц',h:46,c:'#c9a06a'}],{base:118}))+
-        chain24([{e:'🐺',t:'Волк'},{e:'🦊',t:'Лиса'},{e:'🐰',t:'Заяц'}],[0])+
-        wkAns('Волк > Лиса > Заяц — выше всех Волк!',C.green)+
+        wkHero(rowBeasts([
+          {letter:'В',h:100,c:'#7f9bb8'},
+          {letter:'Л',h:70,c:'#e08a4a',delay:.15},
+          {letter:'З',h:42,c:'#c9a06a',delay:.3}
+        ],{ground:118,w:318}))+
+        `<div class="c9in" style="animation-delay:.5s;text-align:center;font-size:13px;color:#e8dcc8;font-weight:bold">В — Волк · Л — Лиса · З — Заяц</div>`+
+        wkRow(sign('Волк > Лиса > Заяц',H9.green,0.5))+
+        wkAns('выше всех — Волк!',H9.green)+
         wkSml('сравнения встают в ряд, как звенья цепи: середина соединяет края'));
     } else if(step===2){
       h=wkFrame(wkBig('Секрет — транзитивность')+
-        wkHero(`<svg width="322" height="150" viewBox="0 0 322 150" style="display:block">
-          <rect x="4" y="4" width="314" height="142" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
-          ${[['A','больше','#7fd1ff',20],['B','середина','#8fd1a8',126],['C','меньше','#ffd76a',232]].map((b,i)=>`
-            <g class="wv-pop" style="animation-delay:${(i*0.16).toFixed(2)}s">
-              <rect x="${b[3]}" y="24" width="72" height="64" rx="14" fill="rgba(255,255,255,.05)" stroke="${b[2]}" stroke-width="2.4"/>
-              <text x="${b[3]+36}" y="58" text-anchor="middle" font-size="26" fill="${b[2]}" font-weight="bold" font-family="Georgia,serif">${b[0]}</text>
-              <text x="${b[3]+36}" y="78" text-anchor="middle" font-size="11" fill="#9ec0a8">${b[1]}</text>
-            </g>`).join('')}
-          <text x="96" y="64" font-size="24" fill="${C.red}" font-weight="bold">></text>
-          <text x="202" y="64" font-size="24" fill="${C.red}" font-weight="bold">></text>
-          <rect x="66" y="104" width="190" height="30" rx="15" fill="rgba(143,209,168,.1)" stroke="${C.green}" stroke-width="1.8"/>
-          <text x="161" y="124" text-anchor="middle" font-size="13.5" fill="${C.green}" font-weight="bold">A > B и B > C → A > C</text>
+        wkHero(`<svg viewBox="0 0 318 168" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="158" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <rect x="24" y="26" width="76" height="64" rx="14" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="3"/>
+          <text x="62" y="60" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">A</text>
+          <text x="62" y="80" text-anchor="middle" font-size="12" fill="#9ec0a8">больше</text>
+          <text x="124" y="66" text-anchor="middle" font-size="26" fill="#ff8a7a" font-weight="bold">&gt;</text>
+          <rect x="144" y="26" width="76" height="64" rx="14" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="3"/>
+          <text x="182" y="60" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">B</text>
+          <text x="182" y="80" text-anchor="middle" font-size="12" fill="#9ec0a8">середина</text>
+          <text x="240" y="66" text-anchor="middle" font-size="26" fill="#ff8a7a" font-weight="bold">&gt;</text>
+          <rect x="258" y="26" width="36" height="64" rx="14" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="3"/>
+          <text x="276" y="60" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">C</text>
+          <g class="c9pop" style="animation-delay:.5s"><rect x="30" y="108" width="258" height="40" rx="16" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.4"/><text x="159" y="133" text-anchor="middle" font-size="19" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">A &gt; B &gt; C</text></g>
         </svg>`)+
-        wkRow(wkChip('рост',C.blue),wkChip('масса',C.green),wkChip('длина',C.gold),wkChip('возраст','#e8a0d8'))+
-        wkSml('промежуточное звено можно «выбросить»: вывод останется верным!'));
+        wkRow(sign('A > B и B > C → A > C',H9.gold,0.5))+
+        wkSml('промежуточное звено можно «выбросить»: вывод останется верным'));
     } else if(step===3){
       h=wkFrame(wkBig('Весы: X, Y и Z')+
-        wkHero(`<svg width="322" height="170" viewBox="0 0 322 170" style="display:block">
-          <rect x="4" y="4" width="314" height="162" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
-          <g class="wv-pop"><circle cx="161" cy="34" r="15" fill="rgba(255,255,255,.07)" stroke="#cbb89a" stroke-width="2.4"/>
-            <line x1="161" y1="49" x2="161" y2="74" stroke="#cbb89a" stroke-width="2.4"/>
-            <line x1="70" y1="76" x2="252" y2="76" stroke="#cbb89a" stroke-width="4"/>
-            <line x1="70" y1="76" x2="70" y2="98" stroke="#cbb89a" stroke-width="4"/>
-            <line x1="252" y1="76" x2="252" y2="98" stroke="#cbb89a" stroke-width="4"/>
-            <rect x="42" y="98" width="56" height="42" rx="10" fill="rgba(127,209,255,.1)" stroke="${C.blue}" stroke-width="2.2"/>
-            <text x="70" y="124" text-anchor="middle" font-size="20" fill="${C.blue}" font-weight="bold" font-family="Georgia,serif">X</text>
-            <rect x="224" y="98" width="56" height="42" rx="10" fill="rgba(217,164,65,.1)" stroke="${C.gold}" stroke-width="2.2"/>
-            <text x="252" y="124" text-anchor="middle" font-size="20" fill="${C.gold}" font-weight="bold" font-family="Georgia,serif">Z</text>
-            <text x="161" y="80" text-anchor="middle" font-size="12" fill="#9ec0a8">X легче Y · Y легче Z</text>
-          </g>
-          <rect x="86" y="132" width="150" height="26" rx="13" fill="rgba(143,209,168,.1)" stroke="${C.green}"/>
-          <text x="161" y="150" text-anchor="middle" font-size="14" fill="${C.green}" font-weight="bold">X < Y < Z</text>
+        wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="166" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="c9pop"><circle cx="159" cy="34" r="14" fill="rgba(255,255,255,.06)" stroke="#cbb89a" stroke-width="2.4"/><line x1="159" y1="48" x2="159" y2="72" stroke="#cbb89a" stroke-width="2.4"/><line x1="66" y1="72" x2="252" y2="72" stroke="#cbb89a" stroke-width="4"/><line x1="66" y1="72" x2="66" y2="94" stroke="#cbb89a" stroke-width="4"/><line x1="252" y1="72" x2="252" y2="94" stroke="#cbb89a" stroke-width="4"/><rect x="38" y="94" width="56" height="46" rx="11" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="2.4"/><text x="66" y="123" text-anchor="middle" font-size="24" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">X</text><rect x="224" y="94" width="56" height="46" rx="11" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="2.4"/><text x="252" y="123" text-anchor="middle" font-size="24" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">Z</text><text x="159" y="70" text-anchor="middle" font-size="11" fill="#9ec0a8">X легче Y · Y легче Z</text></g>
+          <g class="c9pop" style="animation-delay:.5s"><rect x="84" y="146" width="150" height="18" rx="9" fill="rgba(143,209,168,.14)" stroke="#8fd1a8"/><text x="159" y="159" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">X &lt; Y &lt; Z</text></g>
         </svg>`)+
-        wkAns('тяжелее всех Z, легче всех X',C.green)+
+        wkAns('тяжелее всех Z, легче всех X',H9.green)+
         wkSml('стрелка всегда указывает от лёгкого к тяжёлому — идём по ней до конца'));
     } else if(step===4){
       h=wkFrame(wkBig('Цепочка одной строкой')+
-        wkHero(towers([{e:'🐺',t:'Волк',h:108,c:'#7f9bb8'},{e:'🦊',t:'Лиса',h:76,c:'#e08a4a'},{e:'🐰',t:'Заяц',h:46,c:'#c9a06a'}],{base:118}))+
-        wkRow(wkChip('первый — выше всех',C.gold),wkChip('последний — ниже всех',C.green))+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="140" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <text x="159" y="30" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">Волк &gt; Лиса &gt; Заяц</text>
+          <rect x="26" y="44" width="120" height="30" rx="12" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="2.2"/>
+          <text x="86" y="64" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">первый</text>
+          <rect x="172" y="44" width="120" height="30" rx="12" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2.2"/>
+          <text x="232" y="64" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">последний</text>
+          <g class="c9pop" style="animation-delay:.35s"><text x="86" y="96" text-anchor="middle" font-size="14" fill="#e8dcc8" font-weight="bold">самый высокий</text></g>
+          <g class="c9pop" style="animation-delay:.45s"><text x="232" y="96" text-anchor="middle" font-size="14" fill="#e8dcc8" font-weight="bold">самый низкий</text></g>
+          <g class="c9pop" style="animation-delay:.55s"><rect x="56" y="110" width="206" height="22" rx="11" fill="rgba(255,255,255,.05)" stroke="#3d5c49"/><text x="159" y="125" text-anchor="middle" font-size="13" fill="#cfe0cf">концы цепочки = готовый ответ</text></g>
+        </svg>`)+
         wkSml('кто в цепочке первый — самый высокий; кто последний — самый низкий'));
     } else if(step===5){
       h=wkFrame(wkBig('Четыре зверя по росту')+
-        wkHero(towers([{e:'🐻',t:'Медведь',h:122,c:'#b98a5a'},{e:'🐺',t:'Волк',h:94,c:'#7f9bb8'},{e:'🦊',t:'Лиса',h:68,c:'#e08a4a'},{e:'🐰',t:'Заяц',h:42,c:'#c9a06a'}],{base:140,colW:56,gap:8}))+
-        chain24([{e:'🐻',t:'Медведь'},{e:'🐺',t:'Волк'},{e:'🦊',t:'Лиса'},{e:'🐰',t:'Заяц'}])+
+        wkHero(rowBeasts([
+          {letter:'М',h:118,c:'#b98a5a'},
+          {letter:'В',h:92,c:'#7f9bb8',delay:.12},
+          {letter:'Л',h:66,c:'#e08a4a',delay:.24},
+          {letter:'З',h:40,c:'#c9a06a',delay:.36}
+        ],{ground:138,wcol:44,stepX:76,headR:13}))+
+        `<div class="c9in" style="animation-delay:.5s;text-align:center;font-size:12.5px;color:#e8dcc8;font-weight:bold">М — Медведь · В — Волк · Л — Лиса · З — Заяц</div>`+
+        wkRow(sign('Медведь > Волк > Лиса > Заяц',H9.green,0.5))+
+        wkAns('Медведь — самый высокий, Заяц — самый низкий',H9.gold)+
         wkSml('длинная цепочка работает так же, как короткая: звено за звеном'));
     } else if(step===6){
-      if(st.mode==null) st.mode=0;
+      const show=st.mode===1;
       h=wkFrame(wkBig('Данных не хватает?')+
-        wkHero(st.mode===0
-          ? towers([{e:'🦊',t:'Лиса',h:76,c:'#e08a4a'},{e:'🐰',t:'Заяц',h:46,c:'#c9a06a'}],{base:96,colW:60})
-          : towers([{e:'🐺',t:'Волк',h:108,c:'#7f9bb8'},{e:'🦊',t:'Лиса',h:76,c:'#e08a4a'},{e:'🐰',t:'Заяц',h:46,c:'#c9a06a'}],{base:118}))+
-        wkRow(wkPill('Лиса > Заяц',C.gold),wkPill('Волк > Заяц',C.blue))+
-        (st.mode===0
-          ? `<div class="wk-ans" style="color:#ffcfc2">кто выше: Лиса или Волк? пока не знаем!</div>
-             ${wkRow(wkBtn('➕ добавить: Волк выше Лисы',`visW24Act('${lk}','w')`))}`
-          : `${wkAns('теперь ясно: Волк выше Лисы, оба выше Зайца!',C.green)}
-             ${wkRow(wkBtn('↺ сброс',`visW24Act('${lk}','rst')`))}`)+
+        wkHero(rowBeasts(show
+          ? [{letter:'В',h:100,c:'#7f9bb8'},{letter:'Л',h:70,c:'#e08a4a',delay:.15},{letter:'З',h:42,c:'#c9a06a',delay:.3}]
+          : [{letter:'Л',h:70,c:'#e08a4a'},{letter:'З',h:42,c:'#c9a06a',delay:.15},{letter:'В?',h:100,c:'#5a6f7f',delay:.3}],{ground:118,w:318}))+
+        wkRow(sign('Лиса > Заяц',H9.gold),sign('Волк > Заяц',H9.blue,0.2))+
+        (show
+          ? wkAns('теперь ясно: Волк выше Лисы, оба выше Зайца!',H9.green)+wkRow(wkBtn('сброс',`visW24Act('${lk}','rst')`))
+          : `<div class="c9in" style="animation-delay:.5s;text-align:center;font-size:13.5px;color:#ffcfc2;font-weight:bold">кто выше: Лиса или Волк? пока не знаем!</div>`+wkRow(wkBtn('добавить: Волк выше Лисы',`visW24Act('${lk}','w')`)))+
         wkSml('если данных не хватает — отвечай только на то, что следует из цепочки'));
     } else if(step===7){
-      h=wkFrame(wkBig('Тест из учебника 📝')+testUI(lk,st)+
-        wkSml('это вопросы из учебника: собери цепочку — и ответ найдётся сам'));
-    } else {
-      h=wkFrame(wkBig('Проверь себя')+
-        wkHero(`<svg width="322" height="120" viewBox="0 0 322 120" style="display:block">
-          ${[['X','легче','#7fd1ff',22],['Y','средний','#8fd1a8',124],['Z','тяжелее','#ffd76a',226]].map((b,i)=>`
-            <g class="wv-pop" style="animation-delay:${(i*0.16).toFixed(2)}s">
-              <rect x="${b[3]}" y="18" width="70" height="64" rx="13" fill="rgba(255,255,255,.05)" stroke="${b[2]}" stroke-width="2.4"/>
-              <text x="${b[3]+35}" y="52" text-anchor="middle" font-size="26" fill="${b[2]}" font-weight="bold" font-family="Georgia,serif">${b[0]}</text>
-              <text x="${b[3]+35}" y="72" text-anchor="middle" font-size="11" fill="#9ec0a8">${b[1]}</text>
-            </g>`).join('')}
-          <text x="96" y="58" font-size="22" fill="${C.red}" font-weight="bold"><</text>
-          <text x="198" y="58" font-size="22" fill="${C.red}" font-weight="bold"><</text>
+      const kinds=[['рост','выше','#7fd1ff'],['масса','тяжелее','#8fd1a8'],['длина','длиннее','#ffd76a'],['возраст','старше','#e8a0d8']];
+      const chips=kinds.map((k,i)=>`<span class="c9in" style="animation-delay:${(i*0.12).toFixed(2)}s;display:inline-block;padding:6px 13px;border-radius:12px;border:2px solid ${k[2]};font-size:15px;color:${k[2]};font-weight:bold">${k[1]}</span>`).join('');
+      h=wkFrame(wkBig('Сравниваем что угодно')+
+        wkHero(`<svg viewBox="0 0 318 120" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="110" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <rect x="20" y="24" width="64" height="72" rx="11" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="2.4"/>
+          <text x="52" y="64" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">A</text>
+          <text x="52" y="86" text-anchor="middle" font-size="11" fill="#9ec0a8">больше</text>
+          <text x="105" y="70" text-anchor="middle" font-size="24" fill="#ff8a7a" font-weight="bold">&gt;</text>
+          <rect x="127" y="24" width="64" height="72" rx="11" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2.4"/>
+          <text x="159" y="64" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">B</text>
+          <text x="159" y="86" text-anchor="middle" font-size="11" fill="#9ec0a8">середина</text>
+          <text x="212" y="70" text-anchor="middle" font-size="24" fill="#ff8a7a" font-weight="bold">&gt;</text>
+          <rect x="234" y="24" width="64" height="72" rx="11" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="2.4"/>
+          <text x="266" y="64" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">C</text>
+          <text x="266" y="86" text-anchor="middle" font-size="11" fill="#9ec0a8">меньше</text>
         </svg>`)+
-        wkRow(wkPill('X < Y < Z',C.gold))+
-        wkAns('тяжелее всех — Z! Готов к проверке?',C.green)+
+        `<div class="wk-row" style="gap:7px;margin-top:4px">${chips}</div>`+
+        wkSml('правило одно для роста, массы, длины и возраста: если A > B и B > C, то A > C'));
+    } else if(step===8){
+      if(st.quiz==null) st.quiz=0;
+      const cases=[
+        {chain:['A','B','C'], q:'A выше B, B выше C. Кто выше всех?', opts:['A','B','C'], ans:0},
+        {chain:['X','Y','Z'], q:'X легче Y, Y легче Z. Кто тяжелее всех?', opts:['X','Y','Z'], ans:2},
+        {chain:['М','В','Л','З'], q:'Медведь выше Волка, Волк выше Лисы, Лиса выше Зайца. Кто ниже всех?', opts:['Медведь','Волк','Лиса','Заяц'], ans:3},
+        {chain:['A','B','C','D'], q:'A выше B, B выше C, C выше D. Кто выше всех?', opts:['A','B','C','D'], ans:0}
+      ];
+      const T=cases[st.quiz%cases.length];
+      const Q=st.quiz>=cases.length? cases[st.quiz%cases.length] : T;
+      h=wkFrame(wkBig('Тренажёр: концы цепочки')+
+        (st.quiz<cases.length
+          ? wkNote('вопрос '+((st.quiz%cases.length)+1)+' из '+cases.length,'#cfe0cf')
+          : ''))+
+        wkHero(rowBeasts(
+          T.chain.map((c,i)=>({letter:c,h:120-i*24,c:H9P[i%H9P.length],delay:i*0.12})),
+          {ground:132,wcol:40,stepX:72,headR:13}))+
+        wkNote(T.q,'#e8dcc8')+
+        `<div class="wk-row" style="gap:8px">${T.opts.map((o,i)=>{
+          let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+          if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?H9.green:H9.red; tc=i===T.ans?H9.green:H9.red; }
+          return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:52px;font-size:16px" onclick="visW24T('${lk}',${i})">${o}</button>`;
+        }).join('')}</div>`+
+        (st.sel!=null?(st.sel===T.ans
+          ? `<div class="wk-ans" style="color:#8fd1a8;font-size:17px">верно! Ответ — на конце цепочки</div>`+wkRow(wkBtn('следующий вопрос',`visW24Act('${lk}','nq')`))
+          : `<div class="wk-ans" style="color:#ff8a7a;font-size:16px">не так. Кто первый, кто последний?</div>`+wkRow(wkBtn('заново',`visW24Act('${lk}','rst')`))):'')+
+        wkSml('первый в цепочке — «самый», последний — «наименее»');
+    } else if(step===9){
+      const show=st.mode===1;
+      h=wkFrame(wkBig('Очень длинная цепочка')+
+        wkHero(`<svg viewBox="0 0 318 140" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="128" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          ${['A','B','C','D','E'].map((c,i)=>{
+            const x=26+i*58;
+            return `<g class="c9pop" style="animation-delay:${(i*0.12).toFixed(2)}s">
+              <rect x="${x}" y="${show? (20+i*10) : 40}" width="46" height="${show? (92-i*10) : 66}" rx="11" fill="rgba(255,255,255,.05)" stroke="${H9P[i%H9P.length]}" stroke-width="2.4"/>
+              <text x="${x+23}" y="${show? (44+i*10): 78}" text-anchor="middle" font-size="24" fill="#fff" font-weight="bold" font-family="Georgia,serif">${c}</text>
+            </g>`;
+          }).join('')}
+          ${!show? `<text x="159" y="112" text-anchor="middle" font-size="12" fill="#9ec0a8">пока просто буквы: A, B, C, D, E</text>`:''}
+        </svg>`)+
+        (show
+          ? wkRow(sign('A > B > C > D > E',H9.green,0.4))+
+            wkRow(wkPill('выше всех — A',H9.gold),wkPill('ниже всех — E',H9.blue))+
+            wkRow(wkBtn('сброс',`visW24Act('${lk}','rst')`))
+          : wkRow(wkBtn('выстроить по росту',`visW24Act('${lk}','w')`)))+
+        wkSml('сколько бы ни было звеньев, ответ всегда на концах цепочки'));
+    } else if(step===10){
+      h=wkFrame(wkBig('Тест')+
+        wkHero(`<svg viewBox="0 0 318 96" style="display:block;width:100%;height:auto">
+          ${['A','B','C'].map((c,i)=>{
+            const x=52+i*88;
+            return `<g class="c9pop" style="animation-delay:${(i*0.15).toFixed(2)}s">
+              <rect x="${x}" y="14" width="64" height="64" rx="13" fill="rgba(255,255,255,.05)" stroke="${H9P[i%H9P.length]}" stroke-width="2.6"/>
+              <text x="${x+32}" y="55" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">${c}</text>
+            </g>`;
+          }).join('')}
+          <text x="120" y="58" text-anchor="middle" font-size="22" fill="#ff8a7a" font-weight="bold">&gt;</text>
+          <text x="208" y="58" text-anchor="middle" font-size="22" fill="#ff8a7a" font-weight="bold">&gt;</text>
+        </svg>`)+
+        quiz(lk,st)+
+        wkSml('собери цепочку и посмотри на её концы — ответ найдётся сам'));
+    } else {
+      h=wkFrame(wkBig('Проверь себя: X, Y и Z')+
+        wkHero(`<svg viewBox="0 0 318 120" style="display:block;width:100%;height:auto">
+          ${['X','Y','Z'].map((c,i)=>{
+            const x=46+i*82;
+            return `<g class="c9pop" style="animation-delay:${(i*0.16).toFixed(2)}s">
+              <rect x="${x}" y="16" width="64" height="64" rx="13" fill="rgba(255,255,255,.05)" stroke="${H9P[i%H9P.length]}" stroke-width="2.6"/>
+              <text x="${x+32}" y="57" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">${c}</text>
+              <text x="${x+32}" y="96" text-anchor="middle" font-size="11" fill="#9ec0a8">${i===0?'легче всех':(i===1?'средний':'тяжелее всех')}</text>
+            </g>`;
+          }).join('')}
+          <text x="114" y="60" text-anchor="middle" font-size="22" fill="#ff8a7a" font-weight="bold">&lt;</text>
+          <text x="196" y="60" text-anchor="middle" font-size="22" fill="#ff8a7a" font-weight="bold">&lt;</text>
+        </svg>`)+
+        wkRow(sign('X < Y < Z',H9.gold))+
+        wkAns('тяжелее всех — Z! Готов к проверке?',H9.green)+
         wkSml('жми «Понял! Проверю себя» — там вопрос про X, Y и Z'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
@@ -648,8 +777,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   function visW24Act(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
     if(act==='w') st.mode=1;
+    if(act==='nq'){ if(st.quiz!=null){ st.quiz++; } st.sel=null; if(st.q!=null){ st.q=1; st.sel=null; } }
     if(act==='rst') CHS[lk]={};
-    if(act==='nq'){ st.q=1; st.sel=null; }
     chRender(0);
   }
   window.visW24Act=visW24Act;
