@@ -1362,3 +1362,210 @@ window.WAVE_D = window.WAVE_D || {};
   window.WAVE_D[424]=visD424;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===424){ window.ARH_LESSONS[i]=L424; break; } } })();
 })();
+/* ================= УРОК 425 · Метод площадей ================= */
+(function(){
+  const L425 = {
+    id: 425, title: 'Метод площадей', ico: '📐',
+    src: 'Математика · 8 класс · Олимп-8: метод площадей', subj: 'math',
+    explain: [
+      'Метод площадей — мощный олимпиадный приём: вместо сложных рассуждений о длинах считаем ПЛОЩАДИ. Одна и та же фигура имеет одну площадь — как её ни разрежь!',
+      'Главная формула: площадь треугольника = ½ · основание · высота. Для треугольника с основанием 10 и высотой 6: S = ½·10·6 = 30. Запомни половину!',
+      'Прямоугольный треугольник: его катеты — это основание и высота. S = ½·3·4 = 6 для катетов 3 и 4. Классическая «египетская» пара!',
+      'Ключевая идея метода: посчитай площадь фигуры ДВУМЯ разными способами и приравняй. Получишь уравнение на неизвестную величину — и решишь задачу!',
+      'Пример: в треугольнике провели высоты из разных вершин. Площадь одна, значит, ½·a·hₐ = ½·b·h_b. Сокращаем ½: a·hₐ = b·h_b. Связь сторон и высот найдена!',
+      'Если у двух треугольников равные основания, их площади относятся как высоты: S₁/S₂ = h₁/h₂. Ведь S = ½·a·h, а ½·a одинаково!',
+      'Метод площадей помогает находить высоты, доказывать равенства и находить отношения отрезков. Площадь — «мост» между разными элементами фигуры!',
+      'Запомни рецепт: 1) найди площадь удобным способом; 2) найди её же другим способом; 3) приравняй — получишь уравнение; 4) реши его. Всё!',
+      'Теперь проверь себя: площадь треугольника с основанием 10 и высотой 6? Вспомни формулу с половиной!'
+    ],
+    check: { q: 'Площадь треугольника с основанием 10 и высотой 6?', choices: ['30', '60', '15', '16'], ans: 0,
+      exp: '½ · 10 · 6 = 30.' },
+    tasks: [
+      { q: 'Площадь прямоугольного треугольника с катетами 3 и 4?', kind: 'unit', ans: 6, tol: 0,
+        hints: ['½ · 3 · 4.', '6.'], sol: '6' },
+      { q: 'У треугольников равные основания. Тогда площади относятся как…', kind: 'choice', choices: ['высоты', 'углы', 'стороны', 'периметры'], ans: 0, tol: 0,
+        hints: ['S = ½·a·h.', 'Площади пропорциональны высотам.'], sol: 'высоты' }
+    ]
+  };
+  const triPic=(h)=>`<svg viewBox="0 0 180 130" style="width:170px;height:123px">
+    <polygon points="90,15 20,115 160,115" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="3"/>
+    <line x1="90" y1="15" x2="90" y2="115" stroke="#ffd76a" stroke-width="3" stroke-dasharray="5 3"/>
+    <text x="96" y="${h?60:110}" font-size="13" fill="#ffd76a">h</text>
+    <line x1="20" y1="115" x2="160" y2="115" stroke="#8fd1a8" stroke-width="3"/>
+    <text x="90" y="128" text-anchor="middle" font-size="12" fill="#8fd1a8">основание a</text>
+  </svg>`;
+  function visD425(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Метод площадей</div>
+        <div style="font-size:44px" class="wv-swing">📐</div>
+        <div class="wv-sml" style="max-width:330px">фигура имеет ОДНУ площадь — как её ни разрежь! Считаем площади вместо сложных рассуждений</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Формула площади</div>
+        ${triPic(true)}
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 14px;font-size:19px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">S = ½ · a · h</div>
+        <div class="wv-sml">основание 10, высота 6 → ½·10·6 = 30</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Прямоугольный треугольник</div>
+        <svg viewBox="0 0 180 130" style="width:160px;height:116px">
+          <polygon points="20,115 150,115 20,25" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="3"/>
+          <path d="M20 115 L32 115 L32 103 Z" fill="#8fd1a8"/>
+          <text x="85" y="128" text-anchor="middle" font-size="12" fill="#ffd76a">катет 3</text>
+          <text x="24" y="80" font-size="12" fill="#ffd76a">катет 4</text>
+        </svg>
+        <div class="wv-ans" style="font-size:19px;color:#8fd1a8">S = ½·3·4 = 6</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Считаем двумя способами</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.6">посчитай площадь <b style="color:#ffd76a">двумя способами</b> и приравняй — получишь уравнение на неизвестную!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Высоты из разных вершин</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:18px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">½·a·hₐ = ½·b·h_b</div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">a·hₐ = b·h_b</div>
+        </div>
+        <div class="wv-sml">связь сторон и высот найдена!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Равные основания</div>
+        <div style="font-size:20px;color:#e8dcc8;font-family:Georgia,serif">S₁/S₂ = h₁/h₂</div>
+        <div class="wv-sml">S = ½·a·h, а ½·a одинаково → площади как высоты!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Что даёт метод</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['найти высоту','через площадь','#7fd1ff'],
+            ['доказать равенство','двумя способами','#8fd1a8'],
+            ['отношения отрезков','площади как «мост»','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Рецепт</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['1️⃣','найди площадь удобно','#7fd1ff'],
+            ['2️⃣','найди её же иначе','#8fd1a8'],
+            ['3️⃣','приравняй — уравнение!','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;text-align:left;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${triPic(true)}
+        <div class="wv-sml">основание 10, высота 6 → S = ?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">½ · 10 · 6 = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_D[425]=visD425;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===425){ window.ARH_LESSONS[i]=L425; break; } } })();
+})();
+/* ================= УРОК 426 · Вписанные углы и четырёхугольники ================= */
+(function(){
+  const L426 = {
+    id: 426, title: 'Вписанные углы и четырёхугольники', ico: '⭕',
+    src: 'Математика · 8 класс · Олимп-8: вписанные углы', subj: 'math',
+    explain: [
+      'Четырёхугольник называют ВПИСАННЫМ, если все его четыре вершины лежат на одной окружности. Как рамка вокруг круглого портрета! У таких четырёхугольников есть удивительное свойство углов.',
+      'Вспомни: вписанный угол равен ПОЛОВИНЕ дуги, на которую опирается. Это ключ ко всему! Угол при вершине A «видит» дугу между соседними вершинами.',
+      'Главное свойство: сумма ПРОТИВОПОЛОЖНЫХ углов вписанного четырёхугольника равна 180°. Угол A + угол C = 180°, угол B + угол D = 180°. Проверяется через дуги!',
+      'Почему так? Угол A опирается на дугу BCD, угол C — на дугу DAB. Эти две дуги вместе образуют ВСЮ окружность (360°). Половина от 360° = 180° — вот и сумма!',
+      'Обратный признак: если в четырёхугольнике сумма противоположных углов равна 180°, его можно ВПИСАТЬ в окружность. Это работает в обе стороны!',
+      'Частный случай: прямоугольник — всегда вписанный! Его противоположные углы по 90°, сумма 180°. Окружность проходит через все четыре вершины, центр — пересечение диагоналей.',
+      'А квадрат? Тоже вписанный — он прямоугольник! И равнобедренная трапеция тоже вписанная: у неё углы при основании равны, и сумма противоположных даёт 180°.',
+      'Угол, опирающийся на диаметр, равен 90°. Если в четырёхугольнике один угол опирается на диагональ-диаметр — он прямой! Это часто помогает в задачах.',
+      'Теперь проверь себя: чему равна сумма противоположных углов вписанного четырёхугольника? Вспомни — 180°!'
+    ],
+    check: { q: 'Сумма противоположных углов вписанного четырёхугольника?', choices: ['180°', '90°', '360°', '270°'], ans: 0,
+      exp: 'Противоположные углы вписанного 4-угольника в сумме 180°.' },
+    tasks: [
+      { q: 'Чему равен угол, опирающийся на диаметр?', kind: 'unit', ans: 90, tol: 0,
+        hints: ['Диаметр — дуга 180°.', 'Вписанный угол = 90°.'], sol: '90°' },
+      { q: 'Вписанный угол равен…', kind: 'choice', choices: ['половине дуги, на которую опирается', 'самой дуге', 'удвоенной дуге', 'четверти дуги'], ans: 0, tol: 0,
+        hints: ['Свойство вписанного угла.', 'Вписанный угол = ½ дуги.'], sol: 'половине дуги' }
+    ]
+  };
+  const quadCircle=(kind)=>`<svg viewBox="0 0 220 200" style="width:190px;height:173px;background:#101f18;border-radius:12px">
+    <circle cx="110" cy="100" r="80" fill="rgba(127,209,255,.04)" stroke="#7fd1ff" stroke-width="2.5"/>
+    ${kind==='sq'?`<polygon points="110,25 185,100 110,175 35,100" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="2.5"/>`:
+    kind==='rec'?`<polygon points="55,52 170,52 165,148 45,148" fill="rgba(143,209,168,.08)" stroke="#8fd1a8" stroke-width="2.5"/>`:
+    `<polygon points="110,22 180,120 100,175 40,90" fill="rgba(255,138,192,.06)" stroke="#ff8ac0" stroke-width="2.5"/>`}
+  </svg>`;
+  function visD426(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Вписанный четырёхугольник</div>
+        ${quadCircle('gen')}
+        <div class="wv-sml">все четыре вершины лежат на одной окружности!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ключ: вписанный угол = ½ дуги</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:16px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">угол = половина дуги, на которую опирается</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Главное свойство: 180°</div>
+        ${quadCircle('gen')}
+        <div style="background:rgba(127,209,160,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 12px;font-size:16px;color:#8fd1a8;font-weight:bold" class="wv-ans">∠A + ∠C = 180° · ∠B + ∠D = 180°</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Почему так?</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.6">угол A смотрит на дугу BCD, угол C — на дугу DAB. Вместе это <b style="color:#ffd76a">вся окружность 360°</b> → сумма = 180°!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Обратный признак</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.6">если сумма противоположных углов = 180°, четырёхугольник <b style="color:#8fd1a8">можно вписать</b> в окружность — работает в обе стороны!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Прямоугольник — вписанный!</div>
+        ${quadCircle('rec')}
+        <div class="wv-sml">углы по 90° → сумма 180° · центр — пересечение диагоналей</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Квадрат и трапеция</div>
+        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
+          ${[['квадрат','вписанный!','#ffd76a'],['равнобедренная трапеция','вписанная!','#8fd1a8']].map(x=>`<span class="wv-chip" style="border-color:${x[2]};color:${x[2]}">${x[0]} — ${x[1]}</span>`).join('')}
+        </div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Угол на диаметре = 90°</div>
+        ${quadCircle('sq')}
+        <div class="wv-sml">если угол опирается на диагональ-диаметр — он прямой!</div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${quadCircle('gen')}
+        <div class="wv-sml">сумма противоположных углов вписанного 4-угольника?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? °</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_D[426]=visD426;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===426){ window.ARH_LESSONS[i]=L426; break; } } })();
+})();
