@@ -1023,3 +1023,342 @@ window.WAVE_D = window.WAVE_D || {};
   window.WAVE_D[421]=visD421;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===421){ window.ARH_LESSONS[i]=L421; break; } } })();
 })();
+/* ================= УРОК 422 · Неравенство Коши и средние ================= */
+(function(){
+  const L422 = {
+    id: 422, title: 'Неравенство Коши и средние', ico: '⚖️',
+    src: 'Математика · 8 класс · Олимп-8: Коши', subj: 'math',
+    explain: [
+      'Неравенство Коши (его ещё называют неравенством о средних) — одно из важнейших в олимпиадах: для положительных a и b всегда (a + b)/2 ≥ √(ab). Среднее арифметическое не меньше среднего геометрического!',
+      'Проверим на числах 4 и 9: среднее арифметическое (4+9)/2 = 6,5. Среднее геометрическое √(4·9) = √36 = 6. Видим: 6,5 ≥ 6 — работает!',
+      'Когда равенство? Только при a = b. Возьми a = b = 7: (7+7)/2 = 7 и √49 = 7 — равны! Чем сильнее числа отличаются, тем больше разрыв между средними.',
+      'Доказательство одной строкой: (√a − √b)² ≥ 0, ведь квадрат не бывает отрицательным! Раскрываем: a − 2√(ab) + b ≥ 0 → a + b ≥ 2√(ab) → делим на 2.',
+      'Классическое применение: найди минимум x + 4/x при x > 0. Берём a = x и b = 4/x. Их произведение x·(4/x) = 4. По Коши: x + 4/x ≥ 2√4 = 4!',
+      'Когда достигается минимум 4? Равенство при x = 4/x → x² = 4 → x = 2 (x > 0). Проверка: 2 + 4/2 = 2 + 2 = 4. Минимум найден точно!',
+      'Ещё пример: докажи, что x + 1/x ≥ 2 при x > 0. Произведение x·(1/x) = 1 → x + 1/x ≥ 2√1 = 2. Равенство при x = 1. Красиво!',
+      'Запомни рецепт: 1) запиши выражение как сумму двух чисел; 2) найди их произведение; 3) примени Коши: сумма ≥ 2√(произведение); 4) равенство при равных числах.',
+      'Теперь проверь себя: чему равен минимум x + 4/x при x > 0? Вспомни: произведение равно 4!'
+    ],
+    check: { q: 'Чему равен минимум x + 4/x при x > 0?', choices: ['4', '2', '8', '1'], ans: 0,
+      exp: 'x + 4/x ≥ 2√(x·4/x) = 4.' },
+    tasks: [
+      { q: 'Найди среднее геометрическое чисел 4 и 9.', kind: 'unit', ans: 6, tol: 0,
+        hints: ['√(4 · 9).', '√36 = 6.'], sol: '6' },
+      { q: 'Когда (a + b)/2 = √(ab)?', kind: 'choice', choices: ['когда a = b', 'когда a > b', 'когда a < b', 'никогда'], ans: 0, tol: 0,
+        hints: ['Равенство в неравенстве о средних.', 'При a = b.'], sol: 'a = b' }
+    ]
+  };
+  function visD422(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Неравенство Коши</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;font-size:20px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">(a+b)/2 ≥ √(ab)</div>
+        <div class="wv-sml">для положительных a и b · одно из главных в олимпиадах!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверка на 4 и 9</div>
+        <div class="wv-row" style="gap:10px">
+          <div style="text-align:center;background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#7fd1ff;font-family:Georgia,serif">(4+9)/2 = 6,5</b><div style="font-size:10px;color:#9ec0a8">арифметическое</div></div>
+          <div style="text-align:center;background:rgba(143,209,168,.1);border:2px solid #8fd1a8;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#8fd1a8;font-family:Georgia,serif">√36 = 6</b><div style="font-size:10px;color:#9ec0a8">геометрическое</div></div>
+        </div>
+        <div class="wv-sml">6,5 ≥ 6 — работает!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Равенство при a = b</div>
+        <div class="wv-row" style="gap:10px">
+          <div style="text-align:center;background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#7fd1ff;font-family:Georgia,serif">(7+7)/2 = 7</b></div>
+          <div style="text-align:center;background:rgba(143,209,168,.1);border:2px solid #8fd1a8;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#8fd1a8;font-family:Georgia,serif">√49 = 7</b></div>
+        </div>
+        <div class="wv-sml">равны! Чем сильнее отличаются числа — тем больше разрыв</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Доказательство</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:17px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">(√a − √b)² ≥ 0</div>
+          <div class="wv-pop2">a − 2√(ab) + b ≥ 0</div>
+          <div class="wv-pop2">a + b ≥ 2√(ab)</div>
+          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">делим на 2 — готово!</div>
+        </div>
+        <div class="wv-sml">квадрат не бывает отрицательным!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Минимум x + 4/x</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-size:16px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">a = x, b = 4/x</div>
+          <div class="wv-pop2">произведение = x·(4/x) = <b style="color:#7fd1ff">4</b></div>
+          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold;font-size:20px;font-family:Georgia,serif">x + 4/x ≥ 2√4 = 4</div>
+        </div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Когда минимум?</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:18px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">x = 4/x → x² = 4 → x = 2</div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">2 + 4/2 = 4 ✔ минимум!</div>
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ещё пример: x + 1/x</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:18px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">произведение x·(1/x) = 1</div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">x + 1/x ≥ 2√1 = 2</div>
+        </div>
+        <div class="wv-sml">равенство при x = 1</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Рецепт</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['1️⃣','сумма двух чисел','#7fd1ff'],
+            ['2️⃣','найди их произведение','#8fd1a8'],
+            ['3️⃣','сумма ≥ 2√(произведение)','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;text-align:left;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">x + 4/x, x > 0</div>
+        <div class="wv-sml">произведение x·(4/x) = 4 → минимум?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">2√4 = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_D[422]=visD422;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===422){ window.ARH_LESSONS[i]=L422; break; } } })();
+})();
+/* ================= УРОК 423 · Теорема Виета на олимпиадах ================= */
+(function(){
+  const L423 = {
+    id: 423, title: 'Теорема Виета на олимпиадах', ico: '🌿',
+    src: 'Математика · 8 класс · Олимп-8: Виета', subj: 'math',
+    explain: [
+      'Для квадратного уравнения x² + px + q = 0 теорема Виета — волшебный инструмент: сумма корней равна −p, а произведение равно q. Без решения знаем про корни всё!',
+      'Проверим: у уравнения x² − 5x + 6 = 0 коэффициент p = −5, q = 6. По Виете сумма корней = −p = 5, произведение = q = 6. Какие числа дают сумму 5 и произведение 6? Это 2 и 3!',
+      'Проверим подстановкой: 2² − 5·2 + 6 = 4 − 10 + 6 = 0 ✔. И 3² − 5·3 + 6 = 9 − 15 + 6 = 0 ✔. Корни 2 и 3 — верно!',
+      'Как подбирать корни? Ищем два числа: сумма = −p, произведение = q. Для x² − 4x + 3: сумма 4, произведение 3 → числа 1 и 3. Мгновенно, без дискриминанта!',
+      'На олимпиадах Виета позволяет «угадывать» корни и проверять решения. А ещё — восстанавливать уравнение по корням: x² − (сумма)x + произведение = 0.',
+      'Пример: корни 2 и 5 → уравнение x² − 7x + 10 = 0. Сумма 2+5 = 7 → коэффициент −7, произведение 10 → свободный член 10. Готово!',
+      'Хитрость: если уравнение x² + px + q с ЦЕЛЫМИ корнями — они обязательно делители q! У x² + 3x + 2 делители 2: ±1, ±2. Пробуем: −1 и −2 дают сумму −3 = −p ✔. Корни −1, −2!',
+      'Запомни связку: x² + px + q = 0 → x₁ + x₂ = −p, x₁·x₂ = q. Подбирай пары делителей q, проверяя сумму — и корни находятся за секунды!',
+      'Теперь проверь себя: у x² − 5x + 6 чему равна сумма корней? Вспомни: −p!'
+    ],
+    check: { q: 'У x² − 5x + 6 чему равна сумма корней?', choices: ['5', '−5', '6', '−6'], ans: 0,
+      exp: 'Сумма корней = −p = −(−5) = 5.' },
+    tasks: [
+      { q: 'Чему равно произведение корней x² + 3x + 2?', kind: 'unit', ans: 2, tol: 0,
+        hints: ['q = 2.', 'Произведение корней = 2.'], sol: '2' },
+      { q: 'Подбери корни x² − 4x + 3 = 0 по Виете.', kind: 'choice', choices: ['1 и 3', '2 и 2', '−1 и 3', '3 и 4'], ans: 0, tol: 0,
+        hints: ['Сумма 4, произведение 3.', '1 + 3 = 4 и 1·3 = 3 → корни 1 и 3.'], sol: '1 и 3' }
+    ]
+  };
+  const card=(name,val,c)=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${c};border-radius:12px;padding:8px 14px"><b style="font-size:20px;color:${c};font-family:Georgia,serif">${name}</b><div style="font-size:12px;color:#8fa08f">${val}</div></div>`;
+  function visD423(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Теорема Виета</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;font-size:18px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">x² + px + q = 0</div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:4px">
+          ${card('сумма','−p','#7fd1ff')}${card('произведение','q','#8fd1a8')}
+        </div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверка на x² − 5x + 6</div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          ${card('p = −5','сумма = 5','#7fd1ff')}${card('q = 6','произведение = 6','#8fd1a8')}
+        </div>
+        <div class="wv-ans" style="font-size:20px;color:#ffd76a;font-family:Georgia,serif">2 и 3: 2+3=5, 2·3=6!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверка подстановкой</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:16px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">2² − 5·2 + 6 = 4 − 10 + 6 = 0 ✔</div>
+          <div class="wv-pop2">3² − 5·3 + 6 = 9 − 15 + 6 = 0 ✔</div>
+        </div>
+        <div class="wv-sml">корни 2 и 3 — верно!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Подбираем корни</div>
+        <div class="wv-sml">x² − 4x + 3: сумма 4, произведение 3</div>
+        <div class="wv-row" style="gap:8px">${card('1 + 3 = 4','сумма','#7fd1ff')}${card('1 · 3 = 3','произведение','#8fd1a8')}</div>
+        <div class="wv-ans" style="font-size:20px;color:#ffd76a;font-family:Georgia,serif">корни 1 и 3!</div>
+        <div class="wv-sml">без дискриминанта — мгновенно!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Обратная задача: по корням</div>
+        <div class="wv-sml">корни 2 и 5 → уравнение?</div>
+        <div style="font-size:20px;color:#ffd76a;font-family:Georgia,serif">x² − 7x + 10 = 0</div>
+        <div class="wv-sml">сумма 7 → −7 · произведение 10</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Хитрость с делителями</div>
+        <div class="wv-sml">x² + 3x + 2: делители 2 → ±1, ±2</div>
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-size:15px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">−1 и −2: сумма −3 = −p ✔</div>
+          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">корни −1 и −2!</div>
+        </div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Памятка</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:340px;font-size:15px;color:#e8dcc8;font-family:Georgia,serif">x² + px + q = 0 → x₁+x₂ = −p · x₁·x₂ = q</div>
+        <div class="wv-sml">подбирай пары делителей q, проверяя сумму!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Где применяется</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['угадать корни','без дискриминанта','#7fd1ff'],
+            ['проверить решение','быстрая проверка','#8fd1a8'],
+            ['составить уравнение','по известным корням','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">x² − 5x + 6</div>
+        <div class="wv-sml">p = −5 → сумма корней = −p = ?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_D[423]=visD423;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===423){ window.ARH_LESSONS[i]=L423; break; } } })();
+})();
+/* ================= УРОК 424 · Двудольные графы и раскраски ================= */
+(function(){
+  const L424 = {
+    id: 424, title: 'Двудольные графы и раскраски', ico: '🕸️',
+    src: 'Математика · 8 класс · Олимп-8: графы', subj: 'math',
+    explain: [
+      'Граф — это точки (вершины) и линии (рёбра) между ними. Двудольный граф — особенный: его вершины делятся на ДВЕ группы, и рёбра соединяют ТОЛЬКО вершины из разных групп. Никаких рёбер внутри группы!',
+      'Пример: мальчики и девочки на танцах. Каждое ребро — пара «мальчик — девочка». Мальчик с мальчиком не танцуют, значит, рёбер внутри группы нет — граф двудольный!',
+      'Как проверить двудольность? Попробуй раскрасить вершины в два цвета так, чтобы соседние (соединённые ребром) были РАЗНОГО цвета. Получилось — граф двудольный!',
+      'Красим: возьми первую вершину красной, соседей — синими, их соседей — снова красными… Если нигде не возникает конфликт (два соседа одного цвета) — граф двудольный!',
+      'Звезда — граф «центр и листья»: центр соединяется со всеми листьями, но листья между собой не соединяются. Центр — красный, все листья — синие → двудольный!',
+      'А квадрат-цикл (4 вершины по кругу)? Красим по очереди: красный, синий, красный, синий — получилось! Цикл с ЧЁТНЫМ числом вершин двудольный.',
+      'А треугольник? Три вершины, каждая соединена с двумя другими. Красим: красный, синий… третья соседствует и с красной, и с синей — конфликт! Треугольник НЕ двудольный.',
+      'Правило: граф двудольный ⟺ в нём нет циклов нечётной длины. Треугольник (цикл из 3) — не двудольный, квадрат (цикл из 4) — двудольный. Проверяй раскраской!',
+      'Теперь проверь себя: граф, где рёбра соединяют только вершины из разных групп, называется…?'
+    ],
+    check: { q: 'Граф, где рёбра соединяют только вершины из разных групп, называется…', choices: ['двудольным', 'полным', 'деревом', 'циклом'], ans: 0,
+      exp: 'Двудольный граф — вершины в двух группах.' },
+    tasks: [
+      { q: 'Сколько цветов достаточно для раскраски двудольного графа?', kind: 'unit', ans: 2, tol: 0,
+        hints: ['По цвету на группу.', 'Два цвета.'], sol: '2' },
+      { q: 'Является ли «звезда» (центр и листья) двудольным графом?', kind: 'choice', choices: ['да', 'нет', 'только с 3 листьями', 'нельзя узнать'], ans: 0, tol: 0,
+        hints: ['Центр — одна группа.', 'Центр в одной группе, листья — в другой → двудольный.'], sol: 'да' }
+    ]
+  };
+  const bipartite=(kind)=>`<svg viewBox="0 0 220 150" style="width:200px;height:136px;background:#101f18;border-radius:12px">
+    ${kind==='star'?`<g stroke="#8fd1a8" stroke-width="2.5">${[0,1,2,3,4].map(i=>{const a=-90+i*72; const x=110+52*Math.cos(a*Math.PI/180),y=75+52*Math.sin(a*Math.PI/180); return `<line x1="110" y1="75" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/>`;}).join('')}</g>
+      <circle cx="110" cy="75" r="9" fill="#e86a5a"/>
+      ${[0,1,2,3,4].map(i=>{const a=-90+i*72; const x=110+52*Math.cos(a*Math.PI/180),y=75+52*Math.sin(a*Math.PI/180); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="8" fill="#7fd1ff"/>`;}).join('')}`:
+    kind==='tri'?`<polygon points="110,25 45,125 175,125" fill="none" stroke="#ff9a8a" stroke-width="3"/>
+      <circle cx="110" cy="25" r="9" fill="#e86a5a"/><circle cx="45" cy="125" r="9" fill="#7fd1ff"/><circle cx="175" cy="125" r="9" fill="#7fd1ff"/>`:
+    kind==='sq'?`<rect x="60" y="40" width="100" height="70" fill="none" stroke="#8fd1a8" stroke-width="3"/>
+      <circle cx="60" cy="40" r="9" fill="#e86a5a"/><circle cx="160" cy="40" r="9" fill="#7fd1ff"/><circle cx="60" cy="110" r="9" fill="#7fd1ff"/><circle cx="160" cy="110" r="9" fill="#e86a5a"/>`:''}
+  </svg>`;
+  function visD424(el){
+    const step=LV.step||0;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Двудольный граф</div>
+        <div style="display:flex;align-items:center;gap:12px;justify-content:center">
+          <div style="display:flex;flex-direction:column;gap:8px">${[1,2,3].map(()=>'<span style="width:16px;height:16px;border-radius:50%;background:#e86a5a;display:inline-block"></span>').join('')}</div>
+          <div style="font-size:16px;color:#8fa08f">↔ рёбра только между группами</div>
+          <div style="display:flex;flex-direction:column;gap:8px">${[1,2,3].map(()=>'<span style="width:16px;height:16px;border-radius:50%;background:#7fd1ff;display:inline-block"></span>').join('')}</div>
+        </div>
+        <div class="wv-sml">две группы · рёбра между ними, не внутри!</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Танцы: мальчики и девочки</div>
+        <div style="font-size:38px" class="wv-swing">💃</div>
+        <div class="wv-sml">каждое ребро — пара «мальчик–девочка» → граф двудольный!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверка раскраской</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['возьми вершину','красной','#e86a5a'],
+            ['соседей','синими','#7fd1ff'],
+            ['их соседей','снова красными','#e86a5a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        <div class="wv-sml">конфликта нет → двудольный!</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Звезда — двудольная</div>
+        ${bipartite('star')}
+        <div class="wv-sml">центр красный, листья синие → да!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Квадрат-цикл</div>
+        ${bipartite('sq')}
+        <div class="wv-sml">красный-синий-красный-синий → двудольный!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Треугольник — НЕ двудольный</div>
+        ${bipartite('tri')}
+        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:7px 12px;font-size:14.5px;color:#ffcfc2;font-weight:bold" class="wv-ans">третья соседствует и с красной, и с синей — конфликт!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Правило</div>
+        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 12px;max-width:340px;width:100%">
+          <div style="font-size:14.5px;color:#e8dcc8;text-align:center;line-height:1.6">граф двудольный ⟺ <b style="color:#ffd76a">нет циклов нечётной длины</b> (треугольников!)</div>
+        </div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Где применяется</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['расписание','ученики ↔ уроки','#7fd1ff'],
+            ['пары на танцах','мальчики ↔ девочки','#e86a5a'],
+            ['сети','две группы узлов','#8fd1a8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="display:flex;align-items:center;gap:10px;justify-content:center">
+          <span style="width:16px;height:16px;border-radius:50%;background:#e86a5a;display:inline-block"></span>
+          <span style="width:16px;height:16px;border-radius:50%;background:#7fd1ff;display:inline-block"></span>
+        </div>
+        <div class="wv-sml">граф с рёбрами только между группами — какой?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? </div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_D[424]=visD424;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===424){ window.ARH_LESSONS[i]=L424; break; } } })();
+})();
