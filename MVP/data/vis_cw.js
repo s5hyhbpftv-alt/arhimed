@@ -345,3 +345,339 @@ window.WAVE_C = window.WAVE_C || {};
   window.WAVE_C[401]=visC401;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===401){ window.ARH_LESSONS[i]=L401; break; } } })();
 })();
+/* ================= УРОК 402 · Линейная функция y = kx + b ================= */
+(function(){
+  const L402 = {
+    id: 402, title: 'Линейная функция y = kx + b', ico: '📈',
+    src: 'Математика · 7 класс · Алгебра 7: функции', subj: 'math',
+    explain: [
+      'Линейная функция — это правило, по которому каждому числу x сопоставляется число y = kx + b. Пример: y = 2x + 1. Подставили x = 3 — получили y = 7. Самое удивительное: график такой функции — всегда ПРЯМАЯ линия!',
+      'Число k — угловой коэффициент. Он отвечает за НАКЛОН прямой. Если k > 0, прямая поднимается слева направо, как дорога в горку. Если k < 0 — опускается, как с горки. Чем больше |k|, тем круче прямая.',
+      'Число b — свободный член. Он показывает, где прямая пересекает ось y. Ведь при x = 0: y = k·0 + b = b. Значит, точка (0; b) всегда лежит на прямой. У y = 2x + 1 это точка (0; 1).',
+      'Как построить график? Прямая определяется ДВУМЯ точками! Берём y = 2x + 1: при x = 0 → y = 1 (точка (0;1)), при x = 1 → y = 3 (точка (1;3)). Отмечаем обе и проводим прямую.',
+      'Удобно заполнять таблицу значений. Для y = 2x + 1: x = 0 → 1, x = 1 → 3, x = 2 → 5. Видишь? При росте x на 1 значение y растёт на 2 — это и есть k = 2!',
+      'Пример из жизни: тариф такси. Посадка 70 рублей, каждый километр 30 рублей: цена y = 30x + 70, где x — километры. Здесь k = 30 (цена за км), b = 70 (посадка). График — прямая!',
+      'Если b = 0, прямая проходит через начало координат (0; 0): y = kx. Это пропорциональность — чем больше x, тем больше y, ровно во столько же раз.',
+      'Запомни: k — наклон (как быстро растёт), b — точка (0; b) на оси y. Двух точек достаточно, чтобы нарисовать прямую — и весь график готов!',
+      'Теперь проверь себя: у функции y = 2x + 1 найди y при x = 3. Просто подставь: 2·3 + 1.'
+    ],
+    check: { q: 'У функции y = 2x + 1 чему равно y при x = 3?', choices: ['7', '6', '5', '8'], ans: 0,
+      exp: '2·3 + 1 = 7.' },
+    tasks: [
+      { q: 'Где прямая y = 3x − 2 пересекает ось y? Подставь x = 0: y = ?', kind: 'unit', ans: -2, tol: 0,
+        hints: ['x = 0.', 'y = 3·0 − 2 = −2.'], sol: '−2' },
+      { q: 'Какая из функций задаёт прямую?', kind: 'choice', choices: ['y = 2x + 1', 'y = x²', 'y = 1/x', 'y = |x|'], ans: 0, tol: 0,
+        hints: ['Линейная функция.', 'y = 2x + 1 — линейная, график прямая.'], sol: 'y = 2x + 1' }
+    ]
+  };
+  function plane(pt,line){
+    const sc=24, cx=130, cy=105;
+    let g='';
+    for(let i=-4;i<=4;i++){ g+=`<line x1="${cx+i*sc}" y1="8" x2="${cx+i*sc}" y2="202" stroke="rgba(255,255,255,.05)"/>`;
+      g+=`<line x1="8" y1="${cy-i*sc}" x2="252" y2="${cy-i*sc}" stroke="rgba(255,255,255,.05)"/>`; }
+    let dots='',lineEl='';
+    if(line){ const x1=-2,x2=5; const y1=cy-(line[0]*x1+line[1])*sc/2, y2=cy-(line[0]*x2+line[1])*sc/2;
+      lineEl=`<line x1="${cx+x1*sc/2}" y1="${y1}" x2="${cx+x2*sc/2}" y2="${y2}" stroke="#ffd76a" stroke-width="3.5"/>`; }
+    if(pt){ const px=cx+pt[0]*sc/2, py=cy-pt[1]*sc/2;
+      dots=`<circle cx="${px}" cy="${py}" r="6" fill="#8fd1a8"/><circle cx="${px}" cy="${py}" r="10" fill="none" stroke="#8fd1a8" opacity=".6"/>`; }
+    return `<svg viewBox="0 0 260 210" style="width:230px;height:186px;background:#101f18;border-radius:12px">
+      ${g}
+      <line x1="8" y1="${cy}" x2="252" y2="${cy}" stroke="#cfe0cf" stroke-width="2"/>
+      <line x1="${cx}" y1="8" x2="${cx}" y2="202" stroke="#cfe0cf" stroke-width="2"/>
+      ${lineEl}${dots}
+      <text x="248" y="${cy+14}" font-size="11" fill="#cfe0cf">x</text><text x="${cx+8}" y="14" font-size="11" fill="#cfe0cf">y</text>
+    </svg>`;
+  }
+  function visC402(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;justify-content:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:16px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Что такое линейная функция?</div>
+        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">y = 2x + 1</div>
+        <div class="wv-sml">подставили x = 3 → y = 7 · график — <b style="color:#8fd1a8">прямая!</b></div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">k — наклон прямой</div>
+        ${plane(null,[1,0])}
+        <div class="wv-sml">k > 0 — в горку · k < 0 — с горки</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">b — пересечение с осью y</div>
+        ${plane([0,1],[2,1])}
+        <div class="wv-sml">при x = 0: y = b → точка (0; 1)</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">Строим по двум точкам</div>
+        ${plane([1,3],[2,1])}
+        <div class="wv-sml">(0; 1) и (1; 3) → проводим прямую!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Таблица значений y = 2x + 1</div>
+        <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+          ${[[0,1],[1,3],[2,5]].map((p,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:10px;padding:6px 10px"><div style="font-size:12px;color:#8fa08f">x=${p[0]}</div><b style="font-size:20px;color:#ffd76a;font-family:Georgia,serif">y=${p[1]}</b></div>`).join('')}
+        </div>
+        <div class="wv-sml">x +1 → y +2 — это и есть k = 2!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Такси: y = 30x + 70</div>
+        <div style="font-size:40px" class="wv-swing">🚕</div>
+        <div class="wv-sml">k = 30 (₽ за км) · b = 70 (₽ посадка)</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:7px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8">график — прямая: чем дальше едешь, тем дороже!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Если b = 0: y = kx</div>
+        ${plane(null,[1,0])}
+        <div class="wv-sml">прямая проходит через начало (0; 0) — пропорциональность</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Памятка</div>
+        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
+          ${chip('k — наклон','#7fd1ff')}${chip('b — точка (0; b)','#8fd1a8')}${chip('2 точки = прямая','#ffd76a')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">y = 2x + 1, x = 3</div>
+        <div class="wv-sml">подставь: 2·3 + 1 = ?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:20px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">y = ?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_C[402]=visC402;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===402){ window.ARH_LESSONS[i]=L402; break; } } })();
+})();
+/* ================= УРОК 403 · Линейные неравенства ================= */
+(function(){
+  const L403 = {
+    id: 403, title: 'Линейные неравенства', ico: '📊',
+    src: 'Математика · 7 класс · Алгебра 7: неравенства', subj: 'math',
+    explain: [
+      'Неравенство отличается от уравнения только знаком: вместо «=» стоят «>», «<», «≥» или «≤». Например, 2x + 1 > 7. Решить неравенство — значит найти ВСЕ числа x, при которых оно верно.',
+      'Решаем как уравнение: переносим числа, упрощаем. 2x + 1 > 7 → переносим 1 вправо с минусом: 2x > 6. Теперь делим обе части на 2 — число ПОЛОЖИТЕЛЬНОЕ, знак не меняется: x > 3.',
+      'Ответ x > 3 изображают на числовой оси: пустой кружок на 3 (само число 3 не подходит) и луч вправо. Все числа больше 3 подходят: 4, 5, 100…',
+      'А теперь САМОЕ ВАЖНОЕ правило! Если умножить или разделить обе части неравенства на ОТРИЦАТЕЛЬНОЕ число, знак ПЕРЕВОРАЧИВАЕТСЯ. −3x < 9 делим на −3 → x > −3. Был «<», стал «>»!',
+      'Проверим, почему так. Возьмём x = −2: −3·(−2) = 6, а 6 < 9 — верно, −2 подходит. Возьмём x = −4: −3·(−4) = 12, а 12 < 9 — неверно! Значит, подходят числа БОЛЬШЕ −3 → x > −3.',
+      'Кружок: для строгого знака > или < — пустой (число на границе не подходит). Для нестрогого ≥ или ≤ — закрашенный (число подходит). x ≥ −3 включает само −3.',
+      'Всегда проверяй ответ! Подставь одно число из твоего промежутка в исходное неравенство — если получилась правда, ответ верный.',
+      'Запомни раз и навсегда: 1) делишь на положительное — знак тот же; 2) делишь на отрицательное — знак наоборот. Проверка числом — лучшая страховка!',
+      'Теперь проверь себя: реши −3x < 9. Вспомни про деление на отрицательное число!'
+    ],
+    check: { q: 'Реши: x + 5 > 8', choices: ['x > 3', 'x > 13', 'x < 3', 'x > −3'], ans: 0,
+      exp: 'x > 8 − 5 = 3.' },
+    tasks: [
+      { q: 'Сколько целых положительных x подходит: 2x < 10?', kind: 'unit', ans: 4, tol: 0,
+        hints: ['x < 5.', '1, 2, 3, 4 — четыре.'], sol: '4' },
+      { q: 'Реши: −3x < 9', kind: 'choice', choices: ['x > −3', 'x < −3', 'x > 3', 'x < 3'], ans: 0, tol: 0,
+        hints: ['Делим на −3 → знак меняется.', 'x > −3.'], sol: 'x > −3' }
+    ]
+  };
+  const axis=(val,open)=>`<svg viewBox="0 0 260 80" style="width:230px;height:71px;background:#101f18;border-radius:10px">
+    <line x1="10" y1="44" x2="250" y2="44" stroke="#cfe0cf" stroke-width="2"/>
+    ${[-3,-2,-1,0,1,2,3,4,5].map(n=>`<text x="${130+(n)*18}" y="60" text-anchor="middle" font-size="11" fill="#8fa08f">${n}</text>`).join('')}
+    <circle cx="${130+(val)*18}" cy="44" r="7" fill="${open?'none':'#8fd1a8'}" stroke="#8fd1a8" stroke-width="3"/>
+    <line x1="${130+(val)*18+8}" y1="44" x2="248" y2="44" stroke="#8fd1a8" stroke-width="5" stroke-linecap="round"/>
+  </svg>`;
+  function visC403(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:16px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Неравенство — почти уравнение</div>
+        <div style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">2x + 1 > 7</div>
+        <div class="wv-row" style="gap:5px">${chip('>','#ff9a8a')}${chip('<','#7fd1ff')}${chip('≥','#8fd1a8')}${chip('≤','#e8a0d8')}</div>
+        <div class="wv-sml">найти ВСЕ x, при которых верно</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">Решаем как уравнение</div>
+        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:19px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">2x + 1 > 7</div>
+          <div class="wv-pop2">2x > 7 − 1</div>
+          <div class="wv-pop2">2x > 6 | :2</div>
+          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold;font-size:24px">x > 3</div>
+        </div>
+        <div class="wv-sml">делим на ПОЛОЖИТЕЛЬНОЕ 2 — знак тот же!</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Ответ на оси: x > 3</div>
+        ${axis(3,true)}
+        <div class="wv-sml">пустой кружок — само 3 не подходит · луч вправо</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">ГЛАВНОЕ: делим на минус!</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:20px;color:#e8dcc8;text-align:center">
+          <div class="wv-pop">−3x < 9 | :(−3)</div>
+          <div class="wv-pop2" style="color:#ff9a8a">было «<»</div>
+          <div class="wv-pop3" style="color:#8fd1a8;font-size:26px;font-weight:bold">x > −3 — стало «>»!</div>
+        </div>
+        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:7px 12px;font-size:14px;color:#ffcfc2;font-weight:bold" class="wv-ans">знак перевернулся — как зеркало!</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверяем на числах</div>
+        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+          ${[
+            ['x = −2','−3·(−2) = 6 < 9 — верно ✔','#8fd1a8'],
+            ['x = −4','−3·(−4) = 12 < 9 — НЕВЕРНО ✘','#ff9a8a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span style="font-size:12.5px">${x[1]}</span></div>`).join('')}
+        </div>
+        <div class="wv-sml">значит, x > −3 — подтвердилось!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Строгий и нестрогий знак</div>
+        ${axis(-3,false)}
+        <div class="wv-sml">x ≥ −3 — кружок ЗАКРАШЕН: само −3 подходит!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверка — лучшая страховка</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">подставь число из ответа в исходное неравенство: 0 > −3 → −3·0 = 0 < 9 ✔ — правда!</div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Правило на всю жизнь</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          ${[
+            ['делишь на плюс','знак тот же','#8fd1a8'],
+            ['делишь на минус','знак наоборот!','#ff9a8a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">−3x < 9</div>
+        <div class="wv-sml">делим на −3 — не забудь перевернуть знак!</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 14px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">x ? −3</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_C[403]=visC403;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===403){ window.ARH_LESSONS[i]=L403; break; } } })();
+})();
+/* ================= УРОК 404 · Признаки равенства треугольников ================= */
+(function(){
+  const L404 = {
+    id: 404, title: 'Признаки равенства треугольников', ico: '📐',
+    src: 'Математика · 7 класс · Геометрия 7: треугольники', subj: 'math',
+    explain: [
+      'Два треугольника равны, если их можно совместить наложением: все стороны и углы совпали. Проверять все шесть элементов долго. Геометры нашли три КОРОТКИХ признака — по ним равенство проверяется быстро!',
+      'Первый признак: если две стороны одного треугольника равны двум сторонам другого И угол МЕЖДУ ними равен — треугольники равны. Сравниваем «палочки» у угла: длина слева, угол, длина справа.',
+      'Почему хватает двух сторон и угла? Треугольник — жёсткая конструкция. Две палочки выходят из вершины под известным углом: их концы заданы длинами, и третья сторона «дорисуется» сама. Шевельнуть нельзя!',
+      'Второй признак: если сторона одного треугольника равна стороне другого и два угла, ПРИЛЕЖАЩИЕ к этой стороне, равны — треугольники равны. Сторона — как «полка», на которой лежат два угла по краям.',
+      'Третий признак — самый простой: если все три стороны одного треугольника равны трём сторонам другого — треугольники равны. Углы даже сравнивать не нужно: стороны определяют форму полностью!',
+      'Как запомнить? Первый: сторона — угол — сторона (СУС). Второй: угол — сторона — угол (УСУ). Третий: сторона — сторона — сторона (ССС). По первым буквам легко вспомнить!',
+      'Помни про сумму углов: она всегда 180°. Зная два угла, третий находим вычитанием: 60° + 70° = 130°, третий = 180 − 130 = 50°. Это часто помогает в задачах на признаки.',
+      'В задачах «докажи, что треугольники равны»: 1) ищи равные стороны (часто — общая сторона!); 2) ищи равные углы (вертикальные или данные); 3) выбери подходящий признак и запиши вывод.',
+      'Теперь проверь себя: равенство по двум сторонам и углу между ними — какой это признак?'
+    ],
+    check: { q: 'Равенство по двум сторонам и углу между ними — какой признак?', choices: ['первый', 'второй', 'третий', 'такого нет'], ans: 0,
+      exp: 'Это первый признак равенства.' },
+    tasks: [
+      { q: 'Сколько признаков равенства треугольников изучают?', kind: 'unit', ans: 3, tol: 0,
+        hints: ['По сторонам и углам.', 'Три признака.'], sol: '3' },
+      { q: 'По каким элементам проверяют третий признак?', kind: 'choice', choices: ['по трём сторонам', 'по двум сторонам и углу', 'по стороне и двум углам', 'по двум углам'], ans: 0, tol: 0,
+        hints: ['Третий признак.', 'Три стороны.'], sol: 'по трём сторонам' }
+    ]
+  };
+  const tri=(kind)=>`<svg viewBox="0 0 150 120" style="width:${kind==='sss'?160:150}px;height:120px">
+    ${kind==='sus'?`<polygon points="75,12 15,108 135,108" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="3"/>
+      <line x1="75" y1="12" x2="15" y2="108" stroke="#ffd76a" stroke-width="4"/><line x1="75" y1="12" x2="135" y2="108" stroke="#8fd1a8" stroke-width="4"/>
+      <path d="M75 12 L62 32 A 24 24 0 0 1 87 29 Z" fill="rgba(255,138,192,.5)"/>`:
+    kind==='usu'?`<polygon points="20,108 130,108 75,12" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="3"/>
+      <line x1="20" y1="108" x2="130" y2="108" stroke="#ffd76a" stroke-width="4"/>
+      <path d="M75 12 L62 32 A 24 24 0 0 1 87 29 Z" fill="rgba(255,138,192,.5)"/>
+      <path d="M20 108 L44 88 A 26 26 0 0 0 22 92 Z" fill="rgba(127,209,255,.5)"/>`:
+    `<polygon points="75,12 15,108 135,108" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="3"/>
+      <line x1="75" y1="12" x2="15" y2="108" stroke="#ff9a8a" stroke-width="4"/><line x1="15" y1="108" x2="135" y2="108" stroke="#7fd1ff" stroke-width="4"/><line x1="135" y1="108" x2="75" y2="12" stroke="#8fd1a8" stroke-width="4"/>`}
+  </svg>`;
+  function visC404(el){
+    const step=LV.step||0;
+    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        <div class="wv-big">Равные треугольники</div>
+        <div style="display:flex;gap:8px;justify-content:center">${tri('sss')}${tri('sss')}</div>
+        <div class="wv-sml">можно наложить — всё совпало! Как проверить быстро?</div>
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        <div class="wv-big">1-й признак: СУС</div>
+        ${tri('sus')}
+        <div class="wv-sml">две стороны + угол <b style="color:#ff8ac0">между ними</b></div>
+        <div class="wv-sml">золотая и зелёная стороны + розовый угол</div>
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        <div class="wv-big">Жёсткость треугольника</div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">две «палочки» из вершины под углом: их концы заданы → третья сторона <b style="color:#ffd76a">дорисуется сама</b>! Шевельнуть нельзя.</div>
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        <div class="wv-big">2-й признак: УСУ</div>
+        ${tri('usu')}
+        <div class="wv-sml">сторона + два <b style="color:#ff8ac0">прилежащих</b> угла</div>
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        <div class="wv-big">3-й признак: ССС</div>
+        ${tri('sss')}
+        <div class="wv-sml">три стороны — углы проверять не нужно!</div>
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        <div class="wv-big">Как запомнить</div>
+        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
+          ${chip('СУС — 1-й','#7fd1ff')}${chip('УСУ — 2-й','#8fd1a8')}${chip('ССС — 3-й','#ffd76a')}
+        </div>
+        <div class="wv-sml">по первым буквам легко вспомнить!</div>
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        <div class="wv-big">Сумма углов 180°</div>
+        <div style="display:flex;gap:8px;justify-content:center;align-items:center">
+          <span class="wv-chip">60°</span><span class="wv-chip">70°</span><span style="color:#ffd76a;font-size:22px">= 130°</span>
+        </div>
+        <div style="font-size:20px;color:#8fd1a8;font-family:Georgia,serif">третий = 180 − 130 = <b class="wv-ans">50°</b></div>
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        <div class="wv-big">Рецепт решения</div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+          ${[
+            ['1️⃣','ищи равные стороны (общая сторона!)','#7fd1ff'],
+            ['2️⃣','ищи равные углы (вертикальные)','#8fd1a8'],
+            ['3️⃣','выбери признак и запиши вывод','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;text-align:left;font-size:14px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        <div class="wv-big">Проверь себя</div>
+        ${tri('sus')}
+        <div class="wv-sml">две стороны и угол между ними — какой признак?</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 14px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">первый? второй? третий?</div>
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_C[404]=visC404;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===404){ window.ARH_LESSONS[i]=L404; break; } } })();
+})();
