@@ -3190,3 +3190,319 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW46Act=visW46Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===46){ window.ARH_LESSONS[i]=L46; break; } } })();
 })();
+/* ================= УРОК 398 · Полуинварианты: процессы (v2, 13 слайдов, крупные SVG, без эмодзи) ================= */
+(function(){
+  if(!window.__wk398v2css){
+    window.__wk398v2css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .i8in{animation:i8In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes i8In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .i8pop{animation:i8Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes i8Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .i8float{animation:i8Float 1.9s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes i8Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}'+
+      '#lvis .i8flow{stroke-dasharray:9 7;animation:i8Flow .85s linear infinite;}'+
+      '@keyframes i8Flow{to{stroke-dashoffset:-32}}'+
+      '#lvis .i8bump{animation:i8Bump .85s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes i8Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}'+
+      '#lvis .i8wob{animation:i8Wob 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes i8Wob{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}';
+    document.head.appendChild(st);
+  }
+  const L398 = {
+    id: 398, title: 'Полуинварианты: процессы', ico: '⇄',
+    src: 'Математика · 5–6 класс · Олимп-6: процессы', subj: 'math',
+    explain: [
+      'На доске записаны числа 1, 2, 3, 4. Каждый ход стирают два числа a и b и записывают вместо них их разность a − b. Так делают, пока не останется одно число. Можно ли заранее узнать, каким оно будет — чётным или нечётным?',
+      'Попробуем играть вручную. Стираем 1 и 2: 1 − 2 = −1. На доске теперь −1, 3, 4. Одно число заменилось, а сумма всех чисел тоже поменялась — следим за этим!',
+      'Продолжаем: стираем 3 и 4: 3 − 4 = −1. Остались −1 и −1. Их разность: −1 − (−1) = 0. Итог 0 — чётное число!',
+      'Проверим другим порядком. Стираем 1 и 3: 1 − 3 = −2. Остались −2, 2, 4.',
+      'Дальше стираем 2 и 4: 2 − 4 = −2. Остались −2 и −2: их разность −2 − (−2) = 0. Опять 0? Похоже, итог всегда одинаковый…',
+      'Стоп! Проверим третий порядок: (1,4) → −3, остались −3, 2, 3; затем (2,3) → −1, остались −3, −1; наконец −3 − (−1) = −2. Итог −2, а не 0! Значит, само число зависит от порядка — но оба ответа чётные. В чём секрет?',
+      'Смотрим на один ход внимательно. Были числа a и b, а станет одно число a − b. Пусть S — сумма всех чисел на доске. Старая сумма теряет a и b, но получает a − b: новая сумма S′ = S − a − b + (a − b).',
+      'Упростим: S′ = S − a − b + a − b = S − 2b. За один ход сумма меняется ровно на 2b — а 2b всегда чётное число! Вычесть чётное — значит, чётность суммы не изменится.',
+      'Вот он, полуинвариант: чётность суммы чисел на доске сохраняется на каждом ходу, каким бы порядком мы ни играли. Значит, чётность единственного числа в конце равна чётности начальной суммы!',
+      'Считаем начальную сумму: 1 + 2 + 3 + 4 = 10. Десять — чётное число. Чётность не меняется ни на одном ходу, поэтому и итоговое число обязательно чётное: 0 — чётное, −2 — тоже чётное. Ура, всё сходится!',
+      'А что если бы сумма была нечётной? Например, числа 1, 2, 3, 4, 5 дают в сумме 15 — нечётное. Тогда и итог игры был бы нечётным, каким порядком ни играй. Чётность суммы — это «предсказание» финала.',
+      'Тренажёр: возьми набор чисел, сложи их и сразу скажи, чётным или нечётным будет итог игры, — даже не играя! Проверь себя на разных наборах.',
+      'Проверь себя: при замене пары a, b на a − b сохраняется чётность суммы. А из чисел 1, 2, 3, 4 (сумма 10 — чётная) итог будет чётным. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Стирают a и b, записывают a − b. Что сохраняется?', choices: ['чётность суммы', 'сама сумма', 'число чисел', 'произведение'], ans: 0,
+      exp: 'a+b и a−b одной чётности → чётность суммы сохраняется.' },
+    tasks: [
+      { q: 'Чему равна сумма 1 + 2 + 3 + 4?', kind: 'unit', ans: 10, tol: 0,
+        hints: ['Сложи по порядку.', '10.'], sol: '10' },
+      { q: 'Из чисел 1, 2, 3, 4 операцией «разность» останется одно число. Каким оно будет по чётности?', kind: 'choice', choices: ['чётным', 'нечётным', 'любым', 'нельзя узнать'], ans: 0, tol: 0,
+        hints: ['Сумма 10 чётна.', 'Чётность сохраняется → итог чётный.'], sol: 'чётным' }
+    ]
+  };
+  const I={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a',ivory:'#e8e0cc',mut:'#9ec0a8',grey:'#8a94ad'};
+  const IP=['#7fd1ff','#8fd1a8','#ffd76a','#e8a0d8','#ff9a7a','#5aa0d8','#c9a06a'];
+  /* плитка-число (SVG) */
+  function tile(x,y,v,c,opt){
+    const o=opt||{};
+    const w=o.w||58, h=o.h||56;
+    const s=String(v);
+    const fs=Math.min(o.fs||30, Math.floor((w-8)/(s.length*0.62)));
+    const col=o.fill? o.fill : (c? c : 'rgba(255,255,255,.05)');
+    const stroke=o.stroke||c||'#4a6a54';
+    const anim=o.bump?'i8bump':(o.float?'i8float':'i8pop');
+    return `<g class="${anim}" style="animation-delay:${(o.delay||0).toFixed(2)}s">
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.rx||13}" fill="${col}" stroke="${stroke}" stroke-width="${o.sw||3}"/>
+      <text x="${x+w/2}" y="${(y+h/2+fs*0.37).toFixed(1)}" text-anchor="middle" font-size="${fs}" fill="${o.tc||'#fff'}" font-weight="bold" font-family="Georgia,serif">${v}</text>
+    </g>`;
+  }
+  /* ряд плиток по центру; возвращает ширину использованного */
+  function tileRow(vals,opt){
+    const o=opt||{};
+    const W=o.w||318, w=o.tw||58, gap=o.gap||8, y=o.y||14;
+    const n=vals.length;
+    const total=n*w+(n-1)*gap;
+    const x0=Math.round((W-total)/2);
+    let s='';
+    vals.forEach((v,i)=>{
+      const c=o.cols&&o.cols[i]? o.cols[i]: IP[i%IP.length];
+      s+=tile(x0+i*(w+gap),y,v,c,{delay:(o.d0||0.1)+i*0.12,w,fs:o.fs});
+    });
+    return `<svg viewBox="0 0 ${W} ${y+56+(o.extra||6)}" style="display:block;width:100%;height:auto">${s}</svg>`;
+  }
+  /* «доска»: рамка с рядами плиток и подписями шагов */
+  const sign=(t,c,delay,fs)=>`<span class="i8in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:${fs||22}px;color:${c};font-weight:bold">${t}</span>`;
+  const arrow=(x,y,len,c)=>`<g class="i8flow"><line x1="${x}" y1="${y}" x2="${x+len}" y2="${y}" stroke="${c||'#ffd76a'}" stroke-width="3.4"/><path d="M${x+len} ${y-6} L${x+len+8} ${y} L${x+len} ${y+6} Z" fill="${c||'#ffd76a'}"/></g>`;
+  const Q398=[
+    {q:'При замене a, b на a − b чётность суммы…',opts:['сохраняется','меняется','зависит от хода'],ans:0},
+    {q:'Сумма на доске нечётная (например 15). Итог игры будет…',opts:['чётным','нечётным','любым'],ans:1}
+  ];
+  function quiz(lk,st){
+    const T=Q398[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?I.green:I.red; tc=i===T.ans?I.green:I.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:96px;font-size:15px" onclick="visW398T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! Нечётная сумма → нечётный итог</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! Сумма меняется на −2b — чётность та же</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Сумма S меняется на 2b — чётное число</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW398Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW398Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW398(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; if(step===1||step===2||step===3||step===4||step===5){ st.h=0; } if(step===11){ st.set=0; if(st.show==null) st.show=0; } if(step===12){ st.sel=null; st.q=0; } }
+    let h='';
+    if(step===0){
+      h=wkFrame(wkBig('Процесс с числами на доске')+
+        wkHero(tileRow([1,2,3,4],{y:20,extra:0}))+
+        wkHero(`<svg viewBox="0 0 318 92" style="display:block;width:100%;height:auto">
+          <rect x="20" y="10" width="110" height="46" rx="11" fill="rgba(255,255,255,.05)" stroke="#5aa0d8" stroke-width="2.6"/>
+          <text x="42" y="39" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold">a</text>
+          <text x="88" y="39" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold">b</text>
+          ${arrow(140,33,34)}
+          <rect x="188" y="10" width="110" height="46" rx="11" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="3"/>
+          <text x="200" y="39" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold">a</text><text x="232" y="39" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold">−</text><text x="266" y="39" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold">b</text>
+          <text x="159" y="78" text-anchor="middle" font-size="13" fill="#9ec0a8">стираем два числа, пишем их разность</text>
+        </svg>`)+
+        wkSml('так делают, пока не останется одно число · можно ли заранее узнать его чётность?'));
+    } else if(step===1){
+      const sh=st.h;
+      h=wkFrame(wkBig('Играем: порядок 1 (ход 1)')+
+        wkHero(sh===0
+          ? tileRow([1,2,3,4],{y:20,extra:0})
+          : `<svg viewBox="0 0 318 100" style="display:block;width:100%;height:auto">
+              <g class="i8pop"><rect x="14" y="16" width="88" height="58" rx="12" fill="rgba(255,138,122,.12)" stroke="#ff8a7a" stroke-width="3.4"/>
+              <text x="58" y="34" text-anchor="middle" font-size="15" fill="#ffcfc2">стираем</text>
+              <text x="34" y="62" text-anchor="middle" font-size="28" fill="#fff" font-weight="bold">1</text><text x="82" y="62" text-anchor="middle" font-size="28" fill="#fff" font-weight="bold">2</text></g>
+              ${arrow(112,45,26)}
+              ${tile(150,16,58,'−1','#ffd76a',{delay:.25,fs:28,bump:1})}
+              <text x="236" y="30" text-anchor="middle" font-size="15" fill="#ffcfc2">1 − 2 = −1</text>
+              <g class="i8pop" style="animation-delay:.4s"><rect x="150" y="64" width="150" height="30" rx="9" fill="rgba(255,255,255,.05)" stroke="#3d5c49"/>
+              <text x="225" y="84" text-anchor="middle" font-size="15" fill="#e8dcc8">на доске: −1, 3, 4</text></g>
+            </svg>`)+
+        (sh===0? wkRow(wkBtn('сделать ход: 1 − 2 = −1',`visW398Act('${lk}','go')`)): wkAns('сумма стала −1 + 3 + 4 = 6',I.gold))+
+        wkSml('мы стёрли 1 и 2 и записали вместо них −1 · чисел стало меньше!'));
+    } else if(step===2){
+      const sh=st.h;
+      h=wkFrame(wkBig('Играем: порядок 1 (ход 2)')+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          <g class="i8pop"><text x="159" y="20" text-anchor="middle" font-size="14" fill="#9ec0a8">было: −1, 3, 4</text></g>
+          ${sh===0? `<g class="i8pop" style="animation-delay:.1s"><rect x="24" y="30" width="82" height="54" rx="12" fill="rgba(255,138,122,.12)" stroke="#ff8a7a" stroke-width="3"/>
+            <text x="44" y="66" text-anchor="middle" font-size="28" fill="#fff" font-weight="bold">−1</text><text x="88" y="66" text-anchor="middle" font-size="28" fill="#fff" font-weight="bold">3</text></g>`:''}
+          ${sh>=1? tile(24,30,58,'3','#8fd1a8',{delay:0,fs:28}):''}
+          ${sh>=1? tile(112,30,58,'4','#8fd1a8',{delay:.12,fs:28}):''}
+          ${sh>=1? arrow(182,57,30):''}
+          ${sh>=1? tile(220,30,58,'−1','#ffd76a',{delay:.25,fs:28,bump:1}):''}
+          ${sh>=2? `<g class="i8pop" style="animation-delay:.1s"><text x="159" y="110" text-anchor="middle" font-size="20" fill="#e8dcc8" font-family="Georgia,serif">−1 − (−1) = 0</text>
+            <circle class="i8float" cx="240" cy="120" r="22" fill="#ffd76a"/><text x="240" y="128" text-anchor="middle" font-size="22" fill="#0d1a13" font-weight="bold">0</text></g>`:''}
+        </svg>`)+
+        wkRow(sh===0? wkBtn('ход: 3 − 4 = −1',`visW398Act('${lk}','go')`) : (sh===1? wkBtn('финал: −1 − (−1)',`visW398Act('${lk}','go')`) : wkBtn('сначала',`visW398Act('${lk}','rst')`)))+
+        (sh>=2? wkAns('итог 0 — чётное!',I.green):'')+
+        wkSml('три хода — осталось одно число 0'));
+    } else if(step===3){
+      const sh=st.h;
+      h=wkFrame(wkBig('Другой порядок (ход 1)')+
+        wkHero(sh===0
+          ? tileRow([1,2,3,4],{y:20,extra:0})
+          : `<svg viewBox="0 0 318 100" style="display:block;width:100%;height:auto">
+              <g class="i8pop"><rect x="14" y="16" width="88" height="58" rx="12" fill="rgba(255,138,122,.12)" stroke="#ff8a7a" stroke-width="3.4"/>
+              <text x="58" y="34" text-anchor="middle" font-size="15" fill="#ffcfc2">стираем</text>
+              <text x="34" y="62" text-anchor="middle" font-size="28" fill="#fff" font-weight="bold">1</text><text x="82" y="62" text-anchor="middle" font-size="28" fill="#fff" font-weight="bold">3</text></g>
+              ${arrow(112,45,26)}
+              ${tile(150,16,58,'−2','#7fd1ff',{delay:.25,fs:28,bump:1})}
+              <text x="244" y="30" text-anchor="middle" font-size="15" fill="#bfe4ff">1 − 3 = −2</text>
+              <g class="i8pop" style="animation-delay:.4s"><rect x="150" y="64" width="150" height="30" rx="9" fill="rgba(255,255,255,.05)" stroke="#3d5c49"/>
+              <text x="225" y="84" text-anchor="middle" font-size="15" fill="#e8dcc8">на доске: −2, 2, 4</text></g>
+            </svg>`)+
+        (sh===0? wkRow(wkBtn('сделать ход: 1 − 3 = −2',`visW398Act('${lk}','go')`)): wkAns('сумма стала −2 + 2 + 4 = 4',I.gold))+
+        wkSml('порядок другой — а сумма по-прежнему меняется'));
+    } else if(step===4){
+      const sh=st.h;
+      h=wkFrame(wkBig('Другой порядок (финал)')+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          <g class="i8pop"><text x="159" y="20" text-anchor="middle" font-size="14" fill="#9ec0a8">было: −2, 2, 4</text></g>
+          ${sh===0? `<g class="i8pop" style="animation-delay:.1s"><rect x="24" y="30" width="82" height="54" rx="12" fill="rgba(255,138,122,.12)" stroke="#ff8a7a" stroke-width="3"/>
+            <text x="44" y="66" text-anchor="middle" font-size="28" fill="#fff" font-weight="bold">2</text><text x="88" y="66" text-anchor="middle" font-size="28" fill="#fff" font-weight="bold">4</text></g>`:''}
+          ${sh>=1? tile(24,30,58,'−2','#8fd1a8',{delay:0,fs:28}):''}
+          ${sh>=1? tile(112,30,58,'4','#8fd1a8',{delay:.12,fs:28}):''}
+          ${sh>=1? arrow(182,57,30):''}
+          ${sh>=1? tile(220,30,58,'−2','#7fd1ff',{delay:.25,fs:28,bump:1}):''}
+          ${sh>=2? `<g class="i8pop" style="animation-delay:.1s"><text x="120" y="110" text-anchor="middle" font-size="20" fill="#e8dcc8" font-family="Georgia,serif">−2 − (−2) = 0</text>
+            <circle class="i8float" cx="200" cy="120" r="22" fill="#ffd76a"/><text x="200" y="128" text-anchor="middle" font-size="22" fill="#0d1a13" font-weight="bold">0</text></g>`:''}
+        </svg>`)+
+        wkRow(sh===0? wkBtn('ход: 2 − 4 = −2',`visW398Act('${lk}','go')`) : (sh===1? wkBtn('финал: −2 − (−2)',`visW398Act('${lk}','go')`) : wkBtn('сначала',`visW398Act('${lk}','rst')`)))+
+        (sh>=2? wkAns('опять 0 — чётное!',I.green):'')+
+        wkSml('два разных порядка — пока оба дали 0…'));
+    } else if(step===5){
+      const sh=st.h;
+      h=wkFrame(wkBig('А теперь третий порядок!')+
+        wkHero(`<svg viewBox="0 0 318 130" style="display:block;width:100%;height:auto">
+          ${sh===0? `<g class="i8pop"><text x="159" y="24" text-anchor="middle" font-size="15" fill="#9ec0a8">было: 1, 2, 3, 4</text>
+            <rect x="14" y="34" width="88" height="50" rx="11" fill="rgba(255,138,122,.12)" stroke="#ff8a7a" stroke-width="3"/>
+            <text x="34" y="66" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold">1</text><text x="82" y="66" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold">4</text>
+            <text x="130" y="66" text-anchor="middle" font-size="30" fill="#cfe0cf" font-weight="bold">→</text>
+            ${tile(146,34,58,'−3','#ffd76a',{delay:.2,fs:26,bump:1})}
+            <text x="238" y="66" text-anchor="middle" font-size="15" fill="#ffcfc2">1−4=−3</text>
+            <text x="159" y="104" text-anchor="middle" font-size="14" fill="#e8dcc8">на доске: −3, 2, 3</text></g>`
+          : `<g class="i8pop"><text x="159" y="22" text-anchor="middle" font-size="15" fill="#9ec0a8">было: −3, 2, 3</text>
+            <rect x="14" y="34" width="88" height="50" rx="11" fill="rgba(255,138,122,.12)" stroke="#ff8a7a" stroke-width="3"/>
+            <text x="34" y="66" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold">2</text><text x="82" y="66" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold">3</text>
+            <text x="130" y="66" text-anchor="middle" font-size="30" fill="#cfe0cf" font-weight="bold">→</text>
+            ${tile(146,34,58,'−1','#7fd1ff',{delay:.2,fs:26,bump:1})}
+            <text x="236" y="66" text-anchor="middle" font-size="15" fill="#bfe4ff">2−3=−1</text>
+            <text x="159" y="104" text-anchor="middle" font-size="14" fill="#e8dcc8">на доске: −3, −1</text></g>`}
+        </svg>`)+
+        wkRow(sh===0? wkBtn('ход: 1 − 4 = −3',`visW398Act('${lk}','go')`) : wkBtn('финал: −3 − (−1) = −2',`visW398Act('${lk}','go')`))+
+        (sh>=1? wkAns('итог −2, а не 0! Но −2 — тоже чётное!',I.red):'')+
+        wkSml('само число зависит от порядка — а чётность нет! в чём секрет?'));
+    } else if(step===6){
+      h=wkFrame(wkBig('Секрет: смотрим на один ход')+
+        wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="168" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <text x="159" y="28" text-anchor="middle" font-size="14" fill="#9ec0a8">была сумма S · стираем a и b · пишем a − b</text>
+          ${tile(30,40,52,'a','#7fd1ff',{fs:24,delay:0})}
+          ${tile(92,40,52,'b','#7fd1ff',{fs:24,delay:.1})}
+          ${arrow(154,66,34)}
+          ${tile(196,40,52,'a−b','#ffd76a',{fs:22,delay:.2,w:64})}
+          <text x="159" y="120" text-anchor="middle" font-size="19" fill="#e8dcc8" font-family="Georgia,serif">S′ = S − a − b + (a − b)</text>
+          <g class="i8pop" style="animation-delay:.35s"><rect x="30" y="132" width="258" height="30" rx="12" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.2"/>
+          <text x="159" y="152" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">S′ = S − 2b</text></g>
+        </svg>`)+
+        wkSml('старая сумма теряет a и b, но получает a − b · разберём формулу'));
+    } else if(step===7){
+      h=wkFrame(wkBig('Ключ: −2b — всегда чётное')+
+        wkHero(`<svg viewBox="0 0 318 156" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="148" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="i8pop"><rect x="24" y="18" width="120" height="64" rx="13" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="3"/>
+          <text x="84" y="46" text-anchor="middle" font-size="15" fill="#cfe0cf">за ход сумма</text>
+          <text x="84" y="70" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">− 2b</text></g>
+          <g class="i8pop" style="animation-delay:.2s"><rect x="174" y="18" width="120" height="64" rx="13" fill="rgba(217,164,65,.12)" stroke="#ffd76a" stroke-width="3"/>
+          <text x="234" y="46" text-anchor="middle" font-size="15" fill="#ffe9c9">2b — это</text>
+          <text x="234" y="70" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">чётное</text></g>
+          <g class="i8pop" style="animation-delay:.4s"><rect x="30" y="100" width="258" height="40" rx="15" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.4"/>
+          <text x="159" y="125" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold">вычесть чётное → чётность не меняется</text></g>
+        </svg>`)+
+        wkSml('2·(любое число) делится на 2 — значит, S и S′ одной чётности'));
+    } else if(step===8){
+      h=wkFrame(wkBig('Полуинвариант найден')+
+        wkHero(`<svg viewBox="0 0 318 130" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="120" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="i8pop"><rect x="22" y="18" width="274" height="52" rx="13" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.6"/>
+          <text x="159" y="40" text-anchor="middle" font-size="15" fill="#cfe0cf">чётность суммы на доске</text>
+          <text x="159" y="60" text-anchor="middle" font-size="21" fill="#8fd1a8" font-weight="bold">сохраняется на каждом ходу</text></g>
+          <g class="i8float"><circle cx="159" cy="100" r="15" fill="#ffd76a"/><text x="159" y="105" text-anchor="middle" font-size="13" fill="#0d1a13" font-weight="bold">✓</text></g>
+          <text x="234" y="105" text-anchor="middle" font-size="13" fill="#ffd76a" font-weight="bold">полуинвариант</text>
+        </svg>`)+
+        wkSml('величина, которая сохраняется в процессе, — это и есть ключ к ответу'));
+    } else if(step===9){
+      h=wkFrame(wkBig('Считаем начальную сумму')+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="142" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          ${[1,2,3,4].map((v,i)=>{ const x=20+i*58; return tile(x,22,46,v,IP[i],{delay:i*0.12,fs:26}); }).join('')}
+          ${[0,1,2].map(i=>`<text x="${68+i*58}" y="96" text-anchor="middle" font-size="26" fill="#cfe0cf" font-weight="bold">+</text>`).join('')}
+          <g class="i8pop" style="animation-delay:.5s"><rect x="116" y="104" width="86" height="32" rx="13" fill="rgba(217,164,65,.12)" stroke="#ffd76a" stroke-width="2.6"/>
+          <text x="159" y="126" text-anchor="middle" font-size="19" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">= 10</text></g>
+        </svg>`)+
+        wkRow(sign('10 — чётное',I.green,0.5))+
+        wkSml('раз чётность сохраняется — финальное число тоже чётное'));
+    } else if(step===10){
+      h=wkFrame(wkBig('Проверяем предсказание')+
+        wkHero(`<svg viewBox="0 0 318 160" style="display:block;width:100%;height:auto">
+          <rect x="4" y="4" width="310" height="152" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
+          <g class="i8pop"><rect x="16" y="18" width="138" height="56" rx="13" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.6"/>
+          <text x="85" y="40" text-anchor="middle" font-size="14" fill="#cfe0cf">1,2,3,4 · сумма 10</text>
+          <text x="85" y="62" text-anchor="middle" font-size="20" fill="#8fd1a8" font-weight="bold">итог 0 · −2 — чётные ✓</text></g>
+          <g class="i8pop" style="animation-delay:.25s"><rect x="164" y="18" width="138" height="56" rx="13" fill="rgba(255,138,122,.1)" stroke="#ff8a7a" stroke-width="2.6"/>
+          <text x="233" y="40" text-anchor="middle" font-size="14" fill="#ffcfc2">1,2,3,4,5 · сумма 15</text>
+          <text x="233" y="62" text-anchor="middle" font-size="20" fill="#ff8a7a" font-weight="bold">итог будет нечётным</text></g>
+          <g class="i8pop" style="animation-delay:.5s"><rect x="30" y="92" width="258" height="46" rx="14" fill="rgba(217,164,65,.1)" stroke="#ffd76a" stroke-width="2.4"/>
+          <text x="159" y="113" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">чётная сумма → чётный итог</text>
+          <text x="159" y="130" text-anchor="middle" font-size="14" fill="#ffe9c9">нечётная сумма → нечётный итог</text></g>
+        </svg>`)+
+        wkSml('итог предсказан по одной лишь чётности начальной суммы'));
+    } else if(step===11){
+      const sets=[
+        {n:'1, 2, 3, 4', sum:10, vals:[1,2,3,4]},
+        {n:'1, 2, 3, 4, 5', sum:15, vals:[1,2,3,4,5]},
+        {n:'3, 5, 7, 9', sum:24, vals:[3,5,7,9]},
+        {n:'1, 1, 1, 1, 1', sum:5, vals:[1,1,1,1,1]}
+      ];
+      const S=sets[st.set%sets.length];
+      h=wkFrame(wkBig('Тренажёр: предскажи итог')+
+        wkHero(tileRow(S.vals,{y:18,tw:50,extra:0,fs:26}))+
+        (st.show
+          ? wkAns('сумма '+S.sum+' — '+(S.sum%2===0?'чётная':'нечётная')+' → итог '+(S.sum%2===0?'чётный':'нечётный'), S.sum%2===0? I.green:I.red)
+          : wkRow(wkBtn('посчитать сумму',`visW398Act('${lk}','show')`)))+
+        (st.show? wkRow(wkBtn('другой набор',`visW398Act('${lk}','n')`),wkBtn('заново',`visW398Act('${lk}','rst')`)):'')+
+        wkSml('играть не нужно — чётность суммы всё решает'));
+    } else {
+      h=wkFrame(wkBig('Проверь себя')+
+        wkHero(tileRow([1,2,3,4],{y:18,tw:52,extra:0,fs:26}))+
+        quiz(lk,st)+
+        wkSml('сумма 10 чётная и сохраняется → итог чётный'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[398]=visW398;
+  function visW398T(lk,i){
+    const st=CHS[lk]||(CHS[lk]={});
+    st.sel=i; chRender(0);
+  }
+  window.visW398T=visW398T;
+  function visW398Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go') st.h=(st.h||0)+1;
+    if(act==='show') st.show=1;
+    if(act==='show') st.show=1;
+    if(act==='n'){ st.set=(st.set||0)+1; st.show=0; }
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW398Act=visW398Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===398){ window.ARH_LESSONS[i]=L398; break; } } })();
+})();
