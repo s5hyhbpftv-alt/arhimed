@@ -632,7 +632,7 @@ function ringHTML(pct, size, label){
   </svg>`;
 }
 /* ================= ПУТЬ: план обучения + дашборды ================= */
-if(typeof window.PLAN==='undefined') window.PLAN={cls:null,open:null};
+if(typeof window.PLAN==='undefined') window.PLAN={cls:null,open:[]};
 function pdCss(){
   if(document.getElementById('pdCss')) return;
   const st=document.createElement('style'); st.id='pdCss';
@@ -694,6 +694,14 @@ function pdCss(){
   .rt-title{font-size:13.5px;color:#fff;font-weight:bold;line-height:1.25}
   .rt-meta{font-size:11px;color:#8a94ad;margin-top:2px}
   @keyframes pdIn{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
+  .plan-band{animation:pdIn .5s ease both}
+  .plan-ringrow{animation:pdIn .5s ease .12s both}
+  .skill-tile .st-bar i{width:0;animation:stGrow 1s cubic-bezier(.2,.8,.2,1) forwards}
+  @keyframes stGrow{to{width:var(--w,0%)}}
+  .rt-node{animation:pdNode .45s ease both;transform-origin:center}
+  @keyframes pdNode{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.18);opacity:1}100%{transform:scale(1)}}
+  .rt-route::before{opacity:0;animation:pdLineIn .8s ease .25s forwards}
+  @keyframes pdLineIn{to{opacity:.75}}
   `;
   document.head.appendChild(st);
 }
@@ -711,7 +719,9 @@ function planClsNow(){
   return arr[0]||null;
 }
 function planPickCls(k){ PLAN.cls=k; renderPath(); }
-function planOpenIsland(name){ PLAN.open = (PLAN.open===name? null:name); renderPath(); }
+function planOpenIsland(name){ var i=PLAN.open.indexOf(name); if(i>=0){PLAN.open.splice(i,1);}else{PLAN.open.push(name);} renderPath(); }
+function planOpenAll(){ PLAN.open=ISLANDS.filter(islandVisible).map(function(I){return encodeURIComponent(I.name);}); renderPath(); }
+function planCloseAll(){ PLAN.open=[]; renderPath(); }
 function planStatFor(kls){
   const pool=taskPool().filter(t=>clsKey(t)===kls);
   const by={};
@@ -738,13 +748,13 @@ function planDash(){
   const tiles=st.rows.slice(0,6).map((r,i)=>`
     <div class="skill-tile" style="animation-delay:${(0.05+i*0.06).toFixed(2)}s">
       <div class="st-top"><span class="st-name">${esc(r.th)}</span><span class="st-pct">${r.pct}%</span></div>
-      <div class="st-bar"><i style="width:${r.pct}%"></i></div>
+      <div class="st-bar"><i style="--w:${r.pct}%;animation-delay:${(0.22+i*0.06).toFixed(2)}s"></i></div>
       <div class="st-count">решено ${r.d} из ${r.total}</div>
     </div>`).join('') || '<div class="small" style="color:var(--muted)">В этом классе задач пока нет.</div>';
   const steps = next.length
     ? `<div class="rt-route">`+next.map((t,i)=>`
       <div class="rt-stop" onclick="go('task-${t.id}')">
-        <span class="rt-node ${i===0?'now':''}">${i+1}</span>
+        <span class="rt-node ${i===0?'now':''}" style="animation-delay:${(0.3+i*0.12).toFixed(2)}s">${i+1}</span>
         <div class="rt-card">
           <div class="rt-title">${esc(t.title)}</div>
           <div class="rt-meta">${esc(themeOf(t))} · остров «${esc(t.island)}» · ур. ${t.diff}</div>
@@ -760,15 +770,15 @@ function planDash(){
       <div class="kls-bar">${chips}</div>
     </div>
     <div class="plan-ringrow"><span class="lbl">навыки класса</span><span style="margin-left:auto"></span>${ringC}</div>
-    <div class="sec-cap">Что уже умею</div>
+    <div class="sec-cap">Копилка навыков</div>
     <div class="skill-grid">${tiles}</div>
-    <div class="sec-cap">Куда идти дальше</div>
+    <div class="sec-cap">Ближайшие остановки маршрута</div>
     ${steps}
   </div>`;
 }
 function dashMini(I,i){
   const st=islStats(I.name); const pct=st.total? Math.round(st.done/st.total*100):0;
-  const on=PLAN.open===I.name;
+  const on=PLAN.open.indexOf(encodeURIComponent(I.name))>=0;
   return `<div class="dash-mini ${on?'on':''}" style="animation-delay:${0.05*i}s" onclick="planOpenIsland('${encodeURIComponent(I.name)}')">
     <div style="display:flex;justify-content:center">${ringHTML(pct,44,I.ico)}</div>
     <div class="nm">${esc(I.name)}</div>
@@ -828,11 +838,12 @@ function renderPath(){
       <span style="color:var(--brass)">→</span></div>`;
   const islands=ISLANDS.filter(islandVisible);
   const minis=islands.map(dashMini).join('');
-  const openI = PLAN.open? islands.find(i=>i.name===decodeURIComponent(PLAN.open||'')) : null;
-  const expanded = openI? dashExpanded(openI) : '';
+  const openedI = (PLAN.open||[]).map(function(enc){ try{ var nm=decodeURIComponent(enc); return islands.find(function(I){ return I.name===nm; }); }catch(err){ return null; } }).filter(Boolean);
+  const expanded = openedI.map(dashExpanded).join('');
   s.innerHTML=hero+legendCard+nextBtn+plan+
-    `<div class="pd-title" style="margin-bottom:2px"><div style="flex:1;text-align:left"><div class="h">Карта путешествий по островам</div><div class="s">мини-карты — нажми на остров, чтобы развернуть</div></div></div>
-     <div class="dash-mini-row">${minis}</div>${expanded}`;
+    `<div class="pd-title" style="margin-bottom:2px"><div style="flex:1;text-align:left"><div class="h">Карта путешествий по островам</div><div class="s">открытых карт: ${PLAN.open.length} — нажми на остров или разверни все</div></div><div style="flex:0 0 auto"><button class="chip pd" onclick="planOpenAll()">развернуть все</button> <button class="chip pd" onclick="planCloseAll()">свернуть все</button></div></div>
+     <div class="dash-mini-row">${minis}</div>
+     ${expanded}`;
   requestAnimationFrame(()=>{ document.querySelectorAll('.ring-fg').forEach(el=>{ el.style.strokeDashoffset=getComputedStyle(el.parentNode).getPropertyValue('--off'); }); });
   hud();
 }
