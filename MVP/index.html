@@ -36,8 +36,9 @@
     border-top:1px solid var(--hairline); z-index:40; backdrop-filter:blur(6px);
     padding:6px 8px env(safe-area-inset-bottom,0px); max-width:900px; margin:0 auto; }
   .nav button { flex:1; background:none; border:none; color:var(--muted); font-family:inherit; font-size:10.5px;
-    padding:7px 0 5px; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; }
-  .nav button .ic { font-size:19px; }
+    padding:6px 0 5px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:4px; cursor:pointer; }
+  .nav button .ic { font-size:19px; line-height:1; height:24px; width:26px; display:flex; align-items:center; justify-content:center; }
+  .nav button .ic svg { width:23px; height:23px; display:block; }
   .nav button.active { color:var(--brass); }
   h2 { font-size:15px; color:var(--brass); margin:10px 2px 8px; letter-spacing:.02em; }
   .sec { font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin:14px 2px 8px; }
@@ -677,36 +678,36 @@
 <nav class="nav" id="navBar" style="display:none">
   <button class="active" data-tab="path"><span class="ic">🗺</span>Путь</button>
   <button data-tab="tour"><span class="ic">🏁</span>Тур</button>
-  <button data-tab="book"><span class="ic"><svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true"><path d="M1.6 6.2h5.4a5 5 0 0 1 5 5V22.4a3.4 3.4 0 0 0-3.4-3.4H1.6Z"/><path d="M22.4 6.2H17a5 5 0 0 0-5 5V22.4a3.4 3.4 0 0 1 3.4-3.4h6Z"/><path d="M19.2.2l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z"/></svg></span>Учебники</button>
+  <button data-tab="book"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.7C10 4.3 7.6 3.7 5.3 3.7H3.2c-.6 0-1.1.5-1.1 1.1v13.9c0 .6.5 1 1.1 1h2.1c2.3 0 4.7.6 6.7 2V5.7z" fill="#8a5f16"/><path d="M12 5.7c2-1.4 4.4-2 6.7-2h2.1c.6 0 1.1.5 1.1 1.1v13.9c0 .6-.5 1-1.1 1h-2.1c-2.3 0-4.7.6-6.7 2V5.7z" fill="#8a5f16"/><path d="M12 7.3c-1.8-1.1-4-1.6-6.2-1.6H4.6v10.4c2.1 0 4.3.6 6.2 1.7 1.9-1.1 4.1-1.7 6.2-1.7V5.7c-2.2 0-4.4.5-6.2 1.6z" fill="#f7efd9"/><path d="M12 7.3V17.8" stroke="#cbb98f" stroke-width=".9" opacity=".7"/><path d="M6.4 9.2h3.5M6.4 11.6h3.5M6.4 14h3" stroke="#d6c69c" stroke-width=".6" stroke-linecap="round"/><path d="M14.1 9.2h3.5M14.1 11.6h3.5M14.6 14h3" stroke="#d6c69c" stroke-width=".6" stroke-linecap="round"/></svg></span>Учебники</button>
   <button data-tab="library"><span class="ic">📚</span>Банк задач</button>
   <button data-tab="parent"><span class="ic">🛡</span>Родитель</button>
 </nav>
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=250"></script>
-<script src="data/lessons.js?v=250"></script>
-<script src="data/lessons_draft.js?v=250"></script>
-<script src="data/comics_12.js?v=250"></script>
-<script src="data/vis_bw.js?v=250"></script>
-<script src="data/vis_cw.js?v=250"></script>
-<script src="data/vis_dw.js?v=250"></script>
-<script src="data/vis_ew.js?v=250"></script>
-<script src="data/vis_kl.js?v=250"></script>
-<script src="data/vis_wk.js?v=250"></script>
-<script src="js/comic.js?v=250"></script>
-<script src="js/core.js?v=250"></script>
-<script src="js/engine.js?v=250"></script>
-<script src="js/app.js?v=250"></script>
-<script src="js/dashboard.js?v=250"></script>
-<script src="js/lessons.js?v=250"></script>
-<script src="js/legend.js?v=250"></script>
-<script src="js/simulator.js?v=250"></script>
-<script src="js/duel.js?v=250"></script>
-<script src="js/agent.js?v=250"></script>
-<script src="js/voice.js?v=250"></script>
-<script src="js/assistant.js?v=250"></script>
-<script src="js/agentlive.js?v=250"></script>
+<script src="data/tasks.js?v=251"></script>
+<script src="data/lessons.js?v=251"></script>
+<script src="data/lessons_draft.js?v=251"></script>
+<script src="data/comics_12.js?v=251"></script>
+<script src="data/vis_bw.js?v=251"></script>
+<script src="data/vis_cw.js?v=251"></script>
+<script src="data/vis_dw.js?v=251"></script>
+<script src="data/vis_ew.js?v=251"></script>
+<script src="data/vis_kl.js?v=251"></script>
+<script src="data/vis_wk.js?v=251"></script>
+<script src="js/comic.js?v=251"></script>
+<script src="js/core.js?v=251"></script>
+<script src="js/engine.js?v=251"></script>
+<script src="js/app.js?v=251"></script>
+<script src="js/dashboard.js?v=251"></script>
+<script src="js/lessons.js?v=251"></script>
+<script src="js/legend.js?v=251"></script>
+<script src="js/simulator.js?v=251"></script>
+<script src="js/duel.js?v=251"></script>
+<script src="js/agent.js?v=251"></script>
+<script src="js/voice.js?v=251"></script>
+<script src="js/assistant.js?v=251"></script>
+<script src="js/agentlive.js?v=251"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -721,7 +722,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=250').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=251').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
