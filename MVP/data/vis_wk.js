@@ -100,40 +100,47 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     if(step===0){
       if(st.n==null) st.n=17;
       const n=st.n, b=Math.floor(n/5), rem=n%5;
-      const showB=Math.min(b,4);
+      const showB=Math.min(b,3);
       let boxes='';
       for(let g=0;g<showB;g++){
         boxes+=`<div class="w6in" style="animation-delay:${(g*0.12).toFixed(2)}s;display:flex;flex-direction:column;align-items:center;gap:2px">
-          <div style="width:80px;min-height:56px;border:2px solid #7fae8f;border-radius:12px;background:rgba(255,255,255,.04);padding:6px;display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start">
-            ${[0,1,2,3,4].map(j=>`<div class="w6pop" style="width:15px;height:11px;border-radius:3px;background:${BC[(g*5+j)%5]}"></div>`).join('')}
+          <div style="width:70px;min-height:48px;border:2px solid #7fae8f;border-radius:12px;background:rgba(255,255,255,.04);padding:6px;display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start">
+            ${[0,1,2,3,4].map(j=>`<div class="w6pop" style="width:13px;height:9px;border-radius:2.5px;background:${BC[(g*5+j)%5]}"></div>`).join('')}
           </div>
           <span style="font-size:13px;color:#9ec0a8">коробка ${g+1}</span></div>`;
       }
       const remHtml = rem>0
         ? `<div class="w6in" style="animation-delay:${(showB*0.12+0.1).toFixed(2)}s;display:flex;flex-direction:column;align-items:center;gap:2px">
-            <div style="width:80px;min-height:56px;border:2px dashed ${G.gold};border-radius:12px;background:rgba(217,164,65,.07);padding:6px;display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start">${[0,1,2,3].slice(0,rem).map(j=>`<div style="width:15px;height:11px;border-radius:3px;background:${G.gold}"></div>`).join('')}</div>
+            <div style="width:70px;min-height:48px;border:2px dashed ${G.gold};border-radius:12px;background:rgba(217,164,65,.07);padding:6px;display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start">${[0,1,2,3].slice(0,rem).map(j=>`<div style="width:13px;height:9px;border-radius:2.5px;background:${G.gold}"></div>`).join('')}</div>
             <span style="font-size:13px;color:${G.gold}">остаток ${rem}</span></div>`
         : `<span style="font-size:13px;color:#8fd1a8">всё разложилось ровно!</span>`;
       h=wkFrame(wkBig('Склад конструктора 🧱')+
-        wkRow(wkChip('кубиков: '+n, G.blue),wkChip('по 5 в коробку', G.green))+
+        
         `<div class="wk-row" style="gap:10px;align-items:flex-start">${boxes}${remHtml}</div>`+
         wkRow(wkPill(n+' = 5·'+b+' + '+rem, G.gold))+
+        (b>3?wkNote('… и ещё '+(b-3)+' полные коробки по 5','#9ec0a8'):'')+
         wkRow(wkBtn('➕ ещё 5 кубиков',`visW12Act('${lk}','n')`),wkBtn('↺ 17',`visW12Act('${lk}','rst')`))+
         wkSml('полных коробок: '+b+' · остаток: '+rem+' — то, что не поместилось'));
     } else if(step===1){
-      const W=318, top=18;
-      let s='';
-      for(let g=0;g<3;g++) for(let j=0;j<5;j++){
-        const x=16+g*72+j*14, y=top+(g%2?22:0);
-        s+=`<rect class="w6pop" x="${x}" y="${y}" width="12" height="10" rx="2.5" fill="${BC[(g*5+j)%5]}" style="animation-delay:${((g*5+j)*0.04).toFixed(2)}s"/>`;
+      const W=318, cw=22, ch=16, gap=8, x0=Math.round((W- (5*cw+4*gap))/2);
+      let s2='';
+      for(let g=0;g<3;g++){
+        for(let j=0;j<5;j++){
+          const x=x0+j*(cw+gap), y=12+g*(ch+6);
+          s2+=`<rect class="w6pop" x="${x}" y="${y}" width="${cw-6}" height="${ch-6}" rx="3" fill="${BC[(g*5+j)%5]}" style="animation-delay:${((g*5+j)*0.04).toFixed(2)}s"/>`;
+        }
       }
-      for(let j=0;j<2;j++) s+=`<rect class="w6pop" x="244"+'' y="${top+22}" width="12" height="10" rx="2.5" fill="${G.gold}" style="animation-delay:.4s"/>`;
+      for(let j=0;j<2;j++){
+        const x=x0+5*(cw+gap)+6, y=12+j*(ch+6);
+        s2+=`<rect class="w6pop" x="${x}" y="${y}" width="${cw-6}" height="${ch-6}" rx="3" fill="${G.gold}" style="animation-delay:.5s"/>`;
+      }
+      s2+=`<line x1="${x0-2}" y1="80" x2="${x0+5*(cw+gap)+28}" y2="80" stroke="#3d5c49" stroke-width="1.4"/>`;
       h=wkFrame(wkBig('17 кубиков делим на 5')+
-        wkHero(`<svg width="${W}" height="70" viewBox="0 0 ${W} 70" style="display:block">${s}</svg>`)+
+        wkHero(`<svg width="${W}" height="104" viewBox="0 0 ${W} 104" style="display:block">${s2}</svg>`)+
         wkRow(wkPill('частное 3 — группы по 5', G.blue),wkPill('остаток 2', G.gold))+
         wkAns('проверка: 5 · 3 + 2 = 17 ✔', G.green)+
         wkSml('частное — сколько раз поместилось по 5, остаток — что осталось'));
-    } else if(step===2){
+} else if(step===2){
       const box=(t,c,delay)=>`<span class="w6in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:10px 14px;border-radius:14px;border:2.5px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:22px;color:${c};font-weight:bold;min-width:74px">${t}</span>`;
       const op=(t)=>`<span style="font-size:30px;color:#cfe0cf;font-weight:bold;padding:0 2px">${t}</span>`;
       h=wkFrame(wkBig('Формула деления с остатком')+
@@ -150,7 +157,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const cells='';
       let boxes='';
       for(let p=0;p<k;p++){
-        boxes+=`<div class="w6in" style="animation-delay:${(p*0.07).toFixed(2)}s;flex:1;min-width:52px;text-align:center;border:2px solid ${cols[p]};border-radius:12px;padding:6px 2px;background:rgba(255,255,255,.04)">
+        boxes+=`<div class="w6in" style="animation-delay:${(p*0.07).toFixed(2)}s;width:56px;text-align:center;border:2px solid ${cols[p]};border-radius:11px;padding:5px 2px;background:rgba(255,255,255,.04)">
           <div style="font-size:13px;color:${cols[p]};font-weight:bold">остаток ${p}</div>
           <div style="font-family:Georgia,serif;font-size:24px;color:#fff;font-weight:bold;margin:2px 0">${p}</div>
           <div style="font-size:12px;color:#9ec0a8">${data[p].slice(0,3).join('·')}</div>
@@ -158,7 +165,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       }
       h=wkFrame(wkBig('Остаток меньше делителя')+
         wkRow(wkChip('делим на '+k, G.gold))+
-        `<div style="display:flex;gap:6px;width:100%;justify-content:center">${boxes}</div>`+
+        `<div style="display:flex;flex-wrap:wrap;gap:5px;width:100%;justify-content:center">${boxes}</div>`+
         wkRow(wkBtn('делим на 5',`visW12Act('${lk}','d5')`),wkBtn('делим на 4',`visW12Act('${lk}','d4')`),wkBtn('делим на 3',`visW12Act('${lk}','d3')`))+
         wkSml('остаток 5 не бывает: 5 кубиков снова собрались бы в коробку!'));
     } else if(step===4){
