@@ -5940,50 +5940,50 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW183Act=visW183Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===183){ window.ARH_LESSONS[i]=L183; break; } } })();
 })();
-/* ================= УРОК 193 · Проценты: увеличить и уменьшить (v2 · «Бочка Архимеда», 14 слайдов) ================= */
+/* ================= УРОК 193 · Проценты: увеличить и уменьшить (v3 · «Ярмарка процентов Архимеда», 18 разных слайдов) ================= */
 (function(){
-  if(!window.__wk193v2css){
-    window.__wk193v2css=1;
+  if(!window.__wk193v3css){
+    window.__wk193v3css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .k3in{animation:k3In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
-      '@keyframes k3In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .k3pop{animation:k3Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes k3Pop{0%{transform:scale(.13);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .k3rise{animation:k3Rise .9s cubic-bezier(.2,.8,.2,1) both;transform-box:fill-box;}'+
-      '@keyframes k3Rise{from{transform:translateY(26px);opacity:0}to{transform:translateY(0);opacity:1}}'+
-      '#lvis .k3fall{animation:k3Fall .9s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
-      '@keyframes k3Fall{from{transform:translateY(-22px);opacity:0}to{transform:translateY(0);opacity:1}}'+
-      '#lvis .k3wave{animation:k3Wave 1.8s ease-in-out infinite;}'+
-      '@keyframes k3Wave{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}'+
-      '#lvis .k3drop{animation:k3Drop 1.1s ease-in infinite;opacity:0;}'+
-      '@keyframes k3Drop{0%{transform:translate(0,-6px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translate(0,10px);opacity:0}}'+
-      '#lvis .k3bub{animation:k3Bub 2.6s ease-in-out infinite;}'+
-      '@keyframes k3Bub{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-5px);opacity:1}}'+
-      '#lvis .k3bump{animation:k3Bump .85s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes k3Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}'+
-      '#lvis .k3sway{animation:k3Sway 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes k3Sway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}';
+      '#lvis .pcIn{animation:pcIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes pcIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .pcPop{animation:pcPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes pcPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .pcRise{animation:pcRise .9s cubic-bezier(.2,.8,.2,1) both;transform-box:fill-box;}'+
+      '@keyframes pcRise{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}'+
+      '#lvis .pcSlide{animation:pcSlide 1s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
+      '@keyframes pcSlide{from{transform:translate(var(--tx),var(--ty));opacity:0}to{transform:translate(0,0);opacity:1}}'+
+      '#lvis .pcDash{stroke-dasharray:8 6;animation:pcDash 1.5s linear infinite;}'+
+      '@keyframes pcDash{to{stroke-dashoffset:-28}}'+
+      '#lvis .pcBump{animation:pcBump 1s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes pcBump{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}'+
+      '#lvis .pcFloat{animation:pcFloat 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes pcFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
     document.head.appendChild(st);
   }
   const L193 = {
     id: 193, title: 'Проценты: увеличить и уменьшить', ico: '⇅',
     src: 'Математика · 6 класс · Проценты', subj: 'math',
     explain: [
-      'На складе Архимеда стоит огромная бочка с водой — сейчас в ней 200 литров. «Увеличить на 10%» — значит долить десятую часть от того, что есть. Давай разберёмся, как считать проценты увеличения и уменьшения!',
-      'Вспомним: чтобы найти процент от числа, сначала находим 1%. 1% от 200 — это 200 : 100 = 2 литра. Одна сотая бочки — 2 литра.',
-      'Теперь 10% от 200: умножаем 1% на 10 → 2 · 10 = 20 литров. Именно столько воды мы дольём в бочку!',
-      '«Увеличить 200 на 10%»: берём 200 и добавляем 20 → 220. Бочка наполнилась до 220 литров! Увеличить = прибавить процент от числа.',
-      'Запомни формулу: чтобы увеличить число на N%, найди N% от числа (число : 100 · N) и прибавь. 200 + 10% = 200 + 20 = 220.',
-      'А теперь уменьшим! В другой бочке 300 литров. «Уменьшить на 20%» — вылить пятую часть: 20% от 300 = 300 : 100 · 20 = 60 литров.',
-      'Выливаем 60 литров: 300 − 60 = 240. Уменьшить = отнять процент от числа. Уровень в бочке упал до 240!',
-      'Хитрый способ: уменьшить на 20% — значит оставить 100% − 20% = 80%. А 80% от 300 — это 300 · 0,8 = 240. Тот же ответ, но в одно действие!',
-      'Общая формула: увеличить на N% → умножить на (1 + N/100). Уменьшить на N% → умножить на (1 − N/100). Например, +10% → ×1,1, а −20% → ×0,8.',
-      'Проверь на бочке: 200 · 1,1 = 220 ✓ · 300 · 0,8 = 240 ✓. Один множитель вместо двух шагов — удобно!',
-      'Ловушка: 10% от 200 — это 20, а не 10! Процент всегда считаем от того числа, о котором речь. В бочке 200 литров — вот от 200 и считаем десятую часть.',
-      'А если увеличить 50 на 100%? 100% от 50 — это само 50 (вся бочка!). Увеличить на 100% — значит добавить ещё столько же: 50 + 50 = 100. Число удвоилось!',
-      'Тренажёр: тебе дадут число и процент. Шаг 1 — найди процент от числа (число : 100 · N). Шаг 2 — прибавь (увеличить) или отними (уменьшить). Наполняй и опустошай бочку!',
-      'Проверь себя: 200 увеличили на 10% → 220. 300 уменьшили на 20% → 240. Ответь в тесте и жми «Понял! Проверю себя»!'
+      'На ярмарке Архимеда всё продаётся со скидками и наценками. «Процент» — это сотая часть, и с его помощью удобно показывать, на сколько что-то увеличилось или уменьшилось. Разберёмся на прилавках!',
+      'Процент — это одна сотая. На сетке 10×10 клеток одна клетка — это 1%, а 10 клеток — 10%. Процент всегда считаем от целого числа.',
+      'Найти N% от числа: 1% — это число : 100, а N% — в N раз больше. 10% от 200 = 200 : 100 · 10 = 20. Как 20 клеток на сетке из 200.',
+      '«Увеличить 200 на 10%» — это прибавить 10% от 200, то есть 20. Столбик подрастает: 200 → 220. Увеличить = добавить процент от числа.',
+      'Тот же результат короче: увеличить на 10% — значит умножить на (1 + 10/100) = 1,1. Полоса 100% вытягивается до 110%: 200 · 1,1 = 220.',
+      '«Уменьшить 300 на 20%» — отнять 20% от 300, то есть 60. Пирог 100% теряет кусок: 300 − 60 = 240.',
+      'Короче: уменьшить на 20% — значит умножить на (1 − 20/100) = 0,8. Полоса сжимается до 80%: 300 · 0,8 = 240.',
+      'Применение-скидка: куртка 300 рублей, скидка 20%. Новая цена: 300 · 0,8 = 240 рублей. Ценник перечёркиваем!',
+      'Применение-наценка: в пекарне хлеб 200 рублей подорожал на 10%. Новая цена: 200 · 1,1 = 220 рублей.',
+      'Две «машинки процентов»: ×1,1 (увеличить на 10%) и ×0,8 (уменьшить на 20%). Загоняешь число — на выходе ответ в одно действие.',
+      'Проверка: 200 · 1,1 = 220 и 300 · 0,8 = 240. Два способа сходятся — процент можно считать и «по частям», и одним множителем.',
+      'Ловушка: 10% от 200 — это 20, а НЕ 10! Процент всегда считаем от того числа, о котором речь. 10% от 200 — это отдельная клетка-закраска из 200.',
+      'А если увеличить 50 на 100%? 100% от 50 — это само 50. Увеличить на 100% — добавить ещё столько же: 50 + 50 = 100. Число удвоилось!',
+      'Продай всё — 100% скидка: цена 100% − 100% = 0. А −50% (продажа половины) оставляет 50%.',
+      'Тренажёр-цена: дана цена и процент. Шаг 1 — найди процент от числа (число : 100 · N). Шаг 2 — прибавь (наценка) или отними (скидка). Обнови ценник!',
+      'Тренажёр-пирог: дано число, уменьшили на N%. Выбери верный результат, считая пирог 100%.',
+      'Шпаргалка: увеличить на N% → умножить на (1 + N/100); уменьшить на N% → умножить на (1 − N/100). Сначала 1% = число : 100.',
+      'Проверь себя: 200 увеличили на 10% → 220; 50 увеличили на 100% → 100. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Число 200 увеличили на 10%. Что получилось?', choices: ['210', '220', '240'], ans: 1,
       exp: '10% от 200 = 20; 200 + 20 = 220.' },
@@ -5994,43 +5994,59 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['100% от 50 — само 50.', '50 + 50 = 100.'], sol: '50 + 50 = 100.' }
     ]
   };
-  const K={wood:'#8a5a2e',woodD:'#5f3d1d',band:'#c9a06a',water:'#4f9fd8',waterL:'#7fd1ff',gold:'#ffd76a',green:'#8fd1a8',red:'#ff9a8a'};
-  /* бочка с уровнем воды: fillL — литры (0..max), max 300 */
-  function barrel(fill,max,opt){
+  const I={ink:'#28324b',blue:'#2e6fb0',blueL:'#7fb8e0',grn:'#2e8b57',grnL:'#a4d7b4',gold:'#d9940a',red:'#c0392b',redL:'#e88f86',gray:'#8a94ad',panel:'#f6f4ea'};
+  function paper(W,H,opt){
     const o=opt||{};
-    const W=318;
-    const bx=104, by=20, bw=110, bh=140;   // бочка
-    const lvl = by+bh - (fill/max)*bh;
-    let lines='';
-    for(let v=0; v<=max; v+=50){
-      const y=by+bh-(v/max)*bh;
-      lines+=`<text x="${bx-14}" y="${y+4}" text-anchor="end" font-size="10" fill="#9ec0a8">${v}</text>
-        <line x1="${bx-4}" y1="${y}" x2="${bx+bw+4}" y2="${y}" stroke="#3d5c49" stroke-width="1" opacity=".5"/>`;
-    }
-    const rise=o.rise||0; // высота анимации подъёма уровня
-    return `<svg viewBox="0 0 ${W} ${o.h||210}" style="display:block;width:100%;height:auto">
-      <rect x="4" y="4" width="310" height="${(o.h||210)-8}" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
-      ${lines}
-      <g class="k3sway">
-        <path d="M ${bx+8} ${by+6} Q ${bx-6} ${by+bh/2} ${bx+8} ${by+bh-6} L ${bx+bw-8} ${by+bh-6} Q ${bx+bw+6} ${by+bh/2} ${bx+bw-8} ${by+6} Z" fill="${K.wood}" stroke="${K.woodD}" stroke-width="3"/>
-        <rect x="${bx-6}" y="${by+30}" width="${bw+12}" height="9" rx="4" fill="${K.band}"/>
-        <rect x="${bx-6}" y="${by+bh-38}" width="${bw+12}" height="9" rx="4" fill="${K.band}"/>
-      </g>
-      <clipPath id="k3c${o.uid||0}"><path d="M ${bx+10} ${by+8} Q ${bx-4} ${by+bh/2} ${bx+10} ${by+bh-8} L ${bx+bw-10} ${by+bh-8} Q ${bx+bw+4} ${by+bh/2} ${bx+bw-10} ${by+8} Z"/></clipPath>
-      <g clip-path="url(#k3c${o.uid||0})">
-        <g class="${rise?`k3rise`:''}" style="${rise?`animation-delay:${(o.delay||0).toFixed(2)}s`:''}">
-          <rect x="${bx-8}" y="${lvl}" width="${bw+16}" height="${by+bh-lvl+8}" fill="${K.water}" opacity=".9"/>
-          <g class="k3wave"><path d="M ${bx-8} ${lvl} Q ${bx+20} ${lvl-4} ${bx+50} ${lvl} T ${bx+120} ${lvl}" fill="none" stroke="${K.waterL}" stroke-width="2.4"/></g>
-          ${o.bubbles? `<g class="k3bub"><circle cx="${bx+30}" cy="${lvl+30}" r="3" fill="#bfe4ff" opacity=".7"/><circle cx="${bx+70}" cy="${lvl+60}" r="2" fill="#bfe4ff" opacity=".5"/><circle cx="${bx+88}" cy="${lvl+40}" r="2.4" fill="#bfe4ff" opacity=".6"/></g>`:''}
-        </g>
-      </g>
-      ${o.drop? `<g class="k3drop" style="animation-delay:.4s"><path d="M ${bx+bw/2} ${by+6} q 0 -4 -0 -6 q 0 4 0 6" stroke="#bfe4ff" stroke-width="2.4" fill="none"/></g>`:''}
-      ${o.mark? `<g class="k3bump"><line x1="${bx+bw-8}" y1="${lvl}" x2="${bx+bw+26}" y2="${lvl}" stroke="${K.gold}" stroke-width="3.4"/>
-        <polygon points="${bx+bw+26},${lvl} ${bx+bw+30},${lvl-5} ${bx+bw+30},${lvl+5}" fill="${K.gold}"/>
-        <text x="${bx+bw+44}" y="${lvl+5}" text-anchor="middle" font-size="16" fill="${K.gold}" font-weight="bold">${o.mark}</text></g>`:''}
+    let deco='';
+    [[26,28,6],[300,42,5],[290,150,7],[40,152,5],[160,20,4]].forEach((s,i)=>{ deco+=`<circle class="pcFloat" cx="${s[0]}" cy="${s[1]}" r="${s[2]}" fill="none" stroke="rgba(46,111,176,.2)" stroke-width="1.4" style="animation-delay:${(i*0.3).toFixed(2)}s"/>`; });
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs><linearGradient id="pcpg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfbf3"/><stop offset="1" stop-color="#f0f5ec"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#pcpg)"/>
+      ${deco}
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#cfd7bd" stroke-width="2" rx="6"/>
+      ${o.inner?o.inner():''}
     </svg>`;
   }
-  const sign=(t,c,delay,fs)=>`<span class="k3in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 13px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:${fs||21}px;color:${c};font-weight:bold">${t}</span>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||I.ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdfbf3" stroke-width="3.2">${t}</text>`;
+  /* сетка 10×10 клеток: каждая = 1% */
+  function pctGrid(x,y,cell,filled,clickedColors,o){
+    const opt=o||{};
+    let s='';
+    for(let r=0;r<10;r++)for(let c=0;c<10;c++){
+      const idx=r*10+c;
+      const f=idx<filled;
+      const col=f?(clickedColors||opt.col||I.blue):'#eef1e8';
+      s+=`<rect class="${f?'pcPop':''}" x="${x+c*cell}" y="${y+r*cell}" width="${cell-1.2}" height="${cell-1.2}" rx="2" fill="${col}" stroke="${I.gray}" stroke-width="0.8" style="animation-delay:${(idx*0.012+0.05).toFixed(3)}s"/>`;
+    }
+    s+=`<rect x="${x}" y="${y}" width="${cell*10}" height="${cell*10}" fill="none" stroke="${I.ink}" stroke-width="2"/>`;
+    if(opt.big){ // крупная сетка для "10% от 200" используем 20×10
+      // оставим 10×10 как 100 клеток = 100%
+    }
+    return s;
+  }
+  /* вертикальный столбик */
+  function vbar(x,y,w,aH,val,max,color,label,o){
+    const opt=o||{};
+    const h=Math.max(3,(val/max)*aH);
+    let s=`<rect x="${x}" y="${y}" width="${w}" height="${aH}" fill="none" stroke="${I.gray}" stroke-width="1.6"/>`;
+    s+=`<g class="${opt.rise?'pcRise':''}" style="${opt.rise?`animation-delay:${(opt.delay||0).toFixed(2)}s`:''}"><rect x="${x+3}" y="${y+aH-h}" width="${w-6}" height="${h}" rx="3" fill="${color}"/>
+    ${tx(x+w/2,y+aH-h-12,17,'#fff',String(val),{georgia:1,b:1})}</g>`;
+    if(label) s+=tx(x+w/2,y+aH+18,13,label==='инд'?I.blue:I.ink,label,{b:1});
+    return s;
+  }
+  /* пирог с вырезанным куском pct% */
+  function pie(cx,cy,r,pct,leftColor,o){
+    const opt=o||{};
+    function pt(a){ const rad=a*Math.PI/180; return (cx+r*Math.cos(rad)).toFixed(1)+','+(cy+r*Math.sin(rad)).toFixed(1); }
+    let s=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${leftColor}" stroke="${I.ink}" stroke-width="2.6"/>`;
+    const a0=-90, a1=-90+360*pct/100;
+    const large=(a1-a0)>180?1:0;
+    const p0=pt(a0), p1=pt(a1);
+    s+=`<path d="M ${cx} ${cy} L ${p0} A ${r} ${r} 0 ${large} 1 ${p1} Z" fill="#fff" stroke="${I.ink}" stroke-width="2.6"/>`;
+    return s;
+  }
+  const columnColor=(i)=>[I.grn,I.gold,I.blue,I.redL,I.blueL][i%5];
+  const chip=(t,c,delay,fs)=>`<span class="pcIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(255,255,255,.85);font-family:Georgia,serif;font-size:${fs||19}px;color:${c};font-weight:bold">${t}</span>`;
   const Q193=[
     {q:'Число 200 увеличили на 10%?',opts:['210','220','240'],ans:1},
     {q:'Число 50 увеличили на 100%?',opts:['100','150','75'],ans:0}
@@ -6038,202 +6054,378 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   function quiz(lk,st){
     const T=Q193[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?K.green:K.red; tc=i===T.ans?K.green:K.red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:18px" onclick="visW193T('${lk}',${i})">${o}</button>`;
+      let bg='rgba(255,255,255,.85)',bd='#c7cdb2',tc='#28324b';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(46,139,87,.16)':'rgba(192,57,43,.12)'; bd=i===T.ans?I.grn:I.red; tc=i===T.ans?I.grn:I.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:56px;font-size:17px" onclick="visW193T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 100% от 50 = 50; 50+50 = 100</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 10% от 200 = 20; 200+20 = 220</div>')
-        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Сначала найди процент от числа</div>';
+        ? (st.q===1?'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! 100% от 50 = 50 · 50+50 = 100</div>':'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! 10% от 200 = 20 · 200+20 = 220</div>')
+        : '<div class="wk-ans" style="color:#c0392b;font-size:15px">Не так · найди процент от числа и прибавь/отними</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW193Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW193Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:9px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#5c6b85')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW193(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step; if(step===1||step===2||step===3){ st.sh=0; } if(step===4||step===5||step===6){ st.sh=0; } if(step===7){ st.sh=0; } if(step===8||step===9||step===11){ st.sh=0; } if(step===12){ if(st.tr==null) st.tr=0; st.s1=0; st.s2=0; } if(step===13){ st.sel=null; st.q=0; } }
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=17){ st.go=0; st.pick=null; }
+      if(step===14){ if(st.tr==null) st.tr=0; st.go=0; }
+      if(step===15){ if(st.tr==null) st.tr=0; st.pick=null; }
+      if(step===17){ st.sel=null; st.q=0; }
+    }
     let h='';
+    const W=318;
     if(step===0){
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Бочка Архимеда: 200 литров</div>`+
-        wkHero(barrel(200,300,{h:212,uid:0}))+
-        wkRow(sign('увеличить на 10% — что это значит?',K.gold,0.3))+
-        wkSml('долить десятую часть от того, что есть · разберёмся!'));
+      const H=195;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pcFloat"><rect x="40" y="46" width="104" height="66" rx="10" fill="${I.panel}" stroke="${I.gold}" stroke-width="2.4"/>
+      <text x="92" y="78" text-anchor="middle" font-size="15" fill="#a0700a" font-weight="bold">куртка</text>
+      ${tx(92,102,16,I.ink,'300 руб.',{georgia:1,b:1})}
+      <line x1="56" y1="92" x2="128" y2="92" stroke="${I.red}" stroke-width="2.4"/></g>`;
+      inner+=`<g class="pcFloat" style="animation-delay:.2s"><rect x="176" y="46" width="104" height="66" rx="10" fill="${I.panel}" stroke="${I.blue}" stroke-width="2.4"/>
+      <text x="228" y="78" text-anchor="middle" font-size="15" fill="#1f4f80" font-weight="bold">пицца</text>
+      ${tx(228,102,16,I.ink,'200 руб.',{georgia:1,b:1})}</g>`;
+      inner+=tx(159,132,14.5,I.ink,'скидки и наценки — это проценты',{b:1});
+      if(go){
+        inner+=`<text x="159" y="164" text-anchor="middle" font-size="14" fill="${I.gold}" font-weight="bold">процент = сотая часть · будем считать!</text>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ярмарка процентов</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('увеличение и уменьшение — это проценты',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('при чём тут проценты?',`visW193Act('${lk}','go')`))+
+        wkSml('скидка — уменьшить · наценка — увеличить'));
     } else if(step===1){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">1% от 200 — это 2 литра</div>`+
-        wkHero(barrel(200,300,{h:212,uid:1,mark:sh?'1% = 2 л':'200 л'}))+
-        (sh? wkRow(sign('200 : 100 = 2',K.green,0.3)):'')+
-        wkRow(sh===0? wkBtn('найти 1%',`visW193Act('${lk}','go')`) : wkBtn('сброс',`visW193Act('${lk}','rst')`))+
-        wkSml('одна сотая бочки — 2 литра · 1% = число : 100'));
+      const H=190, cell=14, x=80, y=40;
+      let inner='';
+      inner+=pctGrid(x,y,cell,10,null,{});
+      inner+=`<g class="pcPop"><rect x="${x+3*cell}" y="${y+cell+2}" width="${cell-4}" height="${cell-4}" fill="${I.blue}" stroke="none"/></g>`;
+      inner+=tx(x+5*cell,92,14.5,I.ink,'1 клетка = 1% · 10 = 10%',{b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Процент — сотая часть</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('100 клеток = 100% · одна клетка = 1%',I.blue,0.2))+
+        wkSml('вся сетка — целое число'));
     } else if(step===2){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">10% от 200 = 20 литров</div>`+
-        wkHero(barrel(200,300,{h:212,uid:2,mark:'10% = 20 л'}))+
-        (sh? wkRow(sign('2 · 10 = 20 литров дольём',K.green,0.3)):'')+
-        wkRow(sh===0? wkBtn('умножить 1% на 10',`visW193Act('${lk}','go')`) : wkBtn('сброс',`visW193Act('${lk}','rst')`))+
-        wkSml('10% = 1% · 10 → 2 · 10 = 20'));
+      const H=200, cell=15, x=40, y=40, filled=20;
+      const go=st.go||0;
+      let inner='';
+      inner+=pctGrid(x,y,cell,filled,null,{});
+      inner+=`<g class="pcPop"><rect x="${x}" y="${y}" width="${cell*10}" height="${cell*10}" fill="none" stroke="${I.ink}" stroke-width="2"/></g>`;
+      if(go){
+        inner+=`<g class="pcPop"><rect x="196" y="46" width="108" height="70" rx="10" fill="rgba(255,255,255,.92)" stroke="${I.blue}" stroke-width="2.2"/>
+        ${tx(250,70,13.5,'#1f4f80','10% от 200',{b:1})}
+        ${tx(250,100,24,I.blue,'= 20',{georgia:1,b:1})}</g>`;
+      }
+      inner+=tx(159,178,14,I.ink,'10 клеток из 100 — это 10%',{b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Считаем 10% от 200</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('1% = 200:100 = 2 · 10% = 20',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('посчитать',`visW193Act('${lk}','go')`))+
+        wkSml('то же самое: 200 : 100 · 10 = 20'));
     } else if(step===3){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Доливаем: 200 + 20 = 220</div>`+
-        wkHero(barrel(sh?220:200,300,{h:212,uid:3,rise:sh===1,drop:sh===1,mark:sh?'220 л':'200 л',delay:.2}))+
-        (sh? wkRow(sign('увеличили на 10% → 220 литров!',K.green,0.4)):'')+
-        wkRow(sh===0? wkBtn('долить 20 литров',`visW193Act('${lk}','go')`) : wkBtn('сброс',`visW193Act('${lk}','rst')`))+
-        wkSml('увеличить = прибавить процент от числа'));
+      const H=195, x=80, w=60, aH=120, y=40, max=300;
+      const go=st.go||0;
+      let inner='';
+      inner+=vbar(x,y,w,aH,200,max,I.blue,'было',{rise:true});
+      if(go){
+        inner+=vbar(x+120,y,w,aH,220,max,I.grn,'стало',{rise:true,delay:.3});
+        inner+=`<g class="pcPop"><rect x="212" y="46" width="94" height="46" rx="10" fill="rgba(46,139,87,.12)" stroke="${I.grn}" stroke-width="2.2"/>
+        ${tx(259,68,15,I.grn,'+10%',{b:1})}
+        ${tx(259,86,13,'#5c6b85','200 → 220',{})}</g>`;
+      }
+      inner+=tx(159,40-6,0,' ',' ');
+      inner+=tx(110,aH+y+18,13,I.ink,go?'стало':'было',{b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Увеличить на 10%</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('200 + 10%·200 = 200 + 20 = 220',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('долить 10%',`visW193Act('${lk}','go')`))+
+        wkSml(go?'столбик подрос на 10%':'200 + 20 = 220'));
     } else if(step===4){
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Формула увеличения</div>`+
-        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="142" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
-          <g class="k3pop"><rect x="20" y="24" width="120" height="54" rx="12" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="2.4"/>
-          <text x="80" y="44" text-anchor="middle" font-size="13" fill="#cfe0ff">шаг 1 · процент</text>
-          <text x="80" y="68" text-anchor="middle" font-size="18" fill="#fff" font-weight="bold" font-family="Georgia,serif">200:100·10=20</text></g>
-          <text x="159" y="58" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold">+</text>
-          <g class="k3pop" style="animation-delay:.2s"><rect x="178" y="24" width="120" height="54" rx="12" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="2.4"/>
-          <text x="238" y="44" text-anchor="middle" font-size="13" fill="#ffe9c9">шаг 2 · прибавить</text>
-          <text x="238" y="68" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">200+20=220</text></g>
-          <g class="k3bump" style="animation-delay:.4s"><rect x="70" y="96" width="180" height="36" rx="14" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2.6"/>
-          <text x="160" y="119" text-anchor="middle" font-size="18" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">200 + 10% = 220</text></g>
-        </svg>`)+
-        wkSml('сначала N% от числа, потом прибавляем'));
+      const H=182, x=44, y=74, w=230, hh=30;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect x="${x}" y="${y}" width="${w}" height="${hh}" rx="8" fill="none" stroke="${I.ink}" stroke-width="2"/>`;
+      inner+=`<rect x="${x}" y="${y}" width="${w*1.0}" height="${hh}" rx="8" fill="${I.grnL}" stroke="none"/>`;
+      inner+=tx(x+w/2,y+21,14,I.ink,'100%',{b:1});
+      if(go){
+        inner+=`<rect x="${x}" y="${y}" width="${w*1.1}" height="${hh}" rx="8" fill="none" stroke="${I.grn}" stroke-width="2.4" stroke-dasharray="7 5"/>`;
+        inner+=`<g class="pcPop"><text x="${x+w*1.05}" y="${y+21}" text-anchor="middle" font-size="14" fill="${I.grn}" font-weight="bold">110%</text>
+        ${tx(159,140,15,I.ink,'200 · 1,1 = 220',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">+10% = ×1,1</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('увеличить на N% → умножить на (1 + N/100)',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('растянуть до 110%',`visW193Act('${lk}','go')`))+
+        wkSml('полоса 100% вытягивается на 10%'));
     } else if(step===5){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Уменьшаем: 300 − 20%</div>`+
-        wkHero(barrel(300,300,{h:212,uid:5,mark:sh?'20% = 60 л':'300 л'}))+
-        (sh? wkRow(sign('20% от 300 = 60 литров',K.red,0.3)):'')+
-        wkRow(sh===0? wkBtn('найти 20%',`visW193Act('${lk}','go')`) : wkBtn('сброс',`visW193Act('${lk}','rst')`))+
-        wkSml('300 : 100 · 20 = 60 · столько выльем'));
+      const H=185, cx=88, cy=92, r=62;
+      const go=st.go||0;
+      let inner='';
+      inner+=pie(cx,cy,r,20,I.grnL,{});
+      inner+=`<g class="pcPop"><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${I.ink}" stroke-width="2.6"/></g>`;
+      if(go){
+        inner+=`<g class="pcPop"><rect x="188" y="56" width="114" height="78" rx="10" fill="rgba(255,255,255,.92)" stroke="${I.blue}" stroke-width="2.2"/>
+        ${tx(245,80,13.5,'#1f4f80','20% от 300',{b:1})}
+        ${tx(245,108,24,I.blue,'= 60',{georgia:1,b:1})}
+        ${tx(245,128,12.5,'#5c6b85','300 − 60 = 240',{})}</g>`;
+      }
+      inner+=tx(159,168,14.5,I.ink,'вырезали кусок 20%',{b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Уменьшить на 20%</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('300 − 20% = 300 − 60 = 240',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('вырезать кусок',`visW193Act('${lk}','go')`))+
+        wkSml('остаётся 80% пирога'));
     } else if(step===6){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Выливаем: 300 − 60 = 240</div>`+
-        wkHero(barrel(sh?240:300,300,{h:212,uid:6,rise:false,mark:sh?'240 л':'300 л',delay:.2}))+
-        (sh? wkRow(sign('уменьшили на 20% → 240 литров!',K.green,0.4)):'')+
-        wkRow(sh===0? wkBtn('вылить 60 литров',`visW193Act('${lk}','go')`) : wkBtn('сброс',`visW193Act('${lk}','rst')`))+
-        wkSml('уменьшить = отнять процент от числа'));
+      const H=182, x=44, y=74, w=230, hh=30;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect x="${x}" y="${y}" width="${w}" height="${hh}" rx="8" fill="none" stroke="${I.ink}" stroke-width="2"/>`;
+      inner+=`<rect x="${x}" y="${y}" width="${w*0.8}" height="${hh}" rx="8" fill="${I.blueL}" stroke="none"/>`;
+      if(go){
+        inner+=`<rect x="${x}" y="${y}" width="${w*1.0}" height="${hh}" rx="8" fill="none" stroke="${I.gray}" stroke-width="1.6" stroke-dasharray="6 4"/>`;
+        inner+=`<g class="pcPop"><text x="${x+w*0.4}" y="${y+21}" text-anchor="middle" font-size="14" fill="${I.blue}" font-weight="bold">80%</text>
+        ${tx(159,140,15,I.ink,'300 · 0,8 = 240',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">−20% = ×0,8</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('уменьшить на N% → умножить на (1 − N/100)',I.blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('сжать до 80%',`visW193Act('${lk}','go')`))+
+        wkSml('осталось 80% — умножай на 0,8'));
     } else if(step===7){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Хитрый способ: ×0,8</div>`+
-        wkHero(`<svg viewBox="0 0 318 160" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="152" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
-          <g class="k3pop"><rect x="20" y="26" width="130" height="104" rx="13" fill="rgba(255,138,138,.08)" stroke="#ff9a8a" stroke-width="2.2"/>
-          <text x="85" y="50" text-anchor="middle" font-size="14" fill="#ffcfc2">уменьшить на 20%</text>
-          <text x="85" y="76" text-anchor="middle" font-size="20" fill="#fff" font-weight="bold">100% − 20% = 80%</text>
-          <text x="85" y="104" text-anchor="middle" font-size="15" fill="#cfe0cf">остаётся 80%</text>
-          <text x="85" y="124" text-anchor="middle" font-size="20" fill="#ff9a8a" font-weight="bold">× 0,8</text></g>
-          <g class="k3pop" style="animation-delay:.3s"><rect x="172" y="26" width="130" height="104" rx="13" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.4"/>
-          <text x="237" y="52" text-anchor="middle" font-size="15" fill="#cfe0cf">300 · 0,8</text>
-          <text x="237" y="84" text-anchor="middle" font-size="34" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">= 240</text>
-          <text x="237" y="114" text-anchor="middle" font-size="13" fill="#8fd1a8">тот же ответ!</text></g>
-        </svg>`)+
-        (sh? wkRow(sign('300 · 0,8 = 240 ✓',K.green,0.4)):'')+
-        wkRow(sh===0? wkBtn('показать волшебный множитель',`visW193Act('${lk}','go')`) : wkBtn('сброс',`visW193Act('${lk}','rst')`))+
-        wkSml('оставить 80% проще, чем вычитать 20%'));
+      const H=195;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pcFloat"><rect x="40" y="40" width="130" height="86" rx="12" fill="${I.panel}" stroke="${I.gold}" stroke-width="2.6"/>
+      <text x="105" y="66" text-anchor="middle" font-size="14" fill="#a0700a" font-weight="bold">куртка</text>
+      <text x="105" y="92" text-anchor="middle" font-size="20" fill="${I.ink}" font-weight="bold" font-family="Georgia,serif" text-decoration="line-through">300 р.</text>
+      ${tx(105,116,24,I.red,'240 р.',{georgia:1,b:1})}
+      <line x1="60" y1="84" x2="150" y2="84" stroke="${I.red}" stroke-width="2.4"/></g>`;
+      if(go){
+        inner+=`<g class="pcPop"><rect x="192" y="52" width="112" height="66" rx="10" fill="rgba(255,255,255,.92)" stroke="${I.blue}" stroke-width="2.2"/>
+        ${tx(248,76,13,'#1f4f80','скидка 20%',{b:1})}
+        ${tx(248,102,17,I.blue,'300·0,8 = 240',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Скидка на куртку</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('300 рублей · скидка 20% → 240',I.blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('посчитать скидку',`visW193Act('${lk}','go')`))+
+        wkSml('цена снизилась на 20%'));
     } else if(step===8){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Формулы-множители</div>`+
-        wkHero(`<svg viewBox="0 0 318 156" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="148" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
-          <g class="k3pop"><rect x="20" y="24" width="134" height="54" rx="12" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.4"/>
-          <text x="87" y="44" text-anchor="middle" font-size="13" fill="#cfe0cf">увеличить на N%</text>
-          <text x="87" y="68" text-anchor="middle" font-size="19" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">× (1 + N/100)</text></g>
-          <g class="k3pop" style="animation-delay:.2s"><rect x="164" y="24" width="134" height="54" rx="12" fill="rgba(255,138,138,.1)" stroke="#ff9a8a" stroke-width="2.4"/>
-          <text x="231" y="44" text-anchor="middle" font-size="13" fill="#ffcfc2">уменьшить на N%</text>
-          <text x="231" y="68" text-anchor="middle" font-size="19" fill="#ff9a8a" font-weight="bold" font-family="Georgia,serif">× (1 − N/100)</text></g>
-          <g class="k3pop" style="animation-delay:.4s"><rect x="44" y="98" width="230" height="38" rx="13" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="2"/>
-          <text x="159" y="122" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold">+10% → ×1,1 · −20% → ×0,8</text></g>
-        </svg>`)+
-        wkSml('запомни: один множитель вместо двух шагов'));
+      const H=195;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pcFloat"><rect x="40" y="40" width="130" height="86" rx="12" fill="${I.panel}" stroke="${I.blue}" stroke-width="2.6"/>
+      <text x="105" y="66" text-anchor="middle" font-size="14" fill="#1f4f80" font-weight="bold">хлеб</text>
+      ${tx(105,92,18,'#8a94ad','200 р.',{georgia:1,b:1})}
+      ${go?tx(105,120,24,I.red,'220 р.',{georgia:1,b:1}):''}</g>`;
+      if(go){
+        inner+=`<g class="pcPop"><rect x="192" y="52" width="112" height="66" rx="10" fill="rgba(255,255,255,.92)" stroke="${I.blue}" stroke-width="2.2"/>
+        ${tx(248,76,13,'#1f4f80','наценка 10%',{b:1})}
+        ${tx(248,102,17,I.blue,'200·1,1 = 220',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Подорожание хлеба</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('200 рублей · наценка 10% → 220',I.blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('повысить цену',`visW193Act('${lk}','go')`))+
+        wkSml('цена выросла на 10%'));
     } else if(step===9){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверка на бочке</div>`+
-        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="142" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
-          <g class="k3pop"><rect x="16" y="24" width="140" height="96" rx="13" fill="rgba(143,209,168,.08)" stroke="#8fd1a8" stroke-width="2.2"/>
-          <text x="86" y="50" text-anchor="middle" font-size="14" fill="#cfe0cf">+10%</text>
-          <text x="86" y="76" text-anchor="middle" font-size="20" fill="#fff" font-weight="bold">200 · 1,1</text>
-          <text x="86" y="104" text-anchor="middle" font-size="26" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">= 220 ✓</text></g>
-          <g class="k3pop" style="animation-delay:.25s"><rect x="164" y="24" width="140" height="96" rx="13" fill="rgba(255,138,138,.08)" stroke="#ff9a8a" stroke-width="2.2"/>
-          <text x="234" y="50" text-anchor="middle" font-size="14" fill="#ffcfc2">−20%</text>
-          <text x="234" y="76" text-anchor="middle" font-size="20" fill="#fff" font-weight="bold">300 · 0,8</text>
-          <text x="234" y="104" text-anchor="middle" font-size="26" fill="#ff9a8a" font-weight="bold" font-family="Georgia,serif">= 240 ✓</text></g>
-        </svg>`)+
-        wkSml('оба ответа совпали с шагами-прибавлением — множители работают'));
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      function gadget(x,y,mult,from,to,color,lab){
+        let s=`<g><rect x="${x}" y="${y}" width="70" height="58" rx="10" fill="${I.panel}" stroke="${I.ink}" stroke-width="2.2"/>
+        <text x="${x+35}" y="${y-10}" text-anchor="middle" font-size="13" fill="${I.ink}" font-weight="bold">${lab}</text>
+        <circle cx="${x+35}" cy="${y+16}" r="2.6" fill="${I.ink}"/>
+        <line x1="${x+12}" y1="${y+16}" x2="${x+35}" y2="${y+16}" stroke="${I.gray}" stroke-width="1.6"/>
+        <line x1="${x+35}" y1="${y+16}" x2="${x+58}" y2="${y+16}" stroke="${I.gray}" stroke-width="1.6"/>
+        <text x="${x+16}" y="${y+52}" text-anchor="middle" font-size="17" fill="${I.ink}" font-weight="bold" font-family="Georgia,serif">${from}</text>
+        ${go?`<text x="${x+58}" y="${y+52}" text-anchor="middle" font-size="17" fill="${color}" font-weight="bold" font-family="Georgia,serif">${to}</text>`:''}
+        <text x="${x+35}" y="${y-1}" text-anchor="middle" font-size="15" fill="${color}" font-weight="bold" font-family="Georgia,serif">×${mult}</text></g>`;
+        return s;
+      }
+      inner+=gadget(36,64,1.1,200,220,I.grn,'+10%');
+      inner+=gadget(176,64,0.8,300,240,I.blue,'−20%');
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Машинки процентов</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('+10% → ×1,1 · −20% → ×0,8',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('запустить машинки',`visW193Act('${lk}','go')`))+
+        wkSml('загоняешь число — получаешь ответ'));
     } else if(step===10){
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ловушка: процент от ЧИСЛА</div>`+
-        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="142" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
-          <g class="k3pop"><rect x="26" y="28" width="120" height="52" rx="12" fill="rgba(255,138,138,.1)" stroke="#ff9a8a" stroke-width="2.4"/>
-          <text x="86" y="48" text-anchor="middle" font-size="13" fill="#ffcfc2">неверно!</text>
-          <text x="86" y="72" text-anchor="middle" font-size="20" fill="#ff9a8a" font-weight="bold">10% от 200 ≠ 10</text></g>
-          <g class="k3pop" style="animation-delay:.3s"><rect x="172" y="28" width="126" height="52" rx="12" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2.4"/>
-          <text x="235" y="48" text-anchor="middle" font-size="13" fill="#cfe0cf">верно!</text>
-          <text x="235" y="72" text-anchor="middle" font-size="20" fill="#8fd1a8" font-weight="bold">10% от 200 = 20</text></g>
-          <text x="159" y="116" text-anchor="middle" font-size="14" fill="#cfe0cf">процент всегда считаем от числа, о котором речь (200!)</text>
-        </svg>`)+
-        wkSml('в бочке 200 литров — десятую часть находим от 200, а не от 100'));
+      const H=180;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,42,15,I.ink,'два способа сходятся',{b:1});
+      if(go){
+        inner+=`<g class="pcPop"><rect x="40" y="64" width="100" height="46" rx="10" fill="rgba(46,139,87,.12)" stroke="${I.grn}" stroke-width="2.2"/>
+        ${tx(90,86,15,I.grn,'200 · 1,1',{georgia:1,b:1})}
+        ${tx(90,102,16,I.ink,'= 220',{georgia:1,b:1})}</g>
+        <g class="pcPop" style="animation-delay:.15s"><rect x="178" y="64" width="100" height="46" rx="10" fill="rgba(46,111,176,.12)" stroke="${I.blue}" stroke-width="2.2"/>
+        ${tx(228,86,15,I.blue,'300 · 0,8',{georgia:1,b:1})}
+        ${tx(228,102,16,I.ink,'= 240',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверка</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('умножение одним шагом — то же самое',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('показать результат',`visW193Act('${lk}','go')`))+
+        wkSml('и «по частям», и множителем — верно'));
     } else if(step===11){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">50 + 100% = ?</div>`+
-        wkHero(`<svg viewBox="0 0 318 160" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="152" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
-          <g class="k3pop"><rect x="30" y="26" width="110" height="100" rx="13" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="2.4"/>
-          <text x="85" y="50" text-anchor="middle" font-size="13" fill="#cfe0ff">было</text>
-          <text x="85" y="86" text-anchor="middle" font-size="36" fill="#fff" font-weight="bold" font-family="Georgia,serif">50</text>
-          <text x="85" y="112" text-anchor="middle" font-size="12" fill="#cfe0ff">это 100%</text></g>
-          ${sh? `<g class="k3pop" style="animation-delay:.2s"><text x="159" y="86" text-anchor="middle" font-size="30" fill="#ffd76a" font-weight="bold">+</text></g>
-          <g class="k3fall" style="animation-delay:.3s"><rect x="178" y="26" width="110" height="100" rx="13" fill="rgba(255,215,106,.14)" stroke="#ffd76a" stroke-width="2.6"/>
-          <text x="233" y="50" text-anchor="middle" font-size="13" fill="#ffe9c9">100% от 50</text>
-          <text x="233" y="86" text-anchor="middle" font-size="36" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">50</text>
-          <text x="233" y="112" text-anchor="middle" font-size="12" fill="#ffe9c9">ещё столько же!</text></g>`:''}
-        </svg>`)+
-        (sh? wkRow(sign('50 + 50 = 100 · число удвоилось',K.green,0.4)):'')+
-        wkRow(sh===0? wkBtn('показать, что добавили',`visW193Act('${lk}','go')`) : wkBtn('сброс',`visW193Act('${lk}','rst')`))+
-        wkSml('увеличить на 100% — значит добавить само число'));
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      inner+=pctGrid(40,44,15,20,null,{});
+      if(go===0){
+        inner+=tx(159,176,15.5,'#5c6b85','20 клеток из одной большой сетки',{});
+      } else {
+        inner+=`<g class="pcPop"><rect x="196" y="52" width="108" height="74" rx="10" fill="rgba(192,57,43,.1)" stroke="${I.red}" stroke-width="2.4"/>
+        ${tx(250,74,13,I.red,'10% от 200',{b:1})}
+        ${tx(250,100,17.5,I.red,'= 20, не 10!',{georgia:1,b:1})}</g>`;
+        inner+=tx(159,176,15,I.red,'процент — от своего числа!',{b:1});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ловушка процента</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('10% от 200 — это 20',I.red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('проверить',`visW193Act('${lk}','go')`))+
+        wkSml('процент считаем от числа, о котором речь'));
     } else if(step===12){
+      const H=175;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pcPop"><circle cx="70" cy="92" r="44" fill="${I.blueL}" stroke="${I.ink}" stroke-width="2.4"/>
+      ${tx(70,86,20,I.ink,'50',{georgia:1,b:1})}</g>`;
+      inner+=`<text x="159" y="100" text-anchor="middle" font-size="26" fill="${I.gold}" font-weight="bold">→</text>`;
+      if(go){
+        inner+=`<g class="pcPop"><circle cx="248" cy="92" r="44" fill="${I.grnL}" stroke="${I.ink}" stroke-width="2.4"/>
+        ${tx(248,86,20,I.ink,'100',{georgia:1,b:1})}</g>`;
+        inner+=tx(248,158,15,I.grn,'×2 (удвоилось)',{b:1});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Увеличить на 100%</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('+100% = ×2 · 50 → 100',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('удвоить',`visW193Act('${lk}','go')`))+
+        wkSml('100% от 50 — само 50 · стало 100'));
+    } else if(step===13){
+      const H=180;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,44,15,I.ink,'скидка бывает разной',{b:1});
+      if(go){
+        inner+=`<g class="pcPop"><rect x="40" y="66" width="104" height="48" rx="10" fill="rgba(192,57,43,.1)" stroke="${I.red}" stroke-width="2.2"/>
+        ${tx(92,88,14,I.red,'−100%',{b:1})}
+        ${tx(92,108,16,I.ink,'→ 0',{georgia:1,b:1})}</g>
+        <g class="pcPop" style="animation-delay:.15s"><rect x="174" y="66" width="104" height="48" rx="10" fill="rgba(217,148,10,.12)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(226,88,14,'#a0700a','−50%',{b:1})}
+        ${tx(226,108,16,I.ink,'→ 50%',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Крайние скидки</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('−100% — бесплатно · −50% — половина',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW193Act('${lk}','rst')`):wkBtn('показать',`visW193Act('${lk}','go')`))+
+        wkSml('стоимость падает до 0 или до половины'));
+    } else if(step===14){
+      const H=200;
       if(st.tr==null) st.tr=0;
-      const POOL=[
-        {N:200,p:10,up:1,one:2,add:20,res:220},
-        {N:300,p:20,up:0,one:3,add:60,res:240},
-        {N:50,p:100,up:1,one:0.5,add:50,res:100},
-        {N:400,p:25,up:0,one:4,add:100,res:300},
-        {N:80,p:50,up:1,one:0.8,add:40,res:120}
-      ];
-      const T=POOL[st.tr%POOL.length];
-      const word = T.up? 'увеличить на '+T.p+'%' : 'уменьшить на '+T.p+'%';
-      const fillLvl = T.up? (T.N+T.add) : (T.N-T.add);
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: бочка</div>`+
-        wkHero(barrel(st.s2?fillLvl:(st.s1?T.N:200),300,{h:190,uid:12,mark:st.s2?(fillLvl+' л'):(T.N+' л')}))+
-        wkRow(sign(`${T.N} → ${word}`,K.gold,0.2))+
-        (st.s1? wkRow(sign(`${T.p}% от ${T.N} = ${T.add}`,K.green,0.2)):'')+
-        (st.s2? wkRow(sign(`ответ: ${fillLvl}`,K.gold,0.2)):'')+
+      const pool=[[200,10,1,220],[300,20,-1,240],[50,100,1,100],[80,25,-1,60]];
+      const p=pool[st.tr%pool.length];
+      const go=st.go||0;
+      const pct=p[1], up=p[2]===1, ch=p[0], ans=p[3], part=(ch*pct/100);
+      let inner='';
+      inner+=`<g class="pcFloat"><rect x="40" y="40" width="150" height="70" rx="12" fill="${I.panel}" stroke="${up?I.grn:I.red}" stroke-width="2.4"/>
+      <text x="115" y="66" text-anchor="middle" font-size="14" fill="#5c6b85">${up?'наценка':'скидка'} ${pct}%</text>
+      ${tx(115,96,22,I.ink,ch+' руб.',{georgia:1,b:1})}</g>`;
+      if(go>=1){
+        inner+=`<g class="pcPop"><rect x="196" y="40" width="108" height="44" rx="10" fill="rgba(255,255,255,.92)" stroke="${I.blue}" stroke-width="2"/>
+        ${tx(250,62,12.5,'#1f4f80',pct+'% от '+ch,{b:1})}
+        ${tx(250,80,18,I.blue,'= '+part,{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="pcPop"><rect x="196" y="94" width="108" height="44" rx="10" fill="rgba(46,139,87,.12)" stroke="${I.grn}" stroke-width="2.2"/>
+        ${tx(250,116,12.5,'#1f4f80',(up?'+':'−')+' …',{b:1})}
+        ${tx(250,132,18,I.grn,'= '+ans,{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр-ценник</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip(ch+' '+(up?'+':'−')+' '+pct+'% = '+ans,I.grn,0.2)):'')+
         wkRow(
-          !st.s1? wkBtn('1 · найти процент',`visW193Act('${lk}','s1')`) : '',
-          (st.s1&&!st.s2)? wkBtn('2 · прибавить/отнять',`visW193Act('${lk}','s2')`) : '',
-          st.s2? wkBtn('новый пример',`visW193Act('${lk}','n')`) : '',
-          st.s1? wkBtn('заново',`visW193Act('${lk}','rst')`) : '')+
-        wkSml('N : 100 · p → прибавь (увеличить) или отними (уменьшить)'));
+          go===0?wkBtn('1 · найти %',`visW193Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · применить',`visW193Act('${lk}','go')`) : '',
+          go>=2?wkBtn('новый ценник',`visW193Act('${lk}','n')`) : '',
+          go>=1?wkBtn('заново',`visW193Act('${lk}','rst')`):'')+
+        wkSml('наценка '+ (up?'+':'−') +' '+pct+'% · ответ '+ans));
+    } else if(step===15){
+      const H=200;
+      if(st.tr==null) st.tr=0;
+      const pool=[[300,20,240],[200,50,100],[150,10,135],[80,25,60]];
+      const p=pool[st.tr%pool.length];
+      const go=st.pick;
+      let inner='';
+      inner+=pie(96,92,58,p[1],I.grnL,{});
+      inner+=tx(96,162,14.5,I.ink,'уменьшить на '+p[1]+'%',{b:1});
+      inner+=tx(40,26,15,I.ink,'было '+p[0],{b:1});
+      if(st.pick!=null){
+        const ok = st.pick===0;
+        inner+=`<g class="pcPop"><text x="215" y="92" text-anchor="middle" font-size="17" fill="${ok?'#2e8b57':'#c0392b'}" font-weight="bold">${ok?'верно!':'не так'}</text>
+        ${tx(215,120,14,'#5c6b85','осталось '+p[2]+' ('+(p[0]*(1-p[1]/100))+')',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр-пирог</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW193P('${lk}',0)">${p[2]}</button>
+          <button class="wk-btn" onclick="visW193P('${lk}',1)">${p[0]}</button>
+          <button class="wk-btn" onclick="visW193Act('${lk}','n')">новый пирог</button>
+        </div>`+
+        wkSml(st.pick!=null&&st.pick===0?'молодец!':'выбери верный остаток'));
+    } else if(step===16){
+      const H=195;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect x="16" y="36" width="286" height="36" rx="10" fill="rgba(46,139,87,.13)" stroke="${I.grn}" stroke-width="2.2"/>
+      ${tx(159,60,14.5,I.grn,'увеличить на N% → × (1 + N/100)',{georgia:1,b:1})}`;
+      if(go>=1){
+        inner+=`<g class="pcPop"><rect x="16" y="80" width="286" height="36" rx="10" fill="rgba(46,111,176,.13)" stroke="${I.blue}" stroke-width="2.2"/>
+        ${tx(159,104,14.5,I.blue,'уменьшить на N% → × (1 − N/100)',{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="pcPop"><rect x="16" y="124" width="286" height="36" rx="10" fill="rgba(217,148,10,.14)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(159,148,15.5,'#a0700a','сначала 1% = число : 100',{georgia:1,b:1})}</g>`;
+        inner+=`<g class="pcPop" style="animation-delay:.12s"><text x="159" y="184" text-anchor="middle" font-size="14" fill="${I.ink}" font-weight="bold">примеры: +10% → ×1,1 · −20% → ×0,8</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('множитель вместо двух шагов',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · увеличить',`visW193Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · уменьшить',`visW193Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW193Act('${lk}','rst')`):'')+
+        wkSml('быстро и надёжно'));
     } else {
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: бочка</div>`+
-        wkHero(barrel(200,300,{h:180,uid:13,mark:'200 л'}))+
+      const H=185;
+      let inner='';
+      inner+=`<g class="pcPop"><rect x="40" y="40" width="120" height="64" rx="12" fill="${I.panel}" stroke="${I.gold}" stroke-width="2.4"/>
+      ${tx(100,64,14,'#a0700a','+10%',{b:1})}
+      ${tx(100,90,22,I.ink,'200 → 220',{georgia:1,b:1})}</g>`;
+      inner+=`<g class="pcPop"><rect x="176" y="40" width="120" height="64" rx="12" fill="${I.panel}" stroke="${I.blue}" stroke-width="2.4"/>
+      ${tx(236,64,14,'#1f4f80','+100%',{b:1})}
+      ${tx(236,90,22,I.ink,'50 → 100',{georgia:1,b:1})}</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
-        wkSml('200 + 10% = 220 · жми «Понял! Проверю себя»'));
+        wkSml('найди процент от числа и прибавь/отними · жми «Понял! Проверю себя»'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
   window.VISKW[193]=visW193;
-  function visW193T(lk,i){
-    const st=CHS[lk]||(CHS[lk]={});
-    st.sel=i; chRender(0);
-  }
+  function visW193T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
   window.visW193T=visW193T;
+  function visW193P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW193P=visW193P;
   function visW193Act(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
-    if(act==='go') st.sh=1;
-    if(act==='s1') st.s1=1;
-    if(act==='s2') st.s2=1;
-    if(act==='n'){ st.tr=(st.tr==null?0:st.tr)+1; st.s1=0; st.s2=0; }
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
     if(act==='nq'){ st.q=1; st.sel=null; }
     if(act==='rst') CHS[lk]={};
     chRender(0);
