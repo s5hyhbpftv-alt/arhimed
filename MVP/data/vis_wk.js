@@ -6056,3 +6056,471 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW193Act=visW193Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===193){ window.ARH_LESSONS[i]=L193; break; } } })();
 })();
+/* ================= УРОК 198 · Параллельные и перпендикулярные прямые (v2 · 14 блоков по сценарию) ================= */
+(function(){
+  if(!window.__wk198v2css){
+    window.__wk198v2css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .q2in{animation:q2In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes q2In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .q2pop{animation:q2Pop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q2Pop{0%{transform:scale(.1);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q2drive{animation:q2Drive 7s linear infinite;}'+
+      '@keyframes q2Drive{0%{transform:translateX(-76px)}100%{transform:translateX(318px)}}'+
+      '#lvis .q2drive2{animation:q2Drive2 8.4s linear infinite;}'+
+      '@keyframes q2Drive2{0%{transform:translateX(-76px)}100%{transform:translateX(318px)}}'+
+      '#lvis .q2float{animation:q2Float 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q2Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}'+
+      '#lvis .q2wob{animation:q2Wob 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q2Wob{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}'+
+      '#lvis .q2spin{animation:q2Spin 5s linear infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q2Spin{to{transform:rotate(360deg)}}'+
+      '#lvis .q2dash{stroke-dasharray:8 6;animation:q2Dash .8s linear infinite;}'+
+      '@keyframes q2Dash{to{stroke-dashoffset:-28}}'+
+      '#lvis .q2bump{animation:q2Bump .9s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q2Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}'+
+      '#lvis .q2fall{animation:q2Fall 1.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes q2Fall{0%,100%{transform:rotate(0)}30%{transform:rotate(9deg)}70%{transform:rotate(-2deg)}}'+
+      '#lvis .q2sway{animation:q2Sway 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q2Sway{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}';
+    document.head.appendChild(st);
+  }
+  const L198 = {
+    id: 198, title: 'Параллельные и перпендикулярные прямые', ico: '⊥',
+    src: 'Математика · 6 класс · Прямые', subj: 'math',
+    explain: [
+      'Две дороги в ночном городе: по каждой мчится машина. Расстояние между трассами всё время одинаковое — дороги никогда не встретятся. Такие линии называют параллельными — как рельсы поезда!',
+      'Перекрёсток: одна улица пересекает другую. Если угол ровно 90°, улицы перпендикулярны. Это строгий «крест» с четырьмя одинаковыми углами — как пол и стена!',
+      'Сюрприз! Робот бегает между двумя параллельными линиями с линейкой. В любой точке расстояние одинаковое. Это главный признак параллельности: равное расстояние везде.',
+      'Проверка угольником: прозрачный треугольник с прямым углом прикладываем к пересечению. Если он «садится» точно в угол — линии перпендикулярны!',
+      'Параллельность в природе: стволы деревьев растут ровно, полоски на зебре, соты пчёл. Везде прямые, которые не встречаются. Соты — гениальная экономия места!',
+      'Стройка: стена строго вертикальна, пол горизонтален — они перпендикулярны. Именно поэтому дом стоит крепко! Стоит стене наклониться — и дом зашатается.',
+      'У линий есть магические значки: // — две чёрточки, значит «параллельны»; ⊥ — перевёрнутая буква Т, значит «перпендикулярны». Кратко и удобно!',
+      'Почти параллельные — не параллельные! Если две линии чуть-чуть сходятся, далеко-далеко они обязательно пересекутся. Нужно расстояние строго одинаковое.',
+      'Ловушка: линии под углом 89° или 91° выглядят как перпендикуляр, но это не он. Только ровно 90° — перпендикуляр! Соседние градусы не подходят.',
+      'Как нарисовать параллельные без линейки: согни лист бумаги, отогни край — линия сгиба готова! Любой следующий сгиб, параллельный первому, даст ещё одну такую линию.',
+      'А перпендикуляр поможет начертить клетчатая тетрадь: проведи линию по клеткам вверх и вправо — они пересекутся ровно под 90°. Тетрадные линии — готовые перпендикуляры!',
+      'Карта города: улицы идут прямо и параллельно, а проспекты пересекают их под прямым углом. Так строят современные города — удобно ходить и ездить!',
+      'Дуэль линий: параллельные разбегаются и никогда не встречаются, перпендикулярные встречаются ровно под 90°. Сможешь отличить их с первого взгляда?',
+      'Финальный квест: спаси комнату! Верни стенам перпендикулярность, потолку — параллельность — и комната станет красивой. Ты теперь мастер прямых! Жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Как называются прямые, которые не пересекаются?', choices: ['Параллельные', 'Перпендикулярные', 'Пересекающиеся'], ans: 0,
+      exp: 'Прямые, которые не пересекаются, — параллельные.' },
+    tasks: [
+      { q: 'Сколько прямых, параллельных данной, можно провести через точку, не лежащую на ней?', kind: 'unit', ans: 1, tol: 0,
+        hints: ['Вспомни аксиому параллельных.', 'Ровно одну.'], sol: 'Ровно одну.' },
+      { q: 'Под каким углом пересекаются перпендикулярные прямые?', kind: 'choice', choices: ['45°', '90°', '180°'], ans: 1, tol: 0,
+        hints: ['Вспомни определение.', 'Под прямым углом — 90°.'], sol: '90°.' }
+    ]
+  };
+  const P={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a',pink:'#e8a0d8',cream:'#f2e7c9'};
+  const PCOL=['#ffd76a','#7fd1ff','#e8a0d8','#8fd1a8','#ff9a8a','#c9a06a'];
+  /* автомобиль */
+  function car(x,y,scale,col){
+    return `<g transform="translate(${x},${y}) scale(${scale||1})">
+      <rect x="0" y="8" width="38" height="13" rx="5" fill="${col||'#ff8a5a'}"/>
+      <rect x="6" y="0" width="20" height="10" rx="4" fill="${col||'#ff8a5a'}"/>
+      <rect x="9" y="2" width="14" height="6" rx="2" fill="#bfe4ff"/>
+      <circle cx="9" cy="22" r="4.5" fill="#23384d"/><circle cx="30" cy="22" r="4.5" fill="#23384d"/>
+      <circle cx="9" cy="22" r="2" fill="#c8d2da"/><circle cx="30" cy="22" r="2" fill="#c8d2da"/>
+      <circle cx="2" cy="11" r="1.6" fill="#ffe9a8"/><circle cx="36" cy="11" r="1.6" fill="#ff9a8a"/>
+    </g>`;
+  }
+  const road=(x1,y1,x2,y2,c,w)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c||'#7fd1ff'}" stroke-width="${w||4}" stroke-linecap="round"/>`;
+  /* городской фон */
+  function bgCity(inner,opt){
+    const o=opt||{};
+    const W=318,H=o.h||180;
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs><linearGradient id="q2sky${o.uid||0}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b3a6e"/><stop offset="1" stop-color="#7a5a8e"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#q2sky${o.uid||0})"/>
+      <circle cx="270" cy="36" r="13" fill="#ffe9a8" opacity=".9"/>
+      ${[14,30,46,62,78,94,110,126,142].map((x,i)=>`<rect class="q2float" style="animation-delay:${(i*0.2).toFixed(1)}s" x="${x}" y="${50+((i*17)%40)}" width="${22-i%2*6}" height="${10+i%3*8}" rx="3" fill="${i%2?'#3a4a8a':'#2c3a70'}" opacity=".9"/><rect x="${x+3}" y="${52+((i*17)%40)}" width="4" height="3" fill="#ffd76a" opacity=".8"/>`).join('')}
+      <rect x="0" y="${H-14}" width="${W}" height="14" fill="#1a2740"/>
+      ${inner}
+    </svg>`;
+  }
+  const sign=(t,c,delay,fs)=>`<span class="q2in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 13px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.06);font-family:Georgia,serif;font-size:${fs||21}px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c)=>`<span style="display:inline-block;padding:4px 10px;border-radius:9px;border:1.8px solid ${c||'#4a6a54'};font-size:13px;color:#e8dcc8">${t}</span>`;
+  /* итоговый quiz со звёздами */
+  const Q198=[
+    {q:'Прямые, которые не пересекаются, — это…',opts:['параллельные','перпендикулярные','пересекающиеся'],ans:0},
+    {q:'Перпендикулярные прямые пересекаются под углом…',opts:['45°','90°','180°'],ans:1}
+  ];
+  function quiz(lk,st){
+    const T=Q198[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?P.green:P.red; tc=i===T.ans?P.green:P.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:92px;font-size:15px" onclick="visW198T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      if(st.sel===T.ans){
+        const got=(st.stars||0)+1;
+        st.stars=got;
+        msg=`<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! Звёзд: ${'★'.repeat(got)}${'☆'.repeat(2-got)}</div>`;
+      } else {
+        msg='<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Параллельные не встречаются · перпендикулярные — под 90°</div>';
+      }
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW198Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW198Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW198(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step===0){ st.seen=0; }
+      if(step===1){ if(st.ang==null) st.ang=90; }
+      if(step===2){ if(st.r==null) st.r=0; }
+      if(step===3){ st.pick=null; }
+      if(step===4){ if(st.found==null) st.found=0; }
+      if(step===6){ st.pick=null; }
+      if(step===7){ st.pick=null; }
+      if(step===8){ st.pick=null; }
+      if(step===9){ st.fold=0; }
+      if(step===10){ st.v=0; st.h=0; }
+      if(step===11){ st.zone=null; }
+      if(step===12){ st.pick=null; st.q12=0; }
+      if(step===13){ st.sel=null; st.q=0; st.stars=0; st.kv=0; }
+    }
+    let h='';
+    if(step===0){
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 1 · Две дороги, которые не встретятся</div>`+
+        wkHero(bgCity(`
+          ${road(10,64,308,64,'#7fd1ff',5)}
+          ${road(10,96,308,96,'#7fd1ff',5)}
+          <g class="q2drive" style="animation-delay:0s">${car(-14,50,1.15,'#ff8a5a')}</g>
+          <g class="q2drive2" style="animation-delay:.15s">${car(-14,86,1.15,'#5aa0ff')}</g>
+          <g class="q2pop"><text x="20" y="62" text-anchor="middle" font-size="12" fill="#ffe9a8">машина 1</text>
+          <text x="20" y="98" text-anchor="middle" font-size="12" fill="#bfe4ff">машина 2</text></g>
+          <line x1="60" y1="70" x2="60" y2="90" stroke="#ffd76a" stroke-width="2.4" stroke-dasharray="4 4"/>
+          <line x1="160" y1="70" x2="160" y2="90" stroke="#ffd76a" stroke-width="2.4" stroke-dasharray="4 4"/>
+          <line x1="260" y1="70" x2="260" y2="90" stroke="#ffd76a" stroke-width="2.4" stroke-dasharray="4 4"/>
+          <text x="159" y="130" text-anchor="middle" font-size="12" fill="#ffe9c9">расстояние между трассами не меняется</text>
+        `,{h:170,uid:0}))+
+        wkRow(sign('параллельные — как рельсы',P.gold,0.5))+
+        wkSml('машины едут ровно · расстояние всегда одно и то же'));
+    } else if(step===1){
+      const ang=st.ang==null?90:st.ang;
+      const rad=ang*Math.PI/180;
+      const is90=Math.abs(ang-90)<1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 2 · Перекрёсток под прямым углом</div>`+
+        wkHero(bgCity(`
+          ${road(10,80,308,80,'#7fd1ff',5)}
+          <g style="transform-origin:150px 80px" transform="rotate(${ang-90} 150 80)">
+            ${road(150,10,150,170,'#ffd76a',5)}
+          </g>
+          <g class="q2bump"><circle cx="150" cy="80" r="7" fill="#ffd76a" stroke="#0d1a13" stroke-width="2"/></g>
+          <g class="q2pop" style="animation-delay:.3s"><rect x="200" y="34" width="92" height="30" rx="9" fill="rgba(0,0,0,.55)" stroke="#8fd1a8" stroke-width="2"/>
+          <text x="246" y="54" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold">угол ${ang}°</text></g>
+        `,{h:170,uid:1}))+
+        `<div class="q2in" style="display:flex;align-items:center;gap:8px;justify-content:center;margin:6px 0">
+          <span style="font-size:12px;color:#9ec0a8">наклони улицу:</span>
+          <input type="range" min="30" max="150" value="${ang}" style="flex:1;max-width:180px" oninput="visW198Act('${lk}','ang:'+this.value)">
+        </div>`+
+        (is90? wkRow(sign('90° — перпендикуляр! крест!',P.green,0.2)) : wkRow(sign('ищи ровно 90°',P.gold,0.2)))+
+        wkSml('перпендикулярные — строгий крест: четыре одинаковых угла'));
+    } else if(step===2){
+      const pts=[[50,120],[150,120],[250,120]];
+      const dist=st.r||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 3 · Робот с линейкой (сюрприз!)</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="170" fill="#1d3a2a"/>
+          <rect x="0" y="0" width="318" height="34" fill="#14291e"/>
+          <text x="159" y="23" text-anchor="middle" font-size="13" fill="#8fd1a8">весёлый луг</text>
+          ${road(20,120,298,120,'#ffd76a',4)}
+          ${road(20,60,298,60,'#ffd76a',4)}
+          ${pts.map((p,i)=>`<line x1="${p[0]}" y1="60" x2="${p[0]}" y2="120" stroke="#4f9a6a" stroke-width="2" stroke-dasharray="4 4"/>
+          <g class="q2bump"><circle cx="${p[0]}" cy="90" r="4.5" fill="#e8a0d8"/></g>`).join('')}
+          <g class="q2pop" style="animation-delay:.4s"><rect x="30" y="136" width="258" height="30" rx="12" fill="rgba(255,255,255,.07)" stroke="#8fd1a8" stroke-width="2"/>
+          <text x="159" y="157" text-anchor="middle" font-size="16" fill="#8fd1a8" font-weight="bold">расстояние = ${dist==0?60:60} · везде 60!</text></g>
+        </svg>`)+
+        wkRow(wkBtn('проверить точку слева',`visW198Act('${lk}','p0')`),wkBtn('точка в середине',`visW198Act('${lk}','p1')`),wkBtn('точка справа',`visW198Act('${lk}','p2')`))+
+        wkSml('кликай по разным точкам — робот везде намерит 60!'));
+    } else if(step===3){
+      const pick=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 4 · Проверка угольником</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="170" fill="#24314f"/>
+          <text x="159" y="26" text-anchor="middle" font-size="13" fill="#cfe0cf">лаборатория углов</text>
+          <!-- пара 1: перпендикуляр -->
+          <g><line x1="40" y1="130" x2="130" y2="130" stroke="#7fd1ff" stroke-width="4"/>
+          <line x1="85" y1="60" x2="85" y2="140" stroke="#7fd1ff" stroke-width="4"/></g>
+          <g class="q2pop" style="animation-delay:.2s"><text x="85" y="150" text-anchor="middle" font-size="12" fill="#cfe0ff">пара 1</text></g>
+          <!-- пара 2: наклон -->
+          <g><line x1="180" y1="130" x2="290" y2="130" stroke="#ff8a7a" stroke-width="4"/>
+          <line x1="215" y1="56" x2="262" y2="136" stroke="#ff8a7a" stroke-width="4"/></g>
+          <text x="235" y="150" text-anchor="middle" font-size="12" fill="#ffcfc2">пара 2</text>
+          ${pick!=null? `<g class="q2pop"><rect x="86" y="90" width="0" height="0" fill="none"/>
+          <text x="159" y="166" text-anchor="middle" font-size="14" fill="${pick===0?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick===0?'верно! угольник сел точно в 90° ✓':'не так — в паре 2 угол не прямой'}</text></g>`:''}
+        </svg>`)+
+        wkRow(
+          wkBtn('угольник в пару 1',`visW198Act('${lk}','p0')`),
+          wkBtn('угольник в пару 2',`visW198Act('${lk}','p1')`))+
+        wkSml('прозрачный угольник с прямым углом · где он совпадёт идеально?'));
+    } else if(step===4){
+      const found=st.found||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 5 · Параллельность в природе</div>`+
+        wkHero(`<svg viewBox="0 0 318 180" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="180" fill="#7fd1ff"/>
+          <rect x="0" y="0" width="318" height="96" fill="#a8e8c0" opacity=".65"/>
+          <rect x="0" y="96" width="318" height="42" fill="#3fae6a"/>
+          <rect x="0" y="148" width="318" height="32" fill="#2e8a50"/>
+          <text x="159" y="18" text-anchor="middle" font-size="13" fill="#0d3a20">лес · зебра · соты</text>
+          <!-- деревья на горизонте -->
+          ${[36,90,144,198,252].map((x,i)=>`<rect x="${x-4}" y="${64+(i%2)*7}" width="9" height="38" fill="#6b4426" rx="3"/>
+            <circle cx="${x}" cy="${56+(i%2)*7}" r="17" fill="${found>0?'#ffe9a8':'#3fae6a'}"/>
+            <circle cx="${x-11}" cy="${63+(i%2)*7}" r="10" fill="#3fae6a" opacity=".8"/><circle cx="${x+11}" cy="${62+(i%2)*7}" r="11" fill="#35945a" opacity=".85"/>`).join('')}
+          <!-- зебра на лужайке внизу -->
+          <g class="q2float" style="animation-delay:.5s">
+            <ellipse cx="140" cy="122" rx="42" ry="17" fill="#fff"/>
+            ${[0,1,2,3,4,5].map(i=>`<path d="M ${104+i*13} 116 q 5 -15 10 0 q -5 15 -10 0" fill="${found>=2?'#ffd76a':'#2a2a2a'}" opacity=".95"/>`).join('')}
+            <rect x="104" y="136" width="5" height="14" rx="2" fill="#fff"/>
+            <rect x="120" y="138" width="5" height="13" rx="2" fill="#fff"/>
+            <rect x="152" y="138" width="5" height="13" rx="2" fill="#fff"/>
+            <rect x="168" y="136" width="5" height="14" rx="2" fill="#fff"/>
+            <rect x="98" y="116" width="5" height="15" rx="2" fill="#fff" transform="rotate(12 100 124)"/>
+            <rect x="176" y="116" width="5" height="15" rx="2" fill="#fff" transform="rotate(-12 178 124)"/>
+            <circle cx="103" cy="118" r="2.2" fill="#2a2a2a"/><circle cx="177" cy="118" r="2.2" fill="#2a2a2a"/>
+          </g>
+          <!-- соты -->
+          <g class="q2pop" style="animation-delay:.6s">
+            ${[[246,118],[272,118],[259,99],[259,137]].map((c,i)=>{const on=found>=3; return `<circle cx="${c[0]}" cy="${c[1]}" r="12" fill="${on?'#ffe9a8':'#ffd76a'}" stroke="#c9812a" stroke-width="2.2"/>`;}).join('')}
+            <text x="159" y="0" font-size="0" fill="#fff"> </text>
+          </g>
+          <text x="159" y="176" text-anchor="middle" font-size="11.5" fill="#eaffe9" font-weight="bold">${found<3?'найди 3 параллельных: деревья · полоски зебры · соты ('+found+'/3)':'все 3 найдены! соты экономят место!'}</text>
+        </svg>`)+
+        wkRow(wkBtn('стволы деревьев',`visW198Act('${lk}','f0')`),wkBtn('полоски зебры',`visW198Act('${lk}','f1')`),wkBtn('соты',`visW198Act('${lk}','f2')`))+
+        wkSml('кликни 3 объекта с параллельными линиями'));
+    } else if(step===5){
+      const tilt=st.tilt||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 6 · Перпендикуляр в строительстве</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="170" fill="#e8dcc0"/>
+          <rect x="0" y="0" width="318" height="40" fill="#7fd1ff"/><circle cx="60" cy="20" r="9" fill="#ffe9a8"/>
+          <rect x="0" y="140" width="318" height="30" fill="#8a7a5a"/>
+          <rect x="10" y="132" width="298" height="10" fill="#c9a06a"/>
+          <g style="transform-origin:60px 142px" transform="rotate(${tilt} 60 142)">
+            <rect x="60" y="52" width="46" height="90" fill="#c96a4a" stroke="#8a4428" stroke-width="2"/>
+            <rect x="66" y="58" width="34" height="14" fill="#ffe9a8"/><rect x="66" y="80" width="34" height="14" fill="#8fd1a8"/>
+            <rect x="66" y="102" width="34" height="14" fill="#7fd1ff"/>
+            <line x1="46" y1="52" x2="120" y2="52" stroke="#ffd76a" stroke-width="3.4"/>
+            <line x1="46" y1="52" x2="46" y2="142" stroke="#ffd76a" stroke-width="3.4"/>
+            <g class="q2pop"><rect x="70" y="142" width="30" height="14" rx="4" fill="#5a3d20"/></g>
+          </g>
+          ${tilt!==0? `<g class="q2wob"><text x="159" y="30" text-anchor="middle" font-size="15" fill="#c0392b" font-weight="bold">дом шатается!</text></g>`:
+          `<text x="159" y="30" text-anchor="middle" font-size="15" fill="#2a5a3a" font-weight="bold">стена ⊥ пол — дом крепкий</text>`}
+        </svg>`)+
+        wkRow(wkBtn('наклонить стену',`visW198Act('${lk}','tilt')`), wkBtn('выровнять обратно',`visW198Act('${lk}','tilt0')`))+
+        wkSml('потяни стену — увидишь, почему 90° важны'));
+    } else if(step===6){
+      const pick=st.pick;
+      const pairs=[
+        {type:'parallel',name:'параллельные',l1:[20,60,150,60],l2:[20,110,150,110],col:'#7fd1ff'},
+        {type:'perp',name:'перпендикулярные',l1:[190,130,290,130],l2:[240,70,240,140],col:'#ff8a7a'}
+      ];
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 7 · Магические значки // и ⊥</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="170" fill="#33275e"/>
+          <text x="159" y="26" text-anchor="middle" font-size="13" fill="#d8c9ff">магическая лаборатория значков</text>
+          <g class="q2pop"><line x1="20" y1="55" x2="150" y2="55" stroke="${pairs[0].col}" stroke-width="4"/>
+          <line x1="20" y1="105" x2="150" y2="105" stroke="${pairs[0].col}" stroke-width="4"/></g>
+          <g class="q2pop" style="animation-delay:.25s"><line x1="190" y1="130" x2="290" y2="130" stroke="${pairs[1].col}" stroke-width="4"/>
+          <line x1="240" y1="70" x2="240" y2="140" stroke="${pairs[1].col}" stroke-width="4"/></g>
+          <g class="q2bump" style="animation-delay:.5s"><circle cx="85" cy="150" r="24" fill="rgba(255,255,255,.06)" stroke="#e8a0d8" stroke-width="2.4"/>
+          <text x="85" y="157" text-anchor="middle" font-size="20" fill="#e8a0d8" font-weight="bold">?</text></g>
+          <g class="q2bump" style="animation-delay:.6s"><circle cx="240" cy="150" r="24" fill="rgba(255,255,255,.06)" stroke="#ffd76a" stroke-width="2.4"/>
+          <text x="240" y="157" text-anchor="middle" font-size="20" fill="#ffd76a" font-weight="bold">?</text></g>
+          ${pick!=null? `<text x="159" y="168" text-anchor="middle" font-size="13" fill="${pick?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick? 'верно! // — параллельные ✓':'не так. Пара 1 (две ровные) — //'}</text>`:''}
+        </svg>`)+
+        wkRow(wkBtn('пара 1 — значок //',`visW198Act('${lk}','p0')`),wkBtn('пара 2 — значок ⊥',`visW198Act('${lk}','p1')`))+
+        wkSml('перетащи значок: // две чёрточки · ⊥ перевёрнутая Т'));
+    } else if(step===7){
+      const pick=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 8 · Почти параллельные — нет!</div>`+
+        wkHero(`<svg viewBox="0 0 318 180" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="180" fill="#2a1f2e"/>
+          <text x="159" y="24" text-anchor="middle" font-size="13" fill="#e8c9d8">увеличительное стекло</text>
+          <line x1="30" y1="60" x2="290" y2="50" stroke="#ffd76a" stroke-width="4"/>
+          <line x1="30" y1="110" x2="290" y2="130" stroke="#ffd76a" stroke-width="4"/>
+          <g class="q2pop" style="animation-delay:.5s"><circle cx="270" cy="96" r="34" fill="rgba(255,255,255,.05)" stroke="#7fd1ff" stroke-width="2.6"/>
+          <line x1="246" y1="70" x2="296" y2="118" stroke="#7fd1ff" stroke-width="3"/>
+          <text x="270" y="140" text-anchor="middle" font-size="11" fill="#7fd1ff">здесь пересекутся!</text></g>
+          <text x="159" y="162" text-anchor="middle" font-size="13" fill="#e8c9d8">сходятся по чуть-чуть — далеко встретятся</text>
+        </svg>`)+
+        (pick!=null? wkRow(sign(pick===1?'верно! расстояние меняется — не параллельны!':'неверно! они чуть-чуть сходятся — встретятся!', pick===1?P.green:P.red,0.1)) : '')+
+        wkRow(wkBtn('параллельны',`visW198Act('${lk}','p0')`),wkBtn('не параллельны',`visW198Act('${lk}','p1')`))+
+        wkSml('если расстояние чуть-чуть меняется — они обязательно встретятся'));
+    } else if(step===8){
+      const pick=st.pick;
+      const opts=[89,90,91];
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 9 · Ловушки: 89°, 90°, 91°</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="170" fill="#1e3350"/>
+          <text x="159" y="24" text-anchor="middle" font-size="13" fill="#cfe0ff">транспортир наготове</text>
+          ${opts.map((a,i)=>{
+            const x=40+i*90;
+            const rad=(a)*Math.PI/180;
+            return `<g><line x1="${x}" y1="120" x2="${x+70}" y2="120" stroke="#7fd1ff" stroke-width="4"/>
+            <line x1="${x}" y1="120" x2="${x+70*Math.cos(rad)}" y2="${120-70*Math.sin(rad)}" stroke="${a===90?'#8fd1a8':'#ff8a7a'}" stroke-width="4"/>
+            <path d="M ${x+22} 120 A 22 22 0 0 0 ${x+22*Math.cos(rad)} ${120-22*Math.sin(rad)}" fill="none" stroke="#ffd76a" stroke-width="2.4"/>
+            <text x="${x+35}" y="138" text-anchor="middle" font-size="13" fill="#ffd76a">${a}°</text></g>`;
+          }).join('')}
+          ${pick!=null? `<text x="159" y="166" text-anchor="middle" font-size="14" fill="${pick===1?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick===1?'верно! только 90° — перпендикуляр ✓':'нет! только ровно 90°'}</text>`:''}
+        </svg>`)+
+        wkRow(wkBtn('89°',`visW198Act('${lk}','p0')`),wkBtn('90°',`visW198Act('${lk}','p1')`),wkBtn('91°',`visW198Act('${lk}','p2')`))+
+        wkSml('какой угол даёт перпендикуляр? проведи пальцем и измерь'));
+    } else if(step===9){
+      const fold=st.fold||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 10 · Параллельные сгибом листа</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="170" fill="#31403a"/>
+          <rect x="0" y="0" width="318" height="34" fill="#203028"/>
+          <text x="159" y="23" text-anchor="middle" font-size="13" fill="#9fe8c0">бумажная мастерская</text>
+          <g class="q2sway"><rect x="60" y="44" width="200" height="110" rx="6" fill="#f2e7c9" stroke="#b89a5a" stroke-width="2"/>
+          ${fold>=1? `<line x1="60" y1="44" x2="260" y2="44" stroke="#d9a441" stroke-width="0"/>` : ''}
+          ${fold>=1? `<g class="q2pop"><rect x="60" y="44" width="200" height="14" fill="#efe0b0" opacity=".9"/>
+            <line x1="60" y1="51" x2="260" y2="51" stroke="#c9812a" stroke-width="3"/></g>`:''}
+          ${fold>=2? `<g class="q2pop"><rect x="60" y="58" width="200" height="14" fill="#efe0b0" opacity=".9"/>
+            <line x1="60" y1="65" x2="260" y2="65" stroke="#c9812a" stroke-width="3"/></g>`:''}
+          ${fold>=3? `<g class="q2pop"><rect x="60" y="72" width="200" height="14" fill="#efe0b0" opacity=".9"/>
+            <line x1="60" y1="79" x2="260" y2="79" stroke="#c9812a" stroke-width="3"/></g>`:''}
+          </g>
+          ${fold===0? `<g class="q2float"><text x="159" y="130" text-anchor="middle" font-size="14" fill="#8a6a3a">согни лист!</text></g>`:''}
+          ${fold>=3? `<text x="159" y="170" text-anchor="middle" font-size="13" fill="#9fe8c0">сгибы параллельны друг другу</text>`:''}
+        </svg>`)+
+        wkRow(fold<3? wkBtn('согнуть ещё раз',`visW198Act('${lk}','fold')`) : wkBtn('сброс',`visW198Act('${lk}','rst')`))+
+        wkSml('каждый сгиб, параллельный первому, — новая линия'));
+    } else if(step===10){
+      const v=st.v||0,h2=st.h||0;
+      const n=6,cell=26;
+      const ox=(318-n*cell)/2, oy=34;
+      let grid='';
+      for(let r=0;r<n;r++)for(let c=0;c<n;c++){ grid+=`<rect x="${ox+c*cell}" y="${oy+r*cell}" width="${cell}" height="${cell}" fill="none" stroke="#5a8ab0" stroke-width="1" opacity=".5"/>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 11 · Тетрадь в клетку</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="170" fill="#f2e7c9"/>
+          ${grid}
+          <g class="q2pop"><text x="159" y="26" text-anchor="middle" font-size="13" fill="#8a6a3a">проведи по клеткам</text></g>
+          ${h2? `<line x1="${ox+cell}" y1="${oy+cell}" x2="${ox+cell*4}" y2="${oy+cell}" stroke="#e8483a" stroke-width="6"/>`:''}
+          ${v? `<line x1="${ox+cell}" y1="${oy+cell}" x2="${ox+cell}" y2="${oy+cell*4}" stroke="#2a7ab8" stroke-width="6"/>`:''}
+          ${v&&h2? `<g class="q2pop"><circle cx="${ox+cell}" cy="${oy+cell}" r="6" fill="#ffd76a"/><text x="159" y="164" text-anchor="middle" font-size="13" fill="#2a5a3a" font-weight="bold">вертикаль ⊥ горизонталь — 90°!</text></g>`:''}
+        </svg>`)+
+        wkRow(wkBtn('провести вниз',`visW198Act('${lk}','v')`),wkBtn('провести вправо',`visW198Act('${lk}','h')`), (v&&h2)?wkBtn('сброс',`visW198Act('${lk}','rst')`):'')+
+        wkSml('линии тетради — готовые перпендикуляры'));
+    } else if(step===11){
+      const zone=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 12 · Карта города</div>`+
+        wkHero(`<svg viewBox="0 0 318 180" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="180" fill="#e8e0c8"/>
+          <text x="159" y="18" text-anchor="middle" font-size="13" fill="#7a5a3a">какой квартал построен правильно?</text>
+          <!-- квартал A: улицы сходятся -->
+          <line x1="20" y1="40" x2="90" y2="150" stroke="#b0784a" stroke-width="3"/>
+          <line x1="90" y1="40" x2="20" y2="150" stroke="#b0784a" stroke-width="3"/>
+          <line x1="20" y1="90" x2="90" y2="90" stroke="#b0784a" stroke-width="2.6"/>
+          <!-- квартал B: правильная сетка -->
+          <line x1="130" y1="40" x2="130" y2="150" stroke="#4a8ac8" stroke-width="3"/>
+          <line x1="190" y1="40" x2="190" y2="150" stroke="#4a8ac8" stroke-width="3"/>
+          <line x1="128" y1="90" x2="192" y2="90" stroke="#4a8ac8" stroke-width="3"/>
+          <line x1="128" y1="130" x2="192" y2="130" stroke="#4a8ac8" stroke-width="3"/>
+          <!-- квартал C: острые углы -->
+          <line x1="230" y1="150" x2="300" y2="40" stroke="#c86a4a" stroke-width="3"/>
+          <line x1="230" y1="40" x2="300" y2="150" stroke="#c86a4a" stroke-width="3"/>
+          ${zone!=null? `<g class="q2pop"><rect x="${zone===0?24:(zone===1?134:234)}" y="150" width="${zone===1?56:70}" height="22" rx="5" fill="rgba(255,215,106,.8)" stroke="#0d1a13" stroke-width="2"/></g>`:''}
+          <text x="55" y="166" text-anchor="middle" font-size="12" fill="#7a5a3a" font-weight="bold">A</text>
+          <text x="162" y="166" text-anchor="middle" font-size="12" fill="#7a5a3a" font-weight="bold">B</text>
+          <text x="267" y="166" text-anchor="middle" font-size="12" fill="#7a5a3a" font-weight="bold">C</text>
+        </svg>`)+
+        (zone!=null? wkRow(sign(zone===1?'верно! квартал B — все углы прямые ✓':'не так. Ищи ровные улицы и прямые углы', zone===1?P.green:P.red,0.1)) : '')+
+        wkRow(wkBtn('квартал A',`visW198Act('${lk}','z0')`),wkBtn('квартал B',`visW198Act('${lk}','z1')`),wkBtn('квартал C',`visW198Act('${lk}','z2')`))+
+        wkSml('B: параллельные улицы + перпендикулярные проспекты — удобный город'));
+    } else if(step===12){
+      const pick=st.pick; const qi=st.q12||0;
+      const Qs=[
+        {l1:[20,60,290,60],l2:[20,120,290,120],type:'параллельные',type2:0},
+        {l1:[20,90,290,90],l2:[150,20,150,160],type:'перпендикулярные',type2:1},
+        {l1:[20,40,290,140],l2:[20,140,290,40],type:'пересекающиеся',type2:2},
+        {l1:[40,90,160,50],l2:[60,120,200,100],type:'ни те, ни другие',type2:3}
+      ];
+      const T=Qs[qi%Qs.length];
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 13 · Дуэль линий</div>`+
+        wkHero(`<svg viewBox="0 0 318 160" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="160" fill="#2a2340"/>
+          <text x="159" y="24" text-anchor="middle" font-size="13" fill="#e8d8ff">ринг прямых</text>
+          <g class="q2pop"><line x1="${T.l1[0]}" y1="${T.l1[1]}" x2="${T.l1[2]}" y2="${T.l1[3]}" stroke="#ffd76a" stroke-width="5" stroke-linecap="round"/>
+          <line x1="${T.l2[0]}" y1="${T.l2[1]}" x2="${T.l2[2]}" y2="${T.l2[3]}" stroke="#e8a0d8" stroke-width="5" stroke-linecap="round"/></g>
+          <text x="159" y="146" text-anchor="middle" font-size="13" fill="#9fb0d0">как зовут эту пару?</text>
+        </svg>`)+
+        (pick!=null? `<div class="wk-ans" style="color:${pick===T.type2?'#8fd1a8':'#ff8a7a'}">${pick===T.type2?'верно! это '+T.type:'не так — присмотрись'}</div>`:'')+
+        (pick!=null&&pick===T.type2? wkRow(wkBtn('следующая дуэль',`visW198Act('${lk}','next')`)):'')+
+        `<div class="wk-row" style="gap:6px">
+          <button class="wk-btn" style="font-size:13px;min-width:70px" onclick="visW198T2('${lk}',0)">параллельные</button>
+          <button class="wk-btn" style="font-size:13px;min-width:70px" onclick="visW198T2('${lk}',1)">перпендикулярные</button>
+          <button class="wk-btn" style="font-size:13px;min-width:70px" onclick="visW198T2('${lk}',2)">пересекающиеся</button>
+          <button class="wk-btn" style="font-size:13px;min-width:70px" onclick="visW198T2('${lk}',3)">никакие</button>
+        </div>`+
+        wkSml('различи параллельные и перпендикулярные с первого взгляда'));
+    } else {
+      // финал + квест-комната + quiz
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Блок 14 · Спаси комнату!</div>`+
+        wkHero(`<svg viewBox="0 0 318 160" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="160" fill="#3d4a6a"/>
+          <text x="159" y="20" text-anchor="middle" font-size="13" fill="#cfe0cf">комната</text>
+          <!-- пол и потолок -->
+          <rect x="30" y="120" width="258" height="10" fill="#8a5a2e"/>
+          <rect x="30" y="40" width="258" height="10" fill="#8a5a2e"/>
+          ${st.kv? `<g class="q2pop"><rect x="30" y="50" width="10" height="70" fill="#c96a4a"/>
+            <rect x="120" y="50" width="10" height="70" fill="#7fb7e8"/>
+            <rect x="240" y="50" width="10" height="70" fill="#e8a0d8"/>
+            <line x1="30" y1="45" x2="30" y2="125" stroke="#ffd76a" stroke-width="3"/>
+            <text x="159" y="148" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">стены ⊥ пол · потолок ∥ пол — комната спасена!</text></g>`
+          : `<g class="q2fall" style="transform-origin:30px 125px"><rect x="30" y="50" width="10" height="70" fill="#c96a4a" opacity=".85"/></g>
+             <g class="q2fall" style="transform-origin:120px 125px;animation-delay:.3s"><rect x="120" y="50" width="10" height="70" fill="#7fb7e8" opacity=".85"/></g>
+             <g class="q2fall" style="transform-origin:240px 125px;animation-delay:.15s"><rect x="240" y="50" width="10" height="70" fill="#e8a0d8" opacity=".85"/></g>
+             <text x="159" y="148" text-anchor="middle" font-size="13" fill="#ff9a8a" font-weight="bold">стены шатаются — исправь!</text>`}
+        </svg>`)+
+        (st.kv? '' : wkRow(wkBtn('выпрямить все стены',`visW198Act('${lk}','kv')`)))+
+        quiz(lk,st)+
+        wkSml('ты мастер прямых! жми «Понял! Проверю себя»'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[198]=visW198;
+  function visW198T(lk,i){
+    const st=CHS[lk]||(CHS[lk]={});
+    st.sel=i; chRender(0);
+  }
+  window.visW198T=visW198T;
+  function visW198T2(lk,i){
+    const st=CHS[lk]||(CHS[lk]={});
+    st.pick=i; chRender(0);
+  }
+  window.visW198T2=visW198T2;
+  function visW198Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act.indexOf('ang:')===0){ st.ang=parseInt(act.slice(4),10); }
+    if(act==='z0') st.pick=0;
+    if(act==='z1') st.pick=1;
+    if(act==='z2') st.pick=2;
+    if(act==='p0') st.pick=0;
+    if(act==='p1') st.pick=1;
+    if(act==='p2') st.pick=2;
+    if(act==='f0'||act==='f1'||act==='f2'){ st.found=(st.found||0)+1; if(st.found>3) st.found=3; }
+    if(act==='tilt') st.tilt=9;
+    if(act==='tilt0') st.tilt=0;
+    if(act==='fold') st.fold=(st.fold||0)+1;
+    if(act==='v') st.v=1;
+    if(act==='h') st.h=1;
+    if(act==='kv') st.kv=1;
+    if(act==='next'){ st.q12=(st.q12||0)+1; st.pick=null; }
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW198Act=visW198Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===198){ window.ARH_LESSONS[i]=L198; break; } } })();
+})();
