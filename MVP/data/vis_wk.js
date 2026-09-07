@@ -11442,3 +11442,519 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW397Act=visW397Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===397){ window.ARH_LESSONS[i]=L397; break; } } })();
 })();
+
+
+
+
+
+
+
+/* ================= УРОК 191 · Пропорция: основное свойство (v1 · «Цветолаборатория Архимеда», 18 слайдов) ================= */
+(function(){
+  if(!window.__wk191v1css){
+    window.__wk191v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .pzIn{animation:pzIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes pzIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .pzPop{animation:pzPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes pzPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .pzSlide{animation:pzSlide 1s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
+      '@keyframes pzSlide{from{transform:translate(var(--tx),var(--ty));opacity:0}to{transform:translate(0,0);opacity:1}}'+
+      '#lvis .pzDash{stroke-dasharray:8 6;animation:pzDash 1.5s linear infinite;}'+
+      '@keyframes pzDash{to{stroke-dashoffset:-28}}'+
+      '#lvis .pzPulse{animation:pzPulse 1.8s ease-in-out infinite;}'+
+      '@keyframes pzPulse{0%,100%{opacity:.4}50%{opacity:1}}'+
+      '#lvis .pzBump{animation:pzBump 1s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes pzBump{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}'+
+      '#lvis .pzRise{animation:pzRise .7s ease both;transform-box:fill-box;}'+
+      '@keyframes pzRise{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}';
+    document.head.appendChild(st);
+  }
+  const L191 = {
+    id: 191, title: 'Пропорция: основное свойство', ico: '⚖',
+    src: 'Математика · 6 класс · Пропорции', subj: 'math',
+    explain: [
+      'В лаборатории Архимеда готовят фирменный голубой оттенок: на 2 части синей краски берут 3 части белой. Это и есть отношение 2 : 3. А чтобы оттенок остался тем же, обе части увеличивают одинаково.',
+      'Отношение 2 : 3 означает «на 2 части синей — 3 части белой». Попробуем смешать маленькую порцию и получить эталонный оттенок.',
+      'Пропорция — это РАВЕНСТВО двух отношений: 2 : 3 = 10 : 15. Обе записи дают один и тот же оттенок — они пропорциональны.',
+      'Члены пропорции a : b = c : d имеют имена: a и d — КРАЙНИЕ, b и c — СРЕДНИЕ. Запомни их расположение: крайние по краям, средние в середине.',
+      'Как получили 10 : 15 из 2 : 3? Умножили ОБЕ части на один и тот же множитель k = 5: 2·5 = 10 и 3·5 = 15. Оттенок не изменился!',
+      'Главный секрет: в пропорции обе части умножаются на одно и то же число k. Отношение (оттенок) остаётся прежним, меняется только количество краски.',
+      'Отношение — это дробь: 2 : 3 = 2/3, а 10 : 15 = 10/15. Это равные дроби, и их можно сократить до 2/3.',
+      'Основное свойство пропорции: a : b = c : d ⟹ a · d = b · c. Произведение крайних членов равно произведению средних.',
+      'Почему так? Возьмём a/b = c/d и умножим обе части на b·d — получим a·d = c·b. Дроби «очистились», осталось равенство произведений.',
+      'Проверим на числах: 2 : 3 = 10 : 15. Крайние: 2 · 15 = 30. Средние: 3 · 10 = 30. 30 = 30 — пропорция верна!',
+      'Решаем пропорцию 2 : 3 = 10 : x. По свойству: 2 · x = 3 · 10 = 30. Осталось разделить: x = 30 : 2 = 15.',
+      'Тот же ответ можно получить через масштаб: 2 → 10 это умножение на 5, значит и 3 → 3·5 = 15. Два способа — один ответ!',
+      'Проверка: подставим x = 15 в 2 : 3 = 10 : 15. Крайние 2·15 = 30, средние 3·10 = 30 — всё сходится.',
+      'Пример 2: 4 : 5 = x : 20. Крайние 4 и 20, средние 5 и x. Свойство: 4·20 = 5·x → 80 = 5x → x = 16. Масштаб: 5 → 20 это ×4, значит 4 → 16.',
+      'Пример 3: 3 : x = 6 : 10. Крайние 3 и 10, средние x и 6. Свойство: 3·10 = x·6 → 30 = 6x → x = 5.',
+      'Тренажёр-смеситель: дана пропорция — запиши крест-накрест, посчитай произведение и раздели. Кнопки проведут по шагам!',
+      'Ловушка: не всякое равенство отношений — пропорция. Проверяй крест-накрест: если произведения НЕ равны, перед тобой не пропорция.',
+      'Проверь себя: 2 : 3 = 10 : x → x = 15. Ответь в тесте и жми «Понял! Проверю себя» — там эта же пропорция!'
+    ],
+    check: { q: 'Реши пропорцию: 2 : 3 = 10 : x.', choices: ['12', '15', '20'], ans: 1,
+      exp: '2 · x = 3 · 10 = 30, значит x = 30 : 2 = 15.' },
+    tasks: [
+      { q: 'Реши пропорцию: 4 : 5 = x : 20.', kind: 'unit', ans: 16, tol: 0,
+        hints: ['Крайние 4 и 20, средние 5 и x.', '4 · 20 = 5 · x → x = 80 : 5.'], sol: 'x = 16.' },
+      { q: 'Реши пропорцию: 3 : x = 6 : 10.', kind: 'choice', choices: ['5', '6', '8'], ans: 0, tol: 0,
+        hints: ['Крайние 3 и 10, средние x и 6.', '3 · 10 = x · 6 → x = 30 : 6 = 5.'], sol: 'x = 5.' }
+    ]
+  };
+  const I={ink:'#28324b',blue:'#2e6fb0',blueD:'#1f4f80',white:'#f5f7f9',gold:'#d9940a',goldD:'#a0700a',red:'#c0392b',grn:'#2e8b57',sw:'#a9c8e2',gray:'#8a94ad'};
+  function paper(W,H,opt){
+    const o=opt||{};
+    let bub='';
+    const spots=[[24,30,6],[300,44,5],[288,150,7],[40,150,5],[160,22,4]];
+    spots.forEach((s,i)=>{ bub+=`<circle class="pzPulse" cx="${s[0]}" cy="${s[1]}" r="${s[2]}" fill="none" stroke="rgba(46,111,176,.22)" stroke-width="1.4" style="animation-delay:${(i*0.3).toFixed(2)}s"/>`; });
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs><linearGradient id="pzpg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfbf3"/><stop offset="1" stop-color="#f1f5ee"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#pzpg)"/>
+      ${bub}
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#cfd7bd" stroke-width="2" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||I.ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdfbf3" stroke-width="3.2">${t}</text>`;
+  /* карточка члена пропорции */
+  function termBox(x,y,txt,role,o){
+    const opt=o||{};
+    const w=opt.w||48, h=opt.h||40;
+    const c = role==='ext'? I.red : (role==='mid'? I.blue : I.ink);
+    let s=`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${I.white}" stroke="${c}" stroke-width="2.6"/>`;
+    s+=tx(x+w/2,y+h/2+7,24,c,txt,{georgia:1,b:1});
+    return s;
+  }
+  /* пропорция a:b = c:d в ряд, c подсветкой ролей */
+  function propRow(x,y,a,b,c,d,o){
+    const opt=o||{};
+    const w=opt.w||40, gap=8, colon=16, eq=22;
+    let xx=x;
+    let s='';
+    const e1=opt.ext===0? I.red : I.ink;
+    s+=termBox(xx,y,a,opt.ext&&opt.ext&1? 'ext':'', {w,color:opt.ext&&opt.ext&1? I.red : null});
+    xx+=w+gap; s+=tx(xx+colon/2,y+24,colon,I.ink,':',{b:1,georgia:1}); xx+=colon;
+    s+=termBox(xx,y,b,opt.mid&&opt.mid&1? 'mid':'', {w,color:opt.mid&&opt.mid&1? I.blue : null});
+    xx+=w+gap; s+=tx(xx+eq/2,y+24,eq,I.ink,'=',{b:1,georgia:1}); xx+=eq;
+    s+=termBox(xx,y,c,opt.mid&&opt.mid&2? 'mid':'', {w,color:opt.mid&&opt.mid&2? I.blue : null});
+    xx+=w+gap; s+=tx(xx+colon/2,y+24,colon,I.ink,':',{b:1,georgia:1}); xx+=colon;
+    s+=termBox(xx,y,d,opt.ext&&opt.ext&2? 'ext':'', {w,color:opt.ext&&opt.ext&2? I.red : null});
+    return s;
+  }
+  /* прямоугольник-свотч оттенка (неизменный цвет) */
+  function swatch(x,y,w,h,label,c,o){
+    const opt=o||{};
+    return `<g class="pzBump"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" fill="${c||I.sw}" stroke="${I.ink}" stroke-width="2"/>
+    <rect x="${x+3}" y="${y+3}" width="${w-6}" height="${h-6}" rx="5" fill="#fff" opacity=".25"/>
+    ${(label?tx(x+w/2,y+h-7,12,'#1f3a55',label,{b:1}):'')}
+    ${opt.cap?tx(x+w/2,y-8,13,I.ink,opt.cap,{b:1}):''}</g>`;
+  }
+  /* две «порции»: синяя и белая, длины по частям */
+  function parts(x,y,blueCount,whiteCount,pw,ph,labels,o){
+    const opt=o||{};
+    let s='';
+    const bw=blueCount*pw, ww=whiteCount*pw;
+    let xx=x;
+    s+=`<rect x="${xx}" y="${y}" width="${bw}" height="${ph}" rx="6" fill="${I.blue}" stroke="${I.blueD}" stroke-width="2"/>`;
+    s+=tx(xx+bw/2,y+ph/2+6,16,'#fff',String(blueCount),{georgia:1,b:1});
+    xx+=bw+8;
+    s+=`<rect x="${xx}" y="${y}" width="${ww}" height="${ph}" rx="6" fill="${I.white}" stroke="${I.gray}" stroke-width="2"/>`;
+    s+=tx(xx+ww/2,y+ph/2+6,16,I.ink,String(whiteCount),{georgia:1,b:1});
+    if(labels){
+      s+=tx(x+(bw+ww)/2,y+ph+18,12.5,'#5c6b85',labels,{});
+    }
+    return s;
+  }
+  const chip=(t,c,delay,fs)=>`<span class="pzIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(255,255,255,.85);font-family:Georgia,serif;font-size:${fs||19}px;color:${c};font-weight:bold">${t}</span>`;
+  const Q191=[
+    {q:'2 : 3 = 10 : x. Найди x.',opts:['12','15','20'],ans:1},
+    {q:'3 : x = 6 : 10. Найди x.',opts:['5','6','8'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q191[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.85)',bd='#c7cdb2',tc='#28324b';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(46,139,87,.16)':'rgba(192,57,43,.12)'; bd=i===T.ans?I.grn:I.red; tc=i===T.ans?I.grn:I.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:56px;font-size:17px" onclick="visW191T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! 3·10 = x·6 → 30 = 6x → x = 5</div>':'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! 2·x = 30 → x = 15</div>')
+        : '<div class="wk-ans" style="color:#c0392b;font-size:15px">Не так · умножь крайние и средние крест-накрест</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW191Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW191Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#5c6b85')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW191(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=17){ st.go=0; st.pick=null; st.k=null; }
+      if(step===15){ if(st.tr==null) st.tr=0; st.go=0; }
+      if(step===17){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect class="pzRise" x="40" y="34" width="150" height="26" rx="7" fill="${I.blue}" stroke="${I.blueD}" stroke-width="2"/>
+      <text x="115" y="52" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">2 части синей</text>`;
+      inner+=`<rect class="pzRise" style="animation-delay:.15s" x="168" y="66" width="110" height="26" rx="7" fill="${I.white}" stroke="${I.gray}" stroke-width="2"/>
+      <text x="223" y="84" text-anchor="middle" font-size="15" fill="${I.ink}" font-weight="bold">3 части белой</text>`;
+      inner+=tx(159,118,15,I.ink,'фирменный оттенок — «голубой»',{b:1});
+      inner+=tx(159,146,15,I.ink,'отношение 2 : 3',{georgia:1,b:1});
+      if(go){
+        inner+=`<text x="159" y="178" text-anchor="middle" font-size="13" fill="${I.gold}" font-weight="bold">нужно больше краски — оттенок тот же!</text>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Цветолаборатория Архимеда</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('когда оттенок «правильный» — говорят о пропорции',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW191Act('${lk}','rst')`):wkBtn('в чём секрет оттенка?',`visW191Act('${lk}','go')`))+
+        wkSml('на 2 части синей берём 3 части белой'));
+    } else if(step===1){
+      const H=195, ph=34, pw=32, b=2, w=3, x0=42, y=54;
+      const go=st.go||0;
+      let inner='';
+      inner+=parts(x0,y,b,w,pw,ph,'маленькая порция',{});
+      inner+=swatch(210,52,86,44,null,I.sw,{cap:'эталон'});
+      inner+=tx(159,120,14.5,I.ink,'2 части синей и 3 части белой',{});
+      if(go){
+        inner+=`<g class="pzPop"><text x="159" y="152" text-anchor="middle" font-size="17" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">отношение 2 : 3</text>
+        ${tx(159,176,13.5,'#5c6b85','столько же частей белой, сколько синей? смотрим',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Отношение 2 : 3</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('«на 2 части синей — 3 части белой»',I.blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW191Act('${lk}','rst')`):wkBtn('что это значит?',`visW191Act('${lk}','go')`))+
+        wkSml('отношение показывает СООТНОШЕНИЕ частей'));
+    } else if(step===2){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pzPop" style="animation-delay:.1s">${parts(40,44,2,3,30,34,'',{})}</g>`;
+      inner+=`<g class="pzPop" style="animation-delay:.25s">${parts(40,120,10,15,10,24,'',{})}</g>`;
+      inner+=tx(159,94,15,I.ink,'= тот же оттенок',{b:1});
+      if(go){
+        inner+=`<g class="pzPop"><text x="40" y="176" text-anchor="start" font-size="15" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">2 : 3  =  10 : 15</text>
+        ${tx(40,196,12.5,'#5c6b85','это и есть пропорция',{an:'start'})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пропорция — равенство отношений</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2 : 3 = 10 : 15 · оттенок один и тот же',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW191Act('${lk}','rst')`):wkBtn('показать пропорцию',`visW191Act('${lk}','go')`))+
+        wkSml('отношения равны — оттенок не меняется'));
+    } else if(step===3){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      if(go>=0){ inner+=propRow(34,52,2,3,10,15,{ext:go?3:0,mid:go?3:0}); }
+      if(go){
+        inner+=`<g class="pzPop">${tx(82,116,13,I.red,'крайние',{b:1})}${tx(266,116,13,I.red,'крайние',{b:1})}</g>`;
+        inner+=`<g class="pzPop" style="animation-delay:.15s">${tx(146,116,13,I.blue,'средние',{b:1})}${tx(204,116,13,I.blue,'средние',{b:1})}</g>`;
+        inner+=tx(159,142,14.5,I.ink,'a : b = c : d — крайние и средние',{b:1});
+        inner+=tx(159,166,13.5,'#5c6b85','a и d — крайние · b и c — средние',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Крайние и средние</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('крайние — по краям · средние — в середине',I.red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW191Act('${lk}','rst')`):wkBtn('назвать члены',`visW191Act('${lk}','go')`))+
+        wkSml('важно запомнить, где кто стоит'));
+    } else if(step===4){
+      const H=210;
+      const k=st.k||1;
+      const b=2*k, w=3*k;
+      const pw= b>6? 6 : 12;
+      let inner='';
+      inner+=`<g class="pzSlide" style="--tx:0px;--ty:0px">${parts(36,40,b,w,pw,26,'',{})}</g>`;
+      inner+=swatch(200,36,104,40,null,I.sw,{});
+      inner+=tx(252,92,13,'#1f3a55','тот же оттенок',{b:1});
+      inner+=tx(120,86,14,I.blue,'× '+k,{georgia:1,b:1});
+      inner+=`<g class="pzPop"><text x="36" y="150" text-anchor="start" font-size="15" fill="${I.ink}" font-weight="bold" font-family="Georgia,serif">2 : 3  →  ${b} : ${w}</text>
+      ${tx(36,172,12.5,'#5c6b85','обе части умножили на '+k,{an:'start'})}</g>`;
+      if(st.go>=1){ inner+=tx(252,120,13,I.grn,'оттенок неизменен!',{b:1}); }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Увеличиваем порцию</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (st.go?wkRow(chip('умножаем ОБЕ части на одно число',I.grn,0.2)):'')+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW191Act('${lk}','k2')">×2</button>
+          <button class="wk-btn" onclick="visW191Act('${lk}','k3')">×3</button>
+          <button class="wk-btn" onclick="visW191Act('${lk}','k5')">×5</button>
+          <button class="wk-btn" onclick="visW191Act('${lk}','go')">показать оттенок</button>
+          <button class="wk-btn" onclick="visW191Act('${lk}','rst')">сброс</button>
+        </div>`+
+        wkSml('части растут — а оттенок тот же: 2:3 = '+b+':'+w));
+    } else if(step===5){
+      const H=185;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,46,16,I.ink,'в пропорции обе части',{b:1});
+      if(go){
+        inner+=`<g class="pzPop"><text x="159" y="82" text-anchor="middle" font-size="16.5" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">умножаются на одно и то же число</text>
+        ${tx(159,122,15.5,'#5c6b85','оттенок (отношение) прежний',{})}
+        ${tx(159,150,15.5,I.grn,'меняется только количество краски',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Секрет оттенка</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2:3 = 4:6 = 10:15 — все дают один оттенок',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW191Act('${lk}','rst')`):wkBtn('в чём секрет?',`visW191Act('${lk}','go')`))+
+        wkSml('пропорция сохраняется при умножении на одно число'));
+    } else if(step===6){
+      const H=185;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pzRise"><rect x="52" y="46" width="84" height="70" rx="10" fill="${I.white}" stroke="${I.ink}" stroke-width="2"/>
+      ${tx(94,74,26,I.ink,'2',{georgia:1,b:1})}${tx(94,110,26,I.ink,'3',{georgia:1,b:1})}
+      <line x1="58" y1="86" x2="130" y2="86" stroke="${I.ink}" stroke-width="2"/></g>`;
+      inner+=`<g class="pzRise" style="animation-delay:.15s"><rect x="156" y="46" width="84" height="70" rx="10" fill="${I.white}" stroke="${I.ink}" stroke-width="2"/>
+      ${tx(198,74,26,I.ink,'10',{georgia:1,b:1})}${tx(198,110,26,I.ink,'15',{georgia:1,b:1})}
+      <line x1="162" y1="86" x2="234" y2="86" stroke="${I.ink}" stroke-width="2"/></g>`;
+      inner+=tx(116,96,20,'#8a94ad','=',{georgia:1,b:1});
+      if(go){
+        inner+=`<g class="pzPop"><text x="159" y="150" text-anchor="middle" font-size="16" fill="${I.grn}" font-weight="bold" font-family="Georgia,serif">2/3  =  10/15  (сократи до 2/3!)</text>
+        ${tx(159,172,12.5,'#5c6b85','отношение — это дробь',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Отношение = дробь</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2:3 = 2/3 · 10/15 = 2/3',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW191Act('${lk}','rst')`):wkBtn('записать дробями',`visW191Act('${lk}','go')`))+
+        wkSml('равные отношения — равные дроби'));
+    } else if(step===7){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      // крест-накрест: a(верх-лев), b(низ-лев), c(верх-прав), d(низ-прав)
+      const ax=60, ay=56, bx=60, by=116, cx=200, cy=56, dx=200, dy=116, cw=58, ch=44;
+      inner+=termBox(ax,ay,'2','ext',{w:cw,h:ch});
+      inner+=termBox(ax,by,'3','mid',{w:cw,h:ch});
+      inner+=termBox(cx,cy,'10','mid',{w:cw,h:ch});
+      inner+=termBox(cx,dy,'15','ext',{w:cw,h:ch});
+      inner+=tx(130,64,15,'#8a94ad',':',{georgia:1,b:1}); inner+=tx(130,140,15,'#8a94ad','=',{georgia:1,b:1}); inner+=tx(180,140,15,'#8a94ad',':',{georgia:1,b:1});
+      if(go){
+        inner+=`<g class="pzPop">
+        <line x1="${ax+cw/2}" y1="${ay+ch/2}" x2="${cx+cw/2}" y2="${dy+ch/2}" stroke="${I.red}" stroke-width="3.2"/>
+        <line x1="${ax+cw/2}" y1="${by+ch/2}" x2="${cx+cw/2}" y2="${cy+ch/2}" stroke="${I.blue}" stroke-width="3.2"/>
+        ${tx(159,40,14,I.red,'крайние ×2·15',{b:1})}
+        ${tx(159,180,14,I.blue,'средние ×3·10',{b:1})}
+        ${tx(159,196,14,I.ink,'= 30 и 30',{b:1,georgia:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Крест-накрест</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('произведение крайних = произведению средних',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW191Act('${lk}','rst')`):wkBtn('умножить крест-накрест',`visW191Act('${lk}','go')`))+
+        wkSml('a·d = b·c — основное свойство'));
+    } else if(step===8){
+      const H=185;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,44,15,I.ink,'a/b = c/d — дробь',{b:1});
+      if(go){
+        inner+=`<g class="pzPop"><text x="159" y="84" text-anchor="middle" font-size="17" fill="${I.ink}" font-weight="bold">× b·d к обеим частям</text>
+        ${tx(159,118,15.5,'#5c6b85','получаем чистое равенство',{})}
+        ${tx(159,150,21,I.ink,'a·d = c·b',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему крест-накрест</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('умножаем обе части пропорции на b·d',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW191Act('${lk}','rst')`):wkBtn('откуда свойство?',`visW191Act('${lk}','go')`))+
+        wkSml('дроби «очищаются» — остаётся произведение'));
+    } else if(step===9){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pzRise">${parts(40,40,2,3,44,32,'',{})}</g>`;
+      inner+=`<g class="pzRise" style="animation-delay:.15s">${parts(40,98,10,15,8,16,'',{})}</g>`;
+      inner+=`<text x="159" y="80" text-anchor="middle" font-size="22" fill="${I.ink}" font-weight="bold" font-family="Georgia,serif">=</text>`;
+      if(go){
+        inner+=`<g class="pzPop"><rect x="150" y="118" width="150" height="50" rx="10" fill="rgba(255,255,255,.92)" stroke="${I.grn}" stroke-width="2.2"/>
+        ${tx(225,140,14,I.ink,'2·15 = 30',{georgia:1,b:1})}
+        ${tx(225,162,14,I.ink,'3·10 = 30',{georgia:1,b:1})}
+        ${tx(40,180,14,I.grn,'30 = 30 — пропорция верна!',{b:1,an:'start'})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверяем на числах</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2·15 = 3·10 = 30',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW191Act('${lk}','rst')`):wkBtn('проверить крест-накрест',`visW191Act('${lk}','go')`))+
+        wkSml('если произведения равны — пропорция верна'));
+    } else if(step===10){
+      const H=205;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pzRise">${propRow(40,34,2,3,10,'x',{})}</g>`;
+      if(go>=1){
+        inner+=`<g class="pzPop"><text x="159" y="104" text-anchor="middle" font-size="17" fill="${I.ink}" font-weight="bold">2 · x = 3 · 10 = 30</text>
+        <text x="120" y="104" text-anchor="middle" font-size="0" fill="#fff"> </text></g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="pzPop"><text x="159" y="142" text-anchor="middle" font-size="20" fill="${I.gold}" font-weight="bold" font-family="Georgia,serif">x = 30 : 2 = 15</text>
+        ${tx(159,170,13,'#5c6b85','неизвестное нашлось!',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Решаем: 2 : 3 = 10 : x</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('x = 15',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · крест-накрест',`visW191Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · разделить на 2',`visW191Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW191Act('${lk}','rst')`):'')+
+        wkSml(go===0?'неизвестное x — средний член':go===1?'2·x = 30 · x = 30 : 2':'ответ 15'));
+    } else if(step===11){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pzRise">${parts(40,44,2,3,44,30,'',{})}</g>`;
+      inner+=swatch(210,42,84,38,null,I.sw,{});
+      if(go){
+        inner+=`<g class="pzPop"><text x="40" y="112" text-anchor="start" font-size="17" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">2 → 10  (×5)</text>
+        <text x="40" y="140" text-anchor="start" font-size="17" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">3 → 15  (×5)</text>
+        ${tx(159,170,15,'#5c6b85','значит x = 15',{b:1})}</g>`;
+        inner+=`<g class="pzPop" style="animation-delay:.15s"><rect x="150" y="112" width="130" height="54" rx="10" fill="rgba(217,148,10,.13)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(215,134,14,'#a0700a','масштаб ×5',{b:1})}
+        ${tx(215,156,20,I.gold,'x = 15',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Другой способ: масштаб</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2 → 10 это ×5 · значит 3 → 3·5 = 15',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW191Act('${lk}','rst')`):wkBtn('найти масштаб',`visW191Act('${lk}','go')`))+
+        wkSml('два пути — один и тот же ответ'));
+    } else if(step===12){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pzRise">${propRow(40,40,2,3,10,15,{})}</g>`;
+      if(go){
+        inner+=`<g class="pzPop"><text x="159" y="104" text-anchor="middle" font-size="17" fill="${I.ink}" font-weight="bold">2·15 = 30 · 3·10 = 30</text>
+        ${tx(159,132,15,I.grn,'30 = 30 — всё верно!',{b:1})}
+        ${tx(159,158,14,'#5c6b85','подставляем x = 15',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверка подстановкой</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('x = 15 делает пропорцию верной',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW191Act('${lk}','rst')`):wkBtn('проверить',`visW191Act('${lk}','go')`))+
+        wkSml('всегда проверяй ответ'));
+    } else if(step===13){
+      const H=205;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pzRise">${propRow(40,34,4,5,'x',20,{})}</g>`;
+      if(go>=1){
+        inner+=`<g class="pzPop"><text x="159" y="104" text-anchor="middle" font-size="17" fill="${I.ink}" font-weight="bold">4 · 20 = 5 · x = 80</text></g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="pzPop"><text x="159" y="142" text-anchor="middle" font-size="20" fill="${I.gold}" font-weight="bold" font-family="Georgia,serif">x = 80 : 5 = 16</text>
+        ${tx(159,170,13,'#5c6b85','или: 5 → 20 ×4 → 4 → 16',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример 2: 4 : 5 = x : 20</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('x = 16',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · крест-накрест',`visW191Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · разделить',`visW191Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW191Act('${lk}','rst')`):'')+
+        wkSml('4·20 = 5·x → x = 16'));
+    } else if(step===14){
+      const H=205;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="pzRise">${propRow(40,34,3,'x',6,10,{})}</g>`;
+      if(go>=1){
+        inner+=`<g class="pzPop"><text x="159" y="104" text-anchor="middle" font-size="17" fill="${I.ink}" font-weight="bold">3 · 10 = x · 6 = 30</text></g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="pzPop"><text x="159" y="142" text-anchor="middle" font-size="20" fill="${I.gold}" font-weight="bold" font-family="Georgia,serif">x = 30 : 6 = 5</text>
+        ${tx(159,170,13,'#5c6b85','неизвестное — крайний член',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример 3: 3 : x = 6 : 10</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('x = 5',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · крест-накрест',`visW191Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · разделить',`visW191Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW191Act('${lk}','rst')`):'')+
+        wkSml('3·10 = x·6 → x = 5'));
+    } else if(step===15){
+      const H=210;
+      if(st.tr==null) st.tr=0;
+      const pool=[[2,3,10,15],[4,5,16,20],[3,12,4,16],[5,8,15,24]];
+      const [aa,bb,cc,target]=pool[st.tr%pool.length];
+      // вариация: ищем x в a:b = c:x
+      const go=st.go||0;
+      const xv=(bb*cc)/aa;
+      let inner='';
+      inner+=`<g class="pzRise">${propRow(40,40,aa,bb,cc,'x',{})}</g>`;
+      if(go>=1){
+        inner+=`<g class="pzPop"><text x="159" y="100" text-anchor="middle" font-size="16" fill="${I.ink}" font-weight="bold">${aa} · x = ${bb} · ${cc} = ${bb*cc}</text></g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="pzPop"><text x="159" y="136" text-anchor="middle" font-size="20" fill="${I.gold}" font-weight="bold" font-family="Georgia,serif">x = ${bb*cc} : ${aa} = ${xv}</text>
+        ${tx(159,166,13,'#5c6b85','проверка: '+aa+'·'+xv+' = '+bb+'·'+cc,{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр-смеситель</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('x = '+xv,I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · крест-накрест',`visW191Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · разделить',`visW191Act('${lk}','go')`) : '',
+          go>=2?wkBtn('новый пример',`visW191Act('${lk}','n')`) : '',
+          go>=1?wkBtn('заново',`visW191Act('${lk}','rst')`):'')+
+        wkSml('крайние на крест · средние на крест — и делим'));
+    } else if(step===16){
+      const H=195;
+      if(st.tr==null) st.tr=0;
+      const pairs=[[2,3,10,15,true],[3,4,9,12,false],[5,7,10,14,false],[4,6,12,18,true]];
+      const p=pairs[st.tr%pairs.length];
+      const go=st.pick;
+      let inner='';
+      inner+=`<g class="pzRise" style="animation-delay:.05s">${propRow(40,42,p[0],p[1],p[2],p[3],{})}</g>`;
+      if(st.pick!=null){
+        const ok = st.pick=== (p[4]?0:1);
+        inner+=`<g class="pzPop"><text x="159" y="112" text-anchor="middle" font-size="16" fill="${ok?'#2e8b57':'#c0392b'}" font-weight="bold">${ok?'верно!':'не так'}</text>
+        ${tx(159,138,15,I.ink,p[0]+'·'+p[3]+' = '+p[0]*p[3]+' · '+p[1]+'·'+p[2]+' = '+p[1]*p[2],{georgia:1})}
+        ${tx(159,162,14,'#5c6b85',p[4]?'одинаково → пропорция':'не одинаково → не пропорция',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Верно ли это пропорция?</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (st.pick!=null?wkRow(chip(p[4]?'это пропорция':'это НЕ пропорция',p[4]?I.grn:I.red,0.2)):'')+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW191P('${lk}',0)">да</button>
+          <button class="wk-btn" onclick="visW191P('${lk}',1)">нет</button>
+          <button class="wk-btn" onclick="visW191Act('${lk}','n')">другой пример</button>
+        </div>`+
+        wkSml('проверь крест-накрест: равны ли произведения'));
+    } else {
+      const H=190;
+      let inner='';
+      inner+=`<g class="pzRise">${propRow(40,40,2,3,10,'x',{})}</g>`;
+      inner+=`<g class="pzPop"><text x="159" y="112" text-anchor="middle" font-size="16" fill="${I.ink}" font-weight="bold">2·x = 30 → x = 15</text>
+      ${tx(159,138,13,'#5c6b85','проверка: 2·15 = 3·10 = 30',{})}</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('крест-накрест: 2·x = 3·10 · жми «Понял! Проверю себя»'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[191]=visW191;
+  function visW191T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW191T=visW191T;
+  function visW191P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW191P=visW191P;
+  function visW191Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='k2'){ st.k=2; st.go=1; }
+    if(act==='k3'){ st.k=3; st.go=1; }
+    if(act==='k5'){ st.k=5; st.go=1; }
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW191Act=visW191Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===191){ window.ARH_LESSONS[i]=L191; break; } } })();
+})();
