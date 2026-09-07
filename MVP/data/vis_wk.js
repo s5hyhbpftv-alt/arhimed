@@ -7903,3 +7903,1152 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW196Act=visW196Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===196){ window.ARH_LESSONS[i]=L196; break; } } })();
 })();
+
+/* ================= УРОК 199 · Уравнения с переносом слагаемых (v1 · «Река Равенства Архимеда», 14 слайдов) ================= */
+(function(){
+  if(!window.__wk199v1css){
+    window.__wk199v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .g7in{animation:g7In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes g7In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .g7pop{animation:g7Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes g7Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .g7float{animation:g7Float 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes g7Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
+      '#lvis .g7tw{animation:g7Tw 2.4s ease-in-out infinite;}'+
+      '@keyframes g7Tw{0%,100%{opacity:.25}50%{opacity:.95}}'+
+      '#lvis .g7ride{animation:g7Ride 1.1s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
+      '@keyframes g7Ride{from{transform:translate(var(--tx),var(--ty));opacity:0}to{transform:translate(0,0);opacity:1}}'+
+      '#lvis .g7bump{animation:g7Bump .9s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes g7Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}'+
+      '#lvis .g7wav{stroke-dasharray:10 12;animation:g7Wav 1.5s linear infinite;}'+
+      '@keyframes g7Wav{to{stroke-dashoffset:-44}}';
+    document.head.appendChild(st);
+  }
+  const L199 = {
+    id: 199, title: 'Уравнения с переносом слагаемых', ico: '≈',
+    src: 'Математика · 6 класс · Уравнения', subj: 'math',
+    explain: [
+      'Перед нами уравнение 3x − 7 = 2x + 5. Икс прячется СРАЗУ в двух местах: слева и справа от «равно». Как найти x, если он с двух сторон? Переправим лишние слагаемые на нужный берег!',
+      'Уравнение — это РАВЕНСТВО: левая и правая части всегда одинаковы. Пока мы не знаем x, но можем проверить догадку: если x = 12, то слева 3·12 − 7 = 29, справа 2·12 + 5 = 29 — чаши в равновесии!',
+      'Наша цель — собрать все иксы на левом берегу, а все числа на правом. Мешают два «лишних» слагаемых: 2x справа и −7 слева.',
+      'Главное правило: слагаемое можно ПЕРЕНЕСТИ через знак «равно», но при переносе его знак МЕНЯЕТСЯ на противоположный. Плюс становится минусом, минус — плюсом.',
+      'Переправляем 2x через мост: справа он был со знаком «+», а на левом берегу появляется −2x. Уравнение: 3x − 7 − 2x = 5.',
+      'Теперь переправляем −7 вправо: слева он был со знаком «−», справа становится +7. Получаем: 3x − 2x = 5 + 7. Иксы собрались слева, числа — справа!',
+      'Упрощаем: 3x − 2x = x (три икса минус два икса — один икс). Справа 5 + 7 = 12. Ответ: x = 12.',
+      'Проверка — обязательный шаг: подставим 12 вместо x. Слева 3·12 − 7 = 36 − 7 = 29. Справа 2·12 + 5 = 24 + 5 = 29. 29 = 29 — всё верно, чаши весов на одном уровне!',
+      'Почему знак меняется? Уравнение — как весы: чтобы убрать 2x справа, вычитаем 2x из ОБЕИХ чашек. Слева появляется −2x — а это и есть «перенос со сменой знака».',
+      'Ловушка: главная ошибка — перенести слагаемое, НЕ поменяв знак. Тогда ответ выходит неверным, и проверка не сходится: чаши весов разъезжаются!',
+      'Решаем второй пример: 5x − 8 = 2x + 7. Переносим 2x влево (становится −2x), переносим −8 вправо (становится +8): 5x − 2x = 7 + 8.',
+      'Упрощаем: 3x = 15, значит x = 15 : 3 = 5. Проверка: слева 5·5 − 8 = 17, справа 2·5 + 7 = 17. Всё сходится!',
+      'Третий пример: 2x + 5 = x + 9. Переносим x влево: 2x − x = 9 − 5. Упрощаем: x = 4. Проверка: 2·4 + 5 = 13 и 4 + 9 = 13. Верно!',
+      'Алгоритм: 1) собери иксы слева, числа справа (меняя знаки при переносе); 2) упрости: ax = b; 3) x = b : a; 4) обязательно проверь подстановкой! Жми «Понял! Проверю себя» — там уравнение 3x − 7 = 2x + 5.'
+    ],
+    check: { q: 'Реши уравнение: 3x − 7 = 2x + 5.', choices: ['2', '12', '−12'], ans: 1,
+      exp: 'Переносим: 3x − 2x = 5 + 7 → x = 12. Проверка: 3·12 − 7 = 29 = 2·12 + 5.' },
+    tasks: [
+      { q: 'Реши уравнение: 5x − 8 = 2x + 7.', kind: 'unit', ans: 5, tol: 0,
+        hints: ['Перенеси 2x влево, −8 вправо: 5x − 2x = 7 + 8.', '3x = 15 → x = 15 : 3.'], sol: '3x = 15, x = 5.' },
+      { q: 'Реши уравнение: 2x + 5 = x + 9.', kind: 'choice', choices: ['4', '6', '14'], ans: 0, tol: 0,
+        hints: ['Перенеси x влево: 2x − x = 9 − 5.', 'x = 4.'], sol: '2x − x = 9 − 5 → x = 4.' }
+    ]
+  };
+  const G={ink:'#e8ecff',gold:'#ffd76a',cyan:'#7fd1ff',green:'#8fd1a8',rose:'#ff9a8a',lilac:'#c9a8ff'};
+  /* сцена «река равенства»: ночное небо, звёзды, река снизу */
+  function river(inner,W,H){
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs><linearGradient id="g7sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#232b5e"/><stop offset="1" stop-color="#3b2b66"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#g7sky)"/>
+      <g class="g7tw">${[[24,18],[50,38],[84,14],[112,32],[156,12],[194,28],[228,16],[266,34],[298,20]].map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="1.6" fill="#fff" style="animation-delay:${(i*0.25).toFixed(2)}s"/>`).join('')}</g>
+      <circle cx="280" cy="50" r="13" fill="#f4e9c8" opacity=".9"/>
+      <circle cx="276" cy="45" r="2.6" fill="#d8c9a0"/>
+      <circle cx="283" cy="55" r="2" fill="#d8c9a0"/>
+      <rect x="0" y="${H-26}" width="${W}" height="26" fill="#18275a"/>
+      <line class="g7wav" x1="8" y1="${H-8}" x2="${W-8}" y2="${H-8}" stroke="#5f7fd8" stroke-width="2" opacity=".8"/>
+      <line class="g7wav" x1="8" y1="${H-18}" x2="${W-8}" y2="${H-18}" stroke="#4a66b8" stroke-width="1.5" opacity=".6"/>
+      ${inner}
+    </svg>`;
+  }
+  /* плашка-слагаемое (центр x,cy) */
+  function term(x,cy,txt,c,opt){
+    const o=opt||{};
+    const fs=o.fs||20;
+    const w=o.w||(txt.length*fs*0.6+16);
+    const h=o.h||36;
+    const cls=o.cls?`class="${o.cls}"`:'';
+    const dly=o.dly?`style="animation-delay:${o.dly}s"`:'';
+    return `<g ${cls} ${dly}><rect x="${x-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="10" fill="${o.bg||'rgba(255,255,255,.09)'}" stroke="${c}" stroke-width="2.2"/>
+      <text x="${x}" y="${cy+fs*0.36}" text-anchor="middle" font-size="${fs}" fill="${c}" font-weight="bold" font-family="Georgia,serif">${txt}</text></g>`;
+  }
+  /* мост со знаком = */
+  function bridge(cy){
+    return `<g class="g7float">
+      <path d="M 145 ${cy+24} Q 159 ${cy-16} 173 ${cy+24}" fill="none" stroke="#7c5fd0" stroke-width="5"/>
+      <path d="M 145 ${cy+24} Q 159 ${cy-16} 173 ${cy+24}" fill="none" stroke="#c9b8ff" stroke-width="1.5"/>
+      <circle cx="159" cy="${cy+2}" r="15" fill="#2c2158" stroke="${G.gold}" stroke-width="2.4"/>
+      <text x="159" y="${cy+7}" text-anchor="middle" font-size="16" fill="${G.gold}" font-weight="bold" font-family="Georgia,serif">=</text>
+    </g>`;
+  }
+  const sign=(t,c,delay,fs)=>`<span class="g7in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.06);font-family:Georgia,serif;font-size:${fs||20}px;color:${c};font-weight:bold">${t}</span>`;
+  const Q199=[
+    {q:'3x − 7 = 2x + 5. Найди x.',opts:['2','12','−12'],ans:1},
+    {q:'2x + 5 = x + 9. Найди x.',opts:['4','6','14'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q199[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.06)',bd='#4a5a9e',tc='#e8ecff';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.2)':'rgba(255,154,138,.2)'; bd=i===T.ans?G.green:G.rose; tc=i===T.ans?G.green:G.rose; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:62px;font-size:17px" onclick="visW199T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! Иксы влево, числа вправо, знаки меняются</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:16px">Не так. Перенеси слагаемые со сменой знака</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW199Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW199Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#c9d4ff')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW199(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step===0){ st.pick=null; }
+      if(step===1){ st.pick=null; }
+      if(step===2){ st.go=0; }
+      if(step===4){ st.mv=0; }
+      if(step===5){ st.mv=0; }
+      if(step===6){ st.go=0; }
+      if(step===8){ st.show=0; }
+      if(step===9){ if(st.tr==null) st.tr=0; st.go=0; }
+      if(step===10){ st.go=0; }
+      if(step===11){ st.go=0; }
+      if(step===12){ st.go=0; st.pick=null; }
+      if(step===13){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    if(step===0){
+      const H=190, W=318;
+      const chk=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Икс прячется с двух сторон!</div>`+
+        wkHero(river(`
+          ${term(84,92,'3x',G.cyan,{fs:20})}
+          ${term(146,92,'−7',G.gold,{fs:20,dly:.1})}
+          ${bridge(92)}
+          ${term(196,92,'2x',G.cyan,{fs:20,dly:.2})}
+          ${term(258,92,'+5',G.gold,{fs:20,dly:.3})}
+          <text x="84" y="122" text-anchor="middle" font-size="12" fill="#9fb2e8">слева</text>
+          <text x="258" y="122" text-anchor="middle" font-size="12" fill="#9fb2e8">справа</text>
+          ${chk!=null?`<text x="159" y="152" text-anchor="middle" font-size="15" fill="${chk===1?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${chk===1?'верно: x и слева, и справа!':'посмотри: где спрятался x?'}</text>`:''}
+        `,W,H))+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW199T2('${lk}',0)">x только слева</button>
+          <button class="wk-btn" onclick="visW199T2('${lk}',1)">x слева и справа</button>
+        </div>`+
+        wkSml('чтобы найти x, соберём его на одном берегу'));
+    } else if(step===1){
+      const H=190, W=318;
+      const chk=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверяем догадку x = 12</div>`+
+        wkHero(river(`
+          <g class="g7pop"><rect x="18" y="58" width="120" height="58" rx="12" fill="rgba(127,209,255,.1)" stroke="${G.cyan}" stroke-width="2.2"/>
+            <text x="78" y="80" text-anchor="middle" font-size="13" fill="#c9d4ff">3x − 7</text>
+            <text x="78" y="106" text-anchor="middle" font-size="17" fill="${G.cyan}" font-weight="bold" font-family="Georgia,serif">3·12 − 7 = 29</text></g>
+          <g class="g7pop" style="animation-delay:.15s"><rect x="180" y="58" width="120" height="58" rx="12" fill="rgba(201,168,255,.1)" stroke="${G.lilac}" stroke-width="2.2"/>
+            <text x="240" y="80" text-anchor="middle" font-size="13" fill="#c9d4ff">2x + 5</text>
+            <text x="240" y="106" text-anchor="middle" font-size="17" fill="${G.lilac}" font-weight="bold" font-family="Georgia,serif">2·12 + 5 = 29</text></g>
+          <line x1="26" y1="132" x2="292" y2="132" stroke="#5f7fd8" stroke-width="3"/>
+          ${chk!=null?`<text x="159" y="158" text-anchor="middle" font-size="16" fill="${chk===0?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${chk===0?'29 = 29 · равновесие!':'не сходится — попробуй 12'}</text>`:''}
+        `,W,H))+
+        (chk===0?wkRow(sign('оба выражения равны 29',G.green,0.2)):'')+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW199T2('${lk}',0)">подставить x = 12</button>
+          <button class="wk-btn" onclick="visW199T2('${lk}',1)">подставить x = 2</button>
+        </div>`+
+        wkSml('если чаши на одном уровне — догадка верна'));
+    } else if(step===2){
+      const H=180, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Цель: иксы влево, числа вправо</div>`+
+        wkHero(river(`
+          <text x="159" y="36" text-anchor="middle" font-size="14" fill="#c9d4ff" font-weight="bold">мешают: 2x справа и −7 слева</text>
+          <g class="g7float"><rect x="34" y="58" width="104" height="52" rx="12" fill="rgba(127,209,255,.1)" stroke="${G.cyan}" stroke-width="2"/>
+            <text x="86" y="79" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold" font-family="Georgia,serif">3x − 7</text>
+            <text x="86" y="101" text-anchor="middle" font-size="11.5" fill="#ff9a8a">лишний −7 здесь</text></g>
+          <text x="159" y="86" text-anchor="middle" font-size="20" fill="${G.gold}" font-weight="bold">=</text>
+          <g class="g7float" style="animation-delay:.2s"><rect x="180" y="58" width="104" height="52" rx="12" fill="rgba(201,168,255,.1)" stroke="${G.lilac}" stroke-width="2"/>
+            <text x="232" y="79" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold" font-family="Georgia,serif">2x + 5</text>
+            <text x="232" y="101" text-anchor="middle" font-size="11.5" fill="#ff9a8a">лишний 2x здесь</text></g>
+          ${go?`<g class="g7pop"><text x="159" y="142" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">лишние — на другой берег!</text></g>`:''}
+        `,W,H))+
+        (go?wkRow(sign('иксы → влево · числа → вправо',G.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW199Act('${lk}','rst')`):wkBtn('что мешает?',`visW199Act('${lk}','go')`))+
+        wkSml('после переносов получим ax = b'));
+    } else if(step===3){
+      const H=170, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Правило моста</div>`+
+        wkHero(river(`
+          <text x="159" y="32" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">перенос через «равно» меняет знак</text>
+          <g class="g7pop"><rect x="30" y="54" width="76" height="44" rx="10" fill="rgba(255,154,138,.13)" stroke="${G.rose}" stroke-width="2.4"/>
+            <text x="68" y="82" text-anchor="middle" font-size="20" fill="${G.rose}" font-weight="bold" font-family="Georgia,serif">+2x</text></g>
+          <g class="g7ride" style="--tx:-22px;--ty:0px;animation-delay:.7s"><rect x="122" y="54" width="76" height="44" rx="10" fill="rgba(255,215,106,.13)" stroke="${G.gold}" stroke-width="2.4"/>
+            <text x="160" y="82" text-anchor="middle" font-size="20" fill="${G.gold}" font-weight="bold" font-family="Georgia,serif">−2x</text></g>
+          <path d="M 26 120 L 292 120" stroke="#6b7fc4" stroke-width="2" stroke-dasharray="7 6"/>
+          <text x="159" y="136" text-anchor="middle" font-size="14" fill="#c9d4ff">плюс стал минусом · минус станет плюсом</text>
+        `,W,H))+
+        wkRow(sign('перенос: + → − и − → +',G.gold,0.2))+
+        wkSml('так работает волшебный мост через реку равенства'));
+    } else if(step===4){
+      const H=190, W=318;
+      const mv=st.mv||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Переправа: 2x едет влево</div>`+
+        wkHero(river(`
+          ${mv===0
+            ? `${term(64,96,'3x',G.cyan,{fs:19})}${term(118,96,'−7',G.gold,{fs:19,dly:.1})}${bridge(96)}${term(200,96,'2x',G.cyan,{fs:19,cls:'g7float',dly:.3})}${term(252,96,'+5',G.gold,{fs:19,dly:.4})}`
+            : `${term(52,96,'3x',G.cyan,{fs:19})}${term(104,96,'−2x',G.gold,{fs:19,cls:'g7pop',dly:.3})}${term(156,96,'−7',G.gold,{fs:19})}${bridge(96)}${term(252,96,'+5',G.gold,{fs:19,dly:.4})}`}
+          ${mv===0?`<text x="200" y="126" text-anchor="middle" font-size="12" fill="#9fb2e8">лишний икс</text>`:''}
+          ${mv===1?`<text x="159" y="152" text-anchor="middle" font-size="16" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">3x − 7 − 2x = 5</text>`:''}
+        `,W,H))+
+        (mv===1?wkRow(sign('2x стал −2x и переехал влево',G.gold,0.2)):'')+
+        wkRow(mv===0?wkBtn('переправить 2x →',`visW199Act('${lk}','go')`):wkBtn('сброс',`visW199Act('${lk}','rst')`))+
+        wkSml(mv===0?'справа мешает +2x':'плюс при переправе стал минусом'));
+    } else if(step===5){
+      const H=190, W=318;
+      const mv=st.mv||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Переправа: −7 едет вправо</div>`+
+        wkHero(river(`
+          ${mv===0
+            ? `${term(60,96,'3x − 2x',G.cyan,{fs:18})}${term(150,96,'−7',G.gold,{fs:20,cls:'g7float'})}${bridge(96)}${term(246,96,'5 + 7',G.gold,{fs:17,dly:.2})}`
+            : `${term(88,96,'3x − 2x',G.cyan,{fs:18})}${bridge(96)}${term(200,96,'+7',G.gold,{fs:22,cls:'g7pop',dly:.3})}${term(258,96,'+5',G.gold,{fs:20,dly:.5})}`}
+          ${mv===1?`<text x="159" y="148" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">3x − 2x = 5 + 7</text>`:''}
+        `,W,H))+
+        (mv===1?wkRow(sign('−7 стал +7 и переехал вправо',G.gold,0.2)):'')+
+        wkRow(mv===0?wkBtn('переправить −7 →',`visW199Act('${lk}','go')`):wkBtn('сброс',`visW199Act('${lk}','rst')`))+
+        wkSml(mv===0?'слева мешает −7':'иксы слева · числа справа — цель достигнута'));
+    } else if(step===6){
+      const H=180, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Упрощаем: находим x</div>`+
+        wkHero(river(`
+          <text x="159" y="34" text-anchor="middle" font-size="17" fill="#fff" font-weight="bold" font-family="Georgia,serif">3x − 2x = 5 + 7</text>
+          ${go<1?term(118,88,'3x − 2x',G.cyan,{fs:20}):term(118,88,'x',G.cyan,{fs:28,cls:'g7pop'})}
+          <text x="159" y="96" text-anchor="middle" font-size="22" fill="${G.gold}" font-weight="bold">=</text>
+          ${go<2?term(236,88,'5 + 7',G.gold,{fs:19}):term(236,88,'12',G.gold,{fs:28,cls:'g7pop'})}
+          ${go>=1?`<text x="159" y="122" text-anchor="middle" font-size="14" fill="#c9d4ff">${go===1?'3 икса минус 2 икса — остаётся 1 икс':'и 5 + 7 = 12'}</text>`:''}
+          ${go>=2?`<g class="g7bump" style="animation-delay:.3s"><text x="159" y="146" text-anchor="middle" font-size="24" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 12</text></g>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('1 · упростить иксы',`visW199Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · сложить числа',`visW199Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
+        wkSml(go===0?'3x − 2x = x':go===1?'5 + 7 = 12':'икс найден!'));
+    } else if(step===7){
+      const H=185, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверка: подставляем 12</div>`+
+        wkHero(river(`
+          <g class="g7pop"><rect x="20" y="52" width="134" height="60" rx="12" fill="rgba(127,209,255,.1)" stroke="${G.cyan}" stroke-width="2.2"/>
+            <text x="87" y="72" text-anchor="middle" font-size="12" fill="#c9d4ff">3x − 7 при x = 12</text>
+            <text x="87" y="99" text-anchor="middle" font-size="19" fill="${G.cyan}" font-weight="bold" font-family="Georgia,serif">36 − 7 = 29</text></g>
+          <g class="g7pop" style="animation-delay:.15s"><rect x="164" y="52" width="134" height="60" rx="12" fill="rgba(201,168,255,.1)" stroke="${G.lilac}" stroke-width="2.2"/>
+            <text x="231" y="72" text-anchor="middle" font-size="12" fill="#c9d4ff">2x + 5 при x = 12</text>
+            <text x="231" y="99" text-anchor="middle" font-size="19" fill="${G.lilac}" font-weight="bold" font-family="Georgia,serif">24 + 5 = 29</text></g>
+          <g class="g7pop" style="animation-delay:.4s"><text x="159" y="140" text-anchor="middle" font-size="21" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">29 = 29 · верно!</text>
+          <line x1="76" y1="158" x2="242" y2="158" stroke="#8fd1a8" stroke-width="3"/></g>
+        `,W,H))+
+        wkRow(sign('подстановка — главный контроль',G.green,0.3))+
+        wkSml('если бы вышло 29 ≠ 30 — ищи ошибку в переносе'));
+    } else if(step===8){
+      const H=180, W=318;
+      const show=st.show||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему знак меняется?</div>`+
+        wkHero(river(`
+          <text x="159" y="30" text-anchor="middle" font-size="12.5" fill="#c9d4ff" font-weight="bold">действуем одинаково на ОБЕ части уравнения</text>
+          <g class="g7float"><rect x="26" y="48" width="120" height="62" rx="12" fill="rgba(255,255,255,.07)" stroke="#8a94ad" stroke-width="2"/>
+            <text x="86" y="70" text-anchor="middle" font-size="14" fill="#e8ecff" font-family="Georgia,serif">3x − 7</text>
+            ${show?`<text x="86" y="96" text-anchor="middle" font-size="13" fill="#ff9a8a" font-weight="bold">− 2x тоже</text>`:''}</g>
+          <text x="159" y="82" text-anchor="middle" font-size="20" fill="${G.gold}" font-weight="bold">=</text>
+          <g class="g7float" style="animation-delay:.15s"><rect x="172" y="48" width="120" height="62" rx="12" fill="rgba(255,255,255,.07)" stroke="#8a94ad" stroke-width="2"/>
+            <text x="232" y="70" text-anchor="middle" font-size="14" fill="#e8ecff" font-family="Georgia,serif">2x + 5</text>
+            ${show?`<text x="232" y="96" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">− 2x отсюда</text>`:''}</g>
+          ${show?`<text x="159" y="145" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">3x − 7 − 2x = 5</text>`:''}
+        `,W,H))+
+        (show?wkRow(sign('вычли 2x из обеих частей → слева −2x',G.gold,0.2)):'')+
+        wkRow(show?wkBtn('сброс',`visW199Act('${lk}','rst')`):wkBtn('как убрать 2x?',`visW199Act('${lk}','go')`))+
+        wkSml('это и есть перенос: записываем короче, со сменой знака'));
+    } else if(step===9){
+      const H=190, W=318;
+      if(st.tr==null) st.tr=0;
+      const pairs=[[5,8,2,7,5],[7,4,3,8,3]];
+      const [aa,bb,cc,dd,xv]=pairs[st.tr%2];
+      const go=st.go||0;
+      const rows=['','',''];
+      const eq0=`${aa}x − ${bb} = ${cc}x + ${dd}`;
+      const eq1=`${aa}x − ${cc}x = ${dd} + ${bb}`;
+      const eq2=`${aa-cc}x = ${dd+bb}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: по шагам</div>`+
+        wkHero(river(`
+          <rect x="20" y="40" width="278" height="120" rx="14" fill="rgba(255,255,255,.05)" stroke="#4a5a9e" stroke-width="1.8"/>
+          <text x="159" y="70" text-anchor="middle" font-size="18" fill="#fff" font-weight="bold" font-family="Georgia,serif">${eq0}</text>
+          ${go>=1?`<text class="g7pop" x="159" y="102" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">${eq1}</text>`:''}
+          ${go>=2?`<text class="g7pop" x="159" y="134" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">${eq2}</text>`:''}
+          ${go>=3?`<g class="g7bump" style="animation-delay:.2s"><text x="159" y="158" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">делим: x = ${xv}</text></g>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('1 · перенести',`visW199Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · упростить',`visW199Act('${lk}','go')`) : '',
+          go===2?wkBtn('3 · разделить',`visW199Act('${lk}','go')`) : '',
+          go===3?wkBtn('новый пример',`visW199Act('${lk}','n')`) : '',
+          go>=1?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
+        wkSml(go===3?('x = '+dd+bb+' : '+(aa-cc)+' = '+xv):'переносим, упрощаем, делим'));
+    } else if(step===10){
+      const H=185, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример: 5x − 8 = 2x + 7</div>`+
+        wkHero(river(`
+          <text x="159" y="38" text-anchor="middle" font-size="19" fill="#fff" font-weight="bold" font-family="Georgia,serif">5x − 8 = 2x + 7</text>
+          ${go>=1?`<text class="g7pop" x="159" y="76" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">5x − 2x = 7 + 8</text>`:''}
+          ${go>=2?`<text class="g7pop" x="159" y="110" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">3x = 15</text>`:''}
+          ${go>=3?`<g class="g7bump" style="animation-delay:.2s"><text x="159" y="138" text-anchor="middle" font-size="26" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 5</text></g>
+          <text x="159" y="152" text-anchor="middle" font-size="13.5" fill="#c9d4ff">проверка: 5·5−8 = 17 и 2·5+7 = 17</text>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('1 · перенести',`visW199Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · упростить',`visW199Act('${lk}','go')`) : '',
+          go===2?wkBtn('3 · разделить',`visW199Act('${lk}','go')`) : '',
+          go>=3?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
+        wkSml('5x − 8 = 2x + 7 → 3x = 15 → x = 5'));
+    } else if(step===11){
+      const H=185, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример: 2x + 5 = x + 9</div>`+
+        wkHero(river(`
+          <text x="159" y="38" text-anchor="middle" font-size="19" fill="#fff" font-weight="bold" font-family="Georgia,serif">2x + 5 = x + 9</text>
+          ${go>=1?`<text class="g7pop" x="159" y="76" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">2x − x = 9 − 5</text>`:''}
+          ${go>=2?`<g class="g7bump" style="animation-delay:.2s"><text x="159" y="110" text-anchor="middle" font-size="26" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 4</text></g>
+          <text x="159" y="140" text-anchor="middle" font-size="13.5" fill="#c9d4ff">проверка: 2·4+5 = 13 и 4+9 = 13</text>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('1 · перенести',`visW199Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · упростить',`visW199Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
+        wkSml('2x − x = x · 9 − 5 = 4 · x = 4'));
+    } else if(step===12){
+      const H=190, W=318;
+      const go=st.go||0; const pick=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Найди ошибку</div>`+
+        wkHero(river(`
+          <text x="159" y="32" text-anchor="middle" font-size="15" fill="#c9d4ff" font-weight="bold">«решение»: 3x + 5 = 2x + 9</text>
+          ${go?`<g class="g7pop"><rect x="52" y="52" width="214" height="30" rx="9" fill="rgba(255,255,255,.06)" stroke="#4a5a9e" stroke-width="1.8"/>
+            <text x="159" y="72" text-anchor="middle" font-size="16" fill="#ff9a8a" font-weight="bold" font-family="Georgia,serif">3x + 2x = 9 − 5</text></g>
+          <g class="g7pop" style="animation-delay:.15s"><rect x="52" y="88" width="214" height="30" rx="9" fill="rgba(255,255,255,.06)" stroke="#4a5a9e" stroke-width="1.8"/>
+            <text x="159" y="108" text-anchor="middle" font-size="16" fill="#e8ecff" font-weight="bold" font-family="Georgia,serif">5x = 4</text></g>`:''}
+          ${pick===0?`<text x="159" y="150" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">верно! 2x перенесли БЕЗ смены знака</text>`:''}
+          ${pick===1?`<text x="159" y="150" text-anchor="middle" font-size="15" fill="#c9d4ff">вторая строка — следствие первой ошибки</text>`:''}
+          ${pick===0?`<text x="159" y="158" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">правильно: 3x − 2x = 9 − 5 → x = 4</text>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('показать решение',`visW199Act('${lk}','go')`) : '',
+          go===1?wkBtn('ошибка в 1-й строке',`visW199Act('${lk}','w0')`) : '',
+          go===1?wkBtn('ошибка во 2-й строке',`visW199Act('${lk}','w1')`) : '',
+          go?wkBtn('сброс',`visW199Act('${lk}','rst')`):'')+
+        wkSml('2x перенесли влево — какой у него знак теперь?'));
+    } else {
+      const H=180, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(river(`
+          <text x="159" y="46" text-anchor="middle" font-size="21" fill="#fff" font-weight="bold" font-family="Georgia,serif">3x − 7 = 2x + 5</text>
+          <line x1="44" y1="66" x2="274" y2="66" stroke="#4a5a9e" stroke-width="1.4"/>
+          <text x="159" y="92" text-anchor="middle" font-size="13.5" fill="#c9d4ff">иксы влево · числа вправо</text>
+          <text class="g7pop" style="animation-delay:.25s" x="159" y="120" text-anchor="middle" font-size="21" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">3x − 2x = 5 + 7</text>
+          <text class="g7pop" style="animation-delay:.5s" x="159" y="146" text-anchor="middle" font-size="23" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 12</text>
+        `,W,H))+
+        quiz(lk,st)+
+        wkSml('переноси со сменой знака · жми «Понял! Проверю себя»'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[199]=visW199;
+  function visW199T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW199T=visW199T;
+  function visW199T2(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW199T2=visW199T2;
+  function visW199Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){
+      if(sp===2||sp===6||sp===8||sp===9||sp===10||sp===11||sp===12){ st.go=(st.go||0)+1; }
+      else if(sp===4||sp===5){ st.mv=(st.mv||0)+1; }
+    }
+    if(act==='w0'){ st.pick=0; }
+    if(act==='w1'){ st.pick=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; }
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW199Act=visW199Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===199){ window.ARH_LESSONS[i]=L199; break; } } })();
+})();
+
+/* ================= УРОК 199 · Уравнения с переносом слагаемых (v1 · «Река Равенства Архимеда», 14 слайдов) ================= */
+(function(){
+  if(!window.__wk199v1css){
+    window.__wk199v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .g7in{animation:g7In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes g7In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .g7pop{animation:g7Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes g7Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .g7float{animation:g7Float 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes g7Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
+      '#lvis .g7tw{animation:g7Tw 2.4s ease-in-out infinite;}'+
+      '@keyframes g7Tw{0%,100%{opacity:.25}50%{opacity:.95}}'+
+      '#lvis .g7ride{animation:g7Ride 1.1s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
+      '@keyframes g7Ride{from{transform:translate(var(--tx),var(--ty));opacity:0}to{transform:translate(0,0);opacity:1}}'+
+      '#lvis .g7bump{animation:g7Bump .9s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes g7Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}'+
+      '#lvis .g7wav{stroke-dasharray:10 12;animation:g7Wav 1.5s linear infinite;}'+
+      '@keyframes g7Wav{to{stroke-dashoffset:-44}}';
+    document.head.appendChild(st);
+  }
+  const L199 = {
+    id: 199, title: 'Уравнения с переносом слагаемых', ico: '≈',
+    src: 'Математика · 6 класс · Уравнения', subj: 'math',
+    explain: [
+      'Перед нами уравнение 3x − 7 = 2x + 5. Икс прячется СРАЗУ в двух местах: слева и справа от «равно». Как найти x, если он с двух сторон? Переправим лишние слагаемые на нужный берег!',
+      'Уравнение — это РАВЕНСТВО: левая и правая части всегда одинаковы. Пока мы не знаем x, но можем проверить догадку: если x = 12, то слева 3·12 − 7 = 29, справа 2·12 + 5 = 29 — чаши в равновесии!',
+      'Наша цель — собрать все иксы на левом берегу, а все числа на правом. Мешают два «лишних» слагаемых: 2x справа и −7 слева.',
+      'Главное правило: слагаемое можно ПЕРЕНЕСТИ через знак «равно», но при переносе его знак МЕНЯЕТСЯ на противоположный. Плюс становится минусом, минус — плюсом.',
+      'Переправляем 2x через мост: справа он был со знаком «+», а на левом берегу появляется −2x. Уравнение: 3x − 7 − 2x = 5.',
+      'Теперь переправляем −7 вправо: слева он был со знаком «−», справа становится +7. Получаем: 3x − 2x = 5 + 7. Иксы собрались слева, числа — справа!',
+      'Упрощаем: 3x − 2x = x (три икса минус два икса — один икс). Справа 5 + 7 = 12. Ответ: x = 12.',
+      'Проверка — обязательный шаг: подставим 12 вместо x. Слева 3·12 − 7 = 36 − 7 = 29. Справа 2·12 + 5 = 24 + 5 = 29. 29 = 29 — всё верно, чаши весов на одном уровне!',
+      'Почему знак меняется? Уравнение — как весы: чтобы убрать 2x справа, вычитаем 2x из ОБЕИХ чашек. Слева появляется −2x — а это и есть «перенос со сменой знака».',
+      'Ловушка: главная ошибка — перенести слагаемое, НЕ поменяв знак. Тогда ответ выходит неверным, и проверка не сходится: чаши весов разъезжаются!',
+      'Решаем второй пример: 5x − 8 = 2x + 7. Переносим 2x влево (становится −2x), переносим −8 вправо (становится +8): 5x − 2x = 7 + 8.',
+      'Упрощаем: 3x = 15, значит x = 15 : 3 = 5. Проверка: слева 5·5 − 8 = 17, справа 2·5 + 7 = 17. Всё сходится!',
+      'Третий пример: 2x + 5 = x + 9. Переносим x влево: 2x − x = 9 − 5. Упрощаем: x = 4. Проверка: 2·4 + 5 = 13 и 4 + 9 = 13. Верно!',
+      'Алгоритм: 1) собери иксы слева, числа справа (меняя знаки при переносе); 2) упрости: ax = b; 3) x = b : a; 4) обязательно проверь подстановкой! Жми «Понял! Проверю себя» — там уравнение 3x − 7 = 2x + 5.'
+    ],
+    check: { q: 'Реши уравнение: 3x − 7 = 2x + 5.', choices: ['2', '12', '−12'], ans: 1,
+      exp: 'Переносим: 3x − 2x = 5 + 7 → x = 12. Проверка: 3·12 − 7 = 29 = 2·12 + 5.' },
+    tasks: [
+      { q: 'Реши уравнение: 5x − 8 = 2x + 7.', kind: 'unit', ans: 5, tol: 0,
+        hints: ['Перенеси 2x влево, −8 вправо: 5x − 2x = 7 + 8.', '3x = 15 → x = 15 : 3.'], sol: '3x = 15, x = 5.' },
+      { q: 'Реши уравнение: 2x + 5 = x + 9.', kind: 'choice', choices: ['4', '6', '14'], ans: 0, tol: 0,
+        hints: ['Перенеси x влево: 2x − x = 9 − 5.', 'x = 4.'], sol: '2x − x = 9 − 5 → x = 4.' }
+    ]
+  };
+  const G={ink:'#e8ecff',gold:'#ffd76a',cyan:'#7fd1ff',green:'#8fd1a8',rose:'#ff9a8a',lilac:'#c9a8ff'};
+  /* сцена «река равенства»: ночное небо, звёзды, река снизу */
+  function river(inner,W,H){
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs><linearGradient id="g7sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#232b5e"/><stop offset="1" stop-color="#3b2b66"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#g7sky)"/>
+      <g class="g7tw">${[[24,18],[50,38],[84,14],[112,32],[156,12],[194,28],[228,16],[266,34],[298,20]].map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="1.6" fill="#fff" style="animation-delay:${(i*0.25).toFixed(2)}s"/>`).join('')}</g>
+      <circle cx="280" cy="50" r="13" fill="#f4e9c8" opacity=".9"/>
+      <circle cx="276" cy="45" r="2.6" fill="#d8c9a0"/>
+      <circle cx="283" cy="55" r="2" fill="#d8c9a0"/>
+      <rect x="0" y="${H-26}" width="${W}" height="26" fill="#18275a"/>
+      <line class="g7wav" x1="8" y1="${H-8}" x2="${W-8}" y2="${H-8}" stroke="#5f7fd8" stroke-width="2" opacity=".8"/>
+      <line class="g7wav" x1="8" y1="${H-18}" x2="${W-8}" y2="${H-18}" stroke="#4a66b8" stroke-width="1.5" opacity=".6"/>
+      ${inner}
+    </svg>`;
+  }
+  /* плашка-слагаемое (центр x,cy) */
+  function term(x,cy,txt,c,opt){
+    const o=opt||{};
+    const fs=o.fs||20;
+    const w=o.w||(txt.length*fs*0.6+16);
+    const h=o.h||36;
+    const cls=o.cls?`class="${o.cls}"`:'';
+    const dly=o.dly?`style="animation-delay:${o.dly}s"`:'';
+    return `<g ${cls} ${dly}><rect x="${x-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="10" fill="${o.bg||'rgba(255,255,255,.09)'}" stroke="${c}" stroke-width="2.2"/>
+      <text x="${x}" y="${cy+fs*0.36}" text-anchor="middle" font-size="${fs}" fill="${c}" font-weight="bold" font-family="Georgia,serif">${txt}</text></g>`;
+  }
+  /* мост со знаком = */
+  function bridge(cy){
+    return `<g class="g7float">
+      <path d="M 145 ${cy+24} Q 159 ${cy-16} 173 ${cy+24}" fill="none" stroke="#7c5fd0" stroke-width="5"/>
+      <path d="M 145 ${cy+24} Q 159 ${cy-16} 173 ${cy+24}" fill="none" stroke="#c9b8ff" stroke-width="1.5"/>
+      <circle cx="159" cy="${cy+2}" r="15" fill="#2c2158" stroke="${G.gold}" stroke-width="2.4"/>
+      <text x="159" y="${cy+7}" text-anchor="middle" font-size="16" fill="${G.gold}" font-weight="bold" font-family="Georgia,serif">=</text>
+    </g>`;
+  }
+  const sign=(t,c,delay,fs)=>`<span class="g7in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.06);font-family:Georgia,serif;font-size:${fs||20}px;color:${c};font-weight:bold">${t}</span>`;
+  const Q199=[
+    {q:'3x − 7 = 2x + 5. Найди x.',opts:['2','12','−12'],ans:1},
+    {q:'2x + 5 = x + 9. Найди x.',opts:['4','6','14'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q199[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.06)',bd='#4a5a9e',tc='#e8ecff';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.2)':'rgba(255,154,138,.2)'; bd=i===T.ans?G.green:G.rose; tc=i===T.ans?G.green:G.rose; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:62px;font-size:17px" onclick="visW199T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! Иксы влево, числа вправо, знаки меняются</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:16px">Не так. Перенеси слагаемые со сменой знака</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW199Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW199Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#c9d4ff')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW199(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step===0){ st.pick=null; }
+      if(step===1){ st.pick=null; }
+      if(step===2){ st.go=0; }
+      if(step===4){ st.mv=0; }
+      if(step===5){ st.mv=0; }
+      if(step===6){ st.go=0; }
+      if(step===8){ st.show=0; }
+      if(step===9){ if(st.tr==null) st.tr=0; st.go=0; }
+      if(step===10){ st.go=0; }
+      if(step===11){ st.go=0; }
+      if(step===12){ st.go=0; st.pick=null; }
+      if(step===13){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    if(step===0){
+      const H=190, W=318;
+      const chk=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Икс прячется с двух сторон!</div>`+
+        wkHero(river(`
+          ${term(84,92,'3x',G.cyan,{fs:20})}
+          ${term(146,92,'−7',G.gold,{fs:20,dly:.1})}
+          ${bridge(92)}
+          ${term(196,92,'2x',G.cyan,{fs:20,dly:.2})}
+          ${term(258,92,'+5',G.gold,{fs:20,dly:.3})}
+          <text x="84" y="122" text-anchor="middle" font-size="12" fill="#9fb2e8">слева</text>
+          <text x="258" y="122" text-anchor="middle" font-size="12" fill="#9fb2e8">справа</text>
+          ${chk!=null?`<text x="159" y="152" text-anchor="middle" font-size="15" fill="${chk===1?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${chk===1?'верно: x и слева, и справа!':'посмотри: где спрятался x?'}</text>`:''}
+        `,W,H))+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW199T2('${lk}',0)">x только слева</button>
+          <button class="wk-btn" onclick="visW199T2('${lk}',1)">x слева и справа</button>
+        </div>`+
+        wkSml('чтобы найти x, соберём его на одном берегу'));
+    } else if(step===1){
+      const H=190, W=318;
+      const chk=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверяем догадку x = 12</div>`+
+        wkHero(river(`
+          <g class="g7pop"><rect x="18" y="58" width="120" height="58" rx="12" fill="rgba(127,209,255,.1)" stroke="${G.cyan}" stroke-width="2.2"/>
+            <text x="78" y="80" text-anchor="middle" font-size="13" fill="#c9d4ff">3x − 7</text>
+            <text x="78" y="106" text-anchor="middle" font-size="17" fill="${G.cyan}" font-weight="bold" font-family="Georgia,serif">3·12 − 7 = 29</text></g>
+          <g class="g7pop" style="animation-delay:.15s"><rect x="180" y="58" width="120" height="58" rx="12" fill="rgba(201,168,255,.1)" stroke="${G.lilac}" stroke-width="2.2"/>
+            <text x="240" y="80" text-anchor="middle" font-size="13" fill="#c9d4ff">2x + 5</text>
+            <text x="240" y="106" text-anchor="middle" font-size="17" fill="${G.lilac}" font-weight="bold" font-family="Georgia,serif">2·12 + 5 = 29</text></g>
+          <line x1="26" y1="132" x2="292" y2="132" stroke="#5f7fd8" stroke-width="3"/>
+          ${chk!=null?`<text x="159" y="158" text-anchor="middle" font-size="16" fill="${chk===0?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${chk===0?'29 = 29 · равновесие!':'не сходится — попробуй 12'}</text>`:''}
+        `,W,H))+
+        (chk===0?wkRow(sign('оба выражения равны 29',G.green,0.2)):'')+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW199T2('${lk}',0)">подставить x = 12</button>
+          <button class="wk-btn" onclick="visW199T2('${lk}',1)">подставить x = 2</button>
+        </div>`+
+        wkSml('если чаши на одном уровне — догадка верна'));
+    } else if(step===2){
+      const H=180, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Цель: иксы влево, числа вправо</div>`+
+        wkHero(river(`
+          <text x="159" y="36" text-anchor="middle" font-size="14" fill="#c9d4ff" font-weight="bold">мешают: 2x справа и −7 слева</text>
+          <g class="g7float"><rect x="34" y="58" width="104" height="52" rx="12" fill="rgba(127,209,255,.1)" stroke="${G.cyan}" stroke-width="2"/>
+            <text x="86" y="79" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold" font-family="Georgia,serif">3x − 7</text>
+            <text x="86" y="101" text-anchor="middle" font-size="11.5" fill="#ff9a8a">лишний −7 здесь</text></g>
+          <text x="159" y="86" text-anchor="middle" font-size="20" fill="${G.gold}" font-weight="bold">=</text>
+          <g class="g7float" style="animation-delay:.2s"><rect x="180" y="58" width="104" height="52" rx="12" fill="rgba(201,168,255,.1)" stroke="${G.lilac}" stroke-width="2"/>
+            <text x="232" y="79" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold" font-family="Georgia,serif">2x + 5</text>
+            <text x="232" y="101" text-anchor="middle" font-size="11.5" fill="#ff9a8a">лишний 2x здесь</text></g>
+          ${go?`<g class="g7pop"><text x="159" y="142" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">лишние — на другой берег!</text></g>`:''}
+        `,W,H))+
+        (go?wkRow(sign('иксы → влево · числа → вправо',G.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW199Act('${lk}','rst')`):wkBtn('что мешает?',`visW199Act('${lk}','go')`))+
+        wkSml('после переносов получим ax = b'));
+    } else if(step===3){
+      const H=170, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Правило моста</div>`+
+        wkHero(river(`
+          <text x="159" y="32" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">перенос через «равно» меняет знак</text>
+          <g class="g7pop"><rect x="30" y="54" width="76" height="44" rx="10" fill="rgba(255,154,138,.13)" stroke="${G.rose}" stroke-width="2.4"/>
+            <text x="68" y="82" text-anchor="middle" font-size="20" fill="${G.rose}" font-weight="bold" font-family="Georgia,serif">+2x</text></g>
+          <g class="g7ride" style="--tx:-22px;--ty:0px;animation-delay:.7s"><rect x="122" y="54" width="76" height="44" rx="10" fill="rgba(255,215,106,.13)" stroke="${G.gold}" stroke-width="2.4"/>
+            <text x="160" y="82" text-anchor="middle" font-size="20" fill="${G.gold}" font-weight="bold" font-family="Georgia,serif">−2x</text></g>
+          <path d="M 26 120 L 292 120" stroke="#6b7fc4" stroke-width="2" stroke-dasharray="7 6"/>
+          <text x="159" y="136" text-anchor="middle" font-size="14" fill="#c9d4ff">плюс стал минусом · минус станет плюсом</text>
+        `,W,H))+
+        wkRow(sign('перенос: + → − и − → +',G.gold,0.2))+
+        wkSml('так работает волшебный мост через реку равенства'));
+    } else if(step===4){
+      const H=190, W=318;
+      const mv=st.mv||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Переправа: 2x едет влево</div>`+
+        wkHero(river(`
+          ${mv===0
+            ? `${term(64,96,'3x',G.cyan,{fs:19})}${term(118,96,'−7',G.gold,{fs:19,dly:.1})}${bridge(96)}${term(200,96,'2x',G.cyan,{fs:19,cls:'g7float',dly:.3})}${term(252,96,'+5',G.gold,{fs:19,dly:.4})}`
+            : `${term(52,96,'3x',G.cyan,{fs:19})}${term(104,96,'−2x',G.gold,{fs:19,cls:'g7pop',dly:.3})}${term(156,96,'−7',G.gold,{fs:19})}${bridge(96)}${term(252,96,'+5',G.gold,{fs:19,dly:.4})}`}
+          ${mv===0?`<text x="200" y="126" text-anchor="middle" font-size="12" fill="#9fb2e8">лишний икс</text>`:''}
+          ${mv===1?`<text x="159" y="152" text-anchor="middle" font-size="16" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">3x − 7 − 2x = 5</text>`:''}
+        `,W,H))+
+        (mv===1?wkRow(sign('2x стал −2x и переехал влево',G.gold,0.2)):'')+
+        wkRow(mv===0?wkBtn('переправить 2x →',`visW199Act('${lk}','go')`):wkBtn('сброс',`visW199Act('${lk}','rst')`))+
+        wkSml(mv===0?'справа мешает +2x':'плюс при переправе стал минусом'));
+    } else if(step===5){
+      const H=190, W=318;
+      const mv=st.mv||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Переправа: −7 едет вправо</div>`+
+        wkHero(river(`
+          ${mv===0
+            ? `${term(60,96,'3x − 2x',G.cyan,{fs:18})}${term(150,96,'−7',G.gold,{fs:20,cls:'g7float'})}${bridge(96)}${term(246,96,'5 + 7',G.gold,{fs:17,dly:.2})}`
+            : `${term(88,96,'3x − 2x',G.cyan,{fs:18})}${bridge(96)}${term(200,96,'+7',G.gold,{fs:22,cls:'g7pop',dly:.3})}${term(258,96,'+5',G.gold,{fs:20,dly:.5})}`}
+          ${mv===1?`<text x="159" y="148" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">3x − 2x = 5 + 7</text>`:''}
+        `,W,H))+
+        (mv===1?wkRow(sign('−7 стал +7 и переехал вправо',G.gold,0.2)):'')+
+        wkRow(mv===0?wkBtn('переправить −7 →',`visW199Act('${lk}','go')`):wkBtn('сброс',`visW199Act('${lk}','rst')`))+
+        wkSml(mv===0?'слева мешает −7':'иксы слева · числа справа — цель достигнута'));
+    } else if(step===6){
+      const H=180, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Упрощаем: находим x</div>`+
+        wkHero(river(`
+          <text x="159" y="34" text-anchor="middle" font-size="17" fill="#fff" font-weight="bold" font-family="Georgia,serif">3x − 2x = 5 + 7</text>
+          ${go<1?term(118,88,'3x − 2x',G.cyan,{fs:20}):term(118,88,'x',G.cyan,{fs:28,cls:'g7pop'})}
+          <text x="159" y="96" text-anchor="middle" font-size="22" fill="${G.gold}" font-weight="bold">=</text>
+          ${go<2?term(236,88,'5 + 7',G.gold,{fs:19}):term(236,88,'12',G.gold,{fs:28,cls:'g7pop'})}
+          ${go>=1?`<text x="159" y="122" text-anchor="middle" font-size="14" fill="#c9d4ff">${go===1?'3 икса минус 2 икса — остаётся 1 икс':'и 5 + 7 = 12'}</text>`:''}
+          ${go>=2?`<g class="g7bump" style="animation-delay:.3s"><text x="159" y="146" text-anchor="middle" font-size="24" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 12</text></g>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('1 · упростить иксы',`visW199Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · сложить числа',`visW199Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
+        wkSml(go===0?'3x − 2x = x':go===1?'5 + 7 = 12':'икс найден!'));
+    } else if(step===7){
+      const H=185, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверка: подставляем 12</div>`+
+        wkHero(river(`
+          <g class="g7pop"><rect x="20" y="52" width="134" height="60" rx="12" fill="rgba(127,209,255,.1)" stroke="${G.cyan}" stroke-width="2.2"/>
+            <text x="87" y="72" text-anchor="middle" font-size="12" fill="#c9d4ff">3x − 7 при x = 12</text>
+            <text x="87" y="99" text-anchor="middle" font-size="19" fill="${G.cyan}" font-weight="bold" font-family="Georgia,serif">36 − 7 = 29</text></g>
+          <g class="g7pop" style="animation-delay:.15s"><rect x="164" y="52" width="134" height="60" rx="12" fill="rgba(201,168,255,.1)" stroke="${G.lilac}" stroke-width="2.2"/>
+            <text x="231" y="72" text-anchor="middle" font-size="12" fill="#c9d4ff">2x + 5 при x = 12</text>
+            <text x="231" y="99" text-anchor="middle" font-size="19" fill="${G.lilac}" font-weight="bold" font-family="Georgia,serif">24 + 5 = 29</text></g>
+          <g class="g7pop" style="animation-delay:.4s"><text x="159" y="140" text-anchor="middle" font-size="21" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">29 = 29 · верно!</text>
+          <line x1="76" y1="158" x2="242" y2="158" stroke="#8fd1a8" stroke-width="3"/></g>
+        `,W,H))+
+        wkRow(sign('подстановка — главный контроль',G.green,0.3))+
+        wkSml('если бы вышло 29 ≠ 30 — ищи ошибку в переносе'));
+    } else if(step===8){
+      const H=180, W=318;
+      const show=st.show||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему знак меняется?</div>`+
+        wkHero(river(`
+          <text x="159" y="30" text-anchor="middle" font-size="12.5" fill="#c9d4ff" font-weight="bold">действуем одинаково на ОБЕ части уравнения</text>
+          <g class="g7float"><rect x="26" y="48" width="120" height="62" rx="12" fill="rgba(255,255,255,.07)" stroke="#8a94ad" stroke-width="2"/>
+            <text x="86" y="70" text-anchor="middle" font-size="14" fill="#e8ecff" font-family="Georgia,serif">3x − 7</text>
+            ${show?`<text x="86" y="96" text-anchor="middle" font-size="13" fill="#ff9a8a" font-weight="bold">− 2x тоже</text>`:''}</g>
+          <text x="159" y="82" text-anchor="middle" font-size="20" fill="${G.gold}" font-weight="bold">=</text>
+          <g class="g7float" style="animation-delay:.15s"><rect x="172" y="48" width="120" height="62" rx="12" fill="rgba(255,255,255,.07)" stroke="#8a94ad" stroke-width="2"/>
+            <text x="232" y="70" text-anchor="middle" font-size="14" fill="#e8ecff" font-family="Georgia,serif">2x + 5</text>
+            ${show?`<text x="232" y="96" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">− 2x отсюда</text>`:''}</g>
+          ${show?`<text x="159" y="145" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">3x − 7 − 2x = 5</text>`:''}
+        `,W,H))+
+        (show?wkRow(sign('вычли 2x из обеих частей → слева −2x',G.gold,0.2)):'')+
+        wkRow(show?wkBtn('сброс',`visW199Act('${lk}','rst')`):wkBtn('как убрать 2x?',`visW199Act('${lk}','go')`))+
+        wkSml('это и есть перенос: записываем короче, со сменой знака'));
+    } else if(step===9){
+      const H=190, W=318;
+      if(st.tr==null) st.tr=0;
+      const pairs=[[5,8,2,7,5],[7,4,3,8,3]];
+      const [aa,bb,cc,dd,xv]=pairs[st.tr%2];
+      const go=st.go||0;
+      const rows=['','',''];
+      const eq0=`${aa}x − ${bb} = ${cc}x + ${dd}`;
+      const eq1=`${aa}x − ${cc}x = ${dd} + ${bb}`;
+      const eq2=`${aa-cc}x = ${dd+bb}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: по шагам</div>`+
+        wkHero(river(`
+          <rect x="20" y="40" width="278" height="120" rx="14" fill="rgba(255,255,255,.05)" stroke="#4a5a9e" stroke-width="1.8"/>
+          <text x="159" y="70" text-anchor="middle" font-size="18" fill="#fff" font-weight="bold" font-family="Georgia,serif">${eq0}</text>
+          ${go>=1?`<text class="g7pop" x="159" y="102" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">${eq1}</text>`:''}
+          ${go>=2?`<text class="g7pop" x="159" y="134" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">${eq2}</text>`:''}
+          ${go>=3?`<g class="g7bump" style="animation-delay:.2s"><text x="159" y="158" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">делим: x = ${xv}</text></g>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('1 · перенести',`visW199Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · упростить',`visW199Act('${lk}','go')`) : '',
+          go===2?wkBtn('3 · разделить',`visW199Act('${lk}','go')`) : '',
+          go===3?wkBtn('новый пример',`visW199Act('${lk}','n')`) : '',
+          go>=1?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
+        wkSml(go===3?('x = '+dd+bb+' : '+(aa-cc)+' = '+xv):'переносим, упрощаем, делим'));
+    } else if(step===10){
+      const H=185, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример: 5x − 8 = 2x + 7</div>`+
+        wkHero(river(`
+          <text x="159" y="38" text-anchor="middle" font-size="19" fill="#fff" font-weight="bold" font-family="Georgia,serif">5x − 8 = 2x + 7</text>
+          ${go>=1?`<text class="g7pop" x="159" y="76" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">5x − 2x = 7 + 8</text>`:''}
+          ${go>=2?`<text class="g7pop" x="159" y="110" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">3x = 15</text>`:''}
+          ${go>=3?`<g class="g7bump" style="animation-delay:.2s"><text x="159" y="138" text-anchor="middle" font-size="26" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 5</text></g>
+          <text x="159" y="152" text-anchor="middle" font-size="13.5" fill="#c9d4ff">проверка: 5·5−8 = 17 и 2·5+7 = 17</text>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('1 · перенести',`visW199Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · упростить',`visW199Act('${lk}','go')`) : '',
+          go===2?wkBtn('3 · разделить',`visW199Act('${lk}','go')`) : '',
+          go>=3?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
+        wkSml('5x − 8 = 2x + 7 → 3x = 15 → x = 5'));
+    } else if(step===11){
+      const H=185, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример: 2x + 5 = x + 9</div>`+
+        wkHero(river(`
+          <text x="159" y="38" text-anchor="middle" font-size="19" fill="#fff" font-weight="bold" font-family="Georgia,serif">2x + 5 = x + 9</text>
+          ${go>=1?`<text class="g7pop" x="159" y="76" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">2x − x = 9 − 5</text>`:''}
+          ${go>=2?`<g class="g7bump" style="animation-delay:.2s"><text x="159" y="110" text-anchor="middle" font-size="26" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 4</text></g>
+          <text x="159" y="140" text-anchor="middle" font-size="13.5" fill="#c9d4ff">проверка: 2·4+5 = 13 и 4+9 = 13</text>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('1 · перенести',`visW199Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · упростить',`visW199Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
+        wkSml('2x − x = x · 9 − 5 = 4 · x = 4'));
+    } else if(step===12){
+      const H=190, W=318;
+      const go=st.go||0; const pick=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Найди ошибку</div>`+
+        wkHero(river(`
+          <text x="159" y="32" text-anchor="middle" font-size="15" fill="#c9d4ff" font-weight="bold">«решение»: 3x + 5 = 2x + 9</text>
+          ${go?`<g class="g7pop"><rect x="52" y="52" width="214" height="30" rx="9" fill="rgba(255,255,255,.06)" stroke="#4a5a9e" stroke-width="1.8"/>
+            <text x="159" y="72" text-anchor="middle" font-size="16" fill="#ff9a8a" font-weight="bold" font-family="Georgia,serif">3x + 2x = 9 − 5</text></g>
+          <g class="g7pop" style="animation-delay:.15s"><rect x="52" y="88" width="214" height="30" rx="9" fill="rgba(255,255,255,.06)" stroke="#4a5a9e" stroke-width="1.8"/>
+            <text x="159" y="108" text-anchor="middle" font-size="16" fill="#e8ecff" font-weight="bold" font-family="Georgia,serif">5x = 4</text></g>`:''}
+          ${pick===0?`<text x="159" y="150" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">верно! 2x перенесли БЕЗ смены знака</text>`:''}
+          ${pick===1?`<text x="159" y="150" text-anchor="middle" font-size="15" fill="#c9d4ff">вторая строка — следствие первой ошибки</text>`:''}
+          ${pick===0?`<text x="159" y="158" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">правильно: 3x − 2x = 9 − 5 → x = 4</text>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('показать решение',`visW199Act('${lk}','go')`) : '',
+          go===1?wkBtn('ошибка в 1-й строке',`visW199Act('${lk}','w0')`) : '',
+          go===1?wkBtn('ошибка во 2-й строке',`visW199Act('${lk}','w1')`) : '',
+          go?wkBtn('сброс',`visW199Act('${lk}','rst')`):'')+
+        wkSml('2x перенесли влево — какой у него знак теперь?'));
+    } else {
+      const H=180, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(river(`
+          <text x="159" y="46" text-anchor="middle" font-size="21" fill="#fff" font-weight="bold" font-family="Georgia,serif">3x − 7 = 2x + 5</text>
+          <line x1="44" y1="66" x2="274" y2="66" stroke="#4a5a9e" stroke-width="1.4"/>
+          <text x="159" y="92" text-anchor="middle" font-size="13.5" fill="#c9d4ff">иксы влево · числа вправо</text>
+          <text class="g7pop" style="animation-delay:.25s" x="159" y="120" text-anchor="middle" font-size="21" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">3x − 2x = 5 + 7</text>
+          <text class="g7pop" style="animation-delay:.5s" x="159" y="146" text-anchor="middle" font-size="23" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 12</text>
+        `,W,H))+
+        quiz(lk,st)+
+        wkSml('переноси со сменой знака · жми «Понял! Проверю себя»'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[199]=visW199;
+  function visW199T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW199T=visW199T;
+  function visW199T2(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW199T2=visW199T2;
+  function visW199Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){
+      if(sp===2||sp===6||sp===8||sp===9||sp===10||sp===11||sp===12){ st.go=(st.go||0)+1; }
+      else if(sp===4||sp===5){ st.mv=(st.mv||0)+1; }
+    }
+    if(act==='w0'){ st.pick=0; }
+    if(act==='w1'){ st.pick=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; }
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW199Act=visW199Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===199){ window.ARH_LESSONS[i]=L199; break; } } })();
+})();
+
+/* ================= УРОК 377 · Признаки делимости на 3 и 9 (v1 · «Меняльная лавка Архимеда», 14 слайдов) ================= */
+(function(){
+  if(!window.__wk377v1css){
+    window.__wk377v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .h3in{animation:h3In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes h3In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .h3pop{animation:h3Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes h3Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .h3float{animation:h3Float 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes h3Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
+      '#lvis .h3ride{animation:h3Ride 1.1s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
+      '@keyframes h3Ride{from{transform:translate(var(--tx),var(--ty));opacity:0}to{transform:translate(0,0);opacity:1}}'+
+      '#lvis .h3bump{animation:h3Bump .9s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes h3Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}'+
+      '#lvis .h3stamp{animation:h3Stamp .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes h3Stamp{0%{transform:scale(2.2) rotate(-16deg);opacity:0}60%{transform:scale(.94) rotate(-4deg);opacity:1}100%{transform:scale(1) rotate(0)}}';
+    document.head.appendChild(st);
+  }
+  const L377 = {
+    id: 377, title: 'Признаки делимости на 3 и 9', ico: '÷',
+    src: 'Математика · 5–6 класс · Признаки делимости', subj: 'math',
+    explain: [
+      'Как быстро узнать, делится ли 7236 на 9, не деля столбиком? Для 3 и 9 есть хитрый признак: смотрим не на всё число, а только на СУММУ ЕГО ЦИФР.',
+      'Правило для 3: число делится на 3, если сумма его цифр делится на 3. Пример 414: 4 + 1 + 4 = 9, а 9 делится на 3 → 414 делится на 3 (414 : 3 = 138).',
+      'Правило для 9: число делится на 9, если сумма его цифр делится на 9. Пример 7236: 7 + 2 + 3 + 6 = 18, а 18 делится на 9 → 7236 делится на 9 (7236 : 9 = 804).',
+      'Складываем цифры по очереди, слева направо, и держим сумму в уме: 2 + 5 + 8 = 15. Сумма 15 делится на 3 → число 258 делится на 3.',
+      'Почему признак работает? В менальной лавке Архимеда монету-десятку можно разменять на «девятку» и единичку: 10 = 9 + 1. Девятка делится на 9 — значит, на делимость влияет только единичка!',
+      'Сотню меняем так: 100 = 99 + 1 (99 = 9 · 11). Тысячу: 1000 = 999 + 1. Любая такая «девятка» делится на 9, а на счёт остаётся лишь прибавленная единичка.',
+      'Разменяем число 234: две сотни (каждая даёт 99 + 1), три десятка (каждый даёт 9 + 1) и четыре единицы. Все «девятки» делятся на 9, а одиночки складываются: 2 + 3 + 4 = 9.',
+      'Вывод: любое число = (куча из девяток, делится на 9) + сумма его цифр. Поэтому делимость на 9 (и на 3) решает только сумма цифр — остальное всегда делится!',
+      'Проверяем 234: сумма цифр 2 + 3 + 4 = 9 делится на 9 → 234 делится на 9. Действительно, 234 = 26 · 9. И на 3 оно, конечно, тоже делится.',
+      'Число 414: 4 + 1 + 4 = 9 → делится и на 9 (414 = 46 · 9), и на 3 (414 : 3 = 138). Сумма цифр 9 делится на 3 — значит, делится на 3.',
+      'Число 7236: сумма 7 + 2 + 3 + 6 = 18, а 18 — это две девятки. Значит, 7236 делится на 9: 7236 = 9 · 804. Вот как быстро, без столбика!',
+      'Важное следствие: если число делится на 9, то оно делится и на 3 (ведь 9 кратно 3). А наоборот — не всегда: 15 делится на 3 (сумма 6), но на 9 не делится.',
+      'Тренажёр: дано число — сосчитай сумму цифр и реши, делится ли число на 3, на 9, на оба или ни на одно. Кнопки помогут, а Архимед проверит.',
+      'Порядок действий: 1) сложи цифры; 2) если сумма делится на 9 — число делится на 9 (и на 3); 3) если сумма делится только на 3 — число делится на 3; 4) иначе не делится. Жми «Понял! Проверю себя» — там число 7236!'
+    ],
+    check: { q: 'Делится ли 7236 на 9?', choices: ['да', 'нет'], ans: 0,
+      exp: '7 + 2 + 3 + 6 = 18, а 18 делится на 9 → да.' },
+    tasks: [
+      { q: 'Чему равна сумма цифр числа 258? (проверь делимость на 3)', kind: 'unit', ans: 15, tol: 0,
+        hints: ['Сложи цифры: 2 + 5 + 8.', '15 — делится на 3, значит 258 делится на 3.'], sol: '2 + 5 + 8 = 15.' },
+      { q: 'Какое число делится и на 3, и на 9?', kind: 'choice', choices: ['333', '99', '55', '26'], ans: 1, tol: 0,
+        hints: ['Сосчитай суммы цифр.', '99 → 9 + 9 = 18 — делится на 9 (и на 3).'], sol: '99: сумма 18, делится на 9.' }
+    ]
+  };
+  const P={ink:'#3b2b1c',gold:'#b8862e',red:'#b23a2e',green:'#1e7d4f',seal:'#7a4d2a'};
+  /* пергамент-сцена */
+  function parch(inner,W,H){
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <rect x="0" y="0" width="${W}" height="${H}" fill="#f6e8c6"/>
+      <rect x="0" y="0" width="${W}" height="14" fill="#eeddb4"/>
+      <rect x="0" y="${H-14}" width="${W}" height="14" fill="#eeddb4"/>
+      <rect x="6" y="6" width="${W-12}" height="${H-12}" fill="none" stroke="#d8bd85" stroke-width="2" rx="6"/>
+      ${inner}
+    </svg>`;
+  }
+  /* монета */
+  function coin(x,y,r,txt,opt){
+    const o=opt||{};
+    const fs=o.fs||Math.round(r*0.9);
+    const cls=o.cls?`class="${o.cls}"`:'';
+    const dly=o.dly?`style="animation-delay:${o.dly}s"`:'';
+    return `<g ${cls} ${dly}><circle cx="${x}" cy="${y}" r="${r}" fill="${o.fill||'#f0c75a'}" stroke="${o.edge||'#a8741e'}" stroke-width="2.4"/>
+      <circle cx="${x}" cy="${y}" r="${r-3.6}" fill="none" stroke="#d8a83c" stroke-width="1.1" stroke-dasharray="3 3"/>
+      <text x="${x}" y="${y+fs*0.36}" text-anchor="middle" font-size="${fs}" fill="${o.tc||'#5a3a08'}" font-weight="bold" font-family="Georgia,serif">${txt}</text></g>`;
+  }
+  const stamp=(x,y,txt,c,delay)=>`<g class="h3stamp" style="animation-delay:${(delay||0).toFixed(2)}s"><rect x="${x}" y="${y}" width="${(txt.length*8.6+24)}" height="22" rx="5" fill="none" stroke="${c}" stroke-width="2.2"/>
+    <text x="${x+(txt.length*8.6+24)/2}" y="${y+15.5}" text-anchor="middle" font-size="13" fill="${c}" font-weight="bold" font-family="Georgia,serif">${txt}</text></g>`;
+  const sign=(t,c,delay,fs)=>`<span class="h3in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.6);font-family:Georgia,serif;font-size:${fs||19}px;color:${c};font-weight:bold">${t}</span>`;
+  const Q377=[
+    {q:'Делится ли 7236 на 9?',opts:['да','нет'],ans:0},
+    {q:'Что делится и на 3, и на 9?',opts:['333','99','55','26'],ans:1}
+  ];
+  function quiz(lk,st){
+    const T=Q377[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.75)',bd='#b9a06a',tc='#3b2b1c';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(30,125,79,.15)':'rgba(178,58,46,.12)'; bd=i===T.ans?P.green:P.red; tc=i===T.ans?P.green:P.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:62px;font-size:17px" onclick="visW377T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#1e7d4f;font-size:17px">Верно! 9+9 = 18 ⋮ 9, а значит и ⋮ 3</div>':'<div class="wk-ans" style="color:#1e7d4f;font-size:17px">Верно! 7+2+3+6 = 18 ⋮ 9</div>')
+        : '<div class="wk-ans" style="color:#b23a2e;font-size:16px">Не так: посчитай сумму цифр</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW377Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW377Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#6b563a')}<div class="wk-row" style="gap:9px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  const digs=(n)=>{ const s=String(n); const d=[]; for(let i=0;i<s.length;i++) d.push(+s[i]); return d; };
+  const sum=(n)=>digs(n).reduce((a,b)=>a+b,0);
+  function visW377(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=6){ st.go=0; }
+      if(step===7){ st.pick=null; }
+      if(step===8){ st.go=0; }
+      if(step===9){ st.go=0; }
+      if(step===10){ st.go=0; }
+      if(step===11){ st.pick=null; }
+      if(step===12){ if(st.tr==null) st.tr=0; st.go=0; st.pick=null; }
+      if(step===13){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    if(step===0){
+      const H=190, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Делится ли 7236 на 9?</div>`+
+        wkHero(parch(`
+          <text x="159" y="62" text-anchor="middle" font-size="40" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">7236</text>
+          <text x="159" y="88" text-anchor="middle" font-size="13.5" fill="#8a6a3a">ответ подскажет СУММА ЦИФР</text>
+          ${go?`<g class="h3pop"><text x="159" y="122" text-anchor="middle" font-size="25" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">7+2+3+6 = 18</text>
+          ${stamp(112,134,'18 ⋮ 9 · делится!',P.green,.4)}</g>`:''}
+        `,W,H))+
+        (go?wkRow(sign('сумма цифр 18 · 18 ⋮ 9',P.green,0.3)):'')+
+        wkRow(go?wkBtn('сброс',`visW377Act('${lk}','rst')`):wkBtn('посчитать сумму цифр',`visW377Act('${lk}','go')`))+
+        wkSml('никакого деления столбиком — только сложение'));
+    } else if(step===1){
+      const H=190, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Признак делимости на 3</div>`+
+        wkHero(parch(`
+          <rect x="14" y="28" width="290" height="40" rx="9" fill="#fff3da" stroke="${P.gold}" stroke-width="2"/>
+          <text x="159" y="54" text-anchor="middle" font-size="15.5" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">число ⋮ 3, если сумма цифр ⋮ 3</text>
+          <g class="h3in">${digs(414).map((d,i)=>coin(70+i*56,104,23,String(d),{dly:.15+i*.12})).join('')}</g>
+          ${go?`<g class="h3pop"><text x="159" y="142" text-anchor="middle" font-size="24" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">4 + 1 + 4 = 9</text>
+          ${stamp(100,154,'9 ⋮ 3 → 414 ⋮ 3',P.green,.5)}</g>`:''}
+        `,W,H))+
+        (go?wkRow(sign('414 : 3 = 138 · проверка',P.green,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW377Act('${lk}','rst')`):wkBtn('1 · сложить цифры',`visW377Act('${lk}','go')`))+
+        wkSml('9 делится на 3 → 414 делится на 3'));
+    } else if(step===2){
+      const H=190, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Признак делимости на 9</div>`+
+        wkHero(parch(`
+          <rect x="14" y="28" width="290" height="40" rx="9" fill="#fff3da" stroke="${P.gold}" stroke-width="2"/>
+          <text x="159" y="54" text-anchor="middle" font-size="15.5" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">число ⋮ 9, если сумма цифр ⋮ 9</text>
+          <g class="h3in">${digs(7236).map((d,i)=>coin(50+i*42,104,19,String(d),{dly:.15+i*.1})).join('')}</g>
+          ${go?`<g class="h3pop"><text x="159" y="142" text-anchor="middle" font-size="24" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">7+2+3+6 = 18</text>
+          ${stamp(106,154,'18 ⋮ 9 → 7236 ⋮ 9',P.green,.5)}</g>`:''}
+        `,W,H))+
+        (go?wkRow(sign('7236 = 804 · 9',P.green,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW377Act('${lk}','rst')`):wkBtn('1 · сложить цифры',`visW377Act('${lk}','go')`))+
+        wkSml('18 = 2 · 9 → число делится на 9'));
+    } else if(step===3){
+      const H=190, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Считаем сумму по шагам</div>`+
+        wkHero(parch(`
+          <text x="159" y="40" text-anchor="middle" font-size="14.5" fill="#8a6a3a" font-weight="bold">число 258 — складываем слева направо</text>
+          <g class="h3in">${digs(258).map((d,i)=>coin(58+i*64,100,24,String(d),{dly:.15+i*.15})).join('')}</g>
+          ${go>=1?`<text class="h3pop" x="159" y="144" text-anchor="middle" font-size="21" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">2 + 5 = 7</text>`:''}
+          ${go>=2?`<text class="h3pop" x="159" y="170" text-anchor="middle" font-size="26" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">7 + 8 = 15</text>`:''}
+        `,W,H))+
+        (go>=2?wkRow(sign('15 ⋮ 3 → 258 ⋮ 3',P.green,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('2 + 5',`visW377Act('${lk}','go')`) : '',
+          go===1?wkBtn('+ 8',`visW377Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW377Act('${lk}','rst')`):'')+
+        wkSml('сумма 15 · а 15 не делится на 9 — только на 3'));
+    } else if(step===4){
+      const H=190, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Секрет: 10 = 9 + 1</div>`+
+        wkHero(parch(`
+          <text x="159" y="32" text-anchor="middle" font-size="14.5" fill="#8a6a3a" font-weight="bold">меняльная лавка Архимеда</text>
+          ${go===0?coin(92,104,40,'10',{cls:'h3float'}):''}
+          ${go>=1?`<g class="h3ride" style="--tx:-52px;--ty:0px;animation-delay:.15s">${coin(94,104,28,'9',{fill:'#cde6cf',edge:'#1e7d4f',tc:'#14532d',fs:24})}</g>`:''}
+          ${go>=2?`<g class="h3ride" style="--tx:56px;--ty:0px;animation-delay:.35s">${coin(224,104,20,'1',{fill:'#f6d9a0',edge:'#a8741e'})}</g>`:''}
+          ${go===1?`<text x="159" y="170" text-anchor="middle" font-size="15.5" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">десятка → девятка и единичка</text>`:''}
+          ${go>=2?`<text x="159" y="170" text-anchor="middle" font-size="16" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">10 = 9 + 1 · девятка ⋮ 9</text>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('разменять десятку',`visW377Act('${lk}','go')`) : '',
+          go===1?wkBtn('показать равенство',`visW377Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW377Act('${lk}','rst')`):'')+
+        wkSml('единичка-остаток — вот кто решает делимость'));
+    } else if(step===5){
+      const H=190, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сотни и тысячи — тоже 9+1</div>`+
+        wkHero(parch(`
+          <text x="159" y="32" text-anchor="middle" font-size="14" fill="#8a6a3a" font-weight="bold">100 = 99 + 1 · 1000 = 999 + 1</text>
+          ${go===0?coin(82,108,30,'100',{cls:'h3float'}):''}
+          ${go===0?coin(238,108,30,'1000',{cls:'h3float',dly:.2}):''}
+          ${go>=1?`<g class="h3pop"><rect x="14" y="60" width="140" height="48" rx="10" fill="#e3f0e2" stroke="${P.green}" stroke-width="2"/>
+            <text x="84" y="81" text-anchor="middle" font-size="16" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">99 = 9 · 11</text>
+            <text x="84" y="101" text-anchor="middle" font-size="11.5" fill="#55703f">это 11 девяток</text></g>
+          <g class="h3pop" style="animation-delay:.15s"><rect x="164" y="60" width="140" height="48" rx="10" fill="#e3f0e2" stroke="${P.green}" stroke-width="2"/>
+            <text x="234" y="81" text-anchor="middle" font-size="16" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">999 = 9 · 111</text>
+            <text x="234" y="101" text-anchor="middle" font-size="11.5" fill="#55703f">это 111 девяток</text></g>
+          <text class="h3pop" style="animation-delay:.3s" x="159" y="140" text-anchor="middle" font-size="15" fill="${P.ink}" font-weight="bold">каждая монета оставляет только +1</text>`:''}
+        `,W,H))+
+        wkRow(
+          go===0?wkBtn('разменять',`visW377Act('${lk}','go')`) : '',
+          go>=1?wkBtn('сброс',`visW377Act('${lk}','rst')`):'')+
+        wkSml('99 и 999 делятся на 9 · остаётся по единичке'));
+    } else if(step===6){
+      const H=190, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Размен числа 234</div>`+
+        wkHero(parch(`
+          ${go===0?`<text x="159" y="50" text-anchor="middle" font-size="36" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">234</text>
+          <text x="159" y="78" text-anchor="middle" font-size="13" fill="#8a6a3a">2 сотни · 3 десятка · 4 единицы</text>`:''}
+          ${go>=1?`<g class="h3pop"><rect x="12" y="34" width="150" height="52" rx="9" fill="#e3f0e2" stroke="${P.green}" stroke-width="2"/>
+            <text x="87" y="52" text-anchor="middle" font-size="12" fill="#14532d">«девятки»: 2·99 и 3·9</text>
+            <text x="87" y="74" text-anchor="middle" font-size="17" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">делятся на 9</text></g>
+          <g class="h3pop" style="animation-delay:.2s"><rect x="172" y="34" width="134" height="52" rx="9" fill="#fbe9cc" stroke="${P.gold}" stroke-width="2"/>
+            <text x="239" y="52" text-anchor="middle" font-size="12" fill="#8a5a2e">остатки-одиночки</text>
+            <text x="239" y="74" text-anchor="middle" font-size="16" fill="${P.gold}" font-weight="bold" font-family="Georgia,serif">2 + 3 + 4</text></g>
+          <text x="159" y="106" text-anchor="middle" font-size="13.5" fill="#8a6a3a">сотни дали 99+1 · десятки дали 9+1</text>`:''}
+          ${go>=2?`<g class="h3bump" style="animation-delay:.3s"><text x="159" y="146" text-anchor="middle" font-size="25" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">2 + 3 + 4 = 9</text></g>
+          ${stamp(110,152,'9 ⋮ 9 → 234 ⋮ 9',P.green,.5)}` : go===1?`<text x="159" y="148" text-anchor="middle" font-size="14.5" fill="#8a6a3a">осталось сложить одиночки</text>`:''}
+        `,W,H))+
+        (go>=2?wkRow(sign('234 = 26 · 9',P.green,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('разменять 234',`visW377Act('${lk}','go')`) : '',
+          go===1?wkBtn('сложить остатки',`visW377Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW377Act('${lk}','rst')`):'')+
+        wkSml('«девятки» делятся всегда · решают одиночки'));
+    } else if(step===7){
+      const H=185, W=318;
+      const pick=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Главный вывод</div>`+
+        wkHero(parch(`
+          <rect x="16" y="38" width="286" height="100" rx="12" fill="#fff3da" stroke="${P.seal}" stroke-width="2"/>
+          <text x="159" y="64" text-anchor="middle" font-size="16" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">число = «девятки» + сумма цифр</text>
+          <text x="159" y="90" text-anchor="middle" font-size="13.5" fill="${P.green}" font-weight="bold">«девятки» делятся на 9 ВСЕГДА</text>
+          <text x="159" y="114" text-anchor="middle" font-size="13.5" fill="${P.gold}" font-weight="bold">решает только сумма цифр</text>
+          ${pick===0?`<g class="h3pop"><text x="159" y="152" text-anchor="middle" font-size="16" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">сумма ⋮ 3 → число ⋮ 3</text>
+          <text x="159" y="170" text-anchor="middle" font-size="16" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">сумма ⋮ 9 → число ⋮ 9</text></g>`:''}
+        `,W,H))+
+        wkRow(
+          pick===0?wkBtn('сброс',`visW377Act('${lk}','rst')`):wkBtn('итог двумя словами',`visW377Act('${lk}','go')`))+
+        wkSml('остальное всегда делится на 9 — проверим дальше'));
+    } else if(step===8){
+      const H=190, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверяем 234</div>`+
+        wkHero(parch(`
+          <text x="159" y="44" text-anchor="middle" font-size="36" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">234</text>
+          ${go?`<g class="h3pop"><text x="159" y="84" text-anchor="middle" font-size="23" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">2 + 3 + 4 = 9</text>
+          <rect x="58" y="100" width="202" height="34" rx="9" fill="#e3f0e2" stroke="${P.green}" stroke-width="2"/>
+          <text x="159" y="123" text-anchor="middle" font-size="16" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">234 = 26 · 9</text>
+          ${stamp(112,140,'⋮ 9 и ⋮ 3',P.green,.4)}</g>`:''}
+        `,W,H))+
+        (go?wkRow(sign('сумма 9 ⋮ 9 → 234 делится на 9',P.green,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW377Act('${lk}','rst')`):wkBtn('проверить признак',`visW377Act('${lk}','go')`))+
+        wkSml('234 = 26 · 9 · и на 3 тоже делится'));
+    } else if(step===9){
+      const H=190, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверяем 414</div>`+
+        wkHero(parch(`
+          <text x="159" y="44" text-anchor="middle" font-size="36" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">414</text>
+          ${go?`<g class="h3pop"><text x="159" y="82" text-anchor="middle" font-size="23" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">4 + 1 + 4 = 9</text>
+          <rect x="48" y="98" width="222" height="58" rx="10" fill="#e3f0e2" stroke="${P.green}" stroke-width="2"/>
+          <text x="159" y="120" text-anchor="middle" font-size="15.5" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">414 = 46 · 9 · 414 : 3 = 138</text>
+          <text x="159" y="144" text-anchor="middle" font-size="13" fill="#14532d">делится и на 9, и на 3</text>
+          ${stamp(118,150,'⋮ 9 и ⋮ 3',P.green,.5)}</g>`:''}
+        `,W,H))+
+        (go?wkRow(sign('сумма 9 делится и на 9, и на 3',P.green,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW377Act('${lk}','rst')`):wkBtn('проверить признак',`visW377Act('${lk}','go')`))+
+        wkSml('414 = 46 · 9 = 138 · 3'));
+    } else if(step===10){
+      const H=190, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">7236 — без столбика</div>`+
+        wkHero(parch(`
+          <text x="159" y="42" text-anchor="middle" font-size="32" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">7236</text>
+          <g class="h3pop" style="animation-delay:.15s"><text x="159" y="80" text-anchor="middle" font-size="21" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">7 + 2 + 3 + 6 = 18</text></g>
+          ${go?`<g class="h3pop" style="animation-delay:.25s"><rect x="66" y="98" width="186" height="32" rx="8" fill="#e3f0e2" stroke="${P.green}" stroke-width="2"/>
+            <text x="159" y="120" text-anchor="middle" font-size="15.5" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">18 = 9 + 9 · две девятки</text></g>
+          <g class="h3bump" style="animation-delay:.5s"><text x="159" y="158" text-anchor="middle" font-size="24" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">7236 = 804 · 9</text></g>`:''}
+        `,W,H))+
+        (go?wkRow(sign('7236 ⋮ 9 · значит и ⋮ 3',P.green,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW377Act('${lk}','rst')`):wkBtn('18 = ?',`visW377Act('${lk}','go')`))+
+        wkSml('сумма 18 ⋮ 9 → число делится на 9'));
+    } else if(step===11){
+      const H=190, W=318;
+      const go=st.go||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Если ⋮ 9, то ⋮ 3 тоже</div>`+
+        wkHero(parch(`
+          <rect class="h3in" x="16" y="42" width="126" height="66" rx="12" fill="#e3f0e2" stroke="${P.green}" stroke-width="2.4"/>
+          <text x="79" y="68" text-anchor="middle" font-size="14" fill="#14532d" font-weight="bold">делится на 9</text>
+          <text x="79" y="94" text-anchor="middle" font-size="22" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">⋮ 9</text>
+          <text class="h3bump" style="animation-delay:.25s" x="159" y="84" text-anchor="middle" font-size="24" fill="${P.seal}" font-weight="bold">⇒</text>
+          <rect class="h3in" style="animation-delay:.3s" x="176" y="42" width="126" height="66" rx="12" fill="#e3f0e2" stroke="${P.green}" stroke-width="2.4"/>
+          <text x="239" y="68" text-anchor="middle" font-size="14" fill="#14532d" font-weight="bold">делится на 3</text>
+          <text x="239" y="94" text-anchor="middle" font-size="22" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">⋮ 3</text>
+          ${go?`<g class="h3pop"><rect x="40" y="122" width="238" height="44" rx="10" fill="#fde4da" stroke="${P.red}" stroke-width="2"/>
+            <text x="159" y="139" text-anchor="middle" font-size="13.5" fill="${P.red}" font-weight="bold">наоборот не всегда:</text>
+            <text x="159" y="158" text-anchor="middle" font-size="14.5" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">15 ⋮ 3, но 15 не ⋮ 9</text></g>`:''}
+        `,W,H))+
+        (go?wkRow(sign('9 кратно 3 · 6 не кратно 9',P.seal,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW377Act('${lk}','rst')`):wkBtn('а наоборот?',`visW377Act('${lk}','go')`))+
+        wkSml('15 → сумма 6 ⋮ 3, но не ⋮ 9'));
+    } else if(step===12){
+      const H=190, W=318;
+      if(st.tr==null) st.tr=0;
+      const pool=[[127,10,3,'не делится'],[333,9,2,'⋮ 3 и ⋮ 9'],[258,15,0,'⋮ 3'],[144,9,2,'⋮ 3 и ⋮ 9'],[213,6,0,'⋮ 3'],[341,8,3,'не делится']];
+      const cur=pool[st.tr%pool.length];
+      const go=st.go||0;
+      const num=go?cur[0]:null;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр-размен</div>`+
+        wkHero(parch(`
+          ${go===0?`<text x="159" y="82" text-anchor="middle" font-size="30" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">поехали!</text>
+          <text x="159" y="120" text-anchor="middle" font-size="14" fill="#8a6a3a">жми — получишь число для проверки</text>`:''}
+          ${go===1?`<text class="h3pop" x="159" y="52" text-anchor="middle" font-size="40" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">${num}</text>
+          <text x="159" y="78" text-anchor="middle" font-size="13.5" fill="#8a6a3a">сосчитай сумму цифр и выбери ответ</text>
+          ${st.pick!=null?`<text class="h3pop" x="159" y="112" text-anchor="middle" font-size="21" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">сумма = ${cur[1]}</text>`:''}
+          ${st.pick!=null&&st.pick===cur[2]?`<g class="h3bump" style="animation-delay:.2s"><text x="159" y="148" text-anchor="middle" font-size="18" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">верно: ${cur[3]}</text></g>`:''}
+          ${st.pick!=null&&st.pick!==cur[2]?`<text x="159" y="148" text-anchor="middle" font-size="15" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">не так · сумма ${cur[1]} → ${cur[3]}</text>`:''}
+          ${st.pick!=null&&st.pick===cur[2]?stamp(104,156,'молодец!',P.green,.3):''}`:''}
+        `,W,H))+
+        (go===1?`<div class="wk-row" style="gap:6px">
+          <button class="wk-btn" onclick="visW377T3('${lk}',0)">⋮ 3</button>
+          <button class="wk-btn" onclick="visW377T3('${lk}',1)">⋮ 9</button>
+          <button class="wk-btn" onclick="visW377T3('${lk}',2)">⋮ 3 и 9</button>
+          <button class="wk-btn" onclick="visW377T3('${lk}',3)">не делится</button>
+        </div>`:'')+
+        wkRow(
+          go===0?wkBtn('дать число',`visW377Act('${lk}','go')`) : '',
+          go===1&&st.pick!=null?wkBtn('новое число',`visW377Act('${lk}','n')`) : '',
+          go===1?wkBtn('заново',`visW377Act('${lk}','rst')`):'')+
+        wkSml('сумма ⋮ 9 → ⋮ 9 и ⋮ 3 · сумма ⋮ 3 → ⋮ 3'));
+    } else {
+      const H=180, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(parch(`
+          <text x="159" y="50" text-anchor="middle" font-size="38" fill="${P.ink}" font-weight="bold" font-family="Georgia,serif">7236</text>
+          <line x1="70" y1="68" x2="248" y2="68" stroke="#d8bd85" stroke-width="1.6"/>
+          <text class="h3pop" style="animation-delay:.2s" x="159" y="100" text-anchor="middle" font-size="21" fill="${P.red}" font-weight="bold" font-family="Georgia,serif">7+2+3+6 = 18</text>
+          <text class="h3pop" style="animation-delay:.45s" x="159" y="132" text-anchor="middle" font-size="24" fill="${P.green}" font-weight="bold" font-family="Georgia,serif">18 ⋮ 9 → 7236 ⋮ 9</text>
+        `,W,H))+
+        quiz(lk,st)+
+        wkSml('сумма цифр 18 · жми «Понял! Проверю себя»'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[377]=visW377;
+  function visW377T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW377T=visW377T;
+  function visW377T2(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW377T2=visW377T2;
+  function visW377T3(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW377T3=visW377T3;
+  function visW377Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){
+      if(sp===7){ st.pick=0; }
+      else if(sp===12){ if(st.go===0){ st.go=1; } }
+      else if(st.go!=null){ st.go++; }
+      else { st.pick=0; }
+    }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.pick=null; st.go=1; }
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW377Act=visW377Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===377){ window.ARH_LESSONS[i]=L377; break; } } })();
+})();
