@@ -7163,3 +7163,743 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW194Act=visW194Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===194){ window.ARH_LESSONS[i]=L194; break; } } })();
 })();
+/* ================= УРОК 178 · Сравнение дробей с одинаковыми знаменателями (v2 · «Пирожковая Архимеда», 14 слайдов) ================= */
+(function(){
+  if(!window.__wk178v2css){
+    window.__wk178v2css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .d8in{animation:d8In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes d8In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .d8pop{animation:d8Pop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes d8Pop{0%{transform:scale(.1);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .d8jump{animation:d8Jump .6s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
+      '@keyframes d8Jump{from{transform:translateY(-24px);opacity:0}to{transform:translateY(0);opacity:1}}'+
+      '#lvis .d8float{animation:d8Float 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes d8Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}'+
+      '#lvis .d8sway{animation:d8Sway 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes d8Sway{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}'+
+      '#lvis .d8bump{animation:d8Bump .85s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes d8Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}';
+    document.head.appendChild(st);
+  }
+  const L178 = {
+    id: 178, title: 'Сравнение дробей с одинаковыми знаменателями', ico: '≷',
+    src: 'Математика · 5 класс · Сравнение дробей', subj: 'math',
+    explain: [
+      'В пирожковой Архимеда два одинаковых пирога. Один гость просит три седьмых пирога — его режут на 7 кусков и дают 3. Другой просит две седьмых — тоже 7 кусков, но берёт 2. У кого кусок больше? Давай сравним дроби с одинаковыми знаменателями!',
+      'Дроби 3/7 и 2/7 — это доли одного размера: пирог нарезали на 7 одинаковых кусков. Три седьмых — это 3 куска из 7, две седьмых — 2 куска из 7.',
+      'Сравниваем: 3 куска больше, чем 2 куска. Значит, 3/7 > 2/7! Когда знаменатели одинаковые (обе дроби «седьмые»), больше та дробь, у которой больше числитель.',
+      'Почему так? Пирог нарезан на одинаковые куски — как две тарелки с одинаковыми кусочками. На одной тарелке 3 кусочка, на другой 2. Где больше — сразу видно!',
+      'Правило простое: если знаменатели одинаковые, сравниваем только числители. 5/9 < 7/9, потому что 5 < 7. Знаменатели не трогаем — они уже одинаковые!',
+      'А теперь сам сравни пирожки: выбери, какая дробь больше, и кликни на неё. Архимед подскажет, если ошибёшься!',
+      'Ловушка! А если знаменатели разные? 3/7 и 3/5. Седьмые куски маленькие, а пятые — крупнее (пирог разрезали на меньшее число кусков). Поэтому 3/5 > 3/7 — сравнивать можно только доли одного размера!',
+      'Посмотри: пирог на 5 кусков даёт крупные куски, на 7 — мелкие. Один пятый кусок больше одного седьмого: 1/5 > 1/7. Чем меньше знаменатель, тем крупнее доля!',
+      'Сравним с половиной: 3/7 — это три куска из семи. Половина пирога — это 3,5 куска из семи. Значит, 3/7 < 1/2: взяли меньше половины! А 4/7 — больше половины.',
+      'Расставь дроби по порядку: 1/7, 4/7, 6/7. Знаменатель один — сравниваем числители: 1 < 4 < 6. По возрастанию: 1/7, 4/7, 6/7.',
+      'А если взять все куски? 7/7 — это весь пирог, то есть целое: 7/7 = 1. 9/9 = 1, 5/5 = 1. Когда числитель равен знаменателю, дробь равна единице.',
+      'Тренажёр-сравнение: тебе дадут две дроби с одинаковыми знаменателями. Выбери знак: больше, меньше или равно. Смотри на числители!',
+      'Ещё тренажёр: сравни дроби и найди меньшую или большую. Пирог нарезан на одинаковые куски — считай кусочки на тарелках!',
+      'Проверь себя: 3/7 > 2/7 (три куска больше двух). А 5/9 < 7/9. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Какая дробь больше: 3/7 или 2/7?', choices: ['3/7', '2/7', 'Они равны'], ans: 0,
+      exp: 'Знаменатели одинаковые (7), сравниваем числители: 3 > 2 → 3/7 > 2/7.' },
+    tasks: [
+      { q: 'Сравни: 5/9 и 7/9. Какая дробь меньше?', kind: 'unit', ans: 5, tol: 0,
+        hints: ['Знаменатели одинаковые — сравни числители.', '5 < 7 → меньше 5/9.'], sol: '5/9 < 7/9, меньше — 5/9.' },
+      { q: 'Какая дробь больше: 2/5 или 3/5?', kind: 'choice', choices: ['2/5', '3/5', 'Они равны'], ans: 1, tol: 0,
+        hints: ['Пятые доли одинаковые.', '3 > 2 → 3/5 > 2/5.'], sol: '3/5 > 2/5.' }
+    ]
+  };
+  const P={crust:'#d9a441',berry:'#c0392b',plate:'#e8e0c8',wood:'#8a5a2e',bg:'#7a3b2e',cream:'#fff6e0',gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a'};
+  /* пирог-круг, нарезанный на n кусков; взято take кусков (подсвечены). центр cx,cy, радиус r */
+  function pie(cx,cy,r,n,take,opt){
+    const o=opt||{};
+    let s='';
+    for(let i=0;i<n;i++){
+      const a0=i*360/n-90, a1=(i+1)*360/n-90;
+      const taken=i<take;
+      const col=taken?P.berry:P.cream;
+      const rad0=a0*Math.PI/180, rad1=a1*Math.PI/180;
+      const x1=cx+r*Math.cos(rad0), y1=cy+r*Math.sin(rad0);
+      const x2=cx+r*Math.cos(rad1), y2=cy+r*Math.sin(rad1);
+      const large=(a1-a0)>180?1:0;
+      const cls=taken? 'd8pop':'d8seg';
+      s+=`<path class="${cls}" style="animation-delay:${(o.d0||0.1+i*0.04).toFixed(2)}s;${taken?'fill:'+col+';stroke:'+P.crust:'fill:'+col+';stroke:#c9a86a'}" stroke-width="2" d="M ${cx} ${cy} L ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)} Z"/>`;
+    }
+    s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${P.crust}" stroke-width="3"/>`;
+    return s;
+  }
+  /* дробь в SVG: числитель над знаменателем с чёрточкой. (x,yc) — центр */
+  function fracSvg(x,yc,n,d,c,fs){
+    const s=fs||20;
+    const nb=(v,dy,ss)=>`<text x="${x}" y="${yc+dy}" text-anchor="middle" font-size="${ss}" fill="${c}" font-weight="bold" font-family="Georgia,serif">${v}</text>`;
+    return nb(n,-s*0.26,s)+`<line x1="${x-s*0.62}" y1="${yc+s*0.03}" x2="${x+s*0.62}" y2="${yc+s*0.03}" stroke="${c}" stroke-width="2.2"/>`+nb(d,s*0.36,s);
+  }
+  /* тарелка с кусочками-прямоугольниками */
+  function plate(x,y,k,opt){
+    const o=opt||{};
+    let s='';
+    for(let i=0;i<k;i++){
+      s+=`<rect class="d8jump" style="animation-delay:${(o.d0||0.2+i*0.08).toFixed(2)}s" x="${x+i*15}" y="${y-14}" width="12" height="18" rx="3" fill="${P.berry}" stroke="#8f2f22" stroke-width="1.6"/>`;
+    }
+    s+=`<ellipse cx="${x+(k? (k-1)*7.5+6 : 8)}" cy="${y}" rx="${k? k*7.5+6:10}" ry="4" fill="${P.plate}" opacity=".9"/>`;
+    return s;
+  }
+  const fracB=(num,den,c,fs,delay)=>`<span class="d8in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-family:Georgia,serif;line-height:1.05;margin:0 3px">
+    <span style="font-size:${fs||26}px;color:${c||'#fff'};font-weight:bold;border-bottom:2px solid ${c||'#fff'};padding:0 6px">${num}</span>
+    <span style="font-size:${fs||26}px;color:${c||'#fff'};font-weight:bold;padding:0 6px">${den}</span></span>`;
+  const sign=(t,c,delay,fs)=>`<span class="d8in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 13px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.06);font-family:Georgia,serif;font-size:${fs||21}px;color:${c};font-weight:bold">${t}</span>`;
+  const Q178=[
+    {q:'Что больше: 3/7 или 2/7?',opts:['3/7','2/7','равны'],ans:0},
+    {q:'Что больше: 2/5 или 3/5?',opts:['2/5','3/5','равны'],ans:1}
+  ];
+  function quiz(lk,st){
+    const T=Q178[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?P.green:P.red; tc=i===T.ans?P.green:P.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:70px;font-size:17px" onclick="visW178T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 3 > 2 → 3/5 больше</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 3 > 2 → 3/7 больше</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Знаменатели одинаковые — сравни числители</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW178Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW178Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:9px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  /* общая пекарня-сцена */
+  function bakery(inner,W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <rect x="0" y="0" width="${W}" height="${H}" fill="#8a4a38"/>
+      <rect x="0" y="0" width="${W}" height="${H*0.22}" fill="#a8654a"/>
+      <rect x="0" y="${H-18}" width="${W}" height="18" fill="#5d3328"/>
+      <text x="${W/2}" y="${H*0.22-12}" text-anchor="middle" font-size="14" fill="#ffe9c9" font-weight="bold">пирожковая Архимеда</text>
+      <g class="d8seg" style="animation-delay:.1s">${[0,1,2,3].map(i=>`<circle cx="${30+i*80}" cy="${H*0.12}" r="7" fill="#ffd76a" opacity=".6"/>`).join('')}</g>
+      ${inner}
+    </svg>`;
+  }
+  function visW178(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step===0){ st.act=0; }
+      if(step===1){ st.act=0; }
+      if(step===2){ st.act=0; }
+      if(step===5){ st.pick=null; }
+      if(step===7){ st.pick=null; }
+      if(step===8){ st.pick=null; }
+      if(step===9){ st.pick=null; }
+      if(step===11){ if(st.tr==null) st.tr=0; st.pick=null; }
+      if(step===12){ if(st.tr==null) st.tr=0; st.pick=null; }
+      if(step===13){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    if(step===0){
+      const H=190, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Два одинаковых пирога</div>`+
+        wkHero(bakery(`
+          <g class="d8sway"><rect x="20" y="70" width="120" height="26" rx="6" fill="${P.wood}"/>
+            ${pie(80,90,40,7,0,{})}
+            <text x="80" y="146" text-anchor="middle" font-size="13" fill="#ffe9c9">пирог 1 · на 7 кусков</text></g>
+          <g class="d8sway" style="animation-delay:.2s"><rect x="180" y="70" width="120" height="26" rx="6" fill="${P.wood}"/>
+            ${pie(240,90,40,7,0,{})}
+            <text x="240" y="146" text-anchor="middle" font-size="13" fill="#ffe9c9">пирог 2 · на 7 кусков</text></g>
+          <text x="159" y="168" text-anchor="middle" font-size="13" fill="#ffe9c9">оба нарезаны одинаково — куски одного размера</text>
+        `,W,H))+
+        wkRow(sign('гость 1 хочет 3/7 · гость 2 — 2/7',P.gold,0.4))+
+        wkSml('у кого кусок больше? сравниваем дроби с одинаковым знаменателем'));
+    } else if(step===1){
+      const H=200, W=318;
+      const sh=st.act===1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">3/7 и 2/7 — седьмые куски</div>`+
+        wkHero(bakery(`
+          <g class="d8pop"><rect x="14" y="40" width="130" height="20" rx="5" fill="${P.wood}"/>
+            ${pie(80,90,42,7,sh?3:0,{})}
+            <text x="80" y="152" text-anchor="middle" font-size="13" fill="#ffe9c9">${sh?'3 из 7 — красные':'пока никто не взял'}</text></g>
+          <g class="d8pop" style="animation-delay:.1s"><rect x="174" y="40" width="130" height="20" rx="5" fill="${P.wood}"/>
+            ${pie(240,90,42,7,sh?2:0,{})}
+            <text x="240" y="152" text-anchor="middle" font-size="13" fill="#ffe9c9">${sh?'2 из 7 — красные':'ждём гостей'}</text></g>
+          ${sh?`<text x="159" y="178" text-anchor="middle" font-size="14" fill="#ffe9c9">обе дроби «седьмые» — доли одного размера</text>`:''}
+        `,W,H))+
+        (sh?wkRow(sign('3/7 — три седьмых · 2/7 — две седьмых',P.gold,0.3)):'')+
+        wkRow(sh?wkBtn('сброс',`visW178Act('${lk}','rst')`):wkBtn('взять кусочки: 3 и 2',`visW178Act('${lk}','go')`))+
+        wkSml('седьмые куски одинаковые · сравниваем, сколько взяли'));
+    } else if(step===2){
+      const H=210, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">3 куска больше 2 кусков</div>`+
+        wkHero(bakery(`
+          ${pie(80,86,38,7,3,{})}
+          ${plate(50,160,3,{d0:.3})}
+          <text x="80" y="188" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">3/7</text>
+          ${pie(238,86,38,7,2,{})}
+          ${plate(210,160,2,{d0:.45})}
+          <text x="238" y="188" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">2/7</text>
+          <g class="d8bump" style="animation-delay:.5s"><text x="159" y="78" text-anchor="middle" font-size="40" fill="#ffd76a" font-weight="bold">&gt;</text></g>
+        `,W,H))+
+        wkRow(sign('3/7 > 2/7 — больше числитель',P.green,0.5))+
+        wkSml('на тарелке слева 3 кусочка, справа 2 · больше тот, у кого больше кусков'));
+    } else if(step===3){
+      const H=170, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему так? Тарелки с кусочками</div>`+
+        wkHero(bakery(`
+          <rect class="d8pop" x="24" y="50" width="120" height="86" rx="12" fill="rgba(255,255,255,.1)" stroke="#ffd76a" stroke-width="2"/>
+          ${plate(34,110,3,{d0:.3})}
+          ${fracSvg(84,72,3,7,'#ffd76a',17)}
+          <rect class="d8pop" style="animation-delay:.2s" x="174" y="50" width="120" height="86" rx="12" fill="rgba(255,255,255,.1)" stroke="#fff" stroke-width="2"/>
+          ${plate(184,110,2,{d0:.45})}
+          ${fracSvg(234,72,2,7,'#fff',17)}
+          <text x="159" y="150" text-anchor="middle" font-size="14" fill="#ffe9c9">кусочки одинаковые — смотрим, сколько их</text>
+        `,W,H))+
+        wkRow(sign('больше кусочков → больше дробь',P.gold,0.4))+
+        wkSml('на тарелке 3 кусочка больше, чем 2 — вот и вся хитрость'));
+    } else if(step===4){
+      const H=160, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Правило: сравниваем числители</div>`+
+        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="#5d3a2e"/>
+          <text x="159" y="40" text-anchor="middle" font-size="17" fill="#ffe9c9" font-weight="bold">знаменатели одинаковые →</text>
+          <g class="d8pop"><rect x="40" y="58" width="90" height="60" rx="12" fill="rgba(255,255,255,.1)" stroke="#ffd76a" stroke-width="2.4"/>
+            <text x="85" y="95" text-anchor="middle" font-size="30" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">5/9</text></g>
+          <text class="d8in" style="animation-delay:.25s" x="168" y="96" text-anchor="middle" font-size="36" fill="#fff" font-weight="bold">&lt;</text>
+          <g class="d8pop" style="animation-delay:.15s"><rect x="190" y="58" width="90" height="60" rx="12" fill="rgba(255,255,255,.1)" stroke="#fff" stroke-width="2.4"/>
+            <text x="235" y="95" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">7/9</text></g>
+          <text x="159" y="148" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">5 &lt; 7 → 5/9 меньше</text>
+        </svg>`)+
+        wkSml('5/9 и 7/9 — обе «девятые» · смотрим на верхние числа'));
+    } else if(step===5){
+      const H=190, W=318;
+      const pick=st.pick;
+      const pairs=[[3,7,2,7],[5,9,7,9],[4,6,1,6],[8,10,8,10]];
+      const idx=st.q5==null?0:st.q5;
+      const [a,d,b,e]=pairs[idx%pairs.length];
+      const cmp=a===b?2:(a>b?0:1);
+      const got=pick!=null;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сравни сам!</div>`+
+        wkHero(bakery(`
+          ${pie(80,80,34,a>0?d:7,d,a,{})}
+          ${fracSvg(80,142,a,d,'#ffd76a',19)}
+          ${pie(238,80,34,e,7,e,b,{})}
+          ${fracSvg(238,142,b,e,'#ffd76a',19)}
+          ${got?`<text x="159" y="168" text-anchor="middle" font-size="16" fill="${pick===cmp?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick===cmp?'верно!':'не так — сравни числители'}</text>`:''}
+        `,W,H))+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW178T2('${lk}',0)">&gt;</button>
+          <button class="wk-btn" onclick="visW178T2('${lk}',1)">&lt;</button>
+          <button class="wk-btn" onclick="visW178T2('${lk}',2)">=</button>
+        </div>`+
+        (got&&pick===cmp?wkRow(wkBtn('следующая пара',`visW178Act('${lk}','nx5')`)):'')+
+        wkSml('знаменатели одинаковые — что больше: '+a+' или '+b+'?'));
+    } else if(step===6){
+      const H=190, W=318;
+      const sh=st.act===1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ловушка: разные знаменатели!</div>`+
+        wkHero(bakery(`
+          <g class="d8pop"><rect x="12" y="46" width="140" height="18" rx="5" fill="${P.wood}"/>
+            ${pie(82,96,42,7,sh?3:0,{})}
+            <text x="82" y="160" text-anchor="middle" font-size="13" fill="#ffe9c9">на 7 — мелкие куски</text></g>
+          <g class="d8pop" style="animation-delay:.15s"><rect x="168" y="46" width="140" height="18" rx="5" fill="${P.wood}"/>
+            ${pie(238,96,42,5,sh?3:0,{})}
+            <text x="238" y="160" text-anchor="middle" font-size="13" fill="#ffe9c9">на 5 — крупные куски</text></g>
+          ${sh?`<text x="159" y="168" text-anchor="middle" font-size="15" fill="#ff9a8a" font-weight="bold">3/5 &gt; 3/7 · пятые крупнее!</text>`:''}
+        `,W,H))+
+        (sh?wkRow(sign('нельзя сравнивать 3/7 и 3/5 «в лоб»',P.red,0.4)):'')+
+        wkRow(sh?wkBtn('сброс',`visW178Act('${lk}','rst')`):wkBtn('взять по 3 куска от обоих',`visW178Act('${lk}','go')`))+
+        wkSml('доли разного размера — сначала приведи к одному знаменателю!'));
+    } else if(step===7){
+      const H=180, W=318;
+      const pick=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">1/5 крупнее 1/7!</div>`+
+        wkHero(bakery(`
+          ${pie(80,86,36,5,1,{})}
+          <text x="80" y="140" text-anchor="middle" font-size="19" fill="#ffd76a" font-weight="bold">1/5</text>
+          ${pie(238,86,36,7,1,{})}
+          <text x="238" y="140" text-anchor="middle" font-size="19" fill="#ffd76a" font-weight="bold">1/7</text>
+          <g class="d8bump" style="animation-delay:.4s"><text x="159" y="76" text-anchor="middle" font-size="36" fill="#ffd76a" font-weight="bold">&gt;</text></g>
+          ${pick!=null?`<text x="159" y="170" text-anchor="middle" font-size="15" fill="${pick===0?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick===0?'верно! 1/5 > 1/7 · крупнее!':'не так — смотри на размер кусков'}</text>`:''}
+        `,W,H))+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW178T2('${lk}',0)">1/5 больше</button>
+          <button class="wk-btn" onclick="visW178T2('${lk}',1)">1/7 больше</button>
+        </div>`+
+        wkSml('пирог на 5 кусков — куски крупнее, чем на 7'));
+    } else if(step===8){
+      const H=170, W=318;
+      const pick=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сравним с половиной</div>`+
+        wkHero(bakery(`
+          <rect class="d8pop" x="20" y="52" width="130" height="80" rx="12" fill="rgba(255,255,255,.1)" stroke="#ffd76a" stroke-width="2"/>
+          ${pie(52,96,26,7,3,{})}
+          <text x="100" y="80" text-anchor="middle" font-size="16" fill="#ffe9c9">3/7</text>
+          <text x="100" y="116" text-anchor="middle" font-size="12" fill="#9fc5a8">это 3 из 7 · меньше 3,5</text>
+          <rect class="d8pop" style="animation-delay:.2s" x="168" y="52" width="130" height="80" rx="12" fill="rgba(255,255,255,.1)" stroke="#fff" stroke-width="2"/>
+          ${pie(204,96,26,7,4,{})}
+          <text x="252" y="80" text-anchor="middle" font-size="16" fill="#ffe9c9">4/7</text>
+          <text x="252" y="116" text-anchor="middle" font-size="12" fill="#9fc5a8">4 из 7 · больше 3,5</text>
+          ${pick!=null?`<text x="159" y="160" text-anchor="middle" font-size="15" fill="${pick===0?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick===0?'верно! 3/7 меньше половины':'3/7 < 3,5/7 → меньше 1/2'}</text>`:''}
+        `,W,H))+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW178T2('${lk}',0)">3/7 &lt; 1/2</button>
+          <button class="wk-btn" onclick="visW178T2('${lk}',1)">3/7 &gt; 1/2</button>
+        </div>`+
+        wkSml('половина из 7 кусков — это 3,5 куска'));
+    } else if(step===9){
+      const H=170, W=318;
+      const pick=st.pick;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Расставь по порядку</div>`+
+        wkHero(bakery(`
+          <text x="159" y="40" text-anchor="middle" font-size="15" fill="#ffe9c9" font-weight="bold">1/7 · 4/7 · 6/7 — по возрастанию?</text>
+          ${[1,4,6].map((v,i)=>{const x=34+i*92; return `<g class="d8pop" style="animation-delay:${(i*0.15).toFixed(2)}s"><rect x="${x}" y="62" width="80" height="62" rx="12" fill="rgba(255,255,255,.08)" stroke="#ffd76a" stroke-width="2"/>
+            ${pie(x+40,100,22,7,v,{})}
+            <text x="${x+40}" y="150" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">${v}/7</text></g>`;}).join('')}
+          ${pick!=null?`<text x="159" y="166" text-anchor="middle" font-size="0" fill="#fff"> </text>`:''}
+        `,W,H))+
+        (pick!=null?wkRow(sign(pick===0?'верно! 1/7 → 4/7 → 6/7':'посмотри на числители: 1 < 4 < 6', pick===0?P.green:P.red,0.1)):'')+
+        `<div class="wk-row" style="gap:6px">
+          <button class="wk-btn" onclick="visW178T2('${lk}',0)">1/7 → 4/7 → 6/7</button>
+          <button class="wk-btn" onclick="visW178T2('${lk}',1)">6/7 → 4/7 → 1/7</button>
+        </div>`+
+        wkSml('знаменатель один — порядок задают числители'));
+    } else if(step===10){
+      const H=190, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Все куски — целое</div>`+
+        wkHero(bakery(`
+          <g class="d8pop"><rect x="20" y="58" width="130" height="88" rx="12" fill="rgba(255,255,255,.1)" stroke="#ffd76a" stroke-width="2"/>
+          ${pie(85,96,30,7,7,{})}
+          <text x="85" y="150" text-anchor="middle" font-size="16" fill="#ffd76a" font-weight="bold">7/7 = 1</text></g>
+          <g class="d8pop" style="animation-delay:.2s"><rect x="168" y="58" width="130" height="88" rx="12" fill="rgba(255,255,255,.1)" stroke="#fff" stroke-width="2"/>
+          ${pie(233,96,30,5,5,{})}
+          <text x="233" y="150" text-anchor="middle" font-size="16" fill="#ffe9c9" font-weight="bold">5/5 = 1</text></g>
+          <text x="159" y="168" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">взяли весь пирог — это целое!</text>
+        `,W,H))+
+        wkRow(sign('9/9 = 1 · 12/12 = 1 · любая a/a = 1',P.gold,0.4))+
+        wkSml('числитель равен знаменателю — дробь равна единице'));
+    } else if(step===11){
+      const H=190, W=318;
+      if(st.tr==null) st.tr=0;
+      const pairs=[[5,9,7,9],[2,5,3,5],[4,8,1,8],[6,11,11,11],[3,10,9,10]];
+      const [a,d,b,e]=pairs[st.tr%pairs.length];
+      const cmp=a===b?2:(a>b?0:1);
+      const got=st.pick!=null;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр-сравнение</div>`+
+        wkHero(bakery(`
+          ${pie(70,86,32,d,a,{})}
+          ${fracSvg(70,142,a,d,'#ffd76a',19)}
+          ${pie(248,86,32,e,b,{})}
+          ${fracSvg(248,142,b,e,'#ffd76a',19)}
+          ${got?`<text x="159" y="166" text-anchor="middle" font-size="16" fill="${st.pick===cmp?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${st.pick===cmp?'верно!':'сравни числители: '+a+' и '+b}</text>`:''}
+        `,W,H))+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW178T2('${lk}',0)">&gt;</button>
+          <button class="wk-btn" onclick="visW178T2('${lk}',1)">&lt;</button>
+          <button class="wk-btn" onclick="visW178T2('${lk}',2)">=</button>
+        </div>`+
+        (got&&st.pick===cmp?wkRow(wkBtn('новый пример',`visW178Act('${lk}','nx')`)):'')+
+        wkSml('знаменатели одинаковые? тогда сравни верхние числа'));
+    } else if(step===12){
+      const H=190, W=318;
+      if(st.tr==null) st.tr=0;
+      const pairs=[[5,9,7,9,'меньше'],[2,5,3,5,'больше'],[4,9,9,9,'больше'],[1,7,6,7,'меньше']];
+      const [a,d,b,e,ask]=pairs[st.tr%pairs.length];
+      const wantBig=ask==='больше';
+      const big = wantBig? Math.max(a,b): Math.min(a,b);
+      const got=st.pick!=null;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: какая ${ask}?</div>`+
+        wkHero(bakery(`
+          ${pie(80,84,32,d,a,{})}
+          ${fracSvg(80,138,a,d,'#ffd76a',19)}
+          ${pie(238,84,32,e,b,{})}
+          ${fracSvg(238,138,b,e,'#ffd76a',19)}
+          ${got?`<text x="159" y="164" text-anchor="middle" font-size="15" fill="${st.pick===big?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${st.pick===big?'верно!':'не так — смотри на числители'}</text>`:''}
+        `,W,H))+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW178T3('${lk}',${a})">${a}/${d}</button>
+          <button class="wk-btn" onclick="visW178T3('${lk}',${b})">${b}/${e}</button>
+        </div>`+
+        (got&&st.pick===big?wkRow(wkBtn('новый пример',`visW178Act('${lk}','nx')`)):'')+
+        wkSml('найди дробь, которая '+ask));
+    } else {
+      const H=170, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: пирожковая</div>`+
+        wkHero(bakery(`
+          ${pie(80,84,34,7,3,{})}
+          <text x="80" y="138" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">3/7</text>
+          <g class="d8bump"><text x="159" y="90" text-anchor="middle" font-size="40" fill="#ffd76a" font-weight="bold">&gt;</text></g>
+          ${pie(238,84,34,7,2,{})}
+          <text x="238" y="138" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">2/7</text>
+        `,W,H))+
+        quiz(lk,st)+
+        wkSml('3 куска больше 2 · жми «Понял! Проверю себя»'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[178]=visW178;
+  function visW178T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW178T=visW178T;
+  function visW178T2(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW178T2=visW178T2;
+  function visW178T3(lk,v){ const st=CHS[lk]||(CHS[lk]={}); st.pick=+v; chRender(0); }
+  window.visW178T3=visW178T3;
+  function visW178Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go') st.act=1;
+    if(act==='nx'){ st.tr=(st.tr||0)+1; st.pick=null; }
+    if(act==='nx5'){ st.q5=(st.q5||0)+1; st.pick=null; }
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW178Act=visW178Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===178){ window.ARH_LESSONS[i]=L178; break; } } })();
+})();
+
+/* ================= УРОК 196 · Площадь круга (v2 · «Пиццерия Архимеда: секретный прямоугольник», 14 слайдов) ================= */
+(function(){
+  if(!window.__wk196v2css){
+    window.__wk196v2css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .c6in{animation:c6In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes c6In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .c6pop{animation:c6Pop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes c6Pop{0%{transform:scale(.1);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .c6slide{animation:c6Slide 1.1s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
+      '@keyframes c6Slide{from{transform:translateX(var(--dx));opacity:0}to{transform:translateX(0);opacity:1}}'+
+      '#lvis .c6seg{animation:c6Seg 1.2s ease both;transform-box:fill-box;}'+
+      '@keyframes c6Seg{from{transform:translate(var(--sx),var(--sy)) rotate(var(--sr));opacity:0}to{transform:none;opacity:1}}'+
+      '#lvis .c6float{animation:c6Float 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes c6Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}'+
+      '#lvis .c6bump{animation:c6Bump .85s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes c6Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}'+
+      '#lvis .c6dash{stroke-dasharray:8 6;animation:c6Dash .8s linear infinite;}'+
+      '@keyframes c6Dash{to{stroke-dashoffset:-28}}';
+    document.head.appendChild(st);
+  }
+  const L196 = {
+    id: 196, title: 'Площадь круга', ico: '◯',
+    src: 'Математика · 6 класс · Площадь круга', subj: 'math',
+    explain: [
+      'В пиццерии Архимеда пекут большие круглые пиццы. Сколько места занимает пицца? Длину обода мы уже умеем считать (2πr), а сколько квадратиков помещается ВНУТРИ круга — это площадь S. Сегодня раскроем её секрет!',
+      'Площадь круга — это сколько единичных квадратиков умещается внутри. У площади «квадратная» природа: измеряется в см², м² и т.д.',
+      'Формула: S = π · r². Здесь r² = r · r — радиус УМНОЖАЕТСЯ САМ НА СЕБЯ, а не на 2! Это ключ ко всей теме.',
+      'Что такое r²? Это площадь квадрата со стороной r: 3² = 9 клеток. Круг занимает примерно π таких квадратов!',
+      'Ловушка: r² — это НЕ 2r! 3² = 3·3 = 9, а 2·3 = 6 — это диаметр, а не квадрат. Квадрат — умножить на себя.',
+      'Считаем: радиус 3 → r² = 3·3 = 9, S = π·r² ≈ 3·9 = 27. Как в нашей проверке!',
+      'Откуда взялась формула? Разрежем круг на тонкие секторы — как пиццу на много-много кусочков.',
+      'Разрезали пиццу на две половинки, каждая — из «зубчатых» секторов: зубчики смотрят вверх-вниз.',
+      'Сцепим половинки зубчиками — получилась фигура, почти прямоугольник! В этом весь фокус.',
+      'Стороны прямоугольника: длина ≈ π·r (развёрнутые секторы — половина обода), высота = r (радиус).',
+      'Площадь прямоугольника = длина × высота = πr · r = πr². Вот и формула площади круга!',
+      'Задача 1: радиус 2 → r² = 4, S = 3·4 = 12. Задача 2: радиус 4 → r² = 16, S = 3·16 = 48.',
+      'Порядок действий: сначала радиус в квадрате (r·r), потом умножь на π (≈3). Быстро и без ошибок! Не путай с длиной обода: C = 2πr (в см), S = πr² (в см²).',
+      'Проверь себя: радиус 3 → S = 27. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Чему равна площадь круга радиуса 3 (π ≈ 3)?', choices: ['9', '27', '18'], ans: 1,
+      exp: 'S = π·r² = 3·3·3 = 27.' },
+    tasks: [
+      { q: 'Чему равна площадь круга радиуса 2 (π ≈ 3)?', kind: 'unit', ans: 12, tol: 0,
+        hints: ['Сначала r·r = 4.', '3·4 = 12.'], sol: 'S = 3·2·2 = 12.' },
+      { q: 'Чему равна площадь круга радиуса 4 (π ≈ 3)?', kind: 'choice', choices: ['36', '48', '16'], ans: 1, tol: 0,
+        hints: ['4·4 = 16.', '3·16 = 48.'], sol: 'S = 3·4·4 = 48.' }
+    ]
+  };
+  const C6={crust:'#d9a441',cheese:'#ffdf8a',tomato:'#c0392b',bg:'#2f3a2f',table:'#6b4a2e',gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff'};
+  /* секторы, выезжающие в прямоугольник: sN — число секторов верхней, нижняя зеркальная */
+  function rectDemo(x,y,w,h,opt){
+    const o=opt||{};
+    const n=o.n||8; // зубцов на половинку
+    let s=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="${C6.gold}" stroke-width="2.4" stroke-dasharray="7 5"/>`;
+    const toothW=w/n, mid=y+h/2;
+    for(let i=0;i<n;i++){
+      const t0=x+i*toothW, t1=t0+toothW/2, t2=t0+toothW;
+      const dir=i%2===0? -1: 1;
+      s+=`<path d="M ${t0} ${mid} L ${t1} ${mid+dir*h*0.5} L ${t2} ${mid} Z" fill="${i%2?C6.cheese:C6.tomato}" stroke="${C6.crust}" stroke-width="1.6"/>`;
+    }
+    return s;
+  }
+  const sign=(t,c,delay,fs)=>`<span class="c6in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 13px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.06);font-family:Georgia,serif;font-size:${fs||21}px;color:${c};font-weight:bold">${t}</span>`;
+  const Q196=[
+    {q:'Площадь круга радиуса 3 (π≈3)?',opts:['9','27','18'],ans:1},
+    {q:'Площадь круга радиуса 4 (π≈3)?',opts:['36','48','16'],ans:1}
+  ];
+  function quiz(lk,st){
+    const T=Q196[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?C6.green:C6.tomato; tc=i===T.ans?C6.green:C6.tomato; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:18px" onclick="visW196T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 4·4=16, π·16 ≈ 3·16 = 48</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 3·3=9, π·9 ≈ 3·9 = 27</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Сначала r·r, потом умножить на 3</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW196Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW196Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:9px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  /* сцена пиццерии */
+  function oven(inner,W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
+      <rect x="0" y="0" width="${W}" height="${H*0.16}" fill="#3f4f3f"/>
+      <text x="${W/2}" y="${H*0.16-10}" text-anchor="middle" font-size="14" fill="#ffe9c9" font-weight="bold">пиццерия Архимеда</text>
+      <rect x="0" y="${H-16}" width="${W}" height="16" fill="#c9a06a" opacity=".7"/>
+      ${inner}
+    </svg>`;
+  }
+  function visW196(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step===0){ st.act=0; }
+      if(step===3){ st.act=0; }
+      if(step===4){ st.act=0; }
+      if(step===6){ st.cut=0; }
+      if(step===7){ st.cut=0; }
+      if(step===8){ st.cut=0; }
+      if(step===12){ if(st.tr==null) st.tr=0; st.s1=0; st.s2=0; }
+      if(step===13){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    if(step===0){
+      const H=190, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сколько места у пиццы?</div>`+
+        wkHero(oven(`
+          <g class="c6float"><circle cx="100" cy="110" r="44" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/>
+          <circle cx="82" cy="98" r="5" fill="${C6.tomato}"/><circle cx="112" cy="122" r="6" fill="${C6.tomato}"/><circle cx="104" cy="92" r="4" fill="#4a8a3a"/><circle cx="90" cy="126" r="4" fill="#4a8a3a"/></g>
+          <g class="c6pop" style="animation-delay:.3s"><rect x="164" y="70" width="130" height="58" rx="12" fill="rgba(255,255,255,.1)" stroke="#ffd76a" stroke-width="2"/>
+            <text x="229" y="92" text-anchor="middle" font-size="13" fill="#ffe9c9">внутри круга</text>
+            <text x="229" y="118" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">квадратики</text></g>
+          <text x="159" y="170" text-anchor="middle" font-size="13" fill="#ffe9c9">сколько см² поместится внутри круга?</text>
+        `,W,H))+
+        wkRow(sign('S = π · r² — формула площади круга',C6.gold,0.5))+
+        wkSml('сначала разберёмся, что такое r²'));
+    } else if(step===1){
+      const H=170, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Площадь = квадратики внутри</div>`+
+        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
+          <text x="159" y="24" text-anchor="middle" font-size="13" fill="#ffe9c9">квадратики 1×1 внутри круга</text>
+          <g class="c6seg" style="animation-delay:.1s"><circle cx="90" cy="100" r="46" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/></g>
+          <g class="c6seg" style="animation-delay:.4s">${[0,1,2,3,4,5,6,7].map(i=>`<rect x="${90-46+8+((i*37)%60)}" y="${100-46+8+((i*53)%70)}" width="8" height="8" fill="none" stroke="rgba(160,80,20,.5)" stroke-width="1.2"/>`).join('')}</g>
+          <g class="c6pop" style="animation-delay:.7s"><rect x="160" y="66" width="140" height="62" rx="12" fill="rgba(255,255,255,.12)" stroke="#ffd76a" stroke-width="2"/>
+            <text x="230" y="90" text-anchor="middle" font-size="14" fill="#ffe9c9">сколько таких</text>
+            <text x="230" y="114" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold">квадратиков?</text></g>
+        </svg>`)+
+        wkRow(sign('площадь в см² · м² — квадратные',C6.gold,0.4))+
+        wkSml('это и есть площадь: считаем квадратики'));
+    } else if(step===2){
+      const H=180, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">r² — радиус сам на себя</div>`+
+        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
+          <g class="c6seg"><rect x="46" y="40" width="80" height="80" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="3"/>
+            <text x="86" y="82" text-anchor="middle" font-size="26" fill="#8a5a2a" font-weight="bold">r²</text>
+            <line x1="46" y1="130" x2="126" y2="130" stroke="#ffd76a" stroke-width="2"/><text x="86" y="150" text-anchor="middle" font-size="12" fill="#ffe9c9">сторона r</text>
+            <line x1="126" y1="40" x2="126" y2="120" stroke="#ffd76a" stroke-width="2"/><text x="146" y="84" text-anchor="middle" font-size="12" fill="#ffe9c9">сторона r</text></g>
+          <g class="c6pop" style="animation-delay:.3s"><rect x="176" y="52" width="126" height="60" rx="12" fill="rgba(255,255,255,.12)" stroke="#ffd76a" stroke-width="2"/>
+            <text x="239" y="74" text-anchor="middle" font-size="14" fill="#ffe9c9">квадрат со стороной r</text>
+            <text x="239" y="100" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">r² = r · r</text></g>
+          <text x="159" y="172" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">3² = 3·3 = 9 клеток</text>
+        </svg>`)+
+        wkSml('r² — это площадь квадрата со стороной r'));
+    } else if(step===3){
+      const H=180, W=318;
+      const sh=st.act===1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Круг занимает π квадратов r×r</div>`+
+        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
+          <g class="c6seg" style="animation-delay:.1s"><circle cx="80" cy="100" r="40" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/></g>
+          <g class="c6seg" style="animation-delay:.3s"><rect x="48" y="68" width="64" height="64" fill="none" stroke="#ffd76a" stroke-width="2" stroke-dasharray="6 4"/></g>
+          <g class="c6pop" style="animation-delay:.5s"><rect x="166" y="52" width="136" height="92" rx="12" fill="rgba(255,255,255,.12)" stroke="#ffd76a" stroke-width="2"/>
+            <text x="234" y="74" text-anchor="middle" font-size="13" fill="#ffe9c9">круг вмещает</text>
+            <text x="234" y="98" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold">≈ π</text>
+            <text x="234" y="128" text-anchor="middle" font-size="13" fill="#ffe9c9">квадратов r×r</text></g>
+          <text x="159" y="171" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">π ≈ 3 → почти 3 квадрата</text>
+        </svg>`)+
+        (sh?wkRow(sign('S = π · r²',C6.gold,0.3)):'')+
+        wkRow(sh?wkBtn('сброс',`visW196Act('${lk}','rst')`):wkBtn('показать формулу',`visW196Act('${lk}','go')`))+
+        wkSml('π ≈ 3: круг — это примерно три таких квадрата'));
+    } else if(step===4){
+      const H=180, W=318;
+      const sh=st.act===1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ловушка: r² ≠ 2r!</div>`+
+        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
+          <g class="c6seg"><rect x="30" y="40" width="100" height="96" rx="12" fill="rgba(232,84,63,.12)" stroke="#e8543f" stroke-width="2.4"/>
+            <text x="80" y="62" text-anchor="middle" font-size="14" fill="#ff9a8a" font-weight="bold">r = 3</text>
+            <text x="80" y="94" text-anchor="middle" font-size="30" fill="#ff9a8a" font-weight="bold">r² = 9</text>
+            <text x="80" y="120" text-anchor="middle" font-size="13" fill="#ffcfc2">3 · 3 = 9</text></g>
+          <g class="c6seg" style="animation-delay:.2s"><rect x="176" y="40" width="112" height="96" rx="12" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="2.4"/>
+            <text x="232" y="62" text-anchor="middle" font-size="14" fill="#cfe0ff" font-weight="bold">2r = 6</text>
+            <text x="232" y="94" text-anchor="middle" font-size="30" fill="#cfe0ff" font-weight="bold">2·3</text>
+            <text x="232" y="120" text-anchor="middle" font-size="13" fill="#cfe0ff">это диаметр!</text></g>
+          ${sh?`<text x="159" y="162" text-anchor="middle" font-size="15" fill="#ff9a8a" font-weight="bold">9 ≠ 6 · квадрат — умножить на себя!</text>`:''}
+        </svg>`)+
+        (sh?wkRow(sign('r² = r·r · а 2r — диаметр',C6.gold,0.4)):'')+
+        wkRow(sh?wkBtn('сброс',`visW196Act('${lk}','rst')`):wkBtn('сравнить 9 и 6',`visW196Act('${lk}','go')`))+
+        wkSml('квадрат — умножить число на само себя, а не на 2'));
+    } else if(step===5){
+      const H=170, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Считаем: радиус 3</div>`+
+        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
+          <g class="c6seg"><rect x="20" y="34" width="130" height="52" rx="12" fill="rgba(255,255,255,.1)" stroke="#7fd1ff" stroke-width="2.4"/>
+            <text x="85" y="52" text-anchor="middle" font-size="13" fill="#cfe0ff">шаг 1 · r²</text>
+            <text x="85" y="76" text-anchor="middle" font-size="20" fill="#7fd1ff" font-weight="bold">3 · 3 = 9</text></g>
+          <text class="c6seg" style="animation-delay:.2s" x="170" y="66" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold">×</text>
+          <g class="c6seg" style="animation-delay:.3s"><rect x="190" y="34" width="104" height="52" rx="12" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="2.4"/>
+            <text x="242" y="52" text-anchor="middle" font-size="13" fill="#ffe9c9">шаг 2 · π</text>
+            <text x="242" y="76" text-anchor="middle" font-size="20" fill="#ffd76a" font-weight="bold">≈ 3</text></g>
+          <g class="c6bump" style="animation-delay:.6s"><rect x="66" y="106" width="186" height="46" rx="14" fill="rgba(47,138,74,.18)" stroke="#2f8a4a" stroke-width="2.6"/>
+            <text x="159" y="135" text-anchor="middle" font-size="24" fill="#2f8a4a" font-weight="bold" font-family="Georgia,serif">S = 3 · 9 = 27</text></g>
+        </svg>`)+
+        wkRow(sign('S = π · r² ≈ 3 · 9 = 27',C6.green,0.4))+
+        wkSml('сначала r·r = 9, потом ×3'));
+    } else if(step===6){
+      const H=190, W=318;
+      const cut=st.cut||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Откуда формула? Режем пиццу!</div>`+
+        wkHero(oven(`
+          <g class="c6float"><circle cx="90" cy="104" r="44" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/>
+          <circle cx="74" cy="92" r="6" fill="${C6.tomato}"/><circle cx="104" cy="118" r="5" fill="${C6.tomato}"/></g>
+          <g class="c6pop" style="animation-delay:.4s"><rect x="156" y="76" width="140" height="56" rx="12" fill="rgba(255,255,255,.12)" stroke="#ffd76a" stroke-width="2"/>
+            <text x="226" y="98" text-anchor="middle" font-size="14" fill="#ffe9c9">разрежем на</text>
+            <text x="226" y="122" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">тонкие секторы</text></g>
+          ${cut>=1?`<g class="c6seg" style="animation-delay:.2s">${[0,1,2,3,4,5,6,7].map(i=>{const a=i*45; const r=50; return `<line x1="90" y1="104" x2="${(90+r*Math.cos(a*Math.PI/180)).toFixed(0)}" y2="${(104+r*Math.sin(a*Math.PI/180)).toFixed(0)}" stroke="#b06820" stroke-width="2"/>`;}).join('')}</g>`:''}
+          ${cut>=2?`<text x="159" y="170" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">много тонких кусочков — как пицца!</text>`:''}
+        `,W,H))+
+        wkRow(
+          cut===0?wkBtn('взять нож',`visW196Act('${lk}','go')`) : '',
+          cut===1?wkBtn('нарезать на 8 секторов',`visW196Act('${lk}','go')`) : '',
+          cut>=1?wkBtn('сброс',`visW196Act('${lk}','rst')`):'')+
+        wkSml('чем тоньше секторы, тем точнее получится прямоугольник'));
+    } else if(step===7){
+      const H=190, W=318;
+      const cut=st.cut||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Раздвигаем половинки</div>`+
+        wkHero(oven(`
+          <g class="c6float"><circle cx="70" cy="106" r="38" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/>
+          <path d="M 70 68 L 90 106 L 70 106 Z" fill="none" stroke="#b06820" stroke-width="2"/></g>
+          ${cut>=1?`<g class="c6slide" style="--dx:150px;animation-delay:.2s"><circle cx="248" cy="106" r="38" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/></g>`:''}
+          <text x="159" y="170" text-anchor="middle" font-size="13" fill="#ffe9c9">две половинки из зубчатых секторов</text>
+        `,W,H))+
+        wkRow(cut===0?wkBtn('раздвинуть половинки',`visW196Act('${lk}','go')`):wkBtn('сброс',`visW196Act('${lk}','rst')`))+
+        wkSml('зубчики половинок смотрят навстречу друг другу'));
+    } else if(step===8){
+      const H=190, W=318;
+      const cut=st.cut||0;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Сцепляем зубчики!</div>`+
+        wkHero(oven(`
+          <rect x="46" y="64" width="230" height="58" fill="none" stroke="${C6.gold}" stroke-width="2.4"/>
+          ${cut>=1?`<g class="c6slide" style="--dx:0px;animation-delay:.1s">${rectDemo(46,64,230,58,{n:8})}</g>`:''}
+          ${cut>=2?`<text x="159" y="170" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">почти прямоугольник!</text>`:''}
+        `,W,H))+
+        wkRow(
+          cut===0?wkBtn('сцепить зубчиками',`visW196Act('${lk}','go')`) : '',
+          cut===1?wkBtn('пригладить края',`visW196Act('${lk}','go')`) : '',
+          cut>=1?wkBtn('сброс',`visW196Act('${lk}','rst')`):'')+
+        wkSml('зубчики входят друг в друга — получается прямоугольник'));
+    } else if(step===9){
+      const H=190, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Стороны прямоугольника</div>`+
+        wkHero(oven(`
+          <rect x="40" y="86" width="238" height="60" fill="rgba(255,215,106,.12)" stroke="${C6.gold}" stroke-width="2.6"/>
+          <line x1="40" y1="116" x2="278" y2="116" stroke="#ffd76a" stroke-width="2.4" stroke-dasharray="7 5"/>
+          <text x="90" y="108" text-anchor="middle" font-size="14" fill="#ffe9c9">длина ≈ π·r</text>
+          <text x="226" y="160" text-anchor="middle" font-size="14" fill="#cfe0ff">высота = r</text>
+        `,W,H))+
+        wkRow(sign('πr · r — длина на высоту',C6.gold,0.4))+
+        wkSml('половина обода = πr · секторы разложились в длину'));
+    } else if(step===10){
+      const H=170, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Итог: S = πr²</div>`+
+        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
+          <g class="c6seg"><rect x="22" y="34" width="134" height="52" rx="12" fill="rgba(255,255,255,.1)" stroke="#7fd1ff" stroke-width="2.2"/>
+            <text x="89" y="52" text-anchor="middle" font-size="12" fill="#cfe0ff">длина</text>
+            <text x="89" y="76" text-anchor="middle" font-size="19" fill="#7fd1ff" font-weight="bold">πr</text></g>
+          <text class="c6seg" style="animation-delay:.15s" x="172" y="66" text-anchor="middle" font-size="24" fill="#ffd76a" font-weight="bold">×</text>
+          <g class="c6seg" style="animation-delay:.25s"><rect x="190" y="34" width="104" height="52" rx="12" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="2.2"/>
+            <text x="242" y="52" text-anchor="middle" font-size="12" fill="#cfe0ff">высота</text>
+            <text x="242" y="76" text-anchor="middle" font-size="19" fill="#7fd1ff" font-weight="bold">r</text></g>
+          <g class="c6bump" style="animation-delay:.6s"><rect x="56" y="104" width="206" height="48" rx="14" fill="rgba(47,138,74,.2)" stroke="#2f8a4a" stroke-width="2.6"/>
+            <text x="159" y="135" text-anchor="middle" font-size="24" fill="#2f8a4a" font-weight="bold" font-family="Georgia,serif">πr · r = πr²</text></g>
+        </svg>`)+
+        wkRow(sign('площадь круга = π · r²',C6.green,0.4))+
+        wkSml('вот и вся тайна: круг превратился в прямоугольник'));
+    } else if(step===11){
+      const H=170, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Задачи: r=2 и r=4</div>`+
+        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
+          <g class="c6seg"><circle cx="70" cy="104" r="30" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="3"/>
+          <text x="70" y="108" text-anchor="middle" font-size="14" fill="#8a5a2a" font-weight="bold">r=2</text>
+          <text x="70" y="166" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">2²=4 · S=12</text></g>
+          <g class="c6seg" style="animation-delay:.2s"><circle cx="248" cy="104" r="42" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="3"/>
+          <text x="248" y="108" text-anchor="middle" font-size="15" fill="#8a5a2a" font-weight="bold">r=4</text>
+          <text x="248" y="166" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">4²=16 · S=48</text></g>
+        </svg>`)+
+        wkRow(sign('r=2 → S=12 · r=4 → S=48',C6.green,0.4))+
+        wkSml('сначала r·r, потом ×3'));
+    } else if(step===12){
+      if(st.tr==null) st.tr=0;
+      const POOL=[2,3,4,1,5];
+      const r=POOL[st.tr%POOL.length];
+      const s2=r*r, S=s2*3;
+      const H=185, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Тренажёр площади</div>`+
+        wkHero(oven(`
+          <circle cx="96" cy="106" r="${20+r*7}" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/>
+          <text x="96" y="112" text-anchor="middle" font-size="16" fill="#8a5a2a" font-weight="bold">r=${r}</text>
+          <g class="c6seg" style="animation-delay:.2s"><rect x="176" y="60" width="120" height="56" rx="12" fill="rgba(255,255,255,.1)" stroke="#ffd76a" stroke-width="2"/>
+            <text x="236" y="80" text-anchor="middle" font-size="12" fill="#ffe9c9">S = π · r²</text>
+            <text x="236" y="106" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">${st.s1?'r² = '+s2:''}</text></g>
+          ${st.s2?`<g class="c6pop" style="animation-delay:.2s"><text x="159" y="165" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold">S = 3 · ${s2} = ${S}</text></g>`:''}
+        `,W,H))+
+        wkRow(
+          !st.s1?wkBtn('1 · r² = r·r',`visW196Act('${lk}','s1')`) : '',
+          (st.s1&&!st.s2)?wkBtn('2 · S = π·r²',`visW196Act('${lk}','s2')`) : '',
+          st.s2?wkBtn('новый радиус',`visW196Act('${lk}','n')`) : '',
+          st.s1?wkBtn('заново',`visW196Act('${lk}','rst')`):'')+
+        wkSml('π ≈ 3 · S = 3 · r · r'));
+    } else {
+      const H=170, W=318;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Проверь себя: пицца</div>`+
+        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
+          <circle cx="80" cy="100" r="42" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/>
+          <text x="80" y="104" text-anchor="middle" font-size="17" fill="#8a5a2a" font-weight="bold">r=3</text>
+          <text x="80" y="156" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">S = 27</text>
+          <rect class="c6seg" x="160" y="60" width="140" height="66" rx="12" fill="rgba(255,255,255,.1)" stroke="#ffd76a" stroke-width="2"/>
+          <text x="230" y="84" text-anchor="middle" font-size="13" fill="#ffe9c9">3²=9 · π≈3</text>
+          <text x="230" y="112" text-anchor="middle" font-size="20" fill="#ffd76a" font-weight="bold">3·9=27</text>
+        </svg>`)+
+        quiz(lk,st)+
+        wkSml('r·r, потом ×3 · жми «Понял! Проверю себя»'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[196]=visW196;
+  function visW196T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW196T=visW196T;
+  function visW196Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go') st.cut=(st.cut||0)+1;
+    if(act==='s1') st.s1=1;
+    if(act==='s2') st.s2=1;
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.s1=0; st.s2=0; }
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW196Act=visW196Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===196){ window.ARH_LESSONS[i]=L196; break; } } })();
+})();
