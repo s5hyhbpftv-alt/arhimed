@@ -7919,7 +7919,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=`<rect x="${x0.toFixed(1)}" y="${top}" width="${L.toFixed(1)}" height="${r}" fill="${I.fb}" stroke="${I.blue}" stroke-width="2.6"/>`;
       inner+=dim(x0,bot+16,x0+L,bot+16,I.blue,'длина = πr',{off:0,fs:16});
       inner+=dim(x0+L+14,bot,x0+L+14,top,I.red,'высота = r',{off:15,fs:16,neg:1});
-      inner+=tx(159,116,16,I.ink,'πr — половина длины окружности',{});
+      inner+=tx(159,bot+32,16,I.ink,'πr — половина длины окружности',{});
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Стороны прямоугольника</div>`+
         wkHero(paper(W,H,{inner:()=>inner}))+
         wkRow(chip('половина от 2πr — это πr',I.grn,0.2))+
@@ -10817,12 +10817,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=`<line x1="30" y1="${cy}" x2="288" y2="${cy}" stroke="${I.ink}" stroke-width="2.2"/>`;
       inner+=`<line x1="159" y1="18" x2="159" y2="182" stroke="${I.ink}" stroke-width="1.6"/>`;
       [ -2,2 ].forEach(r=>{ inner+=openDot(px(r),cy,I.blue); inner+=tx(px(r),cy+16,13,'#2e6db4',String(r),{b:1}); });
-      inner+=tx(246,56,13.5,'#2e6db4','y = x² − 4',{georgia:1});
+      inner+=tx(44,28,13.5,'#2e6db4','y = x² − 4',{georgia:1});
       if(go){
-        inner+=`<g class="k9pop"><rect x="40" y="30" width="100" height="30" rx="9" fill="${I.fg}" opacity=".5"/>
-        <rect x="196" y="30" width="96" height="30" rx="9" fill="${I.fg}" opacity=".5"/>
-        ${tx(90,50,12.5,I.grn,'y > 0',{b:1})}${tx(244,50,12.5,I.grn,'y > 0',{b:1})}
-        ${tx(159,190,14,I.grn,'парабола выше оси ровно там же',{b:1})}</g>`;
+        const pathFor=(a,b)=>{ let d=`M ${px(a).toFixed(1)} ${cy} L `; const sp=[]; for(let x=a;x<=b;x+=0.2) sp.push(px(x).toFixed(1)+','+py(x*x-4).toFixed(1)); return d+sp.join(' L ')+` L ${px(b).toFixed(1)} ${cy} Z`; };
+        inner+=`<g class="k9pop"><path d="${pathFor(-5.2,-2)}" fill="rgba(46,139,87,.28)" stroke="none"/>
+        <path d="${pathFor(2,5.2)}" fill="rgba(46,139,87,.28)" stroke="none"/>
+        ${tx(px(-3.6),123,14,I.grn,'y > 0',{b:1})}
+        ${tx(px(3.6),123,14,I.grn,'y > 0',{b:1})}
+        ${tx(159,192,14,I.grn,'парабола выше оси ровно там же',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверка графиком</div>`+
         wkHero(paper(W,H,{inner:()=>inner}))+
