@@ -2065,58 +2065,97 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===79){ window.ARH_LESSONS[i]=L79; break; } } })();
 })();
 
-/* ================= УРОК 179 · Правильные, неправильные дроби и смешанные числа (v4) ================= */
+/* ================= УРОК 179 · Правильные, неправильные дроби и смешанные числа (v5 · Шоколадная фабрика, 14 слайдов, без эмодзи) ================= */
 (function(){
-  if(!window.__wk179css){
-    window.__wk179css=1;
+  if(!window.__wk179v5css){
+    window.__wk179v5css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .wk-fall{animation:wkA179 .55s cubic-bezier(.2,.8,.3,1.1) both;}'+
-      '@keyframes wkA179{0%{transform:translateY(-16px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .wk-grow{animation:wkG179 .6s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes wkG179{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1);opacity:1}}'+
-      '#lvis .wk-dash{stroke-dasharray:6 5;animation:wkD179 .8s linear infinite;}'+
-      '@keyframes wkD179{to{stroke-dashoffset:-18}}';
+      '#lvis .c5in{animation:c5In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes c5In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .c5pop{animation:c5Pop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes c5Pop{0%{transform:scale(.12);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .c5slide{animation:c5Slide 1s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
+      '@keyframes c5Slide{from{transform:translateX(var(--sx));opacity:0}to{transform:translateX(0);opacity:1}}'+
+      '#lvis .c5fall{animation:c5Fall .55s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
+      '@keyframes c5Fall{from{transform:translateY(-18px);opacity:0}to{transform:translateY(0);opacity:1}}'+
+      '#lvis .c5belt{stroke-dasharray:10 8;animation:c5Belt .7s linear infinite;}'+
+      '@keyframes c5Belt{to{stroke-dashoffset:-18}}'+
+      '#lvis .c5bump{animation:c5Bump .85s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes c5Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}'+
+      '#lvis .c5wob{animation:c5Wob 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes c5Wob{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}';
     document.head.appendChild(st);
   }
   const L179 = {
-    id: 179, title: 'Правильные, неправильные дроби и смешанные числа', ico: '🍫',
+    id: 179, title: 'Правильные, неправильные дроби и смешанные числа', ico: '⅔',
     src: 'Математика · 5 класс · Виды дробей', subj: 'math',
     explain: [
-      'Кондитерская Архимеда: шоколадные плитки. У плитки 4 дольки. Если взять 3 дольки из 4 — это 3/4: меньше одной целой плитки. А если нужно 7/4? Тогда одной плитки не хватит — понадобится вторая! Дроби бывают разные: меньше единицы и больше единицы. Разберёмся!',
-      'Если числитель МЕНЬШЕ знаменателя — дробь ПРАВИЛЬНАЯ, она меньше единицы. 3/4 — взяли меньше целой плитки. 5/8 — тоже правильная: 5 долек из 8. Правильные дроби всегда меньше 1.',
-      'Если числитель БОЛЬШЕ знаменателя — дробь НЕПРАВИЛЬНАЯ, в ней больше одной целой. 7/4 — это больше целой плитки (нужны две плитки). А 5/5 — числитель равен знаменателю — это ровно ОДНО целое.',
-      'Неправильную дробь удобно записывать как СМЕШАННОЕ ЧИСЛО: целая часть + дробь. Сколько целых «спрятано» в 7/4? Спрашиваем: сколько четвёрок помещается в семёрке? 7 : 4 = 1 и остаток 3. Значит: 1 целая и ещё 3/4 → 7/4 = 1 3/4.',
-      'Проверка: 5/5 = 1. Взяли все пять долек из пяти — собрали ровно одну целую плитку. Числитель равен знаменателю — всегда ровно одно целое: 5/5 = 1, 9/9 = 1, 12/12 = 1.',
-      'Переводим обратно — из смешанного числа в неправильную дробь: 2 1/3. В каждой целой плитке по 3 трети, целых две → 2 · 3 = 6 третей. Прибавляем ещё 1 треть: 6 + 1 = 7. Получаем 7/3. Формула: 2 1/3 = (2 · 3 + 1)/3 = 7/3.',
-      'Тренажёр-«превращалка»: тебе дадут неправильную дробь. Задай вопрос «сколько целых спрятано?» — подели числитель на знаменатель: частное станет целой частью, остаток — числителем дробной части. Жми кнопки и проверяй себя!',
-      'Примеры: 11/4 — сколько четвёрок в 11? 11 : 4 = 2 и остаток 3 → 2 3/4. А 7/3: 7 : 3 = 2 и остаток 1 → 2 1/3. Частное — целые плитки, остаток — лишние дольки.',
-      'Проверь себя: 7/4 = ? (подсказка: 7 : 4 = 1 и остаток 3). И наоборот: 2 1/3 — сколько это третей? Ответь в тесте и жми «Понял! Проверю себя»!'
+      'На фабрике Архимеда пекут шоколадные плитки. Одна плитка — это ЦЕЛОЕ, и она разделена на равные дольки: например, на 4. Если взять меньше плитки — получится правильная дробь, а если больше — неправильная. Разберёмся с видами дробей!',
+      'Взяли 3 дольки из 4 — это дробь 3/4. Числитель 3 меньше знаменателя 4, значит, дробь ПРАВИЛЬНАЯ: мы взяли меньше одной целой плитки. 5/8, 2/3, 7/10 — тоже правильные: всегда меньше 1.',
+      'Посмотри на числовую ось от 0 до 1: правильная дробь всегда стоит МЕЖДУ 0 и 1. 3/4 — это 0,75, чуть ближе к 1, но всё равно меньше единицы!',
+      'А теперь 7/4. Семь долек, а в плитке только четыре! Одной плитки не хватит — понадобится вторая. Числитель 7 больше знаменателя 4 — дробь НЕПРАВИЛЬНАЯ, она больше 1.',
+      'А 5/5? Взяли все пять долек из пяти — собрали ровно одну целую плитку! Когда числитель РАВЕН знаменателю, дробь равна 1: 5/5 = 1, 9/9 = 1, 12/12 = 1.',
+      'Неправильную дробь удобно записывать как СМЕШАННОЕ ЧИСЛО: целая часть и дробная. В 7/4 спрятана одна целая плитка (4/4) и ещё 3/4. Записываем: 7/4 = 1 целая и 3/4 — коротко: 1 3/4.',
+      'Как найти целую часть? Делим числитель на знаменатель: 7 : 4 = 1 (и остаток 3). Частное 1 — целые плитки, остаток 3 — лишние дольки. Значит, 7/4 = 1 3/4.',
+      'Обратный перевод: 2 1/3 — сколько это третей? В каждой целой плитке по 3 трети. Две плитки — это 2 · 3 = 6 третей. Плюс ещё 1 треть из дробной части: 6 + 1 = 7. Получаем 7/3!',
+      'Запомни формулу: смешанное число a b/c = (a · c + b)/c. Проверь: 2 1/3 → (2 · 3 + 1)/3 = 7/3. 1 3/4 → (1 · 4 + 3)/4 = 7/4. Всё сходится!',
+      'Тренажёр-определитель: тебе покажут дробь. Спроси себя: числитель меньше знаменателя? Тогда правильная. Больше или равен? Неправильная. Равен? Ровно 1. Отвечай и проверяй!',
+      'Тренажёр-перевод: неправильную дробь превращаем в смешанное число. Шаг 1 — раздели числитель на знаменатель, найди целую часть. Шаг 2 — остаток станет числителем дробной части.',
+      'Тренажёр обратный: смешанное число превращаем в неправильную дробь. Умножь целое на знаменатель, прибавь числитель — это новый числитель. Знаменатель не меняется!',
+      'Ловушка: дробь 4/4 — это не «четыре четвёртых» больше единицы, а РОВНО 1! Любая дробь, где числитель равен знаменателю, равна целому. А 0/4 = 0 — ноль долек.',
+      'Проверь себя: 7/4 = 1 3/4 (7 : 4 = 1, остаток 3). А 2 1/3 = 7/3. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Запиши 7/4 в виде смешанного числа.', choices: ['1 3/4', '1 1/4', '2 3/4'], ans: 0,
-      exp: 'В 7 четвёрках одна целая (4/4) и остаётся 3 четвёртых: 7/4 = 1 3/4.' },
+      exp: '7 : 4 = 1 (ост. 3) → 1 3/4.' },
     tasks: [
       { q: 'Чему равно 5/5?', kind: 'unit', ans: 1, tol: 0,
         hints: ['Пять пятых — сколько целых?', '5 : 5 = 1.'], sol: '5/5 = 1.' },
       { q: 'Запиши 2 1/3 неправильной дробью.', kind: 'choice', choices: ['7/3', '6/3', '5/3'], ans: 0, tol: 0,
-        hints: ['Две целые — это сколько третей?', '2 · 3 = 6 третей, плюс 1 = 7/3.'], sol: '2 1/3 = (2·3 + 1)/3 = 7/3.' }
+        hints: ['2 · 3 = 6 третей.', 'Плюс 1 = 7/3.'], sol: '2 1/3 = (2·3+1)/3 = 7/3.' }
     ]
   };
-  const G={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a',cream:'#ffe9c9'};
-  /* шоколадная плитка: den долек, hl из них «взяты» (подсвечены) */
-  function bar(den,hl,uid,opt){
+  const C5={gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff8a7a',choc:'#8a5a2e',chocD:'#4a2f1a',cream:'#ffe9c9'};
+  /* шоколадная плитка: den долек, взято hl (подсвечено). Возвращает svg-строку */
+  function choc(den,hl,opt){
     const o=opt||{};
-    const W=o.w||200, h=o.h||46;
+    const W=o.w||300, H=o.h||54;
     const cw=W/den;
-    let s='';
+    let s=`<rect x="1" y="1" width="${W-2}" height="${H-2}" rx="10" fill="rgba(0,0,0,.25)"/>`;
     for(let i=0;i<den;i++){
       const on=hl>i;
-      const x=i*cw;
-      s+=`<g class="wk-fall" style="animation-delay:${(i*0.06).toFixed(2)}s"><rect x="${x+1.5}" y="0" width="${cw-3}" height="${h}" rx="7" fill="${on?'#8a5a2e':'#4a2f1a'}" stroke="${on?G.gold:'#6b4426'}" stroke-width="1.8"/><rect x="${x+4}" y="4" width="${cw-8}" height="${h-8}" rx="4" fill="${on?'#a9743c':'#5d3a20'}" opacity=".55"/></g>`;
+      s+=`<g class="c5fall" style="animation-delay:${(i*0.07).toFixed(2)}s">
+        <rect x="${i*cw+3}" y="4" width="${cw-6}" height="${H-8}" rx="7" fill="${on?'#8a5a2e':'#5d3a20'}" stroke="${on?C5.gold:'#3a2412'}" stroke-width="1.8"/>
+        <rect x="${i*cw+6}" y="8" width="${cw-12}" height="${H-16}" rx="4" fill="${on?'#a9743c':'#6b4426'}" opacity=".6"/>
+      </g>`;
     }
-    return `<svg width="${W}" height="${h}" viewBox="0 0 ${W} ${h}" style="display:block;margin:0 auto">${s}</svg>`;
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">${s}</svg>`;
   }
-  const cap=(t,c)=>`<div style="font-size:12.5px;color:${c||'#cfe0cf'};text-align:center;font-family:Georgia,serif;font-weight:bold">${t}</div>`;
+  /* плитка-целое с рамкой + число долек для дробной части */
+  const frac=(num,den,c,fs)=>`<span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-family:Georgia,serif;line-height:1.05;margin:0 2px">
+    <span style="font-size:${fs||22}px;color:${c||'#fff'};font-weight:bold;border-bottom:2px solid ${c||'#fff'};padding:0 4px">${num}</span>
+    <span style="font-size:${fs||22}px;color:${c||'#fff'};font-weight:bold;padding:0 4px">${den}</span></span>`;
+  const fracSVG=(x,y,num,den,c,fs,opt)=>{
+    const o=opt||{};
+    const f=fs||26;
+    return `<g class="${o.anim||'c5pop'}" style="animation-delay:${(o.delay||0).toFixed(2)}s">
+      <text x="${x}" y="${y-f/2+6}" text-anchor="middle" font-size="${f}" fill="${c||'#fff'}" font-weight="bold" font-family="Georgia,serif">${num}</text>
+      <line x1="${x-f*0.55}" y1="${y+2}" x2="${x+f*0.55}" y2="${y+2}" stroke="${c||'#fff'}" stroke-width="2"/>
+      <text x="${x}" y="${y+f/2+12}" text-anchor="middle" font-size="${f}" fill="${c||'#fff'}" font-weight="bold" font-family="Georgia,serif">${den}</text>
+    </g>`;
+  };
+  const mixedSVG=(x,y,w,n,d,c,fs,opt)=>{
+    const o=opt||{};
+    const f=fs||26;
+    const dx=f*0.85; // дробная часть сдвинута вправо от целой
+    return `<g class="${o.anim||'c5pop'}" style="animation-delay:${(o.delay||0).toFixed(2)}s">
+      <text x="${x}" y="${y+12}" text-anchor="middle" font-size="${f}" fill="${c||'#fff'}" font-weight="bold" font-family="Georgia,serif">${w}</text>
+      <text x="${x+dx*0.7}" y="${y-f/2+8}" text-anchor="middle" font-size="${f*0.72}" fill="${c||'#fff'}" font-weight="bold" font-family="Georgia,serif">${n}</text>
+      <line x1="${x+dx*0.35}" y1="${y+4}" x2="${x+dx*1.05}" y2="${y+4}" stroke="${c||'#fff'}" stroke-width="2"/>
+      <text x="${x+dx*0.7}" y="${y+f/2+14}" text-anchor="middle" font-size="${f*0.72}" fill="${c||'#fff'}" font-weight="bold" font-family="Georgia,serif">${d}</text>
+    </g>`;
+  };
+  const sign=(t,c,delay,fs)=>`<span class="c5in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 13px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:${fs||21}px;color:${c};font-weight:bold">${t}</span>`;
   const Q179=[
     {q:'7/4 = ? (смешанное число)',opts:['1 3/4','1 1/4','2 3/4'],ans:0},
     {q:'2 1/3 = ? (неправильная дробь)',opts:['7/3','6/3','5/3'],ans:0}
@@ -2124,101 +2163,259 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   function quiz(lk,st){
     const T=Q179[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.05)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.2)':'rgba(232,106,90,.2)'; bd=i===T.ans?G.green:G.red; tc=i===T.ans?G.green:G.red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:80px;font-size:15px" onclick="visW179T('${lk}',${i})">${o}</button>`;
+      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?C5.green:C5.red; tc=i===T.ans?C5.green:C5.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:80px;font-size:16px" onclick="visW179T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">🎉 верно! 2·3+1 = 7 третей</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:16px">✅ верно! 7 : 4 = 1 и остаток 3</div>')
-        : '<div class="wk-ans" style="color:#ff8a7a;font-size:15px">❌ подели числитель на знаменатель: частное — целые</div>';
+        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 2·3+1 = 7 третей → 7/3</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 7 : 4 = 1 (ост. 3) → 1 3/4</div>')
+        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Подели числитель на знаменатель: частное — целые</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW179Act('${lk}','nq')`):'';
-    const rst=wkBtn('↺',`visW179Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    const rst=wkBtn('заново',`visW179Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW179(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step===0||step===3){ st.sh=0; } if(step===4){ st.sh=0; } if(step===5){ st.sh=0; } if(step===6){ st.sh=0; } if(step===7){ st.sh=0; }
+      if(step===9){ st.pick=null; st.guess=-1; }
+      if(step===10){ if(st.tr==null) st.tr=0; st.s1=0; st.s2=0; }
+      if(step===11){ if(st.tr==null) st.tr=0; st.s1=0; st.s2=0; }
+      if(step===13){ st.sel=null; st.q=0; }
+    }
     let h='';
     if(step===0){
-      h=wkFrame(wkBig('Кондитерская: шоколадные плитки 🍫')+
-        wkHero(`<div class="wk-row" style="gap:10px;align-items:flex-end"><div>${bar(4,3,'a',{w:150,h:40})}${cap('3/4 — меньше плитки')}</div><div style="text-align:center">${bar(4,4,'b',{w:150,h:40})}${cap('целая плитка')}<div class="wk-row" style="gap:3px;margin-top:3px">${[0,1,2].map(i=>`<div class="wk-fall" style="animation-delay:${(0.2+i*0.1).toFixed(2)}s;width:15px;height:30px;border-radius:4px;background:#6b3f1f;border:1.5px solid #ffd76a"></div>`).join('')}</div>${cap('+ 3 дольки → 7/4!')}</div></div>`)+
-        wkAns('дроби бывают меньше и больше единицы', '#ffd76a')+
-        wkSml('одна плитка — это целое; дольки — её части'));
+      const show=st.sh===1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шоколадная фабрика Архимеда</div>`+
+        wkHero(`<svg viewBox="0 0 318 150" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="150" fill="#2a2030"/>
+          <rect x="0" y="120" width="318" height="30" fill="#1c151f"/>
+          ${[20,60,100,140,180,220,260,300].map((x,i)=>`<circle cx="${x}" cy="126" r="4" fill="#4a3a52"/>`).join('')}
+          <line x1="8" y1="118" x2="310" y2="118" stroke="#5a4a62" stroke-width="6" stroke-linecap="round"/>
+          <g class="c5belt"><line x1="8" y1="118" x2="310" y2="118" stroke="#c9a06a" stroke-width="2"/></g>
+          <g class="c5slide" style="--sx:-200px"><rect x="26" y="38" width="104" height="56" rx="10" fill="#3a2412" stroke="#8a5a2e" stroke-width="2.4"/>
+          <rect x="34" y="46" width="88" height="40" rx="7" fill="${show?'#8a5a2e':'#5d3a20'}"/>
+          <g class="c5fall" style="animation-delay:.15s">${[0,1,2,3].map(i=>`<rect x="${40+i*21}" y="52" width="16" height="28" rx="5" fill="${show?'#a9743c':'#6b4426'}" stroke="${show?C5.gold:'#3a2412'}" stroke-width="1.4"/>`).join('')}</g></g>
+          <text x="159" y="30" text-anchor="middle" font-size="13" fill="#e8d8c8">плитка = целое · 4 дольки</text>
+          ${show? `<g class="c5pop" style="animation-delay:.4s"><rect x="150" y="44" width="140" height="48" rx="12" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="2.2"/>
+            <text x="220" y="74" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold">дольки — части плитки</text></g>`:''}
+        </svg>`)+
+        wkRow(show? wkBtn('сброс',`visW179Act('${lk}','rst')`) : wkBtn('разобрать плитку на дольки',`visW179Act('${lk}','go')`))+
+        wkSml('одна целая плитка · дольки — это её части (дроби)'));
     } else if(step===1){
-      h=wkFrame(wkBig('Правильная дробь: меньше единицы')+
-        wkHero(`<div class="wk-col" style="display:flex;flex-direction:column;gap:8px;width:100%">${bar(4,3,'c',{w:210,h:40})}${cap('3/4 — взяли 3 из 4')}<svg width="260" height="26" viewBox="0 0 260 26"><line x1="6" y1="14" x2="254" y2="14" stroke="#3d5c49" stroke-width="3"/><circle cx="253" cy="14" r="7" fill="#ffd76a"/><text x="253" y="24" text-anchor="middle" font-size="10" fill="#9ec0a8">1</text><circle cx="156" cy="14" r="7" fill="#8fd1a8"/><text x="156" y="24" text-anchor="middle" font-size="10" fill="#9ec0a8">3/4</text></svg></div>`)+
-        wkRow(wkPill('3/4 < 1', G.green),wkChip('5/8 — тоже правильная', G.blue))+
-        wkSml('числитель меньше знаменателя → дробь меньше единицы'));
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">3 из 4 долек = 3/4</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="170" fill="#2a2030"/>
+          <g transform="translate(9,18)">${choc(4,3,{w:300,h:58})}</g>
+          <text x="159" y="100" text-anchor="middle" font-size="14" fill="#e8d8c8">золотые дольки — взяли · тёмные — остались</text>
+          <g class="c5pop" style="animation-delay:.5s"><rect x="60" y="112" width="198" height="44" rx="14" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.2"/>
+          ${fracSVG(100,136,3,4,'#8fd1a8',30)}
+          <text x="159" y="142" text-anchor="middle" font-size="14" fill="#cfe0cf">3 меньше 4 — правильная!</text></g>
+          <text x="159" y="162" text-anchor="middle" font-size="12.5" fill="#9ec0a8">числитель 3 &lt; знаменатель 4</text>
+        </svg>`)+
+        wkRow(sign('3/4 — меньше одной плитки',C5.green,0.5))+
+        wkSml('5/8, 2/3, 7/10 — тоже правильные: всегда меньше 1'));
     } else if(step===2){
-      h=wkFrame(wkBig('Неправильная дробь: больше единицы')+
-        wkHero(`<svg width="322" height="120" viewBox="0 0 322 120" style="display:block">
-          <rect x="6" y="6" width="310" height="108" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="161" y="26" text-anchor="middle" font-size="12.5" fill="#9ec0a8">7/4 — целая плитка и ещё 3 дольки</text>
-          ${[0,1,2,3].map(i=>`<rect x="${30+i*44}" y="44" width="38" height="30" rx="6" fill="#8a5a2e" stroke="#ffd76a" stroke-width="1.8"/>`).join('')}
-          ${[0,1,2].map(i=>`<rect x="${248+i*22}" y="44" width="18" height="30" rx="5" fill="#6b3f1f" stroke="#ffd76a" stroke-width="1.4"/>`).join('')}
-          <text x="161" y="98" text-anchor="middle" font-size="12" fill="#ffd76a">числитель 7 ≥ знаменателя 4 → больше 1</text>
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Правильная дробь на оси</div>`+
+        wkHero(`<svg viewBox="0 0 318 160" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="160" fill="#2a2030"/>
+          <text x="159" y="26" text-anchor="middle" font-size="13" fill="#e8d8c8">от 0 до 1</text>
+          <line x1="36" y1="90" x2="282" y2="90" stroke="#cfe0cf" stroke-width="3.4"/>
+          <g class="c5pop"><rect x="30" y="72" width="44" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="#4a6a54" stroke-width="2"/>
+          <text x="52" y="94" text-anchor="middle" font-size="18" fill="#fff" font-weight="bold">0</text></g>
+          <g class="c5pop" style="animation-delay:.15s"><rect x="238" y="72" width="44" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="#4a6a54" stroke-width="2"/>
+          <text x="260" y="94" text-anchor="middle" font-size="18" fill="#fff" font-weight="bold">1</text></g>
+          <g class="c5bump" style="animation-delay:.4s"><rect x="196" y="60" width="44" height="40" rx="9" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2.6"/>
+          <text x="218" y="86" text-anchor="middle" font-size="20" fill="#8fd1a8" font-weight="bold">3/4</text></g>
+          <text x="218" y="126" text-anchor="middle" font-size="13" fill="#cfe0cf">между 0 и 1 — меньше единицы!</text>
         </svg>`)+
-        wkRow(wkPill('7/4 > 1', G.red),wkChip('5/5 = 1 (ровно целое)', G.green))+
-        wkSml('числитель больше или равен знаменателю — дробь неправильная'));
+        wkRow(sign('0 < правильная дробь < 1',C5.blue,0.5))+
+        wkSml('3/4 = 0,75 · всегда строго между нулём и единицей'));
     } else if(step===3){
-      h=wkFrame(wkBig('7/4 = 1 целая и 3/4')+
-        wkHero(`<svg width="322" height="120" viewBox="0 0 322 120" style="display:block">
-          <rect x="6" y="6" width="310" height="108" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="wk-grow"><circle cx="86" cy="40" r="26" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="2.6"/><text x="86" y="32" text-anchor="middle" font-size="11" fill="#9fc5e8">7 : 4</text><text x="86" y="52" text-anchor="middle" font-size="22" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">= 1</text><text x="86" y="66" text-anchor="middle" font-size="10" fill="#9fc5e8">остаток 3</text></g>
-          <text x="122" y="55" font-size="24" fill="#8fa08f">→</text>
-          <g class="wk-grow" style="animation-delay:.2s"><rect x="140" y="26" width="76" height="52" rx="11" fill="rgba(255,255,255,.05)" stroke="#ffd76a" stroke-width="2.6"/><text x="178" y="60" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">1</text></g>
-          <text x="222" y="62" font-size="20" fill="#cfe0cf">+</text>
-          <g class="wk-grow" style="animation-delay:.35s"><text x="262" y="62" text-anchor="middle" font-size="24" fill="#fff" font-weight="bold" font-family="Georgia,serif">3/4</text></g>
-          <text x="161" y="102" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">7/4 = 1 3/4 — целая плитка и 3 дольки</text>
+      const show=st.sh===1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">7/4 — нужна вторая плитка!</div>`+
+        wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="176" fill="#2a2030"/>
+          <text x="159" y="22" text-anchor="middle" font-size="13" fill="#e8d8c8">семь долек · в плитке только четыре</text>
+          <g transform="translate(6,30)">${choc(4,4,{w:144,h:40})}</g>
+          <g class="c5slide" style="--sx:-120px;animation-delay:.3s"><g transform="translate(160,30)">${choc(4,3,{w:152,h:40})}</g></g>
+          ${show? `<g class="c5pop" style="animation-delay:.6s"><rect x="40" y="88" width="238" height="42" rx="13" fill="rgba(255,138,138,.12)" stroke="#ff8a7a" stroke-width="2.2"/>
+            ${fracSVG(80,110,7,4,'#ff9a8a',32)}
+            <text x="159" y="115" text-anchor="middle" font-size="15" fill="#ffcfc2">7 больше 4 — неправильная!</text></g>
+            <text x="159" y="150" text-anchor="middle" font-size="13" fill="#ffcfc2">числитель 7 &gt; знаменателя 4 → дробь больше 1</text>`:''}
         </svg>`)+
-        wkSml('сколько четвёрок в семёрке? Одна целая (4/4) и остаток 3/4'));
+        (show? wkRow(sign('7/4 > 1',C5.red,0.6)): wkRow(wkBtn('показать, что плитки не хватает',`visW179Act('${lk}','go')`)))+
+        wkSml('две плитки: целая + три дольки — больше единицы'));
     } else if(step===4){
-      h=wkFrame(wkBig('5/5 = 1 — собрали целую плитку')+
-        wkHero(`<div>${bar(5,5,'d',{w:230,h:44})}${cap('пять пятых — вся плитка')}</div>`)+
-        wkRow(wkPill('5/5 = 1', G.green),wkChip('9/9 = 1 · 12/12 = 1', G.blue))+
-        wkSml('числитель равен знаменателю — всегда ровно одно целое'));
+      const show=st.sh===1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">5/5 — ровно одна плитка</div>`+
+        wkHero(`<svg viewBox="0 0 318 156" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="156" fill="#2a2030"/>
+          <text x="159" y="24" text-anchor="middle" font-size="13" fill="#e8d8c8">пять пятых = вся плитка = 1</text>
+          <g transform="translate(34,36)">${choc(5,5,{w:250,h:52})}</g>
+          ${show? `<g class="c5pop" style="animation-delay:.4s"><rect x="60" y="102" width="198" height="42" rx="13" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.2"/>
+            <text x="159" y="129" text-anchor="middle" font-size="20" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">5/5 = 1</text></g>`:''}
+        </svg>`)+
+        (show? wkRow(sign('9/9 = 1 · 12/12 = 1',C5.green,0.4)): wkRow(wkBtn('собрать плитку целиком',`visW179Act('${lk}','go')`)))+
+        wkSml('числитель равен знаменателю — дробь равна единице'));
     } else if(step===5){
-      h=wkFrame(wkBig('Обратно: 2 1/3 = ?')+
-        wkHero(`<svg width="322" height="126" viewBox="0 0 322 126" style="display:block">
-          <rect x="6" y="6" width="310" height="114" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="161" y="24" text-anchor="middle" font-size="12.5" fill="#9ec0a8">две целые плитки по 3 трети — размениваем</text>
-          ${[0,1].map(k=>{const x=40+k*118;return `<g class="wk-fall" style="animation-delay:${(k*0.15).toFixed(2)}s">${[0,1,2].map(j=>`<rect x="${x+j*30}" y="40" width="26" height="30" rx="5" fill="#8a5a2e" stroke="#7fd1ff" stroke-width="1.6"/>`).join('')}</g>`;}).join('')}
-          <g class="wk-fall" style="animation-delay:.35s"><rect x="282" y="40" width="22" height="30" rx="5" fill="#6b3f1f" stroke="#ffd76a" stroke-width="1.6"/></g>
-          <text x="90" y="92" text-anchor="middle" font-size="11" fill="#9fc5e8">2 · 3 = 6 третей</text>
-          <text x="161" y="110" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">6 + 1 = 7 → 2 1/3 = 7/3</text>
+      const show=st.sh===1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">7/4 = 1 целая и 3/4</div>`+
+        wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="176" fill="#2a2030"/>
+          <text x="159" y="22" text-anchor="middle" font-size="13" fill="#e8d8c8">разложим 7 долек по плиткам по 4</text>
+          ${show? `<g class="c5pop"><rect x="20" y="44" width="120" height="64" rx="12" fill="rgba(255,255,255,.03)" stroke="#ffd76a" stroke-width="2"/>
+            <text x="80" y="64" text-anchor="middle" font-size="13" fill="#ffe9c9">целая плитка</text>
+            ${[0,1,2,3].map(i=>`<rect class="c5fall" style="animation-delay:${(0.1+i*0.1).toFixed(2)}s" x="${30+i*23}" y="74" width="18" height="26" rx="5" fill="#8a5a2e" stroke="#ffd76a" stroke-width="1.4"/>`).join('')}</g>`:''}
+          ${show? `<g class="c5pop" style="animation-delay:.4s"><rect x="172" y="44" width="120" height="64" rx="12" fill="rgba(255,255,255,.03)" stroke="#4a6a54" stroke-width="2"/>
+            <text x="232" y="64" text-anchor="middle" font-size="13" fill="#9ec0a8">осталось 3 дольки</text>
+            ${[0,1,2].map(i=>`<rect class="c5fall" style="animation-delay:${(0.5+i*0.1).toFixed(2)}s" x="${184+i*24}" y="74" width="18" height="26" rx="5" fill="#6b4426" stroke="#8a5a2e" stroke-width="1.4"/>`).join('')}</g>`:''}
+          ${show? `<g class="c5pop" style="animation-delay:.7s"><rect x="56" y="128" width="206" height="40" rx="13" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.2"/>
+            ${mixedSVG(159,137,1,3,4,'#8fd1a8',26)}
+            <text x="159" y="160" text-anchor="middle" font-size="0" fill="#fff"> </text></g>`:''}
         </svg>`)+
-        wkSml('в каждой целой по 3 трети: 2·3 = 6, плюс 1 треть → 7/3'));
+        (show? wkRow(sign('7/4 = 1 3/4',C5.green,0.7)): wkRow(wkBtn('разложить 7 долек по плиткам',`visW179Act('${lk}','go')`)))+
+        wkSml('смешанное число: целая часть + дробная'));
     } else if(step===6){
-      if(st.d==null) st.d=0;
-      const POOL=[[7,4],[11,4],[9,2],[13,5],[17,6]];
-      const [a,b]=POOL[st.d%POOL.length];
-      const q=Math.floor(a/b), r=a%b;
-      h=wkFrame(wkBig('Тренажёр-«превращалка» 🔄')+
-        wkHero(`<svg width="322" height="96" viewBox="0 0 322 96" style="display:block">
-          <g class="wk-grow"><rect x="16" y="16" width="120" height="58" rx="13" fill="rgba(232,106,90,.08)" stroke="#ff8a7a" stroke-width="2.4"/><text x="76" y="38" text-anchor="middle" font-size="11" fill="#ff9a8a">неправильная</text><text x="76" y="62" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold" font-family="Georgia,serif">${a}/${b}</text></g>
-          ${st.show?`<g class="wk-fall"><text x="176" y="50" text-anchor="middle" font-size="26" fill="#8fd1a8">→</text></g>`:''}
-          ${st.show?`<g class="wk-fall"><rect x="186" y="16" width="120" height="58" rx="13" fill="rgba(217,164,65,.1)" stroke="#ffd76a" stroke-width="2.4"/><text x="246" y="38" text-anchor="middle" font-size="11" fill="#d9c088">смешанное</text><text x="246" y="62" text-anchor="middle" font-size="22" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">${q} ${r}/${b}</text></g>`:''}
+      const show=st.sh===1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Как найти целую часть: 7 : 4</div>`+
+        wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="176" fill="#2a2030"/>
+          <g class="c5pop"><rect x="24" y="26" width="120" height="64" rx="13" fill="rgba(255,255,255,.04)" stroke="#4a6a54" stroke-width="2.2"/>
+          ${fracSVG(84,48,7,4,'#fff',30)}
+          <text x="84" y="80" text-anchor="middle" font-size="12" fill="#9ec0a8">делим 7 на 4</text></g>
+          <g class="c5pop" style="animation-delay:.2s"><text x="180" y="66" text-anchor="middle" font-size="32" fill="#cfe0cf" font-weight="bold">→</text></g>
+          ${show? `<g class="c5pop" style="animation-delay:.3s"><rect x="200" y="26" width="96" height="64" rx="13" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="2.2"/>
+            <text x="248" y="50" text-anchor="middle" font-size="15" fill="#ffe9c9">7 : 4 = 1</text>
+            <text x="248" y="74" text-anchor="middle" font-size="15" fill="#ff9a8a">остаток 3</text></g>`:''}
+          ${show? `<g class="c5pop" style="animation-delay:.5s"><rect x="40" y="112" width="238" height="46" rx="14" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.4"/>
+            <text x="159" y="132" text-anchor="middle" font-size="14" fill="#cfe0cf">частное 1 — целые плитки</text>
+            <text x="159" y="150" text-anchor="middle" font-size="13" fill="#8fd1a8">остаток 3 — лишние дольки → 1 3/4</text></g>`:''}
         </svg>`)+
-        wkRow(wkBtn('1️⃣ сколько целых?',`visW179Act('${lk}','s1')`),wkBtn('2️⃣ ответ',`visW179Act('${lk}','s2')`),wkBtn('🎲 новый',`visW179Act('${lk}','n')`),wkBtn('↺',`visW179Act('${lk}','rst')`))+
-        (st.s1? wkNote(a+' : '+b+' = '+q+' и остаток '+r,'#cfe0cf'):'')+
-        (st.show? wkAns(a+'/'+b+' = '+q+' '+r+'/'+b, G.gold):'')+
-        wkSml('частное — целые плитки, остаток — лишние дольки'));
+        (show? wkRow(sign('7/4 = 1 3/4',C5.green,0.6)): wkRow(wkBtn('поделить 7 на 4',`visW179Act('${lk}','go')`)))+
+        wkSml('частное — целые · остаток — числитель дробной части'));
     } else if(step===7){
-      h=wkFrame(wkBig('Сколько целых спрятано?')+
-        wkHero(`<svg width="322" height="96" viewBox="0 0 322 96" style="display:block">
-          <rect x="6" y="6" width="310" height="84" rx="15" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="wk-fall"><rect x="16" y="16" width="136" height="60" rx="11" fill="rgba(127,209,255,.08)" stroke="#7fd1ff" stroke-width="2"/><text x="84" y="36" text-anchor="middle" font-size="11" fill="#9fc5e8">11 : 4</text><text x="84" y="62" text-anchor="middle" font-size="19" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">= 2 ост. 3 → 2 3/4</text></g>
-          <g class="wk-fall" style="animation-delay:.2s"><rect x="168" y="16" width="140" height="60" rx="11" fill="rgba(217,164,65,.1)" stroke="#ffd76a" stroke-width="2"/><text x="238" y="36" text-anchor="middle" font-size="11" fill="#d9c088">7 : 3</text><text x="238" y="62" text-anchor="middle" font-size="19" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">= 2 ост. 1 → 2 1/3</text></g>
+      const show=st.sh===1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Обратно: 2 1/3 — сколько третей?</div>`+
+        wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="176" fill="#2a2030"/>
+          <text x="159" y="24" text-anchor="middle" font-size="13" fill="#e8d8c8">две целые плитки по 3 трети + 1 треть</text>
+          ${[0,1].map(k=>{const x=16+k*100; return `<g class="c5fall" style="animation-delay:${(k*0.15).toFixed(2)}s"><rect x="${x}" y="40" width="92" height="50" rx="10" fill="rgba(255,255,255,.02)" stroke="#7fd1ff" stroke-width="1.8"/>
+            ${[0,1,2].map(j=>`<rect x="${x+6+j*28}" y="50" width="24" height="30" rx="6" fill="#8a5a2e" stroke="#7fd1ff" stroke-width="1.4"/>`).join('')}</g>`;}).join('')}
+          <g class="c5fall" style="animation-delay:.35s"><rect x="228" y="40" width="72" height="50" rx="10" fill="rgba(255,255,255,.02)" stroke="#ffd76a" stroke-width="1.8"/>
+          <rect x="234" y="50" width="24" height="30" rx="6" fill="#6b4426" stroke="#ffd76a" stroke-width="1.4"/></g>
+          <text x="66" y="110" text-anchor="middle" font-size="13" fill="#9fc5e8">1-я плитка: 3 трети</text>
+          <text x="166" y="110" text-anchor="middle" font-size="13" fill="#9fc5e8">2-я: 3 трети</text>
+          <text x="264" y="110" text-anchor="middle" font-size="13" fill="#ffe9c9">+ 1 треть</text>
+          ${show? `<g class="c5pop" style="animation-delay:.6s"><rect x="56" y="126" width="206" height="42" rx="13" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.2"/>
+            <text x="159" y="154" text-anchor="middle" font-size="22" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">6 + 1 = 7 третей → 7/3</text></g>`:''}
         </svg>`)+
-        wkSml('всегда задавай вопрос: сколько целых спрятано? — дели числитель на знаменатель'));
+        (show? wkRow(sign('2 1/3 = 7/3',C5.green,0.7)): wkRow(wkBtn('посчитать трети',`visW179Act('${lk}','go')`)))+
+        wkSml('2 плитки × 3 трети = 6 · плюс 1 = 7 третей'));
+    } else if(step===8){
+      const show=st.sh===1;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Формула обратного перевода</div>`+
+        wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="176" fill="#2a2030"/>
+          <text x="159" y="30" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold" font-family="Georgia,serif">a b/c = (a · c + b) / c</text>
+          ${show? `<g class="c5pop" style="animation-delay:.3s"><rect x="30" y="52" width="258" height="46" rx="13" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="2.2"/>
+            <text x="159" y="82" text-anchor="middle" font-size="19" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">2 1/3 = (2·3 + 1)/3 = 7/3</text></g>`:''}
+          ${show? `<g class="c5pop" style="animation-delay:.5s"><rect x="30" y="110" width="258" height="46" rx="13" fill="rgba(127,209,255,.08)" stroke="#7fd1ff" stroke-width="2.2"/>
+            <text x="159" y="140" text-anchor="middle" font-size="19" fill="#7fd1ff" font-weight="bold" font-family="Georgia,serif">1 3/4 = (1·4 + 3)/4 = 7/4</text></g>`:''}
+        </svg>`)+
+        (show? wkRow(sign('обе формулы сошлись!',C5.green,0.6)): wkRow(wkBtn('проверить на примерах',`visW179Act('${lk}','go')`)))+
+        wkSml('целое × знаменатель + числитель = новый числитель'));
+    } else if(step===9){
+      const pick=st.pick;
+      const items=[
+        {f:'3/4',a:0}, {f:'7/4',a:1}, {f:'5/5',a:2}, {f:'2/3',a:0}
+      ];
+      const cur=pick==null?0:pick;
+      const T=items[cur%items.length];
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр-определитель</div>`+
+        wkHero(`<svg viewBox="0 0 318 120" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="120" fill="#2a2030"/>
+          <text x="159" y="30" text-anchor="middle" font-size="15" fill="#e8d8c8">какая это дробь?</text>
+          ${fracSVG(159,66,T.f.split('/')[0],T.f.split('/')[1],'#fff',46)}
+        </svg>`)+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW179T3('${lk}',0)">правильная</button>
+          <button class="wk-btn" onclick="visW179T3('${lk}',1)">неправильная</button>
+          <button class="wk-btn" onclick="visW179T3('${lk}',2)">ровно 1</button>
+        </div>`+
+        (st.ans!=null? (st.ans===T.a? `<div class="wk-ans" style="color:#8fd1a8">верно! ${T.f} — ${['правильная (меньше 1)','неправильная (больше 1)','ровно одно целое'][T.a]}</div>`+wkRow(wkBtn('следующая дробь',`visW179Act('${lk}','nx')`)) : `<div class="wk-ans" style="color:#ff8a7a">не так. Сравни числитель со знаменателем</div>`+wkRow(wkBtn('попробовать снова',`visW179Act('${lk}','again')`))) : '')+
+        wkSml('числитель < знаменателя → правильная · > → неправильная · = → 1'));
+    } else if(step===10){
+      if(st.tr==null) st.tr=0;
+      const POOL=[[11,4],[9,2],[13,5],[17,6],[7,3]];
+      const [a,b]=POOL[st.tr%POOL.length];
+      const q=Math.floor(a/b), r=a%b;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: в смешанное число</div>`+
+        wkHero(`<svg viewBox="0 0 318 140" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="140" fill="#2a2030"/>
+          <g class="c5pop"><rect x="20" y="30" width="110" height="64" rx="13" fill="rgba(255,138,138,.08)" stroke="#ff8a7a" stroke-width="2.2"/>
+          ${fracSVG(75,53,a,b,'#ff9a8a',34)}
+          <text x="75" y="84" text-anchor="middle" font-size="11" fill="#ffcfc2">неправильная</text></g>
+          ${st.s1? `<text class="c5pop" x="150" y="66" text-anchor="middle" font-size="28" fill="#8fd1a8" font-weight="bold">→</text>`:''}
+          ${st.s1? `<g class="c5pop"><rect x="170" y="30" width="128" height="64" rx="13" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="2.2"/>
+          <text x="234" y="52" text-anchor="middle" font-size="13" fill="#ffe9c9">${a} : ${b} = ${q}</text>
+          <text x="234" y="78" text-anchor="middle" font-size="15" fill="#ff9a8a">остаток ${r}</text></g>`:''}
+          ${st.s2? `<g class="c5pop" style="animation-delay:.15s"><rect x="90" y="106" width="140" height="26" rx="12" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2"/>
+          <text x="160" y="124" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">${q} ${r}/${b}</text></g>`:''}
+        </svg>`)+
+        wkRow(
+          !st.s1? wkBtn('1 · сколько целых?',`visW179Act('${lk}','s1')`) : '',
+          (st.s1&&!st.s2)? wkBtn('2 · записать смешанное',`visW179Act('${lk}','s2')`) : '',
+          st.s2? wkBtn('новый пример',`visW179Act('${lk}','n')`) : '',
+          st.s1? wkBtn('заново',`visW179Act('${lk}','rst')`) : '')+
+        wkSml('частное — целые плитки · остаток — дольки'));
+    } else if(step===11){
+      if(st.tr==null) st.tr=0;
+      const POOL=[[2,1,3],[3,2,5],[4,1,4],[5,2,3],[1,3,4]];
+      const [w,n,d]=POOL[st.tr%POOL.length];
+      const num=w*d+n;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: в неправильную дробь</div>`+
+        wkHero(`<svg viewBox="0 0 318 140" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="140" fill="#2a2030"/>
+          <g class="c5pop"><rect x="20" y="30" width="120" height="64" rx="13" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="2.2"/>
+          ${mixedSVG(80,52,w,n,d,'#7fd1ff',34)}
+          <text x="80" y="86" text-anchor="middle" font-size="11" fill="#9fc5e8">смешанное</text></g>
+          ${st.s1? `<text class="c5pop" x="156" y="66" text-anchor="middle" font-size="28" fill="#8fd1a8" font-weight="bold">→</text>`:''}
+          ${st.s1? `<g class="c5pop"><rect x="176" y="30" width="122" height="64" rx="13" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="2.2"/>
+          <text x="237" y="52" text-anchor="middle" font-size="14" fill="#ffe9c9">${w}·${d} = ${w*d}</text>
+          <text x="237" y="78" text-anchor="middle" font-size="15" fill="#ffd76a">+ ${n} = ${num}</text></g>`:''}
+          ${st.s2? `<g class="c5pop" style="animation-delay:.15s"><rect x="90" y="106" width="140" height="26" rx="12" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2"/>
+          ${fracSVG(160,120,num,d,'#8fd1a8',22)}</g>`:''}
+        </svg>`)+
+        wkRow(
+          !st.s1? wkBtn('1 · целых × знаменатель',`visW179Act('${lk}','s1')`) : '',
+          (st.s1&&!st.s2)? wkBtn('2 · + числитель',`visW179Act('${lk}','s2')`) : '',
+          st.s2? wkBtn('новый пример',`visW179Act('${lk}','n')`) : '',
+          st.s1? wkBtn('заново',`visW179Act('${lk}','rst')`) : '')+
+        wkSml('a b/c = (a·c + b)/c · знаменатель не меняется'));
+    } else if(step===12){
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ловушка: 4/4 = 1, а не больше</div>`+
+        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
+          <rect x="0" y="0" width="318" height="170" fill="#2a2030"/>
+          <g transform="translate(24,26)">${choc(4,4,{w:270,h:52})}</g>
+          <text x="159" y="98" text-anchor="middle" font-size="14" fill="#e8d8c8">взяли ВСЕ четыре дольки — это целая плитка!</text>
+          <g class="c5pop" style="animation-delay:.4s"><rect x="60" y="112" width="198" height="42" rx="13" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.2"/>
+          <text x="159" y="139" text-anchor="middle" font-size="20" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">4/4 = 1 · 0/4 = 0</text></g>
+        </svg>`)+
+        wkSml('дробь с равными числителем и знаменателем равна 1 · ноль долек — 0'));
     } else {
-      h=wkFrame(wkBig('Проверь себя 📝')+
-        wkHero(`<div class="wk-row" style="gap:16px"><div>${bar(4,4,'e',{w:140,h:36})}${cap('целая плитка 4/4')}</div><div style="display:flex;gap:4px">${[0,1,2].map(i=>`<div class="wk-grow" style="animation-delay:${(0.2+i*0.1).toFixed(2)}s;width:18px;height:34px;border-radius:5px;background:#8a5a2e;border:1.5px solid #ffd76a;margin-top:2px"></div>`).join('')}</div>${cap('+ 3/4')}</div>`)+
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: плитки и дольки</div>`+
+        wkHero(`<svg viewBox="0 0 318 120" style="display:block;width:100%;height:auto">
+          <g transform="translate(24,20)">${choc(4,4,{w:130,h:34})}</g>
+          <g class="c5slide" style="--sx:-60px;animation-delay:.2s"><g transform="translate(160,20)">${choc(4,3,{w:136,h:34})}</g></g>
+          <text x="159" y="86" text-anchor="middle" font-size="18" fill="#fff" font-weight="bold" font-family="Georgia,serif">7/4 = 1 3/4</text>
+        </svg>`)+
         quiz(lk,st)+
-        wkSml('7/4 = 1 3/4. Жми «Понял! Проверю себя»!'));
+        wkSml('7 : 4 = 1 (ост. 3) · жми «Понял! Проверю себя»'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
@@ -2228,11 +2425,19 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     st.sel=i; chRender(0);
   }
   window.visW179T=visW179T;
+  function visW179T3(lk,i){
+    const st=CHS[lk]||(CHS[lk]={});
+    st.ans=i; chRender(0);
+  }
+  window.visW179T3=visW179T3;
   function visW179Act(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go') st.sh=1;
     if(act==='s1') st.s1=1;
-    if(act==='s2') st.show=1;
-    if(act==='n'){ st.d=(st.d==null?0:st.d)+1; st.s1=st.show=0; }
+    if(act==='s2') st.s2=1;
+    if(act==='n'){ st.tr=(st.tr==null?0:st.tr)+1; st.s1=0; st.s2=0; }
+    if(act==='nx'){ st.pick=(st.pick==null?0:st.pick)+1; st.ans=null; }
+    if(act==='again'){ st.ans=null; }
     if(act==='nq'){ st.q=1; st.sel=null; }
     if(act==='rst') CHS[lk]={};
     chRender(0);
@@ -2240,6 +2445,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW179Act=visW179Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===179){ window.ARH_LESSONS[i]=L179; break; } } })();
 })();
+
 /* ================= УРОК 13 · Чётность: суммы и произведения (v6, крупные SVG, больше слайдов) ================= */
 (function(){
   if(!window.__wk13v6css){
