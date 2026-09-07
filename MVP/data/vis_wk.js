@@ -9404,3 +9404,530 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW195Act=visW195Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===195){ window.ARH_LESSONS[i]=L195; break; } } })();
 })();
+
+/* ================= УРОК 388 · Разрезания и площади (v1 · «Клетчатая мастерская Архимеда», 18 слайдов) ================= */
+(function(){
+  if(!window.__wk388v1css){
+    window.__wk388v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .k7in{animation:k7In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes k7In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .k7pop{animation:k7Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k7Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .k7cell{animation:k7Cell .5s ease both;}'+
+      '@keyframes k7Cell{0%{opacity:0}100%{opacity:1}}'+
+      '#lvis .k7slide{animation:k7Slide 1s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
+      '@keyframes k7Slide{from{transform:translate(var(--tx),var(--ty));opacity:0}to{transform:translate(0,0);opacity:1}}'+
+      '#lvis .k7dash{stroke-dasharray:8 6;animation:k7Dash 1.5s linear infinite;}'+
+      '@keyframes k7Dash{to{stroke-dashoffset:-28}}'+
+      '#lvis .k7bump{animation:k7Bump 1s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k7Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}';
+    document.head.appendChild(st);
+  }
+  const L388 = {
+    id: 388, title: 'Разрезания и площади', ico: '▦',
+    src: 'Математика · 5–6 класс · Олимп-5: клетки', subj: 'math',
+    explain: [
+      'На клетчатой бумаге площадь измеряют клетками: клетка 1×1 — это единица площади. Прямоугольник, разрезание, перекладывание — всё видно по клеткам!',
+      'Площадь прямоугольника — число клеток внутри: посчитай клетки в одной строке и умножь на число строк. Прямоугольник 4 на 3: 4 · 3 = 12 клеток.',
+      'Большой прямоугольник 6 на 4 имеет площадь 6 · 4 = 24 клетки. Считать удобно полосками: 6 полосок по 4 клетки.',
+      'Разрежем его на квадраты 2×2. Площадь одного квадрата 2 · 2 = 4 клетки. Число квадратов = 24 : 4 = 6 — площадь делим на площадь одного!',
+      'Общий способ: число квадратов = площадь фигуры : площадь одного квадрата. Ничего не вырезая, просто делим площади!',
+      'Полоска 1×5 — это 5 клеток. Сложим три такие полоски друг на друга — получится прямоугольник 3×5: 3 · 5 = 15 клеток. Складываем полоски — получаем площадь.',
+      'Квадрат 5×5: в каждой из 5 строк по 5 клеток, всего 5 · 5 = 25 клеток. Квадрат — это число, умноженное само на себя!',
+      'Для квадрата площадь = сторона · сторона: 5·5 = 25, 4·4 = 16, 3·3 = 9. Такие числа называют квадратными.',
+      'Разрезание по прямой: разрежем прямоугольник 6×4 на полосы 1×6 — получится 4 полосы по 6 клеток. Площадь не изменилась: 4 · 6 = 24.',
+      'Диагональ делит прямоугольник на два равных треугольника. У 6×4 площадь каждого треугольника 24 : 2 = 12 клеток — половина.',
+      'Перекладывание: прямоугольник 4×3 разрежем на два прямоугольника 2×3 и переложим их — получится прямоугольник 2×6. Площадь та же: 12 = 12!',
+      'Фигуру со «ступенькой» удобно разбивать на части. Фигура из квадрата 2×2 и клетки — это 5 клеток: 2·2 + 1 = 5.',
+      'Другой способ — вычитать: квадрат 3×3 без угловой клетки имеет площадь 3·3 − 1 = 8 клеток. Разрезание мысленно — тоже разрезание!',
+      'Тренажёр-резак: дан прямоугольник и размер квадрата. Посчитай площадь фигуры и раздели на площадь квадрата. Кнопки проведут по шагам!',
+      'Квадратные числа: 2² = 4, 3² = 9, 4² = 16, 5² = 25 — нарисуй квадраты на клетках и сосчитай. Шаг всегда один: сторона · сторона.',
+      'Проверь себя устно: 5×5 = 25 клеток; 3 полоски по 5 = 15; 6×4 на квадраты 2×2 даёт 6 квадратов.',
+      'Шпаргалка: площадь прямоугольника = длина · ширина (в клетках); площадь квадрата = сторона · сторона; число квадратов = площадь : площадь квадрата; разрезание и перекладывание площадь не меняют.',
+      'Проверь себя: 6×4 разрезали на квадраты 2×2 — сколько квадратов? Считаем: 24 : 4 = 6. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Прямоугольник 6×4 разрезали на квадраты 2×2. Сколько квадратов?', choices: ['6', '8', '12', '4'], ans: 0,
+      exp: 'Площадь 24 : 4 = 6 квадратов.' },
+    tasks: [
+      { q: 'Площадь фигуры из 3 полосок по 5 клеток?', kind: 'unit', ans: 15, tol: 0,
+        hints: ['Каждая полоска — 5 клеток.', '3 · 5 = 15 клеток.'], sol: '3 · 5 = 15.' },
+      { q: 'Сколько квадратиков 1×1 в квадрате 5×5?', kind: 'choice', choices: ['25', '20', '10', '5'], ans: 0, tol: 0,
+        hints: ['В каждой строке 5 клеток, строк 5.', '5 · 5 = 25.'], sol: '5 · 5 = 25.' }
+    ]
+  };
+  const I={ink:'#28324b',blue:'#2e6db4',fb:'rgba(46,109,180,.16)',grn:'#2e8b57',fg:'rgba(46,139,87,.15)',gold:'#d99a06',red:'#c0392b',org:'#e8833a',vio:'#7d5bb0'};
+  const U=20;
+  function paper(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs><linearGradient id="k7pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfbf4"/><stop offset="1" stop-color="#f1f6fd"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#k7pg)"/>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#c8d3e5" stroke-width="2" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||I.ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdfbf4" stroke-width="3.2">${t}</text>`;
+  /* клетчатая фигура: сетка cols×rows клеток по u, левый верхний угол (x,y) */
+  function fig(x,y,cols,rows,u,opt){
+    const o=opt||{};
+    const W=cols*u, H=rows*u;
+    let s='';
+    for(let i=0;i<=cols;i++) s+=`<line x1="${x+i*u}" y1="${y}" x2="${x+i*u}" y2="${y+H}" stroke="rgba(120,150,195,.35)" stroke-width="1"/>`;
+    for(let j=0;j<=rows;j++) s+=`<line x1="${x}" y1="${y+j*u}" x2="${x+W}" y2="${y+j*u}" stroke="rgba(120,150,195,.35)" stroke-width="1"/>`;
+    s+=`<rect x="${x}" y="${y}" width="${W}" height="${H}" fill="none" stroke="${o.stroke||I.ink}" stroke-width="2.6"/>`;
+    if(o.sh){
+      for(const c of o.sh){
+        if(!c||!c.length) continue;
+        for(const cell of c){
+          s+=`<rect class="k7cell" x="${x+cell[0]*u+0.7}" y="${y+cell[1]*u+0.7}" width="${u-1.4}" height="${u-1.4}" fill="${cell[2]||o.shc||'rgba(46,109,180,.3)'}" style="animation-delay:${(o.d0||0.05+cell[1]*rows*0.012+cell[0]*0.012).toFixed(3)}s"/>`;
+        }
+      }
+    }
+    if(o.blk){ // жирная сетка крупных блоков: [bw,bh]
+      const bw=o.blk[0], bh=o.blk[1];
+      for(let i=0;i<=cols/bw;i++) for(let j=0;j<=rows/bh;j++){
+        if(i<cols/bw||true){
+          s+=`<rect x="${x+i*bw*u}" y="${y+j*bh*u}" width="${bw*u}" height="${bh*u}" fill="none" stroke="${o.blkC||I.grn}" stroke-width="2.2"/>`;
+        }
+      }
+      if(o.blkColor){ // закрасить блоки
+        for(let i=0;i<cols/bw;i++) for(let j=0;j<rows/bh;j++){
+          s+=`<rect x="${x+i*bw*u+2}" y="${y+j*bh*u+2}" width="${bw*u-4}" height="${bh*u-4}" fill="${o.blkColor}" opacity=".22"/>`;
+        }
+      }
+    }
+    return s;
+  }
+  const chip=(t,c,delay,fs)=>`<span class="k7in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(255,255,255,.8);font-family:Georgia,serif;font-size:${fs||19}px;color:${c};font-weight:bold">${t}</span>`;
+  const Q388=[
+    {q:'6×4 разрезали на квадраты 2×2. Сколько квадратов?',opts:['6','8','12','4'],ans:0},
+    {q:'Сколько клеток в квадрате 5×5?',opts:['25','20','10','5'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q388[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.8)',bd='#b9c6d8',tc='#28324b';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(46,139,87,.16)':'rgba(192,57,43,.13)'; bd=i===T.ans?I.grn:I.red; tc=i===T.ans?I.grn:I.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:52px;font-size:17px" onclick="visW388T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! 5·5 = 25</div>':'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! 24 : 4 = 6</div>')
+        : '<div class="wk-ans" style="color:#c0392b;font-size:15px">Не так · площадь подели на площадь квадрата</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW388Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW388Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#5c6b85')}<div class="wk-row" style="gap:7px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW388(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step===0){ st.go=0; }
+      if(step===1){ st.go=0; }
+      if(step===2){ st.go=0; }
+      if(step===3){ st.go=0; }
+      if(step===5){ st.go=0; }
+      if(step===8){ st.go=0; }
+      if(step===9){ st.go=0; }
+      if(step===10){ st.go=0; }
+      if(step===12){ st.go=0; }
+      if(step===13){ if(st.tr==null) st.tr=0; st.go=0; }
+      if(step===14){ st.go=0; }
+      if(step===16){ st.go=0; }
+      if(step===17){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=185;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect x="132" y="54" width="54" height="54" fill="${I.fb}" stroke="${I.blue}" stroke-width="3"/>`;
+      inner+=tx(159,88,24,I.blue,'1',{georgia:1,b:1});
+      inner+=tx(159,124,13.5,I.ink,'1 клетка — единица площади',{b:1});
+      if(go){
+        inner+=`<g class="k7pop" style="animation-delay:.15s"><rect x="54" y="70" width="54" height="54" fill="${I.fg}" stroke="${I.grn}" stroke-width="2.2"/>
+        ${tx(81,104,20,I.grn,'1',{georgia:1,b:1})}
+        <rect x="210" y="70" width="54" height="54" fill="rgba(217,154,6,.2)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(237,104,20,I.gold,'1',{georgia:1,b:1})}
+        ${tx(159,158,14.5,I.ink,'все клетки одинаковые · площадь = их число',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Считаем площадь клетками</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('клетка 1×1 — как см²',I.blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW388Act('${lk}','rst')`):wkBtn('что такое клетка-единица?',`visW388Act('${lk}','go')`))+
+        wkSml('прямоугольники и разрезания — всё по клеткам'));
+    } else if(step===1){
+      const H=185, u=22, cols=4, rows=3, x0=92, y0=60;
+      const go=st.go||0;
+      let inner='';
+      let sh=[]; const shg=[];
+      if(go>=1){ for(let c=0;c<cols;c++) shg.push([c,0,I.grn]); }
+      if(go>=2){ for(let c=0;c<cols;c++) shg.push([c,1,I.gold],[c,2,I.gold]); }
+      inner+=fig(x0,y0,cols,rows,u,{sh:go?[shg]:undefined,shc:I.fb});
+      if(go>=1){
+        inner+=`<g class="k7pop"><rect x="216" y="64" width="90" height="52" rx="10" fill="${I.fg}" stroke="${I.grn}" stroke-width="2.2"/>
+        ${tx(261,82,13.5,I.grn,'1 строка',{b:1})}
+        ${tx(261,106,22,I.grn,'4 клетки',{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k7pop"><rect x="216" y="122" width="90" height="50" rx="10" fill="rgba(217,154,6,.15)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(261,140,13,'#a37408','3 строки по 4',{b:1})}
+        ${tx(261,164,22,I.gold,'S = 12',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Прямоугольник 4 на 3</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('S = длина · ширина = 4·3 = 12',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · одна строка',`visW388Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · все строки',`visW388Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW388Act('${lk}','rst')`):'')+
+        wkSml('число клеток в строке × число строк'));
+    } else if(step===2){
+      const H=185, u=17, cols=6, rows=4, x0=95, y0=60;
+      const go=st.go||0;
+      let inner='';
+      const shg=[];
+      if(go>=1){ for(let c=0;c<cols;c++) shg.push([c,0,I.blue]); }
+      if(go>=2){ for(let c=0;c<cols;c++) for(let r=1;r<rows;r++) shg.push([c,r,'rgba(46,109,180,.1)']); }
+      inner+=fig(x0,y0,cols,rows,u,{sh:go?[shg]:undefined});
+      if(go>=1){
+        inner+=`<g class="k7pop"><text x="240" y="86" text-anchor="middle" font-size="17" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">полоска = 6</text>
+        ${tx(240,112,13,I.ink,'6 клеток в строке',{})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k7pop"><rect x="206" y="128" width="100" height="42" rx="10" fill="rgba(217,154,6,.14)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(256,156,20,I.gold,'S = 24',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Прямоугольник 6 на 4</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('4 полоски по 6 клеток · 4·6 = 24',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · полоска',`visW388Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · 4 полоски',`visW388Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW388Act('${lk}','rst')`):'')+
+        wkSml('площадь 24 клетки — будем резать на квадраты'));
+    } else if(step===3){
+      const H=195, u=17, cols=6, rows=4, x0=88, y0=58;
+      const go=st.go||0;
+      let inner='';
+      inner+=fig(x0,y0,cols,rows,u,{blk:[2,2],blkColor:'rgba(46,139,87,.25)'});
+      if(go>=1){
+        inner+=`<g class="k7pop"><text x="240" y="86" text-anchor="middle" font-size="16" fill="${I.grn}" font-weight="bold" font-family="Georgia,serif">квадрат 2×2</text>
+        ${tx(240,112,13,I.ink,'его площадь = 4',{b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k7pop"><rect x="206" y="130" width="100" height="44" rx="10" fill="rgba(217,154,6,.15)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(256,152,13,'#a37408','24 : 4',{b:1})}
+        ${tx(256,168,24,I.gold,'= 6',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Режем 6×4 на квадраты 2×2</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('внутри ровно 6 квадратов 2×2',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · один квадрат',`visW388Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · сколько всего?',`visW388Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW388Act('${lk}','rst')`):'')+
+        wkSml('6 по ширине и 4 по высоте: по 3 квадрата в строке'));
+    } else if(step===4){
+      const H=180;
+      let inner='';
+      inner+=`<rect x="40" y="52" width="238" height="76" rx="12" fill="rgba(255,255,255,.9)" stroke="${I.ink}" stroke-width="2"/>
+      ${tx(159,80,20,I.ink,'число квадратов',{georgia:1,b:1})}
+      ${tx(159,114,20,I.blue,'= S : S квадрата',{georgia:1,b:1})}`;
+      inner+=tx(159,158,15,I.grn,'24 : 4 = 6 · ничего не вырезаем',{b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Общий способ</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('площадь поделить на площадь одного',I.blue,0.2))+
+        wkSml('удобно: не резать, а делить площади'));
+    } else if(step===5){
+      const H=185, u=20, cols=5, rows=3, x0=88, y0=58;
+      const go=st.go||0;
+      let inner='';
+      const shades=[[],[],[]];
+      for(let r=0;r<rows;r++) for(let c=0;c<cols;c++) shades[r].push([c,r,r===0?I.grn:(r===1?I.gold:I.vio)]);
+      const showR=Math.min(go+1,rows);
+      const shVisible=[];
+      for(let r=0;r<showR;r++) shVisible.push(shades[r]);
+      inner+=fig(x0,y0,cols,rows,u,{sh:go?shVisible:undefined});
+      if(go>=0){
+        inner+=`<g class="k7pop"><rect x="212" y="70" width="92" height="86" rx="10" fill="rgba(255,255,255,.92)" stroke="${I.blue}" stroke-width="2"/>
+        ${tx(258,92,14,I.ink,'полоска 1×5',{b:1})}
+        ${tx(258,116,22,I.blue,String((go+1)*5),{georgia:1,b:1})}
+        ${tx(258,140,13,'#8a94ad','клеток',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Три полоски по 5</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('5 + 5 + 5 = 15 · или 3·5',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · положить полоску',`visW388Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · ещё полоску',`visW388Act('${lk}','go')`) : '',
+          go===2?wkBtn('3 · ещё одну',`visW388Act('${lk}','go')`) : '',
+          go>=3?wkBtn('сброс',`visW388Act('${lk}','rst')`):'')+
+        wkSml('прямоугольник 3×5 · площадь 15 клеток'));
+    } else if(step===6){
+      const H=195, u=17, s=5, x0=96, y0=58;
+      const go=st.go||0;
+      let inner='';
+      const sh=[]; const rowsShown=go+1;
+      for(let r=0;r<Math.min(rowsShown,s);r++) for(let c=0;c<s;c++) sh.push([c,r,r===0?I.blue:I.fb]);
+      inner+=fig(x0,y0,s,s,u,{sh:sh.length?[sh]:undefined});
+      if(go>=1){
+        inner+=`<g class="k7pop"><rect x="206" y="86" width="98" height="58" rx="10" fill="rgba(217,154,6,.14)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(255,106,13.5,'#a37408','5 строк по 5',{b:1})}
+        ${tx(255,134,26,I.gold,'25',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Квадрат 5×5</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=1?wkRow(chip('5 · 5 = 25 клеток',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('показать строки',`visW388Act('${lk}','go')`) : '',
+          go>=1?wkBtn('сброс',`visW388Act('${lk}','rst')`):'')+
+        wkSml('5² = 25 — квадрат числа'));
+    } else if(step===7){
+      const H=185;
+      const cards=[[2,4],[3,9],[4,16],[5,25]];
+      let inner='';
+      const u2=14;
+      const xs=[30,92,154,216];
+      cards.forEach((c,i)=>{
+        const s=c[0];
+        inner+=`<g class="k7pop" style="animation-delay:${(i*0.12).toFixed(2)}s">${fig(xs[i],58,s,s,u2,{})}
+        ${tx(xs[i]+s*u2/2,58+s*u2+16,14,I.ink,s+'·'+s+' = '+c[1],{georgia:1,b:1})}</g>`;
+      });
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Квадратные числа</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('2²=4 · 3²=9 · 4²=16 · 5²=25',I.grn,0.2))+
+        wkSml('квадрат числа — площадь квадрата со стороной n'));
+    } else if(step===8){
+      const H=185, u=17, cols=6, rows=4, x0=60, y0=54;
+      const go=st.go||0;
+      let inner='';
+      if(go===0){
+        inner+=fig(x0,y0,cols,rows,u,{stroke:I.ink});
+      } else {
+        // 4 полосы 1×6
+        for(let r=0;r<4;r++){
+          const col=r===0?I.blue:(r===1?I.grn:(r===2?I.gold:I.vio));
+          inner+=`<g class="k7slide" style="--tx:0px;--ty:${(go===2&&r===3)?'16px':'0px'};animation-delay:${(r*0.1).toFixed(2)}s"><rect x="${x0}" y="${y0+r*u}" width="${6*u}" height="${u-1}" fill="${col}" opacity=".25"/>
+          <text x="${x0+6*u+8}" y="${y0+r*u+13}" text-anchor="start" font-size="12" fill="${col}" font-weight="bold">${go===2?'+6':''}</text></g>`;
+        }
+        inner+=`<rect x="${x0}" y="${y0}" width="${6*u}" height="${4*u}" fill="none" stroke="${I.ink}" stroke-width="2.6"/>`;
+        if(go===2){
+          inner+=`<g class="k7pop"><rect x="238" y="78" width="70" height="56" rx="10" fill="rgba(217,154,6,.14)" stroke="${I.gold}" stroke-width="2.2"/>
+          ${tx(273,98,13,'#a37408','4·6',{b:1})}
+          ${tx(273,124,24,I.gold,'24',{georgia:1,b:1})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Разрезали на полосы 1×6</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go===2?wkRow(chip('4 полосы по 6 · площадь та же 24',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · разрезать',`visW388Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · посчитать',`visW388Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW388Act('${lk}','rst')`):'')+
+        wkSml('разрезание площадь не меняет'));
+    } else if(step===9){
+      const H=185, u=17, cols=6, rows=4, x0=64, y0=56;
+      const go=st.go||0;
+      let inner='';
+      inner+=fig(x0,y0,cols,rows,u,{});
+      if(go>=1){
+        inner+=`<line x1="${x0}" y1="${y0}" x2="${x0+cols*u}" y2="${y0+rows*u}" stroke="${I.red}" stroke-width="2.6" stroke-dasharray="9 6"/>`;
+      }
+      if(go>=2){
+        const pts=[[x0,y0,x0+cols*u,y0+rows*u]];
+        inner+=`<path d="M ${x0} ${y0} L ${x0+cols*u} ${y0+rows*u} L ${x0} ${y0+rows*u} Z" fill="${I.fb}" stroke="none"/>`;
+        inner+=tx(x0+46,y0+rows*u-14,13.5,I.blue,'треугольник',{b:1});
+        inner+=`<g class="k7pop"><rect x="214" y="86" width="92" height="52" rx="10" fill="rgba(217,154,6,.14)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(260,106,13,'#a37408','24 : 2',{b:1})}
+        ${tx(260,130,24,I.gold,'= 12',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Диагональ делит пополам</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('два равных треугольника по 12 клеток',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · провести диагональ',`visW388Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · площадь половины',`visW388Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW388Act('${lk}','rst')`):'')+
+        wkSml('каждый треугольник — половина прямоугольника'));
+    } else if(step===10){
+      const H=190;
+      const go=st.go||0;
+      const u=20;
+      let inner='';
+      if(go===0){
+        inner+=fig(60,60,4,3,u,{});
+        inner+=tx(120,60+3*u+18,14,I.ink,'4 × 3 = 12 клеток',{georgia:1,b:1});
+      } else {
+        inner+=`<g class="k7slide" style="--tx:0px;--ty:0px"><rect x="60" y="60" width="${2*u}" height="${3*u}" fill="${I.fb}" stroke="${I.ink}" stroke-width="2.4"/>
+        ${tx(80,60+3*u+18,13,I.blue,'2×3',{georgia:1,b:1})}</g>`;
+        inner+=`<g class="k7slide" style="--tx:0px;--ty:0px;animation-delay:.15s"><rect x="${60+2*u}" y="60" width="${2*u}" height="${3*u}" fill="rgba(46,139,87,.15)" stroke="${I.ink}" stroke-width="2.4"/>
+        ${tx(100+2*u,60+3*u+18,13,I.grn,'2×3',{georgia:1,b:1})}</g>`;
+        if(go>=2){
+          inner+=`<g class="k7slide" style="--tx:80px;--ty:0px;animation-delay:.25s"><rect x="212" y="92" width="${4*u}" height="${2*u}" fill="${I.fg}" stroke="${I.grn}" stroke-width="2.4"/>
+          ${tx(252,92+2*u+18,13,I.grn,'2 × 6',{georgia:1,b:1})}</g>`;
+          inner+=tx(232,80,14,I.ink,'переложили',{b:1});
+          inner+=`<g class="k7pop" style="animation-delay:.5s"><text x="159" y="176" text-anchor="middle" font-size="16" fill="${I.gold}" font-weight="bold" font-family="Georgia,serif">12 = 12 · площадь та же!</text></g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Перекладывание частей</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('4×3 → 2×6 · 12 клеток',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · разрезать пополам',`visW388Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · переложить',`visW388Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW388Act('${lk}','rst')`):'')+
+        wkSml('перекладываем части — площадь не меняется'));
+    } else if(step===11){
+      const H=185, u=22, x0=92, y0=56;
+      const go=st.go||0;
+      let inner='';
+      // фигура: квадрат 2×2 + клетка справа (всего 5)
+      const cells=[[0,0,'rgba(46,109,180,.3)'],[1,0,'rgba(46,109,180,.3)'],[0,1,'rgba(46,109,180,.3)'],[1,1,'rgba(46,109,180,.3)'],[2,1,'rgba(46,139,87,.3)']];
+      inner+=fig(x0,y0,3,2,u,{sh:[cells]});
+      if(go>=1){
+        inner+=`<g class="k7pop"><text x="240" y="92" text-anchor="middle" font-size="17" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">2·2 + 1</text>
+        ${tx(240,118,14,I.ink,'квадрат + клетка',{})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k7pop"><rect x="206" y="132" width="100" height="40" rx="10" fill="rgba(217,154,6,.14)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(256,158,22,I.gold,'= 5',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Фигура со «ступенькой»</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('4 + 1 = 5 клеток',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · разбить на части',`visW388Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · сложить',`visW388Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW388Act('${lk}','rst')`):'')+
+        wkSml('разбиваем «ступеньку» на квадрат и клетку'));
+    } else if(step===12){
+      const H=185, u=22, x0=92, y0=52;
+      const go=st.go||0;
+      let inner='';
+      // квадрат 3×3 с вырезанным углом: рисуем 3×3, угол не закрашен
+      const cells=[];
+      for(let r=0;r<3;r++) for(let c=0;c<3;c++){ if(r<2||c<2) cells.push([c,r,'rgba(46,109,180,.3)']); }
+      inner+=fig(x0,y0,3,3,u,{sh:[cells]});
+      inner+=tx(x0+3*u/2,y0+3*u+18,14,I.ink,'3×3 минус 1 клетка',{b:1});
+      if(go>=1){
+        inner+=`<g class="k7pop"><text x="236" y="96" text-anchor="middle" font-size="18" fill="${I.red}" font-weight="bold" font-family="Georgia,serif">9 − 1 = 8</text>
+        ${tx(236,122,13.5,I.ink,'вычитаем вырезанное',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Вычитание — тоже способ</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('3·3 = 9 · 9 − 1 = 8 клеток',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW388Act('${lk}','rst')`):wkBtn('посчитать',`visW388Act('${lk}','go')`))+
+        wkSml('из большого квадрата вычли уголок'));
+    } else if(step===13){
+      const H=212;
+      if(st.tr==null) st.tr=0;
+      const pool=[[8,6,2,2],[10,4,2,2],[6,6,3,3],[9,4,3,3]];
+      const [cw,chh,bw,bh]=pool[st.tr%pool.length];
+      const area=cw*chh, bs=bw*bh, cnt=area/bs;
+      const go=st.go||0;
+      const u=Math.min(16,Math.floor(150/Math.max(cw,chh)));
+      const Wpx=cw*u, Hpx=chh*u;
+      const x0=Math.round((300-Wpx)/2), y0=44;
+      let inner='';
+      inner+=fig(x0,y0,cw,chh,u,{blk:[bw,bh],blkColor:'rgba(46,139,87,.25)'});
+      inner+=tx(159,y0+Hpx+22,14.5,I.ink,cw+'×'+chh+' режем на квадраты '+bw+'×'+bh,{b:1});
+      if(go>=1){
+        inner+=`<g class="k7pop">${tx(159,184,16,I.blue,'площадь '+cw+'×'+chh+' = '+area+' · квадрат '+bw+'×'+bh+' = '+bs,{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k7pop" style="animation-delay:.15s">${tx(159,204,24,I.gold,'квадратов: '+cnt,{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр-резак</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip(area+' : '+bs+' = '+cnt,I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · площади',`visW388Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · разделить',`visW388Act('${lk}','go')`) : '',
+          go>=2?wkBtn('новый пример',`visW388Act('${lk}','n')`) : '',
+          go>=1?wkBtn('заново',`visW388Act('${lk}','rst')`):'')+
+        wkSml('число квадратов = S : S квадрата'));
+    } else if(step===14){
+      const H=185;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,44,16,I.ink,'квадратные числа по клеткам',{b:1});
+      inner+=`<g class="k7pop">${fig(24,60,2,2,14,{})}${tx(38,60+2*14+14,13,I.ink,'2² = 4',{georgia:1,b:1})}</g>`;
+      inner+=`<g class="k7pop" style="animation-delay:.15s">${fig(102,60,3,3,14,{})}${tx(123,60+3*14+14,13,I.ink,'3² = 9',{georgia:1,b:1})}</g>`;
+      inner+=`<g class="k7pop" style="animation-delay:.3s">${fig(200,60,4,4,14,{})}${tx(228,60+4*14+14,13,I.ink,'4² = 16',{georgia:1,b:1})}</g>`;
+      if(go){
+        inner+=`<g class="k7pop"><rect x="196" y="126" width="108" height="44" rx="10" fill="rgba(217,154,6,.13)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(250,154,20,I.gold,'5² = 25',{georgia:1,b:1})}</g>`;
+        inner+=`<g class="k7pop" style="animation-delay:.2s">${fig(66,124,5,5,8,{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Квадраты на клетках</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('сторона · сторона',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW388Act('${lk}','rst')`):wkBtn('и 5²?',`visW388Act('${lk}','go')`))+
+        wkSml('5×5 = 25 · как в наших задачках'));
+    } else if(step===15){
+      const H=150;
+      let inner='';
+      inner+=tx(159,52,16,I.ink,'быстрые вопросы по клеткам',{b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('5×5 = 25 · 3 полоски по 5 = 15 · 6×4 : 4 = 6',I.grn,0.2))+
+        wkSml('три приёма: умножать, складывать полоски, делить площади'));
+    } else if(step===16){
+      const H=206;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect x="16" y="36" width="286" height="36" rx="10" fill="${I.fb}" stroke="${I.blue}" stroke-width="2.2"/>
+      ${tx(159,60,18,I.blue,'S = длина × ширина',{georgia:1,b:1})}`;
+      if(go>=1){
+        inner+=`<g class="k7pop"><rect x="16" y="80" width="286" height="34" rx="10" fill="${I.fg}" stroke="${I.grn}" stroke-width="2"/>
+        ${tx(159,103,18,I.grn,'S = сторона × сторона',{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k7pop"><rect x="16" y="122" width="286" height="34" rx="10" fill="rgba(217,154,6,.13)" stroke="${I.gold}" stroke-width="2"/>
+        ${tx(159,145,17,'#a37408','квадратов = S : S квадрата',{georgia:1,b:1})}</g>`;
+        inner+=`<g class="k7pop" style="animation-delay:.15s"><text x="159" y="182" text-anchor="middle" font-size="14" fill="${I.red}" font-weight="bold">перекладывать и резать можно —</text>
+        <text x="159" y="202" text-anchor="middle" font-size="14" fill="${I.red}" font-weight="bold">площадь от этого не меняется</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('считаем в клетках',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · прямоугольник',`visW388Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · квадрат',`visW388Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW388Act('${lk}','rst')`):'')+
+        wkSml('клетка = единица площади'));
+    } else {
+      const H=180;
+      let inner='';
+      inner+=fig(40,52,6,4,16,{blk:[2,2],blkColor:'rgba(46,139,87,.25)'});
+      inner+=`<rect x="186" y="60" width="118" height="72" rx="12" fill="rgba(255,255,255,.92)" stroke="${I.gold}" stroke-width="2.2"/>
+      ${tx(245,86,14,'#a37408','S = 24',{georgia:1,b:1})}
+      ${tx(245,110,14,'#a37408','24 : 4',{b:1})}
+      ${tx(245,126,26,I.gold,'= 6',{georgia:1,b:1})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('6×4 = 24 · 2×2 = 4 · 24 : 4 = 6'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[388]=visW388;
+  function visW388T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW388T=visW388T;
+  function visW388Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go'){ if(st.go!=null) st.go++; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; }
+    if(act==='nq'){ st.q=1; st.sel=null; }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW388Act=visW388Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===388){ window.ARH_LESSONS[i]=L388; break; } } })();
+})();
