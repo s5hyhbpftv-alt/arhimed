@@ -7557,71 +7557,131 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===178){ window.ARH_LESSONS[i]=L178; break; } } })();
 })();
 
-/* ================= УРОК 196 · Площадь круга (v2 · «Пиццерия Архимеда: секретный прямоугольник», 14 слайдов) ================= */
+/* ================= УРОК 196 · Площадь круга (v3 · ПОЛНАЯ переделка: учебниковый чертёж «Формула πr²», 18 слайдов) ================= */
 (function(){
-  if(!window.__wk196v2css){
-    window.__wk196v2css=1;
+  if(!window.__wk196v3css){
+    window.__wk196v3css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .c6in{animation:c6In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
-      '@keyframes c6In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .c6pop{animation:c6Pop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes c6Pop{0%{transform:scale(.1);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .c6slide{animation:c6Slide 1.1s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
-      '@keyframes c6Slide{from{transform:translateX(var(--dx));opacity:0}to{transform:translateX(0);opacity:1}}'+
-      '#lvis .c6seg{animation:c6Seg 1.2s ease both;transform-box:fill-box;}'+
-      '@keyframes c6Seg{from{transform:translate(var(--sx),var(--sy)) rotate(var(--sr));opacity:0}to{transform:none;opacity:1}}'+
-      '#lvis .c6float{animation:c6Float 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes c6Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}'+
-      '#lvis .c6bump{animation:c6Bump .85s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes c6Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}'+
-      '#lvis .c6dash{stroke-dasharray:8 6;animation:c6Dash .8s linear infinite;}'+
-      '@keyframes c6Dash{to{stroke-dashoffset:-28}}';
+      '#lvis .k5in{animation:k5In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes k5In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .k5pop{animation:k5Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k5Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .k5rad{animation:k5Rad .8s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k5Rad{from{transform:translate(0,0)}to{transform:translate(var(--dx),var(--dy))}}'+
+      '#lvis .k5rev{animation:k5Rev .8s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k5Rev{from{transform:translate(var(--dx),var(--dy))}to{transform:translate(0,0)}}'+
+      '#lvis .k5dash{stroke-dasharray:9 7;animation:k5Dash 1.6s linear infinite;}'+
+      '@keyframes k5Dash{to{stroke-dashoffset:-32}}'+
+      '#lvis .k5bump{animation:k5Bump 1s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k5Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}'+
+      '#lvis .k5pulse{animation:k5Pulse 1.8s ease-in-out infinite;}'+
+      '@keyframes k5Pulse{0%,100%{opacity:.35}50%{opacity:1}}';
     document.head.appendChild(st);
   }
   const L196 = {
-    id: 196, title: 'Площадь круга', ico: '◯',
+    id: 196, title: 'Площадь круга', ico: 'S',
     src: 'Математика · 6 класс · Площадь круга', subj: 'math',
     explain: [
-      'В пиццерии Архимеда пекут большие круглые пиццы. Сколько места занимает пицца? Длину обода мы уже умеем считать (2πr), а сколько квадратиков помещается ВНУТРИ круга — это площадь S. Сегодня раскроем её секрет!',
-      'Площадь круга — это сколько единичных квадратиков умещается внутри. У площади «квадратная» природа: измеряется в см², м² и т.д.',
-      'Формула: S = π · r². Здесь r² = r · r — радиус УМНОЖАЕТСЯ САМ НА СЕБЯ, а не на 2! Это ключ ко всей теме.',
-      'Что такое r²? Это площадь квадрата со стороной r: 3² = 9 клеток. Круг занимает примерно π таких квадратов!',
-      'Ловушка: r² — это НЕ 2r! 3² = 3·3 = 9, а 2·3 = 6 — это диаметр, а не квадрат. Квадрат — умножить на себя.',
-      'Считаем: радиус 3 → r² = 3·3 = 9, S = π·r² ≈ 3·9 = 27. Как в нашей проверке!',
-      'Откуда взялась формула? Разрежем круг на тонкие секторы — как пиццу на много-много кусочков.',
-      'Разрезали пиццу на две половинки, каждая — из «зубчатых» секторов: зубчики смотрят вверх-вниз.',
-      'Сцепим половинки зубчиками — получилась фигура, почти прямоугольник! В этом весь фокус.',
-      'Стороны прямоугольника: длина ≈ π·r (развёрнутые секторы — половина обода), высота = r (радиус).',
-      'Площадь прямоугольника = длина × высота = πr · r = πr². Вот и формула площади круга!',
-      'Задача 1: радиус 2 → r² = 4, S = 3·4 = 12. Задача 2: радиус 4 → r² = 16, S = 3·16 = 48.',
-      'Порядок действий: сначала радиус в квадрате (r·r), потом умножь на π (≈3). Быстро и без ошибок! Не путай с длиной обода: C = 2πr (в см), S = πr² (в см²).',
-      'Проверь себя: радиус 3 → S = 27. Ответь в тесте и жми «Понял! Проверю себя»!'
+      'Круг — это часть плоскости внутри окружности. Площадь круга показывает, сколько квадратных сантиметров помещается внутри него. Считать клеточки поштучно долго — для площади круга есть точная формула.',
+      'Радиус r соединяет центр круга с его границей. Важно не путать: окружность — это сама граница (её длину называют длиной окружности C), а круг — вся внутренность вместе с границей.',
+      'Сравним круг с квадратами. Круг радиуса r лежит внутри квадрата со стороной 2r: его площадь 4r². А внутри круга помещается квадрат с диагональю 2r: его площадь 2r². Значит, площадь круга S всегда между 2r² и 4r².',
+      'За единицу сравнения возьмём квадрат r × r — его площадь r². Измерения показывают: круг вмещает примерно 3,14 такого квадрата. Это число получило имя — π («пи»).',
+      'Число π ≈ 3,14159… — дробь бесконечная. В школьных задачах часто берут π ≈ 3. Тогда площадь круга легко прикинуть: S ≈ 3 · r².',
+      'Формула площади круга: S = π · r², читается «пи эр квадрат». Порядок действий: сначала радиус умножь сам на себя (r² = r · r), потом умножь на π.',
+      'Вычислим площадь круга радиуса 3. Шаг 1: r² = 3 · 3 = 9. Шаг 2: S = π · 9. При π ≈ 3 получаем S ≈ 27. Если взять π = 3,14, выйдет 28,26 — клеточный подсчёт даёт примерно 28 см².',
+      'Откуда взялась формула πr²? Разрежем круг на много равных секторов — как торт на тонкие кусочки. Начнём с 8 секторов, каждый похож на узкий треугольник.',
+      'Сложим секторы «ёлочкой»: первый остриём вверх, второй вниз, третий вверх и так далее. Получилась фигура, очень похожая на прямоугольник. Чем больше секторов, тем ровнее края.',
+      'Длина получившегося прямоугольника — это половина длины окружности, то есть πr (половина от 2πr). Высота прямоугольника равна радиусу r. Проверь по рисунку подписи сторон.',
+      'Площадь прямоугольника равна длине, умноженной на высоту: πr · r = πr². Но мы не теряли и не добавляли площадь, только перекладывали кусочки — значит, площадь круга тоже πr²!',
+      'Применим формулу к радиусу 2. Шаг 1: r² = 2 · 2 = 4. Шаг 2: S = π · 4. При π ≈ 3: S = 12. Точнее: 12,56 см². На клетчатой бумаге внутри круга радиуса 2 см помещается 12 полных клеток по 1 см².',
+      'Радиус 4: r² = 4 · 4 = 16, S = π · 16. При π ≈ 3: S = 48, при π = 3,14: S ≈ 50,24. Если дан диаметр d, сначала находим радиус: r = d : 2, а потом уже площадь.',
+      'Задача с диаметром: диаметр круга 6 см. Радиус r = 6 : 2 = 3 см. Площадь: r² = 9, S = π · 9 ≈ 3 · 9 = 27 см². Не забывай делить диаметр пополам!',
+      'Тренажёр: тебе дают радиус — сам выполни оба шага: сначала r² = r · r, затем умножь на π ≈ 3. Кнопки проведут тебя по шагам, а Архимед проверит ответ.',
+      'Ловушка: не путай длину окружности и площадь круга. C = 2πr — это длина обода, измеряется в сантиметрах (как лента вокруг круга). S = πr² — площадь внутри, в квадратных сантиметрах. При r = 3: C ≈ 18 см, а S ≈ 27 см².',
+      'Шпаргалка: S = π · r². Шаг 1 — r в квадрате (r · r); шаг 2 — умножить на π ≈ 3,14 (или 3). Единицы площади — см², м². Диаметр d = 2r, значит r = d : 2.',
+      'Проверь себя: площадь круга радиуса 3 при π ≈ 3 равна 27. Ответь в тесте и жми «Понял! Проверю себя» — там ждёт эта же задача.'
     ],
     check: { q: 'Чему равна площадь круга радиуса 3 (π ≈ 3)?', choices: ['9', '27', '18'], ans: 1,
-      exp: 'S = π·r² = 3·3·3 = 27.' },
+      exp: 'S = π·r² = 3 · 3 · 3 = 27.' },
     tasks: [
       { q: 'Чему равна площадь круга радиуса 2 (π ≈ 3)?', kind: 'unit', ans: 12, tol: 0,
-        hints: ['Сначала r·r = 4.', '3·4 = 12.'], sol: 'S = 3·2·2 = 12.' },
+        hints: ['Сначала r·r = 4.', '3 · 4 = 12.'], sol: 'S = 3 · 2 · 2 = 12.' },
       { q: 'Чему равна площадь круга радиуса 4 (π ≈ 3)?', kind: 'choice', choices: ['36', '48', '16'], ans: 1, tol: 0,
-        hints: ['4·4 = 16.', '3·16 = 48.'], sol: 'S = 3·4·4 = 48.' }
+        hints: ['4 · 4 = 16.', '3 · 16 = 48.'], sol: 'S = 3 · 4 · 4 = 48.' }
     ]
   };
-  const C6={crust:'#d9a441',cheese:'#ffdf8a',tomato:'#c0392b',bg:'#2f3a2f',table:'#6b4a2e',gold:'#ffd76a',green:'#8fd1a8',blue:'#7fd1ff'};
-  /* секторы, выезжающие в прямоугольник: sN — число секторов верхней, нижняя зеркальная */
-  function rectDemo(x,y,w,h,opt){
+  const I={ink:'#28324b',blue:'#2e6db4',fb:'rgba(46,109,180,.16)',grn:'#2e8b57',fg:'rgba(46,139,87,.15)',gold:'#d99a06',red:'#c0392b',gray:'#8a94ad'};
+  const U=20; /* 1 см = 20 единиц для клетчатых сцен */
+  /* лист: светлая бумага с тонкой сеткой (опция) */
+  function paper(W,H,opt){
     const o=opt||{};
-    const n=o.n||8; // зубцов на половинку
-    let s=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="${C6.gold}" stroke-width="2.4" stroke-dasharray="7 5"/>`;
-    const toothW=w/n, mid=y+h/2;
-    for(let i=0;i<n;i++){
-      const t0=x+i*toothW, t1=t0+toothW/2, t2=t0+toothW;
-      const dir=i%2===0? -1: 1;
-      s+=`<path d="M ${t0} ${mid} L ${t1} ${mid+dir*h*0.5} L ${t2} ${mid} Z" fill="${i%2?C6.cheese:C6.tomato}" stroke="${C6.crust}" stroke-width="1.6"/>`;
+    let grid='';
+    if(o.grid){
+      const s=o.grid;
+      for(let x=s;x<W;x+=s) grid+=`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="rgba(120,150,195,.22)" stroke-width="1"/>`;
+      for(let y=s;y<H;y+=s) grid+=`<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="rgba(120,150,195,.22)" stroke-width="1"/>`;
+    }
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs><linearGradient id="k5pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfbf4"/><stop offset="1" stop-color="#f2f6fd"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#k5pg)"/>
+      ${grid}
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#c8d3e5" stroke-width="2" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  /* текст с белым ореолом (читается поверх сетки) */
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||I.ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdfbf4" stroke-width="3.2">${t}</text>`;
+  const line=(x1,y1,x2,y2,c,w,opt)=>{
+    const o=opt||{};
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c||I.ink}" stroke-width="${w||2}"${o.dash?' stroke-dasharray="7 6"':''}${o.cls?` class="${o.cls}"`:''}/>`;
+  };
+  /* размерная стрелка: сегмент с засечками и подписью */
+  function dim(x1,y1,x2,y2,c,txt,o){
+    const opt=o||{};
+    const dx=x2-x1, dy=y2-y1, L=Math.hypot(dx,dy)||1;
+    const nx=-dy/L, ny=dx/L;
+    const off=(opt.off!=null?opt.off:12)*(opt.neg?-1:1);
+    const mx=(x1+x2)/2+nx*off, my=(y1+y2)/2+ny*off;
+    const ux=dx/L, uy=dy/L;
+    const tk=4;
+    let s=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="1.6"/>`;
+    s+=`<line x1="${x1-nx*tk}" y1="${y1-ny*tk}" x2="${x1+nx*tk}" y2="${y1+ny*tk}" stroke="${c}" stroke-width="1.6"/>`;
+    s+=`<line x1="${x2-nx*tk}" y1="${y2-ny*tk}" x2="${x2+nx*tk}" y2="${y2+ny*tk}" stroke="${c}" stroke-width="1.6"/>`;
+    const fs=(opt.fs!=null?opt.fs:14);
+    s+=tx(mx,my-4,fs,c,txt,{georgia:1,b:1});
+    return s;
+  }
+  /* окружность: заливка, обод, центр; радиус-стрелка от центра к ободу */
+  function circ(cx,cy,r,o){
+    const opt=o||{};
+    let s=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${opt.fill||'rgba(46,109,180,.13)'}" stroke="${opt.stroke||I.blue}" stroke-width="${opt.w||3}"/>`;
+    if(opt.dot!==false){ s+=`<circle cx="${cx}" cy="${cy}" r="2.6" fill="${I.ink}"/>`; }
+    if(opt.ra){
+      const ang=opt.ra.a!=null?opt.ra.a:(-40); // градусы, луч вправо-вверх по умолчанию
+      const rad=ang*Math.PI/180;
+      const ex=cx+r*Math.cos(rad), ey=cy+r*Math.sin(rad);
+      const mx=cx+r*0.5*Math.cos(rad), my=cy+r*0.5*Math.sin(rad);
+      const px=-Math.sin(rad), py=Math.cos(rad);
+      const ah=7;
+      s+=`<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" stroke="${opt.rac||I.red}" stroke-width="2"/>`;
+      s+=`<path d="M ${ex} ${ey} L ${ex-ah*Math.cos(rad)-ah*0.55*px} ${ey-ah*Math.sin(rad)-ah*0.55*py} M ${ex} ${ey} L ${ex-ah*Math.cos(rad)+ah*0.55*px} ${ey-ah*Math.sin(rad)+ah*0.55*py}" stroke="${opt.rac||I.red}" stroke-width="2" fill="none"/>`;
+      s+=tx(mx+px*11,my+py*11+4,opt.fs||16,opt.rac||I.red,opt.rlabel||'r',{georgia:1,b:1});
     }
     return s;
   }
-  const sign=(t,c,delay,fs)=>`<span class="c6in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 13px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.06);font-family:Georgia,serif;font-size:${fs||21}px;color:${c};font-weight:bold">${t}</span>`;
+  /* квадрат со стороной s, левый верхний угол x,y */
+  function sq(x,y,s,o){
+    const opt=o||{};
+    let r=`<rect x="${x}" y="${y}" width="${s}" height="${s}" fill="${opt.fill||'rgba(46,139,87,.15)'}" stroke="${opt.stroke||I.grn}" stroke-width="${opt.w||3}"${opt.dash?' stroke-dasharray="7 6"':''}/>`;
+    if(opt.label) r+=tx(x+s/2,y-8,opt.lfs||15,opt.stroke||I.grn,opt.label,{georgia:1,b:1});
+    if(opt.cross){ // диагонали
+      r+=`<line x1="${x}" y1="${y}" x2="${x+s}" y2="${y+s}" stroke="rgba(46,139,87,.5)" stroke-width="1.4" stroke-dasharray="4 4"/>`;
+      r+=`<line x1="${x+s}" y1="${y}" x2="${x}" y2="${y+s}" stroke="rgba(46,139,87,.5)" stroke-width="1.4" stroke-dasharray="4 4"/>`;
+    }
+    return r;
+  }
+  const chip=(t,c,delay,fs)=>`<span class="k5in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(255,255,255,.75);font-family:Georgia,serif;font-size:${fs||19}px;color:${c};font-weight:bold">${t}</span>`;
   const Q196=[
     {q:'Площадь круга радиуса 3 (π≈3)?',opts:['9','27','18'],ans:1},
     {q:'Площадь круга радиуса 4 (π≈3)?',opts:['36','48','16'],ans:1}
@@ -7629,273 +7689,435 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   function quiz(lk,st){
     const T=Q196[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?C6.green:C6.tomato; tc=i===T.ans?C6.green:C6.tomato; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:18px" onclick="visW196T('${lk}',${i})">${o}</button>`;
+      let bg='rgba(255,255,255,.8)',bd='#b9c6d8',tc='#28324b';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(46,139,87,.16)':'rgba(192,57,43,.13)'; bd=i===T.ans?I.grn:I.red; tc=i===T.ans?I.grn:I.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:62px;font-size:18px" onclick="visW196T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 4·4=16, π·16 ≈ 3·16 = 48</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 3·3=9, π·9 ≈ 3·9 = 27</div>')
-        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Сначала r·r, потом умножить на 3</div>';
+        ? (st.q===1?'<div class="wk-ans" style="color:#2e8b57;font-size:17px">Верно! 4·4 = 16, π·16 ≈ 3·16 = 48</div>':'<div class="wk-ans" style="color:#2e8b57;font-size:17px">Верно! 3·3 = 9, π·9 ≈ 3·9 = 27</div>')
+        : '<div class="wk-ans" style="color:#c0392b;font-size:16px">Не так. Сначала r·r, потом умножить на 3</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW196Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW196Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:9px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
-  }
-  /* сцена пиццерии */
-  function oven(inner,W,H,opt){
-    const o=opt||{};
-    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-      <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
-      <rect x="0" y="0" width="${W}" height="${H*0.16}" fill="#3f4f3f"/>
-      <text x="${W/2}" y="${H*0.16-10}" text-anchor="middle" font-size="14" fill="#ffe9c9" font-weight="bold">пиццерия Архимеда</text>
-      <rect x="0" y="${H-16}" width="${W}" height="16" fill="#c9a06a" opacity=".7"/>
-      ${inner}
-    </svg>`;
+    return `${wkNote(T.q,'#5c6b85')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW196(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
-      if(step===0){ st.act=0; }
-      if(step===3){ st.act=0; }
-      if(step===4){ st.act=0; }
-      if(step===6){ st.cut=0; }
-      if(step===7){ st.cut=0; }
-      if(step===8){ st.cut=0; }
-      if(step===12){ if(st.tr==null) st.tr=0; st.s1=0; st.s2=0; }
-      if(step===13){ st.sel=null; st.q=0; }
+      if(step===0){ st.go=0; }
+      if(step===2){ st.go=0; }
+      if(step===3){ st.go=0; }
+      if(step===6){ st.go=0; }
+      if(step===7){ st.go=0; st.sel=0; }
+      if(step===8){ if(st.n==null) st.n=8; st.go=0; st.mode=0; }
+      if(step===9){ st.go=0; }
+      if(step===11){ st.go=0; }
+      if(step===12){ st.go=0; }
+      if(step===13){ st.go=0; }
+      if(step===14){ if(st.tr==null) st.tr=0; st.go=0; }
+      if(step===15){ st.pick=null; }
+      if(step===16){ st.go=0; }
+      if(step===17){ st.sel=null; st.q=0; }
     }
     let h='';
+    const W=318;
     if(step===0){
-      const H=190, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сколько места у пиццы?</div>`+
-        wkHero(oven(`
-          <g class="c6float"><circle cx="100" cy="110" r="44" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/>
-          <circle cx="82" cy="98" r="5" fill="${C6.tomato}"/><circle cx="112" cy="122" r="6" fill="${C6.tomato}"/><circle cx="104" cy="92" r="4" fill="#4a8a3a"/><circle cx="90" cy="126" r="4" fill="#4a8a3a"/></g>
-          <g class="c6pop" style="animation-delay:.3s"><rect x="164" y="70" width="130" height="58" rx="12" fill="rgba(255,255,255,.1)" stroke="#ffd76a" stroke-width="2"/>
-            <text x="229" y="92" text-anchor="middle" font-size="13" fill="#ffe9c9">внутри круга</text>
-            <text x="229" y="118" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">квадратики</text></g>
-          <text x="159" y="170" text-anchor="middle" font-size="13" fill="#ffe9c9">сколько см² поместится внутри круга?</text>
-        `,W,H))+
-        wkRow(sign('S = π · r² — формула площади круга',C6.gold,0.5))+
-        wkSml('сначала разберёмся, что такое r²'));
+      const H=196, r=56, cx=159, cy=104;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(cx,cy,r,{ra:{a:-42},rlabel:'r = 3 см',rac:I.red,fs:16});
+      if(go){
+        inner+=`<g class="k5pulse"><rect x="${cx-r-6}" y="${cy-r-6}" width="${2*r+12}" height="${2*r+12}" fill="none" stroke="${I.blue}" stroke-width="1.4" stroke-dasharray="6 5"/></g>`;
+        inner+=tx(cx,cy+r+26,15,I.ink,'внутри — квадратики 1 × 1 см',{b:1});
+      }
+      inner+=tx(159,H-8,0,' ',' ');
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сколько места занимает круг?</div>`+
+        wkHero(paper(W,H,{grid:go?20:0,inner:()=>inner}))+
+        (go?wkRow(chip('площадь — сколько см² помещается внутри',I.blue,0.3)):'')+
+        wkRow(go?wkBtn('сброс',`visW196Act('${lk}','rst')`):wkBtn('показать мерную сетку',`visW196Act('${lk}','go')`))+
+        wkSml('у круга нет прямых сторон — клетки считать неудобно, нужна формула'));
     } else if(step===1){
-      const H=170, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Площадь = квадратики внутри</div>`+
-        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
-          <text x="159" y="24" text-anchor="middle" font-size="13" fill="#ffe9c9">квадратики 1×1 внутри круга</text>
-          <g class="c6seg" style="animation-delay:.1s"><circle cx="90" cy="100" r="46" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/></g>
-          <g class="c6seg" style="animation-delay:.4s">${[0,1,2,3,4,5,6,7].map(i=>`<rect x="${90-46+8+((i*37)%60)}" y="${100-46+8+((i*53)%70)}" width="8" height="8" fill="none" stroke="rgba(160,80,20,.5)" stroke-width="1.2"/>`).join('')}</g>
-          <g class="c6pop" style="animation-delay:.7s"><rect x="160" y="66" width="140" height="62" rx="12" fill="rgba(255,255,255,.12)" stroke="#ffd76a" stroke-width="2"/>
-            <text x="230" y="90" text-anchor="middle" font-size="14" fill="#ffe9c9">сколько таких</text>
-            <text x="230" y="114" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold">квадратиков?</text></g>
-        </svg>`)+
-        wkRow(sign('площадь в см² · м² — квадратные',C6.gold,0.4))+
-        wkSml('это и есть площадь: считаем квадратики'));
+      const H=185;
+      let inner='';
+      inner+=circ(82,104,46,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:4,dot:false});
+      inner+=tx(82,172,15,I.blue,'окружность',{b:1});
+      inner+=circ(236,104,46,{fill:I.fb,stroke:I.blue,w:3});
+      inner+=tx(236,172,15,I.grn,'круг',{b:1});
+      inner+=tx(82,66,13.5,I.ink,'это граница',{});
+      inner+=tx(236,66,13.5,I.ink,'это вся внутренность',{});
+      inner+=tx(159,138,19,I.grn,'S = π · r²',{georgia:1,b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Круг и окружность</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('площадь — это ВНУТРЕННЯЯ часть',I.blue,0.2))+
+        wkSml('длина границы C — в см · площадь S — в см²'));
     } else if(step===2){
-      const H=180, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">r² — радиус сам на себя</div>`+
-        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
-          <g class="c6seg"><rect x="46" y="40" width="80" height="80" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="3"/>
-            <text x="86" y="82" text-anchor="middle" font-size="26" fill="#8a5a2a" font-weight="bold">r²</text>
-            <line x1="46" y1="130" x2="126" y2="130" stroke="#ffd76a" stroke-width="2"/><text x="86" y="150" text-anchor="middle" font-size="12" fill="#ffe9c9">сторона r</text>
-            <line x1="126" y1="40" x2="126" y2="120" stroke="#ffd76a" stroke-width="2"/><text x="146" y="84" text-anchor="middle" font-size="12" fill="#ffe9c9">сторона r</text></g>
-          <g class="c6pop" style="animation-delay:.3s"><rect x="176" y="52" width="126" height="60" rx="12" fill="rgba(255,255,255,.12)" stroke="#ffd76a" stroke-width="2"/>
-            <text x="239" y="74" text-anchor="middle" font-size="14" fill="#ffe9c9">квадрат со стороной r</text>
-            <text x="239" y="100" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">r² = r · r</text></g>
-          <text x="159" y="172" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">3² = 3·3 = 9 клеток</text>
-        </svg>`)+
-        wkSml('r² — это площадь квадрата со стороной r'));
+      const H=190, r=46, cx=159, cy=104;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(cx,cy,r,{ra:{a:-60},rac:I.red,rlabel:'r',fs:15});
+      if(go>=1){
+        inner+=`<rect class="k5dash" x="${cx-r}" y="${cy-r}" width="${2*r}" height="${2*r}" fill="none" stroke="${I.blue}" stroke-width="2"/>`;
+        inner+=tx(cx,cy-r-10,15,I.blue,'квадрат 2r × 2r = 4r²',{b:1,georgia:1});
+      }
+      if(go>=2){
+        inner+=`<g class="k5pop"><rect x="${cx-r}" y="${cy-r}" width="${2*r}" height="${2*r}" fill="none" stroke="${I.grn}" stroke-width="2" transform="rotate(45 ${cx} ${cy})"/>`;
+        inner+=tx(cx+r+6,cy-4,14,I.grn,'вписанный: 2r²',{b:1,georgia:1});
+        inner+=tx(159,cy+r+30,15,I.red,'2r² < S < 4r²',{b:1,georgia:1});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Круг между двумя квадратами</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('площадь круга ≈ 3r² — посередине',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · описанный квадрат',`visW196Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · вписанный квадрат',`visW196Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW196Act('${lk}','rst')`):'')+
+        wkSml('круг больше «2r²», но меньше «4r²»'));
     } else if(step===3){
-      const H=180, W=318;
-      const sh=st.act===1;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Круг занимает π квадратов r×r</div>`+
-        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
-          <g class="c6seg" style="animation-delay:.1s"><circle cx="80" cy="100" r="40" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/></g>
-          <g class="c6seg" style="animation-delay:.3s"><rect x="48" y="68" width="64" height="64" fill="none" stroke="#ffd76a" stroke-width="2" stroke-dasharray="6 4"/></g>
-          <g class="c6pop" style="animation-delay:.5s"><rect x="166" y="52" width="136" height="92" rx="12" fill="rgba(255,255,255,.12)" stroke="#ffd76a" stroke-width="2"/>
-            <text x="234" y="74" text-anchor="middle" font-size="13" fill="#ffe9c9">круг вмещает</text>
-            <text x="234" y="98" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold">≈ π</text>
-            <text x="234" y="128" text-anchor="middle" font-size="13" fill="#ffe9c9">квадратов r×r</text></g>
-          <text x="159" y="171" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">π ≈ 3 → почти 3 квадрата</text>
-        </svg>`)+
-        (sh?wkRow(sign('S = π · r²',C6.gold,0.3)):'')+
-        wkRow(sh?wkBtn('сброс',`visW196Act('${lk}','rst')`):wkBtn('показать формулу',`visW196Act('${lk}','go')`))+
-        wkSml('π ≈ 3: круг — это примерно три таких квадрата'));
+      const H=180, r=50, sqx=46, sqy=74;
+      const go=st.go||0;
+      let inner='';
+      inner+=sq(sqx,sqy,r,{label:'площадь r²',fill:I.fg,stroke:I.grn});
+      inner+=circ(236,99,r,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3,dot:false});
+      inner+=tx(236,170,15,I.ink,'такой же радиус r',{b:1});
+      if(go){
+        inner+=`<g class="k5pop"><rect x="142" y="118" width="164" height="50" rx="9" fill="rgba(255,255,255,.85)" stroke="${I.gold}" stroke-width="2"/>
+        ${tx(224,137,15,I.ink,'круг ≈ 3,14 квадрата',{b:1})}
+        ${tx(224,160,13.5,I.ink,'со стороной r (площадь r²)',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Единица сравнения — квадрат r²</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('π ≈ 3,14 · сколько таких квадратов в круге',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW196Act('${lk}','rst')`):wkBtn('сколько таких квадратов?',`visW196Act('${lk}','go')`))+
+        wkSml('3,14 квадрата — это и есть число π'));
     } else if(step===4){
-      const H=180, W=318;
-      const sh=st.act===1;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ловушка: r² ≠ 2r!</div>`+
-        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
-          <g class="c6seg"><rect x="30" y="40" width="100" height="96" rx="12" fill="rgba(232,84,63,.12)" stroke="#e8543f" stroke-width="2.4"/>
-            <text x="80" y="62" text-anchor="middle" font-size="14" fill="#ff9a8a" font-weight="bold">r = 3</text>
-            <text x="80" y="94" text-anchor="middle" font-size="30" fill="#ff9a8a" font-weight="bold">r² = 9</text>
-            <text x="80" y="120" text-anchor="middle" font-size="13" fill="#ffcfc2">3 · 3 = 9</text></g>
-          <g class="c6seg" style="animation-delay:.2s"><rect x="176" y="40" width="112" height="96" rx="12" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="2.4"/>
-            <text x="232" y="62" text-anchor="middle" font-size="14" fill="#cfe0ff" font-weight="bold">2r = 6</text>
-            <text x="232" y="94" text-anchor="middle" font-size="30" fill="#cfe0ff" font-weight="bold">2·3</text>
-            <text x="232" y="120" text-anchor="middle" font-size="13" fill="#cfe0ff">это диаметр!</text></g>
-          ${sh?`<text x="159" y="162" text-anchor="middle" font-size="15" fill="#ff9a8a" font-weight="bold">9 ≠ 6 · квадрат — умножить на себя!</text>`:''}
-        </svg>`)+
-        (sh?wkRow(sign('r² = r·r · а 2r — диаметр',C6.gold,0.4)):'')+
-        wkRow(sh?wkBtn('сброс',`visW196Act('${lk}','rst')`):wkBtn('сравнить 9 и 6',`visW196Act('${lk}','go')`))+
-        wkSml('квадрат — умножить число на само себя, а не на 2'));
+      const H=170;
+      let inner='';
+      inner+=tx(159,56,26,I.gold,'π ≈ 3,14…',{georgia:1,b:1});
+      inner+=tx(159,96,15,I.ink,'бесконечная дробь · в задачах берут ≈ 3',{});
+      inner+=tx(159,130,20,I.grn,'S ≈ 3 · r²',{georgia:1,b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Число π</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('π = 3,1415926…',I.gold,0.2))+
+        wkSml('с π ≈ 3 считать легко: 3·9=27, 3·16=48'));
     } else if(step===5){
-      const H=170, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Считаем: радиус 3</div>`+
-        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
-          <g class="c6seg"><rect x="20" y="34" width="130" height="52" rx="12" fill="rgba(255,255,255,.1)" stroke="#7fd1ff" stroke-width="2.4"/>
-            <text x="85" y="52" text-anchor="middle" font-size="13" fill="#cfe0ff">шаг 1 · r²</text>
-            <text x="85" y="76" text-anchor="middle" font-size="20" fill="#7fd1ff" font-weight="bold">3 · 3 = 9</text></g>
-          <text class="c6seg" style="animation-delay:.2s" x="170" y="66" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold">×</text>
-          <g class="c6seg" style="animation-delay:.3s"><rect x="190" y="34" width="104" height="52" rx="12" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="2.4"/>
-            <text x="242" y="52" text-anchor="middle" font-size="13" fill="#ffe9c9">шаг 2 · π</text>
-            <text x="242" y="76" text-anchor="middle" font-size="20" fill="#ffd76a" font-weight="bold">≈ 3</text></g>
-          <g class="c6bump" style="animation-delay:.6s"><rect x="66" y="106" width="186" height="46" rx="14" fill="rgba(47,138,74,.18)" stroke="#2f8a4a" stroke-width="2.6"/>
-            <text x="159" y="135" text-anchor="middle" font-size="24" fill="#2f8a4a" font-weight="bold" font-family="Georgia,serif">S = 3 · 9 = 27</text></g>
-        </svg>`)+
-        wkRow(sign('S = π · r² ≈ 3 · 9 = 27',C6.green,0.4))+
-        wkSml('сначала r·r = 9, потом ×3'));
+      const H=170;
+      let inner='';
+      inner+=tx(159,58,34,I.blue,'S = π · r²',{georgia:1,b:1});
+      inner+=tx(159,98,16,I.ink,'шаг 1 · r² = r · r',{});
+      inner+=tx(159,124,16,I.ink,'шаг 2 · умножить на π',{});
+      inner+=tx(159,152,14,I.red,'не 2r! квадрат — это r·r',{b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Формула площади круга</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('«пи эр квадрат» · сначала r², потом ×π',I.blue,0.2))+
+        wkSml('r² — радиус, умноженный сам на себя'));
     } else if(step===6){
-      const H=190, W=318;
-      const cut=st.cut||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Откуда формула? Режем пиццу!</div>`+
-        wkHero(oven(`
-          <g class="c6float"><circle cx="90" cy="104" r="44" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/>
-          <circle cx="74" cy="92" r="6" fill="${C6.tomato}"/><circle cx="104" cy="118" r="5" fill="${C6.tomato}"/></g>
-          <g class="c6pop" style="animation-delay:.4s"><rect x="156" y="76" width="140" height="56" rx="12" fill="rgba(255,255,255,.12)" stroke="#ffd76a" stroke-width="2"/>
-            <text x="226" y="98" text-anchor="middle" font-size="14" fill="#ffe9c9">разрежем на</text>
-            <text x="226" y="122" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">тонкие секторы</text></g>
-          ${cut>=1?`<g class="c6seg" style="animation-delay:.2s">${[0,1,2,3,4,5,6,7].map(i=>{const a=i*45; const r=50; return `<line x1="90" y1="104" x2="${(90+r*Math.cos(a*Math.PI/180)).toFixed(0)}" y2="${(104+r*Math.sin(a*Math.PI/180)).toFixed(0)}" stroke="#b06820" stroke-width="2"/>`;}).join('')}</g>`:''}
-          ${cut>=2?`<text x="159" y="170" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">много тонких кусочков — как пицца!</text>`:''}
-        `,W,H))+
+      const H=196, r=52, cx=80, cy=118;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(cx,cy,r,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3,ra:{a:-30},rlabel:'3',rac:I.red,fs:17});
+      if(go>=1){
+        inner+=`<g class="k5pop"><rect x="176" y="84" width="118" height="52" rx="10" fill="${I.fg}" stroke="${I.grn}" stroke-width="2.4"/>
+        ${tx(235,102,15,I.grn,'шаг 1',{b:1})}${tx(235,126,24,I.grn,'r² = 9',{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k5pop"><rect x="176" y="146" width="118" height="44" rx="10" fill="rgba(217,154,6,.16)" stroke="${I.gold}" stroke-width="2.4"/>
+        ${tx(235,163,15,'#a37408','шаг 2 · ×π ≈ 3',{b:1})}${tx(235,184,22,I.gold,'S = 27',{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=tx(159,H-12,0,' ',' ');
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Радиус 3: считаем по шагам</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('3·3 = 9 · 3·9 = 27',I.grn,0.2)):'')+
         wkRow(
-          cut===0?wkBtn('взять нож',`visW196Act('${lk}','go')`) : '',
-          cut===1?wkBtn('нарезать на 8 секторов',`visW196Act('${lk}','go')`) : '',
-          cut>=1?wkBtn('сброс',`visW196Act('${lk}','rst')`):'')+
-        wkSml('чем тоньше секторы, тем точнее получится прямоугольник'));
+          go===0?wkBtn('1 · r² = r·r',`visW196Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · S = π·r²',`visW196Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW196Act('${lk}','rst')`):'')+
+        wkSml(go===0?'сначала радиус умножь сам на себя':go===1?'теперь умножь r² на π ≈ 3':'π=3,14 дал бы 28,26 — почти 28'));
     } else if(step===7){
-      const H=190, W=318;
-      const cut=st.cut||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Раздвигаем половинки</div>`+
-        wkHero(oven(`
-          <g class="c6float"><circle cx="70" cy="106" r="38" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/>
-          <path d="M 70 68 L 90 106 L 70 106 Z" fill="none" stroke="#b06820" stroke-width="2"/></g>
-          ${cut>=1?`<g class="c6slide" style="--dx:150px;animation-delay:.2s"><circle cx="248" cy="106" r="38" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/></g>`:''}
-          <text x="159" y="170" text-anchor="middle" font-size="13" fill="#ffe9c9">две половинки из зубчатых секторов</text>
-        `,W,H))+
-        wkRow(cut===0?wkBtn('раздвинуть половинки',`visW196Act('${lk}','go')`):wkBtn('сброс',`visW196Act('${lk}','rst')`))+
-        wkSml('зубчики половинок смотрят навстречу друг другу'));
+      const H=200, cx=159, cy=104, r=56;
+      const go=st.go||0;
+      let inner='';
+      if(go===0){
+        inner+=circ(cx,cy,r,{fill:I.fb,stroke:I.blue,w:3,dot:true});
+      } else {
+        const n=8;
+        let cuts='';
+        for(let i=0;i<n;i++){
+          const a=i*360/n+90;
+          const rad=a*Math.PI/180;
+          cuts+=`<line class="k5pop" x1="${cx}" y1="${cy}" x2="${(cx+r*Math.cos(rad)).toFixed(1)}" y2="${(cy+r*Math.sin(rad)).toFixed(1)}" stroke="${I.red}" stroke-width="2.2" style="animation-delay:${(i*0.07).toFixed(2)}s"/>`;
+        }
+        inner+=circ(cx,cy,r,{fill:'rgba(46,109,180,.08)',stroke:I.blue,w:3,dot:true});
+        inner+=cuts;
+        inner+=tx(159,176,15,I.red,'8 равных секторов — «дольки»',{b:1});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Режем круг на секторы</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('каждый сектор похож на узкий треугольник',I.red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW196Act('${lk}','rst')`):wkBtn('разрезать на 8 секторов',`visW196Act('${lk}','go')`))+
+        wkSml('сектор — часть круга между двумя радиусами'));
     } else if(step===8){
-      const H=190, W=318;
-      const cut=st.cut||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Сцепляем зубчики!</div>`+
-        wkHero(oven(`
-          <rect x="46" y="64" width="230" height="58" fill="none" stroke="${C6.gold}" stroke-width="2.4"/>
-          ${cut>=1?`<g class="c6slide" style="--dx:0px;animation-delay:.1s">${rectDemo(46,64,230,58,{n:8})}</g>`:''}
-          ${cut>=2?`<text x="159" y="170" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">почти прямоугольник!</text>`:''}
-        `,W,H))+
+      const H=200;
+      const mode=st.mode||0;
+      const r=46, L=Math.PI*r, x0=(318-L)/2, top=76, bot=top+r, mid=(top+bot)/2;
+      let inner='';
+      if(mode===0){
+        inner+=circ(159,116,54,{fill:I.fb,stroke:I.blue,w:3});
+        inner+=tx(159,186,14,I.ink,'жми — и кусочки соберутся в прямоугольник',{});
+      } else if(mode===1){
+        const n=8;
+        let cuts='';
+        for(let i=0;i<n;i++){
+          const a=i*360/n+90;
+          const rad=a*Math.PI/180;
+          cuts+=`<line class="k5pop" x1="159" y1="116" x2="${(159+52*Math.cos(rad)).toFixed(1)}" y2="${(116+52*Math.sin(rad)).toFixed(1)}" stroke="${I.red}" stroke-width="2" style="animation-delay:${(i*0.06).toFixed(2)}s"/>`;
+        }
+        inner+=circ(159,116,52,{fill:'rgba(46,109,180,.07)',stroke:I.blue,w:3,dot:true});
+        inner+=cuts;
+        inner+=tx(159,184,14,I.red,'секторы раздвигаем «ёлочкой»',{b:1});
+      } else {
+        const n=st.n||8;
+        const pw=L, hh=r, ww=pw/n, xb=x0;
+        const nTop=n/2;
+        inner+=`<rect x="${xb.toFixed(1)}" y="${top.toFixed(1)}" width="${pw.toFixed(1)}" height="${hh.toFixed(1)}" fill="none" stroke="${I.blue}" stroke-width="2.2" stroke-dasharray="8 6"/>`;
+        for(let i=0;i<n;i++){
+          const up=i%2===0;
+          const ax=xb+(i+0.5)*ww;
+          const tip=up?top:bot;
+          const baseY=up?bot:top;
+          const xl=xb+i*ww, xr=xb+(i+1)*ww;
+          const bulge=3.2;
+          let d;
+          if(up){
+            d=`M ${ax} ${tip} Q ${xl} ${mid+bulge} ${xl} ${baseY} L ${xr} ${baseY} Q ${xr} ${mid+bulge} ${ax} ${tip} Z`;
+          } else {
+            d=`M ${ax} ${tip} Q ${xl} ${mid-bulge} ${xl} ${baseY} L ${xr} ${baseY} Q ${xr} ${mid-bulge} ${ax} ${tip} Z`;
+          }
+          inner+=`<path class="k5pop" d="${d}" fill="${up?'rgba(46,109,180,.18)':'rgba(46,139,87,.16)'}" stroke="none" style="animation-delay:${(i*0.03).toFixed(2)}s"/>`;
+          inner+=`<line x1="${xl}" y1="${top}" x2="${xl}" y2="${bot}" stroke="rgba(120,150,195,.5)" stroke-width="1"/>`;
+        }
+        inner+=tx(x0-6,mid+5,0,' ',' ');
+        inner+=dim(x0,bot+14,x0+pw,bot+14,I.blue,'πr',{off:0,fs:15});
+        inner+=dim(x0+pw+12,bot,x0+pw+12,top,I.red,'r',{off:14,fs:15,neg:1});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Секторы складываем в прямоугольник</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (mode===2?wkRow(chip('длина πr (пол-обода) · высота r',I.grn,0.2)):'')+
         wkRow(
-          cut===0?wkBtn('сцепить зубчиками',`visW196Act('${lk}','go')`) : '',
-          cut===1?wkBtn('пригладить края',`visW196Act('${lk}','go')`) : '',
-          cut>=1?wkBtn('сброс',`visW196Act('${lk}','rst')`):'')+
-        wkSml('зубчики входят друг в друга — получается прямоугольник'));
+          mode===0?wkBtn('разрезать',`visW196Act('${lk}','cut')`) : '',
+          mode===1?wkBtn('сложить «ёлочкой»',`visW196Act('${lk}','fold')`) : '',
+          mode===2?wkBtn('8 → 16 → 32 сектора',`visW196Act('${lk}','more')`) : '',
+          mode===2?wkBtn('сброс',`visW196Act('${lk}','rst')`):'')+
+        wkSml(mode===2?'чем больше секторов, тем ровнее края — форма точная':'перекладываем, не теряя площади'));
     } else if(step===9){
-      const H=190, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Стороны прямоугольника</div>`+
-        wkHero(oven(`
-          <rect x="40" y="86" width="238" height="60" fill="rgba(255,215,106,.12)" stroke="${C6.gold}" stroke-width="2.6"/>
-          <line x1="40" y1="116" x2="278" y2="116" stroke="#ffd76a" stroke-width="2.4" stroke-dasharray="7 5"/>
-          <text x="90" y="108" text-anchor="middle" font-size="14" fill="#ffe9c9">длина ≈ π·r</text>
-          <text x="226" y="160" text-anchor="middle" font-size="14" fill="#cfe0ff">высота = r</text>
-        `,W,H))+
-        wkRow(sign('πr · r — длина на высоту',C6.gold,0.4))+
-        wkSml('половина обода = πr · секторы разложились в длину'));
+      const H=180, r=44, L=Math.PI*r, x0=(318-L)/2, top=64, bot=top+r;
+      let inner='';
+      inner+=`<rect x="${x0.toFixed(1)}" y="${top}" width="${L.toFixed(1)}" height="${r}" fill="${I.fb}" stroke="${I.blue}" stroke-width="2.6"/>`;
+      inner+=dim(x0,bot+16,x0+L,bot+16,I.blue,'длина = πr',{off:0,fs:16});
+      inner+=dim(x0+L+14,bot,x0+L+14,top,I.red,'высота = r',{off:15,fs:16,neg:1});
+      inner+=tx(159,116,16,I.ink,'πr — половина длины окружности',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Стороны прямоугольника</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('половина от 2πr — это πr',I.grn,0.2))+
+        wkSml('длина πr · высота r · площадь = πr · r'));
     } else if(step===10){
-      const H=170, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Итог: S = πr²</div>`+
-        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
-          <g class="c6seg"><rect x="22" y="34" width="134" height="52" rx="12" fill="rgba(255,255,255,.1)" stroke="#7fd1ff" stroke-width="2.2"/>
-            <text x="89" y="52" text-anchor="middle" font-size="12" fill="#cfe0ff">длина</text>
-            <text x="89" y="76" text-anchor="middle" font-size="19" fill="#7fd1ff" font-weight="bold">πr</text></g>
-          <text class="c6seg" style="animation-delay:.15s" x="172" y="66" text-anchor="middle" font-size="24" fill="#ffd76a" font-weight="bold">×</text>
-          <g class="c6seg" style="animation-delay:.25s"><rect x="190" y="34" width="104" height="52" rx="12" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="2.2"/>
-            <text x="242" y="52" text-anchor="middle" font-size="12" fill="#cfe0ff">высота</text>
-            <text x="242" y="76" text-anchor="middle" font-size="19" fill="#7fd1ff" font-weight="bold">r</text></g>
-          <g class="c6bump" style="animation-delay:.6s"><rect x="56" y="104" width="206" height="48" rx="14" fill="rgba(47,138,74,.2)" stroke="#2f8a4a" stroke-width="2.6"/>
-            <text x="159" y="135" text-anchor="middle" font-size="24" fill="#2f8a4a" font-weight="bold" font-family="Georgia,serif">πr · r = πr²</text></g>
-        </svg>`)+
-        wkRow(sign('площадь круга = π · r²',C6.green,0.4))+
-        wkSml('вот и вся тайна: круг превратился в прямоугольник'));
+      const H=180;
+      let inner='';
+      inner+=tx(159,54,24,I.ink,'площадь прямоугольника',{b:1});
+      inner+=tx(159,92,30,I.blue,'πr · r = πr²',{georgia:1,b:1});
+      inner+=tx(159,136,14.5,I.grn,'перекладывали, не теряя площадь',{b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Вот и формула!</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('S = π · r²',I.grn,0.2))+
+        wkSml('разрезание показало: круг равен прямоугольнику πr × r'));
     } else if(step===11){
-      const H=170, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Задачи: r=2 и r=4</div>`+
-        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
-          <g class="c6seg"><circle cx="70" cy="104" r="30" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="3"/>
-          <text x="70" y="108" text-anchor="middle" font-size="14" fill="#8a5a2a" font-weight="bold">r=2</text>
-          <text x="70" y="166" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">2²=4 · S=12</text></g>
-          <g class="c6seg" style="animation-delay:.2s"><circle cx="248" cy="104" r="42" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="3"/>
-          <text x="248" y="108" text-anchor="middle" font-size="15" fill="#8a5a2a" font-weight="bold">r=4</text>
-          <text x="248" y="166" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">4²=16 · S=48</text></g>
-        </svg>`)+
-        wkRow(sign('r=2 → S=12 · r=4 → S=48',C6.green,0.4))+
-        wkSml('сначала r·r, потом ×3'));
-    } else if(step===12){
-      if(st.tr==null) st.tr=0;
-      const POOL=[2,3,4,1,5];
-      const r=POOL[st.tr%POOL.length];
-      const s2=r*r, S=s2*3;
-      const H=185, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Тренажёр площади</div>`+
-        wkHero(oven(`
-          <circle cx="96" cy="106" r="${20+r*7}" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/>
-          <text x="96" y="112" text-anchor="middle" font-size="16" fill="#8a5a2a" font-weight="bold">r=${r}</text>
-          <g class="c6seg" style="animation-delay:.2s"><rect x="176" y="60" width="120" height="56" rx="12" fill="rgba(255,255,255,.1)" stroke="#ffd76a" stroke-width="2"/>
-            <text x="236" y="80" text-anchor="middle" font-size="12" fill="#ffe9c9">S = π · r²</text>
-            <text x="236" y="106" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold">${st.s1?'r² = '+s2:''}</text></g>
-          ${st.s2?`<g class="c6pop" style="animation-delay:.2s"><text x="159" y="165" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold">S = 3 · ${s2} = ${S}</text></g>`:''}
-        `,W,H))+
+      const H=200, rcm=2, cx=70, cy=118, rpx=rcm*U;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(cx,cy,rpx,{fill:'rgba(46,139,87,.14)',stroke:I.grn,w:3,ra:{a:-45},rac:I.grn,rlabel:'2',fs:16});
+      // клетки 1см внутри: центр клетки в круге
+      let cnt=0;
+      for(let i=-3;i<=2;i++)for(let j=-3;j<=2;j++){
+        const ccx=cx+(i+0.5)*U, ccy=cy+(j+0.5)*U;
+        if((ccx-cx)*(ccx-cx)+(ccy-cy)*(ccy-cy)<=rpx*rpx-1){
+          inner+=`<rect x="${ccx-U/2+1}" y="${ccy-U/2+1}" width="${U-2}" height="${U-2}" fill="${I.fg}" stroke="${I.grn}" stroke-width="1.2"/>`;
+          cnt++;
+        }
+      }
+      inner+=tx(159,182,15,I.grn,'12 полных клеток по 1 см²',{b:1});
+      if(go>=1){
+        inner+=`<g class="k5pop"><rect x="170" y="70" width="130" height="46" rx="10" fill="${I.fg}" stroke="${I.grn}" stroke-width="2.4"/>
+        ${tx(235,88,14,I.grn,'шаг 1',{b:1})}${tx(235,110,23,I.grn,'r² = 4',{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k5pop"><rect x="170" y="126" width="130" height="52" rx="10" fill="rgba(217,154,6,.15)" stroke="${I.gold}" stroke-width="2.4"/>
+        ${tx(235,145,14,'#a37408','π · r²',{b:1})}${tx(235,168,24,I.gold,'S = 12',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Радиус 2: формула и клетки</div>`+
+        wkHero(paper(W,H,{grid:U,inner:()=>inner}))+
+        (go>=2?wkRow(chip('3 · 4 = 12 · клетки подтверждают',I.grn,0.2)):'')+
         wkRow(
-          !st.s1?wkBtn('1 · r² = r·r',`visW196Act('${lk}','s1')`) : '',
-          (st.s1&&!st.s2)?wkBtn('2 · S = π·r²',`visW196Act('${lk}','s2')`) : '',
-          st.s2?wkBtn('новый радиус',`visW196Act('${lk}','n')`) : '',
-          st.s1?wkBtn('заново',`visW196Act('${lk}','rst')`):'')+
-        wkSml('π ≈ 3 · S = 3 · r · r'));
+          go===0?wkBtn('1 · r²',`visW196Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · S = π·r²',`visW196Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW196Act('${lk}','rst')`):'')+
+        wkSml('π=3,14 даёт 12,56 — почти 12 с половиной'));
+    } else if(step===12){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(70,100,34,{fill:'rgba(46,109,180,.13)',stroke:I.blue,w:3,ra:{a:-60},rac:I.blue,rlabel:'4',fs:15});
+      if(go>=1){
+        inner+=`<g class="k5pop"><rect x="150" y="52" width="150" height="40" rx="10" fill="${I.fb}" stroke="${I.blue}" stroke-width="2.2"/>
+        ${tx(225,77,18,I.blue,'r² = 16',{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k5pop"><rect x="150" y="100" width="150" height="40" rx="10" fill="rgba(217,154,6,.15)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(225,125,18,I.gold,'S = 3·16 = 48',{georgia:1,b:1})}</g>`;
+        inner+=`<g class="k5pop"><text x="159" y="166" text-anchor="middle" font-size="14" fill="${I.grn}" font-weight="bold">π=3,14 → S ≈ 50,24</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Радиус 4</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('16 · 3 = 48',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · r²',`visW196Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · S = π·r²',`visW196Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW196Act('${lk}','rst')`):'')+
+        wkSml('4·4 = 16 · 3·16 = 48'));
+    } else if(step===13){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,44,17,I.ink,'диаметр 6 см — а нужен радиус',{b:1});
+      inner+=circ(96,120,44,{fill:'rgba(46,109,180,.1)',stroke:I.blue,w:3});
+      // диаметр
+      inner+=`<line x1="52" y1="120" x2="140" y2="120" stroke="${I.blue}" stroke-width="2.2"/>`;
+      inner+=`<circle cx="52" cy="120" r="2.6" fill="${I.blue}"/><circle cx="140" cy="120" r="2.6" fill="${I.blue}"/>`;
+      inner+=tx(96,110,15,I.blue,'d = 6 см',{b:1});
+      if(go>=1){
+        inner+=`<g class="k5pop"><text x="159" y="120" text-anchor="middle" font-size="26" fill="${I.red}" font-weight="bold" font-family="Georgia,serif">r = d : 2 = 3</text></g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k5pop"><rect x="182" y="86" width="122" height="64" rx="10" fill="rgba(217,154,6,.15)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(243,106,14,'#a37408','r² = 9',{georgia:1,b:1})}${tx(243,130,19,I.gold,'S = 27 см²',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Если дан диаметр</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('d = 2r → r = d : 2',I.red,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · найти радиус',`visW196Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · площадь',`visW196Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW196Act('${lk}','rst')`):'')+
+        wkSml('6 : 2 = 3 · 3·3 = 9 · 3·9 = 27'));
+    } else if(step===14){
+      const H=200;
+      if(st.tr==null) st.tr=0;
+      const pool=[2,3,4,5];
+      const r=pool[st.tr%4];
+      const r2=r*r, S=r2*3;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(96,120,22+r*8,{fill:'rgba(46,109,180,.13)',stroke:I.blue,w:3,ra:{a:-50},rac:I.blue,rlabel:String(r),fs:16});
+      if(go>=1){
+        inner+=`<g class="k5pop"><rect x="172" y="70" width="128" height="46" rx="10" fill="${I.fg}" stroke="${I.grn}" stroke-width="2.4"/>
+        ${tx(236,88,14,I.grn,'шаг 1 · r² = r·r',{b:1})}${tx(236,110,22,I.grn,String(r2),{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k5pop"><rect x="172" y="126" width="128" height="52" rx="10" fill="rgba(217,154,6,.15)" stroke="${I.gold}" stroke-width="2.4"/>
+        ${tx(236,145,14,'#a37408','шаг 2 · ×π≈3',{b:1})}${tx(236,168,23,I.gold,String(S),{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: радиус ${r}</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('S = 3 · '+r2+' = '+S,I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · r²',`visW196Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · S',`visW196Act('${lk}','go')`) : '',
+          go>=2?wkBtn('новый радиус',`visW196Act('${lk}','n')`) : '',
+          go>=1?wkBtn('заново',`visW196Act('${lk}','rst')`):'')+
+        wkSml('r='+r+' → r²='+r2+' → S='+S));
+    } else if(step===15){
+      const H=190;
+      const pick=st.pick;
+      let inner='';
+      inner+=circ(159,104,52,{fill:'rgba(46,109,180,.12)',stroke:I.blue,w:3,dot:false});
+      if(pick===0){
+        inner+=`<g class="k5pop"><path d="M 159 52 A 52 52 0 1 1 211 104" fill="none" stroke="${I.red}" stroke-width="3"/>
+        <text x="232" y="58" text-anchor="middle" font-size="0" fill="#fff"> </text></g>`;
+        inner+=tx(252,66,15,I.red,'обод — длина',{b:1});
+        inner+=tx(159,186,16,I.red,'C = 2πr ≈ 2·3·3 = 18 см',{b:1,georgia:1});
+      }
+      if(pick===1){
+        inner+=`<circle cx="159" cy="104" r="52" fill="${I.fg}" opacity=".5"/>`;
+        inner+=tx(159,96,0,' ',' ');
+        inner+=tx(159,196,0,' ',' ');
+        inner+=tx(159,180,16,I.grn,'S = πr² ≈ 3·9 = 27 см²',{b:1,georgia:1});
+      }
+      if(pick==null){
+        inner+=tx(159,182,14,I.ink,'что измеряют в см, а что в см²?',{b:1});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Не путай длину и площадь</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (pick!=null?wkRow(chip(pick===0?'C = 2πr — лента по ободу, в см':'S = πr² — внутренность, в см²',pick===0?I.red:I.grn,0.2)):'')+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW196T2('${lk}',0)">длина обода</button>
+          <button class="wk-btn" onclick="visW196T2('${lk}',1)">площадь внутри</button>
+        </div>`+
+        wkSml('при r = 3: C = 18 см · S = 27 см²'));
+    } else if(step===16){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect x="16" y="34" width="286" height="40" rx="10" fill="${I.fb}" stroke="${I.blue}" stroke-width="2.2"/>
+      ${tx(159,60,20,I.blue,'S = π · r²',{georgia:1,b:1})}`;
+      if(go>=1){
+        inner+=`<g class="k5pop"><rect x="16" y="84" width="286" height="36" rx="10" fill="${I.fg}" stroke="${I.grn}" stroke-width="2"/>
+        ${tx(159,108,15,I.grn,'шаг 1: r² = r · r (радиус на себя)',{b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k5pop"><rect x="16" y="128" width="286" height="36" rx="10" fill="rgba(217,154,6,.13)" stroke="${I.gold}" stroke-width="2"/>
+        ${tx(159,152,15,'#a37408','шаг 2: умножить на π ≈ 3,14 (или 3)',{b:1})}</g>`;
+        inner+=`<g class="k5pop"><text x="159" y="186" text-anchor="middle" font-size="14" fill="${I.red}" font-weight="bold">единицы — см², м² · d = 2r, значит r = d : 2</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('два шага — и площадь готова',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · что сначала?',`visW196Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · потом?',`visW196Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW196Act('${lk}','rst')`):'')+
+        wkSml('не забудь единицы: см², а не см!'));
     } else {
-      const H=170, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px}>Проверь себя: пицца</div>`+
-        wkHero(`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-          <rect x="0" y="0" width="${W}" height="${H}" fill="${C6.bg}"/>
-          <circle cx="80" cy="100" r="42" fill="${C6.cheese}" stroke="${C6.crust}" stroke-width="4"/>
-          <text x="80" y="104" text-anchor="middle" font-size="17" fill="#8a5a2a" font-weight="bold">r=3</text>
-          <text x="80" y="156" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">S = 27</text>
-          <rect class="c6seg" x="160" y="60" width="140" height="66" rx="12" fill="rgba(255,255,255,.1)" stroke="#ffd76a" stroke-width="2"/>
-          <text x="230" y="84" text-anchor="middle" font-size="13" fill="#ffe9c9">3²=9 · π≈3</text>
-          <text x="230" y="112" text-anchor="middle" font-size="20" fill="#ffd76a" font-weight="bold">3·9=27</text>
-        </svg>`)+
+      const H=180;
+      let inner='';
+      inner+=circ(80,92,36,{fill:'rgba(46,109,180,.12)',stroke:I.blue,w:3,ra:{a:-45},rac:I.blue,rlabel:'3',fs:15});
+      inner+=tx(80,148,16,I.ink,'r = 3',{b:1});
+      inner+=`<rect x="136" y="52" width="168" height="76" rx="12" fill="rgba(255,255,255,.85)" stroke="${I.gold}" stroke-width="2.2"/>
+      ${tx(220,78,14,'#a37408','r² = 9',{georgia:1,b:1})}
+      ${tx(220,114,22,I.gold,'S = 27',{georgia:1,b:1})}`;
+      inner+=tx(159,166,0,' ',' ');
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
-        wkSml('r·r, потом ×3 · жми «Понял! Проверю себя»'));
+        wkSml('3·3 = 9 · 3·9 = 27 · жми «Понял! Проверю себя»'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
   window.VISKW[196]=visW196;
   function visW196T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
   window.visW196T=visW196T;
+  function visW196T2(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW196T2=visW196T2;
   function visW196Act(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
-    if(act==='go') st.cut=(st.cut||0)+1;
-    if(act==='s1') st.s1=1;
-    if(act==='s2') st.s2=1;
-    if(act==='n'){ st.tr=(st.tr||0)+1; st.s1=0; st.s2=0; }
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; }
+    if(act==='cut'){ st.mode=1; }
+    if(act==='fold'){ st.mode=2; }
+    if(act==='more'){ st.n=(st.n||8)===8?16:(st.n===16?32:8); }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; }
     if(act==='nq'){ st.q=1; st.sel=null; }
     if(act==='rst') CHS[lk]={};
     chRender(0);
@@ -7903,396 +8125,6 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW196Act=visW196Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===196){ window.ARH_LESSONS[i]=L196; break; } } })();
 })();
-
-/* ================= УРОК 199 · Уравнения с переносом слагаемых (v1 · «Река Равенства Архимеда», 14 слайдов) ================= */
-(function(){
-  if(!window.__wk199v1css){
-    window.__wk199v1css=1;
-    const st=document.createElement('style');
-    st.textContent=
-      '#lvis .g7in{animation:g7In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
-      '@keyframes g7In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .g7pop{animation:g7Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes g7Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .g7float{animation:g7Float 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes g7Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
-      '#lvis .g7tw{animation:g7Tw 2.4s ease-in-out infinite;}'+
-      '@keyframes g7Tw{0%,100%{opacity:.25}50%{opacity:.95}}'+
-      '#lvis .g7ride{animation:g7Ride 1.1s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
-      '@keyframes g7Ride{from{transform:translate(var(--tx),var(--ty));opacity:0}to{transform:translate(0,0);opacity:1}}'+
-      '#lvis .g7bump{animation:g7Bump .9s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes g7Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}'+
-      '#lvis .g7wav{stroke-dasharray:10 12;animation:g7Wav 1.5s linear infinite;}'+
-      '@keyframes g7Wav{to{stroke-dashoffset:-44}}';
-    document.head.appendChild(st);
-  }
-  const L199 = {
-    id: 199, title: 'Уравнения с переносом слагаемых', ico: '≈',
-    src: 'Математика · 6 класс · Уравнения', subj: 'math',
-    explain: [
-      'Перед нами уравнение 3x − 7 = 2x + 5. Икс прячется СРАЗУ в двух местах: слева и справа от «равно». Как найти x, если он с двух сторон? Переправим лишние слагаемые на нужный берег!',
-      'Уравнение — это РАВЕНСТВО: левая и правая части всегда одинаковы. Пока мы не знаем x, но можем проверить догадку: если x = 12, то слева 3·12 − 7 = 29, справа 2·12 + 5 = 29 — чаши в равновесии!',
-      'Наша цель — собрать все иксы на левом берегу, а все числа на правом. Мешают два «лишних» слагаемых: 2x справа и −7 слева.',
-      'Главное правило: слагаемое можно ПЕРЕНЕСТИ через знак «равно», но при переносе его знак МЕНЯЕТСЯ на противоположный. Плюс становится минусом, минус — плюсом.',
-      'Переправляем 2x через мост: справа он был со знаком «+», а на левом берегу появляется −2x. Уравнение: 3x − 7 − 2x = 5.',
-      'Теперь переправляем −7 вправо: слева он был со знаком «−», справа становится +7. Получаем: 3x − 2x = 5 + 7. Иксы собрались слева, числа — справа!',
-      'Упрощаем: 3x − 2x = x (три икса минус два икса — один икс). Справа 5 + 7 = 12. Ответ: x = 12.',
-      'Проверка — обязательный шаг: подставим 12 вместо x. Слева 3·12 − 7 = 36 − 7 = 29. Справа 2·12 + 5 = 24 + 5 = 29. 29 = 29 — всё верно, чаши весов на одном уровне!',
-      'Почему знак меняется? Уравнение — как весы: чтобы убрать 2x справа, вычитаем 2x из ОБЕИХ чашек. Слева появляется −2x — а это и есть «перенос со сменой знака».',
-      'Ловушка: главная ошибка — перенести слагаемое, НЕ поменяв знак. Тогда ответ выходит неверным, и проверка не сходится: чаши весов разъезжаются!',
-      'Решаем второй пример: 5x − 8 = 2x + 7. Переносим 2x влево (становится −2x), переносим −8 вправо (становится +8): 5x − 2x = 7 + 8.',
-      'Упрощаем: 3x = 15, значит x = 15 : 3 = 5. Проверка: слева 5·5 − 8 = 17, справа 2·5 + 7 = 17. Всё сходится!',
-      'Третий пример: 2x + 5 = x + 9. Переносим x влево: 2x − x = 9 − 5. Упрощаем: x = 4. Проверка: 2·4 + 5 = 13 и 4 + 9 = 13. Верно!',
-      'Алгоритм: 1) собери иксы слева, числа справа (меняя знаки при переносе); 2) упрости: ax = b; 3) x = b : a; 4) обязательно проверь подстановкой! Жми «Понял! Проверю себя» — там уравнение 3x − 7 = 2x + 5.'
-    ],
-    check: { q: 'Реши уравнение: 3x − 7 = 2x + 5.', choices: ['2', '12', '−12'], ans: 1,
-      exp: 'Переносим: 3x − 2x = 5 + 7 → x = 12. Проверка: 3·12 − 7 = 29 = 2·12 + 5.' },
-    tasks: [
-      { q: 'Реши уравнение: 5x − 8 = 2x + 7.', kind: 'unit', ans: 5, tol: 0,
-        hints: ['Перенеси 2x влево, −8 вправо: 5x − 2x = 7 + 8.', '3x = 15 → x = 15 : 3.'], sol: '3x = 15, x = 5.' },
-      { q: 'Реши уравнение: 2x + 5 = x + 9.', kind: 'choice', choices: ['4', '6', '14'], ans: 0, tol: 0,
-        hints: ['Перенеси x влево: 2x − x = 9 − 5.', 'x = 4.'], sol: '2x − x = 9 − 5 → x = 4.' }
-    ]
-  };
-  const G={ink:'#e8ecff',gold:'#ffd76a',cyan:'#7fd1ff',green:'#8fd1a8',rose:'#ff9a8a',lilac:'#c9a8ff'};
-  /* сцена «река равенства»: ночное небо, звёзды, река снизу */
-  function river(inner,W,H){
-    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-      <defs><linearGradient id="g7sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#232b5e"/><stop offset="1" stop-color="#3b2b66"/></linearGradient></defs>
-      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#g7sky)"/>
-      <g class="g7tw">${[[24,18],[50,38],[84,14],[112,32],[156,12],[194,28],[228,16],[266,34],[298,20]].map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="1.6" fill="#fff" style="animation-delay:${(i*0.25).toFixed(2)}s"/>`).join('')}</g>
-      <circle cx="280" cy="50" r="13" fill="#f4e9c8" opacity=".9"/>
-      <circle cx="276" cy="45" r="2.6" fill="#d8c9a0"/>
-      <circle cx="283" cy="55" r="2" fill="#d8c9a0"/>
-      <rect x="0" y="${H-26}" width="${W}" height="26" fill="#18275a"/>
-      <line class="g7wav" x1="8" y1="${H-8}" x2="${W-8}" y2="${H-8}" stroke="#5f7fd8" stroke-width="2" opacity=".8"/>
-      <line class="g7wav" x1="8" y1="${H-18}" x2="${W-8}" y2="${H-18}" stroke="#4a66b8" stroke-width="1.5" opacity=".6"/>
-      ${inner}
-    </svg>`;
-  }
-  /* плашка-слагаемое (центр x,cy) */
-  function term(x,cy,txt,c,opt){
-    const o=opt||{};
-    const fs=o.fs||20;
-    const w=o.w||(txt.length*fs*0.6+16);
-    const h=o.h||36;
-    const cls=o.cls?`class="${o.cls}"`:'';
-    const dly=o.dly?`style="animation-delay:${o.dly}s"`:'';
-    return `<g ${cls} ${dly}><rect x="${x-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="10" fill="${o.bg||'rgba(255,255,255,.09)'}" stroke="${c}" stroke-width="2.2"/>
-      <text x="${x}" y="${cy+fs*0.36}" text-anchor="middle" font-size="${fs}" fill="${c}" font-weight="bold" font-family="Georgia,serif">${txt}</text></g>`;
-  }
-  /* мост со знаком = */
-  function bridge(cy){
-    return `<g class="g7float">
-      <path d="M 145 ${cy+24} Q 159 ${cy-16} 173 ${cy+24}" fill="none" stroke="#7c5fd0" stroke-width="5"/>
-      <path d="M 145 ${cy+24} Q 159 ${cy-16} 173 ${cy+24}" fill="none" stroke="#c9b8ff" stroke-width="1.5"/>
-      <circle cx="159" cy="${cy+2}" r="15" fill="#2c2158" stroke="${G.gold}" stroke-width="2.4"/>
-      <text x="159" y="${cy+7}" text-anchor="middle" font-size="16" fill="${G.gold}" font-weight="bold" font-family="Georgia,serif">=</text>
-    </g>`;
-  }
-  const sign=(t,c,delay,fs)=>`<span class="g7in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.06);font-family:Georgia,serif;font-size:${fs||20}px;color:${c};font-weight:bold">${t}</span>`;
-  const Q199=[
-    {q:'3x − 7 = 2x + 5. Найди x.',opts:['2','12','−12'],ans:1},
-    {q:'2x + 5 = x + 9. Найди x.',opts:['4','6','14'],ans:0}
-  ];
-  function quiz(lk,st){
-    const T=Q199[st.q||0];
-    const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.06)',bd='#4a5a9e',tc='#e8ecff';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.2)':'rgba(255,154,138,.2)'; bd=i===T.ans?G.green:G.rose; tc=i===T.ans?G.green:G.rose; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:62px;font-size:17px" onclick="visW199T('${lk}',${i})">${o}</button>`;
-    }).join('');
-    let msg='';
-    if(st.sel!=null){
-      msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! Иксы влево, числа вправо, знаки меняются</div>'
-        : '<div class="wk-ans" style="color:#ff9a8a;font-size:16px">Не так. Перенеси слагаемые со сменой знака</div>';
-    }
-    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW199Act('${lk}','nq')`):'';
-    const rst=wkBtn('заново',`visW199Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#c9d4ff')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
-  }
-  function visW199(el){
-    const step=LV.step||0;
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step;
-      if(step===0){ st.pick=null; }
-      if(step===1){ st.pick=null; }
-      if(step===2){ st.go=0; }
-      if(step===4){ st.mv=0; }
-      if(step===5){ st.mv=0; }
-      if(step===6){ st.go=0; }
-      if(step===8){ st.show=0; }
-      if(step===9){ if(st.tr==null) st.tr=0; st.go=0; }
-      if(step===10){ st.go=0; }
-      if(step===11){ st.go=0; }
-      if(step===12){ st.go=0; st.pick=null; }
-      if(step===13){ st.sel=null; st.q=0; }
-    }
-    let h='';
-    if(step===0){
-      const H=190, W=318;
-      const chk=st.pick;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Икс прячется с двух сторон!</div>`+
-        wkHero(river(`
-          ${term(84,92,'3x',G.cyan,{fs:20})}
-          ${term(146,92,'−7',G.gold,{fs:20,dly:.1})}
-          ${bridge(92)}
-          ${term(196,92,'2x',G.cyan,{fs:20,dly:.2})}
-          ${term(258,92,'+5',G.gold,{fs:20,dly:.3})}
-          <text x="84" y="122" text-anchor="middle" font-size="12" fill="#9fb2e8">слева</text>
-          <text x="258" y="122" text-anchor="middle" font-size="12" fill="#9fb2e8">справа</text>
-          ${chk!=null?`<text x="159" y="152" text-anchor="middle" font-size="15" fill="${chk===1?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${chk===1?'верно: x и слева, и справа!':'посмотри: где спрятался x?'}</text>`:''}
-        `,W,H))+
-        `<div class="wk-row" style="gap:8px">
-          <button class="wk-btn" onclick="visW199T2('${lk}',0)">x только слева</button>
-          <button class="wk-btn" onclick="visW199T2('${lk}',1)">x слева и справа</button>
-        </div>`+
-        wkSml('чтобы найти x, соберём его на одном берегу'));
-    } else if(step===1){
-      const H=190, W=318;
-      const chk=st.pick;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверяем догадку x = 12</div>`+
-        wkHero(river(`
-          <g class="g7pop"><rect x="18" y="58" width="120" height="58" rx="12" fill="rgba(127,209,255,.1)" stroke="${G.cyan}" stroke-width="2.2"/>
-            <text x="78" y="80" text-anchor="middle" font-size="13" fill="#c9d4ff">3x − 7</text>
-            <text x="78" y="106" text-anchor="middle" font-size="17" fill="${G.cyan}" font-weight="bold" font-family="Georgia,serif">3·12 − 7 = 29</text></g>
-          <g class="g7pop" style="animation-delay:.15s"><rect x="180" y="58" width="120" height="58" rx="12" fill="rgba(201,168,255,.1)" stroke="${G.lilac}" stroke-width="2.2"/>
-            <text x="240" y="80" text-anchor="middle" font-size="13" fill="#c9d4ff">2x + 5</text>
-            <text x="240" y="106" text-anchor="middle" font-size="17" fill="${G.lilac}" font-weight="bold" font-family="Georgia,serif">2·12 + 5 = 29</text></g>
-          <line x1="26" y1="132" x2="292" y2="132" stroke="#5f7fd8" stroke-width="3"/>
-          ${chk!=null?`<text x="159" y="158" text-anchor="middle" font-size="16" fill="${chk===0?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${chk===0?'29 = 29 · равновесие!':'не сходится — попробуй 12'}</text>`:''}
-        `,W,H))+
-        (chk===0?wkRow(sign('оба выражения равны 29',G.green,0.2)):'')+
-        `<div class="wk-row" style="gap:8px">
-          <button class="wk-btn" onclick="visW199T2('${lk}',0)">подставить x = 12</button>
-          <button class="wk-btn" onclick="visW199T2('${lk}',1)">подставить x = 2</button>
-        </div>`+
-        wkSml('если чаши на одном уровне — догадка верна'));
-    } else if(step===2){
-      const H=180, W=318;
-      const go=st.go||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Цель: иксы влево, числа вправо</div>`+
-        wkHero(river(`
-          <text x="159" y="36" text-anchor="middle" font-size="14" fill="#c9d4ff" font-weight="bold">мешают: 2x справа и −7 слева</text>
-          <g class="g7float"><rect x="34" y="58" width="104" height="52" rx="12" fill="rgba(127,209,255,.1)" stroke="${G.cyan}" stroke-width="2"/>
-            <text x="86" y="79" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold" font-family="Georgia,serif">3x − 7</text>
-            <text x="86" y="101" text-anchor="middle" font-size="11.5" fill="#ff9a8a">лишний −7 здесь</text></g>
-          <text x="159" y="86" text-anchor="middle" font-size="20" fill="${G.gold}" font-weight="bold">=</text>
-          <g class="g7float" style="animation-delay:.2s"><rect x="180" y="58" width="104" height="52" rx="12" fill="rgba(201,168,255,.1)" stroke="${G.lilac}" stroke-width="2"/>
-            <text x="232" y="79" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold" font-family="Georgia,serif">2x + 5</text>
-            <text x="232" y="101" text-anchor="middle" font-size="11.5" fill="#ff9a8a">лишний 2x здесь</text></g>
-          ${go?`<g class="g7pop"><text x="159" y="142" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">лишние — на другой берег!</text></g>`:''}
-        `,W,H))+
-        (go?wkRow(sign('иксы → влево · числа → вправо',G.gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW199Act('${lk}','rst')`):wkBtn('что мешает?',`visW199Act('${lk}','go')`))+
-        wkSml('после переносов получим ax = b'));
-    } else if(step===3){
-      const H=170, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Правило моста</div>`+
-        wkHero(river(`
-          <text x="159" y="32" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">перенос через «равно» меняет знак</text>
-          <g class="g7pop"><rect x="30" y="54" width="76" height="44" rx="10" fill="rgba(255,154,138,.13)" stroke="${G.rose}" stroke-width="2.4"/>
-            <text x="68" y="82" text-anchor="middle" font-size="20" fill="${G.rose}" font-weight="bold" font-family="Georgia,serif">+2x</text></g>
-          <g class="g7ride" style="--tx:-22px;--ty:0px;animation-delay:.7s"><rect x="122" y="54" width="76" height="44" rx="10" fill="rgba(255,215,106,.13)" stroke="${G.gold}" stroke-width="2.4"/>
-            <text x="160" y="82" text-anchor="middle" font-size="20" fill="${G.gold}" font-weight="bold" font-family="Georgia,serif">−2x</text></g>
-          <path d="M 26 120 L 292 120" stroke="#6b7fc4" stroke-width="2" stroke-dasharray="7 6"/>
-          <text x="159" y="136" text-anchor="middle" font-size="14" fill="#c9d4ff">плюс стал минусом · минус станет плюсом</text>
-        `,W,H))+
-        wkRow(sign('перенос: + → − и − → +',G.gold,0.2))+
-        wkSml('так работает волшебный мост через реку равенства'));
-    } else if(step===4){
-      const H=190, W=318;
-      const mv=st.mv||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Переправа: 2x едет влево</div>`+
-        wkHero(river(`
-          ${mv===0
-            ? `${term(64,96,'3x',G.cyan,{fs:19})}${term(118,96,'−7',G.gold,{fs:19,dly:.1})}${bridge(96)}${term(200,96,'2x',G.cyan,{fs:19,cls:'g7float',dly:.3})}${term(252,96,'+5',G.gold,{fs:19,dly:.4})}`
-            : `${term(52,96,'3x',G.cyan,{fs:19})}${term(104,96,'−2x',G.gold,{fs:19,cls:'g7pop',dly:.3})}${term(156,96,'−7',G.gold,{fs:19})}${bridge(96)}${term(252,96,'+5',G.gold,{fs:19,dly:.4})}`}
-          ${mv===0?`<text x="200" y="126" text-anchor="middle" font-size="12" fill="#9fb2e8">лишний икс</text>`:''}
-          ${mv===1?`<text x="159" y="152" text-anchor="middle" font-size="16" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">3x − 7 − 2x = 5</text>`:''}
-        `,W,H))+
-        (mv===1?wkRow(sign('2x стал −2x и переехал влево',G.gold,0.2)):'')+
-        wkRow(mv===0?wkBtn('переправить 2x →',`visW199Act('${lk}','go')`):wkBtn('сброс',`visW199Act('${lk}','rst')`))+
-        wkSml(mv===0?'справа мешает +2x':'плюс при переправе стал минусом'));
-    } else if(step===5){
-      const H=190, W=318;
-      const mv=st.mv||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Переправа: −7 едет вправо</div>`+
-        wkHero(river(`
-          ${mv===0
-            ? `${term(60,96,'3x − 2x',G.cyan,{fs:18})}${term(150,96,'−7',G.gold,{fs:20,cls:'g7float'})}${bridge(96)}${term(246,96,'5 + 7',G.gold,{fs:17,dly:.2})}`
-            : `${term(88,96,'3x − 2x',G.cyan,{fs:18})}${bridge(96)}${term(200,96,'+7',G.gold,{fs:22,cls:'g7pop',dly:.3})}${term(258,96,'+5',G.gold,{fs:20,dly:.5})}`}
-          ${mv===1?`<text x="159" y="148" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">3x − 2x = 5 + 7</text>`:''}
-        `,W,H))+
-        (mv===1?wkRow(sign('−7 стал +7 и переехал вправо',G.gold,0.2)):'')+
-        wkRow(mv===0?wkBtn('переправить −7 →',`visW199Act('${lk}','go')`):wkBtn('сброс',`visW199Act('${lk}','rst')`))+
-        wkSml(mv===0?'слева мешает −7':'иксы слева · числа справа — цель достигнута'));
-    } else if(step===6){
-      const H=180, W=318;
-      const go=st.go||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Упрощаем: находим x</div>`+
-        wkHero(river(`
-          <text x="159" y="34" text-anchor="middle" font-size="17" fill="#fff" font-weight="bold" font-family="Georgia,serif">3x − 2x = 5 + 7</text>
-          ${go<1?term(118,88,'3x − 2x',G.cyan,{fs:20}):term(118,88,'x',G.cyan,{fs:28,cls:'g7pop'})}
-          <text x="159" y="96" text-anchor="middle" font-size="22" fill="${G.gold}" font-weight="bold">=</text>
-          ${go<2?term(236,88,'5 + 7',G.gold,{fs:19}):term(236,88,'12',G.gold,{fs:28,cls:'g7pop'})}
-          ${go>=1?`<text x="159" y="122" text-anchor="middle" font-size="14" fill="#c9d4ff">${go===1?'3 икса минус 2 икса — остаётся 1 икс':'и 5 + 7 = 12'}</text>`:''}
-          ${go>=2?`<g class="g7bump" style="animation-delay:.3s"><text x="159" y="146" text-anchor="middle" font-size="24" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 12</text></g>`:''}
-        `,W,H))+
-        wkRow(
-          go===0?wkBtn('1 · упростить иксы',`visW199Act('${lk}','go')`) : '',
-          go===1?wkBtn('2 · сложить числа',`visW199Act('${lk}','go')`) : '',
-          go>=2?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
-        wkSml(go===0?'3x − 2x = x':go===1?'5 + 7 = 12':'икс найден!'));
-    } else if(step===7){
-      const H=185, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверка: подставляем 12</div>`+
-        wkHero(river(`
-          <g class="g7pop"><rect x="20" y="52" width="134" height="60" rx="12" fill="rgba(127,209,255,.1)" stroke="${G.cyan}" stroke-width="2.2"/>
-            <text x="87" y="72" text-anchor="middle" font-size="12" fill="#c9d4ff">3x − 7 при x = 12</text>
-            <text x="87" y="99" text-anchor="middle" font-size="19" fill="${G.cyan}" font-weight="bold" font-family="Georgia,serif">36 − 7 = 29</text></g>
-          <g class="g7pop" style="animation-delay:.15s"><rect x="164" y="52" width="134" height="60" rx="12" fill="rgba(201,168,255,.1)" stroke="${G.lilac}" stroke-width="2.2"/>
-            <text x="231" y="72" text-anchor="middle" font-size="12" fill="#c9d4ff">2x + 5 при x = 12</text>
-            <text x="231" y="99" text-anchor="middle" font-size="19" fill="${G.lilac}" font-weight="bold" font-family="Georgia,serif">24 + 5 = 29</text></g>
-          <g class="g7pop" style="animation-delay:.4s"><text x="159" y="140" text-anchor="middle" font-size="21" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">29 = 29 · верно!</text>
-          <line x1="76" y1="158" x2="242" y2="158" stroke="#8fd1a8" stroke-width="3"/></g>
-        `,W,H))+
-        wkRow(sign('подстановка — главный контроль',G.green,0.3))+
-        wkSml('если бы вышло 29 ≠ 30 — ищи ошибку в переносе'));
-    } else if(step===8){
-      const H=180, W=318;
-      const show=st.show||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему знак меняется?</div>`+
-        wkHero(river(`
-          <text x="159" y="30" text-anchor="middle" font-size="12.5" fill="#c9d4ff" font-weight="bold">действуем одинаково на ОБЕ части уравнения</text>
-          <g class="g7float"><rect x="26" y="48" width="120" height="62" rx="12" fill="rgba(255,255,255,.07)" stroke="#8a94ad" stroke-width="2"/>
-            <text x="86" y="70" text-anchor="middle" font-size="14" fill="#e8ecff" font-family="Georgia,serif">3x − 7</text>
-            ${show?`<text x="86" y="96" text-anchor="middle" font-size="13" fill="#ff9a8a" font-weight="bold">− 2x тоже</text>`:''}</g>
-          <text x="159" y="82" text-anchor="middle" font-size="20" fill="${G.gold}" font-weight="bold">=</text>
-          <g class="g7float" style="animation-delay:.15s"><rect x="172" y="48" width="120" height="62" rx="12" fill="rgba(255,255,255,.07)" stroke="#8a94ad" stroke-width="2"/>
-            <text x="232" y="70" text-anchor="middle" font-size="14" fill="#e8ecff" font-family="Georgia,serif">2x + 5</text>
-            ${show?`<text x="232" y="96" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">− 2x отсюда</text>`:''}</g>
-          ${show?`<text x="159" y="145" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">3x − 7 − 2x = 5</text>`:''}
-        `,W,H))+
-        (show?wkRow(sign('вычли 2x из обеих частей → слева −2x',G.gold,0.2)):'')+
-        wkRow(show?wkBtn('сброс',`visW199Act('${lk}','rst')`):wkBtn('как убрать 2x?',`visW199Act('${lk}','go')`))+
-        wkSml('это и есть перенос: записываем короче, со сменой знака'));
-    } else if(step===9){
-      const H=190, W=318;
-      if(st.tr==null) st.tr=0;
-      const pairs=[[5,8,2,7,5],[7,4,3,8,3]];
-      const [aa,bb,cc,dd,xv]=pairs[st.tr%2];
-      const go=st.go||0;
-      const rows=['','',''];
-      const eq0=`${aa}x − ${bb} = ${cc}x + ${dd}`;
-      const eq1=`${aa}x − ${cc}x = ${dd} + ${bb}`;
-      const eq2=`${aa-cc}x = ${dd+bb}`;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: по шагам</div>`+
-        wkHero(river(`
-          <rect x="20" y="40" width="278" height="120" rx="14" fill="rgba(255,255,255,.05)" stroke="#4a5a9e" stroke-width="1.8"/>
-          <text x="159" y="70" text-anchor="middle" font-size="18" fill="#fff" font-weight="bold" font-family="Georgia,serif">${eq0}</text>
-          ${go>=1?`<text class="g7pop" x="159" y="102" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">${eq1}</text>`:''}
-          ${go>=2?`<text class="g7pop" x="159" y="134" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">${eq2}</text>`:''}
-          ${go>=3?`<g class="g7bump" style="animation-delay:.2s"><text x="159" y="158" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">делим: x = ${xv}</text></g>`:''}
-        `,W,H))+
-        wkRow(
-          go===0?wkBtn('1 · перенести',`visW199Act('${lk}','go')`) : '',
-          go===1?wkBtn('2 · упростить',`visW199Act('${lk}','go')`) : '',
-          go===2?wkBtn('3 · разделить',`visW199Act('${lk}','go')`) : '',
-          go===3?wkBtn('новый пример',`visW199Act('${lk}','n')`) : '',
-          go>=1?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
-        wkSml(go===3?('x = '+dd+bb+' : '+(aa-cc)+' = '+xv):'переносим, упрощаем, делим'));
-    } else if(step===10){
-      const H=185, W=318;
-      const go=st.go||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример: 5x − 8 = 2x + 7</div>`+
-        wkHero(river(`
-          <text x="159" y="38" text-anchor="middle" font-size="19" fill="#fff" font-weight="bold" font-family="Georgia,serif">5x − 8 = 2x + 7</text>
-          ${go>=1?`<text class="g7pop" x="159" y="76" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">5x − 2x = 7 + 8</text>`:''}
-          ${go>=2?`<text class="g7pop" x="159" y="110" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">3x = 15</text>`:''}
-          ${go>=3?`<g class="g7bump" style="animation-delay:.2s"><text x="159" y="138" text-anchor="middle" font-size="26" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 5</text></g>
-          <text x="159" y="152" text-anchor="middle" font-size="13.5" fill="#c9d4ff">проверка: 5·5−8 = 17 и 2·5+7 = 17</text>`:''}
-        `,W,H))+
-        wkRow(
-          go===0?wkBtn('1 · перенести',`visW199Act('${lk}','go')`) : '',
-          go===1?wkBtn('2 · упростить',`visW199Act('${lk}','go')`) : '',
-          go===2?wkBtn('3 · разделить',`visW199Act('${lk}','go')`) : '',
-          go>=3?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
-        wkSml('5x − 8 = 2x + 7 → 3x = 15 → x = 5'));
-    } else if(step===11){
-      const H=185, W=318;
-      const go=st.go||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример: 2x + 5 = x + 9</div>`+
-        wkHero(river(`
-          <text x="159" y="38" text-anchor="middle" font-size="19" fill="#fff" font-weight="bold" font-family="Georgia,serif">2x + 5 = x + 9</text>
-          ${go>=1?`<text class="g7pop" x="159" y="76" text-anchor="middle" font-size="18" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">2x − x = 9 − 5</text>`:''}
-          ${go>=2?`<g class="g7bump" style="animation-delay:.2s"><text x="159" y="110" text-anchor="middle" font-size="26" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 4</text></g>
-          <text x="159" y="140" text-anchor="middle" font-size="13.5" fill="#c9d4ff">проверка: 2·4+5 = 13 и 4+9 = 13</text>`:''}
-        `,W,H))+
-        wkRow(
-          go===0?wkBtn('1 · перенести',`visW199Act('${lk}','go')`) : '',
-          go===1?wkBtn('2 · упростить',`visW199Act('${lk}','go')`) : '',
-          go>=2?wkBtn('заново',`visW199Act('${lk}','rst')`):'')+
-        wkSml('2x − x = x · 9 − 5 = 4 · x = 4'));
-    } else if(step===12){
-      const H=190, W=318;
-      const go=st.go||0; const pick=st.pick;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Найди ошибку</div>`+
-        wkHero(river(`
-          <text x="159" y="32" text-anchor="middle" font-size="15" fill="#c9d4ff" font-weight="bold">«решение»: 3x + 5 = 2x + 9</text>
-          ${go?`<g class="g7pop"><rect x="52" y="52" width="214" height="30" rx="9" fill="rgba(255,255,255,.06)" stroke="#4a5a9e" stroke-width="1.8"/>
-            <text x="159" y="72" text-anchor="middle" font-size="16" fill="#ff9a8a" font-weight="bold" font-family="Georgia,serif">3x + 2x = 9 − 5</text></g>
-          <g class="g7pop" style="animation-delay:.15s"><rect x="52" y="88" width="214" height="30" rx="9" fill="rgba(255,255,255,.06)" stroke="#4a5a9e" stroke-width="1.8"/>
-            <text x="159" y="108" text-anchor="middle" font-size="16" fill="#e8ecff" font-weight="bold" font-family="Georgia,serif">5x = 4</text></g>`:''}
-          ${pick===0?`<text x="159" y="150" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">верно! 2x перенесли БЕЗ смены знака</text>`:''}
-          ${pick===1?`<text x="159" y="150" text-anchor="middle" font-size="15" fill="#c9d4ff">вторая строка — следствие первой ошибки</text>`:''}
-          ${pick===0?`<text x="159" y="158" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">правильно: 3x − 2x = 9 − 5 → x = 4</text>`:''}
-        `,W,H))+
-        wkRow(
-          go===0?wkBtn('показать решение',`visW199Act('${lk}','go')`) : '',
-          go===1?wkBtn('ошибка в 1-й строке',`visW199Act('${lk}','w0')`) : '',
-          go===1?wkBtn('ошибка во 2-й строке',`visW199Act('${lk}','w1')`) : '',
-          go?wkBtn('сброс',`visW199Act('${lk}','rst')`):'')+
-        wkSml('2x перенесли влево — какой у него знак теперь?'));
-    } else {
-      const H=180, W=318;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
-        wkHero(river(`
-          <text x="159" y="46" text-anchor="middle" font-size="21" fill="#fff" font-weight="bold" font-family="Georgia,serif">3x − 7 = 2x + 5</text>
-          <line x1="44" y1="66" x2="274" y2="66" stroke="#4a5a9e" stroke-width="1.4"/>
-          <text x="159" y="92" text-anchor="middle" font-size="13.5" fill="#c9d4ff">иксы влево · числа вправо</text>
-          <text class="g7pop" style="animation-delay:.25s" x="159" y="120" text-anchor="middle" font-size="21" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">3x − 2x = 5 + 7</text>
-          <text class="g7pop" style="animation-delay:.5s" x="159" y="146" text-anchor="middle" font-size="23" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">x = 12</text>
-        `,W,H))+
-        quiz(lk,st)+
-        wkSml('переноси со сменой знака · жми «Понял! Проверю себя»'));
-    }
-    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
-  }
-  window.VISKW[199]=visW199;
-  function visW199T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
-  window.visW199T=visW199T;
-  function visW199T2(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
-  window.visW199T2=visW199T2;
-  function visW199Act(lk,act){
-    const st=CHS[lk]||(CHS[lk]={});
-    const sp=LV.step;
-    if(act==='go'){
-      if(sp===2||sp===6||sp===8||sp===9||sp===10||sp===11||sp===12){ st.go=(st.go||0)+1; }
-      else if(sp===4||sp===5){ st.mv=(st.mv||0)+1; }
-    }
-    if(act==='w0'){ st.pick=0; }
-    if(act==='w1'){ st.pick=1; }
-    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; }
-    if(act==='nq'){ st.q=1; st.sel=null; }
-    if(act==='rst') CHS[lk]={};
-    chRender(0);
-  }
-  window.visW199Act=visW199Act;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===199){ window.ARH_LESSONS[i]=L199; break; } } })();
-})();
-
 /* ================= УРОК 199 · Уравнения с переносом слагаемых (v1 · «Река Равенства Архимеда», 14 слайдов) ================= */
 (function(){
   if(!window.__wk199v1css){
