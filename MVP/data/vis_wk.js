@@ -11021,3 +11021,422 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW416Act=visW416Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===416){ window.ARH_LESSONS[i]=L416; break; } } })();
 })();
+
+/* ================= УРОК 397 · Домино и раскраски (v1 · «Домино Архимеда», 18 слайдов) ================= */
+(function(){
+  if(!window.__wk397v1css){
+    window.__wk397v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .k0in{animation:k0In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes k0In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .k0pop{animation:k0Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k0Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .k0float{animation:k0Float 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k0Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
+      '#lvis .k0tile{animation:k0Tile .5s ease both;transform-box:fill-box;}'+
+      '@keyframes k0Tile{0%{opacity:0}100%{opacity:1}}';
+    document.head.appendChild(st);
+  }
+  const L397 = {
+    id: 397, title: 'Домино и раскраски', ico: '▦',
+    src: 'Математика · 5–6 класс · Олимп-6: раскраски', subj: 'math',
+    explain: [
+      'Доску 8×8 хотят полностью накрыть костяшками домино — каждая занимает две соседние клетки. Всегда ли это возможно? Ответ помогает хитрый приём — раскраска.',
+      'Раскрасим доску в шахматном порядке: клетки, как на шахматной доске, светлые и тёмные. На доске 8×8 их поровну: 32 светлых и 32 тёмных.',
+      'Домино — это прямоугольник 1×2: оно закрывает ровно две соседние клетки — сверху-снизу или слева-справа.',
+      'Главное наблюдение: две соседние клетки всегда РАЗНОГО цвета. Значит, каждая костяшка накрывает ровно одну светлую и одну тёмную клетку!',
+      'Вывод-инвариант: сколько бы костяшек ни лежало, светлых накрыто ровно столько же, сколько тёмных. Никакое число домино не может накрыть клеток разных цветов не поровну.',
+      'Поэтому необходимое условие: чтобы доску можно было покрыть домино, светлых и тёмных клеток должно быть ПОРОВНУ. Если не поровну — покрыть нельзя, как ни старайся.',
+      'Проверим на маленькой доске 4×4: 8 светлых и 8 тёмных — поровну, и накрыть можно: 8 костяшек укладываются рядами.',
+      'Задача: с доски 8×8 убрали две белые УГЛОВЫЕ клетки (противоположные углы — они одного цвета). Сколько клеток осталось каждого цвета?',
+      'Считаем: было 32 белых и 32 чёрных. Убрали две белые → стало 30 белых и 32 чёрных. Цветов больше НЕ поровну!',
+      'Вывод: такую «дырявую» доску покрыть домино НЕЛЬЗЯ: 30 ≠ 32. Всегда останется лишняя чёрная клетка без пары.',
+      'Почему: 31 костяшка накрыли бы 31 белую и 31 чёрную клетку. Но чёрных 32 — одна чёрная клетка обязательно останется непокрытой. Инвариант сработал!',
+      'Раскраска не обязана быть шахматной — её выбирают под задачу. Главное, чтобы каждый домино накрывал клетки разных цветов.',
+      'Почему шахматная раскраска — удачная: у домино два соседа — сверху и снизу или слева и справа. В шахматной раскраске любой сосед другого цвета. А вот раскраска полосами не годится: горизонтальное домино попало бы на клетки одного цвета.',
+      'Задача 2: доска 7×7 (нечётная). Светлых 25, тёмных 24 — не поровну, да и 49 клеток на 2 не делится. Покрыть нельзя.',
+      'Задача 3: с доски 6×6 убрали две тёмные угловые клетки: было 18 и 18, стало 18 светлых и 16 тёмных → нельзя покрыть.',
+      'Алгоритм: 1) выбери раскраску (чаще всего шахматную); 2) посчитай клетки каждого цвета; 3) если не поровну — докажи невозможность; 4) если поровну — попробуй построить покрытие.',
+      'Шпаргалка: домино = 1 светлая + 1 тёмная; покрыть можно, только если цветов поровну; не поровну → нельзя (инвариант); раскраску выбирают под задачу.',
+      'Проверь себя: с 8×8 убрали две белые угловые клетки → осталось 30 белых и 32 чёрных. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'С доски 8×8 убрали две белые угловые клетки. Сколько белых и чёрных клеток осталось?', choices: ['30 белых, 32 чёрных', '32 и 32', '31 и 32', '30 и 30'], ans: 0,
+      exp: 'Было 32 и 32; убрали 2 белые → 30 и 32.' },
+    tasks: [
+      { q: 'Сколько клеток накрывает одно домино?', kind: 'unit', ans: 2, tol: 0,
+        hints: ['Домино — прямоугольник 1×2.', 'Оно накрывает 2 клетки.'], sol: '2 клетки.' },
+      { q: 'Можно ли покрыть домино доску, где белых 30, а чёрных 32?', kind: 'choice', choices: ['нет', 'да', 'да, если повернуть', 'нельзя узнать'], ans: 0, tol: 0,
+        hints: ['Каждое домино накрывает 1 белую и 1 чёрную.', '30 ≠ 32 → нельзя.'], sol: 'Нельзя: белых и чёрных не поровну.' }
+    ]
+  };
+  const I={ink:'#28324b',blue:'#2e6db4',grn:'#2e8b57',red:'#c0392b',gold:'#d99a06',orange:'#e8833a',dark:'#5f84ad',light:'#f8f2e2',gray:'#8a94ad'};
+  const CW=32, CB=32;
+  const whiteN=(n)=>{let w=0;for(let r=0;r<n;r++)for(let c=0;c<n;c++)if((r+c)%2===0)w++;return w;};
+  function paper(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs><linearGradient id="k0pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfaf2"/><stop offset="1" stop-color="#f2f4ee"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#k0pg)"/>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#d3cbb0" stroke-width="2" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||I.ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdfaf2" stroke-width="3.2">${t}</text>`;
+  /* шахматная доска n×n: x0,y0, размер клетки u */
+  function board(x0,y0,n,u,opt){
+    const o=opt||{};
+    let s='';
+    for(let r=0;r<n;r++)for(let c=0;c<n;c++){
+      const wc=(r+c)%2===0;
+      s+=`<rect x="${x0+c*u}" y="${y0+r*u}" width="${u}" height="${u}" fill="${wc?o.light||I.light:o.dark||I.dark}"/>`;
+    }
+    s+=`<rect x="${x0}" y="${y0}" width="${n*u}" height="${n*u}" fill="none" stroke="${I.ink}" stroke-width="2.4"/>`;
+    if(o.cut){ for(const p of o.cut){ const r=p[0],c=p[1];
+      const x=x0+c*u, y=y0+r*u;
+      s+=`<rect x="${x+1.5}" y="${y+1.5}" width="${u-3}" height="${u-3}" fill="#fdfaf2" stroke="${I.red}" stroke-width="2.4" stroke-dasharray="5 4"/>`;
+      s+=`<line x1="${x+5}" y1="${y+5}" x2="${x+u-5}" y2="${y+u-5}" stroke="${I.red}" stroke-width="2.2"/>`;
+      s+=`<line x1="${x+u-5}" y1="${y+5}" x2="${x+5}" y2="${y+u-5}" stroke="${I.red}" stroke-width="2.2"/>`;
+    }}
+    if(o.tile){ let i=0;
+      for(const t of o.tile){ const r1=t[0],c1=t[1],r2=t[2],c2=t[3];
+        const x=Math.min(x0+c1*u,x0+c2*u), y=Math.min(y0+r1*u,y0+r2*u);
+        const w=Math.abs(c2-c1)*u+u, h=Math.abs(r2-r1)*u+u;
+        s+=`<rect class="k0tile" x="${x+1.2}" y="${y+1.2}" width="${w-2.4}" height="${h-2.4}" rx="4" fill="${I.orange}" opacity=".42" stroke="${I.orange}" stroke-width="2.6" style="animation-delay:${(0.05*i).toFixed(2)}s"/>`;
+        s+=`<line x1="${x+w/2-8}" y1="${y+h/2}" x2="${x+w/2+8}" y2="${y+h/2}" stroke="${I.orange}" stroke-width="2.6"/>`;
+        i++;
+      }
+    }
+    return s;
+  }
+  const chip=(t,c,delay,fs)=>`<span class="k0in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(255,255,255,.85);font-family:Georgia,serif;font-size:${fs||19}px;color:${c};font-weight:bold">${t}</span>`;
+  const Q397=[
+    {q:'8×8, убрали две белые угловые клетки. Осталось?',opts:['30 белых, 32 чёрных','32 и 32','31 и 32','30 и 30'],ans:0},
+    {q:'Сколько клеток накрывает одно домино?',opts:['2','1','4'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q397[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.85)',bd='#c9c2a6',tc='#28324b';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(46,139,87,.16)':'rgba(192,57,43,.12)'; bd=i===T.ans?I.grn:I.red; tc=i===T.ans?I.grn:I.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:52px;font-size:15.5px" onclick="visW397T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! Домино — это 2 клетки рядом</div>':'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! 32 − 2 = 30 белых, чёрных 32</div>')
+        : '<div class="wk-ans" style="color:#c0392b;font-size:15px">Не так · посчитай клетки каждого цвета</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW397Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW397Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#6b5d3a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW397(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=17){ st.go=0; st.pick=null; }
+      if(step===15){ st.mq=0; st.msel=null; }
+      if(step===17){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=200, u=16, n=8, x0=95, y0=22;
+      const go=st.go||0;
+      let inner='';
+      inner+=board(x0,y0,n,u,{});
+      if(go){
+        inner+=`<g class="k0pop"><text x="159" y="${y0+n*u+24}" text-anchor="middle" font-size="15" fill="${I.ink}" font-weight="bold">64 клетки · 32 костяшки домино</text>
+        ${tx(159,y0+n*u+46,13.5,'#8a94ad','всегда ли получится? раскраска подскажет',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Покрыть доску домино</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('каждая костяшка — две соседние клетки',I.ink,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('сколько всего клеток?',`visW397Act('${lk}','go')`))+
+        wkSml('вопрос не про 64 — а про цвета клеток'));
+    } else if(step===1){
+      const H=205, u=16, n=8, x0=95, y0=22;
+      const go=st.go||0;
+      let inner='';
+      inner+=board(x0,y0,n,u,{});
+      if(go){
+        inner+=`<g class="k0pop"><rect x="54" y="${y0+n*u+18}" width="210" height="34" rx="10" fill="rgba(255,255,255,.92)" stroke="${I.blue}" stroke-width="2"/>
+        ${tx(159,y0+n*u+42,16,I.blue,'светлых 32 · тёмных 32',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шахматная раскраска</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('как на шахматной доске · 32 и 32',I.blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('посчитать цвета',`visW397Act('${lk}','go')`))+
+        wkSml('соседние клетки — разного цвета'));
+    } else if(step===2){
+      const H=185, u=26, n=4, x0=96, y0=36;
+      const go=st.go||0;
+      let inner='';
+      inner+=board(x0,y0,n,u,{});
+      if(go){
+        inner+=`<g class="k0tile"><rect x="${x0+u+1.2}" y="${y0+u+1.2}" width="${2*u-2.4}" height="${u-2.4}" rx="4" fill="${I.orange}" opacity=".45" stroke="${I.orange}" stroke-width="2.8"/></g>`;
+        inner+=tx(159,y0+4*u+20,15.5,I.orange,'домино = две клетки рядом',{b:1});
+        inner+=tx(159,y0+4*u+42,13.5,'#8a94ad','в ряд или столбик',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Что такое домино</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('прямоугольник 1×2 · ровно 2 клетки',I.orange,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('положить костяшку',`visW397Act('${lk}','go')`))+
+        wkSml('домино нельзя «перепрыгнуть» через клетку'));
+    } else if(step===3){
+      const H=210, u=26, n=4, x0=96, y0=30;
+      const go=st.go||0;
+      let inner='';
+      inner+=board(x0,y0,n,u,{});
+      if(go){
+        inner+=`<g class="k0pop"><rect class="k0tile" x="${x0+u+1.2}" y="${y0+u+1.2}" width="${2*u-2.4}" height="${u-2.4}" rx="4" fill="${I.orange}" opacity=".5" stroke="${I.orange}" stroke-width="3"/>
+        <circle cx="${x0+u+u/2}" cy="${y0+u+u/2}" r="4.5" fill="#fff" stroke="#28324b" stroke-width="2"/>
+        <circle cx="${x0+2*u+u/2}" cy="${y0+u+u/2}" r="4.5" fill="#28324b" stroke="#fff" stroke-width="1.4"/></g>`;
+        inner+=`<text x="159" y="${y0+4*u+14}" text-anchor="middle" font-size="14.5" fill="${I.ink}" font-weight="bold">одна костяшка = 1 светлая + 1 тёмная</text>`;
+        inner+=`<g class="k0pop" style="animation-delay:.15s"><rect x="70" y="${y0+4*u+22}" width="178" height="32" rx="9" fill="rgba(46,109,180,.14)" stroke="${I.blue}" stroke-width="2"/>
+        ${tx(159,y0+4*u+44,14,I.blue,'соседние клетки всегда разного цвета',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ключевое наблюдение</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('белых накрыто = чёрным накрыто',I.blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('накрыть одну клетку',`visW397Act('${lk}','go')`))+
+        wkSml('куда ни положи — 1 светлая и 1 тёмная'));
+    } else if(step===4){
+      const H=180;
+      let inner='';
+      inner+=tx(159,50,15.5,I.ink,'какое бы число костяшек ни легло,',{b:1});
+      inner+=tx(159,82,19,I.ink,'белых = чёрных',{b:1,georgia:1});
+      inner+=`<g class="k0pop"><rect x="40" y="104" width="238" height="44" rx="12" fill="rgba(192,57,43,.08)" stroke="${I.red}" stroke-width="2.2"/>
+      ${tx(159,132,15.5,I.red,'не поровну → покрыть нельзя',{b:1})}</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Инвариант</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('число белых всегда равно числу чёрных накрытых',I.red,0.2))+
+        wkSml('это свойство не меняется при любом числе домино'));
+    } else if(step===5){
+      const H=180;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,56,19,I.ink,'необходимое условие',{b:1});
+      if(go){
+        inner+=`<g class="k0pop"><text x="159" y="104" text-anchor="middle" font-size="23" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">белые = чёрные</text>
+        ${tx(159,140,14.5,'#8a94ad','иначе — сразу ответ «нельзя»',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Условие возможности</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('проверь цвета — и задача наполовину решена',I.blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('какое условие?',`visW397Act('${lk}','go')`))+
+        wkSml('поровну — необходимо (но не всегда достаточно)'));
+    } else if(step===6){
+      const H=185, u=28, n=4, x0=96, y0=36;
+      const go=st.go||0;
+      let inner='';
+      if(go===0){
+        inner+=board(x0,y0,n,u,{});
+      } else {
+        const tiles=[];
+        for(let r=0;r<n;r++) for(let c=0;c<n;c+=2) tiles.push([r,c,r,c+1]);
+        inner+=board(x0,y0,n,u,{tile:tiles});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Поровну — и можно!</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('8 светлых = 8 тёмных · 8 костяшек',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('покрыть рядами',`visW397Act('${lk}','go')`))+
+        wkSml('пример на доске 4×4 — 8 клеток каждого цвета'));
+    } else if(step===7){
+      const H=195, u=16, n=8, x0=95, y0=20;
+      const go=st.go||0;
+      let inner='';
+      inner+=board(x0,y0,n,u,{cut:go?[[0,0],[7,7]]:undefined});
+      if(go){
+        inner+=`<g class="k0pop"><text x="159" y="${y0+n*u+16}" text-anchor="middle" font-size="14.5" fill="${I.red}" font-weight="bold">убрали два белых угла (по диагонали)</text>
+        ${tx(159,y0+n*u+36,13.5,'#8a94ad','противоположные углы 8×8 — оба белые',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Задача: два угла убрали</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('какие клетки вырезали? белые!',I.red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('показать вырезы',`visW397Act('${lk}','go')`))+
+        wkSml('противоположные углы — одного цвета'));
+    } else if(step===8){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      if(go===0){
+        inner+=`<g class="k0pop"><text x="120" y="78" text-anchor="middle" font-size="22" fill="${I.ink}" font-weight="bold" font-family="Georgia,serif">было: 32 и 32</text>
+        <text x="240" y="78" text-anchor="middle" font-size="22" fill="${I.red}" font-weight="bold" font-family="Georgia,serif">− 2 белые</text></g>`;
+      } else {
+        inner+=`<g class="k0pop"><rect x="52" y="50" width="214" height="76" rx="12" fill="rgba(255,255,255,.92)" stroke="${I.ink}" stroke-width="2.2"/>
+        ${tx(159,76,17,'#8a94ad','стало',{b:1})}
+        ${tx(159,100,24,I.ink,'30 белых · 32 чёрных',{georgia:1,b:1})}
+        ${tx(159,120,15,I.red,'30 ≠ 32',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Считаем после удаления</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('белых стало 30 · чёрных 32',I.red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('посчитать',`visW397Act('${lk}','go')`))+
+        wkSml('убрали две белые — белых меньше'));
+    } else if(step===9){
+      const H=205, u=16, n=8, x0=95, y0=18;
+      const go=st.go||0;
+      let inner='';
+      inner+=board(x0,y0,n,u,{cut:[[0,0],[7,7]]});
+      if(go){
+        inner+=`<g class="k0pop"><text x="159" y="${y0+n*u+20}" text-anchor="middle" font-size="17" fill="${I.red}" font-weight="bold">30 белых · 32 чёрных</text>
+        ${tx(159,y0+n*u+44,16.5,I.red,'не поровну → покрыть нельзя',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Вывод: покрыть нельзя</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('30 ≠ 32 → домино не ляжет',I.red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('почему нельзя?',`visW397Act('${lk}','go')`))+
+        wkSml('сколько костяшек ни клади — цвета не уравнять'));
+    } else if(step===10){
+      const H=180;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,48,17,I.ink,'31 костяшка накрыла бы…',{b:1});
+      if(go){
+        inner+=`<g class="k0pop"><text x="159" y="92" text-anchor="middle" font-size="20" fill="${I.ink}" font-weight="bold" font-family="Georgia,serif">31 белую и 31 чёрную</text>
+        ${tx(159,126,15.5,'#8a94ad','а чёрных на доске 32!',{})}
+        ${tx(159,152,17,I.red,'одна чёрная останется без пары',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему так выходит</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('инвариант: накрытых белых = накрытых чёрных',I.red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('показать',`visW397Act('${lk}','go')`))+
+        wkSml('32 нельзя накрыть парами по 31'));
+    } else if(step===11){
+      const H=180;
+      let inner='';
+      inner+=tx(159,50,18,I.ink,'раскраску выбираем под задачу',{b:1});
+      inner+=`<g class="k0pop" style="animation-delay:.15s"><rect x="40" y="76" width="238" height="44" rx="12" fill="rgba(46,109,180,.1)" stroke="${I.blue}" stroke-width="2.2"/>
+      ${tx(159,104,15.5,I.blue,'домино накрывает РАЗНЫЕ цвета',{b:1})}</g>`;
+      inner+=`<text x="159" y="152" text-anchor="middle" font-size="13.5" fill="#8a94ad">крась так, чтобы было удобно считать</text>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Раскраска — инструмент</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('удачная раскраска делает решение очевидным',I.blue,0.2))+
+        wkSml('иногда красят в 3-4 цвета или полосами'));
+    } else if(step===12){
+      const H=185, u=20, n=4, x0=80, y0=40;
+      const go=st.go||0;
+      let inner='';
+      if(go===0){
+        // полосатая раскраска (строки) + горизонтальное домино одного цвета = плохо
+        let s='';
+        for(let r=0;r<n;r++)for(let c=0;c<n;c++){
+          const wc=r%2===0;
+          s+=`<rect x="${x0+c*u}" y="${y0+r*u}" width="${u}" height="${u}" fill="${wc?I.light:I.dark}"/>`;
+        }
+        inner+=s+`<rect x="${x0}" y="${y0}" width="${4*u}" height="${4*u}" fill="none" stroke="${I.ink}" stroke-width="2.4"/>`;
+        inner+=tx(159,y0+4*u+16,14.5,'#8a94ad','полосатая раскраска',{b:1});
+      } else {
+        inner+=board(x0,y0,n,u,{});
+        inner+=tx(159,y0+4*u+16,14.5,I.grn,'шахматная раскраска — самая надёжная',{b:1});
+        inner+=`<g class="k0pop"><rect x="214" y="44" width="92" height="54" rx="10" fill="rgba(255,255,255,.9)" stroke="${I.grn}" stroke-width="2"/>
+        ${tx(260,64,13,I.grn,'любой сосед',{b:1})}
+        ${tx(260,86,13,I.grn,'другого цвета',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему шахматная — удачная</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('вверх/вниз/влево/вправо — всегда другой цвет',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('сравнить раскраски',`visW397Act('${lk}','go')`))+
+        wkSml('полосатая не годится для горизонтального домино'));
+    } else if(step===13){
+      const H=190, u=16, n=7, x0=103, y0=20;
+      const go=st.go||0;
+      let inner='';
+      inner+=board(x0,y0,n,u,{});
+      if(go){
+        inner+=`<g class="k0pop"><text x="159" y="${y0+n*u+18}" text-anchor="middle" font-size="16" fill="${I.red}" font-weight="bold">светлых 25 · тёмных 24</text>
+        ${tx(159,y0+n*u+42,15.5,I.red,'49 клеток · не поровну → нельзя',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Задача 2: доска 7×7</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('нечётная доска — покрыть нельзя',I.red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('посчитать цвета',`visW397Act('${lk}','go')`))+
+        wkSml('25 ≠ 24 · и 49 на 2 не делится'));
+    } else if(step===14){
+      const H=185, u=18, n=6, x0=105, y0=20;
+      const go=st.go||0;
+      let inner='';
+      inner+=board(x0,y0,n,u,{cut:go?[[0,1],[5,4]]:undefined});
+      if(go){
+        inner+=`<g class="k0pop"><text x="159" y="${y0+n*u+18}" text-anchor="middle" font-size="15" fill="${I.ink}" font-weight="bold">было 18 и 18 · убрали 2 тёмные</text>
+        ${tx(159,y0+n*u+40,16,I.red,'18 ≠ 16 · покрыть нельзя',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Задача 3: доска 6×6</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('было 18/18 · стало 18 и 16',I.red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('вырезать тёмные углы',`visW397Act('${lk}','go')`))+
+        wkSml('снова не поровну — снова нельзя'));
+    } else if(step===15){
+      const H=185;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'Домино накрывает…',opts:['2 клетки','4 клетки','1 клетку'],ans:0},
+        {q:'На доске 30 белых и 32 чёрных. Покрыть можно?',opts:['да','нет','иногда'],ans:1}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,40,15.5,I.ink,'быстрая проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="k0pop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#2e8b57':'#c0392b'}" font-weight="bold">${st.msel===T.ans?'верно!':'не так · вспомни инвариант'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW397S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW397Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW397Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml(st.mq===0?'костяшка — прямоугольник 1×2':'не поровну → нельзя'));
+    } else if(step===16){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect x="16" y="36" width="286" height="36" rx="9" fill="rgba(46,109,180,.12)" stroke="${I.blue}" stroke-width="2"/>
+      ${tx(159,60,15.5,I.blue,'домино = 1 светлая + 1 тёмная клетка',{b:1})}`;
+      if(go>=1){
+        inner+=`<g class="k0pop"><rect x="16" y="80" width="286" height="34" rx="9" fill="${I.fg?I.fg:'rgba(46,139,87,.13)'}" stroke="${I.grn}" stroke-width="2"/>
+        ${tx(159,103,15,I.grn,'можно — только если цветов поровну',{b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k0pop"><rect x="16" y="122" width="286" height="36" rx="9" fill="rgba(192,57,43,.08)" stroke="${I.red}" stroke-width="2"/>
+        ${tx(159,146,15,I.red,'не поровну → сразу «нельзя»',{b:1})}</g>
+        <g class="k0pop" style="animation-delay:.12s"><text x="159" y="184" text-anchor="middle" font-size="14" fill="${I.ink}" font-weight="bold">раскраску выбирают под задачу</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('инвариант решает задачу',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · домино',`visW397Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · условие',`visW397Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW397Act('${lk}','rst')`):'')+
+        wkSml('считаем цвета — и ответ готов'));
+    } else {
+      const H=208, u=16, n=8, x0=95, y0=22;
+      let inner='';
+      inner+=board(x0,y0,n,u,{cut:[[0,0],[7,7]]});
+      inner+=`<g class="k0pop"><text x="159" y="${y0+8*u+22}" text-anchor="middle" font-size="15" fill="${I.red}" font-weight="bold">32 − 2 = 30 белых · 32 чёрных</text>
+      ${tx(159,y0+8*u+42,13.5,'#8a94ad','30 ≠ 32 — покрыть нельзя',{})}</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('домино = 1 белая + 1 чёрная · жми «Понял! Проверю себя»'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[397]=visW397;
+  function visW397T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW397T=visW397T;
+  function visW397S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW397S=visW397S;
+  function visW397Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go'){ if(st.go!=null) st.go++; }
+    if(act==='nq'){ if(LV.step===15){ if((st.mq||0)<1){ st.mq=1; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW397Act=visW397Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===397){ window.ARH_LESSONS[i]=L397; break; } } })();
+})();
