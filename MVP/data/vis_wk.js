@@ -4233,379 +4233,439 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW22Act=visW22Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===22){ window.ARH_LESSONS[i]=L22; break; } } })();
 })();
-/* ================= УРОК 44 · Проценты: находим число (v2 · «Звёздная обсерватория», 14 слайдов) ================= */
+/* ================= УРОК 44 · Проценты: находим число (v3 · «Звёздная обсерватория Архимеда», 18 звёздных слайдов) ================= */
 (function(){
-  if(!window.__wk44v2css){
-    window.__wk44v2css=1;
+  if(!window.__wk44v3css){
+    window.__wk44v3css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .z2in{animation:z2In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
-      '@keyframes z2In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .z2pop{animation:z2Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes z2Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .z2tw{animation:z2Tw 2.2s ease-in-out infinite;}'+
-      '@keyframes z2Tw{0%,100%{opacity:.35}50%{opacity:1}}'+
-      '#lvis .z2met{animation:z2Met 1.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes z2Met{0%,100%{transform:rotate(0)}50%{transform:rotate(12deg)}}'+
-      '#lvis .z2spin{animation:z2Spin 4s linear infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes z2Spin{to{transform:rotate(360deg)}}'+
-      '#lvis .z2shoot{animation:z2Shoot 3.4s ease-in infinite;}'+
-      '@keyframes z2Shoot{0%{transform:translate(0,0);opacity:0}8%{opacity:1}22%{transform:translate(-90px,55px);opacity:1}24%{opacity:0}100%{transform:translate(-90px,55px);opacity:0}}'+
-      '#lvis .z2bump{animation:z2Bump .8s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes z2Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}'+
-      '#lvis .z2rise{animation:z2Rise 1s cubic-bezier(.2,.8,.2,1) both;}'+
-      '@keyframes z2Rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}';
+      '#lvis .zzIn{animation:zzIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes zzIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .zzPop{animation:zzPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes zzPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .zTw{animation:zTw 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes zTw{0%,100%{opacity:.35;transform:scale(.78)}50%{opacity:1;transform:scale(1.06)}}'+
+      '#lvis .zShot{animation:zShot 3.4s linear infinite;opacity:0;}'+
+      '@keyframes zShot{0%{transform:translate(0,0);opacity:0}8%{opacity:1}22%{transform:translate(-90px,40px);opacity:0}100%{opacity:0}}'+
+      '#lvis .zFloat{animation:zFloat 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes zFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}'+
+      '#lvis .zPulse{animation:zPulse 2s ease-in-out infinite;}'+
+      '@keyframes zPulse{0%,100%{opacity:.55}50%{opacity:1}}'+
+      '#lvis .zRing{animation:zRing 1.2s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes zRing{from{stroke-dashoffset:999}to{stroke-dashoffset:0}}';
     document.head.appendChild(st);
   }
   const L44 = {
-    id: 44, title: 'Проценты: находим число', ico: '%',
-    src: 'Математика · 5 класс · Проценты: процент от числа', subj: 'math',
+    id: 44, title: 'Проценты: находим число', ico: '✶',
+    src: 'ВсОШ-стиль · проценты', subj: 'math',
     explain: [
-      'Над островом опустилась ночь, и Архимед поднялся в свою башню-обсерваторию. Сегодня он картографирует звёздное небо. Чтобы считать звёзды, Архимед пользуется процентами — ведь процент означает «сотая часть»: 1% = 1/100, а вся величина — это 100%.',
-      'Представь небесную сетку Архимеда: ровно 100 звёзд в квадрате 10 на 10. Каждая звезда — это одна сотая, то есть 1%. Все 100 звёзд — это 100%. Теперь любое число звёзд легко превратить в проценты!',
-      'Если звёзд больше ста, мы просто делим их на сотни. Например, 300 звёзд — это три сотенных квадрата: 300 = 3·100. Одна звезда из трёхсот — это всё равно 1%, ведь 1% — это «одна сотая», 300 : 100 = 3.',
-      'Найти 1% от числа очень просто: раздели число на 100. 1% от 300 — это 300 : 100 = 3. 1% от 500 — это 5. 1% от 80 — это 80 : 100 = 0,8 (меньше единицы — бывает и так!).',
-      'Теперь легко найти любой процент: сначала найди 1%, потом умножь на нужное число процентов. Например, 10% от 300: сначала 1% = 300 : 100 = 3, затем умножаем на 10: 3·10 = 30.',
-      'Разберём 10% от 300 на звёздной сетке. Триста звёзд — это три сотенных квадрата. 10% — это одна десятая часть, то есть один ряд из десяти звёзд в каждом квадрате. В трёх квадратах: 10 + 10 + 10 = 30 звёзд. Ответ: 30!',
-      'Запомни удобные доли — они встречаются чаще всего. 50% — это половина (делим на 2), 25% — четверть (делим на 4), 20% — пятая часть (делим на 5), 10% — десятая часть (делим на 10).',
-      '25% от 80: четверть от 80 — это 80 : 4 = 20. Проверим на звёздах: восемьдесят звёзд — это 8 рядов по 10. Четверть — это 2 ряда, а в них 20 звёзд. Сходится!',
-      '20% от 500: пятая часть от 500 — это 500 : 5 = 100. Или по-другому: 1% от 500 = 5, умножаем на 20 → 5·20 = 100. Два способа дают один ответ — выбирай, какой удобнее!',
-      'Проценты повсюду: скидки в магазинах. Если вещь стоит 500 монет, а скидка 20% — мы экономим пятую часть: 500 : 5 = 100 монет. Платим 500 − 100 = 400.',
-      'Теперь потренируйся на звёздной сетке: перед тобой сотенный квадрат. Выбери, сколько процентов зажечь, — и посмотри, сколько звёзд вспыхнет. 10% — это ряд из 10 звёзд, 20% — два ряда, 25% — четверть квадрата.',
-      'Формула-помощник: чтобы найти p% от числа N, сделай два шага: 1) найди 1%: N : 100; 2) умножь на p. Запиши кратко: (N : 100) · p. Попробуй сам на тренажёре!',
-      'Тренажёр: тебе дадут число и процент. Шаг 1 — найди 1% (раздели на 100). Шаг 2 — умножь на число процентов. Нажимай кнопки и проверяй ответ!',
-      'Проверь себя: 10% от 300 — это 30 (сначала 300 : 100 = 3, потом 3·10). 20% от 500 — это 100. Ответь в тесте и жми «Понял! Проверю себя»!'
+      'Архимед-астроном смотрит в телескоп: на ночном небе горят созвездия. Процент — это сотая часть, и с его помощью удобно считать, сколько звёзд «светит» из целого неба.',
+      'Процент — одна сотая. На небе из 100 звёзд одна звезда — это 1%, а 10 звёзд — 10%. Процент всегда считаем от целого числа.',
+      '50% — это половина: 50 звёзд из 100. Половина неба светит, половина темнеет.',
+      '25% — это четверть: 25 звёзд из 100. Четверть неба — как четверть пиццы.',
+      '20% — это пятая часть: 20 звёзд из 100. Пять групп по 20 звёзд — всё небо!',
+      'Формула: найти N% от числа M — значит M : 100 · N. Сначала узнаём, чему равен 1% (M : 100), потом умножаем на N.',
+      'Найти 10% от 300: 1% — это 300 : 100 = 3 звезды. Умножаем на 10: 3 · 10 = 30 звёзд. Вот и ответ!',
+      'Найти 20% от 500: 1% — это 500 : 100 = 5 звёзд. 20% — это 5 · 20 = 100 звёзд. Это как скидка 20%!',
+      'Найти 25% от 80: это четверть. 80 : 4 = 20. Удобная доля сразу даёт ответ без лишних шагов.',
+      'Применение-скидка: 20% от 500 рублей = 100 рублей. Метеор «скидка» летит мимо ценника!',
+      'Сравним доли: 50% — половина, 25% — четверть, 20% — пятая часть, 10% — десятая часть. Кольцо покажет, какая доля больше.',
+      'Ловушка: 10% от 300 — это 30, а не 10! Процент всегда считаем от того числа, о котором речь. «От 300» — значит от 300.',
+      'Шкала-небо: вся полоса — 100%. Выделим долю N% — это N звёзд из 100.',
+      'Тренажёр-созвездие: дано число M и процент N. Шаг 1 — 1% = M : 100. Шаг 2 — N% = (M : 100) · N. Собери созвездие!',
+      'Тренажёр-планета: выбери верный ответ среди трёх планет. Процент от числа считаем по формуле.',
+      'Шпаргалка: N% от M = M : 100 · N. Удобные доли: 50% = :2, 25% = :4, 20% = :5, 10% = :10.',
+      'Проверь себя устно: 10% от 300 = 30; 20% от 500 = 100; 25% от 80 = 20.',
+      'Проверь себя: 10% от 300 = 30. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
-    check: { q: 'Сколько будет 10% от 300?', choices: ['3', '30', '300', '15'], ans: 1,
-      exp: '300 : 100 · 10 = 30.' },
+    check: { q: 'Сколько будет 10% от 300?', choices: ['3', '30', '300', '15'], ans: 1, exp: '300 : 100 · 10 = 30.' },
     tasks: [
-      { q: 'Найди 20% от 500.', kind: 'unit', ans: 100, tol: 0,
-        hints: ['20% — это 1/5.', '500 : 5 = 100.'], sol: '500 · 0,2 = 100.' },
-      { q: 'Найди 25% от 80.', kind: 'unit', ans: 20, tol: 0,
-        hints: ['25% — это 1/4.', '80 : 4 = 20.'], sol: '80 · 0,25 = 20.' }
+      { q: 'Найди 20% от 500.', kind: 'unit', ans: 100, tol: 0, hints: ['1% = 500 : 100 = 5.', '5 · 20 = 100.'], sol: '100.' },
+      { q: 'Найди 25% от 80.', kind: 'unit', ans: 20, tol: 0, hints: ['25% — это четверть.', '80 : 4 = 20.'], sol: '20.' }
     ]
   };
-  const Z={gold:'#ffd76a',star:'#fff2c2',dim:'#5b6d9e',night1:'#101a3a',night2:'#1d2c5c',moon:'#e9e2c4',green:'#7fe8b8',blue:'#7fd1ff',red:'#ff9a8a',lens:'#9fd8ff'};
-  /* ночное небо: рамка-обсерватория с фоном-звёздами */
-  function night(inner,opt){
+  const I={ink:'#dfe8ff',soft:'#9fb4de',gold:'#ffd76a',goldD:'#f4c552',blue:'#7fb8ff',cyan:'#8fe0ff',violet:'#c9b8ff',red:'#ff9a8a',grn:'#a4e0b4',dim:'#4a5a80'};
+  /* звезда (путь) */
+  const starP=(cx,cy,R,r)=>(()=>{ const pts=[]; for(let i=0;i<10;i++){ const a=(-90+i*36)*Math.PI/180; const rad=(i%2?r:R); pts.push((cx+rad*Math.cos(a)).toFixed(1)+','+(cy+rad*Math.sin(a)).toFixed(1)); } return 'M '+pts.join(' L ')+' Z'; })();
+  function star(cx,cy,R,c,cls,delay){
+    return `<path class="${cls||''}" style="animation-delay:${(delay||0).toFixed(2)}s" d="${starP(cx,cy,R,R*0.42)}" fill="${c}" />`;
+  }
+  /* сцена неба */
+  function sky(W,H,opt){
     const o=opt||{};
-    const W=318, H=o.h||150;
-    let bg='';
-    for(let i=0;i<26;i++){
-      const x=8+(i*37)%302, y=8+((i*53)%(H-18));
-      bg+=`<circle cx="${x}" cy="${y}" r="${i%3===0?1.6:1.1}" fill="${i%4===0?Z.star:Z.dim}" opacity="${i%4===0?'.9':'.5'}" class="z2tw" style="animation-delay:${(i*0.18).toFixed(2)}s"/>`;
-    }
+    let deco='';
+    const stars=[[26,24,3],[70,52,2.4],[118,20,3.2],[160,40,2.6],[206,18,3],[250,50,2.4],[290,28,3],[30,84,2.2],[88,96,2.6],[150,88,3],[210,96,2.4],[268,84,2.8],[52,122,2],[120,132,2.4],[190,130,2.2],[248,126,2.6],[300,120,2]];
+    stars.forEach((s,i)=>{ deco+=star(s[0],s[1],s[2],'#cfe0ff','zTw',i*0.23); });
+    // луна
+    deco+=`<g class="zFloat"><circle cx="280" cy="48" r="17" fill="#fff3d6"/><circle cx="274" cy="42" r="3.4" fill="#eadbb8"/><circle cx="285" cy="54" r="2.6" fill="#eadbb8"/><circle cx="276" cy="55" r="2" fill="#eadbb8"/></g>`;
+    // метеор (верхний угол, не выходит за канву)
+    deco+=`<g class="zShot"><line x1="286" y1="30" x2="242" y2="62" stroke="#fff" stroke-width="1.8" opacity=".75"/><circle cx="286" cy="30" r="2.4" fill="#fff"/></g>`;
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-      <defs><linearGradient id="z2sky${o.uid||0}" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="${Z.night1}"/><stop offset="1" stop-color="${Z.night2}"/></linearGradient></defs>
-      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#z2sky${o.uid||0})"/>
-      ${bg}
-      <rect x="1" y="1" width="${W-2}" height="${H-2}" fill="none" stroke="#3d5a8c" stroke-width="1.6" rx="14"/>
-      ${inner}
+      <defs><linearGradient id="zzsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1030"/><stop offset="0.55" stop-color="#122046"/><stop offset="1" stop-color="#1a2c52"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#zzsky)"/>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#3a4a78" stroke-width="1.6" rx="6"/>
+      ${deco}
+      ${o.inner?o.inner():''}
     </svg>`;
   }
-  /* сотенный квадрат 10×10: lit — сколько первых звёзд зажжено */
-  function starGrid(lit,opt){
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||I.ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1030" stroke-width="3">${t}</text>`;
+  /* сетка 10×10 звёзд: n звёзд светят */
+  function grid(x,y,cell,n,opt){
     const o=opt||{};
-    const cell=o.cell||24;
-    const W=10*cell, H=10*cell;
-    const R=Math.max(1.8,cell*0.16);
     let s='';
     for(let r=0;r<10;r++)for(let c=0;c<10;c++){
       const idx=r*10+c;
-      const on=idx<lit;
-      const x=c*cell+cell/2, y=r*cell+cell/2;
-      if(on){
-        s+=`<g class="z2tw" style="animation-delay:${((idx%10)*0.12).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="${R*1.8}" fill="${Z.gold}"/><circle cx="${x}" cy="${y}" r="${R*0.9}" fill="#fff"/></g>`;
-      } else {
-        s+=`<circle cx="${x}" cy="${y}" r="${R*0.85}" fill="${Z.dim}" opacity=".5"/>`;
-      }
+      const lit=idx<n;
+      const R=cell*0.30;
+      const cx=x+c*cell+cell/2, cy=y+r*cell+cell/2;
+      s+=star(cx,cy,R, lit?(o.lit||I.gold):'#31517e', lit?'zTw':'', lit?(idx*0.03):0);
     }
-    s+=`<rect x="0" y="0" width="${W}" height="${H}" fill="none" stroke="${o.stroke||'#4a5f8f'}" stroke-width="2" rx="6"/>`;
-    // сетка десятков (каждый 10-й столбец/строка тоньше)
-    for(let i=1;i<10;i++){
-      s+=`<line x1="${i*cell}" y1="0" x2="${i*cell}" y2="${H}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
-    }
-    return {svg:`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">${s}</svg>`,W,H};
+    s+=`<rect x="${x}" y="${y}" width="${cell*10}" height="${cell*10}" fill="none" stroke="#3a4a78" stroke-width="1.6"/>`;
+    return s;
   }
-  const pill=(t,c,delay,fs)=>`<span class="z2in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 13px;border-radius:12px;border:2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:${fs||21}px;color:${c};font-weight:bold">${t}</span>`;
-  const chipT=(t,c)=>`<span class="z2in" style="display:inline-block;padding:4px 12px;border-radius:10px;border:1.8px solid ${c||'#4a5f8f'};font-size:14px;color:#e8e0cc">${t}</span>`;
+  const chip=(t,c,delay,fs)=>`<span class="zzIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(20,28,58,.9);font-family:Georgia,serif;font-size:${fs||19}px;color:${c};font-weight:bold">${t}</span>`;
   const Q44=[
     {q:'Сколько будет 10% от 300?',opts:['3','30','300','15'],ans:1},
-    {q:'Сколько будет 25% от 80?',opts:['4','20','25','40'],ans:1}
+    {q:'Найди 25% от 80.',opts:['20','25','10'],ans:0}
   ];
   function quiz(lk,st){
     const T=Q44[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?Z.green:Z.red; tc=i===T.ans?Z.green:Z.red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:60px;font-size:18px" onclick="visW44T('${lk}',${i})">${o}</button>`;
+      let bg='rgba(20,28,58,.85)',bd='#4a5a80',tc='#dfe8ff';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(164,224,180,.18)':'rgba(255,154,138,.16)'; bd=i===T.ans?I.grn:I.red; tc=i===T.ans?I.grn:I.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:56px;font-size:17px" onclick="visW44T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 25% — это четверть: 80 : 4 = 20</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! 300 : 100 = 3, затем 3·10 = 30</div>')
-        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Сначала найди 1% (раздели на 100)</div>';
+        ? (st.q===1?'<div class="wk-ans" style="color:#a4e0b4;font-size:16px">Верно! 25% — четверть · 80 : 4 = 20</div>':'<div class="wk-ans" style="color:#a4e0b4;font-size:16px">Верно! 300 : 100 · 10 = 30</div>')
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:15px">Не так · M : 100 · N</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW44Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW44Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:9px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#9fb4de')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW44(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step; if(step===0){ st.sh=0; } if(step===2||step===3){ st.n=0; } if(step===4){ st.sh=0; } if(step===5){ st.sh=0; } if(step===8){ st.sh=0; } if(step===10){ if(st.p==null) st.p=10; } if(step===12){ if(st.tr==null) st.tr=0; st.s1=0; st.s2=0; } if(step===13){ st.sel=null; st.q=0; } }
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=17){ st.go=0; st.pick=null; }
+      if(step===13){ if(st.tr==null) st.tr=0; st.go=0; }
+      if(step===14){ if(st.tr==null) st.tr=0; st.pick=null; }
+      if(step===16){ st.mq=0; st.msel=null; }
+      if(step===17){ st.sel=null; st.q=0; }
+    }
     let h='';
+    const W=318;
     if(step===0){
-      const show=st.sh===1;
-      const g=starGrid(0,{cell:16});
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ночь над обсерваторией Архимеда</div>`+
-        wkHero(night(show
-          ? `<g transform="translate(${Math.round((318-160)/2)},34)">${g.svg.replace('<svg','<svg width="160" height="160"')}</g>
-             <text x="159" y="208" text-anchor="middle" font-size="13" fill="#cfe0ff">100 звёзд = 100%</text>
-             <g class="z2pop" style="animation-delay:.3s"><rect x="10" y="10" width="298" height="200" fill="none" stroke="#7fd1ff" stroke-width="2" rx="16" opacity=".45"/></g>`
-          : `<g>
-              <path d="M34 220 L34 100 A84 84 0 0 1 202 100 L202 220 Z" fill="rgba(255,255,255,.02)" stroke="#5b6d9e" stroke-width="2.2"/>
-              <path d="M34 100 A84 84 0 0 1 202 100" fill="none" stroke="#8fa4d8" stroke-width="4.5"/>
-              <circle cx="112" cy="58" r="14" fill="${Z.moon}"/><circle cx="120" cy="53" r="12" fill="#15224c" opacity=".5"/>
-              <g class="z2tw" style="animation-delay:0s"><circle cx="78" cy="120" r="2.4" fill="#fff2c2"/></g>
-              <g class="z2tw" style="animation-delay:.6s"><circle cx="156" cy="150" r="2" fill="#fff2c2"/></g>
-              <g class="z2tw" style="animation-delay:1.1s"><circle cx="128" cy="128" r="2.6" fill="#fff2c2"/></g>
-              <g class="z2tw" style="animation-delay:.3s"><circle cx="180" cy="118" r="1.8" fill="#fff2c2"/></g>
-              <g class="z2tw" style="animation-delay:.9s"><circle cx="92" cy="160" r="2.2" fill="#fff2c2"/></g>
-              <g class="z2pop" style="animation-delay:.4s"><rect x="52" y="166" width="134" height="36" rx="12" fill="rgba(255,242,194,.08)" stroke="#ffd76a" stroke-width="2"/>
-              <text x="119" y="189" text-anchor="middle" font-size="16" fill="#ffe9c9" font-weight="bold">что такое 1%?</text></g>
-              <g class="z2pop" style="animation-delay:.55s">
-                <rect x="228" y="152" width="60" height="11" rx="4" fill="#3a2b16"/>
-                <rect x="237" y="163" width="6.5" height="34" fill="#5a452a"/><rect x="271" y="163" width="6.5" height="34" fill="#5a452a"/>
-                <rect x="250" y="122" width="17" height="42" rx="6" fill="#9fd8ff" stroke="#5b6d9e" stroke-width="2"/>
-                <rect x="267" y="108" width="38" height="13" rx="6" fill="#7fb7e8"/>
-                <line x1="226" y1="120" x2="250" y2="120" stroke="#7fb7e8" stroke-width="5"/>
-                <line x1="196" y1="132" x2="236" y2="120" stroke="#7fb7e8" stroke-width="3" opacity=".85"/>
-                <circle cx="232" cy="119" r="3.2" fill="#fff"/></g>
-            </g>`,{h:232}))+
-        (show? wkRow(pill('1% = одна сотая',Z.gold,0.4)): wkRow(wkBtn('открыть купол',`visW44Act('${lk}','go')`)))+
-        wkSml('процент — «сотая часть» · вся величина — 100%'));
+      const H=195;
+      const go=st.go||0;
+      let inner='';
+      // телескоп
+      inner+=`<g class="zFloat"><rect x="70" y="86" width="10" height="46" fill="#5a6a94"/><rect x="116" y="86" width="10" height="46" fill="#5a6a94"/>
+      <rect x="66" y="130" width="64" height="8" rx="4" fill="#5a6a94"/>
+      <rect x="78" y="58" width="46" height="14" rx="6" fill="#7f96c4" transform="rotate(24 101 65)"/>
+      <circle cx="134" cy="50" r="12" fill="#9fc0ff" opacity=".5"/></g>`;
+      inner+=`<text x="200" y="92" text-anchor="middle" font-size="15" fill="${I.ink}" font-weight="bold">Архимед-астроном</text>
+      ${tx(220,116,14,'#9fb4de','считаем звёзды!',{})}`;
+      if(go){
+        inner+=`<g class="zzPop"><text x="159" y="160" text-anchor="middle" font-size="15" fill="${I.gold}" font-weight="bold">процент — это сотая часть неба</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Звёздная обсерватория</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('найдём процент от числа',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW44Act('${lk}','rst')`):wkBtn('что такое процент?',`visW44Act('${lk}','go')`))+
+        wkSml('звёзды светят частями неба'));
     } else if(step===1){
-      const g=starGrid(1,{cell:26});
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Небесная сетка: 10 × 10</div>`+
-        wkHero(night(`<g transform="translate(${Math.round((318-260)/2)},10)">${g.svg.replace('<svg','<svg width="260" height="260"')}</g>`,{h:282}))+
-        wkRow(pill('1 звезда из 100 = 1%',Z.gold,0.5))+
-        wkSml('десять рядов по десять звёзд · каждая клетка — 1%'));
+      const H=195, cell=14, x=64, y=22;
+      const go=st.go||0;
+      let inner=grid(x,y,cell,1,{lit:I.gold});
+      inner+=tx(159,172,15,I.ink,'1 звезда из 100 = 1%',{b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Процент — сотая часть</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        wkRow(chip('сто звёзд — всё небо · одна = 1%',I.cyan,0.2))+
+        wkSml('сотня звёзд = 100%'));
     } else if(step===2){
-      const g=starGrid(10,{cell:24});
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ряд из десяти звёзд</div>`+
-        wkHero(night(`<g transform="translate(${Math.round((318-240)/2)},16)">${g.svg.replace('<svg','<svg width="240" height="240"')}</g>`,{h:274}))+
-        wkRow(pill('10 звёзд — это 10%',Z.green,0.4),pill('50 звёзд — 50%',Z.gold,0.55))+
-        wkSml('десять звёзд подряд — одна десятая квадрата'));
+      const H=195, cell=14, x=64, y=22;
+      let inner=grid(x,y,cell,50,{lit:I.gold});
+      inner+=tx(159,172,16,I.gold,'50% = половина · 50 звёзд',{georgia:1,b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">50% — половина</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        wkRow(chip('половина неба светит',I.gold,0.2))+
+        wkSml('50% = :2'));
     } else if(step===3){
-      const sets=[{N:300,p:1,one:3},{N:500,p:1,one:5},{N:80,p:1,one:0.8}];
-      const S=sets[st.n%sets.length];
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">1% от числа: делим на 100</div>`+
-        wkHero(night(`<g class="z2pop">
-          <rect x="26" y="34" width="96" height="86" rx="16" fill="rgba(255,255,255,.05)" stroke="#7fd1ff" stroke-width="2.4"/>
-          <text x="74" y="70" text-anchor="middle" font-size="15" fill="#cfe0ff">число</text>
-          <text x="74" y="104" text-anchor="middle" font-size="44" fill="#fff" font-weight="bold" font-family="Georgia,serif">${S.N}</text>
-          <text x="74" y="112" text-anchor="middle" font-size="0" fill="#fff"> </text>
-          <g class="z2spin"><rect x="132" y="56" width="34" height="34" rx="8" fill="rgba(255,255,255,.06)" stroke="#ffd76a" stroke-width="2"/>
-          <circle cx="149" cy="73" r="3" fill="#ffd76a"/><line x1="149" y1="60" x2="149" y2="66" stroke="#ffd76a" stroke-width="2"/></g>
-          <text x="160" y="76" text-anchor="middle" font-size="17" fill="#ffd76a" font-weight="bold">:</text>
-          <text x="196" y="76" text-anchor="middle" font-size="20" fill="#cfe0ff" font-weight="bold">100</text>
-          ${st.sh? `<g class="z2pop"><rect x="220" y="34" width="80" height="86" rx="16" fill="rgba(255,242,194,.08)" stroke="${Z.gold}" stroke-width="2.6"/>
-            <text x="260" y="70" text-anchor="middle" font-size="15" fill="#ffe9c9">1% =</text>
-            <text x="260" y="106" text-anchor="middle" font-size="42" fill="${Z.gold}" font-weight="bold" font-family="Georgia,serif">${S.one}</text></g>`:''}
-        </g>`,{h:150}))+
-        wkRow(st.sh===1? '' : wkBtn('разделить на 100',`visW44Act('${lk}','go')`))+
-        (st.sh===1? wkRow(pill(S.N+' : 100 = '+S.one+' → это 1%',Z.gold,0.2)):'')+
-        wkRow(wkBtn('другое число',`visW44Act('${lk}','n')`), st.sh===1? wkBtn('сброс',`visW44Act('${lk}','rst')`):'')+
-        wkSml('1% — это «одна сотая»: дели число на 100'));
+      const H=195, cell=14, x=64, y=22;
+      let inner=grid(x,y,cell,25,{lit:I.gold});
+      inner+=tx(159,172,16,I.gold,'25% = четверть · 25 звёзд',{georgia:1,b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">25% — четверть</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        wkRow(chip('четверть неба · как кусок пиццы',I.gold,0.2))+
+        wkSml('25% = :4'));
     } else if(step===4){
-      const show=st.sh===1;
-      const g=starGrid(show?30:0,{cell:17});
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">10% от 300</div>`+
-        wkHero(night(`<g transform="translate(${Math.round((318-340)/2)},14) scale(0.9)">${g.svg.replace('<svg','<svg width="170" height="170"')}</g>
-          <text x="70" y="200" text-anchor="middle" font-size="14" fill="#cfe0ff">квадрат 1</text>
-          <text x="170" y="200" text-anchor="middle" font-size="14" fill="#cfe0ff">квадрат 2</text>
-          <text x="270" y="200" text-anchor="middle" font-size="14" fill="#cfe0ff">квадрат 3</text>`,{h:210}))+
-        (show? wkRow(pill('30 звёзд в трёх квадратах = 10% от 300',Z.green,0.3)):'')+
-        wkRow(show===false? wkBtn('зажечь 10% в каждом квадрате',`visW44Act('${lk}','go')`) : wkBtn('сброс',`visW44Act('${lk}','rst')`))+
-        wkSml('300 = 3 квадрата по 100 · в каждом зажглось 10 звёзд (10+10+10)'));
+      const H=195, cell=14, x=64, y=22;
+      let inner=grid(x,y,cell,20,{lit:I.gold});
+      inner+=tx(159,172,16,I.gold,'20% = пятая часть · 20 звёзд',{georgia:1,b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">20% — пятая часть</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        wkRow(chip('пять групп по 20 звёзд — всё небо',I.gold,0.2))+
+        wkSml('20% = :5'));
     } else if(step===5){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Два шага: 10% от 300</div>`+
-        wkHero(night(`<g class="z2pop">
-          <rect x="18" y="22" width="120" height="54" rx="14" fill="rgba(127,209,255,.1)" stroke="${Z.blue}" stroke-width="2.4"/>
-          <text x="78" y="42" text-anchor="middle" font-size="13" fill="#cfe0ff">шаг 1 · 1%</text>
-          <text x="78" y="66" text-anchor="middle" font-size="28" fill="#fff" font-weight="bold" font-family="Georgia,serif">300 : 100 = 3</text>
-          <g class="z2shoot"><line x1="252" y1="6" x2="252" y2="30" stroke="#fff2c2" stroke-width="2"/><circle cx="252" cy="4" r="3" fill="#fff2c2"/></g>
-          <rect x="180" y="22" width="120" height="54" rx="14" fill="rgba(255,242,194,.08)" stroke="${Z.gold}" stroke-width="2.4"/>
-          <text x="240" y="42" text-anchor="middle" font-size="13" fill="#ffe9c9">шаг 2 · ×10</text>
-          <text x="240" y="66" text-anchor="middle" font-size="28" fill="${Z.gold}" font-weight="bold" font-family="Georgia,serif">3 · 10 = 30</text>
-          <rect x="70" y="96" width="180" height="38" rx="16" fill="rgba(127,232,184,.1)" stroke="${Z.green}" stroke-width="2.4"/>
-          <text x="160" y="121" text-anchor="middle" font-size="19" fill="${Z.green}" font-weight="bold" font-family="Georgia,serif">10% от 300 = 30</text>
-        </g>`,{h:150}))+
-        (sh? `<div class="z2pop">${starGrid(30,{cell:10}).svg}</div>`:'')+
-        wkRow(wkBtn('показать формулу ещё раз',`visW44Act('${lk}','go')`), sh? wkBtn('сброс',`visW44Act('${lk}','rst')`):'')+
-        wkSml('сначала 1% (число : 100), потом умножаем на проценты'));
+      const H=185;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,50,17,I.ink,'как найти N% от числа M',{b:1});
+      if(go){
+        inner+=`<g class="zzPop"><text x="159" y="98" text-anchor="middle" font-size="26" fill="${I.gold}" font-weight="bold" font-family="Georgia,serif">N% от M = M : 100 · N</text>
+        ${tx(159,132,14,'#9fb4de','сначала 1% = M : 100',{})}
+        ${tx(159,156,14,I.cyan,'потом умножь на N',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Формула</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('M : 100 · N',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW44Act('${lk}','rst')`):wkBtn('показать формулу',`visW44Act('${lk}','go')`))+
+        wkSml('делим на 100 · умножаем на N'));
     } else if(step===6){
-      const rows=[
-        {p:50,label:'половина',d:2,ex:'80 : 2 = 40'},
-        {p:25,label:'четверть',d:4,ex:'80 : 4 = 20'},
-        {p:20,label:'пятая часть',d:5,ex:'500 : 5 = 100'},
-        {p:10,label:'десятая часть',d:10,ex:'300 : 10 = 30'}
-      ];
-      const cards=rows.map((r,i)=>`<div class="z2in" style="animation-delay:${(i*0.15).toFixed(2)}s;flex:1 1 0;min-width:0;text-align:center;border:2px solid ${i%2?Z.gold:Z.blue};border-radius:14px;padding:7px 4px;background:rgba(255,255,255,.04)">
-        <div style="font-size:24px;color:${i%2?Z.gold:Z.blue};font-weight:bold;font-family:Georgia,serif">${r.p}%</div>
-        <div style="font-size:12.5px;color:#e8e0cc;margin:2px 0">${r.label}</div>
-        <div style="font-size:11.5px;color:#9fb0d0">делим на ${r.d}</div>
-        <div style="font-size:12px;color:#7fe8b8;margin-top:2px;font-weight:bold">${r.ex}</div>
-      </div>`).join('');
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Удобные доли</div>`+
-        wkHero(night(`<g class="z2pop"><text x="159" y="40" text-anchor="middle" font-size="15" fill="#fff">запомни эти доли</text>
-          <circle cx="70" cy="96" r="30" fill="${Z.gold}" opacity=".9"/><text x="70" y="104" text-anchor="middle" font-size="20" fill="#0d1a13" font-weight="bold">50%</text>
-          <text x="70" y="122" text-anchor="middle" font-size="12" fill="#cfe0ff">1/2</text>
-          <circle cx="159" cy="96" r="30" fill="${Z.blue}" opacity=".9"/><text x="159" y="104" text-anchor="middle" font-size="20" fill="#0d1a13" font-weight="bold">25%</text>
-          <text x="159" y="122" text-anchor="middle" font-size="12" fill="#cfe0ff">1/4</text>
-          <circle cx="248" cy="96" r="30" fill="${Z.green}" opacity=".9"/><text x="248" y="104" text-anchor="middle" font-size="20" fill="#0d1a13" font-weight="bold">20%</text>
-          <text x="248" y="122" text-anchor="middle" font-size="12" fill="#cfe0ff">1/5</text>
-        </g>`,{h:160}))+
-        `<div class="wk-row" style="gap:6px;align-items:stretch">${cards}</div>`+
-        wkSml('50% — половина · 25% — четверть · 20% — пятая часть · 10% — десятая'));
+      const H=200, cell=14, x=64, y=20;
+      const go=st.go||0;
+      let inner=grid(x,y,cell,10,{lit:I.gold});
+      inner+=tx(159,168,14.5,I.ink,'10 звёзд светят из сотни',{b:1});
+      if(go){
+        inner+=`<g class="zzPop"><rect x="196" y="52" width="108" height="76" rx="12" fill="rgba(20,28,58,.9)" stroke="${I.cyan}" stroke-width="2.2"/>
+        ${tx(250,74,12.5,'#9fb4de','1% = 300:100 = 3',{georgia:1,b:1})}
+        ${tx(250,96,12.5,'#9fb4de','10% = 3·10',{b:1})}
+        ${tx(250,120,24,I.gold,'= 30',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">10% от 300</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('300 : 100 · 10 = 30',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW44Act('${lk}','rst')`):wkBtn('посчитать',`visW44Act('${lk}','go')`))+
+        wkSml('1% — это 3 звезды · 10% — это 30'));
     } else if(step===7){
-      const sh=st.sh||0;
-      // 80 звёзд = 8 рядов по 10; 25% = 2 ряда = 20
-      const g80=(lit)=>{
-        const cell=15; let s='';
-        for(let r=0;r<8;r++)for(let c=0;c<10;c++){
-          const idx=r*10+c; const on=idx<lit;
-          const x=c*cell+cell/2+4, y=r*cell+cell/2+4;
-          s+=on?`<g class="z2tw" style="animation-delay:${((idx%10)*0.1).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="${cell*0.3}" fill="${Z.gold}"/><circle cx="${x}" cy="${y}" r="${cell*0.15}" fill="#fff"/></g>`
-              :`<circle cx="${x}" cy="${y}" r="${cell*0.22}" fill="${Z.dim}" opacity=".6"/>`;
-        }
-        return s;
-      };
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">25% от 80 — четверть</div>`+
-        wkHero(night(`<rect x="4" y="10" width="312" height="126" rx="10" fill="rgba(0,0,0,.2)"/>
-          ${g80(sh?20:0)}
-          <line x1="30" y1="${10+2*15+15/2}" x2="300" y2="${10+2*15+15/2}" stroke="#ff9a8a" stroke-width="2.5" stroke-dasharray="6 5"/>
-          <text x="159" y="150" text-anchor="middle" font-size="13" fill="#cfe0ff">80 звёзд = 8 рядов по 10</text>`,{h:160}))+
-        (sh? wkRow(pill('2 ряда = 20 звёзд = 25% от 80',Z.green,0.3)):'')+
-        wkRow(sh===0? wkBtn('отделить четверть (2 ряда)',`visW44Act('${lk}','go')`) : wkBtn('сброс',`visW44Act('${lk}','rst')`))+
-        wkSml('80 : 4 = 20 · 25% — это каждая четвёртая звезда'));
+      const H=200, cell=14, x=64, y=20;
+      const go=st.go||0;
+      let inner=grid(x,y,cell,20,{lit:I.gold});
+      inner+=tx(159,168,14.5,I.ink,'20 звёзд светят из сотни',{b:1});
+      if(go){
+        inner+=`<g class="zzPop"><rect x="196" y="52" width="108" height="76" rx="12" fill="rgba(20,28,58,.9)" stroke="${I.cyan}" stroke-width="2.2"/>
+        ${tx(250,74,12.5,'#9fb4de','1% = 500:100 = 5',{georgia:1,b:1})}
+        ${tx(250,96,12.5,'#9fb4de','20% = 5·20',{b:1})}
+        ${tx(250,120,24,I.gold,'= 100',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">20% от 500</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('500 : 100 · 20 = 100',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW44Act('${lk}','rst')`):wkBtn('посчитать',`visW44Act('${lk}','go')`))+
+        wkSml('как скидка 20%'));
     } else if(step===8){
-      const sh=st.sh||0;
-      const g=starGrid(sh?20:0,{cell:9});
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">20% от 500 — пятая часть</div>`+
-        wkHero(night(`<text x="159" y="20" text-anchor="middle" font-size="13" fill="#cfe0ff">500 = пять сотенных квадратов</text>
-          <g transform="translate(${Math.round((318-5*92)/2)},30) scale(0.92)">
-            ${[0,1,2,3,4].map(i=>`<g transform="translate(${i*92},0)">${g.svg.replace('<svg','<svg width="90" height="90"')}</g>`).join('')}
-          </g>
-          ${sh? `<text x="159" y="162" text-anchor="middle" font-size="15" fill="#7fe8b8" font-weight="bold">5 × 20 = 100 звёзд</text>`:''}
-        `,{h:180}))+
-        (sh? wkRow(pill('500 : 5 = 100',Z.green,0.3)):'')+
-        wkRow(sh===0? wkBtn('зажечь 20% в каждом квадрате',`visW44Act('${lk}','go')`) : wkBtn('сброс',`visW44Act('${lk}','rst')`))+
-        wkSml('в каждом квадрате по 20 звёзд · пять квадратов → 100'));
+      const H=200, cell=14, x=64, y=20;
+      const go=st.go||0;
+      let inner=grid(x,y,cell,25,{lit:I.gold});
+      inner+=tx(159,168,14.5,I.ink,'25 звёзд — это четверть',{b:1});
+      if(go){
+        inner+=`<g class="zzPop"><rect x="196" y="52" width="108" height="76" rx="12" fill="rgba(20,28,58,.9)" stroke="${I.cyan}" stroke-width="2.2"/>
+        ${tx(250,74,12.5,'#9fb4de','25% — четверть',{b:1})}
+        ${tx(250,96,12.5,'#9fb4de','80 : 4',{georgia:1,b:1})}
+        ${tx(250,120,24,I.gold,'= 20',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">25% от 80</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('80 : 4 = 20',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW44Act('${lk}','rst')`):wkBtn('посчитать',`visW44Act('${lk}','go')`))+
+        wkSml('четверть сразу даёт ответ'));
     } else if(step===9){
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Два способа — один ответ</div>`+
-        wkHero(night(`<g class="z2pop">
-          <rect x="16" y="24" width="136" height="92" rx="14" fill="rgba(127,209,255,.08)" stroke="${Z.blue}" stroke-width="2.2"/>
-          <text x="84" y="44" text-anchor="middle" font-size="13" fill="#cfe0ff">способ 1 · через 1%</text>
-          <text x="84" y="72" text-anchor="middle" font-size="20" fill="#fff" font-weight="bold" font-family="Georgia,serif">500:100=5</text>
-          <text x="84" y="100" text-anchor="middle" font-size="20" fill="${Z.gold}" font-weight="bold" font-family="Georgia,serif">5·20=100</text>
-          <rect x="166" y="24" width="136" height="92" rx="14" fill="rgba(127,232,184,.08)" stroke="${Z.green}" stroke-width="2.2"/>
-          <text x="234" y="44" text-anchor="middle" font-size="13" fill="#cfe0ff">способ 2 · через долю</text>
-          <text x="234" y="72" text-anchor="middle" font-size="20" fill="#fff" font-weight="bold" font-family="Georgia,serif">20% = 1/5</text>
-          <text x="234" y="100" text-anchor="middle" font-size="20" fill="${Z.green}" font-weight="bold" font-family="Georgia,serif">500:5=100</text>
-          <rect x="70" y="130" width="180" height="30" rx="14" fill="rgba(255,242,194,.1)" stroke="${Z.gold}" stroke-width="2"/>
-          <text x="160" y="150" text-anchor="middle" font-size="16" fill="${Z.gold}" font-weight="bold">20% от 500 = 100</text>
-        </g>`,{h:176}))+
-        wkSml('каким способом ни считай — ответ один: 100'));
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<g class="zFloat"><rect x="44" y="58" width="120" height="66" rx="12" fill="rgba(20,28,58,.92)" stroke="${I.gold}" stroke-width="2.4"/>
+      <text x="104" y="82" text-anchor="middle" font-size="14" fill="#f4c552" font-weight="bold">скидка 20%</text>
+      <text x="104" y="108" text-anchor="middle" font-size="18" fill="${I.ink}" font-weight="bold">500 → 100 р.</text></g>`;
+      inner+=`<g class="zShot"><line x1="250" y1="60" x2="196" y2="90" stroke="#fff" stroke-width="2" opacity=".8"/><circle cx="250" cy="60" r="3" fill="#fff"/></g>`;
+      if(go){
+        inner+=`<g class="zzPop"><rect x="196" y="96" width="108" height="54" rx="10" fill="rgba(20,28,58,.9)" stroke="${I.cyan}" stroke-width="2"/>
+        ${tx(250,118,13,'#9fb4de','500 : 100 · 20',{georgia:1})}
+        ${tx(250,140,20,I.gold,'= 100',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Скидка-метеор</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('20% от 500 = 100',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW44Act('${lk}','rst')`):wkBtn('посчитать скидку',`visW44Act('${lk}','go')`))+
+        wkSml('метеор приносит скидку'));
     } else if(step===10){
-      const P=st.p||10;
-      const price=500, disc=(price/100)*P, pay=price-disc;
-      const g=starGrid(Math.round(disc/5),{cell:13});
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Скидка в лавке звёздных товаров</div>`+
-        wkHero(night(`<g class="z2pop">
-          <rect x="20" y="20" width="110" height="110" rx="16" fill="rgba(255,255,255,.05)" stroke="#4a5f8f" stroke-width="2"/>
-          <text x="75" y="46" text-anchor="middle" font-size="12" fill="#cfe0ff">цена</text>
-          <text x="75" y="86" text-anchor="middle" font-size="40" fill="#fff" font-weight="bold" font-family="Georgia,serif">500</text>
-          <text x="75" y="106" text-anchor="middle" font-size="13" fill="#9fb0d0">монет</text>
-          <rect x="148" y="20" width="150" height="46" rx="12" fill="rgba(255,138,138,.1)" stroke="#ff9a8a" stroke-width="2"/>
-          <text x="223" y="40" text-anchor="middle" font-size="12" fill="#ffc9bd">скидка ${P}%</text>
-          <text x="223" y="60" text-anchor="middle" font-size="24" fill="#ff9a8a" font-weight="bold" font-family="Georgia,serif">− ${disc}</text>
-          <rect x="148" y="82" width="150" height="46" rx="12" fill="rgba(127,232,184,.1)" stroke="${Z.green}" stroke-width="2"/>
-          <text x="223" y="102" text-anchor="middle" font-size="12" fill="#cfe0ff">платим</text>
-          <text x="223" y="122" text-anchor="middle" font-size="24" fill="${Z.green}" font-weight="bold" font-family="Georgia,serif">${pay}</text>
-        </g>`,{h:160}))+
-        wkRow(
-          wkBtn('скидка 10%',`visW44Act('${lk}','p10')`),
-          wkBtn('скидка 20%',`visW44Act('${lk}','p20')`),
-          wkBtn('скидка 25%',`visW44Act('${lk}','p25')`))+
-        wkSml('скидка 20% от 500 = 100 монет · платим 400 · нажимай, меняй скидку'));
+      const H=195, cx=110, cy=88, r=58;
+      const go=st.go||0;
+      let inner='';
+      // четыре четверти: 50 (половина), 25, 20, 10
+      function wed(a0,a1,c,lab){
+        const large=(a1-a0)>180?1:0;
+        const p0=(cx+r*Math.cos(a0*Math.PI/180)).toFixed(1)+','+(cy+r*Math.sin(a0*Math.PI/180)).toFixed(1);
+        const p1=(cx+r*Math.cos(a1*Math.PI/180)).toFixed(1)+','+(cy+r*Math.sin(a1*Math.PI/180)).toFixed(1);
+        const mid=(a0+a1)/2;
+        const lx=cx+(r+16)*Math.cos(mid*Math.PI/180), ly=cy+(r+16)*Math.sin(mid*Math.PI/180);
+        return `<path class="zRing" d="M ${cx} ${cy} L ${p0} A ${r} ${r} 0 ${large} 1 ${p1} Z" fill="${c}" opacity=".5" stroke="#0a1030" stroke-width="1.5"/>
+        <text x="${lx.toFixed(1)}" y="${(ly+4).toFixed(1)}" text-anchor="middle" font-size="13" fill="${I.ink}" font-weight="bold">${lab}</text>`;
+      }
+      inner+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(20,28,58,.55)" stroke="#3a4a78" stroke-width="1.6"/>`;
+      inner+=wed(-90,90,I.gold,'50%');
+      inner+=wed(90,126,I.cyan,'25%');
+      inner+=wed(126,162,'#c9b8ff','20%');
+      inner+=wed(162,180,'#7fb8ff','10%');
+      if(go){
+        inner+=tx(248,66,0,' ',' ');
+        inner+=`<g class="zzPop"><text x="232" y="70" text-anchor="middle" font-size="13.5" fill="${I.ink}" font-weight="bold">доли неба</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сравним доли</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('50% > 25% > 20% > 10%',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW44Act('${lk}','rst')`):wkBtn('сравнить доли',`visW44Act('${lk}','go')`))+
+        wkSml('больше процент — больше доля'));
     } else if(step===11){
-      const P=st.p||10;
-      const lit=P===10?10:(P===20?20:25);
-      const g=starGrid(lit,{cell:22});
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Зажигай звёзды</div>`+
-        wkHero(night(`<g transform="translate(${Math.round((318-220)/2)},12)">${g.svg.replace('<svg','<svg width="220" height="220"')}</g>`,{h:246}))+
-        wkRow(
-          wkBtn('зажечь 10%',`visW44Act('${lk}','p10')`),
-          wkBtn('зажечь 20%',`visW44Act('${lk}','p20')`),
-          wkBtn('зажечь 25%',`visW44Act('${lk}','p25')`))+
-        (P===10? wkAns('10 звёзд = 10% из 100',Z.gold):
-          P===20? wkAns('20 звёзд = 20% из 100',Z.gold):
-          wkAns('25 звёзд = 25% из 100',Z.gold))+
-        wkSml('10% — ряд из 10 звёзд · 25% — четверть квадрата'));
+      const H=200, cell=14, x=64, y=20;
+      const go=st.go||0;
+      let inner=grid(x,y,cell,30,{lit:I.gold});
+      inner+=tx(159,168,15,'#9fb4de','10% от 300 — это 30 звёзд',{b:1});
+      if(go){
+        inner+=`<g class="zzPop"><rect x="196" y="60" width="108" height="72" rx="12" fill="rgba(192,57,43,.14)" stroke="${I.red}" stroke-width="2.2"/>
+        ${tx(250,84,13,I.red,'НЕ 10!',{georgia:1,b:1})}
+        ${tx(250,108,12.5,'#9fb4de','30 звёзд',{})}
+        ${tx(250,128,14,I.gold,'от числа 300',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ловушка</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('10% от 300 = 30, а не 10!',I.red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW44Act('${lk}','rst')`):wkBtn('проверить',`visW44Act('${lk}','go')`))+
+        wkSml('процент — от числа, о котором речь'));
     } else if(step===12){
+      const H=190, x=44, y=84, w=230, hh=26;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect x="${x}" y="${y}" width="${w}" height="${hh}" rx="10" fill="none" stroke="#3a4a78" stroke-width="1.6"/>`;
+      inner+=`<rect x="${x+2}" y="${y+2}" width="${w*0.2}" height="${hh-4}" rx="8" fill="${I.gold}" opacity=".85"/>`;
+      inner+=`<text x="${x+0.1*w+10}" y="${y+hh/2+5}" text-anchor="middle" font-size="14" fill="#0a1030" font-weight="bold">20%</text>`;
+      if(go){
+        inner+=`<g class="zzPop"><text x="159" y="140" text-anchor="middle" font-size="15" fill="${I.ink}" font-weight="bold">100% — всё небо</text>
+        ${tx(159,162,14,'#9fb4de','20 звёзд из 100 светят',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шкала-небо</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('выделяем долю N% на шкале 100%',I.cyan,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW44Act('${lk}','rst')`):wkBtn('показать шкалу',`visW44Act('${lk}','go')`))+
+        wkSml('полоса из ста звёзд'));
+    } else if(step===13){
+      const H=200, cell=14, x=64, y=20;
       if(st.tr==null) st.tr=0;
-      const POOL=[{N:300,p:10},{N:500,p:20},{N:80,p:25},{N:200,p:10},{N:400,p:50},{N:120,p:25}];
-      const T=POOL[st.tr%POOL.length];
-      const one=+(T.N/100).toFixed(1), res=T.N/100*T.p;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр процентов</div>`+
-        wkHero(night(`<g class="z2pop">
-          <rect x="40" y="30" width="120" height="70" rx="14" fill="rgba(255,255,255,.05)" stroke="#7fd1ff" stroke-width="2.4"/>
-          <text x="100" y="54" text-anchor="middle" font-size="13" fill="#cfe0ff">найди ${T.p}% от ${T.N}</text>
-          <text x="100" y="88" text-anchor="middle" font-size="42" fill="#fff" font-weight="bold" font-family="Georgia,serif">${T.p}%</text>
-          <rect x="178" y="30" width="102" height="70" rx="14" fill="rgba(255,242,194,.07)" stroke="#ffd76a" stroke-width="2.4"/>
-          ${st.s1? `<text x="229" y="56" text-anchor="middle" font-size="13" fill="#ffe9c9">1% = ${T.N}:100</text>
-            <text x="229" y="88" text-anchor="middle" font-size="34" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">${one}</text>`:''}
-          ${st.s2? `<rect x="60" y="112" width="200" height="34" rx="15" fill="rgba(127,232,184,.1)" stroke="#7fe8b8" stroke-width="2.2"/>
-            <text x="160" y="134" text-anchor="middle" font-size="17" fill="#7fe8b8" font-weight="bold">ответ: ${res}</text>`:''}
-        </g>`,{h:160}))+
+      const pool=[[300,10,30],[500,20,100],[80,25,20],[200,30,60],[400,5,20]];
+      const p=pool[st.tr%pool.length];
+      const go=st.go||0;
+      let inner=grid(x,y,cell,p[1],{lit:I.gold});
+      inner+=tx(159,168,15,I.ink,p[1]+'% от '+p[0],{b:1});
+      if(go>=1){
+        inner+=`<g class="zzPop"><text x="159" y="44" text-anchor="middle" font-size="15" fill="${I.cyan}" font-weight="bold">1% = ${p[0]/100}</text></g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="zzPop"><rect x="196" y="60" width="108" height="62" rx="12" fill="rgba(20,28,58,.9)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(250,82,13,'#9fb4de','· '+p[1],{b:1})}
+        ${tx(250,110,24,I.gold,'= '+p[2],{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр-созвездие</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip(p[1]+'% от '+p[0]+' = '+p[2],I.gold,0.2)):'')+
         wkRow(
-          !st.s1? wkBtn('1 · найди 1%',`visW44Act('${lk}','s1')`) : '',
-          (st.s1&&!st.s2)? wkBtn('2 · умножь на '+T.p,`visW44Act('${lk}','s2')`) : '',
-          st.s2? wkBtn('новый пример',`visW44Act('${lk}','n')`) : '',
-          st.s1? wkBtn('заново',`visW44Act('${lk}','rst')`) : '')+
-        wkSml('формула: (N : 100) · p — сначала 1%, потом умножение'));
+          go===0?wkBtn('1 · 1% = ?',`visW44Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · умножить',`visW44Act('${lk}','go')`) : '',
+          go>=2?wkBtn('новое созвездие',`visW44Act('${lk}','n')`) : '',
+          go>=1?wkBtn('заново',`visW44Act('${lk}','rst')`):'')+
+        wkSml('бери созвездие · считай звёзды'));
+    } else if(step===14){
+      const H=200, cell=14, x=64, y=20;
+      if(st.tr==null) st.tr=0;
+      const pool=[[300,10,30,3],[500,20,100,150],[80,25,20,40],[200,30,60,80]];
+      const p=pool[st.tr%pool.length];
+      let inner=grid(x,y,cell,p[1],{lit:I.gold});
+      inner+=tx(159,168,15,I.ink,p[1]+'% от '+p[0],{b:1});
+      if(st.pick!=null){
+        const ok = st.pick===0;
+        inner+=`<g class="zzPop"><text x="159" y="46" text-anchor="middle" font-size="16" fill="${ok?'#a4e0b4':'#ff9a8a'}" font-weight="bold">${ok?'верно!':'не так'}</text>
+        ${tx(159,68,14,'#9fb4de','ответ '+p[2],{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр-планета</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW44P('${lk}',0)">${p[2]}</button>
+          <button class="wk-btn" onclick="visW44P('${lk}',1)">${p[3]}</button>
+          <button class="wk-btn" onclick="visW44Act('${lk}','n')">другая планета</button>
+        </div>`+
+        wkSml(st.pick!=null&&st.pick===0?'молодец!':'выбери верную планету'));
+    } else if(step===15){
+      const H=195;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect x="16" y="36" width="286" height="38" rx="10" fill="rgba(20,28,58,.9)" stroke="${I.gold}" stroke-width="2"/>
+      ${tx(159,60,16,I.gold,'N% от M = M : 100 · N',{georgia:1,b:1})}`;
+      if(go>=1){
+        inner+=`<g class="zzPop"><rect x="16" y="82" width="286" height="34" rx="10" fill="rgba(20,28,58,.85)" stroke="${I.cyan}" stroke-width="2"/>
+        ${tx(159,105,14.5,I.cyan,'50% = :2 · 25% = :4 · 20% = :5 · 10% = :10',{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="zzPop"><rect x="16" y="124" width="286" height="36" rx="10" fill="rgba(20,28,58,.85)" stroke="${I.blue}" stroke-width="2"/>
+        ${tx(159,148,14.5,'#7fb8ff','сначала 1% = M : 100',{b:1})}</g>`;
+        inner+=`<g class="zzPop" style="animation-delay:.12s"><text x="159" y="183" text-anchor="middle" font-size="13" fill="${I.ink}" font-weight="bold">проверка: 10% от 300 = 30</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('формула + удобные доли',I.gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · формула',`visW44Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · доли',`visW44Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW44Act('${lk}','rst')`):'')+
+        wkSml('готово к проверке'));
+    } else if(step===16){
+      const H=165;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'10% от 300 = ?',opts:['30','3','300'],ans:0},
+        {q:'20% от 500 = ?',opts:['100','150','250'],ans:0},
+        {q:'25% от 80 = ?',opts:['20','40','25'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,40,15.5,I.ink,'быстрая проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="zzPop"><text x="159" y="92" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#a4e0b4':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'не так'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW44S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW44Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW44Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('формула M : 100 · N'));
     } else {
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: проценты</div>`+
-        wkHero(night(`<g class="z2pop"><text x="159" y="34" text-anchor="middle" font-size="15" fill="#fff">1% от 300 = 3</text>
-          <circle cx="70" cy="86" r="26" fill="${Z.gold}" opacity=".95"/><text x="70" y="93" text-anchor="middle" font-size="17" fill="#0d1a13" font-weight="bold">10%</text><text x="70" y="110" text-anchor="middle" font-size="11" fill="#cfe0ff">=30</text>
-          <circle cx="159" cy="86" r="26" fill="${Z.blue}" opacity=".95"/><text x="159" y="93" text-anchor="middle" font-size="17" fill="#0d1a13" font-weight="bold">20%</text><text x="159" y="110" text-anchor="middle" font-size="11" fill="#cfe0ff">от 500=100</text>
-          <circle cx="248" cy="86" r="26" fill="${Z.green}" opacity=".95"/><text x="248" y="93" text-anchor="middle" font-size="17" fill="#0d1a13" font-weight="bold">25%</text><text x="248" y="110" text-anchor="middle" font-size="11" fill="#cfe0ff">от 80=20</text>
-        </g>`,{h:150}))+
+      const H=175;
+      let inner='';
+      inner+=tx(159,46,16,I.ink,'10% от 300',{georgia:1,b:1});
+      inner+=`<g class="zzPop"><text x="159" y="82" text-anchor="middle" font-size="16" fill="${I.cyan}" font-weight="bold">300 : 100 · 10</text>
+      ${tx(159,116,30,I.gold,'= 30',{georgia:1,b:1})}</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(sky(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
-        wkSml('10% от 300 = 30 · 25% от 80 = 20 · жми «Понял! Проверю себя»'));
+        wkSml('M : 100 · N · жми «Понял! Проверю себя»'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
   window.VISKW[44]=visW44;
-  function visW44T(lk,i){
-    const st=CHS[lk]||(CHS[lk]={});
-    st.sel=i; chRender(0);
-  }
+  function visW44T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
   window.visW44T=visW44T;
+  function visW44P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW44P=visW44P;
+  function visW44S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW44S=visW44S;
   function visW44Act(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
-    if(act==='go') st.sh=1;
-    if(act==='n'){ if(st.n!=null) st.n++; st.sh=0; }
-    if(act==='p10') st.p=10;
-    if(act==='p20') st.p=20;
-    if(act==='p25') st.p=25;
-    if(act==='s1') st.s1=1;
-    if(act==='s2') st.s2=1;
-    if(act==='nq'){ st.q=1; st.sel=null; }
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===16){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
     if(act==='rst') CHS[lk]={};
     chRender(0);
   }
