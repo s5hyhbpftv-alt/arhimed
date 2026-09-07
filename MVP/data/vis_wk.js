@@ -8884,3 +8884,523 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW377Act=visW377Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===377){ window.ARH_LESSONS[i]=L377; break; } } })();
 })();
+
+/* ================= УРОК 195 · Длина окружности (v1 · чертёж «Обод и число π», 18 слайдов) ================= */
+(function(){
+  if(!window.__wk195v1css){
+    window.__wk195v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .k6in{animation:k6In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes k6In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .k6pop{animation:k6Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k6Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .k6draw{animation:k6Draw 1s ease both;}'+
+      '@keyframes k6Draw{from{stroke-dashoffset:600}to{stroke-dashoffset:0}}'+
+      '#lvis .k6dash{stroke-dasharray:9 7;animation:k6Dash 1.6s linear infinite;}'+
+      '@keyframes k6Dash{to{stroke-dashoffset:-32}}'+
+      '#lvis .k6bump{animation:k6Bump 1s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k6Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}'+
+      '#lvis .k6float{animation:k6Float 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k6Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+    document.head.appendChild(st);
+  }
+  const L195 = {
+    id: 195, title: 'Длина окружности', ico: '◯',
+    src: 'Математика · 6 класс · Окружность', subj: 'math',
+    explain: [
+      'Сколько верёвки нужно для обруча радиусом 1 м? Или какой длины лента вокруг торта? Ответ даёт самое загадочное число математики — π («пи»)!',
+      'Окружность — это линия, все точки которой на одинаковом расстоянии от центра. Радиус r — «спица» от центра до края.',
+      'Длина окружности C — это длина «обода». Разрежь обруч в одной точке и растяни в линию — получится отрезок длины C!',
+      'Главное число π ≈ 3,14… — бесконечная дробь! В любом круге длина обода ровно в π раз больше диаметра. Для простоты берём π ≈ 3.',
+      'Диаметр d — «ширина» круга через центр: d = 2 · r. Радиус 4 → диаметр 8 — две «спицы» в ряд!',
+      'Формула через диаметр: C = π · d. Обод = π диаметров! Радиус 4 → диаметр 8 → обод ≈ 3 · 8 = 24.',
+      'Формула через радиус: C = 2 · π · r. Так как d = 2r, то C = π·d = π·2r = 2πr — одна и та же формула в двух видах!',
+      'Считаем: радиус 4. Сначала 2 · r = 8, потом × π ≈ 3: C = 2 · 3 · 4 = 24. Как в нашей проверке!',
+      'Наглядно: радиус 2 → обод 12. Разверни обод в линию — уложится шесть радиусов: 2π ≈ 6, значит обод ≈ 6 · r.',
+      'Секрет: 2π ≈ 6. Длина окружности примерно в 6 раз больше радиуса! Радиус 4 → обод ≈ 24.',
+      'Задача 1: радиус 5 → C = 2 · 3 · 5 = 30. Как в наших задачках!',
+      'Задача 2: радиус 3 → C = 2 · 3 · 3 = 18. Тоже как в задачках — ответ 18!',
+      'Порядок действий: сначала удвой радиус (2 · r), потом умножь на π (≈3). Быстро и без ошибок!',
+      'А если дан диаметр? C = π · d: просто умножь диаметр на 3. Радиус 5 = диаметр 10 — тот же обод 30!',
+      'Где это в жизни: длина обруча, обод велосипедного колеса, лента вокруг торта, орбита спутника. Везде, где есть круг!',
+      'Проверь себя: радиус 2 → C = 12; радиус 6 → C = 36; диаметр 4 → C = 12. Просто ×6 радиус или ×3 диаметр!',
+      'Потренируйся в тренажёре: дадут радиус, посчитай C = 2·π·r. Сначала удвой радиус, потом умножь на 3!',
+      'Совет Архимеда: C = 2·π·r = π·d. π ≈ 3 → обод ≈ 6·r или 3·d. Шаги: 2·r, потом ×3. Радиус 4 → обод 24. Ты готов к проверке!'
+    ],
+    check: { q: 'Чему равна длина окружности радиуса 4 (π ≈ 3)?', choices: ['24', '12', '16'], ans: 0,
+      exp: 'C = 2 · π · r = 2 · 3 · 4 = 24.' },
+    tasks: [
+      { q: 'Чему равна длина окружности радиуса 5 (π ≈ 3)?', kind: 'unit', ans: 30, tol: 0,
+        hints: ['Сначала 2 · 5 = 10.', '10 · 3 = 30.'], sol: 'C = 2 · 3 · 5 = 30.' },
+      { q: 'Чему равна длина окружности радиуса 3 (π ≈ 3)?', kind: 'choice', choices: ['18', '9', '6'], ans: 0, tol: 0,
+        hints: ['2 · 3 = 6.', '6 · 3 = 18.'], sol: 'C = 2 · 3 · 3 = 18.' }
+    ]
+  };
+  const I={ink:'#28324b',blue:'#2e6db4',fb:'rgba(46,109,180,.16)',grn:'#2e8b57',fg:'rgba(46,139,87,.15)',gold:'#d99a06',red:'#c0392b',gray:'#8a94ad'};
+  const U=20;
+  function paper(W,H,opt){
+    const o=opt||{};
+    let grid='';
+    if(o.grid){ const s=o.grid;
+      for(let x=s;x<W;x+=s) grid+=`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="rgba(120,150,195,.22)" stroke-width="1"/>`;
+      for(let y=s;y<H;y+=s) grid+=`<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="rgba(120,150,195,.22)" stroke-width="1"/>`;
+    }
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs><linearGradient id="k6pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfbf4"/><stop offset="1" stop-color="#f1f6fd"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#k6pg)"/>
+      ${grid}
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#c8d3e5" stroke-width="2" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||I.ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdfbf4" stroke-width="3.2">${t}</text>`;
+  function dim(x1,y1,x2,y2,c,txt,o){
+    const opt=o||{};
+    const dx=x2-x1, dy=y2-y1, L=Math.hypot(dx,dy)||1;
+    const nx=-dy/L, ny=dx/L;
+    const off=(opt.off!=null?opt.off:12)*(opt.neg?-1:1);
+    const mx=(x1+x2)/2+nx*off, my=(y1+y2)/2+ny*off;
+    const tk=4;
+    let s=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="1.6"/>`;
+    s+=`<line x1="${x1-nx*tk}" y1="${y1-ny*tk}" x2="${x1+nx*tk}" y2="${y1+ny*tk}" stroke="${c}" stroke-width="1.6"/>`;
+    s+=`<line x1="${x2-nx*tk}" y1="${y2-ny*tk}" x2="${x2+nx*tk}" y2="${y2+ny*tk}" stroke="${c}" stroke-width="1.6"/>`;
+    s+=tx(mx,my-4,(opt.fs!=null?opt.fs:14),c,txt,{georgia:1,b:1});
+    return s;
+  }
+  function circ(cx,cy,r,o){
+    const opt=o||{};
+    let s=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${opt.fill||'rgba(46,109,180,.13)'}" stroke="${opt.stroke||I.blue}" stroke-width="${opt.w||3}"/>`;
+    if(opt.dot!==false){ s+=`<circle cx="${cx}" cy="${cy}" r="2.6" fill="${I.ink}"/>`; }
+    if(opt.ra){
+      const ang=(opt.ra.a!=null?opt.ra.a:-40);
+      const rad=ang*Math.PI/180;
+      const ex=cx+r*Math.cos(rad), ey=cy+r*Math.sin(rad);
+      const mx=cx+r*0.5*Math.cos(rad), my=cy+r*0.5*Math.sin(rad);
+      const px=-Math.sin(rad), py=Math.cos(rad);
+      const ah=7;
+      s+=`<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" stroke="${opt.rac||I.red}" stroke-width="2"/>`;
+      s+=`<path d="M ${ex} ${ey} L ${ex-ah*Math.cos(rad)-ah*0.55*px} ${ey-ah*Math.sin(rad)-ah*0.55*py} M ${ex} ${ey} L ${ex-ah*Math.cos(rad)+ah*0.55*px} ${ey-ah*Math.sin(rad)+ah*0.55*py}" stroke="${opt.rac||I.red}" stroke-width="2" fill="none"/>`;
+      s+=tx(mx+px*11,my+py*11+4,opt.fs||16,opt.rac||I.red,opt.rlabel||'r',{georgia:1,b:1});
+    }
+    return s;
+  }
+  const chip=(t,c,delay,fs)=>`<span class="k6in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(255,255,255,.8);font-family:Georgia,serif;font-size:${fs||19}px;color:${c};font-weight:bold">${t}</span>`;
+  const Q195=[
+    {q:'C = 2πr, r = 4, π≈3. Найди C.',opts:['24','12','16'],ans:0},
+    {q:'C = 2πr, r = 3, π≈3. Найди C.',opts:['18','9','6'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q195[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.8)',bd='#b9c6d8',tc='#28324b';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(46,139,87,.16)':'rgba(192,57,43,.13)'; bd=i===T.ans?I.grn:I.red; tc=i===T.ans?I.grn:I.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:18px" onclick="visW195T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#2e8b57;font-size:17px">Верно! 2·3 = 6, 6·3 = 18</div>':'<div class="wk-ans" style="color:#2e8b57;font-size:17px">Верно! 2·4 = 8, 8·3 = 24</div>')
+        : '<div class="wk-ans" style="color:#c0392b;font-size:16px">Не так. Сначала 2·r, потом ×3</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW195Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW195Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#5c6b85')}<div class="wk-row" style="gap:10px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  /* быстрый мини-квиз для слайда 15 */
+  const QS15=[
+    {q:'Радиус 2 · π≈3: C = 2·π·r = ?',opts:['12','8','6'],ans:0},
+    {q:'Радиус 6 · π≈3: C = 2·π·r = ?',opts:['36','18','12'],ans:0},
+    {q:'Диаметр 4: C = π·d ≈ ?',opts:['12','8','16'],ans:0}
+  ];
+  function mini15(lk,st){
+    const T=QS15[st.mq||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.8)',bd='#b9c6d8',tc='#28324b';
+      if(st.msel!=null&&i===st.msel){ bg=i===T.ans?'rgba(46,139,87,.16)':'rgba(192,57,43,.13)'; bd=i===T.ans?I.grn:I.red; tc=i===T.ans?I.grn:I.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:50px;font-size:17px" onclick="visW195Q('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.msel!=null){
+      msg= st.msel===T.ans
+        ? '<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно!</div>'
+        : '<div class="wk-ans" style="color:#c0392b;font-size:15px">Не так · посчитай ещё раз</div>';
+    }
+    const doneAll=(st.mq||0)>=2;
+    const nxt = st.msel!=null&&st.msel===T.ans
+      ? (doneAll? wkBtn('молодец! вперёд',`visW195Act('${lk}','nq')`) : wkBtn('следующий вопрос →',`visW195Act('${lk}','nq')`))
+      : '';
+    return `${wkNote(T.q,'#5c6b85')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${nxt?nxt:''}</div>`;
+  }
+  function visW195(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=13){ st.go=0; }
+      if(step===15){ st.mq=0; st.msel=null; }
+      if(step===16){ if(st.tr==null) st.tr=0; st.go=0; }
+      if(step===17){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=212, r=58, cx=159, cy=102;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(cx,cy,r,{ra:{a:-45},rac:I.red,rlabel:'r = 1 м',fs:16});
+      if(go){
+        inner+=`<g class="k6dash"><line x1="${cx-r-8}" y1="${cy+r+26}" x2="${cx+r+8}" y2="${cy+r+26}" stroke="${I.grn}" stroke-width="2.4"/></g>`;
+        inner+=tx(159,cy+r+42,14,I.grn,'лента = длина обода C',{b:1});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сколько верёвки на обруч?</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('ответ прячет число π',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW195Act('${lk}','rst')`):wkBtn('показать ленту',`visW195Act('${lk}','go')`))+
+        wkSml('обруч радиусом 1 м — это окружность длиной C'));
+    } else if(step===1){
+      const H=185;
+      let inner='';
+      inner+=circ(92,96,56,{ra:{a:-40},rac:I.red,rlabel:'r',fs:16});
+      inner+=tx(159,178,14.5,I.ink,'все точки на расстоянии r от центра',{});
+      inner+=`<g class="k6pop" style="animation-delay:.2s"><rect x="172" y="60" width="126" height="72" rx="10" fill="rgba(255,255,255,.85)" stroke="${I.blue}" stroke-width="2"/>
+      ${tx(235,84,14.5,I.ink,'центр — точка O',{b:1})}
+      ${tx(235,112,14.5,I.ink,'радиус — «спица»',{b:1})}</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Окружность и радиус</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('окружность — линия · радиус r — от центра до края',I.blue,0.2))+
+        wkSml('окружность нарисована циркулем: ножка в центре O'));
+    } else if(step===2){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(84,92,44,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3.4,dot:false});
+      inner+=tx(84,152,14,I.blue,'C — длина обода',{b:1});
+      if(go){
+        inner+=`<g class="k6pop"><line class="k6draw" x1="180" y1="80" x2="296" y2="80" stroke="${I.grn}" stroke-width="3" stroke-dasharray="600"/>
+        ${tx(238,104,15,I.grn,'обод «разрезали»',{b:1})}
+        ${tx(238,124,15,I.grn,'и растянули в линию',{b:1})}
+        ${tx(238,146,16,I.ink,'длина = C',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Обод можно развернуть в линию</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('C — длина получившегося отрезка',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW195Act('${lk}','rst')`):wkBtn('разрезать и развернуть',`visW195Act('${lk}','go')`))+
+        wkSml('у круга нет прямых сторон — но обод измерить можно'));
+    } else if(step===3){
+      const H=185;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(88,102,50,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3,dot:true});
+      inner+=`<line x1="38" y1="102" x2="138" y2="102" stroke="${I.red}" stroke-width="2"/>`;
+      inner+=tx(88,86,14,I.red,'d',{georgia:1,b:1});
+      if(go){
+        inner+=`<g class="k6pop"><rect x="160" y="62" width="140" height="70" rx="10" fill="rgba(255,255,255,.9)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(230,84,17,I.ink,'C = π · d',{georgia:1,b:1})}
+        ${tx(230,112,13.5,I.ink,'π ≈ 3,14… ≈ 3',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Число π — во сколько раз обод длиннее диаметра</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('в любом круге: C ÷ d = π',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW195Act('${lk}','rst')`):wkBtn('во сколько раз?',`visW195Act('${lk}','go')`))+
+        wkSml('π = 3,14159… · в задачах берём π ≈ 3'));
+    } else if(step===4){
+      const H=185, r=52, cx=96, cy=100;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(cx,cy,r,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3,dot:true});
+      inner+=`<line x1="${cx}" y1="${cy}" x2="${cx-r}" y2="${cy}" stroke="${I.red}" stroke-width="2"/>`;
+      inner+=tx(cx-r/2,cy-8,15,I.red,'r',{georgia:1,b:1});
+      inner+=`<line x1="${cx}" y1="${cy}" x2="${cx+r}" y2="${cy}" stroke="${I.red}" stroke-width="2"/>`;
+      inner+=tx(cx+r/2,cy-8,15,I.red,'r',{georgia:1,b:1});
+      if(go>=1){
+        inner+=`<g class="k6pop"><line x1="${cx-r}" y1="${cy+2}" x2="${cx+r}" y2="${cy+2}" stroke="${I.grn}" stroke-width="2.4"/>
+        ${tx(cx,cy+24,16,I.grn,'d = 2 · r',{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k6pop"><rect x="176" y="66" width="126" height="58" rx="10" fill="rgba(46,139,87,.12)" stroke="${I.grn}" stroke-width="2.2"/>
+        ${tx(239,90,15,I.grn,'r = 4 →',{b:1})}
+        ${tx(239,114,19,I.grn,'d = 8',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Диаметр — две «спицы» в ряд</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('d = 2·r · r = d : 2',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · показать диаметр',`visW195Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · r = 4',`visW195Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW195Act('${lk}','rst')`):'')+
+        wkSml('диаметр проходит через центр от края до края'));
+    } else if(step===5){
+      const H=185;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(74,96,40,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3,dot:false});
+      inner+=`<line x1="34" y1="96" x2="114" y2="96" stroke="${I.red}" stroke-width="2"/>`;
+      inner+=tx(74,80,14,I.red,'d',{georgia:1,b:1});
+      inner+=tx(74,150,14,I.ink,'обод ≈ 3 диаметра',{});
+      if(go){
+        const d=40, L=3*d, x0=148;
+        inner+=`<g class="k6pop"><rect x="140" y="46" width="166" height="94" rx="10" fill="rgba(255,255,255,.9)" stroke="${I.blue}" stroke-width="2"/>
+        ${tx(223,66,14.5,I.ink,'C = π · d',{georgia:1,b:1})}
+        ${tx(223,88,13.5,I.ink,'обод = π диаметров',{})}
+        ${dim(152,104,152+3*d,104,I.grn,'3·d',{off:0,fs:14})}
+        ${tx(223,128,13.5,I.ink,'при π≈3: C ≈ 3·d',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Формула через диаметр</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('C = π · d · радиус 4 → d=8 → C≈24',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW195Act('${lk}','rst')`):wkBtn('показать формулу',`visW195Act('${lk}','go')`))+
+        wkSml('умножь диаметр на π — получишь обод'));
+    } else if(step===6){
+      const H=185;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,56,24,I.blue,'C = 2 · π · r',{georgia:1,b:1});
+      if(go){
+        inner+=`<g class="k6pop"><text x="159" y="100" text-anchor="middle" font-size="17" fill="${I.ink}" font-weight="bold" font-family="Georgia,serif">d = 2r → C = π·d = π·2r</text>
+        ${tx(159,132,18,I.grn,'C = π · 2 · r = 2πr',{georgia:1,b:1})}
+        ${tx(159,162,14,I.ink,'обе формулы — одно и то же',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Та же формула через радиус</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('C = π·d = π·2r = 2πr',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW195Act('${lk}','rst')`):wkBtn('как связаны?',`visW195Act('${lk}','go')`))+
+        wkSml('вместо d подставляем 2r'));
+    } else if(step===7){
+      const H=195, r=50, cx=84, cy=112;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(cx,cy,r,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3,ra:{a:-35},rac:I.red,rlabel:'4',fs:17});
+      if(go>=1){
+        inner+=`<g class="k6pop"><rect x="164" y="62" width="136" height="52" rx="10" fill="${I.fb}" stroke="${I.blue}" stroke-width="2.4"/>
+        ${tx(232,80,14,I.blue,'шаг 1 · 2·r',{b:1})}
+        ${tx(232,106,24,I.blue,'2·4 = 8',{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k6pop"><rect x="164" y="124" width="136" height="52" rx="10" fill="rgba(217,154,6,.15)" stroke="${I.gold}" stroke-width="2.4"/>
+        ${tx(232,142,14,'#a37408','шаг 2 · ×π≈3',{b:1})}
+        ${tx(232,168,24,I.gold,'C = 24',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Радиус 4: считаем</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('8 · 3 = 24 · C = 2·3·4',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · 2·r',`visW195Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · C = 2πr',`visW195Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW195Act('${lk}','rst')`):'')+
+        wkSml('сначала удвой радиус · потом умножь на π'));
+    } else if(step===8){
+      const H=200;
+      const go=st.go||0;
+      const rcm=2, rpx=rcm*U, cx=84, cy=88;
+      let inner='';
+      inner+=circ(cx,cy,rpx,{fill:'rgba(46,139,87,.13)',stroke:I.grn,w:3,ra:{a:-50},rac:I.grn,rlabel:'2',fs:16});
+      inner+=tx(cx,cy+rpx+24,13.5,I.ink,'r = 2 см · C = ?',{b:1});
+      if(go>=1){
+        const x0=36, x1=36+6*rpx, y=164;
+        inner+=`<g class="k6pop"><line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="${I.blue}" stroke-width="2.6"/>
+        ${[1,2,3,4,5].map(i=>`<line x1="${x0+i*rpx}" y1="${y-7}" x2="${x0+i*rpx}" y2="${y+7}" stroke="${I.blue}" stroke-width="1.8"/>`).join('')}
+        ${tx((x0+x1)/2,y-12,14,I.blue,'6 радиусов по 2 см',{b:1})}
+        ${dim(x0,y+16,x1,y+16,I.grn,'C',{off:0,fs:15})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k6pop"><rect x="222" y="52" width="84" height="60" rx="10" fill="rgba(217,154,6,.15)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(264,76,13.5,'#a37408','6 · 2 см',{b:1})}
+        ${tx(264,100,24,I.gold,'12',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Радиус 2: обод = 6 радиусов</div>`+
+        wkHero(paper(W,H,{grid:U,inner:()=>inner}))+
+        (go>=2?wkRow(chip('2π ≈ 6 → C ≈ 6·r = 12',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · развернуть обод',`visW195Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · посчитать',`visW195Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW195Act('${lk}','rst')`):'')+
+        wkSml('2π ≈ 6,28 — «почти 6 радиусов»'));
+    } else if(step===9){
+      const H=175;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,62,30,I.red,'2π ≈ 6',{georgia:1,b:1});
+      if(go){
+        inner+=`<g class="k6pop"><text x="159" y="112" text-anchor="middle" font-size="24" fill="${I.grn}" font-weight="bold" font-family="Georgia,serif">C ≈ 6 · r</text>
+        ${tx(159,146,14.5,I.ink,'радиус 4 → обод ≈ 6·4 = 24',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Секрет числа π</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('обод в 6 раз длиннее радиуса',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW195Act('${lk}','rst')`):wkBtn('а точнее?',`visW195Act('${lk}','go')`))+
+        wkSml('π = 3,14 → 2π = 6,28 — чуть больше 6'));
+    } else if(step===10){
+      const H=190, r=44, cx=86, cy=106;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(cx,cy,r,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3,ra:{a:-45},rac:I.blue,rlabel:'5',fs:17});
+      if(go>=1){
+        inner+=`<g class="k6pop"><rect x="158" y="58" width="142" height="48" rx="10" fill="${I.fb}" stroke="${I.blue}" stroke-width="2.2"/>
+        ${tx(229,76,14,I.blue,'2 · r = 2·5 = 10',{georgia:1,b:1})}
+        ${tx(229,98,15,I.ink,'это диаметр',{})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k6pop"><rect x="158" y="116" width="142" height="52" rx="10" fill="rgba(217,154,6,.15)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(229,134,13.5,'#a37408','× π ≈ 3',{b:1})}
+        ${tx(229,160,24,I.gold,'C = 30',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Радиус 5</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('10 · 3 = 30',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · 2·r',`visW195Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · C',`visW195Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW195Act('${lk}','rst')`):'')+
+        wkSml('C = 2·3·5 = 30'));
+    } else if(step===11){
+      const H=185, r=48, cx=88, cy=100;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(cx,cy,r,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3,ra:{a:-45},rac:I.red,rlabel:'3',fs:17});
+      if(go>=1){
+        inner+=`<g class="k6pop"><text x="180" y="84" text-anchor="middle" font-size="19" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">2·r = 6</text>
+        ${tx(180,112,14,I.ink,'2·3 = 6',{})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k6pop"><text x="180" y="152" text-anchor="middle" font-size="26" fill="${I.gold}" font-weight="bold" font-family="Georgia,serif">C = 18</text>
+        ${tx(180,176,13.5,'#a37408','6 · 3 = 18',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Радиус 3</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('2·3·3 = 18',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · 2·r',`visW195Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · C',`visW195Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW195Act('${lk}','rst')`):'')+
+        wkSml('6 радиусов по 3 = 18'));
+    } else if(step===12){
+      const H=185;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect x="16" y="36" width="286" height="40" rx="10" fill="${I.fb}" stroke="${I.blue}" stroke-width="2.2"/>
+      ${tx(159,62,21,I.blue,'C = 2 · π · r',{georgia:1,b:1})}`;
+      if(go>=1){
+        inner+=`<g class="k6pop"><rect x="16" y="86" width="286" height="36" rx="10" fill="${I.fg}" stroke="${I.grn}" stroke-width="2"/>
+        ${tx(159,110,15,I.grn,'шаг 1: удвой радиус · 2·r',{b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k6pop"><rect x="16" y="130" width="286" height="36" rx="10" fill="rgba(217,154,6,.13)" stroke="${I.gold}" stroke-width="2"/>
+        ${tx(159,154,15,'#a37408','шаг 2: умножь на π ≈ 3',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Порядок действий</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('два шага — и обод готов',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · что сначала?',`visW195Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · потом?',`visW195Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW195Act('${lk}','rst')`):'')+
+        wkSml('C измеряем в см · не в см²!'));
+    } else if(step===13){
+      const H=190, r=50, cx=80, cy=106;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(cx,cy,r,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3,dot:true});
+      inner+=`<line x1="${cx-r}" y1="${cy}" x2="${cx+r}" y2="${cy}" stroke="${I.red}" stroke-width="2.2"/>`;
+      inner+=tx(cx,cy-10,15,I.red,'d = 10',{georgia:1,b:1});
+      if(go>=1){
+        inner+=`<g class="k6pop"><rect x="156" y="58" width="146" height="52" rx="10" fill="${I.fb}" stroke="${I.blue}" stroke-width="2.2"/>
+        ${tx(229,76,14,I.blue,'C = π · d',{georgia:1,b:1})}
+        ${tx(229,102,20,I.blue,'3 · 10 = 30',{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k6pop"><rect x="156" y="120" width="146" height="52" rx="10" fill="rgba(46,139,87,.13)" stroke="${I.grn}" stroke-width="2.2"/>
+        ${tx(229,138,13.5,I.grn,'и через радиус',{b:1})}
+        ${tx(229,164,18,I.grn,'2·3·5 = 30',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Если дан диаметр 10</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('r = 5 · оба пути дают 30',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · C = π·d',`visW195Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · проверим через r',`visW195Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW195Act('${lk}','rst')`):'')+
+        wkSml('диаметр 10 → радиус 5 · ответ тот же'));
+    } else if(step===14){
+      const H=190;
+      const card=(x,y,w,c,innerTxt,cap)=>`<g class="k6pop" style="animation-delay:${(y/300+0.1).toFixed(2)}s"><rect x="${x}" y="${y}" width="${w}" height="64" rx="10" fill="rgba(255,255,255,.9)" stroke="${c}" stroke-width="2"/>
+      ${innerTxt}${tx(x+w/2,y+58,12.5,I.ink,cap,{b:1})}</g>`;
+      let inner='';
+      inner+=card(16,46,86,I.blue,circ(59,82,22,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3.4,dot:false}),'обруч');
+      inner+=card(116,46,86,I.blue,'<g><circle cx="159" cy="82" r="20" fill="none" stroke="'+I.blue+'" stroke-width="3"/>'+
+        [0,60,120,180,240,300].map(a=>{const r0=a*Math.PI/180; return '<line x1="159" y1="82" x2="'+(159+20*Math.cos(r0)).toFixed(1)+'" y2="'+(82+20*Math.sin(r0)).toFixed(1)+'" stroke="'+I.blue+'" stroke-width="1.6"/>';}).join('')+'</g>','колесо');
+      inner+=card(216,46,86,I.blue,circ(259,82,22,{fill:I.fb,stroke:I.blue,w:3}),'лента');
+      inner+=card(66,124,86,I.grn,'<ellipse cx="109" cy="156" rx="26" ry="12" fill="none" stroke="'+I.grn+'" stroke-width="2.6"/><circle cx="128" cy="148" r="3" fill="'+I.grn+'"/>','орбита');
+      inner+=card(166,124,86,I.grn,'<rect x="186" y="144" width="46" height="24" rx="6" fill="'+I.fg+'" stroke="'+I.grn+'" stroke-width="2.4"/>','дорожка');
+      inner+=tx(159,26,0,' ',' ');
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Где нужна длина окружности</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkRow(chip('везде, где есть круглый обод',I.blue,0.2))+
+        wkSml('C — длина обруча, обода колеса, ленты, дорожки'));
+    } else if(step===15){
+      const H=150;
+      let inner='';
+      inner+=tx(159,70,0,' ',' ');
+      inner+=tx(159,90,17,I.ink,'быстро посчитай обод',{b:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        mini15(lk,st)+
+        wkSml('×6 радиус или ×3 диаметр'));
+    } else if(step===16){
+      const H=195;
+      if(st.tr==null) st.tr=0;
+      const pool=[2,3,4,5,6];
+      const r=pool[st.tr%5];
+      const d=2*r, C=2*3*r;
+      const go=st.go||0;
+      let inner='';
+      inner+=circ(84,112,18+r*6,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3,ra:{a:-50},rac:I.blue,rlabel:String(r),fs:15});
+      if(go>=1){
+        inner+=`<g class="k6pop"><rect x="158" y="58" width="142" height="50" rx="10" fill="${I.fb}" stroke="${I.blue}" stroke-width="2.2"/>
+        ${tx(229,76,13.5,I.blue,'шаг 1 · 2·r',{b:1})}
+        ${tx(229,101,23,I.blue,String(d),{georgia:1,b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k6pop"><rect x="158" y="118" width="142" height="56" rx="10" fill="rgba(217,154,6,.15)" stroke="${I.gold}" stroke-width="2.2"/>
+        ${tx(229,136,13.5,'#a37408','шаг 2 · × π ≈ 3',{b:1})}
+        ${tx(229,164,24,I.gold,'C = '+C,{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: радиус ${r}</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('C = 2·3·'+r+' = '+C,I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · 2·r',`visW195Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · C',`visW195Act('${lk}','go')`) : '',
+          go>=2?wkBtn('новый радиус',`visW195Act('${lk}','n')`) : '',
+          go>=1?wkBtn('заново',`visW195Act('${lk}','rst')`):'')+
+        wkSml('удвой радиус · умножь на 3'));
+    } else {
+      const H=180;
+      let inner='';
+      inner+=circ(84,92,38,{fill:'rgba(255,255,255,0)',stroke:I.blue,w:3,ra:{a:-45},rac:I.red,rlabel:'4',fs:15});
+      inner+=`<rect x="140" y="56" width="164" height="72" rx="12" fill="rgba(255,255,255,.9)" stroke="${I.gold}" stroke-width="2.2"/>
+      ${tx(222,80,14,'#a37408','2·r = 8',{georgia:1,b:1})}
+      ${tx(222,116,24,I.gold,'C = 24',{georgia:1,b:1})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('2·4 = 8 · 8·3 = 24 · жми «Понял! Проверю себя»'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[195]=visW195;
+  function visW195T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW195T=visW195T;
+  function visW195Q(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW195Q=visW195Q;
+  function visW195Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; }
+    if(act==='nq'){ if(sp===15){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW195Act=visW195Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===195){ window.ARH_LESSONS[i]=L195; break; } } })();
+})();
