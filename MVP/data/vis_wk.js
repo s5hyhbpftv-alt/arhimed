@@ -10472,3 +10472,552 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW197Act=visW197Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===197){ window.ARH_LESSONS[i]=L197; break; } } })();
 })();
+
+/* ================= УРОК 416 · Квадратные неравенства: метод интервалов (v1 · «Дорога знаков Архимеда», 18 слайдов) ================= */
+(function(){
+  if(!window.__wk416v1css){
+    window.__wk416v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .k9in{animation:k9In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes k9In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .k9pop{animation:k9Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k9Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .k9slide{animation:k9Slide 1s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
+      '@keyframes k9Slide{from{transform:translate(var(--tx),var(--ty));opacity:0}to{transform:translate(0,0);opacity:1}}'+
+      '#lvis .k9dash{stroke-dasharray:9 7;animation:k9Dash 1.6s linear infinite;}'+
+      '@keyframes k9Dash{to{stroke-dashoffset:-32}}'+
+      '#lvis .k9bump{animation:k9Bump 1s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes k9Bump{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}';
+    document.head.appendChild(st);
+  }
+  const L416 = {
+    id: 416, title: 'Квадратные неравенства: метод интервалов', ico: '≫',
+    src: 'Математика · 8 класс · Алгебра 8: неравенства', subj: 'math',
+    explain: [
+      'Неравенство x² − 4 > 0 спрашивает: при каких x значение выражения положительно? Это не одно число, а целые промежутки значений. Найдём их красивым способом — методом интервалов.',
+      'Сначала разложим левую часть на множители. По формуле разности квадратов a² − b² = (a − b)(a + b): x² − 4 = x² − 2² = (x − 2)(x + 2).',
+      'Проверим разложение: (x − 2)(x + 2) = x² + 2x − 2x − 4 = x² − 4. Всё верно — середина сократилась.',
+      'Найдём корни: произведение равно нулю, когда равен нулю хотя бы один множитель. x − 2 = 0 → x = 2; x + 2 = 0 → x = −2.',
+      'Отметим корни на числовой прямой: точки −2 и 2 делят её на три интервала: левый, средний и правый.',
+      'Определим знак произведения на среднем интервале: возьмём пробную точку x = 0. (0 − 2)(0 + 2) = −4 < 0 — знак «минус».',
+      'Проверим крайние интервалы. x = 3: (3 − 2)(3 + 2) = 5 > 0 — плюс. x = −3: (−5)(−1) = 5 > 0 — тоже плюс.',
+      'Итог: знаки идут + − +. В этом суть метода интервалов: пройдя через корень, знак меняется на противоположный.',
+      'Нам нужно (x − 2)(x + 2) > 0, то есть знак «плюс». Плюс стоит на крайних интервалах: слева от −2 и справа от 2.',
+      'Ответ: x < −2 или x > 2. Кратко: x ∈ (−∞; −2) ∪ (2; +∞). Точки −2 и 2 не входят (неравенство строгое).',
+      'Графическая проверка: парабола y = x² − 4 лежит выше оси x ровно на тех же интервалах — при x < −2 и x > 2.',
+      'Пример 2: x² − 9 > 0. Разложим: (x − 3)(x + 3) > 0. Корни ±3, знаки + − +. Ответ: x < −3 или x > 3.',
+      'Пример 3: x² − 1 < 0. Корни ±1, знаки + − +. Нам нужен «минус» — средний интервал. Ответ: −1 < x < 1.',
+      'Алгоритм метода интервалов: 1) разложи на множители; 2) найди корни и отметь на прямой (строгие — «выколотые»); 3) расставь знаки, начиная справа с «+» и чередуя; 4) выбери нужные интервалы и запиши ответ.',
+      'Тренажёр: дано квадратное неравенство — выполни шаги сам: корни, знаки, ответ. Кнопки проведут по шагам!',
+      'Ловушка: x² − 4 > 0 — это НЕ «между −2 и 2»! Проверка: при x = 0 получаем −4 < 0 — не подходит. Решение — вне отрезка. А вот x² − 4 < 0 даёт как раз −2 < x < 2.',
+      'Знак неравенства важен: строгое > и < — точки «выколотые»; нестрогое ≥ и ≤ — точки закрашенные и входят в ответ.',
+      'Проверь себя: x² − 4 > 0 → x < −2 или x > 2. Ответь в тесте и жми «Понял! Проверю себя» — там это же неравенство!'
+    ],
+    check: { q: 'Реши: x² − 4 > 0', choices: ['x < −2 или x > 2', '−2 < x < 2', 'x > 2', 'x < 2'], ans: 0,
+      exp: 'Произведение положительно вне отрезка [−2; 2].' },
+    tasks: [
+      { q: 'Какие корни у уравнения x² − 9 = 0? Введи положительный корень.', kind: 'unit', ans: 3, tol: 0,
+        hints: ['x² = 9.', 'x = 3 или x = −3.'], sol: 'Положительный корень — 3.' },
+      { q: 'Методом интервалов обычно решают…', kind: 'choice', choices: ['неравенства', 'уравнения с модулем', 'системы сложением', 'дроби'], ans: 0, tol: 0,
+        hints: ['Метод интервалов — про знаки на числовой прямой.', 'Им решают неравенства.'], sol: 'Неравенства.' }
+    ]
+  };
+  const I={ink:'#28324b',blue:'#2e6db4',fb:'rgba(46,109,180,.15)',grn:'#2e8b57',red:'#c0392b',gold:'#d99a06',gray:'#8a94ad'};
+  const SC=40, CX=159; // масштаб: 1 ед = 40px, центр 159
+  const M=(x)=>CX+x*SC; // math->screen x
+  function paper(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs><linearGradient id="k9pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fcfdfa"/><stop offset="1" stop-color="#f0f5ef"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#k9pg)"/>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#cbd9c8" stroke-width="2" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||I.ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fcfdfa" stroke-width="3.2">${t}</text>`;
+  /* числовая прямая */
+  function axis(y,x0,x1,c){
+    const h=7;
+    let s=`<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="${c||I.ink}" stroke-width="2.6"/>`;
+    s+=`<path d="M ${x1} ${y} l ${-h} ${-h*0.6} M ${x1} ${y} l ${-h} ${h*0.6}" stroke="${c||I.ink}" stroke-width="2.4" fill="none"/>`;
+    s+=`<path d="M ${x0} ${y} l ${h} ${-h*0.6} M ${x0} ${y} l ${h} ${h*0.6}" stroke="${c||I.ink}" stroke-width="2.4" fill="none"/>`;
+    return s;
+  }
+  /* выколотая точка на прямой */
+  const openDot=(x,y,c)=>`<circle cx="${x}" cy="${y}" r="5.5" fill="#fcfdfa" stroke="${c}" stroke-width="2.8"/>`;
+  const signTxt=(mx,y,t,c,o)=>tx(mx,y,(o&&o.fs)||20,c,t,{georgia:1,b:1});
+  function numline(y,x0,x1){
+    let s=axis(y,x0,x1,I.ink);
+    for(let k=-5;k<=5;k++){
+      const sx=M(k);
+      if(sx<x0+6||sx>x1-6) continue;
+      s+=`<line x1="${sx}" y1="${y-5}" x2="${sx}" y2="${y+5}" stroke="${I.ink}" stroke-width="1.6"/>`;
+      s+=tx(sx,y+16,10.5,'#8a94ad',String(k),{});
+    }
+    return s;
+  }
+  const chip=(t,c,delay,fs)=>`<span class="k9in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(255,255,255,.85);font-family:Georgia,serif;font-size:${fs||19}px;color:${c};font-weight:bold">${t}</span>`;
+  const Q416=[
+    {q:'x² − 4 > 0 — какой ответ?',opts:['x < −2 или x > 2','−2 < x < 2','x > 2'],ans:0},
+    {q:'Положительный корень x² − 9 = 0?',opts:['3','−3','9','81'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q416[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bg='rgba(255,255,255,.85)',bd='#c3d0c2',tc='#28324b';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(46,139,87,.16)':'rgba(192,57,43,.12)'; bd=i===T.ans?I.grn:I.red; tc=i===T.ans?I.grn:I.red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:52px;font-size:16px" onclick="visW416T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? (st.q===1?'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! x² = 9 → x = 3 или x = −3</div>':'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! знак «+» вне отрезка [−2; 2]</div>')
+        : '<div class="wk-ans" style="color:#c0392b;font-size:15px">Не так · расставь знаки на прямой</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW416Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW416Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#55705a')}<div class="wk-row" style="gap:7px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW416(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step===0){ st.go=0; }
+      if(step===1){ st.go=0; }
+      if(step===2){ st.go=0; }
+      if(step===3){ st.go=0; }
+      if(step===4){ st.go=0; }
+      if(step===5){ st.go=0; }
+      if(step===6){ st.go=0; }
+      if(step===7){ st.go=0; }
+      if(step===8){ st.go=0; }
+      if(step===9){ st.go=0; }
+      if(step===10){ st.go=0; }
+      if(step===11){ st.go=0; }
+      if(step===12){ st.go=0; }
+      if(step===13){ st.go=0; }
+      if(step===14){ if(st.tr==null) st.tr=0; st.go=0; }
+      if(step===15){ st.mq=0; st.msel=null; }
+      if(step===16){ st.go=0; }
+      if(step===17){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,46,24,I.ink,'x² − 4 > 0',{georgia:1,b:1});
+      inner+=tx(159,74,14,I.ink,'при каких x выражение положительно?',{});
+      inner+=`<g class="k9pop" style="animation-delay:.15s"><line x1="40" y1="120" x2="278" y2="120" stroke="${I.ink}" stroke-width="2.2"/>
+      ${tx(74,110,14,'#8a94ad','−2',{georgia:1,b:1})}${tx(244,110,14,'#8a94ad','2',{georgia:1,b:1})}
+      ${openDot(79,120,I.blue)}${openDot(239,120,I.blue)}
+      ${tx(159,142,13.5,'#8a94ad','корни −2 и 2 делят прямую на 3 части',{})}</g>`;
+      if(go){
+        inner+=`<g class="k9pop"><text x="159" y="172" text-anchor="middle" font-size="15" fill="${I.grn}" font-weight="bold">ответ — не одно число, а промежутки!</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Квадратное неравенство</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('решим методом интервалов',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW416Act('${lk}','rst')`):wkBtn('что спрашивают?',`visW416Act('${lk}','go')`))+
+        wkSml('x² − 4 = (x − 2)(x + 2) — начнём с разложения'));
+    } else if(step===1){
+      const H=175;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,50,24,I.ink,'x² − 4 = x² − 2²',{georgia:1,b:1});
+      if(go){
+        inner+=`<g class="k9pop"><text x="159" y="92" text-anchor="middle" font-size="21" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">= (x − 2)(x + 2)</text>
+        ${tx(159,124,14.5,I.ink,'формула разности квадратов',{})}
+        ${tx(159,148,15.5,'#8a94ad','a² − b² = (a − b)(a + b)',{georgia:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шаг 1 · разложить на множители</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 = 2² · x² − 4 = (x−2)(x+2)',I.blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW416Act('${lk}','rst')`):wkBtn('разность квадратов',`visW416Act('${lk}','go')`))+
+        wkSml('неравенство превратилось в произведение'));
+    } else if(step===2){
+      const H=175;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,46,17,I.ink,'проверяем раскрытием скобок',{b:1});
+      if(go===0){
+        inner+=tx(159,92,21,I.ink,'(x − 2)(x + 2)',{georgia:1,b:1});
+      } else {
+        inner+=`<g class="k9pop">${tx(159,84,17,I.grn,'x·x + 2x − 2x − 4',{georgia:1,b:1})}
+        ${tx(159,112,16,'#8a94ad','середина 2x − 2x сокращается',{})}
+        ${tx(159,144,24,I.ink,'= x² − 4',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Разложение верно</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('(x−2)(x+2) = x² − 4',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW416Act('${lk}','rst')`):wkBtn('раскрыть скобки',`visW416Act('${lk}','go')`))+
+        wkSml('перемножаем каждое с каждым'));
+    } else if(step===3){
+      const H=180;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,42,18,I.ink,'произведение = 0, если…',{b:1});
+      if(go===0){
+        inner+=tx(159,90,20,I.ink,'x − 2 = 0  или  x + 2 = 0',{georgia:1,b:1});
+      } else if(go===1){
+        inner+=`<g class="k9pop"><text x="120" y="130" text-anchor="middle" font-size="22" fill="${I.red}" font-weight="bold" font-family="Georgia,serif">x = 2</text>
+        <text x="240" y="130" text-anchor="middle" font-size="22" fill="${I.red}" font-weight="bold" font-family="Georgia,serif">x = −2</text>
+        ${tx(159,160,14.5,I.ink,'два корня уравнения (x−2)(x+2) = 0',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шаг 2 · найти корни</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=1?wkRow(chip('корни: −2 и 2',I.red,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('приравнять к нулю',`visW416Act('${lk}','go')`) : '',
+          go===1?wkBtn('сброс',`visW416Act('${lk}','rst')`):'')+
+        wkSml('произведение равно нулю при x = −2 или x = 2'));
+    } else if(step===4){
+      const H=185;
+      const go=st.go||0;
+      const y=120;
+      let inner='';
+      inner+=numline(y,32,286);
+      inner+=openDot(M(-2),y,I.blue)+openDot(M(2),y,I.blue);
+      inner+=tx(M(-2),y-12,15,'#2e6db4','−2',{georgia:1,b:1});
+      inner+=tx(M(2),y-12,15,'#2e6db4','2',{georgia:1,b:1});
+      if(go){
+        inner+=`<g class="k9pop">
+        ${tx(50,y-44,14,I.ink,'I',{b:1,georgia:1})}${tx(159,y-44,14,I.ink,'II',{b:1,georgia:1})}${tx(268,y-44,14,I.ink,'III',{b:1,georgia:1})}
+        ${tx(50,y+34,11.5,'#8a94ad','x < −2',{})}${tx(159,y+34,11.5,'#8a94ad','−2 < x < 2',{})}${tx(268,y+34,11.5,'#8a94ad','x > 2',{})}
+        ${tx(159,174,14.5,I.ink,'три интервала — узнаем знак в каждом',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шаг 3 · интервалы на прямой</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('−∞…−2 · −2…2 · 2…+∞',I.blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW416Act('${lk}','rst')`):wkBtn('показать интервалы',`visW416Act('${lk}','go')`))+
+        wkSml('точки −2 и 2 — границы интервалов'));
+    } else if(step===5){
+      const H=185;
+      const go=st.go||0;
+      const y=120;
+      let inner='';
+      inner+=numline(y,32,286);
+      inner+=openDot(M(-2),y,I.blue)+openDot(M(2),y,I.blue);
+      inner+=tx(M(-2),y-12,15,'#2e6db4','−2',{georgia:1,b:1});
+      inner+=tx(M(2),y-12,15,'#2e6db4','2',{georgia:1,b:1});
+      if(go){
+        inner+=`<g class="k9pop">${openDot(M(0),y,I.gold)}
+        ${tx(M(0),y-12,14,I.gold,'x = 0',{b:1})}
+        ${tx(159,52,17,I.ink,'(0−2)(0+2) = −4 < 0',{georgia:1,b:1})}
+        ${signTxt(M(0),y-40,'−',I.red,{fs:26})}
+        ${tx(159,168,15.5,I.gold,'на среднем интервале знак «минус»',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пробуем x = 0</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('произведение отрицательно → знак −',I.red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW416Act('${lk}','rst')`):wkBtn('подставить x = 0',`visW416Act('${lk}','go')`))+
+        wkSml('пробная точка из среднего интервала'));
+    } else if(step===6){
+      const H=190;
+      const go=st.go||0;
+      const y=126;
+      let inner='';
+      inner+=numline(y,32,286);
+      inner+=openDot(M(-2),y,I.blue)+openDot(M(2),y,I.blue);
+      inner+=tx(M(-2),y-12,15,'#2e6db4','−2',{georgia:1,b:1});
+      inner+=tx(M(2),y-12,15,'#2e6db4','2',{georgia:1,b:1});
+      if(go>=1){
+        inner+=`<g class="k9pop">${signTxt(M(0),y-40,'−',I.red,{fs:26})}
+        ${signTxt(M(-3.2),y-40,'+',I.grn,{fs:26})}
+        ${tx(M(-3.2),y+26,12,'#2e6db4','x = −3',{b:1})}
+        ${tx(38,y-60,12.5,'#8a94ad','(−5)(−1) = 5 > 0',{georgia:1,an:'start'})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k9pop">${signTxt(M(3.2),y-40,'+',I.grn,{fs:26})}
+        ${tx(M(3.2),y+26,12,'#2e6db4','x = 3',{b:1})}
+        ${tx(280,y-60,12.5,'#8a94ad','(1)(5) = 5 > 0',{georgia:1,an:'end'})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пробуем x = −3 и x = 3</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('на крайних интервалах знак «+»',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('проверить x = −3',`visW416Act('${lk}','go')`) : '',
+          go===1?wkBtn('проверить x = 3',`visW416Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW416Act('${lk}','rst')`):'')+
+        wkSml('минус на минус — плюс · плюс на плюс — плюс'));
+    } else if(step===7){
+      const H=192;
+      const go=st.go||0;
+      const y=120;
+      let inner='';
+      inner+=numline(y,32,286);
+      inner+=openDot(M(-2),y,I.blue)+openDot(M(2),y,I.blue);
+      inner+=tx(M(-2),y-12,15,'#2e6db4','−2',{georgia:1,b:1});
+      inner+=tx(M(2),y-12,15,'#2e6db4','2',{georgia:1,b:1});
+      if(go){
+        inner+=`<g class="k9pop">
+        ${signTxt(M(-3.2),y-42,'+',I.grn,{fs:30})}
+        ${signTxt(M(0),y-42,'−',I.red,{fs:30})}
+        ${signTxt(M(3.2),y-42,'+',I.grn,{fs:30})}
+        ${tx(159,166,15.5,I.ink,'знак меняется, проходя через корень',{b:1})}
+        ${tx(159,184,14.5,I.grn,'это и есть метод интервалов',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Знаки чередуются: + − +</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('слева направо: + , − , +',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW416Act('${lk}','rst')`):wkBtn('расставить знаки',`visW416Act('${lk}','go')`))+
+        wkSml('через каждый корень знак меняется'));
+    } else if(step===8){
+      const H=185;
+      const go=st.go||0;
+      const y=120;
+      let inner='';
+      inner+=numline(y,32,286);
+      inner+=openDot(M(-2),y,I.blue)+openDot(M(2),y,I.blue);
+      inner+=tx(M(-2),y-12,15,'#2e6db4','−2',{georgia:1,b:1});
+      inner+=tx(M(2),y-12,15,'#2e6db4','2',{georgia:1,b:1});
+      if(go){
+        inner+=`<g class="k9pop">
+        ${signTxt(M(-3.2),y-42,'+',I.grn,{fs:30})}${signTxt(M(0),y-42,'−',I.red,{fs:30})}${signTxt(M(3.2),y-42,'+',I.grn,{fs:30})}
+        <line x1="${M(-2)-6}" y1="${y-34}" x2="34" y2="${y-34}" stroke="${I.grn}" stroke-width="3"/>
+        <line x1="${M(2)+6}" y1="${y-34}" x2="284" y2="${y-34}" stroke="${I.grn}" stroke-width="3"/>
+        ${tx(159,164,16.5,I.ink,'нужно > 0 → берём «+»',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Выбираем знак «плюс»</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('плюс на крайних интервалах',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW416Act('${lk}','rst')`):wkBtn('что нам нужно?',`visW416Act('${lk}','go')`))+
+        wkSml('нам нужно (x−2)(x+2) > 0 — положительное'));
+    } else if(step===9){
+      const H=180;
+      const go=st.go||0;
+      const y=110;
+      let inner='';
+      inner+=numline(y,32,286);
+      inner+=openDot(M(-2),y,I.blue)+openDot(M(2),y,I.blue);
+      inner+=tx(M(-2),y-12,15,'#2e6db4','−2',{georgia:1,b:1});
+      inner+=tx(M(2),y-12,15,'#2e6db4','2',{georgia:1,b:1});
+      if(go){
+        inner+=`<g class="k9pop"><line x1="${M(-2)-6}" y1="${y-30}" x2="34" y2="${y-30}" stroke="${I.grn}" stroke-width="3"/>
+        <line x1="${M(2)+6}" y1="${y-30}" x2="284" y2="${y-30}" stroke="${I.grn}" stroke-width="3"/>
+        ${signTxt(M(-3.2),y-46,'+',I.grn,{fs:30})}${signTxt(M(3.2),y-46,'+',I.grn,{fs:30})}
+        ${tx(159,152,19,I.ink,'x < −2 или x > 2',{georgia:1,b:1})}
+        ${tx(159,174,13.5,'#8a94ad','x ∈ (−∞; −2) ∪ (2; +∞)',{georgia:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ответ</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('x² − 4 > 0 при x < −2 или x > 2',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW416Act('${lk}','rst')`):wkBtn('записать ответ',`visW416Act('${lk}','go')`))+
+        wkSml('−2 и 2 не входят — неравенство строгое'));
+    } else if(step===10){
+      const H=195;
+      const go=st.go||0;
+      const cy=150, sx=24, sy=6;
+      const px=(mx)=>CX+mx*sx, py=(my)=>cy-my*sy;
+      let pts='';
+      for(let mx=-5.2;mx<=5.2;mx+=0.2) pts+=(pts?',':'')+px(mx).toFixed(1)+','+py(mx*mx-4).toFixed(1);
+      let inner=`<polyline points="${pts}" fill="none" stroke="${I.blue}" stroke-width="3"/>`;
+      inner+=`<line x1="30" y1="${cy}" x2="288" y2="${cy}" stroke="${I.ink}" stroke-width="2.2"/>`;
+      inner+=`<line x1="159" y1="18" x2="159" y2="182" stroke="${I.ink}" stroke-width="1.6"/>`;
+      [ -2,2 ].forEach(r=>{ inner+=openDot(px(r),cy,I.blue); inner+=tx(px(r),cy+16,13,'#2e6db4',String(r),{b:1}); });
+      inner+=tx(246,56,13.5,'#2e6db4','y = x² − 4',{georgia:1});
+      if(go){
+        inner+=`<g class="k9pop"><rect x="40" y="30" width="100" height="30" rx="9" fill="${I.fg}" opacity=".5"/>
+        <rect x="196" y="30" width="96" height="30" rx="9" fill="${I.fg}" opacity=".5"/>
+        ${tx(90,50,12.5,I.grn,'y > 0',{b:1})}${tx(244,50,12.5,I.grn,'y > 0',{b:1})}
+        ${tx(159,190,14,I.grn,'парабола выше оси ровно там же',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверка графиком</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('выше оси x: x < −2 и x > 2',I.grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW416Act('${lk}','rst')`):wkBtn('где y > 0?',`visW416Act('${lk}','go')`))+
+        wkSml('график согласен с методом интервалов'));
+    } else if(step===11){
+      const H=190;
+      const go=st.go||0;
+      const y=120;
+      let inner='';
+      inner+=tx(159,40,20,I.ink,'x² − 9 > 0',{georgia:1,b:1});
+      if(go===0){
+        inner+=tx(159,74,18,I.blue,'(x − 3)(x + 3) > 0',{georgia:1,b:1});
+      } else if(go===1){
+        inner+=`<g class="k9pop">${numline(y,32,286)}
+        ${openDot(M(-3),y,I.blue)}${openDot(M(3),y,I.blue)}
+        ${tx(M(-3),y-12,14,'#2e6db4','−3',{georgia:1,b:1})}${tx(M(3),y-12,14,'#2e6db4','3',{georgia:1,b:1})}
+        ${signTxt(46,y-40,'+',I.grn,{fs:26})}${signTxt(159,y-40,'−',I.red,{fs:26})}${signTxt(274,y-40,'+',I.grn,{fs:26})}</g>`;
+      } else {
+        inner+=`<g class="k9pop">${numline(y,32,286)}
+        ${openDot(M(-3),y,I.blue)}${openDot(M(3),y,I.blue)}
+        ${signTxt(46,y-40,'+',I.grn,{fs:26})}${signTxt(159,y-40,'−',I.red,{fs:26})}${signTxt(274,y-40,'+',I.grn,{fs:26})}
+        ${tx(159,158,19,I.grn,'x < −3 или x > 3',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример 2: x² − 9 > 0</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('9 = 3² · корни ±3',I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · разложить',`visW416Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · прямая и знаки',`visW416Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW416Act('${lk}','rst')`):'')+
+        wkSml('знаки + − + → берём плюсы'));
+    } else if(step===12){
+      const H=190;
+      const go=st.go||0;
+      const y=120;
+      let inner='';
+      inner+=tx(159,40,20,I.ink,'x² − 1 < 0',{georgia:1,b:1});
+      if(go===0){
+        inner+=tx(159,74,18,I.blue,'(x − 1)(x + 1) < 0',{georgia:1,b:1});
+      } else if(go===1){
+        inner+=`<g class="k9pop">${numline(y,32,286)}
+        ${openDot(M(-1),y,I.blue)}${openDot(M(1),y,I.blue)}
+        ${tx(M(-1),y-12,14,'#2e6db4','−1',{georgia:1,b:1})}${tx(M(1),y-12,14,'#2e6db4','1',{georgia:1,b:1})}
+        ${signTxt(M(-2.4),y-40,'+',I.grn,{fs:26})}${signTxt(M(0),y-40,'−',I.red,{fs:26})}${signTxt(M(2.4),y-40,'+',I.grn,{fs:26})}</g>`;
+      } else {
+        inner+=`<g class="k9pop">${numline(y,32,286)}
+        ${openDot(M(-1),y,I.blue)}${openDot(M(1),y,I.blue)}
+        ${signTxt(M(-2.4),y-40,'+',I.grn,{fs:26})}${signTxt(M(0),y-40,'−',I.red,{fs:26})}${signTxt(M(2.4),y-40,'+',I.grn,{fs:26})}
+        ${tx(159,158,19,I.gold,'−1 < x < 1',{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример 3: x² − 1 < 0</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('нужен «−» → средний интервал',I.gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · разложить',`visW416Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · выбрать минус',`visW416Act('${lk}','go')`) : '',
+          go>=2?wkBtn('заново',`visW416Act('${lk}','rst')`):'')+
+        wkSml('знак «меньше» → берём интервал с минусом'));
+    } else if(step===13){
+      const H=195;
+      const go=st.go||0;
+      let inner='';
+      inner+=`<rect x="16" y="34" width="286" height="34" rx="9" fill="${I.fb}" stroke="${I.blue}" stroke-width="2"/>
+      ${tx(159,57,15.5,I.blue,'1 · разложи на множители',{b:1})}`;
+      if(go>=1){
+        inner+=`<g class="k9pop"><rect x="16" y="76" width="286" height="34" rx="9" fill="${I.fg}" stroke="${I.grn}" stroke-width="2"/>
+        ${tx(159,99,15,I.grn,'2 · корни → отметь на прямой',{b:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k9pop"><rect x="16" y="118" width="286" height="34" rx="9" fill="rgba(217,154,6,.13)" stroke="${I.gold}" stroke-width="2"/>
+        ${tx(159,141,15,'#a37408','3 · знаки: справа «+», дальше чередуй',{b:1})}</g>`;
+        inner+=`<g class="k9pop" style="animation-delay:.12s"><rect x="16" y="160" width="286" height="30" rx="9" fill="rgba(255,255,255,.9)" stroke="${I.ink}" stroke-width="2"/>
+        ${tx(159,180,15,I.ink,'4 · выбери нужный знак и запиши ответ',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Алгоритм — 4 шага</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('строгий знак → выколотые точки',I.ink,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · разложить',`visW416Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · корни',`visW416Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW416Act('${lk}','rst')`):'')+
+        wkSml('справа от самого большого корня всегда «+»'));
+    } else if(step===14){
+      const H=195;
+      if(st.tr==null) st.tr=0;
+      const pool=[[-4,0,2,'x² − 4 > 0','x < −2 или x > 2'],[-9,1,3,'x² − 9 < 0','−3 < x < 3'],[-1,1,1,'x² − 1 < 0','−1 < x < 1'],[-9,0,3,'x² − 9 > 0','x < −3 или x > 3']];
+      const p=pool[st.tr%pool.length];
+      const k=p[0], sign=p[1], r=p[2], eqTxt=p[3], ansTxt=p[4];
+      const go=st.go||0;
+      const y=118;
+      let inner='';
+      inner+=tx(159,40,20,I.ink,eqTxt,{georgia:1,b:1});
+      if(go>=1){
+        inner+=`<g class="k9pop">${numline(y,32,286)}
+        ${openDot(M(-r),y,I.blue)}${openDot(M(r),y,I.blue)}
+        ${tx(M(-r),y-12,14,'#2e6db4',String(-r),{georgia:1,b:1})}${tx(M(r),y-12,14,'#2e6db4',String(r),{georgia:1,b:1})}
+        ${signTxt(Math.max(30,M(-r)-24),y-40,26,'+',I.grn,{fs:26})}${signTxt(M(0),y-40,26,'−',I.red,{fs:26})}${signTxt(Math.min(288,M(r)+24),y-40,26,'+',I.grn,{fs:26})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="k9pop"><rect x="66" y="150" width="186" height="34" rx="10" fill="rgba(217,154,6,.13)" stroke="${I.gold}" stroke-width="2"/>
+        ${tx(159,173,17,I.gold,ansTxt,{georgia:1,b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: ${eqTxt}</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip(ansTxt,I.grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1 · корни и знаки',`visW416Act('${lk}','go')`) : '',
+          go===1?wkBtn('2 · ответ',`visW416Act('${lk}','go')`) : '',
+          go>=2?wkBtn('новый пример',`visW416Act('${lk}','n')`) : '',
+          go>=1?wkBtn('заново',`visW416Act('${lk}','rst')`):'')+
+        wkSml(sign===0?'берём «+» вне корней':'берём «−» между корнями'));
+    } else if(step===15){
+      const H=185;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'(x−2)(x+2) при x = 0 — знак?',opts:['+','−','0'],ans:1},
+        {q:'(x−2)(x+2) при x = 3 — знак?',opts:['+','−','0'],ans:0}
+      ];
+      const T=QS[st.mq];
+      const y=110;
+      let inner='';
+      inner+=numline(y,32,286);
+      inner+=openDot(M(-2),y,I.blue)+openDot(M(2),y,I.blue);
+      inner+=tx(M(-2),y-12,14,'#2e6db4','−2',{georgia:1,b:1});
+      inner+=tx(M(2),y-12,14,'#2e6db4','2',{georgia:1,b:1});
+      const probe = st.mq===0? 0 : 3;
+      inner+=openDot(M(probe),y,I.gold);
+      inner+=tx(M(probe),y+26,13,I.gold,'x = '+probe,{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="k9pop"><text x="159" y="168" text-anchor="middle" font-size="16" fill="${st.msel===T.ans?'#2e8b57':'#c0392b'}" font-weight="bold">${st.msel===T.ans?'верно!':'не так · посчитай произведение'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь знак на интервале</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          <button class="wk-btn" onclick="visW416S('${lk}',0)">+</button>
+          <button class="wk-btn" onclick="visW416S('${lk}',1)">−</button>
+          <button class="wk-btn" onclick="visW416S('${lk}',2)">0</button>
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW416Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW416Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml(st.mq===0?'x = 0 — середина, где минус':'x = 3 — справа от 2, где плюс'));
+    } else if(step===16){
+      const H=190;
+      const go=st.go||0;
+      const y=112;
+      let inner='';
+      inner+=tx(159,42,17,I.ink,'x² − 4 > 0 — НЕ «между −2 и 2»!',{b:1});
+      if(go===0){
+        inner+=`${numline(y,32,286)}
+        ${openDot(M(-2),y,I.blue)}${openDot(M(2),y,I.blue)}
+        ${tx(M(-2),y-12,14,'#2e6db4','−2',{georgia:1,b:1})}${tx(M(2),y-12,14,'#2e6db4','2',{georgia:1,b:1})}
+        ${tx(159,150,14.5,'#8a94ad','проверим x = 0 из «середины»',{})}`;
+      } else {
+        inner+=`${numline(y,32,286)}
+        ${openDot(M(-2),y,I.blue)}${openDot(M(2),y,I.blue)}
+        ${tx(M(-2),y-12,14,'#2e6db4','−2',{georgia:1,b:1})}${tx(M(2),y-12,14,'#2e6db4','2',{georgia:1,b:1})}
+        ${openDot(M(0),y,I.red)}
+        ${tx(159,142,17,I.red,'(0−2)(0+2) = −4 < 0',{georgia:1,b:1})}
+        ${tx(159,166,15.5,I.ink,'x = 0 не подходит!',{b:1})}
+        ${tx(159,184,13.5,I.grn,'а вот x² − 4 < 0 даёт −2 < x < 2',{b:1})}`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ловушка: куда смотрит знак</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('> 0 — вне отрезка · < 0 — внутри',I.gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW416Act('${lk}','rst')`):wkBtn('проверить x = 0',`visW416Act('${lk}','go')`))+
+        wkSml('минус между корнями — поэтому «>» берёт края'));
+    } else {
+      const H=180;
+      let inner='';
+      inner+=tx(159,46,22,I.ink,'x² − 4 > 0',{georgia:1,b:1});
+      inner+=`<g class="k9pop"><text x="159" y="86" text-anchor="middle" font-size="17" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">(x − 2)(x + 2) > 0</text>
+      ${tx(159,112,15,I.ink,'знаки: + − +',{georgia:1})}
+      ${tx(159,140,21,I.grn,'x < −2 или x > 2',{georgia:1,b:1})}</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(paper(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('вне отрезка [−2; 2] · жми «Понял! Проверю себя»'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[416]=visW416;
+  function visW416T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW416T=visW416T;
+  function visW416S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW416S=visW416S;
+  function visW416Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go'){ if(st.go!=null) st.go++; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; }
+    if(act==='nq'){ if(LV.step===15){ if((st.mq||0)<1){ st.mq=1; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW416Act=visW416Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===416){ window.ARH_LESSONS[i]=L416; break; } } })();
+})();
