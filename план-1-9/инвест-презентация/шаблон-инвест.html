@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АРХИМЕД · Инвесторская презентация 2026</title>
+<style>
+  :root{
+    --deep:#07130d; --panel:#0f2318; --card:#122a1d; --card2:#0b1e13;
+    --brass:#e3b04c; --brass-d:#b0832f; --ivory:#efe7d2; --muted:#93a893;
+    --glass:#7fc4a6; --glow:#7fd1ff;
+    --ok:#58b368; --okbg:rgba(88,179,104,.16); --warn:#e6b84a; --warnbg:rgba(230,184,74,.15);
+    --danger:#e07a63; --dangerbg:rgba(224,122,99,.14);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:Georgia,'Times New Roman',serif;
+    background:
+      radial-gradient(1100px 500px at 85% -10%, rgba(63,122,89,.35), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(217,164,65,.12), transparent 55%),
+      var(--deep);
+    color:var(--ivory); min-height:100vh;
+  }
+  .deck{ max-width:1080px; margin:0 auto; padding:18px 18px 96px; }
+  .slide{
+    display:none; position:relative; overflow:hidden;
+    background:linear-gradient(160deg, rgba(18,42,29,.94), rgba(11,30,19,.97));
+    border:1px solid rgba(217,164,65,.28); border-radius:20px;
+    padding:clamp(20px,3.4vw,44px) clamp(18px,3.6vw,46px);
+    min-height:calc(100vh - 150px);
+    box-shadow:0 24px 60px -30px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .slide.on{ display:block; }
+  /* декоративное свечение слайда */
+  .slide::after{ content:""; position:absolute; right:-120px; top:-120px; width:340px; height:340px;
+    background:radial-gradient(circle, rgba(127,196,166,.14), transparent 65%); pointer-events:none; }
+  h1{ color:var(--brass); font-size:clamp(24px,4.2vw,44px); line-height:1.12; letter-spacing:.015em; font-weight:normal; }
+  h2{ color:var(--brass); font-size:clamp(19px,2.8vw,30px); margin:0 0 10px; font-weight:normal; line-height:1.2; }
+  h3{ font-weight:normal; }
+  .kicker{ font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--glass); margin-bottom:6px; }
+  .sub{ color:var(--muted); font-size:clamp(12.5px,1.4vw,15px); line-height:1.55; margin:6px 0 10px; }
+  .cols{ display:flex; gap:clamp(10px,1.6vw,18px); flex-wrap:wrap; }
+  .col{ flex:1 1 230px; min-width:0; }
+  .card{ background:rgba(255,255,255,.035); border:1px solid rgba(217,164,65,.18); border-radius:14px; padding:12px 14px; }
+  .card h3{ color:var(--glass); font-size:clamp(13px,1.5vw,16px); margin-bottom:6px; }
+  ul{ list-style:none; }
+  li{ position:relative; padding:3.5px 0 3.5px 18px; font-size:clamp(13px,1.45vw,15.5px); line-height:1.5; }
+  li:before{ content:"▸"; position:absolute; left:0; top:3px; color:var(--brass); }
+  li.have:before{ content:"✔"; color:var(--ok); }
+  li.gap:before{ content:"✚"; color:var(--danger); }
+  li.part:before{ content:"◐"; color:var(--warn); }
+  b{ color:var(--ivory); }
+  .accent{ color:var(--brass); }
+  .glow{ color:var(--glass); }
+  .chip-row{ display:flex; gap:6px; flex-wrap:wrap; margin:6px 0 12px; }
+  .chip{ font-size:clamp(11px,1.2vw,13px); padding:3px 11px; border-radius:999px; border:1px solid rgba(217,164,65,.35); background:rgba(217,164,65,.07); }
+  .chip.have{ background:var(--okbg); border-color:var(--ok); color:#c3ecc8; }
+  .chip.part{ background:var(--warnbg); border-color:var(--warn); color:#f6dfa2; }
+  .chip.gap{ background:var(--dangerbg); border-color:var(--danger); color:#ffcfbe; }
+  .chip.olym{ background:rgba(127,209,255,.12); border-color:var(--glow); color:#c4ecff; }
+  .big{ font-size:clamp(40px,6vw,64px); line-height:1; }
+  table{ width:100%; border-collapse:collapse; font-size:clamp(11.5px,1.25vw,13.5px); }
+  th,td{ border:1px solid rgba(217,164,65,.18); padding:6px 9px; text-align:left; vertical-align:top; }
+  th{ color:var(--brass); background:rgba(217,164,65,.06); }
+  tr:nth-child(even) td{ background:rgba(255,255,255,.02); }
+  .wrap-x{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  /* ---- анимации: запускаются при показе слайда (display none->block перезапускает CSS-анимации) ---- */
+  @keyframes rise{ from{ opacity:0; transform:translateY(14px);} to{ opacity:1; transform:none;} }
+  @keyframes fade{ from{ opacity:0;} to{ opacity:1;} }
+  @keyframes growW{ from{ width:0 !important;} }
+  @keyframes growH{ from{ height:0 !important;} }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+  @keyframes pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(227,176,76,.55);} 60%{ box-shadow:0 0 0 9px rgba(227,176,76,0);} }
+  @keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-9px);} }
+  .slide.on h1,.slide.on h2,.slide.on .kicker,.slide.on .lead{ animation:fade .5s ease both; }
+  .slide.on li{ animation:rise .55s ease both; }
+  .slide.on tr{ animation:fade .6s ease both; }
+  .slide.on .hbar i{ animation:growW 1s cubic-bezier(.22,.9,.3,1) both; transform-origin:left; display:block; }
+  .slide.on .vbar i{ animation:growH 1s cubic-bezier(.22,.9,.3,1) both; }
+  .slide.on .ring circle{ animation:dash 1.4s cubic-bezier(.3,.8,.3,1) both; }
+  @keyframes dash{ from{ stroke-dashoffset:var(--full);} }
+  .slide.on .floaty{ animation:floaty 5s ease-in-out infinite; }
+  .slide.on .timeline .tl-item{ animation:rise .6s ease both; }
+  .slide.on .dot-pulse{ animation:pulse 2.2s ease-out infinite; }
+  .slide.on .stat-big{ animation:rise .7s ease both; }
+  /* ---- бары ---- */
+  .hbar{ display:flex; align-items:center; gap:10px; margin:9px 0; }
+  .hbar .lb{ flex:0 0 118px; font-size:clamp(12px,1.3vw,14px); color:var(--glass); text-align:right; }
+  .hbar .track{ flex:1; background:rgba(255,255,255,.06); border-radius:8px; height:22px; overflow:hidden; }
+  .hbar i{ height:100%; border-radius:8px; background:linear-gradient(90deg,var(--brass-d),var(--brass)); width:0; min-width:0; }
+  .hbar.green i{ background:linear-gradient(90deg,#2e7d4e,var(--ok)); }
+  .hbar.red i{ background:linear-gradient(90deg,#a34b3a,var(--danger)); }
+  .hbar.blue i{ background:linear-gradient(90deg,#2a6d9a,var(--glow)); }
+  .hbar .val{ flex:0 0 64px; font-size:clamp(12px,1.3vw,14px); color:var(--ivory); }
+  .vbar-row{ display:flex; align-items:flex-end; gap:clamp(6px,1.4vw,14px); height:200px; }
+  .vbar{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; }
+  .vbar .track{ flex:1; width:min(54px,9vw); display:flex; align-items:flex-end; background:rgba(255,255,255,.05); border-radius:8px; overflow:hidden; }
+  .vbar i{ width:100%; height:0; background:linear-gradient(0deg,var(--brass-d),var(--brass)); border-radius:8px; }
+  .vbar.green i{ background:linear-gradient(0deg,#2e7d4e,var(--ok)); }
+  .vbar .t{ font-size:clamp(10px,1.1vw,12.5px); color:var(--ivory); text-align:center; }
+  /* ---- кольца ---- */
+  .rings{ display:flex; gap:clamp(14px,2.4vw,34px); flex-wrap:wrap; justify-content:center; margin:10px 0; }
+  .ringbox{ text-align:center; }
+  .ringbox .cap{ font-size:clamp(12px,1.3vw,14px); color:var(--glass); margin-top:4px; }
+  .ring{ transform:rotate(-90deg); }
+  .ring .bg{ stroke:rgba(255,255,255,.09); }
+  .ring circle{ fill:none; stroke-width:11; stroke-linecap:round; }
+  /* ---- таймлайн ---- */
+  .timeline{ position:relative; margin:18px 0 4px; padding-left:26px; }
+  .timeline:before{ content:""; position:absolute; left:7px; top:4px; bottom:4px; width:2px;
+    background:linear-gradient(180deg,var(--brass),rgba(127,196,166,.25)); }
+  .tl-item{ position:relative; margin:0 0 15px; }
+  .tl-item:before{ content:""; position:absolute; left:-26px; top:6px; width:14px; height:14px; border-radius:50%;
+    background:var(--card); border:2.5px solid var(--brass); }
+  .tl-item.live:before{ animation:pulse 2s ease-out infinite; }
+  .tl-item h3{ color:var(--brass); font-size:clamp(14px,1.6vw,17px); }
+  .tl-item .when{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--glow); margin-bottom:2px; }
+  /* ---- статусы матрицы ---- */
+  .st{ font-weight:bold; font-size:14px; text-align:center; }
+  .st.have{ color:#7bd488; } .st.part{ color:var(--warn); } .st.gap{ color:var(--danger); }
+  /* ---- навигация ---- */
+  .nav{ position:fixed; left:0; right:0; bottom:0; z-index:50;
+    background:linear-gradient(0deg, rgba(7,19,13,.98), rgba(7,19,13,.86)); backdrop-filter:blur(8px);
+    border-top:1px solid rgba(217,164,65,.25); padding:9px 14px calc(9px + env(safe-area-inset-bottom)); }
+  .nav-in{ max-width:1080px; margin:0 auto; display:flex; align-items:center; gap:12px; }
+  button{ font-family:inherit; background:var(--panel); color:var(--ivory); border:1.5px solid rgba(217,164,65,.45);
+    border-radius:11px; padding:8px 18px; font-size:clamp(13px,1.4vw,15px); cursor:pointer; transition:background .2s,transform .1s; }
+  button:hover{ background:rgba(217,164,65,.16); }
+  button:active{ transform:scale(.96); }
+  .cnt{ color:var(--muted); font-size:13px; white-space:nowrap; }
+  .dots{ flex:1; display:flex; justify-content:center; gap:6px; flex-wrap:wrap; }
+  .dot{ width:9px; height:9px; border-radius:50%; background:rgba(239,231,210,.22); cursor:pointer; border:none; padding:0; transition:background .2s, transform .2s; }
+  .dot.on{ background:var(--brass); transform:scale(1.25); }
+  .progress{ position:fixed; top:0; left:0; right:0; height:3px; z-index:60; background:rgba(255,255,255,.05); }
+  .progress i{ display:block; height:100%; width:0; background:linear-gradient(90deg,var(--brass-d),var(--brass)); }
+  .stat-big{ font-size:clamp(34px,5.6vw,62px); color:var(--brass); line-height:1; }
+  .hero-center{ text-align:center; }
+  .hero-center .big{ animation:floaty 6s ease-in-out infinite; display:inline-block; }
+  .badge{ display:inline-block; background:rgba(217,164,65,.16); color:var(--brass); border-radius:999px;
+    padding:4px 14px; font-size:clamp(11px,1.2vw,13px); letter-spacing:.06em; margin-bottom:14px; }
+  .lead{ font-size:clamp(15px,1.9vw,20px); color:var(--ivory); line-height:1.5; margin:10px 0 4px; }
+  .grid-kpi{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:18px; }
+  .kpi{ background:rgba(255,255,255,.04); border:1px solid rgba(217,164,65,.2); border-radius:14px; padding:12px; text-align:center; }
+  .kpi .n{ font-size:clamp(24px,3.4vw,38px); color:var(--brass); line-height:1.05; }
+  .kpi .d{ font-size:clamp(11px,1.2vw,13px); color:var(--muted); margin-top:4px; }
+  .logo-line{ display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap; margin-bottom:8px; }
+  .logo-line span{ font-size:clamp(13px,1.5vw,16px); color:var(--glass); padding:2px 10px; border:1px dashed rgba(127,196,166,.35); border-radius:10px; }
+  @media (max-width:760px){
+    .slide{ border-radius:14px; min-height:calc(100vh - 130px); }
+    .hbar .lb{ flex-basis:86px; }
+    .hbar .val{ flex-basis:52px; }
+    .nav-in{ gap:8px; }
+    .cnt{ font-size:11px; }
+  }
+  @media (max-width:430px){
+    .deck{ padding:10px 8px 84px; }
+    .hbar .lb{ flex-basis:74px; font-size:11.5px; }
+    .hbar .val{ flex-basis:44px; font-size:11.5px; }
+    button{ padding:7px 11px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .slide.on *, .slide.on h1, .slide.on h2 { animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="progress"><i id="prog"></i></div>
+<div class="deck" id="deck"><!-- slides --></div>
+<div class="nav"><div class="nav-in">
+  <button onclick="mv(-1)">←</button>
+  <span class="cnt" id="cnt">1 / N</span>
+  <button onclick="mv(1)">→</button>
+  <span class="dots" id="dots"></span>
+</div></div>
+<script>
+var SLIDES=[];
+var COUNTERS=[];
+function render(){
+  var d=document.getElementById('deck'); d.innerHTML='';
+  var dots=document.getElementById('dots'); dots.innerHTML='';
+  SLIDES.forEach(function(s,i){
+    var el=document.createElement('div'); el.className='slide'+(i===0?' on':'');
+    el.id='s'+i; el.innerHTML=s; d.appendChild(el);
+    var b=document.createElement('button'); b.className='dot'+(i===0?' on':'');
+    b.setAttribute('aria-label','Слайд '+(i+1)); b.onclick=function(){goto(i);}; dots.appendChild(b);
+  });
+  upd();
+}
+function cur(){ for(var i=0;i<SLIDES.length;i++){ if(document.getElementById('s'+i).classList.contains('on')) return i; } return 0; }
+function goto(n){
+  var c=cur();
+  document.getElementById('s'+c).classList.remove('on');
+  document.querySelectorAll('.dot')[c].classList.remove('on');
+  document.getElementById('s'+n).classList.add('on');
+  document.querySelectorAll('.dot')[n].classList.add('on');
+  upd();
+}
+function mv(k){ goto(Math.max(0,Math.min(SLIDES.length-1,cur()+k))); }
+function upd(){
+  var on=cur(), i;
+  document.getElementById('cnt').textContent=(on+1)+' / '+SLIDES.length;
+  document.getElementById('prog').style.width=(((on+1)/SLIDES.length)*100)+'%';
+  window.scrollTo(0,0);
+  // счётчики
+  var nums=document.querySelectorAll('#s'+on+' [data-to]');
+  for(i=0;i<nums.length;i++){ (function(el){
+    var to=parseFloat(el.getAttribute('data-to')), suf=el.getAttribute('data-suf')||'',
+        dur=1400, t0=null;
+    function step(ts){ if(!t0)t0=ts; var p=Math.min(1,(ts-t0)/dur); p=1-Math.pow(1-p,3);
+      el.textContent=Math.round(to*p)+(p>=1?suf:''); if(p<1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  })(nums[i]); }
+  // звёздочки-задержки для списков (стаггер)
+  var lis=document.querySelectorAll('#s'+on+' li');
+  for(i=0;i<lis.length && i<24;i++){ lis[i].style.animationDelay=(i*40)+'ms'; }
+}
+var TS=0;
+document.addEventListener('touchstart',function(e){ TS=e.touches[0].clientX; },{passive:true});
+document.addEventListener('touchend',function(e){ var dx=e.changedTouches[0].clientX-TS;
+  if(dx<-40) mv(1); else if(dx>40) mv(-1); },{passive:true});
+document.addEventListener('keydown',function(e){ if(e.key==='ArrowRight'||e.key==='PageDown') mv(1);
+  else if(e.key==='ArrowLeft'||e.key==='PageUp') mv(-1);
+  else if(e.key==='Home') goto(0); else if(e.key==='End') goto(SLIDES.length-1); });
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+Contest Results
+(Analysis by Daniel Zhu)
+Let $nx[i]$ denote $i$'s best friend.
+Partial Solution ($N, M \le 100$): $O(M N^2)$ time
+After each night, just simulate the process for each cow.
+That is, for each $i$ from $1$ to $N$:
+If $i$ is already throwing a party, update the corresponding type.
+Otherwise, set $i = nx[i]$.
+For each day, this will take $O(N)$ time for each cow, leading to a total time
+complexity of $O(MN^2)$.
+Partial Solution ($N, M \le 4000$): $O(NM)$ time
+There is one glaring inefficiency in the above approach. Consider the case in
+which neither cow $i$ nor cow $nx[i]$ is throwing a party. Then, the two cows
+will end up taking essentially the same path to the nearest party, with the only
+difference being cow $i$ must first move to $nx[i]$---therefore, this current
+approach is highly redundant.
+With this in mind, observe that if neither cow $i$ nor cow $nx[i]$ is throwing a
+party, then they will both eventually end up at the same party $j$. This
+motivates an approach in which we instead enumerate $j$, and count how many cows
+will eventually reach this party.
+Construct a directed graph in which each cow $i$ has an edge directed toward
+$nx[i]$ if $i$ is not throwing a party. Observe that the resultant structure is
+a forest---that is, a collection of disjoint trees whose roots correspond to the
+parties. Then, we just have to find the size of each tree, which can be done
+across all roots via a simple depth-first search in $O(N)$ time. Repeating this
+for each query results in a total time complexity of $O(NM)$.
+Full Solution: $O(M \alpha(N))$ time
+Of course, re-running the DFS after each query is certainly wasteful: since only
+one party can be added in each step, most of the graph structure will be
+preserved from one query to the next. In fact, at most one tree in our forest
+will split into two, and all other trees will remain unchanged.
+However, splitting is quite a difficult operation. To remedy this, we can 
+reverse the order of operations. With this transformation, our problem switches
+from adding to removing parties, which in turn corresponds to merging rather
+than splitting trees in our forest. This then reduces to a classic problem
+solvable by DSU.
+In particular, for each tree, we should maintain both its size and its root. We
+can then use DSU to merge trees in $O(\alpha(N))$ time, for a total time
+complexity of $O(M \alpha(N))$.
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> rt; // roots of each tree
+struct dsu : vector<int> {
+ dsu(int n) : vector(n, -1) {}
+ int rep(int x) { return at(x) < 0 ? x : at(x) = rep(at(x)); }
+ int sz(int x) { return -at(rep(x)); }
+ bool same(int x, int y) { return rep(x) == rep(y); }
+ bool join(int x, int y) {
+ x = rep(x), y = rep(y);
+ if (x == y) return 0;
+ int r = rt[y];
+ if (at(x) > at(y)) ::swap(x, y);
+ at(x) += at(y);
+ at(y) = x;
+ rt[x] = r;
+ return 1;
+ }
+};
+int main() {
+ cin.tie(0)->sync_with_stdio(0);
+ int n; cin >> n;
+ rt.resize(n + 1);
+ vector<int> nx(n + 1);
+ for (int i = 1; i <= n; i++) {
+ cin >> nx[i];
+ rt[i] = i;
+ }
+ int q; cin >> q;
+ vector<int> qs(q);
+ // ts[i] stores the operations applied at node i, from earliest to latest
+ vector<vector<int>> ts(n + 1);
+ char c;
+ for (int &idx : qs) {
+ cin >> idx >> c;
+ int t;
+ if (c == 'C') t = 0;
+ else if (c == 'O') t = 1;
+ else t = 2;
+ ts[idx].push_back(t);
+ }
+ reverse(qs.begin(), qs.end()); // process queries backward
+ dsu uf(n + 1); // our union-find data structure
+ // join all non-parties to their parents
+ for (int i = 1; i <= n; i++) if (!ts[i].size()) uf.join(i, nx[i]);
+ array<int, 3> ans = {0, 0, 0}; // ans[i] = # of cows attending a party of type i
+ for (int i = 1; i <= n; i++) if (ts[i].size()) {
+ ans[ts[i].back()] += uf.sz(i);
+ }
+ vector<array<int, 3>> res = {ans};
+ for (int i : qs) {
+ assert(ts[i].size());
+ ans[ts[i].back()] -= uf.sz(i);
+ ts[i].pop_back();
+ if (ts[i].size()) { // switch the type of this party from one to another
+ ans[ts[i].back()] += uf.sz(i);
+ }
+ else { // delete this party and merge i into nx[i]
+ int sz = uf.sz(i);
+ uf.join(i, nx[i]);
+ int r = rt[uf.rep(i)];
+ if (ts[r].size()) ans[ts[r].back()] += sz;
+ }
+ res.push_back(ans);
+ }
+ reverse(res.begin(), res.end());
+ res.erase(res.begin());
+ for (auto &[c, o, w] : res) cout << c << " " << o << " " << w << "\n";
+}

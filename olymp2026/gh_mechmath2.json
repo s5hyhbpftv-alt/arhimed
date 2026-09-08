@@ -1,0 +1,98 @@
+[
+  {
+    "name": "Q1",
+    "path": "IMO2026/Q1",
+    "sha": "4277ef95c6ac7197c055cb3d91b0da067df5dfad",
+    "size": 0,
+    "url": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q1?ref=main",
+    "html_url": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q1",
+    "git_url": "https://api.github.com/repos/MechMath/IMO2026/git/trees/4277ef95c6ac7197c055cb3d91b0da067df5dfad",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q1?ref=main",
+      "git": "https://api.github.com/repos/MechMath/IMO2026/git/trees/4277ef95c6ac7197c055cb3d91b0da067df5dfad",
+      "html": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q1"
+    }
+  },
+  {
+    "name": "Q2",
+    "path": "IMO2026/Q2",
+    "sha": "9e2d9ff532d225b350c5b0809dbac29d11d8cf22",
+    "size": 0,
+    "url": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q2?ref=main",
+    "html_url": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q2",
+    "git_url": "https://api.github.com/repos/MechMath/IMO2026/git/trees/9e2d9ff532d225b350c5b0809dbac29d11d8cf22",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q2?ref=main",
+      "git": "https://api.github.com/repos/MechMath/IMO2026/git/trees/9e2d9ff532d225b350c5b0809dbac29d11d8cf22",
+      "html": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q2"
+    }
+  },
+  {
+    "name": "Q3",
+    "path": "IMO2026/Q3",
+    "sha": "0e1ad68a62877eea67734e2b576381f437293b0b",
+    "size": 0,
+    "url": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q3?ref=main",
+    "html_url": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q3",
+    "git_url": "https://api.github.com/repos/MechMath/IMO2026/git/trees/0e1ad68a62877eea67734e2b576381f437293b0b",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q3?ref=main",
+      "git": "https://api.github.com/repos/MechMath/IMO2026/git/trees/0e1ad68a62877eea67734e2b576381f437293b0b",
+      "html": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q3"
+    }
+  },
+  {
+    "name": "Q4",
+    "path": "IMO2026/Q4",
+    "sha": "241148c49f3f35c71f853df736d8d316b9a0fa83",
+    "size": 0,
+    "url": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q4?ref=main",
+    "html_url": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q4",
+    "git_url": "https://api.github.com/repos/MechMath/IMO2026/git/trees/241148c49f3f35c71f853df736d8d316b9a0fa83",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q4?ref=main",
+      "git": "https://api.github.com/repos/MechMath/IMO2026/git/trees/241148c49f3f35c71f853df736d8d316b9a0fa83",
+      "html": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q4"
+    }
+  },
+  {
+    "name": "Q5",
+    "path": "IMO2026/Q5",
+    "sha": "c2696236a1ef3fdc919d96b2baf8f369564a55c7",
+    "size": 0,
+    "url": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q5?ref=main",
+    "html_url": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q5",
+    "git_url": "https://api.github.com/repos/MechMath/IMO2026/git/trees/c2696236a1ef3fdc919d96b2baf8f369564a55c7",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q5?ref=main",
+      "git": "https://api.github.com/repos/MechMath/IMO2026/git/trees/c2696236a1ef3fdc919d96b2baf8f369564a55c7",
+      "html": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q5"
+    }
+  },
+  {
+    "name": "Q6",
+    "path": "IMO2026/Q6",
+    "sha": "d7c099c3447256f5e8325dd9ae1c892ebc5a846c",
+    "size": 0,
+    "url": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q6?ref=main",
+    "html_url": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q6",
+    "git_url": "https://api.github.com/repos/MechMath/IMO2026/git/trees/d7c099c3447256f5e8325dd9ae1c892ebc5a846c",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/MechMath/IMO2026/contents/IMO2026/Q6?ref=main",
+      "git": "https://api.github.com/repos/MechMath/IMO2026/git/trees/d7c099c3447256f5e8325dd9ae1c892ebc5a846c",
+      "html": "https://github.com/MechMath/IMO2026/tree/main/IMO2026/Q6"
+    }
+  }
+]

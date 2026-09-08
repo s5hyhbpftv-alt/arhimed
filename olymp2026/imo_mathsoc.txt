@@ -1,0 +1,102 @@
+ 
+ 2026 International Mathematical Olympiad: The questions – Maths Society 
+ About 
+ Introduction 
+ Committee 
+ Constitution 
+ Community 
+ Contributing 
+ Membership 
+ Sponsorship 
+ Newsletter 
+ News 
+ Latest 
+ Competitions 
+ Events 
+ Resources 
+ Mathsounds 
+ Notebook 
+ Biographies 
+ Shop 
+ Products 
+ Mugs 
+ Badges 
+ Pencil cases 
+ Water bottles 
+ Delivery 
+ Search 
+ Account 
+ Cart 
+ Account 
+ Loading... 
+ Cart 
+ Home 
+ Feature 
+ 2026 International Mathematical Olympiad: The questions 
+ Feature 2026 International Mathematical Olympiad: The questions 
+ 16 July 2026 / 17 July 2026 by Charlton C 
+ As the ‘contest days’ at the 67 th International Mathematical Olympiad in Shanghai come to a close, we take a look at the recently-released IMO 2026 maths problems. Can you solve them? 
+ The competition consists of six problems, with each problem worth 7 points for a maximum total score of 42 points. Problems are chosen from various areas of secondary school mathematics, including algebra, combinatorics, geometry, and number theory. The Olympiad takes place over two consecutive days and on each day participants have four and a half hours to solve three problems. 
+ The problems require exceptional mathematical insight and creativity. Each year only a few, sometimes only one or none, out of more than 600 of the world’s brightest students manage to solve all six problems scoring 42 points. No calculators are permitted, and solutions must include complete proofs and justifications. 
+ Each year, participating countries submit proposed problems in advance. The Problem Selection Committee appointed by the host organisation reviews submissions and prepares a shortlist. 
+ The final six contest problems are then selected by the IMO Jury of team leaders. The planned difficulty progression is often described as 1, 4, 2, 5, 3, 6, where Problems 1-3 are used on Day 1 and Problems 4-6 on Day 2. Overall, this reflects a progression from more accessible to more challenging problems. 
+ Day 1 
+ Problem 1 
+ There are integers greater than written on a blackboard, not necessarily different. In a move, Confucius chooses two integers and from different places on the blackboard and replaces these two integers with He continues to make moves while it is possible to do so. Prove that, regardless of the choices of Confucius, after finitely many moves, exactly one integer on the blackboard is greater than . Prove that the value of does not depend on the choices of Confucius. (Note that denotes the greatest common divisor of positive integers and , and denotes the least common multiple of and .) 
+ Problem 2 
+ Let be a triangle and let points and be the midpoints of sides and , respectively. Let points and be chosen strictly inside triangles and , respectively, such that lies strictly inside triangle and lies strictly inside triangle . Suppose that Let be the circumcentre of triangle . Prove that . 
+ Problem 3 
+ Let be a positive integer. Liu Bang and Xiang Yu have a stick of length and want to divide it between themselves. Liu marks at most points on the stick, and then Xiang marks at most points on the stick. The marked points are distinct. Then, the stick is cut at all marked points, creating a number of pieces. Afterwards, they take turns claiming any unclaimed piece of the stick, with Liu going first. Each player’s goal is to maximise the total length of their own pieces. For each , determine the largest value such that Liu may guarantee a total length of at least , regardless of Xiang’s play. 
+ Day 2 
+ Problem 4 
+ Shan-Yu and Mulan are playing a game. Let be an angle with known to both players. Initially, Shan-Yu makes a paper triangle with measurements of his choice. Then, they repeatedly perform the following steps: If has at least one angle measuring exactly , then the game stops and Mulan wins. Otherwise, Mulan chooses a point on the perimeter of , different from its three vertices. She then makes a straight cut from to the opposite vertex of , splitting it into two triangles. Shan-Yu discards one of the two triangles. The remaining triangle becomes the new . For which real values of can Mulan guarantee her victory in finitely many steps, no matter how Shan-Yu plays? 
+ Problem 5 
+ Let be the set of positive real numbers. Determine all functions such that for every . 
+ Problem 6 
+ Let be an infinite sequence of positive integers greater than . Suppose that for all positive integers , the number is the smallest positive integer greater than such that for every . Prove that there exist positive integers and such that for every positive integer . (Note that denotes the greatest common divisor of positive integers and .) 
+ Solutions 
+ Problem 1 
+ Problem 2 
+ Problem 3 
+ Problem 4 
+ Problem 5 
+ Problem 6 
+ Tagged International Mathematical Olympiad 
+ 2026 International Mathematical Olympiad gets underway in Shanghai 
+ 100 Great Mathematical Quotes 
+ Please leave this field empty Newsletter 
+ Free monthly updates 
+ By subscribing you agree to receive our email updates and agree with our Privacy Policy . You may unsubscribe at any time. 
+ Check your inbox or spam folder to confirm your subscription.
+ News 
+ Million Dollar Question: The Hodge Conjecture 
+ Lucky and Unlucky Numbers 
+ Four Field Medals awarded in Philadelphia 
+ 2026 International Mathematical Olympiad Results Announced 
+ 100 Great Mathematical Quotes 
+ Maths · Society 
+ About 
+ Introduction to our society 
+ Committee members 
+ Constitution and charter 
+ Community involvement 
+ Contributing articles 
+ Membership and meetings 
+ Sponsorship and support 
+ Newsletter subscriptions 
+ News 
+ Latest updates 
+ Competitions and results 
+ Events and participation 
+ Resources 
+ Mathsounds podcasts 
+ Notebook of maths 
+ Biographies in maths 
+ Shop 
+ Products available 
+ Delivery information 
+ Contact 
+ © 2026 Maths Society Ventures. All Rights Reserved. 
+ Privacy 
+ To top 
+ We noticed you're visiting from Netherlands. We've updated our prices to Euro for your shopping convenience. Use Pound sterling instead. Dismiss 

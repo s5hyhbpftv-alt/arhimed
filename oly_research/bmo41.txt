@@ -1,0 +1,3881 @@
+41st Balkan
+Mathematical Olympiad
+27th April – 2nd May 2024
+Varna, Bulgaria
+
+Problem Shortlist
+with solutions
+
+41st Balkan
+Mathematical Olympiad
+27th April – 2nd May 2024
+Varna, Bulgaria
+
+Problem shortlist
+with solutions
+
+These Shortlist Problems
+have to be kept strictly confidential
+until BMO 2025.
+Contributing countries
+The Organizing Committee and the Problem Selection Committee of BMO 2024 thank the following countries for submitting
+problems:
+Albania, Cyprus, Greece, Kazakhstan, Republic of Moldova,
+Republic of North Macedonia, Romania, Serbia, Switzerland,
+United Kingdom, Uzbekistan.
+Problem Selection Committee
+Stanislav Harizanov
+Emil Kolev
+Danila Cherkashin
+Stoyan Boev
+Stefan Gerdjikov
+
+Shortlisted problems
+
+3
+
+Algebra
+A1.
+Let u, v, w be positive reals. Prove that there is a cyclic permutation (x, y, z) of (u, v, w)
+such that the inequality:
+a
+b
+c
+3
++
++
+≥
+xa + yb + zc xb + yc + za xc + ya + zb
+x+y+z
+holds for all positive real numbers a, b and c.
+
+A2.
+Prove that there is a positive integer number n such that the decimal representation of
+the number:
+⌊n
+⌋
+)
+3 (
+∑
+n k
+8
+3k
+k=1
+ends in 2023 digits 8.
+
+A3.
+Find all triples (a, b, c) of positive real numbers that satisfy the system:
+11bc − 36b − 15c = abc
+12ca − 10c − 28a = abc
+13ab − 21a − 6b = abc.
+
+A4.
+
+Let a ≥ b ≥ c ≥ 0 be real numbers such that ab + bc + ca = 3. Prove that:
+3 + (2 −
+
+√
+
+3) ·
+
+(b − c)2
+√
+≤a+b+c
+b + ( 3 − 1)c
+
+and determine all the cases when the equality occurs.
+
+4
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+A5.
+
+Let R+ = (0, ∞) be the set of positive real numbers. Find all non-negative real numbers
+c ≥ 0 such that there exists a function f : R+ → R+ with the property:
+f (y 2 f (x) + y + c) = xf (x + y 2 )
+for all x, y ∈ R+ .
+
+A6.
+
+Let R+ = (0, ∞) be the set of all positive real numbers. Find all functions f : R+ → R+
+and polynomials g(x) with non-negative coefficients and g(0) = 0 that satisfy the equality:
+f (f (x) + g(y)) = f (x − y) + 2y
+for all positive real numbers x > y.
+
+Shortlisted problems
+
+5
+
+Combinatorics
+C1.
+
+Let n, k be positive integers. Julia and Florian play a game on a 2n × 2n board. Julia
+has secretly tiled the entire board with invisible dominos. Florian now chooses k cells.
+All dominos covering at least one of these cells then turn visible. Determine the minimal
+value of k such that Florian has a strategy to always deduce the entire tiling.
+
+C2.
+
+Let n ≥ 2 and S = {1, 2, . . . , n2 }. For any function f : S → S let Fix(f ) = {x ∈ S |
+f (x) = x}. Find the possible values of the expression
+| Fix(f )| + | Im(f )| + max |f −1 (k)|
+k∈S
+
+as f ranges over all functions f : S → S.
+
+C3.
+
+Let n ⩾ 3. Alice and Bob play the following game: Alice chooses k ∈ {3, 4, . . . , n} and
+draws a 3 × k table, then he fills the k cells of the first row with different numbers from
+{1, 2, . . . , n}. Then, Bob fills on the second row some of the cells (eventually none) with
+distinct numbers from {1, 2, . . . , n}, and the rest of them with 0. Finally, on each cell of
+the third row we write the sum of the two cells above. Show that regardless how Alice
+plays, Bob can guarantee that on the third row he can obtain, in some order, the terms
+of a non-constant arithmetical progression.
+
+C4.
+Prove that for every positive integer k there exists an integer n and distinct primes
+p1 , p2 , . . . , pk such that, if A(n) denotes the number of integers in {1, 2, . . . , n} which are
+relatively prime to p1 p2 · · · pk , then
+)(
+) (
+)
+(
+1
+1
+1
+1−
+··· 1 −
+− A(n) > 2k−3 .
+n 1−
+p1
+p2
+pk
+
+6
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+C5.
+
+Let n ≥ 3 be a natural number. Anna and Bob play the following game on the vertices of
+a regular n-gon: Anna places her token on a vertex of the n-gon. Afterwards Bob places
+his token on another vertex of the n-gon. Then, with Anna playing first, they move their
+tokens alternately as follows for 2n rounds: In Anna’s turn on the k-th round, she moves
+her token k positions clockwise or anticlockwise. In Bob’s turn on the k-th round, he
+moves his token 1 position clockwise or anticlockwise.
+If at the end of any person’s turn the two tokens are on the same vertex, then Anna wins
+the game. Otherwise Bob wins. Decide for each value of n which player has a winning
+strategy.
+
+C6.
+
+Let D be the set of lines in the plane and A a set of 17 points in the plane. For d ∈ D,
+let nd (A) be the number of distinct points in which A projects on d. Find the maximum
+cardinality of
+VA = {nd (A)|d ∈ D}.
+
+Shortlisted problems
+
+7
+
+Geometry
+G1.
+Let ABC be an acute-angled triangle with AC > AB and let D be the foot of the A-angle
+bisector on BC. The reflections of lines AB and AC in line BC meet AC and AB at
+points E, F respectively. Let ℓ be a line through D meeting AC, AB at G, H respectively
+such that G lies strictly between A and C while H lies strictly between B and F . Prove
+that the circumcircles of △EDG and △F DH are tangent to each other.
+
+G2.
+
+Let ABC be an acute triangle and P be a point inside the triangle such that AP B =
+BP C = CP A. Denote with S the area and with α, β, γ the angles of △ABC. Prove
+that
+1
+1
+1
+P A2 + P B 2 + P C 2
+4
++
++
+≥
++√ .
+sin α sin β sin γ
+2S
+3
+When does the equality occur?
+
+G3.
+Let A, B, C, D be fixed points on this order on a line. Let ω be a variable circle through
+C and D and suppose that it meets the perpendicular bisector of CD at the points X
+and Y . Let Z and T be the other points of intersection of AX and BY with ω. Prove
+that XY passes through a fixed point which is independent of the circle ω.
+
+G4.
+Let ABC be an acute-angled triangle with AB < AC, orthocentre H, circumcircle Γ and
+circumcentre O. Let M be the midpoint of BC and let D be a point such that ADOH
+is a parallelogram. Suppose that there exists a point X on Γ and on the opposite side of
+DH to A such that DXH + DHA = 90◦ . Let Y be the midpoint of OX. Prove that
+if M Y = OA then OA = 2OH.
+
+G5.
+)
+
+)
+
+Let ABC be a scalene acute triangle ABC, D be the orthogonal projection of A on BC,
+M and N are the midpoints of AB and AC respectively. Let P, Q are points on the minor
+arcs AB and AC of circumcircle of △ABC respectively such that P Q ∥ BC. Show that
+the circumcircles of △DP Q and △M N D are tangent to each other if and only if P Q
+passes through M .
+
+8
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+G6.
+
+Let △ABC be a triangle and the points K and L on AB, M and N on BC and P and Q
+on CA are such that AK = LB < 21 AB, BM = N C < 12 BC and CP = QA < 12 CA. The
+intersections of KN with M Q and LP are R and T respectively, and the intersections of
+N P with LM and KQ are D and E respectively. Prove that the lines DR, BE and CT
+pass through a common point.
+
+G7.
+
+Let f : π → R be a function from the Euclidean plane to the real numbers such that
+f (A) + f (B) + f (C) = f (O) + f (G) + f (H)
+for any acute triangle ABC with circumcenter O, centroid G, and orthocenter H. Prove
+that f is constant.
+
+Shortlisted problems
+
+9
+
+Number Theory
+N1.
+Let n be a fixed natural number and
+Sn = {cn cn−1 ...c1 (10) | c1 , . . . , cn−1 , cn ∈ {1, 2, 3, 4}}.
+Are there distinct numbers x and y, x, y ∈ Sn , such that 4n | x − y?
+
+N2.
+
+Prove that for every integer n, the number n4 − 12n2 + 144 is not a perfect cube of an
+integer.
+
+N3.
+Consider the sequence
+an = 2n + 3n+2 + 5n+1
+for n ⩾ 1. Prove that there are infinitely many prime numbers such that each one of them
+divides infinitely many terms of the sequence.
+
+N4.
+Let k be a positive integer. Find all sequences (an )n≥1 of positive integers such that
+an+2 (an+1 − k) = an (an+1 + k)
+for all n ≥ 1.
+
+N5.
+Let a and b be distinct positive integers such that 3a + 2 is divisible by 3b + 2. Prove that
+a > b2 .
+
+N6.
+
+For a positive integer c, define a sequence by a1 = c and an = a3n−1 + c for each n ≥ 2.
+Call a prime number p orange if for every positive integer c there is some n such that
+p | an . Are there infinitely many orange primes?
+
+N7.
+
+For a positive integer c, define a sequence by a1 = c and an = a3n−1 + c for each n ≥ 2.
+Call a prime number p orange if for every positive integer c there is some n such that
+p | an . Are there infinitely many orange primes?
+
+10
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+Algebra – Solutions
+A1.
+Let u, v, w be positive reals. Prove that there is a cyclic permutation (x, y, z) of (u, v, w)
+such that the inequality:
+a
+b
+c
+3
++
++
+≥
+xa + yb + zc xb + yc + za xc + ya + zb
+x+y+z
+holds for all positive real numbers a, b and c.
+
+Solution. Trivially, one of the inequalities v + w ≥ 2u, u + w ≥ 2v, v + w ≥ 2u must
+hold. Let (x, y, z) be such a cyclic permutation of (u, v, w) that y + z ≥ 2x. Then the
+LHS of the desired inequality is equal to
+b2
+c2
+a2
++
++
+.
+xa2 + yab + zac xb2 + ybc + zab xc2 + yac + zbc
+Applying the Cauchy-Schwarz inequality (in the form of Arthur Engels) we get
+b2
+c2
+(a + b + c)2
+a2
++
++
+≥
+.
+xa2 + yab + zac xb2 + ybc + zab xc2 + yac + zbc
+x(a2 + b2 + c2 ) + (y + z)(ab + ac + bc)
+S+2P
+3
+Denote S = a2 + b2 + c2 , P = ab + ac + bc. It suffices to prove xS+(y+z)P
+≥ x+y+z
+. This
+inequality is equivalent to (y + z − 2x)(S − P ) ≥ 0, which obviously holds since S ≥ P
+and y + z ≥ 2x.
+
+Alternative Solution.
+Lemma 1. Let f : R+ → R be convex, monotonically decreasing function. We prove that
+for any x1 , x2 , x3 ∈ R+ there is a cyclic permutations (x, y, z) of (x1 , x2 , x3 ) such that the
+inequality:
+)
+(
+x+y+z
+αf (αx + βy + γz) + βf (βx + γy + αz) + γf (γx + αy + βz) ≥ f
+3
+holds true for every choice of non-negative real numbers α, β, γ with sum α + β + γ = 1.
+
+Shortlisted problems
+
+11
+
+Proof. We choose the cyclic permutation (x, y, z) such that x = min(x1 , x2 , x3 ). Let
+α + β + γ = 1 and α, β, γ ≥ 0. Then by the convexity of f and Jensen inequality we have:
+αf (αx+βy+γz)+βf (βx+γy+αz)+γf (γx+αy+βz) ≥ f ((α2 +β 2 +γ 2 )x+(αβ+βγ+γα)(y+z)).
+Setting s = α2 + β 2 + γ 2 , we have that:
+(α + β + γ)2 − s
+1−s
+αβ + βγ + γα = αγ + βα + γβ =
+=
+.
+2
+2
+Therefore, in terms of s, we have:
+(
+)
+1−s
+αf (αx + βy + γz) + βf (βx + γy + αz) + γf (γx + αy + βz) ≥ f sx +
+(y + z) .
+2
+Now note that α2 + β 2 + γ 2 ≥ αβ + βγ + γα and therefore s ≥ 1/2. Finally, by the choice
+of x ≤ min(y, z), a straightforward computation reveals that:
+1−s
+(y + z) ≤ (x + y + z)/3, for this is equivalent to (s − 1/3)x ≤ (−1/6 + s/2)(y + z)
+2
+and the last inequality is obvious, since for s ≥ 1/2, (−1/6 + s/2)(y + z) ≥ (−1/6 +
+s/2)2x = (−1/3 + s)x.
+Therefore, by the (decreasing) monotonicity of f , we get:
+
+sx +
+
+1−s
+(y + z)) ≥ f ((x + y + z)/3)
+2
+and the desired inequality follows.
+f (sx +
+
+Back to the original problem. Note that f (t) = 1t is monotonically decreasing and convex
+function and therefore the assumptions of the Lemma are satisfied. Introducing S =
+a + b + c for a, b, c > 0, and α = Sa , β = Sb , γ = Sc , we have that:
+b
+c
+1
+1
+1
+a
++
++
+=α
++β
++γ
+.
+ax + by + cz bx + cy + az cx + ay + bz
+αx + βy + γz
+βx + γy + αz
+γx + αy + βz
+With this remark, the desired inequality follows immediately from the conclusion of the
+Lemma.
+Comment. Note that the Lemma in the second solution suggests a natural generalisation of the proposed inequality to:
+)
+(
+)
+(
+)
+(
+)
+(
+bx + cy + az
+cx + ay + bz
+x+y+z
+ax + by + cz
++bg
++cg
+≥ (a+b+c)g
+,
+ag
+a+b+c
+a+b+c
+a+b+c
+3
+where g is a monotone convex function.
+
+12
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+A2.
+Prove that there is a positive integer number n such that the decimal representation of
+the number:
+⌋
+⌊n
+)
+3 (
+∑
+n k
+8
+3k
+k=1
+ends in 2023 digits 8.
+∑⌊ n3 ⌋ ( n ) k
+8 and ω ̸= 1 be a third root of the unity. Using the fact
+Solution. Let f (n) = k=1
+3k
+that for every integer k ≥ 0:
+{
+3, if 3 | k
+1 + ω k + ω 2k =
+0, otherwise,
+we get that:
+⌊n
+⌋
+)
+( )
+n
+3 (
+∑
+n k 1∑
+n k
+k
+2k
+f (n) + 1 =
+(1 + ω + ω )
+2
+2 =
+3k
+3
+k
+k=0
+k=0
+
+=
+
+1 n 1
+1
+3 + (1 + 2ω)n + (1 + 2ω 2 )n ).
+3
+3
+3
+
+Now note that 3, 1 + 2ω and 1 + 2ω 2 are the roots of the polynomial:
+P (x) = (x − 3)(x − 1 − 2ω)(x − 1 − 2ω 2 ) = (x − 1)3 − 8 = x3 − 3x2 + 3x − 9
+which, in turn, is the characteristic polynomial of the recursive sequence (ai )i≥0 :
+ai+3 = 3ai+2 − 3ai+1 + 9ai for i ≥ 0.
+Thus, if we set ai = f (i) + 1 = 1 for 0 ≤ i ≤ 2, then f (n) + 1 = an for every n ≥ 0.
+Let bi = ai (mod 102023 ). Since gcd(3, 102023 ) = 1, any three consecutive terms of the
+sequence (bi )i≥0 uniquely the previous as well the next term of this sequence. Together
+with the fact that there are only finitely many residues modulo 102023 , we conclude that
+the sequence (bi )i≥0 is periodic with some period d > 3 (since b3 = a3 = 9). Therefore:
+9(f (d−1)+1) = 9ad−1 = ad+2 −3ad+1 +3ad ≡ a2 −3a1 +3a0
+2023
+
+(mod 102023 ) = 1
+
+(mod 102023 ).
+
+Finally, since 9 | 8.102023 + 1, we conclude that 9 8.10 9 +1 ≡ 1 (mod 102023 ) and consequently:
+8.102023 + 1
+f (d − 1) + 1 = ad−1 ≡
+= 88
+. . . 8}9 (mod 102023 )
+| {z
+9
+2022
+
+Shortlisted problems
+
+13
+
+and thus f (d − 1) ≡ 88
+. . . 8} (mod 102023 ). Therefore n = d − 1 has the desired property.
+| {z
+2022
+
+Comment. We note that the idea of using roots of unity in order to study the properties
+of sums of binomial coefficients is broadly considered in Chapter 5 of the book of Titu
+Andreescu and Dorin Andrica Complex Numbers from A to …Z, 2006, Birkhäuser. See for
+example Problem 4 on page 239.
+Similar idea can be further found in the Romania TST 2004, Problem 10 by Catalin
+Popescu: https://artofproblemsolving.com/community/c6h5487p17788.
+
+14
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+A3.
+Find all triples (a, b, c) of positive real numbers that satisfy the system:
+11bc − 36b − 15c = abc
+12ca − 10c − 28a = abc
+13ab − 21a − 6b = abc.
+
+Solution. Considering each of the equalities:
+abc = 11bc − 36b − 15c
+abc = 12ac − 10c − 28a
+abc = 13ab − 21a − 6b
+and dividing the first one by bc > 0, the second one by ac and third one by ab we obtain:
+36 15
+−
+c
+b
+10 28
+b = 12 −
+−
+a
+c
+21 6
+− .
+c = 13 −
+b
+a
+
+a = 11 −
+
+Summing up all three equalities and rearranging, we conclude that:
+a+
+
+16
+36
+64
++b+
++c+
+= 36.
+a
+b
+c
+
+Taking into account that a, b and c are positive and applying AM-GM, we get that a+ 16
+≥
+a
+64
+36
+8, b + b ≥ 12 and c + c ≥ 16. Since 8 + 12 + 16 = 36 we conclude that actually all three
+inequalities are satisfied with equality and this is possible only if:
+a = 4,
+
+b = 6,
+
+c = 8.
+
+For (a, b, c) = (4, 6, 8), we have 36
+= 92 and 15
+= 25 . Therefore:
+c
+b
+a = 4 = 11 − 7 = 11 −
+
+9 5
+36 15
+− = 11 −
+− .
+2 2
+c
+b
+
+Similarly, 10
+= 52 and 28
+= 72 and therefore:
+a
+c
+b = 6 = 12 −
+
+5 7
+10 28
+− = 12 −
+− .
+2 2
+a
+c
+
+Shortlisted problems
+
+15
+
+Since two of the equalities are satisfied and the sum of the left hand sides of all three is
+equal to the sum of the right hand sides of all three equalities, we conclude that the third
+equality also holds. This shows that (a, b, c) = (4, 6, 8) is indeed a solution of the given
+system. Hence the unique positive solution of the given system is (a, b, c) = (4, 6, 8).
+
+Comment. It seems that the dividing by abc and summing up is crucial for untangling
+the problem.
+According to the author, one could solve directly via a ‘brute-force approach’. However,
+note that there are actually five solutions for (a, b, c) without the positive assumption,
+namely:
+(
+)
+(
+) (
+)
+21 28
+15 140 63
+10 15
+(a, b, c) = −11, ,
+, (0, 0, 0) ,
+,−
+,
+,
+, , −13 , (4, 6, 8)
+11 11
+28
+9 20
+13 13
+By considering the LCM of the denominators, this means that any brute force algebra approach to solve for one of the variables will require finding the roots of a non-trivial quartic
+polynomial and the leading coefficient will be at least 220. For example, solving directly
+for c gives the polynomial equation 220c5 − 153c4 − 27381c3 + 139132c2 − 183456c = 0
+and the ones for a, b are even more intractable.
+
+16
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+A4.
+
+Let a ≥ b ≥ c ≥ 0 be real numbers such that ab + bc + ca = 3. Prove that:
+3 + (2 −
+
+√
+
+3) ·
+
+(b − c)2
+√
+≤a+b+c
+b + ( 3 − 1)c
+
+and determine all the cases when the equality occurs.
+
+Solution. We homogenize and prove a more general statement
+√ √
+√
+3 ab + bc + ca + (2 − 3) ·
+
+(b − c)2
+√
+≤a+b+c
+b + ( 3 − 1)c
+
+(1)
+
+for all reals a ≥ b ≥ c ≥ 0, with b > 0.
+√
+√ √
+√
+• Case 1. c = 0. Then (1) reduces to 3 ab + (2 − √
+3)b ≤ a + √
+b. We set ab = p
+and a + b = 2p. We clearly have b ≤ p, so we show p 3 + (2 − 3)p ≤ 2s ⇔ p ≤ s
+which is true by applying AM-GM inequality, with equality when a = b.
+• Case 2 c > 0. Since the inequality (1) is homogeneous, upon division of c and substituting ac → a and cb → b, we may and we do assume that c = 1.
+√ √
+√
+(b−1)2
+√
+Hence (1) can be rewritten as 3 ab + a + b + (2 − 3) · b+
+≤ a + b + 1.
+3−1
+We introduce 2x
+√ :=
+√ by applying AM-GM inequality we have
+√ a + b ≥ 2. √Then
+2
+ab ≤ x and so 3 ab + a + b ≤ 3 x2 + 2x.
+Also b ≤ x. We will show that:
+(b − 1)2
+(x − 1)2
+√
+√
+≤
+.
+b+ 3−1
+x+ 3−1
+
+(2)
+
+We set b − 1 = u and x − 1 = y.
+Then 0 ≤ u ≤ y and the inequality (2) takes the form:
+√
+√
+u2
+y2
+√ ≤
+√ ⇔ u2 y + u2 3 ≤ y 2 u + y 2 3.
+u+ 3
+y+ 3
+√
+√
+But this is true since u2 y ≤ y 2 u and u2 3 ≤ y 2 3. In summary:
+√ √
+√
+3 ab + a + b + (2 − 3) ·
+
+√ √
+√
+(b − 1)2
+(x − 1)2
+√
+√
+≤ 3 x2 + 2x + (2 − 3)
+.
+b+ 3−1
+x+ 3−1
+
+Shortlisted problems
+
+17
+
+Hence, it suffices to show:
+√ √
+√
+√
+(x − 1)2
+(x − 1)2
+x − 1)2
+√
+√
+3 x2 + 2x+(2− 3)
+≤ 2x+1 ⇔ (2− 3)
+≤√ √
+.
+x+ 3−1
+x+ 3−1
+3 x2 + 2x + 2x + 1
+(3)
+If x = 1 this is true, we have equality.
+For x > 1 (3) is equivalent to:
+√
+√ √
+√ √
+√
+1
+2+ 3
+√
+≤√ √
+⇔ 3 x2 + 2x ≤ x 3+ 3 ⇔ x2 + 2x ≤ x+1,
+x+ 3−1
+3 x2 + 2x + 2x + 1
+which is obviously true, and the equality in the last line is strict, so no equality may
+occur in this case. Now the proof of the inequality complete.
+As to the cases of equality, returning
+√ √to the main inequality, from Case 1, it holds iff
+a = b and c = 0, i.e. (a, b, c) = ( 3, 3, 0). As of the Case 2, it must be the case that
+x = 1, and thus a + b = 2. But a ≥ 1 and√b ≥
+√ 1, therefore a = b = 1. Consequently
+(a, b, c) = (1, 1, 1). Obviously both triples ( 3, 3, 0) and (1, 1, 1) satisfy the conditions
+of the problem and turn the inequality into an equality.
+Alternative Solution. Using the given condition ab + bc + ca = 3 we can easily express:
+a=
+
+3 − bc
+.
+b+c
+
+Thus the condition a ≥ b is equivalent to:
+3 − bc
+≥ b, or b2 + 2bc ≤ 3,
+b+c
+where we used that b + c > 0.
+We apply the Sturm’s method to show that under the given conditions the difference:
+√
+(2 − 3)(b − c)2
+√
+a+b+c−
+b − c + 3c
+attains minimum when a = b.
+Let γ ∈ (0, 1) and consider the triples:
+
+)
+3 − bc
+, b, c and
+(a, b, c) =
+b+c
+(
+)
+3 − γ 2 bc
+′ ′ ′
+(a , b , c ) =
+, γb, γc
+γ(b + c)
+(
+
+18
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+with b2 + 2bc ≤ 3. Then obviously (b′ )2 + 2b′ c′ = γ 2 (b2 + 2bc) ≤ 3.
+Note that:
+√
+√
+√
+(2 − 3)(b′ − c′ )2
+(2 − 3)(b − c)2
+(2 − 3)(b − c)2
+√
+√
+√
+=γ
+<
+,
+b′ − c′ + 3c′
+b − c + 3c
+b − c + 3c
+because γ ∈ (0, 1). On the other hand:
+3 − γ 2 bc 3 − bc
+−
+− (1 − γ)(b + c)
+γ(b + c)
+b+c
+3(1 − γ) + γbc(1 − γ) − γ(1 − γ)(b + c)2
+γ(b + c)
+3 + γbc − γ(b2 + 2bc + c2 )
+(1 − γ)
+γ(b + c)
+2
+3 − γ(b + 2bc) + γc(b − c)
+(1 − γ)
+γ(b + c)
+0,
+
+a′ + b′ + c′ − (a + b + c) = a′ − a − (1 − γ)(b + c) =
+=
+=
+=
+>
+
+where the last inequality follows by the condition that
+b2 + 2bc ≤ 3, √γ ∈ (0, 1) and b ≥ c.
+√
+3)(b′ −c′ )2
+3)(b−c)2
+√
+√
+< (2−b−c+
+we conclude
+This proves that a′ + b′ + c′ > a + b + c and since (2−
+b′ −c′ + 3c′
+3c
+that:
+√
+√
+(2 − 3)(b − c)2
+(2 − 3)(b′ − c′ )2
+′
+′
+′
+√
+√
+a+b+c−
+<a +b +c −
+.
+b − c + 3c
+b′ − c′ + 3c′
+Thus if we have (a, b, c) satisfying the conditions of the problem and pick γ such that
+b2 + 2bc = 3γ 2 , then γ ≤ 1 and the triple (a′ , b′ , c′ ) with a′ = b′ = b/γ, c′ = c/γ attains
+smaller value than (a, b, c).
+Therefore the minimum of:
+√
+(2 − 3)(b − c)2
+√
+a+b+c−
+b − c + 3c
+under the conditions of the problem is attained for a = b and b2 + 2bc = 3 with b ≥ c.
+3
+Consequently b ≥ 1 and c = 2b
+− 2b . Now it is easy to compute that:
+3
+1
+(b − )
+2
+b
+√
+√
+√
+√
+√
+3
+3
+b
+3− 3
+3( 3 − 1)
+( 3 − 1) √
+b − c + 3c = b + ( 3 − 1)( − ) =
+b+
+=
+( 3b + )
+2b 2
+2
+2b
+2
+b
+3
+b
+3
+a + b + c = 2b + c = 2b +
+− = (b + 1/b).
+2b 2
+2
+b−c =
+
+Shortlisted problems
+
+19
+
+Therefore:
+√
+√
+√
+(2 − 3)(b − c)2
+9( 3 − 1)2 (b − 1/b)2
+1
+9( 3 − 1)(b − 1/b)2
+√
+√
+√
+=
+=
+√
+( 3−1)
+8
+b − c + 3c
+4( 3b + 3b )
+( 3b + 3 )
+2
+
+b
+
+and thus by doing some technical but standard arithmetic we obtain:
+√
+√
+(2 − 3)(b − c)2
+3
+9( 3 − 1)(b2 − 2 + 1/b2 )
+√
+√
+a+b+c−
+=
+(b + 1/b) −
+2
+b − c + 3c
+4( 3b + 3/b)
+√
+√
+(3 − 3) √
+6 3 + 18
+=
+( 3b + 3/b) + √
+4
+4( 3b + 3/b)
+√ [
+√ ]
+(3 − 3) √
+(3 + 3)2
+( 3b + 3/b) + √
+=
+4
+3b + 3/b
+√
+√
+(3 − 3)
+(AM ≥ GM )
+≥
+.2(3 + 3) = 3
+4
+and the desired inequality is proven. In order to√have equality as √
+we have shown a = b
+3b
++
+3/b
+=
+3
++
+3√with b ≥ 1. This
+and in the last line
+it
+should
+be
+the
+case
+that
+√
+√
+√
+√
+is equivalent to 3(b − 3) − 3/b(b − 3) = 0. Therefore b = 3 or√b =
+√ 1. This
+shows that the only candidates for attaining the minimum are the triples√( 3,
+√ 3, 0) and
+(1, 1, 1). Substituting in the given expression we see that for (a, b, c) = ( 3, 3, 0):
+√
+√
+√
+√
+(2 − 3)(b − c)2
+(2 − 3).3
+√
+√
+3+
+=3
+=3+2 3−3=2 3=a+b+0=a+b+c
+b − c + 3c
+3
+and for (a, b, c) = (1, 1, 1) it is straightforward that the irregular term is 0 and that
+3 = 1 + 1 + 1 = a + b + c.
+
+Comment.
+The two solutions explore two different ideas. The first one uses a homogenisation and then trivialises the most inconvenient variable c. The second one does
+not change the problem but instead is guided by the basic idea to eliminate the least used
+variable a in the natural pursuit to determine the cases where the equality is attained.
+This is why the first solution might seem more trickier whereas the second one more technical.
+
+20
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+A5.
+
+Let R+ = (0, ∞) be the set of positive real numbers. Find all non-negative real numbers
+c ≥ 0 such that there exists a function f : R+ → R+ with the property:
+f (y 2 f (x) + y + c) = xf (x + y 2 )
+for all x, y ∈ R+ .
+Solution. We prove that no such real numbers exist.
+For the sake of contradiction, assume that c ≥ 0 and f : R+ → R+ satisfies the assumptions of the problem. We write P (x, y) as an abbreviation for the property of x, y ∈ R+
+that:
+xf (x + y 2 ) = f (y 2 f (x) + y + c).
+√
+• Step 1. f is non-increasing. By P (x, y) we first obtain:
+√
+xf (x + y) = f (yf (x) + y + c).
+√
+Next, by P (x + z, y) we further get:
+√
+(x + z)f (x + y + z) = f (yf (x + z) + y + c)
+and combining both equalities we conclude that:
+(x + z)f (x + y + z) = xf (x + (y + z)) + zf ((x + y) + z)
+√
+√
+= f ((y + z)f (x) + y + z + c) + f ((x + y)f (z) + x + y + c)
+and therefore
+√
+√
+√
+f (yf (x+z)+ y+c) = f ((y+z)f (x)+ y + z +c)+f ((x+y)f (z)+ x + y+c) (1)
+Now assume that x, z ∈ R+ but, contrary to our endeavour, f (x + z) > f (z). Fixing
+such a pair (x, z), we shall prove that there is y ∈ R+ with the property:
+√
+√
+yf (x + z) + y + c = (x + y)f (z) + x + y + c.
+We consider this as an equation with respect to y. All we need is to show that this
+equation admits a positive root. Substituting y with xy 2 , we subsequently obtain:
+√
+√
+xy 2 f (x + z) + xy + c = (xy 2 + x)f (z) + x + xy 2 + c
+√
+√ 2
+√
+√ 2
+xy f (x + z) + y =
+xy f (z) + xf (z) + 1 + y 2
+√
+√
+√
+y 2 ( xf (x + z) − xf (z)) + y − xf (z)
+√
+= 1.
+y2 + 1
+
+Shortlisted problems
+
+21
+
+√
+Note that letting y tend to 0 the left hand side tends to − xf (z) < 0 < 1. On the
+other hand letting y tend to infinity, since f (x+z) > f (z), the expression on the left
+hand side tends to ∞. Therefore the last equation has a positive root y0 ∈ (0, ∞)
+and thus:
+√
+√
+f (y0 f (x + z) + y0 + c) = f ((x + y0 )f (z) + x + y0 + c).
+But now by (1) with y = y0 we obtain that:
+√
+f ((y0 + z)f (x) + y0 + z + c) = 0
+which is a contradiction. Therefore no x, z ∈ R+ exist with the property f (x + z) >
+f (x).
+• Step 2. Now we prove that f is constant on some interval [x0 , ∞). First note that
+if a > b and f (a) = f (b), then, since f is non-increasing, f (x) = f (a) for every
+√
+x ∈ [b, a]. Now by P (1, y) we have:
+√
+f (y + 1) = f (yf (1) + y + c).
+Next, we make case distinction w.r.t. f (1):
+√
+– f (1) ≥ 1. Then for y ≥ 4, we have that yf (1)+ y+c ≥ y+2. Therefore by the
+above remark, we have that f (y + 1) = f (y + 2) for any y ≥ 4. Consequently,
+f (y) is constant on [5, ∞).
+√
+– f (1) < 1. Thus for y large enough yf (1) + y < y and therefore, again by the
+remark above, f (y) = f (y + 1). Consequently there is x0 such that on [x0 , ∞),
+f is constant.
+Now we arrive at a contradiction. Let x > max(x0 , 1) and y > x0 . Then x + y 2 > x0 and
+y 2 f (x) + y + c > x0 . Consequently:
+f (x + y 2 ) = f (y 2 f (x) + y + c).
+On the other hand, by P (x, y), we have:
+xf (x + y 2 ) = f (y 2 f (x) + y + c).
+For x > 1, by the positivity of f , this is impossible.
+Alternative Solution. This solution is based on considering the equation
+(f (x) − 1)y 2 + y + c − x = 0.
+
+(2)
+
+22
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+Indeed,
+√ if f (x) > 1 for some x > c then (2) would have a positive solution, i.e., y =
+−1+ 1−4(c−x)(f (x)−1)
+and plugging that (x, y) into the original equation we find that x = 1.
+2(f (x)−1)
+So, for all x > c except possibly x = 1 we have f (x) ≤ 1. On the other hand, choose
+x ∈ (c, c + 1/4) then if there is some x in the afore-mentioned interval such that f (x) < 1
+then 1 − 4(c − x)(f (x) − 1) >√1 + f (x) − 1 = f (x) > 0 and the equation (2) has a
+−1−
+
+1−4(c−x)(f (x)−1)
+
+. By analogous reasoning, we find that
+positive solution, i.e., y =
+2(f (x)−1)
+x = 1. Hence, for all x ∈ (c, c + 1/4) except possibly 1 we have f (x) = 1. Now,
+choose r, s ∈ (c, c + 1/4), 1 ̸= r ̸= s ̸= 1 and choose y small enough to ensure that
+r + y 2 , s + y 2 ∈ (c, c + 1/4) and y 2 f (r) + y + c = y 2 + y + c ∈ (c, c + 1/4). Then, plugging
+(x, y) = (r, y), (s, y) in the original equality, it follows that r = rf (r+y 2 ) = sf (s+y 2 ) = s.
+Impossible. Therefore no function f with the desired properties exists.
+Alternative Solution. Assume that c ≥ 0 is such that:
+xf (x + y 2 ) = f (y 2 f (x) + y + c)
+holds for any x, y ∈ R+ .
+1. Finding periods. Setting x = 1 and u = y 2 , we get:
+f (u + 1) = f (y 2 + 1) = f (f (1)y 2 + y + c) = f (f (1)u +
+
+√
+
+u + c).
+
+This shows that for any u > 0 there are x1 and x2 such that f (x1 ) = f (x2 ) and:
+√
+x2 − x1 = |(f (1) − 1)u + u + c − 1| =: T (u).
+√
+√
+Furthermore x1 = f (1)u + u + c if f (1)u + u + c < u + 1 and x1 = u + 1,
+otherwise.
+2. Some structure of the periods. On the other hand whenever f (x1 ) = f (x2 ), T =
+x2 − x1 and u > x1 , we can write u = x1 + y 2 for an appropriate y > 0. Therefore:
+x1 f (u) = x1 f (x1 + y 2 ) = f (y 2 f (x1 ) + y + c) and
+x2 f (u + T ) = x2 f (x1 + T + y 2 ) = x2 f (x2 + y 2 ) = f (y 2 f (x2 ) + y + c).
+Taking into account that f (x1 ) = f (x2 ), we conclude that the right hand sides of
+both equalities are equal and consequently:
+x1 f (u) = x2 f (u + T )
+holds for any u > x1 . Therefore for u > x1 and recalling that x2 = x1 + T , we have:
+(
+)2
+x1 + T
+f (u + T )
+x1 + T
+f (u + 2T ) f (u + T )
+f (u + 2T )
+=
+and
+=
+=
+.
+x1
+f (u)
+x1
+f (u + T ) f (u)
+f (u)
+
+Shortlisted problems
+
+23
+
+3. Combining steps 1 and 2. To conclude the proof we√combine steps 1 and 2. Let t
+be large enough. Then since T (u) = |(f (1) − 1)u + u + c − 1| continuously tends
+to infinity when u tends to infinity, there is√u = U (t) such that T (u) = t. Let
+x1 (t) = U (t) + 1 if U (t) + 1 < f (1)U (t) + U (t) + c and x1 (t) = U (t) + 1 − t,
+otherwise. Then by step 2, we conclude that:
+(
+)2
+t
+f (y + 2t)
+2t
+1+
+=
+=1+
+,
+x1 (t)
+f (y)
+x1 (2t)
+where y > max(x1 (t) + t, x1 (2t) + 2t). Consequently, we get that:
+2t
+t2
+2t
++ 2
+=
+x1 (t) x1 (t)
+x1 (2t)
+or equivalently,
+tx1 (2t) = 2x1 (t)(x1 (t) − x1 (2t)).
+Yet, x1 (t) tends to infinity as t does so. It follows that for t large enough x1 (t) <
+x1 (2t). This is a contradiction since the left hand side is positive as is 2x1 (t).
+Consequently, there are no non-negative real numbers c with the desired property.
+
+Comment. Actually the original solution and the second alternative solution share the
+same ideas but they are organised in a different order. This suggests that the structure
+of the problem can be revealed from different angles and the pieces of the puzzle can be
+assembled differently to yield a complete solution.
+The first alternative solution shows that the structure of the problem is much more regular
+and it can be revealed by systematically studying the behaviour of the quadratic function
+f (x)y 2 + y + c = y 2 + x with respect to y.
+
+24
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+A6.
+
+Let R+ = (0, ∞) be the set of all positive real numbers. Find all functions f : R+ → R+
+and polynomials g(x) with non-negative coefficients and g(0) = 0 that satisfy the equality:
+f (f (x) + g(y)) = f (x − y) + 2y
+for all positive real numbers x > y.
+
+Solution. Assume that f : R+ → R+ and the polynomial g with non-negative coefficients
+and g(0) = 0 satisfy the conditions of the problem. For positive reals with x > y, we shall
+write P (x, y) for the relation:
+f (f (x) + g(y)) = f (x − y) + 2y.
+1. Step 1. f (x) ≥ x. Assume that this is not true. Since g(0) = 0, g(x) + x is injective
+on positive reals. If f (x) < x for some positive real x, then setting y such that
+y + g(y) = x − f (x) (where obviously y < x), we shall get f (x) + g(y) = x − y and
+by P (x, y), f (f (x) + g(y)) = f (x − y) + 2y, we get 2y = 0, a contradiction.
+2. Step 2. g(x) = cx for some non-negative real c. We will show deg g ≤ 1 and
+together with g(0) = 0 the result will follow. Assume the contrary. Hence there
+exists a positive l such that g(x) ≥ 2x for all x ≥ l. By Step 1 we get
+∀x > y ≥ l : f (x − y) + 2y = f (f (x) + g(y)) ≥ f (x) + g(y) ≥ f (x) + 2y
+and therefore f (x − y) ≥ f (x). We get f (y) ≥ f (2y) ≥ · · · ≥ f (ny) ≥ ny for all
+positive integers n, which is a contradiction.
+3. Step 3. If c ̸= 0, then f (f (x) + y + c2 + 2) = f (x + 1) + y + 2c. Indeed by
+P (f (x + y2 + 1) + cy2 + c, c), we get
+f (f (f (x +
+
+y
+cy
+y
+cy
++ 1) +
++ c) + c2 ) = f (f (x + + 1) + ) + 2c = f (x + 1) + y + 2c.
+2
+2
+2
+2
+
+On the other hand by P (x + y2 + 1, y2 + 1), we have:
+)
+(y
+))
+( (
+) cy
+)
+( (
+y
+y
++1 =f f x+ +1 +
++c .
+f (x) + y + 2 = f f x + + 1 + g
+2
+2
+2
+2
+Substituting in the LHS of P (f (x + y2 + 1) + cy2 + c, c), we get f (f (x) + y + 2 + c2 ) =
+f (x + 1) + y + 2c.
+
+Shortlisted problems
+
+25
+
+4. Step 4. There is x0 , such that f (x) is linear on (x0 , ∞). If c ̸= 0, then by Step 3,
+fixing x = 1, we get f (y + f (1) + 2 + c2 ) = y + f (2) + 2c which implies that f is
+linear for y > f (1) + 2 + c2 . As for the case c = 0, consider y, z ∈ (0, ∞). Pick
+x > max(y, z), then by P (x, x − y) and P (x, x − z) we get:
+f (y) + 2(x − y) = f (f (x)) = f (z) + 2(x − z)
+which proves that f (y) − 2y = f (z) − 2z and there fore f is linear on (0, ∞).
+5. Step 5. g(y) = y and f (x) = x on (x0 , ∞). By Step 4, let f (x) = ax + b on (x0 , ∞).
+Since f takes only positive values, a ≥ 0. If a = 0, then by P (x + y, y) for y > x0
+we get:
+2y + f (x) = f (f (x + y) + g(y)) = f (b + cy).
+Since the LHS is not constant, we conclude c ̸= 0, but then for y > x0 /c, we get
+that the RHS equals b which is a contradiction.
+Hence a > 0. Now for x > x0 and x > (x0 − b)/a large enough by P (x + y, y) we
+get:
+ax+b+2y = f (x)+2y = f (f (x+y)+g(y)) = f (ax+ay+b+cy) = a(ax+ay+b+cy)+b.
+Comparing the coefficients before x, we see a2 = a and since a ̸= 0, a = 1. Now
+2b = b and thus b = 0. Finally, equalising the coefficients before y, we conclude
+2 = 1 + c and therefore c = 1.
+Now we know that f (x) = x on (x0 , ∞) and g(y) = y. Let y > x0 . Then by P (x + y, x)
+we conclude:
+f (x) + 2y = f (f (x + y) + g(y)) = f (x + y + y) = x + 2y.
+Therefore f (x) = x for every x. Conversely, it is straightforward that f (x) = x and
+g(y) = y do indeed satisfy the conditions of the problem.
+Alternative Solution. Assume that the function f : R+ → R+ and the polynomial
+with non-negative coefficients g(y) = yg1 (y) satisfy the given equation. Fix x = x0 > 0
+and note that:
+f (f (x0 + y) + g(y)) = f (x0 + y − y) + 2y = f (x0 ) + 2y.
+Assume that g = 0. Then f (f (x + y)) = f (x) + 2y for x, y > 0. Let x > 0 and z > 0.
+Pick y > 0. Then:
+2y + f (x + z) = f (f (x + y + z)) = f (f (x + z + y)) = f (x) + 2(z + y).
+
+26
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+Therefore f (x + z) = f (x) + 2z for any x > 0 and z > 0. Setting c = f (1), we see
+that f (z + 1) = c + 2z for all positive z. Therefore if x, y > 1 we have that f (x + y) =
+c + 2(x + y − 1) > 1. This shows that:
+f (f (x + y)) = c + 2(f (x + y) − 1) = 3c + 4(x + y) − 4.
+On the other hand f (x)+2y = c+2x+2y. Therefore the equality f (f (x+y)) = f (x)+2y
+is not universally satisfied.
+From now on, we assume that g ̸= 0. Therefore g is strictly increasing with g(0) = 0,
+limy→∞ g(y) = ∞, i.e. g is bijective on [0, ∞) and g(0) = 0.
+Let x > 0, y > 0 and set u = f (x + y), v = g(y). From above, we have u > 0 and v > 0.
+Therefore:
+f (f (u + v) + g(v)) = f (u) + 2v = f (f (x + y)) + 2g(y).
+On the other hand f (u + v) = f (f (x + y) + g(y)) = f (x) + 2y. Therefore we obtain that:
+f (f (x) + 2y + g(g(y))) = f (f (x + y)) + 2g(y).
+Since g is bijective from (0, ∞) to (0, ∞) for any z > 0 there is t such that g(t) = z.
+Applying this observation to z = g(g(y)) + 2y and setting x′ = x + t, we obtain that:
+f (f (x+t+y))+2g(y) = f (f (x′ +y))+2g(y) = f (f (x′ )+g(g(y))+2y) = f (f (x+t)+g(t)) = f (x)+2t.
+Thus if we denote h(y) = g(g(y)) + 2y, then t = g −1 (h(y)) and the above equality can be
+rewritten as:
+f (f (x + g −1 (h(y)) + y)) = f (x) + 2g −1 (h(y)) − 2g(y) = f (x) + 2g −1 (h(y)) + 2y − 2y − 2g(y).
+Let s(y) = g −1 (h(y)) + y and note that since h is continuous and monotone increasing, g
+is continuous and monotone increasing, then so are g −1 and consequently g −1 ◦ h and s.
+It is also clear, that limy→0 s(y) = 0 and limy→∞ s(y) = ∞. Therefore s is continuously
+bijective from [0, ∞) to [0, ∞) with s(0) = 0.
+Thus we have:
+f (f (x + s(y))) = f (x) + 2s(y) − 2y − 2g(y)
+and using that s is invertible, we obtain:
+f (f (x + y)) = f (x) + 2y − 2s−1 (y) − 2g(s−1 (y)).
+Now fix x0 , then for any x > x0 and any y > 0 we have:
+f (x) + 2y − 2s−1 (y) − 2g(s−1 (y)) = f (f (x + y)) = f (f (x0 + x + y − x0 ))
+= f (x0 ) + 2(x + y − x0 ) − 2s−1 (x + y − x0 ) − 2g(s−1 (x + y − x0 )).
+
+Shortlisted problems
+
+27
+
+Setting y = x0 , we get:
+f (x) + 2x0 − 2s−1 (x0 ) − 2g(s−1 (x0 )) = f (x0 ) + 2x − 2s−1 (x) − 2g(s−1 (x)).
+Since this equality is valid for any x > x0 we actually have that:
+f (x) − 2x + 2s−1 (x) + 2g(s−1 (x)) = c for some fixed constant c ∈ R and all x ∈ R+ .
+Let ϕ(x) = −x + 2s−1 (x) + 2g(s−1 (x)). Then:
+f (f (x+y)+g(y)) = f (x+y+ϕ(x+y)+c+g(y)) = x+y+g(y)+ϕ(x+y)+2c+ϕ(x+y+ϕ(x+y)+c+g(y)).
+On the other hand:
+f (f (x + y) + g(y)) = f (x) + 2y = x + ϕ(x) + 2y + c.
+Therefore:
+g(y) + ϕ(x + y) + c + ϕ(x + y + ϕ(x + y) + c + g(y)) = ϕ(x) + y + c.
+Noting that ϕ is continuous on [0, ∞), since it is sum of continuous functions, and letting
+y tend to 0, we obtain that:
+ϕ(x) + c + ϕ(x + ϕ(x) + c) = ϕ(x).
+Therefore ϕ(x + ϕ(x) + c) + c = 0 and substituting in the definition of ϕ(x) = −x +
+2s−1 (x) + 2g(s−1 (x)) we obtain:
+−x − ϕ(x) − c + c + 2s−1 (x + ϕ(x) + c) + 2g(s−1 (x + ϕ(x) + c)) = 0.
+Consequently:
+c + 2s−1 (x + ϕ(x) + c) + 2g(s−1 (x + ϕ(x) + c)) = x + ϕ(x) + c.
+Thus:
+ϕ(c + 2s−1 (x + ϕ(x) + c) + 2g(s−1 (x + ϕ(x) + c))) = ϕ(x + ϕ(x) + c) = −c.
+Finally note that x + ϕ(x) + c = 2s−1 (x) + 2g(s−1 (x)) + c =: u(x) and since g and s−1
+are monotone and bijective on [0, ∞), u(x) exhausts [c, ∞) when x ranges on [0, ∞). It
+follows that ϕ(x) = −c for x ∈ [c, ∞). It follows that for x > max(c, 0):
+f (x) = x + c − ϕ(x) = x − 2c.
+
+28
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+In particular, since f (x) > 0, c ≤ 0. Now for x > max(c, 0) and y > 0 we have:
+x + 2y − 2c = f (x) + 2y = f (f (x + y) + g(y)) = f (x + y − 2c + g(y)) = x + y + g(y) − 4c.
+Since this is valid for any y, we conclude g(y) = y and c = 0. Now it follows that f (x) = x
+for x ∈ (0, ∞).
+It is also straightforward to check that f (x) = x and g(y) = y satisfy the equality:
+f (f (x + y) + g(y)) = f (x + 2y) = x + 2y = f (x) + 2y.
+
+Comment. Considering the remark for the 1st solution; after finding (f (z) + 2x + 2 +
+c2 ) = f (z + 1) + 2x + 2c, we can fix z and conclude that f is linear for large enough x.
+Then, in the (f (x + y) + cy) = f (x) + 2y, if we fix x and make y large enough, the problem
+would be broken.
+The ideas in both solutions are similar. It is only that they are organised in a different
+way. Whereas the first solution first determines the structure of the solution (f, g), the
+approach in the second solution is more general and actually all it uses is that g (in the
+non-trivial case g = 0) can be extended to a monotone bijective (and thus continuous)
+function from [0, ∞) → [0, ∞) with g(0) = 0. Since the class of these functions is
+closed under addition and multiplication. The class of the polynomials with non-negative
+coefficients can be considered as the closure of the functions x → cx for c > 0 with respect
+to addition and multiplication. Even though the class of polynomials in R+ [x] does not
+exhaust the richness of the above functions, it is very natural and easy to describe – a
+property that is crucial for the wording of the problem.
+Actually, one can further weaken the assumptions on g so that the functions s and h that
+appear in the second solution are bijective and continuously tend to 0 at 0, but it seems
+that these properties are not that simple to describe the class of these functions g in a
+natural way.
+
+Shortlisted problems
+
+29
+
+Combinatorics – Solutions
+C1.
+
+Let n, k be positive integers. Julia and Florian play a game on a 2n × 2n board. Julia
+has secretly tiled the entire board with invisible dominos. Florian now chooses k cells.
+All dominos covering at least one of these cells then turn visible. Determine the minimal
+value of k such that Florian has a strategy to always deduce the entire tiling.
+
+Solution. The minimal value of k with this property is n2 .
+We first show that in order for Florian to be able to deduce the entire tiling, we must
+have k ≥ n2 . If Julia picks an independent tiling on each of n2 disjoint 2 × 2 regions, then
+Florian needs to reveal at least one domino from each region to deduce the entire tiling.
+Hence k ≥ n2 .
+Now colour the squares of the board with 4 different colours, such that the colouring is
+periodic with period 2 squares in both horizontal and vertical direction. We show that if
+Florian reveals the dominos covering the n2 squares of one colour class, then there is at
+most one tiling of the board that contains this arrangement of revealed dominos.
+Let red be one of the 4 colours and assume that we have two distinct tilings A and B of
+the board that agree on all the dominos covering a red square. We call a square of the
+board augmented if it is covered in a different way by A and B. Given an augmented
+square s, let a(s) and b(s) be the two squares covered by the same domino in the tiling
+A and B, respectively. By definition, we have a(s) ̸= b(s) and a(s) and b(s) must both
+be augmented as well. Repeating this argument, we find distinct augmented squares
+s1 , s2 , s3 , . . . , sm with
+(a(sk ), b(sk )) = (sk+1 , sk−1 ),
+where indices are taken modulo m. Hence, there is a closed path P of orthogonally
+neighbouring squares that does not contain a red square and that is tiled by the restriction
+of both tilings A and B.
+Note however, that any orthogonal, closed path that avoids red squares must enclose an
+orthogonally connected interior of odd size. This is easily shown by induction on the
+number of red squares enclosed: Consider the top-most, left-most red square x in the
+interior of the closed path. Of its four orthogonal neighbours either two, three or all four
+are in the path. In the last case the interior is a single square, in the others we can
+locally alter the path to exclude x from the interior while reducing the interior by an even
+number of squares.
+
+30
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+Now, since the tilings A and B tile the path P , they must also tile the odd sized region
+enclosed by P . This is impossible since every domino covers exactly 2 squares, contradicting our initial assumption. We conclude that if two tilings agree on the red squares, they
+must in fact be the same tiling. Hence, if Florian knows how the red squares are tiled,
+there is a unique way to complete this tiling to the entire board, which he can deduce by
+searching though all the finitely many tilings of the board.
+
+Shortlisted problems
+
+31
+
+C2.
+
+Let n ≥ 2 and S = {1, 2, . . . , n2 }. For any function f : S → S let Fix(f ) = {x ∈ S |
+f (x) = x}. Find the possible values of the expression
+| Fix(f )| + | Im(f )| + max |f −1 (k)|
+k∈S
+
+as f ranges over all functions f : S → S.
+
+Solution. We show that the answer is all values from 2n to 2n2 + 1. Assume f has
+k ∈ {0, 1, . . . , n2 } fixed points. Then say | Im(f )| = p. Also let s = maxk∈S |f −1 (k)|.
+Upper Bound: From the definitions of s and p, we get sp ≥ n2 . We also have the bound
+s ≤ n2 − p + 1 (as p values are in the image, each of which has at least 1 preimage). We
+deduce the upper bound:
+k + p + s ≤ 2k + i + (n2 − p + 1) = n2 + k + 1 ≤ 2n2 + 1.
+2
+
+Lower Bound: For the minimum value, using AM-GM we get k + p + s ≥ k + p + np ≥
+k + 2n ≥ 2n.
+Now we show all those values are achievable by induction on n. A manual check solves
+the base case of n = 2 (the identity achieves the maximum value of 9, a 2-to-1 function
+can take the values 4, 5, 6 depending on the number of fixed points, and a function that’s
+3-to-1 on three of the inputs can achieve 7 and 8). For the inductive hypothesis now,
+suppose we have a function g : S → S and let T = {1, 2, . . . , (n + 1)2 }. We will build a
+function f : T → T from g by f (x) = g(x) for x ≤ n2 .
+Values from 4n + 1 to 2(n + 1)2 + 1: For the values bigger than n2 , f can now be defined
+as any permutation of the numbers {n2 + 1, . . . , (n + 1)2 }. Obviously, this won’t add to
+the maximum size of a preimeage, and it will add 2n + 1 to the size of the image. For the
+number of fixed points, this can be any number from 0, 1, . . . , 2n+1. So using this, we can
+add any number from 2n+1 to 4n+2 to the value of the expression for g, which means, by
+the inductive hypothesis, we can hit all values 4n + 1 to 2n2 + 1 + (4n + 2) = 2(n + 1)2 + 1.
+Values from 2n + 2 to 4n: If s ≥ n + 1, then send n of the new points (from n2 + 1 to
+(n + 1)2 ) to one of those new points and the other n + 1 points to another one of the new
+points in such a way that we don’t add new fixed points. This way, we don’t increase the
+maximum preimage size or the number of fixed points, but we add 2 to the image size.
+On the other hand, if s ≤ n, then | Im(f )| ≥ n. If | Im(f )| ≥ n + 1, take n + 1 of the new
+points, assign each of them to exactly one of the elements in Im(f ). The other n new
+points will all get mapped to another new point (again, with no new fixed points). This
+
+32
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+way we add no fixed points, we add 1 point in the image, and we increase the maximum
+preimage by 1, so again we add 2 overall. The remaining case is when s = | Im(f )| = n.
+In this case we can only assign n of the new points to exactly one of the new elements in
+Im(f ) and we map the other n + 1 to a single new point.
+In all cases, we add 2 to the expression overall, so we can get all values 2n + 2, . . . , 2n2 + 3,
+and that covers all values.
+
+Shortlisted problems
+
+33
+
+C3.
+
+Let n ⩾ 3. Alice and Bob play the following game: Alice chooses k ∈ {3, 4, . . . , n} and
+draws a 3 × k table, then he fills the k cells of the first row with different numbers from
+{1, 2, . . . , n}. Then, Bob fills on the second row some of the cells (eventually none) with
+distinct numbers from {1, 2, . . . , n}, and the rest of them with 0. Finally, on each cell of
+the third row we write the sum of the two cells above. Show that regardless how Alice
+plays, Bob can guarantee that on the third row he can obtain, in some order, the terms
+of a non-constant arithmetical progression.
+
+Solution. Let 1 ⩽ a1 < a2 < · · · < ak ⩽ n be the numbers Alice chose. For a
+sequence x1 < x2 < · · · < xk of positive integers, we call it’s deficit the set N ∩ [x1 , xk ] \
+{x1 , x2 , . . . , xk }.
+Bob has the following strategy: he starts with a1 < a2 < · · · < ak . Let t be the maximum
+number of its deficit. If we denote δ = t − a1 < n − 1, Bob writes under a1 the number
+a′1 = δ. Then a1 + a′1 = t. If t < a2 , then a2 , a3 , . . . , ak are consecutive and t = a2 − 1.
+So Bob writes under all the rest 0, and he gets on the third row a progression with unit
+ratio.
+Otherwise, we have t > a2 and Bob repeats the process, but for the sequence t, a2 , . . . , ak .
+The lowest term is a2 and it’s deficit does not have t, so has lower cardinal. Therefore,
+each step decreases the cardinality of the deficit. As long as the deficit is not empty, Bob
+can perform another step, so in the end the deficit will be empty and the numbers on the
+third row will form an arithmetic progression with unit ratio.
+As the δ values are strictly decreasing, Bob fulfils the requirement of using numbers from
+1 to n only once.
+Comment. The statement of the problem may be stated also as follows:
+Show that for every integer sequence a1 < · · · < ak = n one can choose integers
+0 ≤ b1 , . . . bk ≤ n such that sums ai + bi form a permutation of a non-constant arithmetical progression and all the nonnegative bi ’s are distinct.
+
+34
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+C4.
+Prove that for every positive integer k there exists an integer n and distinct primes
+p1 , p2 , . . . , pk such that, if A(n) denotes the number of integers in {1, 2, . . . , n} which are
+relatively prime to p1 p2 · · · pk , then
+(
+)(
+) (
+)
+1
+1
+1
+n 1−
+1−
+··· 1 −
+− A(n) > 2k−3 .
+p1
+p2
+pk
+
+Solution. If k = 1, choose p1 = 3, n = 2. If k = 2, choose p1 = 3, p2 = 7, n = 5. Assume
+k ≥ 3. Let p1 , p2 , . . . , pk be primes congruent to 3 modulo 4. By the Chinese Remainder
+Theorem choose n ≡ pi4+1 (mod pi ) for every i, that is, choose an integer n such that
+p1 p2 · · · pk | 4n − 1.
+}
+{
+Consider a fractional part θ = q1 q2n···qr , where q1 , q2 , . . . , qr are different primes among
+p1 , p2 , . . . , pk . Note that θ ≈ 41 if r is odd and θ ≈ 34 if r is even.
+If r is odd, then working modulo 4, we get 4n − 1 = q1 q2 · · · qr · (4m + 1), for some integer
+m. It follows that
+{
+}
+1
+1
+n
+1
+1
+n
+=m+ +
+and
+.
+= +
+q1 q2 · · · q r
+4 4q1 q2 · · · qr
+q1 q2 · · · qr
+4 4q1 q2 · · · qr
+If r is even, then 4n − 1 = q1 q2 · · · qr · (4m + 3), for some integer m. Hence
+{
+}
+n
+1
+1
+3
+n
+3
+=m+ +
+and
+= +
+.
+q1 q2 · · · qr
+4 4q1 · · · qr
+q1 q2 · · · qr
+4 4q1 q2 · · · qr
+)
+)(
+) (
+(
+1 − p12 · · · 1 − p1k and A(n) equals to
+The difference between n 1 − p11
+{n} −
+
+k { }
+∑
+n
+i=1
+
+k
+∑
+1
+
+pi
+
+}
+{
+∑ { n }
+n
+k
++
+− · · · + (−1)
+pi pj
+p1 p2 · · · pk
+1≤i<j≤k
+
+∑
+
+k
+∑
+∑
+3
+1
+1
+1
+=−
++
+− ··· −
++
+− · · · + (−1)k
+4 1≤i<j≤k 4
+4pi 1≤i<j≤k 4pi pj
+4p1 p2 · · · pk
+i=1
+i=1
+(
+) (
+)
+3 k−1 1 k−1 1
+1
+1
+= ·2
+− ·2
++
+1−
+··· 1 −
+−1
+4
+4
+4
+p1
+pk
+(
+) (
+)
+1
+1
+1
+k−2
+=2
++
+1−
+··· 1 −
+−1
+4
+p1
+pk
+> 2k−3 ,
+
+Shortlisted problems
+
+35
+
+for k ≥ 3, as desired.
+Alternative Solution. Note that
+⌊
+⌋
+k ⌊ ⌋
+∑
+∑ ⌊ n ⌋
+n
+n
+k
+A(n) = n −
++
+− · · · + (−1)
+.
+pi
+pi pj
+p1 p2 · · · p k
+i=1
+1≤i<j≤k
+)(
+)
+(
+)
+(
+1 − p12 · · · 1 − p1k and fk (n) = nΠk − A(n), then
+Denote by Πk = 1 − p11
+fk (n) = {n} −
+
+k { }
+∑
+n
+i=1
+
+pi
+
+{
+}
+∑ { n }
+n
+k
++
+− · · · + (−1)
+.
+pi pj
+p1 p2 · · · pk
+1≤i<j≤k
+
+In particular, the function fk (n) satisfies
+{
+Πk − 1, if gcd(n, p1 p2 · · · pk ) = 1;
+f (n) − f (n − 1) =
+Πk , if gcd(n, p1 p2 · · · pk ) > 1.
+We consider the function fk (x) over the real numbers. Note that fk (x) is periodic: fk (x +
+p1 p2 · · · pk ) = fk (x). Also, it satisfies fk (x) = −fk (p1 p2 · · · pk − x){ for
+} all{ x}except
+{ x }integer
+points of discontinuity. For example, the graph of f (x) = {x} − x3 − x7 + 21
+looks
+as follows:
+
+y
+1
+
+3
+
+6
+
+9
+
+12
+
+15
+
+18
+
+21
+
+x
+-1
+
+We prove by induction, for k ≥ 2, that we can find primes p1 , . . . , pk such that a slightly
+stronger inequality holds: max |fk (n)| > 2k−3 + Πk . The base case: if k = 2 then choose
+p1 = 3, p2 = 7. We have max |f2 (n)| = |f2 (5)| and
+(
+)(
+)
+{ } { } { }
+5
+5
+1
+1
+1
+8
+5
+−
++
+1−
+.
+= > + 1−
+|f2 (5)| = {5} −
+3
+7
+21
+7
+2
+3
+7
+
+36
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+Given primes p1 , . . . , pk , suppose −mk ≤ fk (n) ≤ Mk , where −mk and Mk are the minimum and maximum values that fk (n), n ∈ Z, can achieve. We can see that sup fk (n) = mk
+and mk = Mk + Πk because of the discontinuity at the supremum integer point.
+Suppose we can find primes p1 , p2 , . . . , pk such that max |fk (n)| > 2k−3 + Πk . We show
+how to find a prime pk+1 such that max |fk+1 (n)| > 2k−3 + Πk+1 .
+Let {a1 , a2 , . . . , ak } and {b1 , b2 , . . . , bk } be the two sets of residues modulo p1 , p2 , . . . , pk ,
+respectively, which identify two integers for which minimum and maximum of fk (n) occurs.
+Note that ai ̸= 0 for all 1 ≤ i ≤ k because the minimum value occurs at a point of
+discontinuity, at an integer coprime with p1 p2 · · · pk .
+(
+)
+n
+Suppose we add a prime pk+1 , then fk+1 (n) = fk (n) − fk pk+1
+. Set n = mpk+1 + r,
+r
+< 1, we get
+where m is an integer and 0 ≤ r ≤ pk+1 − 1. Since pk+1
+(
+fk+1 (n) = fk (n) − fk
+
+n
+
+)
+
+pk+1
+
+(
+
+= fk (n) − fk (m) − fk
+
+r
+
+)
+
+pk+1
+
+r
+
+· Πk
+pk+1
+≥ fk (n) − fk (m) − Πk+1 .
+
+= fk (n) − fk (m) −
+
+Pick an integer r ̸≡ bi (mod pi ), where 1 ≤ i ≤ k. By Dirichlet’s Theorem there exist
+infinitely many primes pk+1 such that pk+1 ≡ (bi − r) · a−1
+(mod pi ) for all 1 ≤ i ≤ k,
+i
+which satisfy n = mpk+1 + r, where m ≡ ai (mod pi ) and n ≡ bi (mod pi ). Therefore we
+can find a prime pk+1 > r satisfying the given conditions and Mk+1 ≥ Mk + mk − Πk+1 .
+Using induction hypothesis we conclude that
+mk+1 = Mk+1 + Πk+1 ≥ Mk + mk = 2mk − Πk > 2(2k−3 + Πk ) − Πk > 2k−2 + Πk+1 .
+
+Alternative Solution. The most obvious approach appears to be induction on k. Let’s
+see if we can make that work.
+Step 1. Say n and p1 , p2 , . . . , pk work. We are going to keep these primes and add one
+new prime q to them. We’ll set things up so that q is much larger than p1 , p2 , . . . , pk . We
+will select some new positive integer N to go with p1 , p2 , ..., pk , q.
+Let P = p1 p2 · · · pk . We decree right from the start that N is congruent to n modulo P .
+So N = KP + n for some positive integer K. This way, we get to keep all fractional parts
+from the induction hypothesis.
+
+Shortlisted problems
+
+37
+
+Also, we want all of p1 , p2 , . . . pk to be odd, and we want none of p1 , p2 , . . . pk to divide n.
+Consider this part of the induction hypothesis.
+Step 2. Now we’ll satisfy some requirements on q, K, and N whose purpose will become
+clear later on.
+Let C be the unique positive integer such that P divides 2n + C and C < P . By our
+assumptions in Step 1, none of p1 , p2 , . . . , pk divide C.
+We require that P q divides nq + N + C. Let’s see how to ensure that.
+Since P and q are relatively prime, this is the same as P divides nq + n + C and q divides
+N + C.
+The requirement that P divides nq + n + C gives us q congruent to 1 modulo P . By
+Dirichlet, there are infinitely many primes q with this property.
+(Note that this special case of Dirichlet has a known proof accessible to high-schoolers,
+unlike, to the best of my knowledge, the general case.)
+So we set q to some crazy large prime in this arithmetic progression. We’ll see how large
+later on.
+Once we’ve fixed q, we moreover have to ensure that q divides N + C = KP + n + C.
+Since q and P are relatively prime, we can choose K such that this holds.
+To recap, q is absolutely enormous and P q divides nq + N + C.
+Step 3. Let P ′ be any product of several (possibly zero) distinct primes out of p1 , p2 , . . . , pk .
+So P ′ is any divisor of P .
+Then {n/P ′ } is a summand in our induction hypothesis and {N/P ′ q} is a summand in
+what we hope will eventually amount to our induction step.
+Consider n/P ′ + N/P ′ q. This is (nq + N )/P ′ q.
+By Step 2, we have that P ′ q divides nq + N + C. Also, remember that q is really insanely
+large. So (nq + N )/P ′ q is C/P ′ q below the nearest larger positive integer. Here, C/P ′ q
+is at most C/q. So by making q absurdly large we can guarantee that n/P ′ + N/P ′ q is
+arbitrarily close to a positive integer, from below , for all P ′ .
+In particular, we can make it so close to a positive integer that its fractional part is larger
+than the fractional parts of all expressions of the form n/P ′ . Then it follows immediately
+that, for each expression of the form n/P ′ , we have that {N/P ′ q} is arbitrarily close to
+1 − {n/P ′ }.
+Step 4. Let S be the sum of the fractional parts for p1 , p2 , . . . , pk and n; that is,
+∑
+∑
+{n} −
+{n/pi } +
+{n/pi pj } − . . . ,
+and so on. By the induction hypothesis, we know |S| > 2k−3 .
+Let T be the analogous sum for p1 , p2 , . . . , pk , q and N .
+Since N is congruent to n modulo P , we have that T contains all terms from S.
+The new terms are all thingies of the form e{N/P ′ q}, where e = ±1.
+
+38
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+We know that each such thingie is very close to e(1 − {n/P ′ }) = e + (−e){n/P ′ }.
+Here, (−e){n/P ′ } is a term which appears in S as well, with this sign exactly. So T is
+really very close to 2S plus the sum of all the e’s.
+The sum of all the e’s, on the other hand, is just the alternating sum of the binomial
+coefficients in row k of Pascal’s triangle; so, zero. Therefore, T is very close to 2S.
+By making q sufficiently large, we can make “very close” amount to as close as we wish.
+Since |S| > 2k−3 by the induction hypothesis, when T is sufficiently close to 2S, we get
+|T | > 2(k+1)−3 , as needed.
+(Also, q is odd because it is a very large prime and q does not divide N because q divides
+N + C and q is much larger than C.)
+The induction step is complete.
+Step 5. We still have to take care of the base case. It looks like k = 1, p1 = 3, and n = 1
+works with |S| = 1/3 > 1/4.
+Comment. Note that
+A(n) = n −
+
+k ⌊ ⌋
+∑
+n
+i=1
+
+pi
+
+⌋
+⌊
+∑ ⌊ n ⌋
+n
+k
++
+− · · · + (−1)
+pi pj
+p1 p 2 · · · p k
+1≤i<j≤k
+
+)
+(
+1
+and the number n
+· · · 1 − pk represents an estimation of A(n).
+(
+)(
+) (
+)
+The positive difference n 1 − p11
+1 − p12 · · · 1 − p1k − A(n) is equal to
+(
+
+{n} −
+
+1 − p11
+
+)(
+
+1 − p12
+
+k { }
+∑
+n
+i=1
+
+pi
+
+)
+
+}
+{
+∑ { n }
+n
+k
++
+− · · · + (−1)
+p
+p1 p2 · · · pk
+i pj
+1≤i<j≤k
+
+and is clearly less than 2k−1 . The problem asks to show that this upper bound is relatively
+tight for some choice of primes p1 , p2 , . . . , pk and integer n.
+
+Shortlisted problems
+
+39
+
+C5.
+
+Let n ≥ 3 be a natural number. Anna and Bob play the following game on the vertices of
+a regular n-gon: Anna places her token on a vertex of the n-gon. Afterwards Bob places
+his token on another vertex of the n-gon. Then, with Anna playing first, they move their
+tokens alternately as follows for 2n rounds: In Anna’s turn on the k-th round, she moves
+her token k positions clockwise or anticlockwise. In Bob’s turn on the k-th round, he
+moves his token 1 position clockwise or anticlockwise.
+If at the end of any person’s turn the two tokens are on the same vertex, then Anna wins
+the game. Otherwise Bob wins. Decide for each value of n which player has a winning
+strategy.
+
+Solution. We will show that Bob wins if and only if 4|n and n ̸= 4.
+We will often say that Anna and Bob are at a distance d if we can move one token d
+positions clockwise or anticlockwise to reach the other token. Note that the value of this
+distance is not unique.
+We first treat the case 4 ∤ n. Given a positive integer r, we define
+r2 + r + 2
+mr =
+2
+
+and
+
+Dr = {d ∈ {1, 2, . . . , mr } : d ≡ mr mod 2}
+
+Lemma 1. If it is Anna’s turn on round n − 1 − r ⩾ 1 or round 2n − 1 − r ⩾ 1, and she
+is at a distance d from Bob, for some d ∈ Dr , then she has a winning strategy.
+Before proving the Lemma, we show why this implies that Anna has a winning strategy
+in the case 4 ∤ n.
+Note that
+n2 − 3n + 4
+⩾n
+mn−2 =
+2
+In particular, Dn−2 consists of all odd or of all even numbers in {1, 2, . . . , n − 1}. If n
+is odd, the clockwise and the anti-clockwise distance of Anna from Bob have opposite
+parities so Anna is at a distance d from Bob for some d ∈ Dn−2 . Applying the Lemma
+for r = 1 we see that Anna has a winning strategy.
+If n ≡ 2 mod 4, then n2 − 3n + 4 ≡ 2 mod 4, so mn−2 is odd. A same argument as above
+shows that Anna has a winning strategy if d is also odd. If d is even then we apply
+the Lemma in the same way with r = 2n − 2 and Anna has a winning strategy since
+m2n−2 = 2n2 − 3n + 2 is even (and m2n−2 ⩾ n).
+Proof. (of Lemma 1) We proceed by induction on r. For r = 1 we have m1 = 2 and
+D1 = {2} and since we are in round n − 2 or 2n − 2 she has a winning strategy.
+
+40
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+Assume the result is true for r = k. For the inductive step suppose it is now Anna’s turn
+on round n − 1 − (k + 1) = n − (k + 2) or round 2n − 1 − (k + 1) = 2n − (k + 2) and
+she is at a distance d from Bob, for some d ∈ Dk+1 . By moving her token n − (k + 2), or
+2n − (k + 2) positions in the opposite direction, she is now at a distance of |d − (k + 2)|
+positions from Bob. After Bob’s move they will have a distance of d′ for some d′ ∈
+{d − k − 3, d − k − 1, k + 3 − d, k + 1 − d}. Note that all of these numbers have the same
+parity as d − (k + 1) ≡ mk+1 − (k + 1) ≡ mk mod 2. Furthermore,
+d − k − 3 ⩽ d − k − 1 ⩽ mk+1 − (k + 1) = mk
+and
+k + 1 − d ⩽ k + 3 − d ⩽ k + 2 ⩽ mk + 1 .
+(Here we assumed that d ⩾ 1 as otherwise Anna already won.) Since in all cases d′ ⩽
+mk + 1 and d′ ≡ mk mod 2, then d′ ⩽ mk . Therefore Anna wins by the induction
+hypothesis.
+We now treat the case 4|n, say n = 4r. If r = 1 it is easy to see that Anna wins in at
+most two rounds so assume r > 1.
+Bob places his token so that d = 3. Note that Anna cannot win on her first move. Let
+d2k−1 denote the distance after Anna’s move on the k-th round and d2k the distance after
+Bob’s move on the k-th round. Then modulo 2 the sequence is 0, 1, 1, 0, 1, 0, 0, 1, . . . which
+then repeats periodically with period 8.
+Bob’s strategy consists of two parts. The first part is that he never places his token on
+Anna’s token and also he never moves his token on a position where he will immediately
+lose on Anna’s next step unless he is really forced to do this.
+Before explaining the second part of Bob’s strategy let us assume for contradiction that
+Anna has a winning strategy and look at Bob’s last move. Due to the first part of his
+strategy he could perhaps lose only in the following two cases:
+(a) Before his last move d = 1 so he is forced to make it d = 2 and then Anna wins.
+(b) Before his last move d = 2r so he is forced to make it d = 2r − 1 (d = 2r + 1 is the
+same) and then Anna wins.
+In case (a) Anna wins on a round of the form 2 mod 4 which is impossible as on those
+rounds d is odd after Anna’s move
+In case (b) Anna wins on rounds of the form (2r − 1) mod 4r or (2r + 1) mod 4r. Actually
+rounds of the form (2r + 1) mod 4r are rejected since in that case we would have d = 2r
+when Bob was playing on round 2r mod 4k but that could only be possible if d = 0 when
+Anna was playing on round 2r mod 4r. This is rejected as it means that Anna won on an
+earlier round.
+
+Shortlisted problems
+
+41
+
+So in case (b) Anna wins on rounds of the form (2r − 1) mod 4r. If r is even, say r = 2s,
+this is impossible as on round (2r − 1) ≡ 3 mod 4 we have that d is odd after Anna’s
+move.
+So we need to show how Bob can avoid case (b) if r is odd, say r = 2s+1. He needs to avoid
+d = 2r when it’s his turn to play on rounds of the form (2r − 2) mod 4r. This can only
+occur if d = 2 when it’s Anna’s turn to play on rounds of the form (2r − 2) mod 4r. Bob
+can avoid this unless d = 1 when it’s his turn to play on rounds of the form (2r−3) mod 4r.
+This can only occur if d = 2r − 2 or d = 2r − 4 when it’s Anna’s turn to play on rounds
+of the form (2r − 3) mod 4r. Bob can avoid both of these cases unless d = (2r − 3) when
+it’s his turn to play on rounds of the form (2r − 4) mod 4r. This can only occur if d = 1
+or d = 7 when it’s Anna’s turn to play on rounds of the form (2r − 4) mod 4r. But Bob
+can avoid both of these on his move (on rounds of the form (2r − 5) mod 4r). The only
+potential issue would be if n = 10 which is not the case here.
+
+42
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+C6.
+
+Let D be the set of lines in the plane and A a set of 17 points in the plane. For d ∈ D,
+let nd (A) be the number of distinct points in which A projects on d. Find the maximum
+cardinality of
+VA = {nd (A)|d ∈ D}.
+
+Solution. Let m be the required maximum. We see that m ⩾ 13, analyzing this example:
+A = {(x, y)|x ∈ {1, 2, 3}, y ∈ {1, 2, 3, 4, 5, 6}} \ {(3, 6)}.
+y
+
+x
+For this A we have VA = {3, 6, 7, 8, . . . , 17}, so |VA | = 13.
+To show that m = 13 is the required maximum, we consider for the sake of contradiction
+a set A of 17 points for which VA = n ⩾ 14.
+We see that if a, b ∈ VA , we can consider da , db ∈ D such that nda (A) = a and ndb (A) = b.
+Considering the a lines which are perpendicular on da in the a points where A projects
+and similarly the b lines perpendicular on db where the points of A projects on db , then
+the points in A are on this grid. Thus |A| ≤ ab.
+Let VA = {a1 < a2 < · · · < an }. Then, from the observation above, we have a1 a2 ⩾ 17. If
+a1 ⩽ 3, then 3a2 ⩾ 17, so a2 ⩾ 6. Then, a3 ⩾ 7, a4 ⩾ 8, . . . , an ⩾ n + 4 ⩾ 18, impossible.
+So a1 ⩾ 4, then a2 ⩾ 5, . . . , an ⩾ n + 3 ⩾ 17. As A has 17 points, all these inequalities
+become equalities, so VA = {4, 5, . . . , 17}. Then, for each k ∈ {4, 5, . . . , 17} there is a set
+of k parallel lines (we call these the k-lines support) whose union contains A. For each
+
+Shortlisted problems
+
+43
+
+k ∈ {4, 5, . . . , 17} we choose a line dk perpendicular to the k-lines support, on which A
+projects in k points.
+In particular the points of A are part of a 4 × 5 grid G formed at the intersection of the
+4-lines support with the 5-lines support. So A is constituted of 17 out of these 4.5 = 20
+points. In the following schematical representation of G we will assume d4 ⊥ d5 . Clearly,
+d6 is has direction different from the one of d4 and d5 .
+W.l.o.g. assume that G belongs to one of the two half planes determined by d6 . Consider
+the 8 grid points on the 2 closest adjacent sides of the convex hull of G plus the 6
+points next to them (A11 , A12 , A13 , A14 , A21 , A22 , A23 , A24 , A31 , A32 , A41 , A42 , A51 , A52 ) (the
+labelling of the points is matrix inspired).
+
+d6
+
+(1)
+
+(2)
+
+Out of these 14 points, apart from A14 and A51 , we can have at most 2 points projecting in
+the same point of d6 (otherwise, out of 3, at least two belong to the 8-points outer border,
+or to the 6-points inner border, impossible). So we have at least 1 + 1 + (14 − 2)/2 = 8
+points of projection. To achieve 6 points of projection, the set A must eliminate the
+”cause” of at least 2 of this projections. Since A can eliminate at most 3 points, we have
+two cases:
+1) A eliminates A14 and A51 . Then the points in A lie on the lines (L1 : (A11 , A22 , A33 , A44 ); L2 :
+(A21 , A32 , A43 , A54 ); L3 : (A12 , A23 , A34 ); L4 : (A13 , A24 ); L5 : (A31 , A42 , A53 ); L6 : (A41 , A52 )).
+The collinearity on these lines implies that the grid consists of congruent parallelograms.
+Apart from this direction, the minimum number of parallel lines we can put the 18 points
+of G \ {A14 , A51 } is 8 (achieved for the perpendicular direction), and is achieved when
+A11 and A54 are each the only one point on one of these lines. This means that, in order
+to achieve 7 ∈ VA , one of A11 and A54 has to be out of A. Then A will be like the
+representation in (2). In this case we cannot have anymore 8 ∈ VA .
+2) A eliminates one of A14 and A51 , say A14 , and a pair, but the line determined by
+its points has no other grid point. Amongst L1 , L2 , , L3 we have 2 which not include
+the missing pair from A, so their points collinearity can assure that the grid consists of
+
+44
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+congruent parallelograms. Then, the only possible position of the missing pair is next to
+a corner, as shown in (3) or (4). But in none of these cases we have 7 ∈ VA .
+
+(3)
+
+(4)
+
+Shortlisted problems
+
+45
+
+Geometry – Solutions
+G1.
+Let ABC be an acute-angled triangle with AC > AB and let D be the foot of the A-angle
+bisector on BC. The reflections of lines AB and AC in line BC meet AC and AB at
+points E, F respectively. Let ℓ be a line through D meeting AC, AB at G, H respectively
+such that G lies strictly between A and C while H lies strictly between B and F . Prove
+that the circumcircles of △EDG and △F DH are tangent to each other.
+
+Solution. Let X and Y lie on the tangent to the circumcircle of △EDG on the opposite
+side to D as shown in the figure below. Regarding diagram dependency, the acute condition with AC > AB ensures E lies on extension of CA beyond A, and F lies on extension
+of AB beyond B. The condition on ℓ means the points lie in the orders E, A, G, C and
+A, B, H, F .
+C
+b
+
+G X
+b
+
+b
+
+b
+
+D
+
+b
+
+A
+E
+
+b
+
+b
+
+B
+
+Y
+b
+
+H
+
+b
+
+F
+
+b
+
+Using two applications of the alternate segment theorem, the condition that ⊙EDG and
+⊙F DH are tangent at D can be rewritten as
+XDG = Y DH ⇔ DEG = DF H.
+So we can remove G, H from the figure, and we will prove that DEA = DF B.
+
+46
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+The reflection property means that AD and BD are external angle bisectors in △EAB
+and hence D is the E-excentre of this triangle. Thus DE (internally) bisects BEA,
+giving
+1
+1
+DEA = BEA = BEC.
+2
+2
+Similarly, in △F AC, AD and CD are both internal angle bisectors, and so D is the
+incentre of this triangle and F D is also the internal angle bisector of CF H, giving
+1
+1
+DF B = DF A = CF A = CF B.
+2
+2
+Now observe that the pairs of lines (BE, CE) and (BF, CF ) are reflections in BC thus
+E, F are reflections in BC. Hence BEC = CF B and so
+1
+1
+DEA = BEC = CF B = DF B,
+2
+2
+as required.
+
+Shortlisted problems
+
+47
+
+G2.
+
+Let ABC be an acute triangle and P be a point inside the triangle such that AP B =
+BP C = CP A. Denote with S the area and with α, β, γ the angles of △ABC. Prove
+that
+1
+1
+1
+P A2 + P B 2 + P C 2
+4
++
++
+≥
++√ .
+sin α sin β sin γ
+2S
+3
+When does the equality occur?
+
+Solution. The inequality can be rewritten as
+2S(
+
+1
+1
+1
+4
++
++
+− √ ) ≥ P A2 + P B 2 + P C 2 .
+sin α sin β sin γ
+3
+
+Note that AB · AC · sin α = AB · BC · sin β = AC · BC · sin γ = 2S and
+√
+2S = 2(SP AB + SP BC + SP CA ) = (P A · P B + P B · P C + P C · P A)
+
+3
+.
+2
+
+The inequality can be further rewritten as
+AB · AC + AC · BC + BC · AB − 2(P A · P B + P B · P C + P C · P A) ≥ P A2 + P B 2 + P C 2
+that is equivalent to
+AB · AC + AC · BC + BC · AB ≥ (P A + P B + P C)2
+Consider the points X and Y such that △XAB and △Y AC are equilateral (X and C lie
+on different halfplanes with respect to AB, similarly Y and B with respect to AC).
+b
+
+A
+X
+b
+
+b
+
+b
+
+P
+b
+
+B
+
+b
+
+C
+
+Y
+
+48
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+AXB + AP B = 180◦ = AY C + AP C ⇒ XAP B and Y AP C are cyclic quadrilaterals. Also note that BP A + AP Y = 120◦ + ACY = 120◦ + 60◦ = 180◦ hence B, P
+and Y are collinear. Similarly, points C, P and X are collinear.
+From Ptolemy’s Theorem in cyclic quadrilateral XAP B we have that P A · XB + P B ·
+XA = P X · AB, but since △XAB is equilateral, then XA = XB = AB and we have
+that P A + P B = P X. From here, CX = P X + P C = P A + P B + P C. Similarly,
+BY = P A + P B + P C.
+Now, we apply Ptolemy’s Inequality in quadrilateral XBCY and get that XB · Y C +
+XY · BC ≥ CX · BY . From Triangle Inequality we have that AX + AY ≥ XY so
+XB · Y C + (AX + AY )BC ≥ CX · BY . Rewriting the inequality based on the above
+relations we have that AB · AC + AB · BC + AC · BC ≥ (P A + P B + P C)2 .
+The equality occurs if and only if both equality cases of Ptolemy’s Inequality and Triangle’s
+Inequality occur. The equality case of Triangle’s Inequality occurs when X, A and Y are
+collinear ⇐⇒ 180◦ = XAB + BAC + CAY = 60◦ + BAC + 60◦ ⇒ BAC = 60◦ .
+The Ptolemy’s Inequality equality case occurs if and only if XBCY is cyclic ⇐⇒ 180◦ =
+BXY + BCY = 60◦ + BCA + ACY = 60◦ + BCA + 60◦ ⇒ BCA = 60◦ . So
+the equality case happens if and only if △ABC is equilateral.
+Alternative Solution. Applying cotangent rule for △P AB, △P BC and △P AC we
+have:
+4
+AB 2 = P A2 + P B 2 + √ SP AB ,
+3
+4
+BC 2 = P B 2 + P C 2 + √ SP BC ,
+3
+4
+CA2 = P C 2 + P A2 + + √ SP CA
+3
+2
+AB + BC 2 + CA2
+2
+⇒ P A2 + P B 2 + P C 2 =
+−√ S
+2
+3
+and the inequality is equivalent to
+AB · AC + AC · BC + BC · AB ≧
+
+√
+AB 2 + BC 2 + CA2
++ 2 3S
+2
+
+Using standard notations for a triangle we have
+a + b + c = 2p, ab + bc + ac = p2 + r2 + 4rR, S = pr.
+Therefore a2 + b2 + c2 = 2p2 − 2r2 − 8rR and we need to prove that
+√
+3p ≦ r + 4R.
+
+Shortlisted problems
+
+49
+
+From Leibniz’s inequality a2 + b2 + c2 ≦ 9R2 and Euler’s inequality r ≦
+3p2 ≦ 3r2 + 12Rr +
+
+R
+we have
+2
+
+27 2
+5
+R = (r + 4R)2 + 2r2 + 4Rr − R2 ≦ (r + 4R)2 ,
+2
+2
+
+where the equation occurs if and only if △ABC is equilateral.
+
+50
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+G3.
+Let A, B, C, D be fixed points on this order on a line. Let ω be a variable circle through
+C and D and suppose that it meets the perpendicular bisector of CD at the points X
+and Y . Let Z and T be the other points of intersection of AX and BY with ω. Prove
+that XY passes through a fixed point which is independent of the circle ω.
+
+Solution. Let M be the midpoint of CD and let Q and R be the points of intersection
+of XT and Y Z with CD respectively. Since
+RZX = Y ZX = 90◦ = RM X
+
+QT Y = XT Y = 90◦ = QM Y
+
+and
+
+the quadrilaterals XZRM and Y T QM are cyclic.
+X
+b
+
+ω
+
+Z
+b
+
+b
+
+A
+
+b
+
+B
+
+b
+
+C
+
+bc
+
+bc
+
+bc
+
+P
+T
+
+b
+
+b
+
+Q R
+
+M
+
+U
+
+Y
+
+D
+
+b
+
+bb
+b
+
+By the power of the point A with respect to the circumcircle of XZRM and with respect
+to ω we have
+AR.AM = AZ.AX = AC.AD .
+It follows that
+AR =
+
+AC.AD
+AM
+
+Shortlisted problems
+
+51
+
+which is independent of the circle ω. So Z is a point on the fixed circle of diameter AR.
+Similarly, Q is independent of the circle ω and T is a point on the fixed circle of diameter
+BQ. Let P be the point of intersection of ZT with CD. We will show that P is a fixed
+point independent of ω.
+Since
+QT Z = XT Z = XY Z = 90◦ − Y XZ = ZAQ
+then AT QZ is cyclic, thus
+P T.P Z = P A.P Q .
+Letting U be the point of intersection of ZT with the circumcircle of △AZR we also have
+P U.P Z = P A.P R .
+We deduce that
+
+PT
+PQ
+=
+PU
+PR
+from which it follows that P is the centre of homothety of the two fixed circles with
+diameters AR and BQ. Thus P is indeed a fixed point.
+Alternative Solution. Applying the properties of cross (double) ratio we get:
+ω
+
+(A, C; P, D) = Z(X, C; T, D) = Y (X, C; T, D) = (M, C; B, D)
+It follows that
+MB MD
+AP
+M B AD
+AP AD
+:
+=
+:
+⇒
+=
+.
+= const
+CP CD
+BC CD
+CP
+BC M D
+Therefore P is a fixed point.
+
+52
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+G4.
+Let ABC be an acute-angled triangle with AB < AC, orthocentre H, circumcircle Γ and
+circumcentre O. Let M be the midpoint of BC and let D be a point such that ADOH
+is a parallelogram. Suppose that there exists a point X on Γ and on the opposite side of
+DH to A such that DXH + DHA = 90◦ . Let Y be the midpoint of OX. Prove that
+if M Y = OA then OA = 2OH.
+
+Solution. Let E lie on OM such that EHD = 90◦ and let N be the reflection of O in
+BC.
+D
+b
+
+A
+b
+
+b
+
+X
+
+b
+
+Y
+bc
+
+H
+
+O
+
+b
+
+E
+b
+
+b
+
+B
+
+b
+
+b
+
+C
+
+M
+
+N
+
+b
+
+Since AH ∥ DE we have:
+DXH = 90◦ − DHA = 90◦ − HDE = DEH
+So DXEH is cyclic - call this circle ω.
+It’s well-known that AH = 2OM = ON so N H = OA (which we’ll use later) and
+OD
+1
+ON = AH = DO (as ADOH is a parallelogram). This means
+= . Also, by
+ND
+2
+considering homothety factor 2 at O:
+N X = 2M Y = 2OA = 2OX =⇒
+
+OX
+1
+=
+NX
+2
+
+Shortlisted problems
+
+53
+
+so, as the diameter of ω lies on line ON , ω is in fact a circle of Apollonius with focii at
+O, N . Using the above and that N H = OA, which we noted before:
+1
+OH
+OH
+=
+=
+⇒ OA = 2OH
+2
+NH
+OA
+which is what we wanted to prove.
+Comment. The converse of the condition is also true and can be proven in a similar way.
+
+54
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+G5.
+)
+
+)
+
+Let ABC be a scalene acute triangle ABC, D be the orthogonal projection of A on BC,
+M and N are the midpoints of AB and AC respectively. Let P, Q are points on the minor
+arcs AB and AC of circumcircle of △ABC respectively such that P Q ∥ BC. Show that
+the circumcircles of △DP Q and △M N D are tangent to each other if and only if P Q
+passes through M .
+
+Solution. Assume P Q does not pass through the midpoint of AB but (DP Q) is tangent
+to circle (M N D).
+
+A
+b
+
+P
+b
+
+Q′ P 1
+
+b
+
+M
+b
+
+b
+
+b
+
+b
+
+b
+
+b
+
+B
+
+Q
+
+bb
+
+b
+
+D
+
+N
+b
+
+b
+
+O
+
+Q1
+
+P′
+
+b
+
+C
+
+followed by the reflection with respect
+Consider i = the inversion of pole A and k = AB·AC
+2
+to angle bisector of BAC. Denote X ′ = i(X) for any X in the plane.
+Notice that B ′ = N , C ′ = M , the midpoints of AC and AB respectively and that Euler’s
+circle of the triangle ABC is (DM N ), so it’s ’inverse’ is the circle (D′ M ′ N ′ ). But now,
+M ′ = C, N ′ = B and D′ is the circumcenter of ABC, denoted by O: Indeed, the line
+B − D − C is sent to the circle (AN D′ C), which is the circle with diameter AO. And
+since AO and AD are isogonals, it follows that D′ = O.Hence the circle (DM N ) is sent
+to (OBC). At the same time circle ABC is sent to the line M N .
+As P Q ∥ BC, it follows that arcs P B and QC are equal, so AP and AQ are isogonals,
+P ′ = AQ ∩ M N , Q′ = AP ∩ M N and the circle P DQ is sent to P ′ OQ′ .
+Let P1 , Q1 are the points where the line M N cuts the minor arcs AB and AC. We will
+prove that (DM N ) is tangent to (DP1 Q1 ). By the same argument as before, we get
+
+Shortlisted problems
+
+55
+
+P1′ = Q1 and Q′1 = Q1 and then the circles (OP1 Q1 ) and (OBC) are tangent as they are
+isosceles with OB = OC and OP = OQ. Hence (P1 DQ1 ) and (M DN ) are tangent at D
+and M ∈ P1 Q1 .
+Now (DP Q) and (DM N ) are tangent if and only if (OP ′ Q′ ) and (OBC) are tangent,
+so if and only if the tangent at O to (OBC) is the tangent at O to (OP ′ Q′ ) which
+happens if and only if the triangle OP ′ Q′ is isosceles with base P ′ Q′ which is equivalent
+to OP ′ = OQ′ . So we have OP ′ = OQ′ and also OP1 = OQ1 . It follows that
+Q′ P1 = Q1 P ′ ⇔ Q′ Q′1 = P ′ P1′ ⇔ QQ1 ·
+
+k
+k
+= P P1 ·
+⇔
+AQ · AQ1
+AP · AP1
+
+⇔ AQ · AQ1 = AP · AP1 ⇔ SAQQ1 = SAP P1 ⇔ dist(A, QQ1 ) = dist(A, P P1 ).
+But this means that A lies on the segment bisector of P1 Q1 and P Q respectively. So
+the minor arcs AB and AC are equal and the triangle is isosceles, contradiction. The
+conclusion follows now.
+
+56
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+G6.
+
+Let △ABC be a triangle and the points K and L on AB, M and N on BC and P and Q
+on CA are such that AK = LB < 21 AB, BM = N C < 12 BC and CP = QA < 12 CA. The
+intersections of KN with M Q and LP are R and T respectively, and the intersections of
+N P with LM and KQ are D and E respectively. Prove that the lines DR, BE and CT
+pass through a common point.
+
+Solution. Let U, V and W be the intersections of AB, BC and CA with M Q, KN and
+P L respectively. Here it is allowed for the points to be infinite points on the respective
+lines.
+C
+b
+
+E
+
+P
+b
+
+bb
+
+b
+
+N
+b
+
+D
+
+T
+b
+
+Q
+
+R
+b
+
+b
+
+b
+
+A
+
+K
+
+b
+
+bc
+b
+
+S
+b
+
+M
+
+b
+
+L
+
+b
+
+B
+
+b
+
+F
+From Menelaus theorem for the triangle △ABC and the lines M Q, KN and P L we get
+AU
+AQ CM
+=−
+·
+,
+UB
+QC M B
+BV
+BL AP
+=−
+·
+,
+VC
+LA P C
+CW
+CN BK
+=−
+·
+.
+WA
+N B KA
+After multiplying them we get:
+
+Shortlisted problems
+
+57
+
+AU BV CW
+AQ CM BL AP CN BK
+·
+·
+=−
+·
+·
+·
+·
+·
+= −1.
+UB V C WA
+QC M B LA P C N B KA
+Hence by the converse Menelaus theorem the points U , V and W are collinear, implying
+△ALP and △RM N are coaxial. Now by Desargues theorem, △ALP and △RM N are
+copolar, hence A, R and D are collinear.
+Let S be the intersection of LP and M Q. Similarly △BKN and △SQP are coaxial,
+implying they are copolar, hence B, S and E are collinear.
+Now since U , V and W are collinear, △ABC and △RST are coaxial and by Desargues
+theorem they are copolar, hence AR ≡ DR, BS ≡ BE and CT are concurrent. The lines
+AR, BS and CT cannot be parallel as R, S and T are inside △ABC.
+Comment. The colinearity of points U , V and W lead us to the conclusion that the
+points K, L, M , N , P and Q lie on an ellipse (Braikenridge�Maclaurin Theorem - The
+Converse of Pascal’s Theorem). A lot of properties for this configuaration including the
+given one are shown in ”‘Geometry in Figures” - Arseniy Akopyan, Chapter 11.2 - Conics
+intersecting a triangle.
+
+C
+b
+
+E
+
+P
+b
+
+b
+
+b
+
+N
+b
+
+b
+
+Q
+b
+
+A
+
+b
+b
+
+b
+
+K
+b
+
+F
+
+bc
+
+b
+b
+
+M
+
+b
+
+b
+
+L
+
+B
+
+D
+
+58
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+G7.
+
+Let f : π → R be a function from the Euclidean plane to the real numbers such that
+f (A) + f (B) + f (C) = f (O) + f (G) + f (H)
+for any acute triangle ABC with circumcenter O, centroid G, and orthocenter H. Prove
+that f is constant.
+
+Solution.
+B0
+
+C0
+
+d
+G01
+
+G02
+
+A1
+
+A2
+
+l
+
+H1
+
+H2
+G1
+
+O
+
+G2
+
+M
+B
+
+C
+
+Let G1 ̸= G2 be arbitrary points and let d be the perpendicular bisector of G1 G2 . We
+shall construct two congruent triangles, symmetric with respect to d and with centroids
+at G1 and G2 . Choose an acute triangle A1 BC with centroid G1 , and rotate it around
+G1 if necessary to ensure that BC ∥ G1 G2 . By applying a homotethy centered at G1
+if necessary, we may ensure that the midpoint M of BC lies on d. Let H1 , O be the
+orthocenter and circumcenter of △ABC. By construction, we have O ∈ d and A1 H1 ∥
+OM ⊥ BC. If A2 , H2 are the reflections of points A1 , H1 across d, then one sees that
+△A1 BC ≡ △A2 CB, and H2 , G2 , O are the orthocenter, centroid and cirumcenter of
+△A2 BC. Therefore, applying the property of f to △A1 BC and △A2 BC, we have
+
+Shortlisted problems
+
+59
+
+f (A1 ) + f (B) + f (C) = f (O) + f (G1 ) + f (H1 )
+f (A2 ) + f (B) + f (C) = f (O) + f (G2 ) + f (H2 )
+Subtracting, we obtain
+f (A1 ) − f (A2 ) = f (G1 ) − f (G2 ) + f (H1 ) − f (H2 )
+
+(1)
+
+Now let’s reflect the picture across line l, the perpendicular bisector of A1 H1 (l is a
+symmetry axis of rectangle A1 A2 H2 H1 ), denoting by X ′ the image of point X. It follows
+that A′1 = H1 , A′2 = H2 and triangles H1 B ′ C ′ ,H2 B ′ C ′ are symmetric about d. Using this
+symmetry, relation (1) becomes
+f (H1 ) − f (H2 ) = f (G′1 ) − f (G′2 ) + f (A1 ) − f (A2 )
+
+(2)
+
+From (2) and (3) we obtain
+f (G1 ) − f (G2 ) + f (G′1 ) − f (G′2 ) = 0
+
+(3)
+
+The argument up to now holds if we scale the picture. It follows that for any rectangle
+XY ZT which is similar to the rectangle G1 G′1 G′2 G2 , we have
+f (X) − f (T ) + f (Y ) − f (Z) = 0
+K
+
+D
+
+G01
+
+G02
+
+G1
+
+G2
+
+(4)
+
+L
+
+E
+
+M
+
+Let us double up the rectangle G1 G′1 G′2 G2 to a rectangle G1 KLM (see the picture), with
+D and E the midpoints of KL and LM . Applying (4) to rectangle G2 G′2 EM , we have
+f (G2 ) − f (M ) + f (G′2 ) − f (E) = 0 which added to (3) yields
+f (G1 ) − f (M ) + f (G′1 ) − f (E) = 0
+
+60
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+Similarly, one obtains
+
+f (G′1 ) − f (E) + f (K) − f (L) = 0
+
+Subtracting the last relations we get
+f (G1 ) − f (M ) − f (K) + f (L) = 0
+On the other hand, applying (4) to the rectangle G1 KLM we have
+f (G1 ) − f (M ) + f (K) − f (L) = 0
+The last 2 relations imply f (G1 ) − f (M ) = 0, and scaling back we finally obtain f (G1 ) −
+f (G2 ) = 0. The choice of G1 ̸= G2 being arbitrary, it follows that the function f must be
+constant.
+Alternative Solution. Assume that f : π → R satisfies the condition of the problem.
+1. Step 1. (Rhombus 60◦ ) Consider a rhombus ABCD with ∠BAC = 60◦ . Let M and
+N lie on the diagonal AC such that AM = M N = N C. Then since △ABD and
+△CBD are equilateral we have that M and N are their centroids and therefore:
+f (A) + f (B) + f (D) = 3f (M )
+f (C) + f (B) + f (D) = 3f (N ).
+This proves that f (A) − f (C) = 3(f (M ) − f (N )). As a consequence we have that
+whenever A, M, N, C are collinear and AM = M N = N C then:
+f (A) − f (C) = 3(f (M ) − f (N )).
+2. Step 2. Now consider five collinear points A, B, C, D, E with AB = BC = CD =
+DE. Then by Step 1 we have:
+f (A) − f (D) = 3(f (B) − f (C))
+f (B) − f (E) = 3(f (C) − f (D)).
+Summing up both equalities we obtain:
+f (A) − f (E) = 2(f (B) − f (D)).
+Thus whenever A, B, D, E are collinear (in this order) with AB = DE = 12 BD it
+holds:
+f (A) − f (E) = 2(f (B) − f (D)).
+
+Shortlisted problems
+
+61
+
+3. Step 3. Consider a trapezoid ABCD with bases AB ∥ CD and AB = 2CD. Let
+O be the intersection point of the diagonals AC and BD and M and N be the
+midpoints of AO and BO. Finally let P = DM ∩ AB and Q = CN ∩ AB. To start
+with note that by construction AM = M O = OC and BN = N O = OD therefore
+by Step 1:
+f (A) − f (C) = 3(f (M ) − f (O))
+f (B) − f (D) = 3(f (N ) − f (O)).
+Subtracting the second equality from the first one we obtain:
+f (A) − f (B) = f (C) − f (D) + 3(f (M ) − f (N )).
+Now note that AP : CD = AM : M C = 1 : 2 = BN : N D = BQ : CD. Therefore
+AP = BQ and P Q = AB − 2AP = AB − CD = CD = 2AP . Therefore A, P, Q, B
+are collinear (in this order) with AP = QB = 1/2P Q and by Step 2 we have:
+f (A) − f (B) = 2(f (P ) − f (Q)).
+Substituting in the above equality we obtain:
+2(f (P ) − f (Q)) = f (C) − f (D) + 3(f (M ) − f (N )) or after rearrangement
+2f (P ) + f (D) − 3f (M ) = 2f (Q) + f (C) − 3f (N ).
+∥
+
+Finally note that P QCD is a parallelogram (P Q = DC) and P M = QN = 1/3P D.
+Clearly we can reconstruct the points A = CM ∩ P Q and B = DN ∩ P Q and by
+Thales’s Theorem they will satisfy AP = 1/2CD = BQ. To summarise for every
+parallelogram P QCD and points M ∈ P D and N ∈ QC with P M = 1/3P D = QN
+we have:
+2f (P ) + f (D) − 3f (M ) = 2f (Q) + f (C) − 3f (N ).
+4. Step 4. Let P QCD be parallelogram and M, M ′ ∈ P D are N, N ′ ∈ QC be such
+that P M = M M ′ = M ′ D and QN = N N ′ = N ′ D. Applying Step 3 to the
+parallelogram CDP Q and points N ′ and M ′ we have:
+2f (C) + f (Q) − 3f (N ′ ) = 2f (D) + f (P ) − 3f (M ′ ).
+Summing up we the result from Step 3 for the original parallelogram P QCD and
+the points M and N we get:
+3(f (P ) + f (D) − f (M ) − f (M ′ )) = 3(f (C) + f (Q) − f (N ) − f (N ′ ))
+
+62
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+or f (P ) + f (D) − f (M ) − f (M ′ ) = f (C) + f (Q) − f (N ) − f (N ′ ) whenever the line
+∥
+
+segments P D = QC and the points M, M ′ and N, N ′ split P D and QC in three
+equal parts, respectively. We can express this result as follows. There is a function
+−−−−→
+→
+g such that whenever A1 , A2 , A3 , A4 are collinear and −
+v = Ai Ai+1 for i = 1, 2, 3,
+then:
+→
+g(−
+v ) = f (A1 ) − f (A2 ) − f (A3 ) + f (A4 ).
+−−−−→ →
+→
+5. Step 5. Let −
+v ̸= 0 be a vector in the plane and let Ai Ai+1 = −
+v for i = 1, 2, 3, 4.
+Then by Step 4 we have:
+→
+f (A1 ) − f (A2 ) − f (A3 ) + f (A4 ) = g(−
+v)
+−
+→
+f (A2 ) − f (A3 ) − f (A4 ) + f (A5 ) = g( v )
+Summing up both equalities we obtain:
+→
+f (A1 ) − 2f (A3 ) + f (A5 ) = 2g(−
+v ).
+→
+Therefore by scaling with 1/2 we also have f (A1 ) − 2f (A2 ) + f (A3 ) = 2g(−
+v /2).
+Consequently:
+→
+g(−
+v ) = f (A1 ) − f (A2 ) − f (A3 ) + f (A4 )
+→
+= (f (A1 ) − 2f (A2 ) + f (A3 )) + (f (A2 ) − 2f (A3 ) + f (A4 )) = 4g(−
+v /2).
+→
+→
+→
+Therefore g(−
+v /2) = g(v)/4 or, after rescaling, 4g(−
+v ) = g(2−
+v ).
+6. Step 6. Let H, G and O be the orthocenter, centroid and the centre of the circumcircle, respectively, of a triangle. Then, by Euler’s Theorem, they are collinear with
+G belonging to the line segment OH and OH = 2OG. Conversely, if O, G and H
+satisfy the above condition, then there is an acute (isosceles) triangle ABC such
+that H, G and O are the orthocenter, centroid and the centre of the circumcircle
+of △ABC. To see this one can take an arbitrary acute triangle △A′ B ′ C ′ with orthocenter, centroid and the centre of the circumcircle, H ′ , G′ and O′ , respectively.
+Then scale △A′ B ′ C ′ so that O′ H ′ = OH and finally translate and rotate the diagram so that O′ H ′ match OH. During this transformation, clearly, the triangle
+A′ B ′ C ′ is transformed to a similar triangle ABC.
+−−→
+−→
+7. Step 7. Let O, G, H be collinear with HG = 2GO. Let △ABC be arbitrary acute
+triangle such that O, G, H are its centre of the circumcircle, centroid and orthocenter, respectively. Let A1 , B1 , C1 be the midpoints BC, AC and AB, respectively.
+Finally, let A2 , B2 and C2 be the midpoints of B1 C1 , C1 A1 and B1 A1 , respectively.
+
+Shortlisted problems
+
+63
+
+We denote with Oi , Gi , Hi the centre of the circumcircle, centroid and orthocenter,
+respectively, of triangle Ai Bi Ci for i = 1, 2.
+Note that by Step 5:
+−−→
+−−−→
+f (A) − 2f (C1 ) + f (B) = 2g(AC1 /2) = 8g(A1 C2 /2) = 4(f (A1 ) − 2f (C2 ) + f (B1 )).
+Similarly we have:
+f (B) − 2f (A1 ) + f (C) = 4(f (B1 ) − f (A2 ) + f (C1 )
+f (C) − 2f (B1 ) + f (A) = 4(f (C1 ) − f (B2 ) + f (A1 )).
+Summing up all three equalities and taking into account that f (A) + f (B) + f (C) =
+f (O) + f (G) + f (H) and f (Ai ) + f (Bi ) + f (Ci ) = f (Oi ) + f (Gi ) + f (Hi ) we conclude
+that:
+f (O)+f (G)+f (H)−f (O1 )−f (G1 )−f (H1 ) = 4(f (O1 )+f (G1 )+f (H1 )−f (O2 )−f (G2 )−f (H2 )).
+However, obviously G = G1 = G2 and a simple homothetic argument at G shows
+that O = H1 and O1 = H2 . Therefore:
+f (H) − f (O1 ) = 4(f (H1 ) − f (O2 )).
+Now note that O1 is the midpoint of OH and similarly O2 is the midpoint of
+−−→
+−→
+O1 H1 = O1 O. Since O, G, H were arbitrary with HG = 2GO, we conclude that
+−−→
+−−−→
+−−−→
+whenever HO1 = 2O1 O2 = 2O2 H1 we have:
+f (H) − f (O1 ) = 4(f (H1 ) − f (O2 )).
+Introducing M to be the midpoint of HO1 and replacing (H, H1 ) with (H1 , H) we
+get:
+f (H1 ) − f (O1 ) = 4(f (H) − f (M )).
+Subtracting from the first equality the second one, we arrive at:
+f (H)−f (H1 ) = 4(f (H1 )−f (H)−f (O1 )+f (M )) or 5(f (H)−f (H1 )) = 4(f (M )−f (O1 )).
+−−−→
+−−→
+−−−→
+Now, since M O1 = 2HM = 2O1 H1 by Step 2 we also have:
+f (H) − f (H1 ) = 2(f (M ) − f (O1 )).
+This already shows that 10(f (M )−f (O1 )) = 4(f (M )−f (O1 )) and therefore f (M ) =
+f (O1 ), implying that f (H) = f (H1 ) = f (O). Since O and H can be considered
+arbitrary, as G is uniquely determined by the choice of O and H, we conclude that
+f is constant
+
+64
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+Comment. 1. An earlier variant of the problem assumed f (A) + f (B) + f (C) = 3f (H),
+where H is the orthocenter of ABC. This version is easier (but with similar ideas) than
+the above. Note that if we allow using obtuse-angled triangles, there is an even shorter
+solution, by just applying the relation to the 4 triangles ABC, BCH, CAH, ABH with
+orthocenters H, A, B, C, respectively. Replacing H with O also simplifies the problem, as
+one can fix 2 points on a circle, and allow the third point to move along an arc of the
+circle.
+2. A known problem (USAMO 2001) had instead the relation f (A)+f (B)+f (C) = 3f (I),
+where I is the incenter of ABC.
+
+Shortlisted problems
+
+65
+
+Number Theory – Solutions
+N1.
+Let n be a fixed natural number and
+Sn = {cn cn−1 ...c1 (10) | c1 , . . . , cn−1 , cn ∈ {1, 2, 3, 4}}.
+Are there distinct numbers x and y, x, y ∈ Sn , such that 4n | x − y?
+
+Solution. For n = 1, the answer is negative. For n > 1 we will show that answer
+is positive. In contrary, since |Sn | = 4n , we see that the set Sn is complete system of
+remainders modulo 4n . Thus,
+∑
+
+x ≡
+
+Let us calculate
+for all n ∈ N.
+Then:
+n
+∑
+k=1
+
+Bn+1 =
+
+i
+
+3
+
+i=1
+
+x∈Sn
+
+An =
+
+4
+∑
+n
+
+3
+
+)2
+( n n
+4 (4 + 1)
+(mod 4 ) ≡
+2
+n
+
+∑
+
+3
+x∈Sn x . Denote by An =
+
+∑
+
+x∈Sn x, Bn =
+
+10k−1 4n−1 (1 + 2 + 3 + 4) ≡ 2 · 4n−1
+∑
+
+= 4n · 102n ·
+
+4
+∑
+c=1
+
+∑
+
+2
+x∈Sn x and Cn =
+
+(mod 4n ),
+
+∑
+
+(10n · c + xn )2 =
+
+(c,xn )∈{1,2,3,4}×Sn
+
+(mod 4n ) ≡ 0 (mod 4n ).
+
+(♡)
+
+∑
+
+3
+x∈Sn x ,
+
+(1)
+
+(102n · c2 + 2 · 10n · c · xn + x2n )
+
+(c,xn )∈{1,2,3,4}×Sn
+
+c2 + 2 · 10n ·
+
+4
+∑
+
+c · An + 4 · Bn ≡ 4Bn
+
+(mod 4n+1 ).
+
+c=1
+
+Since B1 = 12 + 22 + 32 + 42 = 30 ≡ 2 (mod 4), by induction, it follows that
+Bn ≡ 2 · 4n−1
+holds for all n ∈ N.
+
+(mod 4n )
+
+(2)
+
+66
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+So, by using (1) and (2), we have:
+∑
+Cn+1 =
+(10n · c + xn )3
+(c,xn )∈{1,2,3,4}×Sn
+
+∑
+
+=
+
+(103n · c3 + 3 · 102n · c2 · xn + 3 · 10n · c · x2n + x3n )
+
+(c,xn )∈{1,2,3,4}×Sn
+
+=
+
+4 · 10
+n
+
+3n
+
+·
+
+4
+∑
+
+c + 3 · 10
+3
+
+2n
+
+·
+
+c=1
+(1),(2)
+
+≡
+≡
+≡
+
+4
+∑
+
+c · An + 3 · 10 ·
+2
+
+n
+
+c=1
+
+4
+∑
+
+c · Bn + 4 · Cn
+
+c=1
+
+0 + 0 + 3 · 10n+1 · Bn + 4Cn (mod 4n+1 )
+3 · 10n+1 · (k · 4n + 2 · 4n−1 ) + 4Cn (mod 4n+1 )
+3 · 5n+1 · 2n+2 · 4n−1 + 4Cn (mod 4n+1 ).
+
+(3)
+(4)
+
+Since C1 = 100, from (3), we obtain C2 ≡ 1000 (mod 16) ≡ 8 (mod 16) and for n ≥ 2,
+since 42 | 2n+2 , we get
+Cn+1 ≡ 4Cn ≡ 4n+1 .
+(5)
+Finally, from (5), by induction, we see that for all n ∈ N \ {1}
+Cn ≡4n 2 · 4n−1
+
+(♢)
+
+holds and by (♡) and (♢) we arrive at a contradiction.
+Alternative Solution. Assume such x and y do not exist and let n > 1. Since |Sn | = 4n ,
+we see that the set Sn is complete system of remainders modulo 4n .
+Note that the numbers
+cn cn−1 ...c2 1, cn cn−1 ...c2 2, cn cn−1 ...c2 3, cn cn−1 ...c2 4
+give four consecutive remainders modulo 4n . Call such four consecutive remainders a
+block.
+Therefore all 4n remainders modulo 4n can be split into blocks.
+Thus, the difference of any two of the 4n−1 numbers cn cn−1 ...c2 0 is congruent to 4t modulo
+4n . But
+cn cn−1 ...c3 20 − cn cn−1 ...c3 10 = 10,
+implying 4t ≡ 10 (mod 4n ), a contradiction.
+
+Shortlisted problems
+
+67
+
+N2.
+
+Prove that for every integer n, the number n4 − 12n2 + 144 is not a perfect cube of an
+integer.
+
+Solution. Suppose otherwise and let m ∈ Z be such that n4 − 12n2 + 144 = m3 .
+Firstly, m is clearly positive and we can assume that n is a positive integer (since n = 0
+clearly doesn’t work). Note that the polynomial x4 − 12x2 + 144 may be factored as
+x2 − 12x2 + 144 = (x2 + 12)2 − (6x)2 = (x2 − 6x + 12)(x2 + 6x + 12).
+By repeatedly applying Euclid’s algorithm, we get
+gcd(n2 − 6n + 12, n2 + 6n + 12) = gcd(n2 − 6n + 12, 12n),
+
+(1)
+
+gcd(n2 − 6n + 12, n) = gcd(n2 − 6n + 12 − (n − 6)n, n) = gcd(12, n).
+
+(2)
+
+and then
+
+We now distinguish three cases.
+Case I. n is even. Write n = 2k for some k ∈ N and we have 16(k 4 − 3k 2 + 9) = m3 .
+Hence m is divisible by 4 which means that m3 is divisible by 64. But k 4 − 3k 2 + 9 is
+always odd, so 16(k 4 − 3k 2 + 9) cannot be divisible by 64, a contradiction.
+Case II. n is divisible by 3. Write n = 3l for some l ∈ N and we have 9(9l4 −3l2 +16) = m3 .
+Hence m is divisible by 3 which means m3 is divisible by 27. But 9l4 − 3l2 + 16 is not
+divisible by 3, so 9(9l4 − 3l2 + 16) cannot be divisible by 27, a contradiction.
+Case III. Suppose that gcd(n, 6) = 1. Then gcd(n2 − 6n + 12, n2 + 6n + 12) = 1 by (1)
+and (2) (since gcd(n2 − 6n + 12, 12) = gcd(n(n − 6), 12) = 1, because gcd(n, 6) = 1), thus
+n2 − 6n + 12 = (n − 3)2 + 3 and n2 + 6n + 12 = (n + 3)2 + 3 are both perfect cubes of
+integers. However, we get a contradiction with the following lemma.
+Lemma 1. For every even integer x, the number x2 + 3 is not a perfect cube of an integer.
+Proof. Suppose otherwise, namely that there exists a positive integer y such that x2 + 3 =
+y 3 . The last relation modulo 4 gives y ≡ −1 mod 4. The equation then turns to
+x2 + 22 = y 3 + 1 = (y + 1)(y 2 − y + 1).
+But we have y 2 − y + 1 ≡ (−1)2 − (−1) + 1 ≡ −1 (mod 4), hence there exists a prime
+number p ≡ −1 (mod 4) such that p | y 2 − y + 1 | x2 + 22 . But it is well known that from
+here we should have p | x and p | 2. This means that p = 2, which contradicts p ≡ −1
+mod 4.
+
+68
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+We conclude that no such integer m can exist, thus n4 − 12n2 + 144 is never a perfect
+cube of an integer.
+Comment. In the Shortlisted Problems of JBMO 2019 one can find the following similar
+problem: https://artofproblemsolving.com/community/c6h2610073p22542084.
+More generally, Diofantine equations of the form x2 +k = y 3 are called Mordell’s Equation
+and can be solved by factoring both sides and looking at the prime divisors of k. In this
+particular case we have (n2 − 6)2 + 108 = y 3 and 108 = 22 .33 .
+
+Shortlisted problems
+
+69
+
+N3.
+Consider the sequence
+an = 2n + 3n+2 + 5n+1
+for n ⩾ 1. Prove that there are infinitely many prime numbers such that each one of them
+divides infinitely many terms of the sequence.
+
+Solution. Let S be the set of all primes p ̸= 2, 3, 5 for which 2 and 5 are quadratic
+residues modulo p but 3 is not.
+If p ∈ S, then by Euler’s criterion we have
+p−1
+
+p−1
+
+2 2 ≡ 5 2 ≡ 1 mod p
+
+p−1
+
+and 3 2 ≡ −1 mod p .
+
++ 1, where k ∈ N, by Fermat’s Little Theorem we have
+So for n = k(p − 1) + p−1
+2
+(
+)k p−1
+p−1
+2n ≡ 2k(p−1)+ 2 +1 ≡ 2p−1 · 2 2 · 2 ≡ 2 mod p ,
+(
+)k p−1
+p−1
+3n+2 ≡ 3k(p−1)+ 2 +3 ≡ 3p−1 · 3 2 · 33 ≡ −27 mod p ,
+(
+)k p−1
+p−1
+5n+1 ≡ 3k(p−1)+ 2 +2 ≡ 5p−1 · 5 2 · 52 ≡ 25 mod p .
+Therefore p divides an for infinitely many values of n.
+It remains to show that S contains infinitely many terms. By Dirichlet’s Theorem about
+primes in arithmetic progressions, there are infinitely many primes p with p ≡ 41 mod 120.
+We claim that every such p belongs to S. (Other congruence classes also work.) Indeed
+this follows since
+( )
+2
+• p ≡ 41 mod 120 =⇒ p ≡ 1 mod 8 =⇒
+= +1
+p
+{
+}
+( ) ( )
+3
+p
+p ≡ 1 mod 4
+• p ≡ 41 mod 120 =⇒
+=⇒
+=
+= −1
+p ≡ 2 mod 3
+p
+3
+( ) ( )
+5
+p
+• p ≡ 41 mod 120 =⇒ p ≡ 1 mod 5 =⇒
+=
+= +1
+p
+5
+
+Comment. Note that the following problem appeared at Italia Olympiad 2010:https:
+//artofproblemsolving.com/community/c6h466737p2613923
+We also note that the following result has been proven by George Polya:
+
+70
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+Theorem 1. Let 0 < b1 < · · · < br and P1 (x), . . . , Pr (x) are all polynomials with integer
+coefficients. For a set I ⊆ {1, 2, . . . , n}, set
+∑
+xI,n =
+bni Pi (n).
+i∈I
+
+Assume that r ≥ 2, gcd(b1 , · · · , br ) = 1 and that for any non-empty set I ⊆ {1, 2, . . . , n},
+|xI,n | tends to infinity. Then the set of primes dividing some xn is infinite.
+
+Shortlisted problems
+
+71
+
+N4.
+Let k be a positive integer. Find all sequences (an )n≥1 of positive integers such that
+an+2 (an+1 − k) = an (an+1 + k)
+for all n ≥ 1.
+
+Solution. Denote the given equation by (1). Note that if an ≤ k, for n ≥ 2, we get a
+contradiction, so an > k for all n ≥ 2. Then (1) becomes
+an+2 =
+
+an (an+1 + k)
+.
+an+1 − k
+
+We deduce that an+2 ≥ an + 1.
+n+1 +k)
+Now an+2 = ana(an+1
+so an+1 − k | an (an+1 + k). However, an+1 − k | an (an+1 − k) and
+−k
+subtracting gives an+1 − k | 2kan . Let r ≥ 1 such that r(an+1 − k) = 2kan . Applying (1),
+an+2 = an + r. We apply (1) again too get
+
+an+1 (an + r + k)
+2kan+1
+an+1 (an+2 + k)
+=
+= an+1 +
+an+2 − k
+an + r − k
+an + r − k
+2
+2kan+1
+4k an+1
+= an+1 + r(an+1 −k)
+= an+1 +
+.
+ran+1 + rk − 2k 2
++r−k
+
+an+3 =
+
+2k
+
+Thus, ran+1 + rk − 2k 2 | 4k 2 an+1 so ran+1 + rk − 2k 2 ≤ 4k 2 an+1 . If r ≥ 4k 2 we get a
+contradiction, so r < 4k 2 . Now we use the fact that if a, b, c ∈ Z, a, b, c ̸= 0 then there is a
+finite number of natural numbers x for which ax + b | c. So if rk ̸= 2k 2 (whence r ̸= 2k),
+we get a finite number of possibilities for an+1 (which depends on k but not on r!). Let
+S be this finite set. On the other hand, if r = 2k, it leads us to an+1 = an + k.
+In short, for all n ≥ 2 we either have an ∈ S or an = an−1 + k. But an+2 ≥ an + 1 for
+all n ≥ 2 so for n sufficiently large, we can’t have an ∈ S. So there exists N ≥ 2 such
+that an = an−1 + k for all n ≥ N . Using aN +1 = aN + k we use (backward) induction to
+get an = an−1 + k for all n so (an )n≥1 is an arithmetic progression of common difference
+k and, conversely, these satisfy (1).
+
+72
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+N5.
+Let a and b be distinct positive integers such that 3a + 2 is divisible by 3b + 2. Prove that
+a > b2 .
+Solution. Obviously we have a > b. Let a = bq + r, where 0 ≤ r < b. Then
+3a ≡ 3bq+r ≡ (−2)q .3r ≡ −2 (mod 3b + 2)
+So 3b + 2 divides A = (−2)q .3r + 2 and it follows that
+|(−2)q .3r + 2| ≥ 3b + 2 or (−2)q .3r + 2 = 0.
+We make case distinction:
+1. (−2)q .3r + 2 = 0. Then q = 1 and r = 0 or a = b, a contradiction.
+2. q is even. Then
+A = 2q .3r + 2 = (3b + 2).k.
+Consider both sides of the last equation modulo 3r . Since b > r:
+2 ≡ 2q .3r + 2 = (3b + 2)k ≡ 2k
+
+(mod 3r ),
+
+so it follows that 3r |k − 1. If k = 1 then 2q .3r = 3b , a contradiction. So k ≥ 3r + 1,
+and therefore:
+A = 2q .3r + 2 = (3b + 2)k ≥ (3b + 2)(3r + 1) > 3b .3r + 2
+It follows that
+2
+
+2q .3r > 3b .3r , i.e. 2q > 3b , which implies 3b < 2bq < 3bq ≤ 3bq+r = 3a .
+Consequently a > b2 .
+3. If q is odd. Then
+2q .3r − 2 = (3b + 2)k.
+Considering both sides of the last equation modulo 3r , and since b > r, we get: k +1
+is divisible by 3r and therefore k ≥ 3r − 1. Thus r > 0 because k > 0, and:
+2q .3r − 2 = (3b + 2)k ≥ (3b + 2)(3r − 1), and therefore
+3r
+2q .3r > (3b + 2)(3r − 1) > 3b (3r − 1) > 3b , which shows
+2
+2q + 1 > 3b .
+But for q > 1 we have 2q +1 < 3q , which combined with the above inequality, implies
+2
+that 3b < (2q + 1)b < 3qb ≤ 3a , q.e.d. Finally, If q = 1 then 2q .3r − 2 = (3b + 2)k
+and consequently 2.3r − 2 ≥ 3b + 2 ≥ 3r+1 + 2 > 2.3r − 2, a contradiction.
+
+Shortlisted problems
+
+73
+
+Alternative Solution. D = a − b, and we shall show D > b2 − b. We have 3b + 2|3a + 2,
+so 3b + 2|3D − 1. Let D = bq + r where r < b. First suppose that r ̸= 0. We have
+1 ≡ 3D ≡ 3bq+r ≡ (−2)q+1 3r−b
+
+(mod 3b + 2) =⇒ 3b−r ≡ (−2)q+1
+
+(mod 3b + 2)
+
+Therefore
+3b + 2 ≤ |(−2)q+1 − 3b−r | ≤ 2q+1 + 3b−r ≤ 2q+1 + 3b−1
+Hence
+2 × 3b−1 + 2 ≤ 2q+1 =⇒ 3b−1 < 2q =⇒
+
+log 3
+(b − 1) < q
+log 2
+
+3
+Which yields D = bq + r > bq > log
+b(b − 1) ≥ b2 − b as desired. Now for the case r = 0,
+log 2
+(−2)q ≡ 1 (mod 3b + 2) and so
+
+3b + 2 ≤ |(−2)q − 1| ≤ 2q + 1 =⇒ 3b−1 < 3b < 2q =⇒
+
+log 3
+(b − 1) < q
+log 2
+
+log 3
+b(b − 1) ≥ b2 − b.
+and analogous to the previous case, D = bq + r = bq > log
+2
+
+74
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+N6.
+
+For a positive integer c, define a sequence by a1 = c and an = a3n−1 + c for each n ≥ 2.
+Call a prime number p orange if for every positive integer c there is some n such that
+p | an . Are there infinitely many orange primes?
+Solution. We claim that every prime p ≡ 2 (mod 3) is orange. There are infinitely
+many such primes either i) by quoting Dirichlet’s theorem; ii) or noting that if there were
+a finite list p1 , . . . , pk then 3p1 · · · pk − 1 has a prime divsor that is 2 modulo 3 but can’t
+be any of the primes already on our list giving a contradiction.
+Claim 1. Let p ≡ 2 (mod 3) and x, y ∈ Z. If p | x3 − y 3 then p | x − y.
+Proof. If p | x or p | y then we’re done so we can assume p ∤ x, y. Write p = 3k + 2 where
+k ∈ N. By Fermat’s little theorem we have xp−1 = x3k+1 ≡ 1 (mod p) and similarly for y
+so:
+(
+)2 ( )2k+1 ( 3 )2k+1
+x3 ≡ y 3 (mod p) =⇒ x ≡ x · x3k+1 ≡ x3
+≡ y
+≡ y (mod p)
+which gives p | x − y.
+Now take p as in the claim and assume for contradiction that p is not orange. By the
+pigeonhole principle, there are two terms in the sequence which are from the same residue
+class modulo p. Consider the pair i < j with the smallest possible value of i + j such that
+p | ai − aj . If i > 1 then note that:
+p | a3i−1 − a3j−1 =⇒ p | ai−1 − aj−1
+by our claim which is a contradiction. Otherwise i = 1 and:
+p | a3j−1 + c − c = a3j−1 =⇒ p | aj−1
+so p is orange as desired.
+Comment. We can classify all orange primes. By a direct check, 3 is an orange prime
+and by the above p ≡ 2 (mod 3) is orange. If p ≡ 1 (mod 3) then we can choose −c to
+not be a cube modulo p (as x 7→ x3 is not injective) and for this value of c, p won’t divide
+any terms in the sequence so p is not orange.
+This is of course an alternative possible statement for the problem, requiring at least one
+extra idea for a solution.
+
+Comment. This problem is a simple implication of the conclusion of the following China
+TST problem:https://artofproblemsolving.com/community/c6h1212540p6016827
+
+Shortlisted problems
+
+75
+
+N7.
+Let a, b be positive integers such that a + 1, b + 1 and ab are all perfect squares. Prove
+that gcd(a, b) + 1 is also a perfect square.
+
+Solution. Firstly observe that when a = b, gcd(a, b) + 1 = a + 1 is a perfect square. So
+we now assume WLOG a < b.
+Let a + 1 = A2 , b + 1 = B 2 where 1 < A < B are positive integers. We prove the result
+by induction on max
+√ {a, b} = b. √
+Define C := AB − ab = AB − (A2 − 1) (B 2 − 1) which is an integer as ab is a perfect
+square. Define c := C 2 − 1 We will now prove the following:
+• 1<c<b
+• ac is a perfect square (noting that it follows immediately from the construction that
+a + 1, c + 1 are perfect squares.)
+• gcd(a, c) = gcd(a, b)
+We will then be done by induction as by repeatedly applying this process, we preserve
+the gcd and must eventually reach a case with a = b which we have proved above.
+For the first part,
+√
+√
+C = AB − A2 B 2 − A2 − B 2 + 1 > AB − A2 B 2 − 2AB + 1 = 1
+where the inequality is strict since A ̸= B. Furthermore,
+2(A − 1)B 2 ≥ 2B 2 > A2 − 1 =⇒ A2 + B 2 − 1 < 2AB 2 − B 2
+leading to
+C = AB −
+
+√
+
+A2 B 2 − A2 − B 2 + 1 < AB −
+
+√
+
+A2 B 2 − 2AB 2 + B 2 = B.
+
+So 1 < C < B and therefore 1 < c < b.
+For the second part, expanding the definition of C we get:
+(
+)(
+)
+(AB − C)2 = A2 − 1 B 2 − 1 =⇒ A2 + B 2 + C 2 = 2ABC + 1
+
+(1)
+
+We can rearrange this to:
+(
+)(
+)
+ac = A2 − 1 C 2 − 1 = (B − AC)2
+
+(2)
+
+76
+
+Varna, Bulgaria, 27th April – 2nd May 2024
+
+which shows ac is a perfect square.
+For the final part, note that if d | A2 − 1 and d | C 2 − 1 then from (2), d | B − AC. Then
+from (1) we have:
+B 2 − 1 = 2ABC − A2 − C 2 ≡ 2A2 C 2 − A2 − C 2 ≡ 2 − 1 − 1 ≡ 0
+
+(mod d)
+
+Thus d | B 2 − 1. Setting d = gcd(a, c), we see that gcd(a, c) | gcd(a, b). But the
+condition we’re using in (1) is symmetric in A, B, C and so in a similar way we get
+gcd(a, b) | gcd(a, c).
+Combining, we must have gcd(a, b) = gcd(a, c).
+Alternative Solution. Using the notation from the solution above, define g := gcd(a, b)
+then, as ab is a perfect square, there exists positive integers x, y with gcd(x, y) = 1 such
+that:
+a = A2 − 1 = gx2 and b = B 2 − 1 = gy 2
+Then the pairs (A, x) and (B, y) satisfy the Pell equation:
+p2 − gq 2 = 1
+If (p1 , q1 ) is the fundamental solution to this equation, then all other solutions are generated from the recurrences:
+pn+1 = p1 pn + gq1 qn
+qn+1 = p1 qn + q1 pn
+and in particular, q1 |qn for all n. Thus q1 |x, y and hence q1 |gcd(x, y) = 1 so q1 = 1. But
+then, considering the fundamental solution:
+1 = p21 − gq12 = p21 − g =⇒ g + 1 = p21
+as required.
+Comment. Letting p1 = cosh θ, an easy induction on the recurrence shows that
+pn = cosh (nθ),
+
+qn =
+
+sinh (nθ)
+,
+sinh (θ)
+
+hence pn = Tn (p1 ) where Tn is the nth Chebyshev polynomial of the first kind. Writing
+p1 := m ∈ Z≥1 , we have g = m2 − 1 and we see a general solution is given by
+(
+)
+(A, B) = (Ti (m), Tj (m)) or (a, b) = Ti (m)2 − 1, Tj (m)2 − 1 ,
+
+Shortlisted problems
+
+77
+
+for any integers i, j, m ∈ Z≥1 .
+Comment. This problem appeared as a part of a problem whose solution can be found
+in Journal Kvant, 2000, Number 4, Problem 1740. The problem was proposed by V.
+Senderov.
+
+

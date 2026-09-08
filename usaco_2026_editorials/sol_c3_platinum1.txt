@@ -1,0 +1,180 @@
+Contest Results
+(Analysis by Alan Cheng, Benjamin Qi)
+Full Solution 1 (Alan):
+(Note: the proofs of some claims are left as exercises for the reader.)
+The two types of edges in the tessellation each form their own grid. The edges
+between integer points $x + y\exp(\pi i/3)$ form a grid of equilateral
+triangles. The edges connecting to the centers of equilateral triangles form a
+grid of rhombi.
+Notice that the distance between two points in the original tessellation is
+equal to the sum of the distances in the two subgrids. Therefore, we can compute
+the sum of pairwise distances in the subgrids independently and add them up.
+Let's first compute distances in the equilateral triangle grid. Given two points
+in the grid, the number of horizontal gridlines between them is the number of
+horizontal edges crossed in the minimum path. This allows us to compute the
+total number of horizontal edge crossings.
+Iterate through the points by their $y$-coordinate. Between two consecutive
+$y$-values, the number of times each edge horizontal gridline is crossed is
+$b \cdot (N-b)$, where $b$ is the number of points below the line. The crossings
+of edges of the other two directions can be computed similarly.
+Now, we'll compute the distances in the rhombi grid. We can break this grid into
+two hexagon grids, partitioning the edges based on whether it connects to the
+center of an upward-pointing or downward-pointing equilateral triangle. Let the
+upward hexagons denote those circumscribing the upward-pointing triangles. For
+example, the shortest path between $(0,0,0)$ and $(1,1,7)$ crosses one edge each
+in the equilateral triangle, upward hexagon, and downward hexagon grids.
+To compute distances in the hexagon grids, note that it actually reduces to the
+equilateral triangle grid. For two points in the upward hexagon grid, the
+distance between them is equal to half the distance between two points in the
+corresponding inscribed upward-pointing triangles. This is because crossing an
+edge in the hexagon grid can be viewed as crossing one edge into a downward
+triangle, and then one edge out of it.
+However, there is a tricky point. The two hexagon grids are not independent,
+meaning distance in the rhombi grid is not always the sum of the two distances
+in the hexagon grids. To see this, consider the points $(0,0,0)$ and $(0,0,5)$.
+The shortest path is each hexagon grid crosses exactly $1$ edge. On the other
+hand, any path must cross two hexagons in one grid. So the true distance is
+$1+2$ and not $1+1$.
+We can characterize this issue as a single edge case. Consider the set of rhombi
+with horizontal long diagonals. They can be partitioned into infinite chains
+sharing a single vertex. For example, $(0,0,0), (1,0,0), (2,0,0), \dots$ lie in
+the same rhombi chain.
+Claim: The distance between two points in distinct rhombi of the same
+chain is always exactly $1$ more than the sum of distances between them in the
+hexagon grids.
+Proof: The distance to get to a rhombus $r$ rhombi down the chain is
+$2r+1$, but the distances in the hexagon grid are both $r$.
+We can compute these by counting the points by rhombi in each chain. For each
+chain, if rhombi contain $a_1, \dots, a_m$ points, we must add 
+$$\binom{a_1+\dots+a_m}{2} - \sum_{i = 1}^m \binom{a_i}{2}.$$
+This expression counts the number of pairs of points, subtracting pairs that are
+in the same rhombus.
+The same can be said for the chains in the other two directions. There are no
+other edge cases in the rhombi grid. This solution takes $O(N \log N)$ time.
+Alan's C++ code:
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+void solve() {
+ int n;
+ cin >> n;
+ vector<array<int, 3>> p(n);
+ for (auto &[x, y, z] : p)
+ cin >> x >> y >> z;
+ // compute sum of pairwise abs difference given map of counts
+ auto calc_dir = [&](map<int, int> &m) {
+ ll ret = 0;
+ int pos = m.begin()->first;
+ int cnt = m.begin()->second;
+ m.erase(m.begin());
+ for (auto [k, v] : m) {
+ ret += ll(k - pos) * cnt * (n - cnt);
+ cnt += v;
+ pos = k;
+ }
+ return ret;
+ };
+ // location in equilateral triangle grid
+ // bool denotes inside downward-pointing triangle to the right
+ vector<tuple<int, int, bool>> loc;
+ // compute sum of pairwise distance in equilateral triangle grid
+ auto calc = [&]() {
+ ll ret = 0;
+ map<int, int> m;
+ for (auto [x, y, z] : loc)
+ m[x]++;
+ ret += calc_dir(m);
+ m.clear();
+ for (auto [x, y, z] : loc)
+ m[y]++;
+ ret += calc_dir(m);
+ m.clear();
+ for (auto [x, y, z] : loc)
+ m[x + y + z]++;
+ ret += calc_dir(m);
+ return ret;
+ };
+ // equilateral triangle grid
+ ll ans = 0;
+ for (auto [x, y, z] : p) {
+ loc.push_back({
+ x - (z > 1 && z < 8),
+ y - (z > 5),
+ (z % 4) > 1,
+ });
+ }
+ ans += calc();
+ // upward hexagon grid
+ loc.clear();
+ for (auto [x, y, z] : p) {
+ loc.push_back({
+ x - (z > 2 && z < 7),
+ y - (z > 6 && z != 11),
+ 0,
+ });
+ }
+ ans += calc() / 2;
+ // downward hexagon grid
+ loc.clear();
+ for (auto [x, y, z] : p) {
+ loc.push_back({
+ x - (z != 0 && z < 9),
+ y - (z == 0 || z > 4),
+ 1,
+ });
+ }
+ ans += calc() / 2;
+ // count by rhombi by chain
+ map<int, map<int, int>> m1, m2, m3;
+ for (auto [x, y, z] : p) {
+ int dir = z % 6;
+ if (dir == 0 || dir == 5) // horizontal
+ m1[y][x - (z == 5 || z == 6)]++;
+ else if (dir == 1 || dir == 2) // up-right
+ m2[x][y - (z == 7 || z == 8)]++;
+ else // up-left
+ m3[x + y][y - (z == 9 || z == 10)]++;
+ }
+ auto chains = [&](map<int, map<int, int>> &m) {
+ for (auto [k, v] : m) {
+ int total = 0;
+ for (auto [k2, v2] : v) {
+ total += v2;
+ ans -= (ll)v2 * (v2 - 1) / 2;
+ }
+ ans += (ll)total * (total - 1) / 2;
+ }
+ };
+ chains(m1);
+ chains(m2);
+ chains(m3);
+ cout << ans << '\n';
+}
+int main() {
+ ios::sync_with_stdio(false);
+ cin.tie(nullptr);
+ int t;
+ cin >> t;
+ while (t--)
+ solve();
+}
+Full Solution 2 Sketch (Ben): 
+Note that we always alternate crossing one edge in the triangular grid with one
+edge in the rhombic grid. Let's remove the rhombic grid entirely and double the
+cost of crossing each edge in the triangular grid. The sum of all pairs of
+distances in this new grid can be computed using the same method as in full
+solution 1. 
+To get distances in the original grid from distances in this new grid, we just
+need to add a correction in the range $[-1,1]$ for every pair of input points.
+Specifically, if there is only a single pair of input points, we can:
+Initialize the correction to $1$.
+Subtract one if there is a line of the triangular grid that separates the
+two input points and can be crossed in the first move.
+Subtract one if there is a line of the triangular grid that separates the
+two input points and can be crossed in the last move.
+Add back one if both 2 and 3 apply and the same parallel line is crossed in
+both moves.
+Subtract one if the two points lie in the same rhombus.
+The contributions of each of these parts for all pairs of points can be
+calculated independently in $O(N\log N)$ and added together to get the final
+answer.

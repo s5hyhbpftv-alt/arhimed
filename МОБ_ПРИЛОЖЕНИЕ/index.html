@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b1712">
+<meta name="description" content="АРХИМЕД — олимпиадная математика, физика и химия в виде приключения. Устанавливается на телефон.">
+<title>АРХИМЕД · мобильное приложение</title>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="АРХИМЕД">
+<style>
+  :root { --deep:#0b1712; --panel:#13251c; --card:#182f24; --brass:#d9a441; --brass-d:#a3762a;
+    --ivory:#e8e0cc; --muted:#8fa08f; --glass:#7fb8a0; --hairline:rgba(217,164,65,.25);
+    --safe-b:env(safe-area-inset-bottom,0px); --safe-t:env(safe-area-inset-top,0px); }
+  * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  html,body { height:100%; }
+  body { font-family:'Georgia',serif; color:var(--ivory); touch-action:manipulation;
+    background: radial-gradient(ellipse at 50% -10%, #1a3226 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 110%, #132a20 0%, transparent 45%), var(--deep);
+    display:flex; flex-direction:column; overflow:hidden; }
+  /* шапка */
+  header { padding:calc(10px + var(--safe-t)) 14px 10px; display:flex; justify-content:space-between;
+    align-items:center; border-bottom:1px solid var(--hairline); flex-shrink:0; }
+  .logo { font-size:18px; letter-spacing:.05em; color:var(--brass); }
+  .logo em { font-style:italic; color:var(--glass); }
+  .hud { display:flex; gap:6px; }
+  .chip { background:var(--panel); border:1px solid var(--hairline); border-radius:999px;
+    padding:5px 11px; font-size:12px; }
+  .chip b { color:var(--brass); }
+  .chip.rank { border-color:rgba(217,164,65,.55); color:var(--brass); }
+  /* экраны */
+  main { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:12px 12px calc(70px + var(--safe-b)); }
+  .screen { display:none; }
+  .screen.active { display:block; animation:fade .18s ease; }
+  @keyframes fade { from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+  .sec-title { font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin:10px 2px 8px; }
+  /* тайлы островов */
+  .tile { display:flex; align-items:center; gap:12px; background:linear-gradient(170deg,var(--card),#101f18);
+    border:1px solid var(--hairline); border-radius:14px; padding:13px 14px; margin-bottom:10px;
+    cursor:pointer; transition:border-color .12s; }
+  .tile:active { border-color:var(--brass); background:linear-gradient(170deg,#1c3a2c,#12241b); }
+  .tile .ico { font-size:26px; width:38px; text-align:center; }
+  .tile .inf { flex:1; min-width:0; }
+  .tile .nm { font-size:14.5px; font-weight:bold; }
+  .tile .ds { font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.35; }
+  .bar { height:5px; background:#0d1a13; border:1px solid var(--hairline); border-radius:999px;
+    margin-top:7px; overflow:hidden; }
+  .bar i { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--brass-d),var(--brass));
+    border-radius:999px; transition:width .5s ease; }
+  .tile .go { color:var(--brass); font-size:18px; padding:8px 4px; }
+  .badge { font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--glass);
+    border:1px solid var(--hairline); border-radius:999px; padding:2px 7px; margin-left:6px; white-space:nowrap; }
+  /* путь */
+  .stat-row { display:flex; gap:10px; margin-bottom:12px; }
+  .stat { flex:1; background:var(--panel); border:1px solid var(--hairline); border-radius:12px;
+    padding:12px 8px; text-align:center; }
+  .stat .v { font-size:22px; color:var(--brass); font-weight:bold; }
+  .stat .k { font-size:10.5px; color:var(--muted); margin-top:2px; text-transform:uppercase; letter-spacing:.08em; }
+  .rank-card { background:linear-gradient(135deg,rgba(217,164,65,.14),rgba(217,164,65,.03));
+    border:1px solid rgba(217,164,65,.4); border-radius:12px; padding:13px 14px; margin-bottom:12px; font-size:13px; }
+  .rank-card b { color:var(--brass); font-size:16px; }
+  .rank-card .lvl { display:block; color:var(--muted); font-size:11px; margin-top:4px; }
+  .isl-prog { display:flex; align-items:center; gap:10px; margin-bottom:9px; font-size:12px; }
+  .isl-prog .nm { width:104px; flex-shrink:0; color:#cbb89a; }
+  .isl-prog .bar { flex:1; margin-top:0; }
+  .isl-prog .pc { width:34px; text-align:right; color:var(--glass); }
+  /* профиль */
+  .prof-card { background:var(--panel); border:1px solid var(--hairline); border-radius:12px; padding:16px; }
+  .prof-card label { display:block; font-size:11.5px; color:var(--muted); margin:10px 2px 4px; }
+  .prof-card input, .prof-card select { width:100%; font-family:inherit; font-size:16px; padding:11px 12px;
+    border:2px solid var(--brass); border-radius:9px; background:#0d1a13; color:var(--ivory); outline:none; }
+  .btn-brass { background:linear-gradient(180deg,var(--brass),var(--brass-d)); color:#201a08; border:none;
+    border-radius:10px; padding:14px 0; width:100%; font-family:inherit; font-size:15px; font-weight:bold; margin-top:12px; }
+  .btn-ghost { background:none; border:1px solid var(--hairline); color:var(--muted); border-radius:10px;
+    padding:12px 0; width:100%; font-family:inherit; font-size:13px; margin-top:10px; }
+  .note { text-align:center; font-size:11px; color:#54705f; margin-top:16px; line-height:1.6; }
+  /* нижняя навигация */
+  nav { position:fixed; left:0; right:0; bottom:0; display:flex; background:rgba(11,23,18,.96);
+    border-top:1px solid var(--hairline); padding:6px 8px var(--safe-b); z-index:40; backdrop-filter:blur(6px); }
+  nav button { flex:1; background:none; border:none; color:var(--muted); font-family:inherit;
+    font-size:10.5px; padding:7px 0 5px; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; }
+  nav button .ic { font-size:20px; }
+  nav button.active { color:var(--brass); }
+  /* просмотр модуля */
+  .viewer { position:fixed; inset:0; background:var(--deep); z-index:60; display:none; flex-direction:column; }
+  .viewer.open { display:flex; }
+  .viewer-bar { display:flex; justify-content:space-between; align-items:center; gap:8px;
+    padding:calc(8px + var(--safe-t)) 12px 8px; border-bottom:1px solid var(--hairline); flex-shrink:0; }
+  .viewer-bar .t { font-size:14px; color:var(--brass); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .viewer-bar .close { background:var(--brass); color:#201a08; border:none; border-radius:9px;
+    padding:9px 18px; font-family:inherit; font-size:14px; font-weight:bold; flex-shrink:0; }
+  .viewer iframe { flex:1; width:100%; border:none; background:#10150f; }
+  .toast { position:fixed; left:50%; bottom:calc(84px + var(--safe-b)); transform:translateX(-50%) translateY(10px);
+    background:var(--brass); color:#201a08; font-size:13px; font-weight:bold; border-radius:999px;
+    padding:9px 18px; opacity:0; pointer-events:none; transition:.25s; z-index:80; white-space:nowrap; }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">АРХИМЕД <em>· моб</em></div>
+  <div class="hud">
+    <span class="chip">⭐ <b id="hStars">0</b></span>
+    <span class="chip rank" id="hRank">Стажёр</span>
+  </div>
+</header>
+
+<main>
+  <!-- ОСТРОВА -->
+  <section class="screen active" id="s-islands">
+    <div class="sec-title">🗺 Карта Островов Познания</div>
+    <div id="tiles"></div>
+    <div class="note">АРХИМЕД · мобильное приложение<br>Установите на главный экран: на Android «⋮ → Добавить на главный экран», на iPhone «Поделиться → На экран „Домой“». Офлайн-режим включается автоматически.</div>
+  </section>
+
+  <!-- ПУТЬ -->
+  <section class="screen" id="s-path">
+    <div class="sec-title">🛤 Мой путь Исследователя</div>
+    <div class="stat-row">
+      <div class="stat"><div class="v" id="pStars">0</div><div class="k">звёзд</div></div>
+      <div class="stat"><div class="v" id="pIslands">0/6</div><div class="k">островов</div></div>
+      <div class="stat"><div class="v" id="pSolved">0</div><div class="k">задач</div></div>
+    </div>
+    <div class="rank-card">🏆 Текущий ранг: <b id="pRank">Стажёр</b>
+      <span class="lvl" id="pRankNext">Решите 6 задач, чтобы стать Исследователем</span></div>
+    <div class="sec-title">Прогресс по островам</div>
+    <div id="pBars"></div>
+  </section>
+
+  <!-- ПРОФИЛЬ -->
+  <section class="screen" id="s-profile">
+    <div class="sec-title">👤 Профиль</div>
+    <div class="prof-card">
+      <label>Имя героя</label>
+      <input id="pfName" maxlength="20" placeholder="Как тебя зовут?">
+      <label>Уровень</label>
+      <select id="pfLevel">
+        <option value="novice">🌱 Новичок</option>
+        <option value="advanced">⚡ Уже решал олимпиады</option>
+      </select>
+      <button class="btn-brass" onclick="saveProfile()">Сохранить профиль</button>
+      <button class="btn-ghost" onclick="resetAll()">↺ Сбросить весь прогресс</button>
+    </div>
+    <div class="note" id="pfNote"></div>
+  </section>
+</main>
+
+<nav>
+  <button class="active" data-tab="islands"><span class="ic">🗺</span>Острова</button>
+  <button data-tab="path"><span class="ic">🛤</span>Мой путь</button>
+  <button data-tab="profile"><span class="ic">👤</span>Профиль</button>
+</nav>
+
+<div class="viewer" id="viewer">
+  <div class="viewer-bar">
+    <span class="t" id="vTitle">Остров</span>
+    <button class="close" onclick="closeViewer()">✕ Закрыть</button>
+  </div>
+  <iframe id="vFrame" src="about:blank" title="модуль"></iframe>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= ДАННЫЕ ================= */
+const ISLANDS = [
+  { id:'math', file:'../ПРОТОТИП_МАТЕМАТИКА_ТРЕНАЖЕР.html', ico:'🏛', name:'Остров Сиракузы', dsc:'Математика · 26 олимпиадных задач в 3D' },
+  { id:'phys', file:'../ПРОТОТИП_ФИЗИКА_ТРЕНАЖЕР.html', ico:'🍎', name:'Башня Ньютона', dsc:'Физика · 26 задач: силы, энергия, электричество' },
+  { id:'ch1', file:'../ПРОТОТИП_ГЛАВА1_СИРАКУЗЫ.html', ico:'🧭', name:'Глава 1 «Стражники»', dsc:'Квест: рыцарь и лжец' },
+  { id:'pend', file:'../ПРОТОТИП_ЛАБОРАТОРИЯ_МАЯТНИК.html', ico:'🕰', name:'Лаборатория · Маятник', dsc:'Эксперимент: измерь g, получи медаль' },
+  { id:'chem', file:'../ПРОТОТИП_ХИМИЯ_ТРЕНАЖЕР.html', ico:'⚗️', name:'Лаборатория Лавуазье', dsc:'Химия · 7 задач: молекулы, растворы, газы' },
+  { id:'titr', file:'../ПРОТОТИП_ТИТРОВАНИЕ.html', ico:'🧪', name:'Лаборатория · Титрование', dsc:'Химия: точка эквивалентности' },
+  { id:'chem3d', url:'http://localhost:5173/', ico:'🔬', name:'3D-лаборатория (React)', dsc:'Фотореалистичная химия · только на ПК', pc:true },
+];
+const RANKS = [[0,'Стажёр'],[6,'Исследователь'],[14,'Стратег'],[24,'Хранитель Островов'],[34,'Мастер Вселенной'],[48,'Легенда Островов']];
+const PKEY='arhimed_profile_v1';
+let profile={name:'',level:'novice'};
+try{const s=JSON.parse(localStorage.getItem(PKEY)); if(s&&s.name) profile=Object.assign(profile,s);}catch(e){}
+
+function readJSON(k){ try{ const s=JSON.parse(localStorage.getItem(k)); return s||null; }catch(e){ return null; } }
+function progress(){
+  const math=readJSON('arhimed_math3d_v1')||{}, phys=readJSON('arhimed_phys3d_v1')||{};
+  const ch1=readJSON('arhimed_proto_v1')||{}, pend=readJSON('arhimed_lab_v1')||{}, titr=readJSON('arhimed_titr_v1')||{};
+  const chem=readJSON('arhimed_chem_v1')||{};
+  const stars=(math.stars||0)+(phys.stars||0)+(chem.stars||0);
+  const ch1s=ch1.solved||[];
+  const ch1done=ch1s.length>=3 && ch1s.every(Boolean);
+  const done=[(math.solved||[]).length>=26,(phys.solved||[]).length>=26,(chem.solved||[]).length>=7,ch1done,!!pend.medal,!!titr.medal].filter(Boolean).length;
+  const extra=((ch1.points||0)>0 && !ch1done)?1:0;
+  const solved=(math.solved||[]).length+(phys.solved||[]).length+(chem.solved||[]).length+(ch1s.filter(Boolean).length);
+  return { stars, done:done+extra, solved, math, phys, ch1, pend, titr, chem };
+}
+function rankName(s){ let n=RANKS[0][1]; for(const [t,x] of RANKS) if(s>=t) n=x; return n; }
+function pctOf(arr,total){ return Math.min(100, Math.round((arr||[]).length/total*100)); }
+
+/* ================= РЕНДЕР ================= */
+function render(){
+  const p=progress();
+  document.getElementById('hStars').textContent=p.stars;
+  document.getElementById('hRank').textContent=rankName(p.stars);
+  document.getElementById('pStars').textContent=p.stars;
+  document.getElementById('pIslands').textContent=p.done+'/7';
+  document.getElementById('pSolved').textContent=p.solved;
+  document.getElementById('pRank').textContent=rankName(p.stars);
+  const next=RANKS.find(r=>p.stars<r[0]);
+  document.getElementById('pRankNext').textContent=next
+    ? `До ранга «${next[1]}» осталось ${next[0]-p.stars} ⭐` : 'Максимальный ранг!';
+
+  document.getElementById('tiles').innerHTML=ISLANDS.map(is=>{
+    let pct=0, extra='';
+    if(is.id==='math'){ pct=pctOf(p.math.solved,26); extra=`⭐ ${p.math.stars||0}`; }
+    else if(is.id==='phys'){ pct=pctOf(p.phys.solved,26); extra=`⭐ ${p.phys.stars||0}`; }
+    else if(is.id==='chem'){ pct=pctOf(p.chem.solved,7); extra=`⭐ ${p.chem.stars||0}`; }
+    else if(is.id==='ch1'){ pct=pctOf(p.ch1.solved,3); }
+    else if(is.id==='pend'){ pct=p.pend.medal?100:0; extra=p.pend.medal||''; }
+    else if(is.id==='titr'){ pct=p.titr.medal?100:0; extra=p.titr.medal||''; }
+    return `<div class="tile" onclick="openIsland(${ISLANDS.indexOf(is)})">
+      <div class="ico">${is.ico}</div>
+      <div class="inf"><div class="nm">${is.name}${is.pc?'<span class="badge">на ПК</span>':''}</div>
+      <div class="ds">${is.dsc}</div>
+      <div class="bar"><i style="width:${pct}%"></i></div></div>
+      <div class="go">›</div></div>`;
+  }).join('');
+
+  document.getElementById('pBars').innerHTML=ISLANDS.slice(0,6).map(is=>{
+    let pct=0, label='';
+    if(is.id==='math'){ pct=pctOf(p.math.solved,26); label=`${(p.math.solved||[]).length}/26`; }
+    else if(is.id==='phys'){ pct=pctOf(p.phys.solved,26); label=`${(p.phys.solved||[]).length}/26`; }
+    else if(is.id==='chem'){ pct=pctOf(p.chem.solved,7); label=`${(p.chem.solved||[]).length}/7`; }
+    else if(is.id==='ch1'){ pct=pctOf(p.ch1.solved,3); label=`${(p.ch1.solved||[]).filter(Boolean).length}/3`; }
+    else if(is.id==='pend'){ pct=p.pend.medal?100:0; label=p.pend.medal||'—'; }
+    else if(is.id==='titr'){ pct=p.titr.medal?100:0; label=p.titr.medal||'—'; }
+    return `<div class="isl-prog"><span class="nm">${is.ico} ${is.name}</span>
+      <div class="bar"><i style="width:${pct}%"></i></div><span class="pc">${label}</span></div>`;
+  }).join('');
+
+  document.getElementById('pfName').value=profile.name||'';
+  document.getElementById('pfLevel').value=profile.level||'novice';
+  document.getElementById('pfNote').innerHTML=profile.name?`Привет, ${profile.name}! Прогресс хранится в этом браузере.`:'';
+}
+
+/* ================= ДЕЙСТВИЯ ================= */
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-'+b.dataset.tab).classList.add('active');
+}));
+
+function openIsland(i){
+  const is=ISLANDS[i];
+  if(is.pc){ toast('3D-химия работает на компьютере'); return; }
+  if(is.url){ window.open(is.url,'_blank'); return; }
+  document.getElementById('vTitle').textContent=is.ico+' '+is.name;
+  document.getElementById('vFrame').src=is.file;
+  document.getElementById('viewer').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeViewer(){
+  document.getElementById('viewer').classList.remove('open');
+  document.getElementById('vFrame').src='about:blank';
+  document.body.style.overflow='';
+  render();
+}
+function saveProfile(){
+  const n=document.getElementById('pfName').value.trim();
+  if(!n){ toast('Введи имя, герой!'); return; }
+  profile={name:n, level:document.getElementById('pfLevel').value};
+  try{ localStorage.setItem(PKEY, JSON.stringify(profile)); }catch(e){}
+  toast('Профиль сохранён, '+n+'!'); render();
+}
+function resetAll(){
+  if(!confirm('Сбросить ВЕСЬ прогресс по всем островам?')) return;
+  ['arhimed_math3d_v1','arhimed_phys3d_v1','arhimed_chem_v1','arhimed_proto_v1','arhimed_lab_v1','arhimed_titr_v1','arhimed_profile_v1'].forEach(k=>localStorage.removeItem(k));
+  profile={name:'',level:'novice'}; render(); toast('Прогресс сброшен');
+}
+let toastTimer;
+function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),1800); }
+
+/* ================= PWA ================= */
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('../sw.js').catch(()=>{}); });
+}
+
+render();
+</script>
+</body>
+</html>

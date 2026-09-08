@@ -1,0 +1,126 @@
+Contest Results
+(Analysis by Avnith Vijayram)
+For convenience, we will use $PBT$ as an acronym for perfect binary tree.
+Root the tree at node $1$. Consider counting just the number of ways to create
+a forest of $PBT$s such that the root of each $PBT$ is the closest node in the
+$PBT$ to node $1$ in the original tree. Since all $PBT$s are oriented the same
+way, to build up larger $PBT$s, we need to merge two smaller $PBT$s at their
+roots. This motivates the following DP.
+ $dp[x][h]$ = number of ways to remove edges from node $x$'s subtree and
+have a $PBT$ of height $h$ ($0 \le h \le \log_2 N$) rooted at $x$. 
+ $ans[x]$ = answer for node $x$'s subtree. 
+At node $x$, we can either create a new $PBT$ of height $0$ or merge $PBT$s of
+height $h-1$ from two of $x$'s children. For all children $c$ not used in
+creating the $PBT$ at $x$, we multiply by the product of $ans[c]$ for each of
+those subtrees. This gives us the following recurrences.
+ $dp[x][0] \leftarrow \displaystyle\prod_{c \in C} ans[c]$
+$dp[x][h] \leftarrow \displaystyle\sum_{c_1, c_2 \in C} \left( dp[c_1][h-1] \cdot dp[c_2][h-1] 
+\cdot \prod_{c \in C \setminus \{c_1, c_2\}} ans[c] \right)$
+Here, $C$ is the set of children of node $x$ and the bottom sum is over all
+unordered pairs of children $c_1$ and $c_2$ of node $x$. The answer at $x$ can
+be calculated as
+ $ans[x] \leftarrow \displaystyle\sum_{h} dp[x][h]$
+Now, we need to extend this to cover $PBT$s where the root of the $PBT$ is not
+the closest to node $1$. Suppose that we have a $PBT$ of height $h$ rooted at
+node $r$, but node $s \neq r$ is the closest node to node $1$. Let
+$r = x_0, x_1, \ldots, x_{d-1}, x_d = s$ be the path from node $r$ to node $s$,
+where $d$ is the distance between nodes $r$ and $s$. We can observe the
+following structure relative to the original tree rooted at node $1$.
+ Node $x_0 = r$ has one child, a $PBT$ of height $h-1$. 
+ For each
+$1 \le i < d$, node $x_i$ has two children: $x_{i-1}$ and a $PBT$ of height
+$h-i-1$. 
+ Node $x_d = s$ has child $x_{d-1}$. Additionally, if
+$d \neq h$, then $x_d$ has two $PBT$s of height $h-d-1$ as children. 
+This motivates us to define the following DP.
+ $pd[x][h]$ = number of ways to remove edges from node $x$'s subtree to
+create a tree that becomes a $PBT$ if a $PBT$ of height $h$ was attached to node
+$x$. 
+The observations about the structure of the $PBT$ can now be translated into
+transitions:
+$pd[x][h-1] \leftarrow \displaystyle\sum_{c_1 \in C} \left( dp[c_1][h-1] 
+\cdot \prod_{c \in C \setminus \{c_1\}} ans[c] \right)$
+$pd[x][h-1] \leftarrow \displaystyle\sum_{c_1, c_2 \in C} \left( pd[c_1][h] \cdot 
+dp[c_2][h-1] \cdot \prod_{c \in C \setminus \{c_1, c_2\}} ans[c] \right)$
+$ans[x] \leftarrow \displaystyle\sum_{c_1 \in C} \left( pd[c_1][0] \cdot 
+\prod_{c \in C \setminus \{c_1\}} ans[c] \right)$
+$ans[x] \leftarrow \displaystyle\sum_{c_1, c_2, c_3 \in C} \left( pd[c_1][h] \cdot 
+dp[c_2][h-1] \cdot dp[c_3][h-1] \cdot \prod_{c \in C \setminus \{c_1, c_2, c_3\}} ans[c] \right)$
+Note that $c_2$ and $c_3$ in the last transition are indistinguishable and their
+order doesn't matter, but all other children are distinguishable. To compute
+these sums efficiently, for each node $x$, we can define the following table.
+ $sums[h][i][j]$ = the sum, over all ways to partition the children of $x$
+into groups of size $i$, $j$, and $|C|-i-j$, of the product of
+ $dp[c][h-1]$ for each child $c$ in the first group 
+ $pd[c][h]$ for each child $c$ in the second group 
+ $ans[c]$ for each child $c$ in the third group 
+We can use DP to compute this table for $0 \le i \le 2$ and $0 \le j \le 1$ by 
+processing one child at a time. All of the sums that we need for our transitions
+can be found somewhere in this table. 
+Since computing the DP at each node takes $O(|C| \log N)$, the total time
+complexity is $O(N \log N)$.
+My code:
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+template<class T> using V = vector<T>;
+const ll M = 1e9+7;
+const int LGN = 17;
+void solve() {
+ int n; cin >> n;
+ V<V<int>> adj(n);
+ for (int i = 0; i < n-1; i++) {
+ int u, v; cin >> u >> v; u--; v--;
+ adj[u].push_back(v);
+ adj[v].push_back(u);
+ }
+ V<ll> ans(n, 0);
+ V<V<ll>> dp(LGN, V<ll>(n, 0)), pd(LGN, V<ll>(n, 0));
+ auto dfs = [&](auto&& dfs, int x, int p) -> void {
+ ll sums[LGN][3][2];
+ memset(sums, 0, sizeof(sums));
+ for (int i = 0; i < LGN; i++) sums[i][0][0] = 1;
+ for (auto y : adj[x]) {
+ if (y == p) continue;
+ dfs(dfs, y, x);
+ for (int i = 0; i < LGN; i++) {
+ for (int j = 2; j >= 0; j--) {
+ for (int k = 1; k >= 0; k--) {
+ if (j < 2) {
+ sums[i][j+1][k] += (i > 0 ? dp[i-1][y] : 0LL) * sums[i][j][k] % M;
+ sums[i][j+1][k] %= M;
+ } 
+ if (k < 1) {
+ sums[i][j][k+1] += pd[i][y] * sums[i][j][k] % M;
+ sums[i][j][k+1] %= M;
+ }
+ sums[i][j][k] *= ans[y];
+ sums[i][j][k] %= M;
+ }
+ }
+ }
+ }
+ dp[0][x] += sums[0][0][0];
+ for (int i = 0; i < LGN; i++) {
+ if (i < LGN-1) dp[i+1][x] += sums[i+1][2][0];
+ if (i < LGN-1) pd[i][x] += sums[i+1][1][0];
+ if (i > 0) pd[i-1][x] += sums[i][1][1];
+ ans[x] += dp[i][x];
+ if (i == 0) ans[x] += sums[i][0][1];
+ else ans[x] += sums[i][2][1];
+ }
+ for (int i = 0; i < LGN; i++) {
+ dp[i][x] %= M;
+ pd[i][x] %= M; 
+ }
+ ans[x] %= M;
+ };
+ dfs(dfs, 0, -1);
+ cout << ans[0] << endl;
+}
+signed main() {
+ ios_base::sync_with_stdio(false);
+ cin.tie(nullptr);
+ int t; cin >> t;
+ while (t--) solve();
+}
