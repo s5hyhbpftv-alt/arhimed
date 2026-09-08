@@ -18224,3 +18224,377 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW177Act=visW177Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===177){ window.ARH_LESSONS[i]=L177; break; } } })();
 })();
+
+/* ================= УРОК 84 · Степень с натуральным показателем (v1 · «Шахматная фабрика степеней Архимеда», 14 слайдов, премиум) ================= */
+(function(){
+  if(!window.__wk84v1css){
+    window.__wk84v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qGIn{animation:qGIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qGIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qGPop{animation:qGPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qGPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qGBox{animation:qGBox .6s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qGBox{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qGGrow{animation:qGGrow .7s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes qGGrow{0%{transform:scale(0);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qGFloat{animation:qGFloat 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qGFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+    document.head.appendChild(st);
+  }
+  const L84 = {
+    id: 84, title: 'Степень с натуральным показателем', ico: '⚡',
+    src: 'Математика · 7 класс · Степени', subj: 'math',
+    explain: [
+      'Степень aⁿ — это произведение n одинаковых множителей: 2³ = 2 · 2 · 2 = 8.',
+      'При умножении степеней с одинаковым основанием показатели складываются: 2³ · 2² = 2⁵ = 32.',
+      'При возведении степени в степень показатели перемножаются: (2²)³ = 2⁶ = 64.',
+      'Совет Архимеда: не путай 2³ = 8 и 2 · 3 = 6 — показатель говорит, сколько раз число умножается само на себя.',
+      'Показатель n — сколько раз основание умножаем само на себя: 2³ = 2·2·2.',
+      'Два в кубе — это куб со стороной 2: 2·2·2 = 8 кубиков.',
+      'Рост идёт быстро: 2, 4, 8, 16, 32, 64… каждое умножение на 2 удваивает.',
+      'Одинаковое основание умножается — показатели складываем (3+2=5).',
+      'Степень в степени — показатели перемножаем (2·3=6).',
+      'Тренажёр: посчитай степень по расширению в произведение.',
+      'Тренажёр: примени правило сложения/умножения показателей.',
+      'Шпаргалка: aⁿ = a·a·…·a (n раз); aᵐ·aⁿ = aᵐ⁺ⁿ; (aᵐ)ⁿ = aᵐⁿ.',
+    ],
+    check: { q: 'Сколько будет 3² · 3²?', choices: ['12', '36', '81'], ans: 2,
+      exp: 'Основания одинаковые, показатели складываем: 3² · 3² = 3⁴ = 81, ведь 9 · 9 = 81.' },
+    tasks: [
+      { q: 'Чему равно (2²)³?', kind: 'unit', ans: 64, tol: 0,
+        hints: ['Показатели перемножаются: 2 · 3 = 6.', '2⁶ = 2 · 2 · 2 · 2 · 2 · 2 = 64.'], sol: '(2²)³ = 2⁶ = 64; можно и так: (2 · 2)³ = 4³ = 64.' },
+      { q: 'Чему равно 5³?', kind: 'choice', choices: ['15', '25', '125'], ans: 2, tol: 0,
+        hints: ['5³ — это 5 · 5 · 5.', '5 · 5 = 25, затем 25 · 5 = 125.'], sol: '5³ = 5 · 5 · 5 = 125.' }
+    ]
+  };
+  const ink='#3a2a16', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', blu='#3f6d9e', red='#c14b2f', cream='#f2e6c8', dark='#8a5a2b',
+        card='rgba(255,250,240,.96)', cardB='#c9b98d';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qGbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f9eccd"/><stop offset="1" stop-color="#f0dfb8"/></linearGradient>
+        <linearGradient id="qGgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0c27a"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="#b8802c"/></linearGradient>
+        <filter id="qGsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.24"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qGbg)"/>
+      <g opacity="0.1" stroke="#b8802c" stroke-width="1"><circle cx="40" cy="36" r="24" fill="none"/><circle cx="278" cy="150" r="30" fill="none"/></g>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="${cardB}" stroke-width="2" rx="7"/>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="url(#qGgold)" stroke-width="1.3" opacity="0.6" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  /* ряд клеток с зерном: 2^i */
+  function chessRow(x,y,cell,n){
+    let s='';
+    for(let i=0;i<n;i++){
+      const sq=x+i*cell;
+      s+=`<g class="qGBox" style="animation-delay:${(0.08*i).toFixed(2)}s" filter="url(#qGsh)"><rect x="${sq}" y="${y}" width="${cell-3}" height="${cell-3}" rx="5" fill="${i%2?dark:cream}" stroke="#6b4423" stroke-width="1.2"/>`;
+      if(i===0){ s+=`<circle cx="${sq+cell/2-4}" cy="${y+cell/2-2}" r="4" fill="${gold}"/>`; }
+      else if(i<=4){ for(let k=0;k<(2**(i+1)<=12?2**(i+1):6);k++){ s+=`<circle cx="${sq+8+(k%4)*10}" cy="${y+8+Math.floor(k/4)*10}" r="3.2" fill="${gold}"/>`; } }
+      else { s+=tx(sq+cell/2,y+cell/2+4,12,'#7a5a2a','×'+(2**(i+1)),{b:1}); }
+      s+=tx(sq+cell/2+3,y+cell-3,10,dim,'2^'+(i+1),{}); s+=`</g>`;
+    }
+    return s;
+  }
+  function factorChain(x,y,cell,base,count,result){
+    let s='';
+    for(let i=0;i<count;i++){
+      const cx=x+i*(cell*0.9);
+      s+=`<g class="qGBox" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${cx}" y="${y}" width="${cell}" height="${cell}" rx="7" fill="rgba(217,160,90,.16)" stroke="${gold}" stroke-width="2"/>
+      ${tx(cx+cell/2,y+cell/2+5,22,ink,''+base,{b:1,georgia:1})}
+      <text x="${cx+cell/2}" y="${y+cell-4}" text-anchor="middle" font-size="10" fill="${dim}">множитель</text></g>`;
+      if(i<count-1){ s+=`<text x="${cx+cell*0.9+cell*0.18}" y="${y+cell/2+6}" text-anchor="middle" font-size="20" fill="${dim}">×</text>`; }
+    }
+    return s;
+  }
+  const chip=(t,c,delay)=>`<span class="qGIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
+  const Q84=[
+    {q:'3² · 3² = ?',opts:['12','36','81'],ans:2},
+    {q:'5³ = ?',opts:['15','25','125'],ans:2}
+  ];
+  function quiz(lk,st){
+    const T=Q84[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.16)':'rgba(193,75,47,.14)'; bd=i===T.ans?grn:red; tc=i===T.ans?'#2f7a53':red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW84T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#2f7a53;font-size:16px">Верно! показатели складываем</div>'
+        : '<div class="wk-ans" style="color:#c14b2f;font-size:15px">Не так · перемножь степени</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW84Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW84Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#d9a05a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW84(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=13){ st.go=0; st.pick=null; }
+      if(step===9||step===10) st.pick=null;
+      if(step===10){ st.mq=0; st.msel=null; }
+      if(step===11){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,16,ink,'что такое степень?',{b:1});
+      inner+=tx(159,58,13,dim,'aⁿ = a · a · … · a (n раз)',{});
+      inner+=factorChain(46,72,52,2,go?3:1,8);
+      if(go){
+        inner+=`<g class="qGPop"><text x="159" y="172" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">2³ = 2 · 2 · 2 = 8</text></g>`;
+      } else {
+        inner+=tx(159,172,13.5,dim,'нажми — разложим',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Фабрика степеней</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('показатель — сколько раз',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW84Act('${lk}','rst')`):wkBtn('разложить',`visW84Act('${lk}','go')`))+
+        wkSml('aⁿ = n множителей a'));
+    } else if(step===1){
+      const H=206, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,16,ink,'удвоение на шахматной доске',{b:1});
+      inner+=chessRow(16,58,56,5);
+      if(go){
+        inner+=`<g class="qGPop"><text x="159" y="164" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">2, 4, 8, 16, 32… — растёт быстро!</text></g>`;
+      } else {
+        inner+=tx(159,180,13,dim,'каждое умножение на 2 удваивает',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шахматы Архимеда</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2ⁿ растёт стремительно',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW84Act('${lk}','rst')`):wkBtn('удвоить',`visW84Act('${lk}','go')`))+
+        wkSml('знаменитая задача про зерно'));
+    } else if(step===2){
+      const H=206, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,16,ink,'2³ — куб со стороной 2',{b:1});
+      inner+=factorChain(30,70,50,2,3,8);
+      if(go){
+        /* 2×2×2 кубики: изометрия */
+        let cubes='';
+        for(let r=0;r<2;r++)for(let c=0;c<2;c++){ cubes+=`<rect x="${120+c*38}" y="${118+r*38- (go?8:0)}" width="30" height="30" rx="4" fill="#f0c27a" stroke="#b8802c" stroke-width="1.6"/>`; }
+        cubes+=`<rect x="${120}" y="88" width="68" height="22" rx="4" fill="#e0b06a" stroke="#b8802c"/>`;
+        inner+=`<g class="qGGrow"><rect x="120" y="118" width="68" height="72" rx="4" fill="none" stroke="${gold}" stroke-width="2"/>${cubes}
+        <text x="154" y="210" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold">= 8</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Два в кубе</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2×2×2 = 8 кубиков',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW84Act('${lk}','rst')`):wkBtn('собрать куб',`visW84Act('${lk}','go')`))+
+        wkSml('три множителя «2»'));
+    } else if(step===3){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,16,ink,'5³ = 5·5·5',{b:1});
+      inner+=factorChain(24,66,64,5,3,125);
+      if(go){
+        inner+=`<g class="qGPop"><text x="159" y="176" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">5 · 5 = 25 · 25 · 5 = 125</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пять в кубе</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('5·5·5 = 125',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW84Act('${lk}','rst')`):wkBtn('посчитать',`visW84Act('${lk}','go')`))+
+        wkSml('три множителя «5»'));
+    } else if(step===4){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,36,16,ink,'умножаем степени',{b:1});
+      inner+=tx(64,74,18,ink,'2³',{b:1,georgia:1});
+      inner+=tx(140,74,18,dim,'·',{b:1});
+      inner+=tx(166,74,18,ink,'2²',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="qGPop"><text x="159" y="130" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">2⁵ = 32</text>
+        <text x="159" y="158" text-anchor="middle" font-size="14" fill="${dim}">показатели складываем: 3+2=5</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Одинаковое основание</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('aᵐ · aⁿ = aᵐ⁺ⁿ',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW84Act('${lk}','rst')`):wkBtn('перемножить',`visW84Act('${lk}','go')`))+
+        wkSml('показатели складываются'));
+    } else if(step===5){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,36,16,ink,'степень в степени',{b:1});
+      inner+=tx(84,74,18,ink,'(2²)',{b:1,georgia:1});
+      inner+=`<text x="150" y="76" text-anchor="middle" font-size="16" fill="${dim}" font-family="Georgia,serif">³</text>`;
+      if(go){
+        inner+=`<g class="qGPop"><text x="159" y="130" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">2⁶ = 64</text>
+        <text x="159" y="158" text-anchor="middle" font-size="14" fill="${dim}">показатели перемножаем: 2·3=6</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Степень в степени</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('(aᵐ)ⁿ = aᵐⁿ',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW84Act('${lk}','rst')`):wkBtn('возвести',`visW84Act('${lk}','go')`))+
+        wkSml('показатели перемножаются'));
+    } else if(step===6){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,36,18,ink,'2³ или 2 · 3?',{b:1});
+      inner+=tx(70,74,20,ink,'2³ = 8',{b:1,georgia:1});
+      inner+=tx(230,74,20,red,'2 · 3 = 6',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="qGPop"><rect x="46" y="104" width="226" height="40" rx="11" fill="rgba(193,75,47,.12)" stroke="${red}" stroke-width="2"/>
+        ${tx(159,124,14,red,'не путай: показатель ≠ множитель',{b:1})}
+        ${tx(159,140,12,dim,'2³ = 2·2·2 = 8, а не 6',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ловушка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2³ = 8 · а 2·3 = 6',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW84Act('${lk}','rst')`):wkBtn('проверить',`visW84Act('${lk}','go')`))+
+        wkSml('показатель — сколько раз'));
+    } else if(step===7){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'правила одной строкой',{b:1});
+      const rows=[['aⁿ = a·a·…·a (n раз)'],['aᵐ · aⁿ = aᵐ⁺ⁿ'],['(aᵐ)ⁿ = aᵐⁿ'],['a⁰ = 1 · a¹ = a']];
+      for(let i=0;i<rows.length;i++){
+        if(go>=i){
+          const ry=54+i*36;
+          inner+=`<g class="qGIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="30" rx="9" fill="${i%2?'rgba(255,250,240,.97)':'rgba(217,160,90,.13)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+20,13,ink,rows[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сводка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('складываем / перемножаем',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW84Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW84Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW84Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW84Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW84Act('${lk}','rst')`):'')+
+        wkSml('запомни три правила'));
+    } else if(step===8){
+      const H=200, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'2³ = ?',a:'8',ds:['6','9']},
+        {q:'5² = ?',a:'25',ds:['10','125']},
+        {q:'3³ = ?',a:'27',ds:['9','18']},
+        {q:'10² = ?',a:'100',ds:['20','1000']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,34,17,ink,P.q,{b:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
+        inner+=`<g class="qGIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qGPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qGPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">перемножь основание</text></g>`)
+        : tx(159,py+72,14.5,dim,'вычисли степень',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW84Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW84P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW84P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: степень</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('aⁿ — перемножь'));
+    } else if(step===9){
+      const H=200, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'2³ · 2² = ?',a:'2⁵',ds:['2⁶','2¹']},
+        {q:'3² · 3³ = ?',a:'3⁵',ds:['3⁶','3¹']},
+        {q:'(2³)² = ?',a:'2⁶',ds:['2⁵','2¹']},
+        {q:'(5²)³ = ?',a:'5⁶',ds:['5⁵','5¹']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,34,16,ink,P.q,{b:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
+        inner+=`<g class="qGIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+33,20,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qGPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qGPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">показатели</text></g>`)
+        : tx(159,py+72,14.5,dim,'выбери ответ',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW84Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW84P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW84P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: правила</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        fb+retry+
+        wkSml('складывай / перемножай'));
+    } else if(step===10){
+      const H=196;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'2³ = ?',opts:['8','6','9'],ans:0},
+        {q:'3² · 3² = ?',opts:['81','36','12'],ans:0},
+        {q:'(2²)³ = ?',opts:['64','32','16'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="qGPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'вспомни правило'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW84S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW84Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW84Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('складывай/перемножай показатели'));
+    } else {
+      const H=196;
+      let inner='';
+      inner+=tx(159,42,17,ink,'3² · 3²',{b:1,georgia:1});
+      inner+=`<g class="qGPop"><text x="159" y="90" text-anchor="middle" font-size="32" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 81</text></g>`;
+      inner+=tx(159,116,13.5,dim,'3⁴ = 9 · 9 = 81',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('показатели складываем'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[84]=visW84;
+  function visW84T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW84T=visW84T;
+  function visW84P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW84P=visW84P;
+  function visW84S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW84S=visW84S;
+  function visW84Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===10){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW84Act=visW84Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===84){ window.ARH_LESSONS[i]=L84; break; } } })();
+})();
