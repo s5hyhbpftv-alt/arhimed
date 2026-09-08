@@ -11722,13 +11722,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(chip('число белых всегда равно числу чёрных накрытых',red,0.2))+
         wkSml('это свойство не меняется при любом числе домино'));
     } else if(step===5){
-      const H=185;
+      const H=190;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,58,19,cream,'необходимое условие',{b:1});
+      inner+=board(101,50,6,20,{});
+      inner+=tx(159,36,18,cream,'необходимое условие',{b:1});
       if(go){
-        inner+=`<g class="dmPop"><text x="159" y="106" text-anchor="middle" font-size="23" fill="${blu}" font-weight="bold" font-family="Georgia,serif">белые = чёрные</text>
-        ${tx(159,142,14.5,dim,'иначе — сразу ответ «нельзя»',{})}</g>`;
+        inner+=`<g class="dmPop"><rect x="88" y="106" width="142" height="34" rx="9" fill="rgba(34,22,11,.9)" stroke="${blu}" stroke-width="2"/>
+        ${tx(159,128,19,blu,'белые = чёрные',{b:1,georgia:1})}</g>
+        ${tx(159,166,13.5,dim,'иначе — сразу ответ «нельзя»',{})}`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Условие возможности</div>`+
         wkHero(table(W,H,{inner:()=>inner}))+
@@ -11799,14 +11801,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('почему нельзя?',`visW397Act('${lk}','go')`))+
         wkSml('сколько костяшек ни клади — цвета не уравнять'));
     } else if(step===10){
-      const H=185;
+      const H=192;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,48,17,cream,'31 костяшка накрыла бы…',{b:1});
+      inner+=board(97,52,8,16,{cut:[[0,0],[7,7]]});
+      inner+=tx(159,38,17,cream,'31 костяшка накрыла бы…',{b:1});
       if(go){
-        inner+=`<g class="dmPop"><text x="159" y="94" text-anchor="middle" font-size="20" fill="${cream}" font-weight="bold" font-family="Georgia,serif">31 белую и 31 чёрную</text>
-        ${tx(159,128,15.5,dim,'а чёрных на доске 32!',{})}
-        ${tx(159,154,17,red,'одна чёрная останется без пары',{b:1})}</g>`;
+        inner+=`<g class="dmPop"><text x="159" y="100" text-anchor="middle" font-size="20" fill="${cream}" font-weight="bold" font-family="Georgia,serif">31 белую и 31 чёрную</text>
+        ${tx(159,130,15.5,dim,'а чёрных на доске 32!',{})}
+        ${tx(159,156,17,red,'одна чёрная останется без пары',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему так выходит</div>`+
         wkHero(table(W,H,{inner:()=>inner}))+
@@ -13417,8 +13420,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     s+=`<line x1="${OX}" y1="${sy(ymin)}" x2="${OX}" y2="${sy(ymax)}" stroke="${gold}" stroke-width="2.4"/>`;
     s+=`<path d="M ${OX} ${sy(ymax)} l -4 7 l 8 0 z" fill="${gold}"/>`;
     /* подписи осей */
-    s+=tx(sx(xmax)-4,OY+18,12,gold,'x',{an:'end',georgia:1});
-    s+=tx(OX-8,sy(ymax)+12,12,gold,'y',{an:'end',georgia:1});
+    s+=tx(sx(xmax)+6,OY+18,13,gold,'x',{an:'start',georgia:1});
+    s+=tx(OX-18,sy(ymax)-2,13,gold,'y',{an:'end',georgia:1});
     s+=`<circle cx="${OX}" cy="${OY}" r="4" fill="${gold}"/>`;
     /* метки на осях */
     for(let x=xmin;x<=xmax;x++){ if(x!==0) s+=tx(sx(x),OY+16,10.5,dim,''+x,{}); }
