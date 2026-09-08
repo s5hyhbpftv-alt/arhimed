@@ -12457,3 +12457,445 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW191Act=visW191Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===191){ window.ARH_LESSONS[i]=L191; break; } } })();
 })();
+
+/* ================= УРОК 182 · Деление десятичной дроби на натуральное число (v1 · «Чертёжная мастерская Архимеда», 15 слайдов) ================= */
+(function(){
+  if(!window.__wk182v1css){
+    window.__wk182v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .q1In{animation:q1In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes q1In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .q1Pop{animation:q1Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q1Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q1Seg{animation:q1Seg .6s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q1Seg{0%{transform:scaleX(.05);opacity:0}70%{transform:scaleX(1.04);opacity:1}100%{transform:scaleX(1)}}'+
+      '#lvis .q1Float{animation:q1Float 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q1Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}'+
+      '#lvis .q1Glow{animation:q1Glow 2.4s ease-in-out infinite;}'+
+      '@keyframes q1Glow{0%,100%{opacity:.55}50%{opacity:1}}';
+    document.head.appendChild(st);
+  }
+  const L182 = {
+    id: 182, title: 'Деление десятичной дроби на натуральное число', ico: '➗',
+    src: 'Математика · 5 класс · Деление десятичных', subj: 'math',
+    explain: [
+      'Разделить десятичную дробь на натуральное число — значит разбить её на несколько равных частей. В мастерской Архимеда это делает «делительная линейка».',
+      'Правило Архимеда: делим десятичную дробь почти как целые числа. Но когда доходим до запятой в делимом — ставим запятую в ответе и продолжаем делить.',
+      'Вспомним состав числа: 7,5 — это 7 целых и 5 десятых. Семь целых делим на 3, а пять десятых тоже делим на 3.',
+      'Шаг 1: делим целые. 7 : 3 = 2 (по 2 целых), в остатке 1. Записываем цифру 2 в ответ.',
+      'Шаг 2: сносим 5 (десятых). Сначала ставим запятую в ответе после 2, получаем 2, — а потом 15 десятых : 3 = 5.',
+      'Ответ: 7,5 : 3 = 2,5. Проверка умножением: 2,5 · 3 = 7,5. Деление и умножение — друзья.',
+      'Посмотрим на числовой оси: 7,5 разбили на 3 равные части по 2,5. Прыжками по 2,5 мы проходим весь путь 7,5.',
+      'А если делимое меньше делителя? Например, 6,4 : 8. Берём 0 целых (6 на 8 не делится), потом 64 десятых : 8 = 8. Ответ 0,8.',
+      'Проверка: 0,8 · 8 = 6,4. Ответ начинается с нуля целых — но запятую не потеряй!',
+      'Другой пример: 12,6 : 6. 12 : 6 = 2, затем 6 десятых : 6 = 1 десятая. Ответ 2,1; проверка 2,1 · 6 = 12,6.',
+      'Ловушка: 7,5 : 3 = 2,5, а не 25 и не 0,25. Запятая стоит в ответе ровно там, где начинаются десятые. Не теряй её!',
+      'Тренажёр-мастер: для каждого деления выбери верную запятую среди трёх ответов. Теперь ты — мастер деления.',
+      'Шпаргалка: 1) дели как с целыми числами; 2) дойдя до запятой, поставь запятую в ответе; 3) продолжай делить; 4) проверь умножением.',
+      'Проверь себя устно: 7,5 : 3 = 2,5; 6,4 : 8 = 0,8; 12,6 : 6 = 2,1.',
+      'Проверь себя: 7,5 : 3 = 2,5. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Чему равно 7,5 : 3?', choices: ['2,5', '25', '0,25'], ans: 0,
+      exp: '7,5 : 3 = 2,5; проверка: 2,5 · 3 = 7,5.' },
+    tasks: [
+      { q: 'Чему равно 6,4 : 8?', kind: 'choice', choices: ['0,8', '8', '0,08'], ans: 0, tol: 0,
+        hints: ['6 на 8 не делится — берём 0 целых.', '64 десятых : 8 = 8 десятых → 0,8.'], sol: '6,4 : 8 = 0,8; проверка: 0,8 · 8 = 6,4.' },
+      { q: 'Чему равно 12,6 : 6?', kind: 'choice', choices: ['2,1', '21', '2,01'], ans: 0, tol: 0,
+        hints: ['12 : 6 = 2, затем 6 десятых : 6 = 1 десятая.', 'Ответ 2,1; проверка 2,1 · 6 = 12,6.'], sol: '12,6 : 6 = 2,1.' }
+    ]
+  };
+  const ink='#edf4ff', dim='#a6bacf', brassy='#e5b95a', brassD='#c0902f',
+        cyan='#7fd6ff', grn='#7be0a0', red='#ff9a8a', slate='#13233b', slate2='#0c1626', cell='#2a3c5b', cellD='#1e2c46';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0c1626" stroke-width="3.4">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    let grid='';
+    for(let x=0;x<=W;x+=24) grid+=`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#1d3050" stroke-width="1"/>`;
+    for(let y=0;y<=H;y+=24) grid+=`<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="#1d3050" stroke-width="1"/>`;
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="q1bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2d4a"/><stop offset="1" stop-color="#0f1a2d"/></linearGradient>
+        <linearGradient id="q1brass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4d38a"/><stop offset="0.5" stop-color="#e0a94a"/><stop offset="1" stop-color="#b8802c"/></linearGradient>
+        <linearGradient id="q1seg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe8a8"/><stop offset="1" stop-color="#e0a94a"/></linearGradient>
+        <marker id="q1arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e5b95a"/></marker>
+        <filter id="q1sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.45"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#q1bg)"/>
+      <g opacity="0.5">${grid}</g>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#3c5279" stroke-width="2" rx="7"/>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="url(#q1brass)" stroke-width="1.3" opacity="0.5" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  /* числовая ось-линейка */
+  function numline(px,py,w,lo,hi,opt){
+    const o=opt||{}; const step=o.step||1;
+    let s=`<rect x="${px}" y="${py}" width="${w}" height="18" rx="5" fill="#0d1726" stroke="#3c5279" stroke-width="1.4"/>`;
+    s+=`<rect x="${px}" y="${py}" width="${w}" height="4" rx="2" fill="rgba(255,255,255,.14)"/>`;
+    for(let m=lo;m<=hi;m+=step){
+      const x=px+(m-lo)/(hi-lo)*w;
+      s+=`<line x1="${x}" y1="${py}" x2="${x}" y2="${py+18}" stroke="#e5b95a" stroke-width="${m===o.main?2.2:1.2}"/>`;
+      s+=tx(x,py+32,11,dim,''+m,{});
+    }
+    if(o.seg){ const a=px+(o.seg[0]-lo)/(hi-lo)*w, b=px+(o.seg[1]-lo)/(hi-lo)*w;
+      s+=`<rect x="${a}" y="${py-6}" width="${b-a}" height="30" rx="6" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="1.8"/>`;
+    }
+    return s;
+  }
+  /* полоса из 10 десятых */
+  function tenths(px,py,cell,fill,opt){
+    const o=opt||{};
+    let s='';
+    for(let i=0;i<10;i++) s+=`<rect x="${px+i*cell}" y="${py}" width="${cell-2}" height="${cell-2}" rx="3" fill="${i<fill?(o.fill||cyan):cell}" stroke="${i<fill?(o.stroke||'#bfe9ff'):'#3c5279'}" stroke-width="1.3"/>`;
+    return s;
+  }
+  /* ступенчатое разложение деления (чипы по шагам) */
+  function ldChip(px,py,w,row,gold){
+    return `<g class="q1Pop"><rect x="${px}" y="${py}" width="${w}" height="30" rx="8" fill="rgba(13,22,38,.9)" stroke="${gold?'#e5b95a':'#3c5279'}" stroke-width="1.8"/>
+      ${tx(px+w/2,py+20,16,gold?brassy:ink,row,{b:1,georgia:1})}</g>`;
+  }
+  /* знак ÷ / умножения ярлык */
+  const chip=(t,c,delay)=>`<span class="q1In" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(10,17,30,.9);font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
+  const Q182=[
+    {q:'7,5 : 3 = ?',opts:['2,5','25','0,25'],ans:0},
+    {q:'6,4 : 8 = ?',opts:['0,8','8','0,08'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q182[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd='#3c5279',tc=ink,bg='rgba(13,22,38,.9)';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(123,224,160,.18)':'rgba(255,154,138,.18)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW182T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#7be0a0;font-size:16px">Верно! Запятая — где начинаются десятые</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:15px">Не так · вспомни правило запятой</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW182Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW182Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#e5b95a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW182(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=14){ st.go=0; }
+      if(step===11 && st.tr==null) st.tr=0;
+      if(step===11) st.pick=null;
+      if(step===13){ st.mq=0; st.msel=null; }
+      if(step===14){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=200, px=24, py=44, w=270, parts=3;
+      const go=st.go||0;
+      let inner='';
+      /* делимая полоса 7,5 -> 3 части */
+      inner+=`<rect x="${px}" y="${py}" width="${w}" height="34" rx="9" fill="url(#q1seg)" stroke="${brassy}" stroke-width="2" filter="url(#q1sh)"/>`;
+      inner+=tx(px+w/2,py+23,16,slate2,'7,5',{b:1,georgia:1});
+      if(go){
+        for(let i=0;i<parts;i++){
+          const sx=px+ i*w/parts;
+          inner+=`<g class="q1Seg" style="animation-delay:${(0.1+i*0.14).toFixed(2)}s">
+            <rect x="${sx+2}" y="${py+7}" width="${w/parts-4}" height="20" rx="4" fill="rgba(12,22,38,.9)" stroke="${brassy}" stroke-width="1.4"/>
+            ${tx(sx+w/parts/2,py+22,13,brassy,'2,5',{b:1})}</g>`;
+        }
+        inner+=tx(px+w/2,py+66,15,ink,'каждая часть = 2,5',{b:1});
+        inner+=tx(px+w/2,py+86,13.5,dim,'разбить на 3 равные части — и есть делить на 3',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Что значит «разделить на 3»</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('десятичную дробь делим на N равных частей',brassy,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW182Act('${lk}','rst')`):wkBtn('разбить на 3 части',`visW182Act('${lk}','go')`))+
+        wkSml('7,5 : 3 = ?  — это 3 равные части'));
+    } else if(step===1){
+      const H=196;
+      let inner='';
+      inner+=`<rect x="28" y="30" width="262" height="62" rx="12" fill="rgba(13,22,38,.9)" stroke="${brassy}" stroke-width="2.2" filter="url(#q1sh)"/>`;
+      inner+=tx(159,58,17,brassy,'делим как с целыми числами',{b:1,georgia:1});
+      inner+=tx(159,80,12.5,dim,'но у запятой ставим запятую в ответе',{});
+      inner+=tx(159,128,15,ink,'строй пример 7,5 : 3',{b:1});
+      inner+=tx(159,150,13,dim,'целые поделим, потом десятые — и соберём ответ',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Правило Архимеда</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(chip('главный шаг — не потерять запятую',cyan,0.2))+
+        wkSml('сначала целые, потом десятые, потом запятая'));
+    } else if(step===2){
+      const H=196, cw=24, px=44, py=52;
+      let inner='';
+      /* целые: 7 блоков */
+      for(let i=0;i<7;i++) inner+=`<rect class="q1In" style="animation-delay:${(0.05+i*0.06).toFixed(2)}s" x="${px+i*(cw+3)}" y="${py}" width="${cw}" height="${cw}" rx="4" fill="#2a3c5b" stroke="#7fd6ff" stroke-width="1.6"/>`;
+      inner+=tx(159,py+cw+16,12.5,dim,'целые — 7',{});
+      /* десятые полоса */
+      inner+=tx(44,py+cw+34,12.5,dim,'десятые — 5 из 10',{an:'start'});
+      inner+=tenths(px,py+cw+52,26,5,{fill:cyan,stroke:'#bfe9ff'});
+      inner+=tx(159,py+cw+96,15,ink,'7,5 = 7 целых + 5 десятых',{b:1,georgia:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Состав числа 7,5</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(chip('целые и десятые делим отдельно',cyan,0.2))+
+        wkSml('7 целых и пять десятых — разложим по частям'));
+    } else if(step===3){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,22,ink,'7,5 : 3',{b:1,georgia:1});
+      inner+=tx(159,66,15,dim,'шаг 1 · целые',{});
+      inner+=ldChip(28,84,262,'7 : 3 = 2',true);
+      if(go){
+        inner+=`<g class="q1Pop">${ldChip(28,124,262,'остаток 1 · 2 целых в ответе',false)}</g>`;
+        inner+=tx(159,178,13.5,dim,'сейчас поделим десятые — поставь запятую',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шаг 1: делим целые</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('7 : 3 = 2 (ост. 1) — ответ начинается с 2',brassy,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW182Act('${lk}','rst')`):wkBtn('показать остаток',`visW182Act('${lk}','go')`))+
+        wkSml('получили 2 целых в ответе'));
+    } else if(step===4){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      if(go===0){
+        inner+=tx(159,44,15.5,ink,'сносим 5 — это десятые',{b:1});
+        inner+=tx(159,78,16,ink,'1 целое + 5 десятых = 15 десятых',{b:1,georgia:1});
+      } else {
+        inner+=`<rect x="28" y="20" width="262" height="52" rx="12" fill="rgba(13,22,38,.9)" stroke="${cyan}" stroke-width="2.2"/>`;
+        inner+=tx(159,42,18,cyan,'15 десятых : 3 = 5',{b:1,georgia:1});
+        inner+=tx(159,62,12.5,dim,'ставим запятую в ответе: 2,',{});
+        inner+=`<g class="q1Pop"><rect x="86" y="88" width="146" height="52" rx="12" fill="rgba(123,224,160,.14)" stroke="${grn}" stroke-width="2.4"/>
+        ${tx(159,124,30,grn,'= 2,5',{b:1,georgia:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шаг 2: десятые</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('15 десятых : 3 = 5 десятых → 2,5',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW182Act('${lk}','rst')`):wkBtn('поставить запятую',`visW182Act('${lk}','go')`))+
+        wkSml('запятая — ровно перед десятыми'));
+    } else if(step===5){
+      const H=200, px=30, py=46, w=258;
+      let inner='';
+      inner+=tx(159,34,16,ink,'7,5 : 3 =',{b:1});
+      inner+=`<g class="q1Pop"><text x="159" y="80" text-anchor="middle" font-size="46" fill="${brassy}" font-weight="bold" font-family="Georgia,serif">2,5</text></g>`;
+      inner+=tx(159,104,13.5,dim,'проверка умножением',{});
+      /* кольцо проверки: 2,5 * 3 */
+      for(let i=0;i<3;i++){
+        inner+=`<g class="q1Seg" style="animation-delay:${(0.15+i*0.12).toFixed(2)}s"><rect x="${px+i*88}" y="118" width="80" height="28" rx="7" fill="rgba(13,22,38,.9)" stroke="#3c5279" stroke-width="1.6"/>
+        ${tx(px+i*88+40,137,14,cyan,'2,5',{b:1})}</g>`;
+        if(i<2) inner+=tx(px+i*88+84,138,18,dim,'+',{});
+      }
+      inner+=tx(px+w/2,164,15,ink,'= 7,5 ·',{b:1,georgia:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ответ и проверка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(chip('2,5 · 3 = 7,5 — всё сходится',grn,0.2))+
+        wkSml('деление проверяем умножением'));
+    } else if(step===6){
+      const H=200, px=24, py=60, w=270;
+      const go=st.go||0;
+      let inner='';
+      inner+=numline(px,py,w,0,8,{step:1,main:7.5,seg:[0,7.5]});
+      if(go){
+        for(let i=0;i<3;i++){
+          const a=px+i*w/3, b=px+(i+1)*w/3;
+          inner+=`<g class="q1Seg" style="animation-delay:${(0.12+i*0.16).toFixed(2)}s"><line x1="${a}" y1="${py-18}" x2="${b}" y2="${py-18}" stroke="${brassy}" stroke-width="2.4" marker-end="url(#q1arr)"/>
+          ${tx((a+b)/2,py-28,12,brassy,'2,5',{b:1})}</g>`;
+        }
+        inner+=tx(px+w/2,py+66,16,ink,'3 прыжка по 2,5 = 7,5',{b:1,georgia:1});
+        inner+=tx(px+w/2,py+86,13,dim,'числовая ось подтверждает ответ',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">На числовой оси</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2,5 → 5 → 7,5 — три равные части',cyan,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW182Act('${lk}','rst')`):wkBtn('показать прыжки',`visW182Act('${lk}','go')`))+
+        wkSml('делим 7,5 на 3 — по 2,5 на часть'));
+    } else if(step===7){
+      const H=202;
+      const go=st.go||0;
+      let inner='';
+      if(go===0){
+        inner+=tx(159,44,16,ink,'6,4 : 8',{b:1,georgia:1});
+        inner+=tx(159,80,15,dim,'6 меньше 8 — целых не будет',{});
+        inner+=tx(159,110,15,dim,'начнём с 0 целых',{});
+      } else {
+        inner+=`<rect x="28" y="20" width="262" height="56" rx="12" fill="rgba(13,22,38,.9)" stroke="${brassy}" stroke-width="2.2"/>`;
+        inner+=tx(159,42,18,brassy,'6 < 8 → 0 целых · 64 десятых : 8 = 8',{b:1});
+        inner+=tx(159,64,12.5,dim,'ответ начинается с 0, — не потеряй запятую',{});
+        inner+=`<g class="q1Pop"><rect x="94" y="92" width="130" height="50" rx="12" fill="rgba(123,224,160,.14)" stroke="${grn}" stroke-width="2.4"/>
+        ${tx(159,127,30,grn,'= 0,8',{b:1,georgia:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Когда делимое меньше делителя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('6 : 8 — не делится → 0 целых, потом 0,8',cyan,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW182Act('${lk}','rst')`):wkBtn('взять 0 целых',`visW182Act('${lk}','go')`))+
+        wkSml('0,8 — 8 десятых'));
+    } else if(step===8){
+      const H=196;
+      let inner='';
+      inner+=tx(159,42,16,ink,'проверка: 0,8 · 8',{b:1});
+      inner+=`<g class="q1Pop"><text x="159" y="96" text-anchor="middle" font-size="34" fill="${brassy}" font-weight="bold" font-family="Georgia,serif">= 6,4</text></g>`;
+      inner+=tx(159,122,14,dim,'0,8 + 0,8 + … + 0,8 (8 раз)',{});
+      inner+=tx(159,148,16,grn,'значит 6,4 : 8 = 0,8',{b:1,georgia:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверка умножением</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(chip('умножение и деление — взаимная проверка',grn,0.2))+
+        wkSml('0,8 · 8 = 6,4 — ответ верен'));
+    } else if(step===9){
+      const H=206;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,16,ink,'12,6 : 6',{b:1,georgia:1});
+      if(go===0){
+        inner+=ldChip(28,58,262,'12 : 6 = 2',true);
+      } else if(go===1){
+        inner+=ldChip(28,58,262,'12 : 6 = 2',false);
+        inner+=ldChip(28,96,262,'6 десятых : 6 = 1 десятая',true);
+      } else {
+        inner+=ldChip(28,58,262,'12 : 6 = 2',false);
+        inner+=ldChip(28,96,262,'6 десятых : 6 = 1 десятая',false);
+        inner+=`<g class="q1Pop"><rect x="86" y="132" width="146" height="50" rx="12" fill="rgba(123,224,160,.14)" stroke="${grn}" stroke-width="2.4"/>
+        ${tx(159,166,30,grn,'= 2,1',{b:1,georgia:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример: 12,6 : 6</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('2 + 1 десятая = 2,1 · проверка 2,1·6=12,6',grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('делим целые',`visW182Act('${lk}','go')`) : '',
+          go===1?wkBtn('делим десятые',`visW182Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW182Act('${lk}','rst')`):'')+
+        wkSml('целые и десятые делим отдельно'));
+    } else if(step===10){
+      const H=196;
+      const cw=31, y=96;
+      let inner='';
+      inner+=tx(159,40,19,ink,'ловушка с запятой',{b:1});
+      inner+=tx(159,66,15,dim,'7,5 : 3 — какой ответ верный?',{});
+      /* 3 больших версии */
+      inner+=`<g class="q1In"><rect x="36" y="${y}" width="74" height="52" rx="10" fill="rgba(123,224,160,.14)" stroke="${grn}" stroke-width="2.4"/>${tx(73,y+33,26,grn,'2,5',{b:1,georgia:1})}</g>`;
+      inner+=`<g class="q1In" style="animation-delay:.1s"><rect x="120" y="${y}" width="74" height="52" rx="10" fill="rgba(13,22,38,.9)" stroke="#3c5279" stroke-width="2"/>${tx(157,y+33,26,dim,'25',{b:1,georgia:1})}</g>`;
+      inner+=`<g class="q1In" style="animation-delay:.2s"><rect x="204" y="${y}" width="74" height="52" rx="10" fill="rgba(255,154,138,.14)" stroke="${red}" stroke-width="2.4"/>${tx(241,y+33,26,red,'0,25',{b:1,georgia:1})}</g>`;
+      inner+=`<g class="q1Pop"><rect x="66" y="158" width="186" height="28" rx="8" fill="rgba(13,22,38,.92)" stroke="${cyan}" stroke-width="1.8"/>
+      ${tx(159,177,13.5,cyan,'запятая — где начинаются десятые',{b:1})}</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Не потеряй запятую</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(chip('2,5, а не 25 и не 0,25',cyan,0.2))+
+        wkSml('целое 2 + десятые 5 = 2,5'));
+    } else if(step===11){
+      const H=200, py=48;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'8,4 : 4',ans:'2,1',ds:['21','0,21']},
+        {q:'9,6 : 3',ans:'3,2',ds:['32','3,02']},
+        {q:'5,5 : 5',ans:'1,1',ds:['11','1,01']},
+        {q:'7,2 : 6',ans:'1,2',ds:['12','1,02']},
+        {q:'4,8 : 4',ans:'1,2',ds:['12','1,02']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.ans,...P.ds];
+      const idx0=0;
+      let inner='';
+      inner+=tx(159,36,17,ink,P.q+' =',{b:1,georgia:1});
+      /* три больших варианта-карточки, подсветка по выбору */
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bg='rgba(13,22,38,.9)',bd='#3c5279',tc=ink;
+        if(st.pick!=null){
+          if(i===idx0&&st.pick===idx0){ bg='rgba(123,224,160,.16)'; bd=grn; tc=grn; }
+          else if(i===st.pick){ bg='rgba(255,154,138,.16)'; bd=red; tc=red; }
+        }
+        inner+=`<g class="q1In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="46" rx="10" fill="${bg}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+31,22,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      if(st.pick!=null){
+        inner+=st.pick===idx0
+          ? `<g class="q1Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="19" fill="${grn}" font-weight="bold">верно! запятая на месте</text></g>`
+          : `<g class="q1Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">не так · где запятая?</text></g>`;
+      } else {
+        inner+=tx(159,py+74,14.5,dim,'выбери ответ с верной запятой',{});
+      }
+      const fb= st.pick!=null&&st.pick===idx0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW182Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW182P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==idx0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW182P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр-мастер</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===idx0?wkRow(chip(P.q+' = '+P.ans,grn,0.2)):'')+
+        fb+retry+
+        wkSml('три варианта · береги запятую'));
+    } else if(step===12){
+      const H=214;
+      const go=st.go||0;
+      let inner='';
+      const steps=[['дели как с целыми','1'],['дойдя до запятой — поставь её','2'],['продолжай делить десятые','3'],['проверь умножением','4']];
+      for(let i=0;i<steps.length;i++){
+        if(go>=i){
+          const s=steps[i], ry=30+i*42, cy=47+i*42;
+          inner+=`<g class="q1In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="34" rx="9" fill="${i%2?'rgba(13,22,38,.9)':'rgba(19,35,59,.9)'}" stroke="${i===go-1?'#e5b95a':'#3c5279'}" stroke-width="1.8"/>
+          <circle cx="46" cy="${cy}" r="11" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="1.6"/>
+          ${tx(46,cy+4,12,cyan,s[1],{b:1})}${tx(140,cy+12,14,ink,s[0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка: алгоритм</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('4 шага — и любой пример по силам',brassy,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW182Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW182Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW182Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW182Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW182Act('${lk}','rst')`):'')+
+        wkSml('запятая — ключевой момент'));
+    } else if(step===13){
+      const H=196;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'7,5 : 3 = ?',opts:['2,5','25','0,25'],ans:0},
+        {q:'6,4 : 8 = ?',opts:['0,8','8','0,08'],ans:0},
+        {q:'12,6 : 6 = ?',opts:['2,1','21','2,01'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,40,15.5,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="q1Pop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#7be0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'вспомни правило запятой'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW182S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW182Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW182Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('запятая — где начинаются десятые'));
+    } else {
+      const H=196;
+      let inner='';
+      inner+=tx(159,40,16,ink,'7,5 : 3',{b:1,georgia:1});
+      inner+=`<g class="q1Pop"><text x="159" y="86" text-anchor="middle" font-size="36" fill="${brassy}" font-weight="bold" font-family="Georgia,serif">= 2,5</text></g>`;
+      inner+=tx(159,112,13.5,dim,'проверка: 2,5 · 3 = 7,5',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('дойдя до запятой — поставь её в ответе'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[182]=visW182;
+  function visW182T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW182T=visW182T;
+  function visW182P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW182P=visW182P;
+  function visW182S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW182S=visW182S;
+  function visW182Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===13){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW182Act=visW182Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===182){ window.ARH_LESSONS[i]=L182; break; } } })();
+})();
