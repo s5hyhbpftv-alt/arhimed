@@ -13735,3 +13735,466 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW380Act=visW380Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===380){ window.ARH_LESSONS[i]=L380; break; } } })();
 })();
+
+/* ================= УРОК 378 · Простые и составные числа: решето (v1 · «Школьная доска Архимеда», 15 слайдов, обучение с нуля) ================= */
+(function(){
+  if(!window.__wk378v1css){
+    window.__wk378v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .q3In{animation:q3In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes q3In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .q3Pop{animation:q3Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q3Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q3Num{animation:q3Num .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q3Num{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q3Float{animation:q3Float 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q3Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+    document.head.appendChild(st);
+  }
+  const L378 = {
+    id: 378, title: 'Простые и составные числа: решето', ico: '🔢',
+    src: 'Математика · 5–6 класс · Простые числа', subj: 'math',
+    explain: [
+      'Представь: у нас есть 12 яблок. Можно раздать их поровну 3 друзьям — по 4 каждому. А 5 друзьям поровну не выйдет. Это и есть «делится нацело».',
+      'Делители числа — это все числа, на которые оно делится нацело. У 12 их шесть: 1, 2, 3, 4, 6, 12. У 7 всего два: 1 и 7.',
+      'Посчитай делители: у 12 их много, а у 7 — только два. Числа с «многочисленными» делителями — особенные.',
+      'Простое число делится только на 1 и на само себя: 2, 3, 5, 7, 11… У него ровно два делителя.',
+      'Составное число имеет больше двух делителей: 12 делится на 1, 2, 3, 4, 6, 12.',
+      'Число 1 — не простое и не составное: у него ровно один делитель — только само число 1.',
+      'Запомни правило: простое — ровно два делителя; составное — больше двух; единица — единственное особое число.',
+      'А как быстро найти ВСЕ простые числа, скажем, до 50? Проверять каждое число по очереди — долго. Есть хитрый способ — решето.',
+      'Решето Эратосфена: выписываем числа 2..50 по порядку. Берём 2 — оно простое, вычёркиваем все числа, делящиеся на 2. Потом берём 3 — вычёркиваем кратные 3. Потом 5…',
+      'Почему это работает: вычёркивая кратные, мы убираем все составные числа. А наименьшее невычеркнутое число всегда простое.',
+      'Когда вычеркнули все кратные 2, 3, 5 и 7 — невычеркнутыми остались только простые числа. Решето готово!',
+      'Тренажёр: определи, простое число или составное. Смотри на делители.',
+      'Тренажёр: посчитай, сколько простых чисел в ряду и какие именно.',
+      'Шпаргалка: простое — ровно 2 делителя; составное — больше двух; 1 — особое; решето вычёркивает кратные.',
+      'Проверь себя: укажи простое число. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Какое число простое?', choices: ['9', '15', '17', '21'], ans: 2,
+      exp: '17 делится только на 1 и 17.' },
+    tasks: [
+      { q: 'Сколько простых чисел от 1 до 10?', kind: 'unit', ans: 4, tol: 0,
+        hints: ['Выпиши: 2, 3, 5, 7.', 'Их четыре.'], sol: '4' },
+      { q: 'Является ли 1 простым числом?', kind: 'choice', choices: ['нет', 'да', 'зависит от задачи', 'иногда'], ans: 0, tol: 0,
+        hints: ['У 1 только один делитель.', '1 не простое и не составное.'], sol: 'нет' }
+    ]
+  };
+  const ink='#f2f5e8', dim='#9fb08f', gold='#ffd76a', goldD='#d0a13c',
+        grn='#8fe0a0', red='#ff6b5e', chalk='#e8dcc0', boardC='#17261a', boardD='#0d150e',
+        cellC='#20301f', cellD='#18261a', lineC='#3c503a';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0d150e" stroke-width="3.4">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="q3bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${boardC}"/><stop offset="1" stop-color="${boardD}"/></linearGradient>
+        <filter id="q3sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#q3bg)"/>
+      <g opacity="0.14" stroke="#e0e7cf" stroke-width="1">
+        <line x1="30" y1="0" x2="24" y2="${H}"/><line x1="90" y1="0" x2="85" y2="${H}"/>
+        <line x1="150" y1="0" x2="146" y2="${H}"/><line x1="210" y1="0" x2="207" y2="${H}"/>
+        <line x1="270" y1="0" x2="268" y2="${H}"/>
+      </g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#5b6f4e" stroke-width="2.4" rx="6"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#3a4a32" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  /* полоска из n клеток с делениями на группы */
+  function strip(px,py,cell,n,divider,color,leftover){
+    let s='';
+    for(let i=0;i<n;i++){
+      const x=px+i*cell;
+      s+=`<rect class="q3In" style="animation-delay:${(0.03*i).toFixed(2)}s" x="${x}" y="${py}" width="${cell-2}" height="${cell-2}" rx="2" fill="${(leftover&&i>=divider*Math.floor(n/divider))?leftover:color}" stroke="#2c3a28" stroke-width="1"/>`;
+    }
+    /* деления */
+    for(let g=divider;g<=Math.floor(n/divider)*divider;g+=divider){
+      const x=px+g*cell;
+      s+=`<line x1="${x}" y1="${py-4}" x2="${x}" y2="${py+cell-2}" stroke="#d0a13c" stroke-width="2"/>`;
+    }
+    /* рамка */
+    s+=`<rect x="${px}" y="${py}" width="${n*cell}" height="${cell}" fill="none" stroke="#5b6f4e" stroke-width="1.4"/>`;
+    return s;
+  }
+  function sieveBoard(processed){
+    const x0=26, y0=30, cell=26;
+    let s='';
+    for(let r=0;r<5;r++)for(let c=0;c<10;c++){
+      const n=2+r*10+c;
+      if(n>50) continue;
+      const x=x0+c*cell, y=y0+r*cell;
+      const isPrime=processed.indexOf(n)>=0;
+      const crossed=processed.some(p=> n>p && n%p===0);
+      let fill='rgba(24,36,26,.7)', stroke=lineC, tc=ink;
+      if(crossed){ fill='rgba(70,34,30,.5)'; stroke='#5a3a32'; tc=dim; }
+      if(isPrime){ fill='rgba(46,40,20,.85)'; stroke=gold; tc=gold; }
+      s+=`<rect class="q3Num" style="animation-delay:${(0.01*n).toFixed(2)}s" x="${x}" y="${y}" width="${cell-2}" height="${cell-2}" rx="3" fill="${fill}" stroke="${stroke}" stroke-width="1.4"/>`;
+      s+=tx(x+cell/2,y+cell/2+4,12,tc,''+n,{});
+      if(crossed) s+=`<line x1="${x+5}" y1="${y+cell-5}" x2="${x+cell-5}" y2="${y+6}" stroke="${red}" stroke-width="2" opacity="0.85"/>`;
+      if(isPrime) s+=`<circle cx="${x+cell/2}" cy="${y+cell/2}" r="11" fill="none" stroke="${gold}" stroke-width="2"/>`;
+    }
+    return s;
+  }
+  const chip=(t,c,delay)=>`<span class="q3In" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(13,21,14,.9);font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
+  const Q378=[
+    {q:'Какое число простое?',opts:['9','15','17','21'],ans:2},
+    {q:'Сколько простых чисел от 1 до 10?',opts:['4','5','6'],ans:0}
+  ];
+  const PRIMES=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47];
+  function quiz(lk,st){
+    const T=Q378[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd='#3c503a',tc=ink,bg='rgba(18,28,19,.9)';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,224,160,.16)':'rgba(255,107,94,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW378T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#8fe0a0;font-size:16px">Верно! Простое делится только на 1 и на себя</div>'
+        : '<div class="wk-ans" style="color:#ff6b5e;font-size:15px">Не так · посчитай делители</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW378Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW378Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW378(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step===8) st.sieve=0;
+      if(step===10||step===11) st.pick=null;
+      if(step===13){ st.mq=0; st.msel=null; }
+      if(step===14){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=200, cell=24;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'12 яблок раздать поровну',{b:1});
+      inner+=tx(70,58,14,gold,'на 3 друзей',{b:1});
+      inner+=strip(24,74,24,12,3,'#2c5a3a','#224a2f');
+      inner+=`<g class="q3Pop"><text x="250" y="90" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">по 4</text></g>`;
+      if(go){
+        inner+=tx(70,140,14,red,'на 5 друзей',{b:1});
+        inner+=strip(24,156,24,12,5,red,'#c14b3a','#5a2622');
+        inner+=`<g class="q3Pop"><text x="250" y="172" text-anchor="middle" font-size="14" fill="${red}" font-weight="bold">остаток 2!</text></g>`;
+      } else {
+        inner+=tx(159,164,13.5,dim,'а вот на 5 поровну не поделить — увидишь!',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Что значит «делится нацело»</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('делится нацело — можно раздать поровну',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW378Act('${lk}','rst')`):wkBtn('проверить 5 друзей',`visW378Act('${lk}','go')`))+
+        wkSml('на 3 — да · на 5 — нет'));
+    } else if(step===1){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,16,ink,'на что делится нацело?',{b:1});
+      inner+=tx(88,66,15,gold,'12',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="q3Pop"><rect x="30" y="80" width="258" height="30" rx="8" fill="rgba(18,28,19,.9)" stroke="${grn}" stroke-width="1.8"/>
+        ${tx(159,101,15,grn,'делится на 1, 2, 3, 4, 6, 12',{b:1})}</g>`;
+        inner+=`<g class="q3Pop" style="animation-delay:.12s"><text x="159" y="136" text-anchor="middle" font-size="14" fill="${ink}">шесть делителей!</text></g>`;
+      } else {
+        inner+=tx(159,140,14,dim,'на 1 · 2 · 3 · 4 · 6 · 12',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Делители числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('делители 12: 1,2,3,4,6,12',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW378Act('${lk}','rst')`):wkBtn('найти делители 12',`visW378Act('${lk}','go')`))+
+        wkSml('делитель делит число без остатка'));
+    } else if(step===2){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,16,ink,'сравним: 12 и 7',{b:1});
+      inner+=`<g class="q3In"><rect x="36" y="58" width="112" height="70" rx="10" fill="rgba(18,28,19,.9)" stroke="#3c503a" stroke-width="1.8"/>
+      ${tx(92,84,15,ink,'12',{b:1,georgia:1})}${tx(92,112,12,dim,'6 делителей',{})}</g>`;
+      inner+=`<g class="q3In" style="animation-delay:.12s"><rect x="168" y="58" width="112" height="70" rx="10" fill="rgba(46,40,20,.85)" stroke="${gold}" stroke-width="2"/>
+      ${tx(224,84,15,gold,'7',{b:1,georgia:1})}${tx(224,112,12,dim,'2 делителя',{})}</g>`;
+      inner+=tx(159,156,15,go?grn:ink, go?'у 7 делителей всего два!':'посмотри на делители',{b:1});
+      if(go){
+        inner+=`<g class="q3Pop"><text x="159" y="180" text-anchor="middle" font-size="13.5" fill="${gold}">7: только 1 и 7</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Считаем делители</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('12 — много делителей · 7 — всего два',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW378Act('${lk}','rst')`):wkBtn('сравнить',`visW378Act('${lk}','go')`))+
+        wkSml('делители — ключ к ответу'));
+    } else if(step===3){
+      const H=200;
+      let inner='';
+      inner+=tx(159,32,17,ink,'простое число',{b:1,georgia:1});
+      inner+=tx(159,58,13.5,dim,'делится только на 1 и на само себя',{});
+      const ps=[2,3,5,7];
+      inner+=tx(159,168,13.5,dim,'по 2 делителя: 1 и само число',{});
+      ps.forEach((p,i)=>{
+        inner+=`<g class="q3Num" style="animation-delay:${(0.1*i).toFixed(2)}s"><rect x="${36+i*64}" y="90" width="54" height="54" rx="10" fill="rgba(46,40,20,.85)" stroke="${gold}" stroke-width="2"/>
+        <circle cx="${36+i*64+27}" cy="117" r="20" fill="none" stroke="${gold}" stroke-width="1.6"/>
+        ${tx(36+i*64+27,124,20,gold,''+p,{b:1,georgia:1})}</g>`;
+      });
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Простые: 2, 3, 5, 7…</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(chip('не разбить на равные группы — как кирпичики',gold,0.2))+
+        wkSml('ровно два делителя'));
+    } else if(step===4){
+      const H=200;
+      let inner='';
+      inner+=tx(159,32,17,ink,'составное число',{b:1,georgia:1});
+      inner+=tx(159,58,13.5,dim,'делится на 1, на себя и ещё на кого-то',{});
+      const cs=[[12,'6 делителей'],[15,'1,3,5,15'],[21,'1,3,7,21']];
+      cs.forEach((c,i)=>{
+        inner+=`<g class="q3Num" style="animation-delay:${(0.1*i).toFixed(2)}s"><rect x="${36+i*64}" y="88" width="54" height="60" rx="10" fill="rgba(72,32,28,.7)" stroke="${red}" stroke-width="2"/>
+        ${tx(36+i*64+27,110,20,red,''+c[0],{b:1,georgia:1})}
+        ${tx(36+i*64+27,136,10,dim,c[1],{})}</g>`;
+      });
+      inner+=tx(159,176,13.5,dim,'составной — из маленьких кирпичиков',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Составные числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(chip('делителей больше двух',red,0.2))+
+        wkSml('12, 15, 21 — составные'));
+    } else if(step===5){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,17,ink,'а число 1?',{b:1});
+      inner+=`<g class="q3Num"><rect x="114" y="58" width="90" height="72" rx="12" fill="rgba(18,28,19,.9)" stroke="${grn}" stroke-width="2.4"/>
+      ${tx(159,92,26,grn,'1',{b:1,georgia:1})}${tx(159,118,12,dim,'один делитель',{})}</g>`;
+      if(go){
+        inner+=`<g class="q3Pop"><rect x="60" y="150" width="198" height="30" rx="8" fill="rgba(18,28,19,.92)" stroke="${grn}" stroke-width="1.8"/>
+        ${tx(159,171,14,grn,'не простое и не составное',{b:1})}</g>`;
+      } else {
+        inner+=tx(159,166,14,dim,'у него ровно один делитель — само число',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Особое число 1</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('1 — не простое и не составное',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW378Act('${lk}','rst')`):wkBtn('почему?',`visW378Act('${lk}','go')`))+
+        wkSml('один делитель — особый случай'));
+    } else if(step===6){
+      const H=210;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'таблица-шпаргалка',{b:1});
+      const rows=[['простое','ровно 2','2,3,5,7','#ffd76a',gold],['составное','больше 2','12,15,21','#ff6b5e',red],['единица','ровно 1','только 1','#8fe0a0',grn]];
+      for(let i=0;i<rows.length;i++){
+        if(go>=i){
+          const ry=52+i*48, cy=ry+26;
+          inner+=`<g class="q3In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="26" y="${ry}" width="266" height="40" rx="9" fill="rgba(18,28,19,.9)" stroke="${rows[i][4]}" stroke-width="1.8"/>
+          ${tx(70,cy,14,rows[i][4],rows[i][0],{b:1})}
+          ${tx(165,cy,13,ink,rows[i][1],{})}
+          ${tx(258,cy,13,rows[i][4],rows[i][2],{an:'end'})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Запомни правило</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=3?wkRow(chip('по числу делителей всё ясно',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('простое',`visW378Act('${lk}','go')`) : '',
+          go===1?wkBtn('составное',`visW378Act('${lk}','go')`) : '',
+          go===2?wkBtn('единица',`visW378Act('${lk}','go')`) : '',
+          go>=3?wkBtn('сброс',`visW378Act('${lk}','rst')`):'')+
+        wkSml('считай делители — и ответ готов'));
+    } else if(step===7){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,16,ink,'найти все простые до 50?',{b:1});
+      inner+=tx(159,60,13.5,dim,'проверять каждое число — долго!',{});
+      if(go){
+        inner+=`<g class="q3Pop"><rect x="36" y="82" width="246" height="46" rx="11" fill="rgba(46,40,20,.85)" stroke="${gold}" stroke-width="2.2"/>
+        ${tx(159,108,16,gold,'ЕСТЬ хитрый способ — РЕШЕТО',{b:1,georgia:1})}</g>
+        <g class="q3Float"><text x="159" y="156" text-anchor="middle" font-size="13.5" fill="${chalk}">вычёркиваем лишнее — остаётся простое</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Задача: найти простые</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('вместо проверки — решето Эратосфена',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW378Act('${lk}','rst')`):wkBtn('как быстрее?',`visW378Act('${lk}','go')`))+
+        wkSml('древний приём Эратосфена'));
+    } else if(step===8){
+      const H=196;
+      const go=st.go||0;
+      let processed=[];
+      if(go>0) processed=PRIMES.slice(0,go);
+      let inner='';
+      inner+=tx(159,18,15.5,ink,'решето Эратосфена',{b:1});
+      inner+=sieveBoard(processed);
+      inner+=`<text x="159" y="${(25+5*26)+8}" text-anchor="middle" font-size="13" fill="${dim}">${go===0?'нажми — вычеркнем кратные 2': go===1?'кратные 2 убраны → берём 3': go===2?'кратные 3 убраны → берём 5': go===3?'кратные 5 убраны → берём 7': go>=4?'остались простые!':'решето'}</text>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Решето: шаг за шагом</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('закрашены только простые числа',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('вычеркнуть кратные 2',`visW378Act('${lk}','go')`) : '',
+          go===1?wkBtn('вычеркнуть кратные 3',`visW378Act('${lk}','go')`) : '',
+          go===2?wkBtn('вычеркнуть кратные 5',`visW378Act('${lk}','go')`) : '',
+          go===3?wkBtn('вычеркнуть кратные 7',`visW378Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW378Act('${lk}','rst')`):'')+
+        wkSml('вычёркиваем кратные · остаются простые'));
+    } else if(step===9){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,17,ink,'почему это работает?',{b:1});
+      if(go){
+        inner+=`<g class="q3Pop"><rect x="40" y="68" width="238" height="44" rx="11" fill="rgba(18,28,19,.9)" stroke="${grn}" stroke-width="2.2"/>
+        ${tx(159,94,15,grn,'наименьшее невычеркнутое',{b:1})}
+        ${tx(159,108,13,dim,'никогда не делится на меньшее → простое',{})}</g>`;
+        inner+=`<g class="q3Pop" style="animation-delay:.12s"><text x="159" y="148" text-anchor="middle" font-size="14" fill="${ink}">вычеркнув кратные, мы убрали составные</text></g>`;
+      } else {
+        inner+=tx(159,120,15,dim,'наименьшее невычеркнутое — простое',{});
+        inner+=tx(159,150,13.5,dim,'у него не может быть меньших делителей',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему решето верно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('вычеркиваем составные — остаются простые',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW378Act('${lk}','rst')`):wkBtn('показать',`visW378Act('${lk}','go')`))+
+        wkSml('каждое составное — чьё-то кратное'));
+    } else if(step===10){
+      const H=200, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Какое число простое?',a:'17',ds:['15','21']},
+        {q:'Какое число составное?',a:'21',ds:['13','17']},
+        {q:'Какое число простое?',a:'7',ds:['9','15']},
+        {q:'Какое число составное?',a:'15',ds:['7','3']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,34,17,ink,P.q,{b:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd='#3c503a',tc=ink,bgc='rgba(18,28,19,.9)';
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(143,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,107,94,.16)';bd=red;tc=red;} }
+        inner+=`<g class="q3In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="52" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+34,24,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="q3Pop"><text x="159" y="${py+78}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно! посмотри делители</text></g>`
+          : `<g class="q3Pop"><text x="159" y="${py+78}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">сосчитай делители</text></g>`)
+        : tx(159,py+78,14.5,dim,'простое или составное?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW378Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW378P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW378P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: простое или составное?</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.a+' — '+((P.q.indexOf('состав')>=0)?'составное':'простое'),grn,0.2)):'')+
+        fb+retry+
+        wkSml('считай делители'));
+    } else if(step===11){
+      const H=196;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Сколько простых от 1 до 10?',a:'4',ds:['3','5']},
+        {q:'Какие числа простые среди 2,6,9?',a:'2',ds:['6','9']},
+        {q:'Сколько простых от 1 до 20?',a:'8',ds:['7','9']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,34,17,ink,P.q,{b:1});
+      const X=[32,119,206],CW=86;
+      ord.forEach((o,i)=>{
+        let bd='#3c503a',tc=ink,bgc='rgba(18,28,19,.9)';
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(143,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,107,94,.16)';bd=red;tc=red;} }
+        inner+=`<g class="q3In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="86" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,120,22,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="q3Pop"><text x="159" y="166" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="q3Pop"><text x="159" y="166" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">подумай ещё</text></g>`)
+        : tx(159,166,14.5,dim,'выбери ответ',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW378Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW378P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW378P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: посчитай простые</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        fb+retry+
+        wkSml('простое — два делителя'));
+    } else if(step===12){
+      const H=212;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'шпаргалка',{b:1});
+      const items=[['простое — делится на 1 и на себя'],['составное — делителей больше двух'],['единица — особое число'],['решето — вычёркиваем кратные']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=54+i*38;
+          inner+=`<g class="q3In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="32" rx="9" fill="${i%2?'rgba(18,28,19,.9)':'rgba(28,42,30,.9)'}" stroke="${i===go-1?gold:'#3c503a'}" stroke-width="1.8"/>
+          ${tx(159,ry+21,13.5,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('решето оставляет простые',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW378Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW378Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW378Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW378Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW378Act('${lk}','rst')`):'')+
+        wkSml('простые — кирпичики всех чисел'));
+    } else if(step===13){
+      const H=196;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'Какое число простое?',opts:['9','7','15'],ans:1},
+        {q:'Сколько простых от 1 до 10?',opts:['4','5','6'],ans:0},
+        {q:'Является ли 1 простым?',opts:['нет','да','иногда'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="q3Pop"><text x="159" y="94" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#8fe0a0':'#ff6b5e'}" font-weight="bold">${st.msel===T.ans?'верно!':'посчитай делители'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW378S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW378Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW378Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('считай делители'));
+    } else {
+      const H=196;
+      let inner='';
+      inner+=tx(159,40,16,ink,'простое — делится на 1 и на себя',{b:1});
+      inner+=`<g class="q3Pop"><text x="159" y="86" text-anchor="middle" font-size="30" fill="${gold}" font-weight="bold" font-family="Georgia,serif">17</text></g>`;
+      inner+=tx(159,110,13.5,dim,'делители: 1 и 17',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('простое = ровно 2 делителя'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[378]=visW378;
+  function visW378T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW378T=visW378T;
+  function visW378P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW378P=visW378P;
+  function visW378S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW378S=visW378S;
+  function visW378Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===13){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW378Act=visW378Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===378){ window.ARH_LESSONS[i]=L378; break; } } })();
+})();
