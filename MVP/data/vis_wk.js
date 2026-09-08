@@ -17432,3 +17432,415 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW382Act=visW382Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===382){ window.ARH_LESSONS[i]=L382; break; } } })();
 })();
+
+/* ================= УРОК 47 · Масштаб и пропорции (v1 · «Картограф Архимеда», 15 слайдов, премиум) ================= */
+(function(){
+  if(!window.__wk47v1css){
+    window.__wk47v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qEIn{animation:qEIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qEIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qEPop{animation:qEPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qEPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qEZoom{animation:qEZoom .8s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qEZoom{0%{transform:scale(.35);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qECross{stroke-dasharray:12 6;animation:qEDraw .7s ease both;}'+
+      '@keyframes qEDraw{to{stroke-dashoffset:0}}'+
+      '#lvis .qEFloat{animation:qEFloat 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qEFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+    document.head.appendChild(st);
+  }
+  const L47 = {
+    id: 47, title: 'Масштаб и пропорции', ico: '🗺️',
+    src: 'ВсОШ-стиль · геометрия', subj: 'math',
+    explain: [
+      'У Архимеда есть карта своего острова. На карте всё маленькое, а в жизни — большое. Во сколько раз уменьшили? Это число называется масштабом.',
+      'Что такое масштаб? Запись 1:100 значит: 1 см на карте — это 100 см (1 метр) в жизни. Всё нарисовано в 100 раз меньше.',
+      'Во сколько раз? 1:1 — как есть; 1:100 — уменьшено в 100 раз; 2:1 — увеличено в 2 раза. Первое число про карту, второе про жизнь.',
+      'Линейка масштаба 1:100: 1 см на карте = 1 м в жизни, 2 см = 2 м, 3 см = 3 м.',
+      'Вспомним единицы: 100 см = 1 м, 1000 м = 1 км, 100 000 см = 1 км.',
+      'На плане 5 см, масштаб 1:100. В жизни в 100 раз больше — сколько?',
+      'Формула: реальный размер = размер на плане × второе число масштаба. 5 · 100 = 500 см = 5 м.',
+      'Обратная задача: знаем реальный размер — делим. 8 м = 800 см, 800 : 100 = 8 см на плане.',
+      'Карта города 1:100 000: 1 см на карте = 100 000 см = 1 км. Один сантиметр — километр дороги!',
+      'На карте городе 6 см → в жизни 6 км (умножь на 1 км). И обратно: 12 км → 12 см на карте.',
+      'Масштаб — это пропорция: 1/100 = 5/x. Произведение крайних = произведению средних.',
+      'Пропорция без карты: x : 5 = 8 : 10. 10·x = 5·8 = 40, значит x = 4.',
+      'План комнаты: 6×4 м, масштаб 1:50 → 12×8 см на плане.',
+      'Тренажёр: масштабные задачи и пропорции — решай по шагам.',
+      'Проверь себя: 1:100, 5 см на плане → 500 см. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Масштаб 1:100, на плане отрезок 5 см. Сколько это в реальности? (в см)', choices: ['5', '50', '500', '100'], ans: 2,
+      exp: '5 · 100 = 500 см.' },
+    tasks: [
+      { q: 'Масштаб 1:1000, на плане 3 см. Реальная длина? (в см)', kind: 'unit', ans: 3000, tol: 0,
+        hints: ['Умножь на 1000.', '3 · 1000 = 3000.'], sol: '3 · 1000 = 3000 см.' },
+      { q: 'Реши пропорцию: x : 5 = 8 : 10. Чему равен x?', kind: 'choice', choices: ['4', '5', '8', '10'], ans: 0, tol: 0,
+        hints: ['Произведение крайних равно произведению средних.', '10·x = 5·8 = 40, x = 4.'], sol: 'x = 4.' }
+    ]
+  };
+  const ink='#4a3a24', dim='#9b8266', gold='#c9982b', grn='#3f8b57', blu='#2f5d8a', sea='#7fb8d8', island='#8fc07a', red='#c14b2f',
+        cream='#fdf6e6', card='rgba(255,250,240,.96)', cardB='#c9b98d', lineC='#c9b98d';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e6" stroke-width="3.2">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    let grid='';
+    for(let x=0;x<=W;x+=22) grid+=`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="rgba(63,93,138,.12)" stroke-width="1"/>`;
+    for(let y=0;y<=H;y+=22) grid+=`<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="rgba(63,93,138,.12)" stroke-width="1"/>`;
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qEbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7efda"/><stop offset="1" stop-color="#efe2c4"/></linearGradient>
+        <linearGradient id="qEgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2d38a"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="#b8802c"/></linearGradient>
+        <linearGradient id="qEseaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9dff0"/><stop offset="1" stop-color="#8fc4de"/></linearGradient>
+        <filter id="qEsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.22"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qEbg)"/>
+      <g>${grid}</g>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="${cardB}" stroke-width="2" rx="7"/>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="url(#qEgold)" stroke-width="1.3" opacity="0.6" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  /* мини-карта/план */
+  function planBox(x,y,w,h,room,cols,rows){
+    let s=`<g filter="url(#qEsh)"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="#e8c98f" stroke="${cardB}" stroke-width="2"/>`;
+    s+=`<rect x="${x}" y="${y}" width="${w}" height="${h*0.4}" rx="6" fill="url(#qEseaG)"/>`;
+    if(room){ const rx=x+w/2-room[0]/2, ry=y+h/2-room[1]/2; s+=`<rect x="${rx}" y="${ry}" width="${room[0]}" height="${room[1]}" rx="3" fill="${island}" stroke="#2c5a2a" stroke-width="1.6"/>`; }
+    for(let c=1;c<(cols||5);c++) s+=`<line x1="${x+w*c/(cols||5)}" y1="${y}" x2="${x+w*c/(cols||5)}" y2="${y+h}" stroke="#fff" stroke-width="1" opacity=".6"/>`;
+    s+=`</g>`;
+    return s;
+  }
+  function scaleBar(x,y,w,marks,label){
+    let s=`<rect x="${x}" y="${y-4}" width="${w}" height="8" rx="4" fill="#e5d6b8" stroke="#b8802c" stroke-width="1"/>`;
+    const step=w/(marks.length-1);
+    for(let i=0;i<marks.length;i++){ const px=x+i*step; s+=`<line x1="${px}" y1="${y-4}" x2="${px}" y2="${y+4}" stroke="#b8802c" stroke-width="1.6"/>`; s+=tx(px,y+18,10.5,dim,marks[i],{}); }
+    return s;
+  }
+  function crossE(x,y,left,right){
+    /* left = [a,b], right=[c,d] cross-multiply: a*d = b*c */
+    return `<g class="qECross"><line x1="${left[0][0]}" y1="${left[0][1]}" x2="${right[1][0]}" y2="${right[1][1]}" stroke="${grn}" stroke-width="2.2"/>
+      <line x1="${right[0][0]}" y1="${right[0][1]}" x2="${left[1][0]}" y2="${left[1][1]}" stroke="${grn}" stroke-width="2.2"/></g>`;
+  }
+  const chip=(t,c,delay)=>`<span class="qEIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
+  const Q47=[
+    {q:'Масштаб 1:100, 5 см на плане → ?',opts:['5','50','500','100'],ans:2},
+    {q:'x : 5 = 8 : 10 → x = ?',opts:['4','5','8'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q47[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(63,139,87,.16)':'rgba(193,75,47,.14)'; bd=i===T.ans?grn:'#c14b2f'; tc=i===T.ans?'#2f7a53':'#c14b2f'; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW47T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#2f7a53;font-size:16px">Верно! план × масштаб</div>'
+        : '<div class="wk-ans" style="color:#c14b2f;font-size:15px">Не так · умножь/пропорцию</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW47Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW47Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#c9982b')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW47(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step===13) st.pick=null;
+      if(step===13){ st.mq=0; st.msel=null; }
+      if(step===14){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=200, go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'карта острова Архимеда',{b:1});
+      inner+=planBox(70,64,178,110,[86,60],5,4);
+      inner+=tx(159,128,13,ink,'',{});
+      if(go){
+        inner+=`<g class="qEPop"><rect x="60" y="186" width="198" height="30" rx="9" fill="rgba(63,139,87,.14)" stroke="${grn}" stroke-width="1.8"/>
+        ${tx(159,206,13.5,'#2f7a53','во сколько раз уменьшили?',{b:1})}</g>`;
+      } else {
+        inner+=tx(159,196,13.5,dim,'всё маленькое, а в жизни большое',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Масштаб</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('это отношение размеров',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('что это?',`visW47Act('${lk}','go')`))+
+        wkSml('карта — уменьшенный остров'));
+    } else if(step===1){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,17,ink,'масштаб 1:100',{b:1,georgia:1});
+      inner+=tx(159,68,13.5,dim,'«1 см на карте = 100 см в жизни»',{});
+      inner+=`<g class="qEIn"><rect x="46" y="90" width="70" height="34" rx="8" fill="rgba(201,152,43,.14)" stroke="${gold}" stroke-width="1.8"/>${tx(81,112,13,gold,'карта',{b:1})}</g>`;
+      inner+=`<g class="qEIn" style="animation-delay:.1s"><rect x="202" y="90" width="70" height="34" rx="8" fill="rgba(47,93,138,.12)" stroke="${blu}" stroke-width="1.8"/>${tx(237,112,13,blu,'жизнь',{b:1})}</g>`;
+      if(go){
+        inner+=`<g class="qEPop"><rect x="46" y="146" width="226" height="30" rx="9" fill="${card}" stroke="${grn}" stroke-width="1.8"/>
+        ${tx(159,166,14,'#2f7a53','1 см → 100 см (1 метр)',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Что читает карта</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('второе число = во сколько раз',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('прочитать',`visW47Act('${lk}','go')`))+
+        wkSml('на карте меньше'));
+    } else if(step===2){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,36,16,ink,'во сколько раз?',{b:1});
+      const rows=[['1:1','как есть','1','#9b8266'],['1:100','уменьшено в 100','100','#c9982b'],['2:1','увеличено в 2','2','#3f8b57']];
+      for(let i=0;i<rows.length;i++){
+        if(go>=i){
+          const ry=62+i*40;
+          inner+=`<g class="qEIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="36" y="${ry}" width="246" height="34" rx="9" fill="rgba(255,250,240,.97)" stroke="${rows[i][3]}" stroke-width="1.8"/>
+          <text x="96" y="${ry+22}" text-anchor="middle" font-size="15" fill="${ink}" font-weight="bold">${rows[i][0]}</text>
+          <text x="188" y="${ry+22}" text-anchor="middle" font-size="13" fill="${dim}">${rows[i][1]}</text></g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Виды масштаба</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=3?wkRow(chip('второе число — про «во сколько»',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('1:1',`visW47Act('${lk}','go')`) : '',
+          go===1?wkBtn('1:100',`visW47Act('${lk}','go')`) : '',
+          go===2?wkBtn('2:1',`visW47Act('${lk}','go')`) : '',
+          go>=3?wkBtn('сброс',`visW47Act('${lk}','rst')`):'')+
+        wkSml('первое — про карту'));
+    } else if(step===3){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,16,ink,'линейка масштаба 1:100',{b:1});
+      inner+=scaleBar(24,72,270,['0','1','2','3','4','5'],'');
+      inner+=tx(159,104,12,dim,'сантиметры на карте',{});
+      if(go){
+        inner+=`<g class="qEPop"><rect x="46" y="128" width="226" height="30" rx="9" fill="rgba(63,139,87,.14)" stroke="${grn}" stroke-width="1.8"/>
+        ${tx(159,148,14,'#2f7a53','1 см = 1 м · 2 см = 2 м …',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Линейка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('просто считай метры',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('показать',`visW47Act('${lk}','go')`))+
+        wkSml('линейка масштаба'));
+    } else if(step===4){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,16,ink,'единицы',{b:1});
+      inner+=tx(159,70,15,dim,'100 см = 1 м · 1000 м = 1 км',{});
+      if(go){
+        inner+=`<g class="qEPop"><rect x="52" y="92" width="214" height="46" rx="12" fill="rgba(47,93,138,.12)" stroke="${blu}" stroke-width="2.2"/>
+        ${tx(159,112,15,blu,'100 000 см = 1 км',{b:1})}
+        ${tx(159,130,12,dim,'для больших масштабов',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Единицы длины</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('100 см = 1 м · 100 000 см = 1 км',blu,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('вспомнить',`visW47Act('${lk}','go')`))+
+        wkSml('переводи единицы'));
+    } else if(step===5){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'на плане 5 см',{b:1});
+      inner+=`<g class="qEIn"><rect x="30" y="60" width="120" height="86" rx="8" fill="#e8c98f" stroke="${cardB}" stroke-width="2"/>${tx(90,90,16,gold,'план',{b:1,georgia:1})}<text x="90" y="126" text-anchor="middle" font-size="16" fill="${ink}">5 см</text><line x1="54" y1="112" x2="126" y2="112" stroke="${red}" stroke-width="2"/></g>`;
+      inner+=`<g class="qEIn" style="animation-delay:.1s"><rect x="168" y="60" width="120" height="86" rx="8" fill="rgba(47,93,138,.14)" stroke="${blu}" stroke-width="2"/>${tx(228,90,16,blu,'жизнь?',{b:1,georgia:1})}<text x="228" y="126" text-anchor="middle" font-size="14" fill="${dim}">в 100 раз больше</text></g>`;
+      if(go){
+        inner+=`<g class="qEZoom"><path d="M 150 92 L 168 92 M 168 88 l 8 4 l -8 4" fill="none" stroke="${gold}" stroke-width="2.2"/><text x="159" y="84" font-size="12" fill="${gold}" text-anchor="middle">×100</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Увеличиваем</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('×100 — уменьшили в 100 раз',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('увеличить',`visW47Act('${lk}','go')`))+
+        wkSml('масштаб говорит «во сколько»'));
+    } else if(step===6){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,17,ink,'формула',{b:1});
+      inner+=tx(159,70,15,gold,'реальный = план × второе число',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="qEPop"><text x="159" y="116" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">5 · 100 = 500 см</text>
+        <text x="159" y="146" text-anchor="middle" font-size="14" fill="${dim}">= 5 метров</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Решаем</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('план × N',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('посчитать',`visW47Act('${lk}','go')`))+
+        wkSml('умножаем на масштаб'));
+    } else if(step===7){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,16,ink,'обратная задача',{b:1});
+      inner+=tx(159,68,13.5,dim,'знаем 8 м — сколько на плане?',{});
+      if(go){
+        inner+=`<g class="qEPop"><text x="159" y="108" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">800 см : 100 = 8 см</text>
+        <text x="159" y="138" text-anchor="middle" font-size="14" fill="${dim}">план = реальный : N</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Делим</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('реальный : N',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('посчитать',`visW47Act('${lk}','go')`))+
+        wkSml('реальный ÷ масштаб'));
+    } else if(step===8){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,17,ink,'карта города 1:100 000',{b:1});
+      inner+=tx(159,68,13.5,dim,'1 см = 100 000 см = 1 км',{});
+      if(go){
+        inner+=`<g class="qEPop"><rect x="46" y="98" width="226" height="40" rx="11" fill="rgba(63,139,87,.14)" stroke="${grn}" stroke-width="2"/>
+        ${tx(159,118,15,'#2f7a53','1 см на карте — целый км!',{b:1})}
+        ${tx(159,134,12,dim,'6 см → 6 км',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Километры</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('крупный масштаб — километры',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('показать',`visW47Act('${lk}','go')`))+
+        wkSml('1 см = 1 км'));
+    } else if(step===9){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,16,ink,'обратно с карты',{b:1});
+      inner+=tx(159,68,13.5,dim,'реальные 12 км → на карте?',{});
+      if(go){
+        inner+=`<g class="qEPop"><text x="159" y="112" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">12 км = 1 200 000 см</text>
+        <text x="159" y="142" text-anchor="middle" font-size="15" fill="${dim}">: 100 000 = 12 см</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Делим на масштаб</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('переведи км → см, потом ÷',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('посчитать',`visW47Act('${lk}','go')`))+
+        wkSml('аккуратно с нулями'));
+    } else if(step===10){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'масштаб — это пропорция',{b:1});
+      inner+=tx(64,70,16,ink,'1 / 100',{b:1,georgia:1});
+      inner+=tx(64,120,11.5,dim,'карта',{});
+      inner+=crossE(70,52,[[64,70],[64,120]],[[190,70],[190,120]]);
+      inner+=tx(196,70,16,ink,'5 / x',{b:1,georgia:1});
+      inner+=tx(196,120,11.5,dim,'жизнь',{});
+      if(go){
+        inner+=`<g class="qEPop"><text x="159" y="176" text-anchor="middle" font-size="15" fill="#2f7a53" font-weight="bold">1·x = 100·5 → x = 500</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пропорция</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('крайние × = средние ×',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('решить',`visW47Act('${lk}','go')`))+
+        wkSml('крест-накрест'));
+    } else if(step===11){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'пропорция без карты',{b:1});
+      /* вертикальная пропорция x/5 = 8/10 */
+      inner+=`<g filter="url(#qEsh)"><rect x="74" y="66" width="52" height="70" rx="8" fill="rgba(255,250,240,.97)" stroke="${cardB}" stroke-width="1.8"/>
+      ${tx(100,96,22,ink,'x',{b:1,georgia:1})}
+      <line x1="78" y1="104" x2="122" y2="104" stroke="${cardB}" stroke-width="1.6"/>
+      ${tx(100,124,18,ink,'5',{b:1,georgia:1})}</g>`;
+      inner+=tx(159,104,20,dim,'=',{b:1});
+      inner+=`<g filter="url(#qEsh)"><rect x="184" y="66" width="52" height="70" rx="8" fill="rgba(255,250,240,.97)" stroke="${cardB}" stroke-width="1.8"/>
+      ${tx(210,96,22,ink,'8',{b:1,georgia:1})}
+      <line x1="188" y1="104" x2="232" y2="104" stroke="${cardB}" stroke-width="1.6"/>
+      ${tx(210,124,18,ink,'10',{b:1,georgia:1})}</g>`;
+      inner+=crossE(70,60,[[100,88],[100,120]],[[210,88],[210,120]]);
+      if(go){
+        inner+=`<g class="qEPop"><text x="159" y="176" text-anchor="middle" font-size="16" fill="#2f7a53" font-weight="bold" font-family="Georgia,serif">x·10 = 5·8 = 40 → x = 4</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Решаем пропорцию</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('крест-накрест',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('решить',`visW47Act('${lk}','go')`))+
+        wkSml('x = 4'));
+    } else if(step===12){
+      const H=206;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'план комнаты',{b:1});
+      inner+=tx(159,54,12.5,dim,'комната 6×4 м · масштаб 1:50',{});
+      inner+=`<g class="qEIn"><rect x="70" y="78" width="178" height="86" rx="8" fill="rgba(143,192,122,.25)" stroke="#2c5a2a" stroke-width="2.2"/>
+      ${tx(90,100,13,'#2c5a2a','6 м',{b:1})}${tx(159,96,13,'#2c5a2a','×',{})}${tx(228,100,13,'#2c5a2a','4 м',{b:1})}
+      <text x="159" y="140" text-anchor="middle" font-size="13" fill="${dim}">ширина 6 м · высота 4 м</text></g>`;
+      if(go){
+        inner+=`<g class="qEPop"><rect x="46" y="166" width="226" height="34" rx="9" fill="rgba(63,139,87,.14)" stroke="${grn}" stroke-width="1.8"/>
+        ${tx(159,188,12.5,'#2f7a53','600:50=12 · 400:50=8 → 12×8 см',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Комната</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('план = реальный : N',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW47Act('${lk}','rst')`):wkBtn('построить план',`visW47Act('${lk}','go')`))+
+        wkSml('делим на 50'));
+    } else if(step===13){
+      const H=200, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'1:100, 3 см на плане → ? (см)',a:'300',ds:['30','3']},
+        {q:'1:1000, 4 см → ? (см)',a:'4000',ds:['400','40']},
+        {q:'x : 2 = 6 : 4 → x = ?',a:'3',ds:['6','2']},
+        {q:'x : 5 = 12 : 10 → x = ?',a:'6',ds:['5','12']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,34,15.5,ink,P.q,{b:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(63,139,87,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd='#c14b2f';tc='#c14b2f';} }
+        inner+=`<g class="qEIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qEPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qEPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#c14b2f" font-weight="bold">план × N</text></g>`)
+        : tx(159,py+72,14.5,dim,'вычисли',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW47Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW47P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW47P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: масштаб и пропорция</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('ответ '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('план × N · крест-накрест'));
+    } else {
+      const H=196;
+      let inner='';
+      inner+=tx(159,40,17,ink,'1:100 · 5 см',{b:1,georgia:1});
+      inner+=`<g class="qEPop"><text x="159" y="90" text-anchor="middle" font-size="32" fill="${gold}" font-weight="bold" font-family="Georgia,serif">= 500 см</text></g>`;
+      inner+=tx(159,116,13.5,dim,'5 · 100 = 500 см = 5 м',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('план × масштаб'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[47]=visW47;
+  function visW47T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW47T=visW47T;
+  function visW47P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW47P=visW47P;
+  function visW47S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW47S=visW47S;
+  function visW47Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===13){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW47Act=visW47Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===47){ window.ARH_LESSONS[i]=L47; break; } } })();
+})();
