@@ -18598,3 +18598,429 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW84Act=visW84Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===84){ window.ARH_LESSONS[i]=L84; break; } } })();
 })();
+
+/* ================= УРОК 383 · Оценка + пример: уровень 2 (v1 · «Лаборатория оценок Архимеда», 15 слайдов, научный премиум) ================= */
+(function(){
+  if(!window.__wk383v1css){
+    window.__wk383v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qHIn{animation:qHIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qHIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qHPop{animation:qHPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qHPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qHBox{animation:qHBox .6s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qHBox{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qHBar{animation:qHBar .7s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes qHBar{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}'+
+      '#lvis .qHGrow{animation:qHGrow .8s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qHGrow{0%{transform:scale(0);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qHScan{stroke-dasharray:14 7;animation:qHScan 2s linear infinite;}'+
+      '@keyframes qHScan{to{stroke-dashoffset:-28}}';
+    document.head.appendChild(st);
+  }
+  const L383 = {
+    id: 383, title: 'Оценка + пример: уровень 2', ico: '⚖️',
+    src: 'Математика · 5–6 класс · Олимп-5: оценка', subj: 'math',
+    explain: [
+      'Олимпиадная схема «оценка + пример»: доказываем, что меньше нельзя (оценка), и приводим пример, где это достигается.',
+      'Задача: наименьшее двузначное число с суммой цифр 10. Пробуем 19: 1 + 9 = 10 — подходит, и меньше двузначного с такой суммой нет.',
+      'Обратный ход: задумали число, умножили на 3, получили 24 → задумали 24 : 3 = 8.',
+      'Сумма двух чисел 50, разность 10: (50 + 10) : 2 = 30 — большее число.',
+      'ОЦЕНКА — говорим «минимум столько-то». ПРИМЕР — показываем, что это достигается. Вместе — точный ответ.',
+      'Оценка снизу: разберём все меньшие — ни одно не подходит, значит ответ не меньше.',
+      'Пример: вот конкретное число — оно подходит. Значит ответ ровно такой.',
+      'Для суммы и разности: большее = (сумма + разность) : 2, меньшее = (сумма − разность) : 2.',
+      'Обратное действие: «умножили» — верни делением; «прибавили» — верни вычитанием.',
+      'Тренажёр: примени «оценка + пример».',
+      'Тренажёр: суммы и разности, обратный ход.',
+      'Шпаргалка: оценка снизу + пример = ответ; большее=(S+d)/2; обратное действие — противоположное.',
+      'Проверь себя устно: наименьшее двузначное с суммой 10 — это 19.',
+      'Проверь себя: сумма и разность — большее = (S+d):2.',
+      'Проверь себя: наименьшее двузначное с суммой цифр 10. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Какое наименьшее двузначное число имеет сумму цифр 10?', choices: ['19', '28', '37', '91'], ans: 0,
+      exp: '19: 1 + 9 = 10, и меньше подходящих двузначных нет.' },
+    tasks: [
+      { q: 'Задумали число, умножили на 3 и получили 24. Какое число задумали?', kind: 'unit', ans: 8, tol: 0,
+        hints: ['Действуем обратно: делим.', '24 : 3 = 8.'], sol: '8' },
+      { q: 'Сумма двух чисел 50, а разность 10. Чему равно большее число?', kind: 'choice', choices: ['30', '20', '25', '40'], ans: 0, tol: 0,
+        hints: ['(50 + 10) : 2.', '60 : 2 = 30.'], sol: '30' }
+    ]
+  };
+  const ink='#eef2ff', dim='#98a3c5', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
+        bg0='#151f3a', bg1='#0b1122', card='rgba(20,28,50,.94)', cardB='#3a4a70', lineC='#2a3a5f';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.4">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qHbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <linearGradient id="qHgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="#c9932f"/></linearGradient>
+        <filter id="qHsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qHbg)"/>
+      <g opacity="0.12" stroke="#4a5a8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="90" y1="0" x2="86" y2="${H}"/><line x1="150" y1="0" x2="146" y2="${H}"/><line x1="210" y1="0" x2="207" y2="${H}"/><line x1="270" y1="0" x2="268" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44538a" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3858" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const dsum=(n)=>[...(''+n)].reduce((a,c)=>a+parseInt(c,10),0);
+  function digitSums(x0,y,cell,start,count,hi,go){
+    let s='';
+    for(let i=0;i<count;i++){
+      const n=start+i, x=x0+i*cell;
+      const d=dsum(n);
+      let bgc='rgba(22,30,52,.94)', stroke=cardB, tc=ink;
+      if(go&&n===hi){ bgc='rgba(125,224,160,.2)'; stroke=grn; tc=grn; }
+      s+=`<g class="qHBox" style="animation-delay:${(0.06*i).toFixed(2)}s"><rect x="${x}" y="${y}" width="${cell-3}" height="${cell-3}" rx="6" fill="${bgc}" stroke="${stroke}" stroke-width="1.6"/>
+      ${tx(x+cell/2,y+cell/2-2,14,tc,''+n,{b:go&&n===hi})}
+      ${tx(x+cell/2,y+cell/2+16,11,dim,'∑: '+d,{})}</g>`;
+    }
+    return s;
+  }
+  function sumdiffBars(x,y,w,a,b,go){
+    /* a = большее (30), b = меньшее (20), рисуем две полосы с разностью */
+    let s='';
+    const scale= w/55;
+    /* B */
+    s+=`<g class="qHBar" style="animation-delay:.1s"><rect x="${x}" y="${y}" width="${(b*scale).toFixed(1)}" height="26" rx="5" fill="rgba(110,168,255,.2)" stroke="${blu}" stroke-width="1.8"/>
+    ${tx(x+b*scale/2,y+18,12,blu,'B',{b:1})}</g>`;
+    /* A */
+    s+=`<g class="qHBar" style="animation-delay:.2s"><rect x="${x}" y="${y+34}" width="${(a*scale).toFixed(1)}" height="26" rx="5" fill="rgba(255,215,106,.18)" stroke="${gold}" stroke-width="1.8"/>
+    ${tx(x+a*scale/2,y+52,12,gold,'A',{b:1})}</g>`;
+    /* разность */
+    if(go){ s+=`<g class="qHGrow"><rect x="${x+b*scale}" y="${y+34}" width="${((a-b)*scale).toFixed(1)}" height="26" rx="5" fill="rgba(255,154,138,.2)" stroke="${red}" stroke-width="1.8"/>
+    ${tx(x+b*scale+(a-b)*scale/2,y+52,12,red,'+10 (разность)',{})}</g>`; }
+    return s;
+  }
+  const chip=(t,c,delay)=>`<span class="qHIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
+  const Q383=[
+    {q:'Наименьшее двузначное с суммой цифр 10?',opts:['19','28','37'],ans:0},
+    {q:'Сумма 50, разность 10 — большее?',opts:['30','20','25'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q383[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW383T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:16px">Верно! оценка + пример</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:15px">Не так · проверь меньшие</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW383Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW383Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW383(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step===11||step===12) st.pick=null;
+      if(step===13){ st.mq=0; st.msel=null; }
+      if(step===14){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=200, go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,17,ink,'схема «оценка + пример»',{b:1});
+      inner+=tx(60,64,14,gold,'шаг 1 · ОЦЕНКА',{b:1});
+      inner+=tx(60,86,12,dim,'«меньше нельзя»',{});
+      inner+=tx(60,108,13,ink,'не меньше, чем X',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="qHPop"><rect x="150" y="64" width="150" height="50" rx="10" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
+        ${tx(225,82,13,grn,'шаг 2 · ПРИМЕР',{b:1})}${tx(225,104,12,dim,'«вот X — достигается»',{})}</g>`;
+        inner+=tx(159,150,14,ink,'вместе — точный ответ!',{b:1});
+        inner+=tx(159,172,12,dim,'оценка снизу + пример',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Лаборатория оценок</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('оценка (нельзя меньше) + пример (можно) = ответ',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW383Act('${lk}','rst')`):wkBtn('как работает?',`visW383Act('${lk}','go')`))+
+        wkSml('мощный приём олимпиад'));
+    } else if(step===1){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,17,ink,'оценка снизу',{b:1});
+      inner+=tx(159,66,13.5,dim,'докажи: «меньше нельзя»',{});
+      if(go){
+        inner+=`<g class="qHPop"><rect x="52" y="90" width="214" height="42" rx="11" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="2"/>
+        ${tx(159,110,14,cyan,'разберём все меньшие — ни одно',{b:1})}
+        ${tx(159,126,12,dim,'не подходит → ответ не меньше',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шаг 1 · Оценка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('нижняя граница',cyan,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW383Act('${lk}','rst')`):wkBtn('показать',`visW383Act('${lk}','go')`))+
+        wkSml('пол — ниже не опуститься'));
+    } else if(step===2){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,17,ink,'пример',{b:1});
+      inner+=tx(159,66,13.5,dim,'докажи: «а вот это подходит»',{});
+      if(go){
+        inner+=`<g class="qHPop"><rect x="52" y="92" width="214" height="42" rx="11" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
+        ${tx(159,112,14,grn,'приведи конкретное число,',{b:1})}
+        ${tx(159,128,12,dim,'которое удовлетворяет условию',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шаг 2 · Пример</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('достижимость',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW383Act('${lk}','rst')`):wkBtn('показать',`visW383Act('${lk}','go')`))+
+        wkSml('верхняя граница'));
+    } else if(step===3){
+      const H=200, go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'наименьшее двузначное с суммой 10',{b:1});
+      inner+=digitSums(28,64,28.6,10,10,19,go);
+      if(go){
+        inner+=`<g class="qHPop"><text x="159" y="184" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">19: 1+9=10 · и меньше нет</text></g>`;
+      } else {
+        inner+=tx(159,184,13,dim,'посмотри суммы цифр',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Задача</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('оценка: перебрали меньшие',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW383Act('${lk}','rst')`):wkBtn('оценить',`visW383Act('${lk}','go')`))+
+        wkSml('перебери двузначные'));
+    } else if(step===4){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,16,ink,'считаем цифры',{b:1});
+      inner+=digitSums(24,58,27.6,10,10,19,go);
+      if(go){
+        inner+=`<g class="qHPop"><rect x="70" y="150" width="178" height="34" rx="10" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
+        ${tx(159,172,14,grn,'10→1 · 11→2 … 19→10',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Суммы цифр</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('впервые 10 — на 19',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW383Act('${lk}','rst')`):wkBtn('посчитать',`visW383Act('${lk}','go')`))+
+        wkSml('19 — первое с суммой 10'));
+    } else if(step===5){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,17,ink,'оценка + пример',{b:1});
+      inner+=tx(159,68,13,dim,'наименьшее двузначное с суммой 10',{});
+      if(go){
+        inner+=`<g class="qHPop"><text x="159" y="112" text-anchor="middle" font-size="26" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 19</text>
+        <text x="159" y="142" text-anchor="middle" font-size="13" fill="${dim}">оценка: меньше нельзя · пример: 19 работает</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Точный ответ</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('ответ 19',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW383Act('${lk}','rst')`):wkBtn('ответ',`visW383Act('${lk}','go')`))+
+        wkSml('два шага — надёжно'));
+    } else if(step===6){
+      const H=208, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,16,ink,'сумма 50 · разность 10',{b:1});
+      inner+=sumdiffBars(30,66,258,30,20,go);
+      if(go){
+        inner+=`<g class="qHPop"><text x="159" y="172" text-anchor="middle" font-size="16" fill="${gold}" font-weight="bold">A + B = 50 · A − B = 10</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Большее число</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('A больше B на 10',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW383Act('${lk}','rst')`):wkBtn('показать',`visW383Act('${lk}','go')`))+
+        wkSml('наглядно: A = B + 10'));
+    } else if(step===7){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,17,ink,'формула',{b:1});
+      inner+=tx(159,68,15,gold,'большее = (сумма + разность) : 2',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="qHPop"><text x="159" y="112" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">(50+10):2 = 30</text>
+        <text x="159" y="140" text-anchor="middle" font-size="13" fill="${dim}">меньшее = (50−10):2 = 20</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сумма и разность</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('большее 30 · меньшее 20',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW383Act('${lk}','rst')`):wkBtn('посчитать',`visW383Act('${lk}','go')`))+
+        wkSml('полусумма + полразность'));
+    } else if(step===8){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,16,ink,'обратный ход',{b:1});
+      inner+=`<g class="qHIn"><rect x="44" y="62" width="66" height="46" rx="9" fill="rgba(22,30,52,.94)" stroke="${cardB}" stroke-width="1.8"/>${tx(77,88,14,ink,'?',{b:1,georgia:1})}</g>`;
+      inner+=tx(120,86,16,cyan,'→ ×3 →',{b:1});
+      inner+=`<g class="qHIn" style="animation-delay:.1s"><rect x="170" y="62" width="76" height="46" rx="9" fill="rgba(22,30,52,.94)" stroke="${cardB}" stroke-width="1.8"/>${tx(208,88,14,ink,'24',{b:1,georgia:1})}</g>`;
+      if(go){
+        inner+=`<g class="qHGrow"><text x="159" y="140" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">24 : 3 = 8</text>
+        <text x="159" y="166" text-anchor="middle" font-size="13" fill="${dim}">«умножили» → верни делением</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Верни число</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('обратное действие — деление',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW383Act('${lk}','rst')`):wkBtn('вернуть',`visW383Act('${lk}','go')`))+
+        wkSml('обратный ход'));
+    } else if(step===9){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'проверь себя',{b:1});
+      inner+=tx(159,58,13.5,dim,'наименьшее двузначное с суммой 10',{});
+      if(go){
+        inner+=digitSums(24,78,27.6,10,10,19,true);
+        inner+=`<g class="qHPop"><text x="159" y="180" text-anchor="middle" font-size="19" fill="${grn}" font-weight="bold" font-family="Georgia,serif">19 — ответ</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Оценка + пример</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('ответ 19',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW383Act('${lk}','rst')`):wkBtn('решить',`visW383Act('${lk}','go')`))+
+        wkSml('два шага приёма'));
+    } else if(step===10){
+      const H=200, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Наименьшее двузначное с суммой 9?',a:'18',ds:['27','90']},
+        {q:'Наименьшее двузначное с суммой 12?',a:'39',ds:['48','93']},
+        {q:'Наименьшее двузначное с суммой 5?',a:'14',ds:['23','50']},
+        {q:'Наименьшее двузначное с суммой 11?',a:'29',ds:['38','92']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,34,15.5,ink,P.q,{b:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qHIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qHPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qHPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">оцени снизу</text></g>`)
+        : tx(159,py+72,14.5,dim,'оценка + пример',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW383Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW383P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW383P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: оценка+пример</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('ответ '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('двузначное с суммой цифр'));
+    } else if(step===11){
+      const H=200, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Сумма 40, разность 6 — большее?',a:'23',ds:['17','20']},
+        {q:'Задумали ×2 = 18. Какое число?',a:'9',ds:['36','8']},
+        {q:'Сумма 30, разность 4 — большее?',a:'17',ds:['13','15']},
+        {q:'Задумали +7 = 20. Какое число?',a:'13',ds:['27','14']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,34,15.5,ink,P.q,{b:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qHIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qHPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qHPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вспомни формулу</text></g>`)
+        : tx(159,py+72,14.5,dim,'вычисли',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW383Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW383P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW383P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: суммы/обратный ход</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        fb+retry+
+        wkSml('действуй обратно'));
+    } else if(step===12){
+      const H=210;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'шпаргалка',{b:1});
+      const items=[['оценка (нельзя меньше) + пример (можно)'],['большее=(S+d):2 · меньшее=(S−d):2'],['обратный ход — противоположное действие'],['двузначные начинаются с 10']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=52+i*36;
+          inner+=`<g class="qHIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="30" rx="9" fill="${i%2?'rgba(20,28,50,.94)':'rgba(30,42,68,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+20,11.5,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('два шага — и ответ надёжен',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW383Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW383Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW383Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW383Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW383Act('${lk}','rst')`):'')+
+        wkSml('оценка + пример'));
+    } else if(step===13){
+      const H=196;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'Наименьшее двузначное с суммой 10?',opts:['19','28','91'],ans:0},
+        {q:'Сумма 50, разность 10 — большее?',opts:['30','20','25'],ans:0},
+        {q:'Задумали ×3 = 24. Что задумали?',opts:['8','72','12'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="qHPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'оценка + пример'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW383S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW383Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW383Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('два шага приёма'));
+    } else {
+      const H=196;
+      let inner='';
+      inner+=tx(159,42,17,ink,'наименьшее двузначное',{b:1,georgia:1});
+      inner+=`<g class="qHPop"><text x="159" y="90" text-anchor="middle" font-size="34" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 19</text></g>`;
+      inner+=tx(159,116,13.5,dim,'1+9 = 10 · меньше нет',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('оценка + пример'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[383]=visW383;
+  function visW383T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW383T=visW383T;
+  function visW383P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW383P=visW383P;
+  function visW383S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW383S=visW383S;
+  function visW383Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===13){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW383Act=visW383Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===383){ window.ARH_LESSONS[i]=L383; break; } } })();
+})();
