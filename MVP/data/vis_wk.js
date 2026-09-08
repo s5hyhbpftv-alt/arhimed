@@ -11472,20 +11472,22 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===416){ window.ARH_LESSONS[i]=L416; break; } } })();
 })();
 
-/* ================= УРОК 397 · Домино и раскраски (v1 · «Домино Архимеда», 18 слайдов) ================= */
+/* ================= УРОК 397 · Домино и раскраски (v2 · «Домино Архимеда», 18 слайдов, фотореалистичные костяшки) ================= */
 (function(){
-  if(!window.__wk397v1css){
-    window.__wk397v1css=1;
+  if(!window.__wk397v2css){
+    window.__wk397v2css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .k0in{animation:k0In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
-      '@keyframes k0In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .k0pop{animation:k0Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes k0Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .k0float{animation:k0Float 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes k0Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
-      '#lvis .k0tile{animation:k0Tile .5s ease both;transform-box:fill-box;}'+
-      '@keyframes k0Tile{0%{opacity:0}100%{opacity:1}}';
+      '#lvis .dmIn{animation:dmIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes dmIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .dmPop{animation:dmPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes dmPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .dmTile{animation:dmTile .6s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes dmTile{0%{transform:scale(.3) rotate(-8deg);opacity:0}70%{transform:scale(1.06) rotate(1deg);opacity:1}100%{transform:scale(1) rotate(0)}}'+
+      '#lvis .dmFloat{animation:dmFloat 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes dmFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
+      '#lvis .dmShine{animation:dmShine 3s ease-in-out infinite;}'+
+      '@keyframes dmShine{0%,100%{opacity:0}40%{opacity:.4}52%{opacity:.1}64%{opacity:.4}100%{opacity:0}}';
     document.head.appendChild(st);
   }
   const L397 = {
@@ -11520,46 +11522,101 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Каждое домино накрывает 1 белую и 1 чёрную.', '30 ≠ 32 → нельзя.'], sol: 'Нельзя: белых и чёрных не поровну.' }
     ]
   };
-  const I={ink:'#28324b',blue:'#2e6db4',grn:'#2e8b57',red:'#c0392b',gold:'#d99a06',orange:'#e8833a',dark:'#5f84ad',light:'#f8f2e2',gray:'#8a94ad'};
-  const CW=32, CB=32;
-  const whiteN=(n)=>{let w=0;for(let r=0;r<n;r++)for(let c=0;c<n;c++)if((r+c)%2===0)w++;return w;};
-  function paper(W,H,opt){
-    const o=opt||{};
-    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
-      <defs><linearGradient id="k0pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfaf2"/><stop offset="1" stop-color="#f2f4ee"/></linearGradient></defs>
-      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#k0pg)"/>
-      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#d3cbb0" stroke-width="2" rx="6"/>
-      ${o.inner?o.inner():''}
-    </svg>`;
+  const ink='#2d221a', cream='#fdf4dd', gold='#c9982b', goldS='#9a7117',
+        cellL='#f8edcf', cellD='#2f5170', csn='#1f3a55', woodB='#7b5433', woodM='#65431f', woodT='#4f3016',
+        soft='#c7a978', red='#c14b2f', grn='#3f8b57', blu='#3f6d9e', dim='#9c8a6a';
+  const PIPSEQ=[[4,2],[6,3],[2,5],[5,1],[3,6],[1,4],[6,6],[2,2],[5,3],[4,5],[3,2],[6,1],[1,1],[5,5],[4,6],[3,3]];
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||cream}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#4a2c12" stroke-width="3.4">${t}</text>`;
+  function pip(cx,cy,r){
+    return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#dmpip)" stroke="#241a10" stroke-width="${(r*0.16).toFixed(2)}"/>
+      <circle cx="${(cx-r*0.30).toFixed(2)}" cy="${(cy-r*0.36).toFixed(2)}" r="${(r*0.30).toFixed(2)}" fill="rgba(255,255,255,.5)"/>`;
   }
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||I.ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdfaf2" stroke-width="3.2">${t}</text>`;
-  /* шахматная доска n×n: x0,y0, размер клетки u */
+  const PIPS={0:[],1:[[.5,.5]],2:[[.30,.30],[.70,.70]],3:[[.30,.30],[.5,.5],[.70,.70]],
+    4:[[.30,.28],[.70,.28],[.30,.72],[.70,.72]],5:[[.30,.28],[.70,.28],[.5,.5],[.30,.72],[.70,.72]],
+    6:[[.30,.22],[.70,.22],[.30,.5],[.70,.5],[.30,.78],[.70,.78]]};
+  function pipsIn(bx,by,bw,bh,count){
+    const pts=PIPS[count]||[];
+    return pts.map(pt=>pip(bx+pt[0]*bw, by+pt[1]*bh, Math.min(bw,bh)*0.11)).join('');
+  }
+  function place(x0,y0,u,r,c,vert,a,b,cls,delay,op){
+    const x=x0+c*u, y=y0+r*u;
+    const w= vert? u: 2*u, h= vert? 2*u: u;
+    let s=`<g class="${cls||'dmTile'}" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#dmshad)">`;
+    /* костяной корпус */
+    s+=`<rect x="${(x+0.8).toFixed(1)}" y="${(y+0.8).toFixed(1)}" width="${(w-1.6).toFixed(1)}" height="${(h-1.6).toFixed(1)}" rx="5.5" fill="url(#dmivory)" opacity="${op||0.9}" stroke="#b7a279" stroke-width="1.5"/>`;
+    /* блик сверху и затенение снизу */
+    s+=`<rect x="${(x+2).toFixed(1)}" y="${(y+2).toFixed(1)}" width="${(w-4).toFixed(1)}" height="${(h*0.2).toFixed(1)}" rx="3" fill="rgba(255,255,255,.62)" opacity="${((op||0.9)*0.5).toFixed(2)}"/>`;
+    s+=`<rect x="${(x+2).toFixed(1)}" y="${(y+h-h*0.2).toFixed(1)}" width="${(w-4).toFixed(1)}" height="${(h*0.16).toFixed(1)}" rx="3" fill="rgba(120,96,52,.3)" opacity="${((op||0.9)*0.55).toFixed(2)}"/>`;
+    /* разделительная линия с фаской */
+    if(vert){
+      /* вертикальная костяшка: перекладина горизонтальная, половинки сверху/снизу */
+      s+=`<line x1="${x+3}" y1="${(y+h/2).toFixed(1)}" x2="${(x+w-3).toFixed(1)}" y2="${(y+h/2).toFixed(1)}" stroke="#8f7c54" stroke-width="1.6"/>`;
+      s+=`<line x1="${x+3}" y1="${(y+h/2+1.1).toFixed(1)}" x2="${(x+w-3).toFixed(1)}" y2="${(y+h/2+1.1).toFixed(1)}" stroke="rgba(255,255,255,.5)" stroke-width="1"/>`;
+      s+=pipsIn(x+u*0.06,y+u*0.06,u*0.88,u*0.88,a);
+      s+=pipsIn(x+u*0.06,y+u+u*0.06,u*0.88,u*0.88,b);
+    }else{
+      /* горизонтальная костяшка: перекладина вертикальная, половинки слева/справа */
+      s+=`<line x1="${(x+w/2).toFixed(1)}" y1="${y+3}" x2="${(x+w/2).toFixed(1)}" y2="${(y+h-3).toFixed(1)}" stroke="#8f7c54" stroke-width="1.6"/>`;
+      s+=`<line x1="${(x+w/2+1.1).toFixed(1)}" y1="${y+3}" x2="${(x+w/2+1.1).toFixed(1)}" y2="${(y+h-3).toFixed(1)}" stroke="rgba(255,255,255,.5)" stroke-width="1"/>`;
+      s+=pipsIn(x+u*0.06,y+u*0.06,u*0.88,u*0.88,a);
+      s+=pipsIn(x+u+u*0.06,y+u*0.06,u*0.88,u*0.88,b);
+    }
+    /* пробегающий блик по костяшке */
+    s+=`<rect class="dmShine" x="${(x+2).toFixed(1)}" y="${(y+2).toFixed(1)}" width="${(w-4).toFixed(1)}" height="${(h-4).toFixed(1)}" rx="5" fill="url(#dmshine)"/>`;
+    s+=`</g>`;
+    return s;
+  }
   function board(x0,y0,n,u,opt){
     const o=opt||{};
     let s='';
+    /* деревянный подрамник */
+    s+=`<rect x="${x0-7}" y="${y0-7}" width="${n*u+14}" height="${n*u+14}" rx="9" fill="#4a2e15" stroke="#2e1a0a" stroke-width="1.5"/>`;
+    s+=`<rect x="${x0-4.5}" y="${y0-4.5}" width="${n*u+9}" height="${n*u+9}" rx="7" fill="url(#dmwoodf)" stroke="#8a5a28" stroke-width="1.3"/>`;
     for(let r=0;r<n;r++)for(let c=0;c<n;c++){
       const wc=(r+c)%2===0;
-      s+=`<rect x="${x0+c*u}" y="${y0+r*u}" width="${u}" height="${u}" fill="${wc?o.light||I.light:o.dark||I.dark}"/>`;
+      s+=`<rect x="${x0+c*u}" y="${y0+r*u}" width="${u}" height="${u}" rx="1.5" fill="${wc?cellL:cellD}"/>`;
     }
-    s+=`<rect x="${x0}" y="${y0}" width="${n*u}" height="${n*u}" fill="none" stroke="${I.ink}" stroke-width="2.4"/>`;
+    /* грань между клетками — тонкая светлая линия */
+    s+=`<rect x="${x0}" y="${y0}" width="${n*u}" height="${n*u}" fill="none" stroke="#d8b968" stroke-width="1.4"/>`;
     if(o.cut){ for(const p of o.cut){ const r=p[0],c=p[1];
       const x=x0+c*u, y=y0+r*u;
-      s+=`<rect x="${x+1.5}" y="${y+1.5}" width="${u-3}" height="${u-3}" fill="#fdfaf2" stroke="${I.red}" stroke-width="2.4" stroke-dasharray="5 4"/>`;
-      s+=`<line x1="${x+5}" y1="${y+5}" x2="${x+u-5}" y2="${y+u-5}" stroke="${I.red}" stroke-width="2.2"/>`;
-      s+=`<line x1="${x+u-5}" y1="${y+5}" x2="${x+5}" y2="${y+u-5}" stroke="${I.red}" stroke-width="2.2"/>`;
+      s+=`<rect x="${x+1.5}" y="${y+1.5}" width="${u-3}" height="${u-3}" fill="#3a2410" stroke="${red}" stroke-width="2.4" stroke-dasharray="4 3" rx="2"/>`;
+      s+=`<line x1="${x+6}" y1="${y+6}" x2="${x+u-6}" y2="${y+u-6}" stroke="${red}" stroke-width="2.1"/>`;
+      s+=`<line x1="${x+u-6}" y1="${y+6}" x2="${x+6}" y2="${y+u-6}" stroke="${red}" stroke-width="2.1"/>`;
     }}
     if(o.tile){ let i=0;
       for(const t of o.tile){ const r1=t[0],c1=t[1],r2=t[2],c2=t[3];
-        const x=Math.min(x0+c1*u,x0+c2*u), y=Math.min(y0+r1*u,y0+r2*u);
-        const w=Math.abs(c2-c1)*u+u, h=Math.abs(r2-r1)*u+u;
-        s+=`<rect class="k0tile" x="${x+1.2}" y="${y+1.2}" width="${w-2.4}" height="${h-2.4}" rx="4" fill="${I.orange}" opacity=".42" stroke="${I.orange}" stroke-width="2.6" style="animation-delay:${(0.05*i).toFixed(2)}s"/>`;
-        s+=`<line x1="${x+w/2-8}" y1="${y+h/2}" x2="${x+w/2+8}" y2="${y+h/2}" stroke="${I.orange}" stroke-width="2.6"/>`;
+        const vert=(r1!==r2);
+        const pp=PIPSEQ[i%PIPSEQ.length];
+        s+=place(x0,y0,u,Math.min(r1,r2),Math.min(c1,c2),vert,pp[0],pp[1],'dmTile',0.05*i,0.9);
         i++;
       }
     }
     return s;
   }
-  const chip=(t,c,delay,fs)=>`<span class="k0in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(255,255,255,.85);font-family:Georgia,serif;font-size:${fs||19}px;color:${c};font-weight:bold">${t}</span>`;
+  function table(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="dmwood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${woodB}"/><stop offset="0.5" stop-color="${woodM}"/><stop offset="1" stop-color="${woodT}"/></linearGradient>
+        <linearGradient id="dmwoodf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a6a34"/><stop offset="1" stop-color="#6e431e"/></linearGradient>
+        <radialGradient id="dmvig" cx="0.5" cy="0.42" r="0.8"><stop offset="0" stop-color="rgba(0,0,0,0)"/><stop offset="1" stop-color="rgba(0,0,0,0.36)"/></radialGradient>
+        <linearGradient id="dmivory" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffdf5"/><stop offset="0.55" stop-color="#f7edd7"/><stop offset="1" stop-color="#e0d3b3"/></linearGradient>
+        <radialGradient id="dmpip" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#0f0c08"/><stop offset="1" stop-color="#4c4134"/></radialGradient>
+        <linearGradient id="dmshine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(255,255,255,0)"/><stop offset="0.5" stop-color="rgba(255,255,255,.85)"/><stop offset="1" stop-color="rgba(255,255,255,0)"/></linearGradient>
+        <filter id="dmshad" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.4" stdDeviation="3.2" flood-color="#000" flood-opacity="0.4"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#dmwood)"/>
+      <g opacity="0.10" stroke="#2c1809" stroke-width="1.1">
+        <line x1="34" y1="0" x2="30" y2="${H}"/><line x1="92" y1="0" x2="88" y2="${H}"/><line x1="158" y1="0" x2="154" y2="${H}"/>
+        <line x1="226" y1="0" x2="222" y2="${H}"/><line x1="284" y1="0" x2="280" y2="${H}"/>
+      </g>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#dmvig)"/>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#c79a3e" stroke-width="2.2" rx="7"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const chip=(t,c,delay)=>`<span class="dmIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(34,22,11,.86);font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
   const Q397=[
     {q:'8×8, убрали две белые угловые клетки. Осталось?',opts:['30 белых, 32 чёрных','32 и 32','31 и 32','30 и 30'],ans:0},
     {q:'Сколько клеток накрывает одно домино?',opts:['2','1','4'],ans:0}
@@ -11567,19 +11624,19 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   function quiz(lk,st){
     const T=Q397[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.85)',bd='#c9c2a6',tc='#28324b';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(46,139,87,.16)':'rgba(192,57,43,.12)'; bd=i===T.ans?I.grn:I.red; tc=i===T.ans?I.grn:I.red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:52px;font-size:15.5px" onclick="visW397T('${lk}',${i})">${o}</button>`;
+      let bg='rgba(34,22,11,.9)',bd='#c79a3e',tc='#fdf4dd';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(63,139,87,.22)':'rgba(193,75,47,.2)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:56px;font-size:16px" onclick="visW397T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1?'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! Домино — это 2 клетки рядом</div>':'<div class="wk-ans" style="color:#2e8b57;font-size:16px">Верно! 32 − 2 = 30 белых, чёрных 32</div>')
-        : '<div class="wk-ans" style="color:#c0392b;font-size:15px">Не так · посчитай клетки каждого цвета</div>';
+        ? (st.q===1?'<div class="wk-ans" style="color:#6fce93;font-size:16px">Верно! Домино — это 2 клетки рядом</div>':'<div class="wk-ans" style="color:#6fce93;font-size:16px">Верно! 32 − 2 = 30 белых, чёрных 32</div>')
+        : '<div class="wk-ans" style="color:#e8836a;font-size:15px">Не так · посчитай клетки каждого цвета</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW397Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW397Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#6b5d3a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#d8b968')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW397(el){
     const step=LV.step||0;
@@ -11592,93 +11649,94 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     let h='';
     const W=318;
     if(step===0){
-      const H=200, u=16, n=8, x0=95, y0=22;
+      const H=205, u=17, n=8, x0=78, y0=16;
       const go=st.go||0;
       let inner='';
-      inner+=board(x0,y0,n,u,{});
+      inner+=board(x0,y0,n,u,{tile:go?[[0,0,0,1],[0,2,0,3],[0,4,0,5]]:undefined});
       if(go){
-        inner+=`<g class="k0pop"><text x="159" y="${y0+n*u+24}" text-anchor="middle" font-size="15" fill="${I.ink}" font-weight="bold">64 клетки · 32 костяшки домино</text>
-        ${tx(159,y0+n*u+46,13.5,'#8a94ad','всегда ли получится? раскраска подскажет',{})}</g>`;
+        inner+=`<g class="dmPop"><text x="159" y="${y0+n*u+22}" text-anchor="middle" font-size="15.5" fill="${cream}" font-weight="bold">64 клетки · костяшки ложатся парами</text>
+        ${tx(159,y0+n*u+44,13.5,dim,'всегда ли получится? раскраска подскажет',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Покрыть доску домино</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('каждая костяшка — две соседние клетки',I.ink,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('сколько всего клеток?',`visW397Act('${lk}','go')`))+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('каждая костяшка — две соседние клетки',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('положить костяшки',`visW397Act('${lk}','go')`))+
         wkSml('вопрос не про 64 — а про цвета клеток'));
     } else if(step===1){
-      const H=205, u=16, n=8, x0=95, y0=22;
+      const H=210, u=17, n=8, x0=78, y0=16;
       const go=st.go||0;
       let inner='';
       inner+=board(x0,y0,n,u,{});
       if(go){
-        inner+=`<g class="k0pop"><rect x="54" y="${y0+n*u+18}" width="210" height="34" rx="10" fill="rgba(255,255,255,.92)" stroke="${I.blue}" stroke-width="2"/>
-        ${tx(159,y0+n*u+42,16,I.blue,'светлых 32 · тёмных 32',{georgia:1,b:1})}</g>`;
+        inner+=`<g class="dmPop"><rect x="54" y="${y0+n*u+16}" width="210" height="34" rx="10" fill="rgba(34,22,11,.92)" stroke="${blu}" stroke-width="2"/>
+        ${tx(159,y0+n*u+40,16,blu,'светлых 32 · тёмных 32',{georgia:1,b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Шахматная раскраска</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('как на шахматной доске · 32 и 32',I.blue,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('как на шахматной доске · 32 и 32',blu,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('посчитать цвета',`visW397Act('${lk}','go')`))+
         wkSml('соседние клетки — разного цвета'));
     } else if(step===2){
-      const H=185, u=26, n=4, x0=96, y0=36;
+      const H=190, u=27, n=4, x0=112, y0=40;
       const go=st.go||0;
       let inner='';
       inner+=board(x0,y0,n,u,{});
       if(go){
-        inner+=`<g class="k0tile"><rect x="${x0+u+1.2}" y="${y0+u+1.2}" width="${2*u-2.4}" height="${u-2.4}" rx="4" fill="${I.orange}" opacity=".45" stroke="${I.orange}" stroke-width="2.8"/></g>`;
-        inner+=tx(159,y0+4*u+20,15.5,I.orange,'домино = две клетки рядом',{b:1});
-        inner+=tx(159,y0+4*u+42,13.5,'#8a94ad','в ряд или столбик',{});
+        /* две костяшки: горизонтальная и вертикальная */
+        inner+=place(x0,y0,u,1,0,false,4,2,'dmTile',0.05,0.92);
+        inner+=place(x0,y0,u,0,3,true,3,6,'dmTile',0.12,0.92);
+        inner+=tx(159,y0+4*u+16,15.5,gold,'костяшка = две соседние клетки',{b:1,georgia:1});
+        inner+=tx(159,y0+4*u+38,13.5,dim,'в ряд (1×2) или столбик (2×1)',{});
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Что такое домино</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('прямоугольник 1×2 · ровно 2 клетки',I.orange,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('прямоугольник 1×2 · ровно 2 клетки',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('положить костяшку',`visW397Act('${lk}','go')`))+
         wkSml('домино нельзя «перепрыгнуть» через клетку'));
     } else if(step===3){
-      const H=210, u=26, n=4, x0=96, y0=30;
+      const H=212, u=27, n=4, x0=96, y0=30;
       const go=st.go||0;
       let inner='';
       inner+=board(x0,y0,n,u,{});
       if(go){
-        inner+=`<g class="k0pop"><rect class="k0tile" x="${x0+u+1.2}" y="${y0+u+1.2}" width="${2*u-2.4}" height="${u-2.4}" rx="4" fill="${I.orange}" opacity=".5" stroke="${I.orange}" stroke-width="3"/>
-        <circle cx="${x0+u+u/2}" cy="${y0+u+u/2}" r="4.5" fill="#fff" stroke="#28324b" stroke-width="2"/>
-        <circle cx="${x0+2*u+u/2}" cy="${y0+u+u/2}" r="4.5" fill="#28324b" stroke="#fff" stroke-width="1.4"/></g>`;
-        inner+=`<text x="159" y="${y0+4*u+14}" text-anchor="middle" font-size="14.5" fill="${I.ink}" font-weight="bold">одна костяшка = 1 светлая + 1 тёмная</text>`;
-        inner+=`<g class="k0pop" style="animation-delay:.15s"><rect x="70" y="${y0+4*u+22}" width="178" height="32" rx="9" fill="rgba(46,109,180,.14)" stroke="${I.blue}" stroke-width="2"/>
-        ${tx(159,y0+4*u+44,14,I.blue,'соседние клетки всегда разного цвета',{b:1})}</g>`;
+        /* большая костяшка поверх светлой+тёмной клетки */
+        inner+=place(x0,y0,u,1,1,false,3,2,'dmTile',0.05,0.88);
+        inner+=`<text x="159" y="${y0+4*u+12}" text-anchor="middle" font-size="14.5" fill="${cream}" font-weight="bold">одна костяшка = 1 светлая + 1 тёмная</text>`;
+        inner+=`<g class="dmPop" style="animation-delay:.15s"><rect x="70" y="${y0+4*u+20}" width="178" height="32" rx="9" fill="rgba(63,109,158,.16)" stroke="${blu}" stroke-width="2"/>
+        ${tx(159,y0+4*u+42,14,blu,'соседние клетки всегда разного цвета',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Ключевое наблюдение</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('белых накрыто = чёрным накрыто',I.blue,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('белых накрыто = чёрным накрыто',blu,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('накрыть одну клетку',`visW397Act('${lk}','go')`))+
         wkSml('куда ни положи — 1 светлая и 1 тёмная'));
     } else if(step===4){
-      const H=180;
+      const H=185;
       let inner='';
-      inner+=tx(159,50,15.5,I.ink,'какое бы число костяшек ни легло,',{b:1});
-      inner+=tx(159,82,19,I.ink,'белых = чёрных',{b:1,georgia:1});
-      inner+=`<g class="k0pop"><rect x="40" y="104" width="238" height="44" rx="12" fill="rgba(192,57,43,.08)" stroke="${I.red}" stroke-width="2.2"/>
-      ${tx(159,132,15.5,I.red,'не поровну → покрыть нельзя',{b:1})}</g>`;
+      inner+=tx(159,52,15.5,cream,'какое бы число костяшек ни легло,',{b:1});
+      inner+=tx(159,86,20,cream,'белых = чёрных',{b:1,georgia:1});
+      inner+=`<g class="dmPop"><rect x="40" y="104" width="238" height="44" rx="12" fill="rgba(193,75,47,.12)" stroke="${red}" stroke-width="2.2"/>
+      ${tx(159,132,15.5,red,'не поровну → покрыть нельзя',{b:1})}</g>`;
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Инвариант</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        wkRow(chip('число белых всегда равно числу чёрных накрытых',I.red,0.2))+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        wkRow(chip('число белых всегда равно числу чёрных накрытых',red,0.2))+
         wkSml('это свойство не меняется при любом числе домино'));
     } else if(step===5){
-      const H=180;
+      const H=185;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,56,19,I.ink,'необходимое условие',{b:1});
+      inner+=tx(159,58,19,cream,'необходимое условие',{b:1});
       if(go){
-        inner+=`<g class="k0pop"><text x="159" y="104" text-anchor="middle" font-size="23" fill="${I.blue}" font-weight="bold" font-family="Georgia,serif">белые = чёрные</text>
-        ${tx(159,140,14.5,'#8a94ad','иначе — сразу ответ «нельзя»',{})}</g>`;
+        inner+=`<g class="dmPop"><text x="159" y="106" text-anchor="middle" font-size="23" fill="${blu}" font-weight="bold" font-family="Georgia,serif">белые = чёрные</text>
+        ${tx(159,142,14.5,dim,'иначе — сразу ответ «нельзя»',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Условие возможности</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('проверь цвета — и задача наполовину решена',I.blue,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('проверь цвета — и задача наполовину решена',blu,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('какое условие?',`visW397Act('${lk}','go')`))+
         wkSml('поровну — необходимо (но не всегда достаточно)'));
     } else if(step===6){
-      const H=185, u=28, n=4, x0=96, y0=36;
+      const H=196, u=29, n=4, x0=100, y0=34;
       const go=st.go||0;
       let inner='';
       if(go===0){
@@ -11689,137 +11747,137 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=board(x0,y0,n,u,{tile:tiles});
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Поровну — и можно!</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('8 светлых = 8 тёмных · 8 костяшек',I.grn,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('8 светлых = 8 тёмных · 8 костяшек',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('покрыть рядами',`visW397Act('${lk}','go')`))+
         wkSml('пример на доске 4×4 — 8 клеток каждого цвета'));
     } else if(step===7){
-      const H=195, u=16, n=8, x0=95, y0=20;
+      const H=205, u=17, n=8, x0=78, y0=16;
       const go=st.go||0;
       let inner='';
       inner+=board(x0,y0,n,u,{cut:go?[[0,0],[7,7]]:undefined});
       if(go){
-        inner+=`<g class="k0pop"><text x="159" y="${y0+n*u+16}" text-anchor="middle" font-size="14.5" fill="${I.red}" font-weight="bold">убрали два белых угла (по диагонали)</text>
-        ${tx(159,y0+n*u+36,13.5,'#8a94ad','противоположные углы 8×8 — оба белые',{})}</g>`;
+        inner+=`<g class="dmPop"><text x="159" y="${y0+n*u+14}" text-anchor="middle" font-size="14.5" fill="${red}" font-weight="bold">убрали два белых угла (по диагонали)</text>
+        ${tx(159,y0+n*u+34,13.5,dim,'противоположные углы 8×8 — оба белые',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Задача: два угла убрали</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('какие клетки вырезали? белые!',I.red,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('какие клетки вырезали? белые!',red,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('показать вырезы',`visW397Act('${lk}','go')`))+
         wkSml('противоположные углы — одного цвета'));
     } else if(step===8){
-      const H=190;
+      const H=195;
       const go=st.go||0;
       let inner='';
       if(go===0){
-        inner+=`<g class="k0pop"><text x="120" y="78" text-anchor="middle" font-size="22" fill="${I.ink}" font-weight="bold" font-family="Georgia,serif">было: 32 и 32</text>
-        <text x="240" y="78" text-anchor="middle" font-size="22" fill="${I.red}" font-weight="bold" font-family="Georgia,serif">− 2 белые</text></g>`;
+        inner+=`<g class="dmPop"><text x="112" y="80" text-anchor="middle" font-size="21" fill="${cream}" font-weight="bold" font-family="Georgia,serif">было: 32 и 32</text>
+        <text x="236" y="80" text-anchor="middle" font-size="21" fill="${red}" font-weight="bold" font-family="Georgia,serif">− 2 белые</text>
+        ${tx(159,124,15,dim,'убрали две угловые белые клетки',{})}</g>`;
       } else {
-        inner+=`<g class="k0pop"><rect x="52" y="50" width="214" height="76" rx="12" fill="rgba(255,255,255,.92)" stroke="${I.ink}" stroke-width="2.2"/>
-        ${tx(159,76,17,'#8a94ad','стало',{b:1})}
-        ${tx(159,100,24,I.ink,'30 белых · 32 чёрных',{georgia:1,b:1})}
-        ${tx(159,120,15,I.red,'30 ≠ 32',{georgia:1,b:1})}</g>`;
+        inner+=`<g class="dmPop"><rect x="52" y="42" width="214" height="84" rx="12" fill="rgba(34,22,11,.92)" stroke="${cream}" stroke-width="2.2"/>
+        ${tx(159,66,16,dim,'стало',{b:1})}
+        ${tx(159,92,23,cream,'30 белых · 32 чёрных',{georgia:1,b:1})}
+        ${tx(159,116,15,red,'30 ≠ 32',{georgia:1,b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Считаем после удаления</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('белых стало 30 · чёрных 32',I.red,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('белых стало 30 · чёрных 32',red,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('посчитать',`visW397Act('${lk}','go')`))+
         wkSml('убрали две белые — белых меньше'));
     } else if(step===9){
-      const H=205, u=16, n=8, x0=95, y0=18;
+      const H=212, u=17, n=8, x0=78, y0=16;
       const go=st.go||0;
       let inner='';
       inner+=board(x0,y0,n,u,{cut:[[0,0],[7,7]]});
       if(go){
-        inner+=`<g class="k0pop"><text x="159" y="${y0+n*u+20}" text-anchor="middle" font-size="17" fill="${I.red}" font-weight="bold">30 белых · 32 чёрных</text>
-        ${tx(159,y0+n*u+44,16.5,I.red,'не поровну → покрыть нельзя',{b:1})}</g>`;
+        inner+=`<g class="dmPop"><text x="159" y="${y0+n*u+18}" text-anchor="middle" font-size="17" fill="${red}" font-weight="bold">30 белых · 32 чёрных</text>
+        ${tx(159,y0+n*u+42,16.5,red,'не поровну → покрыть нельзя',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Вывод: покрыть нельзя</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('30 ≠ 32 → домино не ляжет',I.red,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('30 ≠ 32 → домино не ляжет',red,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('почему нельзя?',`visW397Act('${lk}','go')`))+
         wkSml('сколько костяшек ни клади — цвета не уравнять'));
     } else if(step===10){
-      const H=180;
+      const H=185;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,48,17,I.ink,'31 костяшка накрыла бы…',{b:1});
+      inner+=tx(159,48,17,cream,'31 костяшка накрыла бы…',{b:1});
       if(go){
-        inner+=`<g class="k0pop"><text x="159" y="92" text-anchor="middle" font-size="20" fill="${I.ink}" font-weight="bold" font-family="Georgia,serif">31 белую и 31 чёрную</text>
-        ${tx(159,126,15.5,'#8a94ad','а чёрных на доске 32!',{})}
-        ${tx(159,152,17,I.red,'одна чёрная останется без пары',{b:1})}</g>`;
+        inner+=`<g class="dmPop"><text x="159" y="94" text-anchor="middle" font-size="20" fill="${cream}" font-weight="bold" font-family="Georgia,serif">31 белую и 31 чёрную</text>
+        ${tx(159,128,15.5,dim,'а чёрных на доске 32!',{})}
+        ${tx(159,154,17,red,'одна чёрная останется без пары',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему так выходит</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('инвариант: накрытых белых = накрытых чёрных',I.red,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('инвариант: накрытых белых = накрытых чёрных',red,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('показать',`visW397Act('${lk}','go')`))+
         wkSml('32 нельзя накрыть парами по 31'));
     } else if(step===11){
-      const H=180;
+      const H=185;
       let inner='';
-      inner+=tx(159,50,18,I.ink,'раскраску выбираем под задачу',{b:1});
-      inner+=`<g class="k0pop" style="animation-delay:.15s"><rect x="40" y="76" width="238" height="44" rx="12" fill="rgba(46,109,180,.1)" stroke="${I.blue}" stroke-width="2.2"/>
-      ${tx(159,104,15.5,I.blue,'домино накрывает РАЗНЫЕ цвета',{b:1})}</g>`;
-      inner+=`<text x="159" y="152" text-anchor="middle" font-size="13.5" fill="#8a94ad">крась так, чтобы было удобно считать</text>`;
+      inner+=tx(159,50,18,cream,'раскраску выбираем под задачу',{b:1});
+      inner+=`<g class="dmPop" style="animation-delay:.15s"><rect x="40" y="78" width="238" height="44" rx="12" fill="rgba(63,109,158,.16)" stroke="${blu}" stroke-width="2.2"/>
+      ${tx(159,106,15.5,blu,'домино накрывает РАЗНЫЕ цвета',{b:1})}</g>`;
+      inner+=`<text x="159" y="156" text-anchor="middle" font-size="13.5" fill="${dim}">крась так, чтобы было удобно считать</text>`;
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Раскраска — инструмент</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        wkRow(chip('удачная раскраска делает решение очевидным',I.blue,0.2))+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        wkRow(chip('удачная раскраска делает решение очевидным',blu,0.2))+
         wkSml('иногда красят в 3-4 цвета или полосами'));
     } else if(step===12){
-      const H=185, u=20, n=4, x0=80, y0=40;
+      const H=192, u=21, n=4, x0=80, y0=42;
       const go=st.go||0;
       let inner='';
       if(go===0){
-        // полосатая раскраска (строки) + горизонтальное домино одного цвета = плохо
         let s='';
         for(let r=0;r<n;r++)for(let c=0;c<n;c++){
           const wc=r%2===0;
-          s+=`<rect x="${x0+c*u}" y="${y0+r*u}" width="${u}" height="${u}" fill="${wc?I.light:I.dark}"/>`;
+          s+=`<rect x="${x0+c*u}" y="${y0+r*u}" width="${u}" height="${u}" rx="1.5" fill="${wc?cellL:cellD}"/>`;
         }
-        inner+=s+`<rect x="${x0}" y="${y0}" width="${4*u}" height="${4*u}" fill="none" stroke="${I.ink}" stroke-width="2.4"/>`;
-        inner+=tx(159,y0+4*u+16,14.5,'#8a94ad','полосатая раскраска',{b:1});
+        inner+=`<rect x="${x0-7}" y="${y0-7}" width="${4*u+14}" height="${4*u+14}" rx="7" fill="#4a2e15"/>`+s+`<rect x="${x0}" y="${y0}" width="${4*u}" height="${4*u}" fill="none" stroke="#d8b968" stroke-width="1.4"/>`;
+        inner+=tx(159,y0+4*u+16,14.5,dim,'полосатая раскраска',{b:1});
       } else {
-        inner+=board(x0,y0,n,u,{});
-        inner+=tx(159,y0+4*u+16,14.5,I.grn,'шахматная раскраска — самая надёжная',{b:1});
-        inner+=`<g class="k0pop"><rect x="214" y="44" width="92" height="54" rx="10" fill="rgba(255,255,255,.9)" stroke="${I.grn}" stroke-width="2"/>
-        ${tx(260,64,13,I.grn,'любой сосед',{b:1})}
-        ${tx(260,86,13,I.grn,'другого цвета',{b:1})}</g>`;
+        inner+=board(x0,y0,n,u,{tile:[[0,0,0,1]]});
+        inner+=tx(159,y0+4*u+16,14.5,grn,'шахматная раскраска — самая надёжная',{b:1});
+        inner+=`<g class="dmPop"><rect x="212" y="38" width="94" height="56" rx="10" fill="rgba(34,22,11,.9)" stroke="${grn}" stroke-width="2"/>
+        ${tx(258,58,13,grn,'любой сосед',{b:1})}
+        ${tx(258,82,13,grn,'другого цвета',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему шахматная — удачная</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('вверх/вниз/влево/вправо — всегда другой цвет',I.grn,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('вверх/вниз/влево/вправо — всегда другой цвет',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('сравнить раскраски',`visW397Act('${lk}','go')`))+
         wkSml('полосатая не годится для горизонтального домино'));
     } else if(step===13){
-      const H=190, u=16, n=7, x0=103, y0=20;
+      const H=198, u=17, n=7, x0=97, y0=16;
       const go=st.go||0;
       let inner='';
       inner+=board(x0,y0,n,u,{});
       if(go){
-        inner+=`<g class="k0pop"><text x="159" y="${y0+n*u+18}" text-anchor="middle" font-size="16" fill="${I.red}" font-weight="bold">светлых 25 · тёмных 24</text>
-        ${tx(159,y0+n*u+42,15.5,I.red,'49 клеток · не поровну → нельзя',{b:1})}</g>`;
+        inner+=`<g class="dmPop"><text x="159" y="${y0+n*u+16}" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">светлых 25 · тёмных 24</text>
+        ${tx(159,y0+n*u+40,15.5,red,'49 клеток · не поровну → нельзя',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Задача 2: доска 7×7</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('нечётная доска — покрыть нельзя',I.red,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('нечётная доска — покрыть нельзя',red,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('посчитать цвета',`visW397Act('${lk}','go')`))+
         wkSml('25 ≠ 24 · и 49 на 2 не делится'));
     } else if(step===14){
-      const H=185, u=18, n=6, x0=105, y0=20;
+      const H=192, u=19, n=6, x0=102, y0=16;
       const go=st.go||0;
       let inner='';
       inner+=board(x0,y0,n,u,{cut:go?[[0,1],[5,4]]:undefined});
       if(go){
-        inner+=`<g class="k0pop"><text x="159" y="${y0+n*u+18}" text-anchor="middle" font-size="15" fill="${I.ink}" font-weight="bold">было 18 и 18 · убрали 2 тёмные</text>
-        ${tx(159,y0+n*u+40,16,I.red,'18 ≠ 16 · покрыть нельзя',{b:1})}</g>`;
+        inner+=`<g class="dmPop"><text x="159" y="${y0+n*u+16}" text-anchor="middle" font-size="15" fill="${cream}" font-weight="bold">было 18 и 18 · убрали 2 тёмные</text>
+        ${tx(159,y0+n*u+38,16,red,'18 ≠ 16 · покрыть нельзя',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Задача 3: доска 6×6</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('было 18/18 · стало 18 и 16',I.red,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('было 18/18 · стало 18 и 16',red,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW397Act('${lk}','rst')`):wkBtn('вырезать тёмные углы',`visW397Act('${lk}','go')`))+
         wkSml('снова не поровну — снова нельзя'));
     } else if(step===15){
-      const H=185;
+      const H=190;
       if(st.mq==null) st.mq=0;
       const QS=[
         {q:'Домино накрывает…',opts:['2 клетки','4 клетки','1 клетку'],ans:0},
@@ -11827,12 +11885,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,40,15.5,I.ink,'быстрая проверка',{b:1});
+      inner+=tx(159,40,15.5,cream,'быстрая проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="k0pop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#2e8b57':'#c0392b'}" font-weight="bold">${st.msel===T.ans?'верно!':'не так · вспомни инвариант'}</text></g>`;
+        inner+=`<g class="dmPop"><text x="159" y="98" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#6fce93':'#e8836a'}" font-weight="bold">${st.msel===T.ans?'верно!':'не так · вспомни инвариант'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkHero(table(W,H,{inner:()=>inner}))+
         `<div class="wk-row" style="gap:8px">
           ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW397S('${lk}',${i})">${o}</button>`).join('')}
           ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW397Act('${lk}','nq')`):''}
@@ -11840,36 +11898,36 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml(st.mq===0?'костяшка — прямоугольник 1×2':'не поровну → нельзя'));
     } else if(step===16){
-      const H=190;
+      const H=196;
       const go=st.go||0;
       let inner='';
-      inner+=`<rect x="16" y="36" width="286" height="36" rx="9" fill="rgba(46,109,180,.12)" stroke="${I.blue}" stroke-width="2"/>
-      ${tx(159,60,15.5,I.blue,'домино = 1 светлая + 1 тёмная клетка',{b:1})}`;
+      inner+=`<rect x="16" y="36" width="286" height="36" rx="9" fill="rgba(63,109,158,.16)" stroke="${blu}" stroke-width="2"/>
+      ${tx(159,60,15.5,blu,'домино = 1 светлая + 1 тёмная клетка',{b:1})}`;
       if(go>=1){
-        inner+=`<g class="k0pop"><rect x="16" y="80" width="286" height="34" rx="9" fill="${I.fg?I.fg:'rgba(46,139,87,.13)'}" stroke="${I.grn}" stroke-width="2"/>
-        ${tx(159,103,15,I.grn,'можно — только если цветов поровну',{b:1})}</g>`;
+        inner+=`<g class="dmPop"><rect x="16" y="80" width="286" height="34" rx="9" fill="rgba(63,139,87,.16)" stroke="${grn}" stroke-width="2"/>
+        ${tx(159,103,15,grn,'можно — только если цветов поровну',{b:1})}</g>`;
       }
       if(go>=2){
-        inner+=`<g class="k0pop"><rect x="16" y="122" width="286" height="36" rx="9" fill="rgba(192,57,43,.08)" stroke="${I.red}" stroke-width="2"/>
-        ${tx(159,146,15,I.red,'не поровну → сразу «нельзя»',{b:1})}</g>
-        <g class="k0pop" style="animation-delay:.12s"><text x="159" y="184" text-anchor="middle" font-size="14" fill="${I.ink}" font-weight="bold">раскраску выбирают под задачу</text></g>`;
+        inner+=`<g class="dmPop"><rect x="16" y="122" width="286" height="36" rx="9" fill="rgba(193,75,47,.12)" stroke="${red}" stroke-width="2"/>
+        ${tx(159,146,15,red,'не поровну → сразу «нельзя»',{b:1})}</g>
+        <g class="dmPop" style="animation-delay:.12s"><text x="159" y="186" text-anchor="middle" font-size="14" fill="${cream}" font-weight="bold">раскраску выбирают под задачу</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
-        (go>=2?wkRow(chip('инвариант решает задачу',I.grn,0.2)):'')+
+        wkHero(table(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('инвариант решает задачу',grn,0.2)):'')+
         wkRow(
           go===0?wkBtn('1 · домино',`visW397Act('${lk}','go')`) : '',
           go===1?wkBtn('2 · условие',`visW397Act('${lk}','go')`) : '',
           go>=2?wkBtn('сброс',`visW397Act('${lk}','rst')`):'')+
         wkSml('считаем цвета — и ответ готов'));
     } else {
-      const H=208, u=16, n=8, x0=95, y0=22;
+      const H=215, u=17, n=8, x0=78, y0=16;
       let inner='';
       inner+=board(x0,y0,n,u,{cut:[[0,0],[7,7]]});
-      inner+=`<g class="k0pop"><text x="159" y="${y0+8*u+22}" text-anchor="middle" font-size="15" fill="${I.red}" font-weight="bold">32 − 2 = 30 белых · 32 чёрных</text>
-      ${tx(159,y0+8*u+42,13.5,'#8a94ad','30 ≠ 32 — покрыть нельзя',{})}</g>`;
+      inner+=`<g class="dmPop"><text x="159" y="${y0+8*u+22}" text-anchor="middle" font-size="15" fill="${red}" font-weight="bold">32 − 2 = 30 белых · 32 чёрных</text>
+      ${tx(159,y0+8*u+42,13.5,dim,'30 ≠ 32 — покрыть нельзя',{})}</g>`;
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
-        wkHero(paper(W,H,{inner:()=>inner}))+
+        wkHero(table(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
         wkSml('домино = 1 белая + 1 чёрная · жми «Понял! Проверю себя»'));
     }
@@ -11890,13 +11948,6 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW397Act=visW397Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===397){ window.ARH_LESSONS[i]=L397; break; } } })();
 })();
-
-
-
-
-
-
-
 /* ================= УРОК 191 · Пропорция: основное свойство (v1 · «Цветолаборатория Архимеда», 18 слайдов) ================= */
 (function(){
   if(!window.__wk191v1css){
