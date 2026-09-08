@@ -12899,3 +12899,836 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW182Act=visW182Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===182){ window.ARH_LESSONS[i]=L182; break; } } })();
 })();
+
+/* ================= УРОК 180 · Сложение дробей с разными знаменателями (v1 · «Пекарня дробей Архимеда», 15 слайдов) ================= */
+(function(){
+  if(!window.__wk180v1css){
+    window.__wk180v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .b0In{animation:b0In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes b0In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .b0Pop{animation:b0Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes b0Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .b0Seg{animation:b0Seg .6s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes b0Seg{0%{transform:scaleX(.05);opacity:0}70%{transform:scaleX(1.04);opacity:1}100%{transform:scaleX(1)}}'+
+      '#lvis .b0Float{animation:b0Float 2.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes b0Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+    document.head.appendChild(st);
+  }
+  const L180 = {
+    id: 180, title: 'Сложение дробей с разными знаменателями', ico: '🧩',
+    src: 'Математика · 5 класс · Сложение дробей', subj: 'math',
+    explain: [
+      'Дроби с разными знаменателями — это доли разного размера, складывать их сразу нельзя: 1/2 + 1/3 ≠ 2/5!',
+      'Сначала приводим к ОБЩЕМУ знаменателю — числу, которое делится на оба знаменателя.',
+      '1/2 + 1/3: общий знаменатель 6. 1/2 = 3/6 (домножили на 3), 1/3 = 2/6 (домножили на 2).',
+      'Теперь доли одинаковые: 3/6 + 2/6 = 5/6.',
+      'Почему 1/2 = 3/6? Половину пиццы можно нарезать на 6 кусков — тогда это 3 куска из 6.',
+      'Ловушка: знаменатели НЕ складываем: 1/2 + 1/3 ≠ 2/5 — это меньше половины, а на самом деле почти целая пицца (5/6).',
+      'Совет Архимеда: всегда проверяй ответ по смыслу: половина плюс треть — больше половины, а 2/5 — меньше.',
+      'Половину и треть нарезаем на одинаковые кусочки: на 6 долей. Тогда 1/2 = 3/6, а 1/3 = 2/6.',
+      'Теперь доли одинаковые — складываем числители: 3 шестых + 2 шестых = 5 шестых.',
+      'Ответ 5/6: почти целая пицца. Так и должно быть: половина плюс треть — это больше половины.',
+      'Почему 1/2 превращается в 3/6? Умножаем и числитель, и знаменатель на одно и то же число 3 — дробь не меняется.',
+      'Почему 1/3 превращается в 2/6? Умножаем верх и низ на одно и то же число 2.',
+      'Главная ловушка: 1/2 + 1/3 ≠ 2/5! Знаменатели НЕ складываем. Пять шестых — это почти целое, а не две пятых.',
+      'Алгоритм: общий знаменатель → переведи каждую дробь → сложи числители → упрости и проверь по смыслу.',
+      'Проверь себя: 1/2 + 1/3 = 5/6. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Чему равно 1/2 + 1/3?', choices: ['2/5', '5/6', '2/6'], ans: 1,
+      exp: 'Общий знаменатель 6: 1/2 = 3/6, 1/3 = 2/6; 3/6 + 2/6 = 5/6.' },
+    tasks: [
+      { q: 'Чему равен числитель результата 1/4 + 1/6?', kind: 'unit', ans: 5, tol: 0,
+        hints: ['Найди общий знаменатель для 4 и 6 (маленький).', '12: 1/4 = 3/12, 1/6 = 2/12; 3/12 + 2/12 = 5/12 — числитель 5.'], sol: '1/4 + 1/6 = 3/12 + 2/12 = 5/12.' },
+      { q: 'Чему равно 1/3 + 1/6?', kind: 'choice', choices: ['1/2', '2/9', '1/3'], ans: 0, tol: 0,
+        hints: ['Общий знаменатель 6: 1/3 = 2/6.', '2/6 + 1/6 = 3/6 = 1/2.'], sol: '1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2.' }
+    ]
+  };
+  const ink='#4a2f18', dim='#9b8365', gold='#c9982b', cream='#fbf1dd', empty='#efe5cd',
+        berry='#e4574f', blue='#3f6d9e', purple='#8a63b5', green='#4c9a6a', strokeC='#c9b98d';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1dd" stroke-width="3.2">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    let dots='';
+    for(let i=0;i<10;i++){ dots+=`<circle cx="${20+i*32}" cy="18" r="3" fill="rgba(201,152,43,.14)"/>`; }
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="b0bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf5e6"/><stop offset="1" stop-color="#f4e7c9"/></linearGradient>
+        <linearGradient id="b0gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2d38a"/><stop offset="0.5" stop-color="#e0a94a"/><stop offset="1" stop-color="#b8802c"/></linearGradient>
+        <filter id="b0sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.28"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#b0bg)"/>
+      <g opacity="0.8">${dots}</g>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="${strokeC}" stroke-width="2" rx="7"/>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="url(#b0gold)" stroke-width="1.3" opacity="0.55" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  function sector(cx,cy,r,a0,a1){
+    const r0=a0*Math.PI/180, r1=a1*Math.PI/180;
+    return `M ${cx} ${cy} L ${(cx+r*Math.cos(r0)).toFixed(1)} ${(cy+r*Math.sin(r0)).toFixed(1)} A ${r} ${r} 0 ${(r1-r0)>180?1:0} 1 ${(cx+r*Math.cos(r1)).toFixed(1)} ${(cy+r*Math.sin(r1)).toFixed(1)} Z`;
+  }
+  function pie(cx,cy,r,n,k,color,o){
+    const st0=(o&&o.start)!=null?o.start:-90;
+    let s='';
+    for(let i=0;i<n;i++){
+      const a0=st0+i*(360/n), a1=st0+(i+1)*(360/n);
+      const filled=(i<k);
+      s+=`<path d="${sector(cx,cy,r,a0,a1)}" fill="${filled?color:(o&&o.empty)||empty}" stroke="#fffdf5" stroke-width="1.8"/>`;
+    }
+    s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${strokeC}" stroke-width="2"/>`;
+    return s;
+  }
+  function fracBar(px,py,w,h,n,k,color,o){
+    const o2=o||{}, cell=w/n;
+    let s='';
+    for(let i=0;i<n;i++){
+      s+=`<rect x="${(px+i*cell).toFixed(1)}" y="${py}" width="${(cell-1.6).toFixed(1)}" height="${h}" rx="2.6" fill="${i<k?color:(o2.empty||empty)}" stroke="#fffdf5" stroke-width="1.2"/>`;
+    }
+    s+=`<rect x="${px}" y="${py}" width="${w}" height="${h}" fill="none" stroke="${(o2.stroke)||strokeC}" stroke-width="1.6"/>`;
+    return s;
+  }
+  const chip=(t,c,delay)=>`<span class="b0In" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(251,241,221,.95);font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
+  const Q180=[
+    {q:'1/2 + 1/3 = ?',opts:['2/5','5/6','2/6'],ans:1},
+    {q:'1/3 + 1/6 = ?',opts:['1/2','2/9','1/3'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q180[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd='#c9b98d',tc=ink,bg='rgba(251,241,221,.95)';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,106,.18)':'rgba(228,87,79,.16)'; bd=i===T.ans?green:berry; tc=i===T.ans?green:berry; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:56px;font-size:17px" onclick="visW180T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#4c9a6a;font-size:16px">Верно! приведи к общему знаменателю</div>'
+        : '<div class="wk-ans" style="color:#e4574f;font-size:15px">Не так · знаменатели не складываем!</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW180Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW180Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#c9982b')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW180(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=14){ st.go=0; }
+      if(step>=10&&step<=12) st.pick=null;
+      if(step===13){ st.mq=0; st.msel=null; }
+      if(step===14){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=pie(96,80,44,2,1,berry,{start:-90});
+      inner+=pie(224,80,44,3,1,blue,{start:-90});
+      inner+=tx(96,144,15,ink,'1/2',{b:1,georgia:1});
+      inner+=tx(224,144,15,ink,'1/3',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="b0Pop"><text x="159" y="178" text-anchor="middle" font-size="15" fill="${berry}" font-weight="bold">доли разного размера — не сложить!</text></g>`;
+      } else {
+        inner+=tx(159,178,14,dim,'половина и треть — куски разной величины',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пекарня дробей</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('нужен общий «кусочек» — общий знаменатель',berry,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW180Act('${lk}','rst')`):wkBtn('почему нельзя?',`visW180Act('${lk}','go')`))+
+        wkSml('1/2 + 1/3 ≠ 2/5'));
+    } else if(step===1){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,54,18,ink,'общий знаменатель',{b:1,georgia:1});
+      inner+=tx(159,82,13.5,dim,'число, которое делится на оба знаменателя',{});
+      inner+=`<g class="b0In"><rect x="52" y="104" width="214" height="44" rx="12" fill="rgba(138,99,181,.12)" stroke="${purple}" stroke-width="2.2"/>
+      ${tx(159,132,22,purple,'для 2 и 3 → 6',{b:1,georgia:1})}</g>`;
+      inner+=tx(159,166,13.5,dim,'в 6 долей помещается и 1/2, и 1/3',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Общий знаменатель</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(chip('6 делится и на 2, и на 3',purple,0.2))+
+        wkSml('кратное обоим знаменателям'));
+    } else if(step===2){
+      const H=204, px=44, py=54, w=230;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(44,40,14,ink,'1/2',{b:1,georgia:1,an:'start'});
+      inner+=fracBar(px,py,w,28, go?6:2, go?3:1, berry,{});
+      if(go){
+        inner+=`<g class="b0Pop"><text x="159" y="112" text-anchor="middle" font-size="17" fill="${berry}" font-weight="bold">режем на 6 → 1/2 = 3/6</text></g>`;
+        inner+=tx(159,136,13.5,dim,'половина = три шестых',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Вторую долю — на 6</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('1/2 = 3/6 (домножили на 3)',berry,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW180Act('${lk}','rst')`):wkBtn('порезать на 6',`visW180Act('${lk}','go')`))+
+        wkSml('число и знаменатель домножаем на одно и то же'));
+    } else if(step===3){
+      const H=204, px=44, py=54, w=230;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(44,40,14,ink,'1/3',{b:1,georgia:1,an:'start'});
+      inner+=fracBar(px,py,w,28, go?6:3, go?2:1, blue,{});
+      if(go){
+        inner+=`<g class="b0Pop"><text x="159" y="112" text-anchor="middle" font-size="17" fill="${blue}" font-weight="bold">режем на 6 → 1/3 = 2/6</text></g>`;
+        inner+=tx(159,136,13.5,dim,'треть = две шестых',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Третью долю — на 6</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('1/3 = 2/6 (домножили на 2)',blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW180Act('${lk}','rst')`):wkBtn('порезать на 6',`visW180Act('${lk}','go')`))+
+        wkSml('тоже к шестым долям'));
+    } else if(step===4){
+      const H=212, px=44, py=50;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(90,40,15,berry,'3/6',{b:1,georgia:1});
+      inner+=tx(226,40,15,blue,'2/6',{b:1,georgia:1});
+      inner+=fracBar(44,50,100,24,6,3,berry,{});
+      inner+=fracBar(174,50,100,24,6,2,blue,{});
+      if(go){
+        inner+=`<g class="b0Seg"><text x="159" y="98" text-anchor="middle" font-size="24" fill="${ink}" font-weight="bold" font-family="Georgia,serif">+</text></g>`;
+        inner+=`<g class="b0Pop"><rect x="94" y="116" width="130" height="30" rx="8" fill="rgba(76,154,106,.14)" stroke="${green}" stroke-width="2"/>
+        ${tx(159,137,16,green,'3 шестых + 2 шестых',{b:1})}</g>`;
+        inner+=fracBar(44,158,230,26,6,5,green,{});
+        inner+=tx(159,200,17,green,'= 5/6',{b:1,georgia:1});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Доли одинаковые — складываем</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('3 + 2 = 5 шестых',green,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW180Act('${lk}','rst')`):wkBtn('сложить',`visW180Act('${lk}','go')`))+
+        wkSml('складываем числители, знаменатель общий'));
+    } else if(step===5){
+      const H=214;
+      let inner='';
+      inner+=`<g class="b0Pop"><text x="159" y="70" text-anchor="middle" font-size="40" fill="${green}" font-weight="bold" font-family="Georgia,serif">5/6</text></g>`;
+      inner+=pie(96,142,42,6,5,green,{start:-90});
+      inner+=tx(96,198,13,dim,'почти целая пицца',{});
+      inner+=tx(228,142,15,ink,'половина + треть',{b:1});
+      inner+=tx(228,168,13.5,dim,'вместе больше половины',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ответ по смыслу</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(chip('половина да треть = 5/6 — почти целое',green,0.2))+
+        wkSml('проверяем «на глаз»: больше половины'));
+    } else if(step===6){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,56,16,ink,'почему 1/2 = 3/6?',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="b0Pop"><text x="100" y="120" text-anchor="middle" font-size="24" fill="${berry}" font-weight="bold" font-family="Georgia,serif">1·3</text></g>`;
+        inner+=`<g class="b0Pop" style="animation-delay:.1s"><text x="100" y="156" text-anchor="middle" font-size="24" fill="${berry}" font-weight="bold" font-family="Georgia,serif">2·3</text></g>`;
+        inner+=tx(200,120,15,ink,'умножаем',{});
+        inner+=tx(200,150,15,berry,'и числитель,',{});
+        inner+=tx(200,170,15,berry,'и знаменатель',{});
+        inner+=tx(159,186,13.5,dim,'на одно и то же число 3',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему 1/2 = 3/6</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('домножили дробь на 3/3 — значение не меняется',berry,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW180Act('${lk}','rst')`):wkBtn('показать',`visW180Act('${lk}','go')`))+
+        wkSml('дробь не изменится, если верх и низ × одно число'));
+    } else if(step===7){
+      const H=200;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,56,16,ink,'почему 1/3 = 2/6?',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="b0Pop"><text x="100" y="120" text-anchor="middle" font-size="24" fill="${blue}" font-weight="bold" font-family="Georgia,serif">1·2</text></g>`;
+        inner+=`<g class="b0Pop" style="animation-delay:.1s"><text x="100" y="156" text-anchor="middle" font-size="24" fill="${blue}" font-weight="bold" font-family="Georgia,serif">3·2</text></g>`;
+        inner+=tx(200,120,15,ink,'умножаем',{});
+        inner+=tx(200,150,15,blue,'и верх,',{});
+        inner+=tx(200,170,15,blue,'и низ',{});
+        inner+=tx(159,186,13.5,dim,'на одно и то же число 2',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Почему 1/3 = 2/6</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('домножили дробь на 2/2',blue,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW180Act('${lk}','rst')`):wkBtn('показать',`visW180Act('${lk}','go')`))+
+        wkSml('верх и низ умножаем на одинаковое число'));
+    } else if(step===8){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,15.5,ink,'ловушка: знаменатели НЕ складываем!',{b:1});
+      if(go===0){
+        inner+=`<g class="b0In"><rect x="60" y="70" width="198" height="44" rx="11" fill="rgba(228,87,79,.14)" stroke="${berry}" stroke-width="2.2"/>
+        ${tx(159,98,22,berry,'1/2 + 1/3 ≠ 2/5',{b:1,georgia:1})}</g>`;
+        inner+=tx(159,138,14,dim,'2/5 — это меньше половины!',{});
+      } else {
+        inner+=pie(96,120,44,5,2,berry,{start:-90});
+        inner+=tx(96,182,14,berry,'2/5 — меньше половины',{b:1});
+        inner+=pie(224,120,44,6,5,green,{start:-90});
+        inner+=tx(224,182,14,green,'5/6 — почти целая',{b:1});
+        inner+=tx(159,132,14,dim,'',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ловушка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2/5 < половины, а 5/6 почти целое',green,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW180Act('${lk}','rst')`):wkBtn('проверить по смыслу',`visW180Act('${lk}','go')`))+
+        wkSml('складываем только числители'));
+    } else if(step===9){
+      const H=214;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,16,ink,'алгоритм',{b:1});
+      const stps=[['найди общий знаменатель'],['переведи каждую дробь'],['сложи числители — знаменатель общий'],['упрости (если можно)']];
+      for(let i=0;i<stps.length;i++){
+        if(go>=i){
+          const ry=52+i*38, cy=68+i*38;
+          inner+=`<g class="b0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="32" rx="9" fill="rgba(251,241,221,.95)" stroke="${i===go-1?gold:'#d9c89a'}" stroke-width="1.8"/>
+          <circle cx="48" cy="${cy}" r="10" fill="rgba(201,152,43,.16)" stroke="${gold}" stroke-width="1.6"/>
+          ${tx(48,cy+4,12,gold,'1',{b:1})}${tx(150,cy+11,13.5,ink,stps[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Алгоритм</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('4 шага — и любая дробь сложится',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW180Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW180Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW180Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW180Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW180Act('${lk}','rst')`):'')+
+        wkSml('общий знаменатель — ключ ко всему'));
+    } else if(step===10){
+      const H=196, py=48;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'1/2 = ?/6',ans:'3',ds:['2','4']},
+        {q:'1/3 = ?/6',ans:'2',ds:['3','6']},
+        {q:'1/4 = ?/12',ans:'3',ds:['4','6']},
+        {q:'1/6 = ?/12',ans:'2',ds:['6','4']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.ans,...P.ds];
+      let inner='';
+      inner+=tx(159,36,17,ink,P.q,{b:1,georgia:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd='#d9c89a',tc=ink,bgc='rgba(251,241,221,.95)';
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,106,.18)';bd=green;tc=green;} else if(i===st.pick){bgc='rgba(228,87,79,.16)';bd=berry;tc=berry;} }
+        inner+=`<g class="b0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="46" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+31,22,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="b0Pop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${green}" font-weight="bold">верно! к общему знаменателю</text></g>`
+          : `<g class="b0Pop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${berry}" font-weight="bold">не так · посчитай доли</text></g>`)
+        : tx(159,py+72,14.5,dim,'укажи пропущенный числитель',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW180Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW180P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW180P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: общий знаменатель</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.q.replace('?',P.ans),green,0.2)):'')+
+        fb+retry+
+        wkSml('домножаем верх и низ на одно и то же число'));
+    } else if(step===11){
+      const H=196, py=48;
+      const pool=[
+        {q:'1/2 + 1/3',a:'5/6',ds:['2/5','2/6']},
+        {q:'1/4 + 1/6',a:'5/12',ds:['2/10','5/24']},
+        {q:'1/3 + 1/6',a:'1/2',ds:['2/9','2/6']},
+        {q:'1/2 + 1/4',a:'3/4',ds:['2/6','1/4']}
+      ];
+      if(st.tr==null) st.tr=0;
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,36,17,ink,P.q,{b:1,georgia:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd='#d9c89a',tc=ink,bgc='rgba(251,241,221,.95)';
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,106,.18)';bd=green;tc=green;} else if(i===st.pick){bgc='rgba(228,87,79,.16)';bd=berry;tc=berry;} }
+        inner+=`<g class="b0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="46" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+31,21,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="b0Pop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${green}" font-weight="bold">верно! к общему знаменателю</text></g>`
+          : `<g class="b0Pop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${berry}" font-weight="bold">не так · знаменатели не складываем</text></g>`)
+        : tx(159,py+72,14.5,dim,'выбери правильную сумму',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW180Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW180P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW180P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: сложение</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.q+' = '+P.a,green,0.2)):'')+
+        fb+retry+
+        wkSml('приведи к общему знаменателю и сложи'));
+    } else if(step===12){
+      const H=214;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,16,ink,'шпаргалка',{b:1});
+      const items=[['общий знаменатель — кратный обоим'],['переведи каждую дробь'],['сложи только числители'],['проверь по смыслу: больше половины?']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry2=58+i*38;
+          inner+=`<g class="b0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry2}" width="258" height="32" rx="9" fill="${i%2?'rgba(251,241,221,.95)':'rgba(201,152,43,.12)'}" stroke="${i===go-1?gold:'#d9c89a'}" stroke-width="1.8"/>
+          ${tx(159,ry2+21,13.5,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('знаменатели не складываем!',berry,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW180Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW180Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW180Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW180Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW180Act('${lk}','rst')`):'')+
+        wkSml('общий знаменатель → одинаковые доли'));
+    } else if(step===13){
+      const H=200;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'1/2 + 1/3 = ?',opts:['5/6','2/5','2/6'],ans:0},
+        {q:'1/3 + 1/6 = ?',opts:['1/2','2/9','1/3'],ans:0},
+        {q:'1/4 + 1/6 = ?',opts:['5/12','2/10','1/12'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,40,15.5,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="b0Pop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#4c9a6a':'#e4574f'}" font-weight="bold">${st.msel===T.ans?'верно!':'вспомни общий знаменатель'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW180S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW180Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW180Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('общий знаменатель потом числители'));
+    } else {
+      const H=200;
+      let inner='';
+      inner+=tx(159,42,16,ink,'1/2 + 1/3',{b:1,georgia:1});
+      inner+=`<g class="b0Pop"><text x="159" y="88" text-anchor="middle" font-size="36" fill="${green}" font-weight="bold" font-family="Georgia,serif">= 5/6</text></g>`;
+      inner+=tx(159,114,13.5,dim,'общий знаменатель 6: 3/6 + 2/6',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('знаменатели не складываем!'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[180]=visW180;
+  function visW180T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW180T=visW180T;
+  function visW180P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW180P=visW180P;
+  function visW180S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW180S=visW180S;
+  function visW180Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===13){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW180Act=visW180Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===180){ window.ARH_LESSONS[i]=L180; break; } } })();
+})();
+
+/* ================= УРОК 380 · Координатная плоскость (v1 · «Карта сокровищ Архимеда», 12 слайдов) ================= */
+(function(){
+  if(!window.__wk380v1css){
+    window.__wk380v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .q2In{animation:q2In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes q2In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .q2Pop{animation:q2Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q2Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q2Dot{animation:q2Dot .5s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q2Dot{0%{transform:scale(.1);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q2Guide{stroke-dasharray:5 4;animation:q2Draw 1s ease both;}'+
+      '@keyframes q2Draw{0%{stroke-dashoffset:40}100%{stroke-dashoffset:0}}';
+    document.head.appendChild(st);
+  }
+  const L380 = {
+    id: 380, title: 'Координатная плоскость', ico: '🗺️',
+    src: 'Математика · 5–6 класс · Координаты', subj: 'math',
+    explain: [
+      'На плоскости две оси: горизонтальная (x) и вертикальная (y). Точка их пересечения — начало (0; 0).',
+      'Координаты точки записывают в скобках: (x; y). Сначала x, потом y.',
+      'Точка (3; 2): 3 шага вправо от начала и 2 шага вверх.',
+      'Если x отрицательный — идём влево, если y отрицательный — вниз.',
+      'Знак координаты говорит направление: x вправо «+», влево «−»; y вверх «+», вниз «−».',
+      'Прочитать точку легко: найди, сколько шагов по x и сколько по y. Порядок важен: (3; 2) ≠ (2; 3).',
+      'Положительные x и y — правый верхний угол; отрицательные — другие четверти вокруг начала.',
+      'Тренируемся: по данным координатам находим нужную точку или наоборот — читаем координаты точки.',
+      'Шпаргалка: (x; y) — сначала x, потом y. Вправо и вверх — «+», влево и вниз — «−».',
+      'Проверь себя устно: точка (3; 4) — это 3 по x и 4 по y.',
+      'Проверь себя: точка — 3 по оси x и 4 по оси y. Как её записать? Ответь в тесте и жми «Понял! Проверю себя»!',
+      'Проверь себя: выбери верную координату отмеченной точки.'
+    ],
+    check: { q: 'Точка: 3 по оси x и 4 по оси y. Как её записать?', choices: ['(3; 4)', '(4; 3)', '(3, 4)', '(34)'], ans: 0,
+      exp: 'Сначала x, потом y: (3; 4).' },
+    tasks: [
+      { q: 'Назови координату x точки (7; 3).', kind: 'unit', ans: 7, tol: 0,
+        hints: ['Первая координата — x.', 'x = 7.'], sol: '7' },
+      { q: 'Куда идём от начала, чтобы попасть в точку (−3; 2)?', kind: 'choice', choices: ['влево 3, вверх 2', 'вправо 3, вверх 2', 'влево 3, вниз 2', 'вправо 3, вниз 2'], ans: 0, tol: 0,
+        hints: ['Отрицательный x — влево.', 'x = −3 → влево 3; y = 2 → вверх 2.'], sol: 'влево 3, вверх 2' }
+    ]
+  };
+  const ink='#e9f5ef', dim='#9fc0bd', gold='#e0b34c', teal='#0f3433', tealD='#0a2626',
+        grid='#1f4b49', amber='#ffbe5c', grn='#7be0a0', coral='#ff9a8a', cyan='#7fd6ff', sea='#134745', seaD='#0c2e2d';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#082122" stroke-width="3.4">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    let grid2='';
+    for(let x=0;x<=W;x+=22) grid2+=`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#15504d" stroke-width="1" opacity="0.45"/>`;
+    for(let y=0;y<=H;y+=22) grid2+=`<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="#15504d" stroke-width="1" opacity="0.45"/>`;
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="q2bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sea}"/><stop offset="1" stop-color="${seaD}"/></linearGradient>
+        <linearGradient id="q2gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4d38a"/><stop offset="0.5" stop-color="#e0a94a"/><stop offset="1" stop-color="#b8802c"/></linearGradient>
+        <filter id="q2sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.45"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#q2bg)"/>
+      <g opacity="0.5">${grid2}</g>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="#2a6a66" stroke-width="2" rx="7"/>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="url(#q2gold)" stroke-width="1.3" opacity="0.5" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const OX=160, OY=110, CELL=23;
+  const sx=x=>OX+x*CELL, sy=y=>OY-y*CELL;
+  function plane(xmin,xmax,ymin,ymax,o){
+    const o2=o||{};
+    let s='';
+    /* сетка */
+    for(let x=xmin;x<=xmax;x++){ s+=`<line x1="${sx(x)}" y1="${sy(ymax)}" x2="${sx(x)}" y2="${sy(ymin)}" stroke="${grid}" stroke-width="1"/>`; }
+    for(let y=ymin;y<=ymax;y++){ s+=`<line x1="${sx(xmin)}" y1="${sy(y)}" x2="${sx(xmax)}" y2="${sy(y)}" stroke="${grid}" stroke-width="1"/>`; }
+    /* оси */
+    s+=`<line x1="${sx(xmin)}" y1="${OY}" x2="${sx(xmax)}" y2="${OY}" stroke="${gold}" stroke-width="2.4"/>`;
+    s+=`<path d="M ${sx(xmax)} ${OY} l -7 -4 l 0 8 z" fill="${gold}"/>`;
+    s+=`<line x1="${OX}" y1="${sy(ymin)}" x2="${OX}" y2="${sy(ymax)}" stroke="${gold}" stroke-width="2.4"/>`;
+    s+=`<path d="M ${OX} ${sy(ymax)} l -4 7 l 8 0 z" fill="${gold}"/>`;
+    /* подписи осей */
+    s+=tx(sx(xmax)-4,OY+18,12,gold,'x',{an:'end',georgia:1});
+    s+=tx(OX-8,sy(ymax)+12,12,gold,'y',{an:'end',georgia:1});
+    s+=`<circle cx="${OX}" cy="${OY}" r="4" fill="${gold}"/>`;
+    /* метки на осях */
+    for(let x=xmin;x<=xmax;x++){ if(x!==0) s+=tx(sx(x),OY+16,10.5,dim,''+x,{}); }
+    for(let y=ymin;y<=ymax;y++){ if(y!==0) s+=tx(OX-8,sy(y)+4,10.5,dim,''+y,{an:'end'}); }
+    return s;
+  }
+  function dot(x,y,color,r,label,o){
+    const o2=o||{}, px=sx(x), py=sy(y), rr=r||7;
+    let s='';
+    if(o2.guides){
+      s+=`<line class="q2Guide" x1="${px}" y1="${py}" x2="${px}" y2="${OY}" stroke="${color}" stroke-width="1.6" opacity="0.6"/>`;
+      s+=`<line class="q2Guide" x1="${px}" y1="${py}" x2="${OX}" y2="${py}" stroke="${color}" stroke-width="1.6" opacity="0.6"/>`;
+    }
+    s+=`<g class="q2Dot"><circle cx="${px}" cy="${py}" r="${rr}" fill="${color}" stroke="#fffdf2" stroke-width="2" filter="url(#q2sh)"/></g>`;
+    if(label) s+=tx(px+(o2.lx!=null?o2.lx:12),py+(o2.ly!=null?o2.ly:-10),13.5,color,label,{b:1});
+    return s;
+  }
+  const chip=(t,c,delay)=>`<span class="q2In" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:rgba(10,38,38,.9);font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
+  const Q380=[
+    {q:'Точка: 3 по x и 4 по y. Как записать?',opts:['(3; 4)','(4; 3)','(3, 4)'],ans:0},
+    {q:'Точка (−3; 2). Куда идём?',opts:['влево 3, вверх 2','вправо 3, вверх 2','влево 3, вниз 2'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q380[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd='#2a6a66',tc=ink,bg='rgba(10,38,38,.9)';
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(123,224,160,.18)':'rgba(255,154,138,.18)'; bd=i===T.ans?grn:coral; tc=i===T.ans?grn:coral; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW380T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#7be0a0;font-size:16px">Верно! сначала x, потом y</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:15px">Не так · помни порядок: (x; y)</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW380Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW380Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#e0b34c')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW380(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=11){ st.go=0; st.pick=null; }
+      if(step===10){ st.mq=0; st.msel=null; }
+      if(step===11){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=198;
+      const go=st.go||0;
+      let inner='';
+      inner+=plane(-4,4,-2,2,{});
+      if(go){
+        inner+=`<g class="q2Pop"><rect x="54" y="168" width="210" height="30" rx="8" fill="rgba(10,38,38,.92)" stroke="${gold}" stroke-width="1.8"/>
+        ${tx(159,188,14,gold,'пересечение осей — начало (0; 0)',{b:1})}</g>`;
+      } else {
+        inner+=tx(159,182,14,dim,'горизонтальная ось x · вертикальная ось y',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Две оси на плоскости</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('x — вправо, y — вверх (0; 0) — начало',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW380Act('${lk}','rst')`):wkBtn('где начало?',`visW380Act('${lk}','go')`))+
+        wkSml('ось x и ось y — координаты точки'));
+    } else if(step===1){
+      const H=198;
+      const go=st.go||0;
+      let inner='';
+      inner+=plane(-4,4,-2,2,{});
+      inner+=dot(3,2,amber,7,'(3; 2)',{guides:true,lx:-6,ly:-12});
+      if(go){
+        inner+=`<g class="q2Pop"><rect x="52" y="168" width="214" height="30" rx="8" fill="rgba(10,38,38,.92)" stroke="${cyan}" stroke-width="1.8"/>
+        ${tx(159,188,14,cyan,'сначала x = 3, потом y = 2',{b:1})}</g>`;
+      } else {
+        inner+=tx(159,182,13.5,dim,'в скобках: (x; y) — сначала x',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Запись: (x; y)</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('первое число — x, второе — y',cyan,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW380Act('${lk}','rst')`):wkBtn('какой порядок?',`visW380Act('${lk}','go')`))+
+        wkSml('порядок важен: (3;2) ≠ (2;3)'));
+    } else if(step===2){
+      const H=198;
+      let inner='';
+      inner+=plane(-4,4,-2,2,{});
+      /* путь от начала к (3;2) */
+      inner+=`<polyline points="${OX},${OY} ${sx(3)},${OY} ${sx(3)},${sy(2)}" fill="none" stroke="${cyan}" stroke-width="2.2" stroke-dasharray="6 4" opacity="0.8"/>`;
+      inner+=`<path d="M ${OX} ${OY} L ${sx(3)} ${sy(2)}" fill="none" stroke="${amber}" stroke-width="3" opacity="0" />`;
+      
+      inner+=dot(3,2,amber,8,'(3; 2)',{lx:-6,ly:-14});
+      inner+=`<g class="q2Pop"><rect x="52" y="168" width="214" height="30" rx="8" fill="rgba(10,38,38,.92)" stroke="${cyan}" stroke-width="1.8"/>
+      ${tx(159,188,14,cyan,'3 вправо → и 2 вверх ↑',{b:1})}</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Путь к точке (3; 2)</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(chip('сначала по x, потом по y',cyan,0.2))+
+        wkSml('пунктир показывает путь'));
+    } else if(step===3){
+      const H=198;
+      const go=st.go||0;
+      let inner='';
+      inner+=plane(-4,4,-2,2,{});
+      inner+=dot(-3,2,coral,7,'(−3; 2)',{guides:true,lx:-6,ly:-12});
+      if(go){
+        inner+=dot(1,-2,grn,7,'(1; −2)',{guides:true,lx:-4,ly:20});
+        inner+=`<g class="q2Pop"><rect x="40" y="168" width="238" height="30" rx="8" fill="rgba(10,38,38,.92)" stroke="${coral}" stroke-width="1.8"/>
+        ${tx(159,188,13.5,coral,'x<0 → влево · y<0 → вниз',{b:1})}</g>`;
+      } else {
+        inner+=tx(159,182,13.5,dim,'минус у x — влево',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Отрицательные координаты</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('влево и вниз — знак «−»',coral,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW380Act('${lk}','rst')`):wkBtn('показать ещё',`visW380Act('${lk}','go')`))+
+        wkSml('−x влево · −y вниз'));
+    } else if(step===4){
+      const H=198;
+      const go=st.go||0;
+      let inner='';
+      inner+=plane(-4,4,-2,2,{});
+      inner+=dot(-2,-2,grn,7,'(−2; −2)',{guides:true,lx:-6,ly:20});
+      if(go){
+        inner+=`<g class="q2Pop"><rect x="46" y="168" width="226" height="30" rx="8" fill="rgba(10,38,38,.92)" stroke="${grn}" stroke-width="1.8"/>
+        ${tx(159,188,13.5,grn,'влево 2 и вниз 2 — левый нижний угол',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Точка (−2; −2)</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('минус на минус — левый нижний угол',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW380Act('${lk}','rst')`):wkBtn('найти точку',`visW380Act('${lk}','go')`))+
+        wkSml('все четыре четверти вокруг начала'));
+    } else if(step===5){
+      const H=198;
+      const go=st.go||0;
+      let inner='';
+      inner+=plane(-4,4,-2,2,{});
+      inner+=dot(3,1,amber,7,'A',{guides:false});
+      if(go){
+        inner+=`<g class="q2Pop"><rect x="46" y="168" width="226" height="30" rx="8" fill="rgba(10,38,38,.92)" stroke="${cyan}" stroke-width="1.8"/>
+        ${tx(159,188,14,cyan,'A: x = 3, y = 1 → A(3; 1)',{b:1})}</g>`;
+      } else {
+        inner+=tx(159,182,14,dim,'прочти координаты точки A',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Читаем точку</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('сначала по x, потом по y',cyan,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW380Act('${lk}','rst')`):wkBtn('показать',`visW380Act('${lk}','go')`))+
+        wkSml('считаем шаги от начала'));
+    } else if(step===6){
+      const H=198;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,16,ink,'куда идём от начала?',{b:1});
+      inner+=plane(-4,4,-2,3,{});
+      inner+=tx(159,56,13.5,dim,'x = 2, y = 3',{});
+      if(go){
+        inner+=dot(2,3,amber,7,'(2; 3)',{guides:true,lx:-8,ly:-12});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Координаты → точка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2 вправо и 3 вверх → (2; 3)',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW380Act('${lk}','rst')`):wkBtn('найти точку',`visW380Act('${lk}','go')`))+
+        wkSml('x — вправо, y — вверх'));
+    } else if(step===7){
+      const H=198;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {pt:[3,2],label:'(3; 2)'},
+        {pt:[-2,1],label:'(−2; 1)'},
+        {pt:[2,-1],label:'(2; −1)'},
+        {pt:[-3,-1],label:'(−3; −1)'}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=['(3; 2)','(−2; 1)','(2; −1)'];
+      let inner='';
+      inner+=tx(159,24,17,ink,'какая точка отмечена?',{b:1});
+      inner+=plane(-4,4,-2,2,{});
+      inner+=dot(P.pt[0],P.pt[1],amber,8,'',{lx:0,ly:0});
+      inner+=`<g class="q2Dot"><circle cx="${sx(P.pt[0])}" cy="${sy(P.pt[1])}" r="11" fill="none" stroke="${grn}" stroke-width="1.6" opacity="0.7"/></g>`;
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd='#2a6a66',tc=ink,bgc='rgba(10,38,38,.9)';
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(123,224,160,.18)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.18)';bd=coral;tc=coral;} }
+        inner+=`<g class="q2In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${156}" width="${CW}" height="38" rx="9" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,181,17,tc,o,{b:1})}</g>`;
+      });
+      /* feedback text above cards if pick */
+      if(st.pick!=null) inner+=st.pick===0
+        ? `<g class="q2Pop"><text x="159" y="150" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">верно!</text></g>`
+        : `<g class="q2Pop"><text x="159" y="150" text-anchor="middle" font-size="16" fill="${coral}" font-weight="bold">не так · посчитай шаги</text></g>`;
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW380Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW380P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW380P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: читаем точку</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('точка '+P.label,grn,0.2)):'')+
+        fb+retry+
+        wkSml('сначала по x, потом по y'));
+    } else if(step===8){
+      const H=198;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'x = 3, y = 2',pt:[3,2],label:'(3; 2)'},
+        {q:'x = −2, y = 1',pt:[-2,1],label:'(−2; 1)'},
+        {q:'x = 2, y = −1',pt:[2,-1],label:'(2; −1)'}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=['2 вправо, 1 вверх','влево 3, вверх 2','3 вправо, 2 вверх'];
+      const ord2=[P.label];
+      let inner='';
+      inner+=tx(159,24,17,ink,'по координатам найди точку',{b:1});
+      inner+=tx(159,46,15,cyan,P.q,{b:1,georgia:1});
+      inner+=plane(-4,4,-2,2,{});
+      /* три точки кандидата */
+      const cands=[[3,2,'A'],[2,1,'B'],[-2,2,'C']];
+      cands.forEach((c,i)=>{ inner+=dot(c[0],c[1],[amber,coral,cyan][i],7,c[2],{lx:10,ly:-8}); });
+      if(st.pick!=null){
+        const chosen=cands[st.pick];
+        const correct= chosen[0]===P.pt[0]&&chosen[1]===P.pt[1];
+        inner+=`<g class="q2Dot"><circle cx="${sx(P.pt[0])}" cy="${sy(P.pt[1])}" r="11" fill="none" stroke="${correct?grn:coral}" stroke-width="1.8" opacity="0.8"/></g>`;
+      }
+      const X=[26,116,206],CW=86;
+      cands.forEach((c,i)=>{
+        let bd='#2a6a66',tc=ink,bgc='rgba(10,38,38,.9)';
+        if(st.pick!=null){ const ok=(c[0]===P.pt[0]&&c[1]===P.pt[1]); if(ok){bgc='rgba(123,224,160,.18)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.18)';bd=coral;tc=coral;} }
+        inner+=`<g class="q2In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${158}" width="${CW}" height="38" rx="9" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,183,17,tc,c[2],{b:1})}</g>`;
+      });
+      if(st.pick!=null) inner+=`<g class="q2Pop"><text x="159" y="152" text-anchor="middle" font-size="16" fill="${st.pick===0?'#7be0a0':'#ff9a8a'}" font-weight="bold">${st.pick===0?'верно!':'не так · посчитай шаги'}</text></g>`;
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW380Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${cands.map((c,i)=>`<button class="wk-btn" onclick="visW380P('${lk}',${i})">${c[2]}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${cands.map((c,i)=>`<button class="wk-btn" onclick="visW380P('${lk}',${i})">${c[2]}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: ставим точку</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('точка '+P.label,grn,0.2)):'')+
+        fb+retry+
+        wkSml('x — вправо или влево, y — вверх или вниз'));
+    } else if(step===9){
+      const H=214;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,16,ink,'шпаргалка',{b:1});
+      const items=[['запись (x; y) — сначала x'],['x > 0 → вправо · x < 0 → влево'],['y > 0 → вверх · y < 0 → вниз'],['от начала считаем шаги по осям']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=58+i*38;
+          inner+=`<g class="q2In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="32" rx="9" fill="${i%2?'rgba(10,38,38,.9)':'rgba(19,71,69,.9)'}" stroke="${i===go-1?gold:'#2a6a66'}" stroke-width="1.8"/>
+          ${tx(159,ry+21,13.5,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('порядок (x; y) — главное правило',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW380Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW380Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW380Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW380Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW380Act('${lk}','rst')`):'')+
+        wkSml('сначала x, потом y'));
+    } else if(step===10){
+      const H=198;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'Точка (3; 4): что первое?',opts:['x = 3','y = 4','нет разницы'],ans:0},
+        {q:'Точка (−3; 2). Куда идём?',opts:['влево 3, вверх 2','вправо 3, вверх 2','влево 3, вниз 2'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,40,15.5,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="q2Pop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#7be0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'порядок: (x; y)'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW380S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW380Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW380Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('сначала x, потом y'));
+    } else {
+      const H=198;
+      let inner='';
+      inner+=plane(-5,5,-1,4,{});
+      inner+=dot(3,4,amber,8,'(3; 4)',{guides:true,lx:10,ly:22});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('сначала x, потом y'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[380]=visW380;
+  function visW380T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW380T=visW380T;
+  function visW380P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW380P=visW380P;
+  function visW380S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW380S=visW380S;
+  function visW380Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===10){ if((st.mq||0)<1){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW380Act=visW380Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===380){ window.ARH_LESSONS[i]=L380; break; } } })();
+})();
