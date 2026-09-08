@@ -14198,3 +14198,477 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW378Act=visW378Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===378){ window.ARH_LESSONS[i]=L378; break; } } })();
 })();
+
+/* ================= УРОК 395 · Сочетания: начало (v1 · «Лаборатория пар Архимеда», 15 слайдов, обучение с нуля) ================= */
+(function(){
+  if(!window.__wk395v1css){
+    window.__wk395v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .q4In{animation:q4In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes q4In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .q4Pop{animation:q4Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q4Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q4Ball{animation:q4Ball .6s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q4Ball{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q4Line{stroke-dasharray:100;animation:q4Draw .8s ease both;}'+
+      '@keyframes q4Draw{to{stroke-dashoffset:0}}'+
+      '#lvis .q4Float{animation:q4Float 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q4Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+    document.head.appendChild(st);
+  }
+  const L395 = {
+    id: 395, title: 'Сочетания: начало', ico: '🤝',
+    src: 'Математика · 5–6 класс · Олимп-6: комбинаторика', subj: 'math',
+    explain: [
+      'В парке гуляют четыре друга: яблоко, груша, слива и вишня. Сколько разных ПАР можно составить — вдвоём сесть на лавочку?',
+      'Пара — это двое, и порядок в ней НЕ важен: (яблоко, груша) и (груша, яблоко) — одна и та же пара. Один человек дважды не считается.',
+      'Переберём пары по порядку, чтобы ничего не пропустить: ЯГ, ЯС, ЯВ, ГС, ГВ, СВ. Получилось шесть пар.',
+      'Можно посчитать иначе: первого выбираем 4 способами, второго — 3 оставшимися. Это 4·3 = 12 упорядоченных пар.',
+      'Но каждая пара посчитана ДВАЖДЫ: ЯГ и ГЯ — это одно и то же рукопожатие. Поэтому делим пополам: 12 : 2 = 6.',
+      'Вот и вся формула: чтобы выбрать 2 из n, сначала n·(n−1) (с порядком), потом делим на 2. Получаем n·(n−1)/2.',
+      'Проверим на 5 предметах: 5·4/2 = 10. Для четырёх — 6, для пяти — уже 10 пар.',
+      'Рукопожатия четырёх человек — идеальный пример: каждый жмёт руку каждому ОДИН раз. Это ровно выбор 2 из 4 = 6 рукопожатий.',
+      'Сочетание — это выбор группы без порядка. Если порядок важен — это уже размещение. В сочетаниях ЯГ = ГЯ.',
+      'Шпаргалка: формула n·(n−1)/2; для 4 — 6 пар, для 5 — 10, рукопожатия четырёх — 6.',
+      'Тренажёр: считаем пары по формуле. Порядок не важен — не забудь разделить на 2.',
+      'Тренажёр: ещё немного практики — выбери правильное число способов.',
+      'Шпаргалка-алгоритм: 1) пара без порядка; 2) с порядком n·(n−1); 3) делим на 2; 4) ответ n·(n−1)/2.',
+      'Проверь себя устно: выбрать 2 из 4 = 6; рукопожатия 4 человек = 6; 2 из 5 = 10.',
+      'Проверь себя: выбрать 2 из 4 — это 6. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Сколькими способами можно выбрать 2 предмета из 4?', choices: ['6', '4', '8', '12'], ans: 0,
+      exp: '4 · 3 : 2 = 6.' },
+    tasks: [
+      { q: 'Сколькими способами выбрать 2 из 5?', kind: 'unit', ans: 10, tol: 0,
+        hints: ['5 · 4 : 2.', '10 способов.'], sol: '10' },
+      { q: 'Сколько рукопожатий сделают 4 человека (каждый с каждым)?', kind: 'choice', choices: ['6', '4', '8', '12'], ans: 0, tol: 0,
+        hints: ['Это выбор 2 из 4.', '4·3:2 = 6 рукопожатий.'], sol: '6' }
+    ]
+  };
+  const ink='#eef2ff', dim='#9aa8c9', gold='#ffd76a', grn='#8fe0a0', red='#ff6b6b',
+        blu='#7fb8ff', bg0='#1c2240', bg1='#10142a', cardC='rgba(20,26,46,.9)', cardB='#3a466a';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0e1224" stroke-width="3.4">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="q4bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <filter id="q4sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#q4bg)"/>
+      <g opacity="0.1" stroke="#eef2ff" stroke-width="1"><circle cx="54" cy="38" r="34" fill="none"/><circle cx="266" cy="150" r="30" fill="none"/><circle cx="150" cy="86" r="52" fill="none"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#4a5680" stroke-width="2.4" rx="6"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3554" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const ITEMS=[{k:'Я',w:'яблоко',c:'#ff6b6b',g:'#8a2530'},{k:'Г',w:'груша',c:'#ffd166',g:'#8a6a1e'},{k:'С',w:'слива',c:'#9b6bff',g:'#4d2a8a'},{k:'В',w:'вишня',c:'#ff5d8f',g:'#8a2545'}];
+  const BX=[50,120,190,260], BY=78, R=26;
+  const PAIRI=[[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]];
+  const PAIRL=['ЯГ','ЯС','ЯВ','ГС','ГВ','СВ'];
+  function ball(i,cls,delay){
+    const x=BX[i],y=BY,c=ITEMS[i].c,g=ITEMS[i].g;
+    return `<g class="${cls||'q4Ball'}" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#q4sh)">
+      <circle cx="${x}" cy="${y}" r="${R}" fill="${c}"/>
+      <circle cx="${x-R*0.32}" cy="${y-R*0.34}" r="${R*0.28}" fill="rgba(255,255,255,.5)"/>
+      <circle cx="${x}" cy="${y}" r="${R}" fill="none" stroke="${g}" stroke-width="2"/>
+    </g>`;
+  }
+  function wlabel(i){ return tx(BX[i],BY+R+15,12,dim,ITEMS[i].w,{}); }
+  function pairLine(a,b,c,delay){
+    const x1=BX[a],y1=BY,x2=BX[b],y2=BY;
+    return `<g class="q4Pop" style="animation-delay:${(delay||0).toFixed(2)}s">
+      <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="7" opacity="0.25" stroke-linecap="round"/>
+      <line class="q4Line" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="3" stroke-linecap="round"/>
+    </g>`;
+  }
+  function pairCard(x,y,ai,bi,delay){
+    return `<g class="q4In" style="animation-delay:${(delay||0).toFixed(2)}s"><rect x="${x}" y="${y}" width="70" height="28" rx="9" fill="${cardC}" stroke="${cardB}" stroke-width="1.6"/>
+      <circle cx="${x+13}" cy="${y+14}" r="7" fill="${ITEMS[ai].c}"/><circle cx="${x+28}" cy="${y+14}" r="7" fill="${ITEMS[bi].c}"/>
+      ${tx(x+58,y+18,13,ink,''+ITEMS[ai].k+ITEMS[bi].k,{b:1})}</g>`;
+  }
+  const chip=(t,c,delay)=>`<span class="q4In" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${cardC};font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
+  const Q395=[
+    {q:'Выбрать 2 из 4?',opts:['6','4','8','12'],ans:0},
+    {q:'Рукопожатия 4 человек?',opts:['6','4','8'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q395[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=cardC;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,224,160,.16)':'rgba(255,107,107,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW395T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#8fe0a0;font-size:16px">Верно! 4 · 3 : 2 = 6</div>'
+        : '<div class="wk-ans" style="color:#ff6b6b;font-size:15px">Не так · вспомни n(n−1)/2</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW395Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW395Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW395(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step===6||step===8) st.go=0;
+      if(step===10||step===11) st.pick=null;
+      if(step===13){ st.mq=0; st.msel=null; }
+      if(step===14){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      for(let i=0;i<4;i++) inner+=ball(i,'q4Ball',i*0.1);
+      for(let i=0;i<4;i++) inner+=wlabel(i);
+      if(go){
+        inner+=pairLine(0,1,'#ffd76a',0.2);
+        inner+=pairLine(2,3,'#7fb8ff',0.4);
+        inner+=`<g class="q4Pop"><text x="159" y="150" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">составить пару без порядка?</text></g>`;
+      } else {
+        inner+=tx(159,150,13.5,dim,'сколько пар можно составить?',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пары из 4 предметов</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('порядок в паре НЕ важен',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW395Act('${lk}','rst')`):wkBtn('что такое пара?',`visW395Act('${lk}','go')`))+
+        wkSml('(яблоко, груша) = (груша, яблоко)'));
+    } else if(step===1){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      for(let i=0;i<4;i++) inner+=ball(i,'q4Ball',i*0.1);
+      for(let i=0;i<4;i++) inner+=wlabel(i);
+      inner+=pairLine(1,2,'#ffd76a',0.3);
+      if(go){
+        inner+=`<g class="q4Pop"><rect x="98" y="138" width="122" height="30" rx="9" fill="${cardC}" stroke="${gold}" stroke-width="1.8"/>
+        ${tx(159,158,15,gold,'ГС = СГ — одно и то же!',{b:1})}</g>`;
+      } else {
+        inner+=tx(159,150,13.5,dim,'переставить местами — та же пара',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Порядок не важен</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('груша+слива = слива+груша',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW395Act('${lk}','rst')`):wkBtn('переставить',`visW395Act('${lk}','go')`))+
+        wkSml('это одна и та же пара'));
+    } else if(step===2){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      for(let i=0;i<4;i++) inner+=ball(i,'q4Ball',i*0.08);
+      const shown=go;
+      for(let k=0;k<Math.min(shown,6);k++){
+        const pair=PAIRI[k];
+        const x=30+ (k%3)*72, y=138+ Math.floor(k/3)*34;
+        inner+=pairCard(x,y,pair[0],pair[1],0.1+k*0.08);
+        inner+=pairLine(pair[0],pair[1],'#7fb8ff',0.2+k*0.08);
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Перебираем пары</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=6?wkRow(chip('ЯГ, ЯС, ЯВ, ГС, ГВ, СВ — 6 пар',grn,0.2)):'')+
+        wkRow(
+          go>=6?wkBtn('сброс',`visW395Act('${lk}','rst')`):wkBtn('следующая пара',`visW395Act('${lk}','go')`))+
+        wkSml('не пропускаем и не повторяем'));
+    } else if(step===3){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,16,ink,'а если считать «по порядку»?',{b:1});
+      const u=34, x0=54, y0=56;
+      /* шапки */
+      for(let j=0;j<4;j++) inner+=tx(x0+j*u+u/2,y0-6,11,dim,ITEMS[j].k,{});
+      for(let i=0;i<4;i++){
+        inner+=tx(x0-12,y0+i*u+u/2+4,11,dim,ITEMS[i].k,{an:'end'});
+        for(let j=0;j<4;j++){
+          if(i===j) continue;
+          const x=x0+j*u+2, y=y0+i*u+2;
+          const keep=j>i;
+          inner+=`<g class="q4In" style="animation-delay:${(0.02*(i*4+j)).toFixed(2)}s"><rect x="${x}" y="${y}" width="${u-4}" height="${u-4}" rx="5" fill="${keep?'rgba(70,64,32,.4)':'rgba(28,34,56,.6)'}" stroke="${keep?gold:'#2c3554'}" stroke-width="1.4"/>
+          <circle cx="${x+(u-4)/2-5}" cy="${y+(u-4)/2}" r="4" fill="${ITEMS[i].c}"/><circle cx="${x+(u-4)/2+5}" cy="${y+(u-4)/2}" r="4" fill="${ITEMS[j].c}"/></g>`;
+        }
+      }
+      inner+=tx(159,196,13,dim, go? '12 упорядоченных пар — но каждая посчитана дважды':'каждая клетка = одна упорядоченная пара',{});
+      if(go){
+        inner+=`<g class="q4Pop"><text x="242" y="24" text-anchor="middle" font-size="17" fill="${gold}" font-weight="bold">4 · 3 = 12</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Считаем с порядком</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 варианта первого · 3 второго = 12',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW395Act('${lk}','rst')`):wkBtn('посчитать',`visW395Act('${lk}','go')`))+
+        wkSml('но это двойной счёт'));
+    } else if(step===4){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,19,ink,'12 : 2 = 6',{b:1,georgia:1});
+      inner+=tx(159,72,14,dim,'каждая пара посчитана дважды (ЯГ и ГЯ)',{});
+      if(go){
+        inner+=`<g class="q4Pop"><rect x="60" y="102" width="198" height="44" rx="12" fill="rgba(70,64,32,.5)" stroke="${gold}" stroke-width="2.2"/>
+        ${tx(159,128,17,gold,'делим пополам → 6 пар',{b:1,georgia:1})}</g>`;
+        inner+=tx(159,166,13.5,dim,'упорядоченные пары делим на 2',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Убираем двойной счёт</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('12 упорядоченных → 6 пар',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW395Act('${lk}','rst')`):wkBtn('почему делить?',`visW395Act('${lk}','go')`))+
+        wkSml('каждая пара — по два раза'));
+    } else if(step===5){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,42,22,ink,'выбрать 2 из n',{b:1,georgia:1});
+      inner+=tx(159,74,13.5,dim,'сначала посчитаем с порядком:',{});
+      inner+=tx(159,102,22,gold,'n · (n−1)',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="q4Pop"><text x="159" y="150" text-anchor="middle" font-size="26" fill="${grn}" font-weight="bold" font-family="Georgia,serif">n · (n−1) / 2</text></g>`;
+        inner+=tx(159,172,13.5,dim,'делим на 2 — убираем двойной счёт',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Формула</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('для 4: 4·3/2 = 6',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW395Act('${lk}','rst')`):wkBtn('собрать формулу',`visW395Act('${lk}','go')`))+
+        wkSml('n(n−1) пополам'));
+    } else if(step===6){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,16,ink,'проверим на 5 предметах',{b:1});
+      const X5=[40,92,144,196,248], Y5=60;
+      for(let i=0;i<5;i++){
+        const c=['#ff6b6b','#ffd166','#9b6bff','#ff5d8f','#7fb8ff'][i];
+        inner+=`<g class="q4Ball" style="animation-delay:${(0.06*i).toFixed(2)}s" filter="url(#q4sh)"><circle cx="${X5[i]}" cy="${Y5}" r="20" fill="${c}"/><circle cx="${X5[i]-6}" cy="${Y5-7}" r="6" fill="rgba(255,255,255,.5)"/></g>`;
+        inner+=tx(X5[i],Y5+34,11,dim,''+(i+1),{});
+      }
+      if(go){
+        inner+=`<g class="q4Pop"><rect x="70" y="120" width="178" height="40" rx="11" fill="rgba(70,64,32,.5)" stroke="${gold}" stroke-width="2.2"/>
+        ${tx(159,146,20,gold,'5 · 4 / 2 = 10',{b:1,georgia:1})}</g>`;
+        inner+=tx(159,178,13.5,dim,'десять пар из пяти предметов',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пример: 5 предметов</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('5·4/2 = 10',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW395Act('${lk}','rst')`):wkBtn('посчитать',`visW395Act('${lk}','go')`))+
+        wkSml('формула работает и здесь'));
+    } else if(step===7){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,16,ink,'рукопожатия 4 человек',{b:1});
+      const P4=[[80,70],[238,70],[90,160],[228,160]];
+      const lab4=['Анна','Борис','Вера','Глеб'];
+      for(let i=0;i<4;i++){
+        inner+=`<g class="q4Ball" style="animation-delay:${(0.08*i).toFixed(2)}s" filter="url(#q4sh)"><circle cx="${P4[i][0]}" cy="${P4[i][1]}" r="16" fill="${['#ff6b6b','#ffd166','#9b6bff','#ff5d8f'][i]}"/></g>`;
+        inner+=tx(P4[i][0],P4[i][1]+30,11,dim,lab4[i],{});
+      }
+      if(go){
+        inner+=pairLine(0,1,'#ffd76a',0.1);
+        inner+=pairLine(0,2,'#7fb8ff',0.2);
+        inner+=pairLine(0,3,'#ffd76a',0.3);
+        inner+=pairLine(1,2,'#7fb8ff',0.4);
+        inner+=pairLine(1,3,'#ffd76a',0.5);
+        inner+=pairLine(2,3,'#7fb8ff',0.6);
+        inner+=`<g class="q4Pop"><text x="159" y="192" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">каждая пара жмёт руку 1 раз = 6</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Каждый с каждым</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 человека · 6 рукопожатий',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW395Act('${lk}','rst')`):wkBtn('соединить всех',`visW395Act('${lk}','go')`))+
+        wkSml('руки жмут по паре — без порядка'));
+    } else if(step===8){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,36,16,ink,'сочетание vs порядок',{b:1});
+      if(go===0){
+        inner+=`<g class="q4In"><rect x="26" y="64" width="120" height="72" rx="11" fill="rgba(70,64,32,.4)" stroke="${gold}" stroke-width="2"/>
+        ${tx(86,92,14,gold,'СОЧЕТАНИЕ',{b:1})}${tx(86,116,11.5,dim,'порядок не важен',{})}
+        ${tx(86,130,11,dim,'ЯГ = ГЯ',{})}</g>`;
+      } else {
+        inner+=`<g class="q4In"><rect x="26" y="64" width="120" height="72" rx="11" fill="rgba(70,64,32,.4)" stroke="${gold}" stroke-width="2"/>
+        ${tx(86,92,13,gold,'СОЧЕТАНИЕ',{b:1})}${tx(86,114,11.5,dim,'порядок не важен',{})}
+        ${tx(86,130,11,dim,'ЯГ = ГЯ',{})}</g>
+        <g class="q4In" style="animation-delay:.1s"><rect x="166" y="64" width="126" height="72" rx="11" fill="rgba(127,184,255,.15)" stroke="${blu}" stroke-width="2"/>
+        ${tx(229,92,13,blu,'РАЗМЕЩЕНИЕ',{b:1})}${tx(229,114,11.5,dim,'порядок важен',{})}
+        ${tx(229,130,11,dim,'ЯГ ≠ ГЯ',{})}</g>`;
+      }
+      if(go===0){
+        inner+=tx(159,158,13.5,dim,'нажми — увидишь отличие',{});
+      } else {
+        inner+=tx(159,158,13.5,grn,'в сочетаниях порядок не важен',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сочетание и порядок</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('сочетание — без порядка · размещение — с порядком',blu,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW395Act('${lk}','rst')`):wkBtn('сравнить',`visW395Act('${lk}','go')`))+
+        wkSml('в наших задачах порядок не важен'));
+    } else if(step===9){
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,16,ink,'формула: 2 из n',{b:1});
+      if(go>=1){
+        inner+=`<g class="q4In"><rect x="46" y="50" width="226" height="44" rx="11" fill="rgba(70,64,32,.4)" stroke="${gold}" stroke-width="2"/>
+        ${tx(159,76,18,gold,'n(n−1) / 2',{b:1,georgia:1})}</g>`;
+      }
+      if(go>=2){
+        inner+=`<g class="q4In" style="animation-delay:.1s"><rect x="46" y="104" width="226" height="30" rx="9" fill="${cardC}" stroke="${cardB}" stroke-width="1.6"/>
+        ${tx(159,125,13.5,ink,'2 из 4 → 6 · 2 из 5 → 10',{})}</g>`;
+        inner+=`<g class="q4In" style="animation-delay:.2s"><rect x="46" y="142" width="226" height="30" rx="9" fill="${cardC}" stroke="${cardB}" stroke-width="1.6"/>
+        ${tx(159,163,13.5,ink,'рукопожатия 4 → 6',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=2?wkRow(chip('n(n−1)/2 — один приём для всех задач',grn,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('формула',`visW395Act('${lk}','go')`) : '',
+          go===1?wkBtn('примеры',`visW395Act('${lk}','go')`) : '',
+          go>=2?wkBtn('сброс',`visW395Act('${lk}','rst')`):'')+
+        wkSml('считаем пары без порядка'));
+    } else if(step===10){
+      const H=200, py=86;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Выбрать 2 из 4?',a:'6',ds:['4','8']},
+        {q:'Рукопожатия 4 человек?',a:'6',ds:['4','12']},
+        {q:'Выбрать 2 из 5?',a:'10',ds:['8','12']},
+        {q:'Выбрать 2 из 3?',a:'3',ds:['6','2']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,36,17,ink,P.q,{b:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=cardC;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(143,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,107,107,.16)';bd=red;tc=red;} }
+        inner+=`<g class="q4In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+33,24,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="q4Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="q4Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">n(n−1)/2</text></g>`)
+        : tx(159,py+74,14.5,dim,'посчитай по формуле',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW395Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW395P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW395P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: посчитай пары</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.a+' способов',grn,0.2)):'')+
+        fb+retry+
+        wkSml('n(n−1)/2'));
+    } else if(step===11){
+      const H=196;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'2 из 4 = ?',a:'6',ds:['8','12']},
+        {q:'2 из 5 = ?',a:'10',ds:['20','5']},
+        {q:'2 из 3 = ?',a:'3',ds:['6','2']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,36,17,ink,P.q,{b:1});
+      const X=[32,119,206],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=cardC;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(143,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,107,107,.16)';bd=red;tc=red;} }
+        inner+=`<g class="q4In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="88" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,121,22,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="q4Pop"><text x="159" y="164" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="q4Pop"><text x="159" y="164" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">n(n−1)/2</text></g>`)
+        : tx(159,164,14.5,dim,'выбери ответ',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW395Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW395P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW395P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: формула</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        fb+retry+
+        wkSml('n(n−1) пополам'));
+    } else if(step===12){
+      const H=212;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'шпаргалка',{b:1});
+      const items=[['пары — порядок не важен'],['посчитай с порядком: n(n−1)'],['дели на 2 — убираем двойной счёт'],['ответ: n(n−1)/2']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=54+i*38;
+          inner+=`<g class="q4In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="32" rx="9" fill="${i%2?'rgba(20,26,46,.9)':'rgba(30,38,62,.9)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+21,13.5,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('n(n−1)/2 — главная формула',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW395Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW395Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW395Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW395Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW395Act('${lk}','rst')`):'')+
+        wkSml('считаем пары один раз'));
+    } else if(step===13){
+      const H=196;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'Выбрать 2 из 4?',opts:['6','4','12'],ans:0},
+        {q:'Рукопожатия 4 человек?',opts:['6','8','12'],ans:0},
+        {q:'2 из 5 = ?',opts:['10','20','5'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="q4Pop"><text x="159" y="94" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#8fe0a0':'#ff6b6b'}" font-weight="bold">${st.msel===T.ans?'верно!':'n(n−1)/2'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW395S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW395Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW395Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('n(n−1)/2'));
+    } else {
+      const H=196;
+      let inner='';
+      inner+=tx(159,42,16,ink,'2 из 4',{b:1,georgia:1});
+      inner+=`<g class="q4Pop"><text x="159" y="88" text-anchor="middle" font-size="30" fill="${gold}" font-weight="bold" font-family="Georgia,serif">= 6</text></g>`;
+      inner+=tx(159,112,13.5,dim,'порядок не важен · 4·3/2',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('n(n−1)/2'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[395]=visW395;
+  function visW395T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW395T=visW395T;
+  function visW395P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW395P=visW395P;
+  function visW395S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW395S=visW395S;
+  function visW395Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===13){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW395Act=visW395Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===395){ window.ARH_LESSONS[i]=L395; break; } } })();
+})();
