@@ -5129,396 +5129,419 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW87Act=visW87Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===87){ window.ARH_LESSONS[i]=L87; break; } } })();
 })();
-/* ================= УРОК 174 · Простые уравнения (v2 · «Весы Архимеда», 14 слайдов) ================= */
+/* ================= УРОК 174 · Простые уравнения (v3 · «Весы Архимеда», 14 слайдов, премиум) ================= */
 (function(){
-  if(!window.__wk174v2css){
-    window.__wk174v2css=1;
+  if(!window.__wk174v3css){
+    window.__wk174v3css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .b7in{animation:b7In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
-      '@keyframes b7In{0%{transform:translateY(-10px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .b7pop{animation:b7Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes b7Pop{0%{transform:scale(.14);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .b7drop{animation:b7Drop .7s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;}'+
-      '@keyframes b7Drop{from{transform:translateY(-34px);opacity:0}60%{opacity:1}to{transform:translateY(0);opacity:1}}'+
-      '#lvis .b7wob{animation:b7Wob 1.7s ease-in-out infinite;transform-box:fill-box;transform-origin:center bottom;}'+
-      '@keyframes b7Wob{0%,100%{transform:rotate(-2.2deg)}50%{transform:rotate(2.2deg)}}'+
-      '#lvis .b7ok{animation:b7Ok 1.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes b7Ok{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}'+
-      '#lvis .b7fly{animation:b7Fly 1s cubic-bezier(.3,.7,.4,1) both;}'+
-      '@keyframes b7Fly{0%{transform:translate(0,0);opacity:0}25%{opacity:1}100%{transform:translate(var(--tx),var(--ty));opacity:1}}'+
-      '#lvis .b7sway{animation:b7Sway 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes b7Sway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}';
+      '#lvis .q8In{animation:q8In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes q8In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .q8Pop{animation:q8Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q8Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q8Sink{animation:q8Sink .7s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q8Sink{0%{transform:scale(1);opacity:1}100%{transform:scale(.2);opacity:0}}'+
+      '#lvis .q8Tok{animation:q8Tok .6s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q8Tok{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q8Swing{animation:q8Swing 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q8Swing{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}';
     document.head.appendChild(st);
   }
   const L174 = {
-    id: 174, title: 'Простые уравнения', ico: '≈',
+    id: 174, title: 'Простые уравнения', ico: '⚖️',
     src: 'Математика · 5 класс · Уравнения', subj: 'math',
     explain: [
-      'В мастерской Архимеда — огромные чашечные весы. На одной чаше мешок с неизвестным числом x и гиря 27, на другой — гиря 52. Весы в равновесии! Уравнение x + 27 = 52 — это и есть рассказ про эти весы.',
-      'Что говорит уравнение x + 27 = 52? «Неизвестное число и 27 вместе дают 52». Неизвестное — это x. Слагаемое ищут вычитанием: x = 52 − 27.',
-      'Решаем на весах: снимем с ОБЕИХ чаш по 27. Равновесие сохранится! Слева останется мешок x, справа — 25. Значит, x = 25.',
-      'Проверка обязательна: подставь ответ в уравнение. 25 + 27 = 52 — верно! Если сошлось — решение правильное.',
-      'Теперь x − 14 = 30: из мешка с x вынули 14 (как из кошелька!), и осталось 30. Сколько было? Чтобы найти уменьшаемое, складываем: x = 30 + 14 = 44.',
-      'А если 40 − x = 16: было 40, сколько-то вынули, осталось 16. Вычитаемое ищут вычитанием: x = 40 − 16 = 24.',
-      'Умножение: 8 · x = 96. Восемь одинаковых мешков по x вместе дают 96. Множитель ищут делением: x = 96 : 8 = 12.',
-      'Деление: x : 6 = 8. Неизвестное x разложили по 6 — получилось 8 частей. Делимое ищут умножением: x = 8 · 6 = 48.',
-      'Ещё деление: 54 : x = 9. Число 54 разложили на части по 9 — сколько частей? Делитель ищут делением: x = 54 : 9 = 6.',
-      'Запомни правило-зеркало: чтобы найти неизвестное, делай ОБРАТНОЕ действие. Было «+27» — делаем «−27». Было «·8» — делаем «:8». Сложение и вычитание — пара, умножение и деление — пара.',
-      'Ловушка: не спеши! Сначала спроси: «что неизвестно — слагаемое, множитель, уменьшаемое?» От этого зависит, какое действие выбрать. И всегда проверяй ответ подстановкой!',
-      'Определитель Архимеда: посмотри на уравнение и скажи, что неизвестно. Тренируйся — весы сами подскажут: качни чашу с неизвестным!',
-      'Тренажёр: тебе дадут уравнение. Шаг 1 — определи, что неизвестно. Шаг 2 — сделай обратное действие и найди x. Шаг 3 — проверь подстановкой. Нажимай кнопки!',
-      'Проверь себя: x + 27 = 52 → x = 25. 8 · x = 96 → x = 12. x − 14 = 30 → x = 44. Ответь в тесте и жми «Понял! Проверю себя»!'
+      'Уравнение — это «весы в равновесии»: x + 27 = 52 значит «неизвестное число и 27 вместе дают 52».',
+      'Чтобы найти неизвестное слагаемое, от суммы отнимают известное: x = 52 − 27 = 25.',
+      'Если неизвестен множитель, произведение делят на известный множитель: 8 · x = 96, значит x = 96 : 8 = 12.',
+      'Почему так? На весах: если снять с обеих чашек по 27, равновесие сохранится — останется x = 25.',
+      'Ловушка: после решения ВСЕГДА проверяй подстановкой: 25 + 27 = 52 ✓, 8 · 12 = 96 ✓.',
+      'Совет Архимеда: назови неизвестное вслух («сколько было?») — уравнение сразу станет простой задачей.',
+      'Сложение и вычитание — обратные операции: чтобы убрать +27, вычтем 27 из обеих частей.',
+      'Умножение и деление — тоже обратные пары: чтобы убрать «×8», разделим обе части на 8.',
+      'Запомни: что делаешь с одной частью — делай и с другой, равновесие сохраняется.',
+      'Тренажёр: сначала определи, что неизвестно, потом выбери обратное действие.',
+      'Тренажёр: реши уравнение, назови неизвестное число.',
+      'Шпаргалка: неизвестное слагаемое = сумма − известное; неизвестный множитель = произведение : другой.',
+      'Проверь себя устно: x + 27 = 52 → 25; 8 · x = 96 → 12; x − 14 = 30 → 44.',
+      'Проверь себя: x + 27 = 52. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Реши уравнение: x + 27 = 52.', choices: ['25', '79', '35'], ans: 0,
       exp: 'x = 52 − 27 = 25. Проверка: 25 + 27 = 52.' },
     tasks: [
       { q: 'Реши уравнение: 8 · x = 96.', kind: 'unit', ans: 12, tol: 0,
-        hints: ['Что неизвестно: множитель.', 'x = 96 : 8 = 12.'], sol: 'x = 96 : 8 = 12.' },
+        hints: ['Что неизвестно: множитель.', 'x = 96 : 8 = 12; проверка 8 · 12 = 96.'], sol: 'x = 96 : 8 = 12.' },
       { q: 'Реши уравнение: x − 14 = 30.', kind: 'choice', choices: ['16', '44', '34'], ans: 1, tol: 0,
-        hints: ['Что неизвестно: уменьшаемое.', 'x = 30 + 14 = 44.'], sol: 'x = 30 + 14 = 44.' }
+        hints: ['Что нужно сделать с 30 и 14?', 'x = 30 + 14 = 44; проверка 44 − 14 = 30.'], sol: 'x = 30 + 14 = 44.' }
     ]
   };
-  const E={bronze:'#c9a06a',bronzeD:'#8a6a3a',gold:'#ffd76a',goldD:'#d9a441',green:'#8fd1a8',blue:'#7fd1ff',red:'#ff9a8a',cream:'#f2e7c9',dark:'#2a2430'};
-  /* чашечные весы: коромысло с двумя чашами. left/right — содержимое чаш (html-строки svg) */
-  function scaleSVG(left,right,opt){
+  const ink='#eef4ef', dim='#9db4a8', gold='#e5b95a', goldD='#b8802c', brass='#f2d38a', emerald='#16302a', emeraldD='#0c1c17',
+        grn='#7de0a0', red='#ff9a8a', card='rgba(16,30,26,.94)', cardB='#3a5a50', lineC='#2a4038';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1712" stroke-width="3.4">${t}</text>`;
+  function bg(W,H,opt){
     const o=opt||{};
-    const tilt=o.tilt||0;
-    return `<svg viewBox="0 0 318 ${o.h||190}" style="display:block;width:100%;height:auto">
-      <rect x="4" y="4" width="310" height="${(o.h||190)-8}" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-      <g class="${tilt?'b7wob':''}" style="transform-origin:159px 56px">
-        <line x1="159" y1="56" x2="159" y2="28" stroke="#e8dcc8" stroke-width="4"/>
-        <line x1="64" y1="40" x2="254" y2="40" stroke="#e8dcc8" stroke-width="5" stroke-linecap="round"/>
-        <line x1="64" y1="40" x2="88" y2="74" stroke="#c9a06a" stroke-width="2.4"/>
-        <line x1="254" y1="40" x2="230" y2="74" stroke="#c9a06a" stroke-width="2.4"/>
-        <circle cx="159" cy="56" r="8" fill="#c9a06a" stroke="#8a6a3a" stroke-width="2.4"/>
-        <circle cx="64" cy="40" r="4" fill="#c9a06a"/><circle cx="254" cy="40" r="4" fill="#c9a06a"/>
-      </g>
-      <g class="${tilt?'b7wob':''}">
-        <path d="M 88 74 Q 88 96 108 96 L 150 96 Q 158 96 158 96 L 158 74 Z" fill="#c9a06a" stroke="#8a6a3a" stroke-width="2.4"/>
-        <path d="M 230 74 Q 230 96 210 96 L 168 96 Q 160 96 160 96 L 160 74 Z" fill="#c9a06a" stroke="#8a6a3a" stroke-width="2.4"/>
-      </g>
-      <rect x="84" y="96" width="76" height="16" fill="none"/>
-      <rect x="158" y="96" width="76" height="16" fill="none"/>
-      <g>${left}</g>
-      <g transform="translate(160,0)">${right}</g>
-      <line x1="110" y1="112" x2="110" y2="158" stroke="#c9a06a" stroke-width="6"/>
-      <line x1="208" y1="112" x2="208" y2="158" stroke="#c9a06a" stroke-width="6"/>
-      <rect x="86" y="152" width="146" height="20" rx="6" fill="#8a6a3a"/>
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="q8bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e4138"/><stop offset="1" stop-color="#0c1c17"/></linearGradient>
+        <linearGradient id="q8gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${brass}"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="${goldD}"/></linearGradient>
+        <filter id="q8sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#q8bg)"/>
+      <g opacity="0.1" stroke="#dff0e6" stroke-width="1"><circle cx="48" cy="40" r="28" fill="none"/><circle cx="272" cy="150" r="32" fill="none"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#3a6a5c" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="url(#q8gold)" stroke-width="1.2" opacity="0.45" rx="4"/>
+      ${o.inner?o.inner():''}
     </svg>`;
   }
-  /* мешок с x */
-  function bag(x,y,s){
-    return `<g class="b7sway"><path d="M ${x} ${y} Q ${x-16} ${y+22} ${x} ${y+44} Q ${x+16} ${y+22} ${x} ${y} Z" fill="#b98a5a" stroke="#6b4a2a" stroke-width="2.4"/>
-      <path d="M ${x-8} ${y+2} L ${x+8} ${y+2} L ${x+6} ${y-8} L ${x-6} ${y-8} Z" fill="#8a5a2e" stroke="#6b4a2a" stroke-width="2"/>
-      <text x="${x}" y="${y+28}" text-anchor="middle" font-size="${s||26}" fill="#fff" font-weight="bold" font-family="Georgia,serif">x</text></g>`;
-  }
-  /* гиря-плитка с числом */
-  function weight(x,y,v,c,opt){
-    const o=opt||{};
-    const fs=o.fs||Math.min(24, (String(v).length>2?18:24));
-    return `<g class="${o.fly?'b7fly':o.drop?'b7drop':'b7pop'}" ${o.fly?`style="--tx:${o.tx||0}px;--ty:${o.ty||0}px;animation-delay:${(o.delay||0).toFixed(2)}s"`:o.drop?`style="animation-delay:${(o.delay||0).toFixed(2)}s"`:`style="animation-delay:${(o.delay||0).toFixed(2)}s"`}>
-      <rect x="${x}" y="${y}" width="${o.w||52}" height="${o.h||40}" rx="9" fill="${c||'#7fd1ff'}" opacity=".25"/>
-      <rect x="${x}" y="${y}" width="${o.w||52}" height="${o.h||40}" rx="9" fill="none" stroke="${c||'#7fd1ff'}" stroke-width="2.8"/>
-      <text x="${x+(o.w||52)/2}" y="${(y+(o.h||40)/2+fs*0.36).toFixed(1)}" text-anchor="middle" font-size="${fs}" fill="#fff" font-weight="bold" font-family="Georgia,serif">${v}</text>
+  /* золотые весы: балка + две чаши; то, что на чашах, кладём отдельно */
+  function balance(ox,beamY,half){
+    let s=`<g class="q8Swing">
+      <path d="M ${ox-16} ${beamY+22} L ${ox} ${beamY+58} L ${ox+16} ${beamY+58} Z" fill="url(#q8gold)"/>
+      <rect x="${ox-half}" y="${beamY-2.5}" width="${2*half}" height="5" rx="2.5" fill="url(#q8gold)"/>
+      <line x1="${ox-half}" y1="${beamY+2}" x2="${ox-half}" y2="${beamY+24}" stroke="${gold}" stroke-width="1.8"/>
+      <line x1="${ox+half}" y1="${beamY+2}" x2="${ox+half}" y2="${beamY+24}" stroke="${gold}" stroke-width="1.8"/>
+      <ellipse cx="${ox-half}" cy="${beamY+32}" rx="${33}" ry="10" fill="rgba(255,255,255,.12)" stroke="${gold}" stroke-width="2.2"/>
+      <ellipse cx="${ox+half}" cy="${beamY+32}" rx="${33}" ry="10" fill="rgba(255,255,255,.12)" stroke="${gold}" stroke-width="2.2"/>
+      <line x1="${ox}" y1="${beamY+58}" x2="${ox}" y2="${beamY+62}" stroke="${gold}" stroke-width="1.6"/>
+      <path d="M ${ox} ${beamY+62} L ${ox-12} ${beamY+70} L ${ox+12} ${beamY+70} Z" fill="url(#q8gold)"/>
     </g>`;
+    return s;
   }
-  const sign=(t,c,delay,fs)=>`<span class="b7in" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 13px;border-radius:12px;border:2.2px solid ${c};background:rgba(255,255,255,.05);font-family:Georgia,serif;font-size:${fs||21}px;color:${c};font-weight:bold">${t}</span>`;
+  function tok(x,y,w,h,text,c,delay){
+    return `<g class="q8Tok" style="animation-delay:${(delay||0).toFixed(2)}s"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${c}" stroke="#0a1712" stroke-width="1.6"/>
+      ${tx(x+w/2,y+h/2+4,14,'#0a1712',text,{b:1})}</g>`;
+  }
+  const chip=(t,c,delay)=>`<span class="q8In" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
   const Q174=[
-    {q:'Реши: x + 27 = 52.',opts:['25','79','35'],ans:0},
-    {q:'Реши: x − 14 = 30.',opts:['16','44','34'],ans:1}
+    {q:'x + 27 = 52 → x = ?',opts:['25','79','35'],ans:0},
+    {q:'x − 14 = 30 → x = ?',opts:['44','16','34'],ans:1}
   ];
   function quiz(lk,st){
     const T=Q174[st.q||0];
     const opts=T.opts.map((o,i)=>{
-      let bg='rgba(255,255,255,.06)',bd='#3d5c49',tc='#e8dcc8';
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(143,209,168,.22)':'rgba(232,106,90,.2)'; bd=i===T.ans?E.green:E.red; tc=i===T.ans?E.green:E.red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:18px" onclick="visW174T('${lk}',${i})">${o}</button>`;
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW174T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? (st.q===1?'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! Уменьшаемое: x = 30 + 14 = 44</div>':'<div class="wk-ans" style="color:#8fd1a8;font-size:17px">Верно! Слагаемое: x = 52 − 27 = 25</div>')
-        : '<div class="wk-ans" style="color:#ff8a7a;font-size:16px">Не так. Сделай обратное действие</div>';
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:16px">Верно! обрати действие</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:15px">Не так · сделай обратное действие</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW174Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW174Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe0cf')}<div class="wk-row" style="gap:9px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#e5b95a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW174(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step; if(step===1||step===2){ st.sh=0; } if(step===4||step===5||step===6||step===7||step===8){ st.sh=0; } if(step===11){ st.pick=null; } if(step===12){ if(st.tr==null) st.tr=0; st.s1=0; st.s2=0; } if(step===13){ st.sel=null; st.q=0; } }
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=13){ st.go=0; st.pick=null; }
+      if(step===11) st.pick=null;
+      if(step===12){ st.mq=0; st.msel=null; }
+      if(step===13){ st.sel=null; st.q=0; }
+    }
     let h='';
+    const W=318;
     if(step===0){
+      const H=200, ox=159, beamY=44;
+      const go=st.go||0;
+      let inner='';
+      /* x + 27 на левой чаше, 52 на правой */
+      inner+=balance(ox,beamY,84);
+      inner+=tok(80,beamY+16,40,26,'x',gold,0.1);
+      inner+=tok(122,beamY+16,40,26,'27','#3a5a50',0.2);
+      inner+=tok(200,beamY+16,40,26,'52','#3a5a50',0.2);
+      inner+=`<text x="109" y="${beamY+44-6}" text-anchor="middle" font-size="11" fill="${dim}">левая</text>`;
+      inner+=`<text x="220" y="${beamY+44-6}" text-anchor="middle" font-size="11" fill="${dim}">правая</text>`;
+      if(go){
+        inner+=`<g class="q8Pop"><rect x="58" y="150" width="202" height="30" rx="9" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="1.8"/>
+        ${tx(159,170,13.5,grn,'весы в равновесии — уравнение',{b:1})}</g>`;
+      } else {
+        inner+=tx(159,166,13.5,dim,'что означает это уравнение?',{});
+      }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Весы Архимеда</div>`+
-        wkHero(scaleSVG(`${bag(122,64,24)}${weight(86,80,27,'#7fd1ff',{w:40,h:34,fs:18,delay:.2})}`, `${weight(160,64,52,'#ffd76a',{w:56,h:44,fs:24,delay:.3})}`,{h:196}))+
-        wkRow(sign('x + 27 = 52',E.gold,0.5))+
-        wkSml('весы в равновесии — левая чаша весит столько же, сколько правая'));
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('x + 27 = 52 · весы в равновесии',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW174Act('${lk}','rst')`):wkBtn('что это?',`visW174Act('${lk}','go')`))+
+        wkSml('уравнение = весы'));
     } else if(step===1){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Что говорит уравнение?</div>`+
-        wkHero(scaleSVG(`${bag(122,64,24)}${weight(86,80,27,'#7fd1ff',{w:40,h:34,fs:18,delay:.1})}`, `${weight(160,64,52,'#ffd76a',{w:56,h:44,fs:24,delay:.2})}`,{h:196}))+
-        (sh? wkRow(sign('неизвестное и 27 вместе = 52',E.green,0.2)):'')+
-        wkRow(sh===0? wkBtn('перевести на русский',`visW174Act('${lk}','go')`) : wkBtn('сброс',`visW174Act('${lk}','rst')`))+
-        wkSml('x — это «неизвестное число», его и надо найти'));
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,17,ink,'что говорит уравнение?',{b:1});
+      inner+=tx(159,74,20,ink,'x + 27 = 52',{b:1,georgia:1});
+      inner+=tx(159,104,13.5,dim,'«неизвестное и 27 вместе дают 52»',{});
+      if(go){
+        inner+=`<g class="q8Pop"><rect x="70" y="128" width="178" height="30" rx="9" fill="rgba(229,185,90,.14)" stroke="${gold}" stroke-width="1.8"/>
+        ${tx(159,148,14,gold,'назови вслух: «сколько было?»',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Читаем уравнение</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('x — неизвестное · 27 — известное',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW174Act('${lk}','rst')`):wkBtn('прочитать',`visW174Act('${lk}','go')`))+
+        wkSml('найди неизвестное'));
     } else if(step===2){
-      const sh=st.sh||0;
+      const H=204, ox=159, beamY=64;
+      const go=st.go||0;
+      let inner='';
+      /* левая чаша: x + 27; убираем 27 с обеих */
+      inner+=balance(ox,beamY,84);
+      if(go===0){
+        inner+=tok(80,beamY+18,40,26,'x',gold,0.05);
+        inner+=tok(122,beamY+18,40,26,'27','#3a5a50',0.1);
+        inner+=tok(200,beamY+18,40,26,'52','#3a5a50',0.1);
+      } else {
+        inner+=tok(82,beamY+18,40,26,'x',gold,0.05);
+        inner+=`<g class="q8Sink"><rect x="122" y="${beamY+18}" width="40" height="26" rx="6" fill="#9db4a8" opacity="0.5" stroke="#0a1712" stroke-width="1.6"/></g>`;
+        inner+=`<g class="q8Sink"><rect x="200" y="${beamY+18}" width="40" height="26" rx="6" fill="#9db4a8" opacity="0.5" stroke="#0a1712" stroke-width="1.6"/></g>`;
+        inner+=`<g class="q8Pop"><text x="100" y="${beamY-8}" text-anchor="middle" font-size="12" fill="${red}">−27</text>
+        <text x="220" y="${beamY-8}" text-anchor="middle" font-size="12" fill="${red}">−27</text></g>`;
+        inner+=tx(159,168,17,grn,'x = 25 — равновесие сохранено',{b:1});
+      }
       h=wkFrame(`<div class="wk-big" style="font-size:18px">Снимаем 27 с обеих чаш</div>`+
-        wkHero(scaleSVG(
-          sh===0
-            ? `${bag(122,64,24)}${weight(86,80,27,'#7fd1ff',{w:40,h:34,fs:18})}`
-            : `${bag(122,64,24)}<g class="b7fly" style="--tx:-60px;--ty:70px;animation-delay:.2s">${weight(86,80,27,'#7fd1ff',{w:40,h:34,fs:18})}</g>`,
-          sh===0
-            ? `${weight(160,64,52,'#ffd76a',{w:56,h:44,fs:24})}${weight(160,104,27,'#8fd1a8',{w:40,h:30,fs:17,delay:.25})}`
-            : `${weight(160,64,52,'#ffd76a',{w:56,h:44,fs:24})}${bag(188,96,20)}`,
-          {h:196}))+
-        (sh===1? wkRow(sign('слева x, справа 52 − 27 = 25',E.green,0.3)):'')+
-        wkRow(sh===0? wkBtn('снять по 27 с обеих чаш',`visW174Act('${lk}','go')`) : wkBtn('сброс',`visW174Act('${lk}','rst')`))+
-        wkSml('равновесие сохранится, если снять ОДИНАКОВОЕ с обеих чаш'));
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('снимаем одно и то же — весы в равновесии',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW174Act('${lk}','rst')`):wkBtn('снять 27 с обеих',`visW174Act('${lk}','go')`))+
+        wkSml('обе чаши одинаково'));
     } else if(step===3){
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">x = 25 · и проверка!</div>`+
-        wkHero(`<svg viewBox="0 0 318 180" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="168" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="b7pop"><rect x="36" y="36" width="110" height="92" rx="14" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="2.4"/>
-          <text x="91" y="72" text-anchor="middle" font-size="17" fill="#ffe9c9">ответ</text>
-          <text x="91" y="112" text-anchor="middle" font-size="48" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">x = 25</text></g>
-          <g class="b7pop" style="animation-delay:.3s"><rect x="176" y="36" width="106" height="92" rx="14" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.4"/>
-          <text x="229" y="66" text-anchor="middle" font-size="15" fill="#cfe0cf">проверка</text>
-          <text x="229" y="100" text-anchor="middle" font-size="26" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">25+27</text>
-          <text x="229" y="120" text-anchor="middle" font-size="20" fill="#8fd1a8" font-weight="bold">= 52 ✓</text></g>
-          <g class="b7ok"><circle cx="159" cy="156" r="16" fill="#8fd1a8"/><text x="159" y="162" text-anchor="middle" font-size="15" fill="#0d1a13" font-weight="bold">✓</text></g>
-        </svg>`)+
-        wkSml('подставь ответ в уравнение: 25 + 27 = 52 — всё сходится!'));
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,46,22,ink,'x = 52 − 27 =',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="q8Pop"><text x="159" y="96" text-anchor="middle" font-size="40" fill="${grn}" font-weight="bold" font-family="Georgia,serif">25</text></g>`;
+        inner+=tx(159,126,14,dim,'проверка: 25 + 27 = 52',{});
+        inner+=`<g class="q8Popup"><rect x="94" y="146" width="130" height="28" rx="9" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="1.8"/>
+        ${tx(159,166,13,grn,'сходится!',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ответ и проверка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('x = 25 · 25 + 27 = 52',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW174Act('${lk}','rst')`):wkBtn('найти x',`visW174Act('${lk}','go')`))+
+        wkSml('всегда проверяй'));
     } else if(step===4){
-      const sh=st.sh||0;
-      const showBag = ()=>`<g class="b7pop"><rect x="36" y="20" width="92" height="120" rx="10" fill="rgba(255,255,255,.05)" stroke="#5b6d9e" stroke-width="2.4"/>
-        <rect x="44" y="14" width="76" height="18" rx="6" fill="#8a5a2e"/><text x="82" y="27" text-anchor="middle" font-size="10" fill="#ffe9c9">кошелёк x</text>
-        <text x="82" y="62" text-anchor="middle" font-size="15" fill="#cfe0cf">осталось 30</text>
-        <rect x="52" y="80" width="60" height="26" rx="7" fill="rgba(143,209,168,.2)" stroke="#8fd1a8" stroke-width="2"/>
-        <text x="82" y="98" text-anchor="middle" font-size="18" fill="#8fd1a8" font-weight="bold">30</text></g>
-        <g class="b7fly" style="--tx:70px;--ty:60px"><rect x="36" y="20" width="92" height="120" rx="10" fill="rgba(255,255,255,.05)" stroke="#5b6d9e" stroke-width="2.4"/><text x="82" y="40" text-anchor="middle" font-size="11" fill="#cfe0cf">вынули</text>
-        <text x="82" y="66" text-anchor="middle" font-size="22" fill="#ff9a8a" font-weight="bold">14</text></g>`;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">x − 14 = 30: кошелёк</div>`+
-        wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="168" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          ${sh===0
-            ? `<g class="b7pop"><rect x="96" y="24" width="120" height="128" rx="12" fill="rgba(184,138,90,.14)" stroke="#b98a5a" stroke-width="3"/>
-               <rect x="110" y="18" width="92" height="20" rx="6" fill="#8a5a2e"/><text x="156" y="32" text-anchor="middle" font-size="11" fill="#ffe9c9">мешок с секретом x</text>
-               <rect x="112" y="60" width="88" height="44" rx="9" fill="rgba(255,255,255,.07)" stroke="#8fd1a8" stroke-width="2.2"/>
-               <text x="156" y="88" text-anchor="middle" font-size="26" fill="#8fd1a8" font-weight="bold" font-family="Georgia,serif">?</text>
-               <text x="156" y="130" text-anchor="middle" font-size="14" fill="#cfe0cf">вынули 14, осталось 30</text></g>`
-            : `<g class="b7pop"><rect x="24" y="30" width="86" height="118" rx="10" fill="rgba(255,255,255,.05)" stroke="#5b6d9e" stroke-width="2.4"/>
-                 <text x="67" y="52" text-anchor="middle" font-size="12" fill="#cfe0cf">осталось</text>
-                 <text x="67" y="86" text-anchor="middle" font-size="30" fill="#8fd1a8" font-weight="bold">30</text>
-                 <text x="67" y="118" text-anchor="middle" font-size="13" fill="#9ec0a8">это x − 14</text></g>
-               <g class="b7pop" style="animation-delay:.2s"><rect x="150" y="30" width="86" height="118" rx="10" fill="rgba(255,255,255,.05)" stroke="#ff9a8a" stroke-width="2.4"/>
-                 <text x="193" y="52" text-anchor="middle" font-size="12" fill="#ffcfc2">вынули</text>
-                 <text x="193" y="86" text-anchor="middle" font-size="30" fill="#ff9a8a" font-weight="bold">14</text>
-                 <text x="193" y="118" text-anchor="middle" font-size="13" fill="#9ec0a8">вернём обратно!</text></g>
-               <g class="b7pop" style="animation-delay:.4s"><text x="120" y="92" text-anchor="middle" font-size="40" fill="#ffd76a" font-weight="bold">+</text></g>
-               <g class="b7pop" style="animation-delay:.5s"><rect x="234" y="40" width="60" height="92" rx="12" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="3"/>
-                 <text x="264" y="70" text-anchor="middle" font-size="13" fill="#ffe9c9">x =</text>
-                 <text x="264" y="106" text-anchor="middle" font-size="28" fill="#ffd76a" font-weight="bold">44</text></g>`}
-        </svg>`)+
-        (sh===1? wkRow(sign('x = 30 + 14 = 44',E.green,0.5)):'')+
-        wkRow(sh===0? wkBtn('вернуть вынутые 14',`visW174Act('${lk}','go')`) : wkBtn('сброс',`visW174Act('${lk}','rst')`))+
-        wkSml('чтобы узнать, сколько было, складываем: остаток + вынутое'));
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,17,ink,'x − 14 = 30',{b:1,georgia:1});
+      inner+=tx(159,68,13.5,dim,'«число без 14 равно 30»',{});
+      if(go){
+        inner+=`<g class="q8Pop"><rect x="46" y="88" width="226" height="40" rx="11" fill="rgba(229,185,90,.12)" stroke="${gold}" stroke-width="2"/>
+        ${tx(159,108,15,gold,'прибавить 14 к обеим частям',{b:1})}
+        ${tx(159,124,12,dim,'обратное действие — «+»',{})}</g>`;
+        inner+=tx(159,160,22,grn,'x = 44',{b:1,georgia:1});
+        inner+=tx(159,182,12.5,dim,'проверка: 44 − 14 = 30',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сложение — обратное вычитанию</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('x = 30 + 14 = 44',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW174Act('${lk}','rst')`):wkBtn('решить',`visW174Act('${lk}','go')`))+
+        wkSml('минус → плюс'));
     } else if(step===5){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">40 − x = 16</div>`+
-        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="162" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="b7pop"><rect x="24" y="30" width="120" height="52" rx="12" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="2.6"/>
-          <text x="84" y="52" text-anchor="middle" font-size="14" fill="#cfe0ff">было</text>
-          <text x="84" y="74" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">40</text></g>
-          <g class="b7pop" style="animation-delay:.15s"><rect x="24" y="100" width="120" height="52" rx="12" fill="rgba(255,138,138,.1)" stroke="#ff9a8a" stroke-width="2.6"/>
-          <text x="84" y="122" text-anchor="middle" font-size="14" fill="#ffcfc2">осталось</text>
-          <text x="84" y="144" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Georgia,serif">16</text></g>
-          <g class="b7pop" style="animation-delay:.3s"><text x="159" y="95" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold">?</text>
-          <text x="159" y="112" text-anchor="middle" font-size="13" fill="#ffe9c9">сколько вынули?</text></g>
-          ${sh? `<g class="b7pop"><rect x="214" y="52" width="86" height="76" rx="12" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="3"/>
-          <text x="257" y="80" text-anchor="middle" font-size="13" fill="#ffe9c9">x =</text>
-          <text x="257" y="114" text-anchor="middle" font-size="30" fill="#ffd76a" font-weight="bold">24</text></g>`:''}
-        </svg>`)+
-        (sh? wkRow(sign('x = 40 − 16 = 24',E.green,0.3)):'')+
-        wkRow(sh===0? wkBtn('найти вычитаемое',`visW174Act('${lk}','go')`) : wkBtn('сброс',`visW174Act('${lk}','rst')`))+
-        wkSml('вычитаемое = уменьшаемое − разность: 40 − 16'));
+      const H=204;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,36,17,ink,'8 · x = 96',{b:1,georgia:1});
+      inner+=tx(159,62,13.5,dim,'«восемь раз по x = 96»',{});
+      /* восемь мешков-групп */
+      for(let i=0;i<8;i++){
+        inner+=`<g class="q8Tok" style="animation-delay:${(0.05*i).toFixed(2)}s"><rect x="${40+i*30}" y="80" width="26" height="26" rx="5" fill="url(#q8gold)" stroke="#0a1712" stroke-width="1.4"/>
+        ${tx(53+i*30,98,12,'#3a2408','x',{b:1})}</g>`;
+      }
+      if(go){
+        inner+=`<g class="q8Pop"><rect x="70" y="124" width="178" height="30" rx="9" fill="rgba(229,185,90,.14)" stroke="${gold}" stroke-width="1.8"/>
+        ${tx(159,144,14,gold,'делим обе части на 8',{b:1})}</g>`;
+        inner+=tx(159,178,22,grn,'x = 96 : 8 = 12',{b:1,georgia:1});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Восемь равных групп</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('×8 → :8 (обратное действие)',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW174Act('${lk}','rst')`):wkBtn('разделить на 8',`visW174Act('${lk}','go')`))+
+        wkSml('умножение ↔ деление'));
     } else if(step===6){
-      const sh=st.sh||0;
-      const cups = sh===1
-        ? [0,1,2,3,4,5,6,7].map(i=>`<g class="b7drop" style="animation-delay:${(i*0.08).toFixed(2)}s"><rect x="${26+i*30}" y="118" width="24" height="26" rx="6" fill="rgba(143,209,168,.2)" stroke="#8fd1a8" stroke-width="2"/><text x="${38+i*30}" y="135" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">x</text></g>`).join('')
-        : '';
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">8 · x = 96: восемь мешков</div>`+
-        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="162" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          ${[0,1,2,3,4,5,6,7].map(i=>`<g class="b7pop" style="animation-delay:${(i*0.08).toFixed(2)}s"><circle cx="${30+i*34}" cy="46" r="17" fill="rgba(184,138,90,.3)" stroke="#b98a5a" stroke-width="2.2"/><text x="${30+i*34}" y="52" text-anchor="middle" font-size="17" fill="#ffe9c9" font-weight="bold">x</text></g>`).join('')}
-          <text x="159" y="86" text-anchor="middle" font-size="16" fill="#cfe0cf">восемь одинаковых мешков · вместе 96</text>
-          ${cups}
-          ${sh===1? `<g class="b7pop" style="animation-delay:.6s"><rect x="150" y="150" width="130" height="0" fill="none"/>
-            <text x="270" y="40" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold">12</text></g>`:''}
-          ${sh? `<g class="b7pop"><rect x="238" y="112" width="68" height="44" rx="10" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="2.6"/>
-            <text x="272" y="133" text-anchor="middle" font-size="13" fill="#ffe9c9">x = 96:8</text>
-            <text x="272" y="150" text-anchor="middle" font-size="20" fill="#ffd76a" font-weight="bold">= 12</text></g>`:''}
-        </svg>`)+
-        (sh? wkRow(sign('96 : 8 = 12 → x = 12',E.green,0.5)):'')+
-        wkRow(sh===0? wkBtn('разложить 96 поровну',`visW174Act('${lk}','go')`) : wkBtn('сброс',`visW174Act('${lk}','rst')`))+
-        wkSml('множитель ищут делением: произведение : известный множитель'));
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,17,ink,'x : 6 = 8',{b:1,georgia:1});
+      inner+=tx(159,68,13.5,dim,'«x разделили на 6 — получили 8»',{});
+      if(go){
+        inner+=`<g class="q8Pop"><rect x="66" y="90" width="186" height="30" rx="9" fill="rgba(229,185,90,.12)" stroke="${gold}" stroke-width="1.8"/>
+        ${tx(159,110,14,gold,'умножаем обе части на 6',{b:1})}</g>`;
+        inner+=tx(159,148,22,grn,'x = 8 · 6 = 48',{b:1,georgia:1});
+        inner+=tx(159,172,12.5,dim,'проверка: 48 : 6 = 8',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Деление ↔ умножение</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip(':6 → ×6',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW174Act('${lk}','rst')`):wkBtn('решить',`visW174Act('${lk}','go')`))+
+        wkSml('деление → умножение'));
     } else if(step===7){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">x : 6 = 8</div>`+
-        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="162" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="b7pop"><rect x="30" y="30" width="100" height="100" rx="12" fill="rgba(184,138,90,.16)" stroke="#b98a5a" stroke-width="3"/>
-          <rect x="46" y="24" width="68" height="16" rx="5" fill="#8a5a2e"/><text x="80" y="35" text-anchor="middle" font-size="10" fill="#ffe9c9">было x</text>
-          <text x="80" y="96" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">?</text></g>
-          ${[0,1,2,3,4,5,6,7].map(i=>`<g class="b7pop" style="animation-delay:${(0.2+i*0.07).toFixed(2)}s"><rect x="${150+i*18}" y="${56+(i%2)*20}" width="15" height="34" rx="4" fill="rgba(127,209,255,.25)" stroke="#7fd1ff" stroke-width="1.8"/><text x="${157+i*18}" y="${76+(i%2)*20}" text-anchor="middle" font-size="11" fill="#cfe0ff">8</text></g>`).join('')}
-          <text x="159" y="150" text-anchor="middle" font-size="14" fill="#cfe0cf">8 частей по 6</text>
-          ${sh? `<g class="b7pop"><text x="272" y="120" text-anchor="middle" font-size="22" fill="#ffd76a" font-weight="bold">48</text></g>`:''}
-        </svg>`)+
-        (sh? wkRow(sign('x = 8 · 6 = 48',E.green,0.4)):'')+
-        wkRow(sh===0? wkBtn('собрать части обратно',`visW174Act('${lk}','go')`) : wkBtn('сброс',`visW174Act('${lk}','rst')`))+
-        wkSml('делимое ищут умножением: частное · делитель'));
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,17,ink,'54 : x = 9',{b:1,georgia:1});
+      inner+=tx(159,68,13.5,dim,'«54 разделили на неизвестное = 9»',{});
+      if(go){
+        inner+=tx(159,108,20,ink,'x = 54 : 9',{b:1,georgia:1});
+        inner+=`<g class="q8Pop"><text x="159" y="150" text-anchor="middle" font-size="30" fill="${grn}" font-weight="bold" font-family="Georgia,serif">x = 6</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Делитель не известен</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('54 : x = 9 → x = 6',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW174Act('${lk}','rst')`):wkBtn('найти x',`visW174Act('${lk}','go')`))+
+        wkSml('подумай, что неизвестно'));
     } else if(step===8){
-      const sh=st.sh||0;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">54 : x = 9</div>`+
-        wkHero(`<svg viewBox="0 0 318 170" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="162" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="b7pop"><rect x="26" y="40" width="120" height="90" rx="12" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="2.8"/>
-          <text x="86" y="76" text-anchor="middle" font-size="15" fill="#cfe0ff">разложили 54</text>
-          <text x="86" y="106" text-anchor="middle" font-size="28" fill="#fff" font-weight="bold" font-family="Georgia,serif">по 9</text></g>
-          <g class="b7pop" style="animation-delay:.25s"><text x="159" y="95" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold">?</text>
-          <text x="159" y="112" text-anchor="middle" font-size="13" fill="#ffe9c9">сколько частей?</text></g>
-          ${sh? `<g class="b7pop"><rect x="196" y="40" width="100" height="90" rx="12" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="3"/>
-          <text x="246" y="72" text-anchor="middle" font-size="14" fill="#ffe9c9">x = 54 : 9</text>
-          <text x="246" y="108" text-anchor="middle" font-size="32" fill="#ffd76a" font-weight="bold">= 6</text></g>`:''}
-        </svg>`)+
-        (sh? wkRow(sign('x = 54 : 9 = 6',E.green,0.3)):'')+
-        wkRow(sh===0? wkBtn('посчитать части',`visW174Act('${lk}','go')`) : wkBtn('сброс',`visW174Act('${lk}','rst')`))+
-        wkSml('делитель ищут делением: делимое : частное'));
-    } else if(step===9){
-      const rows=[
-        ['x + 27 = 52','слагаемое','52 − 27'],
-        ['x − 14 = 30','уменьшаемое','30 + 14'],
-        ['40 − x = 16','вычитаемое','40 − 16'],
-        ['8 · x = 96','множитель','96 : 8'],
-        ['x : 6 = 8','делимое','8 · 6'],
-        ['54 : x = 9','делитель','54 : 9']
-      ];
-      const cards=rows.map((r,i)=>`<div class="b7in" style="animation-delay:${(i*0.12).toFixed(2)}s;border:2px solid ${i%2?E.blue:E.gold};border-radius:13px;padding:7px 9px;margin:5px 0;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.04)">
-        <span style="font-family:Georgia,serif;font-size:17px;color:#fff;font-weight:bold">${r[0]}</span>
-        <span style="font-size:12px;color:${i%2?E.blue:E.gold};font-weight:bold;text-align:center;flex:1">${r[1]}</span>
-        <span style="font-family:Georgia,serif;font-size:15px;color:#8fd1a8;font-weight:bold">${r[2]}</span>
-      </div>`).join('');
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Правило-зеркало</div>`+
-        wkHero(`<svg viewBox="0 0 318 96" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="88" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <text x="159" y="30" text-anchor="middle" font-size="14" fill="#cfe0cf">было «+» → делаем «−» · было «·» → делаем «:»</text>
-          <g class="b7ok"><rect x="40" y="42" width="104" height="36" rx="10" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2"/>
-          <text x="92" y="65" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">+ ⇄ −</text></g>
-          <g class="b7ok" style="animation-delay:.3s"><rect x="174" y="42" width="104" height="36" rx="10" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="2"/>
-          <text x="226" y="65" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">· ⇄ :</text></g>
-        </svg>`)+
-        `${cards}`+
-        wkSml('каждая строка — как найти неизвестное · выучи как таблицу'));
-    } else if(step===10){
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ловушка: сначала подумай!</div>`+
-        wkHero(`<svg viewBox="0 0 318 160" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="152" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="b7sway"><rect x="24" y="34" width="130" height="100" rx="14" fill="rgba(255,138,122,.1)" stroke="#ff9a8a" stroke-width="2.6"/>
-          <text x="89" y="62" text-anchor="middle" font-size="15" fill="#ffcfc2">неизвестно</text>
-          <text x="89" y="92" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold">x − 14 = 30</text>
-          <text x="89" y="118" text-anchor="middle" font-size="13" fill="#ffcfc2">это УМЕНЬШАЕМОЕ!</text></g>
-          <g class="b7pop" style="animation-delay:.5s"><rect x="176" y="34" width="120" height="100" rx="14" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.6"/>
-          <text x="236" y="62" text-anchor="middle" font-size="15" fill="#cfe0cf">если x − 14 = 30,</text>
-          <text x="236" y="90" text-anchor="middle" font-size="19" fill="#8fd1a8" font-weight="bold">x = 30 + 14</text>
-          <text x="236" y="116" text-anchor="middle" font-size="13" fill="#8fd1a8">(не вычитаем!)</text></g>
-        </svg>`)+
-        wkSml('x стоит в начале — его БОЛЬШЕ, чем 30 · складываем, а не вычитаем'));
-    } else if(step===11){
-      const quiz11=[
-        {q:'x + 15 = 40 · неизвестно?',a:'слагаемое',b:'множитель'},
-        {q:'x · 6 = 54 · неизвестно?',a:'множитель',b:'делитель'},
-        {q:'x − 9 = 21 · неизвестно?',a:'уменьшаемое',b:'вычитаемое'}
-      ];
-      const pick=st.pick==null?0:st.pick;
-      const T=quiz11[pick%3];
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Определитель: что неизвестно?</div>`+
-        wkHero(`<svg viewBox="0 0 318 100" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="92" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="b7sway"><text x="159" y="44" text-anchor="middle" font-size="30" fill="#fff" font-weight="bold" font-family="Georgia,serif">${T.q.split(' · ')[0]}</text>
-          <text x="159" y="76" text-anchor="middle" font-size="14" fill="#ffd76a" font-weight="bold">${T.q.split(' · ')[1]||''}</text></g>
-        </svg>`)+
-        `<div class="wk-row" style="gap:10px">
-          <button class="wk-btn" onclick="visW174T2('${lk}',0)">${T.a}</button>
-          <button class="wk-btn" onclick="visW174T2('${lk}',1)">${T.b}</button>
-        </div>`+
-        (st.ok!=null? wkAns(st.ok?'верно!':'не так. Посмотри на x — где он стоит?', st.ok?E.green:E.red):'')+
-        (st.ok? wkRow(wkBtn('следующее уравнение',`visW174Act('${lk}','nx')`)):'')+
-        wkSml('где стоит x: в конце (x+5) — слагаемое · x один — уменьшаемое/делимое'));
-    } else if(step===12){
-      if(st.tr==null) st.tr=0;
-      const POOL=[
-        {eq:'x + 35 = 70', sol:35, kind:'слагаемое'},
-        {eq:'x − 22 = 48', sol:70, kind:'уменьшаемое'},
-        {eq:'56 − x = 17', sol:39, kind:'вычитаемое'},
-        {eq:'9 · x = 81', sol:9, kind:'множитель'},
-        {eq:'x : 4 = 13', sol:52, kind:'делимое'}
-      ];
-      const T=POOL[st.tr%POOL.length];
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр уравнений</div>`+
-        wkHero(`<svg viewBox="0 0 318 110" style="display:block;width:100%;height:auto">
-          <rect x="4" y="4" width="310" height="102" rx="16" fill="rgba(0,0,0,.16)" stroke="#3d5c49"/>
-          <g class="b7sway"><text x="159" y="44" text-anchor="middle" font-size="34" fill="#fff" font-weight="bold" font-family="Georgia,serif">${T.eq}</text>
-          <text x="159" y="74" text-anchor="middle" font-size="14" fill="#9ec0a8">неизвестно: ${T.kind}</text>
-          ${st.s1? `<text x="159" y="94" text-anchor="middle" font-size="16" fill="#ffd76a" font-weight="bold">обратное действие → x = ?</text>`:''}
-          ${st.s2? `<rect x="80" y="66" width="158" height="30" rx="12" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="2"/>
-          <text x="159" y="86" text-anchor="middle" font-size="20" fill="#ffd76a" font-weight="bold">x = ${T.sol} ✓</text>`:''}
-          </g>
-        </svg>`)+
+      const H=206;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'правило-зеркало',{b:1});
+      const rows=[['+ 27','обратное: − 27'],['− 14','обратное: + 14'],['× 8','обратное: : 8'],[': 6','обратное: × 6']];
+      for(let i=0;i<rows.length;i++){
+        if(go>=i){
+          const ry=52+i*37;
+          inner+=`<g class="q8In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="31" rx="9" fill="${i%2?'rgba(16,30,26,.94)':'rgba(30,52,44,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          <text x="90" y="${ry+20}" text-anchor="middle" font-size="14" fill="${ink}">${rows[i][0]}</text>
+          <text x="150" y="${ry+20}" text-anchor="middle" font-size="16" fill="${gold}">→</text>
+          <text x="222" y="${ry+20}" text-anchor="middle" font-size="14" fill="${grn}">${rows[i][1]}</text></g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Обратные операции</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('у каждой операции есть обратная',gold,0.2)):'')+
         wkRow(
-          !st.s1? wkBtn('1 · обратное действие',`visW174Act('${lk}','s1')`) : '',
-          (st.s1&&!st.s2)? wkBtn('2 · найти x',`visW174Act('${lk}','s2')`) : '',
-          st.s2? wkBtn('новое уравнение',`visW174Act('${lk}','n')`) : '',
-          st.s1? wkBtn('заново',`visW174Act('${lk}','rst')`) : '')+
-        wkSml('проверь себя подстановкой: подставь x и посчитай'));
+          go===0?wkBtn('шаг 1',`visW174Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW174Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW174Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW174Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW174Act('${lk}','rst')`):'')+
+        wkSml('правда = зеркало'));
+    } else if(step===9){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,40,19,ink,'ловушка!',{b:1});
+      if(go===0){
+        inner+=`<g class="q8In"><rect x="56" y="72" width="206" height="44" rx="11" fill="rgba(255,154,138,.12)" stroke="${red}" stroke-width="2.2"/>
+        ${tx(159,98,15,red,'не «переноси» числа как попало!',{b:1})}</g>`;
+        inner+=tx(159,146,14,dim,'делай одно и то же с обеими частями',{});
+      } else {
+        inner+=`<g class="q8In"><rect x="56" y="72" width="206" height="44" rx="11" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2.2"/>
+        ${tx(159,98,15,grn,'и обязательно проверь подстановкой',{b:1})}</g>`;
+        inner+=tx(159,146,14,dim,'25 + 27 = 52 · 8 · 12 = 96',{});
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Берегись ошибки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('равновесие сохраняется',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW174Act('${lk}','rst')`):wkBtn('как верно?',`visW174Act('${lk}','go')`))+
+        wkSml('проверяй всегда'));
+    } else if(step===10){
+      const H=206;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'что неизвестно?',{b:1});
+      const items=[['x + 27 = 52','слагаемое','сумма − известное'],['x − 14 = 30','уменьшаемое','разность + вычитаемое'],['8 · x = 96','множитель','произведение : другой'],['54 : x = 9','делитель','делимое : частное']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=52+i*37;
+          inner+=`<g class="q8In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="24" y="${ry}" width="270" height="31" rx="9" fill="${i%2?'rgba(16,30,26,.94)':'rgba(30,52,44,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          <text x="88" y="${ry+20}" text-anchor="middle" font-size="13" fill="${ink}">${items[i][0]}</text>
+          <text x="166" y="${ry+20}" text-anchor="middle" font-size="12" fill="${gold}">${items[i][1]}</text>
+          <text x="250" y="${ry+20}" text-anchor="middle" font-size="11" fill="${grn}">${items[i][2]}</text></g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Определитель</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('назови неизвестное — и всё ясно',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW174Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW174Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW174Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW174Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW174Act('${lk}','rst')`):'')+
+        wkSml('сначала подумай'));
+    } else if(step===11){
+      const H=200, py=86;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'x + 27 = 52',a:'25',ds:['79','35']},
+        {q:'8 · x = 96',a:'12',ds:['88','24']},
+        {q:'x − 14 = 30',a:'44',ds:['16','34']},
+        {q:'x : 6 = 8',a:'48',ds:['14','2']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,34,17,ink,P.q+' → x = ?',{b:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="q8In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+33,24,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="q8Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="q8Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">сделай обратное</text></g>`)
+        : tx(159,py+74,14.5,dim,'реши уравнение',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW174Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW174P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW174P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр уравнений</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('x = '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('сделай обратное действие'));
+    } else if(step===12){
+      const H=196;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'x + 27 = 52 → x = ?',opts:['25','79','35'],ans:0},
+        {q:'8 · x = 96 → x = ?',opts:['12','88','24'],ans:0},
+        {q:'x − 14 = 30 → x = ?',opts:['44','16','34'],ans:1}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="q8Pop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'обратное действие'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW174S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW174Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW174Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('обратное действие'));
     } else {
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: весы Архимеда</div>`+
-        wkHero(`<svg viewBox="0 0 318 110" style="display:block;width:100%;height:auto">
-          ${bag(140,34,20)}${weight(60,40,27,'#7fd1ff',{w:40,h:32,fs:16,delay:.15})}
-          ${weight(190,30,52,'#ffd76a',{w:54,h:42,fs:20,delay:.25})}
-          <text x="159" y="104" text-anchor="middle" font-size="15" fill="#ffd76a" font-weight="bold">x + 27 = 52</text>
-        </svg>`)+
+      const H=196;
+      let inner='';
+      inner+=tx(159,42,17,ink,'x + 27 = 52',{b:1,georgia:1});
+      inner+=`<g class="q8Pop"><text x="159" y="88" text-anchor="middle" font-size="32" fill="${grn}" font-weight="bold" font-family="Georgia,serif">x = 25</text></g>`;
+      inner+=tx(159,114,13.5,dim,'52 − 27 = 25 · проверка 25+27=52',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
-        wkSml('x + 27 = 52 → x = 25 · жми «Понял! Проверю себя»'));
+        wkSml('обратное действие'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
   window.VISKW[174]=visW174;
-  function visW174T(lk,i){
-    const st=CHS[lk]||(CHS[lk]={});
-    st.sel=i; chRender(0);
-  }
+  function visW174T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
   window.visW174T=visW174T;
-  function visW174T2(lk,i){
-    const st=CHS[lk]||(CHS[lk]={});
-    const quiz11=[
-      {q:'x + 15 = 40',a:0,b:1},
-      {q:'x · 6 = 54',a:1,b:1},
-      {q:'x − 9 = 21',a:0,b:1}
-    ];
-    const T=quiz11[st.pick%quiz11.length];
-    st.ans=i; st.ok=(i===T.a); chRender(0);
-  }
-  window.visW174T2=visW174T2;
+  function visW174P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW174P=visW174P;
+  function visW174S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW174S=visW174S;
   function visW174Act(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
-    if(act==='go') st.sh=1;
-    if(act==='s1') st.s1=1;
-    if(act==='s2') st.s2=1;
-    if(act==='n'){ st.tr=(st.tr==null?0:st.tr)+1; st.s1=0; st.s2=0; }
-    if(act==='nx'){ st.pick=(st.pick==null?0:st.pick)+1; st.ans=null; st.ok=null; }
-    if(act==='nq'){ st.q=1; st.sel=null; }
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===12){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
     if(act==='rst') CHS[lk]={};
     chRender(0);
   }
