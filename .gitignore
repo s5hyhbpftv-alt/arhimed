@@ -31,3 +31,4 @@ deepseek-harness/
 !/manifest.webmanifest
 !/README.md
 !/.gitignore
+!шлюз_сервер.py
