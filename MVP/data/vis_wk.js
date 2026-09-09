@@ -24299,24 +24299,26 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===184){ window.ARH_LESSONS[i]=L184; break; } } })();
 })();
 
-/* ================= УРОК 385 · Переливания: оптимум (v1 · «Водопад-лаборатория Архимеда», 15 слайдов, флагман, премиум) ================= */
+/* ================= УРОК 385 · Переливания: оптимум (v2 · «Водопад-лаборатория Архимеда», 18 слайдов, флагман, реалистичная жидкость) ================= */
 (function(){
-  if(!window.__wk385v1css){
-    window.__wk385v1css=1;
+  if(!window.__wk385v2css){
+    window.__wk385v2css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .qYIn{animation:qYIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
-      '@keyframes qYIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qYPop{animation:qYPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qYPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qYWave{animation:qYWave 1.6s ease-in-out infinite;}'+
-      '@keyframes qYWave{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}'+
-      '#lvis .qYPour{animation:qYPour 1.1s cubic-bezier(.3,.7,.3,1) both;}'+
-      '@keyframes qYPour{0%{transform:scaleY(0);opacity:0}60%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:1}}'+
-      '#lvis .qYDrain{animation:qYDrain .6s ease both;transform-box:fill-box;transform-origin:center bottom;}'+
-      '@keyframes qYDrain{0%{transform:scaleY(1);opacity:1}100%{transform:scaleY(0);opacity:0}}'+
-      '#lvis .qYFill{animation:qYFill .9s cubic-bezier(.2,.8,.3,1.1) both;transform-box:fill-box;transform-origin:center bottom;}'+
-      '@keyframes qYFill{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}';
+      '#lvis .qWtrIn{animation:qWtrIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qWtrIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qWtrPop{animation:qWtrPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qWtrPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qWtrWave{animation:qWtrWave 2.4s ease-in-out infinite;}'+
+      '@keyframes qWtrWave{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}'+
+      '#lvis .qWtrFill{animation:qWtrFill .95s cubic-bezier(.2,.8,.3,1.12) both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes qWtrFill{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}'+
+      '#lvis .qWtrDrain{animation:qWtrDrain .6s ease both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes qWtrDrain{0%{transform:scaleY(1);opacity:1}100%{transform:scaleY(0);opacity:0}}'+
+      '#lvis .qWtrStream{stroke-dasharray:26 16;animation:qWtrStream 1.1s linear infinite;}'+
+      '@keyframes qWtrStream{to{stroke-dashoffset:-42}}'+
+      '#lvis .qWtrBubble{animation:qWtrBubble 2.2s ease-in-out infinite;}'+
+      '@keyframes qWtrBubble{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}';
     document.head.appendChild(st);
   }
   const L385 = {
@@ -24327,16 +24329,19 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Наполняем 7 л, отливаем в банку 3 л → в ведре 4 л.',
       'Выливаем банку, снова отливаем из ведра 3 л → в ведре 1 л!',
       'Секрет: 7 − 3 − 3 = 1 — комбинируем разности объёмов.',
+      'Почему получается 1? Это остаток от деления 7 на 3: 7 = 3·2 + 1, остаток 1.',
       'Два сосуда разного объёма. Начинаем с большего — и «откусываем» маленьким.',
-      'Льём из большого в маленький: маленький наполнился → сливаем → повторяем.',
+      'Льём из большого в малый: малый наполнился → сливаем → повторяем. Так и «отсчитываем» по маленькому.',
       'Так мелкими «шагами» маленького сосуда отнимаем от большого: 7 − 3 = 4, потом 4 − 3 = 1.',
-      'Ведро 5 л и банка 2 л: 5 − 2 = 3, потом 3 − 2 = 1 → отмеряем 1 л!',
-      'Объём, который можно отмерить, — получается вычитанием ёмкостей (и их комбинаций).',
+      'Объём, который можно отмерить, — любой кратный НОД(объёмов).',
+      'НОД(7, 3) = 1, значит отмерим 1 л. НОД(6, 2) = 2 → отмерим только чётные.',
+      'Ведро 5 л и банка 2 л: НОД(5,2) = 1 → 5 − 2 − 2 = 1 → отмеряем 1 л!',
       'Тренажёр: что осталось в ведре.',
-      'Тренажёр: сколько там воды.',
-      'Шпаргалка: лей из большого в малый; сливай малый; повторяй — 7−3−3 = 1.',
+      'Тренажёр: сколько в банке.',
+      'Тренажёр: можно ли отмерить объём.',
+      'Шпаргалка: лей из большого в малый; сливай малый; повторяй — 7−3−3 = 1; НОД даёт возможные объёмы.',
       'Проверь себя устно: после первой отливки 4 л; после второй 1 л; 5−2−2 = 1.',
-      'Проверь себя: отливали — вычитали ёмкость.',
+      'Проверь себя: почему выходит 1 л (остаток от деления 7 на 3).',
       'Проверь себя: ведро 7 л отлили в банку 3 л — сколько осталось? Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Ведро 7 л и банка 3 л: наполнили 7 л и отлили в банку 3 л. Сколько осталось в ведре?', choices: ['4 л', '1 л', '3 л', '2 л'], ans: 0,
@@ -24348,18 +24353,19 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['5 − 2 − 2 = 1.', 'Отлили 2 л (осталось 3), вылили, отлили ещё 2 → 1 л.'], sol: 'да' }
     ]
   };
-  const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', water='#4db6e0', water2='#2a8fc0', blu='#6ea8ff',
-        bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', glass='#c8d4ea';
+  const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', deep='#0d5a80', midw='#1f86b4', topw='#7fd6ef', glass='#c8d8f0',
+        bg0='#0e1830', bg1='#080d1c', card='rgba(16,26,46,.96)', cardB='#3a4c78', steel='#aab8d4';
   const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
-        <linearGradient id="qYbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
-        <linearGradient id="qYwater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fd6ef"/><stop offset="0.5" stop-color="${water}"/><stop offset="1" stop-color="${water2}"/></linearGradient>
-        <filter id="qYsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/></filter>
+        <linearGradient id="qWtrbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <linearGradient id="qWtrwater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fe2f5"/><stop offset="0.35" stop-color="${midw}"/><stop offset="1" stop-color="${deep}"/></linearGradient>
+        <linearGradient id="qWtrglass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(200,216,240,.22)"/><stop offset="0.5" stop-color="rgba(200,216,240,.06)"/><stop offset="1" stop-color="rgba(200,216,240,.2)"/></linearGradient>
+        <filter id="qWtrsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.55"/></filter>
       </defs>
-      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qYbg)"/>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qWtrbg)"/>
       <g opacity="0.14" stroke="#44568c" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
       <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44568c" stroke-width="2.4" rx="7"/>
       <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3a64" stroke-width="1.2" rx="4"/>
@@ -24367,31 +24373,41 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     </svg>`;
   }
   const JTOP=52, JBOT=176, JW=70;
-  function jug(cx,cap,liquid,label,delay){
-    const h=JBOT-JTOP, lv=Math.max(0,Math.min(cap,liquid))/cap*h;
-    const yfill=JBOT-lv, xl=cx-JW/2, xr=cx+JW/2;
-    let s=`<g class="qYIn" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qYsh)">`;
-    s+=`<path d="M ${xl} ${JTOP+6} L ${xl} ${JBOT} L ${xr} ${JBOT} L ${xr} ${JTOP+6} L ${xr-12} ${JTOP-10} L ${xl} ${JTOP-10} Z" fill="rgba(200,212,234,.12)" stroke="${glass}" stroke-width="2.6"/>`;
-    s+=`<path d="M ${xr} ${JTOP+22} L ${xr+10} ${JTOP-4} L ${xr+4} ${JTOP-10}" fill="none" stroke="${glass}" stroke-width="3.4"/>`;
+  function waterBody(cx,liquid,cap,opts){
+    const o=opts||{}, xl=cx-JW/2, xr=cx+JW/2, h=JBOT-JTOP, lv=Math.max(0,Math.min(cap,liquid))/cap*h, yw=JBOT-lv;
+    let s='';
+    // вода (тело)
     if(liquid>0){
-      s+=`<g class="qYFill" style="animation-delay:${((delay||0)+0.2).toFixed(2)}s"><rect x="${xl+2}" y="${yfill}" width="${JW-4}" height="${JBOT-yfill}" rx="4" fill="url(#qYwater)" opacity="0.92"/>
-      <g class="qYWave"><rect x="${xl+2}" y="${yfill-2}" width="${JW-4}" height="6" rx="3" fill="#9fe2f2" opacity="0.9"/></g>
-      <circle cx="${cxl(cx)}" cy="${yfill+10}" r="3" fill="#e0f6ff" opacity="0.7"/><circle cx="${cxl(cx,jw-30)}" cy="${yfill+28}" r="2" fill="#e0f6ff" opacity="0.6"/></g>`;
+      const cls=o.filling?'qWtrFill':(o.draining?'qWtrDrain':'qWtrIn');
+      s+=`<g class="${cls}" style="animation-delay:${((o.delay||0)+0.15).toFixed(2)}s"><path d="M ${xl+3} ${yw} L ${xr-3} ${yw} L ${xr-3} ${JBOT} L ${xl+3} ${JBOT} Z" fill="url(#qWtrwater)" opacity="0.94"/>
+      <rect x="${xl+3}" y="${yw-3}" width="${JW-6}" height="7" rx="3.5" fill="#bdeeff" opacity="0.9"/></g>`;
+      // волна + блик + пузырьки
+      s+=`<g class="qWtrWave"><path d="M ${xl+3} ${yw+5} q ${JW/8} -4 ${JW/4} 0 t ${JW/4} 0 t ${JW/4} 0 t ${JW/4} 0 l 0 4 l -${JW} 0 Z" fill="#cff2ff" opacity="0.55"/>
+      <rect x="${xl+14}" y="${yw-9}" width="${JW*0.42}" height="3.5" rx="1.75" fill="#ffffff" opacity="0.65"/></g>`;
+      s+=`<g class="qWtrBubble"><circle cx="${cx-12}" cy="${yw+22}" r="2.5" fill="none" stroke="#dff6ff" stroke-width="1.2"/><circle cx="${cx+10}" cy="${yw+34}" r="1.8" fill="none" stroke="#dff6ff" stroke-width="1.2"/></g>`;
     }
-    s+=`<text x="${cx}" y="${JBOT+20}" text-anchor="middle" font-size="15" fill="${ink}" font-weight="bold">${label}</text>`;
-    s+=tx(cx,JTOP-26,13,dim,cap+' л',{b:1});
+    // рама/стекло / шкала
+    s+=`<g class="qWtrIn" style="animation-delay:${(o.delay||0).toFixed(2)}s">
+      <path d="M ${xl} ${JTOP+6} L ${xl} ${JBOT} L ${xr} ${JBOT} L ${xr} ${JTOP+6} L ${xr-12} ${JTOP-10} L ${xl} ${JTOP-10} Z" fill="url(#qWtrglass)" stroke="${glass}" stroke-width="2.6"/>
+      <path d="M ${xr} ${JTOP+22} L ${xr+10} ${JTOP-4} L ${xr+4} ${JTOP-10}" fill="none" stroke="${glass}" stroke-width="3.6"/>
+      <rect x="${xl+8}" y="${JTOP-6}" width="4" height="${JBOT-JTOP+12}" rx="2" fill="rgba(255,255,255,.28)"/>
+      <path d="M ${xl+1} ${JTOP+6} L ${xl+1} ${JBOT} L ${xr-1} ${JBOT} L ${xr-1} ${JTOP+6}" fill="none" stroke="${steel}" stroke-width="1.2" opacity="0.4"/>
+      <text x="${cx}" y="${JBOT+20}" text-anchor="middle" font-size="15" fill="${ink}" font-weight="bold">${o.label||''}</text></g>`;
+    if(!opts.hideCap){ s+=tx(cx,JTOP-32,13,dim,cap+' л',{b:1}); }
+    return s;
+  }
+  function pourStream(x1,y1,x2,y2,delay){
+    const my=(y1+y2)/2;
+    let s=`<g class="qWtrIn" style="animation-delay:${(delay||0).toFixed(2)}s">`;
+    s+=`<path d="M ${x1} ${y1} C ${x1-10} ${my}, ${x2+10} ${my}, ${x2} ${y2} L ${x2+5} ${y2} C ${x2+2} ${my+12}, ${x1} ${my}, ${x1+5} ${y1} Z" fill="url(#qWtrwater)" opacity="0.88"/>`;
+    s+=`<path class="qWtrStream" d="M ${x1+2} ${y1+2} C ${x1-8} ${my}, ${x2+8} ${my}, ${x2+2} ${y2-2}" fill="none" stroke="#cff2ff" stroke-width="2.4" stroke-linecap="round" opacity="0.9"/>`;
     s+=`</g>`;
     return s;
   }
-  function cxl(cx,off){ return cx+(off==null?0:off); }
-  function pour(x1,y1,x2,y2,delay){
-    return `<g class="qYPour" style="animation-delay:${(delay||0).toFixed(2)}s"><path d="M ${x1} ${y1} C ${x1-8} ${(y1+y2)/2}, ${x2+8} ${(y1+y2)/2}, ${x2} ${y2} L ${x2+4} ${y2} C ${x2+2} ${(y1+y2)/2+8}, ${x1-2} ${(y1+y2)/2}, ${x1+4} ${y1} Z" fill="url(#qYwater)" opacity="0.85"/></g>`;
+  function splash(cx,y,delay){
+    return `<g class="qWtrPop" style="animation-delay:${(delay||0).toFixed(2)}s"><ellipse cx="${cx}" cy="${y}" rx="14" ry="4" fill="none" stroke="#bdeeff" stroke-width="2"/><ellipse cx="${cx}" cy="${y}" rx="7" ry="2" fill="#dff6ff" opacity="0.8"/></g>`;
   }
-  function drain(cx,liquid,cap,delay){
-    const h=JBOT-JTOP, lv=liquid/cap*h, yfill=JBOT-lv, xl=cx-JW/2, xr=cx+JW/2;
-    return `<g class="qYDrain" style="animation-delay:${(delay||0).toFixed(2)}s"><rect x="${xl+2}" y="${yfill}" width="${JW-4}" height="${JBOT-yfill}" rx="4" fill="url(#qYwater)" opacity="0.9"/></g>`;
-  }
-  const chip=(t,c,delay)=>`<span class="qYIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="qWtrIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q385=[
     {q:'7 л — отлили в 3 л. Сколько осталось?',opts:['4 л','1 л','3 л'],ans:0},
     {q:'4 л — снова отлили 3 л. Сколько осталось?',opts:['1 л','4 л','2 л'],ans:1}
@@ -24417,147 +24433,154 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
-      if(step===9||step===10) st.pick=null;
-      if(step===11){ st.mq=0; st.msel=null; }
-      if(step===14){ st.sel=null; st.q=0; }
+      if(step>=0&&step<=17){ st.go=0; st.pick=null; }
+      if(step===11||step===12||step===13) st.pick=null;
+      if(step===15){ st.mq=0; st.msel=null; }
+      if(step===17){ st.sel=null; st.q=0; }
     }
     let h='';
     const W=318;
     const J7=90, J3=222;
     if(step===0){
-      const H=204, go=st.go||0;
+      const H=206, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'как отмерить 1 л?',{b:1});
+      inner+=tx(159,26,20,ink,'два сосуда — отмеряем 1 л',{b:1});
       if(go){
-        inner+=jug(J7,7,0,'ведро 7 л',0.1);
-        inner+=jug(J3,3,0,'банка 3 л',0.2);
-        inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">два сосуда — отмеряем объём</text></g>`;
+        inner+=waterBody(J7,0,7,{label:'ведро 7 л',delay:0.1});
+        inner+=waterBody(J3,0,3,{label:'банка 3 л',delay:0.2});
+        inner+=`<g class="qWtrPop"><text x="159" y="204" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">7 − 3 − 3 = 1</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Водопад-лаборатория</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('ведро 7 л · банка 3 л',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('показать',`visW385Act('${lk}','go')`))+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('перелить',`visW385Act('${lk}','go')`))+
         wkSml('отмерим 1 л'));
     } else if(step===1){
-      const H=204, go=st.go||0;
+      const H=206, go=st.go||0;
       let inner='';
       inner+=tx(159,26,20,ink,'наполняем ведро',{b:1});
-      inner+=jug(J7,7,go?7:0,'ведро 7 л',0.1);
-      inner+=jug(J3,3,0,'банка 3 л',0.2);
-      if(go){ inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">ведро полное — 7 л</text></g>`; }
+      inner+=waterBody(J7,go?7:0,7,{label:'ведро 7 л',delay:0.1,filling:go});
+      inner+=waterBody(J3,0,3,{label:'банка 3 л',delay:0.2});
+      if(go){ inner+=`<g class="qWtrPop"><text x="159" y="204" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">ведро полное — 7 л</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг 1</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('7 л в ведре',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('налить',`visW385Act('${lk}','go')`))+
         wkSml('наполняем большой'));
     } else if(step===2){
-      const H=204, go=st.go||0;
+      const H=206, go=st.go||0;
       let inner='';
       inner+=tx(159,26,20,ink,'отливаем в банку',{b:1});
-      inner+=jug(J7,7,go?4:7,'ведро 7 л',0.1);
-      inner+=jug(J3,3,go?3:0,'банка 3 л',0.2);
-      if(go){
-        inner+=pour(J7+JW/2,JTOP+4,J3-JW/2,JBOT,0.3);
-        inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">7 − 3 = 4 л в ведре</text></g>`;
-      }
+      inner+=waterBody(J7,go?4:7,7,{label:'ведро 7 л',delay:0.1});
+      inner+=waterBody(J3,go?3:0,3,{label:'банка 3 л',delay:0.2,filling:go});
+      if(go){ inner+=pourStream(J7+JW/2,JTOP+6,J3-JW/2,JBOT-14,0.25); inner+=splash(J3-JW/2,JBOT-16,0.5); inner+=`<g class="qWtrPop"><text x="159" y="204" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">7 − 3 = 4 л в ведре</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг 2</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('банка полная · в ведре 4 л',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('перелить',`visW385Act('${lk}','go')`))+
         wkSml('7 − 3 = 4'));
     } else if(step===3){
-      const H=204, go=st.go||0;
+      const H=206, go=st.go||0;
       let inner='';
       inner+=tx(159,26,20,ink,'выливаем банку',{b:1});
-      inner+=jug(J7,7,go?4:4,'ведро 7 л',0.1);
-      inner+=jug(J3,3,go?0:3,'банка 3 л',0.2);
-      if(go){ inner+=drain(J3,3,3,0.3); inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="16" fill="${gold}" font-weight="bold">банка пустая · в ведре всё ещё 4 л</text></g>`; }
+      inner+=waterBody(J7,4,7,{label:'ведро 7 л',delay:0.1});
+      inner+=waterBody(J3,go?0:3,3,{label:'банка 3 л',delay:0.2,draining:go});
+      if(go){ inner+=`<g class="qWtrPop"><text x="159" y="204" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">банка пустая · в ведре всё ещё 4 л</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг 3</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('4 л не тронуты',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('вылить',`visW385Act('${lk}','go')`))+
         wkSml('освобождаем банку'));
     } else if(step===4){
-      const H=204, go=st.go||0;
+      const H=206, go=st.go||0;
       let inner='';
       inner+=tx(159,26,20,ink,'снова отливаем',{b:1});
-      inner+=jug(J7,7,go?1:4,'ведро 7 л',0.1);
-      inner+=jug(J3,3,go?3:0,'банка 3 л',0.2);
-      if(go){
-        inner+=pour(J7+JW/2,JTOP+4,J3-JW/2,JBOT,0.3);
-        inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">4 − 3 = 1 л в ведре!</text></g>`;
-      }
+      inner+=waterBody(J7,go?1:4,7,{label:'ведро 7 л',delay:0.1});
+      inner+=waterBody(J3,go?3:0,3,{label:'банка 3 л',delay:0.2,filling:go});
+      if(go){ inner+=pourStream(J7+JW/2,JTOP+6,J3-JW/2,JBOT-14,0.25); inner+=splash(J3-JW/2,JBOT-16,0.5); inner+=`<g class="qWtrPop"><text x="159" y="204" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">4 − 3 = 1 л в ведре!</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг 4</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('в ведре ровно 1 л',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('перелить',`visW385Act('${lk}','go')`))+
         wkSml('4 − 3 = 1'));
     } else if(step===5){
-      const H=204, go=st.go||0;
+      const H=206, go=st.go||0;
       let inner='';
       inner+=tx(159,26,20,ink,'цель достигнута!',{b:1});
-      inner+=jug(J7,7,go?1:1,'ведро 7 л',0.1);
-      inner+=jug(J3,3,go?3:3,'банка 3 л',0.2);
-      if(go){
-        inner+=`<g class="qYPop"><text x="159" y="112" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">1 л отмерен!</text>
-        <text x="159" y="200" text-anchor="middle" font-size="14" fill="${dim}">ровно 1 л в ведре</text></g>`;
-      }
+      inner+=waterBody(J7,1,7,{label:'ведро 7 л',delay:0.1});
+      inner+=waterBody(J3,3,3,{label:'банка 3 л',delay:0.2});
+      if(go){ inner+=`<g class="qWtrPop"><text x="159" y="122" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">1 л отмерен!</text><text x="159" y="204" text-anchor="middle" font-size="13" fill="${dim}">ровно 1 л в ведре</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Готово</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('7 − 3 − 3 = 1',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('показать',`visW385Act('${lk}','go')`))+
         wkSml('комбинация разностей'));
     } else if(step===6){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,20,ink,'секрет',{b:1});
+      inner+=tx(159,32,20,ink,'почему ровно 1?',{b:1});
       if(go){
-        inner+=`<g class="qYPop"><text x="159" y="90" text-anchor="middle" font-size="26" fill="${gold}" font-weight="bold" font-family="Georgia,serif">7 − 3 − 3 = 1</text>
-        <text x="159" y="128" text-anchor="middle" font-size="16" fill="${dim}">маленький сосуд «откусывает» от большого</text>
-        <text x="159" y="160" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">каждый раз отливаем по 3 л</text></g>`;
+        inner+=`<g class="qWtrPop"><text x="159" y="86" text-anchor="middle" font-size="17" fill="${ink}">7 = 3 · 2 + 1</text>
+        <text x="159" y="116" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">остаток от деления 7 на 3 = 1</text>
+        <text x="159" y="146" text-anchor="middle" font-size="13" fill="${dim}">вот секрет — остаток!</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Формула</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Теория</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('7 − 3 − 3 = 1',gold,0.2)):'')+
+        (go?wkRow(chip('7 mod 3 = 1',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('показать',`visW385Act('${lk}','go')`))+
-        wkSml('комбинируем объёмы'));
+        wkSml('остаток'));
     } else if(step===7){
-      const H=204, go=st.go||0;
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,20,ink,'принцип разностей',{b:1});
+      if(go){
+        inner+=`<g class="qWtrPop"><rect x="40" y="60" width="238" height="82" rx="12" fill="rgba(110,168,255,.12)" stroke="#6ea8ff" stroke-width="2"/>
+        ${tx(159,84,15,blu,'малый сосуд «откусывает» от большого',{b:1})}
+        ${tx(159,108,15,blu,'повторяем, пока не останется нужное',{b:1})}
+        ${tx(159,130,13,dim,'разности = шаги маленького сосуда',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Приём</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('отнимаем маленьким',blu,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('показать',`visW385Act('${lk}','go')`))+
+        wkSml('шаг за шагом'));
+    } else if(step===8){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,20,ink,'какие объёмы отмерить?',{b:1});
+      if(go){
+        inner+=`<g class="qWtrPop"><text x="159" y="86" text-anchor="middle" font-size="16" fill="${ink}">любые, кратные НОД(объёмов)</text>
+        <text x="159" y="116" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">НОД(7,3) = 1 → отмерим 1 л</text>
+        <text x="159" y="144" text-anchor="middle" font-size="14" fill="${dim}">НОД(6,2) = 2 → только чётные</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Теория</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('кратные НОД',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('показать',`visW385Act('${lk}','go')`))+
+        wkSml('глубокий факт'));
+    } else if(step===9){
+      const H=206, go=st.go||0;
       let inner='';
       inner+=tx(159,26,20,ink,'ведро 5 л · банка 2 л',{b:1});
-      inner+=jug(80,5,go?1:5,'ведро 5 л',0.1);
-      inner+=jug(238,2,go?2:0,'банка 2 л',0.2);
-      if(go){ inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">5 − 2 − 2 = 1 л — тоже можно</text></g>`; }
+      inner+=waterBody(80,go?1:5,5,{label:'ведро 5 л',delay:0.1});
+      inner+=waterBody(238,go?2:0,2,{label:'банка 2 л',delay:0.2});
+      if(go){ inner+=`<g class="qWtrPop"><text x="159" y="204" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">НОД(5,2)=1 → 5−2−2 = 1 л — можно!</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Другой вариант</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('5 − 2 − 2 = 1',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('померить',`visW385Act('${lk}','go')`))+
         wkSml('тоже отмерим 1 л'));
-    } else if(step===8){
-      const H=182;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'почему работает',{b:1});
-      if(go){
-        inner+=`<g class="qYPop"><rect x="46" y="64" width="226" height="80" rx="12" fill="rgba(110,168,255,.12)" stroke="${blu}" stroke-width="2"/>
-        ${tx(159,88,15,blu,'от большей ёмкости',{b:1})}
-        ${tx(159,110,15,blu,'отнимаем меньшую (и её повторяем)',{b:1})}
-        ${tx(159,132,13,dim,'разности дают новый объём',{})}</g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Суть</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('разности ёмкостей',blu,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('показать',`visW385Act('${lk}','go')`))+
-        wkSml('комбинируй разности'));
-    } else if(step===9){
-      const H=202, py=84;
+    } else if(step===10){
+      const H=204, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'7 л отлили в 3 л — осталось?',a:'4 л',ds:['1 л','3 л']},
         {q:'4 л отлили в 3 л — осталось?',a:'1 л',ds:['4 л','3 л']},
-        {q:'5 л отлили в 2 л — осталось?',a:'3 л',ds:['2 л','1 л']}
+        {q:'5 л отлили в 2 л — осталось?',a:'3 л',ds:['2 л','1 л']},
+        {q:'8 л отлили в 3 л — осталось?',a:'5 л',ds:['3 л','2 л']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
@@ -24567,12 +24590,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qYIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        inner+=`<g class="qWtrIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
         ${tx(X[i]+CW/2,py+36,24,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qYPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qYPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вычти ёмкость</text></g>`)
+        ? (st.pick===0? `<g class="qWtrPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qWtrPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вычти ёмкость</text></g>`)
         : tx(159,py+74,16,dim,'что осталось?',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW385Act('${lk}','n')">дальше →</button></div>`
@@ -24583,13 +24606,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
         fb+retry+
         wkSml('отлили — вычти'));
-    } else if(step===10){
+    } else if(step===11){
       const H=204, py=104;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'Отмерить 1 л: 7 л и 3 л — сможем?',a:'да',ds:['нет','только 2 л']},
-        {q:'Отмерить 1 л: 5 л и 2 л — сможем?',a:'да',ds:['нет','только 3 л']},
-        {q:'Отмерить 1 л: 6 л и 2 л — сможем?',a:'нет',ds:['да','только 4 л']}
+        {q:'Отмерить 1 л: 7 л и 3 л?',a:'да',ds:['нет','только 2 л']},
+        {q:'Отмерить 1 л: 5 л и 2 л?',a:'да',ds:['нет','только 3 л']},
+        {q:'Отмерить 1 л: 6 л и 2 л?',a:'нет',ds:['да','только 4 л']},
+        {q:'Отмерить 2 л: 6 л и 2 л?',a:'да',ds:['нет','только 4 л']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
@@ -24599,12 +24623,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qYIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        inner+=`<g class="qWtrIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
         ${tx(X[i]+CW/2,py+36,20,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qYPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qYPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вычитай ёмкости</text></g>`)
+        ? (st.pick===0? `<g class="qWtrPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qWtrPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">смотри НОД</text></g>`)
         : tx(159,py+74,16,dim,'сможем?',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW385Act('${lk}','n')">дальше →</button></div>`
@@ -24613,17 +24637,49 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: померим?</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         fb+retry+
-        wkSml('разности ёмкостей'));
-    } else if(step===11){
+        wkSml('это НОД'));
+    } else if(step===12){
+      const H=204, py=104;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'После 7−3 в ведре?',a:'4 л',ds:['1 л','3 л']},
+        {q:'После 4−3 в ведре?',a:'1 л',ds:['4 л','2 л']},
+        {q:'Почему 1 л?',a:'остаток 7:3',ds:['минус','случайно']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,18,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qWtrIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,20,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qWtrPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qWtrPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">подумай</text></g>`)
+        : tx(159,py+74,16,dim,'что дальше?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW385Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW385P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW385P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: разбор</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('шаг за шагом'));
+    } else if(step===13){
       const H=190;
       const go=st.go||0;
       let inner='';
       inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
-      const items=[['лей из большого в меньший'],['меньший наполнился — сливай'],['повторяй: 7−3−3 = 1'],['померит можно разности']];
+      const items=[['лей из большого в меньший'],['меньший наполнился — сливай'],['повторяй: 7−3−3 = 1'],['возможные объёмы — кратные НОД']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
           const ry=52+i*32;
-          inner+=`<g class="qYIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(20,29,52,.96)':'rgba(32,44,76,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          inner+=`<g class="qWtrIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(16,26,46,.96)':'rgba(28,40,66,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
           ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
         }
       }
@@ -24637,19 +24693,19 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go===3?wkBtn('шаг 4',`visW385Act('${lk}','go')`) : '',
           go>=4?wkBtn('сброс',`visW385Act('${lk}','rst')`):'')+
         wkSml('комбинируй разности'));
-    } else if(step===12){
+    } else if(step===14){
       const H=182;
       if(st.mq==null) st.mq=0;
       const QS=[
         {q:'7 л отлили в 3 л — осталось?',opts:['4 л','1 л','3 л'],ans:0},
-        {q:'4 л отлили в 3 л — осталось?',opts:['1 л','4 л','3 л'],ans:0},
-        {q:'5 л и 2 л — отмерим 1 л?',opts:['да','нет','только 3 л'],ans:0}
+        {q:'Почему 1 л?',opts:['остаток 7:3','случайно','вычли'],ans:0},
+        {q:'НОД(5,2)=1 — отмерим 1?',opts:['да','нет','только 3'],ans:0}
       ];
       const T=QS[st.mq];
       let inner='';
       inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qYPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'вычтём ёмкость'}</text></g>`;
+        inner+=`<g class="qWtrPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'остаток'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -24659,25 +24715,40 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           ${st.msel!=null?wkBtn('заново',`visW385Act('${lk}','rst')`):''}
         </div>`+
         wkSml('7 − 3 − 3 = 1'));
-    } else if(step===13){
-      const H=204, go=st.go||0;
+    } else if(step===15){
+      const H=206, go=st.go||0;
       let inner='';
       inner+=tx(159,24,20,ink,'7 л — 3 л',{b:1,georgia:1});
-      inner+=jug(J7,7,go?4:7,'ведро 7 л',0.1);
-      inner+=jug(J3,3,go?3:0,'банка 3 л',0.2);
-      if(go){ inner+=pour(J7+JW/2,JTOP+4,J3-JW/2,JBOT,0.3); inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 4 л</text></g>`; }
+      inner+=waterBody(J7,go?4:7,7,{label:'ведро 7 л',delay:0.1});
+      inner+=waterBody(J3,go?3:0,3,{label:'банка 3 л',delay:0.2,filling:go});
+      if(go){ inner+=pourStream(J7+JW/2,JTOP+6,J3-JW/2,JBOT-14,0.25); inner+=`<g class="qWtrPop"><text x="159" y="204" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 4 л</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('7 − 3 = 4',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('перелить',`visW385Act('${lk}','go')`))+
         wkSml('вычти ёмкость'));
-    } else {
-      const H=204;
+    } else if(step===16){
+      const H=206, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,20,ink,'7 л — 3 л',{b:1,georgia:1});
-      inner+=jug(J7,7,4,'ведро 7 л',0.1);
-      inner+=jug(J3,3,3,'банка 3 л',0.2);
-      inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 4 л</text></g>`;
+      inner+=tx(159,26,20,ink,'суть приёма',{b:1});
+      if(go){
+        inner+=`<g class="qWtrPop"><text x="159" y="92" text-anchor="middle" font-size="17" fill="${ink}">большой «отмеряет» маленьким:</text>
+        <text x="159" y="122" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">7 − 3 − 3 = 1</text>
+        <text x="159" y="152" text-anchor="middle" font-size="14" fill="${dim}">остаток от деления · НОД</text>
+        <text x="159" y="180" text-anchor="middle" font-size="13" fill="${grn}" font-weight="bold">комбинируем разности объёмов</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('7 − 3 − 3 = 1',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('показать',`visW385Act('${lk}','go')`))+
+        wkSml('остаток и НОД'));
+    } else {
+      const H=206;
+      let inner='';
+      inner+=tx(159,28,20,ink,'7 л отлили в 3 л',{b:1,georgia:1});
+      inner+=waterBody(J7,4,7,{label:'ведро 7 л',delay:0.1});
+      inner+=waterBody(J3,3,3,{label:'банка 3 л',delay:0.2});
+      inner+=`<g class="qWtrPop"><text x="159" y="204" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 4 л</text></g>`;
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
@@ -24697,14 +24768,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const sp=LV.step;
     if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
     if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
-    if(act==='nq'){ if(sp===12){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='nq'){ if(sp===14){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
     if(act==='rst') CHS[lk]={};
     chRender(0);
   }
   window.visW385Act=visW385Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===385){ window.ARH_LESSONS[i]=L385; break; } } })();
 })();
-
 /* ================= УРОК 389 · Углы и треугольники: приёмы (v2 · «Вершина-мастерская Архимеда», 20 слайдов, флагман, сверхподробный) ================= */
 (function(){
   if(!window.__wk389v2css){
