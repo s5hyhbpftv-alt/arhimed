@@ -22529,3 +22529,428 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW185Act=visW185Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===185){ window.ARH_LESSONS[i]=L185; break; } } })();
 })();
+
+/* ================= УРОК 175 · Периметр и площадь прямоугольника (v1 · «Комната Архимеда», 15 слайдов, флагман) ================= */
+(function(){
+  if(!window.__wk175v1css){
+    window.__wk175v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qTIn{animation:qTIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qTIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qTPop{animation:qTPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qTPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qTTile{animation:qTTile .4s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qTTile{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qTBorder{animation:qTBorder .6s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qTBorder{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}';
+    document.head.appendChild(st);
+  }
+  const L175 = {
+    id: 175, title: 'Периметр и площадь прямоугольника', ico: '📐',
+    src: 'Математика · 5 класс · Площадь и периметр', subj: 'math',
+    explain: [
+      'ПЕРИМЕТР — длина границы фигуры: P = 2 · (a + b). У прямоугольника 7 на 3: P = 2 · (7 + 3) = 20.',
+      'ПЛОЩАДЬ — сколько квадратиков помещается внутри: S = a · b. Тот же прямоугольник: S = 7 · 3 = 21.',
+      'Разница: периметр в единицах длины (см), площадь — в квадратных единицах (см²).',
+      'Квадрат — прямоугольник с равными сторонами: S = a · a. У квадрата 5×5 площадь 25, периметр 20.',
+      'Ловушка: не путай формулы: периметр — складываем и умножаем на 2, площадь — перемножаем стороны.',
+      'Совет Архимеда: представь пол из плиток 1×1: сколько плиток уложишь — такая и площадь.',
+      'Периметр — это бордюр вокруг (длина границы).',
+      'Площадь — это пол (квадратики внутри).',
+      'Периметр измеряется в см (единицах длины), площадь — в см² (квадратных).',
+      'Тренажёр: найди площадь прямоугольника.',
+      'Тренажёр: найди периметр прямоугольника.',
+      'Тренажёр: определи, что ищешь — периметр или площадь.',
+      'Шпаргалка: P = 2(a+b); S = a·b; квадрат S = a·a; см и см².',
+      'Проверь себя устно: 7×3 → P=20, S=21; квадрат 5 → S=25.',
+      'Проверь себя: посчитай площадь и периметр.',
+      'Проверь себя: площадь 7 × 3. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Чему равна площадь прямоугольника со сторонами 7 и 3?', choices: ['20', '21', '24'], ans: 1,
+      exp: 'S = 7 · 3 = 21 (квадратных единиц). А 20 — это периметр.' },
+    tasks: [
+      { q: 'Найди периметр прямоугольника со сторонами 6 и 4.', kind: 'unit', ans: 20, tol: 0,
+        hints: ['Периметр = 2 · (a + b).', '2 · (6 + 4) = 2 · 10 = 20.'], sol: 'P = 2 · (6 + 4) = 20.' },
+      { q: 'Чему равна площадь квадрата со стороной 5?', kind: 'choice', choices: ['20', '25', '30'], ans: 1, tol: 0,
+        hints: ['Площадь квадрата = сторона × сторона.', '5 · 5 = 25.'], sol: 'S = 5 · 5 = 25.' }
+    ]
+  };
+  const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', tile='#f2d38a', border='#e8604c',
+        card='rgba(255,251,244,.97)', cardB='#d9c9ab', cream='#fbf1df';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qTbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fcf2df"/><stop offset="1" stop-color="#f4e4c4"/></linearGradient>
+        <linearGradient id="qTgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2d38a"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="#b8802c"/></linearGradient>
+        <filter id="qTsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.22"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qTbg)"/>
+      <g opacity="0.8"><circle cx="30" cy="20" r="3" fill="rgba(217,160,90,.25)"/><circle cx="284" cy="30" r="3" fill="rgba(217,160,90,.25)"/></g>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="${cardB}" stroke-width="2" rx="7"/>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="url(#qTgold)" stroke-width="1.3" opacity="0.6" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const CEL=26, R0x=52, R0y=70;
+  /* комнатная сетка a x b; showBorder -> подсветить границу; showTiles -> залить плитками */
+  function room(a,b,showBorder,showTiles){
+    let s='';
+    for(let r=0;r<b;r++)for(let c=0;c<a;c++){
+      const x=R0x+c*CEL, y=R0y+r*CEL;
+      const isB=(r===0||r===b-1||c===0||c===a-1);
+      const fill=(showTiles?'#f2d38a':(showBorder&&isB?'rgba(232,96,76,.35)':'rgba(255,250,240,.9)'));
+      s+=`<g class="qTTile" style="animation-delay:${(0.02*(r+c)).toFixed(2)}s"><rect x="${x+1}" y="${y+1}" width="${CEL-2}" height="${CEL-2}" rx="3" fill="${fill}" stroke="#c9a86a" stroke-width="1.1"/></g>`;
+    }
+    if(showBorder){
+      s+=`<g class="qTBorder"><rect x="${R0x-3}" y="${R0y-3}" width="${a*CEL+6}" height="${b*CEL+6}" fill="none" stroke="${border}" stroke-width="2.6"/></g>`;
+    }
+    return s;
+  }
+  const chip=(t,c,delay)=>`<span class="qTIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const Q175=[
+    {q:'S = 7 · 3 = ?',opts:['20','21','24'],ans:1},
+    {q:'S квадрата со стороной 5?',opts:['20','25','30'],ans:1}
+  ];
+  function quiz(lk,st){
+    const T=Q175[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.18)':'rgba(193,75,47,.14)'; bd=i===T.ans?grn:red; tc=i===T.ans?'#2f7a53':red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:60px;font-size:17px" onclick="visW175T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#2f7a53;font-size:18px">Верно! перемножь стороны</div>'
+        : '<div class="wk-ans" style="color:#c14b2f;font-size:17px">Не так · площадь = a·b</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW175Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW175Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#c9b98d')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW175(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step===9||step===10||step===11) st.pick=null;
+      if(step===13){ st.mq=0; st.msel=null; }
+      if(step===15){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=206, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'комната 7 × 3',{b:1});
+      inner+=room(7,3,go,false);
+      if(go){ inner+=`<g class="qTPop"><text x="159" y="192" text-anchor="middle" font-size="16" fill="${blu}" font-weight="bold">граница или плитки — что ищем?</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Комната Архимеда</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('периметр и площадь',blu,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW175Act('${lk}','rst')`):wkBtn('показать',`visW175Act('${lk}','go')`))+
+        wkSml('граница и плитки'));
+    } else if(step===1){
+      const H=206;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'периметр — граница',{b:1});
+      inner+=room(7,3,go,false);
+      if(go){
+        inner+=`<g class="qTPop"><text x="159" y="192" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">P = 2·(7+3) = 20</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Периметр</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('длина границы — в см',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW175Act('${lk}','rst')`):wkBtn('показать границу',`visW175Act('${lk}','go')`))+
+        wkSml('бордюр вокруг'));
+    } else if(step===2){
+      const H=206, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'площадь — плитки',{b:1});
+      inner+=room(7,3,false,go);
+      if(go){
+        inner+=`<g class="qTPop"><text x="159" y="192" text-anchor="middle" font-size="18" fill="${gold}" font-weight="bold" font-family="Georgia,serif">S = 7·3 = 21</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Площадь</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('сколько плиток внутри',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW175Act('${lk}','rst')`):wkBtn('уложить плитки',`visW175Act('${lk}','go')`))+
+        wkSml('пол из плиток 1×1'));
+    } else if(step===3){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'разница',{b:1});
+      inner+=tx(159,70,15,gold,'периметр — в см · площадь — в см²',{b:1});
+      if(go){
+        inner+=`<g class="qTPop"><rect x="46" y="92" width="226" height="46" rx="12" fill="rgba(63,109,158,.22)" stroke="${blu}" stroke-width="2"/>
+        ${tx(159,114,16,blu,'периметр — длина (см)',{b:1})}
+        ${tx(159,132,15,blu,'площадь — квадратные (см²)',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Единицы</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('см и см²',blu,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW175Act('${lk}','rst')`):wkBtn('показать',`visW175Act('${lk}','go')`))+
+        wkSml('единицы разные'));
+    } else if(step===4){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'квадрат 5 × 5',{b:1});
+      inner+=tx(159,70,15,dim,'стороны равны: S = a·a',{});
+      if(go){
+        inner+=`<g class="qTPop"><rect x="48" y="92" width="222" height="46" rx="12" fill="rgba(76,154,88,.14)" stroke="${grn}" stroke-width="2"/>
+        ${tx(159,114,17,grn,'S = 5·5 = 25',{b:1,georgia:1})}
+        ${tx(159,132,14,dim,'P = 2·(5+5) = 20',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Квадрат</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('S = a·a',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW175Act('${lk}','rst')`):wkBtn('посчитать',`visW175Act('${lk}','go')`))+
+        wkSml('все стороны равны'));
+    } else if(step===5){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'ловушка',{b:1});
+      inner+=tx(159,74,18,dim,'7×3: 20 или 21?',{});
+      if(go){
+        inner+=`<g class="qTPop"><text x="159" y="112" text-anchor="middle" font-size="17" fill="${red}" font-weight="bold">20 — периметр · 21 — площадь</text>
+        <text x="159" y="146" text-anchor="middle" font-size="14" fill="${dim}">периметр: 2(a+b) · площадь: a·b</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Берегись</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('не путай формулы',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW175Act('${lk}','rst')`):wkBtn('проверить',`visW175Act('${lk}','go')`))+
+        wkSml('P и S — разные'));
+    } else if(step===6){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'формулы',{b:1});
+      inner+=tx(159,74,18,gold,'P = 2(a+b) · S = a·b',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="qTPop"><text x="159" y="116" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">P=20 · S=21</text>
+        <text x="159" y="150" text-anchor="middle" font-size="14" fill="${dim}">граница — 2(a+b); плитки — a·b</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Обе формулы</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('P и S считаем по-разному',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW175Act('${lk}','rst')`):wkBtn('показать',`visW175Act('${lk}','go')`))+
+        wkSml('перемножь / удвои сумму'));
+    } else if(step===7){
+      const H=206, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'центр — целая комната',{b:1});
+      inner+=room(7,3,go,go);
+      if(go){ inner+=`<g class="qTPop"><text x="159" y="192" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">граница 20 · плитки 21</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Всё вместе</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('бордюр и пол',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW175Act('${lk}','rst')`):wkBtn('показать',`visW175Act('${lk}','go')`))+
+        wkSml('граница и плитки'));
+    } else if(step===8){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'совет Архимеда',{b:1});
+      inner+=tx(159,72,15,dim,'пол из плиток 1×1',{});
+      if(go){
+        inner+=`<g class="qTPop"><text x="159" y="110" text-anchor="middle" font-size="17" fill="${gold}" font-weight="bold" font-family="Georgia,serif">сколько плиток уложишь — такая и площадь</text>
+        <text x="159" y="146" text-anchor="middle" font-size="14" fill="${dim}">а границы — это периметр</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Не ошибёшься</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('представь пол из плиток',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW175Act('${lk}','rst')`):wkBtn('показать',`visW175Act('${lk}','go')`))+
+        wkSml('плитки = площадь'));
+    } else if(step===9){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'S = 7·3 ?',a:'21',ds:['20','24']},
+        {q:'S = 6·4 ?',a:'24',ds:['20','10']},
+        {q:'S = 5·5 ?',a:'25',ds:['20','10']},
+        {q:'S = 8·2 ?',a:'16',ds:['20','10']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
+        inner+=`<g class="qTIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qTPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qTPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">S = a·b</text></g>`)
+        : tx(159,py+74,16,dim,'найди площадь',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW175Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW175P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW175P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: площадь</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('S = '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('перемножь стороны'));
+    } else if(step===10){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'P = 6×4 ?',a:'20',ds:['24','10']},
+        {q:'P = 7×3 ?',a:'20',ds:['21','10']},
+        {q:'P = 5×5 ?',a:'20',ds:['25','10']},
+        {q:'P = 9×1 ?',a:'20',ds:['9','10']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
+        inner+=`<g class="qTIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qTPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qTPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">P = 2(a+b)</text></g>`)
+        : tx(159,py+74,16,dim,'найди периметр',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW175Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW175P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW175P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: периметр</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('P = '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('2(a+b)'));
+    } else if(step===11){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'7×3 — что искать для 21?',a:'площадь',ds:['периметр','обе']},
+        {q:'7×3 — что искать для 20?',a:'периметр',ds:['площадь','обе']},
+        {q:'Квадрат 5 — 25 это…?',a:'площадь',ds:['периметр','обе']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,16,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
+        inner+=`<g class="qTIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,20,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qTPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qTPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">граница/плитки</text></g>`)
+        : tx(159,py+74,16,dim,'что ищем?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW175Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW175P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW175P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: что искать</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('граница или плитки'));
+    } else if(step===12){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      const items=[['P = 2(a+b) — длина границы'],['S = a·b — квадратики внутри'],['квадрат: S = a·a'],['см — длина · см² — площадь']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=52+i*32;
+          inner+=`<g class="qTIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(255,251,244,.97)':'rgba(217,160,90,.14)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('P = 2(a+b) · S = a·b',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW175Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW175Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW175Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW175Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW175Act('${lk}','rst')`):'')+
+        wkSml('не путай'));
+    } else if(step===13){
+      const H=182;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'S = 7×3 ?',opts:['21','20','24'],ans:0},
+        {q:'P = 6×4 ?',opts:['20','24','10'],ans:0},
+        {q:'S квадрата 5 ?',opts:['25','20','30'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="qTPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'a·b или 2(a+b)'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW175S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW175Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW175Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('S = a·b'));
+    } else if(step===14){
+      const H=206, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'7 × 3',{b:1,georgia:1});
+      inner+=room(7,3,false,go);
+      if(go){ inner+=`<g class="qTPop"><text x="159" y="192" text-anchor="middle" font-size="18" fill="${gold}" font-weight="bold" font-family="Georgia,serif">S = 7·3 = 21</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('S = 21',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW175Act('${lk}','rst')`):wkBtn('уложить',`visW175Act('${lk}','go')`))+
+        wkSml('перемножь стороны'));
+    } else {
+      const H=206;
+      let inner='';
+      inner+=tx(159,26,20,ink,'7 × 3',{b:1,georgia:1});
+      inner+=room(7,3,false,true);
+      inner+=`<g class="qTPop"><text x="159" y="192" text-anchor="middle" font-size="18" fill="${gold}" font-weight="bold" font-family="Georgia,serif">S = 21</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('перемножь стороны'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[175]=visW175;
+  function visW175T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW175T=visW175T;
+  function visW175P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW175P=visW175P;
+  function visW175S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW175S=visW175S;
+  function visW175Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===13){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW175Act=visW175Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===175){ window.ARH_LESSONS[i]=L175; break; } } })();
+})();
