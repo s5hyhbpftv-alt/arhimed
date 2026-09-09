@@ -25132,3 +25132,410 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW389Act=visW389Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===389){ window.ARH_LESSONS[i]=L389; break; } } })();
 })();
+
+/* ================= УРОК 384 · Средняя скорость: путь и время (v1 · «Трасса Мастера Архимеда», 15 слайдов, флагман, премиум) ================= */
+(function(){
+  if(!window.__wk384v1css){
+    window.__wk384v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .q384In{animation:q384In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes q384In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .q384Pop{animation:q384Pop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q384Pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q384Needle{animation:q384Needle 1.1s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q384Needle{0%{transform:rotate(-60deg)}70%{transform:rotate(4deg)}100%{transform:rotate(var(--rot))}}'+
+      '#lvis .q384Bus{animation:q384Bus 3.2s linear infinite;}'+
+      '@keyframes q384Bus{0%{transform:translateX(0)}49%{transform:translateX(188px)}50%{transform:translateX(188px)}99%{transform:translateX(0)}100%{transform:translateX(0)}}'+
+      '#lvis .q384Road{animation:q384Road .6s ease both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes q384Road{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}';
+    document.head.appendChild(st);
+  }
+  const L384 = {
+    id: 384, title: 'Средняя скорость: путь и время', ico: '🚴',
+    src: 'Математика · 5–6 класс · Олимп-5: движение', subj: 'math',
+    explain: [
+      'Средняя скорость = весь путь : всё время движения.',
+      'Автобус ехал 2 часа со скоростью 40 км/ч и 1 час со скоростью 70 км/ч: путь 40·2 + 70 = 150 км, время 3 ч.',
+      'Средняя скорость = 150 : 3 = 50 км/ч.',
+      'Внимание: нельзя просто усреднить 40 и 70 (было бы 55) — времена разные!',
+      'Сначала считаем ВЕСЬ путь: скорость × время на каждом участке, потом складываем.',
+      'Потом считаем ВСЁ время: складываем время всех участков.',
+      'И только потом делим: путь : время = средняя скорость.',
+      'Всегда: средняя = (частные пути) : (все время).',
+      'Если времена разные — простая средняя арифметическая скоростей НЕПРАВИЛЬНА.',
+      'Тренажёр: найди среднюю скорость.',
+      'Тренажёр: реши, что искать (путь или время).',
+      'Шпаргалка: средняя = путь : время; сначала весь путь и всё время; времена разные ≠ усреднять скорости.',
+      'Проверь себя устно: 150 : 3 = 50; 120 : 3 = 40; 40·2+70 = 150.',
+      'Проверь себя: средняя скорость = путь делить на время.',
+      'Проверь себя: 2 ч по 40 и 1 ч по 70 — средняя? Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: '2 часа по 40 км/ч и 1 час по 70 км/ч. Средняя скорость?', choices: ['50 км/ч', '55 км/ч', '45 км/ч', '60 км/ч'], ans: 0,
+      exp: 'Путь 150 км, время 3 ч: 150 : 3 = 50 км/ч.' },
+    tasks: [
+      { q: 'Весь путь 120 км, время 3 часа. Средняя скорость?', kind: 'unit', ans: 40, tol: 0,
+        hints: ['Средняя = путь : время.', '120 : 3 = 40 км/ч.'], sol: '40' },
+      { q: 'Почему нельзя просто усреднить 40 и 70?', kind: 'choice', choices: ['времена движения разные', 'числа слишком большие', 'дорога кривая', 'можно усреднять'], ans: 0, tol: 0,
+        hints: ['Средняя — это путь, делённый на время.', 'Времена разные → берём весь путь и всё время.'], sol: 'времена разные' }
+    ]
+  };
+  const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', roadC='#3a4a6a', asp='#aab8d4', blu='#6ea8ff', road1='#e0a34a', road2='#4db6e0',
+        bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="q384bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <filter id="q384sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#q384bg)"/>
+      <g opacity="0.14" stroke="#44568c" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44568c" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3a64" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  function road(){
+    let s='';
+    s+=`<rect x="30" y="122" width="258" height="12" rx="6" fill="${roadC}"/>`;
+    for(let x=30;x<=288;x+=18){ s+=`<rect x="${x}" y="139" width="9" height="3" rx="1.5" fill="rgba(170,184,212,.5)"/>`; }
+    return s;
+  }
+  function bus(x,y,delay){
+    return `<g class="q384In" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#q384sh)"><rect x="${x}" y="${y}" width="34" height="18" rx="4" fill="#ffb85c" stroke="#a86a2a" stroke-width="2"/><rect x="${x+5}" y="${y+4}" width="9" height="9" rx="2" fill="#eaf4ff" stroke="#8fa3d0" stroke-width="1.2"/><rect x="${x+19}" y="${y+4}" width="9" height="9" rx="2" fill="#eaf4ff" stroke="#8fa3d0" stroke-width="1.2"/><circle cx="${x+7}" cy="${y+22}" r="4" fill="#222" stroke="#000" stroke-width="1"/><circle cx="${x+27}" cy="${y+22}" r="4" fill="#222" stroke="#000" stroke-width="1"/></g>`;
+  }
+  function speedo(cx,cy,r,val,max,delay){
+    const ang=Math.min(1,val/max)*180-180;
+    let s=`<g class="q384In" style="animation-delay:${(delay||0).toFixed(2)}s">`;
+    s+=`<path d="M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy} Z" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="2.4"/>`;
+    for(let v=0;v<=max;v+=Math.ceil(max/4)){
+      const a=(-180+Math.min(1,v/max)*180)*Math.PI/180;
+      s+=`<line x1="${cx+(r-8)*Math.cos(a)}" y1="${cy+(r-8)*Math.sin(a)}" x2="${cx+(r-16)*Math.cos(a)}" y2="${cy+(r-16)*Math.sin(a)}" stroke="${asp}" stroke-width="2"/>`;
+    }
+    s+=`<g class="q384Needle" style="--rot:${ang}deg;animation-delay:${((delay||0)+0.2).toFixed(2)}s"><line x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy-r+16}" stroke="${grn}" stroke-width="3.4" stroke-linecap="round"/></g>`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="5" fill="${grn}"/>`;
+    s+=tx(cx,cy+24,16,ink,val+' км/ч',{b:1,georgia:1});
+    s+=`</g>`;
+    return s;
+  }
+  function distBar(x,y,w,a,b){
+    const seg=(x+0+ (w*0.53)); // 80 part
+    let s='';
+    s+=`<rect x="${x}" y="${y}" width="${w*0.53}" height="22" rx="4" fill="${road1}"/><rect x="${x+w*0.53}" y="${y}" width="${w*0.47}" height="22" rx="4" fill="${road2}"/>`;
+    s+=tx(x+w*0.265,y+15,13,'80 км',{b:1}); s+=tx(x+w*0.765,y+15,13,'70 км',{b:1});
+    return s;
+  }
+  const chip=(t,c,delay)=>`<span class="q384In" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const Q384=[
+    {q:'2 ч по 40 и 1 ч по 70 — средняя?',opts:['50','55','45'],ans:0},
+    {q:'Путь 120 км, время 3 ч — средняя?',opts:['40','60','30'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q384[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:62px;font-size:17px" onclick="visW384T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! путь : время</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · весь путь : всё время</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW384Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW384Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW384(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step===9||step===10) st.pick=null;
+      if(step===11){ st.mq=0; st.msel=null; }
+      if(step===14){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=200, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'средняя скорость',{b:1});
+      inner+=road();
+      inner+=bus(40,98,0.1);
+      if(go){ inner+=`<g class="q384Pop"><text x="159" y="180" text-anchor="middle" font-size="15" fill="${dim}" font-weight="bold">весь путь : всё время</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Трасса Мастера</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('средняя = путь : время',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW384Act('${lk}','rst')`):wkBtn('в путь',`visW384Act('${lk}','go')`))+
+        wkSml('автобус в дороге'));
+    } else if(step===1){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'формула',{b:1});
+      inner+=tx(159,72,18,gold,'средняя = путь : время',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="q384Pop"><text x="159" y="110" text-anchor="middle" font-size="15" fill="${dim}">весь путь делим на всё время</text>
+        <text x="159" y="144" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">(а не среднюю скоростей!)</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Определение</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('путь : время',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW384Act('${lk}','rst')`):wkBtn('показать',`visW384Act('${lk}','go')`))+
+        wkSml('главная формула'));
+    } else if(step===2){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'поездка',{b:1});
+      inner+=road();
+      inner+=`<g class="q384In" style="animation-delay:.1s"><rect x="30" y="98" width="118" height="16" rx="6" fill="rgba(224,163,74,.2)" stroke="${road1}" stroke-width="1.6"/><text x="89" y="80" text-anchor="middle" font-size="13" fill="${road1}" font-weight="bold">2 ч · 40 км/ч</text></g>`;
+      inner+=`<g class="q384In" style="animation-delay:.2s"><rect x="152" y="98" width="136" height="16" rx="6" fill="rgba(77,182,224,.2)" stroke="${road2}" stroke-width="1.6"/><text x="220" y="80" text-anchor="middle" font-size="13" fill="${road2}" font-weight="bold">1 ч · 70 км/ч</text></g>`;
+      inner+=bus(30,98,0.3);
+      if(go){ inner+=`<g class="q384Pop"><text x="159" y="182" text-anchor="middle" font-size="14" fill="${dim}">два участка — разные скорости и разное время</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Два участка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2 ч по 40 · 1 ч по 70',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW384Act('${lk}','rst')`):wkBtn('показать',`visW384Act('${lk}','go')`))+
+        wkSml('времена разные'));
+    } else if(step===3){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'весь путь',{b:1});
+      if(go){
+        inner+=`<g class="q384Pop"><rect x="30" y="66" width="120" height="30" rx="6" fill="rgba(224,163,74,.16)" stroke="${road1}" stroke-width="1.6"/>${tx(90,87,14,ink,'40 · 2 = 80',{b:1})}
+        <text x="159" y="74" text-anchor="middle" font-size="17" fill="${road1}" font-weight="bold">+</text>
+        <rect x="168" y="66" width="120" height="30" rx="6" fill="rgba(77,182,224,.16)" stroke="${road2}" stroke-width="1.6"/>${tx(228,87,14,ink,'70 · 1 = 70',{b:1})}
+        <text x="159" y="130" text-anchor="middle" font-size="24" fill="${gold}" font-weight="bold" font-family="Georgia,serif">80 + 70 = 150 км</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Путь</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('скорость × время на каждом',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW384Act('${lk}','rst')`):wkBtn('сосчитать',`visW384Act('${lk}','go')`))+
+        wkSml('складываем пути'));
+    } else if(step===4){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,20,ink,'всё время',{b:1});
+      if(go){
+        inner+=`<g class="q384Pop"><text x="159" y="92" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">2 ч + 1 ч = 3 ч</text>
+        <text x="159" y="128" text-anchor="middle" font-size="14" fill="${dim}">складываем время всех участков</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Время</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2 + 1 = 3 ч',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW384Act('${lk}','rst')`):wkBtn('сосчитать',`visW384Act('${lk}','go')`))+
+        wkSml('складываем время'));
+    } else if(step===5){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'средняя',{b:1});
+      inner+=speedo(159,108,62,50,100,0.1);
+      if(go){ inner+=`<g class="q384Pop"><text x="159" y="184" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">150 : 3 = 50 км/ч</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Считаем</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('путь 150 : время 3',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW384Act('${lk}','rst')`):wkBtn('показать',`visW384Act('${lk}','go')`))+
+        wkSml('стрелка на 50'));
+    } else if(step===6){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'ловушка',{b:1});
+      if(go){
+        inner+=`<g class="q384Pop"><text x="159" y="88" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">не усредняй 40 и 70 (было бы 55)</text>
+        <text x="159" y="122" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">правильно 50 км/ч</text>
+        <text x="159" y="150" text-anchor="middle" font-size="13" fill="${dim}">времена разные → не просто (40+70):2</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Берегись</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('55 — НЕПРАВИЛЬНО',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW384Act('${lk}','rst')`):wkBtn('проверить',`visW384Act('${lk}','go')`))+
+        wkSml('взвешено по времени'));
+    } else if(step===7){
+      const H=182, go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'почему 55 неверно',{b:1});
+      if(go){
+        inner+=`<g class="q384Pop"><rect x="36" y="62" width="246" height="80" rx="12" fill="rgba(255,154,138,.1)" stroke="${red}" stroke-width="2"/>
+        ${tx(159,86,15,red,'время 2 ч и 1 ч — разные',{b:1})}
+        ${tx(159,110,15,red,'«тяжелее» тот, где дольше ехал',{b:1})}
+        ${tx(159,132,13,dim,'поэтому (40+70):2 = 55 — неверно',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Причина</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('времена разные',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW384Act('${lk}','rst')`):wkBtn('показать',`visW384Act('${lk}','go')`))+
+        wkSml('взвешенная средняя'));
+    } else if(step===8){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,20,ink,'ещё пример',{b:1});
+      if(go){
+        inner+=`<g class="q384Pop"><text x="159" y="90" text-anchor="middle" font-size="17" fill="${ink}">весь путь 120 км · время 3 ч</text>
+        <text x="159" y="124" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">120 : 3 = 40 км/ч</text>
+        <text x="159" y="152" text-anchor="middle" font-size="13" fill="${dim}">средняя скорость</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Прямой случай</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('120 : 3 = 40',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW384Act('${lk}','rst')`):wkBtn('посчитать',`visW384Act('${lk}','go')`))+
+        wkSml('просто путь : время'));
+    } else if(step===9){
+      const H=198, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'120 км за 3 ч — средняя?',a:'40',ds:['60','30']},
+        {q:'100 км за 2 ч — средняя?',a:'50',ds:['25','100']},
+        {q:'90 км за 1.5 ч — средняя?',a:'60',ds:['45','75']},
+        {q:'240 км за 4 ч — средняя?',a:'60',ds:['40','80']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,18,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="q384In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,24,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="q384Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="q384Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">путь : время</text></g>`)
+        : tx(159,py+74,16,dim,'найди среднюю',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW384Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW384P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW384P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: средняя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('путь : время'));
+    } else if(step===10){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'2 ч по 40 и 1 ч по 70 — что сначала?',a:'весь путь',ds:['просто усреднить','ничего']},
+        {q:'Средняя = ?',a:'путь : время',ds:['(v1+v2):2','время : путь']},
+        {q:'Путь 150, время 3 — средняя?',a:'50',ds:['55','45']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,16,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="q384In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,18,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="q384Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="q384Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вспомни формулу</text></g>`)
+        : tx(159,py+74,16,dim,'что искать?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW384Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW384P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW384P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: суть</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('путь : время'));
+    } else if(step===11){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      const items=[['средняя = путь : время'],['сначала весь путь, потом всё время'],['времена разные ≠ усреднять скорости'],['проверь: средняя между min и max']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=52+i*32;
+          inner+=`<g class="q384In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(20,29,52,.96)':'rgba(32,44,76,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('путь : время',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW384Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW384Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW384Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW384Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW384Act('${lk}','rst')`):'')+
+        wkSml('взвешенная средняя'));
+    } else if(step===12){
+      const H=182;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'2 ч по 40 и 1 ч по 70 — средняя?',opts:['50','55','45'],ans:0},
+        {q:'120 км за 3 ч — средняя?',opts:['40','60','30'],ans:0},
+        {q:'Почему не 55?',opts:['времена разные','числа большие','дорога кривая'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="q384Pop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'путь:время'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW384S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW384Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW384Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('путь : время'));
+    } else if(step===13){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'2 ч по 40 · 1 ч по 70',{b:1,georgia:1});
+      inner+=speedo(159,112,62,go?50:20,100,0.1);
+      if(go){ inner+=`<g class="q384Pop"><text x="159" y="188" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">путь 150 · время 3 → 50 км/ч</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('150 : 3 = 50',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW384Act('${lk}','rst')`):wkBtn('показать',`visW384Act('${lk}','go')`))+
+        wkSml('стрелка к 50'));
+    } else {
+      const H=196;
+      let inner='';
+      inner+=tx(159,32,20,ink,'средняя скорость',{b:1,georgia:1});
+      inner+=speedo(159,112,62,50,100,0.1);
+      inner+=`<g class="q384Pop"><text x="159" y="188" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">50 км/ч</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('путь : время'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[384]=visW384;
+  function visW384T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW384T=visW384T;
+  function visW384P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW384P=visW384P;
+  function visW384S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW384S=visW384S;
+  function visW384Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===12){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW384Act=visW384Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===384){ window.ARH_LESSONS[i]=L384; break; } } })();
+})();
