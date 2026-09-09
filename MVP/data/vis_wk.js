@@ -11,14 +11,14 @@ window.VISKW = window.VISKW || {};
   st.textContent=
     '#lvis g.wv-pop,#lvis rect.wv-pop,#lvis circle.wv-pop,#lvis text.wv-pop{transform-box:fill-box;transform-origin:center;}'+
     '@keyframes wvPop{0%{transform:translateY(10px) scale(.95);opacity:0}70%{transform:translateY(-2px) scale(1.005);opacity:1}100%{transform:none;opacity:1}}'+
-    '.wk-frame{background:linear-gradient(180deg,rgba(26,52,40,.92),rgba(15,30,23,.95));border:1px solid #3d5c49;border-radius:18px;padding:9px 10px 10px;max-width:344px;margin:0 auto;overflow:hidden;}'+
-    '.wk-hero{display:flex;justify-content:center;}'+
-    '.wk-big{font-size:19px;color:#ffd76a;font-family:Georgia,serif;line-height:1.25;text-align:center;padding:0 4px;}'+
-    '.wk-sml{color:#d8c9a8;font-size:13.5px;line-height:1.55;max-width:236px;text-align:center;margin:0 auto;}'+
-    '.wk-row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;align-items:center;}'+
-    '.wk-chip{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1.5px solid #3d5c49;font-size:13.5px;color:#e8dcc8;}'+
-    '.wk-ans{font-size:19px;font-weight:bold;font-family:Georgia,serif;text-align:center;line-height:1.3;}'+
-    '.wk-btn{padding:8px 12px;font-size:13px;border-radius:10px;border:1px solid #3d5c49;background:rgba(255,255,255,.06);color:#ffe9c9;cursor:pointer;font-weight:bold;}'+
+    '.wk-frame{background:linear-gradient(180deg,rgba(26,52,40,.94),rgba(15,30,23,.97));border:1px solid #4a6b56;border-radius:20px;padding:12px 12px 14px;max-width:352px;margin:0 auto;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.35);}'+
+    '.wk-hero{display:flex;justify-content:center;width:100%;}'+
+    '.wk-big{font-size:23px;color:#ffd76a;font-family:Georgia,serif;line-height:1.22;text-align:center;padding:0 4px;}'+
+    '.wk-sml{color:#e6d9ba;font-size:15.5px;line-height:1.5;max-width:270px;text-align:center;margin:0 auto;}'+
+    '.wk-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;align-items:center;}'+
+    '.wk-chip{display:inline-block;padding:5px 13px;border-radius:999px;background:rgba(255,255,255,.06);border:1.6px solid #4a6b56;font-size:15px;color:#efe4cc;}'+
+    '.wk-ans{font-size:21px;font-weight:bold;font-family:Georgia,serif;text-align:center;line-height:1.3;}'+
+    '.wk-btn{padding:11px 16px;font-size:15.5px;border-radius:12px;border:1px solid #4a6b56;background:rgba(255,255,255,.08);color:#ffe9c9;cursor:pointer;font-weight:bold;}'+
     '.wk-btn:active{transform:scale(.96);}';
   document.head.appendChild(st);
 })();
@@ -31,7 +31,7 @@ const wkRow=(...x)=>`<div class="wk-row">${x.join('')}</div>`;
 const wkBtn=(t,on)=>`<button class="wk-btn" onclick="${on}">${t}</button>`;
 const wkFrame=(inner)=>`<div class="wk-frame"><div class="wk-col" style="display:flex;flex-direction:column;gap:7px;align-items:center">${inner}</div></div>`;
 const wkHero=(svg)=>`<div class="wk-hero" style="width:100%">${svg}</div>`;
-const wkNote=(t,c)=>`<div style="font-size:13px;color:${c||'#cfe0cf'};text-align:center;line-height:1.45">${t}</div>`;
+const wkNote=(t,c)=>`<div style="font-size:15px;color:${c||'#dcebd9'};text-align:center;line-height:1.45;max-width:280px">${t}</div>`;
 const wkP=(t)=>`<div class="wv-pop">${t}</div>`;
 const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62+4;if(est>boxW)s=Math.max(8.5,Math.floor((boxW-4)/(txt.length*0.62)));return `<text x="${x}" y="${y}" text-anchor="middle" font-size="${s}" fill="${fill}"${w?' font-weight="bold"':''} font-family="Georgia,serif">${txt}</text>`;};
 
@@ -21539,24 +21539,22 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===379){ window.ARH_LESSONS[i]=L379; break; } } })();
 })();
 
-/* ================= УРОК 189 · Координатная прямая и координаты точек (v1 · «Адресная магистраль Архимеда», 15 слайдов, подробный премиум) ================= */
+/* ================= УРОК 189 · Координатная прямая и координаты точек (v2 · «Адресная магистраль Архимеда», 16 слайдов, улучшенный) ================= */
 (function(){
-  if(!window.__wk189v1css){
-    window.__wk189v1css=1;
+  if(!window.__wk189v2css){
+    window.__wk189v2css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qPIn{animation:qPIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qPIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qPPop{animation:qPPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qPPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qPPoint{animation:qPPoint .55s cubic-bezier(.2,.8,.3,1.4) both;transform-box:fill-box;transform-origin:center;}'+
+      '#lvis .qPPop{animation:qPPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qPPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qPPoint{animation:qPPoint .5s cubic-bezier(.2,.8,.3,1.5) both;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qPPoint{0%{transform:scale(0);opacity:0}70%{transform:scale(1.2);opacity:1}100%{transform:scale(1)}}'+
       '#lvis .qPStep{animation:qPStep .5s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qPStep{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qPGlow{animation:qPGlow 2s ease-in-out infinite;opacity:.4;}'+
-      '@keyframes qPGlow{0%,100%{opacity:.3}50%{opacity:.8}}'+
-      '#lvis .qPFloat{animation:qPFloat 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qPFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+      '@keyframes qPStep{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.2);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qPGlow{animation:qPGlow 1.8s ease-in-out infinite;opacity:.4;}'+
+      '@keyframes qPGlow{0%,100%{opacity:.3}50%{opacity:.85}}';
     document.head.appendChild(st);
   }
   const L189 = {
@@ -21571,13 +21569,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Совет Архимеда: нарисуй прямую и посчитай шаги пальцем — расстояние не ошибёшься.',
       'Справа от 0 — положительные, слева — отрицательные.',
       'Координата = число шагов от нуля со знаком.',
-      'Расстояние = |x₂ − x₁| (всегда положительное).',
+      'Расстояние = |x₂ − x₁| (всегда ≥ 0).',
       'Двигаемся по прямой: вправо — увеличиваем, влево — уменьшаем.',
       'Тренажёр: найди расстояние между точками.',
-      'Тренажёр: найди координату точки (левее/правее).',
+      'Тренажёр: найди координату (левее/правее).',
       'Шпаргалка: координата = адрес; расстояние = |x₂−x₁| ≥ 0; шаги по прямой.',
       'Проверь себя устно: A(−3)…B(2) → 5; −1…4 → 5; левее 2 на 3 → −1.',
-      'Проверь себя: координата — адрес, расстояние — шаги.',
+      'Проверь себя: расстояние — это шаги, а не сумма координат.',
       'Проверь себя: расстояние между A(−3) и B(2). Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Чему равно расстояние между точками A(−3) и B(2)?', choices: ['1', '5', '−1'], ans: 1,
@@ -21589,50 +21587,48 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Левее — значит вычитаем.', '2 − 3 = −1.'], sol: '2 − 3 = −1.' }
     ]
   };
-  const ink='#eef2ff', dim='#98a3c5', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
-        bg0='#151f3a', bg1='#0b1122', card='rgba(20,28,50,.94)', cardB='#3a4a70', lineC='#2a3a5f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.4">${t}</text>`;
+  const ink='#f2f6ff', dim='#a6b1d2', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
+        bg0='#131c34', bg1='#0a101f', card='rgba(24,33,58,.96)', cardB='#3f5480', lineC='#33486e';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
         <linearGradient id="qPbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
         <linearGradient id="qPgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="#c9932f"/></linearGradient>
-        <filter id="qPsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+        <filter id="qPsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.55"/></filter>
       </defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qPbg)"/>
-      <g opacity="0.12" stroke="#4a5a8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="90" y1="0" x2="86" y2="${H}"/><line x1="150" y1="0" x2="146" y2="${H}"/><line x1="210" y1="0" x2="207" y2="${H}"/><line x1="270" y1="0" x2="268" y2="${H}"/></g>
-      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44538a" stroke-width="2.4" rx="7"/>
-      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3858" stroke-width="1.2" rx="4"/>
+      <g opacity="0.16" stroke="#4a5f8f" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="7" y="7" width="${W-14}" height="${H-14}" fill="none" stroke="#43588a" stroke-width="2.6" rx="7"/>
+      <rect x="11" y="11" width="${W-22}" height="${H-22}" fill="none" stroke="#2c3b63" stroke-width="1.3" rx="4"/>
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  const AX={x:22,y:104,w:274,min:-4,max:7};
+  const AX={x:20,y:100,w:278,min:-4,max:7};
   const axPx=v=>AX.x+(v-AX.min)/(AX.max-AX.min)*AX.w;
-  function axis(show,boldV){
+  function axis(){
     let s='';
-    if(show){
-      s+=`<rect x="${AX.x}" y="${AX.y-3}" width="${AX.w}" height="6" rx="3" fill="${gold}"/>`;
-      s+=`<path d="M ${AX.x+AX.w} ${AX.y} l -9 4 l 0 -8 z" fill="${gold}"/><path d="M ${AX.x} ${AX.y} l 9 -4 l 0 8 z" fill="${gold}"/>`;
-      for(let v=AX.min;v<=AX.max;v++){
-        const x=axPx(v);
-        s+=`<line x1="${x}" y1="${AX.y-4}" x2="${x}" y2="${AX.y+4}" stroke="${lineC}" stroke-width="1.4"/>`;
-        s+=tx(x,AX.y+22,11,v===0?ink:dim,''+(v===0?'0':v),{b:v===0});
-      }
+    s+=`<rect x="${AX.x}" y="${AX.y-3.5}" width="${AX.w}" height="7" rx="3.5" fill="${gold}"/>`;
+    s+=`<path d="M ${AX.x} ${AX.y} l 9 -5 l 0 10 z" fill="${gold}"/><path d="M ${AX.x+AX.w} ${AX.y} l -9 -5 l 0 10 z" fill="${gold}"/>`;
+    for(let v=AX.min;v<=AX.max;v++){
+      const x=axPx(v);
+      s+=`<line x1="${x}" y1="${AX.y-5}" x2="${x}" y2="${AX.y+5}" stroke="#5a6f9f" stroke-width="1.8"/>`;
+      s+=tx(x,AX.y+28,15.5,v===0?ink:dim,''+v,{b:v===0});
     }
     return s;
   }
   function marker(v,label,coord,color){
     const x=axPx(v);
-    return `<g class="qPPoint" filter="url(#qPsh)"><circle class="qPGlow" cx="${x}" cy="${AX.y}" r="14" fill="${color}" opacity="0.3"/><circle cx="${x}" cy="${AX.y}" r="9" fill="${color}" stroke="#fffdf2" stroke-width="1.8"/>
-      <rect x="${x-14}" y="${AX.y-34}" width="46" height="20" rx="5" fill="${color}" stroke="#0b1120" stroke-width="1.2"/>
-      <text x="${x+9}" y="${AX.y-20}" text-anchor="middle" font-size="11" fill="#0b1120" font-weight="bold">${label}(${coord})</text></g>`;
+    return `<g class="qPPoint" filter="url(#qPsh)"><circle class="qPGlow" cx="${x}" cy="${AX.y}" r="18" fill="${color}" opacity="0.4"/><circle cx="${x}" cy="${AX.y}" r="12" fill="${color}" stroke="#fffdf2" stroke-width="2.4"/>
+      <rect x="${x-16}" y="${AX.y-44}" width="52" height="24" rx="6" fill="${color}" stroke="#0a1120" stroke-width="1.6"/>
+      <text x="${x+10}" y="${AX.y-27}" text-anchor="middle" font-size="14.5" fill="#0a1120" font-weight="bold">${label}(${coord})</text></g>`;
   }
   function stepcell(v){
     const x=axPx(v);
-    return `<g class="qPStep"><circle cx="${x}" cy="${AX.y-22}" r="7" fill="rgba(255,215,106,.18)" stroke="${gold}" stroke-width="1.4"/><text x="${x}" y="${AX.y-18}" text-anchor="middle" font-size="10" fill="${gold}"></text></g>`;
+    return `<g class="qPStep"><circle cx="${x}" cy="${AX.y-26}" r="9" fill="rgba(255,215,106,.18)" stroke="${gold}" stroke-width="1.8"/></g>`;
   }
-  const chip=(t,c,delay)=>`<span class="qPIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="qPIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:19px;color:${c};font-weight:bold">${t}</span>`;
   const Q189=[
     {q:'A(−3) … B(2) — расстояние?',opts:['1','5','−1'],ans:1},
     {q:'3 левее точки 2 — координата?',opts:['−1','5','−5'],ans:0}
@@ -21642,23 +21638,23 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const opts=T.opts.map((o,i)=>{
       let bd=cardB,tc=ink,bg=card;
       if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW189T('${lk}',${i})">${o}</button>`;
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:17px" onclick="visW189T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#7de0a0;font-size:16px">Верно! считай шаги по прямой</div>'
-        : '<div class="wk-ans" style="color:#ff9a8a;font-size:15px">Не так · шаги / разность</div>';
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! считай шаги по прямой</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · шаги / разность</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW189Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW189Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW189(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step>=0&&step<=15){ st.go=0; st.pick=null; }
       if(step===11||step===12) st.pick=null;
       if(step===14){ st.mq=0; st.msel=null; }
       if(step===15){ st.sel=null; st.q=0; }
@@ -21666,251 +21662,248 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     let h='';
     const W=318;
     if(step===0){
-      const H=196, go=st.go||0;
+      const H=168, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'координатная прямая',{b:1});
-      inner+=axis(true,null);
-      if(go){
-        inner+=`<g class="qPPop"><text x="159" y="164" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold" font-family="Georgia,serif">прямая с «адресами» — как улица</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Адресная магистраль</div>`+
+      inner+=tx(159,32,20,ink,'координатная прямая',{b:1});
+      inner+=axis();
+      if(go){ inner+=`<g class="qPPop"><text x="159" y="152" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">прямая с «адресами»</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Адресная магистраль</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('0 — начало отсчёта',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('что это?',`visW189Act('${lk}','go')`))+
         wkSml('положительные справа, отрицательные слева'));
     } else if(step===1){
-      const H=196;
+      const H=170;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,34,16,ink,'стороны прямой',{b:1});
-      inner+=axis(true,null);
+      inner+=tx(159,32,20,ink,'стороны прямой',{b:1});
+      inner+=axis();
       if(go){
-        inner+=`<g class="qPPop"><text x="70" y="60" text-anchor="middle" font-size="13" fill="${red}" font-weight="bold">← минус</text>
-        <text x="248" y="60" text-anchor="middle" font-size="13" fill="${grn}" font-weight="bold">плюс →</text>
-        <text x="159" y="60" text-anchor="middle" font-size="13" fill="${ink}" font-weight="bold">0</text></g>`;
+        inner+=`<g class="qPPop"><text x="70" y="64" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">← минус</text>
+        <text x="250" y="64" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">плюс →</text>
+        <text x="159" y="152" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">вправо + · влево −</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ноль и стороны</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ноль и стороны</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('вправо + , влево −',gold,0.2)):'')+
+        (go?wkRow(chip('знак = сторона',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
-        wkSml('знак = сторона'));
+        wkSml('справа положительные, слева отрицательные'));
     } else if(step===2){
-      const H=200, go=st.go||0;
+      const H=176, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'координата — это адрес',{b:1});
-      inner+=axis(true,null);
+      inner+=tx(159,32,20,ink,'координата — адрес',{b:1});
+      inner+=axis();
       if(go){
         inner+=marker(-3,'A',-3,'#7fd6ff');
         inner+=marker(2,'B',2,'#7de0a0');
-        inner+=`<g class="qPPop"><text x="159" y="164" text-anchor="middle" font-size="13" fill="${dim}">A(−3) — 3 шага влево · B(2) — 2 шага вправо</text></g>`;
+        inner+=`<g class="qPPop"><text x="159" y="160" text-anchor="middle" font-size="15" fill="${dim}">A(−3) — 3 шага влево · B(2) — 2 вправо</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Точки-дома</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Точки-дома</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('A(−3), B(2)',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('поставить точки',`visW189Act('${lk}','go')`))+
         wkSml('координата = число шагов от 0'));
     } else if(step===3){
-      const H=206, go=st.go||0;
+      const H=176, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'расстояние — сколько шагов',{b:1});
-      inner+=axis(true,null);
+      inner+=tx(159,32,20,ink,'сколько шагов?',{b:1});
+      inner+=axis();
       inner+=marker(-3,'A',-3,'#7fd6ff');
       inner+=marker(2,'B',2,'#7de0a0');
       if(go){
         for(let v=-3;v<2;v++) inner+=stepcell(v);
-        inner+=`<g class="qPPop"><text x="159" y="172" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold" font-family="Georgia,serif">шагов: 5</text></g>`;
+        inner+=`<g class="qPPop"><text x="159" y="160" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">шагов: 5</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Считаем шаги</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Считаем шаги</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('A → B: 5 шагов',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('идти',`visW189Act('${lk}','go')`))+
-        wkSml('шагаем пальцем'));
+        wkSml('шагаем пальцем по прямой'));
     } else if(step===4){
-      const H=196;
+      const H=170;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,34,16,ink,'формула расстояния',{b:1});
-      inner+=tx(159,62,15,gold,'расстояние = |x₂ − x₁|',{b:1,georgia:1});
+      inner+=tx(159,34,20,ink,'формула расстояния',{b:1});
+      inner+=tx(159,70,17,gold,'расстояние = |x₂ − x₁|',{b:1,georgia:1});
       if(go){
-        inner+=`<g class="qPPop"><text x="159" y="104" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">|2 − (−3)| = |5| = 5</text>
-        <text x="159" y="136" text-anchor="middle" font-size="13" fill="${dim}">всегда ≥ 0 (не бывает минус-расстояние)</text></g>`;
+        inner+=`<g class="qPPop"><text x="159" y="116" text-anchor="middle" font-size="25" fill="${grn}" font-weight="bold" font-family="Georgia,serif">|2 − (−3)| = 5</text>
+        <text x="159" y="150" text-anchor="middle" font-size="15" fill="${dim}">всегда ≥ 0 — не бывает минус-расстояние</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Формула</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Формула</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('|x₂−x₁|',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
-        wkSml('модуль разности'));
+        wkSml('модуль разности координат'));
     } else if(step===5){
-      const H=206, go=st.go||0;
+      const H=176, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'почему 5?',{b:1});
-      inner+=axis(true,null);
+      inner+=tx(159,32,20,ink,'почему 5?',{b:1});
+      inner+=axis();
       inner+=marker(-3,'A',-3,'#7fd6ff');
       inner+=marker(2,'B',2,'#7de0a0');
       if(go){
         inner+=stepcell(-2); inner+=stepcell(-1); inner+=stepcell(0); inner+=stepcell(1);
-        inner+=`<g class="qPPop"><text x="159" y="166" text-anchor="middle" font-size="13" fill="${blu}" font-weight="bold">−3→0: 3 шага · 0→2: 2 шага</text>
-        <text x="159" y="184" text-anchor="middle" font-size="13" fill="${blu}" font-weight="bold">всего 3 + 2 = 5</text></g>`;
+        inner+=`<g class="qPPop"><text x="159" y="144" text-anchor="middle" font-size="15" fill="${blu}" font-weight="bold">−3→0: 3 шага · 0→2: 2 шага</text>
+        <text x="159" y="164" text-anchor="middle" font-size="15" fill="${blu}" font-weight="bold">всего 3 + 2 = 5</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Разбор по шагам</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Разбор по шагам</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('от −3 к 0, потом к 2',blu,0.2)):'')+
+        (go?wkRow(chip('3 + 2 = 5',blu,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('разобрать',`visW189Act('${lk}','go')`))+
-        wkSml('всего 3 + 2 = 5'));
+        wkSml('через ноль считаем шаги'));
     } else if(step===6){
-      const H=196;
+      const H=172;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,36,17,ink,'ловушка',{b:1});
-      inner+=tx(90,74,20,red,'−3 + 2 = −1',{b:1,georgia:1});
+      inner+=tx(159,36,20,ink,'ловушка',{b:1});
+      inner+=tx(159,80,30,red,'−3 + 2 = −1',{b:1,georgia:1});
       if(go){
-        inner+=`<g class="qPPop"><rect x="56" y="100" width="206" height="46" rx="11" fill="rgba(255,154,138,.13)" stroke="${red}" stroke-width="2"/>
-        ${tx(159,122,14,red,'это НЕ расстояние!',{b:1})}
-        ${tx(159,140,12,dim,'расстояние всегда положительное',{})}</g>`;
+        inner+=`<g class="qPPop"><text x="159" y="122" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">это НЕ расстояние!</text>
+        <text x="159" y="150" text-anchor="middle" font-size="14.5" fill="${dim}">расстояние всегда положительное</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Берегись</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Берегись</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('не путай с суммой координат',red,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('проверить',`visW189Act('${lk}','go')`))+
         wkSml('расстояние ≥ 0'));
     } else if(step===7){
-      const H=200, go=st.go||0;
+      const H=176, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'пример: −1 и 4',{b:1});
-      inner+=axis(true,null);
+      inner+=tx(159,32,20,ink,'пример: −1 и 4',{b:1});
+      inner+=axis();
       inner+=marker(-1,'P',-1,'#b07fff');
       inner+=marker(4,'Q',4,'#7de0a0');
       if(go){
         inner+=stepcell(0); inner+=stepcell(1); inner+=stepcell(2); inner+=stepcell(3);
-        inner+=`<g class="qPPop"><text x="159" y="172" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold" font-family="Georgia,serif">4 − (−1) = 5</text></g>`;
+        inner+=`<g class="qPPop"><text x="159" y="160" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">4 − (−1) = 5</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ещё пример</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ещё пример</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('1 + 4 = 5',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('сосчитать',`visW189Act('${lk}','go')`))+
         wkSml('шаги к нулю + от нуля'));
     } else if(step===8){
-      const H=200, go=st.go||0;
+      const H=176, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'найди координату: левее 2 на 3',{b:1});
-      inner+=axis(true,null);
+      inner+=tx(159,32,20,ink,'левее 2 на 3',{b:1});
+      inner+=axis();
       inner+=marker(2,'B',2,'#7de0a0');
       if(go){
         inner+=marker(-1,'?',-1,'#b07fff');
-        inner+=`<g class="qPPop"><text x="159" y="172" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">2 − 3 = −1</text></g>`;
+        inner+=`<g class="qPPop"><text x="159" y="160" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">2 − 3 = −1</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Обратная задача</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Обратная задача</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('влево — вычитаем',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('найти',`visW189Act('${lk}','go')`))+
         wkSml('шаг влево = −'));
     } else if(step===9){
-      const H=200, go=st.go||0;
+      const H=172, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'двигаемся по прямой',{b:1});
-      inner+=axis(true,null);
+      inner+=tx(159,32,20,ink,'двигаемся по прямой',{b:1});
+      inner+=axis();
       if(go){
-        inner+=marker(2,'2',2,'#7de0a0');
-        inner+=`<g class="qPPop"><text x="159" y="168" text-anchor="middle" font-size="14" fill="${dim}">вправо — увеличиваем, влево — уменьшаем</text></g>`;
+        inner+=marker(2,'B',2,'#7de0a0');
+        inner+=`<g class="qPPop"><text x="159" y="152" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">вправо — увеличиваем, влево — уменьшаем</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Правило движения</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило движения</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('вправо +, влево −',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
         wkSml('по прямой'));
     } else if(step===10){
-      const H=206, go=st.go||0;
+      const H=172, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'совет Архимеда',{b:1});
-      inner+=axis(true,null);
+      inner+=tx(159,32,20,ink,'совет Архимеда',{b:1});
+      inner+=axis();
       if(go){
         inner+=stepcell(-2); inner+=stepcell(-1); inner+=stepcell(0); inner+=stepcell(1); inner+=stepcell(2);
-        inner+=`<g class="qPPop"><text x="159" y="172" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">нарисуй прямую и посчитай шаги пальцем</text></g>`;
+        inner+=`<g class="qPPop"><text x="159" y="152" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">нарисуй и посчитай шаги пальцем!</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Не ошибёшься</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Не ошибёшься</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?chip('шагаем пальцем',gold,0.2):'')+
+        (go?wkRow(chip('шагаем пальцем',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
         wkSml('наглядно = надёжно'));
     } else if(step===11){
-      const H=200, py=84;
+      const H=182, py=76;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'A(−3)…B(2) — расстояние?',a:'5',ds:['1','−1']},
-        {q:'−1 … 4 — расстояние?',a:'5',ds:['4','3']},
-        {q:'−2 … 3 — расстояние?',a:'5',ds:['1','−5']},
-        {q:'1 … −2 — расстояние?',a:'3',ds:['1','−3']}
+        {q:'A(−3)…B(2)?',a:'5',ds:['1','−1']},
+        {q:'−1 … 4?',a:'5',ds:['4','3']},
+        {q:'−2 … 3?',a:'5',ds:['1','−5']},
+        {q:'1 … −2?',a:'3',ds:['1','−3']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,16,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,32,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qPIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qPIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qPPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qPPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">считай шаги</text></g>`)
-        : tx(159,py+72,14.5,dim,'сколько шагов?',{});
+        ? (st.pick===0? `<g class="qPPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qPPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">считай шаги</text></g>`)
+        : tx(159,py+74,16,dim,'сколько шагов?',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW189Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW189P('${lk}',${i})">${o}</button>`).join('')}</div>`;
       const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW189P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: расстояние</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: расстояние</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
         fb+retry+
         wkSml('|x₂ − x₁|'));
     } else if(step===12){
-      const H=200, py=84;
+      const H=182, py=76;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'Число левее 2 на 3?',a:'−1',ds:['5','−5']},
-        {q:'Число правее −1 на 2?',a:'1',ds:['−3','3']},
-        {q:'Число левее 0 на 5?',a:'−5',ds:['5','0']},
-        {q:'Число правее 4 на 3?',a:'7',ds:['1','−7']}
+        {q:'левее 2 на 3?',a:'−1',ds:['5','−5']},
+        {q:'правее −1 на 2?',a:'1',ds:['−3','3']},
+        {q:'левее 0 на 5?',a:'−5',ds:['5','0']},
+        {q:'правее 4 на 3?',a:'7',ds:['1','−7']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,15,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,32,19,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qPIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qPIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qPPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qPPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">влево −, вправо +</text></g>`)
-        : tx(159,py+72,14.5,dim,'найди координату',{});
+        ? (st.pick===0? `<g class="qPPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qPPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">влево −, вправо +</text></g>`)
+        : tx(159,py+74,16,dim,'найди координату',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW189Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW189P('${lk}',${i})">${o}</button>`).join('')}</div>`;
       const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW189P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: координата</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: координата</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         fb+retry+
         wkSml('влево − , вправо +'));
     } else if(step===13){
-      const H=198;
+      const H=190;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'шпаргалка',{b:1});
+      inner+=tx(159,32,20,ink,'шпаргалка',{b:1});
       const items=[['координата = адрес (шаги от 0)'],['расстояние = |x₂−x₁| ≥ 0'],['вправо + · влево −'],['A(−3)…B(2) = 5 шагов']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
-          const ry=54+i*36;
-          inner+=`<g class="qPIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="30" rx="9" fill="${i%2?'rgba(20,28,50,.94)':'rgba(30,42,68,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+20,12,ink,items[i][0],{})}</g>`;
+          const ry=60+i*30;
+          inner+=`<g class="qPIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="24" rx="8" fill="${i%2?'rgba(24,33,58,.96)':'rgba(34,47,78,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+17,14.5,ink,items[i][0],{})}</g>`;
         }
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go>=4?wkRow(chip('шагай по прямой',gold,0.2)):'')+
         wkRow(
@@ -21921,20 +21914,20 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=4?wkBtn('сброс',`visW189Act('${lk}','rst')`):'')+
         wkSml('расстояние ≥ 0'));
     } else if(step===14){
-      const H=196;
+      const H=174;
       if(st.mq==null) st.mq=0;
       const QS=[
-        {q:'A(−3)…B(2) — расстояние?',opts:['5','1','−1'],ans:0},
-        {q:'−1 … 4 — сколько единиц?',opts:['5','4','3'],ans:0},
-        {q:'левее 2 на 3 — координата?',opts:['−1','5','−5'],ans:0}
+        {q:'A(−3)…B(2)?',opts:['5','1','−1'],ans:0},
+        {q:'−1 … 4?',opts:['5','4','3'],ans:0},
+        {q:'левее 2 на 3?',opts:['−1','5','−5'],ans:0}
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      inner+=tx(159,40,20,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qPPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'считай шаги'}</text></g>`;
+        inner+=`<g class="qPPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'считай шаги'}</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         `<div class="wk-row" style="gap:8px">
           ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW189S('${lk}',${i})">${o}</button>`).join('')}
@@ -21943,14 +21936,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('|x₂ − x₁|'));
     } else {
-      const H=196;
+      const H=176;
       let inner='';
-      inner+=tx(159,38,17,ink,'A(−3) … B(2)',{b:1,georgia:1});
-      inner+=axis(true,null);
+      inner+=tx(159,34,20,ink,'A(−3) … B(2)',{b:1,georgia:1});
+      inner+=axis();
       inner+=marker(-3,'A',-3,'#7fd6ff');
       inner+=marker(2,'B',2,'#7de0a0');
-      if(true){ inner+=`<g class="qPPop"><text x="159" y="168" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">расстояние = 5</text></g>`; }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+      inner+=`<g class="qPPop"><text x="159" y="160" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">расстояние = 5</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
         wkSml('2 − (−3) = 5'));
