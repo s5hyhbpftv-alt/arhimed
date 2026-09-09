@@ -19218,26 +19218,22 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW393Act=visW393Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===393){ window.ARH_LESSONS[i]=L393; break; } } })();
 })();
-/* ================= УРОК 172 · Умножение и деление на 10, 100, 1000 (v2 · «Научный цех нулей Архимеда», 15 слайдов, премиум) ================= */
+/* ================= УРОК 172 · Умножение и деление на 10, 100, 1000 (v3 · «Научный цех нулей Архимеда», 15 слайдов, флагман) ================= */
 (function(){
-  if(!window.__wk172v2css){
-    window.__wk172v2css=1;
+  if(!window.__wk172v3css){
+    window.__wk172v3css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qOIn{animation:qOIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qOIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qOPop{animation:qOPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qOPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qODigit{animation:qODigit .5s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qODigit{0%{transform:scale(.2) rotate(-8deg);opacity:0}70%{transform:scale(1.12) rotate(2deg);opacity:1}100%{transform:scale(1) rotate(0)}}'+
+      '#lvis .qOPop{animation:qOPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qOPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qODigit{animation:qODigit .5s cubic-bezier(.2,.8,.3,1.4) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qODigit{0%{transform:scale(.2) rotate(-8deg);opacity:0}70%{transform:scale(1.15) rotate(2deg);opacity:1}100%{transform:scale(1) rotate(0)}}'+
       '#lvis .qOZero{animation:qOZero .65s cubic-bezier(.2,.8,.3,1.6) both;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qOZero{0%{transform:scale(0) rotate(30deg);opacity:0}60%{transform:scale(1.3) rotate(-4deg);opacity:1}100%{transform:scale(1) rotate(0)}}'+
       '#lvis .qOErase{animation:qOErase .6s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qOErase{0%{transform:scale(1);opacity:1}100%{transform:scale(0);opacity:0}}'+
-      '#lvis .qOShift{animation:qOShift .8s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qOShift{0%{transform:translateX(0)}100%{transform:translateX(0)}}'+
-      '#lvis .qONote{animation:qONote 1.5s ease-in-out infinite;}'+
-      '@keyframes qONote{0%,100%{opacity:.4}50%{opacity:1}}';
+      '@keyframes qOErase{0%{transform:scale(1);opacity:1}100%{transform:scale(0);opacity:0}}';
     document.head.appendChild(st);
   }
   const L172 = {
@@ -19258,7 +19254,6 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Тренажёр: сколько нулей в ответе.',
       'Шпаргалка: ×10→+1 ноль, ×100→+2, ×1000→+3; делим — убираем; цифры сдвигаются.',
       'Проверь себя устно: 47·100=4700; 3500:100=35; 5·1000=5000.',
-      'Проверь себя: 47 · 100. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Чему равно 47 · 100?', choices: ['470', '4700', '47000'], ans: 1,
       exp: 'Приписываем два нуля: 47 · 100 = 4700.' },
@@ -19269,19 +19264,19 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['У 1000 три нуля.', 'Приписываем три нуля: 5000.'], sol: '5 · 1000 = 5000.' }
     ]
   };
-  const ink='#eef2ff', dim='#98a3c5', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
-        bg0='#151f3a', bg1='#0c1224', card='rgba(22,30,52,.94)', cardB='#3a4a70', lineC='#2a3a5f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.4">${t}</text>`;
+  const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
+        bg0='#151f3a', bg1='#0c1224', card='rgba(22,30,52,.96)', cardB='#3a4a70', lineC='#2a3a5f';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let sparks='';
-    for(let i=0;i<10;i++){ sparks+=`<circle class="qONote" style="animation-delay:${(i*0.3).toFixed(2)}s" cx="${(16+i*31)%W}" cy="${12+((i*35)%(H-22))}" r="2.5" fill="#ffd76a" opacity="0.4"/>`; }
+    for(let i=0;i<10;i++){ sparks+=`<circle class="qOPop" style="animation-delay:${(i*0.3).toFixed(2)}s" cx="${(16+i*31)%W}" cy="${12+((i*35)%(H-22))}" r="2.5" fill="#ffd76a" opacity="0.4"/>`; }
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
         <linearGradient id="qObg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
         <radialGradient id="qOdigit" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stop-color="#fff0c0"/><stop offset="0.6" stop-color="${gold}"/><stop offset="1" stop-color="#c9932f"/></radialGradient>
         <radialGradient id="qOzero" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stop-color="#ffe0e6"/><stop offset="0.6" stop-color="#ff9a8a"/><stop offset="1" stop-color="#c94b2f"/></radialGradient>
-        <filter id="qOsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/></filter>
+        <filter id="qOsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
       </defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qObg)"/>
       <g>${sparks}</g>
@@ -19290,21 +19285,20 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  const CELL=40;
-  /* ряд цифр в "машине" с разрядами */
+  const CELL=44;
   function digitSlots(x,y,str,zeroIdx){
     let s='';
-    const PL=['единицы','десятки','сотни','тысячи','10 тыс'];
+    const PL=['единицы','десятки','сотни','тысячи','10 т'];
     for(let i=0;i<str.length;i++){
       const ch=str[i], dz= zeroIdx&&zeroIdx.indexOf(i)>=0;
-      const plx=x+i*CELL, plc=PL[Math.min(PL.length-1, (str.length-1-i))];
-      s+=`<g class="qONote"><text x="${plx+CELL/2}" y="${y-8}" text-anchor="middle" font-size="8.5" fill="${dz?red:dim}">${plc}</text></g>`;
-      s+=`<g class="${dz?'qOZero':'qODigit'}" style="animation-delay:${(0.05*i).toFixed(2)}s" filter="url(#qOsh)"><rect x="${plx+2}" y="${y}" width="${CELL-4}" height="${CELL-4}" rx="7" fill="${dz?'url(#qOzero)':'url(#qOdigit)'}" stroke="${dz?'#c94b2f':'#8a5a2a'}" stroke-width="1.6"/>
-      ${tx(plx+CELL/2,y+CELL/2+6,19,dz?'#7a1a0f':'#3a2408',ch,{b:1,georgia:1})}</g>`;
+      const plx=x+i*CELL, plc=PL[Math.min(PL.length-1,(str.length-1-i))];
+      s+=`<text x="${plx+CELL/2}" y="${y-9}" text-anchor="middle" font-size="11" fill="${dz?red:dim}">${plc}</text>`;
+      s+=`<g class="${dz?'qOZero':'qODigit'}" style="animation-delay:${(0.05*i).toFixed(2)}s" filter="url(#qOsh)"><rect x="${plx+2}" y="${y}" width="${CELL-4}" height="${CELL-4}" rx="9" fill="${dz?'url(#qOzero)':'url(#qOdigit)'}" stroke="${dz?'#c94b2f':'#8a5a2a'}" stroke-width="1.8"/>
+      ${tx(plx+CELL/2,y+CELL/2+6,23,dz?'#7a1a0f':'#3a2408',ch,{b:1,georgia:1})}</g>`;
     }
     return s;
   }
-  const chip=(t,c,delay)=>`<span class="qOIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="qOIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q172=[
     {q:'47 · 100 = ?',opts:['470','4700','47000'],ans:1},
     {q:'5 · 1000 = ?',opts:['500','5000','50000'],ans:1}
@@ -19314,17 +19308,17 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const opts=T.opts.map((o,i)=>{
       let bd=cardB,tc=ink,bg=card;
       if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW172T('${lk}',${i})">${o}</button>`;
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:17px" onclick="visW172T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#7de0a0;font-size:16px">Верно! приписываем нули</div>'
-        : '<div class="wk-ans" style="color:#ff9a8a;font-size:15px">Не так · считай нули</div>';
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! приписываем нули</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · считай нули</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW172Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW172Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW172(el){
     const step=LV.step||0;
@@ -19338,14 +19332,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     let h='';
     const W=318;
     if(step===0){
-      const H=200, go=st.go||0;
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,17,ink,'магия нулей',{b:1});
-      inner+=tx(159,54,13,dim,'47 · 10 = ?',{});
-      inner+=digitSlots(79,84,'47',[]);
+      inner+=tx(159,30,20,ink,'магия нулей',{b:1});
+      inner+=tx(159,56,15,dim,'47 · 10 = ?',{});
+      inner+=digitSlots(go?37:79,78,'47',[]);
       if(go){
-        inner+=digitSlots(39,84,'470',[2]);
-        inner+=`<g class="qOPop"><text x="159" y="186" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 470 · цифра 7 «переехала» влево</text></g>`;
+        inner+=digitSlots(37,78,'470',[2]);
+        inner+=`<g class="qOPop"><text x="159" y="184" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 470 · цифра 7 «переехала» влево</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Научный цех нулей</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19355,13 +19349,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===1){
       const H=186, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,16,ink,'умножить на 10',{b:1});
+      inner+=tx(159,28,20,ink,'умножить на 10',{b:1});
       if(go===0){
-        inner+=digitSlots(79,60,'47',[]);
-        inner+=tx(159,150,13,dim,'+ один ноль',{});
+        inner+=digitSlots(go?37:79,64,'47',[]);
+        inner+=tx(159,158,15,dim,'+ один ноль → сдвиг влево',{});
       } else {
-        inner+=digitSlots(39,60,'470',[2]);
-        inner+=`<g class="qOPop"><text x="159" y="150" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">47 · 10 = 470</text></g>`;
+        inner+=digitSlots(37,64,'470',[2]);
+        inner+=`<g class="qOPop"><text x="159" y="160" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">47 · 10 = 470</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">×10</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19371,13 +19365,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===2){
       const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,16,ink,'умножить на 100',{b:1});
+      inner+=tx(159,28,20,ink,'умножить на 100',{b:1});
       if(go===0){
-        inner+=digitSlots(79,60,'47',[]);
-        inner+=tx(159,150,13,dim,'+ два нуля → сдвиг на 2 разряда',{});
+        inner+=digitSlots(go?37:79,64,'47',[]);
+        inner+=tx(159,160,15,dim,'+ два нуля → сдвиг на 2 разряда',{});
       } else {
-        inner+=digitSlots(0,60,'4700',[2,3]);
-        inner+=`<g class="qOPop"><text x="159" y="156" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">47 · 100 = 4700</text></g>`;
+        inner+=digitSlots(go?0:0,64,'4700',[2,3]);
+        inner+=`<g class="qOPop"><text x="159" y="162" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">47 · 100 = 4700</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">×100</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19387,13 +19381,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===3){
       const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,16,ink,'умножить на 1000',{b:1});
+      inner+=tx(159,28,20,ink,'умножить на 1000',{b:1});
       if(go===0){
-        inner+=digitSlots(99,60,'5',[]);
-        inner+=tx(159,150,13,dim,'+ три нуля → сдвиг на 3 разряда',{});
+        inner+=digitSlots(go?37:79,64,'5',[]);
+        inner+=tx(159,160,15,dim,'+ три нуля → сдвиг на 3 разряда',{});
       } else {
-        inner+=digitSlots(0,60,'5000',[1,2,3]);
-        inner+=`<g class="qOPop"><text x="159" y="156" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">5 · 1000 = 5000</text></g>`;
+        inner+=digitSlots(go?0:0,64,'5000',[1,2,3]);
+        inner+=`<g class="qOPop"><text x="159" y="162" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">5 · 1000 = 5000</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">×1000</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19401,14 +19395,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW172Act('${lk}','rst')`):wkBtn('сдвинуть',`visW172Act('${lk}','go')`))+
         wkSml('сдвиг на 3 разряда'));
     } else if(step===4){
-      const H=190, go=st.go||0;
+      const H=182;
+      const go=st.go||0;
       let inner='';
-      inner+=tx(159,26,16,ink,'почему сдвиг?',{b:1});
-      inner+=tx(159,52,12.5,dim,'47 · 10 — десять раз по 47',{});
+      inner+=tx(159,34,20,ink,'почему сдвиг?',{b:1});
+      inner+=tx(159,68,15,dim,'47 · 10 — десять раз по 47',{});
       if(go){
-        inner+=`<g class="qOPop"><text x="159" y="92" text-anchor="middle" font-size="18" fill="${gold}" font-weight="bold" font-family="Georgia,serif">каждая цифра × 10 → влево</text>
-        <text x="159" y="126" text-anchor="middle" font-size="13.5" fill="${dim}">единицы → десятки → сотни</text>
-        <text x="159" y="158" text-anchor="middle" font-size="13.5" fill="${dim}">справа — пусто → ноль</text></g>`;
+        inner+=`<g class="qOPop"><text x="159" y="106" text-anchor="middle" font-size="20" fill="${gold}" font-weight="bold" font-family="Georgia,serif">каждая цифра ×10 → влево</text>
+        <text x="159" y="140" text-anchor="middle" font-size="15" fill="${dim}">единицы → десятки → сотни</text>
+        <text x="159" y="164" text-anchor="middle" font-size="15" fill="${dim}">справа — пусто → ноль</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Разрядный сдвиг</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19418,13 +19413,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===5){
       const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,16,ink,'разделить на 10',{b:1});
+      inner+=tx(159,28,20,ink,'разделить на 10',{b:1});
       if(go===0){
-        inner+=digitSlots(39,60,'350',[2]);
-        inner+=tx(159,150,13,dim,'− один ноль (сдвиг вправо)',{});
+        inner+=digitSlots(go?37:37,64,'350',[2]);
+        inner+=tx(159,160,15,dim,'− один ноль (сдвиг вправо)',{});
       } else {
-        inner+=digitSlots(79,60,'35',[]);
-        inner+=`<g class="qOPop"><text x="159" y="150" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">350 : 10 = 35</text></g>`;
+        inner+=digitSlots(go?79:79,64,'35',[]);
+        inner+=`<g class="qOPop"><text x="159" y="160" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">350 : 10 = 35</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">:10</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19434,13 +19429,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===6){
       const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,16,ink,'разделить на 100',{b:1});
+      inner+=tx(159,28,20,ink,'разделить на 100',{b:1});
       if(go===0){
-        inner+=digitSlots(0,60,'3500',[2,3]);
-        inner+=tx(159,150,13,dim,'− два нуля (сдвиг на 2 вправо)',{});
+        inner+=digitSlots(go?0:0,64,'3500',[2,3]);
+        inner+=tx(159,160,15,dim,'− два нуля (сдвиг на 2 вправо)',{});
       } else {
-        inner+=digitSlots(79,60,'35',[]);
-        inner+=`<g class="qOPop"><text x="159" y="150" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">3500 : 100 = 35</text></g>`;
+        inner+=digitSlots(go?79:79,64,'35',[]);
+        inner+=`<g class="qOPop"><text x="159" y="160" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">3500 : 100 = 35</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">:100</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19448,16 +19443,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW172Act('${lk}','rst')`):wkBtn('сдвинуть',`visW172Act('${lk}','go')`))+
         wkSml('сдвиг на 2 вправо'));
     } else if(step===7){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,36,17,ink,'считай нули!',{b:1});
-      const rows=[['10','+1 ноль / −1 ноль','#7de0a0'],['100','+2 / −2','#ff9a8a'],['1000','+3 / −3','#7fd6ff']];
+      inner+=tx(159,36,20,ink,'считай нули!',{b:1});
       if(go){
-        inner+=`<g class="qOPop"><rect x="46" y="68" width="226" height="78" rx="12" fill="rgba(255,215,106,.13)" stroke="${gold}" stroke-width="2"/>
-        ${tx(159,94,15,gold,'умножаем — дописываем',{b:1})}
-        ${tx(159,118,15,gold,'делим — убираем',{b:1})}
-        ${tx(159,140,12,dim,'столько же нулей, сколько у 10/100/1000',{})}</g>`;
+        inner+=`<g class="qOPop"><rect x="46" y="68" width="226" height="82" rx="12" fill="rgba(255,215,106,.13)" stroke="${gold}" stroke-width="2"/>
+        ${tx(159,94,17,gold,'умножаем — дописываем',{b:1})}
+        ${tx(159,120,17,gold,'делим — убираем',{b:1})}
+        ${tx(159,144,13,dim,'столько же нулей, сколько у 10/100/1000',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило нулей</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19465,15 +19459,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW172Act('${lk}','rst')`):wkBtn('показать',`visW172Act('${lk}','go')`))+
         wkSml('сколько нулей — столько действий'));
     } else if(step===8){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,36,17,ink,'ловушка',{b:1});
-      inner+=tx(80,72,18,ink,'3500 : 10 = 350',{b:1,georgia:1});
-      inner+=tx(80,106,18,red,'3500 : 100 = 35',{b:1,georgia:1});
+      inner+=tx(159,36,20,ink,'ловушка',{b:1});
+      inner+=tx(80,80,22,ink,'3500 : 10 = 350',{b:1,georgia:1});
+      inner+=tx(80,114,22,red,'3500 : 100 = 35',{b:1,georgia:1});
       if(go){
-        inner+=`<g class="qOPop"><text x="159" y="150" text-anchor="middle" font-size="13.5" fill="${dim}">у 10 — один ноль, у 100 — два</text>
-        <text x="159" y="172" text-anchor="middle" font-size="13" fill="${red}" font-weight="bold">ровно столько и убираем!</text></g>`;
+        inner+=`<g class="qOPop"><text x="159" y="150" text-anchor="middle" font-size="15" fill="${dim}">у 10 — один ноль, у 100 — два</text>
+        <text x="159" y="172" text-anchor="middle" font-size="14" fill="${red}" font-weight="bold">ровно столько и убираем!</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Берегись</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19481,14 +19475,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW172Act('${lk}','rst')`):wkBtn('проверить',`visW172Act('${lk}','go')`))+
         wkSml('не спутай 10 и 100'));
     } else if(step===9){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,36,16,ink,'игра: сколько нулей?',{b:1});
+      inner+=tx(159,36,20,ink,'игра: сколько нулей?',{b:1});
       if(go){
-        inner+=`<g class="qOPop"><rect x="46" y="76" width="226" height="64" rx="12" fill="rgba(110,168,255,.13)" stroke="${blu}" stroke-width="2"/>
-        ${tx(159,98,16,blu,'47 · 100 → сколько нулей?',{b:1})}
-        ${tx(159,122,20,grn,'2 нуля!',{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qOPop"><rect x="44" y="76" width="230" height="66" rx="12" fill="rgba(110,168,255,.13)" stroke="${blu}" stroke-width="2"/>
+        ${tx(159,100,18,blu,'47 · 100 → сколько нулей?',{b:1})}
+        ${tx(159,126,24,grn,'2 нуля!',{b:1,georgia:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Мини-игра</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19496,29 +19490,29 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW172Act('${lk}','rst')`):wkBtn('проверить',`visW172Act('${lk}','go')`))+
         wkSml('спроси число нулей'));
     } else if(step===10){
-      const H=200, py=84;
+      const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'74 · 10 = ?',a:'740',ds:['70','7400']},
-        {q:'86 · 100 = ?',a:'8600',ds:['860','86000']},
-        {q:'2500 : 100 = ?',a:'25',ds:['250','2']},
-        {q:'3 · 1000 = ?',a:'3000',ds:['300','30000']}
+        {q:'74 · 10?',a:'740',ds:['70','7400']},
+        {q:'86 · 100?',a:'8600',ds:['860','86000']},
+        {q:'2500 : 100?',a:'25',ds:['250','2']},
+        {q:'3 · 1000?',a:'3000',ds:['300','30000']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,16,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qOIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,20,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qOIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,24,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qOPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qOPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">считай нули</text></g>`)
-        : tx(159,py+72,14.5,dim,'считай нули',{});
+        ? (st.pick===0? `<g class="qOPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qOPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">считай нули</text></g>`)
+        : tx(159,py+74,16,dim,'считай нули',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW172Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW172P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -19529,29 +19523,29 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('+N / −N нулей'));
     } else if(step===11){
-      const H=200, py=84;
+      const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'37 · 10 — сколько нулей в ответе?',a:'1',ds:['2','3']},
+        {q:'37 · 10 — сколько нулей?',a:'1',ds:['2','3']},
         {q:'9 · 1000 — сколько нулей?',a:'3',ds:['2','1']},
-        {q:'500 : 100 — сколько нулей убрать?',a:'2',ds:['1','3']},
+        {q:'500 : 100 — убрать нулей?',a:'2',ds:['1','3']},
         {q:'12 · 100 — сколько нулей?',a:'2',ds:['1','3']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,14.5,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,16,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qOIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qOIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qOPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qOPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">посчитай нули</text></g>`)
-        : tx(159,py+72,14.5,dim,'сколько нулей?',{});
+        ? (st.pick===0? `<g class="qOPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qOPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">посчитай нули</text></g>`)
+        : tx(159,py+74,16,dim,'сколько нулей?',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW172Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW172P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -19561,16 +19555,16 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('сколько нулей у множителя'));
     } else if(step===12){
-      const H=198;
+      const H=192;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'шпаргалка',{b:1});
-      const items=[['×10 → +1 ноль · ×100 → +2 · ×1000 → +3'],[':10 → −1 · :100 → −2 · :1000 → −3'],['цифры сдвигаются влево (×) / вправо (:)'],['считай нули у 10/100/1000']];
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      const items=[['×10 → +1 · ×100 → +2 · ×1000 → +3'],[':10 → −1 · :100 → −2 · :1000 → −3'],['цифры сдвигаются влево (×) / вправо (:)'],['считай нули у 10/100/1000']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
-          const ry=54+i*36;
-          inner+=`<g class="qOIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="30" rx="9" fill="${i%2?'rgba(22,29,50,.94)':'rgba(30,42,68,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+20,11.5,ink,items[i][0],{})}</g>`;
+          const ry=52+i*32;
+          inner+=`<g class="qOIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(22,29,50,.96)':'rgba(30,42,68,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
         }
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
@@ -19583,33 +19577,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go===3?wkBtn('шаг 4',`visW172Act('${lk}','go')`) : '',
           go>=4?wkBtn('сброс',`visW172Act('${lk}','rst')`):'')+
         wkSml('посчитай нули'));
-    } else if(step===13){
-      const H=196;
-      if(st.mq==null) st.mq=0;
-      const QS=[
-        {q:'47 · 100 = ?',opts:['4700','470','47000'],ans:0},
-        {q:'3500 : 100 = ?',opts:['35','350','3'],ans:0},
-        {q:'5 · 1000 = ?',opts:['5000','500','50000'],ans:0}
-      ];
-      const T=QS[st.mq];
-      let inner='';
-      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
-      if(st.msel!=null){
-        inner+=`<g class="qOPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'считай нули'}</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        `<div class="wk-row" style="gap:8px">
-          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW172S('${lk}',${i})">${o}</button>`).join('')}
-          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW172Act('${lk}','nq')`):''}
-          ${st.msel!=null?wkBtn('заново',`visW172Act('${lk}','rst')`):''}
-        </div>`+
-        wkSml('считай нули'));
     } else {
       const H=196;
       let inner='';
-      inner+=tx(159,36,17,ink,'47 · 100',{b:1,georgia:1});
-      inner+=digitSlots(99,66,'4700',[2,3]);
+      inner+=tx(159,32,20,ink,'47 · 100 = ?',{b:1,georgia:1});
+      inner+=digitSlots(0,64,'4700',[2,3]);
+      inner+=`<g class="qOPop"><text x="159" y="170" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 4700</text></g>`;
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
