@@ -19609,22 +19609,20 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW172Act=visW172Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===172){ window.ARH_LESSONS[i]=L172; break; } } })();
 })();
-/* ================= УРОК 176 · Объём прямоугольного параллелепипеда (v1 · «Цех объёмов Архимеда», 15 слайдов, 3D премиум) ================= */
+/* ================= УРОК 176 · Объём прямоугольного параллелепипеда (v2 · «Цех объёмов Архимеда», 14 слайдов, флагман) ================= */
 (function(){
-  if(!window.__wk176v1css){
-    window.__wk176v1css=1;
+  if(!window.__wk176v2css){
+    window.__wk176v2css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qKIn{animation:qKIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qKIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qKPop{animation:qKPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qKPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qKCube{animation:qKCube .5s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qKCube{0%{transform:scale(0) rotate(-8deg);opacity:0}70%{transform:scale(1.1) rotate(2deg);opacity:1}100%{transform:scale(1) rotate(0)}}'+
-      '#lvis .qKLayer{animation:qKLayer .7s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center bottom;}'+
-      '@keyframes qKLayer{0%{transform:scaleY(0);opacity:0}70%{transform:scaleY(1.05);opacity:1}100%{transform:scaleY(1)}}'+
-      '#lvis .qKFloat{animation:qKFloat 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qKFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+      '#lvis .qKPop{animation:qKPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qKPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qKCube{animation:qKCube .5s cubic-bezier(.2,.8,.3,1.4) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qKCube{0%{transform:scale(0) rotate(-8deg);opacity:0}70%{transform:scale(1.12) rotate(2deg);opacity:1}100%{transform:scale(1) rotate(0)}}'+
+      '#lvis .qKLayer{animation:qKLayer .6s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes qKLayer{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}';
     document.head.appendChild(st);
   }
   const L176 = {
@@ -19656,8 +19654,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     ]
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e',
-        LAY=['#e8604c','#f5a623','#62c1e0','#9a7bd0','#7bcd7b'], card='rgba(255,251,244,.97)', cardB='#d9c9ab', cream='#fbf4e2';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf4e2" stroke-width="3.2">${t}</text>`;
+        LAY=['#e8604c','#f5a623','#62c1e0','#9a7bd0','#7bcd7b'], card='rgba(255,251,244,.97)', cardB='#d9c9ab', cream='#f6e6c6';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let dots='';
@@ -19675,30 +19673,24 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  const U=20, OXX=40, OYY=52;
-  const fx=gx=>OXX+gx*U, fy=gy=>OYY+gy*U;
-  const DDD=0.5*U, DDY=-0.32*U; // глубина за один слой
-  /* изометрия: фронтал a*b, глубина c */
-  function isoBox(a,b,c,color,layers){
+  const U=22, OXX=36, OYY=54;
+  const fx=g=>OXX+g*U, fy=g=>OYY+g*U;
+  const DDD=0.5*U, DDY=-0.34*U;
+  function isoBox(a,b,c,go){
     const W=a*U, H=b*U, ddx=c*DDD, ddy=c*DDY;
     let s='';
-    /* верхняя грань */
-    s+=`<path d="M ${fx(0)} ${fy(0)} L ${fx(0)+ddx} ${fy(0)+ddy} L ${fx(0)+ddx+W} ${fy(0)+ddy} L ${fx(0)+W} ${fy(0)} Z" fill="rgba(217,160,90,.28)" stroke="#7a5a2a" stroke-width="1.6"/>`;
-    /* правая грань */
-    s+=`<path d="M ${fx(a)} ${fy(0)} L ${fx(a)+ddx} ${fy(0)+ddy} L ${fx(a)+ddx} ${fy(b)+ddy} L ${fx(a)} ${fy(b)} Z" fill="rgba(217,160,90,.16)" stroke="#7a5a2a" stroke-width="1.6"/>`;
-    /* фронтальная сетка a*b */
-    s+=`<g class="qKLayer" style="animation-delay:.15s">`;
+    s+=`<path d="M ${fx(0)} ${fy(0)} L ${fx(0)+ddx} ${fy(0)+ddy} L ${fx(0)+ddx+W} ${fy(0)+ddy} L ${fx(0)+W} ${fy(0)} Z" fill="rgba(217,160,90,.28)" stroke="#7a5a2a" stroke-width="1.8"/>`;
+    s+=`<path d="M ${fx(a)} ${fy(0)} L ${fx(a)+ddx} ${fy(0)+ddy} L ${fx(a)+ddx} ${fy(b)+ddy} L ${fx(a)} ${fy(b)} Z" fill="rgba(217,160,90,.16)" stroke="#7a5a2a" stroke-width="1.8"/>`;
+    s+=`<g class="qKLayer">`;
     for(let gy=0;gy<b;gy++)for(let gx=0;gx<a;gx++){
-      const c1=color||LAY[(gx+gy)%LAY.length];
-      s+=`<g class="qKCube" style="animation-delay:${(0.03*(gx+gy)).toFixed(2)}s"><rect x="${fx(gx)+1}" y="${fy(gy)+1}" width="${U-2}" height="${U-2}" rx="3" fill="${c1}" stroke="#5a4630" stroke-width="1.3"/>
-      <rect x="${fx(gx)+3}" y="${fy(gy)+3}" width="${U-6}" height="3" fill="rgba(255,255,255,.35)" rx="1.5"/></g>`;
+      const c1=LAY[(gx+gy)%LAY.length];
+      s+=`<g class="qKCube" style="animation-delay:${(0.03*(gx+gy)).toFixed(2)}s"><rect x="${fx(gx)+1}" y="${fy(gy)+1}" width="${U-2}" height="${U-2}" rx="3" fill="${c1}" stroke="#5a4630" stroke-width="1.4"/><rect x="${fx(gx)+3}" y="${fy(gy)+3}" width="${U-6}" height="3" fill="rgba(255,255,255,.35)" rx="1.5"/></g>`;
     }
     s+=`</g>`;
-    /* линии глубины на правой грани: c-слои */
     for(let i=1;i<c;i++){ s+=`<line x1="${fx(a)+i*DDD}" y1="${fy(0)+i*DDY}" x2="${fx(a)+i*DDD}" y2="${fy(b)+i*DDY}" stroke="#b8802c" stroke-width="1" opacity="0.7"/>`; }
     return s;
   }
-  const chip=(t,c,delay)=>`<span class="qKIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="qKIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q176=[
     {q:'V = 2 · 3 · 4 = ?',opts:['24','9','20'],ans:0},
     {q:'Коробка 10×10×10 — объём?',opts:['1000','100','30'],ans:0}
@@ -19707,24 +19699,24 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const T=Q176[st.q||0];
     const opts=T.opts.map((o,i)=>{
       let bd=cardB,tc=ink,bg=card;
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.16)':'rgba(193,75,47,.14)'; bd=i===T.ans?grn:red; tc=i===T.ans?'#2f7a53':red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW176T('${lk}',${i})">${o}</button>`;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.18)':'rgba(193,75,47,.14)'; bd=i===T.ans?grn:red; tc=i===T.ans?'#2f7a53':red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:60px;font-size:17px" onclick="visW176T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#2f7a53;font-size:16px">Верно! перемножь все стороны</div>'
-        : '<div class="wk-ans" style="color:#c14b2f;font-size:15px">Не так · a · b · c</div>';
+        ? '<div class="wk-ans" style="color:#2f7a53;font-size:18px">Верно! перемножь все стороны</div>'
+        : '<div class="wk-ans" style="color:#c14b2f;font-size:17px">Не так · a · b · c</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW176Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW176Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#d9a05a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#c9b98d')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW176(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step>=0&&step<=13){ st.go=0; st.pick=null; }
       if(step===8){ st.a=2; st.b=3; st.c=4; }
       if(step===9||step===10) st.pick=null;
       if(step===12){ st.mq=0; st.msel=null; }
@@ -19733,69 +19725,58 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     let h='';
     const W=318;
     if(step===0){
-      const H=204, go=st.go||0;
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,17,ink,'сколько кубиков в коробке?',{b:1});
-      inner+=isoBox(go?2:2,go?3:3,go?4:1, null,1);
-      if(go){
-        inner+=`<g class="qKPop"><text x="159" y="186" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">объём = число кубиков внутри!</text></g>`;
-      } else {
-        inner+=tx(159,186,13,dim,'объём — сколько помещается',{});
-      }
+      inner+=tx(159,26,20,ink,'сколько кубиков в коробке?',{b:1});
+      inner+=isoBox(2,3,go?4:1,go);
+      if(go){ inner+=`<g class="qKPop"><text x="159" y="188" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">объём = число кубиков внутри!</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Цех объёмов</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('объём — «вместимость» в кубиках',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW176Act('${lk}','rst')`):wkBtn('что это?',`visW176Act('${lk}','go')`))+
         wkSml('три измерения'));
     } else if(step===1){
-      const H=208, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'коробка 2 × 3 × 4',{b:1});
-      inner+=isoBox(2,3,go?4:1,null,1);
-      inner+=tx(159,150,13.5,dim,'длина × ширина × высота',{});
-      if(go){
-        inner+=`<g class="qKPop"><text x="159" y="188" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">стороны: 2, 3, 4 (см)</text></g>`;
-      }
+      inner+=tx(159,26,20,ink,'коробка 2 × 3 × 4',{b:1});
+      inner+=isoBox(2,3,go?4:1,go);
+      if(go){ inner+=`<g class="qKPop"><text x="159" y="184" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">стороны 2, 3, 4 (см)</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Три стороны</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('a=2, b=3, c=4',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW176Act('${lk}','rst')`):wkBtn('показать',`visW176Act('${lk}','go')`))+
         wkSml('длина, ширина, высота'));
     } else if(step===2){
-      const H=208, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'дно: 2 × 3 = 6 кубиков',{b:1});
-      inner+=isoBox(2,3,go?4:1,null,go?1:1);
-      if(go){
-        inner+=`<g class="qKPop"><text x="159" y="188" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">на дне 6 кубиков — это а·b</text></g>`;
-      }
+      inner+=tx(159,26,20,ink,'дно: 2 × 3 = 6 кубиков',{b:1});
+      inner+=isoBox(2,3,go?4:1,go);
+      if(go){ inner+=`<g class="qKPop"><text x="159" y="184" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">на дне 6 кубиков — это а·b</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Первый слой</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('a·b = 2·3 = 6',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW176Act('${lk}','rst')`):wkBtn('посчитать дно',`visW176Act('${lk}','go')`))+
         wkSml('так на дне'));
     } else if(step===3){
-      const H=208, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'слоёв — 4, число = высота',{b:1});
-      inner+=isoBox(2,3,4,null,go?4:1);
-      if(go){
-        inner+=`<g class="qKPop"><text x="159" y="188" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">6 кубиков × 4 слоя = 24 кубика</text></g>`;
-      }
+      inner+=tx(159,26,20,ink,'слоёв — 4, число = высота',{b:1});
+      inner+=isoBox(2,3,4,go);
+      if(go){ inner+=`<g class="qKPop"><text x="159" y="184" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">6 кубиков × 4 слоя = 24</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Слои</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('a·b кубиков × c слоёв',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW176Act('${lk}','rst')`):wkBtn('добавить слои',`visW176Act('${lk}','go')`))+
         wkSml('объём = a·b·c'));
     } else if(step===4){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,17,ink,'формула',{b:1});
-      inner+=tx(159,72,22,ink,'V = a · b · c',{b:1,georgia:1});
+      inner+=tx(159,38,20,ink,'формула',{b:1});
+      inner+=tx(159,74,24,ink,'V = a · b · c',{b:1,georgia:1});
       if(go){
-        inner+=`<g class="qKPop"><text x="159" y="120" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 2 · 3 · 4 = 24</text>
-        <text x="159" y="150" text-anchor="middle" font-size="13" fill="${dim}">см³ — кубических сантиметра</text></g>`;
+        inner+=`<g class="qKPop"><text x="159" y="122" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 2 · 3 · 4 = 24</text>
+        <text x="159" y="154" text-anchor="middle" font-size="15" fill="${dim}">см³ — кубических сантиметра</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Объём</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19803,15 +19784,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW176Act('${lk}','rst')`):wkBtn('посчитать',`visW176Act('${lk}','go')`))+
         wkSml('перемножь стороны'));
     } else if(step===5){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,17,ink,'кубические единицы',{b:1});
-      inner+=tx(159,72,15,dim,'маленькая тройка = «кубические»',{});
+      inner+=tx(159,36,20,ink,'кубические единицы',{b:1});
+      inner+=tx(159,70,16,dim,'маленькая тройка = «кубические»',{});
       if(go){
-        inner+=`<g class="qKPop"><rect x="52" y="96" width="214" height="42" rx="11" fill="rgba(217,160,90,.14)" stroke="${gold}" stroke-width="2"/>
-        ${tx(159,116,20,gold,'см³ · м³',{b:1,georgia:1})}
-        ${tx(159,132,12,dim,'не квадратные, а кубические',{})}</g>`;
+        inner+=`<g class="qKPop"><rect x="48" y="88" width="222" height="48" rx="12" fill="rgba(217,160,90,.14)" stroke="${gold}" stroke-width="2"/>
+        ${tx(159,110,22,gold,'см³ · м³',{b:1,georgia:1})}
+        ${tx(159,130,14,dim,'не квадратные, а кубические',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Единицы</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19819,28 +19800,26 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW176Act('${lk}','rst')`):wkBtn('показать',`visW176Act('${lk}','go')`))+
         wkSml('три измерения — куб'));
     } else if(step===6){
-      const H=208, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'куб 10 × 10 × 10',{b:1});
-      inner+=isoBox(3,3,3,null,go?3:1);
-      if(go){
-        inner+=`<g class="qKPop"><text x="159" y="188" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">10·10·10 = 1000 см³</text></g>`;
-      }
+      inner+=tx(159,26,20,ink,'куб 10 × 10 × 10',{b:1});
+      inner+=isoBox(3,3,3,go);
+      if(go){ inner+=`<g class="qKPop"><text x="159" y="184" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">10·10·10 = 1000 см³</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Куб</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('куб: a = b = c → a³',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW176Act('${lk}','rst')`):wkBtn('показать',`visW176Act('${lk}','go')`))+
         wkSml('все стороны равны'));
     } else if(step===7){
-      const H=204;
+      const H=186;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'считай по шагам',{b:1});
-      inner+=tx(159,62,15,ink,'2 · 3 · 4',{b:1,georgia:1});
+      inner+=tx(159,34,20,ink,'считай по шагам',{b:1});
+      inner+=tx(159,68,20,ink,'2 · 3 · 4',{b:1,georgia:1});
       if(go){
-        inner+=`<g class="qKPop"><text x="159" y="102" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">шаг 1: 2 · 3 = 6</text>
-        <text x="159" y="132" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">шаг 2: 6 · 4 = 24</text>
-        <text x="159" y="162" text-anchor="middle" font-size="14" fill="${dim}">сначала a·b, потом × c</text></g>`;
+        inner+=`<g class="qKPop"><text x="159" y="112" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">шаг 1: 2 · 3 = 6</text>
+        <text x="159" y="142" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">шаг 2: 6 · 4 = 24</text>
+        <text x="159" y="168" text-anchor="middle" font-size="14" fill="${dim}">сначала a·b, потом × c</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Метод Архимеда</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19848,22 +19827,20 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW176Act('${lk}','rst')`):wkBtn('показать',`visW176Act('${lk}','go')`))+
         wkSml('умножай по шагам'));
     } else if(step===8){
-      const H=210, go=st.go||0;
+      const H=204, go=st.go||0;
       let inner='';
       const a=st.a||2,b=st.b||3,c=st.c||4;
-      inner+=tx(159,26,16,ink,'собери коробку',{b:1});
-      inner+=isoBox(a,b,c,null,go?c:1);
-      inner+=tx(159,190,15,ink,'a='+a+' · b='+b+' · c='+c,{b:1,georgia:1});
-      if(go){
-        inner+=`<g class="qKPop"><text x="159" y="168" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">V = ${a*b*c}</text></g>`;
-      }
+      inner+=tx(159,24,20,ink,'собери коробку',{b:1});
+      inner+=isoBox(a,b,go?c:1,go);
+      inner+=tx(159,188,18,ink,'a='+a+' · b='+b+' · c='+c,{b:1,georgia:1});
+      if(go){ inner+=`<g class="qKPop"><text x="159" y="166" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">V = ${a*b*c}</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Собери сам</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('V = '+a+'·'+b+'·'+c+' = '+(a*b*c),grn,0.2)):'')+
         wkRow(wkBtn('длина +',`visW176Act('${lk}','da')`),wkBtn('ширина +',`visW176Act('${lk}','db')`),wkBtn('высота +',`visW176Act('${lk}','dc')`))+
         wkSml('меняй стороны — смотри объём'));
     } else if(step===9){
-      const H=200, py=84;
+      const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'V = 3·2·5?',a:'30',ds:['10','32']},
@@ -19874,18 +19851,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,17,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
-        inner+=`<g class="qKIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qKIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qKPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
-          : `<g class="qKPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">a·b·c</text></g>`)
-        : tx(159,py+72,14.5,dim,'перемножь',{});
+        ? (st.pick===0? `<g class="qKPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qKPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">a·b·c</text></g>`)
+        : tx(159,py+74,16,dim,'перемножь',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW176Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW176P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -19896,7 +19873,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('V = a·b·c'));
     } else if(step===10){
-      const H=200, py=84;
+      const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'V=24, a=2·b=3. c=?',a:'4',ds:['6','12']},
@@ -19907,18 +19884,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,15.5,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,17,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
-        inner+=`<g class="qKIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qKIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qKPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
-          : `<g class="qKPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">раздели</text></g>`)
-        : tx(159,py+72,14.5,dim,'найди сторону',{});
+        ? (st.pick===0? `<g class="qKPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qKPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">раздели</text></g>`)
+        : tx(159,py+74,16,dim,'найди сторону',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW176Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW176P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -19928,16 +19905,16 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('V = a·b·c — найди c'));
     } else if(step===11){
-      const H=196;
+      const H=190;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'шпаргалка',{b:1});
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
       const items=[['V = a · b · c'],['длина × ширина × высота'],['единицы кубические (см³, м³)'],['куб: a = b = c → a³']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
-          const ry=54+i*36;
-          inner+=`<g class="qKIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="30" rx="9" fill="${i%2?'rgba(255,251,244,.97)':'rgba(217,160,90,.14)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.6"/>
-          ${tx(159,ry+20,13,ink,items[i][0],{})}</g>`;
+          const ry=52+i*32;
+          inner+=`<g class="qKIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(255,251,244,.97)':'rgba(217,160,90,.14)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,15,ink,items[i][0],{})}</g>`;
         }
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
@@ -19951,7 +19928,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=4?wkBtn('сброс',`visW176Act('${lk}','rst')`):'')+
         wkSml('перемножь стороны'));
     } else if(step===12){
-      const H=196;
+      const H=182;
       if(st.mq==null) st.mq=0;
       const QS=[
         {q:'V = 2·3·4?',opts:['24','9','20'],ans:0},
@@ -19960,9 +19937,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qKPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'a·b·c'}</text></g>`;
+        inner+=`<g class="qKPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'a·b·c'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19973,10 +19950,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('V = a·b·c'));
     } else {
-      const H=204;
+      const H=198;
       let inner='';
-      inner+=isoBox(2,3,4,null,1);
-      inner+=`<g class="qKPop"><text x="159" y="188" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">V = 24 см³</text></g>`;
+      inner+=tx(159,28,20,ink,'2 × 3 × 4',{b:1,georgia:1});
+      inner+=isoBox(2,3,4,true);
+      inner+=`<g class="qKPop"><text x="159" y="186" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">V = 24 см³</text></g>`;
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
