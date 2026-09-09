@@ -18869,7 +18869,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   const ink='#2c3a2c', dim='#7a8a7a', gold='#c99a2f', cyan='#1f9aba', grn='#4c9a58', red='#c14b2f',
         card='rgba(255,253,248,.97)', cardB='#c9b98d';
   const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf4e2" stroke-width="3.4">${t}</text>`;
-  const CELL=42, X0=24, Y0=20;
+  const CELL=37, X0=26, Y0=18;
   const px=g=>X0+g*CELL, py=g=>Y0+g*CELL;
   function bg(W,H,opt){
     const o=opt||{};
@@ -19463,8 +19463,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const go=st.go||0;
       let inner='';
       inner+=tx(159,36,20,ink,'ловушка',{b:1});
-      inner+=tx(80,80,22,ink,'3500 : 10 = 350',{b:1,georgia:1});
-      inner+=tx(80,114,22,red,'3500 : 100 = 35',{b:1,georgia:1});
+      inner+=tx(30,80,20,ink,'3500 : 10 = 350',{b:1,georgia:1,an:'start'});
+      inner+=tx(30,114,20,red,'3500 : 100 = 35',{b:1,georgia:1,an:'start'});
       if(go){
         inner+=`<g class="qOPop"><text x="159" y="150" text-anchor="middle" font-size="15" fill="${dim}">у 10 — один ноль, у 100 — два</text>
         <text x="159" y="172" text-anchor="middle" font-size="14" fill="${red}" font-weight="bold">ровно столько и убираем!</text></g>`;
@@ -20076,7 +20076,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     }
     if(showTrace){
       const path='M '+SQ.TL[0]+' '+SQ.TL[1]+' L '+SQ.TR[0]+' '+SQ.TR[1]+' L '+SQ.BR[0]+' '+SQ.BR[1]+' L '+SQ.BL[0]+' '+SQ.BL[1]+' L '+SQ.TL[0]+' '+SQ.TL[1]+' L '+SQ.BR[0]+' '+SQ.BR[1];
-      s+=`<g><circle cx="${SQ.TL[0]}" cy="${SQ.TL[1]}" r="7" fill="#ffd76a" stroke="#fffdf2" stroke-width="2"><animateMotion dur="3.5s" path="${path}" fill="freeze" begin="0.3s"/></circle></g>`;
+      s+=`<g><circle cx="0" cy="0" r="7" fill="#ffd76a" stroke="#fffdf2" stroke-width="2"><animateMotion dur="3.5s" path="${path}" fill="freeze" begin="0.3s"/></circle></g>`;
     }
     return s;
   }
@@ -20310,7 +20310,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
         inner+=`<g class="qLIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
-        ${tx(X[i]+CW/2,py+36,19,tc,o,{b:1,georgia:1})}</g>`;
+        ${tx(X[i]+CW/2,py+36,15,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
         ? (st.pick===0? `<g class="qLPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
@@ -20972,10 +20972,10 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const H=186;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,34,20,ink,'почему остаток наследует НОД?',{b:1});
+      inner+=tx(159,36,17,ink,'почему остаток наследует НОД?',{b:1});
       inner+=tx(159,70,14,dim,'48 = 30·1 + 18 → делитель тот же',{});
       if(go){
-        inner+=`<g class="qNPop"><text x="159" y="108" text-anchor="middle" font-size="16" fill="${cyan}" font-weight="bold">общий делитель 48 и 30 = делитель 30 и 18</text>
+        inner+=`<g class="qNPop"><text x="159" y="108" text-anchor="middle" font-size="13" fill="${cyan}" font-weight="bold">общий делитель 48 и 30 = делитель 30 и 18</text>
         <text x="159" y="140" text-anchor="middle" font-size="14" fill="${dim}">и так далее — до общей меры</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Ключ</div>`+
@@ -20995,7 +20995,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         if(go>=i){
           const max=Math.max(p[0],p[1]);
           inner+=`<g class="qNRow"><line x1="30" y1="${y}" x2="${30+max*(220/48).toFixed(2)}" y2="${y}" stroke="${p[2]===0?grn:cyan}" stroke-width="11" stroke-linecap="round"/>
-          <text x="${30+(max*4.5).toFixed(0)-6}" y="${y-6}" text-anchor="middle" font-size="12" fill="${dim}">${p[0]}·${p[1]}</text></g>`;
+          <text x="${(30+Math.round(max*4.5)-6)}" y="${y-6}" text-anchor="middle" font-size="12" fill="${dim}">${p[0]}·${p[1]}</text></g>`;
         }
       }
       if(go>=4){ inner+=`<g class="qNPop"><text x="159" y="184" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">длина стала 6 = НОД</text></g>`; }
@@ -21122,7 +21122,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===P.ci&&st.pick===P.ci){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
         inner+=`<g class="qNIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
-        ${tx(X[i]+CW/2,py+36,14,tc,o,{b:1,georgia:1})}</g>`;
+        ${tx(X[i]+CW/2,py+36,11,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
         ? (st.pick===P.ci? `<g class="qNPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
@@ -21182,7 +21182,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('деление с остатком'));
     } else if(step===13){
-      const H=202, go=st.go||0;
+      const H=214, go=st.go||0;
       let inner='';
       inner+=tx(159,28,20,ink,'НОД(48, 30)',{b:1,georgia:1});
       inner+=divRow(50,48,30,1,18,false,true);
