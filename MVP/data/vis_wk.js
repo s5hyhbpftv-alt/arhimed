@@ -7700,38 +7700,36 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW194Act=visW194Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===194){ window.ARH_LESSONS[i]=L194; break; } } })();
 })();
-/* ================= УРОК 178 · Сравнение дробей с одинаковыми знаменателями (v3 · «Пиццерия Архимеда», 15 слайдов, исключительный) ================= */
+/* ================= УРОК 178 · Сравнение дробей с одинаковыми знаменателями (v4 · «Пиццерия Архимеда», 15 слайдов, флагман) ================= */
 (function(){
-  if(!window.__wk178v3css){
-    window.__wk178v3css=1;
+  if(!window.__wk178v4css){
+    window.__wk178v4css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .q0In{animation:q0In .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes q0In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .q0Pop{animation:q0Pop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes q0Pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .q0Pop{animation:q0Pop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q0Pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
       '#lvis .q0Serve{animation:q0Serve .7s cubic-bezier(.2,.8,.3,1.2) both;}'+
       '@keyframes q0Serve{0%{transform:scale(.55);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1);opacity:1}}'+
-      '#lvis .q0Float{animation:q0Float 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes q0Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
-      '#lvis .q0Slice{stroke-dasharray:10 6;animation:q0Draw .8s ease both;}'+
-      '@keyframes q0Draw{to{stroke-dashoffset:0}}';
+      '#lvis .q0Float{animation:q0Float 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q0Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
     document.head.appendChild(st);
   }
   const L178 = {
     id: 178, title: 'Сравнение дробей с одинаковыми знаменателями', ico: '⚖️',
     src: 'Математика · 5 класс · Сравнение дробей', subj: 'math',
     explain: [
-      'Дроби с одинаковым знаменателем — это доли одного размера: 3/7 и 2/7 — это три седьмых и две седьмых одного торта.',
+      'Дроби с одинаковым знаменателем — это доли одного размера: 3/7 и 2/7 — три и две седьмых одной пиццы.',
       'Из долей одинакового размера больше та, у которой больше числитель: 3/7 > 2/7.',
       'Почему? Семь одинаковых кусков: три куска больше, чем два.',
-      'Правило: сравниваем числители, знаменатели одинаковые — их не трогаем.',
+      'Правило: сравниваем числители, а знаменатели одинаковые — их не трогаем.',
       'Ловушка: не сравнивай знаменатели! 3/7 и 3/5: больше 3/5, потому что пятые доли крупнее.',
       'Совет Архимеда: представь пиццу, нарезанную на 7 кусков: 3 куска или 2 — что больше?',
       'Одинаковый знаменатель = одинаковый кусок. Сравнивай, сколько кусков.',
       'Одна и та же пицца — 3 куска больше, чем 2 куска, всегда.',
       'А если числители одинаковые? Тогда смотри на знаменатели: меньше знаменатель = крупнее кусок.',
-      'Пятёрка на куске больше семёрки на куске: 3/5 > 3/7. Посмотри на сами куски!',
+      'Пятёрка кусков крупнее семёрки: 3/5 > 3/7. Посмотри на сами куски!',
       'Тренажёр: сравни дроби по кускам пиццы.',
       'Тренажёр: определи знак — больше или меньше.',
       'Шпаргалка: одинаковые знаменатели → сравни числители; одинаковые числители → меньше знаменатель больше.',
@@ -7747,14 +7745,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Пятые доли одинаковые, сравни числители.', '3 > 2 — больше 3/5.'], sol: '3/5' }
     ]
   };
-  const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', crust='#c98a3f', cheese='#f6d24a', sauce='#d6453d', chk1='#e7d9c0', chk2='#d6453d',
-        grn='#4c9a58', blu='#3f6d9e', card='rgba(255,250,240,.96)', cardB='#c9b98d', cream='#fdf6e9';
+  const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', crust='#c98a3f', cheese='#f6d24a', sauce='#d6453d',
+        grn='#4c9a58', blu='#3f6d9e', card='rgba(255,250,240,.97)', cardB='#c9b98d', cream='#fdf6e9';
   const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=10?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
   function sector(cx,cy,r,a0,a1){
     const r0=a0*Math.PI/180, r1=a1*Math.PI/180;
     return `M ${cx} ${cy} L ${(cx+r*Math.cos(r0)).toFixed(1)} ${(cy+r*Math.sin(r0)).toFixed(1)} A ${r} ${r} 0 ${(r1-r0)>180?1:0} 1 ${(cx+r*Math.cos(r1)).toFixed(1)} ${(cy+r*Math.sin(r1)).toFixed(1)} Z`;
   }
-  /* пицца, нарезанная на n кусков; k кусков «съедено»/выбрано (залиты sauce) */
   function pizza(cx,cy,r,n,k,o){
     const o2=o||{}, st=o2.start==null?-90:o2.start;
     let s='';
@@ -7764,10 +7761,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       for(let i=0;i<k;i++){ s+=`<path d="${sector(cx,cy,r,st+i*360/n,st+(i+1)*360/n)}" fill="${o2.fill||sauce}" stroke="rgba(255,235,200,.5)" stroke-width="1.6"/>`; }
       s+=`</g>`;
     }
-    /* корочка */
     s+=`<circle cx="${cx}" cy="${cy}" r="${r-1}" fill="none" stroke="${o2.crust||crust}" stroke-width="4"/>`;
-    /* пузырьки-топпинги */
-    for(let i=0;i<(o2.toppings!=null?o2.toppings:7);i++){ const a=(i*47+st)*Math.PI/180; const rr=r*0.55*((i%3+2)/3); s+=`<circle cx="${(cx+rr*Math.cos(a)).toFixed(1)}" cy="${(cy+rr*Math.sin(a)).toFixed(1)}" r="3" fill="#f09a5a" opacity="0.7"/>`; }
+    for(let i=0;i<(o2.toppings!=null?o2.toppings:7);i++){ const a=(i*47+st)*Math.PI/180; const rr=r*0.55*((i%3+2)/3); s+=`<circle cx="${(cx+rr*Math.cos(a)).toFixed(1)}" cy="${(cy+rr*Math.sin(a)).toFixed(1)}" r="3.4" fill="#f09a5a" opacity="0.7"/>`; }
     return s;
   }
   function bg(W,H,opt){
@@ -7787,7 +7782,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  const chip=(t,c,delay)=>`<span class="q0In" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="q0In" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:19px;color:${c};font-weight:bold">${t}</span>`;
   const Q178=[
     {q:'3/7 или 2/7 — что больше?',opts:['3/7','2/7','равны'],ans:0},
     {q:'3/5 или 3/7 — что больше?',opts:['3/5','3/7','равны'],ans:0}
@@ -7796,18 +7791,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const T=Q178[st.q||0];
     const opts=T.opts.map((o,i)=>{
       let bd=cardB,tc=ink,bg=card;
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.16)':'rgba(214,69,61,.14)'; bd=i===T.ans?grn:sauce; tc=i===T.ans?'#2f7a53':sauce; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW178T('${lk}',${i})">${o}</button>`;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.18)':'rgba(214,69,61,.14)'; bd=i===T.ans?grn:sauce; tc=i===T.ans?'#2f7a53':sauce; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:60px;font-size:17px" onclick="visW178T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#2f7a53;font-size:16px">Верно! сравни числители при равных знаменателях</div>'
-        : '<div class="wk-ans" style="color:#c14b2f;font-size:15px">Не так · смотри на числители</div>';
+        ? '<div class="wk-ans" style="color:#2f7a53;font-size:18px">Верно! сравни числители при равных знаменателях</div>'
+        : '<div class="wk-ans" style="color:#c14b2f;font-size:17px">Не так · смотри на числители</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW178Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW178Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#d9a05a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#c9b98d')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW178(el){
     const step=LV.step||0;
@@ -7822,177 +7817,157 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     let h='';
     const W=318;
     if(step===0){
-      const H=204, go=st.go||0;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'кто получит больше?',{b:1});
-      inner+=tx(159,50,12.5,dim,'две одинаковые пиццы по 7 кусков',{});
-      inner+=pizza(70,130,44,7,go?3:0,{});
-      inner+=pizza(248,130,44,7,go?2:0,{});
-      inner+=tx(70,196,14,ink,'3/7',{b:1,georgia:1});
-      inner+=tx(248,196,14,ink,'2/7',{b:1,georgia:1});
-      if(go){
-        inner+=`<g class="q0Pop"><text x="159" y="90" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3 куска > 2 кусков</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Пиццерия Архимеда</div>`+
+      inner+=tx(159,30,18,ink,'кто получит больше?',{b:1});
+      inner+=pizza(70,124,46,7,go?3:0,{});
+      inner+=pizza(248,124,46,7,go?2:0,{});
+      inner+=tx(70,186,17,ink,'3/7',{b:1,georgia:1});
+      inner+=tx(248,186,17,ink,'2/7',{b:1,georgia:1});
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Пиццерия Архимеда</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('3/7 > 2/7 · больше кусков',grn,0.2)):'')+
+        (go?wkRow(chip('3 куска > 2 кусков',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW178Act('${lk}','rst')`):wkBtn('раздать куски',`visW178Act('${lk}','go')`))+
-        wkSml('доли одного размера'));
+        wkSml('доли одинакового размера'));
     } else if(step===1){
-      const H=196;
+      const H=190;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'одинаковые доли',{b:1});
-      inner+=tx(159,56,13,dim,'и 3/7, и 2/7 — седьмые',{});
+      inner+=tx(159,32,18,ink,'одинаковые доли',{b:1});
+      inner+=tx(159,58,15,dim,'и 3/7, и 2/7 — седьмые',{});
       if(go){
-        inner+=`<g class="q0Pop"><rect x="78" y="82" width="162" height="34" rx="10" fill="rgba(214,69,61,.12)" stroke="${sauce}" stroke-width="2"/>
-        ${tx(159,104,15,sauce,'каждый кусок — седьмая',{b:1})}</g>`;
-        inner+=tx(159,148,14,grn,'куски одинаковые → сравниваем количество',{b:1});
-      } else {
-        inner+=tx(159,140,14,dim,'куски одинакового размера',{});
+        inner+=`<g class="q0Pop"><rect x="70" y="78" width="178" height="44" rx="11" fill="rgba(214,69,61,.12)" stroke="${sauce}" stroke-width="2"/>
+        ${tx(159,102,17,sauce,'каждый кусок — седьмая',{b:1})}</g>`;
+        inner+=tx(159,150,15,grn,'куски одинаковые → сравниваем количество',{b:1});
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Одна пицца, семь кусков</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Одна пицца, семь кусков</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('знаменатель 7 — все куски седьмые',sauce,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW178Act('${lk}','rst')`):wkBtn('почему одинаковые?',`visW178Act('${lk}','go')`))+
         wkSml('одинаковый знаменатель'));
     } else if(step===2){
-      const H=204;
-      const go=st.go||0;
+      const H=192, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'сравниваем числители',{b:1});
-      inner+=pizza(70,120,42,7,go?3:0,{});
-      inner+=pizza(248,120,42,7,go?2:0,{});
+      inner+=tx(159,30,18,ink,'сравниваем числители',{b:1});
+      inner+=pizza(70,116,44,7,go?3:0,{});
+      inner+=pizza(248,116,44,7,go?2:0,{});
       if(go){
-        inner+=`<g class="q0Pop"><text x="70" y="182" text-anchor="middle" font-size="18" fill="${sauce}" font-weight="bold" font-family="Georgia,serif">3/7</text>
-        <text x="248" y="182" text-anchor="middle" font-size="18" fill="${sauce}" font-weight="bold" font-family="Georgia,serif">2/7</text>
-        <text x="159" y="182" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3 > 2</text></g>`;
+        inner+=tx(70,182,20,sauce,'3/7',{b:1,georgia:1});
+        inner+=tx(248,182,20,sauce,'2/7',{b:1,georgia:1});
+        inner+=`<g class="q0Pop"><text x="159" y="182" text-anchor="middle" font-size="26" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3 > 2</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Больше числитель — больше</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Больше числитель — больше</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('3 седьмых > 2 седьмых',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW178Act('${lk}','rst')`):wkBtn('сравнить',`visW178Act('${lk}','go')`))+
         wkSml('числители: 3 > 2'));
     } else if(step===3){
-      const H=196;
+      const H=188;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,44,18,ink,'правило',{b:1,georgia:1});
-      inner+=tx(159,74,15,dim,'знаменатели одинаковые — не трогаем',{});
+      inner+=tx(159,44,20,ink,'правило',{b:1,georgia:1});
+      inner+=tx(159,74,16,dim,'знаменатели одинаковые — не трогаем',{});
       if(go){
-        inner+=`<g class="q0Pop"><rect x="52" y="92" width="214" height="42" rx="11" fill="rgba(217,160,90,.14)" stroke="${gold}" stroke-width="2.2"/>
-        ${tx(159,112,16,gold,'сравнивай только числители',{b:1})}
-        ${tx(159,128,12,dim,'3/7 > 2/7 · 5/9 < 7/9',{})}</g>`;
+        inner+=`<g class="q0Pop"><rect x="48" y="90" width="222" height="48" rx="12" fill="rgba(217,160,90,.14)" stroke="${gold}" stroke-width="2.2"/>
+        ${tx(159,112,18,gold,'сравнивай только числители',{b:1})}
+        ${tx(159,132,14,dim,'3/7 > 2/7 · 5/9 < 7/9',{})}</g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Сравнение дробей</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравнение дробей</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('сравни числители',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW178Act('${lk}','rst')`):wkBtn('показать',`visW178Act('${lk}','go')`))+
         wkSml('знаменатель общий'));
     } else if(step===4){
-      const H=204;
-      const go=st.go||0;
+      const H=192, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'проверим',{b:1});
-      inner+=tx(30,58,14,ink,'5/9',{b:1,georgia:1});
-      inner+=tx(200,58,14,ink,'7/9',{b:1,georgia:1});
-      inner+=pizza(70,130,38,9,go?5:0,{fill:sauce});
-      inner+=pizza(248,130,38,9,go?7:0,{fill:sauce});
+      inner+=tx(159,28,18,ink,'проверим',{b:1});
+      inner+=tx(30,62,16,ink,'5/9',{b:1,georgia:1});
+      inner+=tx(200,62,16,ink,'7/9',{b:1,georgia:1});
+      inner+=pizza(70,124,40,9,go?5:0,{fill:sauce});
+      inner+=pizza(248,124,40,9,go?7:0,{fill:sauce});
       if(go){
-        inner+=`<g class="q0Pop"><text x="159" y="58" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">5 < 7 → 5/9 меньше</text></g>`;
+        inner+=`<g class="q0Pop"><text x="159" y="62" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">5 < 7 → 5/9 меньше</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Ещё пример</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ещё пример</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('5/9 < 7/9',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW178Act('${lk}','rst')`):wkBtn('сравнить',`visW178Act('${lk}','go')`))+
         wkSml('больше кусков = больше'));
     } else if(step===5){
-      const H=200, py=82;
+      const H=200, py=86;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {a:'3/8',b:'5/8',big:1},
-        {a:'2/6',b:'4/6',big:1},
-        {a:'7/10',b:'4/10',big:0},
-        {a:'1/3',b:'2/3',big:1}
+        {q:'3/8 или 5/8?',a:'5/8',ds:['3/8','равны'],ci:0},
+        {q:'2/6 или 4/6?',a:'4/6',ds:['2/6','равны'],ci:0},
+        {q:'7/10 или 4/10?',a:'7/10',ds:['4/10','равны'],ci:0},
+        {q:'1/3 или 2/3?',a:'2/3',ds:['1/3','равны'],ci:0}
       ];
       const P=pool[st.tr%pool.length];
-      const ord=[P.a,P.b];
-      const correct=ord[P.big];
+      const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,32,17,ink,'сравни: '+P.a+' и '+P.b,{b:1});
-      inner+=pizza(66,108,34,6,0,{});
-      inner+=pizza(252,108,34,6,0,{});
-      if(st.pick!=null){
-        inner+=pizza(66,108,34,6,st.pick===0?3:0,{});
-        inner+=pizza(252,108,34,6,st.pick===1?3:0,{});
-      }
-      const X=[88,190],CW=92;
+      inner+=tx(159,32,20,ink,P.q,{b:1});
+      const X=[24,114,204],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===P.big&&st.pick===P.big){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(214,69,61,.14)';bd=sauce;tc=sauce;} }
-        inner+=`<g class="q0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="152" width="${CW}" height="40" rx="9" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,178,18,tc,o,{b:1,georgia:1})}</g>`;
+        if(st.pick!=null){ if(i===P.ci&&st.pick===P.ci){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(214,69,61,.14)';bd=sauce;tc=sauce;} }
+        inner+=`<g class="q0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="52" rx="11" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+34,20,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===P.big? `<g class="q0Pop"><text x="159" y="120" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
-          : `<g class="q0Pop"><text x="159" y="120" text-anchor="middle" font-size="18" fill="${sauce}" font-weight="bold">сравни числители</text></g>`)
-        : tx(159,120,13,dim,'какая больше?',{});
-      const fb= st.pick!=null&&st.pick===P.big
+        ? (st.pick===P.ci? `<g class="q0Pop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="q0Pop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${sauce}" font-weight="bold">сравни числители</text></g>`)
+        : tx(159,py+72,16,dim,'какая больше?',{});
+      const fb= st.pick!=null&&st.pick===P.ci
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW178Act('${lk}','n')">дальше →</button></div>`
-        : `<div class="wk-row" style="gap:10px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW178P('${lk}',${i})">${o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==P.big? `<div class="wk-row" style="gap:10px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW178P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: что больше?</div>`+
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW178P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==P.ci? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW178P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: что больше?</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (st.pick!=null&&st.pick===P.big?wkRow(chip(correct+' больше',grn,0.2)):'')+
+        (st.pick!=null&&st.pick===P.ci?wkRow(chip(P.a+' больше',grn,0.2)):'')+
         fb+retry+
         wkSml('сравни числители'));
     } else if(step===6){
-      const H=204;
-      const go=st.go||0;
+      const H=192, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,16,ink,'ловушка: знаменатели разные',{b:1});
-      inner+=tx(159,48,12.5,dim,'3/7 и 3/5 — числители равны',{});
-      inner+=pizza(70,120,40,7,go?3:0,{});
-      inner+=pizza(248,120,40,5,go?3:0,{});
+      inner+=tx(159,28,18,ink,'ловушка: знаменатели разные',{b:1});
+      inner+=tx(159,54,14,dim,'3/7 и 3/5 — числители равны',{});
+      inner+=pizza(70,116,42,7,go?3:0,{});
+      inner+=pizza(248,116,42,5,go?3:0,{});
       if(go){
-        inner+=`<g class="q0Pop"><text x="70" y="182" text-anchor="middle" font-size="18" fill="${sauce}" font-weight="bold" font-family="Georgia,serif">3/7</text>
-        <text x="248" y="182" text-anchor="middle" font-size="18" fill="${sauce}" font-weight="bold" font-family="Georgia,serif">3/5</text>
-        <text x="159" y="182" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3/5 больше!</text></g>`;
-      } else {
-        inner+=tx(159,182,14,dim,'какая больше?',{});
+        inner+=tx(70,184,20,sauce,'3/7',{b:1,georgia:1});
+        inner+=tx(248,184,20,sauce,'3/5',{b:1,georgia:1});
+        inner+=`<g class="q0Pop"><text x="159" y="184" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3/5 больше!</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь на пиццах</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь на пиццах</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('меньше кусков → крупнее кусок → 3/5 >',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW178Act('${lk}','rst')`):wkBtn('раздать',`visW178Act('${lk}','go')`))+
         wkSml('число кусков разное'));
     } else if(step===7){
-      const H=196;
+      const H=188;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,36,16,ink,'почему 3/5 больше?',{b:1});
+      inner+=tx(159,36,18,ink,'почему 3/5 больше?',{b:1});
       if(go){
-        inner+=`<g class="q0Pop"><rect x="52" y="66" width="214" height="54" rx="12" fill="rgba(217,160,90,.14)" stroke="${gold}" stroke-width="2.2"/>
-        ${tx(159,86,15,gold,'кусков меньше — кусок КРУПНЕЕ',{b:1})}
-        ${tx(159,106,13,dim,'7 кусков мельче, чем 5',{})}</g>`;
-        inner+=`<g class="q0Pop" style="animation-delay:.1s"><text x="159" y="156" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3 больших > 3 маленьких</text></g>`;
-      } else {
-        inner+=tx(159,150,14,dim,'седьмые или пятые?',{});
+        inner+=`<g class="q0Pop"><rect x="48" y="62" width="222" height="56" rx="12" fill="rgba(217,160,90,.14)" stroke="${gold}" stroke-width="2.2"/>
+        ${tx(159,84,17,gold,'кусков меньше — кусок КРУПНЕЕ',{b:1})}
+        ${tx(159,108,14,dim,'7 кусков мельче, чем 5',{})}</g>`;
+        inner+=`<g class="q0Pop" style="animation-delay:.1s"><text x="159" y="156" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3 больших > 3 маленьких</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Секрет кусков</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Секрет кусков</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('меньше знаменатель → крупнее доля',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW178Act('${lk}','rst')`):wkBtn('показать',`visW178Act('${lk}','go')`))+
         wkSml('знаменатель = число кусков'));
     } else if(step===8){
-      const H=206;
+      const H=196;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,26,16,ink,'сколько кусков нарезать?',{b:1});
+      inner+=tx(159,28,18,ink,'сколько кусков нарезать?',{b:1});
       const n=st.slices||6;
-      inner+=pizza(159,116,56,n, go?1:0, {fill:sauce});
-      inner+=tx(159,196,14,dim,'кусков: '+n+' · кусок — '+(1/n).toFixed(2).replace(/^0/,'')+' пиццы',{});
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Число кусков</div>`+
+      inner+=pizza(159,108,58,n, go?1:0, {fill:sauce});
+      inner+=tx(159,182,17,dim,'кусков: '+n+' · кусок — '+(1/n).toFixed(2).replace(/^0/,'')+' пиццы',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Число кусков</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         wkRow(chip('меньше кусков — крупнее кусок',gold,0.2))+
         wkRow(
@@ -8000,21 +7975,21 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           wkBtn('больше кусков',`visW178Act('${lk}','more')`))+
         wkSml('нарезали на n кусков'));
     } else if(step===9){
-      const H=204;
+      const H=200;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,26,17,ink,'таблица сравнения',{b:1});
+      inner+=tx(159,30,19,ink,'таблица сравнения',{b:1});
       const rows=[['одинаковый знаменатель','сравни числители','3/7 > 2/7'],['одинаковый числитель','меньше знаменатель','3/5 > 3/7'],['разные и то, и то','к общему знаменателю','(дальше)']];
       for(let i=0;i<rows.length;i++){
         if(go>=i){
           const ry=56+i*44;
-          inner+=`<g class="q0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="26" y="${ry}" width="266" height="36" rx="9" fill="${i%2?'rgba(255,250,240,.98)':'rgba(217,160,90,.13)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          <text x="100" y="${ry+23}" text-anchor="middle" font-size="11.5" fill="${ink}">${rows[i][0]}</text>
-          <text x="180" y="${ry+23}" text-anchor="middle" font-size="11.5" fill="${gold}">${rows[i][1]}</text>
-          <text x="258" y="${ry+23}" text-anchor="middle" font-size="11.5" fill="${grn}" text-anchor="end">${rows[i][2]}</text></g>`;
+          inner+=`<g class="q0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="24" y="${ry}" width="270" height="36" rx="9" fill="${i%2?'rgba(255,250,240,.98)':'rgba(217,160,90,.13)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          <text x="104" y="${ry+24}" text-anchor="middle" font-size="14" fill="${ink}" font-weight="bold">${rows[i][0]}</text>
+          <text x="184" y="${ry+24}" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">${rows[i][1]}</text>
+          <text x="262" y="${ry+24}" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">${rows[i][2]}</text></g>`;
         }
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Способы сравнения</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Способы сравнения</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go>=3?wkRow(chip('смотри, что одинаково, потом сравнивай',gold,0.2)):'')+
         wkRow(
@@ -8024,52 +7999,52 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=3?wkBtn('сброс',`visW178Act('${lk}','rst')`):'')+
         wkSml('в каждом случае свой ход'));
     } else if(step===10){
-      const H=200, py=82;
+      const H=200, py=86;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'3/7 или 3/5?',a:'3/5',ds:['3/7','равны']},
-        {q:'5/9 или 7/9?',a:'7/9',ds:['5/9','равны']},
-        {q:'2/6 или 4/6?',a:'4/6',ds:['2/6','равны']},
-        {q:'1/4 или 1/3?',a:'1/3',ds:['1/4','равны']}
+        {q:'3/7 или 3/5?',a:'3/5',ds:['3/7','равны'],ci:0},
+        {q:'5/9 или 7/9?',a:'7/9',ds:['5/9','равны'],ci:0},
+        {q:'2/6 или 4/6?',a:'4/6',ds:['2/6','равны'],ci:0},
+        {q:'1/4 или 1/3?',a:'1/3',ds:['1/4','равны'],ci:0}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,17,ink,P.q,{b:1});
+      inner+=tx(159,32,20,ink,P.q,{b:1});
       const X=[24,114,204],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(214,69,61,.14)';bd=sauce;tc=sauce;} }
-        inner+=`<g class="q0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,20,tc,o,{b:1,georgia:1})}</g>`;
+        if(st.pick!=null){ if(i===P.ci&&st.pick===P.ci){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(214,69,61,.14)';bd=sauce;tc=sauce;} }
+        inner+=`<g class="q0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="52" rx="11" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+34,20,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="q0Pop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+        ? (st.pick===P.ci? `<g class="q0Pop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
           : `<g class="q0Pop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${sauce}" font-weight="bold">вспомни правило</text></g>`)
-        : tx(159,py+72,14.5,dim,'какая больше?',{});
-      const fb= st.pick!=null&&st.pick===0
+        : tx(159,py+72,16,dim,'какая больше?',{});
+      const fb= st.pick!=null&&st.pick===P.ci
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW178Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW178P('${lk}',${i})">${o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW178P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: сравни</div>`+
+      const retry= st.pick!=null&&st.pick!==P.ci? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW178P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: сравни</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (st.pick!=null&&st.pick===0?wkRow(chip(P.a+' больше',grn,0.2)):'')+
+        (st.pick!=null&&st.pick===P.ci?wkRow(chip(P.a+' больше',grn,0.2)):'')+
         fb+retry+
         wkSml('смотри на одинаковое'));
     } else if(step===11){
-      const H=212;
+      const H=198;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'шпаргалка',{b:1});
+      inner+=tx(159,30,18,ink,'шпаргалка',{b:1});
       const items=[['одинаковый знаменатель → сравни числители'],['одинаковый числитель → меньше знаменатель больше'],['кусков меньше → кусок крупнее'],['не путай дроби с разными знаменателями']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
           const ry=54+i*38;
-          inner+=`<g class="q0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="32" rx="9" fill="${i%2?'rgba(255,250,240,.98)':'rgba(217,160,90,.13)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+21,13,ink,items[i][0],{})}</g>`;
+          inner+=`<g class="q0In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="32" rx="9" fill="${i%2?'rgba(255,250,240,.98)':'rgba(217,160,90,.13)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+21,14,ink,items[i][0],{})}</g>`;
         }
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go>=4?wkRow(chip('смотри на куски пиццы',gold,0.2)):'')+
         wkRow(
@@ -8080,7 +8055,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=4?wkBtn('сброс',`visW178Act('${lk}','rst')`):'')+
         wkSml('пицца всё объясняет'));
     } else if(step===12){
-      const H=196;
+      const H=190;
       if(st.mq==null) st.mq=0;
       const QS=[
         {q:'3/7 или 2/7?',opts:['3/7','2/7','равны'],ans:0},
@@ -8089,11 +8064,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      inner+=tx(159,38,18,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="q0Pop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'смотри куски'}</text></g>`;
+        inner+=`<g class="q0Pop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'смотри куски'}</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         `<div class="wk-row" style="gap:8px">
           ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW178S('${lk}',${i})">${o}</button>`).join('')}
@@ -8102,29 +8077,28 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('одинаковый знаменатель → числители'));
     } else if(step===13){
-      const H=196;
-      const go=st.go||0;
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,42,17,ink,'3/7 и 2/7',{b:1,georgia:1});
-      inner+=pizza(70,120,34,7,0,{});
-      inner+=pizza(248,120,34,7,0,{});
+      inner+=tx(159,38,19,ink,'3/7 и 2/7',{b:1,georgia:1});
+      inner+=pizza(70,118,38,7,0,{});
+      inner+=pizza(248,118,38,7,0,{});
       if(go){
-        inner+=pizza(70,120,34,7,3,{});
-        inner+=pizza(248,120,34,7,2,{});
-        inner+=`<g class="q0Pop"><text x="159" y="60" text-anchor="middle" font-size="26" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3/7 > 2/7</text></g>`;
+        inner+=pizza(70,118,38,7,3,{});
+        inner+=pizza(248,118,38,7,2,{});
+        inner+=`<g class="q0Pop"><text x="159" y="60" text-anchor="middle" font-size="28" fill="${grn}" font-weight="bold" font-family="Georgia,serif">3/7 > 2/7</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('3 куска > 2 кусков',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW178Act('${lk}','rst')`):wkBtn('сравнить',`visW178Act('${lk}','go')`))+
         wkSml('сравни числители'));
     } else {
-      const H=200;
+      const H=196;
       let inner='';
-      inner+=pizza(159,110,48,7,3,{});
-      inner+=`<g class="q0Pop"><text x="159" y="40" text-anchor="middle" font-size="22" fill="${sauce}" font-weight="bold" font-family="Georgia,serif">3/7</text>
-      <text x="159" y="170" text-anchor="middle" font-size="22" fill="${ink}" font-weight="bold" font-family="Georgia,serif">три куска из семи</text></g>`;
-      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+      inner+=tx(159,30,18,ink,'3/7 и 2/7',{b:1,georgia:1});
+      inner+=pizza(159,106,50,7,3,{});
+      inner+=`<g class="q0Pop"><text x="159" y="176" text-anchor="middle" font-size="28" fill="${sauce}" font-weight="bold" font-family="Georgia,serif">3/7</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
         wkSml('сравни числители'));
