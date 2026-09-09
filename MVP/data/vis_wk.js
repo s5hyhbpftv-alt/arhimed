@@ -22136,20 +22136,26 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===190){ window.ARH_LESSONS[i]=L190; break; } } })();
 })();
 
-/* ================= УРОК 185 · Отрицательные числа и их сравнение (v1 · «Улица Архимеда», 15 слайдов, флагман) ================= */
+/* ================= УРОК 185 · Отрицательные числа и их сравнение (v2 · «Термометр Архимеда», 18 слайдов, флагман, премиум-анимации) ================= */
 (function(){
-  if(!window.__wk185v1css){
-    window.__wk185v1css=1;
+  if(!window.__wk185v2css){
+    window.__wk185v2css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qSIn{animation:qSIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qSIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
       '#lvis .qSPop{animation:qSPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qSPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qSPoint{animation:qSPoint .5s cubic-bezier(.2,.8,.3,1.4) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qSPoint{0%{transform:scale(0);opacity:0}70%{transform:scale(1.2);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qSArrow{animation:qSArrow .7s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qSArrow{0%{transform:scaleX(0);opacity:0}70%{transform:scaleX(1.05);opacity:1}100%{transform:scaleX(1)}}';
+      '#lvis .qSGlide{animation:qSGlide .8s cubic-bezier(.2,.8,.3,1.2) both;}'+
+      '@keyframes qSGlide{0%{transform:translateX(-34px);opacity:0}60%{transform:translateX(4px);opacity:1}100%{transform:translateX(0)}}'+
+      '#lvis .qSPulse{animation:qSPulse 1.5s ease infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qSPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}'+
+      '#lvis .qSThermo{animation:qSThermo 1.4s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes qSThermo{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}'+
+      '#lvis .qSShake{animation:qSShake .7s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qSShake{0%,100%{transform:none}20%{transform:translateX(-6px) rotate(-3deg)}40%{transform:translateX(6px) rotate(3deg)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}'+
+      '#lvis .qSSweep{animation:qSSweep .9s cubic-bezier(.3,.7,.3,1) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qSSweep{0%{transform:scaleX(0);opacity:0}70%{transform:scaleX(1.04);opacity:1}100%{transform:scaleX(1)}}';
     document.head.appendChild(st);
   }
   const L185 = {
@@ -22162,15 +22168,16 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Примеры из жизни: температура, долг (−50 ₽ — ты должен), этажи под землёй.',
       'Ловушка: «−10 больше −2»? Нет! −10 левее −2, значит −10 < −2. Больше то, что ПРАВЕЕ на прямой.',
       'Совет Архимеда: рисуй числовую прямую: чем правее число, тем оно больше — и сравнение всегда верное.',
-      'Отрицательные числа «холоднее» — они левее нуля.',
-      'Сравнивать надо по положению на прямой, а не по «величине» числа.',
-      'Чем правее — тем больше. Даже если на вид «10» больше «2».',
+      'Мороз −5° — холоднее, чем −2°. Чем левее, тем холоднее и тем меньше.',
+      'Сравнивай по положению на прямой, а не по «величине» числа.',
+      'Чем ПРАВЕЕ — тем больше. Даже если на вид «10» больше «2».',
       'Тренажёр: сравни отрицательные числа.',
-      'Тренажёр: найди отрицательные числа в ряду.',
-      'Тренажёр: определи верную запись.',
+      'Тренажёр: найди отрицательные в ряду.',
+      'Тренажёр: верная запись.',
       'Шпаргалка: правее = больше; отрицательное < 0 < положительное; смотри на прямую.',
       'Проверь себя устно: −5 < −2; −7 < 0; −10 < −2.',
-      'Проверь себя: −5 или −2? Ответь в тесте и жми «Понял! Проверю себя»!'
+      'Проверь себя: −5° или −2° — где холоднее?',
+      'Проверь себя: −5 или −2 — что больше? Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Какое число больше: −5 или −2?', choices: ['−5', '−2', 'Они равны'], ans: 1,
       exp: 'На прямой −2 правее −5, значит −2 > −5.' },
@@ -22181,8 +22188,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Отрицательное меньше нуля.', '−7 < 0.'], sol: 'Любое отрицательное число меньше нуля: −7 < 0.' }
     ]
   };
-  const ink='#eef4ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cold='#7fd6ff', warm='#ffb85c', blu='#6ea8ff',
-        bg0='#142038', bg1='#0a1122', card='rgba(20,29,52,.96)', cardB='#3a4c78', lineC='#2c3c64';
+  const ink='#eef6ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cold='#7fd6ff', warm='#ffb85c', blu='#6ea8ff', purple='#b07fff',
+        bg0='#101b30', bg1='#0a0f1e', card='rgba(20,29,50,.96)', cardB='#3a4c74';
   const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
@@ -22190,21 +22197,23 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       <defs>
         <linearGradient id="qSbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
         <linearGradient id="qSline" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${cold}"/><stop offset="0.5" stop-color="#7a8fc0"/><stop offset="1" stop-color="${warm}"/></linearGradient>
-        <filter id="qSsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+        <radialGradient id="qSball" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stop-color="#3a6a90"/><stop offset="0.6" stop-color="#2a5a80"/><stop offset="1" stop-color="#183a55"/></radialGradient>
+        <filter id="qSsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/></filter>
       </defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qSbg)"/>
-      <g opacity="0.14" stroke="#4a5c8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <g opacity="0.14" stroke="#44568c" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
       <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44568c" stroke-width="2.4" rx="7"/>
       <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3a64" stroke-width="1.2" rx="4"/>
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  const aX={x:22,y:100,w:274,min:-10,max:10};
+  const aX={x:22,y:104,w:274,min:-10,max:10};
   const axPx=v=>aX.x+(v-aX.min)/(aX.max-aX.min)*aX.w;
   function axis(){
     let s='';
     s+=`<rect x="${aX.x}" y="${aX.y-3.5}" width="${aX.w}" height="7" rx="3.5" fill="url(#qSline)"/>`;
     s+=`<path d="M ${aX.x} ${aX.y} l 9 -5 l 0 10 z" fill="${cold}"/><path d="M ${aX.x+aX.w} ${aX.y} l -9 -5 l 0 10 z" fill="${warm}"/>`;
+    s+=`<rect x="${axPx(0)-2}" y="${aX.y-8}" width="4" height="16" rx="2" fill="#fffdf2"/>`;
     for(let v=aX.min;v<=aX.max;v++){
       const x=axPx(v);
       s+=`<line x1="${x}" y1="${aX.y-5}" x2="${x}" y2="${aX.y+5}" stroke="#5a6c9c" stroke-width="1.6"/>`;
@@ -22212,16 +22221,31 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     }
     return s;
   }
-  function point(v,label,color,delay){
+  function glidePoint(v,label,color,delay){
     const x=axPx(v);
-    return `<g class="qSPoint" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qSsh)"><circle cx="${x}" cy="${aX.y}" r="12" fill="${color}" stroke="#fffdf2" stroke-width="2.4"/>${label?`<text x="${x}" y="${aX.y+5}" text-anchor="middle" font-size="13" fill="#0a1428" font-weight="bold">${label}</text>`:''}</g>`;
+    return `<g class="qSGlide" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qSsh)"><circle cx="${x}" cy="${aX.y}" r="13" fill="${color}" stroke="#fffdf2" stroke-width="2.6"/><text x="${x}" y="${aX.y+5}" text-anchor="middle" font-size="14" fill="#0a1428" font-weight="bold">${label}</text></g>`;
   }
-  function greaterArrow(vA,vB,color,delay){
+  function pulseRing(v,color,delay){
+    const x=axPx(v);
+    return `<g class="qSPulse" style="animation-delay:${(delay||0).toFixed(2)}s"><circle cx="${x}" cy="${aX.y}" r="17" fill="none" stroke="${color}" stroke-width="3"/></g>`;
+  }
+  function compareWedge(vA,vB,color,delay){
     const xa=axPx(vA), xb=axPx(vB), xmin=Math.min(xa,xb), xmax=Math.max(xa,xb);
-    let s=`<g class="qSArrow" style="animation-delay:${(delay||0).toFixed(2)}s"><line x1="${xmin}" y1="${aX.y-26}" x2="${xmax}" y2="${aX.y-26}" stroke="${color}" stroke-width="3" stroke-linecap="round"/>`;
-    s+=`<path d="M ${xmax} ${aX.y-31} l 8 5 l -8 5 z" fill="${color}"/>`;
-    s+=tx((xmin+xmax)/2,aX.y-40,13,color,(vA>vB? vA+' > '+vB : vB+' > '+vA),{b:1});
+    let s=`<g class="qSSweep" style="animation-delay:${(delay||0).toFixed(2)}s"><line x1="${xmin}" y1="${aX.y-30}" x2="${xmax}" y2="${aX.y-30}" stroke="${color}" stroke-width="3.4" stroke-linecap="round"/>`;
+    s+=`<path d="M ${xmax} ${aX.y-35} l 9 5 l -9 5 z" fill="${color}"/>`;
+    s+=tx((xmin+xmax)/2,aX.y-46,15,color,(Math.max(vA,vB)+' больше'),{b:1});
     s+=`</g>`;
+    return s;
+  }
+  /* вертикальный термометр: столбик поднимается до temp (в диапазоне minT..maxT) */
+  function thermo(cx,temp,label,color,delay){
+    const top=52, bot=170, range=12, tmin=-11;
+    const h=(temp-tmin)/range*(bot-top);
+    const by=bot, ty=bot-h;
+    let s=`<g class="qSPop" style="animation-delay:${((delay||0)-0.15).toFixed(2)}s"><rect x="${cx-6}" y="${top}" width="12" height="${bot-top}" rx="6" fill="rgba(255,255,255,.08)" stroke="#5a6c9c" stroke-width="2"/><rect x="${cx-7}" y="${top}" width="2" height="${bot-top}" rx="1" fill="#33405e"/><rect x="${cx+5}" y="${top}" width="2" height="${bot-top}" rx="1" fill="#33405e"/></g>`;
+    s+=`<g class="qSThermo" style="animation-delay:${(delay||0).toFixed(2)}s"><rect x="${cx-4}" y="${ty+4}" width="8" height="${by-ty-4}" rx="4" fill="${color||cold}" opacity="0.9"/><circle cx="${cx}" cy="${by+8}" r="12" fill="url(#qSball)" stroke="${color||cold}" stroke-width="2.4"/></g>`;
+    s+=tx(cx+22,ty+4,15,color||cold,label,{b:1,an:'start'});
+    s+=tx(cx+22,ty+22,12,dim,'°',{});
     return s;
   }
   const chip=(t,c,delay)=>`<span class="qSIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
@@ -22250,144 +22274,144 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
-      if(step===8||step===9||step===10) st.pick=null;
-      if(step===12){ st.mq=0; st.msel=null; }
-      if(step===13||step===14){ st.sel=null; st.q=0; }
+      if(step>=0&&step<=16){ st.go=0; st.pick=null; }
+      if(step===9||step===10||step===11) st.pick=null;
+      if(step===13){ st.mq=0; st.msel=null; }
+      if(step===15){ st.sel=null; st.q=0; }
     }
     let h='';
     const W=318;
     if(step===0){
-      const H=182, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,20,ink,'числа меньше нуля',{b:1});
+      inner+=tx(159,26,20,ink,'термометр природы',{b:1});
       inner+=axis();
-      inner+=point(-7,'−7',cold,0.2);
-      if(go){
-        inner+=`<g class="qSPop"><text x="159" y="166" text-anchor="middle" font-size="16" fill="${cold}" font-weight="bold" font-family="Georgia,serif">отрицательные — слева от нуля</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Улица Архимеда</div>`+
+      inner+=glidePoint(-5,'−5',cold,0.2);
+      if(go){ inner+=`<g class="qSPop"><text x="159" y="176" text-anchor="middle" font-size="15" fill="${cold}" font-weight="bold">левее — холоднее и меньше · правее — больше</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Термометр Архимеда</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('−1, −5, −10 < 0',cold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
-        wkSml('слева от нуля'));
+        (go?wkRow(chip('отрицательные — слева',cold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('оживить',`visW185Act('${lk}','go')`))+
+        wkSml('холод → тепло'));
     } else if(step===1){
-      const H=182, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,20,ink,'на прямой — слева',{b:1});
-      inner+=axis();
-      inner+=point(-10,'−10',cold,0.15);
-      inner+=point(-3,'−3',cold,0.2);
+      inner+=tx(159,26,20,ink,'−5° или −2°?',{b:1,georgia:1});
       if(go){
-        inner+=`<g class="qSPop"><text x="159" y="164" text-anchor="middle" font-size="16" fill="${ink}" font-weight="bold">чем ЛЕВЕЕ — тем меньше</text></g>`;
+        inner+=thermo(80,-5,'−5°',cold,0.2);
+        inner+=thermo(238,-2,'−2°',warm,0.35);
+        inner+=`<g class="qSPop"><text x="159" y="200" text-anchor="middle" font-size="15" fill="${cold}" font-weight="bold">ниже столбик = холоднее = меньше</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Где они стоят</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Где холоднее</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('левее — меньше',cold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
-        wkSml('сначала холодные'));
+        (go?wkRow(chip('−5° холоднее −2°',cold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('нагреть',`visW185Act('${lk}','go')`))+
+        wkSml('столбик поднимается'));
     } else if(step===2){
-      const H=188, go=st.go||0;
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'−5 или −2?',{b:1,georgia:1});
+      inner+=tx(159,24,20,ink,'−5 или −2?',{b:1,georgia:1});
       inner+=axis();
-      inner+=point(-5,'−5',cold,0.15);
-      inner+=point(-2,'−2',warm,0.2);
-      if(go){
-        inner+=greaterArrow(-5,-2,grn,0.25);
-        inner+=`<g class="qSPop"><text x="159" y="172" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">−2 больше</text></g>`;
-      }
+      inner+=glidePoint(-5,'−5',cold,0.2);
+      inner+=glidePoint(-2,'−2',warm,0.34);
+      if(go){ inner+=compareWedge(-5,-2,grn,0.45); inner+=pulseRing(-2,grn,0.6); }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравниваем</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('−2 правее → −2 > −5',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('сравнить',`visW185Act('${lk}','go')`))+
-        wkSml('правее = больше'));
+        (go?wkRow(chip('−2 правее → больше',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
+        wkSml('стрелка пульсирует'));
     } else if(step===3){
-      const H=182, go=st.go||0;
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'−7 < 0 < 3',{b:1,georgia:1});
+      inner+=tx(159,24,20,ink,'−7 < 0 < 3',{b:1,georgia:1});
       inner+=axis();
-      inner+=point(-7,'−7',cold,0.12);
-      inner+=point(0,'0',blu,0.18);
-      inner+=point(3,'3',warm,0.24);
-      if(go){
-        inner+=`<g class="qSPop"><text x="159" y="166" text-anchor="middle" font-size="16" fill="${ink}" font-weight="bold">отрицательное < 0 < положительное</text></g>`;
-      }
+      inner+=glidePoint(-7,'−7',cold,0.2);
+      inner+=glidePoint(0,'0',purple,0.34);
+      inner+=glidePoint(3,'3',warm,0.48);
+      if(go){ inner+=`<g class="qSPop"><text x="159" y="176" text-anchor="middle" font-size="15" fill="${ink}" font-weight="bold">отрицательное < 0 < положительное</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Порядок</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('−7 < 0 < 3',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('оживить',`visW185Act('${lk}','go')`))+
         wkSml('ноль посередине'));
     } else if(step===4){
-      const H=184, go=st.go||0;
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,20,ink,'где холоднее?',{b:1});
-      inner+=axis();
-      inner+=point(-5,'−5°',cold,0.15);
-      inner+=point(-2,'−2°',warm,0.2);
+      inner+=tx(159,26,20,ink,'в жизни',{b:1});
       if(go){
-        inner+=greaterArrow(-5,-2,grn,0.25);
-        inner+=`<g class="qSPop"><text x="159" y="170" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">−2° теплее (правее)</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Температура</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('−5° < −2°',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('сравнить',`visW185Act('${lk}','go')`))+
-        wkSml('выше температура — правее'));
-    } else if(step===5){
-      const H=184;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,30,20,ink,'в жизни',{b:1});
-      if(go){
-        inner+=`<g class="qSPop">
-        <rect x="24" y="66" width="130" height="70" rx="12" fill="rgba(127,214,255,.14)" stroke="${cold}" stroke-width="2"/><text x="89" y="92" text-anchor="middle" font-size="16" fill="${cold}" font-weight="bold">долг</text><text x="89" y="120" text-anchor="middle" font-size="16" fill="${ink}">−50 ₽</text>
-        <rect x="164" y="66" width="130" height="70" rx="12" fill="rgba(255,184,92,.14)" stroke="${warm}" stroke-width="2"/><text x="229" y="92" text-anchor="middle" font-size="16" fill="${warm}" font-weight="bold">подземный</text><text x="229" y="120" text-anchor="middle" font-size="16" fill="${ink}">этаж −1</text>
-        <text x="159" y="164" text-anchor="middle" font-size="15" fill="${dim}">отрицательные — «ниже нуля» в жизни</text></g>`;
+        inner+=`<g class="qSPop"><rect x="24" y="60" width="130" height="98" rx="12" fill="rgba(127,214,255,.12)" stroke="${cold}" stroke-width="2"/><text x="89" y="86" text-anchor="middle" font-size="16" fill="${cold}" font-weight="bold">долг</text><text x="89" y="118" text-anchor="middle" font-size="20" fill="${gold}" font-weight="bold" font-family="Georgia,serif">−50 ₽</text><text x="89" y="146" text-anchor="middle" font-size="13" fill="${dim}">ты должен</text>
+        <rect x="164" y="60" width="130" height="98" rx="12" fill="rgba(255,184,92,.12)" stroke="${warm}" stroke-width="2"/><text x="229" y="86" text-anchor="middle" font-size="16" fill="${warm}" font-weight="bold">подземный</text><text x="229" y="118" text-anchor="middle" font-size="20" fill="${gold}" font-weight="bold" font-family="Georgia,serif">этаж −1</text><text x="229" y="146" text-anchor="middle" font-size="13" fill="${dim}">ниже нуля</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Зачем они</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('долг · мороз · под землёй',cold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
         wkSml('температура, долг, этажи'));
-    } else if(step===6){
-      const H=184, go=st.go||0;
+    } else if(step===5){
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,20,ink,'главное правило',{b:1});
+      inner+=tx(159,26,20,ink,'главное правило',{b:1});
       inner+=axis();
       if(go){
-        inner+=`<g class="qSPop"><path d="M ${aX.x+20} ${aX.y-34} L ${aX.x+aX.w-20} ${aX.y-34} L ${aX.x+aX.w-20} ${aX.y-25} L ${aX.x+aX.w-12} ${aX.y-34} L ${aX.x+aX.w-20} ${aX.y-43} Z" fill="${grn}"/>
-        <text x="${aX.x+aX.w/2}" y="${aX.y-52}" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">вправо = увеличивается</text></g>`;
+        inner+=`<g class="qSSweep"><path d="M ${aX.x+16} ${aX.y-40} L ${aX.x+aX.w-16} ${aX.y-40} L ${aX.x+aX.w-16} ${aX.y-31} L ${aX.x+aX.w-8} ${aX.y-40} L ${aX.x+aX.w-16} ${aX.y-49} Z" fill="${grn}"/>
+        <text x="${aX.x+aX.w/2}" y="${aX.y-58}" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">правее = увеличивается</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Правее = больше</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('смотри, кто правее',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
-        wkSml('это всё решает'));
-    } else if(step===7){
-      const H=184, go=st.go||0;
+        wkSml('стрелка растёт вправо'));
+    } else if(step===6){
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,20,ink,'ловушка',{b:1});
+      inner+=tx(159,26,20,ink,'ловушка',{b:1});
       inner+=axis();
-      inner+=point(-10,'−10',cold,0.15);
-      inner+=point(-2,'−2',warm,0.2);
       if(go){
-        inner+=greaterArrow(-10,-2,grn,0.25);
-        inner+=`<g class="qSPop"><text x="159" y="172" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">−10 < −2 (не наоборот!)</text></g>`;
+        inner+=`<g class="qSShake">${glidePoint(-10,'−10',cold,0.1)}</g>`;
+        inner+=glidePoint(-2,'−2',warm,0.34);
+        inner+=compareWedge(-10,-2,grn,0.6);
+        inner+=`<g class="qSPop"><text x="159" y="176" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">−10 < −2 (не наоборот!)</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Берегись</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('−10 левее → меньше',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('проверить',`visW185Act('${lk}','go')`))+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('тряхнуть',`visW185Act('${lk}','go')`))+
         wkSml('«10» не значит больше'));
+    } else if(step===7){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'−5° или −2°?',{b:1,georgia:1});
+      if(go){
+        inner+=thermo(80,-5,'−5°',cold,0.2);
+        inner+=thermo(238,-2,'−2°',warm,0.35);
+        inner+=`<g class="qSPop"><text x="159" y="200" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">−2° теплее (правее)</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Температура</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('−5° < −2°',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('сравнить',`visW185Act('${lk}','go')`))+
+        wkSml('столбик ниже = меньше'));
     } else if(step===8){
-      const H=200, py=84;
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'проверь себя',{b:1});
+      inner+=axis();
+      inner+=glidePoint(-5,'−5',cold,0.2);
+      inner+=glidePoint(-2,'−2',warm,0.34);
+      if(go){ inner+=compareWedge(-5,-2,grn,0.45); inner+=pulseRing(-2,grn,0.6); inner+=`<g class="qSPop"><text x="159" y="176" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">−2 больше</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('−2 > −5',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
+        wkSml('правее = больше'));
+    } else if(step===9){
+      const H=196, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'−5 или −2?',a:'−2',ds:['−5','равны']},
         {q:'−10 или −3?',a:'−3',ds:['−10','равны']},
         {q:'−1 или −8?',a:'−1',ds:['−8','равны']},
-        {q:'−4 или −4?',a:'равны',ds:['−4','нельзя знать']}
+        {q:'−4 или −4?',a:'равны',ds:['−4','нельзя']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
@@ -22413,8 +22437,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
         fb+retry+
         wkSml('правее = больше'));
-    } else if(step===9){
-      const H=194, py=84;
+    } else if(step===10){
+      const H=196, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'−3, 0, 5, −1, 7 — сколько отрицательных?',a:'2',ds:['3','5']},
@@ -22445,8 +22469,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         (st.pick!=null&&st.pick===0?wkRow(chip('отрицательных '+P.a,grn,0.2)):'')+
         fb+retry+
         wkSml('числа < 0'));
-    } else if(step===10){
-      const H=194, py=84;
+    } else if(step===11){
+      const H=196, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'Верная запись?',a:'−7 < 0',ds:['−7 > 0','0 < −7']},
@@ -22477,7 +22501,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
         fb+retry+
         wkSml('правее = больше'));
-    } else if(step===11){
+    } else if(step===12){
       const H=190;
       const go=st.go||0;
       let inner='';
@@ -22500,12 +22524,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go===3?wkBtn('шаг 4',`visW185Act('${lk}','go')`) : '',
           go>=4?wkBtn('сброс',`visW185Act('${lk}','rst')`):'')+
         wkSml('правее = больше'));
-    } else if(step===12){
+    } else if(step===13){
       const H=182;
       if(st.mq==null) st.mq=0;
       const QS=[
         {q:'Что больше: −5 или −2?',opts:['−2','−5','равны'],ans:0},
-        {q:'−7 < 0 — верно?',opts:['да','нет','нельзя узнать'],ans:0},
+        {q:'−7 < 0 — верно?',opts:['да','нет','нельзя'],ans:0},
         {q:'−10 или −2?',opts:['−2','−10','равны'],ans:0}
       ];
       const T=QS[st.mq];
@@ -22522,30 +22546,28 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           ${st.msel!=null?wkBtn('заново',`visW185Act('${lk}','rst')`):''}
         </div>`+
         wkSml('правее = больше'));
-    } else if(step===13){
-      const H=182, go=st.go||0;
+    } else if(step===14){
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,20,ink,'−5° или −2°?',{b:1,georgia:1});
-      inner+=axis();
-      inner+=point(-5,'−5°',cold,0.15);
-      inner+=point(-2,'−2°',warm,0.2);
+      inner+=tx(159,24,20,ink,'−5° или −2°?',{b:1,georgia:1});
       if(go){
-        inner+=greaterArrow(-5,-2,grn,0.25);
-        inner+=`<g class="qSPop"><text x="159" y="168" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">−2° теплее</text></g>`;
+        inner+=thermo(80,-5,'−5°',cold,0.2);
+        inner+=thermo(238,-2,'−2°',warm,0.35);
+        inner+=`<g class="qSPop"><text x="159" y="200" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">−2° теплее</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('−2° > −5°',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('сравнить',`visW185Act('${lk}','go')`))+
-        wkSml('правее = больше'));
-    } else {
-      const H=188;
+        wkSml('столбик ниже = меньше'));
+        } else {
+      const H=196;
       let inner='';
       inner+=tx(159,32,20,ink,'−5 или −2?',{b:1,georgia:1});
       inner+=axis();
-      inner+=point(-5,'−5',cold,0.12);
-      inner+=point(-2,'−2',warm,0.18);
-      inner+=`<g class="qSPop"><text x="159" y="168" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">−2 больше</text></g>`;
+      inner+=glidePoint(-5,'−5',cold,0.2);
+      inner+=glidePoint(-2,'−2',warm,0.34);
+      inner+=`<g class="qSPop"><text x="159" y="176" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">−2 больше</text></g>`;
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
@@ -22565,14 +22587,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const sp=LV.step;
     if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
     if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
-    if(act==='nq'){ if(sp===12){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='nq'){ if(sp===13){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
     if(act==='rst') CHS[lk]={};
     chRender(0);
   }
   window.visW185Act=visW185Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===185){ window.ARH_LESSONS[i]=L185; break; } } })();
 })();
-
 /* ================= УРОК 175 · Периметр и площадь прямоугольника (v1 · «Комната Архимеда», 15 слайдов, флагман) ================= */
 (function(){
   if(!window.__wk175v1css){
