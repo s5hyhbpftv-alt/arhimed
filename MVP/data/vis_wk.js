@@ -24329,3 +24329,409 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW184Act=visW184Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===184){ window.ARH_LESSONS[i]=L184; break; } } })();
 })();
+
+/* ================= УРОК 385 · Переливания: оптимум (v1 · «Водопад-лаборатория Архимеда», 15 слайдов, флагман, премиум) ================= */
+(function(){
+  if(!window.__wk385v1css){
+    window.__wk385v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qYIn{animation:qYIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qYIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qYPop{animation:qYPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qYPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qYWave{animation:qYWave 1.6s ease-in-out infinite;}'+
+      '@keyframes qYWave{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}'+
+      '#lvis .qYPour{animation:qYPour 1.1s cubic-bezier(.3,.7,.3,1) both;}'+
+      '@keyframes qYPour{0%{transform:scaleY(0);opacity:0}60%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:1}}'+
+      '#lvis .qYDrain{animation:qYDrain .6s ease both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes qYDrain{0%{transform:scaleY(1);opacity:1}100%{transform:scaleY(0);opacity:0}}'+
+      '#lvis .qYFill{animation:qYFill .9s cubic-bezier(.2,.8,.3,1.1) both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes qYFill{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}';
+    document.head.appendChild(st);
+  }
+  const L385 = {
+    id: 385, title: 'Переливания: оптимум', ico: '🫗',
+    src: 'Математика · 5–6 класс · Олимп-5: переливания', subj: 'math',
+    explain: [
+      'Классика: ведро 7 л и банка 3 л. Как отмерить 1 л?',
+      'Наполняем 7 л, отливаем в банку 3 л → в ведре 4 л.',
+      'Выливаем банку, снова отливаем из ведра 3 л → в ведре 1 л!',
+      'Секрет: 7 − 3 − 3 = 1 — комбинируем разности объёмов.',
+      'Два сосуда разного объёма. Начинаем с большего — и «откусываем» маленьким.',
+      'Льём из большого в маленький: маленький наполнился → сливаем → повторяем.',
+      'Так мелкими «шагами» маленького сосуда отнимаем от большого: 7 − 3 = 4, потом 4 − 3 = 1.',
+      'Ведро 5 л и банка 2 л: 5 − 2 = 3, потом 3 − 2 = 1 → отмеряем 1 л!',
+      'Объём, который можно отмерить, — получается вычитанием ёмкостей (и их комбинаций).',
+      'Тренажёр: что осталось в ведре.',
+      'Тренажёр: сколько там воды.',
+      'Шпаргалка: лей из большого в малый; сливай малый; повторяй — 7−3−3 = 1.',
+      'Проверь себя устно: после первой отливки 4 л; после второй 1 л; 5−2−2 = 1.',
+      'Проверь себя: отливали — вычитали ёмкость.',
+      'Проверь себя: ведро 7 л отлили в банку 3 л — сколько осталось? Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Ведро 7 л и банка 3 л: наполнили 7 л и отлили в банку 3 л. Сколько осталось в ведре?', choices: ['4 л', '1 л', '3 л', '2 л'], ans: 0,
+      exp: '7 − 3 = 4 л.' },
+    tasks: [
+      { q: 'После этого банку вылили и снова отлили из ведра 3 л. Сколько осталось в ведре?', kind: 'unit', ans: 1, tol: 0,
+        hints: ['Было 4 л.', '4 − 3 = 1 л.'], sol: '1 л' },
+      { q: 'Ведро 5 л и банка 2 л. Можно ли отмерить 1 л?', kind: 'choice', choices: ['да', 'нет', 'только 3 л', 'только чётные объёмы'], ans: 0, tol: 0,
+        hints: ['5 − 2 − 2 = 1.', 'Отлили 2 л (осталось 3), вылили, отлили ещё 2 → 1 л.'], sol: 'да' }
+    ]
+  };
+  const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', water='#4db6e0', water2='#2a8fc0', blu='#6ea8ff',
+        bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', glass='#c8d4ea';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qYbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <linearGradient id="qYwater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fd6ef"/><stop offset="0.5" stop-color="${water}"/><stop offset="1" stop-color="${water2}"/></linearGradient>
+        <filter id="qYsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qYbg)"/>
+      <g opacity="0.14" stroke="#44568c" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44568c" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3a64" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const JTOP=52, JBOT=176, JW=70;
+  function jug(cx,cap,liquid,label,delay){
+    const h=JBOT-JTOP, lv=Math.max(0,Math.min(cap,liquid))/cap*h;
+    const yfill=JBOT-lv, xl=cx-JW/2, xr=cx+JW/2;
+    let s=`<g class="qYIn" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qYsh)">`;
+    s+=`<path d="M ${xl} ${JTOP+6} L ${xl} ${JBOT} L ${xr} ${JBOT} L ${xr} ${JTOP+6} L ${xr-12} ${JTOP-10} L ${xl} ${JTOP-10} Z" fill="rgba(200,212,234,.12)" stroke="${glass}" stroke-width="2.6"/>`;
+    s+=`<path d="M ${xr} ${JTOP+22} L ${xr+10} ${JTOP-4} L ${xr+4} ${JTOP-10}" fill="none" stroke="${glass}" stroke-width="3.4"/>`;
+    if(liquid>0){
+      s+=`<g class="qYFill" style="animation-delay:${((delay||0)+0.2).toFixed(2)}s"><rect x="${xl+2}" y="${yfill}" width="${JW-4}" height="${JBOT-yfill}" rx="4" fill="url(#qYwater)" opacity="0.92"/>
+      <g class="qYWave"><rect x="${xl+2}" y="${yfill-2}" width="${JW-4}" height="6" rx="3" fill="#9fe2f2" opacity="0.9"/></g>
+      <circle cx="${cxl(cx)}" cy="${yfill+10}" r="3" fill="#e0f6ff" opacity="0.7"/><circle cx="${cxl(cx,jw-30)}" cy="${yfill+28}" r="2" fill="#e0f6ff" opacity="0.6"/></g>`;
+    }
+    s+=`<text x="${cx}" y="${JBOT+20}" text-anchor="middle" font-size="15" fill="${ink}" font-weight="bold">${label}</text>`;
+    s+=tx(cx,JTOP-26,13,dim,cap+' л',{b:1});
+    s+=`</g>`;
+    return s;
+  }
+  function cxl(cx,off){ return cx+(off==null?0:off); }
+  function pour(x1,y1,x2,y2,delay){
+    return `<g class="qYPour" style="animation-delay:${(delay||0).toFixed(2)}s"><path d="M ${x1} ${y1} C ${x1-8} ${(y1+y2)/2}, ${x2+8} ${(y1+y2)/2}, ${x2} ${y2} L ${x2+4} ${y2} C ${x2+2} ${(y1+y2)/2+8}, ${x1-2} ${(y1+y2)/2}, ${x1+4} ${y1} Z" fill="url(#qYwater)" opacity="0.85"/></g>`;
+  }
+  function drain(cx,liquid,cap,delay){
+    const h=JBOT-JTOP, lv=liquid/cap*h, yfill=JBOT-lv, xl=cx-JW/2, xr=cx+JW/2;
+    return `<g class="qYDrain" style="animation-delay:${(delay||0).toFixed(2)}s"><rect x="${xl+2}" y="${yfill}" width="${JW-4}" height="${JBOT-yfill}" rx="4" fill="url(#qYwater)" opacity="0.9"/></g>`;
+  }
+  const chip=(t,c,delay)=>`<span class="qYIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const Q385=[
+    {q:'7 л — отлили в 3 л. Сколько осталось?',opts:['4 л','1 л','3 л'],ans:0},
+    {q:'4 л — снова отлили 3 л. Сколько осталось?',opts:['1 л','4 л','2 л'],ans:1}
+  ];
+  function quiz(lk,st){
+    const T=Q385[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:62px;font-size:17px" onclick="visW385T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! вычитаем ёмкость</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · сколько отлили</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW385Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW385Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW385(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step===9||step===10) st.pick=null;
+      if(step===11){ st.mq=0; st.msel=null; }
+      if(step===14){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    const J7=90, J3=222;
+    if(step===0){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'как отмерить 1 л?',{b:1});
+      if(go){
+        inner+=jug(J7,7,0,'ведро 7 л',0.1);
+        inner+=jug(J3,3,0,'банка 3 л',0.2);
+        inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">два сосуда — отмеряем объём</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Водопад-лаборатория</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('ведро 7 л · банка 3 л',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('показать',`visW385Act('${lk}','go')`))+
+        wkSml('отмерим 1 л'));
+    } else if(step===1){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'наполняем ведро',{b:1});
+      inner+=jug(J7,7,go?7:0,'ведро 7 л',0.1);
+      inner+=jug(J3,3,0,'банка 3 л',0.2);
+      if(go){ inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">ведро полное — 7 л</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг 1</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('7 л в ведре',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('налить',`visW385Act('${lk}','go')`))+
+        wkSml('наполняем большой'));
+    } else if(step===2){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'отливаем в банку',{b:1});
+      inner+=jug(J7,7,go?4:7,'ведро 7 л',0.1);
+      inner+=jug(J3,3,go?3:0,'банка 3 л',0.2);
+      if(go){
+        inner+=pour(J7+JW/2,JTOP+4,J3-JW/2,JBOT,0.3);
+        inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">7 − 3 = 4 л в ведре</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг 2</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('банка полная · в ведре 4 л',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('перелить',`visW385Act('${lk}','go')`))+
+        wkSml('7 − 3 = 4'));
+    } else if(step===3){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'выливаем банку',{b:1});
+      inner+=jug(J7,7,go?4:4,'ведро 7 л',0.1);
+      inner+=jug(J3,3,go?0:3,'банка 3 л',0.2);
+      if(go){ inner+=drain(J3,3,3,0.3); inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="16" fill="${gold}" font-weight="bold">банка пустая · в ведре всё ещё 4 л</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг 3</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 л не тронуты',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('вылить',`visW385Act('${lk}','go')`))+
+        wkSml('освобождаем банку'));
+    } else if(step===4){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'снова отливаем',{b:1});
+      inner+=jug(J7,7,go?1:4,'ведро 7 л',0.1);
+      inner+=jug(J3,3,go?3:0,'банка 3 л',0.2);
+      if(go){
+        inner+=pour(J7+JW/2,JTOP+4,J3-JW/2,JBOT,0.3);
+        inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">4 − 3 = 1 л в ведре!</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг 4</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('в ведре ровно 1 л',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('перелить',`visW385Act('${lk}','go')`))+
+        wkSml('4 − 3 = 1'));
+    } else if(step===5){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'цель достигнута!',{b:1});
+      inner+=jug(J7,7,go?1:1,'ведро 7 л',0.1);
+      inner+=jug(J3,3,go?3:3,'банка 3 л',0.2);
+      if(go){
+        inner+=`<g class="qYPop"><text x="159" y="112" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">1 л отмерен!</text>
+        <text x="159" y="200" text-anchor="middle" font-size="14" fill="${dim}">ровно 1 л в ведре</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Готово</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('7 − 3 − 3 = 1',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('показать',`visW385Act('${lk}','go')`))+
+        wkSml('комбинация разностей'));
+    } else if(step===6){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,20,ink,'секрет',{b:1});
+      if(go){
+        inner+=`<g class="qYPop"><text x="159" y="90" text-anchor="middle" font-size="26" fill="${gold}" font-weight="bold" font-family="Georgia,serif">7 − 3 − 3 = 1</text>
+        <text x="159" y="128" text-anchor="middle" font-size="16" fill="${dim}">маленький сосуд «откусывает» от большого</text>
+        <text x="159" y="160" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">каждый раз отливаем по 3 л</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Формула</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('7 − 3 − 3 = 1',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('показать',`visW385Act('${lk}','go')`))+
+        wkSml('комбинируем объёмы'));
+    } else if(step===7){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'ведро 5 л · банка 2 л',{b:1});
+      inner+=jug(80,5,go?1:5,'ведро 5 л',0.1);
+      inner+=jug(238,2,go?2:0,'банка 2 л',0.2);
+      if(go){ inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">5 − 2 − 2 = 1 л — тоже можно</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Другой вариант</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('5 − 2 − 2 = 1',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('померить',`visW385Act('${lk}','go')`))+
+        wkSml('тоже отмерим 1 л'));
+    } else if(step===8){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,20,ink,'почему работает',{b:1});
+      if(go){
+        inner+=`<g class="qYPop"><rect x="46" y="64" width="226" height="80" rx="12" fill="rgba(110,168,255,.12)" stroke="${blu}" stroke-width="2"/>
+        ${tx(159,88,15,blu,'от большей ёмкости',{b:1})}
+        ${tx(159,110,15,blu,'отнимаем меньшую (и её повторяем)',{b:1})}
+        ${tx(159,132,13,dim,'разности дают новый объём',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Суть</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('разности ёмкостей',blu,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('показать',`visW385Act('${lk}','go')`))+
+        wkSml('комбинируй разности'));
+    } else if(step===9){
+      const H=202, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'7 л отлили в 3 л — осталось?',a:'4 л',ds:['1 л','3 л']},
+        {q:'4 л отлили в 3 л — осталось?',a:'1 л',ds:['4 л','3 л']},
+        {q:'5 л отлили в 2 л — осталось?',a:'3 л',ds:['2 л','1 л']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,18,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qYIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,24,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qYPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qYPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вычти ёмкость</text></g>`)
+        : tx(159,py+74,16,dim,'что осталось?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW385Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW385P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW385P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: остаток</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('отлили — вычти'));
+    } else if(step===10){
+      const H=204, py=104;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Отмерить 1 л: 7 л и 3 л — сможем?',a:'да',ds:['нет','только 2 л']},
+        {q:'Отмерить 1 л: 5 л и 2 л — сможем?',a:'да',ds:['нет','только 3 л']},
+        {q:'Отмерить 1 л: 6 л и 2 л — сможем?',a:'нет',ds:['да','только 4 л']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,17,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qYIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,20,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qYPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qYPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вычитай ёмкости</text></g>`)
+        : tx(159,py+74,16,dim,'сможем?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW385Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW385P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW385P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: померим?</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        fb+retry+
+        wkSml('разности ёмкостей'));
+    } else if(step===11){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      const items=[['лей из большого в меньший'],['меньший наполнился — сливай'],['повторяй: 7−3−3 = 1'],['померит можно разности']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=52+i*32;
+          inner+=`<g class="qYIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(20,29,52,.96)':'rgba(32,44,76,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('7 − 3 − 3 = 1',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW385Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW385Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW385Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW385Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW385Act('${lk}','rst')`):'')+
+        wkSml('комбинируй разности'));
+    } else if(step===12){
+      const H=182;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'7 л отлили в 3 л — осталось?',opts:['4 л','1 л','3 л'],ans:0},
+        {q:'4 л отлили в 3 л — осталось?',opts:['1 л','4 л','3 л'],ans:0},
+        {q:'5 л и 2 л — отмерим 1 л?',opts:['да','нет','только 3 л'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="qYPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'вычтём ёмкость'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW385S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW385Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW385Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('7 − 3 − 3 = 1'));
+    } else if(step===13){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'7 л — 3 л',{b:1,georgia:1});
+      inner+=jug(J7,7,go?4:7,'ведро 7 л',0.1);
+      inner+=jug(J3,3,go?3:0,'банка 3 л',0.2);
+      if(go){ inner+=pour(J7+JW/2,JTOP+4,J3-JW/2,JBOT,0.3); inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 4 л</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('7 − 3 = 4',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW385Act('${lk}','rst')`):wkBtn('перелить',`visW385Act('${lk}','go')`))+
+        wkSml('вычти ёмкость'));
+    } else {
+      const H=204;
+      let inner='';
+      inner+=tx(159,30,20,ink,'7 л — 3 л',{b:1,georgia:1});
+      inner+=jug(J7,7,4,'ведро 7 л',0.1);
+      inner+=jug(J3,3,3,'банка 3 л',0.2);
+      inner+=`<g class="qYPop"><text x="159" y="200" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 4 л</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('вычти ёмкость'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[385]=visW385;
+  function visW385T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW385T=visW385T;
+  function visW385P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW385P=visW385P;
+  function visW385S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW385S=visW385S;
+  function visW385Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===12){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW385Act=visW385Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===385){ window.ARH_LESSONS[i]=L385; break; } } })();
+})();
