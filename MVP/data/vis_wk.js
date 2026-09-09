@@ -22284,10 +22284,20 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     if(step===0){
       const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'термометр природы',{b:1});
-      inner+=axis();
-      inner+=glidePoint(-5,'−5',cold,0.2);
-      if(go){ inner+=`<g class="qSPop"><text x="159" y="176" text-anchor="middle" font-size="15" fill="${cold}" font-weight="bold">левее — холоднее и меньше · правее — больше</text></g>`; }
+      inner+=tx(159,24,20,ink,'термометр природы',{b:1});
+      inner+=`<rect x="22" y="46" width="274" height="34" rx="8" fill="rgba(127,214,255,.1)" stroke="${cold}" stroke-width="1.5"/>
+      <g class="qSPulse"><circle cx="54" cy="63" r="8" fill="#e0f2ff" opacity="0.9"/></g>
+      <rect x="150" y="46" width="146" height="34" rx="8" fill="rgba(255,184,92,.1)" stroke="${warm}" stroke-width="1.5"/>
+      <g class="qSPulse" style="animation-delay:.3s"><circle cx="250" cy="63" r="10" fill="${warm}" opacity="0.85"/></g>
+      <text x="70" y="68" text-anchor="middle" font-size="13" fill="${cold}" font-weight="bold">холод</text><text x="200" y="68" text-anchor="middle" font-size="13" fill="${warm}" font-weight="bold">тепло</text>`;
+      if(go){
+        let snow='';
+        for(let i=0;i<12;i++){ snow+=`<circle class="qSIn" style="animation-delay:${(0.1+i*0.12).toFixed(2)}s" cx="${30+(i*22)%90}" cy="${100+((i*17)%60)}" r="2.5" fill="#dff2ff"/>`; }
+        inner+=snow;
+        inner+=`<g class="qSGlide"><circle cx="${axPx(-5)}" cy="${aX.y}" r="13" fill="${cold}" stroke="#fffdf2" stroke-width="2.6"/><text x="${axPx(-5)}" y="${aX.y+5}" text-anchor="middle" font-size="14" fill="#0a1428" font-weight="bold">−5</text></g>`;
+        inner+=`<rect x="${aX.x}" y="${aX.y-3.5}" width="${aX.w}" height="7" rx="3.5" fill="url(#qSline)"/>`;
+        inner+=`<g class="qSPop"><text x="159" y="176" text-anchor="middle" font-size="15" fill="${cold}" font-weight="bold">левее — холоднее и меньше · правее — больше</text></g>`;
+      }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Термометр Архимеда</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('отрицательные — слева',cold,0.2)):'')+
