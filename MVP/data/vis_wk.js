@@ -25953,15 +25953,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     }
     let h='';
     const W=318;
-    const GW=54;
-    const GX=76, GY=66;
+    const GW=36;
+    const GX=100, GY=62;
     if(step===0){
-      const H=196, go=st.go||0;
+      const H=220, go=st.go||0;
       let inner='';
       inner+=tx(159,28,20,ink,'собери наряд',{b:1});
       if(go){
-        inner+=outfitGrid(GX,GY,4,3,GW,go);
-        inner+=`<g class="qPWPop"><text x="159" y="196" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">4 рубашки · 3 галстука → 12 комплектов</text></g>`;
+        inner+=outfitGrid(GX,GY,4,3,GW,12);
+        inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">4 рубашки · 3 галстука → 12 комплектов</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Швейная мастерская</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -25984,12 +25984,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
         wkSml('когда можно множить'));
     } else if(step===2){
-      const H=196, go=st.go||0;
+      const H=220, go=st.go||0;
       let inner='';
       inner+=tx(159,24,20,ink,'4 рубашки × 3 галстука',{b:1});
       if(go){
-        inner+=outfitGrid(GX,GY,4,3,GW,go);
-        inner+=`<g class="qPWPop"><text x="159" y="196" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">4 × 3 = 12</text></g>`;
+        inner+=outfitGrid(GX,GY,4,3,GW,12);
+        inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">4 × 3 = 12</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Сетка нарядов</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -25997,7 +25997,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('выложить',`visW390Act('${lk}','go')`))+
         wkSml('4·3 = 12'));
     } else if(step===3){
-      const H=196, go=st.go||0;
+      const H=220, go=st.go||0;
       let inner='';
       inner+=tx(159,28,20,ink,'почему умножаем',{b:1});
       if(go){
@@ -26012,7 +26012,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
         wkSml('вот и умножение'));
     } else if(step===4){
-      const H=196, go=st.go||0;
+      const H=220, go=st.go||0;
       let inner='';
       inner+=tx(159,24,20,ink,'двузначные с 5',{b:1});
       if(go){
@@ -26027,7 +26027,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('посчитать',`visW390Act('${lk}','go')`))+
         wkSml('50 … 59'));
     } else if(step===5){
-      const H=196, go=st.go||0;
+      const H=220, go=st.go||0;
       let inner='';
       inner+=tx(159,24,20,ink,'маршрут А → Б → В → Г',{b:1});
       if(go){
@@ -26058,12 +26058,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
         wkSml('главный признак'));
     } else if(step===7){
-      const H=196, go=st.go||0;
+      const H=220, go=st.go||0;
       let inner='';
       inner+=tx(159,24,20,ink,'полная сетка',{b:1});
       if(go){
-        inner+=outfitGrid(GX,GY,4,3,GW,go);
-        inner+=`<g class="qPWPop"><text x="159" y="196" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">все 12 комплектов на месте</text></g>`;
+        inner+=outfitGrid(GX,GY,4,3,GW,12);
+        inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">все 12 комплектов на месте</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Все комбинации</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -26180,12 +26180,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('перемножай'));
     } else if(step===12){
-      const H=196, go=st.go||0;
+      const H=220, go=st.go||0;
       let inner='';
       inner+=tx(159,24,20,ink,'4 × 3',{b:1,georgia:1});
       if(go){
-        inner+=outfitGrid(GX,GY,4,3,GW,go);
-        inner+=`<g class="qPWPop"><text x="159" y="196" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 12 комплектов</text></g>`;
+        inner+=outfitGrid(GX,GY,4,3,GW,12);
+        inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 12 комплектов</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -26197,7 +26197,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,32,20,ink,'4 рубашки · 3 галстука',{b:1,georgia:1});
       inner+=outfitGrid(GX,GY,4,3,GW,99);
-      inner+=`<g class="qPWPop"><text x="159" y="196" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 12</text></g>`;
+      inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 12</text></g>`;
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
@@ -26224,7 +26224,6 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW390Act=visW390Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===390){ window.ARH_LESSONS[i]=L390; break; } } })();
 })();
-
 /* ================= УРОК 181 · Умножение десятичных дробей на 10 и 100 (v1 · «Машина запятой Архимеда», 15 слайдов, флагман) ================= */
 (function(){
   if(!window.__wk181v1css){
