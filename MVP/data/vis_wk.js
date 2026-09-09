@@ -24746,10 +24746,10 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===385){ window.ARH_LESSONS[i]=L385; break; } } })();
 })();
 
-/* ================= УРОК 389 · Углы и треугольники: приёмы (v1 · «Вершина-мастерская Архимеда», 15 слайдов, флагман, новый визуал) ================= */
+/* ================= УРОК 389 · Углы и треугольники: приёмы (v2 · «Вершина-мастерская Архимеда», 20 слайдов, флагман, сверхподробный) ================= */
 (function(){
-  if(!window.__wk389v1css){
-    window.__wk389v1css=1;
+  if(!window.__wk389v2css){
+    window.__wk389v2css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qAIn{animation:qAIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
@@ -24760,8 +24760,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       '@keyframes qAFold{0%{transform:rotate(-120deg) scale(.5);opacity:0}70%{transform:rotate(2deg) scale(1.02);opacity:1}100%{transform:rotate(0) scale(1)}}'+
       '#lvis .qAArc{animation:qAArc .6s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qAArc{0%{transform:scale(0);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qASpin{animation:qASpin 1.2s cubic-bezier(.4,.2,.2,1) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qASpin{0%{transform:rotate(-40deg) scale(.6);opacity:0}70%{transform:rotate(3deg) scale(1.05);opacity:1}100%{transform:rotate(0) scale(1)}}';
+      '#lvis .qAFloat{animation:qAFloat 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qAFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
     document.head.appendChild(st);
   }
   const L389 = {
@@ -24772,15 +24772,21 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'У равнобедренного треугольника углы при основании равны.',
       'Вершина 40° → углы при основании (180 − 40) : 2 = 70° каждый.',
       'Если два угла известны, третий находим вычитанием из 180°.',
-      'Три угла треугольника, если их «сложить сторона к стороне», образуют развёрнутый угол — 180°.',
-      'Развёрнутый угол — это прямая (180°). Вот почему сумма углов треугольника ровно 180°.',
-      'У равнобедренного треугольника две стороны равны, а углы при основании тоже равны.',
-      'Зная вершину, нашли два одинаковых угла при основании: (180 − вершина) : 2.',
-      'Всегда: третий угол = 180° − (сумма двух известных).',
+      'Угол — фигура из двух лучей, выходящих из одной точки (вершины).',
+      'Углы бывают: острый (< 90°), прямой (90°), тупой (> 90°).',
+      'У любого треугольника ровно три угла — по одному у каждой вершины.',
+      'Сложим три угла «сторона к стороне» — получим развёрнутый угол (прямую) = 180°.',
+      'Развёрнутый угол — это половина круга = 180°. Отсюда сумма углов треугольника 180°.',
+      'Итог: ∠A + ∠B + ∠C = 180° — ВСЕГДА, у любого треугольника.',
+      'Равнобедренный — две стороны равны; углы при основании тоже равны.',
+      'Основание — «нижняя» сторона, углы при ней называются углами при основании.',
+      'Вершина 40°: остальные два — одинаковые. (180 − 40) : 2 = 70° каждый.',
+      'Формула: угол при основании = (180 − вершина) : 2.',
+      'Если знаешь два угла: третий = 180 − (сумма двух).',
       'Тренажёр: найди угол при основании равнобедренного.',
       'Тренажёр: найди третий угол.',
-      'Шпаргалка: сумма 180°; равнобедренный — углы при основании равны; третий = 180 − сумма двух.',
-      'Проверь себя устно: сумма 180°; вершина 40° → основание 70°; 90°+45° → 45°.',
+      'Тренажёр: определи вид угла (острый/прямой/тупой).',
+      'Шпаргалка: сумма 180°; равнобедренный — основание равно; (180−вершина):2; третий = 180−(A+B).',
       'Проверь себя: чему равна сумма углов треугольника. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Чему равна сумма углов треугольника?', choices: ['180°', '90°', '360°', '270°'], ans: 0,
@@ -24800,7 +24806,6 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
         <linearGradient id="qAbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
-        <linearGradient id="qAline" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7fd6ff"/><stop offset="0.5" stop-color="#b07fff"/><stop offset="1" stop-color="#ffb85c"/></linearGradient>
         <filter id="qAsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/></filter>
       </defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qAbg)"/>
@@ -24810,12 +24815,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  /* треугольник 40-70-70 с цветными углами */
   function tri(showAngles){
     const cx=159, top=60, base=172, bx=112, br=206;
     let s='';
     if(showAngles){
-      s+=`<g class="qAArc" style="animation-delay:.1s"><path d="M ${bx} ${base} L ${bx+28} ${base-28} L ${bx} ${base}" fill="none" stroke="${aCol}" stroke-width="3" opacity="0.9"/><path d="M ${bx+3} ${base-4} A 40 40 0 0 0 ${bx+3+16} ${base-20}" fill="none" stroke="${aCol}" stroke-width="3"/></g>`;
+      s+=`<g class="qAArc" style="animation-delay:.1s"><path d="M ${bx} ${base} L ${bx+28} ${base-28} L ${bx} ${base}" fill="none" stroke="${aCol}" stroke-width="3" opacity="0.9"/></g>`;
       s+=`<g class="qAArc" style="animation-delay:.2s"><path d="M ${br} ${base} L ${br-28} ${base-28} L ${br} ${base}" fill="none" stroke="${bCol}" stroke-width="3" opacity="0.9"/></g>`;
       s+=`<g class="qAArc" style="animation-delay:.3s"><path d="M ${cx} ${top} L ${cx-24} ${top+24}" fill="none" stroke="${cCol}" stroke-width="3"/></g>`;
     }
@@ -24823,17 +24827,17 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     s+=tx(bx,base+20,14,ink,'A',{b:1});
     s+=tx(br,base+20,14,ink,'C',{b:1});
     s+=tx(cx,top-12,14,ink,'B',{b:1});
+    if(showAngles){ s+=tx(bx-22,base-6,12,aCol,'∠A',{}); s+=tx(br+16,base-6,12,bCol,'∠C',{}); s+=tx(cx+26,top+4,12,cCol,'∠B',{}); }
     return s;
   }
-  /* складываем углы в полукруг 180° */
   function fold(deg){
     let s='';
-    const cx=159, cy=150, r=78;
+    const cx=159, cy=148, r=72;
     s+=`<path d="M ${cx-96} ${cy} A ${96} ${96} 0 0 1 ${cx+96} ${cy} Z" fill="rgba(255,255,255,.03)" stroke="${glass}" stroke-width="2"/>`;
     s+=`<line x1="${cx-96}" y1="${cy}" x2="${cx+96}" y2="${cy}" stroke="${glass}" stroke-width="2.4"/>`;
-    let a0=-180, col=[aCol,bCol,cCol], lab=['∠A','∠B','∠C'];
+    let a0=-180, col=[aCol,bCol,cCol];
     for(let i=0;i<deg.length;i++){
-      const d=deg[i], a1=a0+d, rr=r+34;
+      const d=deg[i], a1=a0+d, rr=r+38;
       const x0=cx+rr*Math.cos(a0*Math.PI/180), y0=cy+rr*Math.sin(a0*Math.PI/180);
       const x1=cx+rr*Math.cos(a1*Math.PI/180), y1=cy+rr*Math.sin(a1*Math.PI/180);
       s+=`<g class="qAFold" style="animation-delay:${(0.15+i*0.2).toFixed(2)}s"><path d="M ${cx} ${cy} L ${x0} ${y0} A ${rr} ${rr} 0 0 1 ${x1} ${y1} Z" fill="${col[i]}" opacity="0.5" stroke="${col[i]}" stroke-width="2.4"/>
@@ -24869,141 +24873,203 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=13){ st.go=0; st.pick=null; }
-      if(step===9||step===10) st.pick=null;
-      if(step===11){ st.mq=0; st.msel=null; }
-      if(step===13){ st.sel=null; st.q=0; }
+      if(step>=0&&step<=18){ st.go=0; st.pick=null; }
+      if(step===14||step===15||step===16) st.pick=null;
+      if(step===17){ st.mq=0; st.msel=null; }
+      if(step===19){ st.sel=null; st.q=0; }
     }
     let h='';
     const W=318;
     if(step===0){
-      const H=196, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'три угла треугольника',{b:1});
+      inner+=tx(159,26,20,ink,'углы в треугольнике',{b:1});
       inner+=tri(go);
-      if(go){ inner+=`<g class="qAPop"><text x="159" y="192" text-anchor="middle" font-size="15" fill="${dim}" font-weight="bold">∠B=40° · ∠A=∠C=70°</text></g>`; }
+      if(go){ inner+=`<g class="qAPop"><text x="159" y="200" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">три угла · у каждой вершины по одному</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Вершина-мастерская</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('сумма углов — 180°',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('показать углы',`visW389Act('${lk}','go')`))+
-        wkSml('волшебный факт'));
+        (go?wkRow(chip('познакомимся с углами',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('показать',`visW389Act('${lk}','go')`))+
+        wkSml('начнём с угла'));
     } else if(step===1){
-      const H=200, go=st.go||0;
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'что такое угол?',{b:1});
+      inner+=`<g class="qAFloat"><circle cx="128" cy="120" r="6" fill="${gold}"/><line x1="128" y1="120" x2="226" y2="120" stroke="${ink}" stroke-width="2.6" stroke-linecap="round"/><line x1="128" y1="120" x2="196" y2="66" stroke="${ink}" stroke-width="2.6" stroke-linecap="round"/><path d="M 152 120 A 34 34 0 0 0 166 92" fill="none" stroke="${aCol}" stroke-width="3.4"/></g>`;
+      if(go){ inner+=`<g class="qAPop"><text x="159" y="188" text-anchor="middle" font-size="14" fill="${dim}">из одной точки (вершины) выходят два луча</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Угол</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('два луча из вершины',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('показать',`visW389Act('${lk}','go')`))+
+        wkSml('вершина и два луча'));
+    } else if(step===2){
+      const H=188;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'виды углов',{b:1});
+      if(go){
+        inner+=`<g class="qAPop"><rect x="24" y="60" width="86" height="86" rx="11" fill="rgba(255,154,138,.1)" stroke="${red}" stroke-width="2"/><line x1="44" y1="128" x2="90" y2="128" stroke="${ink}" stroke-width="2.4"/><line x1="44" y1="128" x2="76" y2="90" stroke="${ink}" stroke-width="2.4"/>${tx(67,110,12,red,'<90°',{})}${tx(67,144,13,ink,'острый',{b:1})}</g>
+        <rect x="116" y="60" width="86" height="86" rx="11" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="2"/><line x1="136" y1="128" x2="182" y2="128" stroke="${ink}" stroke-width="2.4"/><line x1="136" y1="128" x2="136" y2="84" stroke="${ink}" stroke-width="2.4"/>${tx(172,110,12,grn,'=90°',{})}${tx(159,144,13,ink,'прямой',{b:1})}</g>
+        <rect x="208" y="60" width="86" height="86" rx="11" fill="rgba(176,127,255,.12)" stroke="${cCol}" stroke-width="2"/><line x1="228" y1="128" x2="274" y2="128" stroke="${ink}" stroke-width="2.4"/><line x1="228" y1="128" x2="256" y2="92" stroke="${ink}" stroke-width="2.4"/>${tx(252,112,12,cCol,'>90°',{})}${tx(251,144,13,ink,'тупой',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Три вида</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('острый · прямой · тупой',cCol,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('показать',`visW389Act('${lk}','go')`))+
+        wkSml('по величине'));
+    } else if(step===3){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'три угла треугольника',{b:1});
+      inner+=tri(go);
+      if(go){ inner+=`<g class="qAPop"><text x="159" y="200" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">∠A у вершины A · ∠B у B · ∠C у C</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Три угла</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('по одному у каждой вершины',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('показать',`visW389Act('${lk}','go')`))+
+        wkSml('∠A, ∠B, ∠C'));
+    } else if(step===4){
+      const H=202, go=st.go||0;
       let inner='';
       inner+=tx(159,24,20,ink,'складываем углы',{b:1});
       if(go){
         inner+=fold([40,70,70]);
-        inner+=`<g class="qAPop"><text x="159" y="196" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">40° + 70° + 70° = 180°</text></g>`;
+        inner+=`<g class="qAPop"><text x="159" y="198" text-anchor="middle" font-size="13" fill="${grn}" font-weight="bold">40° + 70° + 70° = 180°</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Сгибаем</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('углы легли в полукруг',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('сложить',`visW389Act('${lk}','go')`))+
         wkSml('развёрнутый угол'));
-    } else if(step===2){
-      const H=200;
+    } else if(step===5){
+      const H=202;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'углы = развёрнутый',{b:1});
+      inner+=tx(159,24,20,ink,'почему 180°?',{b:1});
       if(go){
-        inner+=fold([40,70,70]);
-        inner+=`<g class="qAPop"><rect x="70" y="196" width="178" height="26" rx="8" fill="rgba(255,215,106,.15)" stroke="${gold}" stroke-width="1.8"/><text x="159" y="214" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">развёрнутый угол = 180°</text></g>`;
+        inner+=`<g class="qAPop"><rect x="70" y="60" width="178" height="30" rx="9" fill="rgba(255,215,106,.13)" stroke="${gold}" stroke-width="1.8"/>${tx(159,79,14,gold,'развёрнутый = прямая = 180°',{})}
+        <text x="159" y="120" text-anchor="middle" font-size="14" fill="${dim}">половина круга = 180°</text>
+        <text x="159" y="150" text-anchor="middle" font-size="14" fill="${dim}">три угла заполняют его ровно</text>
+        <text x="159" y="182" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">поэтому сумма = 180°</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Почему 180°</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Доказательство</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('полукруг — это 180°',gold,0.2)):'')+
+        (go?wkRow(chip('полукруг = 180°',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('доказать',`visW389Act('${lk}','go')`))+
-        wkSml('вот что происходит'));
-    } else if(step===3){
+        wkSml('вот и весь секрет'));
+    } else if(step===6){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'главный вывод',{b:1});
+      if(go){
+        inner+=`<g class="qAPop"><text x="159" y="86" text-anchor="middle" font-size="26" fill="${grn}" font-weight="bold" font-family="Georgia,serif">∠A + ∠B + ∠C = 180°</text>
+        <text x="159" y="122" text-anchor="middle" font-size="14" fill="${dim}">у ЛЮБОГО треугольника</text>
+        <text x="159" y="150" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">запомни — это правило!</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Факт</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('сумма всегда 180°',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('показать',`visW389Act('${lk}','go')`))+
+        wkSml('незыблемо'));
+    } else if(step===7){
       const H=196, go=st.go||0;
       let inner='';
       inner+=tx(159,24,20,ink,'равнобедренный',{b:1});
       inner+=tri(go);
-      if(go){ inner+=`<g class="qAPop"><path d="M 112 150 L 159 96 L 206 150" fill="none" stroke="${gold}" stroke-width="2" stroke-dasharray="5 4"/><text x="159" y="192" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">две стороны = углы при основании равны</text></g>`; }
+      if(go){ inner+=`<g class="qAPop"><path d="M 112 150 L 159 96 L 206 150" fill="none" stroke="${gold}" stroke-width="2" stroke-dasharray="5 4"/><text x="159" y="200" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">две стороны равны → ∠A = ∠C</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Равнобедренный</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('∠A = ∠C',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('показать',`visW389Act('${lk}','go')`))+
         wkSml('две равные стороны'));
-    } else if(step===4){
+    } else if(step===8){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,20,ink,'почему основания равны',{b:1});
+      if(go){
+        inner+=`<g class="qAPop"><rect x="40" y="60" width="238" height="82" rx="12" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="2"/>
+        ${tx(159,84,15,gold,'две равные стороны (боковины)',{b:1})}
+        ${tx(159,108,15,gold,'приходим к равным углам',{b:1})}
+        ${tx(159,130,13,dim,'основание — «нижняя» сторона',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Причина</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('равные стороны → равные углы',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('показать',`visW389Act('${lk}','go')`))+
+        wkSml('симметрия'));
+    } else if(step===9){
       const H=196, go=st.go||0;
       let inner='';
       inner+=tx(159,24,20,ink,'вершина 40°',{b:1,georgia:1});
       inner+=tri(go);
-      if(go){ inner+=`<g class="qAPop"><text x="159" y="192" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">(180 − 40) : 2 = 70° каждый</text></g>`; }
+      if(go){ inner+=`<g class="qAPop"><text x="159" y="200" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold" font-family="Georgia,serif">(180 − 40) : 2 = 70° каждый</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Находим основание</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('140 : 2 = 70°',grn,0.2)):'')+
+        (go?wkRow(chip('180 − 40 = 140 · :2 = 70',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('посчитать',`visW389Act('${lk}','go')`))+
-        wkSml('вычти вершину'));
-    } else if(step===5){
+        wkSml('решаем по шагам'));
+    } else if(step===10){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,20,ink,'формула',{b:1});
+      if(go){
+        inner+=`<g class="qAPop"><text x="159" y="90" text-anchor="middle" font-size="22" fill="${gold}" font-weight="bold" font-family="Georgia,serif">угол при основании = (180 − вершина) : 2</text>
+        <text x="159" y="130" text-anchor="middle" font-size="14" fill="${grn}">два одинаковых — делим пополам</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Запоминай</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('(180 − вершина) : 2',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('показать',`visW389Act('${lk}','go')`))+
+        wkSml('базовая формула'));
+    } else if(step===11){
       const H=182;
       const go=st.go||0;
       let inner='';
       inner+=tx(159,32,20,ink,'третий угол',{b:1});
       if(go){
-        inner+=`<g class="qAPop"><text x="159" y="92" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">третий = 180° − (A + B)</text>
-        <text x="159" y="126" text-anchor="middle" font-size="15" fill="${dim}">два известных — и третий найдём</text>
-        <text x="159" y="154" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">90° + 45° → 180 − 135 = 45°</text></g>`;
+        inner+=`<g class="qAPop"><text x="159" y="88" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">третий = 180° − (A + B)</text>
+        <text x="159" y="124" text-anchor="middle" font-size="14" fill="${dim}">знаешь два — найдёшь третий</text>
+        <text x="159" y="152" text-anchor="middle" font-size="13" fill="${gold}" font-weight="bold">когда известны любые два угла</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Вычитание</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Вторая формула</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('180 − сумма двух',gold,0.2)):'')+
+        (go?wkRow(chip('180 − сумма двух',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('показать',`visW389Act('${lk}','go')`))+
-        wkSml('всегда работает'));
-    } else if(step===6){
-      const H=182;
-      const go=st.go||0;
+        wkSml('универсальный приём'));
+    } else if(step===12){
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,32,20,ink,'прямоугольный',{b:1});
+      inner+=tx(159,28,20,ink,'пример: 90° + 45°',{b:1,georgia:1});
       if(go){
-        inner+=`<g class="qAPop"><text x="159" y="90" text-anchor="middle" font-size="17" fill="${ink}">∠A=90° · ∠B=45°</text>
-        <text x="159" y="124" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">∠C = 180 − 135 = 45°</text>
-        <text x="159" y="154" text-anchor="middle" font-size="14" fill="${dim}">получается 45° — ещё один!</text></g>`;
+        inner+=`<g class="qAPop"><rect x="36" y="64" width="246" height="84" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
+        ${tx(159,88,15,ink,'сумма двух = 90 + 45 = 135°',{b:1})}
+        ${tx(159,114,18,grn,'третий = 180 − 135 = 45°',{b:1,georgia:1})}
+        ${tx(159,138,13,dim,'90°, 45°, 45° — углы треугольника',{})}</g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Пример</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Пример 1</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('90+45 = 135 → 45°',grn,0.2)):'')+
+        (go?wkRow(chip('180 − 135 = 45°',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('посчитать',`visW389Act('${lk}','go')`))+
-        wkSml('третий угол'));
-    } else if(step===7){
-      const H=196;
-      const go=st.go||0;
+        wkSml('прямоугольный'));
+    } else if(step===13){
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,20,ink,'проверь себя',{b:1});
+      inner+=tx(159,28,20,ink,'пример: 60° + 70°',{b:1,georgia:1});
       if(go){
-        inner+=fold([40,70,70]);
-        inner+=`<g class="qAPop"><text x="159" y="196" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">40+70+70 = 180°</text></g>`;
+        inner+=`<g class="qAPop"><rect x="36" y="64" width="246" height="84" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
+        ${tx(159,88,15,ink,'сумма двух = 60 + 70 = 130°',{b:1})}
+        ${tx(159,114,18,grn,'третий = 180 − 130 = 50°',{b:1,georgia:1})}
+        ${tx(159,138,13,dim,'60°, 70°, 50° — в сумме 180°',{})}</g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Пример 2</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('всегда 180°',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('сложить',`visW389Act('${lk}','go')`))+
-        wkSml('сумма углов'));
-    } else if(step===8){
-      const H=196;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,30,20,ink,'шпаргалка',{b:1});
-      const items=[['сумма углов треугольника = 180°'],['равнобедренный: углы при основании равны'],['вершина 40° → (180−40):2 = 70°'],['третий угол = 180 − сумма двух']];
-      for(let i=0;i<items.length;i++){
-        if(go>=i){
-          const ry=54+i*32;
-          inner+=`<g class="qAIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(20,29,52,.96)':'rgba(32,44,76,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
-        }
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go>=4?wkRow(chip('сумма = 180°',gold,0.2)):'')+
-        wkRow(
-          go===0?wkBtn('шаг 1',`visW389Act('${lk}','go')`) : '',
-          go===1?wkBtn('шаг 2',`visW389Act('${lk}','go')`) : '',
-          go===2?wkBtn('шаг 3',`visW389Act('${lk}','go')`) : '',
-          go===3?wkBtn('шаг 4',`visW389Act('${lk}','go')`) : '',
-          go>=4?wkBtn('сброс',`visW389Act('${lk}','rst')`):'')+
-        wkSml('180° — всегда'));
-    } else if(step===9){
+        (go?wkRow(chip('180 − 130 = 50°',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('посчитать',`visW389Act('${lk}','go')`))+
+        wkSml('проверим: сумма 180'));
+    } else if(step===14){
       const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
@@ -25035,7 +25101,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
         fb+retry+
         wkSml('(180−вершина):2'));
-    } else if(step===10){
+    } else if(step===15){
       const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
@@ -25068,7 +25134,39 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
         fb+retry+
         wkSml('180 − A − B'));
-    } else if(step===11){
+    } else if(step===16){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Угол 45° — какой?',a:'острый',ds:['прямой','тупой']},
+        {q:'Угол 90° — какой?',a:'прямой',ds:['острый','тупой']},
+        {q:'Угол 120° — какой?',a:'тупой',ds:['острый','прямой']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,19,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qAIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,20,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qAPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qAPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">сравни с 90°</text></g>`)
+        : tx(159,py+74,16,dim,'какой угол?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW389Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW389P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW389P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: вид угла</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('острый/прямой/тупой'));
+    } else if(step===17){
       const H=182;
       if(st.mq==null) st.mq=0;
       const QS=[
@@ -25090,16 +25188,29 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           ${st.msel!=null?wkBtn('заново',`visW389Act('${lk}','rst')`):''}
         </div>`+
         wkSml('сумма = 180°'));
-    } else if(step===12){
-      const H=196, go=st.go||0;
+        } else if(step===18){
+      const H=190;
+      const go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'сумма углов',{b:1,georgia:1});
-      if(go){ inner+=fold([40,70,70]); }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      const items=[['сумма углов треугольника = 180°'],['равнобедренный: углы при основании равны'],['вершина 40° → (180−40):2 = 70°'],['третий угол = 180 − сумма двух']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=52+i*32;
+          inner+=`<g class="qAIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(20,29,52,.96)':'rgba(32,44,76,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('180°',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW389Act('${lk}','rst')`):wkBtn('сложить',`visW389Act('${lk}','go')`))+
-        wkSml('всегда 180°'));
+        (go>=4?wkRow(chip('сумма = 180°',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW389Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW389Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW389Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW389Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW389Act('${lk}','rst')`):'')+
+        wkSml('180° — всегда'));
     } else {
       const H=196;
       let inner='';
@@ -25125,14 +25236,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const sp=LV.step;
     if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
     if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
-    if(act==='nq'){ if(sp===11){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='nq'){ if(sp===17){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
     if(act==='rst') CHS[lk]={};
     chRender(0);
   }
   window.visW389Act=visW389Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===389){ window.ARH_LESSONS[i]=L389; break; } } })();
 })();
-
 /* ================= УРОК 384 · Средняя скорость: путь и время (v1 · «Трасса Мастера Архимеда», 15 слайдов, флагман, премиум) ================= */
 (function(){
   if(!window.__wk384v1css){
