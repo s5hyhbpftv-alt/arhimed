@@ -20905,24 +20905,22 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW171Act=visW171Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===171){ window.ARH_LESSONS[i]=L171; break; } } })();
 })();
-/* ================= УРОК 379 · НОД: алгоритм Евклида (v1 · «Лаборатория НОД Архимеда», 15 слайдов, научный премиум) ================= */
+/* ================= УРОК 379 · НОД: алгоритм Евклида (v2 · «Лаборатория НОД Архимеда», 15 слайдов, флагман) ================= */
 (function(){
-  if(!window.__wk379v1css){
-    window.__wk379v1css=1;
+  if(!window.__wk379v2css){
+    window.__wk379v2css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qNIn{animation:qNIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qNIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qNPop{animation:qNPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qNPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qNPop{animation:qNPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qNPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
       '#lvis .qNRow{animation:qNRow .7s cubic-bezier(.2,.8,.3,1.15) both;}'+
-      '@keyframes qNRow{0%{transform:translateX(-14px);opacity:0}100%{transform:translateX(0);opacity:1}}'+
+      '@keyframes qNRow{0%{transform:translateX(-14px);opacity:0}100%{transform:none;opacity:1}}'+
       '#lvis .qNRem{animation:qNRem .6s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qNRem{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}'+
       '#lvis .qNGcd{animation:qNGcd 1.4s ease infinite;}'+
-      '@keyframes qNGcd{0%,100%{opacity:1}50%{opacity:.65}}'+
-      '#lvis .qNBar{animation:qNBar .7s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:left center;}'+
-      '@keyframes qNBar{0%{transform:scaleX(0)}70%{transform:scaleX(1.04)}100%{transform:scaleX(1)}}';
+      '@keyframes qNGcd{0%,100%{opacity:1}50%{opacity:.65}}';
     document.head.appendChild(st);
   }
   const L379 = {
@@ -20935,14 +20933,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Последний ненулевой остаток и есть НОД!',
       'НОД делит оба числа нацело — это самый большой общий делитель.',
       'Секрет: при делении с остатком НОД не меняется — остаток хранит ту же общую меру.',
-      'Остаток всегда меньше делителя — числа «тают» и доходят до общей меры.',
+      'Остаток всегда меньше делителя — числа «тают» до общей меры.',
       'Когда остаток 0 — делитель и есть НОД.',
-      'Способ через вычитание: отнять меньшее от большего, пока не сравняются — тоже НОД.',
-      'Алгоритм: 1) дели большее на меньшее с остатком; 2) возьми остаток как новый делитель; 3) повторяй, пока остаток 0.',
+      'Алгоритм: 1) дели большее на меньшее с остатком; 2) остаток — новый делитель; 3) повторяй, пока остаток 0.',
       'Тренажёр: шаг алгоритма для пары чисел.',
       'Тренажёр: чему равен НОД по цепочке.',
       'Шпаргалка: НОД = последний ненулевой остаток; деление с остатком, пока остаток 0.',
       'Проверь себя устно: НОД(48,30) = 6; НОД(36,24) = 12.',
+      'Проверь себя: последний ненулевой остаток.',
       'Проверь себя: НОД(48, 30). Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Найди НОД(48, 30).', choices: ['6', '3', '18', '12'], ans: 0,
@@ -20954,47 +20952,41 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Пока остаток не станет 0.', 'Деление большего на меньшее с остатком.'], sol: 'деление с остатком' }
     ]
   };
-  const ink='#eef2ff', dim='#98a3c5', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
-        bg0='#151f3a', bg1='#0b1122', card='rgba(20,28,50,.94)', cardB='#3a4a70', lineC='#2a3a5f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.4">${t}</text>`;
+  const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
+        bg0='#151f3a', bg1='#0b1122', card='rgba(20,28,50,.96)', cardB='#3a4a70';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
         <linearGradient id="qNbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
         <linearGradient id="qNgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="#c9932f"/></linearGradient>
-        <filter id="qNsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+        <filter id="qNsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
       </defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qNbg)"/>
-      <g opacity="0.12" stroke="#4a5a8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="90" y1="0" x2="86" y2="${H}"/><line x1="150" y1="0" x2="146" y2="${H}"/><line x1="210" y1="0" x2="207" y2="${H}"/><line x1="270" y1="0" x2="268" y2="${H}"/></g>
+      <g opacity="0.14" stroke="#4a5a8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
       <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44538a" stroke-width="2.4" rx="7"/>
       <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3858" stroke-width="1.2" rx="4"/>
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  /* строка деления: a = b·q + r */
   function divRow(y,a,b,q,r,isLast,show){
-    const rd=r>0?r:'0';
     let s='';
     if(show){
       s+=`<g class="qNRow">`;
-      s+=`<rect x="24" y="${y}" width="270" height="32" rx="8" fill="${isLast?'rgba(125,224,160,.12)':'rgba(30,42,68,.94)'}" stroke="${isLast?grn:cardB}" stroke-width="1.8"/>`;
-      s+=tx(60,y+22,15,ink,a,{b:1,georgia:1});
-      s+=tx(92,y+22,13.5,dim,'=',{});
-      s+=tx(116,y+22,15,ink,b,{b:1,georgia:1});
-      s+=tx(150,y+22,13.5,gold,'·',{});
-      s+=tx(170,y+22,15,gold,q,{b:1,georgia:1});
-      s+=tx(196,y+22,13.5,dim,'+',{});
-      if(isLast){
-        s+=tx(226,y+22,15,grn,'0',{b:1,georgia:1});
-      } else {
-        s+=tx(226,y+22,15,cyan,r,{b:1,georgia:1});
-      }
+      s+=`<rect x="24" y="${y}" width="270" height="36" rx="9" fill="${isLast?'rgba(125,224,160,.12)':'rgba(30,42,68,.96)'}" stroke="${isLast?grn:cardB}" stroke-width="2"/>`;
+      s+=tx(64,y+25,18,ink,a,{b:1,georgia:1});
+      s+=tx(98,y+25,15,dim,'=',{});
+      s+=tx(122,y+25,18,ink,b,{b:1,georgia:1});
+      s+=tx(158,y+25,15,gold,'·',{});
+      s+=tx(178,y+25,18,gold,q,{b:1,georgia:1});
+      s+=tx(204,y+25,15,dim,'+',{});
+      s+=tx(234,y+25,18,isLast?grn:cyan,r,{b:1,georgia:1});
       s+=`</g>`;
     }
     return s;
   }
-  const chip=(t,c,delay)=>`<span class="qNIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="qNIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q379=[
     {q:'НОД(48, 30) = ?',opts:['6','3','18'],ans:0},
     {q:'Что повторяем в алгоритме?',opts:['деление с остатком','сложение','умножение'],ans:0}
@@ -21004,38 +20996,38 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const opts=T.opts.map((o,i)=>{
       let bd=cardB,tc=ink,bg=card;
       if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW379T('${lk}',${i})">${o}</button>`;
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:17px" onclick="visW379T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#7de0a0;font-size:16px">Верно! последний ненулевой остаток</div>'
-        : '<div class="wk-ans" style="color:#ff9a8a;font-size:15px">Не так · деление с остатком</div>';
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! последний ненулевой остаток</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · деление с остатком</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW379Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW379Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW379(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
       if(step>=0&&step<=14){ st.go=0; st.pick=null; }
-      if(step===10||step===11) st.pick=null;
-      if(step===13){ st.mq=0; st.msel=null; }
-      if(step===14){ st.sel=null; st.q=0; }
+      if(step===9||step===10) st.pick=null;
+      if(step===12){ st.mq=0; st.msel=null; }
+      if(step===13||step===14){ st.sel=null; st.q=0; }
     }
     let h='';
     const W=318;
     if(step===0){
-      const H=200, go=st.go||0;
+      const H=182, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,17,ink,'НОД — что это?',{b:1});
-      inner+=tx(159,58,13.5,dim,'наибольший общий делитель 48 и 30',{});
+      inner+=tx(159,30,20,ink,'НОД — что это?',{b:1});
+      inner+=tx(159,60,15,dim,'наибольший общий делитель 48 и 30',{});
       if(go){
-        inner+=`<g class="qNPop"><rect x="56" y="86" width="206" height="52" rx="12" fill="rgba(110,168,255,.13)" stroke="${blu}" stroke-width="2"/>
-        ${tx(159,108,15,blu,'делит 48 и 30 нацело,',{b:1})}
-        ${tx(159,130,15,blu,'и он самый большой из таких',{b:1})}</g>`;
+        inner+=`<g class="qNPop"><rect x="54" y="86" width="210" height="56" rx="12" fill="rgba(110,168,255,.13)" stroke="${blu}" stroke-width="2"/>
+        ${tx(159,108,17,blu,'делит 48 и 30 нацело,',{b:1})}
+        ${tx(159,130,17,blu,'и он самый большой из таких',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Лаборатория НОД</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -21043,15 +21035,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW379Act('${lk}','rst')`):wkBtn('что это?',`visW379Act('${lk}','go')`))+
         wkSml('наибольший общий делитель'));
     } else if(step===1){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,17,ink,'алгоритм Евклида',{b:1});
-      inner+=tx(159,68,13.5,dim,'делим большее на меньшее с остатком',{});
+      inner+=tx(159,34,20,ink,'алгоритм Евклида',{b:1});
+      inner+=tx(159,70,15,dim,'делим большее на меньшее с остатком',{});
       if(go){
-        inner+=`<g class="qNPop"><rect x="46" y="90" width="226" height="40" rx="11" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
-        ${tx(159,110,14,grn,'потом меньшее на остаток —',{b:1})}
-        ${tx(159,128,12,dim,'пока остаток не станет 0',{})}</g>`;
+        inner+=`<g class="qNPop"><rect x="46" y="90" width="226" height="44" rx="12" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
+        ${tx(159,112,16,grn,'потом меньшее на остаток —',{b:1})}
+        ${tx(159,130,13,dim,'пока остаток не станет 0',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Суть</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -21061,14 +21053,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===2){
       const H=212, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,16,ink,'НОД(48, 30) — лесенка',{b:1});
+      inner+=tx(159,26,20,ink,'НОД(48, 30) — лесенка',{b:1});
       inner+=divRow(46,48,30,1,18,false,go>=1);
-      inner+=divRow(80,30,18,1,12,false,go>=2);
-      inner+=divRow(114,18,12,1,6,false,go>=3);
-      inner+=divRow(148,12,6,2,0,true,go>=4);
+      inner+=divRow(82,30,18,1,12,false,go>=2);
+      inner+=divRow(118,18,12,1,6,false,go>=3);
+      inner+=divRow(154,12,6,2,0,true,go>=4);
       if(go>=4){
-        inner+=`<g class="qNGcd"><rect x="150" y="178" width="40" height="26" rx="8" fill="rgba(125,224,160,.2)" stroke="${grn}" stroke-width="2"/>
-        ${tx(170,196,15,grn,'6',{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qNGcd"><rect x="150" y="184" width="44" height="28" rx="9" fill="rgba(125,224,160,.2)" stroke="${grn}" stroke-width="2"/><text x="172" y="203" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">6</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Лесенка Евклида</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -21081,13 +21072,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=4?wkBtn('сброс',`visW379Act('${lk}','rst')`):'')+
         wkSml('дели, пока остаток 0'));
     } else if(step===3){
-      const H=200, go=st.go||0;
+      const H=186;
+      const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'почему остаток наследует НОД?',{b:1});
-      inner+=tx(159,64,13,dim,'48 = 30·1 + 18 → делитель остаётся тем же',{});
+      inner+=tx(159,34,20,ink,'почему остаток наследует НОД?',{b:1});
+      inner+=tx(159,70,14,dim,'48 = 30·1 + 18 → делитель тот же',{});
       if(go){
-        inner+=`<g class="qNPop"><text x="159" y="104" text-anchor="middle" font-size="15" fill="${cyan}" font-weight="bold">общий делитель 48 и 30 = общий делитель 30 и 18</text>
-        <text x="159" y="132" text-anchor="middle" font-size="13.5" fill="${dim}">и так далее — до общей меры</text></g>`;
+        inner+=`<g class="qNPop"><text x="159" y="108" text-anchor="middle" font-size="16" fill="${cyan}" font-weight="bold">общий делитель 48 и 30 = делитель 30 и 18</text>
+        <text x="159" y="140" text-anchor="middle" font-size="14" fill="${dim}">и так далее — до общей меры</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Ключ</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -21095,22 +21087,21 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW379Act('${lk}','rst')`):wkBtn('показать',`visW379Act('${lk}','go')`))+
         wkSml('НОД не меняется'));
     } else if(step===4){
-      const H=206, go=st.go||0;
+      const H=190;
+      const go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'видим НОД: вычитание',{b:1});
-      inner+=tx(159,54,12.5,dim,'отнимаем меньшее от большего, пока равны',{});
+      inner+=tx(159,34,20,ink,'видим НОД: вычитание',{b:1});
+      inner+=tx(159,68,14,dim,'отнимаем меньшее от большего, пока равны',{});
       const pairs=[[48,30,18],[30,18,12],[18,12,6],[12,6,0]];
-      pairs.forEach((p,i)=>{
-        const y=72+i*30;
-        if(go>=i+0){
+      for(let i=0;i<pairs.length;i++){
+        const p=pairs[i], y=86+i*24;
+        if(go>=i){
           const max=Math.max(p[0],p[1]);
-          inner+=`<g class="qNBar" style="animation-delay:${(0.1*i).toFixed(2)}s"><path d="M 30 ${y} L ${(30+max*(220/48)).toFixed(1)} ${y}" stroke="${p[2]===0?grn:cyan}" stroke-width="14" stroke-linecap="round"/>
-          ${tx(30,(y)-8,10,dim,''+p[0],{})}${tx((30+max*(220/48)).toFixed(1),y-8,10,dim,''+p[1],{})}</g>`;
+          inner+=`<g class="qNRow"><line x1="30" y1="${y}" x2="${30+max*(220/48).toFixed(2)}" y2="${y}" stroke="${p[2]===0?grn:cyan}" stroke-width="11" stroke-linecap="round"/>
+          <text x="${30+(max*4.5).toFixed(0)-6}" y="${y-6}" text-anchor="middle" font-size="12" fill="${dim}">${p[0]}·${p[1]}</text></g>`;
         }
-      });
-      if(go>=4){
-        inner+=`<g class="qNPop"><text x="159" y="190" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">длина стала 6 = НОД</text></g>`;
       }
+      if(go>=4){ inner+=`<g class="qNPop"><text x="159" y="184" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">длина стала 6 = НОД</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Общая мера</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go>=4?wkRow(chip('отрезки сравнялись — 6',grn,0.2)):'')+
@@ -21122,34 +21113,27 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=4?wkBtn('сброс',`visW379Act('${lk}','rst')`):'')+
         wkSml('геометрический смысл'));
     } else if(step===5){
-      const H=212, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,16,ink,'НОД(36, 24)',{b:1});
+      inner+=tx(159,26,20,ink,'НОД(36, 24)',{b:1});
       inner+=divRow(48,36,24,1,12,false,go>=1);
-      inner+=divRow(86,24,12,2,0,true,go>=2);
-      if(go>=2){
-        inner+=`<g class="qNPop"><text x="159" y="180" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">НОД = 12</text></g>`;
-      }
+      inner+=divRow(88,24,12,2,0,true,go>=2);
+      if(go>=2){ inner+=`<g class="qNPop"><text x="159" y="176" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">НОД = 12</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Другой пример</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go>=2?wkRow(chip('12 = последний ненулевой остаток',grn,0.2)):'')+
-        wkRow(
-          go===0?wkBtn('шаг 1',`visW379Act('${lk}','go')`) : '',
-          go===1?wkBtn('шаг 2',`visW379Act('${lk}','go')`) : '',
-          go>=2?wkBtn('сброс',`visW379Act('${lk}','rst')`):'')+
+        wkRow(go===0?wkBtn('шаг 1',`visW379Act('${lk}','go')`) : go===1?wkBtn('шаг 2',`visW379Act('${lk}','go')`) : wkBtn('сброс',`visW379Act('${lk}','rst')`))+
         wkSml('быстро доходит'));
     } else if(step===6){
-      const H=208;
+      const H=202;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'метод по шагам',{b:1});
+      inner+=tx(159,30,20,ink,'метод по шагам',{b:1});
       const rows=[['шаг 1: дели большее на меньшее с остатком'],['шаг 2: остаток — новый делитель'],['шаг 3: повторяй, пока остаток 0'],['НОД = последний ненулевой остаток']];
       for(let i=0;i<rows.length;i++){
         if(go>=i){
-          const ry=54+i*38;
-          inner+=`<g class="qNIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="32" rx="9" fill="${i%2?'rgba(22,29,50,.94)':'rgba(30,42,68,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          <circle cx="48" cy="${ry+16}" r="9" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="1.4"/>
-          ${tx(48,ry+20,10.5,gold,'1',{b:1})}${tx(150,ry+22,12.5,ink,rows[i][0],{})}</g>`;
+          const ry=54+i*36;
+          inner+=`<g class="qNIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="30" rx="8" fill="${i%2?'rgba(22,29,50,.96)':'rgba(30,42,68,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/><circle cx="48" cy="${ry+15}" r="10" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="1.4"/>${tx(48,ry+19,12,gold,'1',{b:1})}${tx(152,ry+20,13.5,ink,rows[i][0],{})}</g>`;
         }
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Как решать</div>`+
@@ -21163,13 +21147,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=4?wkBtn('сброс',`visW379Act('${lk}','rst')`):'')+
         wkSml('алгоритм'));
     } else if(step===7){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,36,17,ink,'что такое НОД?',{b:1});
+      inner+=tx(159,36,20,ink,'что такое НОД?',{b:1});
       if(go){
-        inner+=`<g class="qNPop"><text x="159" y="92" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">наибольший общий делитель</text>
-        <text x="159" y="126" text-anchor="middle" font-size="13.5" fill="${dim}">делит оба числа нацело</text></g>`;
+        inner+=`<g class="qNPop"><text x="159" y="94" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">наибольший общий делитель</text>
+        <text x="159" y="128" text-anchor="middle" font-size="15" fill="${dim}">делит оба числа нацело</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Определение</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -21177,14 +21161,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW379Act('${lk}','rst')`):wkBtn('показать',`visW379Act('${lk}','go')`))+
         wkSml('делитель обоих'));
     } else if(step===8){
-      const H=206, go=st.go||0;
+      const H=190;
+      const go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'все «общие» делители 48 и 30',{b:1});
-      inner+=tx(159,52,12.5,dim,'перечислим:',{});
+      inner+=tx(159,28,20,ink,'все «общие» делители 48 и 30',{b:1});
       if(go){
-        inner+=`<g class="qNPop"><text x="159" y="88" text-anchor="middle" font-size="16" fill="${ink}">48: 1,2,3,4,6,8,12,16,24,48</text>
-        <text x="159" y="118" text-anchor="middle" font-size="16" fill="${ink}">30: 1,2,3,5,6,10,15,30</text>
-        <text x="159" y="152" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">общие: 1, 2, 3, 6 → НОД = 6</text></g>`;
+        inner+=`<g class="qNPop"><text x="159" y="84" text-anchor="middle" font-size="16" fill="${ink}">48: 1,2,3,4,6,8,12,16,24,48</text>
+        <text x="159" y="116" text-anchor="middle" font-size="16" fill="${ink}">30: 1,2,3,5,6,10,15,30</text>
+        <text x="159" y="152" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">общие: 1, 2, 3, 6 → НОД = 6</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравнение</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -21192,45 +21176,29 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW379Act('${lk}','rst')`):wkBtn('показать',`visW379Act('${lk}','go')`))+
         wkSml('перебором — дольше'));
     } else if(step===9){
-      const H=208, go=st.go||0;
-      let inner='';
-      inner+=tx(159,28,16,ink,'запомни: делится нацело',{b:1});
-      inner+=divRow(52,48,30,1,18,true,go>=1);
-      if(go>=1){
-        inner+=`<g class="qNPop"><text x="159" y="120" text-anchor="middle" font-size="14" fill="${cyan}" font-weight="bold">делим «нацело с остатком» — вот суть</text>
-        <text x="159" y="150" text-anchor="middle" font-size="13" fill="${dim}">а не просто вычитание единицы</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Главный приём</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go>=1?wkRow(chip('деление с остатком',cyan,0.2)):'')+
-        wkRow(
-          go===0?wkBtn('показать',`visW379Act('${lk}','go')`) : '',
-          go>=1?wkBtn('сброс',`visW379Act('${lk}','rst')`):'')+
-        wkSml('это и повторяем'));
-    } else if(step===10){
-      const H=200, py=84;
+      const H=194, py=82;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'НОД(48,30) = ?',a:'6',ds:['3','12']},
-        {q:'НОД(36,24) = ?',a:'12',ds:['6','4']},
-        {q:'НОД(20,15) = ?',a:'5',ds:['2','10']},
-        {q:'НОД(30,18) = ?',a:'6',ds:['3','2']}
+        {q:'НОД(48,30)?',a:'6',ds:['3','12']},
+        {q:'НОД(36,24)?',a:'12',ds:['6','4']},
+        {q:'НОД(20,15)?',a:'5',ds:['2','10']},
+        {q:'НОД(30,18)?',a:'6',ds:['3','2']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,16,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,19,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qNIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qNIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qNPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qNPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">последний остаток</text></g>`)
-        : tx(159,py+72,14.5,dim,'вычисли',{});
+        ? (st.pick===0? `<g class="qNPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qNPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">последний остаток</text></g>`)
+        : tx(159,py+74,16,dim,'вычисли',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW379Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW379P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -21240,48 +21208,48 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         (st.pick!=null&&st.pick===0?wkRow(chip('НОД = '+P.a,grn,0.2)):'')+
         fb+retry+
         wkSml('алгоритм Евклида'));
-    } else if(step===11){
-      const H=200, py=84;
+    } else if(step===10){
+      const H=194, py=82;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'Что повторяем в алгоритме?',a:'деление с остатком',ds:['сложение','умножение']},
-        {q:'НОД = ?',a:'последний ненулевой остаток',ds:['первый остаток','делитель']},
-        {q:'Когда остановиться?',a:'когда остаток 0',ds:['когда делитель 1','через 2 шага']}
+        {q:'Что повторяем в алгоритме?',a:'деление с остатком',ds:['сложение','умножение'],ci:0},
+        {q:'НОД = ?',a:'последний ненулевой остаток',ds:['первый остаток','делитель'],ci:0},
+        {q:'Когда остановиться?',a:'когда остаток 0',ds:['когда делитель 1','через 2 шага'],ci:0}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,14,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,15,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qNIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,13,tc,o,{b:1,georgia:1})}</g>`;
+        if(st.pick!=null){ if(i===P.ci&&st.pick===P.ci){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qNIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,14,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qNPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qNPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вспомни алгоритм</text></g>`)
-        : tx(159,py+72,14.5,dim,'выбери',{});
-      const fb= st.pick!=null&&st.pick===0
+        ? (st.pick===P.ci? `<g class="qNPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qNPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вспомни алгоритм</text></g>`)
+        : tx(159,py+74,16,dim,'выбери',{});
+      const fb= st.pick!=null&&st.pick===P.ci
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW379Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW379P('${lk}',${i})">${o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW379P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      const retry= st.pick!=null&&st.pick!==P.ci? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW379P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: алгоритм</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         fb+retry+
         wkSml('деление с остатком'));
-    } else if(step===12){
-      const H=210;
+    } else if(step===11){
+      const H=202;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'шпаргалка',{b:1});
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
       const items=[['НОД — наибольший общий делитель'],['дели большее на меньшее с остатком'],['остаток — новый делитель'],['НОД = последний ненулевой остаток']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
-          const ry=52+i*38;
-          inner+=`<g class="qNIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="32" rx="9" fill="${i%2?'rgba(22,29,50,.94)':'rgba(30,42,68,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+22,12.5,ink,items[i][0],{})}</g>`;
+          const ry=52+i*36;
+          inner+=`<g class="qNIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="30" rx="8" fill="${i%2?'rgba(22,29,50,.96)':'rgba(30,42,68,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+20,14.5,ink,items[i][0],{})}</g>`;
         }
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
@@ -21294,8 +21262,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go===3?wkBtn('шаг 4',`visW379Act('${lk}','go')`) : '',
           go>=4?wkBtn('сброс',`visW379Act('${lk}','rst')`):'')+
         wkSml('пока остаток не 0'));
-    } else if(step===13){
-      const H=196;
+    } else if(step===12){
+      const H=182;
       if(st.mq==null) st.mq=0;
       const QS=[
         {q:'НОД(48,30)?',opts:['6','3','12'],ans:0},
@@ -21304,9 +21272,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qNPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'последний остаток'}</text></g>`;
+        inner+=`<g class="qNPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'последний остаток'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -21316,12 +21284,25 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           ${st.msel!=null?wkBtn('заново',`visW379Act('${lk}','rst')`):''}
         </div>`+
         wkSml('деление с остатком'));
-    } else {
-      const H=200;
+    } else if(step===13){
+      const H=202, go=st.go||0;
       let inner='';
-      inner+=tx(159,42,17,ink,'НОД(48, 30)',{b:1,georgia:1});
-      inner+=`<g class="qNPop"><text x="159" y="90" text-anchor="middle" font-size="34" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 6</text></g>`;
-      inner+=tx(159,118,13.5,dim,'последний ненулевой остаток',{});
+      inner+=tx(159,28,20,ink,'НОД(48, 30)',{b:1,georgia:1});
+      inner+=divRow(50,48,30,1,18,false,true);
+      inner+=divRow(90,30,18,1,12,false,true);
+      inner+=divRow(130,18,12,1,6,false,true);
+      inner+=divRow(170,12,6,2,0,true,true);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('НОД = 6',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW379Act('${lk}','rst')`):wkBtn('показать',`visW379Act('${lk}','go')`))+
+        wkSml('последний ненулевой остаток'));
+    } else {
+      const H=184;
+      let inner='';
+      inner+=tx(159,34,20,ink,'НОД(48, 30)',{b:1,georgia:1});
+      inner+=`<g class="qNPop"><text x="159" y="94" text-anchor="middle" font-size="34" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 6</text></g>`;
+      inner+=tx(159,122,16,dim,'последний ненулевой остаток',{});
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
@@ -21341,7 +21322,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const sp=LV.step;
     if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
     if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
-    if(act==='nq'){ if(sp===13){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='nq'){ if(sp===12){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
     if(act==='rst') CHS[lk]={};
     chRender(0);
   }
