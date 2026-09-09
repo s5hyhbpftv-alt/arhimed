@@ -24586,8 +24586,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     return s;
   }
   function bigResult(cx,y,txt,color){
-    const w=txt.length*12+40, x=cx-w/2;
-    return `<g class="qWtrPop" style="animation-delay:.5s"><rect x="${x}" y="${y-20}" width="${w}" height="34" rx="12" fill="rgba(20,29,50,.96)" stroke="${color}" stroke-width="2.4" filter="url(#qWtrsh)"/><text x="${cx}" y="${y+2}" text-anchor="middle" font-size="18" fill="${color}" font-weight="bold" font-family="Georgia,serif">${txt}</text></g>`;
+    const fs=txt.length<=11?18:(txt.length<=16?16:14);
+    const w=Math.min(292,txt.length*fs*0.6+34), x=cx-w/2;
+    return `<g class="qWtrPop" style="animation-delay:.5s"><rect x="${x}" y="${y-20}" width="${w}" height="34" rx="12" fill="rgba(20,29,50,.96)" stroke="${color}" stroke-width="2.4" filter="url(#qWtrsh)"/><text x="${cx}" y="${y+2}" text-anchor="middle" font-size="${fs}" fill="${color}" font-weight="bold" font-family="Georgia,serif">${txt}</text></g>`;
   }
   const chip=(t,c,delay)=>`<span class="qWtrIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q385=[
@@ -24642,7 +24643,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       if(go){
         inner+=jug(J7,go?7:0,7,{label:'ведро (7 л)',delay:0.1,filling:go});
         inner+=jug(J3,0,3,{label:'банка (3 л)',delay:0.2});
-        inner+=bigResult(159,206,'налили 7 л — ведро полное',grn);
+        inner+=bigResult(159,206,'в ведре 7 л',grn);
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг 1 · наполняем ведро</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -24683,7 +24684,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=jug(J7,go?1:4,7,{label:'ведро (7 л)',delay:0.1});
         inner+=jug(J3,go?3:0,3,{label:'банка (3 л)',delay:0.2,filling:go});
         if(go){ inner+=pourStream(J7+JW/2,JTOP+10,J3-JW/2,JBOT-16,0.25); }
-        inner+=bigResult(159,206,'в ведре ровно 1 л — готово!',grn);
+        inner+=bigResult(159,206,'в ведре 1 л!',grn);
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг 4 · снова переливаем</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -24723,9 +24724,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       if(go){
         inner+=`<g class="qWtrPop"><rect x="36" y="62" width="246" height="92" rx="12" fill="rgba(110,168,255,.12)" stroke="${blu}" stroke-width="2"/>
-        ${tx(64,86,15,ink,'маленький сосуд «откусывает»',{b:1,an:'start'})}
-        ${tx(64,112,15,ink,'от большого по своей ёмкости',{b:1,an:'start'})}
-        ${tx(64,138,15,grn,'пока не останется нужное',{b:1,an:'start'})}</g>`;
+        ${tx(159,88,15,ink,'маленький сосуд',{b:1})}
+        ${tx(159,114,15,ink,'откусывает от большого',{b:1})}
+        ${tx(159,140,15,grn,'по своей ёмкости',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Приём</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
