@@ -25649,3 +25649,394 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW384Act=visW384Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===384){ window.ARH_LESSONS[i]=L384; break; } } })();
 })();
+
+/* ================= УРОК 390 · Правило произведения: задачи (v1 · «Швейно-дорожная мастерская Архимеда», 15 слайдов, флагман, премиум) ================= */
+(function(){
+  if(!window.__wk390v1css){
+    window.__wk390v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qPWIn{animation:qPWIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qPWIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qPWPop{animation:qPWPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qPWPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qPWOutfit{animation:qPWOutfit .45s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qPWOutfit{0%{transform:scale(.3) rotate(-8deg);opacity:0}70%{transform:scale(1.1) rotate(2deg);opacity:1}100%{transform:scale(1) rotate(0)}}'+
+      '#lvis .qPWShirt{animation:qPWShirt .4s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qPWShirt{0%{transform:translateY(-8px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qPWDrive{animation:qPWDrive .7s cubic-bezier(.2,.8,.3,1.15) both;}'+
+      '@keyframes qPWDrive{0%{transform:translateX(-12px);opacity:0}70%{transform:translateX(2px);opacity:1}100%{transform:none}}'+
+      '#lvis .qPWPath{stroke-dasharray:8 5;animation:qPWPath 1.1s ease both;}'+
+      '@keyframes qPWPath{to{stroke-dashoffset:0}}';
+    document.head.appendChild(st);
+  }
+  const L390 = {
+    id: 390, title: 'Правило произведения: задачи', ico: '🔢',
+    src: 'Математика · 5–6 класс · Олимп-5: комбинаторика', subj: 'math',
+    explain: [
+      'Правило произведения: независимые выборы перемножаются.',
+      '4 рубашки и 3 галстука → 4 · 3 = 12 комплектов.',
+      'Сколько двузначных чисел начинается с 5? Вторая цифра любая из 10: 50, 51, …, 59 → 10 чисел.',
+      'А → Б (3 дороги), Б → В (2), В → Г (4): маршрутов 3·2·4 = 24.',
+      'Независимые выборы: выбор рубашки НЕ мешает выбору галстука — можно их перемножать.',
+      'Каждую из 4 рубашек можно надеть с каждой из 3 галстуков: 4 × 3 = 12 комплектов.',
+      'Принцип: «на каждую … своя …» → умножаем число вариантов каждого шага.',
+      'Двузначное с 5: первая цифра 5, вторая — любая из 10 (0..9), значит 1 × 10 = 10 чисел.',
+      'Маршрут А→Б→В→Г: число дорог на каждом участке перемножаем: 3·2·4 = 24.',
+      'Тренажёр: посчитай по правилу произведения.',
+      'Тренажёр: найди число комбинаций.',
+      'Шпаргалка: выборы независимы → перемножай; «на каждую … свою …»; умножай варианты шагов.',
+      'Проверь себя устно: 4·3 = 12; 1·10 = 10; 3·2·4 = 24.',
+      'Проверь себя: 4 рубашки и 3 галстука — сколько комплектов? Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: '4 рубашки и 3 галстука. Сколько комплектов «рубашка + галстук»?', choices: ['12', '7', '4', '3'], ans: 0,
+      exp: '4 · 3 = 12.' },
+    tasks: [
+      { q: 'Сколько двузначных чисел начинается с цифры 5?', kind: 'unit', ans: 10, tol: 0,
+        hints: ['Вторая цифра — любая из 10.', '50…59 — 10 чисел.'], sol: '10' },
+      { q: 'Из А в Б 3 дороги, из Б в В 2, из В в Г 4. Сколько маршрутов А→Г?', kind: 'choice', choices: ['24', '9', '12', '6'], ans: 0, tol: 0,
+        hints: ['Перемножаем.', '3 · 2 · 4 = 24.'], sol: '24' }
+    ]
+  };
+  const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', pink='#ff9ab0', bluT='#a8c4ff', road1='#e0a34a', road2='#4db6e0',
+        shirtC=['#e0604c','#4db6e0','#7bcd7b','#b07fff'], tieC=['#f5a623','#d9758f','#6ea8ff'],
+        bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', wood='#5a4628', wood2='#3a2c18';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qPWbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <linearGradient id="qPWwood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a5330"/><stop offset="0.5" stop-color="${wood}"/><stop offset="1" stop-color="${wood2}"/></linearGradient>
+        <filter id="qPWsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qPWbg)"/>
+      <g opacity="0.14" stroke="#44568c" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44568c" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3a64" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  function miniOutfit(x,y,shirt,tie,w,h,delay){
+    return `<g class="qPWOutfit" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qPWsh)"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" fill="${shirt}" stroke="#fffdf2" stroke-width="1.6"/><rect x="${x+w*0.42}" y="${y+h*0.1}" width="${w*0.16}" height="${h*0.9}" rx="2" fill="${tie}"/></g>`;
+  }
+  function outfitGrid(x,y,shirts,ties,cell,reveal){
+    let s='';
+    let k=0;
+    for(let r=0;r<shirts;r++)for(let c=0;c<ties;c++){
+      const show=(reveal==null||reveal>=k);
+      if(show){ s+=miniOutfit(x+c*cell,y+r*cell,shirtC[r%shirtC.length],tieC[c%tieC.length],cell-4,cell-4,0.04*k); }
+      k++;
+    }
+    return s;
+  }
+  function shirtRow(x,y,shirts,cell,reveal){
+    let s='';
+    for(let r=0;r<shirts;r++){ const show=(reveal==null||reveal>=r); if(show){ s+=`<g class="qPWShirt" style="animation-delay:${(0.08*r).toFixed(2)}s" filter="url(#qPWsh)"><rect x="${x-2}" y="${y+r*cell}" width="8" height="${cell-6}" rx="3" fill="${shirtC[r%shirtC.length]}"/><text x="${x+10}" y="${y+r*cell+cell-10}" text-anchor="start" font-size="11.5" fill="${dim}">${shirtT[r%shirtT.length]}</text></g>`; } }
+    return s;
+  }
+  const shirtT=['красная','голубая','зелёная','сиреневая'];
+  const chip=(t,c,delay)=>`<span class="qPWIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const Q390=[
+    {q:'4 рубашки и 3 галстука — комплектов?',opts:['12','7','4'],ans:0},
+    {q:'3·2·4 маршрутов?',opts:['24','9','12'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q390[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:62px;font-size:17px" onclick="visW390T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! перемножай выборы</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · независимые выборы множим</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW390Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW390Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW390(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=13){ st.go=0; st.pick=null; }
+      if(step===8||step===9) st.pick=null;
+      if(step===11){ st.mq=0; st.msel=null; }
+      if(step===13){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    const GW=54;
+    const GX=76, GY=66;
+    if(step===0){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'собери наряд',{b:1});
+      if(go){
+        inner+=outfitGrid(GX,GY,4,3,GW,go);
+        inner+=`<g class="qPWPop"><text x="159" y="196" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">4 рубашки · 3 галстука → 12 комплектов</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Швейная мастерская</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('выборы перемножаются',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('правило произведения'));
+    } else if(step===1){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'независимые выборы',{b:1});
+      if(go){
+        inner+=`<g class="qPWPop"><rect x="36" y="62" width="246" height="86" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
+        ${tx(70,86,15,ink,'① выбираем рубашку',{b:1,an:'start'})}
+        ${tx(70,110,15,ink,'② выбираем галстук',{b:1,an:'start'})}
+        ${tx(70,134,15,grn,'выборы НЕ мешают друг другу → множим',{b:1,an:'start'})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('независимые — перемножай',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('когда можно множить'));
+    } else if(step===2){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'4 рубашки × 3 галстука',{b:1});
+      if(go){
+        inner+=outfitGrid(GX,GY,4,3,GW,go);
+        inner+=`<g class="qPWPop"><text x="159" y="196" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">4 × 3 = 12</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сетка нарядов</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('каждая рубашка × каждый галстук',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('выложить',`visW390Act('${lk}','go')`))+
+        wkSml('4·3 = 12'));
+    } else if(step===3){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'почему умножаем',{b:1});
+      if(go){
+        inner+=`<g class="qPWPop"><rect x="40" y="60" width="238" height="96" rx="12" fill="rgba(110,168,255,.1)" stroke="#6ea8ff" stroke-width="2"/>
+        ${tx(159,84,15,bluT,'на каждую из 4 рубашек —',{b:1})}
+        ${tx(159,108,15,bluT,'3 галстука',{b:1})}
+        ${tx(159,134,17,grn,'4 × 3 = 12 нарядов',{b:1,georgia:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Суть</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('«на каждую … по …»',bluT,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('вот и умножение'));
+    } else if(step===4){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'двузначные с 5',{b:1});
+      if(go){
+        inner+=`<g class="qPWPop"><text x="86" y="96" text-anchor="middle" font-size="22" fill="${gold}" font-weight="bold" font-family="Georgia,serif">5</text><text x="160" y="96" text-anchor="middle" font-size="22" fill="${dim}" font-weight="bold" font-family="Georgia,serif">? (0–9)</text>
+        <rect x="44" y="120" width="26" height="30" rx="5" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="1.8"/><rect x="74" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/><rect x="104" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/><rect x="134" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/>
+        <rect x="164" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/><rect x="194" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/><rect x="224" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/>
+        <text x="159" y="168" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">1 × 10 = 10 чисел</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Цифровая машина</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('первая 5 · вторая любая из 10',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('посчитать',`visW390Act('${lk}','go')`))+
+        wkSml('50 … 59'));
+    } else if(step===5){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'маршрут А → Б → В → Г',{b:1});
+      if(go){
+        inner+=`<g class="qPWPop"><circle cx="40" cy="150" r="10" fill="${gold}"/><text x="40" y="154" text-anchor="middle" font-size="12" fill="#0a1428" font-weight="bold">А</text>
+        <circle cx="208" cy="96" r="10" fill="${grn}"/><text x="208" y="100" text-anchor="middle" font-size="12" fill="#0a1428" font-weight="bold">Г</text>
+        <path class="qPWPath" d="M 50 150 C 100 150, 120 96, 198 96" fill="none" stroke="${road1}" stroke-width="3.4"/><text x="120" y="112" text-anchor="middle" font-size="13" fill="${road1}" font-weight="bold">3·2·4=24</text>
+        <path class="qPWPath" style="animation-delay:.2s" d="M 50 150 C 110 180, 120 60, 198 96" fill="none" stroke="${road2}" stroke-width="3.4"/></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Дорожная карта</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('3·2·4 = 24',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('посчитать',`visW390Act('${lk}','go')`))+
+        wkSml('перемножаем участки'));
+    } else if(step===6){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,20,ink,'когда умножать',{b:1});
+      if(go){
+        inner+=`<g class="qPWPop"><rect x="36" y="62" width="246" height="80" rx="12" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="2"/>
+        ${tx(159,86,15,gold,'выборы НЕЗАВИСИМЫ',{b:1})}
+        ${tx(159,110,15,gold,'(выбор одного не меняет другой)',{b:1})}
+        ${tx(159,132,13,dim,'тогда перемножай числа вариантов',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Условие</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('независимые → умножай',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('главный признак'));
+    } else if(step===7){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'полная сетка',{b:1});
+      if(go){
+        inner+=outfitGrid(GX,GY,4,3,GW,go);
+        inner+=`<g class="qPWPop"><text x="159" y="196" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">все 12 комплектов на месте</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Все комбинации</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('12 нарядов',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('выложить',`visW390Act('${lk}','go')`))+
+        wkSml('полный шкаф'));
+    } else if(step===8){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'5 рубашек и 2 галстука?',a:'10',ds:['7','20']},
+        {q:'3 рубашки и 3 галстука?',a:'9',ds:['6','12']},
+        {q:'4 рубашки и 4 галстука?',a:'16',ds:['8','12']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qPWIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qPWPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qPWPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">перемножь</text></g>`)
+        : tx(159,py+74,16,dim,'сколько комплектов?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW390Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW390P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW390P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: комплекты</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('a · b'));
+    } else if(step===9){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Двузначных с 5?',a:'10',ds:['9','5']},
+        {q:'Двузначных с 9?',a:'10',ds:['9','5']},
+        {q:'Трёхзначных с 7?',a:'100',ds:['10','90']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,19,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qPWIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qPWPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qPWPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вторая цифра — любая</text></g>`)
+        : tx(159,py+74,16,dim,'посчитай',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW390Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW390P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW390P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('разряды множь'));
+    } else if(step===10){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      const items=[['независимые выборы → перемножай'],['«на каждую … по …»'],['умножаем варианты каждого шага'],['проверь: 4·3=12 · 3·2·4=24']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=52+i*32;
+          inner+=`<g class="qPWIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(20,29,52,.96)':'rgba(32,44,76,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('перемножай!',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW390Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW390Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW390Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW390Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW390Act('${lk}','rst')`):'')+
+        wkSml('умножай')); 
+    } else if(step===11){
+      const H=182;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'4 рубашки и 3 галстука?',opts:['12','7','4'],ans:0},
+        {q:'Двузначных с 5?',opts:['10','9','5'],ans:0},
+        {q:'3·2·4?',opts:['24','9','12'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="qPWPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'перемножь'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW390S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW390Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW390Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('перемножай'));
+    } else if(step===12){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'4 × 3',{b:1,georgia:1});
+      if(go){
+        inner+=outfitGrid(GX,GY,4,3,GW,go);
+        inner+=`<g class="qPWPop"><text x="159" y="196" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 12 комплектов</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4·3 = 12',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('выложить',`visW390Act('${lk}','go')`))+
+        wkSml('умножаем выборы'));
+    } else {
+      const H=196;
+      let inner='';
+      inner+=tx(159,32,20,ink,'4 рубашки · 3 галстука',{b:1,georgia:1});
+      inner+=outfitGrid(GX,GY,4,3,GW,99);
+      inner+=`<g class="qPWPop"><text x="159" y="196" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 12</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('умножаем выборы'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[390]=visW390;
+  function visW390T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW390T=visW390T;
+  function visW390P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW390P=visW390P;
+  function visW390S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW390S=visW390S;
+  function visW390Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===11){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW390Act=visW390Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===390){ window.ARH_LESSONS[i]=L390; break; } } })();
+})();
