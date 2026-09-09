@@ -873,7 +873,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW24Act=visW24Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===24){ window.ARH_LESSONS[i]=L24; break; } } })();
 })();
-/* ================= УРОК 45 · НОД и НОК (v3 · «Делимость-лаборатория Архимеда», 18 слайдов, флагман, сверхтщательный) ================= */
+/* ================= УРОК 45 · НОД и НОК (v3.1 · «Делимость-лаборатория Архимеда», 17 слайдов, центрированный, детальный) ================= */
 (function(){
   if(!window.__wk45v3css){
     window.__wk45v3css=1;
@@ -885,8 +885,6 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       '@keyframes qNDPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
       '#lvis .qNDChip{animation:qNDChip .35s cubic-bezier(.2,.8,.3,1.35) both;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qNDChip{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qNDLink{animation:qNDLink .5s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qNDLink{0%{transform:scale(0);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
       '#lvis .qNDGlow{animation:qNDGlow 2s ease infinite;}'+
       '@keyframes qNDGlow{0%,100%{opacity:.5}50%{opacity:1}}';
     document.head.appendChild(st);
@@ -896,24 +894,23 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     src: 'Математика · 6 класс · Делимость: НОД и НОК', subj: 'math',
     explain: [
       'НОД — наибольший общий делитель: самое большое число, на которое делятся оба.',
-      'Пример: делители 12: 1,2,3,4,6,12. Делители 18: 1,2,3,6,9,18. НОД(12,18) = 6.',
+      'Делитель числа — число, на которое оно делится нацело (без остатка). У чисел много делителей.',
+      'Делители 12: 1, 2, 3, 4, 6, 12. Делители 18: 1, 2, 3, 6, 9, 18.',
+      'Общие делители 12 и 18: 1, 2, 3, 6. Самое большое из них — 6, это и есть НОД(12,18).',
       'НОК — наименьшее общее кратное: самое маленькое число, которое делится на оба.',
-      'Кратные 6: 6,12,18,24… Кратные 8: 8,16,24… НОК(6,8) = 24.',
-      'НОД помогает сокращать дроби, НОК — приводить к общему знаменателю.',
-      'Делитель числа — число, на которое оно делится нацело (без остатка).',
-      'Общие делители 12 и 18: 1, 2, 3, 6. Наибольший из них — 6, это и есть НОД.',
-      'Разложение: 12 = 2²·3, 18 = 2·3². НОД = общие простые в наименьшей степени = 2·3 = 6.',
       'Кратное числа — число, которое делится на него нацело (само число, удвоенное, утроенное…).',
-      'Общие кратные 6 и 8: 24, 48, 72… Наименьшее — 24, это и есть НОК.',
-      'Разложение: 6 = 2·3, 8 = 2³. НОК = все простые в наибольшей степени = 2³·3 = 24.',
+      'Кратные 6: 6, 12, 18, 24, 30… Кратные 8: 8, 16, 24, 32…',
+      'Общие кратные 6 и 8: 24, 48, 72… Самое маленькое — 24, это и есть НОК(6,8).',
+      'Разложение: 12 = 2²·3, 18 = 2·3². Общие простые в наименьшей степени: 2·3 = 6 = НОД.',
+      'Разложение для НОК: 6 = 2·3, 8 = 2³. Все простые в наибольшей степени: 2³·3 = 24 = НОК.',
       'Связь: НОД(a,b) · НОК(a,b) = a · b. Проверка: НОД(6,8)·НОК(6,8) = 2·24 = 48 = 6·8.',
+      'НОД помогает сокращать дроби, НОК — приводить к общему знаменателю.',
       'Тренажёр: найди НОД.',
       'Тренажёр: найди НОК.',
-      'Шпаргалка: НОД = общие множители (мин. степень); НОК = все множители (макс. степень); НОД·НОК = a·b.',
-      'Проверь себя устно: НОД(12,18)=6; НОК(6,8)=24; НОД(24,36)=12.',
-      'Проверь себя: НОД помогает сокращать дроби, НОК — приводить к общему знаменателю.',
-      'Проверь себя: НОД и НОК считают делители/кратные.',
-      'Проверь себя: НОД(12,18) = ? Ответь в тесте и жми «Понял! Проверю себя»!'
+      'Шпаргалка: НОД = общие множители (мин. степень); НОК = все множители (макс. степень); НОД·НОК = a·b; НОД сокращает, НОК приводит к знаменателю.',
+      'Проверь себя устно: НОД(12,18)=6; НОД(24,36)=12; НОК(6,8)=24; НОК(4,6)=12.',
+      'Проверь себя: НОД сокращает дроби, НОК приводит к общему знаменателю.',
+      'Проверь себя: найди НОД(12,18). Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Найди НОД чисел 12 и 18.', choices: ['3', '6', '9', '36'], ans: 1,
       exp: 'Общие делители 1,2,3,6 — наибольший 6.' },
@@ -924,7 +921,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Кратные 4: 4,8,12…', 'Кратные 6: 6,12…', 'Первое общее — 12.'], sol: 'НОК(4,6) = 12.' }
     ]
   };
-  const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', purple='#b07fff',
+  const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff',
         bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', steel='#aab8d4';
   const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
@@ -941,40 +938,24 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  function divChips(x,y,vals,commonSet,delay){
+  /* центрированная сетка «чипов» (делители или кратные) */
+  const CX=159;
+  function chips(cx,y0,vals,commonSet,div,delay){
+    const cell=div?42:38, cols=6, gap=6;
     let s='';
     vals.forEach((v,i)=>{
-      const cx=x+ (i%5)*56, cy=y+Math.floor(i/5)*44;
+      const row=Math.floor(i/cols), col=i%cols;
+      const nIn=Math.min(cols,vals.length-row*cols);
+      const rowW=nIn*cell+(nIn-1)*gap;
+      const x=cx-rowW/2+col*(cell+gap);
+      const y=y0+row*(cell+12);
       const common=commonSet&&commonSet.indexOf(v)>=0;
-      const c=common?grn:steel;
-      const fill=common?'rgba(125,224,160,.18)':'rgba(255,255,255,.06)';
-      s+=`<g class="qNDChip" style="animation-delay:${((delay||0)+0.08*i).toFixed(2)}s" filter="url(#qNDsh)"><rect x="${cx}" y="${cy}" width="46" height="36" rx="9" fill="${fill}" stroke="${c}" stroke-width="2.2"/>
-      <text x="${cx+23}" y="${cy+24}" text-anchor="middle" font-size="18" fill="${common?grn:ink}" font-weight="bold" font-family="Georgia,serif">${v}</text></g>`;
+      const c=common?(div?grn:gold):steel;
+      const fill=common?(div?'rgba(125,224,160,.2)':'rgba(255,215,106,.2)'):'rgba(255,255,255,.06)';
+      s+=`<g class="qNDChip" style="animation-delay:${((delay||0)+0.08*i).toFixed(2)}s" filter="url(#qNDsh)"><rect x="${x}" y="${y}" width="${cell}" height="${cell*0.86}" rx="9" fill="${fill}" stroke="${c}" stroke-width="2.2"/>
+      <text x="${x+cell/2}" y="${y+cell*0.86/2+5}" text-anchor="middle" font-size="${div?18:17}" fill="${common?c:ink}" font-weight="bold" font-family="Georgia,serif">${v}</text></g>`;
     });
-    return s;
-  }
-  function multChips(x,y,vals,commonSet,delay){
-    let s='';
-    vals.forEach((v,i)=>{
-      const cx=(x + (i%6)*47), cy=y+Math.floor(i/6)*44;
-      const common=commonSet&&commonSet.indexOf(v)>=0;
-      const c=common?gold:steel;
-      const fill=common?'rgba(255,215,106,.18)':'rgba(255,255,255,.06)';
-      s+=`<g class="qNDChip" style="animation-delay:${((delay||0)+0.08*i).toFixed(2)}s" filter="url(#qNDsh)"><rect x="${cx}" y="${cy}" width="40" height="36" rx="9" fill="${fill}" stroke="${c}" stroke-width="2.2"/>
-      <text x="${cx+20}" y="${cy+24}" text-anchor="middle" font-size="17" fill="${common?gold:ink}" font-weight="bold" font-family="Georgia,serif">${v}</text></g>`;
-    });
-    return s;
-  }
-  function factorRow(x,y,pairs,highlight){
-    let s='';
-    pairs.forEach((p,i)=>{
-      const cx=x+i*80;
-      const hl=highlight&&highlight.indexOf(p[1])>=0;
-      const c=hl?grn:blu;
-      s+=`<g class="qNDPop" style="animation-delay:${(0.1+i*0.1).toFixed(2)}s" filter="url(#qNDsh)"><rect x="${cx}" y="${y}" width="70" height="54" rx="10" fill="${hl?'rgba(125,224,160,.18)':'rgba(110,168,255,.1)'}" stroke="${c}" stroke-width="2.2"/>
-      <text x="${cx+35}" y="${y+24}" text-anchor="middle" font-size="13" fill="${dim}">${p[0]}</text><text x="${cx+35}" y="${y+44}" text-anchor="middle" font-size="22" fill="${c}" font-weight="bold" font-family="Georgia,serif">${p[1]}</text></g>`;
-    });
-    return s;
+    return {svg:s, rows:Math.ceil(vals.length/cols)};
   }
   const chip=(t,c,delay)=>`<span class="qNDIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q45=[
@@ -1002,216 +983,189 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=17){ st.go=0; st.pick=null; }
+      if(step>=0&&step<=16){ st.go=0; st.pick=null; }
       if(step===12||step===13) st.pick=null;
-      if(step===16){ st.mq=0; st.msel=null; }
-      if(step===18){ st.sel=null; st.q=0; }
+      if(step===15){ st.mq=0; st.msel=null; }
+      if(step===16){ st.sel=null; st.q=0; }
     }
     let h='';
     const W=318;
     if(step===0){
+      const H=216, go=st.go||0;
+      let inner='';
+      if(go){
+        inner+=`<g class="qNDPop"><rect x="36" y="76" width="118" height="58" rx="11" fill="rgba(125,224,160,.13)" stroke="${grn}" stroke-width="2"/>${tx(95,102,14,grn,'НОД',{b:1})}${tx(95,126,12,dim,'наиб. общий делитель',{})}</g>
+        <rect x="164" y="76" width="118" height="58" rx="11" fill="rgba(255,215,106,.13)" stroke="${gold}" stroke-width="2"/>${tx(223,102,14,gold,'НОК',{b:1})}${tx(223,126,12,dim,'наим. общее кратное',{})}</g>`;
+        inner+=`<g class="qNDPop"><text x="159" y="182" text-anchor="middle" font-size="14" fill="${dim}">делители · кратные · сокращение дробей · общий знаменатель</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">НОД и НОК</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('два близких понятия',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('показать',`visW45Act('${lk}','go')`))+
+        wkSml('делители и кратные'));
+    } else if(step===1){
       const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,20,ink,'два понятия',{b:1});
       if(go){
-        inner+=`<g class="qNDPop"><rect x="36" y="70" width="118" height="60" rx="11" fill="rgba(125,224,160,.13)" stroke="${grn}" stroke-width="2"/>${tx(95,96,14,grn,'НОД',{b:1})}${tx(95,122,12,dim,'наиб. общий делитель',{})}</g>
-        <rect x="164" y="70" width="118" height="60" rx="11" fill="rgba(255,215,106,.13)" stroke="${gold}" stroke-width="2"/>${tx(223,96,14,gold,'НОК',{b:1})}${tx(223,122,12,dim,'наим. общее кратное',{})}</g>`;
-        inner+=`<g class="qNDPop"><text x="159" y="170" text-anchor="middle" font-size="14" fill="${dim}">делители · кратные</text></g>`;
+        inner+=`<g class="qNDPop"><rect x="36" y="76" width="246" height="70" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
+        ${tx(159,100,15,ink,'делитель — число, что делит нацело',{b:1})}
+        ${tx(159,122,15,ink,'12 : 6 = 2 → 6 делитель 12',{b:1})}
+        ${tx(159,142,13,blu,'делим без остатка',{b:1})}</g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Делимость-лаборатория</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('НОД и НОК',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('показать',`visW45Act('${lk}','go')`))+
-        wkSml('два близких понятия'));
-    } else if(step===1){
-      const H=184;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'что такое делитель',{b:1});
-      if(go){
-        inner+=`<g class="qNDPop"><rect x="40" y="68" width="238" height="70" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
-        ${tx(159,92,15,ink,'делитель — число, что делит нацело',{b:1})}
-        ${tx(159,116,15,ink,'12 : 6 = 2 (без остатка) → 6 делитель',{b:1})}
-        ${tx(159,132,13,dim,'делим без остатка',{})}</g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Делитель</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Что такое делитель</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('чтобы делилось нацело',blu,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('показать',`visW45Act('${lk}','go')`))+
         wkSml('все делители'));
     } else if(step===2){
-      const H=196, go=st.go||0;
+      const H=178, go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'делители 12',{b:1});
       if(go){
-        inner+=divChips(34,72,[1,2,3,4,6,12],[1,2,3,6],0.1);
-        inner+=`<g class="qNDPop"><text x="159" y="184" text-anchor="middle" font-size="14" fill="${dim}">12 : каждое число нацело</text></g>`;
+        const c=chips(CX,96,[1,2,3,4,6,12],[1,2,3,6],true,0.1);
+        inner+=c.svg;
+        inner+=`<g class="qNDPop"><text x="159" y="156" text-anchor="middle" font-size="14" fill="${dim}">12 делится нацело на каждое</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Число 12</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Делители числа 12</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('1,2,3,4,6,12',blu,0.2)):'')+
+        (go?wkRow(chip('1, 2, 3, 4, 6, 12',blu,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('найти',`visW45Act('${lk}','go')`))+
         wkSml('все делители'));
     } else if(step===3){
-      const H=196, go=st.go||0;
+      const H=178, go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'делители 18',{b:1});
       if(go){
-        inner+=divChips(34,72,[1,2,3,6,9,18],[1,2,3,6],0.1);
-        inner+=`<g class="qNDPop"><text x="159" y="184" text-anchor="middle" font-size="14" fill="${dim}">18 : каждое число нацело</text></g>`;
+        const c=chips(CX,96,[1,2,3,6,9,18],[1,2,3,6],true,0.1);
+        inner+=c.svg;
+        inner+=`<g class="qNDPop"><text x="159" y="156" text-anchor="middle" font-size="14" fill="${dim}">18 делится нацело на каждое</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Число 18</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Делители числа 18</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('1,2,3,6,9,18',blu,0.2)):'')+
+        (go?wkRow(chip('1, 2, 3, 6, 9, 18',blu,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('найти',`visW45Act('${lk}','go')`))+
         wkSml('все делители'));
     } else if(step===4){
-      const H=196, go=st.go||0;
+      const H=212, go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'общие делители',{b:1});
       if(go){
-        inner+=divChips(34,72,[1,2,3,4,6,12],[1,2,3,6],0.1);
-        inner+=divChips(34,116,[1,2,3,6,9,18],[1,2,3,6],0.3);
-        inner+=`<g class="qNDPop"><text x="159" y="176" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">общие: 1, 2, 3, 6</text></g>`;
+        const a=chips(CX,66,[1,2,3,4,6,12],[1,2,3,6],true,0.1);
+        const b=chips(CX,126,[1,2,3,6,9,18],[1,2,3,6],true,0.3);
+        inner+=a.svg; inner+=b.svg;
+        inner+=`<g class="qNDPop"><text x="159" y="184" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">общие делители: 1, 2, 3, 6</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Пересечение</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Общие делители</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('общие делители',grn,0.2)):'')+
+        (go?wkRow(chip('общие: 1, 2, 3, 6',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('сравнить',`visW45Act('${lk}','go')`))+
         wkSml('что совпало'));
     } else if(step===5){
+      const H=206, go=st.go||0;
+      let inner='';
+      if(go){
+        inner+=chips(CX,92,[1,2,3,6],[1,2,3,6],true,0.1).svg;
+        inner+=`<g class="qNDGlow"><rect x="124" y="150" width="70" height="40" rx="11" fill="rgba(125,224,160,.22)" stroke="${grn}" stroke-width="2.6"/><text x="159" y="177" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">6</text></g>`;
+        inner+=`<g class="qNDPop"><text x="159" y="202" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">наибольший общий делитель = 6</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">НОД(12, 18) = 6</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('наибольший из общих',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('показать',`visW45Act('${lk}','go')`))+
+        wkSml('перебором'));
+    } else if(step===6){
       const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'НОД = 6',{b:1,georgia:1});
       if(go){
-        inner+=divChips(34,72,[1,2,3,6],[1,2,3,6],0.1);
-        inner+=`<g class="qNDGlow"><rect x="122" y="120" width="74" height="40" rx="11" fill="rgba(125,224,160,.22)" stroke="${grn}" stroke-width="2.6"/><text x="159" y="147" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">6</text></g>`;
-        inner+=`<g class="qNDPop"><text x="159" y="188" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">наибольший общий делитель = 6</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">НОД</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('НОД(12,18) = 6',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('показать',`visW45Act('${lk}','go')`))+
-        wkSml('наибольший из общих'));
-    } else if(step===6){
-      const H=184;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,30,20,ink,'простые множители',{b:1});
-      if(go){
-        inner+=`<g class="qNDPop"><text x="90" y="88" text-anchor="middle" font-size="20" fill="${blu}" font-weight="bold" font-family="Georgia,serif">12 = 2² · 3</text>
-        <text x="228" y="88" text-anchor="middle" font-size="20" fill="${blu}" font-weight="bold" font-family="Georgia,serif">18 = 2 · 3²</text>
+        inner+=`<g class="qNDPop"><text x="90" y="92" text-anchor="middle" font-size="19" fill="${blu}" font-weight="bold" font-family="Georgia,serif">12 = 2² · 3</text>
+        <text x="228" y="92" text-anchor="middle" font-size="19" fill="${blu}" font-weight="bold" font-family="Georgia,serif">18 = 2 · 3²</text>
         <text x="159" y="132" text-anchor="middle" font-size="13" fill="${dim}">раскладываем на простые</text>
-        <text x="159" y="158" text-anchor="middle" font-size="12" fill="${grn}" font-weight="bold">общие: 2¹ и 3¹</text></g>`;
+        <text x="159" y="162" text-anchor="middle" font-size="13" fill="${grn}" font-weight="bold">общие простые: 2¹ и 3¹</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Разложение</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Простые множители</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('простые множители',blu,0.2)):'')+
+        (go?wkRow(chip('второй способ',blu,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('разложить',`visW45Act('${lk}','go')`))+
-        wkSml('второй способ'));
+        wkSml('на простые'));
     } else if(step===7){
-      const H=182;
-      const go=st.go||0;
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,20,ink,'НОД через разложение',{b:1});
       if(go){
-        inner+=`<g class="qNDPop"><rect x="36" y="62" width="246" height="82" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
-        ${tx(159,86,15,grn,'НОД = общие простые в МЕНЬШЕЙ степени',{b:1})}
-        ${tx(159,112,17,grn,'2¹ · 3¹ = 6',{b:1,georgia:1})}
-        ${tx(159,136,13,dim,'берём наименьшую степень каждой',{})}</g>`;
+        inner+=`<g class="qNDPop"><rect x="36" y="70" width="246" height="86" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
+        ${tx(159,94,15,grn,'НОД = общие простые',{b:1})}
+        ${tx(159,118,15,grn,'в НАИМЕНЬШЕЙ степени',{b:1})}
+        ${tx(159,144,18,grn,'2¹ · 3¹ = 6',{b:1,georgia:1})}</g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Формула</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">НОД разложением</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('мин. степень общих',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('показать',`visW45Act('${lk}','go')`))+
-        wkSml('разложением'));
+        wkSml('2¹·3¹ = 6'));
     } else if(step===8){
-      const H=184;
-      const go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,32,20,ink,'что такое кратное',{b:1});
       if(go){
-        inner+=`<g class="qNDPop"><rect x="40" y="68" width="238" height="70" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
-        ${tx(159,92,15,ink,'кратное — делится на число нацело',{b:1})}
-        ${tx(159,116,15,gold,'6, 12, 18… — кратные 6',{b:1})}
-        ${tx(159,132,13,dim,'само число · удвоенное · утроенное…',{})}</g>`;
+        inner+=`<g class="qNDPop"><rect x="36" y="76" width="246" height="70" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
+        ${tx(159,100,15,ink,'кратное — делится на число нацело',{b:1})}
+        ${tx(159,122,15,gold,'6, 12, 18… — кратные 6',{b:1})}
+        ${tx(159,142,13,dim,'само число · удвоенное · утроенное…',{})}</g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Кратное</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Что такое кратное</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('число × 1, ×2, ×3…',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('показать',`visW45Act('${lk}','go')`))+
         wkSml('бесконечно много'));
     } else if(step===9){
-      const H=196, go=st.go||0;
+      const H=178, go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'кратные 6',{b:1});
       if(go){
-        inner+=multChips(34,70,[6,12,18,24,30,36,42,48,54,60,66,72],[24,48,72],0.1);
-        inner+=`<g class="qNDPop"><text x="159" y="176" text-anchor="middle" font-size="13" fill="${dim}">6·1, 6·2, 6·3…</text></g>`;
+        const c=chips(CX,92,[6,12,18,24,30,36],[24,48,72],false,0.1);
+        inner+=c.svg;
+        inner+=`<g class="qNDPop"><text x="159" y="156" text-anchor="middle" font-size="14" fill="${dim}">6·1, 6·2, 6·3…</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Число 6</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Кратные числа 6</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('6,12,18,24…',gold,0.2)):'')+
+        (go?wkRow(chip('6, 12, 18, 24, 30…',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('найти',`visW45Act('${lk}','go')`))+
-        wkSml('все кратные'));
+        wkSml('умножаем на 1,2,3…'));
     } else if(step===10){
-      const H=196, go=st.go||0;
+      const H=178, go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'кратные 8',{b:1});
       if(go){
-        inner+=multChips(34,70,[8,16,24,32,40,48,56,64,72,80,88,96],[24,48,72],0.1);
-        inner+=`<g class="qNDPop"><text x="159" y="176" text-anchor="middle" font-size="13" fill="${dim}">8·1, 8·2, 8·3…</text></g>`;
+        const c=chips(CX,92,[8,16,24,32,40,48],[24,48,72],false,0.1);
+        inner+=c.svg;
+        inner+=`<g class="qNDPop"><text x="159" y="156" text-anchor="middle" font-size="14" fill="${dim}">8·1, 8·2, 8·3…</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Число 8</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Кратные числа 8</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('8,16,24,32…',gold,0.2)):'')+
+        (go?wkRow(chip('8, 16, 24, 32, 40, 48…',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('найти',`visW45Act('${lk}','go')`))+
-        wkSml('все кратные'));
+        wkSml('умножаем на 1,2,3…'));
     } else if(step===11){
-      const H=196, go=st.go||0;
+      const H=212, go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'общие кратные',{b:1});
       if(go){
-        inner+=multChips(34,70,[6,12,18,24,30,36,42,48,54,60,66,72],[24,48,72],0.1);
-        inner+=multChips(34,114,[8,16,24,32,40,48,56,64,72,80,88,96],[24,48,72],0.3);
-        inner+=`<g class="qNDPop"><text x="159" y="176" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">общие: 24, 48, 72…</text></g>`;
+        const a=chips(CX,66,[6,12,18,24,30,36],[24,48,72],false,0.1);
+        const b=chips(CX,126,[8,16,24,32,40,48],[24,48,72],false,0.3);
+        inner+=a.svg; inner+=b.svg;
+        inner+=`<g class="qNDPop"><text x="159" y="186" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">общие кратные: 24, 48, 72…</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Пересечение</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Общие кратные</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('общие кратные',gold,0.2)):'')+
+        (go?wkRow(chip('общие: 24, 48, 72…',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('сравнить',`visW45Act('${lk}','go')`))+
         wkSml('что совпало'));
     } else if(step===12){
-      const H=196, go=st.go||0;
+      const H=206, go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'НОК = 24',{b:1,georgia:1});
       if(go){
-        inner+=multChips(34,70,[6,12,18,24,30,36,42,48,54,60,66,72],[24,48,72],0.1);
-        inner+=`<g class="qNDGlow"><rect x="124" y="120" width="70" height="40" rx="11" fill="rgba(255,215,106,.22)" stroke="${gold}" stroke-width="2.6"/><text x="159" y="147" text-anchor="middle" font-size="24" fill="${gold}" font-weight="bold" font-family="Georgia,serif">24</text></g>`;
-        inner+=`<g class="qNDPop"><text x="159" y="186" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">наименьшее общее кратное = 24</text></g>`;
+        inner+=chips(CX,92,[24],[24],false,0.1).svg;
+        inner+=`<g class="qNDGlow"><rect x="124" y="150" width="70" height="40" rx="11" fill="rgba(255,215,106,.22)" stroke="${gold}" stroke-width="2.6"/><text x="159" y="177" text-anchor="middle" font-size="24" fill="${gold}" font-weight="bold" font-family="Georgia,serif">24</text></g>`;
+        inner+=`<g class="qNDPop"><text x="159" y="202" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">наименьшее общее кратное = 24</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">НОК</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">НОК(6, 8) = 24</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('НОК(6,8) = 24',gold,0.2)):'')+
+        (go?wkRow(chip('наименьшее из общих',gold,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('показать',`visW45Act('${lk}','go')`))+
-        wkSml('наименьшее из общих'));
+        wkSml('перебором'));
     } else if(step===13){
-      const H=182;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'связь',{b:1});
-      if(go){
-        inner+=`<g class="qNDPop"><rect x="36" y="62" width="246" height="82" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
-        ${tx(159,86,15,gold,'НОД(a,b) · НОК(a,b) = a · b',{b:1,georgia:1})}
-        ${tx(159,112,15,grn,'НОД(6,8)·НОК(6,8) = 2·24 = 48 = 6·8',{b:1})}
-        ${tx(159,136,13,dim,'красивая проверка!',{})}</g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Полезная связь</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('НОД·НОК = a·b',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW45Act('${lk}','rst')`):wkBtn('показать',`visW45Act('${lk}','go')`))+
-        wkSml('проверка'));
-    } else if(step===14){
       const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
@@ -1239,12 +1193,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW45Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW45P('${lk}',${i})">${o}</button>`).join('')}</div>`;
       const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW45P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: НОД</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр · НОД</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (st.pick!=null&&st.pick===0?wkRow(chip('НОД = '+P.a,grn,0.2)):'')+
         fb+retry+
         wkSml('общие множители'));
-    } else if(step===15){
+    } else if(step===14){
       const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
@@ -1272,17 +1226,17 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW45Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW45P('${lk}',${i})">${o}</button>`).join('')}</div>`;
       const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW45P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: НОК</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр · НОК</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (st.pick!=null&&st.pick===0?wkRow(chip('НОК = '+P.a,grn,0.2)):'')+
         fb+retry+
         wkSml('общие кратные'));
-    } else if(step===16){
+    } else if(step===15){
       const H=190;
       const go=st.go||0;
       let inner='';
       inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
-      const items=[['НОД — общие множители (мин. степень)'],['НОК — все множители (макс. степень)'],['НОД(12,18)=6 · НОК(6,8)=24'],['НОД·НОК = a·b']];
+      const items=[['НОД — общие множители (мин. степень)'],['НОК — все множители (макс. степень)'],['НОД·НОК = a·b'],['НОД сокращает · НОК — общий знаменатель']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
           const ry=52+i*32;
@@ -1300,7 +1254,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go===3?wkBtn('шаг 4',`visW45Act('${lk}','go')`) : '',
           go>=4?wkBtn('сброс',`visW45Act('${lk}','rst')`):'')+
         wkSml('два способа'));
-    } else if(step===17){
+    } else if(step===16){
       const H=182;
       if(st.mq==null) st.mq=0;
       const QS=[
@@ -1323,12 +1277,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('НОД и НОК'));
     } else {
-      const H=196;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,32,20,ink,'НОД(12,18)',{b:1,georgia:1});
-      inner+=divChips(34,68,[1,2,3,6],[1,2,3,6],0.1);
-      inner+=`<g class="qNDPop"><text x="159" y="156" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 6</text></g>`;
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+      if(go){
+        inner+=chips(CX,78,[1,2,3,6],[1,2,3,6],true,0.1).svg;
+        inner+=`<g class="qNDPop"><text x="159" y="152" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 6</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">НОД(12, 18)</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
         wkSml('общие делители'));
@@ -1347,7 +1302,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const sp=LV.step;
     if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
     if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
-    if(act==='nq'){ if(sp===17){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='nq'){ if(sp===16){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
     if(act==='rst') CHS[lk]={};
     chRender(0);
   }
