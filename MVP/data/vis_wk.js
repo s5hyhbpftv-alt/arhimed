@@ -22092,3 +22092,440 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW190Act=visW190Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===190){ window.ARH_LESSONS[i]=L190; break; } } })();
 })();
+
+/* ================= УРОК 185 · Отрицательные числа и их сравнение (v1 · «Улица Архимеда», 15 слайдов, флагман) ================= */
+(function(){
+  if(!window.__wk185v1css){
+    window.__wk185v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qSIn{animation:qSIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qSIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qSPop{animation:qSPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qSPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qSPoint{animation:qSPoint .5s cubic-bezier(.2,.8,.3,1.4) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qSPoint{0%{transform:scale(0);opacity:0}70%{transform:scale(1.2);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qSArrow{animation:qSArrow .7s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qSArrow{0%{transform:scaleX(0);opacity:0}70%{transform:scaleX(1.05);opacity:1}100%{transform:scaleX(1)}}';
+    document.head.appendChild(st);
+  }
+  const L185 = {
+    id: 185, title: 'Отрицательные числа и их сравнение', ico: '🌡',
+    src: 'Математика · 6 класс · Отрицательные числа', subj: 'math',
+    explain: [
+      'Числа меньше нуля — ОТРИЦАТЕЛЬНЫЕ: −1, −5, −10. Они стоят на числовой прямой слева от нуля.',
+      'Где холоднее: −5° или −2°? На прямой −5 левее −2, а «чем левее, тем меньше» → −5 < −2.',
+      'Любое отрицательное число меньше нуля, а ноль меньше любого положительного: −7 < 0 < 3.',
+      'Примеры из жизни: температура, долг (−50 ₽ — ты должен), этажи под землёй.',
+      'Ловушка: «−10 больше −2»? Нет! −10 левее −2, значит −10 < −2. Больше то, что ПРАВЕЕ на прямой.',
+      'Совет Архимеда: рисуй числовую прямую: чем правее число, тем оно больше — и сравнение всегда верное.',
+      'Отрицательные числа «холоднее» — они левее нуля.',
+      'Сравнивать надо по положению на прямой, а не по «величине» числа.',
+      'Чем правее — тем больше. Даже если на вид «10» больше «2».',
+      'Тренажёр: сравни отрицательные числа.',
+      'Тренажёр: найди отрицательные числа в ряду.',
+      'Тренажёр: определи верную запись.',
+      'Шпаргалка: правее = больше; отрицательное < 0 < положительное; смотри на прямую.',
+      'Проверь себя устно: −5 < −2; −7 < 0; −10 < −2.',
+      'Проверь себя: −5 или −2? Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Какое число больше: −5 или −2?', choices: ['−5', '−2', 'Они равны'], ans: 1,
+      exp: 'На прямой −2 правее −5, значит −2 > −5.' },
+    tasks: [
+      { q: 'Сколько отрицательных чисел в ряду: −3, 0, 5, −1, 7?', kind: 'unit', ans: 2, tol: 0,
+        hints: ['Какие числа меньше нуля?', '−3 и −1 — два числа.'], sol: 'Отрицательные: −3 и −1 — всего 2.' },
+      { q: 'Какая запись верна?', kind: 'choice', choices: ['−7 > 0', '−7 < 0', '0 < −7'], ans: 1, tol: 0,
+        hints: ['Отрицательное меньше нуля.', '−7 < 0.'], sol: 'Любое отрицательное число меньше нуля: −7 < 0.' }
+    ]
+  };
+  const ink='#eef4ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cold='#7fd6ff', warm='#ffb85c', blu='#6ea8ff',
+        bg0='#142038', bg1='#0a1122', card='rgba(20,29,52,.96)', cardB='#3a4c78', lineC='#2c3c64';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qSbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <linearGradient id="qSline" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${cold}"/><stop offset="0.5" stop-color="#7a8fc0"/><stop offset="1" stop-color="${warm}"/></linearGradient>
+        <filter id="qSsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qSbg)"/>
+      <g opacity="0.14" stroke="#4a5c8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44568c" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3a64" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const aX={x:22,y:100,w:274,min:-10,max:10};
+  const axPx=v=>aX.x+(v-aX.min)/(aX.max-aX.min)*aX.w;
+  function axis(){
+    let s='';
+    s+=`<rect x="${aX.x}" y="${aX.y-3.5}" width="${aX.w}" height="7" rx="3.5" fill="url(#qSline)"/>`;
+    s+=`<path d="M ${aX.x} ${aX.y} l 9 -5 l 0 10 z" fill="${cold}"/><path d="M ${aX.x+aX.w} ${aX.y} l -9 -5 l 0 10 z" fill="${warm}"/>`;
+    for(let v=aX.min;v<=aX.max;v++){
+      const x=axPx(v);
+      s+=`<line x1="${x}" y1="${aX.y-5}" x2="${x}" y2="${aX.y+5}" stroke="#5a6c9c" stroke-width="1.6"/>`;
+      s+=tx(x,aX.y+26,12.5,v===0?ink:dim,''+v,{b:v===0});
+    }
+    return s;
+  }
+  function point(v,label,color,delay){
+    const x=axPx(v);
+    return `<g class="qSPoint" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qSsh)"><circle cx="${x}" cy="${aX.y}" r="12" fill="${color}" stroke="#fffdf2" stroke-width="2.4"/>${label?`<text x="${x}" y="${aX.y+5}" text-anchor="middle" font-size="13" fill="#0a1428" font-weight="bold">${label}</text>`:''}</g>`;
+  }
+  function greaterArrow(vA,vB,color,delay){
+    const xa=axPx(vA), xb=axPx(vB), xmin=Math.min(xa,xb), xmax=Math.max(xa,xb);
+    let s=`<g class="qSArrow" style="animation-delay:${(delay||0).toFixed(2)}s"><line x1="${xmin}" y1="${aX.y-26}" x2="${xmax}" y2="${aX.y-26}" stroke="${color}" stroke-width="3" stroke-linecap="round"/>`;
+    s+=`<path d="M ${xmax} ${aX.y-31} l 8 5 l -8 5 z" fill="${color}"/>`;
+    s+=tx((xmin+xmax)/2,aX.y-40,13,color,(vA>vB? vA+' > '+vB : vB+' > '+vA),{b:1});
+    s+=`</g>`;
+    return s;
+  }
+  const chip=(t,c,delay)=>`<span class="qSIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const Q185=[
+    {q:'Что больше: −5 или −2?',opts:['−5','−2','равны'],ans:1},
+    {q:'Какая запись верна?',opts:['−7 < 0','−7 > 0','0 < −7'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q185[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:17px" onclick="visW185T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! правее = больше</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · смотри на прямую</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW185Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW185Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW185(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step===8||step===9||step===10) st.pick=null;
+      if(step===12){ st.mq=0; st.msel=null; }
+      if(step===13||step===14){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=182, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'числа меньше нуля',{b:1});
+      inner+=axis();
+      inner+=point(-7,'−7',cold,0.2);
+      if(go){
+        inner+=`<g class="qSPop"><text x="159" y="166" text-anchor="middle" font-size="16" fill="${cold}" font-weight="bold" font-family="Georgia,serif">отрицательные — слева от нуля</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Улица Архимеда</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('−1, −5, −10 < 0',cold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
+        wkSml('слева от нуля'));
+    } else if(step===1){
+      const H=182, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'на прямой — слева',{b:1});
+      inner+=axis();
+      inner+=point(-10,'−10',cold,0.15);
+      inner+=point(-3,'−3',cold,0.2);
+      if(go){
+        inner+=`<g class="qSPop"><text x="159" y="164" text-anchor="middle" font-size="16" fill="${ink}" font-weight="bold">чем ЛЕВЕЕ — тем меньше</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Где они стоят</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('левее — меньше',cold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
+        wkSml('сначала холодные'));
+    } else if(step===2){
+      const H=188, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'−5 или −2?',{b:1,georgia:1});
+      inner+=axis();
+      inner+=point(-5,'−5',cold,0.15);
+      inner+=point(-2,'−2',warm,0.2);
+      if(go){
+        inner+=greaterArrow(-5,-2,grn,0.25);
+        inner+=`<g class="qSPop"><text x="159" y="172" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">−2 больше</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравниваем</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('−2 правее → −2 > −5',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('сравнить',`visW185Act('${lk}','go')`))+
+        wkSml('правее = больше'));
+    } else if(step===3){
+      const H=182, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'−7 < 0 < 3',{b:1,georgia:1});
+      inner+=axis();
+      inner+=point(-7,'−7',cold,0.12);
+      inner+=point(0,'0',blu,0.18);
+      inner+=point(3,'3',warm,0.24);
+      if(go){
+        inner+=`<g class="qSPop"><text x="159" y="166" text-anchor="middle" font-size="16" fill="${ink}" font-weight="bold">отрицательное < 0 < положительное</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Порядок</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('−7 < 0 < 3',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
+        wkSml('ноль посередине'));
+    } else if(step===4){
+      const H=184, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'где холоднее?',{b:1});
+      inner+=axis();
+      inner+=point(-5,'−5°',cold,0.15);
+      inner+=point(-2,'−2°',warm,0.2);
+      if(go){
+        inner+=greaterArrow(-5,-2,grn,0.25);
+        inner+=`<g class="qSPop"><text x="159" y="170" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">−2° теплее (правее)</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Температура</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('−5° < −2°',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('сравнить',`visW185Act('${lk}','go')`))+
+        wkSml('выше температура — правее'));
+    } else if(step===5){
+      const H=184;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,20,ink,'в жизни',{b:1});
+      if(go){
+        inner+=`<g class="qSPop">
+        <rect x="24" y="66" width="130" height="70" rx="12" fill="rgba(127,214,255,.14)" stroke="${cold}" stroke-width="2"/><text x="89" y="92" text-anchor="middle" font-size="16" fill="${cold}" font-weight="bold">долг</text><text x="89" y="120" text-anchor="middle" font-size="16" fill="${ink}">−50 ₽</text>
+        <rect x="164" y="66" width="130" height="70" rx="12" fill="rgba(255,184,92,.14)" stroke="${warm}" stroke-width="2"/><text x="229" y="92" text-anchor="middle" font-size="16" fill="${warm}" font-weight="bold">подземный</text><text x="229" y="120" text-anchor="middle" font-size="16" fill="${ink}">этаж −1</text>
+        <text x="159" y="164" text-anchor="middle" font-size="15" fill="${dim}">отрицательные — «ниже нуля» в жизни</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Зачем они</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('долг · мороз · под землёй',cold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
+        wkSml('температура, долг, этажи'));
+    } else if(step===6){
+      const H=184, go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,20,ink,'главное правило',{b:1});
+      inner+=axis();
+      if(go){
+        inner+=`<g class="qSPop"><path d="M ${aX.x+20} ${aX.y-34} L ${aX.x+aX.w-20} ${aX.y-34} L ${aX.x+aX.w-20} ${aX.y-25} L ${aX.x+aX.w-12} ${aX.y-34} L ${aX.x+aX.w-20} ${aX.y-43} Z" fill="${grn}"/>
+        <text x="${aX.x+aX.w/2}" y="${aX.y-52}" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">вправо = увеличивается</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Правее = больше</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('смотри, кто правее',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('показать',`visW185Act('${lk}','go')`))+
+        wkSml('это всё решает'));
+    } else if(step===7){
+      const H=184, go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,20,ink,'ловушка',{b:1});
+      inner+=axis();
+      inner+=point(-10,'−10',cold,0.15);
+      inner+=point(-2,'−2',warm,0.2);
+      if(go){
+        inner+=greaterArrow(-10,-2,grn,0.25);
+        inner+=`<g class="qSPop"><text x="159" y="172" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">−10 < −2 (не наоборот!)</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Берегись</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('−10 левее → меньше',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('проверить',`visW185Act('${lk}','go')`))+
+        wkSml('«10» не значит больше'));
+    } else if(step===8){
+      const H=200, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'−5 или −2?',a:'−2',ds:['−5','равны']},
+        {q:'−10 или −3?',a:'−3',ds:['−10','равны']},
+        {q:'−1 или −8?',a:'−1',ds:['−8','равны']},
+        {q:'−4 или −4?',a:'равны',ds:['−4','нельзя знать']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qSIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,24,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qSPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qSPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">кто правее</text></g>`)
+        : tx(159,py+74,16,dim,'что больше?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW185Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW185P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW185P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: что больше</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('правее = больше'));
+    } else if(step===9){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'−3, 0, 5, −1, 7 — сколько отрицательных?',a:'2',ds:['3','5']},
+        {q:'−10, −101, 4, −5, 2 — сколько отрицательных?',a:'3',ds:['2','4']},
+        {q:'0, −6, 8, −2 — сколько отрицательных?',a:'2',ds:['1','3']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,15,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qSIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qSPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qSPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">числа < 0</text></g>`)
+        : tx(159,py+74,16,dim,'сколько отрицательных?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW185Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW185P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW185P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: найди</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('отрицательных '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('числа < 0'));
+    } else if(step===10){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Верная запись?',a:'−7 < 0',ds:['−7 > 0','0 < −7']},
+        {q:'Верная запись?',a:'−5 < −2',ds:['−5 > −2','−5 = −2']},
+        {q:'Верная запись?',a:'−3 < 2',ds:['−3 > 2','0 > 2']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,16,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qSIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,20,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qSPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qSPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">на прямой</text></g>`)
+        : tx(159,py+74,16,dim,'выбери верную',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW185Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW185P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW185P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: запись</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('правее = больше'));
+    } else if(step===11){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      const items=[['правее на прямой = больше'],['отрицательное < 0 < положительное'],['−5 < −2 · −10 < −2'],['рисуй прямую — не ошибёшься']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=52+i*32;
+          inner+=`<g class="qSIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(20,29,52,.96)':'rgba(32,44,76,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('смотри на прямую',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW185Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW185Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW185Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW185Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW185Act('${lk}','rst')`):'')+
+        wkSml('правее = больше'));
+    } else if(step===12){
+      const H=182;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'Что больше: −5 или −2?',opts:['−2','−5','равны'],ans:0},
+        {q:'−7 < 0 — верно?',opts:['да','нет','нельзя узнать'],ans:0},
+        {q:'−10 или −2?',opts:['−2','−10','равны'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="qSPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'правее = больше'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW185S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW185Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW185Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('правее = больше'));
+    } else if(step===13){
+      const H=182, go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,20,ink,'−5° или −2°?',{b:1,georgia:1});
+      inner+=axis();
+      inner+=point(-5,'−5°',cold,0.15);
+      inner+=point(-2,'−2°',warm,0.2);
+      if(go){
+        inner+=greaterArrow(-5,-2,grn,0.25);
+        inner+=`<g class="qSPop"><text x="159" y="168" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">−2° теплее</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('−2° > −5°',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW185Act('${lk}','rst')`):wkBtn('сравнить',`visW185Act('${lk}','go')`))+
+        wkSml('правее = больше'));
+    } else {
+      const H=188;
+      let inner='';
+      inner+=tx(159,32,20,ink,'−5 или −2?',{b:1,georgia:1});
+      inner+=axis();
+      inner+=point(-5,'−5',cold,0.12);
+      inner+=point(-2,'−2',warm,0.18);
+      inner+=`<g class="qSPop"><text x="159" y="168" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">−2 больше</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('правее = больше'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[185]=visW185;
+  function visW185T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW185T=visW185T;
+  function visW185P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW185P=visW185P;
+  function visW185S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW185S=visW185S;
+  function visW185Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===12){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW185Act=visW185Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===185){ window.ARH_LESSONS[i]=L185; break; } } })();
+})();
