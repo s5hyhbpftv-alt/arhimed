@@ -17664,22 +17664,20 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW47Act=visW47Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===47){ window.ARH_LESSONS[i]=L47; break; } } })();
 })();
-/* ================= УРОК 177 · Доли: половина, треть, четверть числа (v1 · «Кондитерская долей Архимеда», 14 слайдов, премиум) ================= */
+/* ================= УРОК 177 · Доли: половина, треть, четверть числа (v2 · «Кондитерская долей Архимеда», 13 слайдов, флагман) ================= */
 (function(){
-  if(!window.__wk177v1css){
-    window.__wk177v1css=1;
+  if(!window.__wk177v2css){
+    window.__wk177v2css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qFIn{animation:qFIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qFIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qFPop{animation:qFPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qFPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qFSlice{animation:qFSlice .6s cubic-bezier(.2,.8,.3,1.2) both;}'+
-      '@keyframes qFSlice{0%{transform:scale(.55);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qFBar{animation:qFBar .7s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center bottom;}'+
-      '@keyframes qFBar{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}'+
-      '#lvis .qFFloat{animation:qFFloat 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qFFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+      '#lvis .qFPop{animation:qFPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qFPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qFBall{animation:qFBall .5s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qFBall{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qFBar{animation:qFBar .6s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes qFBar{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}';
     document.head.appendChild(st);
   }
   const L177 = {
@@ -17691,7 +17689,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Почему так? Если торт разделить на 3 равные части, каждая часть — треть торта, а её «размер» — треть числа.',
       'Совет Архимеда: знаменатель дроби говорит, на сколько частей делим: /2 — на 2, /3 — на 3, /4 — на 4.',
       'Доля числа = число : знаменатель. Делим на столько частей, сколько в знаменателе.',
-      'Половина — самое крупное: меньше всех остальных долей (1/2 самый большой знаменатель-наименьший).',
+      'Половина — самая крупная: 1/2 больше 1/3 и 1/4.',
       '1/3 меньше 1/2, а 1/4 ещё меньше — больше частей, каждая меньше.',
       'Тренажёр: найди долю числа по правилу «число : знаменатель».',
       'Тренажёр: сравни доли — какая больше.',
@@ -17709,11 +17707,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Половина — раздели на 2.', '50 : 2 = 25.'], sol: '50 : 2 = 25.' }
     ]
   };
-  const ink='#5a2f20', dim='#a5765c', gold='#d9a05a', pink='#f27f96', deep='#c94b6c', sponge='#e9b36a', choco='#7a4a2a',
-        grn='#4c9a58', blu='#3f6d9e', card='rgba(255,250,244,.96)', cardB='#e0b6a6', cream='#fdf3e6';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf3e6" stroke-width="3.2">${t}</text>`;
+  const ink='#5a2f20', dim='#a5765c', gold='#d9a05a', pink='#f27f96', deep='#c94b6c', sponge='#e9b36a', grn='#4c9a58', blu='#3f6d9e',
+        card='rgba(255,250,244,.97)', cardB='#e0b6a6', cream='#fdf3e6';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf3e6" stroke-width="3.4">${t}</text>`;
   function sector(cx,cy,r,a0,a1){
-    const r0=a0*Math.PI/180, r1=a1*Math.PI/180;
+    const r0=a0*Math.PI/180,r1=a1*Math.PI/180;
     return `M ${cx} ${cy} L ${(cx+r*Math.cos(r0)).toFixed(1)} ${(cy+r*Math.sin(r0)).toFixed(1)} A ${r} ${r} 0 ${(r1-r0)>180?1:0} 1 ${(cx+r*Math.cos(r1)).toFixed(1)} ${(cy+r*Math.sin(r1)).toFixed(1)} Z`;
   }
   function bg(W,H,opt){
@@ -17725,36 +17723,32 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         <filter id="qFsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.25"/></filter>
       </defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qFbg)"/>
-      <g opacity="0.8"><circle cx="26" cy="22" r="3" fill="rgba(242,127,150,.3)"/><circle cx="286" cy="32" r="3" fill="rgba(242,127,150,.3)"/><circle cx="160" cy="18" r="2.5" fill="rgba(242,127,150,.3)"/></g>
+      <g opacity="0.8"><circle cx="26" cy="22" r="3" fill="rgba(242,127,150,.3)"/><circle cx="286" cy="32" r="3" fill="rgba(242,127,150,.3)"/></g>
       <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="${cardB}" stroke-width="2" rx="7"/>
       <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="url(#qFgold)" stroke-width="1.3" opacity="0.55" rx="6"/>
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  /* торт, разрезанный на parts кусков; highlight — один кусок «взят» */
   function cake(cx,cy,r,parts,highlight){
     let s='';
     const st=-90;
     for(let i=0;i<parts;i++){ s+=`<path d="${sector(cx,cy,r,st+i*360/parts,st+(i+1)*360/parts)}" fill="${sponge}" stroke="#7a4a2a" stroke-width="1.4"/>`; }
-    /* крем по секторам розовый поверх, но оставим золотую корочку */
     for(let i=0;i<parts;i++){ s+=`<path d="${sector(cx,cy,r-2,st+i*360/parts,st+(i+1)*360/parts)}" fill="${i===highlight?deep:pink}" stroke="#c94b6c" stroke-width="1.2" opacity="0.92"/>`; }
     s+=`<circle cx="${cx}" cy="${cy}" r="${r-1}" fill="none" stroke="${sponge}" stroke-width="3"/>`;
-    s+=`<circle cx="${cx}" cy="${cy-2}" r="${r*0.18}" fill="#ff5d5d" stroke="#7a1a1a" stroke-width="1.6"/>`;
+    s+=`<circle cx="${cx}" cy="${cy-2}" r="${r*0.2}" fill="#ff5d5d" stroke="#7a1a1a" stroke-width="1.6"/>`;
     return s;
   }
-  /* полоса числа total, разделённая на parts, одна часть подсвечена */
   function splitBar(x,y,w,total,parts,hi,color){
     let s='';
     const seg=w/parts;
     for(let i=0;i<parts;i++){
-      const c = i===hi ? (color||pink) : '#e9d4bc';
-      s+=`<g class="qFBar" style="animation-delay:${(0.06*i).toFixed(2)}s"><rect x="${(x+i*seg).toFixed(1)}" y="${y}" width="${(seg-2).toFixed(1)}" height="30" rx="4" fill="${c}" stroke="#c9a58a" stroke-width="1.2"/>
-      ${tx((x+i*seg+seg/2).toFixed(1),y+21,13,c===color?'#fff':ink,''+(i===hi?Math.round(total/parts):Math.round(total/parts)),{b:true})}</g>`;
+      const c=i===hi?(color||pink):'#e9d4bc';
+      s+=`<g class="qFBar" style="animation-delay:${(0.06*i).toFixed(2)}s"><rect x="${(x+i*seg).toFixed(1)}" y="${y}" width="${(seg-3).toFixed(1)}" height="34" rx="5" fill="${c}" stroke="#c9a58a" stroke-width="1.4"/><text x="${(x+i*seg+seg/2).toFixed(1)}" y="${y+24}" text-anchor="middle" font-size="18" fill="${c===color?'#fff':ink}" font-weight="bold">${Math.round(total/parts)}</text></g>`;
     }
-    s+=`<rect x="${x}" y="${y}" width="${w}" height="30" fill="none" stroke="${cardB}" stroke-width="1.6"/>`;
+    s+=`<rect x="${x}" y="${y}" width="${w}" height="34" fill="none" stroke="${cardB}" stroke-width="1.6"/>`;
     return s;
   }
-  const chip=(t,c,delay)=>`<span class="qFIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="qFIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q177=[
     {q:'Четверть числа 40?',opts:['10','20','4'],ans:0},
     {q:'Половина числа 50?',opts:['25','20','50'],ans:0}
@@ -17763,96 +17757,90 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const T=Q177[st.q||0];
     const opts=T.opts.map((o,i)=>{
       let bd=cardB,tc=ink,bg=card;
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.16)':'rgba(242,127,150,.16)'; bd=i===T.ans?grn:pink; tc=i===T.ans?'#2f7a53':deep; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW177T('${lk}',${i})">${o}</button>`;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.18)':'rgba(242,127,150,.16)'; bd=i===T.ans?grn:pink; tc=i===T.ans?'#2f7a53':deep; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:60px;font-size:17px" onclick="visW177T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#2f7a53;font-size:16px">Верно! делим на знаменатель</div>'
-        : '<div class="wk-ans" style="color:#c94b6c;font-size:15px">Не так · число : знаменатель</div>';
+        ? '<div class="wk-ans" style="color:#2f7a53;font-size:18px">Верно! делим на знаменатель</div>'
+        : '<div class="wk-ans" style="color:#c94b6c;font-size:17px">Не так · число : знаменатель</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW177Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW177Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#d9a05a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#c9b98d')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW177(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=13){ st.go=0; st.pick=null; }
-      if(step===9||step===10) st.pick=null;
-      if(step===11){ st.mq=0; st.msel=null; }
-      if(step===12){ st.sel=null; st.q=0; }
+      if(step>=0&&step<=12){ st.go=0; st.pick=null; }
+      if(step===8||step===9) st.pick=null;
+      if(step===10){ st.mq=0; st.msel=null; }
+      if(step===11||step===12){ st.sel=null; st.q=0; }
     }
     let h='';
     const W=318;
     if(step===0){
-      const H=196, go=st.go||0;
+      const H=186, go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'что такое доля?',{b:1});
-      inner+=cake(159,120,50,go?2:1,go?0:-1);
-      inner+=tx(159,180,13.5,dim, go? 'целое разделили на 2 равные части' : 'одна доля — часть целого',{});
+      inner+=tx(159,32,20,ink,'что такое доля?',{b:1});
+      inner+=cake(159,118,54,go?2:1,go?0:-1);
+      if(go){ inner+=tx(159,180,16,dim,'целое разделили на 2 равные части',{}); }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Кондитерская Архимеда</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('половина = 1/2',pink,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW177Act('${lk}','rst')`):wkBtn('разделить на 2',`visW177Act('${lk}','go')`))+
         wkSml('доля — часть целого'));
     } else if(step===1){
-      const H=206, go=st.go||0;
+      const H=192, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'половина от 60',{b:1});
-      inner+=cake(70,140,42,2,go?1:-1);
-      inner+=tx(70,196,14,ink,go?'1/2':'',{b:1,georgia:1});
-      inner+=splitBar(140,112,160,60,2,go?0:0,pink);
-      if(go){
-        inner+=`<g class="qFPop"><text x="220" y="150" text-anchor="middle" font-size="24" fill="${pink}" font-weight="bold" font-family="Georgia,serif">60 : 2 = 30</text></g>`;
-      }
+      inner+=tx(159,30,20,ink,'половина от 60',{b:1});
+      inner+=cake(62,138,46,2,go?1:-1);
+      inner+=tx(62,190,18,ink,go?'1/2':'',{b:1,georgia:1});
+      inner+=splitBar(140,104,150,60,2,go?0:0,pink);
+      if(go){ inner+=`<g class="qFPop"><text x="214" y="146" text-anchor="middle" font-size="28" fill="${pink}" font-weight="bold" font-family="Georgia,serif">60 : 2 = 30</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Половина</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('половина 60 = 30',pink,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW177Act('${lk}','rst')`):wkBtn('найти половину',`visW177Act('${lk}','go')`))+
         wkSml('1/2 — делим на 2'));
     } else if(step===2){
-      const H=206, go=st.go||0;
+      const H=192, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'треть от 60',{b:1});
-      inner+=cake(70,140,42,3,go?1:-1);
-      inner+=tx(70,196,14,ink,go?'1/3':'',{b:1,georgia:1});
-      inner+=splitBar(140,112,160,60,3,go?0:0,'#4c9a58');
-      if(go){
-        inner+=`<g class="qFPop"><text x="220" y="150" text-anchor="middle" font-size="24" fill="#2f7a53" font-weight="bold" font-family="Georgia,serif">60 : 3 = 20</text></g>`;
-      }
+      inner+=tx(159,30,20,ink,'треть от 60',{b:1});
+      inner+=cake(62,138,46,3,go?1:-1);
+      inner+=tx(62,190,18,ink,go?'1/3':'',{b:1,georgia:1});
+      inner+=splitBar(140,104,150,60,3,go?0:0,'#4c9a58');
+      if(go){ inner+=`<g class="qFPop"><text x="214" y="146" text-anchor="middle" font-size="28" fill="#2f7a53" font-weight="bold" font-family="Georgia,serif">60 : 3 = 20</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Треть</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('треть 60 = 20',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW177Act('${lk}','rst')`):wkBtn('найти треть',`visW177Act('${lk}','go')`))+
         wkSml('1/3 — делим на 3'));
     } else if(step===3){
-      const H=206, go=st.go||0;
+      const H=192, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'четверть от 40',{b:1});
-      inner+=cake(70,140,42,4,go?1:-1);
-      inner+=tx(70,196,14,ink,go?'1/4':'',{b:1,georgia:1});
-      inner+=splitBar(140,112,160,40,4,go?0:0,'#3f6d9e');
-      if(go){
-        inner+=`<g class="qFPop"><text x="220" y="150" text-anchor="middle" font-size="24" fill="#2f5d8a" font-weight="bold" font-family="Georgia,serif">40 : 4 = 10</text></g>`;
-      }
+      inner+=tx(159,30,20,ink,'четверть от 40',{b:1});
+      inner+=cake(62,138,46,4,go?1:-1);
+      inner+=tx(62,190,18,ink,go?'1/4':'',{b:1,georgia:1});
+      inner+=splitBar(140,104,150,40,4,go?0:0,'#3f6d9e');
+      if(go){ inner+=`<g class="qFPop"><text x="214" y="146" text-anchor="middle" font-size="28" fill="#2f5d8a" font-weight="bold" font-family="Georgia,serif">40 : 4 = 10</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Четверть</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('четверть 40 = 10',blu,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW177Act('${lk}','rst')`):wkBtn('найти четверть',`visW177Act('${lk}','go')`))+
         wkSml('1/4 — делим на 4'));
     } else if(step===4){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,17,ink,'правило',{b:1});
-      inner+=tx(159,66,13.5,dim,'доля числа = число : знаменатель',{});
+      inner+=tx(159,34,20,ink,'правило',{b:1});
+      inner+=tx(159,68,15,dim,'доля числа = число : знаменатель',{});
       if(go){
-        inner+=`<g class="qFPop"><rect x="46" y="88" width="226" height="42" rx="11" fill="rgba(217,160,90,.14)" stroke="${gold}" stroke-width="2.2"/>
-        ${tx(159,108,15,gold,'дели на знаменатель',{b:1})}
-        ${tx(159,126,12.5,dim,'/2, /3, /4 — на сколько частей',{})}</g>`;
+        inner+=`<g class="qFPop"><rect x="46" y="88" width="226" height="46" rx="12" fill="rgba(217,160,90,.14)" stroke="${gold}" stroke-width="2.2"/>
+        ${tx(159,110,17,gold,'дели на знаменатель',{b:1})}
+        ${tx(159,130,14,dim,'/2, /3, /4 — на сколько частей',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Главное правило</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17860,29 +17848,26 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW177Act('${lk}','rst')`):wkBtn('показать',`visW177Act('${lk}','go')`))+
         wkSml('знаменатель — сколько частей'));
     } else if(step===5){
-      const H=196;
-      const go=st.go||0;
+      const H=186, go=st.go||0;
       let inner='';
-      inner+=tx(159,36,16,ink,'знаменатель = число частей',{b:1});
-      inner+=cake(159,120,46,go?4:1,go?0:-1);
-      if(go){
-        inner+=`<g class="qFPop"><text x="159" y="184" text-anchor="middle" font-size="15" fill="${ink}" font-weight="bold">/2 — на 2 · /3 — на 3 · /4 — на 4</text></g>`;
-      }
+      inner+=tx(159,32,20,ink,'знаменатель = число частей',{b:1});
+      inner+=cake(159,116,52,go?4:1,go?0:-1);
+      if(go){ inner+=`<g class="qFPop"><text x="159" y="180" text-anchor="middle" font-size="15" fill="${ink}" font-weight="bold">/2 — на 2 · /3 — на 3 · /4 — на 4</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Торт и доли</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('торт делим на столько кусков',grn,0.2)):'')+
+        (go?wkRow(chip('на сколько кусков делим',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW177Act('${lk}','rst')`):wkBtn('разрезать',`visW177Act('${lk}','go')`))+
         wkSml('на сколько частей делим'));
     } else if(step===6){
-      const H=204;
+      const H=194;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'сравниваем доли',{b:1});
-      inner+=`<g class="qFIn"><rect x="52" y="66" width="96" height="60" rx="10" fill="rgba(242,127,150,.16)" stroke="${pink}" stroke-width="2"/>${tx(100,90,20,pink,'1/2',{b:1,georgia:1})}${tx(100,112,12,dim,'половина',{})}</g>`;
-      inner+=`<g class="qFIn" style="animation-delay:.1s"><rect x="176" y="66" width="90" height="60" rx="10" fill="rgba(76,154,88,.14)" stroke="${grn}" stroke-width="2"/>${tx(221,90,20,grn,'1/3',{b:1,georgia:1})}${tx(221,112,12,dim,'треть',{})}</g>`;
+      inner+=tx(159,32,20,ink,'сравниваем доли',{b:1});
+      inner+=`<g class="qFIn"><rect x="42" y="64" width="104" height="68" rx="12" fill="rgba(242,127,150,.16)" stroke="${pink}" stroke-width="2.2"/>${tx(94,92,26,pink,'1/2',{b:1,georgia:1})}${tx(94,116,14,dim,'половина',{})}</g>`;
+      inner+=`<g class="qFIn" style="animation-delay:.1s"><rect x="172" y="64" width="104" height="68" rx="12" fill="rgba(76,154,88,.14)" stroke="${grn}" stroke-width="2.2"/>${tx(224,92,26,grn,'1/3',{b:1,georgia:1})}${tx(224,116,14,dim,'треть',{})}</g>`;
       if(go){
-        inner+=`<g class="qFPop"><text x="159" y="156" text-anchor="middle" font-size="20" fill="${pink}" font-weight="bold" font-family="Georgia,serif">1/2 > 1/3</text>
-        <text x="159" y="178" text-anchor="middle" font-size="13" fill="${dim}">меньше частей → крупнее</text></g>`;
+        inner+=`<g class="qFPop"><text x="159" y="160" text-anchor="middle" font-size="22" fill="${pink}" font-weight="bold" font-family="Georgia,serif">1/2 > 1/3</text>
+        <text x="159" y="182" text-anchor="middle" font-size="14" fill="${dim}">меньше частей → крупнее</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Какая доля больше</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17890,7 +17875,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW177Act('${lk}','rst')`):wkBtn('сравнить',`visW177Act('${lk}','go')`))+
         wkSml('меньше частей — крупнее'));
     } else if(step===7){
-      const H=200, py=84;
+      const H=194, py=82;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'Половина 50?',a:'25',ds:['20','100']},
@@ -17901,18 +17886,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,17,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(242,127,150,.16)';bd=pink;tc=deep;} }
-        inner+=`<g class="qFIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qFIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qFPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
-          : `<g class="qFPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${deep}" font-weight="bold">число : знаменатель</text></g>`)
-        : tx(159,py+72,14.5,dim,'найди долю',{});
+        ? (st.pick===0? `<g class="qFPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qFPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${deep}" font-weight="bold">число : знаменатель</text></g>`)
+        : tx(159,py+74,16,dim,'найди долю',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW177Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW177P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -17923,28 +17908,28 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('число : знаменатель'));
     } else if(step===8){
-      const H=200, py=84;
+      const H=194, py=82;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'1/2 от 60 или 1/3 от 60?',a:'1/2 от 60',ds:['1/3 от 60','равны']},
         {q:'1/4 от 40?',a:'10',ds:['4','20']},
-        {q:'Какая доля больше: 1/2 или 1/4?',a:'1/2',ds:['1/4','равны']}
+        {q:'Какая больше: 1/2 или 1/4?',a:'1/2',ds:['1/4','равны']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,15.5,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,18,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(242,127,150,.16)';bd=pink;tc=deep;} }
-        inner+=`<g class="qFIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="48" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+30,15,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qFIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="52" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+34,17,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qFPop"><text x="159" y="156" text-anchor="middle" font-size="17" fill="#2f7a53" font-weight="bold">верно!</text></g>`
-          : `<g class="qFPop"><text x="159" y="156" text-anchor="middle" font-size="17" fill="${deep}" font-weight="bold">подумай о кусках</text></g>`)
-        : tx(159,156,14.5,dim,'выбери ответ',{});
+        ? (st.pick===0? `<g class="qFPop"><text x="159" y="154" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qFPop"><text x="159" y="154" text-anchor="middle" font-size="18" fill="${deep}" font-weight="bold">подумай о кусках</text></g>`)
+        : tx(159,154,16,dim,'выбери ответ',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW177Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW177P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -17954,30 +17939,25 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('1/2 > 1/3 > 1/4'));
     } else if(step===9){
-      const H=196;
+      const H=190;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'шпаргалка',{b:1});
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
       const items=[['доля = число : знаменатель'],['/2 · /3 · /4 — на сколько частей'],['1/2 > 1/3 > 1/4'],['половина = :2 · треть = :3']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
-          const ry=54+i*36;
-          inner+=`<g class="qFIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="30" rx="9" fill="${i%2?'rgba(255,250,244,.97)':'rgba(217,160,90,.13)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+20,13,ink,items[i][0],{})}</g>`;
+          const ry=52+i*34;
+          inner+=`<g class="qFIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="28" rx="8" fill="${i%2?'rgba(255,250,244,.97)':'rgba(217,160,90,.14)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+19,15,ink,items[i][0],{})}</g>`;
         }
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go>=4?wkRow(chip('дели на знаменатель',gold,0.2)):'')+
-        wkRow(
-          go===0?wkBtn('шаг 1',`visW177Act('${lk}','go')`) : '',
-          go===1?wkBtn('шаг 2',`visW177Act('${lk}','go')`) : '',
-          go===2?wkBtn('шаг 3',`visW177Act('${lk}','go')`) : '',
-          go===3?wkBtn('шаг 4',`visW177Act('${lk}','go')`) : '',
-          go>=4?wkBtn('сброс',`visW177Act('${lk}','rst')`):'')+
+        wkRow(go===0?wkBtn('шаг 1',`visW177Act('${lk}','go')`) : go===1?wkBtn('шаг 2',`visW177Act('${lk}','go')`) : go===2?wkBtn('шаг 3',`visW177Act('${lk}','go')`) : go===3?wkBtn('шаг 4',`visW177Act('${lk}','go')`) : wkBtn('сброс',`visW177Act('${lk}','rst')`))+
         wkSml('доля числа'));
     } else if(step===10){
-      const H=196;
+      const H=182;
       if(st.mq==null) st.mq=0;
       const QS=[
         {q:'Четверть 40?',opts:['10','20','4'],ans:0},
@@ -17986,9 +17966,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qFPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#2f7a53':'#c94b6c'}" font-weight="bold">${st.msel===T.ans?'верно!':'дели на знаменатель'}</text></g>`;
+        inner+=`<g class="qFPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#2f7a53':'#c94b6c'}" font-weight="bold">${st.msel===T.ans?'верно!':'дели на знаменатель'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17999,12 +17979,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('число : знаменатель'));
     } else if(step===11){
-      const H=196, go=st.go||0;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,40,17,ink,'половина 60',{b:1,georgia:1});
-      inner+=cake(159,120,46,2,go?1:-1);
+      inner+=tx(159,34,20,ink,'половина 60',{b:1,georgia:1});
+      inner+=cake(159,110,50,2,go?1:-1);
       if(go){
-        inner+=`<g class="qFPop"><text x="159" y="176" text-anchor="middle" font-size="24" fill="${pink}" font-weight="bold" font-family="Georgia,serif">= 30</text></g>`;
+        inner+=`<g class="qFPop"><text x="159" y="176" text-anchor="middle" font-size="28" fill="${pink}" font-weight="bold" font-family="Georgia,serif">= 30</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -18012,11 +17992,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW177Act('${lk}','rst')`):wkBtn('найти',`visW177Act('${lk}','go')`))+
         wkSml('дели на знаменатель'));
     } else {
-      const H=196;
+      const H=184;
       let inner='';
-      inner+=tx(159,42,17,ink,'четверть числа 40',{b:1,georgia:1});
+      inner+=tx(159,32,20,ink,'четверть числа 40',{b:1,georgia:1});
       inner+=`<g class="qFPop"><text x="159" y="90" text-anchor="middle" font-size="34" fill="${blu}" font-weight="bold" font-family="Georgia,serif">= 10</text></g>`;
-      inner+=tx(159,116,13.5,dim,'40 : 4 = 10',{});
+      inner+=tx(159,116,16,dim,'40 : 4 = 10',{});
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
