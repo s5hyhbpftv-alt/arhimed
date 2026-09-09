@@ -23862,3 +23862,449 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW391Act=visW391Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===391){ window.ARH_LESSONS[i]=L391; break; } } })();
 })();
+
+/* ================= УРОК 184 · Среднее арифметическое чисел (v1 · «Весы Выравнивания Архимеда», 17 слайдов, флагман, подробный) ================= */
+(function(){
+  if(!window.__wk184v1css){
+    window.__wk184v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qXIn{animation:qXIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qXIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qXPop{animation:qXPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qXPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qXBar{animation:qXBar .6s cubic-bezier(.2,.8,.3,1.1) both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes qXBar{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}'+
+      '#lvis .qXLevel{animation:qXLevel .7s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center bottom;}'+
+      '@keyframes qXLevel{0%{transform:scaleY(.3);opacity:0}70%{transform:scaleY(1.06);opacity:1}100%{transform:scaleY(1)}}'+
+      '#lvis .qXLift{animation:qXLift .7s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qXLift{0%{transform:translateY(12px);opacity:0}100%{transform:none;opacity:1}}';
+    document.head.appendChild(st);
+  }
+  const L184 = {
+    id: 184, title: 'Среднее арифметическое чисел', ico: '📏',
+    src: 'Математика · 5 класс · Среднее', subj: 'math',
+    explain: [
+      'Среднее арифметическое — это «ровно поровну на всех»: сложили все числа и разделили на их количество.',
+      'Пример: оценки 5, 7, 9 → сумма 21, чисел три → 21 : 3 = 7. Среднее 7.',
+      'Зачем? Чтобы одним числом сказать «в целом сколько»: средний рост, средняя оценка.',
+      'Если чисел четыре, делим сумму на 4; если пять — на 5.',
+      'Совет Архимеда: сначала сложи ВСЕ числа, потом посчитай, сколько их, — и раздели.',
+      'Формула: среднее = сумма всех чисел : количество чисел.',
+      'Наглядно: это «выравнивание» столбиков — лишнее переливается туда, где мало, и все становятся равными.',
+      'Высокий столбик отдаёт лишнее низкому — получаем ровно среднее. Вот почему делим на количество.',
+      'Среднее всегда между самым маленьким и самым большим числом.',
+      'Ноль «тянет вниз» среднее: 10 и 0 дают среднее 5, хотя 10 большое.',
+      'Тренажёр: среднее двух чисел.',
+      'Тренажёр: среднее трёх чисел.',
+      'Тренажёр: задача на среднее (4 числа).',
+      'Шпаргалка: среднее = сумма : количество; всегда между min и max; ноль тянет вниз.',
+      'Проверь себя устно: (5+7+9):3 = 7; (4+8):2 = 6; (6+8+5+9):4 = 7.',
+      'Проверь себя: среднее всегда между min и max.',
+      'Проверь себя: найди среднее 5, 7 и 9. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Найди среднее арифметическое чисел 5, 7 и 9.', choices: ['7', '8', '6'], ans: 0,
+      exp: 'Сумма 5 + 7 + 9 = 21, чисел три: 21 : 3 = 7.' },
+    tasks: [
+      { q: 'Найди среднее арифметическое чисел 4 и 8.', kind: 'unit', ans: 6, tol: 0,
+        hints: ['Сложи и раздели на количество (2).', '4 + 8 = 12; 12 : 2 = 6.'], sol: '(4 + 8) : 2 = 6.' },
+      { q: 'За четыре дня турист прошёл 6, 8, 5 и 9 км. Сколько км в среднем в день?', kind: 'choice', choices: ['6', '7', '8'], ans: 1, tol: 0,
+        hints: ['Сложи все четыре числа.', '6+8+5+9 = 28; 28 : 4 = 7.'], sol: '(6 + 8 + 5 + 9) : 4 = 28 : 4 = 7 км.' }
+    ]
+  };
+  const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', barCol='#f2a05c', bar2='#f6d24a', bar3='#62c1e0',
+        card='rgba(255,251,244,.97)', cardB='#c9b98d', cream='#f5e6c6';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1df" stroke-width="3.2">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qXbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fcf2df"/><stop offset="1" stop-color="#f4e4c4"/></linearGradient>
+        <linearGradient id="qXbar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffcf8a"/><stop offset="0.5" stop-color="${barCol}"/><stop offset="1" stop-color="#cf7428"/></linearGradient>
+        <linearGradient id="qXbar2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0a0"/><stop offset="0.5" stop-color="${bar2}"/><stop offset="1" stop-color="#cf9a1f"/></linearGradient>
+        <filter id="qXsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.22"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qXbg)"/>
+      <g opacity="0.7"><circle cx="28" cy="22" r="3" fill="rgba(217,160,90,.25)"/><circle cx="288" cy="30" r="3" fill="rgba(217,160,90,.25)"/></g>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="${cardB}" stroke-width="2" rx="7"/>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="url(#qXgold)" stroke-width="1.3" opacity="0.6" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  /* столбики столбики: values; scale px на единицу; baseY = дно */
+  const SCALE=8.2;
+  function bars(x,yb,vals,colors,delay,mean){
+    let s='';
+    vals.forEach((v,i)=>{
+      const bx=x+i*34, h=v*SCALE;
+      s+=`<g class="qXBar" style="animation-delay:${((delay||0)+0.08*i).toFixed(2)}s"><rect x="${bx}" y="${yb-h}" width="28" height="${h}" rx="5" fill="${(colors&&colors[i])||barCol}" stroke="#8a5a2a" stroke-width="1.4"/><text x="${bx+14}" y="${yb-h-7}" text-anchor="middle" font-size="15" fill="${ink}" font-weight="bold">${v}</text></g>`;
+    });
+    return s;
+  }
+  function meanLine(x,yb,vals,mean,delay){
+    const width=vals.length*34-4;
+    const my=yb-mean*SCALE;
+    return `<g class="qXLift" style="animation-delay:${(delay||0).toFixed(2)}s"><line x1="${x-2}" y1="${my}" x2="${x+width}" y2="${my}" stroke="${grn}" stroke-width="2.6" stroke-dasharray="7 5"/><text x="${x+width-4}" y="${my-6}" text-anchor="end" font-size="14" fill="#2f7a53" font-weight="bold">среднее ${mean}</text></g>`;
+  }
+  function leveled(x,yb,vals,mean,colors,delay){
+    let s='';
+    vals.forEach((v,i)=>{
+      const bx=x+i*34, h=mean*SCALE;
+      s+=`<g class="qXLevel" style="animation-delay:${((delay||0)+0.08*i).toFixed(2)}s"><rect x="${bx}" y="${yb-h}" width="28" height="${h}" rx="5" fill="${(colors&&colors[i])||barCol}" stroke="#8a5a2a" stroke-width="1.4"/><text x="${bx+14}" y="${yb-h-7}" text-anchor="middle" font-size="15" fill="#2f7a53" font-weight="bold">${mean}</text></g>`;
+    });
+    return s;
+  }
+  function formula(x,y,sum,cnt,mean,go){
+    let s=`<text x="${159}" y="${y-10}" text-anchor="middle" font-size="16" fill="${dim}">сумма ${sum} : ${cnt} =</text>`;
+    s+=`<text x="${159}" y="${y+24}" text-anchor="middle" font-size="28" fill="${grn}" font-weight="bold" font-family="Georgia,serif">${mean}</text>`;
+    return s;
+  }
+  const chip=(t,c,delay)=>`<span class="qXIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const Q184=[
+    {q:'(5+7+9):3 = ?',opts:['7','8','6'],ans:0},
+    {q:'(6+8+5+9):4 = ?',opts:['7','6','8'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q184[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.18)':'rgba(193,75,47,.14)'; bd=i===T.ans?grn:red; tc=i===T.ans?'#2f7a53':red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:60px;font-size:17px" onclick="visW184T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#2f7a53;font-size:18px">Верно! сумма : количество</div>'
+        : '<div class="wk-ans" style="color:#c14b2f;font-size:17px">Не так · сложи и раздели</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW184Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW184Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#c9b98d')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW184(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=16){ st.go=0; st.pick=null; }
+      if(step===10||step===11||step===12) st.pick=null;
+      if(step===15){ st.mq=0; st.msel=null; }
+      if(step===16){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    const YB=178;
+    const V357=[5,7,9], V48=[4,8], V6859=[6,8,5,9];
+    if(step===0){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'«ровно поровну на всех»',{b:1});
+      inner+=bars(96,YB,V357,[barCol,bar2,bar3],0.1);
+      if(go){ inner+=`<g class="qXPop"><rect x="60" y="118" width="198" height="34" rx="11" fill="rgba(76,154,88,.13)" stroke="${grn}" stroke-width="2"/>${tx(159,140,16,grn,'сложили и разделили на всех',{b:1})}</g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Весы Выравнивания</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('среднее арифметическое',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW184Act('${lk}','rst')`):wkBtn('что это?',`visW184Act('${lk}','go')`))+
+        wkSml('среднее = сумма : количество'));
+    } else if(step===1){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'формула',{b:1});
+      inner+=tx(159,72,16,gold,'среднее = сумма чисел : их количество',{b:1});
+      if(go){
+        inner+=`<g class="qXPop"><rect x="52" y="92" width="214" height="38" rx="11" fill="rgba(255,250,240,.96)" stroke="${cardB}" stroke-width="1.8"/>${tx(159,114,13.5,ink,'например: (5+7+9) : 3 = 7',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Определение</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('сложи и подели',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW184Act('${lk}','rst')`):wkBtn('показать',`visW184Act('${lk}','go')`))+
+        wkSml('сумма : количество'));
+    } else if(step===2){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'5, 7, 9',{b:1,georgia:1});
+      inner+=bars(96,YB,V357,[barCol,bar2,bar3],0.1,go);
+      if(go){ inner+=meanLine(96,YB,V357,7,0.3); }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Столбики</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('разной высоты',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW184Act('${lk}','rst')`):wkBtn('показать',`visW184Act('${lk}','go')`))+
+        wkSml('не все одинаковые'));
+    } else if(step===3){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'выравниваем поровну',{b:1});
+      inner+=bars(96,YB,V357,[barCol,bar2,bar3],0.1);
+      if(go){ inner+=leveled(96,YB,V357,7,[barCol,bar2,bar3],0.2); }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Переливаем</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('лишнее → туда, где мало',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW184Act('${lk}','rst')`):wkBtn('выровнять',`visW184Act('${lk}','go')`))+
+        wkSml('все стали равными'));
+    } else if(step===4){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'5,7,9 → 7',{b:1,georgia:1});
+      inner+=leveled(96,YB,V357,7,[barCol,bar2,bar3],0.1);
+      if(go){ inner+=formula(159,120,21,3,7,true); }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Среднее</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('21 : 3 = 7',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW184Act('${lk}','rst')`):wkBtn('считать',`visW184Act('${lk}','go')`))+
+        wkSml('сумма 21 · чисел 3'));
+    } else if(step===5){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,20,ink,'почему делим на количество?',{b:1});
+      if(go){
+        inner+=`<g class="qXPop"><rect x="46" y="70" width="226" height="74" rx="12" fill="rgba(63,109,158,.1)" stroke="${blu}" stroke-width="2"/>
+        ${tx(159,94,15,blu,'сложили = «все вместе»',{b:1})}
+        ${tx(159,116,15,blu,'разделили = «на всех поровну»',{b:1})}
+        ${tx(159,136,13,dim,'поэтому на КОЛИЧЕСТВО чисел',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Смысл</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('«на всех поровну»',blu,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW184Act('${lk}','rst')`):wkBtn('показать',`visW184Act('${lk}','go')`))+
+        wkSml('вот причина'));
+    } else if(step===6){
+      const H=186, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'пара: 4 и 8',{b:1,georgia:1});
+      inner+=bars(173,YB,V48,[barCol,bar2],0.1);
+      if(go){ inner+=meanLine(173,YB,V48,6,0.3); inner+=formula(120,120,12,2,6,true); }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Два числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('12 : 2 = 6',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW184Act('${lk}','rst')`):wkBtn('считать',`visW184Act('${lk}','go')`))+
+        wkSml('середина между ними'));
+    } else if(step===7){
+      const H=186, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'четыре числа',{b:1,georgia:1});
+      inner+=bars(140,YB,V6859,[barCol,bar2,bar3,'#d9a0e0'],0.1);
+      if(go){ inner+=formula(120,118,28,4,7,true); }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Четыре числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('28 : 4 = 7',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW184Act('${lk}','rst')`):wkBtn('считать',`visW184Act('${lk}','go')`))+
+        wkSml('делим на 4'));
+    } else if(step===8){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'зачем нужно',{b:1});
+      if(go){
+        inner+=`<g class="qXPop"><text x="159" y="88" text-anchor="middle" font-size="16" fill="${ink}">«в целом сколько» одним числом</text>
+        <text x="159" y="118" text-anchor="middle" font-size="15" fill="${dim}">средний рост · средняя оценка</text>
+        <text x="159" y="146" text-anchor="middle" font-size="15" fill="#2f7a53" font-weight="bold">средняя скорость, средняя температура</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Применение</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('одно число вместо многих',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW184Act('${lk}','rst')`):wkBtn('показать',`visW184Act('${lk}','go')`))+
+        wkSml('среднее'));
+    } else if(step===9){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'ловушка',{b:1});
+      if(go){
+        inner+=`<g class="qXPop"><text x="159" y="88" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">среднее — НЕ всегда целое число</text>
+        <text x="159" y="116" text-anchor="middle" font-size="15" fill="${ink}">оно всегда между min и max</text>
+        <text x="159" y="146" text-anchor="middle" font-size="15" fill="#2f7a53" font-weight="bold">(2+3):2 = 2,5 — среднее 2,5</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Берегись</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('среднее ≠ всегда целое',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW184Act('${lk}','rst')`):wkBtn('показать',`visW184Act('${lk}','go')`))+
+        wkSml('между min и max'));
+    } else if(step===10){
+      const H=196, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'ноль тянет вниз',{b:1});
+      inner+=bars(173,YB,[10,0],[barCol,'#c14b2f'],0.1);
+      if(go){ inner+=meanLine(173,YB,[10,0],5,0.3); inner+=formula(200,140,10,2,5,true); }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ноль</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('(10+0):2 = 5',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW184Act('${lk}','rst')`):wkBtn('считать',`visW184Act('${lk}','go')`))+
+        wkSml('ноль сильно снижает'));
+    } else if(step===11){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'(4+8):2 ?',a:'6',ds:['12','5']},
+        {q:'(6+8):2 ?',a:'7',ds:['14','6']},
+        {q:'(10+0):2 ?',a:'5',ds:['10','8']},
+        {q:'(9+1):2 ?',a:'5',ds:['10','4']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
+        inner+=`<g class="qXIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qXPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qXPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">сумма:2</text></g>`)
+        : tx(159,py+74,16,dim,'найди среднее',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW184Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW184P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW184P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: пара</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('сумма ÷ 2'));
+    } else if(step===12){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'(5+7+9):3 ?',a:'7',ds:['8','6']},
+        {q:'(3+5+7):3 ?',a:'5',ds:['4','6']},
+        {q:'(10+20+30):3 ?',a:'20',ds:['30','40']},
+        {q:'(2+4+6):3 ?',a:'4',ds:['3','5']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
+        inner+=`<g class="qXIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qXPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qXPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">сумма:3</text></g>`)
+        : tx(159,py+74,16,dim,'найди среднее',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW184Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW184P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW184P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: три числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('сумма ÷ 3'));
+    } else if(step===13){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'6,8,5,9 км — среднее?',a:'7',ds:['6','8']},
+        {q:'4,4,6,6 — среднее?',a:'5',ds:['4','6']},
+        {q:'10,12,14,16 — среднее?',a:'13',ds:['12','14']},
+        {q:'2,4,6,8 — среднее?',a:'5',ds:['4','6']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,18,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
+        inner+=`<g class="qXIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qXPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qXPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">сумма:4</text></g>`)
+        : tx(159,py+74,16,dim,'найди среднее',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW184Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW184P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW184P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: четыре</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('сумма ÷ 4'));
+    } else if(step===14){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      const items=[['среднее = сумма : количество'],['всегда между min и max'],['ноль тянет среднее вниз'],['сначала сложи все, потом раздели']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=52+i*32;
+          inner+=`<g class="qXIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(255,251,244,.97)':'rgba(217,160,90,.13)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('сумма : количество',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW184Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW184Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW184Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW184Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW184Act('${lk}','rst')`):'')+
+        wkSml('ровно поровну'));
+    } else if(step===15){
+      const H=182;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'(5+7+9):3 ?',opts:['7','8','6'],ans:0},
+        {q:'(4+8):2 ?',opts:['6','12','5'],ans:0},
+        {q:'(6+8+5+9):4 ?',opts:['7','6','8'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="qXPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'сумма:кол-во'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW184S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW184Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW184Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('сложи и подели'));
+    } else {
+      const H=196;
+      let inner='';
+      inner+=tx(159,24,20,ink,'5, 7, 9',{b:1,georgia:1});
+      inner+=bars(96,YB,V357,[barCol,bar2,bar3],0.1);
+      inner+=meanLine(96,YB,V357,7,0.2);
+      inner+=`<g class="qXPop"><text x="159" y="150" text-anchor="middle" font-size="20" fill="#2f7a53" font-weight="bold" font-family="Georgia,serif">= 7</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('сумма : количество'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[184]=visW184;
+  function visW184T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW184T=visW184T;
+  function visW184P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW184P=visW184P;
+  function visW184S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW184S=visW184S;
+  function visW184Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===15){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW184Act=visW184Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===184){ window.ARH_LESSONS[i]=L184; break; } } })();
+})();
