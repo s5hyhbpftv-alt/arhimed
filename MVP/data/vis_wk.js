@@ -23398,3 +23398,467 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW82Act=visW82Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===82){ window.ARH_LESSONS[i]=L82; break; } } })();
 })();
+
+/* ================= УРОК 391 · Игры и стратегии: анализ с конца (v1 · «Арена Стратегий Архимеда», 18 слайдов, флагман, очень подробный) ================= */
+(function(){
+  if(!window.__wk391v1css){
+    window.__wk391v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qZIn{animation:qZIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qZIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qZPop{animation:qZPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qZPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qZStone{animation:qZStone .4s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qZStone{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qZCellW{animation:qZCellW .5s cubic-bezier(.2,.8,.3,1.4) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qZCellW{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}';
+    document.head.appendChild(st);
+  }
+  const L391 = {
+    id: 391, title: 'Игры и стратегии: анализ с конца', ico: '🎮',
+    src: 'Математика · 5–6 класс · Олимп-6: игры', subj: 'math',
+    explain: [
+      'Выигрышные позиции ищем с конца: в игре «берут 1–3, выигрывает взявший последний» выигрышны позиции, кратные 4.',
+      '20 предметов: 20 = 4·5 — позиция кратна 4, ходит первый → второй дополняет до 4 и выигрывает.',
+      'Если противник оставил 4 предмета и взял 2, забираем оставшиеся 2 — победа.',
+      'Секрет: оставляй противнику «ловушку» — позицию, кратную 4.',
+      'Играем на 20 камней: за ход берём 1, 2 или 3 камня. Кто взял последний — победил.',
+      'Правило «дополняй до 4»: если противник взял 1 — бери 3; взял 2 — бери 2; взял 3 — бери 1. Вместе всегда 4.',
+      'Анализ с конца: смотрим от последнего хода назад. Позиция 4 — проигрышная: сколько ни возьми, соперник заберёт остаток.',
+      'Позиции 1, 2, 3 — выигрышные (забираем всё). Позиция 4 — проигрышная. 5, 6, 7 — выигрышные (оставь 4).',
+      'Закономерность: проигрышные позиции — кратные 4 (4, 8, 12, 16, 20). Все остальные — выигрышные.',
+      '20 предметов = 4·5 — это КРАТНОЕ 4, то есть проигрышная позиция для того, кто ходит. Ходит первый → проигрывает.',
+      'Стратегия: как только противник ошибся и оставил тебе позицию, не кратную 4, — верни ему «ловушку» (кратную 4).',
+      'Разбор: осталось 4, противник взял 2 → осталось 2. Забираем обе — победа!',
+      'Тренажёр: построй анализ с конца для позиции.',
+      'Тренажёр: определи, выигрышная или проигрышная позиция.',
+      'Тренажёр: сколько взять, чтобы оставить противнику ловушку.',
+      'Шпаргалка: кратное 4 — проигрыш; дополняй до 4; оставляй ловушку; смотри с конца.',
+      'Проверь себя устно: 20 → второй; 4 → проигрыш; противник оставил 4 и взял 2 → бери 2.',
+      'Проверь себя: кто выиграет при 20 предметах? Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: '20 предметов, за ход берут 1–3, выигрывает взявший последний. Кто выиграет при правильной игре?', choices: ['второй', 'первый', 'ничья', 'нельзя узнать'], ans: 0,
+      exp: 'Второй дополняет ход до 4: 20 = 4·5, последний ход за ним.' },
+    tasks: [
+      { q: 'В игре «берут 1–3, дополняй до 4» сколько предметов выгодно оставить противнику?', kind: 'unit', ans: 4, tol: 0,
+        hints: ['Это «ловушка».', 'Позиция, кратная 4: 4 предмета.'], sol: '4' },
+      { q: 'Противник оставил 4 предмета и взял 2. Сколько взять, чтобы выиграть?', kind: 'choice', choices: ['2', '1', '3', '4'], ans: 0, tol: 0,
+        hints: ['4 − 2 = 2.', 'Забираем 2 — последние предметы.'], sol: '2' }
+    ]
+  };
+  const ink='#eef4ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
+        bg0='#14203a', bg1='#0a1122', card='rgba(20,29,52,.96)', cardB='#3a4c78', lineC='#2c3c64';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qZbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <radialGradient id="qZstone" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stop-color="#fff0c0"/><stop offset="0.6" stop-color="${gold}"/><stop offset="1" stop-color="#c9932f"/></radialGradient>
+        <filter id="qZsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qZbg)"/>
+      <g opacity="0.14" stroke="#4a5c8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44568c" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3a64" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const STONE=17, SG=2;
+  function stones(x,y,n,color,delay){
+    let s='';
+    const row=a=>Math.min(10,a);
+    const rows=Math.ceil(n/10);
+    for(let i=0;i<n;i++){
+      const gx=x+(i%10)*STONE, gy=y+Math.floor(i/10)*STONE;
+      s+=`<g class="qZStone" style="animation-delay:${((delay||0)+0.03*i).toFixed(2)}s"><circle cx="${gx+STONE/2}" cy="${gy+STONE/2}" r="${STONE/2-SG}" fill="url(#qZstone)" stroke="#8a5a2a" stroke-width="1.4"/></g>`;
+    }
+    return s;
+  }
+  /* таблица анализа с конца: upTo позиций, W-выигрыш(зел), L-проигрыш(крас) */
+  function wlTable(x,y,upTo,showVal){
+    let s='';
+    for(let n=0;n<=upTo;n++){
+      const gx=x+n*30, win=(n%4)!==0;
+      const c=win?grn:red;
+      s+=`<g class="qZCellW" style="animation-delay:${(0.06*n).toFixed(2)}s"><rect x="${gx+1}" y="${y}" width="28" height="38" rx="7" fill="${win?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'}" stroke="${c}" stroke-width="2"/>
+      ${tx(gx+15,y+26,16,win?grn:red,''+n,{b:1,georgia:1})}
+      ${tx(gx+15,y+46,11,win?grn:red,' '+showVal(win)+' ',{b:1})}</g>`;
+    }
+    return s;
+  }
+  const chip=(t,c,delay)=>`<span class="qZIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const Q391=[
+    {q:'20 предметов — кто выиграет?',opts:['второй','первый','ничья'],ans:0},
+    {q:'Противник оставил 4, взял 2 — сколько взять?',opts:['2','1','3'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q391[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:62px;font-size:17px" onclick="visW391T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! дополняй до 4</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · кратное 4 — проигрыш</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW391Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW391Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW391(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=17){ st.go=0; st.pick=null; }
+      if(step===12||step===13||step===14) st.pick=null;
+      if(step===16){ st.mq=0; st.msel=null; }
+      if(step===17){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=192, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'игра на 20 камней',{b:1});
+      inner+=stones(30,60,go?20:10,0,0.1);
+      if(go){ inner+=`<g class="qZPop"><text x="159" y="182" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">за ход берём 1–3 · кто взял последний — победил</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Арена Стратегий</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('кто победит — решает стратегия',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('как играть?',`visW391Act('${lk}','go')`))+
+        wkSml('анализ с конца'));
+    } else if(step===1){
+      const H=184;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,20,ink,'правила',{b:1});
+      if(go){
+        inner+=`<g class="qZPop"><rect x="40" y="62" width="238" height="80" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="2"/>
+        ${tx(70,84,15,ink,'① 20 камней на столе',{b:1,an:'start'})}
+        ${tx(70,110,15,ink,'② за ход берём 1, 2 или 3',{b:1,an:'start'})}
+        ${tx(70,136,15,ink,'③ куда взял последний — победил',{b:1,an:'start'})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Правила</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('берём 1–3, последний — победил',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('показать',`visW391Act('${lk}','go')`))+
+        wkSml('ровно задача'));
+    } else if(step===2){
+      const H=184;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,20,ink,'дополняй до 4',{b:1});
+      if(go){
+        inner+=`<g class="qZPop"><rect x="36" y="62" width="246" height="80" rx="12" fill="rgba(127,214,255,.1)" stroke="${cyan}" stroke-width="2"/>
+        ${tx(80,86,15,ink,'взял 1 → бери 3',{b:1,an:'start'})}
+        ${tx(80,110,15,ink,'взял 2 → бери 2',{b:1,an:'start'})}
+        ${tx(80,134,15,ink,'взял 3 → бери 1',{b:1,an:'start'})}
+        ${tx(228,112,16,cyan,'вместе 4',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ключевой приём</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('твой ход + ход соперника = 4',cyan,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('показать',`visW391Act('${lk}','go')`))+
+        wkSml('сумма всегда 4'));
+    } else if(step===3){
+      const H=186, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'анализ с конца',{b:1});
+      if(go){
+        inner+=`<g class="qZPop"><rect x="36" y="60" width="246" height="86" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="2"/>
+        ${tx(159,84,16,ink,'от ПОСЛЕДНЕГО хода — назад',{b:1})}
+        ${tx(159,110,14,dim,'смотри, какие позиции проигрышные',{})}
+        ${tx(159,136,16,gold,'позиция 4 — проигрышная!',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Метод</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('думай от конца',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('показать',`visW391Act('${lk}','go')`))+
+        wkSml('назад от финала'));
+    } else if(step===4){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'маленькие позиции',{b:1});
+      inner+=wlTable(30,76,7,go? (w=> w?'В':'П') : (()=>''));
+      if(go){ inner+=`<g class="qZPop"><text x="159" y="160" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">1,2,3 — выигрыш · 4 — проигрыш · 5,6,7 — выигрыш</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Пробуем вручную</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('зелёный = выигрыш · красный = проигрыш',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('разметить',`visW391Act('${lk}','go')`))+
+        wkSml('значения В/П'));
+    } else if(step===5){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'почему 4 — проигрыш?',{b:1});
+      inner+=stones(42,66,4,0,0.1);
+      inner+=tx(159,120,15,dim,'как ни возьми (1–3), соперник заберёт остаток',{});
+      if(go){
+        inner+=`<g class="qZPop"><text x="159" y="152" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">ходит тебе → ты проиграл</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Разбор 4</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 — проигрышная позиция',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('доказать',`visW391Act('${lk}','go')`))+
+        wkSml('сколько ни бери'));
+    } else if(step===6){
+      const H=186, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'почему 5 — выигрыш?',{b:1});
+      inner+=stones(48,66,5,0,0.1);
+      if(go){
+        inner+=`<g class="qZPop"><text x="159" y="118" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">возьми 1 → оставь 4 (проигрыш для него)</text>
+        <text x="159" y="150" text-anchor="middle" font-size="14" fill="${dim}">оставь противнику ловушку!</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Разбор 5</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('5 — выигрыш: оставь 4',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('показать',`visW391Act('${lk}','go')`))+
+        wkSml('оставь ловушку'));
+    } else if(step===7){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'закономерность',{b:1});
+      inner+=wlTable(30,76,10,go? (w=> w?'В':'П') : (()=>''));
+      if(go){ inner+=`<g class="qZPop"><text x="159" y="160" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">кратные 4 (4, 8) — проигрыш · остальные — выигрыш</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Закономерность</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('проигрыш = кратно 4',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('разметить',`visW391Act('${lk}','go')`))+
+        wkSml('4, 8, 12, 16, 20'));
+    } else if(step===8){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,24,20,ink,'проверим на 20',{b:1});
+      inner+=stones(30,64,go?20:0,0,0.1);
+      if(go){
+        inner+=`<g class="qZPop"><text x="159" y="150" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">20 = 4·5 — КРАТНОЕ 4 → проигрышная для ходящего</text>
+        <text x="159" y="176" text-anchor="middle" font-size="14" fill="${dim}">ходит первый → проигрывает</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Главный вывод</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('20 кратно 4 → проигрыш для первого',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('посчитать',`visW391Act('${lk}','go')`))+
+        wkSml('20:4 = 5'));
+    } else if(step===9){
+      const H=186;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'как ходит второй',{b:1});
+      if(go){
+        inner+=`<g class="qZPop"><rect x="40" y="58" width="238" height="90" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="2"/>
+        ${tx(159,82,16,gold,'первый взял X → второй берёт 4−X',{b:1})}
+        ${tx(159,108,14,dim,'каждый ход вместе = 4 камня',{})}
+        ${tx(159,134,16,grn,'после 5 пар ходов — камней нет, победа',{b:1})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Стратегия второго</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('дополняй до 4 каждый ход',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('показать',`visW391Act('${lk}','go')`))+
+        wkSml('всегда 4 за пару'));
+    } else if(step===10){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'осталось 4',{b:1});
+      inner+=stones(52,64,4,0,0.1);
+      if(go){
+        inner+=`<g class="qZPop"><text x="159" y="120" text-anchor="middle" font-size="16" fill="${dim}">противник взял 2 → осталось 2</text>
+        <text x="159" y="150" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">забираем обе — победа!</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Победа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 − 2 = 2',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('забрать',`visW391Act('${lk}','go')`))+
+        wkSml('взяли последний'));
+    } else if(step===11){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,20,ink,'совет Архимеда',{b:1});
+      if(go){
+        inner+=`<g class="qZPop"><text x="159" y="92" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">всегда оставляй противнику</text>
+        <text x="159" y="122" text-anchor="middle" font-size="22" fill="${red}" font-weight="bold" font-family="Georgia,serif">позицию, кратную 4</text>
+        <text x="159" y="152" text-anchor="middle" font-size="14" fill="${dim}">кратное 4 = проигрыш для соперника</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ловушка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('оставь кратное 4',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW391Act('${lk}','rst')`):wkBtn('показать',`visW391Act('${lk}','go')`))+
+        wkSml('главный секрет'));
+    } else if(step===12){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'4 — выигрыш или проигрыш?',a:'проигрыш',ds:['выигрыш','нельзя узнать']},
+        {q:'5 — выигрыш или проигрыш?',a:'выигрыш',ds:['проигрыш','нельзя узнать']},
+        {q:'8 — выигрыш или проигрыш?',a:'проигрыш',ds:['выигрыш','нельзя узнать']},
+        {q:'13 — выигрыш или проигрыш?',a:'выигрыш',ds:['проигрыш','нельзя узнать']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,18,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qZIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,16,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qZPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qZPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">кратно 4 → проигрыш</text></g>`)
+        : tx(159,py+74,16,dim,'кратно 4?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW391Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW391P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW391P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: В/П</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('позиция кратна 4?'));
+    } else if(step===13){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Оставили 7 — тебе что взять?',a:'3',ds:['1','2']},
+        {q:'Оставили 5 — берём?',a:'1',ds:['2','3']},
+        {q:'Оставили 6 — берём?',a:'2',ds:['1','3']},
+        {q:'Оставили 20 (первый) — что?',a:'кратно 4 — проигрыш',ds:['бери 1','бери 3']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,15,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qZIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,14,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qZPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qZPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">оставь кратное 4</text></g>`)
+        : tx(159,py+74,16,dim,'оставь ловушку',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW391Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW391P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW391P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: сколько взять</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        fb+retry+
+        wkSml('дополни до 4'));
+    } else if(step===14){
+      const H=194, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Сколько оставить противнику?',a:'4',ds:['3','5']},
+        {q:'Противник оставил 4, взял 2 — что берём?',a:'2',ds:['1','3']},
+        {q:'20 камней — кто выиграет?',a:'второй',ds:['первый','ничья']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,16,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qZIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,19,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qZPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qZPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">дополняй до 4</text></g>`)
+        : tx(159,py+74,16,dim,'что делать?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW391Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW391P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW391P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: ловушка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        fb+retry+
+        wkSml('оставь кратное 4'));
+    } else if(step===15){
+      const H=190;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      const items=[['кратное 4 — проигрышная позиция'],['дополняй до 4 (твой+его ход)'],['оставляй противнику ловушку'],['анализируй с конца']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=52+i*32;
+          inner+=`<g class="qZIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(20,29,52,.96)':'rgba(32,44,76,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('дополняй до 4',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW391Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW391Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW391Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW391Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW391Act('${lk}','rst')`):'')+
+        wkSml('смотри с конца'));
+    } else if(step===16){
+      const H=182;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'20 камней — кто выиграет?',opts:['второй','первый','ничья'],ans:0},
+        {q:'4 — выигрыш или проигрыш?',opts:['проигрыш','выигрыш','нельзя узнать'],ans:0},
+        {q:'Оставили 4, взял 2 — берём сколько?',opts:['2','1','3'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="qZPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'кратное 4'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW391S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW391Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW391Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('дополняй до 4'));
+    } else {
+      const H=190;
+      let inner='';
+      inner+=tx(159,32,20,ink,'20 предметов',{b:1,georgia:1});
+      inner+=stones(30,70,20,0,0.1);
+      inner+=`<g class="qZPop"><text x="159" y="170" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">второй выигрывает</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('дополняй до 4'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[391]=visW391;
+  function visW391T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW391T=visW391T;
+  function visW391P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW391P=visW391P;
+  function visW391S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW391S=visW391S;
+  function visW391Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===16){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW391Act=visW391Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===391){ window.ARH_LESSONS[i]=L391; break; } } })();
+})();
