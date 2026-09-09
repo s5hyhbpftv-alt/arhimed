@@ -18821,20 +18821,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW383Act=visW383Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===383){ window.ARH_LESSONS[i]=L383; break; } } })();
 })();
-/* ================= УРОК 393 · Формула Пика (v1 · «Клетчатая лаборатория Архимеда», 15 слайдов, научный премиум) ================= */
+/* ================= УРОК 393 · Формула Пика (v2 · «Клетчатая лаборатория Архимеда», 15 слайдов, флагман) ================= */
 (function(){
-  if(!window.__wk393v1css){
-    window.__wk393v1css=1;
+  if(!window.__wk393v2css){
+    window.__wk393v2css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qIIn{animation:qIIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qIIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qIPop{animation:qIPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qIPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qINode{animation:qINode .6s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
+      '#lvis .qIPop{animation:qIPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qIPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qINode{animation:qINode .5s cubic-bezier(.2,.8,.3,1.4) both;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qINode{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qIGrow{animation:qIGrow .8s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qIGrow{0%{transform:scale(0);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}'+
       '#lvis .qISpin{animation:qISpin 1s cubic-bezier(.4,.2,.2,1) both;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qISpin{0%{transform:rotate(-30deg) scale(.6);opacity:0}70%{transform:rotate(3deg) scale(1.05)}100%{transform:rotate(0) scale(1);opacity:1}}';
     document.head.appendChild(st);
@@ -18856,6 +18854,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Шпаргалка: S = В + Г/2 − 1; В — внутри, Г — на границе; вершины в узлах.',
       'Запомни: «Внутренние + половина границы − 1».',
       'Проверь себя устно: В=3, Г=4 → 4.',
+      'Проверь себя: раздели на знаменатель.',
+      'Проверь себя: В = 3, Г = 4. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'В = 3, Г = 4. Чему равна площадь по формуле Пика?', choices: ['4', '5', '6', '3'], ans: 0,
       exp: '3 + 4/2 − 1 = 4.' },
@@ -18867,9 +18867,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     ]
   };
   const ink='#2c3a2c', dim='#7a8a7a', gold='#c99a2f', cyan='#1f9aba', grn='#4c9a58', red='#c14b2f',
-        paper='#fbf4e2', gridc='#9fc8dd', card='rgba(255,253,248,.97)', cardB='#c9b98d';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf4e2" stroke-width="3.2">${t}</text>`;
-  const CELL=40, X0=24, Y0=18;
+        card='rgba(255,253,248,.97)', cardB='#c9b98d';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf4e2" stroke-width="3.4">${t}</text>`;
+  const CELL=42, X0=24, Y0=20;
   const px=g=>X0+g*CELL, py=g=>Y0+g*CELL;
   function bg(W,H,opt){
     const o=opt||{};
@@ -18887,40 +18887,38 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   }
   function grid(n){
     let s='';
-    for(let gx=0;gx<=n;gx++){ s+=`<line x1="${px(gx)}" y1="${py(0)}" x2="${px(gx)}" y2="${py(n)}" stroke="${gridc}" stroke-width="1"/>`; }
-    for(let gy=0;gy<=n;gy++){ s+=`<line x1="${px(0)}" y1="${py(gy)}" x2="${px(n)}" y2="${py(gy)}" stroke="${gridc}" stroke-width="1"/>`; }
+    for(let gx=0;gx<=n;gx++){ s+=`<line x1="${px(gx)}" y1="${py(0)}" x2="${px(gx)}" y2="${py(n)}" stroke="#9fc8dd" stroke-width="1.4"/>`; }
+    for(let gy=0;gy<=n;gy++){ s+=`<line x1="${px(0)}" y1="${py(gy)}" x2="${px(n)}" y2="${py(gy)}" stroke="#9fc8dd" stroke-width="1.4"/>`; }
     return s;
   }
   function node(gx,gy,type,delay){
     const c=type==='i'?cyan:gold;
-    return `<g class="qINode" style="animation-delay:${(delay||0).toFixed(2)}s"><circle cx="${px(gx)}" cy="${py(gy)}" r="6" fill="${c}" stroke="#fff" stroke-width="1.8" filter="url(#qIsh)"/></g>`;
+    return `<g class="qINode" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qIsh)"><circle cx="${px(gx)}" cy="${py(gy)}" r="8" fill="${c}" stroke="#fff" stroke-width="2"/></g>`;
   }
   function tri(){
-    const pts=[[0,0],[4,0],[0,3]];
-    let s=`<path d="M ${px(0)} ${py(0)} L ${px(4)} ${py(0)} L ${px(0)} ${py(3)} Z" fill="rgba(76,154,88,.2)" stroke="#2c5a2a" stroke-width="2.2"/>`;
-    return s;
+    return `<path d="M ${px(0)} ${py(0)} L ${px(4)} ${py(0)} L ${px(0)} ${py(3)} Z" fill="rgba(76,154,88,.22)" stroke="#2c5a2a" stroke-width="2.4"/>`;
   }
-  const chip=(t,c,delay)=>`<span class="qIIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="qIIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q393=[
     {q:'В=3, Г=4 — площадь?',opts:['4','5','6'],ans:0},
-    {q:'В — это…?',opts:['внутренние узлы','граничные узлы','клетки внутри'],ans:0}
+    {q:'В — это…?',opts:['внутренние узлы','граничные узлы','клетки'],ans:0}
   ];
   function quiz(lk,st){
     const T=Q393[st.q||0];
     const opts=T.opts.map((o,i)=>{
       let bd=cardB,tc=ink,bg=card;
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.16)':'rgba(193,75,47,.14)'; bd=i===T.ans?grn:red; tc=i===T.ans?'#2f7a53':red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW393T('${lk}',${i})">${o}</button>`;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.18)':'rgba(193,75,47,.14)'; bd=i===T.ans?grn:red; tc=i===T.ans?'#2f7a53':red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:60px;font-size:17px" onclick="visW393T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#2f7a53;font-size:16px">Верно! В + Г/2 − 1</div>'
-        : '<div class="wk-ans" style="color:#c14b2f;font-size:15px">Не так · вспомни формулу</div>';
+        ? '<div class="wk-ans" style="color:#2f7a53;font-size:18px">Верно! В + Г/2 − 1</div>'
+        : '<div class="wk-ans" style="color:#c14b2f;font-size:17px">Не так · вспомни формулу</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW393Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW393Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#c9982b')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#c9b98d')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW393(el){
     const step=LV.step||0;
@@ -18928,38 +18926,31 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     if(st._at!==step){ st._at=step;
       if(step>=0&&step<=14){ st.go=0; st.pick=null; }
       if(step===9||step===10) st.pick=null;
-      if(step===11){ st.mq=0; st.msel=null; }
-      if(step===12){ st.sel=null; st.q=0; }
+      if(step===12){ st.mq=0; st.msel=null; }
+      if(step===12||step===13||step===14){ st.sel=null; st.q=0; }
     }
     let h='';
     const W=318;
     if(step===0){
-      const H=200, go=st.go||0;
+      const H=184, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'магия клетчатой бумаги',{b:1});
-      inner+=grid(4);
-      inner+=tri();
-      if(go){
-        inner+=`<g class="qIPop"><text x="159" y="178" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">найти площадь, считая только узлы!</text></g>`;
-      } else {
-        inner+=tx(159,178,13,dim,'считаем узлы — получаем площадь',{});
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Лаборатория Архимеда</div>`+
+      inner+=tx(159,30,20,ink,'магия клетчатой бумаги',{b:1});
+      inner+=grid(4); inner+=tri();
+      if(go){ inner+=`<g class="qIPop"><text x="159" y="176" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">считаем узлы — получаем площадь</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Клетчатая лаборатория</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('формула Пика',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW393Act('${lk}','rst')`):wkBtn('что за магия?',`visW393Act('${lk}','go')`))+
         wkSml('площадь без подсчёта клеток'));
     } else if(step===1){
-      const H=200, go=st.go||0;
+      const H=184;
+      const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'узлы сетки',{b:1});
+      inner+=tx(159,30,20,ink,'узлы сетки',{b:1});
       inner+=grid(4);
       if(go){
-        inner+=node(1,2,'i',0.1);
-        inner+=node(2,1,'i',0.15);
-        inner+=node(1,1,'i',0.2);
-        inner+=`<g class="qIPop"><rect x="42" y="180" width="234" height="30" rx="9" fill="rgba(31,154,186,.14)" stroke="${cyan}" stroke-width="1.8"/>
-        ${tx(159,200,12.5,cyan,'точка пересечения линий — узел (В — внутри)',{b:1})}</g>`;
+        inner+=node(1,2,'i',0.1); inner+=node(2,1,'i',0.15); inner+=node(1,1,'i',0.2);
+        inner+=`<g class="qIPop"><rect x="48" y="170" width="222" height="26" rx="8" fill="rgba(31,154,186,.14)" stroke="${cyan}" stroke-width="2"/>${tx(159,188,15,cyan,'точка пересечения линий — узел',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Что такое узел</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -18967,14 +18958,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW393Act('${lk}','rst')`):wkBtn('показать',`visW393Act('${lk}','go')`))+
         wkSml('точка на пересечении'));
     } else if(step===2){
-      const H=204, go=st.go||0;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'внутренние узлы (В)',{b:1});
-      inner+=grid(4);
-      inner+=tri();
+      inner+=tx(159,30,20,ink,'внутренние узлы (В)',{b:1});
+      inner+=grid(4); inner+=tri();
       if(go){
         inner+=node(1,1,'i',0.1); inner+=node(2,1,'i',0.15); inner+=node(1,2,'i',0.2);
-        inner+=`<g class="qIPop"><text x="200" y="96" text-anchor="middle" font-size="20" fill="${cyan}" font-weight="bold" font-family="Georgia,serif">В = 3</text></g>`;
+        inner+=`<g class="qIPop"><text x="244" y="78" text-anchor="middle" font-size="22" fill="${cyan}" font-weight="bold" font-family="Georgia,serif">В = 3</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Внутри фигуры</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -18982,15 +18972,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW393Act('${lk}','rst')`):wkBtn('сосчитать',`visW393Act('${lk}','go')`))+
         wkSml('голубые — внутри'));
     } else if(step===3){
-      const H=204, go=st.go||0;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'граничные узлы (Г)',{b:1});
-      inner+=grid(4);
-      inner+=tri();
+      inner+=tx(159,30,20,ink,'граничные узлы (Г)',{b:1});
+      inner+=grid(4); inner+=tri();
       if(go){
         const b=[[0,0],[1,0],[2,0],[3,0],[4,0],[0,1],[0,2],[0,3]];
         b.forEach((p,i)=> inner+=node(p[0],p[1],'g',0.08*i));
-        inner+=`<g class="qIPop"><text x="200" y="96" text-anchor="middle" font-size="20" fill="${gold}" font-weight="bold" font-family="Georgia,serif">Г = 8</text></g>`;
+        inner+=`<g class="qIPop"><text x="244" y="78" text-anchor="middle" font-size="22" fill="${gold}" font-weight="bold" font-family="Georgia,serif">Г = 8</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">На границе</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -18998,31 +18987,25 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW393Act('${lk}','rst')`):wkBtn('сосчитать',`visW393Act('${lk}','go')`))+
         wkSml('золотые — на границе'));
     } else if(step===4){
-      const H=200;
-      const go=st.go||0;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'наша цель — площадь',{b:1});
-      inner+=grid(4);
-      inner+=tri();
-      if(go){
-        inner+=`<g class="qIPop"><text x="159" y="176" text-anchor="middle" font-size="17" fill="${ink}" font-weight="bold" font-family="Georgia,serif">S = ? (не считая клетки)</text></g>`;
-      } else {
-        inner+=tx(159,176,13,dim,'площадь этого треугольника',{});
-      }
+      inner+=tx(159,30,20,ink,'наша цель — площадь',{b:1});
+      inner+=grid(4); inner+=tri();
+      if(go){ inner+=`<g class="qIPop"><text x="159" y="176" text-anchor="middle" font-size="18" fill="${ink}" font-weight="bold">S = ? (не считая клетки)</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Площадь</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('найдём по Пику',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW393Act('${lk}','rst')`):wkBtn('как?',`visW393Act('${lk}','go')`))+
         wkSml('без клеток'));
     } else if(step===5){
-      const H=200;
+      const H=190;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'формула Пика',{b:1});
-      inner+=tx(159,68,13.5,dim,'полное определение:',{});
+      inner+=tx(159,32,20,ink,'формула Пика',{b:1});
+      inner+=tx(159,66,14,dim,'полное определение:',{});
       if(go){
-        inner+=`<g class="qISpin"><text x="159" y="130" text-anchor="middle" font-size="28" fill="${grn}" font-weight="bold" font-family="Georgia,serif">S = В + Г/2 − 1</text>
-        <text x="159" y="164" text-anchor="middle" font-size="13" fill="${dim}">внутренние + половина границы − 1</text></g>`;
+        inner+=`<g class="qISpin"><text x="159" y="130" text-anchor="middle" font-size="30" fill="${grn}" font-weight="bold" font-family="Georgia,serif">S = В + Г/2 − 1</text>
+        <text x="159" y="164" text-anchor="middle" font-size="14" fill="${dim}">внутренние + половина границы − 1</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Формула Пика</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19030,32 +19013,30 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW393Act('${lk}','rst')`):wkBtn('показать',`visW393Act('${lk}','go')`))+
         wkSml('запомни это определение'));
     } else if(step===6){
-      const H=200;
+      const H=190;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'разбираем формулу',{b:1});
-      inner+=tx(84,78,20,ink,'В',{b:1,georgia:1});
-      inner+=tx(84,108,11.5,dim,'внутри',{});
-      inner+=tx(159,78,16,dim,'+',{});
-      inner+=tx(214,78,20,cyan,'Г/2',{b:1,georgia:1});
-      inner+=tx(214,108,11.5,dim,'граница /2',{});
-      if(go){
-        inner+=`<g class="qIPop"><text x="159" y="148" text-anchor="middle" font-size="15" fill="${red}" font-weight="bold">− 1 (поправка)</text></g>`;
-      }
+      inner+=tx(159,32,20,ink,'разбираем формулу',{b:1});
+      inner+=tx(84,84,24,ink,'В',{b:1,georgia:1});
+      inner+=tx(84,116,14,dim,'внутри',{});
+      inner+=tx(159,88,18,dim,'+',{});
+      inner+=tx(214,84,24,cyan,'Г/2',{b:1,georgia:1});
+      inner+=tx(214,116,14,dim,'граница/2',{});
+      if(go){ inner+=`<g class="qIPop"><text x="159" y="158" text-anchor="middle" font-size="17" fill="${red}" font-weight="bold">− 1 (поправка)</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Что значит каждая часть</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('В (внутри) · Г/2 (граница) · −1',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW393Act('${lk}','rst')`):wkBtn('разобрать',`visW393Act('${lk}','go')`))+
         wkSml('три части формулы'));
     } else if(step===7){
-      const H=200;
+      const H=186;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,36,16,ink,'применяем',{b:1});
-      inner+=tx(159,66,15,ink,'В = 3, Г = 4',{b:1,georgia:1});
+      inner+=tx(159,36,20,ink,'применяем',{b:1});
+      inner+=tx(159,70,17,ink,'В = 3, Г = 4',{b:1,georgia:1});
       if(go){
-        inner+=`<g class="qIPop"><text x="159" y="112" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">S = 3 + 4/2 − 1 = 4</text>
-        <text x="159" y="146" text-anchor="middle" font-size="13" fill="${dim}">внутренние 3 + половина границы 2 − 1</text></g>`;
+        inner+=`<g class="qIPop"><text x="159" y="118" text-anchor="middle" font-size="26" fill="${grn}" font-weight="bold" font-family="Georgia,serif">S = 3 + 4/2 − 1 = 4</text>
+        <text x="159" y="152" text-anchor="middle" font-size="14" fill="${dim}">внутренние 3 + половина границы 2 − 1</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Пример</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19063,25 +19044,23 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW393Act('${lk}','rst')`):wkBtn('посчитать',`visW393Act('${lk}','go')`))+
         wkSml('подставляем В и Г'));
     } else if(step===8){
-      const H=206;
-      const go=st.go||0;
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'проверим на треугольнике',{b:1});
-      inner+=grid(4);
-      inner+=tri();
+      inner+=tx(159,28,20,ink,'проверим на треугольнике',{b:1});
+      inner+=grid(4); inner+=tri();
       if(go){
         inner+=node(1,1,'i',0.1); inner+=node(2,1,'i',0.15); inner+=node(1,2,'i',0.2);
         const b=[[0,0],[1,0],[2,0],[3,0],[4,0],[0,1],[0,2],[0,3]];
         b.forEach((p,i)=> inner+=node(p[0],p[1],'g',0.08*i+0.2));
-        inner+=`<g class="qIPop"><text x="159" y="186" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">В=3, Г=8 → S = 3+4−1 = 6</text></g>`;
+        inner+=`<g class="qIPop"><text x="159" y="184" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">В=3, Г=8 → S = 3+4−1 = 6</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Всё сходится</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('формула даёт 6 — как и подсчёт клеток',grn,0.2)):'')+
+        (go?wkRow(chip('формула даёт 6 — как подсчёт клеток',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW393Act('${lk}','rst')`):wkBtn('проверить',`visW393Act('${lk}','go')`))+
         wkSml('магия работает'));
     } else if(step===9){
-      const H=200, py=84;
+      const H=194, py=82;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'В=3, Г=4 → S?',a:'4',ds:['5','6']},
@@ -19092,18 +19071,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,16,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,19,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
-        inner+=`<g class="qIIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qIIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qIPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
-          : `<g class="qIPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">В + Г/2 − 1</text></g>`)
-        : tx(159,py+72,14.5,dim,'примени формулу',{});
+        ? (st.pick===0? `<g class="qIPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qIPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">В + Г/2 − 1</text></g>`)
+        : tx(159,py+74,16,dim,'примени формулу',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW393Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW393P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -19114,39 +19093,62 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('В + Г/2 − 1'));
     } else if(step===10){
-      const H=200, py=84;
+      const H=194, py=82;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'В — это?',a:'внутри',ds:['на границе','клетки']},
-        {q:'Г — это?',a:'на границе',ds:['внутри','клетки']},
-        {q:'S = В + ? − 1',a:'Г/2',ds:['Г','В/2']},
-        {q:'Формула — если вершины…',a:'в узлах',ds:['на сторонах','вне сетки']}
+        {opts:[['внутри',1],['на границе',0],['клетки',2]],ans:0,q:'В — это?'},
+        {opts:[['внутри',1],['на границе',0],['клетки',2]],ans:1,q:'Г — это?'},
+        {opts:[['+Г/2',1],['+Г',0],['+В/2',0]],ans:0,q:'S = В + ? − 1'},
+        {opts:[['в узлах',1],['на сторонах',0],['вне сетки',0]],ans:0,q:'Формула — если вершины…'}
       ];
       const P=pool[st.tr%pool.length];
-      const ord=[P.a,...P.ds];
+      const ord=P.opts.map(p=>p[0]);
       let inner='';
-      inner+=tx(159,34,15.5,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,17,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
-        inner+=`<g class="qIIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,15,tc,o==='внутренние узлы'||o==='граничные узлы'?o:o,{b:1,georgia:1})}</g>`;
+        if(st.pick!=null){ if(i===P.ans&&st.pick===P.ans){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
+        inner+=`<g class="qIIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,17,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qIPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
-          : `<g class="qIPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вспомни определение</text></g>`)
-        : tx(159,py+72,14.5,dim,'выбери ответ',{});
-      const fb= st.pick!=null&&st.pick===0
+        ? (st.pick===P.ans? `<g class="qIPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qIPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вспомни определение</text></g>`)
+        : tx(159,py+74,16,dim,'выбери ответ',{});
+      const fb= st.pick!=null&&st.pick===P.ans
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW393Act('${lk}','n')">дальше →</button></div>`
-        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW393P('${lk}',${i})">${o.length>10?o+'…':'? '+o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW393P('${lk}',${i})">${o.length>10?o+'…':'? '+o}</button>`).join('')}</div>`:'';
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW393P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==P.ans? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW393P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: определение</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         fb+retry+
         wkSml('В — внутри, Г — граница'));
     } else if(step===11){
-      const H=196;
+      const H=186;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,20,ink,'шпаргалка',{b:1});
+      const items=[['S = В + Г/2 − 1'],['В — внутри, Г — на границе'],['вершины в узлах сетки'],['«внутренние + половина границы − 1»']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=54+i*32;
+          inner+=`<g class="qIIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(255,253,248,.97)':'rgba(217,160,90,.14)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('В + Г/2 − 1',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW393Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW393Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW393Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW393Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW393Act('${lk}','rst')`):'')+
+        wkSml('В + Г/2 − 1'));
+    } else if(step===12){
+      const H=182;
       if(st.mq==null) st.mq=0;
       const QS=[
         {q:'В=3, Г=4 → S?',opts:['4','5','6'],ans:0},
@@ -19155,9 +19157,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qIPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'вспомни формулу'}</text></g>`;
+        inner+=`<g class="qIPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'вспомни формулу'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -19167,13 +19169,29 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           ${st.msel!=null?wkBtn('заново',`visW393Act('${lk}','rst')`):''}
         </div>`+
         wkSml('В + Г/2 − 1'));
-    } else {
-      const H=196;
+    } else if(step===13){
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,42,17,ink,'В=3, Г=4',{b:1,georgia:1});
-      inner+=`<g class="qIPop"><text x="159" y="92" text-anchor="middle" font-size="30" fill="${grn}" font-weight="bold" font-family="Georgia,serif">S = 4</text></g>`;
-      inner+=tx(159,118,13.5,dim,'3 + 4/2 − 1 = 4',{});
-      inner+=tx(159,146,12.5,dim,'внутренние + половина границы − 1',{});
+      inner+=tx(159,28,20,ink,'проверим на треугольнике',{b:1});
+      inner+=grid(4); inner+=tri();
+      if(go){
+        inner+=node(1,1,'i',0.1); inner+=node(2,1,'i',0.15); inner+=node(1,2,'i',0.2);
+        const b=[[0,0],[1,0],[2,0],[3,0],[4,0],[0,1],[0,2],[0,3]];
+        b.forEach((p,i)=> inner+=node(p[0],p[1],'g',0.08*i+0.2));
+        inner+=`<g class="qIPop"><text x="159" y="184" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">В=3, Г=8 → S = 6</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('S = 3 + 4 − 1 = 6',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW393Act('${lk}','rst')`):wkBtn('проверить',`visW393Act('${lk}','go')`))+
+        wkSml('формула работает'));
+    } else {
+      const H=190;
+      let inner='';
+      inner+=tx(159,32,20,ink,'В=3, Г=4',{b:1,georgia:1});
+      inner+=`<g class="qIPop"><text x="159" y="92" text-anchor="middle" font-size="32" fill="${grn}" font-weight="bold" font-family="Georgia,serif">S = 4</text></g>`;
+      inner+=tx(159,120,16,dim,'3 + 4/2 − 1 = 4',{});
+      inner+=tx(159,146,14,dim,'внутренние + половина границы − 1',{});
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
@@ -19193,7 +19211,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const sp=LV.step;
     if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
     if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
-    if(act==='nq'){ if(sp===11){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='nq'){ if(sp===12){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
     if(act==='rst') CHS[lk]={};
     chRender(0);
   }
