@@ -16102,19 +16102,19 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===394){ window.ARH_LESSONS[i]=L394; break; } } })();
 })();
 
-/* ================= УРОК 396 · Усиленный принцип Дирихле (v1 · «Сортировочный цех Архимеда», 14 слайдов, премиум) ================= */
+/* ================= УРОК 396 · Усиленный принцип Дирихле (v2 · «Сортировочный цех Архимеда», 13 слайдов, флагман) ================= */
 (function(){
-  if(!window.__wk396v1css){
-    window.__wk396v1css=1;
+  if(!window.__wk396v2css){
+    window.__wk396v2css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qBIn{animation:qBIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qBIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qBPop{animation:qBPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qBPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qBBall{animation:qBBall .6s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qBBall{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qBFloat{animation:qBFloat 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '#lvis .qBPop{animation:qBPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qBPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qBBall{animation:qBBall .5s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qBBall{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qBFloat{animation:qBFloat 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qBFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
     document.head.appendChild(st);
   }
@@ -16125,14 +16125,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Усиленный Дирихле: если n предметов в k мест, найдётся место минимум с ⌈n/k⌉ предметами.',
       '100 шаров в 9 коробок: 100 = 9·11 + 1 → есть коробка минимум с 12 шарами.',
       'Среди 3 носков двух цветов гарантированно есть пара одного цвета.',
-      'Оценки «с потолком» дают точные границы.',
+      'Оценки «с потолка» дают точные границы.',
       'Разложи поровну, а остаток — в любую коробку: она получит на один больше.',
       'Потолок ⌈n/k⌉ — это «округли вверх»: не меньше, чем n/k.',
       'Принцип даёт ГАРАНТИЮ: как бы ни разложили, есть переполненное место.',
-      'Сократи до простого: сколько «в среднем» — а если не делится нацело, один получит лишний.',
+      'Сократи до простого: сколько «в среднем» — а если не делится, один получит лишний.',
       'Тренажёр: посчитай, сколько минимум в какой-то коробке.',
-      'Тренажёр: найди нужное число предметов, чтобы гарантировать совпадение.',
-      'Шпаргалка: ⌈n/k⌉ предметов в каком-то месте; гарантия — при худшем раскладе.',
+      'Тренажёр: найди нужное число предметов для гарантии.',
+      'Шпаргалка: ⌈n/k⌉ в каком-то месте; гарантия при худшем раскладе.',
       'Проверь себя устно: 100 в 9 → минимум 12; 3 носка 2 цветов → пара.',
       'Проверь себя: 100 шаров в 9 коробок. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
@@ -16145,68 +16145,63 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Цветов 2.', '3 носка: два окажутся одного цвета.'], sol: '3' }
     ]
   };
-  const ink='#eef2ff', dim='#98a3c5', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
-        bg0='#141a2e', bg1='#0c111e', card='rgba(22,29,50,.94)', cardB='#3a466a', lineC='#2a3750';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="3.4">${t}</text>`;
+  const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
+        bg0='#141a2e', bg1='#0c111e', card='rgba(22,29,50,.96)', cardB='#3a466a', lineC='#2a3750';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
         <linearGradient id="qBbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
         <radialGradient id="qBgold" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="${gold}"/></radialGradient>
-        <filter id="qBsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+        <filter id="qBsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
       </defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qBbg)"/>
-      <g opacity="0.12" stroke="#5a6a9a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="90" y1="0" x2="86" y2="${H}"/><line x1="150" y1="0" x2="146" y2="${H}"/><line x1="210" y1="0" x2="207" y2="${H}"/><line x1="270" y1="0" x2="268" y2="${H}"/></g>
+      <g opacity="0.14" stroke="#5a6a9a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
       <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44538a" stroke-width="2.4" rx="7"/>
       <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3858" stroke-width="1.2" rx="4"/>
       ${o.inner?o.inner():''}
     </svg>`;
   }
   function ball(x,y,color,delay){
-    return `<g class="qBBall" style="animation-delay:${(delay||0).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="5" fill="url(#qBgold)" stroke="#8a5a1a" stroke-width="1"/>
-      <circle cx="${x-1.6}" cy="${y-1.8}" r="1.5" fill="rgba(255,255,255,.7)"/></g>`;
+    return `<g class="qBBall" style="animation-delay:${(delay||0).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="6" fill="url(#qBgold)" stroke="#8a5a1a" stroke-width="1"/><circle cx="${x-2}" cy="${y-2}" r="1.8" fill="rgba(255,255,255,.7)"/></g>`;
   }
   function box(x,y,w,h,cnt,hl){
-    let s=`<g class="qBIn" filter="url(#qBsh)"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${hl?'rgba(125,224,160,.16)':'rgba(30,40,66,.95)'}" stroke="${hl?grn:cardB}" stroke-width="2.2"/>
-      <rect x="${x+4}" y="${y+h-8}" width="${w-8}" height="6" rx="3" fill="rgba(255,255,255,.08)"/>`;
-    const br=3, cols=3;
-    for(let i=0;i<Math.min(cnt,6);i++){ const cx=x+w/2-((cols-1)/2)*br*2 + (i%cols)*br*2, cy=y+h-14-Math.floor(i/cols)*8; s+=ball(cx,cy,hl?grn:'#ffd76a',0.05*i); }
-    s+=tx(x+w/2,y+h-2,13,hl?grn:(cnt>0?ink:dim),''+(cnt>0?cnt:'·'),{b:cnt>0});
+    let s=`<g class="qBIn" filter="url(#qBsh)"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="7" fill="${hl?'rgba(125,224,160,.18)':'rgba(32,44,72,.96)'}" stroke="${hl?grn:cardB}" stroke-width="2.4"/>
+      <rect x="${x+4}" y="${y+h-9}" width="${w-8}" height="6" rx="3" fill="rgba(255,255,255,.08)"/>`;
+    const br=3.4, cols=3;
+    for(let i=0;i<Math.min(cnt,6);i++){ const cx=x+w/2-((cols-1)/2)*br*2 + (i%cols)*br*2, cy=y+h-15-Math.floor(i/3)*9; s+=ball(cx,cy,hl?grn:'#ffd76a',0.05*i); }
+    s+=tx(x+w/2,y+h-2,16,hl?grn:(cnt>0?ink:dim),''+(cnt>0?cnt:'·'),{b:cnt>0});
     s+=`</g>`;
     return s;
   }
-  function sock(x,y,color,delay){
-    return `<g class="qBIn" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qBsh)"><rect x="${x}" y="${y}" width="20" height="34" rx="6" fill="${color}" stroke="#0b0f1c" stroke-width="1.6"/>
-      <rect x="${x+4}" y="${y+22}" width="12" height="12" rx="4" fill="${color}" stroke="#0b0f1c" stroke-width="1.6"/></g>`;
-  }
-  const chip=(t,c,delay)=>`<span class="qBIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="qBIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q396=[
     {q:'100 шаров в 9 коробок — минимум?',opts:['12','11','10'],ans:0},
-    {q:'Носки 2 цветов — сколько взять для пары?',opts:['3','2','4'],ans:0}
+    {q:'Носки 2 цветов — сколько взять?',opts:['3','2','4'],ans:0}
   ];
   function quiz(lk,st){
     const T=Q396[st.q||0];
     const opts=T.opts.map((o,i)=>{
       let bd=cardB,tc=ink,bg=card;
       if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW396T('${lk}',${i})">${o}</button>`;
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:17px" onclick="visW396T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#7de0a0;font-size:16px">Верно! примени Дирихле</div>'
-        : '<div class="wk-ans" style="color:#ff9a8a;font-size:15px">Не так · раздели n на k</div>';
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! примени Дирихле</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · раздели n на k</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW396Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW396Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW396(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=13){ st.go=0; st.pick=null; }
+      if(step>=0&&step<=12){ st.go=0; st.pick=null; }
       if(step===9||step===10) st.pick=null;
       if(step===11){ st.mq=0; st.msel=null; }
       if(step===12){ st.sel=null; st.q=0; }
@@ -16214,17 +16209,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     let h='';
     const W=318;
     if(step===0){
-      const H=204, go=st.go||0;
+      const H=182, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'100 шаров, 9 коробок',{b:1});
-      inner+=tx(159,52,12.5,dim,'хотя бы в одной коробке — сколько?',{});
-      inner+=tx(34,82,13,dim,'9 коробок:',{});
-      for(let i=0;i<9;i++) inner+=box(24+i*30,96,26,44,go?11:0,false);
+      inner+=tx(159,30,19,ink,'100 шаров, 9 коробок',{b:1});
+      inner+=tx(159,54,15,dim,'хотя бы в одной коробке — сколько?',{});
+      for(let i=0;i<9;i++) inner+=box(30+i*30,84,26,42,go?11:0,false);
       if(go){
-        inner+=`<g class="qBPop"><rect x="60" y="158" width="198" height="34" rx="10" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
-        ${tx(159,180,14,grn,'9 · 11 = 99 · остаток 1 →',{b:1})}</g>`;
-      } else {
-        inner+=tx(159,180,14,dim,'разложим поровну…',{});
+        inner+=`<g class="qBPop"><rect x="70" y="150" width="178" height="28" rx="9" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
+        ${tx(159,170,15,grn,'9 · 11 = 99 · остаток 1',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача Дирихле</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16232,69 +16224,60 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW396Act('${lk}','rst')`):wkBtn('разложить',`visW396Act('${lk}','go')`))+
         wkSml('раскладываем поровну'));
     } else if(step===1){
-      const H=204;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'а где лишний шар?',{b:1});
-      for(let i=0;i<9;i++) inner+=box(24+i*30,66,26,44,go?11:0,false);
+      inner+=tx(159,30,19,ink,'а где лишний шар?',{b:1});
+      for(let i=0;i<9;i++) inner+=box(30+i*30,80,26,42,go?11:0,false);
       if(go){
-        inner+=box(24,66,26,44,12,true);
-        inner+=`<g class="qBPop"><rect x="60" y="140" width="198" height="34" rx="10" fill="rgba(125,224,160,.16)" stroke="${grn}" stroke-width="2.2"/>
-        ${tx(159,162,15,grn,'одна коробка получит 12!',{b:1})}</g>`;
-        inner+=tx(159,186,13,dim,'99 разложили поровну + 1 лишний',{});
-      } else {
-        inner+=tx(159,186,14,dim,'остаток кладём в любую коробку',{});
+        inner+=box(30,80,26,42,12,true);
+        inner+=tx(159,152,17,grn,'одна коробка получит 12!',{b:1});
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Лишний шар</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('в какой-то коробке ≥ 12',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW396Act('${lk}','rst')`):wkBtn('показать',`visW396Act('${lk}','go')`))+
-        wkSml('остаток — в любую коробку'));
+        wkSml('99 поровну + 1 лишний'));
     } else if(step===2){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,17,ink,'формула',{b:1});
+      inner+=tx(159,34,20,ink,'формула',{b:1});
       inner+=tx(159,70,18,gold,'n предметов в k мест',{b:1,georgia:1});
       if(go){
-        inner+=`<g class="qBPop"><text x="159" y="120" text-anchor="middle" font-size="26" fill="${grn}" font-weight="bold" font-family="Georgia,serif">⌈ n/k ⌉ предметов</text></g>`;
-        inner+=tx(159,152,13.5,dim,'в каком-то месте',{});
-      } else {
-        inner+=tx(159,160,14,dim,'сколько минимум в одной?',{});
+        inner+=`<g class="qBPop"><text x="159" y="122" text-anchor="middle" font-size="28" fill="${grn}" font-weight="bold" font-family="Georgia,serif">⌈ n/k ⌉</text></g>`;
+        inner+=tx(159,156,15,dim,'в каком-то месте',{});
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Усиленный Дирихле</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('есть место с ≥ ⌈n/k⌉ предметами',grn,0.2)):'')+
+        (go?wkRow(chip('есть место с ≥ ⌈n/k⌉',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW396Act('${lk}','rst')`):wkBtn('показать',`visW396Act('${lk}','go')`))+
-        wkSml('найдётся «переполненное» место'));
+        wkSml('найдётся переполненное место'));
     } else if(step===3){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,18,ink,'⌈ n/k ⌉ — потолок',{b:1});
-      inner+=tx(159,70,13.5,dim,'«округли вверх»',{});
+      inner+=tx(159,34,20,ink,'⌈ n/k ⌉ — потолок',{b:1});
+      inner+=tx(159,70,15,dim,'«округли вверх»',{});
       if(go){
-        inner+=`<g class="qBPop"><rect x="46" y="92" width="226" height="40" rx="11" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="2"/>
-        ${tx(159,112,15,cyan,'100 : 9 = 11,1… → вверх → 12',{b:1})}
-        ${tx(159,128,12,dim,'не меньше, чем 11 целых',{})}</g>`;
-      } else {
-        inner+=tx(159,150,14,dim,'вверх — значит не меньше',{});
+        inner+=`<g class="qBPop"><rect x="46" y="88" width="226" height="44" rx="11" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="2"/>
+        ${tx(159,110,17,cyan,'100 : 9 = 11,1… → вверх → 12',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Потолок</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('⌈x⌉ = округлить вверх',cyan,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW396Act('${lk}','rst')`):wkBtn('показать',`visW396Act('${lk}','go')`))+
-        wkSml('буквально «не меньше»'));
+        wkSml('не меньше'));
     } else if(step===4){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,17,ink,'гарантия',{b:1});
-      inner+=tx(159,66,13.5,dim,'как ни разложи — есть переполнение',{});
+      inner+=tx(159,34,20,ink,'гарантия',{b:1});
+      inner+=tx(159,70,15,dim,'как ни разложи — есть переполнение',{});
       if(go){
-        inner+=`<g class="qBPop"><rect x="48" y="88" width="222" height="42" rx="11" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
-        ${tx(159,108,14,grn,'даже при самом «ровном» раскладе',{b:1})}
-        ${tx(159,124,12,dim,'лишний шар куда-то да попадёт',{})}</g>`;
+        inner+=`<g class="qBPop"><rect x="48" y="86" width="222" height="46" rx="11" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
+        ${tx(159,108,16,grn,'даже при самом ровном раскладе',{b:1})}
+        ${tx(159,128,14,dim,'лишний шар куда-то да попадёт',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Что это даёт</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16302,19 +16285,16 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW396Act('${lk}','rst')`):wkBtn('показать',`visW396Act('${lk}','go')`))+
         wkSml('не «может», а «обязательно»'));
     } else if(step===5){
-      const H=206;
-      const go=st.go||0;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'носки: 2 цвета',{b:1});
-      inner+=sock(80,74,'#ff7b6b',0.05);
-      inner+=sock(160,74,'#7fd6ff',0.1);
-      inner+=sock(240,74,go?'#ff7b6b':'#c05f54',0.15);
+      inner+=tx(159,30,19,ink,'носки: 2 цвета',{b:1});
+      inner+=`<g class="qBIn"><rect x="70" y="66" width="26" height="42" rx="6" fill="#ff7b6b" stroke="#0b0f1c" stroke-width="1.6"/><rect x="75" y="92" width="16" height="16" rx="4" fill="#ff7b6b" stroke="#0b0f1c" stroke-width="1.6"/></g>`;
+      inner+=`<g class="qBIn" style="animation-delay:.1s"><rect x="158" y="66" width="26" height="42" rx="6" fill="#7fd6ff" stroke="#0b0f1c" stroke-width="1.6"/><rect x="163" y="92" width="16" height="16" rx="4" fill="#7fd6ff" stroke="#0b0f1c" stroke-width="1.6"/></g>`;
+      inner+=`<g class="qBIn" style="animation-delay:.2s"><rect x="246" y="66" width="26" height="42" rx="6" fill="${go?'#ff7b6b':'#bd5f54'}" stroke="#0b0f1c" stroke-width="1.6"/><rect x="251" y="92" width="16" height="16" rx="4" fill="${go?'#ff7b6b':'#bd5f54'}" stroke="#0b0f1c" stroke-width="1.6"/></g>`;
       if(go){
-        inner+=`<g class="qBPop"><rect x="66" y="130" width="186" height="46" rx="11" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
-        ${tx(159,152,15,grn,'3 носка → пара одного цвета',{b:1})}
-        ${tx(159,168,12,dim,'цветов 2 · носков 3',{})}</g>`;
-      } else {
-        inner+=tx(159,158,14,dim,'хватит ли 2 носков?',{});
+        inner+=`<g class="qBPop"><rect x="70" y="134" width="178" height="40" rx="11" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
+        ${tx(159,155,16,grn,'3 носка → пара одного цвета',{b:1})}
+        ${tx(159,171,13,dim,'цветов 2 · носков 3',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Цвета</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16322,32 +16302,29 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW396Act('${lk}','rst')`):wkBtn('проверить',`visW396Act('${lk}','go')`))+
         wkSml('2 цвета → 3 носка'));
     } else if(step===6){
-      const H=196;
-      const go=st.go||0;
+      const H=182, go=st.go||0;
       let inner='';
-      inner+=tx(159,40,16,ink,'проще некуда',{b:1});
-      inner+=tx(159,70,15,dim,'10 голубей, 5 ящиков',{});
+      inner+=tx(159,34,20,ink,'делится нацело',{b:1});
+      inner+=tx(159,70,16,dim,'10 голубей, 5 ящиков',{});
       if(go){
-        inner+=`<g class="qBPop"><text x="159" y="112" text-anchor="middle" font-size="26" fill="${grn}" font-weight="bold" font-family="Georgia,serif">10 : 5 = 2</text>
-        <text x="159" y="146" text-anchor="middle" font-size="15" fill="${ink}">в каком-то ящике ≥ 2 голубя</text></g>`;
+        inner+=`<g class="qBPop"><text x="159" y="118" text-anchor="middle" font-size="30" fill="${grn}" font-weight="bold" font-family="Georgia,serif">10 : 5 = 2</text>
+        <text x="159" y="152" text-anchor="middle" font-size="16" fill="${ink}">в каком-то ящике ≥ 2</text></g>`;
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Делится нацело</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Делится ровно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('ровно n/k — и всё равно ≥',grn,0.2)):'')+
+        (go?wkRow(chip('ровно n/k',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW396Act('${lk}','rst')`):wkBtn('посчитать',`visW396Act('${lk}','go')`))+
         wkSml('когда делится ровно'));
     } else if(step===7){
-      const H=208;
+      const H=202;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'метод',{b:1});
-      const steps=[['раздели n на k'],['округли вверх (⌈·⌉)'],['это и есть минимум в каком-то месте']];
+      inner+=tx(159,30,19,ink,'метод',{b:1});
+      const steps=[['раздели n на k'],['округли вверх (⌈·⌉)'],['это и есть минимум']];
       for(let i=0;i<steps.length;i++){
         if(go>=i){
-          const ry=54+i*42;
-          inner+=`<g class="qBIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="36" rx="9" fill="${i%2?'rgba(22,29,50,.94)':'rgba(30,40,66,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          <circle cx="48" cy="${ry+18}" r="10" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="1.6"/>
-          ${tx(48,ry+22,11,gold,'1',{b:1})}${tx(150,ry+24,13,ink,steps[i][0],{})}</g>`;
+          const ry=52+i*42;
+          inner+=`<g class="qBIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="36" rx="9" fill="${i%2?'rgba(22,29,50,.96)':'rgba(32,44,72,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/><circle cx="48" cy="${ry+18}" r="11" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="1.6"/>${tx(48,ry+22,12,gold,'1',{b:1})}${tx(150,ry+24,15,ink,steps[i][0],{})}</g>`;
         }
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Как решать</div>`+
@@ -16360,29 +16337,29 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=3?wkBtn('сброс',`visW396Act('${lk}','rst')`):'')+
         wkSml('n : k → вверх'));
     } else if(step===8){
-      const H=200, py=84;
+      const H=194, py=82;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'20 шаров в 3 коробки — минимум?',a:'7',ds:['6','5']},
-        {q:'50 шаров в 6 коробок — минимум?',a:'9',ds:['8','7']},
-        {q:'15 шаров в 4 коробки — минимум?',a:'4',ds:['3','5']},
-        {q:'100 шаров в 9 коробок — минимум?',a:'12',ds:['11','10']}
+        {q:'20 в 3 коробки',a:'7',ds:['6','5']},
+        {q:'50 в 6 коробок',a:'9',ds:['8','7']},
+        {q:'15 в 4 коробки',a:'4',ds:['3','5']},
+        {q:'100 в 9 коробок',a:'12',ds:['11','10']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,16,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,20,ink,'минимум в какой-то коробке',{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qBIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qBIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
         ? (st.pick===0? `<g class="qBPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
           : `<g class="qBPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">n : k вверх</text></g>`)
-        : tx(159,py+74,14.5,dim,'сколько минимум?',{});
+        : tx(159,py+74,16,dim,'сколько минимум?',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW396Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW396P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -16393,28 +16370,28 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('⌈n/k⌉'));
     } else if(step===9){
-      const H=200, py=84;
+      const H=194, py=82;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'2 цвета — сколько носков для пары?',a:'3',ds:['2','4']},
-        {q:'3 цвета — сколько носков для пары?',a:'4',ds:['3','5']},
-        {q:'2 ящика — 3 предмета. Сколько в каком-то?',a:'2',ds:['1','3']}
+        {q:'2 цвета — сколько носков?',a:'3',ds:['2','4']},
+        {q:'3 цвета — сколько носков?',a:'4',ds:['3','5']},
+        {q:'2 ящика, 3 предмета',a:'2',ds:['1','3']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,16,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,19,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qBIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qBIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
         ? (st.pick===0? `<g class="qBPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
           : `<g class="qBPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">цветов + 1</text></g>`)
-        : tx(159,py+74,14.5,dim,'сколько надо?',{});
+        : tx(159,py+74,16,dim,'сколько надо?',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW396Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW396P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -16424,16 +16401,16 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('цветов + 1'));
     } else if(step===10){
-      const H=210;
+      const H=194;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'шпаргалка',{b:1});
-      const items=[['n предметов в k мест → есть место с ≥⌈n/k⌉'],['разложи поровну, остаток — в любую'],['⌈x⌉ — округлить вверх'],['это гарантия, а не «может»']];
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
+      const items=[['n в k мест → есть место с ≥⌈n/k⌉'],['разложи поровну, остаток — в любую'],['⌈x⌉ — округлить вверх'],['это гарантия, а не «может»']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
-          const ry=54+i*36;
-          inner+=`<g class="qBIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="30" rx="9" fill="${i%2?'rgba(22,29,50,.94)':'rgba(30,40,66,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+20,12.5,ink,items[i][0],{})}</g>`;
+          const ry=54+i*34;
+          inner+=`<g class="qBIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="28" rx="8" fill="${i%2?'rgba(22,29,50,.96)':'rgba(32,44,72,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+19,14.5,ink,items[i][0],{})}</g>`;
         }
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
@@ -16447,18 +16424,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=4?wkBtn('сброс',`visW396Act('${lk}','rst')`):'')+
         wkSml('n/k — и вверх'));
     } else if(step===11){
-      const H=196;
+      const H=182;
       if(st.mq==null) st.mq=0;
       const QS=[
-        {q:'100 шаров в 9 коробок — минимум?',opts:['12','11','10'],ans:0},
-        {q:'2 цвета носков — сколько для пары?',opts:['3','2','4'],ans:0},
-        {q:'20 шаров в 3 коробки — минимум?',opts:['7','6','5'],ans:0}
+        {q:'100 в 9 коробок?',opts:['12','11','10'],ans:0},
+        {q:'2 цвета носков?',opts:['3','2','4'],ans:0},
+        {q:'20 в 3 коробки?',opts:['7','6','5'],ans:0}
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qBPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'Дирихле'}</text></g>`;
+        inner+=`<g class="qBPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'Дирихле'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16469,11 +16446,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('n/k округли вверх'));
     } else {
-      const H=196;
+      const H=182;
       let inner='';
-      inner+=tx(159,42,17,ink,'100 шаров, 9 коробок',{b:1});
+      inner+=tx(159,34,20,ink,'100 шаров, 9 коробок',{b:1});
       inner+=`<g class="qBPop"><text x="159" y="90" text-anchor="middle" font-size="32" fill="${grn}" font-weight="bold" font-family="Georgia,serif">минимум 12</text></g>`;
-      inner+=tx(159,116,13.5,dim,'100 = 9·11 + 1 → ≥ 12',{});
+      inner+=tx(159,120,16,dim,'100 = 9·11 + 1 → ≥ 12',{});
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
