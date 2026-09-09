@@ -20204,3 +20204,454 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW176Act=visW176Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===176){ window.ARH_LESSONS[i]=L176; break; } } })();
 })();
+
+/* ================= УРОК 392 · Эйлеровы пути: одним росчерком (v1 · «Лаборатория графов Архимеда», 15 слайдов, научный премиум) ================= */
+(function(){
+  if(!window.__wk392v1css){
+    window.__wk392v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qLIn{animation:qLIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qLIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qLPop{animation:qLPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qLPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qLNode{animation:qLNode .5s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qLNode{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qLEdge{stroke-dasharray:14 7;animation:qLDraw .8s ease both;}'+
+      '@keyframes qLDraw{to{stroke-dashoffset:0}}'+
+      '#lvis .qLPen{animation:qLPen 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qLPen{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(-6deg)}}';
+    document.head.appendChild(st);
+  }
+  const L392 = {
+    id: 392, title: 'Эйлеровы пути: одним росчерком', ico: '🖊️',
+    src: 'Математика · 5–6 класс · Олимп-6: графы', subj: 'math',
+    explain: [
+      'Фигуру можно нарисовать одним росчерком, если у неё 0 или 2 вершины нечётной степени.',
+      'Квадрат с одной диагональю: у двух вершин степень 3 (нечётная), у двух — 2 → можно нарисовать одним росчерком!',
+      '«Плюс» из 4 лучей: центр — степень 4, но 4 конца — степень 1 → 4 нечётные вершины → нельзя.',
+      'Начинать надо с нечётной вершины, если она есть.',
+      'Степень вершины — сколько рёбер сходится в ней. Посчитай линии, входящие в вершину.',
+      'Чётная степень: из вершины входит/выходит поровну — можно «войти и выйти».',
+      'Нечётная степень: одна линия остаётся «лишней» — отсюда и начинаем или заканчиваем.',
+      '0 нечётных — замкнутый путь (Эйлеров цикл): начал и вернулся.',
+      '2 нечётные — путь начинается в одной и кончается в другой.',
+      'Если нечётных больше 2 — одним росчерком НЕЛЬЗЯ.',
+      'Тренажёр: посчитай количество нечётных вершин.',
+      'Тренажёр: реши, можно ли нарисовать фигуру одним росчерком.',
+      'Шпаргалка: 0 или 2 нечётные вершины → можно; начало — с нечётной вершины.',
+      'Проверь себя устно: квадрат с диагональю — 2 нечётные → можно; плюс — 4 → нельзя.',
+      'Проверь себя: 0 или 2 — нарисуем; больше — нет.',
+      'Проверь себя: сколько нечётных вершин у графа «одним росчерком»? Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Сколько вершин нечётной степени может иметь граф, который рисуется одним росчерком?', choices: ['0 или 2', '1 или 3', 'только 0', 'только 2'], ans: 0,
+      exp: 'Нечётных вершин 0 или 2.' },
+    tasks: [
+      { q: 'Сколько нечётных вершин у квадрата с одной диагональю?', kind: 'unit', ans: 2, tol: 0,
+        hints: ['Диагональ добавляет ребро двум вершинам.', 'У двух вершин степень 3 → две нечётные.'], sol: '2' },
+      { q: 'Можно ли нарисовать «плюс» (4 луча из центра) одним росчерком?', kind: 'choice', choices: ['нет', 'да', 'только за 2 прохода', 'нельзя узнать'], ans: 0, tol: 0,
+        hints: ['4 нечётные вершины (концы лучей).', '4 нечётных вершины → нельзя одним росчерком.'], sol: 'нет' }
+    ]
+  };
+  const ink='#eef2ff', dim='#98a3c5', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
+        bg0='#151f3a', bg1='#0b1122', card='rgba(20,28,50,.94)', cardB='#3a4a70', lineC='#2a3a5f';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.4">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qLbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <linearGradient id="qLgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="#c9932f"/></linearGradient>
+        <filter id="qLsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qLbg)"/>
+      <g opacity="0.12" stroke="#4a5a8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="90" y1="0" x2="86" y2="${H}"/><line x1="150" y1="0" x2="146" y2="${H}"/><line x1="210" y1="0" x2="207" y2="${H}"/><line x1="270" y1="0" x2="268" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44538a" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3858" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const NQ={},
+    SQ={TL:[92,50],TR:[226,50],BR:[226,174],BL:[92,174]},
+    SQdeg={TL:3,TR:2,BR:3,BL:2},
+    PL={C:[159,112],N:[159,52],S:[159,172],W:[56,112],E:[262,112]},
+    PLdeg={C:4,N:1,S:1,W:1,E:1};
+  function edge(x1,y1,x2,y2,color,delay){
+    return `<line class="qLEdge" style="animation-delay:${(delay||0).toFixed(2)}s" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color||'#8fa3d0'}" stroke-width="2.6" stroke-linecap="round"/>`;
+  }
+  function node(x,y,deg,odd,label,delay){
+    const c=(odd===1)?red:(odd===0?cyan:'#8fa3d0');
+    return `<g class="qLNode" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qLsh)">
+      <circle cx="${x}" cy="${y}" r="12" fill="${c}" stroke="#fffdf2" stroke-width="2"/>
+      ${label?`<text x="${x}" y="${y+4}" text-anchor="middle" font-size="11" fill="${odd===1?'#3a0f12':'#0b2434'}" font-weight="bold">${label}</text>`:''}
+      <g class="qLPop" style="animation-delay:${((delay||0)+0.15).toFixed(2)}s"><rect x="${x+10}" y="${y-16}" width="22" height="16" rx="4" fill="${odd===1?red:blu}" stroke="#0b1120" stroke-width="1.2"/>
+      <text x="${x+21}" y="${y-4}" text-anchor="middle" font-size="11" fill="#0b1120" font-weight="bold">${deg}</text></g>
+    </g>`;
+  }
+  /* квадрат с диагональю */
+  function sqFig(showDeg,showTrace){
+    let s=edge(...SQ.TL,...SQ.TR,'#8fa3d0',0.1);
+    s+=edge(...SQ.TR,...SQ.BR,'#8fa3d0',0.15);
+    s+=edge(...SQ.BR,...SQ.BL,'#8fa3d0',0.2);
+    s+=edge(...SQ.BL,...SQ.TL,'#8fa3d0',0.25);
+    s+=edge(...SQ.TL,...SQ.BR,'#ffd76a',0.3);
+    if(showDeg){
+      s+=node(...SQ.TL,SQdeg.TL,1,'A',0.35);
+      s+=node(...SQ.TR,SQdeg.TR,0,'B',0.4);
+      s+=node(...SQ.BR,SQdeg.BR,1,'C',0.45);
+      s+=node(...SQ.BL,SQdeg.BL,0,'D',0.5);
+    }
+    if(showTrace){
+      const path='M '+SQ.TL[0]+' '+SQ.TL[1]+' L '+SQ.TR[0]+' '+SQ.TR[1]+' L '+SQ.BR[0]+' '+SQ.BR[1]+' L '+SQ.BL[0]+' '+SQ.BL[1]+' L '+SQ.TL[0]+' '+SQ.TL[1]+' L '+SQ.BR[0]+' '+SQ.BR[1];
+      s+=`<g filter="url(#qLsh)"><circle class="qLPen" cx="0" cy="0" r="6" fill="#ffd76a" stroke="#fffdf2" stroke-width="1.6"><animateMotion dur="3.5s" path="${path}" fill="freeze" begin="0.3s"/></circle></g>`;
+    }
+    return s;
+  }
+  /* плюс */
+  function plFig(showDeg,showTrace){
+    let s=edge(...PL.C,...PL.N,'#8fa3d0',0.1);
+    s+=edge(...PL.C,...PL.S,'#8fa3d0',0.15);
+    s+=edge(...PL.C,...PL.W,'#8fa3d0',0.2);
+    s+=edge(...PL.C,...PL.E,'#8fa3d0',0.25);
+    if(showDeg){
+      s+=node(...PL.C,PLdeg.C,0,'O',0.3);
+      s+=node(...PL.N,PLdeg.N,1,'N',0.35);
+      s+=node(...PL.S,PLdeg.S,1,'S',0.4);
+      s+=node(...PL.W,PLdeg.W,1,'W',0.45);
+      s+=node(...PL.E,PLdeg.E,1,'E',0.5);
+    }
+    return s;
+  }
+  const chip=(t,c,delay)=>`<span class="qLIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:18px;color:${c};font-weight:bold">${t}</span>`;
+  const Q392=[
+    {q:'Граф «одним росчерком» — нечётных вершин…?',opts:['0 или 2','1 или 3','только 0'],ans:0},
+    {q:'Квадрат с диагональю — нечётных вершин?',opts:['2','0','4'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q392[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW392T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:16px">Верно! 0 или 2 — условие Эйлера</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:15px">Не так · посчитай нечётные</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW392Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW392Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW392(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step===11||step===12) st.pick=null;
+      if(step===14){ st.mq=0; st.msel=null; }
+      if(step===15){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=200, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,17,ink,'одним росчерком?',{b:1});
+      inner+=sqFig(false,false);
+      if(go){
+        inner+=`<g class="qLPop"><text x="159" y="196" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">не отрывая карандаша? Это Эйлеров путь!</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Лаборатория графов</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('условие Эйлера',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW392Act('${lk}','rst')`):wkBtn('что это?',`visW392Act('${lk}','go')`))+
+        wkSml('фигура — это граф'));
+    } else if(step===1){
+      const H=200, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,17,ink,'степень вершины',{b:1});
+      inner+=sqFig(true,false);
+      if(go){
+        inner+=`<g class="qLPop"><text x="159" y="196" text-anchor="middle" font-size="14" fill="${cyan}" font-weight="bold">число — сколько рёбер входит в вершину</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Степень</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('степень = число рёбер у вершины',cyan,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW392Act('${lk}','rst')`):wkBtn('сосчитать',`visW392Act('${lk}','go')`))+
+        wkSml('рёбра сходятся'));
+    } else if(step===2){
+      const H=200, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,17,ink,'чётная / нечётная',{b:1});
+      if(go){
+        inner+=`<g class="qLPop"><rect x="46" y="62" width="226" height="60" rx="12" fill="rgba(110,168,255,.13)" stroke="${blu}" stroke-width="2"/>
+        ${tx(159,84,15,blu,'чётная — можно войти и выйти',{b:1})}
+        ${tx(159,106,14,red,'нечётная — одна линия «лишняя»',{b:1})}</g>`;
+        inner+=`<g class="qLPop" style="animation-delay:.1s"><text x="159" y="160" text-anchor="middle" font-size="14" fill="${ink}">в нечётной начинаем или заканчиваем</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Чёт и нечет</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('нечётная → здесь старт/финиш',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW392Act('${lk}','rst')`):wkBtn('показать',`visW392Act('${lk}','go')`))+
+        wkSml('чёт/нечет по степени'));
+    } else if(step===3){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,36,17,ink,'условие Эйлера',{b:1});
+      inner+=tx(159,64,13.5,dim,'одним росчерком, если…',{});
+      if(go){
+        inner+=`<g class="qLPop"><text x="159" y="102" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">0 или 2 нечётные вершины</text>
+        <text x="159" y="132" text-anchor="middle" font-size="13" fill="${dim}">начало — с нечётной вершины</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Правило</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('0 или 2 нечётных → можно',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW392Act('${lk}','rst')`):wkBtn('показать',`visW392Act('${lk}','go')`))+
+        wkSml('иначе — нельзя'));
+    } else if(step===4){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,16,ink,'квадрат с диагональю',{b:1});
+      inner+=sqFig(go?true:false,false);
+      if(go){
+        inner+=`<g class="qLPop"><text x="159" y="196" text-anchor="middle" font-size="14" fill="${red}" font-weight="bold">2 нечётные (A и C) → МОЖНО!</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Успех</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('ровно 2 нечётные',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW392Act('${lk}','rst')`):wkBtn('показать степени',`visW392Act('${lk}','go')`))+
+        wkSml('нарисуем одним росчерком'));
+    } else if(step===5){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,16,ink,'рисуем одним росчерком',{b:1});
+      inner+=sqFig(go?true:false,true);
+      if(go){
+        inner+=`<g class="qLPop"><text x="159" y="196" text-anchor="middle" font-size="14" fill="${cyan}" font-weight="bold">старт в A (нечётной) → финиш в C</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Росчерк</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('начинаем с нечётной A',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW392Act('${lk}','rst')`):wkBtn('нарисовать',`visW392Act('${lk}','go')`))+
+        wkSml('перо бежит по рёбрам'));
+    } else if(step===6){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,16,ink,'«плюс» из 4 лучей',{b:1});
+      inner+=plFig(go?true:false,false);
+      if(go){
+        inner+=`<g class="qLPop"><text x="159" y="196" text-anchor="middle" font-size="14" fill="${red}" font-weight="bold">4 нечётные (концы) → НЕЛЬЗЯ!</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Обратный случай</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 нечётных — одним росчерком нет',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW392Act('${lk}','rst')`):wkBtn('показать степени',`visW392Act('${lk}','go')`))+
+        wkSml('на много нечётных'));
+    } else if(step===7){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,36,16,ink,'почему нельзя?',{b:1});
+      inner+=tx(159,64,13.5,dim,'в каждой нечётной вершине — «тупик»',{});
+      if(go){
+        inner+=`<g class="qLPop"><text x="159" y="104" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">каждая нечётная = начало или конец</text>
+        <text x="159" y="132" text-anchor="middle" font-size="13" fill="${dim}">а начал и концов всего 2!</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Суть теоремы</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('начал+концов = всего 2',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW392Act('${lk}','rst')`):wkBtn('показать',`visW392Act('${lk}','go')`))+
+        wkSml('вот и всё условие'));
+    } else if(step===8){
+      const H=208;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,16,ink,'схемы',{b:1});
+      inner+=tx(84,52,13,ink,'0 нечётных',{b:1}); inner+=tx(232,52,13,ink,'2 нечётные',{b:1});
+      inner+=`<g class="qLIn"><rect x="30" y="66" width="110" height="76" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="2"/>
+      <circle cx="52" cy="104" r="10" fill="${cyan}" stroke="#fffdf2" stroke-width="1.8"/><circle cx="118" cy="104" r="10" fill="${cyan}" stroke="#fffdf2" stroke-width="1.8"/>
+      <line x1="54" y1="100" x2="116" y2="100" stroke="#8fa3d0" stroke-width="2.4"/></g>`;
+      inner+=`<g class="qLIn" style="animation-delay:.1s"><rect x="178" y="66" width="110" height="76" rx="10" fill="rgba(255,154,138,.12)" stroke="${red}" stroke-width="2"/>
+      <circle cx="200" cy="120" r="10" fill="${red}" stroke="#fffdf2" stroke-width="1.8"/><circle cx="266" cy="120" r="10" fill="${red}" stroke="#fffdf2" stroke-width="1.8"/><line x1="204" y1="116" x2="262" y2="116" stroke="#8fa3d0" stroke-width="2.4"/></g>`;
+      if(go){
+        inner+=`<g class="qLPop"><text x="159" y="176" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">цикл (туда-обратно) · путь (начал→конец)</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Два случая</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('0 — замкнутый · 2 — разомкнутый',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW392Act('${lk}','rst')`):wkBtn('показать',`visW392Act('${lk}','go')`))+
+        wkSml('оба случая допустимы'));
+    } else if(step===9){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,36,16,ink,'с чего начать?',{b:1});
+      inner+=tx(159,66,13.5,dim,'есть нечётная — начинай с неё',{});
+      if(go){
+        inner+=`<g class="qLPop"><rect x="56" y="92" width="206" height="42" rx="11" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="2"/>
+        ${tx(159,112,14,gold,'старт/финиш — в нечётных',{b:1})}
+        ${tx(159,128,12,dim,'если нечётных нет — откуда угодно',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Начало пути</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('начинай с нечётной вершины',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW392Act('${lk}','rst')`):wkBtn('показать',`visW392Act('${lk}','go')`))+
+        wkSml('откуда старт'));
+    } else if(step===10){
+      const H=204, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,16,ink,'проверим «плюс»',{b:1});
+      inner+=plFig(go?true:false,false);
+      if(go){
+        inner+=`<g class="qLPop"><text x="159" y="196" text-anchor="middle" font-size="14" fill="${red}" font-weight="bold">4 нечётных → не нарисуем одним росчерком</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Не выйдет</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('нужно 0 или 2 · здесь 4',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW392Act('${lk}','rst')`):wkBtn('посчитать',`visW392Act('${lk}','go')`))+
+        wkSml('4 нечётные'));
+    } else if(step===11){
+      const H=200, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Квадрат с диагональю — нечётных?',a:'2',ds:['0','4']},
+        {q:'Треугольник (3 стороны) — нечётных?',a:'0',ds:['2','1']},
+        {q:'«Плюс» 4 луча — нечётных?',a:'4',ds:['0','2']},
+        {q:'Буква «Н» — нечётных?',a:'0',ds:['2','4']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,34,14,ink,P.q,{b:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qLIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qLPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qLPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">посчитай степени</text></g>`)
+        : tx(159,py+72,14.5,dim,'сколько нечётных?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW392Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW392P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW392P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: нечётные</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('нечётных '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('считай степени'));
+    } else if(step===12){
+      const H=200, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'Квадрат с диагональю — одним росчерком?',a:'да',ds:['нет','нельзя узнать']},
+        {q:'«Плюс» 4 луча — одним росчерком?',a:'нет',ds:['да','за 2 прохода']},
+        {q:'Треугольник — одним росчерком?',a:'да',ds:['нет','за 3']},
+        {q:'«Н» — одним росчерком?',a:'да',ds:['нет','за 2']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,34,14,ink,P.q,{b:1});
+      const X=[24,114,204],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
+        inner+=`<g class="qLIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
+        ${tx(X[i]+CW/2,py+33,15,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qLPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qLPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">0 или 2?</text></g>`)
+        : tx(159,py+72,14.5,dim,'можно одним росчерком?',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW392Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW392P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW392P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Тренажёр: росчерк</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        fb+retry+
+        wkSml('0 или 2 нечётные'));
+    } else if(step===13){
+      const H=196;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,32,16,ink,'шпаргалка',{b:1});
+      const items=[['условие: 0 или 2 нечётные вершины'],['степень = число рёбер у вершины'],['нечётная — старт/финиш'],['больше 2 нечётных — нельзя']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=54+i*36;
+          inner+=`<g class="qLIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="30" rx="9" fill="${i%2?'rgba(20,28,50,.94)':'rgba(30,42,68,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+20,12,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('0 или 2 — и рисуем!',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW392Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW392Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW392Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW392Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW392Act('${lk}','rst')`):'')+
+        wkSml('теорема Эйлера'));
+    } else if(step===14){
+      const H=196;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'Условие одним росчерком?',opts:['0 или 2 нечётные','1 или 3','только 0'],ans:0},
+        {q:'Квадрат с диагональю — можно?',opts:['да','нет','нельзя узнать'],ans:0},
+        {q:'«Плюс» 4 луча — можно?',opts:['нет','да','за 2 прохода'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="qLPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'0 или 2'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW392S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW392Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW392Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('0 или 2 нечётные'));
+    } else {
+      const H=200;
+      let inner='';
+      inner+=tx(159,42,17,ink,'условие Эйлера',{b:1,georgia:1});
+      inner+=`<g class="qLPop"><text x="159" y="90" text-anchor="middle" font-size="28" fill="${grn}" font-weight="bold" font-family="Georgia,serif">0 или 2</text></g>`;
+      inner+=tx(159,118,13.5,dim,'нечётные вершины → одним росчерком',{});
+      h=wkFrame(`<div class="wk-big" style="font-size:18px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('условие Эйлера'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[392]=visW392;
+  function visW392T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW392T=visW392T;
+  function visW392P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW392P=visW392P;
+  function visW392S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW392S=visW392S;
+  function visW392Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===14){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW392Act=visW392Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===392){ window.ARH_LESSONS[i]=L392; break; } } })();
+})();
