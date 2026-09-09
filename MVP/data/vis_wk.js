@@ -16477,24 +16477,20 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW396Act=visW396Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===396){ window.ARH_LESSONS[i]=L396; break; } } })();
 })();
-/* ================= УРОК 187 · Вычитание чисел с разными знаками (v1 · «Студия льда и тепла Архимеда», 15 слайдов, премиум) ================= */
+/* ================= УРОК 187 · Вычитание чисел с разными знаками (v2 · «Студия льда и тепла Архимеда», 15 слайдов, флагман) ================= */
 (function(){
-  if(!window.__wk187v1css){
-    window.__wk187v1css=1;
+  if(!window.__wk187v2css){
+    window.__wk187v2css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qCIn{animation:qCIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qCIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qCPop{animation:qCPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qCPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qCCrit{animation:qCCrit .6s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qCCrit{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qCGlow{animation:qCGlow 2.2s ease-in-out infinite;opacity:.5;}'+
-      '@keyframes qCGlow{0%,100%{opacity:.35}50%{opacity:.8}}'+
+      '#lvis .qCPop{animation:qCPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qCPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qCCrit{animation:qCCrit .55s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qCCrit{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}'+
       '#lvis .qCMorph{animation:qCMorph .8s cubic-bezier(.3,.7,.4,1) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qCMorph{0%{transform:scale(1)}50%{transform:rotate(360deg) scale(.4);opacity:.4}100%{transform:scale(1);opacity:1}}'+
-      '#lvis .qCFloat{animation:qCFloat 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qCFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+      '@keyframes qCMorph{0%{transform:scale(1)}45%{transform:scale(.4) rotate(180deg);opacity:.3}100%{transform:scale(1);opacity:1}}';
     document.head.appendChild(st);
   }
   const L187 = {
@@ -16526,9 +16522,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['4 − 7 = 4 + (−7).', '7 − 4 = 3, знак большего (−) → −3.'], sol: '4 − 7 = −3.' }
     ]
   };
-  const ink='#eef5ff', dim='#9db0d0', gold='#ffd76a', cyan='#7fd6ff', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff',
-        bg0='#152840', bg1='#0a1626', card='rgba(18,30,50,.94)', cardB='#3a5a80', lineC='#2a3f5f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1220" stroke-width="3.4">${t}</text>`;
+  const ink='#eef5ff', dim='#a4b1d2', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
+        bg0='#152840', bg1='#0a1626', card='rgba(18,30,50,.96)', cardB='#3a5a80', lineC='#2a3f5f';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1220" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -16536,49 +16532,35 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         <linearGradient id="qCbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
         <radialGradient id="qCgold" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="${gold}"/></radialGradient>
         <radialGradient id="qCcyan" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#d6f0ff"/><stop offset="1" stop-color="${cyan}"/></radialGradient>
-        <filter id="qCsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+        <filter id="qCsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
       </defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qCbg)"/>
-      <g opacity="0.12" stroke="#4a6a9a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="90" y1="0" x2="86" y2="${H}"/><line x1="150" y1="0" x2="146" y2="${H}"/><line x1="210" y1="0" x2="207" y2="${H}"/><line x1="270" y1="0" x2="268" y2="${H}"/></g>
+      <g opacity="0.14" stroke="#4a6a9a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
       <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#445a8a" stroke-width="2.4" rx="7"/>
       <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3a5f" stroke-width="1.2" rx="4"/>
       ${o.inner?o.inner():''}
     </svg>`;
   }
   function numline(px,py,w,min,max){
-    let s=`<rect x="${px}" y="${py}" width="${w}" height="6" rx="3" fill="${gold}"/>`;
-    s+=`<path d="M ${px+w} ${py+3} l -8 -4 l 0 8 z" fill="${gold}"/>`;
-    s+=`<path d="M ${px} ${py+3} l 8 -4 l 0 8 z" fill="${gold}"/>`;
+    let s=`<rect x="${px}" y="${py}" width="${w}" height="7" rx="3.5" fill="${gold}"/>`;
+    s+=`<path d="M ${px} ${py+3.5} l 9 -4 l 0 8 z" fill="${gold}"/><path d="M ${px+w} ${py+3.5} l -9 -4 l 0 8 z" fill="${gold}"/>`;
     for(let m=min;m<=max;m++){
       const x=px+(m-min)/(max-min)*w;
-      s+=`<line x1="${x}" y1="${py-1}" x2="${x}" y2="${py+7}" stroke="${lineC}" stroke-width="1.4"/>`;
-      s+=tx(x,py+24,11,m===0?ink:dim,''+m,{b:m===0});
+      s+=`<line x1="${x}" y1="${py-1}" x2="${x}" y2="${py+8}" stroke="#5a6f9f" stroke-width="1.6"/>`;
+      s+=tx(x,py+26,13,m===0?ink:dim,''+m,{b:m===0});
     }
     return s;
   }
   function walker(px,py,min,max,from,to,w,c){
     const sx=px+(from-min)/(max-min)*w, ex=px+(to-min)/(max-min)*w, dx=(ex-sx).toFixed(1);
     const mot=`<animateMotion dur="2.2s" path="M 0 0 L ${dx} 0" fill="freeze" begin="0.2s"/>`;
-    return `<g filter="url(#qCsh)">
-      <circle class="qCGlow" cx="${sx}" cy="${py}" r="18" fill="${c}" opacity="0.3">${mot}</circle>
-      <circle cx="${sx}" cy="${py}" r="11" fill="${c}" stroke="#fffdf2" stroke-width="2">${mot}</circle>
-    </g>`;
+    return `<g filter="url(#qCsh)"><circle class="qCPop" cx="${sx}" cy="${py}" r="13" fill="${c}" stroke="#fffdf2" stroke-width="2.4">${mot}</circle><circle cx="${sx}" cy="${py}" r="20" fill="${c}" opacity="0.25">${mot}</circle></g>`;
   }
-  function thermo(cx,top,bot,val,go){
-    let s=`<rect x="${cx-13}" y="${top}" width="26" height="${bot-top}" rx="13" fill="rgba(255,255,255,.08)" stroke="${cardB}" stroke-width="2"/>`;
-    s+=`<rect x="${cx-9}" y="${top+6}" width="18" height="40" rx="9" fill="${bg1}"/>`;
-    const hh=bot-top-20;
-    const mh= go? Math.max(4, hh*(val+3)/(16)) : hh*( -1+3)/16;
-    s+=`<rect x="${cx-9}" y="${top+6+hh-mh}" width="18" height="${mh}" rx="9" fill="${go?grn:red}"/>`;
-    s+=`<circle cx="${cx}" cy="${bot+8}" r="9" fill="${go?grn:red}"/>`;
-    return s;
-  }
-  /* яркое число-бейдж */
   function badge(x,y,text,c,big,delay){
-    return `<g class="qCCrit" style="animation-delay:${(delay||0).toFixed(2)}s"><rect x="${x-big/2}" y="${y-big/2}" width="${big}" height="${big}" rx="9" fill="url(#qCgold)" stroke="#0b1220" stroke-width="2"/>
-      ${tx(x,y+big*0.3,big*0.46,'#3a2408',text,{b:1})}</g>`;
+    return `<g class="qCCrit" style="animation-delay:${(delay||0).toFixed(2)}s"><rect x="${x-big/2}" y="${y-big/2}" width="${big}" height="${big}" rx="10" fill="url(#qCgold)" stroke="#0b1220" stroke-width="2"/>
+      ${tx(x,y+big*0.3,big*0.5,'#3a2408',text,{b:1})}</g>`;
   }
-  const chip=(t,c,delay)=>`<span class="qCIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="qCIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q187=[
     {q:'9 − (−4) = ?',opts:['5','13','−5'],ans:1},
     {q:'4 − 7 = ?',opts:['−3','3','−11'],ans:0}
@@ -16588,17 +16570,17 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const opts=T.opts.map((o,i)=>{
       let bd=cardB,tc=ink,bg=card;
       if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW187T('${lk}',${i})">${o}</button>`;
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:17px" onclick="visW187T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#7de0a0;font-size:16px">Верно! вычти минус = прибавь</div>'
-        : '<div class="wk-ans" style="color:#ff9a8a;font-size:15px">Не так · минус минус = плюс</div>';
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! вычти минус = прибавь</div>'
+        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · минус минус = плюс</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW187Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW187Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW187(el){
     const step=LV.step||0;
@@ -16612,32 +16594,29 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     let h='';
     const W=318;
     if(step===0){
-      const H=200, px=30, py=72, w=258;
+      const H=178, px=30, py=68, w=258;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,17,ink,'9 − 4 = 5 — умеем!',{b:1});
-      inner+=numline(px,py,w,-4,12,{});
+      inner+=tx(159,30,19,ink,'9 − 4 = 5 — умеем!',{b:1});
+      inner+=numline(px,py,w,-4,12);
       if(go){
-        inner+=walker(px,py,-4,12,9,5,w,cyan,'');
-        inner+=`<g class="qCPop"><text x="159" y="130" text-anchor="middle" font-size="20" fill="${cyan}" font-weight="bold" font-family="Georgia,serif">9 − 4 = 5</text></g>`;
-        inner+=tx(159,154,13.5,dim,'а что если 9 − (−4)?',{});
-      } else {
-        inner+=tx(159,132,14,dim,'из 9 убрать 4 → влево',{});
+        inner+=walker(px,py,-4,12,9,5,w,cyan);
+        inner+=tx(159,138,16,dim,'а что если 9 − (−4)?',{});
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Вспомним вычитание</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('вычитание — это шаг влево',cyan,0.2)):'')+
+        (go?wkRow(chip('вычитание — шаг влево',cyan,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW187Act('${lk}','rst')`):wkBtn('вспомнить',`visW187Act('${lk}','go')`))+
         wkSml('минус = шаг влево'));
     } else if(step===1){
-      const H=200;
+      const H=180;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,17,ink,'секрет',{b:1});
-      inner+=tx(159,68,15,dim,'вычитание = сложение с противоположным',{});
+      inner+=tx(159,34,19,ink,'секрет',{b:1});
+      inner+=tx(159,68,13,dim,'вычитание = сложение с противоположным',{});
       if(go){
-        inner+=`<g class="qCPop"><text x="159" y="120" text-anchor="middle" font-size="22" fill="${gold}" font-weight="bold" font-family="Georgia,serif">a − b = a + (−b)</text>
-        <text x="159" y="150" text-anchor="middle" font-size="13" fill="${dim}">вычитание всегда превращаем в сложение</text></g>`;
+        inner+=`<g class="qCPop"><text x="159" y="120" text-anchor="middle" font-size="26" fill="${gold}" font-weight="bold" font-family="Georgia,serif">a − b = a + (−b)</text>
+        <text x="159" y="154" text-anchor="middle" font-size="14" fill="${dim}">всегда превращаем в сложение</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Вычитание — это сложение</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16645,20 +16624,20 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW187Act('${lk}','rst')`):wkBtn('показать',`visW187Act('${lk}','go')`))+
         wkSml('с противоположным числом'));
     } else if(step===2){
-      const H=200;
+      const H=180;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,34,17,ink,'9 − (−4)',{b:1,georgia:1});
+      inner+=tx(159,34,20,ink,'9 − (−4)',{b:1,georgia:1});
       if(go===0){
-        inner+=tx(159,84,15,dim,'два минуса подряд…',{});
-        inner+=badge(90,132,'−',red,52,0.1);
-        inner+=badge(180,132,'−',red,52,0.1);
+        inner+=tx(159,84,16,dim,'два минуса подряд…',{});
+        inner+=badge(90,134,'−',red,54,0.1);
+        inner+=badge(190,134,'−',red,54,0.15);
       } else if(go===1){
-        inner+=`<g class="qCMorph"><text x="159" y="92" text-anchor="middle" font-size="26" fill="${red}" font-weight="bold" font-family="Georgia,serif">− −</text></g>`;
-        inner+=tx(159,150,15,grn,'минус на минус = плюс!',{b:1});
+        inner+=`<g class="qCMorph"><text x="159" y="96" text-anchor="middle" font-size="30" fill="${red}" font-weight="bold" font-family="Georgia,serif">− −</text></g>`;
+        inner+=tx(159,152,17,grn,'минус на минус = плюс!',{b:1});
       } else {
-        inner+=`<g class="qCPop"><text x="159" y="92" text-anchor="middle" font-size="30" fill="${grn}" font-weight="bold" font-family="Georgia,serif">9 + 4 = 13</text></g>`;
-        inner+=`<text x="159" y="150" text-anchor="middle" font-size="15" fill="${dim}">−(−4) превратилось в +4</text>`;
+        inner+=`<g class="qCPop"><text x="159" y="96" text-anchor="middle" font-size="32" fill="${grn}" font-weight="bold" font-family="Georgia,serif">9 + 4 = 13</text></g>`;
+        inner+=tx(159,152,15,dim,'−(−4) превратилось в +4',{});
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Минус на минус</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16669,17 +16648,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=2?wkBtn('сброс',`visW187Act('${lk}','rst')`):'')+
         wkSml('два минуса → один плюс'));
     } else if(step===3){
-      const H=200, px=30, py=72, w=258;
+      const H=178, px=30, py=68, w=258;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'9 − (−4) на прямой',{b:1});
-      inner+=numline(px,py,w,-4,14,{});
+      inner+=tx(159,30,19,ink,'9 − (−4) на прямой',{b:1});
+      inner+=numline(px,py,w,-4,14);
       if(go){
-        inner+=walker(px,py,-4,14,9,13,w,grn,'');
-        inner+=`<g class="qCPop"><text x="159" y="130" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 13</text></g>`;
-        inner+=tx(159,152,13,dim,'минус (минус 4) — шаг вправо!',{});
-      } else {
-        inner+=tx(159,132,13.5,dim,'куда шагнуть?',{});
+        inner+=walker(px,py,-4,14,9,13,w,grn);
+        inner+=tx(159,140,20,grn,'= 13',{b:1,georgia:1});
+        inner+=tx(159,162,14,dim,'минус (минус 4) — шаг вправо!',{});
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг вправо</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16687,17 +16664,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW187Act('${lk}','rst')`):wkBtn('прогуляться',`visW187Act('${lk}','go')`))+
         wkSml('вычли минус — стало теплее'));
     } else if(step===4){
-      const H=200, px=30, py=72, w=258;
+      const H=178, px=30, py=68, w=258;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'4 − 7',{b:1,georgia:1});
-      inner+=numline(px,py,w,-10,6,{});
+      inner+=tx(159,30,19,ink,'4 − 7',{b:1,georgia:1});
+      inner+=numline(px,py,w,-10,6);
       if(go){
-        inner+=walker(px,py,-10,6,4,-3,w,red,'');
-        inner+=`<g class="qCPop"><text x="159" y="130" text-anchor="middle" font-size="22" fill="${red}" font-weight="bold" font-family="Georgia,serif">= −3</text></g>`;
-        inner+=tx(159,152,12.5,dim,'4 + (−7) · знак большего −',{});
-      } else {
-        inner+=tx(159,132,13.5,dim,'шаг влево на 7',{});
+        inner+=walker(px,py,-10,6,4,-3,w,red);
+        inner+=tx(159,140,20,red,'= −3',{b:1,georgia:1});
+        inner+=tx(159,162,14,dim,'4 + (−7) · знак большего −',{});
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Больше влево</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16705,17 +16680,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW187Act('${lk}','rst')`):wkBtn('прогуляться',`visW187Act('${lk}','go')`))+
         wkSml('из маленького вычли большое'));
     } else if(step===5){
-      const H=200, px=30, py=72, w=258;
+      const H=178, px=30, py=68, w=258;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'−3 − 5',{b:1,georgia:1});
-      inner+=numline(px,py,w,-12,4,{});
+      inner+=tx(159,30,19,ink,'−3 − 5',{b:1,georgia:1});
+      inner+=numline(px,py,w,-12,4);
       if(go){
-        inner+=walker(px,py,-12,4,-3,-8,w,red,'');
-        inner+=`<g class="qCPop"><text x="159" y="130" text-anchor="middle" font-size="22" fill="${red}" font-weight="bold" font-family="Georgia,serif">= −8</text></g>`;
-        inner+=tx(159,152,12.5,dim,'−3 + (−5) · ещё холоднее',{});
-      } else {
-        inner+=tx(159,132,13.5,dim,'шаг влево на 5',{});
+        inner+=walker(px,py,-12,4,-3,-8,w,red);
+        inner+=tx(159,140,20,red,'= −8',{b:1,georgia:1});
+        inner+=tx(159,162,14,dim,'−3 + (−5) · ещё холоднее',{});
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Холоднее</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16723,31 +16696,28 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW187Act('${lk}','rst')`):wkBtn('прогуляться',`visW187Act('${lk}','go')`))+
         wkSml('минус на минус — ещё минус'));
     } else if(step===6){
-      const H=206;
-      const go=st.go||0;
+      const H=184, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'термометр',{b:1});
-      inner+=thermo(159,44,166,-3,go);
-      inner+=tx(159,180,13,dim, go? 'было −3°, стало на 5° холоднее' : 'температура бывает ниже нуля',{});
-      if(go){
-        inner+=`<g class="qCPop"><text x="240" y="110" text-anchor="middle" font-size="20" fill="${red}" font-weight="bold" font-family="Georgia,serif">−8°</text></g>`;
-      }
+      inner+=tx(159,28,19,ink,'термометр',{b:1});
+      inner+=`<g class="qCPop"><rect x="140" y="44" width="30" height="110" rx="15" fill="rgba(255,255,255,.08)" stroke="${cardB}" stroke-width="2"/>
+      <rect x="145" y="52" width="20" height="88" rx="10" fill="${bg1}"/>
+      <rect x="145" y="${go?108:70}" width="20" height="${go?70:30}" rx="10" fill="${go?grn:red}"/>
+      <circle cx="155" cy="${go?158:120}" r="10" fill="${go?grn:red}"/>
+      <text x="192" y="${go?126:100}" text-anchor="middle" font-size="20" fill="${go?grn:red}" font-weight="bold">${go?'−8°':'0°'}</text></g>`;
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Холод</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('−3° − 5° = −8°',red,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW187Act('${lk}','rst')`):wkBtn('похолодать',`visW187Act('${lk}','go')`))+
         wkSml('термометр всё показывает'));
     } else if(step===7){
-      const H=200, px=30, py=72, w=258;
+      const H=178, px=30, py=68, w=258;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'было 9°, теплее на 4°',{b:1});
-      inner+=numline(px,py,w,-4,14,{});
+      inner+=tx(159,30,19,ink,'было 9°, теплее на 4°',{b:1});
+      inner+=numline(px,py,w,-4,14);
       if(go){
-        inner+=walker(px,py,-4,14,9,13,w,grn,'');
-        inner+=`<g class="qCPop"><text x="159" y="130" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">9 − (−4) = 13°</text></g>`;
-      } else {
-        inner+=tx(159,132,13.5,dim,'минус −4 — это «+4»',{});
+        inner+=walker(px,py,-4,14,9,13,w,grn);
+        inner+=tx(159,140,20,grn,'= 13°',{b:1,georgia:1});
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Теплее</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16755,19 +16725,19 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW187Act('${lk}','rst')`):wkBtn('потеплеть',`visW187Act('${lk}','go')`))+
         wkSml('минус на минус — теплеет'));
     } else if(step===8){
-      const H=212;
+      const H=200;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'таблица-правило',{b:1});
-      const rows=[['9 − 4','9 + (−4)','= 5','#9db0d0',dim],['9 − (−4)','9 + 4','= 13','#7de0a0',grn],['4 − 7','4 + (−7)','= −3','#ff9a8a',red],['−3 − 5','−3 + (−5)','= −8','#ff9a8a',red]];
+      inner+=tx(159,30,19,ink,'таблица-правило',{b:1});
+      const rows=[['9 − 4','9 + (−4)','= 5','#a4b1d2',dim],['9 − (−4)','9 + 4','= 13','#7de0a0',grn],['4 − 7','4 + (−7)','= −3','#ff9a8a',red],['−3 − 5','−3 + (−5)','= −8','#ff9a8a',red]];
       for(let i=0;i<rows.length;i++){
         if(go>=i){
-          const ry=52+i*39;
-          inner+=`<g class="qCIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="26" y="${ry}" width="266" height="33" rx="8" fill="${i%2?'rgba(18,30,50,.94)':'rgba(28,42,68,.94)'}" stroke="${rows[i][4]}" stroke-width="1.6"/>
-          <text x="76" y="${ry+22}" text-anchor="middle" font-size="13" fill="${ink}">${rows[i][0]}</text>
-          <text x="152" y="${ry+22}" text-anchor="middle" font-size="12" fill="${dim}">→</text>
-          <text x="188" y="${ry+22}" text-anchor="middle" font-size="12.5" fill="${rows[i][4]}">${rows[i][1]}</text>
-          <text x="268" y="${ry+22}" text-anchor="middle" font-size="13" fill="${rows[i][4]}">${rows[i][2]}</text></g>`;
+          const ry=50+i*36;
+          inner+=`<g class="qCIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="24" y="${ry}" width="270" height="30" rx="8" fill="${i%2?'rgba(18,30,50,.96)':'rgba(30,42,68,.96)'}" stroke="${rows[i][4]}" stroke-width="1.8"/>
+          <text x="80" y="${ry+20}" text-anchor="middle" font-size="15" fill="${ink}" font-weight="bold">${rows[i][0]}</text>
+          <text x="150" y="${ry+20}" text-anchor="middle" font-size="13" fill="${dim}">→</text>
+          <text x="186" y="${ry+20}" text-anchor="middle" font-size="14.5" fill="${rows[i][4]}">${rows[i][1]}</text>
+          <text x="262" y="${ry+20}" text-anchor="middle" font-size="15" fill="${rows[i][4]}">${rows[i][2]}</text></g>`;
         }
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Все случаи</div>`+
@@ -16781,17 +16751,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=4?wkBtn('сброс',`visW187Act('${lk}','rst')`):'')+
         wkSml('знак — у большего модуля'));
     } else if(step===9){
-      const H=204;
+      const H=194;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'метод',{b:1});
+      inner+=tx(159,30,19,ink,'метод',{b:1});
       const steps=[['увидь «− b»'],['замени на «+ (−b)»'],['сложи по правилу знаков']];
       for(let i=0;i<steps.length;i++){
         if(go>=i){
-          const ry=54+i*44;
-          inner+=`<g class="qCIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="38" rx="9" fill="${i%2?'rgba(18,30,50,.94)':'rgba(28,42,68,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          <circle cx="48" cy="${ry+19}" r="10" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="1.6"/>
-          ${tx(48,ry+23,11,gold,'1',{b:1})}${tx(150,ry+25,13,ink,steps[i][0],{})}</g>`;
+          const ry=52+i*42;
+          inner+=`<g class="qCIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="36" rx="9" fill="${i%2?'rgba(18,30,50,.96)':'rgba(30,42,68,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/><circle cx="48" cy="${ry+18}" r="11" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="1.6"/>${tx(48,ry+22,12,gold,'1',{b:1})}${tx(150,ry+24,15,ink,steps[i][0],{})}</g>`;
         }
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Как решать</div>`+
@@ -16804,7 +16772,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=3?wkBtn('сброс',`visW187Act('${lk}','rst')`):'')+
         wkSml('три шага'));
     } else if(step===10){
-      const H=200, py=84;
+      const H=194, py=82;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'9 − (−4) = ?',a:'13',ds:['5','−5']},
@@ -16815,18 +16783,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,17,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qCIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qCIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qCPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qCPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">минус минус = плюс</text></g>`)
-        : tx(159,py+72,14.5,dim,'посчитай',{});
+        ? (st.pick===0? `<g class="qCPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qCPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">минус минус = плюс</text></g>`)
+        : tx(159,py+74,16,dim,'посчитай',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW187Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW187P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -16837,15 +16805,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('сначала минус минус'));
     } else if(step===11){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'объясни принцип',{b:1,georgia:1});
-      inner+=tx(159,58,13.5,dim,'почему вычитание «−» — это сложение?',{});
+      inner+=tx(159,32,19,ink,'объясни принцип',{b:1,georgia:1});
+      inner+=tx(159,64,15,dim,'почему вычитание «−» — это сложение?',{});
       if(go){
-        inner+=`<g class="qCPop"><rect x="44" y="82" width="230" height="48" rx="12" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="2"/>
-        ${tx(159,102,14,cyan,'убрать «минус 4» — значит',{b:1})}
-        ${tx(159,122,14,cyan,'добавить «плюс 4»',{b:1})}</g>`;
+        inner+=`<g class="qCPop"><rect x="44" y="84" width="230" height="52" rx="12" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="2"/>
+        ${tx(159,106,16,cyan,'убрать «минус 4» — значит',{b:1})}
+        ${tx(159,128,16,cyan,'добавить «плюс 4»',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Суть</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16853,7 +16821,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW187Act('${lk}','rst')`):wkBtn('объяснить',`visW187Act('${lk}','go')`))+
         wkSml('минус «переворачивает» знак'));
     } else if(step===12){
-      const H=196;
+      const H=182;
       if(st.mq==null) st.mq=0;
       const QS=[
         {q:'9 − (−4) = ?',opts:['13','5','−5'],ans:0},
@@ -16862,9 +16830,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qCPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'минус минус'}</text></g>`;
+        inner+=`<g class="qCPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'минус минус'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -16875,16 +16843,16 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('a − b = a + (−b)'));
     } else if(step===13){
-      const H=212;
+      const H=198;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'шпаргалка',{b:1});
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
       const items=[['a − b = a + (−b)'],['минус на минус = плюс'],['−(−4) = +4'],['знак — у большего модуля']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
-          const ry=54+i*38;
-          inner+=`<g class="qCIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="32" rx="9" fill="${i%2?'rgba(18,30,50,.94)':'rgba(28,42,68,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+21,13.5,ink,items[i][0],{})}</g>`;
+          const ry=52+i*36;
+          inner+=`<g class="qCIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="30" rx="8" fill="${i%2?'rgba(18,30,50,.96)':'rgba(30,42,68,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+20,15,ink,items[i][0],{})}</g>`;
         }
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
@@ -16898,12 +16866,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=4?wkBtn('сброс',`visW187Act('${lk}','rst')`):'')+
         wkSml('минус перед скобкой переворачивает'));
     } else {
-      const H=200;
+      const H=182;
       let inner='';
-      inner+=tx(159,42,17,ink,'9 − (−4)',{b:1,georgia:1});
-      inner+=`<g class="qCPop"><text x="159" y="90" text-anchor="middle" font-size="34" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 13</text></g>`;
-      inner+=tx(159,116,13.5,dim,'9 + 4 = 13 · минус минус = плюс',{});
-      inner+=tx(159,150,13.5,dim,'9 − (−4) = 9 + 4 = 13',{});
+      inner+=tx(159,34,20,ink,'9 − (−4)',{b:1,georgia:1});
+      inner+=`<g class="qCPop"><text x="159" y="90" text-anchor="middle" font-size="32" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 13</text></g>`;
+      inner+=tx(159,118,16,dim,'9 + 4 = 13 · минус минус = плюс',{});
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
