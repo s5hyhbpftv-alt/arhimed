@@ -22997,3 +22997,404 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW175Act=visW175Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===175){ window.ARH_LESSONS[i]=L175; break; } } })();
 })();
+
+/* ================= УРОК 82 · Проценты (v1 · «Лавка Архимеда», 16 слайдов, флагман, подробный) ================= */
+(function(){
+  if(!window.__wk82v1css){
+    window.__wk82v1css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qWIn{animation:qWIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qWIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qWPop{animation:qWPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qWPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qWCell{animation:qWCell .3s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qWCell{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qWCoin{animation:qWCoin .5s cubic-bezier(.2,.8,.3,1.4) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qWCoin{0%{transform:scale(0);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}';
+    document.head.appendChild(st);
+  }
+  const L82 = {
+    id: 82, title: 'Проценты', ico: '🏷️',
+    src: 'Математика · 5–6 класс · Проценты: находим процент от числа', subj: 'math',
+    explain: [
+      'В лавке Архимеда распродажа: на игрушку за 40 монет скидка 20%! Проценты встречаются на каждом чеке, ценнике и в новостях. Научимся понимать их и считать.',
+      'Процент — это одна сотая часть: 1% числа — это число, делённое на 100. Нарисуй сотню клеток — одна клетка и есть 1%. А 40% — это 40 клеток из 100.',
+      'Процент — это десятичная дробь: 1% = 0,01; 10% = 0,1; 25% = 0,25; 50% = 0,5; 100% = 1. Проценты и дроби — просто две записи одного и того же.',
+      'Чтобы найти p% от числа N, умножь N на p и раздели на 100: 25% от 80 = 80 · 25 : 100 = 20. Или сразу на дробь: 80 · 0,25 = 20.',
+      'Запомни удобные проценты: 10% — это поделить на 10; 25% — на 4; 50% — на 2; 20% — на 5. С ними считают в уме за секунду!',
+      'Разбираем как в проверке: 20% от 40. 20% — это пятая часть: раскладываем 40 монет на 5 корзин по 8. 40 : 5 = 8. Ответ 8!',
+      'Задача про класс: 30 учеников, из них 40% — девочки. 30 · 40 : 100 = 12 девочек (30 · 0,4 = 12). Проценты от числа — первый тип задач.',
+      'Обратная задача: 12 девочек — это 40% класса. Сколько всего учеников? Если 40 клеток = 12, то 1% = 12 : 40 = 0,3, а 100% = 30. Целое = часть : p · 100.',
+      'Сколько процентов одно число от другого? 6 из 24: 6 : 24 · 100 = 25%. Шесть — это четверть, а четверть — это 25%. Третий тип задач!',
+      'Шпаргалка трёх типов: 1) процент от числа: N·p:100; 2) число по проценту: часть:p·100; 3) сколько процентов: часть:целое·100.',
+      'Скидка: товар стоит 150 монет, скидка 10%. Сначала процент: 10% от 150 = 15. Платим 150 − 15 = 135 монет.',
+      'Полоса-диаграмма класса: 40% девочек и 60% мальчиков. Красная и синяя части вместе дают ровно 100% — как целый класс. Проценты всегда в сумме дают 100%.',
+      'Тренажёр «Три типа задач»: процент от числа, число по проценту и сколько процентов. Решай по шагам — формула, решение, ответ.',
+      'Совет Архимеда: процент — сотая часть (1% = 0,01). % от числа: N·p:100. Число по проценту: часть:p·100. Сколько %: часть:целое·100.',
+      'Проверь себя устно: 20% от 40 = 8; 25% от 200 = 50; 40% от 30 = 12.',
+      'Проверь себя: найди 20% от 40. Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Найди 20% от 40.', choices: ['8', '2', '20'], ans: 0,
+      exp: '20% — это пятая часть числа: 40 : 5 = 8 → 20% от 40 = 8.' },
+    tasks: [
+      { q: 'Найди 25% от 200.', kind: 'unit', ans: 50, tol: 0,
+        hints: ['25% — это четверть числа.', '200 : 4 = 50.'], sol: '25% от 200 = 200 : 4 = 50.' },
+      { q: 'В классе 30 учеников, из них 40% — девочки. Сколько девочек в классе?', kind: 'choice', choices: ['12', '18', '24'], ans: 0, tol: 0,
+        hints: ['40% — это 40 сотых, то есть 0,4.', '30 · 40 : 100 = 1200 : 100 = 12.'], sol: '40% от 30 = 30 · 40 : 100 = 1200 : 100 = 12 девочек.' }
+    ]
+  };
+  const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', cellHi='#e8604c',
+        card='rgba(255,251,244,.97)', cardB='#c9b98d', cream='#f5e6c6';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1df" stroke-width="3.2">${t}</text>`;
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qWbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fcf2df"/><stop offset="1" stop-color="#f4e4c4"/></linearGradient>
+        <radialGradient id="qWcoin" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stop-color="#fff0c0"/><stop offset="0.6" stop-color="${gold}"/><stop offset="1" stop-color="#b8802c"/></radialGradient>
+        <filter id="qWsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.22"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qWbg)"/>
+      <g opacity="0.7"><circle cx="30" cy="20" r="3" fill="rgba(217,160,90,.25)"/><circle cx="286" cy="30" r="3" fill="rgba(217,160,90,.25)"/></g>
+      <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="${cardB}" stroke-width="2" rx="7"/>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="url(#qWgold)" stroke-width="1.3" opacity="0.6" rx="6"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  function pctGrid(x,y,cell,p,delay){
+    let s='';
+    for(let i=0;i<100;i++){
+      const gx=x+(i%10)*cell, gy=y+Math.floor(i/10)*cell;
+      const on=i<p;
+      s+=`<g class="qWCell" style="animation-delay:${(delay||0)+0.02*i}"><rect x="${gx+1}" y="${gy+1}" width="${cell-2}" height="${cell-2}" rx="2" fill="${on?cellHi:'#fff'}" stroke="${on?'#8a2a1a':'#c9a86a'}" stroke-width="0.8"/></g>`;
+    }
+    return s;
+  }
+  function coin(x,y,val,r,delay){
+    return `<g class="qWCoin" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qWsh)"><circle cx="${x}" cy="${y}" r="${r}" fill="url(#qWcoin)" stroke="#8a5a2a" stroke-width="1.8"/><text x="${x}" y="${y+5}" text-anchor="middle" font-size="${r*0.6}" fill="#3a2408" font-weight="bold" font-family="Georgia,serif">${val}</text></g>`;
+  }
+  const chip=(t,c,delay)=>`<span class="qWIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const Q82=[
+    {q:'20% от 40 = ?',opts:['8','2','20'],ans:0},
+    {q:'40% от 30 = ?',opts:['12','18','24'],ans:0}
+  ];
+  function quiz(lk,st){
+    const T=Q82[st.q||0];
+    const opts=T.opts.map((o,i)=>{
+      let bd=cardB,tc=ink,bg=card;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.18)':'rgba(193,75,47,.14)'; bd=i===T.ans?grn:red; tc=i===T.ans?'#2f7a53':red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:60px;font-size:17px" onclick="visW82T('${lk}',${i})">${o}</button>`;
+    }).join('');
+    let msg='';
+    if(st.sel!=null){
+      msg= st.sel===T.ans
+        ? '<div class="wk-ans" style="color:#2f7a53;font-size:18px">Верно! процент от числа</div>'
+        : '<div class="wk-ans" style="color:#c14b2f;font-size:17px">Не так · N·p:100</div>';
+    }
+    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW82Act('${lk}','nq')`):'';
+    const rst=wkBtn('заново',`visW82Act('${lk}','rst')`);
+    return `${wkNote(T.q,'#c9b98d')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+  }
+  function visW82(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step;
+      if(step>=0&&step<=15){ st.go=0; st.pick=null; }
+      if(step===12) st.pick=null;
+      if(step===14){ st.mq=0; st.msel=null; }
+      if(step===15){ st.sel=null; st.q=0; }
+    }
+    let h='';
+    const W=318;
+    if(step===0){
+      const H=186, go=st.go||0;
+      let inner='';
+      inner+=tx(159,28,20,ink,'распродажа: скидка 20%',{b:1});
+      inner+=coin(140,100,40,40,0.1);
+      if(go){
+        inner+=`<g class="qWPop"><rect x="90" y="148" width="138" height="30" rx="9" fill="rgba(76,154,88,.14)" stroke="${grn}" stroke-width="2"/><text x="159" y="168" text-anchor="middle" font-size="15" fill="#2f7a53" font-weight="bold">скидка 20% — сколько монет?</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Лавка Архимеда</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('проценты — на чеке и ценнике',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('что это?',`visW82Act('${lk}','go')`))+
+        wkSml('процент = сотая часть'));
+    } else if(step===1){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'процент — сотая часть',{b:1});
+      inner+=pctGrid(84,60,14,go?40:1,0);
+      if(go){ inner+=`<g class="qWPop"><text x="159" y="180" text-anchor="middle" font-size="16" fill="#2f7a53" font-weight="bold">40% — это 40 клеток из 100</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">1% = 1 клетка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('процент — сотая часть',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('показать',`visW82Act('${lk}','go')`))+
+        wkSml('1% = 1/100'));
+    } else if(step===2){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'процент = дробь',{b:1});
+      inner+=tx(159,74,16,dim,'1% = 0,01 · 10% = 0,1 · 50% = 0,5 · 100% = 1',{});
+      if(go){
+        inner+=`<g class="qWPop"><text x="159" y="112" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">процент и дробь — одно и то же</text>
+        <text x="159" y="146" text-anchor="middle" font-size="15" fill="${dim}">две записи одной величины</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проценты и дроби</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('25% = 0,25',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('показать',`visW82Act('${lk}','go')`))+
+        wkSml('десятичная дробь'));
+    } else if(step===3){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'формула',{b:1});
+      inner+=tx(159,72,18,gold,'p% от N = N · p : 100',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="qWPop"><text x="159" y="112" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">25% от 80 = 80·25:100 = 20</text>
+        <text x="159" y="146" text-anchor="middle" font-size="15" fill="${dim}">или 80 · 0,25 = 20</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Находим процент</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('умножь и раздели на 100',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('показать',`visW82Act('${lk}','go')`))+
+        wkSml('N·p:100'));
+    } else if(step===4){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'удобные проценты',{b:1});
+      if(go){
+        inner+=`<g class="qWPop"><rect x="32" y="66" width="254" height="76" rx="12" fill="rgba(255,250,240,.96)" stroke="${cardB}" stroke-width="1.8"/>
+        ${tx(94,88,15,ink,'10% → :10',{b:1})}${tx(159,88,15,ink,'25% → :4',{b:1})}${tx(224,88,15,ink,'50% → :2',{b:1})}
+        ${tx(159,112,15,ink,'20% → :5 · 5% → :20',{b:1})}
+        ${tx(159,132,13,dim,'считай в уме за секунду!',{})}</g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Быстрый счёт</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('запомни деления',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('показать',`visW82Act('${lk}','go')`))+
+        wkSml('10/25/50/20%'));
+    } else if(step===5){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'20% от 40',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="qWPop"><text x="159" y="86" text-anchor="middle" font-size="16" fill="${dim}">20% — пятая часть</text>
+        <text x="159" y="118" text-anchor="middle" font-size="17" fill="${gold}" font-weight="bold">40 монет : 5 = 8 монет</text>
+        <text x="159" y="152" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">20% от 40 = 8</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Разбираем</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('40:5 = 8',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('сосчитать',`visW82Act('${lk}','go')`))+
+        wkSml('пятая часть числа'));
+    } else if(step===6){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'класс: 40% девочек',{b:1});
+      if(go){
+        inner+=`<g class="qWPop"><text x="159" y="86" text-anchor="middle" font-size="17" fill="${dim}">30 учеников · 40% — девочки</text>
+        <text x="159" y="118" text-anchor="middle" font-size="17" fill="${gold}" font-weight="bold">30 · 40 : 100 = 1200 : 100</text>
+        <text x="159" y="152" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 12 девочек</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('30·0,4 = 12',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('сосчитать',`visW82Act('${lk}','go')`))+
+        wkSml('тип 1: процент от числа'));
+    } else if(step===7){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'обратная: 12 = 40%',{b:1,georgia:1});
+      if(go){
+        inner+=`<g class="qWPop"><text x="159" y="86" text-anchor="middle" font-size="16" fill="${dim}">40% класса = 12 девочек</text>
+        <text x="159" y="118" text-anchor="middle" font-size="17" fill="${gold}" font-weight="bold">целое = часть : p · 100</text>
+        <text x="159" y="152" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">12 : 40 · 100 = 30 учеников</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Число по проценту</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('часть : p · 100',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('сосчитать',`visW82Act('${lk}','go')`))+
+        wkSml('тип 2: целое'));
+    } else if(step===8){
+      const H=190, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'сколько процентов?',{b:1});
+      if(go){
+        inner+=`<g class="qWPop"><text x="159" y="86" text-anchor="middle" font-size="16" fill="${dim}">6 из 24</text>
+        <text x="159" y="118" text-anchor="middle" font-size="17" fill="${gold}" font-weight="bold">6 : 24 · 100 = 25%</text>
+        <text x="159" y="152" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">шесть — это четверть → 25%</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Третий тип</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('часть : целое · 100',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('сосчитать',`visW82Act('${lk}','go')`))+
+        wkSml('часть на целое'));
+    } else if(step===9){
+      const H=198;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,30,20,ink,'три типа задач',{b:1});
+      const rows=[['1) процент от числа','N·p:100','20% от 40 = 8'],['2) число по проценту','часть:p·100','12 = 40% → 30'],['3) сколько процентов','часть:целое·100','6 из 24 = 25%']];
+      for(let i=0;i<rows.length;i++){
+        if(go>=i){
+          const ry=56+i*42;
+          inner+=`<g class="qWIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="24" y="${ry}" width="270" height="36" rx="9" fill="${i%2?'rgba(255,251,244,.96)':'rgba(217,160,90,.13)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          <text x="100" y="${ry+24}" text-anchor="middle" font-size="13.5" fill="${ink}" font-weight="bold">${rows[i][0]}</text>
+          <text x="184" y="${ry+24}" text-anchor="middle" font-size="13.5" fill="${gold}">${rows[i][1]}</text>
+          <text x="266" y="${ry+24}" text-anchor="middle" font-size="12.5" fill="${grn}">${rows[i][2]}</text></g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Система</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=3?wkRow(chip('все три — про сотую часть',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('тип 1',`visW82Act('${lk}','go')`) : '',
+          go===1?wkBtn('тип 2',`visW82Act('${lk}','go')`) : '',
+          go===2?wkBtn('тип 3',`visW82Act('${lk}','go')`) : '',
+          go>=3?wkBtn('сброс',`visW82Act('${lk}','rst')`):'')+
+        wkSml('связь видна сразу'));
+    } else if(step===10){
+      const H=186, go=st.go||0;
+      let inner='';
+      inner+=tx(159,26,20,ink,'скидка 10%',{b:1});
+      inner+=coin(80,106,150,30,0.1);
+      if(go){
+        inner+=`<g class="qWPop"><text x="159" y="86" text-anchor="middle" font-size="16" fill="${dim}">10% от 150 = 15</text>
+        <text x="159" y="120" text-anchor="middle" font-size="18" fill="${gold}" font-weight="bold">платим 150 − 15 = 135</text>
+        <text x="159" y="152" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">скидка зачёркнута — новая цена зелёная</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Скидка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('150·0,1 = 15 · 150−15 = 135',gold,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('сосчитать',`visW82Act('${lk}','go')`))+
+        wkSml('вычти скидку'));
+    } else if(step===11){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'в сумме 100%',{b:1});
+      if(go){
+        inner+=`<g class="qWPop"><rect x="40" y="66" width="238" height="26" rx="7" fill="rgba(232,96,76,.4)" stroke="${cellHi}" stroke-width="1.6"/><rect x="40" y="66" width="${238*0.6}" height="26" rx="7" fill="rgba(63,109,158,.5)" stroke="${blu}" stroke-width="1.6"/>
+        <text x="66" y="85" text-anchor="middle" font-size="13" fill="#2f5d8a" font-weight="bold">40%</text><text x="228" y="85" text-anchor="middle" font-size="13" fill="#0a2a3f" font-weight="bold">60%</text>
+        <text x="159" y="120" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">40% + 60% = 100%</text>
+        <text x="159" y="148" text-anchor="middle" font-size="14" fill="${dim}">проценты всегда дают 100%</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Полоса-диаграмма</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('части вместе = 100%',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('показать',`visW82Act('${lk}','go')`))+
+        wkSml('целое — 100%'));
+    } else if(step===12){
+      const H=200, py=84;
+      if(st.tr==null) st.tr=0;
+      const pool=[
+        {q:'20% от 40?',a:'8',ds:['2','20']},
+        {q:'25% от 200?',a:'50',ds:['25','100']},
+        {q:'40% от 30?',a:'12',ds:['18','24']},
+        {q:'10% от 150?',a:'15',ds:['10','30']}
+      ];
+      const P=pool[st.tr%pool.length];
+      const ord=[P.a,...P.ds];
+      let inner='';
+      inner+=tx(159,30,20,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
+      ord.forEach((o,i)=>{
+        let bd=cardB,tc=ink,bgc=card;
+        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
+        inner+=`<g class="qWIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+      });
+      inner+=st.pick!=null
+        ? (st.pick===0? `<g class="qWPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qWPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">N·p:100</text></g>`)
+        : tx(159,py+74,16,dim,'найди процент',{});
+      const fb= st.pick!=null&&st.pick===0
+        ? `<div class="wk-row"><button class="wk-btn" onclick="visW82Act('${lk}','n')">дальше →</button></div>`
+        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW82P('${lk}',${i})">${o}</button>`).join('')}</div>`;
+      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW82P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: процент от числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
+        fb+retry+
+        wkSml('N·p:100'));
+    } else if(step===13){
+      const H=182;
+      const go=st.go||0;
+      let inner='';
+      inner+=tx(159,34,20,ink,'шпаргалка',{b:1});
+      const items=[['1% = 0,01 — сотая часть'],['% от числа: N·p:100'],['число по %: часть:p·100'],['сколько %: часть:целое·100']];
+      for(let i=0;i<items.length;i++){
+        if(go>=i){
+          const ry=52+i*32;
+          inner+=`<g class="qWIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(255,251,244,.96)':'rgba(217,160,90,.13)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
+        }
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go>=4?wkRow(chip('три формулы',gold,0.2)):'')+
+        wkRow(
+          go===0?wkBtn('шаг 1',`visW82Act('${lk}','go')`) : '',
+          go===1?wkBtn('шаг 2',`visW82Act('${lk}','go')`) : '',
+          go===2?wkBtn('шаг 3',`visW82Act('${lk}','go')`) : '',
+          go===3?wkBtn('шаг 4',`visW82Act('${lk}','go')`) : '',
+          go>=4?wkBtn('сброс',`visW82Act('${lk}','rst')`):'')+
+        wkSml('умножь/раздели на 100'));
+    } else if(step===14){
+      const H=182;
+      if(st.mq==null) st.mq=0;
+      const QS=[
+        {q:'20% от 40?',opts:['8','2','20'],ans:0},
+        {q:'25% от 200?',opts:['50','25','100'],ans:0},
+        {q:'40% от 30?',opts:['12','18','24'],ans:0}
+      ];
+      const T=QS[st.mq];
+      let inner='';
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
+      if(st.msel!=null){
+        inner+=`<g class="qWPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'N·p:100'}</text></g>`;
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        `<div class="wk-row" style="gap:8px">
+          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW82S('${lk}',${i})">${o}</button>`).join('')}
+          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW82Act('${lk}','nq')`):''}
+          ${st.msel!=null?wkBtn('заново',`visW82Act('${lk}','rst')`):''}
+        </div>`+
+        wkSml('процент от числа'));
+    } else {
+      const H=190;
+      let inner='';
+      inner+=tx(159,32,20,ink,'20% от 40',{b:1,georgia:1});
+      inner+=coin(159,92,40,40,0.1);
+      inner+=`<g class="qWPop"><text x="159" y="164" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 8</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        quiz(lk,st)+
+        wkSml('40:5 = 8'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[82]=visW82;
+  function visW82T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
+  window.visW82T=visW82T;
+  function visW82P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
+  window.visW82P=visW82P;
+  function visW82S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
+  window.visW82S=visW82S;
+  function visW82Act(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const sp=LV.step;
+    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
+    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
+    if(act==='nq'){ if(sp===14){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='rst') CHS[lk]={};
+    chRender(0);
+  }
+  window.visW82Act=visW82Act;
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===82){ window.ARH_LESSONS[i]=L82; break; } } })();
+})();
