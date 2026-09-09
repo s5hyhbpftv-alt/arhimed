@@ -20483,24 +20483,20 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW392Act=visW392Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===392){ window.ARH_LESSONS[i]=L392; break; } } })();
 })();
-/* ================= УРОК 171 · Свойства сложения: считаем удобно (v1 · «Сокровищница Архимеда: волшебные пары», 15 слайдов, уникальный премиум) ================= */
+/* ================= УРОК 171 · Свойства сложения: считаем удобно (v2 · «Сокровищница Архимеда», 14 слайдов, флагман) ================= */
 (function(){
-  if(!window.__wk171v1css){
-    window.__wk171v1css=1;
+  if(!window.__wk171v2css){
+    window.__wk171v2css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qMIn{animation:qMIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qMIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qMPop{animation:qMPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qMPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qMCoin{animation:qMCoin .5s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qMCoin{0%{transform:scale(.2) rotate(-10deg);opacity:0}70%{transform:scale(1.12) rotate(3deg);opacity:1}100%{transform:scale(1) rotate(0)}}'+
+      '#lvis .qMPop{animation:qMPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qMPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qMCoin{animation:qMCoin .5s cubic-bezier(.2,.8,.3,1.4) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qMCoin{0%{transform:scale(.2) rotate(-10deg);opacity:0}70%{transform:scale(1.15) rotate(3deg);opacity:1}100%{transform:scale(1) rotate(0)}}'+
       '#lvis .qMSnap{animation:qMSnap .8s cubic-bezier(.3,.7,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qMSnap{0%{transform:scale(1)}45%{transform:scale(.55);opacity:.4;filter:blur(2px)}100%{transform:scale(1);opacity:1}}'+
-      '#lvis .qMSpark{animation:qMSpark 1.4s ease-in-out infinite;}'+
-      '@keyframes qMSpark{0%,100%{opacity:.3}50%{opacity:1}}'+
-      '#lvis .qMFloat{animation:qMFloat 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qMFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+      '@keyframes qMSnap{0%{transform:scale(1)}45%{transform:scale(.55);opacity:.4}100%{transform:scale(1);opacity:1}}';
     document.head.appendChild(st);
   }
   const L171 = {
@@ -20511,7 +20507,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'А ещё можно группировать слагаемые: (a + b) + c = a + (b + c) — сочетательное свойство.',
       'Зачем? Чтобы получить «круглые» числа: 37 + 48 + 63 — сложим 37 + 63 = 100, и останется 100 + 48 = 148.',
       'Проверь: 37 + 48 + 63 = 85 + 63 = 148 — тот же ответ, просто дольше.',
-      'Ловушка: не переставляй числа в вычитании! 20 − 5 ≠ 5 − 20. Свойства перестановки работают только у сложения и умножения.',
+      'Ловушка: не переставляй числа в вычитании! 20 − 5 ≠ 5 − 20. Перестановка работает только у сложения и умножения.',
       'Совет Архимеда: ищи пары, которые дают 10, 100 или 1000, — и считай в уме быстрее калькулятора.',
       'Переместительное: a + b = b + a — можно менять местами.',
       'Сочетательное: (a + b) + c = a + (b + c) — можно группировать.',
@@ -20520,7 +20516,6 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Тренажёр: найди пару, дополняющую до круглого числа.',
       'Тренажёр: перегруппируй и посчитай удобно.',
       'Шпаргалка: a+b=b+a; (a+b)+c=a+(b+c); ищи пары до 10/100/1000; в вычитании не переставляй!',
-      'Проверь себя устно: 37+48+63 = 148; 25+77+75 = 177; 19+45+11 = 75.',
       'Проверь себя: 37 + 48 + 63. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Вычисли удобно: 37 + 48 + 63.', choices: ['138', '148', '158'], ans: 1,
@@ -20534,38 +20529,35 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a16', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', goldD='#b8802c',
         card='rgba(255,252,246,.97)', cardB='#d9c9ab', cream='#fbf2df';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf2df" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf2df" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let spark='';
-    for(let i=0;i<10;i++){ spark+=`<circle class="qMSpark" style="animation-delay:${(i*0.3).toFixed(2)}s" cx="${(18+i*31)%W}" cy="${14+((i*37)%(H-24))}" r="2.5" fill="#f2d38a" opacity="0.5"/>`; }
+    for(let i=0;i<10;i++){ spark+=`<circle class="qMPop" style="animation-delay:${(i*0.3).toFixed(2)}s" cx="${(18+i*31)%W}" cy="${14+((i*37)%(H-24))}" r="2.5" fill="#f2d38a" opacity="0.5"/>`; }
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
         <linearGradient id="qMbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf4df"/><stop offset="1" stop-color="#f4e4c2"/></linearGradient>
         <radialGradient id="qMcoin" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stop-color="#fff0c0"/><stop offset="0.6" stop-color="${gold}"/><stop offset="1" stop-color="${goldD}"/></radialGradient>
         <radialGradient id="qMgem" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stop-color="#ffe6ef"/><stop offset="0.6" stop-color="#f2a0b8"/><stop offset="1" stop-color="#d9758f"/></radialGradient>
-        <linearGradient id="qMgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2d38a"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="${goldD}"/></linearGradient>
+        <linearGradient id="qMgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2d38a"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="${goldD}"/></linearGradient>
         <filter id="qMsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.22"/></filter>
       </defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qMbg)"/>
       <g>${spark}</g>
       <rect x="3" y="3" width="${W-6}" height="${H-6}" fill="none" stroke="${cardB}" stroke-width="2" rx="7"/>
-      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="url(#qMgold)" stroke-width="1.3" opacity="0.6" rx="6"/>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="url(#qMgrad)" stroke-width="1.3" opacity="0.6" rx="6"/>
       ${o.inner?o.inner():''}
     </svg>`;
   }
   function coin(x,y,r,val,color,delay,glow){
     const c=color=='gem'?'url(#qMgem)':'url(#qMcoin)';
     const tc=color=='gem'?'#7a2340':'#3a2408';
-    let s=`<g class="qMCoin" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qMsh)">`;
-    s+=`<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" stroke="#8a5a2a" stroke-width="2"/>`;
-    s+=`<circle cx="${x}" cy="${y}" r="${r-3}" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.2"/>`;
-    s+=tx(x,y+4,r*0.42,tc,''+val,{b:1,georgia:1});
-    if(glow){ s+=`<circle class="qMSpark" cx="${x}" cy="${y}" r="${r+4}" fill="none" stroke="${gold}" stroke-width="2" opacity="0.6"/>`; }
+    let s=`<g class="qMCoin" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qMsh)"><circle cx="${x}" cy="${y}" r="${r}" fill="${c}" stroke="#8a5a2a" stroke-width="2"/><circle cx="${x}" cy="${y}" r="${r-3}" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.2"/>${tx(x,y+5,r*0.5,tc,''+val,{b:1,georgia:1})}`;
+    if(glow){ s+=`<circle class="qMPop" cx="${x}" cy="${y}" r="${r+4}" fill="none" stroke="${gold}" stroke-width="2" opacity="0.6"/>`; }
     s+=`</g>`;
     return s;
   }
-  const chip=(t,c,delay)=>`<span class="qMIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="qMIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q171=[
     {q:'37 + 48 + 63 = ?',opts:['138','148','158'],ans:1},
     {q:'19 + 45 + 11 = ?',opts:['75','85','84'],ans:0}
@@ -20574,42 +20566,39 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const T=Q171[st.q||0];
     const opts=T.opts.map((o,i)=>{
       let bd=cardB,tc=ink,bg=card;
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.16)':'rgba(193,75,47,.14)'; bd=i===T.ans?grn:red; tc=i===T.ans?'#2f7a53':red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW171T('${lk}',${i})">${o}</button>`;
+      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(76,154,88,.18)':'rgba(193,75,47,.14)'; bd=i===T.ans?grn:red; tc=i===T.ans?'#2f7a53':red; }
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:60px;font-size:17px" onclick="visW171T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#2f7a53;font-size:16px">Верно! волшебная пара</div>'
-        : '<div class="wk-ans" style="color:#c14b2f;font-size:15px">Не так · ищи пару до 100</div>';
+        ? '<div class="wk-ans" style="color:#2f7a53;font-size:18px">Верно! волшебная пара</div>'
+        : '<div class="wk-ans" style="color:#c14b2f;font-size:17px">Не так · ищи пару до 100</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW171Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW171Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#d9a05a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#c9b98d')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW171(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=14){ st.go=0; st.pick=null; }
+      if(step>=0&&step<=13){ st.go=0; st.pick=null; }
       if(step===10||step===11) st.pick=null;
-      if(step===13){ st.mq=0; st.msel=null; }
-      if(step===14){ st.sel=null; st.q=0; }
+      if(step===12){ st.mq=0; st.msel=null; }
+      if(step===13){ st.sel=null; st.q=0; }
     }
     let h='';
     const W=318;
     if(step===0){
-      const H=200, go=st.go||0;
+      const H=186, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,17,ink,'считай как волшебник',{b:1});
-      inner+=coin(110,96,26,37,'gold',0.1,true);
-      inner+=coin(208,96,26,63,'gem',0.15,true);
-      inner+=tx(159,150,14,dim,'а если так?',{});
+      inner+=tx(159,30,20,ink,'считай как волшебник',{b:1});
+      inner+=coin(110,102,30,37,'gold',0.1,true);
+      inner+=coin(208,102,30,63,'gem',0.15,true);
       if(go){
-        inner+=coin(110,96,26,37,'gold',0.1,false);
-        inner+=coin(208,96,26,63,'gem',0.15,false);
-        inner+=`<g class="qMSnap"><text x="159" y="150" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">37 + 63 = 100!</text>
-        <text x="159" y="176" text-anchor="middle" font-size="12.5" fill="${dim}">волшебная пара → легко</text></g>`;
+        inner+=`<g class="qMSnap"><text x="159" y="158" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">37 + 63 = 100!</text>
+        <text x="159" y="182" text-anchor="middle" font-size="14" fill="${dim}">волшебная пара → легко</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Сокровищница Архимеда</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -20617,14 +20606,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW171Act('${lk}','rst')`):wkBtn('сложить пару',`visW171Act('${lk}','go')`))+
         wkSml('переместительное + сочетательное'));
     } else if(step===1){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,17,ink,'переместительное',{b:1});
-      inner+=tx(159,70,15,dim,'a + b = b + a',{});
+      inner+=tx(159,34,20,ink,'переместительное',{b:1});
+      inner+=tx(159,70,16,dim,'a + b = b + a',{});
       if(go){
-        inner+=`<g class="qMPop"><text x="159" y="110" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">7 + 5 = 5 + 7 = 12</text>
-        <text x="159" y="140" text-anchor="middle" font-size="13" fill="${dim}">порядок не важен</text></g>`;
+        inner+=`<g class="qMPop"><text x="159" y="110" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">7 + 5 = 5 + 7 = 12</text>
+        <text x="159" y="142" text-anchor="middle" font-size="15" fill="${dim}">порядок не важен</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Свойство 1</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -20632,14 +20621,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW171Act('${lk}','rst')`):wkBtn('показать',`visW171Act('${lk}','go')`))+
         wkSml('перестановка слагаемых'));
     } else if(step===2){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,17,ink,'сочетательное',{b:1});
-      inner+=tx(159,70,15,dim,'(a + b) + c = a + (b + c)',{});
+      inner+=tx(159,34,20,ink,'сочетательное',{b:1});
+      inner+=tx(159,70,16,dim,'(a + b) + c = a + (b + c)',{});
       if(go){
-        inner+=`<g class="qMPop"><text x="159" y="112" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">(7+5)+3 = 7+(5+3)</text>
-        <text x="159" y="142" text-anchor="middle" font-size="13" fill="${dim}">можно группировать как удобно</text></g>`;
+        inner+=`<g class="qMPop"><text x="159" y="112" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">(7+5)+3 = 7+(5+3)</text>
+        <text x="159" y="144" text-anchor="middle" font-size="15" fill="${dim}">можно группировать как удобно</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Свойство 2</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -20647,44 +20636,40 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW171Act('${lk}','rst')`):wkBtn('показать',`visW171Act('${lk}','go')`))+
         wkSml('объединяй в группы'));
     } else if(step===3){
-      const H=200, go=st.go||0;
+      const H=186, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'волшебная пара: 37 + 63',{b:1});
-      inner+=coin(90,100,30,37,'gold',0.1,false);
-      inner+=coin(228,100,30,63,'gem',0.15,false);
-      inner+=tx(159,160,14.5,dim,'вместе дают ровно 100',{});
-      if(go){
-        inner+=`<g class="qMPop"><text x="159" y="188" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">37 + 63 = 100</text></g>`;
-      }
+      inner+=tx(159,28,20,ink,'волшебная пара: 37 + 63',{b:1});
+      inner+=coin(92,104,32,37,'gold',0.1,false);
+      inner+=coin(226,104,32,63,'gem',0.15,false);
+      inner+=tx(159,162,15,dim,'вместе дают ровно 100',{});
+      if(go){ inner+=`<g class="qMPop"><text x="159" y="184" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">37 + 63 = 100</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Пара до сотни</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('37 и 63 → 100',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW171Act('${lk}','rst')`):wkBtn('проверить',`visW171Act('${lk}','go')`))+
         wkSml('дополняют друг друга'));
     } else if(step===4){
-      const H=204, go=st.go||0;
+      const H=186, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'37 + 48 + 63',{b:1});
-      inner+=coin(70,104,26,37,'gold',0.1,false);
-      inner+=coin(159,104,26,48,'#e8c98f',0.15,false);
-      inner+=coin(248,104,26,63,'gem',0.2,false);
-      if(go){
-        inner+=`<g class="qMPop"><text x="159" y="168" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">37+63 = 100 → 100+48 = 148</text></g>`;
-      }
+      inner+=tx(159,28,20,ink,'37 + 48 + 63',{b:1});
+      inner+=coin(72,104,28,37,'gold',0.1,false);
+      inner+=coin(159,104,28,48,'#c9a86a',0.15,false);
+      inner+=coin(246,104,28,63,'gem',0.2,false);
+      if(go){ inner+=`<g class="qMPop"><text x="159" y="158" text-anchor="middle" font-size="19" fill="${grn}" font-weight="bold">37+63 = 100 → 100+48 = 148</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Считаем удобно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('сначала пара 37+63',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW171Act('${lk}','rst')`):wkBtn('перегруппировать',`visW171Act('${lk}','go')`))+
         wkSml('круглое число — легко'));
     } else if(step===5){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,16,ink,'проверь оба пути',{b:1});
-      inner+=tx(159,68,13.5,dim,'тот же ответ — просто дольше',{});
+      inner+=tx(159,34,20,ink,'проверь оба пути',{b:1});
+      inner+=tx(159,70,14,dim,'тот же ответ — просто дольше',{});
       if(go){
-        inner+=`<g class="qMPop"><text x="159" y="106" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">37+48+63 = 85+63 = 148</text>
-        <text x="159" y="144" text-anchor="middle" font-size="13" fill="${dim}">порядок не меняет ответ</text></g>`;
+        inner+=`<g class="qMPop"><text x="159" y="106" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">37+48+63 = 85+63 = 148</text>
+        <text x="159" y="142" text-anchor="middle" font-size="14" fill="${dim}">порядок не меняет ответ</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Тот же результат</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -20692,21 +20677,21 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW171Act('${lk}','rst')`):wkBtn('проверить',`visW171Act('${lk}','go')`))+
         wkSml('умно = быстро'));
     } else if(step===6){
-      const H=192, go=st.go||0;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'ищем «круглые»',{b:1});
+      inner+=tx(159,30,20,ink,'ищем «круглые»',{b:1});
       const pairs=[['25','75','100'],['11','19','30'],['45','55','100'],['5','5','10']];
-      pairs.forEach((p,i)=>{
-        const x=30+(i%2)*156, y=60+Math.floor(i/2)*54;
-        inner+=`<g class="qMIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${x}" y="${y}" width="132" height="40" rx="9" fill="rgba(255,252,246,.97)" stroke="${cardB}" stroke-width="1.6"/>
-        ${tx(x+66,y+26,14,ink,p[0]+' + '+p[1]+' → '+p[2],{b:1,georgia:1})}</g>`;
-      });
+      for(let i=0;i<pairs.length;i++){
+        const x=30+(i%2)*156, y=58+Math.floor(i/2)*50;
+        inner+=`<g class="qMIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${x}" y="${y}" width="132" height="42" rx="9" fill="rgba(255,252,246,.97)" stroke="${cardB}" stroke-width="1.8"/>
+        ${tx(x+66,y+28,16,ink,pairs[i][0]+' + '+pairs[i][1]+' → '+pairs[i][2],{b:1,georgia:1})}</g>`;
+      }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Волшебные пары</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         wkRow(chip('пары до 10 / 100',gold,0.2))+
         wkSml('запоминай их'));
     } else if(step===7){
-      const H=200, py=84;
+      const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'37 + 63 = ?',a:'100',ds:['90','110']},
@@ -20717,18 +20702,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,16,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,19,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
-        inner+=`<g class="qMIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qMIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qMPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно! пара</text></g>`
-          : `<g class="qMPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">дополни до круглого</text></g>`)
-        : tx(159,py+72,14.5,dim,'чем дополнить?',{});
+        ? (st.pick===0? `<g class="qMPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно! пара</text></g>`
+          : `<g class="qMPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">дополни до круглого</text></g>`)
+        : tx(159,py+74,16,dim,'чем дополнить?',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW171Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW171P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -20739,30 +20724,27 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('дополняй до круглого'));
     } else if(step===8){
-      const H=204, go=st.go||0;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,16,ink,'найди пару в сумме',{b:1});
+      inner+=tx(159,28,20,ink,'найди пару в сумме',{b:1});
       const a=st.a==null?25:st.a, b=st.b==null?77:st.b, c=st.c==null?75:st.c;
-      inner+=tx(159,58,14,dim,a+' + '+b+' + '+c,{});
-      inner+=coin(70,112,26,a,'gold',0.1,st.pick===0);
-      inner+=coin(159,112,26,b,'#e8c98f',0.15,false);
-      inner+=coin(248,112,26,c,'gem',0.2,st.pick===2);
+      inner+=tx(159,56,15,dim,a+' + '+b+' + '+c,{});
+      inner+=coin(72,112,28,a,'gold',0.1,st.pick===0);
+      inner+=coin(159,112,28,b,'#c9a86a',0.15,false);
+      inner+=coin(246,112,28,c,'gem',0.2,st.pick===2);
       if(st.pick!=null){
         const ok=(st.pick===0||st.pick===2);
-        inner+=`<g class="qMPop"><text x="159" y="176" text-anchor="middle" font-size="16" fill="${ok?'#2f7a53':'#c14b2f'}" font-weight="bold">${ok? (a+' + '+c+' = '+(a+c)+' → + '+b+' = '+(a+c+b)) : 'ищи пару: '+a+' + '+c}</text></g>`;
-      } else {
-        inner+=tx(159,176,14,dim,'какие два слагаемых дают 100?',{});
+        inner+=`<g class="qMPop"><text x="159" y="176" text-anchor="middle" font-size="18" fill="${ok?'#2f7a53':'#c14b2f'}" font-weight="bold">${ok? (a+' + '+c+' = '+(a+c)+' → + '+b+' = '+(a+c+b)) : 'ищи пару: '+a+' + '+c}</text></g>`;
       }
       const fb= st.pick!=null&&(st.pick===0||st.pick===2)
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW171Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px"><button class="wk-btn" onclick="visW171P('${lk}',0)">нажми '+a+'</button><button class="wk-btn" onclick="visW171P('${lk}',2)">нажми '+c+'</button></div>`;
-      const retry= st.pick!=null&&st.pick===1? `<div class="wk-row" style="gap:8px"><button class="wk-btn" onclick="visW171P('${lk}',0)">нажми '+a+'</button><button class="wk-btn" onclick="visW171P('${lk}',2)">нажми '+c+'</button></div>`:'';
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Выбери пару</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        fb+retry+
+        fb+
         wkSml(''+a+' + '+c+' = '+(a+c)));
     } else if(step===9){
-      const H=200, py=84;
+      const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
         {q:'25 + 77 + 75 = ?',a:'177',ds:['127','152']},
@@ -20773,18 +20755,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,16,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,19,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(76,154,88,.18)';bd=grn;tc='#2f7a53';} else if(i===st.pick){bgc='rgba(193,75,47,.14)';bd=red;tc=red;} }
-        inner+=`<g class="qMIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qMIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qMPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
-          : `<g class="qMPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">перегруппируй</text></g>`)
-        : tx(159,py+72,14.5,dim,'посчитай удобно',{});
+        ? (st.pick===0? `<g class="qMPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
+          : `<g class="qMPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">перегруппируй</text></g>`)
+        : tx(159,py+74,16,dim,'посчитай удобно',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW171Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW171P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -20795,16 +20777,16 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('ищи пару до 100'));
     } else if(step===10){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,36,17,ink,'ловушка: вычитание',{b:1});
-      inner+=tx(80,78,20,ink,'20 − 5',{b:1,georgia:1});
-      inner+=tx(200,78,20,red,'5 − 20',{b:1,georgia:1});
+      inner+=tx(159,36,20,ink,'ловушка: вычитание',{b:1});
+      inner+=tx(80,84,22,ink,'20 − 5',{b:1,georgia:1});
+      inner+=tx(200,84,22,red,'5 − 20',{b:1,georgia:1});
       if(go){
-        inner+=`<g class="qMPop"><text x="159" y="112" text-anchor="middle" font-size="24" fill="${red}" font-weight="bold" font-family="Georgia,serif">15 ≠ −15</text>
-        <text x="159" y="146" text-anchor="middle" font-size="13" fill="${dim}">переставлять можно только в сложении/умножении</text>
-        <text x="159" y="170" text-anchor="middle" font-size="12.5" fill="${dim}">в вычитании — НЕЛЬЗЯ!</text></g>`;
+        inner+=`<g class="qMPop"><text x="159" y="120" text-anchor="middle" font-size="26" fill="${red}" font-weight="bold" font-family="Georgia,serif">15 ≠ −15</text>
+        <text x="159" y="154" text-anchor="middle" font-size="14" fill="${dim}">переставлять можно только в сложении/умножении</text>
+        <text x="159" y="176" text-anchor="middle" font-size="13" fill="${red}" font-weight="bold">в вычитании — НЕЛЬЗЯ!</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Берегись</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -20812,16 +20794,16 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW171Act('${lk}','rst')`):wkBtn('проверить',`visW171Act('${lk}','go')`))+
         wkSml('только + и ×'));
     } else if(step===11){
-      const H=196;
+      const H=188;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,32,16,ink,'шпаргалка',{b:1});
+      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
       const items=[['a + b = b + a (переместительное)'],['(a + b) + c = a + (b + c) (сочетательное)'],['ищи пары до 10 / 100 / 1000'],['в вычитании не переставляй!']];
       for(let i=0;i<items.length;i++){
         if(go>=i){
-          const ry=54+i*36;
-          inner+=`<g class="qMIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="30" rx="9" fill="${i%2?'rgba(255,252,246,.97)':'rgba(217,160,90,.14)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+20,12,ink,items[i][0],{})}</g>`;
+          const ry=52+i*34;
+          inner+=`<g class="qMIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="28" rx="8" fill="${i%2?'rgba(255,252,246,.97)':'rgba(217,160,90,.14)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
+          ${tx(159,ry+19,14,ink,items[i][0],{})}</g>`;
         }
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
@@ -20835,22 +20817,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=4?wkBtn('сброс',`visW171Act('${lk}','rst')`):'')+
         wkSml('считай удобно'));
     } else if(step===12){
-      const H=210, go=st.go||0;
-      let inner='';
-      inner+=tx(159,30,16,ink,'совет Архимеда',{b:1});
-      if(go){
-        inner+=`<g class="qMPop"><rect x="40" y="64" width="238" height="64" rx="12" fill="rgba(217,160,90,.14)" stroke="${gold}" stroke-width="2.2"/>
-        ${tx(159,88,15,gold,'ищи пары, которые дают',{b:1})}
-        ${tx(159,112,20,gold,'10 · 100 · 1000',{b:1,georgia:1})}</g>`;
-        inner+=`<g class="qMPop" style="animation-delay:.12s"><text x="159" y="166" text-anchor="middle" font-size="15" fill="${ink}" font-weight="bold">и считай в уме быстрее калькулятора!</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Главный секрет</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('круглое число = лёгкий счёт',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW171Act('${lk}','rst')`):wkBtn('показать',`visW171Act('${lk}','go')`))+
-        wkSml('магия круглых чисел'));
-    } else if(step===13){
-      const H=196;
+      const H=192;
       if(st.mq==null) st.mq=0;
       const QS=[
         {q:'37 + 48 + 63 = ?',opts:['148','138','158'],ans:0},
@@ -20859,9 +20826,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qMPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'ищи пару'}</text></g>`;
+        inner+=`<g class="qMPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'ищи пару'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -20872,13 +20839,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('волшебная пара'));
     } else {
-      const H=204;
+      const H=196;
       let inner='';
-      inner+=tx(159,28,16,ink,'37 + 48 + 63',{b:1});
-      inner+=coin(90,98,28,37,'gold',0.1,false);
-      inner+=coin(228,98,28,63,'gem',0.15,false);
-      inner+=`<g class="qMPop"><text x="159" y="176" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 148</text>
-      <text x="159" y="196" text-anchor="middle" font-size="12.5" fill="${dim}">37+63=100 → +48</text></g>`;
+      inner+=tx(159,32,20,ink,'37 + 48 + 63',{b:1,georgia:1});
+      inner+=coin(90,92,28,37,'gold',0.1,false);
+      inner+=coin(228,92,28,63,'gem',0.15,false);
+      inner+=`<g class="qMPop"><text x="159" y="164" text-anchor="middle" font-size="24" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 148</text>
+      <text x="159" y="188" text-anchor="middle" font-size="14" fill="${dim}">37+63=100 · +48</text></g>`;
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
@@ -20898,7 +20865,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const sp=LV.step;
     if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
     if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; st.a=null; st.b=null; st.c=null; }
-    if(act==='nq'){ if(sp===13){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
+    if(act==='nq'){ if(sp===12){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
     if(act==='rst') CHS[lk]={};
     chRender(0);
   }
