@@ -15474,28 +15474,24 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===188){ window.ARH_LESSONS[i]=L188; break; } } })();
 })();
 
-/* ================= УРОК 186 · Сложение отрицательных и положительных чисел (v2 · «Гавань чисел Архимеда», 15 слайдов, супер-профи) ================= */
+/* ================= УРОК 186 · Сложение отрицательных и положительных чисел (v3 · «Гавань чисел Архимеда», 14 слайдов, чистый понятный визуал) ================= */
 (function(){
-  if(!window.__wk186v2css){
-    window.__wk186v2css=1;
+  if(!window.__wk186v3css){
+    window.__wk186v3css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qHrIn{animation:qHrIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qHrIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
       '#lvis .qHrPop{animation:qHrPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qHrPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qHrRise{animation:qHrRise 1.1s cubic-bezier(.2,.8,.3,1.2) both;}'+
-      '@keyframes qHrRise{0%{transform:translateY(18px);opacity:0}70%{transform:translateY(-3px);opacity:1}100%{transform:translateY(0)}}'+
-      '#lvis .qHrFall{animation:qHrFall 1.1s cubic-bezier(.2,.8,.3,1.2) both;}'+
-      '@keyframes qHrFall{0%{transform:translateY(-18px);opacity:0}70%{transform:translateY(3px);opacity:1}100%{transform:translateY(0)}}'+
-      '#lvis .qHrWave{animation:qHrWave 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qHrWave{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
-      '#lvis .qHrBob{animation:qHrBob 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qHrBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}'+
+      '#lvis .qHrJumpR{animation:qHrJumpR 1.05s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qHrJumpR{0%{transform:translateX(-16px);opacity:0}70%{transform:translateX(2px);opacity:1}100%{transform:translateX(0)}}'+
+      '#lvis .qHrJumpL{animation:qHrJumpL 1.05s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qHrJumpL{0%{transform:translateX(16px);opacity:0}70%{transform:translateX(-2px);opacity:1}100%{transform:translateX(0)}}'+
+      '#lvis .qHrPulse{animation:qHrPulse 1.6s ease infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qHrPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}'+
       '#lvis .qHrVanish{animation:qHrVanish .7s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qHrVanish{0%{transform:scale(1);opacity:1}100%{transform:scale(.2);opacity:0}}'+
-      '#lvis .qHrGhost{animation:qHrGhost .7s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qHrGhost{0%{transform:none;opacity:0}30%{opacity:1}100%{transform:translateY(-16px);opacity:0}}';
+      '@keyframes qHrVanish{0%{transform:scale(1);opacity:1}100%{transform:scale(.2);opacity:0}}';
     document.head.appendChild(st);
   }
   const L186 = {
@@ -15508,14 +15504,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Пример: 7 + (−10) — из 10 вычитаем 7, знак большего (−) → −3.',
       '−5 + 5 = 0: число и его «противоположное» гасят друг друга.',
       'Совет Архимеда: представляй температуру: было −4°, стало теплее на 9° — стало 5°.',
-      'Море Архимеда: 0 — уровень воды. Выше — тепло (положительное), ниже — холод (отрицательное).',
+      'Числовая прямая помогает: движение ВПРАВО — плюс, движение ВЛЕВО — минус.',
+      'Плюс — идём вправо (к большему), минус — влево (к меньшему).',
       'Правило знаков: разные — вычитай модули, знак большего; одинаковые — складывай, знак общий.',
-      'Обратные числа (−5 и 5) — на одинаковом расстоянии от 0 и гасят друг друга в сумме.',
+      'Обратные числа (−5 и 5) на одинаковом расстоянии от 0, в сумме дают 0.',
       'Тренажёр: сложи числа.',
       'Тренажёр: определи знак результата.',
-      'Шпаргалка: разные — вычитай модули; одинаковые — складывай; знак большего / общий; −a+a=0.',
-      'Проверь себя устно: −4+9=5; −6+(−3)=−9; 7+(−10)=−3; −5+5=0.',
-      'Проверь себя: −4 + 9. Ответь в тесте и жми «Понял! Проверю себя»!'
+      'Шпаргалка: разные — вычитай модули; одинаковые — складывай; знак большего / общий; −a + a = 0.',
+      'Проверь себя: чему равно −4 + 9. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'Чему равно −4 + 9?', choices: ['5', '−5', '13'], ans: 0,
       exp: 'Знаки разные: 9 − 4 = 5, знак большего (9) положительный → 5.' },
@@ -15526,7 +15522,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['Знаки разные — вычитаем модули.', '10 − 7 = 3, знак большего (−) → −3.'], sol: '7 + (−10) = −3.' }
     ]
   };
-  const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', warm='#ffb85c', sea='#1f86b4',
+  const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', warm='#ffb85c', purple='#b07fff',
         bg0='#0e1830', bg1='#080d1c', card='rgba(16,26,46,.96)', cardB='#3a4c78', steel='#aab8d4';
   const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
@@ -15534,8 +15530,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
         <linearGradient id="qHrbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
-        <linearGradient id="qHrsea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fd6ef"/><stop offset="0.4" stop-color="#1f86b4"/><stop offset="1" stop-color="#0d5a80"/></linearGradient>
-        <filter id="qHrsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.55"/></filter>
+        <linearGradient id="qHrline" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${cyan}"/><stop offset="0.5" stop-color="#7a8fc0"/><stop offset="1" stop-color="${warm}"/></linearGradient>
+        <filter id="qHrsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.55"/></filter>
       </defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qHrbg)"/>
       <g opacity="0.14" stroke="#44568c" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
@@ -15544,37 +15540,33 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  /* вертикальная ось-море: 0 центр, + вверх, − вниз */
-  const VCY=130, VX=200, VPX=8;
-  const vY=v=>VCY-v*VPX;
-  function vAxis(showSea){
+  /* горизонтальная числовая прямая, центр cx, w ширина */
+  const A={x:22,y:120,w:276,min:-12,max:12};
+  const px=v=>A.x+(v-A.min)/(A.max-A.min)*A.w;
+  function hAxis(){
     let s='';
-    s+=`<line x1="${VX}" y1="40" x2="${VX}" y2="222" stroke="${steel}" stroke-width="2.6"/>`;
-    s+=`<path d="M ${VX} 36 l -5 9 l 10 0 z" fill="${steel}"/>`;
-    for(let v=-12;v<=12;v++){
-      const y=vY(v);
-      s+=`<line x1="${VX-5}" y1="${y}" x2="${VX+5}" y2="${y}" stroke="${v===0?gold:'#5a6c9c'}" stroke-width="${v===0?2.6:1.4}"/>`;
-      if(v%3===0){ s+=tx(VX+16,y+4,11.5,v===0?ink:dim,''+v,{}); }
-    }
-    if(showSea){
-      s+=`<rect x="VXPLACE" y="${vY(0)}" width="1" height="1" fill="none"/>`;
-      s+=`<rect x="112" y="${vY(0)}" width="176" height="${222-vY(0)}" fill="rgba(31,134,180,.16)"/>`;
-      s+=`<g class="qHrWave"><rect x="112" y="${vY(0)-3}" width="176" height="7" rx="3" fill="#7fd6ef" opacity="0.7"/></g>`;
-      s+=tx(96,vY(0)+6,12,cyan,'↓ море',{an:'end'});
+    s+=`<rect x="${A.x}" y="${A.y-3.5}" width="${A.w}" height="7" rx="3.5" fill="url(#qHrline)"/>`;
+    s+=`<path d="M ${A.x} ${A.y} l 9 -5 l 0 10 z" fill="${cyan}"/><path d="M ${A.x+A.w} ${A.y} l -9 -5 l 0 10 z" fill="${warm}"/>`;
+    s+=`<rect x="${px(0)-2}" y="${A.y-8}" width="4" height="16" rx="2" fill="#fffdf2"/>`;
+    /* подписи — только каждое 3-е число, чтобы не сливались */
+    for(let v=A.min;v<=A.max;v++){
+      const x=px(v), lb=(v%3===0);
+      s+=`<line x1="${x}" y1="${A.y-5}" x2="${x}" y2="${A.y+5}" stroke="${v===0?gold:'#5a6c9c'}" stroke-width="${v===0?2.2:1.1}"/>`;
+      if(lb){ s+=tx(x,A.y+24,13,v===0?ink:dim,''+v,{b:v===0}); }
     }
     return s;
   }
-  function buoy(v,label,color,cls){
-    const y=vY(v);
-    return `<g class="qHrBob ${cls||''}" filter="url(#qHrsh)"><path d="M ${VX-14} ${y} q 14 -12 28 0 q 14 12 28 0" fill="${color||gold}" stroke="#fffdf2" stroke-width="2"/><rect x="${VX-8}" y="${y-9}" width="16" height="10" rx="3" fill="${color||gold}" stroke="#8a5a2a" stroke-width="1.4"/><text x="${VX}" y="${y-14}" text-anchor="middle" font-size="15" fill="${dim}" font-weight="bold">${label}</text></g>`;
+  function mark(v,color,cls,delay){
+    const x=px(v);
+    return `<g class="qHrPop ${cls||''}" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qHrsh)"><circle cx="${x}" cy="${A.y}" r="13" fill="${color}" stroke="#fffdf2" stroke-width="2.6"/><text x="${x}" y="${A.y+5}" text-anchor="middle" font-size="14" fill="#0a1428" font-weight="bold">${v}</text></g>`;
   }
-  function arrowUp(v,from,to,color){
-    const y1=vY(from), y2=vY(to);
-    return `<g class="qHrRise" style="animation-delay:.4s"><line x1="${VX}" y1="${y1}" x2="${VX}" y2="${y2}" stroke="${color||grn}" stroke-width="4" stroke-linecap="round"/><path d="M ${VX} ${y2} l -6 12 l 12 0 z" fill="${color||grn}"/></g>`;
+  function jump(from,to,color,left,delay){
+    const x1=px(from), x2=px(to);
+    const cls=left?'qHrJumpL':'qHrJumpR';
+    return `<g class="${cls}" style="animation-delay:${(delay||0).toFixed(2)}s"><line x1="${x1}" y1="${A.y-26}" x2="${x2}" y2="${A.y-26}" stroke="${color}" stroke-width="4" stroke-linecap="round"/><path d="M ${x2} ${A.y-31} l ${left?-9:9} 5 l ${left?9:-9} 5 z" fill="${color}"/></g>`;
   }
-  function arrowDown(v,from,to,color){
-    const y1=vY(from), y2=vY(to);
-    return `<g class="qHrFall" style="animation-delay:.4s"><line x1="${VX}" y1="${y1}" x2="${VX}" y2="${y2}" stroke="${color||red}" stroke-width="4" stroke-linecap="round"/><path d="M ${VX} ${y2} l -6 -12 l 12 0 z" fill="${color||red}"/></g>`;
+  function equation(cx,y,start,addend,result,color){
+    return `<g class="qHrPop" style="animation-delay:.6s"><rect x="${cx-110}" y="${y-34}" width="220" height="46" rx="12" fill="rgba(20,29,50,.96)" stroke="${color}" stroke-width="2" filter="url(#qHrsh)"/><text x="${cx}" y="${y-2}" text-anchor="middle" font-size="20" fill="${color}" font-weight="bold" font-family="Georgia,serif">${start} ${addend>0?'+':''}${addend} = ${result}</text></g>`;
   }
   const chip=(t,c,delay)=>`<span class="qHrIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q186=[
@@ -15604,52 +15596,48 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     if(st._at!==step){ st._at=step;
       if(step>=0&&step<=13){ st.go=0; st.pick=null; }
       if(step===9||step===10) st.pick=null;
-      if(step===12){ st.mq=0; st.msel=null; }
+      if(step===11){ st.mq=0; st.msel=null; }
       if(step===13){ st.sel=null; st.q=0; }
     }
     let h='';
     const W=318;
     if(step===0){
-      const H=220, go=st.go||0;
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'море Архимеда',{b:1});
+      inner+=tx(159,28,20,ink,'числовая прямая — дорога чисел',{b:1});
       if(go){
-        inner+=vAxis(true);
-        inner+=buoy(-5,'−5',cyan,'');
-        inner+=buoy(5,'5',warm,'');
-        inner+=`<g class="qHrPop"><text x="80" y="40" text-anchor="middle" font-size="13" fill="${warm}" font-weight="bold">+ выше</text><text x="80" y="206" text-anchor="middle" font-size="13" fill="${cyan}" font-weight="bold">− ниже</text></g>`;
+        inner+=hAxis();
+        inner+=mark(-5,cyan,'',0.1);
+        inner+=mark(5,warm,'',0.25);
+        inner+=`<g class="qHrPop"><text x="60" y="60" text-anchor="middle" font-size="13" fill="${cyan}" font-weight="bold">− влево</text><text x="258" y="60" text-anchor="middle" font-size="13" fill="${warm}" font-weight="bold">+ вправо</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Гавань чисел</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('0 — уровень воды',cyan,0.2)):'')+
+        (go?wkRow(chip('плюс — вправо · минус — влево',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('показать',`visW186Act('${lk}','go')`))+
-        wkSml('сложение = вверх/вниз'));
+        wkSml('начнём с прямой'));
     } else if(step===1){
-      const H=220, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'−4 + 9',{b:1,georgia:1});
-      if(go){
-        inner+=vAxis(false);
-        inner+=buoy(-4,'−4',cyan,'');;
-        inner+=arrowUp(0,-4,5,grn);
-        inner+=buoy(5,'5 →',warm,'qHrRise');
-        inner+=`<g class="qHrPop"><text x="80" y="150" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">9 − 4 = 5</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Всплываем</div>`+
+      inner+=hAxis();
+      inner+=mark(-4,cyan,'',0.1);
+      if(go){ inner+=jump(-4,5,grn,false,0.35); inner+=mark(5,warm,'qHrPulse',0.5); }
+      inner+=equation(159,182,-4,9,5,go?grn:dim);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">−4 + 9</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('было −4 · прибавили 9 → 5',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('плыть',`visW186Act('${lk}','go')`))+
-        wkSml('знак большего (+)'));
+        (go?wkRow(chip('вправо на 9 → к 5',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('прыгнуть',`visW186Act('${lk}','go')`))+
+        wkSml('знак большего (+), 9 − 4 = 5'));
     } else if(step===2){
       const H=190;
       const go=st.go||0;
       let inner='';
       inner+=tx(159,32,20,ink,'правило: разные знаки',{b:1});
       if(go){
-        inner+=`<g class="qHrPop"><rect x="32" y="64" width="254" height="84" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
-        ${tx(159,88,15,grn,'знаки РАЗНЫЕ →',{b:1})}
-        ${tx(159,112,15,grn,'вычти из большего модуля меньший',{b:1})}
-        ${tx(159,136,15,gold,'и поставь знак большего',{b:1})}</g>`;
+        inner+=`<g class="qHrPop"><rect x="32" y="64" width="254" height="88" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
+        ${tx(60,86,15,ink,'знаки РАЗНЫЕ →',{b:1,an:'start'})}
+        ${tx(60,112,15,grn,'вычти из большего модуля меньший',{b:1,an:'start'})}
+        ${tx(60,138,15,gold,'поставь знак большего',{b:1,an:'start'})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило 1</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -15657,31 +15645,27 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('показать',`visW186Act('${lk}','go')`))+
         wkSml('разные знаки'));
     } else if(step===3){
-      const H=220, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'−6 + (−3)',{b:1,georgia:1});
-      if(go){
-        inner+=vAxis(false);
-        inner+=buoy(-6,'−6',cyan,'');
-        inner+=arrowDown(0,-6,-9,red);
-        inner+=buoy(-9,'−9 →',red,'qHrFall');
-        inner+=`<g class="qHrPop"><text x="80" y="170" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold" font-family="Georgia,serif">−6 − 3 = −9</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тонем</div>`+
+      inner+=hAxis();
+      inner+=mark(-6,cyan,'',0.1);
+      if(go){ inner+=jump(-6,-9,red,true,0.35); inner+=mark(-9,red,'qHrPulse',0.5); }
+      inner+=equation(159,182,-6,-3,-9,go?red:dim);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">−6 + (−3)</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('оба минус · вниз ещё',red,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('плыть',`visW186Act('${lk}','go')`))+
-        wkSml('складываем модули'));
+        (go?wkRow(chip('влево на 3 → к −9',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('прыгнуть',`visW186Act('${lk}','go')`))+
+        wkSml('оба минус · сложили 6+3=9'));
     } else if(step===4){
       const H=190;
       const go=st.go||0;
       let inner='';
       inner+=tx(159,30,20,ink,'правило: одинаковые знаки',{b:1});
       if(go){
-        inner+=`<g class="qHrPop"><rect x="32" y="64" width="254" height="84" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
-        ${tx(159,88,15,red,'знаки ОДИНАКОВЫЕ →',{b:1})}
-        ${tx(159,112,15,red,'сложи модули',{b:1})}
-        ${tx(159,136,15,gold,'и поставь общий знак',{b:1})}</g>`;
+        inner+=`<g class="qHrPop"><rect x="32" y="64" width="254" height="88" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
+        ${tx(60,86,15,ink,'знаки ОДИНАКОВЫЕ →',{b:1,an:'start'})}
+        ${tx(60,112,15,red,'сложи модули',{b:1,an:'start'})}
+        ${tx(60,138,15,gold,'поставь общий знак',{b:1,an:'start'})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило 2</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -15689,45 +15673,37 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('показать',`visW186Act('${lk}','go')`))+
         wkSml('одинаковые знаки'));
     } else if(step===5){
-      const H=220, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'7 + (−10)',{b:1,georgia:1});
-      if(go){
-        inner+=vAxis(false);
-        inner+=buoy(7,'7',warm,'');
-        inner+=arrowDown(0,7,-3,red);
-        inner+=buoy(-3,'−3 →',red,'qHrFall');
-        inner+=`<g class="qHrPop"><text x="80" y="80" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold" font-family="Georgia,serif">10 − 7 = 3 → −3</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Вниз</div>`+
+      inner+=hAxis();
+      inner+=mark(7,warm,'',0.1);
+      if(go){ inner+=jump(7,-3,red,true,0.35); inner+=mark(-3,red,'qHrPulse',0.5); }
+      inner+=equation(159,182,7,-10,-3,go?red:dim);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">7 + (−10)</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('знак большего (−)',red,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('плыть',`visW186Act('${lk}','go')`))+
-        wkSml('разные знаки'));
+        (go?wkRow(chip('влево на 10 → к −3',red,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('прыгнуть',`visW186Act('${lk}','go')`))+
+        wkSml('знак большего (−), 10−7=3'));
     } else if(step===6){
-      const H=210, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'−5 + 5 = 0',{b:1,georgia:1});
-      if(go){
-        inner+=vAxis(false);
-        inner+=buoy(-5,'−5',cyan,'');
-        inner+=arrowUp(0,-5,0,grn);
-        inner+=buoy(0,'0',gold,'qHrRise');
-        inner+=`<g class="qHrPop"><text x="80" y="150" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">противоположные гасят друг друга</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Обнуление</div>`+
+      inner+=hAxis();
+      inner+=mark(-5,cyan,'',0.1);
+      if(go){ inner+=jump(-5,0,grn,false,0.35); inner+=mark(0,gold,'qHrPulse',0.5); }
+      inner+=equation(159,182,-5,5,0,go?grn:dim);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">−5 + 5</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('−a + a = 0',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('плыть',`visW186Act('${lk}','go')`))+
-        wkSml('на уровне воды'));
+        (go?wkRow(chip('противоположные → 0',grn,0.2)):'')+
+        wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('прыгнуть',`visW186Act('${lk}','go')`))+
+        wkSml('−a + a = 0'));
     } else if(step===7){
       const H=196, go=st.go||0;
       let inner='';
       inner+=tx(159,26,20,ink,'долг и деньги',{b:1});
       if(go){
         let money='',debt='';
-        for(let i=0;i<9;i++){ money+=`<g class="qHrIn" style="animation-delay:${(0.08*i).toFixed(2)}s" filter="url(#qHrsh)"><circle cx="${52+(i%3)*34}" cy="${74+Math.floor(i/3)*34}" r="12" fill="#f5c542" stroke="#8a5a2a" stroke-width="1.6"/><text x="${52+(i%3)*34}" y="${60+Math.floor(i/3)*34}" text-anchor="middle" font-size="9" fill="#fff" font-weight="bold">+</text></g>`; }
-        for(let i=0;i<4;i++){ debt+=`<g class="qHrIn" style="animation-delay:${(0.08*i).toFixed(2)}s" filter="url(#qHrsh)"><rect x="${196+(i%2)*34}" y="${74+Math.floor(i/2)*34}" width="24" height="24" rx="6" fill="rgba(255,122,110,.3)" stroke="#ff7a6e" stroke-width="1.6"/><text x="${208+(i%2)*34}" y="${90+Math.floor(i/2)*34}" text-anchor="middle" font-size="12" fill="#ffb0a6" font-weight="bold">−</text></g>`; }
+        for(let i=0;i<9;i++){ money+=`<g class="qHrIn" style="animation-delay:${(0.07*i).toFixed(2)}s" filter="url(#qHrsh)"><circle cx="${52+(i%3)*34}" cy="${74+Math.floor(i/3)*34}" r="12" fill="#f5c542" stroke="#8a5a2a" stroke-width="1.6"/><text x="${52+(i%3)*34}" y="${66+Math.floor(i/3)*34}" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">+</text></g>`; }
+        for(let i=0;i<4;i++){ debt+=`<g class="qHrIn" style="animation-delay:${(0.07*i).toFixed(2)}s" filter="url(#qHrsh)"><rect x="${196+(i%2)*34}" y="${74+Math.floor(i/2)*34}" width="24" height="24" rx="6" fill="rgba(255,122,110,.3)" stroke="#ff7a6e" stroke-width="1.6"/><text x="${208+(i%2)*34}" y="${90+Math.floor(i/2)*34}" text-anchor="middle" font-size="12" fill="#ffb0a6" font-weight="bold">−</text></g>`; }
         inner+=money+debt;
         inner+=`<g class="qHrPop"><text x="159" y="182" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">9 монет гасят долг 4 → осталось 5</text></g>`;
       }
@@ -15737,13 +15713,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW186Act('${lk}','rst')`):wkBtn('свести',`visW186Act('${lk}','go')`))+
         wkSml('наглядно'));
     } else if(step===8){
-      const H=200, go=st.go||0;
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'термометр',{b:1});
       if(go){
-        inner+=`<text x="90" y="92" text-anchor="middle" font-size="16" fill="${cyan}" font-weight="bold">−4°</text><text x="159" y="92" text-anchor="middle" font-size="18" fill="${gold}" font-weight="bold">+9°</text><text x="228" y="92" text-anchor="middle" font-size="16" fill="${warm}" font-weight="bold">= 5°</text>
-        <text x="159" y="124" text-anchor="middle" font-size="15" fill="${dim}">было −4°, потеплело на 9°</text>
-        <text x="159" y="154" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">стало 5°</text></g>`;
+        inner+=`<text x="90" y="80" text-anchor="middle" font-size="16" fill="${cyan}" font-weight="bold">−4°</text><text x="159" y="80" text-anchor="middle" font-size="18" fill="${gold}" font-weight="bold">+9°</text><text x="228" y="80" text-anchor="middle" font-size="16" fill="${warm}" font-weight="bold">= 5°</text>
+        <text x="159" y="112" text-anchor="middle" font-size="15" fill="${dim}">было −4°, потеплело на 9°</text>
+        <text x="159" y="142" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">стало 5°</text>
+        <text x="159" y="168" text-anchor="middle" font-size="13" fill="${dim}">совет Архимеда</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Температура</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -15778,7 +15754,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW186Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW186P('${lk}',${i})">${o}</button>`).join('')}</div>`;
       const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW186P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: сложи</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр · сложи</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
         fb+retry+
@@ -15787,9 +15763,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'Знак результата −4+9?',a:'плюс',ds:['минус','0']},
-        {q:'Знак результата 7+(−10)?',a:'минус',ds:['плюс','0']},
-        {q:'Знак результата −6+(−3)?',a:'минус',ds:['плюс','0']}
+        {q:'Знак −4+9?',a:'плюс',ds:['минус','0']},
+        {q:'Знак 7+(−10)?',a:'минус',ds:['плюс','0']},
+        {q:'Знак −6+(−3)?',a:'минус',ds:['плюс','0']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
@@ -15810,7 +15786,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW186Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW186P('${lk}',${i})">${o}</button>`).join('')}</div>`;
       const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW186P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: знак</div>`+
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр · знак</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         fb+retry+
         wkSml('знак большего'));
@@ -15860,16 +15836,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('правила знаков'));
     } else {
-      const H=210, go=st.go||0;
+      const H=200, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'−4 + 9',{b:1,georgia:1});
-      if(go){
-        inner+=vAxis(false);
-        inner+=buoy(-4,'−4',cyan,'');
-        inner+=arrowUp(0,-4,5,grn);
-        inner+=buoy(5,'5',warm,'qHrRise');
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+      inner+=hAxis();
+      inner+=mark(-4,cyan,'',0.1);
+      if(go){ inner+=jump(-4,5,grn,false,0.35); inner+=mark(5,warm,'qHrPulse',0.5); }
+      inner+=equation(159,182,-4,9,5,go?grn:dim);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">−4 + 9</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
         wkSml('9 − 4 = 5'));
