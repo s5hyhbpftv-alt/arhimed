@@ -16897,26 +16897,22 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW187Act=visW187Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===187){ window.ARH_LESSONS[i]=L187; break; } } })();
 })();
-/* ================= УРОК 382 · Вероятность и диаграммы: начало (v1 · «Игровой парк Архимеда», 15 слайдов, премиум) ================= */
+/* ================= УРОК 382 · Вероятность и диаграммы: начало (v2 · «Вероятностный парк Архимеда», 15 слайдов, флагман) ================= */
 (function(){
-  if(!window.__wk382v1css){
-    window.__wk382v1css=1;
+  if(!window.__wk382v2css){
+    window.__wk382v2css=1;
     const st=document.createElement('style');
     st.textContent=
       '#lvis .qDIn{animation:qDIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
       '@keyframes qDIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qDPop{animation:qDPop .55s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qDPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qDBall{animation:qDBall .6s cubic-bezier(.2,.8,.3,1.2) both;transform-box:fill-box;transform-origin:center;}'+
+      '#lvis .qDPop{animation:qDPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qDPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qDBall{animation:qDBall .5s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qDBall{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}'+
       '#lvis .qDFlip{animation:qDFlip 1s ease both;transform-box:fill-box;transform-origin:center;}'+
       '@keyframes qDFlip{0%{transform:scaleX(1)}50%{transform:scaleX(0)}100%{transform:scaleX(1)}}'+
       '#lvis .qDBar{animation:qDBar .7s cubic-bezier(.2,.8,.3,1.15) both;transform-box:fill-box;transform-origin:center bottom;}'+
-      '@keyframes qDBar{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}'+
-      '#lvis .qDSpin{animation:qDSpin 1.2s cubic-bezier(.4,.2,.2,1) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qDSpin{0%{transform:rotate(-20deg)}45%{transform:rotate(200deg)}100%{transform:rotate(0deg)}}'+
-      '#lvis .qDFloat{animation:qDFloat 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qDFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+      '@keyframes qDBar{0%{transform:scaleY(0)}70%{transform:scaleY(1.05)}100%{transform:scaleY(1)}}';
     document.head.appendChild(st);
   }
   const L382 = {
@@ -16934,10 +16930,10 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       'Круговая диаграмма: сектор = доля от целого.',
       'Тренажёр: посчитай вероятность по числу шаров.',
       'Тренажёр: прочитай диаграмму.',
-      'Диаграммы рядом: столбчатая сравнивает, круговая показывает доли — выбирай под задачу.',
-      'Шпаргалка: P = благоприятные / все; 0 ≤ P ≤ 1; столбчатая — сравнить, круговая — доли.',
+      'Шпаргалка: P = благоприятные / все; 0 ≤ P ≤ 1; диаграммы показывают данные.',
       'Проверь себя устно: P(красный) = 2/5; P(орёл) = 1/2.',
-      'Проверь себя: P(красный) = 2/5. Ответь в тесте и жми «Понял! Проверю себя»!'
+      'Проверь себя: P = благоприятные / все.',
+      'Проверь себя: вероятность красного шара. Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: 'В мешке 2 красных и 3 синих шара. Вероятность вытащить красный?', choices: ['2/5', '3/5', '2/3', '1/2'], ans: 0,
       exp: 'Благоприятных 2, всего 5 → 2/5.' },
@@ -16948,80 +16944,66 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         hints: ['У монеты 2 стороны.', 'Орёл — 1 из 2 → 1/2.'], sol: '1/2' }
     ]
   };
-  const ink='#eef2ff', dim='#98a3c5', gold='#ffd76a', grn='#7de0a0', red='#ff7b6b', blu='#6ea8ff', cyan='#7fd6ff', purple='#b07fff', yellow='#ffd166',
-        bg0='#1a2040', bg1='#0d1126', card='rgba(24,31,56,.94)', cardB='#3a466a', lineC='#2a3750';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="3.4">${t}</text>`;
+  const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff7b6b', blu='#6ea8ff', cyan='#7fd6ff', purple='#b07fff', yellow='#ffd166',
+        bg0='#1a2040', bg1='#0d1126', card='rgba(24,31,56,.96)', cardB='#3a466a', lineC='#2a3750';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
         <linearGradient id="qDbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
         <radialGradient id="qDgold" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="${gold}"/></radialGradient>
-        <filter id="qDsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+        <radialGradient id="qDgem" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#ffe3ea"/><stop offset="1" stop-color="#f28ba5"/></radialGradient>
+        <filter id="qDsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
       </defs>
       <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qDbg)"/>
-      <g opacity="0.12" stroke="#4a5a8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="90" y1="0" x2="86" y2="${H}"/><line x1="150" y1="0" x2="146" y2="${H}"/><line x1="210" y1="0" x2="207" y2="${H}"/><line x1="270" y1="0" x2="268" y2="${H}"/></g>
+      <g opacity="0.14" stroke="#4a5a8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
       <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44538a" stroke-width="2.4" rx="7"/>
       <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3858" stroke-width="1.2" rx="4"/>
       ${o.inner?o.inner():''}
     </svg>`;
   }
   function gball(x,y,color,delay,big){
-    return `<g class="qDBall" style="animation-delay:${(delay||0).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="${big||10}" fill="${color}" stroke="#0b0f1c" stroke-width="1.4"/>
-      <circle cx="${x-(big||10)*0.3}" cy="${y-(big||10)*0.32}" r="${(big||10)*0.28}" fill="rgba(255,255,255,.6)"/></g>`;
+    return `<g class="qDBall" style="animation-delay:${(delay||0).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="${big||11}" fill="${color}" stroke="#0b0f1c" stroke-width="1.5"/><circle cx="${x-(big||11)*0.3}" cy="${y-(big||11)*0.32}" r="${(big||11)*0.3}" fill="rgba(255,255,255,.6)"/></g>`;
   }
   function bag(x,y,cols,go,drawIdx){
-    let s=`<g class="qDIn" filter="url(#qDsh)">
-      <path d="M ${x-30} ${y+8} Q ${x-34} ${y-18} ${x-14} ${y-26} L ${x+14} ${y-26} Q ${x+34} ${y-18} ${x+30} ${y+8} L ${x+20} ${y+40} Q ${x} ${y+48} ${x-20} ${y+40} Z" fill="#4a5a80" stroke="#2c3858" stroke-width="2.4"/>
-      <path d="M ${x-18} ${y-26} Q ${x} ${y-34} ${x+18} ${y-26} L ${x+18} ${y-30} Q ${x} ${y-40} ${x-18} ${y-30} Z" fill="#3a4a70" stroke="#2c3858" stroke-width="2"/>
-    </g>`;
-    const cols0=['#ff7b6b','#ff7b6b','#6ea8ff','#6ea8ff','#6ea8ff'];
-    const arr=cols||cols0;
+    let s=`<g class="qDIn" filter="url(#qDsh)"><path d="M ${x-32} ${y+8} Q ${x-36} ${y-18} ${x-15} ${y-26} L ${x+15} ${y-26} Q ${x+36} ${y-18} ${x+32} ${y+8} L ${x+22} ${y+42} Q ${x} ${y+50} ${x-22} ${y+42} Z" fill="#4a5a80" stroke="#2c3858" stroke-width="2.4"/><path d="M ${x-19} ${y-26} Q ${x} ${y-34} ${x+19} ${y-26} L ${x+19} ${y-30} Q ${x} ${y-40} ${x-19} ${y-30} Z" fill="#3a4a70" stroke="#2c3858" stroke-width="2"/></g>`;
+    const arr=cols||['#ff7b6b','#ff7b6b','#6ea8ff','#6ea8ff','#6ea8ff'];
     for(let i=0;i<arr.length;i++){
-      const lx=x-22+ (i%3)*16, ly=y+4 - Math.floor(i/3)*14;
-      if(go && i===drawIdx){ // вытащенный шар летит вверх
-        s+=`<g class="qDBall"><circle cx="${x}" cy="${y-58}" r="12" fill="${arr[i]}" stroke="#0b0f1c" stroke-width="1.6"/>
-          <circle cx="${x-3.6}" cy="${y-61.8}" r="3.4" fill="rgba(255,255,255,.6)"/></g>`;
-      } else {
-        s+=gball(lx,ly,arr[i],0.05*i*0 + 0.05*i);
-      }
+      const lx=x-24+(i%3)*18, ly=y+2-Math.floor(i/3)*14;
+      s+=(go&&i===drawIdx)
+        ? `<g class="qDBall"><circle cx="${x}" cy="${y-60}" r="13" fill="${arr[i]}" stroke="#0b0f1c" stroke-width="1.6"/><circle cx="${x-4}" cy="${y-64}" r="3.8" fill="rgba(255,255,255,.6)"/></g>`
+        : gball(lx,ly,arr[i],0.05*i);
     }
     return s;
   }
   function coin(cx,cy,r,go){
     let s=`<g class="${go?'qDFlip':''}" filter="url(#qDsh)"><ellipse cx="${cx}" cy="${cy}" rx="${r}" ry="${r}" fill="url(#qDgold)" stroke="#8a5a1a" stroke-width="2"/>`;
     s+=`<circle cx="${cx}" cy="${cy}" r="${r-4}" fill="none" stroke="#b8802c" stroke-width="1.4"/>`;
-    s+=tx(cx,cy+r*0.3,r*0.7,(go?'#3a2408':'#8a5a1a'),(go?'О':'О'),{b:1});
+    s+=tx(cx,cy+r*0.3,r*0.72,go?'#3a2408':'#8a5a1a','О',{b:1});
     s+=`</g>`;
     return s;
   }
   function die(cx,cy,size,pips){
-    let s=`<g class="qDIn" filter="url(#qDsh)"><rect x="${cx-size/2}" y="${cy-size/2}" width="${size}" height="${size}" rx="10" fill="#f4f6ff" stroke="#c5ccdb" stroke-width="2"/><rect x="${cx-size/2+6}" y="${cy-size/2+6}" width="${size-12}" height="${size-12}" rx="7" fill="#eef2fa"/></g>`;
-    const P=[[],[ [.5,.5] ],[ [.3,.3],[.7,.7] ],[ [.3,.3],[.5,.5],[.7,.7] ],[ [.3,.3],[.7,.3],[.3,.7],[.7,.7] ],[ [.3,.3],[.7,.3],[.5,.5],[.3,.7],[.7,.7] ],[ [.3,.25],[.7,.25],[.3,.5],[.7,.5],[.3,.75],[.7,.75] ]];
+    let s=`<g class="qDIn" filter="url(#qDsh)"><rect x="${cx-size/2}" y="${cy-size/2}" width="${size}" height="${size}" rx="12" fill="#f4f6ff" stroke="#c5ccdb" stroke-width="2"/><rect x="${cx-size/2+7}" y="${cy-size/2+7}" width="${size-14}" height="${size-14}" rx="8" fill="#eef2fa"/></g>`;
+    const P=[[],[ .5,.5 ],[ .3,.3,.7,.7 ],[ .3,.3,.5,.5,.7,.7 ],[ .3,.3,.7,.3,.3,.7,.7,.7 ],[ .3,.25,.7,.25,.3,.5,.7,.5,.3,.75,.7,.75 ],[ .3,.22,.7,.22,.3,.44,.7,.44,.3,.66,.7,.66,.3,.88,.7,.88 ]];
     let dot='';
-    for(const p of (P[pips]||[])){ dot+=`<circle cx="${cx-size/2+p[0]*size}" cy="${cy-size/2+p[1]*size}" r="${size*0.09}" fill="#3a4460"/>`; }
+    for(let j=0;j<(P[pips]||[]).length;j+=2){ dot+=`<circle cx="${cx-size/2+P[pips][j]*size}" cy="${cy-size/2+P[pips][j+1]*size}" r="${size*0.1}" fill="#3a4460"/>`; }
     return s+dot;
   }
-  function spinner(cx,cy,r,cols,go){
-    const n=cols.length, start=-90;
-    let s='';
-    for(let i=0;i<n;i++){ s+=`<g class="qDIn" style="animation-delay:${(0.05*i).toFixed(2)}s"><path d="${sectorPath(cx,cy,r,start+i*360/n,start+(i+1)*360/n)}" fill="${cols[i]}" stroke="#10152a" stroke-width="2"/></g>`; }
-    s+=`<circle cx="${cx}" cy="${cy}" r="${r*0.22}" fill="#10152a" stroke="${gold}" stroke-width="2.4"/>`;
-    s+=`<g class="${go?'qDSpin':''}"><path d="M ${cx} ${cy-r-2} l -10 0 l 0 -16 l -2 -14 l 14 0 l -2 14 l 0 16 z" fill="${gold}" stroke="#8a5a1a" stroke-width="1.4"/></g>`;
-    return s;
-  }
-  function sectorPath(cx,cy,r,a0,a1){
-    const r0=a0*Math.PI/180, r1=a1*Math.PI/180;
+  function sector(cx,cy,r,a0,a1){
+    const r0=a0*Math.PI/180,r1=a1*Math.PI/180;
     return `M ${cx} ${cy} L ${(cx+r*Math.cos(r0)).toFixed(1)} ${(cy+r*Math.sin(r0)).toFixed(1)} A ${r} ${r} 0 ${(r1-r0)>180?1:0} 1 ${(cx+r*Math.cos(r1)).toFixed(1)} ${(cy+r*Math.sin(r1)).toFixed(1)} Z`;
   }
-  function probScale(x,y,w,mark,markC,label){
-    let s=`<rect x="${x}" y="${y-4}" width="${w}" height="8" rx="4" fill="#2a3750"/>`;
-    s+=`<rect x="${x}" y="${y-4}" width="${mark*w}" height="8" rx="4" fill="url(#qDgold)"/>`;
-    s+=tx(x+w*0.5, y+22, 11, dim, mark===0?'0':mark===1?'1':''+mark, {});
-    s+=`<circle cx="${x+mark*w}" cy="${y}" r="6" fill="${markC}" stroke="#fffdf2" stroke-width="1.6"/>`;
+  function spinner(cx,cy,r,cols){
+    const n=cols.length,start=-90;
+    let s='';
+    for(let i=0;i<n;i++){ s+=`<g class="qDIn" style="animation-delay:${(0.05*i).toFixed(2)}s"><path d="${sector(cx,cy,r,start+i*360/n,start+(i+1)*360/n)}" fill="${cols[i]}" stroke="#10152a" stroke-width="2"/></g>`; }
+    s+=`<circle cx="${cx}" cy="${cy}" r="${r*0.24}" fill="#10152a" stroke="${gold}" stroke-width="2.4"/>`;
+    s+=`<g class="qDPop"><path d="M ${cx} ${cy-r-4} l -11 0 l 0 -17 l -2 -15 l 15 0 l -2 15 l 0 17 z" fill="${gold}" stroke="#8a5a1a" stroke-width="1.4"/></g>`;
     return s;
   }
-  const chip=(t,c,delay)=>`<span class="qDIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const chip=(t,c,delay)=>`<span class="qDIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
   const Q382=[
     {q:'2 красных, 3 синих — P(красный)?',opts:['2/5','3/5','2/3'],ans:0},
     {q:'P(орёл) у монеты?',opts:['1/2','1/3','1'],ans:0}
@@ -17031,17 +17013,17 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const opts=T.opts.map((o,i)=>{
       let bd=cardB,tc=ink,bg=card;
       if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,123,107,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:58px;font-size:17px" onclick="visW382T('${lk}',${i})">${o}</button>`;
+      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:17px" onclick="visW382T('${lk}',${i})">${o}</button>`;
     }).join('');
     let msg='';
     if(st.sel!=null){
       msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#7de0a0;font-size:16px">Верно! благоприятные / все</div>'
-        : '<div class="wk-ans" style="color:#ff7b6b;font-size:15px">Не так · посчитай исходы</div>';
+        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! благоприятные / все</div>'
+        : '<div class="wk-ans" style="color:#ff7b6b;font-size:17px">Не так · посчитай исходы</div>';
     }
     const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW382Act('${lk}','nq')`):'';
     const rst=wkBtn('заново',`visW382Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
+    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
   function visW382(el){
     const step=LV.step||0;
@@ -17055,29 +17037,25 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     let h='';
     const W=318;
     if(step===0){
-      const H=200, go=st.go||0;
+      const H=204, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'повезёт ли?',{b:1});
-      inner+=tx(159,52,12.5,dim,'мешок с шарами — вытащи красный',{});
-      inner+=bag(120,150,['#ff7b6b','#ff7b6b','#6ea8ff','#6ea8ff','#6ea8ff'],go, go?0:-1);
-      inner+=tx(240,150,14,dim,'?',{});
-      if(go){
-        inner+=`<g class="qDPop"><text x="159" y="92" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">шанс — это дробь!</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Игровой парк Архимеда</div>`+
+      inner+=tx(159,32,20,ink,'повезёт ли?',{b:1});
+      inner+=bag(120,150,['#ff7b6b','#ff7b6b','#6ea8ff','#6ea8ff','#6ea8ff'],go,go?0:-1);
+      if(go){ inner+=`<g class="qDPop"><text x="159" y="90" text-anchor="middle" font-size="19" fill="${grn}" font-weight="bold" font-family="Georgia,serif">шанс — это дробь!</text></g>`; }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Вероятностный парк</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('вероятность = благоприятные / все',grn,0.2)):'')+
         wkRow(go?wkBtn('сброс',`visW382Act('${lk}','rst')`):wkBtn('что это?',`visW382Act('${lk}','go')`))+
         wkSml('сколько шансов на удачу'));
     } else if(step===1){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,16,ink,'формула',{b:1});
-      inner+=tx(159,66,13.5,dim,'вероятность события',{});
+      inner+=tx(159,34,20,ink,'формула',{b:1});
+      inner+=tx(159,70,15,dim,'вероятность события',{});
       if(go){
-        inner+=`<g class="qDPop"><text x="159" y="108" text-anchor="middle" font-size="20" fill="${gold}" font-weight="bold" font-family="Georgia,serif">P = благоприятные / все</text>
-        <text x="159" y="140" text-anchor="middle" font-size="13" fill="${dim}">равновозможные исходы</text></g>`;
+        inner+=`<g class="qDPop"><text x="159" y="118" text-anchor="middle" font-size="24" fill="${gold}" font-weight="bold" font-family="Georgia,serif">P = благоприятные / все</text>
+        <text x="159" y="152" text-anchor="middle" font-size="14" fill="${dim}">равновозможные исходы</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Как посчитать шанс</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17087,13 +17065,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===2){
       const H=206, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'2 красных и 3 синих',{b:1});
-      inner+=bag(90,150,['#ff7b6b','#ff7b6b','#6ea8ff','#6ea8ff','#6ea8ff'],go,go?0:-1);
-      inner+=tx(159,196,14,dim,'всего 5 шаров',{});
+      inner+=tx(159,30,20,ink,'2 красных и 3 синих',{b:1});
+      inner+=bag(90,142,['#ff7b6b','#ff7b6b','#6ea8ff','#6ea8ff','#6ea8ff'],go,go?0:-1);
       if(go){
-        inner+=`<g class="qDPop"><rect x="60" y="80" width="198" height="44" rx="12" fill="rgba(255,123,107,.14)" stroke="${red}" stroke-width="2.2"/>
-        ${tx(159,100,16,red,'благоприятных: 2 красных',{b:1})}
-        ${tx(159,118,13,dim,'P(красный) = 2/5',{})}</g>`;
+        inner+=`<g class="qDPop"><rect x="52" y="72" width="214" height="48" rx="12" fill="rgba(255,123,107,.14)" stroke="${red}" stroke-width="2.2"/>
+        ${tx(159,94,18,red,'благоприятных: 2 красных',{b:1})}
+        ${tx(159,114,15,dim,'P(красный) = 2/5',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Мешок с шарами</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17101,15 +17078,15 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW382Act('${lk}','rst')`):wkBtn('вытащить',`visW382Act('${lk}','go')`))+
         wkSml('2 из 5 — доля красных'));
     } else if(step===3){
-      const H=196;
+      const H=182;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,40,17,ink,'все исходы равны?',{b:1});
-      inner+=tx(159,66,13.5,dim,'каждый шар одинаково возможен',{});
+      inner+=tx(159,34,20,ink,'все исходы равны?',{b:1});
+      inner+=tx(159,70,15,dim,'каждый шар одинаково возможен',{});
       if(go){
-        inner+=`<g class="qDPop"><rect x="52" y="88" width="214" height="40" rx="11" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="2"/>
-        ${tx(159,108,15,cyan,'иначе считать нельзя!',{b:1})}
-        ${tx(159,126,12,dim,'равновозможные — честный счёт',{})}</g>`;
+        inner+=`<g class="qDPop"><rect x="48" y="88" width="222" height="44" rx="12" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="2"/>
+        ${tx(159,110,17,cyan,'иначе считать нельзя!',{b:1})}
+        ${tx(159,128,13,dim,'равновозможные — честный счёт',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Честные шансы</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17117,14 +17094,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW382Act('${lk}','rst')`):wkBtn('почему?',`visW382Act('${lk}','go')`))+
         wkSml('равные шансы у всех'));
     } else if(step===4){
-      const H=206, go=st.go||0;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'монета',{b:1});
-      inner+=coin(159,132,46,go);
-      inner+=tx(90,196,13,dim,'орёл',{});
-      inner+=tx(228,196,13,dim,'решка',{});
+      inner+=tx(159,30,20,ink,'монета',{b:1});
+      inner+=coin(159,124,48,go);
       if(go){
-        inner+=`<g class="qDPop"><text x="159" y="86" text-anchor="middle" font-size="20" fill="${gold}" font-weight="bold" font-family="Georgia,serif">P(орёл) = 1/2</text></g>`;
+        inner+=`<g class="qDPop"><text x="159" y="60" text-anchor="middle" font-size="22" fill="${gold}" font-weight="bold" font-family="Georgia,serif">P(орёл) = 1/2</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Монетка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17132,13 +17107,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW382Act('${lk}','rst')`):wkBtn('подбросить',`visW382Act('${lk}','go')`))+
         wkSml('две стороны'));
     } else if(step===5){
-      const H=196;
-      const go=st.go||0;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,40,16,ink,'кубик',{b:1});
-      inner+=die(159,116,66,go?6:1);
+      inner+=tx(159,30,20,ink,'кубик',{b:1});
+      inner+=die(159,116,72,go?6:1);
       if(go){
-        inner+=`<g class="qDPop"><text x="159" y="172" text-anchor="middle" font-size="20" fill="${cyan}" font-weight="bold" font-family="Georgia,serif">P(6) = 1/6</text></g>`;
+        inner+=`<g class="qDPop"><text x="159" y="180" text-anchor="middle" font-size="22" fill="${cyan}" font-weight="bold" font-family="Georgia,serif">P(6) = 1/6</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Игральный кубик</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17146,12 +17120,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW382Act('${lk}','rst')`):wkBtn('бросить',`visW382Act('${lk}','go')`))+
         wkSml('шесть исходов'));
     } else if(step===6){
-      const H=206, go=st.go||0;
+      const H=190, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'рулетка',{b:1});
-      inner+=spinner(159,120,58,['#6ea8ff','#6ea8ff','#ff7b6b','#ffd166','#7de0a0'],go);
+      inner+=tx(159,30,20,ink,'рулетка',{b:1});
+      inner+=spinner(159,116,62,['#6ea8ff','#6ea8ff','#ff7b6b','#ffd166','#7de0a0']);
       if(go){
-        inner+=`<g class="qDPop"><text x="159" y="64" text-anchor="middle" font-size="18" fill="${blu}" font-weight="bold" font-family="Georgia,serif">P(синий) = 2/5</text></g>`;
+        inner+=`<g class="qDPop"><text x="159" y="60" text-anchor="middle" font-size="20" fill="${blu}" font-weight="bold" font-family="Georgia,serif">P(синий) = 2/5</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Рулетка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17159,14 +17133,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW382Act('${lk}','rst')`):wkBtn('крутить',`visW382Act('${lk}','go')`))+
         wkSml('пять секторов'));
     } else if(step===7){
-      const H=192, go=st.go||0;
+      const H=182;
+      const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'шкала вероятности',{b:1});
-      inner+=tx(36,66,11.5,dim,'0',{}); inner+=tx(282,66,11.5,dim,'1',{});
-      inner+=tx(36,88,10,dim,'невозможно',{}); inner+=tx(282,88,10,dim,'обязательно',{});
+      inner+=tx(159,32,20,ink,'шкала вероятности',{b:1});
+      inner+=tx(36,64,13,dim,'0',{}); inner+=tx(282,64,13,dim,'1',{});
+      inner+=tx(36,88,12,dim,'невозможно',{}); inner+=tx(282,88,12,dim,'обязательно',{});
       if(go){
-        inner+=probScale(36,60,246,0.5,'#7fd6ff','');
-        inner+=`<g class="qDPop"><text x="159" y="122" text-anchor="middle" font-size="14" fill="${dim}">монета · шар — где-то посередине</text></g>`;
+        inner+=`<g class="qDPop"><rect x="36" y="78" width="246" height="8" rx="4" fill="#2a3750"/><rect x="36" y="78" width="123" height="8" rx="4" fill="url(#qDgold)"/><circle cx="159" cy="82" r="7" fill="${cyan}" stroke="#fffdf2" stroke-width="1.8"/><text x="159" y="116" text-anchor="middle" font-size="14" fill="${dim}">монета · шар — где-то посередине</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">От 0 до 1</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17174,18 +17148,16 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW382Act('${lk}','rst')`):wkBtn('показать',`visW382Act('${lk}','go')`))+
         wkSml('невозможно — обязательно'));
     } else if(step===8){
-      const H=200, go=st.go||0;
+      const H=188, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'столбчатая диаграмма',{b:1});
+      inner+=tx(159,30,20,ink,'столбчатая диаграмма',{b:1});
       const data=[['К',5,'#ff7b6b'],['М',7,'#6ea8ff'],['Т',4,'#7de0a0']];
       data.forEach((d,i)=>{
         if(go>=i){
           const x=54+i*68, h=d[1]*9;
-          inner+=`<g class="qDBar" style="animation-delay:${(0.12*i).toFixed(2)}s"><rect x="${x}" y="${166-h}" width="40" height="${h}" rx="4" fill="${d[2]}" stroke="#10152a" stroke-width="1.6"/>
-          ${tx(x+20,166+16,12,dim,d[0],{})}${tx(x+20,166-h-6,12,d[2],''+d[1],{b:1})}</g>`;
+          inner+=`<g class="qDBar" style="animation-delay:${(0.12*i).toFixed(2)}s"><rect x="${x}" y="${158-h}" width="40" height="${h}" rx="5" fill="${d[2]}" stroke="#10152a" stroke-width="1.6"/><text x="${x+20}" y="${158+15}" text-anchor="middle" font-size="15" fill="${dim}" font-weight="bold">${d[0]}</text><text x="${x+20}" y="${158-h-6}" text-anchor="middle" font-size="16" fill="${d[2]}" font-weight="bold">${d[1]}</text></g>`;
         }
       });
-      inner+=tx(159,196,12,dim,'высота столбика = число',{});
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Столбчатая</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go>=3?wkRow(chip('высота — величина',gold,0.2)):'')+
@@ -17196,14 +17168,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=3?wkBtn('сброс',`visW382Act('${lk}','rst')`):'')+
         wkSml('сравнивает величины'));
     } else if(step===9){
-      const H=200, go=st.go||0;
+      const H=188, go=st.go||0;
       let inner='';
-      inner+=tx(159,30,16,ink,'круговая диаграмма',{b:1});
+      inner+=tx(159,30,20,ink,'круговая диаграмма',{b:1});
       const cols=['#ff7b6b','#6ea8ff','#7de0a0','#ffd166'];
-      let s='';
-      for(let i=0;i<4;i++){ if(go>=i){ s+=`<g class="qDIn" style="animation-delay:${(0.12*i).toFixed(2)}s"><path d="${sectorPath(159,116,56,-90+i*90,-90+(i+1)*90)}" fill="${cols[i]}" stroke="#10152a" stroke-width="2"/></g>`; } }
-      inner+=s;
-      inner+=tx(159,190,12,dim,'каждый сектор — доля',{});
+      for(let i=0;i<4;i++){ if(go>=i){ inner+=`<g class="qDIn" style="animation-delay:${(0.12*i).toFixed(2)}s"><path d="${sector(159,116,60,-90+i*90,-90+(i+1)*90)}" fill="${cols[i]}" stroke="#10152a" stroke-width="2"/></g>`; } }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Круговая</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go>=4?wkRow(chip('сектор — часть целого',gold,0.2)):'')+
@@ -17215,15 +17184,14 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           go>=4?wkBtn('сброс',`visW382Act('${lk}','rst')`):'')+
         wkSml('показывает доли'));
     } else if(step===10){
-      const H=200, go=st.go||0;
+      const H=182;
+      const go=st.go||0;
       let inner='';
-      inner+=tx(159,34,16,ink,'диаграммы рядом',{b:1});
+      inner+=tx(159,34,20,ink,'диаграммы рядом',{b:1});
       if(go){
-        inner+=`<g class="qDPop"><rect x="46" y="72" width="226" height="44" rx="12" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
-        ${tx(159,92,14,grn,'столбчатая — сравнить',{b:1})}
-        ${tx(159,110,12.5,dim,'круговая — показать доли',{})}</g>`;
-      } else {
-        inner+=tx(159,150,14,dim,'у каждой своя задача',{});
+        inner+=`<g class="qDPop"><rect x="46" y="70" width="226" height="48" rx="12" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>
+        ${tx(159,92,16,grn,'столбчатая — сравнить',{b:1})}
+        ${tx(159,110,13,dim,'круговая — показать доли',{})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Что лучше</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17231,29 +17199,29 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW382Act('${lk}','rst')`):wkBtn('сравнить',`visW382Act('${lk}','go')`))+
         wkSml('выбирай под задачу'));
     } else if(step===11){
-      const H=200, py=84;
+      const H=194, py=82;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'3 красных, 2 синих — P(красный)?',a:'3/5',ds:['2/5','3/2']},
-        {q:'1 красный, 4 синих — P(красный)?',a:'1/5',ds:['4/5','1/4']},
-        {q:'2 красных, 3 синих — P(синий)?',a:'3/5',ds:['2/5','3/2']},
-        {q:'5 белых, 1 чёрный — P(белый)?',a:'5/6',ds:['1/6','1/5']}
+        {q:'3 красных, 2 синих',a:'3/5',ds:['2/5','3/2']},
+        {q:'1 красный, 4 синих',a:'1/5',ds:['4/5','1/4']},
+        {q:'2 красных, 3 синих — синий?',a:'3/5',ds:['2/5','3/2']},
+        {q:'5 белых, 1 чёрный',a:'5/6',ds:['1/6','1/5']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,16,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,19,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,123,107,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qDIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,20,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qDIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,24,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qDPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qDPop"><text x="159" y="${py+72}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">благоприятные / все</text></g>`)
-        : tx(159,py+72,14.5,dim,'посчитай шанс',{});
+        ? (st.pick===0? `<g class="qDPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qDPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">благоприятные / все</text></g>`)
+        : tx(159,py+74,16,dim,'посчитай шанс',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW382Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW382P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -17264,28 +17232,28 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('благоприятные / все'));
     } else if(step===12){
-      const H=196;
+      const H=194, py=82;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'Столбик 5, 7, 4 — какой самый большой?',a:'7',ds:['5','4']},
-        {q:'На рулетке 2 синих из 5 — P(синий)?',a:'2/5',ds:['1/5','3/5']},
-        {q:'Круг: 4 части — какая доля одна часть?',a:'1/4',ds:['1/2','1/3']}
+        {q:'Столбик 5,7,4 — самый большой?',a:'7',ds:['5','4']},
+        {q:'Рулетка: 2 синих из 5',a:'2/5',ds:['1/5','3/5']},
+        {q:'Круг: 4 части — одна часть',a:'1/4',ds:['1/2','1/3']}
       ];
       const P=pool[st.tr%pool.length];
       const ord=[P.a,...P.ds];
       let inner='';
-      inner+=tx(159,34,15.5,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
+      inner+=tx(159,30,18,ink,P.q,{b:1});
+      const X=[26,118,210],CW=86;
       ord.forEach((o,i)=>{
         let bd=cardB,tc=ink,bgc=card;
         if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,123,107,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qDIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="88" width="${CW}" height="48" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,120,20,tc,o,{b:1,georgia:1})}</g>`;
+        inner+=`<g class="qDIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
+        ${tx(X[i]+CW/2,py+36,24,tc,o,{b:1,georgia:1})}</g>`;
       });
       inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qDPop"><text x="159" y="160" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qDPop"><text x="159" y="160" text-anchor="middle" font-size="17" fill="${red}" font-weight="bold">присмотрись</text></g>`)
-        : tx(159,160,14.5,dim,'выбери ответ',{});
+        ? (st.pick===0? `<g class="qDPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
+          : `<g class="qDPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">присмотрись</text></g>`)
+        : tx(159,py+74,16,dim,'выбери ответ',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW382Act('${lk}','n')">дальше →</button></div>`
         : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW382P('${lk}',${i})">${o}</button>`).join('')}</div>`;
@@ -17295,18 +17263,18 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         fb+retry+
         wkSml('читай диаграмму'));
     } else if(step===13){
-      const H=196;
+      const H=182;
       if(st.mq==null) st.mq=0;
       const QS=[
-        {q:'2 красных, 3 синих — P(красный)?',opts:['2/5','3/5','2/3'],ans:0},
+        {q:'2 кр, 3 син — P(красный)?',opts:['2/5','3/5','2/3'],ans:0},
         {q:'P(орёл)?',opts:['1/2','1/3','1'],ans:0},
-        {q:'Самый высокий столбик — это…?',opts:['самая большая величина','самая маленькая','равные'],ans:0}
+        {q:'Самый высокий столбик?',opts:['самая большая','самая маленькая','равные'],ans:0}
       ];
       const T=QS[st.mq];
       let inner='';
-      inner+=tx(159,38,15.5,ink,'устная проверка',{b:1});
+      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qDPop"><text x="159" y="96" text-anchor="middle" font-size="17" fill="${st.msel===T.ans?'#7de0a0':'#ff7b6b'}" font-weight="bold">${st.msel===T.ans?'верно!':'посчитай'}</text></g>`;
+        inner+=`<g class="qDPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff7b6b'}" font-weight="bold">${st.msel===T.ans?'верно!':'посчитай'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -17317,11 +17285,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         </div>`+
         wkSml('благоприятные / все'));
     } else {
-      const H=200;
+      const H=190;
       let inner='';
-      inner+=tx(159,42,17,ink,'P(красный)',{b:1,georgia:1});
+      inner+=tx(159,30,20,ink,'P(красный)',{b:1,georgia:1});
       inner+=bag(120,140,['#ff7b6b','#ff7b6b','#6ea8ff','#6ea8ff','#6ea8ff'],0,-1);
-      inner+=`<g class="qDPop"><text x="159" y="70" text-anchor="middle" font-size="30" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 2/5</text></g>`;
+      inner+=`<g class="qDPop"><text x="159" y="66" text-anchor="middle" font-size="30" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 2/5</text></g>`;
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
