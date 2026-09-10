@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 27 уроков (id 500–526) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 30 уроков (id 500–529) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -5523,6 +5523,1333 @@
       s+=`${fit(159,276,11,dim,'данные → признаки → обучение → проверка',{},292)}`;
       return s;
     }
+    if(K==='hwintro'){ /* компьютер — это система */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'компьютер — это много устройств вместе',{b:1},262)+`</g>`;
+      s+=drawRR(96,54,126,84,8,cyan,2.4,0.2,2,pre);
+      s+=`<rect x="104" y="62" width="110" height="60" rx="4" fill="rgba(127,214,255,.18)"/>`;
+      s+=fit(159,86,11,gold,'процессор',{b:1},100);
+      s+=fit(159,104,10,dim,'и память',{},100);
+      s+=drawRR(20,160,80,56,8,grn,2.2,0.6,1.8,pre);
+      s+=fit(60,182,10.5,grn,'клавиатура',{b:1},74);
+      s+=drawRR(218,160,80,56,8,gold,2.2,0.9,1.8,pre);
+      s+=fit(258,182,10.5,gold,'мышь',{b:1},74);
+      s+=drawRR(120,242,78,40,8,pur,2.2,1.2,1.8,pre);
+      s+=fit(159,266,10.5,pur,'диск',{b:1},70);
+      s+=drawLL({x:159,y:138},{x:159,y:160},blu,2,1.5,1.8,pre)+drawLL({x:159,y:138},{x:120,y:242},blu,2,1.7,1.8,pre);
+      s+=plate2(18,288,282,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='hwparts'){ /* четыре группы */
+      const g2=[{t:'процессор',d:'считает и управляет',c:gold},{t:'память',d:'хранит данные',c:cyan},
+                {t:'ввод',d:'получает от нас',c:grn},{t:'вывод',d:'показывает нам',c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'четыре группы устройств',{b:1},262)+`</g>`;
+      g2.forEach((q,k)=>{
+        const x=22+(k%2)*140, y=52+Math.floor(k/2)*88;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.18).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="132" height="76" rx="11" fill="rgba(12,32,34,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(x+66,y+30,12.5,q.c,q.t,{b:1},124)
+          +fit(x+66,y+52,10,dim,q.d,{},124);
+        if(k===0) s+=`<rect x="${x+52}" y="${y+58}" width="28" height="12" rx="2" fill="${q.c}" opacity=".5"/>`;
+        if(k===1) s+=`<rect x="${x+52}" y="${y+58}" width="28" height="12" rx="2" fill="none" stroke="${q.c}" stroke-width="1.6"/>`;
+        if(k===2) s+=`<path d="M${x+56} ${y+68} h20 M${x+62} ${y+62} v12 M${x+70} ${y+62} v12" stroke="${q.c}" stroke-width="1.6"/>`;
+        if(k===3) s+=aiShape(x+66,y+64,7,'circle',q.c,1.6);
+        s+=`</g>`;
+      });
+      s+=plate2(22,236,274,32,go?grn:cardB,go?'ввод → обработка → вывод, а память помогает':'какие бывают устройства?',11,pre);
+      s+=`${fit(159,290,11,dim,'и всё это соединено вместе',{},280)}`;
+      return s;
+    }
+    if(K==='hwinput'){ /* устройства ввода */
+      const items=[['клавиатура','keys'],['мышь','mouse'],['микрофон','mic'],['камера','cam'],['сканер','scan'],['джойстик','joy']];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'устройства ввода: информацию даём мы',{b:1},264)+`</g>`;
+      items.forEach((q,k)=>{
+        const x=22+(k%3)*94, y=52+Math.floor(k/3)*96;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.12).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="88" height="84" rx="11" fill="rgba(12,32,34,.97)" stroke="${grn}" stroke-width="1.7"/>`
+          +fit(x+44,y+72,10,grn,q[0],{b:1},82);
+        const cx=x+44, cy=y+34;
+        if(q[1]==='keys') s+=`<rect x="${cx-24}" y="${cy-11}" width="48" height="22" rx="4" fill="none" stroke="${grn}" stroke-width="1.7"/><path d="M${cx-16} ${cy-3} h8 M${cx-2} ${cy-3} h8 M${cx-16} ${cy+5} h20" stroke="${grn}" stroke-width="1.4"/>`;
+        else if(q[1]==='mouse') s+=`<path d="M${cx} ${cy-14} a13 14 0 0 1 13 14 v0 a13 14 0 0 1 -26 0 a13 14 0 0 1 13 -14 z" fill="none" stroke="${grn}" stroke-width="1.7"/><path d="M${cx} ${cy-14} v10" stroke="${grn}" stroke-width="1.6"/>`;
+        else if(q[1]==='mic') s+=`<rect x="${cx-6}" y="${cy-14}" width="12" height="20" rx="6" fill="none" stroke="${grn}" stroke-width="1.7"/><path d="M${cx-12} ${cy+2} a12 12 0 0 0 24 0 M${cx} ${cy+14} v8" fill="none" stroke="${grn}" stroke-width="1.7"/>`;
+        else if(q[1]==='cam') s+=`<rect x="${cx-16}" y="${cy-10}" width="32" height="22" rx="5" fill="none" stroke="${grn}" stroke-width="1.7"/><circle cx="${cx}" cy="${cy+1}" r="6" fill="none" stroke="${grn}" stroke-width="1.6"/>`;
+        else if(q[1]==='scan') s+=`<rect x="${cx-15}" y="${cy-14}" width="30" height="8" rx="3" fill="none" stroke="${grn}" stroke-width="1.6"/><path d="M${cx-15} ${cy+2} h30" stroke="${grn}" stroke-width="2.4"/><rect x="${cx-15}" y="${cy+8}" width="30" height="8" rx="3" fill="none" stroke="${grn}" stroke-width="1.6"/>`;
+        else s+=`<circle cx="${cx}" cy="${cy+4}" r="11" fill="none" stroke="${grn}" stroke-width="1.7"/><path d="M${cx} ${cy-7} v-6 M${cx-8} ${cy-2} l-6 -6 M${cx+8} ${cy-2} l6 -6" stroke="${grn}" stroke-width="1.6"/>`;
+        s+=`</g>`;
+      });
+      s+=plate2(22,244,274,30,go?grn:cardB,go?'мы вводим данные — компьютер их обрабатывает':'что общего у этих устройств?',11,pre);
+      return s;
+    }
+    if(K==='hwoutput'){ /* устройства вывода */
+      const items=[['монитор','mon'],['колонки','spk'],['принтер','print'],['проектор','proj']];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'устройства вывода: информацию получаем мы',{b:1},266)+`</g>`;
+      items.forEach((q,k)=>{
+        const x=22+(k%2)*140, y=52+Math.floor(k/2)*92;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.16).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="132" height="80" rx="11" fill="rgba(12,32,34,.97)" stroke="${pur}" stroke-width="1.7"/>`
+          +fit(x+66,y+70,10.5,pur,q[0],{b:1},124);
+        const cx=x+66, cy=y+34;
+        if(q[1]==='mon') s+=`<rect x="${cx-26}" y="${cy-16}" width="52" height="34" rx="4" fill="rgba(176,127,255,.2)" stroke="${pur}" stroke-width="1.7"/><path d="M${cx-10} ${cy+18} h20 M${cx} ${cy+18} v6" stroke="${pur}" stroke-width="1.7"/>`;
+        else if(q[1]==='spk') s+=`<rect x="${cx-22}" y="${cy-16}" width="20" height="34" rx="4" fill="none" stroke="${pur}" stroke-width="1.7"/><circle cx="${cx+2}" cy="${cy-4}" r="7" fill="none" stroke="${pur}" stroke-width="1.6"/><circle cx="${cx+2}" cy="${cy+12}" r="4" fill="none" stroke="${pur}" stroke-width="1.4"/><path d="M${cx+16} ${cy-10} q7 10 0 20" fill="none" stroke="${pur}" stroke-width="1.6"/>`;
+        else if(q[1]==='print') s+=`<rect x="${cx-24}" y="${cy-6}" width="48" height="24" rx="4" fill="none" stroke="${pur}" stroke-width="1.7"/><rect x="${cx-16}" y="${cy-16}" width="32" height="10" rx="2" fill="none" stroke="${pur}" stroke-width="1.5"/><rect x="${cx-16}" y="${cy+18}" width="32" height="8" rx="2" fill="rgba(176,127,255,.25)" stroke="${pur}" stroke-width="1.4"/>`;
+        else s+=`<rect x="${cx-24}" y="${cy-6}" width="34" height="20" rx="4" fill="none" stroke="${pur}" stroke-width="1.7"/><path d="M${cx+14} ${cy-2} l14 -8 v22 l-14 -8 z" fill="rgba(176,127,255,.25)" stroke="${pur}" stroke-width="1.5"/>`;
+        s+=`</g>`;
+      });
+      s+=plate2(22,240,274,32,go?grn:cardB,go?'вывод: компьютер показывает результат нам':'что общего у этих устройств?',11,pre);
+      return s;
+    }
+    if(K==='hwmemory'){ /* память оперативная и постоянная */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'две памяти: быстрая и долгая',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Rise}"><rect x="20" y="52" width="132" height="128" rx="11" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(86,78,12.5,cyan,'оперативная',{b:1},120)+`</g>`;
+      for(let k=0;k<6;k++){
+        s+=`<rect class="${pre}Pop" style="animation-delay:${(0.3+k*0.1).toFixed(2)}s" x="${34+(k%3)*40}" y="${92+Math.floor(k/3)*26}" width="34" height="20" rx="3" fill="rgba(127,214,255,.25)" stroke="${cyan}" stroke-width="1.3"/>`;
+      }
+      s+=fit(86,168,10,dim,'выключил — всё стёрлось',{},124);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.25s"><rect x="166" y="52" width="132" height="128" rx="11" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(232,78,12.5,gold,'постоянная',{b:1},120)+`</g>`;
+      s+=`<circle class="qrPop" cx="232" cy="122" r="26" fill="none" stroke="${gold}" stroke-width="2"/><circle cx="232" cy="122" r="7" fill="${gold}" opacity=".6"/>`;
+      s+=fit(232,168,10,dim,'данные остаются',{},124);
+      s+=plate2(20,192,278,32,go?grn:cardB,go?'программа живёт на диске, а работает в оперативной':'в чём разница?',11,pre);
+      s+=`${fit(159,246,11,ink,'файлы — на диске, запущенная программа — в памяти',{b:1},292)}`;
+      s+=`${fit(159,272,11,dim,'поэтому после выключения файлы целы',{},292)}`;
+      return s;
+    }
+    if(K==='hwram'){ /* ячейки памяти с адресами */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'память — это ячейки с адресами',{b:1},262)+`</g>`;
+      for(let r=0;r<4;r++)for(let c=0;c<5;c++){
+        const i=r*5+c, x=32+c*52, y=60+r*44;
+        s+=`<rect class="${pre}Pop" style="animation-delay:${(0.08*i).toFixed(2)}s" x="${x}" y="${y}" width="46" height="34" rx="5" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`;
+        s+=`<text x="${x+23}" y="${y+16}" text-anchor="middle" font-size="9.5" fill="${dim}">${'#'+(i+1)}</text>`;
+        s+=`<text x="${x+23}" y="${y+29}" text-anchor="middle" font-size="11" font-weight="bold" fill="${cyan}">1010</text>`;
+      }
+      s+=`<g class="${pre}Pop}" style="animation-delay:1.6s"><rect x="286" y="60" width="0" height="0"/></g>`;
+      s+=plate2(32,244,254,32,go?grn:cardB,go?'по адресу находим нужную ячейку':'что хранится в ячейках?',11,pre);
+      s+=`${fit(159,296,11,dim,'адрес — как номер квартиры в доме',{},292)}`;
+      return s;
+    }
+    if(K==='hwbits'){ /* биты и байты */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'внутри памяти только нули и единицы',{b:1},266)+`</g>`;
+      const bits=[1,0,1,1,0,0,1,0];
+      bits.forEach((b,k)=>{
+        const x=32+k*32;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.1).toFixed(2)}s">`
+          +`<rect x="${x}" y="66" width="28" height="34" rx="5" fill="${b?'rgba(125,224,160,.22)':'rgba(255,255,255,.05)'}" stroke="${b?grn:cardB}" stroke-width="1.6"/>`
+          +tx(x+14,89,15,b?grn:dim,''+b,{b:1})+`</g>`;
+      });
+      s+=fit(159,124,11.5,dim,'восемь битов — это один байт',{b:1},260);
+      s+=`<g class="${pre}Rise}"><rect x="32" y="140" width="254" height="34" rx="9" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.7"/>`
+        +fit(159,162,11.5,cyan,'байт хранит, например, одну букву',{b:1},240)+`</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.3s"><rect x="32" y="184" width="254" height="34" rx="9" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,206,11.5,gold,'1 КБ = 1024 байта',{b:1},240)+`</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.5s"><rect x="32" y="228" width="254" height="34" rx="9" fill="rgba(176,127,255,.10)" stroke="${pur}" stroke-width="1.7"/>`
+        +`<text x="159" y="251" text-anchor="middle" font-size="12" font-weight="bold" fill="${pur}">1 МБ = 1024 КБ · 1 ГБ = 1024 МБ</text></g>`;
+      return s;
+    }
+    if(K==='hwcpu'){ /* процессор */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'процессор — «мозг» компьютера',{b:1},262)+`</g>`;
+      s+=drawRect(96,58,126,86,8,gold,2.6,0.2,2.2,pre,{pen:true});
+      s+=fit(159,90,12.5,gold,'процессор',{b:1},110);
+      for(let k=0;k<6;k++){
+        s+=`<line x1="${106+k*20}" y1="44" x2="${106+k*20}" y2="58" stroke="${gold}" stroke-width="2.4"/>`;
+        s+=`<line x1="${106+k*20}" y1="144" x2="${106+k*20}" y2="158" stroke="${gold}" stroke-width="2.4"/>`;
+      }
+      s+=fit(159,176,11.5,ink,'он выполняет команды одну за другой',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="30" y="196" width="258" height="30" rx="8" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,216,11,cyan,'миллиарды простых операций каждую секунду',{b:1},240)+`</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="234" width="258" height="30" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`
+        +fit(159,254,11,dim,'работает по программе, которую написали люди',{},240)+`</g>`;
+      s+=plate2(30,272,258,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='hwcycle'){ /* цикл процессора */
+      const st2=['выбрать команду','расшифровать','выполнить','записать результат'];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'цикл процессора: четыре шага',{b:1},262)+`</g>`;
+      st2.forEach((q,k)=>{
+        const y=56+k*40;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="40" y="${y}" width="238" height="30" rx="9" fill="rgba(18,24,44,.97)" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="1.7"/>`
+          +`<circle cx="60" cy="${y+15}" r="10" fill="rgba(255,255,255,.05)" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="1.3"/>`
+          +tx(60,y+19,11,[cyan,gold,grn,pur][k],''+(k+1),{b:1})
+          +fit(180,y+20,11.5,ink,q,{b:1},220)+`</g>`;
+        if(k<3) s+=drawLL({x:159,y:y+32},{x:159,y:y+38},[cyan,gold,grn,pur][k],1.6,0.5+k*0.2,1.6,pre);
+      });
+      s+=`<path d="M286 71 q22 60 0 118" fill="none" stroke="${gold}" stroke-width="2.2" stroke-dasharray="7 5"/>`;
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="2.4s" repeatCount="indefinite" path="M286 71 q22 60 0 118"/></circle>`;
+      s+=fit(276,140,10.5,gold,'и снова',{b:1},44);
+      s+=plate2(40,224,238,30,go?grn:cardB,go?'миллиарды раз в секунду — вот это и есть «такты»':'что происходит с командой?',11,pre);
+      return s;
+    }
+    if(K==='hwbus'){ /* шины */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'данные ходят по шинам',{b:1},262)+`</g>`;
+      s+=drawRR(114,54,90,44,8,gold,2.4,0.2,2,pre); s+=fit(159,80,11.5,gold,'процессор',{b:1},80);
+      s+=drawRR(28,150,96,40,8,cyan,2.4,0.5,1.8,pre); s+=fit(76,175,11,cyan,'память',{b:1},84);
+      s+=drawRR(196,150,96,40,8,grn,2.4,0.7,1.8,pre); s+=fit(244,175,11,grn,'диск',{b:1},84);
+      s+=drawLL({x:159,y:98},{x:76,y:150},pur,2.4,1,2.2,pre);
+      s+=drawLL({x:159,y:98},{x:244,y:150},pur,2.4,1.2,2.2,pre);
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M159 98 L76 150"/></circle>`;
+      s+=`<circle r="6" fill="${cyan}"><animateMotion dur="2.6s" begin="0.6s" repeatCount="indefinite" path="M76 150 L159 98"/></circle>`;
+      s+=`<circle r="6" fill="${grn}"><animateMotion dur="2.6s" begin="1.2s" repeatCount="indefinite" path="M244 150 L159 98"/></circle>`;
+      s+=plate2(24,206,270,32,go?grn:cardB,go?'по шинам данные идут туда и обратно':'как части общаются?',11,pre);
+      s+=`${fit(159,260,11,ink,'шина — это «дорога» для данных',{b:1},280)}`;
+      return s;
+    }
+    if(K==='hwclock'){ /* тактовая частота */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'такт: как быстро работает процессор',{b:1},262)+`</g>`;
+      let d='M32 120', up=true;
+      for(let k=0;k<11;k++){ d+=' L'+(32+k*24+12)+' '+(up?84:150)+' L'+(32+(k+1)*24)+' '+(up?84:150); up=!up; }
+      s+=`<path d="${d}" fill="none" stroke="${cyan}" stroke-width="2.6" stroke-linejoin="round"/>`;
+      s+=`<line x1="32" y1="150" x2="300" y2="150" stroke="${cardB}" stroke-width="1.4"/>`;
+      s+=fit(159,178,11,dim,'одна секунда — миллиарды тактов',{},280);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="40" y="196" width="238" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,219,12.5,gold,'3 ГГц = 3 миллиарда тактов в секунду',{b:1},226)+`</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="40" y="240" width="238" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,263,11.5,grn,'чем больше тактов, тем быстрее считает',{b:1},226)+`</g>`;
+      s+=`${fit(159,296,11,dim,'но всё упирается и в память, и в диск',{},290)}`;
+      return s;
+    }
+    if(K==='hwcores'){ /* ядра */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'ядра: несколько помощников сразу',{b:1},262)+`</g>`;
+      for(let k=0;k<4;k++){
+        const x=32+(k%2)*140, y=56+Math.floor(k/2)*92;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.15).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="124" height="76" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`
+          +fit(x+62,y+26,11.5,grn,'ядро '+(k+1),{b:1},116)
+          +`<rect x="${x+16}" y="${y+38}" width="92" height="14" rx="6" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.2"/>`
+          +growBar(x+18,y+40,88,10,grn,1.4,0.4+k*0.2,0)+`</g>`;
+      }
+      s+=plate2(24,244,270,30,go?grn:cardB,go?'четыре ядра — четыре задачи одновременно':'сколько задач сразу?',11,pre);
+      s+=`${fit(159,296,11,dim,'поэтому компьютер не «зависает» от одной задачи',{},292)}`;
+      return s;
+    }
+    if(K==='hwcache'){ /* уровни памяти */
+      const lv=[{t:'регистры',v:1,c:red},{t:'кэш',v:0.75,c:gold},{t:'оперативная',v:0.45,c:cyan},{t:'диск',v:0.15,c:blu}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'чем ближе к процессору, тем быстрее',{b:1},264)+`</g>`;
+      lv.forEach((q,k)=>{
+        const w=270-k*54, x=(318-w)/2, y=54+k*44;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="${w}" height="36" rx="9" fill="${q.c}" fill-opacity=".16" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(x+w/2,y+23,12,q.c,q.t,{b:1},w-20)+`</g>`;
+      });
+      s+=fit(34,240,10.5,dim,'быстро и мало',{an:'start'},110);
+      s+=fit(284,240,10.5,dim,'медленно и много',{an:'end'},120);
+      s+=plate2(24,252,270,30,go?grn:cardB,go?'регистры → кэш → память → диск':'как устроена память по скорости?',11,pre);
+      return s;
+    }
+    if(K==='hwstorage'){ /* носители */
+      const it=[{t:'жёсткий диск',d:'внутри ноутбука',c:blu},{t:'SSD',d:'быстрый и тихий',c:grn},
+                {t:'флешка',d:'с собой',c:gold},{t:'облако',d:'в интернете',c:cyan}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${blu}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,blu,'где данные живут долго',{b:1},262)+`</g>`;
+      it.forEach((q,k)=>{
+        const x=22+(k%2)*140, y=52+Math.floor(k/2)*94;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.16).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="132" height="82" rx="11" fill="rgba(12,32,34,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(x+66,y+34,11.5,q.c,q.t,{b:1},124)
+          +fit(x+66,y+56,10,dim,q.d,{},124);
+        const cx=x+66, cy=y+66;
+        if(k===0) s+=`<rect x="${cx-16}" y="${cy-2}" width="32" height="14" rx="3" fill="none" stroke="${q.c}" stroke-width="1.6"/>`;
+        else if(k===1) s+=`<rect x="${cx-16}" y="${cy-2}" width="32" height="14" rx="3" fill="rgba(125,224,160,.25)" stroke="${q.c}" stroke-width="1.6"/>`;
+        else if(k===2) s+=`<rect x="${cx-10}" y="${cy-4}" width="20" height="16" rx="3" fill="none" stroke="${q.c}" stroke-width="1.6"/>`;
+        else s+=`<path d="M${cx-14} ${cy+8} a10 10 0 0 1 8 -16 a12 12 0 0 1 20 4 a8 8 0 0 1 2 12 z" fill="rgba(127,214,255,.2)" stroke="${q.c}" stroke-width="1.6"/>`;
+        s+=`</g>`;
+      });
+      s+=plate2(22,244,274,30,go?grn:cardB,go?'всё это — постоянная память':'где хранят данные?',11,pre);
+      return s;
+    }
+    if(K==='hwgraphics'){ /* видеокарта и звук */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'графика и звук — тоже устройства',{b:1},262)+`</g>`;
+      s+=drawRR(24,54,130,90,10,pur,2.4,0.2,1.9,pre);
+      for(let r=0;r<4;r++)for(let c=0;c<5;c++)
+        s+=`<rect class="${pre}Pop" style="animation-delay:${(0.2+(r*5+c)*0.03).toFixed(2)}s" x="${36+c*22}" y="${66+r*18}" width="20" height="16" rx="2" fill="${(r+c)%2?'rgba(176,127,255,.35)':'rgba(127,214,255,.3)'}"/>`;
+      s+=fit(89,160,11.5,pur,'видеокарта',{b:1},120);
+      s+=fit(89,180,10,dim,'рисует картинку',{},120);
+      s+=drawRR(166,54,130,90,10,grn,2.4,0.5,1.9,pre);
+      for(let k=0;k<4;k++){
+        const h=12+k*12;
+        s+=growBar(186+k*26,124-h,16,h,grn,1.2,0.6+k*0.18,0);
+      }
+      s+=fit(231,160,11.5,grn,'звуковая карта',{b:1},120);
+      s+=fit(231,180,10,dim,'создаёт звук',{},120);
+      s+=plate2(24,196,272,32,go?grn:cardB,go?'без них не было бы игр и музыки':'зачем эти платы?',11,pre);
+      s+=`${fit(159,250,11,ink,'у видеокарты свои ядра и своя память',{b:1},292)}`;
+      s+=`${fit(159,274,11,dim,'поэтому игры требуют мощную видеокарту',{},292)}`;
+      return s;
+    }
+    if(K==='hwsoftware'){ /* железо и программы */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'железо и программы',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Rise}"><rect x="18" y="52" width="134" height="118" rx="11" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(85,78,12.5,cyan,'железо',{b:1},126)+`</g>`;
+      s+=fit(85,102,10.5,dim,'то, что можно потрогать',{},126);
+      s+=`<circle cx="60" cy="132" r="10" fill="none" stroke="${cyan}" stroke-width="1.6"/>`
+        +`<rect x="78" y="122" width="26" height="20" rx="3" fill="none" stroke="${cyan}" stroke-width="1.6"/>`
+        +`<rect x="112" y="122" width="26" height="20" rx="3" fill="none" stroke="${cyan}" stroke-width="1.6"/>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.25s"><rect x="166" y="52" width="134" height="118" rx="11" fill="rgba(125,224,160,.10)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(233,78,12.5,grn,'программы',{b:1},126)+`</g>`;
+      s+=fit(233,102,10.5,dim,'то, что нельзя потрогать',{},126);
+      s+=`<circle cx="208" cy="130" r="9" fill="none" stroke="${grn}" stroke-width="1.6"/><path d="M208 121 v-6" stroke="${grn}" stroke-width="1.6"/>`;
+      s+=`<rect x="226" y="120" width="26" height="20" rx="3" fill="none" stroke="${grn}" stroke-width="1.6"/>`;
+      s+=`<rect x="260" y="120" width="26" height="20" rx="3" fill="none" stroke="${grn}" stroke-width="1.6"/>`;
+      s+=plate2(18,182,282,32,go?grn:cardB,go?'железо без программ — просто детали':'в чём разница?',11,pre);
+      s+=`${fit(159,238,11.5,ink,'программа — это инструкции для железа',{b:1},292)}`;
+      s+=`${fit(159,262,11,dim,'часть программ уже «вшита» в устройства',{},292)}`;
+      return s;
+    }
+    if(K==='hwos'){ /* операционная система */
+      const rows=[{t:'управляет устройствами',c:cyan},{t:'раздаёт память программам',c:gold},
+                  {t:'следит за файлами',c:grn},{t:'показывает окна и значки',c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'операционная система — дирижёр',{b:1},262)+`</g>`;
+      s+=drawRR(52,52,214,44,10,cyan,2.4,0.2,2,pre);
+      s+=fit(159,80,12.5,cyan,'операционная система',{b:1},200);
+      rows.forEach((q,k)=>{
+        const y=110+k*38;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.2+k*0.18).toFixed(2)}s">`
+          +`<rect x="40" y="${y}" width="238" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +`<circle cx="58" cy="${y+15}" r="9" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.3"/>`
+          +tx(58,y+19,10.5,q.c,''.concat(k+1),{b:1})
+          +fit(178,y+20,11,q.c,q.t,{b:1},216)+`</g>`;
+      });
+      s+=plate2(40,266,238,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='hwboot'){ /* как включается */
+      const st2=[{t:'нажали кнопку',c:gold},{t:'проверка устройств',c:cyan},{t:'поиск системы',c:blu},{t:'загрузка системы',c:grn},{t:'рабочий стол',c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'что происходит при включении',{b:1},262)+`</g>`;
+      s+=drawLL({x:36,y:150},{x:286,y:150},cardB,2,0.2,2,pre);
+      st2.forEach((q,k)=>{
+        const x=52+k*56;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.25).toFixed(2)}s">`
+          +`<circle cx="${x}" cy="150" r="13" fill="rgba(12,32,34,.97)" stroke="${q.c}" stroke-width="2"/>`
+          +tx(x,155,11,q.c,''.concat(k+1),{b:1})
+          +fit(x,k%2?186:124,10.5,q.c,q.t,{},104)+`</g>`;
+      });
+      s+=plate2(24,210,270,32,go?grn:cardB,go?'примерно так и запускается компьютер':'какой порядок?',11,pre);
+      s+=`${fit(159,264,11,ink,'это тоже алгоритм — по шагам',{b:1},280)}`;
+      return s;
+    }
+    if(K==='hwspeed'){ /* что влияет на скорость */
+      const rows=[{t:'процессор',v:0.95,c:gold},{t:'оперативная память',v:0.7,c:cyan},
+                  {t:'диск (SSD вместо HDD)',v:0.6,c:grn},{t:'видеокарта (для игр)',v:0.5,c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'что делает компьютер быстрее',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=56+k*46;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`
+          +fit(96,y+22,10.5,ink,q.t,{b:1},130)
+          +growBar(160,y+12,110*q.v,10,q.c,1.2,0.4+k*0.2,0)+`</g>`;
+      });
+      s+=plate2(24,246,270,30,go?grn:cardB,go?'всё вместе решает, насколько он быстрый':'что важнее?',11,pre);
+      s+=`${fit(159,296,11,dim,'слабый диск испортит даже хороший процессор',{},292)}`;
+      return s;
+    }
+    if(K==='hwscale'){ /* от калькулятора до суперкомпьютера */
+      const lv=[{t:'калькулятор',d:'простые операции',c:blu},{t:'смартфон',d:'миллиарды в секунду',c:grn},
+                {t:'ноутбук',d:'ещё быстрее и больше памяти',c:gold},{t:'суперкомпьютер',d:'тысячи процессоров',c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'вычислительные машины бывают очень разными',{b:1},266)+`</g>`;
+      lv.forEach((q,k)=>{
+        const y=54+k*52, w=250-k*24, x=(318-w)/2;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="${w}" height="40" rx="10" fill="${q.c}" fill-opacity=".14" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(x+w/2,y+18,11.5,q.c,q.t,{b:1},w-20)
+          +fit(x+w/2,y+33,9.5,dim,q.d,{},w-20)+`</g>`;
+      });
+      s+=plate2(24,268,270,30,go?grn:cardB,go?'у всех одна основа: процессор и память':'что у них общего?',11,pre);
+      return s;
+    }
+    if(K==='hwpractice'){ /* практика */
+      const rows=[
+        {t:'сколько байт в 1 КБ?',a:'1024',c:cyan},
+        {t:'что быстрее: кэш или диск?',a:'кэш — он ближе к процессору',c:gold},
+        {t:'что произойдёт с оперативной памятью при выключении?',a:'она очистится',c:red}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'практика: разбираемся в устройстве',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*58;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(146,y+20,10.5,ink,q.t,{},212)
+          +(go?fit(146,y+39,11.5,q.c,q.a,{b:1},212):fit(146,y+39,10.5,dim,'нажми «показать»',{},212))+`</g>`;
+      });
+      s+=plate2(22,228,274,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
+      return s;
+    }
+    if(K==='hwgame1'){ /* ввод или вывод */
+      const opts=['устройство ввода','устройство вывода'], ok=1, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +fit(159,34,11.5,ink,'принтер — это…',{b:1},266)+`</g>`;
+      s+=drawRR(116,58,86,66,10,pur,2.4,0.2,2,pre);
+      s+=`<rect x="134" y="86" width="50" height="22" rx="4" fill="none" stroke="${pur}" stroke-width="1.8"/>`
+        +`<rect x="142" y="74" width="34" height="12" rx="2" fill="none" stroke="${pur}" stroke-width="1.6"/>`
+        +`<rect x="142" y="110" width="34" height="8" rx="2" fill="rgba(176,127,255,.25)" stroke="${pur}" stroke-width="1.4"/>`;
+      opts.forEach((t2,k)=>{
+        const x=30+k*140, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="${x}" y="144" width="128" height="44" rx="11" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(x+64,171,11.5,c,t2,{b:on},118)+(on?`<path d="M${x+108} 152 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}"><rect x="30" y="202" width="258" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +fit(159,222,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Принтер печатает — это вывод':'Подумай: информация идёт от компьютера?',{b:done&&st.pick===ok},246)+`</g>`;
+      s+=`${fit(159,258,11,ink,'мышь и клавиатура — наоборот, ввод',{b:1},290)}`;
+      return s;
+    }
+    if(K==='hwgame2'){ /* где хранится */
+      const opts=['в оперативной','на диске'], ok=1, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +fit(159,34,11.5,ink,'твоё сочинение, сохранённое в файл, — где оно?',{b:1},272)+`</g>`;
+      s+=drawC(159,104,44,gold,2,0.2,pre);
+      opts.forEach((t2,k)=>{
+        const x=30+k*140, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="${x}" y="164" width="128" height="44" rx="11" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(x+64,191,11.5,c,t2,{b:on},118)+(on?`<path d="M${x+108} 172 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}"><rect x="30" y="222" width="258" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +fit(159,242,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Сохранённый файл лежит на диске':'Вспомни: после выключения данные остаются?',{b:done&&st.pick===ok},246)+`</g>`;
+      s+=`${fit(159,278,11,ink,'в оперативной памяти файл был только во время работы',{b:1},292)}`;
+      return s;
+    }
+    if(K==='hwmistakes'){ /* частые ошибки */
+      const it=[
+        {t:'путают память и диск',f:'в памяти — работает, на диске — хранится',c:gold},
+        {t:'думают, что процессор «понимает» слова',f:'он выполняет команды по шагам',c:red},
+        {t:'считают, что ГБ и МБ — одно и то же',f:'1 ГБ = 1024 МБ',c:cyan},
+        {t:'забывают, что вывод и ввод — разное',f:'ввод — от нас, вывод — к нам',c:pur}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      s+=`${tx(159,266,11,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='hwsheet'){ /* шпаргалка */
+      const rows=[{t:'процессор считает, память хранит',c:gold},{t:'ввод — от нас, вывод — к нам',c:grn},
+                  {t:'оперативная память быстрая, но пустеет',c:cyan},{t:'диск и флешка хранят долго',c:blu},
+                  {t:'цикл: выбрать → расшифровать → выполнить',c:pur},{t:'программы управляют железом',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'всё главное об устройстве компьютера',{b:1},266)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=50+k*36;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+20,11,q.c,q.t,{b:1},260)+`</g>`;
+      });
+      s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
+      return s;
+    }
+    if(K==='hwfinish'){ /* итог */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'итог: как всё работает вместе',{b:1},262)+`</g>`;
+      s+=drawRR(112,54,94,44,9,gold,2.2,0.2,1.9,pre); s+=fit(159,80,11,gold,'процессор',{b:1},84);
+      s+=drawRR(24,132,84,40,9,cyan,2.2,0.4,1.7,pre); s+=fit(66,157,10.5,cyan,'память',{b:1},76);
+      s+=drawRR(118,132,84,40,9,grn,2.2,0.6,1.7,pre); s+=fit(160,157,10.5,grn,'диск',{b:1},76);
+      s+=drawRR(212,132,84,40,9,pur,2.2,0.8,1.7,pre); s+=fit(254,157,10.5,pur,'устройства',{b:1},76);
+      s+=drawLL({x:159,y:98},{x:66,y:132},blu,2,1,1.8,pre)+drawLL({x:159,y:98},{x:160,y:132},blu,2,1,1.8,pre)+drawLL({x:159,y:98},{x:254,y:132},blu,2,1,1.8,pre);
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3s" repeatCount="indefinite" path="M66 132 L159 98 L254 132 L159 98 L160 132"/></circle>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.2s"><rect x="20" y="192" width="278" height="36" rx="10" fill="rgba(255,215,76,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,216,12,gold,'жми «Понял! Проверю себя» →',{b:1},250)+`</g>`;
+      s+=`${fit(159,254,11,ink,'данные идут по кругу: считать → сохранить → показать',{b:1},292)}`;
+      s+=`${fit(159,278,11,dim,'теперь ты понимаешь, что внутри компьютера',{},292)}`;
+      return s;
+    }
+    if(K==='fileintro'){ /* зачем файлы */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'файл — это документ в памяти компьютера',{b:1},268)+`</g>`;
+      for(let k=0;k<4;k++){
+        const y=56+k*42;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.15).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="258" height="34" rx="6" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+          +`<rect x="40" y="${y+6}" width="20" height="22" rx="3" fill="rgba(255,215,106,.22)" stroke="${gold}" stroke-width="1.4"/>`
+          +fit(150,y+22,10.5,ink,['сочинение','фотография','песня','рисунок'][k],{},150)
+          +fit(272,y+22,10.5,['.txt','.jpg','.mp3','.png'][k]==='.txt'?grn:(['.txt','.jpg','.mp3','.png'][k]==='.jpg'?cyan:(['.txt','.jpg','.mp3','.png'][k]==='.mp3'?pur:gold)),['.txt','.jpg','.mp3','.png'][k],{b:1},60)+`</g>`;
+      }
+      s+=plate2(30,232,258,32,go?grn:cardB,go?'у каждого файла есть имя и расширение':'что общего у этих записей?',11,pre);
+      s+=`${fit(159,288,11,dim,'файлы лежат в папках, как книги на полках',{},292)}`;
+      return s;
+    }
+    if(K==='filename'){ /* имя и расширение */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'имя подсказывает, а расширение объясняет',{b:1},266)+`</g>`;
+      s+=drawRR(30,60,258,52,10,cardB,2.2,0.2,1.8,pre,{pen:false});
+      s+=`<rect x="36" y="66" width="120" height="40" rx="8" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="1.6"/>`;
+      s+=fit(96,92,13,cyan,'задача',{b:1},112);
+      s+=`<rect x="162" y="66" width="120" height="40" rx="8" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=fit(222,92,13,gold,'.txt',{b:1},112);
+      s+=fit(96,124,11,dim,'имя придумывает человек',{},124);
+      s+=fit(222,124,11,dim,'расширение задаёт программа',{},124);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="30" y="146" width="258" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="169" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">задача.txt</text></g>`;
+      s+=fit(159,200,11.5,ink,'точка отделяет имя от расширения',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="30" y="216" width="258" height="34" rx="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`
+        +fit(159,239,11,dim,'в имени нельзя использовать знаки  \\ / : * ? " < >',{},250)+`</g>`;
+      s+=plate2(30,262,258,30,go?grn:cardB,go?'имя + расширение = полное имя файла':'из чего состоит имя?',11,pre);
+      return s;
+    }
+    if(K==='fileext'){ /* типы файлов */
+      const it=[['.txt','текст',grn,'doc'],['.jpg','картинка',cyan,'img'],['.mp3','музыка',pur,'snd'],
+                ['.mp4','видео',red,'vid'],['.exe','программа',gold,'app'],['.zip','архив',blu,'zip']];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'расширение говорит, что внутри',{b:1},264)+`</g>`;
+      it.forEach((q,k)=>{
+        const x=22+(k%3)*94, y=52+Math.floor(k/3)*90;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.12).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="88" height="80" rx="11" fill="rgba(12,32,34,.97)" stroke="${q[2]}" stroke-width="1.7"/>`
+          +`<rect x="${x+30}" y="${y+8}" width="28" height="34" rx="3" fill="rgba(255,255,255,.05)" stroke="${q[2]}" stroke-width="1.4"/>`
+          +fit(x+44,y+60,11.5,q[2],q[0],{b:1},80)
+          +fit(x+44,y+74,9.5,dim,q[1],{},80)+`</g>`;
+      });
+      s+=plate2(22,236,274,30,go?grn:cardB,go?'по расширению понятно, чем открыть файл':'что можно узнать по расширению?',11,pre);
+      s+=`${fit(159,290,11,dim,'не открывай .exe, если не уверен, что это',{},292)}`;
+      return s;
+    }
+    if(K==='foldertree'){ /* дерево папок */
+      const N={root:[159,52],a:[74,110],b:[244,110],a1:[46,170],a2:[112,170],b1:[206,170],b2:[272,170],a1f:[46,228],a2f:[112,228],b1f:[206,228],b2f:[272,228]};
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'папки внутри папок — это дерево',{b:1},262)+`</g>`;
+      const link=(p,q)=>drawPoly([p,q],cardB,1,0.1,1.5,{pen:false,keep:true});
+      [[N.root,N.a],[N.root,N.b],[N.a,N.a1],[N.a,N.a2],[N.b,N.b1],[N.b,N.b2]].forEach(e=>{ s+=link(e[0],e[1]); });
+      const node=(p,t2,c,f,own)=>`<g class="${pre}Pop" style="animation-delay:${(0.15+(own||0)*0.15).toFixed(2)}s"><rect x="${p[0]-32}" y="${p[1]-11}" width="64" height="22" rx="6" fill="${f?'rgba(19,60,44,.6)':'rgba(12,32,34,.97)'}" stroke="${c}" stroke-width="1.5"/>`
+        +fit(p[0],p[1]+4,9,c,t2,{b:1},58)+`</g>`;
+      s+=node(N.root,'Школа',gold,0);
+      s+=node(N.a,'Математика',cyan,1)+node(N.b,'Русский',cyan,1);
+      s+=node(N.a1,'Задачи',grn,2)+node(N.a2,'Тесты',grn,2)+node(N.b1,'Сочинения',grn,2)+node(N.b2,'Слова',grn,2);
+      s+=`<g class="${pre}Pop" style="animation-delay:1.1s"><rect x="${46-26}" y="${228-10}" width="52" height="20" rx="6" fill="rgba(127,214,255,.18)" stroke="${cyan}" stroke-width="1.4"/></g>`;
+      s+=fit(72,232,9,cyan,'урок1.txt',{b:1},56);
+      s+=fit(112,232,9,dim,'тест.doc',{},52);
+      s+=fit(206,232,9,dim,'письмо.doc',{},54);
+      s+=fit(272,232,9,dim,'слова.txt',{},52);
+      s+=plate2(18,252,282,32,go?grn:cardB,go?'файл задача.txt лежит в Школа → Математика → Задачи':'где лежит файл?',11,pre);
+      return s;
+    }
+    if(K==='filepath'){ /* путь */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'путь — адрес файла в дереве папок',{b:1},266)+`</g>`;
+      const parts=[['C:','диск',blu],['Школа','папка',cyan],['Математика','папка',cyan],['Задачи','папка',cyan],['урок1.txt','файл',gold]];
+      parts.forEach((q,k)=>{
+        const y=58+k*38;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="258" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.6"/>`
+          +fit(80,y+20,11,q[2],q[0],{b:1},96)
+          +fit(216,y+20,10,dim,q[1],{},140)+`</g>`;
+        if(k<4) s+=fit(159,y+36,12,gold,'\\',{b:1},20);
+      });
+      s+=fit(159,258,11.5,ink,'каждый шаг отделяют обратной косой чертой',{b:1},292);
+      s+=plate2(30,272,258,30,go?grn:cardB,go?'путь читается слева направо':'из чего состоит путь?',11,pre);
+      return s;
+    }
+    if(K==='filesize'){ /* размеры */
+      const rows=[{t:'текст',v:'20 КБ',b:0.06,c:grn},{t:'фотография',v:'3 МБ',b:0.35,c:cyan},
+                  {t:'песня',v:'8 МБ',b:0.6,c:pur},{t:'фильм',v:'2 ГБ',b:1,c:gold}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'размер файла зависит от содержимого',{b:1},266)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=56+k*46;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`
+          +fit(84,y+22,10.5,ink,q.t,{b:1},110)
+          +growBar(140,y+12,120*q.b,10,q.c,1.2,0.4+k*0.2,0)
+          +fit(278,y+22,10.5,q.c,q.v,{b:1},68)+`</g>`;
+      });
+      s+=plate2(24,240,270,32,go?grn:cardB,go?'фильм занимает больше всего места':'что занимает больше места?',11,pre);
+      s+=`${fit(159,294,11,dim,'поэтому большие файлы дольше передаются',{},292)}`;
+      return s;
+    }
+    if(K==='fileunits'){ /* единицы */
+      const rows=[{t:'1 байт',d:'одна буква',c:grn},{t:'1 КБ = 1024 байта',d:'страница текста',c:cyan},
+                  {t:'1 МБ = 1024 КБ',d:'фотография',c:pur},{t:'1 ГБ = 1024 МБ',d:'фильм',c:gold}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'единицы измерения размера',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=56+k*50;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="26" y="${y}" width="266" height="38" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(120,y+24,11.5,q.c,q.t,{b:1},180)
+          +fit(238,y+24,10,dim,q.d,{},130)+`</g>`;
+      });
+      s+=plate2(26,264,266,32,go?grn:cardB,go?'каждая единица в 1024 раза больше':'во сколько раз отличаются?',11,pre);
+      return s;
+    }
+    if(K==='filecreate'){ /* создаём файл */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'создать файл — значит записать данные на диск',{b:1},268)+`</g>`;
+      s+=drawRR(40,56,110,74,9,cyan,2.2,0.2,1.8,pre);
+      s+=fit(95,84,11,cyan,'новая папка',{b:1},100);
+      s+=fit(95,106,10,dim,'пусто',{},100);
+      s+=`<path d="M170 93 h30" stroke="${gold}" stroke-width="2.6"/><path d="M194 86 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.6"/>`;
+      s+=drawRR(208,56,86,74,9,grn,2.2,0.9,1.8,pre);
+      s+=`<rect x="228" y="70" width="46" height="30" rx="3" fill="rgba(125,224,160,.18)" stroke="${grn}" stroke-width="1.5"/>`;
+      s+=fit(251,118,10,grn,'файл',{b:1},70);
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M150 93 L208 93"/></circle>`;
+      s+=fit(159,156,11.5,ink,'при сохранении данные уходят на диск',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="30" y="174" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,197,11.5,gold,'Ctrl + S — сохранить документ',{b:1},240)+`</g>`;
+      s+=plate2(30,216,258,32,go?grn:cardB,go?'пока не сохранил — файла нет':'когда файл появляется?',11,pre);
+      s+=`${fit(159,272,11,dim,'поэтому работу лучше сохранять почаще',{},292)}`;
+      return s;
+    }
+    if(K==='filecopy'){ /* копирование */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'копирование: файлов становится два',{b:1},266)+`</g>`;
+      s+=drawRR(30,58,110,64,9,cyan,2.2,0.2,1.8,pre);
+      s+=`<rect x="52" y="72" width="40" height="30" rx="3" fill="rgba(127,214,255,.2)" stroke="${cyan}" stroke-width="1.5"/>`;
+      s+=fit(85,126,10,cyan,'было 1',{b:1},90);
+      s+=drawRR(178,58,110,64,9,grn,2.2,0.7,1.8,pre);
+      s+=`<rect x="200" y="72" width="40" height="30" rx="3" fill="rgba(125,224,160,.2)" stroke="${grn}" stroke-width="1.5"/>`;
+      s+=fit(233,126,10,grn,'стало 2',{b:1},90);
+      s+=`<path d="M144 90 h30" stroke="${gold}" stroke-width="2.4" stroke-dasharray="6 5"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:1.2s"><rect x="196" y="34" width="74" height="22" rx="7" fill="rgba(255,215,106,.18)" stroke="${gold}" stroke-width="1.4"/>`
+        +fit(233,49,10,gold,'копия 1',{b:1},66)+`</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.9s"><circle cx="85" cy="88" r="16" fill="none" stroke="${gold}" stroke-width="1.6" stroke-dasharray="5 4"/></g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:1.5s"><circle cx="233" cy="88" r="16" fill="none" stroke="${gold}" stroke-width="1.6" stroke-dasharray="5 4"/></g>`;
+      s+=fit(159,152,11.5,ink,'Ctrl + C — копировать, Ctrl + V — вставить',{b:1},292);
+      s+=plate2(30,170,258,32,go?grn:cardB,go?'копия — это отдельный файл':'что произошло?',11,pre);
+      s+=`${fit(159,226,11,dim,'меняешь копию — оригинал остаётся прежним',{},292)}`;
+      return s;
+    }
+    if(K==='filemove'){ /* перемещение */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'перемещение: файл меняет место',{b:1},262)+`</g>`;
+      s+=drawRR(30,58,110,64,9,cyan,2.2,0.2,1.8,pre);
+      s+=fit(85,90,11,cyan,'папка 1',{b:1},90);
+      s+=`<rect x="52" y="98" width="40" height="18" rx="3" fill="rgba(127,214,255,.2)" stroke="${cyan}" stroke-width="1.4"/><path d="M52 98 L92 116 M92 98 L52 116" stroke="${red}" stroke-width="2.2"/>`;
+      s+=drawRR(178,58,110,64,9,grn,2.2,0.7,1.8,pre);
+      s+=fit(233,90,11,grn,'папка 2',{b:1},90);
+      s+=`<rect x="200" y="98" width="40" height="18" rx="3" fill="rgba(125,224,160,.2)" stroke="${grn}" stroke-width="1.4"/>`;
+      s+=`<path d="M144 74 q24 -18 30 0" fill="none" stroke="${gold}" stroke-width="2.4" stroke-dasharray="6 5"/>`;
+      s+=`<circle r="7" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M144 90 q34 -22 34 0"/></circle>`;
+      s+=fit(159,152,11.5,ink,'Ctrl + X — вырезать, Ctrl + V — вставить',{b:1},292);
+      s+=plate2(30,170,258,32,go?grn:cardB,go?'файл один, но переехал в другую папку':'сколько файлов стало?',11,pre);
+      s+=`${fit(159,226,11,dim,'перемещение — это копирование с удалением',{},292)}`;
+      return s;
+    }
+    if(K==='filerename'){ /* переименование */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'переименование меняет только имя',{b:1},266)+`</g>`;
+      s+=drawRR(30,60,258,54,10,cardB,2.2,0.2,1.8,pre,{pen:false});
+      s+=`<rect x="40" y="70" width="140" height="34" rx="8" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="1.5"/>`;
+      s+=`<text x="110" y="93" text-anchor="middle" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">черновик.txt</text>`;
+      s+=fit(250,93,11,dim,'было',{},60);
+      s+=`<path d="M159 122 v18" stroke="${gold}" stroke-width="2.4"/><path d="M152 134 l7 8 l7 -8" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="30" y="146" width="258" height="54" rx="10" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="179" text-anchor="middle" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">сочинение.txt</text></g>`;
+      s+=fit(159,224,11.5,ink,'содержимое файла не меняется',{b:1},292);
+      s+=plate2(30,240,258,32,go?grn:cardB,go?'имя новое, а внутри всё то же':'что изменилось?',11,pre);
+      s+=`${fit(159,296,11,dim,'расширение лучше не трогать',{},292)}`;
+      return s;
+    }
+    if(K==='filedelete'){ /* удаление */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,red,'удаление: файл уходит в корзину',{b:1},266)+`</g>`;
+      s+=drawRR(30,58,120,70,9,cyan,2.2,0.2,1.8,pre);
+      s+=`<rect x="52" y="76" width="46" height="34" rx="3" fill="rgba(127,214,255,.2)" stroke="${cyan}" stroke-width="1.5"/>`;
+      s+=fit(90,142,10,cyan,'папка',{b:1},100);
+      s+=`<path d="M160 92 h26" stroke="${red}" stroke-width="2.6"/><path d="M180 85 l8 7 l-8 7" fill="none" stroke="${red}" stroke-width="2.6"/>`;
+      s+=`<path d="M206 62 h76 l-8 70 h-60 z" fill="rgba(255,120,100,.14)" stroke="${red}" stroke-width="2"/>`;
+      s+=`<path d="M226 62 v-8 h36 v8" fill="none" stroke="${red}" stroke-width="1.8"/>`;
+      s+=fit(244,110,11,red,'корзина',{b:1},80);
+      s+=`<circle r="6" fill="${cyan}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M98 93 L210 93"/></circle>`;
+      s+=fit(159,164,11.5,ink,'корзина спасает от случайного удаления',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="30" y="182" width="258" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,205,11.5,grn,'из корзины файл можно восстановить',{b:1},240)+`</g>`;
+      s+=plate2(30,224,258,32,go?grn:cardB,go?'а вот удаление из корзины — навсегда':'что происходит при удалении?',11,pre);
+      s+=`${fit(159,280,11,dim,'поэтому важные файлы копируют отдельно',{},292)}`;
+      return s;
+    }
+    if(K==='fileselect'){ /* выделение */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'несколько файлов можно выделить сразу',{b:1},266)+`</g>`;
+      const files=[['фото1.jpg',true],['фото2.jpg',true],['сочинение.txt',false],['фото3.jpg',true],['песня.mp3',false],['рисунок.png',false]];
+      files.forEach((q,k)=>{
+        const x=26+(k%2)*146, y=54+Math.floor(k/2)*54;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="136" height="44" rx="9" fill="${q[1]?'rgba(127,214,255,.16)':'rgba(18,24,44,.97)'}" stroke="${q[1]?cyan:cardB}" stroke-width="${q[1]?1.8:1.3}"/>`
+          +`<rect x="${x+10}" y="${y+13}" width="18" height="18" rx="3" fill="${q[1]?'rgba(127,214,255,.5)':'rgba(255,255,255,.05)'}" stroke="${q[1]?cyan:cardB}" stroke-width="1.3"/>`
+          +(q[1]?`<path d="M${x+14} ${y+22} l4 5 l8 -10" fill="none" stroke="${ink}" stroke-width="2.2"/>`:'')
+          +fit(x+82,y+27,10.5,q[1]?cyan:dim,q[0],{b:q[1]},100)+`</g>`;
+      });
+      s+=plate2(26,222,270,32,go?grn:cardB,go?'Ctrl + щелчок — выделить несколько':'как выделить сразу три файла?',11,pre);
+      s+=`${fit(159,278,11,dim,'выделенные файлы можно копировать все вместе',{},292)}`;
+      return s;
+    }
+    if(K==='filefind'){ /* поиск */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'поиск файла по имени и типу',{b:1},262)+`</g>`;
+      s+=drawRR(46,58,226,40,10,cyan,2.4,0.2,1.9,pre);
+      s+=`<circle cx="76" cy="78" r="10" fill="none" stroke="${cyan}" stroke-width="2"/><path d="M83 85 l8 8" stroke="${cyan}" stroke-width="2.4"/>`;
+      s+=`<text x="190" y="83" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">фото*.jpg</text>`;
+      const found=['фото1.jpg','фото2.jpg','фото3.jpg'];
+      found.forEach((q,k)=>{
+        const y=116+k*40;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.6+k*0.3).toFixed(2)}s">`
+          +`<rect x="60" y="${y}" width="198" height="30" rx="8" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.6"/>`
+          +fit(159,y+20,11,gold,q,{b:1},180)+`</g>`;
+      });
+      s+=fit(159,248,11.5,ink,'звёздочка означает «любые символы»',{b:1},292);
+      s+=plate2(60,262,198,30,go?grn:cardB,go?'нашлись три фотографии':'сколько файлов найдётся?',11,pre);
+      return s;
+    }
+    if(K==='filemask'){ /* маска */
+      const rows=[{t:'*.txt',d:'все текстовые',c:grn},{t:'фото?.jpg',d:'фото1, фото2 (один символ)',c:cyan},{t:'док*.doc',d:'начинается на «док»',c:gold}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'маска: шаблон для поиска файлов',{b:1},266)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=54+k*48;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="26" y="${y}" width="266" height="38" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +`<text x="100" y="${y+25}" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${q.c}">${q.t}</text>`
+          +fit(220,y+25,10.5,dim,q.d,{},140)+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="26" y="198" width="266" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,221,11.5,cyan,'* — сколько угодно символов, ? — один символ',{b:1},250)+`</g>`;
+      s+=plate2(26,240,266,32,go?grn:cardB,go?'маска экономит время при поиске':'зачем нужна маска?',11,pre);
+      s+=`${fit(159,296,11,dim,'в маске нельзя использовать \\ / : * кроме своих знаков',{},296)}`;
+      return s;
+    }
+    if(K==='filesort'){ /* сортировка */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'файлы в папке можно упорядочить',{b:1},262)+`</g>`;
+      const byName=[['альбом.jpg','2 МБ'],['песня.mp3','8 МБ'],['фото.png','3 МБ'],['ярлык.txt','20 КБ']];
+      const bySize=[['ярлык.txt','20 КБ'],['альбом.jpg','2 МБ'],['фото.png','3 МБ'],['песня.mp3','8 МБ']];
+      s+=fit(85,54,11,cyan,'по имени',{b:1},110);
+      byName.forEach((q,k)=>{
+        const y=62+k*32;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s"><rect x="26" y="${y}" width="118" height="26" rx="7" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.2"/>`
+          +fit(85,y+17,9.5,ink,q[0],{},108)+`</g>`;
+      });
+      s+=fit(233,54,11,gold,'по размеру',{b:1},110);
+      bySize.forEach((q,k)=>{
+        const y=62+k*32;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.14).toFixed(2)}s"><rect x="174" y="${y}" width="118" height="26" rx="7" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.2"/>`
+          +fit(233,y+17,9.5,gold,q[0],{},70)+fit(276,y+17,9,dim,q[1],{},44)+`</g>`;
+      });
+      s+=plate2(26,196,266,32,go?grn:cardB,go?'порядок разный — и это удобно':'чем отличаются списки?',11,pre);
+      s+=`${fit(159,250,11.5,ink,'можно сортировать и по дате, и по типу',{b:1},292)}`;
+      return s;
+    }
+    if(K==='filearchive'){ /* архив */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${blu}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,blu,'архив: много файлов в одном',{b:1},262)+`</g>`;
+      for(let k=0;k<4;k++){
+        const x=30+k*36;
+        s+=`<rect class="${pre}Pop" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s" x="${x}" y="${70+k*4}" width="30" height="40" rx="3" fill="rgba(127,214,255,.18)" stroke="${cyan}" stroke-width="1.4"/>`;
+      }
+      s+=`<path d="M180 100 h30" stroke="${gold}" stroke-width="2.6"/><path d="M204 93 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.6"/>`;
+      s+=drawRR(220,62,74,74,10,blu,2.4,0.8,2,pre);
+      s+=fit(257,96,11.5,blu,'.zip',{b:1},66);
+      s+=`<path d="M250 74 v22" stroke="${blu}" stroke-width="2.4" stroke-dasharray="4 4"/>`;
+      s+=fit(159,164,11.5,ink,'архив занимает меньше места',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="30" y="182" width="258" height="34" rx="10" fill="rgba(110,168,255,.14)" stroke="${blu}" stroke-width="1.8"/>`
+        +`<text x="159" y="205" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${blu}">фото.rar · работа.zip · музыка.7z</text></g>`;
+      s+=plate2(30,224,258,32,go?grn:cardB,go?'перед отправкой файлы часто архивируют':'зачем архивировать?',11,pre);
+      s+=`${fit(159,280,11,dim,'чтобы распаковать архив, нужна программа-архиватор',{},296)}`;
+      return s;
+    }
+    if(K==='filebackup'){ /* резервная копия */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'резервная копия спасает от потери',{b:1},266)+`</g>`;
+      s+=drawRR(34,58,110,72,9,cyan,2.2,0.2,1.8,pre);
+      s+=fit(89,86,11,cyan,'диск',{b:1},100);
+      s+=`<rect x="56" y="94" width="66" height="24" rx="4" fill="rgba(127,214,255,.2)" stroke="${cyan}" stroke-width="1.4"/>`;
+      s+=fit(89,136,10,dim,'оригинал',{},100);
+      s+=`<path d="M150 94 h26" stroke="${gold}" stroke-width="2.6"/><path d="M170 87 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.6"/>`;
+      s+=drawRR(184,58,110,72,9,grn,2.2,0.7,1.8,pre);
+      s+=fit(239,86,11,grn,'копия',{b:1},100);
+      s+=`<rect x="206" y="94" width="66" height="24" rx="4" fill="rgba(125,224,160,.2)" stroke="${grn}" stroke-width="1.4"/>`;
+      s+=fit(239,136,10,dim,'на другом носителе',{},100);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="30" y="156" width="258" height="34" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
+        +fit(159,179,11.5,red,'диск может сломаться — копия нужна заранее',{b:1},240)+`</g>`;
+      s+=plate2(30,196,258,32,go?grn:cardB,go?'важные файлы хранят в двух местах':'зачем нужна копия?',11,pre);
+      s+=`${fit(159,252,11,ink,'например: на диске и в облаке',{b:1},292)}`;
+      return s;
+    }
+    if(K==='filecloud'){ /* облако */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'облако: файлы доступны с любого устройства',{b:1},268)+`</g>`;
+      s+=`<path d="M96 96 a26 26 0 0 1 22 -38 a32 32 0 0 1 52 -6 a24 24 0 0 1 30 34 a20 20 0 0 1 -8 38 h-84 a20 20 0 0 1 -12 -28 z" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`;
+      s+=fit(159,104,12,cyan,'облако',{b:1},100);
+      const dev=[[52,186,'ноутбук',grn],[159,186,'смартфон',gold],[266,186,'планшет',pur]];
+      dev.forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.5+k*0.2).toFixed(2)}s">`
+          +`<rect x="${q[0]-34}" y="${q[1]-16}" width="68" height="32" rx="8" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.6"/>`
+          +fit(q[0],q[1]+4,10,q[2],q[2]===grn?'ноутбук':(q[2]===gold?'телефон':'планшет'),{b:1},62)+`</g>`;
+        s+=drawLL({x:q[0],y:q[1]-18},{x:159,y:132},cyan,1.8,0.4+k*0.2,1.6,pre);
+      });
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3s" repeatCount="indefinite" path="M52 170 L159 132 L266 170"/></circle>`;
+      s+=plate2(30,222,258,32,go?grn:cardB,go?'файл в облаке — как будто он везде':'что даёт облако?',11,pre);
+      s+=`${fit(159,278,11,dim,'но нужен интернет и стоит помнить про доступ',{},296)}`;
+      return s;
+    }
+    if(K==='filesafety'){ /* безопасность */
+      const it=[{t:'не открывай .exe от незнакомых',d:'это может быть вирус',c:red},
+                {t:'не удаляй системные папки',d:'компьютер может перестать работать',c:gold},
+                {t:'делай копии важного',d:'файлы теряются неожиданно',c:grn}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,red,'правила безопасной работы с файлами',{b:1},268)+`</g>`;
+      it.forEach((q,k)=>{
+        const y=54+k*56;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="20" y="${y}" width="278" height="48" rx="11" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(104,y+22,11.5,q.c,q.t,{b:1},200)
+          +fit(104,y+38,10.5,dim,q.d,{},200)+`</g>`;
+      });
+      s+=plate2(20,224,278,32,go?grn:cardB,go?'три правила — и файлы будут целы':'что важно помнить?',11,pre);
+      s+=`${fit(159,280,11,dim,'и не забывай сохранять работу',{},290)}`;
+      return s;
+    }
+    if(K==='filepractice'){ /* практика */
+      const rows=[
+        {t:'где лежит файл C:\\Школа\\Задачи\\урок1.txt?',a:'в папке Задачи',c:cyan},
+        {t:'что откроет файл песня.mp3?',a:'музыкальный проигрыватель',c:pur},
+        {t:'сколько файлов найдёт маска *.jpg?',a:'все картинки jpg',c:gold}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'практика: читаем пути и маски',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*58;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(146,y+20,10,ink,q.t,{},212)
+          +(go?fit(146,y+39,11,q.c,q.a,{b:1},212):fit(146,y+39,10.5,dim,'нажми «показать»',{},212))+`</g>`;
+      });
+      s+=plate2(22,228,274,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
+      return s;
+    }
+    if(K==='filegame1'){ /* где лежит файл */
+      const opts=['Школа → Математика → Задачи','Школа → Русский → Слова','Математика → Школа → Задачи'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +fit(159,34,11.5,ink,'файл C:\\Школа\\Математика\\Задачи\\урок1.txt лежит в…',{b:1},276)+`</g>`;
+      opts.forEach((t2,k)=>{
+        const y=58+k*46, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="22" y="${y}" width="274" height="38" rx="10" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(159,y+25,11,c,t2,{b:on},256)+(on?`<path d="M266 ${y+13} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}"><rect x="22" y="200" width="274" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +fit(159,220,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Путь читается по папкам слева направо':'Посмотри на путь внимательно',{b:done&&st.pick===ok},256)+`</g>`;
+      s+=`${fit(159,254,11,ink,'последняя папка перед именем файла — его дом',{b:1},292)}`;
+      return s;
+    }
+    if(K==='filegame2'){ /* чем открыть */
+      const opts=['программой для видео','программой для музыки','программой для текста'], ok=1, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +fit(159,34,11.5,ink,'чем откроется файл песня.mp3?',{b:1},262)+`</g>`;
+      s+=drawRR(120,56,78,52,10,pur,2.4,0.2,2,pre);
+      s+=`<rect x="136" y="70" width="46" height="26" rx="3" fill="rgba(176,127,255,.2)" stroke="${pur}" stroke-width="1.5"/>`;
+      s+=fit(159,124,11,pur,'песня.mp3',{b:1},110);
+      opts.forEach((t2,k)=>{
+        const y=140+k*38, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="22" y="${y}" width="274" height="32" rx="9" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.5}"/>`
+          +fit(159,y+21,11,c,t2,{b:on},254)+(on?`<path d="M266 ${y+9} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}"><rect x="22" y="258" width="274" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +fit(159,278,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! .mp3 — это музыка':'Вспомни: mp3 — это звук',{b:done&&st.pick===ok},256)+`</g>`;
+      return s;
+    }
+    if(K==='filemistakes'){ /* ошибки */
+      const it=[
+        {t:'меняют расширение вручную',f:'файл перестанет открываться',c:red},
+        {t:'путают копирование и перемещение',f:'копия — два файла, перенос — один',c:gold},
+        {t:'удаляют файлы без копии',f:'из корзины вернуть можно не всегда',c:cyan},
+        {t:'ищут файл без пути',f:'используй поиск и маску',c:pur}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10,176/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},176)+`</g>`;
+      });
+      s+=`${tx(159,266,11,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='filesheet'){ /* шпаргалка */
+      const rows=[{t:'имя + расширение = полное имя файла',c:gold},{t:'путь — адрес файла в дереве папок',c:cyan},
+                  {t:'копия — два файла, перемещение — один',c:grn},{t:'1 КБ = 1024 байта, 1 МБ = 1024 КБ',c:blu},
+                  {t:'маска *.jpg ищет все картинки jpg',c:pur},{t:'важные файлы копируй в два места',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'всё главное о файлах и папках',{b:1},264)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=50+k*36;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+20,10.5,q.c,q.t,{b:1},260)+`</g>`;
+      });
+      s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
+      return s;
+    }
+    if(K==='filefinish'){ /* итог */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'итог: файл, папка, путь',{b:1},262)+`</g>`;
+      s+=`<rect x="30" y="56" width="76" height="54" rx="6" fill="rgba(255,215,106,.18)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=fit(68,88,11,gold,'файл',{b:1},64);
+      s+=`<rect x="112" y="56" width="76" height="54" rx="6" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=fit(150,88,11,cyan,'папка',{b:1},64);
+      s+=`<rect x="194" y="56" width="94" height="54" rx="6" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="1.8"/>`;
+      s+=fit(241,88,11,grn,'путь',{b:1},82);
+      s+=drawLL({x:106,y:83},{x:112,y:83},gold,2,0.4,2,pre)+drawLL({x:188,y:83},{x:194,y:83},cyan,2,0.7,2,pre);
+      s+=fit(159,138,11.5,ink,'файл живёт в папке, а путь его находит',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="20" y="158" width="278" height="36" rx="10" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,182,12,gold,'жми «Понял! Проверю себя» →',{b:1},250)+`</g>`;
+      s+=`${fit(159,220,11,ink,'копируй важное, архивируй большое, не трогай системное',{b:1},292)}`;
+      return s;
+    }
+    if(K==='gameintro'){ /* что такое игра */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'игра — это правила, герой и цель',{b:1},262)+`</g>`;
+      s+=drawRR(28,54,262,132,12,cardB,2.4,0.2,2,pre,{pen:false});
+      for(let r=0;r<4;r++)for(let c=0;c<8;c++)
+        s+=`<rect x="${38+c*31}" y="${64+r*30}" width="27" height="26" rx="3" fill="rgba(255,255,255,.03)" stroke="#2c3868" stroke-width="1"/>`;
+      s+=aiShape(70,80,10,'circle',grn,2);
+      s+=`<text x="70" y="85" text-anchor="middle" font-size="11" font-weight="bold" fill="${grn}">Я</text>`;
+      [[160,80],[226,140],[100,170]].forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.5+k*0.2).toFixed(2)}s"><circle cx="${q[0]}" cy="${q[1]}" r="8" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="1.8"/>`
+          +`<text x="${q[0]}" y="${q[1]+4}" text-anchor="middle" font-size="9" font-weight="bold" fill="${gold}">★</text></g>`;
+      });
+      s+=fit(159,204,11.5,ink,'герой собирает звёзды и не попадается врагам',{b:1},292);
+      s+=plate2(28,220,262,32,go?grn:cardB,go?'правила, герой, цель — вот и игра':'из чего состоит игра?',11,pre);
+      s+=`${fit(159,276,11,dim,'всё это описывают алгоритмом и данными',{},292)}`;
+      return s;
+    }
+    if(K==='gameevents'){ /* события */
+      const ev=[['нажата клавиша','герой идёт',cyan],['щелчок мышью','выстрел',gold],['тикает таймер','враг движется',grn]];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'программа ждёт событий и отвечает',{b:1},266)+`</g>`;
+      ev.forEach((q,k)=>{
+        const y=56+k*58;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.22).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="126" height="44" rx="10" fill="rgba(127,214,255,.12)" stroke="${q[2]}" stroke-width="1.7"/>`
+          +fit(85,y+27,10.5,q[2],q[0],{b:1},116)
+          +`<path d="M152 ${y+22} h22" stroke="${gold}" stroke-width="2.4"/><path d="M168 ${y+15} l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`
+          +`<rect x="182" y="${y}" width="114" height="44" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.6"/>`
+          +fit(239,y+27,10.5,ink,q[1],{b:1},104)+`</g>`;
+      });
+      s+=fit(159,238,11.5,ink,'событие → действие: так работает игра',{b:1},292);
+      s+=plate2(22,254,274,32,go?grn:cardB,go?'нажатие, щелчок, таймер — это события':'чего ждёт программа?',11,pre);
+      return s;
+    }
+    if(K==='gameloop'){ /* игровой цикл */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'игровой цикл повторяется 60 раз в секунду',{b:1},272)+`</g>`;
+      s+=`<rect x="52" y="60" width="100" height="52" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=fit(102,84,11.5,cyan,'обновить',{b:1},90);
+      s+=fit(102,102,9.5,dim,'сдвинуть всех',{},90);
+      s+=`<path d="M156 86 h30" stroke="${gold}" stroke-width="2.6"/><path d="M180 79 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.6"/>`;
+      s+=`<rect x="190" y="60" width="100" height="52" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`;
+      s+=fit(240,84,11.5,grn,'нарисовать',{b:1},90);
+      s+=fit(240,102,9.5,dim,'показать кадр',{},90);
+      s+=`<path d="M240 116 q0 34 -138 0" fill="none" stroke="${gold}" stroke-width="2.2" stroke-dasharray="7 5"/>`;
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="1.8s" repeatCount="indefinite" path="M240 116 q0 34 -138 0"/></circle>`;
+      s+=fit(159,160,11.5,ink,'60 кадров в секунду — и картинка движется',{b:1},292);
+      s+=plate2(52,178,238,30,go?grn:cardB,go?'так игра и «оживает»':'зачем повторять цикл?',11,pre);
+      s+=`${fit(159,232,11,dim,'если кадров мало — движение будет дёргаться',{},292)}`;
+      return s;
+    }
+    if(K==='gamesprite'){ /* спрайт */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'спрайт — это картинка героя',{b:1},262)+`</g>`;
+      for(let k=0;k<3;k++){
+        const x=48+k*84;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.2+k*0.25).toFixed(2)}s">`
+          +`<rect x="${x-30}" y="56" width="60" height="60" rx="8" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="1.4"/>`
+          +`<circle cx="${x}" cy="${76}" r="10" fill="rgba(125,224,160,.4)" stroke="${grn}" stroke-width="1.8"/>`
+          +`<rect x="${x-9}" y="${88}" width="18" height="18" rx="4" fill="rgba(125,224,160,.3)" stroke="${grn}" stroke-width="1.6"/>`
+          +(k===0?`<path d="M${x-14} ${106} l-8 10 M${x+14} ${106} l8 10" stroke="${grn}" stroke-width="2.4"/>`:(k===1?`<path d="M${x-14} ${106} l-4 12 M${x+14} ${106} l10 8" stroke="${grn}" stroke-width="2.4"/>`:`<path d="M${x-14} ${106} l-10 8 M${x+14} ${106} l4 12" stroke="${grn}" stroke-width="2.4"/>`))
+          +fit(x,132,10,gold,'кадр '+(k+1),{b:1},70)+`</g>`;
+      }
+      s+=fit(159,162,11.5,ink,'несколько кадров — и герой «шагает»',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="40" y="180" width="238" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,203,11.5,cyan,'кадры меняются — получается анимация',{b:1},220)+`</g>`;
+      s+=plate2(40,216,238,32,go?grn:cardB,go?'спрайт — как мини-мультик':'зачем три кадра?',11,pre);
+      return s;
+    }
+    if(K==='gamecoords'){ /* координаты */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'положение героя — это два числа',{b:1},262)+`</g>`;
+      s+=drawPoly([[50,236],[290,236]],cardB,2,0.2,2,{pen:false,keep:true});
+      s+=drawPoly([[50,236],[50,64]],cardB,2,0.3,2,{pen:false,keep:true});
+      s+=tx(296,232,11,dim,'x',{});
+      s+=tx(54,58,11,dim,'y',{});
+      for(let k=1;k<=6;k++){ s+=`<line x1="${50+k*38}" y1="232" x2="${50+k*38}" y2="240" stroke="${dim}" stroke-width="1.2"/>`; }
+      for(let k=1;k<=5;k++){ s+=`<line x1="46" y1="${236-k*32}" x2="54" y2="${236-k*32}" stroke="${dim}" stroke-width="1.2"/>`; }
+      s+=drawPoly([[50,236],[164,236],[164,140]],gold,1.6,0.6,1.8,{pen:false,keep:true});
+      s+=`<circle class="${pre}Pop" style="animation-delay:.9s" cx="164" cy="140" r="11" fill="rgba(125,224,160,.4)" stroke="${grn}" stroke-width="2"/>`;
+      s+=fit(150,120,11,gold,'x = 3',{b:1},70);
+      s+=fit(186,190,11,gold,'y = 3',{b:1},70);
+      s+=fit(159,262,12,ink,'герой стоит в точке (3; 3)',{b:1},260);
+      s+=plate2(24,272,270,30,go?grn:cardB,go?'x — вправо, y — вверх':'из чего состоит положение?',11,pre);
+      return s;
+    }
+    if(K==='gamemove'){ /* движение */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'движение: x = x + скорость',{b:1},262)+`</g>`;
+      s+=drawPoly([[40,170],[280,170]],cardB,1.8,0.2,1.8,{pen:false,keep:true});
+      for(let k=0;k<5;k++){
+        const x=60+k*50;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.25+k*0.28).toFixed(2)}s">`
+          +`<circle cx="${x}" cy="170" r="11" fill="rgba(125,224,160,.35)" stroke="${grn}" stroke-width="1.8"/>`
+          +`<text x="${x}" y="175" text-anchor="middle" font-size="10" font-weight="bold" fill="${grn}">Я</text>`
+          +fit(x,148,9.5,gold,'x='+(k+1),{b:1},44)+`</g>`;
+      }
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.8s"><rect x="40" y="196" width="238" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="219" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">x = x + 1 — нажали «вправо»</text></g>`;
+      s+=plate2(40,238,238,30,go?grn:cardB,go?'каждый кадр x увеличивается на скорость':'что происходит при движении?',11,pre);
+      s+=`${fit(159,290,11,dim,'скорость 1 означает: один шаг за кадр',{},292)}`;
+      return s;
+    }
+    if(K==='gamekeys'){ /* клавиши */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'каждая клавиша — своё действие',{b:1},262)+`</g>`;
+      const keys=[[['←','x = x − 1',cyan],[159,80]],[['→','x = x + 1',grn],[159,140]],[['↑','прыжок',gold],[159,200]],[['↓','присесть',pur],[159,260]]];
+      keys.forEach((q,k)=>{
+        const cx=q[1][0], cy=q[1][1];
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="${cx-40}" y="${cy-18}" width="80" height="36" rx="9" fill="rgba(18,24,44,.97)" stroke="${q[0][2]}" stroke-width="1.7"/>`
+          +tx(cx,cy+6,15,q[0][2],q[0][0],{b:1})
+          +fit(cx+120,cy+5,11,q[0][2],q[0][1],{b:1},170)+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="18" y="284" width="282" height="30" rx="9" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,304,11,cyan,'программа проверяет: какая клавиша нажата?',{b:1},250)+`</g>`;
+      return s;
+    }
+    if(K==='gamebounds'){ /* границы */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,red,'герой не должен улетать за край',{b:1},262)+`</g>`;
+      s+=`<rect x="40" y="60" width="238" height="150" rx="8" fill="rgba(255,255,255,.03)" stroke="${red}" stroke-width="2.4" stroke-dasharray="8 6"/>`;
+      s+=`<rect x="40" y="60" width="238" height="150" rx="8" fill="none" stroke="${cardB}" stroke-width="1.2"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.5s"><circle cx="272" cy="120" r="12" fill="rgba(255,120,100,.35)" stroke="${red}" stroke-width="1.8"/>`
+        +`<text x="272" y="125" text-anchor="middle" font-size="10" font-weight="bold" fill="${red}">Я</text></g>`;
+      s+=`<path d="M284 120 h12" stroke="${red}" stroke-width="3" stroke-dasharray="5 4"/>`;
+      s+=fit(290,124,10.5,red,'стоп',{b:1},36);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="34" y="218" width="250" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="241" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">если x &gt; 8, то x = 8</text></g>`;
+      s+=plate2(34,254,250,30,go?grn:cardB,go?'это условие не даёт герою уйти за экран':'что делает проверка?',11,pre);
+      return s;
+    }
+    if(K==='gamejump'){ /* прыжок и гравитация */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'прыжок: скорость вверх и гравитация',{b:1},266)+`</g>`;
+      const pts=[[70,232],[104,178],[138,152],[172,152],[206,178],[240,232]];
+      let d='M'+pts.map(q=>q[0]+' '+q[1]).join(' L');
+      s+=`<path d="${d}" fill="none" stroke="${gold}" stroke-width="2.4" stroke-dasharray="7 5"/>`;
+      pts.forEach((q,k)=>{
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.2+k*0.22).toFixed(2)}s" cx="${q[0]}" cy="${q[1]}" r="9" fill="rgba(125,224,160,.35)" stroke="${grn}" stroke-width="1.7"/>`;
+      });
+      s+=`<line x1="40" y1="248" x2="286" y2="248" stroke="${cardB}" stroke-width="2.4"/>`;
+      s+=fit(159,268,11,dim,'скорость вверх уменьшается — герой возвращается',{},292);
+      s+=plate2(40,282,246,30,go?grn:cardB,go?'гравитация всё время тянет вниз':'почему герой падает обратно?',11,pre);
+      return s;
+    }
+    if(K==='gamecollide'){ /* столкновение */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'столкновение: герой коснулся звезды',{b:1},266)+`</g>`;
+      s+=`<rect x="96" y="96" width="60" height="60" rx="8" fill="rgba(125,224,160,.25)" stroke="${grn}" stroke-width="2.2"/>`;
+      s+=`<circle cx="126" cy="126" r="14" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="2"/>`;
+      s+=`<text x="126" y="131" text-anchor="middle" font-size="12" font-weight="bold" fill="${gold}">★</text>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.6s"><rect x="150" y="96" width="60" height="60" rx="8" fill="rgba(127,214,255,.25)" stroke="${cyan}" stroke-width="2.2" stroke-dasharray="6 5"/></g>`;
+      s+=fit(180,128,10.5,cyan,'звезда',{b:1},54);
+      s+=fit(159,178,11.5,ink,'рамки пересеклись — значит, коснулись',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="34" y="196" width="250" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="219" text-anchor="middle" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">счёт = счёт + 1</text></g>`;
+      s+=plate2(34,232,250,32,go?grn:cardB,go?'звезда исчезает, а счёт растёт':'что происходит при касании?',11,pre);
+      return s;
+    }
+    if(K==='gamescore'){ /* очки */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'очки хранятся в переменной',{b:1},262)+`</g>`;
+      const vals=[0,1,2,3];
+      vals.forEach((q,k)=>{
+        const x=48+k*72;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.2+k*0.25).toFixed(2)}s">`
+          +`<rect x="${x-30}" y="70" width="60" height="46" rx="10" fill="rgba(18,24,44,.97)" stroke="${k===3?grn:cardB}" stroke-width="${k===3?2:1.5}"/>`
+          +tx(x,102,20,k===3?grn:gold,''+q,{b:1})
+          +fit(x,132,9.5,dim,'звёзд: '+q,{},60)+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.3s"><rect x="34" y="152" width="250" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="175" text-anchor="middle" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">счёт = счёт + 1 три раза → 3</text></g>`;
+      s+=fit(159,208,11.5,ink,'счёт — обычная переменная из урока про переменные',{b:1},292);
+      s+=plate2(34,224,250,32,go?grn:cardB,go?'собрал все звёзды — победа':'как считают очки?',11,pre);
+      s+=`${fit(159,278,11,dim,'переменная помнит результат всё время игры',{},292)}`;
+      return s;
+    }
+    if(K==='gameenemy'){ /* враг */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,red,'враг двигается по своему циклу',{b:1},262)+`</g>`;
+      s+=drawPoly([[50,160],[270,160]],cardB,1.8,0.2,2,{pen:false,keep:true});
+      s+=`<circle cx="60" cy="160" r="12" fill="rgba(255,120,100,.4)" stroke="${red}" stroke-width="2"><animateMotion dur="3.2s" repeatCount="indefinite" path="M60 160 H260"/></circle>`;
+      s+=`<circle cx="260" cy="160" r="12" fill="rgba(255,120,100,.4)" stroke="${red}" stroke-width="2"><animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite" path="M260 160 H60"/></circle>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.4s"><circle cx="160" cy="196" r="12" fill="rgba(125,224,160,.35)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="160" y="201" text-anchor="middle" font-size="10" font-weight="bold" fill="${grn}">Я</text></g>`;
+      s+=fit(159,232,11.5,ink,'враг тоже просто меняет x — и ходит туда-сюда',{b:1},292);
+      s+=plate2(40,248,246,30,go?grn:cardB,go?'у каждого в игре свой алгоритм движения':'как двигается враг?',11,pre);
+      s+=`${fit(159,300,11,dim,'коснулся врага — потерял жизнь',{},292)}`;
+      return s;
+    }
+    if(K==='gamelevel'){ /* уровень из списка */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'уровень — это список объектов',{b:1},262)+`</g>`;
+      s+=drawRR(24,54,270,120,10,cardB,2.2,0.2,1.8,pre,{pen:false});
+      for(let r=0;r<4;r++)for(let c=0;c<8;c++){
+        const on=((r===0&&(c===2||c===5))||(r===2&&(c===1||c===6))||(r===3&&c===4));
+        s+=`<rect x="${34+c*31}" y="${64+r*28}" width="27" height="24" rx="3" fill="${on?'rgba(255,215,106,.3)':'rgba(255,255,255,.03)'}" stroke="${on?gold:'#2c3868'}" stroke-width="${on?1.5:1}"/>`;
+      }
+      s+=`<g class="${pre}Pop" style="animation-delay:.7s"><circle cx="34+1*31+13" cy="64+3*28+12" r="9" fill="rgba(125,224,160,.4)" stroke="${grn}" stroke-width="1.7"/></g>`;
+      s+=fit(159,194,11,ink,'карта уровня хранится как список координат',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="24" y="212" width="270" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="235" text-anchor="middle" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">звёзды: (2;0) (5;0) (1;2) (6;2) (4;3)</text></g>`;
+      s+=plate2(24,254,270,30,go?grn:cardB,go?'изменил список — изменился уровень':'где хранится карта?',11,pre);
+      return s;
+    }
+    if(K==='gamelives'){ /* жизни */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,red,'жизни: сколько раз можно ошибиться',{b:1},266)+`</g>`;
+      for(let k=0;k<3;k++){
+        const x=96+k*64;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.25+k*0.3).toFixed(2)}s">`
+          +`<path d="M${x} ${96} c-14 -12 -22 -22 -22 -30 a11 11 0 0 1 22 -4 a11 11 0 0 1 22 4 c0 8 -8 18 -22 30 z" fill="${k<2?'rgba(255,120,100,.35)':'rgba(255,255,255,.05)'}" stroke="${k<2?red:cardB}" stroke-width="1.8"/>`
+          +fit(x,124,10,k<2?red:dim,k<2?'есть':'потеряна',{b:1},70)+`</g>`;
+      }
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.2s"><rect x="34" y="146" width="250" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="169" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">жизни = жизни − 1</text></g>`;
+      s+=fit(159,200,11.5,ink,'жизни — это ещё одна переменная',{b:1},292);
+      s+=plate2(34,216,250,32,go?grn:cardB,go?'жизни кончились — игра перезапускается':'что происходит при ошибке?',11,pre);
+      s+=`${fit(159,272,11,dim,'так игра становится интереснее',{},292)}`;
+      return s;
+    }
+    if(K==='gamewin'){ /* победа */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'условие победы — это проверка',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Pop"><rect x="60" y="56" width="198" height="44" rx="11" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>`
+        +`<text x="159" y="84" text-anchor="middle" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">если счёт = всем звёздам</text></g>`;
+      s+=`<path d="M159 104 v20" stroke="${gold}" stroke-width="2.4"/><path d="M152 118 l7 8 l7 -8" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.7s"><rect x="76" y="130" width="166" height="44" rx="11" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="2"/>`
+        +fit(159,158,14,gold,'ПОБЕДА!',{b:1},140)+`</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.2s"><rect x="34" y="192" width="250" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,215,11.5,cyan,'иначе игра продолжается',{b:1},230)+`</g>`;
+      s+=plate2(34,228,250,32,go?grn:cardB,go?'условие победы проверяют каждый кадр':'когда игра заканчивается?',11,pre);
+      s+=`${fit(159,284,11,dim,'хорошая игра всегда понятна игроку',{},292)}`;
+      return s;
+    }
+    if(K==='gamesound'){ /* звук */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'звук — событие тоже звучит',{b:1},262)+`</g>`;
+      s+=`<rect x="60" y="70" width="34" height="46" rx="5" fill="none" stroke="${pur}" stroke-width="2"/>`
+        +`<circle cx="104" cy="88" r="11" fill="none" stroke="${pur}" stroke-width="1.8"/><circle cx="104" cy="116" r="6" fill="none" stroke="${pur}" stroke-width="1.6"/>`;
+      for(let k=0;k<3;k++)
+        s+=`<path d="M124 ${78+k*12} q10 14 0 28" fill="none" stroke="${grn}" stroke-width="2" opacity="0"><animate attributeName="opacity" values="0;.9;0" dur="2s" begin="${(k*0.3).toFixed(1)}s" repeatCount="indefinite"/></path>`;
+      s+=fit(228,96,11.5,grn,'звук',{b:1},70);
+      s+=fit(228,120,10,dim,'сбор звезды',{},80);
+      s+=fit(228,138,10,dim,'проигрыш',{},80);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="34" y="176" width="250" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,199,11.5,gold,'при событии проигрываем короткий звук',{b:1},230)+`</g>`;
+      s+=plate2(34,212,250,32,go?grn:cardB,go?'звук делает игру живой':'зачем звук в игре?',11,pre);
+      s+=`${fit(159,268,11,dim,'звуки — это тоже данные и файлы',{},292)}`;
+      return s;
+    }
+    if(K==='gamesave'){ /* сохранение рекорда */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'рекорд сохраняют в файл',{b:1},262)+`</g>`;
+      s+=`<rect x="40" y="60" width="112" height="72" rx="9" fill="none" stroke="${gold}" stroke-width="2.2"/>`;
+      s+=fit(96,86,11,gold,'счёт',{b:1},90);
+      s+=`<text x="96" y="112" text-anchor="middle" font-size="18" font-family="Georgia,serif" font-weight="bold" fill="${grn}">120</text>`;
+      s+=`<path d="M158 96 h26" stroke="${cyan}" stroke-width="2.6"/><path d="M178 89 l8 7 l-8 7" fill="none" stroke="${cyan}" stroke-width="2.6"/>`;
+      s+=drawRR(190,60,98,72,9,cyan,2.2,0.7,2,pre);
+      s+=fit(239,86,10.5,cyan,'record.txt',{b:1},90);
+      s+=`<rect x="204" y="96" width="70" height="22" rx="4" fill="rgba(127,214,255,.15)" stroke="${cyan}" stroke-width="1.3"/>`;
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="2.4s" repeatCount="indefinite" path="M96 96 L239 96"/></circle>`;
+      s+=fit(159,154,11.5,ink,'без файла рекорд исчезнет при выключении',{b:1},292);
+      s+=plate2(40,170,248,32,go?grn:cardB,go?'файл хранит рекорд между запусками':'где хранят рекорд?',11,pre);
+      s+=`${fit(159,226,11,dim,'поэтому в играх есть кнопка «сохранить»',{},292)}`;
+      return s;
+    }
+    if(K==='gametest'){ /* тестирование */
+      const it=[{t:'герой провалился сквозь пол',f:'проверь границы и столкновения',c:red},
+                {t:'звёзды не исчезают',f:'проверь условие столкновения',c:gold},
+                {t:'враг слишком быстрый',f:'уменьши скорость',c:cyan}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'игру обязательно тестируют',{b:1},262)+`</g>`;
+      it.forEach((q,k)=>{
+        const y=56+k*56;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="22" y="${y}" width="274" height="46" rx="11" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(104,y+22,11,q.c,q.t,{b:1},188)
+          +fit(104,y+38,10.5,dim,'→ '+q.f,{},188)+`</g>`;
+      });
+      s+=plate2(22,228,274,32,go?grn:cardB,go?'тестирование — такая же часть работы':'что делать с ошибками?',11,pre);
+      s+=`${fit(159,284,11,dim,'игра готова, когда ошибок не осталось',{},292)}`;
+      return s;
+    }
+    if(K==='gamebalance'){ /* баланс */
+      const rows=[{t:'скорость героя',v:0.6,c:grn},{t:'скорость врагов',v:0.45,c:red},
+                  {t:'количество звёзд',v:0.7,c:gold},{t:'время уровня',v:0.4,c:cyan}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'баланс: чтобы было интересно',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=56+k*46;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`
+          +fit(96,y+22,10.5,ink,q.t,{b:1},130)
+          +growBar(160,y+12,110*q.v,10,q.c,1.2,0.4+k*0.2,0)+`</g>`;
+      });
+      s+=plate2(24,240,270,32,go?grn:cardB,go?'слишком сложно и слишком просто — плохо':'что настраивают в игре?',11,pre);
+      s+=`${fit(159,296,11,dim,'баланс проверяют на друзьях-тестировщиках',{},292)}`;
+      return s;
+    }
+    if(K==='gameart'){ /* пиксель-арт */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'графика игры — из пикселей',{b:1},262)+`</g>`;
+      const mat=[[0,0,1,1,0,0],[0,1,1,1,1,0],[1,1,0,0,1,1],[0,1,0,0,1,0],[0,1,0,0,1,0],[0,0,1,1,0,0]];
+      for(let r=0;r<6;r++)for(let c=0;c<6;c++)
+        s+=`<rect class="${pre}Pop" style="animation-delay:${(0.05*(r*6+c)).toFixed(2)}s" x="${86+c*20}" y="${52+r*20}" width="18" height="18" rx="2" fill="${mat[r][c]?'rgba(125,224,160,.5)':'rgba(255,255,255,.04)'}" stroke="${mat[r][c]?grn:cardB}" stroke-width="1"/>`;
+      s+=fit(159,196,11.5,ink,'маленький спрайт — таблица цветных клеток',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="34" y="212" width="250" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,235,11.5,gold,'так рисуют героев в старых играх',{b:1},230)+`</g>`;
+      s+=plate2(34,248,250,32,go?grn:cardB,go?'пиксели — как в уроке про рисунки':'из чего состоит спрайт?',11,pre);
+      return s;
+    }
+    if(K==='gamedesign'){ /* этапы */
+      const steps=[{t:'идея и правила',c:gold},{t:'герой и карта',c:cyan},{t:'движение и события',c:grn},
+                   {t:'очки, жизни, победа',c:pur},{t:'тест и баланс',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'как делают игру: пять шагов',{b:1},262)+`</g>`;
+      steps.forEach((q,k)=>{
+        const y=52+k*44;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s">`
+          +`<rect x="26" y="${y}" width="266" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +`<circle cx="48" cy="${y+17}" r="11" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.4"/>`
+          +tx(48,y+21,11,q.c,''.concat(k+1),{b:1})
+          +fit(172,y+22,11.5,q.c,q.t,{b:1},214)+`</g>`;
+        if(k<4) s+=drawLL({x:159,y:y+36},{x:159,y:y+42},q.c,1.6,0.4+k*0.16,1.6,pre);
+      });
+      s+=plate2(26,276,266,30,go?grn:cardB,go?'порядок шагов важен':'с чего начинают игру?',11,pre);
+      return s;
+    }
+    if(K==='gamepractice'){ /* практика */
+      const rows=[
+        {t:'сколько кадров за 2 секунды при 60 кадрах в секунду?',a:'120',c:cyan},
+        {t:'герой был в x = 2 и нажал «вправо» трижды. Где он?',a:'x = 5',c:gold},
+        {t:'собрано 3 звезды из 5. Игра закончена?',a:'нет, нужно ещё 2',c:red}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'практика: считаем как программист',{b:1},266)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*58;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(146,y+19,9.5,ink,q.t,{},214)
+          +(go?fit(146,y+38,11.5,q.c,q.a,{b:1},214):fit(146,y+38,10.5,dim,'нажми «показать»',{},214))+`</g>`;
+      });
+      s+=plate2(22,228,274,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
+      return s;
+    }
+    if(K==='gameplay'){ /* ИГРА: играем сами */
+      const gx=(st&&typeof st.gx==='number')?st.gx:0, gy=(st&&typeof st.gy==='number')?st.gy:5;
+      const gc=(st&&st.gc)?st.gc:[], gm=(st&&st.gm)?st.gm:0;
+      const COINS=[2,5,28,46,50];
+      const left=COINS.filter(i=>gc.indexOf(i)<0).length;
+      let s=`<g class="${pre}Pop"><rect x="16" y="12" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,31,11.5,ink,'играй: собери все звёзды стрелками',{b:1},266)+`</g>`;
+      for(let r=0;r<6;r++)for(let c=0;c<9;c++){
+        const idx=r*9+c, isOn=(gc.indexOf(idx)>=0);
+        s+=`<rect x="${26+c*30}" y="${48+r*28}" width="27" height="25" rx="3" fill="rgba(255,255,255,.03)" stroke="#2c3868" stroke-width="1"/>`;
+      }
+      COINS.forEach((idx,k)=>{
+        if(gc.indexOf(idx)>=0) return;
+        const c=idx%9, r=Math.floor(idx/9);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s"><circle cx="${26+c*30+13}" cy="${48+r*28+12}" r="9" fill="rgba(255,215,106,.35)" stroke="${gold}" stroke-width="1.8"/>`
+          +`<text x="${26+c*30+13}" y="${48+r*28+16}" text-anchor="middle" font-size="10" font-weight="bold" fill="${gold}">★</text></g>`;
+      });
+      s+=`<g class="${pre}Pop}"><circle cx="${26+gx*30+13}" cy="${48+gy*28+12}" r="11" fill="rgba(125,224,160,.5)" stroke="${grn}" stroke-width="2.2"/>`
+        +`<text x="${26+gx*30+13}" y="${48+gy*28+16}" text-anchor="middle" font-size="10" font-weight="bold" fill="${ink}">Я</text></g>`;
+      const mk=(x,y,t2,dx,dy)=>`<g style="cursor:pointer" onclick="infMove('${lk}',${dx},${dy})"><rect x="${x}" y="${y}" width="44" height="34" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.7"/>`
+        +tx(x+22,y+23,17,gold,t2,{b:1})+`</g>`;
+      s+=mk(34,224,'←',-1,0)+mk(126,224,'↑',0,-1)+mk(178,224,'↓',0,1)+mk(230,224,'→',1,0);
+      s+=`<g class="${pre}Rise}"><rect x="34" y="266" width="240" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+        +fit(154,284,10.5,left?gold:grn,left?('осталось звёзд: '+left+' · ходов: '+gm):('ПОБЕДА! Все звёзды за '+gm+' ходов'),{b:1},228)+`</g>`;
+      if(!left) s+=`<g class="${pre}Pop" style="animation-delay:.2s"><circle cx="159" cy="290" r="0" fill="none"/></g>`;
+      return s;
+    }
+    if(K==='gamequiz'){ /* викторина */
+      const opts=['событие','игровой цикл','спрайт'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +fit(159,34,11.5,ink,'что запускает действие героя при нажатии клавиши?',{b:1},276)+`</g>`;
+      s+=aiShape(159,82,20,'circle',grn,2.2);
+      s+=`<text x="159" y="88" text-anchor="middle" font-size="13" font-weight="bold" fill="${grn}">Я</text>`;
+      s+=`<path d="M198 82 h28" stroke="${gold}" stroke-width="2.4"/><path d="M220 75 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      for(let k=0;k<3;k++)
+        s+=`<rect x="${252+k*14}" y="${74-k*4}" width="10" height="${16+k*8}" rx="3" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="1.4"/>`;
+      opts.forEach((t2,k)=>{
+        const y=118+k*40, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="22" y="${y}" width="274" height="34" rx="9" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(159,y+22,11.5,c,t2,{b:on},256)+(on?`<path d="M266 ${y+11} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}"><rect x="22" y="244" width="274" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +fit(159,264,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Нажатие клавиши — это событие':'Подумай: программа чего-то ждёт',{b:done&&st.pick===ok},256)+`</g>`;
+      s+=`${fit(159,292,11,ink,'событие → действие — основа любой игры',{b:1},292)}`;
+      return s;
+    }
+    if(K==='gamemistakes'){ /* ошибки */
+      const it=[
+        {t:'герой двигается рывками',f:'мало кадров или слишком большая скорость',c:gold},
+        {t:'герой уходит за экран',f:'забыли проверить границы',c:red},
+        {t:'звёзды не исчезают',f:'нет условия столкновения',c:cyan},
+        {t:'игра слишком сложная',f:'нарушен баланс — проверь на друзьях',c:pur}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10.5,190/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},196)+`</g>`;
+      });
+      s+=`${tx(159,266,11,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='gamesheet'){ /* шпаргалка */
+      const rows=[{t:'игра = правила + герой + цель',c:pur},{t:'событие → действие героя',c:cyan},
+                  {t:'игровой цикл: обновить и нарисовать',c:grn},{t:'движение: x = x + скорость',c:gold},
+                  {t:'очки и жизни хранят в переменных',c:blu},{t:'рекорд сохраняют в файл',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'всё главное об играх и событиях',{b:1},264)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=50+k*36;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+20,10.5,q.c,q.t,{b:1},260)+`</g>`;
+      });
+      s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -5669,6 +6996,84 @@
     if(K==='outofrange') return 202;
     if(K==='marks') return 220;
     if(K==='findcell') return 210;
+    if(K==='gameintro') return 292;
+    if(K==='gameevents') return 296;
+    if(K==='gameloop') return 268;
+    if(K==='gamesprite') return 268;
+    if(K==='gamecoords') return 312;
+    if(K==='gamemove') return 308;
+    if(K==='gamekeys') return 322;
+    if(K==='gamebounds') return 294;
+    if(K==='gamejump') return 322;
+    if(K==='gamecollide') return 274;
+    if(K==='gamescore') return 290;
+    if(K==='gameenemy') return 314;
+    if(K==='gamelevel') return 294;
+    if(K==='gamelives') return 288;
+    if(K==='gamewin') return 298;
+    if(K==='gamesound') return 282;
+    if(K==='gamesave') return 240;
+    if(K==='gametest') return 298;
+    if(K==='gamebalance') return 308;
+    if(K==='gameart') return 294;
+    if(K==='gamedesign') return 310;
+    if(K==='gamepractice') return 278;
+    if(K==='gameplay') return 306;
+    if(K==='gamequiz') return 306;
+    if(K==='gamemistakes') return 282;
+    if(K==='gamesheet') return 308;
+    if(K==='fileintro') return 300;
+    if(K==='filename') return 306;
+    if(K==='fileext') return 310;
+    if(K==='foldertree') return 296;
+    if(K==='filepath') return 316;
+    if(K==='filesize') return 296;
+    if(K==='fileunits') return 310;
+    if(K==='filecreate') return 292;
+    if(K==='filecopy') return 248;
+    if(K==='filemove') return 248;
+    if(K==='filerename') return 312;
+    if(K==='filedelete') return 300;
+    if(K==='fileselect') return 296;
+    if(K==='filefind') return 306;
+    if(K==='filemask') return 290;
+    if(K==='filesort') return 274;
+    if(K==='filearchive') return 300;
+    if(K==='filebackup') return 272;
+    if(K==='filecloud') return 300;
+    if(K==='filesafety') return 276;
+    if(K==='filepractice') return 278;
+    if(K==='filegame1') return 278;
+    if(K==='filegame2') return 300;
+    if(K==='filemistakes') return 282;
+    if(K==='filesheet') return 308;
+    if(K==='filefinish') return 240;
+    if(K==='hwintro') return 320;
+    if(K==='hwparts') return 320;
+    if(K==='hwinput') return 262;
+    if(K==='hwoutput') return 258;
+    if(K==='hwmemory') return 292;
+    if(K==='hwram') return 296;
+    if(K==='hwbits') return 280;
+    if(K==='hwcpu') return 288;
+    if(K==='hwbust'||K==='hwbus') return 288;
+    if(K==='hwcycle') return 288;
+    if(K==='hwclock') return 318;
+    if(K==='hwcores') return 308;
+    if(K==='hwcache') return 296;
+    if(K==='hwstorage') return 262;
+    if(K==='hwgraphics') return 296;
+    if(K==='hwsoftware') return 288;
+    if(K==='hwos') return 278;
+    if(K==='hwboot') return 278;
+    if(K==='hwspeed') return 296;
+    if(K==='hwscale') return 308;
+    if(K==='hwpractice') return 278;
+    if(K==='hwgame1') return 292;
+    if(K==='hwgame2') return 306;
+    if(K==='hwmistakes') return 282;
+    if(K==='hwsheet') return 308;
+    if(K==='hwfinish') return 300;
     if(K==='aiintro') return 300;
     if(K==='aiwhere') return 306;
     if(K==='ainotmagic') return 310;
@@ -6928,6 +8333,187 @@
       tasks:[
         {q:'Сколько признаков нужно машине, чтобы отличать круг от квадрата по округлости?', kind:'unit', ans:1, tol:0, hints:['Округлость — один признак.','Достаточно одного признака.'], sol:'1'},
         {q:'Что произойдёт, если обучать машину на плохих примерах?', kind:'choice', choices:['она будет ошибаться','она станет умнее','ничего не изменится','она выключится'], ans:0, tol:0, hints:['«Мусор на входе — мусор на выходе».','Плохие данные дают плохие ответы.'], sol:'она будет ошибаться'}
+      ] },
+    { id:527, title:'Как устроен компьютер', ico:'🖥️', src:'Информатика · 5–6 класс · С нуля: устройство ПК',
+      explain:[
+        'Компьютер — это много устройств, которые работают вместе: процессор, память, устройства ввода и вывода, накопители.',
+        'Все устройства делят на четыре группы: процессор (считает), память (хранит), ввод (данные от нас) и вывод (результат нам).',
+        'Устройства ввода — те, через которые информацию даём мы: клавиатура, мышь, микрофон, камера, сканер, джойстик.',
+        'Устройства вывода — те, через которые компьютер отвечает нам: монитор, колонки, принтер, проектор.',
+        'Память бывает оперативная и постоянная. Оперативная — быстрая, но при выключении очищается; постоянная (диск, SSD) хранит данные годами.',
+        'В памяти всё разложено по ячейкам, и у каждой есть адрес — как номер квартиры в большом доме.',
+        'Внутри памяти хранятся только нули и единицы. Восемь битов — это один байт, а байт может хранить одну букву.',
+        'Единицы измерения: 1 КБ = 1024 байта, 1 МБ = 1024 КБ, 1 ГБ = 1024 МБ.',
+        'Процессор — «мозг» компьютера: он выполняет команды одну за другой, миллиарды простых операций каждую секунду.',
+        'Работа процессора — это цикл из четырёх шагов: выбрать команду, расшифровать её, выполнить и записать результат.',
+        'Между устройствами данные ходят по шинам — это «дороги», по которым информация идёт от процессора к памяти и обратно.',
+        'Тактовая частота показывает, сколько тактов в секунду делает процессор: 3 ГГц — это 3 миллиарда тактов каждую секунду.',
+        'Ядра — это несколько «помощников» внутри процессора: четыре ядра могут вести четыре задачи почти одновременно.',
+        'Чем ближе память к процессору, тем она быстрее, но меньше по объёму: регистры, кэш, оперативная память, диск.',
+        'Хранят данные долго накопители: жёсткий диск, SSD, флешка, карта памяти, а ещё облако в интернете.',
+        'Отдельные устройства отвечают за картинку и звук: у видеокарты свои ядра и своя быстрая память, поэтому игры требуют мощную видеокарту.',
+        'Железо — это то, что можно потрогать, а программы — это инструкции. Без программ железо просто детали.',
+        'Операционная система — «дирижёр»: она управляет устройствами, раздаёт память, следит за файлами и показывает окна.',
+        'При включении компьютер проходит шаги: кнопка, проверка устройств, поиск системы, загрузка системы, рабочий стол.',
+        'На скорость влияет всё вместе: процессор, объём оперативной памяти, скорость диска и видеокарта.',
+        'Вычислительные машины бывают разными: калькулятор, смартфон, ноутбук, суперкомпьютер — но основа одна: процессор и память.',
+        'Практика: в 1 КБ 1024 байта; кэш быстрее диска; при выключении оперативная память очищается.',
+        'Тренажёр: определи, принтер — это устройство ввода или вывода.',
+        'Тренажёр: где хранится сохранённый файл — в оперативной памяти или на диске.',
+        'Частые ошибки: путать память и диск, думать, что процессор понимает слова, считать ГБ и МБ одинаковыми, путать ввод и вывод.',
+        'Шпаргалка: процессор считает, память хранит, ввод — от нас, вывод — к нам; внутри памяти только нули и единицы. Проверь себя!' ],
+      slides:[
+        {h:'Компьютер целиком', v:{kind:'hwintro'}, r:'Много устройств вместе.', d:'Компьютер — это система из устройств: процессор и память внутри, ввод и вывод снаружи, накопитель для хранения.'},
+        {h:'Четыре группы устройств', v:{kind:'hwparts'}, r:'Процессор, память, ввод, вывод.', d:'Все устройства делят на четыре группы: обработка, хранение, ввод и вывод.'},
+        {h:'Устройства ввода', v:{kind:'hwinput'}, r:'Информацию даём мы.', d:'Клавиатура, мышь, микрофон, камера, сканер и джойстик — через них данные попадают в компьютер.'},
+        {h:'Устройства вывода', v:{kind:'hwoutput'}, r:'Компьютер отвечает нам.', d:'Монитор, колонки, принтер, проектор — через них мы получаем результат работы.'},
+        {h:'Две памяти', v:{kind:'hwmemory'}, r:'Оперативная и постоянная.', d:'Оперативная память быстрая, но пустеет при выключении. Постоянная (диск, SSD) хранит данные годами.'},
+        {h:'Ячейки и адреса', v:{kind:'hwram'}, r:'У каждой ячейки свой номер.', d:'Память состоит из ячеек, у каждой есть адрес. По адресу компьютер находит нужные данные.'},
+        {h:'Только нули и единицы', v:{kind:'hwbits'}, r:'Биты и байты.', d:'Внутри памяти хранятся только 0 и 1. Восемь битов — байт, он может хранить одну букву.'},
+        {h:'Единицы измерения', v:{kind:'hwbits'}, r:'КБ, МБ, ГБ.', d:'1 КБ = 1024 байта, 1 МБ = 1024 КБ, 1 ГБ = 1024 МБ.'},
+        {h:'Процессор', v:{kind:'hwcpu'}, r:'«Мозг» компьютера.', d:'Процессор выполняет команды программы одну за другой — миллиарды операций в секунду.'},
+        {h:'Цикл процессора', v:{kind:'hwcycle'}, r:'Четыре шага.', d:'Команда проходит четыре шага: выбрать, расшифровать, выполнить, записать результат. И так без остановки.'},
+        {h:'Шины', v:{kind:'hwbus'}, r:'Дороги для данных.', d:'По шинам данные идут от процессора к памяти и накопителю и обратно.'},
+        {h:'Такт', v:{kind:'hwclock'}, r:'Сколько операций в секунду.', d:'Тактовая частота измеряется в гигагерцах: 3 ГГц — это три миллиарда тактов в секунду.'},
+        {h:'Ядра', v:{kind:'hwcores'}, r:'Несколько задач сразу.', d:'Каждое ядро — отдельный вычислитель. Четыре ядра справляются с четырьмя задачами почти одновременно.'},
+        {h:'Пирамида памяти', v:{kind:'hwcache'}, r:'Ближе — быстрее.', d:'Регистры, кэш, оперативная память, диск — чем ближе к процессору, тем быстрее, но меньше объём.'},
+        {h:'Накопители', v:{kind:'hwstorage'}, r:'Где данные живут долго.', d:'Жёсткий диск, SSD, флешка, облако — всё это постоянная память.'},
+        {h:'Графика и звук', v:{kind:'hwgraphics'}, r:'Видеокарта и звук.', d:'Видеокарта рисует картинку, звуковая карта создаёт звук. У видеокарты свои ядра и память.'},
+        {h:'Железо и программы', v:{kind:'hwsoftware'}, r:'Потрогать или нет.', d:'Железо можно потрогать, программы — это инструкции. Без программ железо не работает.'},
+        {h:'Операционная система', v:{kind:'hwos'}, r:'Дирижёр устройств.', d:'ОС управляет устройствами, раздаёт память, следит за файлами и показывает окна.'},
+        {h:'Включение компьютера', v:{kind:'hwboot'}, r:'Пять шагов.', d:'Кнопка, проверка устройств, поиск системы, загрузка системы, рабочий стол — это тоже алгоритм.'},
+        {h:'Что влияет на скорость', v:{kind:'hwspeed'}, r:'Всё вместе.', d:'Скорость зависит от процессора, оперативной памяти, диска и видеокарты — слабое звено тормозит всё.'},
+        {h:'От калькулятора до суперкомпьютера', v:{kind:'hwscale'}, r:'Разные масштабы.', d:'Основа одна — процессор и память, но масштабы очень разные.'},
+        {h:'Практика', v:{kind:'hwpractice'}, r:'Отвечаем на вопросы.', d:'1024 байта в килобайте, кэш быстрее диска, оперативная память очищается при выключении.'},
+        {h:'Тренажёр: ввод или вывод', v:{kind:'hwgame1'}, r:'Определи группу.', d:'Принтер печатает — значит, это устройство вывода.'},
+        {h:'Тренажёр: где файл', v:{kind:'hwgame2'}, r:'Память или диск.', d:'Сохранённый файл лежит на диске, а в оперативной памяти он был только во время работы.'},
+        {h:'Частые ошибки', v:{kind:'hwmistakes'}, r:'Что чаще всего путают.', d:'Память и диск, команды и слова, ГБ и МБ, ввод и вывод.'},
+        {h:'Шпаргалка', v:{kind:'hwsheet'}, r:'Шесть главных мыслей.', d:'Процессор считает, память хранит, ввод — от нас, вывод — к нам.'},
+        {h:'Итог', v:{kind:'hwfinish'}, r:'Как всё работает вместе.', d:'Данные идут по кругу: считать, сохранить, показать. Все части соединены шинами.'} ],
+      check:{ q:'Какие устройства относятся к устройствам ввода?', choices:['клавиатура и мышь','монитор и колонки','принтер и проектор','диск и флешка'], ans:0, exp:'Ввод — то, через что информацию даём мы: клавиатура, мышь, микрофон, камера.' },
+      tasks:[
+        {q:'Сколько байтов в одном килобайте?', kind:'unit', ans:1024, tol:0, hints:['Кило — это 1024, а не 1000.','1 КБ = 1024 байта.'], sol:'1024'},
+        {q:'Что произойдёт с данными в оперативной памяти при выключении компьютера?', kind:'choice', choices:['они очистятся','они сохранятся навсегда','они перейдут на диск','они станут больше'], ans:0, tol:0, hints:['Оперативная память — временное хранилище.','При выключении она пустеет.'], sol:'они очистятся'}
+      ] },
+    { id:528, title:'Файлы и папки: как хранят данные', ico:'📁', src:'Информатика · 5–6 класс · С нуля: файлы',
+      explain:[
+        'Файл — это документ, сохранённый в памяти компьютера. Файлы лежат в папках, как книги на полках библиотеки.',
+        'Полное имя файла состоит из имени и расширения: имя придумывает человек, а расширение показывает, что внутри.',
+        'В имени файла нельзя использовать знаки \\ / : * ? « < > — они служат для других целей.',
+        'Расширение подсказывает, чем открыть файл: .txt — текст, .jpg — картинка, .mp3 — музыка, .mp4 — видео, .exe — программа, .zip — архив.',
+        'Папки можно вкладывать одну в другую — получается дерево папок. Наверху обычно диск, а внутри него всё остальное.',
+        'Путь — это адрес файла в дереве папок. Он читается слева направо: диск, папки, имя файла, и шаги разделяют обратной косой чертой.',
+        'Размер файла измеряют в байтах: 1 байт — одна буква, 1 КБ = 1024 байта, 1 МБ = 1024 КБ, 1 ГБ = 1024 МБ.',
+        'Размер зависит от содержимого: текст занимает килобайты, фотография — мегабайты, фильм — гигабайты.',
+        'Чтобы файл появился, нужно сохранить данные на диск: до сохранения файла ещё нет, поэтому работу сохраняют почаще.',
+        'Копирование создаёт второй такой же файл: Ctrl + C копирует, Ctrl + V вставляет. Оригинал при этом остаётся на месте.',
+        'Перемещение не создаёт копию: файл исчезает из одной папки и появляется в другой. Это как вырезать и вставить.',
+        'Переименование меняет только имя файла — содержимое остаётся тем же. Расширение лучше не трогать руками.',
+        'При удалении файл попадает в корзину и его ещё можно восстановить. А вот удаление из корзины — навсегда.',
+        'Несколько файлов можно выделить сразу: Ctrl + щелчок добавляет файл к выделению.',
+        'Поиск помогает найти файл по имени, а маска — по шаблону: звёздочка означает «сколько угодно символов», вопросительный знак — «один символ».',
+        'Файлы в папке можно упорядочить: по имени, по размеру, по дате или по типу. Это помогает быстрее находить нужное.',
+        'Архив — это много файлов в одном: архив .zip занимает меньше места, поэтому его удобно отправлять.',
+        'Резервная копия спасает от потери данных: важные файлы хранят в двух местах, например на диске и в облаке.',
+        'Облако — это файлы на сервере в интернете. Они доступны с любого устройства, но нужен интернет.',
+        'Правила безопасности: не открывать .exe от незнакомых, не удалять системные папки, делать копии важного.',
+        'Практика: файл C:\\Школа\\Задачи\\урок1.txt лежит в папке Задачи, а файл песня.mp3 откроет музыкальный проигрыватель.',
+        'Практика: маска *.jpg найдёт все картинки формата jpg, а фото?.jpg — только те, где после «фото» стоит один символ.',
+        'Тренажёр: определи, в какой папке лежит файл по его пути.',
+        'Тренажёр: выбери программу, которой откроется файл песня.mp3.',
+        'Частые ошибки: менять расширение руками, путать копирование и перемещение, удалять без копии, искать файл без пути.',
+        'Шпаргалка: имя + расширение, путь по дереву папок, 1 КБ = 1024 байта, копия — два файла, перемещение — один. Проверь себя!' ],
+      slides:[
+        {h:'Зачем нужны файлы', v:{kind:'fileintro'}, r:'Документы в памяти.', d:'Файл — это сохранённый документ. Файлы лежат в папках, как книги на полках.'},
+        {h:'Имя и расширение', v:{kind:'filename'}, r:'Две части имени.', d:'Имя придумывает человек, расширение показывает тип файла. Точка их разделяет.'},
+        {h:'Типы файлов', v:{kind:'fileext'}, r:'Что внутри.', d:'.txt — текст, .jpg — картинка, .mp3 — музыка, .mp4 — видео, .exe — программа, .zip — архив.'},
+        {h:'Дерево папок', v:{kind:'foldertree'}, r:'Папки внутри папок.', d:'Папки вкладываются друг в друга, и получается дерево. Файл лежит в одной из веток.'},
+        {h:'Путь к файлу', v:{kind:'filepath'}, r:'Адрес в дереве.', d:'Путь читается слева направо: диск, папки, имя файла. Шаги разделяют обратной косой чертой.'},
+        {h:'Размеры файлов', v:{kind:'filesize'}, r:'От текста до фильма.', d:'Текст занимает килобайты, фотография — мегабайты, фильм — гигабайты.'},
+        {h:'Единицы измерения', v:{kind:'fileunits'}, r:'1024 — волшебное число.', d:'1 КБ = 1024 байта, 1 МБ = 1024 КБ, 1 ГБ = 1024 МБ.'},
+        {h:'Создание файла', v:{kind:'filecreate'}, r:'Сохранить на диск.', d:'Пока данные не сохранены на диск, файла нет. Поэтому работу сохраняют почаще.'},
+        {h:'Копирование', v:{kind:'filecopy'}, r:'Файлов становится два.', d:'Копирование создаёт второй такой же файл: Ctrl + C и Ctrl + V.'},
+        {h:'Перемещение', v:{kind:'filemove'}, r:'Файл меняет место.', d:'При перемещении файл один: он исчезает из одной папки и появляется в другой.'},
+        {h:'Переименование', v:{kind:'filerename'}, r:'Меняем только имя.', d:'Содержимое файла остаётся тем же, меняется лишь имя.'},
+        {h:'Удаление', v:{kind:'filedelete'}, r:'Сначала в корзину.', d:'Удалённый файл попадает в корзину, откуда его можно восстановить.'},
+        {h:'Выделение', v:{kind:'fileselect'}, r:'Несколько сразу.', d:'Ctrl + щелчок выделяет несколько файлов — с ними можно работать вместе.'},
+        {h:'Поиск файлов', v:{kind:'filefind'}, r:'Найти по имени.', d:'Поиск находит файлы по имени и типу, даже если ты не помнишь, где они лежат.'},
+        {h:'Маска поиска', v:{kind:'filemask'}, r:'Звёздочка и вопросик.', d:'* заменяет сколько угодно символов, ? — ровно один символ.'},
+        {h:'Сортировка', v:{kind:'filesort'}, r:'Порядок в папке.', d:'Файлы можно упорядочить по имени, размеру, дате или типу.'},
+        {h:'Архив', v:{kind:'filearchive'}, r:'Много файлов в одном.', d:'Архив .zip занимает меньше места — его удобно отправлять и хранить.'},
+        {h:'Резервная копия', v:{kind:'filebackup'}, r:'Спасение от потери.', d:'Важные файлы хранят в двух местах: диск может сломаться.'},
+        {h:'Облако', v:{kind:'filecloud'}, r:'Файлы в интернете.', d:'В облаке файлы доступны с любого устройства, но нужен интернет.'},
+        {h:'Безопасность', v:{kind:'filesafety'}, r:'Три правила.', d:'Не открывай .exe от незнакомых, не удаляй системное, делай копии.'},
+        {h:'Практика', v:{kind:'filepractice'}, r:'Пути и маски.', d:'По пути видно, где лежит файл, а по расширению — чем его открыть.'},
+        {h:'Тренажёр: где файл', v:{kind:'filegame1'}, r:'Читаем путь.', d:'В пути C:\\Школа\\Математика\\Задачи\\урок1.txt файл лежит в папке Задачи.'},
+        {h:'Тренажёр: чем открыть', v:{kind:'filegame2'}, r:'Определи программу.', d:'Файл .mp3 открывает музыкальный проигрыватель.'},
+        {h:'Частые ошибки', v:{kind:'filemistakes'}, r:'Что чаще всего путают.', d:'Не меняй расширение, не путай копирование и перемещение, делай копии.'},
+        {h:'Шпаргалка', v:{kind:'filesheet'}, r:'Шесть главных мыслей.', d:'Имя и расширение, путь, размеры, копия и перемещение, маска, копии важного.'},
+        {h:'Итог', v:{kind:'filefinish'}, r:'Файл, папка, путь.', d:'Файл живёт в папке, путь его находит. Копируй важное и архивируй большое.'} ],
+      check:{ q:'Что показывает расширение файла?', choices:['тип файла и чем его открыть','размер файла','дату создания','имя автора'], ans:0, exp:'Расширение (.txt, .jpg, .mp3) говорит, что внутри файла и какой программой его открыть.' },
+      tasks:[
+        {q:'Сколько килобайт в одном мегабайте?', kind:'unit', ans:1024, tol:0, hints:['Каждая единица в 1024 раза больше.','1 МБ = 1024 КБ.'], sol:'1024'},
+        {q:'Чем отличается перемещение файла от копирования?', kind:'choice', choices:['при перемещении файл остаётся один','при перемещении файлов становится два','ничем не отличается','копирование удаляет оригинал'], ans:0, tol:0, hints:['Перемещение — это «вырезать и вставить».','Файл меняет место, но остаётся одним.'], sol:'при перемещении файл остаётся один'}
+      ] },
+    { id:529, title:'События и игры: делаем свою игру', ico:'🎮', src:'Информатика · 5–6 класс · С нуля: игры',
+      explain:[
+        'Игра — это правила, герой и цель. Мы описываем их алгоритмом и данными, и компьютер оживляет их на экране.',
+        'Программа игры ждёт событий: нажатия клавиш, щелчка мышью, тиканья таймера. Событие → действие, так и работает управление.',
+        'Основа любой игры — игровой цикл: обновить состояние и нарисовать кадр. Он повторяется 60 раз в секунду, поэтому картинка движется.',
+        'Спрайт — это картинка героя. Если нарисовать несколько кадров и менять их, герой «шагает» — получается анимация.',
+        'Положение героя на экране задают двумя числами: x (вправо) и y (вверх). Вместе это координаты.',
+        'Движение — это изменение координаты: x = x + скорость. Каждый кадр герой сдвигается на шаг.',
+        'Для каждой клавиши своё действие: влево — x уменьшается, вправо — увеличивается, вверх — прыжок.',
+        'Границы экрана проверяют условием: если x больше предела, вернуть его обратно. Иначе герой улетит за край.',
+        'Прыжок делают из двух частей: скорость вверх и гравитация, которая всё время тянет героя вниз.',
+        'Столкновение определяют по пересечению рамок: если рамки героя и звезды пересеклись — значит, он её коснулся.',
+        'Очки хранят в переменной: при столкновении со звездой счёт = счёт + 1. Так же считают и другие показатели.',
+        'Враг двигается по своему алгоритму — например, ходит туда и обратно, меняя координату по циклу.',
+        'Уровень — это список объектов с координатами: звёзды, враги, стены. Изменил список — изменился уровень.',
+        'Жизни — ещё одна переменная: при ошибке жизни = жизни − 1, а когда они кончились, игра начинается заново.',
+        'Условие победы проверяют каждый кадр: если собраны все звёзды — показываем «Победа!».',
+        'Звук делает игру живой: при событии проигрывается короткий звук — сбор звезды, прыжок, проигрыш.',
+        'Рекорд сохраняют в файл, иначе при выключении компьютера он исчезнет — тут помогает урок про файлы.',
+        'Игру обязательно тестируют: проверяют, не проваливается ли герой, исчезают ли звёзды, не слишком ли быстры враги.',
+        'Баланс — это настройка сложности: скорость героя и врагов, количество звёзд, время уровня. Слишком сложно и слишком просто одинаково плохо.',
+        'Графика игры часто собрана из пикселей: маленький спрайт — это таблица цветных клеток, как в уроке про рисунки.',
+        'Игру делают по шагам: идея и правила, герой и карта, движение и события, очки и жизни, тест и баланс.',
+        'Практика: при 60 кадрах в секунду за 2 секунды проходит 120 кадров; герой из x = 2 после трёх нажатий «вправо» окажется в x = 5.',
+        'Практика: если собрано 3 звезды из 5, игра не закончена — нужно ещё 2.',
+        'Играй сам: управляй героем стрелками и собери все звёзды. Смотри, как работает игровой цикл и условие победы.',
+        'Частые ошибки: рывки из-за большой скорости, герой уходит за экран, звёзды не исчезают, нарушен баланс.',
+        'Шпаргалка: событие → действие, игровой цикл, x = x + скорость, очки и жизни в переменных, рекорд в файле. Проверь себя!' ],
+      slides:[
+        {h:'Что такое игра', v:{kind:'gameintro'}, r:'Правила, герой, цель.', d:'Игра — это правила, герой и цель. Всё это описывают алгоритмом и данными.'},
+        {h:'События', v:{kind:'gameevents'}, r:'Программа ждёт.', d:'Нажатие клавиши, щелчок мышью, тиканье таймера — события. На каждое программа отвечает действием.'},
+        {h:'Игровой цикл', v:{kind:'gameloop'}, r:'60 раз в секунду.', d:'Цикл: обновить состояние и нарисовать кадр. Повторяется много раз в секунду — поэтому картинка движется.'},
+        {h:'Спрайт', v:{kind:'gamesprite'}, r:'Картинка героя.', d:'Спрайт — это картинка героя. Несколько кадров подряд дают анимацию.'},
+        {h:'Координаты героя', v:{kind:'gamecoords'}, r:'Два числа: x и y.', d:'Положение героя задают координаты: x — вправо, y — вверх.'},
+        {h:'Движение', v:{kind:'gamemove'}, r:'x = x + скорость.', d:'Каждый кадр координата меняется на скорость — так герой двигается.'},
+        {h:'Клавиши', v:{kind:'gamekeys'}, r:'У каждой своё действие.', d:'Влево, вправо, прыжок, присесть — программа проверяет, какая клавиша нажата.'},
+        {h:'Границы', v:{kind:'gamebounds'}, r:'Не улететь за край.', d:'Условие «если x больше предела, то x равен пределу» не даёт герою уйти за экран.'},
+        {h:'Прыжок', v:{kind:'gamejump'}, r:'Скорость и гравитация.', d:'Прыжок — это скорость вверх, а гравитация постепенно возвращает героя на землю.'},
+        {h:'Столкновения', v:{kind:'gamecollide'}, r:'Рамки пересеклись.', d:'Если рамка героя пересеклась с рамкой звезды — значит, он её коснулся.'},
+        {h:'Очки', v:{kind:'gamescore'}, r:'Переменная-счётчик.', d:'Очки хранят в переменной: счёт = счёт + 1 при каждом сборе звезды.'},
+        {h:'Враг', v:{kind:'gameenemy'}, r:'Свой алгоритм.', d:'Враг тоже просто меняет координату — поэтому ходит туда и обратно.'},
+        {h:'Уровень', v:{kind:'gamelevel'}, r:'Список объектов.', d:'Карта уровня — список координат звёзд, врагов и стен. Меняешь список — меняется уровень.'},
+        {h:'Жизни', v:{kind:'gamelives'}, r:'Сколько раз можно ошибиться.', d:'Жизни — переменная: при ошибке жизни = жизни − 1.'},
+        {h:'Победа', v:{kind:'gamewin'}, r:'Условие конца игры.', d:'Если собраны все звёзды — показываем «Победа!». Условие проверяют каждый кадр.'},
+        {h:'Звук', v:{kind:'gamesound'}, r:'Игра становится живой.', d:'Звук проигрывается при событии: сбор звезды, прыжок, проигрыш.'},
+        {h:'Рекорд', v:{kind:'gamesave'}, r:'Сохраняем в файл.', d:'Без файла рекорд исчезнет при выключении компьютера.'},
+        {h:'Тестирование', v:{kind:'gametest'}, r:'Ищем ошибки.', d:'Проверяй: не проваливается ли герой, исчезают ли звёзды, не слишком ли быстры враги.'},
+        {h:'Баланс', v:{kind:'gamebalance'}, r:'Сложность.', d:'Скорость героя и врагов, число звёзд и время уровня настраивают так, чтобы играть было интересно.'},
+        {h:'Графика', v:{kind:'gameart'}, r:'Из пикселей.', d:'Спрайт часто рисуют из пикселей — маленьких цветных клеток.'},
+        {h:'Как делают игру', v:{kind:'gamedesign'}, r:'Пять шагов.', d:'Идея и правила, герой и карта, движение и события, очки и жизни, тест и баланс.'},
+        {h:'Практика', v:{kind:'gamepractice'}, r:'Считаем как программист.', d:'120 кадров за две секунды, x = 5 после трёх шагов вправо, для победы нужно 5 звёзд.'},
+        {h:'Играй сам!', v:{kind:'gameplay'}, r:'Собери все звёзды.', d:'Управляй героем кнопками-стрелками. Собери все звёзды — и увидишь условие победы в действии.'},
+        {h:'Викторина', v:{kind:'gamequiz'}, r:'Что запускает действие?', d:'Нажатие клавиши — это событие, и программа отвечает на него действием.'},
+        {h:'Частые ошибки', v:{kind:'gamemistakes'}, r:'Что ломает игру.', d:'Рывки, герой за экраном, звёзды не исчезают, нарушенный баланс.'},
+        {h:'Шпаргалка', v:{kind:'gamesheet'}, r:'Шесть главных мыслей.', d:'Событие → действие, игровой цикл, x = x + скорость, переменные для очков и жизней, рекорд в файле.'} ],
+      check:{ q:'Что такое игровой цикл?', choices:['повторяющееся «обновить и нарисовать»','одно нажатие клавиши','картинка героя','список уровней'], ans:0, exp:'Игровой цикл повторяется много раз в секунду: сначала обновляем состояние, потом рисуем кадр.' },
+      tasks:[
+        {q:'Сколько кадров пройдёт за 3 секунды, если игра рисует 60 кадров в секунду?', kind:'unit', ans:180, tol:0, hints:['Кадры в секунду умножаем на секунды.','60 · 3 = 180.'], sol:'60 · 3 = 180'},
+        {q:'Герой был в точке x = 4 и нажал «влево» два раза. Где он окажется?', kind:'unit', ans:2, tol:0, hints:['Каждое нажатие «влево» уменьшает x на 1.','4 − 2 = 2.'], sol:'4 − 2 = 2'}
       ] }
   ];
 
@@ -6942,7 +8528,7 @@
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -6961,6 +8547,8 @@
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
+      : (s.v.kind==='gameplay')
+      ? wkRow(wkBtn('начать игру заново',`infMove('${lk}',0,0,1)`))
       : (s.v.kind==='aitrain')
       ? wkRow(wkBtn('начать заново',`infTrain('${lk}',0,1)`))
       : (s.v.kind==='aitreegame')
@@ -6974,7 +8562,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='gameplay')? ((st.gm>=5) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -6983,6 +8571,18 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infMove=function(lk,dx,dy,reset){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(reset){ st.gx=0; st.gy=5; st.gc=[]; st.gm=0; chRender(0); return; }
+    const COINS=[2,5,28,46,50];
+    let gx=(typeof st.gx==='number')?st.gx:0, gy=(typeof st.gy==='number')?st.gy:5;
+    gx=Math.max(0,Math.min(8,gx+dx)); gy=Math.max(0,Math.min(5,gy+dy));
+    st.gx=gx; st.gy=gy; st.gm=(st.gm||0)+1;
+    st.gc=st.gc||[];
+    const idx=gy*9+gx;
+    if(COINS.indexOf(idx)>=0 && st.gc.indexOf(idx)<0) st.gc.push(idx);
+    chRender(0);
+  };
   window.infTrain=function(lk,say,reset){
     const st=CHS[lk]||(CHS[lk]={});
     if(reset){ st.t=0.18; st.i=0; st.n=0; st.ok=0; chRender(0); return; }
