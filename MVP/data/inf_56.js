@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 19 уроков (id 500–518) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 20 уроков (id 500–519) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -38,6 +38,30 @@
     [/двоичн|разряд|0 и 1|ноль|нул|единиц/i,'bits'],
     [/порядок|шаг|список|номер|строк/i,'lines']
   ];
+  function graphDraw(pre,nodes,edges,opt){
+    opt=opt||{}; const A=accOf(pre); let s='';
+    edges.forEach((e,k)=>{
+      const a=nodes[e[0]], b=nodes[e[1]];
+      const hl=(opt.hlEdges||[]).indexOf(k)>=0;
+      const col=hl?grn:((opt.dimAll||(opt.dimEdges||[]).indexOf(k)>=0)?'#33456e':'#5a6d96');
+      s+=`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${col}" stroke-width="${hl?4:2.4}" opacity="${(opt.dimAll&&!hl)?0.35:0.95}"/>`;
+      if(opt.dir){
+        const dx=b.x-a.x, dy=b.y-a.y, L=Math.hypot(dx,dy)||1, ux=dx/L, uy=dy/L;
+        const ax=b.x-ux*24, ay=b.y-uy*24;
+        s+=`<path d="M${ax.toFixed(1)} ${ay.toFixed(1)} l${(-ux*11-uy*7).toFixed(1)} ${(-uy*11+ux*7).toFixed(1)} l${(ux*8-uy*10).toFixed(1)} ${(uy*8+ux*10).toFixed(1)} z" fill="#8ea3c8"/>`;
+      }
+      if(e[2]!==undefined) s+=`<g class="${pre}Pop"><rect x="${(a.x+b.x)/2-16}" y="${(a.y+b.y)/2-11}" width="32" height="20" rx="6" fill="rgba(10,18,36,.97)" stroke="#41558a" stroke-width="1.2"/>`
+        +`<text x="${(a.x+b.x)/2}" y="${(a.y+b.y)/2+3}" text-anchor="middle" font-size="11" font-weight="bold" fill="${gold}">${e[2]}</text></g>`;
+    });
+    nodes.forEach((n,i)=>{
+      const hl=(opt.hlNodes||[]).indexOf(i)>=0, dim=(opt.dimNodes||[]).indexOf(i)>=0;
+      const col=hl?grn:(n.c||A);
+      s+=`<circle cx="${n.x}" cy="${n.y}" r="17" fill="${hl?'rgba(19,44,35,.97)':'rgba(10,18,36,.97)'}" stroke="${col}" stroke-width="${hl?3:2.2}" opacity="${dim?0.4:1}"/>`
+        +(hl?`<circle class="${pre}Glow" cx="${n.x}" cy="${n.y}" r="23" fill="none" stroke="${col}" stroke-width="1.8" opacity=".45"/>`:'')
+        +`<text x="${n.x}" y="${n.y+5}" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${hl?grn:col}" paint-order="stroke" stroke="#08101f" stroke-width="3">${n.t}</text>`;
+    });
+    return s;
+  }
   function gridTable(pre,x0,y0,cw,rh,head,rows,opt){
     opt=opt||{};
     const A=accOf(pre);
@@ -2437,6 +2461,227 @@
         +`${tx(159,by+20,Math.min(11.5,252/Math.max(1,msg.length)/0.7),done?grn:dim,msg,{b:done})}</g>`;
       return s;
     }
+    if(K==='maptask'){ /* карта: как добраться? */
+      const nodes=[{x:44,y:54,t:'A'},{x:159,y:38,t:'B'},{x:274,y:56,t:'C'},{x:62,y:158,t:'D'},{x:159,y:170,t:'E'},{x:272,y:158,t:'F'}];
+      const edges=[[0,1],[1,2],[0,3],[1,4],[2,5],[3,4],[4,5],[1,3]];
+      let s=`<g class="${pre}Pop"><rect x="34" y="12" width="250" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +`${tx(159,31,12,gold,'как добраться из A в F?',{b:1})}</g>`;
+      s+=graphDraw(pre,nodes,edges,{});
+      const pulses=[[0,1],[0,3]];
+      pulses.forEach((e,k)=>{
+        s+=`<circle r="5" fill="${gold}"><animateMotion dur="3s" begin="${(k*0.6).toFixed(1)}s" repeatCount="indefinite" path="M${nodes[e[0]].x} ${nodes[e[0]].y} L${nodes[e[1]].x} ${nodes[e[1]].y}"/></circle>`;
+      });
+      s+=`${tx(159,196,11.5,dim,'дороги соединяют города — это граф',{})}`;
+      return s;
+    }
+    if(K==='graphintro'){ /* вершины и рёбра */
+      const nodes=[{x:60,y:70,t:'A'},{x:170,y:52,t:'B'},{x:258,y:110,t:'C'},{x:96,y:162,t:'D'}];
+      const edges=[[0,1],[1,2],[0,3],[3,2]];
+      let s='';
+      edges.forEach((e,k)=>{
+        const a=nodes[e[0]], b=nodes[e[1]];
+        s+=`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${A}" stroke-width="3" stroke-dasharray="${Math.round(Math.hypot(b.x-a.x,b.y-a.y))}" stroke-dashoffset="${Math.round(Math.hypot(b.x-a.x,b.y-a.y))}">`
+          +`<animate attributeName="stroke-dashoffset" values="${Math.round(Math.hypot(b.x-a.x,b.y-a.y))};0;0" keyTimes="0;.5;1" dur="3.6s" begin="${(k*0.35).toFixed(2)}s" repeatCount="indefinite"/></line>`;
+      });
+      nodes.forEach((n,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.5+k*0.2).toFixed(2)}s"><circle cx="${n.x}" cy="${n.y}" r="18" fill="rgba(10,18,36,.97)" stroke="${cyan}" stroke-width="2.4"/>`
+          +`<text x="${n.x}" y="${n.y+5}" text-anchor="middle" font-size="14" font-family="Georgia,serif" font-weight="bold" fill="${cyan}" paint-order="stroke" stroke="#08101f" stroke-width="3">${n.t}</text></g>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.6s"><rect x="24" y="188" width="130" height="28" rx="9" fill="rgba(15,25,46,.95)" stroke="${cyan}" stroke-width="1.6"/>`
+        +`${tx(89,207,11,cyan,'кружки — вершины',{})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.8s"><rect x="164" y="188" width="130" height="28" rx="9" fill="rgba(15,25,46,.95)" stroke="${A}" stroke-width="1.6"/>`
+        +`${tx(229,207,11,A,'линии — рёбра',{})}</g>`;
+      return s;
+    }
+    if(K==='degree'){ /* степень вершины */
+      const nodes=[{x:159,y:64,t:'B'},{x:52,y:120,t:'A'},{x:266,y:120,t:'C'},{x:100,y:194,t:'D'},{x:220,y:194,t:'E'}];
+      const edges=[[0,1],[1,2],[0,3],[1,3],[1,4]];
+      let s=graphDraw(pre,nodes,edges,{hlNodes:[0],hlEdges:[0,2,3,4],dimEdges:[1]});
+      [0,2,3,4].forEach((ei,k)=>{
+        const e=edges[ei], a=nodes[e[0]], b=nodes[e[1]];
+        s+=`<circle r="5" fill="${grn}"><animateMotion dur="2.6s" begin="${(k*0.45).toFixed(2)}s" repeatCount="indefinite" path="M${b.x} ${b.y} L${a.x} ${a.y}"/></circle>`;
+      });
+      s+=`<rect x="96" y="14" width="126" height="28" rx="9" fill="rgba(19,44,35,.95)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(159,33,11.5,grn,'4 дороги — 4 соседа',{b:1})}`;
+      s+=`${tx(159,222,9,dim,'',{})}`;
+      return s;
+    }
+    if(K==='route'){ /* путь по карте */
+      const nodes=[{x:44,y:54,t:'A'},{x:159,y:38,t:'B'},{x:274,y:56,t:'C'},{x:62,y:158,t:'D'},{x:159,y:170,t:'E'},{x:272,y:158,t:'F'}];
+      const all=[[0,1],[1,2],[0,3],[1,4],[2,5],[3,4],[4,5],[1,3]];
+      const path=[0,3,4,5];
+      let s=graphDraw(pre,nodes,all,{dimAll:1});
+      const d='M'+path.map(i=>`${nodes[i].x} ${nodes[i].y}`).join(' L');
+      s+=`<path d="${d}" fill="none" stroke="${grn}" stroke-width="4" stroke-linecap="round" opacity=".9"/>`;
+      path.forEach((n2,k)=>{
+        if(k<path.length-1) s+=`<path d="M${nodes[n2].x} ${nodes[n2].y} L${nodes[path[k+1]].x} ${nodes[path[k+1]].y}" stroke="${grn}" stroke-width="4" stroke-dasharray="6 6" opacity=".9" class="${pre}Dash"/>`;
+      });
+      path.forEach((n2,k)=>{
+        s+=`<circle cx="${nodes[n2].x}" cy="${nodes[n2].y}" r="18" fill="rgba(19,44,35,.97)" stroke="${grn}" stroke-width="2.6"/>`
+          +`<text x="${nodes[n2].x}" y="${nodes[n2].y+5}" text-anchor="middle" font-size="14" font-family="Georgia,serif" font-weight="bold" fill="${grn}" paint-order="stroke" stroke="#08101f" stroke-width="3">${nodes[n2].t}</text>`;
+      });
+      s+=`<circle r="8" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"><animateMotion dur="4.6s" repeatCount="indefinite" path="${d}"/></circle>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.3s"><rect x="24" y="196" width="270" height="30" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,216,11.5,grn,'путь A → D → E → F: три дороги',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='longshort'){ /* длинный и короткий путь */
+      const nodes=[{x:44,y:54,t:'A'},{x:159,y:38,t:'B'},{x:274,y:56,t:'C'},{x:62,y:158,t:'D'},{x:159,y:170,t:'E'},{x:272,y:158,t:'F'}];
+      const all=[[0,1],[1,2],[0,3],[1,4],[2,5],[3,4],[4,5]];
+      let s=graphDraw(pre,nodes,all,{dimAll:1});
+      const lp=[0,1,2,5], sp=[0,3,4,5];
+      s+=`<path d="M${nodes[0].x} ${nodes[0].y} L${nodes[1].x} ${nodes[1].y} L${nodes[2].x} ${nodes[2].y} L${nodes[5].x} ${nodes[5].y}" fill="none" stroke="${red}" stroke-width="3.4" opacity=".85" stroke-dasharray="7 6" class="${pre}Dash"/>`;
+      s+=`<path d="M${nodes[0].x} ${nodes[0].y} L${nodes[3].x} ${nodes[3].y} L${nodes[4].x} ${nodes[4].y} L${nodes[5].x} ${nodes[5].y}" fill="none" stroke="${grn}" stroke-width="3.4" opacity=".9" stroke-dasharray="7 6" class="${pre}Dash"/>`;
+      [[lp,red,'3 дороги'],[sp,grn,'3 дороги']].forEach((q,k)=>{
+        s+=`<circle r="7" fill="${q[1]}"><animateMotion dur="4.4s" begin="${(k*1.1).toFixed(1)}s" repeatCount="indefinite" path="M${q[0].map(i=>`${nodes[i].x} ${nodes[i].y}`).join(' L')}"/></circle>`;
+      });
+      s+=`<rect x="26" y="196" width="126" height="28" rx="9" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.6"/>${tx(89,215,11,red,'длинный путь',{b:1})}`;
+      s+=`<rect x="166" y="196" width="126" height="28" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.6"/>${tx(229,215,11,grn,'короткий путь',{b:1})}`;
+      return s;
+    }
+    if(K==='shortest'){ /* сравниваем маршруты */
+      const nodes=[{x:40,y:110,t:'S'},{x:120,y:46,t:'P'},{x:120,y:174,t:'Q'},{x:206,y:46,t:'R'},{x:206,y:174,t:'T'},{x:282,y:110,t:'Z'}];
+      const all=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,5],[1,2],[3,4]];
+      let s=graphDraw(pre,nodes,all,{dimAll:1});
+      const r1=[0,1,3,5], r2=[0,2,4,5];
+      s+=`<path d="M${r1.map(i=>`${nodes[i].x} ${nodes[i].y}`).join(' L')}" fill="none" stroke="${grn}" stroke-width="3.6" opacity=".9"/>`;
+      s+=`<path d="M${r2.map(i=>`${nodes[i].x} ${nodes[i].y}`).join(' L')}" fill="none" stroke="${gold}" stroke-width="3.6" opacity=".9"/>`;
+      s+=`<circle r="7" fill="${grn}"><animateMotion dur="4.2s" repeatCount="indefinite" path="M${r1.map(i=>`${nodes[i].x} ${nodes[i].y}`).join(' L')}"/></circle>`;
+      s+=`<circle r="7" fill="${gold}"><animateMotion dur="4.2s" begin="1.2s" repeatCount="indefinite" path="M${r2.map(i=>`${nodes[i].x} ${nodes[i].y}`).join(' L')}"/></circle>`;
+      s+=`<rect x="70" y="196" width="86" height="26" rx="8" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.6"/>${tx(113,214,10.5,grn,'3 дороги',{b:1})}`;
+      s+=`<rect x="164" y="196" width="86" height="26" rx="8" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.6"/>${tx(207,214,10.5,gold,'3 дороги',{b:1})}`;
+      return s;
+    }
+    if(K==='deadend'){ /* тупик */
+      const nodes=[{x:40,y:120,t:'A'},{x:126,y:60,t:'B'},{x:210,y:120,t:'C'},{x:270,y:60,t:'T'}];
+      const all=[[0,1],[1,2],[3,2]];
+      let s=graphDraw(pre,nodes,all,{hlNodes:[3]});
+      s+=`<path d="M${nodes[0].x} ${nodes[0].y} L${nodes[1].x} ${nodes[1].y} L${nodes[2].x} ${nodes[2].y} L${nodes[3].x} ${nodes[3].y}" fill="none" stroke="${gold}" stroke-width="3.2" class="${pre}Dash"/>`;
+      s+=`<circle r="8" fill="${gold}"><animateMotion dur="4.4s" repeatCount="indefinite" path="M${nodes[0].x} ${nodes[0].y} L${nodes[1].x} ${nodes[1].y} L${nodes[2].x} ${nodes[2].y} L${nodes[3].x} ${nodes[3].y}"/></circle>`;
+      s+=`<circle cx="${nodes[3].x}" cy="${nodes[3].y}" r="27" fill="none" stroke="${red}" stroke-width="2.4" class="${pre}Glow"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="30" y="170" width="258" height="46" rx="10" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.8"/>`
+        +`${tx(159,192,11.5,red,'из T больше никуда не выйти',{b:1})}`
+        +`${tx(159,209,10.5,red,'это тупик — придётся возвращаться',{})}</g>`;
+      return s;
+    }
+    if(K==='oneway'){ /* направленные дороги */
+      const nodes=[{x:52,y:70,t:'A'},{x:170,y:52,t:'B'},{x:270,y:118,t:'C'},{x:110,y:172,t:'D'}];
+      const edges=[[0,1],[1,2],[3,0],[3,2]];
+      let s=graphDraw(pre,nodes,edges,{dir:1});
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M${nodes[0].x} ${nodes[0].y} L${nodes[1].x} ${nodes[1].y} L${nodes[2].x} ${nodes[2].y}"/></circle>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.35s"><rect x="24" y="200" width="132" height="28" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.6"/>`
+        +`${tx(90,219,11,grn,'так можно',{b:1})}</g>`;
+      s+=`<path d="M${nodes[2].x} ${nodes[2].y} L${nodes[1].x} ${nodes[1].y}" stroke="${red}" stroke-width="3" stroke-dasharray="7 6" opacity=".8"/>`
+        +`<path d="M196 88 l16 10 M212 96 l-16 10" stroke="${red}" stroke-width="3"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.55s"><rect x="164" y="200" width="132" height="28" rx="9" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.6"/>`
+        +`${tx(230,219,11,red,'а так нельзя',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='weight'){ /* дороги с числами */
+      const nodes=[{x:44,y:70,t:'A'},{x:170,y:44,t:'B'},{x:278,y:74,t:'C'},{x:70,y:176,t:'D'},{x:170,y:190,t:'E'},{x:274,y:176,t:'F'}];
+      const edges=[[0,1,5],[1,2,6],[0,3,2],[3,4,3],[4,5,4],[2,5,2]];
+      let s=graphDraw(pre,nodes,edges,{hlEdges:[2,3,4]});
+      s+=`<path d="M${nodes[0].x} ${nodes[0].y} L${nodes[3].x} ${nodes[3].y} L${nodes[4].x} ${nodes[4].y} L${nodes[5].x} ${nodes[5].y}" fill="none" stroke="${grn}" stroke-width="3.6" opacity=".9" class="${pre}Dash"/>`;
+      s+=`<circle r="7" fill="${grn}"><animateMotion dur="4.6s" repeatCount="indefinite" path="M${nodes[0].x} ${nodes[0].y} L${nodes[3].x} ${nodes[3].y} L${nodes[4].x} ${nodes[4].y} L${nodes[5].x} ${nodes[5].y}"/></circle>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="20" y="216" width="140" height="30" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +`<text x="90" y="236" text-anchor="middle" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">2 + 3 + 4 = 9</text></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.6s"><rect x="170" y="216" width="126" height="30" rx="9" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.7"/>`
+        +`<text x="233" y="236" text-anchor="middle" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${red}">5 + 6 + 2 = 13</text></g>`;
+      return s;
+    }
+    if(K==='bfs'){ /* волна от старта */
+      const nodes=[{x:44,y:104,t:'A'},{x:120,y:44,t:'B'},{x:120,y:168,t:'D'},{x:206,y:44,t:'C'},{x:206,y:168,t:'E'},{x:280,y:104,t:'F'}];
+      const all=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,5]];
+      const lvl=[0,1,1,2,2,3];
+      const cols=[grn,cyan,gold,pur];
+      let s=graphDraw(pre,nodes,all,{});
+      [0,1,2].forEach(k=>{
+        s+=`<circle cx="${nodes[0].x}" cy="${nodes[0].y}" r="20" fill="none" stroke="${grn}" stroke-width="2.4" opacity="0">`
+          +`<animate attributeName="r" values="20;${60+k*52};${60+k*52}" dur="4.6s" begin="${(k*0.9).toFixed(2)}s" repeatCount="indefinite"/>`
+          +`<animate attributeName="opacity" values="0;.7;0" dur="4.6s" begin="${(k*0.9).toFixed(2)}s" repeatCount="indefinite"/></circle>`;
+      });
+      nodes.forEach((n,k)=>{
+        const c=cols[lvl[k]];
+        s+=`<circle cx="${n.x}" cy="${n.y}" r="17" fill="rgba(10,18,36,.97)" stroke="${c}" stroke-width="2.6" opacity="0">`
+          +`<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.1+lvl[k]*0.2).toFixed(2)};${(0.16+lvl[k]*0.2).toFixed(2)};1" dur="4.6s" repeatCount="indefinite"/></circle>`
+          +`<text x="${n.x}" y="${n.y+5}" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${c}" paint-order="stroke" stroke="#08101f" stroke-width="3" opacity="0">${n.t}`
+          +`<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.1+lvl[k]*0.2).toFixed(2)};${(0.16+lvl[k]*0.2).toFixed(2)};1" dur="4.6s" repeatCount="indefinite"/></text>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="20" y="196" width="278" height="30" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.6"/>`
+        +`${tx(159,216,11,ink,'волна идёт по уровням: 1 → 2 → 3 дороги от старта',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='tree'){ /* дерево без колец */
+      const nodes=[{x:159,y:38,t:'К'},{x:84,y:104,t:'A'},{x:234,y:104,t:'Б'},{x:46,y:176,t:'1'},{x:122,y:176,t:'2'},{x:196,y:176,t:'3'},{x:272,y:176,t:'4'}];
+      const all=[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]];
+      let s=graphDraw(pre,nodes,all,{hlNodes:[0]});
+      s+=`<circle class="${pre}Glow" cx="159" cy="38" r="24" fill="none" stroke="${grn}" stroke-width="2" opacity=".45"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="24" y="200" width="132" height="28" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.6"/>`
+        +`${tx(90,219,11,grn,'нет ни одного кольца',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.6s"><rect x="164" y="200" width="132" height="28" rx="9" fill="rgba(110,168,255,.1)" stroke="${blu}" stroke-width="1.6"/>`
+        +`${tx(230,219,11,blu,'это дерево',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='cycle'){ /* цикл: вернулись в начало */
+      const nodes=[{x:70,y:52,t:'A'},{x:248,y:52,t:'B'},{x:288,y:150,t:'C'},{x:159,y:200,t:'D'},{x:32,y:150,t:'E'}];
+      const all=[[0,1],[1,2],[2,3],[3,4],[4,0]];
+      let s=graphDraw(pre,nodes,all,{});
+      s+=`<path d="M${all.map(e=>`${nodes[e[0]].x} ${nodes[e[0]].y}`).join(' L')} L${nodes[0].x} ${nodes[0].y}" fill="none" stroke="${gold}" stroke-width="3.4" opacity=".9" class="${pre}Dash"/>`;
+      s+=`<circle r="8" fill="${gold}"><animateMotion dur="5s" repeatCount="indefinite" path="M${all.map(e=>`${nodes[e[0]].x} ${nodes[e[0]].y}`).join(' L')} L${nodes[0].x} ${nodes[0].y}"/></circle>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="30" y="216" width="258" height="30" rx="9" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${tx(159,236,11.5,gold,'обошли круг и вернулись в A',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='metro'){ /* схема метро */
+      const red=[{x:26,y:52},{x:120,y:52},{x:210,y:52},{x:292,y:52}];
+      const blu=[{x:120,y:52},{x:120,y:134},{x:120,y:206}];
+      const gold=[{x:210,y:52},{x:210,y:134},{x:210,y:206}];
+      let s='';
+      const line=(pts,c)=>`<path d="M${pts.map(q=>`${q.x} ${q.y}`).join(' L')}" fill="none" stroke="${c}" stroke-width="7" stroke-linecap="round" opacity=".8"/>`;
+      s+=line(red,'#ff8f6a')+line(blu,'#6ea8ff')+line(gold,'#ffd76a');
+      [[26,52,'A'],[120,52,'B'],[210,52,'C'],[292,52,'D'],[120,134,'E'],[210,134,'F'],[120,206,'G'],[210,206,'H']].forEach((q,k)=>{
+        const jump=(q[3]==='B'||q[3]==='C'), lx=(q[0]>150? q[0]-20 : q[0]+20);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1*k).toFixed(2)}s"><circle cx="${q[0]}" cy="${q[1]}" r="10" fill="#0d1830" stroke="#eaf2ff" stroke-width="2.4"/>`
+          +(jump?`<circle class="${pre}Glow" cx="${q[0]}" cy="${q[1]}" r="15" fill="none" stroke="${gold}" stroke-width="2" opacity=".5"/>`:'')
+          +`</g>`
+          +`${tx(lx,q[1]+4,11,ink,q[3],{b:1})}`;
+      });
+      s+=`<circle r="6" fill="#fff"><animateMotion dur="5s" repeatCount="indefinite" path="M26 52 L120 52 L210 52 L210 134"/></circle>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="24" y="226" width="270" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.6"/>`
+        +`${tx(159,246,11,gold,'на пересадке переходим на другую линию',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='walkgame'){ /* интерактив: пройди по карте до цели */
+      const nodes=[{x:44,y:150,t:'S'},{x:126,y:60,t:'P'},{x:132,y:182,t:'Q'},{x:232,y:176,t:'R'},{x:280,y:72,t:'Z'}];
+      const all=[[0,1],[0,2],[1,3],[2,3],[3,4],[1,4]];
+      const cur=(st&&st.wnode!=null)?st.wnode:0, bad=(st&&typeof st.wbad==='number')?st.wbad:-1, goal=4;
+      const steps=(st&&st.wsteps)||0, done=(cur===goal);
+      const adj=all.filter(e=>e[0]===cur||e[1]===cur).map(e=>e[0]===cur?e[1]:e[0]);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,33,Math.min(11.5,246/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Пройди из S в Z: нажимай соседние города',{b:1})}</g>`;
+      all.forEach(e=>{
+        const a=nodes[e[0]], b=nodes[e[1]];
+        s+=`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#5a6d96" stroke-width="2.4" opacity=".8"/>`;
+      });
+      nodes.forEach((n,k)=>{
+        const isCur=(k===cur), on_=(adj.indexOf(k)>=0), isB=(k===bad), isGoal=(k===goal);
+        const col=isCur?grn:(isB?red:(on_?cyan:'#5a6d96'));
+        s+=`<g style="cursor:pointer" onclick="infWalk('${lk}',${k},${on_?1:0})">`
+          +`<circle cx="${n.x}" cy="${n.y}" r="${isCur?20:17}" fill="${isCur?'rgba(19,44,35,.97)':'rgba(10,18,36,.97)'}" stroke="${col}" stroke-width="${(isCur||isGoal)?3:2.2}"/>`
+          +(isGoal?`<circle class="${pre}Glow" cx="${n.x}" cy="${n.y}" r="24" fill="none" stroke="${grn}" stroke-width="2" opacity=".5"/>`:'')
+          +`<text x="${n.x}" y="${n.y+5}" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${col}" paint-order="stroke" stroke="#08101f" stroke-width="3">${n.t}</text>`
+          +(isB?`${tx(n.x,n.y-26,9.5,red,'не сосед',{})}`:'')
+          +`</g>`;
+      });
+      const by=214;
+      s+=`<rect x="96" y="${by}" width="126" height="26" rx="8" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.6"/>`
+        +`${tx(159,by+18,11,gold,'шагов: '+steps,{b:1})}`;
+      if(done) s+=`<g class="${pre}Pop"><rect x="30" y="${by+32}" width="258" height="28" rx="9" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(159,by+51,11.5,grn,'Дошёл до Z! Шагов: ' + steps,{b:1})}</g>`;
+      else s+=`<g class="${pre}Rise"><rect x="20" y="${by+32}" width="278" height="28" rx="9" fill="rgba(15,25,46,.95)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,by+51,10.5,dim,bad>=0?'Это не соседний город — иди по дороге':'Голубым отмечены соседи, куда можно пойти',{})}</g>`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -2513,6 +2758,20 @@
     if(K==='trace') return 26+27+(v.rows||[]).length*27+44;
     if(K==='compare') return 208;
     if(K==='text') return ((v.lines||[]).length<=2)?(132+26*(v.lines||[]).length):Math.max(134, (v.lines||[]).length*39+54);
+    if(K==='maptask') return 214;
+    if(K==='graphintro') return 228;
+    if(K==='degree') return 226;
+    if(K==='route') return 238;
+    if(K==='longshort') return 238;
+    if(K==='shortest') return 236;
+    if(K==='deadend') return 228;
+    if(K==='oneway') return 240;
+    if(K==='weight') return 258;
+    if(K==='bfs') return 238;
+    if(K==='tree') return 240;
+    if(K==='cycle') return 258;
+    if(K==='metro') return 268;
+    if(K==='walkgame') return 292;
     if(K==='tableintro') return 232;
     if(K==='rowcol') return 226;
     if(K==='celladdr') return 210;
@@ -3247,6 +3506,46 @@
       tasks:[
         {q:'Таблица = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]. Чему равна ячейка таблица[1][2]?', kind:'unit', ans:6, tol:0, hints:['Строка 1 — вторая: 4, 5, 6.','Столбец 2 — третий: это 6.'], sol:'6'},
         {q:'Что переезжает при сортировке таблицы?', kind:'choice', choices:['строка целиком','только одно число','названия столбцов'], ans:0, tol:0, hints:['Иначе данные перепутаются.','Вся строка целиком.'], sol:'строка целиком'}
+      ] },
+    { id:519, title:'Графы: как найти дорогу', ico:'🗺', src:'Информатика · 5–6 класс · С нуля: графы',
+      explain:[
+        'Не все данные — это числа. Часто важнее связи: кто с кем дружит, какие города соединены дорогами.',
+        'Такие связи рисуют графом: точки — это вершины, а линии между ними — рёбра.',
+        'Вершиной может быть что угодно: город, человек, страница сайта, комната, остановка автобуса.',
+        'Ребро означает, что две вершины связаны: например, между городами есть дорога.',
+        'Сколько рёбер выходит из вершины, столько у неё соседей. Это число называют степенью вершины.',
+        'Путь — это последовательность рёбер, по которым мы идём от одной вершины к другой.',
+        'Из одной вершины в другую часто ведёт несколько путей: один короткий, другой длинный.',
+        'Самый короткий путь находят перебором: сравнивают варианты и выбирают тот, где меньше шагов.',
+        'Если у дорог есть длина или время, сравнивают не количество дорог, а их сумму.',
+        'Бывает, что дорога ведёт в тупик: из такой вершины больше никуда не выйти, придётся возвращаться.',
+        'Рёбра бывают направленными: по дороге можно ехать только в одну сторону — в графе это стрелка.',
+        'Чтобы найти путь от старта до цели, удобно пускать «волну»: сначала соседи старта, потом их соседи.',
+        'Дерево — это граф без колец: из корня идут ветки, и вернуться по кругу нельзя.',
+        'А если из вершины можно вернуться в неё же — это цикл, то есть кольцо.',
+        'Проверь себя: что означают вершины и рёбра на карте дорог?',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'Как добраться?', v:{kind:'maptask'}, r:'Карта дорог между городами.', d:'Шесть городов соединены дорогами. Нужно решить, по каким дорогам идти из A в F.'},
+        {h:'Вершины и рёбра', v:{kind:'graphintro'}, r:'Точки — вершины, линии — рёбра.', d:'Вершины — это объекты, рёбра — связи между ними. Рёбра появляются одно за другим, как будто мы рисуем карту.'},
+        {h:'Сколько соседей', v:{kind:'degree'}, r:'Считаем рёбра у вершины.', d:'У вершины B четыре дороги — значит, четыре соседа. Из каждой дороги к B бежит точка.'},
+        {h:'Путь по карте', v:{kind:'route'}, r:'Путь — это цепочка дорог.', d:'Смотри: золотая точка идёт из A в D, потом в E и в F. Это и есть путь из трёх дорог.'},
+        {h:'Длинный и короткий', v:{kind:'longshort'}, r:'Пути бывают разной длины.', d:'Красный путь обходит карту сверху, зелёный идёт напрямую. Сравниваем и выбираем тот, где меньше дорог.'},
+        {h:'Сравниваем маршруты', v:{kind:'shortest'}, r:'Выбираем самый короткий.', d:'По карте одновременно идут две точки: зелёный путь короче, поэтому он и побеждает.'},
+        {h:'Тупик', v:{kind:'deadend'}, r:'Дорога ведёт в тупик.', d:'Из вершины T выходит только одна дорога. Зашли — и придётся возвращаться назад.'},
+        {h:'Односторонние дороги', v:{kind:'oneway'}, r:'Ребро со стрелкой — только в одну сторону.', d:'По стрелке ехать можно, а обратно — нельзя. Такие рёбра называют направленными.'},
+        {h:'Дороги с числами', v:{kind:'weight'}, r:'Считаем не дороги, а их длину.', d:'У каждой дороги своё число — время в пути. Зелёный маршрут короче по сумме, хотя дорог столько же.'},
+        {h:'Волна от старта', v:{kind:'bfs'}, r:'Ищем путь волной.', d:'Сначала подсвечиваются соседи старта, потом их соседи — волна идёт по уровням и доходит до цели.'},
+        {h:'Дерево', v:{kind:'tree'}, r:'Граф без колец.', d:'Из корня идут ветки, и ни одна дорога не возвращает назад. Так выглядит дерево.'},
+        {h:'Цикл', v:{kind:'cycle'}, r:'Кольцо в графе.', d:'Пройдя по всем вершинам, точка возвращается в начало — это цикл.'},
+        {h:'Схема метро', v:{kind:'metro'}, r:'Линии и пересадки.', d:'Схема метро — тоже граф: станции это вершины, а линии — рёбра. На пересадке переходим на другую линию.'},
+        {h:'Пройди по карте', v:{kind:'walkgame', q:'Пройди из S в Z: нажимай соседние города'}, r:'Проверь себя: найди путь.', d:'Голубым подсвечены соседние города. Нажимай их по очереди, чтобы дойти до Z.'},
+        {h:'Что выведет программа', v:{kind:'pick', q:'Сколько дорог в пути A → B → E, если это три вершины?', opts:[{t:'2', ok:1},{t:'3'},{t:'1'}], exp:'Вершин три, а дорог между ними две: A→B и B→E.'}, r:'Проверь себя: посчитай дороги.', d:'В пути на одну дорогу меньше, чем вершин.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'вершины и рёбра', b:1},{t:'путь — цепочка дорог', c:grn},{t:'короткий путь ищем сравнением', c:gold}]}, r:'Запомни, что такое граф.', d:'Главное: граф — это вершины и связи; путь — цепочка рёбер, а короткий путь ищут сравнением.'} ],
+      check:{ q:'Что означает ребро в графе дорог?', choices:['что две вершины соединены','что вершина одна','что дорога закрыта'], ans:0, exp:'Ребро — это связь: например, дорога между двумя городами.' },
+      tasks:[
+        {q:'Сколько соседей у вершины, из которой выходит 4 ребра?', kind:'unit', ans:4, tol:0, hints:['Каждое ребро ведёт к соседу.','Четыре ребра — четыре соседа.'], sol:'4'},
+        {q:'Как находят самый короткий путь?', kind:'choice', choices:['сравнивают варианты и выбирают с меньшим числом дорог','берут первую попавшуюся дорогу','идут наугад'], ans:0, tol:0, hints:['Сравниваем маршруты.','Выбираем тот, где меньше дорог.'], sol:'сравнивают варианты и выбирают с меньшим числом дорог'}
       ] }
   ];
 
@@ -3258,9 +3557,9 @@
     const s=spec.slides[Math.min(step,spec.slides.length-1)];
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; st.seq=[]; st.bad=-1; st.find=-1; st.moves=0;
-      st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; }
+      st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -3271,6 +3570,8 @@
       ? ((st.gsteps>0)? wkRow(wkBtn('загадать снова',`infGuess('${lk}',0,0,0,0)`)) : '')
       : (s.v.kind==='tabgame')
       ? ((st.tab)? wkRow(wkBtn('ещё раз',`infTab('${lk}',-1,-1,0)`)) : '')
+      : (s.v.kind==='walkgame')
+      ? wkRow(wkBtn('сначала',`infWalk('${lk}',-1,0)`))
       : (s.v.kind==='find')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
@@ -3278,7 +3579,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -3287,6 +3588,12 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infWalk=function(lk,i,ok){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(i<0){ st.wnode=0; st.wsteps=0; st.wbad=-1; chRender(0); return; }
+    if(!ok){ st.wbad=i; chRender(0); return; }
+    st.wnode=i; st.wsteps=(st.wsteps||0)+1; st.wbad=-1; chRender(0);
+  };
   window.infTab=function(lk,r,c,ok){
     const st=CHS[lk]||(CHS[lk]={});
     if(r<0){ st.tab=null; st.bad=-1; st.tabOk=0; chRender(0); return; }
