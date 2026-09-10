@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 25 уроков (id 500–524) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 26 уроков (id 500–525) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -38,6 +38,96 @@
     [/двоичн|разряд|0 и 1|ноль|нул|единиц/i,'bits'],
     [/порядок|шаг|список|номер|строк/i,'lines']
   ];
+  const polyLen=(pts)=>{let s2=0;for(let i=1;i<pts.length;i++)s2+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return Math.max(16,Math.round(s2));};
+  const drawPoly=(pts,col,dur,beg,w,opt)=>{
+    const o=opt||{}, d='M'+pts.map(q=>q[0]+' '+q[1]).join(' L'), L=polyLen(pts);
+    return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${w||3}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.7;1" dur="${dur}s" begin="${beg||0}s" repeatCount="${o.keep?'1':'indefinite'}"/></path>`
+      +((o.pen===false||o.keep)?'':`<circle r="${o.r||5}" fill="${gold}"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const drawRect=(x,y,w,h,rx,col,dur,beg,sw,pre,opt)=>{
+    const o=opt||{}, r=Math.min(rx||8,Math.min(w,h)/2);
+    const d=`M${x+r} ${y} H${x+w-r} A${r} ${r} 0 0 1 ${x+w} ${y+r} V${y+h-r} A${r} ${r} 0 0 1 ${x+w-r} ${y+h} H${x+r} A${r} ${r} 0 0 1 ${x} ${y+h-r} V${y+r} A${r} ${r} 0 0 1 ${x+r} ${y}`;
+    const L=Math.round(2*(w-2*r)+2*(h-2*r)+2*Math.PI*r);
+    return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${sw||2.4}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.6;1" dur="${dur}s" begin="${beg||0}s" repeatCount="${o.keep?'1':'indefinite'}"/></path>`
+      +((o.pen===false||o.keep)?'':`<circle r="${o.r||5}" fill="${gold}"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const growBar=(x,y,w,h,fill,dur,beg,stroke)=>`<rect x="${x}" y="${y}" width="0" height="${h}" rx="${h/2}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="1.2">`
+    +`<animate fill="freeze" attributeName="width" values="0;${w};${w}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="1"/></rect>`;
+  /* ---------- движок фракталов (рекурсивная прорисовка) ---------- */
+  const fracTree=(x,y,len,ang,depth,base,out)=>{
+    const o=out||[]; const x2=x+Math.cos(ang)*len, y2=y+Math.sin(ang)*len;
+    o.push({x1:x,y1:y,x2:x2,y2:y2,d:depth});
+    if(depth>0){
+      const nl=len*0.7, sw=0.42;
+      fracTree(x2,y2,nl,ang-sw,o.length?depth-1:0,base,o);
+      fracTree(x2,y2,nl,ang+sw,depth-1,base,o);
+    }
+    return o;
+  };
+  const drawTree=(x,y,len,depth,H,pre,opt)=>{
+    const o=opt||{}, segs=fracTree(x,y,len,-Math.PI/2,depth,H,[]);
+    let s2='', maxd=depth;
+    segs.forEach((q,k)=>{
+      const lvl=maxd-q.d, w=Math.max(1.4,5.4-lvl*0.85);
+      const col=(lvl>=maxd-1&&maxd>1)?o.leaf||grn:(lvl>maxd/2?o.c2||'#7aa86a':o.c||'#8a6b4a');
+      s2+=`<path d="M${q.x1.toFixed(1)} ${q.y1.toFixed(1)} L${q.x2.toFixed(1)} ${q.y2.toFixed(1)}" fill="none" stroke="${col}" stroke-width="${w.toFixed(1)}" stroke-linecap="round" stroke-dasharray="${Math.max(6,Math.round(Math.hypot(q.x2-q.x1,q.y2-q.y1)))}" stroke-dashoffset="${Math.max(6,Math.round(Math.hypot(q.x2-q.x1,q.y2-q.y1)))}">`
+        +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${Math.max(6,Math.round(Math.hypot(q.x2-q.x1,q.y2-q.y1)))};0;0" keyTimes="0;0.7;1" dur="${(o.dur||1.1).toFixed(2)}s" begin="${((o.beg||0)+lvl*0.55).toFixed(2)}s" repeatCount="1"/></path>`;
+    });
+    return s2;
+  };
+  const sierpPts=(p,depth,out)=>{
+    const o=out||[];
+    if(depth===0){ o.push(p); return o; }
+    const mid=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2];
+    const m01=mid(p[0],p[1]), m12=mid(p[1],p[2]), m20=mid(p[2],p[0]);
+    sierpPts([p[0],m01,m20],depth-1,o);
+    sierpPts([m01,p[1],m12],depth-1,o);
+    sierpPts([m20,m12,p[2]],depth-1,o);
+    return o;
+  };
+  const drawSierp=(p,depth,pre,opt)=>{
+    const o=opt||{}, tris=sierpPts(p,depth,[]);
+    let s2='';
+    tris.forEach((q,k)=>{
+      const d=Math.round(6-depth);
+      s2+=`<path d="M${q[0][0].toFixed(1)} ${q[0][1].toFixed(1)} L${q[1][0].toFixed(1)} ${q[1][1].toFixed(1)} L${q[2][0].toFixed(1)} ${q[2][1].toFixed(1)} Z" fill="${(k%2)?'rgba(255,215,106,.30)':'rgba(127,214,255,.30)'}" stroke="${(k%2)?gold:cyan}" stroke-width="1.1"/>`;
+    });
+    s2+=`<path d="M${p[0][0]} ${p[0][1]} L${p[1][0]} ${p[1][1]} L${p[2][0]} ${p[2][1]} Z" fill="none" stroke="${o.c||ink}" stroke-width="2.4" stroke-dasharray="${Math.round(3*180)}" stroke-dashoffset="${Math.round(3*180)}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${Math.round(3*180)};0;0" keyTimes="0;0.6;1" dur="1.6s" begin="${o.beg||0}s" repeatCount="1"/></path>`;
+    return s2;
+  };
+  const kochPath=(p1,p2,depth)=>{
+    if(depth===0) return [p1,p2];
+    const dx=(p2[0]-p1[0])/3, dy=(p2[1]-p1[1])/3;
+    const a=[p1[0]+dx,p1[1]+dy], b=[p1[0]+2*dx,p1[1]+2*dy];
+    const ang=Math.atan2(p2[1]-p1[1],p2[0]-p1[0])-Math.PI/3, h=Math.hypot(dx,dy);
+    const pk=[a[0]+Math.cos(ang)*h, a[1]+Math.sin(ang)*h];
+    return [...kochPath(p1,a,depth-1).slice(0,-1), ...kochPath(a,pk,depth-1).slice(0,-1), ...kochPath(pk,b,depth-1).slice(0,-1), ...kochPath(b,p2,depth-1)];
+  };
+  const drawKoch=(p1,p2,depth,pre,opt)=>{
+    const o=opt||{}, pts=kochPath(p1,p2,depth), d='M'+pts.map(q=>q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' L');
+    const L=Math.round(polyLen(pts.map(q=>[q[0],q[1]])));
+    return `<path d="${d}" fill="none" stroke="${o.c||cyan}" stroke-width="${o.sw||3}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.75;1" dur="${o.dur||2.4}s" begin="${o.beg||0}s" repeatCount="1"/></path>`;
+  };
+  const drawKochSnow=(cx,cy,r,depth,pre,opt)=>{
+    const pts=[];
+    for(let k=0;k<3;k++){
+      const a1=-Math.PI/2+k*2*Math.PI/3, a2=-Math.PI/2+(k+1)*2*Math.PI/3;
+      const p1=[cx+Math.cos(a1)*r,cy+Math.sin(a1)*r], p2=[cx+Math.cos(a2)*r,cy+Math.sin(a2)*r];
+      const seg=kochPath(p1,p2,depth);
+      if(k>0) seg.shift();
+      pts.push(...seg);
+    }
+    const d='M'+pts.map(q=>q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' L')+' Z';
+    const L=Math.round(polyLen(pts.map(q=>[q[0],q[1]])));
+    const o=opt||{};
+    return `<path d="${d}" fill="rgba(127,214,255,.14)" stroke="${o.c||cyan}" stroke-width="${o.sw||2.6}" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.8;1" dur="${o.dur||3}s" begin="${o.beg||0}s" repeatCount="1"/></path>`;
+  };
+  const kochLen=(depth)=>3*Math.pow(4/3,depth);
   const RU='АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
   const cpShift=(w,k)=>[...(w||'')].map(ch=>{const i=RU.indexOf(ch.toUpperCase()); return i<0?ch:RU[((i+k)%RU.length+RU.length)%RU.length];}).join('');
   const cpRing=(cx,cy,r,letters,opt)=>{
@@ -4536,6 +4626,364 @@
       s+=plate2(24,214,270,30,go?grn:cardB,go?'все четыре ответа на месте':'проверь себя устно',11.5,pre);
       return s;
     }
+    if(K==='fracintro'){ /* самоподобие */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'фрактал: часть похожа на целое',{b:1},260)+`</g>`;
+      s+=drawTree(104,268,58,4,270,pre,{dur:1.1,beg:0.2,c:'#8a6b4a',c2:'#7aa86a',leaf:grn});
+      s+=drawRect(206,60,92,92,8,gold,2.4,1.6,2,pre,{pen:true,keep:true});
+      s+=drawTree(252,148,24,4,150,pre,{dur:0.8,beg:2.2,c:'#8a6b4a',c2:'#7aa86a',leaf:grn});
+      s+=fit(252,182,10.5,gold,'ветка внутри ветки',{},100);
+      s+=fit(104,292,10.5,dim,'дерево целиком',{},110);
+      s+=plate2(18,190,164,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='selfsimilar'){ /* часть похожа на целое */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'приближаем — снова то же самое',{b:1},260)+`</g>`;
+      const frames=[[70,74,178,178,0,'всё дерево'],[104,104,110,110,0.6,'ветка'],[124,124,70,70,1.2,'меньше'],[136,136,46,46,1.8,'ещё меньше']];
+      frames.forEach((q,k)=>{
+        s+=`<rect class="${pre}Pop" style="animation-delay:${q[4].toFixed(2)}s" x="${q[0]}" y="${q[1]}" width="${q[2]}" height="${q[3]}" rx="6" fill="none" stroke="${[grn,cyan,gold,pur][k]}" stroke-width="${2.6-k*0.3}"/>`;
+        s+=fit(q[0]+q[2]/2,q[1]-6,10,[grn,cyan,gold,pur][k],q[5],{b:1},q[2]+20);
+      });
+      s+=drawTree(159,250,26,3,120,pre,{dur:0.7,beg:2.2,c:'#8a6b4a',c2:'#7aa86a',leaf:grn});
+      s+=plate2(18,268,282,28,go?grn:cardB,go?'каждый раз видим ту же форму':'что происходит при приближении?',11.5,pre);
+      return s;
+    }
+    if(K==='fracrule'){ /* простое правило */
+      const steps=[
+        {t:'1. отрезок',d:'у нас есть ветка',c:cyan},
+        {t:'2. уголок',d:'из одной ветки — две',c:gold},
+        {t:'3. повторяем',d:'и так на каждом шаге',c:grn}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'всё фрактальное дерево — из одного правила',{b:1},262)+`</g>`;
+      steps.forEach((q,k)=>{
+        const y=52+k*62;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="20" y="${y}" width="278" height="50" rx="11" fill="rgba(12,32,34,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(78,y+22,12,q.c,q.t,{b:1},100)
+          +fit(188,y+38,10.5,dim,q.d,{},160)+`</g>`;
+        s+=drawLL({x:104,y:y+40},{x:104,y:y+50},q.c,2,0.4+k*0.2,1.6,pre);
+      });
+      s+=drawTree(159,268,26,3,110,pre,{dur:0.7,beg:1.4,c:'#8a6b4a',c2:'#7aa86a',leaf:grn});
+      s+=plate2(20,272,278,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='recursion'){ /* рекурсия */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'алгоритм, который вызывает сам себя',{b:1},262)+`</g>`;
+      s+=drawRR(52,60,214,60,12,pur,2.4,0.2,2,pre);
+      s+=fit(159,86,12.5,pur,'ветка(длина, глубина)',{b:1},190);
+      s+=fit(159,106,10.5,dim,'если глубина = 0 — стоп',{},200);
+      s+=`<path class="${pre}Dash" d="M242 120 q40 40 -166 0" fill="none" stroke="${gold}" stroke-width="2.4" stroke-dasharray="8 6"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:1.2s"><path d="M76 118 l8 10 l10 -12" fill="none" stroke="${gold}" stroke-width="2.6"/></g>`;
+      s+=fit(159,158,11.5,gold,'иначе рисуем ветку и вызываем себя дважды',{b:1},292);
+      s+=drawTree(159,252,30,3,108,pre,{dur:0.7,beg:1.6,c:'#8a6b4a',c2:'#7aa86a',leaf:grn});
+      s+=plate2(18,186,282,32,go?grn:cardB,go?'так одна процедура рисует всё дерево':'что делает процедура?',11.5,pre);
+      return s;
+    }
+    if(K==='tree1'){ /* уровень 1 */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'уровень 0: только ствол',{b:1},260)+`</g>`;
+      s+=drawTree(159,278,92,0,270,pre,{dur:1.2,beg:0.3,c:'#8a6b4a'});
+      s+=fit(159,300,11.5,dim,'одна ветка — начало',{},250);
+      s+=`<g class="${pre}Pop" style="animation-delay:1.6s"><rect x="118" y="222" width="82" height="30" rx="9" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`
+        +tx(159,243,13,cyan,'1 ветка',{b:1})+`</g>`;
+      return s;
+    }
+    if(K==='tree3'){ /* уровень 2 */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'уровень 1: ствол и две ветки',{b:1},260)+`</g>`;
+      s+=drawTree(159,286,96,3,270,pre,{dur:1.1,beg:0.3,c:'#8a6b4a',c2:'#7aa86a',leaf:grn});
+      s+=`<g class="${pre}Pop" style="animation-delay:1.8s"><rect x="112" y="228" width="94" height="30" rx="9" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.7"/>`
+        +tx(159,249,13,gold,'3 ветки',{b:1})+`</g>`;
+      s+=fit(159,282,11,dim,'каждая ветка дала две новые',{},270);
+      return s;
+    }
+    if(K==='tree5'){ /* уровень 3 */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'уровень 2: ветки растут и снова делятся',{b:1},262)+`</g>`;
+      s+=drawTree(159,290,88,3,278,pre,{dur:1,beg:0.3,c:'#8a6b4a',c2:'#7aa86a',leaf:grn});
+      s+=`<g class="${pre}Pop" style="animation-delay:1.8s"><rect x="112" y="232" width="94" height="30" rx="9" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.7"/>`
+        +tx(159,253,13,pur,'7 веток',{b:1})+`</g>`;
+      return s;
+    }
+    if(K==='tree7'){ /* полное дерево */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'уровень 3: настоящее фрактальное дерево',{b:1},262)+`</g>`;
+      s+=drawTree(159,292,80,3,290,pre,{dur:0.9,beg:0.2,c:'#8a6b4a',c2:'#7aa86a',leaf:grn});
+      s+=plate2(18,268,282,28,go?grn:cardB,go?'15 веток — и это только начало':'сколько стало веток?',11.5,pre);
+      return s;
+    }
+    if(K==='treecount'){ /* считаем ветки */
+      const rows=[{n:'уровень 0',v:1,c:cyan},{n:'уровень 1',v:3,c:gold},{n:'уровень 2',v:7,c:pur},{n:'уровень 3',v:15,c:grn}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'каждый уровень: каждая ветка даёт две',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*44;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(96,y+23,11.5,q.c,q.n,{b:1},120)
+          +fit(196,y+23,13,q.c,''+q.v,{b:1},60)
+          +growBar(232,y+12,54*Math.log2(q.v+1)/4,10,q.c,1.2,0.4+k*0.2,0)+`</g>`;
+      });
+      s+=plate2(24,232,270,32,go?grn:cardB,go?'1, 3, 7, 15 — почти удвоение':'как растёт число веток?',11.5,pre);
+      s+=`${fit(159,292,11.5,ink,'веток становится всё больше и больше',{b:1},290)}`;
+      return s;
+    }
+    if(K==='sierp1'){ /* шаг 1 */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'шаг 0: один большой треугольник',{b:1},262)+`</g>`;
+      s+=drawSierp([[159,64],[50,268],[268,268]],0,pre,{beg:0.3});
+      s+=fit(159,292,11.5,dim,'1 треугольник',{},200);
+      return s;
+    }
+    if(K==='sierp2'){ /* шаг 2 */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'шаг 1: убрали середину',{b:1},262)+`</g>`;
+      s+=drawSierp([[159,64],[50,268],[268,268]],1,pre,{beg:0.3});
+      s+=`<g class="${pre}Pop" style="animation-delay:1.4s"><rect x="116" y="150" width="86" height="28" rx="8" fill="rgba(18,24,44,.97)" stroke="${red}" stroke-width="1.6"/>`
+        +fit(159,169,11,red,'середина пустая',{b:1},80)+`</g>`;
+      s+=fit(159,292,11.5,dim,'3 треугольника',{},200);
+      return s;
+    }
+    if(K==='sierp3'){ /* шаг 3 */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'шаг 2: то же с каждым треугольником',{b:1},262)+`</g>`;
+      s+=drawSierp([[159,64],[50,268],[268,268]],2,pre,{beg:0.3});
+      s+=fit(159,292,11.5,dim,'9 треугольников',{},200);
+      return s;
+    }
+    if(K==='sierp4'){ /* красивый ковёр */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'шаг 3: треугольник Серпинского',{b:1},262)+`</g>`;
+      s+=drawSierp([[159,60],[44,272],[274,272]],3,pre,{beg:0.3});
+      s+=plate2(18,278,282,0,cardB,'',11.5,pre);
+      s+=`${fit(159,292,11.5,gold,'27 треугольников, а дырок ещё больше',{b:1},290)}`;
+      return s;
+    }
+    if(K==='sierpcount'){ /* считаем треугольники */
+      const rows=[{n:'шаг 0',v:1},{n:'шаг 1',v:3},{n:'шаг 2',v:9},{n:'шаг 3',v:27}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'каждый шаг умножает число на 3',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*42;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="34" y="${y}" width="250" height="32" rx="9" fill="rgba(18,24,44,.97)" stroke="${k===3?grn:cyan}" stroke-width="1.7"/>`
+          +fit(96,y+22,11.5,cyan,q.n,{b:1},90)
+          +fit(170,y+22,13,cyan,'×3',{b:1},40)
+          +fit(226,y+22,14,k===3?grn:gold,''+q.v,{b:1},60)+`</g>`;
+        if(k<3) s+=drawLL({x:159,y:y+34},{x:159,y:y+40},cyan,1.6,0.4+k*0.2,1.6,pre);
+      });
+      s+=`${fit(159,246,12,gold,'1, 3, 9, 27 — растёт очень быстро',{b:1},290)}`;
+      s+=plate2(24,258,270,30,go?grn:cardB,go?'на 5-м шаге их будет 243':'сколько будет дальше?',11.5,pre);
+      return s;
+    }
+    if(K==='koch1'){ /* отрезок */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'правило Коха: делим на три части',{b:1},262)+`</g>`;
+      s+=drawPoly([[40,150],[278,150]],cyan,1.8,0.3,3.4,{pen:true,keep:true});
+      [40,119.3,198.7,278].forEach((x,k)=>{
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.8+k*0.2).toFixed(2)}s" cx="${x.toFixed(1)}" cy="150" r="6" fill="${gold}"/>`;
+      });
+      s+=fit(80,182,11.5,dim,'1/3',{b:1},60); s+=fit(159,182,11.5,dim,'1/3',{b:1},60); s+=fit(238,182,11.5,dim,'1/3',{b:1},60);
+      s+=fit(159,214,11.5,ink,'среднюю часть будем заменять уголком',{b:1},292);
+      s+=plate2(20,236,278,32,go?grn:cardB,go?'так начинается снежинка Коха':'что делаем с отрезком?',11.5,pre);
+      return s;
+    }
+    if(K==='koch2'){ /* уголок */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'середину заменили уголком',{b:1},262)+`</g>`;
+      s+=drawPoly([[40,200],[119.3,200]],dim,1.2,0.3,2.4,{pen:false,keep:true});
+      s+=drawPoly([[198.7,200],[278,200]],dim,1.2,0.3,2.4,{pen:false,keep:true});
+      s+=drawKoch([40,200],[278,200],1,pre,{beg:0.5,dur:1.8,c:gold,sw:3.2});
+      s+=fit(159,242,11.5,ink,'из одного отрезка получилось четыре',{b:1},292);
+      s+=fit(159,266,11.5,dim,'и появилась новая вершина',{},290);
+      s+=plate2(20,280,278,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='koch3'){ /* кривая */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'повторяем правило на каждом отрезке',{b:1},262)+`</g>`;
+      s+=drawKoch([36,220],[282,220],0,pre,{beg:0.2,dur:0.8,c:cardB,sw:2});
+      s+=drawKoch([36,220],[282,220],2,pre,{beg:0.8,dur:2.4,c:pur,sw:3});
+      s+=fit(159,258,11.5,ink,'уровень 2: ломаная становится всё сложнее',{b:1},292);
+      s+=plate2(20,272,278,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='koch4'){ /* снежинка */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'снежинка Коха: три кривые вместе',{b:1},262)+`</g>`;
+      s+=drawKochSnow(159,164,86,3,pre,{beg:0.2,dur:3.2,c:cyan,sw:2.4});
+      s+=`<circle class="${pre}Pop" style="animation-delay:3.2s" cx="159" cy="164" r="7" fill="${gold}"/>`;
+      s+=fit(159,284,11.5,dim,'если повторять правило дальше, деталей станет ещё больше',{},298);
+      s+=plate2(18,258,282,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='kochperim'){ /* периметр растёт */
+      const rows=[{n:0,v:'3,00'},{n:1,v:'4,00'},{n:2,v:'5,33'},{n:3,v:'7,11'},{n:4,v:'9,48'}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'периметр растёт без конца',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=50+k*36;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="124" height="28" rx="8" fill="rgba(18,24,44,.97)" stroke="${k===4?red:cardB}" stroke-width="1.5"/>`
+          +fit(92,y+19,11,ink,'уровень '+q.n,{b:1},110)
+          +fit(216,y+19,12.5,k===4?red:gold,q.v,{b:1},60)
+          +growBar(236,y+9,38*k/4+8,10,k===4?red:cyan,1.2,0.4+k*0.18,0)+`</g>`;
+      });
+      s+=`${fit(159,246,11.5,red,'каждый шаг умножает периметр на 4/3',{b:1},292)}`;
+      s+=plate2(24,260,270,30,go?grn:cardB,go?'а площадь остаётся маленькой':'что происходит с периметром?',11.5,pre);
+      return s;
+    }
+    if(K==='fern'){ /* папоротник */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'папоротник: тот же приём, другой рисунок',{b:1},262)+`</g>`;
+      s+=`<path d="M159 292 C150 224 150 152 159 76" fill="none" stroke="#7aa86a" stroke-width="3.4" stroke-linecap="round"/>`;
+      for(let k=0;k<7;k++){
+        const t=k/7, y=286-t*198, len=54*(1-t*0.78);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.4+k*0.22).toFixed(2)}s">`
+          +drawPoly([[159,y],[159-len,y-16]],grn,1.1,0.5+k*0.22,2,{keep:true})
+          +drawPoly([[159,y],[159+len,y-16]],grn,1.1,0.5+k*0.22,2,{keep:true})
+          +drawPoly([[159-len,y-16],[159-len-14,y-30]],grn,0.9,0.7+k*0.22,1.6,{keep:true})
+          +drawPoly([[159+len,y-16],[159+len+14,y-30]],grn,0.9,0.7+k*0.22,1.6,{keep:true})+`</g>`;
+      }
+      s+=plate2(18,288,282,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='fraczoom'){ /* бесконечная детализация */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'приближаем: детали не кончаются',{b:1},262)+`</g>`;
+      const pts=kochPath([30,196],[288,196],4);
+      s+=`<path d="M${pts.map(q=>q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' L')}" fill="none" stroke="${cyan}" stroke-width="1.6"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.5s"><rect x="42" y="164" width="54" height="54" rx="6" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="2.4"/></g>`;
+      const seg=kochPath([30,196],[288,196],4).filter(q=>q[0]>=40&&q[0]<=94&&q[1]>=162&&q[1]<=222);
+      s+=`<path d="M${seg.map(q=>((q[0]-42)*4+34).toFixed(1)+' '+((q[1]-164)*3+96).toFixed(1)).join(' L')}" fill="none" stroke="${gold}" stroke-width="2.2"/>`;
+      s+=fit(159,116,11.5,gold,'увеличили кусочек — снова та же ломаная',{b:1},292);
+      s+=fit(159,250,11.5,ink,'фрактал бесконечно подробный',{b:1},292);
+      s+=fit(159,274,11,dim,'внутри каждой мелочи — снова такая же форма',{},292);
+      s+=plate2(20,232,278,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='nature'){ /* фракталы в природе */
+      const cards=[
+        {t:'дерево',d:'ветки как целое',c:grn,x:22,y:50,ico:'tree'},
+        {t:'снежинка',d:'лучи и веточки',c:cyan,x:168,y:50,ico:'snow'},
+        {t:'берег моря',d:'изгибы повторяются',c:blu,x:22,y:162,ico:'coast'},
+        {t:'брокколи',d:'соцветия как целое',c:gold,x:168,y:162,ico:'broc'}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'природа любит фракталы',{b:1},260)+`</g>`;
+      cards.forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.18).toFixed(2)}s">`
+          +`<rect x="${q.x}" y="${q.y}" width="128" height="102" rx="11" fill="rgba(12,32,34,.97)" stroke="${q.c}" stroke-width="1.8"/>`;
+        const cx=q.x+64, cy=q.y+46;
+        if(q.ico==='tree'){
+          s+=`<path d="M${cx} ${cy+28} v-30" stroke="#8a6b4a" stroke-width="3" stroke-linecap="round"/>`
+            +`<path d="M${cx} ${cy} l-18 -16 M${cx} ${cy} l18 -16 M${cx} ${cy-12} l-13 -13 M${cx} ${cy-12} l13 -13" stroke="${grn}" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+        } else if(q.ico==='snow'){
+          for(let j=0;j<6;j++){
+            const a=-Math.PI/2+j*Math.PI/3;
+            s+=`<path d="M${cx} ${cy} L${(cx+Math.cos(a)*24).toFixed(1)} ${(cy+Math.sin(a)*24).toFixed(1)}" stroke="${cyan}" stroke-width="2"/>`
+              +`<path d="M${(cx+Math.cos(a)*15).toFixed(1)} ${(cy+Math.sin(a)*15).toFixed(1)} l${(Math.cos(a+1)*9).toFixed(1)} ${(Math.sin(a+1)*9).toFixed(1)}" stroke="${cyan}" stroke-width="1.6"/>`;
+          }
+        } else if(q.ico==='coast'){
+          s+=`<path d="M${q.x+12} ${cy+18} q14 -20 26 -6 q12 14 24 -4 q10 -14 22 2 q10 14 22 -6" fill="none" stroke="${blu}" stroke-width="2.6"/>`
+            +`<path d="M${q.x+12} ${cy+30} q10 -10 20 -2 q12 10 22 -2 q12 -10 24 2 q12 10 26 -4" fill="none" stroke="${blu}" stroke-width="1.6" opacity=".6"/>`;
+        } else {
+          s+=`<circle cx="${cx}" cy="${cy+14}" r="15" fill="rgba(125,224,160,.35)" stroke="${gold}" stroke-width="1.6"/>`;
+          [0,1,2,3].forEach(j=>{
+            const a=-Math.PI/2+j*Math.PI/2, r=20;
+            s+=`<circle cx="${(cx+Math.cos(a)*r).toFixed(1)}" cy="${(cy+14+Math.sin(a)*r*0.7).toFixed(1)}" r="9" fill="rgba(125,224,160,.3)" stroke="${gold}" stroke-width="1.3"/>`;
+          });
+        }
+        s+=fit(cx,q.y+78,11,q.c,q.t,{b:1},120)+fit(cx,q.y+93,10,dim,q.d,{},120)+`</g>`;
+      });
+      s+=plate2(22,274,274,26,go?grn:cardB,go?'фракталы вокруг нас':'где встречаются фракталы?',11,pre);
+      return s;
+    }
+    if(K==='fracpractice'){ /* практика: считаем */
+      const rows=[
+        {t:'дерево, уровень 4: сколько новых веток?',a:'16',c:grn},
+        {t:'Серпинский, шаг 4: сколько треугольников?',a:'81',c:cyan},
+        {t:'снежинка Коха: во сколько раз длиннее?',a:'в (4/3)ⁿ раз',c:gold}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'практика: считаем, как растёт фрактал',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*56;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="46" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(146,y+20,10.5,ink,q.t,{},210)
+          +fit(146,y+38,11,dim,'ответ:',{an:'start'},44)
+          +(go?fit(206,y+38,13,q.c,q.a,{b:1},110):'')+`</g>`;
+      });
+      s+=plate2(22,226,274,32,go?grn:cardB,go?'2⁴ = 16 · 3⁴ = 81':'нажми «показать»',11.5,pre);
+      s+=`${fit(159,282,11,dim,'число деталей растёт очень быстро',{},290)}`;
+      return s;
+    }
+    if(K==='fraccreator'){ /* творческая мастерская: строим сами */
+      const lvl=(st&&typeof st.lvl==='number')?st.lvl:0;
+      const fk=(st&&st.fk)||'tree';
+      const modes=[['tree','дерево',grn],['sier','треугольник',cyan],['koch','снежинка',pur]];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'мастерская: построй фрактал сам',{b:1},262)+`</g>`;
+      modes.forEach((q,k)=>{
+        const x=22+k*92, on=(fk===q[0]);
+        s+=`<g style="cursor:pointer" onclick="infFracMode('${lk}','${q[0]}')">`
+          +`<rect x="${x}" y="50" width="86" height="30" rx="9" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${on?q[2]:cardB}" stroke-width="${on?2:1.4}"/>`
+          +fit(x+43,70,11,on?q[2]:dim,q[1],{b:on},78)+`</g>`;
+      });
+      if(fk==='tree'){
+        s+=drawTree(159,272,54,Math.min(4,lvl+1),278,pre,{dur:0.9,beg:0.1,c:'#8a6b4a',c2:'#7aa86a',leaf:grn});
+      } else if(fk==='sier'){
+        s+=drawSierp([[159,92],[58,246],[260,246]],lvl,pre,{beg:0.2});
+      } else {
+        s+=drawKochSnow(159,166,70,Math.min(4,lvl),pre,{beg:0.2,dur:2,c:pur,sw:2.2});
+      }
+      const info=(fk==='tree')?('веток: '+((1<<(lvl+2))-1)):(fk==='sier')?('треугольников: '+Math.pow(3,lvl)):('длина × '+(Math.pow(4/3,lvl)).toFixed(2));
+      s+=`<g class="${pre}Rise}"><rect x="60" y="256" width="198" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.5"/>`
+        +fit(159,274,11.5,gold,'уровень '+lvl+' · '+info,{b:1},180)+`</g>`;
+      s+=`<g style="cursor:pointer" onclick="infFracLvl('${lk}',-1)"><rect x="34" y="288" width="118" height="34" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
+        +tx(93,311,13,gold,'◀ −1 уровень',{b:1})+`</g>`;
+      s+=`<g style="cursor:pointer" onclick="infFracLvl('${lk}',1)"><rect x="166" y="288" width="118" height="34" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
+        +tx(225,311,13,gold,'+1 уровень ▶',{b:1})+`</g>`;
+      return s;
+    }
+    if(K==='fracmist'){ /* частые ошибки */
+      const it=[
+        {t:'думают, что фрактал — это просто узор',f:'фрактал строят по правилу, шаг за шагом',c:gold},
+        {t:'считают, что детали когда-нибудь кончатся',f:'их можно повторять бесконечно',c:cyan},
+        {t:'путают число шагов и размер рисунка',f:'шаг — это повторение правила',c:grn},
+        {t:'забывают, что правило одно и то же',f:'на каждом шаге применяем то же правило',c:pur}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="${ink}">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      s+=`${tx(159,266,11,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='fracsheet'){ /* шпаргалка */
+      const rows=[{t:'фрактал: часть похожа на целое',c:grn},{t:'правило применяют снова и снова',c:cyan},
+                  {t:'рекурсия: алгоритм вызывает сам себя',c:pur},{t:'дерево: 1, 3, 7, 15 веток',c:gold},
+                  {t:'Серпинский: 1, 3, 9, 27',c:blu},{t:'снежинка Коха: длина × 4/3',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'всё главное о фракталах',{b:1},260)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=50+k*36;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+20,11.5,q.c,q.t,{b:1},256)+`</g>`;
+      });
+      s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11.5,pre);
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -4682,6 +5130,32 @@
     if(K==='outofrange') return 202;
     if(K==='marks') return 220;
     if(K==='findcell') return 210;
+    if(K==='fracintro') return 306;
+    if(K==='selfsimilar') return 308;
+    if(K==='fracrule') return 292;
+    if(K==='recursion') return 296;
+    if(K==='tree1') return 314;
+    if(K==='tree3') return 300;
+    if(K==='tree5') return 280;
+    if(K==='tree7') return 306;
+    if(K==='treecount') return 308;
+    if(K==='sierp1') return 304;
+    if(K==='sierp2') return 304;
+    if(K==='sierp3') return 304;
+    if(K==='sierp4') return 306;
+    if(K==='sierpcount') return 300;
+    if(K==='koch1') return 280;
+    if(K==='koch2') return 284;
+    if(K==='koch3') return 286;
+    if(K==='koch4') return 296;
+    if(K==='kochperim') return 300;
+    if(K==='fern') return 300;
+    if(K==='fraczoom') return 292;
+    if(K==='nature') return 312;
+    if(K==='fracpractice') return 296;
+    if(K==='fraccreator') return 336;
+    if(K==='fracmist') return 282;
+    if(K==='fracsheet') return 308;
     if(K==='secrettask') return 244;
     if(K==='caesarstory') return 268;
     if(K==='shift3') return 254;
@@ -5769,6 +6243,66 @@
       tasks:[
         {q:'Слово КОТ зашифровали ключом 3. Какое слово получилось?', kind:'choice', choices:['НСХ','ЛПЦ','МТЧ','НРХ'], ans:0, tol:0, hints:['К сдвигается на 3 вперёд.','К→Н, О→С, Т→Х.'], sol:'НСХ'},
         {q:'Сколько всего ключей у алфавита из 32 букв?', kind:'unit', ans:32, tol:0, hints:['Ключ — любой сдвиг от 0 до 31.','Получится 32 варианта.'], sol:'32'}
+      ] },
+    { id:525, title:'Фракталы: красота из простого правила', ico:'🌿', src:'Информатика · 5–6 класс · С нуля: фракталы',
+      explain:[
+        'Фрактал — это фигура, у которой часть похожа на целое. Посмотри на дерево: каждая его ветка устроена так же, как всё дерево.',
+        'Если приближать фрактал, рисунок повторяется: внутри большого — маленькое, внутри маленького — ещё меньше. Деталей бесконечно много.',
+        'Главная идея: берём простое правило и применяем его снова и снова. Из одного правила получается сложная и красивая картина.',
+        'Чтобы нарисовать фрактал, нужна рекурсия — алгоритм, который вызывает сам себя. Как помощник из урока про вспомогательные алгоритмы, только он зовёт себя.',
+        'Начнём с дерева. Уровень 0 — это один ствол. Дальше каждая ветка делится на две поменьше.',
+        'Уровень 1: ствол и две ветки. Уровень 2: каждая ветка снова делится — получается 7 веток.',
+        'Уровень 3: продолжаем то же правило — уже 15 веток, и дерево выглядит настоящим.',
+        'Считаем ветки: 1, 3, 7, 15 — с каждым уровнем число почти удваивается. Поэтому фракталы растут так быстро.',
+        'Теперь другая фигура — треугольник Серпинского. Начинаем с одного большого треугольника.',
+        'Шаг 1: убираем серединный треугольник. Остаются три угловых.',
+        'Шаг 2: то же самое делаем с каждым из трёх — получается 9 треугольников.',
+        'Шаг 3: повторяем правило ещё раз — 27 треугольников и множество дырок. Это и есть треугольник Серпинского.',
+        'Число треугольников растёт умножением на 3: 1, 3, 9, 27. Так фрактал становится всё подробнее.',
+        'Снежинка Коха строится из отрезка. Сначала делим отрезок на три равные части.',
+        'Потом заменяем серединную часть «уголком». Из одного отрезка получается четыре.',
+        'Повторяем то же правило на каждом из четырёх отрезков — ломаная становится всё сложнее.',
+        'Если соединить три такие кривые, получится знаменитая снежинка Коха — её контур бесконечно изрезан.',
+        'У снежинки Коха удивительное свойство: периметр увеличивается на каждом шаге (× 4/3), а площадь остаётся ограниченной.',
+        'Похожим правилом рисуют папоротник: ствол, листочки, а на них — снова маленькие листочки.',
+        'Фракталы бесконечно подробные: сколько ни приближай, внутри снова находится такая же форма.',
+        'Фракталы встречаются в природе: деревья, снежинки, берега морей, брокколи, молнии и облака.',
+        'Практика: если на каждом уровне каждая ветка даёт две новые, то на 4-м уровне появится 2⁴ = 16 новых веток.',
+        'Практика: у треугольника Серпинского на 4-м шаге будет 3⁴ = 81 маленький треугольник.',
+        'Мастерская: выбери фигуру — дерево, треугольник или снежинку — и нажимай «+1 уровень». Смотри, как из простого правила вырастает фрактал.',
+        'Частые ошибки: думать, что фрактал — просто узор; считать, что детали когда-нибудь закончатся; путать номер уровня с размером рисунка.',
+        'Шпаргалка: фрактал — часть похожа на целое; правило повторяют много раз; рекурсия — алгоритм, вызывающий себя; веток 1, 3, 7, 15, а треугольников 1, 3, 9, 27. Проверь себя!' ],
+      slides:[
+        {h:'Часть похожа на целое', v:{kind:'fracintro'}, r:'Знакомимся с фракталом.', d:'Фрактал — это фигура, у которой часть похожа на целое. Ветка дерева устроена так же, как всё дерево.'},
+        {h:'Приближаем', v:{kind:'selfsimilar'}, r:'Внутри большого — маленькое.', d:'Если приближать фрактал, мы снова видим ту же форму. Так повторяется на всех уровнях.'},
+        {h:'Простое правило', v:{kind:'fracrule'}, r:'Одно правило — сложная картина.', d:'Берём простое правило и применяем его снова и снова: из этого вырастает фрактал.'},
+        {h:'Рекурсия', v:{kind:'recursion'}, r:'Алгоритм зовёт сам себя.', d:'Рисовать фрактал помогает рекурсия: процедура рисует ветку и вызывает себя для двух веток поменьше.'},
+        {h:'Дерево: уровень 0', v:{kind:'tree1'}, r:'Начинаем со ствола.', d:'Уровень 0 — это один ствол. Дальше каждая ветка будет делиться на две.'},
+        {h:'Дерево: уровень 1', v:{kind:'tree3'}, r:'Уже три ветки.', d:'Ствол дал две ветки — всего 3 ветки. Правило остаётся тем же.'},
+        {h:'Дерево: уровень 2', v:{kind:'tree5'}, r:'Ветки делятся снова.', d:'Каждая ветка снова делится на две, и веток становится 7.'},
+        {h:'Настоящее фрактальное дерево', v:{kind:'tree7'}, r:'Уровень 3: 15 веток.', d:'Продолжаем то же правило — и получается дерево, похожее на настоящее.'},
+        {h:'Считаем ветки', v:{kind:'treecount'}, r:'1, 3, 7, 15…', d:'С каждым уровнем число веток почти удваивается: 1, 3, 7, 15. Поэтому фракталы растут очень быстро.'},
+        {h:'Треугольник Серпинского', v:{kind:'sierp1'}, r:'Шаг 0: один треугольник.', d:'Начинаем с одного большого треугольника — это шаг 0.'},
+        {h:'Шаг 1: убираем середину', v:{kind:'sierp2'}, r:'Остались три угловых.', d:'Убрали серединный треугольник — получилось 3 треугольника.'},
+        {h:'Шаг 2: повторяем', v:{kind:'sierp3'}, r:'Уже девять треугольников.', d:'То же правило применили к каждому из трёх — стало 9 треугольников.'},
+        {h:'Треугольник Серпинского готов', v:{kind:'sierp4'}, r:'Шаг 3: 27 треугольников.', d:'Ещё один шаг — 27 треугольников и много пустых мест. Это классический фрактал.'},
+        {h:'Считаем треугольники', v:{kind:'sierpcount'}, r:'1, 3, 9, 27…', d:'Число треугольников умножается на 3 на каждом шаге: 1, 3, 9, 27.'},
+        {h:'Снежинка Коха: начало', v:{kind:'koch1'}, r:'Делим отрезок на три части.', d:'Правило Коха начинается с деления отрезка на три равные части.'},
+        {h:'Заменяем середину', v:{kind:'koch2'}, r:'Появился уголок.', d:'Серединную часть заменили уголком: из одного отрезка стало четыре.'},
+        {h:'Повторяем правило', v:{kind:'koch3'}, r:'Ломаная усложняется.', d:'То же правило применяем к каждому отрезку — ломаная становится всё изрезаннее.'},
+        {h:'Снежинка Коха', v:{kind:'koch4'}, r:'Три кривые вместе.', d:'Соединили три кривые Коха — получилась знаменитая снежинка.'},
+        {h:'Периметр растёт', v:{kind:'kochperim'}, r:'× 4/3 на каждом шаге.', d:'Периметр снежинки увеличивается на каждом шаге, а площадь остаётся ограниченной.'},
+        {h:'Папоротник', v:{kind:'fern'}, r:'Тот же приём — другой рисунок.', d:'Похожим правилом рисуют папоротник: листочки, а на них — снова маленькие листочки.'},
+        {h:'Бесконечная детализация', v:{kind:'fraczoom'}, r:'Приближаем — то же самое.', d:'Сколько ни приближай фрактал, внутри снова находится такая же форма.'},
+        {h:'Фракталы в природе', v:{kind:'nature'}, r:'Дерево, снежинка, берег, брокколи.', d:'Фракталы встречаются в природе постоянно: деревья, снежинки, берега морей, брокколи.'},
+        {h:'Практика: считаем', v:{kind:'fracpractice'}, r:'2⁴ = 16 и 3⁴ = 81.', d:'На 4-м уровне дерева появится 16 новых веток, а у треугольника Серпинского на 4-м шаге будет 81 треугольник.'},
+        {h:'Мастерская фракталов', v:{kind:'fraccreator'}, r:'Построй фрактал сам!', d:'Выбирай фигуру и нажимай «+1 уровень»: смотри, как из простого правила вырастает фрактал.'},
+        {h:'Частые ошибки', v:{kind:'fracmist'}, r:'Что чаще всего путают.', d:'Фрактал строят по правилу; детали не заканчиваются; уровень — это номер повторения правила.'},
+        {h:'Шпаргалка', v:{kind:'fracsheet'}, r:'Шесть главных мыслей.', d:'Фрактал — часть похожа на целое; правило повторяют много раз; рекурсия — алгоритм, вызывающий себя.'} ],
+      check:{ q:'Что такое фрактал?', choices:['фигура, у которой часть похожа на целое','любой красивый узор','фигура из одних треугольников','алгоритм без повторений'], ans:0, exp:'Фрактал — фигура, у которой часть подобна целому.' },
+      tasks:[
+        {q:'В дереве каждая ветка на следующем уровне даёт две новые. Сколько новых веток появится на 4-м уровне?', kind:'unit', ans:16, tol:0, hints:['Уровень 0 — 1 ветка, уровень 1 — 2 новые.','Новых веток 2⁴ = 16.'], sol:'2⁴ = 16'},
+        {q:'Сколько маленьких треугольников у треугольника Серпинского на 4-м шаге?', kind:'choice', choices:['81','27','64','12'], ans:0, tol:0, hints:['Число треугольников умножается на 3.','1, 3, 9, 27, 81 — значит 3⁴ = 81.'], sol:'3⁴ = 81'}
       ] }
   ];
 
@@ -5783,7 +6317,7 @@
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -5802,6 +6336,8 @@
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
+      : (s.v.kind==='fraccreator')
+      ? wkRow(wkBtn('сброс',`infFracLvl('${lk}',0,1)`))
       : (s.v.kind==='cpdial')
       ? wkRow(wkBtn('сброс круга',`infShift('${lk}',0,1)`))
       : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')
@@ -5809,7 +6345,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -5818,6 +6354,14 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infFracMode=function(lk,mode){
+    const st=CHS[lk]||(CHS[lk]={}); st.fk=mode; chRender(0);
+  };
+  window.infFracLvl=function(lk,delta,reset){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(reset) st.lvl=0; else st.lvl=Math.max(0,Math.min(4,(st.lvl||0)+delta));
+    chRender(0);
+  };
   window.infShift=function(lk,delta,reset){
     const st=CHS[lk]||(CHS[lk]={});
     if(reset) st.sh=0; else st.sh=((st.sh||0)+delta+32)%32;
