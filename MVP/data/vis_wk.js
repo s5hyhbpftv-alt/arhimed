@@ -2511,8 +2511,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const go=st.go||0;
       let inner='';
       inner+=tx(159,34,20,ink,'определения',{b:1});
-      inner+=tx(159,72,15,gold,'правильная: числитель < знаменатель → < 1',{b:1});
-      inner+=tx(159,98,15,red,'неправильная: числитель ≥ знаменатель → ≥ 1',{b:1});
+      inner+=tx(159,72,11.8,gold,'правильная: числитель < знаменатель → < 1',{b:1});
+      inner+=tx(159,98,11.3,red,'неправильная: числитель ≥ знаменатель → ≥ 1',{b:1});
       if(go){
         inner+=`<g class="qVPop"><text x="159" y="130" text-anchor="middle" font-size="15" fill="${dim}">сравни числитель и знаменатель</text></g>`;
       }
@@ -15604,7 +15604,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     if(step===0){
       const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,28,20,ink,'числовая прямая — дорога чисел',{b:1});
+      inner+=tx(159,28,16.1,ink,'числовая прямая — дорога чисел',{b:1});
       if(go){
         inner+=hAxis();
         inner+=mark(-5,cyan,'',0.1);
@@ -15660,7 +15660,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const H=190;
       const go=st.go||0;
       let inner='';
-      inner+=tx(159,30,20,ink,'правило: одинаковые знаки',{b:1});
+      inner+=tx(159,30,19.4,ink,'правило: одинаковые знаки',{b:1});
       if(go){
         inner+=`<g class="qHrPop"><rect x="32" y="64" width="254" height="88" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
         ${tx(60,86,15,ink,'знаки ОДИНАКОВЫЕ →',{b:1,an:'start'})}
@@ -23771,7 +23771,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,24,20,ink,'почему 4 — проигрыш?',{b:1});
       inner+=stones(42,66,4,0,0.1);
-      inner+=tx(159,120,15,dim,'как ни возьми (1–3), соперник заберёт остаток',{});
+      inner+=tx(159,120,10.8,dim,'как ни возьми (1–3), соперник заберёт остаток',{});
       if(go){
         inner+=`<g class="qZPop"><text x="159" y="152" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">ходит тебе → ты проиграл</text></g>`;
       }
@@ -23826,9 +23826,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=tx(159,28,20,ink,'как ходит второй',{b:1});
       if(go){
         inner+=`<g class="qZPop"><rect x="40" y="58" width="238" height="90" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="2"/>
-        ${tx(159,82,16,gold,'первый взял X → второй берёт 4−X',{b:1})}
+        ${tx(159,82,15.1,gold,'первый взял X → второй берёт 4−X',{b:1})}
         ${tx(159,108,14,dim,'каждый ход вместе = 4 камня',{})}
-        ${tx(159,134,16,grn,'после 5 пар ходов — камней нет, победа',{b:1})}</g>`;
+        ${tx(159,134,12.7,grn,'после 5 пар ходов — камней нет, победа',{b:1})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Стратегия второго</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -25976,7 +25976,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=`<g class="qPWPop"><rect x="36" y="62" width="246" height="86" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
         ${tx(70,86,15,ink,'① выбираем рубашку',{b:1,an:'start'})}
         ${tx(70,110,15,ink,'② выбираем галстук',{b:1,an:'start'})}
-        ${tx(70,134,15,grn,'выборы НЕ мешают друг другу → множим',{b:1,an:'start'})}</g>`;
+        ${tx(70,134,13.4,grn,'выборы НЕ мешают друг другу → множим',{b:1,an:'start'})}</g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
