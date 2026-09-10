@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 10 уроков (id 500–509) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 12 уроков (id 500–511) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -305,7 +305,8 @@
         let d='M'+path.map(q=>`${(x0+q[0]*cell+cell/2).toFixed(1)} ${(y0+q[1]*cell+cell/2).toFixed(1)}`).join(' L');
         s+=`<path d="${d}" fill="none" stroke="${A}" stroke-width="2.6" opacity=".8" class="${pre}Dash"/>`;
         const g=path[path.length-1];
-        s+=flagAt(x0+g[0]*cell+cell/2+8, y0+g[1]*cell+cell/2-6, 16, '#ff9a6a', pre+'Pulse');
+        const wallAhead=(v.walls||[]).some(w=>Math.abs(w[0]-g[0])+Math.abs(w[1]-g[1])===1);
+        if(!wallAhead) s+=flagAt(x0+g[0]*cell+cell/2+8, y0+g[1]*cell+cell/2-6, 16, '#ff9a6a', pre+'Pulse');
       }
       const rx=x0+v.pos[0]*cell+cell/2, ry=y0+v.pos[1]*cell+cell/2;
       s+=`<g class="${pre}Float" filter="url(#${pre}sh)">`
@@ -335,7 +336,7 @@
     }
     if(K==='cond'){ /* условие ЕСЛИ…ТО… */
       let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><path d="M159 34 l 80 34 l -80 34 l -80 -34 z" fill="rgba(176,127,255,.14)" stroke="${pur}" stroke-width="2.4"/>`
-        +`<rect class="${pre}Glow" x="77" y="32" width="164" height="72" fill="none" stroke="${pur}" stroke-width="2" opacity=".3"/>`
+        +`<path class="${pre}Glow" d="M159 30 l84 38 l-84 38 l-84 -38 z" fill="none" stroke="${pur}" stroke-width="2" opacity=".35"/>`
         +`${tx(159,73,14,pur,v.q,{b:1})}</g>`;
       s+=`<path d="M159 102 v14" stroke="${A}" stroke-width="2" class="${pre}Dash"/><path d="M155 111 l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="2"/>`;
       s+=`<circle cx="159" cy="104" r="3.6" fill="${A}" style="--run:14px" class="${pre}Dot"/>`;
@@ -451,6 +452,149 @@
         +`${tx(159,y0+rows*rh+47,11.5,dim,'любая информация хранится как 0 и 1',{})}`;
       return s;
     }
+    if(K==='var'){ /* переменная — коробочка с наклейкой */
+      const list=(v.vars&&v.vars.length)?v.vars:[{name:v.name||'x', val:(v.val!==undefined?v.val:'5'), c:A}];
+      const n=list.length, bw=n>1?134:150, gp=12, tot=n*bw+(n-1)*gp, x0=Math.round((CW-tot)/2);
+      let s='';
+      list.forEach((it,k)=>{
+        const bx=x0+k*(bw+gp), bc=it.c||A, cx=bx+bw/2, val=plain(it.val!==undefined?it.val:'5');
+        const vfs=Math.min(38,(bw-24)/(Math.max(1,val.length)*0.62));
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.14*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="${bx}" y="54" width="${bw}" height="94" rx="12" fill="url(#${pre}card)" stroke="${bc}" stroke-width="2.2"/>`
+          +`<rect x="${bx+8}" y="42" width="${bw-16}" height="27" rx="8" fill="rgba(10,18,36,.97)" stroke="${bc}" stroke-width="1.8"/>`
+          +`${tx(cx,61,Math.min(15,60/Math.max(1,plain(it.name).length)/0.62),bc,it.name,{b:1})}`
+          +`<rect class="${pre}Glow" x="${bx-3}" y="51" width="${bw+6}" height="100" rx="14" fill="none" stroke="${bc}" stroke-width="2" opacity=".3"/>`
+          +`<text x="${cx}" y="120" text-anchor="middle" font-size="${vfs.toFixed(1)}" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="4">${val}</text>`
+          +`${tx(cx,140,10.5,dim,'значение',{})}</g>`;
+      });
+      s+=`${tx(159,168,11.5,dim,v.note||'переменная = имя + значение',{})}`;
+      return s;
+    }
+    if(K==='assign'){ /* присваивание: было → стало */
+      const name=plain(v.name||'x'), from=plain(v.from!==undefined?v.from:'3'), to=plain(v.to!==undefined?v.to:'7');
+      let s='';
+      s+=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="59" y="24" width="200" height="48" rx="12" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`<rect x="59" y="24" width="200" height="3.2" rx="1.6" fill="url(#${pre}bar)"/>`
+        +`<text x="159" y="58" text-anchor="middle" font-size="${Math.min(27,170/(Math.max(1,(name+' = '+to).length)*0.68)).toFixed(1)}" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="4">${name} = <tspan fill="${grn}">${to}</tspan></text></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.14s" opacity=".8"><rect x="18" y="96" width="126" height="58" rx="11" fill="rgba(255,255,255,.035)" stroke="${cardB}" stroke-width="1.6"/>`
+        +`${tx(81,116,10.5,dim,'было',{})}`
+        +(from==='пусто'||from==='—'||from===''
+            ? `<rect x="50" y="122" width="62" height="28" rx="7" fill="none" stroke="#4a5b85" stroke-width="1.6" stroke-dasharray="5 4"/>${tx(81,141,11,'#8ea3c8','пусто',{})}`
+            : `<text x="81" y="146" text-anchor="middle" font-size="${Math.min(24,110/(Math.max(1,from.length)*0.62)).toFixed(1)}" font-family="Georgia,serif" fill="#9fb0cf" paint-order="stroke" stroke="#08101f" stroke-width="4">${from}</text><path d="M40 138 H122" stroke="${red}" stroke-width="2.4" opacity=".9"/>`)
+        +`</g>`;
+      s+=`<path d="M150 125 H168" stroke="${A}" stroke-width="2.2" opacity=".7"/><circle cx="150" cy="125" r="3.4" fill="${A}" style="--run:18px" class="${pre}Dot"/><path d="M164 121 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.32s" filter="url(#${pre}sh)"><rect x="174" y="96" width="126" height="58" rx="11" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2.2"/>`
+        +`<rect class="${pre}Glow" x="171" y="93" width="132" height="64" rx="14" fill="none" stroke="${grn}" stroke-width="2" opacity=".35"/>`
+        +`${tx(237,116,10.5,grn,'стало',{})}`
+        +`<text x="237" y="147" text-anchor="middle" font-size="${Math.min(26,110/(Math.max(1,to.length)*0.62)).toFixed(1)}" font-family="Georgia,serif" font-weight="bold" fill="${grn}" paint-order="stroke" stroke="#08101f" stroke-width="4">${to}</text></g>`;
+      s+=`${tx(159,180,11.5,dim,v.note||'новое значение заменяет старое',{})}`;
+      return s;
+    }
+    if(K==='input'){ /* ввод: спросили — запомнили */
+      const q=plain(v.q||'Сколько тебе лет?'), name=plain(v.name||'возраст'), val=plain(v.val!==undefined?v.val:'11');
+      let s='';
+      s+=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="14" y="24" width="196" height="108" rx="11" fill="rgba(8,14,30,.95)" stroke="${A}" stroke-opacity=".55" stroke-width="1.8"/>`
+        +`<path d="M14 46 h196" stroke="${A}" stroke-opacity=".25"/>`
+        +`<circle cx="27" cy="35" r="3.4" fill="#ff6b6b" opacity=".85"/><circle cx="39" cy="35" r="3.4" fill="${gold}" opacity=".85"/><circle cx="51" cy="35" r="3.4" fill="${grn}" opacity=".85"/></g>`;
+      s+=`<text x="24" y="72" font-size="${Math.min(12.5,168/(Math.max(1,q.length)*0.6)).toFixed(1)}" fill="${ink}" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${q}</text>`;
+      s+=`<rect x="24" y="84" width="176" height="30" rx="7" fill="rgba(255,255,255,.05)" stroke="${A}" stroke-opacity=".4"/>`
+        +`<text x="36" y="105" font-size="17" fill="${grn}" font-family="'Courier New',monospace" font-weight="bold" opacity="0">${val}<animate attributeName="opacity" values="0;1" dur=".4s" begin=".7s" fill="freeze"/></text>`
+        +`<rect class="${pre}Caret" x="${(38+val.length*10.4).toFixed(0)}" y="90" width="7" height="18" fill="${A}"/>`;
+      for(let i=0;i<9;i++) s+=`<rect x="${24+i*20}" y="142" width="16" height="9" rx="2.5" fill="rgba(255,255,255,.1)"/>`;
+      s+=`<path d="M214 106 H232" stroke="${A}" stroke-width="2.2" opacity=".7"/><circle cx="214" cy="106" r="3.4" fill="${A}" style="--run:18px" class="${pre}Dot"/><path d="M228 102 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.35s" filter="url(#${pre}sh)"><rect x="236" y="46" width="70" height="112" rx="11" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2.2"/>`
+        +`<rect x="240" y="36" width="62" height="25" rx="7" fill="rgba(10,18,36,.97)" stroke="${grn}" stroke-width="1.6"/>`
+        +`${tx(271,53,Math.min(12,54/Math.max(1,name.length)/0.62),grn,name,{b:1})}`
+        +`<text x="271" y="112" text-anchor="middle" font-size="30" font-family="Georgia,serif" font-weight="bold" fill="${ink}" opacity="0">${val}<animate attributeName="opacity" values="0;1" dur=".4s" begin="1s" fill="freeze"/></text>`
+        +`<rect class="${pre}Glow" x="233" y="43" width="76" height="118" rx="14" fill="none" stroke="${grn}" stroke-width="2" opacity=".3"/></g>`;
+      s+=`${tx(159,174,11.5,dim,v.note||'ввод кладёт число в переменную',{})}`;
+      return s;
+    }
+    if(K==='while'){ /* цикл «пока» */
+      const warn=!!v.warn, pre1=!!v.pre, again=!!v.again;
+      const q=plain(v.q||'условие?'), body=plain(v.body||'тело цикла');
+      const dc=warn?red:pur, bc2=warn?red:(again?gold:grn);
+      const qp=(q.length>13 && q.indexOf(' ')>0)?(()=>{ const m=q.lastIndexOf(' ',Math.ceil(q.length/2)); return [q.slice(0,m), q.slice(m+1)]; })():[q];
+      const qfs=Math.min(13.5, 126/(Math.max.apply(null,qp.map(x=>x.length))*0.68));
+      const qText=(c)=>qp.length>1
+        ? `<text x="162" y="58" text-anchor="middle" font-size="${qfs.toFixed(1)}" fill="${c}" font-weight="bold" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${qp[0]}</text>`
+         +`<text x="162" y="76" text-anchor="middle" font-size="${qfs.toFixed(1)}" fill="${c}" font-weight="bold" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${qp[1]}</text>`
+        : `<text x="162" y="67" text-anchor="middle" font-size="${qfs.toFixed(1)}" fill="${c}" font-weight="bold" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${qp[0]}</text>`;
+      let s='';
+      s+=`<g class="${pre}Pop" filter="url(#${pre}sh)"><path d="M162 30 l76 32 l-76 32 l-76 -32 z" fill="${warn?'rgba(255,120,100,.14)':'rgba(176,127,255,.14)'}" stroke="${dc}" stroke-width="2.4"/>`
+        +(warn?`<path class="${pre}Glow" d="M162 26 l80 36 l-80 36 l-80 -36 z" fill="none" stroke="${dc}" stroke-width="2" opacity=".5"/>`:'')
+        +qText(dc)+`</g>`;
+      s+=`<path d="M240 62 H264" stroke="${A}" stroke-width="2" opacity=".6"/><path d="M260 58 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>${tx(248,50,10,dim,'нет',{})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.2s"><ellipse cx="286" cy="62" rx="27" ry="16" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>${tx(286,66,11,A,'выход',{})}</g>`;
+      s+=`<path d="M162 96 V116" stroke="${A}" stroke-width="2" class="${pre}Dash"/><path d="M158 112 l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="2"/>${tx(180,108,10.5,dim,'да',{})}<circle cx="162" cy="98" r="3.4" fill="${A}" style="--run:18px" class="${pre}Dot"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.3s" filter="url(#${pre}sh)"><rect x="88" y="120" width="148" height="42" rx="10" fill="url(#${pre}card)" stroke="${bc2}" stroke-width="2.2"/>`
+        +`<text x="162" y="146" text-anchor="middle" font-size="${Math.min(13,140/(Math.max(1,body.length)*0.62)).toFixed(1)}" fill="${bc2}" font-weight="bold" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${body}</text></g>`;
+      s+=`<path d="M162 162 V182 H40 V62 H82" fill="none" stroke="${A}" stroke-width="2" opacity=".6" class="${pre}Dash"/><path d="M78 58 l-5 4 l5 4" fill="none" stroke="${A}" stroke-width="2"/>`
+        +`<circle r="3.6" fill="${A}"><animateMotion dur="${warn?'1.1':'2.2'}s" repeatCount="indefinite" path="M162 162 V182 H40 V62 H82"/><animate attributeName="opacity" values="0;1;1;0" dur="${warn?'1.1':'2.2'}s" repeatCount="indefinite"/></circle>`;
+      const plate=warn?{t:'условие всё время истинно → цикл бесконечный', c:red}:(pre1?{t:'условие проверяется ПЕРЕД телом цикла', c:gold}:null);
+      if(plate){
+        s+=`<g class="${pre}Rise" style="animation-delay:.42s"><rect x="24" y="188" width="270" height="28" rx="9" fill="rgba(255,255,255,.04)" stroke="${plate.c}" stroke-width="1.8"/>`
+          +`<text x="159" y="207" text-anchor="middle" font-size="${Math.min(11.5,240/(Math.max(1,plate.t.length)*0.62)).toFixed(1)}" fill="${plate.c}" font-weight="bold" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${plate.t}</text></g>`;
+      } else {
+        s+=`${tx(46,196,10.5,dim,'после тела — снова к условию',{an:'start'})}`;
+      }
+      return s;
+    }
+    if(K==='trace'){ /* трассировка: таблица по шагам */
+      const head=(v.head||[]).map(plain), rows=(v.rows||[]).map(r=>r.map(plain)), nc=Math.max(1,head.length);
+      const need=[];
+      for(let c=0;c<nc;c++){
+        let m=Math.max(1,(''+(head[c]||'')).length*1.3);
+        rows.forEach(r=>{ m=Math.max(m,(''+(r[c]!==undefined?r[c]:'')).length); });
+        need.push(m);
+      }
+      const sumN=need.reduce((x,y)=>x+y,0)||1, avail=CW-40-6*(nc-1);
+      const colw=need.map(x=>Math.max(30, avail*x/sumN));
+      const colX=(c)=>{ let x=20; for(let i=0;i<c;i++) x+=colw[i]+6; return x; };
+      const hy=26, rh=27;
+      let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="20" y="${hy}" width="${CW-40}" height="${rh}" rx="8" fill="${A}" opacity=".16" stroke="${A}" stroke-width="1.5"/></g>`;
+      head.forEach((h,c)=>{ s+=`${tx(colX(c)+colw[c]/2, hy+18, Math.min(11.5,(colw[c]-10)/Math.max(1,h.length)/0.76), A, h, {b:1})}`; });
+      rows.forEach((r,k)=>{
+        const y=hy+rh+k*rh, last=(k===rows.length-1), d=(k*0.45).toFixed(2), du=(rows.length*0.45+0.8).toFixed(2);
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="${CW-40}" height="${rh}" fill="${k%2?'rgba(255,255,255,.05)':'rgba(255,255,255,.015)'}" stroke="#2b3c62" stroke-width="1"/>`
+          +`<rect class="${pre}Spot" style="animation-delay:${d}s;animation-duration:${du}s" x="20" y="${y}" width="${CW-40}" height="${rh}" fill="${A}" opacity=".14"/>`
+          +`<rect x="20" y="${y}" width="3.4" height="${rh}" fill="${A}" opacity=".55"/>`;
+        r.forEach((cv,c)=>{
+          const col=c===0?dim:(last&&c===r.length-1?grn:ink);
+          const fs=c===0?Math.min(11,(colw[c]-10)/Math.max(1,cv.length)/0.74):Math.min(c===r.length-1?14.5:13,(colw[c]-10)/Math.max(1,cv.length)/0.74);
+          s+=`${tx(colX(c)+colw[c]/2, y+19, fs, col, cv, {b:c>0, georgia:c>0})}`;
+        });
+        s+=`</g>`;
+      });
+      const by=hy+rh+rows.length*rh, note=plain(v.note||'таблица показывает каждое изменение');
+      s+=`<rect x="20" y="${by+8}" width="${CW-40}" height="26" rx="8" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-opacity=".35"/>`
+        +`${tx(159,by+25,Math.min(11,250/Math.max(1,note.length)/0.64),dim,note,{})}`;
+      return s;
+    }
+    if(K==='compare'){ /* два вида цикла рядом */
+      const L2=v.left||{}, R2=v.right||{};
+      const panel=(x,o)=>{
+        const c=o.c||A, t=plain(o.t||''), d=plain(o.d||''), pts=(o.points||[]).map(plain);
+        let g=`<g class="${pre}Rise" filter="url(#${pre}sh)"><rect x="${x}" y="26" width="138" height="164" rx="13" fill="url(#${pre}card)" stroke="${c}" stroke-width="2.2"/>`
+          +`<rect x="${x}" y="26" width="138" height="3.2" rx="1.6" fill="${c}"/>`
+          +`<circle cx="${x+69}" cy="72" r="25" fill="${c}" opacity=".13" stroke="${c}" stroke-opacity=".5" stroke-width="1.4"/>`
+          +`<g class="${pre}Float">${icon(iconKey(t,0),x+69,72,c,34)}</g>`
+          +`<text x="${x+69}" y="116" text-anchor="middle" font-size="${Math.min(12.5,110/(Math.max(1,t.length)*0.74)).toFixed(1)}" fill="${c}" font-weight="bold" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${t}</text>`;
+        let py=136;
+        if(d){ g+=`<text x="${x+69}" y="${py}" text-anchor="middle" font-size="${Math.min(10.5,116/(Math.max(1,d.length)*0.68)).toFixed(1)}" fill="${dim}" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="3.4">${d}</text>`; py+=8; }
+        pts.slice(0,2).forEach(pt=>{
+          py+=20;
+          g+=`<circle cx="${x+16}" cy="${py-4}" r="3" fill="${c}"/>`
+            +`<text x="${x+26}" y="${py}" font-size="${Math.min(10.5,98/(Math.max(1,pt.length)*0.68)).toFixed(1)}" fill="${ink}" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="3.4">${pt}</text>`;
+        });
+        return g+`</g>`;
+      };
+      let s=panel(16,L2)+panel(164,R2);
+      s+=`<path d="M159 34 V182" stroke="${A}" stroke-width="1.6" stroke-dasharray="5 5" opacity=".5"/>`
+        +`<circle cx="159" cy="108" r="16" fill="rgba(10,18,36,.96)" stroke="${A}" stroke-width="1.6"/>${tx(159,112,10.5,A,'или',{b:1})}`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -505,6 +649,12 @@
     if(K==='cond') return 202;
     if(K==='flow') return ((v.shapes||[]).length===1)?200:Math.max(120, (v.shapes||[]).length*48+20);
     if(K==='code') return Math.max(110, 42+(v.lines||[]).length*24+16);
+    if(K==='var') return 186;
+    if(K==='assign') return 194;
+    if(K==='input') return 190;
+    if(K==='while') return (v.warn||v.pre)?232:214;
+    if(K==='trace') return 26+27+(v.rows||[]).length*27+44;
+    if(K==='compare') return 208;
     if(K==='text') return ((v.lines||[]).length<=2)?(132+26*(v.lines||[]).length):Math.max(134, (v.lines||[]).length*39+54);
     if(K==='machine') return 216;
     if(K==='rain') return 212;
@@ -811,6 +961,74 @@
       tasks:[
         {q:'Сколько раз покажется «Привет», если «повтори 3 раза: вывести Привет»?', kind:'unit', ans:3, tol:0, hints:['Число в цикле.','3.'], sol:'3'},
         {q:'Что такое программа?', kind:'choice', choices:['алгоритм для компьютера','картинка','число','буква'], ans:0, tol:0, hints:['Записана командами.','Алгоритм для компьютера.'], sol:'алгоритм для компьютера'}
+      ] },
+    { id:510, title:'Переменные: как программа помнит', ico:'📦', src:'Информатика · 5–6 класс · С нуля: переменные',
+      explain:[
+        'Компьютер — машина, и сам он ничего не помнит. Чтобы программа могла считать, ей нужно где-то хранить числа.',
+        'Для этого придумали ПЕРЕМЕННУЮ. Переменная — это коробочка: сверху наклейка с именем, внутри — значение.',
+        'Имя пишут латинскими буквами: x, a, b, sum. По имени программа понимает, какую именно коробочку открыть.',
+        'Значение — то, что лежит в коробочке: число 5 или слово «Привет». У одной переменной всегда одно значение.',
+        'Положить значение помогает команда присваивания — знак «=». Запись «x = 5» читается так: «в переменную x положили 5».',
+        'Если потом записать «x = 7», старое значение 5 затрётся, и в коробочке останется 7. Коробочка одна, а значение в ней меняется.',
+        'Значение можно спросить у человека. Это ВВОД: команда «ввести x» ждёт, пока ты напечатаешь число, и кладёт его в переменную.',
+        'Пример: программа спрашивает «Сколько тебе лет?», получает ответ 11 и запоминает его в переменной «возраст».',
+        'С переменными можно считать: «sum = a + b» возьмёт числа из двух коробочек и положит в третью их сумму.',
+        'Чтобы понять, что делает программа, делают ТРАССИРОВКУ — табличку со столбцами-переменными. В ней видно, как значения меняются шаг за шагом.',
+        'Пример: a = 3, b = 4, sum = a + b. В таблице видно: сначала в a появилось 3, потом в b — 4, и только потом в sum — 7.',
+        'Проверь себя: чем имя переменной отличается от её значения? Имя — наклейка, оно не меняется; значение — то, что внутри, и оно меняется.',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'Программа должна помнить', v:{kind:'text', lines:[{t:'чтобы считать — надо', b:1},{t:'где-то хранить числа', b:1, c:gold}]}, r:'Без памяти программа ничего не посчитает.'},
+        {h:'Коробочка с наклейкой', v:{kind:'var', name:'x', note:'имя — наклейка, значение — внутри коробочки'}, r:'Переменная = коробочка с именем.'},
+        {h:'Имя и значение', v:{kind:'var', vars:[{name:'x',val:'5',c:blu},{name:'sum',val:'12',c:grn}], note:'имя выбирает программист — чтобы было понятно'}, r:'У каждой переменной своё имя.'},
+        {h:'Что лежит внутри', v:{kind:'var', name:'word', val:'Привет', note:'в коробочке может лежать число или слово'}, r:'Значение — то, что лежит в переменной.'},
+        {h:'Знак «=» кладёт значение', v:{kind:'assign', name:'x', from:'пусто', to:'7', note:'x = 7 читается: «в x положили 7»'}, r:'«=» — команда присваивания.'},
+        {h:'Старое значение затирается', v:{kind:'assign', name:'x', from:'5', to:'9', note:'коробочка одна, а значение в ней меняется'}, r:'Новое значение заменяет старое.'},
+        {h:'Ввод: спросим человека', v:{kind:'input', q:'Сколько тебе лет?', name:'возраст', val:'11', note:'программа получила 11 и запомнила его'}, r:'Ввод кладёт ответ человека в переменную.'},
+        {h:'Считаем коробочками', v:{kind:'assign', name:'sum', from:'a + b', to:'7', note:'sum = a + b — взяли два числа и сложили'}, r:'В sum попадёт сумма a и b.'},
+        {h:'Как это устроено', v:{kind:'ipo'}, r:'Ввод → обработка → вывод, и всё через переменные.'},
+        {h:'Трассировка', v:{kind:'trace', head:['шаг','команда','a','b','sum'], rows:[['1','a = 3','3','—','—'],['2','b = 4','3','4','—'],['3','sum = a+b','3','4','7']], note:'по таблице видно, как менялась каждая переменная'}, r:'Трассировка показывает изменения по шагам.'},
+        {h:'Осторожно с именами', v:{kind:'cards', items:[{t:'сумма', d:'понятное имя', c:grn},{t:'x', d:'коротко и ясно', c:grn},{t:'2x', d:'нельзя: начинается с цифры', c:red},{t:'s1', d:'непонятно, что внутри', c:red}]}, r:'Имя должно быть понятным и без цифры в начале.'},
+        {h:'Тренажёр', v:{kind:'var', vars:[{name:'a',val:'8',c:cyan},{name:'b',val:'2',c:gold}], note:'что окажется в sum = a + b ?'}, r:'sum получит 10.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'переменная = имя + значение', b:1},{t:'x = 5 — положить в коробочку', c:grn},{t:'ввести x — спросить у человека', c:gold}]}, r:'Запомни: переменная — коробочка с именем.'} ],
+      check:{ q:'Что делает запись «x = 5»?', choices:['кладёт число 5 в переменную x','сравнивает x и 5','показывает 5 на экране'], ans:0, exp:'Знак «=» — присваивание: в переменную x положили 5.' },
+      tasks:[
+        {q:'В переменной a лежит 3, в b — 4. Что окажется в sum после команды «sum = a + b»?', kind:'unit', ans:7, tol:0, hints:['Программа складывает то, что лежит в коробочках.','3 + 4 = 7.'], sol:'7'},
+        {q:'Какое имя переменной записано неправильно?', kind:'choice', choices:['2x','sum','b','x1'], ans:0, tol:0, hints:['Имя не может начинаться с цифры.','«2x» — так нельзя.'], sol:'2x'}
+      ] },
+    { id:511, title:'Цикл «пока»: повторяем, пока условие верно', ico:'🔁', src:'Информатика · 5–6 класс · С нуля: цикл пока',
+      explain:[
+        'Раньше мы повторяли команды известное число раз: «повтори 4 раза». Но так бывает не всегда.',
+        'Пример: робот должен идти, пока не дойдёт до стены. Сколько шагов ему сделать — заранее неизвестно.',
+        'Для таких случаев есть цикл «ПОКА». Он повторяет команды, пока условие истинно, то есть пока ответ «да».',
+        'Читаем так: «ПОКА впереди нет стены — шаг вперёд». Компьютер проверяет условие, и если «да» — делает шаг.',
+        'После каждого шага условие проверяется ЗАНОВО. Как только стена рядом, ответ станет «нет» — и цикл остановится.',
+        'Важно: в цикле «пока» условие проверяется ПЕРЕД телом. Если условие сразу ложно, тело не выполнится ни разу.',
+        'Сравни: в цикле «повтори N раз» число повторов известно заранее, а в цикле «пока» всё решает условие.',
+        'Пример со счётчиком: «пока i ≤ 3: вывести i; i = i + 1». Число i растёт, и цикл сам останавливается, когда i станет 4.',
+        'Чтобы цикл закончился, тело должно менять то, что проверяет условие. Здесь тело увеличивает i — поэтому условие рано или поздно станет ложным.',
+        'Если тело не меняет условие, ответ всегда будет «да» — и получится бесконечный цикл. Программа зациклится и не выдаст ответ.',
+        'Цикл «пока» удобен для подсчёта неизвестного количества: «пока есть числа — прибавь число к сумме».',
+        'Проверь себя: цикл «пока» проверяет условие до тела или после? До тела — поэтому он может не выполниться ни разу.',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'Когда число повторов известно', v:{kind:'loop', n:4, body:'шаг вперёд'}, r:'«Повтори 4 раза» — если знаем, сколько раз.'},
+        {h:'А если неизвестно?', v:{kind:'text', lines:[{t:'идти, пока не стена', b:1},{t:'сколько шагов — неизвестно', b:1, c:gold}]}, r:'Тут «повтори N раз» не подходит.'},
+        {h:'Цикл «пока»', v:{kind:'while', q:'впереди нет стены?', body:'шаг вперёд', n:3}, r:'ПОКА условие истинно — повторяй тело.'},
+        {h:'Как это записывают', v:{kind:'code', lines:[{t:'пока впереди нет стены:', c:gold},{t:'    шаг вперёд', c:cyan, i:1}]}, r:'Читаем: пока «да» — делаем команду.'},
+        {h:'Условие проверяется снова', v:{kind:'while', q:'впереди нет стены?', body:'шаг вперёд', again:1}, r:'После шага условие проверяют заново.'},
+        {h:'Дошёл до стены — стоп', v:{kind:'robot', pos:[0,3], walls:[[3,3]], path:[[0,3],[1,3],[2,3]]}, r:'Условие стало «нет» — цикл остановился.'},
+        {h:'Проверка до тела', v:{kind:'while', q:'есть числа?', body:'прибавь число', pre:1}, r:'Условие проверяется перед телом.'},
+        {h:'Два вида циклов', v:{kind:'compare', left:{t:'повтори 4 раза', d:'число повторов знаем', c:blu, points:['тело выполнится ровно 4 раза','предсказуемо и просто']}, right:{t:'пока есть числа', d:'число повторов неизвестно', c:grn, points:['сколько раз — решает условие','может не выполниться ни разу']}}, r:'Разные задачи — разные циклы.'},
+        {h:'Счётчик внутри цикла', v:{kind:'code', lines:[{t:'i = 1', c:cyan},{t:'пока i ≤ 3:', c:gold},{t:'    вывести i', c:grn, i:1},{t:'    i = i + 1', c:cyan, i:1}]}, r:'Тело меняет i — цикл остановится.'},
+        {h:'Трассировка', v:{kind:'trace', head:['шаг','i ≤ 3 ?','вывели'], rows:[['1','да','1'],['2','да','2'],['3','да','3'],['4','нет','—']], note:'на шаге 4 условие стало ложным — вышли из цикла'}, r:'По таблице видно, почему цикл закончился.'},
+        {h:'Бесконечный цикл', v:{kind:'while', q:'x всё ещё > 0?', body:'x = x + 1', warn:1}, r:'Условие всегда «да» — программа зациклится.'},
+        {h:'Тренажёр', v:{kind:'while', q:'не дошли до стены?', body:'шаг вперёд', n:2}, r:'Сколько раз повторять — решает условие.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'пока условие верно — повторяй', b:1},{t:'условие проверяется до тела', c:gold},{t:'тело должно менять условие', c:grn}]}, r:'Запомни: «пока» — цикл с условием.'} ],
+      check:{ q:'Когда цикл «пока» проверяет условие?', choices:['перед каждым выполнением тела','только один раз в начале','после того как программа закончится'], ans:0, exp:'Условие проверяется перед каждым повтором тела цикла.' },
+      tasks:[
+        {q:'Сколько раз выполнится тело цикла, если условие «пока» сразу ложно?', kind:'unit', ans:0, tol:0, hints:['Условие проверяется до тела.','Ни разу — это 0.'], sol:'0'},
+        {q:'Что будет, если тело цикла «пока» не меняет условие?', kind:'choice', choices:['цикл будет повторяться бесконечно','цикл выполнится один раз','программа станет быстрее','цикл сам остановится'], ans:0, tol:0, hints:['Условие всё время остаётся истинным.','Получится бесконечный цикл.'], sol:'цикл будет повторяться бесконечно'}
       ] }
   ];
 

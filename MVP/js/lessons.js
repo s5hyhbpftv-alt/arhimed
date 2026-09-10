@@ -51,7 +51,7 @@ function sortByCurrentClass(list){
    (всё, что не из нового курса «с нуля» 500–509) не показываем в списках */
 function isVisibleLesson(L){
   if(!L || L.hidden) return false;
-  if(subjOf(L)==='inf' && !(L.id>=500 && L.id<=509)) return false;
+  if(subjOf(L)==='inf' && !(L.id>=500 && L.id<=519)) return false;
   return true;
 }
 function lessonPool(){
