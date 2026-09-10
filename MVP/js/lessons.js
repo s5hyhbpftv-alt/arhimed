@@ -38,13 +38,22 @@ function lessonClassRange(L){
 function lessonFits(L){ const r=lessonClassRange(L), o=openClassRange(); return !(r[1]<o[0]||r[0]>o[1]); }
 
 function subjOf(L){ return (L&&L.subj) || (/Начальная школа/.test(L.src||'')?'jun':/Информатика/.test(L.src||'')?'inf':/физика/i.test(L.src||'')?'phys':'math'); }
+/* сортировка списка: сначала уроки ТЕКУЩЕГО класса (в порядке обучения),
+   затем все остальные (в прежнем порядке). Порядок внутри групп сохраняется. */
+function sortByCurrentClass(list){
+  try{
+    const k=profileClassNum(), cur=[], oth=[];
+    for(const L of list){ const r=lessonClassRange(L); (k>=r[0] && k<=r[1] ? cur : oth).push(L); }
+    return cur.concat(oth);
+  }catch(e){ return list; }
+}
 function lessonPool(){
   try{
     const junior=typeof isJunior==='function'&&isJunior();
     const pool= junior
       ? window.ARH_LESSONS.filter(L=>subjOf(L)==='jun')
       : window.ARH_LESSONS.filter(L=>subjOf(L)!=='jun');
-    return pool.filter(lessonFits);
+    return sortByCurrentClass(pool.filter(lessonFits));
   }catch(e){ return window.ARH_LESSONS; }
 }
 let BK={ subj:'all', open:{} };   // фильтр по предмету + раскрытые секции
@@ -61,6 +70,16 @@ function lessonRow(L){
 function bookSel(){
   try{ if(typeof isJunior==='function'&&isJunior()) return 'jun'; }catch(e){}
   return BK.subj;
+}
+/* строки уроков с разделителем: сверху — твой класс, ниже — остальные */
+function lessonsWithDivider(items){
+  const k=profileClassNum(); let out='', seenOther=false;
+  for(const L of items){
+    const r=lessonClassRange(L), cur=(k>=r[0] && k<=r[1]);
+    if(!cur && !seenOther){ out+=`<div style="text-align:center;font-size:11.5px;color:var(--muted);margin:12px 0 6px;letter-spacing:.02em">— другие классы —</div>`; seenOther=true; }
+    out+=lessonRow(L);
+  }
+  return out;
 }
 function renderBookList(){
   const s=document.getElementById('screen');
@@ -92,7 +111,7 @@ function renderBookList(){
             <span class="bsh-ico">${g.meta.ico}</span>
             <span><b>${g.meta.name}</b><br>
             <span class="small" style="color:var(--muted)">${esc(g.meta.dsc)} · ${gd}/${g.items.length} пройдено</span></span>
-          </div>${g.items.map(lessonRow).join('')}`; })()
+          </div>${lessonsWithDivider(g.items)}`; })()
     : grouped.filter(g=>g.subj!=='all').map((g,i)=>{
         const isOpen = BK.open[g.subj]===true || (BK.open[g.subj]===undefined && i===0);
         const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
@@ -103,7 +122,7 @@ function renderBookList(){
               <span class="small" style="color:var(--muted);display:block">${esc(g.meta.dsc)}</span></span>
             <span class="pr2">${gd}/${g.items.length} <i class="caret ${isOpen?'down':''}">▸</i></span>
           </div>
-          ${isOpen? g.items.map(lessonRow).join('') : ''}
+          ${isOpen? lessonsWithDivider(g.items) : ''}
         </div>`;}).join('');
   s.innerHTML=`<h2>📖 Книга знаний <span class="small">(пройдено ${doneAll}/${totalL})</span></h2>
     <div class="arch"><span class="who">◈ Архимед</span>
