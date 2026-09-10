@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 18 уроков (id 500–517) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 19 уроков (id 500–518) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -38,6 +38,31 @@
     [/двоичн|разряд|0 и 1|ноль|нул|единиц/i,'bits'],
     [/порядок|шаг|список|номер|строк/i,'lines']
   ];
+  function gridTable(pre,x0,y0,cw,rh,head,rows,opt){
+    opt=opt||{};
+    const A=accOf(pre);
+    const c0=opt.c0||78, n=(head&&head.length)||(rows[0]||[]).length;
+    let w=[], x=[], cur=x0;
+    for(let c=0;c<n;c++){ const ww=(c===0?c0:cw); w.push(ww); x.push(cur); cur+=ww; }
+    let s='';
+    if(head) head.forEach((h,c)=>{
+      s+=`<rect x="${x[c]}" y="${y0}" width="${w[c]}" height="${rh}" fill="${A}" opacity=".18" stroke="${A}" stroke-width="1.2"/>`
+        +`${tx(x[c]+w[c]/2,y0+rh*0.68,Math.min(11.5,(w[c]-8)/Math.max(1,plain(h).length)/0.72),A,h,{b:1})}`;
+    });
+    const top=y0+(head?rh:0);
+    rows.forEach((r,ri)=>{
+      r.forEach((cell,ci)=>{
+        const cy=top+ri*rh;
+        const isCell=!!(opt.hlCell&&opt.hlCell[0]===ri&&opt.hlCell[1]===ci);
+        const isHl=(opt.hlRow===ri), isHc=(opt.hlCol===ci);
+        const fill=isCell?'rgba(125,224,160,.22)':(isHl?'rgba(255,215,106,.12)':(isHc?'rgba(110,168,255,.12)':'rgba(15,25,46,.95)'));
+        const stc=isCell?grn:(isHl?gold:(isHc?blu:'#31456f'));
+        s+=`<rect x="${x[ci]}" y="${cy}" width="${w[ci]}" height="${rh}" fill="${fill}" stroke="${stc}" stroke-width="${(isCell||isHl||isHc)?1.6:1.1}"/>`
+          +`<text x="${x[ci]+w[ci]/2}" y="${cy+rh*0.68}" text-anchor="middle" font-size="${ci===0?11:14.5}" font-family="${ci===0?'Arial,Helvetica,sans-serif':'Georgia,serif'}" font-weight="${ci===0?'normal':'bold'}" fill="${isCell?grn:ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${plain(cell)}</text>`;
+      });
+    });
+    return {s:s, x:x, w:w, total:cur-x0, bottom:top+rows.length*rh};
+  }
   function cellRow(pre,x0,y,w,h,vals,opt){
     opt=opt||{}; let s='';
     vals.forEach((v2,k)=>{
@@ -2158,6 +2183,260 @@
       }
       return s;
     }
+    if(K==='tableintro'){ /* что такое таблица: строки и столбцы */
+      const g=gridTable(pre,52,54,58,28,['предмет','Маша','Петя'],[['математика','5','4'],['русский','4','5'],['история','5','4']],{c0:78,anim:1});
+      let s=`<g class="${pre}Slide">${g.s}</g>`;
+      s+=`<path d="M${g.x[1]+g.w[1]/2} 44 H${g.x[1]+g.w[1]/2+120}" stroke="${blu}" stroke-width="2.4"/>`
+        +`<path d="M${g.x[1]+g.w[1]/2+114} 39 l7 5 l-7 5" fill="none" stroke="${blu}" stroke-width="2.4"/>`
+        +`${tx(g.x[1]+g.w[1]/2+60,38,11,blu,'строка',{b:1})}`;
+      s+=`<path d="M44 ${g.bottom-8} V${g.bottom-70}" stroke="${gold}" stroke-width="2.4"/>`
+        +`<path d="M39 ${g.bottom-64} l5 -7 l5 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`
+        +`${tx(44,g.bottom-40,11,gold,'столбец',{b:1,an:'middle'})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="30" y="${g.bottom+10}" width="258" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.6"/>`
+        +`${tx(159,g.bottom+29,11.5,ink,'таблица — это данные в клетках',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='rowcol'){ /* пересечение строки и столбца */
+      const g=gridTable(pre,52,44,58,28,['предмет','Маша','Петя'],[['математика','5','4'],['русский','4','5'],['история','5','4']],{c0:78,hlRow:1,hlCol:1,hlCell:[1,1]});
+      let s=`<g class="${pre}Pop">${g.s}</g>`;
+      s+=`<path d="M44 ${44+g.bottom-44+14-44} 0" stroke="none"/>`;
+      s+=`<path d="M52 ${44+28+1.5*28} H${g.x[1]-4}" stroke="${gold}" stroke-width="2.2" opacity=".9"/>`
+        +`${tx(46,44+28+1.5*28+4,10.5,gold,'строка',{b:1})}`;
+      s+=`<path d="M${g.x[1]+g.w[1]/2} 40 V32" stroke="${blu}" stroke-width="2.2"/>`
+        +`${tx(g.x[1]+g.w[1]/2,26,10.5,blu,'столбец',{b:1})}`;
+      s+=`<circle class="${pre}Glow" cx="${g.x[1]+g.w[1]/2}" cy="${44+28+1.5*28}" r="20" fill="none" stroke="${grn}" stroke-width="2.2" opacity=".6"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="30" y="${g.bottom+14}" width="258" height="30" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,g.bottom+34,11.5,grn,'на пересечении — одна ячейка',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='celladdr'){ /* адрес ячейки */
+      const vals=[[1,2,3],[4,5,6],[7,8,9]], hr=1, hc=2;
+      const cw=54, x0=Math.round((CW-3*cw)/2), y0=52, rh=30;
+      let s='';
+      for(let r=0;r<3;r++){
+        s+=`${tx(x0-14,y0+r*rh+20,11,dim,''+r,{b:1})}`;
+        for(let c=0;c<3;c++){
+          const cell=(r===hr&&c===hc);
+          s+=`<rect x="${x0+c*cw}" y="${y0+r*rh}" width="${cw}" height="${rh}" fill="${cell?'rgba(125,224,160,.2)':'rgba(15,25,46,.95)'}" stroke="${cell?grn:'#31456f'}" stroke-width="${cell?2:1.1}"/>`
+            +`<text x="${x0+c*cw+cw/2}" y="${y0+r*rh+21}" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="${cell?grn:ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${vals[r][c]}</text>`;
+        }
+      }
+      for(let c=0;c<3;c++) s+=`${tx(x0+c*cw+cw/2,y0-8,11,blu,''+c,{b:1})}`;
+      s+=`${tx(x0-14,y0-8,10,dim,'',{})}`;
+      s+=`<path d="M${x0+hc*cw+cw/2} ${y0+rh*hr} V${y0+rh*hr-10}" stroke="${grn}" stroke-width="1.8" opacity=".7"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.35s"><rect x="34" y="${y0+3*rh+14}" width="250" height="34" rx="10" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2"/>`
+        +`<text x="159" y="${y0+3*rh+36}" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">таблица[1][2] = 6</text></g>`;
+      s+=`${tx(159,y0+3*rh+62,10.5,dim,'сначала строка, потом столбец; счёт с нуля',{})}`;
+      return s;
+    }
+    if(K==='tablecreate'){ /* таблица = список списков */
+      const vals=[[1,2,3],[4,5,6],[7,8,9]];
+      const cw=54, x0=Math.round((CW-3*cw)/2), y0=108, rh=28;
+      let s=`<g class="${pre}Pop"><rect x="16" y="18" width="286" height="76" rx="11" fill="rgba(8,14,30,.94)" stroke="${A}" stroke-width="1.8"/>`
+        +`<path d="M16 38 h286" stroke="${A}" stroke-opacity=".25"/>`
+        +`<text x="28" y="58" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">числа = [[1, 2, 3],</text>`
+        +`<text x="28" y="74" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">         [4, 5, 6],</text>`
+        +`<text x="28" y="90" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">         [7, 8, 9]]</text></g>`;
+      for(let r=0;r<3;r++)for(let c=0;c<3;c++){
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.35+(r*3+c)*0.07).toFixed(2)}s">`
+          +`<rect x="${x0+c*cw}" y="${y0+r*rh}" width="${cw}" height="${rh}" fill="rgba(15,25,46,.95)" stroke="${A}" stroke-width="1.3"/>`
+          +`<text x="${x0+c*cw+cw/2}" y="${y0+r*rh+20}" text-anchor="middle" font-size="14" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${vals[r][c]}</text></g>`;
+        s+=`<path d="M${x0+c*cw+cw/2} 96 V${y0+r*rh-3}" stroke="${A}" stroke-width="1.1" opacity=".25"/>`;
+      }
+      s+=`${tx(159,y0+3*rh+18,11,dim,'каждая строка — свой список внутри общего',{})}`;
+      return s;
+    }
+    if(K==='rowsum'){ /* сумма по строке */
+      const vals=[[4,5,3],[2,7,1],[6,2,8]], hr=0;
+      const g=gridTable(pre,24,50,48,28,null,vals,{c0:48,hlRow:hr});
+      let s=`<g class="${pre}Pop">${g.s}</g>`;
+      vals[hr].forEach((v2,c)=>{
+        s+=`<circle r="7" fill="${gold}" opacity=".95"><animateMotion dur="3.6s" begin="${(0.4+c*0.4).toFixed(2)}s" repeatCount="indefinite" path="M${g.x[c]+g.w[c]/2} ${50+14} Q160 ${76+c*8} 232 104"/></circle>`;
+      });
+      s+=`<rect x="204" y="88" width="96" height="32" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +`${tx(252,109,12,gold,'сумма',{b:1})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="24" y="134" width="276" height="34" rx="10" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="156" text-anchor="middle" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">4 + 5 + 3 = 12</text></g>`;
+      s+=`${tx(159,186,11,ink,'складываем числа в строке',{})}`;
+      return s;
+    }
+    if(K==='colsum'){ /* сумма по столбцу */
+      const vals=[[4,5,3],[2,7,1],[6,2,8]], hc=1;
+      const g=gridTable(pre,24,42,48,28,null,vals,{c0:48,hlCol:hc});
+      let s=`<g class="${pre}Pop">${g.s}</g>`;
+      for(let r=0;r<3;r++){
+        s+=`<circle r="7" fill="${blu}" opacity=".95"><animateMotion dur="3.6s" begin="${(0.4+r*0.4).toFixed(2)}s" repeatCount="indefinite" path="M${g.x[hc]+g.w[hc]/2} ${42+r*28+14} Q${g.x[hc]+g.w[hc]/2-20} 120 ${g.x[hc]+g.w[hc]/2} 152"/></circle>`;
+      }
+      s+=`<rect x="${g.x[hc]+g.w[hc]/2-46}" y="140" width="92" height="30" rx="9" fill="url(#${pre}card)" stroke="${blu}" stroke-width="1.8"/>`
+        +`${tx(g.x[hc]+g.w[hc]/2,160,11.5,blu,'сумма',{b:1})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="24" y="182" width="276" height="32" rx="10" fill="rgba(110,168,255,.1)" stroke="${blu}" stroke-width="1.8"/>`
+        +`<text x="159" y="203" text-anchor="middle" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${blu}">5 + 7 + 2 = 14</text></g>`;
+      return s;
+    }
+    if(K==='findrow'){ /* ищем строку по значению */
+      const rows=[['Маша','5'],['Петя','3'],['Ваня','4']];
+      const cw=64, x0=62, y0=46, rh=30;
+      let s=`<g class="${pre}Pop"><rect x="40" y="14" width="238" height="26" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${tx(159,32,11.5,gold,'кто получил 5?',{b:1})}</g>`;
+      s+=`<rect x="${x0-8}" y="${y0-4}" width="${2*cw+16}" height="26" rx="8" fill="${A}" opacity=".18" stroke="${A}" stroke-width="1.2"/>`
+        +`${tx(x0+cw-32,y0+15,11,A,'ученик',{b:1})}${tx(x0+cw+cw/2,y0+15,11,A,'оценка',{b:1})}`;
+      rows.forEach((r,ri)=>{
+        const y=y0+22+ri*rh, hit=(ri===0);
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.12*ri).toFixed(2)}s">`
+          +`<rect x="${x0}" y="${y}" width="${cw}" height="${rh}" fill="${hit?'rgba(125,224,160,.16)':'rgba(15,25,46,.95)'}" stroke="${hit?grn:'#31456f'}" stroke-width="${hit?1.8:1.1}"/>`
+          +`${tx(x0+cw/2,y+20,11.5,hit?grn:ink,plain(r[0]),{b:hit})}`
+          +`<rect x="${x0+cw}" y="${y}" width="${cw}" height="${rh}" fill="${hit?'rgba(125,224,160,.16)':'rgba(15,25,46,.95)'}" stroke="${hit?grn:'#31456f'}" stroke-width="${hit?1.8:1.1}"/>`
+          +`<text x="${x0+cw+cw/2}" y="${y+20}" text-anchor="middle" font-size="14" font-family="Georgia,serif" font-weight="bold" fill="${hit?grn:ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${plain(r[1])}</text></g>`;
+      });
+      s+=`<rect x="${x0-12}" y="${y0+22}" width="${2*cw+24}" height="26" rx="9" fill="none" stroke="${gold}" stroke-width="2">`
+        +`<animateMotion dur="3.4s" repeatCount="indefinite" path="M0 0 V0"/></rect>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="30" y="${y0+22+3*rh+12}" width="258" height="30" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,y0+22+3*rh+32,11.5,grn,'нашли строку «Маша»',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='maxinrow'){ /* самое большое число в таблице */
+      const vals=[[3,8,5],[7,9,2],[4,6,1]];
+      const cw=48, x0=Math.round((CW-3*cw)/2), y0=52, rh=30;
+      let s='';
+      for(let r=0;r<3;r++)for(let c=0;c<3;c++){
+        const win=(vals[r][c]===9);
+        s+=`<rect x="${x0+c*cw}" y="${y0+r*rh}" width="${cw}" height="${rh}" fill="${win?'rgba(255,215,106,.18)':'rgba(15,25,46,.95)'}" stroke="${win?gold:'#31456f'}" stroke-width="${win?2:1.1}"/>`
+          +`<text x="${x0+c*cw+cw/2}" y="${y0+r*rh+21}" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="${win?gold:ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${vals[r][c]}</text>`;
+      }
+      let order=[[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]];
+      order.forEach((rc,k)=>{
+        s+=`<circle r="11" fill="rgba(255,215,106,.22)" stroke="${gold}" stroke-width="2" opacity="0">`
+          +`<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.04;.1;.14;1" dur="5.4s" begin="${(0.3+k*0.55).toFixed(2)}s" repeatCount="indefinite"/>`
+          +`<animateMotion dur="5.4s" begin="${(0.3+k*0.55).toFixed(2)}s" repeatCount="indefinite" path="M${x0+rc[1]*cw+cw/2} ${y0+rc[0]*rh+12} V${y0+rc[0]*rh+12}"/></circle>`;
+      });
+      s+=`<text x="${x0+1*cw+cw/2}" y="${y0+1*rh+16}" text-anchor="middle" font-size="11" font-weight="bold" fill="${gold}" opacity="0">★<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.75;.85;1" dur="5.4s" repeatCount="indefinite"/></text>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="30" y="${y0+3*rh+14}" width="258" height="30" rx="9" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${tx(159,y0+3*rh+34,11.5,gold,'самое большое число — 9',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='avgrow'){ /* среднее по строке */
+      const g=gridTable(pre,30,44,52,28,['баллы','',''],[['4','5','3'],['5','5','4']],{c0:58,hlRow:0});
+      let s=`<g class="${pre}Pop">${g.s}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.35s"><rect x="150" y="120" width="150" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.7"/>`
+        +`<text x="225" y="141" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">4 + 5 + 3 = 12</text></g>`;
+      s+=`<path d="M225 150 v14" stroke="${A}" stroke-width="2" class="${pre}Dash"/><path d="M221 160 l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="2"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.6s"><rect x="150" y="170" width="150" height="30" rx="9" fill="rgba(110,168,255,.12)" stroke="${blu}" stroke-width="1.7"/>`
+        +`<text x="225" y="191" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${blu}">12 : 3 = 4</text></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.85s"><rect x="16" y="140" width="126" height="56" rx="10" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(79,162,10.5,dim,'среднее',{})}`
+        +`<text x="79" y="188" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="${grn}" paint-order="stroke" stroke="#08101f" stroke-width="3.4">4</text></g>`;
+      s+=`${tx(159,214,11,dim,'сумму делим на количество чисел',{})}`;
+      return s;
+    }
+    if(K==='sorttable'){ /* строки переезжают целиком */
+      const rows=[['Маша','4'],['Петя','5'],['Ваня','3']];
+      const sorted=rows.slice().sort((a,b)=>+b[1]-+a[1]);
+      const cw=64, x0=16, y0=44, rh=28;
+      let s=`<g class="${pre}Pop"><rect x="40" y="14" width="238" height="26" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${tx(159,32,11.5,gold,'сортируем по баллам',{b:1})}</g>`;
+      s+=`<rect x="${x0-8}" y="${y0-4}" width="${2*cw+16}" height="24" rx="8" fill="${A}" opacity=".18" stroke="${A}" stroke-width="1.2"/>`
+        +`${tx(x0+cw/2,y0+13,11,A,'ученик',{b:1})}${tx(x0+cw+cw/2,y0+13,11,A,'баллы',{b:1})}`;
+      rows.forEach((r,ri)=>{
+        const y=y0+20+ri*rh;
+        s+=`<rect x="${x0}" y="${y}" width="${cw}" height="${rh}" fill="rgba(15,25,46,.95)" stroke="#31456f" stroke-width="1.1"/>`
+          +`${tx(x0+cw/2,y+19,11,ink,plain(r[0]),{})}`
+          +`<rect x="${x0+cw}" y="${y}" width="${cw}" height="${rh}" fill="rgba(15,25,46,.95)" stroke="#31456f" stroke-width="1.1"/>`
+          +`<text x="${x0+cw+cw/2}" y="${y+19}" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${plain(r[1])}</text>`;
+      });
+      s+=`<path d="M150 ${y0+20+rh-6} C168 ${y0+30}, 168 ${y0+80}, 150 ${y0+20+2*rh-6}" fill="none" stroke="${gold}" stroke-width="2.2" class="${pre}Dash"/>`;
+      s+=`<path d="M154 ${y0+20+2*rh-14} l-8 6 l8 6" fill="none" stroke="${gold}" stroke-width="2.2"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s">`;
+      sorted.forEach((r,ri)=>{
+        const y=y0+20+ri*rh, best=(ri===0);
+        s+=`<rect x="${x0+152}" y="${y}" width="${cw}" height="${rh}" fill="${best?'rgba(125,224,160,.16)':'rgba(15,25,46,.95)'}" stroke="${best?grn:'#31456f'}" stroke-width="${best?1.8:1.1}"/>`
+          +`${tx(x0+152+cw/2,y+19,11,best?grn:ink,plain(r[0]),{b:best})}`
+          +`<rect x="${x0+152+cw}" y="${y}" width="${cw}" height="${rh}" fill="${best?'rgba(125,224,160,.16)':'rgba(15,25,46,.95)'}" stroke="${best?grn:'#31456f'}" stroke-width="${best?1.8:1.1}"/>`
+          +`<text x="${x0+152+cw+cw/2}" y="${y+19}" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${best?grn:ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${plain(r[1])}</text>`;
+      });
+      s+=`</g>`;
+      s+=`${tx(159,y0+20+3*rh+20,11,grn,'строка переезжает целиком — вместе с именем',{b:1})}`;
+      return s;
+    }
+    if(K==='tablevslist'){ /* список и таблица: одни данные */
+      let s=`<rect x="14" y="40" width="140" height="110" rx="11" fill="rgba(15,25,46,.8)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(84,60,11,dim,'список',{b:1})}`;
+      [1,2,3].forEach((v2,k)=>{
+        s+=`<rect x="${30+k*40}" y="76" width="34" height="34" rx="8" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.6"/>`
+          +`<text x="${47+k*40}" y="99" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${v2}</text>`;
+      });
+      s+=`${tx(84,132,10,dim,'один ряд',{})}`;
+      s+=`<rect x="164" y="40" width="140" height="110" rx="11" fill="rgba(19,44,35,.55)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(234,60,11,grn,'таблица',{b:1})}`;
+      [1,2,3].forEach((v2,k)=>{
+        s+=`<rect x="200" y="${76+k*24}" width="68" height="22" rx="6" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.4"/>`
+          +`<text x="234" y="${91+k*24}" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${grn}" paint-order="stroke" stroke="#08101f" stroke-width="2.8">${v2}</text>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="24" y="164" width="270" height="30" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.6"/>`
+        +`${tx(159,184,11.5,ink,'одни и те же числа, но по-разному',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='schedule'){ /* расписание: день и урок */
+      const head=['','пн','вт','ср'], rows=[['1','рус','мат','физ'],['2','мат','рус','мат'],['3','физ','ист','рус']];
+      const g=gridTable(pre,40,52,58,28,head,rows,{c0:44,hlCell:[2,3]});
+      let s=`<g class="${pre}Pop"><rect x="34" y="14" width="250" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${tx(159,33,11.5,gold,'что в среду третьим уроком?',{b:1})}</g>`;
+      s+=`<g class="${pre}Slide" style="animation-delay:.2s">${g.s}</g>`;
+      s+=`<path d="M${g.x[3]+g.w[3]/2} 48 V40" stroke="${grn}" stroke-width="2" class="${pre}Dash"/>`;
+      s+=`<circle class="${pre}Glow" cx="${g.x[3]+g.w[3]/2}" cy="${52+28+2.5*28}" r="19" fill="none" stroke="${grn}" stroke-width="2.2" opacity=".6"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="30" y="${g.bottom+12}" width="258" height="30" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,g.bottom+32,11.5,grn,'ячейка на пересечении: физкультура',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='grades'){ /* дневник: сумма баллов по строкам */
+      const head=['предмет','1','2','3','сумма'], rows=[['математика','5','4','5','14'],['русский','4','5','4','13'],['история','5','5','5','15']];
+      const cw=44, x0=26, y0=46, rh=28;
+      let s=`<g class="${pre}Pop"><rect x="34" y="14" width="250" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,32,11.5,ink,'дневник: баллы и их сумма',{b:1})}</g>`;
+      s+=`<rect x="${x0}" y="${y0}" width="${86+cw*4}" height="26" rx="8" fill="${A}" opacity=".18" stroke="${A}" stroke-width="1.2"/>`;
+      let cx=x0;
+      head.forEach((h,c)=>{ const w2=(c===0?86:cw);
+        s+=`${tx(cx+w2/2,y0+17,11,A,plain(h),{b:1})}`; cx+=w2; });
+      rows.forEach((r,ri)=>{
+        const y=y0+26+ri*rh, best=(ri===2);
+        let cx2=x0;
+        r.forEach((cell,ci)=>{
+          const w2=(ci===0?86:cw), last=(ci===4);
+          s+=`<rect x="${cx2}" y="${y}" width="${w2}" height="${rh}" fill="${last?(best?'rgba(125,224,160,.2)':'rgba(255,215,106,.1)'):'rgba(15,25,46,.95)'}" stroke="${last?(best?grn:gold):'#31456f'}" stroke-width="${last?1.6:1.1}"/>`
+            +`<text x="${cx2+w2/2}" y="${y+19}" text-anchor="middle" font-size="${ci===0?10.5:13}" font-family="${ci===0?'Arial,Helvetica,sans-serif':'Georgia,serif'}" font-weight="${ci===0?'normal':'bold'}" fill="${last?(best?grn:gold):ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${plain(cell)}</text>`;
+          cx2+=w2;
+        });
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.45s"><rect x="26" y="${y0+26+3*rh+12}" width="266" height="30" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,y0+26+3*rh+32,11.5,grn,'лучше всего с историей: 15 баллов',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='tabgame'){ /* интерактив: нажми на ячейку с нужным адресом */
+      const vals=v.vals||[[1,2,3],[4,5,6],[7,8,9]], hr=v.row||2, hc=v.col||1;
+      const cw=56, x0=Math.round((CW-3*cw)/2), y0=60, rh=32;
+      const sel=(st&&st.tab)?st.tab:null, bad=(st&&typeof st.bad==='number')?st.bad:-1;
+      const done=(sel && sel[0]===hr && sel[1]===hc && st.tabOk);
+      let s=`<g class="${pre}Pop"><rect x="16" y="16" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${tx(159,36,Math.min(12,246/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Нажми на нужную ячейку',{b:1})}</g>`;
+      for(let r=0;r<3;r++){
+        s+=`${tx(x0-14,y0+r*rh+21,11,dim,''+r,{b:1})}`;
+        for(let c=0;c<3;c++){
+          const on=(done&&r===hr&&c===hc), isB=(bad===r*10+c);
+          const col=on?grn:(isB?red:A);
+          s+=`<g class="${pre}Slide" style="animation-delay:${(0.08*(r*3+c)).toFixed(2)}s;cursor:pointer" onclick="infTab('${lk}',${r},${c},${(r===hr&&c===hc)?1:0})">`
+            +`<rect x="${x0+c*cw}" y="${y0+r*rh}" width="${cw}" height="${rh}" fill="${on?'rgba(19,44,35,.97)':(isB?'rgba(52,22,26,.97)':'rgba(15,25,46,.97)')}" stroke="${col}" stroke-width="${(on||isB)?2.2:1.2}"/>`
+            +`<text x="${x0+c*cw+cw/2}" y="${y0+r*rh+22}" text-anchor="middle" font-size="16" font-family="Georgia,serif" font-weight="bold" fill="${on?grn:(isB?red:ink)}" paint-order="stroke" stroke="#08101f" stroke-width="3.2">${vals[r][c]}</text>`
+            +(on?`<path d="M${x0+c*cw+5} ${y0+r*rh+10} l3 4 l7 -9" fill="none" stroke="${grn}" stroke-width="2.2"/>`:'')
+            +(isB?`${tx(x0+c*cw+cw/2,y0+r*rh+rh+13,10,red,'это ['+r+']['+c+']',{})}`:'')
+            +`</g>`;
+        }
+      }
+      for(let c=0;c<3;c++) s+=`${tx(x0+c*cw+cw/2,y0-9,11,blu,''+c,{b:1})}`;
+      const by=y0+3*rh+22;
+      const msg=done?(v.exp||'Верно! Это нужная ячейка.'):(bad>=0?'Не та ячейка — считай строку и столбец':'Нажми на ячейку по адресу сверху');
+      s+=`<g class="${pre}Rise"><rect x="20" y="${by}" width="278" height="30" rx="9" fill="${done?'rgba(125,224,160,.12)':'rgba(15,25,46,.95)'}" stroke="${done?grn:A}" stroke-width="1.7"/>`
+        +`${tx(159,by+20,Math.min(11.5,252/Math.max(1,msg.length)/0.7),done?grn:dim,msg,{b:done})}</g>`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -2234,6 +2513,20 @@
     if(K==='trace') return 26+27+(v.rows||[]).length*27+44;
     if(K==='compare') return 208;
     if(K==='text') return ((v.lines||[]).length<=2)?(132+26*(v.lines||[]).length):Math.max(134, (v.lines||[]).length*39+54);
+    if(K==='tableintro') return 232;
+    if(K==='rowcol') return 226;
+    if(K==='celladdr') return 210;
+    if(K==='tablecreate') return 218;
+    if(K==='rowsum') return 200;
+    if(K==='colsum') return 226;
+    if(K==='findrow') return 214;
+    if(K==='maxinrow') return 218;
+    if(K==='avgrow') return 226;
+    if(K==='sorttable') return 226;
+    if(K==='tablevslist') return 208;
+    if(K==='schedule') return 232;
+    if(K==='grades') return 216;
+    if(K==='tabgame') return 60+3*32+70;
     if(K==='findtask') return 200;
     if(K==='linear') return 194;
     if(K==='linearBad') return 190;
@@ -2914,6 +3207,46 @@
       tasks:[
         {q:'Сколько шагов нужно бинарному поиску, чтобы найти число среди 15?', kind:'unit', ans:4, tol:0, hints:['15 → 7 → 3 → 1.','Четыре шага.'], sol:'4'},
         {q:'Что делать, если средний элемент больше нужного числа?', kind:'choice', choices:['искать в левой половине','искать в правой половине','остановить поиск'], ans:0, tol:0, hints:['Слева числа меньше.','Искать в левой половине.'], sol:'искать в левой половине'}
+      ] },
+    { id:518, title:'Таблицы: как хранить и искать данные', ico:'📊', src:'Информатика · 5–6 класс · С нуля: таблицы',
+      explain:[
+        'В списке данные стоят в один ряд. Но часто данные удобнее расположить в виде таблицы — со строками и столбцами.',
+        'Таблица — это данные, записанные в клетки. Каждую клетку называют ячейкой.',
+        'Горизонтальные ряды таблицы называют строками, а вертикальные — столбцами.',
+        'Каждая ячейка стоит на пересечении своей строки и своего столбца.',
+        'У ячейки есть адрес: сначала пишут номер строки, потом номер столбца. Например, таблица[1][2] — это строка 1, столбец 2.',
+        'Как и в списках, счёт начинается с нуля: первая строка — нулевая, первый столбец — тоже нулевой.',
+        'В программе таблицу записывают как список списков: каждая строка — это свой список внутри общего.',
+        'С таблицей удобно работать циклами: внешний цикл идёт по строкам, а внутренний — по столбцам.',
+        'Можно сложить числа в строке — получится сумма по строке.',
+        'А можно сложить числа в столбце — сумма будет по столбцу. Это совсем другое число, и путать их нельзя.',
+        'Так же находят нужную строку: например, ученика, у которого оценка равна пяти.',
+        'И самое большое число в таблице находят перебором: сравниваем ячейки по очереди и запоминаем чемпиона.',
+        'Среднее значение считают так: сумму делят на количество чисел.',
+        'Таблицу можно отсортировать, но важно помнить: строка переезжает целиком, иначе данные перепутаются.',
+        'Проверь себя: как записать адрес ячейки в третьей строке и втором столбце?',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'Что такое таблица', v:{kind:'tableintro'}, r:'Строки и столбцы.', d:'Данные встают в клетки: по горизонтали идут строки, по вертикали — столбцы. Так видно сразу много чисел.'},
+        {h:'Пересечение', v:{kind:'rowcol'}, r:'Строка и столбец встречаются в ячейке.', d:'Одна ячейка стоит и в своей строке, и в своём столбце — на их пересечении.'},
+        {h:'Адрес ячейки', v:{kind:'celladdr'}, r:'Сначала строка, потом столбец.', d:'Сверху подписаны номера столбцов, слева — номера строк. Ячейка таблица[1][2] — это строка 1, столбец 2, и в ней число 6.'},
+        {h:'Как записать таблицу', v:{kind:'tablecreate'}, r:'Таблица — это список списков.', d:'Каждая строка таблицы записана своим списком в квадратных скобках, а все строки вместе — ещё один список.'},
+        {h:'Сумма по строке', v:{kind:'rowsum'}, r:'Складываем числа строки.', d:'Числа из строки по очереди летят в сумму: 4 + 5 + 3 = 12.'},
+        {h:'Сумма по столбцу', v:{kind:'colsum'}, r:'А теперь складываем столбец.', d:'Здесь числа падают вниз, в сумму по столбцу: 5 + 7 + 2 = 14. Это другое число, чем сумма по строке.'},
+        {h:'Поиск строки', v:{kind:'findrow'}, r:'Ищем того, у кого 5.', d:'Смотрим строки по очереди и находим нужную: у Маши оценка 5.'},
+        {h:'Самое большое', v:{kind:'maxinrow'}, r:'Чемпион среди ячеек.', d:'Рамка идёт по всем ячейкам по очереди и останавливается на самой большой — это 9.'},
+        {h:'Среднее значение', v:{kind:'avgrow'}, r:'Сумма делённая на количество.', d:'Сложили 4 + 5 + 3 = 12, чисел три, значит 12 : 3 = 4 — это среднее.'},
+        {h:'Сортировка таблицы', v:{kind:'sorttable'}, r:'Строка переезжает целиком.', d:'При сортировке строка переезжает вместе с именем: Петя с пятью баллами встаёт первым. Если переставить только числа, данные перепутаются.'},
+        {h:'Список и таблица', v:{kind:'tablevslist'}, r:'Одни данные — разная запись.', d:'В списке числа стоят в ряд, в таблице — в столбик. Данные одни и те же, меняется только форма.'},
+        {h:'Расписание', v:{kind:'schedule'}, r:'Находим урок по дню и номеру.', d:'День — это столбец, номер урока — строка. Их пересечение и есть ответ: в среду третьим уроком физкультура.'},
+        {h:'Дневник', v:{kind:'grades'}, r:'Сумма баллов по предметам.', d:'В каждой строке сложили баллы — и сразу видно, где больше всего: история, 15 баллов.'},
+        {h:'Нажми на ячейку', v:{kind:'tabgame', vals:[[1,2,3],[4,5,6],[7,8,9]], row:2, col:1, q:'Нажми на ячейку таблица[2][1]'}, r:'Проверь себя: найди ячейку по адресу.', d:'Строка — первое число, столбец — второе. Счёт с нуля: строка 2 — третья, столбец 1 — второй.'},
+        {h:'Что выведет программа', v:{kind:'pick', q:'Таблица = [[1, 2], [3, 4]]. Что окажется в таблица[1][0]?', opts:[{t:'3', ok:1},{t:'1'},{t:'4'}], exp:'Строка 1 — вторая: [3, 4]. Столбец 0 — первый элемент этой строки: 3.'}, r:'Проверь себя: найди ячейку по адресу.', d:'Сначала находим строку, потом в ней нужный столбец.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'таблица[строка][столбец]', b:1},{t:'счёт с нуля', c:gold},{t:'строка переезжает целиком', c:grn}]}, r:'Запомни, как устроена таблица.', d:'Главное: адрес ячейки — это строка и столбец, а при сортировке строка переезжает целиком.'} ],
+      check:{ q:'Что означает запись таблица[2][1]?', choices:['строка 2 и столбец 1 (счёт с нуля)','строка 1 и столбец 2','два раза по одному'], ans:0, exp:'Сначала пишут номер строки, потом номер столбца; счёт начинается с нуля.' },
+      tasks:[
+        {q:'Таблица = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]. Чему равна ячейка таблица[1][2]?', kind:'unit', ans:6, tol:0, hints:['Строка 1 — вторая: 4, 5, 6.','Столбец 2 — третий: это 6.'], sol:'6'},
+        {q:'Что переезжает при сортировке таблицы?', kind:'choice', choices:['строка целиком','только одно число','названия столбцов'], ans:0, tol:0, hints:['Иначе данные перепутаются.','Вся строка целиком.'], sol:'строка целиком'}
       ] }
   ];
 
@@ -2925,9 +3258,9 @@
     const s=spec.slides[Math.min(step,spec.slides.length-1)];
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; st.seq=[]; st.bad=-1; st.find=-1; st.moves=0;
-      st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; }
+      st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -2936,6 +3269,8 @@
       ? wkRow(wkBtn('начать заново',`infSwap('${lk}',-1,1)`))
       : (s.v.kind==='guessnum')
       ? ((st.gsteps>0)? wkRow(wkBtn('загадать снова',`infGuess('${lk}',0,0,0,0)`)) : '')
+      : (s.v.kind==='tabgame')
+      ? ((st.tab)? wkRow(wkBtn('ещё раз',`infTab('${lk}',-1,-1,0)`)) : '')
       : (s.v.kind==='find')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
@@ -2943,7 +3278,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -2952,6 +3287,11 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infTab=function(lk,r,c,ok){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(r<0){ st.tab=null; st.bad=-1; st.tabOk=0; chRender(0); return; }
+    st.tab=[r,c]; st.tabOk=ok?1:0; st.bad=ok?(-1):(r*10+c); chRender(0);
+  };
   window.infGuess=function(lk,dir,L0,H0,T){
     const st=CHS[lk]||(CHS[lk]={});
     if(dir===0){ st.glo=null; st.gi=null; st.gsteps=0; chRender(0); return; }
