@@ -12692,7 +12692,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const H=194, py=84;
       if(st.tr==null) st.tr=0;
       const pool=[
-        {q:'2:3 = 10:15 — верно?',a:'да',ds:['нет','нельзя знать']},
+        {q:'2:3 = 10:15 — верно?',a:'да',ds:['нет','нельзя']},
         {q:'4:5 = 20:25 — верно?',a:'да',ds:['нет','нельзя']},
         {q:'1:2 = 2:4 — верно?',a:'да',ds:['нет','нельзя']}
       ];
@@ -25028,7 +25028,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       <text x="${cx+(rr-18)*Math.cos(((a0+d/2)*Math.PI/180))}" y="${cy+(rr-18)*Math.sin(((a0+d/2)*Math.PI/180))+4}" text-anchor="middle" font-size="14" fill="${col[i]}" font-weight="bold">${d}°</text></g>`;
       a0=a1;
     }
-    s+=`<text x="${cx}" y="${cy+52}" text-anchor="middle" font-size="16" fill="${gold}" font-weight="bold" font-family="Georgia,serif">= 180°</text>`;
+    s+=`<text x="${cx}" y="${cy+38}" text-anchor="middle" font-size="16" fill="${gold}" font-weight="bold" font-family="Georgia,serif">= 180°</text>`;
     return s;
   }
   const chip=(t,c,delay)=>`<span class="qAIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
@@ -25986,7 +25986,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===2){
       const H=220, go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'4 рубашки × 3 галстука',{b:1});
+      inner+=tx(159,34,20,ink,'4 рубашки × 3 галстука',{b:1});
       if(go){
         inner+=outfitGrid(GX,GY,4,3,GW,12);
         inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">4 × 3 = 12</text></g>`;
@@ -26182,7 +26182,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===12){
       const H=220, go=st.go||0;
       let inner='';
-      inner+=tx(159,24,20,ink,'4 × 3',{b:1,georgia:1});
+      inner+=tx(159,34,20,ink,'4 × 3',{b:1,georgia:1});
       if(go){
         inner+=outfitGrid(GX,GY,4,3,GW,12);
         inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 12 комплектов</text></g>`;
