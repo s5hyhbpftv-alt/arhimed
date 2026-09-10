@@ -22127,6 +22127,720 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===386){ window.ARH_LESSONS[i]=L386; break; } } })();
 })();
+/* ================= УРОК 192 · Проценты: сколько процентов одно число от другого (v2 · «Процентная мастерская Архимеда», 25 шагов, флагман, прорисовка на каждом слайде) ================= */
+(function(){
+  if(!window.__wk192v2css){
+    window.__wk192v2css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qpIn{animation:qpIn .55s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qpIn{0%{transform:translateY(-14px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qpPop{animation:qpPop .55s cubic-bezier(.2,.9,.3,1.25) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qpPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qpRise{animation:qpRise .7s cubic-bezier(.2,.85,.3,1.08) both;}'+
+      '@keyframes qpRise{0%{transform:translateY(16px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qpGlow{animation:qpGlow 2.2s ease-in-out infinite;}'+
+      '@keyframes qpGlow{0%,100%{opacity:.3}50%{opacity:1}}'+
+      '#lvis .qpBlink{animation:qpBlink 1.5s ease-in-out infinite;}'+
+      '@keyframes qpBlink{0%,100%{opacity:.35}50%{opacity:1}}'+
+      '#lvis .qpFloat{animation:qpFloat 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qpFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}';
+    document.head.appendChild(st);
+  }
+  const L192 = {
+    id: 192, title: 'Проценты: сколько процентов одно число от другого', ico: '％',
+    src: 'Математика · 6 класс · Проценты', subj: 'math',
+    explain: [
+      'Процент — это сотая часть числа. Один процент записывают так: 1% = 1/100. Вся величина — это 100%.',
+      'Если разбить целое на 100 равных клеток, то одна клетка — это 1%, а все сто клеток — 100%.',
+      'Проценты и дроби связаны: 1% = 0,01; 25% = 0,25 = 1/4; 50% = 0,5 = 1/2; 20% = 0,2 = 1/5.',
+      'Полезно помнить частые значения: 50% — половина, 25% — четверть, 20% — пятая часть, 10% — десятая часть.',
+      'Чтобы найти процент от числа, число делят на 100 и умножают на нужное число процентов. Например, 20% от 150 — это 150 : 100 · 20 = 30.',
+      'Тот же ответ получается умножением на дробь: 150 · 0,2 = 30. Так считать быстрее, если дробь уже знакома.',
+      'Чтобы найти число по его проценту, делают обратное: делят известную часть на проценты и умножают на 100. Если 20% числа равны 30, то число равно 30 : 20 · 100 = 150.',
+      'Главная задача урока: узнать, сколько процентов одно число составляет от другого. Для этого первое число делят на второе и результат умножают на 100.',
+      'Пример: сколько процентов составляет 15 от 60? Считаем 15 : 60 = 0,25, затем 0,25 · 100 = 25%.',
+      'Это видно и без вычислений: 15 — это четвёртая часть от 60, а четвёртая часть — это 25%.',
+      'Ловушка: важно, от какого числа считаем. 15 от 60 — это 25%, а 60 от 15 — уже 400%, потому что 60 больше 15 в четыре раза.',
+      'Увеличить число на проценты: 200 плюс 10% — это 200 + 20 = 220. Сначала находим 10% от 200, потом прибавляем.',
+      'Уменьшить число на проценты: 800 минус 25% — это 800 − 200 = 600. Находим 25% и вычитаем.',
+      'Задача про скидку: товар стоил 1200 рублей, скидка 30%. Скидка равна 1200 : 100 · 30 = 360, новая цена 1200 − 360 = 840 рублей.',
+      'Круговая диаграмма: весь круг — это 100%. Если части равны 40%, 35% и 25%, то вместе они дают целый круг.',
+      'Сравнение чисел в процентах: 120 от 100 — это 120%, значит 120 больше 100 на 20%.',
+      'Практика: сколько процентов составляет 24 от 80? Считаем 24 : 80 = 0,3, значит 30%.',
+      'Практика: сколько процентов составляет 6 от 30? Считаем 6 : 30 = 0,2, значит 20%.',
+      'Практика: найдём 40% от 250. Считаем 250 : 100 · 40 = 100.',
+      'Практика: 15% числа равны 45. Тогда само число 45 : 15 · 100 = 300.',
+      'Проценты встречаются каждый день: скидки в магазине, вклады в банке, успеваемость в школе, заряд батареи.',
+      'Тренажёр: сколько процентов составляет 45 от 60.',
+      'Тренажёр: найди 30% от 200.',
+      'Частые ошибки: перепутать, от какого числа считаем; забыть умножить на 100; спутать «на 20%» и «в 20 раз».',
+      'Шпаргалка: 1% = 1/100, процент от числа — умножение, число по проценту — деление, доля одного числа от другого — A : B · 100%. Проверь себя!'
+    ],
+    check: { q: 'Сколько процентов составляет 15 от 60?', choices: ['20%', '25%', '40%'], ans: 1,
+      exp: '15 : 60 = 0,25 = 25% (15 — четверть от 60).' },
+    tasks: [
+      { q: 'Сколько процентов составляет 24 от 80?', kind: 'unit', ans: 30, tol: 0,
+        hints: ['24 : 80 = ?', '24 : 80 = 0,3 = 30%.'], sol: '24 : 80 = 0,3 = 30%.' },
+      { q: 'Сколько процентов составляет 6 от 30?', kind: 'choice', choices: ['15%', '20%', '25%'], ans: 1, tol: 0,
+        hints: ['6 : 30 = ?', '6 : 30 = 0,2 = 20%.'], sol: '6 : 30 = 0,2 = 20%.' }
+    ]
+  };
+  const ink='#eef2ff', dim='#a5aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff',
+        bg0='#1c2140', bg1='#0a0e1e', card='rgba(26,32,58,.96)', cardB='#46507c', lineC='#3a4470';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a0e1e" stroke-width="3.6">${t}</text>`;
+  const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qpbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <filter id="qpsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qpbg)"/>
+      <g opacity="0.12" stroke="#5a6ab0" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#4a5a9a" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3868" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  /* ---------- прорисовка ---------- */
+  const polyLen=(pts)=>{let s=0;for(let i=1;i<pts.length;i++)s+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return Math.max(16,Math.round(s));};
+  const drawPoly=(pts,col,dur,beg,w,opt)=>{
+    const o=opt||{}, d='M'+pts.map(q=>q[0]+' '+q[1]).join(' L'), L=polyLen(pts);
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w||3.2}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.7;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +(o.pen===false?'':`<circle r="${o.r||5.5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.4">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const rectPerim=(x,y,w,h,rx)=>{const r=Math.min(rx||8,Math.min(w,h)/2);
+    return `M${x+r} ${y} H${x+w-r} A${r} ${r} 0 0 1 ${x+w} ${y+r} V${y+h-r} A${r} ${r} 0 0 1 ${x+w-r} ${y+h} H${x+r} A${r} ${r} 0 0 1 ${x} ${y+h-r} V${y+r} A${r} ${r} 0 0 1 ${x+r} ${y}`;};
+  const drawRect=(x,y,w,h,rx,col,dur,beg,sw,opt)=>{
+    const o=opt||{}, r=Math.min(rx||8,Math.min(w,h)/2);
+    const L=Math.round(2*(w-2*r)+2*(h-2*r)+2*Math.PI*r), d=rectPerim(x,y,w,h,rx);
+    return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${sw||2.4}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.6;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +(o.pen===false?'':`<circle r="${o.r||5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.3">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const drawCircle=(cx,cy,r,col,dur,beg,sw)=>{
+    const L=Math.round(2*Math.PI*r), d=`M${cx} ${cy-r} A${r} ${r} 0 1 1 ${cx-0.01} ${cy-r}`;
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${sw||2.6}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;.62;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +`<circle r="5" fill="${gold}" stroke="#fffdf2" stroke-width="1.3"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`;
+  };
+  const growBar=(x,y,w,h,fill,dur,beg,stroke)=>{
+    return `<rect x="${x}" y="${y}" width="0" height="${h}" rx="${h/2}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="1.2">`
+      +`<animate fill="freeze" attributeName="width" values="0;${w};${w}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></rect>`;
+  };
+  const growVert=(x,bottom,w,h,fill,dur,beg)=>{
+    return `<rect x="${x}" y="${bottom}" width="${w}" height="0" rx="4" fill="${fill}">`
+      +`<animate fill="freeze" attributeName="height" values="0;${h};${h}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/>`
+      +`<animate fill="freeze" attributeName="y" values="${bottom};${bottom-h};${bottom-h}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></rect>`;
+  };
+  /* сетка 10×10: n закрашенных клеток */
+  const pctGrid=(x,y,cell,n,col,delay,pre,opt)=>{
+    const o=opt||{}; let s2='';
+    for(let r=0;r<10;r++)for(let c=0;c<10;c++){
+      const k=r*10+c, on=(k<n);
+      s2+=`<rect class="${pre}Pop" style="animation-delay:${((delay||0)+k*0.012).toFixed(2)}s" x="${x+c*cell}" y="${y+r*cell}" width="${cell-1}" height="${cell-1}" rx="2" fill="${on?(o.fill||col):'rgba(255,255,255,.05)'}" stroke="${on?col:'#2c3868'}" stroke-width="${on?1:0.8}"/>`;
+    }
+    return s2;
+  };
+  const plate=(x,y,w,h,col,txt,fs)=>`<g class="qpRise"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="rgba(26,32,58,.95)" stroke="${col}" stroke-width="1.9"/>`
+    +fit(x+w/2,y+h*0.66,fs||13,col,txt,{b:1},w-16)+`</g>`;
+  const chip=(t,c,delay)=>`<span class="qpIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const valBox=(cx,cy,t,c,opt)=>{
+    const o=opt||{}, w=(o.w||Math.max(34,(''+t).length*11+16)), h=(o.h||34);
+    return `<g class="qpPop" style="animation-delay:${(o.delay||0).toFixed(2)}s">`
+      +`<rect x="${cx-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="${o.rx||9}" fill="${o.fill||'rgba(18,24,44,.97)'}" stroke="${c}" stroke-width="${o.sw||2}"/>`
+      +tx(cx,cy+h*0.2,o.fs||15,c,t,{b:1,georgia:o.geo!==false})+`</g>`;
+  };
+  const W=318;
+  function visW192(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; }
+    const go=st.go||0, sel=(typeof st.pick==='number')?st.pick:-1;
+    let h='', H=286;
+    const TT=(t,c)=>`<g class="qpPop"><rect x="20" y="12" width="278" height="30" rx="9" fill="url(#qpbg)" stroke="${c||cardB}" stroke-width="1.8"/>`
+      +fit(159,32,12.5,c||ink,t,{b:1},258)+`</g>`;
+    /* 0: что такое процент */
+    if(step===0){
+      H=332;
+      let inner=TT('процент — это сотая часть','gold');
+      inner+=pctGrid(44,46,20,1,gold,0.2,'qp');
+      inner+=fit(159,276,11.5,dim,'одна клетка из ста — это 1%',{},290);
+      inner+=`<g class="qpRise" style="animation-delay:.7s"><rect x="44" y="46" width="23" height="23" rx="4" fill="none" stroke="${gold}" stroke-width="2.4" class="qpGlow"/></g>`;
+      inner+=`<g class="qpRise" style="animation-delay:.3s"><rect x="40" y="246" width="238" height="30" rx="9" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="1.5"/>`
+        +fit(159,266,11,dim,'а все сто клеток — это 100%',{},230)+`</g>`;
+      inner+=plate(16,290,286,28,go?grn:cardB,go?'1% = одна клетка из ста':'сколько клеток закрашено?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Что такое процент</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('1% = 1/100',gold,0.1)):'')+
+        (go?wkNote('Процент — это сотая часть числа. Если разбить целое на сто равных клеток, одна клетка будет одним процентом, а все сто клеток — целой величиной, то есть 100%.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('показать',`visW192Act('${lk}','go')`))+
+        wkSml('сотая часть'));
+    /* 1: сто клеток = 100% */
+    } else if(step===1){
+      H=314;
+      let inner=TT('сто клеток — это 100%','cyan');
+      inner+=pctGrid(44,48,20,100,cyan,0.15,'qp');
+      inner+=drawRect(40,44,208,208,6,gold,3,0.1,2.2,{pen:true},'qp');
+      inner+=fit(159,300,11.5,gold,'вся величина целиком — 100%',{b:1},290);
+      inner+=plate(16,266,286,28,go?grn:cardB,go?'каждая клетка — 1%':'сколько это процентов?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Целое — это 100%</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('100 клеток = 100%',cyan,0.1)):'')+
+        (go?wkNote('Сто клеток заполняют всю фигуру — это целая величина, то есть 100%. Так удобно представлять проценты: каждая клетка — один процент.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('заполнить',`visW192Act('${lk}','go')`))+
+        wkSml('целое'));
+    /* 2: проценты и дроби */
+    } else if(step===2){
+      H=308;
+      let inner=TT('проценты и дроби','pur');
+      const rows=[{p:'1%',f:'0,01',n:1,c:cyan},{p:'25%',f:'0,25 = 1/4',n:25,c:grn},{p:'50%',f:'0,5 = 1/2',n:50,c:gold},{p:'20%',f:'0,2 = 1/5',n:20,c:pur}];
+      rows.forEach((q,k)=>{
+        const y=52+k*52;
+        inner+=`<g class="qpRise" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="40" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(58,y+26,13,q.c,q.p,{b:1},60)
+          +`<text x="150" y="${y+26}" text-anchor="middle" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${ink}">${q.f}</text>`
+          +growBar(212,y+16,74*q.n/50,10,q.c,1.4,0.3+k*0.2,0)+`</g>`;
+      });
+      inner+=plate(20,266,278,28,go?grn:cardB,go?'проценты и дроби — одно и то же число':'как связаны проценты и дроби?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проценты и дроби</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('25% = 0,25 = 1/4',pur,0.1)):'')+
+        (go?wkNote('Проценты — это те же дроби, только со знаменателем 100. Один процент — это 0,01, четверть — 25%, половина — 50%. Если помнить эти значения, считать проценты проще.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('показать',`visW192Act('${lk}','go')`))+
+        wkSml('связь с дробями'));
+    /* 3: круговая диаграмма долей */
+    } else if(step===3){
+      H=320;
+      let inner=TT('часто встречающиеся проценты','grn');
+      const parts=[{p:50,c:gold,t:'50%'},{p:25,c:grn,t:'25%'},{p:20,c:cyan,t:'20%'},{p:10,c:pur,t:'10%'}];
+      parts.forEach((q,k)=>{
+        const cx=62+(k%2)*120, cy=104+Math.floor(k/2)*92, r=38;
+        const a0=-Math.PI/2, a1=a0+q.p*2*Math.PI/100;
+        const p0=[cx+r*Math.cos(a0),cy+r*Math.sin(a0)], p1=[cx+r*Math.cos(a1),cy+r*Math.sin(a1)];
+        const large=(a1-a0)>Math.PI?1:0;
+        const d=`M${cx} ${cy} L${p0[0].toFixed(1)} ${p0[1].toFixed(1)} A${r} ${r} 0 ${large} 1 ${p1[0].toFixed(1)} ${p1[1].toFixed(1)} Z`;
+        const L=Math.round(r*Math.abs(a1-a0)+2*r);
+        inner+=`<g class="qpRise" style="animation-delay:${(0.15*k).toFixed(2)}s">`
+          +`<path d="${d}" fill="${q.c}" opacity=".9"/>`
+          +`<path d="${d}" fill="none" stroke="${gold}" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+          +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.7;1" dur="1.6s" begin="${(0.3+k*0.2).toFixed(2)}s" repeatCount="indefinite"/></path>`
+          +`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${q.c}" stroke-width="1.4" opacity=".7"/>`
+          +tx(cx,cy+5,12,'#0a0e1e',q.t,{b:1})
+          +fit(cx,cy+r+18,10.5,dim,['половина','четверть','пятая часть','десятая часть'][k],{},86)+`</g>`;
+      });
+      inner+=plate(20,280,278,28,go?grn:cardB,go?'эти доли полезно помнить наизусть':'какие доли бывают?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Полезные доли</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('50% · 25% · 20% · 10%',grn,0.1)):'')+
+        (go?wkNote('Половина — это 50%, четверть — 25%, пятая часть — 20%, десятая — 10%. Эти доли встречаются чаще всего, и их удобно помнить: тогда проценты считаются в уме.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('показать',`visW192Act('${lk}','go')`))+
+        wkSml('доли в процентах'));
+    /* 4: процент от числа */
+    } else if(step===4){
+      H=296;
+      let inner=TT('находим 20% от 150','gold');
+      inner+=`<rect x="30" y="60" width="258" height="42" rx="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.6"/>`;
+      inner+=drawRect(30,60,258,42,10,gold,2.6,0.2,2,{pen:true},'qp');
+      inner+=growBar(34,64,52,34,gold,1.8,0.6,gold);
+      inner+=fit(60,106,11,gold,'это 20%',{b:1},90);
+      inner+=fit(230,88,12,ink,'150 — это 100%',{b:1},130);
+      inner+=`<g class="qpRise" style="animation-delay:1.2s"><rect x="30" y="126" width="258" height="36" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="150" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">150 : 100 · 20 = 30</text></g>`;
+      inner+=fit(159,188,11.5,ink,'делим на 100 — узнаём один процент',{b:1},292);
+      inner+=fit(159,212,11.5,ink,'умножаем на 20 — узнаём двадцать процентов',{b:1},292);
+      inner+=plate(20,228,278,32,go?grn:cardB,go?'20% от 150 — это 30':'как найти часть числа?',11.5);
+      inner+=`${fit(159,282,11.5,gold,'1% от 150 равен 1,5',{b:1},240)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Процент от числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('делим на 100 и умножаем',gold,0.1)):'')+
+        (go?wkNote('Чтобы найти процент от числа, сначала узнаём один процент: делим число на 100. Потом умножаем на нужное число процентов. Для 20% от 150: 150 : 100 = 1,5, затем 1,5 · 20 = 30.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('решить',`visW192Act('${lk}','go')`))+
+        wkSml('часть от числа'));
+    /* 5: два способа */
+    } else if(step===5){
+      H=298;
+      let inner=TT('два способа — один ответ','cyan');
+      inner+=`<g class="qpRise"><rect x="24" y="56" width="270" height="48" rx="11" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,76,11.5,gold,'способ 1: через один процент',{b:1},250)
+        +`<text x="159" y="96" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${ink}">150 : 100 · 20 = 30</text></g>`;
+      inner+=`<g class="qpRise" style="animation-delay:.3s"><rect x="24" y="118" width="270" height="48" rx="11" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,138,11.5,cyan,'способ 2: умножением на дробь',{b:1},250)
+        +`<text x="159" y="158" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${ink}">150 · 0,2 = 30</text></g>`;
+      inner+=drawPoly([[159,106],[159,116]],dim,1.6,0.6,2,{pen:false},'qp');
+      inner+=`<g class="qpRise" style="animation-delay:.7s"><rect x="70" y="180" width="178" height="38" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="205" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="${grn}">ответ: 30</text></g>`;
+      inner+=plate(20,228,278,32,go?grn:cardB,go?'оба способа дают 30':'какой способ удобнее?',11.5);
+      inner+=`${fit(159,282,11.5,dim,'0,2 — это те же 20%, только дробью',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Два способа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('150 · 0,2 = 30',cyan,0.1)):'')+
+        (go?wkNote('Один и тот же результат можно получить двумя способами: разделить на 100 и умножить на проценты или сразу умножить на дробь. Второй способ быстрее, если дробь вы уже знаете.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('показать',`visW192Act('${lk}','go')`))+
+        wkSml('два пути'));
+    /* 6: число по проценту */
+    } else if(step===6){
+      H=296;
+      let inner=TT('находим число по его проценту','pur');
+      inner+=fit(159,62,12.5,ink,'20% числа равны 30',{b:1},280);
+      inner+=`<rect x="30" y="76" width="258" height="42" rx="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.6"/>`;
+      inner+=`<rect x="30" y="76" width="52" height="42" rx="10" fill="${pur}" opacity=".45"/>`;
+      inner+=fit(56,104,11,pur,'30',{b:1},40);
+      inner+=`<path d="M86 97 h198" stroke="${pur}" stroke-width="2" stroke-dasharray="6 5"/>`;
+      inner+=fit(190,104,11,pur,'? — это 100%',{b:1},140);
+      inner+=`<g class="qpRise" style="animation-delay:.8s"><rect x="30" y="132" width="258" height="38" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="157" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">30 : 20 · 100 = 150</text></g>`;
+      inner+=fit(159,194,11.5,ink,'сначала узнаём один процент: 30 : 20 = 1,5',{b:1},292);
+      inner+=fit(159,218,11.5,ink,'потом умножаем на 100 — получаем целое',{b:1},292);
+      inner+=plate(20,234,278,32,go?grn:cardB,go?'целое число равно 150':'как найти целое?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Число по проценту</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('делим на проценты и умножаем на 100',pur,0.1)):'')+
+        (go?wkNote('Если известна часть и её проценты, действуем наоборот: делим часть на проценты и умножаем на 100. Двадцать процентов числа равны 30, значит один процент равен 1,5, а всё число — 150.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('решить',`visW192Act('${lk}','go')`))+
+        wkSml('обратная задача'));
+    /* 7: сколько процентов одно от другого */
+    } else if(step===7){
+      H=292;
+      let inner=TT('сколько процентов 15 от 60?','grn');
+      inner+=fit(20,62,11.5,dim,'60 — это целое',{an:'start'},110);
+      inner+=`<rect x="20" y="72" width="278" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
+      inner+=drawRect(20,72,278,34,8,grn,2.6,0.2,2,{pen:true},'qp');
+      inner+=fit(20,132,11.5,gold,'15 — это часть',{an:'start'},110);
+      inner+=`<rect x="20" y="142" width="278" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
+      inner+=growBar(24,146,66,26,gold,1.8,0.6,gold);
+      inner+=fit(57,166,11,'#0a0e1e','15',{b:1},40);
+      inner+=`<path d="M88 166 h190" stroke="${dim}" stroke-width="1.6" stroke-dasharray="5 5"/>`;
+      inner+=fit(159,200,11.5,ink,'15 укладывается в 60 ровно четыре раза',{b:1},292);
+      inner+=fit(159,224,11.5,dim,'значит, это четвёртая часть, то есть 25%',{},292);
+      inner+=plate(20,240,278,32,go?grn:cardB,go?'15 от 60 — это 25%':'какая это часть?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Часть от целого</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('15 — это четверть от 60',grn,0.1)):'')+
+        (go?wkNote('Сначала смотрим, какая это часть: 15 укладывается в 60 четыре раза, значит 15 — это четверть. А четверть — это 25%. Так можно посчитать проценты даже без вычислений.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('показать',`visW192Act('${lk}','go')`))+
+        wkSml('часть и целое'));
+    /* 8: вычисление по формуле */
+    } else if(step===8){
+      H=294;
+      let inner=TT('считаем по формуле','cyan');
+      const steps=[{t:'15 : 60 = 0,25',c:cyan},{t:'0,25 · 100 = 25',c:gold},{t:'ответ: 25%',c:grn}];
+      steps.forEach((q,k)=>{
+        const y=54+k*48;
+        inner+=`<g class="qpRise" style="animation-delay:${(0.2+k*0.3).toFixed(2)}s"><rect x="40" y="${y}" width="238" height="38" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<text x="159" y="${y+25}" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${q.c}">${q.t}</text></g>`;
+        if(k<2) inner+=drawPoly([[159,y+40],[159,y+46]],dim,1.4,0.5+k*0.3,2,{pen:false},'qp');
+      });
+      inner+=`<g class="qpRise" style="animation-delay:1.2s"><rect x="24" y="204" width="270" height="38" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="229" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">A : B · 100%</text></g>`;
+      inner+=plate(20,252,278,30,go?grn:cardB,go?'формула: делим и умножаем на 100':'какая здесь формула?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Формула процентов</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('A : B · 100%',cyan,0.1)):'')+
+        (go?wkNote('Чтобы узнать, сколько процентов одно число составляет от другого, делим первое число на второе и умножаем на 100. Для 15 от 60: 15 : 60 = 0,25, затем 0,25 · 100 = 25%.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('показать',`visW192Act('${lk}','go')`))+
+        wkSml('главная формула'));
+    /* 9: ловушка */
+    } else if(step===9){
+      H=296;
+      let inner=TT('ловушка: смотри, от какого числа считаем','red');
+      inner+=`<g class="qpRise"><rect x="24" y="52" width="270" height="44" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="80" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">15 от 60 = 25%</text></g>`;
+      inner+=`<g class="qpRise" style="animation-delay:.25s"><rect x="24" y="106" width="270" height="44" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
+        +`<text x="159" y="134" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${red}">60 от 15 = 400%</text></g>`;
+      inner+=`<rect x="30" y="164" width="118" height="26" rx="6" fill="${grn}" opacity=".5"/>`;
+      inner+=fit(89,181,11,ink,'15 из 60',{b:1},110);
+      inner+=`<rect x="30" y="196" width="258" height="26" rx="6" fill="${red}" opacity=".45"/>`;
+      inner+=fit(159,213,11,ink,'60 из 15 — это в 4 раза больше',{b:1},250);
+      inner+=fit(159,240,11,dim,'60 больше 15 в четыре раза, поэтому 400%',{},290);
+      inner+=plate(20,248,278,30,go?grn:cardB,go?'делить надо на то число, ОТ которого считаем':'на что смотреть?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Внимание: от чего считаем</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('меняем целое — меняется ответ',red,0.1)):'')+
+        (go?wkNote('Очень важно, какое число мы берём за целое. Если считать 15 от 60, получается 25%. А если 60 от 15 — уже 400%, ведь 60 больше 15 в четыре раза. Поэтому всегда сначала находим, от какого числа считаем проценты.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('объясни',`visW192Act('${lk}','go')`))+
+        wkSml('частая ошибка'));
+    /* 10: увеличиваем на проценты */
+    } else if(step===10){
+      H=294;
+      let inner=TT('увеличиваем на 10%: 200 → 220','grn');
+      inner+=`<rect x="30" y="62" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
+      inner+=growBar(34,66,250,32,blu,1.8,0.3,blu);
+      inner+=fit(159,89,12,'#0a0e1e','200 рублей',{b:1},240);
+      inner+=fit(159,124,11.5,dim,'плюс 10% — это 20 рублей',{},280);
+      inner+=`<rect x="30" y="140" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
+      inner+=growBar(34,144,250,32,blu,1.6,0.8,blu);
+      inner+=growBar(284,144,0,32,grn,1.4,1.2,grn);
+      inner+=`<rect x="284" y="144" width="0" height="32" rx="4" fill="${grn}"><animate fill="freeze" attributeName="width" values="0;22;22" keyTimes="0;.8;1" dur="1.4s" begin="1.2s" repeatCount="indefinite"/></rect>`;
+      inner+=fit(240,167,12,'#0a0e1e','220 рублей',{b:1},160);
+      inner+=fit(295,132,11,grn,'+20',{b:1},40);
+      inner+=`<g class="qpRise" style="animation-delay:1.6s"><rect x="40" y="196" width="238" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="219" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">200 + 200 : 100 · 10 = 220</text></g>`;
+      inner+=plate(20,238,278,30,go?grn:cardB,go?'новая цена 220 рублей':'какая цена получится?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Увеличить на проценты</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('10% от 200 — это 20',grn,0.1)):'')+
+        (go?wkNote('Чтобы увеличить число на 10%, сначала находим эти 10%: 200 : 100 · 10 = 20. Потом прибавляем: 200 + 20 = 220. Так считают рост цены или увеличение величины.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('посчитать',`visW192Act('${lk}','go')`))+
+        wkSml('увеличение'));
+    /* 11: уменьшаем на проценты */
+    } else if(step===11){
+      H=292;
+      let inner=TT('уменьшаем на 25%: 800 → 600','red');
+      inner+=`<rect x="30" y="62" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
+      inner+=growBar(34,66,250,32,gold,1.6,0.3,gold);
+      inner+=fit(159,89,12,'#0a0e1e','800',{b:1},100);
+      inner+=`<rect x="34" y="66" width="63" height="32" rx="4" fill="${red}" opacity=".5"/>`;
+      inner+=fit(220,89,11.5,red,'−25% = 200',{b:1},120);
+      inner+=`<path d="M64 112 v18" stroke="${red}" stroke-width="2.2" class="qpBlink"/>`;
+      inner+=`<rect x="30" y="146" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
+      inner+=growBar(34,150,188,32,grn,1.6,0.9,grn);
+      inner+=fit(128,173,12,'#0a0e1e','600',{b:1},100);
+      inner+=fit(240,173,11,grn,'осталось',{},90);
+      inner+=`<g class="qpRise" style="animation-delay:1.5s"><rect x="40" y="200" width="238" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="223" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">800 − 800 : 100 · 25 = 600</text></g>`;
+      inner+=plate(20,242,278,30,go?grn:cardB,go?'после скидки осталось 600':'сколько останется?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Уменьшить на проценты</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('25% от 800 — это 200',red,0.1)):'')+
+        (go?wkNote('Чтобы уменьшить число на 25%, находим эти 25%: 800 : 100 · 25 = 200. Потом вычитаем: 800 − 200 = 600. Так считают скидки и уменьшение величины.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('посчитать',`visW192Act('${lk}','go')`))+
+        wkSml('уменьшение'));
+    /* 12: задача про скидку */
+    } else if(step===12){
+      H=294;
+      let inner=TT('задача: скидка 30% на товар','gold');
+      inner+=`<g class="qpPop"><rect x="42" y="52" width="96" height="56" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2"/>`
+        +`<path d="M54 52 v-8 a36 14 0 0 1 72 0 v8" fill="none" stroke="${gold}" stroke-width="2.2"/>`
+        +fit(90,86,15,gold,'1200 ₽',{b:1},86)+`</g>`;
+      inner+=`<g class="qpPop" style="animation-delay:.3s"><rect x="180" y="52" width="96" height="56" rx="10" fill="rgba(19,60,44,.97)" stroke="${grn}" stroke-width="2"/>`
+        +fit(228,78,12,red,'−30%',{b:1},80)
+        +fit(228,98,13,grn,'840 ₽',{b:1},80)+`</g>`;
+      inner+=drawPoly([[142,80],[178,80]],gold,2.4,0.8,2.4,{pen:true},'qp');
+      inner+=`<g class="qpRise" style="animation-delay:1.1s"><rect x="30" y="124" width="258" height="36" rx="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`
+        +`<text x="159" y="148" text-anchor="middle" font-size="13.5" font-family="'Courier New',monospace" font-weight="bold" fill="${ink}">скидка: 1200 : 100 · 30 = 360</text></g>`;
+      inner+=`<g class="qpRise" style="animation-delay:1.4s"><rect x="30" y="168" width="258" height="36" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="192" text-anchor="middle" font-size="13.5" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">новая цена: 1200 − 360 = 840</text></g>`;
+      inner+=plate(20,212,278,32,go?grn:cardB,go?'после скидки товар стоит 840 ₽':'сколько заплатим?',11.5);
+      inner+=`${fit(159,266,11.5,dim,'скидка — это тоже проценты от числа',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача про скидку</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('30% от 1200 — это 360',gold,0.1)):'')+
+        (go?wkNote('Товар стоил 1200 рублей, скидка 30%. Сначала находим размер скидки: 1200 : 100 · 30 = 360 рублей. Потом вычитаем её из старой цены: 1200 − 360 = 840 рублей.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('решить',`visW192Act('${lk}','go')`))+
+        wkSml('задача из магазина'));
+    }
+    /* 13: круговая диаграмма */
+    else if(step===13){
+      H=314;
+      let inner=TT('круговая диаграмма: вместе 100%','pur');
+      const cx=104, cy=140, r=58;
+      const parts=[{p:40,c:gold,t:'40%'},{p:35,c:grn,t:'35%'},{p:25,c:cyan,t:'25%'}];
+      let a=-Math.PI/2;
+      parts.forEach((q,k)=>{
+        const a1=a+q.p*2*Math.PI/100;
+        const p0=[cx+r*Math.cos(a),cy+r*Math.sin(a)], p1=[cx+r*Math.cos(a1),cy+r*Math.sin(a1)];
+        const large=(a1-a)>Math.PI?1:0;
+        const d=`M${cx} ${cy} L${p0[0].toFixed(1)} ${p0[1].toFixed(1)} A${r} ${r} 0 ${large} 1 ${p1[0].toFixed(1)} ${p1[1].toFixed(1)} Z`;
+        const L=Math.round(r*Math.abs(a1-a)+2*r);
+        inner+=`<path d="${d}" fill="${q.c}" opacity=".9"/>`
+          +`<path d="${d}" fill="none" stroke="${gold}" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+          +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.7;1" dur="1.5s" begin="${(0.3+k*0.35).toFixed(2)}s" repeatCount="indefinite"/></path>`
+          +`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${q.c}" stroke-width="1.3" opacity=".7"/>`;
+        a=a1;
+      });
+      inner+=`<g class="qpRise" style="animation-delay:1.4s">`;
+      parts.forEach((q,k)=>{
+        inner+=`<rect x="200" y="${96+k*36}" width="14" height="14" rx="3" fill="${q.c}"/>`
+          +fit(226,108+k*36,11.5,q.c,q.t,{an:'start',b:1},60);
+      });
+      inner+=`${fit(250,208,11,grn,'вместе 100%',{b:1},90)}</g>`;
+      inner+=fit(159,258,11.5,ink,'весь круг — это целое, сектор — часть',{b:1},292);
+      inner+=plate(20,272,278,28,go?grn:cardB,go?'40 + 35 + 25 = 100%':'какая часть больше?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Круговая диаграмма</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('весь круг = 100%',pur,0.1)):'')+
+        (go?wkNote('Круговая диаграмма показывает части целого: весь круг — это 100%, а каждый сектор — своя доля. Если сложить все части, всегда получится ровно 100%.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('показать',`visW192Act('${lk}','go')`))+
+        wkSml('части целого'));
+    /* 14: сравнение в процентах */
+    } else if(step===14){
+      H=294;
+      let inner=TT('на сколько процентов больше?','gold');
+      inner+=`<rect x="30" y="60" width="180" height="34" rx="8" fill="${blu}" opacity=".55"/>`;
+      inner+=fit(120,83,12,ink,'100',{b:1},80);
+      inner+=`<rect x="30" y="112" width="216" height="34" rx="8" fill="${gold}" opacity=".55"/>`;
+      inner+=fit(138,135,12,'#0a0e1e','120',{b:1},80);
+      inner+=`<rect x="210" y="112" width="36" height="34" rx="8" fill="${gold}"/>`;
+      inner+=fit(228,135,11,'#0a0e1e','+20',{b:1},40);
+      inner+=drawPoly([[274,70],[274,146]],cyan,2.4,0.9,2.2,{pen:true},'qp');
+      inner+=fit(292,112,11,cyan,'сравниваем',{an:'end'},60);
+      inner+=`<g class="qpRise" style="animation-delay:1.2s"><rect x="30" y="166" width="258" height="40" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="192" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">120 : 100 · 100% = 120%</text></g>`;
+      inner+=fit(159,226,11.5,ink,'120 от 100 — это 120%',{b:1},292);
+      inner+=fit(159,248,11.5,grn,'значит, 120 больше 100 на 20%',{b:1},292);
+      inner+=plate(20,256,278,30,go?grn:cardB,go?'на 20% больше':'на сколько больше?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравнение в процентах</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('120% — это на 20% больше',gold,0.1)):'')+
+        (go?wkNote('Чтобы сравнить числа в процентах, берём меньшее за 100%: 120 от 100 — это 120%. Значит, первое число больше второго на 20%.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('показать',`visW192Act('${lk}','go')`))+
+        wkSml('сравнение'));
+    /* 15: практика 24 от 80 */
+    } else if(step===15){
+      H=298;
+      let inner=TT('практика: сколько процентов 24 от 80?','cyan');
+      const steps=[{t:'24 : 80 = 0,3',c:cyan},{t:'0,3 · 100 = 30',c:gold},{t:'ответ: 30%',c:grn}];
+      steps.forEach((q,k)=>{
+        const y=58+k*46;
+        inner+=`<g class="qpRise" style="animation-delay:${(0.2+k*0.3).toFixed(2)}s"><rect x="46" y="${y}" width="226" height="36" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<text x="159" y="${y+24}" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${q.c}">${q.t}</text></g>`;
+        if(k<2) inner+=drawPoly([[159,y+38],[159,y+44]],dim,1.4,0.5+k*0.3,2,{pen:false},'qp');
+      });
+      inner+=`<rect x="46" y="196" width="226" height="30" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.4"/>`;
+      inner+=growBar(50,200,68,22,cyan,1.8,1.2,cyan);
+      inner+=fit(84,217,11,'#0a0e1e','24',{b:1},30);
+      inner+=fit(200,217,11,cyan,'из 80',{b:1},60);
+      inner+=plate(20,234,278,30,go?grn:cardB,go?'24 от 80 — это 30%':'какой ответ?',11.5);
+      inner+=`${fit(159,282,11.5,dim,'24 — это почти треть от 80',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Решаем по шагам</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('24 : 80 · 100 = 30%',cyan,0.1)):'')+
+        (go?wkNote('Делим 24 на 80: получается 0,3. Умножаем на 100 — выходит 30. Значит, 24 составляет 30% от 80.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('решить',`visW192Act('${lk}','go')`))+
+        wkSml('практика 1'));
+    /* 16: практика 6 от 30 */
+    } else if(step===16){
+      H=296;
+      let inner=TT('практика: сколько процентов 6 от 30?','grn');
+      const steps=[{t:'6 : 30 = 0,2',c:grn},{t:'0,2 · 100 = 20',c:gold},{t:'ответ: 20%',c:grn}];
+      steps.forEach((q,k)=>{
+        const y=58+k*46;
+        inner+=`<g class="qpRise" style="animation-delay:${(0.2+k*0.3).toFixed(2)}s"><rect x="46" y="${y}" width="226" height="36" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<text x="159" y="${y+24}" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${q.c}">${q.t}</text></g>`;
+        if(k<2) inner+=drawPoly([[159,y+38],[159,y+44]],dim,1.4,0.5+k*0.3,2,{pen:false},'qp');
+      });
+      inner+=`<g class="qpRise" style="animation-delay:1.3s">`;
+      for(let k=0;k<5;k++) inner+=`<circle cx="${86+k*34}" cy="212" r="12" fill="${k===0?grn:'rgba(255,255,255,.06)'}" stroke="${k===0?grn:cardB}" stroke-width="1.8"/>`;
+      inner+=fit(159,246,11.5,grn,'один кружок из пяти — это 20%',{b:1},280)+`</g>`;
+      inner+=plate(20,252,278,30,go?grn:cardB,go?'6 от 30 — это 20%':'какой ответ?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ещё одна практика</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('6 : 30 · 100 = 20%',grn,0.1)):'')+
+        (go?wkNote('Шесть от тридцати: делим 6 на 30, получаем 0,2. Умножаем на 100 — выходит 20%. Проверка: шестёрка — это пятая часть от тридцати, а пятая часть равна 20%.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('решить',`visW192Act('${lk}','go')`))+
+        wkSml('практика 2'));
+    /* 17: практика 40% от 250 */
+    } else if(step===17){
+      H=286;
+      let inner=TT('практика: 40% от 250','pur');
+      inner+=`<rect x="30" y="58" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
+      inner+=drawRect(30,58,258,40,9,pur,2.4,0.2,2,{pen:true},'qp');
+      inner+=growBar(34,62,103,32,pur,1.8,0.6,pur);
+      inner+=fit(85,85,11,'#0a0e1e','40%',{b:1},50);
+      inner+=fit(220,85,11,ink,'250 — 100%',{b:1},120);
+      inner+=`<g class="qpRise" style="animation-delay:1.2s"><rect x="30" y="112" width="258" height="36" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="136" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">250 : 100 · 40 = 100</text></g>`;
+      inner+=fit(159,172,11.5,ink,'один процент от 250 равен 2,5',{b:1},290);
+      inner+=fit(159,196,11.5,dim,'умножаем на 40 — получаем 100',{},290);
+      inner+=plate(20,212,278,32,go?grn:cardB,go?'40% от 250 — это 100':'сколько получится?',11.5);
+      inner+=`${fit(159,268,11.5,gold,'проверка: 100 — это 40% от 250',{b:1},280)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Процент от числа: практика</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('250 : 100 · 40 = 100',pur,0.1)):'')+
+        (go?wkNote('Находим один процент: 250 : 100 = 2,5. Умножаем на 40: 2,5 · 40 = 100. Значит, 40% от 250 — это 100.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('решить',`visW192Act('${lk}','go')`))+
+        wkSml('практика 3'));
+    /* 18: практика число по проценту */
+    } else if(step===18){
+      H=288;
+      let inner=TT('практика: 15% числа равны 45','gold');
+      inner+=`<rect x="30" y="58" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
+      inner+=`<rect x="30" y="58" width="39" height="40" rx="9" fill="${gold}" opacity=".5"/>`;
+      inner+=fit(50,85,11,'#0a0e1e','45',{b:1},34);
+      inner+=fit(210,85,11,gold,'это 15%',{b:1},90);
+      inner+=`<path d="M78 85 h116" stroke="${gold}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
+      inner+=`<g class="qpRise" style="animation-delay:.8s"><rect x="30" y="112" width="258" height="38" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="137" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">45 : 15 · 100 = 300</text></g>`;
+      inner+=fit(159,174,11.5,ink,'один процент равен 45 : 15 = 3',{b:1},290);
+      inner+=fit(159,198,11.5,dim,'умножаем на 100 — получаем 300',{},290);
+      inner+=plate(20,214,278,32,go?grn:cardB,go?'всё число равно 300':'какое это число?',11.5);
+      inner+=`${fit(159,270,11.5,grn,'проверка: 15% от 300 — это 45',{b:1},280)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Число по проценту: практика</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('45 : 15 · 100 = 300',gold,0.1)):'')+
+        (go?wkNote('Пятнадцать процентов числа равны 45. Находим один процент: 45 : 15 = 3. Умножаем на 100: получаем 300. Проверка: 15% от 300 — это действительно 45.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('решить',`visW192Act('${lk}','go')`))+
+        wkSml('практика 4'));
+    /* 19: проценты в жизни */
+    } else if(step===19){
+      H=296;
+      let inner=TT('проценты вокруг нас','grn');
+      const cards=[
+        {t:'скидка',d:'−30% в магазине',c:gold,ico:'tag'},
+        {t:'вклад',d:'+8% в банке',c:grn,ico:'bank'},
+        {t:'успеваемость',d:'80% работы',c:cyan,ico:'bar'}
+      ];
+      cards.forEach((q,k)=>{
+        const y=52+k*62;
+        inner+=`<g class="qpRise" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="52" rx="11" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(96,y+22,12.5,q.c,q.t,{b:1},140)
+          +fit(96,y+40,10.5,dim,q.d,{},140)+`</g>`;
+        if(q.ico==='tag'){
+          inner+=`<g class="qpPop" style="animation-delay:${(0.4+k*0.2).toFixed(2)}s"><path d="M226 ${y+14} h34 v20 l-17 14 l-17 -14 z" fill="rgba(255,215,106,.18)" stroke="${gold}" stroke-width="1.8"/>`
+            +`<circle cx="243" cy="${y+22}" r="3.4" fill="${gold}"/></g>`;
+        } else if(q.ico==='bank'){
+          inner+=`<g class="qpPop" style="animation-delay:${(0.4+k*0.2).toFixed(2)}s"><path d="M222 ${y+34} h44 v-16 l-22 -12 l-22 12 z" fill="rgba(125,224,160,.18)" stroke="${grn}" stroke-width="1.8"/>`
+            +`<rect x="228" y="${y+34}" width="32" height="6" fill="${grn}" opacity=".6"/></g>`;
+        } else {
+          inner+=`<g class="qpRise" style="animation-delay:${(0.4+k*0.2).toFixed(2)}s"><rect x="222" y="${y+20}" width="46" height="14" rx="7" fill="rgba(255,255,255,.06)" stroke="${cyan}" stroke-width="1.4"/>`
+            +growBar(224,y+22,36,10,cyan,1.4,0.8+k*0.2,cyan)+`</g>`;
+        }
+      });
+      inner+=plate(20,244,278,30,go?grn:cardB,go?'проценты помогают сравнивать части':'где встречаются проценты?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проценты в жизни</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('скидка · вклад · успеваемость',grn,0.1)):'')+
+        (go?wkNote('Проценты встречаются каждый день: скидка в магазине показывает, сколько мы экономим; вклад в банке — сколько добавится; успеваемость — какую часть работы мы выполнили.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('показать',`visW192Act('${lk}','go')`))+
+        wkSml('проценты в жизни'));
+    /* 20: тренажёр 1 */
+    } else if(step===20){
+      H=286;
+      const opts=['75%','45%','80%'], ok=0, done=(sel>=0);
+      let inner=TT('сколько процентов составляет 45 от 60?','cyan');
+      inner+=`<rect x="30" y="58" width="258" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
+      inner+=growBar(34,62,193,26,cyan,1.6,0.3,cyan);
+      inner+=fit(130,82,11,'#0a0e1e','45',{b:1},30);
+      inner+=fit(220,82,11,cyan,'из 60',{b:1},70);
+      inner+=fit(159,112,11.5,dim,'считаем: 45 : 60 · 100',{b:1},260);
+      opts.forEach((t,k)=>{
+        const x=34+k*84, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW192Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="132" width="76" height="44" rx="11" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(18,24,44,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+38,161,18,c,t,{b:on})+(on?`<path d="M${x+56} 142 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(20,190,278,32,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! 45 : 60 · 100 = 75%':'Проверь: 45 : 60 = 0,75'):'нажми на ответ',11.5);
+      inner+=`${fit(159,246,11.5,grn,'45 — это три четверти от 60',{b:1},280)}`;
+      inner+=`${fit(159,270,11,dim,'а три четверти — это 75%',{},280)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: часть от целого</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW192Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('45 от 60: делим 45 на 60 — получается 0,75. Умножаем на 100 — выходит 75%. Проверка: 45 — это три четверти от 60, а три четверти равны 75%.'):'')+
+        wkSml('проверь себя'));
+    /* 21: тренажёр 2 */
+    } else if(step===21){
+      H=282;
+      const opts=['60','30','600'], ok=0, done=(sel>=0);
+      let inner=TT('найди 30% от 200','gold');
+      inner+=`<rect x="30" y="58" width="258" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
+      inner+=growBar(34,62,78,26,gold,1.6,0.3,gold);
+      inner+=fit(72,82,11,'#0a0e1e','30%',{b:1},44);
+      inner+=fit(220,82,11,gold,'200',{b:1},50);
+      inner+=fit(159,112,11.5,dim,'считаем: 200 : 100 · 30',{b:1},260);
+      opts.forEach((t,k)=>{
+        const x=34+k*84, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW192Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="132" width="76" height="44" rx="11" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(18,24,44,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+38,161,18,c,t,{b:on})+(on?`<path d="M${x+56} 142 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(20,190,278,32,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! 200 : 100 · 30 = 60':'Помни: делим на 100, потом умножаем'):'нажми на ответ',11.5);
+      inner+=`${fit(159,246,11.5,gold,'один процент от 200 — это 2',{b:1},280)}`;
+      inner+=`${fit(159,270,11,dim,'умножаем на 30 — получаем 60',{},280)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: процент от числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW192Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('Тридцать процентов от 200: сначала один процент — это 200 : 100 = 2, потом умножаем на 30 и получаем 60.'):'')+
+        wkSml('проверь себя'));
+    /* 22: частые ошибки */
+    } else if(step===22){
+      H=316;
+      const it=[
+        {t:'перепутали, от какого числа считаем',f:'15 от 60 — 25%, а 60 от 15 — 400%',c:red},
+        {t:'забыли умножить на 100',f:'0,25 — это доля, а проценты — 25%',c:gold},
+        {t:'спутали «на 20%» и «в 20 раз»',f:'на 20% — это прибавить пятую часть',c:cyan},
+        {t:'взяли не тот процент от числа',f:'сначала найдите 1%, потом умножайте',c:pur}
+      ];
+      let inner='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        inner+=`<g class="qpRise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#qpbg)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#0a0e1e">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      inner+=`${tx(159,300,11,dim,'проверяй эти четыре места',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Частые ошибки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('смотри, от чего считаешь',red,0.1)):'')+
+        (go?wkNote('Четыре ошибки встречаются чаще всего: перепутать целое, забыть умножить на 100, спутать «на 20%» и «в 20 раз», а также взять не тот процент от числа.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('показать',`visW192Act('${lk}','go')`))+
+        wkSml('чтобы не ошибаться'));
+    /* 23: шпаргалка */
+    } else if(step===23){
+      H=328;
+      const rows=[
+        {t:'1% = 1/100, целое = 100%',c:gold},
+        {t:'процент от числа: число : 100 · проценты',c:cyan},
+        {t:'число по проценту: часть : проценты · 100',c:pur},
+        {t:'доля одного от другого: A : B · 100%',c:grn},
+        {t:'увеличить и уменьшить: найти проценты',c:blu}
+      ];
+      let inner='';
+      rows.forEach((q,k)=>{
+        const y=14+k*54;
+        inner+=`<g class="qpRise" style="animation-delay:${(0.12+k*0.14).toFixed(2)}s">`
+          +`<rect x="16" y="${y}" width="286" height="38" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+25,12,q.c,q.t,{b:1},268)+`</g>`;
+        inner+=drawPoly([[36,y+44],[280,y+44]],q.c,2.6,0.2+k*0.14,2,{pen:k===0},'qp');
+      });
+      inner+=plate(16,288,286,26,go?grn:cardB,go?'всё главное вместе':'проверь себя',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('1% · процент от числа · число по проценту',gold,0.1)):'')+
+        (go?wkNote('Вся тема в пяти строках: что такое процент, как найти процент от числа, как найти число по проценту, как узнать долю одного числа от другого и как увеличивать или уменьшать на проценты.'):'')+
+        wkRow(go?wkBtn('сброс',`visW192Act('${lk}','rst')`):wkBtn('показать',`visW192Act('${lk}','go')`))+
+        wkSml('всё главное'));
+    /* 24: итог */
+    } else {
+      H=292;
+      let inner='';
+      inner+=drawCircle(159,104,54,grn,4,0.2,2.6);
+      inner+=`<g class="qpPop" style="animation-delay:.7s">`
+        +`<text x="159" y="96" text-anchor="middle" font-size="14" font-family="Georgia,serif" font-weight="bold" fill="${ink}">15 от 60</text>`
+        +`<text x="159" y="124" text-anchor="middle" font-size="22" font-family="Georgia,serif" font-weight="bold" fill="${grn}">25%</text></g>`;
+      inner+=drawPoly([[92,166],[226,166]],gold,2.6,1,2.2,{pen:true},'qp');
+      inner+=`${fit(159,194,12.5,ink,'делим часть на целое и умножаем на 100',{b:1},292)}`;
+      inner+=`<g class="qpRise" style="animation-delay:1.2s"><rect x="20" y="212" width="278" height="36" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,235,12,gold,'жми «Понял! Проверю себя» →',{b:1},250)+`</g>`;
+      inner+=`${fit(159,274,11.5,dim,'ты разобрал проценты от доли до задач',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Итог урока</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkNote('Запомни главное: 1% — это сотая часть, процент от числа находят умножением, а долю одного числа от другого — делением и умножением на 100%.' )+
+        wkRow(wkBtn('в начало',`visW192Act('${lk}','rst')`))+
+        wkSml('проценты'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[192]=visW192;
+  window.visW192Pick=function(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); };
+  window.visW192Act=function(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go'){ st.go=st.go?0:1; }
+    if(act==='rst'){ CHS[lk]={_at:st._at}; }
+    chRender(0);
+  };
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===192){ window.ARH_LESSONS[i]=L192; break; } } })();
+})();
 /* ================= УРОК 171 · Свойства сложения: считаем удобно (v2 · «Сокровищница Архимеда», 14 слайдов, флагман) ================= */
 (function(){
   if(!window.__wk171v2css){
