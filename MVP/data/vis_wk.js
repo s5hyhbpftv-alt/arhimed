@@ -21235,7 +21235,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   const drawPoly=(pts,col,dur,beg,w,opt)=>{
     const o=opt||{}, d=polyD(pts), L=polyLen(pts);
     return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w||3.4}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
-      +`<animate attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.72;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.72;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
       +(o.pen===false?'':`<circle r="${o.r||5.5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.4" opacity=".95">`
         +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`)
       +(o.trace?`<path d="${d}" fill="none" stroke="${col}" stroke-width="${(w||3.4)+3}" opacity=".13" stroke-linecap="round"/>`:'');
@@ -21247,7 +21247,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const L=Math.round(2*(w-2*r)+2*(h-2*r)+2*Math.PI*r);
     const d=rectPerim(x,y,w,h,rx);
     return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${sw||2.4}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
-      +`<animate attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.6;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.6;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
       +(o.pen===false?'':`<circle r="${o.r||5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.3">`
         +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
   };
@@ -21255,7 +21255,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const L=Math.round(2*Math.PI*r);
     const d=`M${cx} ${cy-r} A${r} ${r} 0 1 1 ${cx-0.01} ${cy-r}`;
     return `<path d="${d}" fill="${fill||'none'}" stroke="${col}" stroke-width="${sw||2.6}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
-      +`<animate attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;.62;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;.62;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
       +`<circle r="5" fill="${gold}" stroke="#fffdf2" stroke-width="1.3"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`;
   };
   const growRect=(x,y,w,h,rx,fill,stroke,dur,beg)=>{
@@ -27140,43 +27140,55 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===384){ window.ARH_LESSONS[i]=L384; break; } } })();
 })();
 
-/* ================= УРОК 390 · Правило произведения: задачи (v1 · «Швейно-дорожная мастерская Архимеда», 15 слайдов, флагман, премиум) ================= */
+/* ================= УРОК 390 · Правило произведения: задачи (v8 · «Мастерская Архимеда», 24 шага, флагман, прорисовка на каждом слайде) ================= */
 (function(){
-  if(!window.__wk390v1css){
-    window.__wk390v1css=1;
+  if(!window.__wk390v8css){
+    window.__wk390v8css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .qPWIn{animation:qPWIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
-      '@keyframes qPWIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qPWPop{animation:qPWPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qPWPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qPWOutfit{animation:qPWOutfit .45s cubic-bezier(.2,.8,.3,1.3) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qPWOutfit{0%{transform:scale(.3) rotate(-8deg);opacity:0}70%{transform:scale(1.1) rotate(2deg);opacity:1}100%{transform:scale(1) rotate(0)}}'+
-      '#lvis .qPWShirt{animation:qPWShirt .4s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qPWShirt{0%{transform:translateY(-8px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qPWDrive{animation:qPWDrive .7s cubic-bezier(.2,.8,.3,1.15) both;}'+
-      '@keyframes qPWDrive{0%{transform:translateX(-12px);opacity:0}70%{transform:translateX(2px);opacity:1}100%{transform:none}}'+
-      '#lvis .qPWPath{stroke-dasharray:8 5;animation:qPWPath 1.1s ease both;}'+
-      '@keyframes qPWPath{to{stroke-dashoffset:0}}';
+      '#lvis .qwIn{animation:qwIn .55s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qwIn{0%{transform:translateY(-14px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qwPop{animation:qwPop .55s cubic-bezier(.2,.9,.3,1.25) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qwPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qwRise{animation:qwRise .7s cubic-bezier(.2,.85,.3,1.08) both;}'+
+      '@keyframes qwRise{0%{transform:translateY(16px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qwGlow{animation:qwGlow 2.2s ease-in-out infinite;}'+
+      '@keyframes qwGlow{0%,100%{opacity:.3}50%{opacity:1}}'+
+      '#lvis .qwBlink{animation:qwBlink 1.5s ease-in-out infinite;}'+
+      '@keyframes qwBlink{0%,100%{opacity:.35}50%{opacity:1}}'+
+      '#lvis .qwFloat{animation:qwFloat 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qwFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
+      '#lvis .qwSlide{animation:qwSlide .7s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qwSlide{0%{transform:translateX(-18px);opacity:0}100%{transform:none;opacity:1}}';
     document.head.appendChild(st);
   }
   const L390 = {
-    id: 390, title: 'Правило произведения: задачи', ico: '🔢',
+    id: 390, title: 'Правило произведения: задачи', ico: '🧵',
     src: 'Математика · 5–6 класс · Олимп-5: комбинаторика', subj: 'math',
     explain: [
-      'Правило произведения: независимые выборы перемножаются.',
-      '4 рубашки и 3 галстука → 4 · 3 = 12 комплектов.',
-      'Сколько двузначных чисел начинается с 5? Вторая цифра любая из 10: 50, 51, …, 59 → 10 чисел.',
-      'А → Б (3 дороги), Б → В (2), В → Г (4): маршрутов 3·2·4 = 24.',
-      'Независимые выборы: выбор рубашки НЕ мешает выбору галстука — можно их перемножать.',
-      'Каждую из 4 рубашек можно надеть с каждой из 3 галстуков: 4 × 3 = 12 комплектов.',
-      'Принцип: «на каждую … своя …» → умножаем число вариантов каждого шага.',
-      'Двузначное с 5: первая цифра 5, вторая — любая из 10 (0..9), значит 1 × 10 = 10 чисел.',
-      'Маршрут А→Б→В→Г: число дорог на каждом участке перемножаем: 3·2·4 = 24.',
-      'Тренажёр: посчитай по правилу произведения.',
-      'Тренажёр: найди число комбинаций.',
-      'Шпаргалка: выборы независимы → перемножай; «на каждую … свою …»; умножай варианты шагов.',
-      'Проверь себя устно: 4·3 = 12; 1·10 = 10; 3·2·4 = 24.',
+      'Задача: у портного 4 рубашки и 3 галстука. Сколько разных комплектов «рубашка + галстук» можно составить? Пересчитывать по одному долго — поможет правило произведения.',
+      'Сначала нарисуем дерево возможностей: сверху 4 рубашки, а от каждой идут 3 ветки к галстукам. Всего веток 4 · 3 = 12 — столько и комплектов.',
+      'Правило произведения: если первый выбор можно сделать m способами, а для каждого из них второй — n способами, то вместе получается m · n способов.',
+      'Почему умножаем? Потому что для каждой из 4 рубашек есть все 3 галстука. Получается 4 группы по 3: 3 + 3 + 3 + 3 = 12, а это и есть 4 · 3.',
+      'Важно различать «и» и «или». Если выборы идут вместе («и рубашка, и галстук») — умножаем. Если выбираем что-то одно («брюки или юбка») — складываем.',
+      'Если шагов больше двух, перемножаем все числа. Маршрут из А в Г: сначала 3 дороги, потом 2, потом 4 → 3 · 2 · 4 = 24 маршрута.',
+      'Двузначные числа, которые начинаются с 5: первая цифра уже выбрана (один способ), вторая — любая из 10 цифр. Значит, 1 · 10 = 10 чисел: 50, 51, …, 59.',
+      'Трёхзначные числа: первая цифра не может быть нулём, поэтому её выбираем 9 способами, а вторую и третью — 10 способами. Итого 9 · 10 · 10 = 900 чисел.',
+      'Если цифры не должны повторяться, каждый следующий выбор становится на один меньше. Из цифр 1, 2, 3, 4 двузначных чисел без повторов: 4 · 3 = 12.',
+      'Так же считают коды и пароли. Если в коде 3 знака, а букв 4 и повторять их можно, то разных кодов 4 · 4 · 4 = 64.',
+      'Меню — та же задача: 3 супа и 5 вторых блюд дают 3 · 5 = 15 разных обедов из супа и второго.',
+      'Два разных кубика дают 6 · 6 = 36 разных исходов: для каждого числа на первом кубике есть 6 чисел на втором.',
+      'Перестановки — это расстановка предметов по порядку. Три предмета можно расставить 3 · 2 · 1 = 6 способами: на первое место 3 варианта, на второе — 2, на третье — 1.',
+      'Четыре книги на полке расставляются 4 · 3 · 2 · 1 = 24 способами. Такое произведение записывают коротко: 4! — «четыре факториал».',
+      'За круглым столом расстановки, которые отличаются только поворотом, считаются одинаковыми. Поэтому четырёх человек можно посадить (4 − 1)! = 6 способами.',
+      'Если порядок не важен, произведение делят на число перестановок выбранных. Рукопожатия четырёх человек: 4 · 3 : 2 = 6, ведь пара «А и Б» — то же самое, что «Б и А».',
+      'Правило произведения работает и в обратную сторону. Если комплектов 12, а галстуков 3, то рубашек 12 : 3 = 4.',
+      'Задачи бывают разные, а правило одно. Эстафета: из 5 бегунов выбираем трёх и расставляем по порядку — 5 · 4 · 3 = 60 способов.',
+      'Тренажёр: посчитай, сколько комплектов получится.',
+      'Тренажёр: посчитай двузначные числа из цифр без повторения.',
+      'Частые ошибки: сложить вместо умножения, посчитать один и тот же вариант дважды, поставить ноль на первое место в числе и перепутать «без повторения» с «с повторением».',
+      'Шпаргалка: правило m · n, дерево возможностей, «и» — умножаем, «или» — складываем, перестановки n! = n · (n−1) · … · 1, выбор двух без порядка n · (n−1) : 2.',
+      'Соберём тему вместе: дерево возможностей, правило произведения, «и» и «или», перестановки, выбор без порядка и обратные задачи.',
       'Проверь себя: 4 рубашки и 3 галстука — сколько комплектов? Ответь в тесте и жми «Понял! Проверю себя»!'
     ],
     check: { q: '4 рубашки и 3 галстука. Сколько комплектов «рубашка + галстук»?', choices: ['12', '7', '4', '3'], ans: 0,
@@ -27185,349 +27197,676 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       { q: 'Сколько двузначных чисел начинается с цифры 5?', kind: 'unit', ans: 10, tol: 0,
         hints: ['Вторая цифра — любая из 10.', '50…59 — 10 чисел.'], sol: '10' },
       { q: 'Из А в Б 3 дороги, из Б в В 2, из В в Г 4. Сколько маршрутов А→Г?', kind: 'choice', choices: ['24', '9', '12', '6'], ans: 0, tol: 0,
-        hints: ['Перемножаем.', '3 · 2 · 4 = 24.'], sol: '24' }
+        hints: ['Перемножаем все числа шагов.', '3 · 2 · 4 = 24.'], sol: '3 · 2 · 4 = 24' }
     ]
   };
-  const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', pink='#ff9ab0', bluT='#a8c4ff', road1='#e0a34a', road2='#4db6e0',
-        shirtC=['#e0604c','#4db6e0','#7bcd7b','#b07fff'], tieC=['#f5a623','#d9758f','#6ea8ff'],
-        bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', wood='#5a4628', wood2='#3a2c18';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const ink='#eef2ff', dim='#a5aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff',
+        bg0='#1b2440', bg1='#0a1020', card='rgba(24,30,54,.96)', cardB='#43507c', lineC='#3a4670';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1020" stroke-width="3.6">${t}</text>`;
+  const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
-        <linearGradient id="qPWbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
-        <linearGradient id="qPWwood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a5330"/><stop offset="0.5" stop-color="${wood}"/><stop offset="1" stop-color="${wood2}"/></linearGradient>
-        <filter id="qPWsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/></filter>
+        <linearGradient id="qwbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <filter id="qwsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
       </defs>
-      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qPWbg)"/>
-      <g opacity="0.14" stroke="#44568c" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
-      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44568c" stroke-width="2.4" rx="7"/>
-      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3a64" stroke-width="1.2" rx="4"/>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qwbg)"/>
+      <g opacity="0.12" stroke="#6a7ab0" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#4a5a94" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3860" stroke-width="1.2" rx="4"/>
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  function miniOutfit(x,y,shirt,tie,w,h,delay){
-    return `<g class="qPWOutfit" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qPWsh)"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" fill="${shirt}" stroke="#fffdf2" stroke-width="1.6"/><rect x="${x+w*0.42}" y="${y+h*0.1}" width="${w*0.16}" height="${h*0.9}" rx="2" fill="${tie}"/></g>`;
-  }
-  function outfitGrid(x,y,shirts,ties,cell,reveal){
-    let s='';
-    let k=0;
-    for(let r=0;r<shirts;r++)for(let c=0;c<ties;c++){
-      const show=(reveal==null||reveal>=k);
-      if(show){ s+=miniOutfit(x+c*cell,y+r*cell,shirtC[r%shirtC.length],tieC[c%tieC.length],cell-4,cell-4,0.04*k); }
-      k++;
-    }
-    return s;
-  }
-  function shirtRow(x,y,shirts,cell,reveal){
-    let s='';
-    for(let r=0;r<shirts;r++){ const show=(reveal==null||reveal>=r); if(show){ s+=`<g class="qPWShirt" style="animation-delay:${(0.08*r).toFixed(2)}s" filter="url(#qPWsh)"><rect x="${x-2}" y="${y+r*cell}" width="8" height="${cell-6}" rx="3" fill="${shirtC[r%shirtC.length]}"/><text x="${x+10}" y="${y+r*cell+cell-10}" text-anchor="start" font-size="11.5" fill="${dim}">${shirtT[r%shirtT.length]}</text></g>`; } }
-    return s;
-  }
-  const shirtT=['красная','голубая','зелёная','сиреневая'];
-  const chip=(t,c,delay)=>`<span class="qPWIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
-  const Q390=[
-    {q:'4 рубашки и 3 галстука — комплектов?',opts:['12','7','4'],ans:0},
-    {q:'3·2·4 маршрутов?',opts:['24','9','12'],ans:0}
-  ];
-  function quiz(lk,st){
-    const T=Q390[st.q||0];
-    const opts=T.opts.map((o,i)=>{
-      let bd=cardB,tc=ink,bg=card;
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:62px;font-size:17px" onclick="visW390T('${lk}',${i})">${o}</button>`;
-    }).join('');
-    let msg='';
-    if(st.sel!=null){
-      msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! перемножай выборы</div>'
-        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · независимые выборы множим</div>';
-    }
-    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW390Act('${lk}','nq')`):'';
-    const rst=wkBtn('заново',`visW390Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
-  }
+  /* ---------- прорисовка ---------- */
+  const polyLen=(pts)=>{let s=0;for(let i=1;i<pts.length;i++)s+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return Math.max(16,Math.round(s));};
+  const polyD=(pts)=>'M'+pts.map(q=>q[0]+' '+q[1]).join(' L');
+  const drawPoly=(pts,col,dur,beg,w,opt)=>{
+    const o=opt||{}, d=polyD(pts), L=polyLen(pts);
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w||3.2}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.72;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +(o.pen===false?'':`<circle r="${o.r||5.5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.4">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const rectPerim=(x,y,w,h,rx)=>{const r=Math.min(rx||8,Math.min(w,h)/2);
+    return `M${x+r} ${y} H${x+w-r} A${r} ${r} 0 0 1 ${x+w} ${y+r} V${y+h-r} A${r} ${r} 0 0 1 ${x+w-r} ${y+h} H${x+r} A${r} ${r} 0 0 1 ${x} ${y+h-r} V${y+r} A${r} ${r} 0 0 1 ${x+r} ${y}`;};
+  const drawRect=(x,y,w,h,rx,col,dur,beg,sw,opt)=>{
+    const o=opt||{}, r=Math.min(rx||8,Math.min(w,h)/2);
+    const L=Math.round(2*(w-2*r)+2*(h-2*r)+2*Math.PI*r), d=rectPerim(x,y,w,h,rx);
+    return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${sw||2.4}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.6;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +(o.pen===false?'':`<circle r="${o.r||5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.3">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const drawCircle=(cx,cy,r,col,dur,beg,sw)=>{
+    const L=Math.round(2*Math.PI*r), d=`M${cx} ${cy-r} A${r} ${r} 0 1 1 ${cx-0.01} ${cy-r}`;
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${sw||2.6}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;.62;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +`<circle r="5" fill="${gold}" stroke="#fffdf2" stroke-width="1.3"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`;
+  };
+  const growRect=(x,y,w,h,rx,fill,dur,beg)=>{
+    return `<rect x="${x}" y="${y}" width="0" height="${h}" rx="${rx||6}" fill="${fill}">`
+      +`<animate attributeName="width" values="0;${w};${w}" keyTimes="0;.7;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></rect>`;
+  };
+  const ticker=(x,y,vals,fs,col,dur,opt)=>{
+    const o=opt||{}, n=vals.length; let s2='';
+    vals.forEach((v2,i)=>{
+      const a=(i/n).toFixed(3), b=((i+1)/n-0.002).toFixed(3);
+      s2+=`<text x="${x}" y="${y}" text-anchor="${o.an||'middle'}" font-size="${fs}" font-weight="bold" font-family="'Courier New',monospace" fill="${col}" opacity="0">${v2}`
+        +`<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;${a};${a};${b};1" dur="${dur}s" repeatCount="indefinite"/></text>`;
+    });
+    return s2;
+  };
+  const plate=(x,y,w,h,col,txt,fs)=>`<g class="qwRise"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="rgba(24,30,54,.95)" stroke="${col}" stroke-width="1.9"/>`
+    +fit(x+w/2,y+h*0.66,fs||13,col,txt,{b:1},w-16)+`</g>`;
+  const chip=(t,c,delay)=>`<span class="qwIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const valBox=(cx,cy,t,c,opt)=>{
+    const o=opt||{}, w=(o.w||Math.max(34,(''+t).length*11+16)), h=(o.h||34);
+    return `<g class="qwPop" style="animation-delay:${(o.delay||0).toFixed(2)}s">`
+      +`<rect x="${cx-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="${o.rx||9}" fill="${o.fill||'rgba(18,24,44,.97)'}" stroke="${c}" stroke-width="${o.sw||2}"/>`
+      +tx(cx,cy+h*0.2,o.fs||15,c,t,{b:1,georgia:o.geo!==false})+`</g>`;
+  };
+  /* иконки темы */
+  const shirtIc=(cx,cy,s,c,delay)=>`<g class="qwPop" style="animation-delay:${(delay||0).toFixed(2)}s">`
+    +`<path d="M${cx-s*0.62} ${cy-s*0.62} l${s*0.42} ${-s*0.22} h${s*0.4} l${s*0.42} ${s*0.22} v${s*1.24} h${-s*1.24} z" fill="rgba(255,255,255,.06)" stroke="${c}" stroke-width="1.8"/>`
+    +`<path d="M${cx-s*0.2} ${cy-s*0.84} l${s*0.2} ${s*0.26} l${s*0.2} ${-s*0.26}" fill="none" stroke="${c}" stroke-width="1.6"/>`
+    +`<line x1="${cx}" y1="${cy-s*0.5}" x2="${cx}" y2="${cy+s*0.5}" stroke="${c}" stroke-width="1.3" opacity=".55"/></g>`;
+  const tieIc=(cx,cy,s,c,delay)=>`<g class="qwPop" style="animation-delay:${(delay||0).toFixed(2)}s">`
+    +`<path d="M${cx-s*0.34} ${cy-s*0.72} h${s*0.68} l${-s*0.34} ${s*0.3} z" fill="${c}" opacity=".75"/>`
+    +`<path d="M${cx-s*0.26} ${cy-s*0.4} l${s*0.26} ${s*1.05} l${s*0.26} ${-s*1.05} z" fill="${c}"/></g>`;
+  const dotIc=(x,y,r,c,delay)=>`<circle class="qwPop" style="animation-delay:${(delay||0).toFixed(2)}s" cx="${x}" cy="${y}" r="${r||5}" fill="${c}" stroke="#fffdf2" stroke-width="1"/>`;
+  const bookIc=(cx,cy,s,c,delay)=>`<g class="qwPop" style="animation-delay:${(delay||0).toFixed(2)}s">`
+    +`<rect x="${cx-s*0.4}" y="${cy-s*0.55}" width="${s*0.8}" height="${s*1.1}" rx="3" fill="${c}" opacity=".85" stroke="#fffdf2" stroke-width="1"/>`
+    +`<line x1="${cx-s*0.28}" y1="${cy-s*0.55}" x2="${cx-s*0.28}" y2="${cy+s*0.55}" stroke="#fffdf2" stroke-width="1.4"/></g>`;
+  const W=318;
   function visW390(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=13){ st.go=0; st.pick=null; }
-      if(step===8||step===9) st.pick=null;
-      if(step===11){ st.mq=0; st.msel=null; }
-      if(step===13){ st.sel=null; st.q=0; }
-    }
-    let h='';
-    const W=318;
-    const GW=36;
-    const GX=100, GY=62;
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; }
+    const go=st.go||0, sel=(typeof st.pick==='number')?st.pick:-1;
+    let h='', H=276;
+    const TT=(t,c)=>`<g class="qwPop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#qwbg)" stroke="${c||cardB}" stroke-width="1.8"/>`
+      +fit(159,32,12.5,c||ink,t,{b:1},260)+`</g>`;
+    /* 0: 4 рубашки и 3 галстука */
     if(step===0){
-      const H=220, go=st.go||0;
-      let inner='';
-      inner+=tx(159,28,20,ink,'собери наряд',{b:1});
-      if(go){
-        inner+=outfitGrid(GX,GY,4,3,GW,12);
-        inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="12.7" fill="${gold}" font-weight="bold">4 рубашки · 3 галстука → 12 комплектов</text></g>`;
+      H=284;
+      let inner=TT('4 рубашки и 3 галстука — сколько комплектов?','gold');
+      [150,210,270].forEach((x,k)=>{ inner+=tieIc(x,64,17,cyan,0.15+k*0.12); });
+      for(let r=0;r<4;r++) inner+=shirtIc(48,88+r*44,13,pur,0.2+r*0.12);
+      for(let r=0;r<4;r++){
+        const y=88+r*44;
+        inner+=drawPoly([[68,y],[292,y]],cardB,3.4,0.8+r*0.45,1.6,{pen:r===3,r:4});
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Швейная мастерская</div>`+
+      [150,210,270].forEach((x,k)=>{ inner+=drawPoly([[x,64],[x,232]],cardB,3.6,1.1+k*0.4,1.6,{pen:k===2,r:4}); });
+      for(let r=0;r<4;r++)for(let c=0;c<3;c++){
+        inner+=dotIc([150,210,270][c],88+r*44,5.5,gold,2.2+r*0.22+c*0.1);
+      }
+      inner+=fit(48,250,11.5,pur,'4 рубашки',{b:1},90);
+      inner+=fit(210,50,11.5,cyan,'3 галстука',{b:1},90);
+      inner+=plate(20,238,278,32,go?grn:cardB,go?'4 · 3 = 12 комплектов':'сколько точек на пересечениях?',12.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача про комплекты</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('выборы перемножаются',gold,0.2)):'')+
+        (go?wkRow(chip('4 · 3 = 12',gold,0.1)):'')+
+        (go?wkNote('Каждая рубашка соединяется с каждым галстуком — получается 4 ряда по 3 точки, всего 12 пересечений. Столько же и комплектов: 4 · 3 = 12. Пересчитывать по одному не нужно.'):'')+
         wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
-        wkSml('правило произведения'));
+        wkSml('первая задача'));
+    /* 1: дерево возможностей */
     } else if(step===1){
-      const H=190, go=st.go||0;
-      let inner='';
-      inner+=tx(159,28,20,ink,'независимые выборы',{b:1});
-      if(go){
-        inner+=`<g class="qPWPop"><rect x="36" y="62" width="246" height="86" rx="12" fill="rgba(20,29,52,.96)" stroke="${cardB}" stroke-width="1.8"/>
-        ${tx(70,86,15,ink,'① выбираем рубашку',{b:1,an:'start'})}
-        ${tx(70,110,15,ink,'② выбираем галстук',{b:1,an:'start'})}
-        ${tx(70,134,13.4,grn,'выборы НЕ мешают друг другу → множим',{b:1,an:'start'})}</g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('независимые — перемножай',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
-        wkSml('когда можно множить'));
-    } else if(step===2){
-      const H=220, go=st.go||0;
-      let inner='';
-      inner+=tx(159,34,20,ink,'4 рубашки × 3 галстука',{b:1});
-      if(go){
-        inner+=outfitGrid(GX,GY,4,3,GW,12);
-        inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">4 × 3 = 12</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сетка нарядов</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('каждая рубашка × каждый галстук',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('выложить',`visW390Act('${lk}','go')`))+
-        wkSml('4·3 = 12'));
-    } else if(step===3){
-      const H=220, go=st.go||0;
-      let inner='';
-      inner+=tx(159,28,20,ink,'почему умножаем',{b:1});
-      if(go){
-        inner+=`<g class="qPWPop"><rect x="40" y="60" width="238" height="96" rx="12" fill="rgba(110,168,255,.1)" stroke="#6ea8ff" stroke-width="2"/>
-        ${tx(159,84,15,bluT,'на каждую из 4 рубашек —',{b:1})}
-        ${tx(159,108,15,bluT,'3 галстука',{b:1})}
-        ${tx(159,134,17,grn,'4 × 3 = 12 нарядов',{b:1,georgia:1})}</g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Суть</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('«на каждую … по …»',bluT,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
-        wkSml('вот и умножение'));
-    } else if(step===4){
-      const H=220, go=st.go||0;
-      let inner='';
-      inner+=tx(159,24,20,ink,'двузначные с 5',{b:1});
-      if(go){
-        inner+=`<g class="qPWPop"><text x="86" y="96" text-anchor="middle" font-size="22" fill="${gold}" font-weight="bold" font-family="Georgia,serif">5</text><text x="160" y="96" text-anchor="middle" font-size="22" fill="${dim}" font-weight="bold" font-family="Georgia,serif">? (0–9)</text>
-        <rect x="44" y="120" width="26" height="30" rx="5" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="1.8"/><rect x="74" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/><rect x="104" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/><rect x="134" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/>
-        <rect x="164" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/><rect x="194" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/><rect x="224" y="120" width="26" height="30" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.8"/>
-        <text x="159" y="168" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">1 × 10 = 10 чисел</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Цифровая машина</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('первая 5 · вторая любая из 10',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('посчитать',`visW390Act('${lk}','go')`))+
-        wkSml('50 … 59'));
-    } else if(step===5){
-      const H=220, go=st.go||0;
-      let inner='';
-      inner+=tx(159,24,20,ink,'маршрут А → Б → В → Г',{b:1});
-      if(go){
-        inner+=`<g class="qPWPop"><circle cx="40" cy="150" r="10" fill="${gold}"/><text x="40" y="154" text-anchor="middle" font-size="12" fill="#0a1428" font-weight="bold">А</text>
-        <circle cx="208" cy="96" r="10" fill="${grn}"/><text x="208" y="100" text-anchor="middle" font-size="12" fill="#0a1428" font-weight="bold">Г</text>
-        <path class="qPWPath" d="M 50 150 C 100 150, 120 96, 198 96" fill="none" stroke="${road1}" stroke-width="3.4"/><text x="120" y="112" text-anchor="middle" font-size="13" fill="${road1}" font-weight="bold">3·2·4=24</text>
-        <path class="qPWPath" style="animation-delay:.2s" d="M 50 150 C 110 180, 120 60, 198 96" fill="none" stroke="${road2}" stroke-width="3.4"/></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Дорожная карта</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('3·2·4 = 24',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('посчитать',`visW390Act('${lk}','go')`))+
-        wkSml('перемножаем участки'));
-    } else if(step===6){
-      const H=182;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'когда умножать',{b:1});
-      if(go){
-        inner+=`<g class="qPWPop"><rect x="36" y="62" width="246" height="80" rx="12" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="2"/>
-        ${tx(159,86,15,gold,'выборы НЕЗАВИСИМЫ',{b:1})}
-        ${tx(159,110,15,gold,'(выбор одного не меняет другой)',{b:1})}
-        ${tx(159,132,13,dim,'тогда перемножай числа вариантов',{})}</g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Условие</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('независимые → умножай',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
-        wkSml('главный признак'));
-    } else if(step===7){
-      const H=220, go=st.go||0;
-      let inner='';
-      inner+=tx(159,24,20,ink,'полная сетка',{b:1});
-      if(go){
-        inner+=outfitGrid(GX,GY,4,3,GW,12);
-        inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">все 12 комплектов на месте</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Все комбинации</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('12 нарядов',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('выложить',`visW390Act('${lk}','go')`))+
-        wkSml('полный шкаф'));
-    } else if(step===8){
-      const H=194, py=84;
-      if(st.tr==null) st.tr=0;
-      const pool=[
-        {q:'5 рубашек и 2 галстука?',a:'10',ds:['7','20']},
-        {q:'3 рубашки и 3 галстука?',a:'9',ds:['6','12']},
-        {q:'4 рубашки и 4 галстука?',a:'16',ds:['8','12']}
-      ];
-      const P=pool[st.tr%pool.length];
-      const ord=[P.a,...P.ds];
-      let inner='';
-      inner+=tx(159,30,20,ink,P.q,{b:1});
-      const X=[26,118,210],CW=86;
-      ord.forEach((o,i)=>{
-        let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qPWIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
-        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+      H=304;
+      let inner=TT('дерево возможностей','cyan');
+      const xs=[44,118,192,266];
+      inner+=`<g class="qwPop"><rect x="112" y="50" width="94" height="28" rx="9" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,69,12,pur,'4 рубашки',{b:1},86)+`</g>`;
+      xs.forEach((x,k)=>{
+        inner+=drawPoly([[159,78],[x,112]],pur,1.6,0.15+k*0.14,2,{pen:k===0,r:4});
+        inner+=`<g class="qwPop" style="animation-delay:${(0.4+k*0.18).toFixed(2)}s">`
+          +`<circle cx="${x}" cy="122" r="13" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="2"/>`
+          +tx(x,127,12,pur,'Ш'+(k+1),{b:1})+`</g>`;
+        [x-30,x,x+30].forEach((tx2,j)=>{
+          inner+=drawPoly([[x,135],[tx2,178]],cyan,1.6,0.6+k*0.2+j*0.08,1.7,{pen:false});
+          inner+=dotIc(tx2,186,6.5,cyan,0.75+k*0.2+j*0.08);
+        });
       });
-      inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qPWPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qPWPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">перемножь</text></g>`)
-        : tx(159,py+74,16,dim,'сколько комплектов?',{});
-      const fb= st.pick!=null&&st.pick===0
-        ? `<div class="wk-row"><button class="wk-btn" onclick="visW390Act('${lk}','n')">дальше →</button></div>`
-        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW390P('${lk}',${i})">${o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW390P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      inner+=fit(159,216,11,cyan,'по 3 галстука на каждую рубашку',{b:1},250);
+      inner+=drawPoly([[50,228],[268,228]],gold,4,2.2,2.2,{pen:true});
+      inner+=plate(20,240,278,32,go?grn:cardB,go?'4 · 3 = 12 веток — 12 комплектов':'сколько веток получится?',12.5);
+      inner+=`${fit(159,290,11.5,dim,'дерево показывает все варианты по порядку',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Дерево возможностей</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('от каждой рубашки — 3 ветки',cyan,0.1)):'')+
+        (go?wkNote('Дерево возможностей — это рисунок всех вариантов. Сверху четыре рубашки, от каждой идут три ветки к галстукам. Веток 4 · 3 = 12, значит и комплектов 12.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('нарисовать',`visW390Act('${lk}','go')`))+
+        wkSml('все варианты на рисунке'));
+    /* 2: правило произведения */
+    } else if(step===2){
+      H=276;
+      let inner=TT('правило произведения','gold');
+      inner+=`<g class="qwPop"><rect x="30" y="58" width="112" height="64" rx="11" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.9"/>`
+        +tx(86,92,26,pur,'m',{b:1,georgia:1})
+        +fit(86,110,10.5,dim,'первый выбор',{},100)+`</g>`;
+      inner+=`<g class="qwPop" style="animation-delay:.2s"><rect x="176" y="58" width="112" height="64" rx="11" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.9"/>`
+        +tx(232,92,26,cyan,'n',{b:1,georgia:1})
+        +fit(232,110,10.5,dim,'второй выбор',{},100)+`</g>`;
+      inner+=tx(159,96,28,gold,'·',{b:1});
+      inner+=drawPoly([[54,128],[54,146],[118,146],[118,128]],pur,3,0.5,2.2,{pen:true});
+      inner+=drawPoly([[200,128],[200,146],[264,146],[264,128]],cyan,3,0.8,2.2,{pen:true});
+      inner+=`<g class="qwRise" style="animation-delay:.9s"><rect x="86" y="164" width="146" height="38" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="189" text-anchor="middle" font-size="16" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">m · n способов</text></g>`;
+      inner+=fit(159,222,12,gold,'пример: 4 рубашки и 3 галстука',{b:1},290);
+      inner+=plate(20,232,278,32,go?grn:cardB,go?'4 · 3 = 12':'для каждого варианта первого — все варианты второго',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило произведения</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('перемножаем независимые выборы',gold,0.1)):'')+
+        (go?wkNote('Правило произведения: если первый выбор можно сделать m способами, а для каждого из них второй — n способами, то вместе получается m · n способов. Главное, чтобы выборы были независимыми.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('главное правило'));
+    /* 3: почему умножаем */
+    } else if(step===3){
+      H=298;
+      let inner=TT('почему умножаем?','pur');
+      for(let g2=0;g2<4;g2++){
+        const gx=24+g2*70;
+        inner+=drawRect(gx,54,62,76,10,pur,3,0.15+g2*0.3,2.2,{pen:g2===3,r:4});
+        for(let k=0;k<3;k++) inner+=tieIc(gx+16+k*15,96,13,cyan,0.6+g2*0.3+k*0.12);
+      }
+      inner+=`<g class="qwRise" style="animation-delay:.8s">${fit(159,150,12,ink,'4 группы по 3 галстука',{b:1},280)}</g>`;
+      inner+=drawPoly([[40,160],[278,160]],cardB,4,1,2,{pen:true});
+      inner+=`<g class="qwRise" style="animation-delay:1.1s"><rect x="40" y="176" width="238" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="199" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">3 + 3 + 3 + 3 = 12</text></g>`;
+      inner+=`<g class="qwRise" style="animation-delay:1.4s"><rect x="40" y="216" width="238" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="239" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">4 · 3 = 12</text></g>`;
+      inner+=plate(20,258,278,28,go?grn:cardB,go?'сложение одинаковых групп — это умножение':'сколько галстуков во всех группах?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Почему умножаем</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 группы по 3 = 4 · 3',pur,0.1)):'')+
+        (go?wkNote('Для каждой из четырёх рубашек подходят все три галстука. Значит, комплекты распадаются на 4 группы по 3. Сложить четыре тройки — то же самое, что умножить 4 на 3.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('объясни',`visW390Act('${lk}','go')`))+
+        wkSml('откуда умножение'));
+    /* 4: «и» и «или» */
+    } else if(step===4){
+      H=296;
+      let inner=TT('«и» — умножаем, «или» — складываем','gold');
+      inner+=`<g class="qwRise"><rect x="16" y="52" width="136" height="108" rx="11" fill="rgba(18,24,44,.96)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(84,72,12,grn,'И → умножаем',{b:1},124)+`</g>`;
+      inner+=shirtIc(56,108,11,pur,0.2)+tieIc(104,108,13,cyan,0.3);
+      inner+=`${fit(84,148,11,dim,'3 рубашки И 2 брюк',{},124)}`;
+      inner+=`<g class="qwRise" style="animation-delay:.2s"><rect x="166" y="52" width="136" height="108" rx="11" fill="rgba(18,24,44,.96)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(234,72,12,cyan,'ИЛИ → складываем',{b:1},124)+`</g>`;
+      for(let k=0;k<6;k++) inner+=dotIc(184+k*20,106,6.5,k<2?blu:pur,0.4+k*0.06);
+      inner+=`${fit(234,148,11,dim,'2 брюк ИЛИ 4 юбки',{},124)}`;
+      inner+=drawPoly([[120,166],[120,182],[200,182],[200,166]],gold,3,0.8,2.2,{pen:true});
+      inner+=`<g class="qwRise" style="animation-delay:1s"><rect x="36" y="192" width="246" height="36" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="217" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">3 · (2 + 4) = 18</text></g>`;
+      inner+=plate(20,238,278,32,go?grn:cardB,go?'сначала сложили низ, потом умножили':'как соединить два правила?',11.5);
+      inner+=`${fit(159,286,11.5,dim,'«и» соединяет выборы, «или» предлагает выбор',{},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Или умножить, или сложить</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('«и» → · , «или» → +',gold,0.1)):'')+
+        (go?wkNote('Если предметы берут вместе («и рубашка, и галстук») — числа перемножают. Если выбирают что-то одно («брюки или юбка») — числа складывают. В больших задачах оба правила работают вместе.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('два правила вместе'));
+    /* 5: три шага — маршруты */
+    } else if(step===5){
+      H=308;
+      let inner=TT('три шага: 3 · 2 · 4 = 24 маршрута','cyan');
+      const cs=[{x:44,t:'А',c:gold},{x:124,t:'Б',c:cyan},{x:204,t:'В',c:blu},{x:284,t:'Г',c:pur}];
+      cs.forEach((q,k)=>{
+        inner+=`<g class="qwPop" style="animation-delay:${(0.15+k*0.12).toFixed(2)}s">`
+          +`<circle cx="${q.x}" cy="86" r="16" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="2.2"/>`
+          +tx(q.x,92,15,q.c,q.t,{b:1,georgia:1})+`</g>`;
+      });
+      [[3,0],[2,1],[4,2]].forEach((q,gi)=>{
+        const a=cs[q[1]], b=cs[q[1]+1];
+        for(let k=0;k<q[0];k++){
+          const off=(k-(q[0]-1)/2)*9;
+          inner+=drawPoly([[a.x+16,86+off],[b.x-16,86+off]],gi===0?gold:(gi===1?cyan:blu),2.6,0.5+gi*0.4+k*0.12,1.9,{pen:(gi===2&&k===0),r:4});
+        }
+        inner+=fit((a.x+b.x)/2,132,12,gi===0?gold:(gi===1?cyan:blu),''+q[0],{b:1},30);
+      });
+      inner+=fit(84,152,11,dim,'дороги',{},70); inner+=fit(164,152,11,dim,'дороги',{},70); inner+=fit(244,152,11,dim,'дороги',{},70);
+      inner+=`<g class="qwRise" style="animation-delay:1.2s"><rect x="40" y="172" width="238" height="36" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="197" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">3 · 2 · 4 = 24</text></g>`;
+      inner+=plate(20,220,278,32,go?grn:cardB,go?'перемножаем число дорог на каждом шаге':'сколько разных маршрутов?',11.5);
+      inner+=`${fit(159,272,11.5,dim,'на каждом шаге доступны все дороги этого участка',{},296)}`;
+      inner+=`${fit(159,290,11,dim,'поэтому числа шагов перемножаются',{},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача про маршруты</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('3 · 2 · 4 = 24',cyan,0.1)):'')+
+        (go?wkNote('Из А в Б ведут 3 дороги, из Б в В — 2, из В в Г — 4. Для каждой первой дороги есть 2 продолжения, а для каждого из них — 4. Значит, маршрутов 3 · 2 · 4 = 24.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('маршруты'));
+    /* 6: двузначные с 5 */
+    } else if(step===6){
+      H=290;
+      let inner=TT('двузначные числа, которые начинаются с 5','gold');
+      inner+=`<g class="qwPop"><rect x="20" y="58" width="44" height="44" rx="9" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2"/>`
+        +tx(42,88,20,gold,'5',{b:1})+`</g>`;
+      inner+=fit(42,120,10.5,dim,'1 способ',{},70);
+      for(let k=0;k<10;k++){
+        const x=76+(k%5)*44, y=58+Math.floor(k/5)*48;
+        inner+=drawRect(x,y,40,40,8,cyan,2.6,0.4+k*0.16,1.9,{pen:k===9,r:3.5})
+          +`<g class="qwPop" style="animation-delay:${(0.7+k*0.16).toFixed(2)}s">`
+          +`<text x="${x+20}" y="${y+27}" text-anchor="middle" font-size="16" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">5${k}</text></g>`;
+      }
+      inner+=fit(298,120,10.5,dim,'10 способов',{an:'end'},80);
+      inner+=drawPoly([[64,66],[76,66]],cardB,2.4,0.9,1.8,{pen:false});
+      inner+=`<g class="qwRise" style="animation-delay:1.4s"><rect x="40" y="168" width="238" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="191" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">1 · 10 = 10</text></g>`;
+      inner+=plate(20,214,278,32,go?grn:cardB,go?'первая цифра задана, вторая — любая из 10':'сколько таких чисел?',11.5);
+      inner+=`${fit(159,266,11.5,dim,'числа: 50, 51, 52, 53, 54, 55, 56, 57, 58, 59',{},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Двузначные числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('1 · 10 = 10 чисел',gold,0.1)):'')+
+        (go?wkNote('Первая цифра уже выбрана — это 5, то есть один способ. Вторая цифра может быть любой из десяти: 0, 1, …, 9. По правилу произведения получается 1 · 10 = 10 чисел.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('перебор и подсчёт'));
+    /* 7: трёхзначные числа */
+    } else if(step===7){
+      H=288;
+      let inner=TT('трёхзначные числа: 9 · 10 · 10 = 900','cyan');
+      const pos=[{x:70,t:'сотни',d:'1…9',n:9,c:gold},{x:159,t:'десятки',d:'0…9',n:10,c:cyan},{x:248,t:'единицы',d:'0…9',n:10,c:blu}];
+      pos.forEach((q,k)=>{
+        inner+=`<g class="qwPop" style="animation-delay:${(0.2+k*0.2).toFixed(2)}s">`
+          +`<rect x="${q.x-40}" y="58" width="80" height="70" rx="11" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="2"/>`
+          +fit(q.x,80,11.5,q.c,q.t,{b:1},72)
+          +tx(q.x,110,17,q.c,''+q.n,{b:1})+`</g>`;
+        inner+=fit(q.x,146,10.5,dim,q.d,{},72);
+        if(k<2) inner+=drawPoly([[q.x+44,86],[pos[k+1].x-44,86]],gold,2.6,0.5+k*0.3,2.2,{pen:k===0,r:4});
+      });
+      inner+=`<g class="qwRise" style="animation-delay:1s"><rect x="40" y="164" width="238" height="36" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="189" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">9 · 10 · 10 = 900</text></g>`;
+      inner+=plate(20,214,278,32,go?grn:cardB,go?'нуль не может стоять первым — поэтому 9, а не 10':'почему первая цифра 9?',11.5);
+      inner+=`${fit(159,266,11.5,dim,'всего трёхзначных чисел ровно 900',{},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Трёхзначные числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('9 · 10 · 10 = 900',cyan,0.1)):'')+
+        (go?wkNote('В трёхзначном числе три позиции. Первой цифрой нуль быть не может, поэтому её выбирают 9 способами (1–9), а вторую и третью — 10 способами. Получается 9 · 10 · 10 = 900 чисел.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('числа из цифр'));
+    /* 8: без повторения */
+    } else if(step===8){
+      H=296;
+      let inner=TT('цифры не повторяются: 4 · 3 = 12','pur');
+      const digs=['1','2','3','4'];
+      digs.forEach((d2,k)=>{
+        const gx=22+k*72;
+        inner+=drawRect(gx,52,58,48,10,pur,2.6,0.2+k*0.25,2,{pen:k===0,r:4});
+        inner+=`<g class="qwPop" style="animation-delay:${(0.5+k*0.25).toFixed(2)}s">`
+          +tx(gx+29,84,22,pur,d2,{b:1})+`</g>`;
+        const rest=digs.filter((q,q2)=>q2!==k);
+        rest.forEach((q,j)=>{
+          inner+=`<g class="qwPop" style="animation-delay:${(0.8+k*0.25+j*0.08).toFixed(2)}s">`
+            +`<rect x="${gx+2+j*19}" y="116" width="17" height="24" rx="5" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="1.4"/>`
+            +tx(gx+10+j*19,133,13,cyan,q,{b:1})+`</g>`;
+        });
+      });
+      inner+=`<g class="qwRise" style="animation-delay:1.3s"><rect x="40" y="162" width="238" height="34" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="185" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">4 · 3 = 12</text></g>`;
+      inner+=plate(20,208,278,32,go?grn:cardB,go?'первую выбираем 4 способами, вторую — 3':'сколько чисел без повторов?',11.5);
+      inner+=`${fit(159,260,11.5,dim,'12, 13, 14, 21, 23, 24, 31, 32, 34, 41, 42, 43',{b:1},296)}`;
+      inner+=`${fit(159,284,11,dim,'каждый следующий выбор на один меньше',{},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Без повторения цифр</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 · 3 = 12 чисел',pur,0.1)):'')+
+        (go?wkNote('Первую цифру можно выбрать четырьмя способами. Когда она выбрана, для второй остаётся только три цифры — повторять нельзя. Значит, чисел 4 · 3 = 12.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('перебор без повторов'));
+    /* 9: коды и пароли */
+    } else if(step===9){
+      H=296;
+      let inner=TT('код из трёх знаков: 4 · 4 · 4 = 64','cyan');
+      const lets=['А','Б','В','Г'];
+      lets.forEach((L2,k)=>inner+=`<g class="qwPop" style="animation-delay:${(0.1+k*0.1).toFixed(2)}s">`
+        +`<circle cx="${36+k*30}" cy="200" r="13" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`
+        +tx(36+k*30,205,13,cyan,L2,{b:1})+`</g>`);
+      inner+=fit(159,200,11,dim,'буквы можно повторять',{},200);
+      [0,1,2].forEach(k=>{
+        const x=86+k*74;
+        inner+=drawRect(x,58,60,62,10,cyan,2.6,0.3+k*0.3,2.2,{pen:k===2,r:4});
+        inner+=`<g class="qwPop" style="animation-delay:${(0.9+k*0.3).toFixed(2)}s">`
+          +fit(x+30,86,11.5,cyan,'любая',{b:1},52)
+          +tx(x+30,110,15,cyan,'4',{b:1})+`</g>`;
+      });
+      inner+=`<g class="qwRise" style="animation-delay:1.4s"><rect x="40" y="140" width="238" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="163" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">4 · 4 · 4 = 64</text></g>`;
+      inner+=plate(20,232,278,32,go?grn:cardB,go?'64 разных кода':'сколько кодов получится?',12.5);
+      inner+=`${fit(159,280,11.5,dim,'на каждом месте — любая из четырёх букв',{},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Коды и пароли</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 · 4 · 4 = 64 кода',cyan,0.1)):'')+
+        (go?wkNote('В коде три знака, и на каждом месте может стоять любая из четырёх букв — повторять разрешено. Поэтому число кодов 4 · 4 · 4 = 64. Так же считают пароли и номера.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('коды и пароли'));
+    /* 10: меню */
+    } else if(step===10){
+      H=292;
+      let inner=TT('меню: 3 супа и 5 вторых = 15 обедов','gold');
+      for(let r=0;r<3;r++){
+        inner+=`<g class="qwSlide" style="animation-delay:${(0.15+r*0.15).toFixed(2)}s">`
+          +`<circle cx="30" cy="${76+r*46}" r="12" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.8"/>`
+          +tx(30,80+r*46,11,gold,'С'+(r+1),{b:1})+`</g>`;
+      }
+      for(let c=0;c<5;c++) inner+=`<g class="qwPop" style="animation-delay:${(0.5+c*0.08).toFixed(2)}s">`
+        +tx(76+c*46,52,11,cyan,'В'+(c+1),{b:1})+`</g>`;
+      for(let r=0;r<3;r++)for(let c=0;c<5;c++){
+        const x=56+c*46, y=62+r*46;
+        inner+=drawRect(x,y,38,38,8,grn,2.4,0.7+r*0.4+c*0.12,1.7,{pen:r===2&&c===4,r:3.5});
+      }
+      inner+=plate(20,206,278,32,go?grn:cardB,go?'3 · 5 = 15 разных обедов':'сколько клеток в таблице?',12.5);
+      inner+=`${fit(159,258,11.5,dim,'каждый суп можно соединить с любым вторым',{},296)}`;
+      inner+=`${fit(159,282,11,gold,'3 · 5 = 15',{b:1},180)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача про меню</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('3 · 5 = 15',gold,0.1)):'')+
+        (go?wkNote('В меню 3 супа и 5 вторых блюд. Обед — это суп И второе, значит варианты перемножаются: 3 · 5 = 15 разных обедов. Такая таблица сразу показывает все сочетания.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('меню и таблица'));
+    /* 11: два кубика */
+    } else if(step===11){
+      H=304;
+      let inner=TT('два кубика: 6 · 6 = 36','red');
+      for(let c=0;c<6;c++) inner+=`<g class="qwPop" style="animation-delay:${(0.1+c*0.06).toFixed(2)}s">`
+        +tx(84+c*34,58,12,cyan,''+ (c+1),{b:1})+`</g>`;
+      for(let r=0;r<6;r++) inner+=`<g class="qwPop" style="animation-delay:${(0.3+r*0.06).toFixed(2)}s">`
+        +tx(48,92+r*30,12,red,''+ (r+1),{b:1})+`</g>`;
+      for(let r=0;r<6;r++)for(let c=0;c<6;c++){
+        const x=68+c*34, y=76+r*30;
+        inner+=drawRect(x,y,30,24,6,gold,1.4,0.3+r*0.14+c*0.03,1.5,{pen:r===5&&c===5,r:3})
+          +`<g class="qwPop" style="animation-delay:${(0.5+r*0.14+c*0.03).toFixed(2)}s">`
+          +tx(x+15,y+17,11,gold,(r+1)+'+'+(c+1),{b:1})+`</g>`;
+      }
+      inner+=plate(20,264,278,32,go?grn:cardB,go?'36 разных исходов':'сколько клеток в таблице?',12.5);
+      inner+=`${fit(159,240,11.5,dim,'кубики разные, поэтому 2+1 и 1+2 — разные исходы',{b:1},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Два кубика</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('6 · 6 = 36 исходов',red,0.1)):'')+
+        (go?wkNote('Бросаем красный и синий кубик. Для каждого из 6 чисел на красном есть 6 чисел на синем: всего 6 · 6 = 36 исходов. Суммы при этом повторяются, но сами исходы разные.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('кубики и таблица'));
+    }
+    /* 12: перестановки трёх предметов */
+    else if(step===12){
+      H=296;
+      let inner=TT('перестановки: 3 · 2 · 1 = 6','pur');
+      const objs=[{t:'А',c:gold},{t:'Б',c:cyan},{t:'В',c:pur}];
+      objs.forEach((q,k)=>{ inner+=`<g class="qwPop" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+        +`<rect x="${30+k*40}" y="52" width="34" height="34" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.9"/>`
+        +tx(47+k*40,75,17,q.c,q.t,{b:1})+`</g>`; });
+      inner+=fit(200,74,11,dim,'3 предмета',{b:1},110);
+      const perms=[['А','Б','В'],['А','В','Б'],['Б','А','В'],['Б','В','А'],['В','А','Б'],['В','Б','А']];
+      perms.forEach((q,k)=>{
+        inner+=drawRect(20+(k%3)*76,110+Math.floor(k/3)*46,68,38,9,grn,2.4,0.5+k*0.2,1.8,{pen:k===5,r:3.5});
+        inner+=`<g class="qwPop" style="animation-delay:${(0.8+k*0.2).toFixed(2)}s">`
+          +tx(54+(k%3)*76,135+Math.floor(k/3)*46,15,grn,q.join(''),{b:1})+`</g>`;
+      });
+      inner+=`<g class="qwRise" style="animation-delay:1.9s"><rect x="30" y="206" width="258" height="34" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="229" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">3 · 2 · 1 = 6</text></g>`;
+      inner+=plate(20,250,278,32,go?grn:cardB,go?'шесть разных порядков':'сколько способов расставить?',12.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Перестановки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('3! = 6 способов',pur,0.1)):'')+
+        (go?wkNote('Перестановка — это расстановка предметов по порядку. На первое место можно поставить любой из 3 предметов, на второе — любой из 2 оставшихся, на третье — последний. Всего 3 · 2 · 1 = 6 способов.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('порядок важен'));
+    /* 13: четыре книги — факториал */
+    } else if(step===13){
+      H=292;
+      let inner=TT('четыре книги: 4 · 3 · 2 · 1 = 24','gold');
+      const cnt=[4,3,2,1], cols=[gold,cyan,blu,pur];
+      cnt.forEach((q,k)=>{
+        const x=44+k*62;
+        inner+=drawRect(x,54,50,44,9,cols[k],2.6,0.2+k*0.25,2,{pen:k===0,r:4});
+        inner+=`<g class="qwPop" style="animation-delay:${(0.5+k*0.25).toFixed(2)}s">`
+          +tx(x+25,84,19,cols[k],''+q,{b:1})+`</g>`;
+        inner+=fit(x+25,112,10,dim,['мест 4','осталось 3','осталось 2','последняя'][k],{},84);
+      });
+      for(let k=0;k<4;k++) inner+=bookIc(56+k*62,158,26,[gold,cyan,blu,pur][k],0.8+k*0.15);
+      inner+=drawPoly([[30,182],[288,182]],cardB,4,1.4,2.2,{pen:true});
+      inner+=`<g class="qwRise" style="animation-delay:1.5s"><rect x="40" y="196" width="238" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="219" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">4! = 4 · 3 · 2 · 1 = 24</text></g>`;
+      inner+=plate(20,240,278,32,go?grn:cardB,go?'24 способа расставить книги':'сколько способов?',12.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Факториал</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4! = 24',gold,0.1)):'')+
+        (go?wkNote('Четыре книги на полке: на первое место 4 варианта, на второе — 3, на третье — 2, на последнее — 1. Получается 4 · 3 · 2 · 1 = 24. Такую запись сокращают: 4! и читают «четыре факториал».'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('факториал'));
+    /* 14: круглый стол */
+    } else if(step===14){
+      H=296;
+      let inner=TT('за круглым столом: (4 − 1)! = 6','cyan');
+      inner+=drawCircle(159,128,66,cyan,3.6,0.2,2.6);
+      inner+=drawCircle(159,128,40,cardB,3,0.5,2,{});
+      const seats=[{a:-Math.PI/2},{a:0},{a:Math.PI/2},{a:Math.PI}];
+      seats.forEach((q,k)=>{
+        const x=159+Math.cos(q.a)*66, y=128+Math.sin(q.a)*66;
+        inner+=`<g class="qwPop" style="animation-delay:${(0.8+k*0.15).toFixed(2)}s">`
+          +`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="14" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.9"/>`
+          +tx(x,y+5,13,pur,''+ (k+1),{b:1})+`</g>`;
+      });
+      inner+=drawPoly([[159,44],[159,74]],gold,2.6,1.2,2.4,{pen:true});
+      inner+=fit(159,38,11,gold,'поворот не считается новым способом',{b:1},290);
+      inner+=`<g class="qwRise" style="animation-delay:1.6s"><rect x="40" y="206" width="238" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="229" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">(4 − 1)! = 3 · 2 · 1 = 6</text></g>`;
+      inner+=plate(20,250,278,32,go?grn:cardB,go?'шесть разных посадок':'сколько способов посадить?',12.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Круглый стол</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('повороты — один и тот же способ',cyan,0.1)):'')+
+        (go?wkNote('За круглым столом расстановки, которые отличаются только поворотом, считаются одинаковыми: если все встали и пересели на соседний стул, порядок не изменился. Поэтому способов (4 − 1)! = 3 · 2 · 1 = 6.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('круглые перестановки'));
+    /* 15: рукопожатия */
+    } else if(step===15){
+      H=302;
+      let inner=TT('рукопожатия: 4 · 3 : 2 = 6','grn');
+      const pts=[{x:96,y:82},{x:222,y:82},{x:222,y:196},{x:96,y:196}];
+      pts.forEach((q,k)=>inner+=`<g class="qwPop" style="animation-delay:${(0.15+k*0.12).toFixed(2)}s">`
+        +`<circle cx="${q.x}" cy="${q.y}" r="16" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="2.1"/>`
+        +tx(q.x,q.y+5,14,pur,'АБВГ'[k],{b:1})+`</g>`);
+      let e=0;
+      for(let i2=0;i2<4;i2++)for(let j2=i2+1;j2<4;j2++){
+        inner+=drawPoly([[pts[i2].x,pts[i2].y],[pts[j2].x,pts[j2].y]],grn,2.6,0.6+e*0.22,2.2,{pen:e===0,r:4});
+        e++;
+      }
+      inner+=`<g class="qwRise" style="animation-delay:2s"><rect x="40" y="222" width="238" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="245" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">4 · 3 : 2 = 6</text></g>`;
+      inner+=plate(20,262,278,26,go?grn:cardB,go?'шесть пар — шесть рукопожатий':'сколько линий получилось?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Когда порядок не важен</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('пара «А и Б» = пара «Б и А»',grn,0.1)):'')+
+        (go?wkNote('Четыре человека обмениваются рукопожатиями. Сначала считаем с порядком: 4 · 3 = 12, но каждая пара посчитана дважды («А и Б» и «Б и А» — одно и то же). Поэтому делим на 2: 12 : 2 = 6.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('выбор без порядка'));
+    /* 16: обратная задача */
+    } else if(step===16){
+      H=280;
+      let inner=TT('обратная задача: сколько рубашек?','gold');
+      inner+=`<g class="qwPop"><rect x="34" y="58" width="250" height="44" rx="11" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.9"/>`
+        +`<text x="159" y="87" text-anchor="middle" font-size="16" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">? · 3 = 12</text></g>`;
+      inner+=fit(159,124,12,ink,'комплектов 12, галстуков 3',{b:1},280);
+      inner+=drawPoly([[159,132],[159,158]],cyan,3,0.5,2.4,{pen:true});
+      inner+=`<g class="qwRise" style="animation-delay:.8s"><rect x="34" y="166" width="250" height="44" rx="11" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`<text x="159" y="195" text-anchor="middle" font-size="16" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">12 : 3 = 4</text></g>`;
+      inner+=plate(20,222,278,32,go?grn:cardB,go?'рубашек было 4':'как найти неизвестное число?',12.5);
+      inner+=`${fit(159,268,11.5,dim,'проверка: 4 · 3 = 12 — сходится',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Обратная задача</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('делим, если ищем множитель',gold,0.1)):'')+
+        (go?wkNote('Если известно, что комплектов 12 и в каждом участвует один из 3 галстуков, то число рубашек находим делением: 12 : 3 = 4. Правило произведения работает и в обратную сторону.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('решить',`visW390Act('${lk}','go')`))+
+        wkSml('обратный счёт'));
+    /* 17: эстафета */
+    } else if(step===17){
+      H=302;
+      let inner=TT('эстафета: 5 · 4 · 3 = 60','pur');
+      const cnt=[5,4,3], cols=[gold,cyan,blu], nm=['1-й этап','2-й этап','3-й этап'];
+      cnt.forEach((q,k)=>{
+        const x=40+k*82;
+        inner+=drawRect(x,52,66,52,10,cols[k],2.6,0.2+k*0.3,2.1,{pen:k===2,r:4});
+        inner+=`<g class="qwPop" style="animation-delay:${(0.6+k*0.3).toFixed(2)}s">`
+          +fit(x+33,74,11,cols[k],nm[k],{b:1},60)
+          +tx(x+33,96,19,cols[k],''+q,{b:1})+`</g>`;
+      });
+      for(let k=0;k<5;k++) inner+=dotIc(48+k*26,132,7.5,k<5?pur:dim,0.9+k*0.08);
+      inner+=fit(159,154,11,dim,'пять бегунов',{},180);
+      inner+=`<g class="qwRise" style="animation-delay:1.5s"><rect x="40" y="166" width="238" height="34" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="189" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">5 · 4 · 3 = 60</text></g>`;
+      inner+=plate(20,210,278,32,go?grn:cardB,go?'60 способов расставить бегунов':'сколько вариантов эстафеты?',11.5);
+      inner+=`${fit(159,262,11.5,dim,'выбрали одного — осталось на одного меньше',{},296)}`;
+      inner+=`${fit(159,284,11,dim,'это выбор с порядком (без повторений)',{},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача про эстафету</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('5 · 4 · 3 = 60',pur,0.1)):'')+
+        (go?wkNote('Из пяти бегунов выбираем трёх и расставляем по этапам. На первый этап — 5 вариантов, на второй — 4 (один уже бежит), на третий — 3. Всего 5 · 4 · 3 = 60 способов.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('выбор с порядком'));
+    /* 18: тренажёр 1 */
+    } else if(step===18){
+      H=294;
+      const opts=['12','7','34'], ok=0, done=(sel>=0);
+      let inner=TT('3 рубашки и 4 галстука — сколько комплектов?','gold');
+      [0,1,2].forEach(k=>inner+=shirtIc(48,86+k*32,11,pur,0.15+k*0.1));
+      [0,1,2,3].forEach(k=>inner+=tieIc(252,74+k*26,11,cyan,0.45+k*0.1));
+      opts.forEach((t,k)=>{
+        const x=34+k*84, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW390Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="196" width="76" height="44" rx="11" fill="${on?'rgba(19,44,35,.97)':(bad?'rgba(52,22,26,.97)':'rgba(18,24,44,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+38,225,19,c,t,{b:1,georgia:1})+(on?`<path d="M${x+56} 206 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(20,250,278,32,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! 3 · 4 = 12':'Помни: комплект — это «и», значит умножаем'):'нажми на ответ',11.5);
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: комплекты</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
-        fb+retry+
-        wkSml('a · b'));
-    } else if(step===9){
-      const H=194, py=84;
-      if(st.tr==null) st.tr=0;
-      const pool=[
-        {q:'Двузначных с 5?',a:'10',ds:['9','5']},
-        {q:'Двузначных с 9?',a:'10',ds:['9','5']},
-        {q:'Трёхзначных с 7?',a:'100',ds:['10','90']}
-      ];
-      const P=pool[st.tr%pool.length];
-      const ord=[P.a,...P.ds];
-      let inner='';
-      inner+=tx(159,30,19,ink,P.q,{b:1});
-      const X=[26,118,210],CW=86;
-      ord.forEach((o,i)=>{
-        let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qPWIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
-        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+        wkRow(done?wkBtn('ещё раз',`visW390Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('Комплект — это рубашка И галстук, поэтому числа перемножаем: 3 · 4 = 12. Сложение 3 + 4 = 7 здесь не подходит.'):'')+
+        wkSml('проверь себя'));
+    /* 19: тренажёр 2 */
+    } else if(step===19){
+      H=290;
+      const opts=['6','9','12'], ok=0, done=(sel>=0);
+      let inner=TT('двузначные числа из цифр 1, 2, 3 без повторов','pur');
+      ['1','2','3'].forEach((d2,k)=>inner+=`<g class="qwPop" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+        +`<rect x="${40+k*46}" y="52" width="38" height="38" rx="8" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.9"/>`
+        +tx(59+k*46,78,18,pur,d2,{b:1})+`</g>`);
+      inner+=fit(250,76,11,dim,'каждую цифру — один раз',{b:1},120);
+      inner+=`${fit(159,116,12,ink,'первая цифра: 3 способа, вторая: 2 способа',{b:1},292)}`;
+      opts.forEach((t,k)=>{
+        const x=34+k*84, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW390Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="140" width="76" height="44" rx="11" fill="${on?'rgba(19,44,35,.97)':(bad?'rgba(52,22,26,.97)':'rgba(18,24,44,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+38,169,19,c,t,{b:1,georgia:1})+(on?`<path d="M${x+56} 150 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
       });
-      inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qPWPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qPWPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вторая цифра — любая</text></g>`)
-        : tx(159,py+74,16,dim,'посчитай',{});
-      const fb= st.pick!=null&&st.pick===0
-        ? `<div class="wk-row"><button class="wk-btn" onclick="visW390Act('${lk}','n')">дальше →</button></div>`
-        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW390P('${lk}',${i})">${o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW390P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: числа</div>`+
+      inner+=plate(20,194,278,32,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! Это 3 · 2 = 6':'Посчитай: 3 способа и 2 способа'):'нажми на ответ',11.5);
+      inner+=`${fit(159,248,12,gold,'12, 13, 21, 23, 31, 32',{b:1},290)}`;
+      inner+=`${fit(159,274,11,dim,'повторять цифры нельзя, поэтому второй выбор меньше',{},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: числа без повторов</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
-        fb+retry+
-        wkSml('разряды множь'));
-    } else if(step===10){
-      const H=182;
-      const go=st.go||0;
+        wkRow(done?wkBtn('ещё раз',`visW390Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('Первую цифру выбираем 3 способами, вторую — 2 (одна цифра уже использована). Значит, чисел 3 · 2 = 6: 12, 13, 21, 23, 31, 32.'):'')+
+        wkSml('проверь себя'));
+    /* 20: частые ошибки */
+    } else if(step===20){
+      H=324;
+      const it=[
+        {t:'сложили вместо умножения',f:'«и» → умножаем: 4 · 3 = 12',c:gold},
+        {t:'посчитали вариант дважды',f:'без порядка делим на 2: 4 · 3 : 2',c:grn},
+        {t:'поставили 0 первым в числе',f:'первая цифра — только 1…9',c:cyan},
+        {t:'спутали «без повторения» и «с повторением»',f:'без повтора выборы уменьшаются',c:pur}
+      ];
       let inner='';
-      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
-      const items=[['независимые выборы → перемножай'],['«на каждую … по …»'],['умножаем варианты каждого шага'],['проверь: 4·3=12 · 3·2·4=24']];
-      for(let i=0;i<items.length;i++){
-        if(go>=i){
-          const ry=52+i*32;
-          inner+=`<g class="qPWIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(20,29,52,.96)':'rgba(32,44,76,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
-        }
-      }
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        inner+=`<g class="qwRise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s" filter="url(#qwsh)">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#qwbg)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#12182c">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      inner+=`${tx(159,308,11,dim,'проверяй эти четыре места',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Частые ошибки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('«и» — умножить, «без порядка» — делить',grn,0.1)):'')+
+        (go?wkNote('Чаще всего путают два правила: складывают там, где нужно умножать, и забывают делить, когда порядок не важен. Ещё две ошибки — нуль на первом месте в числе и путаница с повторением цифр.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('чтобы не ошибаться'));
+    /* 21: шпаргалка */
+    } else if(step===21){
+      H=332;
+      const rows=[
+        {t:'правило: m · n способов',c:gold},
+        {t:'дерево возможностей — все ветки',c:cyan},
+        {t:'«и» — умножаем, «или» — складываем',c:grn},
+        {t:'перестановки: n! = n · (n−1) · … · 1',c:pur},
+        {t:'выбор двух без порядка: n · (n−1) : 2',c:blu}
+      ];
+      let inner='';
+      rows.forEach((q,k)=>{
+        const y=14+k*56;
+        inner+=`<g class="qwRise" style="animation-delay:${(0.12+k*0.14).toFixed(2)}s">`
+          +`<rect x="16" y="${y}" width="286" height="40" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+26,12.5,q.c,q.t,{b:1},268)+`</g>`;
+        inner+=drawPoly([[36,y+46],[280,y+46]],q.c,2.8,0.2+k*0.14,2,{pen:k===0});
+      });
+      inner+=plate(16,294,286,26,go?grn:cardB,go?'эти пять строк — вся тема':'всё главное вместе',11.5);
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go>=4?wkRow(chip('перемножай!',gold,0.2)):'')+
-        wkRow(
-          go===0?wkBtn('шаг 1',`visW390Act('${lk}','go')`) : '',
-          go===1?wkBtn('шаг 2',`visW390Act('${lk}','go')`) : '',
-          go===2?wkBtn('шаг 3',`visW390Act('${lk}','go')`) : '',
-          go===3?wkBtn('шаг 4',`visW390Act('${lk}','go')`) : '',
-          go>=4?wkBtn('сброс',`visW390Act('${lk}','rst')`):'')+
-        wkSml('умножай')); 
-    } else if(step===11){
-      const H=182;
-      if(st.mq==null) st.mq=0;
-      const QS=[
-        {q:'4 рубашки и 3 галстука?',opts:['12','7','4'],ans:0},
-        {q:'Двузначных с 5?',opts:['10','9','5'],ans:0},
-        {q:'3·2·4?',opts:['24','9','12'],ans:0}
+        (go?wkRow(chip('умножай выборы — считай варианты',gold,0.1)):'')+
+        (go?wkNote('Вся тема в пяти строках: правило произведения, дерево возможностей, различие «и» и «или», формула перестановок и подсчёт выбора двух без порядка.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('всё главное'));
+    /* 22: карта темы */
+    } else if(step===22){
+      H=300;
+      const nodes=[
+        {x:159,y:52,t:'дерево',c:cyan},{x:58,y:132,t:'m · n',c:gold},{x:256,y:132,t:'«и» и «или»',c:grn},
+        {x:58,y:216,t:'перестановки',c:pur},{x:256,y:216,t:'без порядка',c:blu}
       ];
-      const T=QS[st.mq];
-      let inner='';
-      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
-      if(st.msel!=null){
-        inner+=`<g class="qPWPop"><text x="159" y="96" text-anchor="middle" font-size="12.4" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'перемножь'}</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
+      const ed=[[0,1],[0,2],[1,3],[2,4],[3,4],[1,2]];
+      let inner=TT('вся тема на одной карте','gold');
+      ed.forEach((e,k)=>{
+        const a=nodes[e[0]], b=nodes[e[1]];
+        inner+=drawPoly([[a.x,a.y],[b.x,b.y]],lineC,1.6,0.1+k*0.12,2.4,{pen:false});
+      });
+      nodes.forEach((n,k)=>inner+=`<g class="qwPop" style="animation-delay:${(0.3+k*0.14).toFixed(2)}s">`
+        +`<rect x="${n.x-44}" y="${n.y-17}" width="88" height="34" rx="10" fill="rgba(18,24,44,.97)" stroke="${n.c}" stroke-width="1.9"/>`
+        +fit(n.x,n.y+5,11.5,n.c,n.t,{b:1},80)+`</g>`);
+      inner+=drawPoly([[159,68],[58,116],[58,200],[256,200],[256,116],[159,68]],gold,6,0.9,2.2,{pen:true});
+      inner+=plate(20,252,278,30,go?grn:cardB,go?'всё связано в одну картину':'как устроена тема',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Карта темы</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        `<div class="wk-row" style="gap:8px">
-          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW390S('${lk}',${i})">${o}</button>`).join('')}
-          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW390Act('${lk}','nq')`):''}
-          ${st.msel!=null?wkBtn('заново',`visW390Act('${lk}','rst')`):''}
-        </div>`+
-        wkSml('перемножай'));
-    } else if(step===12){
-      const H=220, go=st.go||0;
-      let inner='';
-      inner+=tx(159,34,20,ink,'4 × 3',{b:1,georgia:1});
-      if(go){
-        inner+=outfitGrid(GX,GY,4,3,GW,12);
-        inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 12 комплектов</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('4·3 = 12',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('выложить',`visW390Act('${lk}','go')`))+
-        wkSml('умножаем выборы'));
+        (go?wkRow(chip('дерево → правило → перестановки',gold,0.1)):'')+
+        (go?wkNote('Смотри, как связана тема: дерево возможностей показывает варианты, из него получается правило произведения, а из правила — различие «и» и «или», перестановки и выбор без порядка.'):'')+
+        wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('показать',`visW390Act('${lk}','go')`))+
+        wkSml('всё вместе'));
+    /* 23: итог */
     } else {
-      const H=228;
+      H=286;
       let inner='';
-      inner+=tx(159,32,20,ink,'4 рубашки · 3 галстука',{b:1,georgia:1});
-      inner+=outfitGrid(GX,GY,4,3,GW,99);
-      inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 12</text></g>`;
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+      inner+=drawCircle(159,104,54,grn,4,0.2,2.6);
+      inner+=`<g class="qwPop" style="animation-delay:.7s">`
+        +`<text x="159" y="98" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="${ink}">4 рубашки · 3 галстука</text>`
+        +`<text x="159" y="126" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="${grn}">12</text></g>`;
+      inner+=drawPoly([[92,158],[226,158]],gold,2.6,1,2.2,{pen:true});
+      inner+=`${fit(159,186,12.5,ink,'умножаем, потому что выборы идут вместе',{b:1},290)}`;
+      inner+=`<g class="qwRise" style="animation-delay:1.2s"><rect x="20" y="204" width="278" height="36" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,227,12,gold,'жми «Понял! Проверю себя» →',{b:1},250)+`</g>`;
+      inner+=`${fit(159,266,11.5,dim,'ты разобрал правило произведения от дерева до задач',{},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Итог урока</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        quiz(lk,st)+
-        wkSml('умножаем выборы'));
+        wkNote('Запомни главное: независимые выборы перемножаются, «или» требует сложения, а когда порядок не важен — делим на число перестановок.' )+
+        wkRow(wkBtn('в начало',`visW390Act('${lk}','rst')`))+
+        wkSml('правило произведения'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
   window.VISKW[390]=visW390;
-  function visW390T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
-  window.visW390T=visW390T;
-  function visW390P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
-  window.visW390P=visW390P;
-  function visW390S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
-  window.visW390S=visW390S;
-  function visW390Act(lk,act){
+  window.visW390Pick=function(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); };
+  window.visW390Act=function(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
-    const sp=LV.step;
-    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
-    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
-    if(act==='nq'){ if(sp===11){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
-    if(act==='rst') CHS[lk]={};
+    if(act==='go'){ st.go=st.go?0:1; }
+    if(act==='rst'){ CHS[lk]={_at:st._at}; }
     chRender(0);
-  }
-  window.visW390Act=visW390Act;
+  };
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===390){ window.ARH_LESSONS[i]=L390; break; } } })();
 })();
 /* ================= УРОК 181 · Умножение десятичных дробей на 10 и 100 (v1 · «Машина запятой Архимеда», 15 слайдов, флагман) ================= */
