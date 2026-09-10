@@ -22719,434 +22719,658 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW379Act=visW379Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===379){ window.ARH_LESSONS[i]=L379; break; } } })();
 })();
-/* ================= УРОК 189 · Координатная прямая и координаты точек (v2 · «Адресная магистраль Архимеда», 16 слайдов, улучшенный) ================= */
+/* ================= УРОК 189 · Координатная прямая и координаты точек (v3 · «Адресная магистраль Архимеда», 22 шага, флагман, прорисовка на каждом слайде) ================= */
 (function(){
-  if(!window.__wk189v2css){
-    window.__wk189v2css=1;
+  if(!window.__wk189v3css){
+    window.__wk189v3css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .qPIn{animation:qPIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
-      '@keyframes qPIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qPPop{animation:qPPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qPPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qPPoint{animation:qPPoint .5s cubic-bezier(.2,.8,.3,1.5) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qPPoint{0%{transform:scale(0);opacity:0}70%{transform:scale(1.2);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qPStep{animation:qPStep .5s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qPStep{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.2);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qPGlow{animation:qPGlow 1.8s ease-in-out infinite;opacity:.4;}'+
-      '@keyframes qPGlow{0%,100%{opacity:.3}50%{opacity:.85}}';
+      '#lvis .qoIn{animation:qoIn .55s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qoIn{0%{transform:translateY(-14px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qoPop{animation:qoPop .55s cubic-bezier(.2,.9,.3,1.25) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qoPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qoRise{animation:qoRise .7s cubic-bezier(.2,.85,.3,1.08) both;}'+
+      '@keyframes qoRise{0%{transform:translateY(16px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qoGlow{animation:qoGlow 2.2s ease-in-out infinite;}'+
+      '@keyframes qoGlow{0%,100%{opacity:.3}50%{opacity:1}}'+
+      '#lvis .qoBlink{animation:qoBlink 1.5s ease-in-out infinite;}'+
+      '@keyframes qoBlink{0%,100%{opacity:.35}50%{opacity:1}}'+
+      '#lvis .qoStep{animation:qoStep 1.6s ease-in-out infinite;}'+
+      '@keyframes qoStep{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}';
     document.head.appendChild(st);
   }
   const L189 = {
     id: 189, title: 'Координатная прямая и координаты точек', ico: '📈',
     src: 'Математика · 6 класс · Координатная прямая', subj: 'math',
     explain: [
-      'Координатная прямая — прямая с началом отсчёта (0), положительные числа справа и отрицательные слева.',
-      'Координата точки — её «адрес»: точка A(−3) стоит на 3 шага левее нуля, точка B(2) — на 2 шага правее.',
-      'Расстояние между точками считаем как разность координат: 2 − (−3) = 5 — расстояние 5.',
-      'Почему так? От −3 до 0 — 3 шага, от 0 до 2 — ещё 2, всего 3 + 2 = 5.',
-      'Ловушка: не считай −3 + 2 = −1 — это не расстояние! Расстояние всегда положительное.',
-      'Совет Архимеда: нарисуй прямую и посчитай шаги пальцем — расстояние не ошибёшься.',
-      'Справа от 0 — положительные, слева — отрицательные.',
-      'Координата = число шагов от нуля со знаком.',
-      'Расстояние = |x₂ − x₁| (всегда ≥ 0).',
-      'Двигаемся по прямой: вправо — увеличиваем, влево — уменьшаем.',
-      'Тренажёр: найди расстояние между точками.',
-      'Тренажёр: найди координату (левее/правее).',
-      'Шпаргалка: координата = адрес; расстояние = |x₂−x₁| ≥ 0; шаги по прямой.',
-      'Проверь себя устно: A(−3)…B(2) → 5; −1…4 → 5; левее 2 на 3 → −1.',
-      'Проверь себя: расстояние — это шаги, а не сумма координат.',
-      'Проверь себя: расстояние между A(−3) и B(2). Ответь в тесте и жми «Понял! Проверю себя»!'
+      'Координатная прямая — это прямая, на которой выбрали начало отсчёта (точку 0), единичный отрезок и направление вправо. Справа от нуля пишут положительные числа, слева — отрицательные.',
+      'Единичный отрезок — это «шаг» прямой. Откладывая его от нуля вправо и влево, мы получаем все отметки: 1, 2, 3 и −1, −2, −3.',
+      'Координата точки — это её адрес на прямой: число, которое показывает, сколько шагов от нуля и в какую сторону. Записывают так: A(−3) или B(2).',
+      'Точка B(2) стоит на 2 шага правее нуля, а точка A(−3) — на 3 шага левее нуля. Нуль — начало отсчёта, он не положительный и не отрицательный.',
+      'Противоположные числа стоят на одинаковом расстоянии от нуля, но по разные стороны: 3 и −3, 5 и −5. Их сумма всегда равна нулю.',
+      'Модуль числа — это расстояние от нуля до точки. Обозначают двумя палочками: |−3| = 3, |2| = 2, |0| = 0. Модуль никогда не бывает отрицательным.',
+      'Сравнивать числа удобно по прямой: чем правее стоит число, тем оно больше. Поэтому 2 больше −5, а −1 больше −4.',
+      'Из двух отрицательных чисел меньше то, которое дальше от нуля: −7 меньше −3, потому что модуль у него больше.',
+      'Любое отрицательное число меньше нуля, а любое положительное — больше нуля: −100 < 0 < 3.',
+      'Расстояние между двумя точками — это длина отрезка между ними. Его считают как разность координат: из большей координаты вычитают меньшую.',
+      'Например, расстояние между A(−3) и B(2): 2 − (−3) = 5. Проверим по шагам: от −3 до 0 три шага, от 0 до 2 ещё два, всего 3 + 2 = 5.',
+      'Коротко можно записать так: расстояние = |a − b|. Модуль нужен, чтобы ответ всегда был положительным.',
+      'Ловушка: расстояние — не сумма координат! −3 + 2 = −1 — это не расстояние, а совсем другое число. Расстояние всегда положительное.',
+      'Расстояние от точки до нуля — это её модуль: от A(−3) до нуля расстояние 3, значит |−3| = 3.',
+      'Все натуральные числа, все противоположные им числа и нуль вместе называют целыми числами: …, −2, −1, 0, 1, 2, …',
+      'Отрицательные числа встречаются в жизни: температура ниже нуля, глубина моря, долг, этажи подземного паркинга.',
+      'По прямой удобно считать перемещения: если из точки −2 пройти 5 шагов вправо, получится 3. Это и есть −2 + 5 = 3.',
+      'Если пройти влево, координата уменьшается: из 3 пройти 5 шагов влево — попадём в −2, то есть 3 − 5 = −2.',
+      'Тренажёр: назови координату точки и найди расстояние между точками.',
+      'Тренажёр: чему равно расстояние между A(−4) и B(3)?',
+      'Частые ошибки: перепутать стороны (слева отрицательные, справа положительные), посчитать расстояние как сумму координат, забыть модуль и получить отрицательное расстояние.',
+      'Шпаргалка: координата — адрес точки, модуль — расстояние до нуля, сравнение — правее значит больше, расстояние = |a − b|. Проверь себя!'
     ],
     check: { q: 'Чему равно расстояние между точками A(−3) и B(2)?', choices: ['1', '5', '−1'], ans: 1,
-      exp: '2 − (−3) = 5 — расстояние 5 (от −3 до 0 три шага и от 0 до 2 ещё два).' },
+      exp: '2 − (−3) = 2 + 3 = 5.' },
     tasks: [
-      { q: 'Сколько единиц между точками −1 и 4?', kind: 'unit', ans: 5, tol: 0,
-        hints: ['От −1 до 0 один шаг, от 0 до 4 четыре.', '1 + 4 = 5.'], sol: '4 − (−1) = 5.' },
-      { q: 'Какая координата у точки на 3 левее точки с координатой 2?', kind: 'choice', choices: ['5', '−1', '−5'], ans: 1, tol: 0,
-        hints: ['Левее — значит вычитаем.', '2 − 3 = −1.'], sol: '2 − 3 = −1.' }
+      { q: 'Точка K имеет координату −4. На каком расстоянии от нуля стоит эта точка?', kind: 'unit', ans: 4, tol: 0,
+        hints: ['Расстояние от нуля — это модуль.', '|−4| = 4.'], sol: '|−4| = 4' },
+      { q: 'Какое число больше: −7 или −3?', kind: 'choice', choices: ['−3', '−7', 'они равны'], ans: 0, tol: 0,
+        hints: ['Правее на прямой — больше.', '−3 стоит правее, значит −3 больше.'], sol: '−3 > −7' }
     ]
   };
-  const ink='#f2f6ff', dim='#a6b1d2', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
-        bg0='#131c34', bg1='#0a101f', card='rgba(24,33,58,.96)', cardB='#3f5480', lineC='#33486e';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const ink='#eef2ff', dim='#a5aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff',
+        bg0='#16233c', bg1='#0a1120', card='rgba(22,30,52,.96)', cardB='#3f4d78', lineC='#364470';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.6">${t}</text>`;
+  const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
-        <linearGradient id="qPbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
-        <linearGradient id="qPgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="#c9932f"/></linearGradient>
-        <filter id="qPsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.55"/></filter>
+        <linearGradient id="qobg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <filter id="qosh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
       </defs>
-      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qPbg)"/>
-      <g opacity="0.16" stroke="#4a5f8f" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
-      <rect x="7" y="7" width="${W-14}" height="${H-14}" fill="none" stroke="#43588a" stroke-width="2.6" rx="7"/>
-      <rect x="11" y="11" width="${W-22}" height="${H-22}" fill="none" stroke="#2c3b63" stroke-width="1.3" rx="4"/>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qobg)"/>
+      <g opacity="0.12" stroke="#5a6a9a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44538a" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3858" stroke-width="1.2" rx="4"/>
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  const AX={x:20,y:100,w:278,min:-4,max:7};
-  const axPx=v=>AX.x+(v-AX.min)/(AX.max-AX.min)*AX.w;
-  function axis(){
-    let s='';
-    s+=`<rect x="${AX.x}" y="${AX.y-3.5}" width="${AX.w}" height="7" rx="3.5" fill="${gold}"/>`;
-    s+=`<path d="M ${AX.x} ${AX.y} l 9 -5 l 0 10 z" fill="${gold}"/><path d="M ${AX.x+AX.w} ${AX.y} l -9 -5 l 0 10 z" fill="${gold}"/>`;
-    for(let v=AX.min;v<=AX.max;v++){
-      const x=axPx(v);
-      s+=`<line x1="${x}" y1="${AX.y-5}" x2="${x}" y2="${AX.y+5}" stroke="#5a6f9f" stroke-width="1.8"/>`;
-      s+=tx(x,AX.y+28,15.5,v===0?ink:dim,''+v,{b:v===0});
+  /* ---------- прорисовка ---------- */
+  const polyLen=(pts)=>{let s=0;for(let i=1;i<pts.length;i++)s+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return Math.max(16,Math.round(s));};
+  const polyD=(pts)=>'M'+pts.map(q=>q[0]+' '+q[1]).join(' L');
+  const drawPoly=(pts,col,dur,beg,w,opt)=>{
+    const o=opt||{}, d=polyD(pts), L=polyLen(pts);
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w||3.2}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.7;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +(o.pen===false?'':`<circle r="${o.r||5.5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.4">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const rectPerim=(x,y,w,h,rx)=>{const r=Math.min(rx||8,Math.min(w,h)/2);
+    return `M${x+r} ${y} H${x+w-r} A${r} ${r} 0 0 1 ${x+w} ${y+r} V${y+h-r} A${r} ${r} 0 0 1 ${x+w-r} ${y+h} H${x+r} A${r} ${r} 0 0 1 ${x} ${y+h-r} V${y+r} A${r} ${r} 0 0 1 ${x+r} ${y}`;};
+  const drawRect=(x,y,w,h,rx,col,dur,beg,sw,opt)=>{
+    const o=opt||{}, r=Math.min(rx||8,Math.min(w,h)/2);
+    const L=Math.round(2*(w-2*r)+2*(h-2*r)+2*Math.PI*r), d=rectPerim(x,y,w,h,rx);
+    return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${sw||2.4}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.6;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +(o.pen===false?'':`<circle r="${o.r||5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.3">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const drawCircle=(cx,cy,r,col,dur,beg,sw)=>{
+    const L=Math.round(2*Math.PI*r), d=`M${cx} ${cy-r} A${r} ${r} 0 1 1 ${cx-0.01} ${cy-r}`;
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${sw||2.6}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;.62;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +`<circle r="5" fill="${gold}" stroke="#fffdf2" stroke-width="1.3"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`;
+  };
+  const plate=(x,y,w,h,col,txt,fs)=>`<g class="qoRise"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="rgba(22,30,52,.95)" stroke="${col}" stroke-width="1.9"/>`
+    +fit(x+w/2,y+h*0.66,fs||13,col,txt,{b:1},w-16)+`</g>`;
+  const chip=(t,c,delay)=>`<span class="qoIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const valBox=(cx,cy,t,c,opt)=>{
+    const o=opt||{}, w=(o.w||Math.max(34,(''+t).length*11+16)), h=(o.h||34);
+    return `<g class="qoPop" style="animation-delay:${(o.delay||0).toFixed(2)}s">`
+      +`<rect x="${cx-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="${o.rx||9}" fill="${o.fill||'rgba(16,22,40,.97)'}" stroke="${c}" stroke-width="${o.sw||2}"/>`
+      +tx(cx,cy+h*0.2,o.fs||15,c,t,{b:1,georgia:o.geo!==false})+`</g>`;
+  };
+  /* ---------- координатная прямая ---------- */
+  const W=318;
+  const mkLine=(x0,x1,min,max)=>({x0:x0,x1:x1,min:min,max:max});
+  const pxOf=(v,L)=>L.x0+(v-L.min)/(L.max-L.min)*(L.x1-L.x0);
+  const axisDraw=(L,y,opt)=>{
+    const o=opt||{}, s2=[];
+    s2.push(drawPoly([[L.x0-6,y],[L.x1+8,y]],o.c||ink,o.dur||2.4,o.beg||0.1,2.6,{pen:o.pen!==false,r:5}));
+    s2.push(drawPoly([[L.x1+8,y],[L.x1-2,y-6]],o.c||ink,0.5,(o.beg||0.1)+(o.dur||2.4)*0.7,2.6,{pen:false}));
+    s2.push(drawPoly([[L.x1+8,y],[L.x1-2,y+6]],o.c||ink,0.5,(o.beg||0.1)+(o.dur||2.4)*0.7,2.6,{pen:false}));
+    for(let v=L.min;v<=L.max;v++){
+      const x=pxOf(v,L), big=(v===0);
+      s2.push(`<line x1="${x}" y1="${y-(big?9:6)}" x2="${x}" y2="${y+(big?9:6)}" stroke="${big?gold:dim}" stroke-width="${big?2.6:1.6}"/>`);
+      s2.push(`<g class="qoPop" style="animation-delay:${((o.lab||0.5)+Math.abs(v)*0.05).toFixed(2)}s">`
+        +tx(x,y+22,big?14:11.5,big?gold:dim,''+v,{b:big})+`</g>`);
     }
-    return s;
-  }
-  function marker(v,label,coord,color){
-    const x=axPx(v);
-    return `<g class="qPPoint" filter="url(#qPsh)"><circle class="qPGlow" cx="${x}" cy="${AX.y}" r="18" fill="${color}" opacity="0.4"/><circle cx="${x}" cy="${AX.y}" r="12" fill="${color}" stroke="#fffdf2" stroke-width="2.4"/>
-      <rect x="${x-16}" y="${AX.y-44}" width="52" height="24" rx="6" fill="${color}" stroke="#0a1120" stroke-width="1.6"/>
-      <text x="${x+10}" y="${AX.y-27}" text-anchor="middle" font-size="14.5" fill="#0a1120" font-weight="bold">${label}(${coord})</text></g>`;
-  }
-  function stepcell(v){
-    const x=axPx(v);
-    return `<g class="qPStep"><circle cx="${x}" cy="${AX.y-26}" r="9" fill="rgba(255,215,106,.18)" stroke="${gold}" stroke-width="1.8"/></g>`;
-  }
-  const chip=(t,c,delay)=>`<span class="qPIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:19px;color:${c};font-weight:bold">${t}</span>`;
-  const Q189=[
-    {q:'A(−3) … B(2) — расстояние?',opts:['1','5','−1'],ans:1},
-    {q:'3 левее точки 2 — координата?',opts:['−1','5','−5'],ans:0}
-  ];
-  function quiz(lk,st){
-    const T=Q189[st.q||0];
-    const opts=T.opts.map((o,i)=>{
-      let bd=cardB,tc=ink,bg=card;
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:17px" onclick="visW189T('${lk}',${i})">${o}</button>`;
-    }).join('');
-    let msg='';
-    if(st.sel!=null){
-      msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! считай шаги по прямой</div>'
-        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · шаги / разность</div>';
+    return s2.join('');
+  };
+  const dotAt=(v,L,y,c,label,delay,opt)=>{
+    const o=opt||{}, x=pxOf(v,L);
+    return `<g class="qoPop" style="animation-delay:${(delay||0).toFixed(2)}s">`
+      +`<circle cx="${x}" cy="${y}" r="${o.r||7}" fill="${c}" stroke="#fffdf2" stroke-width="1.6"/>`
+      +(label?tx(x,y-(o.up||18),o.fs||11.5,c,label,{b:1}):'')+`</g>`;
+  };
+  const arcBetween=(a,b,L,y,c,delay,h)=>{
+    const xa=pxOf(a,L), xb=pxOf(b,L), hh=(h||26);
+    return drawPoly([[xa,y],[xa,y-hh],[xb,y-hh],[xb,y]],c,2.8,delay||0.6,2.4,{pen:true,r:4.5});
+  };
+  const stepsBetween=(a,b,L,y,c,delay)=>{
+    const xa=pxOf(a,L), xb=pxOf(b,L), n=Math.abs(b-a);
+    let s2='';
+    for(let k=0;k<n;k++){
+      const x=xa+(xb-xa)*((k+0.5)/n);
+      s2+=`<g class="qoPop" style="animation-delay:${((delay||0.6)+k*0.18).toFixed(2)}s">`
+        +`<circle cx="${x}" cy="${y+34}" r="8" fill="rgba(125,224,160,.18)" stroke="${c}" stroke-width="1.6"/>`
+        +tx(x,y+38,11,c,''+ (a<b? a+k+1 : a-k-1),{b:1})+`</g>`;
     }
-    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW189Act('${lk}','nq')`):'';
-    const rst=wkBtn('заново',`visW189Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
-  }
+    return s2;
+  };
   function visW189(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=15){ st.go=0; st.pick=null; }
-      if(step===11||step===12) st.pick=null;
-      if(step===14){ st.mq=0; st.msel=null; }
-      if(step===15){ st.sel=null; st.q=0; }
-    }
-    let h='';
-    const W=318;
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; }
+    const go=st.go||0, sel=(typeof st.pick==='number')?st.pick:-1;
+    let h='', H=280;
+    const TT=(t,c)=>`<g class="qoPop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#qobg)" stroke="${c||cardB}" stroke-width="1.8"/>`
+      +fit(159,32,12.5,c||ink,t,{b:1},260)+`</g>`;
+    /* 0: что такое координатная прямая */
     if(step===0){
-      const H=168, go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'координатная прямая',{b:1});
-      inner+=axis();
-      if(go){ inner+=`<g class="qPPop"><text x="159" y="152" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">прямая с «адресами»</text></g>`; }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Адресная магистраль</div>`+
+      H=292;
+      const L=mkLine(30,286,-5,5); const Y=112;
+      let inner=TT('координатная прямая','gold');
+      inner+=axisDraw(L,Y,{dur:2.6,beg:0.1,lab:0.9});
+      inner+=`<g class="qoPop" style="animation-delay:.5s"><circle cx="${pxOf(0,L)}" cy="${Y}" r="10" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/></g>`;
+      inner+=fit(pxOf(0,L),Y-20,12,gold,'начало отсчёта',{b:1},120);
+      inner+=drawPoly([[pxOf(0,L),Y-38],[pxOf(1,L),Y-38]],cyan,2.2,1.4,2.2,{pen:true,r:4});
+      inner+=fit((pxOf(0,L)+pxOf(1,L))/2,Y-48,10.5,cyan,'единичный отрезок',{b:1},120);
+      inner+=drawPoly([[pxOf(0,L)+16,Y-70],[pxOf(4,L)+10,Y-70]],grn,3,1.2,2.6,{pen:true});
+      inner+=fit(300,Y-80,11.5,grn,'положительные числа',{an:'end',b:1},150);
+      inner+=drawPoly([[pxOf(0,L)-16,Y+58],[pxOf(-4,L)-10,Y+58]],pur,3,1.4,2.6,{pen:true});
+      inner+=fit(18,Y+76,11.5,pur,'отрицательные числа',{an:'start',b:1},150);
+      inner+=plate(20,166,278,32,go?grn:cardB,go?'0 — начало отсчёта, вправо положительные':'где положительные, где отрицательные?',11.5);
+      inner+=`${fit(159,222,12,ink,'прямая + начало отсчёта + шаг + направление',{b:1},292)}`;
+      inner+=`${fit(159,248,11.5,dim,'это и есть координатная прямая',{},292)}`;
+      inner+=`${fit(159,272,11,gold,'вправо — плюс, влево — минус',{b:1},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Что такое координатная прямая</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('0 — начало отсчёта',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('что это?',`visW189Act('${lk}','go')`))+
-        wkSml('положительные справа, отрицательные слева'));
+        (go?wkRow(chip('0 · единичный отрезок · направление',gold,0.1)):'')+
+        (go?wkNote('Координатная прямая — это обычная прямая, на которой выбрали точку отсчёта 0, единичный отрезок (шаг) и направление вправо. Справа от нуля пишут положительные числа, слева — отрицательные.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('первое знакомство'));
+    /* 1: единичный отрезок */
     } else if(step===1){
-      const H=170;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'стороны прямой',{b:1});
-      inner+=axis();
-      if(go){
-        inner+=`<g class="qPPop"><text x="70" y="64" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">← минус</text>
-        <text x="250" y="64" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">плюс →</text>
-        <text x="159" y="152" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">вправо + · влево −</text></g>`;
+      H=284;
+      const L=mkLine(34,282,-3,3); const Y=104;
+      let inner=TT('единичный отрезок — это шаг','cyan');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      for(let v=1;v<=3;v++){
+        inner+=drawPoly([[pxOf(v-1,L),Y-34],[pxOf(v,L),Y-34]],cyan,1.8,0.6+v*0.35,2.2,{pen:v===3,r:4});
       }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ноль и стороны</div>`+
+      for(let v=-1;v>=-3;v--){
+        inner+=drawPoly([[pxOf(v+1,L),Y+44],[pxOf(v,L),Y+44]],pur,1.8,0.8+Math.abs(v)*0.35,2.2,{pen:v===-3,r:4});
+      }
+      inner+=fit(pxOf(2,L),Y-46,11.5,cyan,'влево шагаем в плюс',{b:1},150);
+      inner+=fit(159,Y-58,11.5,cyan,'шаги вправо: 1, 2, 3',{b:1},200);
+      inner+=fit(pxOf(-2,L),Y+66,11.5,pur,'шаги влево: −1, −2, −3',{b:1},200);
+      inner+=plate(20,160,278,32,go?grn:cardB,go?'каждый шаг равен единичному отрезку':'какой длины шаг?',11.5);
+      inner+=`${fit(159,216,12,ink,'откладываем шаг от нуля вправо и влево',{b:1},292)}`;
+      inner+=`${fit(159,242,11.5,dim,'так получаются все отметки на прямой',{},292)}`;
+      inner+=`${fit(159,266,11,gold,'1, 2, 3 — вправо; −1, −2, −3 — влево',{b:1},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шаг прямой</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('знак = сторона',gold,0.2)):'')+
+        (go?wkRow(chip('единичный отрезок = 1 шаг',cyan,0.1)):'')+
+        (go?wkNote('Единичный отрезок — это «шаг» координатной прямой. Откладывая его от нуля вправо, получаем 1, 2, 3, а влево — −1, −2, −3. Все отметки стоят на одинаковом расстоянии.'):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
-        wkSml('справа положительные, слева отрицательные'));
+        wkSml('шаг прямой'));
+    /* 2: положительные числа */
     } else if(step===2){
-      const H=176, go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'координата — адрес',{b:1});
-      inner+=axis();
-      if(go){
-        inner+=marker(-3,'A',-3,'#7fd6ff');
-        inner+=marker(2,'B',2,'#7de0a0');
-        inner+=`<g class="qPPop"><text x="159" y="160" text-anchor="middle" font-size="15" fill="${dim}">A(−3) — 3 шага влево · B(2) — 2 вправо</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Точки-дома</div>`+
+      H=280;
+      const L=mkLine(34,282,-2,6); const Y=104;
+      let inner=TT('положительные числа — справа от нуля','grn');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      [1,2,3,4,5].forEach((v,k)=>{ inner+=dotAt(v,L,Y,grn,'+'+v,0.7+k*0.14); });
+      inner+=`<g class="qoPop" style="animation-delay:.5s"><circle cx="${pxOf(0,L)}" cy="${Y}" r="8" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/></g>`;
+      inner+=drawPoly([[pxOf(0,L)+12,Y-56],[pxOf(5,L),Y-56]],grn,3.4,0.9,2.6,{pen:true});
+      inner+=fit(pxOf(3,L),Y-66,11.5,grn,'все числа больше нуля',{b:1},200);
+      inner+=plate(20,152,278,32,go?grn:cardB,go?'положительные: 1, 2, 3, 4, 5':'чем отличаются эти числа?',11.5);
+      inner+=`${fit(159,208,12,ink,'они стоят правее нуля',{b:1},292)}`;
+      inner+=`${fit(159,234,11.5,dim,'и все они больше нуля',{},292)}`;
+      inner+=`${fit(159,258,11,gold,'знак «+» часто не пишут',{b:1},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Положительные числа</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('A(−3), B(2)',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('поставить точки',`visW189Act('${lk}','go')`))+
-        wkSml('координата = число шагов от 0'));
+        (go?wkRow(chip('правее нуля — положительные',grn,0.1)):'')+
+        (go?wkNote('Справа от нуля расположены положительные числа: 1, 2, 3, 4, 5. Они больше нуля. Знак «плюс» у положительных чисел обычно не пишут, но подразумевают его.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('справа от нуля'));
+    /* 3: отрицательные числа */
     } else if(step===3){
-      const H=176, go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'сколько шагов?',{b:1});
-      inner+=axis();
-      inner+=marker(-3,'A',-3,'#7fd6ff');
-      inner+=marker(2,'B',2,'#7de0a0');
-      if(go){
-        for(let v=-3;v<2;v++) inner+=stepcell(v);
-        inner+=`<g class="qPPop"><text x="159" y="160" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold">шагов: 5</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Считаем шаги</div>`+
+      H=280;
+      const L=mkLine(34,282,-6,2); const Y=104;
+      let inner=TT('отрицательные числа — слева от нуля','pur');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      [-1,-2,-3,-4,-5].forEach((v,k)=>{ inner+=dotAt(v,L,Y,pur,''+v,0.7+k*0.14); });
+      inner+=`<g class="qoPop" style="animation-delay:.5s"><circle cx="${pxOf(0,L)}" cy="${Y}" r="8" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/></g>`;
+      inner+=drawPoly([[pxOf(0,L)-12,Y-56],[pxOf(-5,L),Y-56]],pur,3.4,0.9,2.6,{pen:true});
+      inner+=fit(pxOf(-3,L),Y-66,11.5,pur,'все числа меньше нуля',{b:1},200);
+      inner+=plate(20,152,278,32,go?grn:cardB,go?'отрицательные: −1, −2, −3, −4, −5':'чем отличаются эти числа?',11.5);
+      inner+=`${fit(159,208,12,ink,'они стоят левее нуля',{b:1},292)}`;
+      inner+=`${fit(159,234,11.5,dim,'и все они меньше нуля',{},292)}`;
+      inner+=`${fit(159,258,11,gold,'знак «минус» пишут обязательно',{b:1},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Отрицательные числа</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('A → B: 5 шагов',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('идти',`visW189Act('${lk}','go')`))+
-        wkSml('шагаем пальцем по прямой'));
+        (go?wkRow(chip('левее нуля — отрицательные',pur,0.1)):'')+
+        (go?wkNote('Слева от нуля стоят отрицательные числа: −1, −2, −3, −4, −5. Все они меньше нуля. Так записывают температуру ниже нуля, глубину и долг.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('слева от нуля'));
+    /* 4: координата точки */
     } else if(step===4){
-      const H=170;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,34,20,ink,'формула расстояния',{b:1});
-      inner+=tx(159,70,17,gold,'расстояние = |x₂ − x₁|',{b:1,georgia:1});
-      if(go){
-        inner+=`<g class="qPPop"><text x="159" y="116" text-anchor="middle" font-size="25" fill="${grn}" font-weight="bold" font-family="Georgia,serif">|2 − (−3)| = 5</text>
-        <text x="159" y="150" text-anchor="middle" font-size="15" fill="${dim}">всегда ≥ 0 — не бывает минус-расстояние</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Формула</div>`+
+      H=296;
+      const L=mkLine(30,286,-5,5); const Y=126;
+      let inner=TT('координата точки — это её адрес','gold');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      inner+=stepsBetween(0,-3,L,Y,pur,0.7);
+      inner+=stepsBetween(0,2,L,Y,grn,1.2);
+      inner+=dotAt(-3,L,Y,pur,'A(−3)',2.6,{up:18,fs:12.5});
+      inner+=dotAt(2,L,Y,grn,'B(2)',2.9,{up:18,fs:12.5});
+      inner+=fit(pxOf(-3,L),Y+72,11.5,pur,'3 шага влево',{b:1},120);
+      inner+=fit(pxOf(2,L),Y+72,11.5,grn,'2 шага вправо',{b:1},120);
+      inner+=plate(20,214,278,32,go?grn:cardB,go?'A(−3) и B(2) — адреса точек':'сколько шагов до каждой точки?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Адрес точки</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('|x₂−x₁|',grn,0.2)):'')+
+        (go?wkRow(chip('координата = шаги от нуля',gold,0.1)):'')+
+        (go?wkNote('Координата точки показывает, сколько шагов от нуля и в какую сторону. Точка A(−3) стоит на 3 шага левее нуля, а точка B(2) — на 2 шага правее. Записывают это так: A(−3), B(2).'):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
-        wkSml('модуль разности координат'));
+        wkSml('координата'));
+    /* 5: запись координат */
     } else if(step===5){
-      const H=176, go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'почему 5?',{b:1});
-      inner+=axis();
-      inner+=marker(-3,'A',-3,'#7fd6ff');
-      inner+=marker(2,'B',2,'#7de0a0');
-      if(go){
-        inner+=stepcell(-2); inner+=stepcell(-1); inner+=stepcell(0); inner+=stepcell(1);
-        inner+=`<g class="qPPop"><text x="159" y="144" text-anchor="middle" font-size="15" fill="${blu}" font-weight="bold">−3→0: 3 шага · 0→2: 2 шага</text>
-        <text x="159" y="164" text-anchor="middle" font-size="15" fill="${blu}" font-weight="bold">всего 3 + 2 = 5</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Разбор по шагам</div>`+
+      H=286;
+      const L=mkLine(26,290,-6,6); const Y=110;
+      let inner=TT('читаем и записываем координаты','cyan');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      [[-6,'K'],[0,'C'],[4,'D'],[6,'M']].forEach((q,k)=>{
+        inner+=dotAt(q[0],L,Y,[gold,grn,cyan,pur][k],q[1]+'('+q[0]+')',0.8+k*0.25,{up:18,fs:12});
+      });
+      inner+=`<g class="qoRise" style="animation-delay:1.8s"><rect x="20" y="176" width="278" height="36" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,199,12,gold,'сначала буква, потом координата в скобках',{b:1},250)+`</g>`;
+      inner+=plate(20,220,278,32,go?grn:cardB,go?'C(0) — точка стоит в нуле':'как записать точку?',11.5);
+      inner+=`${fit(159,272,11.5,dim,'координату пишут в скобках: A(−3)',{},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Запись координат</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('3 + 2 = 5',blu,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('разобрать',`visW189Act('${lk}','go')`))+
-        wkSml('через ноль считаем шаги'));
+        (go?wkRow(chip('A(−3) читают «A с координатой −3»',cyan,0.1)):'')+
+        (go?wkNote('Записывают координату так: буква, а рядом в скобках число. K(−6), C(0), D(4), M(6). Читается «точка K с координатой −6». Если точка стоит в нуле, её координата равна нулю.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('запись и чтение'));
+    /* 6: противоположные числа */
     } else if(step===6){
-      const H=172;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,36,20,ink,'ловушка',{b:1});
-      inner+=tx(159,80,30,red,'−3 + 2 = −1',{b:1,georgia:1});
-      if(go){
-        inner+=`<g class="qPPop"><text x="159" y="122" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">это НЕ расстояние!</text>
-        <text x="159" y="150" text-anchor="middle" font-size="14.5" fill="${dim}">расстояние всегда положительное</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Берегись</div>`+
+      H=290;
+      const L=mkLine(30,286,-5,5); const Y=120;
+      let inner=TT('противоположные числа','pur');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      [[-3,3],[ -5,5 ]].forEach((q,k)=>{
+        inner+=dotAt(q[0],L,Y,pur,'' + q[0],0.7+k*0.3,{up:18,fs:12.5});
+        inner+=dotAt(q[1],L,Y,cyan,'+' + q[1],0.85+k*0.3,{up:18,fs:12.5});
+      });
+      inner+=drawPoly([[pxOf(-3,L),Y-40],[pxOf(3,L),Y-40]],pur,2.6,1.1,2.4,{pen:true});
+      inner+=drawPoly([[pxOf(-5,L),Y-64],[pxOf(5,L),Y-64]],cyan,2.6,1.4,2.4,{pen:true});
+      inner+=fit(pxOf(-3,L)-6,Y+60,11,pur,'3 шага',{b:1},70);
+      inner+=fit(pxOf(3,L)+6,Y+60,11,cyan,'3 шага',{b:1},70);
+      inner+=`<g class="qoPop" style="animation-delay:.55s"><circle cx="${pxOf(0,L)}" cy="${Y}" r="8" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/></g>`;
+      inner+=plate(20,196,278,32,go?grn:cardB,go?'расстояния равны, стороны разные':'что общего у этих пар?',11.5);
+      inner+=`${fit(159,252,12,ink,'противоположные числа: 3 и −3, 5 и −5',{b:1},292)}`;
+      inner+=`${fit(159,278,11.5,dim,'их сумма всегда равна нулю',{},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Противоположные числа</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('не путай с суммой координат',red,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('проверить',`visW189Act('${lk}','go')`))+
-        wkSml('расстояние ≥ 0'));
+        (go?wkRow(chip('3 + (−3) = 0',pur,0.1)):'')+
+        (go?wkNote('Противоположные числа стоят на одинаковом расстоянии от нуля, но по разные стороны: 3 и −3, 5 и −5. Если сложить противоположные числа, всегда получится нуль: 3 + (−3) = 0.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('симметрия относительно нуля'));
+    /* 7: модуль */
     } else if(step===7){
-      const H=176, go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'пример: −1 и 4',{b:1});
-      inner+=axis();
-      inner+=marker(-1,'P',-1,'#b07fff');
-      inner+=marker(4,'Q',4,'#7de0a0');
-      if(go){
-        inner+=stepcell(0); inner+=stepcell(1); inner+=stepcell(2); inner+=stepcell(3);
-        inner+=`<g class="qPPop"><text x="159" y="160" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">4 − (−1) = 5</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ещё пример</div>`+
+      H=298;
+      const L=mkLine(30,286,-5,5); const Y=118;
+      let inner=TT('модуль — расстояние от нуля','cyan');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      inner+=drawPoly([[pxOf(-3,L),Y-34],[pxOf(0,L),Y-34]],grn,2.4,0.8,2.6,{pen:true});
+      inner+=drawPoly([[pxOf(0,L),Y-34],[pxOf(2,L),Y-34]],gold,2.4,1.2,2.6,{pen:true});
+      inner+=dotAt(-3,L,Y,pur,'A(−3)',1.6,{up:52,fs:12});
+      inner+=dotAt(2,L,Y,blu,'B(2)',1.9,{up:52,fs:12});
+      inner+=fit(pxOf(-1.5,L),Y-44,12,grn,'|−3| = 3',{b:1},100);
+      inner+=fit(pxOf(1,L),Y-44,12,gold,'|2| = 2',{b:1},100);
+      inner+=`<g class="qoPop" style="animation-delay:.6s"><circle cx="${pxOf(0,L)}" cy="${Y}" r="8" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/></g>`;
+      inner+=plate(20,182,278,32,go?grn:cardB,go?'модуль — это длина без знака':'чему равны расстояния?',11.5);
+      inner+=`${fit(159,238,12,ink,'|−3| = 3, |2| = 2, |0| = 0',{b:1},292)}`;
+      inner+=`${fit(159,264,11.5,dim,'модуль не бывает отрицательным',{},292)}`;
+      inner+=`${fit(159,286,11,gold,'обозначают двумя вертикальными палочками',{},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Модуль числа</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('1 + 4 = 5',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('сосчитать',`visW189Act('${lk}','go')`))+
-        wkSml('шаги к нулю + от нуля'));
+        (go?wkRow(chip('|−3| = 3 — это расстояние',cyan,0.1)):'')+
+        (go?wkNote('Модуль числа — это расстояние от нуля до точки. Обозначают его двумя вертикальными палочками: |−3| = 3, |2| = 2, |0| = 0. Расстояние не может быть отрицательным, поэтому модуль всегда не отрицателен.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('расстояние до нуля'));
+    /* 8: сравнение — правее значит больше */
     } else if(step===8){
-      const H=176, go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'левее 2 на 3',{b:1});
-      inner+=axis();
-      inner+=marker(2,'B',2,'#7de0a0');
-      if(go){
-        inner+=marker(-1,'?',-1,'#b07fff');
-        inner+=`<g class="qPPop"><text x="159" y="160" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">2 − 3 = −1</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Обратная задача</div>`+
+      H=286;
+      const L=mkLine(30,286,-6,6); const Y=116;
+      let inner=TT('правее — значит больше','grn');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      inner+=dotAt(-5,L,Y,red,'−5',0.8,{up:18,fs:12});
+      inner+=dotAt(2,L,Y,grn,'2',1.0,{up:18,fs:12});
+      inner+=dotAt(-4,L,Y,red,'−4',1.2,{up:18,fs:12});
+      inner+=dotAt(-1,L,Y,grn,'−1',1.4,{up:18,fs:12});
+      inner+=drawPoly([[pxOf(-5,L),Y+40],[pxOf(2,L),Y+40]],grn,3,1.6,2.6,{pen:true});
+      inner+=fit((pxOf(-5,L)+pxOf(2,L))/2,Y+58,12,grn,'2 > −5',{b:1},130);
+      inner+=drawPoly([[pxOf(-4,L),Y+74],[pxOf(-1,L),Y+74]],cyan,2.6,1.9,2.4,{pen:true});
+      inner+=fit((pxOf(-4,L)+pxOf(-1,L))/2,Y+92,12,cyan,'−1 > −4',{b:1},130);
+      inner+=plate(20,214,278,30,go?grn:cardB,go?'чем правее, тем больше':'сравни пары чисел',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравнение по прямой</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('влево — вычитаем',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('найти',`visW189Act('${lk}','go')`))+
-        wkSml('шаг влево = −'));
+        (go?wkRow(chip('правее → больше',grn,0.1)):'')+
+        (go?wkNote('Сравнивать числа удобно по координатной прямой: чем правее стоит число, тем оно больше. Число 2 правее, чем −5, значит 2 > −5. Точно так же −1 > −4.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('кто больше'));
+    /* 9: из двух отрицательных */
     } else if(step===9){
-      const H=172, go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'двигаемся по прямой',{b:1});
-      inner+=axis();
-      if(go){
-        inner+=marker(2,'B',2,'#7de0a0');
-        inner+=`<g class="qPPop"><text x="159" y="152" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">вправо — увеличиваем, влево — уменьшаем</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило движения</div>`+
+      H=288;
+      const L=mkLine(30,286,-8,2); const Y=112;
+      let inner=TT('из двух отрицательных меньше то, что дальше','red');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      inner+=dotAt(-7,L,Y,red,'−7',0.9,{up:18,fs:12});
+      inner+=dotAt(-3,L,Y,grn,'−3',1.2,{up:18,fs:12});
+      inner+=drawPoly([[pxOf(-7,L),Y+40],[pxOf(0,L),Y+40]],red,2.4,1.5,2.2,{pen:true});
+      inner+=drawPoly([[pxOf(-3,L),Y+40],[pxOf(0,L),Y+40]],grn,2.4,1.8,2.2,{pen:true});
+      inner+=fit(pxOf(-3.5,L),Y+58,11,red,'|−7| = 7 — дальше',{b:1},120);
+      inner+=fit(pxOf(-1.5,L),Y+58,11,grn,'|−3| = 3',{b:1},90);
+      inner+=`<g class="qoRise" style="animation-delay:2.1s"><rect x="40" y="${Y+72}" width="238" height="34" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
+        +`<text x="159" y="${Y+95}" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${red}">−7 &lt; −3</text></g>`;
+      inner+=plate(20,224,278,30,go?grn:cardB,go?'−7 меньше, хотя модуль больше':'сравни −7 и −3',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Два отрицательных числа</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('вправо +, влево −',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
-        wkSml('по прямой'));
+        (go?wkRow(chip('дальше от нуля — меньше',red,0.1)):'')+
+        (go?wkNote('Число −7 стоит левее, чем −3, поэтому оно меньше. Сравнить их можно и по модулю: у −7 модуль 7, у −3 модуль 3. Из двух отрицательных меньше то, у которого модуль больше.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('объясни',`visW189Act('${lk}','go')`))+
+        wkSml('отрицательные числа'));
+    /* 10: ноль в середине */
     } else if(step===10){
-      const H=172, go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,20,ink,'совет Архимеда',{b:1});
-      inner+=axis();
-      if(go){
-        inner+=stepcell(-2); inner+=stepcell(-1); inner+=stepcell(0); inner+=stepcell(1); inner+=stepcell(2);
-        inner+=`<g class="qPPop"><text x="159" y="152" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">нарисуй и посчитай шаги пальцем!</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Не ошибёшься</div>`+
+      H=282;
+      let inner=TT('любое отрицательное меньше нуля','gold');
+      inner+=`<g class="qoRise">`;
+      inner+=valBox(58,72,'−100',red,{w:76,h:40,fs:15});
+      inner+=fit(112,80,20,dim,'<',{b:1},24);
+      inner+=valBox(150,72,'0',gold,{w:46,h:40,fs:17});
+      inner+=fit(188,80,20,dim,'<',{b:1},24);
+      inner+=valBox(240,72,'3',grn,{w:46,h:40,fs:17});
+      inner+=`</g>`;
+      inner+=drawPoly([[40,104],[278,104]],cardB,4,0.6,2,{pen:true});
+      inner+=`<g class="qoRise" style="animation-delay:.8s"><rect x="20" y="126" width="278" height="38" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="151" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">−100 &lt; 0 &lt; 3</text></g>`;
+      inner+=fit(159,192,12,ink,'нуль — граница между двумя группами чисел',{b:1},292);
+      inner+=fit(159,218,11.5,dim,'он не положительный и не отрицательный',{},292);
+      inner+=plate(20,236,278,30,go?grn:cardB,go?'отрицательные < 0 < положительные':'где здесь нуль?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Нуль посередине</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('шагаем пальцем',gold,0.2)):'')+
+        (go?wkRow(chip('нуль разделяет числа',gold,0.1)):'')+
+        (go?wkNote('Нуль стоит между отрицательными и положительными числами. Любое отрицательное число меньше нуля, а любое положительное — больше. Поэтому −100 < 0 < 3. Сам нуль не положительный и не отрицательный.'):'')+
         wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
-        wkSml('наглядно = надёжно'));
+        wkSml('нуль — граница'));
+    /* 11: расстояние через разность */
     } else if(step===11){
-      const H=182, py=76;
-      if(st.tr==null) st.tr=0;
-      const pool=[
-        {q:'A(−3)…B(2)?',a:'5',ds:['1','−1']},
-        {q:'−1 … 4?',a:'5',ds:['4','3']},
-        {q:'−2 … 3?',a:'5',ds:['1','−5']},
-        {q:'1 … −2?',a:'3',ds:['1','−3']}
-      ];
-      const P=pool[st.tr%pool.length];
-      const ord=[P.a,...P.ds];
-      let inner='';
-      inner+=tx(159,32,20,ink,P.q,{b:1});
-      const X=[26,118,210],CW=86;
-      ord.forEach((o,i)=>{
-        let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qPIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
-        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
-      });
-      inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qPPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qPPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">считай шаги</text></g>`)
-        : tx(159,py+74,16,dim,'сколько шагов?',{});
-      const fb= st.pick!=null&&st.pick===0
-        ? `<div class="wk-row"><button class="wk-btn" onclick="visW189Act('${lk}','n')">дальше →</button></div>`
-        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW189P('${lk}',${i})">${o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW189P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: расстояние</div>`+
+      H=300;
+      const L=mkLine(30,286,-5,5); const Y=136;
+      let inner=TT('расстояние между точками','grn');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      inner+=dotAt(-3,L,Y,pur,'A(−3)',0.9,{up:18,fs:12.5});
+      inner+=dotAt(2,L,Y,grn,'B(2)',1.1,{up:18,fs:12.5});
+      inner+=arcBetween(-3,2,L,Y-30,pur,1.4,30);
+      inner+=stepsBetween(-3,2,L,Y,grn,1.8);
+      inner+=fit((pxOf(-3,L)+pxOf(2,L))/2,Y-84,12.5,grn,'5 шагов',{b:1},110);
+      inner+=`<g class="qoRise" style="animation-delay:2.6s"><rect x="34" y="${Y+72}" width="250" height="36" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="${Y+96}" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">2 − (−3) = 5</text></g>`;
+      inner+=plate(20,246,278,30,go?grn:cardB,go?'расстояние равно 5':'из большей координаты вычитаем меньшую',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Расстояние между точками</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (st.pick!=null&&st.pick===0?wkRow(chip('= '+P.a,grn,0.2)):'')+
-        fb+retry+
-        wkSml('|x₂ − x₁|'));
+        (go?wkRow(chip('из большей вычесть меньшую',grn,0.1)):'')+
+        (go?wkNote('Расстояние — это длина отрезка между точками. Считают его так: из большей координаты вычитают меньшую. Для A(−3) и B(2): 2 − (−3) = 2 + 3 = 5. Значит, расстояние равно 5.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('решить',`visW189Act('${lk}','go')`))+
+        wkSml('считаем расстояние'));
+    /* 12: расстояние через шаги */
     } else if(step===12){
-      const H=182, py=76;
-      if(st.tr==null) st.tr=0;
-      const pool=[
-        {q:'левее 2 на 3?',a:'−1',ds:['5','−5']},
-        {q:'правее −1 на 2?',a:'1',ds:['−3','3']},
-        {q:'левее 0 на 5?',a:'−5',ds:['5','0']},
-        {q:'правее 4 на 3?',a:'7',ds:['1','−7']}
-      ];
-      const P=pool[st.tr%pool.length];
-      const ord=[P.a,...P.ds];
-      let inner='';
-      inner+=tx(159,32,19,ink,P.q,{b:1});
-      const X=[26,118,210],CW=86;
-      ord.forEach((o,i)=>{
-        let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qPIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
-        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
+      H=300;
+      const L=mkLine(30,286,-5,5); const Y=134;
+      let inner=TT('то же самое по шагам','cyan');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      inner+=dotAt(-3,L,Y,pur,'A(−3)',0.9,{up:18,fs:12.5});
+      inner+=dotAt(2,L,Y,grn,'B(2)',1.1,{up:18,fs:12.5});
+      inner+=`<g class="qoPop" style="animation-delay:.55s"><circle cx="${pxOf(0,L)}" cy="${Y}" r="8" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/></g>`;
+      inner+=drawPoly([[pxOf(-3,L),Y-30],[pxOf(0,L),Y-30]],pur,2.4,1.3,2.4,{pen:true});
+      inner+=drawPoly([[pxOf(0,L),Y-30],[pxOf(2,L),Y-30]],grn,2.4,1.7,2.4,{pen:true});
+      inner+=fit(pxOf(-1.5,L),Y-40,12,pur,'3 шага',{b:1},90);
+      inner+=fit(pxOf(1,L),Y-40,12,grn,'2 шага',{b:1},80);
+      inner+=`<g class="qoRise" style="animation-delay:2.2s"><rect x="34" y="${Y+62}" width="250" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="${Y+85}" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">3 + 2 = 5</text></g>`;
+      inner+=plate(20,240,278,30,go?grn:cardB,go?'от −3 до 0 три шага, от 0 до 2 два шага':'посчитай шаги до нуля и от нуля',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Считаем шагами</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('шаги складываются',cyan,0.1)):'')+
+        (go?wkNote('То же расстояние можно посчитать по шагам: от −3 до нуля 3 шага, от нуля до 2 ещё 2 шага. Всего 3 + 2 = 5. Так считают расстояние, когда точки стоят по разные стороны от нуля.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('шаги и расстояние'));
+    /* 13: формула с модулем */
+    } else if(step===13){
+      H=288;
+      let inner=TT('короткая запись: расстояние = |a − b|','pur');
+      inner+=`<g class="qoRise"><rect x="46" y="58" width="226" height="48" rx="11" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.9"/>`
+        +`<text x="159" y="89" text-anchor="middle" font-size="17" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">|a − b|</text></g>`;
+      inner+=fit(159,128,12,ink,'берём разность координат и модуль',{b:1},290);
+      inner+=`<g class="qoRise" style="animation-delay:.5s"><rect x="30" y="146" width="258" height="36" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="170" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">|2 − (−3)| = |5| = 5</text></g>`;
+      inner+=drawPoly([[70,196],[248,196]],cyan,2.8,0.9,2.2,{pen:true});
+      inner+=fit(159,220,11.5,cyan,'модуль убирает знак минус',{b:1},250);
+      inner+=plate(20,236,278,30,go?grn:cardB,go?'расстояние всегда положительное':'зачем здесь модуль?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Формула расстояния</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('|a − b| — расстояние',pur,0.1)):'')+
+        (go?wkNote('Коротко расстояние записывают так: |a − b|. Сначала находим разность координат, а модуль нужен, чтобы ответ не оказался отрицательным. Для наших точек: |2 − (−3)| = |5| = 5.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('формула'));
+    /* 14: ловушка */
+    } else if(step===14){
+      H=292;
+      let inner=TT('ловушка: расстояние нельзя складывать','red');
+      inner+=`<g class="qoRise"><rect x="34" y="58" width="250" height="42" rx="11" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.9"/>`
+        +`<text x="159" y="86" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${red}">−3 + 2 = −1</text></g>`;
+      inner+=drawPoly([[60,52],[258,106]],red,2.6,0.6,3,{pen:false});
+      inner+=drawPoly([[258,52],[60,106]],red,2.6,0.6,3,{pen:false});
+      inner+=fit(159,122,11.5,red,'это не расстояние!',{b:1},220);
+      inner+=`<g class="qoRise" style="animation-delay:.7s"><rect x="34" y="140" width="250" height="42" rx="11" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.9"/>`
+        +`<text x="159" y="168" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">|2 − (−3)| = 5</text></g>`;
+      inner+=drawCircle(159,161,44,grn,2.8,1.1,2.6);
+      inner+=fit(159,208,12,ink,'расстояние всегда положительное',{b:1},292);
+      inner+=fit(159,232,11.5,dim,'поэтому нужна разность, а не сумма',{},292);
+      inner+=plate(20,248,278,30,go?grn:cardB,go?'правильный ответ — 5, а не −1':'какая запись верная?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Внимание: ошибка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('расстояние не бывает отрицательным',red,0.1)):'')+
+        (go?wkNote('Частая ошибка — сложить координаты: −3 + 2 = −1. Но это совсем другое число, оно показывает положение точки, а не расстояние. Расстояние считают разностью и берут модуль: |2 − (−3)| = 5.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('объясни',`visW189Act('${lk}','go')`))+
+        wkSml('не попадись'));
+    /* 15: целые числа */
+    } else if(step===15){
+      H=286;
+      let inner=TT('целые числа','cyan');
+      const parts=[{t:'…, −2, −1',c:pur,x:62},{t:'0',c:gold,x:159},{t:'1, 2, …',c:grn,x:254}];
+      parts.forEach((q,k)=>{
+        inner+=drawRect(q.x-46,58,92,56,12,q.c,2.6,0.2+k*0.3,2.1,{pen:k===2,r:4});
+        inner+=`<g class="qoPop" style="animation-delay:${(0.6+k*0.3).toFixed(2)}s">`
+          +fit(q.x,92,15,q.c,q.t,{b:1},84)+`</g>`;
       });
-      inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qPPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qPPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">влево −, вправо +</text></g>`)
-        : tx(159,py+74,16,dim,'найди координату',{});
-      const fb= st.pick!=null&&st.pick===0
-        ? `<div class="wk-row"><button class="wk-btn" onclick="visW189Act('${lk}','n')">дальше →</button></div>`
-        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW189P('${lk}',${i})">${o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW189P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
+      inner+=fit(62,140,11,pur,'отрицательные',{b:1},90);
+      inner+=fit(159,140,11,gold,'нуль',{b:1},90);
+      inner+=fit(254,140,11,grn,'натуральные',{b:1},90);
+      inner+=`<g class="qoRise" style="animation-delay:1.4s"><rect x="20" y="160" width="278" height="38" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,185,12.5,cyan,'все вместе — целые числа',{b:1},250)+`</g>`;
+      inner+=fit(159,224,12,ink,'натуральные, противоположные им и нуль',{b:1},292);
+      inner+=plate(20,238,278,30,go?grn:cardB,go?'целые числа: …, −2, −1, 0, 1, 2, …':'как назвать все эти числа?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Целые числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('натуральные + противоположные + нуль',cyan,0.1)):'')+
+        (go?wkNote('Все натуральные числа, все противоположные им числа и нуль вместе называют целыми числами. Они идут по порядку: …, −2, −1, 0, 1, 2, … Между соседними целыми числами других целых чисел нет.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('множество целых чисел'));
+    /* 16: отрицательные в жизни */
+    } else if(step===16){
+      H=298;
+      let inner=TT('где встречаются отрицательные числа','pur');
+      inner+=drawRect(22,52,80,150,12,cyan,3,0.2,2.2,{pen:true});
+      inner+=`<g class="qoRise" style="animation-delay:.7s">${fit(62,74,11,cyan,'термометр',{b:1},74)}</g>`;
+      inner+=`<rect x="46" y="86" width="32" height="100" rx="16" fill="rgba(127,214,255,.18)" stroke="${cyan}" stroke-width="1.6"/>`;
+      inner+=`<rect x="46" y="116" width="32" height="70" rx="16" fill="${blu}" opacity=".7"/>`;
+      inner+=tx(62,110,12,cyan,'0°',{b:1});
+      inner+=tx(62,166,12,blu,'−12°',{b:1});
+      inner+=`<g class="qoRise" style="animation-delay:1s">${fit(62,222,10.5,dim,'мороз',{},74)}</g>`;
+      inner+=drawPoly([[120,60],[290,60]],grn,2.6,0.5,2.4,{pen:true});
+      inner+=fit(206,80,11.5,grn,'высота: +8848 м — выше моря',{b:1},170);
+      inner+=drawPoly([[120,110],[290,110]],blu,2.6,0.8,2.4,{pen:true});
+      inner+=fit(206,130,11.5,blu,'глубина: −11022 м — ниже моря',{b:1},170);
+      inner+=drawPoly([[120,160],[290,160]],gold,2.6,1.1,2.4,{pen:true});
+      inner+=fit(206,180,11.5,gold,'долг: −500 ₽ — надо отдать',{b:1},170);
+      inner+=drawPoly([[120,210],[290,210]],pur,2.6,1.4,2.4,{pen:true});
+      inner+=fit(206,230,11.5,pur,'паркинг: −2 этаж — под землёй',{b:1},170);
+      inner+=plate(20,246,278,32,go?grn:cardB,go?'минус — это «ниже, меньше, долг»':'где ещё встречается минус?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Отрицательные числа вокруг нас</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('минус показывает направление вниз',pur,0.1)):'')+
+        (go?wkNote('Отрицательные числа помогают описывать то, что ниже или меньше нуля: температура мороза, глубина моря, долг, этажи подземного паркинга. Знак «минус» здесь показывает направление вниз или влево от нуля.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('минус в жизни'));
+    /* 17: перемещение по прямой */
+    } else if(step===17){
+      H=296;
+      const L=mkLine(30,286,-5,5); const Y=126;
+      let inner=TT('перемещение по прямой','gold');
+      inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
+      inner+=dotAt(-2,L,Y,pur,'старт −2',0.7,{up:20,fs:11.5});
+      inner+=dotAt(3,L,Y,grn,'финиш 3',1.0,{up:20,fs:11.5});
+      inner+=stepsBetween(-2,3,L,Y,grn,1.3);
+      inner+=drawPoly([[pxOf(-2,L),Y-40],[pxOf(3,L),Y-40]],gold,3,2.1,2.6,{pen:true});
+      inner+=fit((pxOf(-2,L)+pxOf(3,L))/2,Y-50,12,gold,'5 шагов вправо',{b:1},150);
+      inner+=`<g class="qoRise" style="animation-delay:2.5s"><rect x="34" y="${Y+72}" width="250" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="${Y+95}" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">−2 + 5 = 3</text></g>`;
+      inner+=plate(20,240,278,30,go?grn:cardB,go?'шаг вправо — прибавляем, влево — вычитаем':'куда придём из −2 через 5 шагов?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Движение по прямой</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('вправо «+», влево «−»',gold,0.1)):'')+
+        (go?wkNote('По координатной прямой удобно считать перемещения. Из точки −2 прошли 5 шагов вправо — попали в 3, значит −2 + 5 = 3. Если идти влево, координата уменьшается: 3 − 5 = −2.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('шаги и координаты'));
+    /* 18: тренажёр — координата */
+    } else if(step===18){
+      H=296;
+      const L=mkLine(30,286,-6,6); const Y=118;
+      const opts=['−4','4','0'], ok=0, done=(sel>=0);
+      let inner=TT('какая координата у точки K?','cyan');
+      inner+=axisDraw(L,Y,{dur:1.8,beg:0.1,lab:0.25});
+      inner+=dotAt(-4,L,Y,red,'K',0.9,{up:20,fs:13});
+      inner+=drawCircle(pxOf(-4,L),Y,18,red,2.6,1.1,2.6);
+      opts.forEach((t,k)=>{
+        const x=44+k*88, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW189Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="176" width="78" height="44" rx="11" fill="${on?'rgba(19,44,35,.97)':(bad?'rgba(52,22,26,.97)':'rgba(16,22,40,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+39,205,19,c,t,{b:1,georgia:1})+(on?`<path d="M${x+58} 186 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(20,232,278,32,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! K(−4) — 4 шага влево':'Считай шаги от нуля влево'):'нажми на ответ',11.5);
+      inner+=`${fit(159,284,11,dim,'влево от нуля — отрицательные числа',{},292)}`;
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: координата</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        fb+retry+
-        wkSml('влево − , вправо +'));
-    } else if(step===13){
-      const H=190;
-      const go=st.go||0;
+        wkRow(done?wkBtn('ещё раз',`visW189Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('Точка K стоит на 4 шага левее нуля, значит её координата −4. Записываем K(−4).'):'')+
+        wkSml('проверь себя'));
+    /* 19: тренажёр — расстояние */
+    } else if(step===19){
+      H=298;
+      const opts=['7','1','−7'], ok=0, done=(sel>=0);
+      let inner=TT('расстояние между A(−4) и B(3)','grn');
+      const L=mkLine(30,286,-5,5); const Y=112;
+      inner+=axisDraw(L,Y,{dur:1.8,beg:0.1,lab:0.25});
+      inner+=dotAt(-4,L,Y,pur,'A(−4)',0.8,{up:18,fs:11.5});
+      inner+=dotAt(3,L,Y,grn,'B(3)',1.0,{up:18,fs:11.5});
+      inner+=arcBetween(-4,3,L,Y-26,grn,1.2,26);
+      inner+=`${fit((pxOf(-4,L)+pxOf(3,L))/2,Y-76,12,grn,'сколько шагов?',{b:1},140)}`;
+      opts.forEach((t,k)=>{
+        const x=44+k*88, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW189Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="180" width="78" height="44" rx="11" fill="${on?'rgba(19,44,35,.97)':(bad?'rgba(52,22,26,.97)':'rgba(16,22,40,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+39,209,19,c,t,{b:1,georgia:1})+(on?`<path d="M${x+58} 190 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(20,234,278,32,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! 3 − (−4) = 7':'Вспомни: из большей вычесть меньшую'):'нажми на ответ',11.5);
+      inner+=`${fit(159,286,11,dim,'расстояние не может быть отрицательным',{},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: расстояние</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW189Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('Из большей координаты вычитаем меньшую: 3 − (−4) = 3 + 4 = 7. Расстояние равно 7. По шагам: от −4 до 0 четыре шага и от 0 до 3 три шага, всего 7.'):'')+
+        wkSml('проверь себя'));
+    /* 20: частые ошибки */
+    } else if(step===20){
+      H=312;
+      const it=[
+        {t:'перепутали стороны прямой',f:'справа положительные, слева отрицательные',c:gold},
+        {t:'посчитали расстояние как сумму',f:'нужна разность и модуль: |a − b|',c:grn},
+        {t:'получили отрицательное расстояние',f:'расстояние всегда положительное',c:cyan},
+        {t:'забыли, что модуль — это расстояние',f:'|−5| = 5, а не −5',c:pur}
+      ];
       let inner='';
-      inner+=tx(159,32,20,ink,'шпаргалка',{b:1});
-      const items=[['координата = адрес (шаги от 0)'],['расстояние = |x₂−x₁| ≥ 0'],['вправо + · влево −'],['A(−3)…B(2) = 5 шагов']];
-      for(let i=0;i<items.length;i++){
-        if(go>=i){
-          const ry=60+i*30;
-          inner+=`<g class="qPIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="24" rx="8" fill="${i%2?'rgba(24,33,58,.96)':'rgba(34,47,78,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+17,14.5,ink,items[i][0],{})}</g>`;
-        }
-      }
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        inner+=`<g class="qoRise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s" filter="url(#qosh)">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#qobg)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#0e1428">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      inner+=`${tx(159,300,11,dim,'проверяй эти четыре места',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Частые ошибки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('правее больше, расстояние через разность',grn,0.1)):'')+
+        (go?wkNote('Четыре самые частые ошибки: перепутать стороны прямой, посчитать расстояние как сумму координат, получить отрицательное расстояние и забыть, что модуль — это расстояние от нуля.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('чтобы не ошибаться'));
+    /* 21: шпаргалка */
+    } else {
+      H=324;
+      const rows=[
+        {t:'координата — адрес точки: A(−3)',c:gold},
+        {t:'правее на прямой — больше',c:grn},
+        {t:'модуль — расстояние до нуля: |−3| = 3',c:cyan},
+        {t:'расстояние = |a − b|, всегда положительное',c:pur},
+        {t:'противоположные: 3 и −3, сумма 0',c:blu}
+      ];
+      let inner='';
+      rows.forEach((q,k)=>{
+        const y=14+k*54;
+        inner+=`<g class="qoRise" style="animation-delay:${(0.12+k*0.14).toFixed(2)}s">`
+          +`<rect x="16" y="${y}" width="286" height="38" rx="10" fill="rgba(16,22,40,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+25,12,q.c,q.t,{b:1},268)+`</g>`;
+        inner+=drawPoly([[36,y+44],[280,y+44]],q.c,2.6,0.2+k*0.14,2,{pen:k===0});
+      });
+      inner+=plate(16,286,286,26,go?grn:cardB,go?'всё главное вместе':'проверь себя',11.5);
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go>=4?wkRow(chip('шагай по прямой',gold,0.2)):'')+
-        wkRow(
-          go===0?wkBtn('шаг 1',`visW189Act('${lk}','go')`) : '',
-          go===1?wkBtn('шаг 2',`visW189Act('${lk}','go')`) : '',
-          go===2?wkBtn('шаг 3',`visW189Act('${lk}','go')`) : '',
-          go===3?wkBtn('шаг 4',`visW189Act('${lk}','go')`) : '',
-          go>=4?wkBtn('сброс',`visW189Act('${lk}','rst')`):'')+
-        wkSml('расстояние ≥ 0'));
-    } else if(step===14){
-      const H=174;
-      if(st.mq==null) st.mq=0;
-      const QS=[
-        {q:'A(−3)…B(2)?',opts:['5','1','−1'],ans:0},
-        {q:'−1 … 4?',opts:['5','4','3'],ans:0},
-        {q:'левее 2 на 3?',opts:['−1','5','−5'],ans:0}
-      ];
-      const T=QS[st.mq];
-      let inner='';
-      inner+=tx(159,40,20,ink,'устная проверка',{b:1});
-      if(st.msel!=null){
-        inner+=`<g class="qPPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'считай шаги'}</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        `<div class="wk-row" style="gap:8px">
-          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW189S('${lk}',${i})">${o}</button>`).join('')}
-          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW189Act('${lk}','nq')`):''}
-          ${st.msel!=null?wkBtn('заново',`visW189Act('${lk}','rst')`):''}
-        </div>`+
-        wkSml('|x₂ − x₁|'));
-    } else {
-      const H=176;
-      let inner='';
-      inner+=tx(159,34,20,ink,'A(−3) … B(2)',{b:1,georgia:1});
-      inner+=axis();
-      inner+=marker(-3,'A',-3,'#7fd6ff');
-      inner+=marker(2,'B',2,'#7de0a0');
-      inner+=`<g class="qPPop"><text x="159" y="160" text-anchor="middle" font-size="22" fill="${grn}" font-weight="bold" font-family="Georgia,serif">расстояние = 5</text></g>`;
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        quiz(lk,st)+
-        wkSml('2 − (−3) = 5'));
+        (go?wkRow(chip('прямая, координата, модуль, расстояние',gold,0.1)):'')+
+        (go?wkNote('Вся тема в пяти строках: координата как адрес точки, сравнение по прямой, модуль как расстояние до нуля, формула расстояния между точками и противоположные числа.'):'')+
+        wkRow(go?wkBtn('сброс',`visW189Act('${lk}','rst')`):wkBtn('показать',`visW189Act('${lk}','go')`))+
+        wkSml('всё главное'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
   window.VISKW[189]=visW189;
-  function visW189T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
-  window.visW189T=visW189T;
-  function visW189P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
-  window.visW189P=visW189P;
-  function visW189S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
-  window.visW189S=visW189S;
-  function visW189Act(lk,act){
+  window.visW189Pick=function(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); };
+  window.visW189Act=function(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
-    const sp=LV.step;
-    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
-    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
-    if(act==='nq'){ if(sp===14){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
-    if(act==='rst') CHS[lk]={};
+    if(act==='go'){ st.go=st.go?0:1; }
+    if(act==='rst'){ CHS[lk]={_at:st._at}; }
     chRender(0);
-  }
-  window.visW189Act=visW189Act;
+  };
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===189){ window.ARH_LESSONS[i]=L189; break; } } })();
 })();
 /* ================= УРОК 190 · Модуль числа (v1 · «Магическая линейка Архимеда», 15 слайдов, флагман) ================= */
