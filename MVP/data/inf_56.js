@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 24 уроков (id 500–523) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 25 уроков (id 500–524) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -38,6 +38,58 @@
     [/двоичн|разряд|0 и 1|ноль|нул|единиц/i,'bits'],
     [/порядок|шаг|список|номер|строк/i,'lines']
   ];
+  const RU='АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+  const cpShift=(w,k)=>[...(w||'')].map(ch=>{const i=RU.indexOf(ch.toUpperCase()); return i<0?ch:RU[((i+k)%RU.length+RU.length)%RU.length];}).join('');
+  const cpRing=(cx,cy,r,letters,opt)=>{
+    const o=opt||{}, arr=(typeof letters==='string')?[...letters]:letters; let s2='';
+    arr.forEach((ch,k)=>{
+      const a=-Math.PI/2+k*2*Math.PI/arr.length;
+      const x=cx+Math.cos(a)*r, y=cy+Math.sin(a)*r;
+      s2+=`<text x="${x.toFixed(1)}" y="${(y+4).toFixed(1)}" text-anchor="middle" font-size="${o.fs||10.5}" font-family="Arial,Helvetica,sans-serif" font-weight="bold" fill="${o.c||ink}" paint-order="stroke" stroke="#06131a" stroke-width="2.4">${ch}</text>`;
+    });
+    return s2;
+  };
+  const cpDisc=(cx,cy,rO,rI,shift,pre,opt)=>{
+    const A=accOf(pre), o=opt||{}, inner=cpShift(RU,shift);
+    let s2='';
+    s2+=`<circle class="${pre}In" cx="${cx}" cy="${cy}" r="${rO+11}" fill="rgba(10,28,30,.95)" stroke="${A}" stroke-width="2.4"/>`;
+    s2+=`<circle cx="${cx}" cy="${cy}" r="${(rO+rI)/2}" fill="none" stroke="${cardB}" stroke-width="1.2" opacity=".8"/>`;
+    s2+=`<circle cx="${cx}" cy="${cy}" r="${rI-9}" fill="rgba(16,42,44,.95)" stroke="${cyan}" stroke-width="1.4" opacity=".7"/>`;
+    s2+=cpRing(cx,cy,rO,RU,{c:gold,fs:o.fs||10.5});
+    s2+=`<g transform="rotate(${o.rot||0} ${cx} ${cy})">`
+      +`${cpRing(cx,cy,rI,inner,{c:cyan,fs:o.fs||10.5})}</g>`;
+    s2+=`<path d="M${cx-7} ${cy-rO-14} h14 l-7 11 z" fill="${gold}"/>`;
+    s2+=`<path d="M${cx-6} ${cy-rI+2} h12 l-6 -10 z" fill="${cyan}"/>`;
+    s2+=`<circle cx="${cx}" cy="${cy}" r="9" fill="rgba(10,28,30,.97)" stroke="${gold}" stroke-width="1.6"/>`
+      +`<text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="${gold}">${shift}</text>`;
+    return s2;
+  };
+  const cpSym=(i,x,y,s,c)=>{
+    const k=((i%12)+12)%12, r=s*0.42, st=`fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round"`;
+    if(k===0) return `<circle cx="${x}" cy="${y}" r="${r}" ${st}/>`;
+    if(k===1) return `<path d="M${x} ${y-r} L${x+r} ${y+r*0.8} L${x-r} ${y+r*0.8} Z" ${st}/>`;
+    if(k===2) return `<rect x="${x-r}" y="${y-r}" width="${r*2}" height="${r*2}" rx="2" ${st}/>`;
+    if(k===3) return `<path d="M${x} ${y-r} L${x+r} ${y} L${x} ${y+r} L${x-r} ${y} Z" ${st}/>`;
+    if(k===4) return `<path d="M${x-r} ${y} H${x+r} M${x} ${y-r} V${y+r}" ${st}/>`;
+    if(k===5) return `<path d="M${x-r} ${y} L${x+r} ${y} M${x} ${y-r} L${x} ${y+r} M${x-r*0.7} ${y-r*0.7} L${x+r*0.7} ${y+r*0.7}" ${st}/>`;
+    if(k===6) return `<path d="M${x-r} ${y} A${r} ${r} 0 0 1 ${x+r} ${y}" ${st}/><line x1="${x-r}" y1="${y}" x2="${x+r}" y2="${y}" stroke="${c}" stroke-width="2"/>`;
+    if(k===7) return `<path d="M${x-r} ${y+r*0.6} L${x} ${y-r} L${x+r} ${y+r*0.6}" ${st}/><line x1="${x-r*0.6}" y1="${y+r*0.6}" x2="${x+r*0.6}" y2="${y+r*0.6}" stroke="${c}" stroke-width="2"/>`;
+    if(k===8) return `<path d="M${x-r} ${y+r} L${x+r} ${y-r} M${x+r*0.2} ${y-r} h${r*0.8} v${r*0.8}" ${st}/>`;
+    if(k===9) return `<path d="M${x-r} ${y-r} L${x+r} ${y+r} M${x-r} ${y+r} L${x+r} ${y-r}" ${st}/>`;
+    if(k===10) return `<circle cx="${x}" cy="${y-r*0.6}" r="${r*0.28}" fill="${c}"/><circle cx="${x-r*0.7}" cy="${y+r*0.5}" r="${r*0.28}" fill="${c}"/><circle cx="${x+r*0.7}" cy="${y+r*0.5}" r="${r*0.28}" fill="${c}"/>`;
+    return `<path d="M${x-r} ${y+r*0.7} L${x-r*0.3} ${y-r*0.7} L${x+r*0.3} ${y+r*0.7} L${x+r} ${y-r*0.7}" ${st}/>`;
+  };
+  const cpStrip=(x0,y,letters,cell,pre,opt)=>{
+    const o=opt||{}, hl=(o.hl!=null?o.hl:-1);
+    const arr=(typeof letters==='string')?[...letters]:letters;
+    let s2='';
+    arr.forEach((ch,k)=>{
+      const x=x0+k*cell, on=(k===hl);
+      s2+=`<rect class="${pre}Pop" style="animation-delay:${(0.05*k).toFixed(2)}s" x="${x}" y="${y}" width="${cell-2}" height="${cell-2}" rx="4" fill="${on?'rgba(255,215,106,.22)':'rgba(12,32,34,.97)'}" stroke="${on?gold:cardB}" stroke-width="${on?1.8:1}"/>`
+        +`<text x="${x+cell/2-1}" y="${y+cell*0.68}" text-anchor="middle" font-size="${cell*0.5}" font-weight="bold" fill="${on?gold:(o.c||ink)}">${ch}</text>`;
+    });
+    return s2;
+  };
   const drawC=(cx,cy,r,col,dur,beg,pre)=>{
     const L=Math.round(2*Math.PI*r);
     const d=`M${cx} ${cy-r} A${r} ${r} 0 1 1 ${cx-0.01} ${cy-r}`;
@@ -4054,6 +4106,436 @@
       s+=plate2(24,214,270,30,go?grn:cardB,go?'все четыре ответа на месте':'проверь себя устно',11.5,pre);
       return s;
     }
+    if(K==='secrettask'){ /* зачем прятать сообщение */
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="30" rx="10" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>`
+        +`${tx(159,34,12.5,gold,'как передать секретное сообщение?',{b:1})}</g>`;
+      s+=drawRR(30,60,180,50,10,cyan,2.8,0.2,2.2,pre,{pen:true});
+      s+=`<text x="120" y="92" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">ВСТРЕЧА В 5:00</text>`;
+      s+=drawLL({x:210,y:85},{x:250,y:85},cardB,2,1.2,0.6,pre);
+      s+=`<g class="${pre}Pop" style="animation-delay:1s"><rect x="248" y="58" width="46" height="54" rx="8" fill="rgba(19,44,44,.97)" stroke="${grn}" stroke-width="2.2"/>`
+        +`<path d="M256 58 v-8 a15 15 0 0 1 30 0 v8" fill="none" stroke="${grn}" stroke-width="2.6"/>`
+        +`<circle cx="271" cy="84" r="4.5" fill="${grn}"/><rect x="269" y="88" width="4" height="10" rx="2" fill="${grn}"/></g>`;
+      s+=fit(159,140,11.5,ink,'любой по пути может прочитать сообщение',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.3s"><rect x="30" y="156" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,179,11.5,gold,'поэтому сообщение шифруют — прячут по правилу',{b:1},250)+`</g>`;
+      s+=plate2(24,200,270,30,go?grn:cardB,go?'слово «шифр» значит «тайна»':'что делать с сообщением?',11.5,pre);
+      return s;
+    }
+    if(K==='caesarstory'){ /* шифр Цезаря */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,32,12.5,gold,'так шифровал Юлий Цезарь',{b:1},256)}</g>`;
+      s+=fit(159,62,11.5,ink,'каждую букву он сдвигал на 3 вперёд',{b:1},290);
+      s+=cpStrip(46,78,RU.slice(0,9),26,pre,{});
+      s+=`<path d="M120 112 h44" stroke="${gold}" stroke-width="2.4"/><path d="M158 106 l8 6 l-8 6" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=cpStrip(46,124,cpShift(RU.slice(0,9),3),26,pre,{c:cyan,hl:1});
+      s+=fit(159,166,11.5,dim,'А превращается в Г, Б — в Д, В — в Е',{},290);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="182" width="258" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.7"/>`
+        +fit(159,205,11.5,cyan,'сдвиг на 3 — это и есть ключ',{b:1},240)+`</g>`;
+      s+=plate2(24,226,270,28,go?grn:cardB,go?'Цезарь сдвигал буквы на 3':'как он это делал?',11.5,pre);
+      return s;
+    }
+    if(K==='shift3'){ /* сдвиг на три */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,cyan,'сдвигаем алфавит на 3 буквы',{b:1},256)}</g>`;
+      s+=cpStrip(30,52,RU.slice(0,12),22,pre,{});
+      s+=cpStrip(30,90,cpShift(RU.slice(0,12),3),22,pre,{c:cyan,hl:3});
+      s+=`<rect x="30" y="86" width="20" height="24" rx="4" fill="none" stroke="${gold}" stroke-width="2"/>`
+        +`<animate attributeName="x" values="30;96;96;30" keyTimes="0;.45;.9;1" dur="4.5s" repeatCount="indefinite"/>`
+        +`<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="4.5s" repeatCount="indefinite"/>`;
+      s+=fit(159,126,11,dim,'нижняя строка «уезжает» на 3 клетки вправо',{},290);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.2s"><rect x="30" y="142" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,165,11.5,gold,'теперь А стоит над Г, Б над Д',{b:1},240)+`</g>`;
+      s+=plate2(24,186,270,30,go?grn:cardB,go?'читаем букву сверху, пишем снизу':'что произошло с алфавитом?',11.5,pre);
+      s+=`${fit(159,238,11,dim,'это самый простой шифр — шифр сдвига',{},290)}`;
+      return s;
+    }
+    if(K==='cipherdisc'){ /* шифровальный круг */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,gold,'шифровальный круг: два алфавита',{b:1},256)}</g>`;
+      s+=cpDisc(159,150,78,54,3,pre,{rot:0});
+      s+=`<g><animateTransform attributeName="transform" type="rotate" values="0 159 150;30 159 150;0 159 150" dur="6s" repeatCount="indefinite"/>`
+        +`<circle cx="159" cy="150" r="40" fill="none" stroke="${cyan}" stroke-width="1" opacity=".35" stroke-dasharray="5 6"/></g>`;
+      s+=fit(159,54,10.5,gold,'внешний круг — обычные буквы',{an:'start'},150);
+      s+=fit(303,88,10.5,cyan,'внутренний — сдвинутые',{an:'end'},150);
+      s+=plate2(24,240,270,28,go?grn:cardB,go?'круг поворачивают на ключ — на 3 буквы':'как устроен круг?',11.5,pre);
+      return s;
+    }
+    if(K==='cipherenc'){ /* шифруем по кругу */
+      const word='КОТ', sh=3, cx=108, cy=124, rO=72, rI=48;
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,gold,'шифруем слово КОТ сдвигом 3',{b:1},256)}</g>`;
+      s+=cpDisc(cx,cy,rO,rI,sh,pre,{rot:0,fs:9.5});
+      [...word].forEach((ch,k)=>{
+        const i=RU.indexOf(ch), out=RU[(i+sh)%RU.length];
+        const a1=-Math.PI/2+i*2*Math.PI/RU.length, a2=-Math.PI/2+((i+sh)%RU.length)*2*Math.PI/RU.length;
+        const x1=cx+Math.cos(a1)*rO, y1=cy+Math.sin(a1)*rO;
+        const x2=cx+Math.cos(a2)*rI, y2=cy+Math.sin(a2)*rI;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.6+k*0.5).toFixed(2)}s"><circle cx="${x1.toFixed(1)}" cy="${y1.toFixed(1)}" r="8" fill="rgba(255,215,106,.22)" stroke="${gold}" stroke-width="1.6"/></g>`;
+        s+=`<circle class="${pre}Pop" r="5" fill="${gold}" style="animation-delay:${(0.7+k*0.5).toFixed(2)}s"><animateMotion dur="3s" begin="${(0.7+k*0.5).toFixed(2)}s" repeatCount="indefinite" path="M${x1.toFixed(1)} ${y1.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}"/></circle>`;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(1+k*0.5).toFixed(2)}s"><circle cx="${x2.toFixed(1)}" cy="${y2.toFixed(1)}" r="8" fill="rgba(127,214,255,.22)" stroke="${cyan}" stroke-width="1.6"/></g>`;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(1.2+k*0.5).toFixed(2)}s"><rect x="${216}" y="${58+k*34}" width="86" height="28" rx="7" fill="rgba(12,32,34,.97)" stroke="${cyan}" stroke-width="1.6"/>`
+          +`<text x="${248}" y="${78+k*34}" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">${ch} → ${out}</text></g>`;
+      });
+      s+=plate2(22,214,116,30,go?grn:cardB,go?'К→Н, О→С, Т→Х':'какая буква получится?',10.5,pre);
+      s+=`${fit(240,244,12,gold,'КОТ → НСХ',{b:1},120)}`;
+      return s;
+    }
+    if(K==='cipherdec'){ /* расшифровываем */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,grn,'расшифровка — сдвиг назад',{b:1},256)}</g>`;
+      s+=fit(159,62,13,cyan,'шифр: НСХ',{b:1,georgia:1},200);
+      s+=`<path d="M159 74 v16" stroke="${grn}" stroke-width="2.4"/><path d="M154 84 l5 7 l5 -7" fill="none" stroke="${grn}" stroke-width="2.4"/>`;
+      s+=fit(159,110,12,ink,'сдвигаем каждую букву на 3 назад',{b:1},290);
+      s+=cpStrip(46,126,RU.slice(11,20),24,pre,{c:cyan,hl:2});
+      s+=cpStrip(46,158,cpShift(RU.slice(11,20),-3),24,pre,{c:grn,hl:2});
+      s+=fit(159,200,13,gold,'получилось: КОТ',{b:1,georgia:1},240);
+      s+=plate2(24,214,270,30,go?grn:cardB,go?'тот же ключ 3, только со знаком минус':'как читать шифр?',11.5,pre);
+      s+=`${fit(159,266,11,dim,'у кого ключ — тот и прочитает',{},290)}`;
+      return s;
+    }
+    if(K==='keyidea'){ /* что такое ключ */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,gold,'ключ — число сдвига',{b:1},256)}</g>`;
+      s+=drawRR(30,54,120,54,10,gold,2.6,0.2,2,pre,{pen:true});
+      s+=fit(90,78,11.5,gold,'слово ПРИВЕТ',{b:1},110);
+      s+=fit(90,98,11,cyan,'ключ 3',{b:1},110);
+      s+=`<path d="M150 81 h28" stroke="${A}" stroke-width="2.2"/><path d="M172 75 l8 6 l-8 6" fill="none" stroke="${A}" stroke-width="2.2"/>`;
+      s+=drawRR(188,54,106,54,10,cyan,2.6,0.5,2,pre,{pen:true});
+      s+=`<text x="241" y="86" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">ТУЛЕЗИХ</text>`;
+      s+=fit(159,132,11.5,ink,'другой ключ — совсем другой шифр',{b:1},290);
+      s+=cpStrip(30,150,RU.slice(0,10),26,pre,{});
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><text x="159" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="${gold}">ключ 3</text></g>`;
+      s+=cpStrip(30,206,cpShift(RU.slice(0,10),3),26,pre,{c:gold});
+      s+=plate2(24,242,270,30,go?grn:cardB,go?'ключ меняет шифр полностью':'что такое ключ?',11.5,pre);
+      return s;
+    }
+    if(K==='keyvars'){ /* сколько ключей */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,pur,'сколько бывает ключей',{b:1},256)}</g>`;
+      s+=fit(159,64,12,ink,'в русском алфавите 32 буквы',{b:1},290);
+      for(let k=0;k<8;k++){
+        const x=30+k*34;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.12).toFixed(2)}s">`
+          +`<rect x="${x}" y="82" width="30" height="30" rx="6" fill="rgba(12,32,34,.97)" stroke="${pur}" stroke-width="1.5"/>`
+          +tx(x+15,103,11,pur,''+k,{b:1})+`</g>`;
+      }
+      s+=fit(159,132,12,dim,'… и так до 31',{b:1},200);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.2s"><rect x="46" y="150" width="226" height="36" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="175" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">32 варианта ключа</text></g>`;
+      s+=plate2(24,196,270,30,go?grn:cardB,go?'ключ от 0 до 31 — всего 32':'сколько вариантов?',11.5,pre);
+      s+=`${fit(159,248,11,dim,'сдвиг 0 ничего не меняет — он бесполезен',{},290)}`;
+      return s;
+    }
+    if(K==='alpha'){ /* лента алфавита */
+      const word='ШКОЛА';
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,gold,'шифруем ШКОЛА по ленте',{b:1},256)}</g>`;
+      s+=fit(20,60,11,ink,'буквы слова:',{an:'start',b:1},110);
+      [...word].forEach((ch,k)=>{
+        const i=RU.indexOf(ch);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.12).toFixed(2)}s">`
+          +`<rect x="${112+k*36}" y="46" width="32" height="28" rx="6" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
+          +tx(128+k*36,66,13,gold,ch,{b:1})+`</g>`;
+      });
+      s+=fit(20,104,11,cyan,'шифр:',{an:'start',b:1},60);
+      [...word].forEach((ch,k)=>{
+        const out=cpShift(ch,3);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.9+k*0.35).toFixed(2)}s">`
+          +`<rect x="${86+k*40}" y="90" width="36" height="30" rx="6" fill="rgba(16,42,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`
+          +tx(104+k*40,111,14,cyan,out,{b:1})+`</g>`;
+        if(k===0) s+=`<path d="M128 76 v12" stroke="${A}" stroke-width="1.8" class="${pre}Dash"/>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:2.6s"><rect x="30" y="136" width="258" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.7"/>`
+        +`<text x="159" y="159" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">ШКОЛА → ЫНСОГ</text></g>`;
+      s+=plate2(24,180,270,30,go?grn:cardB,go?'каждая буква сдвинулась на 3':'как изменилось слово?',11.5,pre);
+      s+=`${fit(159,232,11,dim,'смотри внимательно: Я сдвигается в Б',{},290)}`;
+      return s;
+    }
+    if(K==='ciphex1'){ /* пошаговый пример */
+      const pairs=[['К','Н'],['О','С'],['Т','Х']];
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,cyan,'каждая буква по отдельности',{b:1},256)}</g>`;
+      pairs.forEach((q,k)=>{
+        const y=56+k*56;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.2+k*0.35).toFixed(2)}s">`
+          +`<rect x="46" y="${y}" width="60" height="44" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="2"/>`
+          +tx(76,y+32,18,gold,q[0],{b:1})
+          +`<path d="M112 ${y+22} h24" stroke="${A}" stroke-width="2.2"/><path d="M130 ${y+16} l8 6 l-8 6" fill="none" stroke="${A}" stroke-width="2.2"/>`
+          +`<rect x="150" y="${y}" width="60" height="44" rx="9" fill="rgba(16,42,44,.97)" stroke="${cyan}" stroke-width="2"/>`
+          +tx(180,y+32,18,cyan,q[1],{b:1})
+          +fit(248,y+22,10.5,dim,'буква '+(k+1),{},80)
+          +fit(248,y+38,10.5,gold,'сдвиг +3',{},80)+`</g>`;
+      });
+      s+=plate2(24,232,270,30,go?grn:cardB,go?'из трёх букв получилось НСХ':'что получится из каждой буквы?',11.5,pre);
+      return s;
+    }
+    if(K==='ciphex2'){ /* пример: Я переходит в Б */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,red,'важный случай: буквы идут по кругу',{b:1},256)}</g>`;
+      s+=cpStrip(24,54,RU.slice(28,32),32,pre,{c:gold,hl:3});
+      s+=`<path d="M136 96 q40 -22 80 0" fill="none" stroke="${red}" stroke-width="2.4" stroke-dasharray="6 5"/>`;
+      s+=`<circle r="5" fill="${red}"><animateMotion dur="3s" repeatCount="indefinite" path="M144 92 Q176 70 208 92"/></circle>`;
+      s+=cpStrip(24,110,RU.slice(0,4),32,pre,{c:cyan,hl:2});
+      s+=fit(159,158,11.5,ink,'после Я алфавит начинается сначала',{b:1},290);
+      s+=fit(159,182,11,dim,'поэтому Я + 3 = В (Я, А, Б, В)',{},290);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="40" y="198" width="238" height="34" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.7"/>`
+        +fit(159,221,11.5,red,'если забыть про круг — получится ошибка',{b:1},230)+`</g>`;
+      s+=plate2(24,220,270,30,go?grn:cardB,go?'алфавит замкнут в круг':'что происходит в конце алфавита?',11.5,pre);
+      return s;
+    }
+    if(K==='revword'){ /* читаем наоборот */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${blu}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,blu,'самый простой способ: читать наоборот',{b:1},256)}</g>`;
+      const w='СЕКРЕТ';
+      [...w].forEach((ch,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.2+k*0.1).toFixed(2)}s">`
+          +`<rect x="${34+k*38}" y="56" width="34" height="32" rx="6" fill="rgba(12,32,34,.97)" stroke="${blu}" stroke-width="1.6"/>`
+          +tx(51+k*38,78,13,blu,ch,{b:1})+`</g>`;
+      });
+      [...w].reverse().forEach((ch,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.9+k*0.12).toFixed(2)}s">`
+          +`<rect x="${34+k*38}" y="110" width="34" height="32" rx="6" fill="rgba(16,42,44,.97)" stroke="${gold}" stroke-width="1.6"/>`
+          +tx(51+k*38,132,13,gold,ch,{b:1})+`</g>`;
+      });
+      s+=`<path d="M34 96 q120 26 240 0" fill="none" stroke="${cyan}" stroke-width="2" stroke-dasharray="6 5"/>`;
+      s+=fit(159,166,11.5,ink,'ТЕРЕКС вместо СЕКРЕТ',{b:1},290);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.8s"><rect x="30" y="182" width="258" height="34" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.7"/>`
+        +fit(159,205,11.5,red,'такой шифр легко разгадать — буквы просто переставили',{b:1},246)+`</g>`;
+      s+=plate2(24,226,270,28,go?grn:cardB,go?'этот способ называют «перестановка»':'чем этот способ слабее?',11.5,pre);
+      return s;
+    }
+    if(K==='numcode'){ /* буквы как числа */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,cyan,'заменяем буквы числами: А = 1, Б = 2',{b:1},256)}</g>`;
+      for(let k=0;k<10;k++){
+        const x=26+k*29;
+        s+=drawRR(x,52,26,34,6,k===0?gold:cardB,2,0.15+k*0.08,1.5,pre,{pen:k===0,r:3});
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.5+k*0.08).toFixed(2)}s">`
+          +tx(x+13,68,11,ink,RU[k],{b:1})+tx(x+13,82,10,dim,''.concat(k+1),{})+`</g>`;
+      }
+      s+=fit(159,110,11,dim,'…и так до Я = 32',{b:1},200);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.2s"><rect x="30" y="126" width="258" height="38" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="151" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">КОТ = 11 15 19</text></g>`;
+      s+=fit(159,184,11.5,ink,'числа передавать проще, чем буквы',{b:1},290);
+      s+=plate2(24,200,270,30,go?grn:cardB,go?'числовой шифр — замена букв числами':'как превратить буквы в числа?',11.5,pre);
+      s+=`${fit(159,252,11,dim,'но такой шифр тоже легко разгадать',{},290)}`;
+      return s;
+    }
+    if(K==='symcode'){ /* шифр символами */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,pur,'у каждой буквы — свой значок',{b:1},256)}</g>`;
+      for(let k=0;k<12;k++){
+        const x=30+(k%6)*48, y=k<6?54:106;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.07).toFixed(2)}s">`
+          +`<rect x="${x-20}" y="${y-20}" width="40" height="40" rx="8" fill="rgba(12,32,34,.97)" stroke="${pur}" stroke-width="1.4"/>`
+          +tx(x,y-8,11,ink,RU[k],{b:1})+cpSym(k,x,y+8,15,pur)+`</g>`;
+      }
+      s+=fit(159,144,11,dim,'это ключ шифра — таблица значков',{b:1},290);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.4s"><rect x="34" y="158" width="250" height="40" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="100" y="184" text-anchor="middle" font-size="13" font-weight="bold" fill="${ink}">ДОМ =</text>`;
+      [4,14,12].forEach((idx,k2)=>{ s+=cpSym(idx,150+k2*40,178,22,pur); });
+      s+=`</g>`;
+      s+=plate2(24,212,270,30,go?grn:cardB,go?'без таблицы значки не прочитать':'что здесь ключ?',11.5,pre);
+      return s;
+    }
+    if(K==='keysecret'){ /* ключ в секрете */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,gold,'что можно знать всем, а что нельзя',{b:1},256)}</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.15s"><rect x="22" y="52" width="130" height="86" rx="11" fill="rgba(19,60,44,.55)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(87,76,11.5,grn,'можно знать',{b:1},116)
+        +fit(87,100,10.5,dim,'способ шифрования',{},116)
+        +fit(87,118,10.5,dim,'сам круг',{},116)+`</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.35s"><rect x="166" y="52" width="130" height="86" rx="11" fill="rgba(52,22,26,.6)" stroke="${red}" stroke-width="1.8"/>`
+        +fit(231,76,11.5,red,'нельзя никому',{b:1},116)
+        +fit(231,100,10.5,dim,'число-ключ',{},116)
+        +fit(231,118,10.5,dim,'и текст без ключа',{},116)+`</g>`;
+      s+=drawLL({x:154,y:95},{x:164,y:95},cardB,2,0.9,0.6,pre);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="26" y="152" width="266" height="36" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,176,11.5,gold,'секретен именно ключ, а не способ',{b:1},250)+`</g>`;
+      s+=plate2(24,198,270,30,go?grn:cardB,go?'потеряешь ключ — никто не прочитает':'что держат в секрете?',11.5,pre);
+      s+=`${fit(159,250,11,dim,'поэтому ключ хранят отдельно от шифра',{},290)}`;
+      return s;
+    }
+    if(K==='brute'){ /* перебор всех ключей */
+      const cipher='ТУЛЕЗИХ';
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,cyan,'пробуем все ключи по порядку',{b:1},256)}</g>`;
+      s+=fit(159,54,11.5,dim,'шифр: ТУЛЕЗИХ',{b:1},200);
+      for(let k=0;k<7;k++){
+        const y=70+k*28, ok=(k===3);
+        const word=cpShift(cipher,-k);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.2+k*0.08).toFixed(2)}s">`
+          +`<rect x="34" y="${y}" width="250" height="24" rx="6" fill="${ok?'rgba(19,60,44,.75)':'rgba(12,32,34,.97)'}" stroke="${ok?grn:cardB}" stroke-width="${ok?1.8:1.2}"/>`
+          +fit(74,y+17,10.5,dim,'ключ '+k,{},78)
+          +`<text x="200" y="${y+17}" text-anchor="middle" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${ok?grn:ink}">${word}</text></g>`;
+        if(!ok) s+=`<g class="${pre}Blink}" style="animation-delay:${(0.4+k*0.3).toFixed(2)}s"><circle cx="300" cy="${y+12}" r="6" fill="none" stroke="${red}" stroke-width="1.8"/></g>`;
+      }
+      s+=`<g class="${pre}Pop" style="animation-delay:1.8s"><circle cx="300" cy="154" r="8" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+        +`<path d="M296 154 l3 4 l6 -7" fill="none" stroke="${grn}" stroke-width="2.2"/></g>`;
+      s+=plate2(34,268,250,28,go?grn:cardB,go?'ключ 3 — текст читается: ПРИВЕТ':'какой ключ подойдёт?',11,pre);
+      return s;
+    }
+    if(K==='crackword'){ /* взлом по знакомому слову */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,pur,'если одно слово известно — ключ найден',{b:1},256)}</g>`;
+      s+=fit(159,62,12,cyan,'шифр: ТУЛЕЗИХ',{b:1},200);
+      s+=fit(159,88,11.5,dim,'мы знаем, что в тексте есть слово ПРИВЕТ',{},290);
+      const pairs=[['П','Т'],['Р','У'],['И','Л']];
+      pairs.forEach((q,k)=>{
+        const x=68+k*74;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.4+k*0.25).toFixed(2)}s">`
+          +`<rect x="${x-24}" y="108" width="48" height="38" rx="8" fill="rgba(16,42,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`
+          +tx(x,132,15,cyan,q[0],{b:1})
+          +`<path d="M${x-6} 152 v12" stroke="${A}" stroke-width="1.8"/>`
+          +`<rect x="${x-24}" y="166" width="48" height="38" rx="8" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.7"/>`
+          +tx(x,190,15,gold,q[1],{b:1})+`</g>`;
+      });
+      s+=fit(159,224,11.5,ink,'сдвиг между буквами одинаковый — это и есть ключ',{b:1},292);
+      s+=plate2(24,238,270,30,go?grn:cardB,go?'П→Т даёт сдвиг 3 — ключ найден':'как узнать ключ?',11.5,pre);
+      return s;
+    }
+    if(K==='cpdial'){ /* интерактив: крутим круг */
+      const cipher='НСХ', sh=(st&&typeof st.sh==='number')?st.sh:0;
+      const word=cpShift(cipher,-sh);
+      let s=`<g class="${pre}Pop"><rect x="16" y="12" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${fit(159,31,Math.min(11.5,250/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Крути круг и расшифруй слово',{b:1})}</g>`;
+      s+=`<circle cx="106" cy="142" r="78" fill="rgba(10,28,30,.95)" stroke="${A}" stroke-width="2.2"/>`;
+      s+=cpRing(106,142,66,RU,{c:gold,fs:9});
+      s+=`<g transform="rotate(${(sh*360/RU.length).toFixed(1)} 106 142)">${cpRing(106,142,50,cpShift(RU,sh),{c:cyan,fs:9})}</g>`;
+      s+=`<path d="M99 62 h14 l-7 10 z" fill="${gold}"/>`;
+      s+=`<circle cx="106" cy="142" r="16" fill="rgba(10,28,30,.97)" stroke="${gold}" stroke-width="1.6"/>`
+        +`<text x="106" y="147" text-anchor="middle" font-size="12" font-weight="bold" fill="${gold}">${sh}</text>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.2s"><rect x="200" y="86" width="102" height="40" rx="10" fill="rgba(12,32,34,.97)" stroke="${cyan}" stroke-width="1.7"/>`
+        +`<text x="249" y="114" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">${cipher}</text></g>`;
+      const ok=(sh===3);
+      s+=`<g class="${pre}Pop" style="animation-delay:.4s"><rect x="200" y="140" width="102" height="40" rx="10" fill="${ok?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${ok?grn:gold}" stroke-width="1.7"/>`
+        +`<text x="249" y="166" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${ok?grn:gold}">${word}</text></g>`;
+      s+=`<g style="cursor:pointer" onclick="infShift('${lk}',-1)"><rect x="196" y="192" width="48" height="34" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
+        +`<text x="220" y="215" text-anchor="middle" font-size="13" font-weight="bold" fill="${gold}">◀ −1</text></g>`;
+      s+=`<g style="cursor:pointer" onclick="infShift('${lk}',1)"><rect x="254" y="192" width="48" height="34" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
+        +`<text x="278" y="215" text-anchor="middle" font-size="13" font-weight="bold" fill="${gold}">+1 ▶</text></g>`;
+      const by=234;
+      s+=`<g class="${pre}Rise}"><rect x="18" y="${by}" width="284" height="28" rx="9" fill="${ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${ok?grn:A}" stroke-width="1.6"/>`
+        +`${fit(159,by+18,11,ok?grn:dim,ok?'Верно! Ключ 3: НСХ → КОТ':'Крути круг, пока слово не станет читаемым',{b:ok},268)}</g>`;
+      return s;
+    }
+    if(K==='cpracc'){ /* практика: задача */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,32,12,gold,'задача: слово ЗАМОК, ключ 4',{b:1},256)}</g>`;
+      s+=fit(159,68,12,ink,'зашифруй слово',{b:1},200);
+      ['З','А','М','О','К'].forEach((ch,k)=>{
+        const out=cpShift(ch,4);
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.3+k*0.25).toFixed(2)}s">`
+          +`<rect x="${30+k*52}" y="86" width="44" height="34" rx="7" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
+          +tx(52+k*52,109,14,gold,ch,{b:1})
+          +`<path d="M52 124 v10" stroke="${A}" stroke-width="1.6"/>`
+          +`<rect x="${30+k*52}" y="136" width="44" height="34" rx="7" fill="rgba(16,42,44,.97)" stroke="${cyan}" stroke-width="1.6"/>`
+          +tx(52+k*52,159,14,cyan,out,{b:1})+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.8s"><rect x="40" y="184" width="238" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.7"/>`
+        +`<text x="159" y="207" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">ЗАМОК → ЛДРТО</text></g>`;
+      s+=plate2(24,206,270,30,go?grn:cardB,go?'каждая буква сдвинулась на 4':'что получится?',11.5,pre);
+      return s;
+    }
+    if(K==='hardcipher'){ /* современные шифры */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,pur,'сейчас шифры гораздо сложнее',{b:1},256)}</g>`;
+      const rows=[{t:'длинный ключ из многих чисел',c:cyan},{t:'буквы перемешиваются и заменяются',c:gold},{t:'одну букву шифруют по-разному',c:grn},{t:'без ключа не прочитать за миллион лет',c:pur}];
+      rows.forEach((q,k)=>{
+        const y=52+k*38;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12*k).toFixed(2)}s"><rect x="26" y="${y}" width="266" height="30" rx="9" fill="rgba(255,255,255,.04)" stroke="${q.c}" stroke-width="1.6"/>`
+          +`<circle cx="46" cy="${y+15}" r="9" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.3"/>`
+          +tx(46,y+19,10.5,q.c,''.concat(k+1),{b:1})
+          +fit(168,y+20,11,q.c,q.t,{b:1},210)+`</g>`;
+        s+=drawLL({x:26,y:y+30},{x:292,y:y+30},q.c,2,0.3+k*0.2,1.8,pre);
+      });
+      s+=plate2(26,208,266,32,go?grn:cardB,go?'идея та же: правило + секретный ключ':'что изменилось?',11.5,pre);
+      s+=`${fit(159,262,11,dim,'но правило стало очень хитрым',{},290)}`;
+      return s;
+    }
+    if(K==='stego'){ /* спрятать внутри другого */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,grn,'можно спрятать сообщение внутри другого',{b:1},256)}</g>`;
+      const lines=['Солнце светит ярко','Тучи уплыли вдаль','Иней лёг на травы','Хвоя пахнет смолой'];
+      lines.forEach((q,k)=>{
+        const y=56+k*30;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.12).toFixed(2)}s">`
+          +fit(30,y+16,11,ink,q,{an:'start'},250)
+          +`<circle cx="36" cy="${y+12}" r="8" fill="rgba(255,215,106,.2)" stroke="${gold}" stroke-width="1.3"/>`
+          +tx(36,y+16,10,gold,q[0],{b:1})+`</g>`;
+      });
+      s+=fit(159,190,11.5,dim,'читаем первые буквы сверху вниз',{},290);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="60" y="204" width="198" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="227" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">С Т И Х</text></g>`;
+      s+=plate2(24,244,270,28,go?grn:cardB,go?'сообщение спрятано, а текст обычный':'какое слово спрятано?',11.5,pre);
+      return s;
+    }
+    if(K==='cpsafety'){ /* правила */
+      const it=[
+        {t:'не отправляй пароль в чате',d:'даже другу',c:red},
+        {t:'ключ храни отдельно от шифра',d:'иначе смысла нет',c:gold},
+        {t:'слабый шифр легко взломать',d:'перебором всех ключей',c:cyan}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,gold,'правила секретной переписки',{b:1},256)}</g>`;
+      it.forEach((q,k)=>{
+        const y=52+k*54;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="20" y="${y}" width="278" height="46" rx="11" fill="rgba(255,255,255,.04)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<path d="M40 ${y+12} l12 20 h-24 z" fill="${q.c}" opacity=".9"/><text x="40" y="${y+27}" text-anchor="middle" font-size="10" font-weight="bold" fill="#06131a">!</text>`
+          +fit(104,y+20,11.5,q.c,q.t,{b:1},190)
+          +fit(104,y+38,10.5,dim,q.d,{},190)+`</g>`;
+      });
+      s+=plate2(20,214,278,30,go?grn:cardB,go?'секрет — это ключ и текст':'что важно помнить?',11.5,pre);
+      return s;
+    }
+    if(K==='cpgame1'){ /* тренажёр: расшифруй */
+      const opts=['КОТ','КИТ','ДОМ'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${fit(159,33,Math.min(11.5,250/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'НСХ с ключом 3 — какое слово?',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise}"><rect x="86" y="52" width="146" height="38" rx="9" fill="rgba(12,32,34,.97)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="78" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">НСХ</text></g>`;
+      s+=fit(159,106,11,dim,'ключ 3, читаем назад',{},240);
+      opts.forEach((t,k)=>{
+        const x=34+k*84, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:A);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="${x}" y="120" width="76" height="42" rx="10" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+38,148,16,c,t,{b:on})+(on?`<path d="M${x+56} 130 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      const by=176;
+      s+=`<g class="${pre}Rise}"><rect x="20" y="${by}" width="278" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +`${fit(159,by+20,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! НСХ → КОТ':'Сдвинь каждую букву на 3 назад',{b:done&&st.pick===ok},260)}</g>`;
+      return s;
+    }
+    if(K==='cpgame2'){ /* тренажёр: какой ключ */
+      const opts=['3','5','1'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${fit(159,33,Math.min(11.5,250/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'ПРИВЕТ → ТУЛЕЗИХ: какой ключ?',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise}"><rect x="26" y="52" width="266" height="44" rx="10" fill="rgba(12,32,34,.97)" stroke="${cardB}" stroke-width="1.6"/>`
+        +`<text x="159" y="80" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${ink}">ПРИВЕТ → ТУЛЕЗИХ</text></g>`;
+      opts.forEach((t,k)=>{
+        const x=44+k*88, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:A);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="${x}" y="112" width="78" height="44" rx="11" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+39,141,18,c,t,{b:on})+(on?`<path d="M${x+56} 122 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      const by=172;
+      s+=`<g class="${pre}Rise}"><rect x="20" y="${by}" width="278" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +`${fit(159,by+20,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! П и Т стоят на 3 буквы друг от друга':'Сравни первые буквы: П и Т',{b:done&&st.pick===ok},262)}</g>`;
+      return s;
+    }
+    if(K==='cpcheck'){ /* проверь себя */
+      const qa=[['что такое ключ шифра','число сдвига'],['сколько ключей у 32 букв','32'],['как читают шифр сдвига','сдвигают назад'],['что держат в секрете','ключ']];
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,grn,'что мы узнали о шифрах',{b:1},256)}</g>`;
+      qa.forEach((q,k)=>{
+        const y=50+k*40, shown=(st&&st.q)>k;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.1*k).toFixed(2)}s"><rect x="24" y="${y}" width="270" height="34" rx="9" fill="rgba(255,255,255,.04)" stroke="${shown?grn:A}" stroke-width="1.6"/>`
+          +fit(118,y+22,11,ink,q[0],{},166)
+          +(shown?fit(246,y+22,11.5,grn,q[1],{b:1},100):fit(246,y+22,10,dim,'нажми «ответ»',{},100))+`</g>`;
+      });
+      s+=plate2(24,214,270,30,go?grn:cardB,go?'все четыре ответа на месте':'проверь себя устно',11.5,pre);
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -4200,6 +4682,31 @@
     if(K==='outofrange') return 202;
     if(K==='marks') return 220;
     if(K==='findcell') return 210;
+    if(K==='secrettask') return 244;
+    if(K==='caesarstory') return 268;
+    if(K==='shift3') return 254;
+    if(K==='cipherdisc') return 282;
+    if(K==='cipherenc') return 258;
+    if(K==='cipherdec') return 282;
+    if(K==='keyidea') return 288;
+    if(K==='keyvars') return 264;
+    if(K==='alpha') return 250;
+    if(K==='ciphex1') return 276;
+    if(K==='ciphex2') return 272;
+    if(K==='revword') return 268;
+    if(K==='numcode') return 268;
+    if(K==='symcode') return 256;
+    if(K==='keysecret') return 262;
+    if(K==='brute') return 312;
+    if(K==='crackword') return 284;
+    if(K==='cpdial') return 278;
+    if(K==='cpracc') return 250;
+    if(K==='hardcipher') return 280;
+    if(K==='stego') return 288;
+    if(K==='cpsafety') return 258;
+    if(K==='cpgame1') return 220;
+    if(K==='cpgame2') return 216;
+    if(K==='cpcheck') return 258;
     if(K==='nettask') return 212;
     if(K==='network') return 248;
     if(K==='localnet') return 260;
@@ -5202,6 +5709,66 @@
       tasks:[
         {q:'Файл 100 килобайт передают пакетами по 1 килобайту. Сколько получится пакетов?', kind:'unit', ans:100, tol:0, hints:['Делим размер файла на размер пакета.','100 : 1 = 100.'], sol:'100'},
         {q:'Что делает DNS?', kind:'choice', choices:['превращает имя сайта в адрес','хранит пароли','ускоряет интернет','удаляет вирусы'], ans:0, tol:0, hints:['DNS — «телефонная книга» интернета.','Он находит адрес по имени.'], sol:'превращает имя сайта в адрес'}
+      ] },
+    { id:524, title:'Шифры: как спрятать сообщение', ico:'🔐', src:'Информатика · 5–6 класс · С нуля: шифры',
+      explain:[
+        'Секретное сообщение опасно отправлять как есть: любой по пути может его прочитать. Поэтому сообщение шифруют — прячут по правилу.',
+        'Простейший шифр придумали ещё в древности: Юлий Цезарь сдвигал каждую букву на 3 вперёд. Из А получалось Г, из Б — Д, из В — Е.',
+        'Такой шифр называют шифром сдвига: буквы как будто едут по кругу алфавита. Число сдвига — это ключ шифра.',
+        'Чтобы удобнее было шифровать, делают шифровальный круг: на внешнем кольце обычные буквы, на внутреннем — сдвинутые. Круг поворачивают на ключ.',
+        'Шифруем слово КОТ с ключом 3: К становится Н, О становится С, Т становится Х. Получается НСХ.',
+        'Чтобы расшифровать, круг поворачивают назад — на те же 3 буквы. НСХ снова превращается в КОТ. У кого есть ключ, тот и прочитает.',
+        'Ключ — самое важное в шифре. Другой ключ даёт совсем другой шифр: одно и то же слово зашифруется по-разному.',
+        'В русском алфавите 32 буквы, значит ключей тоже 32: сдвиги от 0 до 31. Сдвиг 0 ничего не меняет, поэтому он бесполезен.',
+        'Если буквы заканчиваются, счёт продолжается с начала: после Я идёт А. Алфавит как будто замкнут в круг, и это важно помнить.',
+        'Шифровать можно не только сдвигом. Есть способ читать слово наоборот — но он очень слабый: буквы просто переставили.',
+        'Можно заменить буквы числами: А = 1, Б = 2, …, Я = 32. Тогда слово КОТ запишется как 11 15 19.',
+        'А можно придумать свой значок для каждой буквы. Тогда ключом становится таблица значков: без неё сообщение не прочитать.',
+        'Правило простое: способ шифрования знать можно, а ключ — нельзя. Секрет — это именно ключ.',
+        'Если шифр простой, его можно взломать перебором: попробовать все ключи по порядку и посмотреть, где текст станет читаемым.',
+        'Перебор работает быстро: 32 варианта — это совсем немного. Поэтому настоящие шифры делают гораздо сложнее.',
+        'Есть и более хитрый способ взлома: если мы знаем одно слово из сообщения, по нему можно найти сдвиг и вычислить ключ.',
+        'Практика: зашифруем слово ЗАМОК с ключом 4 — получится ЛДРТО. Каждая буква сдвинулась на 4.',
+        'Покрути шифровальный круг сам: меняй ключ и смотри, когда шифр НСХ превратится в понятное слово.',
+        'Современные шифры устроены намного сложнее: длинный ключ, перемешивание, разные замены для одной и той же буквы. Но идея та же: правило плюс секретный ключ.',
+        'Есть ещё один приём — спрятать сообщение внутри другого текста. Например, читать первые буквы строк: из них складывается тайное слово.',
+        'В секретной переписке важно: не отправлять пароль в чате, хранить ключ отдельно и помнить, что слабый шифр взламывают быстро.',
+        'Тренажёр: расшифруй слово НСХ с ключом 3.',
+        'Тренажёр: определи, какой ключ использовали для слова ПРИВЕТ.',
+        'Проверь себя: что такое ключ, сколько ключей бывает, как читают шифр сдвига и что держат в секрете.',
+        'Проверь себя: что такое ключ, сколько бывает ключей, как читают шифр сдвига и что держат в секрете.',
+        'Шпаргалка: ключ — число сдвига, алфавит замкнут в круг, расшифровка — сдвиг назад, секрет — это ключ. Проверь себя!' ],
+      slides:[
+        {h:'Зачем прятать сообщение', v:{kind:'secrettask'}, r:'Любой может прочитать.', d:'Сообщение без шифра прочитает каждый, через кого оно проходит. Поэтому его прячут по правилу.'},
+        {h:'Шифр Цезаря', v:{kind:'caesarstory'}, r:'Сдвиг на три буквы.', d:'Цезарь сдвигал каждую букву на 3 вперёд: А превращалось в Г, Б — в Д, В — в Е. Это шифр сдвига.'},
+        {h:'Сдвигаем алфавит', v:{kind:'shift3'}, r:'Нижняя строка уезжает.', d:'Если сдвинуть нижнюю строку алфавита на 3 клетки, буква А окажется над Г, а Б — над Д. Так и шифруют.'},
+        {h:'Шифровальный круг', v:{kind:'cipherdisc'}, r:'Два кольца с буквами.', d:'На внешнем кольце обычные буквы, на внутреннем — сдвинутые. Круг поворачивают на число ключа.'},
+        {h:'Шифруем слово', v:{kind:'cipherenc'}, r:'КОТ с ключом 3.', d:'Каждая буква идёт по кругу: К становится Н, О — С, Т — Х. Получается НСХ.'},
+        {h:'Расшифровываем', v:{kind:'cipherdec'}, r:'Сдвигаем назад.', d:'Чтобы прочитать шифр, круг поворачивают назад на то же число. НСХ снова становится КОТ.'},
+        {h:'Что такое ключ', v:{kind:'keyidea'}, r:'Число сдвига.', d:'Ключ — это число, на которое сдвигают буквы. С другим ключом то же слово зашифруется иначе.'},
+        {h:'Сколько бывает ключей', v:{kind:'keyvars'}, r:'32 буквы — 32 ключа.', d:'Ключ может быть от 0 до 31. Сдвиг 0 ничего не меняет, поэтому он не нужен.'},
+        {h:'Шифруем ШКОЛА', v:{kind:'alpha'}, r:'Каждая буква сдвинулась.', d:'ШКОЛА с ключом 3 даёт ЫНСОГ. Смотри внимательно: Я переходит через край алфавита.'},
+        {h:'Буква за буквой', v:{kind:'ciphex1'}, r:'Каждая буква отдельно.', d:'Буквы шифруются по одной: К → Н, О → С, Т → Х. Из трёх букв получается НСХ.'},
+        {h:'Алфавит замкнут в круг', v:{kind:'ciphex2'}, r:'После Я идёт А.', d:'Если сдвигать букву в конце алфавита, счёт продолжается с начала: Я + 3 = В. Об этом легко забыть и ошибиться.'},
+        {h:'Читаем наоборот', v:{kind:'revword'}, r:'Слабый способ.', d:'Слово можно просто перевернуть: СЕКРЕТ станет ТЕРЕКС. Это легко разгадать, потому что буквы те же.'},
+        {h:'Буквы как числа', v:{kind:'numcode'}, r:'А = 1, Б = 2.', d:'Каждой букве можно дать номер: А = 1, Б = 2, …, Я = 32. Тогда КОТ запишется как 11 15 19.'},
+        {h:'Шифр значками', v:{kind:'symcode'}, r:'Свой значок для буквы.', d:'Можно придумать значок для каждой буквы. Ключом станет таблица значков — без неё текст не прочитать.'},
+        {h:'Что держат в секрете', v:{kind:'keysecret'}, r:'Секрет — это ключ.', d:'Способ шифрования знать можно, а ключ — нельзя. Если ключ попадёт к чужому, он прочитает всё.'},
+        {h:'Взлом перебором', v:{kind:'brute'}, r:'Пробуем все ключи.', d:'Простой шифр взламывают перебором: подставляют ключи по порядку, пока текст не станет читаемым.'},
+        {h:'Взлом по слову', v:{kind:'crackword'}, r:'Знаем одно слово — знаем ключ.', d:'Если известно, что в тексте есть слово ПРИВЕТ, сравниваем буквы и находим сдвиг. Так узнают ключ.'},
+        {h:'Практика: ЗАМОК', v:{kind:'cpracc'}, r:'Ключ 4.', d:'Сдвигаем каждую букву на 4: З → Л, А → Д, М → Р, О → Т, К → О. Получается ЛДРТО.'},
+        {h:'Покрути круг', v:{kind:'cpdial', q:'Крути круг и расшифруй слово'}, r:'Меняй ключ кнопками.', d:'Нажимай «−1» и «+1», поворачивая круг, пока шифр НСХ не превратится в понятное слово.'},
+        {h:'Настоящие шифры', v:{kind:'hardcipher'}, r:'Сложно, но идея та же.', d:'В современных шифрах длинный ключ, перемешивание и разные замены, но принцип тот же: правило плюс секретный ключ.'},
+        {h:'Спрятать в тексте', v:{kind:'stego'}, r:'Читаем первые буквы.', d:'Сообщение можно спрятать внутри обычного текста: если читать первые буквы строк, получится тайное слово.'},
+        {h:'Правила секретов', v:{kind:'cpsafety'}, r:'Три важных правила.', d:'Не отправляй пароль в чате, храни ключ отдельно от шифра и помни: слабый шифр взламывают быстро.'},
+        {h:'Тренажёр: расшифруй', v:{kind:'cpgame1', q:'НСХ с ключом 3 — какое слово?'}, r:'Проверь себя: выбери слово.', d:'Сдвигаем каждую букву на 3 назад: Н → К, С → О, Х → Т. Получается КОТ.'},
+        {h:'Тренажёр: найди ключ', v:{kind:'cpgame2', q:'ПРИВЕТ → ТУЛЕЗИХ: какой ключ?'}, r:'Проверь себя: выбери ключ.', d:'Сравниваем первые буквы: П и Т стоят на расстоянии 3 букв. Значит, ключ равен 3.'},
+        {h:'Проверь себя', v:{kind:'cpcheck'}, r:'Ответь на четыре вопроса.', d:'Нажимай «показать ответ» и проверяй себя: ключ, число ключей, расшифровка и что держат в секрете.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'ключ — число сдвига', b:1},{t:'алфавит замкнут в круг', c:grn},{t:'секрет — это ключ', c:gold}]}, r:'Запомни главное о шифрах.', d:'Главное: буквы сдвигают на ключ по кругу, расшифровка — сдвиг назад, а секретным должен быть только ключ.'} ],
+      check:{ q:'Что такое ключ в шифре сдвига?', choices:['число, на которое сдвигают буквы','само слово','таблица значков','пароль от почты'], ans:0, exp:'Ключ — это число сдвига, например 3.' },
+      tasks:[
+        {q:'Слово КОТ зашифровали ключом 3. Какое слово получилось?', kind:'choice', choices:['НСХ','ЛПЦ','МТЧ','НРХ'], ans:0, tol:0, hints:['К сдвигается на 3 вперёд.','К→Н, О→С, Т→Х.'], sol:'НСХ'},
+        {q:'Сколько всего ключей у алфавита из 32 букв?', kind:'unit', ans:32, tol:0, hints:['Ключ — любой сдвиг от 0 до 31.','Получится 32 варианта.'], sol:'32'}
       ] }
   ];
 
@@ -5216,7 +5783,7 @@
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -5235,12 +5802,14 @@
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
-      : (s.v.kind==='vcheck'||s.v.kind==='netcheck')
+      : (s.v.kind==='cpdial')
+      ? wkRow(wkBtn('сброс круга',`infShift('${lk}',0,1)`))
+      : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')
       ? ((st.q||0)<4? wkRow(wkBtn('показать ответ',`infQ('${lk}')`)) : wkRow(wkBtn('сначала',`infQ('${lk}',1)`)))
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck')? (((st.q||0)>=4) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -5249,6 +5818,11 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infShift=function(lk,delta,reset){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(reset) st.sh=0; else st.sh=((st.sh||0)+delta+32)%32;
+    chRender(0);
+  };
   window.infQ=function(lk,reset){
     const st=CHS[lk]||(CHS[lk]={});
     if(reset) st.q=0; else st.q=Math.min(4,(st.q||0)+1);
