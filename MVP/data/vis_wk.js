@@ -15974,318 +15974,366 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     const rst=wkBtn('заново',`visW394Act('${lk}','rst')`);
     return `${wkNote(T.q,'#ffd76a')}<div class="wk-row" style="gap:6px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
   }
+  /* ============ УРОК 394 · «Делимость и десятичная запись» (v2 · флагман, 14 шагов) ============ */
+  if(!window.__wk394v2css){
+    window.__wk394v2css=1;
+    const st2=document.createElement('style');
+    st2.textContent=
+      '#lvis .q9Rise{animation:q9Rise .7s cubic-bezier(.2,.85,.3,1.08) both;}'+
+      '@keyframes q9Rise{0%{transform:translateY(16px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .q9Glow{animation:q9Glow 2.2s ease-in-out infinite;}'+
+      '@keyframes q9Glow{0%,100%{opacity:.28}50%{opacity:.95}}'+
+      '#lvis .q9Blink{animation:q9Blink 1.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q9Blink{0%,100%{opacity:.3}50%{opacity:1}}'+
+      '#lvis .q9Sweep{animation:q9Sweep 2.6s ease-in-out infinite;}'+
+      '@keyframes q9Sweep{0%{transform:translateX(0);opacity:0}12%{opacity:.85}88%{opacity:.85}100%{transform:translateX(var(--run,120px));opacity:0}}'+
+      '#lvis .q9Pulse{animation:q9Pulse 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q9Pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}'+
+      '#lvis .q9Spin{animation:q9Spin 8s linear infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes q9Spin{to{transform:rotate(360deg)}}';
+    document.head.appendChild(st2);
+  }
+  const fit=(x,y,fs,c,t,o,maxw)=>{
+    const s=(maxw? Math.min(fs, maxw/Math.max(1,(''+t).length)/0.72) : fs);
+    return tx(x,y,s,c,t,o);
+  };
+  const plate=(x,y,w,h,c,txt,col,fs)=>{
+    return `<g class="q9Rise"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="rgba(22,29,50,.94)" stroke="${col}" stroke-width="1.9"/>`
+      +fit(x+w/2,y+h*0.66,fs||13.5,col,txt,{b:1},w-18)+`</g>`;
+  };
+  const digitBoxes=(x0,y,cell,str,hi,cols)=>{
+    let s2='';
+    for(let i=0;i<str.length;i++){
+      const x=x0+i*cell, on=(hi||[]).indexOf(i)>=0, c=(cols&&cols[i])||(on?gold:cardB);
+      s2+=`<g class="q9Tok" style="animation-delay:${(0.06*i).toFixed(2)}s"><rect x="${x}" y="${y}" width="${cell-3}" height="${cell-3}" rx="7" fill="${on?'rgba(255,215,106,.18)':'rgba(22,29,50,.92)'}" stroke="${c}" stroke-width="${on?2.4:1.4}"/>`
+        +tx(x+cell/2-1.5,y+cell/2+5,20,on?gold:ink,str[i],{b:on,georgia:1})+`</g>`;
+    }
+    return s2;
+  };
+  const dotOn=(path,dur,begin,col,r)=>`<circle r="${r||5}" fill="${col||gold}"><animateMotion dur="${dur}s" begin="${(begin||0).toFixed(2)}s" repeatCount="indefinite" path="${path}"/></circle>`;
+  const W=318;
   function visW394(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=13){ st.go=0; st.pick=null; }
-      if(step===10||step===11) st.pick=null;
-      if(step===12){ st.mq=0; st.msel=null; }
-      if(step===13){ st.sel=null; st.q=0; }
-    }
-    let h='';
-    const W=318;
-    if(step===0){
-      const H=198;
-      const go=st.go||0;
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; st.q=0; }
+    const go=st.go||0;
+    let h='', H=200;
+    if(step===0){ /* признаки делимости: смотрим на запись */
+      H=202;
       let inner='';
-      inner+=tx(159,34,17,ink,'делится ли 124 на 4?',{b:1,georgia:1});
-      inner+=numbox(90,66,46,'124',[],{});
+      inner+=fit(159,32,16,ink,'делится ли 2468 на 4?',{b:1,georgia:1},280);
+      inner+=digitBoxes(66,52,42,'2468',go?[2,3]:[],go?[null,null,grn,grn]:null);
+      inner+=`<rect x="${66+2*42-4}" y="46" width="${2*42+5}" height="${46}" rx="9" fill="none" stroke="${grn}" stroke-width="2.4" opacity="${go?1:0}"/>`;
       if(go){
-        inner+=`<g class="q9Pop"><rect x="64" y="132" width="190" height="36" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="2"/>
-        ${tx(159,156,14,gold,'не считая — по записи числа!',{b:1})}</g>`;
+        inner+=`<g class="q9Glow"><rect x="66" y="46" width="${4*42}" height="46" rx="9" fill="none" stroke="${gold}" stroke-width="2"/></g>`;
+      }
+      inner+=`<rect class="q9Sweep" style="--run:170px" x="62" y="46" width="3" height="46" fill="${cyan}" opacity=".5"/>`;
+      if(go){
+        inner+=plate(48,110,222,34,grn,'последние две цифры: 68 ⋮ 4',grn,14);
+        inner+=fit(159,164,12.5,gold,'по записи — без деления!',{b:1},250);
       } else {
-        inner+=tx(159,158,14,dim,'есть быстрый признак!',{});
+        inner+=fit(159,120,13,dim,'смотрим на цифры, а не считаем',{},250);
+        inner+=fit(159,146,12,dim,'а на 3 или на 9?',{},240);
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Признаки делимости</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('смотрим на последние цифры',gold,0.2)):'')+
+        (go?wkRow(chip('признак — по десятичной записи',grn,0.1)):'')+
+        (go?wkNote('Признак делимости — это правило, которое по цифрам числа сразу говорит, делится оно или нет.'):'')+
         wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('как узнать?',`visW394Act('${lk}','go')`))+
-        wkSml('признак по десятичной записи'));
-    } else if(step===1){
-      const H=198;
-      const go=st.go||0;
+        wkSml('теория чисел · делимость'));
+    } else if(step===1){ /* 2, 5, 10 — последняя цифра */
+      H=214;
       let inner='';
-      inner+=tx(159,32,17,ink,'на 2',{b:1,georgia:1});
-      inner+=tx(159,58,13.5,dim,'смотрим на последнюю цифру',{});
-      inner+=numbox(66,82,40,'248',[2],{});
-      if(go){
-        inner+=`<g class="q9Pop"><text x="159" y="160" text-anchor="middle" font-size="20" fill="${gold}" font-weight="bold" font-family="Georgia,serif">8 — чётная → 248 ⋮ 2</text></g>`;
-      } else {
-        inner+=tx(159,156,14,dim,'число чётное?',{});
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Чётность</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('0,2,4,6,8 → делится на 2',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('проверить',`visW394Act('${lk}','go')`))+
-        wkSml('последняя цифра 0,2,4,6,8'));
-    } else if(step===2){
-      const H=198;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,17,ink,'на 5 и на 10',{b:1,georgia:1});
-      inner+=numbox(50,74,40,'240',[2],{});
-      if(go){
-        inner+=`<g class="q9Pop"><rect x="58" y="130" width="202" height="40" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="2"/>
-        ${tx(159,148,14,grn,'240 ⋮ 5 (кончается на 0 или 5)',{b:1})}
-        ${tx(159,164,12,dim,'240 ⋮ 10 (кончается на 0)',{})}</g>`;
-      } else {
-        inner+=tx(159,158,14,dim,'как отличить 5 и 10?',{});
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Пятёрка и десятка</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('5 → 0 или 5 · 10 → 0',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('проверить',`visW394Act('${lk}','go')`))+
-        wkSml('на 10 — только на 0'));
-    } else if(step===3){
-      const H=204;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,17,ink,'на 3 — сумма цифр',{b:1});
-      inner+=numbox(60,66,40,'123',[],{});
-      if(go){
-        inner+=`<g class="q9Pop"><text x="159" y="136" text-anchor="middle" font-size="18" fill="${cyan}" font-weight="bold">1 + 2 + 3 = 6</text>
-        <text x="159" y="164" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">6 ⋮ 3 → 123 ⋮ 3</text></g>`;
-      } else {
-        inner+=tx(159,158,14,dim,'сложи все цифры',{});
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сумма цифр</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('сумма делится на 3 → число делится',cyan,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('сложить',`visW394Act('${lk}','go')`))+
-        wkSml('складываем ВСЕ цифры'));
-    } else if(step===4){
-      const H=204;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,17,ink,'на 9 — тоже сумма',{b:1});
-      inner+=numbox(60,66,40,'126',[],{});
-      if(go){
-        inner+=`<g class="q9Pop"><text x="159" y="136" text-anchor="middle" font-size="18" fill="${cyan}" font-weight="bold">1 + 2 + 6 = 9</text>
-        <text x="159" y="164" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">9 ⋮ 9 → 126 ⋮ 9</text></g>`;
-      } else {
-        inner+=tx(159,158,14,dim,'сумма цифр 126 = ?',{});
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Девятка</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('сумма делится на 9 → число делится',cyan,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('сложить',`visW394Act('${lk}','go')`))+
-        wkSml('на 9 — по сумме цифр'));
-    } else if(step===5){
-      const H=206;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,17,ink,'на 4 — последние две',{b:1});
-      inner+=numbox(58,64,44,'124',[1,2],{});
-      if(go){
-        inner+=`<g class="q9Pop"><text x="159" y="134" text-anchor="middle" font-size="16" fill="${dim}">24 ⋮ 4 → 124 ⋮ 4</text>
-        <text x="159" y="164" text-anchor="middle" font-size="21" fill="${grn}" font-weight="bold">124 : 4 = 31</text></g>`;
-      } else {
-        inner+=tx(159,158,14,dim,'24 делится на 4?',{});
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сотни всегда делятся на 4</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('последние две цифры → 24 ⋮ 4',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('проверить',`visW394Act('${lk}','go')`))+
-        wkSml('100 делится на 4 · остаются 2 цифры'));
-    } else if(step===6){
-      const H=212;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,30,16,ink,'сводка признаков',{b:1});
-      const rows=[['на 2','последняя 0,2,4,6,8'],['на 5','последняя 0 или 5'],['на 3','сумма цифр ⋮ 3'],['на 9','сумма цифр ⋮ 9'],['на 4','последние две ⋮ 4']];
-      for(let i=0;i<rows.length;i++){
-        if(go>=i){
-          const ry=54+i*30;
-          inner+=`<g class="q9In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="26" rx="8" fill="${i%2?'rgba(22,29,50,.94)':'rgba(30,40,66,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.6"/>
-          <text x="70" y="${ry+18}" text-anchor="middle" font-size="13" fill="${gold}">${rows[i][0]}</text>
-          <text x="188" y="${ry+18}" text-anchor="middle" font-size="12.5" fill="${ink}">${rows[i][1]}</text></g>`;
-        }
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Таблица признаков</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go>=5?wkRow(chip('2,5,10 — цифра · 3,9 — сумма · 4 — две цифры',gold,0.2)):'')+
-        wkRow(
-          go===0?wkBtn('на 2',`visW394Act('${lk}','go')`) : '',
-          go===1?wkBtn('на 5',`visW394Act('${lk}','go')`) : '',
-          go===2?wkBtn('на 3',`visW394Act('${lk}','go')`) : '',
-          go===3?wkBtn('на 9',`visW394Act('${lk}','go')`) : '',
-          go===4?wkBtn('на 4',`visW394Act('${lk}','go')`) : '',
-          go>=5?wkBtn('сброс',`visW394Act('${lk}','rst')`):'')+
-        wkSml('каждый признак — по записи'));
-    } else if(step===7){
-      const H=200;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,34,17,ink,'НОК(6, 8)',{b:1,georgia:1});
-      inner+=tx(159,62,13.5,dim,'наименьшее общее кратное',{});
-      if(go){
-        inner+=`<g class="q9Pop"><rect x="52" y="88" width="214" height="42" rx="11" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="2.2"/>
-        ${tx(159,110,16,grn,'делится и на 6, и на 8',{b:1})}
-        ${tx(159,126,12,dim,'и оно наименьшее',{})}</g>`;
-      } else {
-        inner+=tx(159,150,14,dim,'найди общее кратное',{});
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Наименьшее общее кратное</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('НОК = общее кратное, самое маленькое',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('что такое НОК?',`visW394Act('${lk}','go')`))+
-        wkSml('общее кратное · наименьшее'));
-    } else if(step===8){
-      const H=204, cell=46;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,32,16,ink,'перебираем кратные',{b:1});
-      inner+=tx(60,64,13,dim,'кратные 8:',{});
-      inner+=multRow(20,76,cell,8,[8,16,24,32,40],24,1);
-      if(go){
-        inner+=tx(60,132,13,dim,'кратные 6:',{});
-        inner+=multRow(20,144,cell,6,[6,12,18,24,30],24,1);
-        inner+=`<g class="q9Pop"><text x="159" y="188" text-anchor="middle" font-size="20" fill="${grn}" font-weight="bold" font-family="Georgia,serif">НОК(6, 8) = 24</text></g>`;
-      } else {
-        inner+=tx(159,182,14,dim,'где общее 24?',{});
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Находим НОК</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('24 — общее и наименьшее',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('найти общее',`visW394Act('${lk}','go')`))+
-        wkSml('кратные большего → проверь на меньшее'));
-    } else if(step===9){
-      const H=196;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,36,17,ink,'кратно 7, двузначное',{b:1});
-      inner+=`<g class="q9In"><rect x="44" y="70" width="230" height="40" rx="10" fill="${card}" stroke="${cardB}" stroke-width="1.8"/>
-      ${tx(159,92,15,dim,'7·1 = 7 (однозначное)',{})}
-      ${tx(159,106,15,grn,'7·2 = 14 — двузначное!',{b:1})}</g>`;
-      if(go){
-        inner+=`<g class="q9Pop"><text x="159" y="150" text-anchor="middle" font-size="28" fill="${grn}" font-weight="bold" font-family="Georgia,serif">14</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Наименьшее двузначное</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('кратные 7: 7, 14, 21… → 14',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('найти',`visW394Act('${lk}','go')`))+
-        wkSml('перебираем кратные 7'));
-    } else if(step===10){
-      const H=200, py=84;
-      if(st.tr==null) st.tr=0;
-      const pool=[
-        {q:'248 делится на 2?',a:'да',ds:['нет','не знаю']},
-        {q:'123 делится на 3?',a:'да',ds:['нет','не знаю']},
-        {q:'124 делится на 4?',a:'да',ds:['нет','не знаю']},
-        {q:'246 делится на 9?',a:'нет',ds:['да','не знаю']},
-        {q:'250 делится на 5?',a:'да',ds:['нет','не знаю']}
+      const rows=[
+        {t:'на 2',r:'0, 2, 4, 6, 8',n:'1348',c:grn},
+        {t:'на 5',r:'0 или 5',n:'1345',c:cyan},
+        {t:'на 10',r:'только 0',n:'1340',c:gold}
       ];
-      const P=pool[st.tr%pool.length];
-      const ord=[P.a,...P.ds];
-      let inner='';
-      inner+=tx(159,34,17,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
-      ord.forEach((o,i)=>{
-        let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="q9In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,20,tc,o==='не знаю'?'?':o,{b:1,georgia:1})}</g>`;
+      rows.forEach((q,k)=>{
+        const y=28+k*54;
+        inner+=`<g class="q9Rise" style="animation-delay:${(0.14*k).toFixed(2)}s">`
+          +`<rect x="18" y="${y}" width="282" height="46" rx="10" fill="rgba(22,29,50,.9)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(58,y+22,13,q.c,q.t,{b:1},70)
+          +fit(58,y+38,11,dim,q.r,{},80)
+          +digitBoxes(160,y+6,22,q.n,go?[3]:[],[null,null,null,q.c])
+          +`</g>`;
       });
-      inner+=st.pick!=null
-        ? (st.pick===0? `<g class="q9Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="q9Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">вспомни признак</text></g>`)
-        : tx(159,py+74,14.5,dim,'делится или нет?',{});
-      const fb= st.pick!=null&&st.pick===0
-        ? `<div class="wk-row"><button class="wk-btn" onclick="visW394Act('${lk}','n')">дальше →</button></div>`
-        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW394P('${lk}',${i})">${o==='не знаю'?'?':o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW394P('${lk}',${i})">${o==='не знаю'?'?':o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: делится?</div>`+
+      inner+=`<g class="q9Blink"><rect x="${160+3*22-4}" y="${28+2*54+2}" width="26" height="42" rx="8" fill="none" stroke="${gold}" stroke-width="2"/></g>`;
+      inner+=`${dotOn('M160 176 H250',2.8,0,cyan,4)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">2, 5 и 10</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (st.pick!=null&&st.pick===0?wkRow(chip(P.q.split(' делится')[0]+' → '+(P.a==='да'?'⋮':'не ⋮'),grn,0.2)):'')+
-        fb+retry+
-        wkSml('по признаку делимости'));
-    } else if(step===11){
-      const H=200, py=84;
-      if(st.tr==null) st.tr=0;
-      const pool=[
-        {q:'НОК(4, 6)?',a:'12',ds:['24','6']},
-        {q:'НОК(6, 8)?',a:'24',ds:['48','12']},
-        {q:'НОК(3, 5)?',a:'15',ds:['8','30']},
-        {q:'НОК(4, 10)?',a:'20',ds:['40','10']}
-      ];
-      const P=pool[st.tr%pool.length];
-      const ord=[P.a,...P.ds];
+        (go?wkRow(chip('смотрим только на последнюю цифру',grn,0.1)):'')+
+        (go?wkNote('У чисел 2, 5 и 10 признак самый простой: хватает одной последней цифры.'):'')+
+        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('показать',`visW394Act('${lk}','go')`))+
+        wkSml('признаки делимости'));
+    } else if(step===2){ /* 3 и 9 — сумма цифр */
+      H=216;
       let inner='';
-      inner+=tx(159,34,17,ink,P.q,{b:1});
-      const X=[24,114,204],CW=86;
-      ord.forEach((o,i)=>{
-        let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="q9In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="50" rx="10" fill="${bgc}" stroke="${bd}" stroke-width="2.2"/>
-        ${tx(X[i]+CW/2,py+33,22,tc,o,{b:1,georgia:1})}</g>`;
+      inner+=fit(159,30,15,ink,'738 — делится на 3 и на 9?',{b:1,georgia:1},290);
+      ['7','3','8'].forEach((d2,k)=>{
+        const x=96+k*46;
+        inner+=`<g class="q9Tok" style="animation-delay:${(0.1*k).toFixed(2)}s"><rect x="${x}" y="46" width="42" height="42" rx="8" fill="rgba(22,29,50,.92)" stroke="${cyan}" stroke-width="1.8"/>`
+          +tx(x+21,74,20,cyan,d2,{b:1,georgia:1})+`</g>`;
+        inner+=dotOn(`M${x+21} 92 Q159 118 ${118+k*40} 138`,3,0.4*k,gold,5);
       });
-      inner+=st.pick!=null
-        ? (st.pick===0? `<g class="q9Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="q9Pop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">перебери кратные</text></g>`)
-        : tx(159,py+74,14.5,dim,'найди НОК',{});
-      const fb= st.pick!=null&&st.pick===0
-        ? `<div class="wk-row"><button class="wk-btn" onclick="visW394Act('${lk}','n')">дальше →</button></div>`
-        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW394P('${lk}',${i})">${o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW394P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: НОК</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (st.pick!=null&&st.pick===0?wkRow(chip('НОК = '+P.a,grn,0.2)):'')+
-        fb+retry+
-        wkSml('общее кратное — наименьшее'));
-    } else if(step===12){
-      const H=212;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,30,16,ink,'шпаргалка',{b:1});
-      const items=[['2 и 5 · по последней цифре'],['3 и 9 · по сумме цифр'],['4 · по последним двум цифрам'],['НОК · наименьшее общее кратное']];
-      for(let i=0;i<items.length;i++){
-        if(go>=i){
-          const ry=54+i*37;
-          inner+=`<g class="q9In" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="30" y="${ry}" width="258" height="31" rx="9" fill="${i%2?'rgba(22,29,50,.94)':'rgba(30,40,66,.94)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+20,13,ink,items[i][0],{})}</g>`;
-        }
+      if(go){
+        inner+=plate(60,140,198,32,grn,'7 + 3 + 8 = 18',gold,14);
+        inner+=plate(60,178,198,30,grn,'18 ⋮ 3 и 18 ⋮ 9 → да!',grn,13);
+      } else {
+        inner+=fit(159,152,13,dim,'сложим цифры числа',{},240);
       }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">3 и 9: сумма цифр</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('делится сумма — делится число',grn,0.1)):'')+
+        (go?wkNote('Сумма цифр 7 + 3 + 8 = 18 делится и на 3, и на 9, значит 738 делится на 3 и на 9.'):'')+
+        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('сложить',`visW394Act('${lk}','go')`))+
+        wkSml('признак по сумме цифр'));
+    } else if(step===3){ /* на 4 — последние две цифры */
+      H=200;
+      let inner='';
+      inner+=fit(159,32,16,ink,'124 делится на 4?',{b:1,georgia:1},270);
+      inner+=digitBoxes(78,54,44,'124',go?[1,2]:[],[null,grn,grn]);
+      inner+=`<rect x="${78+1*44-4}" y="48" width="${2*44+5}" height="48" rx="9" fill="none" stroke="${grn}" stroke-width="2.4" opacity="${go?1:0}"/>`;
+      if(go){
+        inner+=plate(58,116,202,32,grn,'24 ⋮ 4  →  124 ⋮ 4',grn,14);
+        inner+=fit(159,170,12.5,dim,'смотрим только на последние две цифры',{},270);
+      } else {
+        inner+=fit(159,124,13,dim,'достаточно пары цифр',{},240);
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Признак для 4</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('две последние цифры делятся на 4',grn,0.1)):'')+
+        (go?wkNote('Делим не всё число, а только его последние две цифры: 24 делится на 4, значит и 124 делится.'):'')+
+        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('проверить',`visW394Act('${lk}','go')`))+
+        wkSml('признак по двум цифрам'));
+    } else if(step===4){ /* почему про 4 */
+      H=204;
+      let inner='';
+      inner+=fit(159,30,15,ink,'почему хватает двух цифр?',{b:1,georgia:1},290);
+      inner+=`<g class="q9Rise"><rect x="24" y="50" width="130" height="46" rx="10" fill="rgba(22,29,50,.92)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(89,72,14,cyan,'сотни',{b:1},100)+fit(89,88,11,dim,'100, 200, 300…',{},110)+`</g>`;
+      inner+=`<g class="q9Rise" style="animation-delay:.2s"><rect x="164" y="50" width="130" height="46" rx="10" fill="rgba(22,29,50,.92)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(229,72,14,gold,'две цифры',{b:1},110)+fit(229,88,11,dim,'последние',{},100)+`</g>`;
+      inner+=fit(159,116,18,dim,'+',{b:1},20);
+      inner+=`<g class="q9Pulse"><rect x="60" y="126" width="198" height="34" rx="9" fill="${go?'rgba(125,224,160,.12)':'rgba(255,215,106,.1)'}" stroke="${go?grn:gold}" stroke-width="1.9"/>`
+        +fit(159,148,14,go?grn:gold,'100 = 4 · 25',{b:1},180)+`</g>`;
+      inner+=fit(159,182,12,dim,'сотни всегда делятся на 4',{},250);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Почему это работает</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('100 делится на 4 — сотни не мешают',grn,0.1)):'')+
+        (go?wkNote('Любое число — это сотни плюс две последние цифры. Сотни на 4 делятся, поэтому всё решают две последние цифры.'):'')+
+        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('объясни',`visW394Act('${lk}','go')`))+
+        wkSml('почему признак верный'));
+    } else if(step===5){ /* НОК(6,8): перебор кратных 8 */
+      H=204;
+      const mult=[8,16,24,32,40];
+      let inner='';
+      inner+=fit(159,30,15,ink,'кратные восьми',{b:1,georgia:1},250);
+      mult.forEach((m,k)=>{
+        const x=26+k*54, hit=(m===24);
+        inner+=`<g class="q9Tok" style="animation-delay:${(0.12*k).toFixed(2)}s"><rect x="${x}" y="52" width="48" height="40" rx="9" fill="${hit&&go?'rgba(125,224,160,.2)':'rgba(22,29,50,.92)'}" stroke="${hit&&go?grn:cardB}" stroke-width="${hit&&go?2.4:1.4}"/>`
+          +tx(x+24,79,17,hit&&go?grn:ink,''+m,{b:hit&&go,georgia:1})+`</g>`;
+      });
+      mult.forEach((m,k)=>{
+        inner+=dotOn(`M${26+k*54+24} 96 Q159 120 150 136`,3,0.45*k,gold,4);
+      });
+      if(go){
+        inner+=plate(48,132,222,32,grn,'24 делится на 6 → НОК = 24',grn,13.5);
+        inner+=fit(159,184,12,dim,'перебираем кратные большего числа',{},260);
+      } else {
+        inner+=fit(159,140,13,dim,'какое из них делится на 6?',{},250);
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">НОК(6, 8)</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('24 делится и на 6, и на 8',grn,0.1)):'')+
+        (go?wkNote('Берём большее число 8 и выписываем его кратные: 8, 16, 24. Первое, что делится на 6, — это 24.'):'')+
+        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('искать',`visW394Act('${lk}','go')`))+
+        wkSml('наименьшее общее кратное'));
+    } else if(step===6){ /* НОК — определение */
+      H=216;
+      let inner='';
+      inner+=fit(159,28,15,ink,'общие кратные 6 и 8',{b:1,georgia:1},280);
+      [[6,'6'],[8,'8']].forEach((q,k)=>{
+        const y=44+k*46, c=k===0?cyan:gold;
+        inner+=fit(30,y+22,12,c,'кратные '+q[1],{b:1,an:'start'},80);
+        [1,2,3,4,5].forEach((n2,j)=>{
+          const v2=(k===0?6:8)*n2, x=104+j*40, hit=(v2===24);
+          inner+=`<g class="q9Tok" style="animation-delay:${(0.06*(k*5+j)).toFixed(2)}s"><rect x="${x}" y="${y}" width="36" height="28" rx="7" fill="${hit&&go?'rgba(125,224,160,.22)':'rgba(22,29,50,.92)'}" stroke="${hit&&go?grn:c}" stroke-width="${hit&&go?2.2:1.3}"/>`
+            +tx(x+18,y+19,13,hit&&go?grn:c,''+v2,{b:hit&&go})+`</g>`;
+        });
+      });
+      inner+=`<path d="M224 78 C224 104, 184 104, 184 128" fill="none" stroke="${grn}" stroke-width="2.2" stroke-dasharray="7 5" class="q9Scan"/>`
+        +`<circle cx="224" cy="78" r="4" fill="${grn}"/><circle cx="184" cy="128" r="4" fill="${grn}"/>`
+
+      if(go){
+        inner+=plate(58,142,202,32,grn,'НОК(6, 8) = 24',grn,15);
+        inner+=fit(159,190,12,dim,'наименьшее общее кратное',{},240);
+      } else {
+        inner+=fit(159,150,13,dim,'какое число есть в обеих строках?',{},260);
+      }
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Что такое НОК</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('наименьшее общее кратное',grn,0.1)):'')+
+        (go?wkNote('НОК — самое маленькое число, которое делится и на одно, и на другое число. Для 6 и 8 это 24.'):'')+
+        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('показать',`visW394Act('${lk}','go')`))+
+        wkSml('общее кратное'));
+    } else if(step===7){ /* кратные 7: наименьшее двузначное */
+      H=200;
+      let inner='';
+      inner+=fit(159,30,15,ink,'числа, кратные 7',{b:1,georgia:1},250);
+      inner+=`<line x1="26" y1="96" x2="292" y2="96" stroke="#44538a" stroke-width="2.4"/>`;
+      [7,14,21,28,35].forEach((v2,k)=>{
+        const x=36+k*58, two=(v2>=14&&v2<100), best=(v2===14);
+        inner+=`<g class="q9Rise" style="animation-delay:${(0.14*k).toFixed(2)}s">`
+          +`<line x1="${x}" y1="88" x2="${x}" y2="104" stroke="${two?gold:'#5a6a9a'}" stroke-width="2.4"/>`
+          +tx(x,126,15,best&&go?grn:(two?gold:dim),''+v2,{b:two})
+          +(best&&go?`<circle class="q9Pulse" cx="${x}" cy="126" r="22" fill="none" stroke="${grn}" stroke-width="2.2"/>`:'')
+          +`</g>`;
+      });
+      if(go){
+        inner+=plate(58,152,202,30,grn,'наименьшее двузначное — 14',grn,13.5);
+      } else {
+        inner+=fit(159,158,13,dim,'7 · 1 = 7, 7 · 2 = ?',{},240);
+      }
+      inner+=dotOn('M36 96 H292',3.4,0,cyan,5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Кратные семи</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('7 · 2 = 14 — первое двузначное',grn,0.1)):'')+
+        (go?wkNote('Однозначное кратное только одно — 7. Следующее кратное уже двузначное: 7 · 2 = 14.'):'')+
+        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('показать',`visW394Act('${lk}','go')`))+
+        wkSml('кратные числа'));
+    } else if(step===8){ /* алгоритм НОК */
+      H=210;
+      const items=['берём большее число','выписываем его кратные','проверяем делимость на меньшее','первое подходящее — НОК'];
+      let inner='';
+      items.forEach((t,k)=>{
+        const y=26+k*42, d=(0.2+k*0.5).toFixed(2), du=(items.length*0.5+1).toFixed(2);
+        inner+=`<g class="q9Rise" style="animation-delay:${(0.1*k).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="258" height="34" rx="9" fill="rgba(22,29,50,.92)" stroke="${cardB}" stroke-width="1.5"/>`
+          +`<circle cx="50" cy="${y+17}" r="11" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="1.6"/>`
+          +tx(50,y+22,12,gold,''+(k+1),{b:1})
+          +fit(168,y+22,12.5,ink,t,{},190)
+          +`<rect class="q9Glow" style="animation-delay:${d}s;animation-duration:${du}s" x="30" y="${y}" width="258" height="34" rx="9" fill="${cyan}" opacity=".12"/></g>`;
+      });
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Алгоритм поиска НОК</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('шаг за шагом — всегда работает',grn,0.1)):'')+
+        (go?wkNote('Так ищут НОК любых двух чисел: перебираем кратные большего и проверяем делимость на меньшее.'):'')+
+        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('показать план',`visW394Act('${lk}','go')`))+
+        wkSml('алгоритм'));
+    } else if(step===9){ /* тренажёр: делится ли 246 на 3 */
+      H=210;
+      const opts=['да, делится','нет, не делится'], ok=0;
+      const sel=st.pick, done=(sel>=0);
+      let inner='';
+      inner+=fit(159,30,15,ink,'делится ли 246 на 3?',{b:1,georgia:1},270);
+      inner+=digitBoxes(114,48,40,'246',done?[0,1,2]:[],[null,null,null,cyan]);
+      if(done) inner+=plate(70,104,178,30,gold,'2 + 4 + 6 = 12',gold,13.5);
+      opts.forEach((t,k)=>{
+        const x=34+k*126, good=(k===ok), on=(done&&k===ok), bad=(done&&sel===k&&!good);
+        const c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW394Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="146" width="116" height="36" rx="10" fill="${on?'rgba(125,224,160,.16)':(bad?'rgba(255,120,100,.16)':'rgba(22,29,50,.94)')}" stroke="${c}" stroke-width="${(on||bad)?2:1.6}"/>`
+          +fit(x+58,169,13,c,t,{b:on},100)+`</g>`;
+      });
+      if(done) inner+=fit(159,198,12,sel===ok?grn:red,sel===ok?'Верно! 12 делится на 3':'Подумай: сложи цифры',{b:1},270);
+      else inner+=fit(159,198,11.5,dim,'нажми на вариант ответа',{},240);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: признак для 3</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW394Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('2 + 4 + 6 = 12, а 12 делится на 3 — значит и 246 делится на 3.'):'')+
+        wkSml('проверь по сумме цифр'));
+    } else if(step===10){ /* тренажёр: НОК(4,6) */
+      H=206;
+      const opts=['12','24','10'], ok=0, sel=st.pick, done=(sel>=0);
+      let inner='';
+      inner+=fit(159,30,15,ink,'чему равен НОК(4, 6)?',{b:1,georgia:1},270);
+      [6,12,18,24].forEach((v2,k)=>{
+        const x=52+k*56, hit=(v2===12);
+        inner+=`<g class="q9Tok" style="animation-delay:${(0.08*k).toFixed(2)}s"><rect x="${x}" y="50" width="50" height="34" rx="8" fill="${done&&hit?'rgba(125,224,160,.2)':'rgba(22,29,50,.92)'}" stroke="${done&&hit?grn:cardB}" stroke-width="${done&&hit?2.2:1.4}"/>`
+          +tx(x+25,73,14,done&&hit?grn:ink,''+v2,{b:done&&hit})+`</g>`;
+      });
+      inner+=fit(159,100,11.5,dim,'кратные шести',{},200);
+      opts.forEach((t,k)=>{
+        const x=40+k*82, good=(k===ok), on=(done&&k===ok), bad=(done&&sel===k&&!good);
+        const c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW394Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="118" width="72" height="38" rx="10" fill="${on?'rgba(125,224,160,.16)':(bad?'rgba(255,120,100,.16)':'rgba(22,29,50,.94)')}" stroke="${c}" stroke-width="${(on||bad)?2:1.6}"/>`
+          +tx(x+36,143,16,c,t,{b:on,georgia:1})+`</g>`;
+      });
+      if(done) inner+=fit(159,182,12,sel===ok?grn:red,sel===ok?'Верно! 12 делится и на 4, и на 6':'Проверь: делится ли на 4?',{b:1},280);
+      else inner+=fit(159,180,11.5,dim,'нажми на ответ',{},220);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: ищем НОК</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW394Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('12 — первое кратное шести, которое делится и на 4. Значит НОК(4, 6) = 12.'):'')+
+        wkSml('наименьшее общее кратное'));
+    } else if(step===11){ /* шпаргалка */
+      H=214;
+      const rows=[
+        {t:'на 2, 5, 10',r:'последняя цифра',c:grn},
+        {t:'на 3 и 9',r:'сумма всех цифр',c:cyan},
+        {t:'на 4',r:'последние две цифры',c:gold},
+        {t:'НОК',r:'наименьшее общее кратное',c:'#b07fff'}
+      ];
+      let inner='';
+      rows.forEach((q,k)=>{
+        const y=24+k*46;
+        inner+=`<g class="q9Rise" style="animation-delay:${(0.14*k).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="38" rx="10" fill="rgba(22,29,50,.92)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(96,y+24,13.5,q.c,q.t,{b:1},130)
+          +fit(220,y+24,12,ink,q.r,{},150)+`</g>`;
+      });
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go>=4?wkRow(chip('проверяй по записи числа',gold,0.2)):'')+
-        wkRow(
-          go===0?wkBtn('шаг 1',`visW394Act('${lk}','go')`) : '',
-          go===1?wkBtn('шаг 2',`visW394Act('${lk}','go')`) : '',
-          go===2?wkBtn('шаг 3',`visW394Act('${lk}','go')`) : '',
-          go===3?wkBtn('шаг 4',`visW394Act('${lk}','go')`) : '',
-          go>=4?wkBtn('сброс',`visW394Act('${lk}','rst')`):'')+
-        wkSml('признаки по записи'));
-    } else {
-      const H=196;
+        (go?wkRow(chip('смотри на запись, а не считай',grn,0.1)):'')+
+        (go?wkNote('Четыре правила на всю тему: последняя цифра, сумма цифр, две последние цифры и определение НОК.'):'')+
+        wkRow(go?wkBtn('сброс',`visW394Act('${lk}','rst')`):wkBtn('показать',`visW394Act('${lk}','go')`))+
+        wkSml('всё главное вместе'));
+    } else if(step===12){ /* устная проверка */
+      H=210;
+      const qa=[['НОК(6, 8) = ?','24'],['кратные 7','7, 14, 21'],['на 4 — по чему?','последние две цифры']];
       let inner='';
-      inner+=tx(159,42,17,ink,'НОК(6, 8)',{b:1,georgia:1});
-      inner+=`<g class="q9Pop"><text x="159" y="88" text-anchor="middle" font-size="34" fill="${grn}" font-weight="bold" font-family="Georgia,serif">= 24</text></g>`;
-      inner+=tx(159,114,13.5,dim,'24 делится и на 6, и на 8',{});
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
+      qa.forEach((q,k)=>{
+        const y=26+k*54, shown=(st.q||0)>k;
+        inner+=`<g class="q9Rise" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="44" rx="10" fill="rgba(22,29,50,.92)" stroke="${shown?grn:cardB}" stroke-width="1.7"/>`
+          +fit(92,y+27,12.5,ink,q[0],{},140)
+          +(shown?fit(232,y+27,13,grn,q[1],{b:1},120):fit(232,y+27,11,dim,'жми «ответ»',{},110))
+          +`</g>`;
+      });
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        quiz(lk,st)+
-        wkSml('общее кратное · наименьшее'));
+        ((st.q||0)>=3?wkRow(chip('все ответы на месте',grn,0.1)):'')+
+        wkRow((st.q||0)<3?wkBtn('показать ответ',`visW394Act('${lk}','q')`):wkBtn('сначала',`visW394Act('${lk}','rst')`))+
+        (st.q>=3?wkNote('Если все три ответа вспомнились сразу — тема усвоена.'):'')+
+        wkSml('быстрая проверка'));
+    } else { /* step 13: итог */
+      H=196;
+      let inner='';
+      inner+=`<g class="q9Pulse"><circle cx="159" cy="76" r="46" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="2.6"/></g>`;
+      inner+=fit(159,70,15,ink,'НОК(6, 8)',{b:1,georgia:1},200);
+      inner+=fit(159,98,26,grn,'24',{b:1,georgia:1},120);
+      inner+=fit(159,132,12.5,dim,'24 делится и на 6, и на 8',{},250);
+      inner+=`<g class="q9Rise"><rect x="40" y="148" width="238" height="30" rx="9" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,168,12,gold,'жми «Понял! Проверю себя» →',{b:1},220)+`</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Итог урока</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkNote('Запомни главное: 2, 5, 10 — последняя цифра; 3, 9 — сумма цифр; 4 — две последние цифры; НОК — наименьшее общее кратное.')+
+        wkRow(wkBtn('в начало',`visW394Act('${lk}','rst')`))+
+        wkSml('делимость и НОК'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
   window.VISKW[394]=visW394;
-  function visW394T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
-  window.visW394T=visW394T;
-  function visW394P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
-  window.visW394P=visW394P;
-  function visW394S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
-  window.visW394S=visW394S;
-  function visW394Act(lk,act){
+  window.visW394Pick=function(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); };
+  window.visW394Act=function(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
-    const sp=LV.step;
-    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
-    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
-    if(act==='nq'){ if(sp===12){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
-    if(act==='rst') CHS[lk]={};
+    if(act==='go'){ st.go=st.go?0:1; }
+    if(act==='q'){ st.q=Math.min(3,(st.q||0)+1); }
+    if(act==='rst'){ CHS[lk]={_at:st._at}; }
     chRender(0);
-  }
-  window.visW394Act=visW394Act;
+  };
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===394){ window.ARH_LESSONS[i]=L394; break; } } })();
 })();
 
