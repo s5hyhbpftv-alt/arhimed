@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 20 уроков (id 500–519) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 21 урока (id 500–520) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -38,6 +38,19 @@
     [/двоичн|разряд|0 и 1|ноль|нул|единиц/i,'bits'],
     [/порядок|шаг|список|номер|строк/i,'lines']
   ];
+  const fit=(x,y,fs,c,t,o,maxw)=>{
+    const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);
+    return tx(x,y,s2,c,t,o);
+  };
+  function pxGrid(pre,x0,y0,cell,mat,opt){
+    opt=opt||{}; let s='';
+    mat.forEach((row,r)=>row.forEach((v2,c)=>{
+      const on=(v2===1||v2===true), x=x0+c*cell, y=y0+r*cell;
+      const fill=on?'#101828':(opt.paper?'#eaf2ff':'rgba(255,255,255,.05)');
+      s+=`<rect class="${pre}Pop" style="animation-delay:${((opt.base||0)+(r*mat[0].length+c)*0.03).toFixed(2)}s" x="${x}" y="${y}" width="${cell-1}" height="${cell-1}" rx="2" fill="${fill}" stroke="${opt.paper?'#c8d4ee':'#26355c'}" stroke-width="0.9"/>`;
+    }));
+    return s;
+  }
   function graphDraw(pre,nodes,edges,opt){
     opt=opt||{}; const A=accOf(pre); let s='';
     edges.forEach((e,k)=>{
@@ -2682,6 +2695,269 @@
         +`${tx(159,by+51,10.5,dim,bad>=0?'Это не соседний город — иди по дороге':'Голубым отмечены соседи, куда можно пойти',{})}</g>`;
       return s;
     }
+    if(K==='pixeltask'){ /* как компьютер хранит рисунок */
+      const smile=[[0,1,1,1,1,0],[1,0,0,0,0,1],[1,1,0,0,1,1],[1,0,0,0,0,1],[1,1,1,1,1,1],[0,1,1,1,1,0]];
+      let s=`<g class="${pre}Pop"><rect x="30" y="16" width="258" height="30" rx="10" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>`
+        +`${tx(159,36,13,gold,'как компьютер хранит рисунок?',{b:1})}</g>`;
+      const cw2=17, x0=Math.round((CW-6*cw2)/2), y0=58;
+      s+=`<rect x="${x0-8}" y="${y0-8}" width="${6*cw2+16}" height="${6*cw2+16}" rx="8" fill="#0f1930" stroke="${A}" stroke-width="1.8"/>`;
+      s+=pxGrid(pre,x0,y0,cw2,smile,{base:0.15});
+      s+=`<g class="${pre}Float"><circle cx="${x0+2*cw2}" cy="${y0+2*cw2}" r="26" fill="rgba(126,168,255,.14)" stroke="${cyan}" stroke-width="2.4"/>`
+        +`<circle cx="${x0+2*cw2}" cy="${y0+2*cw2}" r="19" fill="none" stroke="${cyan}" stroke-width="1.6"/>`
+        +`<path d="M${x0+2*cw2+14} ${y0+2*cw2+14} l12 12" stroke="${cyan}" stroke-width="3.4" stroke-linecap="round"/>`
+        +`<animateMotion dur="4s" repeatCount="indefinite" path="M${x0+cw2} ${y0+cw2} Q${x0+3*cw2} ${y0+5*cw2} ${x0+5*cw2} ${y0+cw2}"/></g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.5s"><rect x="24" y="176" width="270" height="28" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,195,11,dim,'а внутри — только числа, как всегда',{})}</g>`;
+      return s;
+    }
+    if(K==='pixzoom'){ /* приближаем: видно клетки */
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,ink,'увеличиваем — и видим клетки',{b:1})}</g>`;
+      const mat=[[1,1,0,1],[1,0,1,1],[0,1,1,0],[1,1,0,1]];
+      [[22,60,10],[112,60,15],[208,62,20]].forEach((q,k)=>{
+        const n=4, x0=q[0], y0=q[1], cell=q[2];
+        s+=`<rect x="${x0-4}" y="${y0-4}" width="${n*cell+8}" height="${n*cell+8}" rx="6" fill="#0f1930" stroke="${k===2?gold:A}" stroke-width="1.6"/>`;
+        s+=pxGrid(pre,x0,y0,cell,mat,{base:0.15+k*0.2});
+        if(k<2){
+          const g=k===0?34:20;
+          s+=`<path d="M${x0+n*cell+6} ${y0+n*cell/2} h${g}" stroke="${gold}" stroke-width="2" class="${pre}Dash"/>`
+            +`<path d="M${x0+n*cell+6+g-6} ${y0+n*cell/2-4} l6 4 l-6 4" fill="none" stroke="${gold}" stroke-width="2"/>`;
+        }
+      });
+      s+=`${tx(159,178,11.5,gold,'на каждом шаге клетки всё крупнее',{b:1})}`;
+      s+=`${tx(159,198,11,dim,'так выглядит «пиксель» при увеличении',{})}`;
+      return s;
+    }
+    if(K==='pixel'){ /* один пиксель */
+      let s=`<g class="${pre}Pop"><rect x="30" y="16" width="258" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +`${tx(159,35,12.5,gold,'один пиксель — один цвет',{b:1})}</g>`;
+      s+=`<rect x="99" y="58" width="120" height="120" rx="10" fill="#eaf2ff" stroke="${gold}" stroke-width="2.6" filter="url(#${pre}sh)"/>`;
+      s+=`<circle class="${pre}Twinkle" cx="159" cy="118" r="34" fill="#101828"/>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.3s"><rect x="24" y="190" width="130" height="30" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.5"/>`
+        +`${tx(89,210,11,cyan,'клетка = пиксель',{})}</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.45s"><rect x="164" y="190" width="130" height="30" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.5"/>`
+        +`${tx(229,210,11,grn,'у него один цвет',{})}</g>`;
+      return s;
+    }
+    if(K==='bw'){ /* чёрно-белый код: 1 и 0 */
+      const mat=(v.mat||[[0,1,1,1,1,0],[1,0,0,0,0,1],[1,0,1,0,1,1],[1,0,0,0,0,1],[1,1,1,1,1,1],[0,1,1,1,1,0]]);
+      const cw2=20, x0=Math.round((CW-6*cw2)/2)-30, y0=52;
+      let s=`<g class="${pre}Pop"><rect x="20" y="14" width="278" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,ink,'белый лист и чёрные пиксели',{b:1})}</g>`;
+      s+=`<rect x="${x0-6}" y="${y0-6}" width="${6*cw2+12}" height="${6*cw2+12}" rx="6" fill="#eaf2ff" stroke="${grn}" stroke-width="2"/>`;
+      s+=`<g>${pxGrid(pre,x0,y0,cw2,mat,{base:0.2,paper:1})}</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="228" y="60" width="76" height="52" rx="9" fill="rgba(16,26,46,.97)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(266,82,20,grn,'1',{b:1,georgia:1})}${tx(266,102,10.5,dim,'чёрный',{})}</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.75s"><rect x="228" y="122" width="76" height="52" rx="9" fill="rgba(16,26,46,.97)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(266,144,20,ink,'0',{b:1,georgia:1})}${tx(266,164,10.5,dim,'белый',{})}</g>`;
+      s+=`${tx(159,196,11.5,dim,'два числа — два цвета',{})}`;
+      return s;
+    }
+    if(K==='drawbits'){ /* рисуем по коду */
+      const mat=(v.mat||[[0,1,1,1,0],[1,0,0,0,1],[1,1,1,1,1],[1,0,0,0,1],[1,0,0,0,1]]);
+      const rows=mat.length, cols=mat[0].length, cw2=22, x0=150, y0=52;
+      let s=`<g class="${pre}Pop"><rect x="20" y="14" width="278" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,gold,'где 1 — закрашиваем клетку',{b:1})}</g>`;
+      mat.forEach((r,k)=>{
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.1*k).toFixed(2)}s"><rect x="26" y="${y0+k*22-2}" width="${cols*18}" height="20" rx="5" fill="rgba(15,25,46,.97)" stroke="${cardB}" stroke-width="1"/>`;
+        r.forEach((v2,c)=>{ s+=`${tx(26+8+c*18,y0+k*22+12,12,v2?grn:dim,''+v2,{b:1})}`; });
+        s+=`</g>`;
+      });
+      s+=`<rect x="${x0-6}" y="${y0-6}" width="${cols*cw2+12}" height="${rows*cw2+12}" rx="6" fill="#eaf2ff" stroke="${grn}" stroke-width="2"/>`;
+      mat.forEach((r,k)=>r.forEach((v2,c)=>{
+        const d=(0.3+(k*cols+c)*0.055).toFixed(2);
+        s+=`<rect class="${pre}Pop" style="animation-delay:${d}s" x="${x0+c*cw2}" y="${y0+k*cw2}" width="${cw2-1}" height="${cw2-1}" rx="2" fill="${v2?'#101828':'#eaf2ff'}" stroke="#c8d4ee" stroke-width="0.8"/>`;
+      }));
+      s+=`<path d="M${x0-14} ${y0-6} v${rows*cw2+12} M${x0-14} ${y0-6} h8 M${x0-14} ${y0+rows*cw2+6} h8" stroke="${gold}" stroke-width="2" opacity=".8"/>`;
+      s+=`${tx(159,y0+rows*cw2+26,11.5,grn,'код из чисел стал картинкой',{b:1})}`;
+      return s;
+    }
+    if(K==='readbits'){ /* читаем код с картинки */
+      const mat=(v.mat||[[0,1,1,1,0],[1,0,0,0,1],[1,1,1,1,1],[1,0,0,0,1]]);
+      const rows=mat.length, cols=mat[0].length, cw2=20, x0=34, y0=56;
+      let s=`<g class="${pre}Pop"><rect x="20" y="14" width="278" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,cyan,'запишем рисунок числами',{b:1})}</g>`;
+      s+=`<rect x="${x0-6}" y="${y0-6}" width="${cols*cw2+12}" height="${rows*cw2+12}" rx="6" fill="#eaf2ff" stroke="${cyan}" stroke-width="2"/>`;
+      mat.forEach((r,k)=>r.forEach((v2,c)=>{
+        s+=`<rect x="${x0+c*cw2}" y="${y0+k*cw2}" width="${cw2-1}" height="${cw2-1}" rx="2" fill="${v2?'#101828':'#eaf2ff'}" stroke="#c8d4ee" stroke-width="0.8"/>`;
+      }));
+      s+=`<path d="M${x0+cols*cw2+8} ${y0+8} h30 m-6 -5 l6 5 l-6 5" stroke="${A}" stroke-width="2" fill="none" class="${pre}Dash"/>`;
+      mat.forEach((r,k)=>{
+        s+=`<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.12+k*0.18).toFixed(2)};${(0.2+k*0.18).toFixed(2)};1" dur="4.6s" repeatCount="indefinite"/>`
+          +`<rect x="180" y="${y0+k*24-2}" width="${cols*20}" height="22" rx="5" fill="rgba(15,25,46,.97)" stroke="${cyan}" stroke-width="1.2"/>`;
+        r.forEach((v2,c)=>{ s+=`${tx(180+10+c*20,y0+k*24+13,13,v2?ink:dim,''+v2,{b:1})}`; });
+        s+=`</g>`;
+      });
+      s+=`${tx(159,y0+rows*cw2+30,11.5,cyan,'каждая строка — цепочка нулей и единиц',{b:1})}`;
+      return s;
+    }
+    if(K==='graylevels'){ /* оттенки серого */
+      const sh=[{v:0,t:'00',c:'#1b2a4d'},{v:1,t:'01',c:'#5a6d96'},{v:2,t:'10',c:'#a8b6d4'},{v:3,t:'11',c:'#eaf2ff'}];
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,ink,'2 бита → 4 оттенка',{b:1})}</g>`;
+      sh.forEach((q,k)=>{
+        const x=24+k*70;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.12).toFixed(2)}s">`
+          +`<rect x="${x}" y="58" width="62" height="62" rx="8" fill="${q.c}" stroke="${gold}" stroke-width="1.8"/>`
+          +`<rect x="${x+8}" y="132" width="46" height="26" rx="7" fill="rgba(15,25,46,.97)" stroke="${A}" stroke-width="1.4"/>`
+          +`${tx(x+31,150,14,gold,q.t,{b:1})}</g>`;
+      });
+      s+=`${tx(159,182,11.5,dim,'каждый оттенок — свой код из двух бит',{})}`;
+      s+=`${tx(159,202,11.5,grn,'чем больше бит, тем больше оттенков',{b:1})}`;
+      return s;
+    }
+    if(K==='colors'){ /* смешиваем три цвета */
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,ink,'красный + зелёный + синий',{b:1})}</g>`;
+      const cx=159, cy=118, R=44;
+      s+=`<circle class="${pre}Glow" cx="${cx-30}" cy="${cy-18}" r="${R}" fill="rgba(255,90,90,.4)" stroke="#ff6b6b" stroke-width="2"/>`;
+      s+=`<circle class="${pre}Glow" style="animation-delay:.5s" cx="${cx+30}" cy="${cy-18}" r="${R}" fill="rgba(90,255,140,.38)" stroke="${grn}" stroke-width="2"/>`;
+      s+=`<circle class="${pre}Glow" style="animation-delay:1s" cx="${cx}" cy="${cy+30}" r="${R}" fill="rgba(90,140,255,.38)" stroke="${blu}" stroke-width="2"/>`;
+      s+=tx(cx-62,cy-40,12,'#ffd0d0','R',{b:1});
+      s+=tx(cx+62,cy-40,12,'#d4ffe0','G',{b:1});
+      s+=tx(cx-58,cy+48,12,'#d6e2ff','B',{b:1});
+      s+=`<circle class="${pre}Twinkle" cx="${cx}" cy="${cy}" r="12" fill="rgba(255,255,255,.55)"/>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.5s"><rect x="24" y="186" width="270" height="28" rx="9" fill="rgba(255,255,255,.05)" stroke="${gold}" stroke-width="1.6"/>`
+        +`${tx(159,205,11.5,gold,'все три вместе дают белый',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='colorcode'){ /* код цвета */
+      const pal=[{n:'красный',r:255,g:0,b:0,c:'#ff5d5d'},{n:'зелёный',r:0,g:200,b:90,c:'#6fe0a0'},{n:'синий',r:70,g:130,b:255,c:'#7fa8ff'}];
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,ink,'цвет — это три числа',{b:1})}</g>`;
+      pal.forEach((q,k)=>{
+        const y=54+k*48;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="42" height="40" rx="8" fill="${q.c}" stroke="${gold}" stroke-width="1.6"/>`
+          +`<rect x="76" y="${y}" width="222" height="40" rx="9" fill="rgba(15,25,46,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+          +`${tx(104,y+25,12,ink,q.n,{an:'start'})}`
+          +`<text x="284" y="${y+26}" text-anchor="end" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${q.c}">(${q.r}, ${q.g}, ${q.b})</text></g>`;
+      });
+      s+=`${tx(159,204,11.5,dim,'каждое число от 0 до 255 — это один байт',{})}`;
+      return s;
+    }
+    if(K==='bitscount'){ /* сколько бит на пиксель */
+      const rows=[{n:'2 цвета',b:'1 бит',c:cyan,w:22},{n:'4 цвета',b:'2 бита',c:blu,w:44},{n:'16 цветов',b:'4 бита',c:gold,w:78},{n:'256 цветов',b:'8 бит',c:grn,w:122}];
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,ink,'сколько бит нужно пикселю',{b:1})}</g>`;
+      rows.forEach((q,k)=>{
+        const y=54+k*38;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+          +`${tx(24,y+16,12,q.c,q.n,{an:'start',b:1})}`
+          +`<rect x="118" y="${y+2}" width="${q.w}" height="18" rx="6" fill="${q.c}" opacity=".26" stroke="${q.c}" stroke-width="1.3"/>`
+          +`<text x="300" y="${y+17}" text-anchor="end" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${q.c}">${q.b}</text></g>`;
+      });
+      s+=`${tx(159,54+rows.length*38+8,11.5,grn,'каждый новый бит удваивает число цветов',{b:1})}`;
+      return s;
+    }
+    if(K==='imgsize'){ /* считаем размер рисунка */
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,gold,'считаем размер рисунка',{b:1})}</g>`;
+      const steps=[{t:'10 × 10 пикселей',c:cyan},{t:'× 1 бит на пиксель',c:blu},{t:'= 100 бит',c:grn}];
+      steps.forEach((q,k)=>{
+        const y=54+k*40;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.2+k*0.25).toFixed(2)}s"><rect x="34" y="${y}" width="250" height="32" rx="9" fill="rgba(15,25,46,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +`${tx(159,y+22,13,q.c,q.t,{b:1})}</g>`;
+        if(k<2) s+=`<path d="M159 ${y+34} v6" stroke="${A}" stroke-width="1.8" class="${pre}Dash"/>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.95s"><rect x="20" y="180" width="278" height="34" rx="9" fill="rgba(255,255,255,.05)" stroke="${gold}" stroke-width="1.6"/>`
+        +`${tx(159,202,11.5,ink,'а цветной пиксель — это 3 байта',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='resolution'){ /* чем больше пикселей, тем чётче */
+      const small=[[1,1,1,1],[1,0,0,0],[1,0,0,0],[1,1,1,0]];
+      const big=[[1,1,1,1,1,1,1,1],[1,1,0,0,0,0,0,0],[1,1,0,0,0,0,0,0],[1,1,0,0,0,0,0,0],[1,1,0,0,0,0,0,0],[1,1,0,0,0,0,0,0],[1,1,0,0,0,0,0,0],[1,1,1,1,1,1,0,0]];
+      let s=`<g class="${pre}Pop"><rect x="20" y="14" width="278" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,ink,'больше пикселей — чётче рисунок',{b:1})}</g>`;
+      s+=`<rect x="24" y="52" width="124" height="124" rx="8" fill="#eaf2ff" stroke="${red}" stroke-width="2"/>`;
+      s+=`<g>${small.map((r,k)=>r.map((v2,c)=>`<rect x="${28+c*29}" y="${56+k*29}" width="28" height="28" fill="${v2?'#101828':'#eaf2ff'}" stroke="#c8d4ee" stroke-width="0.8"/>`).join('')).join('')}</g>`;
+      s+=`<rect x="170" y="52" width="124" height="124" rx="8" fill="#eaf2ff" stroke="${grn}" stroke-width="2"/>`;
+      s+=`<g>${big.map((r,k)=>r.map((v2,c)=>`<rect x="${174+c*14.5}" y="${56+k*14.5}" width="14" height="14" fill="${v2?'#101828':'#eaf2ff'}" stroke="#dbe4f5" stroke-width="0.6"/>`).join('')).join('')}</g>`;
+      s+=`${tx(86,192,11.5,red,'4 × 4 — грубо',{b:1})}${tx(232,192,11.5,grn,'8 × 8 — уже видно',{b:1})}`;
+      s+=`${tx(159,212,11,dim,'разрешение — это число пикселей в рисунке',{})}`;
+      return s;
+    }
+    if(K==='rle'){ /* одинаковые пиксели записываем короче */
+      const row=[0,0,0,0,0,1,1,1,0,0];
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,ink,'одинаковые пиксели — короче',{b:1})}</g>`;
+      row.forEach((v2,k)=>{
+        const x=34+k*25;
+        s+=`<g class="${pre}Tok" style="animation-delay:${(0.08*k).toFixed(2)}s"><rect x="${x}" y="52" width="23" height="30" rx="5" fill="${v2?'#101828':'#eaf2ff'}" stroke="#c8d4ee" stroke-width="1"/>`
+          +`${tx(x+11,90,12,v2?grn:dim,''+v2,{b:1})}</g>`;
+      });
+      s+=`<path d="M34 108 H158" stroke="${cyan}" stroke-width="2.4"/><path d="M34 104 v8 M158 104 v8" stroke="${cyan}" stroke-width="2.4"/>`
+        +`${tx(96,126,12,cyan,'5 нулей',{b:1})}`;
+      s+=`<path d="M159 108 H234" stroke="${gold}" stroke-width="2.4"/><path d="M159 104 v8 M234 104 v8" stroke="${gold}" stroke-width="2.4"/>`
+        +`${tx(196,126,12,gold,'3 единицы',{b:1})}`;
+      s+=`<path d="M235 108 H284" stroke="${cyan}" stroke-width="2.4"/><path d="M235 104 v8 M284 104 v8" stroke="${cyan}" stroke-width="2.4"/>`
+        +`${tx(259,126,11,cyan,'2 нуля',{})}`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="24" y="140" width="270" height="34" rx="9" fill="rgba(255,255,255,.05)" stroke="${grn}" stroke-width="1.6"/>`
+        +`<text x="159" y="162" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">5·0  3·1  2·0</text></g>`;
+      s+=`${tx(159,192,11,dim,'так код становится короче — это сжатие',{})}`;
+      return s;
+    }
+    if(K==='photo'){ /* фото — миллионы пикселей */
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,33,12,ink,'фотография — это очень много пикселей',{b:1})}</g>`;
+      let sd=7; const rnd=()=>{sd=(sd*1103515245+12345)%2147483648; return sd/2147483648;};
+      for(let r=0;r<18;r++)for(let c=0;c<18;c++){
+        const x=52+c*12, y=52+r*12, t=rnd();
+        const col=t<.33?'#3b5a8f':(t<.66?'#7fa8ff':'#d9e6ff');
+        s+=`<rect x="${x}" y="${y}" width="11" height="11" fill="${col}" opacity=".85"/>`;
+      }
+      s+=`<rect x="50" y="50" width="220" height="220" rx="8" fill="none" stroke="${gold}" stroke-width="2"/>`;
+      const steps=[{t:'1000 × 1000 = 1 000 000 пикселей',c:cyan},{t:'и у каждого 3 числа цвета',c:blu},{t:'= 3 000 000 байт!',c:red}];
+      steps.forEach((q,k)=>{
+        const y=282+k*30;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.3+k*0.25).toFixed(2)}s"><rect x="20" y="${y}" width="278" height="26" rx="8" fill="rgba(15,25,46,.97)" stroke="${q.c}" stroke-width="1.5"/>`
+          +fit(159,y+18,11.5,q.c,q.t,{},266)+`</g>`;
+      });
+      return s;
+    }
+    if(K==='drawgame'){ /* интерактив: раскрась по коду */
+      const tgt=(v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]);
+      const rows=tgt.length, cols=tgt[0].length;
+      const grid=(st&&st.grid)?st.grid:tgt.map(r=>r.map(()=>0));
+      const done=grid.every((r,k)=>r.every((v2,c)=>v2===tgt[k][c]));
+      const cw2=26, x0=Math.round((CW-cols*cw2)/2), y0=64;
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${tx(159,34,Math.min(12,250/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Раскрась пиксели по коду',{b:1})}</g>`;
+      grid.forEach((r,k)=>r.forEach((v2,c)=>{
+        const want=tgt[k][c], ok=(v2===want);
+        s+=`<g style="cursor:pointer" onclick="infDraw('${lk}',${k},${c})">`
+          +`<rect x="${x0+c*cw2}" y="${y0+k*cw2}" width="${cw2-2}" height="${cw2-2}" rx="4" fill="${v2?'#101828':'#eaf2ff'}" stroke="${v2?(ok?grn:'#ff9a8a'):'#c8d4ee'}" stroke-width="${v2?2:1}"/>`
+          +(v2?`${tx(x0+c*cw2+6,y0+k*cw2+16,10,'#4a5b85',''+want,{an:'start'})}`
+             :`<text x="${x0+c*cw2+5}" y="${y0+k*cw2+14}" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${want?'#8ea3c8':'#b6c2dd'}" opacity=".85">${want}</text>`)
+          +`</g>`;
+      }));
+      s+=`<rect x="${x0-4}" y="${y0-4}" width="${cols*cw2+4}" height="${rows*cw2+4}" rx="6" fill="none" stroke="${A}" stroke-width="1.6"/>`;
+      const by=y0+rows*cw2+10;
+      if(done) s+=`<g class="${pre}Pop"><rect x="30" y="${by}" width="258" height="30" rx="9" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(159,by+20,12,grn,'Совпало! Ты нарисовал картинку по коду',{b:1})}</g>`;
+      else s+=`<g class="${pre}Rise}"><rect x="20" y="${by}" width="278" height="30" rx="9" fill="rgba(15,25,46,.95)" stroke="${A}" stroke-width="1.5"/>`
+        +`${tx(159,by+20,11,dim,'нажимай клетки: где в коде 1 — там чёрный',{})}</g>`;
+      return s;
+    }
+    if(K==='pixmistakes'){ /* частые ошибки */
+      const it=(v.items||[
+        {t:'перепутал 1 и 0', f:'1 — чёрный пиксель, 0 — белый'},
+        {t:'думал, что у пикселя один цвет', f:'в RGB цвет — это три числа'},
+        {t:'забыл про размер', f:'пиксели × биты = объём рисунка'}
+      ]);
+      let s='';
+      it.forEach((q,k)=>{
+        const y=22+k*54;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.14+k*0.16).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="16" y="${y}" width="286" height="46" rx="11" fill="url(#${pre}card)" stroke="${red}" stroke-width="2"/>`
+          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#241016">!</text>`
+          +fit(62,y+20,Math.min(11.5,206/Math.max(1,q.t.length)/0.72),red,q.t,{an:'start',b:1},206)
+          +`<path d="M62 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(84,y+40,Math.min(11,186/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      s+=`${tx(159,22+it.length*54+4,11,dim,'эти ошибки встречаются чаще всего',{})}`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -2828,6 +3104,22 @@
     if(K==='outofrange') return 202;
     if(K==='marks') return 220;
     if(K==='findcell') return 210;
+    if(K==='pixeltask') return 220;
+    if(K==='pixzoom') return 220;
+    if(K==='pixel') return 236;
+    if(K==='bw') return 224;
+    if(K==='drawbits') return 240;
+    if(K==='readbits') return 230;
+    if(K==='graylevels') return 220;
+    if(K==='colors') return 230;
+    if(K==='colorcode') return 220;
+    if(K==='bitscount') return 224;
+    if(K==='imgsize') return 228;
+    if(K==='resolution') return 228;
+    if(K==='rle') return 210;
+    if(K==='photo') return 24+282+3*30;
+    if(K==='drawgame') return 64+6*26+52;
+    if(K==='pixmistakes') return 22+((v.items||[1,2,3]).length)*54+22;
     if(K==='broken') return 216;
     if(K==='kinds3') return 218;
     if(K==='console') return 204;
@@ -3546,6 +3838,50 @@
       tasks:[
         {q:'Сколько соседей у вершины, из которой выходит 4 ребра?', kind:'unit', ans:4, tol:0, hints:['Каждое ребро ведёт к соседу.','Четыре ребра — четыре соседа.'], sol:'4'},
         {q:'Как находят самый короткий путь?', kind:'choice', choices:['сравнивают варианты и выбирают с меньшим числом дорог','берут первую попавшуюся дорогу','идут наугад'], ans:0, tol:0, hints:['Сравниваем маршруты.','Выбираем тот, где меньше дорог.'], sol:'сравнивают варианты и выбирают с меньшим числом дорог'}
+      ] },
+    { id:520, title:'Пиксели: как компьютер хранит рисунок', ico:'🖼', src:'Информатика · 5–6 класс · С нуля: пиксели',
+      explain:[
+        'Рисунок на экране состоит из маленьких квадратиков — пикселей. Если сильно увеличить картинку, эти квадратики видно глазом.',
+        'Пиксель — это одна клетка рисунка, и у неё только один цвет: чёрный или белый, серый или цветной.',
+        'Компьютер хранит рисунок как таблицу чисел: для каждой клетки записано своё число.',
+        'Самый простой рисунок — чёрно-белый. Здесь хватает двух чисел: 1 — чёрный пиксель, 0 — белый.',
+        'Тогда рисунок записывают кодом: строка за строкой идут нули и единицы — так же, как мы кодировали буквы.',
+        'Чтобы нарисовать картинку по коду, идём по строкам: где стоит 1 — закрашиваем клетку, где 0 — оставляем белой.',
+        'Если цветов больше двух, одному пикселю нужно больше бит: 2 бита дают 4 оттенка серого, 4 бита — 16 цветов, 8 бит (один байт) — 256 цветов.',
+        'Цветной пиксель кодируют тремя числами: сколько красного, зелёного и синего. Такой способ называют RGB.',
+        'Каждое из этих чисел — от 0 до 255, то есть один байт. Значит, один цветной пиксель занимает три байта.',
+        'Смешивая три цвета, получают любой другой: красный с зелёным дают жёлтый, а все три вместе — белый.',
+        'Размер рисунка считают так: число пикселей умножают на число бит для одного пикселя.',
+        'Чем больше в рисунке пикселей, тем он чётче. Это называют разрешением: 4 на 4 клетки — грубо, 100 на 100 — уже хорошо.',
+        'Если подряд идут одинаковые пиксели, код можно сократить: вместо пяти нулей записать «5 нулей». Это и есть сжатие.',
+        'Фотография — это миллионы пикселей, у каждого три числа. Поэтому файлы с картинками такие большие и их сжимают.',
+        'Проверь себя: сколько чисел нужно, чтобы записать один цветной пиксель?',
+        'Тренажёр: раскрась клетки по коду — где 1, там чёрный пиксель.',
+        'Тренажёр: посчитай, сколько бит нужно для 16 цветов.',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'Как хранится рисунок', v:{kind:'pixeltask'}, r:'Что внутри картинки?', d:'На экране мы видим рисунок, а компьютер хранит его как таблицу чисел. Смотри, что покажет лупа.'},
+        {h:'Увеличиваем', v:{kind:'pixzoom'}, r:'При увеличении видны клетки.', d:'Одна и та же картинка при разном увеличении: чем сильнее приближаем, тем крупнее становятся квадратики-пиксели.'},
+        {h:'Пиксель', v:{kind:'pixel'}, r:'Клетка = пиксель = один цвет.', d:'Пиксель — самая маленькая часть рисунка. У него ровно один цвет, смешивать внутри клетки нечего.'},
+        {h:'Чёрное и белое', v:{kind:'bw', mat:[[0,1,1,1,1,0],[1,0,0,0,0,1],[1,0,1,0,1,1],[1,0,0,0,0,1],[1,1,1,1,1,1],[0,1,1,1,1,0]]}, r:'Два числа — два цвета.', d:'Самый простой код: 1 — чёрный пиксель, 0 — белый. Всего один бит на клетку.'},
+        {h:'Рисуем по коду', v:{kind:'drawbits', mat:[[0,1,1,1,0],[1,0,0,0,1],[1,1,1,1,1],[1,0,0,0,1],[1,0,0,0,1]]}, r:'Числа превращаются в картинку.', d:'Слева код, справа рисунок. Клетки закрашиваются одна за другой — видно, как числа становятся картинкой.'},
+        {h:'Читаем код', v:{kind:'readbits', mat:[[0,1,1,1,0],[1,0,0,0,1],[1,1,1,1,1],[1,0,0,0,1]]}, r:'А теперь наоборот.', d:'Обратная задача: смотрим на рисунок и записываем его кодом. Каждая строка клеток становится строкой из нулей и единиц.'},
+        {h:'Оттенки серого', v:{kind:'graylevels'}, r:'2 бита — 4 оттенка.', d:'Если цветов больше двух, нужно больше бит: двумя битами можно записать четыре разных оттенка.'},
+        {h:'Три цвета', v:{kind:'colors'}, r:'Красный, зелёный, синий.', d:'Цветной пиксель собирают из трёх цветов. Они светятся и складываются: все три вместе дают белый.'},
+        {h:'Код цвета', v:{kind:'colorcode'}, r:'Цвет — это три числа.', d:'Каждый цвет записывают тремя числами от 0 до 255: сколько красного, зелёного и синего. Это и есть RGB.'},
+        {h:'Сколько бит', v:{kind:'bitscount'}, r:'Больше цветов — больше бит.', d:'Каждый новый бит удваивает число цветов: 1 бит — 2 цвета, 2 бита — 4, 4 бита — 16, 8 бит — 256.'},
+        {h:'Размер рисунка', v:{kind:'imgsize'}, r:'Считаем объём.', d:'Размер считают умножением: число пикселей на число бит для одного пикселя. Для цветного пикселя нужно три байта.'},
+        {h:'Разрешение', v:{kind:'resolution'}, r:'Чем больше клеток, тем чётче.', d:'Слева рисунок из 16 клеток — он грубый, видны квадраты. Справа клеток больше в четыре раза — рисунок стал чётким.'},
+        {h:'Сжатие', v:{kind:'rle'}, r:'Одинаковые клетки — короче.', d:'Подряд идущие одинаковые пиксели записывают группой: «5 нулей, 3 единицы, 2 нуля». Так код становится короче.'},
+        {h:'Фотография', v:{kind:'photo'}, r:'Миллионы пикселей.', d:'В фотографии 1000 на 1000 пикселей — это миллион клеток, и у каждой три числа цвета. Поэтому фотографии такие большие.'},
+        {h:'Раскрась по коду', v:{kind:'drawgame', q:'Раскрась клетки по коду: где 1 — чёрный', mat:[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]}, r:'Проверь себя: нарисуй картинку.', d:'Сверху написан код. Нажимай клетки: где в коде 1 — там должен быть чёрный пиксель, где 0 — белый.'},
+        {h:'Что выведет программа', v:{kind:'pick', q:'Сколько бит нужно, чтобы закодировать один пиксель с 16 цветами?', opts:[{t:'4 бита', ok:1},{t:'16 бит'},{t:'1 бит'}], exp:'16 = 2 · 2 · 2 · 2, значит, нужно 4 бита.'}, r:'Проверь себя: посчитай биты.', d:'Вспомни: каждый бит удваивает число цветов.'},
+        {h:'Частые ошибки', v:{kind:'pixmistakes'}, r:'Что чаще всего путают.', d:'Под каждой ошибкой зелёным написано, как правильно.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'пиксель = клетка + число', b:1},{t:'1 — чёрный, 0 — белый', c:grn},{t:'цвет в RGB — три числа', c:gold}]}, r:'Запомни, как хранятся рисунки.', d:'Главное: рисунок — это таблица чисел, один бит для чёрно-белого и три байта для цветного пикселя.'} ],
+      check:{ q:'Сколько бит нужно, чтобы закодировать один пиксель с 16 цветами?', choices:['4','16','2','8'], ans:0, exp:'16 = 2⁴, значит, для одного пикселя нужно 4 бита.' },
+      tasks:[
+        {q:'Сколько чисел нужно, чтобы записать один цветной пиксель (RGB)?', kind:'unit', ans:3, tol:0, hints:['Красный, зелёный, синий.','Три числа.'], sol:'3'},
+        {q:'Что означает 1 в чёрно-белом коде рисунка?', kind:'choice', choices:['чёрный пиксель','белый пиксель','пустую клетку'], ans:0, tol:0, hints:['1 — закрашенная клетка.','1 — чёрный пиксель.'], sol:'чёрный пиксель'}
       ] }
   ];
 
@@ -3557,9 +3893,10 @@
     const s=spec.slides[Math.min(step,spec.slides.length-1)];
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; st.seq=[]; st.bad=-1; st.find=-1; st.moves=0;
-      st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1; }
+      st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
+      st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -3572,6 +3909,8 @@
       ? ((st.tab)? wkRow(wkBtn('ещё раз',`infTab('${lk}',-1,-1,0)`)) : '')
       : (s.v.kind==='walkgame')
       ? wkRow(wkBtn('сначала',`infWalk('${lk}',-1,0)`))
+      : (s.v.kind==='drawgame')
+      ? wkRow(wkBtn('начать заново',`infDraw('${lk}',-1,-1)`))
       : (s.v.kind==='find')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
@@ -3579,7 +3918,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -3588,6 +3927,12 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infDraw=function(lk,r,c){
+    const st=CHS[lk]||(CHS[lk]={}); const g=st.grid;
+    if(!g) return;
+    if(r<0){ st.grid=null; chRender(0); return; }
+    g[r][c]=g[r][c]?0:1; chRender(0);
+  };
   window.infWalk=function(lk,i,ok){
     const st=CHS[lk]||(CHS[lk]={});
     if(i<0){ st.wnode=0; st.wsteps=0; st.wbad=-1; chRender(0); return; }
