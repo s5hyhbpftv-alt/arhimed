@@ -3,145 +3,513 @@
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
         bg0='#0d1830', bg1='#080d1c', card='rgba(16,26,46,.96)', cardB='#3a4c78';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#08101f" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#08101f" stroke-width="4">${plain(t)}</text>`;
+  /* ---------- акцентный цвет урока ---------- */
+  const ACCS=['#7fd6ff','#7de0a0','#6ea8ff','#b07fff','#ffd76a','#ffb066','#5fe0d0','#ff8fd0','#8fb4ff','#9ae86a'];
+  function accOf(pre){
+    const id=parseInt((''+pre).replace(/[^0-9]/g,''),10);
+    return ACCS[(((isFinite(id)?id:500)-500)%ACCS.length+ACCS.length)%ACCS.length];
+  }
+  /* ---------- emoji → векторные значки ---------- */
+  const EMO=/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\uFE0F\u20E3]/gu;
+  const plain=(t)=>(''+t).replace(EMO,'').replace(/\s+/g,' ').trim();
+  const IKEYS=[
+    [/зрен|глаз|вид|смотр|наблюд/i,'eye'],
+    [/слух|уш[ио]|слыш/i,'ear'],
+    [/запах|нос|нюх/i,'nose'],
+    [/осяза|рук|палец|трогат|кож/i,'hand'],
+    [/вкус|язык|рот/i,'mouth'],
+    [/текст|букв|слов|книг|письм|запис/i,'lines'],
+    [/числ|цифр|счёт|счет|значен|данн/i,'num'],
+    [/картин|рис|изображ|фото|пиксел/i,'pic'],
+    [/звук|музык|реч|колонк|микроф|наушник/i,'sound'],
+    [/экран|монитор|проектор|телевизор|дисплей/i,'screen'],
+    [/клавиат|мышь|камер|принтер|сканер|устройств|компьютер|машин|систем/i,'chip'],
+    [/бит|байт|нолик|единичк/i,'bits'],
+    [/память|диск|файл|храни|флешк/i,'disk'],
+    [/интернет|сеть|сайт|браузер|почт|сервер/i,'net'],
+    [/программ|команд|алгоритм|код/i,'code'],
+    [/парол|секрет|шифр|ключ/i,'key'],
+    [/быстр|скорост|время|секунд/i,'bolt'],
+    [/услови|вопрос|если|провер/i,'quest'],
+    [/цикл|повтор/i,'loop'],
+    [/робот|исполн/i,'robot'],
+    [/схем|граф|связ|маршрут|план/i,'net'],
+    [/двоичн|разряд|0 и 1|ноль|нул|единиц/i,'bits'],
+    [/порядок|шаг|список|номер|строк/i,'lines']
+  ];
+  const iconKey=(t,k)=>{ for(const r of IKEYS){ if(r[0].test(t)) return r[1]; } return MOT[(((k||0)%MOT.length)+MOT.length)%MOT.length]; };
+  function icon(k,cx,cy,c,s){
+    s=s||26; const h=s/2, sw=2.2, o='fill="none" stroke="'+c+'" stroke-width="'+sw+'" stroke-linecap="round" stroke-linejoin="round"';
+    if(k==='lines') return `<path d="M${cx-h*0.85} ${cy-h*0.55} H${cx+h*0.85} M${cx-h*0.85} ${cy} H${cx+h*0.45} M${cx-h*0.85} ${cy+h*0.55} H${cx+h*0.15}" ${o}/>`;
+    if(k==='num') return `<text x="${cx}" y="${cy+h*0.42}" text-anchor="middle" font-size="${(s*0.62).toFixed(1)}" font-family="'Courier New',monospace" font-weight="bold" fill="${c}">123</text><path d="M${cx-h*0.95} ${cy+h*0.85} H${cx+h*0.95}" stroke="${c}" stroke-width="${sw}" stroke-linecap="round"/>`;
+    if(k==='pic') return `<rect x="${cx-h}" y="${cy-h*0.78}" width="${s}" height="${h*1.56}" rx="4" ${o}/><circle cx="${cx-h*0.42}" cy="${cy-h*0.3}" r="${h*0.19}" fill="${c}"/><path d="M${cx-h*0.78} ${cy+h*0.6} L${cx-h*0.12} ${cy-h*0.12} L${cx+h*0.35} ${cy+h*0.35} L${cx+h*0.58} ${cy+h*0.08} L${cx+h*0.8} ${cy+h*0.6}" ${o}/>`;
+    if(k==='sound') return `<path d="M${cx-h*0.85} ${cy-h*0.28} h${h*0.34} l${h*0.5} -${h*0.55} v${h*1.66} l-${h*0.5} -${h*0.55} h-${h*0.34} z" fill="${c}" opacity=".4" stroke="${c}" stroke-width="1.7" stroke-linejoin="round"/><path d="M${cx+h*0.3} ${cy-h*0.35} a${h*0.5} ${h*0.5} 0 0 1 0 ${h*0.7} M${cx+h*0.66} ${cy-h*0.62} a${h*0.85} ${h*0.85} 0 0 1 0 ${h*1.24}" ${o}/>`;
+    if(k==='screen') return `<rect x="${cx-h}" y="${cy-h*0.85}" width="${s}" height="${h*1.3}" rx="4" ${o}/><path d="M${cx-h*0.35} ${cy+h*0.86} h${h*0.7} M${cx} ${cy+h*0.45} v${h*0.41}" ${o}/>`;
+    if(k==='eye') return `<path d="M${cx-h} ${cy} q${h} ${-h*0.8} ${s} 0 q-${h} ${h*0.8} -${s} 0 z" ${o}/><circle cx="${cx}" cy="${cy}" r="${h*0.26}" fill="${c}"/>`;
+    if(k==='ear') return `<path d="M${cx+h*0.35} ${cy+h*0.9} q-${h*0.5} ${h*0.1} -${h*0.5} -${h*0.4} q0 -${h*0.5} ${h*0.35} -${h*0.55} q${h*0.4} -${h*0.1} ${h*0.4} -${h*0.5} q0 -${h*0.65} -${h*0.6} -${h*0.65} q-${h*0.75} 0 -${h*0.85} ${h*0.75} q-${h*0.08} ${h*0.6} ${h*0.15} ${h*0.95}" ${o}/><path d="M${cx+h*0.1} ${cy+h*0.15} q${h*0.28} ${h*0.2} ${h*0.05} ${h*0.5}" ${o}/>`;
+    if(k==='nose') return `<path d="M${cx+h*0.2} ${cy-h*0.9} q-${h*0.15} ${h*1.1} -${h*0.55} ${h*1.3} q-${h*0.35} ${h*0.2} -${h*0.05} ${h*0.42} q${h*0.35} ${h*0.22} ${h*0.85} ${h*0.1}" ${o}/><path d="M${cx-h*0.4} ${cy+h*0.72} q${h*0.22} ${h*0.28} ${h*0.6} ${h*0.18}" ${o}/>`;
+    if(k==='mouth') return `<path d="M${cx-h*0.85} ${cy-h*0.25} q${h*0.85} ${h*1.25} ${h*1.7} 0 z" fill="${c}" opacity=".3" stroke="${c}" stroke-width="${sw}" stroke-linejoin="round"/>`;
+    if(k==='hand') return `<path d="M${cx-h*0.6} ${cy+h*0.6} v-${h*1.1} M${cx-h*0.2} ${cy+h*0.6} v-${h*1.35} M${cx+h*0.2} ${cy+h*0.6} v-${h*1.2} M${cx+h*0.6} ${cy+h*0.6} v-${h*0.8}" ${o}/><path d="M${cx-h*0.6} ${cy+h*0.15} q0 -${h*0.85} ${h*0.6} -${h*0.85} q${h*0.6} 0 ${h*0.6} ${h*0.85}" ${o}/>`;
+    if(k==='chip') return motif('chip',cx,cy,s,c);
+    if(k==='bulb') return motif('bulb',cx,cy,s,c);
+    if(k==='gear') return motif('gear',cx,cy,s,c);
+    if(k==='wave') return motif('wave',cx,cy,s,c);
+    if(k==='loop') return motif('loop',cx,cy,s,c);
+    if(k==='key') return motif('key',cx,cy,s,c);
+    if(k==='net') return motif('net',cx,cy,s,c);
+    if(k==='bits') return `<rect x="${cx-h*0.9}" y="${cy-h*0.8}" width="${h*0.8}" height="${h*1.6}" rx="3" fill="${c}" opacity=".35" stroke="${c}" stroke-width="${sw}"/><rect x="${cx+h*0.1}" y="${cy-h*0.8}" width="${h*0.8}" height="${h*1.6}" rx="3" ${o}/>`;
+    if(k==='disk') return `<rect x="${cx-h*0.9}" y="${cy-h*0.9}" width="${h*1.8}" height="${h*1.8}" rx="4" ${o}/><circle cx="${cx}" cy="${cy}" r="${h*0.42}" ${o}/><circle cx="${cx}" cy="${cy}" r="${h*0.1}" fill="${c}"/>`;
+    if(k==='code') return `<path d="M${cx-h*0.5} ${cy-h*0.5} l-${h*0.42} ${h*0.5} l${h*0.42} ${h*0.5} M${cx+h*0.5} ${cy-h*0.5} l${h*0.42} ${h*0.5} l-${h*0.42} ${h*0.5} M${cx+h*0.12} ${cy-h*0.62} l-${h*0.24} ${h*1.24}" ${o}/>`;
+    if(k==='bolt') return `<path d="M${cx+h*0.25} ${cy-h*0.95} l-${h*0.85} ${h*1.1} h${h*0.6} l-${h*0.35} ${h*0.8}" fill="${c}" opacity=".35" stroke="${c}" stroke-width="${sw}" stroke-linejoin="round"/>`;
+    if(k==='quest') return `<circle cx="${cx}" cy="${cy}" r="${h*0.9}" ${o}/><path d="M${cx-h*0.3} ${cy-h*0.28} q${h*0.3} -${h*0.45} ${h*0.62} -${h*0.05} q-${h*0.05} ${h*0.3} -${h*0.32} ${h*0.45}" ${o}/><circle cx="${cx}" cy="${cy+h*0.55}" r="${h*0.11}" fill="${c}"/>`;
+    if(k==='robot') return `<path d="M${cx} ${cy-h*0.95} v-${h*0.25}" ${o}/><circle cx="${cx}" cy="${cy-h*1.28}" r="${h*0.16}" fill="${c}"/><rect x="${cx-h*0.72}" y="${cy-h*0.55}" width="${h*1.44}" height="${h*1.1}" rx="${h*0.3}" ${o}/><circle cx="${cx-h*0.28}" cy="${cy-h*0.02}" r="${h*0.13}" fill="${c}"/><circle cx="${cx+h*0.28}" cy="${cy-h*0.02}" r="${h*0.13}" fill="${c}"/><path d="M${cx-h*0.25} ${cy+h*0.28} h${h*0.5}" ${o}/>`;
+    return motif('chip',cx,cy,s,c);
+  }
+  /* ---------- стили сцен ---------- */
   const css=(pre)=>{
     if(window['__inf_'+pre]) return; window['__inf_'+pre]=1;
     const st=document.createElement('style');
     st.textContent=
-      `#lvis .${pre}In{animation:${pre}In .5s cubic-bezier(.2,.85,.3,1.05) both;}`+
-      `@keyframes ${pre}In{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}`+
-      `#lvis .${pre}Pop{animation:${pre}Pop .5s ease both;transform-box:fill-box;transform-origin:center;}`+
-      `@keyframes ${pre}Pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}`+
-      `#lvis .${pre}Slide{animation:${pre}Slide .7s cubic-bezier(.2,.8,.3,1.15) both;}`+
-      `@keyframes ${pre}Slide{0%{transform:translateX(-14px);opacity:0}70%{transform:translateX(2px);opacity:1}100%{transform:none}}`+
-      `#lvis .${pre}Blink{animation:${pre}Blink 1.6s ease infinite;}`+
-      `@keyframes ${pre}Blink{0%,100%{opacity:.45}50%{opacity:1}}`+
-      `#lvis .${pre}Run{animation:${pre}Run 1.1s ease both;}`+
-      `@keyframes ${pre}Run{0%{opacity:0;transform:translateX(-10px)}100%{opacity:1;transform:none}}`;
+      `#lvis .${pre}In{animation:${pre}In .55s cubic-bezier(.2,.85,.3,1.05) both}`
+     +`@keyframes ${pre}In{0%{transform:translateY(-14px);opacity:0}100%{transform:none;opacity:1}}`
+     +`#lvis .${pre}Pop{animation:${pre}Pop .6s cubic-bezier(.2,.9,.3,1.2) both;transform-box:fill-box;transform-origin:center}`
+     +`@keyframes ${pre}Pop{0%{transform:scale(.25);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}`
+     +`#lvis .${pre}Slide{animation:${pre}Slide .8s cubic-bezier(.2,.8,.3,1.15) both}`
+     +`@keyframes ${pre}Slide{0%{transform:translateX(-18px);opacity:0}100%{transform:none;opacity:1}}`
+     +`#lvis .${pre}Rise{animation:${pre}Rise .85s cubic-bezier(.2,.9,.3,1.1) both}`
+     +`@keyframes ${pre}Rise{0%{transform:translateY(18px) scale(.97);opacity:0}100%{transform:none;opacity:1}}`
+     +`#lvis .${pre}Blink{animation:${pre}Blink 1.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}`
+     +`@keyframes ${pre}Blink{0%,100%{opacity:.28}50%{opacity:1}}`
+     +`#lvis .${pre}Float{animation:${pre}Float 3.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}`
+     +`@keyframes ${pre}Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}`
+     +`#lvis .${pre}Pulse{animation:${pre}Pulse 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}`
+     +`@keyframes ${pre}Pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}`
+     +`#lvis .${pre}Glow{animation:${pre}Glow 2.2s ease-in-out infinite}`
+     +`@keyframes ${pre}Glow{0%,100%{opacity:.25}50%{opacity:.9}}`
+     +`#lvis .${pre}Dot{animation:${pre}Dot 1.7s linear infinite}`
+     +`@keyframes ${pre}Dot{0%{transform:translateX(0);opacity:0}14%{opacity:1}82%{opacity:1}100%{transform:translateX(var(--run,64px));opacity:0}}`
+     +`#lvis .${pre}Dash{stroke-dasharray:7 8;animation:${pre}Dash 1.1s linear infinite}`
+     +`@keyframes ${pre}Dash{to{stroke-dashoffset:-30}}`
+     +`#lvis .${pre}Spot{animation:${pre}Spot 2.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}`
+     +`@keyframes ${pre}Spot{0%,100%{opacity:.2}38%,62%{opacity:1}}`
+     +`#lvis .${pre}Shine{animation:${pre}Shine 3.8s ease-in-out infinite;transform-box:fill-box}`
+     +`@keyframes ${pre}Shine{0%{transform:translateX(-90px);opacity:0}25%{opacity:.35}60%{opacity:0}100%{transform:translateX(120px);opacity:0}}`
+     +`#lvis .${pre}Spin{animation:${pre}Spin 8s linear infinite;transform-box:fill-box;transform-origin:center}`
+     +`@keyframes ${pre}Spin{to{transform:rotate(360deg)}}`
+     +`#lvis .${pre}Caret{animation:${pre}Caret .95s steps(1) infinite}`
+     +`@keyframes ${pre}Caret{0%,49%{opacity:1}50%,100%{opacity:0}}`
+     +`#lvis .${pre}Bob{animation:${pre}Bob 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}`
+     +`@keyframes ${pre}Bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}`
+     +`#lvis .${pre}Scan{animation:${pre}Scan 3.6s ease-in-out infinite}`
+     +`@keyframes ${pre}Scan{0%{transform:translateY(0);opacity:0}12%{opacity:.7}88%{opacity:.7}100%{transform:translateY(var(--scan,120px));opacity:0}}`
+     +`#lvis .${pre}Twinkle{animation:${pre}Twinkle 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}`
+     +`@keyframes ${pre}Twinkle{0%,100%{transform:scale(.86);opacity:.5}50%{transform:scale(1.08);opacity:1}}`;
     document.head.appendChild(st);
   };
-  function arh(W,H,inner,col){
+  /* ---------- рамка сцены с фоном и «атмосферой» ---------- */
+  function arh(W,H,inner,pre){
+    const p=pre||'ix500', A=accOf(p);
+    let sd=((W*7919+H*104729+(''+p).length*31)%9973)+7;
+    const rnd=()=>{ sd=(sd*1103515245+12345)%2147483648; return sd/2147483648; };
+    let amb='';
+    for(let i=0;i<12;i++){
+      const x=(14+rnd()*(W-28)).toFixed(0), y=(16+rnd()*(H-32)).toFixed(0), r=(0.9+rnd()*1.7).toFixed(1),
+            d=(rnd()*3).toFixed(1), du=(2.6+rnd()*2.6).toFixed(1);
+      amb+=`<circle cx="${x}" cy="${y}" r="${r}" fill="${A}"><animate attributeName="opacity" values="0.10;0.55;0.10" dur="${du}s" begin="${d}s" repeatCount="indefinite"/></circle>`;
+    }
+    for(let i=0;i<5;i++){
+      const x=(28+rnd()*(W-56)).toFixed(0), y=(42+rnd()*(H-80)).toFixed(0), g=rnd()<.5?'0':'1',
+            d=(rnd()*3).toFixed(1), du=(4+rnd()*3).toFixed(1);
+      amb+=`<text x="${x}" y="${y}" fill="${A}" opacity=".15" font-size="13" font-family="'Courier New',monospace" text-anchor="middle">${g}<animateTransform attributeName="transform" type="translate" values="0 0;0 -11;0 0" dur="${du}s" begin="${d}s" repeatCount="indefinite"/></text>`;
+    }
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
-        <linearGradient id="infbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
-        <filter id="infsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.55"/></filter>
+        <linearGradient id="${p}bg" x1="0" y1="0" x2="0.25" y2="1"><stop offset="0" stop-color="#122043"/><stop offset=".55" stop-color="#0a1329"/><stop offset="1" stop-color="#060a16"/></linearGradient>
+        <radialGradient id="${p}halo" cx="0.5" cy="0.08" r="0.95"><stop offset="0" stop-color="${A}" stop-opacity=".26"/><stop offset="1" stop-color="${A}" stop-opacity="0"/></radialGradient>
+        <linearGradient id="${p}card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2748"/><stop offset="1" stop-color="#0e1830"/></linearGradient>
+        <linearGradient id="${p}bar" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${A}" stop-opacity=".95"/><stop offset="1" stop-color="${A}" stop-opacity=".25"/></linearGradient>
+        <filter id="${p}sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity=".55"/></filter>
+        <pattern id="${p}gr" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0 L0 0 L0 26" fill="none" stroke="#2a3a68" stroke-width="1"/></pattern>
+        <clipPath id="${p}clip"><rect x="9" y="9" width="${W-18}" height="${H-18}" rx="9"/></clipPath>
+        <linearGradient id="${p}fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1329"/><stop offset=".22" stop-color="#0a1329" stop-opacity="0"/><stop offset=".78" stop-color="#0a1329" stop-opacity="0"/><stop offset="1" stop-color="#0a1329"/></linearGradient>
       </defs>
-      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#infbg)"/>
-      <g opacity="0.13" stroke="#44568c" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
-      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44568c" stroke-width="2.4" rx="7"/>
-      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3a64" stroke-width="1.2" rx="4"/>
-      ${inner}
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#${p}bg)"/>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#${p}halo)"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" rx="8" fill="url(#${p}gr)" opacity=".30"/>
+      <g opacity=".9">${amb}</g>
+      <rect x="7" y="7" width="${W-14}" height="${H-14}" rx="11" fill="none" stroke="#3d5490" stroke-width="2.4"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" rx="7" fill="none" stroke="#22304f" stroke-width="1"/>
+      <g stroke="${A}" stroke-width="2.6" fill="none" opacity=".85">
+        <path d="M17 30 v-8 h8"/><path d="M${W-17} 30 v-8 h-8"/>
+        <path d="M17 ${H-30} v8 h8"/><path d="M${W-17} ${H-30} v8 h-8"/>
+      </g>
+      <g clip-path="url(#${p}clip)">${inner}</g>
     </svg>`;
   }
   const chip=(t,c,cls)=>`<span class="${cls}In" style="display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  /* ---------- векторные «значки-мотивы» ---------- */
+  const MOT=['chip','gear','bulb','screen','loop','key','net','wave'];
+  function motif(k,cx,cy,s,c,cls){
+    const h=s/2; let g='';
+    if(k==='chip'){
+      for(let i=-1;i<=1;i++) g+=`<line x1="${cx-h-6}" y1="${cy+i*s/4}" x2="${cx-h}" y2="${cy+i*s/4}" stroke="${c}" stroke-width="2"/><line x1="${cx+h}" y1="${cy+i*s/4}" x2="${cx+h+6}" y2="${cy+i*s/4}" stroke="${c}" stroke-width="2"/>`;
+      g+=`<rect x="${cx-h}" y="${cy-h}" width="${s}" height="${s}" rx="${(s*0.18).toFixed(1)}" fill="none" stroke="${c}" stroke-width="2.4"/><rect x="${cx-s*0.22}" y="${cy-s*0.22}" width="${s*0.44}" height="${s*0.44}" rx="4" fill="${c}" opacity=".3" stroke="${c}" stroke-width="1.6"/>`;
+    } else if(k==='gear'){
+      g+=`<circle cx="${cx}" cy="${cy}" r="${h*0.62}" fill="none" stroke="${c}" stroke-width="2.4"/>`;
+      for(let i=0;i<8;i++){ const a=i*Math.PI/4;
+        g+=`<line x1="${(cx+Math.cos(a)*h*0.62).toFixed(1)}" y1="${(cy+Math.sin(a)*h*0.62).toFixed(1)}" x2="${(cx+Math.cos(a)*h).toFixed(1)}" y2="${(cy+Math.sin(a)*h).toFixed(1)}" stroke="${c}" stroke-width="4"/>`; }
+      g+=`<circle cx="${cx}" cy="${cy}" r="${h*0.22}" fill="${c}" opacity=".5"/>`;
+    } else if(k==='bulb'){
+      g+=`<circle cx="${cx}" cy="${cy-h*0.18}" r="${h*0.56}" fill="none" stroke="${c}" stroke-width="2.6"/><rect x="${cx-h*0.26}" y="${cy+h*0.36}" width="${h*0.52}" height="${h*0.44}" rx="3" fill="none" stroke="${c}" stroke-width="2.2"/>`;
+      for(let i=0;i<6;i++){ const a=Math.PI*(0.12+i*0.15);
+        g+=`<line x1="${(cx+Math.cos(a)*h*0.78).toFixed(1)}" y1="${(cy-h*0.18-Math.sin(a)*h*0.78).toFixed(1)}" x2="${(cx+Math.cos(a)*h*1.06).toFixed(1)}" y2="${(cy-h*0.18-Math.sin(a)*h*1.06).toFixed(1)}" stroke="${c}" stroke-width="2" opacity=".8"/>`; }
+    } else if(k==='screen'){
+      g+=`<rect x="${cx-h}" y="${cy-h*0.82}" width="${s}" height="${s*0.7}" rx="6" fill="none" stroke="${c}" stroke-width="2.4"/><path d="M${cx-h*0.34} ${cy+h*0.6} h${h*0.68} M${cx} ${cy-h*0.12} v${h*0.72}" stroke="${c}" stroke-width="2.2"/>`;
+    } else if(k==='loop'){
+      g+=`<path d="M${cx-h*0.72} ${cy} a${h*0.72} ${h*0.72} 0 1 1 ${h*1.44} 0" fill="none" stroke="${c}" stroke-width="2.6"/><path d="M${cx+h*0.72} ${cy} a${h*0.72} ${h*0.72} 0 1 1 -${h*1.44} 0" fill="none" stroke="${c}" stroke-width="2.6" opacity=".5"/>`;
+    } else if(k==='key'){
+      g+=`<circle cx="${cx-h*0.45}" cy="${cy}" r="${h*0.42}" fill="none" stroke="${c}" stroke-width="2.6"/><path d="M${cx-h*0.08} ${cy} h${h*0.95} M${cx+h*0.55} ${cy} v${h*0.36} M${cx+h*0.86} ${cy} v${h*0.3}" stroke="${c}" stroke-width="2.4"/>`;
+    } else if(k==='net'){
+      const q=[[-0.82,-0.5],[0.86,-0.6],[0.05,-0.95],[0,0.12],[-0.72,0.8],[0.78,0.76]];
+      g+=`<path d="M${cx+q[0][0]*h} ${cy+q[0][1]*h} L${cx+q[3][0]*h} ${cy+q[3][1]*h} L${cx+q[1][0]*h} ${cy+q[1][1]*h} M${cx+q[3][0]*h} ${cy+q[3][1]*h} L${cx+q[4][0]*h} ${cy+q[4][1]*h} M${cx+q[3][0]*h} ${cy+q[3][1]*h} L${cx+q[5][0]*h} ${cy+q[5][1]*h} M${cx+q[3][0]*h} ${cy+q[3][1]*h} L${cx+q[2][0]*h} ${cy+q[2][1]*h}" stroke="${c}" stroke-width="2.2" fill="none"/>`;
+      q.forEach(z=>{ g+=`<circle cx="${(cx+z[0]*h).toFixed(1)}" cy="${(cy+z[1]*h).toFixed(1)}" r="4.2" fill="${c}"/>`; });
+    } else if(k==='wave'){
+      g+=`<path d="M${cx-h} ${cy} q${h*0.25} ${-h*0.55} ${h*0.5} 0 t${h*0.5} 0 t${h*0.5} 0 t${h*0.5} 0" fill="none" stroke="${c}" stroke-width="2.6"/>`;
+    }
+    return `<g class="${cls||''}">${g}</g>`;
+  }
+  function flagAt(cx,cy,s,c,cls){
+    return `<g class="${cls||''}"><path d="M${cx} ${cy+s*0.6} v${-s}" stroke="#cfe3ff" stroke-width="2.2"/><path d="M${cx} ${cy-s*0.4} l${s*0.62} ${s*0.22} l-${s*0.62} ${s*0.22} z" fill="${c}" stroke="${c}" stroke-width="1.2"/></g>`;
+  }
 
   /* ---------- визуализации (kind) ---------- */
-  function viz(v,pre){
-    const K=v.kind;
+  function viz(v,pre,i){
+    const K=v.kind, A=accOf(pre), CW=318, H=vizH(v), MOTIF=MOT[((i||0)+(''+pre).length)%MOT.length];
     if(K==='cards'){ /* карточки */
+      const it=v.items||[], ch=58, cw=138, gx=12, gy=10, rows=Math.ceil(it.length/2);
+      const tot=rows*ch+(rows-1)*gy, y0=Math.max(20,Math.round((H-tot)/2));
       let s='';
-      v.items.forEach((it,i)=>{ const x=22+(i%2)*148, y=52+Math.floor(i/2)*64;
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.08*i).toFixed(2)}s" filter="url(#infsh)"><rect x="${x}" y="${y}" width="144" height="52" rx="10" fill="rgba(255,255,255,.05)" stroke="${it.c||blu}" stroke-width="2"/>${tx(x+72,y+24,14,it.c||blu,it.t,{b:1})}${it.d?tx(x+72,y+42,11,dim,it.d,{}):''}</g>`; });
-      return s;
-    }
-    if(K==='ipo'){ /* ввод → обработка → вывод */
-      const b=(x,c,t,s2)=>`<g class="${pre}Pop"><rect x="${x}" y="70" width="82" height="52" rx="10" fill="rgba(255,255,255,.05)" stroke="${c}" stroke-width="2.2"/>${tx(x+41,92,13,c,t,{b:1})}${tx(x+41,110,10.5,dim,s2||'',{})}</g>`;
-      let s=b(20,cyan,'ВВОД','клавиатура')+b(118,gold,'ОБРАБОТКА','программа')+b(216,grn,'ВЫВОД','экран');
-      s+=`<path d="M104 96 l 10 0 m0 -4 l 4 4 l -4 4" stroke="${dim}" stroke-width="2.4" fill="none"/><path d="M202 96 l 10 0 m0 -4 l 4 4 l -4 4" stroke="${dim}" stroke-width="2.4" fill="none"/>`;
-      return s;
-    }
-    if(K==='bits'){ /* биты-выключатели */
-      const n=v.bits.length, w=n<=4?48:(n<=6?40:34), gp=n<=4?12:6;
-      const x0=Math.round((318-(n*w+(n-1)*gp))/2), y=66, h=n<=4?66:58, fs=n<=4?30:24;
-      let s='';
-      v.bits.forEach((b,i)=>{ const x=x0+i*(w+gp);
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.08*i).toFixed(2)}s" filter="url(#infsh)"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${b?'rgba(125,224,160,.16)':'rgba(255,255,255,.05)'}" stroke="${b?grn:cardB}" stroke-width="2.4"/>${tx(x+w/2,y+34,fs,b?grn:dim,''+(b?1:0),{b:1,georgia:1})}${tx(x+w/2,y+h+16,11,dim,b?'вкл':'выкл',{})}</g>`; });
-      return s;
-    }
-    if(K==='binary'){ /* разряды двоичного */
-      const pw=v.powers, bits=v.bits;
-      let s='';
-      for(let i=0;i<pw.length;i++){ const x=44+i*62;
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${x}" y="58" width="50" height="34" rx="8" fill="rgba(110,168,255,.12)" stroke="${blu}" stroke-width="1.8"/>${tx(x+25,81,15,blu,''+pw[i],{b:1})}
-        <rect x="${x}" y="98" width="50" height="42" rx="8" fill="${bits[i]?'rgba(125,224,160,.16)':'rgba(255,255,255,.05)'}" stroke="${bits[i]?grn:cardB}" stroke-width="2"/>${tx(x+25,128,24,bits[i]?grn:dim,''+bits[i],{b:1,georgia:1})}</g>`; }
-      return s;
-    }
-    if(K==='codes'){ /* таблица код-буква */
-      let s='';
-      v.pairs.forEach((p,i)=>{ const x=34+i*72;
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.08*i).toFixed(2)}s" filter="url(#infsh)"><rect x="${x}" y="70" width="64" height="56" rx="10" fill="rgba(255,255,255,.05)" stroke="${pur}" stroke-width="2"/>${tx(x+32,104,24,pur,p[0],{b:1,georgia:1})}${tx(x+32,118,11,dim,'= '+p[1],{})}</g>`; });
-      return s;
-    }
-    if(K==='steps'){ /* шаги алгоритма */
-      let s='';
-      v.steps.forEach((t,i)=>{ const y=44+i*Math.min(30,v.steps.length>5?26:30);
-        s+=`<g class="${pre}Slide" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="26" y="${y}" width="266" height="24" rx="7" fill="${i%2?'rgba(16,26,46,.96)':'rgba(30,42,70,.96)'}" stroke="${cardB}" stroke-width="1.4"/><circle cx="42" cy="${y+12}" r="9" fill="rgba(255,215,106,.18)" stroke="${gold}" stroke-width="1.4"/>${tx(42,y+16,11,gold,''+(i+1),{b:1})}${tx(159,y+16,12.5,ink,t,{})}</g>`; });
-      return s;
-    }
-    if(K==='robot'){ /* робот на поле */
-      const n=6, cell=36, x0=(318-n*cell)/2, y0=54;
-      let s='';
-      for(let r=0;r<n;r++)for(let c=0;c<n;c++){ s+=`<rect x="${x0+c*cell}" y="${y0+r*cell}" width="${cell}" height="${cell}" fill="rgba(255,255,255,.03)" stroke="#2c3a64" stroke-width="1"/>`; }
-      (v.walls||[]).forEach(w=>{ s+=`<rect x="${x0+w[0]*cell}" y="${y0+w[1]*cell}" width="${cell}" height="${cell}" fill="rgba(110,168,255,.28)" stroke="${blu}" stroke-width="1.4"/>`; });
-      const rx=x0+v.pos[0]*cell+cell/2, ry=y0+v.pos[1]*cell+cell/2;
-      s+=`<g class="${pre}Run" filter="url(#infsh)"><circle cx="${rx}" cy="${ry}" r="13" fill="${gold}" stroke="#fffdf2" stroke-width="2.4"/>${tx(rx,ry+5,13,'#3a2408','🤖',{})}</g>`;
-      (v.path||[]).forEach((p,i)=>{ const px=x0+p[0]*cell+cell/2, py=y0+p[1]*cell+cell/2; s+=`<circle class="${pre}Blink" style="animation-delay:${(0.15*i).toFixed(2)}s" cx="${px}" cy="${py}" r="4" fill="${grn}"/>`; });
-      return s;
-    }
-    if(K==='loop'){ /* цикл */
-      let s=`<g class="${pre}Pop"><rect x="60" y="60" width="198" height="40" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="2"/>${tx(159,86,15,gold,'Повтори '+v.n+' раза:',{b:1})}</g>`;
-      s+=`<g class="${pre}Slide"><rect x="80" y="112" width="158" height="38" rx="9" fill="rgba(255,255,255,.05)" stroke="${grn}" stroke-width="2"/>${tx(159,137,15,grn,v.body,{b:1})}</g>`;
-      s+=`<path d="M 80 131 h -18 v -50 h 18" fill="none" stroke="${gold}" stroke-width="2" stroke-dasharray="5 4"/>`;
-      return s;
-    }
-    if(K==='cond'){ /* условие */
-      let s=`<g class="${pre}Pop"><path d="M 159 56 l 74 34 l -74 34 l -74 -34 z" fill="rgba(176,127,255,.14)" stroke="${pur}" stroke-width="2.2"/>${tx(159,94,14,pur,v.q,{b:1})}</g>`;
-      s+=`<g class="${pre}Slide"><rect x="40" y="140" width="238" height="36" rx="9" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="2"/>${tx(159,163,13,grn,v.then,{b:1})}</g>`;
-      s+=`${tx(159,122,11,dim,'да ↓',{})}`;
-      return s;
-    }
-    if(K==='flow'){ /* блок-схема */
-      const shapes=(v.shapes||[]);
-      let s='', y=44;
-      shapes.forEach((sh,i)=>{ const c=sh.c||blu;
-        if(sh.k==='o') s+=`<g class="${pre}Slide" style="animation-delay:${(0.08*i).toFixed(2)}s"><ellipse cx="159" cy="${y+16}" rx="74" ry="16" fill="rgba(255,255,255,.05)" stroke="${c}" stroke-width="2"/>${tx(159,y+20,12.5,c,sh.t,{b:1})}</g>`;
-        else if(sh.k==='d') s+=`<g class="${pre}Slide" style="animation-delay:${(0.08*i).toFixed(2)}s"><path d="M 159 ${y} l 74 16 l -74 16 l -74 -16 z" fill="rgba(176,127,255,.12)" stroke="${c}" stroke-width="2"/>${tx(159,y+20,12,c,sh.t,{b:1})}</g>`;
-        else s+=`<g class="${pre}Slide" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="85" y="${y}" width="148" height="32" rx="8" fill="rgba(255,255,255,.05)" stroke="${c}" stroke-width="2"/>${tx(159,y+21,12.5,c,sh.t,{b:1})}</g>`;
-        if(i<shapes.length-1) s+=`<path d="M 159 ${y+32} l 0 12 m -4 -2 l 4 4 l 4 -4" stroke="${dim}" stroke-width="2" fill="none"/>`;
-        y+=44;
+      it.forEach((c,k)=>{
+        const x=24+(k%2)*(cw+gx), y=y0+Math.floor(k/2)*(ch+gy), col=c.c||A;
+        const title=plain(c.t), cx=x+30, cy=y+ch/2, tx0=x+cw/2+17;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="${x}" y="${y}" width="${cw}" height="${ch}" rx="12" fill="url(#${pre}card)" stroke="${col}" stroke-width="2"/>`
+          +`<rect x="${x+1}" y="${y+1}" width="${cw-2}" height="3" rx="1.5" fill="${col}" opacity=".85"/>`
+          +`<path d="M${x+64} ${y+ch-4} L${x+92} ${y+4} L${x+104} ${y+4} L${x+76} ${y+ch-4} z" fill="#fff" opacity=".04"/>`
+          +`<circle cx="${cx}" cy="${cy}" r="16" fill="${col}" opacity=".13" stroke="${col}" stroke-opacity=".55" stroke-width="1.4"/>`
+          +`<g class="${pre}Float" style="animation-delay:${(0.2*k).toFixed(2)}s">${icon(iconKey(title,k),cx,cy,col,24)}</g>`
+          +`${tx(tx0,y+26,Math.min(13.5,84/Math.max(1,title.length)/0.6),col,title,{b:1})}`
+          +(c.d?tx(tx0,y+46,Math.min(11.5,86/Math.max(1,(''+c.d).length)/0.56),dim,c.d,{}):'')
+          +`</g>`;
       });
       return s;
     }
-    if(K==='code'){ /* код программы */
-      let s='';
-      v.lines.forEach((ln,i)=>{ const y=52+i*28, ind=ln.i?22:0;
-        s+=`<g class="${pre}Slide" style="animation-delay:${(0.1*i).toFixed(2)}s"><rect x="26" y="${y}" width="266" height="24" rx="6" fill="rgba(255,255,255,.04)" stroke="#2c3a64" stroke-width="1"/><text x="${40+ind}" y="${y+16}" font-size="13" fill="${ln.c||cyan}" font-family="'Courier New',monospace" font-weight="bold">${ln.t}</text></g>`; });
+    if(K==='ipo'){ /* ввод → обработка → вывод */
+      const y=46, bw=88, bh=64;
+      const blk=(x,c,tt,s2,gl)=>`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="12" fill="url(#${pre}card)" stroke="${c}" stroke-width="2.2"/>`
+        +(gl?`<rect class="${pre}Glow" x="${x-4}" y="${y-4}" width="${bw+8}" height="${bh+8}" rx="15" fill="none" stroke="${c}" stroke-width="2.4" opacity=".45"/>`:'')
+        +`${tx(x+bw/2,y+30,Math.min(13,70/Math.max(1,tt.length)/0.62),c,tt,{b:1})}${tx(x+bw/2,y+50,Math.min(10,76/Math.max(1,(''+s2).length)/0.6),dim,s2||'',{})}</g>`;
+      let s=blk(14,cyan,'ВВОД','клавиатура')+blk(115,gold,'ОБРАБОТКА','программа',1)+blk(216,grn,'ВЫВОД','экран');
+      const conn=(x1,x2)=>{ const d=x2-x1-4;
+        return `<path d="M${x1} ${y+bh/2} H${x2}" stroke="${A}" stroke-width="2" opacity=".55" fill="none"/>`
+          +`<circle cx="${x1}" cy="${y+bh/2}" r="3.4" fill="${A}" style="--run:${d}px" class="${pre}Dot"/>`
+          +`<path d="M${x2-6} ${y+bh/2-4} l6 4 l-6 4" fill="none" stroke="${A}" stroke-width="2"/>`; };
+      s+=conn(104,113)+conn(205,214);
+      s+=`${tx(56,y+bh+20,10.5,dim,'вводим данные',{})}${tx(159,y+bh+20,10.5,dim,'компьютер думает',{})}${tx(258,y+bh+20,10.5,dim,'видим результат',{})}`;
+      s+=`<path d="M120 ${y+bh-4} L146 ${y+4} L158 ${y+4} L132 ${y+bh-4} z" fill="#fff" opacity=".05"/>`;
       return s;
     }
-    if(K==='text'){ /* текстовые строки */
+    if(K==='bits'){ /* биты-выключатели */
+      const n=v.bits.length, bw=n<=4?46:(n<=6?38:32), gp=n<=4?14:8;
+      const tot=n*bw+(n-1)*gp, x0=Math.round((CW-tot)/2), by=44, bh=62, busY=by+bh+12;
+      let s=`<rect x="18" y="${busY}" width="${CW-36}" height="6" rx="3" fill="url(#${pre}bar)" opacity=".5"/>`;
+      v.bits.forEach((b,k)=>{
+        const x=x0+k*(bw+gp), col=b?grn:'#8ea3c8';
+        s+=`<line x1="${x+bw/2}" y1="${by+bh+2}" x2="${x+bw/2}" y2="${busY+1}" stroke="${b?grn:'#3a4c78'}" stroke-width="2"/>`
+          +`<g class="${pre}Pop" style="animation-delay:${(0.1*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="${x}" y="${by}" width="${bw}" height="${bh}" rx="11" fill="${b?'rgba(125,224,160,.13)':'rgba(255,255,255,.045)'}" stroke="${b?grn:cardB}" stroke-width="2.2"/>`
+          +(b?`<rect class="${pre}Glow" x="${x-3}" y="${by-3}" width="${bw+6}" height="${bh+6}" rx="13" fill="none" stroke="${grn}" stroke-width="2.2" opacity=".4"/>`:'')
+          +`<circle cx="${x+bw/2}" cy="${by+bh-9}" r="3" fill="${b?grn:'#465878'}"/>`
+          +`${tx(x+bw/2,by+34,n<=4?28:23,b?grn:col,''+b,{b:1,georgia:1})}`
+          +`${tx(x+bw/2,by+bh+30,10.5,dim,b?'вкл':'выкл',{})}</g>`;
+      });
+      return s;
+    }
+    if(K==='binary'){ /* разряды двоичного числа */
+      const pw=v.powers||[], b=v.bits||[], n=pw.length, bw=n<=3?48:44, gp=6;
+      const tot=n*bw+(n-1)*gp, x0=Math.round((CW-tot)/2);
+      const expr=b.map((x,k)=>x?pw[k]:0).filter(Boolean).join(' + ');
+      const val=pw.reduce((a,p,k)=>a+(b[k]?p:0),0);
+      const sum=(expr? expr+' = ' : 'единиц нет · ')+val;
       let s='';
-      (v.lines||[]).forEach((t,i)=>{ s+=tx(159, 70+i*32, v.fs||15, t.c||ink, t.t!==undefined?t.t:t, {b:!!t.b}); });
+      pw.forEach((p,k)=>{
+        const x=x0+k*(bw+gp), on=!!b[k];
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.07*k).toFixed(2)}s">`
+          +`<rect x="${x}" y="28" width="${bw}" height="26" rx="7" fill="rgba(110,168,255,.12)" stroke="${blu}" stroke-width="1.6"/>${tx(x+bw/2,47,13,blu,''+p,{b:1})}`
+          +`<rect x="${x}" y="60" width="${bw}" height="42" rx="8" fill="${on?'rgba(125,224,160,.16)':'rgba(255,255,255,.04)'}" stroke="${on?grn:cardB}" stroke-width="2"/>`
+          +(on?`<rect class="${pre}Glow" x="${x-3}" y="57" width="${bw+6}" height="48" rx="11" fill="none" stroke="${grn}" stroke-width="2.2" opacity=".4"/>`:'')
+          +`${tx(x+bw/2,90,22,on?grn:'#7f92b6',''+b[k],{b:1,georgia:1})}`
+          +(on?`<path d="M${x+bw/2} 104 v10" stroke="${grn}" stroke-width="2" class="${pre}Dash"/>`:`<path d="M${x+bw/2} 104 v10" stroke="#33456e" stroke-width="1.6"/>`)
+          +`</g>`;
+      });
+      s+=`<rect x="22" y="118" width="274" height="32" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8" filter="url(#${pre}sh)"/>`
+        +`${tx(159,139,13.5,ink,sum,{b:1})}`;
+      return s;
+    }
+    if(K==='codes'){ /* таблица код-буква */
+      const pr=v.pairs||[], n=pr.length, cw=n<=3?76:(n<=4?62:52), gp=n<=3?14:8;
+      const tot=n*cw+(n-1)*gp, x0=Math.round((CW-tot)/2), y=52;
+      let s=`<g opacity=".12" class="${pre}Float">${motif('key',159,120,150,A)}</g>`;
+      pr.forEach((c,k)=>{
+        const x=x0+k*(cw+gp);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="${x}" y="${y}" width="${cw}" height="56" rx="11" fill="url(#${pre}card)" stroke="${pur}" stroke-width="2"/>`
+          +`<rect x="${x+1}" y="${y+1}" width="${cw-2}" height="3" rx="1.5" fill="${pur}" opacity=".8"/>`
+          +`${tx(x+cw/2,y+28,23,ink,c[0],{b:1,georgia:1})}`
+          +`<rect x="${x+6}" y="${y+38}" width="${cw-12}" height="15" rx="6" fill="${pur}" opacity=".18"/>`
+          +`${tx(x+cw/2,y+50,11.5,pur,c[1],{b:1})}</g>`;
+      });
+      s+=`<path d="M ${x0} ${y+72} H ${x0+tot}" stroke="${A}" stroke-width="2" opacity=".45" class="${pre}Dash"/>`;
+      s+=`${tx(159,y+88,11.5,dim,v.note||'буква → её код',{})}`;
+      return s;
+    }
+    if(K==='steps'){ /* шаги алгоритма */
+      const st=v.steps||[], n=st.length, rh=28, gp=6, tot=n*rh+(n-1)*gp;
+      const y0=Math.max(26,Math.round((H-tot)/2));
+      let s=`<line x1="44" y1="${y0+8}" x2="44" y2="${y0+tot-8}" stroke="${A}" stroke-width="2" opacity=".3" class="${pre}Dash"/>`;
+      st.forEach((t,k)=>{
+        const y=y0+k*(rh+gp), d=(k*0.5).toFixed(2), du=(n*0.5+1).toFixed(2);
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.08*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="30" y="${y}" width="266" height="${rh}" rx="8" fill="url(#${pre}card)" stroke="${A}" stroke-opacity=".38" stroke-width="1.4"/>`
+          +`<rect class="${pre}Spot" style="animation-delay:${d}s;animation-duration:${du}s" x="30" y="${y}" width="266" height="${rh}" rx="8" fill="${A}" opacity=".14"/>`
+          +`<circle cx="44" cy="${y+rh/2}" r="10" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="1.6"/>${tx(44,y+rh/2+4,11,gold,''+(k+1),{b:1})}`
+          +`${tx(163,y+rh/2+4.5,12.5,ink,t,{})}</g>`;
+      });
+      return s;
+    }
+    if(K==='robot'){ /* робот на клетчатом поле */
+      const n=6, cell=34, x0=Math.round((CW-n*cell)/2), y0=40;
+      let s='';
+      s+=`<rect x="${x0-6}" y="${y0-6}" width="${n*cell+12}" height="${n*cell+12}" rx="10" fill="rgba(126,168,255,.06)" stroke="${A}" stroke-opacity=".35" stroke-width="1.6"/>`;
+      for(let r=0;r<n;r++)for(let c=0;c<n;c++){
+        s+=`<rect x="${x0+c*cell}" y="${y0+r*cell}" width="${cell}" height="${cell}" fill="${((r+c)%2)?'rgba(255,255,255,.055)':'rgba(255,255,255,.022)'}" stroke="#31456f" stroke-width="1"/>`;
+      }
+      (v.walls||[]).forEach(w=>{
+        const x=x0+w[0]*cell, y=y0+w[1]*cell;
+        s+=`<g class="${pre}Pop"><rect x="${x+1.5}" y="${y+1.5}" width="${cell-3}" height="${cell-3}" rx="4" fill="rgba(110,168,255,.3)" stroke="${blu}" stroke-width="1.5"/>`
+          +`<path d="M${x+7} ${y+cell-7} L${x+cell-7} ${y+7}" stroke="${blu}" stroke-width="1.4" opacity=".75"/></g>`;
+      });
+      const path=(v.path||[]);
+      if(path.length>1){
+        let d='M'+path.map(q=>`${(x0+q[0]*cell+cell/2).toFixed(1)} ${(y0+q[1]*cell+cell/2).toFixed(1)}`).join(' L');
+        s+=`<path d="${d}" fill="none" stroke="${A}" stroke-width="2.6" opacity=".8" class="${pre}Dash"/>`;
+        const g=path[path.length-1];
+        s+=flagAt(x0+g[0]*cell+cell/2+8, y0+g[1]*cell+cell/2-6, 16, '#ff9a6a', pre+'Pulse');
+      }
+      const rx=x0+v.pos[0]*cell+cell/2, ry=y0+v.pos[1]*cell+cell/2;
+      s+=`<g class="${pre}Float" filter="url(#${pre}sh)">`
+        +`<path d="M${rx} ${ry-19} v-7" stroke="${gold}" stroke-width="2"/><circle class="${pre}Blink" cx="${rx}" cy="${ry-30}" r="3.6" fill="${gold}"/>`
+        +`<rect x="${rx-13}" y="${ry-19}" width="26" height="20" rx="7" fill="#ffd76a" stroke="#fffdf2" stroke-width="1.6"/>`
+        +`<circle cx="${rx-5}" cy="${ry-10}" r="3" fill="#1a2340"/><circle cx="${rx+5}" cy="${ry-10}" r="3" fill="#1a2340"/>`
+        +`<rect x="${rx-11}" y="${ry+4}" width="22" height="12" rx="4" fill="#e8b84e" stroke="#fffdf2" stroke-width="1.2"/>`
+        +`<circle class="${pre}Spin" cx="${rx-7}" cy="${ry+18}" r="4.2" fill="#9fb2d6" stroke="#1a2340" stroke-width="1"/><circle class="${pre}Spin" cx="${rx+7}" cy="${ry+18}" r="4.2" fill="#9fb2d6" stroke="#1a2340" stroke-width="1"/>`
+        +`</g>`;
+      for(let c=0;c<n;c++) s+=tx(x0+c*cell+cell/2, y0+n*cell+16, 10, dim, ''+c, {});
+      for(let r=0;r<n;r++) s+=tx(x0-13, y0+r*cell+cell/2+3.5, 10, dim, ''+r, {});
+      return s;
+    }
+    if(K==='loop'){ /* цикл */
+      const n=v.n||4, cxx=150, cyy=92, R=50;
+      let s=`<g opacity=".12" class="${pre}Float">${motif('loop',cxx,cyy,R*2.1,A)}</g>`;
+      s+=`<circle cx="${cxx}" cy="${cyy}" r="${R}" fill="none" stroke="${A}" stroke-width="3" stroke-dasharray="${(2*Math.PI*R-34).toFixed(0)} 34" opacity=".6"/>`;
+      for(let k=0;k<n;k++){
+        const a=(-Math.PI/2)+(k/n)*2*Math.PI, px=cxx+Math.cos(a)*R, py=cyy+Math.sin(a)*R;
+        s+=`<circle class="${pre}Spot" style="animation-delay:${(k*0.32).toFixed(2)}s;animation-duration:${(n*0.32+0.6).toFixed(2)}s" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="6" fill="${gold}" stroke="#0b1224" stroke-width="1.6"/>`;
+      }
+      s+=`<circle r="5" fill="${A}"><animateMotion dur="2.2s" repeatCount="indefinite" path="M ${cxx} ${cyy-R} A ${R} ${R} 0 1 1 ${cxx-0.1} ${cyy-R}"/></circle>`;
+      s+=`<circle cx="${cxx}" cy="${cyy}" r="26" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2" filter="url(#${pre}sh)"/>${tx(cxx,cyy+7,17,gold,''+n,{b:1,georgia:1})}`;
+      s+=`<rect x="22" y="${cyy+R+18}" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.6" filter="url(#${pre}sh)"/>`
+        +`${tx(159,cyy+R+38,12,ink,'повтори '+n+' раз: '+(v.body||'действие'),{})}`;
+      return s;
+    }
+    if(K==='cond'){ /* условие ЕСЛИ…ТО… */
+      let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><path d="M159 34 l 80 34 l -80 34 l -80 -34 z" fill="rgba(176,127,255,.14)" stroke="${pur}" stroke-width="2.4"/>`
+        +`<rect class="${pre}Glow" x="77" y="32" width="164" height="72" fill="none" stroke="${pur}" stroke-width="2" opacity=".3"/>`
+        +`${tx(159,73,14,pur,v.q,{b:1})}</g>`;
+      s+=`<path d="M159 102 v14" stroke="${A}" stroke-width="2" class="${pre}Dash"/><path d="M155 111 l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="2"/>`;
+      s+=`<circle cx="159" cy="104" r="3.6" fill="${A}" style="--run:14px" class="${pre}Dot"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.25s" filter="url(#${pre}sh)">`
+        +`<rect x="34" y="126" width="196" height="40" rx="10" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2.2"/>`
+        +`<rect class="${pre}Glow" x="32" y="124" width="200" height="44" rx="13" fill="none" stroke="${grn}" stroke-width="2" opacity=".3"/>`
+        +`<circle cx="56" cy="146" r="10" fill="rgba(125,224,160,.18)" stroke="${grn}" stroke-width="1.6"/>${tx(56,150,10.5,grn,'да',{b:1})}`
+        +`${tx(150,150,13,grn,v.then,{b:1})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.42s"><rect x="240" y="126" width="62" height="40" rx="10" fill="rgba(255,255,255,.03)" stroke="${cardB}" stroke-width="1.6" stroke-dasharray="5 4"/>`
+        +`<circle cx="256" cy="146" r="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.4"/>${tx(256,150,10,'#9fb0cf','нет',{b:1})}`
+        +`${tx(283,150,10.5,'#8296b8','—',{})}</g>`;
+      s+=`${tx(159,186,11,dim,'если да — выполняем, если нет — пропускаем',{})}`;
+      return s;
+    }
+    if(K==='flow'){ /* блок-схема */
+      const sh=v.shapes||[], lone=(sh.length===1), rh=32, gp=16, tot=sh.length*rh+(sh.length-1)*gp;
+      const y0=lone?32:Math.max(24,Math.round((H-tot)/2));
+      let s='';
+      sh.forEach((x,k)=>{
+        const y=y0+k*(rh+gp), c=x.c||A, d=(k*0.45).toFixed(2), du=(sh.length*0.45+1).toFixed(2);
+        const shape=x.k==='o'
+          ? `<ellipse cx="159" cy="${y+rh/2}" rx="84" ry="${rh/2}" fill="url(#${pre}card)" stroke="${c}" stroke-width="2.2"/>`
+          : x.k==='d'
+          ? `<path d="M159 ${y} l 84 ${rh/2} l -84 ${rh/2} l -84 -${rh/2} z" fill="url(#${pre}card)" stroke="${c}" stroke-width="2.2"/>`
+          : `<rect x="75" y="${y}" width="168" height="${rh}" rx="9" fill="url(#${pre}card)" stroke="${c}" stroke-width="2.2"/>`;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.1*k).toFixed(2)}s" filter="url(#${pre}sh)">${shape}`
+          +`<rect class="${pre}Spot" style="animation-delay:${d}s;animation-duration:${du}s" x="70" y="${y-3}" width="7" height="${rh+6}" rx="3.5" fill="${c}"/>`
+          +`${tx(159,y+rh/2+4.5,12.5,c,x.t,{b:1})}</g>`;
+        if(k<sh.length-1) s+=`<path d="M159 ${y+rh+2} V${y+rh+gp-2}" stroke="${A}" stroke-width="2" opacity=".7" class="${pre}Dash"/><path d="M155 ${y+rh+gp-7} l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="2"/>`;
+      });
+      if(lone){ /* из чего состоит блок-схема — мини-легенда */
+        const ly=H-64;
+        s+=`<rect x="16" y="${ly-16}" width="286" height="62" rx="12" fill="rgba(255,255,255,.035)" stroke="${A}" stroke-opacity=".25"/>`;
+        [{k:'o',x:64,t:'начало/конец',c:grn},{k:'r',x:159,t:'действие',c:blu},{k:'d',x:254,t:'условие',c:pur}].forEach(it=>{
+          const on=(it.k===sh[0].k), col=on?it.c:'#5f78a8';
+          const shape=it.k==='o'?`<ellipse cx="${it.x}" cy="${ly+6}" rx="25" ry="11" fill="none" stroke="${col}" stroke-width="${on?2.4:1.6}"/>`
+            : it.k==='r'?`<rect x="${it.x-25}" y="${ly-6}" width="50" height="24" rx="6" fill="none" stroke="${col}" stroke-width="${on?2.4:1.6}"/>`
+            : `<path d="M${it.x} ${ly-8} l25 14 l-25 14 l-25 -14 z" fill="none" stroke="${col}" stroke-width="${on?2.4:1.6}"/>`;
+          s+=`<g opacity="${on?1:.5}" class="${on?pre+'Pulse':''}">${shape}${tx(it.x,ly+34,10.5,col,it.t,{})}</g>`;
+        });
+      }
+      return s;
+    }
+    if(K==='code'){ /* окно программы */
+      const ln=v.lines||[], lh=24, hh=42+ln.length*lh+10;
+      let s=`<g filter="url(#${pre}sh)"><rect x="20" y="20" width="278" height="${hh}" rx="12" fill="rgba(8,14,30,.94)" stroke="${A}" stroke-opacity=".5" stroke-width="1.6"/>`
+        +`<path d="M20 46 h278" stroke="${A}" stroke-opacity=".22"/>`
+        +`<circle cx="34" cy="33" r="4" fill="#ff6b6b" opacity=".85"/><circle cx="48" cy="33" r="4" fill="${gold}" opacity=".85"/><circle cx="62" cy="33" r="4" fill="${grn}" opacity=".85"/>`
+        +`${tx(170,37,10.5,dim,v.title||'программа',{})}</g>`;
+      ln.forEach((L,k)=>{
+        const y=48+k*lh, ind=L.i?20:0, ch=(''+L.t).length;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+          +`<rect x="26" y="${y}" width="266" height="${lh-2}" rx="5" fill="rgba(255,255,255,${k%2?'.022':'.04'})"/>`
+          +`${tx(38,y+15,10,'#5a6d96',''+(k+1),{})}`
+          +`<text x="${54+ind}" y="${y+16}" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${L.c||cyan}">${L.t}</text>`
+          +(k===ln.length-1?`<rect class="${pre}Caret" x="${(54+ind+ch*7.85).toFixed(1)}" y="${y+4}" width="7" height="14" fill="${A}"/>`:'')
+          +`</g>`;
+      });
+      return s;
+    }
+    if(K==='machine'){ /* настоящий компьютер: монитор, системный блок, клавиатура */
+      let s='';
+      // системный блок
+      s+=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="20" y="40" width="50" height="120" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-opacity=".7" stroke-width="1.8"/>`
+        +`<rect x="28" y="50" width="34" height="10" rx="3" fill="rgba(255,255,255,.06)"/><rect x="28" y="66" width="34" height="10" rx="3" fill="rgba(255,255,255,.06)"/>`
+        +`<circle class="${pre}Blink" cx="45" cy="98" r="12" fill="none" stroke="${A}" stroke-width="1.4" opacity=".5"/>`
+        +`<g class="${pre}Spin">${[0,60,120,180,240,300].map(a=>`<path d="M45 98 l${(Math.cos(a*Math.PI/180)*11).toFixed(1)} ${(Math.sin(a*Math.PI/180)*11).toFixed(1)}" stroke="${A}" stroke-width="2.4" opacity=".8"/>`).join('')}</g>`
+        +`<circle class="${pre}Blink" cx="31" cy="130" r="3.2" fill="${grn}"/><circle class="${pre}Twinkle" cx="31" cy="142" r="3.2" fill="${gold}"/>`
+        +`<rect x="28" y="150" width="34" height="3" rx="1.5" fill="${A}" opacity=".4"/></g>`;
+      // монитор
+      s+=`<g class="${pre}Pop" style="animation-delay:.12s" filter="url(#${pre}sh)"><rect x="82" y="30" width="162" height="106" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-opacity=".7" stroke-width="1.8"/>`
+        +`<rect x="90" y="38" width="146" height="88" rx="6" fill="#0a1730" stroke="${A}" stroke-opacity=".35"/>`
+        +`<rect x="152" y="136" width="22" height="10" fill="#16223f"/><rect x="126" y="146" width="74" height="7" rx="3.5" fill="url(#${pre}card)" stroke="${A}" stroke-opacity=".5"/></g>`;
+      // «код» на экране
+      const lines=[[100,44],[86,120],[94,70],[72,110],[104,52]];
+      lines.forEach((w,k)=>{
+        s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;0 0" dur="1s"/>`
+          +`<rect x="100" y="${47+k*17}" width="${w[0]}" height="6" rx="3" fill="${k%2?A:grn}" opacity=".55"><animate attributeName="opacity" values="0.2;0.75;0.2" dur="${(2.2+k*0.35).toFixed(2)}s" begin="${(k*0.3).toFixed(2)}s" repeatCount="indefinite"/></rect>`
+          +`</g>`;
+      });
+      s+=`<rect class="${pre}Caret" x="102" y="${47+5*17}" width="7" height="7" rx="1.5" fill="${A}"/>`;
+      // клавиатура
+      s+=`<g class="${pre}Pop" style="animation-delay:.24s" filter="url(#${pre}sh)"><rect x="86" y="170" width="150" height="34" rx="7" fill="url(#${pre}card)" stroke="${A}" stroke-opacity=".6" stroke-width="1.6"/>`;
+      for(let r=0;r<3;r++)for(let c=0;c<9;c++){
+        const kx=92+c*16, ky=175+r*9.5, dl=((r*9+c)%7*0.28).toFixed(2);
+        s+=`<rect x="${kx}" y="${ky}" width="13" height="7" rx="2" fill="rgba(255,255,255,.12)"><animate attributeName="fill" values="rgba(255,255,255,.12);${A};rgba(255,255,255,.12)" dur="3.4s" begin="${dl}s" repeatCount="indefinite"/></rect>`;
+      }
+      s+=`</g>`;
+      // мышь
+      s+=`<g class="${pre}Pop" style="animation-delay:.3s" filter="url(#${pre}sh)"><rect x="246" y="170" width="28" height="42" rx="13" fill="url(#${pre}card)" stroke="${A}" stroke-opacity=".6" stroke-width="1.6"/><path d="M260 176 v10" stroke="${A}" stroke-width="2"/></g>`;
+      // кабели с «током»
+      s+=`<path d="M70 130 C 76 150, 90 152, 130 150" fill="none" stroke="${A}" stroke-width="1.8" opacity=".45" class="${pre}Dash"/>`
+        +`<path d="M70 60 C 76 44, 78 40, 82 40" fill="none" stroke="${A}" stroke-width="1.8" opacity=".45"/>`
+        +`<circle cx="70" cy="130" r="3" fill="${A}"><animate attributeName="cx" values="70;130" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.2;1;0.2" dur="1.6s" repeatCount="indefinite"/></circle>`;
+      return s;
+    }
+    if(K==='rain'){ /* поток данных: бегущие 0 и 1 */
+      const cols=7, cw=(CW-40)/cols, y0=22, rows=6, rh=22;
+      let s='';
+      for(let c=0;c<cols;c++){
+        const x=(20+cw*c+cw/2).toFixed(1);
+        for(let k=0;k<rows;k++){
+          const ch=((c+k)%2)?'1':'0', dur=(rows*0.34).toFixed(2), beg=(c*0.28+k*0.34).toFixed(2);
+          s+=`<text x="${x}" y="${y0+k*rh}" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="#5f78a8">${ch}`
+            +`<animate attributeName="fill" values="#5f78a8;${A};#5f78a8" dur="${dur}s" begin="${beg}s" repeatCount="indefinite"/>`
+            +`<animate attributeName="opacity" values="0.45;1;0.45" dur="${dur}s" begin="${beg}s" repeatCount="indefinite"/>`
+            +`<animateTransform attributeName="transform" type="translate" values="0 0;0 5;0 0" dur="${dur}s" begin="${beg}s" repeatCount="indefinite"/></text>`;
+        }
+      }
+      s+=`<rect x="14" y="${y0+rows*rh-4}" width="${CW-28}" height="2.4" rx="1.2" fill="url(#${pre}bar)" opacity=".55"/>`;
+      s+=`${[0,1,2,3,4].map((k)=>`<circle r="3.6" fill="${A}"><animateMotion dur="2.4s" begin="${(k*0.45).toFixed(2)}s" repeatCount="indefinite" path="M 26 ${y0+rows*rh+16} L ${CW-26} ${y0+rows*rh+16}"/><animate attributeName="opacity" values="0;1;1;0" dur="2.4s" begin="${(k*0.45).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}</g>`;
+      s+=`<rect x="20" y="${y0+rows*rh+30}" width="${CW-40}" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-opacity=".4"/>`
+        +`${tx(159,y0+rows*rh+47,11.5,dim,'любая информация хранится как 0 и 1',{})}`;
+      return s;
+    }
+    if(K==='text'){ /* текстовые строки — «плакат» */
+      const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
+      if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
+        let s2=`<g opacity=".12" class="${pre}Float">${motif(MOTIF,159,Math.round(H*0.42),Math.min(H*0.6,104),A)}</g>`;
+        s2+=`<g filter="url(#${pre}sh)"><rect x="18" y="18" width="282" height="${H-36}" rx="14" fill="url(#${pre}card)" stroke="${A}" stroke-opacity=".4" stroke-width="1.6"/>`
+          +`<rect x="18" y="18" width="282" height="3.2" rx="1.6" fill="url(#${pre}bar)"/></g>`;
+        s2+=`<circle cx="159" cy="66" r="42" fill="${A}" opacity=".1"/><circle cx="159" cy="66" r="30" fill="rgba(10,18,36,.85)" stroke="${A}" stroke-width="2"/>`
+          +`<g class="${pre}Twinkle">${icon(iconKey(plain((L[0]||{}).t),0),159,66,A,40)}</g>`;
+        const ly0=H-34-(n-1)*30;
+        L.forEach((t,k)=>{
+          const raw=(t.t!==undefined?t.t:t), txt=plain(raw), len=Math.max(1,txt.length);
+          const col=t.c||(t.b?ink:dim), ly=ly0+k*30;
+          const fs=t.b?Math.min(17.5,252/(len*0.62)):Math.min(13.5,250/(len*0.6));
+          s2+=`<g class="${pre}Rise" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+            +`<text x="159" y="${ly}" text-anchor="middle" font-size="${fs.toFixed(1)}" fill="${col}" font-weight="${t.b?'bold':'normal'}" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${txt}</text>`
+            +(t.b?`<rect x="${(159-Math.min(240,len*fs*0.3)).toFixed(0)}" y="${ly+7}" width="${Math.min(480,len*fs*0.6).toFixed(0)}" height="2.2" rx="1.1" fill="${col}" opacity=".35"/>`:'')
+            +`</g>`;
+        });
+        return s2;
+      }
+      const y0=Math.max(30,Math.round((H-tot)/2)), py=y0-14, ph=tot+28;
+      let s=`<g opacity=".12" class="${pre}Float">${motif(MOTIF,159,Math.round(H/2),Math.min(H*0.6,110),A)}</g>`;
+      s+=`<g filter="url(#${pre}sh)"><rect x="16" y="${py}" width="286" height="${ph}" rx="14" fill="url(#${pre}card)" stroke="${A}" stroke-opacity=".4" stroke-width="1.6"/>`
+        +`<rect x="16" y="${py}" width="286" height="3.2" rx="1.6" fill="url(#${pre}bar)"/></g>`;
+      s+=`<rect class="${pre}Scan" style="--scan:${ph-8}px" x="20" y="${py+4}" width="278" height="2" rx="1" fill="${A}" opacity=".18"/>`;
+      L.forEach((t,k)=>{
+        const y=y0+k*(rh+gp), raw=(t.t!==undefined?t.t:t), txt=plain(raw);
+        const len=Math.max(1,txt.length), fs=Math.min(t.b?15.5:14.2, 236/(len*0.62));
+        const col=t.c||(t.b?ink:dim), cy2=y+rh/2;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.09*k).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="${rh}" rx="9" fill="rgba(255,255,255,.035)"/>`
+          +`<circle cx="44" cy="${cy2}" r="12" fill="${A}" opacity=".12" stroke="${A}" stroke-opacity=".45" stroke-width="1.2"/>`
+          +`<g class="${pre}Twinkle" style="animation-delay:${(0.3*k).toFixed(2)}s">${icon(iconKey(txt,k),44,cy2,col,18)}</g>`
+          +`<text x="66" y="${cy2+5}" text-anchor="start" font-size="${fs.toFixed(1)}" fill="${col}" font-weight="${t.b?'bold':'normal'}" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${txt}</text>`
+          +(t.b?`<rect x="66" y="${cy2+9.5}" width="${Math.min(238, len*fs*0.6).toFixed(0)}" height="2" rx="1" fill="${col}" opacity=".35"/>`:'')
+          +`<path d="M222 ${y+rh-1} h14 M244 ${y+rh-1} h14" stroke="${A}" stroke-width="1.4" opacity=".25"/></g>`;
+      });
       return s;
     }
     return '';
   }
   function vizH(v){ /* высота под визуализацию */
     const K=v.kind;
-    if(K==='cards') return 52+Math.ceil(v.items.length/2)*64+6;
-    if(K==='ipo') return 140;
-    if(K==='bits') return 168;
+    if(K==='cards') return Math.max(120, Math.ceil((v.items||[]).length/2)*68+16);
+    if(K==='ipo') return 152;
+    if(K==='bits') return 172;
     if(K==='binary') return 158;
-    if(K==='codes') return 146;
-    if(K==='steps') return 44+v.steps.length*(v.steps.length>5?26:30)+6;
-    if(K==='robot') return 54+6*36+8;
-    if(K==='loop') return 168;
-    if(K==='cond') return 190;
-    if(K==='flow') return 44+(v.shapes||[]).length*44+6;
-    if(K==='code') return 52+v.lines.length*28+8;
-    if(K==='text') return 70+(v.lines||[]).length*32;
+    if(K==='codes') return 158;
+    if(K==='steps') return Math.max(120, (v.steps||[]).length*34+22);
+    if(K==='robot') return 40+6*34+30;
+    if(K==='loop') return 206;
+    if(K==='cond') return 202;
+    if(K==='flow') return ((v.shapes||[]).length===1)?200:Math.max(120, (v.shapes||[]).length*48+20);
+    if(K==='code') return Math.max(110, 42+(v.lines||[]).length*24+16);
+    if(K==='text') return ((v.lines||[]).length<=2)?(132+26*(v.lines||[]).length):Math.max(134, (v.lines||[]).length*39+54);
+    if(K==='machine') return 216;
+    if(K==='rain') return 212;
     return 180;
   }
-
   /* ---------- данные 10 уроков ---------- */
   const LESSONS=[
     { id:500, title:'Что такое информация и компьютер', ico:'💡', src:'Информатика · 5–6 класс · С нуля: информация',
@@ -160,7 +528,7 @@
       slides:[
         {h:'Информация', v:{kind:'cards', items:[{t:'📝 текст', d:'слова, буквы', c:cyan},{t:'🔢 число', d:'цифры', c:gold},{t:'🖼 картинка', d:'изображение', c:grn},{t:'🔊 звук', d:'музыка, речь', c:pur}]}, r:'Информация — это сведения об окружающем мире.'},
         {h:'Как мы получаем', v:{kind:'cards', items:[{t:'👁 зрение', c:cyan},{t:'👂 слух', c:gold},{t:'👃 запах', c:grn},{t:'✋ осязание', c:pur}]}, r:'Информацию человек получает органами чувств.'},
-        {h:'Компьютер', v:{kind:'text', lines:[{t:'Компьютер — машина для работы', b:1},{t:'с информацией:', c:dim},{t:'хранит · обрабатывает · передаёт', c:grn, b:1}]}, r:'Компьютер хранит, обрабатывает и передаёт информацию.'},
+        {h:'Компьютер', v:{kind:'machine'}, r:'Компьютер хранит, обрабатывает и передаёт информацию.'},
         {h:'Схема работы', v:{kind:'ipo'}, r:'ВВОД → ОБРАБОТКА → ВЫВОД.'},
         {h:'Ввод', v:{kind:'cards', items:[{t:'⌨ клавиатура', c:cyan},{t:'🖱 мышь', c:cyan},{t:'📷 камера', c:cyan},{t:'🎤 микрофон', c:cyan}]}, r:'Ввод — информация попадает в компьютер.'},
         {h:'Обработка', v:{kind:'text', lines:[{t:'Компьютер выполняет программу', b:1},{t:'и меняет информацию', b:1},{t:'(считает, ищет, рисует)', c:dim}]}, r:'Обработка — компьютер работает с информацией по программе.'},
@@ -195,7 +563,7 @@
         {h:'Мало бит', v:{kind:'text', lines:[{t:'Один бит = только «да/нет»', b:1},{t:'Поэтому биты объединяют', c:dim},{t:'в группы', c:dim}]}, r:'Из одного бита мало что закодируешь.'},
         {h:'Байт', v:{kind:'text', lines:[{t:'8 бит = 1 байт', b:1, c:grn},{t:'байт — «кирпичик» памяти', c:dim}]}, r:'8 бит = 1 байт.'},
         {h:'Байт хранит букву', v:{kind:'cards', items:[{t:'1 байт', d:'= 1 буква', c:grn},{t:'1 байт', d:'= 8 бит', c:blu}]}, r:'В одном байте — одна буква.'},
-        {h:'Всё — это 0 и 1', v:{kind:'bits', bits:[1,0,1,1,0,1]}, r:'Буквы, картинки, музыка — всё цепочки 0 и 1.'},
+        {h:'Всё — это 0 и 1', v:{kind:'rain'}, r:'Буквы, картинки, музыка — всё цепочки 0 и 1.'},
         {h:'Длиннее — больше', v:{kind:'text', lines:[{t:'Больше бит → больше значений', b:1},{t:'2 бита → 4 значения', c:cyan},{t:'3 бита → 8 значений', c:grn}]}, r:'Чем длиннее цепочка, тем больше вариантов.'},
         {h:'Тренажёр', v:{kind:'bits', bits:[1,0,1,0]}, r:'1 байт = 8 бит.'},
         {h:'Шпаргалка', v:{kind:'text', lines:[{t:'1 бит = 0 или 1', b:1},{t:'1 байт = 8 бит', c:grn, b:1},{t:'всё хранится как 0 и 1', c:dim}]}, r:'Запомни: бит, байт, 0 и 1.'} ],
@@ -256,7 +624,7 @@
         {h:'Собираем код', v:{kind:'text', lines:[{t:'К=12 · О=16 · Т=20', b:1, c:pur},{t:'→ 12 16 20', b:1, c:grn}]}, r:'Получилась цепочка чисел.'},
         {h:'Раскодировать', v:{kind:'text', lines:[{t:'по числу находим букву', b:1},{t:'12 → К', c:cyan}]}, r:'Обратно: число → буква.'},
         {h:'Другая информация', v:{kind:'cards', items:[{t:'🖼 картинка', d:'свои коды', c:grn},{t:'🔊 звук', d:'свои коды', c:gold}]}, r:'У каждого вида — своя таблица кодов.'},
-        {h:'Главное', v:{kind:'text', lines:[{t:'всё → числа → 0 и 1', b:1, c:grn}]}, r:'Компьютер превращает всё в числа, потом в 0 и 1.'},
+        {h:'Главное', v:{kind:'rain'}, r:'Компьютер превращает всё в числа, потом в 0 и 1.'},
         {h:'Тренажёр', v:{kind:'codes', pairs:[['А','1'],['Б','2']]}, r:'Под номером 1 — буква А.'},
         {h:'Шпаргалка', v:{kind:'text', lines:[{t:'буква = число (код)', b:1},{t:'слово = цепочка кодов', c:dim},{t:'всё → числа → 0 и 1', c:grn, b:1}]}, r:'Запомни: буква кодируется числом.'} ],
       check:{ q:'Какая буква стоит под номером 1?', choices:['А','Б','В'], ans:0, exp:'А = 1.' },
@@ -456,9 +824,9 @@
     const go=st.go||0;
     const s=spec.slides[Math.min(step,spec.slides.length-1)];
     const H=vizH(s.v)+30;
-    const inner = `<g class="${pre}In">${go? viz(s.v,pre) : ''}</g>`;
+    const inner = `<g class="${pre}In">${go? viz(s.v,pre,step) : ''}</g>`;
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
-      wkHero(arh(318,H,inner))+
+      wkHero(arh(318,H,inner,pre))+
       (go&&s.r?wkRow(chip(s.r,grn,pre)):'')+
       wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`))+
       wkSml(L.title));
