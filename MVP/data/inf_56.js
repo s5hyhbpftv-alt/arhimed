@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 21 урока (id 500–520) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 22 уроков (id 500–521) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -41,6 +41,27 @@
   const fit=(x,y,fs,c,t,o,maxw)=>{
     const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);
     return tx(x,y,s2,c,t,o);
+  };
+  const sineD=(x0,y0,w,amp,cyc,steps)=>{
+    let d='';
+    for(let i=0;i<=steps;i++){
+      const t=i/steps, x=x0+t*w, y=y0-amp*Math.sin(t*cyc*2*Math.PI);
+      d+=(i?' L':'M')+x.toFixed(1)+' '+y.toFixed(1);
+    }
+    return d;
+  };
+  const sinePts=(x0,y0,w,amp,cyc,n)=>{
+    const o=[];
+    for(let i=0;i<n;i++){
+      const t=(n===1?0:i/(n-1)), x=x0+t*w, y=y0-amp*Math.sin(t*cyc*2*Math.PI);
+      o.push([+x.toFixed(1),+y.toFixed(1)]);
+    }
+    return o;
+  };
+  const stairD=(pts)=>{
+    let d='M'+pts[0][0]+' '+pts[0][1];
+    for(let i=1;i<pts.length;i++) d+=' H'+pts[i][0]+' V'+pts[i][1];
+    return d;
   };
   function pxGrid(pre,x0,y0,cell,mat,opt){
     opt=opt||{}; let s='';
@@ -2958,6 +2979,285 @@
       s+=`${tx(159,22+it.length*54+4,11,dim,'эти ошибки встречаются чаще всего',{})}`;
       return s;
     }
+    if(K==='sndtask'){ /* что такое звук */
+      let s=`<g class="${pre}Pop"><rect x="30" y="16" width="258" height="30" rx="10" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>`
+        +`${tx(159,36,13,gold,'как компьютер записывает звук?',{b:1})}</g>`;
+      s+=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="26" y="86" width="54" height="76" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`<path d="M80 108 l26 -18 v60 l-26 -18 z" fill="rgba(126,168,255,.25)" stroke="${cyan}" stroke-width="2"/></g>`;
+      [0,1,2].forEach(k=>{
+        s+=`<path d="M112 ${124} q${18+k*14} ${-22-k*16} 0 ${-44-k*32}" fill="none" stroke="${cyan}" stroke-width="2.6" opacity="0">`
+          +`<animate attributeName="opacity" values="0;.9;0" dur="2.4s" begin="${(k*0.5).toFixed(2)}s" repeatCount="indefinite"/></path>`;
+      });
+      let sd2=11; const rnd2=()=>{sd2=(sd2*1103515245+12345)%2147483648; return sd2/2147483648;};
+      for(let k=0;k<22;k++){
+        const x=150+rnd2()*140, y=74+rnd2()*100, d=(rnd2()*2).toFixed(2);
+        s+=`<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="2.4" fill="${gold}" opacity=".5">`
+          +`<animateTransform attributeName="transform" type="translate" values="0 0;${(rnd2()*6-3).toFixed(1)} ${(rnd2()*6-3).toFixed(1)};0 0" dur="${(1.6+rnd2()).toFixed(1)}s" begin="${d}s" repeatCount="indefinite"/></circle>`;
+      }
+      s+=`<g class="${pre}Rise}" style="animation-delay:.5s"><rect x="24" y="176" width="270" height="30" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,196,11.5,dim,'звук — это дрожание воздуха',{})}</g>`;
+      return s;
+    }
+    if(K==='sndwave'){ /* громкость и высота */
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,ink,'громкость и высота звука',{b:1})}</g>`;
+      const bl=(y)=>`<line x1="24" y1="${y}" x2="292" y2="${y}" stroke="#31456f" stroke-width="1.6" opacity=".8"/>`;
+      s+=bl(74)+bl(160);
+      s+=`<path d="${sineD(30,74,120,10,2,40)}" fill="none" stroke="${blu}" stroke-width="3"/>`
+        +`${tx(90,64,10.5,blu,'тихо',{b:1})}`
+        +`${tx(90,116,10,dim,'дрожит слабо',{})}`;
+      s+=`<path d="${sineD(168,74,120,24,2,40)}" fill="none" stroke="${red}" stroke-width="3"/>`
+        +`${tx(228,64,10.5,red,'громко',{b:1})}`
+        +`${tx(228,116,10,dim,'дрожит сильно',{})}`;
+      s+=`<path d="${sineD(30,160,120,18,1.5,40)}" fill="none" stroke="${gold}" stroke-width="3"/>`
+        +`${tx(90,204,10.5,gold,'низкий звук',{b:1})}`;
+      s+=`<path d="${sineD(168,160,120,18,5,80)}" fill="none" stroke="${grn}" stroke-width="3"/>`
+        +`${tx(228,204,10.5,grn,'высокий звук',{b:1})}`;
+      s+=`${tx(90,192,9.5,dim,'волна редкая',{})}${tx(228,192,9.5,dim,'волна частая',{})}`;
+      return s;
+    }
+    if(K==='sndsample'){ /* измеряем через равные промежутки */
+      const y0=96, amp=40, n=10;
+      const pts=sinePts(30,y0,258,amp,2,n);
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,ink,'измеряем через равные промежутки',{b:1})}</g>`;
+      s+=`<path d="${sineD(30,y0,258,amp,2,80)}" fill="none" stroke="${A}" stroke-width="2.2" opacity=".45"/>`;
+      s+=`<line x1="24" y1="${y0}" x2="292" y2="${y0}" stroke="#31456f" stroke-width="1.4"/>`;
+      pts.forEach((p,k)=>{
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.2+k*0.22).toFixed(2)}s" cx="${p[0]}" cy="${p[1]}" r="4.6" fill="${gold}" stroke="#fffdf2" stroke-width="1.2"/>`;
+        s+=`<line x1="${p[0]}" y1="${p[1]}" x2="${p[0]}" y2="${y0+52}" stroke="${gold}" stroke-width="1.4" stroke-dasharray="4 4" class="${pre}Pop" style="animation-delay:${(0.2+k*0.22).toFixed(2)}s" opacity=".55"/>`;
+      });
+      s+=`<circle r="5" fill="${cyan}"><animateMotion dur="4.4s" repeatCount="indefinite" path="${sineD(30,y0,258,amp,2,80)}"/></circle>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="24" y="164" width="270" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${tx(159,184,11.5,gold,'у каждой точки — своё время',{b:1})}</g>`;
+      s+=`${tx(159,212,11,dim,'ровные промежутки — как тиканье часов',{})}`;
+      return s;
+    }
+    if(K==='sndnumbers'){ /* точки становятся числами */
+      const y0=70, amp=34, n=8;
+      const pts=sinePts(30,y0,258,amp,2,n);
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,ink,'каждое измерение — это число',{b:1})}</g>`;
+      s+=`<path d="${sineD(30,y0,258,amp,2,80)}" fill="none" stroke="${A}" stroke-width="2" opacity=".4"/>`;
+      pts.forEach((p,k)=>{
+        s+=`<circle cx="${p[0]}" cy="${p[1]}" r="4.2" fill="${gold}"/>`;
+        s+=`<circle r="3.4" fill="${gold}"><animateMotion dur="3.6s" begin="${(k*0.25).toFixed(2)}s" repeatCount="indefinite" path="M${p[0]} ${p[1]} V132"/></circle>`;
+      });
+      s+=`<rect x="24" y="132" width="270" height="30" rx="8" fill="rgba(15,25,46,.97)" stroke="${gold}" stroke-width="1.6"/>`;
+      pts.forEach((p,k)=>{
+        const v=Math.round((y0-p[1])/amp*9);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.5+k*0.22).toFixed(2)}s">`
+          +`<text x="${32+k*32}" y="152" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${k%2?grn:cyan}">${(v>0?'+':'')+v}</text></g>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="24" y="176" width="270" height="30" rx="9" fill="rgba(255,255,255,.04)" stroke="${grn}" stroke-width="1.6"/>`
+        +`${tx(159,196,11.5,grn,'эта строка чисел — уже файл',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='sndfew'){ /* мало измерений — грубо */
+      const y0=72, amp=30, n=4;
+      const pts=sinePts(30,y0,258,amp,2,n);
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,red,'мало измерений — звук грубый',{b:1})}</g>`;
+      s+=`<path d="${sineD(30,y0,258,amp,2,80)}" fill="none" stroke="${A}" stroke-width="1.8" opacity=".3"/>`;
+      s+=`<path d="${stairD(pts)}" fill="none" stroke="${red}" stroke-width="3"/>`;
+      pts.forEach(p=>{ s+=`<circle cx="${p[0]}" cy="${p[1]}" r="4.6" fill="${red}"/>`; });
+      s+=`<rect x="24" y="118" width="270" height="28" rx="8" fill="rgba(15,25,46,.97)" stroke="${red}" stroke-width="1.5"/>`;
+      pts.forEach((p,k)=>{ const v=Math.round((y0-p[1])/amp*9);
+        s+=`<text x="${70+k*62}" y="137" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${red}">${(v>0?'+':'')+v}</text>`; });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.4s"><rect x="24" y="158" width="270" height="30" rx="9" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.7"/>`
+        +`${tx(159,178,11.5,red,'вместо волны — ступеньки',{b:1})}</g>`;
+      s+=`${tx(159,206,11,dim,'на слух: скрипучий, «металлический» звук',{})}`;
+      return s;
+    }
+    if(K==='sndmore'){ /* много измерений — точно */
+      const y0=72, amp=30, n=26;
+      const pts=sinePts(30,y0,258,amp,2,n);
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,grn,'много измерений — звук точный',{b:1})}</g>`;
+      s+=`<path d="${sineD(30,y0,258,amp,2,80)}" fill="none" stroke="${A}" stroke-width="1.8" opacity=".3"/>`;
+      s+=`<path d="${stairD(pts)}" fill="none" stroke="${grn}" stroke-width="2.6"/>`;
+      pts.filter((p,k)=>k%5===0).forEach(p=>{ s+=`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${grn}"/>`; });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.4s"><rect x="24" y="120" width="270" height="30" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,140,11.5,grn,'ступеньки почти слились с волной',{b:1})}</g>`;
+      s+=`${tx(159,170,11,dim,'звук получается чистым',{})}`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="24" y="184" width="270" height="28" rx="8" fill="rgba(15,25,46,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+        +`${tx(159,203,11,dim,'точек больше — и разница не слышна',{})}</g>`;
+      return s;
+    }
+    if(K==='sndrate'){ /* частота дискретизации */
+      const rows=[{n:'телефонный звонок',v:8000,c:cyan,w:40},{n:'музыка в наушниках',v:22050,c:gold,w:110},{n:'диск CD',v:44100,c:grn,w:190}];
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,ink,'сколько раз в секунду измеряют',{b:1})}</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*48;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.14*k).toFixed(2)}s">`
+          +fit(24,y+16,11.5,q.c,q.n,{an:'start',b:1},140)
+          +`<rect x="24" y="${y+24}" width="${Math.min(q.w,266)}" height="18" rx="6" fill="${q.c}" opacity=".26" stroke="${q.c}" stroke-width="1.3"/>`
+          +fit(24+Math.min(q.w,266)+6,y+38,11.5,q.c,q.v.toLocaleString('ru-RU'),{an:'start',b:1},60)
+          +`</g>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.5s"><rect x="24" y="196" width="270" height="28" rx="8" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.6"/>`
+        +`${tx(159,215,11,grn,'это и есть частота дискретизации',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='sndlevels'){ /* уровни громкости */
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,ink,'сколько оттенков громкости',{b:1})}</g>`;
+      [[26,'8 бит','256 уровней',cyan],[176,'16 бит','65 536 уровней',grn]].forEach((q,k)=>{
+        const x=q[0];
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.2+k*0.2).toFixed(2)}s">`
+          +`<rect x="${x}" y="52" width="116" height="96" rx="9" fill="rgba(15,25,46,.97)" stroke="${q[3]}" stroke-width="1.8"/>`;
+        for(let i=0;i<16;i++){
+          const y=56+i*5.6, op=0.15+i/16*0.8;
+          s+=`<rect x="${x+8}" y="${y.toFixed(1)}" width="100" height="4" fill="${q[3]}" opacity="${op.toFixed(2)}"/>`;
+        }
+        s+=`${tx(x+58,164,11.5,q[3],q[1],{b:1})}${tx(x+58,182,10,dim,q[2],{})}</g>`;
+      });
+      s+=`${tx(159,206,11,dim,'чем больше бит, тем плавнее громкость',{})}`;
+      return s;
+    }
+    if(K==='sndsize'){ /* размер файла */
+      const steps=[{t:'44 100 измерений в секунду',c:cyan},{t:'× 16 бит на измерение',c:blu},{t:'× 2 канала (стерео)',c:gold},{t:'= 1 411 200 бит в секунду',c:grn}];
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,ink,'считаем размер звукового файла',{b:1})}</g>`;
+      steps.forEach((q,k)=>{
+        const y=48+k*38;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.18+k*0.2).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="30" rx="9" fill="rgba(15,25,46,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+20,12,q.c,q.t,{b:1},250)+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="24" y="204" width="270" height="30" rx="9" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${tx(159,224,11.5,gold,'за минуту — почти 10 мегабайт!',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='sndstereo'){ /* два канала */
+      const y0=76, amp=22, n=8;
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,ink,'стерео: два уха — два числа',{b:1})}</g>`;
+      s+=`<path d="${sineD(38,y0,112,amp,2,40)}" fill="none" stroke="${blu}" stroke-width="2.6"/>`
+        +`${tx(94,52,11,blu,'левый канал',{b:1})}`;
+      s+=`<path d="${sineD(168,y0,112,amp,2.6,40)}" fill="none" stroke="${pur}" stroke-width="2.6"/>`
+        +`${tx(224,52,11,pur,'правый канал',{b:1})}`;
+      s+=`<rect x="24" y="112" width="270" height="26" rx="8" fill="rgba(15,25,46,.97)" stroke="${cardB}" stroke-width="1.4"/>`;
+      for(let k=0;k<n;k++){
+        const x=36+k*33;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.15).toFixed(2)}s">`
+          +`<text x="${x}" y="130" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${blu}">${(k%3?4:-6)+k%5}</text>`
+          +`<text x="${x+13}" y="130" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">${(k%4?3:-7)+k%4}</text></g>`;
+      }
+      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="24" y="152" width="270" height="30" rx="9" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${tx(159,172,11.5,gold,'на каждое измерение — два числа',{b:1})}</g>`;
+      s+=`${tx(159,200,11,dim,'файл становится в два раза больше',{})}`;
+      return s;
+    }
+    if(K==='sndpipe'){ /* путь звука */
+      const stn=[{t:'микрофон',c:cyan},{t:'измерения',c:gold},{t:'числа',c:blu},{t:'файл',c:grn},{t:'колонка',c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,ink,'путь звука в компьютере',{b:1})}</g>`;
+      stn.forEach((q,k)=>{
+        const y=52+k*36;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.14*k).toFixed(2)}s">`
+          +`<rect x="52" y="${y}" width="214" height="28" rx="9" fill="rgba(15,25,46,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+19,12,q.c,q.t,{b:1},190)+`</g>`;
+        if(k<stn.length-1) s+=`<path d="M159 ${y+30} v4" stroke="${A}" stroke-width="1.6"/><path d="M155 ${y+30} l4 4 l4 -4" fill="none" stroke="${A}" stroke-width="1.6"/>`;
+      });
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="5s" repeatCount="indefinite" path="M159 66 V238"/></circle>`;
+      s+=`${tx(159,252,10.5,dim,'микрофон → числа → файл → звук',{})}`;
+      return s;
+    }
+    if(K==='sndmp3'){ /* сжатие звука */
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,ink,'сжатие: убираем лишнее',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.15s">`
+        +`${tx(28,60,11.5,cyan,'без сжатия',{an:'start',b:1})}`
+        +`<rect x="28" y="68" width="262" height="24" rx="8" fill="${cyan}" opacity=".24" stroke="${cyan}" stroke-width="1.4"/>`
+        +`${tx(159,85,11,cyan,'10 мегабайт',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.4s">`
+        +`${tx(28,120,11.5,grn,'mp3',{an:'start',b:1})}`
+        +`<rect x="28" y="128" width="54" height="24" rx="8" fill="${grn}" opacity=".26" stroke="${grn}" stroke-width="1.4"/>`
+        +`<text x="88" y="145" font-size="11" font-weight="bold" fill="${grn}">1 мегабайт</text></g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="24" y="170" width="270" height="46" rx="10" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,190,11,grn,'убираем то, что человек почти не слышит',{b:1})}`
+        +`${tx(159,206,10.5,dim,'поэтому музыку слушают в mp3',{})}</g>`;
+      return s;
+    }
+    if(K==='sndanalog'){ /* пластинка и компьютер */
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,ink,'непрерывно и по точкам',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.15s">`
+        +`<rect x="20" y="48" width="130" height="112" rx="10" fill="rgba(15,25,46,.95)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(85,68,11,gold,'пластинка',{b:1},110)
+        +`<path d="${sineD(28,110,114,20,2,80)}" fill="none" stroke="${gold}" stroke-width="2.8"/>`
+        +fit(85,148,10,dim,'волна непрерывная',{},112)+`</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.35s">`
+        +`<rect x="168" y="48" width="130" height="112" rx="10" fill="rgba(15,25,46,.95)" stroke="${grn}" stroke-width="1.7"/>`
+        +fit(233,68,11,grn,'компьютер',{b:1},110)
+        +`<path d="${sineD(176,110,114,20,2,80)}" fill="none" stroke="${grn}" stroke-width="1.4" opacity=".35"/>`
+        +`<path d="${stairD(sinePts(176,110,114,20,2,10))}" fill="none" stroke="${grn}" stroke-width="2.6"/>`
+        +fit(233,148,10,dim,'только точки',{},112)+`</g>`;
+      s+=`${tx(159,182,11,dim,'у цифры звук собран из измерений',{})}`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="24" y="194" width="270" height="28" rx="8" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.6"/>`
+        +`${tx(159,213,11,gold,'чаще измеряем — ближе к настоящему',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='sndgame'){ /* интерактив: где запись точнее */
+      const tiles=[{n:4,t:'4 измерения',c:red},{n:12,t:'12 измерений',c:gold},{n:40,t:'40 измерений',c:grn}];
+      const sel=(st&&typeof st.pick==='number')?st.pick:-1, ok=2, done=(sel>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="12" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${tx(159,32,Math.min(12,250/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Где звук записан точнее?',{b:1})}</g>`;
+      tiles.forEach((q,k)=>{
+        const x=16+k*96, good=(k===ok), on=(done&&k===ok), bad=(done&&sel===k&&!good);
+        const c=on?grn:(bad?red:q.c);
+        const pts=sinePts(x+22,88,74,18,2,q.n);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="${x}" y="52" width="90" height="120" rx="10" fill="${on?'rgba(19,44,35,.97)':(bad?'rgba(52,22,26,.97)':'rgba(15,25,46,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.4:1.7}"/>`
+          +`<path d="${sineD(x+22,88,74,18,2,80)}" fill="none" stroke="${c}" stroke-width="1.2" opacity=".3"/>`
+          +`<path d="${stairD(pts)}" fill="none" stroke="${c}" stroke-width="2.4"/>`
+          +fit(x+45,146,10.5,c,q.t,{},84)
+          +(on?`<path d="M${x+70} 64 l5 6 l11 -13" fill="none" stroke="${grn}" stroke-width="2.6"/>`:'')
+          +`</g>`;
+      });
+      const by=184;
+      if(done) s+=`<g class="${pre}Pop"><rect x="24" y="${by}" width="270" height="30" rx="9" fill="${sel===ok?'rgba(125,224,160,.12)':'rgba(255,120,100,.1)'}" stroke="${sel===ok?grn:red}" stroke-width="1.7"/>`
+        +`${tx(159,by+20,11,sel===ok?grn:red,sel===ok?'Верно! Чем больше измерений, тем точнее':'Нет: смотри, где ступеньки ровнее',{b:1})}</g>`;
+      else s+=`<g class="${pre}Rise}"><rect x="24" y="${by}" width="270" height="30" rx="9" fill="rgba(15,25,46,.95)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,by+20,11,dim,'нажми на самую точную запись',{})}</g>`;
+      return s;
+    }
+    if(K==='sndmistakes'){ /* частые ошибки */
+      const it=(v.items||[
+        {t:'думал, что компьютер хранит волну', f:'он хранит только числа-измерения'},
+        {t:'забыл про два канала', f:'в стерео чисел в два раза больше'},
+        {t:'спутал высоту звука и частоту измерений', f:'это разные вещи'}
+      ]);
+      let s='';
+      it.forEach((q,k)=>{
+        const y=20+k*54;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.14+k*0.16).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="16" y="${y}" width="286" height="46" rx="11" fill="url(#${pre}card)" stroke="${red}" stroke-width="2"/>`
+          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#241016">!</text>`
+          +fit(62,y+20,Math.min(11,206/Math.max(1,q.t.length)/0.72),red,q.t,{an:'start',b:1},206)
+          +`<path d="M62 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(84,y+40,Math.min(11,186/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      s+=`${tx(159,20+it.length*54+4,11,dim,'эти ошибки встречаются чаще всего',{})}`;
+      return s;
+    }
+    if(K==='sndvoice'){ /* примеры */
+      const ex=(v.ex||[{t:'голосовое сообщение',d:'1 минута ≈ 5 МБ',c:cyan},{t:'музыка в плеере',d:'mp3 ≈ 1 МБ',c:grn},{t:'звонок по телефону',d:'8000 измерений',c:gold}]);
+      let s=`<g class="${pre}Pop"><rect x="24" y="12" width="270" height="26" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,30,11.5,ink,'где мы встречаем звук',{b:1})}</g>`;
+      ex.forEach((q,k)=>{
+        const y=48+k*46;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.14*k).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="38" rx="10" fill="rgba(15,25,46,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(60,y+18,11.5,q.c,q.t,{an:'start',b:1},150)
+          +fit(60,y+32,10.5,dim,q.d,{an:'start'},150)
+          +`<path d="${sineD(220,y+10,70,9,2,40)}" fill="none" stroke="${q.c}" stroke-width="2" opacity=".85"/></g>`;
+      });
+      s+=`${tx(159,48+ex.length*46+4,11,dim,'звук всюду вокруг нас — и всюду числа',{})}`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -3104,6 +3404,22 @@
     if(K==='outofrange') return 202;
     if(K==='marks') return 220;
     if(K==='findcell') return 210;
+    if(K==='sndtask') return 214;
+    if(K==='sndwave') return 216;
+    if(K==='sndsample') return 232;
+    if(K==='sndnumbers') return 216;
+    if(K==='sndfew') return 224;
+    if(K==='sndmore') return 224;
+    if(K==='sndrate') return 236;
+    if(K==='sndlevels') return 216;
+    if(K==='sndsize') return 244;
+    if(K==='sndstereo') return 216;
+    if(K==='sndpipe') return 268;
+    if(K==='sndmp3') return 226;
+    if(K==='sndanalog') return 234;
+    if(K==='sndgame') return 226;
+    if(K==='sndmistakes') return 20+((v.items||[1,2,3]).length)*54+22;
+    if(K==='sndvoice') return 48+((v.ex||[1,2,3]).length)*46+18;
     if(K==='pixeltask') return 220;
     if(K==='pixzoom') return 220;
     if(K==='pixel') return 236;
@@ -3882,6 +4198,50 @@
       tasks:[
         {q:'Сколько чисел нужно, чтобы записать один цветной пиксель (RGB)?', kind:'unit', ans:3, tol:0, hints:['Красный, зелёный, синий.','Три числа.'], sol:'3'},
         {q:'Что означает 1 в чёрно-белом коде рисунка?', kind:'choice', choices:['чёрный пиксель','белый пиксель','пустую клетку'], ans:0, tol:0, hints:['1 — закрашенная клетка.','1 — чёрный пиксель.'], sol:'чёрный пиксель'}
+      ] },
+    { id:521, title:'Звук в компьютере: как записать волну', ico:'🔊', src:'Информатика · 5–6 класс · С нуля: звук',
+      explain:[
+        'Звук — это дрожание воздуха. Когда что-то звучит, воздух начинает дрожать, и эти дрожания доходят до нашего уха.',
+        'Громкость зависит от того, насколько сильно дрожит воздух: дрожит сильнее — звук громче, дрожит слабее — тише.',
+        'Высота звука зависит от того, как часто дрожит воздух: частые дрожания дают высокий звук, редкие — низкий.',
+        'Компьютер не может сохранить саму волну целиком. Он измеряет её через равные промежутки времени — как будто ставит точки.',
+        'Каждое измерение — это одно число: насколько громким был звук в этот момент.',
+        'Если измерять редко, точек получится мало, и волна будет угловатой — звук станет грубым и скрипучим.',
+        'Если измерять часто, точек много, и волна получится почти как настоящая — звук будет чистым.',
+        'Сколько раз в секунду измеряют звук, называют частотой дискретизации. Для музыки на диске это 44 100 раз в секунду.',
+        'Каждое измерение записывают числом из нескольких бит. 8 бит дают 256 уровней громкости, а 16 бит — уже 65 536.',
+        'Размер звукового файла считают умножением: измерений в секунду умножить на биты, потом на каналы и на секунды.',
+        'В стерео два канала: один для левого уха, другой для правого. Значит, на каждое измерение нужно два числа, и файл в два раза больше.',
+        'Записывают звук так: микрофон превращает дрожание воздуха в сигнал, компьютер измеряет его и записывает числа в файл.',
+        'Играют звук обратно наоборот: компьютер читает числа и заставляет колонку дрожать точно так же, как дрожал воздух.',
+        'Чтобы файл стал меньше, звук сжимают: убирают то, что человек почти не слышит. Так получается формат mp3.',
+        'Проверь себя: что называют частотой дискретизации?',
+        'Тренажёр: выбери запись, где звук записан точнее всего.',
+        'Тренажёр: посчитай, сколько измерений делают за секунду на диске.',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'Что такое звук', v:{kind:'sndtask'}, r:'Звук — это дрожание воздуха.', d:'Когда колонка играет, она толкает воздух, и по нему бегут волны дрожания. Именно их и слышит наше ухо.'},
+        {h:'Громко и высоко', v:{kind:'sndwave'}, r:'Громкость и высота — разные вещи.', d:'Сверху две волны одной высоты, но разной громкости: чем выше горбы, тем громче. Внизу две волны одинаковой громкости, но разной высоты: чем чаще горбы, тем выше звук.'},
+        {h:'Измеряем волну', v:{kind:'sndsample'}, r:'Ставим точки через равные промежутки.', d:'Компьютер не рисует волну, а измеряет её через равные промежутки времени — как будто тикают часы. Каждая точка — это одно измерение.'},
+        {h:'Измерение — это число', v:{kind:'sndnumbers'}, r:'Точки превращаются в числа.', d:'Каждая точка падает вниз и становится числом: насколько громко было в этот момент. Строка таких чисел и есть звуковой файл.'},
+        {h:'Мало измерений', v:{kind:'sndfew'}, r:'Редкие измерения — грубый звук.', d:'Если точек мало, вместо плавной волны получаются ступеньки. На слух такой звук скрипучий и «металлический».'},
+        {h:'Много измерений', v:{kind:'sndmore'}, r:'Частые измерения — чистый звук.', d:'Чем больше точек, тем ближе ступеньки к настоящей волне. При частых измерениях разница на слух почти незаметна.'},
+        {h:'Сколько раз в секунду', v:{kind:'sndrate'}, r:'Это частота дискретизации.', d:'Телефон измеряет звук 8000 раз в секунду, музыка — 22 050, а диск CD — 44 100 раз в секунду. Чем больше измерений, тем точнее запись.'},
+        {h:'Уровни громкости', v:{kind:'sndlevels'}, r:'Сколько бит на одно измерение.', d:'8 бит дают 256 уровней громкости, а 16 бит — 65 536. Чем больше уровней, тем плавнее и точнее звук.'},
+        {h:'Размер файла', v:{kind:'sndsize'}, r:'Считаем, сколько места займёт.', d:'44 100 измерений умножаем на 16 бит, потом на два канала — получаем больше миллиона бит в секунду. За минуту это почти 10 мегабайт.'},
+        {h:'Два канала', v:{kind:'sndstereo'}, r:'Стерео — это два числа.', d:'В стерео звук записывают отдельно для левого и правого уха. На каждое измерение нужно два числа, поэтому файл в два раза больше.'},
+        {h:'Путь звука', v:{kind:'sndpipe'}, r:'От микрофона до колонки.', d:'Микрофон ловит дрожание воздуха, компьютер измеряет его, превращает в числа и сохраняет в файл. При прослушивании всё происходит наоборот.'},
+        {h:'Сжатие', v:{kind:'sndmp3'}, r:'mp3 — звук поменьше.', d:'Из записи убирают то, что человек почти не слышит. Файл становится в десять раз меньше, а на слух разница почти незаметна.'},
+        {h:'Пластинка и файл', v:{kind:'sndanalog'}, r:'Непрерывно и по точкам.', d:'У пластинки волна непрерывная, а в компьютере — только отдельные точки. Чем чаще измерения, тем ближе цифровой звук к настоящему.'},
+        {h:'Где точнее', v:{kind:'sndgame', q:'Где звук записан точнее всего?'}, r:'Проверь себя: выбери запись.', d:'На трёх плитках одна и та же волна, но измерений разное количество. Нажми на ту, где ступеньки ровнее всего.'},
+        {h:'Что выведет программа', v:{kind:'pick', q:'Сколько измерений в секунду делают при записи диска CD?', opts:[{t:'44 100', ok:1},{t:'100'},{t:'8'}], exp:'На диске CD звук измеряют 44 100 раз в секунду — это стандарт качества музыки.'}, r:'Проверь себя: посчитай измерения.', d:'Вспомни строку про диск CD: там самое большое число измерений.'},
+        {h:'Частые ошибки', v:{kind:'sndmistakes'}, r:'Что чаще всего путают.', d:'Под каждой ошибкой зелёным написано, как правильно.'},
+        {h:'Где мы встречаем звук', v:{kind:'sndvoice'}, r:'Вокруг нас — всюду числа.', d:'Голосовые сообщения, музыка в плеере и телефонный звонок — всё это наборы измерений. Различаются они числом измерений и качеством.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'звук = измерения', b:1},{t:'чаще измеряем — точнее', c:grn},{t:'в стерео два числа', c:gold}]}, r:'Запомни главное про звук.', d:'Главное: компьютер хранит звук как строку чисел-измерений, а точность зависит от того, как часто он измеряет.'} ],
+      check:{ q:'Что называют частотой дискретизации?', choices:['сколько раз в секунду измеряют звук','как громко звучит музыка','сколько бит в файле'], ans:0, exp:'Частота дискретизации — это число измерений звука за одну секунду.' },
+      tasks:[
+        {q:'Сколько чисел нужно на одно измерение в стерео (два канала)?', kind:'unit', ans:2, tol:0, hints:['Один канал — левое ухо.','Два канала — два числа.'], sol:'2'},
+        {q:'Что будет со звуком, если измерять его слишком редко?', kind:'choice', choices:['он станет грубым и неточным','он станет громче','он исчезнет'], ans:0, tol:0, hints:['Точек мало — волна угловатая.','Звук станет грубым.'], sol:'он станет грубым и неточным'}
       ] }
   ];
 
@@ -3896,7 +4256,7 @@
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
