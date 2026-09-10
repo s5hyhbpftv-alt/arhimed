@@ -21151,6 +21151,761 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===392){ window.ARH_LESSONS[i]=L392; break; } } })();
 })();
+/* ================= УРОК 386 · Деление с остатком: задачи (v7 · «Конфетная фабрика Архимеда», 24 шага, флагман, прорисовка на каждом слайде) ================= */
+(function(){
+  if(!window.__wk386v7css){
+    window.__wk386v7css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qJIn{animation:qJIn .55s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qJIn{0%{transform:translateY(-14px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qJPop{animation:qJPop .55s cubic-bezier(.2,.9,.3,1.25) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qJPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qJRise{animation:qJRise .7s cubic-bezier(.2,.85,.3,1.08) both;}'+
+      '@keyframes qJRise{0%{transform:translateY(16px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qJGlow{animation:qJGlow 2.2s ease-in-out infinite;}'+
+      '@keyframes qJGlow{0%,100%{opacity:.3}50%{opacity:1}}'+
+      '#lvis .qJBlink{animation:qJBlink 1.5s ease-in-out infinite;}'+
+      '@keyframes qJBlink{0%,100%{opacity:.35}50%{opacity:1}}'+
+      '#lvis .qJFloat{animation:qJFloat 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qJFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
+      '#lvis .qJDrop{animation:qJDrop .8s cubic-bezier(.3,.9,.4,1.2) both;}'+
+      '@keyframes qJDrop{0%{transform:translateY(-26px);opacity:0}100%{transform:none;opacity:1}}';
+    document.head.appendChild(st);
+  }
+  const L386 = {
+    id: 386, title: 'Деление с остатком: задачи', ico: '🧮',
+    src: 'Математика · 5–6 класс · Олимп-5: остатки', subj: 'math',
+    explain: [
+      'Начнём с задачи. У Архимеда 48 конфет, и он раскладывает их в коробочки по 5 штук. Сколько получится полных коробочек и сколько конфет останется?',
+      'Не всегда одно число делится на другое нацело. Например, 7 конфет в коробки по 2: две полные коробки и одна конфета останется. Это и есть деление с остатком.',
+      'В записи 48 : 5 = 9 (ост. 3) у каждого числа своё имя: 48 — делимое, 5 — делитель, 9 — неполное частное, 3 — остаток.',
+      'Главное правило: остаток всегда меньше делителя. Поэтому при делении на 5 остаток не может быть равен 5, 6 или 7 — тогда можно было бы взять ещё одну целую коробку.',
+      'Сколько остатков бывает? При делении на 2 — два остатка (0 и 1), на 5 — пять (0, 1, 2, 3, 4), на 10 — десять (0, 1, 2, …, 9). Всегда ровно столько, чему равен делитель.',
+      'Любое деление с остатком можно записать одной формулой: делимое = делитель · частное + остаток. Для нашей задачи: 48 = 5 · 9 + 3.',
+      'Отсюда и проверка: умножь делитель на частное и прибавь остаток. Если получилось исходное число — всё решено верно. 5 · 9 + 3 = 45 + 3 = 48.',
+      'Обратная задача: найти число по остатку. Например, какое наименьшее число при делении на 7 даёт остаток 4? Берём самое маленькое частное 1: 7 · 1 + 4 = 11.',
+      'Можно найти и делитель. Если известно, что при делении числа 47 на какое-то число получилось частное 9 и остаток 2, то делитель равен (47 − 2) : 9 = 5.',
+      'Письменное деление с остатком делают в столбик: подбирают самое большое число, которое делится на делитель, вычитают его и получают остаток. Остаток всегда меньше делителя.',
+      'Остаток при делении на 2 показывает чётность: если остаток 0 — число чётное, если 1 — нечётное. Так признак делимости на 2 становится понятнее.',
+      'Остаток при делении на 10 — это последняя цифра числа. У числа 348 остаток 8, потому что 348 = 10 · 34 + 8. Поэтому по последней цифре сразу видно и делимость на 10.',
+      'Остаток при делении на 9 равен остатку от деления суммы цифр на 9. У числа 348: 3 + 4 + 8 = 15, 15 : 9 = 1 (ост. 6) — и 348 : 9 = 38 (ост. 6).',
+      'Практическая задача: в 48 конфетах по 5 в коробке. Полных коробок 9, но 3 конфеты остались — значит, нужна ещё одна коробочка. Всего коробок 10, а не 9!',
+      'Ещё задача: сколько конфет нужно добавить, чтобы всё разложилось без остатка? До 50 не хватает 2 конфет: 50 = 10 · 5. Значит, добавить надо делитель минус остаток: 5 − 3 = 2.',
+      'Задачи про дни недели тоже решаются остатком. Если сегодня вторник, то через 100 дней: 100 : 7 = 14 (ост. 2) — недели повторяются, а два дня вперёд дают четверг.',
+      'Наименьшее число с остатком 4 при делении на 7 — это 11, а следующие: 18, 25, 32 — каждый раз на 7 больше. Наибольшее двузначное такое число — 95.',
+      'Остаток — это как позиция в круге. Если отсчитывать по 5 по кругу из 12 точек, то 48-й шаг остановится на 3-й точке: 48 : 5 = 9 (ост. 3).',
+      'Тренажёр: найди частное и остаток и проверь себя.',
+      'Тренажёр: может ли получиться такой остаток?',
+      'Частые ошибки: забыть правило «остаток меньше делителя», перепутать частное и остаток, написать остаток больше делителя и не сделать проверку.',
+      'Шпаргалка: делимое = делитель · частное + остаток, остаток меньше делителя, проверка умножением, нужна ещё одна коробка, если остаток не ноль.',
+      'Мы разобрали деление с остатком полностью: запись и названия, главное правило, формулу и проверку, обратные задачи, столбик, связь с признаками делимости и практические задачи.',
+      'Проверь себя: чему равны частное и остаток при делении 48 на 5? Ответь в тесте и жми «Понял! Проверю себя»!'
+    ],
+    check: { q: 'Чему равны частное и остаток: 48 : 5?', choices: ['9 и 3', '8 и 8', '10 и 2', '9 и 4'], ans: 0,
+      exp: '48 = 9·5 + 3 → частное 9, остаток 3.' },
+    tasks: [
+      { q: 'Какое наименьшее натуральное число при делении на 7 даёт остаток 4?', kind: 'unit', ans: 11, tol: 0,
+        hints: ['7·1 + 4.', '11.'], sol: '11' },
+      { q: 'Может ли остаток при делении на 5 быть равен 5?', kind: 'choice', choices: ['нет', 'да', 'если число большое', 'иногда'], ans: 0, tol: 0,
+        hints: ['Остаток меньше делителя.', 'Остаток всегда меньше 5.'], sol: 'нет' }
+    ]
+  };
+  const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff', candy='#ff8fb0',
+        bg0='#2a1830', bg1='#120b1c', card='rgba(34,22,44,.96)', cardB='#5a4368', lineC='#4a3a5c';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#180f22" stroke-width="3.6">${t}</text>`;
+  const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qJbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <filter id="qJsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qJbg)"/>
+      <g opacity="0.12" stroke="#8a6a9a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#6a5480" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#402f52" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  /* ================= ПРОРИСОВКА: карандаш + линия ================= */
+  const polyLen=(pts)=>{let s=0;for(let i=1;i<pts.length;i++)s+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return Math.max(16,Math.round(s));};
+  const polyD=(pts)=>'M'+pts.map(q=>q[0]+' '+q[1]).join(' L');
+  const drawPoly=(pts,col,dur,beg,w,opt)=>{
+    const o=opt||{}, d=polyD(pts), L=polyLen(pts);
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w||3.4}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.72;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +(o.pen===false?'':`<circle r="${o.r||5.5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.4" opacity=".95">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`)
+      +(o.trace?`<path d="${d}" fill="none" stroke="${col}" stroke-width="${(w||3.4)+3}" opacity=".13" stroke-linecap="round"/>`:'');
+  };
+  const rectPerim=(x,y,w,h,rx)=>{const r=Math.min(rx||8,Math.min(w,h)/2);
+    return `M${x+r} ${y} H${x+w-r} A${r} ${r} 0 0 1 ${x+w} ${y+r} V${y+h-r} A${r} ${r} 0 0 1 ${x+w-r} ${y+h} H${x+r} A${r} ${r} 0 0 1 ${x} ${y+h-r} V${y+r} A${r} ${r} 0 0 1 ${x+r} ${y}`;};
+  const drawRect=(x,y,w,h,rx,col,dur,beg,sw,opt)=>{
+    const o=opt||{}, r=Math.min(rx||8,Math.min(w,h)/2);
+    const L=Math.round(2*(w-2*r)+2*(h-2*r)+2*Math.PI*r);
+    const d=rectPerim(x,y,w,h,rx);
+    return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${sw||2.4}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.6;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +(o.pen===false?'':`<circle r="${o.r||5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.3">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const drawCircle=(cx,cy,r,col,dur,beg,sw,fill)=>{
+    const L=Math.round(2*Math.PI*r);
+    const d=`M${cx} ${cy-r} A${r} ${r} 0 1 1 ${cx-0.01} ${cy-r}`;
+    return `<path d="${d}" fill="${fill||'none'}" stroke="${col}" stroke-width="${sw||2.6}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;.62;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +`<circle r="5" fill="${gold}" stroke="#fffdf2" stroke-width="1.3"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`;
+  };
+  const growRect=(x,y,w,h,rx,fill,stroke,dur,beg)=>{
+    return `<rect x="${x}" y="${y}" width="0" height="${h}" rx="${rx||6}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="1.4">`
+      +`<animate attributeName="width" values="0;${w};${w}" keyTimes="0;.7;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></rect>`;
+  };
+  /* катящееся число: ступенчатая смена значений */
+  const ticker=(x,y,vals,fs,col,dur,opt)=>{
+    const o=opt||{}, n=vals.length, kt=[], vs=[];
+    for(let i=0;i<n;i++){ kt.push((i/n).toFixed(3)); vs.push(i===0?'1':'0'); kt.push(((i+1)/n-0.001).toFixed(3)); vs.push(i===0?'1':'0'); }
+    kt.pop(); vs.pop(); kt.push('1'); vs.push('0');
+    let s2='';
+    vals.forEach((v2,i)=>{
+      const a=(i/n).toFixed(3), b=((i+1)/n-0.002).toFixed(3);
+      s2+=`<text x="${x}" y="${y}" text-anchor="${o.an||'middle'}" font-size="${fs}" font-weight="bold" font-family="'Courier New',monospace" fill="${col}" opacity="0">${v2}`
+        +`<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;${a};${a};${b};1" dur="${dur}s" repeatCount="indefinite"/></text>`;
+    });
+    return s2;
+  };
+  const plate=(x,y,w,h,col,txt,fs)=>`<g class="qJRise"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="rgba(34,22,44,.95)" stroke="${col}" stroke-width="1.9"/>`
+    +fit(x+w/2,y+h*0.66,fs||13,col,txt,{b:1},w-16)+`</g>`;
+  const chip=(t,c,delay)=>`<span class="qJIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const valBox=(cx,cy,t,c,opt)=>{
+    const o=opt||{}, w=(o.w||Math.max(34,(''+t).length*11+16)), h=(o.h||34);
+    return `<g class="qJPop" style="animation-delay:${(o.delay||0).toFixed(2)}s">`
+      +`<rect x="${cx-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="${o.rx||9}" fill="${o.fill||'rgba(24,16,34,.97)'}" stroke="${c}" stroke-width="${o.sw||2}"/>`
+      +tx(cx,cy+h*0.2,o.fs||15,c,t,{b:1,georgia:o.geo!==false})+`</g>`;
+  };
+  /* конфета */
+  const candyDot=(x,y,r,delay,opt)=>{
+    const o=opt||{}, rr=(r||6), col=(o.c||candy);
+    const body=`<circle cx="${x}" cy="${y}" r="${rr}" fill="${col}" stroke="#ffe3ee" stroke-width="1.1"/>`;
+    if(rr<=5) return `<g class="qJPop" style="animation-delay:${(delay||0).toFixed(2)}s">${body}</g>`;
+    return `<g class="qJPop" style="animation-delay:${(delay||0).toFixed(2)}s">${body}`
+      +`<path d="M${x-rr-4} ${y} l4 -4 v8 z" fill="${col}" opacity=".8"/><path d="M${x+rr+4} ${y} l-4 -4 v8 z" fill="${col}" opacity=".8"/></g>`;
+  };
+  const posOf=(i,n,x0,dx,per,y0,dy)=>[x0+(i%per)*dx, y0+Math.floor(i/per)*dy];
+  const W=318;
+  function visW386(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; }
+    const go=st.go||0, sel=(typeof st.pick==='number')?st.pick:-1;
+    let h='', H=250;
+    const TT=(t,c)=>`<g class="qJPop"><rect x="20" y="12" width="278" height="30" rx="9" fill="url(#qJbg)" stroke="${c||cardB}" stroke-width="1.8"/>`
+      +fit(159,32,12.5,c||ink,t,{b:1},256)+`</g>`;
+    /* --- 0: 48 конфет по 5 --- */
+    if(step===0){
+      H=284;
+      let inner=TT('48 конфет раскладываем по 5','gold');
+      for(let b=0;b<9;b++){
+        const bx=20+(b%3)*52, by=54+Math.floor(b/3)*46;
+        inner+=drawRect(bx,by,46,40,8,candy,3.2,0.15*b,2.2,{pen:b===8,r:4});
+        for(let k=0;k<5;k++){
+          const cx=bx+9+(k%3)*14, cy=by+13+Math.floor(k/3)*14;
+          inner+=candyDot(cx,cy,4.4,0.25+b*0.12+k*0.04);
+        }
+      }
+      inner+=`<path d="M196 54 v132" stroke="${cardB}" stroke-width="1.6" stroke-dasharray="6 6"/>`;
+      for(let k=0;k<3;k++) inner+=candyDot(222+k*30,100,7,1.5+k*0.15);
+      inner+=drawCircle(252,100,44,candy,3.4,1.7,2.8);
+      inner+=fit(252,156,12,candy,'эти 3 остались',{b:1},110);
+      inner+=plate(20,196,278,32,go?grn:cardB,go?'9 полных коробочек и 3 конфеты в остатке':'сколько получится коробочек?',12.5);
+      inner+=`${fit(159,248,12,gold,'48 : 5 = 9 (ост. 3)',{b:1,georgia:1},240)}`;
+      inner+=`${fit(159,266,11,dim,'так записывают деление с остатком',{},260)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача про конфеты</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('9 коробочек и 3 конфеты',candy,0.1)):'')+
+        (go?wkNote('48 конфет раскладываем по 5. Получается 9 полных коробочек — это 45 конфет, и ещё 3 конфеты остаются лишними. Записываем коротко: 48 : 5 = 9 (ост. 3).'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('разложить',`visW386Act('${lk}','go')`))+
+        wkSml('первая задача'));
+    /* --- 1: не всегда нацело --- */
+    } else if(step===1){
+      H=266;
+      let inner=TT('не всегда делится нацело','cyan');
+      for(let k=0;k<6;k++) inner+=candyDot(34+k*32,76,8,0.1+k*0.07);
+      inner+=candyDot(226,76,8,0.55);
+      [24,88,152].forEach((bx,k)=>{ inner+=drawRect(bx,54,52,44,10,grn,2.6,0.6+k*0.35,2.2,{pen:k===2,r:4}); });
+      inner+=drawCircle(226,76,16,red,2.8,1.9,2.6);
+      inner+=fit(159,124,12,dim,'три коробочки по 2 — и одна конфета лишняя',{},280);
+      inner+=`<g class="qJRise" style="animation-delay:.4s">`;
+      inner+=valBox(60,166,'7',gold,{w:48,h:38,fs:17});
+      inner+=valBox(112,166,':',dim,{w:30,h:38,fs:17,geo:0});
+      inner+=valBox(164,166,'2',blu,{w:48,h:38,fs:17});
+      inner+=valBox(216,166,'=',dim,{w:30,h:38,fs:17,geo:0});
+      inner+=valBox(268,166,'3',grn,{w:48,h:38,fs:17});
+      inner+=`</g>`;
+      inner+=drawPoly([[300,190],[300,214]],red,2.4,0.9,2,{pen:false});
+      inner+=fit(268,222,11,red,'(ост. 1)',{b:1},90);
+      inner+=plate(20,196,236,34,go?grn:cardB,go?'7 : 2 = 3 (ост. 1)':'как записать результат?',12.5);
+      inner+=`${fit(159,250,11.5,dim,'деление с остатком — это когда часть остаётся',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Когда нацело не делится</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('остаток — это то, что не разделилось',cyan,0.1)):'')+
+        (go?wkNote('7 конфет в коробки по 2: получается 3 полные коробочки (6 конфет) и 1 конфета остаётся. Так и появляется запись с остатком: 7 : 2 = 3 (ост. 1).'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('что такое остаток'));
+    /* --- 2: названия частей --- */
+    } else if(step===2){
+      H=264;
+      let inner=TT('как называются числа','pur');
+      inner+=`<g class="qJRise">`;
+      inner+=valBox(60,64,'48',gold,{w:52,h:42,fs:19});
+      inner+=valBox(110,64,':',dim,{w:30,h:42,fs:18,geo:0});
+      inner+=valBox(158,64,'5',blu,{w:44,h:42,fs:19});
+      inner+=valBox(206,64,'=',dim,{w:30,h:42,fs:18,geo:0});
+      inner+=valBox(254,64,'9',grn,{w:44,h:42,fs:19});
+      inner+=`</g>`;
+      inner+=tx(159,96,14,dim,'(ост. 3)',{b:1});
+      const labs=[{x:60,t:'делимое',c:gold,y:150},{x:158,t:'делитель',c:blu,y:150},{x:254,t:'частное',c:grn,y:150},{x:159,t:'остаток',c:pur,y:198}];
+      labs.forEach((q,k)=>{
+        const from=[q.x,86], to=[q.x,q.y-16];
+        inner+=drawPoly([[q.x,92],[q.x,q.y-18]],q.c,2.2,0.3+k*0.3,1.8,{pen:false});
+        inner+=`<g class="qJPop" style="animation-delay:${(0.5+k*0.3).toFixed(2)}s"><rect x="${q.x-42}" y="${q.y-14}" width="84" height="28" rx="9" fill="rgba(24,16,34,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(q.x,q.y+5,12,q.c,q.t,{b:1},76)+`</g>`;
+      });
+      inner+=drawPoly([[159,100],[159,180]],pur,2.2,1.3,1.8,{pen:false});
+      inner+=plate(20,216,278,34,go?grn:cardB,go?'у каждого числа в записи своё имя':'наведи порядок в названиях',12);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Имена чисел</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('делимое · делитель · частное · остаток',pur,0.1)):'')+
+        (go?wkNote('В записи 48 : 5 = 9 (ост. 3) у каждого числа своё название. 48 — делимое (то, что делим), 5 — делитель (на сколько делим), 9 — неполное частное, 3 — остаток.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('названия чисел'));
+    /* --- 3: главное правило --- */
+    } else if(step===3){
+      H=268;
+      let inner=TT('остаток меньше делителя','red');
+      inner+=drawRect(26,54,132,70,12,grn,3.2,0.2,2.4,{pen:true});
+      for(let k=0;k<5;k++) inner+=candyDot(52+(k%3)*34,74+Math.floor(k/3)*22,7,0.5+k*0.1,{c:grn});
+      inner+=fit(92,142,12,grn,'в коробке 5 — она полная',{b:1},140);
+      inner+=`<g class="qJPop" style="animation-delay:1.1s">`
+        +valBox(228,86,'5',red,{w:56,h:46,fs:20}) +`</g>`;
+      inner+=drawPoly([[204,60],[252,112]],red,2.6,1.3,3,{pen:false});
+      inner+=drawPoly([[252,60],[204,112]],red,2.6,1.3,3,{pen:false});
+      inner+=fit(228,142,12,red,'а шестая конфета',{b:1},140);
+      inner+=fit(228,160,12,red,'сделала бы коробку 6',{},140);
+      inner+=`<g class="qJRise" style="animation-delay:.6s"><rect x="26" y="180" width="266" height="40" rx="11" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.9"/>`
+        +fit(159,206,15,red,'остаток < делителя',{b:1,georgia:1},240)+`</g>`;
+      inner+=drawPoly([[92,212],[226,212]],red,2.6,1.5,2.6,{pen:true});
+      inner+=`${fit(159,240,12,dim,'поэтому при делении на 5 остатки только 0, 1, 2, 3, 4',{},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Главное правило</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('остаток меньше делителя — всегда!',red,0.1)):'')+
+        (go?wkNote('Остаток — это то, что не поместилось. Если бы остаток был равен делителю или больше, мы могли бы положить ещё одну целую коробку. Поэтому остаток всегда меньше делителя.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('объясни',`visW386Act('${lk}','go')`))+
+        wkSml('правило остатка'));
+    /* --- 4: сколько бывает остатков --- */
+    } else if(step===4){
+      H=272;
+      let inner=TT('сколько остатков бывает','cyan');
+      const rows=[{n:2,c:blu,y:64},{n:5,c:gold,y:126},{n:10,c:grn,y:188}];
+      rows.forEach((q,ri)=>{
+        inner+=fit(20,q.y+22,12,q.c,'на '+q.n,{an:'start',b:1},60);
+        for(let k=0;k<q.n;k++){
+          const w=q.n>=10?20:30, gap=q.n>=10?2:5, x=(q.n>=10?78:84)+k*(w+gap);
+          inner+=drawRect(x,q.y,w,w+4,6,q.c,2.4,0.5+ri*0.4+k*0.12,1.8,{pen:false})
+            +`<g class="qJPop" style="animation-delay:${(0.7+ri*0.4+k*0.12).toFixed(2)}s">`
+            +tx(x+w/2,q.y+22,q.n>=10?13:15,q.c,''+k,{b:1})+`</g>`;
+        }
+        inner+=fit(300,q.y+22,10.5,dim,'всего '+q.n,{an:'end'},54);
+      });
+      inner+=plate(20,228,278,32,go?grn:cardB,go?'остатков всегда ровно столько, чему равен делитель':'сколько чисел может стоять после «ост.»?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Какие бывают остатки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('0, 1, …, делитель − 1',cyan,0.1)):'')+
+        (go?wkNote('Остаток может быть нулём или любым числом, меньшим делителя. При делении на 2 остатки 0 и 1, на 5 — целых пять остатков, на 10 — десять. Всегда ровно столько, чему равен делитель.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('таблица остатков'));
+    /* --- 5: формула --- */
+    } else if(step===5){
+      H=266;
+      let inner=TT('делимое = делитель · частное + остаток','gold');
+      inner+=`<g class="qJRise">`;
+      inner+=valBox(52,80,'48',gold,{w:56,h:44,fs:19});
+      inner+=fit(96,88,18,dim,'=',{b:1},24);
+      inner+=valBox(140,80,'5',blu,{w:46,h:44,fs:19});
+      inner+=fit(178,86,18,dim,'·',{b:1},24);
+      inner+=valBox(216,80,'9',grn,{w:46,h:44,fs:19});
+      inner+=fit(252,86,18,dim,'+',{b:1},24);
+      inner+=valBox(282,80,'3',red,{w:46,h:44,fs:19});
+      inner+=`</g>`;
+      inner+=drawPoly([[120,58],[120,106]],dim,2.4,0.4,2,{pen:false});
+      inner+=drawPoly([[140,110],[216,110]],blu,3,0.7,2.4,{pen:true});
+      inner+=drawPoly([[216,110],[282,110]],red,3,1.0,2.4,{pen:true});
+      inner+=fit(178,126,11.5,blu,'делитель умножаем на частное',{b:1},200);
+      inner+=fit(300,126,11.5,red,'и прибавляем остаток',{an:'end',b:1},140);
+      inner+=`<g class="qJRise" style="animation-delay:.8s"><rect x="20" y="146" width="278" height="36" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="171" text-anchor="middle" font-size="16" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">48 = 5 · 9 + 3</text></g>`;
+      inner+=`${fit(159,204,12,ink,'проверим: 5 · 9 = 45, 45 + 3 = 48',{b:1},280)}`;
+      inner+=plate(20,218,278,32,go?grn:cardB,go?'это и есть проверка деления с остатком':'как связаны все четыре числа?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Формула деления</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('делитель · частное + остаток',gold,0.1)):'')+
+        (go?wkNote('Любое деление с остатком можно записать одной формулой: делимое = делитель · частное + остаток. Для нашей задачи: 48 = 5 · 9 + 3. Это же и проверка: умножь делитель на частное и прибавь остаток.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('формула и проверка'));
+    /* --- 6: проверка --- */
+    } else if(step===6){
+      H=272;
+      let inner=TT('проверяем ответ','grn');
+      inner+=`<g class="qJRise">`;
+      inner+=valBox(70,72,'9 · 5',grn,{w:80,h:44,fs:18});
+      inner+=fit(126,80,18,dim,'=',{b:1},24);
+      inner+=valBox(180,72,'45',grn,{w:56,h:44,fs:18});
+      inner+=`</g>`;
+      inner+=drawPoly([[112,100],[112,116],[180,116],[180,100]],cyan,3,0.4,2.4,{pen:true});
+      inner+=fit(146,132,11.5,cyan,'умножили делитель на частное',{b:1},170);
+      inner+=`<g class="qJRise" style="animation-delay:.5s">`;
+      inner+=valBox(190,158,'45 + 3',grn,{w:88,h:42,fs:17});
+      inner+=fit(246,166,18,dim,'=',{b:1},24);
+      inner+=valBox(278,158,'48',gold,{w:44,h:42,fs:17});
+      inner+=`</g>`;
+      inner+=drawCircle(278,158,28,grn,3,1.1,2.8);
+      inner+=plate(20,206,278,32,go?grn:cardB,go?'получилось 48 — значит, решено верно':'что получится, если проверить?',12);
+      inner+=`${fit(159,254,12,gold,'проверка: делитель · частное + остаток',{b:1},296)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверка ответа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('получилось исходное число',grn,0.1)):'')+
+        (go?wkNote('Проверяем так: умножаем делитель 5 на частное 9 — получаем 45, прибавляем остаток 3 — получаем 48. Сошлось с делимым, значит частное и остаток найдены верно.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('проверить',`visW386Act('${lk}','go')`))+
+        wkSml('всегда проверяй'));
+    /* --- 7: наименьшее число по остатку --- */
+    } else if(step===7){
+      H=274;
+      let inner=TT('наименьшее число с остатком 4 при делении на 7','cyan');
+      inner+=drawPoly([[22,110],[296,110]],cardB,2.6,0.2,3,{pen:true});
+      for(let k=0;k<=40;k++){ const x=22+k*6.85;
+        if(k%7===0) inner+=`<line x1="${x}" y1="104" x2="${x}" y2="116" stroke="${dim}" stroke-width="1.4"/>`; }
+      [11,18,25,32].forEach((v2,k)=>{
+        const x=22+(v2/40)*274;
+        inner+=`<g class="qJPop" style="animation-delay:${(0.5+k*0.3).toFixed(2)}s">`
+          +`<circle cx="${x}" cy="110" r="8" fill="${k===0?grn:gold}" stroke="#fffdf2" stroke-width="1.4"/>`
+          +tx(x,134,12,k===0?grn:gold,''+v2,{b:1})+`</g>`;
+        if(k===0) inner+=drawCircle(x,110,17,grn,2.6,0.8,2.4);
+      });
+      inner+=drawPoly([[22,168],[80,168]],gold,2.4,0.9,2.2,{pen:true});
+      inner+=fit(160,152,12,gold,'каждый следующий — на 7 больше',{b:1},240);
+      inner+=`<g class="qJRise" style="animation-delay:1s"><rect x="20" y="180" width="278" height="38" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="205" text-anchor="middle" font-size="16" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">7 · 1 + 4 = 11</text></g>`;
+      inner+=plate(20,228,278,32,go?grn:cardB,go?'наименьшее такое число — 11':'возьми самое маленькое частное',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Число по остатку</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('берём частное 1 и прибавляем остаток',cyan,0.1)):'')+
+        (go?wkNote('Наименьшее число с остатком 4 при делении на 7: берём самое маленькое частное — единицу: 7 · 1 + 4 = 11. Следующие такие числа получаются прибавлением 7: 18, 25, 32 и так далее.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('обратная задача'));
+    /* --- 8: находим делитель --- */
+    } else if(step===8){
+      H=272;
+      let inner=TT('находим делитель','pur');
+      inner+=fit(159,68,15,ink,'47 : ? = 9 (ост. 2)',{b:1,georgia:1},280);
+      inner+=`<g class="qJRise" style="animation-delay:.25s"><rect x="52" y="88" width="214" height="36" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="113" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">(47 − 2) : 9 = 5</text></g>`;
+      inner+=drawPoly([[100,126],[100,146],[218,146],[218,126]],pur,2.8,0.5,2.2,{pen:true});
+      inner+=fit(159,162,11.5,pur,'сначала убираем остаток, потом делим',{b:1},270);
+      inner+=`<g class="qJRise" style="animation-delay:.8s">`;
+      inner+=valBox(88,202,'5 · 9 + 2',blu,{w:112,h:42,fs:15});
+      inner+=fit(160,210,17,dim,'=',{b:1},24);
+      inner+=valBox(228,202,'47',grn,{w:56,h:42,fs:17});
+      inner+=`</g>`;
+      inner+=drawCircle(228,202,32,grn,2.8,1.3,2.6);
+      inner+=plate(20,232,278,28,go?grn:cardB,go?'делитель равен 5 — проверка сходится':'как найти делитель?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Обратная задача: делитель</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('вычти остаток и раздели на частное',pur,0.1)):'')+
+        (go?wkNote('Если неизвестен делитель, сначала убираем остаток из делимого: 47 − 2 = 45. Потом делим на частное: 45 : 9 = 5. Проверяем: 5 · 9 + 2 = 47 — всё верно.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('решить',`visW386Act('${lk}','go')`))+
+        wkSml('ищем делитель'));
+    /* --- 9: столбик --- */
+    } else if(step===9){
+      H=274;
+      let inner=TT('деление с остатком в столбик','gold');
+      inner+=`<g class="qJFloat">`;
+      inner+=tx(66,74,22,ink,'48',{b:1,georgia:0});
+      inner+=tx(196,74,22,ink,'5',{b:1,georgia:0});
+      inner+=`</g>`;
+      inner+=drawPoly([[152,48],[152,180]],gold,3.4,0.2,2.6,{pen:true});
+      inner+=drawPoly([[160,48],[160,180]],gold,2.2,0.35,1.6,{pen:false});
+      inner+=`<g class="qJPop" style="animation-delay:.45s">${tx(232,74,24,grn,'9',{b:1,georgia:0})}</g>`;
+      inner+=`<g class="qJPop" style="animation-delay:.65s">${tx(66,110,24,red,'45',{b:1,georgia:0})}</g>`;
+      inner+=drawPoly([[30,118],[104,118]],ink,2.6,0.9,2.4,{pen:true});
+      inner+=`<g class="qJPop" style="animation-delay:1.1s">${tx(48,108,22,red,'−',{b:1,georgia:0})}</g>`;
+      inner+=`<g class="qJPop" style="animation-delay:1.3s">${tx(66,156,26,cyan,'3',{b:1,georgia:0})}</g>`;
+      inner+=drawCircle(66,148,22,cyan,2.6,1.5,2.8);
+      inner+=`${fit(66,180,10.5,dim,'остаток',{b:1},80)}`;
+      inner+=`${fit(232,110,11,dim,'частное',{b:1},80)}`;
+      inner+=`${fit(232,132,11,grn,'полных: 9',{b:1},90)}`;
+      inner+=plate(20,196,278,30,go?grn:cardB,go?'45 — самое большое число, кратное 5, не большее 48':'подбираем, сколько раз 5 помещается в 48',11.5);
+      inner+=`${fit(159,244,11.5,gold,'45 = 9 · 5, остаток 48 − 45 = 3',{b:1},300)}`;
+      inner+=`${fit(159,264,11,dim,'остаток 3 меньше делителя 5 — правило выполнено',{},302)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Столбиком</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('подбираем → вычитаем → остаток',gold,0.1)):'')+
+        (go?wkNote('В столбик делят так: подбирают самое большое кратное делителя, которое не больше делимого (45 = 9 · 5), вычитают его из делимого (48 − 45 = 3) и получают остаток. Остаток меньше делителя — значит, всё сделано правильно.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('письменное деление'));
+    /* --- 10: остаток на 2 = чётность --- */
+    } else if(step===10){
+      H=256;
+      let inner=TT('остаток при делении на 2','blu');
+      [[348,0,grn,'чётное'],[347,1,red,'нечётное']].forEach((q,k)=>{
+        const y=64+k*78;
+        inner+=fit(20,y+6,13,q[2],''+q[0],{an:'start',b:1},60);
+        for(let i=0;i<6;i++) inner+=candyDot(96+i*26,y,7,0.2+k*0.3+i*0.04,{c:i===5&&q[1]===1?red:q[2]});
+        if(q[1]===1) inner+=drawCircle(226,y,15,red,2.6,0.9+k*0.3,2.4);
+        inner+=fit(268,y+6,12,q[2],'ост. '+q[1],{b:1},80);
+      });
+      inner+=drawPoly([[22,120],[292,120]],cardB,2,0.6,1.6,{pen:false});
+      inner+=plate(20,192,278,32,go?grn:cardB,go?'остаток 0 — чётное, остаток 1 — нечётное':'что показывает остаток?',11.5);
+      inner+=`${fit(159,244,11.5,dim,'поэтому чётность узнают по последней цифре',{},300)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Остаток и чётность</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('ост. 0 → чётное · ост. 1 → нечётное',blu,0.1)):'')+
+        (go?wkNote('При делении на 2 возможны только два остатка. Если остаток 0, число разделилось попарно — оно чётное. Если остаток 1, одна точка осталась без пары — число нечётное.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('связь с чётностью'));
+    /* --- 11: остаток на 10 = последняя цифра --- */
+    } else if(step===11){
+      H=272;
+      let inner=TT('остаток при делении на 10','cyan');
+      [348,470].forEach((q,k)=>{
+        const y=70+k*74, last=q%10;
+        inner+=`<g class="qJRise" style="animation-delay:${(0.15+k*0.3).toFixed(2)}s">`;
+        const s2=''+q;
+        for(let i=0;i<s2.length;i++){
+          inner+=tx(70+i*30,y+7,22,i===s2.length-1?cyan:ink,s2[i],{b:i===s2.length-1,georgia:0});
+        }
+        inner+=`</g>`;
+        inner+=drawCircle(70+(s2.length-1)*30,y,20,cyan,2.6,0.5+k*0.35,2.4);
+        inner+=fit(268,y+7,12,cyan,'ост. '+last,{b:1},80);
+        inner+=fit(160,y+30,11,dim,`${q} = 10 · ${Math.floor(q/10)} + ${last}`,{b:1},240);
+      });
+      inner+=plate(20,204,278,32,go?grn:cardB,go?'остаток — это последняя цифра числа':'какой остаток получится?',11.5);
+      inner+=`${fit(159,254,11.5,dim,'поэтому на 10 делятся числа, оканчивающиеся нулём',{},300)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Остаток и последняя цифра</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('остаток от деления на 10 = последняя цифра',cyan,0.1)):'')+
+        (go?wkNote('Число 348 = 10 · 34 + 8, значит остаток равен 8 — это и есть последняя цифра. У числа 470 остаток 0. Отсюда правило: на 10 делятся только числа, которые оканчиваются нулём.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('остаток и цифра'));
+    }
+    /* --- 12: остаток на 9 = сумма цифр --- */
+    else if(step===12){
+      H=282;
+      let inner=TT('остаток при делении на 9','pur');
+      const ds='348';
+      for(let i=0;i<3;i++){
+        inner+=`<g class="qJPop" style="animation-delay:${(0.1+i*0.12).toFixed(2)}s">`
+          +`<rect x="${96+i*44}" y="52" width="38" height="38" rx="7" fill="rgba(24,16,34,.97)" stroke="${pur}" stroke-width="1.8"/>`
+          +tx(115+i*44,78,20,pur,ds[i],{b:1})+`</g>`;
+        inner+=drawPoly([[115+i*44,96],[136+i*22,118]],cyan,2.2,0.5+i*0.3,1.8,{pen:i===0});
+      }
+      inner+=`<g class="qJRise" style="animation-delay:.9s"><rect x="72" y="120" width="174" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="144" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">3 + 4 + 8 = 15</text></g>`;
+      inner+=`<g class="qJRise" style="animation-delay:1.2s"><rect x="72" y="162" width="174" height="32" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="184" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">15 : 9 = 1 (ост. 6)</text></g>`;
+      inner+=drawPoly([[246,138],[278,138],[278,178]],grn,2.8,1.4,2.2,{pen:true});
+      inner+=drawCircle(159,220,26,grn,2.8,1.6,2.6);
+      inner+=`${fit(159,226,14,grn,'ост. 6',{b:1},80)}`;
+      inner+=plate(20,240,278,28,go?grn:cardB,go?'и 348 : 9 даёт тот же остаток 6':'сложи цифры и раздели на 9',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Остаток и сумма цифр</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('остаток числа = остаток суммы цифр',pur,0.1)):'')+
+        (go?wkNote('Сложим цифры числа 348: 3 + 4 + 8 = 15. Теперь 15 : 9 = 1 (ост. 6). Такой же остаток 6 получится, если разделить на 9 само число: 348 : 9 = 38 (ост. 6). Так работает признак делимости на 9.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('остаток и цифры'));
+    }
+    /* --- 13: сколько коробок нужно --- */
+    else if(step===13){
+      H=270;
+      let inner=TT('сколько коробок нужно купить?','candy');
+      for(let b=0;b<9;b++){
+        const bx=20+(b%3)*52, by=54+Math.floor(b/3)*44;
+        inner+=drawRect(bx,by,46,38,8,candy,2.4,0.12*b,2,{pen:b===8,r:4});
+        for(let k=0;k<5;k++) inner+=candyDot(bx+9+(k%3)*14,by+12+Math.floor(k/3)*13,4,0.3+b*0.1+k*0.03);
+      }
+      inner+=drawRect(176,142,124,44,10,grn,3,1.4,2.6,{pen:true});
+      for(let k=0;k<3;k++) inner+=candyDot(196+k*30,164,6.5,1.7+k*0.15);
+      inner+=fit(238,204,11.5,grn,'10-я коробочка — неполная',{b:1},130);
+      inner+=drawCircle(90,236,26,grn,2.8,1.9,2.6);
+      inner+=`${fit(90,242,15,grn,'10',{b:1,georgia:1},70)}`;
+      inner+=plate(140,220,158,32,go?grn:cardB,go?'нужно 10 коробок, а не 9':'сколько коробок понадобится?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Практическая задача</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('остаток не ноль → нужна ещё коробка',candy,0.1)):'')+
+        (go?wkNote('9 полных коробочек — это 45 конфет, но 3 конфеты остались. Их тоже надо куда-то положить, значит нужна ещё одна коробочка. Всего коробок 10, хотя частное равно 9.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('задача про коробки'));
+    }
+    /* --- 14: сколько добавить --- */
+    else if(step===14){
+      H=266;
+      let inner=TT('сколько конфет добавить до полного?','gold');
+      inner+=drawRect(40,60,120,60,12,gold,3,0.2,2.4,{pen:true});
+      for(let k=0;k<5;k++) inner+=candyDot(64+(k%3)*32,80+Math.floor(k/3)*22,6.5,0.45+k*0.1);
+      inner+=fit(100,138,11.5,gold,'полная коробка — 5 конфет',{b:1},150);
+      inner+=drawRect(190,60,100,60,12,red,3,0.7,2.4,{pen:true});
+      for(let k=0;k<3;k++) inner+=candyDot(214+k*30,90,6.5,1+k*0.12,{c:red});
+      inner+=fit(240,138,11.5,red,'здесь только 3',{b:1},130);
+      for(let k=0;k<2;k++){
+        inner+=`<path d="M228 ${k?36:36} q-40 -24 -80 12" fill="none" stroke="${grn}" stroke-width="2.6" stroke-dasharray="6 5"/>`;
+        inner+=`<circle r="6" fill="${grn}"><animateMotion dur="3.4s" begin="${(1.4+k*0.4).toFixed(2)}s" repeatCount="indefinite" path="M268 40 Q210 8 176 76"/></circle>`;
+      }
+      inner+=fit(272,40,12,grn,'+2',{b:1},54);
+      inner+=`<g class="qJRise" style="animation-delay:1.2s"><rect x="40" y="156" width="250" height="36" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="165" y="181" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">5 − 3 = 2</text></g>`;
+      inner+=plate(20,202,278,32,go?grn:cardB,go?'добавить нужно делитель минус остаток':'сколько конфет доложить?',11.5);
+      inner+=`${fit(159,252,12,dim,'48 + 2 = 50 = 10 · 5 — делится нацело',{b:1},300)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">До полного деления</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('делитель − остаток = сколько добавить',gold,0.1)):'')+
+        (go?wkNote('В неполной коробочке 3 конфеты, а нужно 5. Значит, не хватает 2 конфет: 5 − 3 = 2. После этого станет 50 конфет, и они разложатся ровно в 10 коробок без остатка.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('посчитать',`visW386Act('${lk}','go')`))+
+        wkSml('сколько добавить'));
+    }
+    /* --- 15: дни недели --- */
+    else if(step===15){
+      H=306;
+      let inner=TT('через 100 дней — какой день недели?','blu');
+      const cxx=159, cyy=146, R=58, dn=['пн','вт','ср','чт','пт','сб','вс'], dc=[gold,grn,cyan,red,candy,pur,blu];
+      inner+=drawCircle(cxx,cyy,R,cardB,3.6,0.15,2.6);
+      dn.forEach((t,k)=>{
+        const a=-Math.PI/2+k*2*Math.PI/7;
+        const x=cxx+Math.cos(a)*R, y=cyy+Math.sin(a)*R;
+        inner+=`<g class="qJPop" style="animation-delay:${(0.4+k*0.1).toFixed(2)}s">`
+          +`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="15" fill="rgba(24,16,34,.97)" stroke="${dc[k]}" stroke-width="1.9"/>`
+          +tx(x,y+5,12,dc[k],t,{b:1})+`</g>`;
+      });
+      inner+=drawPoly([[159,38],[159,58]],grn,2.6,0.9,2.4,{pen:true});
+      inner+=`<circle r="7" fill="${grn}" stroke="#fffdf2" stroke-width="1.4"><animateMotion dur="6s" repeatCount="indefinite" path="${(()=>{let d='';for(let k=0;k<=14;k++){const a=-Math.PI/2+k*2*Math.PI/7;d+=(k?' L':'M')+(cxx+Math.cos(a)*R).toFixed(1)+' '+(cyy+Math.sin(a)*R).toFixed(1);}return d;})()}"/></circle>`;
+      inner+=`<g class="qJRise" style="animation-delay:1.1s"><rect x="20" y="222" width="278" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="246" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">100 : 7 = 14 (ост. 2)</text></g>`;
+      inner+=plate(20,262,278,28,go?grn:cardB,go?'вторник + 2 дня = четверг':'сколько дней сверх целых недель?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача про день недели</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('недели повторяются — смотрим остаток',blu,0.1)):'')+
+        (go?wkNote('В неделе 7 дней, поэтому делим 100 на 7: 100 : 7 = 14 (ост. 2). Четырнадцать недель ничего не меняют, а два дня сдвигают вперёд. Если сегодня вторник, то через 100 дней будет четверг.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('остаток и циклы'));
+    }
+    /* --- 16: все числа с данным остатком --- */
+    else if(step===16){
+      H=262;
+      let inner=TT('все числа с остатком 4 при делении на 7','gold');
+      inner+=drawPoly([[22,96],[296,96]],cardB,2.6,0.2,3,{pen:true});
+      [11,18,25,32,39,46,53,60,67,74,81,88,95].forEach((v2,k)=>{
+        const x=22+(v2/100)*274, big=(v2===11||v2===95);
+        inner+=`<g class="qJPop" style="animation-delay:${(0.4+k*0.12).toFixed(2)}s">`
+          +`<circle cx="${x}" cy="96" r="${big?7:4.5}" fill="${big?grn:gold}" stroke="#fffdf2" stroke-width="1.2"/></g>`;
+        if(big) inner+=drawCircle(x,96,16,grn,2.4,0.9+k*0.05,2.2);
+      });
+      inner+=tx(40,126,12,grn,'11',{b:1}); inner+=tx(282,126,12,grn,'95',{b:1});
+      inner+=drawPoly([[56,70],[126,70]],gold,2.4,1.1,2.2,{pen:true});
+      inner+=fit(96,62,11,gold,'+7',{b:1},40);
+      inner+=plate(20,140,278,32,go?grn:cardB,go?'наименьшее 11, наибольшее двузначное 95':'найди первое и последнее',11.5);
+      inner+=`${fit(159,196,12,ink,'каждое следующее число на 7 больше',{b:1},290)}`;
+      inner+=`${fit(159,222,12,dim,'11, 18, 25, 32, … , 95',{b:1},290)}`;
+      inner+=`${fit(159,244,11.5,gold,'7 · 1 + 4 = 11     7 · 13 + 4 = 95',{b:1},300)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Все числа с остатком</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('одно и то же число повторяется через 7',gold,0.1)):'')+
+        (go?wkNote('Числа с остатком 4 при делении на 7 идут через каждые 7: 11, 18, 25, 32 и так далее. Наименьшее такое число 11 = 7 · 1 + 4, а наибольшее двузначное 95 = 7 · 13 + 4.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('наименьшее и наибольшее'));
+    }
+    /* --- 17: остаток как позиция в круге --- */
+    else if(step===17){
+      H=276;
+      let inner=TT('остаток — это позиция в круге','cyan');
+      const cx2=159, cy2=130, R2=62;
+      inner+=drawCircle(cx2,cy2,R2,cardB,3.4,0.15,2.4);
+      for(let k=0;k<12;k++){
+        const a=-Math.PI/2+k*2*Math.PI/12;
+        const x=cx2+Math.cos(a)*R2, y=cy2+Math.sin(a)*R2;
+        inner+=`<g class="qJPop" style="animation-delay:${(0.35+k*0.06).toFixed(2)}s">`
+          +`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="${k===3?grn:'rgba(24,16,34,.97)'}" stroke="${k===3?grn:cardB}" stroke-width="2"/>`
+          +tx(x,y-10,10,k===3?grn:dim,''+k,{b:k===3})+`</g>`;
+      }
+      inner+=drawPoly([[cx2,cy2-6],[cx2+30,cy2+10],[cx2+22,cy2+34],[cx2-8,cy2+38],[cx2-26,cy2+18],[cx2-10,cy2+2]],gold,5,1,2.6,{pen:true});
+      inner+=drawCircle(cx2+Math.cos(-Math.PI/2+3*2*Math.PI/12)*R2,cy2+Math.sin(-Math.PI/2+3*2*Math.PI/12)*R2,14,grn,2.4,1.6,2.6);
+      inner+=plate(20,204,278,32,go?grn:cardB,go?'48-й шаг остановится на точке 3':'считаем по 5 по кругу',11.5);
+      inner+=`${fit(159,256,12,ink,'48 : 5 = 9 (ост. 3) — девять полных кругов и 3 шага',{b:1},300)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Остаток и круг</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('остаток показывает, где мы остановились',cyan,0.1)):'')+
+        (go?wkNote('Остаток — это как позиция при счёте по кругу. Если шагать по 5 точек из 12, то 48-й шаг придётся на точку 3: полных кругов 9, и остаётся 3 шага. Так остаток помогает в задачах про циклы.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('остаток и циклы'));
+    }
+    /* --- 18: тренажёр 1 --- */
+    else if(step===18){
+      H=282;
+      const opts=['9 (ост. 2)','8 (ост. 7)','9 (ост. 5)'], ok=0, done=(sel>=0);
+      let inner=TT('47 : 5 = ?','gold');
+      inner+=`<g class="qJRise">`;
+      inner+=valBox(90,74,'47',gold,{w:56,h:42,fs:18});
+      inner+=valBox(150,74,':',dim,{w:30,h:42,fs:17,geo:0});
+      inner+=valBox(210,74,'5',blu,{w:48,h:42,fs:18});
+      inner+=`</g>`;
+      inner+=drawCircle(90,74,34,gold,2.6,0.5,2.4);
+      opts.forEach((t,k)=>{
+        const y=118+k*40, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW386Pick('${lk}',${k})">`
+          +`<rect x="30" y="${y}" width="258" height="34" rx="10" fill="${on?'rgba(19,44,35,.97)':(bad?'rgba(52,22,26,.97)':'rgba(24,16,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(140,y+22,14,on?grn:(bad?red:ink),t,{b:on},200)
+          +(on?`<path d="M258 ${y+10} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(20,240,278,28,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! 47 = 5 · 9 + 2':'Помни: остаток меньше 5'):'нажми на верный ответ',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: найди ответ</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW386Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('47 : 5 = 9 (ост. 2): 5 · 9 = 45, а 47 − 45 = 2. Остаток 2 меньше делителя 5 — значит, ответ верный.'):'')+
+        wkSml('проверь себя'));
+    }
+    /* --- 19: тренажёр 2 --- */
+    else if(step===19){
+      H=256;
+      const opts=['нет, не может','да, может'], ok=0, done=(sel>=0);
+      let inner=TT('может ли остаток при делении на 5 быть равен 5?','red');
+      inner+=`<g class="qJRise">`;
+      inner+=valBox(120,80,'ост. 5',red,{w:96,h:44,fs:16});
+      inner+=valBox(246,80,'?',cardB,{w:44,h:44,fs:20,geo:0});
+      inner+=`</g>`;
+      inner+=drawPoly([[212,68],[196,92]],red,2.4,0.7,2.6,{pen:false});
+      opts.forEach((t,k)=>{
+        const x=34+k*134, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW386Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="128" width="116" height="44" rx="11" fill="${on?'rgba(19,44,35,.97)':(bad?'rgba(52,22,26,.97)':'rgba(24,16,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(x+58,156,14,c,t,{b:on},104)+(on?`<path d="M${x+92} 138 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(20,186,278,32,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно: остаток всегда меньше делителя':'Посмотри правило: остаток < делителя'):'выбери ответ',11.5);
+      inner+=`${fit(159,238,12,gold,'если было бы 5, получилась бы целая коробка',{b:1},300)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: правило остатка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW386Act('${lk}','rst')`):'')+
+        (done?wkNote('Остаток при делении на 5 может быть только 0, 1, 2, 3 или 4. Число 5 уже само делится на 5, поэтому остатком быть не может — иначе мы просто взяли бы ещё одну целую коробку.'):'')+
+        wkSml('проверь себя'));
+    }
+    /* --- 20: частые ошибки --- */
+    else if(step===20){
+      H=268;
+      const it=[
+        {t:'остаток больше делителя',f:'остаток всегда меньше делителя',c:red},
+        {t:'перепутаны частное и остаток',f:'9 (ост. 3): 9 — частное, 3 — остаток',c:gold},
+        {t:'не сделана проверка',f:'делитель · частное + остаток = делимое',c:cyan},
+        {t:'забыли про лишнюю коробку',f:'остаток не ноль → нужна ещё одна',c:candy}
+      ];
+      let inner='';
+      it.forEach((q,k)=>{
+        const y=16+k*54;
+        inner+=`<g class="qJRise" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s" filter="url(#qJsh)">`
+          +`<rect x="14" y="${y}" width="290" height="46" rx="11" fill="url(#qJbg)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#1c1026">!</text>`
+          +fit(60,y+20,Math.min(11.5,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+40,Math.min(11,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},184)+`</g>`;
+      });
+      inner+=`${tx(159,250,11.5,dim,'проверяй себя этими правилами',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Частые ошибки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('правило, проверка, лишняя коробка',grn,0.1)):'')+
+        (go?wkNote('Четыре ошибки встречаются чаще всего: остаток больше делителя, перепутанные частное и остаток, забытая проверка и забытая лишняя коробка, когда остаток не равен нулю.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('чтобы не ошибаться'));
+    }
+    /* --- 21: шпаргалка --- */
+    else if(step===21){
+      H=276;
+      const rows=[
+        {t:'делимое = делитель · частное + остаток',c:gold},
+        {t:'остаток всегда меньше делителя',c:red},
+        {t:'проверка: делитель · частное + остаток',c:cyan},
+        {t:'остаток не ноль → нужна ещё одна коробка',c:candy},
+        {t:'остаток на 10 — последняя цифра',c:blu}
+      ];
+      let inner='';
+      rows.forEach((q,k)=>{
+        const y=16+k*44;
+        inner+=`<g class="qJRise" style="animation-delay:${(0.12+k*0.14).toFixed(2)}s">`
+          +`<rect x="18" y="${y}" width="282" height="34" rx="9" fill="rgba(24,16,34,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+22,12,q.c,q.t,{b:1},262)+`</g>`;
+        inner+=drawPoly([[40,y+38],[278,y+38]],q.c,2.6,0.2+k*0.14,2,{pen:k===0});
+      });
+      inner+=plate(18,238,282,26,go?grn:cardB,go?'эти пять строк — вся тема':'всё главное вместе',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('формула · правило · проверка',gold,0.1)):'')+
+        (go?wkNote('Вся тема в пяти строках: формула деления, правило про остаток, проверка умножением и два практических вывода — про лишнюю коробку и про последнюю цифру.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('всё главное'));
+    }
+    /* --- 22: карта темы --- */
+    else if(step===22){
+      H=280;
+      const nodes=[
+        {x:159,y:44,t:'запись',c:cyan},{x:62,y:118,t:'правило',c:red},{x:256,y:118,t:'формула',c:gold},
+        {x:62,y:200,t:'проверка',c:grn},{x:256,y:200,t:'задачи',c:candy}
+      ];
+      const ed=[[0,1],[0,2],[1,3],[2,4],[3,4],[2,3]];
+      let inner=TT('вся тема на одной карте','pur');
+      ed.forEach((e,k)=>{
+        const a=nodes[e[0]], b=nodes[e[1]];
+        inner+=drawPoly([[a.x,a.y],[b.x,b.y]],lineC,1.6,0.1+k*0.12,2.4,{pen:false});
+      });
+      nodes.forEach((n,k)=>{
+        inner+=`<g class="qJPop" style="animation-delay:${(0.3+k*0.14).toFixed(2)}s">`
+          +`<rect x="${n.x-46}" y="${n.y-16}" width="92" height="32" rx="10" fill="rgba(24,16,34,.97)" stroke="${n.c}" stroke-width="1.9"/>`
+          +fit(n.x,n.y+5,12,n.c,n.t,{b:1},84)+`</g>`;
+      });
+      inner+=drawPoly([[159,60],[62,102],[62,184],[256,184],[256,102],[159,60]],pur,6,0.9,2.2,{pen:true});
+      inner+=plate(20,240,278,26,go?grn:cardB,go?'всё связано в одну картину':'как устроена тема',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Карта темы</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('запись → правило → формула → проверка',pur,0.1)):'')+
+        (go?wkNote('Смотри, как связана тема: запись деления даёт главное правило про остаток, из правила получается формула и проверка, а из них — практические задачи про коробки и циклы.'):'')+
+        wkRow(go?wkBtn('сброс',`visW386Act('${lk}','rst')`):wkBtn('показать',`visW386Act('${lk}','go')`))+
+        wkSml('всё вместе'));
+    }
+    /* --- 23: итог --- */
+    else {
+      H=254;
+      let inner='';
+      inner+=drawCircle(159,96,52,grn,4,0.2,2.6);
+      inner+=`<g class="qJPop" style="animation-delay:.7s">`
+        +`<text x="159" y="90" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="${ink}">48 : 5</text>`
+        +`<text x="159" y="118" text-anchor="middle" font-size="19" font-family="Georgia,serif" font-weight="bold" fill="${grn}">9 (ост. 3)</text></g>`;
+      inner+=`${fit(159,170,12.5,ink,'проверка: 5 · 9 + 3 = 48',{b:1},280)}`;
+      inner+=drawPoly([[86,146],[232,146]],gold,2.6,1,2.2,{pen:true});
+      inner+=`<g class="qJRise" style="animation-delay:1.2s"><rect x="20" y="184" width="278" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,206,12,gold,'жми «Понял! Проверю себя» →',{b:1},250)+`</g>`;
+      inner+=`${fit(159,240,11.5,dim,'ты разобрал деление с остатком от задачи до проверки',{},300)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Итог урока</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkNote('Запомни главное: делимое = делитель · частное + остаток, остаток всегда меньше делителя, а проверка умножением спасает от ошибок.' )+
+        wkRow(wkBtn('в начало',`visW386Act('${lk}','rst')`))+
+        wkSml('деление с остатком'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[386]=visW386;
+  window.visW386Pick=function(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); };
+  window.visW386Act=function(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go'){ st.go=st.go?0:1; }
+    if(act==='rst'){ CHS[lk]={_at:st._at}; }
+    chRender(0);
+  };
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===386){ window.ARH_LESSONS[i]=L386; break; } } })();
+})();
 /* ================= УРОК 171 · Свойства сложения: считаем удобно (v2 · «Сокровищница Архимеда», 14 слайдов, флагман) ================= */
 (function(){
   if(!window.__wk171v2css){
