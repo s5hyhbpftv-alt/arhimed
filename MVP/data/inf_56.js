@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 30 уроков (id 500–529) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 31 урока (id 500–530) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -6850,6 +6850,484 @@
       s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
       return s;
     }
+    if(K==='robotintro'){ /* что такое робот */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'робот: датчики, «мозг» и моторы',{b:1},262)+`</g>`;
+      s+=`<rect x="112" y="58" width="94" height="70" rx="12" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`;
+      s+=`<circle cx="140" cy="86" r="9" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`<circle cx="178" cy="86" r="9" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`<rect x="140" y="104" width="38" height="10" rx="5" fill="rgba(127,214,255,.4)"/>`;
+      s+=`<path d="M159 58 v-10 M147 47 h24" stroke="${cyan}" stroke-width="2.2"/><circle cx="159" cy="44" r="5" fill="${red}"/>`;
+      s+=`<path d="M112 82 h-24" stroke="${gold}" stroke-width="2.4" stroke-dasharray="6 4"/>`;
+      s+=`<path d="M206 82 h24" stroke="${grn}" stroke-width="2.4" stroke-dasharray="6 4"/>`;
+      s+=fit(80,70,10.5,gold,'датчик',{b:1},62);
+      s+=fit(238,70,10.5,grn,'мотор',{b:1},62);
+      s+=`<circle cx="126" cy="142" r="14" fill="rgba(255,255,255,.05)" stroke="${pur}" stroke-width="2"/><circle cx="192" cy="142" r="14" fill="rgba(255,255,255,.05)" stroke="${pur}" stroke-width="2"/>`;
+      s+=`<g><animateTransform attributeName="transform" type="rotate" values="0 126 142;360 126 142" dur="3s" repeatCount="indefinite"/><path d="M126 130 v24 M114 142 h24" stroke="${pur}" stroke-width="2"/></g>`;
+      s+=`<g><animateTransform attributeName="transform" type="rotate" values="0 192 142;360 192 142" dur="3s" repeatCount="indefinite"/><path d="M192 130 v24 M180 142 h24" stroke="${pur}" stroke-width="2"/></g>`;
+      s+=fit(159,176,10.5,pur,'колёса',{b:1},70);
+      s+=fit(159,200,11.5,ink,'внутри — программа, которая решает',{b:1},292);
+      s+=plate2(18,214,282,32,go?grn:cardB,go?'робот чувствует, думает и двигается':'из чего состоит робот?',11,pre);
+      s+=`${fit(159,270,11,dim,'робот не думает сам — он выполняет правила',{},292)}`;
+      return s;
+    }
+    if(K==='robotparts'){ /* три части по кругу */
+      const it=[{t:'датчики',d:'получают данные',c:gold},{t:'контроллер',d:'принимает решение',c:cyan},{t:'моторы',d:'двигают робота',c:grn}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'робот работает по кругу',{b:1},262)+`</g>`;
+      it.forEach((q,k)=>{
+        const x=22+k*94, y=56;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="88" height="72" rx="11" fill="rgba(12,32,34,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(x+44,y+28,12,q.c,q.t,{b:1},80)
+          +fit(x+44,y+48,9.5,dim,q.d,{},80)
+          +`<circle cx="${x+44}" cy="${y+62}" r="6" fill="${q.c}" opacity=".55"/></g>`;
+        if(k<2) s+=`<path d="M${x+90} ${y+36} h4" stroke="${gold}" stroke-width="2.4"/><path d="M${x+88} ${y+31} l6 5 l-6 5" fill="none" stroke="${gold}" stroke-width="2.2"/>`;
+      });
+      s+=`<path d="M254 132 q14 34 -92 0" fill="none" stroke="${gold}" stroke-width="2.2" stroke-dasharray="7 5"/>`;
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M68 132 q96 34 186 0"/></circle>`;
+      s+=`${fit(159,152,10.5,gold,'и так по кругу много раз в секунду',{b:1},260)}`;
+      s+=fit(159,182,11.5,ink,'датчик → решение → движение → снова датчик',{b:1},292);
+      s+=plate2(18,198,282,32,go?grn:cardB,go?'это и есть цикл управления робота':'какой порядок шагов?',11,pre);
+      s+=`${fit(159,254,11,dim,'без датчиков робот слепой, без моторов — неподвижный',{},296)}`;
+      return s;
+    }
+    if(K==='robotsensors'){ /* виды датчиков */
+      const it=[['расстояния','ультразвук','dist',cyan],['света','яркость','light',gold],['касания','кнопка','touch',red],
+                ['цвета','оттенок','color',grn],['температуры','градусы','temp',pur],['звука','громкость','sound',blu]];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'датчики рассказывают роботу о мире',{b:1},266)+`</g>`;
+      it.forEach((q,k)=>{
+        const x=22+(k%3)*94, y=52+Math.floor(k/3)*92, cx=x+44, cy=y+36;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.12).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="88" height="82" rx="11" fill="rgba(12,32,34,.97)" stroke="${q[3]}" stroke-width="1.7"/>`;
+        if(q[2]==='dist') s+=`<circle cx="${cx-9}" cy="${cy}" r="5" fill="${q[3]}"/><circle cx="${cx+9}" cy="${cy}" r="5" fill="none" stroke="${q[3]}" stroke-width="1.6"/><path d="M${cx+18} ${cy-8} q8 8 0 16" fill="none" stroke="${q[3]}" stroke-width="1.6"/>`;
+        else if(q[2]==='light') s+=`<circle cx="${cx}" cy="${cy}" r="10" fill="none" stroke="${q[3]}" stroke-width="1.8"/><path d="M${cx-16} ${cy} h-6 M${cx+16} ${cy} h6 M${cx} ${cy-16} v-6 M${cx} ${cy+16} v6" stroke="${q[3]}" stroke-width="1.6"/>`;
+        else if(q[2]==='touch') s+=`<rect x="${cx-12}" y="${cy-8}" width="24" height="16" rx="4" fill="none" stroke="${q[3]}" stroke-width="1.7"/><path d="M${cx} ${cy-8} v-10" stroke="${q[3]}" stroke-width="1.8"/>`;
+        else if(q[2]==='color') s+=`<circle cx="${cx}" cy="${cy}" r="10" fill="${grn}" fill-opacity=".4" stroke="${q[3]}" stroke-width="1.7"/><path d="M${cx+12} ${cy+8} l8 8" stroke="${q[3]}" stroke-width="1.6"/>`;
+        else if(q[2]==='temp') s+=`<rect x="${cx-3}" y="${cy-12}" width="6" height="20" rx="3" fill="rgba(176,127,255,.4)" stroke="${q[3]}" stroke-width="1.4"/><circle cx="${cx}" cy="${cy+12}" r="6" fill="rgba(176,127,255,.4)" stroke="${q[3]}" stroke-width="1.4"/>`;
+        else s+=`<rect x="${cx-8}" y="${cy-10}" width="16" height="20" rx="6" fill="none" stroke="${q[3]}" stroke-width="1.7"/><path d="M${cx+12} ${cy-4} q6 4 0 8 M${cx+16} ${cy-8} q10 8 0 16" fill="none" stroke="${q[3]}" stroke-width="1.4"/>`;
+        s+=fit(cx,y+66,10,q[3],q[0],{b:1},82)+fit(cx,y+78,9,dim,q[1],{},82)+`</g>`;
+      });
+      s+=plate2(22,240,274,30,go?grn:cardB,go?'каждый датчик измеряет своё':'что измеряют датчики?',11,pre);
+      return s;
+    }
+    if(K==='robotlook'){ /* эхолокация */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'как датчик измеряет расстояние',{b:1},262)+`</g>`;
+      s+=`<rect x="32" y="150" width="60" height="50" rx="9" fill="rgba(127,214,255,.18)" stroke="${cyan}" stroke-width="2"/>`;
+      s+=fit(62,180,10.5,cyan,'робот',{b:1},54);
+      s+=`<path d="M92 172 h150" stroke="${cardB}" stroke-width="2" stroke-dasharray="6 5"/>`;
+      s+=`<rect x="242" y="130" width="34" height="90" rx="6" fill="rgba(255,120,100,.18)" stroke="${red}" stroke-width="2"/>`;
+      s+=fit(259,236,10.5,red,'стена',{b:1},50);
+      for(let k=0;k<3;k++){
+        s+=`<path d="M96 ${158+k*16} q70 ${-8-k*6} 142 0" fill="none" stroke="${gold}" stroke-width="2.2" opacity="0">`
+          +`<animate attributeName="opacity" values="0;.9;0" dur="2.4s" begin="${(k*0.5).toFixed(1)}s" repeatCount="indefinite"/></path>`;
+      }
+      s+=`<circle r="7" fill="${gold}"><animateMotion dur="2.4s" repeatCount="indefinite" path="M96 172 L240 172"/></circle>`;
+      s+=`<circle r="7" fill="${cyan}"><animateMotion dur="2.4s" begin="0.9s" repeatCount="indefinite" path="M240 172 L96 172"/></circle>`;
+      s+=fit(166,146,10.5,gold,'звук туда',{b:1},90);
+      s+=fit(166,200,10.5,cyan,'эхо обратно',{b:1},90);
+      s+=fit(159,258,11.5,ink,'по времени возврата эха робот считает расстояние',{b:1},292);
+      s+=plate2(24,272,270,30,go?grn:cardB,go?'быстрее вернулось — ближе препятствие':'что измеряет датчик?',11,pre);
+      return s;
+    }
+    if(K==='robotvalues'){ /* датчик выдаёт числа */
+      const vals=[12,25,40,68];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'датчик отдаёт числа: сантиметры',{b:1},266)+`</g>`;
+      vals.forEach((q,k)=>{
+        const y=56+k*44;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="258" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`
+          +fit(72,y+22,11,ink,'расстояние',{b:1},96)
+          +growBar(140,y+12,110*(1-q/80),10,(q<20?red:(q<40?gold:grn)),1.2,0.4+k*0.2,0)
+          +fit(268,y+22,11,(q<20?red:(q<40?gold:grn)),q+' см',{b:1},54)+`</g>`;
+      });
+      s+=fit(159,246,11.5,ink,'маленькое число — близко, большое — далеко',{b:1},292);
+      s+=plate2(30,260,258,30,go?grn:cardB,go?'программа сравнивает число с порогом':'как робот понимает расстояние?',11,pre);
+      return s;
+    }
+    if(K==='robotfeedback'){ /* обратная связь */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'обратная связь: измерил, сравнил, сделал',{b:1},268)+`</g>`;
+      const st2=[{t:'измерил датчиком',c:gold},{t:'сравнил с порогом',c:cyan},{t:'выполнил действие',c:grn},{t:'снова измерил',c:pur}];
+      st2.forEach((q,k)=>{
+        const x=40+k*66;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="${x}" y="58" width="58" height="58" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +tx(x+29,86,14,q.c,''.concat(k+1),{b:1})
+          +fit(x+29,106,8.5,dim,q.t,{},56)+`</g>`;
+        if(k<3) s+=`<path d="M${x+60} 87 h26" stroke="${cardB}" stroke-width="1.8" stroke-dasharray="4 4"/>`;
+      });
+      s+=`<path d="M276 126 q22 44 -160 0" fill="none" stroke="${gold}" stroke-width="2.2" stroke-dasharray="7 5"/>`;
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3s" repeatCount="indefinite" path="M276 126 q22 44 -160 0"/></circle>`;
+      s+=`<path d="M69 126 q22 44 160 0" fill="none" stroke="${cyan}" stroke-width="2" stroke-dasharray="7 5"/>`;
+      s+=`<circle r="5" fill="${cyan}"><animateMotion dur="3s" begin="1.5s" repeatCount="indefinite" path="M69 126 q22 44 160 0"/></circle>`;
+      s+=fit(159,168,11.5,ink,'робот всё время «слушает» датчики и подправляет себя',{b:1},292);
+      s+=plate2(18,184,282,32,go?grn:cardB,go?'это называется обратной связью':'зачем повторять измерение?',11,pre);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="222" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,245,11.5,gold,'например: ехать ровно по линии',{b:1},230)+`</g>`;
+      return s;
+    }
+    if(K==='robotalgo'){ /* алгоритм робота */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'программа робота — это правила',{b:1},262)+`</g>`;
+      const rows=[{t:'если препятствие близко — повернуть',c:red},
+                  {t:'если путь свободен — ехать вперёд',c:grn},
+                  {t:'если касание — отъехать назад',c:gold}];
+      rows.forEach((q,k)=>{
+        const y=56+k*46;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="36" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+24,11.5,q.c,q.t,{b:1},250)+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.85s"><rect x="24" y="200" width="270" height="40" rx="10" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.7"/>`
+        +fit(159,216,11,cyan,'повторяй всегда:',{b:1},240)
+        +fit(159,232,10.5,dim,'читай датчики → выбирай правило → двигайся',{},240)+`</g>`;
+      s+=plate2(24,250,270,30,go?grn:cardB,go?'так робот и «думает»':'как робот принимает решение?',11,pre);
+      s+=`${fit(159,300,11,dim,'чем точнее правила, тем умнее робот',{},292)}`;
+      return s;
+    }
+    if(K==='robotmotors'){ /* моторы и колёса */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'два мотора — два колеса',{b:1},262)+`</g>`;
+      s+=`<rect x="106" y="70" width="106" height="70" rx="12" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="1.8"/>`;
+      s+=fit(159,110,11.5,ink,'корпус',{b:1},90);
+      [[94,'левое',cyan],[224,'правое',gold]].forEach((q,k)=>{
+        const cx=q[0];
+        s+=`<circle cx="${cx}" cy="104" r="26" fill="rgba(255,255,255,.05)" stroke="${q[2]}" stroke-width="2.4"/>`;
+        s+=`<g><animateTransform attributeName="transform" type="rotate" values="0 ${cx} 104;360 ${cx} 104" dur="${k?2.4:1.6}s" repeatCount="indefinite"/>`
+          +`<path d="M${cx} 84 v40 M${cx-20} 104 h40" stroke="${q[2]}" stroke-width="2.2"/></g>`;
+        s+=fit(cx,152,10.5,q[2],q[1],{b:1},70);
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="40" y="172" width="238" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,195,11,cyan,'оба колеса крутятся одинаково → едем прямо',{b:1},226)+`</g>`;
+      s+=plate2(40,208,238,32,go?grn:cardB,go?'разная скорость колёс — поворот':'как робот поворачивает?',11,pre);
+      s+=`${fit(159,264,11,dim,'левое быстрее — поворот направо, и наоборот',{},296)}`;
+      return s;
+    }
+    if(K==='robotdrive'){ /* движемся и поворачиваем */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'движение и поворот',{b:1},262)+`</g>`;
+      const W=270, x0=30, y0=200;
+      s+=drawPoly([[x0,y0],[x0+W,y0]],cardB,1.8,0.2,2,{pen:false,keep:true});
+      const tr=[[1,0],[0.8,-0.35],[0.6,-0.6],[0.3,-0.75],[0,-0.8],[-0.3,-0.75],[-0.6,-0.6],[-0.8,-0.35],[-1,0]];
+      let d='M'+(x0+40)+' '+y0;
+      tr.forEach((v,k)=>{ d+=' L'+(x0+40+k*20)+' '+(y0+v*70); });
+      s+=`<path d="${d}" fill="none" stroke="${cyan}" stroke-width="2.4" stroke-dasharray="7 5"/>`;
+      s+=`<circle r="12" fill="rgba(125,224,160,.4)" stroke="${grn}" stroke-width="2"><animateMotion dur="5s" repeatCount="indefinite" path="${d}"/></circle>`;
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="5s" repeatCount="indefinite" path="M${x0+40} ${y0} L${x0+220} ${y0}"/></circle>`;
+      s+=fit(74,224,10.5,dim,'едем прямо',{b:1},84);
+      s+=fit(230,150,10.5,cyan,'поворот',{b:1},60);
+      s+=fit(159,252,11.5,ink,'сначала прямо, потом колесо медленнее — и поворот',{b:1},292);
+      s+=plate2(30,266,258,30,go?grn:cardB,go?'движение робота — это последовательность шагов':'что видно на схеме?',11,pre);
+      return s;
+    }
+    if(K==='robotobstacle'){ /* объезжаем препятствие */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'робот объезжает препятствие сам',{b:1},262)+`</g>`;
+      s+=`<rect x="30" y="52" width="258" height="180" rx="10" fill="rgba(255,255,255,.03)" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=`<rect x="176" y="96" width="42" height="70" rx="6" fill="rgba(255,120,100,.2)" stroke="${red}" stroke-width="2"/>`;
+      s+=fit(197,182,10.5,red,'препятствие',{b:1},76);
+      s+=`<path d="M56 214 L56 130 Q56 108 84 108 L168 108" fill="none" stroke="${cyan}" stroke-width="2.2" stroke-dasharray="7 5"/>`;
+      s+=`<path d="M168 108 Q196 108 196 84" fill="none" stroke="${gold}" stroke-width="2.2" stroke-dasharray="7 5"/>`;
+      s+=`<path d="M226 84 L250 84" fill="none" stroke="${grn}" stroke-width="2.2" stroke-dasharray="7 5"/>`;
+      s+=`<circle r="13" fill="rgba(127,214,255,.4)" stroke="${cyan}" stroke-width="2"><animateMotion dur="6s" repeatCount="indefinite" path="M56 214 L56 130 Q56 108 84 108 L168 108"/></circle>`;
+      s+=`<circle r="9" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="1.8"><animateMotion dur="6s" begin="1s" repeatCount="indefinite" path="M96 130 q0 -14 22 -14 h92"/></circle>`;
+      s+=fit(120,100,10,gold,'поворот',{b:1},60);
+      s+=fit(159,246,11.5,ink,'датчик увидел стену → робот повернул',{b:1},292);
+      s+=plate2(30,260,258,30,go?grn:cardB,go?'правило: близко препятствие — повернуть':'кто сказал роботу повернуть?',11,pre);
+      return s;
+    }
+    if(K==='robotthreshold'){ /* порог */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'порог: граница между «близко» и «далеко»',{b:1},272)+`</g>`;
+      s+=drawPoly([[40,140],[288,140]],cardB,2,0.2,2.2,{pen:false,keep:true});
+      s+=`<line x1="164" y1="70" x2="164" y2="210" stroke="${gold}" stroke-width="2.6" stroke-dasharray="7 5"/>`;
+      s+=fit(164,62,11,gold,'порог 20 см',{b:1},110);
+      s+=`<rect x="42" y="150" width="118" height="34" rx="9" fill="rgba(255,120,100,.16)" stroke="${red}" stroke-width="1.8"/>`;
+      s+=fit(101,173,11.5,red,'близко · повернуть',{b:1},110);
+      s+=`<rect x="174" y="150" width="112" height="34" rx="9" fill="rgba(125,224,160,.16)" stroke="${grn}" stroke-width="1.8"/>`;
+      s+=fit(230,173,11.5,grn,'далеко · ехать',{b:1},104);
+      s+=`<circle r="7" fill="${cyan}"><animateMotion dur="3s" repeatCount="indefinite" path="M60 140 L280 140"/></circle>`;
+      s+=fit(159,212,11.5,ink,'датчик даёт число — программа сравнивает его с порогом',{b:1},292);
+      s+=plate2(30,226,258,32,go?grn:cardB,go?'меньше порога — опасность':'как робот понимает «близко»?',11,pre);
+      s+=`${fit(159,282,11,dim,'порог выбирает программист',{},292)}`;
+      return s;
+    }
+    if(K==='robotlight'){ /* датчик света и линия */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'датчик света: робот видит чёрное и белое',{b:1},276)+`</g>`;
+      s+=`<rect x="30" y="70" width="258" height="120" rx="8" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=`<path d="M30 130 h100 q30 0 30 -30 h58 q30 0 30 30 h40" fill="none" stroke="${ink}" stroke-width="14" stroke-linecap="round" opacity=".85"/>`;
+      s+=`<rect x="80" y="52" width="76" height="52" rx="10" fill="rgba(127,214,255,.2)" stroke="${cyan}" stroke-width="2"/>`;
+      s+=fit(118,84,11,cyan,'робот',{b:1},64);
+      s+=`<path d="M118 104 v18" stroke="${gold}" stroke-width="2.2" stroke-dasharray="4 4"/>`;
+      s+=`<circle class="${pre}Pop" style="animation-delay:.5s" cx="118" cy="126" r="7" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=fit(214,206,10.5,dim,'чёрная линия — тёмный участок',{},150);
+      s+=fit(159,232,11.5,ink,'датчик видит тёмное → робот знает, что он на линии',{b:1},292);
+      s+=plate2(30,246,258,32,go?grn:cardB,go?'так робот едет по линии':'зачем роботу датчик света?',11,pre);
+      return s;
+    }
+    if(K==='robotline'){ /* едем по линии */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'два датчика ведут робота по линии',{b:1},266)+`</g>`;
+      s+=`<rect x="30" y="60" width="258" height="150" rx="8" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=`<path d="M100 210 q0 -70 60 -70 q60 0 60 -70" fill="none" stroke="${ink}" stroke-width="16" stroke-linecap="round" opacity=".85"/>`;
+      const spots=[[92,44,'левый',cyan],[112,44,'правый',gold]];
+      spots.forEach((q,k)=>{
+        s+=`<rect x="${q[0]-10}" y="${q[1]}" width="20" height="16" rx="4" fill="rgba(18,24,44,.97)" stroke="${q[3]}" stroke-width="1.6"/>`;
+        s+=fit(q[0],q[1]-6,9,q[3],q[2],{b:1},44);
+      });
+      s+=`<circle r="11" fill="rgba(127,214,255,.4)" stroke="${cyan}" stroke-width="2"><animateMotion dur="6s" repeatCount="indefinite" path="M100 210 q0 -70 60 -70 q60 0 60 -70"/></circle>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="222" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,245,10.5,gold,'левый на белом, правый на чёрном → поворачиваем влево',{b:1},246)+`</g>`;
+      s+=plate2(30,258,258,0,cardB,'',11,pre);
+      s+=`${fit(159,278,11,dim,'два датчика позволяют держаться линии точно',{},296)}`;
+      return s;
+    }
+    if(K==='robotarm'){ /* манипулятор */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'манипулятор: робот берёт предмет',{b:1},266)+`</g>`;
+      s+=`<rect x="40" y="150" width="70" height="70" rx="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.8"/>`;
+      s+=fit(75,192,10.5,ink,'робот',{b:1},64);
+      s+=`<g><animateTransform attributeName="transform" type="rotate" values="-18 110 160;24 110 160;-18 110 160" dur="4s" repeatCount="indefinite"/>`
+        +`<path d="M110 160 L186 108" stroke="${pur}" stroke-width="6" stroke-linecap="round"/></g>`;
+      s+=`<g><animateTransform attributeName="transform" type="rotate" values="18 186 108;-20 186 108;18 186 108" dur="4s" repeatCount="indefinite"/>`
+        +`<path d="M186 108 L226 128" stroke="${cyan}" stroke-width="5" stroke-linecap="round"/>`
+        +`<path d="M226 128 l14 -6 M226 128 l14 8" stroke="${cyan}" stroke-width="4" stroke-linecap="round"/></g>`;
+      s+=`<rect x="238" y="150" width="42" height="34" rx="6" fill="rgba(255,215,106,.22)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=fit(259,172,10.5,gold,'деталь',{b:1},50);
+      s+=`<circle cx="110" cy="160" r="7" fill="${gold}"/><circle cx="186" cy="108" r="6" fill="${gold}"/>`;
+      s+=fit(159,244,11.5,ink,'моторы поворачивают «руку» на нужный угол',{b:1},292);
+      s+=plate2(30,258,258,30,go?grn:cardB,go?'так роботы собирают детали на заводах':'что делает манипулятор?',11,pre);
+      return s;
+    }
+    if(K==='robottouch'){ /* датчик касания */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,red,'датчик касания: самая простая кнопка',{b:1},268)+`</g>`;
+      s+=`<rect x="70" y="76" width="80" height="70" rx="11" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`;
+      s+=fit(110,118,11,cyan,'робот',{b:1},70);
+      s+=`<path d="M150 110 h34" stroke="${red}" stroke-width="3.4" stroke-linecap="round"/>`;
+      s+=`<circle cx="190" cy="110" r="7" fill="${red}"/>`;
+      s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;-10 0;0 0" dur="2.4s" repeatCount="indefinite"/>`
+        +`<rect x="228" y="66" width="34" height="88" rx="6" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.8"/></g>`;
+      s+=fit(245,176,10.5,dim,'препятствие',{b:1},74);
+      s+=`<g class="${pre}Pop" style="animation-delay:.6s"><rect x="182" y="184" width="118" height="28" rx="8" fill="rgba(255,120,100,.16)" stroke="${red}" stroke-width="1.6"/>`
+        +fit(241,203,10.5,red,'касание = 1',{b:1},110)+`</g>`;
+      s+=fit(159,238,11.5,ink,'усик нажали — значит, впереди препятствие',{b:1},292);
+      s+=plate2(30,252,258,30,go?grn:cardB,go?'простой датчик, но очень надёжный':'как работает кнопка?',11,pre);
+      return s;
+    }
+    if(K==='robotbrain'){ /* программа робота */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'программа робота: повторяй и решай',{b:1},266)+`</g>`;
+      s+=`<rect x="26" y="54" width="266" height="120" rx="11" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=fit(76,76,11.5,cyan,'повторяй',{b:1},86);
+      const lines=['прочитай датчики','сравни с порогом','выбери правило','включи моторы'];
+      lines.forEach((q,k)=>{
+        const y=92+k*20;
+        s+=fit(196,y,10.5,ink,q,{},150);
+        s+=`<circle cx="60" cy="${y-4}" r="4" fill="${gold}" opacity=".7"/>`;
+      });
+      s+=`<path d="M52 62 v104" stroke="${gold}" stroke-width="2" stroke-dasharray="6 5"/>`;
+      s+=`<path d="M266 62 v104" stroke="${gold}" stroke-width="2" stroke-dasharray="6 5"/>`;
+      s+=fit(159,192,11.5,ink,'программа — это алгоритм с условиями и циклом',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="26" y="208" width="266" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="231" text-anchor="middle" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">повторяй { читай; решай; двигай }</text></g>`;
+      s+=plate2(26,246,266,30,go?grn:cardB,go?'цикл и условие — основа поведения робота':'из чего состоит программа?',11,pre);
+      return s;
+    }
+    if(K==='robotmap'){ /* карта и маршрут */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'карта: робот знает, где стены',{b:1},262)+`</g>`;
+      const MX=40, MY=54, C=32, COLS=7, ROWS=5;
+      for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+        const wall=((r===1&&c<5)||(r===3&&c>1)||(r===2&&c===3));
+        s+=`<rect x="${MX+c*C}" y="${MY+r*C}" width="${C-2}" height="${C-2}" rx="3" fill="${wall?'rgba(255,120,100,.22)':'rgba(255,255,255,.03)'}" stroke="${wall?red:'#2c3868'}" stroke-width="1"/>`;
+      }
+      s+=`<circle class="${pre}Pop" style="animation-delay:.4s" cx="${MX+13}" cy="${MY+4*C+13}" r="9" fill="rgba(125,224,160,.45)" stroke="${grn}" stroke-width="1.8"/>`;
+      s+=`<circle class="${pre}Pop" style="animation-delay:.7s" cx="${MX+6*C+13}" cy="${MY+13}" r="9" fill="rgba(255,215,106,.45)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`<path d="M${MX+13} ${MY+4*C+13} L${MX+13} ${MY+2*C+13} L${MX+5*C+13} ${MY+2*C+13} L${MX+5*C+13} ${MY+13} L${MX+6*C+13} ${MY+13}" fill="none" stroke="${cyan}" stroke-width="2.4" stroke-dasharray="6 5"/>`;
+      s+=fit(159,266,11,ink,'маршрут обходит стены — это алгоритм поиска пути',{b:1},292);
+      s+=plate2(40,282,224,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='robotvac'){ /* робот-пылесос */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'робот-пылесос убирает по правилу',{b:1},266)+`</g>`;
+      s+=`<rect x="30" y="56" width="258" height="160" rx="10" fill="rgba(255,255,255,.03)" stroke="${cardB}" stroke-width="1.8"/>`;
+      s+=`<path d="M46 72 H272 M46 104 H272 M46 136 H272 M46 168 H272" stroke="${cyan}" stroke-width="2" stroke-dasharray="7 6" opacity=".6"/>`;
+      s+=`<circle r="13" fill="rgba(127,214,255,.45)" stroke="${cyan}" stroke-width="2"><animateMotion dur="8s" repeatCount="indefinite" path="M46 72 H272 M46 104 H272 M46 136 H272 M46 168 H272"/></circle>`;
+      s+=`<rect x="196" y="108" width="30" height="24" rx="5" fill="rgba(255,120,100,.2)" stroke="${red}" stroke-width="1.6"/>`;
+      s+=`<rect x="60" y="140" width="26" height="22" rx="5" fill="rgba(255,215,106,.2)" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=fit(159,238,11.5,ink,'он ходит рядами и объезжает мебель',{b:1},292);
+      s+=plate2(30,252,258,30,go?grn:cardB,go?'простое правило, повторённое много раз':'как он убирает всю комнату?',11,pre);
+      s+=`${fit(159,302,11,dim,'датчики не дают ему застрять',{},292)}`;
+      return s;
+    }
+    if(K==='robotdrone'){ /* дроны и машины */
+      const cards=[{t:'дрон',d:'держит высоту',c:cyan},{t:'робот-доставщик',d:'едет по маршруту',c:grn},
+                   {t:'беспилотная машина',d:'видит дорогу',c:gold},{t:'робот на складе',d:'возит коробки',c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'где работают роботы',{b:1},262)+`</g>`;
+      cards.forEach((q,k)=>{
+        const x=22+(k%2)*140, y=52+Math.floor(k/2)*92;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.16).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="132" height="80" rx="11" fill="rgba(12,32,34,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(x+66,y+72,10.5,q.c,q.t,{b:1},124);
+        const cx=x+66, cy=y+34;
+        if(k===0) s+=`<rect x="${cx-22}" y="${cy-8}" width="44" height="14" rx="5" fill="none" stroke="${q.c}" stroke-width="1.8"/><circle cx="${cx-26}" cy="${cy-14}" r="9" fill="none" stroke="${q.c}" stroke-width="1.8"/><circle cx="${cx+26}" cy="${cy-14}" r="9" fill="none" stroke="${q.c}" stroke-width="1.8"/>`;
+        else if(k===1) s+=`<rect x="${cx-20}" y="${cy-10}" width="34" height="22" rx="5" fill="none" stroke="${q.c}" stroke-width="1.8"/><circle cx="${cx-14}" cy="${cy+14}" r="6" fill="none" stroke="${q.c}" stroke-width="1.6"/><circle cx="${cx+8}" cy="${cy+14}" r="6" fill="none" stroke="${q.c}" stroke-width="1.6"/>`;
+        else if(k===2) s+=`<path d="M${cx-24} ${cy+8} q6 -16 22 -16 h20 q16 0 22 16 z" fill="none" stroke="${q.c}" stroke-width="1.8"/><circle cx="${cx-12}" cy="${cy+14}" r="6" fill="none" stroke="${q.c}" stroke-width="1.6"/><circle cx="${cx+12}" cy="${cy+14}" r="6" fill="none" stroke="${q.c}" stroke-width="1.6"/>`;
+        else s+=`<rect x="${cx-20}" y="${cy-12}" width="40" height="26" rx="4" fill="none" stroke="${q.c}" stroke-width="1.8"/><path d="M${cx-20} ${cy+4} h40" stroke="${q.c}" stroke-width="1.4"/>`;
+        s+=fit(cx,y+58,9.5,dim,q.d,{},124)+`</g>`;
+      });
+      s+=plate2(22,240,274,30,go?grn:cardB,go?'всюду датчики и правила движения':'что у них общего?',11,pre);
+      return s;
+    }
+    if(K==='robotjobs'){ /* робот и человек */
+      const rows=[{t:'робот делает быстро и точно',c:grn},{t:'робот не устаёт и не отвлекается',c:cyan},
+                  {t:'но он не понимает смысла задачи',c:gold},{t:'решения принимает человек',c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'робот и человек вместе',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=56+k*48;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="26" y="${y}" width="266" height="38" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +`<circle cx="48" cy="${y+19}" r="10" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.3"/>`
+          +tx(48,y+23,10.5,q.c,''.concat(k+1),{b:1})
+          +fit(172,y+24,10.5,q.c,q.t,{b:1},208)+`</g>`;
+      });
+      s+=plate2(26,240,266,32,go?grn:cardB,go?'роботы заменяют тяжёлый труд, но не решение':'кто главный?',11,pre);
+      s+=`${fit(159,296,11,dim,'поэтому роботов программируют люди',{},292)}`;
+      return s;
+    }
+    if(K==='robotethics'){ /* безопасность */
+      const it=[{t:'робот может ошибаться',d:'датчик может отказать',c:red},
+                {t:'рядом с роботом нужна осторожность',d:'он тяжёлый и сильный',c:gold},
+                {t:'правила важнее скорости',d:'безопасность прежде всего',c:grn}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,red,'безопасность при работе с роботами',{b:1},266)+`</g>`;
+      it.forEach((q,k)=>{
+        const y=56+k*56;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="22" y="${y}" width="274" height="46" rx="11" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(108,y+22,11.5,q.c,q.t,{b:1},200)
+          +fit(108,y+38,10.5,dim,q.d,{},200)+`</g>`;
+      });
+      s+=plate2(22,230,274,32,go?grn:cardB,go?'робот — инструмент, а не игрушка':'что важно помнить?',11,pre);
+      return s;
+    }
+    if(K==='robotpractice'){ /* практика */
+      const rows=[
+        {t:'датчик 15 см, а порог 20 см. Что делать?',a:'повернуть — близко',c:red},
+        {t:'левый на белом, правый на чёрном — куда?',a:'повернуть вправо',c:gold},
+        {t:'3 секунды по 2 клетки в секунду — сколько?',a:'6 клеток',c:grn}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'практика: думаем как робот',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*58;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(146,y+19,9.5,ink,q.t,{},214)
+          +(go?fit(146,y+38,11.5,q.c,q.a,{b:1},214):fit(146,y+38,10.5,dim,'нажми «показать»',{},214))+`</g>`;
+      });
+      s+=plate2(22,228,274,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
+      return s;
+    }
+    if(K==='robotlab'){ /* ЛАБОРАТОРИЯ: ведём робота по линии */
+      const TRACK=[[1,0],[1,0],[0,1],[0,1],[1,1],[0,0],[1,0],[0,1],[1,1],[1,0],[0,1],[1,1]];
+      const pos=(st&&typeof st.rp==='number')?st.rp:0;
+      const trace=(st&&st.rt)?st.rt:[];
+      const done=(pos>=TRACK.length-1);
+      const cur=TRACK[pos];
+      const rule=(cur[0]&&cur[1])?'оба датчика на чёрном — едем прямо':(cur[0]?'левый на чёрном — поворачиваем влево':(cur[1]?'правый на чёрном — поворачиваем вправо':'оба на белом — линии нет, ищем'));
+      let s=`<g class="${pre}Pop"><rect x="16" y="12" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,31,11.5,ink,'лаборатория: проведи робота по линии',{b:1},268)+`</g>`;
+      const x0=26, y0=52, w=22;
+      for(let k=0;k<TRACK.length;k++){
+        const c=(k===pos)?gold:cardB, on=(k<=pos);
+        s+=`<rect x="${x0+k*w}" y="${y0}" width="${w-2}" height="34" rx="3" fill="${on?'rgba(125,224,160,.14)':'rgba(255,255,255,.03)'}" stroke="${c}" stroke-width="${(k===pos)?2:1}"/>`;
+        s+=`<rect x="${x0+k*w+3}" y="${y0+8}" width="${w-8}" height="18" rx="2" fill="rgba(10,14,30,.9)"/>`;
+        if(TRACK[k][0]) s+=`<rect x="${x0+k*w+3}" y="${y0+8}" width="${(w-8)/2-1}" height="18" fill="${ink}" opacity=".85"/>`;
+        if(TRACK[k][1]) s+=`<rect x="${x0+k*w+3+(w-8)/2}" y="${y0+8}" width="${(w-8)/2-1}" height="18" fill="${ink}" opacity=".85"/>`;
+      }
+      s+=`<circle class="${pre}Pop" cx="${x0+pos*w+10}" cy="${y0-12}" r="8" fill="rgba(127,214,255,.5)" stroke="${cyan}" stroke-width="2"/>`;
+      s+=`<path d="M${x0+pos*w+10} ${y0-4} v8" stroke="${cyan}" stroke-width="2"/>`;
+      const mk=(x,label,c)=>`<rect x="${x-11}" y="${y0+42}" width="22" height="20" rx="5" fill="${c}" fill-opacity=".3" stroke="${c}" stroke-width="1.5"/>`;
+      s+=mk(x0+pos*w+6,'',cur[0]?ink:cardB)+mk(x0+pos*w+16,'',cur[1]?ink:cardB);
+      s+=fit(x0+pos*w+11,y0+78,9.5,dim,'датчики',{b:1},70);
+      s+=`<g class="${pre}Rise}"><rect x="26" y="140" width="266" height="30" rx="9" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,160,10.5,gold,rule,{b:1},252)+`</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.2s"><rect x="26" y="176" width="266" height="76" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`
+        +fit(159,192,10,dim,'журнал решений:',{b:1},250);
+      trace.slice(-4).forEach((q,k)=>{
+        s+=fit(159,206+k*14,9.5,ink,q,{},250);
+      });
+      s+=`</g>`;
+      s+=`<g style="cursor:pointer" onclick="infRobot('${lk}','step')"><rect x="34" y="258" width="118" height="34" rx="9" fill="rgba(12,32,34,.97)" stroke="${grn}" stroke-width="1.7"/>`
+        +fit(93,280,12,grn,'шаг вперёд',{b:1},108)+`</g>`;
+      s+=`<g style="cursor:pointer" onclick="infRobot('${lk}','reset')"><rect x="166" y="258" width="118" height="34" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(225,280,12,gold,'сначала',{b:1},108)+`</g>`;
+      s+=`<g class="${pre}Rise}"><rect x="34" y="298" width="250" height="26" rx="8" fill="${done?'rgba(125,224,160,.14)':'rgba(255,255,255,.04)'}" stroke="${done?grn:cardB}" stroke-width="1.5"/>`
+        +fit(159,316,11,done?grn:dim,done?'Маршрут пройден! Робот не потерял линию':'шаг '+pos+' из '+(TRACK.length-1),{b:done},240)+`</g>`;
+      return s;
+    }
+    if(K==='robotquiz'){ /* викторина */
+      const opts=['повернуть','ехать прямо','остановиться'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +fit(159,34,11.5,ink,'датчик показал 10 см, а порог — 20 см. Что делать?',{b:1},276)+`</g>`;
+      s+=`<rect x="96" y="58" width="126" height="52" rx="10" fill="rgba(255,120,100,.14)" stroke="${red}" stroke-width="1.8"/>`;
+      s+=fit(159,82,11.5,red,'расстояние 10 см',{b:1},112);
+      s+=fit(159,100,10,dim,'это меньше порога 20 см',{},130);
+      opts.forEach((t2,k)=>{
+        const y=124+k*40, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="22" y="${y}" width="274" height="34" rx="9" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(159,y+22,11.5,c,t2,{b:on},256)+(on?`<path d="M266 ${y+11} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}"><rect x="22" y="250" width="274" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +fit(159,270,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Близко — значит надо поворачивать':'Вспомни: меньше порога — близко',{b:done&&st.pick===ok},256)+`</g>`;
+      s+=`${fit(159,300,11,ink,'правило простое: близко — уходим от препятствия',{b:1},292)}`;
+      return s;
+    }
+    if(K==='robotmistakes'){ /* ошибки */
+      const it=[
+        {t:'робот едет вслепую',f:'не читает датчики перед движением',c:red},
+        {t:'порог выбран неверно',f:'робот пугается слишком рано',c:gold},
+        {t:'нет правила на все случаи',f:'что делать, если линии нет?',c:cyan},
+        {t:'программа не проверена',f:'тестируй на разных маршрутах',c:pur}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},180)+`</g>`;
+      });
+      s+=`${tx(159,266,11,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='robotsheet'){ /* шпаргалка */
+      const rows=[{t:'робот = датчики + контроллер + моторы',c:cyan},{t:'датчик отдаёт числа',c:gold},
+                  {t:'сравни с порогом — получишь решение',c:pur},{t:'два колеса: одинаково — прямо, по-разному — поворот',c:grn},
+                  {t:'повторяй: читай, решай, двигай',c:blu},{t:'тестируй на разных маршрутах',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'всё главное о роботах и датчиках',{b:1},266)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=50+k*36;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+20,10.5,q.c,q.t,{b:1},258)+`</g>`;
+      });
+      s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -6996,6 +7474,32 @@
     if(K==='outofrange') return 202;
     if(K==='marks') return 220;
     if(K==='findcell') return 210;
+    if(K==='robotintro') return 296;
+    if(K==='robotparts') return 280;
+    if(K==='robotsensors') return 268;
+    if(K==='robotlook') return 316;
+    if(K==='robotvalues') return 292;
+    if(K==='robotfeedback') return 280;
+    if(K==='robotalgo') return 314;
+    if(K==='robotmotors') return 286;
+    if(K==='robotdrive') return 308;
+    if(K==='robotobstacle') return 308;
+    if(K==='robotthreshold') return 298;
+    if(K==='robotlight') return 292;
+    if(K==='robotline') return 296;
+    if(K==='robotarm') return 300;
+    if(K==='robottouch') return 296;
+    if(K==='robotbrain') return 292;
+    if(K==='robotmap') return 306;
+    if(K==='robotvac') return 320;
+    if(K==='robotdrone') return 290;
+    if(K==='robotjobs') return 314;
+    if(K==='robotethics') return 282;
+    if(K==='robotpractice') return 278;
+    if(K==='robotlab') return 342;
+    if(K==='robotquiz') return 316;
+    if(K==='robotmistakes') return 282;
+    if(K==='robotsheet') return 308;
     if(K==='gameintro') return 292;
     if(K==='gameevents') return 296;
     if(K==='gameloop') return 268;
@@ -8514,6 +9018,66 @@
       tasks:[
         {q:'Сколько кадров пройдёт за 3 секунды, если игра рисует 60 кадров в секунду?', kind:'unit', ans:180, tol:0, hints:['Кадры в секунду умножаем на секунды.','60 · 3 = 180.'], sol:'60 · 3 = 180'},
         {q:'Герой был в точке x = 4 и нажал «влево» два раза. Где он окажется?', kind:'unit', ans:2, tol:0, hints:['Каждое нажатие «влево» уменьшает x на 1.','4 − 2 = 2.'], sol:'4 − 2 = 2'}
+      ] },
+    { id:530, title:'Роботы и датчики: как машина чувствует мир', ico:'🤖', src:'Информатика · 5–6 класс · С нуля: роботы',
+      explain:[
+        'Робот — это машина из трёх частей: датчики, контроллер и моторы. Датчики получают информацию, контроллер решает, моторы двигают.',
+        'Робот работает по кругу: датчик → решение → движение → снова датчик. Этот цикл повторяется много раз в секунду.',
+        'Датчики бывают разные: расстояния, света, касания, цвета, температуры, звука. Каждый измеряет своё.',
+        'Датчик расстояния работает как эхо: посылает звук и ждёт его возврата. Быстрее вернулся — препятствие ближе.',
+        'Датчик отдаёт программе числа: например расстояние в сантиметрах. Маленькое число — близко, большое — далеко.',
+        'Обратная связь — главное в роботе: измерил, сравнил, сделал и снова измерил. Так робот подправляет себя.',
+        'Программа робота — это правила: если препятствие близко — повернуть, если путь свободен — ехать вперёд.',
+        'У робота два мотора и два колеса. Крутятся одинаково — робот едет прямо, с разной скоростью — поворачивает.',
+        'Движение робота — это последовательность шагов: сначала прямо, потом колесо медленнее — и поворот.',
+        'Датчик увидел стену — робот повернул. Это не «ум», а выполнение правила, записанного человеком.',
+        'Порог — это граница между «близко» и «далеко». Например, порог 20 см: меньше — опасно, больше — можно ехать.',
+        'Датчик света различает чёрное и белое. По этому признаку робот понимает, что стоит на тёмной линии.',
+        'Два датчика света ведут робота по линии: если левый видит белое, а правый чёрное — робот поворачивает.',
+        'Манипулятор — это «рука» робота: моторы поворачивают её на нужный угол, чтобы взять деталь.',
+        'Датчик касания — самая простая кнопка: усик нажали, значит впереди препятствие.',
+        'Программа робота — это алгоритм с циклом и условиями: повторяй { прочитай датчики; сравни; выбери правило; двигайся }.',
+        'Карта помогает роботу: он знает, где стены, и строит маршрут, обходя препятствия.',
+        'Робот-пылесос убирает комнату простым правилом, повторённым много раз, и датчиками, которые не дают застрять.',
+        'Роботы работают в разных местах: дроны держат высоту, доставщики едут по маршруту, машины видят дорогу, складские роботы возят коробки.',
+        'Робот делает быстро и точно, не устаёт и не отвлекается, но он не понимает смысла задачи — решения принимает человек.',
+        'Безопасность важна: робот может ошибаться, датчик может отказать, поэтому рядом с роботом нужно быть осторожным.',
+        'Практика: если датчик показал 15 см при пороге 20 см — робот поворачивает; если левый датчик на белом, а правый на чёрном — поворачивает вправо.',
+        'Практика: робот ехал 3 секунды со скоростью 2 клетки в секунду — значит, он прошёл 6 клеток.',
+        'Лаборатория: веди робота по линии шаг за шагом. Смотри, что видят датчики, какое правило срабатывает и как робот движется.',
+        'Частые ошибки: робот едет вслепую, неверный порог, нет правила на все случаи, программа не проверена на разных маршрутах.',
+        'Шпаргалка: датчики, контроллер, моторы; датчик отдаёт числа; сравни с порогом; два колеса рулят; повторяй «читай, решай, двигай». Проверь себя!' ],
+      slides:[
+        {h:'Что такое робот', v:{kind:'robotintro'}, r:'Датчики, мозг, моторы.', d:'Робот состоит из датчиков, контроллера и моторов. Датчики чувствуют, контроллер решает, моторы двигают.'},
+        {h:'Цикл управления', v:{kind:'robotparts'}, r:'По кругу.', d:'Датчик → решение → движение → снова датчик. Этот цикл повторяется много раз в секунду.'},
+        {h:'Какие бывают датчики', v:{kind:'robotsensors'}, r:'Каждый измеряет своё.', d:'Датчики расстояния, света, касания, цвета, температуры и звука рассказывают роботу о мире.'},
+        {h:'Как измерить расстояние', v:{kind:'robotlook'}, r:'Эхо.', d:'Датчик посылает звук и ждёт возврата: чем быстрее вернулось эхо, тем ближе препятствие.'},
+        {h:'Датчик отдаёт числа', v:{kind:'robotvalues'}, r:'Сантиметры.', d:'Программа получает числа. Маленькое число — препятствие близко, большое — далеко.'},
+        {h:'Обратная связь', v:{kind:'robotfeedback'}, r:'Измерил, сравнил, сделал.', d:'Робот постоянно проверяет себя: измеряет, сравнивает и подправляет движение.'},
+        {h:'Программа робота', v:{kind:'robotalgo'}, r:'Правила «если… то…».', d:'Если препятствие близко — повернуть, если путь свободен — ехать вперёд.'},
+        {h:'Моторы и колёса', v:{kind:'robotmotors'}, r:'Два колеса.', d:'Одинаковая скорость колёс — робот едет прямо, разная — поворачивает.'},
+        {h:'Движение и поворот', v:{kind:'robotdrive'}, r:'Прямо и по дуге.', d:'Движение робота — это последовательность шагов: прямо, затем поворот.'},
+        {h:'Объезжаем препятствие', v:{kind:'robotobstacle'}, r:'Датчик увидел стену.', d:'Робот получил от датчика число, сравнил с порогом и повернул.'},
+        {h:'Порог', v:{kind:'robotthreshold'}, r:'Граница решения.', d:'Порог — это число, с которым сравнивают показания датчика. Порог выбирает программист.'},
+        {h:'Датчик света', v:{kind:'robotlight'}, r:'Чёрное и белое.', d:'Датчик света различает тёмное и светлое — так робот узнаёт линию.'},
+        {h:'Едем по линии', v:{kind:'robotline'}, r:'Два датчика.', d:'Левый и правый датчики подсказывают, куда подрулить, чтобы не потерять линию.'},
+        {h:'Манипулятор', v:{kind:'robotarm'}, r:'«Рука» робота.', d:'Моторы поворачивают руку на нужный угол, чтобы взять деталь.'},
+        {h:'Датчик касания', v:{kind:'robottouch'}, r:'Простая кнопка.', d:'Усик нажали — значит, впереди препятствие. Самый надёжный датчик.'},
+        {h:'Программа-цикл', v:{kind:'robotbrain'}, r:'Читай, решай, двигай.', d:'Программа робота — алгоритм с циклом и условиями.'},
+        {h:'Карта и маршрут', v:{kind:'robotmap'}, r:'Обходим стены.', d:'Робот знает карту и строит маршрут, обходя препятствия.'},
+        {h:'Робот-пылесос', v:{kind:'robotvac'}, r:'Правило и датчики.', d:'Он ходит рядами, объезжает мебель и не застревает благодаря датчикам.'},
+        {h:'Где работают роботы', v:{kind:'robotdrone'}, r:'Дроны, машины, склад.', d:'Дроны, доставщики, беспилотные машины и складские роботы — всюду датчики и правила.'},
+        {h:'Робот и человек', v:{kind:'robotjobs'}, r:'Кто главный.', d:'Робот быстрый и точный, но смысл задачи понимает человек.'},
+        {h:'Безопасность', v:{kind:'robotethics'}, r:'Осторожность.', d:'Робот может ошибаться, поэтому рядом с ним нужно соблюдать правила безопасности.'},
+        {h:'Практика', v:{kind:'robotpractice'}, r:'Думаем как робот.', d:'15 см при пороге 20 — поворот; правый датчик на чёрном — вправо; 3 секунды по 2 клетки — 6 клеток.'},
+        {h:'Лаборатория робота', v:{kind:'robotlab'}, r:'Веди робота по линии!', d:'Нажимай «шаг вперёд»: смотри, что видят датчики, какое правило срабатывает и куда едет робот.'},
+        {h:'Викторина', v:{kind:'robotquiz'}, r:'Что делать роботу?', d:'Если расстояние меньше порога — близко, значит надо поворачивать.'},
+        {h:'Частые ошибки', v:{kind:'robotmistakes'}, r:'Что ломает робота.', d:'Едет вслепую, неверный порог, нет правила на все случаи, программа не проверена.'},
+        {h:'Шпаргалка', v:{kind:'robotsheet'}, r:'Шесть главных мыслей.', d:'Датчики, контроллер, моторы; числа и порог; два колеса; цикл «читай, решай, двигай».'} ],
+      check:{ q:'Что делает робот, если датчик показал расстояние меньше порога?', choices:['поворачивает, потому что близко','едет быстрее','выключается','ждёт команды'], ans:0, exp:'Меньше порога — значит препятствие близко, и правило велит повернуть.' },
+      tasks:[
+        {q:'Датчик показал 15 см, а порог равен 20 см. Сколько сантиметров «не хватает» до безопасного расстояния?', kind:'unit', ans:5, tol:0, hints:['Порог минус показание датчика.','20 − 15 = 5.'], sol:'20 − 15 = 5'},
+        {q:'Робот ехал 4 секунды со скоростью 3 клетки в секунду. Сколько клеток он прошёл?', kind:'unit', ans:12, tol:0, hints:['Скорость умножаем на время.','3 · 4 = 12.'], sol:'3 · 4 = 12'}
       ] }
   ];
 
@@ -8528,7 +9092,7 @@
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz'||s.v.kind==='robotlab'||s.v.kind==='robotquiz');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -8547,6 +9111,8 @@
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
+      : (s.v.kind==='robotlab')
+      ? wkRow(wkBtn('сброс лаборатории',`infRobot('${lk}','reset')`))
       : (s.v.kind==='gameplay')
       ? wkRow(wkBtn('начать игру заново',`infMove('${lk}',0,0,1)`))
       : (s.v.kind==='aitrain')
@@ -8562,7 +9128,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='gameplay')? ((st.gm>=5) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='robotlab')? ((st.rp>=11) && s.r) : (s.v.kind==='gameplay')? ((st.gm>=5) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -8571,6 +9137,18 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infRobot=function(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    const TRACK=[[1,0],[1,0],[0,1],[0,1],[1,1],[0,0],[1,0],[0,1],[1,1],[1,0],[0,1],[1,1]];
+    if(act==='reset'){ st.rp=0; st.rt=[]; chRender(0); return; }
+    const p2=(typeof st.rp==='number')?st.rp:0;
+    if(p2>=TRACK.length-1){ chRender(0); return; }
+    const cur=TRACK[p2];
+    const rule=((cur[0]&&cur[1])?'оба на чёрном — едем прямо':(cur[0]?'левый на чёрном — влево':(cur[1]?'правый на чёрном — вправо':'оба на белом — ищем линию')));
+    st.rt=st.rt||[]; st.rt.push('шаг '+(p2+1)+': '+rule);
+    st.rp=p2+1;
+    chRender(0);
+  };
   window.infMove=function(lk,dx,dy,reset){
     const st=CHS[lk]||(CHS[lk]={});
     if(reset){ st.gx=0; st.gy=5; st.gc=[]; st.gm=0; chRender(0); return; }
