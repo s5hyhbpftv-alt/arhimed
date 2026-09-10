@@ -24389,6 +24389,12 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       +`<rect x="${cx-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="${o.rx||9}" fill="${o.fill||'rgba(18,24,44,.97)'}" stroke="${c}" stroke-width="${o.sw||2}"/>`
       +tx(cx,cy+h*0.2,o.fs||15,c,t,{b:1,georgia:o.geo!==false})+`</g>`;
   };
+  /* подпись с тёмной подложкой: без чёрного текста, всегда читаемо */
+  const lbl=(cx,cy,txt,col,w)=>{
+    const W2=(w||Math.max(30,(''+txt).length*7.4+14)), H2=22;
+    return `<g class="qpPop"><rect x="${(cx-W2/2).toFixed(1)}" y="${(cy-H2/2).toFixed(1)}" width="${W2.toFixed(1)}" height="${H2}" rx="7" fill="rgba(10,14,30,.82)" stroke="${col}" stroke-width="1.2" stroke-opacity=".8"/>`
+      +tx(cx,cy+4.5,11.5,col,txt,{b:1})+`</g>`;
+  };
   const W=318;
   function visW192(el){
     const step=LV.step||0;
@@ -24465,7 +24471,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           +`<path d="${d}" fill="none" stroke="${gold}" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
           +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.7;1" dur="1.6s" begin="${(0.3+k*0.2).toFixed(2)}s" repeatCount="indefinite"/></path>`
           +`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${q.c}" stroke-width="1.4" opacity=".7"/>`
-          +tx(cx,cy+5,12,'#0a0e1e',q.t,{b:1})
+          +lbl(cx,cy,q.t,'#eef6ff',30)
           +fit(cx,cy+r+18,10.5,dim,['половина','четверть','пятая часть','десятая часть'][k],{},86)+`</g>`;
       });
       inner+=plate(20,280,278,28,go?grn:cardB,go?'эти доли полезно помнить наизусть':'какие доли бывают?',11.5);
@@ -24547,8 +24553,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=drawRect(20,72,278,34,8,grn,2.6,0.2,2,{pen:true},'qp');
       inner+=fit(20,132,11.5,gold,'15 — это часть',{an:'start'},110);
       inner+=`<rect x="20" y="142" width="278" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
-      inner+=growBar(24,146,66,26,gold,1.8,0.6,gold);
-      inner+=fit(57,166,11,'#0a0e1e','15',{b:1},40);
+      inner+=growBar(24,146,69.5,26,gold,1.8,0.6,gold);
+      inner+=fit(57,166,11,gold,'15',{b:1},40);
       inner+=`<path d="M88 166 h190" stroke="${dim}" stroke-width="1.6" stroke-dasharray="5 5"/>`;
       inner+=fit(159,200,11.5,ink,'15 укладывается в 60 ровно четыре раза',{b:1},292);
       inner+=fit(159,224,11.5,dim,'значит, это четвёртая часть, то есть 25%',{},292);
@@ -24605,13 +24611,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner=TT('увеличиваем на 10%: 200 → 220','grn');
       inner+=`<rect x="30" y="62" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=growBar(34,66,250,32,blu,1.8,0.3,blu);
-      inner+=fit(159,89,12,'#0a0e1e','200 рублей',{b:1},240);
+      inner+=lbl(159,89,'200 рублей',blu,86);
       inner+=fit(159,124,11.5,dim,'плюс 10% — это 20 рублей',{},280);
       inner+=`<rect x="30" y="140" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=growBar(34,144,250,32,blu,1.6,0.8,blu);
       inner+=growBar(284,144,0,32,grn,1.4,1.2,grn);
-      inner+=`<rect x="284" y="144" width="0" height="32" rx="4" fill="${grn}"><animate fill="freeze" attributeName="width" values="0;22;22" keyTimes="0;.8;1" dur="1.4s" begin="1.2s" repeatCount="indefinite"/></rect>`;
-      inner+=fit(240,167,12,'#0a0e1e','220 рублей',{b:1},160);
+      inner+=`<rect x="284" y="144" width="0" height="32" rx="4" fill="${grn}"><animate fill="freeze" attributeName="width" values="0;25;25" keyTimes="0;.8;1" dur="1.4s" begin="1.2s" repeatCount="indefinite"/></rect>`;
+      inner+=lbl(240,167,'220 рублей',grn,86);
       inner+=fit(295,132,11,grn,'+20',{b:1},40);
       inner+=`<g class="qpRise" style="animation-delay:1.6s"><rect x="40" y="196" width="238" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
         +`<text x="159" y="219" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">200 + 200 : 100 · 10 = 220</text></g>`;
@@ -24628,13 +24634,13 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner=TT('уменьшаем на 25%: 800 → 600','red');
       inner+=`<rect x="30" y="62" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=growBar(34,66,250,32,gold,1.6,0.3,gold);
-      inner+=fit(159,89,12,'#0a0e1e','800',{b:1},100);
+      inner+=lbl(159,89,'800',gold,44);
       inner+=`<rect x="34" y="66" width="63" height="32" rx="4" fill="${red}" opacity=".5"/>`;
-      inner+=fit(220,89,11.5,red,'−25% = 200',{b:1},120);
+      inner+=fit(246,89,11,red,'−25% = 200',{b:1},92);
       inner+=`<path d="M64 112 v18" stroke="${red}" stroke-width="2.2" class="qpBlink"/>`;
       inner+=`<rect x="30" y="146" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=growBar(34,150,188,32,grn,1.6,0.9,grn);
-      inner+=fit(128,173,12,'#0a0e1e','600',{b:1},100);
+      inner+=lbl(128,173,'600',grn,44);
       inner+=fit(240,173,11,grn,'осталось',{},90);
       inner+=`<g class="qpRise" style="animation-delay:1.5s"><rect x="40" y="200" width="238" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
         +`<text x="159" y="223" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">800 − 800 : 100 · 25 = 600</text></g>`;
@@ -24709,9 +24715,9 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=`<rect x="30" y="60" width="180" height="34" rx="8" fill="${blu}" opacity=".55"/>`;
       inner+=fit(120,83,12,ink,'100',{b:1},80);
       inner+=`<rect x="30" y="112" width="216" height="34" rx="8" fill="${gold}" opacity=".55"/>`;
-      inner+=fit(138,135,12,'#0a0e1e','120',{b:1},80);
+      inner+=lbl(138,135,'120',gold,44);
       inner+=`<rect x="210" y="112" width="36" height="34" rx="8" fill="${gold}"/>`;
-      inner+=fit(228,135,11,'#0a0e1e','+20',{b:1},40);
+      inner+=fit(228,112,11,gold,'+20',{b:1},40);
       inner+=drawPoly([[274,70],[274,146]],cyan,2.4,0.9,2.2,{pen:true},'qp');
       inner+=fit(292,112,11,cyan,'сравниваем',{an:'end'},60);
       inner+=`<g class="qpRise" style="animation-delay:1.2s"><rect x="30" y="166" width="258" height="40" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
@@ -24738,7 +24744,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       });
       inner+=`<rect x="46" y="196" width="226" height="30" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.4"/>`;
       inner+=growBar(50,200,68,22,cyan,1.8,1.2,cyan);
-      inner+=fit(84,217,11,'#0a0e1e','24',{b:1},30);
+      inner+=lbl(84,217,'24',cyan,30);
       inner+=fit(200,217,11,cyan,'из 80',{b:1},60);
       inner+=plate(20,234,278,30,go?grn:cardB,go?'24 от 80 — это 30%':'какой ответ?',11.5);
       inner+=`${fit(159,282,11.5,dim,'24 — это почти треть от 80',{},290)}`;
@@ -24776,7 +24782,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=`<rect x="30" y="58" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=drawRect(30,58,258,40,9,pur,2.4,0.2,2,{pen:true},'qp');
       inner+=growBar(34,62,103,32,pur,1.8,0.6,pur);
-      inner+=fit(85,85,11,'#0a0e1e','40%',{b:1},50);
+      inner+=lbl(85,85,'40%',pur,38);
       inner+=fit(220,85,11,ink,'250 — 100%',{b:1},120);
       inner+=`<g class="qpRise" style="animation-delay:1.2s"><rect x="30" y="112" width="258" height="36" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
         +`<text x="159" y="136" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">250 : 100 · 40 = 100</text></g>`;
@@ -24796,7 +24802,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner=TT('практика: 15% числа равны 45','gold');
       inner+=`<rect x="30" y="58" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=`<rect x="30" y="58" width="39" height="40" rx="9" fill="${gold}" opacity=".5"/>`;
-      inner+=fit(50,85,11,'#0a0e1e','45',{b:1},34);
+      inner+=lbl(50,85,'45',gold,32);
       inner+=fit(210,85,11,gold,'это 15%',{b:1},90);
       inner+=`<path d="M78 85 h116" stroke="${gold}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
       inner+=`<g class="qpRise" style="animation-delay:.8s"><rect x="30" y="112" width="258" height="38" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
@@ -24851,7 +24857,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner=TT('сколько процентов составляет 45 от 60?','cyan');
       inner+=`<rect x="30" y="58" width="258" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=growBar(34,62,193,26,cyan,1.6,0.3,cyan);
-      inner+=fit(130,82,11,'#0a0e1e','45',{b:1},30);
+      inner+=lbl(130,82,'45',cyan,32);
       inner+=fit(220,82,11,cyan,'из 60',{b:1},70);
       inner+=fit(159,112,11.5,dim,'считаем: 45 : 60 · 100',{b:1},260);
       opts.forEach((t,k)=>{
@@ -24875,7 +24881,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner=TT('найди 30% от 200','gold');
       inner+=`<rect x="30" y="58" width="258" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=growBar(34,62,78,26,gold,1.6,0.3,gold);
-      inner+=fit(72,82,11,'#0a0e1e','30%',{b:1},44);
+      inner+=lbl(72,82,'30%',gold,38);
       inner+=fit(220,82,11,gold,'200',{b:1},50);
       inner+=fit(159,112,11.5,dim,'считаем: 200 : 100 · 30',{b:1},260);
       opts.forEach((t,k)=>{
@@ -24906,7 +24912,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         const y=14+k*56;
         inner+=`<g class="qpRise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
           +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#qpbg)" stroke="${q.c}" stroke-width="2"/>`
-          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#0a0e1e">!</text>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eef6ff">!</text>`
           +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
           +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
