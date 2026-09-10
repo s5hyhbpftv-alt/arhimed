@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 13 уроков (id 500–512) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 14 уроков (id 500–513) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -842,6 +842,251 @@
       else s+=`${tx(159,70+opts.length*40+22,11,dim,'нажми на вариант — я проверю',{})}`;
       return s;
     }
+    if(K==='bigtask'){ /* большая задача — длинно и запутанно */
+      let s='', y0=26, rh=11;
+      for(let k=0;k<13;k++){
+        const w=120+((k*37)%110);
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.05*k).toFixed(2)}s">`
+          +`<rect x="24" y="${y0+k*rh}" width="${w}" height="8" rx="4" fill="${k%3?A:'#5f78a8'}" opacity="${k%3?0.65:0.4}"/>`
+          +`<rect x="${24+w+6}" y="${y0+k*rh}" width="${(k%4)*14}" height="8" rx="4" fill="#5f78a8" opacity=".3"/></g>`;
+      }
+      s+=`<path d="M258 ${y0-4} V${y0+13*rh}" stroke="${red}" stroke-width="2.4" opacity=".8"/>`
+        +`<path d="M254 ${y0-4} h8 M254 ${y0+13*rh} h8" stroke="${red}" stroke-width="2.4" opacity=".8"/>`;
+      s+=`<rect class="${pre}Pop" style="animation-delay:.8s" x="266" y="${y0+42}" width="40" height="24" rx="7" fill="rgba(255,120,100,.16)" stroke="${red}" stroke-width="1.6"/>${tx(286,y0+59,10.5,red,'30',{b:1})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:1s"><rect x="20" y="186" width="278" height="30" rx="9" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.7"/>`
+        +`${tx(159,206,11.5,red,'30 команд — долго писать и легко ошибиться',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='plan'){ /* разбиваем задачу на подзадачи */
+      const ch=[{x:65,t:'нарисовать квадрат',c:cyan},{x:159,t:'повторить 3 раза',c:gold},{x:253,t:'поставить рядом',c:grn}];
+      let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="64" y="24" width="190" height="36" rx="12" fill="url(#${pre}card)" stroke="${A}" stroke-width="2.2"/>`
+        +`<rect x="64" y="24" width="190" height="3.2" rx="1.6" fill="url(#${pre}bar)"/>${tx(159,48,13,ink,'большая задача',{b:1})}</g>`;
+      ch.forEach((q,k)=>{
+        s+=`<path d="M159 60 V70 H${q.x} V104" fill="none" stroke="${q.c}" stroke-width="2" opacity=".6" stroke-dasharray="6 5" class="${pre}Dash"/>`;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.2+0.14*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="${q.x-45}" y="104" width="90" height="62" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<circle cx="${q.x}" cy="126" r="13" fill="${q.c}" opacity=".14" stroke="${q.c}" stroke-width="1.3"/>`
+          +`<text x="${q.x}" y="140" text-anchor="middle" font-size="17" font-family="Georgia,serif" font-weight="bold" fill="${q.c}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${k+1}</text>`
+          +`${tx(q.x,155,10.5,ink,q.t,{})}</g>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.7s"><rect x="20" y="178" width="278" height="28" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.6" stroke-opacity=".5"/>`
+        +`${tx(159,197,11,dim,'большое → три маленьких понятных шага',{})}</g>`;
+      return s;
+    }
+    if(K==='recipe'){ /* вспомогательный алгоритм — рецепт с именем */
+      let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="28" y="30" width="262" height="140" rx="13" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2.2"/>`
+        +`<rect x="30" y="18" width="126" height="26" rx="9" fill="rgba(10,18,36,.98)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(93,36,13,grn,v.name||'квадрат',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.25s">`
+        +`<rect x="46" y="64" width="226" height="26" rx="7" fill="rgba(255,255,255,.05)" stroke="${A}" stroke-opacity=".4"/>${tx(159,82,11.5,gold,'повтори 4 раза:',{b:1,an:'middle'})}`
+        +`<rect x="56" y="96" width="206" height="26" rx="7" fill="rgba(255,255,255,.05)" stroke="${A}" stroke-opacity=".4"/>${tx(159,114,11.5,cyan,'вперёд и повернуть',{b:1})}`
+        +`<rect x="56" y="128" width="206" height="26" rx="7" fill="rgba(255,255,255,.05)" stroke="${grn}" stroke-opacity=".5"/>${tx(159,146,11.5,grn,'4 стороны готовы',{b:1})}</g>`;
+      s+=`<circle class="${pre}Twinkle" cx="266" cy="34" r="11" fill="${gold}" opacity=".25" stroke="${gold}" stroke-width="1.6"/><text x="266" y="39" text-anchor="middle" font-size="12" font-weight="bold" fill="${gold}">имя</text>`;
+      s+=`${tx(159,190,11.5,dim,v.note||'у алгоритма есть имя и своё тело из команд',{})}`;
+      return s;
+    }
+    if(K==='helper'){ /* главный алгоритм вызывает помощника */
+      let s=`<path d="M96 112 H224" stroke="${A}" stroke-width="2" opacity=".55" stroke-dasharray="7 6" class="${pre}Dash"/>`;
+      s+=`<circle r="4.4" fill="${A}"><animateMotion dur="1.6s" repeatCount="indefinite" path="M96 112 H224"/></circle>`;
+      s+=`<circle r="3.8" fill="${grn}"><animateMotion dur="1.6s" begin=".8s" repeatCount="indefinite" path="M224 130 H96"/></circle>`;
+      s+=`<path d="M224 124 H96" stroke="${grn}" stroke-width="1.6" opacity=".4"/>`;
+      s+=`<g class="${pre}Float"><circle cx="62" cy="110" r="26" fill="${gold}" stroke="#fffdf2" stroke-width="2"/>`
+        +`<circle cx="53" cy="104" r="4" fill="#1a2340"/><circle cx="71" cy="104" r="4" fill="#1a2340"/>`
+        +`<path d="M54 120 q8 7 16 0" fill="none" stroke="#1a2340" stroke-width="2"/>`
+        +`<path d="M62 84 v-10" stroke="${gold}" stroke-width="2"/><circle class="${pre}Blink" cx="62" cy="70" r="4" fill="${cyan}"/></g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.2s" filter="url(#${pre}sh)"><rect x="10" y="140" width="104" height="26" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>${tx(62,158,11,gold,'главный',{b:1})}</g>`;
+      s+=`<g class="${pre}Float" style="animation-delay:.3s"><circle cx="250" cy="120" r="20" fill="#8fd6ff" stroke="#fffdf2" stroke-width="1.8"/>`
+        +`<circle cx="243" cy="115" r="3.2" fill="#14314a"/><circle cx="257" cy="115" r="3.2" fill="#14314a"/></g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.35s" filter="url(#${pre}sh)"><rect x="196" y="52" width="108" height="26" rx="9" fill="rgba(10,18,36,.98)" stroke="${cyan}" stroke-width="1.8"/>${tx(250,70,11.5,cyan,v.name||'квадрат',{b:1})}</g>`;
+      s+=`${tx(250,80,10,dim,'имя помощника',{})}`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.5s"><rect x="216" y="140" width="68" height="26" rx="9" fill="rgba(143,214,255,.12)" stroke="${cyan}" stroke-width="1.6"/>${tx(250,158,11,cyan,'помощник',{})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.7s"><rect x="20" y="176" width="278" height="28" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,195,11,dim,'главный пишет: «квадрат» — и помощник приходит на помощь',{})}</g>`;
+      return s;
+    }
+    if(K==='call'){ /* вызов по имени из разных мест */
+      let s=`<g class="${pre}Pulse" filter="url(#${pre}sh)"><rect x="114" y="90" width="90" height="40" rx="12" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2.4"/>`
+        +`<rect x="114" y="90" width="90" height="3.2" rx="1.6" fill="${grn}"/>${tx(159,116,13,grn,v.name||'повернуть',{b:1})}</g>`;
+      const sites=[{x:44,y:36,t:'шаг 3'},{x:274,y:36,t:'шаг 7'},{x:44,y:186,t:'шаг 12'},{x:274,y:186,t:'шаг 18'}];
+      sites.forEach((q,k)=>{
+        s+=`<path d="M159 106 Q${(159+q.x)/2} ${(106+q.y)/2} ${q.x} ${q.y}" fill="none" stroke="${A}" stroke-width="1.8" opacity=".5" stroke-dasharray="6 5" class="${pre}Dash"/>`
+          +`<g class="${pre}Slide" style="animation-delay:${(0.14*k).toFixed(2)}s"><rect x="${q.x-32}" y="${q.y-15}" width="64" height="30" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.6"/>${tx(q.x,q.y+4,11,dim,q.t,{})}</g>`
+          +`<circle r="3.4" fill="${gold}"><animateMotion dur="2.6s" begin="${(k*0.5).toFixed(2)}s" repeatCount="indefinite" path="M${q.x} ${q.y} Q${(159+q.x)/2} ${(106+q.y)/2} 159 106"/></circle>`;
+      });
+      s+=`${tx(159,156,10.5,dim,'одно описание — много вызовов',{})}`;
+      return s;
+    }
+    if(K==='zoom'){ /* лупа: что внутри алгоритма */
+      const lines=['повтори 4 раза:','   вперёд','   повернуть','конец'];
+      let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="18" y="84" width="84" height="44" rx="11" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2.2"/>`
+        +`${tx(60,112,12.5,grn,v.name||'квадрат',{b:1})}</g>`;
+      s+=`<path d="M106 106 H138" stroke="${A}" stroke-width="2.2" opacity=".7"/><path d="M134 102 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>`;
+      s+=`<circle class="${pre}Pulse" cx="212" cy="106" r="60" fill="rgba(126,168,255,.08)" stroke="${A}" stroke-width="3"/>`
+        +`<circle cx="212" cy="106" r="54" fill="rgba(8,14,30,.92)" stroke="${A}" stroke-width="1.2" opacity=".7"/>`
+        +`<path d="M256 152 l24 24" stroke="${A}" stroke-width="7" stroke-linecap="round" opacity=".85"/>`;
+      lines.forEach((t,k)=>{
+        const y=74+k*22;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.25+0.14*k).toFixed(2)}s">`
+          +`<rect x="168" y="${y}" width="${t.length*6+16}" height="18" rx="5" fill="rgba(255,255,255,.05)"/>`
+          +`<text x="176" y="${y+13}" font-size="10.5" font-family="'Courier New',monospace" font-weight="bold" fill="${k===0?gold:cyan}">${t}</text></g>`;
+      });
+      return s;
+    }
+    if(K==='square'){ /* робот рисует квадрат: след и углы */
+      const p="M112 66 H206 V160 H112 Z", L=372;
+      let s=`<path d="${p}" fill="none" stroke="${A}" stroke-width="5" opacity=".18"/>`;
+      s+=`<path d="${p}" fill="none" stroke="${grn}" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">
+            <animate attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;.75;1" dur="4.4s" repeatCount="indefinite"/></path>`;
+      [[112,66],[206,66],[206,160],[112,160]].forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.9+k*0.8).toFixed(2)}s"><circle cx="${q[0]}" cy="${q[1]}" r="11" fill="rgba(10,18,36,.96)" stroke="${gold}" stroke-width="1.8"/>`
+          +`<text x="${q[0]}" y="${q[1]+4}" text-anchor="middle" font-size="11" font-weight="bold" fill="${gold}">${k+1}</text></g>`;
+      });
+      s+=`<g><circle r="11" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/><circle cx="-3.6" cy="-3" r="2.4" fill="#1a2340"/><circle cx="3.6" cy="-3" r="2.4" fill="#1a2340"/>`
+        +`<animateMotion dur="4.4s" repeatCount="indefinite" path="${p}"/></g>`;
+      s+=`${tx(159,190,11.5,dim,'4 раза: вперёд и повернуть — получился квадрат',{})}`;
+      return s;
+    }
+    if(K==='tower'){ /* башня из трёх вызовов */
+      let s=`<g class="${pre}Float"><circle cx="52" cy="176" r="16" fill="${gold}" stroke="#fffdf2" stroke-width="1.8"/>`
+        +`<circle cx="46" cy="172" r="3" fill="#1a2340"/><circle cx="58" cy="172" r="3" fill="#1a2340"/></g>`;
+      [[128,148,cyan,'1'],[128,104,grn,'2'],[128,60,gold,'3']].forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.55).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="${q[0]}" y="${q[1]}" width="76" height="40" rx="8" fill="rgba(126,168,255,.14)" stroke="${q[2]}" stroke-width="2.2"/>`
+          +`<path d="M${q[0]+6} ${q[1]+34} h64" stroke="${q[2]}" stroke-width="2" opacity=".7"/></g>`;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.45+k*0.55).toFixed(2)}s"><rect x="216" y="${q[1]+7}" width="82" height="26" rx="8" fill="url(#${pre}card)" stroke="${q[2]}" stroke-width="1.7"/>`
+          +`<text x="257" y="${q[1]+24}" text-anchor="middle" font-size="10.5" font-family="'Courier New',monospace" font-weight="bold" fill="${q[2]}">${'квадрат('+q[3]+')'}</text></g>`;
+        s+=`<path d="M${q[0]+80} ${q[1]+20} H212" stroke="${q[2]}" stroke-width="1.5" opacity=".45" stroke-dasharray="5 4"/>`;
+      });
+      s+=`<path d="M68 176 H124" stroke="${A}" stroke-width="2" opacity=".5" class="${pre}Dash"/>`;
+      s+=`${tx(159,204,11.5,grn,'три вызова — башня из трёх этажей',{b:1})}`;
+      return s;
+    }
+    if(K==='params'){ /* параметр: одно имя — разные размеры */
+      let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="24" y="24" width="118" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="2"/>`
+        +`<text x="83" y="44" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">квадрат(2)</text></g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.16s" filter="url(#${pre}sh)"><rect x="176" y="24" width="118" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>`
+        +`<text x="235" y="44" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">квадрат(5)</text></g>`;
+      s+=`<path d="M83 56 V88" stroke="${cyan}" stroke-width="1.8" opacity=".6" stroke-dasharray="6 5" class="${pre}Dash"/>`
+        +`<path d="M235 56 V76" stroke="${gold}" stroke-width="1.8" opacity=".6" stroke-dasharray="6 5" class="${pre}Dash"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.35s"><rect x="61" y="90" width="44" height="44" rx="4" fill="rgba(126,168,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`
+        +`${tx(83,154,10.5,cyan,'маленький',{})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="180" y="78" width="110" height="110" rx="4" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="2.2"/>`
+        +`${tx(235,204,10.5,gold,'большой',{})}</g>`;
+      s+=`${tx(159,178,11,dim,'одно имя, разные числа → разный результат',{})}`;
+      return s;
+    }
+    if(K==='library'){ /* библиотека алгоритмов */
+      const books=[{x:30,h:64,t:'повернуть',c:cyan},{x:100,h:80,t:'квадрат',c:grn,pull:1},{x:172,h:56,t:'башня',c:gold},{x:242,h:70,t:'дорога',c:pur}];
+      let s=`<rect x="14" y="152" width="290" height="12" rx="4" fill="rgba(255,255,255,.09)" stroke="#31456f" stroke-width="1"/>`;
+      books.forEach((q,k)=>{
+        const y=152-q.h;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.14*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +(q.pull?`<animateTransform attributeName="transform" type="translate" values="0 0;0 -14;0 -14;0 0" keyTimes="0;.25;.8;1" dur="5s" repeatCount="indefinite"/>`:'')
+          +`<rect x="${q.x}" y="${y}" width="58" height="${q.h}" rx="6" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<rect x="${q.x+4}" y="${y+6}" width="50" height="4" rx="2" fill="${q.c}" opacity=".7"/>`
+          +`<text transform="translate(${q.x+29},${y+q.h/2+6}) rotate(-90)" text-anchor="middle" font-size="11" font-weight="bold" fill="${q.c}" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="3">${q.t}</text>`
+          +(q.pull?`<rect class="${pre}Glow" x="${q.x-3}" y="${y-3}" width="64" height="${q.h+6}" rx="9" fill="none" stroke="${q.c}" stroke-width="2" opacity=".5"/>`:'')
+          +`</g>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.7s"><rect x="20" y="176" width="278" height="28" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,195,11,dim,'берём готовый алгоритм по имени',{})}</g>`;
+      return s;
+    }
+    if(K==='compare2'){ /* было / стало: длинно и коротко */
+      const lh=6.4;
+      let s=`<rect x="14" y="30" width="132" height="150" rx="11" fill="rgba(255,120,100,.07)" stroke="${red}" stroke-width="1.8"/>`
+        +`<rect x="172" y="30" width="132" height="150" rx="11" fill="rgba(125,224,160,.08)" stroke="${grn}" stroke-width="1.8"/>`;
+      s+=`${tx(80,50,11,red,'без помощника',{b:1})}${tx(238,50,11,grn,'с помощником',{b:1})}`;
+      s+=`<rect x="60" y="58" width="40" height="20" rx="7" fill="rgba(255,120,100,.16)" stroke="${red}" stroke-width="1.4"/>${tx(80,72,10.5,red,'30',{b:1})}`
+        +`<rect x="218" y="58" width="40" height="20" rx="7" fill="rgba(125,224,160,.16)" stroke="${grn}" stroke-width="1.4"/>${tx(238,72,10.5,grn,'6',{b:1})}`;
+      for(let k=0;k<18;k++){
+        s+=`<rect class="${pre}Slide" style="animation-delay:${(k*0.04).toFixed(2)}s" x="24" y="${80+k*lh}" width="${88-((k*13)%26)}" height="4" rx="2" fill="${red}" opacity=".45"/>`;
+      }
+      ['квадрат','повернуть','квадрат','повернуть','квадрат','конец'].forEach((t,k)=>{
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.3+k*0.12).toFixed(2)}s"><rect x="182" y="${78+k*17}" width="112" height="13" rx="4" fill="rgba(255,255,255,.05)" stroke="${grn}" stroke-opacity=".45"/>`
+          +`<text x="188" y="${88+k*17}" font-size="9.5" font-family="'Courier New',monospace" font-weight="bold" fill="${k===5?'#7f92b6':grn}">${t}</text></g>`;
+      });
+      s+=`<path d="M152 106 h14 m-4 -5 l5 5 l-5 5" stroke="${A}" stroke-width="2" fill="none"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.9s"><rect x="20" y="188" width="278" height="28" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,207,11.5,grn,'30 строк превратились в 6 — понятнее и короче',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='test513'){ /* проверяем помощника отдельно */
+      let s=`<rect x="16" y="30" width="196" height="150" rx="12" fill="rgba(126,168,255,.07)" stroke="${A}" stroke-width="1.8" stroke-dasharray="8 6"/>`
+        +`${tx(114,50,11,dim,'проверяем помощника отдельно',{})}`;
+      s+=`<g class="${pre}Float"><circle cx="52" cy="122" r="17" fill="${gold}" stroke="#fffdf2" stroke-width="1.8"/>`
+        +`<circle cx="46" cy="118" r="3" fill="#1a2340"/><circle cx="58" cy="118" r="3" fill="#1a2340"/></g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.2s"><rect x="88" y="86" width="108" height="72" rx="9" fill="rgba(8,14,30,.95)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<path d="M132 104 H192 V150 H132 Z" fill="none" stroke="${grn}" stroke-width="2.4" stroke-dasharray="180" stroke-dashoffset="180">`
+        +`<animate attributeName="stroke-dashoffset" values="180;0;0" keyTimes="0;.6;1" dur="4s" repeatCount="indefinite"/></path>`
+        +`<path d="M100 132 H124" stroke="${A}" stroke-width="1.6" opacity=".5" stroke-dasharray="5 4" class="${pre}Dash"/></g>`;
+      s+=`<path d="M214 118 H238" stroke="${A}" stroke-width="1.8" opacity=".6"/><path d="M234 114 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.5s" transform="rotate(-12 268 108)"><rect x="240" y="86" width="58" height="44" rx="9" fill="rgba(125,224,160,.16)" stroke="${grn}" stroke-width="2.4"/>`
+        +`<path d="M252 108 l7 8 l14 -18" fill="none" stroke="${grn}" stroke-width="3"/></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.8s"><rect x="20" y="188" width="278" height="28" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,207,11,dim,'верный помощник — верная и вся программа',{})}</g>`;
+      return s;
+    }
+    if(K==='sort'){ /* интерактив: собери алгоритм по порядку */
+      const items=v.items||[], done=(st&&st.seq)?st.seq:[], bad=(st&&typeof st.bad==='number')?st.bad:-1;
+      const full=items.length;
+      let s=`<g class="${pre}Pop"><rect x="16" y="20" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${tx(159,40,Math.min(12,250/Math.max(1,plain(v.q||'').length)/0.64),ink,v.q||'Собери алгоритм по порядку',{b:1})}</g>`;
+      items.forEach((it,k)=>{
+        const col=Math.floor(k/3), row=k%3, x=18+row*98, y=60+col*40;
+        const pos=done.indexOf(k), placed=pos>=0, isBad=(bad===k);
+        const c=placed?grn:(isBad?red:A);
+        const bg=placed?'rgba(19,44,35,.97)':(isBad?'rgba(52,22,26,.97)':'rgba(15,25,46,.97)');
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.1*k).toFixed(2)}s;cursor:pointer" onclick="infSeq('${lk}',${k},${it.ord})">`
+          +`<rect x="${x}" y="${y}" width="94" height="32" rx="9" fill="${bg}" stroke="${c}" stroke-width="2"/>`
+          +(placed?`<circle cx="${x+16}" cy="${y+16}" r="10" fill="${grn}" opacity=".28" stroke="${grn}" stroke-width="1.4"/><text x="${x+16}" y="${y+21}" text-anchor="middle" font-size="11" font-weight="bold" fill="${grn}">${pos+1}</text>`
+                 :`<circle cx="${x+16}" cy="${y+16}" r="10" fill="rgba(255,255,255,.05)" stroke="${c}" stroke-width="1.3"/>`)
+          +`${tx(x+58,y+21,Math.min(10.5,60/Math.max(1,plain(it.t).length)/0.62),placed?grn:ink,it.t,{})}</g>`;
+      });
+      const sy=148;
+      s+=`<rect x="18" y="${sy}" width="284" height="34" rx="10" fill="rgba(10,18,36,.9)" stroke="${A}" stroke-opacity=".45" stroke-width="1.5"/>`
+        +`${tx(159,sy-4,9.5,dim,'порядок выполнения',{})}`;
+      for(let k=0;k<full;k++){
+        const x=24+k*56;
+        s+=`<rect x="${x}" y="${sy+6}" width="50" height="22" rx="7" fill="${done[k]!==undefined?'rgba(19,44,35,.98)':'rgba(255,255,255,.04)'}" stroke="${done[k]!==undefined?grn:'#2b3c62'}" stroke-width="1.4"/>`
+          +`<text x="${x+25}" y="${sy+21}" text-anchor="middle" font-size="11" font-weight="bold" fill="${done[k]!==undefined?grn:'#5f78a8'}">${k+1}</text>`;
+      }
+      if(done.length===full) s+=`<g class="${pre}Pop"><rect x="18" y="190" width="284" height="28" rx="9" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>${tx(159,209,11.5,grn,'Порядок верный! Алгоритм собран.',{b:1})}</g>`;
+      else s+=`<g class="${pre}Rise"><rect x="18" y="190" width="284" height="28" rx="9" fill="rgba(15,25,46,.95)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,209,11,dim,bad>=0?'Не тот шаг — подумай, что должно быть раньше':'Нажимай шаги в правильном порядке',{})}</g>`;
+      return s;
+    }
+    if(K==='naming'){ /* правила имени алгоритма */
+      const t=[{n:'повернуть',ok:1},{n:'квадрат',ok:1},{n:'алг 1',ok:0},{n:'поворот-на-90-градусов-вправо',ok:0}];
+      let s='';
+      t.forEach((q,k)=>{
+        const y=26+k*38, c=q.ok?grn:red;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.12*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<path d="M34 ${y} h${q.ok?212:200} l16 16 l-16 16 H34 z" fill="${q.ok?'rgba(125,224,160,.1)':'rgba(255,120,100,.1)'}" stroke="${c}" stroke-width="1.8"/>`
+          +`${tx(q.ok?50:50,y+21,Math.min(11.5,(q.ok?190:150)/Math.max(1,q.n.length)/0.64),c,q.n,{an:'start',b:1})}`
+          +`<circle cx="272" cy="${y+16}" r="13" fill="${c}" opacity=".16" stroke="${c}" stroke-width="1.6"/>`
+          +(q.ok?`<path d="M266 ${y+16} l5 6 l11 -13" fill="none" stroke="${c}" stroke-width="2.8"/>`
+               :`<path d="M266 ${y+11} l12 10 M278 ${y+11} l-12 10" stroke="${c}" stroke-width="2.6" fill="none"/>`)
+          +`</g>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.6s"><rect x="20" y="182" width="278" height="28" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,201,10.5,dim,'имя — короткое, понятное, без пробелов',{})}</g>`;
+      return s;
+    }
+    if(K==='summary513'){ /* пирамида: из чего состоит большая программа */
+      const lv=[{y:150,w:250,t:'большая программа',c:gold},{y:104,w:190,t:'алгоритмы-помощники',c:grn},{y:58,w:130,t:'команды исполнителя',c:cyan}];
+      let s='';
+      lv.forEach((q,k)=>{
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.2+0.16*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<path d="M${159-q.w/2} ${q.y} h${q.w} l${(q.w-(q.w-30))/2} -34 h-${q.w-30} z" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2.2"/>`
+          +`<rect class="${pre}Spot" style="animation-delay:${(k*0.5).toFixed(2)}s;animation-duration:2.5s" x="${159-q.w/2}" y="${q.y-34}" width="${q.w}" height="34" fill="${q.c}" opacity=".1"/>`
+          +`${tx(159,q.y-13,11.5,q.c,q.t,{b:1})}</g>`;
+      });
+      s+=`<path d="M159 58 V42" stroke="${gold}" stroke-width="2.4" opacity=".8"/><path class="${pre}Twinkle" d="M159 20 l5 12 l12 2 l-9 8 l2 13 l-10 -6 l-10 6 l2 -13 l-9 -8 l12 -2 z" fill="${gold}" opacity=".9"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.75s"><rect x="20" y="188" width="278" height="28" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,207,11,dim,'большое строится из маленьких понятных частей',{})}</g>`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -917,6 +1162,21 @@
     if(K==='trace') return 26+27+(v.rows||[]).length*27+44;
     if(K==='compare') return 208;
     if(K==='text') return ((v.lines||[]).length<=2)?(132+26*(v.lines||[]).length):Math.max(134, (v.lines||[]).length*39+54);
+    if(K==='bigtask') return 226;
+    if(K==='plan') return 216;
+    if(K==='recipe') return 200;
+    if(K==='helper') return 214;
+    if(K==='call') return 216;
+    if(K==='zoom') return 200;
+    if(K==='square') return 202;
+    if(K==='tower') return 214;
+    if(K==='params') return 218;
+    if(K==='library') return 214;
+    if(K==='compare2') return 226;
+    if(K==='test513') return 226;
+    if(K==='sort') return 70+((v.items||[]).length>3?2:1)*40+136;
+    if(K==='naming') return 220;
+    if(K==='summary513') return 226;
     if(K==='machine') return 216;
     if(K==='rain') return 212;
     return 180;
@@ -1328,6 +1588,44 @@
       tasks:[
         {q:'Робот сделал 3 шага и 1 поворот. Сколько всего команд выполнила программа?', kind:'unit', ans:4, tol:0, hints:['Сложи шаги и повороты.','3 + 1 = 4.'], sol:'4'},
         {q:'Что случится, если внутри цикла «пока» не менять условие?', kind:'choice', choices:['программа зациклится','робот сразу остановится','цикл выполнится один раз','ничего не изменится'], ans:0, tol:0, hints:['Условие всё время остаётся истинным.','Получится бесконечный цикл.'], sol:'программа зациклится'}
+      ] },
+    { id:513, title:'Разбиваем задачу на части: помощники', ico:'🧩', src:'Информатика · 5–6 класс · С нуля: вспомогательные алгоритмы',
+      explain:[
+        'Большую задачу писать целиком тяжело: в ней много одинаковых кусков, и в них легко запутаться.',
+        'Люди так не делают. Большую работу разбивают на маленькие понятные части: «сначала это, потом это, потом это».',
+        'Маленькая часть алгоритма со своим именем называется ВСПОМОГАТЕЛЬНЫЙ АЛГОРИТМ. По-другому — подпрограмма.',
+        'Вспомогательный алгоритм похож на рецепт в книге: у него есть имя (название рецепта) и тело (сами команды).',
+        'Чтобы воспользоваться помощником, в программе пишут его ИМЯ. Это называется вызов. Компьютер идёт и выполняет команды этого алгоритма, а потом возвращается обратно.',
+        'Один и тот же помощник можно вызывать сколько угодно раз и из разных мест программы — описываем один раз, используем много раз.',
+        'Имя должно быть понятным: «квадрат», «повернуть», «дорога». Тогда программа читается как рассказ, а не как шифр.',
+        'Пример: квадрат — это «повтори 4 раза: вперёд и повернуть». Опишем его один раз, а рисовать квадраты будем вызовом «квадрат».',
+        'Башня из трёх квадратов — это три вызова «квадрат», а не тридцать одинаковых команд. Программа стала короче и понятнее.',
+        'Помощнику можно передать число — параметр. Например, вызов «квадрат(5)» нарисует квадрат со стороной 5.',
+        'Благодаря параметру один и тот же алгоритм работает по-разному: «квадрат(2)» — маленький, «квадрат(5)» — большой.',
+        'Когда помощников много, они собираются в библиотеку. Программист берёт из неё нужный алгоритм по имени и не пишет всё заново.',
+        'Каждый помощник проверяют отдельно: запускают только его и смотрят, что получилось. Если помощник верный, то и большая программа будет верной.',
+        'Проверь себя: зачем разбивать задачу на части? Чтобы не повторять одно и то же, легче читать и проще находить ошибки.',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'Задача слишком большая', v:{kind:'bigtask'}, r:'Много одинаковых команд — легко ошибиться.'},
+        {h:'Разбиваем на части', v:{kind:'plan'}, r:'Большое делим на маленькие понятные шаги.'},
+        {h:'Что такое помощник', v:{kind:'recipe', name:'квадрат'}, r:'У алгоритма-помощника есть имя и тело.'},
+        {h:'Главный и помощник', v:{kind:'helper', name:'квадрат'}, r:'Главная программа вызывает помощника по имени.'},
+        {h:'Вызов из разных мест', v:{kind:'call', name:'повернуть'}, r:'Одно описание — сколько угодно вызовов.'},
+        {h:'Заглянем внутрь', v:{kind:'zoom', name:'квадрат'}, r:'Внутри помощника — обычные команды.'},
+        {h:'Рисуем квадрат', v:{kind:'square'}, r:'4 раза: вперёд и повернуть.'},
+        {h:'Башня из квадратов', v:{kind:'tower'}, r:'Три вызова — три этажа.'},
+        {h:'Число-параметр', v:{kind:'params'}, r:'Одно имя, разные числа — разный результат.'},
+        {h:'Библиотека помощников', v:{kind:'library'}, r:'Готовые алгоритмы берём по имени.'},
+        {h:'Было и стало', v:{kind:'compare2'}, r:'С помощником программа короче в пять раз.'},
+        {h:'Проверяем помощника', v:{kind:'test513'}, r:'Сначала проверь помощника отдельно.'},
+        {h:'Тренажёр', v:{kind:'sort', q:'Собери алгоритм «приготовить чай» по порядку', items:[{t:'положить чай', ord:2},{t:'взять чашку', ord:1},{t:'выпить', ord:5},{t:'налить кипяток', ord:3},{t:'подождать', ord:4}]}, r:'Шаги выполняются по порядку.'},
+        {h:'Как назвать помощника', v:{kind:'naming'}, r:'Имя — короткое и понятное.'},
+        {h:'Из чего состоит программа', v:{kind:'summary513'}, r:'Команды → помощники → большая программа.'} ],
+      check:{ q:'Что такое вспомогательный алгоритм?', choices:['маленький алгоритм со своим именем, который вызывают по имени','самая главная программа','ошибка в программе'], ans:0, exp:'Вспомогательный алгоритм — маленькая часть со своим именем; её вызывают по имени.' },
+      tasks:[
+        {q:'Сколько раз выполнится помощник «квадрат», если в программе три вызова «квадрат»?', kind:'unit', ans:3, tol:0, hints:['Каждый вызов — одно выполнение.','Три вызова — три раза.'], sol:'3'},
+        {q:'Как воспользоваться помощником с именем «дорога»?', kind:'choice', choices:['написать его имя: дорога','написать слово «вызов»','скопировать все его команды в программу','написать имя в кавычках'], ans:0, tol:0, hints:['Вызов — это просто имя алгоритма.','Пишем имя: дорога.'], sol:'написать его имя: дорога'}
       ] }
   ];
 
@@ -1337,16 +1635,18 @@
     css(pre);
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; }
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; st.seq=[]; st.bad=-1; }
     const go=st.go||0;
     const s=spec.slides[Math.min(step,spec.slides.length-1)];
-    const isPick=(s.v.kind==='pick');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
-    const btnRow = isPick
+    const btnRow = (s.v.kind==='sort')
+      ? wkRow(wkBtn('собрать заново',`infSeq('${lk}',-1,0)`))
+      : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = isPick? (st.pick>=0 && s.r) : (go && s.r);
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -1354,6 +1654,14 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infSeq=function(lk,i,ord){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(i<0){ st.seq=[]; st.bad=-1; chRender(0); return; }
+    const sq=st.seq||(st.seq=[]);
+    if(sq.indexOf(i)>=0) return;
+    if(ord===sq.length+1){ sq.push(i); st.bad=-1; } else { st.bad=i; }
+    chRender(0);
+  };
   window.infPick=function(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); };
   window.infAct=function(lk){ const st=CHS[lk]||(CHS[lk]={}); st.go=st.go?0:1; chRender(0); };
   LESSONS.forEach(function(L){ L.subj='inf'; });
