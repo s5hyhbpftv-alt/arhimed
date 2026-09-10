@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 26 уроков (id 500–525) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 27 уроков (id 500–526) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -55,6 +55,89 @@
   };
   const growBar=(x,y,w,h,fill,dur,beg,stroke)=>`<rect x="${x}" y="${y}" width="0" height="${h}" rx="${h/2}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="1.2">`
     +`<animate fill="freeze" attributeName="width" values="0;${w};${w}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="1"/></rect>`;
+  /* ---------- движок ИИ: данные, нейросеть, график точности ---------- */
+  const aiExamples=[{x:0.20,y:0,ch:'квадрат'},{x:0.30,y:0,ch:'квадрат'},{x:0.35,y:0,ch:'квадрат'},{x:0.42,y:0,ch:'квадрат'},{x:0.48,y:0,ch:'квадрат'},
+                    {x:0.55,y:1,ch:'круг'},{x:0.62,y:1,ch:'круг'},{x:0.68,y:0,ch:'квадрат'},{x:0.75,y:1,ch:'круг'},{x:0.85,y:1,ch:'круг'}];
+  const aiShape=(x,y,s,kind,col,sw)=>{
+    if(kind==='circle') return `<circle cx="${x}" cy="${y}" r="${s}" fill="${col}" fill-opacity=".28" stroke="${col}" stroke-width="${sw||2.2}"/>`;
+    if(kind==='square') return `<rect x="${x-s}" y="${y-s}" width="${s*2}" height="${s*2}" rx="2" fill="${col}" fill-opacity=".28" stroke="${col}" stroke-width="${sw||2.2}"/>`;
+    return `<path d="M${x} ${y-s} L${x+s} ${y+s*0.8} L${x-s} ${y+s*0.8} Z" fill="${col}" fill-opacity=".28" stroke="${col}" stroke-width="${sw||2.2}"/>`;
+  };
+  const aiAxis=(x0,x1,y,col,label0,label1)=>{
+    let s2=drawPoly([[x0,y],[x1,y]],col,1.6,0.2,2,{pen:false,keep:true});
+    s2+=`<path d="M${x1} ${y} l-9 -5 v10 z" fill="${col}"/>`;
+    s2+=`<text x="${x0}" y="${y+20}" text-anchor="middle" font-size="10.5" fill="${dim}">${label0}</text>`;
+    s2+=`<text x="${x1}" y="${y+20}" text-anchor="middle" font-size="10.5" fill="${dim}">${label1}</text>`;
+    return s2;
+  };
+  const aiThreshold=(x0,x1,y,t,col,label)=>{
+    const x=x0+(x1-x0)*t;
+    let s2=`<line x1="${x.toFixed(1)}" y1="${y-46}" x2="${x.toFixed(1)}" y2="${y+46}" stroke="${col}" stroke-width="2.6" stroke-dasharray="7 5"/>`;
+    s2+=`<circle cx="${x.toFixed(1)}" cy="${y-52}" r="5" fill="${col}"/>`;
+    if(label) s2+=`<text x="${x.toFixed(1)}" y="${y+62}" text-anchor="middle" font-size="10.5" fill="${col}">${label}</text>`;
+    return s2;
+  };
+  const drawNet=(cx,cy,layers,pre,opt)=>{
+    const o=opt||{}, gapX=o.gapX||46, gapY=14, R=8;
+    const pos=layers.map((n,k)=>{
+      const col=[];
+      for(let j=0;j<n;j++) col.push([cx+(k-(layers.length-1)/2)*gapX, cy+(j-(n-1)/2)*gapY*1.5]);
+      return col;
+    });
+    let s2='';
+    for(let k=0;k<pos.length-1;k++) for(const a of pos[k]) for(const b of pos[k+1]){
+      s2+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${o.c||cyan}" stroke-width="1" opacity=".35"/>`;
+    }
+    pos.forEach((col,k)=>{
+      col.forEach((q,j)=>{
+        const col2=k===0?blu:(k===pos.length-1?gold:cyan);
+        s2+=`<circle class="${pre}Pop" style="animation-delay:${(0.1*k+j*0.05).toFixed(2)}s" cx="${q[0]}" cy="${q[1]}" r="${R}" fill="rgba(12,32,34,.97)" stroke="${col2}" stroke-width="1.8"/>`;
+      });
+    });
+    if(o.anim){
+      s2+=`<circle r="4.5" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M${pos[0][0][0]} ${pos[0][0][1]} L${pos[1][0][0]} ${pos[1][0][1]} L${pos[2][0][0]} ${pos[2][0][1]}"/></circle>`;
+      s2+=`<circle r="4.5" fill="${grn}"><animateMotion dur="2.6s" begin="0.5s" repeatCount="indefinite" path="M${pos[0][pos[0].length-1][0]} ${pos[0][pos[0].length-1][1]} L${pos[1][pos[1].length-1][0]} ${pos[1][pos[1].length-1][1]} L${pos[2][pos[2].length-1][0]} ${pos[2][pos[2].length-1][1]}"/></circle>`;
+    }
+    return s2;
+  };
+  const drawAcc=(x0,y0,w,h,pts,pre,opt)=>{
+    const o=opt||{};
+    let s2=drawPoly([[x0,y0],[x0+w,y0]],cardB,1.4,0.2,1.6,{pen:false,keep:true})+drawPoly([[x0,y0],[x0,y0-h]],cardB,1.4,0.2,1.6,{pen:false,keep:true});
+    for(let k=1;k<=4;k++) s2+=`<line x1="${x0}" y1="${y0-h*k/4}" x2="${x0+w}" y2="${y0-h*k/4}" stroke="#2c3868" stroke-width="1"/>`;
+    s2+=`<line x1="${x0}" y1="${y0-h}" x2="${x0+w}" y2="${y0-h}" stroke="${grn}" stroke-width="1.6" stroke-dasharray="6 5"/>`;
+    s2+=`<text x="${x0+w+2}" y="${y0-h+4}" text-anchor="end" font-size="10" fill="${grn}">100%</text>`;
+    const step=w/Math.max(1,pts.length-1);
+    const path=pts.map((v,k)=>[x0+k*step, y0-h*v]).map(q=>q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' L');
+    s2+=`<path d="M${path}" fill="none" stroke="${o.c||gold}" stroke-width="2.6" stroke-linecap="round"/>`;
+    pts.forEach((v,k)=>{ s2+=`<circle class="${pre}Pop" style="animation-delay:${(0.3+k*0.25).toFixed(2)}s" cx="${(x0+k*step).toFixed(1)}" cy="${(y0-h*v).toFixed(1)}" r="4" fill="${o.c||gold}"/>`; });
+    return s2;
+  };
+  const drawDecisionTree=(cx,cy,pre,opt)=>{
+    const o=opt||{};
+    const N={root:[cx,cy],a:[cx-72,cy+58],b:[cx+72,cy+58],a1:[cx-108,cy+118],a2:[cx-40,cy+118],b1:[cx+40,cy+118],b2:[cx+108,cy+118]};
+    let s2='';
+    const link=(p,q)=>{ s2+=drawPoly([p,q],o.dim||cardB,1,0.15,1.6,{pen:false,keep:true}); };
+    link(N.root,N.a); link(N.root,N.b); link(N.a,N.a1); link(N.a,N.a2); link(N.b,N.b1); link(N.b,N.b2);
+    const node=(p,t,col,fill)=>`<g class="${pre}Pop" style="animation-delay:${(0.2+(fill||0)*0.2).toFixed(2)}s"><rect x="${p[0]-32}" y="${p[1]-13}" width="64" height="26" rx="8" fill="rgba(12,32,34,.97)" stroke="${col}" stroke-width="1.7"/>`
+      +fit(p[0],p[1]+4,10,col,t,{b:1},58)+`</g>`;
+    s2+=node(N.root,o.q1||'вопрос 1?',cyan,0);
+    s2+=node(N.a,o.q2||'вопрос 2?',cyan,1);
+    s2+=node(N.b,o.q3||'вопрос 3?',cyan,2);
+    s2+=node(N.a1,o.a1||'ответ A',grn,3);
+    s2+=node(N.a2,o.a2||'ответ B',gold,3);
+    s2+=node(N.b1,o.b1||'ответ C',gold,3);
+    s2+=node(N.b2,o.b2||'ответ D',red,3);
+    return s2;
+  };
+  const aiWeightBar=(x,y,w,h,v,col,label)=>{
+    const mid=x+w/2, frac=Math.max(-1,Math.min(1,v));
+    let s2=`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h/2}" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.4"/>`
+      +`<line x1="${mid}" y1="${y-3}" x2="${mid}" y2="${y+h+3}" stroke="${dim}" stroke-width="1.4"/>`;
+    if(frac>=0) s2+=`<rect x="${mid}" y="${y+1}" width="${(w/2-1)*frac}" height="${h-2}" rx="${(h-2)/2}" fill="${col}"/>`;
+    else s2+=`<rect x="${mid+(w/2-1)*frac}" y="${y+1}" width="${(w/2-1)*(-frac)}" height="${h-2}" rx="${(h-2)/2}" fill="${red}"/>`;
+    if(label) s2+=`<text x="${x-6}" y="${y+h*0.7}" text-anchor="end" font-size="10.5" fill="${dim}">${label}</text>`;
+    return s2;
+  };
   /* ---------- движок фракталов (рекурсивная прорисовка) ---------- */
   const fracTree=(x,y,len,ang,depth,base,out)=>{
     const o=out||[]; const x2=x+Math.cos(ang)*len, y2=y+Math.sin(ang)*len;
@@ -4984,6 +5067,462 @@
       s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11.5,pre);
       return s;
     }
+    if(K==='aiintro'){ /* что такое ИИ */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'искусственный интеллект учится на примерах',{b:1},262)+`</g>`;
+      s+=aiShape(70,120,34,'circle',grn,2.6)+aiShape(159,120,30,'square',blu,2.6)+aiShape(248,120,32,'circle',grn,2.6);
+      s+=aiShape(70,214,34,'square',blu,2.6)+aiShape(159,214,30,'circle',grn,2.6)+aiShape(248,214,32,'square',blu,2.6);
+      s+=fit(159,88,11,dim,'примеры с ответами',{b:1},200);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="52" y="256" width="214" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,279,11.5,cyan,'машина ищет закономерность сама',{b:1},200)+`</g>`;
+      s+=plate2(18,290,282,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='aiwhere'){ /* где встречается */
+      const cards=[{t:'фото',d:'найти кота',c:grn},{t:'голос',d:'понять слова',c:cyan},{t:'перевод',d:'с языка на язык',c:gold},
+                   {t:'рекомендации',d:'что посмотреть',c:pur},{t:'игры',d:'обыграть человека',c:blu},{t:'медицина',d:'заметить болезнь',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'где уже работает ИИ',{b:1},262)+`</g>`;
+      cards.forEach((q,k)=>{
+        const x=22+(k%3)*94, y=54+Math.floor(k/3)*100;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.14).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="88" height="86" rx="11" fill="rgba(12,32,34,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(x+44,y+34,12,q.c,q.t,{b:1},80)
+          +fit(x+44,y+56,10,dim,q.d,{},80);
+        const cx=x+44, cy=y+66;
+        if(k===0) s+=aiShape(cx,cy,10,'circle',q.c,1.6);
+        else if(k===1) s+=`<path d="M${cx-10} ${cy} q5 -10 10 0 q5 10 10 0" fill="none" stroke="${q.c}" stroke-width="1.8"/>`;
+        else if(k===2) s+=`<path d="M${cx-10} ${cy} h20 M${cx-3} ${cy-7} l-7 7 l7 7" fill="none" stroke="${q.c}" stroke-width="1.8"/>`;
+        else if(k===3) s+=`<path d="M${cx-10} ${cy+6} l6 -12 l6 12 l6 -12" fill="none" stroke="${q.c}" stroke-width="1.8"/>`;
+        else if(k===4) s+=`<rect x="${cx-10}" y="${cy-7}" width="20" height="14" rx="4" fill="none" stroke="${q.c}" stroke-width="1.8"/>`;
+        else s+=`<path d="M${cx-10} ${cy} h20 M${cx} ${cy-8} v16" stroke="${q.c}" stroke-width="1.8"/>`;
+        s+=`</g>`;
+      });
+      s+=plate2(22,268,274,28,go?grn:cardB,go?'ИИ помогает людям в разных делах':'где встречается ИИ?',11.5,pre);
+      return s;
+    }
+    if(K==='ainotmagic'){ /* не магия */
+      const it=[{t:'ИИ не «думает» как человек',c:red},{t:'он находит закономерности в данных',c:grn},{t:'чем больше данных — тем лучше',c:cyan}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'это не волшебство, а математика',{b:1},262)+`</g>`;
+      it.forEach((q,k)=>{
+        const y=54+k*52;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.22).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="42" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<circle cx="46" cy="${y+21}" r="10" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.3"/>`
+          +tx(46,y+25,11,q.c,''.concat(k+1),{b:1})
+          +fit(176,y+26,11.5,q.c,q.t,{b:1},228)+`</g>`;
+      });
+      s+=drawNet(159,258,[3,3,2],pre,{anim:true});
+      s+=fit(159,300,10.5,dim,'внутри — числа и вычисления',{},280);
+      return s;
+    }
+    if(K==='aidata'){ /* данные */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'данные: примеры вместе с ответами',{b:1},262)+`</g>`;
+      const rows=[['большой круг','круг'],['маленький квадрат','квадрат'],['круг средний','круг'],['квадрат большой','квадрат']];
+      s+=`<rect x="24" y="54" width="180" height="30" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.4"/>`;
+      s+=fit(114,74,11.5,cyan,'что видим',{b:1},160);
+      s+=`<rect x="210" y="54" width="84" height="30" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.4"/>`;
+      s+=fit(252,74,11.5,gold,'ответ',{b:1},76);
+      rows.forEach((q,k)=>{
+        const y=88+k*34;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.16).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="180" height="28" rx="7" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
+          +fit(114,y+19,11,ink,q[0],{},170)
+          +`<rect x="210" y="${y}" width="84" height="28" rx="7" fill="rgba(18,24,44,.97)" stroke="${k%2?blu:grn}" stroke-width="1.3"/>`
+          +fit(252,y+19,11,k%2?blu:grn,q[1],{b:1},76);
+        const cx=290, cy=y+14;
+        s+=(q[1]==='круг'?aiShape(cx,cy,9,'circle',grn,1.6):aiShape(cx,cy,9,'square',blu,1.6))+`</g>`;
+      });
+      s+=plate2(24,232,270,32,go?grn:cardB,go?'это и есть обучающая выборка':'как устроены данные?',11.5,pre);
+      s+=`${fit(159,290,11,dim,'чем больше примеров, тем умнее машина',{},290)}`;
+      return s;
+    }
+    if(K==='aifeatures'){ /* признаки */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'признаки: по чему различаем',{b:1},262)+`</g>`;
+      const feats=[{t:'форма',v:'круглая или угловатая',c:grn},{t:'размер',v:'большой или маленький',c:cyan},{t:'цвет',v:'светлый или тёмный',c:gold}];
+      s+=aiShape(74,120,30,'circle',grn,2.4)+aiShape(244,120,26,'square',blu,2.4);
+      s+=fit(159,124,16,gold,'?',{b:1},30);
+      feats.forEach((q,k)=>{
+        const y=176+k*36;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.2+k*0.2).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="258" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(80,y+20,11.5,q.c,q.t,{b:1},96)
+          +fit(206,y+20,10.5,dim,q.v,{},140)+`</g>`;
+      });
+      s+=plate2(30,292,258,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='aiexample'){ /* пример: круг или квадрат */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'признак «округлость» от 0 до 1',{b:1},262)+`</g>`;
+      s+=aiAxis(40,278,150,dim,'0 · квадрат','1 · круг');
+      aiExamples.forEach((q,k)=>{
+        const x=40+238*q.x, y=150;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.12).toFixed(2)}s">`
+          +`<circle cx="${x.toFixed(1)}" cy="${y}" r="9" fill="${q.y?grn:blu}" fill-opacity=".35" stroke="${q.y?grn:blu}" stroke-width="2"/></g>`;
+      });
+      s+=fit(159,200,11.5,ink,'каждый пример получил число — округлость',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.4s"><rect x="40" y="216" width="238" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,239,11.5,cyan,'машине осталось провести границу',{b:1},226)+`</g>`;
+      s+=fit(159,272,11,dim,'слева квадраты, справа круги',{},290);
+      return s;
+    }
+    if(K==='aiweight'){ /* вес признака */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'вес признака: насколько он важен',{b:1},262)+`</g>`;
+      s+=aiWeightBar(96,74,180,20,0.9,grn,'округлость');
+      s+=aiWeightBar(96,124,180,20,-0.6,red,'угловатость');
+      s+=aiWeightBar(96,174,180,20,0.25,cyan,'размер');
+      s+=fit(159,220,11.5,ink,'чем важнее признак, тем больше вес',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.2s"><rect x="36" y="236" width="246" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,259,11.5,gold,'веса машина подбирает сама',{b:1},234)+`</g>`;
+      s+=`${fit(159,292,11,dim,'красный вес работает против признака',{},290)}`;
+      return s;
+    }
+    if(K==='aiguess'){ /* первая догадка */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,red,'сначала машина угадывает наугад',{b:1},262)+`</g>`;
+      s+=aiAxis(40,278,160,dim,'0','1');
+      s+=aiThreshold(40,278,160,0.18,red,'граница');
+      aiExamples.forEach((q,k)=>{
+        const x=40+238*q.x;
+        s+=`<circle cx="${x.toFixed(1)}" cy="160" r="9" fill="${q.y?grn:blu}" fill-opacity=".3" stroke="${q.y?grn:blu}" stroke-width="1.8"/>`;
+      });
+      s+=fit(159,214,11.5,ink,'граница стоит почти в самом начале',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.2s"><rect x="36" y="230" width="246" height="34" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
+        +fit(159,253,11.5,red,'почти всё машина называет кругом — ошибки',{b:1},234)+`</g>`;
+      s+=`${fit(159,288,11,dim,'правильных ответов мало',{},290)}`;
+      return s;
+    }
+    if(K==='aicorrect'){ /* исправляем */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'увидев ошибку, машина сдвигает границу',{b:1},262)+`</g>`;
+      s+=aiAxis(40,278,160,dim,'0','1');
+      s+=aiThreshold(40,278,160,0.18,red,'было');
+      s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;74 0;74 0;0 0" keyTimes="0;.45;.9;1" dur="6s" repeatCount="indefinite"/>`
+        +aiThreshold(40,278,160,0.18,grn,'стало')+`</g>`;
+      aiExamples.forEach((q,k)=>{
+        const x=40+238*q.x;
+        s+=`<circle cx="${x.toFixed(1)}" cy="160" r="9" fill="${q.y?grn:blu}" fill-opacity=".3" stroke="${q.y?grn:blu}" stroke-width="1.8"/>`;
+      });
+      s+=fit(159,216,11.5,ink,'граница поехала вправо — к правильному месту',{b:1},292);
+      s+=plate2(24,234,270,32,go?grn:cardB,go?'так машина учится на ошибках':'что произошло с границей?',11.5,pre);
+      s+=`${fit(159,292,11,dim,'каждая ошибка — маленький шаг',{},290)}`;
+      return s;
+    }
+    if(K==='ailoop'){ /* цикл обучения */
+      const st2=[{t:'показать пример',c:cyan},{t:'машина отвечает',c:gold},{t:'сравнить с ответом',c:pur},{t:'исправить веса',c:grn}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'обучение — это цикл из четырёх шагов',{b:1},262)+`</g>`;
+      st2.forEach((q,k)=>{
+        const y=56+k*46;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="60" y="${y}" width="198" height="32" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+21,11.5,q.c,q.t,{b:1},186)+`</g>`;
+        if(k<3) s+=drawPoly([[159,y+34],[159,y+42]],q.c,1,0.4+k*0.2,1.8,{pen:false,keep:true});
+      });
+      s+=`<path d="M258 72 q22 60 0 118" fill="none" stroke="${gold}" stroke-width="2.2" stroke-dasharray="7 5"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:1.2s"><path d="M252 184 l6 8 l8 -8" fill="none" stroke="${gold}" stroke-width="2.4"/></g>`;
+      s+=fit(276,140,10.5,gold,'повторять',{b:1},60);
+      s+=plate2(60,248,198,30,go?grn:cardB,go?'повторяем много раз — машина учится':'что делаем по кругу?',11,pre);
+      return s;
+    }
+    if(K==='aimore'){ /* больше примеров */
+      const rows=[{n:'10 примеров',v:0.6,c:red},{n:'50 примеров',v:0.78,c:gold},{n:'200 примеров',v:0.92,c:cyan},{n:'1000 примеров',v:0.97,c:grn}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'чем больше примеров, тем точнее',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=56+k*42;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="26" y="${y}" width="266" height="32" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`
+          +fit(96,y+21,11,ink,q.n,{b:1},130)
+          +growBar(180,y+11,72*q.v,10,q.c,1.2,0.4+k*0.2,0)
+          +fit(266,y+21,11,q.c,Math.round(q.v*100)+'%',{b:1},50)+`</g>`;
+      });
+      s+=`${fit(159,246,11.5,ink,'точность растёт с каждым новым примером',{b:1},290)}`;
+      s+=plate2(26,258,266,30,go?grn:cardB,go?'1000 примеров — точность 97%':'как меняется точность?',11.5,pre);
+      return s;
+    }
+    if(K==='aiaccuracy'){ /* график точности */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'точность растёт шаг за шагом',{b:1},262)+`</g>`;
+      s+=drawAcc(56,232,240,150,[0.1,0.25,0.3,0.45,0.5,0.55,0.7,0.85,0.9,0.95],pre,{c:grn});
+      s+=fit(56,254,10.5,dim,'сначала',{an:'start'},60);
+      s+=fit(296,254,10.5,dim,'потом',{an:'end'},60);
+      s+=fit(159,276,11.5,ink,'каждая попытка делает модель чуть лучше',{b:1},292);
+      s+=plate2(24,288,270,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='aitree'){ /* дерево решений */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'дерево решений: вопросы «да» и «нет»',{b:1},262)+`</g>`;
+      s+=drawDecisionTree(159,86,pre,{q1:'есть перья?',q2:'умеет летать?',q3:'живёт в воде?',a1:'птица',a2:'пингвин',b1:'рыба',b2:'кот'});
+      s+=fit(159,240,11.5,ink,'идём по вопросам — и получаем ответ',{b:1},292);
+      s+=plate2(24,254,270,30,go?grn:cardB,go?'так машина объясняет своё решение':'как машина решает?',11.5,pre);
+      s+=`${fit(159,308,11,dim,'дерево можно нарисовать и понять',{},290)}`;
+      return s;
+    }
+    if(K==='aineuron'){ /* нейросеть */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'нейросеть: много нейронов и связей',{b:1},262)+`</g>`;
+      s+=drawNet(159,140,[4,4,3],pre,{anim:true,gapX:56});
+      s+=fit(56,140,10.5,blu,'вход',{b:1},44);
+      s+=fit(159,206,10.5,cyan,'скрытый слой',{b:1},80);
+      s+=fit(262,140,10.5,gold,'ответ',{b:1},50);
+      s+=fit(159,232,11.5,ink,'сигнал идёт от входа к ответу',{b:1},292);
+      s+=plate2(24,246,270,32,go?grn:cardB,go?'каждый нейрон складывает сигналы с весами':'как устроена нейросеть?',11.5,pre);
+      s+=`${fit(159,300,11,dim,'связей очень много — вот почему нужны компьютеры',{},292)}`;
+      return s;
+    }
+    if(K==='ailayers'){ /* слои */
+      const L3=[{t:'вход: признаки',d:'округлость, размер, цвет',c:blu},{t:'скрытые слои',d:'ищем сочетания признаков',c:cyan},{t:'выход: ответ',d:'круг или квадрат',c:gold}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'слои: от признаков к ответу',{b:1},262)+`</g>`;
+      L3.forEach((q,k)=>{
+        const y=56+k*52;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.22).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="258" height="42" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(96,y+20,11.5,q.c,q.t,{b:1},130)
+          +fit(212,y+34,10,dim,q.d,{},150)+`</g>`;
+        if(k<2) s+=drawPoly([[159,y+44],[159,y+50]],q.c,1,0.5+k*0.2,1.8,{pen:false,keep:true});
+      });
+      s+=drawNet(159,262,[3,4,2],pre,{});
+      s+=`${fit(159,300,10.5,dim,'чем больше слоёв, тем сложнее закономерности',{},292)}`;
+      return s;
+    }
+    if(K==='ainotprogram'){ /* не как программа */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'обычная программа и обучение',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Rise}"><rect x="20" y="54" width="130" height="150" rx="11" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(85,80,12,cyan,'программа',{b:1},116)+`</g>`;
+      s+=fit(85,106,10.5,dim,'правила пишет человек',{},116);
+      s+=`<path d="M42 122 h86" stroke="${cyan}" stroke-width="2"/>`;
+      s+=fit(85,142,10.5,dim,'если круг — то…',{},116);
+      s+=fit(85,162,10.5,dim,'если углы — то…',{},116);
+      s+=fit(85,188,10.5,cyan,'понятно и предсказуемо',{b:1},116);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.3s"><rect x="164" y="54" width="130" height="150" rx="11" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(229,80,12,gold,'обучение',{b:1},116)+`</g>`;
+      s+=fit(229,106,10.5,dim,'правила находит машина',{},116);
+      s+=aiAxis(180,274,130,dim,'0','1');
+      s+=aiThreshold(180,274,130,0.52,gold,'');
+      s+=fit(229,188,10.5,gold,'может ошибаться',{b:1},116);
+      s+=plate2(20,218,274,32,go?grn:cardB,go?'в обучении правила никто не пишет':'в чём разница?',11.5,pre);
+      s+=`${fit(159,272,11,dim,'поэтому ИИ иногда ведёт себя неожиданно',{},290)}`;
+      return s;
+    }
+    if(K==='aibaddata'){ /* мусор на входе */
+      const it=[{t:'если примеры плохие — ответы плохие',c:red},{t:'если примеры однобокие — машина ошибается',c:gold},{t:'«мусор на входе — мусор на выходе»',c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,red,'качество зависит от данных',{b:1},262)+`</g>`;
+      it.forEach((q,k)=>{
+        const y=56+k*52;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.22).toFixed(2)}s">`
+          +`<rect x="26" y="${y}" width="266" height="42" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<path d="M42 ${y+14} l10 18 h-20 z" fill="${q.c}" opacity=".9"/>`
+          +fit(180,y+26,11,q.c,q.t,{b:1},224)+`</g>`;
+      });
+      s+=aiShape(90,252,26,'circle',grn,2.2)+aiShape(150,252,24,'square',blu,2.2)+aiShape(210,252,26,'circle',grn,2.2)+aiShape(264,252,24,'square',blu,2.2);
+      s+=fit(159,294,11,dim,'хорошие примеры — основа хорошей модели',{},292);
+      return s;
+    }
+    if(K==='aiethics'){ /* этика */
+      const it=[
+        {t:'машина может ошибаться',d:'её ответ нужно проверять',c:gold},
+        {t:'важные решения принимает человек',d:'лечение, суд, безопасность',c:grn},
+        {t:'нельзя слепо доверять ИИ',d:'думай своей головой',c:cyan}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'ИИ — помощник, а не начальник',{b:1},262)+`</g>`;
+      it.forEach((q,k)=>{
+        const y=56+k*54;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="22" y="${y}" width="274" height="46" rx="11" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(108,y+22,11.5,q.c,q.t,{b:1},190)
+          +fit(108,y+38,10.5,dim,q.d,{},190)+`</g>`;
+      });
+      s+=plate2(22,230,274,32,go?grn:cardB,go?'ответственность всегда на человеке':'что важно помнить?',11.5,pre);
+      s+=`${fit(159,286,11,dim,'ИИ помогает думать, но не думает вместо нас',{},292)}`;
+      return s;
+    }
+    if(K==='aipractice'){ /* практика */
+      const rows=[
+        {t:'сколько нужно примеров, чтобы точность была 95%?',a:'сотни',c:cyan},
+        {t:'какой признак важнее для «кот или собака»?',a:'форма морды и уши',c:gold},
+        {t:'что делать, если машина ошибается часто?',a:'добавить хорошие примеры',c:grn}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'практика: думаем как инженеры ИИ',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*58;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(146,y+20,10.5,ink,q.t,{},212)
+          +(go?fit(146,y+39,11.5,q.c,q.a,{b:1},212):fit(146,y+39,10.5,dim,'нажми «показать»',{},212))+`</g>`;
+      });
+      s+=plate2(22,228,274,30,go?grn:cardB,go?'вот три инженерных ответа':'нажми «показать»',11.5,pre);
+      s+=`${fit(159,282,11,dim,'данные решают всё',{},280)}`;
+      return s;
+    }
+    if(K==='aiplan'){ /* план обучения */
+      const steps=[{t:'собрать примеры',d:'много и разных',c:grn},{t:'выбрать признаки',d:'по чему различать',c:cyan},
+                   {t:'обучить модель',d:'угадывай и исправляй',c:gold},{t:'проверить на новых',d:'так ли хорошо она работает',c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'как обучают модель: четыре шага',{b:1},262)+`</g>`;
+      steps.forEach((q,k)=>{
+        const y=54+k*52;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="258" height="42" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<circle cx="54" cy="${y+21}" r="11" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.4"/>`
+          +tx(54,y+25,11.5,q.c,''.concat(k+1),{b:1})
+          +fit(174,y+19,11.5,q.c,q.t,{b:1},196)
+          +fit(174,y+35,10,dim,q.d,{},196)+`</g>`;
+        if(k<3) s+=drawPoly([[159,y+44],[159,y+50]],q.c,1,0.5+k*0.2,1.8,{pen:false,keep:true});
+      });
+      s+=fit(159,276,11.5,ink,'без проверки на новых данных доверять нельзя',{b:1},292);
+      s+=plate2(30,288,258,0,cardB,'',11.5,pre);
+      return s;
+    }
+    if(K==='aitrain'){ /* интерактив: обучаем машину */
+      const t=(st&&typeof st.t==='number')?st.t:0.18;
+      const n=(st&&st.n)||0, ok=(st&&st.ok)||0;
+      const i=(st&&typeof st.i==='number')?st.i:0;
+      const ex=aiExamples[i%aiExamples.length];
+      const pred=(ex.x>t);           // true = круг
+      const truth=(ex.y===1);
+      const right=(pred===truth);
+      let s=`<g class="${pre}Pop"><rect x="16" y="12" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,31,11.5,ink,'обучи машину: подскажи, где она ошиблась',{b:1},266)+`</g>`;
+      s+=aiAxis(40,278,150,dim,'0 · квадрат','1 · круг');
+      aiExamples.forEach((q,k)=>{
+        const x=40+238*q.x;
+        s+=`<circle cx="${x.toFixed(1)}" cy="150" r="8" fill="${q.y?grn:blu}" fill-opacity=".3" stroke="${q.y?grn:blu}" stroke-width="1.6"/>`;
+      });
+      s+=aiThreshold(40,278,150,t,gold,'');
+      const exX=40+238*ex.x;
+      s+=`<g class="${pre}Pop}"><circle cx="${exX.toFixed(1)}" cy="150" r="14" fill="none" stroke="${gold}" stroke-width="2.4" class="${pre}Blink"/></g>`;
+      s+=`<g class="${pre}Rise}"><rect x="196" y="62" width="104" height="52" rx="10" fill="rgba(12,32,34,.97)" stroke="${ex.y?grn:blu}" stroke-width="1.8"/>`
+        +aiShape(248,88,15,ex.y?'circle':'square',ex.y?grn:blu,2)+`</g>`;
+      s+=fit(120,80,11,dim,'машина видит объект',{},130);
+      s+=fit(120,102,11.5,(ex.y?grn:blu),ex.ch,{b:1},130);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.2s"><rect x="40" y="196" width="238" height="30" rx="8" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,216,11.5,gold,'машина говорит: '+(pred?'это круг':'это квадрат'),{b:1},220)+`</g>`;
+      const btns=[['верно ✓',grn,'infTrain("'+lk+'",1)'],['ошибка ✗',red,'infTrain("'+lk+'",2)']];
+      btns.forEach((b,k)=>{
+        const x=40+k*124;
+        s+=`<g style="cursor:pointer" onclick='${b[2]}'><rect x="${x}" y="232" width="114" height="32" rx="9" fill="rgba(12,32,34,.97)" stroke="${b[1]}" stroke-width="1.7"/>`
+          +fit(x+57,253,11.5,b[1],b[0],{b:1},104)+`</g>`;
+      });
+      const acc=n?Math.round(ok/n*100):0;
+      s+=`<g class="${pre}Rise}"><rect x="40" y="270" width="238" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+        +fit(159,288,10.5,(acc>=70?grn:(acc>=40?gold:red)),'граница '+t.toFixed(2).replace('.',',')+' · попыток '+n+' · точность '+acc+'%',{b:1},224)+`</g>`;
+      return s;
+    }
+    if(K==='aitreegame'){ /* интерактив: строим дерево */
+      const a1=(st&&st.a1)||0, a2=(st&&st.a2)||0, a3=(st&&st.a3)||0;
+      const leaf=!a1?0:(a1===1?(a2===1?1:2):(a3===1?3:4));
+      const ans=['—','птица (умеет летать)','пингвин (не летает)','рыба (живёт в воде)','кот (не летает, не в воде)'];
+      let s=`<g class="${pre}Pop"><rect x="16" y="12" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,31,11.5,ink,'построй дерево решений: отвечай на вопросы',{b:1},266)+`</g>`;
+      const q=[[ 'есть перья?',['да','нет'],a1,'a1'],[ 'умеет летать?',['да','нет'],a2,'a2'],['живёт в воде?',['да','нет'],a3,'a3']];
+      q.forEach((row,k)=>{
+        const y=52+k*34;
+        s+=fit(84,y+20,11,ink,row[0],{b:1},96);
+        row[1].forEach((lab,j)=>{
+          const x=140+j*70, on=(row[2]===j+1);
+          s+=`<g style="cursor:pointer" onclick="infTree('${lk}','${row[3]}',${j+1})">`
+            +`<rect x="${x}" y="${y+4}" width="64" height="24" rx="7" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${on?grn:cardB}" stroke-width="${on?1.8:1.3}"/>`
+            +fit(x+32,y+20,11,on?grn:dim,lab,{b:on},56)+`</g>`;
+        });
+      });
+      const N={root:[159,180],a:[92,224],b:[226,224],a1:[56,268],a2:[128,268],b1:[194,268],b2:[266,268]};
+      const link=(p,q2,c)=>drawPoly([p,q2],c,1,0.1,1.8,{pen:false,keep:true});
+      const onA=(a1===1), onB=(a1===2), onA1=(onA&&a2===1), onA2=(onA&&a2===2), onB1=(onB&&a3===1), onB2=(onB&&a3===2);
+      s+=link(N.root,N.a,onA?grn:cardB)+link(N.root,N.b,onB?grn:cardB);
+      s+=link(N.a,N.a1,onA1?grn:cardB)+link(N.a,N.a2,onA2?grn:cardB);
+      s+=link(N.b,N.b1,onB1?grn:cardB)+link(N.b,N.b2,onB2?grn:cardB);
+      const node=(p,t2,c,on)=>`<g class="${pre}Pop"><rect x="${p[0]-34}" y="${p[1]-12}" width="68" height="24" rx="8" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${c}" stroke-width="${on?2:1.5}"/>`
+        +fit(p[0],p[1]+4,10,on?c:dim,t2,{b:on},62)+`</g>`;
+      s+=node(N.root,'есть перья?',onA||onB?grn:cyan,onA||onB);
+      s+=node(N.a,'летает?',onA1||onA2?grn:cardB,onA1||onA2);
+      s+=node(N.b,'в воде?',onB1||onB2?grn:cardB,onB1||onB2);
+      s+=node(N.a1,'птица',onA1?grn:cardB,onA1)+node(N.a2,'пингвин',onA2?grn:cardB,onA2);
+      s+=node(N.b1,'рыба',onB1?grn:cardB,onB1)+node(N.b2,'кот',onB2?grn:cardB,onB2);
+      s+=`<g class="${pre}Rise}"><rect x="30" y="292" width="258" height="26" rx="8" fill="rgba(255,215,76,.12)" stroke="${gold}" stroke-width="1.5"/>`
+        +fit(159,310,11.5,gold,'ответ машины: '+ans[leaf],{b:1},240)+`</g>`;
+      return s;
+    }
+    if(K==='aitest'){ /* интерактив: что скажет машина */
+      const opts=['круг','квадрат'], ok=1, done=(st&&st.pick>=0);
+      const val=(st&&typeof st.tv==='number')?st.tv:0.72;
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +fit(159,34,11.5,ink,'машина обучилась: граница на 0,50. Что она ответит?',{b:1},272)+`</g>`;
+      s+=aiAxis(44,274,150,dim,'0','1');
+      s+=aiThreshold(44,274,150,0.5,gold,'граница 0,50');
+      const x=44+230*val;
+      s+=`<g class="${pre}Pop}"><circle cx="${x.toFixed(1)}" cy="150" r="12" fill="rgba(255,215,106,.25)" stroke="${gold}" stroke-width="2.4"/></g>`;
+      s+=fit(x,124,11.5,gold,'округлость '+val.toFixed(2).replace('.',','),{b:1},140);
+      s+=fit(159,196,11.5,ink,'объект правее границы — значит он круглее',{b:1},292);
+      opts.forEach((t2,k)=>{
+        const bx=44+k*124, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="${bx}" y="214" width="114" height="38" rx="10" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +aiShape(bx+28,233,11,k===0?'circle':'square',c,1.8)
+          +fit(bx+74,239,12.5,c,t2,{b:on},66)+(on?`<path d="M${bx+90} 222 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}"><rect x="30" y="262" width="258" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +fit(159,282,11.5,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Машина назовёт это кругом':'Правее границы — машина считает это кругом',{b:done&&st.pick===ok},248)+`</g>`;
+      return s;
+    }
+    if(K==='aimistakes'){ /* частые ошибки */
+      const it=[
+        {t:'думают, что ИИ понимает смысл',f:'он сравнивает числа и признаки',c:red},
+        {t:'верят любому ответу машины',f:'модель может ошибаться',c:gold},
+        {t:'учат на плохих примерах',f:'мусор на входе — мусор на выходе',c:pur},
+        {t:'считают, что ИИ не ошибается',f:'точность бывает 90%, а не 100%',c:cyan}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="${ink}">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      s+=`${tx(159,266,11,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='aisheet'){ /* шпаргалка */
+      const rows=[{t:'ИИ учится на примерах с ответами',c:grn},{t:'признаки и веса решают всё',c:cyan},
+                  {t:'обучение — цикл: угадай и исправь',c:gold},{t:'точность растёт с числом примеров',c:pur},
+                  {t:'нейросеть: слои нейронов и связей',c:blu},{t:'ответ ИИ всегда проверяет человек',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'всё главное об искусственном интеллекте',{b:1},264)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=50+k*36;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+20,11,q.c,q.t,{b:1},260)+`</g>`;
+      });
+      s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11.5,pre);
+      return s;
+    }
+    if(K==='aifinish'){ /* итог */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'итог: как машина учится',{b:1},262)+`</g>`;
+      s+=aiAxis(44,274,140,dim,'0 · квадрат','1 · круг');
+      aiExamples.forEach((q,k)=>{ const x=44+230*q.x;
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.1+k*0.1).toFixed(2)}s" cx="${x.toFixed(1)}" cy="140" r="8" fill="${q.y?grn:blu}" fill-opacity=".3" stroke="${q.y?grn:blu}" stroke-width="1.6"/>`; });
+      s+=aiThreshold(44,274,140,0.5,grn,'выученная граница');
+      s+=fit(159,196,11.5,ink,'машина нашла границу сама — по примерам',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="20" y="214" width="278" height="36" rx="10" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,238,12,gold,'жми «Понял! Проверю себя» →',{b:1},250)+`</g>`;
+      s+=`${fit(159,276,11,dim,'данные → признаки → обучение → проверка',{},292)}`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -5130,6 +5669,32 @@
     if(K==='outofrange') return 202;
     if(K==='marks') return 220;
     if(K==='findcell') return 210;
+    if(K==='aiintro') return 300;
+    if(K==='aiwhere') return 306;
+    if(K==='ainotmagic') return 310;
+    if(K==='aidata') return 300;
+    if(K==='aifeatures') return 296;
+    if(K==='aiexample') return 286;
+    if(K==='aiweight') return 300;
+    if(K==='aiguess') return 296;
+    if(K==='aicorrect') return 300;
+    if(K==='ailoop') return 292;
+    if(K==='aimore') return 296;
+    if(K==='aiaccuracy') return 296;
+    if(K==='aitree') return 316;
+    if(K==='aineuron') return 310;
+    if(K==='ailayers') return 312;
+    if(K==='ainotprogram') return 288;
+    if(K==='aibaddata') return 306;
+    if(K==='aiethics') return 298;
+    if(K==='aiplan') return 296;
+    if(K==='aipractice') return 278;
+    if(K==='aitrain') return 312;
+    if(K==='aitreegame') return 330;
+    if(K==='aitest') return 306;
+    if(K==='aimistakes') return 282;
+    if(K==='aisheet') return 308;
+    if(K==='aifinish') return 292;
     if(K==='fracintro') return 306;
     if(K==='selfsimilar') return 308;
     if(K==='fracrule') return 292;
@@ -6303,6 +6868,66 @@
       tasks:[
         {q:'В дереве каждая ветка на следующем уровне даёт две новые. Сколько новых веток появится на 4-м уровне?', kind:'unit', ans:16, tol:0, hints:['Уровень 0 — 1 ветка, уровень 1 — 2 новые.','Новых веток 2⁴ = 16.'], sol:'2⁴ = 16'},
         {q:'Сколько маленьких треугольников у треугольника Серпинского на 4-м шаге?', kind:'choice', choices:['81','27','64','12'], ans:0, tol:0, hints:['Число треугольников умножается на 3.','1, 3, 9, 27, 81 — значит 3⁴ = 81.'], sol:'3⁴ = 81'}
+      ] },
+    { id:526, title:'Искусственный интеллект: как машина учится', ico:'🤖', src:'Информатика · 5–6 класс · С нуля: ИИ',
+      explain:[
+        'Искусственный интеллект — это программа, которая учится на примерах. Мы показываем ей много примеров с ответами, и она находит закономерность.',
+        'ИИ уже вокруг нас: он узнаёт лица на фото, понимает речь, переводит тексты, советует фильмы, играет в игры и помогает врачам.',
+        'Это не волшебство, а математика: внутри идут числа, признаки и вычисления. Машина не «понимает» смысл, она сравнивает числа.',
+        'Данные — это примеры вместе с ответами. Чем больше хороших примеров, тем лучше учится машина. Такие данные называют обучающей выборкой.',
+        'Признаки — это свойства, по которым различают объекты: форма, размер, цвет. По ним машина и принимает решение.',
+        'Пример: отличить круг от квадрата можно по одному признаку — округлости от 0 до 1. У круга она близка к единице.',
+        'У каждого признака есть вес — насколько он важен. Чем больше вес, тем сильнее признак влияет на ответ. Веса машина подбирает сама.',
+        'Сначала машина угадывает наугад: её граница решения стоит в случайном месте, и она часто ошибается.',
+        'Увидев ошибку, машина сдвигает границу в нужную сторону. Каждая ошибка — маленький шаг к правильному ответу.',
+        'Обучение — это цикл: показать пример, получить ответ, сравнить с правильным, исправить веса. И так много-много раз.',
+        'Чем больше примеров, тем точнее модель: на 10 примерах точность около 60%, а на 1000 — уже около 97%.',
+        'Точность растёт шаг за шагом — это хорошо видно на графике. Сначала ошибок много, потом всё меньше.',
+        'Дерево решений — понятный способ обучения: машина задаёт вопросы «да» или «нет» и идёт по веткам к ответу.',
+        'Нейросеть — это много нейронов и связей между ними. Каждый нейрон складывает сигналы с весами и передаёт дальше.',
+        'Слои нейросети идут от входа к выходу: вход — признаки, скрытые слои — сочетания признаков, выход — ответ.',
+        'Отличие от обычной программы: правила пишет человек, а в обучении правила находит машина по данным.',
+        'Если данные плохие, ответы тоже плохие: «мусор на входе — мусор на выходе». Однобокие примеры приводят к ошибкам.',
+        'ИИ может ошибаться, поэтому важные решения принимает человек: врач, учитель, инженер. Машина — помощник, а не начальник.',
+        'Как обучают модель: собрать примеры, выбрать признаки, обучить, а потом обязательно проверить на новых данных.',
+        'Практика: чтобы точность была около 95%, нужны сотни примеров; если модель ошибается часто — добавьте хорошие примеры.',
+        'Мастерская: перед тобой машина, которая учится отличать круг от квадрата. Подсказывай ей «верно» или «ошибка» — и смотри, как двигается граница и растёт точность.',
+        'Мастерская: построй дерево решений сам — отвечай на вопросы «да» и «нет», и дерево приведёт к ответу: птица, пингвин, рыба или кот.',
+        'Проверь себя: машина обучилась, и её граница стоит на 0,50. Что она ответит про объект с округлостью 0,72?',
+        'Частые ошибки: думать, что ИИ понимает смысл; верить любому ответу; учить на плохих примерах; ждать 100% точности.',
+        'Шпаргалка: данные → признаки → веса → цикл обучения → проверка; ответ ИИ всегда проверяет человек. Проверь себя!',
+        'Итог: соберём всё вместе — данные, признаки, веса, обучение и проверка. Так машина сама находит границу и учится отличать круг от квадрата.' ],
+      slides:[
+        {h:'Что такое ИИ', v:{kind:'aiintro'}, r:'Машина учится на примерах.', d:'Искусственный интеллект — программа, которая находит закономерность в примерах и потом узнаёт похожие объекты.'},
+        {h:'Где работает ИИ', v:{kind:'aiwhere'}, r:'Вокруг нас.', d:'ИИ узнаёт фото, понимает речь, переводит, советует фильмы, играет в игры и помогает врачам.'},
+        {h:'Это не магия', v:{kind:'ainotmagic'}, r:'Внутри — числа.', d:'ИИ не думает как человек: он работает с числами, признаками и весами. Это математика, а не волшебство.'},
+        {h:'Данные и ответы', v:{kind:'aidata'}, r:'Обучающая выборка.', d:'Данные — это примеры вместе с правильными ответами. Чем больше хороших примеров, тем точнее обучение.'},
+        {h:'Признаки', v:{kind:'aifeatures'}, r:'По чему различаем.', d:'Признаки — свойства объекта: форма, размер, цвет. По ним машина и отличает объекты.'},
+        {h:'Один признак', v:{kind:'aiexample'}, r:'Округлость от 0 до 1.', d:'Круг и квадрат можно различить по одному признаку — округлости. Каждый пример получает число.'},
+        {h:'Вес признака', v:{kind:'aiweight'}, r:'Насколько признак важен.', d:'У каждого признака есть вес. Чем он больше, тем сильнее влияет на ответ. Веса подбирает сама машина.'},
+        {h:'Первая догадка', v:{kind:'aiguess'}, r:'Машина угадывает.', d:'Сначала граница решения стоит почти в начале, и машина почти всё называет кругом — она часто ошибается.'},
+        {h:'Исправляем ошибку', v:{kind:'aicorrect'}, r:'Граница сдвигается.', d:'Увидев ошибку, машина сдвигает границу к правильному месту. Так она учится.'},
+        {h:'Цикл обучения', v:{kind:'ailoop'}, r:'Четыре шага по кругу.', d:'Обучение — это цикл: пример, ответ, сравнение с правильным, исправление. И так много раз.'},
+        {h:'Больше примеров', v:{kind:'aimore'}, r:'Точность выше.', d:'На 10 примерах точность около 60%, на 50 — 78%, на 200 — 92%, а на 1000 — 97%.'},
+        {h:'График точности', v:{kind:'aiaccuracy'}, r:'Растёт шаг за шагом.', d:'Точность модели растёт с каждой попыткой: сначала ошибок много, потом всё меньше.'},
+        {h:'Дерево решений', v:{kind:'aitree'}, r:'Вопросы «да» и «нет».', d:'Дерево решений задаёт вопросы и идёт по веткам к ответу. Такое решение легко понять.'},
+        {h:'Нейросеть', v:{kind:'aineuron'}, r:'Нейроны и связи.', d:'Нейросеть — много нейронов, соединённых связями. Сигнал идёт от входа к ответу.'},
+        {h:'Слои', v:{kind:'ailayers'}, r:'От признаков к ответу.', d:'Вход — признаки, скрытые слои — их сочетания, выход — ответ машины.'},
+        {h:'Не как программа', v:{kind:'ainotprogram'}, r:'Правила находит машина.', d:'В обычной программе правила пишет человек, а в обучении правила находятся по данным.'},
+        {h:'Плохие данные', v:{kind:'aibaddata'}, r:'Мусор на входе — мусор на выходе.', d:'Если примеры плохие или однобокие, машина будет ошибаться. Качество данных решает всё.'},
+        {h:'Этика', v:{kind:'aiethics'}, r:'Помощник, не начальник.', d:'ИИ может ошибаться, поэтому важные решения принимает человек. Ответственность всегда на нас.'},
+        {h:'План обучения', v:{kind:'aiplan'}, r:'Четыре шага инженера.', d:'Собрать примеры, выбрать признаки, обучить модель и проверить её на новых данных.'},
+        {h:'Практика', v:{kind:'aipractice'}, r:'Думаем как инженеры ИИ.', d:'Сколько нужно примеров, какой признак важнее и что делать, если модель часто ошибается.'},
+        {h:'Мастерская: обучи машину', v:{kind:'aitrain'}, r:'Подскажи, где ошибка!', d:'Машина показывает свой ответ, а ты нажимай «верно» или «ошибка». Граница будет двигаться, а точность — расти.'},
+        {h:'Мастерская: дерево решений', v:{kind:'aitreegame'}, r:'Отвечай на вопросы.', d:'Отвечай «да» и «нет» — и дерево приведёт к ответу: птица, пингвин, рыба или кот.'},
+        {h:'Что выучила машина', v:{kind:'aitest'}, r:'Проверь модель.', d:'Машина обучилась, граница стоит на 0,50. Посмотри, что она скажет про новый объект.'},
+        {h:'Частые ошибки', v:{kind:'aimistakes'}, r:'Что чаще всего путают.', d:'ИИ не понимает смысл, может ошибаться, зависит от данных и не даёт 100% точности.'},
+        {h:'Шпаргалка', v:{kind:'aisheet'}, r:'Шесть главных мыслей.', d:'Данные, признаки, веса, цикл обучения, нейросеть и обязательная проверка человеком.'},
+        {h:'Итог', v:{kind:'aifinish'}, r:'Машина нашла границу сама.', d:'Данные → признаки → обучение → проверка. Так машина учится отличать круг от квадрата.'} ],
+      check:{ q:'Как машина учится отличать круг от квадрата?', choices:['находит закономерность в примерах','читает надписи на картинке','спрашивает у человека каждый раз','запоминает все ответы наизусть'], ans:0, exp:'Машина находит закономерность в примерах с ответами и по ней предсказывает.' },
+      tasks:[
+        {q:'Сколько признаков нужно машине, чтобы отличать круг от квадрата по округлости?', kind:'unit', ans:1, tol:0, hints:['Округлость — один признак.','Достаточно одного признака.'], sol:'1'},
+        {q:'Что произойдёт, если обучать машину на плохих примерах?', kind:'choice', choices:['она будет ошибаться','она станет умнее','ничего не изменится','она выключится'], ans:0, tol:0, hints:['«Мусор на входе — мусор на выходе».','Плохие данные дают плохие ответы.'], sol:'она будет ошибаться'}
       ] }
   ];
 
@@ -6317,7 +6942,7 @@
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -6336,6 +6961,10 @@
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
+      : (s.v.kind==='aitrain')
+      ? wkRow(wkBtn('начать заново',`infTrain('${lk}',0,1)`))
+      : (s.v.kind==='aitreegame')
+      ? wkRow(wkBtn('сбросить ответы',`infTree('${lk}','reset',0)`))
       : (s.v.kind==='fraccreator')
       ? wkRow(wkBtn('сброс',`infFracLvl('${lk}',0,1)`))
       : (s.v.kind==='cpdial')
@@ -6345,7 +6974,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -6354,6 +6983,24 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infTrain=function(lk,say,reset){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(reset){ st.t=0.18; st.i=0; st.n=0; st.ok=0; chRender(0); return; }
+    const t=(typeof st.t==='number')?st.t:0.18;
+    const i=(typeof st.i==='number')?st.i:0;
+    const list=aiExamples, ex=list[i%list.length];
+    const pred=(ex.x>t), right=(pred===(ex.y===1));
+    st.n=(st.n||0)+1;
+    if(right) st.ok=(st.ok||0)+1;
+    if(say===2 && !right){ st.t=Math.max(0.05,Math.min(0.95, ex.y===1 ? t-0.07 : t+0.07)); }
+    st.i=i+1;
+    chRender(0);
+  };
+  window.infTree=function(lk,field,val){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(field==='reset'){ st.a1=0; st.a2=0; st.a3=0; chRender(0); return; }
+    st[field]=val; chRender(0);
+  };
   window.infFracMode=function(lk,mode){
     const st=CHS[lk]||(CHS[lk]={}); st.fk=mode; chRender(0);
   };
