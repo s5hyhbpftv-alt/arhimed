@@ -23296,10 +23296,10 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW82Act('${lk}','rst')`):wkBtn('что это?',`visW82Act('${lk}','go')`))+
         wkSml('процент = сотая часть'));
     } else if(step===1){
-      const H=190, go=st.go||0;
+      const H=196, go=st.go||0;
       let inner='';
-      inner+=tx(159,26,20,ink,'процент — сотая часть',{b:1});
-      inner+=pctGrid(84,60,14,go?40:1,0);
+      inner+=tx(159,24,20,ink,'процент — сотая часть',{b:1});
+      inner+=pctGrid(99,52,12,go?40:1,0);
       if(go){ inner+=`<g class="qWPop"><text x="159" y="180" text-anchor="middle" font-size="16" fill="#2f7a53" font-weight="bold">40% — это 40 клеток из 100</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">1% = 1 клетка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -23311,7 +23311,8 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       const go=st.go||0;
       let inner='';
       inner+=tx(159,34,20,ink,'процент = дробь',{b:1});
-      inner+=tx(159,74,16,dim,'1% = 0,01 · 10% = 0,1 · 50% = 0,5 · 100% = 1',{});
+      inner+=tx(159,66,15,dim,'1% = 0,01 · 10% = 0,1',{});
+      inner+=tx(159,92,15,dim,'50% = 0,5 · 100% = 1',{});
       if(go){
         inner+=`<g class="qWPop"><text x="159" y="112" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">процент и дробь — одно и то же</text>
         <text x="159" y="146" text-anchor="middle" font-size="15" fill="${dim}">две записи одной величины</text></g>`;
@@ -23573,7 +23574,6 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   window.visW82Act=visW82Act;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===82){ window.ARH_LESSONS[i]=L82; break; } } })();
 })();
-
 /* ================= УРОК 391 · Игры и стратегии: анализ с конца (v1 · «Арена Стратегий Архимеда», 18 слайдов, флагман, очень подробный) ================= */
 (function(){
   if(!window.__wk391v1css){
