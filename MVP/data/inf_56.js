@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 15 уроков (id 500–514) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 16 уроков (id 500–515) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -38,6 +38,17 @@
     [/двоичн|разряд|0 и 1|ноль|нул|единиц/i,'bits'],
     [/порядок|шаг|список|номер|строк/i,'lines']
   ];
+  function cellRow(pre,x0,y,w,h,vals,opt){
+    opt=opt||{}; let s='';
+    vals.forEach((v2,k)=>{
+      const x=x0+k*(w+6), on=(opt.at===k), col=on?(opt.c||grn):'#6ea8ff';
+      s+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="9" fill="${on?'rgba(19,44,35,.97)':'rgba(15,25,46,.97)'}" stroke="${col}" stroke-width="${on?2.4:1.6}"/>`
+        +`<text x="${x+w/2}" y="${y+h/2+7}" text-anchor="middle" font-size="18" font-family="Georgia,serif" font-weight="bold" fill="${on?(opt.c||grn):ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text>`
+        +(opt.idx?tx(x+w/2,y+h+16,10.5,on?(opt.c||grn):dim,''+k,{}):'')
+        +(on&&opt.ring?`<rect class="${pre}Glow" x="${x-3}" y="${y-3}" width="${w+6}" height="${h+6}" rx="12" fill="none" stroke="${col}" stroke-width="2" opacity=".45"/>`:'');
+    });
+    return s;
+  }
   function wrapT(t,max){
     const w=(''+t).split(' '), out=[]; let cur='';
     w.forEach(x=>{ if((cur?cur+' ':'')+x && ((cur+' '+x).trim().length>max) && cur){ out.push(cur); cur=x; } else cur=(cur+' '+x).trim(); });
@@ -98,7 +109,7 @@
      +`#lvis .${pre}Dash{stroke-dasharray:7 8;animation:${pre}Dash 1.1s linear infinite}`
      +`@keyframes ${pre}Dash{to{stroke-dashoffset:-30}}`
      +`#lvis .${pre}Spot{animation:${pre}Spot 2.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}`
-     +`@keyframes ${pre}Spot{0%,100%{opacity:.2}38%,62%{opacity:1}}`
+     +`@keyframes ${pre}Spot{0%,100%{opacity:.15}38%,62%{opacity:.62}}`
      +`#lvis .${pre}Shine{animation:${pre}Shine 3.8s ease-in-out infinite;transform-box:fill-box}`
      +`@keyframes ${pre}Shine{0%{transform:translateX(-90px);opacity:0}25%{opacity:.35}60%{opacity:0}100%{transform:translateX(120px);opacity:0}}`
      +`#lvis .${pre}Spin{animation:${pre}Spin 8s linear infinite;transform-box:fill-box;transform-origin:center}`
@@ -1425,6 +1436,217 @@
         +ml.map((t,k)=>tx(159,by+26+k*15,Math.min(11.5,252/Math.max(1,t.length)/0.7),done?grn:dim,t,{b:done})).join('')+`</g>`;
       return s;
     }
+    if(K==='manyvars'){ /* много переменных — неудобно */
+      let s='';
+      for(let k=0;k<6;k++){
+        const x=18+(k%3)*98, y=32+Math.floor(k/3)*62;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.08*k).toFixed(2)}s"><rect x="${x}" y="${y}" width="88" height="48" rx="10" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.8"/>`
+          +`<rect x="${x+8}" y="${y-9}" width="44" height="19" rx="6" fill="rgba(10,18,36,.97)" stroke="${red}" stroke-width="1.4"/>`
+          +`${tx(x+30,y+5,10,red,'a'+(k+1),{b:1})}`
+          +`<text x="${x+44}" y="${y+34}" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="#8ea3c8" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${3+k*2}</text></g>`;
+      }
+      s+=`<g class="${pre}Rise" style="animation-delay:.6s"><rect x="18" y="158" width="282" height="46" rx="11" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.8"/>`
+        +`${tx(159,178,12,red,'а если чисел сто?',{b:1})}`
+        +`${tx(159,196,11,dim,'сто переменных — так делать нельзя',{})}</g>`;
+      return s;
+    }
+    if(K==='train'){ /* список — поезд с вагонами */
+      const vals=v.vals||[3,7,2,9];
+      let s=`<g><animateTransform attributeName="transform" type="translate" values="0 0;8 0;8 0;0 0" keyTimes="0;.3;.7;1" dur="7s" repeatCount="indefinite"/>`;
+      s+=`<line x1="10" y1="152" x2="308" y2="152" stroke="#31456f" stroke-width="2"/>`;
+      s+=`<g class="${pre}Pop"><rect x="16" y="104" width="62" height="44" rx="8" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2.2"/>`
+        +`<rect x="30" y="90" width="16" height="16" rx="4" fill="#33456e" stroke="${gold}" stroke-width="1.4"/></g>`
+        +`<g class="${pre}Pop" style="animation-delay:.1s"><rect x="14" y="62" width="66" height="24" rx="8" fill="rgba(10,18,36,.97)" stroke="${gold}" stroke-width="1.8"/>`
+        +`${tx(47,79,12,gold,v.name||'числа',{b:1})}</g>`;
+      vals.forEach((v2,k)=>{
+        const x=86+k*56;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.12).toFixed(2)}s">`
+          +`<rect x="${x}" y="${104}" width="50" height="44" rx="8" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+          +`<text x="${x+25}" y="133" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text>`
+          +`${tx(x+25,96,11,gold,''+k,{b:1})}`
+          +`<circle class="${pre}Spin" cx="${x+12}" cy="152" r="7" fill="#8fa3c8" stroke="#1a2340" stroke-width="1.2"/>`
+          +`<circle class="${pre}Spin" cx="${x+38}" cy="152" r="7" fill="#8fa3c8" stroke="#1a2340" stroke-width="1.2"/></g>`;
+      });
+      s+=`<circle class="${pre}Spin" cx="47" cy="152" r="8" fill="#8fa3c8" stroke="#1a2340" stroke-width="1.2"/>`;
+      s+=`</g>`;
+      s+=`${tx(159,180,11.5,dim,'одно имя у всего поезда, а вагоны идут по порядку',{})}`;
+      return s;
+    }
+    if(K==='cells'){ /* ячейки с индексами: список[2] */
+      const vals=v.vals||[3,7,2,9], at=(v.at===undefined?2:v.at);
+      let s=cellRow(pre,22,54,64,52,vals,{at:at,idx:1,ring:1});
+      s+=`<path d="M${22+at*70+32} 40 V50" stroke="${grn}" stroke-width="2" class="${pre}Dash"/><path d="M${22+at*70+28} 30 h8 l-4 8 z" fill="${grn}"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.3s"><rect x="40" y="146" width="238" height="34" rx="10" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2"/>`
+        +`<text x="159" y="169" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">${plain(v.name||'числа')}[${at}] = ${plain(vals[at])}</text></g>`;
+      return s;
+    }
+    if(K==='index0'){ /* счёт с нуля */
+      const vals=v.vals||[3,7,2];
+      let s='';
+      vals.forEach((v2,k)=>{
+        const x=44+k*80;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.14*k).toFixed(2)}s">`
+          +`<circle cx="${x+32}" cy="50" r="15" fill="${k===0?'rgba(255,120,100,.16)':'rgba(110,168,255,.14)'}" stroke="${k===0?red:blu}" stroke-width="2"/>`
+          +`<text x="${x+32}" y="56" text-anchor="middle" font-size="16" font-weight="bold" fill="${k===0?red:blu}" font-family="Georgia,serif">${k}</text>`
+          +`<path d="M${x+32} 66 V74" stroke="${k===0?red:blu}" stroke-width="1.8" class="${pre}Dash"/></g>`;
+      });
+      s+=cellRow(pre,44,76,64,50,vals,{at:0,c:red,idx:0});
+      s+=`<text x="76" y="146" text-anchor="middle" font-size="10.5" fill="${red}" font-weight="bold" font-family="Arial">первый элемент</text>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="18" y="156" width="282" height="34" rx="10" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.8"/>`
+        +`${tx(159,178,11.5,red,'нумерация начинается с нуля, а не с единицы!',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='create'){ /* создаём список: числа = [3, 7, 2, 9] */
+      const vals=v.vals||[3,7,2,9];
+      let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="30" y="22" width="258" height="38" rx="10" fill="rgba(8,14,30,.95)" stroke="${A}" stroke-width="2"/>`
+        +`<text x="159" y="47" text-anchor="middle" font-size="16" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">числа = [${vals.join(', ')}]</text></g>`;
+      s+=cellRow(pre,22,124,64,50,vals,{idx:1});
+      vals.forEach((v2,k)=>{
+        const tx2=22+k*70+32;
+        s+=`<circle r="9" fill="${gold}" opacity=".95"><animateMotion dur="3.6s" begin="${(0.5+k*0.35).toFixed(2)}s" repeatCount="indefinite" path="M${70+k*44} 62 Q${tx2} 90 ${tx2} 118"/></circle>`;
+      });
+      s+=`${tx(159,206,11,grn,'числа из скобок встают в ячейки по порядку',{b:1})}`;
+      return s;
+    }
+    if(K==='length'){ /* длина списка */
+      const vals=v.vals||[3,7,2,9];
+      let s=cellRow(pre,22,44,64,52,vals,{idx:1});
+      s+=`<path d="M22 116 v10 h286 v-10" fill="none" stroke="${gold}" stroke-width="2.2" opacity=".85"/>`;
+      vals.forEach((v2,k)=>{
+        s+=`<circle class="${pre}Spot" style="animation-delay:${(k*0.45).toFixed(2)}s;animation-duration:${(vals.length*0.45+1).toFixed(2)}s" cx="${22+k*70+32}" cy="70" r="30" fill="${gold}" opacity=".16"/>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="64" y="134" width="190" height="34" rx="10" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>`
+        +`<text x="159" y="157" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">длина = ${vals.length}</text></g>`;
+      s+=`${tx(159,186,11,dim,'длина — сколько ячеек в списке',{})}`;
+      return s;
+    }
+    if(K==='walk'){ /* перебор циклом */
+      const vals=v.vals||[3,7,2,9];
+      let s=cellRow(pre,22,36,64,50,vals,{idx:1});
+      vals.forEach((v2,k)=>{
+        s+=`<rect x="${22+k*70}" y="36" width="64" height="50" rx="9" fill="${A}" opacity=".08"><animate attributeName="opacity" values="0.06;0.26;0.06" dur="${(vals.length*0.7+1).toFixed(2)}s" begin="${(k*0.7).toFixed(2)}s" repeatCount="indefinite"/></rect>`;
+        s+=`<g opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.05;.2;.25;1" dur="${(vals.length*0.7+1).toFixed(2)}s" begin="${(k*0.7).toFixed(2)}s" repeatCount="indefinite"/>`
+          +`<rect x="240" y="104" width="64" height="26" rx="8" fill="rgba(15,25,46,.97)" stroke="${A}" stroke-width="1.6"/>`
+          +`${tx(272,121,11.5,A,'i = '+k,{b:1})}</g>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.3s"><rect x="18" y="110" width="212" height="52" rx="10" fill="rgba(8,14,30,.92)" stroke="${A}" stroke-opacity=".5" stroke-width="1.5"/>`
+        +`<text x="30" y="132" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">пока i &lt; длина:</text>`
+        +`<text x="30" y="150" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">    смотри числа[i]</text></g>`;
+      s+=`${tx(159,182,11,dim,'цикл по очереди заглядывает в каждую ячейку',{})}`;
+      return s;
+    }
+    if(K==='sumlist'){ /* сумма всех чисел */
+      const vals=v.vals||[3,7,2,9], acc=[], tot=[];
+      let run=0; vals.forEach(x=>{ run+=Number(plain(x))||0; tot.push(run); });
+      let s=cellRow(pre,22,30,64,46,vals,{idx:1});
+      s+=`<path d="M34 100 L70 172 H174 L210 100 z" fill="rgba(126,168,255,.12)" stroke="${blu}" stroke-width="2.2" opacity=".9"/>`;
+      vals.forEach((v2,k)=>{
+        s+=`<circle r="9" fill="${gold}" opacity=".95"><animateMotion dur="4s" begin="${(0.4+k*0.6).toFixed(2)}s" repeatCount="indefinite" path="M${22+k*70+32} 80 Q${90+k*20} 110 122 166"/></circle>`;
+      });
+      s+=`<rect x="78" y="120" width="88" height="30" rx="9" fill="rgba(8,14,30,.95)" stroke="${blu}" stroke-width="1.8"/><text x="122" y="141" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">сумма</text>`;
+      tot.forEach((t,k)=>{
+        s+=`<g opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.04;.2;.26;1" dur="4s" begin="${(0.9+k*0.6).toFixed(2)}s" repeatCount="indefinite"/>`
+          +`<rect x="224" y="120" width="76" height="30" rx="9" fill="rgba(19,44,35,.97)" stroke="${grn}" stroke-width="1.8"/>`
+          +`<text x="262" y="141" text-anchor="middle" font-size="14" font-family="Georgia,serif" font-weight="bold" fill="${grn}">${t}</text></g>`;
+      });
+      s+=`${tx(159,196,11,grn,'числа по очереди падают в сумму, счётчик растёт',{b:1})}`;
+      return s;
+    }
+    if(K==='maxlist'){ /* поиск самого большого */
+      const vals=v.vals||[3,7,2,9];
+      let s=cellRow(pre,22,50,64,50,vals,{idx:1});
+      vals.forEach((v2,k)=>{
+        s+=`<g opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.05;.3;.35;1" dur="4.5s" begin="${(0.4+k*1.05).toFixed(2)}s" repeatCount="indefinite"/>`
+          +`<circle cx="${22+k*70+32}" cy="50" r="14" fill="rgba(255,215,106,.2)" stroke="${gold}" stroke-width="2"/>`
+          +`<text x="${22+k*70+32}" y="55" text-anchor="middle" font-size="14" font-weight="bold" fill="${gold}">★</text></g>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.3s"><rect x="18" y="120" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${tx(159,140,11.5,gold,'чемпион пока в первой ячейке: 3',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.6s"><rect x="18" y="158" width="282" height="30" rx="9" fill="rgba(19,44,35,.9)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,178,11.5,grn,'7 больше 3 → чемпион переехал; 9 больше 7 → снова',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='findlist'){ /* ищем число в списке */
+      const vals=v.vals||[3,7,2,9], target=(v.target===undefined?2:v.target);
+      const ti=vals.map(plain).indexOf(plain(target));
+      let s=cellRow(pre,22,60,64,50,vals,{idx:1,at:(ti<0?-1:ti),c:grn,ring:1});
+      s+=`<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.6;.75;1" dur="3.2s" repeatCount="indefinite"/>`
+        +`<path d="M${22+ti*70+32} 46 l8 9 l16 -20" fill="none" stroke="${grn}" stroke-width="3"/></g>`;
+      s+=`<g><circle r="7" fill="none" stroke="${cyan}" stroke-width="2.4"/><path d="M0 0 l-9 9" stroke="${cyan}" stroke-width="3"/>`
+        +`<animateMotion dur="3.2s" repeatCount="indefinite" path="M${22+32} 122 H${22+ti*70+32}"/></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.3s"><rect x="18" y="140" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.7"/>`
+        +`${tx(159,160,11.5,cyan,'ищем ' + plain(target) + ' … нашли в ячейке ' + ti + '!',{b:1})}</g>`;
+      s+=`${tx(159,190,11,dim,'лупа идёт по ячейкам, пока число не найдётся',{})}`;
+      return s;
+    }
+    if(K==='append'){ /* добавляем в конец */
+      const vals=v.vals||[3,7,2,9], add2=(v.add===undefined?5:v.add);
+      let s=cellRow(pre,19,54,52,50,vals,{idx:1});
+      s+=`<g class="${pre}Rise" style="animation-delay:.45s"><rect x="247" y="54" width="52" height="50" rx="9" fill="rgba(19,44,35,.97)" stroke="${grn}" stroke-width="2.4"/>`
+        +`<rect class="${pre}Glow" x="244" y="51" width="58" height="56" rx="12" fill="none" stroke="${grn}" stroke-width="2" opacity=".45"/>`
+        +`<text x="273" y="86" text-anchor="middle" font-size="18" font-family="Georgia,serif" font-weight="bold" fill="${grn}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(add2)}</text>`
+        +`${tx(273,120,10.5,grn,'4',{b:1})}</g>`;
+      s+=`<path d="M250 44 h46 m-6 -5 l6 5 l-6 5" stroke="${A}" stroke-width="1.8" fill="none" opacity=".8"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.7s"><rect x="20" y="140" width="278" height="30" rx="9" fill="rgba(19,44,35,.85)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,160,11.5,grn,'добавили в конец — длина стала 5',{b:1})}</g>`;
+      s+=`${tx(159,190,11,dim,'новое значение всегда встаёт последним',{})}`;
+      return s;
+    }
+    if(K==='outofrange'){ /* выход за границы */
+      const vals=v.vals||[3,7,2,9];
+      let s=cellRow(pre,19,54,52,50,vals,{idx:1});
+      s+=`<g class="${pre}Pop" style="animation-delay:.4s"><rect x="247" y="54" width="52" height="50" rx="9" fill="rgba(52,22,26,.7)" stroke="${red}" stroke-width="2.4" stroke-dasharray="6 5"/>`
+        +`<text x="273" y="88" text-anchor="middle" font-size="20" font-weight="bold" fill="${red}">?</text>`
+        +`${tx(273,120,10.5,red,'4',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.7s"><rect x="18" y="140" width="282" height="52" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.9"/>`
+        +`<text x="159" y="162" text-anchor="middle" font-size="13.5" font-family="'Courier New',monospace" font-weight="bold" fill="${red}">числа[4] — такой ячейки нет</text>`
+        +`${tx(159,182,11,red,'длина 4, значит последний индекс 3',{})}</g>`;
+      return s;
+    }
+    if(K==='marks'){ /* список команд робота */
+      const cmds=v.cmds||['вперёд','вперёд','вправо','вперёд'];
+      let s=`<rect x="12" y="26" width="140" height="${cmds.length*28+22}" rx="10" fill="rgba(8,14,30,.92)" stroke="${A}" stroke-opacity=".5" stroke-width="1.5"/>`
+        +`${tx(82,44,10.5,dim,'список команд',{})}`;
+      cmds.forEach((t,k)=>{
+        const y=54+k*28;
+        s+=`<rect x="18" y="${y}" width="128" height="24" rx="6" fill="rgba(255,255,255,.04)" stroke="#2b3c62" stroke-width="1"/>`
+          +`<rect x="18" y="${y}" width="128" height="24" rx="6" fill="${A}" opacity=".1"><animate attributeName="opacity" values="0.06;0.3;0.06" dur="${(cmds.length*0.9+1).toFixed(2)}s" begin="${(k*0.9).toFixed(2)}s" repeatCount="indefinite"/></rect>`
+          +`<text x="28" y="${y+16}" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${k%2?gold:cyan}">${plain(t)}</text>`
+          +`${tx(138,y+16,10,dim,''+k,{})}`;
+      });
+      s+=`<rect x="166" y="26" width="140" height="140" rx="10" fill="rgba(126,168,255,.07)" stroke="${A}" stroke-opacity=".5" stroke-width="1.5"/>`;
+      for(let r=0;r<4;r++)for(let c=0;c<4;c++){
+        s+=`<rect x="${174+c*32}" y="${36+r*32}" width="32" height="32" fill="${((r+c)%2)?'rgba(255,255,255,.05)':'rgba(255,255,255,.02)'}" stroke="#31456f" stroke-width="1"/>`;
+      }
+      s+=`<g><circle r="11" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/><circle cx="-3.4" cy="-3" r="2.4" fill="#1a2340"/><circle cx="3.4" cy="-3" r="2.4" fill="#1a2340"/>`
+        +`<animateMotion dur="3.6s" repeatCount="indefinite" path="M190 148 V116 V84 L222 84 V52"/></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="166" y="176" width="140" height="30" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.6"/>`
+        +`${tx(236,196,10.5,ink,'робот идёт по списку',{})}</g>`;
+      return s;
+    }
+    if(K==='findcell'){ /* интерактив: нажми на ячейку с нужным индексом */
+      const vals=v.vals||[3,7,2,9], need=(v.need===undefined?2:v.need);
+      const sel=(st&&typeof st.find==='number')?st.find:-1, bad2=(st&&typeof st.bad==='number')?st.bad:-1;
+      const done=(sel===need);
+      let s=`<g class="${pre}Pop"><rect x="16" y="18" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${tx(159,38,Math.min(12,246/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Нажми на ячейку с нужным индексом',{b:1})}</g>`;
+      vals.forEach((v2,k)=>{
+        const x=22+k*70, on=(done&&k===need), isB=(k===bad2);
+        const c=on?grn:(isB?red:blu);
+        const bg=on?'rgba(19,44,35,.97)':(isB?'rgba(52,22,26,.97)':'rgba(15,25,46,.97)');
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.1*k).toFixed(2)}s;cursor:pointer" onclick="infCell('${lk}',${k},${k===need?1:0})">`
+          +`<rect x="${x}" y="60" width="64" height="54" rx="10" fill="${bg}" stroke="${c}" stroke-width="${(on||isB)?2.6:1.8}"/>`
+          +`<text x="${x+32}" y="96" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="${on?grn:(isB?red:ink)}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text>`
+          +`${tx(x+32,132,12,on?grn:(isB?red:dim),''+k,{b:1})}`
+          +(on?`<path d="M${x+8} 72 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')
+          +(isB?`${tx(x+32,152,10.5,red,'это индекс '+k,{})}`:'')
+          +`</g>`;
+      });
+      const msg=done?(v.exp||'Верно! Это ячейка с этим индексом.'):(bad2>=0?'Не угадал: смотри на номер под ячейкой':'Нажми на ячейку, у которой такой номер');
+      s+=`<g class="${pre}Rise"><rect x="20" y="168" width="278" height="30" rx="9" fill="${done?'rgba(125,224,160,.12)':'rgba(15,25,46,.95)'}" stroke="${done?grn:A}" stroke-width="1.7"/>`
+        +`${tx(159,188,Math.min(11.5,252/Math.max(1,msg.length)/0.7),done?grn:dim,msg,{b:done})}</g>`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -1500,6 +1722,20 @@
     if(K==='trace') return 26+27+(v.rows||[]).length*27+44;
     if(K==='compare') return 208;
     if(K==='text') return ((v.lines||[]).length<=2)?(132+26*(v.lines||[]).length):Math.max(134, (v.lines||[]).length*39+54);
+    if(K==='manyvars') return 218;
+    if(K==='train') return 200;
+    if(K==='cells') return 200;
+    if(K==='index0') return 202;
+    if(K==='create') return 216;
+    if(K==='length') return 200;
+    if(K==='walk') return 196;
+    if(K==='sumlist') return 204;
+    if(K==='maxlist') return 200;
+    if(K==='findlist') return 204;
+    if(K==='append') return 186;
+    if(K==='outofrange') return 202;
+    if(K==='marks') return 220;
+    if(K==='findcell') return 210;
     if(K==='broken') return 216;
     if(K==='kinds3') return 218;
     if(K==='console') return 204;
@@ -2018,6 +2254,46 @@
       tasks:[
         {q:'Сколько строк нужно менять за один раз, когда исправляешь ошибку?', kind:'unit', ans:1, tol:0, hints:['Иначе непонятно, что помогло.','Одну — ту, где ошибка.'], sol:'1'},
         {q:'Как быстрее всего найти ошибку в длинной программе?', kind:'choice', choices:['делить программу пополам и проверять половины','удалить программу и написать заново','запускать её много раз подряд'], ans:0, tol:0, hints:['Каждая проверка сужает место поиска вдвое.','Делим пополам.'], sol:'делить программу пополам и проверять половины'}
+      ] },
+    { id:515, title:'Списки: как хранить много чисел', ico:'🚃', src:'Информатика · 5–6 класс · С нуля: списки',
+      explain:[
+        'В переменной хранится одно значение. Но что делать, если чисел не одно, а двадцать или сто?',
+        'Заводить сто переменных неудобно: у каждой должно быть своё имя, и в них очень легко запутаться.',
+        'Для этого придумали СПИСОК: одно имя — и много значений внутри, по порядку друг за другом.',
+        'Список похож на поезд: у всего поезда одно имя, а вагоны идут один за другим.',
+        'Каждое значение лежит в своей ячейке. У ячейки есть номер — его называют индексом.',
+        'Важно: счёт индексов начинается с нуля! Первый элемент — это числа[0], второй — числа[1].',
+        'Создают список так: числа = [3, 7, 2, 9]. Квадратные скобки означают, что это список.',
+        'Обращение к элементу: числа[2] — это значение из ячейки с номером 2, то есть третьей по счёту.',
+        'Длина списка — сколько в нём ячеек. У списка [3, 7, 2, 9] длина равна четырём.',
+        'Чтобы пройти по всем элементам, используют цикл: «пока i меньше длины списка — смотри числа[i]».',
+        'Так считают сумму всех чисел: берём числа по одному и складываем результат в переменную сумма.',
+        'Так же ищут самое большое число: сначала чемпион — первый элемент, а потом сравниваем с ним остальные.',
+        'Список можно менять: добавить значение в конец, заменить значение в ячейке или найти нужное число.',
+        'Частая ошибка — выйти за границы списка: если длина равна 4, то последний индекс 3, а числа[4] не существует.',
+        'Проверь себя: какой индекс у первого элемента списка?',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'А если чисел много?', v:{kind:'manyvars'}, r:'Сто переменных — неудобно.', d:'Каждому числу пришлось бы придумывать своё имя. Для больших наборов чисел так делать нельзя.'},
+        {h:'Список — это поезд', v:{kind:'train', vals:[3,7,2,9]}, r:'Одно имя — много вагонов.', d:'У списка одно имя, а значения стоят в вагонах-ячейках по порядку: первое, второе, третье.'},
+        {h:'Номер ячейки', v:{kind:'cells', vals:[3,7,2,9], at:2}, r:'У каждой ячейки свой индекс.', d:'Индекс — это номер ячейки. Запись числа[2] значит: возьми значение из ячейки с номером 2.'},
+        {h:'Счёт с нуля', v:{kind:'index0', vals:[3,7,2]}, r:'Первый элемент — нулевой!', d:'Это самое непривычное в списках: нумерация начинается с нуля, а не с единицы.'},
+        {h:'Создаём список', v:{kind:'create', vals:[3,7,2,9]}, r:'Числа = [3, 7, 2, 9].', d:'Квадратные скобки — это список. Значения из скобок встают в ячейки по порядку.'},
+        {h:'Длина списка', v:{kind:'length', vals:[3,7,2,9]}, r:'Сколько ячеек — такая и длина.', d:'Длина показывает, сколько в списке элементов. У списка из четырёх чисел длина равна 4.'},
+        {h:'Идём по списку циклом', v:{kind:'walk', vals:[3,7,2,9]}, r:'Цикл заглядывает в каждую ячейку.', d:'Счётчик i по очереди становится 0, 1, 2, 3 — и цикл смотрит числа[i].'},
+        {h:'Сумма всех чисел', v:{kind:'sumlist', vals:[3,7,2,9]}, r:'Складываем по одному.', d:'Числа по очереди попадают в сумму, а счётчик растёт: 3, потом 10, потом 12 и наконец 21.'},
+        {h:'Самое большое число', v:{kind:'maxlist', vals:[3,7,2,9]}, r:'Ищем чемпиона по очереди.', d:'Сначала чемпион — первое число. Если следующее больше, чемпион меняется: так находим максимум.'},
+        {h:'Поиск в списке', v:{kind:'findlist', vals:[3,7,2,9], target:2}, r:'Лупа идёт по ячейкам.', d:'Проверяем числа одно за другим и сравниваем с тем, что ищем. Нашли — запоминаем номер ячейки.'},
+        {h:'Добавляем в конец', v:{kind:'append', vals:[3,7,2,9], add:5}, r:'Список можно удлинить.', d:'Новое значение всегда встаёт в конец списка, и длина увеличивается на единицу.'},
+        {h:'Ошибка: выход за границы', v:{kind:'outofrange', vals:[3,7,2,9]}, r:'Числа[4] не существует.', d:'Если длина списка 4, то последний индекс — 3. Обращение к числа[4] — ошибка.'},
+        {h:'Список команд робота', v:{kind:'marks', cmds:['вперёд','вперёд','вправо','вперёд']}, r:'Робот выполняет команды из списка.', d:'В списке могут храниться не только числа, но и команды: робот берёт их по порядку.'},
+        {h:'Найди нужную ячейку', v:{kind:'findcell', vals:[3,7,2,9], need:2, q:'Нажми на ячейку с индексом 2'}, r:'Проверь себя: где индекс 2?', d:'Нажми на ячейку, у которой номер 2. Я проверю и объясню.'},
+        {h:'Что выведет программа', v:{kind:'pick', q:'Что покажет команда вывести числа[1], если числа = [4, 9, 6]?', opts:[{t:'9', ok:1},{t:'4'},{t:'6'}], exp:'Числа[1] — это второй элемент по счёту, то есть 9.'}, r:'Проверь себя: чему равен числа[1].', d:'Вспомни: индекс 1 — это второй элемент, потому что счёт начинается с нуля.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'список = [3, 7, 2, 9]', b:1},{t:'первый индекс — 0', c:red},{t:'длина = сколько ячеек', c:grn, b:1}]}, r:'Запомни: список, индекс, длина.', d:'Главное: у списка одно имя, у каждой ячейки свой номер, и счёт начинается с нуля.'} ],
+      check:{ q:'Какой индекс у первого элемента списка?', choices:['0','1','2'], ans:0, exp:'Счёт элементов в списке начинается с нуля: первый элемент — это числа[0].' },
+      tasks:[
+        {q:'Дан список [5, 8, 1]. Чему равна его длина?', kind:'unit', ans:3, tol:0, hints:['Посчитай ячейки.','Их три.'], sol:'3'},
+        {q:'Числа = [4, 9, 6]. Что окажется в переменной x после команды x = числа[1]?', kind:'choice', choices:['9','4','6','1'], ans:0, tol:0, hints:['Индекс 1 — это второй элемент.','Второй элемент — 9.'], sol:'9'}
       ] }
   ];
 
@@ -2030,17 +2306,19 @@
     if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; st.seq=[]; st.bad=-1; st.find=-1; }
     const go=st.go||0;
     const s=spec.slides[Math.min(step,spec.slides.length-1)];
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
       ? wkRow(wkBtn('собрать заново',`infSeq('${lk}',-1,0)`))
       : (s.v.kind==='find')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
+      : (s.v.kind==='findcell')
+      ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find')? (st.find>=0 && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -2049,6 +2327,11 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infCell=function(lk,i,ok){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(i<0){ st.find=-1; st.bad=-1; chRender(0); return; }
+    st.find=i; st.bad=ok?(-1):i; chRender(0);
+  };
   window.infFind=function(lk,i,ok){
     const st=CHS[lk]||(CHS[lk]={});
     if(i<0){ st.find=-1; st.bad=-1; chRender(0); return; }
