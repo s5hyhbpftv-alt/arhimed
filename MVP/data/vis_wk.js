@@ -468,409 +468,591 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===17){ window.ARH_LESSONS[i]=L17; break; } } })();
 })();
 
-/* ================= УРОК 24 · Цепочки сравнений (v5 · «Остров Сравнялок Архимеда», 16 слайдов, флагман, подробный) ================= */
+/* ================= УРОК 24 · Сравнения и цепочки неравенств (v6 · «Остров Сравнялок Архимеда», 22 шага, флагман, по материалу Петерсона) ================= */
 (function(){
-  if(!window.__wk24v5css){
-    window.__wk24v5css=1;
+  if(!window.__wk24v6css){
+    window.__wk24v6css=1;
     const st=document.createElement('style');
     st.textContent=
-      '#lvis .qUIn{animation:qUIn .5s cubic-bezier(.2,.85,.3,1.05) both;}'+
-      '@keyframes qUIn{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}'+
-      '#lvis .qUPop{animation:qUPop .5s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qUPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qUNode{animation:qUNode .5s cubic-bezier(.2,.8,.3,1.4) both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qUNode{0%{transform:scale(0);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}'+
-      '#lvis .qULink{animation:qULink .6s ease both;transform-box:fill-box;transform-origin:center;}'+
-      '@keyframes qULink{0%{transform:scaleX(0);opacity:0}70%{transform:scaleX(1.05);opacity:1}100%{transform:scaleX(1)}}';
+      '#lvis .qYIn{animation:qYIn .55s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qYIn{0%{transform:translateY(-14px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qYPop{animation:qYPop .55s cubic-bezier(.2,.9,.3,1.25) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qYPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qYRise{animation:qYRise .7s cubic-bezier(.2,.85,.3,1.08) both;}'+
+      '@keyframes qYRise{0%{transform:translateY(16px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qYGlow{animation:qYGlow 2.2s ease-in-out infinite;}'+
+      '@keyframes qYGlow{0%,100%{opacity:.3}50%{opacity:1}}'+
+      '#lvis .qYBlink{animation:qYBlink 1.5s ease-in-out infinite;}'+
+      '@keyframes qYBlink{0%,100%{opacity:.35}50%{opacity:1}}'+
+      '#lvis .qYFloat{animation:qYFloat 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qYFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'+
+      '#lvis .qYPulse{animation:qYPulse 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qYPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}'+
+      '#lvis .qYBite{animation:qYBite 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qYBite{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-8deg)}}'+
+      '#lvis .qYWalk{animation:qYWalk 3.4s linear infinite;}'+
+      '@keyframes qYWalk{0%{transform:translateX(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateX(var(--run,180px));opacity:0}}';
     document.head.appendChild(st);
   }
   const L24 = {
     id: 24, title: 'Цепочки сравнений', ico: '📏',
-    src: 'классика · логика', subj: 'math',
+    src: 'классика · логика · сравнения', subj: 'math',
     explain: [
-      'Сравнения «выше/ниже», «тяжелее/легче» складываются в цепочку: если A выше B, а B выше C, то A выше C.',
-      'Строим цепочку неравенств и сразу видим порядок: A > B > C.',
-      'Запиши все условия одной строкой, соединяя звенья: A>B, B>C → A>B>C.',
-      'Кто выше всех — первый в цепочке, кто ниже всех — последний.',
-      'Если сравнений не хватает для полного порядка, отвечай только на то, что следует из цепочки.',
-      'Правило: если A > B и B > C, то и A > C. Это называется «транзитивность».',
-      'Цепочка читается слева направо: первый — самый большой.',
-      'Соедини звенья в одну линию — и порядок виден сразу.',
-      'Тренажёр: построй цепочку из условий.',
-      'Тренажёр: определи, кто первый, а кто последний.',
-      'Тренажёр: что следует из цепочки.',
-      'Шпаргалка: A>B>C — A первый, C последний; звенья соединяем в линию.',
-      'Проверь себя устно: X<Y<Z → Z тяжелее; A>B>C → A выше.',
-      'Проверь себя: X < Y < Z — кто тяжелее всех?',
-      'Проверь себя: X<Y<Z → Z тяжелее.',
-      'Проверь себя: цепочка A > B > C. Ответь в тесте и жми «Понял! Проверю себя»!'
+      'Сравнить — значит узнать, что больше, что меньше, а что равно. Для этого есть три знака: «>» больше, «<» меньше и «=» равно.',
+      'У знака есть «клювик» — он всегда открывается на большее число. Значит, «5 > 3» читается «пять больше трёх».',
+      'Натуральные числа сравнивают так: у кого больше цифр, то число и больше. Например, 100 > 99, потому что в нём три цифры, а в 99 — две.',
+      'Если цифр поровну, сравниваем по старшему разряду: 47 > 42, потому что десятков поровну, а единиц больше у 47.',
+      'Сравнения складываются в цепочку. Если A больше B, а B больше C, то A больше C — это главное свойство цепочки.',
+      'Цепочку записывают одной строкой: A > B > C. В такой записи знаки смотрят в одну сторону, а числа идут по порядку.',
+      'В цепочке A > B > C первый слева — самый большой, а последний — самый маленький.',
+      'Цепочку можно записать и наоборот, поменяв местами всё вместе со знаками: A > B > C — то же самое, что C < B < A.',
+      'Бывает, что данных не хватает. Если A больше B и C больше B, то про A и C мы ничего не знаем: A может быть и больше C, и меньше.',
+      'Кроме строгих знаков есть нестрогие: «≥» значит «не меньше», то есть больше или равно, а «≤» значит «не больше».',
+      'Двойное неравенство — это сразу два условия в одной записи: 3 < x < 7 читается «x больше трёх и меньше семи».',
+      'Двойное неравенство удобно для ответа задачи: если x — натуральное число и 3 < x < 7, то x равно 4, 5 или 6.',
+      'На координатном луче сравнение видно глазом: чем правее стоит число, тем оно больше.',
+      'Отрицательные числа стоят слева от нуля, поэтому они меньше нуля и меньше любых положительных чисел: −5 < 0 < 3.',
+      'Из двух отрицательных чисел меньше то, у которого модуль больше: −7 < −3, потому что число −7 дальше от нуля.',
+      'Величины сравнивают, приведя их к одной единице: 5 см 3 мм = 53 мм, значит 5 см 3 мм = 53 мм, а 5 см 4 мм > 53 мм.',
+      'Дроби с одинаковыми знаменателями сравнивают по числителям: 3/8 < 5/8. А с одинаковыми числителями больше та дробь, у которой знаменатель меньше: 1/3 > 1/5.',
+      'У неравенства есть свойства: если к обеим частям прибавить одно и то же число, знак не изменится.',
+      'Умножать обе части можно на положительное число — знак сохранится. А если умножить на отрицательное число, знак перевернётся.',
+      'Неравенства одного знака можно складывать: если 3 < a < 5 и 4 < b < 6, то 7 < a + b < 11. Так оценивают результат.',
+      'Проверь себя: поставь нужный знак и найди, кто в цепочке первый.',
+      'Шпаргалка: клювик на большее, звенья цепочки идут по порядку, двойное неравенство — два условия сразу. Тренажёр и шпаргалка.'
     ],
     check: { q: 'X легче Y, а Y легче Z. Кто тяжелее всех?', choices: ['X', 'Y', 'Z'], ans: 2,
       exp: 'X < Y < Z — тяжелее всех Z.' },
     tasks: [
-      { q: 'A выше B, B выше C. Кто выше всех?', choices: ['A', 'B', 'C'], ans: 0, tol: 0,
-        hints: ['Цепочка: A > B > C.', 'Выше всех — первый в цепочке.'], sol: 'A > B > C — выше всех A.', kind: 'choice' },
-      { q: 'A выше B, B выше C, C выше D. Кто ниже всех?', choices: ['A', 'B', 'C', 'D'], ans: 3, tol: 0,
-        hints: ['Цепочка: A > B > C > D.', 'Ниже всех — последний.'], sol: 'A > B > C > D — ниже всех D.', kind: 'choice' }
+      { q: 'A выше B, B выше C. Кто выше всех?', kind: 'choice', choices: ['A', 'B', 'C'], ans: 0, tol: 0,
+        hints: ['Цепочка: A > B > C.'], sol: 'A > B > C — выше всех A.' },
+      { q: 'A выше B, B выше C, C выше D. Кто ниже всех?', kind: 'choice', choices: ['A', 'B', 'C', 'D'], ans: 3, tol: 0,
+        hints: ['Цепочка: A > B > C > D.', 'Ниже всех — последний.'], sol: 'A > B > C > D — ниже всех D.' }
     ]
   };
-  const ink='#eef4ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cold='#7fd6ff', warm='#ffb85c', blu='#6ea8ff', purple='#b07fff',
-        bg0='#142038', bg1='#0a1122', card='rgba(20,29,52,.96)', cardB='#3a4c78', lineC='#2c3c64';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff',
+        bg0='#16203c', bg1='#0b1122', card='rgba(20,28,50,.96)', cardB='#3a4a70', lineC='#33436b';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.6">${t}</text>`;
+  const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
       <defs>
-        <linearGradient id="qUbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
-        <linearGradient id="qUgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="#c9932f"/></linearGradient>
-        <filter id="qUsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+        <linearGradient id="qYbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <filter id="qYsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
       </defs>
-      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qUbg)"/>
-      <g opacity="0.14" stroke="#4a5c8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
-      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44568c" stroke-width="2.4" rx="7"/>
-      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3a64" stroke-width="1.2" rx="4"/>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qYbg)"/>
+      <g opacity="0.13" stroke="#4a5a8a" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#44538a" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3858" stroke-width="1.2" rx="4"/>
       ${o.inner?o.inner():''}
     </svg>`;
   }
-  function node(x,y,label,color,r,delay){
-    return `<g class="qUNode" style="animation-delay:${(delay||0).toFixed(2)}s" filter="url(#qUsh)"><circle cx="${x}" cy="${y}" r="${r}" fill="${color}" stroke="#fffdf2" stroke-width="2.4"/><text x="${x}" y="${y+5}" text-anchor="middle" font-size="15" fill="#0a1428" font-weight="bold">${label}</text></g>`;
-  }
-  function link(x1,x2,y,sym,color,delay){
-    const cx=(x1+x2)/2;
-    return `<g class="qULink" style="animation-delay:${(delay||0).toFixed(2)}s"><text x="${cx}" y="${y+6}" text-anchor="middle" font-size="26" fill="${color||gold}" font-weight="bold" font-family="Georgia,serif">${sym}</text></g>`;
-  }
-  /* цепочка: [ {label,color,r}, ... ] соединённые символом (по умолчанию >) */
-  function chain(x,y,items,sym,colorsArr){
-    let s='';
-    const gap=16;
-    const cxs=items.map((it,i)=> x+i*(it.r*2+gap));
-    items.forEach((it,i)=>{
-      s+=node(cxs[i],y,it.label,it.c,it.r,0.1+i*0.08);
-      if(i<items.length-1){ s+=link(cxs[i]+it.r,cxs[i+1]-items[i+1].r,y,sym||'>',colorsArr?colorsArr[i]:null,0.12+i*0.08); }
-    });
-    return s;
-  }
-  const chip=(t,c,delay)=>`<span class="qUIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:6px 14px;border-radius:12px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
-  const Q24=[
-    {q:'X легче Y, Y легче Z — кто тяжелее?',opts:['X','Y','Z'],ans:2},
-    {q:'A выше B, B выше C — кто выше?',opts:['A','B','C'],ans:0}
-  ];
-  function quiz(lk,st){
-    const T=Q24[st.q||0];
-    const opts=T.opts.map((o,i)=>{
-      let bd=cardB,tc=ink,bg=card;
-      if(st.sel!=null&&i===st.sel){ bg=i===T.ans?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'; bd=i===T.ans?grn:red; tc=i===T.ans?grn:red; }
-      return `<button class="wk-btn" style="background:${bg};border-color:${bd};color:${tc};min-width:64px;font-size:17px" onclick="visW24T('${lk}',${i})">${o}</button>`;
-    }).join('');
-    let msg='';
-    if(st.sel!=null){
-      msg= st.sel===T.ans
-        ? '<div class="wk-ans" style="color:#7de0a0;font-size:18px">Верно! первый в цепочке — самый большой</div>'
-        : '<div class="wk-ans" style="color:#ff9a8a;font-size:17px">Не так · построй цепочку</div>';
-    }
-    const next= st.sel!=null&&st.sel===T.ans&&st.q===0? wkBtn('следующий →',`visW24Act('${lk}','nq')`):'';
-    const rst=wkBtn('заново',`visW24Act('${lk}','rst')`);
-    return `${wkNote(T.q,'#cfe8e2')}<div class="wk-row" style="gap:8px">${opts}</div>${msg}<div class="wk-row">${next?next+rst:rst}</div>`;
-  }
+  const plate=(x,y,w,h,col,txt,fs)=>`<g class="qYRise"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="rgba(20,28,50,.95)" stroke="${col}" stroke-width="1.9"/>`
+    +fit(x+w/2,y+h*0.66,fs||13,col,txt,{b:1},w-16)+`</g>`;
+  const chip=(t,c,delay)=>`<span class="qYIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  /* плашка со значением */
+  const valBox=(cx,cy,t,c,opt)=>{
+    const o=opt||{}, w=(o.w||Math.max(34,(''+t).length*11+18)), h=(o.h||36);
+    return `<g class="qYPop" style="animation-delay:${(o.delay||0).toFixed(2)}s">`
+      +`<rect x="${cx-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="${o.rx||9}" fill="${o.fill||'rgba(15,25,46,.97)'}" stroke="${c}" stroke-width="${o.sw||2}"/>`
+      +tx(cx,cy+h*0.2,o.fs||16,c,t,{b:1,georgia:o.geo!==false})+`</g>`;
+  };
+  /* знак сравнения */
+  const signBox=(cx,cy,t,c,opt)=>{
+    const o=opt||{}, w=(o.w||38), h=(o.h||34);
+    return `<g class="qYPop" style="animation-delay:${(o.delay||0).toFixed(2)}s">`
+      +`<rect x="${cx-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="10" fill="${o.fill||'rgba(255,215,106,.14)'}" stroke="${c}" stroke-width="1.9"/>`
+      +tx(cx,cy+7,22,c,t,{b:1,georgia:1})+`</g>`;
+  };
+  const W=318;
   function visW24(el){
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step;
-      if(step>=0&&step<=15){ st.go=0; st.pick=null; }
-      if(step===9||step===10||step===11) st.pick=null;
-      if(step===13){ st.mq=0; st.msel=null; }
-      if(step===15){ st.sel=null; st.q=0; }
-    }
-    let h='';
-    const W=318;
-    if(step===0){
-      const H=186, go=st.go||0;
-      let inner='';
-      inner+=tx(159,26,20,ink,'что такое цепочка?',{b:1});
-      if(go){
-        inner+=chain(40,110,[{label:'B',c:gold,r:28},{label:'C',c:grn,r:24}],'>',[]);
-        inner+=`<g class="qUPop"><text x="159" y="166" text-anchor="middle" font-size="15" fill="${dim}">B > C — «B выше/тяжелее C»</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Остров Сравнялок</div>`+
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; }
+    const go=st.go||0, sel=(typeof st.pick==='number')?st.pick:-1;
+    let h='', H=232;
+    const TT=(t,c)=>`<g class="qYPop"><rect x="24" y="12" width="270" height="28" rx="9" fill="url(#qYbg)" stroke="${c||cardB}" stroke-width="1.8"/>`
+      +fit(159,31,12.5,c||ink,t,{b:1},250)+`</g>`;
+    if(step===0){ /* что значит сравнить */
+      H=238;
+      let inner=TT('что больше, что меньше','gold');
+      for(let k=0;k<5;k++) inner+=`<circle class="qYPop" style="animation-delay:${(0.1+k*0.06).toFixed(2)}s" cx="${68+k*24}" cy="96" r="9" fill="rgba(255,215,106,.85)" stroke="${gold}" stroke-width="1.6"/>`;
+      for(let k=0;k<3;k++) inner+=`<circle class="qYPop" style="animation-delay:${(0.4+k*0.06).toFixed(2)}s" cx="${208+k*24}" cy="96" r="9" fill="rgba(126,168,255,.8)" stroke="${blu}" stroke-width="1.6"/>`;
+      inner+=signBox(159,96,'>',gold,{delay:0.65,w:44,h:40});
+      inner+=`${fit(86,134,11.5,gold,'5 кружков',{b:1},110)}${fit(232,134,11.5,blu,'3 кружка',{b:1},110)}`;
+      inner+=`<g class="qYRise" style="animation-delay:.5s"><rect x="24" y="152" width="270" height="30" rx="9" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,172,11.5,gold,'клювик открыт на большее число',{b:1},250)+`</g>`;
+      inner+=plate(24,194,270,30,go?grn:cardB,go?'5 > 3 — читаем «пять больше трёх»':'какой знак поставить?',12);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Что значит сравнить</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('сравнения складываются в цепь',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('что это?',`visW24Act('${lk}','go')`))+
-        wkSml('выше/ниже, тяжелее/легче'));
-    } else if(step===1){
-      const H=186, go=st.go||0;
-      let inner='';
-      inner+=tx(159,26,20,ink,'правило цепочки',{b:1});
-      if(go){
-        inner+=chain(30,110,[{label:'A',c:red,r:30},{label:'B',c:gold,r:26},{label:'C',c:grn,r:22}],'>',[]);
-        inner+=`<g class="qUPop"><text x="159" y="168" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">если A>B и B>C, то A>C</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Логика</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('транзитивность',grn,0.2)):'')+
+        (go?wkRow(chip('клювик на большее',gold,0.1)):'')+
+        (go?wkNote('Сравнить два числа — значит узнать, какое из них больше. У знака есть клювик: он всегда открывается в сторону большего числа. Слева пять кружков, справа три, значит 5 больше 3.'):'')+
         wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
-        wkSml('соедини звенья'));
-    } else if(step===2){
-      const H=190, go=st.go||0;
-      let inner='';
-      inner+=tx(159,26,20,ink,'строим цепочку',{b:1});
-      if(go){
-        inner+=chain(30,120,[{label:'A',c:red,r:30},{label:'B',c:gold,r:26},{label:'C',c:grn,r:22}],'>',[]);
-        inner+=`<g class="qUPop"><text x="159" y="174" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">A > B > C</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Соединяем</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('в одну линию >',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('построить',`visW24Act('${lk}','go')`))+
-        wkSml('A>B, B>C → A>B>C'));
-    } else if(step===3){
-      const H=192, go=st.go||0;
-      let inner='';
-      inner+=tx(159,26,20,ink,'читаем цепочку',{b:1});
-      if(go){
-        inner+=chain(30,116,[{label:'A',c:red,r:30},{label:'B',c:gold,r:26},{label:'C',c:grn,r:22}],'>',[]);
-        inner+=`<g class="qUPop"><text x="60" y="176" text-anchor="middle" font-size="15" fill="${red}" font-weight="bold">первый</text><text x="258" y="176" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">последний</text>
-        <text x="159" y="194" text-anchor="middle" font-size="13" fill="${dim}">слева направо: убывание</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Как читать</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('первый = самый большой',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('читать',`visW24Act('${lk}','go')`))+
-        wkSml('слева наибольший'));
-    } else if(step===4){
-      const H=192, go=st.go||0;
-      let inner='';
-      inner+=tx(159,26,20,ink,'кто выше всех?',{b:1});
-      if(go){
-        inner+=chain(30,116,[{label:'A',c:red,r:30},{label:'B',c:gold,r:26},{label:'C',c:grn,r:22}],'>',[]);
-        inner+=`<g class="qUPop"><text x="159" y="174" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold" font-family="Georgia,serif">A — первый → выше всех</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Самый большой</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('первый (слева) — наибольший',red,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
-        wkSml('кто первый'));
-    } else if(step===5){
-      const H=192, go=st.go||0;
-      let inner='';
-      inner+=tx(159,26,20,ink,'кто ниже всех?',{b:1});
-      if(go){
-        inner+=chain(30,116,[{label:'A',c:red,r:30},{label:'B',c:gold,r:26},{label:'C',c:grn,r:22}],'>',[]);
-        inner+=`<g class="qUPop"><text x="159" y="174" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold" font-family="Georgia,serif">C — последний → ниже всех</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Самый маленький</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('последний — наименьший',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
-        wkSml('кто последний'));
-    } else if(step===6){
-      const H=190, go=st.go||0;
-      let inner='';
-      inner+=tx(159,26,20,ink,'пример: вес',{b:1});
-      if(go){
-        inner+=chain(30,108,[{label:'X',c:grn,r:20},{label:'Y',c:gold,r:26},{label:'Z',c:red,r:32}],'<',[]);
-        inner+=`<g class="qUPop"><text x="159" y="164" text-anchor="middle" font-size="16" fill="${gold}" font-weight="bold" font-family="Georgia,serif">X < Y < Z</text>
-        <text x="159" y="184" text-anchor="middle" font-size="13" fill="${dim}">«легче» пишем «<» — Z тяжелее всех</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тяжелее/легче</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('легче → «<»',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('построить',`visW24Act('${lk}','go')`))+
-        wkSml('не перепутай знак'));
-    } else if(step===7){
-      const H=190, go=st.go||0;
-      let inner='';
-      inner+=tx(159,26,20,ink,'вникаем: X<Y<Z',{b:1});
-      if(go){
-        inner+=chain(30,108,[{label:'X',c:grn,r:20},{label:'Y',c:gold,r:26},{label:'Z',c:red,r:32}],'<',[]);
-        inner+=`<g class="qUPop"><text x="70" y="164" text-anchor="middle" font-size="13" fill="${grn}">X легче Y</text><text x="159" y="164" text-anchor="middle" font-size="13" fill="${gold}">Y легче Z</text><text x="248" y="164" text-anchor="middle" font-size="13" fill="${red}">Z больше всех</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Разбор</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('соединяем по шагам',gold,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('разобрать',`visW24Act('${lk}','go')`))+
-        wkSml('легче → тяжелее'));
-    } else if(step===8){
-      const H=186, go=st.go||0;
-      let inner='';
-      inner+=tx(159,30,20,ink,'длинная цепочка',{b:1});
-      if(go){
-        inner+=chain(8,98,[{label:'A',c:red,r:26},{label:'B',c:gold,r:23},{label:'C',c:purple,r:20},{label:'D',c:grn,r:17}],'>',[]);
-        inner+=`<g class="qUPop"><text x="159" y="152" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold" font-family="Georgia,serif">A > B > C > D</text>
-        <text x="159" y="174" text-anchor="middle" font-size="13" fill="${dim}">ниже всех — D (последний)</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Четыре звена</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('A > B > C > D',grn,0.2)):'')+
-        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('построить',`visW24Act('${lk}','go')`))+
-        wkSml('любой длины'));
-    } else if(step===9){
-      const H=194, py=84;
-      if(st.tr==null) st.tr=0;
-      const pool=[
-        {q:'A>B, B>C — построй',a:'A>B>C',ds:['C>B>A','B>A>C']},
-        {q:'X<Y, Y<Z — построй',a:'X<Y<Z',ds:['Z<Y<X','Y<X<Z']},
-        {q:'D<C, C<B, B<A — построй',a:'D<C<B<A',ds:['A<B<C<D','D<B<C<A']}
-      ];
-      const P=pool[st.tr%pool.length];
-      const ord=[P.a,...P.ds];
-      let inner='';
-      inner+=tx(159,30,15,ink,P.q,{b:1});
-      const X=[26,118,210],CW=86;
-      ord.forEach((o,i)=>{
-        let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qUIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
-        ${tx(X[i]+CW/2,py+36,16,tc,o,{b:1,georgia:1})}</g>`;
+        wkSml('знаки сравнения'));
+    } else if(step===1){ /* три знака */
+      H=250;
+      let inner=TT('три знака: больше, меньше, равно','cyan');
+      const rows=[{a:'5',s:'>',b:'3',t:'5 больше 3',c:gold},{a:'3',s:'<',b:'5',t:'3 меньше 5',c:cyan},{a:'5',s:'=',b:'5',t:'5 равно 5',c:grn}];
+      rows.forEach((q,k)=>{
+        const y=76+k*46;
+        inner+=`<g class="qYPop" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+          +valBox(86,y,q.a,pur,{delay:0.12*k})
+          +signBox(159,y,q.s,q.c,{delay:0.2+0.12*k})
+          +valBox(232,y,q.b,blu,{delay:0.28+0.12*k})
+          +fit(159,y+34,11,q.c,q.t,{b:1},150)+`</g>`;
       });
-      inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qUPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qUPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">соедини звенья</text></g>`)
-        : tx(159,py+74,16,dim,'построй цепочку',{});
-      const fb= st.pick!=null&&st.pick===0
-        ? `<div class="wk-row"><button class="wk-btn" onclick="visW24Act('${lk}','n')">дальше →</button></div>`
-        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW24P('${lk}',${i})">${o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW24P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: цепочка</div>`+
+      inner+=plate(24,214,270,26,go?grn:cardB,go?'знак всегда смотрит на большее':'сравниваем слева направо',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Три знака</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
-        fb+retry+
-        wkSml('A>B, B>C → A>B>C'));
-    } else if(step===10){
-      const H=194, py=84;
-      if(st.tr==null) st.tr=0;
-      const pool=[
-        {q:'A>B>C — кто выше всех?',a:'A',ds:['B','C']},
-        {q:'X<Y<Z — кто тяжелее?',a:'Z',ds:['X','Y']},
-        {q:'A>B>C>D — кто ниже всех?',a:'D',ds:['A','C']}
-      ];
-      const P=pool[st.tr%pool.length];
-      const ord=[P.a,...P.ds];
-      let inner='';
-      inner+=tx(159,30,16,ink,P.q,{b:1});
-      const X=[26,118,210],CW=86;
-      ord.forEach((o,i)=>{
-        let bd=cardB,tc=ink,bgc=card;
-        if(st.pick!=null){ if(i===0&&st.pick===0){bgc='rgba(125,224,160,.16)';bd=grn;tc=grn;} else if(i===st.pick){bgc='rgba(255,154,138,.16)';bd=red;tc=red;} }
-        inner+=`<g class="qUIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="${X[i]}" y="${py}" width="${CW}" height="54" rx="12" fill="${bgc}" stroke="${bd}" stroke-width="2.4"/>
-        ${tx(X[i]+CW/2,py+36,26,tc,o,{b:1,georgia:1})}</g>`;
-      });
-      inner+=st.pick!=null
-        ? (st.pick===0? `<g class="qUPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${grn}" font-weight="bold">верно!</text></g>`
-          : `<g class="qUPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">первый/последний</text></g>`)
-        : tx(159,py+74,16,dim,'кто первый?',{});
-      const fb= st.pick!=null&&st.pick===0
-        ? `<div class="wk-row"><button class="wk-btn" onclick="visW24Act('${lk}','n')">дальше →</button></div>`
-        : `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW24P('${lk}',${i})">${o}</button>`).join('')}</div>`;
-      const retry= st.pick!=null&&st.pick!==0? `<div class="wk-row" style="gap:8px">${ord.map((o,i)=>`<button class="wk-btn" onclick="visW24P('${lk}',${i})">${o}</button>`).join('')}</div>`:'';
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: крайние</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (st.pick!=null&&st.pick===0?wkRow(chip(P.a,grn,0.2)):'')+
-        fb+retry+
-        wkSml('первый — наибольший'));
-    } else if(step===11){
-      const H=182;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,34,20,ink,'если не хватает сравнений',{b:1});
-      if(go){
-        inner+=`<g class="qUPop"><rect x="46" y="70" width="226" height="70" rx="12" fill="rgba(255,154,138,.12)" stroke="${red}" stroke-width="2"/>
-        ${tx(159,92,16,red,'отвечай только на то,',{b:1})}
-        ${tx(159,112,16,red,'что следует из цепочки',{b:1})}
-        ${tx(159,132,13,dim,'не додумывай лишнего',{})}</g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Осторожно</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('только то, что доказано',red,0.2)):'')+
+        (go?wkRow(chip('> больше · < меньше · = равно',cyan,0.1)):'')+
+        (go?wkNote('Запомни: «>» значит больше, «<» значит меньше, «=» значит равно. Клювик открывается на большее число, поэтому 5 > 3 и 3 < 5 — это одно и то же сравнение, прочитанное с двух сторон.'):'')+
         wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
-        wkSml('сравнений может не хватить'));
-    } else if(step===12){
-      const H=190;
-      const go=st.go||0;
-      let inner='';
-      inner+=tx(159,30,19,ink,'шпаргалка',{b:1});
-      const items=[['A>B>C — A первый, C последний'],['соединяй звенья в одну линию'],['легче → «<» · выше → «>»'],['только то, что следует из цепочки']];
-      for(let i=0;i<items.length;i++){
-        if(go>=i){
-          const ry=52+i*32;
-          inner+=`<g class="qUIn" style="animation-delay:${(0.08*i).toFixed(2)}s"><rect x="28" y="${ry}" width="262" height="26" rx="8" fill="${i%2?'rgba(20,29,52,.96)':'rgba(32,44,76,.96)'}" stroke="${i===go-1?gold:cardB}" stroke-width="1.8"/>
-          ${tx(159,ry+18,14,ink,items[i][0],{})}</g>`;
-        }
+        wkSml('больше, меньше, равно'));
+    } else if(step===2){ /* как сравнивать числа */
+      H=240;
+      let inner=TT('как сравнивать числа','gold');
+      inner+=`<g class="qYRise"><rect x="20" y="48" width="134" height="84" rx="10" fill="rgba(15,25,46,.95)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(87,68,11,gold,'сравниваем цифры',{b:1},116)
+        +valBox(60,96,'100',grn,{w:46,h:30,fs:14,delay:0.15,geo:0})
+        +valBox(114,96,'99',red,{w:38,h:30,fs:14,delay:0.25,geo:0})
+        +fit(87,124,10,dim,'3 цифры > 2 цифр',{b:1},118)+`</g>`;
+      inner+=`<g class="qYRise" style="animation-delay:.2s"><rect x="164" y="48" width="134" height="84" rx="10" fill="rgba(15,25,46,.95)" stroke="${cyan}" stroke-width="1.7"/>`
+        +fit(231,68,11,cyan,'или по разрядам',{b:1},116)
+        +valBox(204,96,'47',grn,{w:44,h:30,fs:14,delay:0.35,geo:0})
+        +valBox(258,96,'42',red,{w:44,h:30,fs:14,delay:0.45,geo:0})
+        +fit(231,124,10,dim,'десятки равны, 7 > 2',{b:1},124)+`</g>`;
+      inner+=`<g class="qYRise" style="animation-delay:.5s"><rect x="24" y="142" width="270" height="30" rx="9" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,162,11,gold,'у кого больше цифр — тот и больше',{b:1},250)+`</g>`;
+      inner+=plate(24,182,270,30,go?grn:cardB,go?'100 > 99, а 47 > 42':'правило сравнения',12);
+      inner+=`${tx(159,226,10.5,dim,'если цифр поровну — смотрим старший разряд',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравниваем числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('сначала число цифр',gold,0.1)):'')+
+        (go?wkNote('Натуральные числа сравнивают просто: у кого больше цифр, тот и больше. Если цифр поровну, сравниваем слева направо — сначала десятки, потом единицы.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('объясни',`visW24Act('${lk}','go')`))+
+        wkSml('правило сравнения'));
+    } else if(step===3){ /* цепочка */
+      H=236;
+      let inner=TT('звенья складываются в цепочку','cyan');
+      const row=(y,arr,dim2)=>{
+        let s='', cx=44;
+        arr.forEach((q,k)=>{
+          const w=(q==='='||q==='>'||q==='<'||q==='>='||q==='<=')?34:44;
+          if(q==='>'||q==='<'||q==='=') s+=signBox(cx+w/2,y,q,cyan,{w:34,h:32,delay:(y*0.004)+k*0.1});
+          else s+=valBox(cx+w/2,y,q,(dim2&&k===0)?dim2:gold,{w:44,h:34,fs:16,delay:(y*0.004)+k*0.1});
+          cx+=w+6;
+        });
+        return s;
+      };
+      inner+=row(72,['A','>','B']);
+      inner+=`<g class="qYRise" style="animation-delay:.3s">${fit(240,77,11.5,grn,'A больше B',{an:'start',b:1},90)}</g>`;
+      inner+=row(112,['B','>','C']);
+      inner+=`<g class="qYRise" style="animation-delay:.45s">${fit(240,117,11.5,grn,'B больше C',{an:'start',b:1},90)}</g>`;
+      inner+=`<path d="M64 90 V100" stroke="${gold}" stroke-width="2" class="qYBlink"/>`;
+      for(let k=0;k<3;k++){
+        const x=72;
+        inner+=`<circle class="qYPop" style="animation-delay:${(0.6+k*0.12).toFixed(2)}s" cx="${x+k*87}" cy="166" r="17" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="1.9"/>`;
+        if(k<2) inner+=`${tx(x+k*87+43,175,20,gold,'>',{b:1})}`;
       }
+      inner+=`${tx(72,173,14,gold,'A',{b:1,georgia:1})}${tx(159,173,14,gold,'B',{b:1,georgia:1})}${tx(246,173,14,gold,'C',{b:1,georgia:1})}`;
+      inner+=plate(24,196,270,30,go?grn:cardB,go?'значит A больше C':'что следует из двух условий?',12);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Цепочка сравнений</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('если A > B и B > C, то A > C',cyan,0.1)):'')+
+        (go?wkNote('Это главное свойство сравнений: если первое больше второго, а второе больше третьего, то первое больше третьего. Все условия можно записать одной цепочкой A > B > C.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('построить',`visW24Act('${lk}','go')`))+
+        wkSml('главное свойство'));
+    } else if(step===4){ /* цепочка из четырёх */
+      H=244;
+      let inner=TT('A > B > C > D','gold');
+      const xs=[48,120,192,264];
+      ['A','B','C','D'].forEach((t,k)=>{
+        inner+=valBox(xs[k],86,t,k===0?grn:(k===3?red:gold),{w:44,h:36,fs:17,delay:0.12*k});
+        if(k<3) inner+=signBox((xs[k]+xs[k+1])/2,86,'>',cyan,{w:32,h:30,delay:0.2+0.12*k});
+      });
+      inner+=`<g class="qYRise" style="animation-delay:.6s">`
+        +`<path d="M48 118 V132" stroke="${grn}" stroke-width="2.2"/><path d="M264 118 V132" stroke="${red}" stroke-width="2.2"/>`
+        +fit(22,146,11,grn,'первый — самый большой',{an:'start'},130)
+        +fit(296,146,10.5,red,'последний — самый маленький',{an:'end'},140)+`</g>`;
+      inner+=`<g class="qYRise" style="animation-delay:.75s"><rect x="24" y="162" width="270" height="30" rx="9" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,182,11,gold,'в цепочке знаки смотрят в одну сторону',{b:1},250)+`</g>`;
+      inner+=plate(24,202,270,30,go?grn:cardB,go?'выше всех A, ниже всех D':'кто первый, кто последний?',12);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Читаем цепочку</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('первый — самый большой',gold,0.1)):'')+
+        (go?wkNote('В цепочке A > B > C > D числа идут по порядку: слева самый большой, справа самый маленький. Значит, выше всех A, а ниже всех D.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
+        wkSml('порядок в цепочке'));
+    } else if(step===5){ /* когда данных не хватает */
+      H=238;
+      let inner=TT('а если данных не хватает?','red');
+      inner+=valBox(70,76,'A',gold,{w:44,h:34,delay:0.1})+signBox(114,76,'>',cyan,{w:30,h:30,delay:0.2})+valBox(158,76,'B',blu,{w:44,h:34,delay:0.3});
+      inner+=valBox(70,124,'C',gold,{w:44,h:34,delay:0.4})+signBox(114,124,'>',cyan,{w:30,h:30,delay:0.5})+valBox(158,124,'B',blu,{w:44,h:34,delay:0.6});
+      inner+=`<g class="qYPop" style="animation-delay:.75s">`
+        +`<rect x="212" y="88" width="76" height="46" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
+        +tx(250,110,24,red,'?',{b:1})+fit(250,128,9.5,red,'A и C?',{},66)+`</g>`;
+      inner+=`<g class="qYRise" style="animation-delay:.9s"><rect x="24" y="160" width="270" height="30" rx="9" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.7"/>`
+        +fit(159,180,11,red,'про A и C сказать ничего нельзя',{b:1},250)+`</g>`;
+      inner+=plate(24,194,270,30,go?grn:cardB,go?'оба варианта возможны':'можно ли сравнить A и C?',12);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Неполные данные</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('иногда цепочка не сходится',red,0.1)):'')+
+        (go?wkNote('Известно, что A больше B и C больше B. Про A и C мы не знаем ничего: A может быть больше C, а может быть меньше. В таких задачах отвечаем только то, что точно следует из условий.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('объясни',`visW24Act('${lk}','go')`))+
+        wkSml('что следует из условий'));
+    } else if(step===6){ /* нестрогие знаки */
+      H=234;
+      let inner=TT('нестрогие знаки: ≥ и ≤','cyan');
+      const rows=[{s:'≥',t:'не меньше',e:'x ≥ 7 — это 7 или больше',c:grn},{s:'≤',t:'не больше',e:'x ≤ 7 — это 7 или меньше',c:gold}];
+      rows.forEach((q,k)=>{
+        const y=76+k*54;
+        inner+=`<g class="qYRise" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +signBox(58,y,q.s,q.c,{w:44,h:38,delay:0.15+k*0.2})
+          +fit(96,y+6,13,q.c,q.t,{an:'start',b:1},80)
+          +fit(159,y+30,11,dim,q.e,{},210)+`</g>`;
+      });
+      inner+=plate(24,192,270,30,go?grn:cardB,go?'не меньше — значит больше или равно':'чем отличаются от > и <',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Нестрогие знаки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('≥ не меньше · ≤ не больше',cyan,0.1)):'')+
+        (go?wkNote('Знак «≥» читается «не меньше», то есть больше или столько же. Знак «≤» читается «не больше». Например, «возраст не меньше 7 лет» — это 7 лет или больше.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
+        wkSml('не больше и не меньше'));
+    } else if(step===7){ /* двойное неравенство */
+      H=240;
+      let inner=TT('двойное неравенство','gold');
+      const xs=[70,159,248];
+      inner+=valBox(xs[0],80,'3',blu,{w:44,h:36,delay:0.1});
+      inner+=signBox(114,80,'<',gold,{w:32,h:30,delay:0.2});
+      inner+=valBox(xs[1],80,'x',gold,{w:44,h:36,delay:0.3});
+      inner+=signBox(204,80,'<',gold,{w:32,h:30,delay:0.4});
+      inner+=valBox(xs[2],80,'7',blu,{w:44,h:36,delay:0.5});
+      inner+=`<g class="qYGlow">${fit(159,132,11.5,grn,'x больше 3 и меньше 7',{b:1},250)}</g>`;
+      inner+=`<g class="qYRise" style="animation-delay:.6s"><rect x="24" y="146" width="270" height="34" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +fit(159,167,12,grn,'натуральные x: 4, 5, 6',{b:1},250)+`</g>`;
+      inner+=plate(24,192,270,30,go?grn:cardB,go?'двойное неравенство — два условия сразу':'сколько чисел подходит?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Двойное неравенство</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('3 < x < 7 — три числа',gold,0.1)):'')+
+        (go?wkNote('Запись 3 < x < 7 — это сразу два условия: x больше трёх И x меньше семи. Если x — натуральное число, то подходят только 4, 5 и 6.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
+        wkSml('два условия в одной записи'));
+    } else if(step===8){ /* цепочку можно перевернуть */
+      H=232;
+      let inner=TT('цепочку можно перевернуть','pur');
+      const chain=(y,arr,cc)=>{
+        let s='', cx=54;
+        arr.forEach((q,k)=>{
+          if(q==='>'||q==='<') { s+=signBox(cx+17,y,q,cc,{w:32,h:30,delay:0.1*k}); cx+=32+8; }
+          else { s+=valBox(cx+21,y,q,cc,{w:42,h:34,delay:0.1*k}); cx+=42+8; }
+        });
+        return s;
+      };
+      inner+=chain(74,['a','>','b','>','c'],gold);
+      inner+=`<g class="qYRise" style="animation-delay:.4s">${fit(159,116,11.5,dim,'то же самое, что',{},250)}</g>`;
+      inner+=chain(150,['c','<','b','<','a'],grn);
+      inner+=`<path d="M266 74 C296 96, 296 128, 266 150" fill="none" stroke="${pur}" stroke-width="2.2" stroke-dasharray="6 5" class="qYBlink"/>`;
+      inner+=plate(24,186,270,30,go?grn:cardB,go?'читаем справа налево — знаки меняются на <':'как записать иначе?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Переворачиваем цепочку</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('a > b > c и c < b < a',pur,0.1)):'')+
+        (go?wkNote('Цепочку можно записать с другого конца: если a больше b, а b больше c, то c меньше b, а b меньше a. Главное — менять и порядок чисел, и все знаки сразу.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
+        wkSml('запись цепочки'));
+    } else if(step===9){ /* координатный луч */
+      H=234;
+      let inner=TT('на луче: правее — больше','cyan');
+      inner+=`<line x1="24" y1="110" x2="296" y2="110" stroke="#44538a" stroke-width="3"/>`;
+      inner+=`<path d="M296 110 l-9 -5 v10 z" fill="#8ea3c8"/>`;
+      for(let k=0;k<=10;k++){
+        const x=30+k*26;
+        inner+=`<line x1="${x}" y1="104" x2="${x}" y2="116" stroke="#5a6a9a" stroke-width="1.6"/>`;
+        inner+=`${tx(x,132,10.5,dim,''+k,{})}`;
+      }
+      [3,7].forEach((v2,k)=>{
+        const x=30+v2*26;
+        inner+=`<g class="qYPop" style="animation-delay:${(0.2+k*0.2).toFixed(2)}s"><circle cx="${x}" cy="110" r="7" fill="${k?grn:gold}" stroke="#fffdf2" stroke-width="1.4"/></g>`;
+      });
+      inner+=`<rect x="${30+3*26}" y="84" width="${4*26}" height="12" rx="6" fill="rgba(125,224,160,.2)" stroke="${grn}" stroke-width="1.4"/>`;
+      inner+=`<g class="qYRise" style="animation-delay:.5s">${fit(159,166,11.5,cyan,'чем правее стоит число, тем оно больше',{b:1},270)}</g>`;
+      inner+=plate(24,180,270,30,go?grn:cardB,go?'3 < 7, потому что 7 правее':'сравни 3 и 7',12);
+      inner+=`${tx(159,224,10.5,dim,'между ними лежат 4, 5 и 6',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравнение на луче</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('правее — больше',cyan,0.1)):'')+
+        (go?wkNote('На координатном луче сравнение видно сразу: числа стоят по порядку слева направо. Кто правее, тот больше. Поэтому 7 > 3, а между ними находятся 4, 5 и 6.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
+        wkSml('луч и порядок'));
+    } else if(step===10){ /* отрицательные числа */
+      H=238;
+      let inner=TT('отрицательные числа — левее нуля','red');
+      inner+=`<line x1="24" y1="112" x2="296" y2="112" stroke="#44538a" stroke-width="3"/>`;
+      inner+=`<path d="M296 112 l-9 -5 v10 z" fill="#8ea3c8"/>`;
+      const nums=[-5,-2,0,3];
+      nums.forEach((v2,k)=>{
+        const x=60+k*58;
+        inner+=`<g class="qYPop" style="animation-delay:${(0.15+k*0.15).toFixed(2)}s">`
+          +`<circle cx="${x}" cy="112" r="13" fill="${v2<0?'rgba(255,120,100,.2)':(v2===0?'rgba(255,215,106,.2)':'rgba(125,224,160,.2)')}" stroke="${v2<0?red:(v2===0?gold:grn)}" stroke-width="2"/>`
+          +tx(x,117,13,v2<0?red:(v2===0?gold:grn),''+v2,{b:1,georgia:1})+`</g>`;
+      });
+      inner+=`<g class="qYRise" style="animation-delay:.6s">${fit(159,150,12,ink,'−5 < −2 < 0 < 3',{b:1,georgia:1},250)}</g>`;
+      inner+=`<g class="qYRise" style="animation-delay:.75s"><rect x="24" y="164" width="270" height="30" rx="9" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.7"/>`
+        +fit(159,184,11,red,'отрицательные меньше нуля и положительных',{b:1},250)+`</g>`;
+      inner+=plate(24,200,270,28,go?grn:cardB,go?'−5 < 0 < 3':'сравни −5, −2, 0 и 3',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Отрицательные числа</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('левее нуля — меньше',red,0.1)):'')+
+        (go?wkNote('Отрицательные числа стоят на луче слева от нуля, поэтому они меньше нуля и меньше любых положительных чисел. Порядок такой: −5, потом −2, потом 0, потом 3.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
+        wkSml('числа меньше нуля'));
+    } else if(step===11){ /* сравнение отрицательных */
+      H=252;
+      let inner=TT('из двух отрицательных меньше то…','gold');
+      const x0=52;
+      inner+=`<line x1="30" y1="120" x2="290" y2="120" stroke="#44538a" stroke-width="2.4"/>`;
+      inner+=`<line x1="${x0+7*26}" y1="96" x2="${x0+7*26}" y2="146" stroke="${gold}" stroke-width="2.4"/>`;
+      inner+=`${tx(x0+7*26,164,11,gold,'0',{b:1})}`;
+      const negs=[{v:-7,k:7},{v:-3,k:3}];
+      negs.forEach((q,k)=>{
+        const x=x0+7*26-q.k*26;
+        inner+=`<g class="qYPop" style="animation-delay:${(0.2+k*0.2).toFixed(2)}s">`
+          +`<circle cx="${x}" cy="120" r="12" fill="rgba(255,120,100,.2)" stroke="${red}" stroke-width="2"/>`
+          +tx(x,125,12,red,''+q.v,{b:1,georgia:1})+`</g>`;
+        inner+=`<line x1="${x}" y1="86" x2="${x0+7*26}" y2="86" stroke="${k?blu:pur}" stroke-width="2.4"/>`;
+        inner+=`<line x1="${x}" y1="80" x2="${x}" y2="92" stroke="${k?blu:pur}" stroke-width="2.4"/>`;
+        inner+=`<line x1="${x0+7*26}" y1="80" x2="${x0+7*26}" y2="92" stroke="${k?blu:pur}" stroke-width="2.4"/>`;
+        inner+=`${tx((x+x0+7*26)/2,78,k?blu:pur,'|'+q.v+'| = '+q.k,{b:1})}`;
+      });
+      inner+=`<g class="qYRise" style="animation-delay:.6s"><rect x="24" y="178" width="270" height="30" rx="9" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,198,11,gold,'−7 меньше −3: модуль у него больше',{b:1},250)+`</g>`;
+      inner+=plate(24,214,270,26,go?grn:cardB,go?'−7 < −3 < 0':'сравни −7 и −3',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравниваем отрицательные</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('дальше от нуля — меньше',gold,0.1)):'')+
+        (go?wkNote('Число −7 дальше от нуля, чем −3: его модуль равен 7, а модуль −3 равен 3. Поэтому из двух отрицательных меньше то, у которого модуль больше: −7 < −3.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('объясни',`visW24Act('${lk}','go')`))+
+        wkSml('модуль и сравнение'));
+    } else if(step===12){ /* сравнение величин */
+      H=240;
+      let inner=TT('величины сравниваем в одних единицах','cyan');
+      inner+=`<g class="qYRise"><rect x="20" y="48" width="278" height="52" rx="10" fill="rgba(15,25,46,.95)" stroke="${cyan}" stroke-width="1.7"/>`
+        +fit(80,72,13,cyan,'5 см 3 мм',{b:1},130)
+        +signBox(159,74,'=',grn,{w:32,h:30,delay:0.2})
+        +fit(238,72,13,cyan,'53 мм',{b:1},110)
+        +fit(159,94,10,dim,'приводим к миллиметрам: 5 см = 50 мм',{},262)+`</g>`;
+      inner+=`<g class="qYRise" style="animation-delay:.3s"><rect x="20" y="110" width="278" height="52" rx="10" fill="rgba(15,25,46,.95)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(80,134,13,gold,'5 см 4 мм',{b:1},130)
+        +signBox(159,136,'>',gold,{w:32,h:30,delay:0.5})
+        +fit(238,134,13,gold,'53 мм',{b:1},110)
+        +fit(159,156,10,dim,'54 мм больше 53 мм',{},262)+`</g>`;
+      inner+=plate(24,176,270,30,go?grn:cardB,go?'сначала одна единица, потом сравнение':'как сравнить 5 см 3 мм и 53 мм?',11.5);
+      inner+=`${tx(159,224,10.5,dim,'1 см = 10 мм — это и помогает',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравнение величин</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('приведи к одной единице',cyan,0.1)):'')+
+        (go?wkNote('Величины с разными единицами сравнивать нельзя. Сначала переведём сантиметры в миллиметры: 5 см = 50 мм, значит 5 см 3 мм = 53 мм. А 5 см 4 мм = 54 мм, и это больше 53 мм.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
+        wkSml('единицы измерения'));
+    } else if(step===13){ /* сравнение дробей */
+      H=248;
+      let inner=TT('сравниваем доли и дроби','pur');
+      const bar=(x,y,n,f,c)=>{
+        let s='';
+        for(let k=0;k<n;k++) s+=`<rect x="${x+k*(104/n)}" y="${y}" width="${(104/n)-1.5}" height="24" rx="3" fill="${k<f?c:'rgba(255,255,255,.06)'}" stroke="${c}" stroke-width="1"/>`;
+        return s;
+      };
+      inner+=`<g class="qYRise">${bar(28,56,8,3,gold)}${bar(186,56,8,5,grn)}</g>`;
+      inner+=`<g class="qYRise" style="animation-delay:.2s">`;
+      inner+=fit(80,96,12,gold,'3/8',{b:1},90)+fit(238,96,12,grn,'5/8',{b:1},90);
+      inner+=signBox(159,88,'<',cyan,{w:30,h:28,delay:0.3})+fit(159,116,10.5,dim,'знаменатели одинаковые',{},160)+`</g>`;
+      inner+=`<g class="qYRise" style="animation-delay:.4s">${bar(28,140,3,1,blu)}${bar(206,140,5,1,pur)}</g>`;
+      inner+=`<g class="qYRise" style="animation-delay:.6s">`;
+      inner+=fit(80,180,12,blu,'1/3',{b:1},90)+fit(248,180,12,pur,'1/5',{b:1},90);
+      inner+=signBox(159,172,'>',cyan,{w:30,h:28,delay:0.7})+fit(159,198,10.5,dim,'числители одинаковые',{},160)+`</g>`;
+      inner+=plate(24,208,270,28,go?grn:cardB,go?'3/8 < 5/8, но 1/3 > 1/5':'сравни дроби',11);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сравнение дробей</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('больше доля — короче знаменатель',pur,0.1)):'')+
+        (go?wkNote('Если знаменатели одинаковые, сравниваем числители: 3/8 < 5/8. Если одинаковые числители, то больше та дробь, у которой знаменатель меньше: 1/3 > 1/5 — треть пирога больше пятой части.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
+        wkSml('доли и дроби'));
+    } else if(step===14){ /* свойства неравенств */
+      H=242;
+      let inner=TT('что можно делать с неравенством','gold');
+      const rows=[{t:'прибавить одно и то же',e:'5 > 3  →  5 + 2 > 3 + 2',c:grn},{t:'умножить на положительное',e:'5 > 3  →  5 · 2 > 3 · 2',c:cyan},{t:'умножить на отрицательное',e:'5 > 3  →  −5 < −3',c:red}];
+      rows.forEach((q,k)=>{
+        const y=50+k*50;
+        inner+=`<g class="qYRise" style="animation-delay:${(0.15+k*0.18).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="44" rx="10" fill="rgba(15,25,46,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+18,11.5,q.c,q.t,{b:1},256)
+          +`<text x="159" y="${y+36}" text-anchor="middle" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${ink}">${q.e}</text></g>`;
+      });
+      inner+=`<g class="qYBlink">${signBox(288,192,'<',red,{w:26,h:26})}</g>`;
+      inner+=plate(24,206,270,28,go?grn:cardB,go?'на отрицательное — знак переворачивается':'что меняется, а что нет',11);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Свойства неравенств</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('знак сохраняется, если умножаем на «+»',gold,0.1)):'')+
+        (go?wkNote('Неравенство ведёт себя как весы. Прибавляем или умножаем на положительное — знак не меняется. А если умножить или разделить на отрицательное число, знак переворачивается.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
+        wkSml('свойства неравенств'));
+    } else if(step===15){ /* оценка суммы */
+      H=240;
+      let inner=TT('складываем неравенства: 3 < a < 5 и 4 < b < 6','cyan');
+      inner+=`<g class="qYRise"><rect x="20" y="46" width="278" height="66" rx="10" fill="rgba(15,25,46,.95)" stroke="${cyan}" stroke-width="1.7"/>`
+        +fit(90,68,11.5,cyan,'3 < a < 5',{b:1},120)
+        +fit(228,68,11.5,cyan,'4 < b < 6',{b:1},120)
+        +fit(159,92,11,dim,'обе части неравенств одного знака',{},262)+`</g>`;
+      inner+=`<path d="M160 116 v14" stroke="${gold}" stroke-width="2.4"/><path d="M156 126 l4 6 l4 -6" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      inner+=`<g class="qYRise" style="animation-delay:.35s"><rect x="20" y="134" width="278" height="46" rx="10" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,156,13,grn,'7 < a + b < 11',{b:1,georgia:1},250)
+        +fit(159,174,10.5,dim,'сложили левые и правые части',{},262)+`</g>`;
+      inner+=plate(24,190,270,28,go?grn:cardB,go?'сумма точно между 7 и 11':'что можно сказать о сумме?',11);
+      inner+=`${tx(159,226,10.5,dim,'так оценивают результат, не считая точно',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Оцениваем сумму</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('неравенства одного знака можно складывать',cyan,0.1)):'')+
+        (go?wkNote('Если a больше 3 и меньше 5, а b больше 4 и меньше 6, то сумма a + b точно больше 3 + 4 = 7 и меньше 5 + 6 = 11. Так можно оценить ответ, не вычисляя его точно.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('объясни',`visW24Act('${lk}','go')`))+
+        wkSml('оценка результата'));
+    } else if(step===16){ /* задача на упорядочивание */
+      H=248;
+      let inner=TT('построим порядок по условиям','gold');
+      const conds=['Аня выше Бори','Боря выше Вити','Гена ниже Вити'];
+      conds.forEach((q,k)=>{
+        const y=46+k*26;
+        inner+=`<g class="qYRise" style="animation-delay:${(0.12+k*0.15).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="22" rx="7" fill="rgba(15,25,46,.97)" stroke="${cardB}" stroke-width="1.3"/>`
+          +fit(159,y+15,10.5,ink,q,{},252)+`</g>`;
+      });
+      inner+=`<g class="qYRise" style="animation-delay:.6s">`;
+      ['Аня','Боря','Витя','Гена'].forEach((t,k)=>{
+        const x=44+k*76;
+        inner+=valBox(x,164,t,k===0?grn:(k===3?red:gold),{w:64,h:30,fs:11.5,delay:0.6+k*0.1});
+        if(k<3) inner+=signBox(x+38,164,'>',cyan,{w:24,h:24,delay:0.66+k*0.1});
+      });
+      inner+=`</g>`;
+      inner+=plate(24,192,270,30,go?grn:cardB,go?'Аня > Боря > Витя > Гена':'кто выше всех?',12);
+      inner+=`${fit(159,238,11,grn,'выше всех Аня, ниже всех Гена',{b:1},270)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача про рост</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('соедини условия в цепочку',gold,0.1)):'')+
+        (go?wkNote('Читаем условия и соединяем их: Аня выше Бори, Боря выше Вити, а Гена ниже Вити. Значит, порядок такой: Аня, Боря, Витя, Гена. Выше всех Аня, ниже всех Гена.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('решить',`visW24Act('${lk}','go')`))+
+        wkSml('задача с условиями'));
+    } else if(step===17){ /* интерактив: знак */
+      H=250;
+      const opts=['>','<','='], ok=0, done=(sel>=0);
+      let inner=TT('какой знак поставить: 47 … 42?','cyan');
+      inner+=valBox(86,80,'47',gold,{w:56,h:42,fs:18});
+      inner+=signBox(159,80,done?opts[ok]:'?',done?grn:cardB,{w:46,h:42});
+      inner+=valBox(232,80,'42',blu,{w:56,h:42,fs:18});
+      inner+=`<g class="qYRise" style="animation-delay:.2s">${fit(159,124,11.5,dim,'десятков поровну — смотрим единицы',{},260)}</g>`;
+      opts.forEach((t,k)=>{
+        const x=44+k*88, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW24Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="140" width="78" height="44" rx="11" fill="${on?'rgba(19,44,35,.97)':(bad?'rgba(52,22,26,.97)':'rgba(15,25,46,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+39,171,22,c,t,{b:1,georgia:1})+(on?`<path d="M${x+62} 150 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(24,198,270,30,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! 47 > 42':'Посмотри на единицы: 7 и 2'):'нажми на знак',11.5);
+      inner+=`${tx(159,236,10,dim,'клювик открывается на большее',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: поставь знак</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW24Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('В числах 47 и 42 десятков поровну — по 4. Сравниваем единицы: 7 больше 2, значит 47 > 42. Клювик открыт на 47.'):'')+
+        wkSml('выбери знак'));
+    } else if(step===18){ /* интерактив: кто выше всех */
+      H=248;
+      const opts=['A','B','C','D'], ok=0, done=(sel>=0);
+      let inner=TT('A > B, B > C, C > D — кто выше всех?','gold');
+      inner+=`<g class="qYRise" style="animation-delay:.15s">${fit(159,76,12,gold,'A > B > C > D',{b:1,georgia:1},250)}</g>`;
+      opts.forEach((t,k)=>{
+        const x=36+k*66, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW24Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="100" width="58" height="46" rx="11" fill="${on?'rgba(19,44,35,.97)':(bad?'rgba(52,22,26,.97)':'rgba(15,25,46,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+29,132,20,c,t,{b:1,georgia:1})+(on?`<path d="M${x+44} 110 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(24,160,270,30,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! A — первый в цепочке':'Смотри: цепочка начинается с A'):'нажми на ответ',11.5);
+      inner+=`${fit(159,208,11,dim,'первый слева — самый большой',{},270)}`;
+      inner+=`${fit(159,230,11,grn,'последний D — самый маленький',{},270)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: читаем цепочку</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW24Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('Цепочка A > B > C > D читается по порядку: слева самый большой, справа самый маленький. Значит, выше всех A.'):'')+
+        wkSml('первый и последний'));
+    } else if(step===19){ /* интерактив: сколько чисел */
+      H=240;
+      const opts=['3','2','4'], ok=0, done=(sel>=0);
+      let inner=TT('сколько натуральных чисел в 3 < x < 7?','cyan');
+      inner+=`<g class="qYRise" style="animation-delay:.15s">${fit(159,74,13,cyan,'3 < x < 7',{b:1,georgia:1},250)}</g>`;
+      inner+=`<line x1="34" y1="110" x2="284" y2="110" stroke="#44538a" stroke-width="2.4"/>`;
+      [3,4,5,6,7].forEach((v2,k)=>{
+        const x=64+k*48, mid=(v2>3&&v2<7);
+        inner+=`<g class="qYPop" style="animation-delay:${(0.2+k*0.12).toFixed(2)}s">`
+          +`<circle cx="${x}" cy="110" r="${mid?13:10}" fill="${mid?'rgba(125,224,160,.2)':'rgba(15,25,46,.97)'}" stroke="${mid?grn:cardB}" stroke-width="2"/>`
+          +tx(x,115,12,mid?grn:dim,''+v2,{b:mid})+`</g>`;
+      });
+      opts.forEach((t,k)=>{
+        const x=44+k*88, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW24Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="142" width="78" height="42" rx="11" fill="${on?'rgba(19,44,35,.97)':(bad?'rgba(52,22,26,.97)':'rgba(15,25,46,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+39,171,19,c,t,{b:1,georgia:1})+(on?`<path d="M${x+62} 152 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(24,196,270,28,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! Это 4, 5 и 6':'Посчитай числа между 3 и 7'):'выбери ответ',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: двойное неравенство</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW24Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('Неравенство 3 < x < 7 означает, что x больше 3 и меньше 7. Натуральные числа между ними — это 4, 5 и 6, всего три числа.'):'')+
+        wkSml('считаем варианты'));
+    } else if(step===20){ /* частые ошибки */
+      H=238;
+      const it=[{t:'клювик смотрит не туда',f:'клювик открыт на большее число'},{t:'сравнил по последней цифре',f:'сначала число цифр, потом старший разряд'},{t:'«не меньше» принял за «больше»',f:'не меньше — это больше или равно'}];
+      let inner='';
+      it.forEach((q,k)=>{
+        const y=18+k*54;
+        inner+=`<g class="qYRise" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s" filter="url(#qYsh)">`
+          +`<rect x="16" y="${y}" width="286" height="46" rx="11" fill="url(#qYbg)" stroke="${red}" stroke-width="2"/>`
+          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#241016">!</text>`
+          +fit(62,y+20,Math.min(11.5,206/Math.max(1,q.t.length)/0.72),red,q.t,{an:'start',b:1},206)
+          +`<path d="M62 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(84,y+40,Math.min(11,186/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      inner+=`${tx(159,18+it.length*54+2,11,dim,'эти ошибки встречаются чаще всего',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Частые ошибки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('проверь себя по правилу',grn,0.1)):'')+
+        (go?wkNote('Смотри на клювик, сравнивай числа по старшему разряду и помни, что «не меньше» — это больше или столько же.'):'')+
+        wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
+        wkSml('чтобы не ошибаться'));
+    } else { /* шаг 21: шпаргалка */
+      H=236;
+      const rows=[{t:'клювик открыт на большее',c:gold},{t:'A > B > C — читаем по порядку',c:cyan},{t:'3 < x < 7 — два условия',c:grn},{t:'правее на луче — больше',c:pur}];
+      let inner='';
+      rows.forEach((q,k)=>{
+        const y=20+k*40;
+        inner+=`<g class="qYRise" style="animation-delay:${(0.14*k).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="32" rx="9" fill="rgba(15,25,46,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+21,11.5,q.c,q.t,{b:1},256)+`</g>`;
+      });
+      inner+=plate(24,186,270,30,go?grn:cardB,go?'знак, цепочка, двойное неравенство':'всё главное вместе',11.5);
+      inner+=`${fit(159,224,11,gold,'и не забудь проверить ответ',{b:1},270)}`;
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
-        (go>=4?wkRow(chip('первый — самый большой',gold,0.2)):'')+
-        wkRow(
-          go===0?wkBtn('шаг 1',`visW24Act('${lk}','go')`) : '',
-          go===1?wkBtn('шаг 2',`visW24Act('${lk}','go')`) : '',
-          go===2?wkBtn('шаг 3',`visW24Act('${lk}','go')`) : '',
-          go===3?wkBtn('шаг 4',`visW24Act('${lk}','go')`) : '',
-          go>=4?wkBtn('сброс',`visW24Act('${lk}','rst')`):'')+
-        wkSml('построй цепочку'));
-    } else if(step===13){
-      const H=182;
-      if(st.mq==null) st.mq=0;
-      const QS=[
-        {q:'X<Y<Z — кто тяжелее?',opts:['Z','X','Y'],ans:0},
-        {q:'A>B>C — кто выше?',opts:['A','B','C'],ans:0},
-        {q:'A>B>C>D — кто ниже всех?',opts:['D','A','C'],ans:0}
-      ];
-      const T=QS[st.mq];
-      let inner='';
-      inner+=tx(159,38,19,ink,'устная проверка',{b:1});
-      if(st.msel!=null){
-        inner+=`<g class="qUPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'построй цепочку'}</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        `<div class="wk-row" style="gap:8px">
-          ${T.opts.map((o,i)=>`<button class="wk-btn" onclick="visW24S('${lk}',${i})">${o}</button>`).join('')}
-          ${st.msel!=null&&st.msel===T.ans?wkBtn('следующий →',`visW24Act('${lk}','nq')`):''}
-          ${st.msel!=null?wkBtn('заново',`visW24Act('${lk}','rst')`):''}
-        </div>`+
-        wkSml('первый — наибольший'));
-    } else if(step===14){
-      const H=190, go=st.go||0;
-      let inner='';
-      inner+=tx(159,26,20,ink,'X < Y < Z',{b:1,georgia:1});
-      if(go){
-        inner+=chain(30,108,[{label:'X',c:grn,r:20},{label:'Y',c:gold,r:26},{label:'Z',c:red,r:32}],'<',[]);
-        inner+=`<g class="qUPop"><text x="159" y="164" text-anchor="middle" font-size="20" fill="${red}" font-weight="bold" font-family="Georgia,serif">Z — тяжелее всех</text></g>`;
-      }
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        (go?wkRow(chip('Z — правое, но тяжёлое',red,0.2)):'')+
+        (go?wkRow(chip('сравнение — это порядок',grn,0.1)):'')+
+        (go?wkNote('Вся тема в четырёх строках: клювик на большее, цепочку читаем по порядку, двойное неравенство — два условия сразу, а на луче больше то число, что правее.'):'')+
         wkRow(go?wkBtn('сброс',`visW24Act('${lk}','rst')`):wkBtn('показать',`visW24Act('${lk}','go')`))+
-        wkSml('X<Y<Z → Z больше'));
-    } else {
-      const H=192;
-      let inner='';
-      inner+=tx(159,30,20,ink,'X < Y < Z',{b:1,georgia:1});
-      inner+=chain(30,102,[{label:'X',c:grn,r:20},{label:'Y',c:gold,r:26},{label:'Z',c:red,r:32}],'<',[]);
-      inner+=`<g class="qUPop"><text x="159" y="166" text-anchor="middle" font-size="20" fill="${red}" font-weight="bold" font-family="Georgia,serif">Z — тяжелее всех</text></g>`;
-      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
-        wkHero(bg(W,H,{inner:()=>inner}))+
-        quiz(lk,st)+
-        wkSml('X<Y<Z → Z'));
+        wkSml('всё главное вместе'));
     }
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
   window.VISKW[24]=visW24;
-  function visW24T(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.sel=i; chRender(0); }
-  window.visW24T=visW24T;
-  function visW24P(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); }
-  window.visW24P=visW24P;
-  function visW24S(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.msel=i; chRender(0); }
-  window.visW24S=visW24S;
-  function visW24Act(lk,act){
+  window.visW24Pick=function(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); };
+  window.visW24Act=function(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
-    const sp=LV.step;
-    if(act==='go'){ if(st.go!=null) st.go++; else st.go=1; }
-    if(act==='n'){ st.tr=(st.tr||0)+1; st.go=0; st.pick=null; }
-    if(act==='nq'){ if(sp===13){ if((st.mq||0)<2){ st.mq++; st.msel=null; } } else { st.q=1; st.sel=null; } }
-    if(act==='rst') CHS[lk]={};
+    if(act==='go'){ st.go=st.go?0:1; }
+    if(act==='rst'){ CHS[lk]={_at:st._at}; }
     chRender(0);
-  }
-  window.visW24Act=visW24Act;
+  };
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===24){ window.ARH_LESSONS[i]=L24; break; } } })();
 })();
 /* ================= УРОК 45 · НОД и НОК (v3.1 · «Делимость-лаборатория Архимеда», 17 слайдов, центрированный, детальный) ================= */
