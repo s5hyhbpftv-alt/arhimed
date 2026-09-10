@@ -22127,6 +22127,1408 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===386){ window.ARH_LESSONS[i]=L386; break; } } })();
 })();
+/* ================= УРОК 420 · Векторы: начало (v2 · «Стрелки Архимеда», 26 шагов, крупные чертежи, прорисовка на каждом шаге; текст без чёрного цвета) ================= */
+(function(){
+  if(!window.__wk420v2css){
+    window.__wk420v2css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qvIn{animation:qvIn .55s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qvIn{0%{transform:translateY(-14px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qvPop{animation:qvPop .55s cubic-bezier(.2,.9,.3,1.25) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qvPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qvRise{animation:qvRise .7s cubic-bezier(.2,.85,.3,1.08) both;}'+
+      '@keyframes qvRise{0%{transform:translateY(16px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qvGlow{animation:qvGlow 2.2s ease-in-out infinite;}'+
+      '@keyframes qvGlow{0%,100%{opacity:.35}50%{opacity:1}}'+
+      '#lvis .qvBlink{animation:qvBlink 1.5s ease-in-out infinite;}'+
+      '@keyframes qvBlink{0%,100%{opacity:.35}50%{opacity:1}}'+
+      '#lvis .qvFloat{animation:qvFloat 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qvFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}';
+    document.head.appendChild(st);
+  }
+  const L420 = {
+    id: 420, title: 'Векторы: начало', ico: '➡️',
+    src: 'Математика · 8 класс · Геометрия 8: векторы', subj: 'math',
+    explain: [
+      'Вектор — это направленный отрезок: у него важны и длина, и направление. Обозначают вектор со стрелкой: AB⃗ — из точки A в точку B.',
+      'У вектора есть начало (точка A) и конец (точка B). Стрелка показывает, куда вектор направлен.',
+      'Длина вектора — это расстояние между его концами. Её обозначают |AB⃗| и она никогда не бывает отрицательной.',
+      'Направление так же важно, как длина: два вектора одинаковой длины, но разного направления — разные векторы.',
+      'Векторы равны, если они одинаково направлены и имеют одинаковую длину. Равные векторы можно переносить: они не привязаны к месту.',
+      'Векторы, лежащие на одной прямой или на параллельных прямых, называют коллинеарными. Они могут быть сонаправленными или противоположно направленными.',
+      'Нулевой вектор — это вектор нулевой длины: его начало и конец совпадают, а направление не определено.',
+      'Противоположные векторы имеют одинаковую длину, но противоположные направления: a и −a. Их сумма равна нулевому вектору.',
+      'Правило треугольника: чтобы сложить векторы, начало второго приставляют к концу первого, а сумма идёт из начала первого в конец второго.',
+      'Правило параллелограмма: векторы откладывают из одной точки и достраивают параллелограмм — его диагональ и есть сумма.',
+      'Складывать векторы можно по координатам: складываем первые координаты и вторые отдельно.',
+      'Вычитание векторов — это сложение с противоположным: a − b = a + (−b).',
+      'Умножение вектора на число меняет его длину, а при отрицательном числе — ещё и направление: 2a длиннее в два раза, −a смотрит назад.',
+      'Координаты вектора находят как разности координат конца и начала: AB⃗ = (x_B − x_A; y_B − y_A).',
+      'Длину вектора по координатам считают по теореме Пифагора: |AB⃗| = √(x² + y²). Для вектора (3; 4) длина равна 5.',
+      'Свойства сложения: a + b = b + a, (a + b) + c = a + (b + c), a + 0 = a.',
+      'Вектором удобно задавать перемещение: точка плюс вектор даёт новую точку. Это как сдвиг на карте.',
+      'Вектор скорости показывает, куда и как быстро движется тело: самолёт летит по вектору своей скорости.',
+      'Силы тоже изображают векторами, а их сумма называется равнодействующей.',
+      'Практика: вектор из A(1; 2) в B(4; 6) имеет координаты (4 − 1; 6 − 2) = (3; 4).',
+      'Практика: длина вектора (3; 4) равна √(9 + 16) = √25 = 5.',
+      'Практика: если a = (2; 1), а b = (1; 3), то a + b = (3; 4).',
+      'Тренажёр: найди координаты вектора по двум точкам.',
+      'Тренажёр: найди длину вектора (6; 8).',
+      'Частые ошибки: путать конец и начало вектора, забывать про направление, складывать координаты «крест-накрест».',
+      'Шпаргалка: вектор — длина и направление; координаты — разности; длина — по теореме Пифагора; сумма — по правилу треугольника. Проверь себя!'
+    ],
+    check: { q: 'Как обозначают вектор из точки A в точку B?', choices: ['AB⃗', '|AB|', 'A + B', 'AB²'], ans: 0,
+      exp: 'Вектор с началом A и концом B — AB⃗.' },
+    tasks: [
+      { q: 'Чему равна сумма вектора a и противоположного ему вектора −a?', kind: 'unit', ans: 0, tol: 0,
+        hints: ['Они гасят друг друга.', 'Нулевой вектор: 0.'], sol: '0' },
+      { q: 'Длина вектора — это…', kind: 'choice', choices: ['расстояние между его концами', 'его направление', 'координата x', 'удвоенная длина отрезка'], ans: 0, tol: 0,
+        hints: ['Модуль вектора.', 'Это расстояние между началом и концом.'], sol: 'расстояние между его концами' }
+    ]
+  };
+  const ink='#eef6ff', dim='#a3aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff', rose='#ff8fb0',
+        bg0='#191f3c', bg1='#080c1a', card='rgba(25,31,56,.96)', cardB='#46507c';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}">${t}</text>`;
+  const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qvbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <marker id="qvhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="${gold}"/></marker>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qvbg)"/>
+      <g opacity="0.12" stroke="#5a6ab0" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#4a5a9a" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3868" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  const polyLen=(pts)=>{let s=0;for(let i=1;i<pts.length;i++)s+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return Math.max(16,Math.round(s));};
+  const drawPoly=(pts,col,dur,beg,w,opt)=>{
+    const o=opt||{}, d='M'+pts.map(q=>q[0]+' '+q[1]).join(' L'), L=polyLen(pts);
+    return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${w||3.2}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.7;1" dur="${dur}s" begin="${beg||0}s" repeatCount="${o.keep?'1':'indefinite'}"/></path>`
+      +((o.pen===false||o.keep)?'':`<circle r="${o.r||5.5}" fill="${gold}"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  /* стрелка: стержень + острие, с прорисовкой */
+  const arrow=(x1,y1,x2,y2,col,o)=>{
+    const opt=o||{}, a=Math.atan2(y2-y1,x2-x1), h=opt.h||11, sw=opt.sw||3.4, dur=opt.dur||1.8, beg=opt.beg||0;
+    const bx=x2-Math.cos(a)*h, by=y2-Math.sin(a)*h;
+    const p2=[bx+Math.cos(a+Math.PI/2)*h*0.5, by+Math.sin(a+Math.PI/2)*h*0.5];
+    const p3=[bx-Math.cos(a+Math.PI/2)*h*0.5, by-Math.sin(a+Math.PI/2)*h*0.5];
+    return drawPoly([[x1,y1],[bx,by]],col,dur,beg,sw,{keep:true,r:opt.r||5})
+      +drawPoly([p2,[x2,y2],p3],col,dur*0.5,beg+dur*0.75,sw*0.8,{keep:true,pen:false});
+  };
+  const growBar=(x,y,w,h,fill,dur,beg,stroke)=>{
+    return `<rect x="${x}" y="${y}" width="0" height="${h}" rx="${h/2}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="1.2">`
+      +`<animate fill="freeze" attributeName="width" values="0;${w};${w}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></rect>`;
+  };
+  const plate=(x,y,w,h,col,txt,fs)=>`<g class="qvRise"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="rgba(25,31,56,.95)" stroke="${col}" stroke-width="1.9"/>`
+    +fit(x+w/2,y+h*0.66,fs||13,col,txt,{b:1},w-16)+`</g>`;
+  const chip=(t,c,delay)=>`<span class="qvIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const grid=(x0,y0,u,n,m,col)=>{
+    let s2='';
+    for(let i=0;i<=n;i++) s2+=`<line x1="${x0+i*u}" y1="${y0-m*u}" x2="${x0+i*u}" y2="${y0}" stroke="${col}" stroke-width="1"/>`;
+    for(let j=0;j<=m;j++) s2+=`<line x1="${x0}" y1="${y0-j*u}" x2="${x0+n*u}" y2="${y0-j*u}" stroke="${col}" stroke-width="1"/>`;
+    return s2;
+  };
+  const rightAngleLocal=(x,y,s2,col)=>`<path d="M${x+s2} ${y} L${x+s2} ${y-s2} L${x} ${y-s2}" fill="none" stroke="${col}" stroke-width="2"/>`;
+  const W=318;
+  function visW420(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; }
+    const go=st.go||0, sel=(typeof st.pick==='number')?st.pick:-1;
+    let h='', H=310;
+    const TT=(t,c)=>`<g class="qvPop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#qvbg)" stroke="${c||cardB}" stroke-width="1.8"/>`
+      +fit(159,32,12.5,c||ink,t,{b:1},260)+`</g>`;
+    /* 0: что такое вектор */
+    if(step===0){
+      H=322;
+      let inner=TT('вектор — это перемещение','gold');
+      const A=[56,250], B=[252,120];
+      inner+=arrow(A[0],A[1],B[0],B[1],gold,{dur:2.4,beg:0.2});
+      inner+=`<circle class="qvPop" style="animation-delay:.2s" cx="${A[0]}" cy="${A[1]}" r="9" fill="${cyan}" stroke="#eef6ff" stroke-width="1.5"/>`;
+      inner+=`<circle class="qvPop" style="animation-delay:2s" cx="${B[0]}" cy="${B[1]}" r="9" fill="${grn}" stroke="#eef6ff" stroke-width="1.5"/>`;
+      inner+=fit(A[0]-6,A[1]+26,12,cyan,'начало A',{b:1},80);
+      inner+=fit(B[0]+14,B[1]-18,12,grn,'конец B',{b:1},80);
+      inner+=`<circle r="8" fill="${gold}"><animateMotion dur="4.4s" begin="0.4s" repeatCount="indefinite" path="M${A[0]} ${A[1]} L${B[0]} ${B[1]}"/></circle>`;
+      inner+=fit(96,124,11.5,dim,'стрелка показывает направление',{},150);
+      inner+=plate(18,282,282,30,go?grn:cardB,go?'вектор ведёт из A в B':'что показывает стрелка?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Что такое вектор</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('длина и направление',gold,0.1)):'')+
+        (go?wkNote('Вектор — это отрезок со стрелкой: он показывает, куда и насколько нужно переместиться. У вектора важны и длина, и направление, поэтому его рисуют стрелкой из начала в конец.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('направленный отрезок'));
+    /* 1: обозначение */
+    } else if(step===1){
+      H=314;
+      let inner=TT('обозначение: из A в B — это AB⃗','cyan');
+      const A=[64,236], B=[244,110];
+      inner+=arrow(A[0],A[1],B[0],B[1],cyan,{dur:2.2,beg:0.2,sw:4});
+      inner+=`<circle class="qvPop" style="animation-delay:.3s" cx="${A[0]}" cy="${A[1]}" r="11" fill="rgba(127,214,255,.25)" stroke="${cyan}" stroke-width="2"/>`;
+      inner+=tx(A[0],A[1]+6,13,cyan,'A',{b:1});
+      inner+=`<circle class="qvPop" style="animation-delay:1.8s" cx="${B[0]}" cy="${B[1]}" r="11" fill="rgba(125,224,160,.25)" stroke="${grn}" stroke-width="2"/>`;
+      inner+=tx(B[0],B[1]+6,13,grn,'B',{b:1});
+      inner+=`<g class="qvRise" style="animation-delay:.8s"><rect x="30" y="58" width="120" height="40" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`
+        +tx(90,84,17,cyan,'AB⃗',{b:1})+`</g>`;
+      inner+=fit(159,150,11.5,dim,'читается «вектор AB»',{},220);
+      inner+=`<g class="qvRise" style="animation-delay:1.4s"><rect x="166" y="58" width="122" height="40" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(227,84,13,gold,'|AB⃗| — длина',{b:1},112)+`</g>`;
+      inner+=plate(18,268,282,30,go?grn:cardB,go?'A — начало, B — конец вектора':'как записать этот вектор?',11.5);
+      inner+=`${fit(159,250,11.5,ink,'первая буква — начало, вторая — конец',{b:1},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Как обозначают вектор</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('AB⃗ — вектор из A в B',cyan,0.1)):'')+
+        (go?wkNote('Вектор обозначают двумя буквами со стрелкой сверху: AB⃗. Первая буква — начало, вторая — конец. Длину вектора записывают в прямых скобках: |AB⃗|.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('буквы и стрелка'));
+    /* 2: длина вектора */
+    } else if(step===2){
+      H=310;
+      let inner=TT('длина вектора — расстояние между концами','grn');
+      const A=[56,222], B=[240,222];
+      inner+=arrow(A[0],A[1],B[0],B[1],grn,{dur:2,beg:0.2,sw:4});
+      inner+=`<circle cx="${A[0]}" cy="${A[1]}" r="8" fill="${cyan}" stroke="#eef6ff" stroke-width="1.4"/>`;
+      inner+=`<circle cx="${B[0]}" cy="${B[1]}" r="8" fill="${gold}" stroke="#eef6ff" stroke-width="1.4"/>`;
+      inner+=`<rect x="52" y="200" width="240" height="14" rx="4" fill="rgba(255,215,106,.25)" stroke="${gold}" stroke-width="1.4"/>`;
+      for(let k=0;k<=8;k++) inner+=`<line x1="${56+k*29}" y1="200" x2="${56+k*29}" y2="${k%2?206:210}" stroke="${gold}" stroke-width="1.2"/>`;
+      inner+=fit(160,192,11.5,gold,'измеряем длину',{b:1},150);
+      inner+=`<g class="qvRise" style="animation-delay:1.2s"><rect x="52" y="244" width="216" height="36" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(160,268,13,grn,'|AB⃗| = 6,4 см',{b:1},200)+`</g>`;
+      inner+=plate(18,288,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Длина вектора</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('|AB⃗| — модуль вектора',grn,0.1)):'')+
+        (go?wkNote('Длина вектора — это расстояние между его началом и концом. Её обозначают |AB⃗| и измеряют как обычный отрезок. Длина не бывает отрицательной: самый короткий вектор — нулевой.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('измерить',`visW420Act('${lk}','go')`))+
+        wkSml('модуль'));
+    /* 3: направление важно */
+    } else if(step===3){
+      H=312;
+      let inner=TT('длина одинаковая, а векторы разные','red');
+      inner+=arrow(56,110,236,110,cyan,{dur:1.8,beg:0.2,sw:3.6});
+      inner+=fit(146,92,12,cyan,'a',{b:1},30);
+      inner+=arrow(236,180,56,180,red,{dur:1.8,beg:0.8,sw:3.6});
+      inner+=fit(146,162,12,red,'b',{b:1},30);
+      inner+=`<g class="qvRise" style="animation-delay:1.6s"><rect x="30" y="208" width="258" height="34" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
+        +fit(159,230,11.5,red,'длины равны, направления противоположны',{b:1},250)+`</g>`;
+      inner+=plate(18,252,282,30,go?grn:cardB,go?'это разные векторы — a и b не равны':'одинаковые ли это векторы?',11.5);
+      inner+=`${fit(159,300,11.5,dim,'направление — часть вектора',{},280)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Направление важно</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('одинаковая длина — ещё не равенство',red,0.1)):'')+
+        (go?wkNote('Если у двух векторов одинаковая длина, но разные направления, это разные векторы. Вектор — не просто отрезок: стрелка показывает, куда он ведёт.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('сравнение'));
+    /* 4: равные векторы */
+    } else if(step===4){
+      H=312;
+      let inner=TT('равные векторы: длина и направление','grn');
+      const pairs=[[46,96,116,68,cyan,'a'],[150,150,220,122,gold,'b'],[74,214,144,186,pur,'c']];
+      pairs.forEach((q,k)=>{
+        inner+=arrow(q[0],q[1],q[2],q[3],q[4],{dur:1.6,beg:0.3+k*0.5,sw:3.4});
+        inner+=fit(q[0]-16,q[1]+20,12,q[4],q[5],{b:1},30);
+      });
+      inner+=`<g class="qvRise" style="animation-delay:2s"><rect x="26" y="236" width="266" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,258,11.5,grn,'все три вектора равны между собой',{b:1},250)+`</g>`;
+      inner+=plate(18,278,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Равные векторы</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('длина + направление совпадают',grn,0.1)):'')+
+        (go?wkNote('Векторы равны, если они одинаково направлены и имеют одинаковую длину. Такие векторы можно переносить в любое место: они не привязаны к точке на плоскости.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('равенство'));
+    /* 5: коллинеарные */
+    } else if(step===5){
+      H=314;
+      let inner=TT('коллинеарные векторы','pur');
+      inner+=drawPoly([[40,150],[280,150]],cardB,1.6,0.2,1.6,{keep:true});
+      inner+=arrow(60,150,150,150,cyan,{dur:1.4,beg:0.4,sw:3.4});
+      inner+=arrow(170,150,240,150,gold,{dur:1.4,beg:0.9,sw:3.4});
+      inner+=fit(105,132,12,cyan,'a',{b:1},30);
+      inner+=fit(205,132,12,gold,'b',{b:1},30);
+      inner+=fit(159,172,11.5,dim,'сонаправленные — смотрят в одну сторону',{},290);
+      inner+=drawPoly([[40,236],[280,236]],cardB,1.6,1.4,1.6,{keep:true});
+      inner+=arrow(240,236,150,236,red,{dur:1.4,beg:1.6,sw:3.4});
+      inner+=fit(195,218,12,red,'c',{b:1},30);
+      inner+=fit(159,258,11.5,dim,'противоположно направленные',{},290);
+      inner+=plate(18,272,282,30,go?grn:cardB,go?'все три лежат на параллельных прямых':'что общего у этих векторов?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Коллинеарные векторы</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('одна прямая или параллельные',pur,0.1)):'')+
+        (go?wkNote('Векторы называют коллинеарными, если они лежат на одной прямой или на параллельных прямых. Сонаправленные смотрят в одну сторону, противоположно направленные — в разные.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('параллельность'));
+    /* 6: нулевой вектор */
+    } else if(step===6){
+      H=306;
+      let inner=TT('нулевой вектор','cyan');
+      inner+=`<circle class="qvPop" style="animation-delay:.3s" cx="159" cy="150" r="16" fill="rgba(127,214,255,.25)" stroke="${cyan}" stroke-width="2.6"/>`;
+      inner+=`<circle class="qvGlow" cx="159" cy="150" r="26" fill="none" stroke="${cyan}" stroke-width="2"/>`;
+      inner+=fit(159,196,12.5,cyan,'начало и конец совпали',{b:1},280);
+      inner+=fit(159,222,11.5,dim,'длина нуля — ноль',{},220);
+      inner+=`<g class="qvRise" style="animation-delay:1s"><rect x="40" y="240" width="238" height="34" rx="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`
+        +fit(159,262,11.5,ink,'направление у нулевого вектора не определено',{b:1},230)+`</g>`;
+      inner+=plate(18,282,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Нулевой вектор</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('длина равна нулю',cyan,0.1)):'')+
+        (go?wkNote('Нулевой вектор — это вектор, у которого начало и конец совпадают. Его длина равна нулю, а направление не определено. Обозначают его просто: 0.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('ноль'));
+    /* 7: противоположные векторы */
+    } else if(step===7){
+      H=314;
+      let inner=TT('противоположные векторы: a и −a','rose');
+      inner+=arrow(80,150,240,150,gold,{dur:1.6,beg:0.3,sw:3.8});
+      inner+=fit(160,132,13,gold,'a',{b:1},30);
+      inner+=arrow(240,220,80,220,red,{dur:1.6,beg:1.1,sw:3.8});
+      inner+=fit(160,202,13,red,'−a',{b:1},34);
+      inner+=drawPoly([[160,150],[160,220]],dim,1.4,1.8,1.6,{pen:false});
+      inner+=`<circle class="qvPop" style="animation-delay:2s" cx="160" cy="185" r="6" fill="${pur}"/>`;
+      inner+=`<g class="qvRise" style="animation-delay:2.2s"><rect x="30" y="244" width="258" height="34" rx="10" fill="rgba(255,143,176,.12)" stroke="${rose}" stroke-width="1.8"/>`
+        +fit(159,266,11.5,rose,'одинаковая длина, обратное направление',{b:1},250)+`</g>`;
+      inner+=plate(18,284,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Противоположные векторы</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('a + (−a) = 0',rose,0.1)):'')+
+        (go?wkNote('Противоположные векторы имеют одинаковую длину, но противоположные направления. Их сумма равна нулевому вектору: a + (−a) = 0, ведь они гасят друг друга.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('минус вектор'));
+    /* 8: правило треугольника */
+    } else if(step===8){
+      H=320;
+      let inner=TT('правило треугольника','gold');
+      const A=[56,236], B=[176,176], C=[250,236];
+      inner+=arrow(A[0],A[1],B[0],B[1],cyan,{dur:1.8,beg:0.2,sw:3.6});
+      inner+=fit((A[0]+B[0])/2-18,(A[1]+B[1])/2-12,13,cyan,'a',{b:1},30);
+      inner+=arrow(B[0],B[1],C[0],C[1],grn,{dur:1.8,beg:1.2,sw:3.6});
+      inner+=fit((B[0]+C[0])/2+18,(B[1]+C[1])/2-8,13,grn,'b',{b:1},30);
+      inner+=arrow(A[0],A[1],C[0],C[1],gold,{dur:1.8,beg:2.4,sw:4.2});
+      inner+=fit((A[0]+C[0])/2,(A[1]+C[1])/2+28,13,gold,'a + b',{b:1},70);
+      inner+=`<circle class="qvPop" style="animation-delay:.2s" cx="${A[0]}" cy="${A[1]}" r="8" fill="rgba(127,214,255,.3)" stroke="${cyan}" stroke-width="1.8"/>`;
+      inner+=`<circle class="qvPop" style="animation-delay:1.2s" cx="${B[0]}" cy="${B[1]}" r="8" fill="rgba(125,224,160,.3)" stroke="${grn}" stroke-width="1.8"/>`;
+      inner+=`<circle class="qvPop" style="animation-delay:2.4s" cx="${C[0]}" cy="${C[1]}" r="8" fill="rgba(255,215,106,.3)" stroke="${gold}" stroke-width="1.8"/>`;
+      inner+=plate(18,264,282,30,go?grn:cardB,go?'начало a и конец b — это и есть сумма':'как сложить два вектора?',11.5);
+      inner+=`${fit(159,310,11.5,dim,'начало второго приставляем к концу первого',{},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило треугольника</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('a + b: из начала a в конец b',gold,0.1)):'')+
+        (go?wkNote('Чтобы сложить векторы, приставим начало второго вектора к концу первого. Тогда сумма пойдёт из начала первого вектора в конец второго — это правило треугольника.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('сложить',`visW420Act('${lk}','go')`))+
+        wkSml('сложение'));
+    /* 9: правило параллелограмма */
+    } else if(step===9){
+      H=326;
+      let inner=TT('правило параллелограмма','pur');
+      const O=[70,246], P=[240,196], Q=[120,116];
+      inner+=arrow(O[0],O[1],P[0],P[1],cyan,{dur:1.6,beg:0.3,sw:3.6});
+      inner+=fit((O[0]+P[0])/2+10,(O[1]+P[1])/2+22,13,cyan,'a',{b:1},30);
+      inner+=arrow(O[0],O[1],Q[0],Q[1],grn,{dur:1.6,beg:1,sw:3.6});
+      inner+=fit((O[0]+Q[0])/2-20,(O[1]+Q[1])/2-6,13,grn,'b',{b:1},30);
+      inner+=drawPoly([[P[0],P[1]],[P[0]+Q[0]-O[0],P[1]+Q[1]-O[1]]],cardB,1.4,1.8,1.8,{keep:true,pen:false});
+      inner+=drawPoly([[Q[0],Q[1]],[P[0]+Q[0]-O[0],P[1]+Q[1]-O[1]]],cardB,1.4,1.8,1.8,{keep:true,pen:false});
+      inner+=arrow(O[0],O[1],P[0]+Q[0]-O[0],P[1]+Q[1]-O[1],gold,{dur:1.8,beg:2.2,sw:4.2});
+      inner+=fit((O[0]+P[0]+Q[0]-O[0])/2+8,(O[1]+P[1]+Q[1]-O[1])/2-10,13,gold,'a + b',{b:1},70);
+      inner+=plate(18,268,282,30,go?grn:cardB,go?'диагональ параллелограмма — это сумма':'что показывает диагональ?',11.5);
+      inner+=`${fit(159,312,11.5,dim,'оба вектора отложены из одной точки',{},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Правило параллелограмма</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('сумма — диагональ',pur,0.1)):'')+
+        (go?wkNote('Если отложить оба вектора из одной точки и достроить параллелограмм, то сумма будет его диагональю. Это второе правило сложения — правило параллелограмма.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('диагональ'));
+    /* 10: сложение в координатах */
+    } else if(step===10){
+      H=314;
+      let inner=TT('сложение в координатах','cyan');
+      inner+=`<g class="qvRise"><rect x="26" y="56" width="266" height="40" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="82" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">a = (2; 1),  b = (1; 3)</text></g>`;
+      inner+=`<g class="qvRise" style="animation-delay:.4s"><rect x="26" y="112" width="266" height="40" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="138" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">a + b = (2+1; 1+3)</text></g>`;
+      inner+=`<g class="qvRise" style="animation-delay:.8s"><rect x="60" y="168" width="198" height="42" rx="11" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>`
+        +`<text x="159" y="196" text-anchor="middle" font-size="16" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">a + b = (3; 4)</text></g>`;
+      inner+=drawPoly([[159,96],[159,110]],dim,1.2,0.3,2,{pen:false});
+      inner+=drawPoly([[159,152],[159,166]],dim,1.2,0.7,2,{pen:false});
+      inner+=fit(159,236,11.5,ink,'первые координаты складываем отдельно',{b:1},292);
+      inner+=fit(159,260,11.5,ink,'вторые координаты — тоже отдельно',{b:1},292);
+      inner+=plate(18,274,282,30,go?grn:cardB,go?'получился вектор (3; 4)':'что получится?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Сложение по координатам</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('(2; 1) + (1; 3) = (3; 4)',cyan,0.1)):'')+
+        (go?wkNote('Складывать векторы удобно по координатам: складываем первые координаты и отдельно вторые. Для a = (2; 1) и b = (1; 3) получается (3; 4).'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('сложить',`visW420Act('${lk}','go')`))+
+        wkSml('координаты'));
+    /* 11: вычитание */
+    } else if(step===11){
+      H=312;
+      let inner=TT('вычитание: a − b = a + (−b)','red');
+      inner+=arrow(50,140,220,140,cyan,{dur:1.6,beg:0.3,sw:3.6});
+      inner+=fit(135,122,13,cyan,'a',{b:1},30);
+      inner+=arrow(220,140,120,140,red,{dur:1.4,beg:1,sw:3.6});
+      inner+=fit(170,122,13,red,'−b',{b:1},34);
+      inner+=drawPoly([[50,140],[120,140]],gold,1.6,2.2,4,{keep:true});
+      inner+=`<g class="qvPop" style="animation-delay:2.4s"><path d="M120 132 l-12 8 l12 8" fill="none" stroke="${gold}" stroke-width="2.6"/></g>`;
+      inner+=fit(85,164,12,gold,'a − b',{b:1},70);
+      inner+=`<g class="qvRise" style="animation-delay:2.6s"><rect x="26" y="196" width="266" height="34" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
+        +fit(159,218,11.5,red,'вычитание — это сложение с противоположным',{b:1},250)+`</g>`;
+      inner+=`<g class="qvRise" style="animation-delay:2.9s"><rect x="60" y="244" width="198" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.7"/>`
+        +`<text x="159" y="266" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">a − b = a + (−b)</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Вычитание векторов</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('прибавляем противоположный',red,0.1)):'')+
+        (go?wkNote('Чтобы вычесть вектор, прибавляют противоположный: a − b = a + (−b). На рисунке видно, что результат направлен в сторону уменьшения первого вектора.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('разность'));
+    /* 12: умножение на число */
+    } else if(step===12){
+      H=316;
+      let inner=TT('умножение вектора на число','pur');
+      inner+=arrow(50,96,140,96,cyan,{dur:1.4,beg:0.3,sw:3.2});
+      inner+=fit(95,78,12,cyan,'a',{b:1},30);
+      inner+=arrow(50,166,230,166,gold,{dur:1.8,beg:0.9,sw:3.6});
+      inner+=fit(140,148,12,gold,'2a — в два раза длиннее',{b:1},170);
+      inner+=arrow(250,236,110,236,red,{dur:1.6,beg:1.6,sw:3.6});
+      inner+=fit(180,218,12,red,'−a — смотрит назад',{b:1},150);
+      inner+=`<g class="qvRise" style="animation-delay:2.4s"><rect x="26" y="258" width="266" height="32" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`
+        +fit(159,279,11.5,ink,'число меняет длину, знак — направление',{b:1},250)+`</g>`;
+      inner+=plate(18,292,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Умножение на число</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('2a длиннее, −a — назад',pur,0.1)):'')+
+        (go?wkNote('При умножении вектора на положительное число его длина увеличивается, а направление сохраняется. Если число отрицательное, вектор разворачивается в противоположную сторону.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('длина и знак'));
+    }
+    /* 13: координаты вектора */
+    else if(step===13){
+      H=326;
+      let inner=TT('координаты вектора','gold');
+      const x0=56, y0=252, u=32;
+      inner+=grid(x0,y0,u,4,4,'#3a4470');
+      const A=[x0+1*u,y0-2*u], B=[x0+4*u,y0-4*u];
+      inner+=arrow(A[0],A[1],B[0],B[1],gold,{dur:1.8,beg:0.4,sw:3.6});
+      inner+=`<circle class="qvPop" style="animation-delay:.4s" cx="${A[0]}" cy="${A[1]}" r="7" fill="${cyan}" stroke="#eef6ff" stroke-width="1.4"/>`;
+      inner+=`<circle class="qvPop" style="animation-delay:1.8s" cx="${B[0]}" cy="${B[1]}" r="7" fill="${grn}" stroke="#eef6ff" stroke-width="1.4"/>`;
+      inner+=fit(A[0]-4,A[1]+24,11.5,cyan,'A(1; 2)',{b:1},70);
+      inner+=fit(B[0]+4,B[1]-14,11.5,grn,'B(4; 4)',{b:1},70);
+      inner+=drawPoly([[A[0],A[1]],[B[0],A[1]],[B[0],B[1]]],dim,1.4,2,1.8,{keep:true,pen:false});
+      inner+=fit((A[0]+B[0])/2,A[1]+20,11.5,dim,'4 − 1 = 3',{b:1},80);
+      inner+=fit(B[0]+16,(A[1]+B[1])/2,11.5,dim,'4 − 2 = 2',{b:1},70);
+      inner+=`<g class="qvRise" style="animation-delay:2.4s"><rect x="24" y="272" width="270" height="42" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="299" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">AB⃗ = (4 − 1; 4 − 2) = (3; 2)</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Координаты вектора</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('AB⃗ = (x_B − x_A; y_B − y_A)',gold,0.1)):'')+
+        (go?wkNote('Чтобы найти координаты вектора, из координат конца вычитают координаты начала. Для A(1; 2) и B(4; 4) получается (3; 2): вектор сдвигает на 3 вправо и на 2 вверх.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('найти',`visW420Act('${lk}','go')`))+
+        wkSml('разности координат'));
+    /* 14: длина через координаты */
+    } else if(step===14){
+      H=322;
+      let inner=TT('длина вектора через координаты','grn');
+      const x0=54, y0=250, u=38;
+      inner+=grid(x0,y0,u,4,4,'#3a4470');
+      const A=[x0,y0], B=[x0+3*u,y0-4*u];
+      inner+=drawPoly([[A[0],A[1]],[B[0],A[1]]],dim,1.4,0.4,2,{keep:true,pen:false});
+      inner+=drawPoly([[B[0],A[1]],[B[0],B[1]]],dim,1.4,0.7,2,{keep:true,pen:false});
+      inner+=arrow(A[0],A[1],B[0],B[1],grn,{dur:2,beg:1,sw:3.8});
+      inner+=fit(x0+1.5*u,A[1]+22,12,cyan,'x = 3',{b:1},70);
+      inner+=fit(B[0]+20,A[1]-2*u,12,blu,'y = 4',{b:1},70);
+      inner+=fit(x0+1.5*u-6,A[1]-2*u-12,12,grn,'|a| = ?',{b:1},70);
+      inner+=rightAngleLocal(A[0],A[1],16,grn);
+      inner+=`<g class="qvRise" style="animation-delay:2s"><rect x="24" y="270" width="270" height="40" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="296" text-anchor="middle" font-size="13.5" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">√(3² + 4²) = √25 = 5</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Длина по координатам</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('|a| = √(x² + y²)',grn,0.1)):'')+
+        (go?wkNote('Координаты вектора — это катеты, а сам вектор — гипотенуза. Поэтому длину находят по теореме Пифагора: для вектора (3; 4) получаем √(9 + 16) = 5.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('посчитать',`visW420Act('${lk}','go')`))+
+        wkSml('теорема Пифагора'));
+    /* 15: свойства сложения */
+    } else if(step===15){
+      H=318;
+      let inner=TT('свойства сложения векторов','pur');
+      const rows=[{t:'a + b = b + a',c:cyan},{t:'(a + b) + c = a + (b + c)',c:grn},{t:'a + 0 = a',c:gold},{t:'a + (−a) = 0',c:rose}];
+      rows.forEach((q,k)=>{
+        const y=54+k*48;
+        inner+=`<g class="qvRise" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="30" y="${y}" width="258" height="36" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<text x="159" y="${y+24}" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${q.c}">${q.t}</text></g>`;
+        if(k<3) inner+=drawPoly([[159,y+38],[159,y+44]],dim,1.2,0.5+k*0.2,2,{pen:false});
+      });
+      inner+=plate(18,254,282,32,go?grn:cardB,go?'те же правила, что у чисел':'что общего с числами?',11.5);
+      inner+=`${fit(159,304,11.5,dim,'векторы ведут себя как числа',{},280)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Свойства векторов</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('переместительное и сочетательное',pur,0.1)):'')+
+        (go?wkNote('Сложение векторов подчиняется тем же правилам, что и сложение чисел: можно менять порядок, можно группировать, а прибавление нулевого вектора ничего не меняет.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('правила'));
+    /* 16: перемещение точкой */
+    } else if(step===16){
+      H=320;
+      let inner=TT('вектор задаёт перемещение','cyan');
+      const x0=52, y0=252, u=34;
+      inner+=grid(x0,y0,u,4,4,'#3a4470');
+      const A=[x0+1*u,y0-1*u], B=[A[0]+3*u,A[1]-2*u];
+      inner+=arrow(A[0],A[1],B[0],B[1],cyan,{dur:1.8,beg:0.3,sw:3.6});
+      inner+=`<circle class="qvPop" style="animation-delay:.3s" cx="${A[0]}" cy="${A[1]}" r="8" fill="${gold}" stroke="#eef6ff" stroke-width="1.4"/>`;
+      inner+=fit(A[0]-4,A[1]+24,11.5,gold,'A(1; 1)',{b:1},70);
+      inner+=`<circle class="qvPop" style="animation-delay:1.8s" cx="${B[0]}" cy="${B[1]}" r="8" fill="${grn}" stroke="#eef6ff" stroke-width="1.4"/>`;
+      inner+=fit(B[0]+8,B[1]-14,11.5,grn,'B(4; 3)',{b:1},70);
+      inner+=`<g class="qvRise" style="animation-delay:2.2s"><rect x="24" y="272" width="270" height="40" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="298" text-anchor="middle" font-size="13.5" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">(1; 1) + (3; 2) = (4; 3)</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Точка и вектор</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('точка + вектор = новая точка',cyan,0.1)):'')+
+        (go?wkNote('Вектор (3; 2) означает: сдвинься на 3 вправо и на 2 вверх. Прибавим его к точке A(1; 1) и получим B(4; 3). Так векторами задают перемещения.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('сдвинуть',`visW420Act('${lk}','go')`))+
+        wkSml('сдвиг'));
+    /* 17: самолёт и ветер */
+    } else if(step===17){
+      H=318;
+      let inner=TT('вектор скорости: самолёт и ветер','grn');
+      inner+=`<path d="M40 210 L150 186 L200 210 L150 202 Z" fill="rgba(127,214,255,.3)" stroke="${cyan}" stroke-width="2.2"/>`;
+      inner+=`<path d="M120 200 L96 224 L128 208 Z" fill="rgba(127,214,255,.3)" stroke="${cyan}" stroke-width="2"/>`;
+      inner+=arrow(80,206,214,150,grn,{dur:1.6,beg:0.4,sw:3.6});
+      inner+=fit(170,142,12,grn,'вектор самолёта',{b:1},120);
+      inner+=arrow(214,150,262,124,gold,{dur:1.4,beg:1.2,sw:3.4});
+      inner+=fit(276,116,11.5,gold,'ветер',{b:1},60);
+      inner+=drawPoly([[80,206],[262,124]],red,1.6,2,2.2,{keep:true,pen:false});
+      inner+=fit(150,158,12,red,'на самом деле',{b:1},110);
+      inner+=`<g class="qvRise" style="animation-delay:2.6s"><rect x="24" y="238" width="270" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,260,11.5,grn,'скорости складываются по правилу треугольника',{b:1},250)+`</g>`;
+      inner+=plate(18,276,282,30,go?grn:cardB,go?'самолёт летит по сумме векторов':'куда полетит самолёт?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Векторы в движении</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('скорость + ветер',grn,0.1)):'')+
+        (go?wkNote('Самолёт летит по вектору своей скорости, но ветер сносит его. Настоящее перемещение — это сумма двух векторов. Так же считают скорость лодки на реке.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('скорость и ветер'));
+    /* 18: силы */
+    } else if(step===18){
+      H=314;
+      let inner=TT('силы — тоже векторы','gold');
+      const O=[100,160];
+      inner+=arrow(O[0],O[1],210,110,cyan,{dur:1.6,beg:0.3,sw:3.6});
+      inner+=fit(180,102,12,cyan,'F₁',{b:1},40);
+      inner+=arrow(O[0],O[1],196,210,grn,{dur:1.6,beg:1,sw:3.6});
+      inner+=fit(178,220,12,grn,'F₂',{b:1},40);
+      inner+=arrow(O[0],O[1],262,140,red,{dur:1.8,beg:1.8,sw:4});
+      inner+=fit(236,124,12,red,'равнодействующая',{b:1},130);
+      inner+=drawPoly([[210,110],[262,140],[196,210]],cardB,1.4,2.4,1.8,{keep:true,pen:false});
+      inner+=`<g class="qvRise" style="animation-delay:2.8s"><rect x="24" y="244" width="270" height="34" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
+        +fit(159,266,11.5,red,'сумма сил показывает общее действие',{b:1},250)+`</g>`;
+      inner+=plate(18,282,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Силы и равнодействующая</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('F = F₁ + F₂',gold,0.1)):'')+
+        (go?wkNote('Две силы, приложенные к телу, изображают векторами. Их сумма называется равнодействующей: она показывает, куда и с какой силой тело будет двигаться на самом деле.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('сложить',`visW420Act('${lk}','go')`))+
+        wkSml('силы'));
+    /* 19: практика координаты */
+    } else if(step===19){
+      H=324;
+      let inner=TT('практика: координаты вектора AB','cyan');
+      const x0=56, y0=210, u=32;
+      inner+=grid(x0,y0,u,4,4,'#3a4470');
+      const A=[x0+1*u,y0-2*u], B=[x0+4*u,y0-4*u];
+      inner+=arrow(A[0],A[1],B[0],B[1],cyan,{dur:1.6,beg:0.3,sw:3.4});
+      inner+=`<circle cx="${A[0]}" cy="${A[1]}" r="7" fill="${gold}" stroke="#eef6ff" stroke-width="1.3"/>`;
+      inner+=`<circle cx="${B[0]}" cy="${B[1]}" r="7" fill="${grn}" stroke="#eef6ff" stroke-width="1.3"/>`;
+      inner+=fit(A[0]-6,A[1]+22,11.5,gold,'A(1; 2)',{b:1},66);
+      inner+=fit(B[0]+6,B[1]-12,11.5,grn,'B(4; 4)',{b:1},66);
+      const rows=['4 − 1 = 3','4 − 2 = 2','AB⃗ = (3; 2)'];
+      rows.forEach((q,k)=>{
+        inner+=`<g class="qvRise" style="animation-delay:${(0.8+k*0.3).toFixed(2)}s"><rect x="66" y="${228+k*30}" width="186" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${k===2?grn:cyan}" stroke-width="1.6"/>`
+          +`<text x="159" y="${247+k*30}" text-anchor="middle" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${k===2?grn:cyan}">${q}</text></g>`;
+      });
+      inner+=plate(18,282,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Практика: координаты</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('(4 − 1; 4 − 2) = (3; 2)',cyan,0.1)):'')+
+        (go?wkNote('Из координат конца вычитаем координаты начала: 4 − 1 = 3 и 4 − 2 = 2. Значит, вектор AB⃗ имеет координаты (3; 2).'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('решить',`visW420Act('${lk}','go')`))+
+        wkSml('практика 1'));
+    /* 20: практика длина */
+    } else if(step===20){
+      H=314;
+      let inner=TT('практика: длина вектора (3; 4)','grn');
+      const x0=64, y0=206, u=36;
+      inner+=grid(x0,y0,u,3,4,'#3a4470');
+      const A=[x0,y0], B=[x0+3*u,y0-4*u];
+      inner+=drawPoly([[A[0],A[1]],[B[0],A[1]]],dim,1.3,0.4,1.8,{keep:true,pen:false});
+      inner+=drawPoly([[B[0],A[1]],[B[0],B[1]]],dim,1.3,0.7,1.8,{keep:true,pen:false});
+      inner+=arrow(A[0],A[1],B[0],B[1],grn,{dur:1.8,beg:1,sw:3.6});
+      inner+=fit(x0+1.5*u,A[1]+22,11.5,cyan,'3',{b:1},40);
+      inner+=fit(B[0]+16,A[1]-2*u,11.5,blu,'4',{b:1},40);
+      inner+=fit(x0+1.5*u-8,A[1]-2*u-6,12,grn,'?',{b:1},40);
+      const rows=['3² + 4² = 9 + 16','= 25','√25 = 5'];
+      rows.forEach((q,k)=>{
+        inner+=`<g class="qvRise" style="animation-delay:${(1.6+k*0.3).toFixed(2)}s"><rect x="66" y="${222+k*28}" width="186" height="24" rx="7" fill="rgba(18,24,44,.97)" stroke="${k===2?grn:cyan}" stroke-width="1.5"/>`
+          +`<text x="159" y="${240+k*28}" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${k===2?grn:cyan}">${q}</text></g>`;
+      });
+      inner+=plate(18,282,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Практика: длина вектора</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('длина равна 5',grn,0.1)):'')+
+        (go?wkNote('Длина вектора (3; 4) — это гипотенуза прямоугольного треугольника с катетами 3 и 4. По теореме Пифагора: 9 + 16 = 25, значит длина равна 5.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('решить',`visW420Act('${lk}','go')`))+
+        wkSml('практика 2'));
+    /* 21: тренажёр координаты */
+    } else if(step===21){
+      H=300;
+      const opts=['(2; 2)','(6; 8)','(4; 6)'], ok=0, done=(sel>=0);
+      let inner=TT('A(2; 3), B(4; 5). Какие координаты у AB⃗?','gold');
+      const x0=76, y0=190, u=24;
+      inner+=grid(x0,y0,u,4,4,'#3a4470');
+      const A=[x0+2*u,y0-3*u], B=[x0+4*u,y0-5*u+u*0];
+      inner+=arrow(A[0],A[1],B[0],y0-5*u,gold,{dur:1.4,beg:0.3,sw:3.2});
+      inner+=`<circle cx="${A[0]}" cy="${A[1]}" r="6" fill="${cyan}" stroke="#eef6ff" stroke-width="1.2"/>`;
+      inner+=`<circle cx="${B[0]}" cy="${y0-5*u}" r="6" fill="${grn}" stroke="#eef6ff" stroke-width="1.2"/>`;
+      opts.forEach((t,k)=>{
+        const x=32+k*86, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW420Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="208" width="80" height="40" rx="10" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(18,24,44,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(x+40,234,14,c,t,{b:on},74)+(on?`<path d="M${x+58} 218 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(18,256,282,30,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! (4−2; 5−3) = (2; 2)':'Вычитаем координаты начала'):'нажми на ответ',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: координаты</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW420Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('Из координат конца вычитаем координаты начала: 4 − 2 = 2 и 5 − 3 = 2. Вектор AB⃗ равен (2; 2).'):'')+
+        wkSml('проверь себя'));
+    /* 22: тренажёр длина */
+    } else if(step===22){
+      H=296;
+      const opts=['10','14','48'], ok=0, done=(sel>=0);
+      let inner=TT('длина вектора (6; 8) равна…','pur');
+      const x0=88, y0=176, u=16;
+      inner+=drawPoly([[x0,y0],[x0+6*u,y0],[x0+6*u,y0-8*u],[x0,y0]],cardB,1.4,0.3,1.8,{keep:true,pen:false});
+      inner+=arrow(x0,y0,x0+6*u,y0-8*u,pur,{dur:1.6,beg:0.4,sw:3.4});
+      inner+=fit(x0+3*u,y0+20,11.5,cyan,'x = 6',{b:1},60);
+      inner+=fit(x0+6*u+18,y0-4*u,11.5,blu,'y = 8',{b:1},60);
+      inner+=rightAngleLocal(x0,y0,12,grn);
+      opts.forEach((t,k)=>{
+        const x=34+k*84, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW420Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="204" width="76" height="42" rx="10" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(18,24,44,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+38,232,17,c,t,{b:on})+(on?`<path d="M${x+56} 214 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(18,254,282,30,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! 36 + 64 = 100 → 10':'Считай по теореме Пифагора'):'нажми на ответ',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: длина</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW420Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('Длина вектора (6; 8): 6² + 8² = 36 + 64 = 100, а √100 = 10. Это знакомая тройка 6-8-10.'):'')+
+        wkSml('проверь себя'));
+    /* 23: частые ошибки */
+    } else if(step===23){
+      H=318;
+      const it=[
+        {t:'путают начало и конец вектора',f:'AB⃗ и BA⃗ — противоположные векторы',c:gold},
+        {t:'забывают про направление',f:'важны и длина, и направление',c:red},
+        {t:'складывают координаты крест-накрест',f:'складываем x с x, y с y',c:cyan},
+        {t:'теряют знак при вычитании координат',f:'x_B − x_A, а не наоборот',c:pur}
+      ];
+      let inner='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        inner+=`<g class="qvRise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#qvbg)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="${ink}">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      inner+=`${tx(159,304,11,dim,'проверяй эти четыре места',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Частые ошибки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('вектор — это направление',gold,0.1)):'')+
+        (go?wkNote('Чаще всего путают начало и конец вектора, забывают про направление, складывают координаты крест-накрест и теряют знак при вычитании координат.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('чтобы не ошибаться'));
+    /* 24: шпаргалка */
+    } else if(step===24){
+      H=330;
+      const rows=[
+        {t:'вектор = длина + направление',c:gold},
+        {t:'AB⃗ = (x_B − x_A; y_B − y_A)',c:cyan},
+        {t:'|a| = √(x² + y²)',c:grn},
+        {t:'a + b по правилу треугольника',c:pur},
+        {t:'a − b = a + (−b)',c:red}
+      ];
+      let inner=TT('всё главное о векторах','gold');
+      rows.forEach((q,k)=>{
+        const y=52+k*42;
+        inner+=`<g class="qvRise" style="animation-delay:${(0.12+k*0.14).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+22,12.5,q.c,q.t,{b:1},260)+`</g>`;
+        inner+=drawPoly([[40,y+38],[278,y+38]],q.c,2.4,0.2+k*0.14,2,{pen:k===0});
+      });
+      inner+=plate(18,268,282,30,go?grn:cardB,go?'всё главное вместе':'проверь себя',11.5);
+      inner+=`${fit(159,316,11,dim,'координаты и длина — самое важное',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('координаты и правила',gold,0.1)):'')+
+        (go?wkNote('Вся тема в пяти строках: что такое вектор, как найти его координаты, как посчитать длину и как складывать и вычитать векторы.'):'')+
+        wkRow(go?wkBtn('сброс',`visW420Act('${lk}','rst')`):wkBtn('показать',`visW420Act('${lk}','go')`))+
+        wkSml('всё главное'));
+    /* 25: итог */
+    } else {
+      H=312;
+      let inner='';
+      inner+=arrow(60,236,232,124,gold,{dur:2,beg:0.3,sw:4.2});
+      inner+=`<circle class="qvPop" style="animation-delay:.3s" cx="60" cy="236" r="9" fill="${cyan}" stroke="#eef6ff" stroke-width="1.5"/>`;
+      inner+=`<circle class="qvPop" style="animation-delay:1.8s" cx="232" cy="124" r="9" fill="${grn}" stroke="#eef6ff" stroke-width="1.5"/>`;
+      inner+=fit(120,212,12,cyan,'A',{b:1},30);
+      inner+=fit(210,150,12,grn,'B',{b:1},30);
+      inner+=fit(159,110,13,gold,'AB⃗',{b:1},50);
+      inner+=`<g class="qvRise" style="animation-delay:2.4s"><rect x="20" y="252" width="278" height="38" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,277,12,gold,'жми «Понял! Проверю себя» →',{b:1},250)+`</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Итог урока</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkNote('Главное: вектор — это направленный отрезок; его координаты находят как разности координат концов, а длину — по теореме Пифагора.' )+
+        wkRow(wkBtn('в начало',`visW420Act('${lk}','rst')`))+
+        wkSml('векторы'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[420]=visW420;
+  window.visW420Pick=function(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); };
+  window.visW420Act=function(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go'){ st.go=st.go?0:1; }
+    if(act==='rst'){ CHS[lk]={_at:st._at}; }
+    chRender(0);
+  };
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===420){ window.ARH_LESSONS[i]=L420; break; } } })();
+})();
+/* ================= УРОК 90 · Теорема Пифагора (v2 · «Мастерская Пифагора», 26 шагов, крупные чертежи, прорисовка на каждом шаге; текст без чёрного цвета) ================= */
+(function(){
+  if(!window.__wk90v2css){
+    window.__wk90v2css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qsIn{animation:qsIn .55s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qsIn{0%{transform:translateY(-14px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qsPop{animation:qsPop .55s cubic-bezier(.2,.9,.3,1.25) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qsPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qsRise{animation:qsRise .7s cubic-bezier(.2,.85,.3,1.08) both;}'+
+      '@keyframes qsRise{0%{transform:translateY(16px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qsGlow{animation:qsGlow 2.2s ease-in-out infinite;}'+
+      '@keyframes qsGlow{0%,100%{opacity:.35}50%{opacity:1}}'+
+      '#lvis .qsBlink{animation:qsBlink 1.5s ease-in-out infinite;}'+
+      '@keyframes qsBlink{0%,100%{opacity:.35}50%{opacity:1}}'+
+      '#lvis .qsFloat{animation:qsFloat 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qsFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}';
+    document.head.appendChild(st);
+  }
+  const L90 = {
+    id: 90, title: 'Теорема Пифагора', ico: '🔺',
+    src: 'Математика · 8–9 класс · Теорема Пифагора', subj: 'math',
+    explain: [
+      'Египетский секрет: верёвку с 12 узлами делили на части 3, 4 и 5 — и получался идеальный прямой угол. Сегодня узнаем, почему так работает.',
+      'Прямоугольный треугольник: две стороны у прямого угла — катеты (a и b), а самая длинная сторона напротив прямого угла — гипотенуза (c).',
+      'Квадрат числа — это площадь квадрата: a² — квадрат со стороной a. Квадрат 3×3 содержит 9 клеток, значит 3² = 9.',
+      'Теорема Пифагора: a² + b² = c². Площадь квадрата на гипотенузе равна сумме площадей квадратов на катетах.',
+      'Смотрим наглядно: катеты 3 и 4. Квадрат 3×3 — 9 клеток, квадрат 4×4 — 16 клеток, а вместе 25 — ровно столько клеток в квадрате 5×5.',
+      'Проверяем числами: 3² = 9, 4² = 16, 9 + 16 = 25 = 5². Значит, гипотенуза равна 5. Это египетский треугольник.',
+      'Находим гипотенузу: если катеты 6 и 8, то 6² + 8² = 36 + 64 = 100, значит c = 10.',
+      'Ещё пример: катеты 5 и 12 — тогда 25 + 144 = 169, а гипотенуза равна 13.',
+      'Теоремой можно найти и катет: из квадрата гипотенузы вычитаем квадрат известного катета. Если c = 13 и a = 5, то b² = 169 − 25 = 144, значит b = 12.',
+      'Обратная теорема: если a² + b² = c², то треугольник прямоугольный. Проверяем 6, 8, 10: 36 + 64 = 100 — да, прямоугольный.',
+      'Если равенство не выполняется, треугольник не прямоугольный: для 4, 5, 6 получаем 16 + 25 = 41, а 6² = 36 — не сходится.',
+      'Пифагоровы тройки — целые числа, которые подходят в теорему: (3, 4, 5), (6, 8, 10), (5, 12, 13), (8, 15, 17), (9, 12, 15).',
+      'Ту же тройку можно увеличить: если (3, 4, 5) умножить на 2, получится (6, 8, 10) — теорема всё равно работает.',
+      'Диагональ прямоугольника находят теоремой Пифагора: у прямоугольника 3 на 4 диагональ равна 5.',
+      'Диагональ квадрата со стороной 1 равна √2, то есть примерно 1,41. Это первое иррациональное число, с которым встречаются школьники.',
+      'Лестница у стены — знакомая задача: если основание в 3 метрах от стены, а высота 4 метра, длина лестницы 5 метров.',
+      'Расстояние между двумя точками на координатной плоскости тоже считают по теореме Пифагора: разности координат — это катеты.',
+      'Наглядно теорему можно увидеть разрезанием: квадрат на гипотенузе состоит из четырёх таких же треугольников и маленького квадрата.',
+      'Практика: верёвка с 12 узлами даёт отрезки 3, 4 и 5 — так строители получают прямой угол без инструментов.',
+      'Практика: катеты 9 и 12. Считаем 81 + 144 = 225, а √225 = 15. Гипотенуза равна 15.',
+      'Практика: гипотенуза 25, катет 20. Тогда второй катет: 625 − 400 = 225, значит 15.',
+      'Практика: расстояние между точками (1; 1) и (4; 5) — это катеты 3 и 4, значит расстояние равно 5.',
+      'Тренажёр: найди гипотенузу, если катеты 6 и 8.',
+      'Тренажёр: проверь, прямоугольный ли треугольник со сторонами 6, 8 и 10.',
+      'Частые ошибки: складывать катеты вместо квадратов (3 + 4 = 7 вместо 5), путать гипотенузу с катетом, забывать извлечь корень.',
+      'Шпаргалка: катеты в квадрате складываем, получаем квадрат гипотенузы; чтобы найти катет — вычитаем. Проверь себя!'
+    ],
+    check: { q: 'Катеты прямоугольного треугольника 6 и 8. Чему равна гипотенуза?', choices: ['10', '14', '12', '48'], ans: 0,
+      exp: '6² + 8² = 36 + 64 = 100, значит гипотенуза равна 10.' },
+    tasks: [
+      { q: 'Катеты прямоугольного треугольника 9 и 12. Найди гипотенузу.', kind: 'unit', ans: 15, tol: 0,
+        hints: ['9² + 12² = 81 + 144 = 225.', '√225 = 15.'], sol: '15' },
+      { q: 'Гипотенуза 25, один катет 20. Чему равен второй катет?', kind: 'unit', ans: 15, tol: 0,
+        hints: ['25² − 20² = 625 − 400 = 225.', '√225 = 15.'], sol: '15' }
+    ]
+  };
+  const ink='#eef6ff', dim='#a3aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff', rose='#ff8fb0',
+        bg0='#1b2140', bg1='#090d1c', card='rgba(26,32,58,.96)', cardB='#46507c';
+  /* текст: без чёрного цвета и без тёмной обводки */
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}">${t}</text>`;
+  const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qsbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <filter id="qssh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+        <filter id="qssoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qsbg)"/>
+      <g opacity="0.12" stroke="#5a6ab0" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#4a5a9a" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3868" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  /* ---------- прорисовка ---------- */
+  const polyLen=(pts)=>{let s=0;for(let i=1;i<pts.length;i++)s+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return Math.max(16,Math.round(s));};
+  const drawPoly=(pts,col,dur,beg,w,opt)=>{
+    const o=opt||{}, d='M'+pts.map(q=>q[0]+' '+q[1]).join(' L'), L=polyLen(pts);
+    return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${w||3.2}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.7;1" dur="${dur}s" begin="${beg||0}s" repeatCount="${o.keep?'1':'indefinite'}"/></path>`
+      +((o.pen===false||o.keep)?'':`<circle r="${o.r||5.5}" fill="${gold}">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const rectPerim=(x,y,w,h,rx)=>{const r=Math.min(rx||8,Math.min(w,h)/2);
+    return `M${x+r} ${y} H${x+w-r} A${r} ${r} 0 0 1 ${x+w} ${y+r} V${y+h-r} A${r} ${r} 0 0 1 ${x+w-r} ${y+h} H${x+r} A${r} ${r} 0 0 1 ${x} ${y+h-r} V${y+r} A${r} ${r} 0 0 1 ${x+r} ${y}`;};
+  const drawRect=(x,y,w,h,rx,col,dur,beg,sw,opt)=>{
+    const o=opt||{}, r=Math.min(rx||8,Math.min(w,h)/2);
+    const L=Math.round(2*(w-2*r)+2*(h-2*r)+2*Math.PI*r), d=rectPerim(x,y,w,h,rx);
+    return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${sw||2.4}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.6;1" dur="${dur}s" begin="${beg||0}s" repeatCount="${o.keep?'1':'indefinite'}"/></path>`
+      +((o.pen===false||o.keep)?'':`<circle r="${o.r||5}" fill="${gold}">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const growBar=(x,y,w,h,fill,dur,beg,stroke)=>{
+    return `<rect x="${x}" y="${y}" width="0" height="${h}" rx="${h/2}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="1.2">`
+      +`<animate fill="freeze" attributeName="width" values="0;${w};${w}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></rect>`;
+  };
+  const growVert=(x,bottom,w,h,fill,dur,beg)=>{
+    return `<rect x="${x}" y="${bottom}" width="${w}" height="0" rx="4" fill="${fill}">`
+      +`<animate fill="freeze" attributeName="height" values="0;${h};${h}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/>`
+      +`<animate fill="freeze" attributeName="y" values="${bottom};${bottom-h};${bottom-h}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></rect>`;
+  };
+  /* клетчатый квадрат со стороной n клеток */
+  const cellSquare=(x,y,n,cell,col,delay,fill)=>{
+    let s2=`<rect x="${x}" y="${y}" width="${n*cell}" height="${n*cell}" rx="3" fill="${fill||'rgba(255,255,255,.04)'}"/>`;
+    for(let i=0;i<=n;i++){
+      s2+=`<line x1="${x+i*cell}" y1="${y}" x2="${x+i*cell}" y2="${y+n*cell}" stroke="${col}" stroke-width="1" opacity=".55"/>`;
+      s2+=`<line x1="${x}" y1="${y+i*cell}" x2="${x+n*cell}" y2="${y+i*cell}" stroke="${col}" stroke-width="1" opacity=".55"/>`;
+    }
+    s2+=`<g class="qsPop" style="animation-delay:${(delay||0).toFixed(2)}s"><rect x="${x}" y="${y}" width="${n*cell}" height="${n*cell}" rx="3" fill="none" stroke="${col}" stroke-width="2.4"/></g>`;
+    return s2;
+  };
+  const plate=(x,y,w,h,col,txt,fs)=>`<g class="qsRise"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="rgba(26,32,58,.95)" stroke="${col}" stroke-width="1.9"/>`
+    +fit(x+w/2,y+h*0.66,fs||13,col,txt,{b:1},w-16)+`</g>`;
+  const chip=(t,c,delay)=>`<span class="qsIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const rightAngle=(x,y,s,col)=>{ // прямой угол в точке-вершине, лучи вправо и вверх
+    return `<path d="M${x+s} ${y} L${x+s} ${y-s} L${x} ${y-s}" fill="none" stroke="${col}" stroke-width="2"/>`;
+  };
+  const W=318;
+  function visW90(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; }
+    const go=st.go||0, sel=(typeof st.pick==='number')?st.pick:-1;
+    let h='', H=310;
+    const TT=(t,c)=>`<g class="qsPop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#qsbg)" stroke="${c||cardB}" stroke-width="1.8"/>`
+      +fit(159,32,12.5,c||ink,t,{b:1},260)+`</g>`;
+    /* 0: египетская верёвка */
+    if(step===0){
+      H=322;
+      let inner=TT('египетская верёвка с 12 узлами','gold');
+      inner+=`<path d="M30 74 Q80 44 130 74 T230 74 T300 66" fill="none" stroke="${gold}" stroke-width="5" stroke-linecap="round" opacity=".85"/>`;
+      for(let k=0;k<12;k++){
+        const x=32+k*24;
+        inner+=`<circle class="qsPop" style="animation-delay:${(0.2+k*0.09).toFixed(2)}s" cx="${x}" cy="${k%2?86:74}" r="6" fill="${gold}"/>`;
+      }
+      inner+=fit(159,116,11.5,dim,'12 узлов дают 12 равных частей верёвки',{},292);
+      inner+=drawPoly([[84,258],[84,166],[196,166],[196,258],[84,258]],grn,2.6,1.4,3,{pen:true});
+      inner+=drawPoly([[84,258],[196,258]],cyan,2.2,2,3.4,{pen:false});
+      inner+=drawPoly([[84,258],[84,166]],blu,2.2,2.2,3.4,{pen:false});
+      inner+=drawPoly([[84,166],[196,166]],cyan,2,2.2,3.4,{pen:false});
+      inner+=fit(140,278,11.5,cyan,'4 части',{b:1},90);
+      inner+=fit(62,214,11.5,blu,'3',{b:1},50);
+            inner+=fit(232,206,10.5,grn,'5',{b:1},40);
+      inner+=`<path d="M96 258 L96 246 L108 246" fill="none" stroke="${grn}" stroke-width="2"/>`;
+      inner+=plate(18,286,282,26,go?grn:cardB,go?'3, 4 и 5 дают прямой угол':'что делали с верёвкой?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Египетский треугольник</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('3 · 4 · 5 — прямой угол',gold,0.1)):'')+
+        (go?wkNote('Строители брали верёвку с 12 одинаковыми промежутками между узлами и складывали треугольник со сторонами 3, 4 и 5 частей. Угол между сторонами 3 и 4 всегда получался прямым — так строили стены без инструментов.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('сложить',`visW90Act('${lk}','go')`))+
+        wkSml('12 узлов'));
+    /* 1: катеты и гипотенуза */
+    } else if(step===1){
+      H=318;
+      let inner=TT('катеты и гипотенуза','cyan');
+      const A=[74,250], B=[218,250], C=[74,142];
+      inner+=`<path d="M${A[0]} ${A[1]} L${B[0]} ${B[1]} L${C[0]} ${C[1]} Z" fill="rgba(127,214,255,.14)"/>`;
+      inner+=drawPoly([A,B,C,A],cyan,2.6,0.2,3,{pen:true});
+      inner+=rightAngle(A[0],A[1],20,grn);
+      inner+=`<circle class="qsPop" style="animation-delay:1.4s" cx="${A[0]}" cy="${A[1]}" r="5" fill="${gold}"/>`;
+      inner+=fit(146,272,13,cyan,'катет a',{b:1},120);
+      inner+=fit(56,200,13,blu,'катет b',{b:1},0,0);
+      inner+=`<g transform="rotate(-38 ${(B[0]+C[0])/2} ${(B[1]+C[1])/2})">${fit((B[0]+C[0])/2,(B[1]+C[1])/2-10,13,grn,'гипотенуза c',{b:1},140)}</g>`;
+      inner+=`<text x="30" y="196" text-anchor="middle" font-size="13" font-weight="bold" fill="${blu}">b</text>`;
+      inner+=`<text x="146" y="272" text-anchor="middle" font-size="13" font-weight="bold" fill="${cyan}">a</text>`;
+      inner+=`<text x="164" y="182" text-anchor="middle" font-size="13" font-weight="bold" fill="${grn}">c</text>`;
+      inner+=`<g class="qsRise" style="animation-delay:1.8s"><rect x="196" y="132" width="104" height="26" rx="8" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="1.6"/>`
+        +fit(248,150,11,grn,'прямой угол',{b:1},96)+`</g>`;
+      inner+=plate(18,282,282,26,go?grn:cardB,go?'гипотенуза — самая длинная сторона':'какая сторона самая длинная?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Прямоугольный треугольник</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('катеты и гипотенуза',cyan,0.1)):'')+
+        (go?wkNote('В прямоугольном треугольнике две стороны, образующие прямой угол, называют катетами (a и b). Третья сторона, лежащая напротив прямого угла, — гипотенуза (c), и она всегда самая длинная.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('показать',`visW90Act('${lk}','go')`))+
+        wkSml('стороны'));
+    /* 2: квадраты на сторонах */
+    } else if(step===2){
+      H=336;
+      let inner=TT('квадраты на сторонах треугольника','gold');
+      const u=15, x0=110, y0=228;
+      inner+=cellSquare(x0,y0,4,u,cyan,0.3,'rgba(127,214,255,.16)');
+      inner+=cellSquare(x0-3*u,y0-3*u,3,u,blu,0.7,'rgba(110,168,255,.16)');
+      inner+=`<g transform="matrix(.8,.6,.6,-.8,${x0},${y0-3*u})">${cellSquare(0,0,5,u,grn,1.1,'rgba(125,224,160,.16)')}</g>`;
+      inner+=`<path d="M${x0} ${y0} L${x0+4*u} ${y0} L${x0} ${y0-3*u} Z" fill="rgba(255,215,106,.28)" stroke="${gold}" stroke-width="2.6"/>`;
+      inner+=rightAngle(x0,y0,14,gold);
+      inner+=fit(x0+2*u,y0+2*u+6,15,cyan,'16',{b:1},40);
+      inner+=fit(x0-1.5*u,y0-1.5*u+6,15,blu,'9',{b:1},40);
+      inner+=`<g class="qsPop" style="animation-delay:1.6s">${tx(x0+2.5*u+8,y0-3*u-24,16,grn,'25',{b:1})}</g>`;
+      inner+=fit(x0-1.5*u,y0-3*u-10,10.5,blu,'3² = 9',{},70);
+      inner+=plate(18,296,282,32,go?grn:cardB,go?'9 клеток + 16 клеток = 25 клеток':'сколько клеток в квадратах?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Квадраты на сторонах</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('9 + 16 = 25',gold,0.1)):'')+
+        (go?wkNote('Построим квадрат на каждом катете и на гипотенузе. Квадрат катета 3 содержит 9 клеток, квадрат катета 4 — 16 клеток, а квадрат гипотенузы 5 — 25 клеток. И правда: 9 + 16 = 25.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('построить',`visW90Act('${lk}','go')`))+
+        wkSml('площади квадратов'));
+    /* 3: формула */
+    } else if(step===3){
+      H=316;
+      let inner=TT('теорема Пифагора','grn');
+      inner+=`<g class="qsRise"><rect x="24" y="54" width="270" height="52" rx="12" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2.2"/>`
+        +`<text x="159" y="88" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="${grn}">a² + b² = c²</text></g>`;
+      inner+=fit(159,132,12,ink,'квадрат катета плюс квадрат катета',{b:1},292);
+      inner+=fit(159,156,12,ink,'равны квадрату гипотенузы',{b:1},292);
+      inner+=`<g class="qsRise" style="animation-delay:.5s">`
+        +`<rect x="44" y="176" width="98" height="40" rx="10" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(93,202,13,cyan,'b²',{b:1},80)
+        +`<text x="159" y="202" text-anchor="middle" font-size="18" fill="${dim}">+</text>`
+        +`<rect x="176" y="176" width="98" height="40" rx="10" fill="rgba(110,168,255,.16)" stroke="${blu}" stroke-width="1.8"/>`
+        +fit(225,202,13,blu,'a²',{b:1},80)+`</g>`;
+      inner+=drawPoly([[159,212],[159,228]],dim,1.4,0.9,2.4,{pen:false});
+      inner+=`<g class="qsRise" style="animation-delay:1.1s"><rect x="94" y="228" width="130" height="42" rx="11" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="2"/>`
+        +fit(159,256,15,gold,'c²',{b:1},110)+`</g>`;
+      inner+=plate(18,278,282,28,go?grn:cardB,go?'так звучит теорема':'что утверждает теорема?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Теорема Пифагора</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('a² + b² = c²',grn,0.1)):'')+
+        (go?wkNote('Теорема Пифагора говорит: сумма площадей квадратов, построенных на катетах, равна площади квадрата, построенного на гипотенузе. Коротко это записывают так: a² + b² = c².'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('показать',`visW90Act('${lk}','go')`))+
+        wkSml('главная формула'));
+    /* 4: 9 + 16 = 25 */
+    } else if(step===4){
+      H=322;
+      let inner=TT('считаем клетки: 9 + 16 = 25','cyan');
+      inner+=cellSquare(40,52,3,22,blu,0.3,'rgba(110,168,255,.16)');
+      inner+=fit(73,140,20,blu,'9',{b:1},40);
+      inner+=fit(73,160,11,blu,'3 × 3',{b:1},60);
+      inner+=`<text x="128" y="112" text-anchor="middle" font-size="20" fill="${gold}">+</text>`;
+      inner+=cellSquare(146,52,4,22,cyan,0.6,'rgba(127,214,255,.16)');
+      inner+=fit(190,140,20,cyan,'16',{b:1},44);
+      inner+=fit(190,160,11,cyan,'4 × 4',{b:1},60);
+      inner+=`<text x="248" y="112" text-anchor="middle" font-size="20" fill="${gold}">=</text>`;
+      inner+=cellSquare(240,52,5,13,grn,1.0,'rgba(125,224,160,.16)');
+      inner+=fit(272,140,16,grn,'25',{b:1},36);
+      inner+=fit(272,160,10.5,grn,'5 × 5',{b:1},50);
+      inner+=`<g class="qsRise" style="animation-delay:1.8s"><rect x="24" y="180" width="270" height="38" rx="10" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="205" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">9 + 16 = 25</text></g>`;
+      inner+=fit(159,242,12,ink,'площадь квадрата на гипотенузе равна 25',{b:1},292);
+      inner+=fit(159,266,11.5,dim,'значит, сторона этого квадрата равна 5',{},292);
+      inner+=plate(18,280,282,30,go?grn:cardB,go?'значит, гипотенуза равна 5':'что это значит?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Девять плюс шестнадцать</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('9 + 16 = 25',cyan,0.1)):'')+
+        (go?wkNote('Считаем клетки: в квадрате катета 3 — девять клеток, в квадрате катета 4 — шестнадцать, и вместе двадцать пять. Ровно столько клеток в квадрате со стороной 5, значит гипотенуза равна 5.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('посчитать',`visW90Act('${lk}','go')`))+
+        wkSml('клетки'));
+    /* 5: проверка числами 3-4-5 */
+    } else if(step===5){
+      H=316;
+      let inner=TT('проверяем числами: 3, 4, 5','gold');
+      const rows=[{t:'3² = 9',c:blu},{t:'4² = 16',c:cyan},{t:'9 + 16 = 25',c:gold},{t:'5² = 25',c:grn},{t:'значит, c = 5',c:grn}];
+      rows.forEach((q,k)=>{
+        const y=52+k*44;
+        inner+=`<g class="qsRise" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s"><rect x="60" y="${y}" width="198" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<text x="159" y="${y+23}" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${q.c}">${q.t}</text></g>`;
+        if(k<4) inner+=drawPoly([[159,y+36],[159,y+42]],dim,1.2,0.4+k*0.25,2,{pen:false});
+      });
+      inner+=plate(18,278,282,28,go?grn:cardB,go?'египетский треугольник: 3, 4, 5':'что получилось?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверка на числах</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('3² + 4² = 5²',gold,0.1)):'')+
+        (go?wkNote('Проверим теорему на египетском треугольнике: 3² = 9, 4² = 16, вместе 25. И это ровно 5², потому что 5 · 5 = 25. Значит, гипотенуза равна 5 — всё сходится.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('проверить',`visW90Act('${lk}','go')`))+
+        wkSml('проверка'));
+    /* 6: находим гипотенузу 6 и 8 */
+    } else if(step===6){
+      H=318;
+      let inner=TT('находим гипотенузу: катеты 6 и 8','cyan');
+      const u=17, x0=74, y0=232;
+      inner+=`<path d="M${x0} ${y0} L${x0+8*u} ${y0} L${x0} ${y0-6*u} Z" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="2.6"/>`;
+      inner+=rightAngle(x0,y0,14,grn);
+      inner+=fit(x0+4*u,y0+18,12,cyan,'8',{b:1},40);
+      inner+=fit(x0-16,y0-3*u,12,blu,'6',{b:1},40);
+      inner+=fit((x0+8*u+x0)/2+14,(y0-6*u+y0)/2-6,12,grn,'c = ?',{b:1},60);
+      inner+=`<g class="qsRise" style="animation-delay:.7s"><rect x="24" y="256" width="270" height="36" rx="10" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="280" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">36 + 64 = 100 → c = 10</text></g>`;
+      inner+=plate(18,296,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ищем гипотенузу</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('6² + 8² = 100',cyan,0.1)):'')+
+        (go?wkNote('Катеты 6 и 8. Возводим в квадрат: 36 и 64, складываем — получаем 100. Осталось извлечь корень: √100 = 10. Значит, гипотенуза равна 10.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('решить',`visW90Act('${lk}','go')`))+
+        wkSml('гипотенуза'));
+    /* 7: гипотенуза 5 и 12 */
+    } else if(step===7){
+      H=318;
+      let inner=TT('ещё пример: катеты 5 и 12','pur');
+      const u=19, x0=66, y0=236;
+      inner+=`<path d="M${x0} ${y0} L${x0+12*u} ${y0} L${x0} ${y0-5*u} Z" fill="rgba(176,127,255,.14)" stroke="${pur}" stroke-width="2.6"/>`;
+      inner+=rightAngle(x0,y0,13,grn);
+      inner+=fit(x0+6*u,y0+18,12,pur,'12',{b:1},40);
+      inner+=fit(x0-16,y0-2.5*u,12,blu,'5',{b:1},40);
+      inner+=fit(x0+5*u+16,y0-2*u,12,grn,'c = ?',{b:1},60);
+      inner+=`<g class="qsRise" style="animation-delay:.7s"><rect x="24" y="258" width="270" height="38" rx="10" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="283" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">25 + 144 = 169 → c = 13</text></g>`;
+      inner+=plate(18,300,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Пифагорова тройка 5-12-13</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('5² + 12² = 13²',pur,0.1)):'')+
+        (go?wkNote('Катеты 5 и 12: 25 + 144 = 169. Это 13², потому что 13 · 13 = 169. Такая тройка тоже встречается часто: 5, 12 и 13.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('решить',`visW90Act('${lk}','go')`))+
+        wkSml('5-12-13'));
+    /* 8: находим катет */
+    } else if(step===8){
+      H=330;
+      let inner=TT('находим катет: c = 13, a = 5','grn');
+      const u=19, x0=76, y0=238;
+      inner+=`<path d="M${x0} ${y0} L${x0+12*u} ${y0} L${x0} ${y0-5*u} Z" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2.6"/>`;
+      inner+=rightAngle(x0,y0,13,grn);
+      inner+=fit(x0+6*u,y0+18,12,grn,'b = ?',{b:1},60);
+      inner+=fit(x0-16,y0-2.5*u,12,blu,'5',{b:1},40);
+      inner+=fit(x0+5*u+16,y0-2*u,12,gold,'13',{b:1},40);
+      const rows=['169 − 25 = 144','√144 = 12'];
+      rows.forEach((q,k)=>{
+        inner+=`<g class="qsRise" style="animation-delay:${(0.6+k*0.3).toFixed(2)}s"><rect x="60" y="${252+k*36}" width="198" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${k?grn:gold}" stroke-width="1.7"/>`
+          +`<text x="159" y="${273+k*36}" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${k?grn:gold}">${q}</text></g>`;
+      });
+      inner+=plate(18,282,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Ищем катет</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('169 − 25 = 144',grn,0.1)):'')+
+        (go?wkNote('Теорема работает и «в обратную сторону»: чтобы найти катет, из квадрата гипотенузы вычитаем квадрат известного катета. 169 − 25 = 144, а √144 = 12.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('решить',`visW90Act('${lk}','go')`))+
+        wkSml('катет'));
+    /* 9: катет 10 и 6 */
+    } else if(step===9){
+      H=318;
+      let inner=TT('катет: c = 10, a = 6','gold');
+      const u=20, x0=80, y0=236;
+      inner+=`<path d="M${x0} ${y0} L${x0+8*u} ${y0} L${x0} ${y0-6*u} Z" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="2.6"/>`;
+      inner+=rightAngle(x0,y0,13,grn);
+      inner+=fit(x0+4*u,y0+18,12,gold,'b = ?',{b:1},60);
+      inner+=fit(x0-16,y0-3*u,12,blu,'6',{b:1},40);
+      inner+=fit(x0+4*u+18,y0-3*u,12,grn,'10',{b:1},40);
+      inner+=`<g class="qsRise" style="animation-delay:.6s"><rect x="46" y="252" width="226" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="275" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">100 − 36 = 64 → b = 8</text></g>`;
+      inner+=plate(18,294,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Второй катет</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('100 − 36 = 64',gold,0.1)):'')+
+        (go?wkNote('Гипотенуза 10, катет 6. Тогда квадрат второго катета равен 100 − 36 = 64, а сам катет равен 8. Получилась знакомая тройка 6, 8 и 10.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('решить',`visW90Act('${lk}','go')`))+
+        wkSml('6-8-10'));
+    /* 10: пифагоровы тройки */
+    } else if(step===10){
+      H=332;
+      let inner=TT('пифагоровы тройки','cyan');
+      const tr=[[3,4,5],[6,8,10],[5,12,13],[8,15,17],[9,12,15]];
+      tr.forEach((q,k)=>{
+        const y=52+k*46;
+        inner+=`<g class="qsRise" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="38" rx="10" fill="rgba(18,24,44,.97)" stroke="${k<2?cyan:pur}" stroke-width="1.7"/>`
+          +fit(96,y+24,13,k<2?cyan:pur,'('+q[0]+', '+q[1]+', '+q[2]+')',{b:1},150)
+          +fit(232,y+24,11.5,dim,q[0]+'² + '+q[1]+'² = '+q[2]+'²',{},120)+`</g>`;
+        inner+=drawPoly([[40,y+32],[278,y+32]],k<2?cyan:pur,2,0.2+k*0.16,1.6,{pen:false});
+      });
+      inner+=plate(18,290,282,30,go?grn:cardB,go?'все они подходят в теорему':'что общего у этих троек?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Пифагоровы тройки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('3-4-5 · 5-12-13 · 8-15-17',cyan,0.1)):'')+
+        (go?wkNote('Пифагоровы тройки — это целые числа, для которых выполняется теорема. Их удобно запомнить: (3, 4, 5), (6, 8, 10), (5, 12, 13), (8, 15, 17) и (9, 12, 15). Если тройку умножить на число, она снова подойдёт.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('показать',`visW90Act('${lk}','go')`))+
+        wkSml('таблица троек'));
+    /* 11: обратная теорема */
+    } else if(step===11){
+      H=322;
+      let inner=TT('проверяем: прямоугольный ли треугольник','grn');
+      inner+=`<g class="qsRise"><rect x="18" y="50" width="136" height="150" rx="11" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(86,74,12.5,grn,'6, 8, 10',{b:1},120)+`</g>`;
+      inner+=`<path d="M40 168 L104 168 L40 104 Z" fill="rgba(125,224,160,.2)" stroke="${grn}" stroke-width="2.2"/>`;
+      inner+=rightAngle(40,168,10,grn);
+      inner+=fit(86,196,12,grn,'36 + 64 = 100 = 10²',{b:1},128);
+      inner+=fit(86,216,12,grn,'прямоугольный ✓',{b:1},128);
+      inner+=`<g class="qsRise" style="animation-delay:.3s"><rect x="164" y="50" width="136" height="150" rx="11" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.9"/>`
+        +fit(232,74,12.5,red,'4, 5, 6',{b:1},120)+`</g>`;
+      inner+=`<path d="M182 168 L246 168 L196 108 Z" fill="rgba(255,120,100,.18)" stroke="${red}" stroke-width="2.2"/>`;
+      inner+=fit(232,196,12,red,'16 + 25 = 41 ≠ 36',{b:1},128);
+      inner+=fit(232,216,12,red,'не прямоугольный',{b:1},128);
+      inner+=plate(18,236,282,32,go?grn:cardB,go?'обратная теорема помогает проверять':'какой треугольник прямоугольный?',11.5);
+      inner+=`${fit(159,290,11.5,dim,'если равенство не выполняется — угла 90° нет',{},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Обратная теорема</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('a² + b² = c² — значит, 90°',grn,0.1)):'')+
+        (go?wkNote('Обратная теорема позволяет проверить: если сумма квадратов двух меньших сторон равна квадрату большей, треугольник прямоугольный. Для 6, 8, 10 это так, а для 4, 5, 6 — нет.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('проверить',`visW90Act('${lk}','go')`))+
+        wkSml('проверка угла'));
+    /* 12: диагональ прямоугольника */
+    } else if(step===12){
+      H=320;
+      let inner=TT('диагональ прямоугольника 3 на 4','gold');
+      const x0=56, y0=228, u=34;
+      inner+=`<rect x="${x0}" y="${y0-3*u}" width="${4*u}" height="${3*u}" rx="5" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="2.6"/>`;
+      inner+=drawPoly([[x0,y0],[x0+4*u,y0-3*u]],cyan,2.4,0.5,3,{pen:true});
+      inner+=rightAngle(x0,y0-3*u,14,grn);
+      inner+=fit(x0+2*u,y0+18,12,gold,'4',{b:1},40);
+      inner+=fit(x0-16,y0-1.5*u,12,blu,'3',{b:1},40);
+      inner+=fit(x0+2*u+16,y0-1.5*u-8,12,cyan,'диагональ = 5',{b:1},120);
+      inner+=`<g class="qsRise" style="animation-delay:1s"><rect x="24" y="248" width="270" height="36" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="272" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">9 + 16 = 25 → 5</text></g>`;
+      inner+=plate(18,290,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Диагональ прямоугольника</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('стороны 3 и 4 дают диагональ 5',gold,0.1)):'')+
+        (go?wkNote('Диагональ прямоугольника — это гипотенуза прямоугольного треугольника, катеты которого равны сторонам. Для прямоугольника 3 на 4 диагональ равна 5: 9 + 16 = 25.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('посчитать',`visW90Act('${lk}','go')`))+
+        wkSml('диагональ'));
+    }
+    /* 13: диагональ квадрата */
+    else if(step===13){
+      H=318;
+      let inner=TT('диагональ квадрата: √2','pur');
+      const x0=76, y0=250, s=150;
+      inner+=`<rect x="${x0}" y="${y0-s}" width="${s}" height="${s}" rx="4" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="2.6"/>`;
+      inner+=drawPoly([[x0,y0],[x0+s,y0-s]],cyan,2.4,0.5,3,{pen:true});
+      inner+=rightAngle(x0,y0,16,grn);
+      inner+=fit(x0+s/2,y0+18,12,pur,'1',{b:1},40);
+      inner+=fit(x0-16,y0-s/2,12,blu,'1',{b:1},40);
+      inner+=fit(x0+s/2+20,y0-s/2-10,12,cyan,'диагональ = √2',{b:1},130);
+      inner+=`<g class="qsRise" style="animation-delay:1s"><rect x="30" y="262" width="258" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="285" text-anchor="middle" font-size="13.5" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">1² + 1² = 2 → √2 ≈ 1,41</text></g>`;
+      inner+=plate(18,300,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Диагональ квадрата</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('√2 ≈ 1,41',pur,0.1)):'')+
+        (go?wkNote('У квадрата со стороной 1 диагональ равна √2. Это число нельзя записать точно дробью: √2 примерно равно 1,41. Так теорема Пифагора приводит к иррациональным числам.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('посчитать',`visW90Act('${lk}','go')`))+
+        wkSml('квадратный корень'));
+    /* 14: лестница у стены */
+    } else if(step===14){
+      H=326;
+      let inner=TT('лестница у стены: 3 и 4 метра','cyan');
+      const x0=92, y0=262, u=30;
+      inner+=`<rect x="${x0-16}" y="${y0-4*u-14}" width="16" height="${4*u+14}" rx="3" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`;
+      inner+=`<rect x="${x0-16}" y="${y0}" width="${4*u+16}" height="12" rx="3" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`;
+            inner+=drawPoly([[x0,y0],[x0,y0-4*u]],gold,2.4,0.4,3.4,{pen:true});
+      inner+=fit(x0-30,y0-2*u,12,gold,'4 м',{b:1},50);
+      inner+=drawPoly([[x0,y0],[x0+2*u,y0]],blu,2.2,0.9,3,{pen:false});
+      inner+=fit(x0+u,y0+22,12,blu,'3 м',{b:1},50);
+      inner+=`<path d="M${x0} ${y0} L${x0+2*u} ${y0-4*u}" stroke="${grn}" stroke-width="5" stroke-linecap="round" opacity=".85"/>`;
+      for(let k=1;k<5;k++){
+        const t=k/5, px=x0+2*u*t, py=y0-4*u*t;
+        inner+=`<line x1="${px-6}" y1="${py-4}" x2="${px+6}" y2="${py+4}" stroke="${grn}" stroke-width="3"/>`;
+      }
+      inner+=fit(x0+u+22,y0-2*u-8,12,grn,'лестница 5 м',{b:1},110);
+      inner+=rightAngle(x0,y0,16,grn);
+      inner+=`<g class="qsRise" style="animation-delay:1.2s"><rect x="24" y="282" width="270" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="305" text-anchor="middle" font-size="13.5" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">3² + 4² = 25 → 5 м</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача про лестницу</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('9 + 16 = 25 → 5 м',cyan,0.1)):'')+
+        (go?wkNote('Лестницу поставили в 3 метрах от стены, а верхний конец оказался на высоте 4 метра. Стена, пол и лестница образуют прямоугольный треугольник, поэтому длина лестницы равна 5 метрам.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('решить',`visW90Act('${lk}','go')`))+
+        wkSml('задача из жизни'));
+    /* 15: расстояние между точками */
+    } else if(step===15){
+      H=326;
+      let inner=TT('расстояние между точками','pur');
+      const x0=56, y0=262, u=34;
+      inner+=`<rect x="${x0}" y="${y0-4*u}" width="${4*u}" height="${4*u}" fill="rgba(255,255,255,.03)"/>`;
+      for(let i=0;i<=4;i++){
+        inner+=`<line x1="${x0+i*u}" y1="${y0-4*u}" x2="${x0+i*u}" y2="${y0}" stroke="#3a4470" stroke-width="1"/>`;
+        inner+=`<line x1="${x0}" y1="${y0-i*u}" x2="${x0+4*u}" y2="${y0-i*u}" stroke="#3a4470" stroke-width="1"/>`;
+      }
+      const A=[x0+1*u,y0-1*u], B=[x0+4*u,y0-4*u];
+      inner+=drawPoly([[A[0],A[1]],[B[0],A[1]],[B[0],B[1]]],dim,1.6,0.4,2,{pen:false});
+      inner+=drawPoly([A,B],pur,2.6,1,3.2,{pen:true});
+      inner+=`<circle class="qsPop" style="animation-delay:.3s" cx="${A[0]}" cy="${A[1]}" r="8" fill="${cyan}" stroke="#eef6ff" stroke-width="1.4"/>`;
+      inner+=`<circle class="qsPop" style="animation-delay:.6s" cx="${B[0]}" cy="${B[1]}" r="8" fill="${grn}" stroke="#eef6ff" stroke-width="1.4"/>`;
+      inner+=fit(A[0]-4,A[1]+24,11.5,cyan,'A(1; 1)',{b:1},70);
+      inner+=fit(B[0]+6,B[1]-14,11.5,grn,'B(4; 5)',{b:1},70);
+      inner+=fit(x0+2.5*u,A[1]+24,11.5,dim,'3',{b:1},40);
+      inner+=fit(B[0]+16,A[1]-1.5*u,11.5,dim,'4',{b:1},40);
+      inner+=fit((A[0]+B[0])/2-30,(A[1]+B[1])/2-10,11.5,pur,'5',{b:1},40);
+      inner+=`<g class="qsRise" style="animation-delay:1.4s"><rect x="24" y="278" width="270" height="34" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="301" text-anchor="middle" font-size="13.5" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">3² + 4² = 25 → 5</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Расстояние между точками</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('разности координат — это катеты',pur,0.1)):'')+
+        (go?wkNote('Расстояние между точками на координатной плоскости считают по теореме Пифагора: разность по x и разность по y — это катеты. Для точек (1; 1) и (4; 5): 3² + 4² = 25, значит расстояние равно 5.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('решить',`visW90Act('${lk}','go')`))+
+        wkSml('координаты'));
+    /* 16: доказательство разрезанием */
+    } else if(step===16){
+      H=340;
+      let inner=TT('почему теорема верна','grn');
+      const x0=54, y0=272, u=26;
+      inner+=`<rect x="${x0}" y="${y0-7*u}" width="${7*u}" height="${7*u}" rx="3" fill="rgba(255,255,255,.04)" stroke="${grn}" stroke-width="2.6"/>`;
+      const P=[[x0+4*u,y0-7*u],[x0+7*u,y0-3*u],[x0+3*u,y0],[x0,y0-4*u]];
+      const tri=[[[x0,y0-7*u],[x0+4*u,y0-7*u],[x0,y0-3*u]],[[x0+7*u,y0-7*u],[x0+7*u,y0-3*u],[x0+4*u,y0-7*u]],[[x0+7*u,y0],[x0+3*u,y0],[x0+7*u,y0-3*u]],[[x0,y0],[x0,y0-4*u],[x0+3*u,y0]]];
+      tri.forEach((q,k)=>{
+        inner+=`<path d="M${q[0][0]} ${q[0][1]} L${q[1][0]} ${q[1][1]} L${q[2][0]} ${q[2][1]} Z" fill="rgba(255,215,106,.2)" stroke="${gold}" stroke-width="1.8" class="qsPop" style="animation-delay:${(0.2+k*0.2).toFixed(2)}s"/>`;
+      });
+      inner+=drawPoly([P[0],P[1],P[2],P[3],P[0]],cyan,2.6,1.1,3,{pen:true});
+      inner+=`<g class="qsPop" style="animation-delay:1.8s">${tx(x0+3.5*u,y0-3.5*u+6,16,cyan,'25',{b:1})}</g>`;
+      inner+=fit(x0+3.5*u,y0-3.5*u+28,11.5,cyan,'внутренний квадрат = c²',{b:1},170);
+      inner+=fit(159,y0-7*u-12,11.5,dim,'большой квадрат 7×7',{b:1},170);
+      inner+=plate(18,288,282,30,go?grn:cardB,go?'49 = 4 · 6 + 25 — всё сходится':'что здесь видно?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Доказательство без формул</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 треугольника и квадрат c²',grn,0.1)):'')+
+        (go?wkNote('Посмотри: большой квадрат 7 на 7 содержит четыре одинаковых прямоугольных треугольника с катетами 3 и 4 (каждый площадью 6) и наклонный внутренний квадрат. Его площадь равна 49 − 24 = 25, то есть c². Значит, c² = a² + b².'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('показать',`visW90Act('${lk}','go')`))+
+        wkSml('наглядное доказательство'));
+    /* 17: практика с верёвкой */
+    } else if(step===17){
+      H=318;
+      let inner=TT('практика: строим прямой угол','gold');
+      const steps=[{t:'отмеряем 12 равных частей',c:gold},{t:'берём части 3, 4 и 5',c:cyan},{t:'складываем треугольник',c:blu},{t:'угол между 3 и 4 — прямой',c:grn}];
+      steps.forEach((q,k)=>{
+        const y=52+k*42;
+        inner+=`<g class="qsRise" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="26" y="${y}" width="266" height="32" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +`<circle cx="46" cy="${y+16}" r="10" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.3"/>`
+          +tx(46,y+20,11,q.c,''.concat(k+1),{b:1})
+          +fit(172,y+21,11.5,q.c,q.t,{b:1},215)+`</g>`;
+        inner+=drawPoly([[26,y+34],[292,y+34]],q.c,2,0.3+k*0.2,1.8,{pen:false});
+      });
+      inner+=drawPoly([[84,270],[84,206],[168,206],[84,270]],grn,2.4,1.5,3,{pen:true});
+      inner+=rightAngle(84,270,14,grn);
+      inner+=fit(120,288,11.5,grn,'3 · 4 · 5',{b:1},90);
+      inner+=plate(18,286,282,0,cardB,'',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Практика строителей</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('верёвка вместо угольника',gold,0.1)):'')+
+        (go?wkNote('Строители поступают так: делят верёвку на 12 равных частей, отмеряют 3, 4 и 5 частей и складывают треугольник. По теореме Пифагора 9 + 16 = 25, поэтому угол между сторонами 3 и 4 получается прямым.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('показать',`visW90Act('${lk}','go')`))+
+        wkSml('как это делают'));
+    /* 18: практика 9 и 12 */
+    } else if(step===18){
+      H=304;
+      let inner=TT('практика: катеты 9 и 12','cyan');
+      const steps=['9² = 81','12² = 144','81 + 144 = 225','√225 = 15'];
+      steps.forEach((q,k)=>{
+        const y=54+k*42;
+        inner+=`<g class="qsRise" style="animation-delay:${(0.18+k*0.24).toFixed(2)}s"><rect x="74" y="${y}" width="170" height="32" rx="9" fill="rgba(18,24,44,.97)" stroke="${k===3?grn:cyan}" stroke-width="1.7"/>`
+          +`<text x="159" y="${y+21}" text-anchor="middle" font-size="13.5" font-family="'Courier New',monospace" font-weight="bold" fill="${k===3?grn:cyan}">${q}</text></g>`;
+        if(k<3) inner+=drawPoly([[159,y+34],[159,y+40]],dim,1.2,0.4+k*0.24,2,{pen:false});
+      });
+      inner+=plate(18,236,282,32,go?grn:cardB,go?'гипотенуза равна 15':'какой ответ?',11.5);
+      inner+=`${fit(159,292,11.5,dim,'225 — это 15 в квадрате',{},280)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Практика: гипотенуза</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('81 + 144 = 225 → 15',cyan,0.1)):'')+
+        (go?wkNote('Катеты 9 и 12. Возводим в квадрат: 81 и 144, складываем — 225. Осталось извлечь корень: √225 = 15. Это увеличенная тройка 3-4-5.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('решить',`visW90Act('${lk}','go')`))+
+        wkSml('практика 1'));
+    /* 19: практика катет 25 и 20 */
+    } else if(step===19){
+      H=304;
+      let inner=TT('практика: гипотенуза 25, катет 20','pur');
+      const steps=['25² = 625','20² = 400','625 − 400 = 225','√225 = 15'];
+      steps.forEach((q,k)=>{
+        const y=54+k*42;
+        inner+=`<g class="qsRise" style="animation-delay:${(0.18+k*0.24).toFixed(2)}s"><rect x="74" y="${y}" width="170" height="32" rx="9" fill="rgba(18,24,44,.97)" stroke="${k===3?grn:pur}" stroke-width="1.7"/>`
+          +`<text x="159" y="${y+21}" text-anchor="middle" font-size="13.5" font-family="'Courier New',monospace" font-weight="bold" fill="${k===3?grn:pur}">${q}</text></g>`;
+        if(k<3) inner+=drawPoly([[159,y+34],[159,y+40]],dim,1.2,0.4+k*0.24,2,{pen:false});
+      });
+      inner+=plate(18,236,282,32,go?grn:cardB,go?'второй катет равен 15':'какой ответ?',11.5);
+      inner+=`${fit(159,292,11.5,dim,'здесь мы вычитаем, а не складываем',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Практика: катет</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('625 − 400 = 225 → 15',pur,0.1)):'')+
+        (go?wkNote('Известны гипотенуза 25 и катет 20. Квадрат второго катета: 625 − 400 = 225, значит катет равен 15. Это тройка 15-20-25.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('решить',`visW90Act('${lk}','go')`))+
+        wkSml('практика 2'));
+    /* 20: практика расстояние */
+    } else if(step===20){
+      H=322;
+      let inner=TT('практика: расстояние между точками','grn');
+      const x0=64, y0=256, u=32;
+      for(let i=0;i<=4;i++){
+        inner+=`<line x1="${x0+i*u}" y1="${y0-4*u}" x2="${x0+i*u}" y2="${y0}" stroke="#3a4470" stroke-width="1"/>`;
+        inner+=`<line x1="${x0}" y1="${y0-i*u}" x2="${x0+4*u}" y2="${y0-i*u}" stroke="#3a4470" stroke-width="1"/>`;
+      }
+      const A=[x0+1*u,y0-1*u], B=[x0+4*u,y0-4*u];
+      inner+=drawPoly([[A[0],A[1]],[B[0],A[1]],[B[0],B[1]]],dim,1.6,0.4,2,{pen:false});
+      inner+=drawPoly([A,B],grn,2.6,1,3.2,{pen:true});
+      inner+=`<circle class="qsPop" style="animation-delay:.3s" cx="${A[0]}" cy="${A[1]}" r="8" fill="${cyan}" stroke="#eef6ff" stroke-width="1.4"/>`;
+      inner+=`<circle class="qsPop" style="animation-delay:.6s" cx="${B[0]}" cy="${B[1]}" r="8" fill="${gold}" stroke="#eef6ff" stroke-width="1.4"/>`;
+      inner+=fit(A[0]-2,A[1]+24,11.5,cyan,'(1; 1)',{b:1},70);
+      inner+=fit(B[0]+4,B[1]-14,11.5,gold,'(4; 5)',{b:1},70);
+      inner+=fit(x0+2.5*u,A[1]+24,11.5,dim,'3',{b:1},40);
+      inner+=fit(B[0]+16,A[1]-1.5*u,11.5,dim,'4',{b:1},40);
+      inner+=`<g class="qsRise" style="animation-delay:1.4s"><rect x="24" y="272" width="270" height="36" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="296" text-anchor="middle" font-size="13.5" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">3² + 4² = 9 + 16 = 25 → 5</text></g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Практика: расстояние</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('расстояние равно 5',grn,0.1)):'')+
+        (go?wkNote('Точки (1; 1) и (4; 5). Разность по x равна 3, разность по y равна 4 — это катеты. По теореме Пифагора 9 + 16 = 25, значит расстояние между точками равно 5.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('решить',`visW90Act('${lk}','go')`))+
+        wkSml('практика 3'));
+    /* 21: тренажёр 1 */
+    } else if(step===21){
+      H=320;
+      const opts=['10','14','48'], ok=0, done=(sel>=0);
+      let inner=TT('катеты 6 и 8 — чему равна гипотенуза?','gold');
+      const u=20, x0=100, y0=210;
+      inner+=`<path d="M${x0} ${y0} L${x0+8*u} ${y0} L${x0} ${y0-6*u} Z" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="2.6"/>`;
+      inner+=rightAngle(x0,y0,12,grn);
+      inner+=fit(x0+4*u,y0+18,12,gold,'8',{b:1},40);
+      inner+=fit(x0-14,y0-3*u,12,gold,'6',{b:1},40);
+      inner+=fit(x0+4*u+18,y0-3*u,12,cyan,'?',{b:1},40);
+      opts.forEach((t,k)=>{
+        const x=34+k*84, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW90Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="228" width="76" height="42" rx="10" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(18,24,44,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+38,255,17,c,t,{b:on})+(on?`<path d="M${x+56} 238 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(18,278,282,30,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! 36 + 64 = 100 → 10':'Проверь: 6² + 8² = 100'):'нажми на ответ',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: гипотенуза</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW90Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('36 + 64 = 100, а √100 = 10. Значит, гипотенуза равна 10. Ошибка «14» получилась бы, если сложить катеты, но так делать нельзя.'):'')+
+        wkSml('проверь себя'));
+    /* 22: тренажёр 2 */
+    } else if(step===22){
+      H=344;
+      const opts=['прямоугольный','не прямоугольный'], ok=0, done=(sel>=0);
+      let inner=TT('треугольник 6, 8, 10 — какой он?','grn');
+      inner+=`<path d="M96 194 L224 194 L96 98 Z" fill="rgba(125,224,160,.16)" stroke="${grn}" stroke-width="2.6"/>`;
+      inner+=rightAngle(96,194,14,grn);
+      inner+=fit(160,216,12,grn,'6² + 8² ? 10²',{b:1},160);
+      inner+=fit(160,240,12,gold,'36 + 64 = 100',{b:1},160);
+      opts.forEach((t,k)=>{
+        const w=132, x=24+k*140, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW90Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="250" width="${w}" height="36" rx="10" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(18,24,44,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(x+w/2,274,13,c,t,{b:on},w-14)+(on?`<path d="M${x+w-24} 258 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(18,296,282,30,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! Треугольник прямоугольный':'Сравни: 36 + 64 и 100'):'нажми на ответ',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: проверка угла</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW90Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('Сумма квадратов меньших сторон 36 + 64 = 100 равна квадрату большей стороны. По обратной теореме Пифагора треугольник прямоугольный.'):'')+
+        wkSml('проверь себя'));
+    /* 23: частые ошибки */
+    } else if(step===23){
+      H=318;
+      const it=[
+        {t:'складывают катеты вместо квадратов',f:'3 + 4 = 7, а надо 9 + 16 = 25',c:gold},
+        {t:'путают гипотенузу с катетом',f:'гипотенуза всегда напротив прямого угла',c:red},
+        {t:'забывают извлечь корень',f:'c² = 100, значит c = 10',c:cyan},
+        {t:'вычитают, когда надо складывать',f:'катет ищем вычитанием, гипотенузу — сложением',c:pur}
+      ];
+      let inner='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        inner+=`<g class="qsRise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#qsbg)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="${ink}">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      inner+=`${tx(159,306,11,dim,'проверяй эти четыре места',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Частые ошибки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('квадраты, а не стороны',gold,0.1)):'')+
+        (go?wkNote('Самая частая ошибка — сложить катеты вместо их квадратов: 3 + 4 = 7 неверно, правильно 9 + 16 = 25. Ещё путают гипотенузу с катетом и забывают извлечь корень в конце.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('показать',`visW90Act('${lk}','go')`))+
+        wkSml('чтобы не ошибаться'));
+    /* 24: шпаргалка */
+    } else if(step===24){
+      H=326;
+      const rows=[
+        {t:'a² + b² = c²',c:grn},
+        {t:'гипотенуза: c = √(a² + b²)',c:cyan},
+        {t:'катет: b = √(c² − a²)',c:gold},
+        {t:'тройки: 3-4-5, 6-8-10, 5-12-13',c:pur},
+        {t:'проверка: a² + b² = c² → 90°',c:blu}
+      ];
+      let inner=TT('всё главное о теореме','grn');
+      rows.forEach((q,k)=>{
+        const y=52+k*42;
+        inner+=`<g class="qsRise" style="animation-delay:${(0.12+k*0.14).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+22,12.5,q.c,q.t,{b:1},260)+`</g>`;
+        inner+=drawPoly([[40,y+38],[278,y+38]],q.c,2.4,0.2+k*0.14,2,{pen:k===0});
+      });
+      inner+=plate(18,270,282,30,go?grn:cardB,go?'всё главное вместе':'проверь себя',11.5);
+      inner+=`${fit(159,316,11,dim,'пифагоровы тройки полезно помнить',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('a² + b² = c²',grn,0.1)):'')+
+        (go?wkNote('Вся тема в пяти строках: сама теорема, как найти гипотенузу, как найти катет, полезные тройки и как проверить прямой угол. Теперь можно смело решать задачи.'):'')+
+        wkRow(go?wkBtn('сброс',`visW90Act('${lk}','rst')`):wkBtn('показать',`visW90Act('${lk}','go')`))+
+        wkSml('всё главное'));
+    /* 25: итог */
+    } else {
+      H=316;
+      let inner='';
+      const x0=76, y0=246, u=26;
+      inner+=`<path d="M${x0} ${y0} L${x0+4*u} ${y0} L${x0} ${y0-3*u} Z" fill="rgba(125,224,160,.18)" stroke="${grn}" stroke-width="2.6"/>`;
+      inner+=rightAngle(x0,y0,12,grn);
+      inner+=fit(x0+2*u,y0-1.5*u,18,grn,'3-4-5',{b:1},90);
+      inner+=fit(x0+2*u,y0+22,12,cyan,'катеты 3 и 4 → гипотенуза 5',{b:1},200);
+      inner+=`<g class="qsRise" style="animation-delay:1s"><rect x="20" y="264" width="278" height="36" rx="10" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,288,12,gold,'жми «Понял! Проверю себя» →',{b:1},250)+`</g>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Итог урока</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkNote('Главное: в прямоугольном треугольнике сумма квадратов катетов равна квадрату гипотенузы. Отсюда находят и гипотенузу, и катет, и проверяют прямой угол.' )+
+        wkRow(wkBtn('в начало',`visW90Act('${lk}','rst')`))+
+        wkSml('теорема Пифагора'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[90]=visW90;
+  window.visW90Pick=function(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); };
+  window.visW90Act=function(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go'){ st.go=st.go?0:1; }
+    if(act==='rst'){ CHS[lk]={_at:st._at}; }
+    chRender(0);
+  };
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===90){ window.ARH_LESSONS[i]=L90; break; } } })();
+})();
 /* ================= УРОК 381 · Осевая и центральная симметрия (v2 · «Зеркальный сад Архимеда», 25 шагов, флагман, крупные рисунки и прорисовка на каждом шаге) ================= */
 (function(){
   if(!window.__wk381v2css){
