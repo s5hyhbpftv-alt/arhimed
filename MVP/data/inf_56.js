@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 17 уроков (id 500–516) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 18 уроков (id 500–517) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -1905,6 +1905,259 @@
         +`${tx(159,210,11,dim,'нажимай числа, пока ряд не встанет по порядку',{})}</g>`;
       return s;
     }
+    if(K==='findtask'){ /* задача: найти число в ряду */
+      const vals=v.vals||[3,7,2,9,5,1,8,4,6];
+      const w=40, gap=6;
+      let s=`<g class="${pre}Pop"><rect x="60" y="16" width="198" height="30" rx="10" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>`
+        +`${tx(159,36,13,gold,'где здесь число 8?',{b:1})}</g>`;
+      const row=(arr,y)=>{ const tot=arr.length*w+(arr.length-1)*gap, x0=Math.round((CW-tot)/2);
+        return arr.map((v2,k)=>`<rect x="${x0+k*(w+gap)}" y="${y}" width="${w}" height="38" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+          +`<text x="${x0+k*(w+gap)+w/2}" y="${y+26}" text-anchor="middle" font-size="18" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.2">${plain(v2)}</text>`).join(''); };
+      s+=`<g class="${pre}Slide" style="animation-delay:.15s">${row(vals.slice(0,5),60)}</g>`;
+      s+=`<g class="${pre}Slide" style="animation-delay:.3s">${row(vals.slice(5),112)}</g>`;
+      s+=`<g class="${pre}Float"><circle cx="86" cy="86" r="15" fill="rgba(126,168,255,.12)" stroke="${cyan}" stroke-width="2.4"/>`
+        +`<circle cx="86" cy="86" r="9" fill="none" stroke="${cyan}" stroke-width="2"/><path d="M92 92 l8 8" stroke="${cyan}" stroke-width="3"/></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.45s"><rect x="30" y="162" width="258" height="28" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,181,11,dim,'как найти его быстрее всего?',{})}</g>`;
+      return s;
+    }
+    if(K==='linear'){ /* линейный поиск: по очереди */
+      const vals=v.vals||[3,7,2,9,5,1,8,4,6], tgt=(v.target===undefined?8:v.target);
+      const w=29, gap=4, tot=vals.length*w+(vals.length-1)*gap, x0=Math.round((CW-tot)/2), ti=vals.map(plain).indexOf(plain(tgt));
+      let s='';
+      vals.forEach((v2,k)=>{
+        s+=`<rect x="${x0+k*(w+gap)}" y="60" width="${w}" height="44" rx="8" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.6"/>`
+          +`<text x="${x0+k*(w+gap)+w/2}" y="89" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${plain(v2)}</text>`
+          +`<rect x="${x0+k*(w+gap)-2}" y="58" width="${w+4}" height="48" rx="10" fill="${cyan}" opacity="0">`
+          +`<animate attributeName="opacity" values="0;0.28;0.28;0" keyTimes="0;.04;.16;.22" dur="4.4s" begin="${(0.3+k*0.5).toFixed(2)}s" repeatCount="indefinite"/></rect>`;
+      });
+      s+=`<g class="${pre}Pop" style="animation-delay:.4s"><rect x="${x0+ti*(w+gap)-3}" y="57" width="${w+6}" height="50" rx="11" fill="none" stroke="${grn}" stroke-width="2.4" opacity="0">`
+        +`<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.6;.7;1" dur="4.4s" repeatCount="indefinite"/></rect></g>`;
+      s+=`<g><circle r="11" fill="none" stroke="${cyan}" stroke-width="2.6"/><path d="M5 5 l7 7" stroke="${cyan}" stroke-width="3"/>`
+        +`<animateMotion dur="4.4s" repeatCount="indefinite" path="M${x0+w/2} 120 H${x0+ti*(w+gap)+w/2}"/></g>`;
+      for(let k=0;k<4;k++){
+        s+=`<g opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.04;.2;.26;1" dur="4.4s" begin="${(0.3+k*0.5).toFixed(2)}s" repeatCount="indefinite"/>`
+          +`<rect x="96" y="136" width="126" height="28" rx="9" fill="rgba(15,25,46,.97)" stroke="${cyan}" stroke-width="1.6"/>`
+          +`${tx(159,155,11.5,cyan,'проверок: '+(k+1),{b:1})}</g>`;
+      }
+      s+=`${tx(159,182,11,dim,'смотрим числа по очереди, слева направо',{})}`;
+      return s;
+    }
+    if(K==='linearBad'){ /* сто чисел — сто проверок */
+      let s=`<g class="${pre}Pop"><rect x="30" y="18" width="258" height="28" rx="9" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.7"/>`
+        +`${tx(159,37,12,red,'а если чисел сто?',{b:1})}</g>`;
+      for(let k=0;k<20;k++){
+        s+=`<rect x="${20+k*14}" y="62" width="12" height="30" rx="3" fill="${k<9?'rgba(126,168,255,.18)':'rgba(255,255,255,.05)'}" stroke="${k<9?A:'#31456f'}" stroke-width="1"/>`;
+      }
+      s+=`${tx(159,110,12,A,'…',{b:1})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.35s"><rect x="66" y="126" width="186" height="30" rx="9" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
+        +`${tx(159,146,12,red,'до 100 проверок',{b:1})}</g>`;
+      s+=`${tx(159,174,11,dim,'и это только чтобы найти одно число',{})}`;
+      return s;
+    }
+    if(K==='sortedRow'){ /* в порядке есть подсказка: середина */
+      const vals=v.vals||[1,2,3,4,5,6,7,8,9];
+      const w=29, gap=4, tot=vals.length*w+(vals.length-1)*gap, x0=Math.round((CW-tot)/2), mid=Math.floor(vals.length/2);
+      let s='';
+      s+=`<path d="M${x0} 50 H${x0+mid*(w+gap)-2}" stroke="${blu}" stroke-width="2" opacity=".8"/>`
+        +`${tx(x0+(mid*(w+gap)-2)/2,44,10,blu,'здесь меньше',{b:1})}`
+        +`<path d="M${x0+(mid+1)*(w+gap)+2} 50 H${x0+tot}" stroke="${grn}" stroke-width="2" opacity=".8"/>`
+        +`${tx(x0+(mid+1)*(w+gap)+2+(tot-(mid+1)*(w+gap)-2)/2,44,10,grn,'здесь больше',{b:1})}`;
+      vals.forEach((v2,k)=>{
+        const x=x0+k*(w+gap), on=(k===mid);
+        s+=`<rect x="${x}" y="60" width="${w}" height="44" rx="8" fill="${on?'rgba(255,215,106,.16)':'url(#'+pre+'card)'}" stroke="${on?gold:A}" stroke-width="${on?2.4:1.6}"/>`
+          +`<text x="${x+w/2}" y="89" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="${on?gold:ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${plain(v2)}</text>`;
+      });
+      s+=`<path d="M${x0+mid*(w+gap)+w/2} 54 v-8" stroke="${gold}" stroke-width="2" class="${pre}Dash"/><path d="M${x0+mid*(w+gap)+w/2-5} 40 h10 l-5 8 z" fill="${gold}"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="24" y="124" width="270" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${tx(159,144,12,gold,'середина — наша подсказка',{b:1})}</g>`;
+      s+=`${tx(159,174,11,dim,'сравним нужное число со средним',{})}`;
+      return s;
+    }
+    if(K==='halves'){ /* половина отпадает */
+      const vals=v.vals||[1,2,3,4,5,6,7,8,9], keep=v.keep||'right';
+      const w=29, gap=4, tot=vals.length*w+(vals.length-1)*gap, x0=Math.round((CW-tot)/2), mid=Math.floor(vals.length/2);
+      let s='';
+      vals.forEach((v2,k)=>{
+        const x=x0+k*(w+gap), drop=(keep==='right'? k<=mid : k>=mid);
+        s+=`<g>`;
+        if(drop) s+=`<animateTransform attributeName="transform" type="translate" values="0 0;0 14;0 14" keyTimes="0;.5;1" dur="4s" repeatCount="indefinite"/>`;
+        s+=`<rect x="${x}" y="70" width="${w}" height="44" rx="8" fill="url(#${pre}card)" stroke="${keep==='right'?grn:blu}" stroke-width="1.6"/>`
+          +`<text x="${x+w/2}" y="99" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${plain(v2)}</text>`;
+        if(drop) s+=`<rect x="${x-2}" y="68" width="${w+4}" height="48" rx="10" fill="#0a1226" opacity="0"><animate attributeName="opacity" values="0;0;0.82;0.82" keyTimes="0;.3;.55;1" dur="4s" repeatCount="indefinite"/></rect>`;
+        s+=`</g>`;
+      });
+      s+=`<path d="M${x0+(mid+1)*(w+gap)-2} 124 H${x0+tot}" stroke="${grn}" stroke-width="2" opacity="0"><animate attributeName="opacity" values="0;0;0.9;0.9" keyTimes="0;.3;.6;1" dur="4s" repeatCount="indefinite"/></path>`
+        +`${tx(159,144,11.5,grn,'осталась только эта половина',{b:1})}`;
+      s+=`${tx(159,172,11,dim,'вторая половина отпала — там числа не подходят',{})}`;
+      return s;
+    }
+    if(K==='binsteps'){ /* три шага деления пополам */
+      const steps=v.steps||[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[9,10,11,12,13,14,15],[11,12,13]];
+      const rows=steps, labels=['шаг 1: 15 чисел','шаг 2: 7 чисел','шаг 3: 3 числа'];
+      let s='';
+      rows.forEach((r,k)=>{
+        const y=34+k*62, n=r.length, w=Math.max(17,Math.min(30,Math.round(240/n)-3)), gap=3;
+        const tot=n*w+(n-1)*gap, x0=Math.round((CW-tot)/2);
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.2+k*0.3).toFixed(2)}s">`
+          +`<rect x="14" y="${y-10}" width="120" height="20" rx="7" fill="rgba(10,18,36,.97)" stroke="${A}" stroke-width="1.4"/>`
+          +`${tx(74,y+4,10,A,labels[k]||('шаг '+(k+1)),{})}`;
+        r.forEach((v2,j)=>{
+          const x=x0+j*(w+gap), on=(k===2 && v2===12);
+          s+=`<rect x="${x}" y="${y+16}" width="${w}" height="26" rx="6" fill="${on?'rgba(125,224,160,.2)':'rgba(15,25,46,.97)'}" stroke="${on?grn:A}" stroke-width="${on?2:1.4}"/>`
+            +`<text x="${x+w/2}" y="${y+34}" text-anchor="middle" font-size="11" font-family="Georgia,serif" font-weight="bold" fill="${on?grn:ink}" paint-order="stroke" stroke="#08101f" stroke-width="2.6">${plain(v2)}</text>`;
+        });
+        s+=`</g>`;
+        if(k<rows.length-1) s+=`<path d="M159 ${y+46} v8" stroke="${A}" stroke-width="1.8" class="${pre}Dash"/><path d="M155 ${y+50} l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="1.8"/>`;
+      });
+      s+=`${tx(159,34+rows.length*62+8,11.5,grn,'12 найдено за три шага',{b:1})}`;
+      return s;
+    }
+    if(K==='binaryCount'){ /* сравнение числа проверок */
+      const vals=v.vals||[[ 'по очереди', 15, red],[ 'делением пополам', 4, grn]];
+      let s=`<g class="${pre}Pop"><rect x="60" y="16" width="198" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,35,11.5,ink,'сколько проверок нужно',{b:1})}</g>`;
+      vals.forEach((q,k)=>{
+        const y=58+k*54;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.2+k*0.25).toFixed(2)}s">`
+          +`${tx(24,y+16,11,q[2],q[0],{an:'start',b:1})}`
+          +`<rect x="24" y="${y+24}" width="${Math.min(250,Math.round(q[1]*16))}" height="20" rx="7" fill="${q[2]}" opacity=".26" stroke="${q[2]}" stroke-width="1.3"/>`
+          +`${tx(Math.min(250,Math.round(q[1]*16))+34,y+39,11.5,q[2],''+q[1],{b:1})}</g>`;
+      });
+      s+=`${tx(159,58+vals.length*54+6,11,dim,'для 15 чисел разница уже заметна',{})}`;
+      return s;
+    }
+    if(K==='rule'){ /* влево или вправо */
+      let s=`<rect x="132" y="66" width="54" height="46" rx="10" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="2.4"/>`
+        +`<text x="159" y="97" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="${gold}" paint-order="stroke" stroke="#08101f" stroke-width="3.4">7</text>`
+        +`${tx(159,58,10.5,gold,'середина',{b:1})}`;
+      s+=`<path d="M132 89 H60" stroke="${blu}" stroke-width="2.4" class="${pre}Dash"/><path d="M66 84 l-7 5 l7 5" fill="none" stroke="${blu}" stroke-width="2.4"/>`
+        +`<rect x="18" y="70" width="80" height="38" rx="9" fill="url(#${pre}card)" stroke="${blu}" stroke-width="2"/>`
+        +`${tx(58,88,10.5,blu,'меньше',{b:1})}${tx(58,102,9.5,blu,'1…6',{})}`;
+      s+=`<path d="M186 89 H258" stroke="${grn}" stroke-width="2.4" class="${pre}Dash"/><path d="M252 84 l7 5 l-7 5" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+        +`<rect x="220" y="70" width="80" height="38" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2"/>`
+        +`${tx(260,88,10.5,grn,'больше',{b:1})}${tx(260,102,9.5,grn,'8…15',{})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="24" y="128" width="270" height="30" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.7"/>`
+        +`${tx(159,148,11.5,ink,'средний элемент — как развилка на дороге',{b:1})}</g>`;
+      s+=`${tx(159,176,11,dim,'сравнили и выбрали половину',{})}`;
+      return s;
+    }
+    if(K==='phonebook'){ /* как в словаре */
+      let s=`<g class="${pre}Pop">`
+        +`<path d="M40 44 Q159 26 278 44 L278 150 Q159 168 40 150 z" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`<path d="M159 32 V162" stroke="#41558a" stroke-width="2" opacity=".8"/>`
+        +`<path d="M40 44 Q100 36 159 32" fill="none" stroke="${A}" stroke-width="1.4" opacity=".5"/>`
+        +`<path d="M278 44 Q218 36 159 32" fill="none" stroke="${A}" stroke-width="1.4" opacity=".5"/>`
+        +`${tx(96,92,13,blu,'А–М',{b:1})}${tx(222,92,13,grn,'Н–Я',{b:1})}`
+        +`<path d="M150 34 v26" stroke="${gold}" stroke-width="3"/><path d="M150 60 l-5 -7 h10 z" fill="${gold}"/></g>`;
+      s+=`<rect x="150" y="60" width="18" height="86" fill="#0a1226" opacity=".55"/>`;
+      s+=`<circle class="${pre}Float" cx="159" cy="104" r="15" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="2.2"/>`
+        +`<text x="159" y="109" text-anchor="middle" font-size="12" font-weight="bold" fill="${gold}">?</text>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="24" y="176" width="270" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.6"/>`
+        +`${tx(159,195,11.5,gold,'открываем в середине и листаем в нужную сторону',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='notfound'){ /* числа нет: границы сходятся */
+      const tgt=(v.target===undefined?6:v.target);
+      let s=`<g class="${pre}Pop"><rect x="40" y="16" width="238" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +`${tx(159,35,12,pur,'ищем число ' + plain(tgt),{b:1})}</g>`;
+      s+=`<rect x="30" y="72" width="258" height="26" rx="8" fill="rgba(255,255,255,.05)" stroke="#31456f" stroke-width="1.2"/>`;
+      s+=`<rect x="30" y="72" width="258" height="26" rx="8" fill="${red}" opacity=".14">`
+        +`<animate attributeName="x" values="30;150;159" keyTimes="0;.6;1" dur="4.4s" repeatCount="indefinite"/>`
+        +`<animate attributeName="width" values="258;18;0" keyTimes="0;.6;1" dur="4.4s" repeatCount="indefinite"/></rect>`;
+      s+=`<g><rect x="26" y="66" width="8" height="38" rx="3" fill="${blu}"/><animate attributeName="x" values="0;120;129" keyTimes="0;.6;1" dur="4.4s" repeatCount="indefinite"/></g>`;
+      s+=`<g><rect x="284" y="66" width="8" height="38" rx="3" fill="${blu}"/><animate attributeName="x" values="0;-120;-129" keyTimes="0;.6;1" dur="4.4s" repeatCount="indefinite"/></g>`;
+      s+=`<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.75;.85;1" dur="4.4s" repeatCount="indefinite"/>`
+        +`<circle cx="159" cy="85" r="20" fill="none" stroke="${red}" stroke-width="2.4"/>`
+        +`<path d="M151 77 l16 16 M167 77 l-16 16" stroke="${red}" stroke-width="3"/></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="24" y="118" width="270" height="46" rx="10" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.8"/>`
+        +`${tx(159,140,11.5,red,'границы сошлись — пусто',{b:1})}`
+        +`${tx(159,157,10.5,red,'такого числа в списке нет',{})}</g>`;
+      return s;
+    }
+    if(K==='dups'){ /* бинарный поиск в неотсортированном ряду ошибается */
+      const vals=v.vals||[7,2,9,3,1], tgt=(v.target===undefined?3:v.target);
+      const w=42, gap=8, tot=vals.length*w+(vals.length-1)*gap, x0=Math.round((CW-tot)/2), mid=2, ti=vals.indexOf(tgt);
+      let s=`<g class="${pre}Pop"><rect x="34" y="14" width="250" height="28" rx="9" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.7"/>`
+        +`${tx(159,33,11.5,red,'ряд не отсортирован!',{b:1})}</g>`;
+      vals.forEach((v2,k)=>{
+        const x=x0+k*(w+gap), isMid=(k===mid), isT=(k===ti);
+        s+=`<rect x="${x}" y="58" width="${w}" height="44" rx="9" fill="url(#${pre}card)" stroke="${isMid?gold:A}" stroke-width="${isMid?2.4:1.8}"/>`
+          +`<text x="${x+w/2}" y="87" text-anchor="middle" font-size="18" font-family="Georgia,serif" font-weight="bold" fill="${isT?red:ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.2">${plain(v2)}</text>`;
+        if(isMid) s+=`${tx(x+w/2,52,10,gold,'середина',{b:1})}`;
+        if(isT) s+=`<path d="M${x+8} 66 l${w-16} ${28} M${x+w-8} 66 l-${w-16} ${28}" stroke="${red}" stroke-width="2.6"/>`;
+      });
+      s+=`<path d="M${x0+mid*(w+gap)-2} 106 H${x0+ti*(w+gap)+w/2}" stroke="${red}" stroke-width="2.2" stroke-dasharray="6 5" class="${pre}Dash"/>`
+        +`<path d="M${x0+ti*(w+gap)+w/2+8} 106 l-6 -5 v10 z" fill="${red}"/>`
+        +`${tx(159,124,10.5,red,'поиск ушёл влево, а число стоит справа',{})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="20" y="140" width="278" height="46" rx="10" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.8"/>`
+        +`${tx(159,162,11.5,red,'бинарный поиск требует порядка',{b:1})}`
+        +`${tx(159,179,10.5,dim,'сначала отсортируй — потом ищи',{})}</g>`;
+      return s;
+    }
+    if(K==='halving'){ /* пирамида половин */
+      const nums=v.nums||[1000,500,250,125,63,32,16,8,4,2,1];
+      const show=nums.slice(0,6).concat([1]);
+      let s='';
+      show.forEach((q,k)=>{
+        const y=26+k*26, w2=Math.max(24,Math.round(200*Math.log2(q+1)/Math.log2(1001)));
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+          +`<rect x="18" y="${y}" width="${w2}" height="20" rx="6" fill="${A}" opacity=".22" stroke="${A}" stroke-width="1.2"/>`
+          +`${tx(26,y+14,11,ink,''+q,{an:'start',b:1})}`
+          +`${tx(232,y+14,10.5,dim,'шаг '+(k+1),{})}</g>`;
+      });
+      s+=`${tx(159,26+show.length*26+10,11.5,grn,'10 шагов вместо 1000 проверок',{b:1})}`;
+      return s;
+    }
+    if(K==='mistakes'){ /* типичные ошибки */
+      const it=v.items||[
+        {t:'искать в неотсортированном ряду', f:'сначала отсортируй список'},
+        {t:'перепутать левую и правую половину', f:'меньше среднего — идём влево'},
+        {t:'остановиться, не проверив границу', f:'сравнивай и крайние элементы'}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=26+k*54;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.15+k*0.18).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="16" y="${y}" width="286" height="46" rx="11" fill="url(#${pre}card)" stroke="${red}" stroke-width="2"/>`
+          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#241016">!</text>`
+          +`${tx(60,y+20,Math.min(11.5,220/Math.max(1,q.t.length)/0.72),red,q.t,{an:'start',b:1})}`
+          +`<path d="M60 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +`${tx(82,y+40,Math.min(11,190/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'})}</g>`;
+      });
+      s+=`${tx(159,26+it.length*54+4,11,dim,'эти ошибки встречаются чаще всего',{})}`;
+      return s;
+    }
+    if(K==='guessnum'){ /* интерактив: угадай число делением пополам */
+      const L0=v.lo||1, H0=v.hi||15, T=v.target||11;
+      const lo=(st&&st.glo!=null)?st.glo:L0, hi=(st&&st.gi!=null)?st.gi:H0;
+      const steps=(st&&st.gsteps)||0, done=(lo>=hi), mid=Math.floor((lo+hi)/2);
+      const per=5, cw=30, gp=5;
+      let s=`<g class="${pre}Pop"><rect x="30" y="16" width="258" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,35,11.5,ink,done?('Угадал! Это ' + lo):('я загадал число от ' + L0 + ' до ' + H0),{b:1})}</g>`;
+      for(let n2=L0;n2<=H0;n2++){
+        const idx=n2-L0, r=Math.floor(idx/per), c=idx%per, rows=Math.ceil((H0-L0+1)/per);
+        const yy=54+r*30, xx=Math.round((CW-(per*cw+(per-1)*gp))/2)+c*(cw+gp);
+        const inside=(n2>=lo&&n2<=hi), isMid=(!done&&n2===mid);
+        s+=`<rect x="${xx}" y="${yy}" width="${cw}" height="26" rx="7" fill="${isMid?'rgba(255,215,106,.2)':(inside?'rgba(15,25,46,.97)':'rgba(255,255,255,.03)')}" stroke="${isMid?gold:(inside?A:'#26355c')}" stroke-width="${isMid?2.2:1.4}" opacity="${inside?1:.5}"/>`
+          +`<text x="${xx+cw/2}" y="${yy+18}" text-anchor="middle" font-size="12.5" font-family="Georgia,serif" font-weight="bold" fill="${isMid?gold:(inside?ink:'#4a5b85')}" paint-order="stroke" stroke="#08101f" stroke-width="2.8">${n2}</text>`;
+      }
+      const rows=Math.ceil((H0-L0+1)/per), by=54+rows*30+6;
+      if(!done){
+        s+=`<g style="cursor:pointer" onclick="infGuess('${lk}',1,${L0},${H0},${T})">`
+          +`<rect x="22" y="${by}" width="132" height="34" rx="10" fill="rgba(19,44,35,.95)" stroke="${grn}" stroke-width="2"/>`
+          +`${tx(88,by+22,11.5,grn,'загаданное больше',{b:1})}</g>`;
+        s+=`<g style="cursor:pointer" onclick="infGuess('${lk}',-1,${L0},${H0},${T})">`
+          +`<rect x="164" y="${by}" width="132" height="34" rx="10" fill="rgba(12,30,52,.95)" stroke="${blu}" stroke-width="2"/>`
+          +`${tx(230,by+22,11.5,blu,'загаданное меньше',{b:1})}</g>`;
+        s+=`${tx(159,by+52,10.5,dim,'жёлтая клетка — середина; после ответа половина отпадёт',{})}`;
+      } else {
+        s+=`<g class="${pre}Pop"><rect x="60" y="${by}" width="198" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="2"/>`
+          +`${tx(159,by+22,12.5,grn,'Шагов: ' + steps,{b:1})}</g>`;
+        s+=`${tx(159,by+52,10.5,dim,'каждый вопрос уменьшал диапазон вдвое',{})}`;
+      }
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -1981,6 +2234,20 @@
     if(K==='trace') return 26+27+(v.rows||[]).length*27+44;
     if(K==='compare') return 208;
     if(K==='text') return ((v.lines||[]).length<=2)?(132+26*(v.lines||[]).length):Math.max(134, (v.lines||[]).length*39+54);
+    if(K==='findtask') return 200;
+    if(K==='linear') return 194;
+    if(K==='linearBad') return 190;
+    if(K==='sortedRow') return 190;
+    if(K==='halves') return 190;
+    if(K==='binsteps') return 34+(v.steps||[1,2,3]).length*62+26;
+    if(K==='binaryCount') return 58+((v.vals||[1,2]).length)*54+28;
+    if(K==='rule') return 194;
+    if(K==='phonebook') return 212;
+    if(K==='notfound') return 176;
+    if(K==='dups') return 200;
+    if(K==='halving') return 26+7*26+26;
+    if(K==='mistakes') return 26+((v.items||[1,2,3]).length)*54+22;
+    if(K==='guessnum') return 54+Math.ceil(((v.hi||15)-(v.lo||1)+1)/5)*30+76;
     if(K==='disorder') return 200;
     if(K==='order') return 190;
     if(K==='scale') return 196;
@@ -2607,6 +2874,46 @@
       tasks:[
         {q:'Ряд 3, 1, 2. Сколько обменов нужно, чтобы получился ряд 1, 2, 3?', kind:'unit', ans:2, tol:0, hints:['Сначала поменяй 3 и 1.','Потом поменяй 3 и 2 — всего два обмена.'], sol:'2'},
         {q:'Когда ряд чисел можно считать отсортированным?', kind:'choice', choices:['когда каждое число не больше следующего','когда чисел стало больше','когда все числа одинаковые'], ans:0, tol:0, hints:['Сравни соседей по очереди.','Каждое число не больше следующего.'], sol:'когда каждое число не больше следующего'}
+      ] },
+    { id:517, title:'Поиск: как найти нужное число', ico:'🔍', src:'Информатика · 5–6 класс · С нуля: поиск',
+      explain:[
+        'Мы научились сортировать числа. Теперь проверим, зачем это нужно: в упорядоченном ряду искать намного быстрее.',
+        'Задача поиска: в списке чисел нужно найти нужное число и узнать его номер — индекс.',
+        'Самый простой способ — линейный поиск: смотреть числа по очереди, начиная с первого.',
+        'Линейный поиск работает всегда, но медленно: если числа в списке нет, придётся проверить все.',
+        'Если чисел сто, линейный поиск может сделать сто проверок. Это долго и утомительно.',
+        'Но в отсортированном ряду есть подсказка: числа идут по возрастанию, и по среднему элементу можно понять, где искать.',
+        'Смотрим на средний элемент. Если он больше нужного числа, искать надо слева; если меньше — справа.',
+        'Так сразу отпадает половина ряда. Этот способ называется бинарный поиск, или поиск делением пополам.',
+        'После каждого шага чисел становится вдвое меньше. Для пятнадцати чисел хватает четырёх шагов, а линейному поиску нужно до пятнадцати.',
+        'Так же мы ищем слова в словаре или номер в телефонной книге: открываем в середине и решаем, куда листать дальше.',
+        'Если числа в списке нет, границы поиска сойдутся, и мы это поймём: останется пустой отрезок.',
+        'Важно: бинарный поиск работает только в отсортированном ряду. В беспорядочном ряду он ошибается.',
+        'Ещё одна частая ошибка — перепутать, куда идти: если средний элемент больше нужного числа, идём в левую половину.',
+        'В игру «угадай число» удобно играть именно так: каждый вопрос «больше или меньше» уменьшает диапазон вдвое.',
+        'Проверь себя: сколько шагов нужно бинарному поиску, чтобы найти число среди пятнадцати?',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'Найди число', v:{kind:'findtask', vals:[3,7,2,9,5,1,8,4,6]}, r:'Где здесь число 8?', d:'В ряду девять чисел, и нужно найти одно. Как сделать это быстрее всего?'},
+        {h:'По очереди', v:{kind:'linear', vals:[3,7,2,9,5,1,8,4,6], target:8}, r:'Линейный поиск: смотрим подряд.', d:'Лупа идёт слева направо и проверяет числа одно за другим. Счётчик показывает, сколько проверок уже сделано.'},
+        {h:'А если чисел сто?', v:{kind:'linearBad'}, r:'Линейный поиск — до 100 проверок.', d:'Чем длиннее список, тем дольше искать по очереди. Если числа нет, придётся проверить всё.'},
+        {h:'В порядке есть подсказка', v:{kind:'sortedRow', vals:[1,2,3,4,5,6,7,8,9]}, r:'Середина подсказывает, где искать.', d:'В отсортированном ряду слева числа меньше среднего, а справа — больше. Значит, половину можно сразу отбросить.'},
+        {h:'Половина отпадает', v:{kind:'halves', vals:[1,2,3,4,5,6,7,8,9], keep:'right'}, r:'Лишняя половина нам не нужна.', d:'Смотри: левая половина гаснет, остаётся только та часть, где может быть нужное число.'},
+        {h:'Три шага', v:{kind:'binsteps', steps:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[9,10,11,12,13,14,15],[11,12,13]]}, r:'Делим пополам снова и снова.', d:'Было 15 чисел, стало 7, потом 3 — и число 12 нашлось всего за три шага.'},
+        {h:'Сколько проверок', v:{kind:'binaryCount', vals:[['по очереди',15,'#ff9a8a'],['делением пополам',4,'#7de0a0']]}, r:'Разница огромная.', d:'Для пятнадцати чисел линейному поиску нужно до 15 проверок, а бинарному — всего четыре.'},
+        {h:'Влево или вправо', v:{kind:'rule'}, r:'Средний элемент — как развилка.', d:'Сравнили нужное число со средним — и сразу поняли, в какую половину идти дальше.'},
+        {h:'Как в словаре', v:{kind:'phonebook'}, r:'Открываем в середине.', d:'Слова в словаре стоят по алфавиту, поэтому мы открываем книгу в середине и листаем в нужную сторону — это тот же бинарный поиск.'},
+        {h:'Если числа нет', v:{kind:'notfound', target:6}, r:'Границы сходятся — числа нет.', d:'Левая и правая границы сдвигаются навстречу друг другу. Когда они сошлись, значит, числа в списке нет.'},
+        {h:'Так нельзя!', v:{kind:'dups', vals:[7,2,9,3,1], target:3}, r:'В беспорядочном ряду поиск ошибается.', d:'Числа стоят как попало, поэтому правило «слева меньше, справа больше» не работает — поиск уходит не туда.'},
+        {h:'Как быстро уменьшается', v:{kind:'halving', nums:[1000,500,250,125,63,32,16,8,4,2,1]}, r:'Каждый шаг — вдвое меньше.', d:'Тысяча чисел превращается в 500, потом в 250 и так далее: до одного числа остаётся всего десять шагов.'},
+        {h:'Угадай число', v:{kind:'guessnum', lo:1, hi:15, target:11}, r:'Проверь себя: угадай число.', d:'Нажимай «больше» или «меньше» — жёлтая клетка показывает середину, а лишняя половина сразу отпадает.'},
+        {h:'Частые ошибки', v:{kind:'mistakes'}, r:'Что чаще всего делают не так.', d:'Под каждой ошибкой зелёным написано, как правильно.'},
+        {h:'Что выведет программа', v:{kind:'pick', q:'Сколько проверок нужно бинарному поиску для 15 чисел?', opts:[{t:'4', ok:1},{t:'15'},{t:'1'}], exp:'15 → 7 → 3 → 1: каждое деление уменьшает ряд вдвое, поэтому хватает четырёх шагов.'}, r:'Проверь себя: посчитай шаги.', d:'Вспомни, как ряд уменьшается вдвое, и выбери ответ.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'по очереди — просто, но долго', b:1},{t:'делением пополам — быстро', c:grn},{t:'но только в отсортированном ряду', c:red}]}, r:'Запомни два способа поиска.', d:'Главное: поиск делением пополам работает только там, где числа стоят по порядку.'} ],
+      check:{ q:'Почему бинарный поиск работает только в отсортированном ряду?', choices:['потому что по середине видно, в какой половине искать','потому что так короче программа','потому что числа становятся меньше'], ans:0, exp:'В отсортированном ряду слева от середины числа меньше, а справа больше — поэтому половину можно отбросить.' },
+      tasks:[
+        {q:'Сколько шагов нужно бинарному поиску, чтобы найти число среди 15?', kind:'unit', ans:4, tol:0, hints:['15 → 7 → 3 → 1.','Четыре шага.'], sol:'4'},
+        {q:'Что делать, если средний элемент больше нужного числа?', kind:'choice', choices:['искать в левой половине','искать в правой половине','остановить поиск'], ans:0, tol:0, hints:['Слева числа меньше.','Искать в левой половине.'], sol:'искать в левой половине'}
       ] }
   ];
 
@@ -2618,15 +2925,17 @@
     const s=spec.slides[Math.min(step,spec.slides.length-1)];
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; st.seq=[]; st.bad=-1; st.find=-1; st.moves=0;
-      st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; }
+      st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
       ? wkRow(wkBtn('собрать заново',`infSeq('${lk}',-1,0)`))
       : (s.v.kind==='sortgame')
       ? wkRow(wkBtn('начать заново',`infSwap('${lk}',-1,1)`))
+      : (s.v.kind==='guessnum')
+      ? ((st.gsteps>0)? wkRow(wkBtn('загадать снова',`infGuess('${lk}',0,0,0,0)`)) : '')
       : (s.v.kind==='find')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
@@ -2634,7 +2943,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -2643,6 +2952,15 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infGuess=function(lk,dir,L0,H0,T){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(dir===0){ st.glo=null; st.gi=null; st.gsteps=0; chRender(0); return; }
+    let lo=(st.glo!=null)?st.glo:L0, hi=(st.gi!=null)?st.gi:H0;
+    const mid=Math.floor((lo+hi)/2);
+    if(dir>0) lo=mid+1; else hi=mid-1;
+    st.glo=lo; st.gi=hi; st.gsteps=(st.gsteps||0)+1;
+    chRender(0);
+  };
   window.infSwap=function(lk,i,reset){
     const st=CHS[lk]||(CHS[lk]={});
     if(reset){ st.arr=null; st.moves=0; chRender(0); return; }
