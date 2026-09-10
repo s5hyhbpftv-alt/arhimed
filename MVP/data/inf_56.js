@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 12 уроков (id 500–511) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 13 уроков (id 500–512) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -184,7 +184,7 @@
   }
 
   /* ---------- визуализации (kind) ---------- */
-  function viz(v,pre,i){
+  function viz(v,pre,i,st,lk){
     const K=v.kind, A=accOf(pre), CW=318, H=vizH(v), MOTIF=MOT[((i||0)+(''+pre).length)%MOT.length];
     if(K==='cards'){ /* карточки */
       const it=v.items||[], ch=58, cw=138, gx=12, gy=10, rows=Math.ceil(it.length/2);
@@ -595,6 +595,253 @@
         +`<circle cx="159" cy="108" r="16" fill="rgba(10,18,36,.96)" stroke="${A}" stroke-width="1.6"/>${tx(159,112,10.5,A,'или',{b:1})}`;
       return s;
     }
+    if(K==='quest'){ /* карта пути: что мы уже умеем */
+      const st2=[{x:56,y:140,ic:'chip',t:'переменные',c:blu},{x:159,y:92,ic:'quest',t:'условие',c:pur},{x:262,y:44,ic:'loop',t:'цикл',c:grn}];
+      let s=`<path d="M56 140 Q108 122 159 92 Q210 70 262 44" fill="none" stroke="${A}" stroke-width="2.6" stroke-dasharray="8 7" opacity=".6" class="${pre}Dash"/>`;
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="4.2s" repeatCount="indefinite" path="M56 140 Q108 122 159 92 Q210 70 262 44"/></circle>`;
+      st2.forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.16*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<circle cx="${q.x}" cy="${q.y}" r="27" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2.4"/>`
+          +`<circle class="${pre}Glow" cx="${q.x}" cy="${q.y}" r="32" fill="none" stroke="${q.c}" stroke-width="2" opacity=".35"/>`
+          +`${icon(q.ic,q.x,q.y,q.c,30)}`
+          +`<rect x="${q.x-46}" y="${q.y+32}" width="92" height="22" rx="8" fill="rgba(10,18,36,.96)" stroke="${q.c}" stroke-width="1.5"/>`
+          +`${tx(q.x,q.y+47,11.5,q.c,q.t,{b:1})}</g>`;
+      });
+      s+=`${tx(159,200,11,dim,'три умения вместе — и программа «думает»',{})}`;
+      return s;
+    }
+    if(K==='comboscheme'){ /* условие внутри цикла — общая схема */
+      let s='';
+      s+=`<g class="Pop"><ellipse cx="140" cy="24" rx="56" ry="13" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2"/>${tx(140,28,11.5,grn,'начало',{b:1})}</g>`;
+      s+=`<path d="M140 38 V54" stroke="${A}" stroke-width="2" class="${pre}Dash"/><path d="M136 50 l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="2"/>`;
+      s+=`<rect x="26" y="56" width="238" height="176" rx="15" fill="rgba(125,224,160,.06)" stroke="${grn}" stroke-width="2" stroke-dasharray="9 7"/>`;
+      s+=`<rect x="34" y="47" width="126" height="20" rx="7" fill="rgba(10,18,36,.98)" stroke="${grn}" stroke-width="1.5"/>${tx(97,61,10.5,grn,'пока не вышли',{b:1})}`;
+      s+=`<g class="Pop" style="animation-delay:.15s"><path d="M130 84 l62 24 l-62 24 l-62 -24 z" fill="rgba(176,127,255,.14)" stroke="${pur}" stroke-width="2.2"/>${tx(130,112,12.5,pur,'стена?',{b:1})}</g>`;
+      s+=`<path d="M192 108 H200" stroke="${A}" stroke-width="2"/><path d="M196 104 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>${tx(206,100,10,dim,'да',{})}`;
+      s+=`<g class="Pop" style="animation-delay:.28s"><rect x="204" y="86" width="52" height="30" rx="8" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>${tx(230,105,11,gold,'повернуть',{})}</g>`;
+      s+=`<path d="M230 116 V142 H196" stroke="${A}" stroke-width="2" opacity=".65" class="${pre}Dash"/><path d="M200 138 l-5 4 l5 4" fill="none" stroke="${A}" stroke-width="2"/>`;
+      s+=`<path d="M130 132 V142" stroke="${A}" stroke-width="2" class="${pre}Dash"/><path d="M126 138 l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="2"/>${tx(146,140,10,dim,'нет',{})}`;
+      s+=`<g class="Pop" style="animation-delay:.4s" filter="url(#${pre}sh)"><rect x="60" y="148" width="134" height="32" rx="9" fill="url(#${pre}card)" stroke="${bc||A}" stroke-width="2.2"/>${tx(127,169,12.5,ink,'шаг вперёд',{b:1})}</g>`;
+      s+=`<path d="M127 180 V206 H38 V108 H64" fill="none" stroke="${A}" stroke-width="2" opacity=".6" class="${pre}Dash"/><path d="M60 104 l-5 4 l5 4" fill="none" stroke="${A}" stroke-width="2"/>`
+        +`<circle r="4" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M127 180 V206 H38 V108 H64"/></circle>`;
+      s+=`<path d="M264 206 H282" stroke="${A}" stroke-width="2" opacity=".7"/><path d="M278 202 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>`
+        +`<ellipse cx="298" cy="206" rx="18" ry="12" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.8"/>${tx(298,210,9.5,red,'выход',{})}`;
+      s+=`<rect class="${pre}Scan" style="--scan:160px" x="30" y="60" width="230" height="2" rx="1" fill="${grn}" opacity=".2"/>`;
+      return s;
+    }
+    if(K==='pseudo'){ /* псевдокод с указателем выполнения */
+      const rows=v.rows||[], rh=25, y0=26;
+      let s=`<rect x="16" y="16" width="286" height="${rows.length*rh+38}" rx="12" fill="rgba(8,14,30,.9)" stroke="${A}" stroke-opacity=".45" stroke-width="1.6"/>`
+        +`<path d="M16 40 h286" stroke="${A}" stroke-opacity=".2"/>`
+        +`<circle cx="30" cy="28" r="3.4" fill="#ff6b6b" opacity=".8"/><circle cx="42" cy="28" r="3.4" fill="${gold}" opacity=".8"/><circle cx="54" cy="28" r="3.4" fill="${grn}" opacity=".8"/>`
+        +`${tx(200,32,10.5,dim,'как читает компьютер',{})}`;
+      rows.forEach((r,k)=>{
+        const y=y0+22+k*rh, ind=(r.i||0)*18, d=(k*0.5).toFixed(2), du=(rows.length*0.5+1).toFixed(2);
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.09*k).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="${rh-2}" rx="5" fill="rgba(255,255,255,${k%2?'.02':'.045'})"/>`
+          +`<rect class="${pre}Spot" style="animation-delay:${d}s;animation-duration:${du}s" x="22" y="${y}" width="274" height="${rh-2}" rx="5" fill="${A}" opacity=".13"/>`
+          +`<text x="${34+ind}" y="${y+16}" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${r.c||cyan}">${plain(r.t)}</text>`
+          +`</g>`
+          +`<path class="${pre}Spot" style="animation-delay:${d}s;animation-duration:${du}s" d="M22 ${y+5} l8 6 l-8 6 z" fill="${gold}"/>`;
+      });
+      return s;
+    }
+    if(K==='split'){ /* программа и мир одновременно */
+      const code=v.lines||['пока не вышли:','    шаг вперёд','    i = i + 1'];
+      const n=4, cell=28, gx=196, gy=54;
+      let s=`<rect x="14" y="24" width="150" height="184" rx="12" fill="rgba(8,14,30,.92)" stroke="${A}" stroke-opacity=".5" stroke-width="1.6"/>`
+        +`${tx(89,42,11,dim,'программа',{b:1})}`
+        +`<rect x="176" y="24" width="128" height="184" rx="12" fill="rgba(126,168,255,.07)" stroke="${A}" stroke-opacity=".5" stroke-width="1.6"/>`
+        +`${tx(240,42,11,dim,'мир робота',{b:1})}`;
+      code.forEach((t,k)=>{
+        const y=54+k*30, d=(k*0.6).toFixed(2), du=(code.length*0.6+1).toFixed(2);
+        s+=`<rect x="22" y="${y}" width="134" height="24" rx="6" fill="rgba(255,255,255,.04)"/>`
+          +`<rect class="${pre}Spot" style="animation-delay:${d}s;animation-duration:${du}s" x="22" y="${y}" width="134" height="24" rx="6" fill="${A}" opacity=".16"/>`
+          +`<text x="${30+(t.match(/^\s+/)?12:0)}" y="${y+16}" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${k===0?gold:cyan}">${plain(t.trim())}</text>`
+          +`<rect class="${pre}Spot" style="animation-delay:${d}s;animation-duration:${du}s" x="16" y="${y+4}" width="4" height="16" rx="2" fill="${gold}"/>`;
+      });
+      for(let r=0;r<4;r++)for(let c=0;c<4;c++){
+        const x=gx+c*cell, y=gy+r*cell;
+        s+=`<rect x="${x}" y="${y}" width="${cell}" height="${cell}" fill="${((r+c)%2)?'rgba(255,255,255,.05)':'rgba(255,255,255,.02)'}" stroke="#31456f" stroke-width="1"/>`;
+      }
+      s+=`<rect x="${gx+2*cell}" y="${gy+cell}" width="${cell}" height="${cell}" rx="3" fill="rgba(110,168,255,.32)" stroke="${blu}" stroke-width="1.4"/>`;
+      s+=`<g><circle r="9" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/><circle cx="-3" cy="-3" r="2" fill="#1a2340"/><circle cx="3" cy="-3" r="2" fill="#1a2340"/>`
+        +`<animateMotion dur="4.4s" repeatCount="indefinite" path="M${gx+cell/2} ${gy+3*cell+cell/2} L${gx+cell/2} ${gy+2*cell+cell/2} L${gx+2*cell+cell/2} ${gy+2*cell+cell/2} L${gx+2*cell+cell/2} ${gy+cell+cell/2}"/></g>`;
+      s+=`<path d="M168 116 H172" stroke="${A}" stroke-width="2" opacity=".6"/><circle cx="168" cy="116" r="3.2" fill="${A}" style="--run:6px" class="${pre}Dot"/>`;
+      return s;
+    }
+    if(K==='gears'){ /* шестерни-счётчики */
+      const gs=[{x:70,y:96,r:34,v:v.a||'i',t:'повторы',c:blu},{x:159,y:96,r:26,v:v.b||'шаги',t:'шагов',c:grn},{x:224,y:96,r:20,v:v.c||'повороты',t:'поворотов',c:gold}];
+      let s='';
+      gs.forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.14*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<g class="${pre}Spin" style="animation-duration:${(7+k*2)}s">${motif('gear',q.x,q.y,q.r*2.1,q.c)}</g>`
+          +`<circle cx="${q.x}" cy="${q.y}" r="${q.r*0.62}" fill="rgba(10,18,36,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +`<text x="${q.x}" y="${q.y+7}" text-anchor="middle" font-size="16" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(q.v)}</text>`
+          +`${tx(q.x,q.y+q.r+20,10.5,q.c,q.t,{b:1})}</g>`;
+      });
+      s+=`<path d="M40 172 h40" stroke="${A}" stroke-width="2" opacity=".5"/><circle cx="40" cy="172" r="3.2" fill="${A}" style="--run:40px" class="${pre}Dot"/>`;
+      s+=`${tx(159,194,11.5,dim,'каждый повтор добавляет единицу в счётчики',{})}`;
+      return s;
+    }
+    if(K==='gate'){ /* ворота-условие в стене */
+      const op=!!v.open, dc=op?grn:gold;
+      let s=`<rect x="14" y="150" width="290" height="44" rx="6" fill="#33456e" stroke="#41558a" stroke-width="1.5"/>`;
+      for(let k=0;k<4;k++) s+=`<path d="M14 ${161+k*11} h290" stroke="#41558a" stroke-width="1" opacity=".45"/>`;
+      s+=`<rect x="132" y="150" width="54" height="44" rx="3" fill="#0f1930" stroke="${dc}" stroke-width="1.6"/>`;
+      s+=`<g transform="translate(132,150)"><g><animateTransform attributeName="transform" type="rotate" values="0 0 0;${op?-88:0} 0 0;${op?-88:0} 0 0;0 0 0" keyTimes="0;.3;.85;1" dur="6s" repeatCount="indefinite"/>`
+        +`<rect x="0" y="0" width="27" height="44" rx="3" fill="${dc}" opacity=".85" stroke="#08101f" stroke-width="1"/></g></g>`;
+      s+=`<g transform="translate(186,150)"><g><animateTransform attributeName="transform" type="rotate" values="0 0 0;${op?88:0} 0 0;${op?88:0} 0 0;0 0 0" keyTimes="0;.3;.85;1" dur="6s" repeatCount="indefinite"/>`
+        +`<rect x="-27" y="0" width="27" height="44" rx="3" fill="${dc}" opacity=".85" stroke="#08101f" stroke-width="1"/></g></g>`;
+      s+=`<g class="${pre}Pop"><path d="M159 24 l76 26 l-76 26 l-76 -26 z" fill="rgba(176,127,255,.14)" stroke="${pur}" stroke-width="2.2"/>${tx(159,56,12.5,pur,v.q||'впереди стена?',{b:1})}</g>`;
+      s+=`<path d="M116 72 L98 84" stroke="${A}" stroke-width="2" class="${pre}Dash"/><path d="M94 80 l-3 7 l8 -1" fill="none" stroke="${A}" stroke-width="2"/>${tx(88,74,10,dim,'да',{})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.22s"><rect x="14" y="90" width="118" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>${tx(73,110,11.5,gold,'повернуть',{b:1})}</g>`;
+      s+=`<path d="M159 76 V142" stroke="${A}" stroke-width="2" class="${pre}Dash"/><path d="M155 136 l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="2"/>${tx(172,96,10,dim,'нет',{})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.34s"><rect x="186" y="90" width="118" height="30" rx="9" fill="url(#${pre}card)" stroke="${dc}" stroke-width="2"/>`
+        +`${tx(245,110,Math.min(11.5,108/Math.max(1,(op?'ворота открыты':'ворота закрыты').length)/0.64),dc,op?'ворота открыты':'ворота закрыты',{b:1})}</g>`;
+      s+=`<rect class="${pre}Spot" style="animation-duration:3s" x="132" y="150" width="54" height="44" rx="3" fill="${dc}" opacity=".18"/>`;
+      if(op){
+        s+=`<g><circle r="12" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/><circle cx="-4" cy="-3" r="2.6" fill="#1a2340"/><circle cx="4" cy="-3" r="2.6" fill="#1a2340"/>`
+          +`<animateMotion dur="4.4s" repeatCount="indefinite" path="M159 240 V110"/></g>`;
+      } else {
+        s+=`<g><circle r="12" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/><circle cx="-4" cy="-3" r="2.6" fill="#1a2340"/><circle cx="4" cy="-3" r="2.6" fill="#1a2340"/>`
+          +`<animateMotion dur="2.2s" repeatCount="indefinite" path="M159 238 h-16 h32 h-16"/></g>`;
+      }
+      s+=`${tx(159,262,11,dim,'условие решает: повернуть или пройти',{})}`;
+      return s;
+    }
+    if(K==='sensor'){ /* датчик робота: луч и эхо */
+      let s=`<rect x="284" y="34" width="18" height="116" rx="4" fill="rgba(110,168,255,.3)" stroke="${blu}" stroke-width="1.6"/>`;
+      for(let k=0;k<4;k++) s+=`<path d="M287 ${52+k*26} L299 ${44+k*26}" stroke="${blu}" stroke-width="1.1" opacity=".6"/>`;
+      s+=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="14" y="46" width="98" height="26" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>${tx(63,64,11.5,cyan,'датчик',{b:1})}</g>`;
+      s+=`<path d="M63 72 V96" stroke="${cyan}" stroke-width="1.6" opacity=".6" class="${pre}Dash"/>`;
+      s+=`<g class="${pre}Float"><circle cx="56" cy="122" r="20" fill="${gold}" stroke="#fffdf2" stroke-width="1.8"/>`
+        +`<circle cx="49" cy="118" r="3.4" fill="#1a2340"/><circle cx="63" cy="118" r="3.4" fill="#1a2340"/>`
+        +`<circle class="${pre}Blink" cx="56" cy="92" r="4.4" fill="${cyan}"/></g>`;
+      s+=`<path d="M78 116 H282" stroke="${cyan}" stroke-width="2" stroke-dasharray="7 6" class="${pre}Dash" opacity=".8"/>`;
+      s+=`<circle r="4.4" fill="${cyan}"><animateMotion dur="1.8s" repeatCount="indefinite" path="M78 116 H282"/></circle>`;
+      s+=`<path d="M282 130 H78" stroke="${grn}" stroke-width="1.8" opacity=".45"/>`;
+      s+=`<circle r="3.6" fill="${grn}"><animateMotion dur="1.8s" begin=".9s" repeatCount="indefinite" path="M282 130 H78"/></circle>`;
+      s+=`${[140,200,260].map(x=>`<path d="M${x} 112 v8" stroke="${cyan}" stroke-width="1.4" opacity=".5"/>`).join('')}`;
+      s+=`<rect x="16" y="160" width="286" height="30" rx="9" fill="rgba(255,255,255,.04)" stroke="${pur}" stroke-width="1.7"/>`
+        +`${tx(159,180,11.5,pur,'датчик отвечает: «стена?» → да или нет',{b:1})}`;
+      return s;
+    }
+    if(K==='shelves'){ /* полка памяти */
+      const cells=v.cells||[{n:'i',v:'0',c:blu},{n:'шаги',v:'3',c:grn},{n:'повороты',v:'1',c:gold},{n:'стена',v:'нет',c:pur}];
+      let s=`<rect x="16" y="44" width="286" height="14" rx="4" fill="rgba(255,255,255,.08)" stroke="#31456f" stroke-width="1"/>`;
+      const cw=(286-6*(cells.length+1))/cells.length, x0=22;
+      cells.forEach((q,k)=>{
+        const x=x0+k*(cw+6);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+          +`<rect x="${x}" y="58" width="${cw}" height="92" rx="9" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<rect class="${pre}Spot" style="animation-delay:${(k*0.5).toFixed(2)}s;animation-duration:${(cells.length*0.5+1).toFixed(2)}s" x="${x}" y="58" width="${cw}" height="92" rx="9" fill="${q.c}" opacity=".13"/>`
+          +`${tx(x+cw/2,76,9.5,q.c,q.n,{b:1})}`
+          +`<text x="${x+cw/2}" y="118" text-anchor="middle" font-size="19" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(q.v)}</text>`
+          +`</g>`;
+      });
+      s+=`${tx(159,172,11.5,dim,v.note||'программа помнит всё, что ей нужно',{})}`;
+      return s;
+    }
+    if(K==='nest'){ /* вложенность блоков */
+      let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="20" y="46" width="278" height="150" rx="14" fill="rgba(125,224,160,.06)" stroke="${grn}" stroke-width="2.2"/>`
+        +`<rect x="28" y="38" width="112" height="20" rx="7" fill="rgba(10,18,36,.98)" stroke="${grn}" stroke-width="1.5"/>${tx(84,52,10.5,grn,'цикл пока',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.3s" filter="url(#${pre}sh)"><rect x="44" y="80" width="230" height="98" rx="12" fill="rgba(176,127,255,.10)" stroke="${pur}" stroke-width="2.2"/>`
+        +`<rect x="52" y="72" width="94" height="20" rx="7" fill="rgba(10,18,36,.98)" stroke="${pur}" stroke-width="1.5"/>${tx(99,86,10.5,pur,'если стена',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="62" y="104" width="90" height="28" rx="8" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>${tx(107,123,11,gold,'повернуть',{})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.65s"><rect x="166" y="104" width="94" height="28" rx="8" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>${tx(213,123,11,cyan,'шаг вперёд',{})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.8s"><rect x="62" y="142" width="198" height="28" rx="8" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>${tx(161,161,11,grn,'i = i + 1',{b:1})}</g>`;
+      s+=`<path class="${pre}Dash" d="M20 200 H298" stroke="${A}" stroke-width="1.6" opacity=".4" stroke-dasharray="7 6"/>${tx(159,216,11,dim,'внутри цикла живёт условие — это вложенность',{})}`;
+      return s;
+    }
+    if(K==='debugger'){ /* ищем ошибку */
+      const rows=v.lines||['пока i < 3:','    вывести i'], bad=v.bad||0;
+      let s=`<g filter="url(#${pre}sh)"><rect x="16" y="20" width="286" height="${rows.length*26+40}" rx="12" fill="rgba(8,14,30,.92)" stroke="${A}" stroke-opacity=".45" stroke-width="1.6"/>`
+        +`<path d="M16 44 h286" stroke="${A}" stroke-opacity=".2"/>`
+        +`<circle cx="30" cy="32" r="3.4" fill="#ff6b6b" opacity=".8"/><circle cx="42" cy="32" r="3.4" fill="${gold}" opacity=".8"/><circle cx="54" cy="32" r="3.4" fill="${grn}" opacity=".8"/>`
+        +`${tx(190,36,10.5,dim,'ищем ошибку',{})}</g>`;
+      rows.forEach((t,k)=>{
+        const y=54+k*26, isb=(k===bad);
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.1*k).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="22" rx="5" fill="${isb?'rgba(255,120,100,.16)':'rgba(255,255,255,.035)'}" ${isb?'class="'+pre+'Glow"':''} stroke="${isb?red:'#2b3c62'}" stroke-width="${isb?1.8:1}"/>`
+          +`<text x="${34+(t.match(/^\s+/)?16:0)}" y="${y+15}" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${isb?red:cyan}">${plain(t.trim())}</text>`
+          +(isb?`<path d="M258 ${y+4} l8 14 h-16 z" fill="${red}" opacity=".9"/><text x="258" y="${y+16}" text-anchor="middle" font-size="9" fill="#1a2340" font-weight="bold">!</text>`:'')
+          +`</g>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="16" y="${rows.length*26+66}" width="286" height="30" rx="9" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.8"/>`
+        +`${tx(159,rows.length*26+86,11.5,red,v.hint||'тело не меняет условие — цикл не кончится',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='tests'){ /* проверяем на примерах */
+      const runs=v.runs||[{t:'поле 3×3',r:'вышел за 4 шага'},{t:'поле 4×4',r:'вышел за 6 шагов'},{t:'стена рядом',r:'повернул сразу'}];
+      let s='';
+      runs.forEach((q,k)=>{
+        const y=34+k*50;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.16*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="20" y="${y}" width="278" height="42" rx="10" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+          +`<circle cx="44" cy="${y+21}" r="12" fill="${grn}" opacity=".18" stroke="${grn}" stroke-width="1.5"/>`
+          +`<path d="M38 ${y+21} l4 5 l8 -10" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +`${tx(64,y+17,11.5,ink,q.t,{an:'start',b:1})}`
+          +`${tx(64,y+33,10.5,dim,q.r,{an:'start'})}`
+          +`<rect class="${pre}Spot" style="animation-delay:${(k*0.5).toFixed(2)}s;animation-duration:${(runs.length*0.5+1).toFixed(2)}s" x="20" y="${y}" width="278" height="42" rx="10" fill="${grn}" opacity=".08"/></g>`;
+      });
+      s+=`${tx(159,34+runs.length*50+8,11,grn,v.note||'проверяем на нескольких полях — программа работает всегда',{})}`;
+      return s;
+    }
+    if(K==='belt'){ /* конвейер: прочитал → проверил → сделал → повторил */
+      const st3=[{x:52,t:'прочитал',c:cyan},{x:126,t:'проверил',c:pur},{x:200,t:'сделал',c:gold},{x:274,t:'повторил',c:grn}];
+      let s=`<rect x="24" y="118" width="270" height="26" rx="13" fill="rgba(255,255,255,.06)" stroke="#31456f" stroke-width="1.4"/>`;
+      for(let i=0;i<18;i++) s+=`<rect class="${pre}Dash" x="${30+i*15}" y="126" width="8" height="4" rx="2" fill="${A}" opacity=".5"/>`;
+      st3.forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<circle cx="${q.x}" cy="76" r="25" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2.2"/>`
+          +`<text x="${q.x}" y="84" text-anchor="middle" font-size="22" font-family="Georgia,serif" font-weight="bold" fill="${q.c}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${k+1}</text>`
+          +`${tx(q.x,120,10.5,q.c,q.t,{b:1})}`
+          +`<path d="M${q.x} 102 v12" stroke="${q.c}" stroke-width="1.6" opacity=".6"/></g>`;
+        if(k<st3.length-1) s+=`<path d="M${q.x+26} 76 h${st3[k+1].x-q.x-52}" stroke="${A}" stroke-width="1.6" opacity=".35" stroke-dasharray="4 4"/>`;
+      });
+      s+=`<rect x="60" y="122" width="22" height="18" rx="4" fill="${gold}" opacity=".9"><animateMotion dur="5s" repeatCount="indefinite" path="M0 0 H210"/></rect>`;
+      s+=`<rect x="30" y="166" width="258" height="30" rx="9" fill="rgba(255,255,255,.04)" stroke="${A}" stroke-width="1.6" stroke-opacity=".5"/>${tx(159,186,11.5,ink,'каждый круг компьютер делает эти четыре шага',{})}`;
+      return s;
+    }
+    if(K==='mindmap'){ /* карта знаний */
+      const br=[{x:60,y:60,t:'переменные',c:blu},{x:258,y:60,t:'условие',c:pur},{x:60,y:170,t:'цикл',c:grn},{x:258,y:170,t:'порядок',c:gold}];
+      let s=`<g>`;
+      br.forEach((q,k)=>{
+        s+=`<path d="M159 116 Q${(159+q.x)/2} ${(116+q.y)/2} ${q.x} ${q.y}" fill="none" stroke="${q.c}" stroke-width="2" opacity=".55" stroke-dasharray="7 6" class="${pre}Dash"/>`;
+      });
+      br.forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.14*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="${q.x-56}" y="${q.y-17}" width="112" height="34" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`${tx(q.x,q.y+5,11.5,q.c,q.t,{b:1})}</g>`;
+      });
+      s+=`<g class="${pre}Pulse" filter="url(#${pre}sh)"><circle cx="159" cy="116" r="42" fill="rgba(10,18,36,.97)" stroke="${A}" stroke-width="2.6"/><circle cx="159" cy="116" r="50" fill="none" stroke="${A}" stroke-width="1.6" opacity=".35"/></g>`
+        +`${tx(159,110,12.5,ink,'моя',{b:1})}${tx(159,126,12.5,ink,'программа',{b:1})}`;
+      s+=`${tx(159,206,11,dim,'всё, что нужно, чтобы написать любую программу',{})}`;
+      return s;
+    }
+    if(K==='pick'){ /* интерактив: выбери ответ */
+      const opts=v.opts||[], sel=(st&&typeof st.pick==='number')?st.pick:-1, okI=opts.findIndex(o=>o.ok);
+      let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="20" y="24" width="278" height="34" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${tx(159,46,Math.min(12.5,250/Math.max(1,plain(v.q||'').length)/0.64),ink,v.q||'Выбери ответ',{b:1})}</g>`;
+      opts.forEach((o,k)=>{
+        const y=70+k*40, done=sel>=0, good=(k===okI);
+        const col=!done?(o.c||A):(good?grn:red);
+        const bg=done&&good?'rgba(125,224,160,.16)':(done&&sel===k?'rgba(255,120,100,.16)':'rgba(255,255,255,.04)');
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.12*k).toFixed(2)}s;cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="34" y="${y}" width="250" height="34" rx="10" fill="${bg}" stroke="${col}" stroke-width="2"/>`
+          +`<circle cx="56" cy="${y+17}" r="11" fill="${col}" opacity=".16" stroke="${col}" stroke-width="1.5"/>`
+          +`<text x="56" y="${y+22}" text-anchor="middle" font-size="12" font-weight="bold" fill="${col}" font-family="Georgia,serif">${String.fromCharCode(1040+k)}</text>`
+          +`${tx(180,y+23,12.5,done&&sel===k?col:ink,o.t,{b:1})}`
+          +(done&&good?`<path d="M266 ${y+17} l5 6 l9 -12" fill="none" stroke="${grn}" stroke-width="2.6"/>`:'')
+          +(done&&sel===k&&!good?`<path d="M262 ${y+11} l12 12 M274 ${y+11} l-12 12" stroke="${red}" stroke-width="2.6" fill="none"/>`:'')
+          +`</g>`;
+      });
+      if(sel>=0) s+=`<g class="${pre}Rise" style="animation-delay:.2s"><rect x="20" y="${70+opts.length*40+6}" width="278" height="30" rx="9" fill="rgba(255,255,255,.04)" stroke="${sel===okI?grn:gold}" stroke-width="1.8"/>`
+        +`${tx(159,70+opts.length*40+26,11,sel===okI?grn:gold, v.exp||(sel===okI?'Верно!':'Подумай ещё: подсказка ниже'),{b:1})}</g>`;
+      else s+=`${tx(159,70+opts.length*40+22,11,dim,'нажми на вариант — я проверю',{})}`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -649,6 +896,20 @@
     if(K==='cond') return 202;
     if(K==='flow') return ((v.shapes||[]).length===1)?200:Math.max(120, (v.shapes||[]).length*48+20);
     if(K==='code') return Math.max(110, 42+(v.lines||[]).length*24+16);
+    if(K==='quest') return 214;
+    if(K==='comboscheme') return 246;
+    if(K==='pseudo') return (v.rows||[]).length*25+68;
+    if(K==='split') return 226;
+    if(K==='gears') return 206;
+    if(K==='gate') return 272;
+    if(K==='sensor') return 202;
+    if(K==='shelves') return 190;
+    if(K==='nest') return 232;
+    if(K==='debugger') return (v.lines||[]).length*26+108;
+    if(K==='tests') return 34+(v.runs||[]).length*50+26;
+    if(K==='belt') return 212;
+    if(K==='mindmap') return 226;
+    if(K==='pick') return 70+(v.opts||[]).length*40+48;
     if(K==='var') return 186;
     if(K==='assign') return 194;
     if(K==='input') return 190;
@@ -1029,6 +1290,44 @@
       tasks:[
         {q:'Сколько раз выполнится тело цикла, если условие «пока» сразу ложно?', kind:'unit', ans:0, tol:0, hints:['Условие проверяется до тела.','Ни разу — это 0.'], sol:'0'},
         {q:'Что будет, если тело цикла «пока» не меняет условие?', kind:'choice', choices:['цикл будет повторяться бесконечно','цикл выполнится один раз','программа станет быстрее','цикл сам остановится'], ans:0, tol:0, hints:['Условие всё время остаётся истинным.','Получится бесконечный цикл.'], sol:'цикл будет повторяться бесконечно'}
+      ] },
+    { id:512, title:'Программа думает: условие внутри цикла', ico:'🤖', src:'Информатика · 5–6 класс · С нуля: условие в цикле',
+      explain:[
+        'В этом уроке мы соединим всё, что уже знаем: переменные, условие и цикл. Такая программа умеет «думать»: она смотрит на мир и решает, что делать дальше.',
+        'Задача: робот в лабиринте. Он должен идти, пока не выйдет, а если впереди стена — повернуть. Сколько шагов понадобится, заранее неизвестно.',
+        'Значит, нужен цикл «пока»: «пока не вышли из лабиринта — повторяй».',
+        'Но одного шага мало: перед каждым шагом надо проверить, нет ли стены. Поэтому ВНУТРИ цикла стоит условие: «если стена, то повернуть».',
+        'Когда одно правило вложено в другое, это называется вложенность. Здесь цикл — снаружи, а условие — внутри него.',
+        'Порядок очень важен: сначала проверяем стену, потом шагаем. Если шагнуть первым, робот врежется в стену.',
+        'У робота есть датчик. Датчик отвечает на вопрос «впереди стена?» только «да» или «нет» — это и есть условие для ветвления.',
+        'Чтобы не потеряться, программа ведёт счёт: i — сколько шагов сделано, «повороты» — сколько раз повернули. Это переменные.',
+        'Тело цикла должно менять условие — иначе цикл никогда не закончится. Здесь робот каждый раз подходит ближе к выходу, и условие становится ложным.',
+        'Как читать программу по-русски: «пока не вышли: если стена — повернуть; шаг вперёд; i = i + 1».',
+        'Каждый круг компьютер делает четыре дела: прочитал команду, проверил условие, выполнил действие, вернулся к началу цикла.',
+        'Частая ошибка — забыть проверить стену или не менять счётчик. Тогда робот врежется или программа зациклится.',
+        'Готовую программу проверяют на нескольких примерах: короткий коридор, стена рядом, длинный путь. Если везде верно — программа хорошая.',
+        'Проверь себя: почему условие стоит внутри цикла, а не после него? Потому что проверять стену нужно перед каждым шагом.',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'Что мы уже умеем', v:{kind:'quest'}, r:'Переменные, условие и цикл — вместе.'},
+        {h:'Программа целиком', v:{kind:'comboscheme'}, r:'Цикл снаружи, условие внутри.'},
+        {h:'Читаем по строкам', v:{kind:'pseudo', rows:[{t:'i = 0',c:cyan},{t:'пока не вышли:',c:gold},{t:'если стена?',c:pur,i:1},{t:'повернуть',c:gold,i:2},{t:'шаг вперёд',c:cyan,i:1},{t:'i = i + 1',c:grn,i:1}]}, r:'Указатель показывает, какую строку читает компьютер.'},
+        {h:'Код и мир рядом', v:{kind:'split', lines:['пока не вышли:','    если стена:','        повернуть','    шаг вперёд']}, r:'Слева команды — справа робот.'},
+        {h:'Как робот видит стену', v:{kind:'sensor'}, r:'Датчик отвечает «да» или «нет».'},
+        {h:'Ворота-условие', v:{kind:'gate', q:'впереди стена?', open:1}, r:'Стена близко — поворачиваем.'},
+        {h:'Счётчики программы', v:{kind:'gears', a:'7', b:'7', c:'2'}, r:'i, шаги и повороты — переменные.'},
+        {h:'Что программа помнит', v:{kind:'shelves', cells:[{n:'i',v:'7',c:blu},{n:'шаги',v:'7',c:grn},{n:'повороты',v:'2',c:gold},{n:'стена',v:'нет',c:pur}]}, r:'Значения живут в переменных.'},
+        {h:'Условие внутри цикла', v:{kind:'nest'}, r:'Вложенность: цикл снаружи, условие внутри.'},
+        {h:'Один круг цикла', v:{kind:'belt'}, r:'Прочитал → проверил → сделал → повторил.'},
+        {h:'Частая ошибка', v:{kind:'debugger', lines:['пока не вышли:','    шаг вперёд'], bad:1, hint:'забыли проверить стену — робот врежется'}, r:'Проверка стены обязательна.'},
+        {h:'Проверяем на примерах', v:{kind:'tests', runs:[{t:'коридор без стен', r:'вышел за 5 шагов'},{t:'стена справа', r:'повернул и вышел'},{t:'стена впереди', r:'повернул сразу'}]}, r:'Одна программа — разные поля.'},
+        {h:'Тренажёр', v:{kind:'pick', q:'Что робот сделает первым делом?', opts:[{t:'проверит, есть ли стена', ok:1},{t:'сразу шагнёт вперёд'},{t:'выключится'}], exp:'Сначала проверка условия — иначе можно врезаться.'}, r:'Сначала проверяем, потом действуем.'},
+        {h:'Карта знаний', v:{kind:'mindmap'}, r:'Всё, что нужно для любой программы.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'цикл снаружи, условие внутри', b:1},{t:'сначала проверь — потом шагай', c:gold},{t:'тело меняет условие', c:grn}]}, r:'Программа думает перед каждым шагом.'} ],
+      check:{ q:'Где стоит условие в программе «идти, пока не вышли, а при стене поворачивать»?', choices:['внутри цикла, перед шагом','после цикла','в самом начале программы'], ans:0, exp:'Стену проверяем перед каждым шагом — значит, условие внутри цикла.' },
+      tasks:[
+        {q:'Робот сделал 3 шага и 1 поворот. Сколько всего команд выполнила программа?', kind:'unit', ans:4, tol:0, hints:['Сложи шаги и повороты.','3 + 1 = 4.'], sol:'4'},
+        {q:'Что случится, если внутри цикла «пока» не менять условие?', kind:'choice', choices:['программа зациклится','робот сразу остановится','цикл выполнится один раз','ничего не изменится'], ans:0, tol:0, hints:['Условие всё время остаётся истинным.','Получится бесконечный цикл.'], sol:'программа зациклится'}
       ] }
   ];
 
@@ -1038,18 +1337,24 @@
     css(pre);
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step; st.go=0; }
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; }
     const go=st.go||0;
     const s=spec.slides[Math.min(step,spec.slides.length-1)];
+    const isPick=(s.v.kind==='pick');
     const H=vizH(s.v)+30;
-    const inner = `<g class="${pre}In">${go? viz(s.v,pre,step) : ''}</g>`;
+    const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
+    const btnRow = isPick
+      ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
+      : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
+    const capShown = isPick? (st.pick>=0 && s.r) : (go && s.r);
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
-      (go&&s.r?wkRow(chip(s.r,grn,pre)):'')+
-      wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`))+
+      (capShown?wkRow(chip(s.r,grn,pre)):'')+
+      btnRow+
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infPick=function(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); };
   window.infAct=function(lk){ const st=CHS[lk]||(CHS[lk]={}); st.go=st.go?0:1; chRender(0); };
   LESSONS.forEach(function(L){ L.subj='inf'; });
   window.ARH_LESSONS = (window.ARH_LESSONS||[]).concat(LESSONS);
