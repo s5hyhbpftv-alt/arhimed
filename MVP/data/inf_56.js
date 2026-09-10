@@ -1,9 +1,9 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 14 уроков (id 500–513) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 15 уроков (id 500–514) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
         bg0='#0d1830', bg1='#080d1c', card='rgba(16,26,46,.96)', cardB='#3a4c78';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#08101f" stroke-width="4">${plain(t)}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(9.5,Math.min(s,292/((''+t).length*0.66))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#08101f" stroke-width="4">${plain(t)}</text>`;
   /* ---------- акцентный цвет урока ---------- */
   const ACCS=['#7fd6ff','#7de0a0','#6ea8ff','#b07fff','#ffd76a','#ffb066','#5fe0d0','#ff8fd0','#8fb4ff','#9ae86a'];
   function accOf(pre){
@@ -38,6 +38,12 @@
     [/двоичн|разряд|0 и 1|ноль|нул|единиц/i,'bits'],
     [/порядок|шаг|список|номер|строк/i,'lines']
   ];
+  function wrapT(t,max){
+    const w=(''+t).split(' '), out=[]; let cur='';
+    w.forEach(x=>{ if((cur?cur+' ':'')+x && ((cur+' '+x).trim().length>max) && cur){ out.push(cur); cur=x; } else cur=(cur+' '+x).trim(); });
+    if(cur) out.push(cur);
+    return out;
+  }
   const iconKey=(t,k)=>{ for(const r of IKEYS){ if(r[0].test(t)) return r[1]; } return MOT[(((k||0)%MOT.length)+MOT.length)%MOT.length]; };
   function icon(k,cx,cy,c,s){
     s=s||26; const h=s/2, sw=2.2, o='fill="none" stroke="'+c+'" stroke-width="'+sw+'" stroke-linecap="round" stroke-linejoin="round"';
@@ -875,8 +881,13 @@
           +(done&&sel===k&&!good?`<path d="M262 ${y+11} l12 12 M274 ${y+11} l-12 12" stroke="${red}" stroke-width="2.6" fill="none"/>`:'')
           +`</g>`;
       });
-      if(sel>=0) s+=`<g class="${pre}Rise" style="animation-delay:.2s"><rect x="20" y="${y0+opts.length*40+6}" width="278" height="30" rx="9" fill="rgba(255,255,255,.04)" stroke="${sel===okI?grn:gold}" stroke-width="1.8"/>`
-        +`${tx(159,y0+opts.length*40+26,11,sel===okI?grn:gold, v.exp||(sel===okI?'Верно!':'Подумай ещё: подсказка ниже'),{b:1})}</g>`;
+      if(sel>=0){
+        const elines=wrapT(plain(v.exp||(sel===okI?'Верно!':'Подумай ещё')),40).slice(0,3);
+        const eh=12+elines.length*15;
+        s+=`<g class="${pre}Rise" style="animation-delay:.2s"><rect x="20" y="${y0+opts.length*40+6}" width="278" height="${eh}" rx="9" fill="rgba(255,255,255,.04)" stroke="${sel===okI?grn:gold}" stroke-width="1.8"/>`
+          +elines.map((t,k)=>tx(159,y0+opts.length*40+24+k*15,Math.min(11,252/Math.max(1,t.length)/0.7),sel===okI?grn:gold,t,{b:1})).join('')
+          +`</g>`;
+      }
       else s+=`${tx(159,y0+opts.length*40+22,11,dim,'нажми на вариант — я проверю',{})}`;
       return s;
     }
@@ -1133,6 +1144,287 @@
         +`${tx(159,207,11,dim,'большое строится из маленьких понятных частей',{})}</g>`;
       return s;
     }
+    if(K==='broken'){ /* программа не работает: робот врезался в стену */
+      let s=`<line x1="20" y1="150" x2="300" y2="150" stroke="#31456f" stroke-width="2"/>`;
+      s+=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="234" y="84" width="20" height="66" rx="4" fill="#33456e" stroke="${blu}" stroke-width="1.6"/>`
+        +`<path d="M238 96 L250 132 M250 96 L238 132" stroke="${blu}" stroke-width="1.2" opacity=".7"/></g>`;
+      s+=`<g><circle r="13" fill="${gold}" stroke="#fffdf2" stroke-width="1.8"/>`
+        +`<circle cx="-4" cy="-3" r="2.8" fill="#1a2340"/><circle cx="4" cy="-3" r="2.8" fill="#1a2340"/>`
+        +`<animateMotion dur="2.6s" repeatCount="indefinite" path="M40 136 H214"/></g>`;
+      s+=`<g opacity="0"><animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;.52;.6;.72;1" dur="2.6s" repeatCount="indefinite"/>`
+        +`<circle cx="222" cy="136" r="24" fill="${red}" opacity=".22"/>`
+        +`<path d="M216 122 l14 22 h-28 z" fill="${red}" opacity=".95"/><text x="216" y="141" text-anchor="middle" font-size="13" font-weight="bold" fill="#241016">!</text></g>`;
+      s+=`<path d="M234 106 l-9 11 l9 9 l-9 13" fill="none" stroke="${red}" stroke-width="2.4" opacity=".85"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="22" y="162" width="274" height="46" rx="10" fill="rgba(8,14,30,.92)" stroke="${red}" stroke-width="1.7"/>`
+        +`<text x="48" y="184" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">вперёд · вперёд · вперёд</text>`
+        +`${tx(159,201,10.5,red,'а здесь нужно было повернуть',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='kinds3'){ /* три вида ошибок */
+      const rows=[
+        {t:'Опечатка в команде', c1:'виперёд', c2:'вперёд', c:red, ic:'quest'},
+        {t:'Не тот порядок', c1:'налить · взять чашку', c2:'взять · налить', c:gold, ic:'loop'},
+        {t:'Не то условие', c1:'пока i > 3', c2:'пока i ≤ 3', c:pur, ic:'gear'}
+      ];
+      let s='';
+      rows.forEach((q,k)=>{
+        const y=22+k*62;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.14*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="14" y="${y}" width="290" height="54" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<circle cx="36" cy="${y+27}" r="13" fill="${q.c}" opacity=".16" stroke="${q.c}" stroke-width="1.4"/>`
+          +`<text x="36" y="${y+32}" text-anchor="middle" font-size="14" font-weight="bold" fill="${q.c}" font-family="Georgia,serif">${k+1}</text>`
+          +`${tx(100,y+18,10.5,ink,q.t,{an:'start'})}`
+          +`<text x="100" y="${y+40}" font-size="${Math.min(11.5,96/(Math.max(1,q.c1.length)*0.66)).toFixed(1)}" font-family="'Courier New',monospace" font-weight="bold" fill="${red}">${q.c1}</text>`
+          +`<path d="M100 ${y+44} h96" stroke="${red}" stroke-width="2" stroke-dasharray="96" stroke-dashoffset="96">`
+          +`<animate attributeName="stroke-dashoffset" values="96;0" dur=".6s" begin="${(0.5+k*0.2).toFixed(2)}s" fill="freeze"/></path>`
+          +`<path d="M204 ${y+36} h12 m-4 -4 l5 4 l-5 4" stroke="${A}" stroke-width="1.6" fill="none" opacity=".7"/>`
+          +`<text x="224" y="${y+40}" font-size="${Math.min(11.5,74/(Math.max(1,q.c2.length)*0.66)).toFixed(1)}" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">${q.c2}</text>`
+          +`</g>`;
+      });
+      s+=`${tx(159,212,11,dim,'красным — как не надо, зелёным — как правильно',{})}`;
+      return s;
+    }
+    if(K==='console'){ /* компьютер сообщает об ошибке */
+      const ln=(v.lines||['шаги = 0','пока шаги < 3:','    вперёд шаг','    шаги = шаги + 1','вывести шаги']);
+      let s=`<rect x="12" y="24" width="150" height="152" rx="11" fill="rgba(8,14,30,.92)" stroke="${A}" stroke-opacity=".5" stroke-width="1.6"/>`
+        +`${tx(87,42,10.5,dim,'моя программа',{})}`;
+      ln.forEach((t,k)=>{
+        const y=54+k*24, bad=(k===2);
+        s+=`<rect x="18" y="${y}" width="138" height="20" rx="5" fill="${bad?'rgba(255,120,100,.16)':'rgba(255,255,255,.04)'}" stroke="${bad?red:'#2b3c62'}" stroke-width="1"/>`
+          +`<text x="26" y="${y+14}" font-size="10.5" font-family="'Courier New',monospace" font-weight="bold" fill="${bad?red:cyan}">${plain(t.trim())}</text>`;
+      });
+      s+=`<rect x="170" y="24" width="134" height="152" rx="11" fill="rgba(30,10,14,.92)" stroke="${red}" stroke-width="1.8"/>`
+        +`<circle cx="184" cy="38" r="3.4" fill="#ff6b6b"/><circle cx="195" cy="38" r="3.4" fill="${gold}" opacity=".6"/><circle cx="206" cy="38" r="3.4" fill="${grn}" opacity=".6"/>`
+        +`${tx(240,42,10.5,red,'сообщение',{})}`;
+      ['не знаю команду','«вперёд шаг»','строка 3'].forEach((t,k)=>{
+        s+=`<text x="182" y="${62+k*20}" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${red}" opacity="0">${t}`
+          +`<animate attributeName="opacity" values="0;1" dur=".3s" begin="${(0.6+k*0.35).toFixed(2)}s" fill="freeze"/></text>`;
+      });
+      s+=`<g class="${pre}Pop" style="animation-delay:1.8s"><rect x="176" y="126" width="122" height="34" rx="8" fill="rgba(255,120,100,.14)" stroke="${red}" stroke-width="1.6"/>`
+        +`${tx(237,147,11,red,'исправь строку 3',{b:1})}</g>`;
+      s+=`<path d="M168 108 H158" stroke="${red}" stroke-width="1.8" stroke-dasharray="5 4" class="${pre}Dash"/><path d="M150 104 l-6 4 l6 4" fill="none" stroke="${red}" stroke-width="1.8"/>`;
+      s+=`${tx(160,192,11,dim,'компьютер останавливается и говорит, где ошибка',{})}`;
+      return s;
+    }
+    if(K==='stepdebug'){ /* пошаговое выполнение: где всё пошло не так */
+      const ln=(v.lines||['взять чашку','положить чай','налить кипяток','выпить чай','убрать чашку']);
+      const stop=v.stop||3;
+      let s=`<rect x="34" y="22" width="240" height="${ln.length*26+14}" rx="11" fill="rgba(8,14,30,.9)" stroke="${A}" stroke-opacity=".45" stroke-width="1.5"/>`;
+      ln.forEach((t,k)=>{
+        const y=30+k*26, d=(0.5+k*0.55).toFixed(2), du=(ln.length*0.55+1.2).toFixed(2);
+        const isStop=(k===stop);
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.08*k).toFixed(2)}s">`
+          +`<rect x="40" y="${y}" width="228" height="22" rx="5" fill="${isStop?'rgba(255,120,100,.14)':'rgba(255,255,255,.035)'}" stroke="${isStop?red:'#2b3c62'}" stroke-width="${isStop?1.8:1}"/>`
+          +`<text x="50" y="${y+15}" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${isStop?red:cyan}">${plain(t)}</text>`
+          +(isStop?`<circle class="${pre}Blink" cx="256" cy="${y+11}" r="8" fill="none" stroke="${red}" stroke-width="2"/>`
+                 +`<text x="256" y="${y+15}" text-anchor="middle" font-size="11" font-weight="bold" fill="${red}">?</text>`:'')
+          +`</g>`
+          +`<path class="${pre}Spot" style="animation-delay:${d}s;animation-duration:${du}s" d="M30 ${y+4} l7 7 l-7 7 z" fill="${gold}"/>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="14" y="22" width="16" height="16" rx="4" fill="rgba(255,215,106,.2)" stroke="${gold}" stroke-width="1.4"/>`
+        +`<text x="22" y="34" text-anchor="middle" font-size="10" font-weight="bold" fill="${gold}">1</text>`
+        +`<rect x="14" y="${30+stop*26}" width="16" height="16" rx="4" fill="rgba(255,120,100,.2)" stroke="${red}" stroke-width="1.4"/>`
+        +`<text x="22" y="${42+stop*26}" text-anchor="middle" font-size="10" font-weight="bold" fill="${red}">!</text></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.8s"><rect x="284" y="${30+stop*26-4}" width="30" height="24" rx="7" fill="rgba(255,120,100,.14)" stroke="${red}" stroke-width="1.5"/>`
+        +`<text x="299" y="${30+stop*26+13}" text-anchor="middle" font-size="10.5" font-weight="bold" fill="${red}">стоп</text></g>`;
+      s+=`${tx(159,30+ln.length*26+18,11,dim,'подсветка идёт по строкам — на этой она останавливается',{})}`;
+      return s;
+    }
+    if(K==='printDebug'){ /* отладочная печать значений */
+      const out=(v.out||['i = 1   шаги = 1','i = 2   шаги = 2','i = 3   шаги = 3']);
+      let s=`<rect x="36" y="26" width="246" height="${out.length*26+30}" rx="11" fill="rgba(8,14,30,.94)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<rect x="36" y="26" width="246" height="3" rx="1.5" fill="${grn}" opacity=".8"/>`
+        +`${tx(159,46,10.5,grn,'отладочная печать',{b:1})}`;
+      out.forEach((t,k)=>{
+        s+=`<text x="52" y="${70+k*26}" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}" opacity="0">${plain(t)}`
+          +`<animate attributeName="opacity" values="0;1" dur=".3s" begin="${(0.5+k*0.4).toFixed(2)}s" fill="freeze"/></text>`;
+      });
+      s+=`${tx(159,out.length*26+72,11,dim,'команда «вывести» показывает, что происходит внутри',{})}`;
+      return s;
+    }
+    if(K==='traceErr'){ /* сравниваем с тем, что должно быть */
+      const head=(v.head||['шаг','i','получилось','должно быть']), rows=(v.rows||[]);
+      const cw=[54,44,86,86], x0=[16,74,122,212];
+      const hy=28, rh=28;
+      let s=`<g class="${pre}Pop"><rect x="16" y="${hy}" width="286" height="${rh}" rx="8" fill="${A}" opacity=".16" stroke="${A}" stroke-width="1.5"/></g>`;
+      head.forEach((h,k)=>{ s+=`${tx(x0[k]+cw[k]/2,hy+19,10.5,k>=2&&k===3?grn:A,h,{b:1})}`; });
+      s+=`<path d="M120 ${hy-10} h178" stroke="${grn}" stroke-width="1.6" opacity=".7"/><path d="M120 ${hy-10} v6 M298 ${hy-10} v6" stroke="${grn}" stroke-width="1.6" opacity=".7"/>`
+        +`${tx(209,hy-16,9.5,grn,'сравниваем',{})}`;
+      rows.forEach((r,k)=>{
+        const y=hy+rh+k*rh;
+        s+=`<rect x="16" y="${y}" width="286" height="${rh}" fill="${k%2?'rgba(255,255,255,.05)':'rgba(255,255,255,.015)'}" stroke="#2b3c62" stroke-width="1"/>`;
+        r.forEach((cv,c)=>{
+          const wrong=(c===2 && plain(cv)!==plain(r[3]));
+          const col=wrong?red:(c===3?grn:(c===0?dim:ink));
+          s+=`${tx(x0[c]+cw[c]/2, y+20, c===0?11:13, col, cv, {b:c>0, georgia:c>0})}`;
+          if(wrong) s+=`<rect class="${pre}Glow" x="${x0[c]+2}" y="${y+2}" width="${cw[c]-4}" height="${rh-4}" rx="6" fill="none" stroke="${red}" stroke-width="2" opacity=".6"/>`;
+        });
+      });
+      const by=hy+rh+rows.length*rh;
+      const nl=wrapT(plain(v.note||'там, где получилось не то — ошибка'),44).slice(0,2), nh=12+nl.length*15;
+      s+=`<rect x="16" y="${by+8}" width="286" height="${nh}" rx="9" fill="rgba(255,255,255,.04)" stroke="${red}" stroke-width="1.6"/>`
+        +nl.map((t,k)=>tx(159,by+26+k*15,Math.min(11,252/Math.max(1,t.length)/0.7),red,t,{b:1})).join('');
+      return s;
+    }
+    if(K==='breakpoints'){ /* точка останова и лупа */
+      const ln=(v.lines||['шаги = 0','пока шаги < 3:','    шаг вперёд','    шаги = шаги + 1']);
+      const bp=v.bp||3;
+      let s=`<rect x="14" y="26" width="188" height="${ln.length*26+16}" rx="11" fill="rgba(8,14,30,.9)" stroke="${A}" stroke-opacity=".45" stroke-width="1.5"/>`;
+      ln.forEach((t,k)=>{
+        const y=34+k*26, isB=(k===bp);
+        s+=`<rect x="20" y="${y}" width="176" height="22" rx="5" fill="${isB?'rgba(255,120,100,.14)':'rgba(255,255,255,.035)'}" stroke="${isB?red:'#2b3c62'}" stroke-width="1"/>`
+          +`<text x="30" y="${y+15}" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${isB?red:cyan}">${plain(t.trim())}</text>`;
+        if(isB) s+=`<circle class="${pre}Pulse" cx="14" cy="${y+11}" r="8" fill="${red || '#ff9a8a'}" opacity=".85" stroke="#fffdf2" stroke-width="1.2"/>`;
+      });
+      s+=`<path d="M206 108 H222" stroke="${A}" stroke-width="1.8" stroke-dasharray="5 4" class="${pre}Dash"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.35s"><circle cx="262" cy="108" r="42" fill="rgba(126,168,255,.08)" stroke="${A}" stroke-width="2.6"/>`
+        +`<circle cx="262" cy="108" r="37" fill="rgba(8,14,30,.94)"/>`
+        +`<path d="M292 138 l18 18" stroke="${A}" stroke-width="6" stroke-linecap="round"/>`
+        +`${tx(262,100,10,dim,'сейчас',{})}${tx(262,120,16,grn,v.val||'шаги = 1',{b:1})}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.6s"><rect x="16" y="${26+ln.length*26+26}" width="286" height="28" rx="9" fill="rgba(255,255,255,.04)" stroke="${red}" stroke-width="1.5"/>`
+        +`${tx(159,26+ln.length*26+45,11,red,'красная точка — программа останавливается, и видно значения',{})}</g>`;
+      return s;
+    }
+    if(K==='bisect'){ /* ищем ошибку делением пополам */
+      const n=8, bw=32, gp=4, x0=Math.round((318-(n*bw+(n-1)*gp))/2), y=74;
+      let s='';
+      for(let k=0;k<n;k++){
+        const x=x0+k*(bw+gp), firstHalf=(k<4), secondHalf=(k>=6);
+        const c=firstHalf?grn:(k===7?red:A);
+        s+=`<rect x="${x}" y="${y}" width="${bw}" height="34" rx="6" fill="rgba(15,25,46,.96)" stroke="#2b3c62" stroke-width="1.4"/>`
+          +`<rect x="${x}" y="${y}" width="${bw}" height="34" rx="6" fill="${c}" opacity="0">`
+          +(firstHalf?`<animate attributeName="opacity" values="0;.22" dur=".4s" begin=".5s" fill="freeze"/>`:'')
+          +(secondHalf&&k!==7?`<animate attributeName="opacity" values="0;.18" dur=".4s" begin="1.5s" fill="freeze"/>`:'')
+          +`</rect>`
+          +`${tx(x+bw/2,y+22,12,A,''+(k+1),{b:1})}`;
+      }
+      s+=`<path d="M${x0} ${y-10} h${4*bw+3*gp}" stroke="${grn}" stroke-width="2" opacity="0"><animate attributeName="opacity" values="0;.8" dur=".4s" begin=".5s" fill="freeze"/></path>`
+        +`${tx(x0+(4*bw+3*gp)/2,y-16,10,grn,'здесь всё верно',{})}`;
+      s+=`<path d="M${x0+6*(bw+gp)} ${y+44} h${2*bw+gp}" stroke="${gold}" stroke-width="2" opacity="0"><animate attributeName="opacity" values="0;.8" dur=".4s" begin="1.5s" fill="freeze"/></path>`
+        +`${tx(x0+7*(bw+gp),y+58,10,gold,'делим ещё раз',{})}`;
+      s+=`<circle class="${pre}Glow" cx="${x0+7*(bw+gp)+bw/2}" cy="${y+17}" r="24" fill="none" stroke="${red}" stroke-width="2.4" opacity=".5" style="animation-delay:2.2s"/>`
+        +`<path d="M${x0+7*(bw+gp)+bw/2} ${y+17} l14 14" stroke="${red}" stroke-width="3" opacity="0"><animate attributeName="opacity" values="0;1" dur=".3s" begin="2.2s" fill="freeze"/></path>`
+        +`${tx(159,196,11.5,red,'ошибка в последнем блоке — его и проверяем',{b:1})}`;
+      s+=`${tx(159,214,11,dim,'проверяем половину — и снова делим пополам',{})}`;
+      return s;
+    }
+    if(K==='fixpatch'){ /* как выглядит исправление */
+      let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="14" y="34" width="132" height="86" rx="11" fill="rgba(52,22,26,.75)" stroke="${red}" stroke-width="2"/>`
+        +`${tx(80,54,11,red,'было',{b:1})}`
+        +`<text x="30" y="80" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${red}">вперёд шаг</text>`
+        +`<path d="M30 86 h66" stroke="${red}" stroke-width="2.4"/>`
+        +`${tx(80,110,10.5,dim,'компьютер не знает',{})}</g>`;
+      s+=`<path d="M152 77 h26" stroke="${A}" stroke-width="2.4" opacity=".8"/><circle cx="152" cy="77" r="3.6" fill="${A}" style="--run:26px" class="${pre}Dot"/><path d="M174 73 l6 4 l-6 4" fill="none" stroke="${A}" stroke-width="2.2"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.3s" filter="url(#${pre}sh)"><rect x="188" y="34" width="116" height="86" rx="11" fill="rgba(19,44,35,.8)" stroke="${grn}" stroke-width="2"/>`
+        +`${tx(246,54,11,grn,'стало',{b:1})}`
+        +`<text x="200" y="80" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">шаг вперёд</text>`
+        +`<path d="M264 92 l6 7 l12 -16" fill="none" stroke="${grn}" stroke-width="2.8"/></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.6s"><rect x="20" y="136" width="278" height="30" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,156,11.5,grn,'исправляем одну строку и снова запускаем',{b:1})}</g>`;
+      s+=`${tx(159,186,11,dim,'ищем ошибку — меняем только её, остальное не трогаем',{})}`;
+      return s;
+    }
+    if(K==='checklist'){ /* проверь перед запуском */
+      const it=(v.items||['понял, что должна делать программа','проверил порядок строк','проверил условие выхода из цикла','запустил на маленьком примере']);
+      let s='';
+      it.forEach((t,k)=>{
+        const y=26+k*44;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.12*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<rect x="16" y="${y}" width="286" height="36" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-opacity=".45" stroke-width="1.6"/>`
+          +`<rect x="28" y="${y+8}" width="20" height="20" rx="6" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="1.6"/>`
+          +`<path d="M32 ${y+18} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.6" stroke-dasharray="20" stroke-dashoffset="20">`
+          +`<animate attributeName="stroke-dashoffset" values="20;0" dur=".4s" begin="${(0.6+k*0.35).toFixed(2)}s" fill="freeze"/></path>`
+          +`${tx(62,y+22,Math.min(11.5,220/Math.max(1,t.length)/0.66),ink,t,{an:'start',b:1})}</g>`;
+      });
+      s+=`${tx(159,26+it.length*44+4,11,dim,'четыре проверки перед запуском программы',{})}`;
+      return s;
+    }
+    if(K==='fixkit'){ /* набор инструментов отладчика */
+      const tools=[
+        {t:'печать', d:'видеть значения', ic:'num', c:grn},
+        {t:'трассировка', d:'таблица по шагам', ic:'lines', c:blu},
+        {t:'деление пополам', d:'сузить место', ic:'gear', c:gold},
+        {t:'точка останова', d:'остановка и просмотр', ic:'quest', c:red}
+      ];
+      let s=`<path d="M126 34 h66 v-10 a8 8 0 0 0 -8 -8 h-50 a8 8 0 0 0 -8 8 z" fill="none" stroke="${A}" stroke-width="2.4" opacity=".7"/>`;
+      s+=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="16" y="34" width="286" height="160" rx="14" fill="url(#${pre}card)" stroke="${A}" stroke-width="2.4"/>`
+        +`<rect x="16" y="34" width="286" height="3.4" rx="1.7" fill="url(#${pre}bar)"/></g>`;
+      tools.forEach((q,k)=>{
+        const x=30+(k%2)*140, y=54+Math.floor(k/2)*68;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.2+0.16*k).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="126" height="56" rx="10" fill="rgba(15,25,46,.95)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<circle cx="${x+26}" cy="${y+28}" r="17" fill="${q.c}" opacity=".13" stroke="${q.c}" stroke-width="1.3"/>`
+          +`${icon(q.ic,x+26,y+28,q.c,26)}`
+          +`${tx(x+50,y+24,11,q.c,q.t,{an:'start',b:1})}`
+          +`${tx(x+50,y+40,Math.min(9.5,66/(Math.max(1,q.d.length)*0.72)),dim,q.d,{an:'start'})}</g>`;
+      });
+      s+=`${tx(159,208,11,dim,'набор инструментов, которые помогают найти ошибку',{})}`;
+      return s;
+    }
+    if(K==='guess'){ /* предскажи результат, потом проверь */
+      const opts=v.opts||['шаги = 3','шаги = 4','шаги = 0'];
+      const good=(v.ok===undefined?0:v.ok);
+      const ln=(v.lines||['шаги = 0','пока шаги < 3:','    шаги = шаги + 1','вывести шаги']);
+      let s=`<rect x="12" y="30" width="136" height="${ln.length*24+16}" rx="10" fill="rgba(8,14,30,.92)" stroke="${A}" stroke-opacity=".5" stroke-width="1.5"/>`;
+      ln.forEach((t,k)=>{
+        const y=40+k*24;
+        s+=`<rect x="18" y="${y}" width="124" height="20" rx="5" fill="rgba(255,255,255,.04)"/>`
+          +`<text x="26" y="${y+14}" font-size="10" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">${plain(t)}</text>`;
+      });
+      opts.forEach((t,k)=>{
+        const y=44+k*46, on=(k===good);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.15).toFixed(2)}s">`
+          +`<rect x="162" y="${y}" width="142" height="38" rx="10" fill="${on?'rgba(19,44,35,.8)':'rgba(15,25,46,.9)'}" stroke="${on?grn:cardB}" stroke-width="${on?2.2:1.6}"/>`
+          +`<text x="233" y="${y+24}" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${on?grn:'#8ea3c8'}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(t)}</text>`;
+        if(on) s+=`<g opacity="0"><animate attributeName="opacity" values="0;1" dur=".4s" begin="1.8s" fill="freeze"/>`
+          +`<circle class="${pre}Glow" cx="233" cy="${y+19}" r="26" fill="none" stroke="${grn}" stroke-width="2" opacity=".5"/>`
+          +`<path d="M292 ${y+19} l5 6 l10 -13" fill="none" stroke="${grn}" stroke-width="2.6"/></g>`;
+        s+=`</g>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:2.1s"><rect x="16" y="186" width="288" height="28" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.6"/>`
+        +`${tx(160,205,11,grn,v.note||'сначала предскажи ответ — потом проверь',{b:1})}</g>`;
+      s+=`${tx(80,30+ln.length*24+16+4,10,dim,'программа',{})}`;
+      return s;
+    }
+    if(K==='summary514'){ /* план отладки из пяти шагов */
+      const st4=[{t:'пойми, что должно получиться',c:cyan},{t:'проверь на маленьком примере',c:blu},{t:'найди место: шаг за шагом или пополам',c:gold},{t:'посмотри значения переменных',c:grn},{t:'исправь одну строку и проверь снова',c:red}];
+      let s=`<path d="M44 34 V${34+4*40}" stroke="${A}" stroke-width="2.4" opacity=".4" stroke-dasharray="7 6" class="${pre}Dash"/>`;
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="5s" repeatCount="indefinite" path="M44 34 V${34+4*40}"/></circle>`;
+      st4.forEach((q,k)=>{
+        const y=34+k*40;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.12*k).toFixed(2)}s" filter="url(#${pre}sh)">`
+          +`<circle cx="44" cy="${y}" r="14" fill="rgba(10,18,36,.97)" stroke="${q.c}" stroke-width="2.2"/>`
+          +`<text x="44" y="${y+5}" text-anchor="middle" font-size="13" font-weight="bold" fill="${q.c}" font-family="Georgia,serif">${k+1}</text>`
+          +`<rect x="66" y="${y-15}" width="238" height="30" rx="9" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="1.7"/>`
+          +`${tx(72,y+4,Math.min(11,222/Math.max(1,q.t.length)/0.66),q.c,q.t,{an:'start',b:1})}</g>`;
+      });
+      s+=`${tx(159,214,11,dim,'так ищут ошибку настоящие программисты',{})}`;
+      return s;
+    }
+    if(K==='find'){ /* интерактив: найди строку с ошибкой */
+      const ln=v.lines||[], sel=(st&&typeof st.find==='number')?st.find:-1, bad=(st&&typeof st.bad==='number')?st.bad:-1;
+      const okI=ln.findIndex(x=>x.ok), done=(sel>=0 && sel===okI);
+      let s=`<g class="${pre}Pop"><rect x="16" y="18" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${tx(159,38,Math.min(12,240/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Нажми на строку с ошибкой',{b:1})}</g>`;
+      ln.forEach((L,k)=>{
+        const y=58+k*26, on=(done&&k===okI), isBad=(k===bad);
+        const c=on?grn:(isBad?red:cyan);
+        const bg=on?'rgba(19,44,35,.97)':(isBad?'rgba(52,22,26,.97)':'rgba(15,25,46,.97)');
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.08*k).toFixed(2)}s;cursor:pointer" onclick="infFind('${lk}',${k},${L.ok?1:0})">`
+          +`<rect x="24" y="${y}" width="270" height="22" rx="5" fill="${bg}" stroke="${c}" stroke-width="${(on||isBad)?1.8:1}" stroke-opacity=".95"/>`
+          +`${tx(38,y+15,10,'#5a6d96',''+(k+1),{})}`
+          +`<text x="${54+(L.i?14:0)}" y="${y+15}" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${c}">${plain(L.t)}</text>`
+          +(on?`<path d="M274 ${y+11} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')
+          +(isBad?`${tx(262,y+15,10.5,red,'нет',{})}`:'')
+          +`</g>`;
+      });
+      const by=58+ln.length*26;
+      const msg=done?(v.exp||'Верно — ошибка здесь.'):(bad>=0?'Здесь всё в порядке — ищи дальше':'Нажми на строку, где ошибка');
+      const ml=wrapT(plain(msg),44).slice(0,3), mh=12+ml.length*15;
+      s+=`<g class="${pre}Rise"><rect x="20" y="${by+8}" width="278" height="${mh}" rx="9" fill="${done?'rgba(125,224,160,.12)':'rgba(15,25,46,.95)'}" stroke="${done?grn:A}" stroke-width="1.7"/>`
+        +ml.map((t,k)=>tx(159,by+26+k*15,Math.min(11.5,252/Math.max(1,t.length)/0.7),done?grn:dim,t,{b:done})).join('')+`</g>`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -1200,7 +1492,7 @@
     if(K==='tests') return 34+(v.runs||[]).length*50+26;
     if(K==='belt') return 212;
     if(K==='mindmap') return 226;
-    if(K==='pick'){ const ql=plain(v.q||'').length; return (ql>30?78:70)+(v.opts||[]).length*40+48; }
+    if(K==='pick'){ const ql=plain(v.q||'').length; return (ql>30?78:70)+(v.opts||[]).length*40+72; }
     if(K==='var') return 186;
     if(K==='assign') return 194;
     if(K==='input') return 190;
@@ -1208,6 +1500,20 @@
     if(K==='trace') return 26+27+(v.rows||[]).length*27+44;
     if(K==='compare') return 208;
     if(K==='text') return ((v.lines||[]).length<=2)?(132+26*(v.lines||[]).length):Math.max(134, (v.lines||[]).length*39+54);
+    if(K==='broken') return 216;
+    if(K==='kinds3') return 218;
+    if(K==='console') return 204;
+    if(K==='stepdebug') return (v.lines||['a','b','c','d','e']).length*26+62;
+    if(K==='printDebug') return (v.out||['a','b','c']).length*26+96;
+    if(K==='traceErr') return 28+28+(v.rows||[]).length*28+58;
+    if(K==='breakpoints') return (v.lines||['a','b','c','d']).length*26+104;
+    if(K==='bisect') return 226;
+    if(K==='fixpatch') return 200;
+    if(K==='checklist') return (v.items||['a','b','c','d']).length*44+46;
+    if(K==='fixkit') return 216;
+    if(K==='guess') return 222;
+    if(K==='summary514') return 226;
+    if(K==='find') return 58+(v.lines||[]).length*26+68;
     if(K==='bigtask') return 226;
     if(K==='plan') return 216;
     if(K==='recipe') return 200;
@@ -1672,6 +1978,46 @@
       tasks:[
         {q:'Сколько раз выполнится помощник «квадрат», если в программе три вызова «квадрат»?', kind:'unit', ans:3, tol:0, hints:['Каждый вызов — одно выполнение.','Три вызова — три раза.'], sol:'3'},
         {q:'Как воспользоваться помощником с именем «дорога»?', kind:'choice', choices:['написать его имя: дорога','написать слово «вызов»','скопировать все его команды в программу','написать имя в кавычках'], ans:0, tol:0, hints:['Вызов — это просто имя алгоритма.','Пишем имя: дорога.'], sol:'написать его имя: дорога'}
+      ] },
+    { id:514, title:'Ошибки в программе: как найти и исправить', ico:'🛠', src:'Информатика · 5–6 класс · С нуля: отладка',
+      explain:[
+        'Иногда программа не работает: компьютер делает не то, что мы хотели. Это нормально — ошибаются все программисты, даже взрослые.',
+        'Ошибки бывают разные: опечатка в команде, неверный порядок шагов или неправильное условие.',
+        'Опечатку компьютер замечает сам: такой команды он не знает, поэтому сразу сообщает об ошибке и не начинает работу.',
+        'Ошибка в порядке или в условии хитрее: программа запустится, но результат будет неверным. Компьютер об этом не скажет — искать придётся самому.',
+        'Поэтому программу сначала проверяют на маленьком примере, где правильный ответ известен заранее.',
+        'Первый помощник в поиске ошибки — пошаговое выполнение: смотрим, как подсветка идёт по строкам, и находим то место, где всё пошло не так.',
+        'Второй помощник — отладочная печать: просим программу показать значения переменных на каждом шаге.',
+        'Третий помощник — трассировка: записываем значения в таблицу и сравниваем с тем, что должно было получиться.',
+        'Четвёртый помощник — точка останова: программа останавливается в нужном месте, и мы спокойно смотрим, что лежит в переменных.',
+        'Если программа длинная, её делят пополам: сначала проверяют первую половину; если там всё верно — ищут во второй и снова делят её пополам.',
+        'Нашли ошибку — исправляем ровно одну строку и снова проверяем. Менять сразу много строк нельзя: потом непонятно, что именно помогло.',
+        'Перед запуском полезно проверить себя по списку: понял ли задачу, верный ли порядок строк, выходит ли цикл, проверен ли маленький пример.',
+        'Если программа зациклилась, ищите строку, которая меняет условие цикла: скорее всего, её забыли написать или написали неверно.',
+        'Ошибки — не беда: каждая найденная ошибка делает программиста опытнее.',
+        'Проверь себя: где искать ошибку, если программа запустилась, но ответ неверный?',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'Программа не работает', v:{kind:'broken'}, r:'Робот врезался в стену.', d:'Робот ехал вперёд, но впереди стена. Программа сделала не то, что нужно, — значит, в ней ошибка.'},
+        {h:'Три вида ошибок', v:{kind:'kinds3'}, r:'Опечатка, порядок, условие.', d:'Опечатку компьютер замечает сам, а ошибку в порядке и в условии — нет: программа запустится, но ответ будет неверным.'},
+        {h:'Компьютер сообщает', v:{kind:'console', lines:['шаги = 0','пока шаги < 3:','    вперёд шаг','    шаги = шаги + 1','вывести шаги']}, r:'Опечатку компьютер видит сам.', d:'Компьютер не знает команды «вперёд шаг» и прямо говорит, в какой строке проблема.'},
+        {h:'Идём по шагам', v:{kind:'stepdebug', lines:['взять чашку','положить чай','налить кипяток','выпить чай','убрать чашку'], stop:3}, r:'Подсветка останавливается на плохом шаге.', d:'Выполняем программу по шагам и смотрим, где результат впервые стал неправильным.'},
+        {h:'Печать значений', v:{kind:'printDebug', out:['i = 1   шаги = 1','i = 2   шаги = 2','i = 3   шаги = 3']}, r:'Просим показать, что внутри.', d:'Команда «вывести» печатает значения переменных: сразу видно, где число перестало расти правильно.'},
+        {h:'Сравниваем с ответом', v:{kind:'traceErr', head:['шаг','i','получилось','должно быть'], rows:[['1','1','1','1'],['2','2','3','3'],['3','3','9','6']], note:'на третьем шаге получилось 9, а должно быть 6 — ошибка здесь'}, r:'Где не совпало — там ошибка.', d:'Записываем значения в таблицу и сравниваем столбцы: красная клетка показывает шаг с ошибкой.'},
+        {h:'Точка останова', v:{kind:'breakpoints', lines:['шаги = 0','пока шаги < 3:','    шаг вперёд','    шаги = шаги + 1'], bp:3, val:'шаги = 1'}, r:'Остановились и посмотрели.', d:'Красная точка останавливает программу в нужном месте, и лупа показывает, что лежит в переменной в этот момент.'},
+        {h:'Делим пополам', v:{kind:'bisect'}, r:'Проверяем половину — и делим снова.', d:'В длинной программе сначала проверяют первую половину: если там всё верно, ошибка во второй — и её снова делят пополам.'},
+        {h:'Как выглядит исправление', v:{kind:'fixpatch'}, r:'Меняем одну строку.', d:'Исправляем только ту строку, где ошибка, и снова запускаем программу.'},
+        {h:'Найди ошибку сам', v:{kind:'find', q:'Нажми на строку с ошибкой', lines:[{t:'шаги = 0'},{t:'пока шаги < 3:'},{t:'    шаг вперёд'},{t:'    шаги = шаги + 2', ok:1},{t:'вывести шаги'}], exp:'Верно! Шаги растут по два, поэтому цикл выйдет слишком рано.'}, r:'Проверь себя: найди строку с ошибкой.', d:'Нажми на строку, которая, по-твоему, написана неверно. Я проверю и объясню.'},
+        {h:'Проверь перед запуском', v:{kind:'checklist', items:['понял, что должна делать программа','проверил порядок строк','проверил условие выхода из цикла','запустил на маленьком примере']}, r:'Четыре проверки перед запуском.', d:'Такие проверки экономят время: часто ошибку видно ещё до запуска программы.'},
+        {h:'Если зациклилось', v:{kind:'pick', q:'Программа крутится без конца. Что проверить первым делом?', opts:[{t:'строку, которая меняет условие цикла', ok:1},{t:'название программы'},{t:'цвет букв на экране'}], exp:'Цикл заканчивается, когда условие станет ложным. Проверь строку, которая меняет условие.'}, r:'Проверь себя: как выйти из цикла.', d:'Нажми на вариант ответа — я проверю и объясню.'},
+        {h:'Аптечка отладчика', v:{kind:'fixkit'}, r:'Четыре инструмента против ошибок.', d:'Печать, трассировка, деление пополам и точка останова — этим пользуются настоящие программисты.'},
+        {h:'Предскажи результат', v:{kind:'guess', lines:['шаги = 0','пока шаги < 3:','    шаги = шаги + 1','вывести шаги'], opts:['шаги = 3','шаги = 4','шаги = 0'], ok:0, note:'сначала предскажи ответ — потом проверь'}, r:'Сначала догадайся, потом проверь.', d:'Умение предсказывать результат помогает сразу заметить, что программа работает неправильно.'},
+        {h:'План отладки', v:{kind:'summary514'}, r:'Пять шагов поиска ошибки.', d:'По этому плану можно найти ошибку в любой программе: от «что должно быть» до «исправь и проверь снова».'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'ошибка → найди место', b:1},{t:'шаг за шагом · печать · трассировка', c:grn},{t:'исправь одну строку и проверь', c:gold}]}, r:'Запомни, как искать ошибки.', d:'Главное: не бояться ошибок и искать их по шагам, а не наугад.'} ],
+      check:{ q:'Программа запустилась, но ответ неверный. Где искать ошибку?', choices:['в порядке шагов, в условии или в вычислениях','в названии файла','нужно переустановить компьютер'], ans:0, exp:'Если программа запускается, ошибка обычно в логике: порядок шагов, условие или вычисления.' },
+      tasks:[
+        {q:'Сколько строк нужно менять за один раз, когда исправляешь ошибку?', kind:'unit', ans:1, tol:0, hints:['Иначе непонятно, что помогло.','Одну — ту, где ошибка.'], sol:'1'},
+        {q:'Как быстрее всего найти ошибку в длинной программе?', kind:'choice', choices:['делить программу пополам и проверять половины','удалить программу и написать заново','запускать её много раз подряд'], ans:0, tol:0, hints:['Каждая проверка сужает место поиска вдвое.','Делим пополам.'], sol:'делить программу пополам и проверять половины'}
       ] }
   ];
 
@@ -1681,18 +2027,20 @@
     css(pre);
     const step=LV.step||0;
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; st.seq=[]; st.bad=-1; }
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; st.seq=[]; st.bad=-1; st.find=-1; }
     const go=st.go||0;
     const s=spec.slides[Math.min(step,spec.slides.length-1)];
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
       ? wkRow(wkBtn('собрать заново',`infSeq('${lk}',-1,0)`))
+      : (s.v.kind==='find')
+      ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find')? (st.find>=0 && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -1701,6 +2049,11 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infFind=function(lk,i,ok){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(i<0){ st.find=-1; st.bad=-1; chRender(0); return; }
+    st.find=i; st.bad=ok?(-1):i; chRender(0);
+  };
   window.infSeq=function(lk,i,ord){
     const st=CHS[lk]||(CHS[lk]={});
     if(i<0){ st.seq=[]; st.bad=-1; chRender(0); return; }
