@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 23 уроков (id 500–522) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 24 уроков (id 500–523) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -38,6 +38,13 @@
     [/двоичн|разряд|0 и 1|ноль|нул|единиц/i,'bits'],
     [/порядок|шаг|список|номер|строк/i,'lines']
   ];
+  const drawC=(cx,cy,r,col,dur,beg,pre)=>{
+    const L=Math.round(2*Math.PI*r);
+    const d=`M${cx} ${cy-r} A${r} ${r} 0 1 1 ${cx-0.01} ${cy-r}`;
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;.62;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +`<circle r="5" fill="${gold}" stroke="#fffdf2" stroke-width="1.3"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`;
+  };
   const drawRR=(x,y,w,h,rx,col,dur,beg,sw,pre,opt)=>{
     const r=Math.min(rx||8,Math.min(w,h)/2);
     const d=`M${x+r} ${y} H${x+w-r} A${r} ${r} 0 0 1 ${x+w} ${y+r} V${y+h-r} A${r} ${r} 0 0 1 ${x+w-r} ${y+h} H${x+r} A${r} ${r} 0 0 1 ${x} ${y+h-r} V${y+r} A${r} ${r} 0 0 1 ${x+r} ${y}`;
@@ -3636,6 +3643,417 @@
       s+=plate2(24,206,270,30,go?grn:cardB,go?'все четыре ответа на месте':'проверь себя устно',11.5,pre);
       return s;
     }
+    if(K==='nettask'){ /* как доходит сообщение */
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="30" rx="10" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>`
+        +`${tx(159,34,12.5,gold,'как сообщение доходит до друга?',{b:1})}</g>`;
+      s+=drawRR(28,60,64,44,10,cyan,2.4,0.2,1.9,pre);
+      s+=`${fit(60,88,10.5,cyan,'твой',{},54)}${fit(60,102,10.5,cyan,'компьютер',{},58)}`;
+      s+=drawRR(228,60,64,44,10,grn,2.4,0.35,1.9,pre);
+      s+=`${fit(260,88,10.5,grn,'друг',{},50)}${fit(260,102,10.5,grn,'далеко',{},50)}`;
+      s+=drawLL({x:92,y:82},{x:228,y:82},cardB,2,1.2,0.5,pre);
+      for(let k=0;k<3;k++){
+        s+=`<g><animateMotion dur="4s" begin="${(0.8+k*0.35).toFixed(2)}s" repeatCount="indefinite" path="M92 82 H228"/>`
+          +`<rect x="-15" y="-9" width="30" height="18" rx="4" fill="rgba(19,60,44,.97)" stroke="${gold}" stroke-width="1.5"/>`
+          +`<text x="0" y="4" text-anchor="middle" font-size="9.5" font-weight="bold" fill="${gold}">часть ${k+1}</text></g>`;
+      }
+      s+=`<circle class="${pre}Pop" cx="159" cy="82" r="15" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="2"/>`;
+      s+=`${fit(159,128,11,dim,'сообщение идёт через сеть',{},250)}`;
+      s+=plate2(24,144,270,30,go?grn:cardB,go?'его делят на части — пакеты':'что происходит с сообщением?',11.5,pre);
+      s+=`${fit(159,196,11.5,ink,'по пути части идут разными дорогами',{b:1},290)}`;
+      return s;
+    }
+    if(K==='network'){ /* что такое сеть */
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`${fit(159,33,12,cyan,'сеть — это соединённые компьютеры',{b:1},250)}</g>`;
+      const N=[{x:60,y:74,t:1},{x:159,y:56,t:2},{x:258,y:74,t:3},{x:110,y:150,t:4},{x:210,y:150,t:5}];
+      const E=[[0,1],[1,2],[0,3],[1,3],[1,4],[2,4],[3,4]];
+      E.forEach((e,k)=>{
+        s+=drawLL({x:N[e[0]].x,y:N[e[0]].y},{x:N[e[1]].x,y:N[e[1]].y},cardB,2,1.8,0.2+k*0.16,pre);
+      });
+      N.forEach((n,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.6+k*0.12).toFixed(2)}s">`
+          +`<circle cx="${n.x}" cy="${n.y}" r="15" fill="rgba(12,32,34,.97)" stroke="${cyan}" stroke-width="2"/>`
+          +tx(n.x,n.y+5,13,cyan,''+n.t,{b:1})+`</g>`;
+      });
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="5s" repeatCount="indefinite" path="M60 74 L159 56 L258 74 L210 150 L110 150 Z"/></circle>`;
+      s+=plate2(24,180,270,30,go?grn:cardB,go?'у каждого компьютера есть номер в сети':'что общего у этих устройств?',11.5,pre);
+      s+=`${fit(159,232,11,dim,'данные бегут по линиям связи',{},290)}`;
+      return s;
+    }
+    if(K==='localnet'){ /* локальная сеть */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'домашняя и школьная сеть',{b:1},256)}</g>`;
+      s+=drawRR(112,54,94,40,10,gold,2.6,0.2,2,pre);
+      s+=`${fit(159,80,11.5,gold,'роутер',{b:1},80)}`;
+      const dev=[{x:42,y:66,t:'ноутбук',c:cyan},{x:42,y:150,t:'телефон',c:grn},{x:276,y:66,t:'телевизор',c:pur},{x:276,y:150,t:'планшет',c:blu}];
+      dev.forEach((q,k)=>{
+        s+=drawRR(q.x-40,q.y-16,80,32,8,q.c,2.4,0.5+k*0.2,1.8,pre);
+        s+=`${fit(q.x,q.y+4,10.5,q.c,q.t,{},76)}`;
+        const ax=(q.x<159? q.x+40 : q.x-40);
+        s+=drawLL({x:ax,y:q.y},{x:(q.x<159?112:206),y:q.y===66?66:150+0},cardB,1.8,1.4,0.8+k*0.2,pre);
+      });
+      s+=plate2(24,192,270,30,go?grn:cardB,go?'роутер соединяет все устройства':'кто связывает устройства?',11.5,pre);
+      s+=`${fit(159,244,11,dim,'это и есть локальная сеть',{},290)}`;
+      return s;
+    }
+    if(K==='globe'){ /* интернет — сеть сетей */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${blu}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,blu,'интернет — сеть сетей',{b:1},256)}</g>`;
+      const cx=159, cy=118, r=62;
+      s+=drawC(cx,cy,r,blu,3.4,0.2,pre);
+      s+=`<ellipse cx="${cx}" cy="${cy}" rx="${r}" ry="${(r*0.35).toFixed(1)}" fill="none" stroke="${blu}" stroke-width="1.6" opacity=".7"/>`;
+      s+=`<ellipse cx="${cx}" cy="${cy}" rx="${(r*0.35).toFixed(1)}" ry="${r}" fill="none" stroke="${blu}" stroke-width="1.6" opacity=".7"/>`;
+      s+=`<line x1="${cx-r}" y1="${cy}" x2="${cx+r}" y2="${cy}" stroke="${blu}" stroke-width="1.6" opacity=".7"/>`;
+      [[-46,-40],[46,-30],[0,54]].forEach((q,k)=>{
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.8+k*0.2).toFixed(2)}s" cx="${cx+q[0]}" cy="${cy+q[1]}" r="9" fill="${[gold,grn,pur][k]}" stroke="#fffdf2" stroke-width="1.3"/>`;
+      });
+      s+=`<circle r="5" fill="${cyan}"><animateMotion dur="6s" repeatCount="indefinite" path="M113 78 Q159 30 205 88 Q159 172 113 78"/></circle>`;
+      s+=plate2(24,194,270,30,go?grn:cardB,go?'сети соединяются друг с другом':'что такое интернет?',11.5,pre);
+      s+=`${fit(159,246,11,dim,'поэтому связь есть между любыми странами',{},290)}`;
+      return s;
+    }
+    if(K==='ipaddr'){ /* IP-адрес */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,gold,'IP-адрес — номер устройства в сети',{b:1},256)}</g>`;
+      ['192','168','1','25'].forEach((q,k)=>{
+        s+=drawRR(38+k*62,60,52,46,9,k===3?grn:gold,2.6,0.3+k*0.25,2,pre,{pen:k===3});
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.7+k*0.25).toFixed(2)}s">${tx(64+k*62,90,17,k===3?grn:gold,q,{b:1})}</g>`;
+      });
+      s+=`${tx(95,94,20,dim,'.',{b:1})}${tx(157,94,20,dim,'.',{b:1})}${tx(219,94,20,dim,'.',{b:1})}`;
+      s+=fit(159,132,11.5,ink,'четыре числа от 0 до 255',{b:1},290);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.9s"><rect x="40" y="148" width="238" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,171,11.5,gold,'как номер дома, только для компьютера',{b:1},230)+`</g>`;
+      s+=plate2(24,194,270,30,go?grn:cardB,go?'такой адрес у каждого устройства в сети':'из чего состоит адрес?',11.5,pre);
+      return s;
+    }
+    if(K==='ipunique'){ /* у каждого свой адрес */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,cyan,'два устройства — два адреса',{b:1},256)}</g>`;
+      [[36,60,'192.168.1.25',grn,'ноутбук'],[164,60,'192.168.1.30',blu,'телефон']].forEach((q,k)=>{
+        s+=drawRR(q[0],q[1],118,64,10,q[3],2.4,0.25+k*0.25,1.9,pre);
+        s+=fit(q[0]+59,q[1]+26,11,q[3],q[4],{b:1},108);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.7+k*0.25).toFixed(2)}s"><text x="${q[0]+59}" y="${q[1]+48}" text-anchor="middle" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${q[3]}">${q[2]}</text></g>`;
+      });
+      s+=drawLL({x:95,y:124},{x:223,y:124},cardB,1.8,1.2,0.9,pre);
+      s+=`<circle class="${pre}Pop" cx="159" cy="124" r="13" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`${fit(159,124,10,gold,'сеть',{b:1},40)}`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.4s"><rect x="30" y="146" width="258" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.7"/>`
+        +fit(159,169,11.5,cyan,'адреса не повторяются — иначе письмо уйдёт не туда',{b:1},250)+`</g>`;
+      s+=plate2(24,192,270,30,go?grn:cardB,go?'адрес уникален, как номер телефона':'зачем разные адреса?',11.5,pre);
+      return s;
+    }
+    if(K==='dns'){ /* DNS — телефонная книга */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,pur,'имя сайта превращается в адрес',{b:1},256)}</g>`;
+      s+=drawRR(24,56,120,54,10,pur,2.4,0.25,1.9,pre);
+      s+=fit(84,80,11.5,pur,'школа.ру',{b:1},110);
+      s+=fit(84,98,10,dim,'имя понятно человеку',{},112);
+      s+=drawLL({x:144,y:83},{x:196,y:83},pur,2,1.2,0.6,pre);
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="3s" repeatCount="indefinite" path="M146 83 H196"/></circle>`;
+      s+=drawRR(196,56,98,54,10,grn,2.4,0.5,1.9,pre);
+      s+=`<g class="${pre}Pop" style="animation-delay:1s"><text x="245" y="80" text-anchor="middle" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">93.184.216.34</text></g>`;
+      s+=fit(245,98,10,dim,'адрес понятен сети',{},94);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.3s"><rect x="30" y="126" width="258" height="34" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.7"/>`
+        +fit(159,149,11.5,pur,'это делает DNS — «телефонная книга» интернета',{b:1},250)+`</g>`;
+      s+=plate2(24,172,270,30,go?grn:cardB,go?'имя → адрес: так находят сайт':'как из имени получается адрес?',11.5,pre);
+      s+=`${fit(159,224,11,dim,'человек помнит имена, а сеть — числа',{},290)}`;
+      return s;
+    }
+    if(K==='packets'){ /* данные делят на пакеты */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,gold,'файл делят на маленькие пакеты',{b:1},256)}</g>`;
+      s+=drawRR(40,54,238,38,9,cyan,2.6,0.2,2,pre,{pen:true});
+      s+=fit(159,79,11.5,cyan,'файл 100 килобайт',{b:1},220);
+      for(let k=0;k<5;k++){
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.8+k*0.18).toFixed(2)}s">`
+          +`<rect x="${34+k*52}" y="112" width="46" height="34" rx="7" fill="rgba(19,60,44,.97)" stroke="${grn}" stroke-width="1.8"/>`
+          +tx(57+k*52,134,11,grn,'П'+(k+1),{b:1})+`</g>`;
+        s+=drawLL({x:159,y:94},{x:57+k*52,y:110},cardB,1.6,1,0.7+k*0.15,pre);
+      }
+      s+=fit(159,166,11.5,ink,'каждый пакет — часть файла со своим номером',{b:1},292);
+      s+=fit(159,188,11,dim,'номер нужен, чтобы собрать файл в правильном порядке',{},292);
+      s+=plate2(24,204,270,30,go?grn:cardB,go?'100 КБ по 1 КБ = 100 пакетов':'на что делят файл?',11.5,pre);
+      return s;
+    }
+    if(K==='packetroute'){ /* пакеты идут разными путями */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,cyan,'пакеты идут разными дорогами',{b:1},256)}</g>`;
+      const A={x:40,y:104}, B={x:278,y:104};
+      const mid=[[{x:110,y:52},{x:210,y:52}],[{x:159,y:104}],[{x:110,y:156},{x:210,y:156}]];
+      s+=`<circle cx="${A.x}" cy="${A.y}" r="15" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="2"/>`;
+      s+=tx(A.x,A.y+4,9.5,gold,'ты',{b:1});
+      s+=`<circle cx="${B.x}" cy="${B.y}" r="15" fill="rgba(12,32,34,.97)" stroke="${grn}" stroke-width="2"/>`;
+      s+=tx(B.x,B.y+4,9.5,grn,'друг',{b:1});
+      mid.forEach((path,k)=>{
+        let d=`M${A.x+15} ${A.y}`;
+        path.forEach(q=>{ d+=` L${q.x} ${q.y}`; });
+        d+=` L${B.x-15} ${B.y}`;
+        s+=`<path d="${d}" fill="none" stroke="${cardB}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
+        path.forEach((q,j)=>{
+          s+=`<circle class="${pre}Pop" style="animation-delay:${(0.3+k*0.2+j*0.1).toFixed(2)}s" cx="${q.x}" cy="${q.y}" r="10" fill="rgba(12,32,34,.97)" stroke="${[gold,cyan,pur][k]}" stroke-width="1.8"/>`;
+        });
+        s+=`<g><animateMotion dur="4.4s" begin="${(0.6+k*0.5).toFixed(2)}s" repeatCount="indefinite" path="${d}"/>`
+          +`<rect x="-13" y="-8" width="26" height="16" rx="4" fill="rgba(19,60,44,.97)" stroke="${[gold,cyan,pur][k]}" stroke-width="1.4"/>`
+          +`<text x="0" y="4" text-anchor="middle" font-size="9" font-weight="bold" fill="${[gold,cyan,pur][k]}">П${k+1}</text></g>`;
+      });
+      s+=fit(159,192,11.5,ink,'дошли все три — файл собирается у друга',{b:1},292);
+      s+=plate2(24,208,270,30,go?grn:cardB,go?'если пакет потерялся, его отправят снова':'что происходит в пути?',11.5,pre);
+      return s;
+    }
+    if(K==='routerjob'){ /* маршрутизатор */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,gold,'маршрутизатор выбирает дорогу',{b:1},256)}</g>`;
+      s+=drawRR(114,72,90,44,10,gold,2.6,0.2,2,pre);
+      s+=`${fit(159,100,11.5,gold,'роутер',{b:1},80)}`;
+      const out=[{x:52,y:150,t:'быстрее',c:grn,cost:'2'},{x:159,y:164,t:'средний',c:gold,cost:'4'},{x:266,y:150,t:'долгий',c:red,cost:'7'}];
+      out.forEach((q,k)=>{
+        s+=drawLL({x:159,y:116},{x:q.x,y:q.y-14},q.c,2,k===0?2.2:1.6,0.6+k*0.3,pre);
+        s+=drawRR(q.x-46,q.y-14,92,30,8,q.c,2,1+k*0.2,1.7,pre);
+        s+=`${fit(q.x,q.y+5,10.5,q.c,q.t,{},84)}`;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(1.3+k*0.2).toFixed(2)}s"><text x="${q.x+54}" y="${q.y+5}" text-anchor="middle" font-size="11" font-weight="bold" fill="${q.c}">${q.cost}</text></g>`;
+      });
+      s+=plate2(24,196,270,30,go?grn:cardB,go?'пакет пойдёт по дороге с числом 2':'какую дорогу выберет роутер?',11.5,pre);
+      s+=`${fit(159,248,11,dim,'число — это «сколько шагов до цели»',{},290)}`;
+      return s;
+    }
+    if(K==='protocol'){ /* правила передачи */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,grn,'правила передачи — протокол',{b:1},256)}</g>`;
+      const it=[{t:'каждый пакет подписан адресом',c:cyan},{t:'номер пакета — чтобы собрать по порядку',c:gold},{t:'проверка: не испортился ли пакет',c:grn},{t:'если потерялся — попросят повторить',c:pur}];
+      it.forEach((q,k)=>{
+        const y=52+k*40;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12*k).toFixed(2)}s"><rect x="26" y="${y}" width="266" height="32" rx="9" fill="rgba(255,255,255,.04)" stroke="${q.c}" stroke-width="1.7"/>`
+          +`<circle cx="46" cy="${y+16}" r="10" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.3"/>`
+          +tx(46,y+20,11,q.c,''.concat(k+1),{b:1})
+          +fit(170,y+21,11,q.c,q.t,{b:1},215)+`</g>`;
+        s+=drawLL({x:26,y:y+32},{x:292,y:y+32},q.c,2,0.3+k*0.2,1.8,pre);
+      });
+      s+=plate2(26,214,266,30,go?grn:cardB,go?'все правила вместе — протокол TCP/IP':'зачем нужны правила?',11.5,pre);
+      s+=`${fit(159,266,11,dim,'без правил пакеты не соберутся в файл',{},290)}`;
+      return s;
+    }
+    if(K==='wifi'){ /* Wi-Fi и кабель */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${blu}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,blu,'без провода и с проводом',{b:1},256)}</g>`;
+      s+=drawRR(24,60,130,96,12,cyan,2.6,0.2,2,pre);
+      s+=fit(89,84,11.5,cyan,'Wi-Fi',{b:1},110);
+      s+=`<circle cx="89" cy="126" r="10" fill="${cyan}"/>`;
+      for(let k=0;k<3;k++){
+        s+=`<path d="M${89-14-k*10} ${126-14-k*10} q${14+k*10} ${-18-k*12} ${28+k*20} 0" fill="none" stroke="${cyan}" stroke-width="2.4" opacity="0">`
+          +`<animate attributeName="opacity" values="0;.9;0" dur="2.4s" begin="${(k*0.4).toFixed(1)}s" repeatCount="indefinite"/></path>`;
+      }
+      s+=fit(89,174,10,dim,'радиоволны, без провода',{},116);
+      s+=drawRR(164,60,130,96,12,grn,2.6,0.4,2,pre);
+      s+=fit(229,84,11.5,grn,'кабель',{b:1},110);
+      s+=drawLL({x:190,y:126},{x:268,y:126},grn,4,1.6,0.8,pre);
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M190 126 H268"/></circle>`;
+      s+=fit(229,174,10,dim,'надёжнее и быстрее',{},116);
+      s+=plate2(24,186,270,30,go?grn:cardB,go?'и Wi-Fi, и кабель — это сети':'в чём разница?',11.5,pre);
+      s+=`${fit(159,238,11,grn,'Wi-Fi — это способ подключиться, а не сам интернет',{b:1},292)}`;
+      return s;
+    }
+    if(K==='serverclient'){ /* сервер и клиент */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,pur,'браузер просит — сервер отвечает',{b:1},256)}</g>`;
+      s+=drawRR(24,60,116,84,12,cyan,2.6,0.2,2,pre);
+      s+=fit(82,86,11.5,cyan,'браузер',{b:1},100);
+      s+=fit(82,108,10,dim,'клиент',{},100);
+      s+=fit(82,130,10,cyan,'просит страницу',{},104);
+      s+=drawRR(178,60,116,84,12,grn,2.6,0.4,2,pre);
+      s+=fit(236,86,11.5,grn,'сервер',{b:1},100);
+      s+=fit(236,108,10,dim,'хранит сайт',{},100);
+      s+=fit(236,130,10,grn,'отправляет',{},104);
+      s+=`<g><animateMotion dur="3.4s" repeatCount="indefinite" path="M140 84 H178"/>`
+        +`<rect x="-22" y="-8" width="44" height="16" rx="4" fill="rgba(19,60,44,.97)" stroke="${cyan}" stroke-width="1.4"/>`
+        +`<text x="0" y="4" text-anchor="middle" font-size="8.5" font-weight="bold" fill="${cyan}">запрос</text></g>`;
+      s+=`<g><animateMotion dur="3.4s" begin="1.7s" repeatCount="indefinite" path="M178 122 H140"/>`
+        +`<rect x="-24" y="-8" width="48" height="16" rx="4" fill="rgba(19,60,44,.97)" stroke="${grn}" stroke-width="1.4"/>`
+        +`<text x="0" y="4" text-anchor="middle" font-size="8.5" font-weight="bold" fill="${grn}">страница</text></g>`;
+      s+=plate2(24,164,270,30,go?grn:cardB,go?'так браузер получает сайт':'кто с кем разговаривает?',11.5,pre);
+      s+=`${fit(159,216,11,dim,'сервер — компьютер, который отдаёт страницы',{},292)}`;
+      return s;
+    }
+    if(K==='browser'){ /* что делает браузер */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,cyan,'что делает браузер по шагам',{b:1},256)}</g>`;
+      const it=['читает имя сайта','спрашивает у DNS адрес','просит страницу у сервера','собирает пакеты в страницу','показывает её на экране'];
+      it.forEach((q,k)=>{
+        const y=50+k*34;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.15*k).toFixed(2)}s"><rect x="30" y="${y}" width="258" height="28" rx="8" fill="rgba(255,255,255,.04)" stroke="${k===4?grn:cardB}" stroke-width="1.5"/>`
+          +tx(48,y+19,11,gold,''.concat(k+1),{b:1})
+          +fit(176,y+19,11,k===4?grn:ink,q,{},200)+`</g>`;
+        if(k<4) s+=`<path d="M159 ${y+28} v6" stroke="${A}" stroke-width="1.6"/>`;
+      });
+      s+=plate2(30,222,258,30,go?grn:cardB,go?'всё это занимает доли секунды':'что происходит по порядку?',11.5,pre);
+      return s;
+    }
+    if(K==='speed'){ /* скорость передачи */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,gold,'скорость передачи данных',{b:1},256)}</g>`;
+      s+=fit(159,66,12,ink,'скорость измеряют в мегабитах в секунду',{b:1},292);
+      s+=drawRR(30,84,258,34,9,cardB,2.4,0.3,1.8,pre,{pen:true});
+      s+=`<rect x="34" y="88" width="0" height="26" rx="6" fill="rgba(125,224,160,.35)" stroke="${grn}" stroke-width="1.4">`
+        +`<animate fill="freeze" attributeName="width" values="0;248;0" keyTimes="0;.5;1" dur="6s" repeatCount="indefinite"/></rect>`;
+      s+=`<text x="159" y="106" text-anchor="middle" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">10 Мбит/с</text>`;
+      s+=fit(159,146,11.5,dim,'10 мегабит за одну секунду',{},290);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="30" y="162" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,185,11.5,gold,'чем больше скорость, тем быстрее скачается файл',{b:1},250)+`</g>`;
+      s+=plate2(24,208,270,30,go?grn:cardB,go?'1 мегабайт = 8 мегабит':'как связаны байты и биты?',11.5,pre);
+      s+=`${fit(159,260,11,dim,'это важно для задач про время загрузки',{},290)}`;
+      return s;
+    }
+    if(K==='praccalc'){ /* практика: время загрузки */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,32,12,gold,'файл 10 МБ, скорость 5 Мбит/с',{b:1},256)}</g>`;
+      const steps=[{t:'10 МБ = 10 · 8 = 80 Мбит',c:cyan},{t:'80 : 5 = 16',c:blu},{t:'ответ: 16 секунд',c:grn}];
+      steps.forEach((q,k)=>{
+        const y=54+k*46;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.2+k*0.25).toFixed(2)}s"><rect x="30" y="${y}" width="258" height="36" rx="10" fill="rgba(255,255,255,.04)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+24,12.5,q.c,q.t,{b:1},238)+`</g>`;
+        if(k<2) s+=`<path d="M159 ${y+38} v6" stroke="${A}" stroke-width="1.8" class="${pre}Dash"/>`;
+      });
+      s+=plate2(30,198,258,30,go?grn:cardB,go?'16 секунд — вот ответ':'как посчитать время?',11.5,pre);
+      s+=`${fit(159,250,11,dim,'сначала переводим мегабайты в мегабиты',{},290)}`;
+      return s;
+    }
+    if(K==='pracpackets'){ /* практика: сколько пакетов */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +`${fit(159,32,12.5,grn,'файл 100 КБ, пакет 1 КБ',{b:1},256)}</g>`;
+      s+=fit(159,68,12,ink,'сколько получится пакетов?',{b:1},250);
+      for(let k=0;k<6;k++){
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.14).toFixed(2)}s">`
+          +`<rect x="${34+k*42}" y="86" width="36" height="28" rx="6" fill="rgba(19,60,44,.97)" stroke="${grn}" stroke-width="1.5"/>`
+          +tx(52+k*42,105,10.5,grn,'1 КБ',{b:1})+`</g>`;
+      }
+      s+=fit(159,134,12,dim,'…',{b:1},40);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.2s"><rect x="46" y="148" width="226" height="38" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="174" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">100 : 1 = 100</text></g>`;
+      s+=plate2(24,194,270,30,go?grn:cardB,go?'100 пакетов по 1 килобайту':'как посчитать?',11.5,pre);
+      s+=`${fit(159,246,11,dim,'столько же маленьких частей отправит сеть',{},290)}`;
+      return s;
+    }
+    if(K==='pracaddr'){ /* практика: читаем адрес */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +`${fit(159,32,12.5,pur,'читаем адрес устройства 10.0.0.7',{b:1},256)}</g>`;
+      ['10','0','0','7'].forEach((q,k)=>{
+        s+=drawRR(38+k*62,58,52,46,9,[gold,cyan,grn,pur][k],2.4,0.3+k*0.2,2,pre,{pen:k===0});
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.7+k*0.2).toFixed(2)}s">${tx(64+k*62,88,17,[gold,cyan,grn,pur][k],q,{b:1})}</g>`;
+      });
+      const notes=['старшая часть','сеть','подсеть','само устройство'];
+      notes.forEach((q,k)=>{
+        s+=fit(64+k*62,122,9.5,[gold,cyan,grn,pur][k],q,{},58);
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.6s"><rect x="30" y="138" width="258" height="34" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.7"/>`
+        +fit(159,161,11.5,pur,'каждое число — от 0 до 255',{b:1},250)+`</g>`;
+      s+=fit(159,190,11.5,ink,'последнее число часто означает само устройство',{b:1},292);
+      s+=plate2(24,206,270,30,go?grn:cardB,go?'по адресу видно, где искать устройство':'что означают числа?',11.5,pre);
+      return s;
+    }
+    if(K==='safety'){ /* безопасность */
+      const it=[
+        {t:'пароль держи в секрете',d:'никому не сообщай его',c:gold},
+        {t:'не переходи по чужим ссылкам',d:'спроси взрослых',c:red},
+        {t:'не выкладывай личные данные',d:'адрес, телефон, фото школы',c:pur}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,grn,'безопасность в сети',{b:1},256)}</g>`;
+      it.forEach((q,k)=>{
+        const y=52+k*54;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="20" y="${y}" width="278" height="46" rx="11" fill="rgba(255,255,255,.04)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<path d="M40 ${y+12} l12 20 h-24 z" fill="${q.c}" opacity=".9"/><text x="40" y="${y+27}" text-anchor="middle" font-size="10" font-weight="bold" fill="#06131a">!</text>`
+          +fit(104,y+20,11.5,q.c,q.t,{b:1},190)
+          +fit(104,y+38,10.5,dim,q.d,{},190)+`</g>`;
+      });
+      s+=plate2(20,214,278,30,go?grn:cardB,go?'эти три правила — главные':'какие правила безопасности?',11.5,pre);
+      return s;
+    }
+    if(K==='netgame'){ /* тренажёр: IP-адрес */
+      const opts=['номер устройства в сети','имя сайта','пароль от почты'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${fit(159,34,Math.min(12,250/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Что такое IP-адрес?',{b:1})}</g>`;
+      s+=drawRR(80,56,158,40,9,gold,2.4,0.2,1.8,pre);
+      s+=`<text x="159" y="82" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">192.168.1.25</text>`;
+      opts.forEach((t,k)=>{
+        const y=110+k*40, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:A);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="24" y="${y}" width="270" height="34" rx="10" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(159,y+22,11.5,on?grn:(bad?red:ink),t,{b:on},240)+(on?`<path d="M262 ${y+10} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      const by=240;
+      s+=`<g class="${pre}Rise}"><rect x="20" y="${by}" width="278" height="28" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +`${fit(159,by+18,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Это номер устройства в сети':'IP-адрес — числовой номер устройства',{b:done&&st.pick===ok},256)}</g>`;
+      return s;
+    }
+    if(K==='netgame2'){ /* тренажёр: потерянный пакет */
+      const opts=['его отправят ещё раз','файл пропадёт навсегда','интернет выключится'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${fit(159,34,Math.min(12,250/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Что будет, если пакет потерялся?',{b:1})}</g>`;
+      s+=`<path d="M40 84 H200" stroke="${cardB}" stroke-width="2" stroke-dasharray="7 6"/>`;
+      s+=`<circle cx="40" cy="84" r="13" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="2"/>`;
+      s+=`<g class="${pre}Blink}"><rect x="176" y="76" width="30" height="18" rx="4" fill="rgba(52,22,26,.97)" stroke="${red}" stroke-width="1.5"/>`
+        +`<text x="191" y="89" text-anchor="middle" font-size="9" font-weight="bold" fill="${red}">П2</text></g>`;
+      s+=`<circle cx="252" cy="84" r="13" fill="rgba(12,32,34,.97)" stroke="${grn}" stroke-width="2"/>`;
+      s+=fit(146,116,11,red,'пакет пропал — порядок сбился',{b:1},250);
+      opts.forEach((t,k)=>{
+        const y=132+k*38, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:A);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="24" y="${y}" width="270" height="32" rx="9" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(159,y+21,11.5,on?grn:(bad?red:ink),t,{b:on},240)+(on?`<path d="M262 ${y+9} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      const by=252;
+      s+=`<g class="${pre}Rise}"><rect x="20" y="${by}" width="278" height="26" rx="8" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.5"/>`
+        +`${fit(159,by+17,10.5,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Потерянный пакет отправляют снова':'Подумай: правила протокола помогают',{b:done&&st.pick===ok},260)}</g>`;
+      return s;
+    }
+    if(K==='netmist'){ /* частые ошибки */
+      const it=[
+        {t:'путают интернет и сайт',f:'интернет — сеть, сайт — страница в ней',c:gold},
+        {t:'думают, что данные идут одним куском',f:'данные делят на пакеты',c:grn},
+        {t:'считают, что Wi-Fi — это интернет',f:'Wi-Fi — способ подключения',c:cyan},
+        {t:'забывают про правила протокола',f:'они собирают пакеты по порядку',c:pur}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#06131a">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      s+=`${tx(159,300,11,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='netsum'){ /* карта темы */
+      const nodes=[{x:159,y:52,t:'адрес',c:gold},{x:58,y:128,t:'пакеты',c:cyan},{x:260,y:128,t:'роутер',c:grn},
+        {x:58,y:206,t:'DNS',c:pur},{x:260,y:206,t:'сайт',c:blu}];
+      const ed=[[0,1],[0,2],[1,3],[2,4],[1,4],[3,4]];
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'вся тема на одной карте',{b:1},256)}</g>`;
+      ed.forEach((e,k)=>s+=drawLL({x:nodes[e[0]].x,y:nodes[e[0]].y},{x:nodes[e[1]].x,y:nodes[e[1]].y},'#415a6a',1.6,0.1+k*0.12,2,pre));
+      nodes.forEach((n,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.14).toFixed(2)}s">`
+          +`<rect x="${n.x-46}" y="${n.y-15}" width="92" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${n.c}" stroke-width="1.9"/>`
+          +fit(n.x,n.y+5,11.5,n.c,n.t,{b:1},84)+`</g>`;
+      });
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="5s" repeatCount="indefinite" path="M159 52 L58 128 L58 206 L260 206 L260 128 L159 52"/></circle>`;
+      s+=plate2(22,240,274,28,go?grn:cardB,go?'адрес → пакеты → роутер → сайт':'как связана тема',11.5,pre);
+      return s;
+    }
+    if(K==='netcheck'){ /* проверь себя */
+      const qa=[['номер устройства в сети','IP-адрес'],['на что делят файл','пакеты'],['кто выбирает дорогу','маршрутизатор'],['где ищут адрес сайта','в DNS']];
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,grn,'что мы узнали о сети',{b:1},256)}</g>`;
+      qa.forEach((q,k)=>{
+        const y=50+k*40, shown=(st&&st.q)>k;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.1*k).toFixed(2)}s"><rect x="24" y="${y}" width="270" height="34" rx="9" fill="rgba(255,255,255,.04)" stroke="${shown?grn:A}" stroke-width="1.6"/>`
+          +fit(120,y+22,11,ink,q[0],{},170)
+          +(shown?fit(248,y+22,11.5,grn,q[1],{b:1},104):fit(248,y+22,10,dim,'нажми «ответ»',{},104))+`</g>`;
+      });
+      s+=plate2(24,214,270,30,go?grn:cardB,go?'все четыре ответа на месте':'проверь себя устно',11.5,pre);
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -3782,6 +4200,30 @@
     if(K==='outofrange') return 202;
     if(K==='marks') return 220;
     if(K==='findcell') return 210;
+    if(K==='nettask') return 212;
+    if(K==='network') return 248;
+    if(K==='localnet') return 260;
+    if(K==='globe') return 262;
+    if(K==='ipaddr') return 240;
+    if(K==='ipunique') return 238;
+    if(K==='dns') return 240;
+    if(K==='packets') return 250;
+    if(K==='packetroute') return 254;
+    if(K==='routerjob') return 264;
+    if(K==='protocol') return 282;
+    if(K==='wifi') return 254;
+    if(K==='serverclient') return 232;
+    if(K==='browser') return 268;
+    if(K==='speed') return 276;
+    if(K==='praccalc') return 266;
+    if(K==='pracpackets') return 262;
+    if(K==='pracaddr') return 252;
+    if(K==='safety') return 260;
+    if(K==='netgame') return 284;
+    if(K==='netgame2') return 294;
+    if(K==='netmist') return 318;
+    if(K==='netsum') return 284;
+    if(K==='netcheck') return 260;
     if(K==='movetask') return 224;
     if(K==='flipbook') return 256;
     if(K==='frame') return 250;
@@ -4702,6 +5144,64 @@
       tasks:[
         {q:'Сколько кадров в 5 секундах при 24 кадрах в секунду?', kind:'unit', ans:120, tol:0, hints:['Кадры в секунду · секунды.','24 · 5 = 120.'], sol:'120'},
         {q:'Мультик идёт 10 секунд при 10 кадрах в секунду. Сколько в нём кадров?', kind:'choice', choices:['100','20','10','1000'], ans:0, tol:0, hints:['10 · 10.','Получится 100 кадров.'], sol:'10 · 10 = 100'}
+      ] },
+    { id:523, title:'Как работает интернет: пакеты и адреса', ico:'🌐', src:'Информатика · 5–6 класс · С нуля: сети',
+      explain:[
+        'Когда мы отправляем сообщение другу, оно не летит одним куском. Компьютер делит его на маленькие части — пакеты, и они идут по сети.',
+        'Сеть — это несколько компьютеров, соединённых линиями связи. По этим линиям данные бегут от одного устройства к другому.',
+        'Дома и в школе устройства соединяет роутер: он связывает ноутбук, телефон, телевизор и планшет в одну сеть — локальную.',
+        'Интернет — это сеть сетей: миллионы компьютеров по всему миру соединены друг с другом.',
+        'Чтобы письмо дошло до нужного устройства, ему нужен адрес. В сети адрес числовой — его называют IP-адресом.',
+        'IP-адрес состоит из четырёх чисел от 0 до 255, разделённых точками: например, 192.168.1.25. Это как номер дома, только для компьютера.',
+        'Адреса не повторяются: у ноутбука и телефона разные IP-адреса, иначе данные уходили бы не туда.',
+        'Люди помнят имена сайтов, а сеть работает с числами. Поэтому имя превращают в адрес с помощью DNS — «телефонной книги» интернета.',
+        'Файл или сообщение делят на пакеты. У каждого пакета есть адрес получателя и номер, чтобы собрать всё в правильном порядке.',
+        'Пакеты могут идти разными дорогами: один — через один город, другой — через другой. У получателя они собираются в целый файл.',
+        'Дорогу для пакетов выбирает маршрутизатор: он смотрит, какая дорога свободнее и короче, и отправляет пакет туда.',
+        'Чтобы всё работало, нужны общие правила — протокол. Он говорит, как подписать пакет, как проверить его и что делать, если пакет потерялся.',
+        'Подключиться к сети можно по проводу или без него. Wi-Fi — это беспроводное подключение, но сам интернет при этом тот же.',
+        'Сайт хранится на сервере — большом компьютере, который работает круглосуточно. Браузер отправляет запрос, сервер отвечает страницей.',
+        'Браузер делает несколько шагов: читает имя сайта, узнаёт у DNS адрес, просит страницу у сервера, собирает пакеты и показывает страницу.',
+        'Скорость передачи измеряют в мегабитах в секунду. Чем она больше, тем быстрее скачивается файл.',
+        'Практика: файл 10 мегабайт при скорости 5 мегабит в секунду. 10 МБ = 80 Мбит, 80 : 5 = 16 секунд.',
+        'Практика: файл 100 килобайт делим на пакеты по 1 килобайту — получится 100 пакетов.',
+        'Практика: в адресе 10.0.0.7 четыре числа; последнее часто означает само устройство, а первые — сеть.',
+        'В сети важно быть внимательным: держать пароль в секрете, не переходить по чужим ссылкам и не выкладывать личные данные.',
+        'Тренажёр: что такое IP-адрес.',
+        'Тренажёр: что будет, если пакет потерялся.',
+        'Частые ошибки: путать интернет и сайт, думать, что данные идут одним куском, считать Wi-Fi интернетом и забывать про правила протокола.',
+        'Соберём тему в карту: адрес, пакеты, маршрутизатор, DNS и сайт — из этого состоит любая передача данных.',
+        'Шпаргалка: адрес → пакеты → маршрутизатор → сборка; имя сайта находит DNS; скорость считают в мегабитах. Проверь себя!' ],
+      slides:[
+        {h:'Как доходит сообщение', v:{kind:'nettask'}, r:'Сообщение делится на части.', d:'Сообщение не летит одним куском: компьютер режет его на пакеты, и они идут по сети.'},
+        {h:'Что такое сеть', v:{kind:'network'}, r:'Компьютеры соединены линиями.', d:'Сеть — это устройства, соединённые линиями связи. У каждого устройства в сети есть свой номер.'},
+        {h:'Домашняя сеть', v:{kind:'localnet'}, r:'Роутер связывает устройства.', d:'Роутер соединяет ноутбук, телефон, телевизор и планшет в одну локальную сеть.'},
+        {h:'Интернет — сеть сетей', v:{kind:'globe'}, r:'Миллионы компьютеров вместе.', d:'Интернет — это сети, соединённые между собой по всему миру — поэтому связь есть между любыми странами.'},
+        {h:'IP-адрес', v:{kind:'ipaddr'}, r:'Номер устройства в сети.', d:'IP-адрес — четыре числа от 0 до 255, разделённые точками. Для сети это как номер дома.'},
+        {h:'Адреса разные', v:{kind:'ipunique'}, r:'У каждого устройства свой адрес.', d:'Если адреса повторятся, данные уйдут не туда. Поэтому у ноутбука и телефона адреса разные.'},
+        {h:'DNS: имя и адрес', v:{kind:'dns'}, r:'Имя сайта превращается в адрес.', d:'Человек пишет имя сайта, а сеть работает с числами. DNS — «телефонная книга», которая превращает имя в адрес.'},
+        {h:'Данные делят на пакеты', v:{kind:'packets'}, r:'Файл становится пакетами.', d:'Файл 100 килобайт при пакете 1 килобайт даёт 100 пакетов. У каждого пакета есть адрес и номер.'},
+        {h:'Пакеты идут разными путями', v:{kind:'packetroute'}, r:'Три пакета — три дороги.', d:'Пакеты могут идти разными дорогами, а у получателя собираются в один файл по номерам.'},
+        {h:'Маршрутизатор выбирает дорогу', v:{kind:'routerjob'}, r:'Какая дорога короче.', d:'Маршрутизатор смотрит на «стоимость» дорог и отправляет пакет туда, где быстрее.'},
+        {h:'Правила передачи', v:{kind:'protocol'}, r:'Протокол — общие правила.', d:'Протокол говорит, как подписать пакет, как проверить, не испортился ли он, и что делать, если пакет потерялся.'},
+        {h:'Wi-Fi и кабель', v:{kind:'wifi'}, r:'Без провода и с проводом.', d:'Wi-Fi — беспроводное подключение, кабель — проводное. Сам интернет при этом один и тот же.'},
+        {h:'Сервер и клиент', v:(function(){return {kind:'serverclient'};})(), r:'Браузер просит — сервер отвечает.', d:'Сервер — компьютер, который хранит сайт и отвечает на запросы. Браузер — клиент, который просит страницу.'},
+        {h:'Что делает браузер', v:{kind:'browser'}, r:'Пять шагов до страницы.', d:'Браузер читает имя, спрашивает адрес у DNS, просит страницу, собирает пакеты и показывает результат.'},
+        {h:'Скорость передачи', v:{kind:'speed'}, r:'Мегабиты в секунду.', d:'Скорость показывает, сколько данных проходит за секунду. 1 мегабайт — это 8 мегабит.'},
+        {h:'Задача: время загрузки', v:{kind:'praccalc'}, r:'10 МБ при 5 Мбит/с.', d:'Переводим мегабайты в мегабиты: 10 · 8 = 80. Делим на скорость: 80 : 5 = 16 секунд.'},
+        {h:'Задача: сколько пакетов', v:{kind:'pracpackets'}, r:'100 КБ по 1 КБ.', d:'Делим размер файла на размер пакета: 100 : 1 = 100 пакетов.'},
+        {h:'Задача: читаем адрес', v:{kind:'pracaddr'}, r:'Что означают числа.', d:'В адресе 10.0.0.7 четыре числа. Первые описывают сеть, последнее — само устройство.'},
+        {h:'Безопасность в сети', v:{kind:'safety'}, r:'Три главных правила.', d:'Держи пароль в секрете, не переходи по чужим ссылкам и не выкладывай личные данные.'},
+        {h:'Тренажёр: IP-адрес', v:{kind:'netgame', q:'Что такое IP-адрес?'}, r:'Проверь себя: выбери ответ.', d:'IP-адрес — это числовой номер устройства в сети, например 192.168.1.25.'},
+        {h:'Тренажёр: потерянный пакет', v:{kind:'netgame2', q:'Что будет, если пакет потерялся?'}, r:'Проверь себя: выбери ответ.', d:'По правилам протокола потерянный пакет отправляют снова, поэтому файл всё равно соберётся.'},
+        {h:'Частые ошибки', v:{kind:'netmist'}, r:'Что чаще всего путают.', d:'Интернет и сайт — разные вещи; данные идут пакетами; Wi-Fi — это способ подключения, а не сам интернет.'},
+        {h:'Карта темы', v:{kind:'netsum'}, r:'Как связана тема.', d:'Адрес указывает, куда идти; пакеты — что передаём; маршрутизатор выбирает дорогу; DNS находит адрес по имени.'},
+        {h:'Проверь себя', v:{kind:'netcheck'}, r:'Ответь на четыре вопроса.', d:'Нажимай «показать ответ» и проверяй себя: адрес, пакеты, маршрутизатор и DNS.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'адрес → пакеты → маршрут', b:1},{t:'DNS: имя превращается в адрес', c:grn},{t:'скорость — в мегабитах', c:gold}]}, r:'Запомни главное о сети.', d:'Главное: данные идут пакетами, у каждого устройства есть адрес, дорогу выбирает маршрутизатор, а имя сайта превращает в адрес DNS.'} ],
+      check:{ q:'На что компьютер делит файл, когда отправляет его по сети?', choices:['на пакеты','на буквы','на страницы','на картинки'], ans:0, exp:'Данные делят на пакеты — маленькие части с адресом и номером.' },
+      tasks:[
+        {q:'Файл 100 килобайт передают пакетами по 1 килобайту. Сколько получится пакетов?', kind:'unit', ans:100, tol:0, hints:['Делим размер файла на размер пакета.','100 : 1 = 100.'], sol:'100'},
+        {q:'Что делает DNS?', kind:'choice', choices:['превращает имя сайта в адрес','хранит пароли','ускоряет интернет','удаляет вирусы'], ans:0, tol:0, hints:['DNS — «телефонная книга» интернета.','Он находит адрес по имени.'], sol:'превращает имя сайта в адрес'}
       ] }
   ];
 
@@ -4716,7 +5216,7 @@
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -4735,12 +5235,12 @@
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
-      : (s.v.kind==='vcheck')
+      : (s.v.kind==='vcheck'||s.v.kind==='netcheck')
       ? ((st.q||0)<4? wkRow(wkBtn('показать ответ',`infQ('${lk}')`)) : wkRow(wkBtn('сначала',`infQ('${lk}',1)`)))
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck')? (((st.q||0)>=4) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck')? (((st.q||0)>=4) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
