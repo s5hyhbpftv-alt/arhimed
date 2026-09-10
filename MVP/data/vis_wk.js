@@ -516,7 +516,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef4ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cold='#7fd6ff', warm='#ffb85c', blu='#6ea8ff', purple='#b07fff',
         bg0='#142038', bg1='#0a1122', card='rgba(20,29,52,.96)', cardB='#3a4c78', lineC='#2c3c64';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -923,7 +923,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff',
         bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', steel='#aab8d4';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -2396,7 +2396,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', cheese='#f6d24a', sponge='#e9b36a', crust='#c98a3f',
         card='rgba(255,251,244,.97)', cardB='#c9b98d', cream='#fdf3e6';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf3e6" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf3e6" stroke-width="3.2">${t}</text>`;
   function sector(cx,cy,r,a0,a1){
     const r0=a0*Math.PI/180,r1=a1*Math.PI/180;
     return `M ${cx} ${cy} L ${(cx+r*Math.cos(r0)).toFixed(1)} ${(cy+r*Math.sin(r0)).toFixed(1)} A ${r} ${r} 0 ${(r1-r0)>180?1:0} 1 ${(cx+r*Math.cos(r1)).toFixed(1)} ${(cy+r*Math.sin(r1)).toFixed(1)} Z`;
@@ -2499,7 +2499,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=`<g class="qVPop"><rect x="36" y="64" width="120" height="46" rx="11" fill="rgba(255,250,240,.96)" stroke="${cardB}" stroke-width="1.8"/>${tx(96,80,24,ink,'7',{b:1,georgia:1})}<line x1="44" y1="88" x2="148" y2="88" stroke="${cardB}" stroke-width="1.6"/>${tx(96,104,24,ink,'4',{b:1,georgia:1})}</g>`;
       inner+=pizza(240,116,42,4,7,'#3f6d9e');
       if(go){
-        inner+=`<g class="qVPop"><text x="159" y="176" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold" font-family="Georgia,serif">числитель 7 ≥ знаменатель 4 → ≥ 1</text></g>`;
+        inner+=`<g class="qVPop"><text x="159" y="176" text-anchor="middle" font-size="14.7" fill="${red}" font-weight="bold" font-family="Georgia,serif">числитель 7 ≥ знаменатель 4 → ≥ 1</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Неправильная</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -2559,7 +2559,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=whole(78,116,38,0.1);
       inner+=pizza(238,116,38,4,3,'#e8604c');
       if(go){
-        inner+=`<g class="qVPop"><text x="159" y="178" text-anchor="middle" font-size="17" fill="${grn}" font-weight="bold" font-family="Georgia,serif">7 : 4 = 1 (целое) и 3 (остаток)</text></g>`;
+        inner+=`<g class="qVPop"><text x="159" y="178" text-anchor="middle" font-size="15.6" fill="${grn}" font-weight="bold" font-family="Georgia,serif">7 : 4 = 1 (целое) и 3 (остаток)</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Переводим</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -2573,7 +2573,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=tx(159,36,20,ink,'5/5 = 1',{b:1,georgia:1});
       if(go){
         inner+=whole(159,116,42,0.1);
-        inner+=`<g class="qVPop"><text x="159" y="176" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">пять пятых = одно целое (5:5=1)</text></g>`;
+        inner+=`<g class="qVPop"><text x="159" y="176" text-anchor="middle" font-size="15.6" fill="${grn}" font-weight="bold">пять пятых = одно целое (5:5=1)</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Ровно единица</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -2631,7 +2631,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       });
       inner+=st.pick!=null
         ? (st.pick===0? `<g class="qVPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="#2f7a53" font-weight="bold">верно!</text></g>`
-          : `<g class="qVPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="18" fill="${red}" font-weight="bold">сравни числитель и знаменатель</text></g>`)
+          : `<g class="qVPop"><text x="159" y="${py+74}" text-anchor="middle" font-size="16.1" fill="${red}" font-weight="bold">сравни числитель и знаменатель</text></g>`)
         : tx(159,py+74,16,dim,'какая дробь?',{});
       const fb= st.pick!=null&&st.pick===0
         ? `<div class="wk-row"><button class="wk-btn" onclick="visW179Act('${lk}','n')">дальше →</button></div>`
@@ -2718,7 +2718,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qVPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'дели/умножай'}</text></g>`;
+        inner+=`<g class="qVPop"><text x="159" y="96" text-anchor="middle" font-size="11.5" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'дели/умножай'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -4038,7 +4038,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       h=wkFrame(wkBig('Секрет: смотрим на один ход')+
         wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
           <rect x="4" y="4" width="310" height="168" rx="18" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
-          <text x="159" y="28" text-anchor="middle" font-size="14" fill="#9ec0a8">была сумма S · стираем a и b · пишем a − b</text>
+          <text x="159" y="28" text-anchor="middle" font-size="11.5" fill="#9ec0a8">была сумма S · стираем a и b · пишем a − b</text>
           ${tile(30,40,52,'a','#7fd1ff',{fs:24,delay:0})}
           ${tile(92,40,52,'b','#7fd1ff',{fs:24,delay:.1})}
           ${arrow(154,66,34)}
@@ -4059,7 +4059,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           <text x="234" y="46" text-anchor="middle" font-size="15" fill="#ffe9c9">2b — это</text>
           <text x="234" y="70" text-anchor="middle" font-size="26" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">чётное</text></g>
           <g class="i8pop" style="animation-delay:.4s"><rect x="30" y="100" width="258" height="40" rx="15" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.4"/>
-          <text x="159" y="125" text-anchor="middle" font-size="17" fill="#8fd1a8" font-weight="bold">вычесть чётное → чётность не меняется</text></g>
+          <text x="159" y="125" text-anchor="middle" font-size="13.1" fill="#8fd1a8" font-weight="bold">вычесть чётное → чётность не меняется</text></g>
         </svg>`)+
         wkSml('2·(любое число) делится на 2 — значит, S и S′ одной чётности'));
     } else if(step===8){
@@ -4068,7 +4068,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           <rect x="4" y="4" width="310" height="120" rx="16" fill="rgba(0,0,0,.14)" stroke="#3d5c49"/>
           <g class="i8pop"><rect x="22" y="18" width="274" height="52" rx="13" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="2.6"/>
           <text x="159" y="40" text-anchor="middle" font-size="15" fill="#cfe0cf">чётность суммы на доске</text>
-          <text x="159" y="60" text-anchor="middle" font-size="21" fill="#8fd1a8" font-weight="bold">сохраняется на каждом ходу</text></g>
+          <text x="159" y="60" text-anchor="middle" font-size="18.6" fill="#8fd1a8" font-weight="bold">сохраняется на каждом ходу</text></g>
           <g class="i8float"><circle cx="159" cy="100" r="15" fill="#ffd76a"/><text x="159" y="105" text-anchor="middle" font-size="13" fill="#0d1a13" font-weight="bold">✓</text></g>
           <text x="234" y="105" text-anchor="middle" font-size="13" fill="#ffd76a" font-weight="bold">полуинвариант</text>
         </svg>`)+
@@ -5267,7 +5267,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Измеряем ферму транспортиром</div>`+
         wkHero(sheet(`${triShape(tri)}
           ${curArc}
-          <text x="159" y="176" text-anchor="middle" font-size="15" fill="#2b4a8a" font-weight="bold">углы 40° · 60° · 80° · сейчас: ${pickLbl}</text>
+          <text x="159" y="176" text-anchor="middle" font-size="11.8" fill="#2b4a8a" font-weight="bold">углы 40° · 60° · 80° · сейчас: ${pickLbl}</text>
         `,{h:204}))+
         wkRow(
           wkBtn('измерить ∠A (60°)',`visW87Act('${lk}','c0')`),
@@ -5283,7 +5283,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
             ? `<g class="m9pop"><path d="M 70 140 L 120 50 L 250 140 Z" fill="rgba(244,232,200,.16)" stroke="#e8dcc8" stroke-width="3" stroke-linejoin="round"/>
                <line x1="70" y1="140" x2="120" y2="50" stroke="#c93a1a" stroke-width="2.6" stroke-dasharray="6 4" opacity=".8"/>
                <line x1="120" y1="50" x2="250" y2="140" stroke="#c93a1a" stroke-width="2.6" stroke-dasharray="6 4" opacity=".8"/>
-               <text x="159" y="158" text-anchor="middle" font-size="13" fill="#cfe0cf">бумажный треугольник · режем по пунктиру</text></g>`
+               <text x="159" y="158" text-anchor="middle" font-size="12.1" fill="#cfe0cf">бумажный треугольник · режем по пунктиру</text></g>`
             : `<g>
                 <line x1="24" y1="150" x2="294" y2="150" stroke="#e8dcc8" stroke-width="3.6"/>
                 <!-- веер: из точки O на линии три сектора 40+60+80 = 180° -->
@@ -5345,7 +5345,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           ${sh? angArc(ax,cx,bx,{r:26,c:'#8fd1a8',fs:14}):''}
           <circle cx="${bx.x}" cy="${bx.y}" r="4" fill="#ffd76a"/><circle cx="${cx.x}" cy="${cx.y}" r="4" fill="#ffd76a"/><circle cx="${ax.x}" cy="${ax.y}" r="4" fill="#ffd76a"/>
           <text x="${bx.x-24}" y="${bx.y-8}" text-anchor="middle" font-size="13" fill="#7fd1ff" font-weight="bold">90°</text></g>
-          <text x="159" y="36" text-anchor="middle" font-size="15" fill="${sh?'#8fd1a8':'#cfe0cf'}" font-weight="bold">${sh?'третий угол = 60°':'на острые углы остаётся 90°'}</text>
+          <text x="159" y="36" text-anchor="middle" font-size="10" fill="${sh?'#8fd1a8':'#cfe0cf'}" font-weight="bold">${sh?'третий угол = 60°':'на острые углы остаётся 90°'}</text>
         </svg>`)+
         wkRow(sh===0? wkBtn('найти третий',`visW87Act('${lk}','go')`) : wkBtn('сброс',`visW87Act('${lk}','rst')`))+
         wkSml('180° − 90° − 30° = 60° · острые углы в сумме всегда 90°'));
@@ -5391,7 +5391,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
               <path d="M 212 40 L 212 118" stroke="#c6d2f0" stroke-width="2.4"/>
               <circle cx="168" cy="118" r="4" fill="#ffd76a"/><circle cx="212" cy="40" r="4" fill="#ffd76a"/><circle cx="256" cy="118" r="4" fill="#ffd76a"/>
             </g>`}
-            <text x="159" y="150" text-anchor="middle" font-size="13" fill="#cfe0cf">${sh?'две треугольные призмы подняты на мост!':'пустое место на мосту · ждём фермы'}</text>
+            <text x="159" y="150" text-anchor="middle" font-size="10" fill="#cfe0cf">${sh?'две треугольные призмы подняты на мост!':'пустое место на мосту · ждём фермы'}</text>
           </g>
         </svg>`)+
         wkRow(sh===0? wkBtn('поднять фермы на мост',`visW87Act('${lk}','go')`) : wkBtn('сброс',`visW87Act('${lk}','rst')`))+
@@ -5427,7 +5427,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkHero(sheet(`${triShape(pts)}
           ${st.s1? angArc(pts[1],pts[0],pts[2],{r:22,c:'#c93a1a',fs:12}):''}
           ${st.s1? angArc(pts[2],pts[1],pts[0],{r:22,c:'#2b4a8a',fs:12}):''}
-          <text x="159" y="172" text-anchor="middle" font-size="14" fill="#2b4a8a" font-weight="bold">${T.kind} · ∠A = ${T.a}°, ∠B = ${T.b}°</text>
+          <text x="159" y="172" text-anchor="middle" font-size="12.7" fill="#2b4a8a" font-weight="bold">${T.kind} · ∠A = ${T.a}°, ∠B = ${T.b}°</text>
           ${st.s2? `<text x="159" y="156" text-anchor="middle" font-size="22" fill="#c93a1a" font-weight="bold">∠C = ${T.c}°</text>`:''}
         `,{h:198}))+
         wkRow(
@@ -6368,7 +6368,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           <text x="140" y="92" text-anchor="middle" font-size="40" fill="#ffd76a" font-weight="bold" font-family="Georgia,serif">2,36 мили</text></g>
           <g class="r9bump" style="animation-delay:.3s"><circle cx="270" cy="66" r="20" fill="rgba(143,209,168,.2)" stroke="#8fd1a8" stroke-width="2.6"/>
           <text x="270" y="72" text-anchor="middle" font-size="14" fill="#8fd1a8" font-weight="bold">окру-глить?</text></g>
-          <text x="140" y="140" text-anchor="middle" font-size="14" fill="#9ec0a8">в журнал запишем простое число — ближайшее</text>
+          <text x="140" y="140" text-anchor="middle" font-size="11.5" fill="#9ec0a8">в журнал запишем простое число — ближайшее</text>
         </svg>`)+
         wkSml('округлить — заменить число близким, но более простым'));
     } else if(step===1){
@@ -6391,7 +6391,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           <text x="240" y="58" text-anchor="middle" font-size="14" fill="#fff">смотрим десятые</text></g>
           <g class="r9pop" style="animation-delay:.3s"><rect x="30" y="86" width="258" height="64" rx="14" fill="rgba(143,209,168,.08)" stroke="#8fd1a8" stroke-width="2.4"/>
           <text x="159" y="110" text-anchor="middle" font-size="15" fill="#8fd1a8" font-weight="bold">5, 6, 7, 8, 9 → увеличиваем на 1</text>
-          <text x="159" y="138" text-anchor="middle" font-size="15" fill="#cfe0cf" font-weight="bold">0, 1, 2, 3, 4 → оставляем как есть</text></g>
+          <text x="159" y="138" text-anchor="middle" font-size="14.2" fill="#cfe0cf" font-weight="bold">0, 1, 2, 3, 4 → оставляем как есть</text></g>
         </svg>`)+
         (show? wkRow(sign('сосед справа решает всё',N.gold,0.3)):'')+
         wkRow(show===0? wkBtn('запомнить правило',`visW183Act('${lk}','go')`) : wkBtn('сброс',`visW183Act('${lk}','rst')`))+
@@ -6424,7 +6424,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkHero(`<svg viewBox="0 0 318 176" style="display:block;width:100%;height:auto">
           <rect x="4" y="4" width="310" height="168" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
           <g class="r9pop"><rect x="30" y="28" width="258" height="60" rx="13" fill="rgba(255,255,255,.04)" stroke="#4a6a54" stroke-width="2.2"/>
-          <text x="159" y="50" text-anchor="middle" font-size="15" fill="#cfe0cf">округлить ДО ЦЕЛЫХ · смотрим десятые</text>
+          <text x="159" y="50" text-anchor="middle" font-size="13.4" fill="#cfe0cf">округлить ДО ЦЕЛЫХ · смотрим десятые</text>
           <text x="159" y="80" text-anchor="middle" font-size="44" fill="#fff" font-weight="bold" font-family="Georgia,serif">7,<span style="color:${sh?'#ff9a8a':'#ffd76a'}">5</span></text></g>
           ${sh? `<g class="r9pop" style="animation-delay:.2s"><rect x="60" y="104" width="198" height="52" rx="12" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="2.4"/>
           <text x="159" y="126" text-anchor="middle" font-size="15" fill="#ffe9c9">десятые = 5 · середина</text>
@@ -6504,7 +6504,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Памятка навигатора</div>`+
         wkHero(`<svg viewBox="0 0 318 130" style="display:block;width:100%;height:auto">
           <rect x="4" y="4" width="310" height="122" rx="16" fill="rgba(0,0,0,.18)" stroke="#3d5c49"/>
-          <text x="159" y="32" text-anchor="middle" font-size="14" fill="#cfe0cf">1 · подчеркни нужный разряд · 2 · сосед справа</text>
+          <text x="159" y="32" text-anchor="middle" font-size="10.5" fill="#cfe0cf">1 · подчеркни нужный разряд · 2 · сосед справа</text>
           <g class="r9bump"><rect x="40" y="46" width="104" height="40" rx="12" fill="rgba(127,209,255,.14)" stroke="#7fd1ff" stroke-width="2.6"/>
           <text x="92" y="71" text-anchor="middle" font-size="18" fill="#7fd1ff" font-weight="bold">0–4 → вниз</text></g>
           <g class="r9bump" style="animation-delay:.3s"><rect x="176" y="46" width="104" height="40" rx="12" fill="rgba(255,215,106,.14)" stroke="#ffd76a" stroke-width="2.6"/>
@@ -7241,7 +7241,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           ${pts.map((p,i)=>`<line x1="${p[0]}" y1="60" x2="${p[0]}" y2="120" stroke="#4f9a6a" stroke-width="2" stroke-dasharray="4 4"/>
           <g class="q2bump"><circle cx="${p[0]}" cy="90" r="4.5" fill="#e8a0d8"/></g>`).join('')}
           <g class="q2pop" style="animation-delay:.4s"><rect x="30" y="136" width="258" height="30" rx="12" fill="rgba(255,255,255,.07)" stroke="#8fd1a8" stroke-width="2"/>
-          <text x="159" y="157" text-anchor="middle" font-size="16" fill="#8fd1a8" font-weight="bold">расстояние = ${dist==0?60:60} · везде 60!</text></g>
+          <text x="159" y="157" text-anchor="middle" font-size="11.8" fill="#8fd1a8" font-weight="bold">расстояние = ${dist==0?60:60} · везде 60!</text></g>
         </svg>`)+
         wkRow(wkBtn('проверить точку слева',`visW198Act('${lk}','p0')`),wkBtn('точка в середине',`visW198Act('${lk}','p1')`),wkBtn('точка справа',`visW198Act('${lk}','p2')`))+
         wkSml('кликай по разным точкам — робот везде намерит 60!'));
@@ -7260,7 +7260,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           <line x1="215" y1="56" x2="262" y2="136" stroke="#ff8a7a" stroke-width="4"/></g>
           <text x="235" y="150" text-anchor="middle" font-size="12" fill="#ffcfc2">пара 2</text>
           ${pick!=null? `<g class="q2pop"><rect x="86" y="90" width="0" height="0" fill="none"/>
-          <text x="159" y="166" text-anchor="middle" font-size="14" fill="${pick===0?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick===0?'верно! угольник сел точно в 90° ✓':'не так — в паре 2 угол не прямой'}</text></g>`:''}
+          <text x="159" y="166" text-anchor="middle" font-size="10" fill="${pick===0?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick===0?'верно! угольник сел точно в 90° ✓':'не так — в паре 2 угол не прямой'}</text></g>`:''}
         </svg>`)+
         wkRow(
           wkBtn('угольник в пару 1',`visW198Act('${lk}','p0')`),
@@ -7339,7 +7339,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           <text x="85" y="157" text-anchor="middle" font-size="20" fill="#e8a0d8" font-weight="bold">?</text></g>
           <g class="q2bump" style="animation-delay:.6s"><circle cx="240" cy="150" r="24" fill="rgba(255,255,255,.06)" stroke="#ffd76a" stroke-width="2.4"/>
           <text x="240" y="157" text-anchor="middle" font-size="20" fill="#ffd76a" font-weight="bold">?</text></g>
-          ${pick!=null? `<text x="159" y="168" text-anchor="middle" font-size="13" fill="${pick?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick? 'верно! // — параллельные ✓':'не так. Пара 1 (две ровные) — //'}</text>`:''}
+          ${pick!=null? `<text x="159" y="168" text-anchor="middle" font-size="10" fill="${pick?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick? 'верно! // — параллельные ✓':'не так. Пара 1 (две ровные) — //'}</text>`:''}
         </svg>`)+
         wkRow(wkBtn('пара 1 — значок //',`visW198Act('${lk}','p0')`),wkBtn('пара 2 — значок ⊥',`visW198Act('${lk}','p1')`))+
         wkSml('перетащи значок: // две чёрточки · ⊥ перевёрнутая Т'));
@@ -7354,7 +7354,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
           <g class="q2pop" style="animation-delay:.5s"><circle cx="270" cy="96" r="34" fill="rgba(255,255,255,.05)" stroke="#7fd1ff" stroke-width="2.6"/>
           <line x1="246" y1="70" x2="296" y2="118" stroke="#7fd1ff" stroke-width="3"/>
           <text x="270" y="140" text-anchor="middle" font-size="11" fill="#7fd1ff">здесь пересекутся!</text></g>
-          <text x="159" y="162" text-anchor="middle" font-size="13" fill="#e8c9d8">сходятся по чуть-чуть — далеко встретятся</text>
+          <text x="159" y="162" text-anchor="middle" font-size="11.8" fill="#e8c9d8">сходятся по чуть-чуть — далеко встретятся</text>
         </svg>`)+
         (pick!=null? wkRow(sign(pick===1?'верно! расстояние меняется — не параллельны!':'неверно! они чуть-чуть сходятся — встретятся!', pick===1?P.green:P.red,0.1)) : '')+
         wkRow(wkBtn('параллельны',`visW198Act('${lk}','p0')`),wkBtn('не параллельны',`visW198Act('${lk}','p1')`))+
@@ -7374,7 +7374,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
             <path d="M ${x+22} 120 A 22 22 0 0 0 ${x+22*Math.cos(rad)} ${120-22*Math.sin(rad)}" fill="none" stroke="#ffd76a" stroke-width="2.4"/>
             <text x="${x+35}" y="138" text-anchor="middle" font-size="13" fill="#ffd76a">${a}°</text></g>`;
           }).join('')}
-          ${pick!=null? `<text x="159" y="166" text-anchor="middle" font-size="14" fill="${pick===1?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick===1?'верно! только 90° — перпендикуляр ✓':'нет! только ровно 90°'}</text>`:''}
+          ${pick!=null? `<text x="159" y="166" text-anchor="middle" font-size="10" fill="${pick===1?'#8fd1a8':'#ff9a8a'}" font-weight="bold">${pick===1?'верно! только 90° — перпендикуляр ✓':'нет! только ровно 90°'}</text>`:''}
         </svg>`)+
         wkRow(wkBtn('89°',`visW198Act('${lk}','p0')`),wkBtn('90°',`visW198Act('${lk}','p1')`),wkBtn('91°',`visW198Act('${lk}','p2')`))+
         wkSml('какой угол даёт перпендикуляр? проведи пальцем и измерь'));
@@ -7481,7 +7481,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
             <rect x="120" y="50" width="10" height="70" fill="#7fb7e8"/>
             <rect x="240" y="50" width="10" height="70" fill="#e8a0d8"/>
             <line x1="30" y1="45" x2="30" y2="125" stroke="#ffd76a" stroke-width="3"/>
-            <text x="159" y="148" text-anchor="middle" font-size="13" fill="#8fd1a8" font-weight="bold">стены ⊥ пол · потолок ∥ пол — комната спасена!</text></g>`
+            <text x="159" y="148" text-anchor="middle" font-size="10.5" fill="#8fd1a8" font-weight="bold">стены ⊥ пол · потолок ∥ пол — комната спасена!</text></g>`
           : `<g class="q2fall" style="transform-origin:30px 125px"><rect x="30" y="50" width="10" height="70" fill="#c96a4a" opacity=".85"/></g>
              <g class="q2fall" style="transform-origin:120px 125px;animation-delay:.3s"><rect x="120" y="50" width="10" height="70" fill="#7fb7e8" opacity=".85"/></g>
              <g class="q2fall" style="transform-origin:240px 125px;animation-delay:.15s"><rect x="240" y="50" width="10" height="70" fill="#e8a0d8" opacity=".85"/></g>
@@ -8006,7 +8006,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', crust='#c98a3f', cheese='#f6d24a', sauce='#d6453d',
         grn='#4c9a58', blu='#3f6d9e', card='rgba(255,250,240,.97)', cardB='#c9b98d', cream='#fdf6e9';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
   function sector(cx,cy,r,a0,a1){
     const r0=a0*Math.PI/180, r1=a1*Math.PI/180;
     return `M ${cx} ${cy} L ${(cx+r*Math.cos(r0)).toFixed(1)} ${(cy+r*Math.sin(r0)).toFixed(1)} A ${r} ${r} 0 ${(r1-r0)>180?1:0} 1 ${(cx+r*Math.cos(r1)).toFixed(1)} ${(cy+r*Math.sin(r1)).toFixed(1)} Z`;
@@ -8325,7 +8325,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,38,18,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="q0Pop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'смотри куски'}</text></g>`;
+        inner+=`<g class="q0Pop"><text x="159" y="96" text-anchor="middle" font-size="11.5" fill="${st.msel===T.ans?'#2f7a53':'#c14b2f'}" font-weight="bold">${st.msel===T.ans?'верно!':'смотри куски'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -12389,7 +12389,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', ext='#ff8a5c', mid='#5c9aff',
         bg0='#101b30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', wood='#6a5330', wood2='#3a2c18';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -12510,7 +12510,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=tx(159,24,20,ink,'пропорция',{b:1});
       if(go){
         inner+=cross(2,3,10,15,false);
-        inner+=`<g class="qEXPop"><text x="159" y="210" text-anchor="middle" font-size="14" fill="${gold}" font-weight="bold">2 : 3 = 10 : 15 — два отношения равны</text></g>`;
+        inner+=`<g class="qEXPop"><text x="159" y="196" text-anchor="middle" font-size="13.1" fill="${gold}" font-weight="bold">2 : 3 = 10 : 15 — два отношения равны</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Определение</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -12536,7 +12536,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=tx(159,26,20,ink,'основное свойство',{b:1});
       if(go){
         inner+=cross(2,3,10,15,go);
-        inner+=`<g class="qEXPop"><text x="159" y="210" text-anchor="middle" font-size="13" fill="${dim}">крайние × средние — крест-накрест</text></g>`;
+        inner+=`<g class="qEXPop"><text x="159" y="196" text-anchor="middle" font-size="13" fill="${dim}">крайние × средние — крест-накрест</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Свойство</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -12579,7 +12579,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=tx(159,24,20,ink,'найдём x',{b:1,georgia:1});
       if(go){
         inner+=cross(2,3,10,'x',false);
-        inner+=`<g class="qEXPop"><text x="159" y="210" text-anchor="middle" font-size="13" fill="${dim}">2 : 3 = 10 : x</text></g>`;
+        inner+=`<g class="qEXPop"><text x="159" y="196" text-anchor="middle" font-size="13" fill="${dim}">2 : 3 = 10 : x</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Задача</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -12593,7 +12593,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=tx(159,30,20,ink,'крест-накрест',{b:1});
       if(go){
         inner+=`<g class="qEXPop"><text x="159" y="86" text-anchor="middle" font-size="17" fill="${ext}" font-weight="bold" font-family="Georgia,serif">2 · x = 3 · 10</text>
-        <text x="159" y="116" text-anchor="middle" font-size="17" fill="${ink}">крайний × крайний = средний × средний</text>
+        <text x="159" y="116" text-anchor="middle" font-size="13.1" fill="${ink}">крайний × крайний = средний × средний</text>
         <text x="159" y="150" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">получили уравнение</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Умножаем</div>`+
@@ -12755,7 +12755,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qEXPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'a·d=b·c'}</text></g>`;
+        inner+=`<g class="qEXPop"><text x="159" y="96" text-anchor="middle" font-size="13.1" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'a·d=b·c'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -12771,7 +12771,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=tx(159,24,20,ink,'2 : 3 = 10 : x',{b:1,georgia:1});
       if(go){
         inner+=cross(2,3,10,'x',go);
-        inner+=`<g class="qEXPop"><text x="159" y="210" text-anchor="middle" font-size="13" fill="${grn}" font-weight="bold" font-family="Georgia,serif">x = 15</text></g>`;
+        inner+=`<g class="qEXPop"><text x="159" y="196" text-anchor="middle" font-size="13" fill="${grn}" font-weight="bold" font-family="Georgia,serif">x = 15</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -15524,7 +15524,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', warm='#ffb85c', purple='#b07fff',
         bg0='#0e1830', bg1='#080d1c', card='rgba(16,26,46,.96)', cardB='#3a4c78', steel='#aab8d4';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -16334,7 +16334,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
         bg0='#141a2e', bg1='#0c111e', card='rgba(22,29,50,.96)', cardB='#3a466a', lineC='#2a3750';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -16711,7 +16711,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef5ff', dim='#a4b1d2', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
         bg0='#152840', bg1='#0a1626', card='rgba(18,30,50,.96)', cardB='#3a5a80', lineC='#2a3f5f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1220" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1220" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -17133,7 +17133,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff7b6b', blu='#6ea8ff', cyan='#7fd6ff', purple='#b07fff', yellow='#ffd166',
         bg0='#1a2040', bg1='#0d1126', card='rgba(24,31,56,.96)', cardB='#3a466a', lineC='#2a3750';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -17549,7 +17549,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a16', dim='#9b8266', gold='#c9982b', grn='#3f8b57', blu='#2f5d8a', red='#c14b2f',
         cream='#fdf6e6', card='rgba(255,250,240,.97)', cardB='#c9b98d';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e6" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e6" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let grid='';
@@ -17896,7 +17896,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#5a2f20', dim='#a5765c', gold='#d9a05a', pink='#f27f96', deep='#c94b6c', sponge='#e9b36a', grn='#4c9a58', blu='#3f6d9e',
         card='rgba(255,250,244,.97)', cardB='#e0b6a6', cream='#fdf3e6';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf3e6" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf3e6" stroke-width="3.4">${t}</text>`;
   function sector(cx,cy,r,a0,a1){
     const r0=a0*Math.PI/180,r1=a1*Math.PI/180;
     return `M ${cx} ${cy} L ${(cx+r*Math.cos(r0)).toFixed(1)} ${(cy+r*Math.sin(r0)).toFixed(1)} A ${r} ${r} 0 ${(r1-r0)>180?1:0} 1 ${(cx+r*Math.cos(r1)).toFixed(1)} ${(cy+r*Math.sin(r1)).toFixed(1)} Z`;
@@ -18256,7 +18256,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a16', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', cream='#f2e6c8', dark='#8a5a2b',
         card='rgba(255,250,240,.97)', cardB='#c9b98d';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -18652,7 +18652,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
         bg0='#151f3a', bg1='#0b1122', card='rgba(20,28,50,.96)', cardB='#3a4a70', lineC='#2a3a5f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -19055,7 +19055,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#2c3a2c', dim='#7a8a7a', gold='#c99a2f', cyan='#1f9aba', grn='#4c9a58', red='#c14b2f',
         card='rgba(255,253,248,.97)', cardB='#c9b98d';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf4e2" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf4e2" stroke-width="3.4">${t}</text>`;
   const CELL=37, X0=26, Y0=18;
   const px=g=>X0+g*CELL, py=g=>Y0+g*CELL;
   function bg(W,H,opt){
@@ -19453,7 +19453,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
         bg0='#151f3a', bg1='#0c1224', card='rgba(22,30,52,.96)', cardB='#3a4a70', lineC='#2a3a5f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let sparks='';
@@ -19842,7 +19842,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e',
         LAY=['#e8604c','#f5a623','#62c1e0','#9a7bd0','#7bcd7b'], card='rgba(255,251,244,.97)', cardB='#d9c9ab', cream='#f6e6c6';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let dots='';
@@ -20219,7 +20219,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
         bg0='#151f3a', bg1='#0b1122', card='rgba(20,28,50,.96)', cardB='#3a4a70', lineC='#2a3a5f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -20646,7 +20646,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a16', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', goldD='#b8802c',
         card='rgba(255,252,246,.97)', cardB='#d9c9ab', cream='#fbf2df';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf2df" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf2df" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let spark='';
@@ -21038,7 +21038,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
         bg0='#151f3a', bg1='#0b1122', card='rgba(20,28,50,.96)', cardB='#3a4a70';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -21891,7 +21891,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef4ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
         bg0='#14203a', bg1='#0a1122', card='rgba(20,29,52,.96)', cardB='#3a4c78', lineC='#2c3c64';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -22334,7 +22334,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cold='#7fd6ff', warm='#ffb85c', blu='#6ea8ff', purple='#b07fff',
         bg0='#101b30', bg1='#0a0f1e', card='rgba(20,29,50,.96)', cardB='#3a4c74';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -22796,7 +22796,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', tile='#f2d38a', border='#e8604c',
         card='rgba(255,251,244,.97)', cardB='#d9c9ab', cream='#fbf1df';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -23221,7 +23221,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', cellHi='#e8604c',
         card='rgba(255,251,244,.97)', cardB='#c9b98d', cream='#f5e6c6';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1df" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1df" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -23624,7 +23624,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef4ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
         bg0='#14203a', bg1='#0a1122', card='rgba(20,29,52,.96)', cardB='#3a4c78', lineC='#2c3c64';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -23655,11 +23655,11 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   function wlTable(x,y,upTo,showVal){
     let s='';
     for(let n=0;n<=upTo;n++){
-      const gx=x+n*30, win=(n%4)!==0;
+      const gx=x+n*25, win=(n%4)!==0;
       const c=win?grn:red;
-      s+=`<g class="qZCellW" style="animation-delay:${(0.06*n).toFixed(2)}s"><rect x="${gx+1}" y="${y}" width="28" height="38" rx="7" fill="${win?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'}" stroke="${c}" stroke-width="2"/>
-      ${tx(gx+15,y+26,16,win?grn:red,''+n,{b:1,georgia:1})}
-      ${tx(gx+15,y+46,11,win?grn:red,' '+showVal(win)+' ',{b:1})}</g>`;
+      s+=`<g class="qZCellW" style="animation-delay:${(0.06*n).toFixed(2)}s"><rect x="${gx+1}" y="${y}" width="23" height="38" rx="7" fill="${win?'rgba(125,224,160,.16)':'rgba(255,154,138,.16)'}" stroke="${c}" stroke-width="2"/>
+      ${tx(gx+12,y+26,16,win?grn:red,''+n,{b:1,georgia:1})}
+      ${tx(gx+12,y+46,11,win?grn:red,' '+showVal(win)+' ',{b:1})}</g>`;
     }
     return s;
   }
@@ -23701,7 +23701,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,26,20,ink,'игра на 20 камней',{b:1});
       inner+=stones(30,60,go?20:10,0,0.1);
-      if(go){ inner+=`<g class="qZPop"><text x="159" y="182" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">за ход берём 1–3 · кто взял последний — победил</text></g>`; }
+      if(go){ inner+=`<g class="qZPop"><text x="159" y="182" text-anchor="middle" font-size="10.3" fill="${gold}" font-weight="bold">за ход берём 1–3 · кто взял последний — победил</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Арена Стратегий</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('кто победит — решает стратегия',gold,0.2)):'')+
@@ -23760,7 +23760,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,24,20,ink,'маленькие позиции',{b:1});
       inner+=wlTable(30,76,7,go? (w=> w?'В':'П') : (()=>''));
-      if(go){ inner+=`<g class="qZPop"><text x="159" y="160" text-anchor="middle" font-size="15" fill="${grn}" font-weight="bold">1,2,3 — выигрыш · 4 — проигрыш · 5,6,7 — выигрыш</text></g>`; }
+      if(go){ inner+=`<g class="qZPop"><text x="159" y="160" text-anchor="middle" font-size="10.1" fill="${grn}" font-weight="bold">1,2,3 — выигрыш · 4 — проигрыш · 5,6,7 — выигрыш</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Пробуем вручную</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('зелёный = выигрыш · красный = проигрыш',gold,0.2)):'')+
@@ -23786,7 +23786,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=tx(159,24,20,ink,'почему 5 — выигрыш?',{b:1});
       inner+=stones(48,66,5,0,0.1);
       if(go){
-        inner+=`<g class="qZPop"><text x="159" y="118" text-anchor="middle" font-size="16" fill="${grn}" font-weight="bold">возьми 1 → оставь 4 (проигрыш для него)</text>
+        inner+=`<g class="qZPop"><text x="159" y="118" text-anchor="middle" font-size="12.4" fill="${grn}" font-weight="bold">возьми 1 → оставь 4 (проигрыш для него)</text>
         <text x="159" y="150" text-anchor="middle" font-size="14" fill="${dim}">оставь противнику ловушку!</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Разбор 5</div>`+
@@ -23799,7 +23799,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,24,20,ink,'закономерность',{b:1});
       inner+=wlTable(30,76,10,go? (w=> w?'В':'П') : (()=>''));
-      if(go){ inner+=`<g class="qZPop"><text x="159" y="160" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">кратные 4 (4, 8) — проигрыш · остальные — выигрыш</text></g>`; }
+      if(go){ inner+=`<g class="qZPop"><text x="159" y="160" text-anchor="middle" font-size="10" fill="${red}" font-weight="bold">кратные 4 (4, 8) — проигрыш · остальные — выигрыш</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Закономерность</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('проигрыш = кратно 4',red,0.2)):'')+
@@ -23811,7 +23811,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=tx(159,24,20,ink,'проверим на 20',{b:1});
       inner+=stones(30,64,go?20:0,0,0.1);
       if(go){
-        inner+=`<g class="qZPop"><text x="159" y="150" text-anchor="middle" font-size="16" fill="${red}" font-weight="bold">20 = 4·5 — КРАТНОЕ 4 → проигрышная для ходящего</text>
+        inner+=`<g class="qZPop"><text x="159" y="150" text-anchor="middle" font-size="10.3" fill="${red}" font-weight="bold">20 = 4·5 — КРАТНОЕ 4 → проигрышная для ходящего</text>
         <text x="159" y="176" text-anchor="middle" font-size="14" fill="${dim}">ходит первый → проигрывает</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Главный вывод</div>`+
@@ -23995,7 +23995,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qZPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'кратное 4'}</text></g>`;
+        inner+=`<g class="qZPop"><text x="159" y="96" text-anchor="middle" font-size="12.4" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'кратное 4'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -24089,7 +24089,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', barCol='#f2a05c', bar2='#f6d24a', bar3='#62c1e0',
         card='rgba(255,251,244,.97)', cardB='#c9b98d', cream='#f5e6c6';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1df" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1df" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -24539,7 +24539,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', deep='#0d5a80', midw='#1f86b4', glass='#c8d8f0',
         bg0='#0e1830', bg1='#080d1c', card='rgba(16,26,46,.96)', cardB='#3a4c78', steel='#aab8d4';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -24984,7 +24984,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', aCol='#ffb85c', bCol='#7fd6ff', cCol='#b07fff',
         bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', glass='#5a6c9c';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -25069,7 +25069,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,26,20,ink,'углы в треугольнике',{b:1});
       inner+=tri(go);
-      if(go){ inner+=`<g class="qAPop"><text x="159" y="200" text-anchor="middle" font-size="14" fill="${grn}" font-weight="bold">три угла · у каждой вершины по одному</text></g>`; }
+      if(go){ inner+=`<g class="qAPop"><text x="159" y="200" text-anchor="middle" font-size="13.1" fill="${grn}" font-weight="bold">три угла · у каждой вершины по одному</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Вершина-мастерская</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('познакомимся с углами',gold,0.2)):'')+
@@ -25080,7 +25080,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,28,20,ink,'что такое угол?',{b:1});
       inner+=`<g class="qAFloat"><circle cx="128" cy="120" r="6" fill="${gold}"/><line x1="128" y1="120" x2="226" y2="120" stroke="${ink}" stroke-width="2.6" stroke-linecap="round"/><line x1="128" y1="120" x2="196" y2="66" stroke="${ink}" stroke-width="2.6" stroke-linecap="round"/><path d="M 152 120 A 34 34 0 0 0 166 92" fill="none" stroke="${aCol}" stroke-width="3.4"/></g>`;
-      if(go){ inner+=`<g class="qAPop"><text x="159" y="188" text-anchor="middle" font-size="14" fill="${dim}">из одной точки (вершины) выходят два луча</text></g>`; }
+      if(go){ inner+=`<g class="qAPop"><text x="159" y="188" text-anchor="middle" font-size="11.8" fill="${dim}">из одной точки (вершины) выходят два луча</text></g>`; }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Угол</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         (go?wkRow(chip('два луча из вершины',gold,0.2)):'')+
@@ -25200,7 +25200,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,32,20,ink,'формула',{b:1});
       if(go){
-        inner+=`<g class="qAPop"><text x="159" y="90" text-anchor="middle" font-size="22" fill="${gold}" font-weight="bold" font-family="Georgia,serif">угол при основании = (180 − вершина) : 2</text>
+        inner+=`<g class="qAPop"><text x="159" y="90" text-anchor="middle" font-size="12.1" fill="${gold}" font-weight="bold" font-family="Georgia,serif">угол при основании = (180 − вершина) : 2</text>
         <text x="159" y="130" text-anchor="middle" font-size="14" fill="${grn}">два одинаковых — делим пополам</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Запоминай</div>`+
@@ -25362,7 +25362,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qAPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'180−…'}</text></g>`;
+        inner+=`<g class="qAPop"><text x="159" y="96" text-anchor="middle" font-size="13.8" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'180−…'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -25400,7 +25400,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,32,20,ink,'сумма углов',{b:1,georgia:1});
       inner+=fold([40,70,70]);
-      inner+=`<g class="qAPop"><text x="159" y="196" text-anchor="middle" font-size="16" fill="${gold}" font-weight="bold" font-family="Georgia,serif">= 180°</text></g>`;
+      inner+=`<g class="qAPop"><text x="159" y="184" text-anchor="middle" font-size="16" fill="${gold}" font-weight="bold" font-family="Georgia,serif">= 180°</text></g>`;
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
         quiz(lk,st)+
@@ -25476,7 +25476,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', roadC='#3a4a6a', asp='#aab8d4', blu='#6ea8ff', road1='#e0a34a', road2='#4db6e0',
         bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -25885,7 +25885,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', pink='#ff9ab0', bluT='#a8c4ff', road1='#e0a34a', road2='#4db6e0',
         shirtC=['#e0604c','#4db6e0','#7bcd7b','#b07fff'], tieC=['#f5a623','#d9758f','#6ea8ff'],
         bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', wood='#5a4628', wood2='#3a2c18';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -25961,7 +25961,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       inner+=tx(159,28,20,ink,'собери наряд',{b:1});
       if(go){
         inner+=outfitGrid(GX,GY,4,3,GW,12);
-        inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="15" fill="${gold}" font-weight="bold">4 рубашки · 3 галстука → 12 комплектов</text></g>`;
+        inner+=`<g class="qPWPop"><text x="159" y="214" text-anchor="middle" font-size="12.7" fill="${gold}" font-weight="bold">4 рубашки · 3 галстука → 12 комплектов</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Швейная мастерская</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -26169,7 +26169,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       let inner='';
       inner+=tx(159,38,19,ink,'устная проверка',{b:1});
       if(st.msel!=null){
-        inner+=`<g class="qPWPop"><text x="159" y="96" text-anchor="middle" font-size="20" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'перемножь'}</text></g>`;
+        inner+=`<g class="qPWPop"><text x="159" y="96" text-anchor="middle" font-size="12.4" fill="${st.msel===T.ans?'#7de0a0':'#ff9a8a'}" font-weight="bold">${st.msel===T.ans?'верно!':'перемножь'}</text></g>`;
       }
       h=wkFrame(`<div class="wk-big" style="font-size:23px">Проверь себя: устно</div>`+
         wkHero(bg(W,H,{inner:()=>inner}))+
@@ -26193,7 +26193,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkRow(go?wkBtn('сброс',`visW390Act('${lk}','rst')`):wkBtn('выложить',`visW390Act('${lk}','go')`))+
         wkSml('умножаем выборы'));
     } else {
-      const H=196;
+      const H=228;
       let inner='';
       inner+=tx(159,32,20,ink,'4 рубашки · 3 галстука',{b:1,georgia:1});
       inner+=outfitGrid(GX,GY,4,3,GW,99);
@@ -26273,7 +26273,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', comma='#ff8a5c', cellB='#3a4c78', white='#eaf4ff',
         bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):s).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
