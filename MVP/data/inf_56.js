@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 22 уроков (id 500–521) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 23 уроков (id 500–522) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -38,6 +38,35 @@
     [/двоичн|разряд|0 и 1|ноль|нул|единиц/i,'bits'],
     [/порядок|шаг|список|номер|строк/i,'lines']
   ];
+  const drawRR=(x,y,w,h,rx,col,dur,beg,sw,pre,opt)=>{
+    const r=Math.min(rx||8,Math.min(w,h)/2);
+    const d=`M${x+r} ${y} H${x+w-r} A${r} ${r} 0 0 1 ${x+w} ${y+r} V${y+h-r} A${r} ${r} 0 0 1 ${x+w-r} ${y+h} H${x+r} A${r} ${r} 0 0 1 ${x} ${y+h-r} V${y+r} A${r} ${r} 0 0 1 ${x+r} ${y}`;
+    const L=Math.round(2*(w-2*r)+2*(h-2*r)+2*Math.PI*r);
+    return `<path d="${d}" fill="${(opt&&opt.fill)||'none'}" stroke="${col}" stroke-width="${sw||2.4}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.6;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +((opt&&opt.pen===false)?'':`<circle r="5" fill="${gold}" stroke="#fffdf2" stroke-width="1.3"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const drawLL=(a,b,col,sw,dur,beg,pre)=>{
+    const L=Math.max(16,Math.round(Math.hypot(b.x-a.x,b.y-a.y)));
+    const d=`M${a.x} ${a.y} L${b.x} ${b.y}`;
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${sw||2.2}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.7;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`;
+  };
+  const plate2=(x,y,w,h,col,txt,fs,pre)=>`<g class="${pre}Rise"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="rgba(12,32,34,.95)" stroke="${col}" stroke-width="1.9"/>`
+    +fit(x+w/2,y+h*0.66,fs||13,col,txt,{b:1},w-16)+`</g>`;
+  const walker=(cx,cy,s,c,ph)=>{
+    const col=c||gold, hip=cy+2*s, ph2=((ph||0)*0.4).toFixed(2), ph3=(((ph||0)*0.4)+0.45).toFixed(2);
+    const limb=(x1,y1,x2,y2,w2,delay,swing)=>`<g><animateTransform attributeName="transform" type="rotate" values="${-swing} ${x1} ${y1};${swing} ${x1} ${y1};${-swing} ${x1} ${y1}" dur="0.9s" begin="${delay}s" repeatCount="indefinite"/>`
+      +`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${w2}" stroke-linecap="round"/></g>`;
+    return `<g>`
+      +`<circle cx="${cx}" cy="${cy-30*s}" r="${7*s}" fill="none" stroke="${col}" stroke-width="${2.4*s}"/>`
+      +`<line x1="${cx}" y1="${cy-22*s}" x2="${cx}" y2="${hip}" stroke="${col}" stroke-width="${3*s}" stroke-linecap="round"/>`
+      +limb(cx,cy-18*s,cx-13*s,cy-6*s,2.4*s,ph2,26)
+      +limb(cx,cy-18*s,cx+13*s,cy-6*s,2.4*s,ph3,26)
+      +limb(cx,hip,cx-9*s,cy+18*s,2.8*s,ph2,24)
+      +limb(cx,hip,cx+9*s,cy+18*s,2.8*s,ph3,24)
+      +`</g>`;
+  };
   const fit=(x,y,fs,c,t,o,maxw)=>{
     const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);
     return tx(x,y,s2,c,t,o);
@@ -3258,6 +3287,355 @@
       s+=`${tx(159,48+ex.length*46+4,11,dim,'звук всюду вокруг нас — и всюду числа',{})}`;
       return s;
     }
+    if(K==='movetask'){ /* как получается движение */
+      let s=`<g class="${pre}Pop"><rect x="26" y="14" width="266" height="30" rx="10" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>`
+        +`${tx(159,34,12.5,gold,'почему на экране движение?',{b:1})}</g>`;
+      const cx=[56,110,164,218,272];
+      for(let k=0;k<5;k++){
+        s+=drawRR(cx[k]-24,58,48,92,10,A,2.2,0.15+k*0.16,1.6,pre);
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.6+k*0.16).toFixed(2)}s" cx="${cx[k]}" cy="${128-k*16}" r="11" fill="${gold}" stroke="#fffdf2" stroke-width="1.4"/>`;
+      }
+      s+=`${fit(159,168,11.5,dim,'в каждом кадре мяч стоит на новом месте',{},290)}`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="24" y="184" width="270" height="30" rx="9" fill="rgba(255,255,255,.05)" stroke="${gold}" stroke-width="1.6"/>`
+        +`${fit(159,204,11.5,gold,'а показывают их очень быстро',{},260)}</g>`;
+      return s;
+    }
+    if(K==='flipbook'){ /* блокнот-мультик */
+      let s=`<g class="${pre}Pop"><rect x="20" y="14" width="278" height="30" rx="10" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="2"/>`
+        +`${tx(159,34,12.5,cyan,'быстро листаем — рисунок оживает',{b:1})}</g>`;
+      s+=drawRR(52,58,214,150,12,cardB,2.6,0.2,2,pre);
+      for(let k=0;k<4;k++){
+        const op=`0;0;1;1;0;0`, t=(k*0.25).toFixed(3), t2=Math.min(1,(k+1)*0.25).toFixed(3);
+        s+=`<g opacity="0"><animate attributeName="opacity" values="${op}" keyTimes="0;${t};${t};${t2};${t2};1" dur="4s" repeatCount="indefinite"/>`
+          +walker(159,150,1,['#7fd6ff','#7de0a0','#ffd76a','#b07fff'][k],k)
+          +`</g>`;
+      }
+      s+=`<g class="${pre}Pop" style="animation-delay:1.2s"><rect x="196" y="70" width="58" height="126" rx="8" fill="rgba(255,255,255,.05)" stroke="${cyan}" stroke-width="1.6" opacity=".7"/>`
+        +fit(225,200,10,dim,'страницы',{},54)+`</g>`;
+      s+=plate2(24,216,270,28,cyan,'много кадров подряд = мультик',11,pre);
+      return s;
+    }
+    if(K==='frame'){ /* что такое кадр */
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${tx(159,34,12.5,ink,'кадр — это один рисунок',{b:1})}</g>`;
+      s+=drawRR(84,58,150,120,14,A,3,0.2,2.2,pre,{pen:true});
+      const mat=[[0,0,1,1,0,0],[0,1,1,1,1,0],[1,1,0,0,1,1],[0,1,0,0,1,0],[0,1,0,0,1,0],[0,0,1,1,0,0]];
+      for(let r=0;r<6;r++)for(let c=0;c<6;c++){
+        s+=`<rect class="${pre}Pop" style="animation-delay:${(0.6+(r*6+c)*0.03).toFixed(2)}s" x="${96+c*22}" y="${70+r*18}" width="20" height="16" rx="3" fill="${mat[r][c]?'#101828':'#eaf2ff'}"/>`;
+      }
+      s+=`${fit(159,196,11.5,dim,'в кадре — таблица пикселей',{},290)}`;
+      s+=plate2(24,208,270,30,grn,'фильм — это очень много кадров',11.5,pre);
+      return s;
+    }
+    if(K==='fps'){ /* что такое частота кадров */
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="30" rx="10" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>`
+        +`${tx(159,34,12.5,gold,'сколько кадров в секунду',{b:1})}</g>`;
+      s+=drawRR(30,58,258,54,12,A,2.4,0.2,2,pre);
+      s+=`${fit(159,80,12,ink,'1 секунда',{b:1},200)}`;
+      for(let k=0;k<12;k++){
+        s+=`<line class="${pre}Pop" style="animation-delay:${(0.5+k*0.08).toFixed(2)}s" x1="${42+k*20.5}" y1="88" x2="${42+k*20.5}" y2="104" stroke="${cyan}" stroke-width="2"/>`;
+      }
+      s+=`${fit(159,126,11,dim,'например, 24 кадра за одну секунду',{},290)}`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.1s"><rect x="34" y="142" width="250" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${fit(159,164,12.5,gold,'это и есть частота кадров',{b:1},230)}</g>`;
+      s+=plate2(24,186,270,30,grn,'обозначают «кадров в секунду»',11.5,pre);
+      s+=`${fit(159,232,11,cyan,'2 кадра — рывки, 24 кадра — плавно',{b:1},290)}`;
+      return s;
+    }
+    if(K==='slowfast'){ /* медленно и быстро */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'2 кадра в секунду и 24 кадра в секунду',{b:1},256)}</g>`;
+      s+=fit(22,58,11,red,'мало кадров — рывки',{an:'start',b:1},140);
+      for(let k=0;k<3;k++) s+=drawRR(24+k*44,66,38,40,8,red,2.2,0.2+k*0.15,1.5,pre);
+      s+=`<circle r="9" fill="${red}"><animateMotion dur="2.4s" repeatCount="indefinite" path="M40 86 h${3*44-8}"/></circle>`;
+      s+=fit(22,132,11,grn,'много кадров — плавно',{an:'start',b:1},150);
+      for(let k=0;k<6;k++) s+=drawRR(24+k*44,140,38,40,8,grn,2.2,0.5+k*0.1,1.5,pre);
+      s+=`<circle r="9" fill="${grn}"><animateMotion dur="2.4s" repeatCount="indefinite" path="M40 160 h${6*44-8}"/></circle>`;
+      s+=plate2(22,192,274,30,go?grn:cardB,go?'24 кадра в секунду глаз видит как движение':'сравни две ленты кадров',11.5,pre);
+      return s;
+    }
+    if(K==='eye'){ /* почему мы видим движение */
+      let s=`<g class="${pre}Pop"><rect x="24" y="14" width="270" height="30" rx="10" fill="url(#${pre}card)" stroke="${pur}" stroke-width="2"/>`
+        +`${tx(159,34,12.5,pur,'почему кадры превращаются в движение',{b:1})}</g>`;
+      s+=`<path d="M56 108 q103 -54 206 0 q-103 54 -206 0 z" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="2.4"/>`;
+      s+=`<circle cx="159" cy="108" r="17" fill="rgba(176,127,255,.25)" stroke="${pur}" stroke-width="2.2"/>`;
+      s+=`<circle cx="159" cy="108" r="7" fill="${pur}"/>`;
+      for(let k=0;k<3;k++){
+        s+=`<circle r="9" fill="${gold}" opacity="0"><animate attributeName="opacity" values="0;0;.8;.8;0" keyTimes="0;${(0.1+k*0.2).toFixed(2)};${(0.2+k*0.2).toFixed(2)};${(0.35+k*0.2).toFixed(2)};1" dur="3s" repeatCount="indefinite"/>`
+          +`<animateMotion dur="3s" repeatCount="indefinite" path="M60 168 H258"/></circle>`;
+      }
+      s+=`<path d="M60 168 H258" stroke="${A}" stroke-width="2" stroke-dasharray="6 5" opacity=".5"/>`;
+      s+=fit(159,196,11.5,dim,'глаз ещё мгновение «держит» картинку',{},290);
+      s+=plate2(24,210,270,30,go?grn:cardB,go?'поэтому мы видим плавное движение':'что происходит с глазом?',11.5,pre);
+      return s;
+    }
+    if(K==='fpsvalues'){ /* где какая частота */
+      const rows=[{t:'мультик, гифка',v:'10 кадров',w:52,c:cyan},{t:'кино',v:'24 кадра',w:96,c:gold},{t:'видео',v:'30 кадров',w:130,c:grn},{t:'игры',v:'60 кадров',w:200,c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'сколько кадров в секунду бывает',{b:1},256)}</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*42;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+          +fit(22,y+18,11,q.c,q.t,{an:'start',b:1},120)
+          +`<rect x="22" y="${y+26}" width="${q.w}" height="14" rx="6" fill="${q.c}" opacity=".28" stroke="${q.c}" stroke-width="1.2"/>`
+          +`<text x="${28+q.w}" y="${y+38}" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${q.c}">${q.v}</text></g>`;
+      });
+      s+=plate2(22,228,274,28,go?grn:cardB,go?'чем больше кадров, тем плавнее картинка':'сравни частоты',11.5,pre);
+      return s;
+    }
+    if(K==='framescount'){ /* сколько кадров в минуте */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,32,12.5,gold,'считаем кадры в мультфильме',{b:1},256)}</g>`;
+      const steps=[{t:'24 кадра в секунду',c:cyan},{t:'× 60 секунд в минуте',c:blu},{t:'= 1440 кадров',c:grn}];
+      steps.forEach((q,k)=>{
+        const y=54+k*44;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.2+k*0.25).toFixed(2)}s"><rect x="30" y="${y}" width="258" height="34" rx="10" fill="rgba(255,255,255,.04)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+22,12.5,q.c,q.t,{b:1},236)+`</g>`;
+        if(k<2) s+=`<path d="M159 ${y+36} v6" stroke="${A}" stroke-width="1.8" class="${pre}Dash"/>`;
+      });
+      s+=plate2(30,196,258,30,go?grn:cardB,go?'за минуту — 1440 кадров':'сколько кадров получится?',11.5,pre);
+      s+=`${fit(159,244,11.5,dim,'поэтому фильмы занимают много места',{},290)}`;
+      return s;
+    }
+    if(K==='framepixels'){ /* кадр — это пиксели */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'в кадре — сетка пикселей',{b:1},256)}</g>`;
+      const mat=[[0,0,1,1,0,0],[0,1,0,0,1,0],[1,0,0,0,0,1],[1,0,0,0,0,1],[0,1,0,0,1,0],[0,0,1,1,0,0]];
+      for(let r=0;r<6;r++)for(let c=0;c<6;c++){
+        s+=`<rect x="${34+c*24}" y="${50+r*24}" width="22" height="22" rx="3" fill="${mat[r][c]?'#101828':'#eaf2ff'}" stroke="#c8d4ee" stroke-width=".8"/>`;
+      }
+      s+=`${tx(220,90,12,cyan,'1 кадр',{b:1})}`;
+      s+=`${fit(220,116,10.5,dim,'сотни тысяч',{},70)}`;
+      s+=`${fit(220,132,10.5,dim,'пикселей',{},70)}`;
+      s+=plate2(24,206,270,30,grn,'и всё это надо хранить для каждого кадра',11,pre);
+      s+=`${fit(159,254,11,dim,'поэтому видео сжимают',{},290)}`;
+      return s;
+    }
+    if(K==='vidres'){ /* разрешение кадра */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'чем больше кадр, тем тяжелее видео',{b:1},256)}</g>`;
+      s+=drawRR(24,52,122,72,10,cyan,2.4,0.2,1.8,pre)+drawRR(172,52,122,72,10,pur,2.4,0.4,1.8,pre);
+      s+=fit(85,80,11.5,cyan,'640 × 360',{b:1},110)+fit(233,80,11.5,pur,'1920 × 1080',{b:1},110);
+      s+=fit(85,102,10.5,dim,'230 тысяч пикселей',{},116)+fit(233,102,10.5,dim,'2 миллиона пикселей',{},116);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="24" y="140" width="270" height="32" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.7"/>`
+        +`${fit(159,161,11.5,pur,'в 9 раз больше пикселей — и файл тяжелее',{b:1},250)}</g>`;
+      s+=plate2(24,182,270,30,go?grn:cardB,go?'разрешение показывает размер кадра':'сравни два кадра',11.5,pre);
+      s+=`${fit(159,234,11,dim,'поэтому у больших видео огромный размер',{},290)}`;
+      return s;
+    }
+    if(K==='vidsize'){ /* размер видео */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.9"/>`
+        +`${fit(159,32,12.5,red,'почему видео такое большое',{b:1},256)}</g>`;
+      const steps=[{t:'один кадр ≈ 6 мегабайт',c:cyan},{t:'× 30 кадров в секунду',c:blu},{t:'= 180 мегабайт в секунду!',c:red}];
+      steps.forEach((q,k)=>{
+        const y=54+k*44;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.2+k*0.25).toFixed(2)}s"><rect x="30" y="${y}" width="258" height="34" rx="10" fill="rgba(255,255,255,.04)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+22,12.5,q.c,q.t,{b:1},236)+`</g>`;
+        if(k<2) s+=`<path d="M159 ${y+36} v6" stroke="${A}" stroke-width="1.8" class="${pre}Dash"/>`;
+      });
+      s+=plate2(30,196,258,30,go?grn:cardB,go?'поэтому видео всегда сжимают':'что получится?',11.5,pre);
+      s+=`${fit(159,244,11.5,grn,'в сжатом видео файл в сотни раз меньше',{b:1},290)}`;
+      return s;
+    }
+    if(K==='vidsound'){ /* видео и звук */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'видео — это кадры и звук вместе',{b:1},256)}</g>`;
+      for(let k=0;k<4;k++) s+=drawRR(30+k*42,52,36,40,7,cyan,2.2,0.2+k*0.12,1.6,pre);
+      s+=fit(30,106,10.5,cyan,'картинка',{an:'start',b:1},90);
+      s+=`<path d="M148 72 h20" stroke="${A}" stroke-width="2"/><path d="M162 68 l6 4 l-6 4" fill="none" stroke="${A}" stroke-width="2"/>`;
+      for(let k=0;k<3;k++) s+=`<path d="M182 ${60+k*12} q9 -10 18 0 q9 10 18 0 q9 -10 18 0" fill="none" stroke="${grn}" stroke-width="2.2"/>`;
+      s+=fit(226,106,10.5,grn,'звук',{b:1},70);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="24" y="122" width="270" height="32" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${fit(159,143,11.5,grn,'звук хранится отдельно — как в уроке про звук',{b:1},250)}</g>`;
+      s+=plate2(24,166,270,30,go?grn:cardB,go?'плеер показывает кадры и играет звук':'из чего состоит видео?',11.5,pre);
+      s+=`${fit(159,218,11,dim,'поэтому видеофайл больше, чем просто картинки',{},290)}`;
+      return s;
+    }
+    if(K==='changes'){ /* храним только изменения */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'сжатие: храним только изменения',{b:1},256)}</g>`;
+      const draw=(x0,y0,ball,hl)=>{
+        let s2=drawRR(x0,y0,126,92,10,cardB,2.2,0.2,1.6,pre);
+        for(let k=0;k<3;k++) s2+=`<rect x="${x0+8+k*40}" y="${y0+64}" width="36" height="20" rx="4" fill="rgba(255,255,255,.05)"/>`;
+        s2+=`<circle cx="${x0+30+ball}" cy="${y0+56}" r="10" fill="${gold}" stroke="#fffdf2" stroke-width="1.3"/>`;
+        if(hl) s2+=drawRR(x0+18+ball,y0+42,26,28,6,red,2,0.7,2,pre);
+        return s2;
+      };
+      s+=draw(24,50,0,false)+draw(168,50,66,true);
+      s+=fit(87,60,10.5,dim,'кадр 1',{},80)+fit(231,60,10.5,dim,'кадр 2',{},80);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="24" y="152" width="270" height="34" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.7"/>`
+        +`${fit(159,175,11.5,red,'изменилась только рамка вокруг мяча',{b:1},250)}</g>`;
+      s+=plate2(24,194,270,30,go?grn:cardB,go?'её и записываем, а остальное берём из кадра 1':'что изменилось?',11.5,pre);
+      s+=`${fit(159,246,11,dim,'так видео становится во много раз меньше',{},290)}`;
+      return s;
+    }
+    if(K==='keyframe'){ /* опорные кадры */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'опорные кадры простыми словами',{b:1},256)}</g>`;
+      const pos=[{x:46,k:1},{x:118,k:0},{x:190,k:0},{x:262,k:1}];
+      pos.forEach((q,i)=>{
+        s+=drawRR(q.x-26,52,52,74,9,q.k?cyan:cardB,q.k?2.6:1.8,0.2+i*0.2,q.k?2:1.4,pre,{pen:!!q.k});
+        s+=`<circle cx="${q.x}" cy="${88-i*8}" r="9" fill="${q.k?gold:dim}" stroke="#fffdf2" stroke-width="1.2"/>`;
+        s+=fit(q.x,140,10,q.k?cyan:dim,q.k?'опорный':'достроен',{},60);
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.1s"><rect x="24" y="156" width="270" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.7"/>`
+        +`${fit(159,179,11.5,cyan,'опорные кадры хранят полностью, остальные — достраивают',{b:1},250)}</g>`;
+      s+=plate2(24,198,270,30,go?grn:cardB,go?'так экономят место в видеофайле':'зачем опорные кадры?',11.5,pre);
+      s+=`${fit(159,250,11,dim,'это и есть сжатие видео',{},290)}`;
+      return s;
+    }
+    if(K==='vformats'){ /* форматы */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'где встречаются видео и мультики',{b:1},256)}</g>`;
+      s+=drawRR(22,50,132,110,12,cyan,2.4,0.2,1.9,pre);
+      s+=fit(88,74,11.5,cyan,'гифка (gif)',{b:1},120);
+      s+=`${fit(88,96,10.5,dim,'короткий мультик',{},116)}`;
+      s+=`${fit(88,114,10.5,dim,'без звука',{},116)}`;
+      s+=`${fit(88,138,10.5,grn,'повторяется по кругу',{},116)}`;
+      s+=drawRR(164,50,132,110,12,grn,2.4,0.4,1.9,pre);
+      s+=fit(230,74,11.5,grn,'фильм (mp4)',{b:1},120);
+      s+=`${fit(230,96,10.5,dim,'кадры и звук',{},116)}`;
+      s+=`${fit(230,114,10.5,dim,'сжатый — потому и',{},116)}`;
+      s+=`${fit(230,132,10.5,dim,'помещается в телефон',{},116)}`;
+      s+=plate2(22,174,274,30,go?grn:cardB,go?'гифка — мультик, mp4 — фильм':'чем они отличаются?',11.5,pre);
+      s+=`${fit(159,226,11,dim,'и там, и там — быстрая смена кадров',{},290)}`;
+      return s;
+    }
+    if(K==='slowmo'){ /* замедление */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'зачем снимают с большой частотой',{b:1},256)}</g>`;
+      s+=drawRR(24,50,270,44,10,cardB,2.4,0.2,1.8,pre);
+      for(let k=0;k<20;k++) s+=`<line x1="${34+k*13}" y1="58" x2="${34+k*13}" y2="86" stroke="${pur}" stroke-width="1.4" opacity=".8"/>`;
+      s+=fit(159,110,11.5,pur,'240 кадров в секунду — очень много',{b:1},260);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="24" y="126" width="270" height="32" rx="10" fill="rgba(255,255,255,.05)" stroke="${pur}" stroke-width="1.5"/>`
+        +`${fit(159,147,11.5,ink,'при замедлении кадров хватает — движение плавное',{b:1},250)}</g>`;
+      s+=plate2(24,168,270,30,go?grn:cardB,go?'поэтому в слоумо можно рассмотреть всё':'что даёт много кадров?',11.5,pre);
+      s+=`${fit(159,220,11,dim,'если кадров мало, замедленное видео дёргается',{},290)}`;
+      return s;
+    }
+    if(K==='practice1'){ /* практика: кадры */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +`${fit(159,32,12.5,gold,'задача: 5 секунд при 24 кадрах в секунду',{b:1},256)}</g>`;
+      s+=fit(159,70,13,ink,'сколько всего кадров?',{b:1},250);
+      s+=drawRR(40,86,238,40,10,cardB,2.4,0.3,1.8,pre);
+      s+=`<text x="159" y="112" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">24 · 5 = ?</text>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="66" y="136" width="186" height="38" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="162" text-anchor="middle" font-size="16" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">24 · 5 = 120</text></g>`;
+      s+=plate2(24,186,270,30,go?grn:cardB,go?'120 кадров за пять секунд':'как посчитать?',12,pre);
+      s+=`${fit(159,238,11.5,dim,'кадры в секунду умножаем на секунды',{},290)}`;
+      return s;
+    }
+    if(K==='practice2'){ /* практика: мультик */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +`${fit(159,32,12.5,cyan,'мультик: 10 секунд, 10 кадров в секунду',{b:1},256)}</g>`;
+      const st2=[{t:'10 кадров · 10 секунд = 100 кадров',c:cyan},{t:'а при 24 к/с: 24 · 10 = 240',c:gold},{t:'чем больше кадров — тем плавнее',c:grn}];
+      st2.forEach((q,k)=>{
+        const y=52+k*40;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.2+k*0.25).toFixed(2)}s"><rect x="26" y="${y}" width="266" height="32" rx="10" fill="rgba(255,255,255,.04)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+21,11.5,q.c,q.t,{b:1},244)+`</g>`;
+      });
+      s+=plate2(26,180,266,30,go?grn:cardB,go?'100 кадров против 240':'сколько кадров получится?',11.5,pre);
+      s+=`${fit(159,232,11,dim,'одна и та же сцена — разное число кадров',{},290)}`;
+      return s;
+    }
+    if(K==='vidgame'){ /* интерактив: кадры */
+      const opts=['72','27','24'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${fit(159,34,Math.min(12,250/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Сколько кадров?',{b:1})}</g>`;
+      s+=drawRR(40,54,238,44,10,cardB,2.4,0.2,1.8,pre);
+      s+=`<text x="159" y="82" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">24 · 3 = ?</text>`;
+      opts.forEach((t,k)=>{
+        const x=34+k*84, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:A);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="${x}" y="116" width="76" height="44" rx="11" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+38,145,19,c,t,{b:on})+(on?`<path d="M${x+56} 126 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      const by=176;
+      const msg=done?(st.pick===ok?'Верно! 24 · 3 = 72 кадра':(st.pick===1?'Почти: 24 · 3, а не 24 + 3':'Запомни: кадры в секунду умножаем на секунды')):'Нажми на ответ';
+      s+=`<g class="${pre}Rise}"><rect x="20" y="${by}" width="278" height="30" rx="9" fill="${done?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done?grn:A}" stroke-width="1.7"/>`
+        +`${fit(159,by+20,Math.min(11.5,260/Math.max(1,msg.length)/0.72),done?(st.pick===ok?grn:red):dim,msg,{b:done})}</g>`;
+      return s;
+    }
+    if(K==='vidgame2'){ /* интерактив: мало кадров */
+      const opts=['движение будет рывками','движение станет плавнее','видео исчезнет'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${fit(159,34,Math.min(12,250/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Что будет, если кадров мало?',{b:1})}</g>`;
+      opts.forEach((t,k)=>{
+        const y=58+k*42, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:A);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="24" y="${y}" width="270" height="34" rx="10" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(159,y+22,12,on?grn:(bad?red:ink),t,{b:on},240)+(on?`<path d="M262 ${y+10} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      const by=190;
+      s+=`<g class="${pre}Rise}"><rect x="20" y="${by}" width="278" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.7"/>`
+        +`${fit(159,by+20,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Кадров мало — движение дёргается':'Сравни: 2 кадра и 24 кадра',{b:done&&st.pick===ok},258)}</g>`;
+      return s;
+    }
+    if(K==='vidsum'){ /* карта темы */
+      const nodes=[{x:159,y:52,t:'кадры',c:cyan},{x:60,y:128,t:'частота',c:gold},{x:258,y:128,t:'размер',c:red},
+        {x:60,y:206,t:'сжатие',c:pur},{x:258,y:206,t:'звук',c:grn}];
+      const ed=[[0,1],[0,2],[1,3],[2,4],[1,4],[3,4]];
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'вся тема на одной карте',{b:1},256)}</g>`;
+      ed.forEach((e,k)=>{
+        const a=nodes[e[0]], b=nodes[e[1]];
+        s+=drawLL(a,b,'#415a6a',1.6,0.1+k*0.12,2,pre);
+      });
+      nodes.forEach((n,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.14).toFixed(2)}s">`
+          +`<rect x="${n.x-48}" y="${n.y-15}" width="96" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${n.c}" stroke-width="1.9"/>`
+          +fit(n.x,n.y+5,11.5,n.c,n.t,{b:1},88)+`</g>`;
+      });
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="5s" repeatCount="indefinite" path="M159 52 L60 128 L60 206 L258 206 L258 128 L159 52"/></circle>`;
+      s+=plate2(22,240,274,28,go?grn:cardB,go?'кадры → частота → размер → сжатие и звук':'как связана тема',11.5,pre);
+      return s;
+    }
+    if(K==='vtheory'){ /* теория словами */
+      const it=[
+        {t:'кадр — один рисунок',d:'из кадров состоит любое видео',c:cyan},
+        {t:'частота — кадров в секунду',d:'24 кадра в секунду — как в кино',c:gold},
+        {t:'размер — кадры · пиксели',d:'поэтому файлы большие',c:red},
+        {t:'сжатие — храним изменения',d:'и видео помещается в телефон',c:pur}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.9"/>`
+        +`${fit(159,31,12,ink,'четыре главные мысли о видео',{b:1},256)}</g>`;
+      it.forEach((q,k)=>{
+        const y=52+k*44;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12*k).toFixed(2)}s"><rect x="26" y="${y}" width="266" height="36" rx="10" fill="rgba(255,255,255,.04)" stroke="${q.c}" stroke-width="1.7"/>`
+          +`<circle cx="46" cy="${y+18}" r="11" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.4"/>`
+          +tx(46,y+23,11.5,q.c,''.concat(k+1),{b:1})
+          +fit(172,y+17,11.5,q.c,q.t,{b:1},200)
+          +fit(172,y+31,10,dim,q.d,{},214)+`</g>`;
+        s+=drawLL({x:26,y:y+36},{x:292,y:y+36},q.c,2,0.3+k*0.2,1.8,pre);
+      });
+      s+=plate2(26,232,266,28,go?grn:cardB,go?'эти четыре мысли — основа урока':'запомни четыре мысли',11.5,pre);
+      return s;
+    }
+    if(K==='vpractice3'){ /* практика: игры */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +`${fit(159,32,12.5,pur,'задача: игра, 60 кадров в секунду, 3 секунды',{b:1},256)}</g>`;
+      s+=fit(159,70,12.5,ink,'сколько кадров нарисует компьютер?',{b:1},250);
+      s+=drawRR(40,88,238,40,10,cardB,2.4,0.3,1.8,pre);
+      s+=`<text x="159" y="114" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">60 · 3 = ?</text>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="66" y="138" width="186" height="38" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="164" text-anchor="middle" font-size="16" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">60 · 3 = 180</text></g>`;
+      s+=plate2(24,188,270,30,go?grn:cardB,go?'180 кадров — вот почему нужна мощная видеокарта':'как посчитать?',11.5,pre);
+      s+=`${fit(159,240,11.5,dim,'чем больше кадров, тем плавнее игра',{},290)}`;
+      return s;
+    }
+    if(K==='vcheck'){ /* проверь себя */
+      let s=`<g class="${pre}Pop"><rect x="22" y="12" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +`${fit(159,32,12.5,grn,'что мы узнали о видео',{b:1},256)}</g>`;
+      const qa=[['из чего состоит видео?','из кадров'],['что такое 24 кадра в секунду?','частота кадров'],['почему файлы большие?','много кадров и пикселей'],['как уменьшают размер?','сжимают: хранят изменения']];
+      qa.forEach((q,k)=>{
+        const y=52+k*38, shown=(st&&st.q)>k;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12*k).toFixed(2)}s"><rect x="24" y="${y}" width="270" height="32" rx="9" fill="rgba(255,255,255,.04)" stroke="${shown?grn:A}" stroke-width="1.6"/>`
+          +fit(92,y+21,10.5,ink,q[0],{},140)
+          +(shown?fit(232,y+21,11,grn,q[1],{b:1},120):fit(232,y+21,10,dim,'нажми «ответ»',{},110))+`</g>`;
+      });
+      s+=plate2(24,206,270,30,go?grn:cardB,go?'все четыре ответа на месте':'проверь себя устно',11.5,pre);
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -3404,6 +3782,30 @@
     if(K==='outofrange') return 202;
     if(K==='marks') return 220;
     if(K==='findcell') return 210;
+    if(K==='movetask') return 224;
+    if(K==='flipbook') return 256;
+    if(K==='frame') return 250;
+    if(K==='fps') return 244;
+    if(K==='slowfast') return 234;
+    if(K==='eye') return 252;
+    if(K==='fpsvalues') return 268;
+    if(K==='framescount') return 258;
+    if(K==='framepixels') return 268;
+    if(K==='vidres') return 246;
+    if(K==='vidsize') return 258;
+    if(K==='vidsound') return 232;
+    if(K==='changes') return 260;
+    if(K==='keyframe') return 262;
+    if(K==='vformats') return 240;
+    if(K==='slowmo') return 234;
+    if(K==='practice1') return 252;
+    if(K==='practice2') return 246;
+    if(K==='vidgame') return 218;
+    if(K==='vidgame2') return 232;
+    if(K==='vidsum') return 282;
+    if(K==='vtheory') return 272;
+    if(K==='vpractice3') return 254;
+    if(K==='vcheck') return 248;
     if(K==='sndtask') return 214;
     if(K==='sndwave') return 216;
     if(K==='sndsample') return 232;
@@ -4242,6 +4644,64 @@
       tasks:[
         {q:'Сколько чисел нужно на одно измерение в стерео (два канала)?', kind:'unit', ans:2, tol:0, hints:['Один канал — левое ухо.','Два канала — два числа.'], sol:'2'},
         {q:'Что будет со звуком, если измерять его слишком редко?', kind:'choice', choices:['он станет грубым и неточным','он станет громче','он исчезнет'], ans:0, tol:0, hints:['Точек мало — волна угловатая.','Звук станет грубым.'], sol:'он станет грубым и неточным'}
+      ] },
+    { id:522, title:'Видео: движение из кадров', ico:'🎬', src:'Информатика · 5–6 класс · С нуля: видео',
+      explain:[
+        'Движение на экране — это обман зрения: компьютер показывает много похожих картинок, и они сменяют друг друга очень быстро.',
+        'Такие картинки называют кадрами. Если быстро листать блокнот, где человечек нарисован чуть-чуть по-разному, он «оживёт» — так делают мультики.',
+        'Кадр — это один рисунок фильма. В нём, как и в обычной картинке, есть строки и столбцы пикселей.',
+        'Сколько кадров показывают за одну секунду, называют частотой кадров. Например, 24 кадра в секунду.',
+        'Если кадров мало (2–3 в секунду), движение получается рывками. Если много (24 и больше), глаз видит плавное движение.',
+        'Почему так? Глаз ещё мгновение «держит» увиденную картинку, поэтому быстрая смена кадров сливается в движение.',
+        'Частота кадров бывает разной: в мультике и гифке около 10 кадров, в кино 24, в видео 30, а в играх 60 кадров в секунду.',
+        'Посчитаем: если в секунду 24 кадра, то в минуте 24 · 60 = 1440 кадров. Поэтому фильмы занимают так много места.',
+        'Каждый кадр — это сетка пикселей. Даже небольшой кадр содержит сотни тысяч пикселей, и всё это надо хранить.',
+        'Разрешение кадра — это его размер в пикселях. Кадр 640 на 360 содержит 230 тысяч пикселей, а 1920 на 1080 — уже 2 миллиона.',
+        'Размер видео считают так: размер одного кадра умножают на число кадров. Один несжатый кадр занимает около 6 мегабайт.',
+        'Если кадров 30 в секунду, получается 180 мегабайт за одну секунду. Поэтому видео обязательно сжимают.',
+        'Видео состоит из двух частей: картинки (кадры) и звука. Звук хранится отдельно — так же, как в уроке про звук.',
+        'Как уменьшить размер? Хранить не все кадры целиком, а только то, что изменилось: если двигается только мяч, остальное можно не записывать.',
+        'Опорные кадры хранят полностью, а промежуточные достраивают по изменениям. Так видео сжимается в сотни раз.',
+        'Короткий мультик без звука удобно хранить гифкой, а фильм со звуком — в формате mp4.',
+        'Если снимать с частотой 240 кадров в секунду, видео можно замедлить: кадров хватает, и движение остаётся плавным.',
+        'Практика: сколько кадров в 5 секундах при 24 кадрах в секунду? Умножаем: 24 · 5 = 120 кадров.',
+        'Практика: мультик 10 секунд при 10 кадрах в секунду — это 100 кадров, а при 24 кадрах — уже 240.',
+        'Тренажёр: посчитай кадры для 3 секунд при 24 кадрах в секунду.',
+        'Тренажёр: определи, что будет, если кадров слишком мало.',
+        'Соберём тему в карту: кадры дают движение, частота отвечает за плавность, разрешение и число кадров дают размер, а сжатие уменьшает файл.',
+        'Четыре главные мысли: кадр — один рисунок, частота — кадры в секунду, размер — кадры умножить на пиксели, сжатие — храним только изменения.',
+        'Практика: игра рисует 60 кадров в секунду. За 3 секунды получится 60 · 3 = 180 кадров.',
+        'Проверь себя: из чего состоит видео, что такое частота кадров, почему файлы большие и как их уменьшают. Шпаргалка и тренажёр!' ],
+      slides:[
+        {h:'Движение на экране', v:{kind:'movetask'}, r:'Откуда берётся движение?', d:'В каждом кадре мяч стоит на новом месте. Если показывать кадры быстро, глаз видит движение.'},
+        {h:'Блокнот-мультик', v:{kind:'flipbook'}, r:'Быстро листаем — рисунок оживает.', d:'На каждой странице человечек нарисован чуть иначе. Когда страницы листаются быстро, человечек начинает шагать.'},
+        {h:'Что такое кадр', v:{kind:'frame'}, r:'Кадр — один рисунок.', d:'Кадр — это как обычная картинка: таблица пикселей. Фильм состоит из тысяч таких кадров.'},
+        {h:'Частота кадров', v:{kind:'fps'}, r:'Сколько кадров за секунду.', d:'Частота кадров — это число кадров, которые компьютер показывает за одну секунду. Обозначают «кадров в секунду».'},
+        {h:'Мало и много кадров', v:{kind:'slowfast'}, r:'Мало кадров — рывки, много — плавно.', d:'Слева всего 3 кадра, и мяч прыгает рывками. Справа кадров в восемь раз больше — движение получается плавным.'},
+        {h:'Почему мы видим движение', v:{kind:'eye'}, r:'Глаз задерживает картинку.', d:'Глаз ещё мгновение «держит» увиденный кадр. Поэтому при быстрой смене кадров перерывы не заметны и мы видим движение.'},
+        {h:'Какая частота бывает', v:{kind:'fpsvalues'}, r:'От 10 до 60 кадров.', d:'В мультике и гифке около 10 кадров в секунду, в кино 24, в видео 30, а в играх 60. Чем больше кадров, тем плавнее.'},
+        {h:'Сколько кадров в минуте', v:{kind:'framescount'}, r:'Считаем кадры.', d:'При 24 кадрах в секунду за минуту получается 24 · 60 = 1440 кадров. Это только одна минута фильма!'},
+        {h:'Кадр — это пиксели', v:{kind:'framepixels'}, r:'В кадре сотни тысяч пикселей.', d:'Каждый кадр — сетка пикселей, как в уроке про рисунки. И такую сетку нужно хранить для каждого кадра.'},
+        {h:'Разрешение кадра', v:{kind:'vidres'}, r:'Больше пикселей — тяжелее файл.', d:'Кадр 640 на 360 — это 230 тысяч пикселей, а 1920 на 1080 — два миллиона. Чем больше пикселей, тем больше размер видео.'},
+        {h:'Размер одного кадра', v:{kind:'vidsize'}, r:'Кадр весит немало.', d:'Один несжатый кадр занимает около 6 мегабайт. Если кадров 30 в секунду, за секунду набегает 180 мегабайт.'},
+        {h:'Видео и звук', v:{kind:'vidsound'}, r:'Картинка плюс звук.', d:'Видео состоит из кадров и звука. Звук хранится отдельно — теми же измерениями, о которых мы говорили в уроке про звук.'},
+        {h:'Храним изменения', v:{kind:'changes'}, r:'Что изменилось — то и записываем.', d:'В соседних кадрах меняется только маленькая часть: мяч сдвинулся. Вместо целого кадра можно записать только это изменение.'},
+        {h:'Опорные кадры', v:{kind:'keyframe'}, r:'Главные кадры и промежуточные.', d:'Опорные кадры хранят полностью, а промежуточные достраивают по изменениям. Так видео сжимается в сотни раз.'},
+        {h:'Форматы видео', v:{kind:'vformats'}, r:'Гифка и фильм.', d:'Гифка — короткий мультик без звука, который повторяется по кругу. Формат mp4 хранит и кадры, и звук.'},
+        {h:'Замедление', v:{kind:'slowmo'}, r:'Зачем много кадров.', d:'Если снять 240 кадров в секунду, видео можно замедлить: кадров хватает, и движение остаётся плавным.'},
+        {h:'Практика: кадры', v:{kind:'practice1'}, r:'Сколько кадров в 5 секундах?', d:'Умножаем частоту на время: 24 · 5 = 120 кадров. Так считают кадры для любого фильма.'},
+        {h:'Практика: мультик', v:{kind:'practice2'}, r:'Сравниваем две частоты.', d:'При 10 кадрах в секунду за 10 секунд получится 100 кадров, а при 24 кадрах — уже 240. Одна сцена, но разное число кадров.'},
+        {h:'Тренажёр: считаем кадры', v:{kind:'vidgame', q:'Сколько кадров в 3 секундах при 24 кадрах в секунду?'}, r:'Проверь себя: посчитай кадры.', d:'Кадры в секунду умножаем на секунды: 24 · 3 = 72.'},
+        {h:'Тренажёр: мало кадров', v:{kind:'vidgame2', q:'Что будет, если кадров слишком мало?'}, r:'Проверь себя: выбери ответ.', d:'Мало кадров — движение становится рывками, как в старом мультике.'},
+        {h:'Карта темы', v:{kind:'vidsum'}, r:'Как связана тема.', d:'Кадры дают движение, частота отвечает за плавность, разрешение и число кадров дают размер, сжатие уменьшает файл, а звук хранится отдельно.'},
+        {h:'Четыре главные мысли', v:{kind:'vtheory'}, r:'Коротко о видео.', d:'Кадр — один рисунок. Частота — кадров в секунду. Размер — кадры умножить на пиксели. Сжатие — храним только изменения.'},
+        {h:'Практика: игра', v:{kind:'vpractice3'}, r:'Сколько кадров рисует игра?', d:'Игра с 60 кадрами в секунду за 3 секунды нарисует 60 · 3 = 180 кадров.'},
+        {h:'Проверь себя', v:{kind:'vcheck'}, r:'Ответь на четыре вопроса.', d:'Нажимай «показать ответ» и проверяй себя: из чего состоит видео, что такое частота кадров, почему файлы большие и как их уменьшают.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'видео = кадры + звук', b:1},{t:'частота: кадров в секунду', c:grn},{t:'размер: кадры · пиксели', c:gold}]}, r:'Запомни главное о видео.', d:'Главное: движение получается из быстрой смены кадров, размер зависит от числа кадров и пикселей, а сжатие хранит только изменения.'} ],
+      check:{ q:'Что называют частотой кадров?', choices:['сколько кадров показывают за секунду','сколько пикселей в кадре','сколько секунд идёт фильм'], ans:0, exp:'Частота кадров — это число кадров за одну секунду.' },
+      tasks:[
+        {q:'Сколько кадров в 5 секундах при 24 кадрах в секунду?', kind:'unit', ans:120, tol:0, hints:['Кадры в секунду · секунды.','24 · 5 = 120.'], sol:'120'},
+        {q:'Мультик идёт 10 секунд при 10 кадрах в секунду. Сколько в нём кадров?', kind:'choice', choices:['100','20','10','1000'], ans:0, tol:0, hints:['10 · 10.','Получится 100 кадров.'], sol:'10 · 10 = 100'}
       ] }
   ];
 
@@ -4256,7 +4716,7 @@
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -4275,10 +4735,12 @@
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
+      : (s.v.kind==='vcheck')
+      ? ((st.q||0)<4? wkRow(wkBtn('показать ответ',`infQ('${lk}')`)) : wkRow(wkBtn('сначала',`infQ('${lk}',1)`)))
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck')? (((st.q||0)>=4) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -4287,6 +4749,11 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infQ=function(lk,reset){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(reset) st.q=0; else st.q=Math.min(4,(st.q||0)+1);
+    chRender(0);
+  };
   window.infDraw=function(lk,r,c){
     const st=CHS[lk]||(CHS[lk]={}); const g=st.grid;
     if(!g) return;
