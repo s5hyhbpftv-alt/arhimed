@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 31 урока (id 500–530) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 32 уроков (id 500–531) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -7328,6 +7328,471 @@
       s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
       return s;
     }
+    if(K==='modelintro'){ /* что такое модель */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'модель — это упрощённая копия',{b:1},264)+`</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.15s"><circle cx="86" cy="96" r="34" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`
+        +`<ellipse cx="86" cy="96" rx="34" ry="12" fill="none" stroke="${cyan}" stroke-width="1.4"/>`
+        +`<ellipse cx="86" cy="96" rx="12" ry="34" fill="none" stroke="${cyan}" stroke-width="1.4"/>`
+        +fit(86,146,10.5,cyan,'глобус',{b:1},70)+`</g>`;
+      s+=`<path d="M128 96 h36" stroke="${gold}" stroke-width="2.4"/><path d="M158 89 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.4s"><rect x="176" y="62" width="112" height="68" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.9"/>`
+        +`<path d="M186 112 l24 -22 l20 14 l18 -26 l24 34 z" fill="rgba(255,215,106,.22)" stroke="${gold}" stroke-width="1.6"/>`
+        +`<circle cx="246" cy="86" r="5" fill="${gold}"/></g>`;
+      s+=fit(232,146,10.5,gold,'карта',{b:1},70);
+      s+=fit(159,176,11.5,ink,'и глобус, и карта описывают одну Землю',{b:1},292);
+      s+=plate2(18,190,282,32,go?grn:cardB,go?'модель сохраняет главное и упрощает остальное':'чем похожи глобус и карта?',11,pre);
+      s+=`${fit(159,246,11,dim,'главное — чтобы модель работала',{b:1},250)}`;
+      return s;
+    }
+    if(K==='modelwhy'){ /* зачем модели */
+      const it=[{t:'слишком большое',d:'планеты и климат',c:blu},{t:'слишком маленькое',d:'атомы и клетки',c:cyan},
+                {t:'опасное',d:'пожары и вирусы',c:red},{t:'дорогое',d:'новая машина',c:gold}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'зачем нужны модели',{b:1},262)+`</g>`;
+      it.forEach((q,k)=>{
+        const x=22+(k%2)*140, y=52+Math.floor(k/2)*88;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.16).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="132" height="76" rx="11" fill="rgba(12,32,34,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(x+66,y+30,11.5,q.c,q.t,{b:1},124)
+          +fit(x+66,y+52,10,dim,q.d,{},124)+`</g>`;
+      });
+      s+=plate2(22,236,274,32,go?grn:cardB,go?'модель позволяет изучать то, что недоступно':'что моделируют чаще всего?',11,pre);
+      s+=`${fit(159,292,11,dim,'и не ломать настоящее, если ошибёшься',{},290)}`;
+      return s;
+    }
+    if(K==='modelreal'){ /* модель и оригинал */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'модель сохраняет важные свойства',{b:1},268)+`</g>`;
+      s+=drawRR(24,54,128,104,10,cyan,2.2,0.2,1.8,pre);
+      s+=fit(88,78,11.5,cyan,'оригинал',{b:1},116);
+      s+=fit(88,98,10,dim,'настоящее метро',{},116);
+      s+=`<path d="M40 112 h10 M60 112 h10 M80 112 h10 M100 112 h10 M120 112 h10" stroke="${dim}" stroke-width="2" stroke-dasharray="3 5"/>`;
+      s+=fit(88,132,10,red,'сложно и подробно',{},116);
+      s+=`<path d="M156 106 h28" stroke="${gold}" stroke-width="2.4"/><path d="M178 99 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=drawRR(190,54,104,104,10,gold,2.2,0.7,1.8,pre);
+      s+=fit(242,78,11.5,gold,'модель',{b:1},92);
+      s+=`<circle cx="222" cy="106" r="7" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="1.5"/>`;
+      s+=`<circle cx="262" cy="106" r="7" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="1.5"/>`;
+      s+=`<circle cx="242" cy="132" r="7" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="1.5"/>`;
+      s+=`<path d="M222 106 L262 106 M222 106 L242 132 M262 106 L242 132" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=fit(242,148,10,grn,'только станции и связи',{},98);
+      s+=fit(159,182,11.5,ink,'схема метро — модель: линии и пересадки',{b:1},292);
+      s+=plate2(24,196,270,32,go?grn:cardB,go?'это граф — как в уроке про графы':'что осталось от метро?',11,pre);
+      s+=`${fit(159,252,11,dim,'модель отвечает на вопрос: как проехать',{},292)}`;
+      return s;
+    }
+    if(K==='modeltypes'){ /* три вида моделей */
+      const it=[{t:'предметные',d:'глобус, макет',c:gold,ico:'obj'},{t:'образные',d:'рисунок, фото',c:cyan,ico:'img'},{t:'знаковые',d:'формула, таблица',c:grn,ico:'sign'}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'модели бывают трёх видов',{b:1},262)+`</g>`;
+      it.forEach((q,k)=>{
+        const x=22+k*94, y=54, cx=x+44, cy=y+34;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="88" height="96" rx="11" fill="rgba(12,32,34,.97)" stroke="${q.c}" stroke-width="1.8"/>`;
+        if(q.ico==='obj') s+=`<circle cx="${cx}" cy="${cy}" r="17" fill="rgba(255,215,106,.18)" stroke="${q.c}" stroke-width="1.8"/><ellipse cx="${cx}" cy="${cy}" rx="17" ry="6" fill="none" stroke="${q.c}" stroke-width="1.3"/>`;
+        else if(q.ico==='img') s+=`<rect x="${cx-18}" y="${cy-14}" width="36" height="28" rx="3" fill="rgba(127,214,255,.16)" stroke="${q.c}" stroke-width="1.7"/><path d="M${cx-14} ${cy+8} l9 -10 l7 6 l6 -9 l8 13" fill="none" stroke="${q.c}" stroke-width="1.5"/>`;
+        else s+=`<text x="${cx}" y="${cy+7}" text-anchor="middle" font-size="17" font-family="Georgia,serif" font-weight="bold" fill="${q.c}">x²</text>`;
+        s+=fit(cx,y+72,10.5,q.c,q.t,{b:1},82)+fit(cx,y+86,9,dim,q.d,{},82)+`</g>`;
+      });
+      s+=fit(159,172,11.5,ink,'главное — что модель работает, а не как выглядит',{b:1},292);
+      s+=plate2(22,186,274,32,go?grn:cardB,go?'предметные, образные и знаковые':'какие модели бывают?',11,pre);
+      s+=`${fit(159,242,11,dim,'в информатике чаще всего знаковые — их считает компьютер',{},296)}`;
+      return s;
+    }
+    if(K==='modeldata'){ /* модель — это данные и правила */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'в компьютере модель — это данные и правила',{b:1},270)+`</g>`;
+      s+=`<rect x="26" y="54" width="124" height="96" rx="10" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=fit(88,76,11.5,cyan,'данные',{b:1},112);
+      s+=fit(88,96,10,dim,'скорость 60 км/ч',{},112);
+      s+=fit(88,114,10,dim,'время 2 ч',{},112);
+      s+=fit(88,136,10,grn,'хранятся в переменных',{},116);
+      s+=`<path d="M156 102 h28" stroke="${gold}" stroke-width="2.4"/><path d="M178 95 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<rect x="190" y="54" width="104" height="96" rx="10" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=fit(242,76,11.5,gold,'правила',{b:1},92);
+      s+=`<text x="242" y="104" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${gold}">S = v · t</text>`;
+      s+=fit(242,126,10,dim,'как считать',{},92);
+      s+=fit(242,142,10,grn,'это формула модели',{},92);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="26" y="162" width="268" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`<text x="159" y="185" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">S = 60 · 2 = 120 км</text></g>`;
+      s+=fit(159,216,11.5,ink,'модель предсказывает: за 2 часа проедем 120 км',{b:1},292);
+      s+=plate2(26,230,268,32,go?grn:cardB,go?'данные + формула = работающая модель':'из чего состоит модель?',11,pre);
+      s+=`${fit(159,286,11,dim,'изменим данные — модель даст другой ответ',{},292)}`;
+      return s;
+    }
+    if(K==='modelformula'){ /* формула движения */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'модель движения: S = v · t',{b:1},262)+`</g>`;
+      const rows=[[1,60],[2,120],[3,180],[4,240]];
+      rows.forEach((q,k)=>{
+        const y=56+k*40;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="258" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+          +fit(84,y+20,10.5,ink,'t = '+q[0]+' ч',{b:1},80)
+          +fit(180,y+20,10.5,dim,'60 · '+q[0],{},80)
+          +fit(272,y+20,11.5,grn,q[1]+' км',{b:1},66)+`</g>`;
+      });
+      s+=`<line x1="30" y1="224" x2="288" y2="224" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="4s" repeatCount="indefinite" path="M40 224 L280 224"/></circle>`;
+      s+=fit(159,246,11.5,ink,'та же формула — и мы знаем путь в любой момент',{b:1},292);
+      s+=plate2(30,260,258,30,go?grn:cardB,go?'это математическая модель движения':'что считается по формуле?',11,pre);
+      return s;
+    }
+    if(K==='modeltable'){ /* табличная модель */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'табличная модель: дни и температура',{b:1},270)+`</g>`;
+      const days=['пн','вт','ср','чт','пт'];
+      const temp=[8,11,9,14,12];
+      s+=`<rect x="26" y="54" width="266" height="28" rx="7" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.4"/>`;
+      s+=fit(74,73,10.5,dim,'день',{b:1},80);
+      s+=fit(196,73,10.5,dim,'температура',{b:1},120);
+      days.forEach((q,k)=>{
+        const y=84+k*32;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="26" y="${y}" width="266" height="28" rx="7" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.2"/>`
+          +fit(74,y+19,11,ink,q,{b:1},80)
+          +growBar(140,y+9,96*temp[k]/14,10,(temp[k]>12?red:(temp[k]>9?gold:blu)),1,0.3+k*0.14,0)
+          +fit(268,y+19,11,cyan,temp[k]+'°',{b:1},54)+`</g>`;
+      });
+      s+=fit(159,248,11.5,ink,'по таблице сразу видно, где теплее',{b:1},292);
+      s+=plate2(26,262,266,30,go?grn:cardB,go?'таблица — тоже модель':'что показывает таблица?',11,pre);
+      return s;
+    }
+    if(K==='modelgraph'){ /* графическая модель */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'график: как меняется величина',{b:1},262)+`</g>`;
+      s+=drawPoly([[46,224],[288,224]],cardB,2,0.2,2,{pen:false,keep:true});
+      s+=drawPoly([[46,224],[46,64]],cardB,2,0.3,2,{pen:false,keep:true});
+      s+=tx(294,220,10.5,dim,'t',{});
+      s+=tx(50,58,10.5,dim,'T',{});
+      const pts=[[46,200],[94,188],[142,170],[190,140],[238,116],[286,88]];
+      s+=drawPoly(pts,cyan,2.4,0.6,2.8,{keep:true});
+      pts.forEach((q,k)=>{ s+=`<circle class="${pre}Pop" style="animation-delay:${(0.7+k*0.2).toFixed(2)}s" cx="${q[0]}" cy="${q[1]}" r="5" fill="${cyan}"/>`; });
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.6s"><rect x="40" y="240" width="238" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,263,11.5,grn,'линия идёт вверх — температура растёт',{b:1},226)+`</g>`;
+      s+=plate2(40,254,238,0,cardB,'',11,pre);
+      s+=`${fit(159,296,11,dim,'график — та же таблица, только нагляднее',{},292)}`;
+      return s;
+    }
+    if(K==='modelsim'){ /* «а что если» */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'модель отвечает на вопрос «а что если?»',{b:1},272)+`</g>`;
+      const rows=[['а если скорость 80?','160 км'],['а если время 5 ч?','300 км'],['а если скорость 40 и время 3?','120 км']];
+      rows.forEach((q,k)=>{
+        const y=56+k*44;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${k===2?grn:pur}" stroke-width="1.7"/>`
+          +fit(112,y+22,10.5,pur,q[0],{b:1},176)
+          +fit(240,y+22,11.5,k===2?grn:gold,'→ '+q[1],{b:1},110)+`</g>`;
+      });
+      s+=fit(159,200,11.5,ink,'меняем данные — получаем новый ответ',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="24" y="216" width="270" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,239,11.5,gold,'так модель помогает выбирать решение',{b:1},250)+`</g>`;
+      s+=plate2(24,252,270,32,go?grn:cardB,go?'не надо ехать — можно посчитать':'зачем менять данные?',11,pre);
+      return s;
+    }
+    if(K==='modelstep'){ /* шаг модели */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'модель считает шаг за шагом',{b:1},262)+`</g>`;
+      s+=`<rect x="26" y="58" width="120" height="56" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=fit(86,80,11,cyan,'состояние',{b:1},110);
+      s+=fit(86,100,10,dim,'числа сейчас',{},110);
+      s+=`<path d="M152 86 h26" stroke="${gold}" stroke-width="2.4"/><path d="M172 79 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<rect x="184" y="58" width="110" height="56" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=fit(239,80,11,gold,'правило',{b:1},100);
+      s+=fit(239,100,10,dim,'пересчитываем',{},100);
+      s+=`<path d="M239 122 q0 34 -153 0" fill="none" stroke="${grn}" stroke-width="2.2" stroke-dasharray="7 5"/>`;
+      s+=`<circle r="6" fill="${grn}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M239 122 q0 34 -153 0"/></circle>`;
+      s+=fit(159,158,11,grn,'и снова: новое состояние',{b:1},230);
+      s+=fit(159,190,11.5,ink,'компьютер делает тысячи таких шагов быстро',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="26" y="206" width="268" height="34" rx="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`
+        +fit(159,229,11,ink,'это цикл — как в уроке про алгоритмы',{b:1},240)+`</g>`;
+      s+=plate2(26,240,268,32,go?grn:cardB,go?'состояние и правило — модель готова':'что повторяется?',11,pre);
+      return s;
+    }
+    if(K==='modelball'){ /* модель падения мяча */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'модель полёта мяча',{b:1},262)+`</g>`;
+      s+=`<line x1="40" y1="240" x2="290" y2="240" stroke="${cardB}" stroke-width="2.4"/>`;
+      const pts=[];
+      for(let k=0;k<=10;k++){ const x=52+k*22; pts.push([x,236-Math.round(140*Math.sin(Math.PI*k/10))]); }
+      let d='M'+pts.map(q=>q[0]+' '+q[1]).join(' L');
+      s+=`<path d="${d}" fill="none" stroke="${cyan}" stroke-width="2.4" stroke-dasharray="7 5"/>`;
+      s+=`<circle r="9" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="1.8"><animateMotion dur="3.4s" repeatCount="indefinite" path="${d}"/></circle>`;
+      s+=`<circle cx="52" cy="236" r="6" fill="${grn}"/><circle cx="272" cy="236" r="6" fill="${red}"/>`;
+      s+=fit(56,222,10,grn,'бросок',{b:1},60)+fit(268,222,10,red,'падение',{b:1},66);
+      s+=fit(159,62,11,ink,'v = v + ускорение · время',{b:1},250);
+      s+=fit(159,266,11.5,ink,'модель показывает, где мяч будет через миг',{b:1},292);
+      s+=plate2(30,280,258,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='modelrabbit'){ /* модель размножения */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'модель роста: кролики удваиваются',{b:1},270)+`</g>`;
+      const vals=[2,4,8,16,32];
+      vals.forEach((q,k)=>{
+        const x=40+k*52, h=Math.log2(q)*22;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="${x}" y="${232-h}" width="34" height="${h}" rx="5" fill="rgba(125,224,160,.35)" stroke="${grn}" stroke-width="1.6"/>`
+          +fit(x+17,246,10,grn,''+q,{b:1},40)
+          +fit(x+17,262,9,dim,'год '+(k+1),{},44)+`</g>`;
+      });
+      s+=`<line x1="34" y1="232" x2="294" y2="232" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=fit(159,76,11.5,ink,'каждый год число кроликов умножается на 2',{b:1},292);
+      s+=plate2(30,90,258,32,go?grn:cardB,go?'2 → 4 → 8 → 16 → 32: это модель роста':'как растёт число кроликов?',11,pre);
+      s+=`${fit(159,140,11,dim,'так моделируют и популяции животных',{},292)}`;
+      return s;
+    }
+    if(K==='modelque'){ /* модель очереди */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'модель очереди в столовой',{b:1},264)+`</g>`;
+      s+=`<rect x="40" y="56" width="70" height="70" rx="10" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=fit(75,96,10.5,cyan,'касса',{b:1},64);
+      s+=`<circle cx="140" cy="92" r="11" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`<circle cx="170" cy="92" r="11" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`<circle cx="200" cy="92" r="11" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`<circle cx="230" cy="92" r="11" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`<circle r="11" fill="rgba(125,224,160,.5)" stroke="${grn}" stroke-width="2"><animateMotion dur="3.4s" repeatCount="indefinite" path="M292 92 H140 L75 122"/></circle>`;
+      s+=fit(186,126,10.5,dim,'очередь',{b:1},70);
+      s+=fit(159,158,11,ink,'правило: один человек обслуживается 2 минуты',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="30" y="174" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,197,11.5,gold,'4 человека → 8 минут ожидания',{b:1},240)+`</g>`;
+      s+=plate2(30,212,258,32,go?grn:cardB,go?'модель предсказывает время ожидания':'что покажет модель?',11,pre);
+      s+=`${fit(159,268,11,dim,'по такой модели решают, сколько открыть касс',{},296)}`;
+      return s;
+    }
+    if(K==='modelwater'){ /* модель бака */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'модель бака: приток и расход',{b:1},266)+`</g>`;
+      s+=`<rect x="60" y="64" width="110" height="140" rx="10" fill="rgba(255,255,255,.04)" stroke="${cyan}" stroke-width="2"/>`;
+      s+=`<rect x="64" y="120" width="102" height="80" rx="6" fill="rgba(127,214,255,.28)"/>`;
+      s+=`<path d="M115 64 v-24" stroke="${grn}" stroke-width="4" stroke-linecap="round"/>`;
+      s+=`<circle r="6" fill="${grn}"><animateMotion dur="2s" repeatCount="indefinite" path="M115 44 L115 76"/></circle>`;
+      s+=fit(115,38,10,grn,'приток',{b:1},60);
+      s+=`<path d="M170 186 h34" stroke="${red}" stroke-width="4" stroke-linecap="round"/>`;
+      s+=`<circle r="6" fill="${red}"><animateMotion dur="2s" repeatCount="indefinite" path="M174 186 L206 186"/></circle>`;
+      s+=fit(220,190,10,red,'расход',{b:1},60);
+      s+=`<text x="115" y="152" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${ink}">60 л</text>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="24" y="216" width="270" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="239" text-anchor="middle" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">уровень = уровень + приток − расход</text></g>`;
+      s+=plate2(24,254,270,30,go?grn:cardB,go?'каждый час уровень пересчитывают заново':'как меняется вода?',11,pre);
+      return s;
+    }
+    if(K==='modelweather'){ /* модель погоды */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${blu}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,blu,'модель погоды: много параметров',{b:1},266)+`</g>`;
+      const rows=[{t:'температура',c:blu},{t:'давление',c:cyan},{t:'ветер',c:grn},{t:'влажность',c:pur}];
+      rows.forEach((q,k)=>{
+        const y=56+k*40;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="258" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +`<circle cx="50" cy="${y+15}" r="8" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.3"/>`
+          +fit(190,y+20,10.5,q.c,q.t,{b:1},240)+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="30" y="218" width="258" height="34" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
+        +fit(159,241,11,red,'чем дальше прогноз, тем больше ошибка',{b:1},240)+`</g>`;
+      s+=plate2(30,254,258,30,go?grn:cardB,go?'точный прогноз — только на несколько дней':'почему прогноз ошибается?',11,pre);
+      s+=`${fit(159,304,11,dim,'в модель входит вся атмосфера — а это очень сложно',{},296)}`;
+      return s;
+    }
+    if(K==='modelaccuracy'){ /* точность модели */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'чем проще модель, тем грубее ответ',{b:1},270)+`</g>`;
+      const maps=[['глобус','всё подробно',grn,0],['карта страны','города и реки',cyan,1],['схема метро','только станции',gold,2]];
+      maps.forEach((q,k)=>{
+        const x=24+k*92, y=56, cx=x+42;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="84" height="84" rx="10" fill="rgba(12,32,34,.97)" stroke="${q[2]}" stroke-width="1.7"/>`;
+        if(k===0) s+=`<circle cx="${cx}" cy="${y+34}" r="17" fill="rgba(125,224,160,.18)" stroke="${q[2]}" stroke-width="1.7"/><ellipse cx="${cx}" cy="${y+34}" rx="17" ry="6" fill="none" stroke="${q[2]}" stroke-width="1.2"/><ellipse cx="${cx}" cy="${y+34}" rx="6" ry="17" fill="none" stroke="${q[2]}" stroke-width="1.2"/>`;
+        else if(k===1) s+=`<path d="M${x+12} ${y+44} l16 -14 l14 10 l12 -16 l16 20" fill="none" stroke="${q[2]}" stroke-width="1.8"/><circle cx="${cx-6}" cy="${y+30}" r="3" fill="${q[2]}"/><circle cx="${cx+8}" cy="${y+48}" r="3" fill="${q[2]}"/>`;
+        else s+=`<circle cx="${cx-14}" cy="${y+34}" r="5" fill="none" stroke="${q[2]}" stroke-width="1.6"/><circle cx="${cx+14}" cy="${y+34}" r="5" fill="none" stroke="${q[2]}" stroke-width="1.6"/><path d="M${cx-9} ${y+34} h18" stroke="${q[2]}" stroke-width="1.6"/>`;
+        s+=fit(cx,y+72,9.5,q[2],q[0],{b:1},78)+`</g>`;
+      });
+      s+=fit(159,166,11,ink,'подробнее — точнее, но сложнее и дольше',{b:1},292);
+      s+=plate2(24,180,268,32,go?grn:cardB,go?'выбирай модель под задачу':'какая модель точнее?',11,pre);
+      s+=`${fit(159,236,11,dim,'для метро хватает схемы, для стройки — чертежа',{},296)}`;
+      return s;
+    }
+    if(K==='modeltest'){ /* проверка модели */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'модель проверяют на реальности',{b:1},266)+`</g>`;
+      s+=`<rect x="26" y="56" width="126" height="72" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=fit(89,82,11,cyan,'предсказание',{b:1},116);
+      s+=fit(89,104,10.5,dim,'модель сказала 120 км',{},116);
+      s+=`<path d="M158 92 h28" stroke="${gold}" stroke-width="2.4"/><path d="M180 85 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<rect x="192" y="56" width="100" height="72" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`;
+      s+=fit(242,82,11,grn,'реальность',{b:1},90);
+      s+=fit(242,104,10.5,dim,'проехали 118 км',{},90);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="26" y="142" width="266" height="34" rx="10" fill="rgba(255,215,76,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,165,11.5,gold,'разница 2 км — модель хорошая',{b:1},246)+`</g>`;
+      s+=fit(159,196,11.5,ink,'если разница большая — модель надо исправлять',{b:1},292);
+      s+=plate2(26,210,266,32,go?grn:cardB,go?'сравнение с опытом — главная проверка':'как понять, хороша ли модель?',11,pre);
+      s+=`${fit(159,266,11,dim,'поэтому модели уточняют снова и снова',{},292)}`;
+      return s;
+    }
+    if(K==='modellimits'){ /* границы применимости */
+      const it=[{t:'модель упрощает мир',f:'в ней нет всех деталей',c:cyan},{t:'у модели есть границы',f:'сложное она не опишет',c:gold},
+                {t:'модель может ошибаться',f:'проверяй результат',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'у каждой модели есть границы',{b:1},266)+`</g>`;
+      it.forEach((q,k)=>{
+        const y=58+k*54;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="22" y="${y}" width="274" height="44" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +fit(106,y+21,11.5,q.c,q.t,{b:1},200)
+          +fit(106,y+37,10.5,dim,q.f,{},200)+`</g>`;
+      });
+      s+=plate2(22,228,274,32,go?grn:cardB,go?'модель — инструмент, а не истина':'что важно помнить?',11,pre);
+      s+=`${fit(159,284,11,dim,'для каждой задачи выбирают свою модель',{},292)}`;
+      return s;
+    }
+    if(K==='modelcity'){ /* модель города */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'модель города: машины и светофоры',{b:1},270)+`</g>`;
+      s+=`<rect x="26" y="54" width="266" height="140" rx="10" fill="rgba(255,255,255,.03)" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=`<path d="M26 110 h266 M140 54 v140 M220 54 v140" stroke="${cardB}" stroke-width="8" opacity=".5"/>`;
+      s+=`<rect x="100" y="86" width="16" height="34" rx="4" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="1.4"/>`;
+      s+=`<rect x="184" y="118" width="16" height="34" rx="4" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="1.4"/>`;
+      s+=`<circle r="7" fill="${grn}"><animateMotion dur="4s" repeatCount="indefinite" path="M34 110 H270"/></circle>`;
+      s+=`<circle r="7" fill="${pur}"><animateMotion dur="4s" begin="1s" repeatCount="indefinite" path="M270 110 H34"/></circle>`;
+      s+=`<circle r="7" fill="${blu}"><animateMotion dur="5s" repeatCount="indefinite" path="M140 60 V188"/></circle>`;
+      s+=fit(159,212,11.5,ink,'модель показывает, где соберётся пробка',{b:1},292);
+      s+=plate2(26,226,266,32,go?grn:cardB,go?'можно поменять время светофора и проверить':'зачем моделировать город?',11,pre);
+      s+=`${fit(159,282,11,dim,'и не перестраивать город наугад',{},292)}`;
+      return s;
+    }
+    if(K==='modelclimate'){ /* модель экологии */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'модель леса: деревья и животные',{b:1},266)+`</g>`;
+      s+=`<line x1="36" y1="228" x2="290" y2="228" stroke="${cardB}" stroke-width="2"/>`;
+      [0,1,2,3,4].forEach(k=>{
+        const x=54+k*46, h=40+k*26;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<path d="M${x} 228 v-${h*0.35}" stroke="#8a6b4a" stroke-width="3"/>`
+          +`<circle cx="${x}" cy="${228-h*0.35-h*0.3}" r="${14+k*3}" fill="rgba(125,224,160,.25)" stroke="${grn}" stroke-width="1.6"/>`
+          +fit(x,246,9,dim,(k+1)*10+' лет',{},44)+`</g>`;
+      });
+      s+=fit(159,88,11.5,ink,'модель показывает, как вырастет лес через годы',{b:1},292);
+      s+=plate2(30,102,258,32,go?grn:cardB,go?'так планируют посадки и вырубку':'что предсказывает модель?',11,pre);
+      s+=`${fit(159,152,11,dim,'и как изменятся животные в лесу',{},292)}`;
+      return s;
+    }
+    if(K==='modelplan'){ /* этапы моделирования */
+      const steps=[{t:'задача',c:gold},{t:'выбрать свойства',c:cyan},{t:'построить модель',c:grn},{t:'посчитать',c:pur},{t:'сверить с реальностью',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'как строят модель: пять шагов',{b:1},264)+`</g>`;
+      steps.forEach((q,k)=>{
+        const y=52+k*44;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s">`
+          +`<rect x="26" y="${y}" width="266" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +`<circle cx="48" cy="${y+17}" r="11" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.4"/>`
+          +tx(48,y+21,11,q.c,''.concat(k+1),{b:1})
+          +fit(172,y+22,11.5,q.c,q.t,{b:1},214)+`</g>`;
+        if(k<4) s+=drawLL({x:159,y:y+36},{x:159,y:y+42},q.c,1.6,0.4+k*0.16,1.6,pre);
+      });
+      s+=plate2(26,276,266,30,go?grn:cardB,go?'без последнего шага модель бесполезна':'с чего начинают?',11,pre);
+      return s;
+    }
+    if(K==='modelpractice'){ /* практика */
+      const rows=[
+        {t:'60 км/ч и 3 часа — какой путь?',a:'180 км',c:grn},
+        {t:'кроликов 2, каждый год вдвое — сколько через 3 года?',a:'16',c:cyan},
+        {t:'один человек — 2 минуты. Сколько ждать пятерым?',a:'10 минут',c:gold}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'практика: считаем по моделям',{b:1},264)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*58;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(146,y+19,9.5,ink,q.t,{},214)
+          +(go?fit(146,y+38,11.5,q.c,q.a,{b:1},214):fit(146,y+38,10.5,dim,'нажми «показать»',{},214))+`</g>`;
+      });
+      s+=plate2(22,228,274,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
+      return s;
+    }
+    if(K==='modellab'){ /* ЛАБОРАТОРИЯ МОДЕЛИ */
+      const kids=(st&&typeof st.mk==='number')?st.mk:1;
+      const years=(st&&typeof st.my==='number')?st.my:0;
+      const k2=kids+1;
+      let cur=2; const series=[];
+      for(let i=0;i<=years;i++){ series.push(cur); cur=cur*k2; }
+      const maxv=Math.max.apply(null,series.concat([1]));
+      let s=`<g class="${pre}Pop"><rect x="16" y="12" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,31,11.5,ink,'лаборатория: модель роста кроликов',{b:1},266)+`</g>`;
+      [[1,'1 детёныш',cyan],[2,'2 детёныша',gold],[3,'3 детёныша',pur]].forEach((q,k)=>{
+        const x=24+k*90, on=(kids===q[0]);
+        s+=`<g style="cursor:pointer" onclick="infModel('${lk}','kids',${q[0]})"><rect x="${x}" y="48" width="84" height="30" rx="9" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${on?q[2]:cardB}" stroke-width="${on?2:1.4}"/>`
+          +fit(x+42,68,9.5,on?q[2]:dim,q[1],{b:on},76)+`</g>`;
+      });
+      s+=`<rect x="24" y="86" width="270" height="140" rx="10" fill="rgba(255,255,255,.03)" stroke="${cardB}" stroke-width="1.5"/>`;
+      series.forEach((v,k)=>{
+        const x=36+k*32, h=112*Math.log2(v)/Math.log2(Math.max(2,maxv));
+        s+=`<rect class="${pre}Pop" style="animation-delay:${(0.06*k).toFixed(2)}s" x="${x}" y="${220-h}" width="26" height="${Math.max(4,h)}" rx="4" fill="rgba(125,224,160,.4)" stroke="${grn}" stroke-width="1.4"/>`;
+        s+=fit(x+13,234,9,grn,''+v,{b:1},30);
+        s+=fit(x+13,246,8,dim,'г.'+k,{},24);
+      });
+      s+=`<g class="${pre}Rise}"><rect x="24" y="252" width="270" height="28" rx="8" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.5"/>`
+        +`<text x="159" y="271" text-anchor="middle" font-size="10.5" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">каждый год: число · ${k2} — сейчас ${series[series.length-1]}</text></g>`;
+      s+=`<g style="cursor:pointer" onclick="infModel('${lk}','year',1)"><rect x="34" y="288" width="118" height="32" rx="9" fill="rgba(12,32,34,.97)" stroke="${grn}" stroke-width="1.7"/>`
+        +fit(93,309,11.5,grn,'+1 год',{b:1},108)+`</g>`;
+      s+=`<g style="cursor:pointer" onclick="infModel('${lk}','reset',0)"><rect x="166" y="288" width="118" height="32" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(225,309,11.5,gold,'сначала',{b:1},108)+`</g>`;
+      return s;
+    }
+    if(K==='modelquiz'){ /* викторина */
+      const opts=['это модель','это оригинал','это не связано'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +fit(159,34,11.5,ink,'Схема метро — это…',{b:1},266)+`</g>`;
+      s+=`<rect x="96" y="56" width="126" height="64" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`<circle cx="126" cy="88" r="8" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="1.5"/>`;
+      s+=`<circle cx="192" cy="88" r="8" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="1.5"/>`;
+      s+=`<path d="M126 88 L192 88" stroke="${gold}" stroke-width="1.8"/>`;
+      opts.forEach((t2,k)=>{
+        const y=136+k*40, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="22" y="${y}" width="274" height="34" rx="9" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(159,y+22,11.5,c,t2,{b:on},256)+(on?`<path d="M266 ${y+11} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}"><rect x="22" y="262" width="274" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +fit(159,282,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Схема метро — модель метро':'Подумай: она описывает настоящее метро?',{b:done&&st.pick===ok},256)+`</g>`;
+      return s;
+    }
+    if(K==='modelmistakes'){ /* ошибки */
+      const it=[
+        {t:'думают, что модель — это сама реальность',f:'модель лишь описывает главное',c:red},
+        {t:'забывают проверить модель',f:'сравни с опытом и измерь ошибку',c:gold},
+        {t:'выбирают слишком простую модель',f:'ответ будет очень грубым',c:cyan},
+        {t:'верят одному расчёту',f:'проверь на других данных',c:pur}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},180)+`</g>`;
+      });
+      s+=`${tx(159,266,11,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='modelsheet'){ /* шпаргалка */
+      const rows=[{t:'модель — упрощённая копия',c:cyan},{t:'виды: предметные, образные, знаковые',c:gold},
+                  {t:'в компьютере модель = данные + правила',c:grn},{t:'правило пересчитывает состояние шаг за шагом',c:pur},
+                  {t:'модель отвечает на «а что если?»',c:blu},{t:'модель сверяют с реальностью',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'всё главное о моделях',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=50+k*36;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+20,10,q.c,q.t,{b:1},260)+`</g>`;
+      });
+      s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -7474,6 +7939,32 @@
     if(K==='outofrange') return 202;
     if(K==='marks') return 220;
     if(K==='findcell') return 210;
+    if(K==='modelintro') return 292;
+    if(K==='modelwhy') return 314;
+    if(K==='modelreal') return 270;
+    if(K==='modeltypes') return 254;
+    if(K==='modeldata') return 302;
+    if(K==='modelformula') return 268;
+    if(K==='modeltable') return 272;
+    if(K==='modelgraph') return 286;
+    if(K==='modelsim') return 276;
+    if(K==='modelstep') return 280;
+    if(K==='modelball') return 284;
+    if(K==='modelrabbit') return 268;
+    if(K==='modelque') return 288;
+    if(K==='modelwater') return 284;
+    if(K==='modelweather') return 300;
+    if(K==='modelaccuracy') return 248;
+    if(K==='modeltest') return 288;
+    if(K==='modellimits') return 288;
+    if(K==='modelcity') return 304;
+    if(K==='modelclimate') return 268;
+    if(K==='modelplan') return 310;
+    if(K==='modelpractice') return 278;
+    if(K==='modellab') return 336;
+    if(K==='modelquiz') return 300;
+    if(K==='modelmistakes') return 282;
+    if(K==='modelsheet') return 308;
     if(K==='robotintro') return 296;
     if(K==='robotparts') return 280;
     if(K==='robotsensors') return 268;
@@ -9078,6 +9569,66 @@
       tasks:[
         {q:'Датчик показал 15 см, а порог равен 20 см. Сколько сантиметров «не хватает» до безопасного расстояния?', kind:'unit', ans:5, tol:0, hints:['Порог минус показание датчика.','20 − 15 = 5.'], sol:'20 − 15 = 5'},
         {q:'Робот ехал 4 секунды со скоростью 3 клетки в секунду. Сколько клеток он прошёл?', kind:'unit', ans:12, tol:0, hints:['Скорость умножаем на время.','3 · 4 = 12.'], sol:'3 · 4 = 12'}
+      ] },
+    { id:531, title:'Модели и моделирование: как компьютер предсказывает', ico:'📈', src:'Информатика · 5–6 класс · С нуля: модели',
+      explain:[
+        'Модель — это упрощённая копия объекта. Глобус и карта описывают одну и ту же Землю, но по-разному.',
+        'Модели нужны, когда оригинал слишком большой, слишком маленький, опасный или дорогой: планеты, атомы, пожары, новая машина.',
+        'Модель сохраняет только важные свойства. Схема метро — модель: в ней есть станции и пересадки, но нет домов и деревьев.',
+        'Модели бывают предметные (глобус, макет), образные (рисунок, фотография) и знаковые (формула, таблица, схема).',
+        'В компьютере модель — это данные и правила. Данные хранят в переменных, а правила записывают формулами и алгоритмами.',
+        'Математическая модель движения: S = v · t. Зная скорость и время, можно посчитать путь.',
+        'Табличная модель — это данные в таблице: например, температура по дням недели.',
+        'Графическая модель — график: по нему сразу видно, как меняется величина.',
+        'Компьютерная модель отвечает на вопрос «а что если?»: меняем данные и смотрим новый ответ.',
+        'Модель считает шаг за шагом: есть состояние, есть правило, которое пересчитывает состояние, и так много раз.',
+        'Модель полёта мяча показывает, где мяч будет через мгновение: скорость меняется, и мяч падает.',
+        'Модель роста: если каждый год число кроликов удваивается, получается 2, 4, 8, 16, 32 — быстрый рост.',
+        'Модель очереди помогает предсказать ожидание: если каждый человек занимает 2 минуты, пятеро ждут 10 минут.',
+        'Модель бака считает уровень воды: уровень = уровень + приток − расход. Такие модели используют на заводах.',
+        'Модель погоды включает много параметров: температуру, давление, ветер, влажность. Чем дальше прогноз, тем больше ошибка.',
+        'Чем проще модель, тем грубее ответ: для метро хватает схемы, а для стройки нужен точный чертёж.',
+        'Модель обязательно проверяют: сравнивают предсказание с реальностью и смотрят на разницу.',
+        'У каждой модели есть границы: она упрощает мир, описывает не всё и может ошибаться — результат надо проверять.',
+        'Моделируют и города: меняя время светофора, можно посмотреть, где соберётся пробка.',
+        'Моделируют и природу: рост леса, популяции животных, климат — так планируют посадки и следят за экологией.',
+        'Модель строят по шагам: задача, выбор свойств, построение модели, расчёт и сверка с реальностью.',
+        'Практика: 60 км/ч за 3 часа — это 180 км; кролики удваиваются 3 раза — их станет 16; пятеро в очереди ждут 10 минут.',
+        'Лаборатория: выбери, сколько детёнышей даёт каждая пара, и добавляй годы. Смотри, как растёт число кроликов и почему это называется быстрым ростом.',
+        'Викторина: схема метро — это модель, потому что она описывает настоящее метро, но упрощённо.',
+        'Частые ошибки: считать модель реальностью, не проверять её, брать слишком простую модель, верить одному расчёту.',
+        'Шпаргалка: модель — упрощённая копия; данные + правила; шаг за шагом; «а что если?»; сверяй с реальностью. Проверь себя!' ],
+      slides:[
+        {h:'Что такое модель', v:{kind:'modelintro'}, r:'Упрощённая копия.', d:'Модель описывает объект упрощённо: глобус и карта — модели Земли.'},
+        {h:'Зачем нужны модели', v:{kind:'modelwhy'}, r:'Когда оригинал недоступен.', d:'Слишком большое, слишком маленькое, опасное или дорогое — всё это изучают на моделях.'},
+        {h:'Модель и оригинал', v:{kind:'modelreal'}, r:'Сохраняем важное.', d:'В модели остаются главные свойства: у схемы метро — станции и пересадки.'},
+        {h:'Виды моделей', v:{kind:'modeltypes'}, r:'Три группы.', d:'Предметные (глобус), образные (рисунок) и знаковые (формула, таблица).'},
+        {h:'Данные и правила', v:{kind:'modeldata'}, r:'Из чего состоит модель.', d:'В компьютере модель — это данные в переменных и правила-формулы.'},
+        {h:'Формула движения', v:{kind:'modelformula'}, r:'S = v · t.', d:'Математическая модель позволяет посчитать путь для любого времени.'},
+        {h:'Табличная модель', v:{kind:'modeltable'}, r:'Данные в таблице.', d:'Таблица температур по дням — простая и наглядная модель.'},
+        {h:'Графическая модель', v:{kind:'modelgraph'}, r:'График.', d:'По графику сразу видно, как меняется величина со временем.'},
+        {h:'«А что если?»', v:{kind:'modelsim'}, r:'Меняем данные.', d:'Компьютерная модель быстро отвечает на вопрос «а что если?».'},
+        {h:'Шаг за шагом', v:{kind:'modelstep'}, r:'Состояние и правило.', d:'Модель пересчитывает состояние по правилу — и так тысячи шагов.'},
+        {h:'Модель полёта мяча', v:{kind:'modelball'}, r:'Скорость и ускорение.', d:'Каждый шаг скорость меняется, и модель показывает, где мяч будет дальше.'},
+        {h:'Модель роста', v:{kind:'modelrabbit'}, r:'Удвоение.', d:'Если число удваивается каждый год, получается 2, 4, 8, 16, 32 — быстрый рост.'},
+        {h:'Модель очереди', v:{kind:'modelque'}, r:'Сколько ждать.', d:'Если один человек занимает 2 минуты, пятеро будут ждать 10 минут.'},
+        {h:'Модель бака', v:{kind:'modelwater'}, r:'Приток и расход.', d:'Уровень = уровень + приток − расход: так моделируют системы с водой.'},
+        {h:'Модель погоды', v:{kind:'modelweather'}, r:'Много параметров.', d:'Температура, давление, ветер, влажность — чем дальше прогноз, тем больше ошибка.'},
+        {h:'Точность модели', v:{kind:'modelaccuracy'}, r:'Проще — грубее.', d:'Для метро хватает схемы, для стройки нужен точный чертёж.'},
+        {h:'Проверка модели', v:{kind:'modeltest'}, r:'Сверяем с опытом.', d:'Сравниваем предсказание с реальностью: маленькая разница — модель хорошая.'},
+        {h:'Границы модели', v:{kind:'modellimits'}, r:'Модель не истина.', d:'У модели есть границы: она упрощает мир и может ошибаться.'},
+        {h:'Модель города', v:{kind:'modelcity'}, r:'Пробки и светофоры.', d:'Меняя время светофора, можно посмотреть, где соберётся пробка.'},
+        {h:'Модель природы', v:{kind:'modelclimate'}, r:'Лес и животные.', d:'Модели роста леса помогают планировать посадки и следить за экологией.'},
+        {h:'Как строят модель', v:{kind:'modelplan'}, r:'Пять шагов.', d:'Задача, свойства, построение, расчёт и сверка с реальностью.'},
+        {h:'Практика', v:{kind:'modelpractice'}, r:'Считаем по моделям.', d:'180 км, 16 кроликов, 10 минут ожидания.'},
+        {h:'Лаборатория модели', v:{kind:'modellab'}, r:'Вырасти кроликов!', d:'Выбери число детёнышей и добавляй годы. Смотри, как быстро растёт население.'},
+        {h:'Викторина', v:{kind:'modelquiz'}, r:'Что это такое?', d:'Схема метро — модель метро: она описывает его упрощённо.'},
+        {h:'Частые ошибки', v:{kind:'modelmistakes'}, r:'Что путают чаще всего.', d:'Модель — не реальность; её надо проверять; слишком простая модель даёт грубый ответ.'},
+        {h:'Шпаргалка', v:{kind:'modelsheet'}, r:'Шесть главных мыслей.', d:'Упрощённая копия, данные и правила, шаг за шагом, «а что если?», сверка с реальностью.'} ],
+      check:{ q:'Что такое модель?', choices:['упрощённая копия объекта','точное повторение объекта','сам объект','рисунок без смысла'], ans:0, exp:'Модель описывает объект упрощённо, сохраняя главные свойства.' },
+      tasks:[
+        {q:'Скорость 70 км/ч, время 3 часа. Какой путь пройдёт машина по модели S = v · t?', kind:'unit', ans:210, tol:0, hints:['Путь равен скорости, умноженной на время.','70 · 3 = 210.'], sol:'70 · 3 = 210'},
+        {q:'Кроликов было 2, и каждый год их число удваивается. Сколько кроликов будет через 4 года?', kind:'unit', ans:32, tol:0, hints:['Через год — 4, через два — 8.','2 · 2 · 2 · 2 · 2 = 32.'], sol:'2 · 2 · 2 · 2 · 2 = 32'}
       ] }
   ];
 
@@ -9092,7 +9643,7 @@
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz'||s.v.kind==='robotlab'||s.v.kind==='robotquiz');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz'||s.v.kind==='robotlab'||s.v.kind==='robotquiz'||s.v.kind==='modellab'||s.v.kind==='modelquiz');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -9111,6 +9662,8 @@
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
+      : (s.v.kind==='modellab')
+      ? wkRow(wkBtn('сброс модели',`infModel('${lk}','reset',0)`))
       : (s.v.kind==='robotlab')
       ? wkRow(wkBtn('сброс лаборатории',`infRobot('${lk}','reset')`))
       : (s.v.kind==='gameplay')
@@ -9128,7 +9681,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='robotlab')? ((st.rp>=11) && s.r) : (s.v.kind==='gameplay')? ((st.gm>=5) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='modellab')? (((st.my||0)>=5) && s.r) : (s.v.kind==='robotlab')? ((st.rp>=11) && s.r) : (s.v.kind==='gameplay')? ((st.gm>=5) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -9137,6 +9690,12 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infModel=function(lk,act,val){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='reset'){ st.mk=1; st.my=0; chRender(0); return; }
+    if(act==='kids'){ st.mk=val; chRender(0); return; }
+    if(act==='year'){ st.my=Math.min(8,(st.my||0)+1); chRender(0); return; }
+  };
   window.infRobot=function(lk,act){
     const st=CHS[lk]||(CHS[lk]={});
     const TRACK=[[1,0],[1,0],[0,1],[0,1],[1,1],[0,0],[1,0],[0,1],[1,1],[1,0],[0,1],[1,1]];
