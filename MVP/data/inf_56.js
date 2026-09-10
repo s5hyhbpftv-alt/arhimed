@@ -204,12 +204,12 @@
   function viz(v,pre,i,st,lk){
     const K=v.kind, A=accOf(pre), CW=318, H=vizH(v), MOTIF=MOT[((i||0)+(''+pre).length)%MOT.length];
     if(K==='cards'){ /* карточки */
-      const it=v.items||[], ch=58, cw=138, gx=12, gy=10, rows=Math.ceil(it.length/2);
+      const it=v.items||[], ch=58, cw=136, gx=10, gy=10, rows=Math.ceil(it.length/2);
       const tot=rows*ch+(rows-1)*gy, y0=Math.max(20,Math.round((H-tot)/2));
       let s='';
       it.forEach((c,k)=>{
-        const x=24+(k%2)*(cw+gx), y=y0+Math.floor(k/2)*(ch+gy), col=c.c||A;
-        const title=plain(c.t), cx=x+30, cy=y+ch/2, tx0=x+cw/2+17;
+        const x=22+(k%2)*(cw+gx), y=y0+Math.floor(k/2)*(ch+gy), col=c.c||A;
+        const title=plain(c.t), cx=x+29, cy=y+ch/2, tx0=x+cw/2+15;
         s+=`<g class="${pre}Pop" style="animation-delay:${(0.1*k).toFixed(2)}s" filter="url(#${pre}sh)">`
           +`<rect x="${x}" y="${y}" width="${cw}" height="${ch}" rx="12" fill="url(#${pre}card)" stroke="${col}" stroke-width="2"/>`
           +`<rect x="${x+1}" y="${y+1}" width="${cw-2}" height="3" rx="1.5" fill="${col}" opacity=".85"/>`
@@ -571,8 +571,8 @@
       s+=`<g class="${pre}Pop" filter="url(#${pre}sh)"><path d="M162 30 l76 32 l-76 32 l-76 -32 z" fill="${warn?'rgba(255,120,100,.14)':'rgba(176,127,255,.14)'}" stroke="${dc}" stroke-width="2.4"/>`
         +(warn?`<path class="${pre}Glow" d="M162 26 l80 36 l-80 36 l-80 -36 z" fill="none" stroke="${dc}" stroke-width="2" opacity=".5"/>`:'')
         +qText(dc)+`</g>`;
-      s+=`<path d="M240 62 H264" stroke="${A}" stroke-width="2" opacity=".6"/><path d="M260 58 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>${tx(248,50,10,dim,'нет',{})}`;
-      s+=`<g class="${pre}Rise" style="animation-delay:.2s"><ellipse cx="286" cy="62" rx="27" ry="16" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>${tx(286,66,11,A,'выход',{})}</g>`;
+      s+=`<path d="M240 62 H252" stroke="${A}" stroke-width="2" opacity=".6"/><path d="M248 58 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>${tx(244,50,10,dim,'нет',{})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.2s"><ellipse cx="278" cy="62" rx="25" ry="16" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>${tx(278,66,11,A,'выход',{})}</g>`;
       s+=`<path d="M162 96 V116" stroke="${A}" stroke-width="2" class="${pre}Dash"/><path d="M158 112 l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="2"/>${tx(180,108,10.5,dim,'да',{})}<circle cx="162" cy="98" r="3.4" fill="${A}" style="--run:18px" class="${pre}Dot"/>`;
       s+=`<g class="${pre}Rise" style="animation-delay:.3s" filter="url(#${pre}sh)"><rect x="88" y="120" width="148" height="42" rx="10" fill="url(#${pre}card)" stroke="${bc2}" stroke-width="2.2"/>`
         +`<text x="162" y="146" text-anchor="middle" font-size="${Math.min(13,140/(Math.max(1,body.length)*0.62)).toFixed(1)}" fill="${bc2}" font-weight="bold" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${body}</text></g>`;
@@ -596,7 +596,9 @@
         need.push(m);
       }
       const sumN=need.reduce((x,y)=>x+y,0)||1, avail=CW-40-6*(nc-1);
-      const colw=need.map(x=>Math.max(30, avail*x/sumN));
+      let colw=need.map(x=>Math.max(26, avail*x/sumN));
+      const wsum=colw.reduce((x,y)=>x+y,0);
+      if(wsum>avail) colw=colw.map(x=>x*avail/wsum);
       const colX=(c)=>{ let x=20; for(let i=0;i<c;i++) x+=colw[i]+6; return x; };
       const hy=26, rh=27;
       let s=`<g class="${pre}Pop" filter="url(#${pre}sh)"><rect x="20" y="${hy}" width="${CW-40}" height="${rh}" rx="8" fill="${A}" opacity=".16" stroke="${A}" stroke-width="1.5"/></g>`;
@@ -852,14 +854,14 @@
       return s;
     }
     if(K==='mindmap'){ /* карта знаний */
-      const br=[{x:60,y:60,t:'переменные',c:blu},{x:258,y:60,t:'условие',c:pur},{x:60,y:170,t:'цикл',c:grn},{x:258,y:170,t:'порядок',c:gold}];
+      const br=[{x:70,y:60,t:'переменные',c:blu},{x:248,y:60,t:'условие',c:pur},{x:70,y:170,t:'цикл',c:grn},{x:248,y:170,t:'порядок',c:gold}];
       let s=`<g>`;
       br.forEach((q,k)=>{
         s+=`<path d="M159 116 Q${(159+q.x)/2} ${(116+q.y)/2} ${q.x} ${q.y}" fill="none" stroke="${q.c}" stroke-width="2" opacity=".55" stroke-dasharray="7 6" class="${pre}Dash"/>`;
       });
       br.forEach((q,k)=>{
         s+=`<g class="${pre}Pop" style="animation-delay:${(0.14*k).toFixed(2)}s" filter="url(#${pre}sh)">`
-          +`<rect x="${q.x-56}" y="${q.y-17}" width="112" height="34" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<rect x="${q.x-54}" y="${q.y-17}" width="108" height="34" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
           +`${tx(q.x,q.y+5,11.5,q.c,q.t,{b:1})}</g>`;
       });
       s+=`<g class="${pre}Pulse" filter="url(#${pre}sh)"><circle cx="159" cy="116" r="42" fill="rgba(10,18,36,.97)" stroke="${A}" stroke-width="2.6"/><circle cx="159" cy="116" r="50" fill="none" stroke="${A}" stroke-width="1.6" opacity=".35"/></g>`
@@ -1236,8 +1238,8 @@
         +`<text x="22" y="34" text-anchor="middle" font-size="10" font-weight="bold" fill="${gold}">1</text>`
         +`<rect x="14" y="${30+stop*26}" width="16" height="16" rx="4" fill="rgba(255,120,100,.2)" stroke="${red}" stroke-width="1.4"/>`
         +`<text x="22" y="${42+stop*26}" text-anchor="middle" font-size="10" font-weight="bold" fill="${red}">!</text></g>`;
-      s+=`<g class="${pre}Rise" style="animation-delay:.8s"><rect x="284" y="${30+stop*26-4}" width="30" height="24" rx="7" fill="rgba(255,120,100,.14)" stroke="${red}" stroke-width="1.5"/>`
-        +`<text x="299" y="${30+stop*26+13}" text-anchor="middle" font-size="10.5" font-weight="bold" fill="${red}">стоп</text></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.8s"><rect x="272" y="${30+stop*26-4}" width="32" height="24" rx="7" fill="rgba(255,120,100,.14)" stroke="${red}" stroke-width="1.5"/>`
+        +`<text x="288" y="${30+stop*26+13}" text-anchor="middle" font-size="10.5" font-weight="bold" fill="${red}">стоп</text></g>`;
       s+=`${tx(159,30+ln.length*26+18,11,dim,'подсветка идёт по строкам — на этой она останавливается',{})}`;
       return s;
     }
@@ -1256,11 +1258,11 @@
     if(K==='traceErr'){ /* сравниваем с тем, что должно быть */
       const head=(v.head||['шаг','i','получилось','должно быть']), rows=(v.rows||[]);
       const cw=[54,44,86,86], x0=[16,74,122,212];
-      const hy=28, rh=28;
+      const hy=40, rh=28;
       let s=`<g class="${pre}Pop"><rect x="16" y="${hy}" width="286" height="${rh}" rx="8" fill="${A}" opacity=".16" stroke="${A}" stroke-width="1.5"/></g>`;
       head.forEach((h,k)=>{ s+=`${tx(x0[k]+cw[k]/2,hy+19,10.5,k>=2&&k===3?grn:A,h,{b:1})}`; });
-      s+=`<path d="M120 ${hy-10} h178" stroke="${grn}" stroke-width="1.6" opacity=".7"/><path d="M120 ${hy-10} v6 M298 ${hy-10} v6" stroke="${grn}" stroke-width="1.6" opacity=".7"/>`
-        +`${tx(209,hy-16,9.5,grn,'сравниваем',{})}`;
+      s+=`<path d="M120 ${hy-9} h178" stroke="${grn}" stroke-width="1.6" opacity=".7"/><path d="M120 ${hy-9} v6 M298 ${hy-9} v6" stroke="${grn}" stroke-width="1.6" opacity=".7"/>`
+        +`${tx(209,hy-15,9.5,grn,'сравниваем',{})}`;
       rows.forEach((r,k)=>{
         const y=hy+rh+k*rh;
         s+=`<rect x="16" y="${y}" width="286" height="${rh}" fill="${k%2?'rgba(255,255,255,.05)':'rgba(255,255,255,.015)'}" stroke="#2b3c62" stroke-width="1"/>`;
@@ -1285,7 +1287,7 @@
         const y=34+k*26, isB=(k===bp);
         s+=`<rect x="20" y="${y}" width="176" height="22" rx="5" fill="${isB?'rgba(255,120,100,.14)':'rgba(255,255,255,.035)'}" stroke="${isB?red:'#2b3c62'}" stroke-width="1"/>`
           +`<text x="30" y="${y+15}" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${isB?red:cyan}">${plain(t.trim())}</text>`;
-        if(isB) s+=`<circle class="${pre}Pulse" cx="14" cy="${y+11}" r="8" fill="${red || '#ff9a8a'}" opacity=".85" stroke="#fffdf2" stroke-width="1.2"/>`;
+        if(isB) s+=`<circle class="${pre}Pulse" cx="20" cy="${y+11}" r="8" fill="${red || '#ff9a8a'}" opacity=".85" stroke="#fffdf2" stroke-width="1.2"/>`;
       });
       s+=`<path d="M206 108 H222" stroke="${A}" stroke-width="1.8" stroke-dasharray="5 4" class="${pre}Dash"/>`;
       s+=`<g class="${pre}Pop" style="animation-delay:.35s"><circle cx="262" cy="108" r="42" fill="rgba(126,168,255,.08)" stroke="${A}" stroke-width="2.6"/>`
@@ -1659,9 +1661,10 @@
         L.forEach((t,k)=>{
           const raw=(t.t!==undefined?t.t:t), txt=plain(raw), len=Math.max(1,txt.length);
           const col=t.c||(t.b?ink:dim), ly=ly0+k*30;
-          const fs=t.b?Math.min(17.5,252/(len*0.62)):Math.min(13.5,250/(len*0.6));
+          const fs=t.b?Math.min(17.5,286/(len*0.78)):Math.min(13.5,280/(len*0.72));
+          const tl=(len*fs*0.9>286)?` textLength="284" lengthAdjust="spacingAndGlyphs"`:'';
           s2+=`<g class="${pre}Rise" style="animation-delay:${(0.12*k).toFixed(2)}s">`
-            +`<text x="159" y="${ly}" text-anchor="middle" font-size="${fs.toFixed(1)}" fill="${col}" font-weight="${t.b?'bold':'normal'}" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${txt}</text>`
+            +`<text x="159" y="${ly}"${tl} text-anchor="middle" font-size="${fs.toFixed(1)}" fill="${col}" font-weight="${t.b?'bold':'normal'}" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${txt}</text>`
             +(t.b?`<rect x="${(159-Math.min(240,len*fs*0.3)).toFixed(0)}" y="${ly+7}" width="${Math.min(480,len*fs*0.6).toFixed(0)}" height="2.2" rx="1.1" fill="${col}" opacity=".35"/>`:'')
             +`</g>`;
         });
@@ -1680,7 +1683,7 @@
           +`<rect x="24" y="${y}" width="270" height="${rh}" rx="9" fill="rgba(255,255,255,.035)"/>`
           +`<circle cx="44" cy="${cy2}" r="12" fill="${A}" opacity=".12" stroke="${A}" stroke-opacity=".45" stroke-width="1.2"/>`
           +`<g class="${pre}Twinkle" style="animation-delay:${(0.3*k).toFixed(2)}s">${icon(iconKey(txt,k),44,cy2,col,18)}</g>`
-          +`<text x="66" y="${cy2+5}" text-anchor="start" font-size="${fs.toFixed(1)}" fill="${col}" font-weight="${t.b?'bold':'normal'}" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${txt}</text>`
+          +`<text x="66" y="${cy2+5}"${(len*fs*0.9>236)?` textLength="234" lengthAdjust="spacingAndGlyphs"`:''} text-anchor="start" font-size="${fs.toFixed(1)}" fill="${col}" font-weight="${t.b?'bold':'normal'}" font-family="Arial,Helvetica,sans-serif" paint-order="stroke" stroke="#08101f" stroke-width="4">${txt}</text>`
           +(t.b?`<rect x="66" y="${cy2+9.5}" width="${Math.min(238, len*fs*0.6).toFixed(0)}" height="2" rx="1" fill="${col}" opacity=".35"/>`:'')
           +`<path d="M222 ${y+rh-1} h14 M244 ${y+rh-1} h14" stroke="${A}" stroke-width="1.4" opacity=".25"/></g>`;
       });
@@ -1741,7 +1744,7 @@
     if(K==='console') return 204;
     if(K==='stepdebug') return (v.lines||['a','b','c','d','e']).length*26+62;
     if(K==='printDebug') return (v.out||['a','b','c']).length*26+96;
-    if(K==='traceErr') return 28+28+(v.rows||[]).length*28+58;
+    if(K==='traceErr') return 40+28+(v.rows||[]).length*28+60;
     if(K==='breakpoints') return (v.lines||['a','b','c','d']).length*26+104;
     if(K==='bisect') return 226;
     if(K==='fixpatch') return 200;
