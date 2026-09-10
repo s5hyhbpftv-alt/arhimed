@@ -22127,6 +22127,737 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===386){ window.ARH_LESSONS[i]=L386; break; } } })();
 })();
+/* ================= УРОК 381 · Осевая и центральная симметрия (v2 · «Зеркальный сад Архимеда», 25 шагов, флагман, крупные рисунки и прорисовка на каждом шаге) ================= */
+(function(){
+  if(!window.__wk381v2css){
+    window.__wk381v2css=1;
+    const st=document.createElement('style');
+    st.textContent=
+      '#lvis .qrIn{animation:qrIn .55s cubic-bezier(.2,.85,.3,1.05) both;}'+
+      '@keyframes qrIn{0%{transform:translateY(-14px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qrPop{animation:qrPop .55s cubic-bezier(.2,.9,.3,1.25) both;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qrPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}'+
+      '#lvis .qrRise{animation:qrRise .7s cubic-bezier(.2,.85,.3,1.08) both;}'+
+      '@keyframes qrRise{0%{transform:translateY(16px);opacity:0}100%{transform:none;opacity:1}}'+
+      '#lvis .qrGlow{animation:qrGlow 2.2s ease-in-out infinite;}'+
+      '@keyframes qrGlow{0%,100%{opacity:.3}50%{opacity:1}}'+
+      '#lvis .qrBlink{animation:qrBlink 1.5s ease-in-out infinite;}'+
+      '@keyframes qrBlink{0%,100%{opacity:.35}50%{opacity:1}}'+
+      '#lvis .qrWing{animation:qrWing 3.4s ease-in-out infinite;transform-box:fill-box;transform-origin:right center;}'+
+      '@keyframes qrWing{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.86)}}'+
+      '#lvis .qrFloat{animation:qrFloat 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}'+
+      '@keyframes qrFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}';
+    document.head.appendChild(st);
+  }
+  const L381 = {
+    id: 381, title: 'Осевая и центральная симметрия', ico: '🦋',
+    src: 'Математика · 5–6 класс · Симметрия', subj: 'math',
+    explain: [
+      'Симметрия — это «зеркальная» одинаковость: одна половина фигуры точно повторяет другую. Самый понятный пример — бабочка.',
+      'Осевая симметрия — это отражение относительно прямой. Прямую называют осью симметрии: она работает как зеркало.',
+      'Чтобы построить точку, симметричную данной, опускают перпендикуляр к оси и откладывают такое же расстояние с другой стороны.',
+      'Значит, у симметричных точек расстояние до оси одинаковое, а соединяющий их отрезок перпендикулярен оси.',
+      'Если каждую точку фигуры отразить относительно оси, получится симметричная фигура — такая же по форме, но перевёрнутая.',
+      'Ось симметрии может быть у самой фигуры: если сложить фигуру по этой прямой, половинки совпадут.',
+      'У бабочки одна ось симметрии — вертикальная линия через тело: левое крыло полностью повторяет правое.',
+      'Буквы тоже бывают симметричными: у А вертикальная ось, у В — горизонтальная, а у Н и О — сразу две.',
+      'Число осей зависит от фигуры: у отрезка их две, у угла одна, у равнобедренного треугольника одна, у равностороннего три.',
+      'У квадрата четыре оси симметрии: две проходят через середины противоположных сторон и две — по диагоналям.',
+      'У прямоугольника, который не является квадратом, только две оси — через середины противоположных сторон: диагонали осями не являются.',
+      'У круга осей бесконечно много: любая прямая, проходящая через центр, делит его на две одинаковые половины.',
+      'Центральная симметрия — это поворот фигуры на 180° вокруг точки. Точку называют центром симметрии.',
+      'При центральной симметрии точка и её образ лежат на одной прямой с центром, а расстояния до центра равны.',
+      'Фигуры с центром симметрии: отрезок, прямоугольник, параллелограмм, круг — при повороте на 180° они совпадают сами с собой.',
+      'А вот треугольник и буква Р центра симметрии не имеют: при повороте на 180° они не совпадут.',
+      'Важно не путать: при осевой симметрии фигура отражается от прямой, а при центральной — поворачивается на 180° вокруг точки.',
+      'У снежинки шесть лучей, и через каждый луч проходит ось симметрии: всего шесть осей.',
+      'Симметрию удобно строить на координатной плоскости: при отражении относительно оси y меняется знак первой координаты, относительно оси x — второй.',
+      'Зеркало меняет левое и правое: слово, написанное на стекле, в зеркале читается наоборот.',
+      'Практика: у квадрата четыре оси, а у прямоугольника только две — сравни их и проверь складыванием.',
+      'Тренажёр: сколько осей симметрии у прямоугольника?',
+      'Тренажёр: у какой фигуры есть центр симметрии?',
+      'Частые ошибки: путать осевую и центральную симметрию, считать диагонали прямоугольника осями, думать, что при центральной симметрии фигура переворачивается.',
+      'Шпаргалка: ось — зеркало, расстояния до оси равны; центр — поворот на 180°, расстояния до центра равны. Проверь себя!'
+    ],
+    check: { q: 'При центральной симметрии фигура поворачивается на…', choices: ['180°', '90°', '360°', '45°'], ans: 0,
+      exp: 'Центральная симметрия — поворот на 180°.' },
+    tasks: [
+      { q: 'Сколько осей симметрии у прямоугольника, который не является квадратом?', kind: 'unit', ans: 2, tol: 0,
+        hints: ['Через середины противоположных сторон.', 'Две оси.'], sol: '2' },
+      { q: 'Какая буква имеет горизонтальную ось симметрии?', kind: 'choice', choices: ['В', 'Р', 'Г', 'Я'], ans: 0, tol: 0,
+        hints: ['Сложи букву пополам по горизонтали.', 'У В верх и низ симметричны.'], sol: 'В' }
+    ]
+  };
+  const ink='#eef6ff', dim='#a3aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff', rose='#ff8fb0',
+        bg0='#1b2140', bg1='#090d1c', card='rgba(26,32,58,.96)', cardB='#46507c';
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#090d1c" stroke-width="3.6">${t}</text>`;
+  const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
+  function bg(W,H,opt){
+    const o=opt||{};
+    return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
+      <defs>
+        <linearGradient id="qrbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${bg0}"/><stop offset="1" stop-color="${bg1}"/></linearGradient>
+        <filter id="qrsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+      </defs>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#qrbg)"/>
+      <g opacity="0.12" stroke="#5a6ab0" stroke-width="1"><line x1="40" y1="0" x2="34" y2="${H}"/><line x1="100" y1="0" x2="96" y2="${H}"/><line x1="160" y1="0" x2="157" y2="${H}"/><line x1="220" y1="0" x2="218" y2="${H}"/><line x1="280" y1="0" x2="279" y2="${H}"/></g>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" fill="none" stroke="#4a5a9a" stroke-width="2.4" rx="7"/>
+      <rect x="12" y="12" width="${W-24}" height="${H-24}" fill="none" stroke="#2c3868" stroke-width="1.2" rx="4"/>
+      ${o.inner?o.inner():''}
+    </svg>`;
+  }
+  /* ---------- прорисовка ---------- */
+  const polyLen=(pts)=>{let s=0;for(let i=1;i<pts.length;i++)s+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return Math.max(16,Math.round(s));};
+  const drawPoly=(pts,col,dur,beg,w,opt)=>{
+    const o=opt||{}, d='M'+pts.map(q=>q[0]+' '+q[1]).join(' L'), L=polyLen(pts);
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w||3.2}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.7;1" dur="${dur}s" begin="${beg||0}s" repeatCount="${o.keep?'1':'indefinite'}"/></path>`
+      +((o.pen===false||o.keep)?'':`<circle r="${o.r||5.5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.4">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const rectPerim=(x,y,w,h,rx)=>{const r=Math.min(rx||8,Math.min(w,h)/2);
+    return `M${x+r} ${y} H${x+w-r} A${r} ${r} 0 0 1 ${x+w} ${y+r} V${y+h-r} A${r} ${r} 0 0 1 ${x+w-r} ${y+h} H${x+r} A${r} ${r} 0 0 1 ${x} ${y+h-r} V${y+r} A${r} ${r} 0 0 1 ${x+r} ${y}`;};
+  const drawRect=(x,y,w,h,rx,col,dur,beg,sw,opt)=>{
+    const o=opt||{}, r=Math.min(rx||8,Math.min(w,h)/2);
+    const L=Math.round(2*(w-2*r)+2*(h-2*r)+2*Math.PI*r), d=rectPerim(x,y,w,h,rx);
+    return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${sw||2.4}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;0.6;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +(o.pen===false?'':`<circle r="${o.r||5}" fill="${gold}" stroke="#fffdf2" stroke-width="1.3">`
+        +`<animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`);
+  };
+  const drawCircle=(cx,cy,r,col,dur,beg,sw,opt)=>{
+    const o=opt||{}, L=Math.round(2*Math.PI*r), d=`M${cx} ${cy-r} A${r} ${r} 0 1 1 ${cx-0.01} ${cy-r}`;
+    return `<path d="${d}" fill="${o.fill||'none'}" stroke="${col}" stroke-width="${sw||2.6}" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}">`
+      +`<animate fill="freeze" attributeName="stroke-dashoffset" values="${L};0;0" keyTimes="0;.62;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></path>`
+      +`<circle r="5" fill="${gold}" stroke="#fffdf2" stroke-width="1.3"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${d}"/></circle>`;
+  };
+  const growBar=(x,y,w,h,fill,dur,beg,stroke)=>{
+    return `<rect x="${x}" y="${y}" width="0" height="${h}" rx="${h/2}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="1.2">`
+      +`<animate fill="freeze" attributeName="width" values="0;${w};${w}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite"/></rect>`;
+  };
+  const plate=(x,y,w,h,col,txt,fs)=>`<g class="qrRise"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="rgba(26,32,58,.95)" stroke="${col}" stroke-width="1.9"/>`
+    +fit(x+w/2,y+h*0.66,fs||13,col,txt,{b:1},w-16)+`</g>`;
+  const chip=(t,c,delay)=>`<span class="qrIn" style="animation-delay:${(delay||0).toFixed(2)}s;display:inline-block;padding:5px 12px;border-radius:11px;border:2.2px solid ${c};background:${card};font-family:Georgia,serif;font-size:21px;color:${c};font-weight:bold">${t}</span>`;
+  const valBox=(cx,cy,t,c,opt)=>{
+    const o=opt||{}, w=(o.w||Math.max(34,(''+t).length*11+16)), h=(o.h||34);
+    return `<g class="qrPop" style="animation-delay:${(o.delay||0).toFixed(2)}s">`
+      +`<rect x="${cx-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="${o.rx||9}" fill="${o.fill||'rgba(18,24,44,.97)'}" stroke="${c}" stroke-width="${o.sw||2}"/>`
+      +tx(cx,cy+h*0.2,o.fs||15,c,t,{b:1,georgia:o.geo!==false})+`</g>`;
+  };
+  /* ---------- крупные рисунки ---------- */
+  const butterfly=(cx,cy,s,opt)=>{
+    const o=opt||{}, c1=o.c1||pur, c2=o.c2||rose, c3=o.c3||gold;
+    const wing=(dir)=>{
+      const w1=`M${cx} ${cy-6} C${cx+dir*s*0.34} ${cy-s*0.62}, ${cx+dir*s*0.78} ${cy-s*0.5}, ${cx+dir*s*0.52} ${cy-s*0.02} C${cx+dir*s*0.72} ${cy+s*0.24}, ${cx+dir*s*0.44} ${cy+s*0.5}, ${cx} ${cy+8} Z`;
+      const w2=`M${cx} ${cy+2} C${cx+dir*s*0.26} ${cy+s*0.24}, ${cx+dir*s*0.5} ${cy+s*0.44}, ${cx+dir*s*0.34} ${cy+s*0.66} C${cx+dir*s*0.16} ${cy+s*0.78}, ${cx} ${cy+s*0.5}, ${cx} ${cy+12} Z`;
+      return `<path d="${w1}" fill="${c1}" opacity=".65" stroke="${c1}" stroke-width="2"/>`
+        +`<path d="${w2}" fill="${c2}" opacity=".6" stroke="${c2}" stroke-width="2"/>`
+        +`<path d="${w1}" fill="none" stroke="${gold}" stroke-width="2.2" stroke-dasharray="500" stroke-dashoffset="500">`
+        +`<animate fill="freeze" attributeName="stroke-dashoffset" values="500;0;0" keyTimes="0;.7;1" dur="1.8s" begin="${(o.delay||0)+ (dir<0?0:0.35)}s" repeatCount="indefinite"/></path>`
+        +`<circle cx="${cx+dir*s*0.3}" cy="${cy-s*0.2}" r="${s*0.07}" fill="${c3}"/>`
+        +`<circle cx="${cx+dir*s*0.22}" cy="${cy+s*0.3}" r="${s*0.05}" fill="${c3}"/>`;
+    };
+    return `<g class="qrPop" style="animation-delay:${(o.delay||0).toFixed(2)}s">${wing(-1)}${wing(1)}`
+      +`<ellipse cx="${cx}" cy="${cy+s*0.05}" rx="${s*0.045}" ry="${s*0.42}" fill="${cyan}" opacity=".85"/>`
+      +`<circle cx="${cx}" cy="${cy-s*0.42}" r="${s*0.07}" fill="${cyan}"/>`
+      +`<path d="M${cx} ${cy-s*0.48} C${cx-6} ${cy-s*0.66}, ${cx-12} ${cy-s*0.7}, ${cx-14} ${cy-s*0.78}" fill="none" stroke="${cyan}" stroke-width="1.8"/>`
+      +`<path d="M${cx} ${cy-s*0.48} C${cx+6} ${cy-s*0.66}, ${cx+12} ${cy-s*0.7}, ${cx+14} ${cy-s*0.78}" fill="none" stroke="${cyan}" stroke-width="1.8"/></g>`;
+  };
+  const snowflake=(cx,cy,r,col,dur,beg)=>{
+    let s2='';
+    for(let k=0;k<6;k++){
+      const a=-Math.PI/2+k*Math.PI/3, ex=cx+Math.cos(a)*r, ey=cy+Math.sin(a)*r;
+      s2+=drawPoly([[cx,cy],[ex,ey]],col,dur||2.2,(beg||0)+k*0.22,2.6,{keep:true});
+      const mx=cx+Math.cos(a)*r*0.55, my=cy+Math.sin(a)*r*0.55;
+      const pa=a+Math.PI/2.6, pb=a-Math.PI/2.6;
+      s2+=drawPoly([[mx,my],[mx+Math.cos(pa)*r*0.3,my+Math.sin(pa)*r*0.3]],col,(dur||2.2)*0.7,(beg||0)+0.5+k*0.22,2,{keep:true});
+      s2+=drawPoly([[mx,my],[mx+Math.cos(pb)*r*0.3,my+Math.sin(pb)*r*0.3]],col,(dur||2.2)*0.7,(beg||0)+0.5+k*0.22,2,{keep:true});
+    }
+    s2+=`<circle cx="${cx}" cy="${cy}" r="${r*0.1}" fill="${col}"/>`;
+    return s2;
+  };
+  const axisLine=(x1,y1,x2,y2,col,dur,beg,label,labelAt)=>{
+    let s2=drawPoly([[x1,y1],[x2,y2]],col,dur||2,beg||0.2,2.6,{pen:true,r:5});
+    if(label) s2+=`<g class="qrPop" style="animation-delay:${((beg||0.2)+(dur||2)*0.7).toFixed(2)}s"><rect x="${labelAt[0]-28}" y="${labelAt[1]-11}" width="56" height="22" rx="7" fill="rgba(18,24,44,.97)" stroke="${col}" stroke-width="1.4"/>`
+      +fit(labelAt[0],labelAt[1]+4,10.5,col,label,{b:1},50)+`</g>`;
+    return s2;
+  };
+  const W=318;
+  function visW381(el){
+    const step=LV.step||0;
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; }
+    const go=st.go||0, sel=(typeof st.pick==='number')?st.pick:-1;
+    let h='', H=300;
+    const TT=(t,c)=>`<g class="qrPop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#qrbg)" stroke="${c||cardB}" stroke-width="1.8"/>`
+      +fit(159,32,12.5,c||ink,t,{b:1},260)+`</g>`;
+    /* 0: что такое симметрия */
+    if(step===0){
+      H=314;
+      let inner=TT('симметрия — зеркальная одинаковость','pur');
+      inner+=butterfly(159,168,116,{delay:0.2});
+      inner+=axisLine(159,62,159,272,cyan,2.2,0.5,'ось',[159,54]);
+      inner+=plate(18,276,282,26,go?grn:cardB,go?'левое и правое крыло одинаковы':'на что похожи крылья?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Красота и симметрия</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('две половины одинаковы',pur,0.1)):'')+
+        (go?wkNote('Симметрия — это когда одна половина фигуры точно повторяет другую, как отражение в зеркале. У бабочки левое и правое крыло одинаковы, а прямая посередине — ось симметрии.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('зеркальная одинаковость'));
+    /* 1: осевая симметрия */
+    } else if(step===1){
+      H=308;
+      let inner=TT('осевая симметрия — отражение','cyan');
+      inner+=`<path d="M56 240 L118 96 L140 240 Z" fill="${blu}" opacity=".45" stroke="${blu}" stroke-width="2.4"/>`;
+      inner+=drawPoly([[56,240],[118,96],[140,240],[56,240]],blu,2.2,0.25,2.6,{pen:true});
+      inner+=drawPoly([[262,240],[200,96],[178,240],[262,240]],grn,2.2,0.8,2.6,{pen:true});
+      inner+=`<path d="M262 240 L200 96 L178 240 Z" fill="${grn}" opacity=".45" stroke="${grn}" stroke-width="2.4"/>`;
+      inner+=axisLine(159,70,159,262,gold,2.2,0.1,'ось симметрии',[159,60]);
+      inner+=`<circle r="7" fill="${gold}"><animateMotion dur="4s" repeatCount="indefinite" path="M92 190 H226"/></circle>`;
+      inner+=plate(18,272,282,28,go?grn:cardB,go?'фигура отразилась относительно оси':'что произошло с фигурой?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Отражение относительно оси</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('ось работает как зеркало',cyan,0.1)):'')+
+        (go?wkNote('Осевая симметрия — это отражение относительно прямой. Прямую называют осью симметрии: она работает как зеркало, а фигура переходит на другую сторону такой же по форме.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('отразить',`visW381Act('${lk}','go')`))+
+        wkSml('зеркало'));
+    /* 2: построение симметричной точки */
+    } else if(step===2){
+      H=316;
+      let inner=TT('строим симметричную точку','gold');
+      inner+=axisLine(159,64,159,250,gold,2.2,0.1,'ось',[159,56]);
+      inner+=`<circle class="qrPop" style="animation-delay:.5s" cx="76" cy="160" r="9" fill="${cyan}" stroke="#fffdf2" stroke-width="1.6"/>`;
+      inner+=fit(76,186,12,cyan,'A',{b:1},30);
+      inner+=drawPoly([[76,160],[159,160]],cyan,1.8,0.8,2,{pen:true,r:4});
+      inner+=`<path d="M159 160 h-14 M159 160 v-14" stroke="${cyan}" stroke-width="1.8" opacity=".9"/>`;
+      inner+=`<path d="M152 153 l7 7" stroke="${cyan}" stroke-width="1.6"/>`;
+      inner+=`<circle class="qrPop" style="animation-delay:1.5s" cx="242" cy="160" r="9" fill="${grn}" stroke="#fffdf2" stroke-width="1.6"/>`;
+      inner+=fit(242,186,12,grn,"A'",{b:1},30);
+      inner+=drawPoly([[159,160],[242,160]],grn,1.8,1.7,2,{pen:true,r:4});
+      inner+=`<g class="qrRise" style="animation-delay:2.1s"><rect x="64" y="196" width="86" height="26" rx="8" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.6"/>`
+        +`<text x="107" y="214" text-anchor="middle" font-size="11.5" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">83 = 83</text></g>`;
+      inner+=plate(18,266,282,26,go?grn:cardB,go?'расстояния до оси равны':'как построить точку A-штрих?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Как построить отражение</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('перпендикуляр и равные расстояния',gold,0.1)):'')+
+        (go?wkNote('Чтобы построить точку, симметричную данной, опускаем из неё перпендикуляр к оси и откладываем такое же расстояние с другой стороны. Расстояния от точки и от её образа до оси равны.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('построить',`visW381Act('${lk}','go')`))+
+        wkSml('построение'));
+    /* 3: свойства симметричных точек */
+    } else if(step===3){
+      H=304;
+      let inner=TT('два свойства симметричных точек','grn');
+      inner+=axisLine(159,72,159,232,gold,2,0.15,'ось',[159,64]);
+      [[-1,116,cyan],[1,116,grn]].forEach((q,k)=>{
+        const x=159+q[0]*84;
+        inner+=`<circle class="qrPop" style="animation-delay:${(0.4+k*0.3).toFixed(2)}s" cx="${x}" cy="${q[1]}" r="10" fill="${q[2]}" stroke="#fffdf2" stroke-width="1.6"/>`;
+      });
+      inner+=drawPoly([[75,116],[243,116]],pur,2.4,1,2.6,{pen:true});
+      inner+=`<g class="qrRise" style="animation-delay:1.4s"><rect x="26" y="140" width="266" height="32" rx="9" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.7"/>`
+        +fit(159,162,11.5,pur,'отрезок перпендикулярен оси',{b:1},250)+`</g>`;
+      inner+=drawPoly([[84,96],[84,116]],cyan,1.6,1.6,2,{pen:false});
+      inner+=drawPoly([[234,96],[234,116]],grn,1.6,1.7,2,{pen:false});
+      inner+=fit(84,88,11,cyan,'равно',{b:1},50); inner+=fit(234,88,11,grn,'равно',{b:1},50);
+      inner+=`<g class="qrRise" style="animation-delay:2s"><rect x="26" y="182" width="266" height="32" rx="9" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.7"/>`
+        +fit(159,204,11.5,cyan,'расстояния до оси одинаковые',{b:1},250)+`</g>`;
+      inner+=plate(18,244,282,28,go?grn:cardB,go?'оба свойства сразу':'какие свойства у этих точек?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Свойства отражения</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('перпендикулярно и равноудалённо',grn,0.1)):'')+
+        (go?wkNote('У симметричных точек два свойства: отрезок между ними перпендикулярен оси, а расстояния от каждой точки до оси одинаковые. Это и позволяет строить отражения точно.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('два свойства'));
+    /* 4: отражаем треугольник */
+    } else if(step===4){
+      H=316;
+      let inner=TT('отражаем треугольник целиком','blu');
+      inner+=axisLine(159,66,159,254,gold,2,0.15,'ось',[159,58]);
+      inner+=drawPoly([[52,244],[104,110],[146,244],[52,244]],blu,2.4,0.3,2.6,{pen:true});
+      inner+=`<path d="M52 244 L104 110 L146 244 Z" fill="${blu}" opacity=".35"/>`;
+      [[52,244,'A'],[104,110,'B'],[146,244,'C']].forEach((q)=>{ inner+=fit(q[0],q[1]+(q[1]>200?20:-12),11.5,blu,q[2],{b:1},30); });
+      inner+=drawPoly([[266,244],[214,110],[172,244],[266,244]],grn,2.4,1.1,2.6,{pen:true});
+      inner+=`<path d="M266 244 L214 110 L172 244 Z" fill="${grn}" opacity=".35"/>`;
+      [[266,244,"A'"],[214,110,"B'"],[172,244,"C'"]].forEach((q)=>{ inner+=fit(q[0],q[1]+(q[1]>200?20:-12),11.5,grn,q[2],{b:1},30); });
+      inner+=drawPoly([[52,244],[266,244]],dim,1.6,1.9,1.8,{pen:false});
+      inner+=plate(18,272,282,28,go?grn:cardB,go?'каждая вершина отразилась':'что произошло с вершинами?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Отражение фигуры</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('каждая точка нашла своё отражение',blu,0.1)):'')+
+        (go?wkNote('Чтобы отразить фигуру, отражаем каждую её вершину: A переходит в A-штрих, B — в B-штрих, C — в C-штрих. Соединяем отражённые вершины — получается симметричная фигура.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('отразить',`visW381Act('${lk}','go')`))+
+        wkSml('отражение фигуры'));
+    /* 5: складывание по оси */
+    } else if(step===5){
+      H=308;
+      let inner=TT('ось симметрии у фигуры','pur');
+      inner+=`<g transform="translate(159,0)"><path d="M0 76 L84 120 L84 236 L0 236 Z" fill="${pur}" opacity=".4" stroke="${pur}" stroke-width="2.4"/></g>`;
+      inner+=`<g transform="translate(159,0)"><g><animateTransform attributeName="transform" type="scale" values="1 1;0.02 1;1 1" keyTimes="0;.5;1" dur="5s" repeatCount="indefinite"/>`
+        +`<path d="M0 76 L-84 120 L-84 236 L0 236 Z" fill="${cyan}" opacity=".45" stroke="${cyan}" stroke-width="2.4"/></g></g>`;
+      inner+=axisLine(159,58,159,258,gold,2.2,0.2,'ось',[159,50]);
+      inner+=fit(159,284,11.5,dim,'сложили по оси — половинки совпали',{},290);
+      inner+=plate(18,266,282,28,go?grn:cardB,go?'эта прямая — ось симметрии фигуры':'что происходит при складывании?',11.5);
+      inner+=`<circle cx="159" cy="284" r="0" fill="none"/>`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Складываем по оси</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('половинки совпадают — это ось',pur,0.1)):'')+
+        (go?wkNote('Если фигуру можно сложить по прямой так, что половинки совпадут, эта прямая — ось симметрии фигуры. Смотри: правая половина «складывается» на левую и точно её накрывает.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('сложить',`visW381Act('${lk}','go')`))+
+        wkSml('ось фигуры'));
+    /* 6: бабочка и её ось */
+    } else if(step===6){
+      H=312;
+      let inner=TT('бабочка и её ось','rose');
+      inner+=butterfly(159,166,112,{delay:0.2,c1:blu,c2:pur,c3:gold});
+      inner+=axisLine(159,60,159,272,grn,2,1.2,'одна ось',[159,52]);
+      inner+=`<g class="qrRise" style="animation-delay:2s"><rect x="20" y="274" width="278" height="26" rx="8" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.6"/>`
+        +fit(159,292,11.5,grn,'крылья повторяют друг друга',{b:1},260)+`</g>`;
+            h=wkFrame(`<div class="wk-big" style="font-size:23px">Симметрия в природе</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('одна ось симметрии',rose,0.1)):'')+
+        (go?wkNote('У бабочки одна ось симметрии — вертикальная линия через тело. Левое крыло полностью повторяет правое, поэтому бабочка кажется такой красивой и «правильной».'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('крылья и ось'));
+    /* 7: буквы и их оси */
+    } else if(step===7){
+      H=304;
+      let inner=TT('буквы и их оси симметрии','gold');
+      const L=[{ch:'А',n:1,v:1,c:grn},{ch:'В',n:1,v:0,c:gold},{ch:'Н',n:2,v:2,c:cyan},{ch:'О',n:2,v:2,c:pur}];
+      L.forEach((q,k)=>{
+        const x=48+k*74, y=170;
+        inner+=`<g class="qrPop" style="animation-delay:${(0.15+k*0.15).toFixed(2)}s">`
+          +`<rect x="${x-32}" y="${y-62}" width="64" height="96" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.8"/>`
+          +`<text x="${x}" y="${y+22}" text-anchor="middle" font-size="52" font-family="Georgia,serif" font-weight="bold" fill="${q.c}">${q.ch}</text></g>`;
+        if(q.v>=1) inner+=drawPoly([[x,y-56],[x,y+28]],grn,1.4,0.8+k*0.15,2,{pen:false});
+        if(q.v>=2) inner+=drawPoly([[x-26,y-14],[x+26,y-14]],cyan,1.4,1+k*0.15,2,{pen:false});
+        inner+=fit(x,y+56,11,q.c,q.n===1?'1 ось':'2 оси',{b:1},66);
+      });
+      inner+=plate(18,214,282,32,go?grn:cardB,go?'у Н и О по две оси, у А и В по одной':'сколько осей у каждой буквы?',11.5);
+      inner+=`${fit(159,270,11.5,dim,'ось может быть вертикальной и горизонтальной',{},290)}`;
+      inner+=`${fit(159,290,11,gold,'проверь: сложи букву пополам',{},280)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Буквы и симметрия</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('у В — горизонтальная ось',gold,0.1)):'')+
+        (go?wkNote('Буквы тоже бывают симметричными. У буквы А одна вертикальная ось, у В — одна горизонтальная, а у Н и О по две оси. Проверить просто: сложи букву пополам и посмотри, совпадут ли половинки.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('буквы'));
+    /* 8: сколько осей у фигур */
+    } else if(step===8){
+      H=312;
+      let inner=TT('сколько осей у разных фигур','cyan');
+      inner+=`<g class="qrRise">`;
+      inner+=drawPoly([[26,90],[110,90]],gold,1.6,0.2,2.4,{keep:true});
+      inner+=drawPoly([[68,60],[68,120]],cyan,1.6,0.5,2,{keep:true});
+      inner+=fit(68,140,11,gold,'отрезок — 2',{b:1},110);
+      inner+=drawPoly([[150,120],[178,66],[206,120]],grn,1.8,0.8,2.4,{keep:true});
+      inner+=drawPoly([[178,66],[178,120]],cyan,1.4,1.1,1.8,{keep:true});
+      inner+=fit(178,140,11,grn,'угол — 1',{b:1},110);
+      inner+=drawPoly([[232,120],[262,70],[292,120],[232,120]],blu,1.8,1.3,2.4,{keep:true});
+      inner+=drawPoly([[262,70],[262,120]],cyan,1.4,1.6,1.8,{keep:true});
+      inner+=fit(262,140,11,blu,'равнобедр. — 1',{b:1},120);
+      inner+=`</g>`;
+      const tri=[{x:96,y:200},{x:52,y:276},{x:140,y:276}];
+      inner+=`<path d="M${tri[0].x} ${tri[0].y} L${tri[1].x} ${tri[1].y} L${tri[2].x} ${tri[2].y} Z" fill="${pur}" opacity=".35" stroke="${pur}" stroke-width="2.2"/>`;
+      [0,1,2].forEach(k=>{
+        const a=tri[(k+1)%3], b=tri[(k+2)%3];
+        const mx=(a.x+b.x)/2, my=(a.y+b.y)/2;
+        inner+=drawPoly([[tri[k].x,tri[k].y],[mx,my]],cyan,1.4,1.9+k*0.2,1.8,{keep:true});
+      });
+      inner+=fit(96,296,11,pur,'равносторонний — 3 оси',{b:1},170);
+      inner+=`<rect x="196" y="200" width="96" height="76" rx="8" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="2.2"/>`;
+      inner+=drawPoly([[196,238],[292,238]],cyan,1.4,2.5,1.8,{keep:true});
+      inner+=drawPoly([[244,200],[244,276]],cyan,1.4,2.7,1.8,{keep:true});
+      inner+=fit(244,296,11,gold,'прямоугольник — 2',{b:1},170);
+      inner+=`${fit(159,168,11,dim,'у каждой фигуры своё число осей',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Разные фигуры — разное число осей</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('1, 2, 3 — зависит от фигуры',cyan,0.1)):'')+
+        (go?wkNote('Число осей симметрии зависит от фигуры: у отрезка их две (сама прямая и серединный перпендикуляр), у угла одна, у равнобедренного треугольника одна, у равностороннего три, у прямоугольника две.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('считаем оси'));
+    /* 9: квадрат — четыре оси */
+    } else if(step===9){
+      H=316;
+      let inner=TT('у квадрата четыре оси','grn');
+      inner+=`<rect x="76" y="60" width="166" height="166" rx="6" fill="rgba(125,224,160,.16)" stroke="${grn}" stroke-width="2.6"/>`;
+      [[159,58,159,228,'1',159,84],[74,143,244,143,'2',212,143],[76,60,242,226,'3',126,110],[242,60,76,226,'4',192,110]].forEach((q,k)=>{
+        inner+=drawPoly([[q[0],q[1]],[q[2],q[3]]],k<2?cyan:gold,1.8,0.4+k*0.5,2.4,{keep:true,pen:k===3,r:5});
+        const lx=q[5], ly=q[6];
+        inner+=`<g class="qrPop" style="animation-delay:${(1+k*0.5).toFixed(2)}s"><circle cx="${lx}" cy="${ly}" r="11" fill="rgba(18,24,44,.97)" stroke="${k<2?cyan:gold}" stroke-width="1.6"/>`
+          +tx(lx,ly+4,11,k<2?cyan:gold,q[4],{b:1})+`</g>`;
+      });
+      inner+=plate(18,242,282,32,go?grn:cardB,go?'2 через середины + 2 по диагоналям = 4':'сколько осей у квадрата?',11.5);
+      inner+=`${fit(159,296,11.5,dim,'у квадрата все четыре оси настоящие',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Квадрат</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('у квадрата 4 оси',grn,0.1)):'')+
+        (go?wkNote('У квадрата четыре оси симметрии: две проходят через середины противоположных сторон, и ещё две — по диагоналям. Все четыре оси настоящие: при складывании половинки совпадают.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('четыре оси'));
+    /* 10: прямоугольник — две оси */
+    } else if(step===10){
+      H=316;
+      let inner=TT('у прямоугольника только две оси','gold');
+      inner+=`<rect x="46" y="76" width="226" height="120" rx="6" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="2.6"/>`;
+      inner+=drawPoly([[159,74],[159,198]],cyan,1.8,0.4,2.4,{keep:true});
+      inner+=drawPoly([[44,136],[274,136]],cyan,1.8,0.9,2.4,{keep:true});
+      inner+=`<g class="qrPop" style="animation-delay:1.5s"><rect x="34" y="204" width="250" height="34" rx="9" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
+        +fit(159,227,11.5,red,'диагонали осями не являются',{b:1},240)+`</g>`;
+      inner+=drawPoly([[46,76],[272,196]],red,1.6,1.9,2,{pen:false});
+      inner+=drawPoly([[272,76],[46,196]],red,1.6,1.9,2,{pen:false});
+      inner+=`<path d="M150 128 l18 18 M168 128 l-18 18" stroke="${red}" stroke-width="2.2"/>`;
+      inner+=plate(18,248,282,30,go?grn:cardB,go?'две оси через середины сторон':'сколько осей у прямоугольника?',11.5);
+      inner+=`${fit(159,298,11,dim,'сложишь по диагонали — половинки не совпадут',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Прямоугольник</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('у прямоугольника 2 оси',gold,0.1)):'')+
+        (go?wkNote('У прямоугольника, который не является квадратом, всего две оси: через середины противоположных сторон. Диагонали осями не являются: если сложить прямоугольник по диагонали, половинки не совпадут.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('две оси'));
+    /* 11: круг — бесконечно много осей */
+    } else if(step===11){
+      H=318;
+      let inner=TT('у круга осей бесконечно много','pur');
+      inner+=drawCircle(159,164,88,pur,3,0.2,2.8,{fill:'rgba(176,127,255,.12)'});
+      inner+=`<g><animateTransform attributeName="transform" type="rotate" values="0 159 164;180 159 164;360 159 164" dur="8s" repeatCount="indefinite"/>`
+        +drawPoly([[159,68],[159,260]],cyan,1.6,0.6,2.2,{pen:false})+`</g>`;
+      for(let k=1;k<4;k++){
+        const a=k*Math.PI/4;
+        const x1=159-Math.cos(a)*88, y1=164-Math.sin(a)*88, x2=159+Math.cos(a)*88, y2=164+Math.sin(a)*88;
+        inner+=`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${cyan}" stroke-width="1.6" opacity=".45"/>`;
+      }
+      inner+=`<g class="qrPop" style="animation-delay:1s"><circle cx="159" cy="164" r="5" fill="${gold}"/></g>`;
+      inner+=fit(159,272,11.5,ink,'любая прямая через центр делит круг пополам',{b:1},292);
+      inner+=plate(18,278,282,28,go?grn:cardB,go?'осей бесконечно много':'сколько осей у круга?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Круг</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('бесконечно много осей',pur,0.1)):'')+
+        (go?wkNote('У круга осей симметрии бесконечно много: любая прямая, проходящая через центр, делит круг на две одинаковые половины. Смотри, как ось поворачивается — каждая её позиция подходит.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('бесконечно много'));
+    /* 12: центральная симметрия */
+    } else if(step===12){
+      H=316;
+      let inner=TT('центральная симметрия — поворот на 180°','pur');
+      inner+=`<g><animateTransform attributeName="transform" type="rotate" values="0 159 170;180 159 170;360 159 170" dur="6s" repeatCount="indefinite"/>`
+        +`<path d="M159 170 L112 106 L206 106 Z" fill="${cyan}" opacity=".4" stroke="${cyan}" stroke-width="2.4"/>`
+        +`<circle cx="159" cy="170" r="0"/></g>`;
+      inner+=drawPoly([[112,106],[206,106],[159,170],[112,106]],grn,2.4,0.4,2.6,{pen:true});
+      inner+=`<circle class="qrPop" style="animation-delay:.8s" cx="159" cy="170" r="12" fill="rgba(255,215,106,.2)" stroke="${gold}" stroke-width="2.2"/>`;
+      inner+=`<text x="159" y="175" text-anchor="middle" font-size="12" font-weight="bold" fill="${gold}">O</text>`;
+      inner+=fit(159,196,11,gold,'центр симметрии',{b:1},140);
+      inner+=`<path d="M244 120 a34 34 0 0 1 -10 46" fill="none" stroke="${pur}" stroke-width="2.4"/>`;
+      inner+=`<path d="M234 160 l6 8 l-12 2" fill="none" stroke="${pur}" stroke-width="2.4"/>`;
+      inner+=fit(268,142,12,pur,'180°',{b:1},60);
+      inner+=plate(18,214,282,32,go?grn:cardB,go?'фигура повернулась на 180° и совпала':'на сколько повернулась фигура?',11.5);
+      inner+=`${fit(159,266,11.5,ink,'поворот на 180° — это и есть центральная симметрия',{b:1},292)}`;
+      inner+=`${fit(159,292,11,dim,'точка O остаётся на месте',{},280)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Центральная симметрия</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('поворот на 180° вокруг точки',pur,0.1)):'')+
+        (go?wkNote('Центральная симметрия — это поворот фигуры на 180 градусов вокруг точки. Точку называют центром симметрии: она остаётся на месте, а фигура «переворачивается» и совпадает сама с собой.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('повернуть',`visW381Act('${lk}','go')`))+
+        wkSml('поворот на 180°'));
+    }
+    /* 13: точка и её образ при центральной симметрии */
+    else if(step===13){
+      H=308;
+      let inner=TT('точка, её образ и центр','cyan');
+      inner+=`<line x1="40" y1="176" x2="278" y2="176" stroke="${cardB}" stroke-width="1.8" stroke-dasharray="7 6"/>`;
+      inner+=`<circle class="qrPop" style="animation-delay:.4s" cx="70" cy="176" r="11" fill="${cyan}" stroke="#fffdf2" stroke-width="1.6"/>`;
+      inner+=fit(70,206,12,cyan,'A',{b:1},30);
+      inner+=`<circle class="qrPop" style="animation-delay:.7s" cx="159" cy="176" r="11" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/>`;
+      inner+=fit(159,206,12,gold,'O',{b:1},30);
+      inner+=`<circle class="qrPop" style="animation-delay:1s" cx="248" cy="176" r="11" fill="${grn}" stroke="#fffdf2" stroke-width="1.6"/>`;
+      inner+=fit(248,206,12,grn,"A'",{b:1},30);
+      inner+=drawPoly([[70,150],[248,150]],pur,2.4,1.2,2.4,{pen:true});
+      inner+=drawPoly([[88,140],[88,160]],cyan,1.4,1.5,1.8,{pen:false});
+      inner+=drawPoly([[230,140],[230,160]],grn,1.4,1.6,1.8,{pen:false});
+      inner+=fit(114,136,11,cyan,'равно',{b:1},54); inner+=fit(204,136,11,grn,'равно',{b:1},54);
+      inner+=`<path d="M159 210 v14" stroke="${gold}" stroke-width="2" class="qrBlink"/>`;
+      inner+=`<g class="qrRise" style="animation-delay:1.8s"><rect x="26" y="228" width="266" height="32" rx="9" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.7"/>`
+        +fit(159,250,11.5,gold,'A и A-штрих на одной прямой с центром',{b:1},250)+`</g>`;
+      inner+=plate(18,266,282,30,go?grn:cardB,go?'центр делит отрезок пополам':'где находится центр?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Точка и её образ</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('расстояния до центра равны',cyan,0.1)):'')+
+        (go?wkNote('При центральной симметрии точка и её образ лежат на одной прямой с центром, а расстояния от них до центра равны. Значит, центр делит отрезок между точкой и её образом пополам.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('точка и центр'));
+    /* 14: фигуры с центром симметрии */
+    } else if(step===14){
+      H=310;
+      let inner=TT('фигуры с центром симметрии','grn');
+      inner+=`<g class="qrPop"><path d="M40 92 L112 76 L152 132 L80 148 Z" fill="rgba(125,224,160,.25)" stroke="${grn}" stroke-width="2.2"/>`
+        +`<circle cx="96" cy="112" r="7" fill="${gold}"/></g>`;
+      inner+=fit(96,172,11,grn,'параллелограмм',{b:1},120);
+      inner+=`<g class="qrPop" style="animation-delay:.25s"><rect x="186" y="76" width="104" height="72" rx="6" fill="rgba(127,214,255,.22)" stroke="${cyan}" stroke-width="2.2"/>`
+        +`<circle cx="238" cy="112" r="7" fill="${gold}"/></g>`;
+      inner+=fit(238,172,11,cyan,'прямоугольник',{b:1},120);
+      inner+=drawCircle(96,240,44,pur,2.6,0.6,2.6,{fill:'rgba(176,127,255,.18)'});
+      inner+=`<circle class="qrPop" style="animation-delay:1.1s" cx="96" cy="240" r="7" fill="${gold}"/>`;
+      inner+=fit(96,300,11,pur,'круг',{b:1},70);
+      inner+=drawPoly([[186,240],[290,240]],gold,1.8,1.3,2.4,{pen:true});
+      inner+=`<circle class="qrPop" style="animation-delay:1.7s" cx="238" cy="240" r="7" fill="${gold}"/>`;
+      inner+=fit(238,300,11,gold,'отрезок',{b:1},90);
+            inner+=`${fit(159,206,11.5,ink,'при повороте на 180° они совпадают сами с собой',{b:1},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">У каких фигур есть центр</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('параллелограмм · прямоугольник · круг',grn,0.1)):'')+
+        (go?wkNote('Центр симметрии есть у отрезка, прямоугольника, параллелограмма и круга: при повороте на 180 градусов вокруг центра они совпадают сами с собой. У круга центр — это его середина.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('фигуры с центром'));
+    /* 15: фигуры без центра */
+    } else if(step===15){
+      H=308;
+      let inner=TT('а у этих фигур центра нет','red');
+      inner+=`<g class="qrPop"><path d="M40 106 L118 106 L79 190 Z" fill="rgba(255,120,100,.2)" stroke="${red}" stroke-width="2.4"/>`
+        +`<circle cx="79" cy="134" r="7" fill="${gold}" opacity=".8"/></g>`;
+      inner+=fit(79,214,11,red,'треугольник',{b:1},120);
+      inner+=`<g class="qrPop" style="animation-delay:.3s"><rect x="196" y="76" width="72" height="112" rx="6" fill="rgba(255,120,100,.14)" stroke="${red}" stroke-width="2.4"/>`
+        +`<text x="232" y="156" text-anchor="middle" font-size="56" font-family="Georgia,serif" font-weight="bold" fill="${red}">Р</text></g>`;
+      inner+=fit(232,214,11,red,'буква Р',{b:1},120);
+      inner+=`<g class="qrRise" style="animation-delay:1.2s"><rect x="26" y="228" width="266" height="32" rx="9" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.7"/>`
+        +fit(159,250,11.5,red,'повернём на 180° — фигура не совпадёт',{b:1},250)+`</g>`;
+      inner+=plate(18,266,282,30,go?grn:cardB,go?'у треугольника и буквы Р центра нет':'есть ли у них центр?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Без центра симметрии</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('поворот на 180° не совпадает',red,0.1)):'')+
+        (go?wkNote('Не у всякой фигуры есть центр симметрии. Треугольник и буква Р при повороте на 180 градусов не совпадут сами с собой, значит центра симметрии у них нет.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('без центра'));
+    /* 16: сравнение двух симметрий */
+    } else if(step===16){
+      H=312;
+      let inner=TT('осевая и центральная — в чём разница','gold');
+      inner+=`<g class="qrRise"><rect x="18" y="52" width="134" height="150" rx="11" fill="rgba(127,214,255,.1)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(85,76,12,cyan,'осевая',{b:1},118)+`</g>`;
+      inner+=drawPoly([[85,90],[85,190]],cyan,1.6,0.5,2.4,{pen:false});
+      inner+=`<path d="M52 116 L85 96 L85 168 L52 148 Z" fill="rgba(127,214,255,.3)" stroke="${cyan}" stroke-width="1.8"/>`;
+      inner+=`<path d="M118 116 L85 96 L85 168 L118 148 Z" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="1.8" stroke-dasharray="5 4"/>`;
+      inner+=fit(85,190,10.5,dim,'отражение от прямой',{},124);
+      inner+=`<g class="qrRise" style="animation-delay:.25s"><rect x="166" y="52" width="134" height="150" rx="11" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(233,76,12,gold,'центральная',{b:1},118)+`</g>`;
+      inner+=`<g><animateTransform attributeName="transform" type="rotate" values="0 233 146;180 233 146;360 233 146" dur="6s" repeatCount="indefinite"/>`
+        +`<path d="M206 116 L233 168 L260 116 Z" fill="rgba(255,215,106,.32)" stroke="${gold}" stroke-width="2"/>`
+        +`<circle cx="233" cy="146" r="0"/></g>`;
+      inner+=`<path d="M206 116 L233 168 L260 116 Z" fill="none" stroke="${gold}" stroke-width="1.8" stroke-dasharray="5 4"/>`;
+      inner+=`<circle cx="233" cy="146" r="6" fill="${gold}"/>`;
+      inner+=fit(233,190,10.5,dim,'поворот на 180°',{},124);
+      inner+=`<g class="qrRise" style="animation-delay:1.2s"><rect x="18" y="214" width="282" height="34" rx="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`
+        +fit(159,236,11.5,ink,'осевая — прямая, центральная — точка',{b:1},268)+`</g>`;
+      inner+=plate(18,254,282,30,go?grn:cardB,go?'зеркало против поворота':'чем они отличаются?',11.5);
+      inner+=`${fit(159,300,11,dim,'не путай эти два вида симметрии',{},280)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Два вида симметрии</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('ось — зеркало, центр — поворот',gold,0.1)):'')+
+        (go?wkNote('Осевая симметрия — это отражение относительно прямой, как в зеркале. Центральная симметрия — это поворот на 180 градусов вокруг точки. Главное отличие: в первом случае есть ось, во втором — центр.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('сравнение'));
+    /* 17: снежинка */
+    } else if(step===17){
+      H=324;
+      let inner=TT('снежинка: шесть осей симметрии','cyan');
+      inner+=snowflake(159,164,92,cyan,2.2,0.2);
+      for(let k=0;k<6;k++){
+        const a=-Math.PI/2+k*Math.PI/3;
+        const x1=159-Math.cos(a)*100, y1=164-Math.sin(a)*100, x2=159+Math.cos(a)*100, y2=164+Math.sin(a)*100;
+        inner+=`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${pur}" stroke-width="1.8" opacity=".6" stroke-dasharray="7 6"/>`;
+      }
+      inner+=`<circle class="qrPop" style="animation-delay:1.4s" cx="159" cy="164" r="7" fill="${gold}"/>`;
+      inner+=fit(159,278,11.5,ink,'каждая из шести прямых — ось симметрии',{b:1},292);
+      inner+=plate(18,282,282,30,go?grn:cardB,go?'у снежинки шесть осей':'сколько осей у снежинки?',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Снежинка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('6 лучей — 6 осей',cyan,0.1)):'')+
+        (go?wkNote('У снежинки шесть лучей, и через каждый луч проходит ось симметрии: всего шесть осей. Поэтому все снежинки кажутся такими правильными — природа «строит» их симметрично.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('симметрия в природе'));
+    /* 18: симметрия на координатной плоскости */
+    } else if(step===18){
+      H=312;
+      let inner=TT('симметрия на координатной плоскости','blu');
+      inner+=drawPoly([[40,170],[286,170]],cardB,2,0.2,2.2,{pen:false});
+      inner+=drawPoly([[163,54],[163,286]],cardB,2,0.3,2.2,{pen:false});
+      inner+=tx(292,166,11,dim,'x',{});
+      inner+=tx(167,50,11,dim,'y',{});
+      const x0=163, y0=170, u=27;
+      const P={x:x0+2*u, y:y0-2*u};
+      inner+=`<circle class="qrPop" style="animation-delay:.6s" cx="${P.x}" cy="${P.y}" r="9" fill="${cyan}" stroke="#fffdf2" stroke-width="1.5"/>`;
+      inner+=fit(P.x+24,P.y-8,11,cyan,'A(2; 2)',{b:1},70);
+      const P1={x:x0-2*u, y:P.y}, P2={x:P.x, y:y0+2*u};
+      inner+=`<circle class="qrPop" style="animation-delay:1.1s" cx="${P1.x}" cy="${P1.y}" r="9" fill="${pur}" stroke="#fffdf2" stroke-width="1.5"/>`;
+      inner+=fit(P1.x-26,P1.y-8,11,pur,'(−2; 2)',{b:1},66);
+      inner+=`<circle class="qrPop" style="animation-delay:1.5s" cx="${P2.x}" cy="${P2.y}" r="9" fill="${grn}" stroke="#fffdf2" stroke-width="1.5"/>`;
+      inner+=fit(P2.x+22,P2.y+16,11,grn,'(2; −2)',{b:1},66);
+      inner+=drawPoly([[P1.x,P1.y],[P.x,P.y],[P2.x,P2.y]],dim,1.6,1.8,1.6,{pen:false});
+      inner+=`<g class="qrRise" style="animation-delay:2s"><rect x="24" y="212" width="270" height="34" rx="10" fill="rgba(110,168,255,.12)" stroke="${blu}" stroke-width="1.7"/>`
+        +fit(159,234,11,blu,'отражение меняет знак у одной координаты',{b:1},258)+`</g>`;
+      inner+=plate(18,254,282,30,go?grn:cardB,go?'относительно оси y: меняем знак x':'как меняются координаты?',11.5);
+      inner+=`${fit(159,300,11,dim,'относительно оси x меняется знак второй координаты',{},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Симметрия и координаты</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('(2; 2) → (−2; 2) и (2; −2)',blu,0.1)):'')+
+        (go?wkNote('На координатной плоскости симметрию строить удобно: при отражении относительно оси y меняется знак первой координаты, а относительно оси x — знак второй. Точка (2; 2) даёт (−2; 2) и (2; −2).'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('координаты и симметрия'));
+    /* 19: зеркало и слова */
+    } else if(step===19){
+      H=300;
+      let inner=TT('зеркало меняет левое и правое','pur');
+      inner+=`<rect x="26" y="60" width="120" height="70" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="2"/>`;
+      inner+=`<text x="86" y="108" text-anchor="middle" font-size="26" font-family="Georgia,serif" font-weight="bold" fill="${cyan}">КОТ</text>`;
+      inner+=`<g transform="translate(318,0) scale(-1,1)"><rect x="26" y="60" width="120" height="70" rx="10" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="2"/>`
+        +`<text x="86" y="108" text-anchor="middle" font-size="26" font-family="Georgia,serif" font-weight="bold" fill="${pur}">КОТ</text></g>`;
+      inner+=`<rect x="159" y="52" width="6" height="120" fill="rgba(255,215,106,.25)"/>`;
+      inner+=`<line x1="162" y1="48" x2="162" y2="180" stroke="${gold}" stroke-width="2.4" stroke-dasharray="7 6"/>`;
+      inner+=fit(162,196,11.5,gold,'зеркало',{b:1},110);
+      inner+=fit(86,150,11,dim,'так написано',{},110);
+      inner+=fit(238,150,11,pur,'так видно в зеркале',{},140);
+      inner+=plate(18,214,282,32,go?grn:cardB,go?'в зеркале слово читается наоборот':'что изменилось в зеркале?',11.5);
+      inner+=`${fit(159,272,11.5,ink,'поэтому оси симметрии называют зеркальными',{},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Зеркальное отражение</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('левое и правое меняются местами',pur,0.1)):'')+
+        (go?wkNote('Зеркало меняет левое и правое: слово, написанное на стекле, в отражении читается наоборот. Точно так же работает осевая симметрия — ось как зеркало переставляет половинки.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('зеркало'));
+    /* 20: практика */
+    } else if(step===20){
+      H=312;
+      let inner=TT('практика: считаем оси у фигур','grn');
+      inner+=`<rect x="30" y="58" width="112" height="72" rx="6" fill="rgba(125,224,160,.16)" stroke="${grn}" stroke-width="2.4"/>`;
+      inner+=drawPoly([[86,56],[86,132]],cyan,1.6,0.4,2,{keep:true});
+      inner+=drawPoly([[28,94],[144,94]],cyan,1.6,0.7,2,{keep:true});
+      inner+=drawPoly([[30,58],[142,130]],cyan,1.6,1,2,{keep:true});
+      inner+=drawPoly([[142,58],[30,130]],cyan,1.6,1.3,2,{keep:true});
+      inner+=fit(86,150,11.5,grn,'квадрат — 4 оси',{b:1},140);
+      inner+=`<rect x="176" y="58" width="116" height="72" rx="6" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="2.4"/>`;
+      inner+=drawPoly([[234,56],[234,132]],cyan,1.6,1.6,2,{keep:true});
+      inner+=drawPoly([[174,94],[294,94]],cyan,1.6,1.9,2,{keep:true});
+      inner+=drawPoly([[176,58],[292,130]],red,1.4,2.2,1.8,{pen:false});
+      inner+=drawPoly([[292,58],[176,130]],red,1.4,2.2,1.8,{pen:false});
+      inner+=fit(234,150,11.5,gold,'прямоугольник — 2 оси',{b:1},160);
+      inner+=`<g class="qrRise" style="animation-delay:2.4s"><rect x="26" y="172" width="266" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.7"/>`
+        +fit(159,194,11.5,cyan,'красные линии осями не являются',{b:1},250)+`</g>`;
+      inner+=`<g class="qrRise" style="animation-delay:2.7s"><rect x="26" y="214" width="266" height="34" rx="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`
+        +`<text x="159" y="236" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${ink}">квадрат: 4 = 2 + 2 · прямоугольник: 2</text></g>`;
+      inner+=plate(18,250,282,30,go?grn:cardB,go?'вот и вся разница':'посчитай оси сам',11.5);
+      inner+=`${fit(159,296,11,dim,'у квадрата добавляются две диагонали',{},290)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Квадрат и прямоугольник</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('4 оси против 2 осей',grn,0.1)):'')+
+        (go?wkNote('У квадрата четыре оси: две через середины сторон и две по диагоналям. У прямоугольника только две — через середины сторон: его диагонали осями не являются.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('практика'));
+    /* 21: тренажёр 1 */
+    } else if(step===21){
+      H=290;
+      const opts=['2','4','1'], ok=0, done=(sel>=0);
+      let inner=TT('сколько осей симметрии у прямоугольника?','gold');
+      inner+=`<rect x="86" y="56" width="146" height="86" rx="6" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="2.4"/>`;
+      inner+=drawPoly([[159,54],[159,144]],cyan,1.6,0.5,2,{keep:true});
+      inner+=drawPoly([[84,99],[234,99]],cyan,1.6,0.8,2,{keep:true});
+      inner+=drawPoly([[86,56],[232,142]],red,1.4,1.1,1.8,{pen:false});
+      inner+=drawPoly([[232,56],[86,142]],red,1.4,1.1,1.8,{pen:false});
+      opts.forEach((t,k)=>{
+        const x=44+k*88, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW381Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="160" width="78" height="46" rx="11" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(18,24,44,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +tx(x+39,190,19,c,t,{b:on})+(on?`<path d="M${x+56} 170 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(18,216,282,32,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! У прямоугольника 2 оси':'Посмотри: диагонали не подходят'):'нажми на ответ',11.5);
+      inner+=`${fit(159,272,11.5,gold,'обе оси идут через середины сторон',{b:1},280)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: оси прямоугольника</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW381Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('У прямоугольника, который не является квадратом, две оси симметрии: они проходят через середины противоположных сторон. Диагонали осями не являются — при складывании по диагонали половинки не совпадают.'):'')+
+        wkSml('проверь себя'));
+    /* 22: тренажёр 2 */
+    } else if(step===22){
+      H=288;
+      const opts=['круг','буква Р','треугольник'], ok=0, done=(sel>=0);
+      let inner=TT('у какой фигуры есть центр симметрии?','pur');
+      opts.forEach((t,k)=>{
+        const x=32+k*86, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
+        inner+=`<g style="cursor:pointer" onclick="visW381Pick('${lk}',${k})">`
+          +`<rect x="${x}" y="56" width="80" height="72" rx="10" fill="${on?'rgba(19,60,44,.9)':(bad?'rgba(52,22,26,.9)':'rgba(18,24,44,.9)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(x+40,100,14,c,t,{b:on},74)
+          +(k===0?`<circle cx="${x+40}" cy="80" r="12" fill="none" stroke="${on?grn:pur}" stroke-width="2"/>`:k===1?`<text x="${x+40}" y="88" text-anchor="middle" font-size="30" font-family="Georgia,serif" font-weight="bold" fill="${on?grn:red}">Р</text>`:`<path d="M${x+24} 92 L${x+40} 64 L${x+56} 92 Z" fill="none" stroke="${on?grn:red}" stroke-width="2"/>`)
+          +(on?`<path d="M${x+58} 66 l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      inner+=plate(18,140,282,32,done?(sel===ok?grn:red):cardB,done?(sel===ok?'Верно! У круга есть центр симметрии':'Вспомни: поворот на 180°'):'нажми на фигуру',11.5);
+      inner+=`${fit(159,196,11.5,ink,'при повороте на 180° фигура должна совпасть',{b:1},292)}`;
+      inner+=`${fit(159,222,11.5,dim,'у круга центр — его середина',{},292)}`;
+      inner+=`${fit(159,248,11,gold,'у буквы Р и треугольника центра нет',{b:1},292)}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Тренажёр: центр симметрии</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        wkRow(done?wkBtn('ещё раз',`visW381Act('${lk}','rst')`):'')+
+        (done&&sel===ok?wkNote('Центр симметрии есть у круга: как его ни поверни на 180 градусов вокруг центра, он совпадёт сам с собой. У буквы Р и у треугольника такого центра нет.'):'')+
+        wkSml('проверь себя'));
+    /* 23: частые ошибки */
+    } else if(step===23){
+      H=314;
+      const it=[
+        {t:'путают осевую и центральную',f:'ось — зеркало, центр — поворот на 180°',c:gold},
+        {t:'считают диагонали прямоугольника осями',f:'у прямоугольника только 2 оси',c:grn},
+        {t:'думают, что при центральной симметрии фигура переворачивается',f:'она поворачивается на 180°',c:cyan},
+        {t:'забывают, что расстояния равны',f:'до оси и до центра расстояния равны',c:pur}
+      ];
+      let inner='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        inner+=`<g class="qrRise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#qrbg)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#090d1c">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
+      });
+      inner+=`${tx(159,300,11,dim,'проверяй эти четыре места',{})}`;
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Частые ошибки</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('ось — зеркало, центр — поворот',gold,0.1)):'')+
+        (go?wkNote('Чаще всего путают два вида симметрии, считают диагонали прямоугольника осями, думают, что при центральной симметрии фигура переворачивается, и забывают про равные расстояния.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('чтобы не ошибаться'));
+    /* 24: шпаргалка и итог */
+    } else {
+      H=308;
+      const rows=[
+        {t:'ось — зеркало, расстояния равны',c:cyan},
+        {t:'центр — поворот на 180°',c:gold},
+        {t:'квадрат — 4 оси, прямоугольник — 2',c:grn},
+        {t:'круг — бесконечно много осей',c:pur},
+        {t:'снежинка — 6 осей',c:blu}
+      ];
+      let inner=TT('всё главное о симметрии','grn');
+      rows.forEach((q,k)=>{
+        const y=52+k*42;
+        inner+=`<g class="qrRise" style="animation-delay:${(0.12+k*0.14).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(159,y+22,12,q.c,q.t,{b:1},260)+`</g>`;
+        inner+=drawPoly([[40,y+38],[278,y+38]],q.c,2.4,0.2+k*0.14,2,{pen:k===0});
+      });
+      inner+=plate(20,268,278,28,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'всё главное вместе',11.5);
+      h=wkFrame(`<div class="wk-big" style="font-size:23px">Шпаргалка</div>`+
+        wkHero(bg(W,H,{inner:()=>inner}))+
+        (go?wkRow(chip('ось · центр · число осей',grn,0.1)):'')+
+        (go?wkNote('Вся тема в пяти строках: осевая симметрия — отражение от прямой, центральная — поворот на 180°, у квадрата четыре оси, у прямоугольника две, у круга бесконечно много, а у снежинки шесть.'):'')+
+        wkRow(go?wkBtn('сброс',`visW381Act('${lk}','rst')`):wkBtn('показать',`visW381Act('${lk}','go')`))+
+        wkSml('симметрия'));
+    }
+    el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
+  }
+  window.VISKW[381]=visW381;
+  window.visW381Pick=function(lk,i){ const st=CHS[lk]||(CHS[lk]={}); st.pick=i; chRender(0); };
+  window.visW381Act=function(lk,act){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(act==='go'){ st.go=st.go?0:1; }
+    if(act==='rst'){ CHS[lk]={_at:st._at}; }
+    chRender(0);
+  };
+  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===381){ window.ARH_LESSONS[i]=L381; break; } } })();
+})();
 /* ================= УРОК 192 · Проценты: сколько процентов одно число от другого (v2 · «Процентная мастерская Архимеда», 25 шагов, флагман, прорисовка на каждом слайде) ================= */
 (function(){
   if(!window.__wk192v2css){
