@@ -532,7 +532,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff',
         bg0='#16203c', bg1='#0b1122', card='rgba(20,28,50,.96)', cardB='#3a4a70', lineC='#33436b';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.6">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.6">${t}</text>`;
   const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
@@ -576,7 +576,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       +fit(159,31,12.5,c||ink,t,{b:1},250)+`</g>`;
     if(step===0){ /* что значит сравнить */
       H=238;
-      let inner=TT('что больше, что меньше','gold');
+      let inner=TT('что больше, что меньше',gold);
       for(let k=0;k<5;k++) inner+=`<circle class="qYPop" style="animation-delay:${(0.1+k*0.06).toFixed(2)}s" cx="${68+k*24}" cy="96" r="9" fill="rgba(255,215,106,.85)" stroke="${gold}" stroke-width="1.6"/>`;
       for(let k=0;k<3;k++) inner+=`<circle class="qYPop" style="animation-delay:${(0.4+k*0.06).toFixed(2)}s" cx="${208+k*24}" cy="96" r="9" fill="rgba(126,168,255,.8)" stroke="${blu}" stroke-width="1.6"/>`;
       inner+=signBox(159,96,'>',gold,{delay:0.65,w:44,h:40});
@@ -592,7 +592,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('знаки сравнения'));
     } else if(step===1){ /* три знака */
       H=250;
-      let inner=TT('три знака: больше, меньше, равно','cyan');
+      let inner=TT('три знака: больше, меньше, равно',cyan);
       const rows=[{a:'5',s:'>',b:'3',t:'5 больше 3',c:gold},{a:'3',s:'<',b:'5',t:'3 меньше 5',c:cyan},{a:'5',s:'=',b:'5',t:'5 равно 5',c:grn}];
       rows.forEach((q,k)=>{
         const y=76+k*46;
@@ -611,7 +611,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('больше, меньше, равно'));
     } else if(step===2){ /* как сравнивать числа */
       H=240;
-      let inner=TT('как сравнивать числа','gold');
+      let inner=TT('как сравнивать числа',gold);
       inner+=`<g class="qYRise"><rect x="20" y="48" width="134" height="84" rx="10" fill="rgba(15,25,46,.95)" stroke="${gold}" stroke-width="1.7"/>`
         +fit(87,68,11,gold,'сравниваем цифры',{b:1},116)
         +valBox(60,96,'100',grn,{w:46,h:30,fs:14,delay:0.15,geo:0})
@@ -634,7 +634,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('правило сравнения'));
     } else if(step===3){ /* цепочка */
       H=236;
-      let inner=TT('звенья складываются в цепочку','cyan');
+      let inner=TT('звенья складываются в цепочку',cyan);
       const row=(y,arr,dim2)=>{
         let s='', cx=44;
         arr.forEach((q,k)=>{
@@ -665,7 +665,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('главное свойство'));
     } else if(step===4){ /* цепочка из четырёх */
       H=244;
-      let inner=TT('A > B > C > D','gold');
+      let inner=TT('A > B > C > D',gold);
       const xs=[48,120,192,264];
       ['A','B','C','D'].forEach((t,k)=>{
         inner+=valBox(xs[k],86,t,k===0?grn:(k===3?red:gold),{w:44,h:36,fs:17,delay:0.12*k});
@@ -686,7 +686,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('порядок в цепочке'));
     } else if(step===5){ /* когда данных не хватает */
       H=238;
-      let inner=TT('а если данных не хватает?','red');
+      let inner=TT('а если данных не хватает?',red);
       inner+=valBox(70,76,'A',gold,{w:44,h:34,delay:0.1})+signBox(114,76,'>',cyan,{w:30,h:30,delay:0.2})+valBox(158,76,'B',blu,{w:44,h:34,delay:0.3});
       inner+=valBox(70,124,'C',gold,{w:44,h:34,delay:0.4})+signBox(114,124,'>',cyan,{w:30,h:30,delay:0.5})+valBox(158,124,'B',blu,{w:44,h:34,delay:0.6});
       inner+=`<g class="qYPop" style="animation-delay:.75s">`
@@ -703,7 +703,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('что следует из условий'));
     } else if(step===6){ /* нестрогие знаки */
       H=234;
-      let inner=TT('нестрогие знаки: ≥ и ≤','cyan');
+      let inner=TT('нестрогие знаки: ≥ и ≤',cyan);
       const rows=[{s:'≥',t:'не меньше',e:'x ≥ 7 — это 7 или больше',c:grn},{s:'≤',t:'не больше',e:'x ≤ 7 — это 7 или меньше',c:gold}];
       rows.forEach((q,k)=>{
         const y=76+k*54;
@@ -721,7 +721,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('не больше и не меньше'));
     } else if(step===7){ /* двойное неравенство */
       H=240;
-      let inner=TT('двойное неравенство','gold');
+      let inner=TT('двойное неравенство',gold);
       const xs=[70,159,248];
       inner+=valBox(xs[0],80,'3',blu,{w:44,h:36,delay:0.1});
       inner+=signBox(114,80,'<',gold,{w:32,h:30,delay:0.2});
@@ -740,7 +740,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('два условия в одной записи'));
     } else if(step===8){ /* цепочку можно перевернуть */
       H=232;
-      let inner=TT('цепочку можно перевернуть','pur');
+      let inner=TT('цепочку можно перевернуть',pur);
       const chain=(y,arr,cc)=>{
         let s='', cx=54;
         arr.forEach((q,k)=>{
@@ -762,7 +762,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('запись цепочки'));
     } else if(step===9){ /* координатный луч */
       H=234;
-      let inner=TT('на луче: правее — больше','cyan');
+      let inner=TT('на луче: правее — больше',cyan);
       inner+=`<line x1="24" y1="110" x2="296" y2="110" stroke="#44538a" stroke-width="3"/>`;
       inner+=`<path d="M296 110 l-9 -5 v10 z" fill="#8ea3c8"/>`;
       for(let k=0;k<=10;k++){
@@ -786,7 +786,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('луч и порядок'));
     } else if(step===10){ /* отрицательные числа */
       H=238;
-      let inner=TT('отрицательные числа — левее нуля','red');
+      let inner=TT('отрицательные числа — левее нуля',red);
       inner+=`<line x1="24" y1="112" x2="296" y2="112" stroke="#44538a" stroke-width="3"/>`;
       inner+=`<path d="M296 112 l-9 -5 v10 z" fill="#8ea3c8"/>`;
       const nums=[-5,-2,0,3];
@@ -808,7 +808,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('числа меньше нуля'));
     } else if(step===11){ /* сравнение отрицательных */
       H=252;
-      let inner=TT('из двух отрицательных меньше то…','gold');
+      let inner=TT('из двух отрицательных меньше то…',gold);
       const x0=52;
       inner+=`<line x1="30" y1="120" x2="290" y2="120" stroke="#44538a" stroke-width="2.4"/>`;
       inner+=`<line x1="${x0+7*26}" y1="96" x2="${x0+7*26}" y2="146" stroke="${gold}" stroke-width="2.4"/>`;
@@ -822,7 +822,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         inner+=`<line x1="${x}" y1="86" x2="${x0+7*26}" y2="86" stroke="${k?blu:pur}" stroke-width="2.4"/>`;
         inner+=`<line x1="${x}" y1="80" x2="${x}" y2="92" stroke="${k?blu:pur}" stroke-width="2.4"/>`;
         inner+=`<line x1="${x0+7*26}" y1="80" x2="${x0+7*26}" y2="92" stroke="${k?blu:pur}" stroke-width="2.4"/>`;
-        inner+=`${tx((x+x0+7*26)/2,78,k?blu:pur,'|'+q.v+'| = '+q.k,{b:1})}`;
+        inner+=`${tx((x+x0+7*26)/2,78,11,k?blu:pur,'|'+q.v+'| = '+q.k,{b:1})}`;
       });
       inner+=`<g class="qYRise" style="animation-delay:.6s"><rect x="24" y="178" width="270" height="30" rx="9" fill="rgba(255,215,106,.1)" stroke="${gold}" stroke-width="1.7"/>`
         +fit(159,198,11,gold,'−7 меньше −3: модуль у него больше',{b:1},250)+`</g>`;
@@ -835,7 +835,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('модуль и сравнение'));
     } else if(step===12){ /* сравнение величин */
       H=240;
-      let inner=TT('величины сравниваем в одних единицах','cyan');
+      let inner=TT('величины сравниваем в одних единицах',cyan);
       inner+=`<g class="qYRise"><rect x="20" y="48" width="278" height="52" rx="10" fill="rgba(15,25,46,.95)" stroke="${cyan}" stroke-width="1.7"/>`
         +fit(80,72,13,cyan,'5 см 3 мм',{b:1},130)
         +signBox(159,74,'=',grn,{w:32,h:30,delay:0.2})
@@ -856,7 +856,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('единицы измерения'));
     } else if(step===13){ /* сравнение дробей */
       H=248;
-      let inner=TT('сравниваем доли и дроби','pur');
+      let inner=TT('сравниваем доли и дроби',pur);
       const bar=(x,y,n,f,c)=>{
         let s='';
         for(let k=0;k<n;k++) s+=`<rect x="${x+k*(104/n)}" y="${y}" width="${(104/n)-1.5}" height="24" rx="3" fill="${k<f?c:'rgba(255,255,255,.06)'}" stroke="${c}" stroke-width="1"/>`;
@@ -879,7 +879,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('доли и дроби'));
     } else if(step===14){ /* свойства неравенств */
       H=242;
-      let inner=TT('что можно делать с неравенством','gold');
+      let inner=TT('что можно делать с неравенством',gold);
       const rows=[{t:'прибавить одно и то же',e:'5 > 3  →  5 + 2 > 3 + 2',c:grn},{t:'умножить на положительное',e:'5 > 3  →  5 · 2 > 3 · 2',c:cyan},{t:'умножить на отрицательное',e:'5 > 3  →  −5 < −3',c:red}];
       rows.forEach((q,k)=>{
         const y=50+k*50;
@@ -898,7 +898,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('свойства неравенств'));
     } else if(step===15){ /* оценка суммы */
       H=240;
-      let inner=TT('складываем неравенства: 3 < a < 5 и 4 < b < 6','cyan');
+      let inner=TT('складываем неравенства: 3 < a < 5 и 4 < b < 6',cyan);
       inner+=`<g class="qYRise"><rect x="20" y="46" width="278" height="66" rx="10" fill="rgba(15,25,46,.95)" stroke="${cyan}" stroke-width="1.7"/>`
         +fit(90,68,11.5,cyan,'3 < a < 5',{b:1},120)
         +fit(228,68,11.5,cyan,'4 < b < 6',{b:1},120)
@@ -917,7 +917,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         wkSml('оценка результата'));
     } else if(step===16){ /* задача на упорядочивание */
       H=248;
-      let inner=TT('построим порядок по условиям','gold');
+      let inner=TT('построим порядок по условиям',gold);
       const conds=['Аня выше Бори','Боря выше Вити','Гена ниже Вити'];
       conds.forEach((q,k)=>{
         const y=46+k*26;
@@ -943,7 +943,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===17){ /* интерактив: знак */
       H=250;
       const opts=['>','<','='], ok=0, done=(sel>=0);
-      let inner=TT('какой знак поставить: 47 … 42?','cyan');
+      let inner=TT('какой знак поставить: 47 … 42?',cyan);
       inner+=valBox(86,80,'47',gold,{w:56,h:42,fs:18});
       inner+=signBox(159,80,done?opts[ok]:'?',done?grn:cardB,{w:46,h:42});
       inner+=valBox(232,80,'42',blu,{w:56,h:42,fs:18});
@@ -964,7 +964,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===18){ /* интерактив: кто выше всех */
       H=248;
       const opts=['A','B','C','D'], ok=0, done=(sel>=0);
-      let inner=TT('A > B, B > C, C > D — кто выше всех?','gold');
+      let inner=TT('A > B, B > C, C > D — кто выше всех?',gold);
       inner+=`<g class="qYRise" style="animation-delay:.15s">${fit(159,76,12,gold,'A > B > C > D',{b:1,georgia:1},250)}</g>`;
       opts.forEach((t,k)=>{
         const x=36+k*66, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
@@ -983,7 +983,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===19){ /* интерактив: сколько чисел */
       H=240;
       const opts=['3','2','4'], ok=0, done=(sel>=0);
-      let inner=TT('сколько натуральных чисел в 3 < x < 7?','cyan');
+      let inner=TT('сколько натуральных чисел в 3 < x < 7?',cyan);
       inner+=`<g class="qYRise" style="animation-delay:.15s">${fit(159,74,13,cyan,'3 < x < 7',{b:1,georgia:1},250)}</g>`;
       inner+=`<line x1="34" y1="110" x2="284" y2="110" stroke="#44538a" stroke-width="2.4"/>`;
       [3,4,5,6,7].forEach((v2,k)=>{
@@ -1012,7 +1012,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         const y=18+k*54;
         inner+=`<g class="qYRise" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s" filter="url(#qYsh)">`
           +`<rect x="16" y="${y}" width="286" height="46" rx="11" fill="url(#qYbg)" stroke="${red}" stroke-width="2"/>`
-          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#241016">!</text>`
+          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eef6ff">!</text>`
           +fit(62,y+20,Math.min(11.5,206/Math.max(1,q.t.length)/0.72),red,q.t,{an:'start',b:1},206)
           +`<path d="M62 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +fit(84,y+40,Math.min(11,186/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
@@ -1105,7 +1105,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff',
         bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', steel='#aab8d4';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -2578,7 +2578,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', cheese='#f6d24a', sponge='#e9b36a', crust='#c98a3f',
         card='rgba(255,251,244,.97)', cardB='#c9b98d', cream='#fdf3e6';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf3e6" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf3e6" stroke-width="3.2">${t}</text>`;
   function sector(cx,cy,r,a0,a1){
     const r0=a0*Math.PI/180,r1=a1*Math.PI/180;
     return `M ${cx} ${cy} L ${(cx+r*Math.cos(r0)).toFixed(1)} ${(cy+r*Math.sin(r0)).toFixed(1)} A ${r} ${r} 0 ${(r1-r0)>180?1:0} 1 ${(cx+r*Math.cos(r1)).toFixed(1)} ${(cy+r*Math.sin(r1)).toFixed(1)} Z`;
@@ -5707,7 +5707,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef4ef', dim='#9db4a8', gold='#e5b95a', goldD='#b8802c', brass='#f2d38a', emerald='#16302a', emeraldD='#0c1c17',
         grn='#7de0a0', red='#ff9a8a', card='rgba(16,30,26,.94)', cardB='#3a5a50', lineC='#2a4038';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1712" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1712" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -7757,7 +7757,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#5a3a22', dim='#a58a5f', gold='#c9982b', cream='#fdf4e4', empty='#f2e7cc', strokeC='#d8c39a',
         berry='#e4574f', honey='#f0a94a', mint='#5fbf8a', blue='#5f8fd0', purple='#9b5fbf';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf4e4" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf4e4" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let dots='';
@@ -8188,7 +8188,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', crust='#c98a3f', cheese='#f6d24a', sauce='#d6453d',
         grn='#4c9a58', blu='#3f6d9e', card='rgba(255,250,240,.97)', cardB='#c9b98d', cream='#fdf6e9';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
   function sector(cx,cy,r,a0,a1){
     const r0=a0*Math.PI/180, r1=a1*Math.PI/180;
     return `M ${cx} ${cy} L ${(cx+r*Math.cos(r0)).toFixed(1)} ${(cy+r*Math.sin(r0)).toFixed(1)} A ${r} ${r} 0 ${(r1-r0)>180?1:0} 1 ${(cx+r*Math.cos(r1)).toFixed(1)} ${(cy+r*Math.sin(r1)).toFixed(1)} Z`;
@@ -9196,7 +9196,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff',
         bg0='#141c36', bg1='#0a1120', card='rgba(20,28,50,.96)', cardB='#3a4a70', lineC='#33436b';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.6">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.6">${t}</text>`;
   const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
@@ -9654,7 +9654,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         const y=18+k*54;
         inner+=`<g class="qQRise" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s" filter="url(#qQsh)">`
           +`<rect x="16" y="${y}" width="286" height="46" rx="11" fill="url(#qQbg)" stroke="${red}" stroke-width="2"/>`
-          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#241016">!</text>`
+          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eef6ff">!</text>`
           +fit(62,y+20,Math.min(11.5,206/Math.max(1,q.t.length)/0.72),red,q.t,{an:'start',b:1},206)
           +`<path d="M62 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +fit(84,y+40,Math.min(11,186/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
@@ -12746,7 +12746,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', ext='#ff8a5c', mid='#5c9aff',
         bg0='#101b30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', wood='#6a5330', wood2='#3a2c18';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -13206,7 +13206,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#edf4ff', dim='#a6bacf', brassy='#e5b95a', brassD='#c0902f',
         cyan='#7fd6ff', grn='#7be0a0', red='#ff9a8a', slate='#13233b', slate2='#0c1626', cell='#2a3c5b', cellD='#1e2c46';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0c1626" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0c1626" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let grid='';
@@ -13646,7 +13646,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#4a2f18', dim='#9b8365', gold='#c9982b', cream='#fbf1dd', empty='#efe5cd',
         berry='#e4574f', blue='#3f6d9e', purple='#8a63b5', green='#4c9a6a', strokeC='#c9b98d';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1dd" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1dd" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let dots='';
@@ -14083,7 +14083,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#e9f5ef', dim='#9fc0bd', gold='#e0b34c', teal='#0f3433', tealD='#0a2626',
         grid='#1f4b49', amber='#ffbe5c', grn='#7be0a0', coral='#ff9a8a', cyan='#7fd6ff', sea='#134745', seaD='#0c2e2d';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#082122" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#082122" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let grid2='';
@@ -14480,7 +14480,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   const ink='#f2f5e8', dim='#9fb08f', gold='#ffd76a', goldD='#d0a13c',
         grn='#8fe0a0', red='#ff6b5e', chalk='#e8dcc0', boardC='#17261a', boardD='#0d150e',
         cellC='#20301f', cellD='#18261a', lineC='#3c503a';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0d150e" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0d150e" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -14944,7 +14944,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#9aa8c9', gold='#ffd76a', grn='#8fe0a0', red='#ff6b6b',
         blu='#7fb8ff', bg0='#1c2240', bg1='#10142a', cardC='rgba(20,26,46,.9)', cardB='#3a466a';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0e1224" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0e1224" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -15417,7 +15417,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#9fa8c9', gold='#ffd76a', goldD='#c9932f', cyan='#7fd6ff',
         mint='#8fe0a0', red='#ff7b6b', sea='#211a3a', seaD='#130f26', card='rgba(24,20,44,.92)', cardB='#3a315f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0e0b1c" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0e0b1c" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -15881,7 +15881,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', warm='#ffb85c', purple='#b07fff',
         bg0='#0e1830', bg1='#080d1c', card='rgba(16,26,46,.96)', cardB='#3a4c78', steel='#aab8d4';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -16273,7 +16273,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#98a3c5', gold='#ffd76a', cyan='#7fd6ff', grn='#7de0a0', red='#ff9a8a',
         bg0='#141a2e', bg1='#0c111e', card='rgba(22,29,50,.94)', cardB='#3a466a', lineC='#2a3750';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -16739,7 +16739,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
         bg0='#141a2e', bg1='#0c111e', card='rgba(22,29,50,.96)', cardB='#3a466a', lineC='#2a3750';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b0f1c" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -17116,7 +17116,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef5ff', dim='#a4b1d2', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
         bg0='#152840', bg1='#0a1626', card='rgba(18,30,50,.96)', cardB='#3a5a80', lineC='#2a3f5f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1220" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1220" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -17549,7 +17549,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#effaf5', dim='#9fb3ad', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff',
         rose='#ff8fb0', bg0='#12302f', bg1='#08181c', card='rgba(18,44,44,.96)', cardB='#3d6a66', lineC='#35605c';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#06131a" stroke-width="3.6">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#06131a" stroke-width="3.6">${t}</text>`;
   const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
@@ -17642,7 +17642,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 0: что такое вероятность */
     if(step===0){
       H=290;
-      let inner=TT('что такое вероятность','gold');
+      let inner=TT('что такое вероятность',gold);
       inner+=drawRect(30,56,140,120,14,cardB,3.2,0.2,2.4,{pen:true});
       for(let k=0;k<5;k++) inner+=ballIc(56+(k%3)*38,90+Math.floor(k/3)*40,13,k<2?rose:blu,0.6+k*0.12);
       inner+=fit(100,196,11.5,rose,'2 красных и 3 синих',{b:1},150);
@@ -17666,7 +17666,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         {t:'случайное',d:'может быть, а может нет',ex:'выпадет орёл',c:gold},
         {t:'невозможное',d:'не произойдёт никогда',ex:'кубик покажет 7',c:red}
       ];
-      let inner=TT('три вида событий','cyan');
+      let inner=TT('три вида событий',cyan);
       cards.forEach((q,k)=>{
         const y=52+k*62;
         inner+=`<g class="qmRise" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
@@ -17686,7 +17686,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 2: равновозможные исходы */
     } else if(step===2){
       H=288;
-      let inner=TT('исходы должны быть равновозможными','grn');
+      let inner=TT('исходы должны быть равновозможными',grn);
       inner+=`<g class="qmRise">${fit(80,60,11.5,grn,'так можно',{b:1},130)}</g>`;
       inner+=coinIc(50,110,22,'О',0.3)+coinIc(110,110,22,'Р',0.45);
       inner+=fit(80,152,11,dim,'две стороны монеты',{},140);
@@ -17707,7 +17707,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 3: формула вероятности */
     } else if(step===3){
       H=292;
-      let inner=TT('как считают вероятность','gold');
+      let inner=TT('как считают вероятность',gold);
       inner+=`<g class="qmRise"><rect x="24" y="54" width="270" height="52" rx="12" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="2"/>`
         +`<text x="159" y="88" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="${gold}">P = благоприятные : все</text></g>`;
       inner+=`<g class="qmRise" style="animation-delay:.4s"><rect x="24" y="120" width="130" height="60" rx="11" fill="rgba(12,32,34,.97)" stroke="${grn}" stroke-width="1.8"/>`
@@ -17728,7 +17728,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 4: шкала вероятностей */
     } else if(step===4){
       H=288;
-      let inner=TT('вероятность от 0 до 1','cyan');
+      let inner=TT('вероятность от 0 до 1',cyan);
       inner+=drawPoly([[26,120],[292,120]],cardB,3.4,0.2,3,{pen:true});
       [0,0.25,0.5,0.75,1].forEach((q,k)=>{
         const x=26+q*266;
@@ -17752,7 +17752,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 5: монета */
     } else if(step===5){
       H=290;
-      let inner=TT('монета: вероятность орла 1/2','gold');
+      let inner=TT('монета: вероятность орла 1/2',gold);
       inner+=coinIc(90,84,30,'О',0.25)+coinIc(228,84,30,'Р',0.5);
       inner+=fit(90,136,12,gold,'орёл — 1 исход',{b:1},120);
       inner+=fit(228,136,12,cyan,'решка — 1 исход',{b:1},120);
@@ -17770,7 +17770,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 6: кубик */
     } else if(step===6){
       H=300;
-      let inner=TT('кубик: 6 равновозможных исходов','cyan');
+      let inner=TT('кубик: 6 равновозможных исходов',cyan);
       for(let k=0;k<6;k++) inner+=dieIc(44+k*46,74,34,k+1,0.25+k*0.12);
       inner+=`<g class="qmRise" style="animation-delay:1s"><rect x="24" y="108" width="270" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
         +`<text x="159" y="131" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">шестёрка: 1/6</text></g>`;
@@ -17788,7 +17788,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 7: мешок с шарами */
     } else if(step===7){
       H=296;
-      let inner=TT('в мешке 2 красных и 3 синих','rose');
+      let inner=TT('в мешке 2 красных и 3 синих',rose);
       inner+=drawRect(34,56,250,88,14,cardB,3.2,0.2,2.4,{pen:true});
       [0,1].forEach(k=>inner+=ballIc(84+k*46,100,17,rose,0.7+k*0.15));
       [0,1,2].forEach(k=>inner+=ballIc(176+k*42,100,17,blu,1.1+k*0.15));
@@ -17806,7 +17806,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 8: сравнение вероятностей */
     } else if(step===8){
       H=300;
-      let inner=TT('сравниваем вероятности','grn');
+      let inner=TT('сравниваем вероятности',grn);
       inner+=`<g class="qmRise">${fit(78,60,11.5,rose,'красный шар',{b:1},130)}</g>`;
       inner+=`<g class="qmRise" style="animation-delay:.2s">${fit(238,60,11.5,blu,'синий шар',{b:1},130)}</g>`;
       inner+=growBar(48,170,60,58,rose,1.6,0.6);
@@ -17826,7 +17826,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 9: противоположное событие */
     } else if(step===9){
       H=290;
-      let inner=TT('вероятности в сумме дают 1','pur');
+      let inner=TT('вероятности в сумме дают 1',pur);
       inner+=`<g class="qmRise"><rect x="26" y="58" width="128" height="64" rx="12" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.9"/>`
         +fit(90,84,11.5,grn,'случится',{b:1},116)+tx(90,110,16,grn,'2/5',{b:1})+`</g>`;
       inner+=`<g class="qmRise" style="animation-delay:.2s"><rect x="164" y="58" width="128" height="64" rx="12" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.9"/>`
@@ -17846,7 +17846,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 10: две монеты */
     } else if(step===10){
       H=296;
-      let inner=TT('две монеты: 4 исхода','cyan');
+      let inner=TT('две монеты: 4 исхода',cyan);
       const outs=[['О','О'],['О','Р'],['Р','О'],['Р','Р']];
       outs.forEach((q,k)=>{
         const x=30+(k%2)*146, y=56+Math.floor(k/2)*86;
@@ -17866,7 +17866,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 11: частота */
     } else if(step===11){
       H=294;
-      let inner=TT('частота: сколько раз случилось','gold');
+      let inner=TT('частота: сколько раз случилось',gold);
       for(let k=0;k<10;k++){
         const x=32+k*26, isO=(k!==3&&k!==7&&k!==9);
         inner+=coinIc(x,86,11,isO?'О':'Р',0.2+k*0.1);
@@ -17886,7 +17886,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 12: много опытов */
     } else if(step===12){
       H=304;
-      let inner=TT('много опытов — частота ближе к 1/2','grn');
+      let inner=TT('много опытов — частота ближе к 1/2',grn);
       const data=[{n:'10',v:0.7},{n:'50',v:0.58},{n:'200',v:0.53},{n:'1000',v:0.505}];
       inner+=drawPoly([[40,190],[292,190]],cardB,3,0.3,2.2,{pen:true});
       inner+=drawPoly([[40,190],[40,56]],cardB,2.6,0.5,2.2,{pen:false});
@@ -17909,7 +17909,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 13: столбчатая диаграмма */
     } else if(step===13){
       H=302;
-      let inner=TT('столбчатая диаграмма','cyan');
+      let inner=TT('столбчатая диаграмма',cyan);
       const d=[{t:'пн',v:4,c:cyan},{t:'вт',v:7,c:grn},{t:'ср',v:5,c:gold},{t:'чт',v:9,c:rose},{t:'пт',v:6,c:pur}];
       inner+=drawPoly([[34,196],[292,196]],cardB,3.2,0.3,2.4,{pen:true});
       inner+=drawPoly([[34,196],[34,52]],cardB,2.6,0.5,2.2,{pen:false});
@@ -17934,7 +17934,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===14){
       H=294;
       const opts=['четверг','понедельник','пятница'], ok=0, done=(sel>=0);
-      let inner=TT('в какой день значение наибольшее?','grn');
+      let inner=TT('в какой день значение наибольшее?',grn);
       const d=[{t:'пн',v:4,c:cyan},{t:'вт',v:7,c:grn},{t:'ср',v:5,c:gold},{t:'чт',v:9,c:rose},{t:'пт',v:6,c:pur}];
       inner+=drawPoly([[34,170],[292,170]],cardB,2.6,0.2,2.2,{pen:true});
       d.forEach((q,k)=>{
@@ -17958,7 +17958,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 15: круговая диаграмма */
     } else if(step===15){
       H=300;
-      let inner=TT('круговая диаграмма показывает доли','pur');
+      let inner=TT('круговая диаграмма показывает доли',pur);
       const cx=110, cy=150, r=62;
       const parts=[{f:0.5,c:grn,t:'половина'},{f:0.25,c:gold,t:'четверть'},{f:0.25,c:cyan,t:'четверть'}];
       let a=-Math.PI/2;
@@ -17984,7 +17984,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 16: чтение круговой диаграммы */
     } else if(step===16){
       H=296;
-      let inner=TT('читаем круговую диаграмму','gold');
+      let inner=TT('читаем круговую диаграмму',gold);
       const cx=104, cy=146, r=58;
       const parts=[{f:0.25,c:rose,t:'мёд'},{f:0.5,c:gold,t:'молоко'},{f:0.25,c:blu,t:'вода'}];
       let a=-Math.PI/2;
@@ -18008,7 +18008,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 17: линейная диаграмма */
     } else if(step===17){
       H=294;
-      let inner=TT('линейная диаграмма — изменение','cyan');
+      let inner=TT('линейная диаграмма — изменение',cyan);
       const pts=[[50,190],[100,150],[150,160],[200,110],[250,80],[290,96]];
       inner+=drawPoly([[40,196],[292,196]],cardB,3,0.3,2.2,{pen:true});
       inner+=drawPoly([[40,196],[40,54]],cardB,2.4,0.5,2,{pen:false});
@@ -18027,7 +18027,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===18){
       H=296;
       const opts=['1/5','4/5','1/4'], ok=0, done=(sel>=0);
-      let inner=TT('в коробке 4 белых и 1 чёрный шар','rose');
+      let inner=TT('в коробке 4 белых и 1 чёрный шар',rose);
       inner+=drawRect(60,54,198,86,14,cardB,2.8,0.2,2.2,{pen:true});
       for(let k=0;k<4;k++) inner+=ballIc(104+k*34,84,15,ink,0.5+k*0.12);
       inner+=ballIc(230,112,15,'#22303a',1.1);
@@ -18049,7 +18049,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===19){
       H=300;
       const opts=['невозможное','достоверное','случайное'], ok=0, done=(sel>=0);
-      let inner=TT('кубик показывает 7 — какое это событие?','red');
+      let inner=TT('кубик показывает 7 — какое это событие?',red);
       inner+=dieIc(120,86,44,6,0.3);
       inner+=`<g class="qmPop" style="animation-delay:.6s">${tx(196,96,26,red,'7 ?',{b:1})}</g>`;
       inner+=drawCircle(120,86,34,cyan,2.2,0.9,2.4);
@@ -18079,7 +18079,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         const y=14+k*56;
         inner+=`<g class="qmRise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s" filter="url(#qmsh)">`
           +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#qmbg)" stroke="${q.c}" stroke-width="2"/>`
-          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#07161a">!</text>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eef6ff">!</text>`
           +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
           +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
@@ -18175,7 +18175,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a16', dim='#9b8266', gold='#c9982b', grn='#3f8b57', blu='#2f5d8a', red='#c14b2f',
         cream='#fdf6e6', card='rgba(255,250,240,.97)', cardB='#c9b98d';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e6" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e6" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let grid='';
@@ -18522,7 +18522,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#5a2f20', dim='#a5765c', gold='#d9a05a', pink='#f27f96', deep='#c94b6c', sponge='#e9b36a', grn='#4c9a58', blu='#3f6d9e',
         card='rgba(255,250,244,.97)', cardB='#e0b6a6', cream='#fdf3e6';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf3e6" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf3e6" stroke-width="3.4">${t}</text>`;
   function sector(cx,cy,r,a0,a1){
     const r0=a0*Math.PI/180,r1=a1*Math.PI/180;
     return `M ${cx} ${cy} L ${(cx+r*Math.cos(r0)).toFixed(1)} ${(cy+r*Math.sin(r0)).toFixed(1)} A ${r} ${r} 0 ${(r1-r0)>180?1:0} 1 ${(cx+r*Math.cos(r1)).toFixed(1)} ${(cy+r*Math.sin(r1)).toFixed(1)} Z`;
@@ -18882,7 +18882,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a16', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', cream='#f2e6c8', dark='#8a5a2b',
         card='rgba(255,250,240,.97)', cardB='#c9b98d';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -19278,7 +19278,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
         bg0='#151f3a', bg1='#0b1122', card='rgba(20,28,50,.96)', cardB='#3a4a70', lineC='#2a3a5f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -19681,7 +19681,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#2c3a2c', dim='#7a8a7a', gold='#c99a2f', cyan='#1f9aba', grn='#4c9a58', red='#c14b2f',
         card='rgba(255,253,248,.97)', cardB='#c9b98d';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf4e2" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf4e2" stroke-width="3.4">${t}</text>`;
   const CELL=37, X0=26, Y0=18;
   const px=g=>X0+g*CELL, py=g=>Y0+g*CELL;
   function bg(W,H,opt){
@@ -20079,7 +20079,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff',
         bg0='#151f3a', bg1='#0c1224', card='rgba(22,30,52,.96)', cardB='#3a4a70', lineC='#2a3a5f';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let sparks='';
@@ -20468,7 +20468,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e',
         LAY=['#e8604c','#f5a623','#62c1e0','#9a7bd0','#7bcd7b'], card='rgba(255,251,244,.97)', cardB='#d9c9ab', cream='#f6e6c6';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let dots='';
@@ -20860,7 +20860,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff',
         bg0='#151f3a', bg1='#0b1122', card='rgba(20,28,50,.96)', cardB='#3a4a70', lineC='#33436b';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.6">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.6">${t}</text>`;
   const fit=(x,y,fs,c,t,o,maxw)=>{const s=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
@@ -21434,7 +21434,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff', candy='#ff8fb0',
         bg0='#2a1830', bg1='#120b1c', card='rgba(34,22,44,.96)', cardB='#5a4368', lineC='#4a3a5c';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#180f22" stroke-width="3.6">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#180f22" stroke-width="3.6">${t}</text>`;
   const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
@@ -21526,7 +21526,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 0: 48 конфет по 5 --- */
     if(step===0){
       H=284;
-      let inner=TT('48 конфет раскладываем по 5','gold');
+      let inner=TT('48 конфет раскладываем по 5',gold);
       for(let b=0;b<9;b++){
         const bx=20+(b%3)*52, by=54+Math.floor(b/3)*46;
         inner+=drawRect(bx,by,46,40,8,candy,3.2,0.15*b,2.2,{pen:b===8,r:4});
@@ -21551,7 +21551,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 1: не всегда нацело --- */
     } else if(step===1){
       H=266;
-      let inner=TT('не всегда делится нацело','cyan');
+      let inner=TT('не всегда делится нацело',cyan);
       for(let k=0;k<6;k++) inner+=candyDot(34+k*32,76,8,0.1+k*0.07);
       inner+=candyDot(226,76,8,0.55);
       [24,88,152].forEach((bx,k)=>{ inner+=drawRect(bx,54,52,44,10,grn,2.6,0.6+k*0.35,2.2,{pen:k===2,r:4}); });
@@ -21577,7 +21577,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 2: названия частей --- */
     } else if(step===2){
       H=264;
-      let inner=TT('как называются числа','pur');
+      let inner=TT('как называются числа',pur);
       inner+=`<g class="qJRise">`;
       inner+=valBox(60,64,'48',gold,{w:52,h:42,fs:19});
       inner+=valBox(110,64,':',dim,{w:30,h:42,fs:18,geo:0});
@@ -21604,7 +21604,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 3: главное правило --- */
     } else if(step===3){
       H=268;
-      let inner=TT('остаток меньше делителя','red');
+      let inner=TT('остаток меньше делителя',red);
       inner+=drawRect(26,54,132,70,12,grn,3.2,0.2,2.4,{pen:true});
       for(let k=0;k<5;k++) inner+=candyDot(52+(k%3)*34,74+Math.floor(k/3)*22,7,0.5+k*0.1,{c:grn});
       inner+=fit(92,142,12,grn,'в коробке 5 — она полная',{b:1},140);
@@ -21627,7 +21627,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 4: сколько бывает остатков --- */
     } else if(step===4){
       H=272;
-      let inner=TT('сколько остатков бывает','cyan');
+      let inner=TT('сколько остатков бывает',cyan);
       const rows=[{n:2,c:blu,y:64},{n:5,c:gold,y:126},{n:10,c:grn,y:188}];
       rows.forEach((q,ri)=>{
         inner+=fit(20,q.y+22,12,q.c,'на '+q.n,{an:'start',b:1},60);
@@ -21649,7 +21649,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 5: формула --- */
     } else if(step===5){
       H=266;
-      let inner=TT('делимое = делитель · частное + остаток','gold');
+      let inner=TT('делимое = делитель · частное + остаток',gold);
       inner+=`<g class="qJRise">`;
       inner+=valBox(52,80,'48',gold,{w:56,h:44,fs:19});
       inner+=fit(96,88,18,dim,'=',{b:1},24);
@@ -21677,7 +21677,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 6: проверка --- */
     } else if(step===6){
       H=272;
-      let inner=TT('проверяем ответ','grn');
+      let inner=TT('проверяем ответ',grn);
       inner+=`<g class="qJRise">`;
       inner+=valBox(70,72,'9 · 5',grn,{w:80,h:44,fs:18});
       inner+=fit(126,80,18,dim,'=',{b:1},24);
@@ -21702,7 +21702,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 7: наименьшее число по остатку --- */
     } else if(step===7){
       H=274;
-      let inner=TT('наименьшее число с остатком 4 при делении на 7','cyan');
+      let inner=TT('наименьшее число с остатком 4 при делении на 7',cyan);
       inner+=drawPoly([[22,110],[296,110]],cardB,2.6,0.2,3,{pen:true});
       for(let k=0;k<=40;k++){ const x=22+k*6.85;
         if(k%7===0) inner+=`<line x1="${x}" y1="104" x2="${x}" y2="116" stroke="${dim}" stroke-width="1.4"/>`; }
@@ -21727,7 +21727,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 8: находим делитель --- */
     } else if(step===8){
       H=272;
-      let inner=TT('находим делитель','pur');
+      let inner=TT('находим делитель',pur);
       inner+=fit(159,68,15,ink,'47 : ? = 9 (ост. 2)',{b:1,georgia:1},280);
       inner+=`<g class="qJRise" style="animation-delay:.25s"><rect x="52" y="88" width="214" height="36" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
         +`<text x="159" y="113" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">(47 − 2) : 9 = 5</text></g>`;
@@ -21749,7 +21749,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 9: столбик --- */
     } else if(step===9){
       H=274;
-      let inner=TT('деление с остатком в столбик','gold');
+      let inner=TT('деление с остатком в столбик',gold);
       inner+=`<g class="qJFloat">`;
       inner+=tx(66,74,22,ink,'48',{b:1,georgia:0});
       inner+=tx(196,74,22,ink,'5',{b:1,georgia:0});
@@ -21777,7 +21777,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 10: остаток на 2 = чётность --- */
     } else if(step===10){
       H=256;
-      let inner=TT('остаток при делении на 2','blu');
+      let inner=TT('остаток при делении на 2',blu);
       [[348,0,grn,'чётное'],[347,1,red,'нечётное']].forEach((q,k)=>{
         const y=64+k*78;
         inner+=fit(20,y+6,13,q[2],''+q[0],{an:'start',b:1},60);
@@ -21797,7 +21797,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 11: остаток на 10 = последняя цифра --- */
     } else if(step===11){
       H=272;
-      let inner=TT('остаток при делении на 10','cyan');
+      let inner=TT('остаток при делении на 10',cyan);
       [348,470].forEach((q,k)=>{
         const y=70+k*74, last=q%10;
         inner+=`<g class="qJRise" style="animation-delay:${(0.15+k*0.3).toFixed(2)}s">`;
@@ -21822,7 +21822,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 12: остаток на 9 = сумма цифр --- */
     else if(step===12){
       H=282;
-      let inner=TT('остаток при делении на 9','pur');
+      let inner=TT('остаток при делении на 9',pur);
       const ds='348';
       for(let i=0;i<3;i++){
         inner+=`<g class="qJPop" style="animation-delay:${(0.1+i*0.12).toFixed(2)}s">`
@@ -21848,7 +21848,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 13: сколько коробок нужно --- */
     else if(step===13){
       H=270;
-      let inner=TT('сколько коробок нужно купить?','candy');
+      let inner=TT('сколько коробок нужно купить?',candy);
       for(let b=0;b<9;b++){
         const bx=20+(b%3)*52, by=54+Math.floor(b/3)*44;
         inner+=drawRect(bx,by,46,38,8,candy,2.4,0.12*b,2,{pen:b===8,r:4});
@@ -21870,7 +21870,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 14: сколько добавить --- */
     else if(step===14){
       H=266;
-      let inner=TT('сколько конфет добавить до полного?','gold');
+      let inner=TT('сколько конфет добавить до полного?',gold);
       inner+=drawRect(40,60,120,60,12,gold,3,0.2,2.4,{pen:true});
       for(let k=0;k<5;k++) inner+=candyDot(64+(k%3)*32,80+Math.floor(k/3)*22,6.5,0.45+k*0.1);
       inner+=fit(100,138,11.5,gold,'полная коробка — 5 конфет',{b:1},150);
@@ -21896,7 +21896,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 15: дни недели --- */
     else if(step===15){
       H=306;
-      let inner=TT('через 100 дней — какой день недели?','blu');
+      let inner=TT('через 100 дней — какой день недели?',blu);
       const cxx=159, cyy=146, R=58, dn=['пн','вт','ср','чт','пт','сб','вс'], dc=[gold,grn,cyan,red,candy,pur,blu];
       inner+=drawCircle(cxx,cyy,R,cardB,3.6,0.15,2.6);
       dn.forEach((t,k)=>{
@@ -21921,7 +21921,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 16: все числа с данным остатком --- */
     else if(step===16){
       H=262;
-      let inner=TT('все числа с остатком 4 при делении на 7','gold');
+      let inner=TT('все числа с остатком 4 при делении на 7',gold);
       inner+=drawPoly([[22,96],[296,96]],cardB,2.6,0.2,3,{pen:true});
       [11,18,25,32,39,46,53,60,67,74,81,88,95].forEach((v2,k)=>{
         const x=22+(v2/100)*274, big=(v2===11||v2===95);
@@ -21946,7 +21946,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* --- 17: остаток как позиция в круге --- */
     else if(step===17){
       H=276;
-      let inner=TT('остаток — это позиция в круге','cyan');
+      let inner=TT('остаток — это позиция в круге',cyan);
       const cx2=159, cy2=130, R2=62;
       inner+=drawCircle(cx2,cy2,R2,cardB,3.4,0.15,2.4);
       for(let k=0;k<12;k++){
@@ -21971,7 +21971,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     else if(step===18){
       H=282;
       const opts=['9 (ост. 2)','8 (ост. 7)','9 (ост. 5)'], ok=0, done=(sel>=0);
-      let inner=TT('47 : 5 = ?','gold');
+      let inner=TT('47 : 5 = ?',gold);
       inner+=`<g class="qJRise">`;
       inner+=valBox(90,74,'47',gold,{w:56,h:42,fs:18});
       inner+=valBox(150,74,':',dim,{w:30,h:42,fs:17,geo:0});
@@ -21996,7 +21996,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     else if(step===19){
       H=256;
       const opts=['нет, не может','да, может'], ok=0, done=(sel>=0);
-      let inner=TT('может ли остаток при делении на 5 быть равен 5?','red');
+      let inner=TT('может ли остаток при делении на 5 быть равен 5?',red);
       inner+=`<g class="qJRise">`;
       inner+=valBox(120,80,'ост. 5',red,{w:96,h:44,fs:16});
       inner+=valBox(246,80,'?',cardB,{w:44,h:44,fs:20,geo:0});
@@ -22030,7 +22030,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         const y=16+k*54;
         inner+=`<g class="qJRise" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s" filter="url(#qJsh)">`
           +`<rect x="14" y="${y}" width="290" height="46" rx="11" fill="url(#qJbg)" stroke="${q.c}" stroke-width="2"/>`
-          +`<path d="M34 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#1c1026">!</text>`
+          +`<path d="M34 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eef6ff">!</text>`
           +fit(60,y+20,Math.min(11.5,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
           +`<path d="M60 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +fit(82,y+40,Math.min(11,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},184)+`</g>`;
@@ -22077,7 +22077,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         {x:62,y:200,t:'проверка',c:grn},{x:256,y:200,t:'задачи',c:candy}
       ];
       const ed=[[0,1],[0,2],[1,3],[2,4],[3,4],[2,3]];
-      let inner=TT('вся тема на одной карте','pur');
+      let inner=TT('вся тема на одной карте',pur);
       ed.forEach((e,k)=>{
         const a=nodes[e[0]], b=nodes[e[1]];
         inner+=drawPoly([[a.x,a.y],[b.x,b.y]],lineC,1.6,0.1+k*0.12,2.4,{pen:false});
@@ -22189,7 +22189,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#a3aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff', rose='#ff8fb0',
         bg0='#191f3c', bg1='#080c1a', card='rgba(25,31,56,.96)', cardB='#46507c';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}">${t}</text>`;
   const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
@@ -22247,7 +22247,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 0: что такое вектор */
     if(step===0){
       H=322;
-      let inner=TT('вектор — это перемещение','gold');
+      let inner=TT('вектор — это перемещение',gold);
       const A=[56,250], B=[252,120];
       inner+=arrow(A[0],A[1],B[0],B[1],gold,{dur:2.4,beg:0.2});
       inner+=`<circle class="qvPop" style="animation-delay:.2s" cx="${A[0]}" cy="${A[1]}" r="9" fill="${cyan}" stroke="#eef6ff" stroke-width="1.5"/>`;
@@ -22266,7 +22266,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 1: обозначение */
     } else if(step===1){
       H=314;
-      let inner=TT('обозначение: из A в B — это AB⃗','cyan');
+      let inner=TT('обозначение: из A в B — это AB⃗',cyan);
       const A=[64,236], B=[244,110];
       inner+=arrow(A[0],A[1],B[0],B[1],cyan,{dur:2.2,beg:0.2,sw:4});
       inner+=`<circle class="qvPop" style="animation-delay:.3s" cx="${A[0]}" cy="${A[1]}" r="11" fill="rgba(127,214,255,.25)" stroke="${cyan}" stroke-width="2"/>`;
@@ -22289,7 +22289,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 2: длина вектора */
     } else if(step===2){
       H=310;
-      let inner=TT('длина вектора — расстояние между концами','grn');
+      let inner=TT('длина вектора — расстояние между концами',grn);
       const A=[56,222], B=[240,222];
       inner+=arrow(A[0],A[1],B[0],B[1],grn,{dur:2,beg:0.2,sw:4});
       inner+=`<circle cx="${A[0]}" cy="${A[1]}" r="8" fill="${cyan}" stroke="#eef6ff" stroke-width="1.4"/>`;
@@ -22309,7 +22309,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 3: направление важно */
     } else if(step===3){
       H=312;
-      let inner=TT('длина одинаковая, а векторы разные','red');
+      let inner=TT('длина одинаковая, а векторы разные',red);
       inner+=arrow(56,110,236,110,cyan,{dur:1.8,beg:0.2,sw:3.6});
       inner+=fit(146,92,12,cyan,'a',{b:1},30);
       inner+=arrow(236,180,56,180,red,{dur:1.8,beg:0.8,sw:3.6});
@@ -22327,7 +22327,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 4: равные векторы */
     } else if(step===4){
       H=312;
-      let inner=TT('равные векторы: длина и направление','grn');
+      let inner=TT('равные векторы: длина и направление',grn);
       const pairs=[[46,96,116,68,cyan,'a'],[150,150,220,122,gold,'b'],[74,214,144,186,pur,'c']];
       pairs.forEach((q,k)=>{
         inner+=arrow(q[0],q[1],q[2],q[3],q[4],{dur:1.6,beg:0.3+k*0.5,sw:3.4});
@@ -22345,7 +22345,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 5: коллинеарные */
     } else if(step===5){
       H=314;
-      let inner=TT('коллинеарные векторы','pur');
+      let inner=TT('коллинеарные векторы',pur);
       inner+=drawPoly([[40,150],[280,150]],cardB,1.6,0.2,1.6,{keep:true});
       inner+=arrow(60,150,150,150,cyan,{dur:1.4,beg:0.4,sw:3.4});
       inner+=arrow(170,150,240,150,gold,{dur:1.4,beg:0.9,sw:3.4});
@@ -22366,7 +22366,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 6: нулевой вектор */
     } else if(step===6){
       H=306;
-      let inner=TT('нулевой вектор','cyan');
+      let inner=TT('нулевой вектор',cyan);
       inner+=`<circle class="qvPop" style="animation-delay:.3s" cx="159" cy="150" r="16" fill="rgba(127,214,255,.25)" stroke="${cyan}" stroke-width="2.6"/>`;
       inner+=`<circle class="qvGlow" cx="159" cy="150" r="26" fill="none" stroke="${cyan}" stroke-width="2"/>`;
       inner+=fit(159,196,12.5,cyan,'начало и конец совпали',{b:1},280);
@@ -22383,7 +22383,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 7: противоположные векторы */
     } else if(step===7){
       H=314;
-      let inner=TT('противоположные векторы: a и −a','rose');
+      let inner=TT('противоположные векторы: a и −a',rose);
       inner+=arrow(80,150,240,150,gold,{dur:1.6,beg:0.3,sw:3.8});
       inner+=fit(160,132,13,gold,'a',{b:1},30);
       inner+=arrow(240,220,80,220,red,{dur:1.6,beg:1.1,sw:3.8});
@@ -22402,7 +22402,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 8: правило треугольника */
     } else if(step===8){
       H=320;
-      let inner=TT('правило треугольника','gold');
+      let inner=TT('правило треугольника',gold);
       const A=[56,236], B=[176,176], C=[250,236];
       inner+=arrow(A[0],A[1],B[0],B[1],cyan,{dur:1.8,beg:0.2,sw:3.6});
       inner+=fit((A[0]+B[0])/2-18,(A[1]+B[1])/2-12,13,cyan,'a',{b:1},30);
@@ -22424,7 +22424,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 9: правило параллелограмма */
     } else if(step===9){
       H=326;
-      let inner=TT('правило параллелограмма','pur');
+      let inner=TT('правило параллелограмма',pur);
       const O=[70,246], P=[240,196], Q=[120,116];
       inner+=arrow(O[0],O[1],P[0],P[1],cyan,{dur:1.6,beg:0.3,sw:3.6});
       inner+=fit((O[0]+P[0])/2+10,(O[1]+P[1])/2+22,13,cyan,'a',{b:1},30);
@@ -22445,7 +22445,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 10: сложение в координатах */
     } else if(step===10){
       H=314;
-      let inner=TT('сложение в координатах','cyan');
+      let inner=TT('сложение в координатах',cyan);
       inner+=`<g class="qvRise"><rect x="26" y="56" width="266" height="40" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`
         +`<text x="159" y="82" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">a = (2; 1),  b = (1; 3)</text></g>`;
       inner+=`<g class="qvRise" style="animation-delay:.4s"><rect x="26" y="112" width="266" height="40" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
@@ -22466,7 +22466,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 11: вычитание */
     } else if(step===11){
       H=312;
-      let inner=TT('вычитание: a − b = a + (−b)','red');
+      let inner=TT('вычитание: a − b = a + (−b)',red);
       inner+=arrow(50,140,220,140,cyan,{dur:1.6,beg:0.3,sw:3.6});
       inner+=fit(135,122,13,cyan,'a',{b:1},30);
       inner+=arrow(220,140,120,140,red,{dur:1.4,beg:1,sw:3.6});
@@ -22487,7 +22487,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 12: умножение на число */
     } else if(step===12){
       H=316;
-      let inner=TT('умножение вектора на число','pur');
+      let inner=TT('умножение вектора на число',pur);
       inner+=arrow(50,96,140,96,cyan,{dur:1.4,beg:0.3,sw:3.2});
       inner+=fit(95,78,12,cyan,'a',{b:1},30);
       inner+=arrow(50,166,230,166,gold,{dur:1.8,beg:0.9,sw:3.6});
@@ -22507,7 +22507,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 13: координаты вектора */
     else if(step===13){
       H=326;
-      let inner=TT('координаты вектора','gold');
+      let inner=TT('координаты вектора',gold);
       const x0=56, y0=252, u=32;
       inner+=grid(x0,y0,u,4,4,'#3a4470');
       const A=[x0+1*u,y0-2*u], B=[x0+4*u,y0-4*u];
@@ -22530,7 +22530,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 14: длина через координаты */
     } else if(step===14){
       H=322;
-      let inner=TT('длина вектора через координаты','grn');
+      let inner=TT('длина вектора через координаты',grn);
       const x0=54, y0=250, u=38;
       inner+=grid(x0,y0,u,4,4,'#3a4470');
       const A=[x0,y0], B=[x0+3*u,y0-4*u];
@@ -22552,7 +22552,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 15: свойства сложения */
     } else if(step===15){
       H=318;
-      let inner=TT('свойства сложения векторов','pur');
+      let inner=TT('свойства сложения векторов',pur);
       const rows=[{t:'a + b = b + a',c:cyan},{t:'(a + b) + c = a + (b + c)',c:grn},{t:'a + 0 = a',c:gold},{t:'a + (−a) = 0',c:rose}];
       rows.forEach((q,k)=>{
         const y=54+k*48;
@@ -22571,7 +22571,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 16: перемещение точкой */
     } else if(step===16){
       H=320;
-      let inner=TT('вектор задаёт перемещение','cyan');
+      let inner=TT('вектор задаёт перемещение',cyan);
       const x0=52, y0=252, u=34;
       inner+=grid(x0,y0,u,4,4,'#3a4470');
       const A=[x0+1*u,y0-1*u], B=[A[0]+3*u,A[1]-2*u];
@@ -22591,7 +22591,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 17: самолёт и ветер */
     } else if(step===17){
       H=318;
-      let inner=TT('вектор скорости: самолёт и ветер','grn');
+      let inner=TT('вектор скорости: самолёт и ветер',grn);
       inner+=`<path d="M40 210 L150 186 L200 210 L150 202 Z" fill="rgba(127,214,255,.3)" stroke="${cyan}" stroke-width="2.2"/>`;
       inner+=`<path d="M120 200 L96 224 L128 208 Z" fill="rgba(127,214,255,.3)" stroke="${cyan}" stroke-width="2"/>`;
       inner+=arrow(80,206,214,150,grn,{dur:1.6,beg:0.4,sw:3.6});
@@ -22612,7 +22612,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 18: силы */
     } else if(step===18){
       H=314;
-      let inner=TT('силы — тоже векторы','gold');
+      let inner=TT('силы — тоже векторы',gold);
       const O=[100,160];
       inner+=arrow(O[0],O[1],210,110,cyan,{dur:1.6,beg:0.3,sw:3.6});
       inner+=fit(180,102,12,cyan,'F₁',{b:1},40);
@@ -22633,7 +22633,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 19: практика координаты */
     } else if(step===19){
       H=324;
-      let inner=TT('практика: координаты вектора AB','cyan');
+      let inner=TT('практика: координаты вектора AB',cyan);
       const x0=56, y0=210, u=32;
       inner+=grid(x0,y0,u,4,4,'#3a4470');
       const A=[x0+1*u,y0-2*u], B=[x0+4*u,y0-4*u];
@@ -22657,7 +22657,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 20: практика длина */
     } else if(step===20){
       H=314;
-      let inner=TT('практика: длина вектора (3; 4)','grn');
+      let inner=TT('практика: длина вектора (3; 4)',grn);
       const x0=64, y0=206, u=36;
       inner+=grid(x0,y0,u,3,4,'#3a4470');
       const A=[x0,y0], B=[x0+3*u,y0-4*u];
@@ -22683,7 +22683,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===21){
       H=300;
       const opts=['(2; 2)','(6; 8)','(4; 6)'], ok=0, done=(sel>=0);
-      let inner=TT('A(2; 3), B(4; 5). Какие координаты у AB⃗?','gold');
+      let inner=TT('A(2; 3), B(4; 5). Какие координаты у AB⃗?',gold);
       const x0=76, y0=190, u=24;
       inner+=grid(x0,y0,u,4,4,'#3a4470');
       const A=[x0+2*u,y0-3*u], B=[x0+4*u,y0-5*u+u*0];
@@ -22706,7 +22706,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===22){
       H=296;
       const opts=['10','14','48'], ok=0, done=(sel>=0);
-      let inner=TT('длина вектора (6; 8) равна…','pur');
+      let inner=TT('длина вектора (6; 8) равна…',pur);
       const x0=88, y0=176, u=16;
       inner+=drawPoly([[x0,y0],[x0+6*u,y0],[x0+6*u,y0-8*u],[x0,y0]],cardB,1.4,0.3,1.8,{keep:true,pen:false});
       inner+=arrow(x0,y0,x0+6*u,y0-8*u,pur,{dur:1.6,beg:0.4,sw:3.4});
@@ -22761,7 +22761,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         {t:'a + b по правилу треугольника',c:pur},
         {t:'a − b = a + (−b)',c:red}
       ];
-      let inner=TT('всё главное о векторах','gold');
+      let inner=TT('всё главное о векторах',gold);
       rows.forEach((q,k)=>{
         const y=52+k*42;
         inner+=`<g class="qvRise" style="animation-delay:${(0.12+k*0.14).toFixed(2)}s">`
@@ -22870,7 +22870,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   const ink='#eef6ff', dim='#a3aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff', rose='#ff8fb0',
         bg0='#1b2140', bg1='#090d1c', card='rgba(26,32,58,.96)', cardB='#46507c';
   /* текст: без чёрного цвета и без тёмной обводки */
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}">${t}</text>`;
   const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
@@ -22943,7 +22943,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 0: египетская верёвка */
     if(step===0){
       H=322;
-      let inner=TT('египетская верёвка с 12 узлами','gold');
+      let inner=TT('египетская верёвка с 12 узлами',gold);
       inner+=`<path d="M30 74 Q80 44 130 74 T230 74 T300 66" fill="none" stroke="${gold}" stroke-width="5" stroke-linecap="round" opacity=".85"/>`;
       for(let k=0;k<12;k++){
         const x=32+k*24;
@@ -22968,7 +22968,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 1: катеты и гипотенуза */
     } else if(step===1){
       H=318;
-      let inner=TT('катеты и гипотенуза','cyan');
+      let inner=TT('катеты и гипотенуза',cyan);
       const A=[74,250], B=[218,250], C=[74,142];
       inner+=`<path d="M${A[0]} ${A[1]} L${B[0]} ${B[1]} L${C[0]} ${C[1]} Z" fill="rgba(127,214,255,.14)"/>`;
       inner+=drawPoly([A,B,C,A],cyan,2.6,0.2,3,{pen:true});
@@ -22992,7 +22992,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 2: квадраты на сторонах */
     } else if(step===2){
       H=336;
-      let inner=TT('квадраты на сторонах треугольника','gold');
+      let inner=TT('квадраты на сторонах треугольника',gold);
       const u=15, x0=110, y0=228;
       inner+=cellSquare(x0,y0,4,u,cyan,0.3,'rgba(127,214,255,.16)');
       inner+=cellSquare(x0-3*u,y0-3*u,3,u,blu,0.7,'rgba(110,168,255,.16)');
@@ -23013,7 +23013,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 3: формула */
     } else if(step===3){
       H=316;
-      let inner=TT('теорема Пифагора','grn');
+      let inner=TT('теорема Пифагора',grn);
       inner+=`<g class="qsRise"><rect x="24" y="54" width="270" height="52" rx="12" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2.2"/>`
         +`<text x="159" y="88" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="${grn}">a² + b² = c²</text></g>`;
       inner+=fit(159,132,12,ink,'квадрат катета плюс квадрат катета',{b:1},292);
@@ -23037,7 +23037,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 4: 9 + 16 = 25 */
     } else if(step===4){
       H=322;
-      let inner=TT('считаем клетки: 9 + 16 = 25','cyan');
+      let inner=TT('считаем клетки: 9 + 16 = 25',cyan);
       inner+=cellSquare(40,52,3,22,blu,0.3,'rgba(110,168,255,.16)');
       inner+=fit(73,140,20,blu,'9',{b:1},40);
       inner+=fit(73,160,11,blu,'3 × 3',{b:1},60);
@@ -23063,7 +23063,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 5: проверка числами 3-4-5 */
     } else if(step===5){
       H=316;
-      let inner=TT('проверяем числами: 3, 4, 5','gold');
+      let inner=TT('проверяем числами: 3, 4, 5',gold);
       const rows=[{t:'3² = 9',c:blu},{t:'4² = 16',c:cyan},{t:'9 + 16 = 25',c:gold},{t:'5² = 25',c:grn},{t:'значит, c = 5',c:grn}];
       rows.forEach((q,k)=>{
         const y=52+k*44;
@@ -23081,7 +23081,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 6: находим гипотенузу 6 и 8 */
     } else if(step===6){
       H=318;
-      let inner=TT('находим гипотенузу: катеты 6 и 8','cyan');
+      let inner=TT('находим гипотенузу: катеты 6 и 8',cyan);
       const u=17, x0=74, y0=232;
       inner+=`<path d="M${x0} ${y0} L${x0+8*u} ${y0} L${x0} ${y0-6*u} Z" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="2.6"/>`;
       inner+=rightAngle(x0,y0,14,grn);
@@ -23100,7 +23100,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 7: гипотенуза 5 и 12 */
     } else if(step===7){
       H=318;
-      let inner=TT('ещё пример: катеты 5 и 12','pur');
+      let inner=TT('ещё пример: катеты 5 и 12',pur);
       const u=19, x0=66, y0=236;
       inner+=`<path d="M${x0} ${y0} L${x0+12*u} ${y0} L${x0} ${y0-5*u} Z" fill="rgba(176,127,255,.14)" stroke="${pur}" stroke-width="2.6"/>`;
       inner+=rightAngle(x0,y0,13,grn);
@@ -23119,7 +23119,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 8: находим катет */
     } else if(step===8){
       H=330;
-      let inner=TT('находим катет: c = 13, a = 5','grn');
+      let inner=TT('находим катет: c = 13, a = 5',grn);
       const u=19, x0=76, y0=238;
       inner+=`<path d="M${x0} ${y0} L${x0+12*u} ${y0} L${x0} ${y0-5*u} Z" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2.6"/>`;
       inner+=rightAngle(x0,y0,13,grn);
@@ -23141,7 +23141,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 9: катет 10 и 6 */
     } else if(step===9){
       H=318;
-      let inner=TT('катет: c = 10, a = 6','gold');
+      let inner=TT('катет: c = 10, a = 6',gold);
       const u=20, x0=80, y0=236;
       inner+=`<path d="M${x0} ${y0} L${x0+8*u} ${y0} L${x0} ${y0-6*u} Z" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="2.6"/>`;
       inner+=rightAngle(x0,y0,13,grn);
@@ -23160,7 +23160,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 10: пифагоровы тройки */
     } else if(step===10){
       H=332;
-      let inner=TT('пифагоровы тройки','cyan');
+      let inner=TT('пифагоровы тройки',cyan);
       const tr=[[3,4,5],[6,8,10],[5,12,13],[8,15,17],[9,12,15]];
       tr.forEach((q,k)=>{
         const y=52+k*46;
@@ -23180,7 +23180,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 11: обратная теорема */
     } else if(step===11){
       H=322;
-      let inner=TT('проверяем: прямоугольный ли треугольник','grn');
+      let inner=TT('проверяем: прямоугольный ли треугольник',grn);
       inner+=`<g class="qsRise"><rect x="18" y="50" width="136" height="150" rx="11" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.9"/>`
         +fit(86,74,12.5,grn,'6, 8, 10',{b:1},120)+`</g>`;
       inner+=`<path d="M40 168 L104 168 L40 104 Z" fill="rgba(125,224,160,.2)" stroke="${grn}" stroke-width="2.2"/>`;
@@ -23203,7 +23203,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 12: диагональ прямоугольника */
     } else if(step===12){
       H=320;
-      let inner=TT('диагональ прямоугольника 3 на 4','gold');
+      let inner=TT('диагональ прямоугольника 3 на 4',gold);
       const x0=56, y0=228, u=34;
       inner+=`<rect x="${x0}" y="${y0-3*u}" width="${4*u}" height="${3*u}" rx="5" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="2.6"/>`;
       inner+=drawPoly([[x0,y0],[x0+4*u,y0-3*u]],cyan,2.4,0.5,3,{pen:true});
@@ -23224,7 +23224,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 13: диагональ квадрата */
     else if(step===13){
       H=318;
-      let inner=TT('диагональ квадрата: √2','pur');
+      let inner=TT('диагональ квадрата: √2',pur);
       const x0=76, y0=250, s=150;
       inner+=`<rect x="${x0}" y="${y0-s}" width="${s}" height="${s}" rx="4" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="2.6"/>`;
       inner+=drawPoly([[x0,y0],[x0+s,y0-s]],cyan,2.4,0.5,3,{pen:true});
@@ -23244,7 +23244,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 14: лестница у стены */
     } else if(step===14){
       H=326;
-      let inner=TT('лестница у стены: 3 и 4 метра','cyan');
+      let inner=TT('лестница у стены: 3 и 4 метра',cyan);
       const x0=92, y0=262, u=30;
       inner+=`<rect x="${x0-16}" y="${y0-4*u-14}" width="16" height="${4*u+14}" rx="3" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`;
       inner+=`<rect x="${x0-16}" y="${y0}" width="${4*u+16}" height="12" rx="3" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`;
@@ -23270,7 +23270,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 15: расстояние между точками */
     } else if(step===15){
       H=326;
-      let inner=TT('расстояние между точками','pur');
+      let inner=TT('расстояние между точками',pur);
       const x0=56, y0=262, u=34;
       inner+=`<rect x="${x0}" y="${y0-4*u}" width="${4*u}" height="${4*u}" fill="rgba(255,255,255,.03)"/>`;
       for(let i=0;i<=4;i++){
@@ -23298,7 +23298,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 16: доказательство разрезанием */
     } else if(step===16){
       H=340;
-      let inner=TT('почему теорема верна','grn');
+      let inner=TT('почему теорема верна',grn);
       const x0=54, y0=272, u=26;
       inner+=`<rect x="${x0}" y="${y0-7*u}" width="${7*u}" height="${7*u}" rx="3" fill="rgba(255,255,255,.04)" stroke="${grn}" stroke-width="2.6"/>`;
       const P=[[x0+4*u,y0-7*u],[x0+7*u,y0-3*u],[x0+3*u,y0],[x0,y0-4*u]];
@@ -23320,7 +23320,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 17: практика с верёвкой */
     } else if(step===17){
       H=318;
-      let inner=TT('практика: строим прямой угол','gold');
+      let inner=TT('практика: строим прямой угол',gold);
       const steps=[{t:'отмеряем 12 равных частей',c:gold},{t:'берём части 3, 4 и 5',c:cyan},{t:'складываем треугольник',c:blu},{t:'угол между 3 и 4 — прямой',c:grn}];
       steps.forEach((q,k)=>{
         const y=52+k*42;
@@ -23343,7 +23343,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 18: практика 9 и 12 */
     } else if(step===18){
       H=304;
-      let inner=TT('практика: катеты 9 и 12','cyan');
+      let inner=TT('практика: катеты 9 и 12',cyan);
       const steps=['9² = 81','12² = 144','81 + 144 = 225','√225 = 15'];
       steps.forEach((q,k)=>{
         const y=54+k*42;
@@ -23362,7 +23362,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 19: практика катет 25 и 20 */
     } else if(step===19){
       H=304;
-      let inner=TT('практика: гипотенуза 25, катет 20','pur');
+      let inner=TT('практика: гипотенуза 25, катет 20',pur);
       const steps=['25² = 625','20² = 400','625 − 400 = 225','√225 = 15'];
       steps.forEach((q,k)=>{
         const y=54+k*42;
@@ -23381,7 +23381,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 20: практика расстояние */
     } else if(step===20){
       H=322;
-      let inner=TT('практика: расстояние между точками','grn');
+      let inner=TT('практика: расстояние между точками',grn);
       const x0=64, y0=256, u=32;
       for(let i=0;i<=4;i++){
         inner+=`<line x1="${x0+i*u}" y1="${y0-4*u}" x2="${x0+i*u}" y2="${y0}" stroke="#3a4470" stroke-width="1"/>`;
@@ -23408,7 +23408,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===21){
       H=320;
       const opts=['10','14','48'], ok=0, done=(sel>=0);
-      let inner=TT('катеты 6 и 8 — чему равна гипотенуза?','gold');
+      let inner=TT('катеты 6 и 8 — чему равна гипотенуза?',gold);
       const u=20, x0=100, y0=210;
       inner+=`<path d="M${x0} ${y0} L${x0+8*u} ${y0} L${x0} ${y0-6*u} Z" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="2.6"/>`;
       inner+=rightAngle(x0,y0,12,grn);
@@ -23431,7 +23431,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===22){
       H=344;
       const opts=['прямоугольный','не прямоугольный'], ok=0, done=(sel>=0);
-      let inner=TT('треугольник 6, 8, 10 — какой он?','grn');
+      let inner=TT('треугольник 6, 8, 10 — какой он?',grn);
       inner+=`<path d="M96 194 L224 194 L96 98 Z" fill="rgba(125,224,160,.16)" stroke="${grn}" stroke-width="2.6"/>`;
       inner+=rightAngle(96,194,14,grn);
       inner+=fit(160,216,12,grn,'6² + 8² ? 10²',{b:1},160);
@@ -23484,7 +23484,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         {t:'тройки: 3-4-5, 6-8-10, 5-12-13',c:pur},
         {t:'проверка: a² + b² = c² → 90°',c:blu}
       ];
-      let inner=TT('всё главное о теореме','grn');
+      let inner=TT('всё главное о теореме',grn);
       rows.forEach((q,k)=>{
         const y=52+k*42;
         inner+=`<g class="qsRise" style="animation-delay:${(0.12+k*0.14).toFixed(2)}s">`
@@ -23592,7 +23592,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#a3aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff', rose='#ff8fb0',
         bg0='#1b2140', bg1='#090d1c', card='rgba(26,32,58,.96)', cardB='#46507c';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#090d1c" stroke-width="3.6">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#090d1c" stroke-width="3.6">${t}</text>`;
   const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
@@ -23696,7 +23696,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 0: что такое симметрия */
     if(step===0){
       H=314;
-      let inner=TT('симметрия — зеркальная одинаковость','pur');
+      let inner=TT('симметрия — зеркальная одинаковость',pur);
       inner+=butterfly(159,168,116,{delay:0.2});
       inner+=axisLine(159,62,159,272,cyan,2.2,0.5,'ось',[159,54]);
       inner+=plate(18,276,282,26,go?grn:cardB,go?'левое и правое крыло одинаковы':'на что похожи крылья?',11.5);
@@ -23709,7 +23709,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 1: осевая симметрия */
     } else if(step===1){
       H=308;
-      let inner=TT('осевая симметрия — отражение','cyan');
+      let inner=TT('осевая симметрия — отражение',cyan);
       inner+=`<path d="M56 240 L118 96 L140 240 Z" fill="${blu}" opacity=".45" stroke="${blu}" stroke-width="2.4"/>`;
       inner+=drawPoly([[56,240],[118,96],[140,240],[56,240]],blu,2.2,0.25,2.6,{pen:true});
       inner+=drawPoly([[262,240],[200,96],[178,240],[262,240]],grn,2.2,0.8,2.6,{pen:true});
@@ -23726,7 +23726,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 2: построение симметричной точки */
     } else if(step===2){
       H=316;
-      let inner=TT('строим симметричную точку','gold');
+      let inner=TT('строим симметричную точку',gold);
       inner+=axisLine(159,64,159,250,gold,2.2,0.1,'ось',[159,56]);
       inner+=`<circle class="qrPop" style="animation-delay:.5s" cx="76" cy="160" r="9" fill="${cyan}" stroke="#fffdf2" stroke-width="1.6"/>`;
       inner+=fit(76,186,12,cyan,'A',{b:1},30);
@@ -23748,7 +23748,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 3: свойства симметричных точек */
     } else if(step===3){
       H=304;
-      let inner=TT('два свойства симметричных точек','grn');
+      let inner=TT('два свойства симметричных точек',grn);
       inner+=axisLine(159,72,159,232,gold,2,0.15,'ось',[159,64]);
       [[-1,116,cyan],[1,116,grn]].forEach((q,k)=>{
         const x=159+q[0]*84;
@@ -23772,7 +23772,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 4: отражаем треугольник */
     } else if(step===4){
       H=316;
-      let inner=TT('отражаем треугольник целиком','blu');
+      let inner=TT('отражаем треугольник целиком',blu);
       inner+=axisLine(159,66,159,254,gold,2,0.15,'ось',[159,58]);
       inner+=drawPoly([[52,244],[104,110],[146,244],[52,244]],blu,2.4,0.3,2.6,{pen:true});
       inner+=`<path d="M52 244 L104 110 L146 244 Z" fill="${blu}" opacity=".35"/>`;
@@ -23791,7 +23791,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 5: складывание по оси */
     } else if(step===5){
       H=308;
-      let inner=TT('ось симметрии у фигуры','pur');
+      let inner=TT('ось симметрии у фигуры',pur);
       inner+=`<g transform="translate(159,0)"><path d="M0 76 L84 120 L84 236 L0 236 Z" fill="${pur}" opacity=".4" stroke="${pur}" stroke-width="2.4"/></g>`;
       inner+=`<g transform="translate(159,0)"><g><animateTransform attributeName="transform" type="scale" values="1 1;0.02 1;1 1" keyTimes="0;.5;1" dur="5s" repeatCount="indefinite"/>`
         +`<path d="M0 76 L-84 120 L-84 236 L0 236 Z" fill="${cyan}" opacity=".45" stroke="${cyan}" stroke-width="2.4"/></g></g>`;
@@ -23808,7 +23808,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 6: бабочка и её ось */
     } else if(step===6){
       H=312;
-      let inner=TT('бабочка и её ось','rose');
+      let inner=TT('бабочка и её ось',rose);
       inner+=butterfly(159,166,112,{delay:0.2,c1:blu,c2:pur,c3:gold});
       inner+=axisLine(159,60,159,272,grn,2,1.2,'одна ось',[159,52]);
       inner+=`<g class="qrRise" style="animation-delay:2s"><rect x="20" y="274" width="278" height="26" rx="8" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.6"/>`
@@ -23822,7 +23822,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 7: буквы и их оси */
     } else if(step===7){
       H=304;
-      let inner=TT('буквы и их оси симметрии','gold');
+      let inner=TT('буквы и их оси симметрии',gold);
       const L=[{ch:'А',n:1,v:1,c:grn},{ch:'В',n:1,v:0,c:gold},{ch:'Н',n:2,v:2,c:cyan},{ch:'О',n:2,v:2,c:pur}];
       L.forEach((q,k)=>{
         const x=48+k*74, y=170;
@@ -23845,7 +23845,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 8: сколько осей у фигур */
     } else if(step===8){
       H=312;
-      let inner=TT('сколько осей у разных фигур','cyan');
+      let inner=TT('сколько осей у разных фигур',cyan);
       inner+=`<g class="qrRise">`;
       inner+=drawPoly([[26,90],[110,90]],gold,1.6,0.2,2.4,{keep:true});
       inner+=drawPoly([[68,60],[68,120]],cyan,1.6,0.5,2,{keep:true});
@@ -23879,7 +23879,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 9: квадрат — четыре оси */
     } else if(step===9){
       H=316;
-      let inner=TT('у квадрата четыре оси','grn');
+      let inner=TT('у квадрата четыре оси',grn);
       inner+=`<rect x="76" y="60" width="166" height="166" rx="6" fill="rgba(125,224,160,.16)" stroke="${grn}" stroke-width="2.6"/>`;
       [[159,58,159,228,'1',159,84],[74,143,244,143,'2',212,143],[76,60,242,226,'3',126,110],[242,60,76,226,'4',192,110]].forEach((q,k)=>{
         inner+=drawPoly([[q[0],q[1]],[q[2],q[3]]],k<2?cyan:gold,1.8,0.4+k*0.5,2.4,{keep:true,pen:k===3,r:5});
@@ -23898,7 +23898,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 10: прямоугольник — две оси */
     } else if(step===10){
       H=316;
-      let inner=TT('у прямоугольника только две оси','gold');
+      let inner=TT('у прямоугольника только две оси',gold);
       inner+=`<rect x="46" y="76" width="226" height="120" rx="6" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="2.6"/>`;
       inner+=drawPoly([[159,74],[159,198]],cyan,1.8,0.4,2.4,{keep:true});
       inner+=drawPoly([[44,136],[274,136]],cyan,1.8,0.9,2.4,{keep:true});
@@ -23918,7 +23918,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 11: круг — бесконечно много осей */
     } else if(step===11){
       H=318;
-      let inner=TT('у круга осей бесконечно много','pur');
+      let inner=TT('у круга осей бесконечно много',pur);
       inner+=drawCircle(159,164,88,pur,3,0.2,2.8,{fill:'rgba(176,127,255,.12)'});
       inner+=`<g><animateTransform attributeName="transform" type="rotate" values="0 159 164;180 159 164;360 159 164" dur="8s" repeatCount="indefinite"/>`
         +drawPoly([[159,68],[159,260]],cyan,1.6,0.6,2.2,{pen:false})+`</g>`;
@@ -23939,7 +23939,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 12: центральная симметрия */
     } else if(step===12){
       H=316;
-      let inner=TT('центральная симметрия — поворот на 180°','pur');
+      let inner=TT('центральная симметрия — поворот на 180°',pur);
       inner+=`<g><animateTransform attributeName="transform" type="rotate" values="0 159 170;180 159 170;360 159 170" dur="6s" repeatCount="indefinite"/>`
         +`<path d="M159 170 L112 106 L206 106 Z" fill="${cyan}" opacity=".4" stroke="${cyan}" stroke-width="2.4"/>`
         +`<circle cx="159" cy="170" r="0"/></g>`;
@@ -23963,7 +23963,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 13: точка и её образ при центральной симметрии */
     else if(step===13){
       H=308;
-      let inner=TT('точка, её образ и центр','cyan');
+      let inner=TT('точка, её образ и центр',cyan);
       inner+=`<line x1="40" y1="176" x2="278" y2="176" stroke="${cardB}" stroke-width="1.8" stroke-dasharray="7 6"/>`;
       inner+=`<circle class="qrPop" style="animation-delay:.4s" cx="70" cy="176" r="11" fill="${cyan}" stroke="#fffdf2" stroke-width="1.6"/>`;
       inner+=fit(70,206,12,cyan,'A',{b:1},30);
@@ -23988,7 +23988,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 14: фигуры с центром симметрии */
     } else if(step===14){
       H=310;
-      let inner=TT('фигуры с центром симметрии','grn');
+      let inner=TT('фигуры с центром симметрии',grn);
       inner+=`<g class="qrPop"><path d="M40 92 L112 76 L152 132 L80 148 Z" fill="rgba(125,224,160,.25)" stroke="${grn}" stroke-width="2.2"/>`
         +`<circle cx="96" cy="112" r="7" fill="${gold}"/></g>`;
       inner+=fit(96,172,11,grn,'параллелограмм',{b:1},120);
@@ -24011,7 +24011,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 15: фигуры без центра */
     } else if(step===15){
       H=308;
-      let inner=TT('а у этих фигур центра нет','red');
+      let inner=TT('а у этих фигур центра нет',red);
       inner+=`<g class="qrPop"><path d="M40 106 L118 106 L79 190 Z" fill="rgba(255,120,100,.2)" stroke="${red}" stroke-width="2.4"/>`
         +`<circle cx="79" cy="134" r="7" fill="${gold}" opacity=".8"/></g>`;
       inner+=fit(79,214,11,red,'треугольник',{b:1},120);
@@ -24030,7 +24030,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 16: сравнение двух симметрий */
     } else if(step===16){
       H=312;
-      let inner=TT('осевая и центральная — в чём разница','gold');
+      let inner=TT('осевая и центральная — в чём разница',gold);
       inner+=`<g class="qrRise"><rect x="18" y="52" width="134" height="150" rx="11" fill="rgba(127,214,255,.1)" stroke="${cyan}" stroke-width="1.8"/>`
         +fit(85,76,12,cyan,'осевая',{b:1},118)+`</g>`;
       inner+=drawPoly([[85,90],[85,190]],cyan,1.6,0.5,2.4,{pen:false});
@@ -24058,7 +24058,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 17: снежинка */
     } else if(step===17){
       H=324;
-      let inner=TT('снежинка: шесть осей симметрии','cyan');
+      let inner=TT('снежинка: шесть осей симметрии',cyan);
       inner+=snowflake(159,164,92,cyan,2.2,0.2);
       for(let k=0;k<6;k++){
         const a=-Math.PI/2+k*Math.PI/3;
@@ -24077,7 +24077,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 18: симметрия на координатной плоскости */
     } else if(step===18){
       H=312;
-      let inner=TT('симметрия на координатной плоскости','blu');
+      let inner=TT('симметрия на координатной плоскости',blu);
       inner+=drawPoly([[40,170],[286,170]],cardB,2,0.2,2.2,{pen:false});
       inner+=drawPoly([[163,54],[163,286]],cardB,2,0.3,2.2,{pen:false});
       inner+=tx(292,166,11,dim,'x',{});
@@ -24105,7 +24105,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 19: зеркало и слова */
     } else if(step===19){
       H=300;
-      let inner=TT('зеркало меняет левое и правое','pur');
+      let inner=TT('зеркало меняет левое и правое',pur);
       inner+=`<rect x="26" y="60" width="120" height="70" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="2"/>`;
       inner+=`<text x="86" y="108" text-anchor="middle" font-size="26" font-family="Georgia,serif" font-weight="bold" fill="${cyan}">КОТ</text>`;
       inner+=`<g transform="translate(318,0) scale(-1,1)"><rect x="26" y="60" width="120" height="70" rx="10" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="2"/>`
@@ -24126,7 +24126,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 20: практика */
     } else if(step===20){
       H=312;
-      let inner=TT('практика: считаем оси у фигур','grn');
+      let inner=TT('практика: считаем оси у фигур',grn);
       inner+=`<rect x="30" y="58" width="112" height="72" rx="6" fill="rgba(125,224,160,.16)" stroke="${grn}" stroke-width="2.4"/>`;
       inner+=drawPoly([[86,56],[86,132]],cyan,1.6,0.4,2,{keep:true});
       inner+=drawPoly([[28,94],[144,94]],cyan,1.6,0.7,2,{keep:true});
@@ -24155,7 +24155,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===21){
       H=290;
       const opts=['2','4','1'], ok=0, done=(sel>=0);
-      let inner=TT('сколько осей симметрии у прямоугольника?','gold');
+      let inner=TT('сколько осей симметрии у прямоугольника?',gold);
       inner+=`<rect x="86" y="56" width="146" height="86" rx="6" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="2.4"/>`;
       inner+=drawPoly([[159,54],[159,144]],cyan,1.6,0.5,2,{keep:true});
       inner+=drawPoly([[84,99],[234,99]],cyan,1.6,0.8,2,{keep:true});
@@ -24178,7 +24178,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===22){
       H=288;
       const opts=['круг','буква Р','треугольник'], ok=0, done=(sel>=0);
-      let inner=TT('у какой фигуры есть центр симметрии?','pur');
+      let inner=TT('у какой фигуры есть центр симметрии?',pur);
       opts.forEach((t,k)=>{
         const x=32+k*86, on=(done&&k===ok), bad=(done&&sel===k&&!on), c=on?grn:(bad?red:cardB);
         inner+=`<g style="cursor:pointer" onclick="visW381Pick('${lk}',${k})">`
@@ -24210,7 +24210,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         const y=14+k*56;
         inner+=`<g class="qrRise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
           +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#qrbg)" stroke="${q.c}" stroke-width="2"/>`
-          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#090d1c">!</text>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eef6ff">!</text>`
           +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
           +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
@@ -24232,7 +24232,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         {t:'круг — бесконечно много осей',c:pur},
         {t:'снежинка — 6 осей',c:blu}
       ];
-      let inner=TT('всё главное о симметрии','grn');
+      let inner=TT('всё главное о симметрии',grn);
       rows.forEach((q,k)=>{
         const y=52+k*42;
         inner+=`<g class="qrRise" style="animation-delay:${(0.12+k*0.14).toFixed(2)}s">`
@@ -24321,7 +24321,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a5aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff',
         bg0='#1c2140', bg1='#0a0e1e', card='rgba(26,32,58,.96)', cardB='#46507c', lineC='#3a4470';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a0e1e" stroke-width="3.6">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a0e1e" stroke-width="3.6">${t}</text>`;
   const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
@@ -24407,7 +24407,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 0: что такое процент */
     if(step===0){
       H=332;
-      let inner=TT('процент — это сотая часть','gold');
+      let inner=TT('процент — это сотая часть',gold);
       inner+=pctGrid(44,46,20,1,gold,0.2,'qp');
       inner+=fit(159,276,11.5,dim,'одна клетка из ста — это 1%',{},290);
       inner+=`<g class="qpRise" style="animation-delay:.7s"><rect x="44" y="46" width="23" height="23" rx="4" fill="none" stroke="${gold}" stroke-width="2.4" class="qpGlow"/></g>`;
@@ -24423,7 +24423,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 1: сто клеток = 100% */
     } else if(step===1){
       H=314;
-      let inner=TT('сто клеток — это 100%','cyan');
+      let inner=TT('сто клеток — это 100%',cyan);
       inner+=pctGrid(44,48,20,100,cyan,0.15,'qp');
       inner+=drawRect(40,44,208,208,6,gold,3,0.1,2.2,{pen:true},'qp');
       inner+=fit(159,300,11.5,gold,'вся величина целиком — 100%',{b:1},290);
@@ -24437,7 +24437,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 2: проценты и дроби */
     } else if(step===2){
       H=308;
-      let inner=TT('проценты и дроби','pur');
+      let inner=TT('проценты и дроби',pur);
       const rows=[{p:'1%',f:'0,01',n:1,c:cyan},{p:'25%',f:'0,25 = 1/4',n:25,c:grn},{p:'50%',f:'0,5 = 1/2',n:50,c:gold},{p:'20%',f:'0,2 = 1/5',n:20,c:pur}];
       rows.forEach((q,k)=>{
         const y=52+k*52;
@@ -24457,7 +24457,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 3: круговая диаграмма долей */
     } else if(step===3){
       H=320;
-      let inner=TT('часто встречающиеся проценты','grn');
+      let inner=TT('часто встречающиеся проценты',grn);
       const parts=[{p:50,c:gold,t:'50%'},{p:25,c:grn,t:'25%'},{p:20,c:cyan,t:'20%'},{p:10,c:pur,t:'10%'}];
       parts.forEach((q,k)=>{
         const cx=62+(k%2)*120, cy=104+Math.floor(k/2)*92, r=38;
@@ -24484,7 +24484,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 4: процент от числа */
     } else if(step===4){
       H=296;
-      let inner=TT('находим 20% от 150','gold');
+      let inner=TT('находим 20% от 150',gold);
       inner+=`<rect x="30" y="60" width="258" height="42" rx="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.6"/>`;
       inner+=drawRect(30,60,258,42,10,gold,2.6,0.2,2,{pen:true},'qp');
       inner+=growBar(34,64,52,34,gold,1.8,0.6,gold);
@@ -24505,7 +24505,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 5: два способа */
     } else if(step===5){
       H=298;
-      let inner=TT('два способа — один ответ','cyan');
+      let inner=TT('два способа — один ответ',cyan);
       inner+=`<g class="qpRise"><rect x="24" y="56" width="270" height="48" rx="11" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.8"/>`
         +fit(159,76,11.5,gold,'способ 1: через один процент',{b:1},250)
         +`<text x="159" y="96" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${ink}">150 : 100 · 20 = 30</text></g>`;
@@ -24526,7 +24526,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 6: число по проценту */
     } else if(step===6){
       H=296;
-      let inner=TT('находим число по его проценту','pur');
+      let inner=TT('находим число по его проценту',pur);
       inner+=fit(159,62,12.5,ink,'20% числа равны 30',{b:1},280);
       inner+=`<rect x="30" y="76" width="258" height="42" rx="10" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.6"/>`;
       inner+=`<rect x="30" y="76" width="52" height="42" rx="10" fill="${pur}" opacity=".45"/>`;
@@ -24547,7 +24547,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 7: сколько процентов одно от другого */
     } else if(step===7){
       H=292;
-      let inner=TT('сколько процентов 15 от 60?','grn');
+      let inner=TT('сколько процентов 15 от 60?',grn);
       inner+=fit(20,62,11.5,dim,'60 — это целое',{an:'start'},110);
       inner+=`<rect x="20" y="72" width="278" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=drawRect(20,72,278,34,8,grn,2.6,0.2,2,{pen:true},'qp');
@@ -24568,7 +24568,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 8: вычисление по формуле */
     } else if(step===8){
       H=294;
-      let inner=TT('считаем по формуле','cyan');
+      let inner=TT('считаем по формуле',cyan);
       const steps=[{t:'15 : 60 = 0,25',c:cyan},{t:'0,25 · 100 = 25',c:gold},{t:'ответ: 25%',c:grn}];
       steps.forEach((q,k)=>{
         const y=54+k*48;
@@ -24588,7 +24588,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 9: ловушка */
     } else if(step===9){
       H=296;
-      let inner=TT('ловушка: смотри, от какого числа считаем','red');
+      let inner=TT('ловушка: смотри, от какого числа считаем',red);
       inner+=`<g class="qpRise"><rect x="24" y="52" width="270" height="44" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
         +`<text x="159" y="80" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">15 от 60 = 25%</text></g>`;
       inner+=`<g class="qpRise" style="animation-delay:.25s"><rect x="24" y="106" width="270" height="44" rx="10" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.8"/>`
@@ -24608,7 +24608,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 10: увеличиваем на проценты */
     } else if(step===10){
       H=294;
-      let inner=TT('увеличиваем на 10%: 200 → 220','grn');
+      let inner=TT('увеличиваем на 10%: 200 → 220',grn);
       inner+=`<rect x="30" y="62" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=growBar(34,66,250,32,blu,1.8,0.3,blu);
       inner+=lbl(159,89,'200 рублей',blu,86);
@@ -24631,7 +24631,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 11: уменьшаем на проценты */
     } else if(step===11){
       H=292;
-      let inner=TT('уменьшаем на 25%: 800 → 600','red');
+      let inner=TT('уменьшаем на 25%: 800 → 600',red);
       inner+=`<rect x="30" y="62" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=growBar(34,66,250,32,gold,1.6,0.3,gold);
       inner+=lbl(159,89,'800',gold,44);
@@ -24654,7 +24654,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 12: задача про скидку */
     } else if(step===12){
       H=294;
-      let inner=TT('задача: скидка 30% на товар','gold');
+      let inner=TT('задача: скидка 30% на товар',gold);
       inner+=`<g class="qpPop"><rect x="42" y="52" width="96" height="56" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2"/>`
         +`<path d="M54 52 v-8 a36 14 0 0 1 72 0 v8" fill="none" stroke="${gold}" stroke-width="2.2"/>`
         +fit(90,86,15,gold,'1200 ₽',{b:1},86)+`</g>`;
@@ -24678,7 +24678,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 13: круговая диаграмма */
     else if(step===13){
       H=314;
-      let inner=TT('круговая диаграмма: вместе 100%','pur');
+      let inner=TT('круговая диаграмма: вместе 100%',pur);
       const cx=104, cy=140, r=58;
       const parts=[{p:40,c:gold,t:'40%'},{p:35,c:grn,t:'35%'},{p:25,c:cyan,t:'25%'}];
       let a=-Math.PI/2;
@@ -24711,7 +24711,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 14: сравнение в процентах */
     } else if(step===14){
       H=294;
-      let inner=TT('на сколько процентов больше?','gold');
+      let inner=TT('на сколько процентов больше?',gold);
       inner+=`<rect x="30" y="60" width="180" height="34" rx="8" fill="${blu}" opacity=".55"/>`;
       inner+=fit(120,83,12,ink,'100',{b:1},80);
       inner+=`<rect x="30" y="112" width="216" height="34" rx="8" fill="${gold}" opacity=".55"/>`;
@@ -24734,7 +24734,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 15: практика 24 от 80 */
     } else if(step===15){
       H=298;
-      let inner=TT('практика: сколько процентов 24 от 80?','cyan');
+      let inner=TT('практика: сколько процентов 24 от 80?',cyan);
       const steps=[{t:'24 : 80 = 0,3',c:cyan},{t:'0,3 · 100 = 30',c:gold},{t:'ответ: 30%',c:grn}];
       steps.forEach((q,k)=>{
         const y=58+k*46;
@@ -24757,7 +24757,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 16: практика 6 от 30 */
     } else if(step===16){
       H=296;
-      let inner=TT('практика: сколько процентов 6 от 30?','grn');
+      let inner=TT('практика: сколько процентов 6 от 30?',grn);
       const steps=[{t:'6 : 30 = 0,2',c:grn},{t:'0,2 · 100 = 20',c:gold},{t:'ответ: 20%',c:grn}];
       steps.forEach((q,k)=>{
         const y=58+k*46;
@@ -24778,7 +24778,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 17: практика 40% от 250 */
     } else if(step===17){
       H=286;
-      let inner=TT('практика: 40% от 250','pur');
+      let inner=TT('практика: 40% от 250',pur);
       inner+=`<rect x="30" y="58" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=drawRect(30,58,258,40,9,pur,2.4,0.2,2,{pen:true},'qp');
       inner+=growBar(34,62,103,32,pur,1.8,0.6,pur);
@@ -24799,7 +24799,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 18: практика число по проценту */
     } else if(step===18){
       H=288;
-      let inner=TT('практика: 15% числа равны 45','gold');
+      let inner=TT('практика: 15% числа равны 45',gold);
       inner+=`<rect x="30" y="58" width="258" height="40" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=`<rect x="30" y="58" width="39" height="40" rx="9" fill="${gold}" opacity=".5"/>`;
       inner+=lbl(50,85,'45',gold,32);
@@ -24820,7 +24820,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 19: проценты в жизни */
     } else if(step===19){
       H=296;
-      let inner=TT('проценты вокруг нас','grn');
+      let inner=TT('проценты вокруг нас',grn);
       const cards=[
         {t:'скидка',d:'−30% в магазине',c:gold,ico:'tag'},
         {t:'вклад',d:'+8% в банке',c:grn,ico:'bank'},
@@ -24854,7 +24854,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===20){
       H=286;
       const opts=['75%','45%','80%'], ok=0, done=(sel>=0);
-      let inner=TT('сколько процентов составляет 45 от 60?','cyan');
+      let inner=TT('сколько процентов составляет 45 от 60?',cyan);
       inner+=`<rect x="30" y="58" width="258" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=growBar(34,62,193,26,cyan,1.6,0.3,cyan);
       inner+=lbl(130,82,'45',cyan,32);
@@ -24878,7 +24878,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===21){
       H=282;
       const opts=['60','30','600'], ok=0, done=(sel>=0);
-      let inner=TT('найди 30% от 200','gold');
+      let inner=TT('найди 30% от 200',gold);
       inner+=`<rect x="30" y="58" width="258" height="34" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.5"/>`;
       inner+=growBar(34,62,78,26,gold,1.6,0.3,gold);
       inner+=lbl(72,82,'30%',gold,38);
@@ -25026,7 +25026,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a16', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', goldD='#b8802c',
         card='rgba(255,252,246,.97)', cardB='#d9c9ab', cream='#fbf2df';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf2df" stroke-width="3.4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf2df" stroke-width="3.4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     let spark='';
@@ -25418,7 +25418,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a0abc9', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
         bg0='#151f3a', bg1='#0b1122', card='rgba(20,28,50,.96)', cardB='#3a4a70';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -25851,7 +25851,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a5aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff',
         bg0='#16233c', bg1='#0a1120', card='rgba(22,30,52,.96)', cardB='#3f4d78', lineC='#364470';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.6">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1120" stroke-width="3.6">${t}</text>`;
   const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
@@ -25952,7 +25952,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     if(step===0){
       H=292;
       const L=mkLine(30,286,-5,5); const Y=112;
-      let inner=TT('координатная прямая','gold');
+      let inner=TT('координатная прямая',gold);
       inner+=axisDraw(L,Y,{dur:2.6,beg:0.1,lab:0.9});
       inner+=`<g class="qoPop" style="animation-delay:.5s"><circle cx="${pxOf(0,L)}" cy="${Y}" r="10" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/></g>`;
       inner+=fit(pxOf(0,L),Y-20,12,gold,'начало отсчёта',{b:1},120);
@@ -25976,7 +25976,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===1){
       H=284;
       const L=mkLine(34,282,-3,3); const Y=104;
-      let inner=TT('единичный отрезок — это шаг','cyan');
+      let inner=TT('единичный отрезок — это шаг',cyan);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       for(let v=1;v<=3;v++){
         inner+=drawPoly([[pxOf(v-1,L),Y-34],[pxOf(v,L),Y-34]],cyan,1.8,0.6+v*0.35,2.2,{pen:v===3,r:4});
@@ -26001,7 +26001,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===2){
       H=280;
       const L=mkLine(34,282,-2,6); const Y=104;
-      let inner=TT('положительные числа — справа от нуля','grn');
+      let inner=TT('положительные числа — справа от нуля',grn);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       [1,2,3,4,5].forEach((v,k)=>{ inner+=dotAt(v,L,Y,grn,'+'+v,0.7+k*0.14); });
       inner+=`<g class="qoPop" style="animation-delay:.5s"><circle cx="${pxOf(0,L)}" cy="${Y}" r="8" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/></g>`;
@@ -26021,7 +26021,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===3){
       H=280;
       const L=mkLine(34,282,-6,2); const Y=104;
-      let inner=TT('отрицательные числа — слева от нуля','pur');
+      let inner=TT('отрицательные числа — слева от нуля',pur);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       [-1,-2,-3,-4,-5].forEach((v,k)=>{ inner+=dotAt(v,L,Y,pur,''+v,0.7+k*0.14); });
       inner+=`<g class="qoPop" style="animation-delay:.5s"><circle cx="${pxOf(0,L)}" cy="${Y}" r="8" fill="${gold}" stroke="#fffdf2" stroke-width="1.6"/></g>`;
@@ -26041,7 +26041,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===4){
       H=296;
       const L=mkLine(30,286,-5,5); const Y=126;
-      let inner=TT('координата точки — это её адрес','gold');
+      let inner=TT('координата точки — это её адрес',gold);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       inner+=stepsBetween(0,-3,L,Y,pur,0.7);
       inner+=stepsBetween(0,2,L,Y,grn,1.2);
@@ -26060,7 +26060,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===5){
       H=286;
       const L=mkLine(26,290,-6,6); const Y=110;
-      let inner=TT('читаем и записываем координаты','cyan');
+      let inner=TT('читаем и записываем координаты',cyan);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       [[-6,'K'],[0,'C'],[4,'D'],[6,'M']].forEach((q,k)=>{
         inner+=dotAt(q[0],L,Y,[gold,grn,cyan,pur][k],q[1]+'('+q[0]+')',0.8+k*0.25,{up:18,fs:12});
@@ -26079,7 +26079,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===6){
       H=290;
       const L=mkLine(30,286,-5,5); const Y=120;
-      let inner=TT('противоположные числа','pur');
+      let inner=TT('противоположные числа',pur);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       [[-3,3],[ -5,5 ]].forEach((q,k)=>{
         inner+=dotAt(q[0],L,Y,pur,'' + q[0],0.7+k*0.3,{up:18,fs:12.5});
@@ -26103,7 +26103,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===7){
       H=298;
       const L=mkLine(30,286,-5,5); const Y=118;
-      let inner=TT('модуль — расстояние от нуля','cyan');
+      let inner=TT('модуль — расстояние от нуля',cyan);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       inner+=drawPoly([[pxOf(-3,L),Y-34],[pxOf(0,L),Y-34]],grn,2.4,0.8,2.6,{pen:true});
       inner+=drawPoly([[pxOf(0,L),Y-34],[pxOf(2,L),Y-34]],gold,2.4,1.2,2.6,{pen:true});
@@ -26126,7 +26126,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===8){
       H=286;
       const L=mkLine(30,286,-6,6); const Y=116;
-      let inner=TT('правее — значит больше','grn');
+      let inner=TT('правее — значит больше',grn);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       inner+=dotAt(-5,L,Y,red,'−5',0.8,{up:18,fs:12});
       inner+=dotAt(2,L,Y,grn,'2',1.0,{up:18,fs:12});
@@ -26147,7 +26147,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===9){
       H=288;
       const L=mkLine(30,286,-8,2); const Y=112;
-      let inner=TT('из двух отрицательных меньше то, что дальше','red');
+      let inner=TT('из двух отрицательных меньше то, что дальше',red);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       inner+=dotAt(-7,L,Y,red,'−7',0.9,{up:18,fs:12});
       inner+=dotAt(-3,L,Y,grn,'−3',1.2,{up:18,fs:12});
@@ -26167,7 +26167,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 10: ноль в середине */
     } else if(step===10){
       H=282;
-      let inner=TT('любое отрицательное меньше нуля','gold');
+      let inner=TT('любое отрицательное меньше нуля',gold);
       inner+=`<g class="qoRise">`;
       inner+=valBox(58,72,'−100',red,{w:76,h:40,fs:15});
       inner+=fit(112,80,20,dim,'<',{b:1},24);
@@ -26191,7 +26191,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===11){
       H=300;
       const L=mkLine(30,286,-5,5); const Y=136;
-      let inner=TT('расстояние между точками','grn');
+      let inner=TT('расстояние между точками',grn);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       inner+=dotAt(-3,L,Y,pur,'A(−3)',0.9,{up:18,fs:12.5});
       inner+=dotAt(2,L,Y,grn,'B(2)',1.1,{up:18,fs:12.5});
@@ -26211,7 +26211,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===12){
       H=300;
       const L=mkLine(30,286,-5,5); const Y=134;
-      let inner=TT('то же самое по шагам','cyan');
+      let inner=TT('то же самое по шагам',cyan);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       inner+=dotAt(-3,L,Y,pur,'A(−3)',0.9,{up:18,fs:12.5});
       inner+=dotAt(2,L,Y,grn,'B(2)',1.1,{up:18,fs:12.5});
@@ -26232,7 +26232,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 13: формула с модулем */
     } else if(step===13){
       H=288;
-      let inner=TT('короткая запись: расстояние = |a − b|','pur');
+      let inner=TT('короткая запись: расстояние = |a − b|',pur);
       inner+=`<g class="qoRise"><rect x="46" y="58" width="226" height="48" rx="11" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.9"/>`
         +`<text x="159" y="89" text-anchor="middle" font-size="17" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">|a − b|</text></g>`;
       inner+=fit(159,128,12,ink,'берём разность координат и модуль',{b:1},290);
@@ -26250,7 +26250,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 14: ловушка */
     } else if(step===14){
       H=292;
-      let inner=TT('ловушка: расстояние нельзя складывать','red');
+      let inner=TT('ловушка: расстояние нельзя складывать',red);
       inner+=`<g class="qoRise"><rect x="34" y="58" width="250" height="42" rx="11" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.9"/>`
         +`<text x="159" y="86" text-anchor="middle" font-size="15" font-family="'Courier New',monospace" font-weight="bold" fill="${red}">−3 + 2 = −1</text></g>`;
       inner+=drawPoly([[60,52],[258,106]],red,2.6,0.6,3,{pen:false});
@@ -26271,7 +26271,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 15: целые числа */
     } else if(step===15){
       H=286;
-      let inner=TT('целые числа','cyan');
+      let inner=TT('целые числа',cyan);
       const parts=[{t:'…, −2, −1',c:pur,x:62},{t:'0',c:gold,x:159},{t:'1, 2, …',c:grn,x:254}];
       parts.forEach((q,k)=>{
         inner+=drawRect(q.x-46,58,92,56,12,q.c,2.6,0.2+k*0.3,2.1,{pen:k===2,r:4});
@@ -26294,7 +26294,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 16: отрицательные в жизни */
     } else if(step===16){
       H=298;
-      let inner=TT('где встречаются отрицательные числа','pur');
+      let inner=TT('где встречаются отрицательные числа',pur);
       inner+=drawRect(22,52,80,150,12,cyan,3,0.2,2.2,{pen:true});
       inner+=`<g class="qoRise" style="animation-delay:.7s">${fit(62,74,11,cyan,'термометр',{b:1},74)}</g>`;
       inner+=`<rect x="46" y="86" width="32" height="100" rx="16" fill="rgba(127,214,255,.18)" stroke="${cyan}" stroke-width="1.6"/>`;
@@ -26321,7 +26321,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===17){
       H=296;
       const L=mkLine(30,286,-5,5); const Y=126;
-      let inner=TT('перемещение по прямой','gold');
+      let inner=TT('перемещение по прямой',gold);
       inner+=axisDraw(L,Y,{dur:2.2,beg:0.1,lab:0.25});
       inner+=dotAt(-2,L,Y,pur,'старт −2',0.7,{up:20,fs:11.5});
       inner+=dotAt(3,L,Y,grn,'финиш 3',1.0,{up:20,fs:11.5});
@@ -26342,7 +26342,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
       H=296;
       const L=mkLine(30,286,-6,6); const Y=118;
       const opts=['−4','4','0'], ok=0, done=(sel>=0);
-      let inner=TT('какая координата у точки K?','cyan');
+      let inner=TT('какая координата у точки K?',cyan);
       inner+=axisDraw(L,Y,{dur:1.8,beg:0.1,lab:0.25});
       inner+=dotAt(-4,L,Y,red,'K',0.9,{up:20,fs:13});
       inner+=drawCircle(pxOf(-4,L),Y,18,red,2.6,1.1,2.6);
@@ -26363,7 +26363,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===19){
       H=298;
       const opts=['7','1','−7'], ok=0, done=(sel>=0);
-      let inner=TT('расстояние между A(−4) и B(3)','grn');
+      let inner=TT('расстояние между A(−4) и B(3)',grn);
       const L=mkLine(30,286,-5,5); const Y=112;
       inner+=axisDraw(L,Y,{dur:1.8,beg:0.1,lab:0.25});
       inner+=dotAt(-4,L,Y,pur,'A(−4)',0.8,{up:18,fs:11.5});
@@ -26397,7 +26397,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         const y=14+k*56;
         inner+=`<g class="qoRise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s" filter="url(#qosh)">`
           +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#qobg)" stroke="${q.c}" stroke-width="2"/>`
-          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#0e1428">!</text>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eef6ff">!</text>`
           +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
           +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
@@ -26495,7 +26495,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef4ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
         bg0='#14203a', bg1='#0a1122', card='rgba(20,29,52,.96)', cardB='#3a4c78', lineC='#2c3c64';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -26938,7 +26938,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cold='#7fd6ff', warm='#ffb85c', blu='#6ea8ff', purple='#b07fff',
         bg0='#101b30', bg1='#0a0f1e', card='rgba(20,29,50,.96)', cardB='#3a4c74';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -27400,7 +27400,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', tile='#f2d38a', border='#e8604c',
         card='rgba(255,251,244,.97)', cardB='#d9c9ab', cream='#fbf1df';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fdf6e9" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -27825,7 +27825,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', cellHi='#e8604c',
         card='rgba(255,251,244,.97)', cardB='#c9b98d', cream='#f5e6c6';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1df" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1df" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -28228,7 +28228,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef4ff', dim='#9fb0d0', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', purple='#b07fff',
         bg0='#14203a', bg1='#0a1122', card='rgba(20,29,52,.96)', cardB='#3a4c78', lineC='#2c3c64';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -28693,7 +28693,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#3a2a1a', dim='#9b8266', gold='#d9a05a', grn='#4c9a58', red='#c14b2f', blu='#3f6d9e', barCol='#f2a05c', bar2='#f6d24a', bar3='#62c1e0',
         card='rgba(255,251,244,.97)', cardB='#c9b98d', cream='#f5e6c6';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1df" stroke-width="3.2">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#fbf1df" stroke-width="3.2">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -29143,7 +29143,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', deep='#0d5a80', midw='#1f86b4', glass='#c8d8f0',
         bg0='#0e1830', bg1='#080d1c', card='rgba(16,26,46,.96)', cardB='#3a4c78', steel='#aab8d4';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -29588,7 +29588,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', aCol='#ffb85c', bCol='#7fd6ff', cCol='#b07fff',
         bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78', glass='#5a6c9c';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -30080,7 +30080,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', roadC='#3a4a6a', asp='#aab8d4', blu='#6ea8ff', road1='#e0a34a', road2='#4db6e0',
         bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">
@@ -30500,7 +30500,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef2ff', dim='#a5aecb', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', cyan='#7fd6ff', blu='#6ea8ff', pur='#b07fff',
         bg0='#1b2440', bg1='#0a1020', card='rgba(24,30,54,.96)', cardB='#43507c', lineC='#3a4670';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1020" stroke-width="3.6">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${s}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0b1020" stroke-width="3.6">${t}</text>`;
   const fit=(x,y,fs,c,t,o,maxw)=>{const s2=(maxw?Math.min(fs,maxw/Math.max(1,(''+t).length)/0.72):fs);return tx(x,y,s2,c,t,o);};
   function bg(W,H,opt){
     const o=opt||{};
@@ -30588,7 +30588,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 0: 4 рубашки и 3 галстука */
     if(step===0){
       H=284;
-      let inner=TT('4 рубашки и 3 галстука — сколько комплектов?','gold');
+      let inner=TT('4 рубашки и 3 галстука — сколько комплектов?',gold);
       [150,210,270].forEach((x,k)=>{ inner+=tieIc(x,64,17,cyan,0.15+k*0.12); });
       for(let r=0;r<4;r++) inner+=shirtIc(48,88+r*44,13,pur,0.2+r*0.12);
       for(let r=0;r<4;r++){
@@ -30611,7 +30611,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 1: дерево возможностей */
     } else if(step===1){
       H=304;
-      let inner=TT('дерево возможностей','cyan');
+      let inner=TT('дерево возможностей',cyan);
       const xs=[44,118,192,266];
       inner+=`<g class="qwPop"><rect x="112" y="50" width="94" height="28" rx="9" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.8"/>`
         +fit(159,69,12,pur,'4 рубашки',{b:1},86)+`</g>`;
@@ -30638,7 +30638,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 2: правило произведения */
     } else if(step===2){
       H=276;
-      let inner=TT('правило произведения','gold');
+      let inner=TT('правило произведения',gold);
       inner+=`<g class="qwPop"><rect x="30" y="58" width="112" height="64" rx="11" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.9"/>`
         +tx(86,92,26,pur,'m',{b:1,georgia:1})
         +fit(86,110,10.5,dim,'первый выбор',{},100)+`</g>`;
@@ -30661,7 +30661,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 3: почему умножаем */
     } else if(step===3){
       H=298;
-      let inner=TT('почему умножаем?','pur');
+      let inner=TT('почему умножаем?',pur);
       for(let g2=0;g2<4;g2++){
         const gx=24+g2*70;
         inner+=drawRect(gx,54,62,76,10,pur,3,0.15+g2*0.3,2.2,{pen:g2===3,r:4});
@@ -30683,7 +30683,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 4: «и» и «или» */
     } else if(step===4){
       H=296;
-      let inner=TT('«и» — умножаем, «или» — складываем','gold');
+      let inner=TT('«и» — умножаем, «или» — складываем',gold);
       inner+=`<g class="qwRise"><rect x="16" y="52" width="136" height="108" rx="11" fill="rgba(18,24,44,.96)" stroke="${grn}" stroke-width="1.8"/>`
         +fit(84,72,12,grn,'И → умножаем',{b:1},124)+`</g>`;
       inner+=shirtIc(56,108,11,pur,0.2)+tieIc(104,108,13,cyan,0.3);
@@ -30706,7 +30706,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 5: три шага — маршруты */
     } else if(step===5){
       H=308;
-      let inner=TT('три шага: 3 · 2 · 4 = 24 маршрута','cyan');
+      let inner=TT('три шага: 3 · 2 · 4 = 24 маршрута',cyan);
       const cs=[{x:44,t:'А',c:gold},{x:124,t:'Б',c:cyan},{x:204,t:'В',c:blu},{x:284,t:'Г',c:pur}];
       cs.forEach((q,k)=>{
         inner+=`<g class="qwPop" style="animation-delay:${(0.15+k*0.12).toFixed(2)}s">`
@@ -30736,7 +30736,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 6: двузначные с 5 */
     } else if(step===6){
       H=290;
-      let inner=TT('двузначные числа, которые начинаются с 5','gold');
+      let inner=TT('двузначные числа, которые начинаются с 5',gold);
       inner+=`<g class="qwPop"><rect x="20" y="58" width="44" height="44" rx="9" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2"/>`
         +tx(42,88,20,gold,'5',{b:1})+`</g>`;
       inner+=fit(42,120,10.5,dim,'1 способ',{},70);
@@ -30761,7 +30761,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 7: трёхзначные числа */
     } else if(step===7){
       H=288;
-      let inner=TT('трёхзначные числа: 9 · 10 · 10 = 900','cyan');
+      let inner=TT('трёхзначные числа: 9 · 10 · 10 = 900',cyan);
       const pos=[{x:70,t:'сотни',d:'1…9',n:9,c:gold},{x:159,t:'десятки',d:'0…9',n:10,c:cyan},{x:248,t:'единицы',d:'0…9',n:10,c:blu}];
       pos.forEach((q,k)=>{
         inner+=`<g class="qwPop" style="animation-delay:${(0.2+k*0.2).toFixed(2)}s">`
@@ -30784,7 +30784,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 8: без повторения */
     } else if(step===8){
       H=296;
-      let inner=TT('цифры не повторяются: 4 · 3 = 12','pur');
+      let inner=TT('цифры не повторяются: 4 · 3 = 12',pur);
       const digs=['1','2','3','4'];
       digs.forEach((d2,k)=>{
         const gx=22+k*72;
@@ -30812,7 +30812,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 9: коды и пароли */
     } else if(step===9){
       H=296;
-      let inner=TT('код из трёх знаков: 4 · 4 · 4 = 64','cyan');
+      let inner=TT('код из трёх знаков: 4 · 4 · 4 = 64',cyan);
       const lets=['А','Б','В','Г'];
       lets.forEach((L2,k)=>inner+=`<g class="qwPop" style="animation-delay:${(0.1+k*0.1).toFixed(2)}s">`
         +`<circle cx="${36+k*30}" cy="200" r="13" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`
@@ -30838,7 +30838,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 10: меню */
     } else if(step===10){
       H=292;
-      let inner=TT('меню: 3 супа и 5 вторых = 15 обедов','gold');
+      let inner=TT('меню: 3 супа и 5 вторых = 15 обедов',gold);
       for(let r=0;r<3;r++){
         inner+=`<g class="qwSlide" style="animation-delay:${(0.15+r*0.15).toFixed(2)}s">`
           +`<circle cx="30" cy="${76+r*46}" r="12" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.8"/>`
@@ -30862,7 +30862,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 11: два кубика */
     } else if(step===11){
       H=304;
-      let inner=TT('два кубика: 6 · 6 = 36','red');
+      let inner=TT('два кубика: 6 · 6 = 36',red);
       for(let c=0;c<6;c++) inner+=`<g class="qwPop" style="animation-delay:${(0.1+c*0.06).toFixed(2)}s">`
         +tx(84+c*34,58,12,cyan,''+ (c+1),{b:1})+`</g>`;
       for(let r=0;r<6;r++) inner+=`<g class="qwPop" style="animation-delay:${(0.3+r*0.06).toFixed(2)}s">`
@@ -30885,7 +30885,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 12: перестановки трёх предметов */
     else if(step===12){
       H=296;
-      let inner=TT('перестановки: 3 · 2 · 1 = 6','pur');
+      let inner=TT('перестановки: 3 · 2 · 1 = 6',pur);
       const objs=[{t:'А',c:gold},{t:'Б',c:cyan},{t:'В',c:pur}];
       objs.forEach((q,k)=>{ inner+=`<g class="qwPop" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
         +`<rect x="${30+k*40}" y="52" width="34" height="34" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.9"/>`
@@ -30909,7 +30909,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 13: четыре книги — факториал */
     } else if(step===13){
       H=292;
-      let inner=TT('четыре книги: 4 · 3 · 2 · 1 = 24','gold');
+      let inner=TT('четыре книги: 4 · 3 · 2 · 1 = 24',gold);
       const cnt=[4,3,2,1], cols=[gold,cyan,blu,pur];
       cnt.forEach((q,k)=>{
         const x=44+k*62;
@@ -30932,7 +30932,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 14: круглый стол */
     } else if(step===14){
       H=296;
-      let inner=TT('за круглым столом: (4 − 1)! = 6','cyan');
+      let inner=TT('за круглым столом: (4 − 1)! = 6',cyan);
       inner+=drawCircle(159,128,66,cyan,3.6,0.2,2.6);
       inner+=drawCircle(159,128,40,cardB,3,0.5,2,{});
       const seats=[{a:-Math.PI/2},{a:0},{a:Math.PI/2},{a:Math.PI}];
@@ -30956,7 +30956,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 15: рукопожатия */
     } else if(step===15){
       H=302;
-      let inner=TT('рукопожатия: 4 · 3 : 2 = 6','grn');
+      let inner=TT('рукопожатия: 4 · 3 : 2 = 6',grn);
       const pts=[{x:96,y:82},{x:222,y:82},{x:222,y:196},{x:96,y:196}];
       pts.forEach((q,k)=>inner+=`<g class="qwPop" style="animation-delay:${(0.15+k*0.12).toFixed(2)}s">`
         +`<circle cx="${q.x}" cy="${q.y}" r="16" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="2.1"/>`
@@ -30978,7 +30978,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 16: обратная задача */
     } else if(step===16){
       H=280;
-      let inner=TT('обратная задача: сколько рубашек?','gold');
+      let inner=TT('обратная задача: сколько рубашек?',gold);
       inner+=`<g class="qwPop"><rect x="34" y="58" width="250" height="44" rx="11" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.9"/>`
         +`<text x="159" y="87" text-anchor="middle" font-size="16" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">? · 3 = 12</text></g>`;
       inner+=fit(159,124,12,ink,'комплектов 12, галстуков 3',{b:1},280);
@@ -30996,7 +30996,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     /* 17: эстафета */
     } else if(step===17){
       H=302;
-      let inner=TT('эстафета: 5 · 4 · 3 = 60','pur');
+      let inner=TT('эстафета: 5 · 4 · 3 = 60',pur);
       const cnt=[5,4,3], cols=[gold,cyan,blu], nm=['1-й этап','2-й этап','3-й этап'];
       cnt.forEach((q,k)=>{
         const x=40+k*82;
@@ -31022,7 +31022,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===18){
       H=294;
       const opts=['12','7','34'], ok=0, done=(sel>=0);
-      let inner=TT('3 рубашки и 4 галстука — сколько комплектов?','gold');
+      let inner=TT('3 рубашки и 4 галстука — сколько комплектов?',gold);
       [0,1,2].forEach(k=>inner+=shirtIc(48,86+k*32,11,pur,0.15+k*0.1));
       [0,1,2,3].forEach(k=>inner+=tieIc(252,74+k*26,11,cyan,0.45+k*0.1));
       opts.forEach((t,k)=>{
@@ -31041,7 +31041,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
     } else if(step===19){
       H=290;
       const opts=['6','9','12'], ok=0, done=(sel>=0);
-      let inner=TT('двузначные числа из цифр 1, 2, 3 без повторов','pur');
+      let inner=TT('двузначные числа из цифр 1, 2, 3 без повторов',pur);
       ['1','2','3'].forEach((d2,k)=>inner+=`<g class="qwPop" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
         +`<rect x="${40+k*46}" y="52" width="38" height="38" rx="8" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.9"/>`
         +tx(59+k*46,78,18,pur,d2,{b:1})+`</g>`);
@@ -31075,7 +31075,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         const y=14+k*56;
         inner+=`<g class="qwRise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s" filter="url(#qwsh)">`
           +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#qwbg)" stroke="${q.c}" stroke-width="2"/>`
-          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#12182c">!</text>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eef6ff">!</text>`
           +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
           +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
@@ -31120,7 +31120,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
         {x:58,y:216,t:'перестановки',c:pur},{x:256,y:216,t:'без порядка',c:blu}
       ];
       const ed=[[0,1],[0,2],[1,3],[2,4],[3,4],[1,2]];
-      let inner=TT('вся тема на одной карте','gold');
+      let inner=TT('вся тема на одной карте',gold);
       ed.forEach((e,k)=>{
         const a=nodes[e[0]], b=nodes[e[1]];
         inner+=drawPoly([[a.x,a.y],[b.x,b.y]],lineC,1.6,0.1+k*0.12,2.4,{pen:false});
@@ -31216,7 +31216,7 @@ const fitTxt=(x,y,boxW,txt,size,fill,w)=>{let s=size;const est=txt.length*s*0.62
   };
   const ink='#eef6ff', dim='#8fa2c4', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', comma='#ff8a5c', cellB='#3a4c78', white='#eaf4ff',
         bg0='#0f1a30', bg1='#0a0f1e', card='rgba(18,28,50,.96)', cardB='#3a4c78';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(10,Math.min(s,300/((''+t).length*0.62))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#0a1120" stroke-width="4">${t}</text>`;
   function bg(W,H,opt){
     const o=opt||{};
     return `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;height:auto">

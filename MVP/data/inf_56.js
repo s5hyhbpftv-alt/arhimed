@@ -3,7 +3,7 @@
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
         bg0='#0d1830', bg1='#080d1c', card='rgba(16,26,46,.96)', cardB='#3a4c78';
-  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(9.5,Math.min(s,292/((''+t).length*0.66))):s)).toFixed(1)}" fill="${c||ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#08101f" stroke-width="4">${plain(t)}</text>`;
+  const tx=(x,y,s,c,t,o)=>`<text x="${x}" y="${y}" text-anchor="${(o&&o.an)||'middle'}" font-size="${(t&&(''+t).length<=6?Math.round(s*1.4):((''+t).length>24?Math.max(9.5,Math.min(s,292/((''+t).length*0.66))):s)).toFixed(1)}" fill="${(typeof c==='string'&&c.length<24&&/^[#a-zA-Z]/.test(c))?c:ink}" font-weight="${(o&&o.b)?'bold':'normal'}" font-family="${(o&&o.georgia)?'Georgia,serif':'Arial,Helvetica,sans-serif'}" paint-order="stroke" stroke="#08101f" stroke-width="4">${plain(t)}</text>`;
   /* ---------- акцентный цвет урока ---------- */
   const ACCS=['#7fd6ff','#7de0a0','#6ea8ff','#b07fff','#ffd76a','#ffb066','#5fe0d0','#ff8fd0','#8fb4ff','#9ae86a'];
   function accOf(pre){
@@ -1510,7 +1510,7 @@
         +`<animateMotion dur="2.6s" repeatCount="indefinite" path="M40 136 H214"/></g>`;
       s+=`<g opacity="0"><animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;.52;.6;.72;1" dur="2.6s" repeatCount="indefinite"/>`
         +`<circle cx="222" cy="136" r="24" fill="${red}" opacity=".22"/>`
-        +`<path d="M216 122 l14 22 h-28 z" fill="${red}" opacity=".95"/><text x="216" y="141" text-anchor="middle" font-size="13" font-weight="bold" fill="#241016">!</text></g>`;
+        +`<path d="M216 122 l14 22 h-28 z" fill="${red}" opacity=".95"/><text x="216" y="141" text-anchor="middle" font-size="13" font-weight="bold" fill="#eaf2ff">!</text></g>`;
       s+=`<path d="M234 106 l-9 11 l9 9 l-9 13" fill="none" stroke="${red}" stroke-width="2.4" opacity=".85"/>`;
       s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="22" y="162" width="274" height="46" rx="10" fill="rgba(8,14,30,.92)" stroke="${red}" stroke-width="1.7"/>`
         +`<text x="48" y="184" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">вперёд · вперёд · вперёд</text>`
@@ -2464,7 +2464,7 @@
         const y=26+k*54;
         s+=`<g class="${pre}Slide" style="animation-delay:${(0.15+k*0.18).toFixed(2)}s" filter="url(#${pre}sh)">`
           +`<rect x="16" y="${y}" width="286" height="46" rx="11" fill="url(#${pre}card)" stroke="${red}" stroke-width="2"/>`
-          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#241016">!</text>`
+          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
           +`${tx(60,y+20,Math.min(11.5,220/Math.max(1,q.t.length)/0.72),red,q.t,{an:'start',b:1})}`
           +`<path d="M60 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +`${tx(82,y+40,Math.min(11,190/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'})}</g>`;
@@ -3232,7 +3232,7 @@
         const y=22+k*54;
         s+=`<g class="${pre}Slide" style="animation-delay:${(0.14+k*0.16).toFixed(2)}s" filter="url(#${pre}sh)">`
           +`<rect x="16" y="${y}" width="286" height="46" rx="11" fill="url(#${pre}card)" stroke="${red}" stroke-width="2"/>`
-          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#241016">!</text>`
+          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
           +fit(62,y+20,Math.min(11.5,206/Math.max(1,q.t.length)/0.72),red,q.t,{an:'start',b:1},206)
           +`<path d="M62 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +fit(84,y+40,Math.min(11,186/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
@@ -3496,7 +3496,7 @@
         const y=20+k*54;
         s+=`<g class="${pre}Slide" style="animation-delay:${(0.14+k*0.16).toFixed(2)}s" filter="url(#${pre}sh)">`
           +`<rect x="16" y="${y}" width="286" height="46" rx="11" fill="url(#${pre}card)" stroke="${red}" stroke-width="2"/>`
-          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#241016">!</text>`
+          +`<path d="M36 ${y+12} l12 20 h-24 z" fill="${red}" opacity=".9"/><text x="36" y="${y+28}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
           +fit(62,y+20,Math.min(11,206/Math.max(1,q.t.length)/0.72),red,q.t,{an:'start',b:1},206)
           +`<path d="M62 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +fit(84,y+40,Math.min(11,186/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
@@ -4185,7 +4185,7 @@
       it.forEach((q,k)=>{
         const y=52+k*54;
         s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="20" y="${y}" width="278" height="46" rx="11" fill="rgba(255,255,255,.04)" stroke="${q.c}" stroke-width="1.8"/>`
-          +`<path d="M40 ${y+12} l12 20 h-24 z" fill="${q.c}" opacity=".9"/><text x="40" y="${y+27}" text-anchor="middle" font-size="10" font-weight="bold" fill="#06131a">!</text>`
+          +`<path d="M40 ${y+12} l12 20 h-24 z" fill="${q.c}" opacity=".9"/><text x="40" y="${y+27}" text-anchor="middle" font-size="10" font-weight="bold" fill="#eaf2ff">!</text>`
           +fit(104,y+20,11.5,q.c,q.t,{b:1},190)
           +fit(104,y+38,10.5,dim,q.d,{},190)+`</g>`;
       });
@@ -4242,7 +4242,7 @@
         const y=14+k*56;
         s+=`<g class="${pre}Rise}" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
           +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
-          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#06131a">!</text>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
           +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
           +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
           +fit(82,y+42,Math.min(10.5,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},186)+`</g>`;
@@ -4654,7 +4654,7 @@
       it.forEach((q,k)=>{
         const y=52+k*54;
         s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s"><rect x="20" y="${y}" width="278" height="46" rx="11" fill="rgba(255,255,255,.04)" stroke="${q.c}" stroke-width="1.8"/>`
-          +`<path d="M40 ${y+12} l12 20 h-24 z" fill="${q.c}" opacity=".9"/><text x="40" y="${y+27}" text-anchor="middle" font-size="10" font-weight="bold" fill="#06131a">!</text>`
+          +`<path d="M40 ${y+12} l12 20 h-24 z" fill="${q.c}" opacity=".9"/><text x="40" y="${y+27}" text-anchor="middle" font-size="10" font-weight="bold" fill="#eaf2ff">!</text>`
           +fit(104,y+20,11.5,q.c,q.t,{b:1},190)
           +fit(104,y+38,10.5,dim,q.d,{},190)+`</g>`;
       });
