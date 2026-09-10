@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 16 уроков (id 500–515) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 17 уроков (id 500–516) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -661,20 +661,20 @@
     }
     if(K==='comboscheme'){ /* условие внутри цикла — общая схема */
       let s='';
-      s+=`<g class="Pop"><ellipse cx="140" cy="24" rx="56" ry="13" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2"/>${tx(140,28,11.5,grn,'начало',{b:1})}</g>`;
+      s+=`<g class="${pre}Pop"><ellipse cx="140" cy="24" rx="56" ry="13" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2"/>${tx(140,28,11.5,grn,'начало',{b:1})}</g>`;
       s+=`<path d="M140 38 V54" stroke="${A}" stroke-width="2" class="${pre}Dash"/><path d="M136 50 l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="2"/>`;
       s+=`<rect x="26" y="56" width="238" height="176" rx="15" fill="rgba(125,224,160,.06)" stroke="${grn}" stroke-width="2" stroke-dasharray="9 7"/>`;
       s+=`<rect x="34" y="47" width="126" height="20" rx="7" fill="rgba(10,18,36,.98)" stroke="${grn}" stroke-width="1.5"/>${tx(97,61,10.5,grn,'пока не вышли',{b:1})}`;
-      s+=`<g class="Pop" style="animation-delay:.15s"><path d="M130 84 l62 24 l-62 24 l-62 -24 z" fill="rgba(176,127,255,.14)" stroke="${pur}" stroke-width="2.2"/>${tx(130,112,12.5,pur,'стена?',{b:1})}</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.15s"><path d="M130 84 l62 24 l-62 24 l-62 -24 z" fill="rgba(176,127,255,.14)" stroke="${pur}" stroke-width="2.2"/>${tx(130,112,12.5,pur,'стена?',{b:1})}</g>`;
       s+=`<path d="M192 108 H200" stroke="${A}" stroke-width="2"/><path d="M196 104 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>${tx(206,100,10,dim,'да',{})}`;
-      s+=`<g class="Pop" style="animation-delay:.28s"><rect x="204" y="86" width="52" height="30" rx="8" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>${tx(230,105,11,gold,'повернуть',{})}</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.28s"><rect x="204" y="86" width="52" height="30" rx="8" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>${tx(230,105,11,gold,'повернуть',{})}</g>`;
       s+=`<path d="M230 116 V142 H196" stroke="${A}" stroke-width="2" opacity=".65" class="${pre}Dash"/><path d="M200 138 l-5 4 l5 4" fill="none" stroke="${A}" stroke-width="2"/>`;
       s+=`<path d="M130 132 V142" stroke="${A}" stroke-width="2" class="${pre}Dash"/><path d="M126 138 l4 5 l4 -5" fill="none" stroke="${A}" stroke-width="2"/>${tx(146,140,10,dim,'нет',{})}`;
-      s+=`<g class="Pop" style="animation-delay:.4s" filter="url(#${pre}sh)"><rect x="60" y="148" width="134" height="32" rx="9" fill="url(#${pre}card)" stroke="${bc||A}" stroke-width="2.2"/>${tx(127,169,12.5,ink,'шаг вперёд',{b:1})}</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.4s" filter="url(#${pre}sh)"><rect x="60" y="148" width="134" height="32" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2.2"/>${tx(127,169,12.5,ink,'шаг вперёд',{b:1})}</g>`;
       s+=`<path d="M127 180 V206 H38 V108 H64" fill="none" stroke="${A}" stroke-width="2" opacity=".6" class="${pre}Dash"/><path d="M60 104 l-5 4 l5 4" fill="none" stroke="${A}" stroke-width="2"/>`
         +`<circle r="4" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M127 180 V206 H38 V108 H64"/></circle>`;
-      s+=`<path d="M264 206 H282" stroke="${A}" stroke-width="2" opacity=".7"/><path d="M278 202 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>`
-        +`<ellipse cx="298" cy="206" rx="18" ry="12" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.8"/>${tx(298,210,9.5,red,'выход',{})}`;
+      s+=`<path d="M264 206 H270" stroke="${A}" stroke-width="2" opacity=".7"/><path d="M266 202 l5 4 l-5 4" fill="none" stroke="${A}" stroke-width="2"/>`
+        +`<ellipse cx="288" cy="206" rx="16" ry="12" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.8"/>${tx(288,210,7,red,'выход',{})}`;
       s+=`<rect class="${pre}Scan" style="--scan:160px" x="30" y="60" width="230" height="2" rx="1" fill="${grn}" opacity=".2"/>`;
       return s;
     }
@@ -1649,6 +1649,262 @@
         +`${tx(159,188,Math.min(11.5,252/Math.max(1,msg.length)/0.7),done?grn:dim,msg,{b:done})}</g>`;
       return s;
     }
+    if(K==='disorder'){ /* числа стоят вразнобой */
+      const vals=v.vals||[7,2,9,3,1];
+      const w=52, gap=6, tot=vals.length*w+(vals.length-1)*gap, x0=Math.round((CW-tot)/2);
+      let s=`<g class="${pre}Pop"><rect x="30" y="18" width="258" height="30" rx="10" fill="url(#${pre}card)" stroke="${gold}" stroke-width="2"/>`
+        +`${tx(159,38,13,gold,'как навести порядок?',{b:1})}</g>`;
+      vals.forEach((v2,k)=>{
+        const x=x0+k*(w+gap);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1*k).toFixed(2)}s"><g>`
+          +`<animateTransform attributeName="transform" type="translate" values="0 0;2 -4;-3 3;0 0" dur="${(2.4+k*0.3).toFixed(2)}s" begin="${(k*0.2).toFixed(2)}s" repeatCount="indefinite"/>`
+          +`<rect x="${x}" y="70" width="${w}" height="54" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+          +`<text x="${x+w/2}" y="104" text-anchor="middle" font-size="22" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text></g></g>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="22" y="146" width="274" height="30" rx="9" fill="rgba(255,120,100,.1)" stroke="${red}" stroke-width="1.7"/>`
+        +`${tx(159,166,11.5,red,'так числа искать долго и неудобно',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='order'){ /* карточки сами встают по порядку */
+      const init=v.vals||[7,2,9,3,1], fin=init.slice().sort((a,b)=>a-b);
+      const w=52, gap=6, tot=fin.length*w+(fin.length-1)*gap, x0=Math.round((CW-tot)/2);
+      let s=`<g class="${pre}Pop"><rect x="24" y="18" width="270" height="30" rx="10" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2"/>`
+        +`${tx(159,38,12.5,grn,'по порядку — от меньшего к большему',{b:1})}</g>`;
+      fin.forEach((v2,k)=>{
+        const x=x0+k*(w+gap), from=init.indexOf(v2)* (w+gap);
+        s+=`<g><animateTransform attributeName="transform" type="translate" values="${(from-(k*(w+gap))).toFixed(0)} -30;0 0;0 0" keyTimes="0;.6;1" dur="3s" begin="${(k*0.25).toFixed(2)}s" repeatCount="indefinite"/>`
+          +`<rect x="${x}" y="70" width="${w}" height="54" rx="10" fill="url(#${pre}card)" stroke="${grn}" stroke-width="2"/>`
+          +`<text x="${x+w/2}" y="104" text-anchor="middle" font-size="22" font-family="Georgia,serif" font-weight="bold" fill="${grn}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text>`
+          +`<path d="M${x+w/2} 130 l5 6 l9 -12" fill="none" stroke="${grn}" stroke-width="2.4" opacity=".8"/></g>`;
+      });
+      s+=`${tx(159,166,11.5,dim,'каждое число встало на своё место',{})}`;
+      return s;
+    }
+    if(K==='scale'){ /* весы: сравнение двух чисел */
+      const a=(v.a===undefined?7:v.a), b=(v.b===undefined?2:v.b);
+      let s=`<path d="M159 44 V150" stroke="#41558a" stroke-width="4"/>`;
+      s+=`<path d="M120 150 h78" stroke="#41558a" stroke-width="5" stroke-linecap="round"/>`;
+      s+=`<g><animateTransform attributeName="transform" type="rotate" values="0 159 44;-9 159 44;-9 159 44;0 159 44" keyTimes="0;.25;.85;1" dur="5s" repeatCount="indefinite"/>`
+        +`<path d="M74 44 H244" stroke="${gold}" stroke-width="4" stroke-linecap="round"/>`
+        +`<circle cx="159" cy="44" r="7" fill="${gold}"/>`;
+      [[74,a,'левое'],[244,b,'правое']].forEach((q,k)=>{
+        const c=k===0?blu:pur;
+        s+=`<path d="M${q[0]} 44 V74" stroke="#41558a" stroke-width="2"/>`
+          +`<path d="M${q[0]-26} 74 H${q[0]+26} L${q[0]+16} 106 H${q[0]-16} z" fill="rgba(126,168,255,.14)" stroke="${c}" stroke-width="2"/>`
+          +`<text x="${q[0]}" y="96" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="${c}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(q[1])}</text>`;
+      });
+      s+=`</g>`;
+      s+=`${tx(159,124,10.5,dim,'сравниваем два числа',{})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.4s"><rect x="24" y="150" width="270" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(159,170,11.5,grn,'7 больше 2 — значит большее идёт правее',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='swap2'){ /* обмен двух чисел местами */
+      const a=(v.a===undefined?7:v.a), b=(v.b===undefined?2:v.b);
+      const card=(x,y,val,c)=>`<rect x="${x}" y="${y}" width="54" height="46" rx="10" fill="url(#${pre}card)" stroke="${c}" stroke-width="2.2"/>`
+        +`<text x="${x+27}" y="${y+31}" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="${c}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(val)}</text>`;
+      let s=`${tx(88,34,11,dim,'было',{b:1})}${card(61,42,a,red)}${card(161,42,b,blu)}`;
+      s+=`<path d="M121 52 C140 30, 156 30, 175 50" fill="none" stroke="${gold}" stroke-width="2.4" class="${pre}Dash"/>`
+        +`<path d="M171 42 l6 9 l-10 1" fill="none" stroke="${gold}" stroke-width="2.4"/>`
+        +`<path d="M175 76 C156 98, 140 98, 121 78" fill="none" stroke="${gold}" stroke-width="2.4" class="${pre}Dash"/>`
+        +`<path d="M125 86 l-6 -9 l10 -1" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.35s">${tx(230,34,11,grn,'стало',{b:1})}${card(203,42,b,grn)}${card(103,42,a,grn)}</g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.6s"><rect x="40" y="116" width="238" height="30" rx="9" fill="rgba(125,224,160,.1)" stroke="${grn}" stroke-width="1.7"/>`
+        +`${tx(159,136,11.5,grn,'поменяли местами — стало по порядку',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='bubble'){ /* большое число всплывает вправо */
+      const vals=v.vals||[2,3,1,7,9];
+      const w=46, gap=6, tot=vals.length*w+(vals.length-1)*gap, x0=Math.round((CW-tot)/2);
+      let s='';
+      vals.forEach((v2,k)=>{
+        const x=x0+k*(w+gap);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1*k).toFixed(2)}s"><rect x="${x}" y="112" width="${w}" height="46" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+          +`<text x="${x+w/2}" y="142" text-anchor="middle" font-size="19" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text></g>`;
+      });
+      s+=`<g><circle r="17" fill="rgba(255,215,106,.2)" stroke="${gold}" stroke-width="2.4"/>`
+        +`<text y="6" text-anchor="middle" font-size="18" font-family="Georgia,serif" font-weight="bold" fill="${gold}">9</text>`
+        +`<animateMotion dur="3.4s" repeatCount="indefinite" path="M${x0+4*(w+gap)+w/2} 100 Q159 30 ${x0+4*(w+gap)+w/2} 100"/></g>`;
+      s+=`${tx(159,176,11.5,gold,'самое большое число «всплывает» в конец',{b:1})}`;
+      s+=`${tx(159,194,11,dim,'как пузырёк в воде — так работает пузырьковая сортировка',{})}`;
+      return s;
+    }
+    if(K==='pass'){ /* один проход: сравниваем пары */
+      const vals=v.vals||[2,7,3,1,9];
+      const w=52, gap=6, tot=vals.length*w+(vals.length-1)*gap, x0=Math.round((CW-tot)/2);
+      let s='';
+      vals.forEach((v2,k)=>{
+        const x=x0+k*(w+gap);
+        s+=`<rect x="${x}" y="74" width="${w}" height="50" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+          +`<text x="${x+w/2}" y="107" text-anchor="middle" font-size="21" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text>`;
+      });
+      for(let k=0;k<vals.length-1;k++){
+        const x=x0+k*(w+gap);
+        s+=`<rect x="${x-3}" y="71" width="${2*w+gap+6}" height="56" rx="12" fill="${A}" opacity=".1">`
+          +`<animate attributeName="opacity" values="0.08;0.28;0.08;0.08" keyTimes="0;.3;.6;1" dur="${((vals.length-1)*0.55+1).toFixed(2)}s" begin="${(k*0.55).toFixed(2)}s" repeatCount="indefinite"/></rect>`;
+      }
+      s+=`<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.75;.85;1" dur="3.6s" repeatCount="indefinite"/>`
+        +`<rect x="${x0+(vals.length-1)*(w+gap)-4}" y="70" width="${w+8}" height="58" rx="13" fill="none" stroke="${gold}" stroke-width="2.6"/>`
+        +`${tx(x0+(vals.length-1)*(w+gap)+w/2,66,10.5,gold,'на месте',{b:1})}</g>`;
+      s+=`${tx(159,146,11.5,dim,'идём слева направо и сравниваем соседей',{})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="22" y="158" width="274" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.7"/>`
+        +`${tx(159,178,11.5,gold,'самое большое встало в конец — оно на месте',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='passes'){ /* проходы: ряд становится по порядку */
+      const rows=v.rows||[[2,7,3,1,9],[2,3,1,7,9],[2,1,3,7,9],[1,2,3,7,9]];
+      const w=40, gap=5, tot=5*w+4*gap, x0=20;
+      let s='';
+      rows.forEach((r,k)=>{
+        const y=26+k*42;
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.2+k*0.3).toFixed(2)}s">`;
+        r.forEach((v2,j)=>{
+          const x=x0+j*(w+gap), done=(v2===r.slice().sort((p,q)=>p-q)[j]);
+          s+=`<rect x="${x}" y="${y}" width="${w}" height="34" rx="8" fill="rgba(15,25,46,.97)" stroke="${done?grn:'#6ea8ff'}" stroke-width="${done?2:1.6}"/>`
+            +`<text x="${x+w/2}" y="${y+23}" text-anchor="middle" font-size="16" font-family="Georgia,serif" font-weight="bold" fill="${done?grn:ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${plain(v2)}</text>`;
+        });
+        s+=`<rect x="248" y="${y+4}" width="52" height="26" rx="8" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.5"/>`
+          +`${tx(274,y+22,10.5,gold,'проход '+(k+1),{b:1})}</g>`;
+      });
+      s+=`${tx(159,26+rows.length*42+2,11,dim,'с каждым проходом порядок становится лучше',{})}`;
+      return s;
+    }
+    if(K==='minscan'){ /* сканер ищет самое маленькое */
+      const vals=v.vals||[7,2,9,3,1];
+      const w=52, gap=6, tot=vals.length*w+(vals.length-1)*gap, x0=Math.round((CW-tot)/2);
+      let s='';
+      vals.forEach((v2,k)=>{
+        const x=x0+k*(w+gap);
+        s+=`<rect x="${x}" y="84" width="${w}" height="50" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+          +`<text x="${x+w/2}" y="117" text-anchor="middle" font-size="21" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text>`;
+      });
+      s+=`<g opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.08;.28;.36;1" dur="4.4s" repeatCount="indefinite"/>`
+        +`<rect x="${x0-3}" y="81" width="${w+6}" height="56" rx="12" fill="none" stroke="${gold}" stroke-width="2.6"/>${tx(x0+w/2,72,10,gold,'минимум',{b:1})}</g>`;
+      s+=`<g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.5;.58;.85;.93;1" dur="4.4s" repeatCount="indefinite"/>`
+        +`<rect x="${x0+4*(w+gap)-3}" y="81" width="${w+6}" height="56" rx="12" fill="none" stroke="${grn}" stroke-width="2.6"/>${tx(x0+4*(w+gap)+w/2,72,10,grn,'новый',{b:1})}</g>`;
+      s+=`<rect x="${x0-6}" y="52" width="${w+12}" height="80" rx="14" fill="none" stroke="${cyan}" stroke-width="2" opacity=".65">`
+        +`<animateMotion dur="4.4s" repeatCount="indefinite" path="M0 0 H${(4*(w+gap))}"/></rect>`;
+      s+=`${tx(159,158,11.5,cyan,'сканер запоминает самое маленькое',{b:1})}`;
+      return s;
+    }
+    if(K==='minmove'){ /* минимум переезжает в начало */
+      const vals=v.vals||[2,7,9,3,1];
+      const w=46, gap=6, tot=vals.length*w+(vals.length-1)*gap, x0=Math.round((CW-tot)/2);
+      let s='';
+      vals.forEach((v2,k)=>{
+        const x=x0+k*(w+gap), isMin=(v2===1);
+        s+=`<rect x="${x}" y="80" width="${w}" height="46" rx="10" fill="url(#${pre}card)" stroke="${isMin?red:'#6ea8ff'}" stroke-width="${isMin?2.4:1.8}"/>`
+          +`<text x="${x+w/2}" y="110" text-anchor="middle" font-size="19" font-family="Georgia,serif" font-weight="bold" fill="${isMin?red:ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text>`;
+      });
+      s+=`<g><circle r="14" fill="rgba(125,224,160,.22)" stroke="${grn}" stroke-width="2.2"/>`
+        +`<text y="6" text-anchor="middle" font-size="17" font-family="Georgia,serif" font-weight="bold" fill="${grn}">1</text>`
+        +`<animateMotion dur="3.6s" repeatCount="indefinite" path="M${x0+4*(w+gap)+w/2} 74 Q159 22 ${x0+w/2} 74"/></g>`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.45s">`;
+      [1,2,7,9,3].forEach((v2,k)=>{
+        const x=x0+k*(w+gap), first=(k===0);
+        s+=`<rect x="${x}" y="128" width="${w}" height="42" rx="10" fill="rgba(19,44,35,.9)" stroke="${first?grn:'#6ea8ff'}" stroke-width="${first?2.4:1.6}"/>`
+          +`<text x="${x+w/2}" y="155" text-anchor="middle" font-size="17" font-family="Georgia,serif" font-weight="bold" fill="${first?grn:ink}" paint-order="stroke" stroke="#08101f" stroke-width="3">${plain(v2)}</text>`;
+      });
+      s+=`</g>`;
+      s+=`${tx(159,190,11.5,grn,'самое маленькое встало в начало ряда',{b:1})}`;
+      return s;
+    }
+    if(K==='sortedok'){ /* ряд отсортирован */
+      const vals=v.vals||[1,2,3,7,9];
+      const w=52, gap=6, tot=vals.length*w+(vals.length-1)*gap, x0=Math.round((CW-tot)/2);
+      let s='';
+      vals.forEach((v2,k)=>{
+        const x=x0+k*(w+gap);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12*k).toFixed(2)}s">`
+          +`<rect x="${x}" y="76" width="${w}" height="50" rx="10" fill="rgba(19,44,35,.9)" stroke="${grn}" stroke-width="2.2"/>`
+          +`<text x="${x+w/2}" y="109" text-anchor="middle" font-size="21" font-family="Georgia,serif" font-weight="bold" fill="${grn}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text>`
+          +`<path d="M${x+w/2-11} 56 l5 6 l11 -13" fill="none" stroke="${grn}" stroke-width="2.6"/></g>`;
+        if(k<vals.length-1) s+=`<path d="M${x+w+1} 101 h${gap-2}" stroke="${grn}" stroke-width="2" opacity=".6"/>`;
+      });
+      s+=`<g class="${pre}Rise" style="animation-delay:.7s"><rect x="30" y="142" width="258" height="30" rx="9" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(159,162,12,grn,'ряд отсортирован!',{b:1})}</g>`;
+      s+=`${tx(159,188,11,dim,'каждое число не больше следующего',{})}`;
+      return s;
+    }
+    if(K==='neighbors'){ /* проверяем соседей */
+      const vals=v.vals||[2,3,7,9,12];
+      const w=46, gap=14, tot=vals.length*w+(vals.length-1)*gap, x0=Math.round((CW-tot)/2);
+      let s='';
+      vals.forEach((v2,k)=>{
+        const x=x0+k*(w+gap);
+        s+=`<rect x="${x}" y="60" width="${w}" height="46" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+          +`<text x="${x+w/2}" y="90" text-anchor="middle" font-size="19" font-family="Georgia,serif" font-weight="bold" fill="${ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text>`;
+        if(k<vals.length-1){
+          const mx=x+w+gap/2;
+          s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.25).toFixed(2)}s"><text x="${mx}" y="90" text-anchor="middle" font-size="15" font-weight="bold" fill="${grn}">≤</text>`
+            +`<circle cx="${mx}" cy="108" r="6" fill="none" stroke="${grn}" stroke-width="1.8"/><path d="M${mx-2} 108 l2 3 l4 -5" fill="none" stroke="${grn}" stroke-width="1.6"/></g>`;
+        }
+      });
+      s+=`${tx(159,138,11.5,dim,'проверяем каждую пару соседей',{})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.8s"><rect x="24" y="150" width="270" height="30" rx="9" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(159,170,11.5,grn,'все пары в порядке — ряд отсортирован',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='why'){ /* зачем сортировать */
+      let s=`<rect x="12" y="28" width="146" height="122" rx="11" fill="rgba(19,44,35,.5)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(85,46,10.5,grn,'по порядку',{b:1})}`
+        +`<rect x="160" y="28" width="146" height="122" rx="11" fill="rgba(52,22,26,.5)" stroke="${red}" stroke-width="1.8"/>`
+        +`${tx(233,46,10.5,red,'вразнобой',{b:1})}`;
+      const drawer=(x,y,val,hit,c)=>`<rect x="${x}" y="${y}" width="34" height="22" rx="5" fill="${hit?'rgba(125,224,160,.2)':'rgba(15,25,46,.95)'}" stroke="${hit?grn:'#3a4c78'}" stroke-width="${hit?2:1.3}"/>`
+        +`<text x="${x+17}" y="${y+15}" text-anchor="middle" font-size="11" font-weight="bold" fill="${hit?grn:'#8ea3c8'}">${val}</text>`;
+      [1,2,3,4,5].forEach((n2,k)=>{ s+=drawer(20+k*26,58,n2,n2===3,grn); });
+      s+=`<circle class="${pre}Pop" cx="89" cy="69" r="13" fill="none" stroke="${grn}" stroke-width="2.2"/>`
+        +`${tx(85,100,10.5,grn,'нашли за 1 шаг',{b:1})}`;
+      [7,1,9,3,5].forEach((n2,k)=>{ s+=drawer(168+k*26,58,n2,n2===3,red); });
+      s+=`${tx(233,100,10.5,red,'перебрали все 5',{b:1})}`;
+      s+=`${tx(85,126,10,dim,'сразу видно, где искать',{})}${tx(233,126,10,dim,'приходится смотреть всё',{})}`;
+      s+=`<g class="${pre}Rise" style="animation-delay:.5s"><rect x="20" y="156" width="278" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.6"/>`
+        +`${tx(159,175,11.5,gold,'в отсортированном ряду искать быстрее',{b:1})}</g>`;
+      return s;
+    }
+    if(K==='countcmp'){ /* сколько сравнений нужно */
+      const rows=v.rows||[[3,3],[4,6],[5,10],[10,45]];
+      let s=`<g class="${pre}Pop"><rect x="70" y="20" width="178" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +`${tx(159,39,11.5,ink,'чисел · сравнений',{b:1})}</g>`;
+      rows.forEach((r,k)=>{
+        const y=58+k*32, bw=Math.round(r[1]*3.4);
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.15+k*0.15).toFixed(2)}s">`
+          +`<circle cx="46" cy="${y+12}" r="12" fill="rgba(110,168,255,.14)" stroke="${blu}" stroke-width="1.5"/>`
+          +`<text x="46" y="${y+17}" text-anchor="middle" font-size="13" font-weight="bold" fill="${blu}" font-family="Georgia,serif">${r[0]}</text>`
+          +`<rect x="66" y="${y}" width="${Math.min(bw,180)}" height="24" rx="7" fill="${A}" opacity=".22" stroke="${A}" stroke-width="1.2"/>`
+          +`<text x="76" y="${y+17}" font-size="11.5" font-weight="bold" fill="${ink}">${r[1]} сравнений</text></g>`;
+      });
+      s+=`${tx(159,58+rows.length*32+10,11,dim,'чем больше чисел, тем больше сравнений',{})}`;
+      return s;
+    }
+    if(K==='sortgame'){ /* интерактив: меняем соседей местами, пока ряд не встанет по порядку */
+      const start=v.vals||[7,2,9,3,1];
+      const arr=(st&&st.arr&&st.arr.length)?st.arr:start;
+      const tgt=start.slice().sort((a,b)=>a-b);
+      const isSorted=arr.every((x,i)=>i===0||arr[i-1]<=x);
+      const moves=(st&&st.moves)||0;
+      const w=52, gap=6, tot=arr.length*w+(arr.length-1)*gap, x0=Math.round((CW-tot)/2);
+      let s=`<g class="${pre}Pop"><rect x="16" y="18" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +`${tx(159,38,Math.min(12,246/Math.max(1,plain(v.q||'').length)/0.72),ink,v.q||'Нажми на число, чтобы поменять его с соседом справа',{b:1})}</g>`;
+      arr.forEach((v2,k)=>{
+        const x=x0+k*(w+gap), inPlace=(v2===tgt[k]);
+        s+=`<g class="${pre}Slide" style="animation-delay:${(0.06*k).toFixed(2)}s;cursor:pointer" onclick="infSwap('${lk}',${k},0)">`
+          +`<rect x="${x}" y="70" width="${w}" height="52" rx="10" fill="${inPlace?'rgba(19,44,35,.97)':'rgba(15,25,46,.97)'}" stroke="${inPlace?grn:A}" stroke-width="${inPlace?2.4:2}"/>`
+          +`<text x="${x+w/2}" y="104" text-anchor="middle" font-size="22" font-family="Georgia,serif" font-weight="bold" fill="${inPlace?grn:ink}" paint-order="stroke" stroke="#08101f" stroke-width="3.5">${plain(v2)}</text>`
+          +`${tx(x+w/2,138,10.5,dim,''+k,{})}</g>`;
+      });
+      for(let k=0;k<arr.length-1;k++){
+        const x=x0+k*(w+gap);
+        s+=`<path d="M${x+w} 96 h${gap}" stroke="${A}" stroke-width="1.6" opacity=".5"/>`;
+      }
+      s+=`<rect x="96" y="152" width="126" height="28" rx="9" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.6"/>`
+        +`${tx(159,171,11.5,gold,'обменов: '+moves,{b:1})}`;
+      if(isSorted) s+=`<g class="${pre}Pop"><rect x="30" y="190" width="258" height="30" rx="9" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +`${tx(159,210,12,grn,'Отсортировано! Обменов: '+moves,{b:1})}</g>`;
+      else s+=`<g class="${pre}Rise"><rect x="30" y="190" width="258" height="30" rx="9" fill="rgba(15,25,46,.95)" stroke="${A}" stroke-width="1.5" stroke-opacity=".5"/>`
+        +`${tx(159,210,11,dim,'нажимай числа, пока ряд не встанет по порядку',{})}</g>`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -1725,6 +1981,20 @@
     if(K==='trace') return 26+27+(v.rows||[]).length*27+44;
     if(K==='compare') return 208;
     if(K==='text') return ((v.lines||[]).length<=2)?(132+26*(v.lines||[]).length):Math.max(134, (v.lines||[]).length*39+54);
+    if(K==='disorder') return 200;
+    if(K==='order') return 190;
+    if(K==='scale') return 196;
+    if(K==='swap2') return 166;
+    if(K==='bubble') return 212;
+    if(K==='pass') return 206;
+    if(K==='passes') return 26+(v.rows||[1,2,3,4]).length*42+22;
+    if(K==='minscan') return 180;
+    if(K==='minmove') return 208;
+    if(K==='sortedok') return 200;
+    if(K==='neighbors') return 194;
+    if(K==='why') return 198;
+    if(K==='countcmp') return 58+(v.rows||[1,2,3,4]).length*32+28;
+    if(K==='sortgame') return 232;
     if(K==='manyvars') return 218;
     if(K==='train') return 200;
     if(K==='cells') return 200;
@@ -2297,6 +2567,46 @@
       tasks:[
         {q:'Дан список [5, 8, 1]. Чему равна его длина?', kind:'unit', ans:3, tol:0, hints:['Посчитай ячейки.','Их три.'], sol:'3'},
         {q:'Числа = [4, 9, 6]. Что окажется в переменной x после команды x = числа[1]?', kind:'choice', choices:['9','4','6','1'], ans:0, tol:0, hints:['Индекс 1 — это второй элемент.','Второй элемент — 9.'], sol:'9'}
+      ] },
+    { id:516, title:'Сортировка: расставляем числа по порядку', ico:'🔢', src:'Информатика · 5–6 класс · С нуля: сортировка',
+      explain:[
+        'В списке числа могут стоять как попало. С таким рядом неудобно работать: трудно найти нужное число.',
+        'Навести порядок — значит расставить числа по порядку: от самого маленького к самому большому.',
+        'Чтобы расставить числа, компьютер их сравнивает. Сравнение — это вопрос «кто больше?», и ответ на него всегда точный.',
+        'Если два соседних числа стоят не по порядку — их меняют местами. Такой обмен называют перестановкой.',
+        'Самый простой способ — идти по ряду слева направо и сравнивать соседей: если левое больше правого, меняем их местами.',
+        'За один такой проход самое большое число «всплывает» в конец ряда — как пузырёк в воде. Поэтому способ называют пузырьковой сортировкой.',
+        'Один проход ставит на место только одно число — самое большое. Значит, проходы нужно повторять.',
+        'Каждый следующий проход можно делать короче: последнее число уже стоит на месте, и его можно не трогать.',
+        'Есть и другой способ: найти самое маленькое число и поставить его в начало, потом искать следующее — и так до конца.',
+        'Способов сортировки несколько: пузырьковая и выбором — самые простые. Результат у них один: ряд, расставленный по порядку.',
+        'Когда ряд встал по порядку, каждое число не больше следующего. Это и есть проверка: сравниваем соседей по очереди.',
+        'Сортировка нужна не сама по себе, а чтобы быстро искать: в упорядоченном ряду нужное число находится сразу.',
+        'Чем больше чисел, тем больше сравнений нужно. Для трёх чисел хватает трёх сравнений, а для пяти — уже десяти.',
+        'Компьютер сортирует очень быстро: миллионы чисел он расставляет за секунды.',
+        'Проверь себя: что нужно сделать, если два соседних числа стоят не по порядку?',
+        'Тренажёр и шпаргалка.' ],
+      slides:[
+        {h:'Числа стоят вразнобой', v:{kind:'disorder', vals:[7,2,9,3,1]}, r:'Как навести порядок?', d:'Карточки дрожат и стоят как попало: в таком ряду трудно что-то найти.'},
+        {h:'По порядку', v:{kind:'order', vals:[7,2,9,3,1]}, r:'От меньшего к большему.', d:'Смотри: карточки сами съезжают на свои места — получается 1, 2, 3, 7, 9.'},
+        {h:'Сравниваем два числа', v:{kind:'scale', a:7, b:2}, r:'Сначала сравнить: кто больше?', d:'Весы показывают: 7 тяжелее 2. Значит, большее число должно стоять правее.'},
+        {h:'Меняем местами', v:{kind:'swap2', a:7, b:2}, r:'Если не по порядку — обмен.', d:'Два числа меняются местами: было 7 и 2, стало 2 и 7 — теперь по порядку.'},
+        {h:'Пузырёк', v:{kind:'bubble', vals:[2,3,1,7,9]}, r:'Большое «всплывает» в конец.', d:'Большое число поднимается и уходит вправо, как пузырёк в воде — отсюда название способа.'},
+        {h:'Один проход', v:{kind:'pass', vals:[2,7,3,1,9]}, r:'Идём и сравниваем соседей.', d:'Подсветка по очереди обводит пары: 2 и 7, потом 7 и 3, потом 3 и 1, потом 1 и 9. В конце 9 оказалось на месте.'},
+        {h:'Повторяем проходы', v:{kind:'passes', rows:[[2,7,3,1,9],[2,3,1,7,9],[2,1,3,7,9],[1,2,3,7,9]]}, r:'Каждый проход ставит число на место.', d:'Зелёные числа уже стоят правильно. С каждым проходом зелёных становится больше, пока весь ряд не станет зелёным.'},
+        {h:'Ищем самое маленькое', v:{kind:'minscan', vals:[7,2,9,3,1]}, r:'Сканер ищет минимум.', d:'Рамка идёт по ряду и запоминает самое маленькое число: сначала это 7, потом 2, а потом 1.'},
+        {h:'Минимум — в начало', v:{kind:'minmove', vals:[2,7,9,3,1]}, r:'Маленькое переезжает вперёд.', d:'Самое маленькое число перелетает в начало ряда, а остальные сдвигаются вправо.'},
+        {h:'Ряд отсортирован', v:{kind:'sortedok', vals:[1,2,3,7,9]}, r:'Готово: каждое число на месте.', d:'Все числа встали по порядку, у каждой карточки галочка.'},
+        {h:'Как проверить', v:{kind:'neighbors', vals:[2,3,7,9,12]}, r:'Сравниваем соседей по очереди.', d:'Проверка простая: каждое число должно быть не больше следующего. Между парами появляются знаки «меньше или равно» с галочками.'},
+        {h:'Зачем сортировать', v:{kind:'why'}, r:'В порядке искать быстрее.', d:'Слева числа по порядку — нужное находится сразу. Справа вразнобой — приходится перебирать всё.'},
+        {h:'Сколько сравнений', v:{kind:'countcmp', rows:[[3,3],[4,6],[5,10],[10,45]]}, r:'Чем больше чисел, тем больше работы.', d:'Для трёх чисел нужно 3 сравнения, для пяти — 10, а для десяти — уже 45.'},
+        {h:'Отсортируй сам', v:{kind:'sortgame', vals:[7,2,9,3,1], q:'Нажми на число, чтобы поменять его с соседом справа'}, r:'Проверь себя: расставь числа.', d:'Нажимай карточки: выбранное число меняется местами с соседом справа. Цель — расставить числа по порядку.'},
+        {h:'Что выведет программа', v:{kind:'pick', q:'Сколько обменов нужно, чтобы из ряда 3, 1, 2 получился ряд 1, 2, 3?', opts:[{t:'2', ok:1},{t:'1'},{t:'3'}], exp:'Меняем 3 и 1 — получаем 1, 3, 2; потом меняем 3 и 2 — получаем 1, 2, 3. Всего два обмена.'}, r:'Проверь себя: посчитай обмены.', d:'Посчитай, сколько раз придётся поменять соседей местами, и выбери ответ.'},
+        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'сравнить → поменять местами', b:1},{t:'большое «всплывает» в конец', c:gold},{t:'ряд готов, если каждое ≤ следующего', c:grn}]}, r:'Запомни, как работает сортировка.', d:'Главное: сравниваем соседей и меняем местами, пока каждое число не встанет на своё место.'} ],
+      check:{ q:'Что нужно сделать, если два соседних числа стоят не по порядку?', choices:['поменять их местами','удалить одно из них','дописать ещё число'], ans:0, exp:'Если левое число больше правого, их меняют местами — это и есть шаг сортировки.' },
+      tasks:[
+        {q:'Ряд 3, 1, 2. Сколько обменов нужно, чтобы получился ряд 1, 2, 3?', kind:'unit', ans:2, tol:0, hints:['Сначала поменяй 3 и 1.','Потом поменяй 3 и 2 — всего два обмена.'], sol:'2'},
+        {q:'Когда ряд чисел можно считать отсортированным?', kind:'choice', choices:['когда каждое число не больше следующего','когда чисел стало больше','когда все числа одинаковые'], ans:0, tol:0, hints:['Сравни соседей по очереди.','Каждое число не больше следующего.'], sol:'когда каждое число не больше следующего'}
       ] }
   ];
 
@@ -2305,15 +2615,18 @@
     const pre='ix'+L.id;
     css(pre);
     const step=LV.step||0;
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; st.seq=[]; st.bad=-1; st.find=-1; }
-    const go=st.go||0;
     const s=spec.slides[Math.min(step,spec.slides.length-1)];
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell');
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    if(st._at!==step){ st._at=step; st.go=0; st.pick=-1; st.seq=[]; st.bad=-1; st.find=-1; st.moves=0;
+      st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; }
+    const go=st.go||0;
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
       ? wkRow(wkBtn('собрать заново',`infSeq('${lk}',-1,0)`))
+      : (s.v.kind==='sortgame')
+      ? wkRow(wkBtn('начать заново',`infSwap('${lk}',-1,1)`))
       : (s.v.kind==='find')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
@@ -2321,7 +2634,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -2330,6 +2643,16 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infSwap=function(lk,i,reset){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(reset){ st.arr=null; st.moves=0; chRender(0); return; }
+    const cur=st.arr||null;
+    const base=(cur&&cur.length)?cur:null;
+    if(!base) return;
+    if(i<0||i>=base.length-1) return;
+    const v=base.slice(), t=v[i]; v[i]=v[i+1]; v[i+1]=t;
+    st.arr=v; st.moves=(st.moves||0)+1; chRender(0);
+  };
   window.infCell=function(lk,i,ok){
     const st=CHS[lk]||(CHS[lk]={});
     if(i<0){ st.find=-1; st.bad=-1; chRender(0); return; }
