@@ -74,7 +74,7 @@
       <div class="ap-chips" id="asstChips"></div>
       <div class="ap-hint">💡 Кнопки меню подстраиваются под экран; голосовые — работают, когда разговор включён.</div>
       <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-        <span class="ap-hint" id="asstVer" style="margin:0">сборка v359</span>
+        <span class="ap-hint" id="asstVer" style="margin:0">сборка v360</span>
         <button class="asmall" style="width:auto;padding:0 10px" onclick="ASSIST.hardReload()" title="Сбросить кэш и обновить">🔄 Обновить</button>
       </div>
     </div>`)
@@ -237,22 +237,19 @@
     if(tab) return tab;
     return 'path';
   }
-  let tipTimer=null, tipIdx=0, tipCtxKey='';
+  /* Подсказка-«облачко» показывается РОВНО ОДИН РАЗ за всё время и больше не всплывает. */
+  let tipHideTimer=null, tipDone=false;
   function tipLoop(){
-    if(tipTimer) return;
-    tipTimer=setInterval(()=>{ try{ tickTip(false); }catch(e){} },8000);
-    setTimeout(()=>{ try{ tickTip(true); }catch(e){} },3500);
-  }
-  function tickTip(forceNew){
-    if(typeof AGENTLIVE!=='undefined'&&AGENTLIVE.state&&AGENTLIVE.state()) return; // не мешать разговору
-    const k=tipKind();
-    if(k!==tipCtxKey){ tipCtxKey=k; tipIdx=0; }
-    const pool=TIPS[k]||TIPS.path;
-    if(!pool.length) return;
-    const t=pool[tipIdx%pool.length]; tipIdx++;
-    bubEl.innerHTML=esc(t); bubEl.classList.add('show');
-    clearTimeout(tipTimer._h);
-    tipTimer._h=setTimeout(()=>{ bubEl.classList.remove('show'); },4300);
+    if(tipDone) return; tipDone=true;
+    try{ if(DB&&DB.profile&&DB.profile.tipDone) return; }catch(e){}
+    setTimeout(()=>{ try{
+      if(typeof AGENTLIVE!=='undefined'&&AGENTLIVE.state&&AGENTLIVE.state()) return; // не мешать разговору
+      const pool=TIPS[tipKind()]||TIPS.path; if(!pool.length) return;
+      try{ DB.profile.tipDone=1; if(typeof saveDB==='function') saveDB(); }catch(e){}
+      bubEl.innerHTML=esc(pool[0]); bubEl.classList.add('show');
+      clearTimeout(tipHideTimer);
+      tipHideTimer=setTimeout(()=>{ bubEl.classList.remove('show'); },4300);
+    }catch(e){} },2500);
   }
   let menuTimer=null;
   function watchMenu(){

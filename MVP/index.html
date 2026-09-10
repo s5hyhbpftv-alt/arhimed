@@ -307,10 +307,10 @@
     font-size:12px; padding:6px 11px; cursor:pointer; font-family:inherit; }
   .vbtn:hover { border-color:var(--brass); color:var(--ivory); }
   /* --- ассистент-аватар --- */
-  .asst { position:fixed; right:14px; bottom:96px; z-index:75; display:flex; flex-direction:column;
+  .asst { position:fixed; right:12px; bottom:78px; z-index:75; display:flex; flex-direction:column;
     align-items:flex-end; pointer-events:none; }
   .asst > * { pointer-events:auto; }
-  .avatar { width:100px; height:100px; cursor:pointer; filter:drop-shadow(0 8px 16px rgba(0,0,0,.5)); transition:transform .15s; }
+  .avatar { width:62px; height:62px; cursor:pointer; filter:drop-shadow(0 8px 16px rgba(0,0,0,.5)); transition:transform .15s; }
   .avatar:hover { transform:scale(1.07); }
   .asst.idle .avatar { animation:aidle 4s ease-in-out infinite; }
   @keyframes aidle { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-3px);} }
@@ -324,7 +324,7 @@
     margin-bottom:8px; display:none; }
   .abubble.show { display:block; animation:bup .18s ease; }
   @keyframes bup { from{ transform:translateY(6px); opacity:0;} to{ transform:none; opacity:1;} }
-  .apanel { position:fixed; right:14px; bottom:208px; width:258px; z-index:76; background:#12241b;
+  .apanel { position:fixed; right:12px; bottom:150px; width:258px; z-index:76; background:#12241b;
     border:1px solid var(--hairline); border-radius:16px; padding:12px; box-shadow:0 14px 40px rgba(0,0,0,.6);
     display:none; }
   .apanel.open { display:block; animation:bup .18s ease; }
@@ -685,30 +685,30 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=359"></script>
-<script src="data/lessons.js?v=359"></script>
-<script src="data/lessons_draft.js?v=359"></script>
-<script src="data/comics_12.js?v=359"></script>
-<script src="data/vis_bw.js?v=359"></script>
-<script src="data/vis_cw.js?v=359"></script>
-<script src="data/vis_dw.js?v=359"></script>
-<script src="data/vis_ew.js?v=359"></script>
-<script src="data/vis_kl.js?v=359"></script>
-<script src="data/vis_wk.js?v=359"></script>
-<script src="data/inf_56.js?v=359"></script>
-<script src="js/comic.js?v=359"></script>
-<script src="js/core.js?v=359"></script>
-<script src="js/engine.js?v=359"></script>
-<script src="js/app.js?v=359"></script>
-<script src="js/dashboard.js?v=359"></script>
-<script src="js/lessons.js?v=359"></script>
-<script src="js/legend.js?v=359"></script>
-<script src="js/simulator.js?v=359"></script>
-<script src="js/duel.js?v=359"></script>
-<script src="js/agent.js?v=359"></script>
-<script src="js/voice.js?v=359"></script>
-<script src="js/assistant.js?v=359"></script>
-<script src="js/agentlive.js?v=359"></script>
+<script src="data/tasks.js?v=360"></script>
+<script src="data/lessons.js?v=360"></script>
+<script src="data/lessons_draft.js?v=360"></script>
+<script src="data/comics_12.js?v=360"></script>
+<script src="data/vis_bw.js?v=360"></script>
+<script src="data/vis_cw.js?v=360"></script>
+<script src="data/vis_dw.js?v=360"></script>
+<script src="data/vis_ew.js?v=360"></script>
+<script src="data/vis_kl.js?v=360"></script>
+<script src="data/vis_wk.js?v=360"></script>
+<script src="data/inf_56.js?v=360"></script>
+<script src="js/comic.js?v=360"></script>
+<script src="js/core.js?v=360"></script>
+<script src="js/engine.js?v=360"></script>
+<script src="js/app.js?v=360"></script>
+<script src="js/dashboard.js?v=360"></script>
+<script src="js/lessons.js?v=360"></script>
+<script src="js/legend.js?v=360"></script>
+<script src="js/simulator.js?v=360"></script>
+<script src="js/duel.js?v=360"></script>
+<script src="js/agent.js?v=360"></script>
+<script src="js/voice.js?v=360"></script>
+<script src="js/assistant.js?v=360"></script>
+<script src="js/agentlive.js?v=360"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
@@ -723,7 +723,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=359').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=360').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>
