@@ -47,12 +47,19 @@ function sortByCurrentClass(list){
     return cur.concat(oth);
   }catch(e){ return list; }
 }
+/* видимость урока в каталоге: скрытые уроки и старые «учебники» информатики
+   (всё, что не из нового курса «с нуля» 500–509) не показываем в списках */
+function isVisibleLesson(L){
+  if(!L || L.hidden) return false;
+  if(subjOf(L)==='inf' && !(L.id>=500 && L.id<=509)) return false;
+  return true;
+}
 function lessonPool(){
   try{
     const junior=typeof isJunior==='function'&&isJunior();
-    const pool= junior
+    const pool= (junior
       ? window.ARH_LESSONS.filter(L=>subjOf(L)==='jun')
-      : window.ARH_LESSONS.filter(L=>subjOf(L)!=='jun');
+      : window.ARH_LESSONS.filter(L=>subjOf(L)!=='jun')).filter(isVisibleLesson);
     return sortByCurrentClass(pool.filter(lessonFits));
   }catch(e){ return window.ARH_LESSONS; }
 }

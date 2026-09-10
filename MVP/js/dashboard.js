@@ -115,7 +115,7 @@ function renderDashboard(){
 
     <div class="card">
       <div class="sec" style="margin-top:0">📖 Уроки «объясни → реши» (ВсОШ 6–7 класс)</div>
-      ${window.ARH_LESSONS.map(L=>{const rec=DB.lessons&&DB.lessons[L.id];
+      ${window.ARH_LESSONS.filter(L=>typeof isVisibleLesson==='function'?isVisibleLesson(L):!L.hidden).map(L=>{const rec=DB.lessons&&DB.lessons[L.id];
         const done=!!(rec&&rec.done);
         return `<div class="theme-row"><span class="tn">${L.ico} ${esc(L.title)}</span>
           <div class="bar"><i style="width:${done?100:0}%;background:var(--ok)"></i></div>
