@@ -8565,6 +8565,1012 @@ if(K==='d3intro'){ /* экран и объём — подробно */
       s+=plate2(16,272,286,28,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
       return s;
     }
+    if(K==='gfxintro'){ /* два способа */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'два способа рисовать на экране',{b:1},262)+`</g>`;
+      s+=gxRaster(30,56,8,GX_HEART,'#ff8fb0',null,pre,{delay:0.2,step:0.012});
+      s+=gxVectorHeart(236,110,44,'#7fd6ff',2.2,0.4,pre);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.4s"><rect x="24" y="164" width="130" height="46" rx="10" fill="rgba(255,143,176,.12)" stroke="${rose}" stroke-width="1.8"/>`
+        +fit(89,184,11.5,rose,'растр: точками',{b:1},118)+fit(89,200,9.5,dim,'сетка пикселей',{},118)+`</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.6s"><rect x="164" y="164" width="130" height="46" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(229,184,11.5,cyan,'вектор: линиями',{b:1},118)+fit(229,200,9.5,dim,'формулы и кривые',{},118)+`</g>`;
+      s+=fit(159,230,11.5,ink,'одно и то же сердце — но нарисовано по-разному',{b:1},296);
+      s+=plate2(18,244,282,32,go?grn:cardB,go?'растровая и векторная графика':'чем отличаются два рисунка?',11,pre);
+      return s;
+    }
+    if(K==='gfxraster'){ /* растр: пиксели */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,rose,'растровое изображение — сетка пикселей',{b:1},270)+`</g>`;
+      s+=gxRaster(62,52,12,GX_HEART,'#ff8fb0','#ff8fb0',pre,{delay:0.2,step:0.018});
+      s+=`<g class="${pre}Rise}" style="animation-delay:2.2s"><rect x="26" y="222" width="266" height="30" rx="9" fill="rgba(255,143,176,.12)" stroke="${rose}" stroke-width="1.7"/>`
+        +fit(159,242,11,rose,'256 клеток в ширину — и каждая со своим цветом',{b:1},250)+`</g>`;
+      s+=fit(159,272,11.5,ink,'пиксель — самая маленькая точка рисунка',{b:1},292);
+      s+=plate2(26,286,266,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='gfxpixel'){ /* пиксель и цвет */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'у каждого пикселя есть цвет',{b:1},262)+`</g>`;
+      s+=`<rect x="42" y="60" width="96" height="96" rx="6" fill="#ff8fb0" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:.5s"><rect x="166" y="60" width="126" height="96" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(229,84,11,gold,'красный 255',{b:1},112)
+        +fit(229,106,11,grn,'зелёный 143',{b:1},112)
+        +fit(229,128,11,cyan,'синий 176',{b:1},112)
+        +fit(229,148,9.5,dim,'#FF8FB0',{},112)+`</g>`;
+      s+=fit(90,184,11,dim,'этот пиксель',{b:1},100);
+      s+=fit(229,184,11,ink,'три числа — и цвет готов',{b:1},150);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="34" y="204" width="250" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,227,11.5,cyan,'256 · 256 · 256 = 16 777 216 цветов',{b:1},236)+`</g>`;
+      s+=plate2(34,240,250,32,go?grn:cardB,go?'почти 17 миллионов оттенков':'сколько цветов бывает?',11,pre);
+      return s;
+    }
+    if(K==='gfxrgb'){ /* RGB смешение */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'цвет собирается из трёх лучей',{b:1},262)+`</g>`;
+      s+=gxRGBmix(159,132,56,pre);
+      s+=fit(159,72,10.5,ink,'красный + зелёный + синий',{b:1},220);
+      s+=fit(110,206,10,rose,'R',{b:1},26)+fit(196,196,10,cyan,'B',{b:1},26)+fit(159,232,10,grn,'G',{b:1},26);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.1s"><rect x="30" y="244" width="258" height="32" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,266,11.5,gold,'в центре, где всё вместе, — светлый цвет',{b:1},242)+`</g>`;
+      s+=plate2(30,278,258,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='gfxpalette'){ /* палитра */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'палитра программы',{b:1},262)+`</g>`;
+      GX_PAL.forEach((q,k)=>{
+        const x=26+(k%4)*68, y=54+Math.floor(k/4)*62;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.1).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="60" height="44" rx="9" fill="${q[0]}" stroke="${ink}" stroke-opacity=".35" stroke-width="1.4"/>`
+          +fit(x+30,y+58,8.5,dim,q[1],{},62)+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="26" y="186" width="266" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,209,11.5,cyan,'градиент: цвет плавно переходит в другой',{b:1},242)+`</g>`;
+      s+=`<defs><linearGradient id="gxgrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff5a6e"/><stop offset=".5" stop-color="#ffe066"/><stop offset="1" stop-color="#5ad6ff"/></linearGradient></defs>`;
+      s+=`<rect x="26" y="230" width="266" height="26" rx="9" fill="url(#gxgrad)" stroke="${cardB}" stroke-width="1.2"/>`;
+      s+=fit(159,278,11,dim,'тысячи оттенков — а записывают их тремя числами',{},292);
+      s+=plate2(26,286,266,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='gfxzoomr'){ /* приближаем растр */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,rose,'приближаем растр: видны квадратики',{b:1},272)+`</g>`;
+      const mat=[['0001100001100000','0011110011110000','0111111111111000','1111111111111100','0111111111111000','0011111111110000','0001111111100000','0000111111000000']];
+      s+=gxRaster(36,54,7,GX_HEART,'#ff8fb0','#ff8fb0',pre,{delay:0.1,step:0.01});
+      s+=`<rect x="34" y="52" width="34" height="34" rx="3" fill="none" stroke="${gold}" stroke-width="2.4" class="${pre}Blink"/>`;
+      s+=`<path d="M70 70 h26" stroke="${gold}" stroke-width="2.4"/><path d="M90 63 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<rect x="126" y="52" width="166" height="140" rx="10" fill="rgba(18,24,44,.97)" stroke="${rose}" stroke-width="1.8"/>`;
+      const zoom=[['1','1','1'],['1','0','1'],['1','0','1']];
+      for(let r=0;r<3;r++)for(let c=0;c<3;c++){
+        const on=(r!==1||c!==1);
+        s+=`<rect x="${146+c*44}" y="${66+r*40}" width="42" height="38" rx="4" fill="${on?'#ff8fb0':'rgba(255,255,255,.05)'}" stroke="${on?'#ffb3c9':'#2c3868'}" stroke-width="1.4"/>`;
+      }
+      s+=fit(209,200,10,rose,'один пиксель крупным планом',{b:1},150);
+      s+=fit(159,216,11,ink,'увеличение показывает квадраты, а не плавные линии',{b:1},296);
+      s+=plate2(30,230,258,32,go?grn:cardB,go?'поэтому у растра видны «лесенки»':'что видно при увеличении?',11,pre);
+      return s;
+    }
+    if(K==='gfxvector'){ /* вектор: формулы */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'векторная фигура описана формулой',{b:1},270)+`</g>`;
+      s+=gxVectorCircle(104,134,54,cyan,{fill:'rgba(127,214,255,.16)',radius:true,axes:true});
+      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="176" y="60" width="118" height="104" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(235,84,10.5,cyan,'круг',{b:1},104)
+        +fit(235,106,9.5,dim,'центр (104; 134)',{},104)
+        +fit(235,124,9.5,dim,'радиус 54',{},104)
+        +fit(235,146,10,gold,'одна формула',{b:1},104)+`</g>`;
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="196" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,219,11.5,gold,'записаны только числа — и рисунок готов',{b:1},240)+`</g>`;
+      s+=fit(159,248,11,ink,'вектор хранит не точки, а описание фигуры',{b:1},292);
+      s+=plate2(30,262,258,30,go?grn:cardB,go?'поэтому вектор легко увеличивать':'что хранит векторный рисунок?',11,pre);
+      return s;
+    }
+    if(K==='gfxzoomv'){ /* приближаем вектор */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'приближаем вектор: линии остаются гладкими',{b:1},276)+`</g>`;
+      s+=gxVectorCircle(80,120,32,cyan,{fill:'rgba(127,214,255,.14)',sw:2.2});
+      s+=`<rect x="52" y="92" width="30" height="30" rx="3" fill="none" stroke="${gold}" stroke-width="2.2" class="${pre}Blink"/>`;
+      s+=`<path d="M112 118 h24" stroke="${gold}" stroke-width="2.4"/><path d="M130 111 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<rect x="164" y="64" width="128" height="128" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=gxVectorCircle(228,128,54,cyan,{fill:'rgba(127,214,255,.14)',sw:2.8});
+      s+=fit(228,204,10,cyan,'тот же край — без квадратов',{b:1},124);
+      s+=fit(159,232,11,ink,'вектор пересчитывается заново — и потому чёткий',{b:1},296);
+      s+=plate2(30,246,258,32,go?grn:cardB,go?'увеличение не портит векторный рисунок':'что произошло с краем?',11,pre);
+      return s;
+    }
+    if(K==='gfxcompare'){ /* сравнение */
+      const rows=[['увеличение','расплывается','остаётся чётким'],['вес файла','зависит от размера','маленький'],['фото','идеально','не подходит'],['логотип','тяжело','идеально']];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'растр и вектор: что выбрать',{b:1},266)+`</g>`;
+      s+=`<rect x="24" y="52" width="86" height="34" rx="9" fill="rgba(255,143,176,.14)" stroke="${rose}" stroke-width="1.7"/>`;
+      s+=fit(67,74,11,rose,'растр',{b:1},74);
+      s+=`<rect x="116" y="52" width="86" height="34" rx="9" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="1.7"/>`;
+      s+=fit(159,74,11,cyan,'вектор',{b:1},74);
+      s+=`<rect x="208" y="52" width="86" height="34" rx="9" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="1.4"/>`;
+      s+=fit(251,74,11,dim,'что важно',{b:1},74);
+      rows.forEach((q,k)=>{
+        const y=90+k*36;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="32" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
+          +fit(67,y+21,9.5,rose,q[1],{b:1},80)
+          +fit(159,y+21,9.5,cyan,q[2],{b:1},80)
+          +fit(251,y+21,9.5,dim,q[0],{},80)+`</g>`;
+      });
+      s+=plate2(24,240,270,32,go?grn:cardB,go?'фото — растр, логотип — вектор':'что выбрать для фото и логотипа?',11,pre);
+      return s;
+    }
+    if(K==='gfxformats'){ /* форматы */
+      const it=[['png','без потерь',grn],['jpg','фото, сжатие',gold],['gif','анимация',pur],['svg','вектор',cyan]];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'форматы графических файлов',{b:1},262)+`</g>`;
+      it.forEach((q,k)=>{
+        const x=22+(k%2)*140, y=52+Math.floor(k/2)*90;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.16).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="132" height="78" rx="11" fill="rgba(12,32,34,.97)" stroke="${q[2]}" stroke-width="1.7"/>`
+          +`<rect x="${x+14}" y="${y+12}" width="34" height="30" rx="4" fill="rgba(255,255,255,.05)" stroke="${q[2]}" stroke-width="1.5"/>`
+          +fit(x+88,y+28,12,q[2],'.'+q[0],{b:1},70)
+          +fit(x+88,y+48,9.5,dim,q[1],{},76)
+          +fit(x+88,y+64,9,dim,(k===3?'масштабируется':'пиксели'),{},76)+`</g>`;
+      });
+      s+=plate2(22,236,274,32,go?grn:cardB,go?'расширение подскажет, что внутри':'какие бывают форматы?',11,pre);
+      s+=`${fit(159,290,11,dim,'svg — векторный, остальные — растровые',{},290)}`;
+      return s;
+    }
+    if(K==='gfxsize'){ /* размер файла */
+      const rows=[{t:'значок 64×64',px:4096,c:grn},{t:'фото 1000×1000',px:1000000,c:gold},{t:'кадр 1920×1080',px:2073600,c:rose}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'сколько весит картинка',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=56+k*52;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="40" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(88,y+25,10.5,ink,q.t,{b:1},120)
+          +growBar(160,y+15,96*Math.log10(q.px)/7,12,q.c,1.2,0.4+k*0.2,0)
+          +fit(268,y+25,10,q.c,(Math.round(q.px/1000))+' тыс. пикс.',{b:1},80)+`</g>`;
+      });
+      s+=fit(159,222,11.5,ink,'каждый пиксель хранит 3 числа — вот и размер',{b:1},296);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="236" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +`<text x="159" y="259" text-anchor="middle" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">1000 · 1000 · 3 = 3 000 000 байт</text></g>`;
+      s+=`${fit(159,290,11,dim,'поэтому фото и сжимают',{},290)}`;
+      return s;
+    }
+    if(K==='gfxcompress'){ /* сжатие и качество */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'сжатие: качество против размера',{b:1},270)+`</g>`;
+      [[60,'высокое',grn,1],[159,'среднее',gold,0.82],[258,'низкое',rose,0.55]].forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +`<rect x="${q[0]-44}" y="56" width="88" height="88" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.7"/>`
+          +`<g opacity="${q[3]}">`
+          +`<circle cx="${q[0]}" cy="92" r="22" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="2"/>`
+          +`<path d="M${q[0]-14} 118 q14 -18 28 0" fill="none" stroke="${grn}" stroke-width="2"/>`
+          +`</g>`
+          +fit(q[0],162,10.5,q[2],q[1],{b:1},80)+`</g>`;
+        if(k<2) s+=`<path d="M${q[0]+48} 100 h12" stroke="${gold}" stroke-width="2" stroke-dasharray="4 4"/>`;
+      });
+      s+=fit(159,190,11.5,ink,'меньше размер — больше «квадратиков» и мутных пятен',{b:1},296);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="204" width="258" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,227,11,grn,'png хранит без потерь, jpg — с потерями',{b:1},240)+`</g>`;
+      s+=plate2(30,240,258,32,go?grn:cardB,go?'для чертежа бери png, для фото — jpg':'какой формат выбрать?',11,pre);
+      return s;
+    }
+    if(K==='gfxaa'){ /* сглаживание */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'лесенка и сглаживание',{b:1},262)+`</g>`;
+      s+=`<rect x="26" y="54" width="130" height="130" rx="8" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="1.4"/>`;
+      s+=gxStairs(38,66,13,9,'#7fd6ff',false);
+      s+=fit(91,200,10.5,rose,'без сглаживания: лесенка',{b:1},130);
+      s+=`<rect x="162" y="54" width="130" height="130" rx="8" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="1.4"/>`;
+      s+=gxStairs(174,66,13,9,'#7fd6ff',true);
+      s+=fit(227,200,10.5,grn,'со сглаживанием: плавно',{b:1},130);
+      s+=fit(159,224,11.5,ink,'крайние пиксели делают полупрозрачными — и линия гладкая',{b:1},296);
+      s+=plate2(26,238,266,32,go?grn:cardB,go?'так убирают «лесенки» на краях':'что изменилось?',11,pre);
+      return s;
+    }
+    if(K==='gfxcolors'){ /* цветовые модели */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'для экрана RGB, для печати CMYK',{b:1},270)+`</g>`;
+      s+=`<rect x="26" y="56" width="130" height="110" rx="10" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=gxRGBmix(91,104,30,pre);
+      s+=fit(91,150,11,cyan,'экран: RGB',{b:1},120);
+      s+=fit(91,182,9.5,dim,'свет складывается',{},124);
+      s+=`<rect x="162" y="56" width="130" height="110" rx="10" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.8"/>`;
+      [['#5ad6ff',64],['#ff8fb0',118],['#ffe066',172],['#eaf2ff',226]].forEach((q,k)=>{
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s" cx="${q[1]}" cy="104" r="24" fill="${q[0]}" fill-opacity=".6"/>`;
+      });
+      s+=fit(227,150,11,gold,'печать: CMYK',{b:1},120);
+      s+=fit(227,182,9.5,dim,'краски смешиваются',{},124);
+      s+=plate2(26,200,266,32,go?grn:cardB,go?'цвет на экране и на бумаге может отличаться':'чем отличаются модели?',11,pre);
+      s+=`${fit(159,254,11,dim,'поэтому печатают пробный оттиск',{},290)}`;
+      return s;
+    }
+    if(K==='gfxalpha'){ /* прозрачность */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'прозрачность: четвёртое число',{b:1},266)+`</g>`;
+      s+=`<rect x="40" y="60" width="120" height="120" rx="10" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="1.4"/>`;
+      for(let r=0;r<6;r++)for(let c=0;c<6;c++)
+        s+=`<rect x="${40+c*20}" y="${60+r*20}" width="20" height="20" fill="${((r+c)%2)?'rgba(255,255,255,.08)':'rgba(255,255,255,.02)'}"/>`;
+      s+=`<circle class="${pre}Pop" style="animation-delay:.3s" cx="120" cy="120" r="42" fill="rgba(125,224,160,.55)"/>`;
+      s+=`<circle class="${pre}Pop" style="animation-delay:.6s" cx="160" cy="120" r="42" fill="rgba(127,214,255,.55)"/>`;
+      s+=fit(100,198,10.5,dim,'фон «шахматка» — значит прозрачно',{},130);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="196" y="70" width="98" height="100" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(245,94,10.5,grn,'альфа',{b:1},86)
+        +fit(245,116,9.5,dim,'0 — невидимо',{},86)
+        +fit(245,136,9.5,dim,'255 — плотно',{},86)
+        +fit(245,158,10,gold,'0 … 255',{b:1},86)+`</g>`;
+      s+=plate2(40,214,254,32,go?grn:cardB,go?'так картинки накладывают друг на друга':'что значит «прозрачно»?',11,pre);
+      s+=`${fit(159,268,11,dim,'логотипы часто хранят с прозрачным фоном',{},292)}`;
+      return s;
+    }
+    if(K==='gfxtools'){ /* инструменты */
+      const it=[['кисть','brush',rose],['линия','line',cyan],['прямоугольник','rect',grn],['круг','circle',gold],['заливка','fill',pur],['ластик','eraser',blu]];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'инструменты графического редактора',{b:1},266)+`</g>`;
+      it.forEach((q,k)=>{
+        const x=22+(k%3)*94, y=52+Math.floor(k/3)*92, cx=x+44, cy=y+34;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.12).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="88" height="82" rx="11" fill="rgba(12,32,34,.97)" stroke="${q[2]}" stroke-width="1.7"/>`;
+        if(q[1]==='brush') s+=`<path d="M${cx-14} ${cy+12} l20 -20 l8 8 l-20 20 z" fill="rgba(255,143,176,.35)" stroke="${q[2]}" stroke-width="1.6"/>`;
+        else if(q[1]==='line') s+=`<line x1="${cx-16}" y1="${cy+12}" x2="${cx+16}" y2="${cy-12}" stroke="${q[2]}" stroke-width="2.6"/>`;
+        else if(q[1]==='rect') s+=`<rect x="${cx-17}" y="${cy-13}" width="34" height="26" fill="none" stroke="${q[2]}" stroke-width="1.8"/>`;
+        else if(q[1]==='circle') s+=`<circle cx="${cx}" cy="${cy}" r="14" fill="none" stroke="${q[2]}" stroke-width="1.8"/>`;
+        else if(q[1]==='fill') s+=`<path d="M${cx-14} ${cy+6} l14 -18 l14 18 z" fill="rgba(176,127,255,.4)" stroke="${q[2]}" stroke-width="1.6"/><circle cx="${cx+16}" cy="${cy+10}" r="5" fill="${q[2]}" opacity=".6"/>`;
+        else s+=`<path d="M${cx-14} ${cy+10} l22 -22 l10 10 l-22 22 z" fill="rgba(110,168,255,.3)" stroke="${q[2]}" stroke-width="1.6"/><path d="M${cx+8} ${cy+2} l10 10" stroke="${q[2]}" stroke-width="1.6"/>`;
+        s+=fit(cx,y+66,10,q[2],q[0],{b:1},82)+`</g>`;
+      });
+      s+=plate2(22,240,274,30,go?grn:cardB,go?'все редакторы умеют эти шесть действий':'какой инструмент нужен?',11,pre);
+      return s;
+    }
+    if(K==='gfxlayers'){ /* слои */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'рисунок собирается из слоёв',{b:1},262)+`</g>`;
+      [[0,0,'фон',blu],[18,-16,'дом',grn],[36,-32,'дерево',grn],[54,-48,'птица',gold]].forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.22).toFixed(2)}s">`
+          +`<rect x="${56+q[0]}" y="${188+q[1]}" width="150" height="34" rx="8" fill="rgba(18,24,44,.97)" stroke="${q[3]}" stroke-width="1.6"/>`
+          +fit(131+q[0],210+q[1],10.5,q[3],q[2],{b:1},140)+`</g>`;
+      });
+      s+=`<path d="M212 186 v-88" stroke="${gold}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
+      s+=`<rect x="212" y="48" width="80" height="76" rx="9" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.7"/>`+fit(252,74,10.5,pur,'итог',{b:1},70)+fit(252,96,9.5,dim,'все слои',{},70)+fit(252,112,9.5,dim,'вместе',{},70);
+      s+=fit(159,238,11.5,ink,'каждый слой можно двигать и выключать отдельно',{b:1},296);
+      s+=plate2(24,252,270,32,go?grn:cardB,go?'слои не портят уже нарисованное':'зачем нужны слои?',11,pre);
+      return s;
+    }
+    if(K==='gfxsprites'){ /* спрайты */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'спрайты делают из пикселей',{b:1},262)+`</g>`;
+      s+=gxRaster(40,56,9,GX_HOUSE,'#7de0a0','#7de0a0',pre,{delay:0.2,step:0.02});
+      s+=`<rect x="196" y="56" width="102" height="102" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`;
+      s+=gxRaster(212,84,6,GX_HEART,'#ff8fb0','#ff8fb0',pre,{delay:0.8,step:0.02});
+      s+=fit(247,176,10,rose,'значок жизни',{b:1},94);
+      s+=fit(100,172,10.5,grn,'домик из пикселей',{b:1},130);
+      s+=fit(159,200,11.5,ink,'в играх так рисуют героев, значки и предметы',{b:1},296);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1.4s"><rect x="30" y="214" width="258" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,237,11.5,cyan,'это те же рисунки из урока про пиксели',{b:1},240)+`</g>`;
+      s+=plate2(30,250,258,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='gfxlogo'){ /* вектор для логотипов */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'логотип делают вектором',{b:1},262)+`</g>`;
+      [['маленький',70,26],['средний',159,42],['большой',248,58]].forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +gxVectorCircle(q[1],110,q[2],gold,{fill:'rgba(255,215,106,.18)',sw:2.4})
+          +fit(q[1],186,10,gold,q[0],{b:1},80)+`</g>`;
+      });
+      s+=fit(159,212,11.5,ink,'один и тот же вектор — и на визитке, и на щите',{b:1},296);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="226" width="258" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,249,11.5,grn,'растровый логотип пришлось бы хранить в 10 размерах',{b:1},244)+`</g>`;
+      s+=plate2(30,262,258,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='gfxphoto'){ /* обработка фото */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'из фото можно сделать много версий',{b:1},266)+`</g>`;
+      [[62,'обычное',1,cyan],[159,'ярче',1.25,gold],[256,'чёрно-белое',1,blu]].forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +`<rect x="${q[0]-42}" y="56" width="84" height="84" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[3]}" stroke-width="1.7"/>`;
+        const cx=q[0], cy=98;
+        if(k===2) s+=`<circle cx="${cx}" cy="${cy-8}" r="15" fill="rgba(255,255,255,.28)"/><path d="M${cx-16} ${cy+22} q16 -30 32 0" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="3"/>`;
+        else s+=`<circle cx="${cx}" cy="${cy-8}" r="15" fill="rgba(255,143,176,${(0.3*q[2]).toFixed(2)})" stroke="${rose}" stroke-width="1.6"/><path d="M${cx-16} ${cy+22} q16 -30 32 0" fill="none" stroke="${grn}" stroke-width="3" opacity="${Math.min(1,q[2])}"/>`;
+        s+=`${fit(cx,158,10,q[3],q[1],{b:1},80)}</g>`;
+      });
+      s+=fit(159,192,11.5,ink,'яркость, контраст, цвет — всё это меняет числа пикселей',{b:1},296);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="206" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,229,11.5,gold,'фильтр — это правило, по которому меняют числа',{b:1},244)+`</g>`;
+      s+=plate2(30,242,258,32,go?grn:cardB,go?'так работают все фоторедакторы':'что меняет фильтр?',11,pre);
+      return s;
+    }
+    if(K==='gfxpipeline'){ /* конвейер отрисовки */
+      const rows=[{t:'описать фигуры числами',c:gold},{t:'посчитать пиксели',c:cyan},{t:'раскрасить каждый пиксель',c:grn},{t:'вывести на экран',c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'как компьютер рисует картинку',{b:1},266)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=54+k*44;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="258" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +`<circle cx="52" cy="${y+17}" r="11" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.3"/>`
+          +tx(52,y+21,11,q.c,''.concat(k+1),{b:1})
+          +fit(176,y+22,11,q.c,q.t,{b:1},214)+`</g>`;
+        if(k<3) s+=drawLL({x:159,y:y+36},{x:159,y:y+42},q.c,1.6,0.4+k*0.18,1.6,pre);
+      });
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M52 71 L52 246"/></circle>`;
+      s+=fit(159,250,11,ink,'это происходит за доли секунды, много раз в секунду',{b:1},292);
+      s+=plate2(30,262,258,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='gfxpractice'){ /* практика */
+      const rows=[
+        {t:'сколько байт займёт фото 100 на 200 пикселей?',a:'60 000 байт',c:gold},
+        {t:'что лучше для логотипа — растр или вектор?',a:'вектор: масштабируется',c:cyan},
+        {t:'почему на увеличенном фото видны квадраты?',a:'это пиксели',c:rose}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'практика: считаем и выбираем',{b:1},264)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*58;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(146,y+19,9.5,ink,q.t,{},214)
+          +(go?fit(146,y+38,11,q.c,q.a,{b:1},214):fit(146,y+38,10.5,dim,'нажми «показать»',{},214))+`</g>`;
+      });
+      s+=plate2(22,228,274,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
+      return s;
+    }
+    if(K==='gfxlab'){ /* ИНТЕРАКТИВ: лаборатория графики */
+      const mode=(st&&st.gxm)||'raster';
+      const zm=(st&&typeof st.gxz==='number')?st.gxz:2;
+      const cell=[3,5,8,12][Math.min(3,zm)];
+      let s=`<g class="${pre}Pop"><rect x="16" y="12" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,31,11.5,ink,'лаборатория: растр и вектор в увеличении',{b:1},272)+`</g>`;
+      [['растр','raster',rose],['вектор','vector',cyan]].forEach((q,k)=>{
+        const x=24+k*94, on=(mode===q[1]);
+        s+=`<g style="cursor:pointer" onclick="infGfx('${lk}','mode','${q[1]}')"><rect x="${x}" y="48" width="88" height="28" rx="8" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${on?q[2]:cardB}" stroke-width="${on?2:1.4}"/>`
+          +fit(x+44,67,10.5,on?q[2]:dim,q[0],{b:on},80)+`</g>`;
+      });
+      s+=`<g style="cursor:pointer" onclick="infGfx('${lk}','zoom','-')"><rect x="216" y="48" width="36" height="28" rx="8" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.5"/>`
+        +tx(234,68,15,gold,'−',{b:1})+`</g>`;
+      s+=`<g style="cursor:pointer" onclick="infGfx('${lk}','zoom','+')"><rect x="258" y="48" width="36" height="28" rx="8" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.5"/>`
+        +tx(276,68,15,gold,'+',{b:1})+`</g>`;
+      s+=`<rect x="46" y="84" width="226" height="182" rx="10" fill="rgba(18,24,44,.97)" stroke="${mode==='raster'?rose:cyan}" stroke-width="1.9"/>`;
+      if(mode==='raster'){
+        s+=gxRaster(59,94,cell,GX_HEART,'#ff8fb0','#ff8fb0',pre,{delay:0.06,step:0.004});
+        const px=Math.round(16*14*3/1024*100)/100;
+        s+=`<g class="${pre}Rise}"><rect x="46" y="274" width="226" height="30" rx="9" fill="rgba(255,143,176,.12)" stroke="${rose}" stroke-width="1.6"/>`
+          +fit(159,300,10,rose,'приближение '+zm+'× · видно клетки пикселей · файл ~'+px+' КБ',{b:1},214)+`</g>`;
+      } else {
+        s+=gxVectorHeart(159,168,62,'#7fd6ff',2.4+zm*0.5,0.1,pre);
+        s+=`<circle cx="159" cy="168" r="3.4" fill="${gold}"/>`;
+        s+=`<path d="M159 168 L205 128" stroke="${gold}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
+        s+=`<g class="${pre}Rise}"><rect x="46" y="274" width="226" height="30" rx="9" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.6"/>`
+          +fit(159,300,10,cyan,'приближение '+zm+'× · край гладкий · описание: 2 кривые',{b:1},214)+`</g>`;
+      }
+      s+=plate2(46,308,226,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='gfxquiz'){ /* викторина */
+      const opts=['вектор','растр','и то и другое'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +fit(159,34,11.5,ink,'Что лучше выбрать для логотипа на футболку и на щит?',{b:1},276)+`</g>`;
+      s+=gxVectorCircle(120,96,34,gold,{fill:'rgba(255,215,106,.16)',sw:2.4});
+      s+=`<rect x="176" y="66" width="60" height="60" rx="8" fill="rgba(18,24,44,.97)" stroke="${rose}" stroke-width="1.6"/>`;
+      s+=gxRaster(184,74,7,[['111111','100001','100001','100001','100001','111111']],'#ff8fb0','#ff8fb0',pre,{delay:0.3,step:0.01});
+      opts.forEach((t2,k)=>{
+        const y=146+k*40, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="22" y="${y}" width="274" height="34" rx="9" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
+          +fit(159,y+22,11.5,c,t2,{b:on},256)+(on?`<path d="M266 ${y+11} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}"><rect x="22" y="272" width="274" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +fit(159,292,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Вектор масштабируется без потерь':'Подумай: логотип нужен в разных размерах',{b:done&&st.pick===ok},256)+`</g>`;
+      return s;
+    }
+    if(K==='gfxmistakes'){ /* ошибки */
+      const it=[
+        {t:'увеличивают растровую картинку',f:'появятся квадраты и мутные пятна',c:rose},
+        {t:'хранят чертёж в jpg',f:'для чертежа нужен png или вектор',c:gold},
+        {t:'забывают про прозрачность',f:'логотип получит белый квадрат',c:cyan},
+        {t:'путают размер файла и размер картинки',f:'это разные вещи',c:pur}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},180)+`</g>`;
+      });
+      s+=`${tx(159,266,11,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='gfxsheet'){ /* шпаргалка */
+      const rows=[{t:'растр — сетка пикселей, вектор — формулы',c:rose},{t:'цвет пикселя: три числа 0…255',c:cyan},
+                  {t:'растровый файл тяжелее, вектор легче',c:gold},{t:'увеличение портит растр, но не вектор',c:grn},
+                  {t:'png — без потерь, jpg — с потерями',c:pur},{t:'логотип — вектор, фото — растр',c:blu}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'всё главное о компьютерной графике',{b:1},270)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=50+k*36;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+20,10,q.c,q.t,{b:1},260)+`</g>`;
+      });
+      s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
+      return s;
+    }
+    if(K==='animintro'){ /* что такое анимация */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'анимация — это быстро сменяющиеся кадры',{b:1},276)+`</g>`;
+      s+=`<rect x="18" y="46" width="120" height="96" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=`<circle cx="78" cy="94" r="22" fill="rgba(127,214,255,.4)" stroke="${cyan}" stroke-width="2"/>`;
+      s+=`<line x1="34" y1="130" x2="122" y2="130" stroke="${cardB}" stroke-width="2"/>`;
+      s+=fit(78,166,10.5,dim,'один кадр — мяч стоит',{b:1},130);
+      s+=`<path d="M146 94 h20" stroke="${gold}" stroke-width="2.4"/><path d="M160 87 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      const ys=[120,86,68,86];
+      for(let k=0;k<4;k++){
+        const x=176+k*30;
+        s+=`<rect x="${x}" y="46" width="26" height="96" rx="6" fill="rgba(18,24,44,.97)" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="1.4"/>`;
+        s+=`<circle cx="${x+13}" cy="${ys[k]}" r="8" fill="${[cyan,gold,grn,pur][k]}" fill-opacity=".75"/>`;
+      }
+      s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;116 0;0 0" dur="2.4s" repeatCount="indefinite"/>`
+        +`<rect x="176" y="42" width="28" height="104" rx="7" fill="none" stroke="${gold}" stroke-width="2.2"/></g>`;
+      s+=fit(232,166,10.5,gold,'кадры идут по очереди',{b:1},120);
+      s+=`<g class="${pre}Pop"><rect x="20" y="184" width="278" height="32" rx="10" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,206,10.5,cyan,'много кадров подряд — рисунок начинает двигаться',{b:1},262)+`</g>`;
+      s+=plate2(20,200,278,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='animframes'){ /* кадры: мяч прыгает по дуге */
+      const ys=[0.86,0.42,0.14,0.03,0.14,0.42,0.86,0.6];
+      const N=8, x0=22, cw=33, gap=3, hh=118, y0=46;
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'в каждом кадре мяч на новой высоте',{b:1},270)+`</g>`;
+      /* траектория прыжка */
+      let d='';
+      for(let k=0;k<N;k++){ const x=x0+k*(cw+gap)+cw/2, y=y0+hh*ys[k]; d+=(k?' L':'M')+x.toFixed(1)+' '+y.toFixed(1); }
+      s+=`<path d="${d}" fill="none" stroke="${cyan}" stroke-width="1.6" stroke-dasharray="5 4" opacity=".6"/>`;
+      for(let k=0;k<N;k++){
+        const x=x0+k*(cw+gap), y=y0+hh*ys[k]-7;
+        s+=`<rect class="${pre}Pop" style="animation-delay:${(0.06*k).toFixed(2)}s" x="${x}" y="${y0}" width="${cw}" height="${hh}" rx="6" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.3"/>`;
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.08*k).toFixed(2)}s" cx="${(x+cw/2).toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="${gold}"/>`;
+        s+=fit(x+cw/2,y0+hh+14,9,dim,''+k,{b:1},24);
+        s+=`<line x1="${x}" y1="${y0+hh}" x2="${x+cw}" y2="${y0+hh}" stroke="${cardB}" stroke-width="${k===0?2:1}" opacity=".7"/>`;
+      }
+      s+=`<line x1="${x0}" y1="${y0+hh}" x2="${x0+N*(cw+gap)}" y2="${y0+hh}" stroke="${cardB}" stroke-width="2"/>`;
+      s+=fit(159,y0+hh+32,10,dim,'пол — от него отсчитываем высоту',{},270);
+      s+=`<g class="${pre}Pop"><rect x="20" y="${y0+hh+44}" width="278" height="30" rx="9" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,y0+hh+64,10.5,gold,'высшая точка — 4-й кадр, ниже всех — 1-й и 7-й',{b:1},262)+`</g>`;
+      return s;
+    }
+    if(K==='animfps'){ /* частота кадров и плавность */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11,grn,'чем больше кадров в секунду, тем плавнее',{b:1},282)+`</g>`;
+      [[3,'3 кадра в секунду','рывками',rose],[8,'8 кадров в секунду','лучше',gold],[16,'16 кадров в секунду','плавно',grn]].forEach((q,k)=>{
+        const y=48+k*46;
+        s+=fit(58,y+22,9.5,q[3],q[1],{b:1},118);
+        for(let j=0;j<q[0];j++){
+          const x=140+j*(150/q[0]);
+          s+=`<rect x="${x.toFixed(1)}" y="${y+6}" width="${(140/q[0]-2).toFixed(1)}" height="26" rx="4" fill="rgba(18,24,44,.97)" stroke="${q[3]}" stroke-width="1.1"/>`;
+          s+=`<circle cx="${(x+140/q[0]/2).toFixed(1)}" cy="${(y+19-(j%2)*6).toFixed(1)}" r="4" fill="${q[3]}"/>`;
+        }
+        s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;140 0" dur="${(q[0]/6).toFixed(2)}s" repeatCount="indefinite"/>`
+          +`<rect x="140" y="${y+2}" width="6" height="34" rx="3" fill="${q[3]}" fill-opacity=".55"/></g>`;
+        s+=fit(286,y+22,9,dim,q[2],{an:'end'},60);
+      });
+      s+=fit(159,196,11,ink,'частота кадров измеряется в кадрах в секунду',{b:1},296);
+      s+=`<g class="${pre}Pop"><rect x="20" y="210" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,232,10.5,gold,'в кино 24 кадра, в играх 60 кадров в секунду',{b:1},262)+`</g>`;
+      s+=plate2(20,246,278,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='animkey'){ /* ключевые кадры */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'ключевые кадры — главные позы',{b:1},272)+`</g>`;
+      s+=`<path d="M24 168 H292" stroke="${cardB}" stroke-width="2"/>`;
+      const keys=[[52,52],[122,116],[192,52],[262,116]];
+      keys.forEach((q,k)=>{
+        s+=anBall(q[0],q[1],15,[pur,cyan,grn,gold][k],{delay:0.2+k*0.3,pre:'an'});
+        s+=anKeyIcon(q[0],196,[pur,cyan,grn,gold][k],true);
+        s+=fit(q[0],214,9.5,[pur,cyan,grn,gold][k],'кадр '+(k*4),{b:1},60);
+      });
+      s+=fit(159,234,10.5,dim,'художник рисует только главные позы',{},270);s+=`<circle r="8" fill="rgba(127,214,255,.6)" stroke="${cyan}" stroke-width="1.6"><animateMotion dur="3s" repeatCount="indefinite" path="M52 52 Q87 160 122 116 Q157 20 192 52 Q227 160 262 116"/></circle>`;
+
+      s+=`<g class="anPop" style="animation-delay:1.2s"><rect x="20" y="246" width="278" height="30" rx="9" fill="rgba(176,127,255,.11)" stroke="${pur}" stroke-width="1.6"/>`
+        +fit(159,266,10.5,pur,'остальные кадры между ними — промежуточные',{b:1},262)+`</g>`;
+      return s;
+    }
+    if(K==='animtween'){ /* промежуточные кадры считает компьютер */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'между ключами кадры досчитывает компьютер',{b:1},284)+`</g>`;
+      s+=`<line x1="22" y1="200" x2="296" y2="200" stroke="${cardB}" stroke-width="2"/>`;
+      const A=[46,168], B=[272,74];
+      const d='M'+A[0]+' '+A[1]+' C120 60, 200 190, '+B[0]+' '+B[1];
+      s+=`<path d="${d}" fill="none" stroke="${pur}" stroke-width="2" stroke-dasharray="6 5"/>`;
+      for(let k=0;k<=12;k++){
+        const t=k/12;
+        const x=(1-t)*(1-t)*A[0]+2*(1-t)*t*130+t*t*B[0];
+        const y=(1-t)*(1-t)*A[1]+2*(1-t)*t*80+t*t*B[1];
+        const isKey=(k===0||k===12);
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.05*k).toFixed(2)}s" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${isKey?11:5}" fill="${isKey?pur:'rgba(127,214,255,.75)'}" stroke="${isKey?pur:'none'}"/>`;
+        if(k%3===0) s+=anKeyIcon(x,226,isKey?pur:cyan,isKey);
+      }
+      s+=`<circle r="9" fill="rgba(255,215,106,.6)" stroke="${gold}" stroke-width="2"><animateMotion dur="3.6s" repeatCount="indefinite" path="${d}"/></circle>`;
+      s+=fit(46,188,9.5,pur,'ключ 1',{b:1},60)+fit(272,188,9.5,pur,'ключ 13',{b:1},60);
+      s+=`<g class="${pre}Pop"><rect x="20" y="240" width="278" height="30" rx="9" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,260,10.5,cyan,'светлые точки — кадры, посчитанные программой',{b:1},264)+`</g>`;
+      return s;
+    }
+    if(K==='animeasing'){ /* плавность: ускорение и замедление */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,gold,'замедление и ускорение делают движение живым',{b:1},290)+`</g>`;
+      s+=`<rect x="20" y="48" width="132" height="112" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=anCurve(30,150,112,96,t=>t,gold,{dash:false,sw:2.2});
+      s+=fit(86,176,10,dim,'равномерно',{b:1},120);
+      s+=`<rect x="166" y="48" width="132" height="112" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=anCurve(176,150,112,96,t=>anEase(t,3),grn,{dash:false,sw:2.2});
+      s+=fit(232,176,10,grn,'с разгоном',{b:1},120);
+      s+=fit(86,196,9,dim,'скорость одна',{},120)+fit(232,196,9,dim,'сначала медленно',{},120)+fit(232,208,9,dim,'потом быстро',{},120);s+=`<circle r="5" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M32 150 L142 54"/></circle>`;
+s+=`<circle r="5" fill="${grn}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M178 150 C200 148 226 122 286 54"/></circle>`;
+
+      s+=anTrail([[32,150],[44,146],[56,142],[68,138],[80,134]],'transparent',gold,5,3,5);
+      s+=anTrail([[176,150],[190,144],[206,132],[224,112],[242,84]],'transparent',grn,5,3,5);
+      s+=`<g class="anPop" style="animation-delay:1s"><rect x="20" y="222" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,244,10.5,gold,'двигай точки на графике — и меняй характер',{b:1},260)+`</g>`;
+      s+=plate2(20,258,278,28,go?grn:cardB,go?'плавное начало и конец — «плавность»':'зачем замедление?',11,pre);
+      return s;
+    }
+    if(K==='animwalk'){ /* походка: руки и ноги в противофазе */
+      const poses=[[-16,16,14,-14],[8,-8,-16,16],[16,-16,-8,8],[-8,8,16,-16]];
+      const cols=[cyan,gold,grn,pur];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11,grn,'четыре позы походки: руки против ног',{b:1},278)+`</g>`;
+      for(let k=0;k<4;k++){
+        const x=52+k*70, cy=104, c=cols[k], L1=poses[k][0], L2=poses[k][1], A1=poses[k][2], A2=poses[k][3];
+        s+=`<rect class="${pre}Pop" style="animation-delay:${(0.1+k*0.15).toFixed(2)}s" x="${x-30}" y="46" width="60" height="112" rx="9" fill="rgba(18,24,44,.97)" stroke="${c}" stroke-width="1.5"/>`;
+        s+=`<line x1="${x-24}" y1="${cy+34}" x2="${x+24}" y2="${cy+34}" stroke="${cardB}" stroke-width="1.6" stroke-dasharray="4 3"/>`;
+        s+=`<circle cx="${x}" cy="${cy-30}" r="9" fill="none" stroke="${c}" stroke-width="2"/>`;
+        s+=`<line x1="${x}" y1="${cy-21}" x2="${x}" y2="${cy+2}" stroke="${c}" stroke-width="2.6" stroke-linecap="round"/>`;
+        s+=`<line x1="${x}" y1="${cy-14}" x2="${x+A1}" y2="${cy-2}" stroke="${c}" stroke-width="2.2" stroke-linecap="round"/>`;
+        s+=`<line x1="${x}" y1="${cy-14}" x2="${x+A2}" y2="${cy-2}" stroke="${c}" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>`;
+        s+=`<line x1="${x}" y1="${cy+2}" x2="${x+L1}" y2="${cy+32}" stroke="${c}" stroke-width="2.6" stroke-linecap="round"/>`;
+        s+=`<line x1="${x}" y1="${cy+2}" x2="${x+L2}" y2="${cy+32}" stroke="${c}" stroke-width="2.6" stroke-linecap="round" opacity=".55"/>`;
+        s+=`<circle cx="${x+L1}" cy="${cy+32}" r="3.4" fill="${c}"/><circle cx="${x+L2}" cy="${cy+32}" r="3.4" fill="${c}" opacity=".55"/>`;
+        s+=fit(x,176,9.5,dim,'поза '+(k+1),{},56);
+      }
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M22 196 H296"/></circle>`;
+      s+=`<line x1="22" y1="196" x2="296" y2="196" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=`<g class="${pre}Pop"><rect x="20" y="208" width="278" height="30" rx="9" fill="rgba(125,224,160,.11)" stroke="${grn}" stroke-width="1.6"/>`
+        +fit(159,228,10.5,grn,'левая рука вперёд — правая нога вперёд',{b:1},262)+`</g>`;
+      s+=plate2(20,222,278,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='animsprite'){ /* спрайт-лист */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'спрайт-лист: все кадры в одной картинке',{b:1},282)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="120" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      const poses=[[-10,12],[4,-6],[10,-10],[-6,4]];
+      for(let k=0;k<4;k++){
+        const x=54+k*70, cx=x, cy=100, [l1,l2]=poses[k];
+        s+=`<rect x="${x-28}" y="56" width="56" height="100" rx="8" fill="rgba(255,255,255,.03)" stroke="${cyan}" stroke-width="1.2"/>`;
+        s+=`<circle cx="${cx}" cy="${cy-24}" r="8" fill="none" stroke="${grn}" stroke-width="1.8"/>`;
+        s+=`<line x1="${cx}" y1="${cy-16}" x2="${cx}" y2="${cy+4}" stroke="${grn}" stroke-width="2.2" stroke-linecap="round"/>`;
+        s+=`<line x1="${cx}" y1="${cy+4}" x2="${cx+l1}" y2="${cy+26}" stroke="${grn}" stroke-width="2.2" stroke-linecap="round"/>`;
+        s+=`<line x1="${cx}" y1="${cy+4}" x2="${cx+l2}" y2="${cy+26}" stroke="${grn}" stroke-width="2.2" stroke-linecap="round"/>`;
+        s+=fit(cx,150,8.5,dim,'кадр '+(k+1),{},56);
+      }
+      s+=anPlayhead(54,40,132,gold,0.3,0);
+      s+=fit(159,182,10.5,ink,'программа показывает один кадр за другим',{b:1},292);s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;70 0;140 0;210 0;0 0" dur="2.4s" repeatCount="indefinite"/>`
+  +`<rect x="26" y="52" width="56" height="108" rx="7" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="2.2"/></g>`;
+
+      s+=`<g class="anPop" style="animation-delay:.9s"><rect x="20" y="196" width="278" height="32" rx="10" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,218,10.5,cyan,'так хранят героев в играх — целой лентой кадров',{b:1},262)+`</g>`;
+      s+=plate2(20,232,278,30,go?grn:cardB,go?'похоже на урок про спрайты':'зачем все кадры вместе?',11,pre);
+      return s;
+    }
+    if(K==='animparallax'){ /* слои движутся с разной скоростью */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'слои движутся с разной скоростью',{b:1},276)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="140" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=`<path d="M22 118 L58 92 L94 118 L130 88 L166 118 L202 92 L238 118 L274 88 L296 104" fill="none" stroke="${blu}" stroke-width="2" opacity=".85"/>`;
+      s+=`<path d="M22 152 L58 128 L94 152 L130 124 L166 152 L202 128 L238 152 L274 124 L296 138" fill="none" stroke="${grn}" stroke-width="2.4"/>`;
+      s+=fit(60,124,9.5,blu,'дальние горы',{b:1},90);
+      for(let k=0;k<2;k++){
+        const d=(k===0)?'6.4s':'3.2s';
+        s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;18 0;0 0" dur="${d}" repeatCount="indefinite"/>`
+          +`<circle cx="${90+k*110}" cy="140" r="9" fill="rgba(125,224,160,.4)" stroke="${grn}" stroke-width="1.7"/></g>`;
+      }
+      s+=fit(60,176,9.5,grn,'ближний лес',{b:1},90);
+      for(let k=0;k<2;k++){
+        const d=(k===0)?'1.6s':'0.9s';
+        s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;-22 0;0 0" dur="${d}" repeatCount="indefinite"/>`
+          +`<circle cx="${120+k*90}" cy="168" r="7" fill="rgba(255,215,106,.45)" stroke="${gold}" stroke-width="1.6"/></g>`;
+      }
+      s+=fit(232,176,9.5,gold,'предметы',{b:1},70);
+      s+=`<path d="M22 186 H296" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=fit(159,206,10.5,ink,'дальнее движется медленно, ближнее — быстро',{b:1},292);
+      s+=plate2(20,220,278,32,go?grn:cardB,go?'это параллакс — он создаёт глубину':'какой слой быстрее?',11,pre);
+      s+=fit(159,276,10.5,dim,'так рисуют фон в мультфильмах и играх',{},296);
+      return s;
+    }
+    if(K==='animpath'){ /* движение по пути */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'объект можно вести по нарисованному пути',{b:1},280)+`</g>`;
+      const d='M34 190 C70 90, 150 90, 180 170 C200 220, 260 210, 286 120';
+      s+=`<path d="${d}" fill="none" stroke="${cardB}" stroke-width="2.4" stroke-dasharray="8 6"/>`;
+      s+=`<circle r="10" fill="rgba(127,214,255,.45)" stroke="${cyan}" stroke-width="2"><animateMotion dur="4.4s" repeatCount="indefinite" path="${d}"/></circle>`;
+      s+=anTrail([[45,160],[75,120],[110,102],[150,104],[180,140],[196,180]],'transparent',cyan,6,3,6);
+      s+=anKeyIcon(34,190,gold,true)+anKeyIcon(286,120,gold,true);
+      s+=fit(34,212,9.5,gold,'начало',{b:1},60)+fit(286,212,9.5,gold,'конец',{b:1},60);
+      s+=fit(159,236,11,ink,'мяч идёт по кривой, а не по прямой',{b:1},292);
+      s+=plate2(20,250,278,32,go?grn:cardB,go?'путь задают кривыми — он плавный':'почему путь кривой?',11,pre);
+      return s;
+    }
+    if(K==='animtransform'){ /* поворот, размер и прозрачность — всё работает */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'поворот, размер и прозрачность тоже анимируют',{b:1},290)+`</g>`;
+      const cy=108;
+      /* 1 — поворот */
+      s+=`<rect x="24" y="46" width="88" height="112" rx="9" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.5"/>`;
+      s+=`<g><animateTransform attributeName="transform" type="rotate" values="0 68 ${cy};360 68 ${cy}" dur="4s" repeatCount="indefinite"/>`
+        +`<rect x="51" y="${cy-13}" width="34" height="26" rx="4" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="1.8"/></g>`;
+      s+=fit(68,176,10.5,cyan,'поворот',{b:1},82);
+      s+=fit(68,192,9,dim,'0° → 360°',{},82);
+      /* 2 — размер: анимируем сами размеры прямоугольника */
+      s+=`<rect x="118" y="46" width="88" height="112" rx="9" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.5"/>`;
+      s+=`<rect y="${cy-13}" height="26" rx="4" fill="rgba(125,224,160,.35)" stroke="${grn}" stroke-width="1.8">`
+        +`<animate attributeName="x" values="145;135;145" dur="3s" repeatCount="indefinite"/>`
+        +`<animate attributeName="width" values="34;54;34" dur="3s" repeatCount="indefinite"/>`
+        +`<animate attributeName="y" values="${cy-13};${cy-20};${cy-13}" dur="3s" repeatCount="indefinite"/>`
+        +`<animate attributeName="height" values="26;40;26" dur="3s" repeatCount="indefinite"/></rect>`;
+      s+=fit(162,176,10.5,grn,'размер',{b:1},82);
+      s+=fit(162,192,9,dim,'1× → 1,6× → 1×',{},82);
+      /* 3 — прозрачность: сплошной цвет + анимация fill-opacity */
+      s+=`<rect x="212" y="46" width="88" height="112" rx="9" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.5"/>`;
+      s+=`<rect x="239" y="${cy-13}" width="34" height="26" rx="4" fill="#b07fff" stroke="${pur}" stroke-width="1.8">`
+        +`<animate attributeName="fill-opacity" values="1;0.12;1" dur="3s" repeatCount="indefinite"/></rect>`;
+      s+=fit(256,176,10.5,pur,'прозрачность',{b:1},82);
+      s+=fit(256,192,9,dim,'1 → 0,12 → 1',{},82);
+      s+=`<g class="${pre}Pop"><rect x="20" y="206" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,228,10.5,gold,'в программе это числа в ключевых кадрах',{b:1},262)+`</g>`;
+      s+=plate2(20,232,278,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='animloop'){ /* цикл анимации */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,grn,'цикл: последний кадр повторяет первый',{b:1},282)+`</g>`;
+      const cx=159, cy=124, R=62;
+      for(let k=0;k<6;k++){
+        const a=-Math.PI/2+k*Math.PI*2/6, x=cx+Math.cos(a)*R, y=cy+Math.sin(a)*R;
+        const col=[cyan,gold,grn,pur,rose,blu][k];
+        s+=`<rect x="${(x-19).toFixed(1)}" y="${(y-14).toFixed(1)}" width="38" height="28" rx="6" fill="rgba(18,24,44,.97)" stroke="${col}" stroke-width="1.4"/>`
+          +fit(x,y+4,9,dim,'к'+(k+1),{},34);
+      }
+      s+=`<path d="M${cx} ${cy-R-16} a${R} ${R} 0 1 1 0 ${2*R}" fill="none" stroke="${gold}" stroke-width="2" stroke-dasharray="7 5"/>`;
+      s+=`<circle r="7" fill="${gold}"><animateMotion dur="4s" repeatCount="indefinite" path="M${cx} ${cy-R} A${R} ${R} 0 1 1 ${cx} ${cy+R} A${R} ${R} 0 1 1 ${cx} ${cy-R}"/></circle>`;
+      s+=fit(cx,cy+6,11,ink,'круг',{b:1},60);
+      s+=fit(159,214,10.5,ink,'движение повторяется — анимация зацикливается',{b:1},296);
+      s+=`<g class="anPop" style="animation-delay:.9s"><rect x="20" y="228" width="278" height="32" rx="10" fill="rgba(125,224,160,.11)" stroke="${grn}" stroke-width="1.6"/>`
+        +fit(159,250,10.5,grn,'так делают ходьбу, бег, полёт и вращение',{b:1},262)+`</g>`;
+      s+=plate2(20,264,278,28,go?grn:cardB,go?'цикл экономит работу художника':'зачем нужен цикл?',11,pre);
+      return s;
+    }
+    if(K==='animsmear'){ /* смазывание движения */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,rose,'быстрое движение «смазывают»',{b:1},262)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="104" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=anBall(56,98,14,cyan,{pre:'an'});
+      for(let k=0;k<5;k++){
+        const x=100+k*26;
+        s+=`<ellipse cx="${x}" cy="98" rx="${(16-k*2).toFixed(1)}" ry="${(11-k*1.4).toFixed(1)}" fill="${cyan}" fill-opacity="${(0.4-k*0.07).toFixed(2)}"/>`;
+      }
+      s+=anBall(252,98,14,grn,{delay:0.3,pre:'an'});
+      s+=fit(56,168,10,dim,'обычный кадр',{b:1},90)+fit(176,168,10,dim,'смазанный кадр',{b:1},110)+fit(252,168,10,dim,'снова обычный',{b:1},90);
+      s+=fit(159,192,10.5,ink,'в смазанном кадре видно направление движения',{b:1},292);s+=`<g><animateMotion dur="2.2s" repeatCount="indefinite" path="M40 98 H280"/>`
+  +`<ellipse cx="0" cy="0" rx="16" ry="11" fill="rgba(127,214,255,.45)"/><circle cx="-20" cy="0" r="6" fill="rgba(127,214,255,.25)"/><circle cx="-34" cy="0" r="4" fill="rgba(127,214,255,.15)"/></g>`;
+
+      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="206" width="278" height="32" rx="10" fill="rgba(255,143,176,.11)" stroke="${rose}" stroke-width="1.6"/>`
+        +fit(159,228,10.5,rose,'так движение кажется быстрее и резче',{b:1},262)+`</g>`;
+      s+=plate2(20,242,278,30,go?grn:cardB,go?'художники называют это «смаз»':'зачем смазывать кадр?',11,pre);
+      return s;
+    }
+    if(K==='animprinciples'){ /* принципы анимации */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'приёмы, которые оживляют рисунок',{b:1},276)+`</g>`;
+      const it=[['сжатие и растяжение',gold,'squash'],['подготовка к движению',cyan,'anticip'],['движение по инерции',grn,'follow'],['преувеличение',pur,'exag']];
+      it.forEach((q,k)=>{
+        const x=24+(k%2)*140, y=46+Math.floor(k/2)*88;
+        s+=`<rect x="${x}" y="${y}" width="132" height="72" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.6"/>`;
+        const cx=x+66, cy=y+32;
+        if(q[2]==='squash') s+=`<ellipse cx="${cx}" cy="${cy+8}" rx="18" ry="12" fill="rgba(255,215,106,.35)" stroke="${gold}" stroke-width="1.7"/>`;
+        else if(q[2]==='anticip') s+=`<circle cx="${cx-12}" cy="${cy}" r="9" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="1.6"/><path d="M${cx-2} ${cy} h16" stroke="${cyan}" stroke-width="1.8" stroke-dasharray="4 4"/>`;
+        else if(q[2]==='follow') s+=`<circle cx="${cx}" cy="${cy}" r="10" fill="rgba(125,224,160,.35)" stroke="${grn}" stroke-width="1.7"/><circle cx="${cx+16}" cy="${cy+6}" r="6" fill="rgba(125,224,160,.22)" stroke="${grn}" stroke-width="1.4"/>`;
+        else s+=`<circle cx="${cx}" cy="${cy}" r="14" fill="rgba(176,127,255,.32)" stroke="${pur}" stroke-width="1.8"/><ellipse cx="${cx}" cy="${cy+16}" rx="20" ry="5" fill="rgba(176,127,255,.18)"/>`;
+        s+=fit(cx,y+62,9,q[1],q[0],{b:1},124)+`</g>`;
+      });
+      s+=fit(159,238,10.5,ink,'это четыре из двенадцати принципов анимации',{b:1},296);s+=`<ellipse cx="90" cy="94" rx="16" ry="11" fill="none" stroke="${gold}" stroke-width="1.4"><animate attributeName="ry" values="11;7;13;11" dur="2s" repeatCount="indefinite"/></ellipse>`;
+s+=`<circle cx="206" cy="80" r="7" fill="none" stroke="${cyan}" stroke-width="1.4"><animate attributeName="cx" values="206;216;206" dur="1.8s" repeatCount="indefinite"/></circle>`;
+s+=`<circle cx="354" cy="96" r="7" fill="none" stroke="${grn}" stroke-width="1.4"><animate attributeName="cx" values="354;366;354" dur="1.6s" repeatCount="indefinite"/></circle>`;
+s+=`<circle cx="206" cy="182" r="12" fill="none" stroke="${pur}" stroke-width="1.4"><animate attributeName="r" values="12;16;12" dur="2.2s" repeatCount="indefinite"/></circle>`;
+
+      s+=plate2(20,252,278,32,go?grn:cardB,go?'приёмы придумали мультипликаторы Disney':'какие бывают приёмы?',11,pre);
+      return s;
+    }
+    if(K==='animsquash'){ /* живой отскок: сжатие при ударе */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'сжатие и растяжение: мяч живой',{b:1},272)+`</g>`;
+      const gy=214;
+      s+=`<line x1="20" y1="${gy}" x2="298" y2="${gy}" stroke="${cardB}" stroke-width="2.4"/>`;
+      for(let k=1;k<=4;k++) s+=`<line x1="${20+k*56}" y1="${gy-4}" x2="${20+k*56}" y2="${gy+4}" stroke="${cardB}" stroke-width="1.2"/>`;
+      const d=`M46 76 C96 50, 130 202, 172 202 C214 202, 244 64, 290 76`;
+      s+=`<path d="${d}" fill="none" stroke="${cyan}" stroke-width="1.4" stroke-dasharray="5 4" opacity=".55"/>`;
+      s+=`<circle cx="46" cy="76" r="15" fill="rgba(255,215,106,.35)" stroke="${gold}" stroke-width="2"/>`;
+      s+=fit(46,50,9.5,dim,'летит ровно',{b:1},90);
+      s+=`<ellipse cx="172" cy="196" rx="24" ry="12" fill="rgba(255,143,176,.4)" stroke="${rose}" stroke-width="2"/>`;
+      s+=fit(172,236,9.5,rose,'сжался о пол',{b:1},110);
+      s+=`<ellipse cx="290" cy="72" rx="12" ry="20" fill="rgba(125,224,160,.4)" stroke="${grn}" stroke-width="2"/>`;
+      s+=fit(282,42,9.5,grn,'растянулся',{b:1},96);
+      s+=`<g><animateMotion dur="2.6s" repeatCount="indefinite" path="${d}"/>`
+        +`<circle cx="0" cy="0" r="13" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="1.8">`
+        +`<animate attributeName="r" values="13;16;10;16;13" dur="2.6s" repeatCount="indefinite"/></circle></g>`;
+      s+=`<g class="${pre}Pop"><rect x="20" y="252" width="278" height="30" rx="9" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.5"/>`
+        +fit(159,272,10,cyan,'у пола мяч сплющивается, в полёте вытягивается',{b:1},264)+`</g>`;
+      s+=`<g class="${pre}Pop"><rect x="20" y="288" width="278" height="30" rx="9" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,308,10.5,gold,'это делает движение упругим, а не каменным',{b:1},262)+`</g>`;
+      return s;
+    }
+    if(K==='animsound'){ /* звук в анимации */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'звук совпадает с движением кадр в кадр',{b:1},282)+`</g>`;
+      s+=anStrip(20,46,6,42,60,6,cyan,{});
+      for(let k=0;k<6;k++){
+        const x=41+k*48;
+        s+=fit(x,74,9.5,dim,'к'+(k+1),{},30);
+      }
+      s+=anPlayhead(113,40,74,gold,0.3,0);
+      s+=fit(113,124,9.5,gold,'сейчас кадр 3',{b:1},90);
+      for(let k=0;k<12;k++){
+        const x=30+k*22, h=8+((k%4)*7);
+        s+=growBar(x,200-h,14,h,(k<6?cyan:cardB),0.8,0.4+k*0.1,0);
+      }
+      s+=`<line x1="113" y1="140" x2="113" y2="204" stroke="${gold}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
+      s+=fit(159,226,10.5,ink,'звуковая дорожка тоже разбита по кадрам',{b:1},292);s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;278 0" dur="3.2s" repeatCount="indefinite"/>`
+  +`<rect x="24" y="42" width="4" height="164" rx="2" fill="${gold}" fill-opacity=".7"/></g>`;
+s+=`<circle cx="248" cy="52" r="7" fill="${cyan}"><animate attributeName="r" values="7;11;7" dur="0.6s" repeatCount="indefinite"/></circle>`;
+
+      s+=`<g class="anPop" style="animation-delay:.7s"><rect x="20" y="240" width="278" height="32" rx="10" fill="rgba(176,127,255,.11)" stroke="${pur}" stroke-width="1.6"/>`
+        +fit(159,262,10.5,pur,'шаг в кадре 3 — звук шага тоже в кадре 3',{b:1},262)+`</g>`;
+      s+=plate2(20,274,278,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='animrender'){ /* из анимации в видео */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'анимацию собирают в видеофайл',{b:1},268)+`</g>`;
+      for(let k=0;k<4;k++){
+        const x=26+k*38;
+        s+=`<rect x="${x}" y="52" width="32" height="46" rx="5" fill="rgba(18,24,44,.97)" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="1.4"/>`;
+        s+=anBall(x+16,78-(k%2)*10,7,[cyan,gold,grn,pur][k],{pre:'an',delay:0.2+k*0.2});
+      }
+      s+=fit(159,118,10,dim,'кадры анимации',{b:1},140);
+      s+=`<path d="M188 75 h22" stroke="${gold}" stroke-width="2.4"/><path d="M204 68 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<rect x="220" y="52" width="74" height="46" rx="8" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2"/>`;
+      s+=fit(257,72,10,gold,'видео',{b:1},64)+fit(257,88,9,dim,'24 кадра/с',{},64);
+      s+=fit(159,148,10.5,ink,'программа собирает кадры в один файл',{b:1},292);s+=`<circle r="6" fill="${gold}"><animateMotion dur="2.4s" repeatCount="indefinite" path="M34 75 H254"/></circle>`;
+s+=`<rect x="220" y="52" width="74" height="46" rx="8" fill="none" stroke="${gold}" stroke-width="1.6" stroke-dasharray="5 4"><animate attributeName="stroke-opacity" values="1;.25;1" dur="1.4s" repeatCount="indefinite"/></rect>`;
+
+      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="166" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,188,10.5,gold,'1000 кадров при 24 в секунду — это 42 секунды',{b:1},262)+`</g>`;
+      s+=plate2(20,202,278,32,go?grn:cardB,go?'это «рендер» — сборка видео из кадров':'как получают видео?',11,pre);
+      s+=fit(159,258,10.5,dim,'поэтому рендер мультфильма занимает часы',{},296);
+      return s;
+    }
+    if(K==='animtools'){ /* инструменты анимации */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,grn,'два способа делать анимацию',{b:1},262)+`</g>`;
+      s+=`<rect x="18" y="46" width="134" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`;
+      s+=fit(85,70,11,cyan,'покадрово',{b:1},118);
+      for(let k=0;k<4;k++){
+        const x=32+k*30;
+        s+=`<rect x="${x}" y="82" width="26" height="34" rx="4" fill="rgba(255,255,255,.04)" stroke="${cyan}" stroke-width="1.2"/>`;
+        s+=anBall(x+13,98-(k%2)*8,5,cyan,{pre:'an',delay:0.15+k*0.2});
+        s+=fit(x+13,132,8,dim,''+(k+1),{},24);
+      }
+      s+=fit(85,152,9.5,dim,'рисунок в каждом кадре',{},120)+fit(85,168,9.5,dim,'зато полный контроль',{},120)+fit(85,186,9.5,cyan,'подходит для героя',{},120);
+      s+=`<rect x="166" y="46" width="134" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.7"/>`;
+      s+=fit(233,70,11,gold,'по ключам',{b:1},118);
+      s+=`<path d="M182 130 H284" stroke="${cardB}" stroke-width="1.6"/>`;
+      for(let k=0;k<3;k++){
+        const x=196+k*40;
+        s+=anKeyIcon(x,130,gold,true);
+        s+=anBall(x,110-(k%2)*16,6,gold,{pre:'an',delay:0.15+k*0.25});
+      }
+      s+=fit(233,152,9.5,dim,'задаём главные позы',{},120)+fit(233,168,9.5,dim,'остальное считает программа',{},120)+fit(233,186,9.5,gold,'подходит для движения',{},120);
+      s+=fit(159,214,10.5,ink,'выбор способа зависит от задачи',{b:1},292);s+=`<circle r="6" fill="${cyan}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M34 130 H134"/></circle>`;
+s+=`<circle r="6" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M182 130 H284"/></circle>`;
+s+=`<circle cx="196" cy="110" r="6" fill="${gold}"><animate attributeName="cy" values="110;90;110" dur="2s" repeatCount="indefinite"/></circle>`;
+s+=`<circle cx="236" cy="110" r="6" fill="${gold}"><animate attributeName="cy" values="90;110;90" dur="2s" repeatCount="indefinite"/></circle>`;
+
+      s+=plate2(18,228,282,32,go?grn:cardB,go?'героя рисуют кадрами, движение — по ключам':'какой способ выбрать?',11,pre);
+      return s;
+    }
+    if(K==='animstopmotion'){ /* стоп-моушен */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,rose,'покадровая съёмка: стоп-моушен',{b:1},276)+`</g>`;
+      s+=`<rect x="24" y="46" width="70" height="54" rx="8" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`;
+      s+=`<path d="M42 66 l20 -12 v24 z" fill="rgba(127,214,255,.4)" stroke="${cyan}" stroke-width="1.4"/>`;
+      s+=`<circle cx="80" cy="58" r="7" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="1.4"/>`;
+      s+=fit(59,116,10,cyan,'камера',{b:1},90);
+      s+=`<path d="M96 74 L200 74" stroke="${gold}" stroke-width="1.6" stroke-dasharray="6 5"/>`;
+      for(let k=0;k<4;k++){
+        const x=214, y=48+k*34;
+        s+=`<rect x="196" y="${y}" width="46" height="28" rx="6" fill="rgba(18,24,44,.97)" stroke="${rose}" stroke-width="1.3"/>`;
+        s+=`<circle cx="${214+k*8}" cy="${y+18}" r="6" fill="rgba(255,143,176,.4)" stroke="${rose}" stroke-width="1.3"/>`;
+      }
+      s+=fit(230,196,10,dim,'сдвиг на чуть-чуть',{},120);
+      s+=fit(159,222,10.5,ink,'фигурку чуть двигают и снимают снова',{b:1},292);s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;26 0;54 0;0 0" dur="3.2s" repeatCount="indefinite"/>`
+  +`<circle cx="150" cy="180" r="10" fill="rgba(255,143,176,.5)" stroke="${rose}" stroke-width="1.8"/></g>`;
+s+=`<line x1="120" y1="196" x2="230" y2="196" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
+
+      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="236" width="278" height="32" rx="10" fill="rgba(255,143,176,.11)" stroke="${rose}" stroke-width="1.6"/>`
+        +fit(159,258,10.5,rose,'так снимают мультфильмы из пластилина',{b:1},262)+`</g>`;
+      s+=plate2(20,270,278,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='animcartoon'){ /* как делают мультфильм */
+      const st2=[['сценарий',gold],['раскадровка',cyan],['аниматик',grn],['анимация',pur],['звук',rose],['монтаж',blu]];
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,gold,'мультфильм делают по шагам',{b:1},262)+`</g>`;
+      st2.forEach((q,k)=>{
+        const y=46+k*36;
+        s+=`<g class="anPop" style="animation-delay:${(0.08+k*0.1).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.5"/>`
+          +`<circle cx="44" cy="${y+15}" r="9" fill="rgba(255,255,255,.05)" stroke="${q[1]}" stroke-width="1.2"/>`
+          +tx(44,y+19,9.5,q[1],''+(k+1),{b:1})
+          +fit(168,y+20,10.5,q[1],q[0],{b:1},200)+`</g>`;
+        if(k<5) s+=drawLL({x:159,y:y+32},{x:159,y:y+34},q[1],1.2,0.3+k*0.1,1.2,pre);
+      });
+      s+=fit(159,272,10,dim,'от идеи до готового фильма',{},200);
+      s+=`<circle r="5.5" fill="${gold}"><animateMotion dur="4.2s" repeatCount="indefinite" path="M44 61 L44 256"/></circle>`;
+      return s;
+    }
+    if(K==='animmix'){ /* 2D и 3D вместе */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'в мультфильмах соединяют 2D и 3D',{b:1},276)+`</g>`;
+      s+=`<rect x="18" y="46" width="134" height="120" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.6"/>`;
+      s+=`<path d="M20 150 Q60 100 100 150" fill="none" stroke="${cyan}" stroke-width="2.4"/>`;
+      s+=(typeof d3draw==='function')?d3draw(d3cube(),146,110,22,0.32,-0.66,0,pre,{c:gold,sw:1.4,fov:7}):'';
+      s+=`<path d="M152 100 L232 78" stroke="${gold}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
+      s+=`<rect x="186" y="46" width="114" height="120" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=`<path d="M196 150 Q236 96 276 150" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=fit(85,182,10.5,cyan,'рисованный герой',{b:1},124)+fit(243,182,10.5,gold,'3D-модель',{b:1},110);
+      s+=fit(159,208,10.5,ink,'героя рисуют, а мир вокруг строят в 3D',{b:1},292);s+=`<g><animateTransform attributeName="transform" type="rotate" values="0 243 106;360 243 106" dur="5s" repeatCount="indefinite"/>`
+  +`<rect x="231" y="94" width="24" height="24" rx="4" fill="none" stroke="${gold}" stroke-width="1.8"/></g>`;
+s+=`<circle r="5" fill="${cyan}"><animateMotion dur="2.8s" repeatCount="indefinite" path="M34 148 Q60 104 112 148"/></circle>`;
+
+      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="222" width="278" height="32" rx="10" fill="rgba(176,127,255,.11)" stroke="${pur}" stroke-width="1.6"/>`
+        +fit(159,244,10.5,pur,'так экономят силы и получают красивую картинку',{b:1},262)+`</g>`;
+      s+=plate2(20,256,278,30,go?grn:cardB,go?'например: герой 2D, город 3D':'зачем смешивать?',11,pre);
+      return s;
+    }
+    if(K==='animpractice'){ /* практика */
+      const rows=[
+        {t:'24 кадра в секунду, 5 секунд — сколько кадров?',a:'120 кадров',c:grn},
+        {t:'герой прошёл 240 точек за 4 секунды. Сколько за секунду?',a:'60 точек',c:cyan},
+        {t:'цикл 8 кадров при 24 в секунду — сколько циклов?',a:'3 цикла',c:gold}
+      ];
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'практика: считаем кадры и скорость',{b:1},276)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=48+k*58;
+        s+=`<g class="anPop" style="animation-delay:${(0.12+k*0.2).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(142,y+19,9.5,ink,q.t,{},200)
+          +(go?fit(142,y+38,11,q.c,q.a,{b:1},200):fit(142,y+38,10,dim,'нажми «показать»',{},200))+`</g>`;
+      });
+      s+=plate2(20,224,278,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
+      s+=fit(159,276,10,dim,'анимация — это расчёт времени и кадров',{},290);
+      return s;
+    }
+    if(K==='animlab'){ /* ЛАБОРАТОРИЯ: таймлайн и интерполяция */
+      const fr=(st&&typeof st.af==='number')?st.af:0;
+      const keys=(st&&st.ak)?st.ak:[0.65,0.15,0.65];
+      const sel=(st&&typeof st.asel==='number')?st.asel:0;
+      const N=12, kf=[0,6,12];
+      let y=0;
+      for(let i=0;i<kf.length-1;i++){
+        if(fr>=kf[i]&&fr<=kf[i+1]){ const t=(fr-kf[i])/(kf[i+1]-kf[i]); y=anLerp(keys[i],keys[i+1],anEase(t,2)); }
+      }
+      if(fr>=12) y=keys[2];
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,ink,'лаборатория: ключи и промежуточные кадры',{b:1},284)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=`<line x1="30" y1="180" x2="288" y2="180" stroke="${cardB}" stroke-width="2"/>`;
+      const px=k=>34+k*(244/N), py=v=>180-v*118;
+      let trail='';
+      for(let k=0;k<=N;k++){
+        let v=0;
+        for(let i2=0;i2<kf.length-1;i2++){ if(k>=kf[i2]&&k<=kf[i2+1]){ const t=(k-kf[i2])/(kf[i2+1]-kf[i2]); v=anLerp(keys[i2],keys[i2+1],anEase(t,2)); } }
+        trail+=`<circle cx="${px(k).toFixed(1)}" cy="${py(v).toFixed(1)}" r="${k===fr?7:2.6}" fill="${k===fr?gold:(k%6===0?pur:'rgba(127,214,255,.45)')}"/>`;
+      }
+      s+=trail;
+      kf.forEach((k2,i2)=>{
+        s+=anKeyIcon(px(k2),196,i2===sel?gold:pur,true);
+        s+=fit(px(k2),212,9,i2===sel?gold:pur,'к'+(i2+1),{b:1},34);
+      });
+      s+=anPlayhead(px(fr),52,128,gold,0,0);
+      s+=fit(px(fr)>240?246:px(fr)+6,64,9.5,gold,'кадр '+(fr+1),{b:1},70);
+      s+=`<g class="anPop"><rect x="20" y="222" width="278" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
+        +`<text x="159" y="240" text-anchor="middle" font-size="10" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">высота: ${(y*100).toFixed(0)}% · ключей: 3</text></g>`;
+      const btn=(x,y2,t2,col,act,val,w2)=>`<g style="cursor:pointer" onclick="infAnim('${lk}','${act}','${val}')"><rect x="${x}" y="${y2}" width="${w2}" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${col}" stroke-width="1.6"/>`
+        +fit(x+w2/2,y2+20,10.5,col,t2,{b:1},w2-10)+`</g>`;
+      s+=btn(20,258,'+1 кадр',grn,'frame','+',88);
+      s+=btn(114,258,'выше',gold,'up','',68);
+      s+=btn(188,258,'ниже',rose,'down','',68);
+      s+=btn(20,296,'сначала',cardB,'reset','',88);
+      s+=btn(114,296,'ключ 1',pur,'sel','0',68);
+      s+=btn(188,296,'ключ 3',pur,'sel','2',68);
+      return s;
+    }
+    if(K==='animquiz'){ /* викторина */
+      const opts=['ключевые кадры','промежуточные кадры','спрайт-лист'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,ink,'Как называют главные позы движения?',{b:1},276)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="80" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=anBall(64,86,14,pur,{pre:'an'});
+      for(let k=1;k<5;k++) s+=anBall(64+k*48,86-(k%2)*18,8,cyan,{pre:'an',delay:0.1*k});
+      s+=anBall(260,86,14,pur,{pre:'an',delay:0.6});
+      s+=anKeyIcon(64,112,pur,true)+anKeyIcon(260,112,pur,true);
+      opts.forEach((t2,k)=>{
+        const y=136+k*36, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="20" y="${y}" width="278" height="30" rx="8" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.1:1.5}"/>`
+          +fit(159,y+20,10.5,c,t2,{b:on},258)+(on?`<path d="M270 ${y+9} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.2"/>`:'')+`</g>`;
+      });
+      s+=`<g class="anPop"><rect x="20" y="250" width="278" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.5"/>`
+        +fit(159,270,10,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Главные позы — ключевые кадры':'Подумай: их рисует художник',{b:done&&st.pick===ok},256)+`</g>`;
+      s+=fit(159,296,10,dim,'остальные программа досчитывает сама',{},280);
+      return s;
+    }
+    if(K==='animmistakes'){ /* ошибки */
+      const it=[
+        {t:'мало кадров — движение дёргается',f:'увеличь частоту кадров',c:rose},
+        {t:'нет ключей — движение непонятное',f:'задай главные позы',c:gold},
+        {t:'все части движутся одинаково',f:'добавь инерцию и параллакс',c:cyan},
+        {t:'герой не сжимается при ударе',f:'добавь сжатие и растяжение',c:pur}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="anPop" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="12" y="${y}" width="294" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="1.9"/>`
+          +`<path d="M28 ${y+13} l10 18 h-20 z" fill="${red}" opacity=".9"/><text x="28" y="${y+28}" text-anchor="middle" font-size="10" font-weight="bold" fill="#eaf2ff">!</text>`
+          +fit(96,y+20,Math.min(10.5,150/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},132)
+          +`<path d="M98 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.2"/>`
+          +fit(120,y+37,Math.min(9.5,140/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},140)+`</g>`;
+      });
+      s+=`${tx(159,250,10.5,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='animsheet'){ /* шпаргалка */
+      const rows=[{t:'анимация — быстрая смена кадров',c:cyan},{t:'ключевые кадры рисует человек',c:pur},
+                  {t:'промежуточные считает программа',c:gold},{t:'плавность: ускорение и замедление',c:grn},
+                  {t:'сжатие и растяжение оживляют движение',c:rose},{t:'цикл экономит кадры',c:blu}];
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'всё главное об анимации',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=46+k*36;
+        s+=`<g class="anPop" style="animation-delay:${(0.08+k*0.1).toFixed(2)}s">`
+          +`<rect x="16" y="${y}" width="286" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.5"/>`;
+        if(k===0) s+=anBall(38,y+15,9,q.c,{pre:'an'});
+        else if(k===1) s+=anKeyIcon(38,y+15,q.c,true);
+        else if(k===2) s+=anKeyIcon(38,y+15,q.c,false);
+        else if(k===3) s+=anCurve(28,y+24,22,18,t=>anEase(t,3),q.c,{sw:1.8});
+        else if(k===4) s+=`<ellipse cx="38" cy="${y+19}" rx="11" ry="7" fill="rgba(255,143,176,.4)" stroke="${q.c}" stroke-width="1.4"/>`;
+        else s+=`<path d="M28 ${y+15} a10 10 0 1 1 0 0.01" fill="none" stroke="${q.c}" stroke-width="1.8"/>`;
+        s+=fit(176,y+20,9.5,q.c,q.t,{b:1},190)+`</g>`;
+      });
+      s+=plate2(16,268,286,28,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -8751,7 +9757,7 @@ if(K==='d3intro'){ /* экран и объём — подробно */
     if(K==='animloop') return 314;
     if(K==='animsmear') return 288;
     if(K==='animprinciples') return 300;
-    if(K==='animsquash') return 300;
+    if(K==='animsquash') return 330;
     if(K==='animsound') return 288;
     if(K==='animrender') return 272;
     if(K==='animtools') return 274;
