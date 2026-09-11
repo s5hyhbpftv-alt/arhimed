@@ -16230,7 +16230,7 @@ function visPhysNew(el){
             <stop offset="0" stop-color="#2b3a55"/><stop offset=".55" stop-color="#4a5568"/><stop offset="1" stop-color="#8c7a63"/>
           </linearGradient>
           <radialGradient id="pwSun" cx="78%" cy="18%" r="42%">
-            <stop offset="0" stop-color="#ffe6b0" stop-opacity=".85"/><stop offset="1" stop-color="#ffe6b0" stop-opacity="0"/>
+            <stop offset="0" stop-color="#ffe6b0" stop-opacity=".5"/><stop offset="1" stop-color="#ffe6b0" stop-opacity="0"/>
           </radialGradient>
           <linearGradient id="pwMast" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0" stop-color="#6d6257"/><stop offset=".3" stop-color="#d8cbb8"/><stop offset=".62" stop-color="#8b7d6c"/><stop offset="1" stop-color="#4c443b"/>
@@ -16269,16 +16269,13 @@ function visPhysNew(el){
         </g>
         <!-- трос и крюк -->
         <line x1="160" y1="96" x2="160" y2="${(214-lift-14).toFixed(1)}" stroke="#d9d2c4" stroke-width="2.2"/>
-        <path d="M160 ${(214-lift-14).toFixed(1)} v6" stroke="#8a8377" stroke-width="3"/>
-        <g style="transition:transform .9s cubic-bezier(.3,.9,.3,1)" transform="translate(0 0)">
-          <path d="M154 ${(222-lift).toFixed(1)} q6 10 12 0" fill="none" stroke="url(#pwMetal)" stroke-width="4" stroke-linecap="round"/>
-        </g>
+        <path class="pw-cable" d="M160 96 v96" stroke="#d9d2c4" stroke-width="2.2" style="transition:transform .9s cubic-bezier(.3,.9,.3,1);transform:translateY(${(-Math.min(72,lift)).toFixed(1)}px)"/>
         <!-- бетонный блок -->
-        <g filter="url(#pwShadow)" style="transition:transform .9s cubic-bezier(.3,.9,.3,1);transform:translateY(${(st.up? -82+N/40 : 0).toFixed(1)}px)">
-          <rect x="132" y="${(224-lift).toFixed(1)}" width="56" height="40" rx="3" fill="url(#pwBlock)"/>
-          <rect x="132" y="${(228-lift).toFixed(1)}" width="56" height="4" fill="#fff" opacity=".18"/>
-          <circle cx="146" cy="${(240-lift).toFixed(1)}" r="3.4" fill="#5c5852"/><circle cx="174" cy="${(240-lift).toFixed(1)}" r="3.4" fill="#5c5852"/>
-          <text x="160" y="${(252-lift).toFixed(1)}" text-anchor="middle" font-size="9" fill="#efe9df">${A} Дж</text>
+        <g filter="url(#pwShadow)" style="transition:transform .95s cubic-bezier(.3,.9,.3,1);transform:translateY(${(-Math.min(72,lift)).toFixed(1)}px)">
+          <rect x="132" y="168" width="56" height="40" rx="3" fill="url(#pwBlock)"/>
+          <rect x="132" y="172" width="56" height="4" fill="#fff" opacity=".18"/>
+          <circle cx="146" cy="184" r="3.4" fill="#5c5852"/><circle cx="174" cy="184" r="3.4" fill="#5c5852"/>
+          <text x="160" y="196" text-anchor="middle" font-size="9" fill="#efe9df">${A} Дж</text>
         </g>
         <!-- секундомер -->
         <g transform="translate(300 176)">
