@@ -2741,55 +2741,111 @@ window.WAVE_B = window.WAVE_B || {};
   };
 
   const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
-  const P=()=>window.PHYS||{density:(m,V)=>({rho:m/V,floats:m/V<1,sinks:m/V>1}),floatState:(r,l)=>({frac:r>=(l||1)?1:r/(l||1),sink:r>=(l||1)}),T:{density:{frac:[[0.2,0.2,0],[0.9,0.9,0],[1,1,0],[1.6,1,1]]}}};
+  const P=()=>window.PHYS||{density:(m,V)=>({rho:m/V,floats:m/V<1,sinks:m/V>1}),floatState:(r,l)=>({frac:r>=(l||1)?1:r/(l||1),sink:r>=(l||1),note:r>=(l||1)?'тонет':(r<(l||1)?'плавает':'висит')}),T:{density:{frac:[[0.2,0.2,0],[0.9,0.9,0],[1,1,0],[1.6,1,1]]}}};
   const CSS=`<style>
-    @keyframes d3rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
-    @keyframes d3drop{0%{transform:translateY(-36px);opacity:0}70%{transform:translateY(4px)}100%{transform:translateY(0);opacity:1}}
-    @keyframes d3bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-    @keyframes d3draw{to{stroke-dashoffset:0}}
-    @keyframes d3pack{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-    @keyframes d3shim{0%{transform:translateX(0)}100%{transform:translateX(-18px)}}
-    .d3f{transform-origin:50% 100%;transform-box:fill-box;animation:d3rise .9s cubic-bezier(.2,.85,.2,1) both}
-    .d3drop{transform-box:fill-box;transform-origin:center;animation:d3drop .75s cubic-bezier(.2,1.2,.25,1) both}
-    .d3bob{animation:d3bob 2.2s ease-in-out infinite}
-    .d3line{stroke-dasharray:280;stroke-dashoffset:280;animation:d3draw 1.05s ease forwards}
-    .d3pack{transform-box:fill-box;transform-origin:center;animation:d3pack 1.4s ease-in-out infinite}
-    .d3shim{animation:d3shim 1.8s linear infinite}
-    .d3lab{paint-order:stroke fill;stroke:#071018;stroke-width:3.4px;stroke-linejoin:round}
+    @keyframes d4rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    @keyframes d4drop{0%{transform:translateY(-40px);opacity:0}72%{transform:translateY(5px)}100%{transform:translateY(0);opacity:1}}
+    @keyframes d4bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+    @keyframes d4draw{to{stroke-dashoffset:0}}
+    @keyframes d4pack{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+    @keyframes d4wave{0%{d:path('M 78 94 Q 110 88 140 94 T 202 94')}50%{d:path('M 78 94 Q 110 100 140 94 T 202 94')}100%{d:path('M 78 94 Q 110 88 140 94 T 202 94')}}
+    @keyframes d4dust{0%{opacity:.15;transform:translateY(0)}100%{opacity:0;transform:translateY(-24px)}}
+    .d4f{transform-origin:50% 100%;transform-box:fill-box;animation:d4rise .95s cubic-bezier(.2,.85,.2,1) both}
+    .d4drop{transform-box:fill-box;transform-origin:center;animation:d4drop .8s cubic-bezier(.2,1.15,.25,1) both}
+    .d4bob{animation:d4bob 2.4s ease-in-out infinite}
+    .d4line{stroke-dasharray:280;stroke-dashoffset:280;animation:d4draw 1.05s ease forwards}
+    .d4pack{transform-box:fill-box;transform-origin:center;animation:d4pack 1.5s ease-in-out infinite}
+    .d4lab{paint-order:stroke fill;stroke:#140c08;stroke-width:3.6px;stroke-linejoin:round}
   </style>`;
   function lab(x,y,t,col,anchor,fs){
-    const xx=Math.max(12,Math.min(228,+x)), yy=Math.max(14,Math.min(210,+y));
-    return `<text class="d3lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+    const xx=Math.max(12,Math.min(228,+x)), yy=Math.max(14,Math.min(212,+y));
+    return `<text class="d4lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
   }
   function frame(inner){
-    try{ window._waveCss && _waveCss('css-d3v1', CSS); }catch(e){}
-    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,320px);height:auto;background:radial-gradient(circle at 50% 0%,#1a3044,#071018 74%);border-radius:16px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
+    try{ window._waveCss && _waveCss('css-d4v1', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,340px);height:auto;background:#0b1418;border-radius:16px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
   }
   function note(title,text){
-    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+    return `<div style="max-width:340px;width:100%;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
       <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
       <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
   }
   function defs(){
     return `<defs>
-      <linearGradient id="d3w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ad0ff" stop-opacity=".5"/><stop offset="1" stop-color="#163a58" stop-opacity=".95"/></linearGradient>
-      <linearGradient id="d3wood" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0c48a"/><stop offset="1" stop-color="#a06a32"/></linearGradient>
-      <linearGradient id="d3iron" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d5e2ee"/><stop offset="1" stop-color="#5d7388"/></linearGradient>
-      <linearGradient id="d3ice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4fbff"/><stop offset="1" stop-color="#9ec8e6"/></linearGradient>
+      <linearGradient id="d4sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1c12"/><stop offset=".45" stop-color="#1a140e"/><stop offset="1" stop-color="#0a0806"/></linearGradient>
+      <radialGradient id="d4lamp" cx="50%" cy="8%" r="70%"><stop offset="0" stop-color="#ffd18a" stop-opacity=".35"/><stop offset="1" stop-color="#0a0806" stop-opacity="0"/></radialGradient>
+      <linearGradient id="d4woodT" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6ddb0"/><stop offset="1" stop-color="#c89658"/></linearGradient>
+      <linearGradient id="d4woodL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c48a44"/><stop offset="1" stop-color="#7a4a22"/></linearGradient>
+      <linearGradient id="d4woodR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a06832"/><stop offset="1" stop-color="#5a3014"/></linearGradient>
+      <linearGradient id="d4ironT" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2f6fa"/><stop offset="1" stop-color="#9aafbc"/></linearGradient>
+      <linearGradient id="d4ironL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a9eac"/><stop offset="1" stop-color="#3a4c58"/></linearGradient>
+      <linearGradient id="d4ironR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a8090"/><stop offset="1" stop-color="#243038"/></linearGradient>
+      <linearGradient id="d4iceT" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#b8dcee"/></linearGradient>
+      <linearGradient id="d4w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8ad8ff" stop-opacity=".55"/><stop offset="1" stop-color="#123a58" stop-opacity=".96"/></linearGradient>
+      <linearGradient id="d4desk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a4020"/><stop offset="1" stop-color="#2a160c"/></linearGradient>
+      <filter id="d4soft"><feGaussianBlur stdDeviation="1.1"/></filter>
     </defs>`;
   }
-  function cube(ox,oy,s,fill,n){
-    const hx=s*0.86, hy=s*0.5, h=s*0.92;
-    let mol='';
-    for(let i=0;i<n;i++){
-      const u=(i%4)/3, v=Math.floor(i/4)/4;
-      mol+=`<circle class="d3pack" cx="${ox+hx*0.3+u*hx*1.1}" cy="${oy+hy*0.2+v*h}" r="2.2" fill="${GOLD}" style="animation-delay:${i*.07}s"/>`;
+  function desk(){
+    return `<rect width="240" height="220" fill="url(#d4sky)"/>
+      <ellipse cx="120" cy="18" rx="110" ry="40" fill="url(#d4lamp)"/>
+      <path d="M 8 178 L 232 178 L 218 206 L 22 206 Z" fill="url(#d4desk)"/>
+      <path d="M 14 180 L 226 180" stroke="#c49658" stroke-width="1.6" opacity=".55"/>
+      <path d="M 48 178 L 58 206" stroke="#1a0c06" opacity=".35"/>
+      <path d="M 120 178 L 128 206" stroke="#1a0c06" opacity=".28"/>
+      <path d="M 186 178 L 194 206" stroke="#1a0c06" opacity=".3"/>
+      <circle class="d4drop" cx="36" cy="70" r="1.2" fill="#ffd18a" opacity=".35"/>
+      <circle cx="200" cy="54" r="1" fill="#ffd18a" opacity=".25"/>`;
+  }
+  function isoCube(ox,oy,s,kind,n){
+    const hx=s*0.82, hy=s*0.46, h=s*0.9;
+    const T={wood:'url(#d4woodT)',iron:'url(#d4ironT)',ice:'url(#d4iceT)',gold:'#ffe08a'}[kind]||'#ccc';
+    const L={wood:'url(#d4woodL)',iron:'url(#d4ironL)',ice:'#8eb8d0',gold:'#d4a43a'}[kind];
+    const R={wood:'url(#d4woodR)',iron:'url(#d4ironR)',ice:'#5a88a4',gold:'#a06e16'}[kind];
+    let extra='';
+    if(kind==='wood'){
+      extra=`<path d="M ${ox+5} ${oy+h*.28} l ${hx-8} ${hy-3}" stroke="#5a3014" stroke-width="1.1" fill="none" opacity=".55"/>
+        <path d="M ${ox+7} ${oy+h*.52} l ${hx-10} ${hy-4}" stroke="#5a3014" stroke-width="1" fill="none" opacity=".4"/>
+        <ellipse cx="${ox+hx*.42}" cy="${oy+h*.58}" rx="4.2" ry="2.8" fill="#4a2410" opacity=".5"/>`;
+    } else if(kind==='iron'){
+      extra=`<path d="M ${ox+hx*1.05} ${oy+hy-8} l ${hx*.55} ${-hy*.45}" stroke="#fff" stroke-width="1.5" opacity=".4" fill="none"/>
+        <circle cx="${ox+hx*.38}" cy="${oy+h*.38}" r="2.1" fill="#e8f0f6" opacity=".7"/>
+        <circle cx="${ox+hx*1.42}" cy="${oy+hy+h*.22}" r="2.1" fill="#c8d4de" opacity=".45"/>`;
+    } else if(kind==='ice'){
+      extra=`<path d="M ${ox+hx*.35} ${oy-1} l 7 16 l -11 5" stroke="#fff" stroke-width="1.3" fill="none" opacity=".75"/>
+        <path d="M ${ox+hx*1.25} ${oy+2} l 5 20" stroke="#fff" stroke-width="1" opacity=".5" fill="none"/>`;
     }
-    return `<g class="d3drop">
-      <path d="M ${ox} ${oy} l ${hx} ${-hy} l ${hx} ${hy} l ${-hx} ${hy} Z" fill="${fill}" stroke="#071018"/>
-      <path d="M ${ox} ${oy} l ${hx} ${hy} l 0 ${h} l ${-hx} ${-hy} Z" fill="${fill}" opacity=".75"/>
-      <path d="M ${ox+hx} ${oy+hy} l ${hx} ${-hy} l 0 ${h} l ${-hx} ${hy} Z" fill="${fill}" opacity=".55"/>
-      ${mol}</g>`;
+    let mol='';
+    for(let i=0;i<(n||0);i++){
+      const u=(i%4)/3, v=Math.floor(i/4)/4;
+      mol+=`<circle class="d4pack" cx="${(ox+hx*.28+u*hx*1.12).toFixed(1)}" cy="${(oy+hy*.18+v*h).toFixed(1)}" r="2.1" fill="${GOLD}" style="animation-delay:${i*.07}s"/>`;
+    }
+    return `<g class="d4drop">
+      <path d="M ${ox} ${oy} l ${hx} ${-hy} l ${hx} ${hy} l ${-hx} ${hy} Z" fill="${T}" stroke="#1a1008" stroke-width="1.05"/>
+      <path d="M ${ox} ${oy} l ${hx} ${hy} l 0 ${h} l ${-hx} ${-hy} Z" fill="${L}" stroke="#1a1008" stroke-width="1.05"/>
+      <path d="M ${ox+hx} ${oy+hy} l ${hx} ${-hy} l 0 ${h} l ${-hx} ${hy} Z" fill="${R}" stroke="#1a1008" stroke-width="1.05"/>
+      ${extra}${mol}</g>`;
+  }
+  function scale(tilt){
+    const a=tilt*16;
+    return `${desk()}
+      <polygon points="120,132 106,156 134,156" fill="#c4a060" stroke="#2a1808"/>
+      <rect x="114" y="108" width="12" height="26" rx="2" fill="#e0c080" stroke="#5a3a14"/>
+      <g transform="rotate(${a} 120 112)">
+        <rect x="38" y="107" width="164" height="10" rx="4" fill="#edd6a0" stroke="#6a4418"/>
+        <circle cx="46" cy="112" r="4.5" fill="#8a6230"/>
+        <circle cx="194" cy="112" r="4.5" fill="#8a6230"/>
+        <line x1="50" y1="117" x2="50" y2="138" stroke="#c9b07a" stroke-width="1.6"/>
+        <line x1="46" y1="117" x2="46" y2="138" stroke="#c9b07a" stroke-width="1.2"/>
+        <line x1="54" y1="117" x2="54" y2="138" stroke="#c9b07a" stroke-width="1.2"/>
+        <line x1="190" y1="117" x2="190" y2="138" stroke="#c9b07a" stroke-width="1.6"/>
+        <line x1="186" y1="117" x2="186" y2="138" stroke="#c9b07a" stroke-width="1.2"/>
+        <line x1="194" y1="117" x2="194" y2="138" stroke="#c9b07a" stroke-width="1.2"/>
+        <ellipse cx="50" cy="142" rx="24" ry="5.5" fill="#b89050" stroke="#5a3a14"/>
+        <ellipse cx="190" cy="142" rx="24" ry="5.5" fill="#b89050" stroke="#5a3a14"/>
+        ${isoCube(28, 118, 24, 'wood', 0)}
+        ${isoCube(168, 118, 24, 'iron', 0)}
+      </g>`;
   }
   function plot(pts, hx, hy, xl, yl){
     const ox=36, oy=28, W=168, H=140;
@@ -2799,28 +2855,31 @@ window.WAVE_B = window.WAVE_B || {};
     const xy=(x,y)=>[ox+(x-x0)/(x1-x0)*W, oy+H-(y-y0)/(y1-y0)*H];
     const d=pts.map((p,i)=>{const q=xy(p[0],p[1]); return (i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1);}).join(' ');
     let mark='';
-    if(hx!=null){ const q=xy(hx, hy==null?pts.reduce((a,p)=>Math.abs(p[0]-hx)<Math.abs(a[0]-hx)?p:a,[99,0])[1]:hy); mark=`<circle cx="${q[0]}" cy="${q[1]}" r="5" fill="${GOLD}"/>`; }
+    if(hx!=null){ const q=xy(hx, hy==null?pts.reduce((a,p)=>Math.abs(p[0]-hx)<Math.abs(a[0]-hx)?p:a,[99,0])[1]:hy); mark=`<circle cx="${q[0]}" cy="${q[1]}" r="5" fill="${GOLD}"/><circle cx="${q[0]}" cy="${q[1]}" r="9" fill="none" stroke="${GOLD}" opacity=".4"/>`; }
     return `<g>
-      <line x1="${ox}" y1="${oy+H}" x2="${ox+W}" y2="${oy+H}" stroke="#3d5c49"/>
-      <line x1="${ox}" y1="${oy}" x2="${ox}" y2="${oy+H}" stroke="#3d5c49"/>
-      <path class="d3line" d="${d}" fill="none" stroke="${BLUE}" stroke-width="2.6"/>
+      <rect x="0" y="0" width="240" height="220" fill="url(#d4sky)"/>
+      <rect x="${ox-8}" y="${oy-8}" width="${W+28}" height="${H+28}" rx="10" fill="#0c1418" opacity=".55"/>
+      <line x1="${ox}" y1="${oy+H}" x2="${ox+W}" y2="${oy+H}" stroke="#4a6a58"/>
+      <line x1="${ox}" y1="${oy}" x2="${ox}" y2="${oy+H}" stroke="#4a6a58"/>
+      <path class="d4line" d="${d}" fill="none" stroke="${BLUE}" stroke-width="2.8"/>
       ${mark}
       ${lab(ox+W/2, 214, xl, MUTED,'middle',11)}
       ${lab(18, oy+H/2, yl, MUTED,'middle',11)}
     </g>`;
   }
-  function tank(rho){
+  function tank(rho, kind){
     const st=P().floatState(rho,1);
-    const surf=86, bot=196, H=28;
-    const y = st.sink ? bot-H-4 : surf-(1-st.frac)*H;
-    return `<g>
-      <rect x="70" y="70" width="100" height="130" rx="8" fill="none" stroke="#4a88aa" stroke-width="2"/>
-      <rect class="d3f" x="72" y="${surf}" width="96" height="${bot-surf}" fill="url(#d3w)"/>
-      <g class="d3shim" opacity=".35"><path d="M 72 ${surf} Q 96 ${surf-5}, 120 ${surf} T 168 ${surf}" fill="none" stroke="#fff" stroke-width="2"/></g>
-      <g class="${st.sink?'d3drop':'d3bob'}"><rect x="104" y="${y}" width="32" height="${H}" rx="4" fill="${st.sink?'#8aa0b4':'#d8eef8'}" stroke="#071018"/></g>
-      ${lab(120, 24, 'ρ = '+String(rho).replace('.',',')+'  ·  '+st.note, GOLD, 'middle', 13)}
-      ${lab(200, 120, Math.round(st.frac*100)+'%', GREEN)}
-    </g>`;
+    const surf=92, bot=188, H=26;
+    const y = st.sink ? bot-H-6 : surf-(1-st.frac)*H;
+    const k=kind|| (st.sink?'iron':'ice');
+    return `${desk().replace('178','208')}
+      <rect x="70" y="58" width="100" height="138" rx="6" fill="#0a2030" stroke="#8ec8e0" stroke-width="3"/>
+      <rect x="73" y="61" width="8" height="132" rx="2" fill="#fff" opacity=".12"/>
+      <rect class="d4f" x="74" y="${surf}" width="92" height="${bot-surf}" fill="url(#d4w)"/>
+      <path d="M 74 ${surf} Q 96 ${surf-6} 120 ${surf} T 166 ${surf}" fill="none" stroke="#e8f8ff" stroke-width="1.8" opacity=".7"/>
+      <ellipse cx="120" cy="186" rx="40" ry="6" fill="#3a2a18" opacity=".55"/>
+      <g class="${st.sink?'d4drop':'d4bob'}">${isoCube(96, y-6, 22, k, 0)}</g>
+      ${lab(120, 24, 'ρ = '+String(rho).replace('.',',')+(st.sink?' · на дне':' · '+Math.round(st.frac*100)+'% в воде'), GOLD, 'middle', 12)}`;
   }
   function pred(st, key, q, opts){
     const cur=st[key];
@@ -2833,7 +2892,7 @@ window.WAVE_B = window.WAVE_B || {};
   }
 
   function visB100(el){
-    try{ window._waveCss && _waveCss('css-d3v1', CSS); }catch(e){}
+    try{ window._waveCss && _waveCss('css-d4v1', CSS); }catch(e){}
     const step=LV.step||0;
     const lk=(typeof lidKey==='function')?lidKey(LV.id):'100';
     if(typeof CHS==='undefined') window.CHS={};
@@ -2845,35 +2904,36 @@ window.WAVE_B = window.WAVE_B || {};
     let h='';
 
     if(step===0){
+      const tilt=st.p0==='iron'||st.p0==='wood'?0.7:0;
       h=`<div class="wv-col">
-        ${frame(defs()+cube(28,90,38,'url(#d3wood)',4)+cube(132,90,38,'url(#d3iron)',18)+lab(120, 24, 'один размер', GOLD))}
+        ${frame(defs()+scale(tilt)+lab(50, 36, 'дерево', GOLD, 'middle', 12)+lab(190, 36, 'железо', BLUE, 'middle', 12))}
         ${pred(st,'p0','Одинаковый размер. Кто сорвёт чашу весов?',[{k:'wood',t:'дерево'},{k:'iron',t:'железо'},{k:'same',t:'одинаково'}])}
-        ${st.p0?note('После выбора','Железо. Не потому что кубик больше — он такой же. Внутри гуще упаковано.'):note('Сначала предскажи','Не жми наугад дальше. Выбери, потом смотри объяснение.')}
+        ${st.p0?note('После выбора','Железо. Не потому что кубик больше — он такой же. Внутри гуще упаковано. Весы наклоняются вправо.'):note('Сначала предскажи','Не жми наугад дальше. Выбери, потом смотри объяснение.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        ${frame(defs()+cube(28,90,38,'url(#d3wood)',4)+cube(132,90,38,'url(#d3iron)',18)+lab(120, 24, 'V одно · m разная', GOLD))}
-        ${note('Не размер','Объём одинаковый. Масса разная. Значит, дело не в «больше-меньше», а в том, сколько вещества в одном кубике.')}
+        ${frame(defs()+desk()+isoCube(28,78,36,'wood',4)+isoCube(132,78,36,'iron',16)+lab(120, 24, 'объём один · масса разная', GOLD))}
+        ${note('Не размер','Кубики одного размера. Масса разная. Дело не в «больше-меньше», а в том, сколько вещества в одном кубике.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        ${frame(defs()+cube(80,88,44,'url(#d3iron)',22)+lab(120, 24, 'частицы внутри', GOLD))}
+        ${frame(defs()+desk()+isoCube(78,72,48,'iron',22)+lab(120, 24, 'частицы внутри', GOLD))}
         ${note('Невидимое','Точки в кубе — модель упаковки. Гуще точки — больше масса при том же объёме. Это и есть плотность.')}
       </div>`;
     } else if(step===3){
       const d=P().density(6,3);
       h=`<div class="wv-col">
-        ${frame(lab(120, 70, 'ρ = m / V', GOLD, 'middle', 24)+lab(120, 118, '6 / 3 = '+d.rho, GREEN, 'middle', 20)+lab(120, 158, 'г/см³, не наоборот', MUTED))}
+        ${frame(defs()+desk()+lab(120, 78, 'ρ = m / V', GOLD, 'middle', 24)+lab(120, 118, '6 / 3 = '+d.rho, GREEN, 'middle', 20)+lab(120, 156, 'г/см³, не наоборот', MUTED))}
         ${note('Лаборатория посчитала','Python-модель: масса на объём. 6 г и 3 см³ → 2. Перевернёшь дробь — 0,5, чужой ответ.')}
       </div>`;
     } else if(step===4){
       const hid=st.hid||'';
       const map={m:'m = ρ · V', rho:'ρ = m / V', V:'V = m / ρ'};
       h=`<div class="wv-col">
-        ${frame(`<polygon points="120,36 40,176 200,176" fill="${GOLD}14" stroke="${GOLD}" stroke-width="2"/>`+
-          lab(120,70,hid==='m'?'?':'m', hid==='m'?RED:GOLD,'middle',22)+
-          lab(70,164,hid==='rho'?'?':'ρ', hid==='rho'?RED:BLUE,'middle',20)+
-          lab(170,164,hid==='V'?'?':'V', hid==='V'?RED:GREEN,'middle',20)+
+        ${frame(defs()+desk()+`<polygon points="120,44 48,164 192,164" fill="${GOLD}18" stroke="${GOLD}" stroke-width="2"/>`+
+          lab(120,76,hid==='m'?'?':'m', hid==='m'?RED:GOLD,'middle',22)+
+          lab(72,154,hid==='rho'?'?':'ρ', hid==='rho'?RED:BLUE,'middle',20)+
+          lab(168,154,hid==='V'?'?':'V', hid==='V'?RED:GREEN,'middle',20)+
           lab(120,208,hid?map[hid]:'закрой неизвестное', GOLD,'middle',12))}
         <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
           ${[['m','закрыть m'],['rho','закрыть ρ'],['V','закрыть V']].map(x=>`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].hid='${x[0]}';chRender(0);}catch(e){}">${x[1]}</button>`).join('')}
@@ -2882,7 +2942,7 @@ window.WAVE_B = window.WAVE_B || {};
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        ${frame(lab(120, 56, 'm = '+m+' г', GOLD)+lab(120, 96, 'V = '+V+' см³', BLUE)+lab(120, 148, 'ρ = '+String(D.rho).replace('.',',')+' г/см³', GREEN, 'middle', 18))}
+        ${frame(defs()+desk()+lab(120, 64, 'm = '+m+' г', GOLD)+lab(120, 100, 'V = '+V+' см³', BLUE)+lab(120, 148, 'ρ = '+String(D.rho).replace('.',',')+' г/см³', GREEN, 'middle', 18))}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">m
           <input type="range" min="1" max="20" value="${m}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].m=+this.value;chRender(0);}catch(e){}">
@@ -2901,7 +2961,7 @@ window.WAVE_B = window.WAVE_B || {};
     } else if(step===7){
       const show=st.p7&&st.go7;
       h=`<div class="wv-col">
-        ${frame(defs()+(show?tank(0.9):cube(80,90,44,'url(#d3ice)',8))+lab(120, 24, show?'лёд: 90% в воде':'кубик льда', GOLD))}
+        ${frame(defs()+(show?tank(0.9,'ice'):desk()+isoCube(78,78,42,'ice',6))+lab(120, 24, show?'лёд: 90% в воде':'кубик льда', GOLD))}
         ${pred(st,'p7','Лёд в воде. Что сделает?',[{k:'float',t:'всплывёт'},{k:'sink',t:'утонет'},{k:'hang',t:'повиснет'}])}
         ${st.p7?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].go7=1;chRender(0);}catch(e){}">Бросить в бак</button>`:''}
         ${show?note('Расчёт','ρ = 0,9. Доля погружения = 0,9 / 1 = 90%. Верх торчит. Ты '+(st.p7==='float'?'угадал':'думал иначе — смотри бак')):note('Предскажи до опыта','Не смотри ответ глазами. Сначала жми карточку.')}
@@ -2910,7 +2970,7 @@ window.WAVE_B = window.WAVE_B || {};
       const pts=((P().T&&P().T.density&&P().T.density.frac)||[]).map(p=>[p[0], p[1]]);
       const fs=P().floatState(rho,1);
       h=`<div class="wv-col">
-        ${frame(defs()+tank(rho))}
+        ${frame(defs()+tank(rho, rho>=1?'iron':'ice'))}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">ρ
           <input type="range" min="20" max="180" value="${Math.round(rho*100)}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].rho=this.value/100;chRender(0);}catch(e){}">
@@ -2921,7 +2981,7 @@ window.WAVE_B = window.WAVE_B || {};
       </div>`;
     } else if(step===9){
       h=`<div class="wv-col">
-        ${frame(defs()+tank(7.8)+lab(120, 48, 'железо 7,8', RED))}
+        ${frame(defs()+tank(7.8,'iron')+lab(120, 48, 'железо 7,8', RED))}
         ${pred(st,'p9','Сплошное железо в воде?',[{k:'sink',t:'тонет'},{k:'float',t:'плывёт'}])}
         ${st.p9?note('Почему корабль тогда плывёт','Сплошной кубик тонет. Корабль не сплошной: внутри воздух, среднее ρ < 1.'):note('Предскажи','Сплошной куб и корабль — не одно и то же.')}
       </div>`;
@@ -2929,18 +2989,18 @@ window.WAVE_B = window.WAVE_B || {};
       const air=!!st.air;
       const avg=air?0.6:7.8;
       h=`<div class="wv-col">
-        ${frame(defs()+tank(avg)+lab(120, 24, air?'среднее ρ = 0,6':'сталь без воздуха', GOLD))}
+        ${frame(defs()+tank(avg, air?'ice':'iron')+lab(120, 24, air?'среднее ρ = 0,6':'сталь без воздуха', GOLD))}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].air=1;chRender(0);}catch(e){}">${air?'Плывёт':'Добавить воздух'}</button>
         ${note('Средняя плотность','Масса почти та же, объём вырос. ρ = m / V_всего. Упало ниже воды — корпус всплыл.')}
       </div>`;
     } else if(step===11){
       h=`<div class="wv-col">
-        ${frame(lab(70, 80, '1 см³ воды', BLUE)+lab(70, 110, '1 г', GREEN)+lab(174, 80, '1 см³ золота', GOLD)+lab(174, 110, '19,3 г', RED)+lab(120, 160, 'весы выдают подделку', MUTED))}
+        ${frame(defs()+desk()+isoCube(22,86,32,'ice',0)+isoCube(132,86,32,'gold',0)+lab(54, 48, 'вода 1 г', BLUE)+lab(186, 48, 'золото 19,3 г', GOLD)+lab(120, 24, 'один кубик — разная масса', MUTED,'middle',12))}
         ${note('Одинаковый объём','Золото в двадцать раз гуще воды. Медный слиток того же размера легче настоящего.')}
       </div>`;
     } else if(step===12){
       h=`<div class="wv-col">
-        ${frame(lab(120, 80, 'однородное: ρ везде одна', GOLD, 'middle', 14)+lab(120, 124, 'корабль: среднее ρ', BLUE, 'middle', 14)+lab(120, 164, 'формула та же: m / V', GREEN))}
+        ${frame(defs()+desk()+lab(120, 80, 'однородное: ρ везде одна', GOLD, 'middle', 14)+lab(120, 124, 'корабль: среднее ρ', BLUE, 'middle', 14)+lab(120, 164, 'формула та же: m / V', GREEN))}
         ${note('Смысл','Для льдины ρ — паспорт вещества. Для корабля — средний паспорт корпуса с воздухом.')}
       </div>`;
     } else if(step===13){
@@ -2960,7 +3020,7 @@ window.WAVE_B = window.WAVE_B || {};
     } else {
       const d=P().density(6,3);
       h=`<div class="wv-col">
-        ${frame(lab(120, 70, '6 г · 3 см³', GOLD, 'middle', 18)+lab(120, 120, 'ρ = ?', GREEN, 'middle', 22)+lab(120, 164, 'модель: '+d.rho, MUTED))}
+        ${frame(defs()+desk()+lab(120, 78, '6 г · 3 см³', GOLD, 'middle', 18)+lab(120, 124, 'ρ = ?', GREEN, 'middle', 22)+lab(120, 164, 'модель: '+d.rho, MUTED))}
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">плотность?</div>
         ${note('Проверка','2 г/см³. Деление, не переворот и не произведение.')}
       </div>`;
@@ -3012,40 +3072,44 @@ window.WAVE_B = window.WAVE_B || {};
   const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
   const P=()=>window.PHYS||{pascal:(rho,h)=>({kPa:rho*10*h/1000,Pa:rho*10*h}),jet:(f,y)=>{const d=f-y,v=Math.sqrt(2*9.81*Math.max(0,d));return {v,range:v*Math.sqrt(2*0.04/9.81),pts:[]};},T:{pascal:{water:[[0,0],[5,50],[10,100]],oil:[[0,0],[2,18],[10,90]],jets:[]}}};
   const CSS=`<style>
-    @keyframes p3rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
-    @keyframes p3sink{0%{transform:translateY(-40px);opacity:0}100%{transform:translateY(0);opacity:1}}
-    @keyframes p3bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-    @keyframes p3bub{0%{transform:translateY(0);opacity:.8}100%{transform:translateY(-80px);opacity:0}}
-    @keyframes p3draw{to{stroke-dashoffset:0}}
-    @keyframes p3spray{to{stroke-dashoffset:0}}
-    @keyframes p3out{0%{transform:scale(.2);opacity:0}100%{transform:scale(1);opacity:.9}}
-    @keyframes p3ring{0%{transform:scale(.3);opacity:.9}100%{transform:scale(2.2);opacity:0}}
-    .p3f{transform-origin:50% 100%;transform-box:fill-box;animation:p3rise 1s cubic-bezier(.2,.85,.2,1) both}
-    .p3diver{animation:p3sink .8s cubic-bezier(.2,1.2,.25,1) both, p3bob 2.3s ease-in-out .8s infinite}
-    .p3bub{animation:p3bub 2s ease-out infinite}
-    .p3line{stroke-dasharray:280;stroke-dashoffset:280;animation:p3draw 1s ease forwards}
-    .p3jet{stroke-dasharray:8 6;animation:p3spray .5s linear infinite}
-    .p3out{transform-box:fill-box;transform-origin:center;animation:p3out .55s cubic-bezier(.2,1.3,.25,1) both}
-    .p3ring{transform-box:fill-box;transform-origin:center;animation:p3ring 1.8s ease-out infinite}
-    .p3lab{paint-order:stroke fill;stroke:#071018;stroke-width:3.4px;stroke-linejoin:round}
+    @keyframes p4rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    @keyframes p4sink{0%{transform:translateY(-48px);opacity:0}100%{transform:translateY(0);opacity:1}}
+    @keyframes p4bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+    @keyframes p4bub{0%{transform:translateY(0) scale(1);opacity:.85}100%{transform:translateY(-90px) scale(.4);opacity:0}}
+    @keyframes p4draw{to{stroke-dashoffset:0}}
+    @keyframes p4spray{to{stroke-dashoffset:-24}}
+    @keyframes p4out{0%{transform:scale(.15);opacity:0}100%{transform:scale(1);opacity:.95}}
+    @keyframes p4ring{0%{transform:scale(.28);opacity:.9}100%{transform:scale(2.3);opacity:0}}
+    @keyframes p4caust{0%,100%{opacity:.35}50%{opacity:.7}}
+    .p4f{transform-origin:50% 100%;transform-box:fill-box;animation:p4rise 1s cubic-bezier(.2,.85,.2,1) both}
+    .p4diver{animation:p4sink .85s cubic-bezier(.2,1.2,.25,1) both, p4bob 2.4s ease-in-out .85s infinite}
+    .p4bub{animation:p4bub 2.2s ease-out infinite}
+    .p4line{stroke-dasharray:280;stroke-dashoffset:280;animation:p4draw 1s ease forwards}
+    .p4jet{stroke-dasharray:7 8;animation:p4spray .45s linear infinite}
+    .p4out{transform-box:fill-box;transform-origin:center;animation:p4out .55s cubic-bezier(.2,1.3,.25,1) both}
+    .p4ring{transform-box:fill-box;transform-origin:center;animation:p4ring 1.8s ease-out infinite}
+    .p4lab{paint-order:stroke fill;stroke:#041018;stroke-width:3.5px;stroke-linejoin:round}
   </style>`;
   function lab(x,y,t,col,anchor,fs){
     const xx=Math.max(12,Math.min(228,+x)), yy=Math.max(14,Math.min(210,+y));
-    return `<text class="p3lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+    return `<text class="p4lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
   }
   function frame(inner){
-    try{ window._waveCss && _waveCss('css-p3v1', CSS); }catch(e){}
-    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,320px);height:auto;background:radial-gradient(circle at 50% 0%,#16425c,#071018 76%);border-radius:16px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
+    try{ window._waveCss && _waveCss('css-p4v1', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,340px);height:auto;background:#0b1418;border-radius:16px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
   }
   function note(title,text){
-    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+    return `<div style="max-width:340px;width:100%;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
       <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
       <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
   }
   function defs(){
     return `<defs>
-      <linearGradient id="p3w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ee0ff" stop-opacity=".5"/><stop offset="1" stop-color="#0d3a5c" stop-opacity=".96"/></linearGradient>
-      <linearGradient id="p3o" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0d08a" stop-opacity=".5"/><stop offset="1" stop-color="#5a3a10" stop-opacity=".95"/></linearGradient>
+      <linearGradient id="p4sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16344c"/><stop offset=".4" stop-color="#0c1c28"/><stop offset="1" stop-color="#071018"/></linearGradient>
+      <linearGradient id="p4w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ee8ff" stop-opacity=".42"/><stop offset="1" stop-color="#0a3050" stop-opacity=".96"/></linearGradient>
+      <linearGradient id="p4o" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4d890" stop-opacity=".5"/><stop offset="1" stop-color="#4a3010" stop-opacity=".95"/></linearGradient>
+      <linearGradient id="p4glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c8e8f8" stop-opacity=".25"/><stop offset=".15" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#8ec8e0" stop-opacity=".12"/></linearGradient>
+      <radialGradient id="p4glow" cx="50%" cy="12%" r="70%"><stop offset="0" stop-color="#7ec8ff" stop-opacity=".3"/><stop offset="1" stop-color="#071018" stop-opacity="0"/></radialGradient>
     </defs>`;
   }
   function plot(pts, hx, hy, xl){
@@ -3055,26 +3119,49 @@ window.WAVE_B = window.WAVE_B || {};
     const xy=(x,y)=>[ox+x/x1*W, oy+H-y/y1*H];
     const d=pts.map((p,i)=>{const q=xy(p[0],p[1]); return (i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1);}).join(' ');
     let mark='';
-    if(hx!=null){ const q=xy(hx, hy); mark=`<circle cx="${q[0]}" cy="${q[1]}" r="5" fill="${GOLD}"/>`; }
+    if(hx!=null){ const q=xy(hx, hy); mark=`<circle cx="${q[0]}" cy="${q[1]}" r="5" fill="${GOLD}"/><circle cx="${q[0]}" cy="${q[1]}" r="9" fill="none" stroke="${GOLD}" opacity=".4"/>`; }
     return `<g>
+      <rect width="240" height="220" fill="url(#p4sky)"/>
+      <rect x="${ox-8}" y="${oy-8}" width="${W+28}" height="${H+28}" rx="10" fill="#06141c" opacity=".55"/>
       <line x1="${ox}" y1="${oy+H}" x2="${ox+W}" y2="${oy+H}" stroke="#3d5c49"/>
       <line x1="${ox}" y1="${oy}" x2="${ox}" y2="${oy+H}" stroke="#3d5c49"/>
-      <path class="p3line" d="${d}" fill="none" stroke="${BLUE}" stroke-width="2.6"/>
+      <path class="p4line" d="${d}" fill="none" stroke="${BLUE}" stroke-width="2.7"/>
       ${mark}${lab(ox+W/2, 214, xl, MUTED,'middle',11)}${lab(16, oy+H/2, 'кПа', MUTED)}
+    </g>`;
+  }
+  function diver(cx, cy){
+    return `<g class="p4diver">
+      <ellipse cx="${cx}" cy="${cy+18}" rx="8" ry="12" fill="#1a5a78"/>
+      <circle cx="${cx}" cy="${cy}" r="9" fill="#ffd2a8"/>
+      <ellipse cx="${cx}" cy="${cy+1}" rx="8" ry="5.5" fill="#1a3040" opacity=".85"/>
+      <ellipse cx="${cx-3.2}" cy="${cy+1}" rx="2.4" ry="2.1" fill="#9ee8ff"/>
+      <ellipse cx="${cx+3.2}" cy="${cy+1}" rx="2.4" ry="2.1" fill="#9ee8ff"/>
+      <rect x="${cx-7}" y="${cy-2}" width="4" height="10" rx="2" fill="#3a6a80"/>
+      <rect x="${cx+3}" y="${cy-2}" width="4" height="10" rx="2" fill="#3a6a80"/>
+      <path d="M ${cx-6} ${cy+28} q -8 8 -2 12" stroke="#1a5a78" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M ${cx+6} ${cy+28} q 8 8 2 12" stroke="#1a5a78" stroke-width="3.5" fill="none" stroke-linecap="round"/>
     </g>`;
   }
   function column(h, rho){
     const kPa=P().pascal(rho,h).kPa;
-    const top=40, bot=198, fill=Math.max(0.04, Math.min(1,h/10));
+    const top=46, bot=196, fill=Math.max(0.06, Math.min(1,h/10));
     const ySurf=bot-fill*(bot-top);
-    const yDiv=Math.min(bot-16, Math.max(ySurf+14, ySurf+20));
+    const yDiv=Math.min(bot-22, Math.max(ySurf+16, ySurf+(bot-ySurf)*0.42));
     const oil=rho<1000;
     return `<g>
-      <rect x="78" y="${top}" width="84" height="${bot-top}" rx="10" fill="none" stroke="#4a88aa" stroke-width="2.2"/>
-      <rect class="p3f" x="80" y="${ySurf}" width="80" height="${bot-ySurf-2}" fill="${oil?'url(#p3o)':'url(#p3w)'}"/>
-      <g class="p3diver"><circle cx="120" cy="${yDiv}" r="10" fill="#ffd2a8"/><rect x="114" y="${yDiv+8}" width="12" height="14" rx="3" fill="#1e5a7a"/></g>
-      ${[0,1,2].map(i=>`<circle class="p3bub" cx="${110+i*8}" cy="${Math.min(bot-6,yDiv+18)}" r="2.2" fill="#d8f6ff" style="animation-delay:${i*.25}s"/>`).join('')}
-      ${lab(120, 22, h.toString().replace('.',',')+' м · '+Math.round(kPa)+' кПа', GOLD, 'middle', 13)}
+      <rect width="240" height="220" fill="url(#p4sky)"/>
+      <ellipse cx="120" cy="18" rx="110" ry="36" fill="url(#p4glow)"/>
+      <rect x="72" y="${top}" width="96" height="${bot-top}" rx="8" fill="#071820"/>
+      <rect class="p4f" x="76" y="${ySurf}" width="88" height="${bot-ySurf-4}" fill="${oil?'url(#p4o)':'url(#p4w)'}"/>
+      <rect x="72" y="${top}" width="96" height="${bot-top}" rx="8" fill="url(#p4glass)" stroke="#9ed4ea" stroke-width="2.6"/>
+      <rect x="76" y="${top+6}" width="7" height="${bot-top-16}" rx="3" fill="#fff" opacity=".14"/>
+      <ellipse cx="120" cy="${bot-6}" rx="38" ry="6" fill="#3a2a14" opacity=".5"/>
+      <path d="M 86 ${bot-8} q 6 -16 4 -28" stroke="#2a6a48" stroke-width="3" fill="none"/>
+      <path d="M 154 ${bot-8} q -5 -18 2 -32" stroke="#1e5a3a" stroke-width="2.5" fill="none"/>
+      <path d="M 76 ${ySurf} Q 98 ${ySurf-7} 120 ${ySurf} T 164 ${ySurf}" fill="none" stroke="#e8f8ff" stroke-width="1.7" opacity=".75"/>
+      ${diver(120, yDiv)}
+      ${[0,1,2,3].map(i=>`<circle class="p4bub" cx="${108+i*7}" cy="${Math.min(bot-10,yDiv+16)}" r="${1.6+i%2}" fill="#d8f6ff" style="animation-delay:${i*.28}s"/>`).join('')}
+      ${lab(120, 24, h<1.2 ? 'у поверхности' : ('глубина '+String(h).replace('.',',')+' м · '+Math.round(kPa)+' кПа'), GOLD, 'middle', 13)}
     </g>`;
   }
   function pred(st,key,q,opts){
@@ -3083,11 +3170,12 @@ window.WAVE_B = window.WAVE_B || {};
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
+      ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
   }
 
   function visB104(el){
-    try{ window._waveCss && _waveCss('css-p3v1', CSS); }catch(e){}
+    try{ window._waveCss && _waveCss('css-p4v1', CSS); }catch(e){}
     const step=LV.step||0;
     const lk=(typeof lidKey==='function')?lidKey(LV.id):'104';
     if(typeof CHS==='undefined') window.CHS={};
@@ -3108,9 +3196,10 @@ window.WAVE_B = window.WAVE_B || {};
     } else if(step===1){
       const a=[[0,-24],[24,0],[0,24],[-24,0],[17,-17],[17,17],[-17,17],[-17,-17]];
       h=`<div class="wv-col">
-        ${frame(`<circle class="p3ring" cx="120" cy="118" r="20" fill="none" stroke="${BLUE}"/>`+
+        ${frame(defs()+`<rect width="240" height="220" fill="url(#p4sky)"/>`+
+          `<circle class="p4ring" cx="120" cy="118" r="20" fill="none" stroke="${BLUE}"/>`+
           `<circle cx="120" cy="118" r="32" fill="${BLUE}18" stroke="${BLUE}"/>`+
-          a.map((v,i)=>`<line class="p3out" x1="120" y1="118" x2="${120+v[0]}" y2="${118+v[1]}" stroke="${BLUE}" stroke-width="2.4" style="animation-delay:${i*.06}s"/>`).join('')+
+          a.map((v,i)=>`<line class="p4out" x1="120" y1="118" x2="${120+v[0]}" y2="${118+v[1]}" stroke="${BLUE}" stroke-width="2.4" style="animation-delay:${i*.06}s"/>`).join('')+
           lab(120, 24, 'во все стороны', GOLD))}
         ${pred(st,'p1','Давит только вниз?',[{k:'no',t:'во все стороны'},{k:'yes',t:'только вниз'}])}
         ${st.p1?note('Скаляр','На дно, на стенки и снизу вверх. Стрелки из точки — модель давления.'):note('Предскажи','Типичная ловушка: «вода давит вниз».')}
@@ -3143,7 +3232,7 @@ window.WAVE_B = window.WAVE_B || {};
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        ${frame([['2','20'],['5','50'],['10','100']].map((x,i)=>`<rect class="p3f" x="${48+i*56}" y="${196-x[1]*1.4}" width="44" height="${x[1]*1.4}" rx="7" fill="${BLUE}" opacity="${.4+i*.2}" style="animation-delay:${i*.12}s"/>`+lab(70+i*56,34,x[0]+' м',GOLD)+lab(70+i*56,54,x[1]+' кПа',GREEN)).join(''))}
+        ${frame(defs()+`<rect width="240" height="220" fill="url(#p4sky)"/>`+[['2','20'],['5','50'],['10','100']].map((x,i)=>`<rect class="p4f" x="${48+i*56}" y="${196-x[1]*1.4}" width="44" height="${x[1]*1.4}" rx="7" fill="${BLUE}" opacity="${.4+i*.2}" style="animation-delay:${i*.12}s"/>`+lab(70+i*56,34,x[0]+' м',GOLD)+lab(70+i*56,54,x[1]+' кПа',GREEN)).join(''))}
         ${note('Десять метров ≈ атмосфера','Столбики вырастают снизу. 100 кПа — как воздух над тобой.')}
       </div>`;
     } else if(step===6){
@@ -3168,10 +3257,10 @@ window.WAVE_B = window.WAVE_B || {};
       h=`<div class="wv-col">
         ${pred(st,'p8','Какая струя уйдёт дальше?',[{k:'low',t:'нижняя'},{k:'mid',t:'средняя'},{k:'up',t:'верхняя'}])}
         ${st.p8?frame(defs()+
-          `<rect class="p3f" x="64" y="42" width="60" height="148" rx="8" fill="url(#p3w)" stroke="#4a88aa"/>`+
+          `<rect class="p4f" x="64" y="42" width="60" height="148" rx="8" fill="url(#p4w)" stroke="#9ed4ea" stroke-width="2.4"/>`+
           live.map((j,i)=>{
             const y=70+i*38, len=go?18+j.range*220:6;
-            return `<circle cx="124" cy="${y}" r="4" fill="${BLUE}"/>`+(go?`<path class="p3jet" d="M 124 ${y} C ${124+len/2} ${y+6}, ${124+len*0.75} ${y+12}, ${124+len} ${y+16}" fill="none" stroke="${BLUE}" stroke-width="3"/>`:'');
+            return `<circle cx="124" cy="${y}" r="4" fill="${BLUE}"/>`+(go?`<path class="p4jet" d="M 124 ${y} C ${124+len/2} ${y+6}, ${124+len*0.75} ${y+12}, ${124+len} ${y+16}" fill="none" stroke="${BLUE}" stroke-width="3"/>`:'');
           }).join('')+lab(120,22,go?'v = √(2gh)':'три дырки',GOLD)
         ):''}
         ${st.p8?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].jet=1;chRender(0);}catch(e){}">Открыть дырки</button>`:''}
@@ -3185,9 +3274,10 @@ window.WAVE_B = window.WAVE_B || {};
     } else if(step===10){
       const on=!!st.ball;
       h=`<div class="wv-col">
-        ${frame(`<circle class="p3ring" cx="120" cy="120" r="18" fill="none" stroke="${BLUE}"/>`+
+        ${frame(defs()+`<rect width="240" height="220" fill="url(#p4sky)"/>`+
+          `<circle class="p4ring" cx="120" cy="120" r="18" fill="none" stroke="${BLUE}"/>`+
           `<circle cx="120" cy="120" r="42" fill="${BLUE}16" stroke="${BLUE}" stroke-width="2.4"/>`+
-          (on?Array.from({length:8},(_,i)=>{const a=i*Math.PI/4;return `<line class="p3jet" x1="120" y1="120" x2="${(120+66*Math.cos(a)).toFixed(1)}" y2="${(120+66*Math.sin(a)).toFixed(1)}" stroke="${BLUE}" stroke-width="3"/>`;}).join(''):'')+
+          (on?Array.from({length:8},(_,i)=>{const a=i*Math.PI/4;return `<line class="p4jet" x1="120" y1="120" x2="${(120+66*Math.cos(a)).toFixed(1)}" y2="${(120+66*Math.sin(a)).toFixed(1)}" stroke="${BLUE}" stroke-width="3"/>`;}).join(''):'')+
           `<rect x="112" y="56" width="16" height="26" rx="3" fill="${GOLD}"/>`+lab(120,22,on?'равные струйки':'шар Паскаля',GOLD))}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].ball=1;chRender(0);}catch(e){}">Надавить</button>
         ${note('Одинаково','Если бы любило низ, нижние были бы длиннее. Они равны.')}
@@ -3209,7 +3299,8 @@ window.WAVE_B = window.WAVE_B || {};
       </div>`;
     } else if(step===13){
       h=`<div class="wv-col">
-        ${frame(`<circle class="p3ring" cx="120" cy="118" r="18" fill="none" stroke="${GOLD}"/>`+
+        ${frame(defs()+`<rect width="240" height="220" fill="url(#p4sky)"/>`+
+          `<circle class="p4ring" cx="120" cy="118" r="18" fill="none" stroke="${GOLD}"/>`+
           `<circle cx="120" cy="118" r="46" fill="${GOLD}14" stroke="${GOLD}" stroke-width="3"/>`+lab(120,24,'мяч и шина',GOLD))}
         ${note('Газ тоже','Давит на стенки равно. Сдулся — держаться нечем.')}
       </div>`;
@@ -3274,32 +3365,34 @@ window.WAVE_B = window.WAVE_B || {};
   const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
   const P=()=>window.PHYS||{ohm:(U,R)=>({I:U/R,period:Math.max(.28,Math.min(2.4,2/Math.max(.25,U/R)))}),T:{ohm:{iu_R6:[[0,0],[12,2],[24,4]],ir_U12:[[3,4],[6,2],[12,1]]}}};
   const CSS=`<style>
-    @keyframes o3run{to{offset-distance:100%}}
-    @keyframes o3flow{to{stroke-dashoffset:0}}
-    @keyframes o3glow{0%,100%{filter:drop-shadow(0 0 2px #ffd36a)}40%{filter:drop-shadow(0 0 16px #fff1a8)}70%{filter:drop-shadow(0 0 7px #ffc84a)}}
-    @keyframes o3halo{0%{transform:scale(.55);opacity:.8}100%{transform:scale(1.7);opacity:0}}
-    @keyframes o3draw{to{stroke-dashoffset:0}}
-    @keyframes o3volt{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.16)}}
-    @keyframes o3bar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
-    .o3e{offset-path:path('M 48 122 H 192');animation:o3run 1.2s linear infinite}
-    .o3wire{stroke-dasharray:10 8;animation:o3flow .65s linear infinite}
-    .o3lamp{transform-box:fill-box;transform-origin:center;animation:o3glow 1.1s ease-in-out infinite}
-    .o3halo{transform-box:fill-box;transform-origin:center;animation:o3halo 1.5s ease-out infinite}
-    .o3line{stroke-dasharray:280;stroke-dashoffset:280;animation:o3draw 1s ease forwards}
-    .o3volt{transform-box:fill-box;transform-origin:center;animation:o3volt .85s ease-in-out infinite}
-    .o3bar{transform-origin:50% 100%;transform-box:fill-box;animation:o3bar .7s cubic-bezier(.2,.85,.2,1) both}
-    .o3lab{paint-order:stroke fill;stroke:#071018;stroke-width:3.4px;stroke-linejoin:round}
+    @keyframes o4run{to{offset-distance:100%}}
+    @keyframes o4flow{to{stroke-dashoffset:-24}}
+    @keyframes o4glow{0%,100%{filter:drop-shadow(0 0 3px #ffd36a)}40%{filter:drop-shadow(0 0 18px #fff3b0)}70%{filter:drop-shadow(0 0 8px #ffc84a)}}
+    @keyframes o4halo{0%{transform:scale(.5);opacity:.75}100%{transform:scale(1.85);opacity:0}}
+    @keyframes o4draw{to{stroke-dashoffset:0}}
+    @keyframes o4volt{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+    @keyframes o4bar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    @keyframes o4fil{0%,100%{opacity:.75}50%{opacity:1}}
+    .o4e{offset-path:path('M 42 148 C 42 148, 120 148, 168 148 C 176 148, 176 78, 132 64');animation:o4run 1.3s linear infinite}
+    .o4wire{stroke-dasharray:9 7;animation:o4flow .7s linear infinite}
+    .o4lamp{transform-box:fill-box;transform-origin:center;animation:o4glow 1.15s ease-in-out infinite}
+    .o4halo{transform-box:fill-box;transform-origin:center;animation:o4halo 1.55s ease-out infinite}
+    .o4line{stroke-dasharray:280;stroke-dashoffset:280;animation:o4draw 1s ease forwards}
+    .o4volt{transform-box:fill-box;transform-origin:center;animation:o4volt 1.6s ease-in-out infinite}
+    .o4bar{transform-origin:50% 100%;transform-box:fill-box;animation:o4bar .7s cubic-bezier(.2,.85,.2,1) both}
+    .o4fil{animation:o4fil .7s ease-in-out infinite}
+    .o4lab{paint-order:stroke fill;stroke:#100810;stroke-width:3.5px;stroke-linejoin:round}
   </style>`;
   function lab(x,y,t,col,anchor,fs){
     const xx=Math.max(12,Math.min(228,+x)), yy=Math.max(14,Math.min(210,+y));
-    return `<text class="o3lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+    return `<text class="o4lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
   }
   function frame(inner){
-    try{ window._waveCss && _waveCss('css-o3v1', CSS); }catch(e){}
-    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,320px);height:auto;background:radial-gradient(circle at 50% 0%,#241c3a,#071018 76%);border-radius:16px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
+    try{ window._waveCss && _waveCss('css-o4v1', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,340px);height:auto;background:#120814;border-radius:16px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
   }
   function note(title,text){
-    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+    return `<div style="max-width:340px;width:100%;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
       <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
       <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
   }
@@ -3310,27 +3403,51 @@ window.WAVE_B = window.WAVE_B || {};
     const xy=(x,y)=>[ox+x/x1*W, oy+H-y/y1*H];
     const d=pts.map((p,i)=>{const q=xy(p[0],p[1]); return (i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1);}).join(' ');
     let mark='';
-    if(hx!=null){ const q=xy(hx,hy); mark=`<circle cx="${q[0]}" cy="${q[1]}" r="5" fill="${GOLD}"/>`; }
+    if(hx!=null){ const q=xy(hx,hy); mark=`<circle cx="${q[0]}" cy="${q[1]}" r="5" fill="${GOLD}"/><circle cx="${q[0]}" cy="${q[1]}" r="9" fill="none" stroke="${GOLD}" opacity=".4"/>`; }
     return `<g>
+      <rect width="240" height="220" fill="#120814"/>
+      <rect x="${ox-8}" y="${oy-8}" width="${W+28}" height="${H+28}" rx="10" fill="#0c0814" opacity=".55"/>
       <line x1="${ox}" y1="${oy+H}" x2="${ox+W}" y2="${oy+H}" stroke="#3d5c49"/>
       <line x1="${ox}" y1="${oy}" x2="${ox}" y2="${oy+H}" stroke="#3d5c49"/>
-      <path class="o3line" d="${d}" fill="none" stroke="${GOLD}" stroke-width="2.6"/>
+      <path class="o4line" d="${d}" fill="none" stroke="${GOLD}" stroke-width="2.6"/>
       ${mark}${lab(ox+W/2,214,xl,MUTED,'middle',11)}${lab(16,oy+H/2,yl,MUTED)}
+    </g>`;
+  }
+  function desk(){
+    return `<rect width="240" height="220" fill="#120814"/>
+      <ellipse cx="132" cy="58" rx="70" ry="46" fill="#ffd36a" opacity=".08"/>
+      <path d="M 6 176 L 234 176 L 220 208 L 20 208 Z" fill="#3a2418"/>
+      <path d="M 12 178 L 228 178" stroke="#c49658" stroke-width="1.4" opacity=".45"/>
+      <path d="M 54 176 L 62 208" stroke="#1a0c08" opacity=".3"/>
+      <path d="M 160 176 L 168 208" stroke="#1a0c08" opacity=".28"/>`;
+  }
+  function batt(){
+    return `<g class="o4volt">
+      <rect x="22" y="118" width="36" height="58" rx="6" fill="#c8ccd0" stroke="#3a4044"/>
+      <rect x="22" y="118" width="36" height="16" rx="6" fill="#d9783a"/>
+      <rect x="34" y="112" width="12" height="8" rx="2" fill="#e8c878"/>
+      <text x="40" y="156" text-anchor="middle" font-size="11" fill="#2a2e32" font-family="Georgia,serif">+</text>
     </g>`;
   }
   function lamp(I){
     const on=I>0.2, g=Math.max(0.12, Math.min(1, I/4));
-    const col=on?`rgba(255,224,130,${0.35+g*.65})`:'#2a2e22';
+    const glow=on?`rgba(255,220,120,${0.28+g*.7})`:'#2a2418';
     return `<g>
-      ${on?`<ellipse class="o3halo" cx="120" cy="70" rx="${24+g*10}" ry="${28+g*8}" fill="none" stroke="${GOLD}" stroke-width="1.3"/>`:''}
-      <ellipse class="${on?'o3lamp':''}" cx="120" cy="70" rx="${16+g*8}" ry="${20+g*6}" fill="${col}" stroke="${GOLD}" stroke-width="2"/>
-      <rect x="108" y="90" width="24" height="13" rx="3" fill="#8a8870"/>
+      ${on?`<ellipse class="o4halo" cx="132" cy="64" rx="${28+g*14}" ry="${32+g*10}" fill="none" stroke="${GOLD}" stroke-width="1.2"/>`:''}
+      ${on?`<ellipse cx="132" cy="64" rx="${36+g*10}" ry="${40+g*8}" fill="#ffd36a" opacity="${0.12+g*.22}"/>`:''}
+      <ellipse class="${on?'o4lamp':''}" cx="132" cy="62" rx="22" ry="28" fill="${glow}" stroke="#e8d8a8" stroke-width="1.6"/>
+      <path d="M 118 82 Q 132 94 146 82" fill="#d8c898" stroke="#8a7a48"/>
+      <rect x="124" y="90" width="16" height="10" rx="2" fill="#8a8870"/>
+      <rect x="126" y="100" width="12" height="8" rx="1" fill="#6a6858"/>
+      ${on?`<path class="o4fil" d="M 124 68 q 4 -8 8 0 t 8 0" fill="none" stroke="#fff6c8" stroke-width="1.6"/>`:''}
     </g>`;
   }
-  function batt(){ return `<g class="o3volt"><line x1="42" y1="102" x2="42" y2="142" stroke="${GOLD}" stroke-width="6" stroke-linecap="round"/><line x1="54" y1="110" x2="54" y2="134" stroke="${GOLD}" stroke-width="3"/></g>`; }
-  function wire(){ return `<path class="o3wire" d="M 54 122 H 192" fill="none" stroke="#6a90aa" stroke-width="5.5" stroke-linecap="round"/>`; }
+  function wire(){
+    return `<path class="o4wire" d="M 58 148 H 168 C 180 148 180 90 148 78" fill="none" stroke="#c47a3a" stroke-width="3.4" stroke-linecap="round"/>
+      <path d="M 40 176 V 148 H 58" fill="none" stroke="#c47a3a" stroke-width="3.2" stroke-linecap="round"/>`;
+  }
   function electrons(n, period){
-    return Array.from({length:n},(_,i)=>`<circle class="o3e" r="4" fill="${GOLD}" style="animation-duration:${period}s;animation-delay:${(i/n)*period}s"/>`).join('');
+    return Array.from({length:n},(_,i)=>`<circle class="o4e" r="3.6" fill="${GOLD}" style="animation-duration:${period}s;animation-delay:${(i/n)*period}s"/>`).join('');
   }
   function pred(st,key,q,opts){
     const cur=st[key];
@@ -3338,11 +3455,15 @@ window.WAVE_B = window.WAVE_B || {};
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
+      ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
+  }
+  function scene(I, extra){
+    return desk()+batt()+wire()+electrons(I>0.3?Math.max(4,Math.min(12,Math.round(I*3))):2, Math.max(.35, Math.min(2.2, 2/Math.max(.25,I))))+lamp(I)+(extra||'');
   }
 
   function visB105(el){
-    try{ window._waveCss && _waveCss('css-o3v1', CSS); }catch(e){}
+    try{ window._waveCss && _waveCss('css-o4v1', CSS); }catch(e){}
     const step=LV.step||0;
     const lk=(typeof lidKey==='function')?lidKey(LV.id):'105';
     if(typeof CHS==='undefined') window.CHS={};
@@ -3357,7 +3478,7 @@ window.WAVE_B = window.WAVE_B || {};
     if(step===0){
       const on=!!st.on;
       h=`<div class="wv-col">
-        ${frame(batt()+wire()+electrons(on?9:2, on?0.45:2)+lamp(on?3:0.15)+lab(120,24,on?'лампа поёт':'кто душит ток?',GOLD))}
+        ${frame(scene(on?3:0.12)+lab(120,24,on?'лампа поёт':'кто душит ток?',GOLD))}
         ${pred(st,'p0','Замкнёшь цепь. Нить?',[{k:'on',t:'разгорится'},{k:'off',t:'не изменится'}])}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].on=1;chRender(0);}catch(e){}">Замкнуть</button>
         ${on?note('Ток пошёл','Заряды побежали, нить задышала. Яркость — про ток, не про «сильную батарейку» в отрыве от R.'):note('Предскажи','Сначала карточка.')}
@@ -3372,7 +3493,7 @@ window.WAVE_B = window.WAVE_B || {};
     } else if(step===2){
       h=`<div class="wv-col">
         ${frame(lab(48,64,'насос U',GOLD)+lab(120,64,'труба R',GREEN)+lab(192,64,'поток I',BLUE)+
-          `<path class="o3wire" d="M 28 124 C 70 88, 110 160, 152 112 S 214 150, 226 124" fill="none" stroke="${BLUE}" stroke-width="6"/>`+
+          `<path class="o4wire" d="M 28 124 C 70 88, 110 160, 152 112 S 214 150, 226 124" fill="none" stroke="${BLUE}" stroke-width="6"/>`+
           lab(120,24,'карта, не вода в проводе',GOLD,'middle',13))}
         ${note('Карта','Напор больше — поток больше. Труба уже — поток меньше.')}
       </div>`;
@@ -3399,7 +3520,7 @@ window.WAVE_B = window.WAVE_B || {};
       const pts=(P().T&&P().T.ohm&&P().T.ohm.iu_R6)||[[0,0],[24,4]];
       const s=P().ohm(U,6);
       h=`<div class="wv-col">
-        ${frame(batt()+wire()+electrons(Math.max(2,Math.min(12,Math.round(s.I*3))), s.period)+lamp(s.I)+lab(120,24,'R = 6 Ом · I = '+String(s.I).replace('.',',')+' А',GOLD,'middle',13))}
+        ${frame(scene(s.I)+lab(120,24,'R = 6 Ом · I = '+String(s.I).replace('.',',')+' А',GOLD,'middle',13))}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">U
           <input type="range" min="1" max="24" value="${U}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].U=+this.value;CHS[k].R=6;chRender(0);}catch(e){}">
@@ -3416,14 +3537,14 @@ window.WAVE_B = window.WAVE_B || {};
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        ${frame([[6,1],[12,2],[24,4]].map((x,i)=>`<rect class="o3bar" x="${40+i*62}" y="${176-x[1]*28}" width="48" height="${x[1]*28}" rx="7" fill="${GOLD}" opacity="${.45+i*.18}" style="animation-delay:${i*.12}s"/>`+lab(64+i*62,34,x[0]+' В',GOLD)+lab(64+i*62,54,x[1]+' А',GREEN)).join(''))}
+        ${frame([[6,1],[12,2],[24,4]].map((x,i)=>`<rect class="o4bar" x="${40+i*62}" y="${176-x[1]*28}" width="48" height="${x[1]*28}" rx="7" fill="${GOLD}" opacity="${.45+i*.18}" style="animation-delay:${i*.12}s"/>`+lab(64+i*62,34,x[0]+' В',GOLD)+lab(64+i*62,54,x[1]+' А',GREEN)).join(''))}
         ${note('Прямо к U','R = 6. Напор вдвое — ток вдвое. Столбики из той же модели.')}
       </div>`;
     } else if(step===8){
       const pts=(P().T&&P().T.ohm&&P().T.ohm.ir_U12)||[[3,4],[12,1]];
       const s=P().ohm(12,R);
       h=`<div class="wv-col">
-        ${frame(batt()+wire()+electrons(Math.max(2,Math.min(12,Math.round(s.I*3))), s.period)+lamp(s.I)+lab(120,24,'U = 12 В · I = '+String(s.I).replace('.',',')+' А',GOLD,'middle',13))}
+        ${frame(scene(s.I)+lab(120,24,'U = 12 В · I = '+String(s.I).replace('.',',')+' А',GOLD,'middle',13))}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">R
           <input type="range" min="1" max="24" value="${R}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].R=+this.value;CHS[k].U=12;chRender(0);}catch(e){}">
@@ -3452,9 +3573,9 @@ window.WAVE_B = window.WAVE_B || {};
     } else if(step===12){
       const s=P().ohm(12,R);
       h=`<div class="wv-col">
-        ${frame(batt()+wire()+electrons(Math.max(2,Math.min(12,Math.round(s.I*3))), s.period)+lamp(s.I)+
-          `<rect x="148" y="98" width="46" height="48" rx="7" fill="#1e2c38" stroke="${GREEN}"/>`+
-          `<circle cx="${154+(R-1)/23*32}" cy="122" r="7" fill="${GOLD}"/>`+
+        ${frame(scene(s.I)+
+          `<rect x="168" y="118" width="48" height="44" rx="7" fill="#1e2c38" stroke="${GREEN}"/>`+
+          `<circle cx="${174+(R-1)/23*32}" cy="140" r="7" fill="${GOLD}"/>`+
           lab(120,24,'реостат · I = '+String(s.I).replace('.',',')+' А',GOLD,'middle',13))}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">R
           <input type="range" min="1" max="24" value="${R}" style="flex:1"
@@ -3489,7 +3610,7 @@ window.WAVE_B = window.WAVE_B || {};
     } else {
       const s=P().ohm(15,5);
       h=`<div class="wv-col">
-        ${frame(batt()+wire()+electrons(8,s.period)+lamp(s.I)+lab(120,24,'15 В и 5 Ом',GOLD))}
+        ${frame(scene(s.I)+lab(120,24,'15 В и 5 Ом',GOLD))}
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">ток ? А</div>
         ${note('Проверка','Модель: '+s.I+' А.')}
       </div>`;
