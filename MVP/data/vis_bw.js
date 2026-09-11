@@ -3,10 +3,19 @@
    уникальный интерактивный виджет в #lvis по шагу LV.step. */
 window.WAVE_B = window.WAVE_B || {};
 window.physShot=function(file, meter){
+  const src='img/phys/'+file;
+  const isVid=/\.mp4$/i.test(file);
+  const poster=isVid?src.replace(/\.mp4$/,'.jpg'):'';
+  const media=isVid
+    ? `<video autoplay muted loop playsinline poster="${poster}" src="${src}" style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover"></video>`
+    : `<img src="${src}" alt="" style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover;animation:physKen 10s ease-in-out infinite alternate">`;
   return `<div style="width:min(100%,340px);border-radius:16px;overflow:hidden;border:1px solid #3d5c49;background:#071018;position:relative">
-    <img src="img/phys/${file}" alt="" style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover">
+    ${media}
     ${meter?`<div style="position:absolute;left:10px;bottom:10px;max-width:86%;background:rgba(7,16,24,.78);border:1px solid rgba(217,164,65,.5);border-radius:10px;padding:6px 10px;color:#ffd76a;font-size:13px;font-family:Georgia,serif">${meter}</div>`:''}
   </div>`;
+};
+window.physKenCss=function(){
+  try{ window._waveCss && _waveCss('css-physken', `@keyframes physKen{from{transform:scale(1.07)}to{transform:scale(1)}}`); }catch(e){}
 };
 
 /* ================= УРОК 377 · Признаки делимости на 3 и на 9 ================= */
@@ -2899,6 +2908,7 @@ window.physShot=function(file, meter){
 
   function visB100(el){
     try{ window._waveCss && _waveCss('css-d4v1', CSS); }catch(e){}
+    try{ window.physKenCss && physKenCss(); }catch(e){}
     const step=LV.step||0;
     const lk=(typeof lidKey==='function')?lidKey(LV.id):'100';
     if(typeof CHS==='undefined') window.CHS={};
@@ -2912,43 +2922,48 @@ window.physShot=function(file, meter){
     if(step===0){
       const tilt=st.p0==='iron'||st.p0==='wood';
       h=`<div class="wv-col">
-        ${physShot(tilt?'scale_tilt.jpg':'scale_empty.jpg', tilt?'железо рвёт чашу вниз':'положи кубики на весы')}
+        ${physShot(tilt?'scale_tilt.mp4':'scale_empty.mp4', tilt?'железо рвёт чашу вниз':'положи кубики на весы')}
         ${pred(st,'p0','Одинаковый размер. Кто сорвёт чашу весов?',[{k:'wood',t:'дерево'},{k:'iron',t:'железо'},{k:'same',t:'одинаково'}])}
-        ${st.p0?note('После выбора','Как в PhET Density: одинаковый объём, разная масса. Железо гуще упаковано — весы наклоняются.'):note('Сначала предскажи','Как у PhET и Brilliant: сначала карточка, потом смотри весы.')}
+        ${st.p0?note('После выбора','Одинаковый объём, разная масса. Железо гуще упаковано — весы наклоняются.'):note('Сначала предскажи','Сначала карточка, потом смотри весы. Как в настоящей лаборатории.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        ${physShot('cubes.jpg','объём один · масса разная')}
+        ${physShot('cubes.mp4','объём один · масса разная')}
         ${note('Не размер','Кубики одного размера. Масса разная. Дело не в «больше-меньше», а в том, сколько вещества в одном кубике.')}
       </div>`;
     } else if(step===2){
+      const pack=st.pack||'iron';
       h=`<div class="wv-col">
-        ${frame(defs()+desk()+isoCube(78,72,48,'iron',22)+lab(120, 24, 'частицы внутри', GOLD))}
-        ${note('Невидимое','Точки в кубе — модель упаковки. Гуще точки — больше масса при том же объёме. Это и есть плотность.')}
+        ${physShot(pack==='wood'?'wood_cut.mp4':'iron_cut.mp4', pack==='wood'?'дерево · внутри воздух':'железо · частицы густо')}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${[['wood','разрезать дерево'],['iron','разрезать железо']].map(x=>`<button type="button" class="btn" style="border-color:${pack===x[0]?GOLD:'#3d5c49'}" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].pack='${x[0]}';chRender(0);}catch(e){}">${x[1]}</button>`).join('')}
+        </div>
+        ${note('Невидимое','Разрезали куб. В дереве воздух и редкие волокна. В железе зёрна металла стоят плотно. Гуще упаковка — больше масса при том же объёме. Это и есть плотность.')}
       </div>`;
     } else if(step===3){
       const d=P().density(6,3);
       h=`<div class="wv-col">
-        ${frame(defs()+desk()+lab(120, 78, 'ρ = m / V', GOLD, 'middle', 24)+lab(120, 118, '6 / 3 = '+d.rho, GREEN, 'middle', 20)+lab(120, 156, 'г/см³, не наоборот', MUTED))}
-        ${note('Лаборатория посчитала','Python-модель: масса на объём. 6 г и 3 см³ → 2. Перевернёшь дробь — 0,5, чужой ответ.')}
+        ${physShot('lab.jpg','ρ = m / V  ·  6 / 3 = '+d.rho)}
+        ${note('Лаборатория посчитала','Гири и стакан — масса и объём. Делишь массу на объём: 6 г и 3 см³ → 2. Перевернёшь дробь — 0,5, чужой ответ.')}
       </div>`;
     } else if(step===4){
       const hid=st.hid||'';
       const map={m:'m = ρ · V', rho:'ρ = m / V', V:'V = m / ρ'};
       h=`<div class="wv-col">
-        ${frame(defs()+desk()+`<polygon points="120,44 48,164 192,164" fill="${GOLD}18" stroke="${GOLD}" stroke-width="2"/>`+
+        ${physShot('tri.jpg', hid?map[hid]:'закрой неизвестное')}
+        ${frame(defs()+`<polygon points="120,44 48,164 192,164" fill="${GOLD}18" stroke="${GOLD}" stroke-width="2"/>`+
           lab(120,76,hid==='m'?'?':'m', hid==='m'?RED:GOLD,'middle',22)+
           lab(72,154,hid==='rho'?'?':'ρ', hid==='rho'?RED:BLUE,'middle',20)+
           lab(168,154,hid==='V'?'?':'V', hid==='V'?RED:GREEN,'middle',20)+
-          lab(120,208,hid?map[hid]:'закрой неизвестное', GOLD,'middle',12))}
+          lab(120,208,hid?map[hid]:'m наверху', GOLD,'middle',12))}
         <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
           ${[['m','закрыть m'],['rho','закрыть ρ'],['V','закрыть V']].map(x=>`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].hid='${x[0]}';chRender(0);}catch(e){}">${x[1]}</button>`).join('')}
         </div>
-        ${note('Треугольник','m наверху. Ищешь плотность — дели массу на объём.')}
+        ${note('Треугольник','m наверху. Ищешь плотность — дели массу на объём. Ищешь массу — умножай.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        ${frame(defs()+desk()+lab(120, 64, 'm = '+m+' г', GOLD)+lab(120, 100, 'V = '+V+' см³', BLUE)+lab(120, 148, 'ρ = '+String(D.rho).replace('.',',')+' г/см³', GREEN, 'middle', 18))}
+        ${physShot('lab.jpg','m = '+m+' г  ·  V = '+V+' см³  ·  ρ = '+String(D.rho).replace('.',','))}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">m
           <input type="range" min="1" max="20" value="${m}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].m=+this.value;chRender(0);}catch(e){}">
@@ -2959,6 +2974,7 @@ window.physShot=function(file, meter){
     } else if(step===6){
       const tab=(P().T&&P().T.density&&P().T.density.table)||[['лёд',0.9],['вода',1],['железо',7.8]];
       h=`<div class="wv-col">
+        ${physShot('samples.jpg','пробка · лёд · вода · стекло · железо · золото')}
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
           ${tab.map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.06}s;display:flex;justify-content:space-between;border:1px solid #3d5c49;border-left:4px solid ${+x[1]<1?GREEN:+x[1]===1?BLUE:GOLD};border-radius:10px;padding:7px 12px;color:#e8dcc8"><span>${x[0]}</span><b>${String(x[1]).replace('.',',')} г/см³</b></div>`).join('')}
         </div>
@@ -2967,7 +2983,7 @@ window.physShot=function(file, meter){
     } else if(step===7){
       const show=st.p7&&st.go7;
       h=`<div class="wv-col">
-        ${show?physShot('ice.jpg','лёд: ~90% в воде'):physShot('ice.jpg','кубик льда · брось в бак')}
+        ${physShot(show?'ice.mp4':'ice.jpg', show?'лёд: ~90% в воде':'кубик льда · брось в бак')}
         ${pred(st,'p7','Лёд в воде. Что сделает?',[{k:'float',t:'всплывёт'},{k:'sink',t:'утонет'},{k:'hang',t:'повиснет'}])}
         ${st.p7?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].go7=1;chRender(0);}catch(e){}">Бросить в бак</button>`:''}
         ${show?note('Расчёт','ρ = 0,9. Доля погружения = 0,9 / 1 = 90%. Верх торчит. Ты '+(st.p7==='float'?'угадал':'думал иначе — смотри бак')):note('Предскажи до опыта','Не смотри ответ глазами. Сначала жми карточку.')}
@@ -2975,8 +2991,10 @@ window.physShot=function(file, meter){
     } else if(step===8){
       const pts=((P().T&&P().T.density&&P().T.density.frac)||[]).map(p=>[p[0], p[1]]);
       const fs=P().floatState(rho,1);
+      const clip=rho<0.4?'cork.jpg':rho<1?'ice.mp4':'iron.mp4';
+      const cap=fs.sink?'ρ = '+String(rho).replace('.',',')+' · на дне':'ρ = '+String(rho).replace('.',',')+' · '+Math.round(fs.frac*100)+'% в воде';
       h=`<div class="wv-col">
-        ${frame(defs()+tank(rho, rho>=1?'iron':'ice'))}
+        ${physShot(clip, cap)}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">ρ
           <input type="range" min="20" max="180" value="${Math.round(rho*100)}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].rho=this.value/100;chRender(0);}catch(e){}">
@@ -2987,30 +3005,31 @@ window.physShot=function(file, meter){
       </div>`;
     } else if(step===9){
       h=`<div class="wv-col">
-        ${physShot('iron.jpg','железо 7,8 · на дне')}
+        ${physShot('iron.mp4','железо 7,8 · на дне')}
         ${pred(st,'p9','Сплошное железо в воде?',[{k:'sink',t:'тонет'},{k:'float',t:'плывёт'}])}
         ${st.p9?note('Почему корабль тогда плывёт','Сплошной кубик тонет. Корабль не сплошной: внутри воздух, среднее ρ < 1.'):note('Предскажи','Сплошной куб и корабль — не одно и то же.')}
       </div>`;
     } else if(step===10){
       const air=!!st.air;
-      const avg=air?0.6:7.8;
       h=`<div class="wv-col">
-        ${physShot(air?'boat.jpg':'iron.jpg', air?'среднее ρ = 0,6 · плывёт':'сталь без воздуха · тонет')}
+        ${physShot(air?'boat.mp4':'iron.mp4', air?'среднее ρ = 0,6 · плывёт':'сталь без воздуха · тонет')}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].air=1;chRender(0);}catch(e){}">${air?'Плывёт':'Добавить воздух'}</button>
         ${note('Средняя плотность','Масса почти та же, объём вырос. ρ = m / V_всего. Упало ниже воды — корпус всплыл.')}
       </div>`;
     } else if(step===11){
       h=`<div class="wv-col">
-        ${frame(defs()+desk()+isoCube(22,86,32,'ice',0)+isoCube(132,86,32,'gold',0)+lab(54, 48, 'вода 1 г', BLUE)+lab(186, 48, 'золото 19,3 г', GOLD)+lab(120, 24, 'один кубик — разная масса', MUTED,'middle',12))}
-        ${note('Одинаковый объём','Золото в двадцать раз гуще воды. Медный слиток того же размера легче настоящего.')}
+        ${physShot('gold.mp4','вода 1 г · золото 19,3 г · один кубик')}
+        ${physShot('fake.jpg','настоящее золото тяжелее подделки')}
+        ${note('Одинаковый объём','Золото в двадцать раз гуще воды. Медный слиток того же размера легче настоящего — весы выдают обман.')}
       </div>`;
     } else if(step===12){
       h=`<div class="wv-col">
-        ${frame(defs()+desk()+lab(120, 80, 'однородное: ρ везде одна', GOLD, 'middle', 14)+lab(120, 124, 'корабль: среднее ρ', BLUE, 'middle', 14)+lab(120, 164, 'формула та же: m / V', GREEN))}
-        ${note('Смысл','Для льдины ρ — паспорт вещества. Для корабля — средний паспорт корпуса с воздухом.')}
+        ${physShot('ship.mp4','однородное vs среднее ρ')}
+        ${note('Смысл','Для льдины ρ — паспорт вещества. Для корабля — средний паспорт корпуса с воздухом. Формула та же: m / V.')}
       </div>`;
     } else if(step===13){
       h=`<div class="wv-col">
+        ${physShot('three.mp4','плавает · висит · тонет')}
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[['ρ < 1','плавает',GREEN],['ρ = 1','висит',BLUE],['ρ > 1','тонет, если сплошное',RED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
         </div>
@@ -3018,17 +3037,18 @@ window.physShot=function(file, meter){
       </div>`;
     } else if(step===14){
       h=`<div class="wv-col">
+        ${physShot('iceberg.mp4','айсберг: 90% под водой')}
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[['1','Что ищут: ρ, m или V',GOLD],['2','Треугольник',BLUE],['3','Единицы не мешать',GREEN],['4','Плавание: сравни с водой',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')}
         </div>
-        ${note('Рецепт','Сначала буква, потом формула, потом число.')}
+        ${note('Рецепт','Сначала буква, потом формула, потом число. Айсберг торчит, потому что ρ льда 0,9.')}
       </div>`;
     } else {
       const d=P().density(6,3);
       h=`<div class="wv-col">
-        ${frame(defs()+desk()+lab(120, 78, '6 г · 3 см³', GOLD, 'middle', 18)+lab(120, 124, 'ρ = ?', GREEN, 'middle', 22)+lab(120, 164, 'модель: '+d.rho, MUTED))}
+        ${physShot('lab.jpg','6 г · 3 см³ · ρ = ?')}
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">плотность?</div>
-        ${note('Проверка','2 г/см³. Деление, не переворот и не произведение.')}
+        ${note('Проверка','Модель считает '+d.rho+' г/см³. Деление, не переворот и не произведение.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
