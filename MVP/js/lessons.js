@@ -9387,17 +9387,17 @@ function l96css(){
   st.textContent=`
   @keyframes l96ray{from{opacity:.35}to{opacity:.95}}
   @keyframes l96tw{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-  .l96-scene{width:100%;box-sizing:border-box;position:relative;height:150px;border-radius:12px;overflow:hidden;
+  .l96-scene{aspect-ratio:3/2;min-height:200px;max-width:340px;margin:0 auto;width:100%;box-sizing:border-box;position:relative;border-radius:12px;overflow:hidden;
     background:linear-gradient(180deg,#1a2634,#0e1620 70%,#161009)}
-  .l96-ground{position:absolute;left:0;right:0;bottom:0;height:26px;background:linear-gradient(180deg,#3a2e22,#20180f)}
+  .l96-ground{position:absolute;left:0;right:0;bottom:0;height:17%;background:linear-gradient(180deg,#3a2e22,#20180f)}
   .l96-sun{position:absolute;width:34px;height:34px;border-radius:50%;
     background:radial-gradient(circle at 40% 38%,#fff6d8,#ffd76a 45%,#ff9d3c 78%,rgba(255,157,60,0));
     box-shadow:0 0 22px rgba(255,196,90,.75);transition:left .7s,top .7s;animation:l96tw 3.4s ease-in-out infinite}
-  .l96-tree{position:absolute;bottom:22px;left:50%;margin-left:-16px;width:32px;height:64px}
-  .l96-trunk{position:absolute;left:13px;bottom:0;width:7px;height:26px;background:#6b4a2c;border-radius:2px}
-  .l96-crown{position:absolute;left:0;bottom:18px;width:32px;height:26px;border-radius:50% 50% 45% 45%;
+  .l96-tree{position:absolute;bottom:15%;left:50%;margin-left:-16px;width:32px;height:64px}
+  .l96-trunk{position:absolute;left:13px;bottom:0;width:7px;height:42%;background:#6b4a2c;border-radius:2px}
+  .l96-crown{position:absolute;left:0;bottom:30%;width:32px;height:42%;border-radius:50% 50% 45% 45%;
     background:radial-gradient(circle at 38% 32%,#8fd6a0,#3f8b58 70%,#255c39)}
-  .l96-sh{position:absolute;bottom:20px;height:8px;border-radius:5px;background:rgba(6,9,14,.85);
+  .l96-sh{position:absolute;bottom:13%;height:12px;border-radius:5px;background:rgba(6,9,14,.85);
     filter:blur(1.1px);transition:left .7s,width .7s}
   .l96-ray{position:absolute;height:2px;background:linear-gradient(90deg,rgba(255,215,106,.9),rgba(255,215,106,.05));
     transform-origin:0 50%;animation:l96ray 1.6s ease-in-out infinite alternate}
@@ -9412,7 +9412,7 @@ function l96css(){
   .l96-band{height:7px;border-radius:4px;margin:2px 0;transition:width .8s}
   .l96-card{border-radius:12px;padding:8px 12px;background:linear-gradient(170deg,rgba(24,47,36,.95),rgba(14,24,48,.6));
     border:1px solid rgba(217,164,65,.28);font-size:12.5px;color:#e6eef6}
-  .l96-ecl{width:100%;box-sizing:border-box;position:relative;height:110px;border-radius:12px;background:radial-gradient(circle at 20% 50%,rgba(255,214,106,.18),transparent 60%),#0d1520;overflow:hidden}
+  .l96-ecl{aspect-ratio:16/7;min-height:150px;max-width:340px;margin:0 auto;width:100%;box-sizing:border-box;position:relative;border-radius:12px;background:radial-gradient(circle at 20% 50%,rgba(255,214,106,.18),transparent 60%),#0d1520;overflow:hidden}
   .l96-orb{position:absolute;top:50%;transform:translateY(-50%);border-radius:50%}
   `;
   document.head.appendChild(st);
