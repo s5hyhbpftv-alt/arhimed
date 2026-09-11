@@ -1,7 +1,6 @@
-/* АРХИМЕД MVP · service worker (офлайн) */
-/* Правило: код (html, js, css, данные) берём СНАЧАЛА ИЗ СЕТИ и только при офлайне — из кэша.
-   Так на устройстве не может застрять старая сборка, из-за которой «не открываются страницы». */
-const CACHE='arhimed-mvp-v442';
+/* АРХИМЕД MVP · service worker */
+/* Код (html/js/css) — сначала сеть. Иначе в браузере залипает старая сборка. */
+const CACHE='arhimed-mvp-v443';
 const ASSETS=['index.html','img/car.png','data/tasks.js','data/lessons.js',
  'js/core.js','js/engine.js','js/app.js','js/dashboard.js','js/lessons.js','js/legend.js','js/comic.js','js/simulator.js','js/duel.js',
  'manifest.webmanifest','../МОБ_ПРИЛОЖЕНИЕ/icons/icon-192.png'];
@@ -12,7 +11,7 @@ self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.
 function netFirst(req, ms){
   return new Promise((resolve, reject)=>{
     const t=setTimeout(()=>reject(new Error('timeout')), ms||6000);
-    fetch(req).then(r=>{ clearTimeout(t); resolve(r); }).catch(err=>{ clearTimeout(t); reject(err); });
+    fetch(req, {cache:'no-store'}).then(r=>{ clearTimeout(t); resolve(r); }).catch(err=>{ clearTimeout(t); reject(err); });
   });
 }
 function isCode(url){

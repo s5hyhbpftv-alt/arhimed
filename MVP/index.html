@@ -685,37 +685,38 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=442"></script>
-<script src="data/lessons.js?v=442"></script>
-<script src="data/lessons_draft.js?v=442"></script>
-<script src="data/comics_12.js?v=442"></script>
-<script src="data/vis_bw.js?v=442"></script>
-<script src="data/vis_cw.js?v=442"></script>
-<script src="data/vis_dw.js?v=442"></script>
-<script src="data/vis_ew.js?v=442"></script>
-<script src="data/vis_kl.js?v=442"></script>
-<script src="data/vis_wk.js?v=442"></script>
-<script src="data/inf_56.js?v=442"></script>
-<script src="js/comic.js?v=442"></script>
-<script src="js/core.js?v=442"></script>
-<script src="js/engine.js?v=442"></script>
-<script src="js/app.js?v=442"></script>
-<script src="js/dashboard.js?v=442"></script>
-<script src="js/lessons.js?v=442"></script>
-<script src="js/wave_guard.js?v=442"></script>
-<script src="js/legend.js?v=442"></script>
-<script src="js/simulator.js?v=442"></script>
-<script src="js/duel.js?v=442"></script>
-<script src="js/agent.js?v=442"></script>
-<script src="js/voice.js?v=442"></script>
-<script src="js/assistant.js?v=442"></script>
-<script src="js/agentlive.js?v=442"></script>
+<script src="data/tasks.js?v=443"></script>
+<script src="data/lessons.js?v=443"></script>
+<script src="data/lessons_draft.js?v=443"></script>
+<script src="data/comics_12.js?v=443"></script>
+<script src="data/vis_bw.js?v=443"></script>
+<script src="data/vis_cw.js?v=443"></script>
+<script src="data/vis_dw.js?v=443"></script>
+<script src="data/vis_ew.js?v=443"></script>
+<script src="data/vis_kl.js?v=443"></script>
+<script src="data/vis_wk.js?v=443"></script>
+<script src="data/inf_56.js?v=443"></script>
+<script src="js/comic.js?v=443"></script>
+<script src="js/core.js?v=443"></script>
+<script src="js/engine.js?v=443"></script>
+<script src="js/app.js?v=443"></script>
+<script src="js/dashboard.js?v=443"></script>
+<script src="js/lessons.js?v=443"></script>
+<script src="js/wave_guard.js?v=443"></script>
+<script src="js/legend.js?v=443"></script>
+<script src="js/simulator.js?v=443"></script>
+<script src="js/duel.js?v=443"></script>
+<script src="js/agent.js?v=443"></script>
+<script src="js/voice.js?v=443"></script>
+<script src="js/assistant.js?v=443"></script>
+<script src="js/agentlive.js?v=443"></script>
 <script>
   /* автоочистка устаревшего кэша (одноразово за сессию) */
   (function(){
     try{
-      if(sessionStorage.getItem('arhimed-clean-ok')) return;
-      sessionStorage.setItem('arhimed-clean-ok','1');
+      const VER='443';
+      if(localStorage.getItem('arh-build')===VER) return;
+      localStorage.setItem('arh-build', VER);
       const jobs=[];
       if('caches' in window){ jobs.push(caches.keys().then(ks=>Promise.all(ks.map(k=>caches.delete(k))))); }
       if('serviceWorker' in navigator){ jobs.push(navigator.serviceWorker.getRegistrations().then(rs=>Promise.all(rs.map(r=>r.unregister())))); }
@@ -724,7 +725,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=442').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=443').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
 </script>

@@ -343,7 +343,10 @@ function visMath(el){
 
 
 function visIsMath(){
-  try{ const L=lessonById(LV.id); if(!L) return false;
+  try{
+    const L=lessonById(LV.id); if(!L) return false;
+    const id=LV.id;
+    if((window.VISKW&&window.VISKW[id])||(window.WAVE_B&&window.WAVE_B[id])||(window.WAVE_C&&window.WAVE_C[id])||(window.WAVE_D&&window.WAVE_D[id])||(window.WAVE_E&&window.WAVE_E[id])) return false;
     return L.subj==='math' || (L.subj==='jun' && !L.comic);
   }catch(e){ return false; }
 }
@@ -16364,13 +16367,13 @@ function renderLessonVis(){
   else if(id===61) visL61(el);
   else if(id===59) visL59(el);
   else if(id===62) visL62(el);
-  else if(visIsChem()) visChemNew(el);
-  else if(visIsPhys()) visPhysNew(el);
-  else if(visIsMath()) visMathNew(el);
   else if(window.WAVE_B&&window.WAVE_B[id]){ try{ window.WAVE_B[id](el); }catch(e){ el.innerHTML=''; } }
   else if(window.WAVE_C&&window.WAVE_C[id]){ try{ window.WAVE_C[id](el); }catch(e){ el.innerHTML=''; } }
   else if(window.WAVE_D&&window.WAVE_D[id]){ try{ window.WAVE_D[id](el); }catch(e){ el.innerHTML=''; } }
   else if(window.WAVE_E&&window.WAVE_E[id]){ try{ window.WAVE_E[id](el); }catch(e){ el.innerHTML=''; } }
+  else if(visIsChem()) visChemNew(el);
+  else if(visIsPhys()) visPhysNew(el);
+  else if(visIsMath()) visMathNew(el);
   else el.innerHTML='';
 }
 function visDigits(el){
