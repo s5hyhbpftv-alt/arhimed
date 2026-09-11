@@ -4710,3 +4710,183 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     if(!f) arr.push(L101);
   })();
 })();
+/* ================= УРОК 252 · Мощность ================= */
+(function(){
+  const L252 = {
+    id: 252, title: 'Мощность: кто быстрее делает работу', ico: '🏗️',
+    src: 'Физика · 7 класс · Работа и мощность', subj: 'phys',
+    explain: [
+      'Два крана поднимают одинаковый блок на один этаж. Работа одна: груз и высота те же. Первый — 20 с, второй — 5 с. Разница не в работе, а в быстроте.',
+      'Эта быстрота — мощность N. Сколько работы за одну секунду. N = A : t. A — джоули, t — секунды.',
+      'Единица — ватт: 1 Вт = 1 Дж за 1 с. Поднять яблоко на метр за секунду — примерно 1 Вт. Это мало.',
+      'Медленный кран: 800 Дж за 20 с → 800 : 20 = 40 Вт.',
+      'Быстрый: та же 800 Дж за 5 с → 160 Вт. Время в 4 раза меньше — мощность в 4 раза больше.',
+      'График N(t) при той же работе — гипербола: чем дольше, тем меньше мощность. Не прямая.',
+      'Треугольник: сверху A, снизу N · t. Закрой неизвестное: N = A:t, A = N·t, t = A:N.',
+      'Обратно. Мотор 500 Вт работал 6 с → A = 500 · 6 = 3000 Дж.',
+      'Время: 1200 Дж при 300 Вт → t = 1200 : 300 = 4 с.',
+      'Как сделана работа — не важно. Медленный и быстрый подъём одной плиты: работа одна, мощность разная.',
+      '1 кВт = 1000 Вт, 1 МВт = 1 000 000 Вт. Лампа 60 Вт, чайник 2000 Вт, автомобиль ~100 кВт.',
+      'Лошадиная сила ≈ 735 Вт. Чайник — примерно 2,7 «лошади». Старая единица, до ватта.',
+      'Счётчик считает энергию. 1 кВт за 1 час = 1 кВт·ч. Мощный прибор крутит диск быстрее.',
+      'Чайник 2000 Вт кипит 3 минуты, лампа 20 Вт горит 5 часов. Энергии может уйти поровну, мощность разная в 100 раз.',
+      'Шаги: выпиши A и t, время в секундах, N = A : t, в кВт — раздели на 1000. Пример: 1500 Дж за 5 с → 300 Вт.',
+      'Рецепт. N = A : t. Ватт — джоуль в секунду. Быстрее та же работа — больше мощность.'
+    ],
+    check: { q: 'Работа 2400 Дж выполнена за 8 с. Какова мощность?',
+      choices: ['300 Вт','19200 Вт','2408 Вт','8 Вт'], ans: 0,
+      exp: 'N = A : t = 2400 : 8 = 300 Вт.' },
+    tasks: [
+      { q: 'Кран: работа 3600 Дж за 12 с. Мощность (Вт)?', kind: 'unit', ans: 300, tol: 0,
+        hints: ['N = A : t.','3600 : 12 = 300.'], sol: '300 Вт' },
+      { q: 'Мотор 800 Вт работал 5 с. Работа (Дж)?', kind: 'unit', ans: 4000, tol: 0,
+        hints: ['A = N · t.','800 · 5 = 4000.'], sol: '4000 Дж' },
+      { q: 'Работа 6000 Дж, мощность 1500 Вт. Время (с)?', kind: 'unit', ans: 4, tol: 0,
+        hints: ['t = A : N.','6000 : 1500 = 4.'], sol: '4 с' },
+      { q: '800 Дж за 20 с. Мощность (Вт)?', kind: 'unit', ans: 40, tol: 0,
+        hints: ['800 : 20.'], sol: '40 Вт' },
+      { q: 'Та же 800 Дж за 5 с. Мощность (Вт)?', kind: 'unit', ans: 160, tol: 0,
+        hints: ['Время в 4 раза меньше — мощность в 4 раза больше.'], sol: '160 Вт' },
+      { q: '1 кВт — это сколько ватт?', kind: 'choice',
+        choices: ['100','1000','1000000'], ans: 1,
+        hints: ['кило — тысяча.'], sol: '1000 Вт' }
+    ]
+  };
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function pred(st,key,q,opts){
+    const cur=st[key];
+    return `<div style="width:min(100%,340px);text-align:left">
+      <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+        onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
+      ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
+    </div>`;
+  }
+  function cards(rows){
+    return `<div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">`+
+      rows.map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${x[2]||GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${x[2]||GOLD}">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')+
+      `</div>`;
+  }
+  function visB252(el){
+    try{ window.physKenCss && physKenCss(); }catch(e){}
+    const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'252';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const t=Math.max(4, Math.min(40, +(st.t==null?20:st.t)));
+    const A=800;
+    const N=Math.round((A/t)*10)/10;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        ${physShot('n_two.mp4','один этаж · разное время')}
+        ${pred(st,'p0','Работа у кранов?',[{k:'same',t:'одинаковая'},{k:'fast',t:'у быстрого больше'}])}
+        ${st.p0?note('Ключ','Груз и высота те же — работа одна. Разница в быстроте. Эту быстроту и назовём мощностью.'):note('Предскажи','Что одинаково, что нет?')}
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        ${physShot('n_crane.mp4','N = A : t')}
+        ${cards([['A','работа, джоули',GOLD],['t','время, секунды',BLUE],['N','мощность, ватты',GREEN]])}
+        ${note('Формула','Работу делим на время. Сколько джоулей успели за одну секунду.')}
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        ${physShot('n_apple.mp4','1 Вт ≈ яблоко на метр за секунду')}
+        ${note('Ватт','1 Вт = 1 Дж / 1 с. Это мало. Лампочка — десятки ватт, чайник — тысячи, машина — сотни тысяч.')}
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        ${physShot('n_slow.mp4','800 Дж · 20 с')}
+        ${note('Медленный','800 : 20 = 40 Вт. Работу делим на время. Не умножаем: 800 · 20 было бы 16000, это не мощность.')}
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        ${physShot('n_fast.mp4','800 Дж · 5 с')}
+        ${pred(st,'p4','Мощность быстрого?',[{k:'160',t:'160 Вт'},{k:'40',t:'тоже 40'},{k:'4',t:'4 Вт'}])}
+        ${st.p4?note('В четыре раза','Время в 4 раза меньше — мощность в 4 раза больше. 800 : 5 = 160 Вт. Быстрее та же работа — мощнее.'):note('Предскажи','800 : 5.')}
+      </div>`;
+    } else if(step===5){
+      const pts=[[4,200],[5,160],[8,100],[10,80],[16,50],[20,40],[25,32],[32,25],[40,20]];
+      h=`<div class="wv-col">
+        ${physShot(t<=8?'n_fast.mp4':'n_slow.mp4', 'A = 800 Дж  ·  t = '+t+' с  ·  N = '+N+' Вт')}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">t
+          <input type="range" min="4" max="40" value="${t}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].t=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${t} с</b>
+        </label>
+        ${physChart([{pts, col:GOLD, name:'N = 800 / t'}], t, N, 't, с', 'мощность', 'hyp', 'Вт')}
+        ${note('Гипербола','Не прямая. Дольше — меньше мощность. Та же работа размазана по времени.')}
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        ${physShot('n_watch.mp4','треугольник A, N, t')}
+        ${cards([['N = A : t','мощность',GOLD],['A = N · t','работа',BLUE],['t = A : N','время',GREEN]])}
+        ${note('Палец','Сверху A, снизу N · t. Закрой неизвестное — получишь формулу.')}
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        ${physShot('n_motor.mp4','500 Вт · 6 с')}
+        ${note('Работа','A = N · t = 500 · 6 = 3000 Дж. Мощность на время. Не делить.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${physShot('n_watch.mp4','1200 Дж · 300 Вт')}
+        ${pred(st,'p8','Сколько секунд?',[{k:'4',t:'4 с'},{k:'360',t:'360 с'},{k:'0',t:'0,25 с'}])}
+        ${st.p8?note('Время','t = A : N = 1200 : 300 = 4 с. Работу делим на мощность.'):note('Предскажи','Закрой t в треугольнике.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${physShot('n_slab.mp4','плита та же · время разное')}
+        ${note('Работа одна','Медленно или быстро — плита на этаже. Работа от пути и силы, не от часов. Мощность — как раз про часы.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        ${physShot('n_fil.mp4','лампа десятки ватт')}
+        ${cards([['лампа','10–60 Вт',GOLD],['чайник','2000 Вт',BLUE],['авто','~100 кВт',GREEN],['1 кВт','1000 Вт',MUTED]])}
+        ${note('Шкала','кило — тысяча, мега — миллион. Машина мощнее чайника в 50 раз, чайник мощнее лампы в 30.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        ${physShot('n_horse.mp4','1 л.с. ≈ 735 Вт')}
+        ${note('Лошадиная сила','Старая единица, до ватта. Чайник 2000 Вт ≈ 2,7 л.с. Джеймс Уатт как раз сравнивал машины с лошадьми.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        ${physShot('n_meter.mp4','счётчик считает энергию')}
+        ${note('кВт·ч','1 киловатт за 1 час = 1 кВт·ч. Мощность — быстрота, энергия — сколько накрутили. Мощный прибор крутит диск быстрее.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        ${physShot('n_boil.mp4','чайник 3 мин · лампа 5 ч')}
+        ${pred(st,'p13','У кого больше мощность?',[{k:'k',t:'у чайника'},{k:'l',t:'у лампы'},{k:'eq',t:'одинаковая'}])}
+        ${st.p13?note('Разные вещи','Чайник мощнее в 100 раз, но работает минуты. Лампа слабая, но часами. Энергии может уйти поровну.'):note('Предскажи','Мощность или энергия?')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${physShot('n_block.mp4','1500 Дж · 5 с')}
+        ${note('Пример','1) A = 1500, t = 5. 2) время уже в секундах. 3) N = 1500 : 5 = 300 Вт. 4) 0,3 кВт, если нужно.')}
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        ${physShot('n_still.mp4','2400 Дж · 8 с · N = ?')}
+        ${cards([['1','N = A : t',GOLD],['2','ватт = джоуль в секунду',BLUE],['3','быстрее — мощнее',GREEN],['4','1000 Вт = 1 кВт',MUTED]])}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">мощность в ваттах?</div>
+        ${note('Проверка','300 Вт. 2400 : 8. Не умножать.')}
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[252]=visB252;
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===252){ arr[i]=L252; f=true; break; } }
+    if(!f) arr.push(L252);
+  })();
+})();

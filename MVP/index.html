@@ -689,37 +689,37 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=474"></script>
-<script src="data/lessons.js?v=474"></script>
-<script src="data/lessons_draft.js?v=474"></script>
-<script src="data/comics_12.js?v=474"></script>
-<script src="data/sim_phys.js?v=474"></script>
-<script src="data/vis_bw.js?v=474"></script>
-<script src="data/vis_cw.js?v=474"></script>
-<script src="data/vis_dw.js?v=474"></script>
-<script src="data/vis_ew.js?v=474"></script>
-<script src="data/vis_kl.js?v=474"></script>
-<script src="data/vis_wk.js?v=474"></script>
-<script src="data/inf_56.js?v=474"></script>
-<script src="js/comic.js?v=474"></script>
-<script src="js/core.js?v=474"></script>
-<script src="js/engine.js?v=474"></script>
-<script src="js/app.js?v=474"></script>
-<script src="js/dashboard.js?v=474"></script>
-<script src="js/lessons.js?v=474"></script>
-<script src="js/wave_guard.js?v=474"></script>
-<script src="js/legend.js?v=474"></script>
-<script src="js/simulator.js?v=474"></script>
-<script src="js/duel.js?v=474"></script>
-<script src="js/agent.js?v=474"></script>
-<script src="js/voice.js?v=474"></script>
-<script src="js/assistant.js?v=474"></script>
-<script src="js/agentlive.js?v=474"></script>
+<script src="data/tasks.js?v=475"></script>
+<script src="data/lessons.js?v=475"></script>
+<script src="data/lessons_draft.js?v=475"></script>
+<script src="data/comics_12.js?v=475"></script>
+<script src="data/sim_phys.js?v=475"></script>
+<script src="data/vis_bw.js?v=475"></script>
+<script src="data/vis_cw.js?v=475"></script>
+<script src="data/vis_dw.js?v=475"></script>
+<script src="data/vis_ew.js?v=475"></script>
+<script src="data/vis_kl.js?v=475"></script>
+<script src="data/vis_wk.js?v=475"></script>
+<script src="data/inf_56.js?v=475"></script>
+<script src="js/comic.js?v=475"></script>
+<script src="js/core.js?v=475"></script>
+<script src="js/engine.js?v=475"></script>
+<script src="js/app.js?v=475"></script>
+<script src="js/dashboard.js?v=475"></script>
+<script src="js/lessons.js?v=475"></script>
+<script src="js/wave_guard.js?v=475"></script>
+<script src="js/legend.js?v=475"></script>
+<script src="js/simulator.js?v=475"></script>
+<script src="js/duel.js?v=475"></script>
+<script src="js/agent.js?v=475"></script>
+<script src="js/voice.js?v=475"></script>
+<script src="js/assistant.js?v=475"></script>
+<script src="js/agentlive.js?v=475"></script>
 <script>
   /* сброс кэша при новой сборке — иначе MVP показывает старый урок */
   (function(){
     try{
-      const VER='474';
+      const VER='475';
       if(localStorage.getItem('arh-build')===VER) return;
       localStorage.setItem('arh-build', VER);
       const jobs=[];
@@ -734,7 +734,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=474').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=475').catch(()=>{}); });
 }
 window.addEventListener('hashchange', ()=>{
   try{
