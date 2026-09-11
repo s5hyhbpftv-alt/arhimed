@@ -16154,6 +16154,22 @@ function visPhysNew(el){
       const [nm,ic,ds]=exs[i%exs.length];
       h=col(icon('🔭'), big(L.title), `<div style="font-size:64px" class="wv-pop">${ic}</div>`+big(nm)+sml(ds)+btn('показать ещё явление', `phAct('${lk}','nx')`));
     }
+    else if(id===252){ /* Мощность: N = A : t — интерактивная сцена */
+      if(st.a==null) st.a=600; if(st.b==null) st.b=20;
+      if(st.b<1) st.b=1;
+      const N=Math.round(st.a/Math.max(1,st.b));
+      const lift=Math.min(92, 8+N/4);
+      h=col(icon('🏗️'),
+        `<div style="position:relative;width:210px;height:124px;margin:0 auto">
+           <div style="position:absolute;bottom:6px;left:0;right:0;height:2px;background:#3d5c49"></div>
+           <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:2px;font-size:46px">🏗️</div>
+           <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${lift}px;width:64px;height:16px;background:#c96f4a;border:2px solid #33291e;border-radius:5px;text-align:center;font-size:10px;line-height:16px;color:#fff;transition:bottom .7s ease">${st.a} Дж</div>
+           <div style="position:absolute;left:6px;top:6px;font-size:10px;color:#7fa88f">время: ${st.b} с</div>
+         </div>`+
+        big(`N = A : t = ${st.a} : ${st.b} = ${N} Вт`)+
+        btns(btn('+100 Дж',`phAct('${lk}','a+')`),btn('−100 Дж',`phAct('${lk}','a-')`),btn('+1 с',`phAct('${lk}','b+')`),btn('−1 с',`phAct('${lk}','b-')`),btn('↺',`phAct('${lk}','r')`))+
+        sml('одна и та же работа быстрее — значит мощность больше: N = A : t'));
+    }
     else if(id===95){ const mats=[['Железо','притянулось!','🧷',1],['Сталь','притянулось!','🔩',1],['Дерево','не притягивается','🪵',0],['Стекло','не притягивается','🥛',0],['Пластик','не притягивается','🧴',0]];
       const [nm,res,ic,ok]=mats[i%mats.length];
       h=col(`<div style="font-size:64px">🧲</div>`+big(L.title)+
