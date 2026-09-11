@@ -8749,57 +8749,7 @@ function visL51(el){
       <ellipse cx="180" cy="198" rx="152" ry="24" fill="url(#qGlow)" opacity="${(0.12+hlev*0.5).toFixed(2)}">
         <animate attributeName="opacity" values="${(0.12+hlev*0.5).toFixed(2)};${(0.2+hlev*0.6).toFixed(2)};${(0.12+hlev*0.5).toFixed(2)}" dur="4.2s" repeatCount="indefinite"/></ellipse></g>`;
     /* СМЫСЛОВЫЕ АНИМАЦИИ: у каждого шага своё движение, привязанное к его смыслу */
-    const extra=(n)=>{
-      const pulse=(x,y,w,h,c,delay)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="9" fill="none" stroke="${c}" stroke-width="1.8" opacity="0">
-        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.7;1" dur="2.4s" begin="${delay}s" repeatCount="indefinite"/></rect>`;
-      if(n===1) return `<g><circle cx="120" cy="164" r="12" fill="none" stroke="#7fd1ff" stroke-width="1.5" opacity=".7">
-          <animate attributeName="r" values="11;18;11" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;.7" dur="2.6s" repeatCount="indefinite"/></circle>
-        <circle cx="250" cy="150" r="12" fill="none" stroke="#ffd76a" stroke-width="1.5" opacity=".7">
-          <animate attributeName="r" values="11;18;11" dur="2.2s" begin=".5s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;.7" dur="2.2s" begin=".5s" repeatCount="indefinite"/></circle>
-        <circle r="5" fill="#ffd76a"><animateMotion dur="3.2s" repeatCount="indefinite" path="M214 168 L262 100"/></circle></g>`;
-      if(n===3) return `<g><circle r="6" fill="#ffd76a" opacity=".9"><animateMotion dur="2.4s" repeatCount="indefinite" path="M90 62 L90 108"/></circle>
-        <circle cx="90" cy="120" r="30" fill="none" stroke="#ffd76a" stroke-width="1.4" opacity=".5">
-          <animate attributeName="r" values="30;40;30" dur="2.4s" repeatCount="indefinite"/></circle></g>`;
-      if(n===7) return `<g>${[[70,'0s'],[180,'.4s'],[292,'.8s']].map(q=>`<circle cx="${q[0]}" cy="40" r="7" fill="#ffd76a" opacity=".85">
-          <animate attributeName="opacity" values="0;1;.2" dur="1.6s" begin="${q[1]}" repeatCount="indefinite"/>
-          <animate attributeName="r" values="4;9;4" dur="1.6s" begin="${q[1]}" repeatCount="indefinite"/></circle>`).join('')}
-        <circle r="4" fill="#7fd1ff"><animateMotion dur="2.8s" repeatCount="indefinite" path="M40 160 L320 160"/></circle></g>`;
-      if(n===8) return `<g>${[0,1,2].map(k=>`<path d="M${100+k*10} 150 q8 -18 0 -34" fill="none" stroke="#ff9d3c" stroke-width="2" opacity="0">
-          <animate attributeName="opacity" values="0;.85;0" dur="2s" begin="${(k*0.35).toFixed(2)}s" repeatCount="indefinite"/>
-          <animateTransform attributeName="transform" type="translate" values="0 0;-6 -22" dur="2s" begin="${(k*0.35).toFixed(2)}s" repeatCount="indefinite"/></path>`).join('')}
-        <circle cx="250" cy="110" r="38" fill="none" stroke="#ffd76a" stroke-width="1.3" opacity=".5">
-          <animate attributeName="r" values="36;44;36" dur="2.6s" repeatCount="indefinite"/></circle></g>`;
-      if(n===9) return `<g>${[0,1,2].map(k=>pulse(12+k*110,86,92,60,'#ffd76a',(k*0.55).toFixed(2))).join('')}
-        <circle r="5" fill="#7de0a0"><animateMotion dur="2.6s" repeatCount="indefinite" path="M20 176 L340 176"/></circle></g>`;
-      if(n===10) return `<g>${[0,1,2].map(k=>`<circle cx="${62+k*16}" cy="128" r="3" fill="#eaffff" opacity=".85">
-          <animate attributeName="cy" values="136;112" dur="1.1s" begin="${(k*0.22).toFixed(2)}s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.9;0" dur="1.1s" begin="${(k*0.22).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}
-        ${[0,1,2].map(k=>`<circle cx="${230+k*16}" cy="128" r="3" fill="#eaffff" opacity=".7">
-          <animate attributeName="cy" values="136;112" dur="2.2s" begin="${(k*0.45).toFixed(2)}s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.7;0" dur="2.2s" begin="${(k*0.45).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}</g>`;
-      if(n===12) return `<g>${[0,1,2,3].map(k=>`<path d="M${146+k*12} 46 q8 -14 0 -26" fill="none" stroke="#ff9d3c" stroke-width="2" opacity="0">
-          <animate attributeName="opacity" values="0;.8;0" dur="2.4s" begin="${(k*0.4).toFixed(2)}s" repeatCount="indefinite"/>
-          <animateTransform attributeName="transform" type="translate" values="0 0;${k%2?7:-7} -20" dur="2.4s" begin="${(k*0.4).toFixed(2)}s" repeatCount="indefinite"/></path>`).join('')}</g>`;
-      if(n===13) return `<g>${[0,1,2,3].map(k=>`<circle cx="${58+k*86}" cy="96" r="26" fill="none" stroke="#7fd1ff" stroke-width="1.5" opacity=".55">
-          <animate attributeName="r" values="24;34;24" dur="2.2s" begin="${(k*0.3).toFixed(2)}s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values=".55;.05;.55" dur="2.2s" begin="${(k*0.3).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}</g>`;
-      if(n===14) return `<g><circle cx="300" cy="40" r="18" fill="#ffe6b0" opacity=".35"><animate attributeName="r" values="16;22;16" dur="3.4s" repeatCount="indefinite"/></circle>
-        <circle r="4" fill="#bfe6ff"><animateMotion dur="4.2s" repeatCount="indefinite" path="M320 60 q-40 30 -120 34"/></circle>
-        <circle r="4" fill="#ffd76a"><animateMotion dur="4.6s" begin="1s" repeatCount="indefinite" path="M40 150 q60 26 120 30"/></circle></g>`;
-      if(n===15) return `<g>${[0,1,2,3].map(k=>pulse(30,26+k*40,300,34,'#7fd1ff',(k*0.5).toFixed(2))).join('')}
-        <circle cx="20" cy="43" r="4.5" fill="#ffd76a"><animate attributeName="cy" values="43;163;43" dur="3.6s" repeatCount="indefinite"/></circle></g>`;
-      if(n===16) return `<g>${[0,1,2].map(k=>pulse(30,50+k*38,300,30,'#7de0a0',(k*0.6).toFixed(2))).join('')}
-        <circle r="5" fill="#7de0a0"><animateMotion dur="3s" repeatCount="indefinite" path="M40 188 L320 188"/></circle></g>`;
-      if(n===17) return `<g>${pulse(96,126,168,44,'#7de0a0','0s')}
-        <circle cx="130" cy="148" r="4" fill="#7de0a0"><animateMotion dur="2.4s" repeatCount="indefinite" path="M110 148 L250 148"/></circle>
-        <circle cx="292" cy="196" r="6" fill="none" stroke="#7de0a0" stroke-width="1.6" opacity=".8">
-          <animate attributeName="r" values="5;11;5" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0;.8" dur="2s" repeatCount="indefinite"/></circle></g>`;
-      if(n===4) return `<g><circle r="4.5" fill="#ffd76a"><animateMotion dur="3s" repeatCount="indefinite" path="M118 190 L272 190"/></circle></g>`;
-      if(n===5) return `<g><circle r="4.5" fill="#7fd1ff"><animateMotion dur="3.4s" repeatCount="indefinite" path="M60 120 q60 6 120 -30"/></circle></g>`;
-      if(n===6) return `<g><circle r="4" fill="#ff9d3c"><animateMotion dur="1s" repeatCount="indefinite" path="M216 190 L304 190"/></circle></g>`;
-      if(n===11) return `<g><circle r="4" fill="#7fd1ff"><animateMotion dur="2.6s" repeatCount="indefinite" path="M84 40 L84 182"/></circle></g>`;
-      if(n===2) return `<g><circle r="5" fill="#ff9d3c"><animateMotion dur="2.2s" repeatCount="indefinite" path="M216 140 L136 140"/></circle></g>`;
-      if(n===0) return `<g><circle r="5" fill="#ffd76a"><animateMotion dur="2.6s" repeatCount="indefinite" path="M96 120 L170 120"/></circle></g>`;
-      return '';
-    };
+    const extra=(n)=>'';
     /* КОМПАКТНЫЙ ИНДИКАТОР МОДЕЛИ: шкала + значение + состояние (без шарика) */
     const hdr=()=>`<g transform="translate(6 4)">
       <rect width="348" height="26" rx="9" fill="rgba(9,15,20,.74)" stroke="rgba(127,209,255,.26)" stroke-width="1"/>
@@ -8829,40 +8779,73 @@ function visL51(el){
       <path d="M${x} ${y} C${x-14} ${y-hh*0.45} ${x-11} ${y-hh} ${x} ${y-hh*1.3} C${x+11} ${y-hh} ${x+14} ${y-hh*0.45} ${x} ${y} Z" fill="url(#qFlame)">
         <animateTransform attributeName="transform" type="scale" values="1 1;1 .85;1 1.06;1 1" dur=".9s" repeatCount="indefinite" additive="sum"/></path>
       <path d="M${x} ${y} C${x-7} ${y-hh*0.3} ${x-6} ${y-hh*0.6} ${x} ${y-hh*0.82} C${x+6} ${y-hh*0.6} ${x+7} ${y-hh*0.3} ${x} ${y} Z" fill="#fff6d8" opacity=".9"/></g>`;
-    const kettle=(x,y,w,hh,hot)=>`<g filter="url(#qSh)"><path d="M${x} ${y} C${x-6} ${y-hh*0.7} ${x-4} ${y-hh} ${x+8} ${y-hh*1.05} C${x+w-8} ${y-hh*1.05} ${x+w+4} ${y-hh*0.7} ${x+w} ${y} Z" fill="url(#qSteel)"/>
-      <ellipse cx="${x+w/2}" cy="${y}" rx="${w/2}" ry="7" fill="#3f464a"/>
-      <ellipse cx="${x+w/2}" cy="${y-hh*1.02}" rx="${w/2-2}" ry="8" fill="#dfe6ea"/>
-      <path d="M${x+6} ${y-hh*0.85} C${x-4} ${y-hh*0.9} ${x-8} ${y-hh*0.5} ${x+2} ${y-hh*0.42}" fill="none" stroke="url(#qSteel)" stroke-width="7" stroke-linecap="round"/>
-      <path d="M${x+w/2-16} ${y-hh*1.1} C${x+w/2} ${y-hh*1.24} ${x+w/2+16} ${y-hh*1.1} ${x+w/2+16} ${y-hh*1.1}" fill="none" stroke="#2b3033" stroke-width="6" stroke-linecap="round"/>
-      <path d="M${x+12} ${y-hh*0.9} C${x+10} ${y-hh*0.6} ${x+11} ${y-hh*0.3} ${x+14} ${y-8}" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".38" filter="url(#qBlur2)"/>
-      <rect x="${x+w/2-9}" y="${y-hh*1.12}" width="18" height="6" rx="3" fill="#8b9296"/>
-      ${hot? `<ellipse cx="${x+w/2}" cy="${y-hh*0.5}" rx="${w*0.6}" ry="${hh*0.5}" fill="url(#qGlow)"/>`:''}</g>`;
-    const thermo=(x,y,val,hh)=>`<g transform="translate(${x} ${y})"><rect x="-9" y="${-hh}" width="18" height="${hh+10}" rx="9" fill="#f3f7fa" opacity=".95"/>
-      <rect x="-5" y="${-hh+5}" width="10" height="${hh}" rx="5" fill="#dfe9ee"/>
-      <rect x="-5" y="${(-6-Math.max(4,Math.min(hh-8,((val+20)/140)*(hh-14)))).toFixed(1)}" width="10" height="${Math.max(4,Math.min(hh-8,((val+20)/140)*(hh-14))).toFixed(1)}" rx="5" fill="#e0341c"/>
-      <circle cy="14" r="10" fill="#d3311c"/>
-      ${[0,25,50,75,100].map(v=>{const yy=(-6-((v+20)/140)*(hh-14)).toFixed(1);return `<line x1="-10" y1="${yy}" x2="-16" y2="${yy}" stroke="#9fb0aa" stroke-width="1.2"/><text x="-19" y="${(+yy+3).toFixed(1)}" text-anchor="end" font-size="7.5" fill="#a9b8b2">${v}</text>`;}).join('')}</g>`;
-    const pan=(x,y,w,hh,fill,lab,sub)=>`<g filter="url(#qSh)"><path d="M${x} ${y-hh} L${x+w} ${y-hh} L${x+w-8} ${y} L${x+8} ${y} Z" fill="url(#qSteel)"/>
-      <ellipse cx="${x+w/2}" cy="${y-hh}" rx="${w/2}" ry="6" fill="#cfd6da"/>
-      <path d="M${x+10} ${y-hh+6} L${x+w-10} ${y-hh+6} L${x+w-14} ${y-6} L${x+14} ${y-6} Z" fill="${fill}" opacity=".9"/>
-      <path d="M${x-14} ${y-hh+4} h-8 M${x+w+14} ${y-hh+4} h8" stroke="#8f979b" stroke-width="5" stroke-linecap="round"/>
+    const kettle=(x,y,w,hh,hot)=>`<g filter="url(#qSh)">
+      <ellipse cx="${x+w/2}" cy="${y+3}" rx="${w*0.52}" ry="7" fill="#000" opacity=".45"/>
+      <path d="M${x} ${y} C${x-5} ${y-hh*0.55} ${x+2} ${y-hh*0.92} ${x+14} ${y-hh*0.96} L${x+w-14} ${y-hh*0.96} C${x+w-2} ${y-hh*0.92} ${x+w+5} ${y-hh*0.55} ${x+w} ${y} Z" fill="url(#qSteel)"/>
+      <ellipse cx="${x+w/2}" cy="${y}" rx="${w/2}" ry="6" fill="#394044"/>
+      <path d="M${x+w-6} ${y-hh*0.72} C${x+w+18} ${y-hh*0.78} ${x+w+22} ${y-hh*0.96} ${x+w+14} ${y-hh*1.06} C${x+w+6} ${y-hh*0.92} ${x+w+2} ${y-hh*0.84} ${x+w-4} ${y-hh*0.8} Z" fill="url(#qSteel)"/>
+      <ellipse cx="${x+w/2}" cy="${y-hh*0.98}" rx="${w*0.42}" ry="7" fill="#dfe6ea"/>
+      <ellipse cx="${x+w/2}" cy="${y-hh*1.01}" rx="${w*0.42}" ry="6" fill="#f2f6f8"/>
+      <rect x="${x+w/2-10}" y="${y-hh*1.1}" width="20" height="7" rx="3.5" fill="#8b9296"/>
+      <path d="M${x+12} ${y-hh*0.86} C${x+9} ${y-hh*0.6} ${x+10} ${y-hh*0.3} ${x+13} ${y-6}" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".4" filter="url(#qBlur2)"/>
+      <path d="M${x+w-16} ${y-hh*0.86} C${x+w-20} ${y-hh*0.5} ${x+w-20} ${y-hh*0.24} ${x+w-15} ${y-6}" stroke="#000" stroke-width="7" stroke-linecap="round" opacity=".16" filter="url(#qBlur2)"/>
+      ${hot>0.35?`<g filter="url(#qBlur)" opacity="${Math.min(.95,(hot-0.35)/0.5).toFixed(2)}">${[0,1,2].map(k=>`<ellipse cx="${x+w+16+k*4}" cy="${y-hh*1.05-k*3}" rx="${6+k}" ry="${5+k*1.4}" fill="#fff" opacity=".65">
+        <animateTransform attributeName="transform" type="translate" values="0 0;${k%2?12:-10} -26;0 -52" dur="${(2.2+k*0.5).toFixed(1)}s" begin="${(k*0.45).toFixed(1)}s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;.85;0" dur="${(2.2+k*0.5).toFixed(1)}s" begin="${(k*0.45).toFixed(1)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
+      ${hot>0.25?`<ellipse cx="${x+w/2}" cy="${y-hh*0.45}" rx="${w*0.55}" ry="${hh*0.45}" fill="url(#qGlow)" opacity="${(hot*0.7).toFixed(2)}"/>`:''}
+    </g>`;
+    const thermo=(x,y,val,hh)=>`<g transform="translate(${x} ${y})">
+      <rect x="-11" y="${-hh}" width="22" height="${hh+14}" rx="11" fill="#f3f7fa" opacity=".96"/>
+      <rect x="-11" y="${-hh}" width="22" height="${hh+14}" rx="11" fill="url(#qGlass)"/>
+      <rect x="-6" y="${-hh+6}" width="12" height="${hh+4}" rx="6" fill="#dfe9ee"/>
+      <rect x="-6" y="${(-8-Math.max(6,Math.min(hh-12,((val+20)/140)*(hh-18)))).toFixed(1)}" width="12" height="${Math.max(6,Math.min(hh-12,((val+20)/140)*(hh-18))).toFixed(1)}" rx="6" fill="#e0341c"/>
+      <circle cy="16" r="12" fill="#d3311c"/><circle cy="16" r="12" fill="url(#qGlass)" opacity=".5"/>
+      ${[0,25,50,75,100].map(v=>{const yy=(-8-((v+20)/140)*(hh-18)).toFixed(1);return `<line x1="-12" y1="${yy}" x2="-19" y2="${yy}" stroke="#9fb0aa" stroke-width="1.3"/><text x="-22" y="${(+yy+3).toFixed(1)}" text-anchor="end" font-size="8" fill="#a9b8b2">${v}</text>`;}).join('')}
+      <text y="${hh+26}" text-anchor="middle" font-size="9" fill="#9fb0aa">термометр</text></g>`;
+    const pan=(x,y,w,hh,fill,lab,sub,hot)=>`<g filter="url(#qSh)">
+      <ellipse cx="${x+w/2}" cy="${y+3}" rx="${w*0.48}" ry="6" fill="#000" opacity=".4"/>
+      <path d="M${x} ${y} L${x+w} ${y} L${x+w-6} ${y-hh} L${x+6} ${y-hh} Z" fill="url(#qSteel)"/>
+      <ellipse cx="${x+w/2}" cy="${y-hh}" rx="${w/2-4}" ry="7" fill="#cfd6da"/>
+      <ellipse cx="${x+w/2}" cy="${y-hh+3}" rx="${w/2-7}" ry="5.5" fill="${fill}" opacity=".95">
+        <animateTransform attributeName="transform" type="scale" values="1 1;1.01 .96;1 1" dur="3.2s" repeatCount="indefinite" additive="sum"/></ellipse>
+      <ellipse cx="${x+w/2}" cy="${y-hh-3}" rx="${w/2-2}" ry="6" fill="#e8eef2" opacity=".95"/>
+      <rect x="${x+w/2-9}" y="${y-hh-11}" width="18" height="7" rx="3.5" fill="#8b9296"/>
+      <path d="M${x+3} ${y-hh+8} h-12" stroke="#8f979b" stroke-width="5" stroke-linecap="round"/>
+      <path d="M${x+w-3} ${y-hh+8} h12" stroke="#8f979b" stroke-width="5" stroke-linecap="round"/>
+      <path d="M${x+10} ${y-hh+12} L${x+12} ${y-6}" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".35" filter="url(#qBlur2)"/>
+      ${(hot||0)>0.45?`<g filter="url(#qBlur)" opacity="${Math.min(.85,((hot||0)-0.45)/0.5).toFixed(2)}">${[0,1,2].map(k=>`<ellipse cx="${x+w/2-8+k*8}" cy="${y-hh-16}" rx="${5+k}" ry="${4+k}" fill="#fff" opacity=".6">
+        <animateTransform attributeName="transform" type="translate" values="0 0;${k%2?9:-8} -22;0 -44" dur="${(2.4+k*0.5).toFixed(1)}s" begin="${(k*0.4).toFixed(1)}s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;.8;0" dur="${(2.4+k*0.5).toFixed(1)}s" begin="${(k*0.4).toFixed(1)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
       <text x="${x+w/2}" y="${y+16}" text-anchor="middle" font-size="10" fill="#dbe6ee">${lab}</text>
       <text x="${x+w/2}" y="${y+28}" text-anchor="middle" font-size="8.5" fill="#9fb0aa">${sub}</text></g>`;
-
     let body='', example='', hot=0;
     if(LV.step===0){
-      body=`<rect y="150" width="360" height="50" fill="url(#qTable)"/>
-        ${kettle(96,150,74,66,0)}
-        <g filter="url(#qSh)"><rect x="238" y="118" width="46" height="34" rx="5" fill="url(#qIce)" stroke="#eaf9ff" stroke-width="1.4"/>
-          <path d="M244 122 l10 14 M262 146 l10 -16" stroke="#fff" stroke-width="1.2" opacity=".8"/>
-          <animate attributeName="opacity" values="1;.75;1" dur="3s" repeatCount="indefinite"/></g>
-        <text x="133" y="42" text-anchor="middle" font-size="11" fill="#ffd76a">горячий чайник</text>
-        <text x="261" y="100" text-anchor="middle" font-size="11" fill="#bfe6ff">холодный лёд</text>
-        <g>${Array.from({length:7},(_,k)=>`<circle cx="${104+(k%4)*16}" cy="${104+Math.floor(k/4)*14}" r="${1.6+(k%2)*0.8}" fill="#ffd9a8" opacity=".85">
-            <animateTransform attributeName="transform" type="translate" values="0 0;${(k%2?5:-5)} ${(k%3?4:-6)};0 0" dur="${(2.4-hlev*1.9).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}</g>
-        <path d="M120 52 q0 26 -22 40" stroke="#ff9d3c" stroke-width="2" stroke-dasharray="4 3" fill="none"/>
-        <path d="M258 112 q0 -22 -18 -34" stroke="#7fd1ff" stroke-width="2" stroke-dasharray="4 3" fill="none"/>`;
-      example='Пример: чайник обжигает, лёд студит — это движутся частицы внутри.';
+      const hh=Math.max(0,Math.min(1,(t+20)/140));
+      body=`<rect y="152" width="360" height="48" fill="url(#qTable)"/>
+        <ellipse cx="120" cy="152" rx="86" ry="14" fill="#201914"/>
+        <ellipse cx="120" cy="150" rx="76" ry="11" fill="none" stroke="#3a2d24" stroke-width="2.5"/>
+        ${hh>0.12?`<ellipse cx="120" cy="150" rx="64" ry="9" fill="url(#qGlow)" opacity="${(0.3+hh*0.7).toFixed(2)}"/>`:''}
+        ${hh>0.12?`<g filter="url(#qBlur2)" opacity="${(0.45+hh*0.55).toFixed(2)}">
+          ${[0,1,2].map(k=>`<path d="M${120} 150 C${112-k*6} ${150-10-hh*10} ${114-k*4} ${150-18-hh*22} ${120} ${150-24-hh*30} C${128+k*6} ${150-18-hh*22} ${126+k*4} ${150-10-hh*10} ${120} 150 Z" fill="url(#qFlame)">
+            <animateTransform attributeName="transform" type="scale" values="1 1;1 .84;1 1.07;1 1" dur="${(0.62+k*0.16).toFixed(2)}s" repeatCount="indefinite" additive="sum"/>
+            <animate attributeName="opacity" values=".95;.6;1;.75;.95" dur="${(1.1+k*0.2).toFixed(2)}s" repeatCount="indefinite"/></path>`).join('')}
+          ${[0,1,2].map(k=>`<ellipse cx="${108+k*12}" cy="${150-26-hh*30}" rx="${3+k%2}" ry="${2+(k%2)*1.5}" fill="#fff6d8" opacity=".85">
+            <animate attributeName="cy" values="${150-24-hh*28};${150-40-hh*44}" dur="${(1.1+k*0.2).toFixed(2)}s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.9;0" dur="${(1.1+k*0.2).toFixed(2)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
+        ${kettle(78,150,84,62,hh)}
+        <ellipse cx="268" cy="158" rx="46" ry="11" fill="#cfd6da" opacity=".25"/>
+        <ellipse cx="268" cy="156" rx="42" ry="9" fill="#e8eef2" opacity=".35"/>
+        <g filter="url(#qSh)">
+          <rect x="246" y="120" width="44" height="36" rx="5" fill="url(#qIce)" stroke="#eaf9ff" stroke-width="1.3"/>
+          <path d="M251 124 l12 14 M266 148 l10 -16" stroke="#fff" stroke-width="1.1" opacity=".75"/>
+          <animate attributeName="opacity" values="1;.82;1" dur="3.4s" repeatCount="indefinite"/>
+          <animateTransform attributeName="transform" type="translate" values="0 0;0 2.5;0 0" dur="3.4s" repeatCount="indefinite"/></g>
+        ${t>=0?`<g opacity="${Math.min(1,(t+6)/18).toFixed(2)}">${[0,1,2].map(k=>`<ellipse cx="${248+k*18}" cy="${160+k*2}" rx="${7-k}" ry="3" fill="#9fd8ff" opacity=".85">
+          <animate attributeName="opacity" values=".9;.2;.9" dur="${(1.6+k*0.3).toFixed(1)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
+        <text x="120" y="42" text-anchor="middle" font-size="11" fill="#ffd76a">чайник на плите</text>
+        <text x="268" y="108" text-anchor="middle" font-size="11" fill="#bfe6ff">лёд на тарелке</text>
+        <text x="180" y="190" text-anchor="middle" font-size="9.5" fill="#9fb0aa">${hh>0.5?'вода кипит — из носика идёт пар':(t<0?'лёд тает: появляется талая вода':'огонь греет дно — тепло идёт в воду')}</text>`;
+      example='Пример: пламя греет дно чайника; лёд на тарелке тает и превращается в воду.';
     } else if(LV.step===1){
       body=`${thermo(120,150,20,96)}
         <g transform="translate(120 52)"><path d="M-24 0 h48" stroke="#7fd1ff" stroke-width="1.6"/><text y="-5" text-anchor="middle" font-size="9" fill="#bfe6ff">кислород −183°</text></g>
@@ -8872,15 +8855,23 @@ function visL51(el){
         <text x="120" y="188" text-anchor="middle" font-size="11" fill="#e6eef6">сейчас: ${t>0?'+':''}${f(t)} °C</text>`;
       example='Пример: термометр — линейка для температуры; 0 °C и 100 °C — её главные метки.';
     } else if(LV.step===2){
-      body=`<rect x="40" y="70" width="90" height="70" rx="10" fill="#2a323c" stroke="#7a8894" stroke-width="1.6"/>
-        <text x="85" y="112" text-anchor="middle" font-size="13" fill="#e6eef6">тело</text>
-        ${flame(216,140,52,1)}
-        <path d="M170 140 H130" stroke="#ff9d3c" stroke-width="3" marker-end="url(#a1)"/>
-        <text x="150" y="128" text-anchor="middle" font-size="9.5" fill="#ffd76a">теплота идёт в тело</text>
-        <path d="M60 70 q-10 -30 -30 -40" stroke="#7fd1ff" stroke-width="2.4" stroke-dasharray="5 4" fill="none"/>
-        <text x="60" y="52" text-anchor="middle" font-size="9.5" fill="#bfe6ff">остывает — тепло уходит</text>
-        <g filter="url(#qBlur)"><ellipse cx="300" cy="60" rx="30" ry="18" fill="#ffffff" opacity=".12"><animateTransform attributeName="transform" type="translate" values="0 0;-10 -30;0 0" dur="4s" repeatCount="indefinite"/></ellipse></g>`;
-      example='Пример: чашка чая остывает — энергия уходит в воздух, а не исчезает.';
+      const hh=Math.max(0,Math.min(1,(t+20)/140));
+      body=`<rect y="156" width="360" height="44" fill="url(#qTable)"/>
+        <path d="M92 156 h176 v10 h-176 z" fill="#4a4038"/>
+        ${hh>0.1?`<g filter="url(#qBlur2)" opacity="${(0.4+hh*0.6).toFixed(2)}">${[0,1,2,3].map(k=>`<path d="M${150+k*16} 152 C${144+k*16} 142 ${146+k*16} 134 ${150+k*16} 128 C${156+k*16} 134 ${154+k*16} 142 ${150+k*16} 152 Z" fill="url(#qFlame)">
+          <animateTransform attributeName="transform" type="scale" values="1 1;1 .85;1 1.06;1 1" dur="${(0.66+(k%2)*0.2).toFixed(2)}s" repeatCount="indefinite" additive="sum"/></path>`).join('')}</g>`:''}
+        <g filter="url(#qSh)"><rect x="104" y="104" width="152" height="16" rx="6" fill="url(#qSteel)"/>
+          <rect x="112" y="106" width="136" height="4" rx="2" fill="#fff" opacity=".35"/>
+          <rect x="96" y="118" width="168" height="8" rx="4" fill="#6d757a"/></g>
+        <g>${Array.from({length:9},(_,k)=>`<circle cx="${116+(k%5)*32}" cy="${110+Math.floor(k/5)*6}" r="${1.4+(k%2)*0.7}" fill="#ffd9a8" opacity="${(0.35+hh*0.6).toFixed(2)}">
+          <animateTransform attributeName="transform" type="translate" values="0 0;${(k%2?6:-6)} ${(k%3?4:-5)};0 0" dur="${(2.6-hh*2.0).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}</g>
+        <text x="180" y="52" text-anchor="middle" font-size="11" fill="#e6eef6">железный стержень на подставке</text>
+        <text x="180" y="70" text-anchor="middle" font-size="9.5" fill="#9fb0aa">${hh>0.5?'частицы внутри движутся быстро — стержень горячий':'частицы движутся медленно — стержень холодный'}</text>
+        ${hh>0.2?`<g filter="url(#qBlur)" opacity="${(hh*0.8).toFixed(2)}">${[0,1].map(k=>`<ellipse cx="${120+k*120}" cy="96" rx="10" ry="6" fill="#fff" opacity=".4">
+          <animateTransform attributeName="transform" type="translate" values="0 0;${k?12:-12} -22;0 -44" dur="${(2.6+k*0.6).toFixed(1)}s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;.7;0" dur="${(2.6+k*0.6).toFixed(1)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
+        <text x="180" y="188" text-anchor="middle" font-size="9.5" fill="#cbb9a4">нагрели — энергия пришла в стержень; остынет — уйдёт в воздух</text>`;
+      example='Пример: ложка в горячем чае нагревается, а вынутая — остывает, отдавая тепло воздуху.';
     } else if(LV.step===3){
       body=`<g transform="translate(90 120)" filter="url(#qSh)"><circle r="30" fill="url(#qSteel)"/><text y="5" text-anchor="middle" font-size="14" fill="#2b3033">1 Дж</text></g>
         <g transform="translate(250 120)" filter="url(#qSh)"><rect x="-40" y="-28" width="80" height="56" rx="8" fill="#2a323c" stroke="#7fd1ff" stroke-width="1.8"/>
@@ -8891,14 +8882,20 @@ function visL51(el){
         <text x="165" y="112" text-anchor="middle" font-size="9.5" fill="#ffd76a">×1000</text>`;
       example='Пример: чтобы вскипятить чайник, нужно около 300 000 Дж = 300 кДж.';
     } else if(LV.step===4){
-      body=`<rect y="150" width="360" height="50" fill="url(#qTable)"/>
-        ${pan(70,150,96,62,'url(#qWater)','1 литр','греется 5 минут')}
-        ${pan(224,150,96,62,'url(#qWater)','2 литра','греется 10 минут')}
-        ${flame(118,176,34,1)}${flame(272,176,34,1)}
-        <text x="118" y="46" text-anchor="middle" font-size="10.5" fill="#ffd76a">масса в 2 раза больше</text>
-        <path d="M140 54 q34 18 84 -2" stroke="#7fd1ff" stroke-width="2" fill="none" stroke-dasharray="5 4"/>
-        <text x="272" y="46" text-anchor="middle" font-size="10.5" fill="#bfe6ff">времени нужно в 2 раза больше</text>`;
-      example='Пример: 2 литра вскипают вдвое дольше, чем 1 литр — Q зависит от массы.';
+      body=`<rect y="152" width="360" height="48" fill="url(#qTable)"/>
+        <ellipse cx="96" cy="150" rx="72" ry="12" fill="#201914"/><ellipse cx="264" cy="150" rx="72" ry="12" fill="#201914"/>
+        ${[0,1,2].map(k=>`<path d="M${96} 150 C${88-k*4} ${140} ${90-k*3} ${132} ${96} ${126} C${104+k*4} ${132} ${102+k*3} ${140} ${96} 150 Z" fill="url(#qFlame)" opacity=".9">
+          <animateTransform attributeName="transform" type="scale" values="1 1;1 .85;1 1.06;1 1" dur="${(0.6+k*0.14).toFixed(2)}s" repeatCount="indefinite" additive="sum"/></path>`).join('')}
+        ${[0,1,2].map(k=>`<path d="M${264} 150 C${256-k*4} ${140} ${258-k*3} ${132} ${264} ${126} C${272+k*4} ${132} ${270+k*3} ${140} ${264} 150 Z" fill="url(#qFlame)" opacity=".9">
+          <animateTransform attributeName="transform" type="scale" values="1 1;1 .85;1 1.06;1 1" dur="${(0.6+k*0.14).toFixed(2)}s" repeatCount="indefinite" additive="sum"/></path>`).join('')}
+        ${pan(58,150,76,54,'url(#qWater)','1 литр','вскипает за 5 мин',Math.max(0,Math.min(1,(t+20)/140)))}
+        ${pan(226,150,76,54,'url(#qWater)','2 литра','вскипает за 10 мин',Math.max(0,Math.min(1,(t+20)/140)))}
+        <text x="180" y="42" text-anchor="middle" font-size="11" fill="#ffd76a">одинаковые кастрюли, разное количество воды</text>
+        <path d="M138 78 q42 16 84 -2" stroke="#7fd1ff" stroke-width="2" fill="none" stroke-dasharray="5 4">
+          <animate attributeName="stroke-dashoffset" values="0;-18" dur="1.1s" repeatCount="indefinite"/></path>
+        <text x="180" y="74" text-anchor="middle" font-size="9.5" fill="#bfe6ff">массы вдвое больше — времени вдвое больше</text>
+        <text x="180" y="190" text-anchor="middle" font-size="9.5" fill="#9fb0aa">пузыри в правой кастрюле появляются реже: Q зависит от массы</text>`;
+      example='Пример: 2 литра вскипают вдвое дольше, чем 1 литр — тепла нужно вдвое больше.';
     } else if(LV.step===5){
       body=`<rect y="150" width="360" height="50" fill="url(#qTable)"/>
         ${pan(150,150,86,60,'url(#qWater)','','Δ')}
