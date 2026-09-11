@@ -468,117 +468,308 @@ window._waveCss = function(id, css){
     id: 417, title: 'Четырёхугольники', ico: '▰',
     src: 'Математика · 8 класс · Геометрия 8: четырёхугольники', subj: 'math',
     explain: [
-      'Четырёхугольник — фигура с четырьмя сторонами и четырьмя углами. Самые известные: квадрат, прямоугольник, ромб, параллелограмм, трапеция. У каждого свои особые свойства!',
-      'Сумма углов любого четырёхугольника равна 360°. Почему? Разрежь его диагональю на два треугольника — у каждого сумма 180°, вместе 360°!',
-      'Параллелограмм — четырёхугольник, у которого противоположные стороны параллельны. Свойства: противоположные стороны РАВНЫ, противоположные углы равны, диагонали делятся пополам.',
-      'Прямоугольник — параллелограмм с прямыми углами. У него, кроме свойств параллелограмма, диагонали РАВНЫ. А оси симметрии — две, через середины сторон.',
-      'Ромб — параллелограмм с равными сторонами. У ромба диагонали ПЕРПЕНДИКУЛЯРНЫ и делят углы пополам. Оси симметрии — его диагонали.',
-      'Квадрат — одновременно прямоугольник и ромб: все стороны равны и все углы прямые. Он вобрал свойства всех! Диагонали равны, перпендикулярны и делят углы пополам.',
-      'Трапеция — четырёхугольник, у которого только одна пара противоположных сторон параллельна. Эти стороны — основания. Равнобедренная трапеция имеет равные боковые стороны и углы при основании.',
-      'Как не запутаться? Параллелограмм — «родитель»: прямоугольник и ромб — его «дети», а квадрат — «внук», сочетающий всё. Схема-дерево поможет запомнить!',
-      'Теперь проверь себя: у какой фигуры все стороны равны и все углы прямые? Это квадрат — наследник прямоугольника и ромба!'
+      'Загадка: четыре стороны, четыре угла. Кто из них «собрал всё» — и равные стороны, и прямые углы? Сейчас разложим семейство по полочкам и увидим, кто чей родственник.',
+      'Четырёхугольник — замкнутая ломаная из четырёх отрезков. Вершины A, B, C, D по кругу, без пересечений. Нажми «Обвести» — стороны дорисуются по очереди.',
+      'Проведи одну диагональ. Получилось два треугольника. У каждого сумма углов 180°, вместе 360°. Это верно для любого выпуклого четырёхугольника — квадрата, «кривого» параллелограмма, трапеции.',
+      'Параллелограмм: противоположные стороны параллельны. Как рельсы. Тогда они ещё и равны, противоположные углы равны, диагонали делят друг друга пополам. Один факт тянет остальные.',
+      'Нажми середину: диагонали встречаются в одной точке и режутся пополам. Это быстрый признак: если диагонали делятся пополам — перед тобой параллелограмм.',
+      'Прямоугольник — параллелограмм, у которого все углы 90°. Квадратики в углах. Бонус: диагонали равны. Подвинь ползунок — «скошенный» становится прямым, диагонали выравниваются.',
+      'Ромб — параллелограмм, у которого все стороны равны. Как квадрат, который наклонили. Диагонали перпендикулярны и делят углы пополам. Крест внутри — всегда прямой.',
+      'Квадрат — и прямоугольник, и ромб сразу. Все стороны равны, все углы 90°, диагонали равны, перпендикулярны и режут углы. Он на вершине семейства.',
+      'Семейное дерево: четырёхугольник → параллелограмм → прямоугольник и ромб → квадрат. Квадрат наследует всё. Трапеция стоит рядом: у неё только одна пара параллельных сторон.',
+      'Трапеция: две стороны параллельны — это основания, две другие — боковые. Не параллелограмм, потому что параллельна только одна пара.',
+      'Равнобедренная трапеция: боковые равны, углы при каждом основании равны, диагонали равны. Как ворота: симметрия по средней линии.',
+      'Подвинь ползунок «скос». Слева — параллелограмм, справа — прямоугольник. Смотри, как углы становятся прямыми, а диагонали — одинаковыми.',
+      'Шпаргалка по диагоналям: параллелограмм — делятся пополам; прямоугольник — ещё и равны; ромб — ещё и перпендикулярны; квадрат — всё сразу.',
+      'Рецепт: сначала спроси, сколько пар параллельных сторон. Две — параллелограмм и его дети. Одна — трапеция. Ноль — просто четырёхугольник. Потом смотри углы и стороны.',
+      'В карман: сумма углов 360°. Параллелограмм — противоположные равны. Прямоугольник — 90° и равные диагонали. Ромб — равные стороны и крест. Квадрат — всё вместе.',
+      'Проверка: все стороны равны и все углы прямые. Это квадрат. Прямоугольник без равных сторон — не он. Ромб без прямых углов — тоже не он.'
     ],
     check: { q: 'У какой фигуры все стороны равны и все углы прямые?', choices: ['квадрат', 'прямоугольник', 'ромб', 'параллелограмм'], ans: 0,
-      exp: 'Квадрат сочетает свойства прямоугольника и ромба.' },
+      exp: 'Квадрат — и прямоугольник, и ромб: стороны равны, углы 90°.' },
     tasks: [
       { q: 'Чему равна сумма углов четырёхугольника?', kind: 'unit', ans: 360, tol: 0,
-        hints: ['(4 − 2) · 180°.', '360°.'], sol: '360°' },
-      { q: 'У параллелограмма противоположные стороны…', kind: 'choice', choices: ['равны', 'перпендикулярны', 'всегда разные', 'являются диагоналями'], ans: 0, tol: 0,
-        hints: ['Свойство параллелограмма.', 'Противоположные стороны равны.'], sol: 'равны' }
+        hints: ['Разрежь диагональю на два треугольника.', '180° + 180° = 360°.'], sol: '360°' },
+      { q: 'У параллелограмма противоположные стороны…', kind: 'choice',
+        choices: ['равны', 'перпендикулярны', 'всегда разные', 'являются диагоналями'], ans: 0, tol: 0,
+        hints: ['Они ещё и параллельны.', 'Параллельны и равны.'], sol: 'равны' }
     ]
   };
-  const shape=(kind)=>`<svg viewBox="0 0 140 110" style="width:${kind==='tr'?150:130}px;height:110px">
-    ${kind==='par'?`<polygon points="20,30 120,30 100,90 10,90" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="3"/>`:
-    kind==='rec'?`<rect x="15" y="25" width="110" height="65" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="3"/>`:
-    kind==='rom'?`<polygon points="70,12 120,55 70,98 20,55" fill="rgba(255,138,192,.12)" stroke="#ff8ac0" stroke-width="3"/>`:
-    kind==='sq'?`<rect x="25" y="20" width="80" height="80" fill="rgba(255,215,106,.14)" stroke="#ffd76a" stroke-width="3"/>`:
-    `<polygon points="15,85 50,20 125,20 95,85" fill="rgba(232,160,90,.12)" stroke="#e8a05a" stroke-width="3"/>`}
-  </svg>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', PINK='#ff8ac0', ORANGE='#e8a05a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l417ink{to{stroke-dashoffset:0}}
+    @keyframes l417pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l417pulse{0%,100%{opacity:.45}50%{opacity:1}}
+    @keyframes l417glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l417-ink{animation:l417ink 1.4s cubic-bezier(.2,.75,.15,1) forwards}
+    .l417-dot{transform-box:fill-box;transform-origin:center;animation:l417pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l417-pulse{animation:l417pulse 1.6s ease-in-out infinite}
+    .l417-glow{animation:l417glow 1.8s ease-in-out infinite}
+    .l417-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l417-ink" style="animation-duration:${dur||1.35}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    return `<text class="l417-lab" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l417', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function mid(a,b){ return [(a[0]+b[0])/2, (a[1]+b[1])/2]; }
+  function dist(a,b){ return Math.hypot(b[0]-a[0], b[1]-a[1]); }
+  function poly(pts, fill, stroke, draw){
+    const d=pts.map((p,i)=>(i?'L':'M')+p[0]+','+p[1]).join(' ')+' Z';
+    let per=0; for(let i=0;i<pts.length;i++) per+=dist(pts[i], pts[(i+1)%pts.length]);
+    return `<path d="${d}" fill="${fill}" stroke="${stroke}" stroke-width="2.6" ${draw?ink(per,1.4,0):''}/>`;
+  }
+  function sqMark(A,B,C,col){
+    const u=[B[0]-A[0], B[1]-A[1]], v=[C[0]-A[0], C[1]-A[1]];
+    const lu=Math.hypot(u[0],u[1])||1, lv=Math.hypot(v[0],v[1])||1;
+    const s=11, uu=[u[0]/lu*s, u[1]/lu*s], vv=[v[0]/lv*s, v[1]/lv*s];
+    const p1=[A[0]+uu[0], A[1]+uu[1]], p2=[A[0]+uu[0]+vv[0], A[1]+uu[1]+vv[1]], p3=[A[0]+vv[0], A[1]+vv[1]];
+    return `<path d="M ${p1[0].toFixed(1)} ${p1[1].toFixed(1)} L ${p2[0].toFixed(1)} ${p2[1].toFixed(1)} L ${p3[0].toFixed(1)} ${p3[1].toFixed(1)}" fill="none" stroke="${col}" stroke-width="1.6"/>`;
+  }
+  function dots(pts, names, cols){
+    return pts.map((p,i)=>`<circle class="l417-dot" style="animation-delay:${i*.06}s" cx="${p[0]}" cy="${p[1]}" r="5" fill="${cols[i]||GOLD}"/>`+lab(p[0], p[1]-11, names[i], cols[i]||GOLD)).join('');
+  }
+  const PAR=[[48,72],[188,72],[164,168],[24,168]];
+  const REC=[[40,64],[200,64],[200,168],[40,168]];
+  const ROM=[[120,36],[196,110],[120,184],[44,110]];
+  const SQ=[[64,48],[176,48],[176,160],[64,160]];
+  const TR=[[36,168],[72,56],[188,56],[164,168]];
+  const ITR=[[48,168],[72,56],[168,56],[192,168]];
+
   function visD417(el){
+    try{ window._waveCss && _waveCss('css-l417', CSS); }catch(e){}
     const step=LV.step||0;
-    const card=(name,desc,color,svg)=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${color};border-radius:14px;padding:8px 10px;min-width:130px">${svg}<b style="font-size:14px;color:${color}">${name}</b><div style="font-size:10.5px;color:#8fa08f;margin-top:2px">${desc}</div></div>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'417';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const t=Math.max(0, Math.min(1, st.t==null?0.35:+st.t));
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Четырёхугольники</div>
-        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
-          ${card('квадрат','всё равное','#ffd76a',shape('sq'))}
-          ${card('прямоугольник','углы 90°','#8fd1a8',shape('rec'))}
-        </div>
-        <div class="wv-sml">четыре стороны, четыре угла — и куча свойств!</div>
+        ${frame(
+          poly(SQ, 'rgba(255,215,106,.12)', GOLD, doDraw)+
+          lab(120, 28, open?'квадрат':'кто собрал всё?', GOLD, 'middle', 15)+
+          lab(120, 204, open?'стороны равны, углы 90°':'4 стороны, 4 угла', MUTED)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Семейство','Квадрат, прямоугольник, ромб, параллелограмм, трапеция. Сейчас нарисуем каждого и посмотрим, кто чей родственник.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Сумма углов 360°</div>
-        <div style="display:flex;align-items:center;gap:8px;justify-content:center">
-          ${shape('par')}<span style="font-size:22px;color:#8fa08f">= 2 Δ</span>
-        </div>
-        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">2 · 180° = 360°</div>
-        <div class="wv-sml">диагональ делит на два треугольника!</div>
+        ${frame(
+          poly(PAR, 'rgba(127,209,255,.1)', BLUE, doDraw)+
+          dots(PAR, ['A','B','C','D'], [GOLD,GOLD,GOLD,GOLD])+
+          lab(120, 28, 'четырёхугольник ABCD', BLUE)
+        )}
+        ${note('Четыре вершины','Вершины по кругу, стороны не пересекаются. Это выпуклый четырёхугольник — все наши фигуры такие.')}
       </div>`;
     } else if(step===2){
+      const show=st.cut!==false;
       h=`<div class="wv-col">
-        <div class="wv-big">Параллелограмм</div>
-        ${shape('par')}
-        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-size:14px;color:#e8dcc8">
-          <div class="wv-pop">✔ противоположные стороны равны и параллельны</div>
-          <div class="wv-pop2">✔ противоположные углы равны</div>
-          <div class="wv-pop2">✔ диагонали делятся пополам</div>
-        </div>
+        ${frame(
+          poly(PAR, 'rgba(127,209,255,.08)', BLUE, false)+
+          (show?`<line x1="${PAR[0][0]}" y1="${PAR[0][1]}" x2="${PAR[2][0]}" y2="${PAR[2][1]}" stroke="${GOLD}" stroke-width="2.4" ${doDraw?ink(dist(PAR[0],PAR[2]),1.2,0):''}/>`:'')+
+          dots(PAR, ['A','B','C','D'], [GOLD,GOLD,GOLD,GOLD])+
+          lab(88, 108, '180°', GREEN)+lab(148, 128, '180°', GREEN)+
+          lab(120, 28, '180° + 180° = 360°', GOLD)
+        )}
+        ${note('Два треугольника','Одна диагональ режет фигуру пополам. У каждого треугольника 180°, вместе 360°. Для любого выпуклого четырёхугольника.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        <div class="wv-big">Прямоугольник</div>
-        ${shape('rec')}
-        <div class="wv-sml">параллелограмм с прямыми углами</div>
-        <div style="background:rgba(143,209,168,.12);border:1px solid #4c8a5a;border-radius:9px;padding:6px 12px;max-width:330px;font-size:14px;color:#8fd1a8">особое: диагонали РАВНЫ!</div>
+        ${frame(
+          poly(PAR, 'rgba(127,209,255,.1)', BLUE, doDraw)+
+          lab(mid(PAR[0],PAR[1])[0], PAR[0][1]-12, 'a', GOLD)+
+          lab(mid(PAR[3],PAR[2])[0], PAR[2][1]+16, 'a', GOLD)+
+          lab(PAR[0][0]-12, mid(PAR[0],PAR[3])[1], 'b', GREEN, 'end')+
+          lab(PAR[1][0]+12, mid(PAR[1],PAR[2])[1], 'b', GREEN, 'start')+
+          lab(120, 28, 'параллелограмм', BLUE)
+        )}
+        ${note('Рельсы','Противоположные стороны параллельны и равны. Противоположные углы равны. Это «родитель» прямоугольника и ромба.')}
       </div>`;
     } else if(step===4){
+      const M=mid(PAR[0], PAR[2]);
+      const show=!!st.mid;
       h=`<div class="wv-col">
-        <div class="wv-big">Ромб</div>
-        ${shape('rom')}
-        <div class="wv-sml">параллелограмм с равными сторонами</div>
-        <div style="background:rgba(255,138,192,.1);border:1px solid rgba(255,138,192,.4);border-radius:9px;padding:6px 12px;max-width:330px;font-size:14px;color:#ff8ac0">особое: диагонали ПЕРПЕНДИКУЛЯРНЫ и делят углы!</div>
+        ${frame(
+          poly(PAR, 'rgba(127,209,255,.08)', BLUE, false)+
+          `<line x1="${PAR[0][0]}" y1="${PAR[0][1]}" x2="${PAR[2][0]}" y2="${PAR[2][1]}" stroke="${GOLD}" stroke-width="2" ${doDraw?ink(dist(PAR[0],PAR[2]),1.1,0):''}/>`+
+          `<line x1="${PAR[1][0]}" y1="${PAR[1][1]}" x2="${PAR[3][0]}" y2="${PAR[3][1]}" stroke="${GREEN}" stroke-width="2" ${doDraw?ink(dist(PAR[1],PAR[3]),1.1,.15):''}/>`+
+          (show?`<circle class="l417-glow" cx="${M[0]}" cy="${M[1]}" r="6" fill="${GOLD}"/>`+lab(M[0]+12, M[1]-8, 'середина', GOLD, 'start', 11):'')+
+          lab(120, 28, 'диагонали делятся пополам', GOLD, 'middle', 13)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].mid=!CHS[k].mid;chRender(0);}catch(e){}">${show?'Скрыть точку':'Показать середину'}</button>
+        ${note('Признак','Если диагонали режутся пополам — это параллелограмм. Быстрая проверка на чертеже.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        <div class="wv-big">Квадрат — всё сразу!</div>
-        ${shape('sq')}
-        <div class="wv-row" style="gap:5px;flex-wrap:wrap">
-          ${[['стороны равны','#ffd76a'],['углы 90°','#8fd1a8'],['диагонали равны','#7fd1ff'],['диагонали ⊥','#ff8ac0']].map(x=>`<span class="wv-chip" style="border-color:${x[1]};color:${x[1]}">${x[0]}</span>`).join('')}
-        </div>
+        ${frame(
+          poly(REC, 'rgba(143,209,168,.1)', GREEN, doDraw)+
+          sqMark(REC[0], REC[1], REC[3], GREEN)+
+          sqMark(REC[1], REC[2], REC[0], GREEN)+
+          sqMark(REC[2], REC[1], REC[3], GREEN)+
+          sqMark(REC[3], REC[0], REC[2], GREEN)+
+          `<line x1="${REC[0][0]}" y1="${REC[0][1]}" x2="${REC[2][0]}" y2="${REC[2][1]}" stroke="${GOLD}" stroke-width="1.8"/>`+
+          `<line x1="${REC[1][0]}" y1="${REC[1][1]}" x2="${REC[3][0]}" y2="${REC[3][1]}" stroke="${GOLD}" stroke-width="1.8"/>`+
+          lab(120, 28, 'прямоугольник · диагонали равны', GREEN, 'middle', 13)
+        )}
+        ${note('Прямые углы','Параллелограмм + все углы 90°. Диагонали становятся равными. Две оси симметрии через середины сторон.')}
       </div>`;
     } else if(step===6){
+      const M=mid(ROM[0], ROM[2]);
       h=`<div class="wv-col">
-        <div class="wv-big">Трапеция</div>
-        ${shape('tr')}
-        <div class="wv-sml">одна пара параллельных сторон — основания</div>
-        <div class="wv-sml">равнобедренная: боковые стороны равны, углы при основании равны</div>
+        ${frame(
+          poly(ROM, 'rgba(255,138,192,.1)', PINK, doDraw)+
+          `<line x1="${ROM[0][0]}" y1="${ROM[0][1]}" x2="${ROM[2][0]}" y2="${ROM[2][1]}" stroke="${GOLD}" stroke-width="2"/>`+
+          `<line x1="${ROM[1][0]}" y1="${ROM[1][1]}" x2="${ROM[3][0]}" y2="${ROM[3][1]}" stroke="${GOLD}" stroke-width="2"/>`+
+          sqMark(M, ROM[0], ROM[1], GOLD)+
+          lab(120, 22, 'ромб · диагонали ⊥', PINK)+
+          lab(120, 208, 'все стороны равны', MUTED)
+        )}
+        ${note('Наклонный квадрат','Все стороны равны. Диагонали крестом: перпендикулярны и делят углы пополам. Оси симметрии — сами диагонали.')}
       </div>`;
     } else if(step===7){
+      const M=mid(SQ[0], SQ[2]);
       h=`<div class="wv-col">
-        <div class="wv-big">Дерево семейства</div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:14px;color:#e8dcc8">
-          <div class="wv-chip" style="border-color:#7fd1ff;color:#7fd1ff">параллелограмм</div>
-          <div style="display:flex;gap:20px;margin-top:4px">
-            <div class="wv-chip" style="border-color:#8fd1a8;color:#8fd1a8">прямоугольник</div>
-            <div class="wv-chip" style="border-color:#ff8ac0;color:#ff8ac0">ромб</div>
-          </div>
-          <div class="wv-chip" style="border-color:#ffd76a;color:#ffd76a;margin-top:4px">квадрат = их сын!</div>
+        ${frame(
+          poly(SQ, 'rgba(255,215,106,.12)', GOLD, doDraw)+
+          sqMark(SQ[0], SQ[1], SQ[3], GREEN)+
+          `<line x1="${SQ[0][0]}" y1="${SQ[0][1]}" x2="${SQ[2][0]}" y2="${SQ[2][1]}" stroke="${BLUE}" stroke-width="1.8"/>`+
+          `<line x1="${SQ[1][0]}" y1="${SQ[1][1]}" x2="${SQ[3][0]}" y2="${SQ[3][1]}" stroke="${BLUE}" stroke-width="1.8"/>`+
+          sqMark(M, SQ[0], SQ[1], BLUE)+
+          lab(120, 28, 'квадрат — всё сразу', GOLD)+
+          lab(120, 204, 'стороны =  углы 90°  диагонали ⊥ и =', MUTED, 'middle', 11)
+        )}
+        ${note('Вершина семьи','И прямоугольник, и ромб. Наследует все свойства: равные стороны, прямые углы, равные и перпендикулярные диагонали.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(
+          `<rect x="70" y="18" width="100" height="28" rx="8" fill="${BLUE}22" stroke="${BLUE}"/>`+lab(120, 37, 'четырёхугольник', BLUE, 'middle', 11)+
+          `<line x1="120" y1="46" x2="120" y2="62" stroke="${MUTED}"/>`+
+          `<rect x="62" y="62" width="116" height="28" rx="8" fill="${GREEN}22" stroke="${GREEN}"/>`+lab(120, 81, 'параллелограмм', GREEN, 'middle', 11)+
+          `<line x1="120" y1="90" x2="70" y2="108" stroke="${MUTED}"/><line x1="120" y1="90" x2="170" y2="108" stroke="${MUTED}"/>`+
+          `<rect x="16" y="108" width="100" height="28" rx="8" fill="${GREEN}22" stroke="${GREEN}"/>`+lab(66, 127, 'прямоугольник', GREEN, 'middle', 11)+
+          `<rect x="124" y="108" width="100" height="28" rx="8" fill="${PINK}22" stroke="${PINK}"/>`+lab(174, 127, 'ромб', PINK, 'middle', 11)+
+          `<line x1="66" y1="136" x2="120" y2="154" stroke="${MUTED}"/><line x1="174" y1="136" x2="120" y2="154" stroke="${MUTED}"/>`+
+          `<rect x="70" y="154" width="100" height="28" rx="8" fill="${GOLD}22" stroke="${GOLD}"/>`+lab(120, 173, 'квадрат', GOLD, 'middle', 12)+
+          lab(120, 208, 'трапеция рядом: одна пара //', ORANGE)
+        , '0 0 240 220')}
+        ${note('Дерево','Сверху вниз свойства копятся. Квадрат внизу — у него всё. Трапеция не в этой ветке: у неё только одна пара параллельных.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${frame(
+          poly(TR, 'rgba(232,160,90,.1)', ORANGE, doDraw)+
+          `<line x1="${TR[1][0]}" y1="${TR[1][1]}" x2="${TR[2][0]}" y2="${TR[2][1]}" stroke="${GOLD}" stroke-width="3"/>`+
+          `<line x1="${TR[0][0]}" y1="${TR[0][1]}" x2="${TR[3][0]}" y2="${TR[3][1]}" stroke="${GOLD}" stroke-width="3"/>`+
+          lab(120, 44, 'основания', GOLD)+
+          lab(120, 204, 'трапеция · одна пара //', ORANGE)
+        )}
+        ${note('Одна пара рельс','Две стороны параллельны — основания. Другие две — боковые, они не параллельны. Это уже не параллелограмм.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        ${frame(
+          poly(ITR, 'rgba(232,160,90,.1)', ORANGE, doDraw)+
+          lab(mid(ITR[0],ITR[1])[0]-8, mid(ITR[0],ITR[1])[1], 'c', GREEN, 'end')+
+          lab(mid(ITR[2],ITR[3])[0]+8, mid(ITR[2],ITR[3])[1], 'c', GREEN, 'start')+
+          `<line x1="${ITR[0][0]}" y1="${ITR[0][1]}" x2="${ITR[2][0]}" y2="${ITR[2][1]}" stroke="${BLUE}" stroke-width="1.6"/>`+
+          `<line x1="${ITR[1][0]}" y1="${ITR[1][1]}" x2="${ITR[3][0]}" y2="${ITR[3][1]}" stroke="${BLUE}" stroke-width="1.6"/>`+
+          lab(120, 28, 'равнобедренная', GOLD)+
+          lab(120, 204, 'боковые равны, диагонали равны', MUTED, 'middle', 11)
+        )}
+        ${note('Ворота','Боковые стороны равны, углы при каждом основании равны, диагонали равны. Есть ось симметрии посередине.')}
+      </div>`;
+    } else if(step===11){
+      const skew=40*(1-t);
+      const P=[[40+skew,64],[200,64],[200-skew,168],[40,168]];
+      h=`<div class="wv-col">
+        ${frame(
+          poly(P, 'rgba(127,209,255,.1)', t>0.92?GREEN:BLUE, false)+
+          (t>0.92?sqMark(P[0], P[1], P[3], GREEN):'')+
+          `<line x1="${P[0][0]}" y1="${P[0][1]}" x2="${P[2][0]}" y2="${P[2][1]}" stroke="${GOLD}" stroke-width="1.7"/>`+
+          `<line x1="${P[1][0]}" y1="${P[1][1]}" x2="${P[3][0]}" y2="${P[3][1]}" stroke="${GOLD}" stroke-width="1.7"/>`+
+          lab(120, 28, t>0.92?'прямоугольник':'параллелограмм', t>0.92?GREEN:BLUE)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">скос
+          <input type="range" min="0" max="100" value="${Math.round(t*100)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].t=this.value/100;chRender(0);}catch(e){}">
+        </label>
+        ${note('Живой скос','Влево — параллелограмм, диагонали разные. Вправо — углы 90°, диагонали сравниваются. Один ползунок, два родственника.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['параллелограмм','делятся пополам',BLUE],
+            ['прямоугольник','+ равны',GREEN],
+            ['ромб','+ перпендикулярны',PINK],
+            ['квадрат','всё сразу',GOLD]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
+        ${note('Диагонали','Один столбик свойств. Каждая ступенька добавляет одно. Квадрат собирает колонку целиком.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Сколько пар параллельных сторон?',GOLD],
+            ['2','Две → параллелограмм и дети',BLUE],
+            ['3','Одна → трапеция',ORANGE],
+            ['4','Углы 90°? Стороны равны?',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${x[2]};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Сначала параллельность, потом углы и стороны. Не начинай с названия — начни с свойств.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          poly(SQ, 'rgba(255,215,106,.12)', GOLD, doDraw)+
+          lab(120, 28, 'квадрат', GOLD)+
+          lab(120, 204, '360° · // · 90° · стороны =', MUTED, 'middle', 11)
+        )}
+        ${note('В карман','Сумма 360°. Параллелограмм — противоположные равны. Прямоугольник — 90°. Ромб — стороны равны. Квадрат — всё.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${shape('sq')}
-        <div class="wv-sml">все стороны равны И все углы прямые — кто это?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? </div>
+        ${frame(
+          poly(SQ, 'rgba(255,215,106,.12)', GOLD, doDraw)+
+          lab(120, 28, 'стороны равны, углы 90°', GOLD, 'middle', 14)+
+          lab(120, 204, 'кто это?', MUTED)
+        )}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">?</div>
+        ${note('Проверка','Квадрат. Прямоугольник без равных сторон — нет. Ромб без прямых углов — нет.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[417]=visD417;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===417){ window.ARH_LESSONS[i]=L417; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===417){ arr[i]=L417; f=true; break; } }
+    if(!f) arr.push(L417);
+  })();
 })();
 /* ================= УРОК 418 · Подобие треугольников ================= */
 (function(){
@@ -586,113 +777,313 @@ window._waveCss = function(id, css){
     id: 418, title: 'Подобие треугольников', ico: '🔺',
     src: 'Математика · 8 класс · Геометрия 8: подобие', subj: 'math',
     explain: [
-      'Два треугольника подобны, если они «одинаковые по форме, но разные по размеру» — как фотография и её увеличение. У подобных треугольников углы равны, а стороны пропорциональны.',
-      'Коэффициент подобия k — во сколько раз стороны одного треугольника больше сторон другого. Если k = 2, каждая сторона второго в 2 раза больше соответствующей стороны первого.',
-      'Признаки подобия как у равенства, только мягче: 1) два угла равны; 2) две стороны пропорциональны и угол между ними равен; 3) три стороны пропорциональны. Для подобия достаточно двух равных углов!',
-      'Зачем это нужно? Подобие позволяет найти НЕИЗВЕСТНУЮ сторону: если треугольники подобны с k = 3, а сторона первого равна 4, то сторона второго = 4·3 = 12. Пропорция решает!',
-      'Средняя линия треугольника — отрезок, соединяющий середины двух сторон. Она ПАРАЛЛЕЛЬНА третьей стороне и равна её половине. Средняя линия отсекает подобный треугольник с k = 1/2!',
-      'Площади подобных треугольников относятся как k². Если k = 2, площадь второго в 4 раза больше! Почему? Площадь = (основание·высоту)/2, а обе величины выросли в k раз: k·k = k².',
-      'Проверим: k = 2 → стороны ×2 → площадь ×4. k = 3 → площадь ×9. Запомни: площади растут КВАДРАТИЧНО от коэффициента!',
-      'Подобие в жизни: карта и местность, модель и настоящий корабль, тень человека и тень дерева. Измерив тень, находим высоту дерева — через подобие треугольников!',
-      'Теперь проверь себя: треугольники подобны с k = 2. Во сколько раз площадь второго больше? Вспомни: площади относятся как k²!'
+      'Загадка: фотография и её увеличение. Углы те же, стороны выросли. Как назвать такие треугольники и как найти неизвестную сторону, не измеряя её линейкой?',
+      'Подобные треугольники — одинаковая форма, разный размер. Пишут △ABC ∼ △A′B′C′. Углы равны, стороны пропорциональны. Не путай с равными: равные — ещё и одного размера.',
+      'Коэффициент k — во сколько раз стороны одного больше сторон другого. k = 2 значит каждая сторона второго в два раза длиннее. Подвинь ползунок — маленький треугольник растёт, форма не ломается.',
+      'Три признака, мягче чем равенство. Два угла равны — уже подобны. Две стороны пропорциональны и угол между ними равен. Три стороны пропорциональны. Чаще всего хватает двух углов.',
+      'Нажми признак: загорятся нужные элементы. Для задач почти всегда ищи два равных угла — вертикальные, накрест лежащие, общие.',
+      'Неизвестная сторона: если подобны и k = 3, сторона 4 переходит в 12. Пиши пропорцию: a/a′ = b/b′ = k. Крест-накрест и готово.',
+      'Средняя линия соединяет середины двух сторон. Она параллельна третьей и равна её половине. Нажми середины — линия ляжет ровно посередине.',
+      'Средняя линия отсекает маленький подобный треугольник с k = 1/2. Большой и маленький смотрят в одну сторону, углы общие — вот и подобие.',
+      'Площади относятся как k². Не как k. Если стороны ×2, площадь ×4. Почему: и основание, и высота выросли в k, произведение — k².',
+      'Посмотри два квадрата: сторона 1 и сторона 2. Площади 1 и 4. Тот же квадрат коэффициента. Для треугольников правило то же.',
+      'Подвинь k. Подпись показывает k и k². Поймай k = 2 — площадь в 4 раза. Поймай k = 3 — в 9. Это самая частая ловушка в тесте.',
+      'Тень дерева. Человек и дерево, солнце одно — треугольники подобны. Измерил себя и свою тень, измерил тень дерева — нашёл высоту, не залезая наверх.',
+      'Карта и местность — тоже подобие. Масштаб 1:10000 значит k = 10000. 1 см на карте — 100 м в поле. Те же углы, другие стороны.',
+      'Рецепт: найди два равных угла → подобны. Напиши k. Перенеси его на нужную сторону или на площадь как k². Не забудь, что площадь — квадрат.',
+      'В карман: ∼ значит форма одна. k — стороны. k² — площади. Средняя линия — k = 1/2. Тень и карта — те же треугольники.',
+      'Проверка: k = 2, площадь второго во сколько раз больше? Не в 2 — в 4. Стороны удвоились, площадь учетверилась.'
     ],
     check: { q: 'Треугольники подобны с коэффициентом 2. Во сколько раз площадь второго больше?', choices: ['в 4 раза', 'в 2 раза', 'в 8 раз', 'в √2 раз'], ans: 0,
-      exp: 'Площади относятся как k² = 4.' },
+      exp: 'Площади относятся как k². 2² = 4.' },
     tasks: [
       { q: 'Коэффициент подобия 3. Во сколько раз стороны одного больше другого?', kind: 'unit', ans: 3, tol: 0,
-        hints: ['Стороны пропорциональны k.', 'В 3 раза.'], sol: '3' },
-      { q: 'Средняя линия треугольника соединяет…', kind: 'choice', choices: ['середины двух сторон', 'вершину с серединой стороны', 'две вершины', 'центр с вершиной'], ans: 0, tol: 0,
-        hints: ['Средняя линия.', 'Середины двух сторон; она параллельна третьей стороне.'], sol: 'середины двух сторон' }
+        hints: ['Стороны пропорциональны k.', 'k = 3 — стороны в 3 раза.'], sol: '3' },
+      { q: 'Средняя линия треугольника соединяет…', kind: 'choice',
+        choices: ['середины двух сторон', 'вершину с серединой стороны', 'две вершины', 'центр с вершиной'], ans: 0, tol: 0,
+        hints: ['Это не медиана.', 'Середины двух сторон, параллельна третьей.'], sol: 'середины двух сторон' }
     ]
   };
-  const triSmall=()=>`<svg viewBox="0 0 140 120" style="width:120px;height:103px"><polygon points="70,10 15,110 125,110" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="3"/></svg>`;
-  const triBig=()=>`<svg viewBox="0 0 190 170" style="width:170px;height:152px"><polygon points="95,10 10,160 180,160" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="3"/></svg>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', PINK='#ff8ac0', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l418ink{to{stroke-dashoffset:0}}
+    @keyframes l418pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l418pulse{0%,100%{opacity:.45}50%{opacity:1}}
+    @keyframes l418glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l418-ink{animation:l418ink 1.4s cubic-bezier(.2,.75,.15,1) forwards}
+    .l418-dot{transform-box:fill-box;transform-origin:center;animation:l418pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l418-pulse{animation:l418pulse 1.6s ease-in-out infinite}
+    .l418-glow{animation:l418glow 1.8s ease-in-out infinite}
+    .l418-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l418-ink" style="animation-duration:${dur||1.35}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    return `<text class="l418-lab" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l418', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function mid(a,b){ return [(a[0]+b[0])/2,(a[1]+b[1])/2]; }
+  function dist(a,b){ return Math.hypot(b[0]-a[0], b[1]-a[1]); }
+  function tri(pts, fill, stroke, draw){
+    const d='M'+pts.map(p=>p[0]+','+p[1]).join(' L')+' Z';
+    const per=dist(pts[0],pts[1])+dist(pts[1],pts[2])+dist(pts[2],pts[0]);
+    return `<path d="${d}" fill="${fill}" stroke="${stroke}" stroke-width="2.5" ${draw?ink(per,1.35,0):''}/>`;
+  }
+  function ang(A,B,C,col,txt){
+    const n=(V)=>{const L=Math.hypot(V[0],V[1])||1; return [V[0]/L,V[1]/L];};
+    const u=n([A[0]-B[0],A[1]-B[1]]), w=n([C[0]-B[0],C[1]-B[1]]);
+    const s=16, p1=[B[0]+u[0]*s,B[1]+u[1]*s], p2=[B[0]+w[0]*s,B[1]+w[1]*s];
+    const bx=u[0]+w[0], by=u[1]+w[1], bL=Math.hypot(bx,by)||1;
+    const lp=[B[0]+(bx/bL)*28, B[1]+(by/bL)*28];
+    const lx=Math.max(18, Math.min(222, lp[0])), ly=Math.max(18, Math.min(206, lp[1]));
+    return `<path d="M ${p1[0].toFixed(1)} ${p1[1].toFixed(1)} Q ${lp[0].toFixed(1)} ${lp[1].toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}" fill="${col}33" stroke="${col}" stroke-width="1.5"/>`+
+      (txt?lab(lx, ly+4, txt, col, 'middle', 11):'');
+  }
+  const S=[[48,168],[96,48],[144,168]];
+  const B=[[40,196],[120,28],[200,196]];
+
   function visD418(el){
+    try{ window._waveCss && _waveCss('css-l418', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'418';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const k=Math.max(1, Math.min(3, +(st.k==null?2:st.k)));
+    const feat=st.feat==null?0:+st.feat;
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Подобные треугольники</div>
-        <div style="display:flex;align-items:center;gap:10px;justify-content:center">
-          ${triSmall()}<span style="font-size:22px;color:#8fa08f">≈</span>${triBig()}
-        </div>
-        <div class="wv-sml">одинаковая форма, разный размер · углы равны, стороны пропорциональны</div>
+        ${frame(
+          tri([[36,176],[70,80],[104,176]], 'rgba(127,209,255,.12)', BLUE, doDraw)+
+          tri([[118,196],[168,36],[218,196]], 'rgba(255,215,106,.1)', GOLD, doDraw)+
+          lab(70, 64, 'фото', BLUE)+lab(168, 24, open?'увеличение':'?', GOLD)+
+          lab(120, 212, open?'одна форма, разный размер':'чем похожи?', MUTED)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Фото и увеличение','Углы те же, стороны выросли. Такие треугольники называют подобными. Сейчас научимся находить сторону, не измеряя её.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Коэффициент подобия k</div>
-        <div style="display:flex;align-items:center;gap:10px;justify-content:center">
-          ${triSmall()}<span style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">×2</span>${triBig()}
-        </div>
-        <div class="wv-sml">k = 2: каждая сторона второго в 2 раза больше!</div>
+        ${frame(
+          tri(S, 'rgba(127,209,255,.12)', BLUE, doDraw)+
+          tri([[130,176],[178,72],[226,176]], 'rgba(255,215,106,.1)', GOLD, false)+
+          lab(96, 36, '△ABC', BLUE)+lab(178, 60, "△A′B′C′", GOLD)+
+          lab(120, 208, 'ABC ∼ A′B′C′', GOLD)
+        )}
+        ${note('Знак ∼','Тильда — «похожи». Углы равны, стороны пропорциональны. Равные треугольники — частный случай, когда k = 1.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">Признаки подобия</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
-          ${[
-            ['1️⃣','два угла равны','#8fd1a8'],
-            ['2️⃣','2 стороны пропорциональны + угол между ними','#7fd1ff'],
-            ['3️⃣','3 стороны пропорциональны','#ffd76a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;text-align:left;font-size:13px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
-        </div>
-        <div class="wv-sml">для подобия достаточно ДВУХ равных углов!</div>
+        ${frame(
+          tri(S, 'rgba(127,209,255,.1)', BLUE, false)+
+          tri([[132,176],[180,72],[228,176]], 'rgba(255,215,106,.1)', GOLD, false)+
+          ang(S[1], S[0], S[2], GREEN, 'α')+
+          ang([180,72],[132,176],[228,176], GREEN, 'α')+
+          ang(S[0], S[1], S[2], GOLD, 'β')+
+          ang([132,176],[180,72],[228,176], GOLD, 'β')+
+          lab(120, 28, 'углы попарно равны', GOLD)
+        )}
+        ${note('Форма держится углами','Если углы совпали, форма одна. Стороны могут быть любыми — лишь бы пропорция одна.')}
       </div>`;
     } else if(step===3){
+      const base=[[40,188],[40+50*k,188],[40+25*k,188-70*k/2]];
+      const ok=base[1][0]<228 && base[2][1]>28;
+      const T=ok?base:[[40,188],[190,188],[115,48]];
       h=`<div class="wv-col">
-        <div class="wv-big">Находим сторону</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-size:17px;color:#e8dcc8;text-align:center;font-family:Georgia,serif">
-          <div class="wv-pop">k = 3, сторона первого = 4</div>
-          <div class="wv-pop2">сторона второго = 4 · 3 = <b style="color:#ffd76a">12</b></div>
-        </div>
-        <div class="wv-sml">пропорция решает!</div>
+        ${frame(
+          tri([[40,188],[90,188],[65,118]], 'rgba(127,209,255,.14)', BLUE, false)+
+          tri(T, 'rgba(255,215,106,.1)', GOLD, doDraw)+
+          lab(120, 28, 'k = '+k.toString().replace('.',','), GOLD, 'middle', 16)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">k
+          <input type="range" min="10" max="30" value="${Math.round(k*10)}" style="flex:1"
+            oninput="try{const k2=lidKey(LV.id);CHS[k2]=CHS[k2]||{};CHS[k2].k=this.value/10;chRender(0);}catch(e){}">
+          <b style="color:${GOLD};min-width:28px">${k.toString().replace('.',',')}</b>
+        </label>
+        ${note('Расти, не ломаясь','Ползунок множит все стороны. Углы не двигаются. Это и есть подобие: форма заморожена, размер живой.')}
       </div>`;
     } else if(step===4){
+      const items=[['два угла','AA',BLUE],['две стороны и угол','SAS',GREEN],['три стороны','SSS',GOLD]];
       h=`<div class="wv-col">
-        <div class="wv-big">Средняя линия</div>
-        <svg viewBox="0 0 180 140" style="width:170px;height:132px">
-          <polygon points="90,12 20,128 160,128" fill="rgba(127,209,255,.06)" stroke="#7fd1ff" stroke-width="2.5"/>
-          <line x1="55" y1="70" x2="125" y2="70" stroke="#ffd76a" stroke-width="4"/>
-          <circle cx="55" cy="70" r="5" fill="#ff9a8a"/><circle cx="125" cy="70" r="5" fill="#ff9a8a"/>
-          <text x="62" y="64" font-size="11" fill="#ff9a8a">середины</text>
-        </svg>
-        <div class="wv-sml">средняя линия ∥ третьей стороне и = её половине!</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
+          ${items.map((x,i)=>`<button type="button" class="btn" style="justify-content:space-between;border-color:${feat===i?x[2]:'#3d5c49'}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].feat=${i};chRender(0);}catch(e){}"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></button>`).join('')}
+        </div>
+        ${frame(
+          tri(B, 'rgba(127,209,255,.1)', BLUE, false)+
+          (feat===0? ang(B[1],B[0],B[2],GOLD,'α')+ang(B[0],B[1],B[2],GREEN,'β') : '')+
+          (feat===1? `<line x1="${B[0][0]}" y1="${B[0][1]}" x2="${B[1][0]}" y2="${B[1][1]}" stroke="${GOLD}" stroke-width="4"/>`+
+            `<line x1="${B[1][0]}" y1="${B[1][1]}" x2="${B[2][0]}" y2="${B[2][1]}" stroke="${GOLD}" stroke-width="4"/>`+ang(B[0],B[1],B[2],GREEN,'∠') : '')+
+          (feat===2? `<path d="M ${B[0][0]} ${B[0][1]} L ${B[1][0]} ${B[1][1]} L ${B[2][0]} ${B[2][1]} Z" fill="none" stroke="${GOLD}" stroke-width="4"/>` : '')+
+          lab(120, 208, items[feat][0], GOLD)
+        )}
+        ${note('Три двери','Чаще всего хватает двух углов. В задачах ищи вертикальные, накрест лежащие или общий угол.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        <div class="wv-big">Площади: как k²!</div>
-        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;font-size:19px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">площади относятся как k²</div>
-        <div class="wv-sml">площадь = (основание·высота)/2 — оба выросли в k раз!</div>
+        ${frame(
+          tri([[32,176],[80,88],[128,176]], 'rgba(127,209,255,.12)', BLUE, doDraw)+
+          lab(80, 188, '4', BLUE)+
+          tri([[140,188],[186,40],[232,188]], 'rgba(255,215,106,.1)', GOLD, false)+
+          lab(186, 204, '?', GOLD)+
+          lab(120, 28, 'k = 3  →  4·3 = 12', GOLD)
+        )}
+        <div class="wv-ans" style="font-size:16px">a / a′ = 4 / x = 1 / 3</div>
+        ${note('Пропорция','Известную сторону умножь на k. Или пиши крест-накрест. Не складывай стороны — только умножай.')}
       </div>`;
     } else if(step===6){
+      const show=!!st.mid;
+      const M1=mid(B[0], B[1]), M2=mid(B[1], B[2]);
       h=`<div class="wv-col">
-        <div class="wv-big">Проверяем</div>
-        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
-          ${[['k = 2','площадь ×4','#8fd1a8'],['k = 3','площадь ×9','#7fd1ff'],['k = 5','площадь ×25','#ffd76a']].map(x=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${x[2]};border-radius:12px;padding:7px 12px"><b style="font-size:17px;color:${x[2]};font-family:Georgia,serif">${x[0]}</b><div style="font-size:11px;color:#8fa08f">${x[1]}</div></div>`).join('')}
-        </div>
-        <div class="wv-sml">площади растут квадратично!</div>
+        ${frame(
+          tri(B, 'rgba(127,209,255,.08)', BLUE, false)+
+          (show?`<line x1="${M1[0]}" y1="${M1[1]}" x2="${M2[0]}" y2="${M2[1]}" stroke="${GOLD}" stroke-width="3" ${doDraw?ink(dist(M1,M2),1.2,0):''}/>`+
+            `<circle class="l418-dot" cx="${M1[0]}" cy="${M1[1]}" r="5" fill="${GOLD}"/>`+
+            `<circle class="l418-dot" cx="${M2[0]}" cy="${M2[1]}" r="5" fill="${GOLD}"/>`+
+            lab(120, 120, '∥ и = ½', GOLD):'')+
+          lab(120, 28, 'средняя линия', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].mid=!CHS[k].mid;chRender(0);}catch(e){}">${show?'Скрыть':'Показать середины'}</button>
+        ${note('Середины двух сторон','Не путай с медианой: медиана идёт из вершины. Средняя линия — от середины к середине, параллельна третьей, вдвое короче.')}
       </div>`;
     } else if(step===7){
+      const M1=mid(B[0], B[1]), M2=mid(B[1], B[2]);
       h=`<div class="wv-col">
-        <div class="wv-big">Подобие в жизни</div>
-        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-          ${['🗺️','🚢','🌳'].map((e,i)=>`<span style="font-size:42px" class="wv-pop" style="animation-delay:${i*0.1}s">${e}</span>`).join('')}
+        ${frame(
+          tri(B, 'rgba(127,209,255,.08)', BLUE, false)+
+          tri([M1, B[1], M2], 'rgba(255,215,106,.16)', GOLD, doDraw)+
+          lab(120, 28, 'k = 1/2', GOLD)+
+          lab(120, 208, 'маленький ∼ большому', MUTED)
+        )}
+        ${note('Отсекли подобный','Верхний треугольник смотрит туда же. Угол у вершины общий, средняя линия параллельна основанию — углы равны. k = 1/2.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(
+          `<rect x="28" y="88" width="48" height="48" fill="${BLUE}33" stroke="${BLUE}" stroke-width="2" ${doDraw?ink(192,1.1,0):''}/>`+
+          lab(52, 80, 'k=1', BLUE)+lab(52, 152, 'S=1', MUTED)+
+          `<rect x="108" y="40" width="96" height="96" fill="${GOLD}22" stroke="${GOLD}" stroke-width="2" ${doDraw?ink(384,1.3,.1):''}/>`+
+          lab(156, 32, 'k=2', GOLD)+lab(156, 152, 'S=4', MUTED)+
+          lab(120, 204, 'площади как k²', GOLD)
+        )}
+        ${note('Не в k раз','Сторона ×2, площадь ×4. Сторона ×3, площадь ×9. Ловушка теста: отвечают «в 2 раза» — это про стороны, не про площадь.')}
+      </div>`;
+    } else if(step===9){
+      const s=36*k;
+      const x=120-s/2, y=120-s/2;
+      h=`<div class="wv-col">
+        ${frame(
+          `<rect x="${x}" y="${y}" width="${s}" height="${s}" fill="${GOLD}22" stroke="${GOLD}" stroke-width="2.4"/>`+
+          lab(120, 28, 'k = '+k.toString().replace('.',',')+'   S × '+(Math.round(k*k*10)/10).toString().replace('.',','), GOLD, 'middle', 14)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">k
+          <input type="range" min="10" max="30" value="${Math.round(k*10)}" style="flex:1"
+            oninput="try{const k2=lidKey(LV.id);CHS[k2]=CHS[k2]||{};CHS[k2].k=this.value/10;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${k.toString().replace('.',',')}</b>
+        </label>
+        ${note('Крути k','Подпись сверху — коэффициент и во сколько раз площадь. Поймай 2 и 4, поймай 3 и 9.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        ${frame(
+          `<line x1="20" y1="188" x2="220" y2="188" stroke="#3d5c49" stroke-width="3"/>`+
+          `<line x1="48" y1="188" x2="48" y2="132" stroke="${BLUE}" stroke-width="4"/>`+
+          `<line x1="48" y1="132" x2="88" y2="188" stroke="${GOLD}" stroke-width="2" ${doDraw?ink(70,1.1,0):''}/>`+
+          `<line x1="130" y1="188" x2="130" y2="48" stroke="${GREEN}" stroke-width="5"/>`+
+          `<line x1="130" y1="48" x2="210" y2="188" stroke="${GOLD}" stroke-width="2" ${doDraw?ink(160,1.3,.15):''}/>`+
+          lab(48, 122, 'чел.', BLUE)+lab(130, 38, 'дерево', GREEN)+
+          lab(120, 208, 'одно солнце → подобны', MUTED, 'middle', 11)
+        )}
+        ${note('Тень','Солнце одно, лучи параллельны — треугольники подобны. Измерил себя и тень, измерил тень дерева — высота дерева находится пропорцией.')}
+      </div>`;
+    } else if(step===11){
+      const kk=Math.min(2.4, k);
+      const side=4*kk;
+      h=`<div class="wv-col">
+        ${frame(
+          tri([[28,188],[28+40,188],[28+20,188-56]], 'rgba(127,209,255,.14)', BLUE, false)+
+          lab(48, 204, '4', BLUE)+
+          tri([[110,188],[110+40*kk,188],[110+20*kk,188-56*kk]], 'rgba(255,215,106,.12)', GOLD, false)+
+          lab(Math.min(220,110+20*kk), 204, (Math.round(side*10)/10).toString().replace('.',','), GOLD)+
+          lab(120, 28, 'стороны ×'+kk.toString().replace('.',',')+'  площадь ×'+(Math.round(kk*kk*10)/10).toString().replace('.',','), GOLD, 'middle', 12)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">k
+          <input type="range" min="10" max="24" value="${Math.round(kk*10)}" style="flex:1"
+            oninput="try{const k2=lidKey(LV.id);CHS[k2]=CHS[k2]||{};CHS[k2].k=this.value/10;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${kk.toString().replace('.',',')}</b>
+        </label>
+        ${note('Сторона и площадь рядом','Следи за двумя числами сразу. Стороны — k, площадь — k². Их путают чаще всего.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        ${frame(
+          `<rect x="36" y="48" width="80" height="56" rx="6" fill="${BLUE}22" stroke="${BLUE}"/>`+
+          lab(76, 80, 'карта', BLUE)+
+          `<rect x="140" y="36" width="72" height="80" rx="6" fill="${GOLD}22" stroke="${GOLD}"/>`+
+          lab(176, 80, 'поле', GOLD)+
+          lab(120, 160, '1 : 10 000', GOLD)+
+          lab(120, 188, '1 см → 100 м', MUTED)
+        )}
+        ${note('Масштаб','Карта — маленький подобный чертёж местности. k огромный, углы те же. Линейка на карте превращается в расстояние в поле.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Найди два равных угла → ∼',BLUE],
+            ['2','Запиши k по сторонам',GOLD],
+            ['3','Неизвестная сторона = известная · k',GREEN],
+            ['4','Площадь — это k², не k',PINK]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${x[2]};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
         </div>
-        <div class="wv-sml">карта, модель корабля, тень дерева — всюду подобие!</div>
+        ${note('Рецепт','Сначала подобие, потом коэффициент, потом что просят: сторону или площадь. Не прыгай сразу к числам.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          tri(S, 'rgba(127,209,255,.12)', BLUE, doDraw)+
+          lab(96, 36, '∼', GOLD, 'middle', 22)+
+          lab(120, 204, 'k — стороны,  k² — площадь', MUTED, 'middle', 12)
+        )}
+        ${note('В карман','∼ — форма. k — стороны. k² — площади. Средняя линия — половина. Тень и карта — те же треугольники.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${triSmall()}
-        <div class="wv-sml">k = 2 — площадь второго во сколько раз больше?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">в ? раз (k²)</div>
+        ${frame(
+          tri([[40,176],[80,88],[120,176]], 'rgba(127,209,255,.12)', BLUE, doDraw)+
+          tri([[128,188],[176,48],[224,188]], 'rgba(255,215,106,.1)', GOLD, false)+
+          lab(120, 28, 'k = 2  ·  площадь × ?', GOLD)
+        )}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">в ? раз</div>
+        ${note('Проверка','Не в 2 — в 4. Стороны удвоились, площадь учетверилась. k² = 4.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[418]=visD418;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===418){ window.ARH_LESSONS[i]=L418; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===418){ arr[i]=L418; f=true; break; } }
+    if(!f) arr.push(L418);
+  })();
 })();
 /* ================= УРОК 419 · Окружность: касательная и углы ================= */
 (function(){
