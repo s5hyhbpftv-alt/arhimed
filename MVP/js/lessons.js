@@ -6148,123 +6148,209 @@ function l97Wave(f,uid){
     <div style="text-align:center;font-size:11.5px;color:#cbb89a">${f} колебаний в секунду (Гц)</div>
   </div>`;
 }
+/* ===== Общий слой анимаций для уроков физики 97–99 ===== */
+function apCss(){
+  if(document.getElementById('apcss')) return;
+  const st=document.createElement('style'); st.id='apcss';
+  st.textContent=`
+  @keyframes apJig{0%,100%{transform:translate(0,0)}25%{transform:translate(2px,-2px)}50%{transform:translate(-2px,1px)}75%{transform:translate(1px,2px)}}
+  @keyframes apSlide{0%{transform:translate(0,0)}30%{transform:translate(14px,-8px)}60%{transform:translate(-10px,6px)}100%{transform:translate(0,0)}}
+  @keyframes apFly{0%{transform:translate(0,0)}25%{transform:translate(42px,-26px)}50%{transform:translate(84px,10px)}75%{transform:translate(40px,32px)}100%{transform:translate(0,0)}}
+  @keyframes apRipple{0%{transform:scale(.35);opacity:.95}100%{transform:scale(2.6);opacity:0}}
+  @keyframes apBar{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+  @keyframes apRise{0%{transform:translateY(0);opacity:.95}100%{transform:translateY(-54px);opacity:0}}
+  @keyframes apFall{0%{transform:translateY(-10px);opacity:1}100%{transform:translateY(52px);opacity:.15}}
+  @keyframes apFlame{from{transform:scaleY(.9) scaleX(1)}to{transform:scaleY(1.15) scaleX(.93)}}
+  @keyframes apSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes apSwing{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+  @keyframes apGlow{0%,100%{opacity:.45}50%{opacity:1}}
+  @keyframes apTrack{0%{transform:translateX(0)}100%{transform:translateX(150px)}}
+  @keyframes apDrift{0%{transform:translate(0,0)}50%{transform:translate(18px,-12px)}100%{transform:translate(0,0)}}
+  @keyframes apSnake{0%{transform:translateX(-20px)}100%{transform:translateX(152px)}}
+  @keyframes apGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .ap-lab{position:relative;width:100%;max-width:340px;margin:0 auto;aspect-ratio:3/2;min-height:200px;border-radius:12px;overflow:hidden;
+    background:radial-gradient(circle at 50% 6%,#3a4757,#12181f 70%)}
+  .ap-lab.tall{aspect-ratio:4/3;min-height:240px}
+  .ap-bench{position:absolute;left:0;right:0;bottom:0;height:20%;background:linear-gradient(180deg,#46515e,#1c232b);box-shadow:inset 0 3px 0 rgba(255,255,255,.07)}
+  .ap-m{position:absolute;border-radius:50%}
+  .ap-bar{width:5px;border-radius:3px;transform-origin:50% 50%;animation:apBar 1s ease-in-out infinite}
+  .ap-ring{position:absolute;border:2px solid rgba(127,209,255,.75);border-radius:50%;animation:apRipple 2.2s ease-out infinite}
+  .ap-bub{position:absolute;border-radius:50%;background:rgba(255,255,255,.85);animation:apRise 1.2s linear infinite}
+  .ap-steam{position:absolute;border-radius:50%;background:rgba(255,255,255,.6);filter:blur(3px);animation:apRise 2.6s ease-out infinite}
+  .ap-drop{position:absolute;width:4px;height:7px;border-radius:50%;background:rgba(170,220,255,.9);animation:apFall 1.3s linear infinite}
+  .ap-flame{position:absolute;border-radius:50% 50% 46% 46%;transform-origin:50% 100%;animation:apFlame .5s ease-in-out infinite alternate}
+  .ap-card{border-radius:12px;padding:8px 12px;background:linear-gradient(170deg,rgba(24,47,36,.95),rgba(14,24,48,.6));border:1px solid rgba(217,164,65,.28);font-size:12.5px;color:#e6eef6}
+  .ap-lbl{font-size:10px;color:#9fb0aa;text-align:center;line-height:1.25}
+  .ap-chip{display:inline-block;padding:2px 9px;border-radius:9px;font-size:11.5px;margin:2px}
+  `;
+  document.head.appendChild(st);
+}
+function apMol(kind,n,w,h,col,size){
+  /* solid — решётка с дрожью, liquid — бегают рядом, gas — разлетаются */
+  const parts=[];
+  for(let k=0;k<n;k++){
+    const c=col||'#7fd1ff', sz=size||6;
+    if(kind==='solid'){
+      const cols=Math.max(1,Math.round(Math.sqrt(n))); const r=Math.floor(k/cols), cc=k%cols;
+      parts.push('<div class="ap-m" style="left:'+(8+cc*(w/cols))+'px;bottom:'+(10+r*(h/Math.ceil(n/cols)))+'px;width:'+sz+'px;height:'+sz+'px;background:'+c+';animation:apJig '+(0.9+((k%5)*0.16)).toFixed(2)+'s linear infinite"></div>');
+    } else if(kind==='liquid'){
+      parts.push('<div class="ap-m" style="left:'+(8+((k*37)%w))+'px;bottom:'+(8+((k*53)%h))+'px;width:'+sz+'px;height:'+sz+'px;background:'+c+';animation:apSlide '+(1.3+((k%6)*0.28)).toFixed(2)+'s ease-in-out infinite;animation-delay:'+(k*0.12).toFixed(2)+'s"></div>');
+    } else {
+      parts.push('<div class="ap-m" style="left:'+(6+((k*41)%w))+'px;bottom:'+(6+((k*67)%h))+'px;width:'+sz+'px;height:'+sz+'px;background:'+c+';animation:apFly '+(1.1+((k%7)*0.22)).toFixed(2)+'s linear infinite;animation-delay:'+(k*0.09).toFixed(2)+'s"></div>');
+    }
+  }
+  return parts.join('');
+}
+function apWaves(n,col,dur,bars){
+  const out=[];
+  for(let k=0;k<n;k++){
+    out.push('<div class="ap-bar" style="height:'+(bars?bars[k%bars.length]:26)+'px;background:'+col+';animation-duration:'+(dur*(k%2?1:.72)).toFixed(2)+'s;animation-delay:'+(k*0.05).toFixed(2)+'s"></div>');
+  }
+  return '<div style="display:flex;align-items:center;justify-content:center;gap:3px;height:56px">'+out.join('')+'</div>';
+}
+function apRipple(cx,cy,r,col){
+  return [0,1,2].map(k=>'<div class="ap-ring" style="left:'+cx+'px;top:'+cy+'px;width:'+r+'px;height:'+r+'px;margin-left:'+(-r/2)+'px;margin-top:'+(-r/2)+'px;'+(col?'border-color:'+col+';':'')+'animation-delay:'+(k*0.7).toFixed(1)+'s"></div>').join('');
+}
+function apBtn(lk,act,txt){ return '<button class="hint-btn" onclick="l97Act(\''+lk+'\',\''+act+'\')">'+txt+'</button>'; }
+function l97Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  if(act==='pinch') st.pinch=!st.pinch;
+  else if(act==='amp') st.amp=(st.amp||1)>=3?1:(st.amp||1)+1;
+  else if(act==='freq') st.freq=(st.freq||1)>=3?1:(st.freq||1)+1;
+  else if(act==='air') st.vac=!st.vac;
+  else if(act==='reset'){ st.pinch=0; st.amp=1; st.freq=1; st.vac=0; }
+  try{ renderLessonView(); }catch(e){}
+}
 function visL97(el){
   try{
+    apCss();
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     const step=LV.step||0;
+    const amp=st.amp||1, frq=st.freq||1;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const big=x=>`<div class="wv-big">${x}</div>`;
+    const sml=x=>`<div class="wv-sml">${x}</div>`;
+    const row=(...b)=>`<div class="wv-row">${b.join('')}</div>`;
+    const rowC=(...p)=>`<div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:3px 0">${p.join('')}</div>`;
+    const card=x=>`<div class="ap-card">${x}</div>`;
+    const chip=(t,c)=>`<span class="ap-chip" style="border:1px solid ${c||'rgba(127,184,160,.45)'};color:#cfe6ff">${t}</span>`;
+    const labW=Math.min(336, ((document.getElementById('lvis')||{}).clientWidth||348)-12);
+    const SC=Math.max(0.72, Math.min(1, labW/336));
+    const scene=(inner,cls)=>`<div class="ap-lab ${cls||''}"><div style="position:absolute;left:0;top:0;width:336px;height:${cls==='tall'?252:224}px;transform:scale(${SC.toFixed(3)});transform-origin:0 0">${inner}</div></div>`;
+    const at=(x,y,inner)=>`<div style="position:absolute;left:${x}px;top:${y}px">${inner}</div>`;
+    const capAt=(y,txt)=>`<div class="ap-lbl" style="position:absolute;left:6px;right:6px;top:${y}px">${txt}</div>`;
+    const emo=(x,y,sz,ch)=>`<div style="position:absolute;left:${x}px;top:${y}px;width:${sz+8}px;text-align:center;font-size:${sz}px;line-height:1">${ch}</div>`;
+    const spk=(x,y,on)=>at(x,y,`<div style="position:relative;width:54px;height:54px;border-radius:8px;background:linear-gradient(100deg,#8d9499,#eef3f6 30%,#7d8589);box-shadow:0 8px 14px -10px #000">
+        <div style="position:absolute;left:8px;top:8px;right:8px;bottom:8px;border-radius:50%;background:radial-gradient(circle,#2b3238,#5a6165)"></div></div>${on?apRipple(x+27,y+27,30):''}`);
+    const string=(y,freq,pinch)=>`<div style="position:absolute;left:26px;right:26px;top:${y}px;height:34px">
+        <div style="position:absolute;left:0;right:0;top:16px;height:2px;background:rgba(217,164,65,.55)"></div>
+        <div style="position:absolute;left:0;right:0;top:8px;height:18px;${pinch?'opacity:.25':''}">
+          ${apWaves(28,'#ffd76a',(0.9/freq).toFixed(2),[6,14,22,30,38,30,22,14].map(v=>v*(pinch?0.2:1)*(0.6+amp*0.25)).map(v=>Math.max(3,Math.round(v))))}</div>
+        <div class="ap-lbl" style="position:absolute;bottom:-12px;left:0;right:0">${pinch?'струна прижата — звук пропал':'струна колеблется — слышен звук'}</div></div>`;
     let h='';
     if(step===0){
-      h=col(big('Что такое звук?'),
-        `<div style="font-size:46px" class="wv-pulse">🔊</div>`+
-        sml('звук рождается, когда что-то КОЛЕБЛЕТСЯ: струна, голосовые связки, барабан. Нет колебаний — нет звука!'));
+      h=col(big('Звук — это колебания'),
+        scene(spk(34,40,true)+emo(200,44,18,'👂')+emo(150,16,32,'🔊')+capAt(150,'колеблется тело → бегут волны → слышит ухо')),
+        sml('звук рождается, когда что-то дрожит: струна, барабан, голосовые связки. Нет колебаний — нет звука'));
     } else if(step===1){
-      h=col(big('Опыт: струна гитары'),
-        rowC(chip('дёрнули струну — она дрожит','rgba(127,209,255,.5)'),chip('дрожит — слышим звук','rgba(127,184,160,.5)'),chip('прижали — замолчала','rgba(232,160,90,.5)'))+
-        l97Wave(300,'a')+
-        sml('останови колебания пальцем — звук исчезнет! Как в нашей проверке: струна звучит, потому что колеблется'));
+      h=col(big('Опыт со струной'),
+        scene(string(70,frq,st.pinch),'tall'),
+        row(apBtn(lk,'pinch',st.pinch?'отпустить струну':'прижать струну'),apBtn(lk,'reset','↺')),
+        sml('дёрнули струну — она дрожит, и мы слышим звук. Прижали пальцем — колебания прекратились, звук исчез'));
     } else if(step===2){
-      h=col(big('Как звук доходит до уха?'),
-        rowC(chip('колебания передаются воздуху','rgba(127,209,255,.5)'),chip('волны бегут к уху','rgba(127,184,160,.5)'))+
-        `<div style="font-size:40px" class="wv-flow">〰️</div>`+
-        sml('струна толкает воздух — по воздуху бегут волны сжатия-разрежения — барабанная перепонка ловит их'));
+      h=col(big('Как звук доходит до уха'),
+        scene(spk(20,60,true)+apMol('gas',14,180,90,'#7fd1ff',5)+emo(246,56,20,'👂')+apRipple(272,68,26,'rgba(127,224,160,.7)')+capAt(150,'воздух передаёт колебания дальше')),
+        sml('струна толкает молекулы воздуха, они толкают соседние — волна бежит по воздуху и доходит до уха'));
     } else if(step===3){
       h=col(big('Почувствуй колебания сам'),
-        rowC(chip('пальцы на горло','rgba(127,209,255,.5)'),chip('скажи «а-а-а»','rgba(127,184,160,.5)'))+
-        sml('голосовые связки дрожат сотни раз в секунду — вот откуда твой голос!'));
+        scene(at(120,60,`<div style="position:relative;width:80px;height:60px">
+            <div style="position:absolute;left:24px;top:0;bottom:0;width:6px;background:#ffb3b3;border-radius:3px;animation:apBar .3s ease-in-out infinite"></div>
+            <div style="position:absolute;left:46px;top:0;bottom:0;width:6px;background:#ffb3b3;border-radius:3px;animation:apBar .3s ease-in-out infinite reverse"></div></div>`)
+          +apWaves(16,'#ffd76a',.35,[10,20,30,40,30,20])+capAt(150,'связки дрожат — идёт звук «а-а-а»')),
+        sml('приложи пальцы к горлу и скажи «а-а-а» — почувствуешь дрожь. Это колеблются голосовые связки'));
     } else if(step===4){
-      h=col(big('Громкость'),
-        rowC(chip('сильнее ударили — больше размах','rgba(232,160,90,.5)'),chip('звук громче','rgba(127,184,160,.5)'))+
-        `<div style="font-size:40px" class="wv-pop">🥁</div>`+
-        sml('громкость зависит от РАЗМАХА колебаний (амплитуды). Как в наших задачках!'));
+      h=col(big('Громкость = размах колебаний'),
+        scene(apWaves(26,'#ffd76a',.8,[8,16,26,34,26,16].map(v=>v*(0.5+amp*0.4)).map(v=>Math.round(v)))+at(30,150,'<div class="ap-lbl">амплитуда: '+(amp===1?'маленькая — тихо':amp===2?'средняя':amp===3?'большая — громко':'')+'</div>')),
+        row(apBtn(lk,'amp','ударить сильнее'),apBtn(lk,'reset','↺')),
+        sml('ударил по барабану сильнее — размах колебаний больше — звук громче. Громкость зависит от амплитуды'));
     } else if(step===5){
-      h=col(big('Высота звука'),
-        rowC(chip('частота — сколько колебаний в секунду','rgba(127,209,255,.5)'),chip('чаще — выше звук','rgba(127,184,160,.5)'),chip('реже — ниже','rgba(232,160,90,.5)'))+
-        sml('частота измеряется в герцах (Гц): 1 Гц = 1 колебание в секунду'));
+      h=col(big('Высота = частота колебаний'),
+        scene(apWaves(26,'#7fd1ff',(1.2/frq).toFixed(2))+at(30,150,'<div class="ap-lbl">частота: '+(frq===1?'низкая':frq===2?'средняя':'высокая')+' — '+(200*frq)+' Гц</div>')),
+        row(apBtn(lk,'freq','повысить частоту'),apBtn(lk,'reset','↺')),
+        sml('чем чаще колеблется тело, тем выше звук. Частота измеряется в герцах (Гц) — колебаний в секунду'));
     } else if(step===6){
-      h=col(big('Низкий звук: редкие волны'),
-        l97Wave(60,'b')+
-        sml('бас-барабан или рык льва: колебания редкие — волны широкие, звук низкий'));
+      h=col(big('Низкий звук — редкие колебания'),
+        scene(apWaves(14,'#ff9d3c',1.5,[10,24,36,24])+emo(120,24,28,'🦁')+capAt(150,'волны широкие и редкие — бас, рык льва')),
+        sml('бас-барабан и рык льва дают мало колебаний в секунду — звук низкий'));
     } else if(step===7){
-      h=col(big('Высокий звук: частые волны'),
-        l97Wave(1200,'c')+
-        sml('писк комара или свист: колебания частые — волны тесные, звук высокий. Как в наших задачках!'));
+      h=col(big('Высокий звук — частые колебания'),
+        scene(apWaves(40,'#7de0a0',.3,[8,14,22,30])+emo(120,24,22,'🦟')+capAt(150,'волны тесные и частые — писк комара, свист')),
+        sml('комар машет крыльями сотни раз в секунду — звук высокий и писклявый'));
     } else if(step===8){
       h=col(big('Сравни: комар и лев'),
-        rowC(l97Wave(100,'d'),l97Wave(1000,'e'))+
-        sml('крылья комара машут сотни раз в секунду — писк высокий. Лев рычит редко — низко. Частота решает!'));
+        scene(at(20,40,`<div style="width:130px;text-align:center"><div style="font-size:22px">🦟</div>${apWaves(18,'#7de0a0',.28,[8,12,18,24])}<div class="ap-lbl">сотни взмахов в секунду — высокий</div></div>`)
+             +at(180,40,`<div style="width:130px;text-align:center"><div style="font-size:26px">🦁</div>${apWaves(8,'#ff9d3c',1.6,[12,26,36,26])}<div class="ap-lbl">единицы колебаний — низкий</div></div>`)),
+        sml('чем больше колебаний в секунду, тем выше звук. Комар пищит высоко, лев рычит низко'));
     } else if(step===9){
       h=col(big('Гитара: толстая и тонкая струна'),
-        rowC(chip('толстая струна колеблется медленно','rgba(232,160,90,.5)'),chip('тонкая — быстро','rgba(127,209,255,.5)'))+
-        sml('поэтому толстая струна звучит низко, тонкая — высоко. А прижал палец — струна стала короче и выше!'));
+        scene(string(46,1,false).replace('top:46px','top:34px')+string(120,2.4,false).replace('top:120px','top:120px'),
+          ''),
+        sml('толстая струна колеблется медленно — звучит низко; тонкая колеблется быстро — звучит высоко'));
     } else if(step===10){
-      h=col(big('Что слышит человек'),
-        rowC(chip('от 20 до 20 000 Гц','rgba(127,209,255,.5)'))+
-        sml('ниже 20 Гц — инфразвук (землетрясения), выше 20 000 Гц — ультразвук. Их мы не слышим!'));
+      h=col(big('Что слышит человек: 20–20 000 Гц'),
+        scene(capAt(20,'инфразвук до 20 Гц · слышимый звук 20–20 000 Гц · ультразвук выше 20 кГц')
+          +at(24,74,`<div style="position:relative;width:284px;height:26px">
+            <div style="position:absolute;left:0;width:25%;height:26px;background:rgba(127,209,255,.2);border-radius:6px"></div>
+            <div style="position:absolute;left:26%;width:48%;height:26px;background:rgba(125,224,160,.3);border-radius:6px"></div>
+            <div style="position:absolute;left:75%;width:25%;height:26px;background:rgba(255,157,60,.22);border-radius:6px"></div>
+            <div style="position:absolute;left:0;top:30px;width:10px;height:10px;border-radius:50%;background:#ffd76a;animation:apTrack 3.4s linear infinite"></div></div>`)),
+        sml('ниже 20 Гц — инфразвук (землетрясения), выше 20 000 Гц — ультразвук. Их человек не слышит'));
     } else if(step===11){
       h=col(big('Кто слышит больше нас'),
-        rowC(chip('собака: до 45 000 Гц','rgba(127,209,255,.5)'),chip('дельфин и летучая мышь: ультразвук','rgba(127,184,160,.5)'))+
-        sml('собачий свисток «молчит» для нас, а собака слышит — потому что ультразвук!'));
+        rowC(card('<b style="color:#ffd76a">человек</b><br>20 – 20 000 Гц'),card('<b style="color:#7fd1ff">собака</b><br>до 45 000 Гц'),
+             card('<b style="color:#7de0a0">летучая мышь</b><br>до 100 000 Гц'),card('<b style="color:#ff9d3c">дельфин</b><br>до 150 000 Гц')),
+        scene(apWaves(34,'#7fd1ff',.34,[6,12,20,28])+capAt(150,'летучая мышь «видит» ультразвуком — эхолокация')),
+        sml('животные слышат ультразвук и ориентируются по нему'));
     } else if(step===12){
-      h=col(big('Звук в пустоте не идёт'),
-        rowC(chip('под колпаком нет воздуха','rgba(232,160,90,.5)'),chip('звонок не слышно','rgba(232,160,90,.5)'))+
-        sml('волнам нужна среда: воздух, вода, стена. В вакууме (пустоте) звуку нечем бежать!'));
+      h=col(big('В пустоте звук не идёт'),
+        scene(at(120,40,`<div style="position:relative;width:96px;height:110px;border:2px solid rgba(206,233,255,.5);border-radius:10px 10px 6px 6px;background:rgba(255,255,255,.04)">
+            <div style="position:absolute;left:26px;bottom:6px;width:44px;height:40px;border-radius:6px;background:linear-gradient(100deg,#8d9499,#eef3f6 40%,#7d8589)"></div>
+            ${st.vac?'':apRipple(48,60,26)}
+            ${st.vac?'<div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">воздуха нет — волнам не по чему бежать</div>':''}</div>`)),
+        row(apBtn(lk,'air',st.vac?'вернуть воздух':'откачать воздух'),apBtn(lk,'reset','↺')),
+        sml('под колпаком без воздуха звонок не слышно: звуку нужна среда — воздух, вода или металл'));
     } else if(step===13){
-      h=col(big('Скорость звука'),
-        rowC(chip('в воздухе ≈ 340 м/с','rgba(127,209,255,.5)'),chip('в воде быстрее','rgba(127,184,160,.5)'),chip('в стали ещё быстрее','rgba(127,184,160,.5)'))+
-        sml('поэтому молнию видно сразу, а гром приходит позже — звук бежит медленнее света!'));
+      h=col(big('Скорость звука в разных средах'),
+        scene(at(20,50,`<div style="position:relative;width:300px;height:24px;background:rgba(127,209,255,.16);border-radius:6px"><div class="ap-lbl" style="position:absolute;left:6px;top:3px;color:#cfe6ff">воздух · 340 м/с</div><div style="position:absolute;top:8px;left:0;width:8px;height:8px;border-radius:50%;background:#7fd1ff;animation:apTrack 4.4s linear infinite"></div></div>`)
+          +at(20,92,`<div style="position:relative;width:300px;height:24px;background:rgba(125,224,160,.18);border-radius:6px"><div class="ap-lbl" style="position:absolute;left:6px;top:3px;color:#cfe6ff">вода · 1500 м/с</div><div style="position:absolute;top:8px;left:0;width:8px;height:8px;border-radius:50%;background:#7de0a0;animation:apTrack 2.4s linear infinite"></div></div>`)
+          +at(20,134,`<div style="position:relative;width:300px;height:24px;background:rgba(255,157,60,.18);border-radius:6px"><div class="ap-lbl" style="position:absolute;left:6px;top:3px;color:#cfe6ff">сталь · 5000 м/с</div><div style="position:absolute;top:8px;left:0;width:8px;height:8px;border-radius:50%;background:#ff9d3c;animation:apTrack 1.1s linear infinite"></div></div>`)),
+        sml('в воде звук быстрее, чем в воздухе, а в стали — ещё быстрее: поэтому по рельсу звук слышно раньше'));
     } else if(step===14){
-      h=col(big('Эхо'),
-        rowC(chip('звук отражается от стены','rgba(127,209,255,.5)'),chip('возвращается — слышим «ау!» дважды','rgba(127,184,160,.5)'))+
-        `<div style="font-size:40px" class="wv-swing">🗻</div>`+
-        sml('эхо — это отражённый звук. В горах или большом зале он возвращается к нам'));
+      h=col(big('Эхо — отражённый звук'),
+        scene(at(30,60,`<div style="font-size:22px">🧍</div>`)+apRipple(46,74,26)+at(280,40,`<div style="width:26px;height:120px;border-radius:6px;background:linear-gradient(100deg,#6d7479,#c9d2d7 40%,#6a7176)"></div>`)
+          +at(70,120,`<div style="position:relative;width:200px;height:20px"><div style="position:absolute;top:6px;left:0;width:10px;height:10px;border-radius:50%;background:#ffd76a;animation:apSnake 2.6s linear infinite"></div></div>`)+capAt(150,'звук дошёл до скалы, отразился и вернулся — мы слышим эхо')),
+        sml('крикнул в горах — звук долетел до стены, отразился и вернулся. Чем дальше стена, тем позже эхо'));
     } else if(step===15){
-      h=col(big('Громкость и высота — не одно и то же!'),
-        rowC(chip('громкость = размах волн','rgba(127,209,255,.5)'),chip('высота = частота волн','rgba(127,184,160,.5)'))+
-        sml('можно пищать тихо и громко, можно гудеть тихо и громко — это разные свойства звука'));
+      h=col(big('Громкость и высота — разные свойства'),
+        rowC(card('<b style="color:#ffd76a">громкость</b><br>размах волн (амплитуда)'),card('<b style="color:#7fd1ff">высота</b><br>частота колебаний')),
+        scene(apWaves(28,'#ffd76a',(1/frq).toFixed(2),[8,16,26,36].map(v=>Math.round(v*(0.5+amp*0.4))))),
+        row(apBtn(lk,'amp','громче'),apBtn(lk,'freq','выше'),apBtn(lk,'reset','↺')),
+        sml('можно громко и низко (барабан) или тихо и высоко (комар) — это независимые свойства'));
     } else if(step===16){
-      const POOL=[['bass','60'],['bass','100'],['mid','200'],['mid','300'],['high','600'],['high','1000'],['high','1500'],['mid','250'],['bass','80'],['high','900'],['mid','150'],['high','2000']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], band=e[0], f=+e[1];
-      const label=band==='bass'?'низкий (бас)':band==='mid'?'средний':'высокий';
-      const answer=band==='high'?'высокий':band==='mid'?'средний':'низкий';
-      let desc, firstStep;
-      if(f<200){ firstStep='мало колебаний в секунду → звук низкий'; }
-      else if(f<700){ firstStep='среднее число колебаний → звук средний'; }
-      else { firstStep='очень много колебаний в секунду → звук высокий'; }
-      h=col(big('Тренажёр: высота звука'),
-        `<div class="wv-row">${chip('частота '+f+' Гц — какой звук?','rgba(217,164,65,.35)')}</div>`+
-        l97Wave(f,'t')+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:26px;color:#7fd1a0;font-weight:bold">${answer}</div>`:'')+
-        btns(btn('1️⃣ подумай',`l97Act('${lk}','s1')`),btn('2️⃣ ответ',`l97Act('${lk}','s2')`),btn('🎲 другая',`l97Act('${lk}','n')`),btn('↺',`l97Act('${lk}','r')`))+
-        sml('чаще колебания — выше звук. Посмотри на волны: тесные = высокий!'));
+      h=col(big('Тренажёр: частота и волны'),
+        scene(apWaves(30,'#7de0a0',(1.2/frq).toFixed(2))+at(30,150,'<div class="ap-lbl">'+(200*frq)+' Гц — '+(frq===1?'редкие волны, низкий звук':frq===2?'средние волны':'тесные волны, высокий звук')+'</div>')),
+        row(apBtn(lk,'freq','изменить частоту'),apBtn(lk,'reset','↺')),
+        sml('посмотри на волны: тесные и частые — высокий звук, широкие и редкие — низкий'));
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🔊 Звук = колебания.<br>
-            📢 Громче = больше размах.<br>
-            🎵 Выше = чаще колебания (Гц).<br>
-            👂 Человек: 20–20 000 Гц.</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там струна гитары'));
+      h=col(big('Главное о звуке'),
+        card('звук — это колебания тела<br>громче = больше размах (амплитуда)<br>выше = больше частота (Гц)<br>человек слышит 20–20 000 Гц<br>в пустоте звук не идёт, нужна среда<br>скорость: воздух 340 м/с, вода 1500, сталь 5000<br>эхо — отражённый звук'),
+        scene(apWaves(24,'#ffd76a',.5,[10,20,30,20])+capAt(150,'звук — колебания, которые бегут по среде')));
     }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+    el.innerHTML=h;
+  }catch(e){ el.innerHTML='<div class="ap-card">Ошибка сцены: '+esc(e&&e.message)+'</div>'; }
 }
 
-// ===================== УРОК 7 «ПЕРЕЛИВАНИЯ» (v161) =====================
-// ===================== УРОК 7 «ПЕРЕЛИВАНИЯ» (v161) =====================
 function l7Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
   const p=+act.split(':')[1];
@@ -9817,1095 +9903,348 @@ function visL96(el){
 
 function l98Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['ice','0'],['ice','-5'],['water','25'],['water','0'],['steam','100'],['water','99'],['ice','-20'],['steam','150']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
-  chRender(0);
-}
-function l98Mol(state,uid){
-  // молекулы воды в состоянии: ice — решётка, water — тесная кучка, steam — разлетаются
-  const m=(d,delay,cls)=>`<div class="${cls||''}" style="animation-delay:${delay}s;width:13px;height:13px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#a8dcff,#4f9fd8);border:1px solid #2a5a80;display:inline-block;margin:2px"></div>`;
-  let cells='';
-  if(state==='ice'){
-    for(let r=0;r<3;r++)for(let c=0;c<5;c++) cells+=m(0,(r*5+c)*0.05,'');
-  } else if(state==='water'){
-    for(let i=0;i<12;i++) cells+=m(0,i*0.05,'wv-flick');
-  } else {
-    for(let i=0;i<9;i++) cells+=m(0,i*0.1,['wv-rise','wv-rise2','wv-rise3'][i%3]);
-  }
-  const label=state==='ice'?'твёрдое: лёд (молекулы в решётке)':state==='water'?'жидкое: вода (молекулы рядом, бегают)':'газообразное: пар (молекулы разлетелись)';
-  return `<div style="text-align:center;margin:3px auto">
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:180px;min-height:${state==='steam'?96:50}px;gap:0">${cells}</div>
-    <div style="font-size:11.5px;color:#9ec0a8">${label}</div>
-  </div>`;
-}
-function l98Thermo(t,uid){
-  const H=120;
-  const y=H-16-(Math.max(-20,Math.min(t,120))/140)*(H-34);
-  return `<div style="display:inline-block;position:relative;width:34px;height:${H}px;vertical-align:top">
-    <div style="position:absolute;left:50%;top:0;bottom:12px;transform:translateX(-50%);width:11px;background:#e8e0d0;border-radius:5px;border:1px solid #8a6a2f;overflow:hidden">
-      <div style="position:absolute;left:0;right:0;top:${y}px;bottom:0;background:#e05a4a"></div>
-    </div>
-    <div style="position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:#e05a4a;border:1px solid #8a6a2f"></div>
-    <div style="position:absolute;left:40px;top:${Math.max(0,y-8)}px;font-size:14px;color:#ffd9a0;white-space:nowrap">${t}°C</div>
-  </div>`;
+  if(st.t==null) st.t=20;
+  if(act==='up') st.t=Math.min(120,st.t+10);
+  else if(act==='down') st.t=Math.max(-30,st.t-10);
+  else if(act==='ice') st.t=-10;
+  else if(act==='boil') st.t=100;
+  else if(act==='melt') st.t=0;
+  else if(act==='reset') st.t=20;
+  try{ renderLessonView(); }catch(e){}
 }
 function visL98(el){
   try{
+    apCss();
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
+    if(st.t==null) st.t=20;
+    const T=st.t, step=LV.step||0;
+    const state=T<0?'лёд':(T<100?'вода':'пар');
+    const kind=T<0?'solid':(T<100?'liquid':'gas');
+    const molCol=kind==='solid'?'#bfe6ff':(kind==='liquid'?'#7fd1ff':'#cfe6ff');
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const big=x=>`<div class="wv-big">${x}</div>`;
+    const sml=x=>`<div class="wv-sml">${x}</div>`;
+    const row=(...b)=>`<div class="wv-row">${b.join('')}</div>`;
+    const rowC=(...q)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:3px 0">${q.join('')}</div>`;
+    const card=x=>`<div class="ap-card">${x}</div>`;
+    const labW=Math.min(336, ((document.getElementById('lvis')||{}).clientWidth||348)-12);
+    const SC=Math.max(0.72, Math.min(1, labW/336));
+    const scene=inner=>`<div class="ap-lab tall"><div style="position:absolute;left:0;top:0;width:336px;height:252px;transform:scale(${SC.toFixed(3)});transform-origin:0 0">${inner}</div></div>`;
+    const at=(x,y,inner)=>`<div style="position:absolute;left:${x}px;top:${y}px">${inner}</div>`;
+    const b98=(t,a)=>`<button class="hint-btn" onclick="l98Act('${lk}','${a}')">${t}</button>`;
+    const ctl=row(b98('−10 °C','down'),b98('+10 °C','up'),b98('лёд','ice'),b98('0 °C','melt'),b98('100 °C','boil'),b98('↺','reset'));
+    const box=(inner,extra)=>`<div style="position:relative;width:118px;height:118px;border:2px solid rgba(206,233,255,.55);border-radius:10px;${extra||'background:linear-gradient(180deg,rgba(190,230,255,.16),rgba(120,190,230,.26))'}">${inner}</div>`;
+    const cap=txt=>`<div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">${txt}</div>`;
+    const capAt=(y,txt)=>`<div class="ap-lbl" style="position:absolute;left:6px;right:6px;top:${y}px">${txt}</div>`;
+    const thermo=v=>`<div style="position:relative;width:22px;height:112px;border-radius:11px;background:linear-gradient(180deg,#f4f8fa,#dbe4e9)">
+        <div style="position:absolute;left:5px;right:5px;bottom:12px;height:${Math.max(4,Math.min(86,((v+30)/150)*86)).toFixed(0)}px;border-radius:6px;background:linear-gradient(90deg,#8e1f14,#ff5a3c,#a8281a);transition:height .7s"></div>
+        <div style="position:absolute;left:50%;margin-left:-9px;bottom:-10px;width:18px;height:18px;border-radius:50%;background:#d3311c"></div>
+        <div class="ap-lbl" style="position:absolute;left:-26px;right:-26px;bottom:-40px;white-space:nowrap">${v>0?'+':''}${v} °C · ${v<0?'лёд':(v<100?'вода':'пар')}</div></div>`;
+    const steam=n=>Array.from({length:n},(_,k)=>`<div class="ap-steam" style="left:${26+k*13}px;bottom:106px;width:${10+k*2}px;height:${10+k*2}px;animation-duration:${(2.6-k*0.22).toFixed(1)}s;animation-delay:${(k*0.32).toFixed(1)}s"></div>`).join('');
+    const bub=(n,fast)=>Array.from({length:n},(_,k)=>`<div class="ap-bub" style="left:${22+k*13}px;bottom:10px;width:${4+(k%3)}px;height:${4+(k%3)}px;animation-duration:${((fast?0.7:1.4)-k*0.04).toFixed(2)}s;animation-delay:${(k*0.2).toFixed(1)}s"></div>`).join('');
     let h='';
     if(step===0){
-      h=col(big('Одна и та же вода — три лица'),
-        rowC(chip('🧊 лёд','rgba(127,209,255,.5)'),chip('💧 вода','rgba(127,184,160,.5)'),chip('♨️ пар','rgba(232,160,90,.5)'))+
-        sml('лёд, вода и пар — это ОДНО и то же вещество, просто в разных состояниях!'));
+      const p1=at(8,26, box(apMol('solid',16,120,96,'#bfe6ff',7))+cap('лёд'));
+      const p2=at(140,26, box(apMol('liquid',16,120,96,'#7fd1ff',7))+cap('вода'));
+      h=col(big('Одна вода — три состояния'), scene(p1+p2+capAt(176,'а ещё есть пар — газообразная вода')),
+        sml('лёд, вода и пар — одно и то же вещество: различается только поведение молекул'));
     } else if(step===1){
       h=col(big('Всё состоит из молекул'),
-        l98Mol('ice','a')+
-        sml('вода состоит из крошечных молекул. От их «поведения» зависит состояние!'));
+        scene(at(70,20, box(apMol('liquid',26,116,100,'#7fd1ff',7),'background:rgba(140,200,235,.12)')+cap('молекулы воды H₂O'))),
+        sml('молекулы не видно глазом, но именно от их движения зависит состояние вещества'));
     } else if(step===2){
-      h=col(big('Три состояния'),
-        rowC(chip('твёрдое — лёд','rgba(127,209,255,.5)'),chip('жидкое — вода','rgba(127,184,160,.5)'),chip('газообразное — пар','rgba(232,160,90,.5)'))+
-        sml('переходы между ними — плавление, замерзание, кипение'));
+      h=col(big('Переходы между состояниями'),
+        rowC(card('лёд'),card('→ нагревание →'),card('вода'),card('→ нагревание →'),card('пар')),
+        scene(at(10,24, box(apMol('solid',12,112,96,'#bfe6ff',6))+cap('твёрдое'))
+          +at(166,24, box(apMol('gas',12,112,96,'#cfe6ff',6),'background:rgba(255,255,255,.05);border-style:dashed')+cap('газообразное'))
+          +at(88,60,`<div style="font-size:20px;color:#ffd76a">⇄</div>`)),
+        rowC(card('пар → охлаждение → вода: конденсация'),card('вода → охлаждение → лёд: замерзание')),
+        ctl, sml('нагреваем — вправо (лёд → вода → пар), охлаждаем — влево'));
     } else if(step===3){
-      h=col(big('Лёд: молекулы в решётке'),
-        l98Mol('ice','b')+
-        sml('в твёрдом состоянии молекулы стоят на своих местах, как солдатики, — форма сохраняется'));
+      h=col(big('Лёд: молекулы стоят в строю'),
+        scene(at(70,20, box(apMol('solid',24,116,100,'#bfe6ff',7))+cap('молекулы только дрожат на месте'))),
+        sml('молекулы в решётке удерживают друг друга — поэтому лёд твёрдый и держит форму'));
     } else if(step===4){
-      h=col(big('Вода: молекулы бегают'),
-        l98Mol('water','c')+
-        sml('в жидком состоянии молекулы рядом, но бегают — поэтому вода принимает форму сосуда'));
+      h=col(big('Вода: молекулы бегают рядом'),
+        scene(at(70,20, box(apMol('liquid',24,116,100,'#7fd1ff',7))+cap('молекулы перескакивают друг мимо друга'))),
+        sml('связи слабее: молекулы рядом, но свободно перескакивают — вода течёт и принимает форму сосуда'));
     } else if(step===5){
-      h=col(big('Пар: молекулы разлетелись'),
-        l98Mol('steam','d')+
-        sml('в газообразном состоянии молекулы разлетаются во все стороны — пар заполняет всё пространство'));
+      h=col(big('Пар: молекулы разлетаются'),
+        scene(at(70,14, box(apMol('gas',22,116,112,'#cfe6ff',6),'background:rgba(255,255,255,.05);border-style:dashed')+cap('молекулы летят свободно и заполняют объём'))),
+        sml('в газе молекулы далеко и летят во все стороны — пар не имеет ни формы, ни объёма'));
     } else if(step===6){
-      h=col(big('Точка плавления: 0°C'),
-        l98Thermo(0,'e')+
-        rowC(chip('лёд плавится при 0°C','rgba(127,209,255,.5)'),chip('вода замерзает тоже при 0°C','rgba(127,184,160,.5)'))+
-        sml('0°C — граница между льдом и водой. Как в наших задачках: лёд плавится при 0!'));
+      const inner=(T<0? apMol('solid',18,116,100,'#bfe6ff',7) : apMol('liquid',18,116,100,'#7fd1ff',7))
+        +(T>=0? steam(4):'')+(T>0? bub(4,false):'')
+        +cap(T<0?'лёд ещё твёрдый':'лёд тает — появилась вода');
+      h=col(big('Точка плавления: 0 °C'),
+        scene(at(230,20, thermo(T))+at(54,20, box(inner))),
+        ctl, sml('при 0 °C лёд плавится, а вода замерзает: это одна и та же температура перехода'));
     } else if(step===7){
-      h=col(big('Точка кипения: 100°C'),
-        l98Thermo(100,'f')+
-        rowC(chip('вода кипит при 100°C','rgba(232,160,90,.5)'))+
-        sml('при кипении вода превращается в пар. Как в нашей проверке: 100!'));
+      h=col(big('Точка кипения: 100 °C'),
+        scene(at(230,20, thermo(T))
+          +at(54,20, box(`<div style="position:absolute;left:8px;right:8px;bottom:6px;height:${T>=100?74:60}px;border-radius:6px 6px 12px 12px;background:linear-gradient(180deg,rgba(140,200,235,.3),rgba(90,170,220,.5))">${bub(6,T>=100)}</div>`+(T>=100?steam(5):'')+cap(T>=100?'кипит: пузыри и пар':'пока только горячая вода')))),
+        ctl, sml('при 100 °C вода кипит: пузыри поднимаются, молекулы вырываются наружу и образуют пар'));
     } else if(step===8){
-      h=col(big('Греем лёд'),
-        l98Thermo(-10,'g')+
-        l98Mol('ice','h')+
-        sml('лёд при −10°C — холодный и твёрдый. Начнём нагревать!'));
+      h=col(big('Греем лёд: −10 °C → 0 °C'),
+        scene(at(70,20, box(apMol('solid',20,116,100,'#bfe6ff',7))+cap('чем теплее, тем сильнее дрожат молекулы'))),
+        ctl, sml('сейчас '+T+' °C: пока ниже 0 °C, лёд остаётся твёрдым'));
     } else if(step===9){
-      h=col(big('Дошли до 0°C — лёд тает!'),
-        l98Thermo(0,'i')+
-        l98Mol('water','j')+
-        sml('при 0°C лёд плавится: решётка «рассыпается», молекулы начинают бегать — получается вода'));
+      h=col(big('0 °C — лёд тает'),
+        scene(at(70,20, box(apMol('liquid',20,116,100,'#7fd1ff',7)
+          +[0,1,2].map(k=>`<div class="ap-drop" style="left:${26+k*36}px;top:8px;animation-delay:${(k*0.4).toFixed(1)}s"></div>`).join('')
+          +cap('решётка рассыпалась — молекулы побежали')))),
+        ctl, sml('при 0 °C лёд переходит в воду: решётка разрушается, молекулы начинают двигаться свободнее'));
     } else if(step===10){
-      h=col(big('Греем дальше — до 100°C'),
-        l98Thermo(80,'k')+
-        l98Mol('water','l')+
-        sml('вода нагревается, молекулы бегают всё быстрее…'));
+      h=col(big('Греем воду: молекулы быстрее'),
+        scene(at(70,20, box(apMol('liquid',24,116,100,'#7fd1ff',7)+cap('сейчас '+T+' °C')))), 
+        ctl, sml('температура растёт — молекулы движутся всё быстрее, вода становится горячей'));
     } else if(step===11){
-      h=col(big('100°C — вода кипит!'),
-        l98Thermo(100,'m')+
-        l98Mol('steam','n')+
-        sml('при кипении молекулы вырываются — пар поднимается вверх!'));
+      h=col(big('100 °C — вода кипит'),
+        scene(at(70,14, box(`<div style="position:absolute;left:8px;right:8px;bottom:6px;height:70px;border-radius:6px 6px 14px 14px;background:linear-gradient(180deg,rgba(140,200,235,.3),rgba(90,170,220,.5))">${bub(7,true)}</div>`+steam(7)+cap('молекулы вырываются из жидкости — идёт пар')))),
+        ctl, sml('кипение: молекулы покидают воду и улетают в воздух'));
     } else if(step===12){
-      h=col(big('Обратный путь: пар → вода → лёд'),
-        rowC(chip('остудили пар → конденсация в воду','rgba(127,209,255,.5)'),chip('заморозили воду → кристаллизация в лёд','rgba(127,184,160,.5)'))+
-        sml('все переходы обратимы! Пар на крышке кастрюли — это снова капельки воды'));
+      h=col(big('Обратный путь: конденсация и замерзание'),
+        scene(at(20,20, box([0,1,2,3,4,5].map(k=>`<div style="position:absolute;left:${18+k*17}px;top:${12+(k%3)*20}px;width:6px;height:8px;border-radius:50%;background:rgba(170,220,255,.9);animation:apFall 2.2s ease-in infinite;animation-delay:${(k*0.3).toFixed(1)}s"></div>`).join('')+cap('пар остыл — снова капельки воды')))
+          +at(176,20, box(apMol('solid',16,116,100,'#bfe6ff',7)+cap('вода замёрзла — лёд')))),
+        ctl, sml('остудили пар — конденсация; заморозили воду — кристаллизация. Это обратные переходы'));
     } else if(step===13){
       h=col(big('Зимой на улице'),
-        l98Thermo(-15,'o')+
-        l98Mol('ice','p')+
-        sml('мороз ниже 0°C — лёд не тает, потому что температура ниже точки плавления! Как в совете Архимеда'));
+        scene(at(20,40,`<div style="position:relative;width:300px;height:120px">
+            <div style="position:absolute;bottom:0;left:0;right:0;height:26px;border-radius:6px;background:linear-gradient(180deg,#cfe6ff,#8ec8e8)"></div>
+            <div style="position:absolute;bottom:24px;left:26px;right:26px;height:56px;border-radius:10px;background:linear-gradient(180deg,rgba(210,245,255,.55),rgba(140,200,235,.45))">${apMol('solid',16,240,52,'#bfe6ff',6)}</div>
+            <div style="position:absolute;right:8px;top:-4px;font-size:20px">❄️</div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-18px">мороз ниже 0 °C — лёд не тает: до точки плавления не хватает тепла</div></div>`)),
+        ctl, sml('пока температура ниже 0 °C, лёд остаётся льдом'));
     } else if(step===14){
       h=col(big('Круговорот воды в природе'),
-        rowC(chip('☀️ солнце греет → испарение','rgba(232,160,90,.5)'),chip('☁️ пар поднимается → облака','rgba(127,209,255,.5)'),chip('🌧️ охлаждается → дождь','rgba(127,184,160,.5)'))+
-        sml('вода всё время меняет состояния — это круговорот воды!'));
+        scene(at(10,12,`<div style="position:relative;width:320px;height:170px">
+            <div style="position:absolute;left:6px;top:0;font-size:22px">☀️</div>
+            <div style="position:absolute;left:36px;bottom:24px;width:96px;height:26px;border-radius:6px;background:linear-gradient(180deg,rgba(120,190,230,.7),rgba(70,150,205,.85))"></div>
+            <div style="position:absolute;left:150px;top:14px;width:80px;height:32px;border-radius:50%;background:rgba(220,235,245,.5)"></div>
+            ${[0,1,2,3,4,5].map(k=>`<div class="ap-steam" style="left:${48+k*14}px;bottom:50px;width:10px;height:10px;animation-duration:2.4s;animation-delay:${(k*0.3).toFixed(1)}s"></div>`).join('')}
+            ${[0,1,2,3,4,5,6,7].map(k=>`<div class="ap-drop" style="left:${158+k*8}px;top:48px;animation-delay:${(k*0.25).toFixed(2)}s"></div>`).join('')}
+            <div style="position:absolute;left:120px;bottom:24px;width:180px;height:24px;border-radius:6px;background:linear-gradient(180deg,rgba(120,190,230,.6),rgba(70,150,205,.85))"></div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:0">солнце → испарение → облако → дождь → река</div></div>`)),
+        sml('вода путешествует по кругу: испаряется, собирается в облака, падает дождём и возвращается в реки'));
     } else if(step===15){
       h=col(big('Проверь себя'),
-        rowC(chip('лёд плавится при 0°C','rgba(127,184,160,.5)'),chip('вода кипит при 100°C','rgba(127,184,160,.5)'),chip('пар — газообразное состояние','rgba(127,184,160,.5)'))+
-        sml('три числа-ориентира: 0 (плавление) и 100 (кипение)'));
+        rowC(card('<b style="color:#bfe6ff">0 °C</b><br>лёд плавится, вода замерзает'),
+             card('<b style="color:#ffd76a">100 °C</b><br>вода кипит, образуется пар'),
+             card('<b style="color:#7de0a0">пар</b><br>газообразное состояние')),
+        scene(at(70,20, box(apMol(kind,18,116,100,molCol,7)+cap('сейчас '+state+' при '+T+' °C')))),
+        ctl);
     } else if(step===16){
-      const POOL=[['ice','0'],['ice','-5'],['water','25'],['water','0'],['steam','100'],['water','99'],['ice','-20'],['steam','150']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0], t=+e[1];
-      const stateLabel=kind==='ice'?'твёрдом (лёд)':kind==='water'?'жидком (вода)':'газообразном (пар)';
-      const firstStep=t<0?'ниже 0°C → вода замёрзла':t===0?'ровно 0°C — точка плавления/замерзания':t<100?'от 0 до 100°C → вода жидкая':t===100?'ровно 100°C — кипит': 'выше 100°C → пар';
-      const ans=kind==='ice'?'лёд':kind==='water'?'вода':'пар';
-      h=col(big('💧 Тренажёр: состояние воды'),
-        `<div class="wv-row">${chip('вода при '+t+'°C — в каком состоянии?','rgba(217,164,65,.35)')}</div>`+
-        rowC(l98Thermo(t,'t'),'')+
-        l98Mol(kind,'t2')+
-        (st.s1? `<div class="l35-pop" style="font-size:16px;text-align:center;color:#ffd9a0;max-width:280px">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">${stateLabel}</div>`:'')+
-        btns(btn('1️⃣ подумай',`l98Act('${lk}','s1')`),btn('2️⃣ ответ',`l98Act('${lk}','s2')`),btn('🎲 другая',`l98Act('${lk}','n')`),btn('↺',`l98Act('${lk}','r')`))+
-        sml('ниже 0 — лёд, 0–100 — вода, от 100 — пар!'));
+      h=col(big('Тренажёр: угадай состояние'),
+        scene(at(230,20, thermo(T))
+          +at(54,20, box(apMol(kind,18,116,100,molCol,7)+cap(T<0?'молекулы в решётке':(T<100?'молекулы бегают рядом':'молекулы разлетаются'))))),
+        ctl, sml('при '+T+' °C вещество находится в состоянии: '+state));
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            💧 Три состояния: лёд, вода, пар.<br>
-            🧊 Лёд плавится при 0°C.<br>
-            ♨️ Вода кипит при 100°C.<br>
-            🔄 Все переходы обратимы!</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там про кипение'));
+      h=col(big('Главное о воде'),
+        card('одно вещество — три состояния<br>лёд: молекулы в решётке<br>вода: молекулы бегают рядом<br>пар: молекулы разлетаются<br>плавление и замерзание — 0 °C<br>кипение — 100 °C<br>в природе — круговорот воды'),
+        scene(at(10,30, box(apMol('solid',10,86,80,'#bfe6ff',6))+cap('лёд'))
+          +at(140,30, box(apMol('liquid',10,86,80,'#7fd1ff',6))+cap('вода'))
+          +capAt(140,'одна и та же вода в разных состояниях')));
     }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
-}
-
-// ============ УРОК 92 v2 «Что изучает физика» — легенда «Три зала музея Архимеда» ============
-var L92POOL=[['body','гвоздь','🔨'],['body','молоток','🔨'],['body','стакан','🥛'],['body','мяч','⚽'],['body','карандаш','✏️'],['body','ложка','🥄'],['body','стул','🪑'],['body','книга','📖'],['sub','железо','🧱'],['sub','вода','💧'],['sub','стекло','🪟'],['sub','дерево','🪵'],['sub','медь','🟠'],['sub','золото','🟡'],['sub','воздух','🎈'],['sub','кислород','🫧'],['ev','таяние снега','☀️'],['ev','гром','💥'],['ev','дождь','🌧️'],['ev','молния','⚡'],['ev','кипение воды','♨️'],['ev','полёт мяча','🏀'],['ev','радуга','🌈'],['ev','горение свечи','🕯️']];
-// ============ УРОК 92 v3 «Что изучает физика» — «Музей природы Архимеда» ============
-var L92POOL=[['body','гвоздь','🔨','предмет с острым концом, им прибивают доски'],['body','молоток','🔨','инструмент, которым забивают гвозди'],['body','стакан','🥛','в него наливают воду или чай'],['body','мяч','⚽','им играют в футбол и баскетбол'],['body','карандаш','✏️','им рисуют и пишут на бумаге'],['body','ложка','🥄','ей едят суп и кашу'],['body','стул','🪑','на нём сидят за столом'],['body','книга','📖','в ней напечатаны рассказы и задачи'],['sub','железо','🧱','серый металл: из него гвозди и корабли'],['sub','вода','💧','жидкость без цвета и запаха, нужна всему живому'],['sub','стекло','🪟','прозрачный материал для окон и стаканов'],['sub','дерево','🪵','материал деревьев: из него мебель и бумага'],['sub','медь','🟠','красноватый металл для проводов и монет'],['sub','золото','🟡','жёлтый драгоценный металл для украшений'],['sub','воздух','🎈','смесь газов вокруг нас, невидимый'],['sub','кислород','🫧','газ, которым дышат люди и животные'],['ev','таяние снега','☀️','снег превращается в воду при тепле'],['ev','гром','💥','раскатистый звук после молнии'],['ev','дождь','🌧️','с неба падают капли воды'],['ev','молния','⚡','гигантская электрическая искра в небе'],['ev','кипение воды','♨️','вода бурлит и превращается в пар'],['ev','полёт мяча','🏀','мяч летит по дуге после броска'],['ev','радуга','🌈','разноцветная дуга после дождя'],['ev','горение свечи','🕯️','свеча светит и плавит воск']];
-// ============ УРОК 92 v4 «Что изучает физика» — детализированные SVG-сцены ============
-var L92POOL=[['body','гвоздь','описание: стальной стержень со шляпкой, им прибивают доски'],['body','молоток','инструмент с деревянной ручкой и стальным бойком'],['body','стакан','прозрачный сосуд для воды — из стекла'],['body','мяч','резиновый шар с камерой, им играют'],['body','карандаш','деревянный стержень с грифелем для письма'],['body','ложка','металлическая ложка для супа'],['body','стул','предмет мебели: сиденье, спинка, ножки'],['body','книга','листы бумаги в переплёте с обложкой'],['sub','железо','серый металл: твёрдый, блестит, притягивается магнитом'],['sub','вода','прозрачная жидкость без запаха, замерзает при 0°'],['sub','стекло','прозрачный твёрдый материал: хрупкий, пропускает свет'],['sub','дерево','твёрдый материал от деревьев: лёгкий, горит'],['sub','медь','красноватый металл: мягкий, хорошо проводит ток'],['sub','золото','жёлтый металл: тяжёлый, не ржавеет'],['sub','воздух','смесь газов: азот и кислород, невидимый'],['sub','кислород','газ, которым дышат — без цвета и запаха'],['ev','таяние снега','процесс: снежинки превращаются в воду под теплом'],['ev','гром','звук: раскат после молнии, воздух сотрясается'],['ev','дождь','процесс: капли воды падают из туч'],['ev','молния','гигантская электрическая искра между облаками'],['ev','кипение воды','процесс: вода бурлит и становится паром при 100°'],['ev','полёт мяча','движение: мяч летит по дуге после удара'],['ev','радуга','свет: солнечные лучи распадаются на цвета в каплях'],['ev','горение свечи','процесс: воск плавится, пламя даёт свет и тепло']];
-// ============ УРОК 92 v6 «Что изучает физика» — рисованные предметы + анимации ============
-var L92POOL=[['body','гвоздь','стальной стержень со шляпкой, им прибивают доски','nail'],['body','молоток','инструмент: деревянная ручка и стальной боёк','hammer'],['body','стакан','прозрачный стеклянный сосуд для воды','glass'],['body','мяч','резиновый шар, в него играют ногой','ball'],['body','карандаш','деревянный стержень с грифелем','pencil'],['body','ложка','металлическая ложка для супа','spoon'],['body','стул','мебель: сиденье, спинка и ножки','chair'],['body','книга','бумажные страницы в переплёте','book'],['sub','железо','серый металл, притягивается магнитом','iron'],['sub','вода','жидкость без цвета, замерзает при 0°','water'],['sub','стекло','прозрачный хрупкий материал','sheet'],['sub','дерево','материал от деревьев, лёгкий','wood'],['sub','медь','красноватый металл, проводит ток','copper'],['sub','золото','жёлтый металл, не ржавеет','gold'],['sub','воздух','смесь газов: азот и кислород','air'],['sub','кислород','газ, которым дышат','oxygen'],['ev','таяние снега','снежинки тают и становятся водой','melt'],['ev','гром','раскат звука после молнии','thunder'],['ev','дождь','капли воды падают из туч','rain'],['ev','молния','гигантская электрическая искра','bolt'],['ev','кипение воды','вода бурлит и становится паром','boil'],['ev','полёт мяча','мяч летит по дуге после удара','fly'],['ev','радуга','солнечный свет распадается на цвета','rainbow'],['ev','горение свечи','воск плавится, пламя горит','candle']];
-// ============ УРОК 92 v6 «Что изучает физика» — рисованные предметы + анимации ============
-var L92POOL=[['body','гвоздь','стальной стержень со шляпкой, им прибивают доски','nail'],['body','молоток','инструмент: деревянная ручка и стальной боёк','hammer'],['body','стакан','прозрачный стеклянный сосуд для воды','glass'],['body','мяч','резиновый шар, в него играют ногой','ball'],['body','карандаш','деревянный стержень с грифелем','pencil'],['body','ложка','металлическая ложка для супа','spoon'],['body','стул','мебель: сиденье, спинка и ножки','chair'],['body','книга','бумажные страницы в переплёте','book'],['sub','железо','серый металл, притягивается магнитом','iron'],['sub','вода','жидкость без цвета, замерзает при 0°','water'],['sub','стекло','прозрачный хрупкий материал','sheet'],['sub','дерево','материал от деревьев, лёгкий','wood'],['sub','медь','красноватый металл, проводит ток','copper'],['sub','золото','жёлтый металл, не ржавеет','gold'],['sub','воздух','смесь газов: азот и кислород','air'],['sub','кислород','газ, которым дышат','oxygen'],['ev','таяние снега','снежинки тают и становятся водой','melt'],['ev','гром','раскат звука после молнии','thunder'],['ev','дождь','капли воды падают из туч','rain'],['ev','молния','гигантская электрическая искра','bolt'],['ev','кипение воды','вода бурлит и становится паром','boil'],['ev','полёт мяча','мяч летит по дуге после удара','fly'],['ev','радуга','солнечный свет распадается на цвета','rainbow'],['ev','горение свечи','воск плавится, пламя горит','candle']];
-// ============ УРОК 92 v6 «Что изучает физика» — рисованные предметы + анимации ============
-var L92POOL=[['body','гвоздь','стальной стержень со шляпкой, им прибивают доски','nail'],['body','молоток','инструмент: деревянная ручка и стальной боёк','hammer'],['body','стакан','прозрачный стеклянный сосуд для воды','glass'],['body','мяч','резиновый шар, в него играют ногой','ball'],['body','карандаш','деревянный стержень с грифелем','pencil'],['body','ложка','металлическая ложка для супа','spoon'],['body','стул','мебель: сиденье, спинка и ножки','chair'],['body','книга','бумажные страницы в переплёте','book'],['sub','железо','серый металл, притягивается магнитом','iron'],['sub','вода','жидкость без цвета, замерзает при 0°','water'],['sub','стекло','прозрачный хрупкий материал','sheet'],['sub','дерево','материал от деревьев, лёгкий','wood'],['sub','медь','красноватый металл, проводит ток','copper'],['sub','золото','жёлтый металл, не ржавеет','gold'],['sub','воздух','смесь газов: азот и кислород','air'],['sub','кислород','газ, которым дышат','oxygen'],['ev','таяние снега','снежинки тают и становятся водой','melt'],['ev','гром','раскат звука после молнии','thunder'],['ev','дождь','капли воды падают из туч','rain'],['ev','молния','гигантская электрическая искра','bolt'],['ev','кипение воды','вода бурлит и становится паром','boil'],['ev','полёт мяча','мяч летит по дуге после удара','fly'],['ev','радуга','солнечный свет распадается на цвета','rainbow'],['ev','горение свечи','воск плавится, пламя горит','candle']];
-// ============ УРОК 92 v6 «Что изучает физика» — рисованные предметы + анимации ============
-var L92POOL=[['body','гвоздь','стальной стержень со шляпкой, им прибивают доски','nail'],['body','молоток','инструмент: деревянная ручка и стальной боёк','hammer'],['body','стакан','прозрачный стеклянный сосуд для воды','glass'],['body','мяч','резиновый шар, в него играют ногой','ball'],['body','карандаш','деревянный стержень с грифелем','pencil'],['body','ложка','металлическая ложка для супа','spoon'],['body','стул','мебель: сиденье, спинка и ножки','chair'],['body','книга','бумажные страницы в переплёте','book'],['sub','железо','серый металл, притягивается магнитом','iron'],['sub','вода','жидкость без цвета, замерзает при 0°','water'],['sub','стекло','прозрачный хрупкий материал','sheet'],['sub','дерево','материал от деревьев, лёгкий','wood'],['sub','медь','красноватый металл, проводит ток','copper'],['sub','золото','жёлтый металл, не ржавеет','gold'],['sub','воздух','смесь газов: азот и кислород','air'],['sub','кислород','газ, которым дышат','oxygen'],['ev','таяние снега','снежинки тают и становятся водой','melt'],['ev','гром','раскат звука после молнии','thunder'],['ev','дождь','капли воды падают из туч','rain'],['ev','молния','гигантская электрическая искра','bolt'],['ev','кипение воды','вода бурлит и становится паром','boil'],['ev','полёт мяча','мяч летит по дуге после удара','fly'],['ev','радуга','солнечный свет распадается на цвета','rainbow'],['ev','горение свечи','воск плавится, пламя горит','candle']];
-// ============ УРОК 92 v7 «Что изучает физика» — «Атлас чудес природы» ============
-var L92POOL=[['body','снежинка','кристаллик льда с шестью лучами, падает с неба','snow'],['body','планета','огромный шар, летит по орбите вокруг звезды','planet'],['body','комета','ледяное тело с хвостом, мчится в космосе','comet'],['body','капля','маленький шарик воды','drop'],['body','айсберг','ледяная гора, плавает в океане','iceberg'],['body','метеорит','камень, упавший из космоса','meteor'],['sub','вода','прозрачная жидкость: без неё нет жизни','water'],['sub','золото','жёлтый драгоценный металл','gold'],['sub','кислород','газ, которым мы дышим','oxygen'],['sub','воздух','смесь газов вокруг Земли','air'],['sub','лёд','твёрдая вода','ice'],['sub','алмаз','самый твёрдый минерал, блестит','diamond'],['ev','молния','гигантская электрическая искра в небе','bolt'],['ev','радуга','солнечный свет распадается в каплях','rainbow'],['ev','северное сияние','небо светится зелёным у полюсов','aurora'],['ev','гейзер','горячий фонтан бьёт из-под земли','geyser'],['ev','извержение','вулкан выбрасывает лаву','volcano'],['ev','гром','раскат звука после молнии','thunder'],['ev','таяние снега','снежинки становятся водой','melt'],['ev','дождь','капли падают из туч','rain'],['ev','кипение','вода становится паром','boil'],['ev','полёт кометы','комета мчится по небу','flycomet'],['ev','снегопад','снежинки кружатся с неба','snowfall'],['ev','гроза','молнии и гром бушуют в тучах','storm']];
-function l92Act(lk,act){
-  const st=CHS[lk]||(CHS[lk]={});
-  if(st.i==null) st.i=Math.floor(Math.random()*L92POOL.length); if(st.score==null) st.score=0;
-  const m=act.match(/^pick(\d)$/);
-  if(m){
-    const kind=L92POOL[st.i][0];
-    const correct=kind==='body'?0:kind==='sub'?1:2;
-    st.last=(+m[1]===correct)?'ok':'no';
-    if(+m[1]===correct){ st.score++; st.done=st.done||{}; st.done[st.i]=1; }
-    else st.hintShow=1;
-  }
-  if(act==='n'){ st.i=(st.i+1)%L92POOL.length; st.last=''; st.hintShow=0; }
-  if(act==='r'){ st.i=Math.floor(Math.random()*L92POOL.length); st.score=0; st.done={}; st.last=''; st.hintShow=0; }
-  chRender(0);
-}
-// ============== БИБЛИОТЕКА ЧУДЕС (каждый — свой SVG) ==============
-var L92ART={};
-function l92S(inner,w,h,vb){ return `<svg width="${w}" height="${h}" viewBox="${vb||('0 0 '+w+' '+h)}" style="display:block;max-width:100%">${inner}</svg>`; }
-// ---- ЧУДЕСА-ТЕЛА ----
-L92ART.snow=l92S('<g><defs><radialGradient id="s1" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bfe3f7"/></radialGradient></defs>'+[0,60,120].map(a=>`<line x1="60" y1="46" x2="60" y2="12" stroke="#9cc9e4" stroke-width="5" stroke-linecap="round" transform="rotate(${a} 60 46)"/>`).join('')+[30,90,150].map(a=>`<line x1="60" y1="46" x2="60" y2="18" stroke="#d5ecf8" stroke-width="3" stroke-linecap="round" transform="rotate(${a} 60 46)" opacity=".8"/>`).join('')+'<circle cx="60" cy="46" r="5" fill="#ffffff"/></g>',120,92);
-L92ART.planet=l92S('<g><defs><radialGradient id="p1" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ffd9a0"/><stop offset=".55" stop-color="#e89a5c"/><stop offset="1" stop-color="#b06828"/></radialGradient></defs><ellipse cx="60" cy="52" rx="60" ry="14" fill="none" stroke="#e8cfa0" stroke-width="7" transform="rotate(-16 60 52)"/><circle cx="60" cy="52" r="26" fill="url(#p1)"/><path d="M52 40 Q60 34 68 38 M44 50 Q58 44 76 52" stroke="#c07030" stroke-width="4" fill="none" opacity=".7"/></g>',120,86);
-L92ART.comet=l92S('<g><path d="M10 76 Q50 40 92 20" stroke="#cfe4f2" stroke-width="7" stroke-linecap="round" opacity=".7"/><path d="M10 76 Q50 40 92 20" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity=".8"/><circle cx="96" cy="17" r="13" fill="#eaf6ff" stroke="#9cc9e4" stroke-width="2"/><circle cx="92" cy="13" r="4" fill="#ffffff"/></g>',112,88);
-L92ART.drop=l92S('<g><defs><linearGradient id="d1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf6ff"/><stop offset="1" stop-color="#4f9fd8"/></linearGradient></defs><path d="M60 8 Q76 30 78 44 Q80 66 60 68 Q40 66 42 44 Q44 30 60 8 Z" fill="url(#d1)"/><line x1="51" y1="30" x2="48" y2="48" stroke="#ffffff" stroke-width="3" opacity=".8" stroke-linecap="round"/></g>',100,76);
-L92ART.iceberg=l92S('<g><defs><linearGradient id="i1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#bfe3f5"/><stop offset="1" stop-color="#7fb7d8"/></linearGradient></defs><path d="M30 56 L22 76 L98 76 L86 56 L74 30 L46 34 Z" fill="url(#i1)" stroke="#5a8fb8" stroke-width="2"/><path d="M30 56 Q46 66 62 56 Q78 46 86 56" stroke="#ffffff" stroke-width="3" fill="none" opacity=".8"/><path d="M0 76 Q60 66 120 76 L120 90 L0 90 Z" fill="#4f9fd8" opacity=".8"/></g>',120,92);
-L92ART.meteor=l92S('<g><defs><linearGradient id="m1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#dfe9f0"/><stop offset=".6" stop-color="#8a9ab0"/><stop offset="1" stop-color="#5c6a80"/></linearGradient></defs><path d="M12 40 Q44 10 88 6" stroke="#ffb46b" stroke-width="6" stroke-linecap="round" opacity=".8"/><path d="M20 36 Q50 14 84 12" stroke="#ffd966" stroke-width="3" stroke-linecap="round" opacity=".9"/><path d="M86 6 Q98 4 104 14 Q96 20 86 14 Q80 8 86 6 Z" fill="url(#m1)" stroke="#4a5a6a" stroke-width="1.5"/><circle cx="90" cy="10" r="3" fill="#ffffff" opacity=".8"/></g>',112,60);
-// ---- ЧУДЕСА-ВЕЩЕСТВА ----
-L92ART.water=l92S('<g><path d="M60 6 Q76 26 78 40 Q80 60 60 62 Q40 60 42 40 Q44 26 60 6 Z" fill="#7fb7e8" stroke="#4f9fd8" stroke-width="2"/><line x1="52" y1="24" x2="48" y2="42" stroke="#fff" stroke-width="3" opacity=".8"/><path d="M12 76 Q36 70 60 76 Q84 82 108 76" stroke="#9cc9e4" stroke-width="2.5" fill="none" opacity=".7"/></g>',112,86);
-L92ART.gold=l92S('<g><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset=".5" stop-color="#ffd966"/><stop offset="1" stop-color="#d9a441"/></linearGradient></defs><path d="M40 56 L40 40 L80 40 L80 56 Z" fill="url(#g1)"/><path d="M40 40 L44 30 L76 30 L80 40 Z" fill="#ffe98a"/><path d="M36 56 L40 48 L80 48 L84 56 Z" fill="#e8b03c"/><circle cx="96" cy="26" r="10" fill="#ffd966" opacity=".6"/><line x1="96" y1="18" x2="96" y2="10" stroke="#ffd966" stroke-width="2.5"/><line x1="90" y1="22" x2="83" y2="20" stroke="#ffd966" stroke-width="2"/></g>',110,70);
-L92ART.oxygen=l92S('<g><circle cx="60" cy="46" r="26" fill="#9cc9e4" opacity=".45" stroke="#4f9fd8" stroke-width="3"/><text x="60" y="54" fill="#17324a" font-size="17" text-anchor="middle" font-weight="bold" font-family="Georgia,serif">O₂</text><circle cx="20" cy="70" r="7" fill="#9cc9e4" opacity=".4"/><circle cx="100" cy="66" r="5" fill="#9cc9e4" opacity=".3"/></g>',110,84);
-L92ART.air=l92S('<g><circle cx="34" cy="40" r="14" fill="#cfe4f2" opacity=".6"/><circle cx="56" cy="28" r="10" fill="#cfe4f2" opacity=".5"/><circle cx="70" cy="42" r="12" fill="#cfe4f2" opacity=".55"/><circle cx="52" cy="52" r="9" fill="#cfe4f2" opacity=".4"/><path d="M20 66 Q60 58 100 66" stroke="#bfd8ea" stroke-width="3" fill="none" opacity=".7"/></g>',110,78);
-L92ART.ice=l92S('<g><rect x="26" y="28" width="58" height="44" rx="8" fill="#d5ecf8" opacity=".6" stroke="#7fb7d8" stroke-width="3"/><line x1="36" y1="36" x2="36" y2="64" stroke="#fff" stroke-width="4" opacity=".9"/><line x1="44" y1="34" x2="44" y2="58" stroke="#fff" stroke-width="2" opacity=".5"/><rect x="18" y="72" width="74" height="4" rx="2" fill="#cfe4f2" opacity=".5"/></g>',100,82);
-L92ART.diamond=l92S('<g><defs><linearGradient id="dm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#bfe8f5"/><stop offset="1" stop-color="#8fd0e8"/></linearGradient></defs><path d="M60 6 L96 40 L60 90 L24 40 Z" fill="url(#dm)" stroke="#5ab8d8" stroke-width="2"/><path d="M60 6 L60 90 M24 40 L96 40" stroke="#ffffff" stroke-width="1.5" opacity=".6"/><line x1="42" y1="28" x2="36" y2="52" stroke="#ffffff" stroke-width="3" opacity=".9"/></g>',110,96);
-// ---- ЧУДЕСА-ЯВЛЕНИЯ ----
-L92ART.bolt=l92S('<g><defs><linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset="1" stop-color="#ffb400"/></linearGradient></defs><circle cx="96" cy="14" r="18" fill="#8a9ab0" opacity=".45"/><circle cx="90" cy="10" r="12" fill="#aab8c8" opacity=".5"/><path d="M62 6 L42 8 L58 36 L36 36 L70 88 L56 44 L78 42 L62 6 Z" fill="url(#b1)" stroke="#d98a00" stroke-width="1.5"/></g>',110,94);
-L92ART.rainbow=l92S('<g><path d="M18 72 A46 46 0 0 1 102 72" stroke="#ff5a5a" stroke-width="7" fill="none"/><path d="M22 72 A42 42 0 0 1 98 72" stroke="#ffb400" stroke-width="6" fill="none"/><path d="M26 72 A38 38 0 0 1 94 72" stroke="#ffe14d" stroke-width="6" fill="none"/><path d="M30 72 A34 34 0 0 1 90 72" stroke="#7fd1a0" stroke-width="6" fill="none"/><path d="M34 72 A30 30 0 0 1 86 72" stroke="#4f9fd8" stroke-width="6" fill="none"/><path d="M38 72 A26 26 0 0 1 82 72" stroke="#8a5ad8" stroke-width="6" fill="none"/><rect x="0" y="72" width="120" height="16" fill="#5a7a3a"/><circle cx="100" cy="20" r="12" fill="#ffd966"/></g>',120,90);
-L92ART.aurora=l92S('<g><rect x="0" y="0" width="120" height="70" fill="#0a1a2e"/><path d="M10 62 Q30 30 50 56 Q70 20 90 52 Q105 34 118 48 L118 70 L10 70 Z" fill="#7fd1a0" opacity=".5"/><path d="M6 66 Q26 42 48 60 Q68 32 88 58 Q104 44 116 54 L116 70 L6 70 Z" fill="#4f9fd8" opacity=".45"/><path d="M8 70 Q30 50 52 64 Q74 44 96 60 Q108 52 116 60 L116 70 L8 70 Z" fill="#d98ae8" opacity=".35"/><circle cx="20" cy="16" r="3" fill="#fff" opacity=".8"/><circle cx="60" cy="10" r="2" fill="#fff" opacity=".6"/><circle cx="95" cy="18" r="2.5" fill="#fff" opacity=".7"/><rect x="0" y="70" width="120" height="16" fill="#12263a"/></g>',120,88);
-L92ART.geyser=l92S('<g><rect x="0" y="66" width="120" height="20" fill="#7a5a3a"/><path d="M52 66 L48 44 L72 44 L68 66 Z" fill="#8a6a4a" stroke="#6a4e2e" stroke-width="2"/><path d="M60 44 L60 20" stroke="#bfe3f7" stroke-width="6" stroke-linecap="round"/><path d="M60 20 Q48 14 54 6 M60 20 Q72 14 66 6" stroke="#cfe8fb" stroke-width="3" stroke-linecap="round" fill="none"/><circle cx="60" cy="12" r="4" fill="#eaf6ff"/><path d="M44 56 Q50 50 56 54 M66 54 Q72 50 78 54" stroke="#e8f6fd" stroke-width="2" fill="none" opacity=".8"/></g>',120,88);
-L92ART.volcano=l92S('<g><path d="M14 88 L44 34 Q50 24 60 20 Q70 24 76 34 L106 88 Z" fill="#7a4a2e" stroke="#5a3419" stroke-width="2"/><path d="M44 34 Q50 28 60 24 Q70 28 76 34 L68 50 Q60 44 52 50 Z" fill="#ff8a3a"/><path d="M52 50 Q60 44 68 50 L64 60 Q60 56 56 60 Z" fill="#ffb46b"/><path d="M60 20 L60 2 M56 12 L44 6 M64 12 L78 4" stroke="#ffd966" stroke-width="3" stroke-linecap="round" opacity=".9" class="none"/><rect x="0" y="84" width="120" height="8" fill="#4a6230"/></g>',120,92);
-L92ART.thunder=l92S('<g><path d="M16 30 L104 30 L96 48 L112 48 L52 88 L70 50 L38 50 Z" fill="#5a6a80" opacity=".85"/><ellipse cx="26" cy="26" rx="14" ry="9" fill="#7d8da5"/><ellipse cx="66" cy="22" rx="12" ry="8" fill="#8a9ab0"/><path d="M52 48 L60 60 L50 60 L58 78 L64 58 L72 58 Z" fill="#ffd966" opacity=".9"/></g>',120,92);
-L92ART.melt=l92S('<g><g transform="translate(38 8)">'+[0,60,120].map(a=>`<line x1="0" y1="-20" x2="0" y2="20" stroke="#bfe3f7" stroke-width="3.5" stroke-linecap="round" transform="rotate(${a})"/>`).join('')+'<circle cx="0" cy="0" r="3" fill="#eaf6fd"/></g><ellipse cx="76" cy="66" rx="24" ry="8" fill="#4f9fd8" opacity=".7"/><path d="M52 60 Q76 70 100 58" stroke="#8fd0f0" stroke-width="2.5" fill="none" opacity=".9"/></g>',120,84);
-L92ART.rain=l92S('<g><ellipse cx="38" cy="24" rx="26" ry="15" fill="#6a7a90"/><ellipse cx="66" cy="19" rx="20" ry="12" fill="#7d8da5"/><ellipse cx="88" cy="28" rx="17" ry="11" fill="#5a6a80"/><path d="M28 38 L24 60 M44 38 L40 64 M58 40 L54 62 M72 40 L68 62 M86 40 L82 60" stroke="#4f9fd8" stroke-width="2.5" stroke-linecap="round" opacity=".85"/></g>',108,70);
-L92ART.boil=l92S('<g><path d="M22 26 L18 72 Q18 80 24 80 L96 80 Q102 80 102 72 L98 26 Z" fill="#cfe8fb" opacity=".55" stroke="#7fa3b8" stroke-width="3"/><rect x="26" y="50" width="68" height="28" fill="#4f9fd8" opacity=".75"/><circle cx="46" cy="46" r="4" fill="#fff" opacity=".9" class="wv-rise"/><circle cx="64" cy="42" r="5" fill="#fff" opacity=".9" class="wv-rise2"/><circle cx="80" cy="48" r="3.5" fill="#fff" opacity=".9" class="wv-rise3"/><path d="M56 12 Q64 4 72 12 M36 16 Q44 8 52 16" stroke="#fff" stroke-width="2.5" fill="none" opacity=".8" class="wv-flick"/></g>',112,88);
-L92ART.flycomet=l92S('<g><path d="M8 72 Q44 18 88 12" stroke="#cfe4f2" stroke-width="3" stroke-dasharray="7 6" fill="none" opacity=".9"/><circle cx="84" cy="14" r="11" fill="#eaf6ff" stroke="#9cc9e4" stroke-width="2"/><path d="M70 26 Q52 16 40 8" stroke="#ffd966" stroke-width="2" fill="none" opacity=".8"/></g>',100,80);
-L92ART.snowfall=l92S('<g><rect x="0" y="0" width="120" height="70" fill="#8aa0b8"/><rect x="0" y="70" width="120" height="18" fill="#d5e8f5"/><g transform="translate(30 30)">'+[0,60,120].map(a=>`<line x1="0" y1="-10" x2="0" y2="10" stroke="#fff" stroke-width="2" transform="rotate(${a})"/>`).join('')+'</g><g transform="translate(70 20)">'+[0,60,120].map(a=>`<line x1="0" y1="-9" x2="0" y2="9" stroke="#fff" stroke-width="2" transform="rotate(${a})"/>`).join('')+'</g><g transform="translate(95 44)">'+[0,60,120].map(a=>`<line x1="0" y1="-8" x2="0" y2="8" stroke="#fff" stroke-width="2" transform="rotate(${a})"/>`).join('')+'</g><g transform="translate(52 52)">'+[0,60,120].map(a=>`<line x1="0" y1="-8" x2="0" y2="8" stroke="#fff" stroke-width="2" transform="rotate(${a})"/>`).join('')+'</g></g>',120,90);
-L92ART.storm=l92S('<g><rect x="0" y="0" width="120" height="70" fill="#46566e"/><ellipse cx="30" cy="22" rx="22" ry="13" fill="#57677f"/><ellipse cx="62" cy="17" rx="18" ry="11" fill="#64748c"/><ellipse cx="90" cy="24" rx="20" ry="12" fill="#4a5a72"/><path d="M30 34 L40 46 L34 46 L42 60 L48 44 L56 44 L30 34 Z" fill="#ffd966" opacity=".95" class="wv-flick"/><path d="M72 36 L80 48 L75 48 L82 60 L87 46 L94 46 Z" fill="#ffe98a" opacity=".9" class="wv-flick"/><rect x="0" y="70" width="120" height="18" fill="#2e3a4e"/></g>',120,90);
-function l92Art(id,w,h){
-  const s=L92ART[id]||L92ART.snow;
-  if(!w) return s;
-  const m=s.match(/viewBox="([^"]+)"/);
-  const vb=m?m[1]:'0 0 120 90';
-  const p=vb.split(' ').map(Number); const vw=p[2]-p[0]||120, vh=p[3]-p[1]||90;
-  let W=w, H=h||Math.round(w*vh/vw);
-  if(h&&w){ const k=Math.min(w/vw,h/vh); W=Math.round(vw*k); H=Math.round(vh*k); }
-  const inner=s.replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'');
-  return `<svg width="${W}" height="${H}" viewBox="${vb}" style="display:block;max-width:100%">${inner}</svg>`;
-}
-function l92B(txt,c){ return `<span style="display:inline-block;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:10px;background:${c}22;border:1px solid ${c};color:${c};margin-bottom:3px">${txt}</span>`; }
-function l92Card(tag,emoji,title,lines,color){
-  if(!Array.isArray(lines)) lines=[lines];
-  let ls='';
-  for(let i=0;i<lines.length;i++) ls+=`<div style="font-size:12.5px;color:#d8ecff;line-height:1.55;text-align:left;padding:2px 0;${i>0?'border-top:1px dashed rgba(255,255,255,.08)':''}">${lines[i]}</div>`;
-  return `<div style="flex:1;min-width:150px;background:linear-gradient(160deg,${color}14,rgba(0,0,0,.25));border:1px solid ${color}55;border-radius:14px;padding:10px 12px;text-align:left">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><div style="font-size:22px">${emoji}</div><div style="flex:1"><div style="font-size:11px;color:${color};letter-spacing:.5px">${tag}</div><div style="font-size:15px;color:#fff;font-weight:bold;line-height:1.2">${title}</div></div></div>${ls}</div>`;
-}
-function l92Pic(e,size){
-  const [kind,word,desc,art]=e;
-  const col=kind==='body'?'#7fd1a0':kind==='sub'?'#ffd966':'#ff8a6a';
-  const w=size||76;
-  const bg=kind==='body'?'rgba(127,208,160,.09)':kind==='sub'?'rgba(255,217,102,.09)':'rgba(255,138,106,.09)';
-  return `<div style="flex:1;min-width:${w}px;max-width:${w+6}px;background:${bg};border:1px solid ${col}55;border-radius:14px 14px 8px 8px;padding:6px 4px 4px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.35)">
-    <div style="height:${w*0.58}px;display:flex;align-items:flex-end;justify-content:center;position:relative">
-      <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:70%;height:7px;background:rgba(0,0,0,.4);border-radius:50%;filter:blur(2px)"></div>
-      <div style="position:relative;z-index:1;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))">${l92Art(art,w-16)}</div>
-    </div>
-    <div style="background:${col}22;border-top:1px solid ${col}44;border-radius:0 0 6px 6px;padding:2px 0;margin-top:2px">
-      <div style="font-size:10.5px;color:#fff;font-weight:bold">${word}</div>
-      <div style="font-size:7.5px;color:${col};letter-spacing:.5px">${kind==='body'?'ЧУДО-ТЕЛО':kind==='sub'?'ЧУДО-ВЕЩЕСТВО':'ЧУДО-ЯВЛЕНИЕ'}</div>
-    </div>
-  </div>`;
-}
-function l92Doors(hot){
-  const doors=[['Чудеса-ТЕЛА','#7fd1a0','0'],['Чудеса-ВЕЩЕСТВА','#ffd966','1'],['Чудеса-ЯВЛЕНИЯ','#ff8a6a','2']];
-  return `<div style="display:flex;gap:6px;justify-content:center;margin:6px auto">
-    ${doors.map((d,i)=>`<div class="wv-morph" style="flex:1;max-width:104px;padding:8px 4px;text-align:center;border-radius:12px 12px 4px 4px;border:2px solid ${d[1]};background:linear-gradient(180deg,${d[1]}2b,${d[1]}0a);${hot===i?'box-shadow:0 0 14px '+d[1]+'99;transform:scale(1.05)':''}">
-      <div style="font-size:10px;color:#d8ecff">${d[0]}</div>
-      <div style="font-size:18px;margin-top:2px">${hot===i?'🚀➡️':'🌍'}</div>
-    </div>`).join('')}
-  </div>`;
-}
-function visL92(el){
-  try{
-    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(`<div style="font-size:20px;color:#c9b28a;letter-spacing:1px">🌟 ЛЕГЕНДА · Атлас чудес</div>`+
-        big('Экспедиция Архимеда')+
-        `<div style="font-size:40px" class="wv-swing">🌌</div>`+
-        `<div style="background:rgba(127,183,216,.09);border:1.5px solid #7fb7d855;border-radius:16px;padding:12px 14px;max-width:320px;text-align:left">
-          <div style="font-size:14px;color:#e8dcc8;line-height:1.7">Архимед собрал экспедицию: от снежных вершин до вулканов, от дна океана до звёзд! В его рюкзаке — <b>«Атлас чудес природы»</b> с тремя разделами: <span style="color:#7fd1a0">Чудеса-тела</span>, <span style="color:#ffd966">Чудеса-вещества</span> и <span style="color:#ff8a6a">Чудеса-явления</span>. Помоги занести каждое чудо в свой раздел!</div>
-        </div>`);
-    } else if(step===1){
-      h=col(l92B('ТРИ РАЗДЕЛА АТЛАСА','#c9b28a')+
-        big('Три вида чудес')+
-        `<div style="display:flex;flex-direction:column;gap:8px;max-width:340px">
-          <div style="display:flex;align-items:center;gap:10px;background:rgba(127,208,160,.07);border:1px solid #7fd1a044;border-radius:14px;padding:8px 10px">${l92Art('snow',52,40)}<div style="text-align:left"><div style="font-size:13px;color:#7fd1a0;font-weight:bold">Чудеса-ТЕЛА</div><div style="font-size:10.5px;color:#9ec0a8">снежинка, планета, комета — их можно увидеть и измерить</div></div></div>
-          <div style="display:flex;align-items:center;gap:10px;background:rgba(255,217,102,.07);border:1px solid #ffd96644;border-radius:14px;padding:8px 10px">${l92Art('water',52,40)}<div style="text-align:left"><div style="font-size:13px;color:#ffd966;font-weight:bold">Чудеса-ВЕЩЕСТВА</div><div style="font-size:10.5px;color:#9ec0a8">вода, золото, кислород — материалы природы</div></div></div>
-          <div style="display:flex;align-items:center;gap:10px;background:rgba(255,138,106,.07);border:1px solid #ff8a6a44;border-radius:14px;padding:8px 10px">${l92Art('bolt',46,38)}<div style="text-align:left"><div style="font-size:13px;color:#ff8a6a;font-weight:bold">Чудеса-ЯВЛЕНИЯ</div><div style="font-size:10.5px;color:#9ec0a8">молния, радуга, гейзер — процессы природы</div></div></div>
-        </div>`);
-    } else if(step===2){
-      h=col(l92B('СТРАНИЦА 1','#7fd1a0')+
-        big('Чудеса-тела: небесные и земные')+
-        `<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:flex-end;max-width:340px;background:rgba(20,30,50,.35);border:1px solid #3a5a7a44;border-radius:16px;padding:12px 6px 4px">
-          ${[['snow','снежинка'],['planet','планета'],['comet','комета'],['drop','капля'],['iceberg','айсберг']].map(x=>`<div style="text-align:center;width:64px">${l92Art(x[0],58,44)}<div style="font-size:8.5px;color:#cfe4f2;margin-top:2px">${x[1]}</div></div>`).join('')}
-          <div style="height:5px;width:92%;background:linear-gradient(90deg,#3a5a7a,#6a9ac0,#3a5a7a);border-radius:3px;margin:4px 0 2px"></div>
-        </div>`+
-        sml('тело — любое чудо, которое можно увидеть, потрогать, измерить: от капли до планеты!'));
-    } else if(step===3){
-      h=col(l92B('СНЕЖИНКА-РЕКОРДСМЕН','#7fd1a0')+
-        big('Ни одной одинаковой снежинки')+
-        `<div style="text-align:center;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))">${l92Art('snow',200,154)}</div>`+
-        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
-          ${[['❄️','Каждая — кристалл льда','у неё всегда 6 лучей — шестиугольная симметрия!'],['📏','Снежинку можно измерить','размер ~5 мм, масса ~1 мг — но её можно рассмотреть'],['❓','Тело или вещество?','снежинка — ТЕЛО: кусочек льда с формой и размером']].map(f=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(127,208,160,.06);border:1px solid #7fd1a033;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:15px">${f[0]}</span><span style="font-size:12px;color:#d8ecff"><b style="color:#fff">${f[1]}</b><br><span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
-        </div>`);
-    } else if(step===4){
-      h=col(l92B('САМОЕ БОЛЬШОЕ ТЕЛО','#7fd1a0')+
-        big('Планета — тоже тело!')+
-        `<div style="text-align:center">${l92Art('planet',200,144)}</div>`+
-        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
-          ${[['🌍','Земля — гигантское тело','диаметр 12 742 км, масса 6·10²⁴ кг!'],['🪐','У Сатурна есть кольца','изо льда и камней — тоже тела'],['📐','Тела можно измерять','от миллиметра до миллионов километров']].map(f=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(127,208,160,.06);border:1px solid #7fd1a033;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:15px">${f[0]}</span><span style="font-size:12px;color:#d8ecff"><b style="color:#fff">${f[1]}</b><br><span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
-        </div>`);
-    } else if(step===5){
-      h=col(l92B('СТРАНИЦА 2','#ffd966')+
-        big('Чудеса-вещества')+
-        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:340px">
-          ${l92Pic(['sub','Вода','жидкость: без неё нет жизни','water'],104)}
-          ${l92Pic(['sub','Золото','металл: блестит, не ржавеет','gold'],104)}
-          ${l92Pic(['sub','Кислород','газ: им мы дышим','oxygen'],104)}
-        </div>`+
-        sml('вещества — «материалы природы»: из них состоят все тела!'));
-    } else if(step===6){
-      h=col(l92B('ВОДА-ЧАРОДЕЙКА','#ffd966')+
-        big('Одно вещество — три лица')+
-        `<div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;max-width:340px">
-          ${l92Pic(['body','Снежинка','твёрдая вода','snow'],92)}
-          <div style="font-size:20px" class="wv-flick">↔</div>
-          ${l92Pic(['sub','Вода','жидкая','water'],92)}
-          <div style="font-size:20px" class="wv-flick">↔</div>
-          ${l92Pic(['ev','Пар','газообразная','boil'],92)}
-        </div>`+
-        `<div style="background:rgba(255,217,102,.07);border:1px solid #ffd96644;border-radius:12px;padding:8px 12px;max-width:330px;text-align:left;font-size:12px;color:#e8dcc8;line-height:1.6">Снежинка и пар — РАЗНЫЕ тела, но сделаны из ОДНОГО вещества — воды! Тело — предмет, вещество — материал. Как в наших задачках!</div>`);
-    } else if(step===7){
-      h=col(l92B('СТРАНИЦА 3','#ff8a6a')+
-        big('Чудеса-явления: небо и земля')+
-        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;align-items:flex-end;max-width:340px">
-          <div style="text-align:center"><div class="wv-flick">${l92Art('bolt',90,72)}</div><div style="font-size:8.5px;color:#ffd9a0">молния</div></div>
-          <div style="text-align:center;position:relative">${l92Art('rain',84,52)}<div style="font-size:9px;color:#ffd9a0">дождь</div></div>
-          <div style="text-align:center"><div class="wv-pulse">${l92Art('rainbow',100,72)}</div><div style="font-size:8.5px;color:#ffd9a0">радуга</div></div>
-        </div>`+
-        sml('явления — процессы: они длятся, в них что-то меняется!'));
-    } else if(step===8){
-      h=col(l92B('СЕВЕРНОЕ СИЯНИЕ','#ff8a6a')+
-        big('Небо танцует')+
-        `<div style="text-align:center;border-radius:14px;overflow:hidden">${l92Art('aurora',280,120)}</div>`+
-        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
-          ${[['🌌','Северное сияние — явление','солнечный ветер сталкивается с атмосферой — небо светится!'],['⏳','Оно длится','минуты и часы, меняя цвет и форму'],['❓','Явление или тело?','сияние — ПРОЦЕСС: его нельзя взять в руки!']].map(f=>`<div style="display:flex;gap:8px;align-items:flex-start;background:rgba(255,138,106,.06);border:1px solid #ff8a6a33;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:15px">${f[0]}</span><span style="font-size:12px;color:#d8ecff"><b style="color:#fff">${f[1]}</b><br><span style="color:#9ec0a8">${f[2]}</span></span></div>`).join('')}
-        </div>`);
-    } else if(step===9){
-      h=col(l92B('ПРОВЕРКА ЭКСПЕДИЦИИ','#c9b28a')+
-        big('Гром, молния и дождь — это?')+
-        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;align-items:flex-end">${l92Art('bolt',90,70)}${l92Art('rain',80,48)}</div>`+
-        `<div class="wv-ans" style="font-size:20px;color:#ff8a6a;font-weight:bold">это ЧУДЕСА-ЯВЛЕНИЯ — процессы в природе!</div>`+
-        sml('как в нашей проверке: дождь, гром, молния — физические явления!'));
-    } else if(step===10){
-      h=col(l92B('СПОР В ЭКСПЕДИЦИИ','#c9b28a')+
-        big('Три «родственника» воды')+
-        `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:340px">
-          ${l92Pic(['body','Снежинка','кристалл льда','snow'],96)}
-          ${l92Pic(['ev','Таяние','лёд → вода','melt'],96)}
-          ${l92Pic(['sub','Вода','жидкое вещество','water'],96)}
-        </div>`+
-        sml('снежинка, её таяние и вода спорят: кто тело, кто вещество, а кто явление?'));
-    } else if(step===11){
-      h=col(l92B('РАЗБОР 1','#7fd1a0')+
-        big('Снежинка — ЧУДО-ТЕЛО')+
-        `<div style="text-align:center;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))">${l92Art('snow',190,146)}</div>`+
-        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
-          ${[['✋','Можно рассмотреть','у неё форма, размер, масса'],['📏','Можно измерить','до 5 мм, до 1 мг'],['💧','Сделана из вещества','из замёрзшей воды — льда']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(127,208,160,.06);border:1px solid #7fd1a033;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
-        </div>`);
-    } else if(step===12){
-      h=col(l92B('РАЗБОР 2','#ff8a6a')+
-        big('Таяние — ЧУДО-ЯВЛЕНИЕ')+
-        `<div style="text-align:center;display:flex;align-items:center;justify-content:center;gap:8px">${l92Art('snow',80,62)}<div style="font-size:22px" class="wv-flick">→</div>${l92Art('melt',80,56)}</div>`+
-        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
-          ${[['⏳','Длится во времени','снежинка → капля: процесс идёт'],['🔥','Нужно тепло','лёд тает при 0°C'],['🔄','Изменение','твёрдое стало жидким']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,138,106,.06);border:1px solid #ff8a6a33;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
-        </div>`);
-    } else if(step===13){
-      h=col(l92B('РАЗБОР 3','#ffd966')+
-        big('Вода — ЧУДО-ВЕЩЕСТВО')+
-        `<div style="text-align:center">${l92Art('water',120,84)}</div>`+
-        `<div style="display:flex;flex-direction:column;gap:5px;max-width:330px">
-          ${[['🧪','Материал природы','из воды состоят снежинки, капли, океаны'],['⚗️','Свойства воды','прозрачная, без запаха, замерзает при 0°'],['🌊','Из неё делают тела','лёд, пар, дождь — всё это вода в разных видах']].map(f=>`<div style="display:flex;gap:8px;align-items:center;background:rgba(255,217,102,.06);border:1px solid #ffd96633;border-radius:10px;padding:5px 10px;text-align:left"><span style="font-size:16px">${f[0]}</span><b style="font-size:12.5px;color:#fff">${f[1]}</b><span style="font-size:11px;color:#9ec0a8;margin-left:auto">${f[2]}</span></div>`).join('')}
-        </div>`);
-    } else if(step===14){
-      h=col(l92B('ЗАДАЧА 1','#c9b28a')+
-        big('Сколько здесь ЧУДЕС-ТЕЛ?')+
-        `<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:340px">
-          ${l92Pic(['body','снежинка','','snow'],88)}
-          ${l92Pic(['ev','таяние','','melt'],88)}
-          ${l92Pic(['sub','вода','','water'],88)}
-          ${l92Pic(['body','капля','','drop'],88)}
-        </div>`+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">тел — 2: снежинка и капля!</div>`+
-        sml('как в наших задачках: таяние — явление, вода — вещество.'));
-    } else if(step===15){
-      h=col(l92B('ЗАДАЧА 2','#c9b28a')+
-        big('Найди ЯВЛЕНИЕ')+
-        `<div style="display:flex;justify-content:center">${l92Art('melt',180,120)}</div>`+
-        `<div class="wv-ans" style="font-size:22px;color:#ff8a6a">таяние снега — ЯВЛЕНИЕ!</div>`+
-        sml('снежинка и лёд — тела, а их превращение в воду — процесс. Как в наших задачках!'));
-    } else if(step===16){
-      if(st.i==null){ st.i=Math.floor(Math.random()*L92POOL.length); st.score=0; st.done={}; st.last=''; st.hintShow=0; }
-      const e=L92POOL[st.i], kind=e[0], word=e[1], desc=e[2], art=e[3];
-      const want=kind==='body'?0:kind==='sub'?1:2;
-      const doneCount=Object.keys(st.done||{}).length;
-      const resTxt=st.last==='ok'?`✅ Верно! «${word}» — ${kind==='body'?'чудо-тело':kind==='sub'?'чудо-вещество':'чудо-явление'}! (${doneCount}/24)`:
-        st.last==='no'?'❌ Не угадал — прочитай описание!':'';
-      h=col(l92B('ИГРА · ЗАНОСИМ В АТЛАС','#ffd966')+
-        big('Куда занести чудо?')+
-        `<div style="display:inline-block;background:rgba(127,183,216,.1);border:1.5px solid #7fb7d877;border-radius:18px;padding:8px 14px;max-width:290px;box-shadow:0 4px 14px rgba(0,0,0,.4)">
-          <div style="display:flex;justify-content:center;filter:drop-shadow(0 4px 5px rgba(0,0,0,.45))">${l92Art(art,130,100)}</div>
-          <div style="font-size:16px;color:#fff;font-weight:bold">${word}</div>
-          <div style="font-size:10.5px;color:#b8c9d8;line-height:1.5">${desc}</div>
-        </div>`+
-        (st.last==='ok'?`<div style="display:flex;justify-content:center;gap:6px"><span class="wv-rise" style="font-size:16px">✨</span><span class="wv-rise2" style="font-size:12px">✨</span></div>`:'')+
-        (resTxt?`<div class="l35-pop" style="font-size:13.5px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'}">${resTxt}</div>`:'')+
-        (st.hintShow?`<div class="l35-pop" style="font-size:12px;color:#ffd9a0;max-width:310px">💡 ${kind==='body'?'тело можно увидеть и измерить':kind==='sub'?'вещество — материал: вода, золото, кислород':'явление — процесс, длится во времени'}</div>`:'')+
-        l92Doors(want)+
-        `<div style="font-size:11.5px;color:#9ec0a8">счёт: ${st.score} ✅ · занесено ${doneCount}/24</div>`+
-        btns(btn('🌍 Тела',`l92Act('${lk}','pick0')`),btn('🧪 Вещества',`l92Act('${lk}','pick1')`),btn('⚡ Явления',`l92Act('${lk}','pick2')`),btn('🎲 чудо',`l92Act('${lk}','n')`),btn('↺',`l92Act('${lk}','r')`)));
-    } else {
-      h=col(l92B('ПАМЯТКА ПУТЕШЕСТВЕННИКА','#c9b28a')+
-        big('Три раздела Атласа')+
-        `<div style="display:flex;flex-direction:column;gap:8px;max-width:330px">
-          <div style="display:flex;align-items:center;gap:10px;background:rgba(127,208,160,.07);border:1px solid #7fd1a044;border-radius:14px;padding:8px 10px">${l92Art('snow',52,40)}<div style="text-align:left"><div style="font-size:12.5px;color:#7fd1a0;font-weight:bold">Чудеса-ТЕЛА</div><div style="font-size:10px;color:#9ec0a8">снежинка, планета, капля — можно увидеть и измерить</div></div></div>
-          <div style="display:flex;align-items:center;gap:10px;background:rgba(255,217,102,.07);border:1px solid #ffd96644;border-radius:14px;padding:8px 10px">${l92Art('water',52,40)}<div style="text-align:left"><div style="font-size:12.5px;color:#ffd966;font-weight:bold">Чудеса-ВЕЩЕСТВА</div><div style="font-size:10px;color:#9ec0a8">вода, золото, кислород — материалы природы</div></div></div>
-          <div style="display:flex;align-items:center;gap:10px;background:rgba(255,138,106,.07);border:1px solid #ff8a6a44;border-radius:14px;padding:8px 10px">${l92Art('bolt',46,38)}<div style="text-align:left"><div style="font-size:12.5px;color:#ff8a6a;font-weight:bold">Чудеса-ЯВЛЕНИЯ</div><div style="font-size:10px;color:#9ec0a8">молния, радуга, гейзер — процессы природы</div></div></div>
-        </div>`+
-        btn('⟲ вернуться к игре', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя»!'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
-}
-
-function l93Act(lk,act){
-  const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['m','5','cm'],['m','3','cm'],['m','7','cm'],['m','2','cm'],['kg','4','g'],['kg','2','g'],['kg','7','g'],['kg','3','g'],['h','2','min'],['h','3','min'],['min','2','sec'],['min','5','sec']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
-  chRender(0);
-}
-function l93Ruler(cmLen,uid){
-  // линейка: показывает cmLen см (1..10)
-  let seg='';
-  for(let i=0;i<10;i++){
-    const fill=i<cmLen;
-    seg+=`<div style="flex:1;height:20px;border-right:1px solid #3d2f1c;${fill?'background:linear-gradient(180deg,#7fd1a0,#3c8f5f)':'background:#20352a'};display:flex;align-items:flex-start;justify-content:center;font-size:8px;color:#d8ecff">${i}</div>`;
-  }
-  return `<div style="margin:2px auto">
-    <div style="display:flex;width:230px;border:2px solid #cbb89a;border-radius:4px;overflow:hidden">${seg}</div>
-    <div style="display:flex;width:230px;margin:0 auto"><div style="flex:1;font-size:10px;color:#cbb89a">0 см</div><div style="font-size:10px;color:#cbb89a">10 см</div></div>
-  </div>`;
-}
-function l93Scale(g,uid){
-  // весы: г граммов
-  return `<div style="display:inline-block;text-align:center">
-    <div style="font-size:34px">⚖️</div>
-    <div style="font-size:15px;color:#ffd9a0">${g} г</div>
-  </div>`;
-}
-function l93Clock(h,uid){
-  // часы: h минут (0..60)
-  const ang=(h/60)*360-90;
-  return `<svg width="64" height="64" style="display:block;margin:0 auto">
-    <circle cx="32" cy="32" r="28" fill="#f2e8d0" stroke="#8a6a2f" stroke-width="2.5"/>
-    <line x1="32" y1="32" x2="${32+22*Math.cos(ang*Math.PI/180)}" y2="${32+22*Math.sin(ang*Math.PI/180)}" stroke="#a02818" stroke-width="3.5" stroke-linecap="round"/>
-    <circle cx="32" cy="32" r="2.5" fill="#8a6a2f"/>
-  </svg>`;
-}
-function visL93(el){
-  try{
-    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(big('Как измерить стол?'),
-        `<div style="font-size:44px" class="wv-pulse">📏</div>`+
-        sml('ладонями? шагами? Древние люди мерили локтями! Но чтобы все понимали друг друга, нужны ОДИНАКОВЫЕ единицы'));
-    } else if(step===1){
-      h=col(big('Величина и её единица'),
-        rowC(chip('величина: длина','rgba(127,209,255,.5)'),chip('единица: метр','rgba(127,184,160,.5)'))+
-        sml('измерить — значит СРАВНИТЬ с единицей: сколько метров в столе, сколько килограммов в арбузе'));
-    } else if(step===2){
-      h=col(big('Три главных измерения'),
-        rowC(chip('длина — метры (м)','rgba(127,209,255,.5)'),chip('масса — килограммы (кг)','rgba(232,160,90,.5)'),chip('время — секунды (с)','rgba(127,184,160,.5)'))+
-        sml('это основа! Их мерят линейкой, весами и часами'));
-    } else if(step===3){
-      h=col(big('Метр и сантиметр'),
-        l93Ruler(3,'a')+
-        rowC(chip('1 м = 100 см','rgba(127,209,255,.5)'),chip('3 м = 300 см','rgba(232,160,90,.5)'))+
-        sml('сантиметр — маленькая часть метра: их ровно 100!'));
-    } else if(step===4){
-      h=col(big('Задача-проверка'),
-        l93Ruler(10,'b')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">3 м = 3 · 100 = 300 см</div>`+
-        sml('как в проверке: умножаем метры на 100!'));
-    } else if(step===5){
-      h=col(big('Задача 1: 5 метров'),
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">5 м = 5 · 100 = 500 см</div>`+
-        sml('как в наших задачках!'));
-    } else if(step===6){
-      h=col(big('Килограмм и грамм'),
-        l93Scale(4000,'c')+
-        rowC(chip('1 кг = 1000 г','rgba(127,209,255,.5)'),chip('4 кг = 4000 г','rgba(232,160,90,.5)'))+
-        sml('грамм — маленькая часть килограмма: их ровно 1000!'));
-    } else if(step===7){
-      h=col(big('Задача 2: 4 килограмма'),
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">4 кг = 4 · 1000 = 4000 г</div>`+
-        sml('как в наших задачках: умножаем килограммы на 1000!'));
-    } else if(step===8){
-      h=col(big('Час и минута'),
-        l93Clock(30,'d')+
-        rowC(chip('1 час = 60 минут','rgba(127,209,255,.5)'),chip('полчаса = 30 минут','rgba(127,184,160,.5)'))+
-        sml('в часе 60 минут — не 100! Поэтому время особое'));
-    } else if(step===9){
-      h=col(big('Секунда — самая маленькая'),
-        rowC(chip('1 минута = 60 секунд','rgba(127,209,255,.5)'),chip('«раз-и-два-и» ≈ 2 секунды','rgba(127,184,160,.5)'))+
-        sml('секунды тикают на каждом шагу: тик-так, тик-так!'));
-    } else if(step===10){
-      h=col(big('Приставки-помощники'),
-        rowC(chip('санти- = 1/100 (см)','rgba(127,209,255,.5)'),chip('кило- = 1000 (кг, км)','rgba(232,160,90,.5)'))+
-        sml('санти — сотая часть, кило — тысяча. Запомнил — и единицы не страшны!'));
-    } else if(step===11){
-      h=col(big('Крупнее единица — меньше число'),
-        rowC(chip('3 м = 300 см','rgba(127,209,255,.5)'),chip('метр крупнее — число 3 маленькое','rgba(127,184,160,.5)'),chip('сантиметр мельче — число 300 большое','rgba(232,160,90,.5)'))+
-        sml('мерили крупной единицей — число меньше. Мельче единица — число больше!'));
-    } else if(step===12){
-      h=col(big('Умножаешь — дописывай нули'),
-        rowC(chip('×100 → допиши 2 нуля: 5 м = 500 см','rgba(127,209,255,.5)'),chip('×1000 → допиши 3 нуля: 4 кг = 4000 г','rgba(232,160,90,.5)'))+
-        sml('трюк Архимеда: 5 м = 500 см — два нуля, как в совете!'));
-    } else if(step===13){
-      h=col(big('Приборы измерения'),
-        rowC(chip('📏 линейка — длина','rgba(127,209,255,.5)'),chip('⚖️ весы — масса','rgba(127,184,160,.5)'),chip('⏰ часы — время','rgba(127,209,255,.5)'))+
-        sml('у каждой величины — свой прибор и своя единица!'));
-    } else if(step===14){
-      h=col(big('Где это в жизни'),
-        rowC(chip('рост 1 м 40 см','rgba(127,209,255,.4)'),chip('арбуз 3 кг 200 г','rgba(127,209,255,.4)'),chip('забег на 100 м за 12 с','rgba(127,209,255,.4)'))+
-        sml('мы постоянно измеряем — и теперь понимаем единицы!'));
-    } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('2 м = 200 см','rgba(127,184,160,.5)'),chip('3 кг = 3000 г','rgba(127,184,160,.5)'),chip('1 час = 60 мин','rgba(127,184,160,.5)'))+
-        sml('×100 для см, ×1000 для г — и не забудь про 60!'));
-    } else if(step===16){
-      const POOL=[['m','5','cm'],['m','3','cm'],['m','7','cm'],['m','2','cm'],['kg','4','g'],['kg','2','g'],['kg','7','g'],['kg','3','g'],['h','2','min'],['h','3','min'],['min','2','sec'],['min','5','sec']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0], n=+e[1];
-      let desc, firstStep, ans;
-      if(kind==='m'){
-        desc=n+' м → сколько сантиметров?';
-        firstStep='1 м = 100 см → '+n+'·100';
-        ans=n*100;
-      } else if(kind==='kg'){
-        desc=n+' кг → сколько граммов?';
-        firstStep='1 кг = 1000 г → '+n+'·1000';
-        ans=n*1000;
-      } else if(kind==='h'){
-        desc=n+' час(а) → сколько минут?';
-        firstStep='1 час = 60 минут → '+n+'·60';
-        ans=n*60;
-      } else {
-        desc=n+' минуты → сколько секунд?';
-        firstStep='1 мин = 60 с → '+n+'·60';
-        ans=n*60;
-      }
-      h=col(big('📏 Тренажёр: единицы измерения'),
-        `<div class="wv-row">${chip(desc,'rgba(217,164,65,.35)')}</div>`+
-        `<div style="font-size:28px" class="wv-pop">${desc.split(' →')[0]}</div>`+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
-        btns(btn('1️⃣ подумай',`l93Act('${lk}','s1')`),btn('2️⃣ ответ',`l93Act('${lk}','s2')`),btn('🎲 другой',`l93Act('${lk}','n')`),btn('↺',`l93Act('${lk}','r')`))+
-        sml('в см — ×100, в г — ×1000, в минуты/секунды — ×60!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            📏 1 м = 100 см → ×100 (2 нуля).<br>
-            ⚖️ 1 кг = 1000 г → ×1000 (3 нуля).<br>
-            ⏰ 1 час = 60 мин, 1 мин = 60 с.<br>
-            🔍 Мерить = сравнивать с единицей.</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там 3 метра'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
-}
-
-function l94Act(lk,act){
-  const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['v','60','2'],['v','45','3'],['v','100','2'],['v','90','3'],['v','120','4'],['v','80','4'],['s','5','4'],['s','15','3'],['s','6','2'],['s','40','4'],['s','20','4'],['s','12','3']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
-  chRender(0);
-}
-function l94Road(speed,uid){
-  // дорога: человечек/машина движется со скоростью speed (км/ч)
-  const speedLabel=speed>=60?'🚗 машина':speed>=15?'🚲 велосипед':'🚶 пешеход';
-  return `<div style="position:relative;width:230px;height:52px;border:2px solid #3d5c49;border-radius:8px;background:linear-gradient(180deg,#2c3a30,#1d2b22);overflow:hidden;margin:2px auto">
-    <div style="position:absolute;top:50%;left:0;right:0;height:2px;background:repeating-linear-gradient(90deg,rgba(255,208,90,.6) 0 14px,transparent 14px 28px)"></div>
-    <div class="wv-drive" style="--dx:${Math.min(190,40+speed*2)}px;position:absolute;bottom:2px;left:4px;font-size:24px">${speedLabel.split(' ')[0]}</div>
-    <div style="position:absolute;right:6px;top:2px;font-size:13px;color:#ffd9a0;font-weight:bold">${speed} км/ч</div>
-  </div>`;
-}
-function l94Graph(km,uid){
-  // график пути: вертикаль — путь, у машины прямая
-  const H=110,W=210;
-  const hgt=Math.min(H-14,km/160*(H-20));
-  return `<svg width="${W}" height="${H}" style="display:block;margin:2px auto;background:#13251c;border:1px solid #3d5c49;border-radius:6px">
-    <line x1="24" y1="${H-18}" x2="${W-6}" y2="${H-18}" stroke="#cbb89a" stroke-width="1.5"/>
-    <line x1="24" y1="6" x2="24" y2="${H-18}" stroke="#cbb89a" stroke-width="1.5"/>
-    <text x="10" y="10" fill="#7fd1a0" font-size="8">путь, км</text>
-    <text x="${W-30}" y="${H-4}" fill="#cbb89a" font-size="8">время</text>
-    <line x1="24" y1="${H-18}" x2="${W-6}" y2="${H-18-hgt}" stroke="#7fd1a0" stroke-width="2.5"/>
-    <text x="${W-58}" y="${H-24-hgt}" fill="#7fd1a0" font-size="10">S = ${km} км</text>
-  </svg>`;
-}
-function visL94(el){
-  try{
-    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(big('Кто быстрее: ты или велосипед?'),
-        `<div style="font-size:44px" class="wv-flick">🏃</div>`+
-        sml('скорость — сколько километров проходит тело за 1 час. Узнаем, как её считать!'));
-    } else if(step===1){
-      h=col(big('Что такое скорость'),
-        rowC(chip('v = S : t','rgba(127,209,255,.5)'),chip('S — путь (км)','rgba(232,160,90,.5)'),chip('t — время (ч)','rgba(127,184,160,.5)'))+
-        sml('скорость = путь делить на время. Как в нашей проверке!'));
-    } else if(step===2){
-      h=col(big('Считаем скорость'),
-        l94Road(30,'a')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">v = 60 : 2 = 30 км/ч</div>`+
-        sml('проехали 60 км за 2 часа → 30 км каждый час!'));
-    } else if(step===3){
-      h=col(big('Задача-проверка: лыжник'),
-        l94Road(10,'b')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">v = 40 : 4 = 10 км/ч</div>`+
-        sml('как в проверке: 40 км за 4 часа → 10 км/ч!'));
-    } else if(step===4){
-      h=col(big('Задача 1: велосипедист'),
-        l94Road(15,'c')+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">v = 45 : 3 = 15 км/ч</div>`+
-        sml('как в наших задачках!'));
-    } else if(step===5){
-      h=col(big('Путь из скорости'),
-        rowC(chip('S = v · t','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">S = 5 · 4 = 20 км</div>`+
-        sml('пешеход 5 км/ч идёт 4 часа → 5·4 = 20 км. Как в наших задачках!'));
-    } else if(step===6){
-      h=col(big('Время из скорости'),
-        rowC(chip('t = S : v','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">t = 60 : 15 = 4 часа</div>`+
-        sml('велосипедист 15 км/ч: 60 км за 4 часа'));
-    } else if(step===7){
-      h=col(big('Скорости в жизни'),
-        rowC(chip('пешеход: 4–5 км/ч','rgba(127,209,255,.5)'),chip('велосипед: 15 км/ч','rgba(127,184,160,.5)'),chip('машина: 60–90 км/ч','rgba(232,160,90,.5)'),chip('самолёт: 800 км/ч','rgba(127,209,255,.5)'))+
-        sml('у каждого своя скорость! Самолёт в 160 раз быстрее пешехода'));
-    } else if(step===8){
-      h=col(big('Сравниваем'),
-        rowC(chip('4 км/ч — пешком','rgba(127,184,160,.5)'),chip('15 км/ч — велосипед','rgba(127,209,255,.5)'),chip('90 км/ч — машина','rgba(232,160,90,.5)'))+
-        sml('одинаковое время — разный путь: скорость решает!'));
-    } else if(step===9){
-      h=col(big('График движения'),
-        l94Graph(60,'d')+
-        sml('по горизонтали — время, по вертикали — путь. Равномерное движение — прямая линия!'));
-    } else if(step===10){
-      h=col(big('Чем круче — тем быстрее'),
-        rowC(chip('крутая прямая — быстрая машина','rgba(232,160,90,.5)'),chip('пологая — медленный пешеход','rgba(127,184,160,.5)'))+
-        sml('наклон графика показывает скорость!'));
-    } else if(step===11){
-      h=col(big('Перевод единиц'),
-        rowC(chip('1 м/с = 3,6 км/ч','rgba(127,209,255,.5)'),chip('бегун 2 м/с = 7,2 км/ч','rgba(127,184,160,.5)'))+
-        sml('м/с → км/ч: умножай на 3,6 (потому что в часе 3600 секунд и в километре 1000 м)'));
-    } else if(step===12){
-      h=col(big('Почему 3,6?'),
-        rowC(chip('1 м/с = 1 м за 1 с','rgba(127,209,255,.5)'),chip('за час: 3600 м = 3,6 км','rgba(232,160,90,.5)'))+
-        sml('за секунду метр, за 3600 секунд — 3600 метров = 3,6 км!'));
-    } else if(step===13){
-      h=col(big('Треугольник S-v-t'),
-        `<div style="text-align:center;font-size:16px;color:#e8dcc8" class="wv-pop">
-          <div style="display:inline-block;padding:4px 16px;border:2px solid rgba(217,164,65,.5);border-radius:10px;background:rgba(217,164,65,.06)">▲<br>S<br><span style="color:#7fd1a0">v</span> · <span style="color:#8fa6b8">t</span></div>
-        </div>`+
-        sml('путь наверху: S = v·t, v = S:t, t = S:v. Закрываешь неизвестное!'));
-    } else if(step===14){
-      h=col(big('Где это в жизни'),
-        rowC(chip('спидометр машины','rgba(127,209,255,.4)'),chip('табличка «60 км/ч»','rgba(127,209,255,.4)'),chip('олимпийский рекорд','rgba(127,209,255,.4)'),chip('время в пути','rgba(127,209,255,.4)'))+
-        sml('спидометр показывает скорость прямо сейчас — и это v = S:t!'));
-    } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('120 км за 2 ч → 60 км/ч','rgba(127,184,160,.5)'),chip('5 км/ч за 3 ч → 15 км','rgba(127,184,160,.5)'),chip('60 км при 20 км/ч → 3 ч','rgba(127,184,160,.5)'))+
-        sml('три формулы: S = v·t, v = S:t, t = S:v!'));
-    } else if(step===16){
-      const POOL=[['v','60','2'],['v','45','3'],['v','100','2'],['v','90','3'],['v','120','4'],['v','80','4'],['s','5','4'],['s','15','3'],['s','6','2'],['s','40','4'],['s','20','4'],['s','12','3']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0];
-      let desc, firstStep, ans;
-      if(kind==='v'){
-        const S=+e[1], t=+e[2];
-        desc='проехали '+S+' км за '+t+' ч → скорость?';
-        firstStep='v = S : t = '+S+' : '+t;
-        ans=S/t;
-      } else {
-        const v=+e[1], t=+e[2];
-        desc='скорость '+v+' км/ч, время '+t+' ч → путь?';
-        firstStep='S = v · t = '+v+' · '+t;
-        ans=v*t;
-      }
-      h=col(big('🏃 Тренажёр: скорость движения'),
-        `<div class="wv-row">${chip(desc+' (в км/ч или км)','rgba(217,164,65,.35)')}</div>`+
-        l94Road(kind==='v'?+e[1]/+e[2]:+e[1],'t')+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans}</div>`:'')+
-        btns(btn('1️⃣ подумай',`l94Act('${lk}','s1')`),btn('2️⃣ ответ',`l94Act('${lk}','s2')`),btn('🎲 другой',`l94Act('${lk}','n')`),btn('↺',`l94Act('${lk}','r')`))+
-        sml('v = S:t, S = v·t — треугольник решает!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🏃 v = S : t (скорость).<br>
-            🔺 S наверху: S = v·t, t = S:v.<br>
-            📈 Равномерное движение — прямая на графике.<br>
-            🚗 1 м/с = 3,6 км/ч.</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там лыжник'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
-}
-
-// ============ УРОК 95 v2 «Магниты и притяжение» — легенда «Город Архимагнетия» ============
-var L95POOL=[['nn','N','N'],['ss','S','S'],['ns','N','S'],['sn','S','N'],['ns2','N','S'],['nn2','N','N'],['sn2','S','N'],['ss2','S','S']];
-function l95Act(lk,act){
-  const st=CHS[lk]||(CHS[lk]={});
-  if(st.i==null) st.i=Math.floor(Math.random()*L95POOL.length); if(st.score==null) st.score=0;
-  const m=act.match(/^pick(\d)$/);
-  if(m){
-    const e=L95POOL[st.i];
-    const correct=(e[1]===e[2])?0:1; // 0=отталкиваются, 1=притягиваются
-    st.last=(+m[1]===correct)?'ok':'no';
-    if(+m[1]===correct) st.score++;
-  }
-  if(act==='n'){ st.i=(st.i+1)%L95POOL.length; st.last=''; }
-  if(act==='s1') st.s1=1;
-  if(act==='s2') st.s2=1;
-  if(act==='r'){ st.i=Math.floor(Math.random()*L95POOL.length); st.s1=st.s2=0; st.score=0; st.last=''; }
-  chRender(0);
-}
-function l95Mag(pole,size,uid){
-  // магнит-подкова/стержень с полюсом
-  const s=size||'m';
-  const w=s==='l'?62:s==='s'?44:52;
-  const isN=pole==='N';
-  return `<div style="display:flex;flex-direction:column;align-items:center">
-    <div style="width:${w}px;height:34px;border-radius:8px;background:linear-gradient(145deg,${isN?'#e05a5a':'#4f6fd8'},${isN?'#a02828':'#2a4a9a'});display:flex;align-items:center;justify-content:center;font-size:${s==='s'?13:17}px;color:#fff;font-weight:bold;box-shadow:0 3px 8px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.25)">${pole}</div>
-    <div style="font-size:9.5px;color:#9ec0a8;margin-top:2px">${isN?'северный':'южный'}</div>
-  </div>`;
-}
-function l95Field(uid){
-  // магнитное поле: силовые линии (эллипсы)
-  return `<svg width="150" height="64" style="display:block;margin:2px auto">
-    <rect x="4" y="22" width="24" height="24" rx="5" fill="#e05a5a"/>
-    <text x="16" y="38" fill="#fff" font-size="12" text-anchor="middle" font-weight="bold">N</text>
-    <rect x="122" y="22" width="24" height="24" rx="5" fill="#4f6fd8"/>
-    <text x="134" y="38" fill="#fff" font-size="12" text-anchor="middle" font-weight="bold">S</text>
-    <path d="M32 34 Q50 6 70 34 Q90 62 118 34" fill="none" stroke="#ffd966" stroke-width="1.6" opacity=".8"/>
-    <path d="M32 34 Q50 18 70 34 Q90 50 118 34" fill="none" stroke="#ffd966" stroke-width="1.2" opacity=".5"/>
-    <path d="M32 34 Q50 50 70 34 Q90 18 118 34" fill="none" stroke="#ffd966" stroke-width="1.2" opacity=".5"/>
-  </svg>`;
-}
-function l95Pair(p1,p2,result,uid){
-  const attract=result==='притягиваются';
-  const gap=attract?14:52;
-  return `<div style="display:flex;align-items:center;justify-content:center;gap:${gap}px;margin:8px auto;transition:gap .7s ease">
-    ${l95Mag(p1,'l','a')}
-    <div style="font-size:22px;color:${attract?'#7fd1a0':'#ff9a8a'}" class="wv-pulse">${attract?'❤️':'💥'}</div>
-    ${l95Mag(p2,'l','b')}
-  </div>`;
-}
-function l95Compass(deg,uid){
-  // компас со стрелкой (deg — поворот)
-  return `<div style="text-align:center">
-    <svg width="70" height="70" style="display:block;margin:0 auto">
-      <circle cx="35" cy="35" r="30" fill="#f2e8d0" stroke="#8a6a2f" stroke-width="2.5"/>
-      <text x="35" y="12" fill="#a02828" font-size="11" text-anchor="middle" font-weight="bold">С</text>
-      <text x="60" y="38" fill="#8a6a2f" font-size="10" text-anchor="middle">В</text>
-      <text x="35" y="64" fill="#4f6fd8" font-size="11" text-anchor="middle" font-weight="bold">Ю</text>
-      <text x="10" y="38" fill="#8a6a2f" font-size="10" text-anchor="middle">З</text>
-      <g transform="rotate(${deg} 35 35)">
-        <polygon points="35,8 39,38 35,35 31,38" fill="#a02828"/>
-        <polygon points="35,62 31,32 35,35 39,32" fill="#4f6fd8"/>
-      </g>
-      <circle cx="35" cy="35" r="2.5" fill="#8a6a2f"/>
-    </svg>
-  </div>`;
-}
-function l95Pickup(uid){
-  // магнит поднимает скрепку
-  return `<svg width="120" height="86" style="display:block;margin:0 auto">
-    <rect x="44" y="6" width="26" height="24" rx="6" fill="#e05a5a"/>
-    <text x="57" y="22" fill="#fff" font-size="11" text-anchor="middle" font-weight="bold">N</text>
-    <line x1="57" y1="30" x2="57" y2="46" stroke="#cbb89a" stroke-width="1.5"/>
-    <path d="M57 46 q10 12 0 22 q-10 -10 0 -22" fill="none" stroke="#d8ecff" stroke-width="2"/>
-    <text x="88" y="70" fill="#ffd966" font-size="10">скрепка!</text>
-  </svg>`;
-}
-function l95Earth(uid){
-  return `<div style="font-size:52px" class="wv-swing">🌍</div>`;
-}
-function visL95(el){
-  try{
-    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
-    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(`<div style="font-size:20px;color:#c9b28a;letter-spacing:1px">🌟 ЛЕГЕНДА · Эпизод 2</div>`+
-        big('Город Архимагнетия')+
-        `<div style="font-size:44px" class="wv-flick">🏙️🧲</div>`+
-        sml('В волшебном городе Архимагнетии поезда летают над рельсами, двери сами открываются, а холодильники держат записки! Всё это — благодаря магнитам. Архимед приглашает тебя на экскурсию!'));
-    } else if(step===1){
-      h=col(big('Первый экспонат: магнит-стержень'),
-        rowC(l95Mag('N','l','a'),l95Mag('S','l','b'))+
-        sml('вот он, главный житель города — МАГНИТ! У него два конца-полюса: красный N (северный) и синий S (южный). Даже если разломить — у каждой половинки снова будут N и S!'));
-    } else if(step===2){
-      h=col(big('Кого притягивает магнит?'),
-        rowC(chip('🔩 железо ✅','rgba(127,184,160,.5)'),chip('🥄 сталь ✅','rgba(127,184,160,.5)'),chip('🪵 дерево ❌','rgba(232,160,90,.5)'),chip('🥛 стекло ❌','rgba(232,160,90,.5)'),chip('🪀 пластик ❌','rgba(232,160,90,.5)'))+
-        sml('магнит «дружит» только с железом и сталью. Как в нашей проверке — железные тела!'));
-    } else if(step===3){
-      h=col(big('Проверка: монетка-незнакомка'),
-        l95Pickup('c')+
-        sml('поднеси магнит к разным предметам: гвоздь прилип — там железо! Карандаш нет — дерево. Так можно «искать» железо дома!'));
-    } else if(step===4){
-      h=col(big('Невидимая сила: магнитное поле'),
-        l95Field('d')+
-        sml('вокруг магнита — невидимое магнитное поле. Насыпь железные опилки — они выстроятся по золотым линиям, как по дорожкам!'));
-    } else if(step===5){
-      h=col(big('Главное правило города'),
-        rowC(chip('разные полюса (N и S) — ПРИТЯГИВАЮТСЯ ❤️','rgba(127,184,160,.5)'),chip('одинаковые (N и N) — ОТТАЛКИВАЮТСЯ 💥','rgba(232,160,90,.5)'))+
-        sml('закон Архимагнетии: противоположности притягиваются, одинаковые — разбегаются!'));
-    } else if(step===6){
-      h=col(big('Разные полюса — встреча!'),
-        l95Pair('N','S','притягиваются','e')+
-        sml('N и S — как старые друзья: бегут навстречу друг другу и обнимаются! Как в наших задачках.'));
-    } else if(step===7){
-      h=col(big('Одинаковые — расходятся!'),
-        l95Pair('N','N','отталкиваются','f')+
-        sml('N и N — одинаковые, как два упрямца: не хотят сближаться, расталкивают друг друга! Как в наших задачках.'));
-    } else if(step===8){
-      h=col(big('Задача 1: N к N'),
-        l95Pair('N','N','отталкиваются','g')+
-        `<div class="wv-ans" style="font-size:22px;color:#ff9a8a">северные полюса → ОТТОЛКНУТСЯ 💥</div>`+
-        sml('как в наших задачках: одноимённые полюса!'));
-    } else if(step===9){
-      h=col(big('Задача 2: S к N'),
-        l95Pair('S','N','притягиваются','h')+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">S и N → ПРИТЯНУТСЯ ❤️</div>`+
-        sml('как в наших задачках: разноимённые полюса!'));
-    } else if(step===10){
-      h=col(big('Экскурсия: компас-площадь'),
-        l95Compass(-8,'i')+
-        sml('на площади города стоит компас. Его стрелка — маленький магнит! Она всегда показывает на север — потому что…'));
-    } else if(step===11){
-      h=col(big('Земля — гигантский магнит'),
-        l95Earth('j')+
-        `<div class="wv-ans" style="font-size:20px;color:#7fd1a0">наша планета — огромный магнит!</div>`+
-        sml('в центре Земли — раскалённое железо, оно создаёт магнитное поле всей планеты!'));
-    } else if(step===12){
-      h=col(big('Секрет компаса'),
-        rowC(chip('стрелка N тянется к северу','rgba(127,209,255,.5)'),chip('значит там «южный» полюс Земли-магнита','rgba(232,160,90,.5)'))+
-        sml('противоположности притягиваются: красный N стрелки тянет к южному полюсу Земли-магнита, который находится на севере планеты!'));
-    } else if(step===13){
-      h=col(big('Городские чудеса: поезд на подушке'),
-        `<div style="font-size:40px" class="wv-drive" style="--dx:120px">🚝</div>`+
-        sml('поезд парит над рельсами! Под ним такие же магниты, которые отталкиваются — трение исчезает, и поезд летит со скоростью 600 км/ч!'));
-    } else if(step===14){
-      h=col(big('Электромагнит — управляемый магнит'),
-        rowC(chip('катушка + ток = магнит','rgba(127,209,255,.5)'),chip('выключили ток — магнит «выключился»','rgba(232,160,90,.5)'))+
-        sml('на заводе Архимагнетии огромные электромагниты поднимают целые автомобили, а потом отпускают их по команде!'));
-    } else if(step===15){
-      h=col(big('Магниты вокруг тебя'),
-        rowC(chip('🎧 наушники','rgba(127,209,255,.4)'),chip('🔊 динамики','rgba(127,209,255,.4)'),chip('💳 банковская карта','rgba(127,209,255,.4)'),chip('🧲 дверца холодильника','rgba(127,209,255,.4)'),chip('🔔 звонок','rgba(127,209,255,.4)'))+
-        sml('в каждом динамике — магнит, который двигает мембрану и создаёт звук!'));
-    } else if(step===16){
-      h=col(big('Проверь себя'),
-        rowC(chip('N-S → притягиваются ❤️','rgba(127,184,160,.5)'),chip('N-N → отталкиваются 💥','rgba(127,184,160,.5)'),chip('магнит + дерево → ничего','rgba(127,184,160,.5)'))+
-        sml('три закона Архимагнетии — и ты местный житель!'));
-    } else if(step===17){
-      h=col(big('Как разломить магнит?'),
-        rowC(chip('разломал пополам — и что?','rgba(127,209,255,.5)'),chip('у каждой половинки свои N и S!','rgba(217,164,65,.5)'))+
-        sml('магнит нельзя «отделить» от полюса: сколько ни дели — у каждого кусочка будет и север, и юг!'));
-    } else if(step===18){
-      if(st.i==null){ st.i=Math.floor(Math.random()*L95POOL.length); st.score=0; st.last=''; }
-      const e=L95POOL[st.i], p1=e[1], p2=e[2];
-      const correct=(p1===p2)?0:1;
-      const hint=p1===p2?'полюса одинаковые ('+p1+' и '+p2+') → отталкиваются 💥':'полюса разные ('+p1+' и '+p2+') → притягиваются ❤️';
-      const resTxt=st.last==='ok'?`✅ Верно! ${hint.split('→')[1]||''}`:st.last==='no'?`❌ Не угадал — ${hint}`:'';
-      h=col(big('🎮 Интерактив: закон пар!'),
-        `<div class="wv-row">${chip('Счёт: '+st.score+' ✅','rgba(127,209,255,.5)')}</div>`+
-        rowC(l95Mag(p1,'l','t1'),l95Mag(p2,'l','t2'))+
-        (resTxt?`<div class="l35-pop" style="font-size:15px;color:${st.last==='ok'?'#7fd1a0':'#ff9a8a'};text-align:center;max-width:300px">${resTxt}</div>`:'')+
-        btns(btn('❤️ притянутся',`l95Act('${lk}','pick1')`),btn('💥 оттолкнутся',`l95Act('${lk}','pick0')`),btn('🎲 пара',`l95Act('${lk}','n')`),btn('↺',`l95Act('${lk}','r')`))+
-        sml('следи за полюсами: N и S — друзья, N и N — соперники!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Мэр города — Архимед')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:270px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🧲 Магнит дружит с железом и сталью.<br>
-            ❤️ N и S (разные) — притягиваются.<br>
-            💥 N и N (одинаковые) — отталкиваются.<br>
-            🌍 Земля — магнит: компас на север!<br>
-            🎓 Загляни в тренажёр — закон пар!</div>
-        </div>`+
-        btn('⟲ вернуться к игре', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — какие тела притягивает магнит?'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+    el.innerHTML=h;
+  }catch(e){ el.innerHTML='<div class="ap-card">Ошибка сцены: '+esc(e&&e.message)+'</div>'; }
 }
 
 function l99Act(lk,act){
   const st=CHS[lk]||(CHS[lk]={});
-  const POOL=[['warm','вверх'],['cold','вниз'],['warm','вверх'],['cold','вниз']];
-  switch(act){
-    case 's1': st.s1=1; break; case 's2': st.s2=1; break;
-    case 'n': st.i=((st.i==null?0:st.i)+1)%POOL.length; st.s1=st.s2=0; break;
-    case 'r': CHS[lk]={}; break;
-  }
-  chRender(0);
-}
-function l99Mol(n,color,rise,uid){
-  // молекулы газа
-  let out='';
-  for(let i=0;i<n;i++){
-    const cls=rise?['wv-rise','wv-rise2','wv-rise3'][i%3]:'';
-    out+=`<div class="${cls}" style="animation-delay:${(i*0.12).toFixed(2)}s;display:inline-block;width:${color==='big'?16:10}px;height:${color==='big'?16:10}px;border-radius:50%;background:${color==='n2'?'rgba(150,190,230,.55)':color==='big'?'rgba(230,120,90,.75)':'rgba(160,205,245,.5)'};border:1px solid rgba(255,255,255,.4);margin:2px"></div>`;
-  }
-  return `<div style="text-align:center;min-height:34px;line-height:26px">${out}</div>`;
-}
-function l99Wind(uid){
-  // стрелки ветра
-  return `<div style="text-align:center;font-size:34px" class="wv-flow">💨💨💨</div>`;
-}
-function l99Balloon(warm,uid){
-  // тёплый шарик поднимается / холодный опускается
-  return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:${warm?'flex-start':'flex-end'};height:120px;margin:2px auto">
-    <div class="wv-pop" style="font-size:38px;${warm?'':'transform:scaleY(-1)'}">${warm?'🎈':'🪨'}</div>
-  </div>`;
+  if(act==='jar') st.jar=!st.jar;
+  else if(act==='air') st.air=!st.air;
+  else if(act==='press') st.press=!st.press;
+  else if(act==='heat') st.heat=!st.heat;
+  else if(act==='night') st.night=!st.night;
+  else if(act==='reset'){ st.jar=0; st.air=0; st.press=0; st.heat=0; st.night=0; }
+  try{ renderLessonView(); }catch(e){}
 }
 function visL99(el){
   try{
+    apCss();
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     const step=LV.step||0;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
+    const big=x=>`<div class="wv-big">${x}</div>`;
+    const sml=x=>`<div class="wv-sml">${x}</div>`;
+    const row=(...b)=>`<div class="wv-row">${b.join('')}</div>`;
+    const rowC=(...q)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:3px 0">${q.join('')}</div>`;
+    const card=x=>`<div class="ap-card">${x}</div>`;
+    const labW=Math.min(336, ((document.getElementById('lvis')||{}).clientWidth||348)-12);
+    const SC=Math.max(0.72, Math.min(1, labW/336));
+    const scene=inner=>`<div class="ap-lab tall"><div style="position:absolute;left:0;top:0;width:336px;height:252px;transform:scale(${SC.toFixed(3)});transform-origin:0 0">${inner}</div></div>`;
+    const at=(x,y,inner)=>`<div style="position:absolute;left:${x}px;top:${y}px">${inner}</div>`;
+    const cap=txt=>`<div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">${txt}</div>`;
+    const b=(t,a)=>`<button class="hint-btn" onclick="l99Act('${lk}','${a}')">${t}</button>`;
+    const ctl=row(b('накрыть банкой','jar'),b('нагреть','heat'),b('сжать','press'),b('день/ночь','night'),b('↺','reset'));
+    const balloon=(up)=>`<div style="position:relative;width:96px;height:150px;transition:transform 1s cubic-bezier(.3,.9,.3,1);transform:translateY(${up?-58:0}px)">
+        <div style="position:absolute;left:14px;top:0;width:68px;height:76px;border-radius:50% 50% 46% 46%;background:radial-gradient(circle at 36% 30%,#ffd0a0,#e2734a 55%,#a8432a)"></div>
+        <div style="position:absolute;left:40px;top:74px;width:6px;height:26px;background:#8b8378"></div>
+        <div style="position:absolute;left:26px;top:100px;width:44px;height:26px;border-radius:6px;background:linear-gradient(180deg,#a8794a,#6b4a2c)"></div>
+        ${up?'<div class="ap-flame" style="left:42px;top:92px;width:16px;height:22px;background:radial-gradient(circle at 50% 74%,#fff3c4,#ff9d3c 45%,#e2571a)"></div>':''}</div>`;
+    const candle=(alive,jar)=>`<div style="position:relative;width:70px;height:120px">
+        <div style="position:absolute;left:26px;bottom:0;width:18px;height:56px;border-radius:4px;background:linear-gradient(180deg,#f2e6c8,#cbb98f)"></div>
+        ${alive?`<div class="ap-flame" style="left:29px;bottom:56px;width:12px;height:26px;background:radial-gradient(circle at 50% 76%,#fff8dc,#ffd76a 42%,#ff9d3c 75%,transparent)"></div>`:`<div style="position:absolute;left:30px;bottom:60px;width:8px;height:8px;border-radius:50%;background:rgba(200,200,200,.55);animation:apRise 2.6s ease-out infinite"></div>`}
+        ${jar?`<div style="position:absolute;left:4px;bottom:0;width:62px;height:96px;border:2px solid rgba(206,233,255,.6);border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(180,220,255,.12))"></div>`:''}
+        ${cap(alive?'свеча горит: кислород поддерживает горение':'кислород кончился — свеча погасла')}</div>`;
+    const arrows=(y,n,dir,color)=>Array.from({length:n},(_,k)=>`<div style="position:absolute;left:${20+k*34}px;top:${y}px;width:24px;height:2px;background:${color};border-radius:2px;opacity:.85"><div style="position:absolute;${dir>0?'right:-6px':'left:-6px'};top:-4px;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;${dir>0?'border-left:7px solid '+color:'border-right:7px solid '+color}"></div><div style="position:absolute;left:0;top:0;width:0;height:0;animation:apDrift ${(1.6+k*0.2).toFixed(1)}s ease-in-out infinite"></div></div>`).join('');
+    let title='', sc='', extraCtl='', note='';
     if(step===0){
-      h=col(big('Воздух есть? А невидимый!'),
-        `<div style="font-size:44px" class="wv-pulse">🎈</div>`+
-        sml('воздух не видно, но он повсюду! Помаши листом бумаги — почувствуешь. Сегодня познакомимся с воздухом поближе'));
+      title='Воздух не видно, но он повсюду';
+      sc=at(10,26,`<div style="position:relative;width:120px;height:96px">
+            <div style="position:absolute;left:16px;top:10px;width:56px;height:74px;border-radius:6px;background:linear-gradient(160deg,#f2f6f8,#c9d2d7);transform-origin:50% 0;animation:apSwing 2.2s ease-in-out infinite"></div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-14px">машем листом — чувствуем воздух</div></div>`)
+        +at(160,20,`<div style="position:relative;width:160px;height:110px;border:2px dashed rgba(127,209,255,.35);border-radius:12px">${apMol('gas',18,150,100,'#7fd1ff',6)}</div>`)
+        +at(96,150,`<div class="ap-lbl">молекулы газов летают между нами — воздух заполняет всё</div>`);
+      note='помаши листом бумаги у лица — почувствуешь движение воздуха, хотя самого воздуха не видно';
     } else if(step===1){
-      h=col(big('Что такое воздух'),
-        l99Mol(10,'n2','',false)+
-        rowC(chip('смесь газов','rgba(127,209,255,.5)'))+
-        sml('воздух — не один газ, а СМЕСЬ! Как в нашей проверке'));
+      title='Воздух — смесь газов';
+      sc=at(20,20,`<div style="position:relative;width:300px;height:120px;border:2px dashed rgba(127,209,255,.35);border-radius:12px">
+            ${apMol('gas',10,290,110,'#7fd1ff',8)}${apMol('gas',6,290,110,'#ff8f70',7)}${apMol('gas',3,290,110,'#7de0a0',6)}
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">синие — азот, красные — кислород, зелёные — другие газы</div></div>`);
+      note='воздух — не один газ, а смесь: азот, кислород, углекислый газ, пары воды и другие';
     } else if(step===2){
-      h=col(big('Из чего состоит воздух'),
-        rowC(chip('азот ~78%','rgba(127,209,255,.5)'),chip('кислород ~21%','rgba(127,184,160,.5)'),chip('другие газы ~1%','rgba(232,160,90,.5)'))+
-        sml('больше всего азота, потом кислород (им мы дышим), остальное — углекислый газ и другие'));
+      title='Состав воздуха';
+      const bar=(y,txt,pct,c,val)=>`<div style="position:absolute;left:10px;right:10px;top:${y}px"><div class="ap-lbl" style="position:absolute;left:0;top:-13px;color:#cfe6ff">${txt}</div><div style="position:relative;width:100%;height:18px;background:rgba(255,255,255,.07);border-radius:6px"><div style="position:absolute;left:0;top:0;height:18px;border-radius:6px;background:${c};width:${pct}%;transform-origin:0 50%;animation:apGrow 1.1s ease-out both"></div><div class="ap-lbl" style="position:absolute;right:6px;top:2px">${val}</div></div></div>`;
+      sc=bar(24,'азот N₂',78,'#7fd1ff','78 %')+bar(74,'кислород O₂',21,'#ff8f70','21 %')+bar(124,'другие газы',1,'#7de0a0','1 %');
+      sc=`<div style="position:absolute;left:0;top:0;width:336px;height:176px">${sc}</div>`;
+      note='азота больше всего (78 %), кислорода 21 %, остальное — углекислый газ, аргон и пары воды';
     } else if(step===3){
-      h=col(big('Кислород — для дыхания'),
-        rowC(chip('дышим кислородом','rgba(127,184,160,.5)'),chip('огонь горит благодаря кислороду','rgba(232,160,90,.5)'))+
-        sml('без кислорода не горел бы огонь и мы не могли бы дышать!'));
+      title='Кислород — для дыхания и горения';
+      sc=at(30,16,candle(!st.jar,st.jar))+at(170,20,`<div style="position:relative;width:150px;height:130px;border:2px dashed rgba(127,209,255,.3);border-radius:12px">${apMol('gas',8,140,120,'#ff8f70',7)}<div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">кислород в воздухе</div></div>`);
+      extraCtl=row(b(st.jar?'снять банку':'накрыть свечу банкой','jar'),b('↺','reset'));
+      note='без кислорода огонь гаснет, а дышать невозможно: кислород нужен и нам, и пламени';
     } else if(step===4){
-      h=col(big('У воздуха есть вес'),
-        rowC(chip('1 м³ воздуха весит ~1,3 кг','rgba(127,209,255,.5)'),chip('воздух в комнате весит как человек!','rgba(232,160,90,.5)'))+
-        sml('кажется лёгким, но целая комната воздуха весит десятки килограммов!'));
+      title='У воздуха есть вес';
+      sc=at(40,30,`<div style="position:relative;width:260px;height:130px">
+            <div style="position:absolute;left:120px;top:0;width:6px;height:18px;background:#8b8378"></div>
+            <div style="position:absolute;left:20px;top:18px;width:220px;height:6px;border-radius:3px;background:linear-gradient(180deg,#c9d2d7,#6d7479);transition:transform .8s;transform:rotate(${st.air?6:-6}deg)"></div>
+            <div style="position:absolute;left:16px;top:26px;width:64px;height:44px;border-radius:6px;background:linear-gradient(180deg,#f2f6f8,#c9d2d7)"></div>
+            <div style="position:absolute;left:186px;top:26px;width:64px;height:44px;border-radius:6px;background:rgba(127,209,255,.25);border:1px dashed rgba(127,209,255,.6)"></div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">${st.air?'в правую чашу добавили воздух — она опустилась':'1 м³ воздуха весит 1,3 кг'}</div></div>`);
+      extraCtl=row(b(st.air?'убрать воздух':'добавить 1 м³ воздуха','air'),b('↺','reset'));
+      note='воздух имеет массу: кубометр воздуха весит около 1,3 кг, а весь воздух комнаты — десятки килограммов';
     } else if(step===5){
-      h=col(big('Воздух давит на нас'),
-        rowC(chip('атмосферное давление','rgba(127,209,255,.5)'),chip('≈ 100 000 Па на каждый м²','rgba(232,160,90,.5)'))+
-        sml('столб воздуха над нами давит — но мы не замечаем, потому что давление изнутри уравновешивает!'));
+      title='Воздух давит на нас';
+      const pos=st.press?96:26;
+      sc=at(30,24,`<div style="position:relative;width:280px;height:130px">
+            <div style="position:absolute;left:60px;top:20px;width:170px;height:60px;border:2px solid rgba(206,233,255,.55);border-radius:8px;background:rgba(255,255,255,.04)">${apMol('gas',st.press?22:10,160,52,'#7fd1ff',6)}</div>
+            <div style="position:absolute;left:${60+pos}px;top:16px;width:10px;height:68px;border-radius:5px;background:linear-gradient(90deg,#8d9499,#eef3f6 40%,#7d8589);transition:left .8s"></div>
+            <div style="position:absolute;left:${60+pos}px;top:34px;width:44px;height:8px;border-radius:4px;background:#8b8378;transition:left .8s"></div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">${st.press?'воздух сжали — молекул больше в том же объёме':'поршень, воздух внутри'}</div></div>`);
+      extraCtl=row(b(st.press?'вернуть поршень':'сжать воздух','press'),b('↺','reset'));
+      note='атмосфера давит на нас с силой около 100 000 Па на квадратный метр — мы этого не замечаем, потому что давление внутри тела такое же';
     } else if(step===6){
-      h=col(big('Опыт со стаканом'),
-        rowC(chip('стакан вверх дном в воду','rgba(127,209,255,.5)'),chip('вода не заходит — там воздух!','rgba(127,184,160,.5)'))+
-        sml('опусти стакан вверх дном в воду — внутри останется воздух, и вода туда не попадёт!'));
+      title='Опыт: стакан вверх дном в воде';
+      sc=at(40,20,`<div style="position:relative;width:260px;height:140px">
+            <div style="position:absolute;left:0;bottom:0;width:260px;height:56px;border-radius:6px;background:linear-gradient(180deg,rgba(120,190,230,.7),rgba(60,140,195,.85))"></div>
+            <div style="position:absolute;left:96px;bottom:16px;width:70px;height:96px;border:3px solid rgba(206,233,255,.65);border-radius:6px 6px 0 0;background:rgba(255,255,255,.06)">
+              <div style="position:absolute;left:2px;top:2px;right:2px;height:74px;background:rgba(127,209,255,.16)">${apMol('gas',6,62,66,'#7fd1ff',5)}</div></div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">вода не заходит: внутри стакана воздух, он занимает место</div></div>`);
+      note='опусти стакан вверх дном в воду — вода почти не войдёт: воздух внутри не пускает её';
     } else if(step===7){
-      h=col(big('Воздух занимает место'),
-        rowC(chip('бутылка «пустая» — на самом деле с воздухом','rgba(127,209,255,.5)'))+
-        sml('«пустой» сосуд не пуст — он полон воздуха!'));
+      title='Воздух занимает место';
+      sc=at(50,16,`<div style="position:relative;width:240px;height:150px">
+            <div style="position:absolute;left:70px;top:30px;width:96px;height:110px;border:2px solid rgba(206,233,255,.55);border-radius:10px 10px 16px 16px;background:rgba(255,255,255,.05)">
+              <div style="position:absolute;left:4px;right:4px;bottom:4px;height:${st.air?54:20}px;border-radius:8px;background:linear-gradient(180deg,rgba(120,190,230,.6),rgba(60,140,195,.8));transition:height .8s"></div>
+              ${st.air?Array.from({length:5},(_,k)=>`<div class="ap-bub" style="left:${12+k*16}px;bottom:30px;width:5px;height:5px;animation-duration:1.1s;animation-delay:${(k*0.2).toFixed(1)}s"></div>`).join(''):''}
+            </div>
+            <div style="position:absolute;left:104px;top:8px;width:28px;height:26px;clip-path:polygon(0 0,100% 0,60% 100%,40% 100%);background:rgba(235,240,235,.6)"></div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">${st.air?'вода входит, а воздух выходит пузырьками':'«пустая» бутылка на самом деле полна воздуха'}</div></div>`);
+      extraCtl=row(b(st.air?'вылить воду':'налить воду в бутылку','air'),b('↺','reset'));
+      note='воздух занимает место: чтобы влить воду, приходится выпустить воздух — он выходит пузырьками';
     } else if(step===8){
-      h=col(big('Тёплый воздух легче'),
-        l99Balloon(true,'a')+
-        rowC(chip('нагрелся → расширился','rgba(127,209,255,.5)'),chip('стал легче холодного','rgba(232,160,90,.5)'))+
-        sml('тёплый воздух поднимается вверх! Как в наших задачках'));
+      title='Тёплый воздух легче';
+      sc=at(110,20,balloon(st.heat))+at(230,40,`<div style="position:relative;width:100px;height:120px">
+            <div style="position:absolute;left:40px;top:20px;width:22px;height:34px;border-radius:8px;background:linear-gradient(180deg,#a8794a,#6b4a2c)"></div>
+            ${st.heat?Array.from({length:4},(_,k)=>`<div class="ap-steam" style="left:${44+k*4}px;top:6px;width:12px;height:12px;animation-duration:2s;animation-delay:${(k*0.3).toFixed(1)}s"></div>`).join(''):''}
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-14px">${st.heat?'воздух нагрелся — шар поднялся':'нагрей воздух в шаре'}</div></div>`);
+      extraCtl=row(b(st.heat?'остудить воздух':'нагреть воздух','heat'),b('↺','reset'));
+      note='нагретый воздух расширяется и становится легче — поэтому воздушный шар поднимается вверх';
     } else if(step===9){
-      h=col(big('Холодный воздух тяжелее'),
-        l99Balloon(false,'b')+
-        rowC(chip('остыл → сжался','rgba(127,209,255,.5)'),chip('стал тяжелее → опускается вниз','rgba(127,184,160,.5)'))+
-        sml('холодный воздух стелется вниз — поэтому у пола холоднее!'));
+      title='Холодный воздух тяжелее';
+      sc=at(40,16,`<div style="position:relative;width:260px;height:140px">
+            <div style="position:absolute;left:20px;top:10px;width:90px;height:50px;border-radius:10px;background:rgba(255,157,60,.16);border:1px dashed rgba(255,157,60,.5)">${apMol('gas',6,80,42,'#ff9d3c',6)}</div>
+            <div style="position:absolute;left:150px;top:70px;width:90px;height:56px;border-radius:10px;background:rgba(127,209,255,.18);border:1px dashed rgba(127,209,255,.55)">${apMol('gas',7,80,48,'#7fd1ff',6)}</div>
+            <div style="position:absolute;left:56px;top:62px;font-size:16px;color:#ffd76a">↓</div>
+            <div style="position:absolute;left:186px;top:126px;font-size:16px;color:#7fd1ff">↓</div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">холодный воздух сжимается, становится тяжелее и опускается вниз</div></div>`);
+      note='остывший воздух плотнее и тяжелее — он опускается вниз, а тёплый поднимается наверх';
     } else if(step===10){
-      h=col(big('Что такое ветер'),
-        l99Wind('c')+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">ветер — движущийся воздух!</div>`+
-        sml('как в наших задачках: тёплый поднялся вверх, холодный пришёл на его место — вот и ветер!'));
+      title='Что такое ветер';
+      sc=at(20,16,`<div style="position:relative;width:300px;height:140px">
+            <div style="position:absolute;left:0;bottom:0;width:300px;height:20px;border-radius:4px;background:linear-gradient(180deg,#46515e,#1c232b)"></div>
+            <div style="position:absolute;left:200px;bottom:20px;width:80px;height:70px;border-radius:10px;background:rgba(255,157,60,.18);border:1px dashed rgba(255,157,60,.5)">${apMol('gas',6,72,60,'#ff9d3c',6)}</div>
+            <div style="position:absolute;left:20px;bottom:20px;width:80px;height:44px;border-radius:10px;background:rgba(127,209,255,.18);border:1px dashed rgba(127,209,255,.55)">${apMol('gas',5,72,36,'#7fd1ff',6)}</div>
+            ${arrows(26,5,1,'rgba(255,215,106,.8)')}
+            <div style="position:absolute;left:60px;bottom:96px;font-size:16px;color:#ff9d3c">↑</div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">тёплый воздух поднялся, на его место пришёл холодный — это ветер</div></div>`);
+      note='ветер — это движущийся воздух: тёплый поднимается, а холодный устремляется на его место';
     } else if(step===11){
-      h=col(big('День и ночь у моря'),
-        rowC(chip('днём: с моря на сушу (бриз)','rgba(127,209,255,.5)'),chip('ночью: с суши на море','rgba(127,184,160,.5)'))+
-        sml('суша греется быстрее воды — воздух над ней поднимается, и с моря приходит прохладный ветерок!'));
+      title='День и ночь у моря';
+      const night=st.night;
+      sc=at(20,16,`<div style="position:relative;width:300px;height:140px">
+            <div style="position:absolute;left:0;bottom:0;width:300px;height:44px;border-radius:6px;background:linear-gradient(180deg,${night?'#1c3a52':'#7fc4e8'},${night?'#12293c':'#3f8fc4'})"></div>
+            <div style="position:absolute;left:0;bottom:0;width:150px;height:22px;border-radius:6px;background:linear-gradient(180deg,#5b4630,#2f2418)"></div>
+            <div style="position:absolute;left:${night?20:230}px;top:6px;font-size:20px">${night?'🌙':'☀️'}</div>
+            ${arrows(night?84:52,4,night?-1:1,'rgba(255,215,106,.85)')}
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">${night?'ночью суша остывает быстрее — ветер дует с суши на море':'днём суша греется быстрее — ветер дует с моря на сушу'}</div></div>`);
+      extraCtl=row(b(night?'сделать день':'сделать ночь','night'),b('↺','reset'));
+      note='днём ветер дует с моря на сушу, ночью — с суши на море: это морской и береговой бриз';
     } else if(step===12){
-      h=col(big('Воздух нужен для горения'),
-        rowC(chip('накрыли свечу банкой — погасла','rgba(127,209,255,.5)'),chip('кислород закончился','rgba(232,160,90,.5)'))+
-        sml('без кислорода огонь гаснет — попробуй дома с родителями!'));
+      title='Воздух нужен для горения';
+      sc=at(40,16,candle(!st.jar,st.jar))+at(190,24,`<div style="position:relative;width:130px;height:130px">${apMol('gas',7,120,120,'#ff8f70',6)}<div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">кислород — «пища» для огня</div></div>`);
+      extraCtl=row(b(st.jar?'снять банку':'накрыть банкой','jar'),b('↺','reset'));
+      note='накрыли свечу банкой — кислород внутри израсходовался, и огонь погас. Без воздуха горения нет';
     } else if(step===13){
-      h=col(big('Воздух — плохой проводник тепла'),
-        rowC(chip('шерсть и пух держат воздух','rgba(127,209,255,.5)'),chip('воздух не выпускает тепло','rgba(127,184,160,.5)'))+
-        sml('поэтому в пуховике тепло: между ворсинками — воздух, он не пускает холод!'));
+      title='Воздух — плохой проводник тепла';
+      sc=at(30,16,`<div style="position:relative;width:280px;height:140px">
+            <div style="position:absolute;left:0;top:20px;width:130px;height:90px;border-radius:12px;background:radial-gradient(circle at 40% 40%,#d8c9a8,#a89070)"></div>
+            ${Array.from({length:6},(_,k)=>`<div style="position:absolute;left:${12+k*18}px;top:${34+(k%3)*22}px;width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.16)"></div>`).join('')}
+            <div style="position:absolute;left:150px;top:40px;width:110px;height:50px;border-radius:10px;background:rgba(255,157,60,.16);border:1px dashed rgba(255,157,60,.5)"></div>
+            <div style="position:absolute;left:140px;top:58px;font-size:16px;color:#ff9d3c">⇢</div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">между ворсинками заперт воздух — он не пускает тепло наружу</div></div>`);
+      note='шерсть, пух и двойные окна держат воздух между слоями: воздух плохо проводит тепло, поэтому в шубе тепло';
     } else if(step===14){
-      h=col(big('Парашют и крылья'),
-        rowC(chip('парашют ловит воздух','rgba(127,209,255,.5)'),chip('крыло самолёта опирается на воздух','rgba(127,184,160,.5)'))+
-        sml('воздух может держать! Купол парашюта тормозит падение, крыло поднимает самолёт'));
+      title='Парашют и крыло';
+      sc=at(20,10,`<div style="position:relative;width:150px;height:150px">
+            <div style="position:absolute;left:24px;top:0;width:96px;height:44px;border-radius:50% 50% 40% 40%;background:linear-gradient(180deg,#ffd0a0,#e2734a)"></div>
+            <div style="position:absolute;left:24px;top:42px;width:2px;height:40px;background:#c9d2d7"></div><div style="position:absolute;left:118px;top:42px;width:2px;height:40px;background:#c9d2d7"></div>
+            <div style="position:absolute;left:58px;top:80px;width:22px;height:22px;border-radius:50%;background:#8b8378;animation:apFall 5s linear infinite"></div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">парашют падает медленно</div></div>`)
+        +at(190,16,`<div style="position:relative;width:130px;height:140px">
+            <div style="position:absolute;left:52px;top:0;width:16px;height:16px;border-radius:50%;background:#c9d2d7;animation:apFall 1.3s linear infinite"></div>
+            <div style="position:absolute;left:46px;top:34px;width:28px;height:18px;border-radius:4px;background:#e8eef2;animation:apFall 1.1s linear infinite"></div>
+            <div style="position:absolute;left:10px;top:70px;width:110px;height:16px;border-radius:50% 20% 20% 50%;background:linear-gradient(180deg,#cfe6ff,#7fb8e0)"></div>
+            <div style="position:absolute;left:20px;top:56px;font-size:14px;color:#7de0a0">↑</div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">крыло: воздух давит снизу — подъёмная сила</div></div>`);
+      note='купол парашюта ловит воздух и тормозит падение, а крыло самолёта опирается на воздух и создаёт подъёмную силу';
     } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('воздух — смесь газов','rgba(127,184,160,.5)'),chip('ветер — движение воздуха','rgba(127,184,160,.5)'),chip('тёплый воздух легче — поднимается','rgba(127,184,160,.5)'))+
-        sml('три главных факта о воздухе!'));
+      title='Проверь себя';
+      sc=rowC(card('<b style="color:#7fd1ff">воздух</b><br>смесь газов: азот, кислород'),card('<b style="color:#ffd76a">ветер</b><br>движущийся воздух'),
+              card('<b style="color:#ff9d3c">тёплый</b><br>легче — поднимается'),card('<b style="color:#bfe6ff">холодный</b><br>тяжелее — опускается'));
+      note='проверь: воздух — смесь газов, ветер — движение воздуха, тёплый воздух поднимается';
     } else if(step===16){
-      const POOL=[['warm','вверх'],['cold','вниз'],['warm','вверх'],['cold','вниз']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], kind=e[0];
-      const warm=kind==='warm';
-      const q=warm?'тёплый воздух — что происходит?':'холодный воздух — что происходит?';
-      const firstStep=warm?'нагрелся → расширился → стал легче → поднимается вверх':'остыл → сжался → стал тяжелее → опускается вниз';
-      h=col(big('🎈 Тренажёр: тёплый и холодный воздух'),
-        `<div class="wv-row">${chip(q,'rgba(217,164,65,.35)')}</div>`+
-        l99Balloon(warm,'t')+
-        (st.s1? `<div class="l35-pop" style="font-size:16px;text-align:center;color:#ffd9a0;max-width:280px">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-weight:bold">${warm?'поднимается вверх':'опускается вниз'}!</div>`:'')+
-        btns(btn('1️⃣ подумай',`l99Act('${lk}','s1')`),btn('2️⃣ ответ',`l99Act('${lk}','s2')`),btn('🎲 другой',`l99Act('${lk}','n')`),btn('↺',`l99Act('${lk}','r')`))+
-        sml('тёплый легче — вверх! Холодный тяжелее — вниз!'));
+      title='Тренажёр: тёплый или холодный';
+      sc=at(60,20,`<div style="position:relative;width:220px;height:130px">
+            <div style="position:absolute;left:20px;top:10px;width:80px;height:46px;border-radius:10px;background:rgba(255,157,60,.18);border:1px dashed rgba(255,157,60,.5)">${apMol('gas',5,72,38,'#ff9d3c',6)}</div>
+            <div style="position:absolute;left:120px;top:60px;width:80px;height:46px;border-radius:10px;background:rgba(127,209,255,.18);border:1px dashed rgba(127,209,255,.55)">${apMol('gas',6,72,38,'#7fd1ff',6)}</div>
+            <div style="position:absolute;left:52px;top:60px;font-size:16px;color:#ff9d3c">↑</div>
+            <div style="position:absolute;left:152px;top:112px;font-size:16px;color:#7fd1ff">↓</div>
+            <div class="ap-lbl" style="position:absolute;left:0;right:0;bottom:-16px">тёплый воздух поднимается вверх, холодный опускается вниз</div></div>`);
+      extraCtl=row(b('нагреть','heat'),b('день/ночь','night'),b('↺','reset'));
+      note='определи по стрелкам: тёплый воздух лёгкий — идёт вверх, холодный тяжёлый — вниз';
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🎈 Воздух — смесь газов (азот, кислород).<br>
-            💨 Ветер — движущийся воздух.<br>
-            🔥 Тёплый воздух легче — вверх!<br>
-            🧥 Воздух в одежде греет.</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там про воздух'));
+      title='Главное о воздухе';
+      sc=rowC(card('<b style="color:#7fd1ff">состав</b><br>азот 78 %, кислород 21 %'),card('<b style="color:#ff9d3c">свойства</b><br>имеет вес, давит, занимает место'),
+              card('<b style="color:#ffd76a">движение</b><br>тёплый вверх, холодный вниз — ветер'),card('<b style="color:#7de0a0">жизнь</b><br>нужен для дыхания и горения'))
+        +at(20,110,`<div style="position:relative;width:300px;height:60px">${apMol('gas',16,290,52,'#7fd1ff',6)}</div>`);
+      note='воздух — смесь газов; он имеет вес, давит на нас, занимает место и приходит в движение — это ветер';
     }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+    el.innerHTML=col(big(title), scene(sc), (extraCtl||ctl), sml(note));
+  }catch(e){ el.innerHTML='<div class="ap-card">Ошибка сцены: '+esc(e&&e.message)+'</div>'; }
 }
 
 function l87Act(lk,act){
