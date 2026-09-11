@@ -246,111 +246,312 @@ window._waveCss = function(id, css){
     id: 415, title: 'Квадратичная функция y = ax² + bx + c', ico: '📈',
     src: 'Математика · 8 класс · Алгебра 8: функции', subj: 'math',
     explain: [
-      'Квадратичная функция — это y = ax² + bx + c, где a ≠ 0. Самая простая — y = x². Её график — знаменитая ПАРАБОЛА, похожая на чашу или горку!',
-      'Направление ветвей решает коэффициент a. Если a > 0 — ветви вверх, парабола как чаша. Если a < 0 — ветви вниз, как горка. У y = x² коэффициент a = 1 > 0 → ветви вверх!',
-      'У параболы есть вершина — самая нижняя (или верхняя) точка. Её координата x считается по формуле x₀ = −b/(2a). Для y = x²: b = 0 → x₀ = 0 — вершина в начале координат.',
-      'Найдём вершину y = x² − 6x. Здесь a = 1, b = −6. Считаем: x₀ = −(−6)/(2·1) = 6/2 = 3. Вершина в точке x = 3. Подставим: y = 9 − 18 = −9. Вершина (3; −9).',
-      'Зачем нужна вершина? Она делит параболу на две симметричные половинки — ось симметрии проходит через x₀. Парабола симметрична: точки слева и справа от x₀ на одинаковом расстоянии дают одинаковый y.',
-      'Как построить график? 1) найди вершину (x₀; y₀); 2) отметь её; 3) возьми пару точек слева и справа (x₀±1, x₀±2); 4) соедини плавной линией — параболой!',
-      'Нули функции — где парабола пересекает ось x, то есть y = 0: ax² + bx + c = 0. Это квадратное уравнение! Сколько корней — столько пересечений: 2, 1 или 0.',
-      'Квадратичная функция в жизни: траектория мяча, прыжки, арки мостов, фонтан — всё это параболы! Брошенный мяч летит по параболе — красиво и математично.',
-      'Теперь проверь себя: у параболы y = x² ветви направлены… Вспомни: a = 1 > 0!'
+      'Загадка: бросаешь мяч — дуга в воздухе. Чаша фонтана. Арка моста. Одна и та же кривая. Как её зовут и кто решает, чаша это или горка?',
+      'Квадратичная функция: y = ax² + bx + c, и a не ноль. Самая простая — y = x². Точки (0;0), (1;1), (2;4), (3;9) — чаша. Нажми «Точки»: они сядут на клетку, потом кривая их соединит.',
+      'Соедини точки плавной линией — получится парабола. Не ломаная и не окружность: у параболы ветви уходят всё круче. Линия дорисуется до конца.',
+      'Коэффициент a решает направление. a > 0 — чаша, ветви вверх. a < 0 — горка, ветви вниз. Подвинь ползунок a: чаша переворачивается в горку, вершина на месте.',
+      'Вершина — дно чаши или макушка горки. Формула: x₀ = −b / (2a). Для y = x² коэффициент b = 0, вершина в нуле. Для любой параболы ось симметрии — вертикаль через вершину.',
+      'Пример y = x² − 6x. Здесь a = 1, b = −6. Считаем: x₀ = −(−6) / 2 = 3. Подставь x = 3: y = 9 − 18 = −9. Вершина (3; −9). Нажми «Показать» — точка загорится.',
+      'Симметрия: шаг влево и шаг вправо от вершины дают один и тот же y. Точки (2; −8) и (4; −8) — близнецы. Ось — пунктир x = 3.',
+      'Как строить: вершина, потом ±1 и ±2 по x. Пять точек хватает, чтобы рука провела параболу. Не пытайся угадать кривую «на глаз» без вершины.',
+      'Нули — где парабола пересекает ось x, то есть y = 0. Это корни уравнения ax² + bx + c = 0. Два корня — два пересечения, один — касается, ноль — висит над осью или под ней.',
+      'Подвинь a, b, c. Живая парабола. Смотри, как вершина едет, как ветви раскрываются. a меняет ширину и направление, b двигает вбок, c поднимает всю чашу.',
+      'Мяч летит по параболе. Нажми «Бросок»: точка бежит по дуге и падает. В воздухе нет двигателя — только гравитация, поэтому траектория квадратичная.',
+      'Таблица: x = 0,1,2,3,4 для y = x² − 6x. Числа сами рисуют чашу: 0, −5, −8, −9, −8. Дно на 3, симметрия видна в столбце.',
+      'Связка: a — чаша или горка. Вершина −b/(2a). Ось через вершину. Нули — уравнение. График начинают с вершины, не с «наугад».',
+      'Дискриминант говорит, сколько раз парабола клюёт ось x. D > 0 — два нуля, D = 0 — один (вершина на оси), D < 0 — не клюёт.',
+      'В карман: y = ax² + bx + c. Чаша при a > 0. Вершина x = −b/(2a). Для x² − 6x вершина (3; −9). Мяч, фонтан, арка — всё это она.',
+      'Проверка: у y = x² коэффициент a = 1, он плюс. Ветви куда? Вверх, как чаша, не как горка.'
     ],
     check: { q: 'У параболы y = x² ветви направлены…', choices: ['вверх', 'вниз', 'влево', 'вправо'], ans: 0,
-      exp: 'a = 1 > 0 → ветви вверх.' },
+      exp: 'a = 1 > 0 → ветви вверх, чаша.' },
     tasks: [
       { q: 'Вершина y = x² − 6x: чему равен x₀ = −b/(2a)?', kind: 'unit', ans: 3, tol: 0,
-        hints: ['b = −6, a = 1.', 'x₀ = −(−6)/(2·1) = 3.'], sol: '3' },
-      { q: 'При каком a парабола y = ax² открыта вниз?', kind: 'choice', choices: ['a < 0', 'a > 0', 'a = 0', 'a = 1'], ans: 0, tol: 0,
-        hints: ['Ветви вниз при отрицательном a.', 'a < 0.'], sol: 'a < 0' }
+        hints: ['a = 1, b = −6.', 'x₀ = −(−6) / 2 = 3.'], sol: '3' },
+      { q: 'При каком a парабола y = ax² открыта вниз?', kind: 'choice',
+        choices: ['a < 0', 'a > 0', 'a = 0', 'a = 1'], ans: 0, tol: 0,
+        hints: ['Горка — отрицательный a.', 'a < 0.'], sol: 'a < 0' }
     ]
   };
-  const par=(dir,vertexX)=>`<svg viewBox="0 0 240 200" style="width:210px;height:175px;background:#101f18;border-radius:12px">
-    <line x1="10" y1="160" x2="230" y2="160" stroke="#cfe0cf" stroke-width="2"/>
-    <line x1="120" y1="12" x2="120" y2="190" stroke="#cfe0cf" stroke-width="2"/>
-    ${dir==='up'?`<path d="M30 100 Q120 ${vertexX===3?40:10} 210 100" fill="none" stroke="#ffd76a" stroke-width="3.5"/>`:
-      `<path d="M30 60 Q120 ${vertexX===3?120:150} 210 60" fill="none" stroke="#e86a5a" stroke-width="3.5"/>`}
-    <circle cx="120" cy="${vertexX===3?100:160}" r="5" fill="#8fd1a8"/>
-  </svg>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l415ink{to{stroke-dashoffset:0}}
+    @keyframes l415pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.18)}100%{transform:scale(1);opacity:1}}
+    @keyframes l415pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l415glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l415-ink{animation:l415ink 1.45s cubic-bezier(.2,.75,.15,1) forwards}
+    .l415-dot{transform-box:fill-box;transform-origin:center;animation:l415pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l415-pulse{animation:l415pulse 1.6s ease-in-out infinite}
+    .l415-glow{animation:l415glow 1.8s ease-in-out infinite}
+    .l415-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l415-ink" style="animation-duration:${dur||1.4}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l415-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner){
+    try{ window._waveCss && _waveCss('css-l415', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  const OX=100, OY=118;
+  function X(x){ return OX + x*16; }
+  function Y(y){ return OY - y*8; }
+  function axes(){
+    return `<line x1="18" y1="${OY}" x2="222" y2="${OY}" stroke="#3d5c49" stroke-width="1.6"/>`+
+      `<line x1="${OX}" y1="28" x2="${OX}" y2="204" stroke="#3d5c49" stroke-width="1.6"/>`+
+      lab(214, OY+14, 'x', MUTED, 'middle', 11)+lab(OX+10, 40, 'y', MUTED, 'start', 11);
+  }
+  function paraPts(a,b,c){
+    const pts=[];
+    for(let x=-6; x<=6.01; x+=0.12){
+      const y=a*x*x+b*x+c;
+      const px=X(x), py=Y(y);
+      if(py>=32 && py<=200 && px>=20 && px<=220) pts.push([px,py,x,y]);
+    }
+    return pts;
+  }
+  function paraPath(pts, col, w, draw){
+    if(pts.length<2) return '';
+    let d='M '+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L ');
+    let L=0; for(let i=1;i<pts.length;i++) L+=Math.hypot(pts[i][0]-pts[i-1][0], pts[i][1]-pts[i-1][1]);
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w||2.6}" ${draw?ink(L,1.45,0):''}/>`;
+  }
+  function vertex(a,b,c){
+    const x=-b/(2*a); return [x, a*x*x+b*x+c];
+  }
+
   function visD415(el){
+    try{ window._waveCss && _waveCss('css-l415', CSS); }catch(e){}
     const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'415';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const av=+(st.a==null?1:st.a);
+    const bv=+(st.b==null?0:st.b);
+    const cv=+(st.c==null?0:st.c);
     let h='';
+
     if(step===0){
+      const open=!!st.open;
+      const pts=paraPts(1,0,0);
       h=`<div class="wv-col">
-        <div class="wv-big">Квадратичная функция</div>
-        <div style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">y = ax² + bx + c</div>
-        <div style="font-size:44px" class="wv-swing">⛲</div>
-        <div class="wv-sml">график — парабола, как фонтан или чаша!</div>
+        ${frame(
+          axes()+paraPath(pts, GOLD, 3, doDraw)+
+          lab(120, 24, open?'парабола — чаша':'что за кривая?', GOLD, 'middle', 14)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Мяч, фонтан, арка','Одна кривая на троих. Сейчас разберём, кто решает «чаша или горка» и где у неё дно.')}
       </div>`;
     } else if(step===1){
+      const shown=Math.max(0, Math.min(5, st.n==null?0:+st.n));
+      const dots=[[0,0],[1,1],[-1,1],[2,4],[-2,4]];
       h=`<div class="wv-col">
-        <div class="wv-big">Ветви: a решает!</div>
-        <div class="wv-row" style="gap:12px;align-items:flex-end">
-          <div style="text-align:center"><svg viewBox="0 0 120 100" style="width:90px;height:75px"><path d="M15 80 Q60 5 105 80" fill="none" stroke="#8fd1a8" stroke-width="3.5"/></svg><div style="font-size:12px;color:#8fd1a8">a > 0 — вверх</div></div>
-          <div style="text-align:center"><svg viewBox="0 0 120 100" style="width:90px;height:75px"><path d="M15 20 Q60 95 105 20" fill="none" stroke="#e86a5a" stroke-width="3.5"/></svg><div style="font-size:12px;color:#ff9a8a">a < 0 — вниз</div></div>
-        </div>
+        ${frame(
+          axes()+
+          dots.slice(0,shown).map((p,i)=>`<circle class="l415-dot" style="animation-delay:${i*.08}s" cx="${X(p[0])}" cy="${Y(p[1])}" r="5" fill="${GOLD}"/>`+lab(X(p[0])+10, Y(p[1])-6, '('+p[0]+'; '+p[1]+')', GOLD, 'start', 10)).join('')+
+          lab(120, 24, 'y = x²  точки', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].n=Math.min(5,(CHS[k].n||0)+1);chRender(0);}catch(e){}">${shown>=5?'Все пять':'Следующая точка'}</button>
+        ${note('Сначала точки','(0;0), (±1;1), (±2;4). Уже видна чаша. Чем дальше от нуля по x, тем круче вверх — это квадрат.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">Вершина</div>
-        ${par('up',0)}
-        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:17px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">x₀ = −b/(2a)</div>
+        ${frame(
+          axes()+paraPath(paraPts(1,0,0), GOLD, 3, doDraw)+
+          lab(120, 24, 'парабола y = x²', GOLD)
+        )}
+        ${note('Плавная, не ломаная','Ветви уходят всё круче. Это не дуга окружности: окружность потом загибается вниз, парабола — нет.')}
       </div>`;
     } else if(step===3){
+      const a=av===0?0.2:av;
       h=`<div class="wv-col">
-        <div class="wv-big">Вершина y = x² − 6x</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-size:18px;color:#e8dcc8;text-align:center;font-family:Georgia,serif">
-          <div class="wv-pop">a = 1, b = −6</div>
-          <div class="wv-pop2">x₀ = −(−6)/(2·1) = 6/2 = <b style="color:#ffd76a">3</b></div>
-          <div class="wv-pop3">y = 9 − 18 = <b style="color:#8fd1a8">−9</b></div>
-        </div>
-        <div class="wv-sml">вершина (3; −9)</div>
+        ${frame(
+          axes()+paraPath(paraPts(a,0,0), a>0?GREEN:RED, 3, doDraw)+
+          lab(120, 24, a>0?'a > 0  чаша':'a < 0  горка', a>0?GREEN:RED)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">a
+          <input type="range" min="-20" max="20" value="${Math.round(av*10)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].a=this.value/10; if(+this.value===0) CHS[k].a=0.2; chRender(0);}catch(e){}">
+          <b style="color:${av>0?GREEN:RED};min-width:32px">${av.toString().replace('.',',')}</b>
+        </label>
+        ${note('Кто решает','Плюс — чаша, минус — горка. Модуль |a| — ширина: большое a — узкая, маленькое — широкая.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
-        <div class="wv-big">Ось симметрии</div>
-        ${par('up',3)}
-        <div class="wv-sml">парабола симметрична: слева и справа от x₀ — одинаковый y!</div>
+        <div class="wv-ans" style="font-size:18px">x₀ = −b / (2a)</div>
+        ${frame(
+          axes()+paraPath(paraPts(1,0,0), GOLD, 2.6, doDraw)+
+          `<circle class="l415-glow" cx="${X(0)}" cy="${Y(0)}" r="6" fill="${GREEN}"/>`+
+          lab(X(0)+12, Y(0)-10, 'вершина (0; 0)', GREEN, 'start', 11)+
+          lab(120, 24, 'для y = x²  b = 0', GOLD)
+        )}
+        ${note('Дно чаши','Формула всегда одна. Если b = 0, вершина на оси y. Дальше сдвинем её в сторону.')}
       </div>`;
     } else if(step===5){
+      const show=!!st.vx;
+      const V=vertex(1,-6,0);
       h=`<div class="wv-col">
-        <div class="wv-big">Как построить параболу</div>
-        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
-          ${[
-            ['1️⃣','найди вершину (x₀; y₀)','#ffd76a'],
-            ['2️⃣','отметь точки x₀±1, x₀±2','#7fd1ff'],
-            ['3️⃣','соедини плавной линией','#8fd1a8']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;text-align:left;font-size:14px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
-        </div>
+        ${frame(
+          axes()+paraPath(paraPts(1,-6,0), GOLD, 2.8, doDraw)+
+          (show?`<circle class="l415-glow" cx="${X(V[0])}" cy="${Y(V[1])}" r="6" fill="${GREEN}"/>`+lab(X(V[0]), Y(V[1])-12, '(3; −9)', GREEN):'')+
+          lab(120, 24, 'y = x² − 6x', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].vx=!CHS[k].vx;chRender(0);}catch(e){}">${show?'Скрыть':'Показать вершину'}</button>
+        <div class="wv-sml">x₀ = −(−6)/2 = 3,  y = 9 − 18 = −9</div>
+        ${note('Считаем вслух','a = 1, b = −6. Минус на минус даёт плюс: 6/2 = 3. Подстановка в формулу — дно в (3; −9).')}
       </div>`;
     } else if(step===6){
+      const V=vertex(1,-6,0);
       h=`<div class="wv-col">
-        <div class="wv-big">Нули функции</div>
-        <div style="font-size:20px;color:#e8dcc8;font-family:Georgia,serif">y = 0 → ax² + bx + c = 0</div>
-        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
-          ${[['2 корня','2 пересечения','#8fd1a8'],['1 корень','касание','#ffd76a'],['0 корней','нет встречи','#ff9a8a']].map(x=>`<span class="wv-chip" style="border-color:${x[2]};color:${x[2]}">${x[0]} — ${x[1]}</span>`).join('')}
-        </div>
+        ${frame(
+          axes()+paraPath(paraPts(1,-6,0), GOLD, 2.4, false)+
+          `<line x1="${X(3)}" y1="36" x2="${X(3)}" y2="196" stroke="${BLUE}" stroke-width="1.6" stroke-dasharray="5 4"/>`+
+          `<circle cx="${X(2)}" cy="${Y(-8)}" r="5" fill="${GREEN}"/>`+
+          `<circle cx="${X(4)}" cy="${Y(-8)}" r="5" fill="${GREEN}"/>`+
+          `<circle class="l415-glow" cx="${X(V[0])}" cy="${Y(V[1])}" r="6" fill="${GOLD}"/>`+
+          lab(X(3)+10, 48, 'x = 3', BLUE, 'start', 11)+
+          lab(120, 24, 'близнецы слева и справа', GOLD, 'middle', 13)
+        )}
+        ${note('Зеркало','Шаг 1 влево и шаг 1 вправо — один y. Поэтому график строят от вершины, а не с края.')}
       </div>`;
     } else if(step===7){
+      const pts=[[3,-9],[2,-8],[4,-8],[1,-5],[5,-5]];
+      const n=Math.max(0, Math.min(5, st.n==null?1:+st.n));
       h=`<div class="wv-col">
-        <div class="wv-big">Параболы в жизни</div>
-        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-          ${['⚽','🏀','🌉','⛲'].map((e,i)=>`<span style="font-size:40px" class="wv-pop" style="animation-delay:${i*0.1}s">${e}</span>`).join('')}
+        ${frame(
+          axes()+
+          (n>=5?paraPath(paraPts(1,-6,0), GOLD, 2.6, doDraw):'')+
+          pts.slice(0,n).map((p,i)=>`<circle class="l415-dot" style="animation-delay:${i*.07}s" cx="${X(p[0])}" cy="${Y(p[1])}" r="5" fill="${i===0?GREEN:GOLD}"/>`).join('')+
+          lab(120, 24, 'вершина → ±1 → ±2', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].n=Math.min(5,(CHS[k].n||1)+1);chRender(0);}catch(e){}">${n>=5?'Готово':'Ещё точка'}</button>
+        ${note('Пять точек','Вершина, два соседа, ещё два. Потом рука проводит кривую. Без вершины чертёж «поплывёт».')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(
+          axes()+paraPath(paraPts(1,-6,0), GOLD, 2.6, doDraw)+
+          `<circle class="l415-dot" cx="${X(0)}" cy="${Y(0)}" r="6" fill="${BLUE}"/>`+
+          `<circle class="l415-dot" style="animation-delay:.12s" cx="${X(6)}" cy="${Y(0)}" r="6" fill="${BLUE}"/>`+
+          lab(X(0), Y(0)+16, '0', BLUE)+lab(X(6), Y(0)+16, '6', BLUE)+
+          lab(120, 24, 'нули: x = 0 и x = 6', GOLD)
+        )}
+        ${note('Где y = 0','x² − 6x = x(x − 6) = 0. Два нуля — два пересечения с осью x. Это корни квадратного уравнения.')}
+      </div>`;
+    } else if(step===9){
+      const a=av===0?0.4:av, b=bv, c=cv;
+      const V=vertex(a,b,c);
+      h=`<div class="wv-col">
+        ${frame(
+          axes()+paraPath(paraPts(a,b,c), a>0?GOLD:RED, 2.8, false)+
+          (Y(V[1])>36 && Y(V[1])<200?`<circle class="l415-glow" cx="${X(V[0])}" cy="${Y(V[1])}" r="5" fill="${GREEN}"/>`:'')+
+          lab(120, 24, 'y = '+a.toString().replace('.',',')+'x² + '+b.toString().replace('.',',')+'x + '+c.toString().replace('.',','), GOLD, 'middle', 12)
+        )}
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,300px)">
+          ${[['a',av,-20,20,10],['b',bv,-30,30,5],['c',cv,-20,20,5]].map(r=>`<label class="wv-sml" style="display:flex;align-items:center;gap:8px">${r[0]}
+            <input type="range" min="${r[2]}" max="${r[3]}" value="${Math.round(r[1]*(r[0]==='a'?10:5))}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].${r[0]}=this.value/${r[0]==='a'?10:5}; if(k && '${r[0]}'==='a' && +this.value===0) CHS[k].a=0.3; chRender(0);}catch(e){}">
+            <b style="color:${GOLD};min-width:32px">${r[1].toString().replace('.',',')}</b></label>`).join('')}
         </div>
-        <div class="wv-sml">мяч, арки мостов, фонтаны — всё летит по параболе!</div>
+        ${note('Три ручки','a — чаша/горка и ширина. b — сдвиг вбок. c — подъём всей фигуры. Вершина едет за ними.')}
+      </div>`;
+    } else if(step===10){
+      if(st.play && !window._l415iv){
+        window._l415iv=setInterval(()=>{
+          try{
+            const k=lidKey(LV.id); CHS[k]=CHS[k]||{}; const s=CHS[k];
+            s.w=(s.w==null?0:s.w)+0.016; if(s.w>1) s.w=0;
+            if(LV.id===415 && LV.step===10 && s.play) chRender(0);
+            else { clearInterval(window._l415iv); window._l415iv=null; }
+          }catch(e){ clearInterval(window._l415iv); window._l415iv=null; }
+        }, 40);
+      }
+      if(!st.play && window._l415iv){ clearInterval(window._l415iv); window._l415iv=null; }
+      const w=st.w==null?0.15:+st.w;
+      const x=w*6, y=x*(6-x)*0.7;
+      h=`<div class="wv-col">
+        ${frame(
+          axes()+paraPath(paraPts(-0.7,4.2,0), GOLD, 2.6, doDraw)+
+          `<circle class="l415-glow" cx="${X(x)}" cy="${Y(y)}" r="7" fill="${BLUE}"/>`+
+          lab(120, 24, 'бросок мяча', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].play=!CHS[k].play;chRender(0);}catch(e){}">${st.play?'⏸ Стоп':'▶ Бросок'}</button>
+        ${note('Гравитация','В воздухе нет мотора. Скорость вверх тает, потом вниз. Получается парабола. Фонтан и арка — те же ветви.')}
+      </div>`;
+    } else if(step===11){
+      const rows=[0,1,2,3,4].map(x=>[x, x*x-6*x]);
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:4px;width:min(100%,280px)">
+          ${rows.map((r,i)=>`<div class="wv-pop" style="animation-delay:${i*.07}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${r[0]===3?GOLD:BLUE};border-radius:10px;padding:7px 12px;font-size:14px;color:#e8dcc8">
+            <span>x = ${r[0]}</span><b style="color:${r[0]===3?GOLD:GREEN}">y = ${r[1]}</b></div>`).join('')}
+        </div>
+        ${note('Столбик сам рисует чашу','0, −5, −8, −9, −8. Дно на x = 3, дальше зеркало. Таблица — черновик графика.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['a','чаша, если плюс; горка, если минус',GREEN],
+            ['вершина','x₀ = −b / (2a)',GOLD],
+            ['ось','вертикаль через вершину',BLUE],
+            ['нули','корни ax²+bx+c = 0',MUTED]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <b style="color:${x[2]}">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Связка','Сначала a, потом вершина, потом точки, потом кривая. Нули — если спросят пересечения с осью x.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        ${frame(
+          axes()+
+          paraPath(paraPts(1,-4,0), GREEN, 2.2, doDraw)+
+          paraPath(paraPts(1,0,0), GOLD, 2.2, false)+
+          paraPath(paraPts(1,0,2), RED, 2.2, false)+
+          lab(70, 44, 'D>0', GREEN)+lab(150, 44, 'D=0', GOLD)+lab(200, 70, 'D<0', RED)
+        )}
+        ${note('Сколько клюёт ось','Два нуля, один (вершина на оси) или ни одного. Дискриминант — счётчик пересечений.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          axes()+paraPath(paraPts(1,0,0), GOLD, 3, doDraw)+
+          lab(120, 24, 'y = ax² + bx + c', GOLD)
+        )}
+        ${note('В карман','Чаша при a > 0. Вершина −b/(2a). Для x² − 6x дно (3; −9). Мяч, фонтан, арка — она.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">y = x²</div>
-        <div class="wv-sml">a = 1 — ветви куда?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 14px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">вверх / вниз</div>
+        ${frame(
+          axes()+paraPath(paraPts(1,0,0), GOLD, 3, doDraw)+
+          lab(120, 24, 'y = x²   a = 1', GOLD)+
+          lab(120, 204, 'ветви куда?', MUTED)
+        )}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">вверх / вниз</div>
+        ${note('Проверка','Вверх. a плюс — чаша. Вниз было бы у y = −x².')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[415]=visD415;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===415){ window.ARH_LESSONS[i]=L415; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===415){ arr[i]=L415; f=true; break; } }
+    if(!f) arr.push(L415);
+  })();
 })();
 /* ================= УРОК 416 · Квадратные неравенства: метод интервалов ================= */
 (function(){
@@ -358,109 +559,305 @@ window._waveCss = function(id, css){
     id: 416, title: 'Квадратные неравенства: метод интервалов', ico: '📊',
     src: 'Математика · 8 класс · Алгебра 8: неравенства', subj: 'math',
     explain: [
-      'Квадратное неравенство — это неравенство с x², например x² − 4 > 0. Решить его — найти все x, при которых оно верно. Мощный способ — метод интервалов!',
-      'Шаг 1: решаем уравнение x² − 4 = 0. x² = 4 → x = 2 или x = −2. Эти корни разбивают числовую ось на три интервала: (−∞; −2), (−2; 2), (2; +∞).',
-      'Шаг 2: берём пробную точку из каждого интервала и смотрим знак выражения. Из левого возьмём x = −3: (−3)² − 4 = 9 − 4 = 5 > 0 — плюс! Из среднего x = 0: 0 − 4 = −4 < 0 — минус! Из правого x = 3: 9 − 4 = 5 > 0 — плюс!',
-      'Шаг 3: нам нужно x² − 4 > 0, то есть знак «+». Плюсы на крайних интервалах → ответ: x < −2 или x > 2. Готово!',
-      'Почему знак не меняется внутри интервала? Выражение x² − 4 непрерывно и меняет знак только в корнях. Внутри интервала между корнями знак постоянный — достаточно проверить одну точку!',
-      'Что если неравенство нестрогое, x² − 4 ≥ 0? Тогда корни ВКЛЮЧАЕМ: x ≤ −2 или x ≥ 2. Кружки на оси закрашиваем!',
-      'А если x² − 4 < 0? Нужен знак «−», он в среднем интервале: −2 < x < 2. Красиво: парабола y = x² − 4 ниже оси x ровно между корнями!',
-      'Связь с параболой: неравенство x² − 4 > 0 — это «где парабола выше оси x». Ветви вверх → снаружи корней плюс, внутри минус. Запомни эту картинку — и метод интервалов станет наглядным!',
-      'Теперь проверь себя: реши x² − 4 > 0. Вспомни: корни ±2, плюсы снаружи!'
+      'Загадка: где выражение x² − 4 больше нуля? Не одно число, а целые куски прямой. Сейчас разрежем ось корнями и раскрасим плюсы и минусы.',
+      'Квадратное неравенство — вопрос «где парабола выше оси». Пример: x² − 4 > 0. Сначала делают равенство, потом знаки. Не прыгай сразу к ответу.',
+      'Шаг 1. Реши x² − 4 = 0. Получишь x = −2 и x = 2. Эти две точки — заборы. Они режут прямую на три двора: левый, средний, правый.',
+      'Нажми корни: на оси зажгутся две точки. Между ними — середина, по бокам — бесконечности. Больше корней нет, дворов ровно три.',
+      'Шаг 2. Пробная точка слева. Возьми x = −3: (−3)² − 4 = 5, плюс. Нажми «Проверить»: слева загорится плюс. Одной точки хватает на весь двор.',
+      'Середина. x = 0: 0 − 4 = −4, минус. Парабола здесь под осью. Средний двор — отрицательный.',
+      'Справа. x = 3: 9 − 4 = 5, плюс. Картина симметричная: плюс, минус, плюс. Так всегда у чаши с двумя корнями.',
+      'Почему знак не скачет внутри двора? Выражение непрерывное, ноль только в корнях. Внутри двора оно не пересекает ноль — знак один. Поэтому одна пробная точка.',
+      'Шаг 3. Что просили? x² − 4 > 0 — нужны плюсы. Это левый и правый дворы: x < −2 или x > 2. Средний выкидываем.',
+      'Нестрогое ≥ включает корни. Кружки закрашиваем, в ответ ставим ≤ и ≥. Строгое > — кружки пустые, корни не берём.',
+      'Наоборот, x² − 4 < 0 — нужен минус, это середина: −2 < x < 2. Там парабола ниже оси.',
+      'Живая парабола y = x² − 4. Где она над осью — плюс, под осью — минус. Метод интервалов — это вид сбоку той же чаши.',
+      'Подвинь x. Подпись скажет знак. Поймай плюс слева, минус в середине, плюс справа. Рука запомнит картинку лучше, чем правило «снаружи плюс».',
+      'Рецепт: уравнение → корни на ось → пробные точки → взять нужный знак. Для чаши с двумя корнями плюс всегда снаружи.',
+      'В карман: x² − 4 > 0 → x < −2 или x > 2. Строгое — пустые кружки. Нестрогое — закрашенные. Ниже оси — середина.',
+      'Проверка: x² − 4 > 0. Плюсы снаружи заборов ±2. Ответ: x < −2 или x > 2. Не середина — там минус.'
     ],
     check: { q: 'Реши: x² − 4 > 0', choices: ['x < −2 или x > 2', '−2 < x < 2', 'x > 2', 'x < 2'], ans: 0,
-      exp: 'Произведение положительно вне отрезка [−2; 2].' },
+      exp: 'Плюс снаружи корней ±2: x < −2 или x > 2.' },
     tasks: [
       { q: 'Какие корни у уравнения x² − 9 = 0? Введи положительный корень.', kind: 'unit', ans: 3, tol: 0,
-        hints: ['x² = 9.', 'x = ±3 → положительный 3.'], sol: '3' },
-      { q: 'Методом интервалов обычно решают…', kind: 'choice', choices: ['неравенства', 'уравнения с модулем', 'системы сложением', 'дроби'], ans: 0, tol: 0,
-        hints: ['Расстановка знаков по интервалам.', 'Квадратные и дробные неравенства.'], sol: 'неравенства' }
+        hints: ['x² = 9.', 'x = ±3, положительный — 3.'], sol: '3' },
+      { q: 'Методом интервалов обычно решают…', kind: 'choice',
+        choices: ['неравенства', 'уравнения с модулем', 'системы сложением', 'дроби'], ans: 0, tol: 0,
+        hints: ['Расстановка знаков по дворам.', 'Квадратные и дробные неравенства.'], sol: 'неравенства' }
     ]
   };
-  const axisIntervals=()=>`<svg viewBox="0 0 260 80" style="width:230px;height:71px;background:#101f18;border-radius:10px">
-    <line x1="10" y1="42" x2="250" y2="42" stroke="#cfe0cf" stroke-width="2.5"/>
-    ${[-3,-2,-1,0,1,2,3].map(n=>`<text x="${130+n*26}" y="64" text-anchor="middle" font-size="12" fill="#8fa08f">${n}</text>`).join('')}
-    <circle cx="${130-2*26}" cy="42" r="7" fill="none" stroke="#ffd76a" stroke-width="3"/>
-    <circle cx="${130+2*26}" cy="42" r="7" fill="none" stroke="#ffd76a" stroke-width="3"/>
-    <line x1="10" y1="42" x2="${130-2*26-8}" y2="42" stroke="#8fd1a8" stroke-width="5" stroke-linecap="round"/>
-    <line x1="${130+2*26+8}" y1="42" x2="250" y2="42" stroke="#8fd1a8" stroke-width="5" stroke-linecap="round"/>
-    <line x1="${130-2*26+8}" y1="42" x2="${130+2*26-8}" y2="42" stroke="#ff9a8a" stroke-width="5" stroke-linecap="round"/>
-  </svg>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l416ink{to{stroke-dashoffset:0}}
+    @keyframes l416pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.18)}100%{transform:scale(1);opacity:1}}
+    @keyframes l416pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l416glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l416-ink{animation:l416ink 1.35s cubic-bezier(.2,.75,.15,1) forwards}
+    .l416-dot{transform-box:fill-box;transform-origin:center;animation:l416pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l416-pulse{animation:l416pulse 1.6s ease-in-out infinite}
+    .l416-glow{animation:l416glow 1.8s ease-in-out infinite}
+    .l416-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l416-ink" style="animation-duration:${dur||1.3}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l416-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l416', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function AX(n){ return 120 + n*24; }
+  function axis(y){
+    y=y||110;
+    let t=`<line x1="16" y1="${y}" x2="224" y2="${y}" stroke="#3d5c49" stroke-width="2"/>`;
+    for(let n=-4;n<=4;n++){
+      t+=`<line x1="${AX(n)}" y1="${y-6}" x2="${AX(n)}" y2="${y+6}" stroke="#3d5c49"/>`+lab(AX(n), y+20, String(n), MUTED, 'middle', 11);
+    }
+    return t;
+  }
+  function root(n,y,fill){
+    y=y||110;
+    return `<circle class="l416-dot" cx="${AX(n)}" cy="${y}" r="7" fill="${fill?GOLD:'#0c1a14'}" stroke="${GOLD}" stroke-width="3"/>`;
+  }
+  function paraPts(){
+    const pts=[];
+    for(let x=-4.2;x<=4.2;x+=0.1){
+      const px=AX(x), py=140-(x*x-4)*10;
+      if(py>=32 && py<=190) pts.push([px,py]);
+    }
+    return pts;
+  }
+  function paraPath(draw){
+    const pts=paraPts();
+    let L=0; for(let i=1;i<pts.length;i++) L+=Math.hypot(pts[i][0]-pts[i-1][0], pts[i][1]-pts[i-1][1]);
+    return `<path d="M ${pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L ')}" fill="none" stroke="${GOLD}" stroke-width="2.6" ${draw?ink(L,1.4,0):''}/>`;
+  }
+
   function visD416(el){
+    try{ window._waveCss && _waveCss('css-l416', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'416';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const xv=Math.max(-4, Math.min(4, +(st.x==null?0:st.x)));
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Квадратное неравенство</div>
-        <div style="font-size:28px;color:#ffd76a;font-family:Georgia,serif">x² − 4 > 0</div>
-        <div class="wv-sml">найти все x, при которых верно — метод интервалов!</div>
+        ${frame(
+          lab(120, 40, 'x² − 4 > 0', GOLD, 'middle', 22)+
+          `<rect x="36" y="70" width="168" height="70" rx="12" fill="${BLUE}14" stroke="${BLUE}" stroke-width="2" ${doDraw?ink(476,1.2,0):''}/>`+
+          lab(120, 110, open?'снаружи ±2':'где это верно?', open?GREEN:GOLD, 'middle', 15)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Не одно число','Нужны все x, где выражение плюс. Режем ось корнями и красим дворы. Это метод интервалов.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Шаг 1: корни уравнения</div>
-        <div style="font-size:24px;color:#e8dcc8;font-family:Georgia,serif">x² − 4 = 0</div>
-        <div style="display:flex;gap:8px;justify-content:center;margin-top:4px">
-          ${chip('x = 2','#8fd1a8')}${chip('x = −2','#7fd1ff')}
-        </div>
-        <div class="wv-sml">корни разбивают ось на три интервала!</div>
+        <div class="wv-ans" style="font-size:20px">x² − 4 = 0</div>
+        <div class="wv-sml">сначала равенство, потом знаки</div>
+        ${frame(
+          axis(110)+lab(120, 48, 'ищем заборы', GOLD)
+        , '0 0 240 160')}
+        ${note('Порядок','Неравенство не решают «в лоб». Сначала где ноль, потом где плюс и минус. Ноль — граница дворов.')}
       </div>`;
     } else if(step===2){
+      const n=Math.max(0, Math.min(2, st.n==null?0:+st.n));
       h=`<div class="wv-col">
-        <div class="wv-big">Шаг 2: пробные точки</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
-          ${[
-            ['x = −3','(−3)² − 4 = 5 > 0 → +','#8fd1a8'],
-            ['x = 0','0 − 4 = −4 < 0 → −','#ff9a8a'],
-            ['x = 3','9 − 4 = 5 > 0 → +','#8fd1a8']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><b>${x[0]}</b><span style="font-size:12px;color:${x[2]}">${x[1]}</span></div>`).join('')}
-        </div>
+        ${frame(
+          axis(110)+
+          (n>=1?root(-2,110,false):'')+
+          (n>=2?root(2,110,false):'')+
+          lab(120, 48, n>=2?'x = −2 и x = 2':'поставь корни', GOLD)
+        , '0 0 240 160')}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].n=Math.min(2,(CHS[k].n||0)+1);chRender(0);}catch(e){}">${n>=2?'Оба забора':'Следующий корень'}</button>
+        ${note('Два забора','x² = 4 → x = ±2. Пустые кружки: пока это равенство, точки ещё не «наши» — неравенство строгое.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        <div class="wv-big">Шаг 3: ответ</div>
-        ${axisIntervals()}
-        <div class="wv-sml">зелёный — плюс (нужен нам) · красный — минус</div>
-        <div style="background:rgba(127,209,160,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 12px;font-size:18px;color:#8fd1a8;font-weight:bold" class="wv-ans">x < −2 или x > 2</div>
+        ${frame(
+          axis(120)+
+          root(-2,120,false)+root(2,120,false)+
+          lab(AX(-3.2), 70, 'I', BLUE)+lab(120, 70, 'II', GOLD)+lab(AX(3.2), 70, 'III', GREEN)+
+          `<path d="M ${AX(-4.2)} 96 L ${AX(-2)-10} 96" stroke="${BLUE}" stroke-width="5" stroke-linecap="round"/>`+
+          `<path d="M ${AX(-2)+10} 96 L ${AX(2)-10} 96" stroke="${GOLD}" stroke-width="5" stroke-linecap="round"/>`+
+          `<path d="M ${AX(2)+10} 96 L ${AX(4.2)} 96" stroke="${GREEN}" stroke-width="5" stroke-linecap="round"/>`+
+          lab(120, 36, 'три двора', GOLD)
+        , '0 0 240 170')}
+        ${note('Три куска','Левый (−∞; −2), средний (−2; 2), правый (2; +∞). В каждом знак свой, внутри двора он не меняется.')}
       </div>`;
     } else if(step===4){
+      const ok=!!st.p1;
       h=`<div class="wv-col">
-        <div class="wv-big">Почему знак не меняется?</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">выражение меняет знак <b style="color:#ffd76a">только в корнях</b>. Внутри интервала знак постоянный → проверь одну точку!</div>
+        ${frame(
+          axis(120)+root(-2,120,false)+root(2,120,false)+
+          `<circle class="l416-glow" cx="${AX(-3)}" cy="120" r="6" fill="${BLUE}"/>`+
+          lab(AX(-3), 86, ok?'+5':'x = −3', ok?GREEN:BLUE)+
+          lab(120, 36, 'проба слева', GOLD)
+        , '0 0 240 170')}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].p1=1;chRender(0);}catch(e){}">${ok?'5 > 0, плюс':'Проверить −3'}</button>
+        ${note('Левый двор','(−3)² − 4 = 9 − 4 = 5. Плюс. Одной точки хватает на весь левый кусок до −2.')}
       </div>`;
     } else if(step===5){
+      const ok=!!st.p2;
       h=`<div class="wv-col">
-        <div class="wv-big">Нестрогое ≥</div>
-        <div class="wv-sml">x² − 4 ≥ 0 → корни включаем!</div>
-        <div style="font-size:20px;color:#8fd1a8;font-family:Georgia,serif">x ≤ −2 или x ≥ 2</div>
-        <div class="wv-sml">кружки на оси закрашиваем</div>
+        ${frame(
+          axis(120)+root(-2,120,false)+root(2,120,false)+
+          `<circle class="l416-glow" cx="${AX(0)}" cy="120" r="6" fill="${GOLD}"/>`+
+          lab(120, 86, ok?'−4':'x = 0', ok?RED:GOLD)+
+          lab(120, 36, 'проба в середине', GOLD)
+        , '0 0 240 170')}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].p2=1;chRender(0);}catch(e){}">${ok?'−4 < 0, минус':'Проверить 0'}</button>
+        ${note('Средний двор','0 − 4 = −4. Минус. Между корнями чаша под осью — там выражение отрицательное.')}
       </div>`;
     } else if(step===6){
+      const ok=!!st.p3;
       h=`<div class="wv-col">
-        <div class="wv-big">А если < 0?</div>
-        <div class="wv-sml">x² − 4 < 0 → нужен минус — он в середине!</div>
-        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">−2 < x < 2</div>
+        ${frame(
+          axis(120)+root(-2,120,false)+root(2,120,false)+
+          `<circle class="l416-glow" cx="${AX(3)}" cy="120" r="6" fill="${GREEN}"/>`+
+          lab(AX(3), 86, ok?'+5':'x = 3', ok?GREEN:BLUE)+
+          lab(120, 36, 'проба справа', GOLD)
+        , '0 0 240 170')}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].p3=1;chRender(0);}catch(e){}">${ok?'5 > 0, плюс':'Проверить 3'}</button>
+        ${note('Правый двор','9 − 4 = 5. Плюс. Картина: плюс — минус — плюс. Для чаши с двумя корнями так всегда.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Связь с параболой</div>
-        <div style="font-size:20px;color:#e8dcc8;font-family:Georgia,serif">x² − 4 > 0 ⟺ парабола выше оси x</div>
-        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
-          ${chip('ветви вверх','#8fd1a8')}${chip('снаружи — плюс','#8fd1a8')}${chip('внутри — минус','#ff9a8a')}
+        ${frame(
+          axis(130)+root(-2,130,false)+root(2,130,false)+
+          lab(AX(-3.2), 78, '+', GREEN, 'middle', 18)+
+          lab(120, 78, '−', RED, 'middle', 18)+
+          lab(AX(3.2), 78, '+', GREEN, 'middle', 18)+
+          `<path d="M 20 130 L ${AX(-2)-10} 130" stroke="${GREEN}" stroke-width="6" stroke-linecap="round" ${doDraw?ink(AX(-2)-30,1.1,0):''}/>`+
+          `<path d="M ${AX(-2)+10} 130 L ${AX(2)-10} 130" stroke="${RED}" stroke-width="6" stroke-linecap="round" ${doDraw?ink(AX(2)-AX(-2)-20,1.1,.15):''}/>`+
+          `<path d="M ${AX(2)+10} 130 L 220 130" stroke="${GREEN}" stroke-width="6" stroke-linecap="round" ${doDraw?ink(220-AX(2)-10,1.1,.3):''}/>`+
+          lab(120, 36, 'знаки на оси', GOLD)
+        , '0 0 240 180')}
+        ${note('Не скачет внутри','Непрерывная функция меняет знак только в корнях. Во дворе проверяем одну точку — и красим весь кусок.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(
+          axis(130)+root(-2,130,false)+root(2,130,false)+
+          `<path d="M 20 130 L ${AX(-2)-10} 130" stroke="${GREEN}" stroke-width="6" stroke-linecap="round"/>`+
+          `<path d="M ${AX(2)+10} 130 L 220 130" stroke="${GREEN}" stroke-width="6" stroke-linecap="round"/>`+
+          lab(120, 36, 'нужен плюс  →  края', GREEN)+
+          lab(120, 78, 'x < −2  или  x > 2', GOLD, 'middle', 14)
+        , '0 0 240 180')}
+        ${note('Что просили','> 0 — это плюсы, края. Средний двор выкинули. Строгое неравенство: заборы не входят, кружки пустые.')}
+      </div>`;
+    } else if(step===9){
+      const fill=!!st.fill;
+      h=`<div class="wv-col">
+        ${frame(
+          axis(130)+root(-2,130,fill)+root(2,130,fill)+
+          `<path d="M 20 130 L ${AX(-2)-(fill?0:10)} 130" stroke="${GREEN}" stroke-width="6" stroke-linecap="round"/>`+
+          `<path d="M ${AX(2)+(fill?0:10)} 130 L 220 130" stroke="${GREEN}" stroke-width="6" stroke-linecap="round"/>`+
+          lab(120, 36, fill?'≥  кружки полные':'>  кружки пустые', GOLD)+
+          lab(120, 78, fill?'x ≤ −2 или x ≥ 2':'x < −2 или x > 2', GREEN, 'middle', 13)
+        , '0 0 240 180')}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].fill=!CHS[k].fill;chRender(0);}catch(e){}">${fill?'Сделать строгим >':'Включить корни ≥'}</button>
+        ${note('Пустой или полный','Строгое — точка не входит. Нестрогое — входит. На оси это пустой кружок против закрашенного.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        ${frame(
+          axis(130)+root(-2,130,false)+root(2,130,false)+
+          `<path d="M ${AX(-2)+10} 130 L ${AX(2)-10} 130" stroke="${RED}" stroke-width="6" stroke-linecap="round" ${doDraw?ink(AX(2)-AX(-2)-20,1.2,0):''}/>`+
+          lab(120, 36, 'нужен минус → середина', RED)+
+          lab(120, 78, '−2 < x < 2', GOLD, 'middle', 16)
+        , '0 0 240 180')}
+        ${note('Наоборот','x² − 4 < 0 — парабола ниже оси, это между корнями. Тот же чертёж, другой знак в условии.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        ${frame(
+          `<line x1="16" y1="140" x2="224" y2="140" stroke="#3d5c49" stroke-width="1.6"/>`+
+          paraPath(doDraw)+
+          `<circle cx="${AX(-2)}" cy="140" r="5" fill="${GOLD}"/>`+
+          `<circle cx="${AX(2)}" cy="140" r="5" fill="${GOLD}"/>`+
+          lab(AX(-3), 70, '+', GREEN)+lab(120, 170, '−', RED)+lab(AX(3), 70, '+', GREEN)+
+          lab(120, 28, 'y = x² − 4', GOLD)
+        )}
+        ${note('Вид сбоку','Над осью — плюс, под осью — минус. Метод интервалов — та же парабола, только лежа на числовой прямой.')}
+      </div>`;
+    } else if(step===12){
+      const val=xv*xv-4;
+      const plus=val>0, zero=Math.abs(val)<0.05;
+      const col=zero?GOLD:(plus?GREEN:RED);
+      const py=Math.max(36, Math.min(190, 140-(xv*xv-4)*10));
+      h=`<div class="wv-col">
+        ${frame(
+          `<line x1="16" y1="140" x2="224" y2="140" stroke="#3d5c49" stroke-width="1.6"/>`+
+          paraPath(false)+
+          `<circle class="l416-glow" cx="${AX(xv)}" cy="${py}" r="7" fill="${col}"/>`+
+          lab(120, 28, (zero?'0':(plus?'плюс':'минус'))+'  при x = '+xv.toString().replace('.',','), col)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">x
+          <input type="range" min="-40" max="40" value="${Math.round(xv*10)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].x=this.value/10;chRender(0);}catch(e){}">
+          <b style="color:${col};min-width:28px">${xv.toString().replace('.',',')}</b>
+        </label>
+        ${note('Поймай знаки','Слева плюс, в середине минус, справа плюс. На корнях ноль. Рука запомнит картинку.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Сделай равенство, поставь корни',GOLD],
+            ['2','Пробная точка в каждом дворе',BLUE],
+            ['3','Возьми дворы с нужным знаком',GREEN],
+            ['4','> пустые кружки,  ≥ полные',MUTED]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${x[2]};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
         </div>
+        ${note('Рецепт','Для чаши с двумя корнями плюс снаружи, минус внутри. Не зубри ответ — рисуй ось.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          axis(130)+root(-2,130,false)+root(2,130,false)+
+          `<path d="M 20 130 L ${AX(-2)-10} 130" stroke="${GREEN}" stroke-width="6" stroke-linecap="round"/>`+
+          `<path d="M ${AX(2)+10} 130 L 220 130" stroke="${GREEN}" stroke-width="6" stroke-linecap="round"/>`+
+          lab(120, 36, 'x < −2  или  x > 2', GOLD, 'middle', 15)
+        , '0 0 240 180')}
+        ${note('В карман','x² − 4 > 0 — края. Строгое — пустые кружки. Ниже оси — середина. Парабола и ось — один чертёж.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${axisIntervals()}
-        <div class="wv-sml">x² − 4 > 0 → ответ?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">x < −2 или x > ?</div>
+        <div style="font-size:22px;color:${GOLD};font-family:Georgia,serif">x² − 4 > 0</div>
+        ${frame(
+          axis(120)+root(-2,120,false)+root(2,120,false)+
+          lab(120, 48, 'плюс снаружи или внутри?', MUTED)
+        , '0 0 240 160')}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:16px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">x < −2 или x > ?</div>
+        ${note('Проверка','Снаружи: x < −2 или x > 2. Середина — это для «меньше нуля».')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[416]=visD416;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===416){ window.ARH_LESSONS[i]=L416; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===416){ arr[i]=L416; f=true; break; } }
+    if(!f) arr.push(L416);
+  })();
 })();
 /* ================= УРОК 417 · Четырёхугольники ================= */
 (function(){
