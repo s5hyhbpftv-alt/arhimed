@@ -3217,7 +3217,6 @@ function l33Act(lk,act){
   const bump=(k,d,lo)=> st[k]=Math.max(lo||1, Math.round(((st[k]==null?1:st[k])+d)*10)/10);
   switch(act){
     case 'm+': bump('m',1); break; case 'm-': bump('m',-1); break;
-    case 'a10': bump('a',10,0); break; case 'a10-': bump('a',-10,0); break;
     case 'V+': bump('V',1); break; case 'V-': bump('V',-1); break;
     case 'w+': bump('m',5); break; case 'w-': bump('m',-5); break;
     case 'drop': st.drop=(st.drop||0)+1; break;
@@ -16442,6 +16441,7 @@ function phAct(lk,act){
     case 'U+': bump('U',3); break; case 'U-': bump('U',-3); break;
     case 'R+': bump('R',1); break; case 'R-': bump('R',-1); break;
     case 'a+': bump('a',1); break; case 'a-': bump('a',-1); break;
+    case 'a10': bump('a',10,0); break; case 'a10-': bump('a',-10,0); break;
     case 'b+': bump('b',1); break; case 'b-': bump('b',-1); break;
     case 'dt+': bump('dt',1); break; case 'dt-': bump('dt',-1); break;
     case 'smooth': st.srf='гладкий лёд'; st.f=1; break;
