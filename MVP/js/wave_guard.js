@@ -1,11 +1,55 @@
-/* не даём visMathNew перехватывать уроки волн B–E */
+/* не даём visMathNew перехватывать уроки волн B–E;
+   кнопки и ползунки не должны сносить виджет при каждом клике */
 (function(){
-  const orig=window.visIsMath;
+  const origMath=window.visIsMath;
   window.visIsMath=function(){
     try{
       const id=window.LV&&LV.id;
       if(id!=null && ((window.WAVE_D&&WAVE_D[id])||(window.WAVE_C&&WAVE_C[id])||(window.WAVE_B&&WAVE_B[id])||(window.WAVE_E&&WAVE_E[id])||(window.VISKW&&VISKW[id]))) return false;
     }catch(e){}
-    return orig?orig.apply(this,arguments):false;
+    return origMath?origMath.apply(this,arguments):false;
+  };
+
+  function waveFn(){
+    const id=window.LV&&LV.id;
+    if(id==null) return null;
+    if(window.VISKW&&VISKW[id]) return VISKW[id];
+    if(window.WAVE_D&&WAVE_D[id]) return WAVE_D[id];
+    if(window.WAVE_C&&WAVE_C[id]) return WAVE_C[id];
+    if(window.WAVE_B&&WAVE_B[id]) return WAVE_B[id];
+    if(window.WAVE_E&&WAVE_E[id]) return WAVE_E[id];
+    return null;
+  }
+
+  const orig=window.chRender;
+
+  window.waveLive=function(){
+    const el=document.getElementById('lvis');
+    const fn=waveFn();
+    if(!el||!fn){ if(typeof orig==='function') orig(0); return; }
+    const tmp=document.createElement('div');
+    try{ fn(tmp); }catch(e){ try{ fn(el); }catch(_){ } return; }
+    const nsvg=tmp.querySelector('svg');
+    const osvg=el.querySelector('svg');
+    if(nsvg&&osvg) osvg.replaceWith(nsvg);
+    const nAns=tmp.querySelectorAll('.wv-ans, .wv-sml, .wv-big');
+    const oAns=el.querySelectorAll('.wv-ans, .wv-sml, .wv-big');
+    nAns.forEach(function(n,i){ if(oAns[i]) oAns[i].innerHTML=n.innerHTML; });
+    el.querySelectorAll('input[type=range]').forEach(function(inp){
+      const b=inp.parentElement && inp.parentElement.querySelector('b');
+      if(b) b.textContent=inp.value;
+    });
+  };
+
+  window.chRender=function(lid){
+    const el=document.getElementById('lvis');
+    const fn=waveFn();
+    if(el&&fn){
+      const a=document.activeElement;
+      if(a && a.type==='range' && el.contains(a)){ window.waveLive(); return; }
+      try{ fn(el); }catch(e){ try{ el.innerHTML=''; }catch(_){ } }
+      return;
+    }
+    if(orig) return orig.apply(this, arguments);
   };
 })();

@@ -1131,7 +1131,7 @@ window._waveCss = function(id, css){
           lab(168, 112, 'сторона квадрата', MUTED)+
           lab(120, 170, open?'середина 6,5  ≥  сторона 6': 'какое среднее честнее?', GOLD)
         )}
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
         ${note('Загадка','Одно и то же «между 4 и 9» считается двумя способами. Середина отрезка — 6,5. Квадрат площади 36 — сторона 6. Сейчас поймём, почему первое всегда не меньше второго.')}
       </div>`;
     } else if(step===1){
@@ -1256,7 +1256,7 @@ window._waveCss = function(id, css){
             : `<div style="height:42px;border:1px dashed #3d5c49;border-radius:10px"></div>`
           ).join('')}
         </div>
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].pr=Math.min(4,(CHS[k].pr||0)+1);chRender(0);}catch(e){}">${show>=4?'Готово':'Следующая строка'}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].pr=Math.min(4,(CHS[k].pr||0)+1);chRender(0);}catch(e){}">${show>=4?'Готово':'Следующая строка'}</button>
         ${note('Три хода','Не зубри формулу. Нарисуй квадрат, раскрой, перенеси, раздели. На олимпиаде это пишут за 20 секунд.')}
       </div>`;
     } else if(step===9){
@@ -1495,7 +1495,7 @@ window._waveCss = function(id, css){
             : `<g class="l423-pulse">${lab(X(2),120,'?',GOLD,'middle',28)}${lab(X(3.5),120,'?',BLUE,'middle',28)}</g>`
           )
         )}
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть числа'}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть числа'}</button>
         ${note('Загадка','Сложи — 5, перемножь — 6. Нажми кнопку: на прямой появятся 2 и 3. Именно эта пара сидит в уравнении x² − 5x + 6 = 0.')}
       </div>`;
     } else if(step===1){
@@ -1557,7 +1557,7 @@ window._waveCss = function(id, css){
             : `<div style="background:rgba(255,255,255,.03);border:1px dashed #3d5c49;border-radius:10px;padding:8px;min-height:56px"></div>`
           ).join('')}
         </div>
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].exp=Math.min(4,(CHS[k].exp||0)+1);chRender(0);}catch(e){}">${show>=4?'Все четыре клетки':'Следующая клетка'}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].exp=Math.min(4,(CHS[k].exp||0)+1);chRender(0);}catch(e){}">${show>=4?'Все четыре клетки':'Следующая клетка'}</button>
         <div class="wv-ans" style="font-size:15px">${show>=4?'x² + (−3x−2x) + 6 = x² − 5x + 6': show>=3? 'средние сложатся в −5x' : 'раскрываем по одной клетке'}</div>
         ${note('Четыре произведения','Как таблица умножения: каждый кусок левой скобки на каждый кусок правой. Средние два — это и есть «минус сумма корней».')}
       </div>`;
@@ -1608,7 +1608,7 @@ window._waveCss = function(id, css){
             ['x = 3','9 − 15 + 6 = 0','#8fd1a8']
           ].map((row,i)=>`<div class="wv-pop" style="display:${i<stage?'flex':'none'};justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${row[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8"><span>${row[0]}</span><b style="color:${row[2]}">${row[1]}</b></div>`).join('')}
         </div>
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].sub=Math.min(2,(CHS[k].sub||0)+1);chRender(0);}catch(e){}">${stage>=2?'Оба корня на месте':'Подставить корень'}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].sub=Math.min(2,(CHS[k].sub||0)+1);chRender(0);}catch(e){}">${stage>=2?'Оба корня на месте':'Подставить корень'}</button>
         ${note('Проверка','Виета предлагает пару. Подстановка подтверждает: оба числа обнуляют многочлен. Сначала подбери, потом проверь — и дискриминант не нужен.')}
       </div>`;
     } else if(step===8){
@@ -1621,7 +1621,7 @@ window._waveCss = function(id, css){
             rootDot(1,BLUE,'1',.1,true)+rootDot(3,GREEN,'3',.25,true) : '')
         )}
         <div class="wv-ans" style="font-size:15px">x² − 4x + 3 = 0 · сумма 4 · произведение 3</div>
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].show13=true;CHS[k].drew13=true;chRender(0);}catch(e){}">${show?'Корни 1 и 3':'Показать корни'}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].show13=true;CHS[k].drew13=true;chRender(0);}catch(e){}">${show?'Корни 1 и 3':'Показать корни'}</button>
         ${note('Подбери пару','Ищем два числа с суммой 4 и произведением 3. 1 и 3 подходят сразу. Парабола дорисуется до оси в этих точках.')}
       </div>`;
     } else if(step===9){
@@ -1633,7 +1633,7 @@ window._waveCss = function(id, css){
           ${stage>=2?card('2·5=10','произведение','#8fd1a8'):''}
         </div>
         ${stage>=3?`<div class="wv-ans" style="font-size:20px;color:${GOLD}">x² − 7x + 10 = 0</div>`:''}
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].build=Math.min(3,(CHS[k].build||0)+1);chRender(0);}catch(e){}">${['Сложить корни','Перемножить','Собрать уравнение','Готово'][Math.min(stage,3)]}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].build=Math.min(3,(CHS[k].build||0)+1);chRender(0);}catch(e){}">${['Сложить корни','Перемножить','Собрать уравнение','Готово'][Math.min(stage,3)]}</button>
         ${note('Собрать уравнение','Коэффициенты — это сумма и произведение. Перед суммой ставим минус: x² − 7x + 10. Обратная Виета — как сложить разборный конструктор.')}
       </div>`;
     } else if(step===10){
@@ -1655,7 +1655,7 @@ window._waveCss = function(id, css){
       h=`<div class="wv-col">
         <div class="wv-ans" style="font-size:15px">x² + 3x + 2 · нужно сумму −3 и произведение 2</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:320px">
-          ${[['1 и 2'],['−1 и −2'],['1 и −2'],['−1 и 2']].map((lab_,i)=>`<button class="btn" style="border-color:${pick===i?(good&&i===1?GREEN:RED):'#3d5c49'}" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].pick=${i};chRender(0);}catch(e){}">${lab_[0]}</button>`).join('')}
+          ${[['1 и 2'],['−1 и −2'],['1 и −2'],['−1 и 2']].map((lab_,i)=>`<button type="button" class="btn" style="border-color:${pick===i?(good&&i===1?GREEN:RED):'#3d5c49'}" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].pick=${i};chRender(0);}catch(e){}">${lab_[0]}</button>`).join('')}
         </div>
         <div class="wv-sml">${pick<0?'Кликни пару делителей q': good?'Да: сумма −3, произведение 2':'Сумма или произведение не те'}</div>
         ${note('Делители q','Целый корень обязан делить свободный член. Перебрал делители — проверил сумму — готово. Это самый быстрый олимпиадный ход.')}
@@ -1890,7 +1890,7 @@ window._waveCss = function(id, css){
           all.slice(0,shown).map((e,i)=>edge(pts[e[0]],pts[e[1]],GREEN,2.4,.05, true,'l424-glow')).join('')+
           Object.keys(pts).map((k,i)=>node(pts[k],k,GOLD,false,.08*i,doDraw,'',[pts[k][0], pts[k][1]<90?pts[k][1]-14:pts[k][1]+20])).join('')
         )}
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].nE=Math.min(4,(CHS[k].nE||0)+1);chRender(0);}catch(e){}">${shown>=4?'Все рёбра на месте':'Дорисовать ребро'}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].nE=Math.min(4,(CHS[k].nE||0)+1);chRender(0);}catch(e){}">${shown>=4?'Все рёбра на месте':'Дорисовать ребро'}</button>
         ${note('Ребро','Нажми кнопку: очередная линия дорисуется до конца. Ребро — это «связь». Пока линия не дошла до второй точки, связи ещё нет.')}
       </div>`;
     } else if(step===3){
@@ -1934,7 +1934,7 @@ window._waveCss = function(id, css){
           eds.map((e,i)=>edge(pts[e[0]],pts[e[1]],GREEN,2,.08*i,doDraw,'')).join('')+
           pts.map((p,i)=>node(p,names[i], colOf(i), wave>0 && colOf(i)!==MUTED, .08*i, doDraw, '', [p[0], p[1]<80?p[1]-14:p[1]+20])).join('')
         )}
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].wave=((CHS[k].wave||0)+1)%4;chRender(0);}catch(e){}">${['Начать с A','Покрасить соседей','Докрасить остальных','Сначала'][wave]}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].wave=((CHS[k].wave||0)+1)%4;chRender(0);}catch(e){}">${['Начать с A','Покрасить соседей','Докрасить остальных','Сначала'][wave]}</button>
         <div class="wv-ans" style="font-size:14px">${['Возьмём A красной','Соседи A — синие','Сосед синих, который ещё белый, — красный','Конфликта нет: граф двудольный'][wave]}</div>
         ${note('Волна цвета','Соседи обязаны быть другого цвета. Если на каком-то шаге два соседа выходят одного цвета — граф не двудольный. Здесь волна прошла до конца.')}
       </div>`;
@@ -1963,7 +1963,7 @@ window._waveCss = function(id, css){
           pts.map((p,i)=>node(p,names[i], i%2===0?RED:BLUE, i===idx, .08*i, doDraw,'',[p[0], p[1]<80?p[1]-14:p[1]+20])).join('')+
           `<circle cx="${wp[0].toFixed(1)}" cy="${wp[1].toFixed(1)}" r="6" fill="${GOLD}" class="l424-glow"/>`
         )}
-        <button class="btn" onclick="${st.play?setPlay('false'):setPlay('true')}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
+        <button type="button" class="btn" onclick="${st.play?setPlay('false'):setPlay('true')}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
         ${note('Путь','Шарик бежит по цепочке. На нечётной вершине красный, на чётной синий. Ссоры не будет: у пути нет циклов вообще.')}
       </div>`;
     } else if(step===8){
@@ -1980,7 +1980,7 @@ window._waveCss = function(id, css){
           pts.map((p,i)=>node(p,names[i], i%2===0?RED:BLUE, i===idx, .08*i, doDraw,'',[p[0]+(p[0]<120?-18:18), p[1]+(p[1]<100?-12:20)])).join('')+
           `<circle cx="${wp[0].toFixed(1)}" cy="${wp[1].toFixed(1)}" r="6.5" fill="${GOLD}" class="l424-glow"/>`
         )}
-        <button class="btn" onclick="${st.play?setPlay('false'):setPlay('true')}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
+        <button type="button" class="btn" onclick="${st.play?setPlay('false'):setPlay('true')}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
         <div class="wv-ans" style="font-size:14px">C₄ · 4 вершины · чётный цикл</div>
         ${note('Чётный обруч','Вернулись в A — она снова красная, как в начале. Цвета сомкнулись. Любой цикл чётной длины раскрашивается в два цвета.')}
       </div>`;
@@ -1998,7 +1998,7 @@ window._waveCss = function(id, css){
           pts.map((p,i)=>{const o=outRad(120,105,p,18); return node(p,names[i], i%2===0?RED:BLUE, i===idx, .07*i, doDraw,'',o);}).join('')+
           `<circle cx="${wp[0].toFixed(1)}" cy="${wp[1].toFixed(1)}" r="6.5" fill="${GOLD}" class="l424-glow"/>`
         )}
-        <button class="btn" onclick="${st.play?setPlay('false'):setPlay('true')}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
+        <button type="button" class="btn" onclick="${st.play?setPlay('false'):setPlay('true')}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
         <div class="wv-ans" style="font-size:14px">C₆ · шесть — чётное · двудольный</div>
         ${note('Ещё один чётный','Шесть точек по кругу. Красный-синий чередуется и сходится. Запомни: чётное число вершин в цикле — двудольность жива.')}
       </div>`;
@@ -2015,7 +2015,7 @@ window._waveCss = function(id, css){
             return node(p,names[i],c,stage>=3&&i===2, .1*i, doDraw,'',[p[0], p[1]<80?p[1]-14:p[1]+20]);
           }).join('')
         )}
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].tri=((CHS[k].tri||0)+1)%4;chRender(0);}catch(e){}">${['Покрасить A','Покрасить B','Покрасить C','Сначала'][stage]}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].tri=((CHS[k].tri||0)+1)%4;chRender(0);}catch(e){}">${['Покрасить A','Покрасить B','Покрасить C','Сначала'][stage]}</button>
         <div class="wv-ans" style="font-size:14px">${['A красная','B синяя — сосед A','C сосед и красной, и синей — конфликт','Треугольник не двудольный'][stage]}</div>
         ${note('Нечётный цикл','Три — нечётное. Третьей вершине некуда деться: оба цвета уже заняты соседями. Любой нечётный цикл ломает двудольность.')}
       </div>`;
@@ -2044,7 +2044,7 @@ window._waveCss = function(id, css){
           }).join('')
         )}
         <div class="wv-ans" style="font-size:14px">${bad.length? 'Соседи одного цвета — конфликт!' : all===5? 'Пять точек по кругу не сходятся' : 'Кликай вершины: красный → синий → сброс'}</div>
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].cols={};chRender(0);}catch(e){}">Сбросить</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].cols={};chRender(0);}catch(e){}">Сбросить</button>
         ${note('Попробуй сам','C₅ — нечётный цикл. Как ни крась, одно ребро останется «своих с своими». Это и есть доказательство руками: пятиугольник не двудольный.')}
       </div>`;
     } else if(step===12){
@@ -2071,7 +2071,7 @@ window._waveCss = function(id, css){
           Lft.map((p,i)=>node(p,'L'+(i+1),RED,false,.08*i,doDraw,'',[28,p[1]+4])).join('')+
           Rgt.map((p,i)=>node(p,'R'+(i+1),BLUE,false,.08*i,doDraw,'',[214,p[1]+4])).join('')
         )}
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].match=!CHS[k].match;chRender(0);}catch(e){}">${show?'Скрыть пары':'Показать паросочетание'}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].match=!CHS[k].match;chRender(0);}catch(e){}">${show?'Скрыть пары':'Показать паросочетание'}</button>
         <div class="wv-ans" style="font-size:14px">${show?'3 ребра, вершины не делятся — максимум':'серые — все дружбы, жёлтые — выбранные пары'}</div>
         ${note('Паросочетание','Хотим как можно больше пар, но один человек — в одной паре. В двудольном графе такие наборы искать легче: доли уже разделены.')}
       </div>`;
@@ -2298,7 +2298,7 @@ window._waveCss = function(id, css){
               lab(18,100,'катет 4','#7fd1ff')+lab(110,184,'катет 3','#ffd76a'))+
           vtx(A,'A','#ffd76a',false,0,doDraw)+vtx(B,'B','#7fd1ff',false,.1,doDraw)+vtx(C,'C','#8fd1a8',false,.2,doDraw)
         )}
-        <button class="btn" style="margin-top:4px" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].leg=CHS[k].leg==='ac'?'ab':'ac';chRender(0);}catch(e){}">${legs?'Катеты как основание и высота':'Гипотенуза как основание'}</button>
+        <button type="button" class="btn" style="margin-top:4px" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].leg=CHS[k].leg==='ac'?'ab':'ac';chRender(0);}catch(e){}">${legs?'Катеты как основание и высота':'Гипотенуза как основание'}</button>
         <div class="wv-ans" style="font-size:16px">S = ½ · 3 · 4 = 6</div>
         ${note('Прямой угол уже есть','Катеты сами стоят буквой Г. Один — основание, второй — высота, ничего опускать не нужно. ½·3·4 = 6. Кнопка показывает: можно взять и гипотенузу, но тогда высота другая — площадь та же.')}
       </div>`;
@@ -2321,7 +2321,7 @@ window._waveCss = function(id, css){
               lab(128,92,'h = 6','#ffd76a'))+
           vtx(A0,'A','#ffd76a',!way,0,doDraw)+vtx(B0,'B','#7fd1ff',false,.1,doDraw)+vtx(C0,'C','#8fd1a8',way,.2,doDraw)
         )}
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].way=!CHS[k].way;chRender(0);}catch(e){}">${way?'Способ 1: основание 10':'Способ 2: другая сторона'}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].way=!CHS[k].way;chRender(0);}catch(e){}">${way?'Способ 1: основание 10':'Способ 2: другая сторона'}</button>
         <div class="wv-ans" style="font-size:15px">${way?'½ · 8 · 7.5 = 30':'½ · 10 · 6 = 30'}</div>
         ${note('Одна площадь — два счёта','Фигура не меняется, значит оба ответа равны: ½·10·6 = ½·8·7.5. Приравниваем — и можно найти неизвестную сторону или высоту. Это и есть метод площадей.')}
       </div>`;
@@ -2662,7 +2662,7 @@ window._waveCss = function(id, css){
           (showC?angMark(Q.D,Q.C,Q.B,'#8fd1a8',''):'')+
           allDots(showC?'C':'A')
         )}
-        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].selC=!CHS[k].selC;chRender(0);}catch(e){}" style="margin-top:4px">${showC?'Скрыть угол C':'Показать угол C'}</button>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].selC=!CHS[k].selC;chRender(0);}catch(e){}" style="margin-top:4px">${showC?'Скрыть угол C':'Показать угол C'}</button>
         <div class="wv-ans">∠A + ∠C = 180°</div>
         ${note('Против друг друга','Возьми углы через один: A с C, B с D. У вписанного четырёхугольника эта сумма всегда 180° — как развёрнутая линейка. Нажми кнопку и сравни A и C.')}
       </div>`;
@@ -2747,7 +2747,7 @@ window._waveCss = function(id, css){
            <text class="l426-lab" x="${Lp[0].toFixed(1)}" y="${(Lp[1]+4).toFixed(1)}" text-anchor="middle" fill="#ffd76a" font-size="13">P</text>`
         )}
         <div style="display:flex;align-items:center;gap:8px;width:min(100%,300px);flex-wrap:wrap">
-          <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].play=!CHS[k].play;chRender(0);}catch(e){}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
+          <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].play=!CHS[k].play;chRender(0);}catch(e){}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
           <input type="range" min="0" max="100" value="${Math.round(t*100)}"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].t=this.value/100;CHS[k].play=false;chRender(0);}catch(e){}"
             style="flex:1;min-width:140px">

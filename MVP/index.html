@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-store">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0b1712">
@@ -19,7 +20,7 @@
   body { font-family:Georgia,'Times New Roman',serif; color:var(--ivory); min-height:100vh;
     background: radial-gradient(ellipse at 50% -10%, #1a3226 0%, transparent 55%),
       radial-gradient(ellipse at 90% 110%, #132a20 0%, transparent 45%), var(--deep); }
-  .wrap { max-width:900px; margin:0 auto; padding:14px 14px 90px; }
+  .wrap { max-width:900px; margin:0 auto; padding:14px 14px 120px; }
   header { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
     border-bottom:1px solid var(--hairline); padding-bottom:10px; margin-bottom:12px; }
   .logo { font-size:20px; color:var(--brass); letter-spacing:.05em; }
@@ -197,10 +198,11 @@
   .fb.ok { background:#1e3a26; border:1px solid var(--ok); }
   .fb.no { background:#3a211c; border:1px solid var(--danger); }
   .btn { background:linear-gradient(180deg,var(--brass),var(--brass-d)); color:#201a08; border:none; border-radius:10px;
-    padding:12px 20px; font-family:inherit; font-size:14.5px; font-weight:bold; cursor:pointer; }
+    padding:12px 20px; font-family:inherit; font-size:14.5px; font-weight:bold; cursor:pointer;
+    position:relative; z-index:2; touch-action:manipulation; user-select:none; -webkit-user-select:none; }
   .btn.ghost { background:none; color:var(--glass); border:1px solid rgba(127,184,160,.4); font-weight:normal; }
   .btn:disabled { opacity:.45; cursor:not-allowed; }
-  .btnrow { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  .btnrow { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; position:relative; z-index:80; }
   /* онбординг */
   .onboard { max-width:520px; margin:24px auto; }
   .onboard input, .onboard select { width:100%; font-family:inherit; font-size:16px; padding:12px;
@@ -307,7 +309,7 @@
     font-size:12px; padding:6px 11px; cursor:pointer; font-family:inherit; }
   .vbtn:hover { border-color:var(--brass); color:var(--ivory); }
   /* --- ассистент-аватар --- */
-  .asst { position:fixed; right:12px; bottom:78px; z-index:75; display:flex; flex-direction:column;
+  .asst { position:fixed; right:12px; bottom:78px; z-index:20; display:flex; flex-direction:column;
     align-items:flex-end; pointer-events:none; }
   .asst > * { pointer-events:auto; }
   .avatar { width:62px; height:62px; cursor:pointer; filter:drop-shadow(0 8px 16px rgba(0,0,0,.5)); transition:transform .15s; }
@@ -685,36 +687,36 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=445"></script>
-<script src="data/lessons.js?v=445"></script>
-<script src="data/lessons_draft.js?v=445"></script>
-<script src="data/comics_12.js?v=445"></script>
-<script src="data/vis_bw.js?v=445"></script>
-<script src="data/vis_cw.js?v=445"></script>
-<script src="data/vis_dw.js?v=445"></script>
-<script src="data/vis_ew.js?v=445"></script>
-<script src="data/vis_kl.js?v=445"></script>
-<script src="data/vis_wk.js?v=445"></script>
-<script src="data/inf_56.js?v=445"></script>
-<script src="js/comic.js?v=445"></script>
-<script src="js/core.js?v=445"></script>
-<script src="js/engine.js?v=445"></script>
-<script src="js/app.js?v=445"></script>
-<script src="js/dashboard.js?v=445"></script>
-<script src="js/lessons.js?v=445"></script>
-<script src="js/wave_guard.js?v=445"></script>
-<script src="js/legend.js?v=445"></script>
-<script src="js/simulator.js?v=445"></script>
-<script src="js/duel.js?v=445"></script>
-<script src="js/agent.js?v=445"></script>
-<script src="js/voice.js?v=445"></script>
-<script src="js/assistant.js?v=445"></script>
-<script src="js/agentlive.js?v=445"></script>
+<script src="data/tasks.js?v=446"></script>
+<script src="data/lessons.js?v=446"></script>
+<script src="data/lessons_draft.js?v=446"></script>
+<script src="data/comics_12.js?v=446"></script>
+<script src="data/vis_bw.js?v=446"></script>
+<script src="data/vis_cw.js?v=446"></script>
+<script src="data/vis_dw.js?v=446"></script>
+<script src="data/vis_ew.js?v=446"></script>
+<script src="data/vis_kl.js?v=446"></script>
+<script src="data/vis_wk.js?v=446"></script>
+<script src="data/inf_56.js?v=446"></script>
+<script src="js/comic.js?v=446"></script>
+<script src="js/core.js?v=446"></script>
+<script src="js/engine.js?v=446"></script>
+<script src="js/app.js?v=446"></script>
+<script src="js/dashboard.js?v=446"></script>
+<script src="js/lessons.js?v=446"></script>
+<script src="js/wave_guard.js?v=446"></script>
+<script src="js/legend.js?v=446"></script>
+<script src="js/simulator.js?v=446"></script>
+<script src="js/duel.js?v=446"></script>
+<script src="js/agent.js?v=446"></script>
+<script src="js/voice.js?v=446"></script>
+<script src="js/assistant.js?v=446"></script>
+<script src="js/agentlive.js?v=446"></script>
 <script>
-  /* автоочистка устаревшего кэша (одноразово за сессию) */
+  /* сброс кэша при новой сборке — иначе MVP показывает старый урок */
   (function(){
     try{
-      const VER='445';
+      const VER='446';
       if(localStorage.getItem('arh-build')===VER) return;
       localStorage.setItem('arh-build', VER);
       const jobs=[];
@@ -725,9 +727,22 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=445').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=446').catch(()=>{}); });
 }
-window.addEventListener('DOMContentLoaded', ()=>{ init(); VOICE.init(); });
+window.addEventListener('DOMContentLoaded', ()=>{
+  init(); VOICE.init();
+  try{
+    
+    const m=(location.hash||'').match(/(\d{2,4})/);
+    if(m){
+      if(!DB.profile){
+        DB.profile={name:'Гость', klass:'8', level:'medium', color:(COLORS&&COLORS[0])||'#d9a441'};
+        save(); showNav(true);
+      }
+      setTimeout(function(){ openLessonView(+m[1]); }, 60);
+    }
+  }catch(e){}
+});
 </script>
 </body>
 </html>
