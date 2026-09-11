@@ -8817,9 +8817,8 @@ function l108css(){
   @keyframes l108flame{from{transform:scaleY(.9) scaleX(1)}to{transform:scaleY(1.14) scaleX(.93)}}
   @keyframes l108drop{from{transform:translateY(-6px);opacity:0}60%{opacity:1}to{transform:translateY(26px);opacity:0}}
   .l108-lab{position:relative;width:100%;max-width:340px;margin:0 auto;aspect-ratio:4/3;min-height:250px;border-radius:12px;overflow:hidden;
-    background:radial-gradient(circle at 50% 8%,#3a4757,#141a21 68%)}
-  .l108-bench{position:absolute;left:0;right:0;bottom:0;height:23%;background:linear-gradient(180deg,#46515e,#1c232b);
-    box-shadow:inset 0 3px 0 rgba(255,255,255,.09)}
+    background:linear-gradient(180deg,rgba(0,0,0,0) 0 76%,rgba(70,81,94,.95) 76.4%,#1c232b 100%),radial-gradient(circle at 50% 8%,#3a4757,#141a21 68%);box-shadow:inset 0 3px 0 rgba(255,255,255,.07)}
+  
   .l108-g{position:relative;background:linear-gradient(100deg,rgba(255,255,255,.24),rgba(255,255,255,.04) 42%,rgba(255,255,255,.2));
     border:1.6px solid rgba(206,233,255,.55);box-shadow:inset 0 0 14px rgba(150,205,255,.16),0 8px 16px -10px #000;
     display:flex;align-items:flex-end;justify-content:center}
@@ -8895,7 +8894,7 @@ function visL108(el){
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     const step=LV.step||0;
-    const lab=(inner,bg)=>`<div class="l108-lab" style="${bg||''}"><div class="l108-bench"></div>${inner}</div>`;
+    const lab=(inner,bg)=>`<div class="l108-lab" style="${bg||''}">${inner}</div>`;
     const put=(x,bottom,inner)=>`<div style="position:absolute;left:${x};bottom:${bottom}">${inner}</div>`;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
     const big=x=>`<div class="wv-big">${x}</div>`;
@@ -8927,7 +8926,7 @@ function visL108(el){
       const liq=[62,54,26][s3], cols=['rgba(200,240,255,.85)','rgba(120,200,255,.75)','rgba(220,240,255,.28)'][s3];
       h=col(big('Три состояния одного вещества'),
         lab(put('70px','46%',g108('beaker',cols,liq,names[s3]))+put('190px','46%',g108('beaker',s3===2?'rgba(220,240,255,.3)':'rgba(200,240,255,.85)',[26,46,16][s3],s3===2?'испарение':'вода')),
-          put('45%','70%',`<div style="font-size:20px">${s3===0?'❄️':(s3===1?'💧':'☁️')}</div>`)),
+          put('76%','80%',`<div style="font-size:20px">${s3===0?'❄️':(s3===1?'💧':'☁️')}</div>`)),
         row(btn(s3===0?'нагреть лёд':(s3===1?'вскипятить воду':'заморозить пар'),`l108Act('${lk}','state')`),btn('↺',`l108Act('${lk}','reset')`)),
         sml('лёд → вода → пар: это одно вещество вода в разных состояниях. Нагреваем — переход вправо, охлаждаем — влево'));
     } else if(step===4){
