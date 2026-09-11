@@ -171,13 +171,32 @@
     return {v:v,faces:faces,edges:edges};
   };
   const d3prism=()=>{
-    const v=[P3(-1,-1,-1),P3(1,-1,-1),P3(1,-1,1),P3(-1,-1,1),P3(-1,1,-1),P3(1,1,-1),P3(1,1,1),P3(-1,1,1)];
-    const faces=[[0,3,2,1],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]];
-    const edges=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+    /* треугольная призма: треугольник внизу, такой же сверху */
+    const R=1.15;
+    const base=[];
+    for(let i=0;i<3;i++){ const a=-Math.PI/2+i*2*Math.PI/3; base.push([Math.cos(a)*R,Math.sin(a)*R]); }
+    const v=[];
+    base.forEach(q=>v.push(P3(q[0],-1,q[1])));
+    base.forEach(q=>v.push(P3(q[0],1,q[1])));
+    const faces=[[0,2,1],[3,4,5],[0,1,4,3],[1,2,5,4],[2,0,3,5]];
+    const edges=[[0,1],[1,2],[2,0],[3,4],[4,5],[5,3],[0,3],[1,4],[2,5]];
     return {v:v,faces:faces,edges:edges};
   };
   const d3shape=(name)=>(name==='pyr')?d3pyr():((name==='prism')?d3prism():d3cube());
   const d3rot=(p,ax,ay,az)=>{ let q=rotYP(p,ay); q=rotXP(q,ax); return rotZP(q,az); };
+  const d3spin=(shape,cx,cy,sc,ax,ay,az,nF,dAy,dAx,opt)=>{
+    const o=opt||{}, pre=o.pre||'an', dur=o.dur||3.6, N=nF||16;
+    let out='';
+    let svgDefs='';
+    for(let k=0;k<N;k++){
+      const t=k/N, t2=(k+1)/N;
+      const ay2=ay+dAy*t, ax2=ax+dAx*t;
+      const path=`<g>${d3draw(shape,cx,cy,sc,ax2,ay2,az,pre,{c:o.c||cyan,sw:o.sw||1.5,fov:o.fov||7,edges:o.edges!==false,ec:o.ec,ew:o.ew})}`+
+        (o.wire!==false?d3wire(shape,cx,cy,sc,ax2,ay2,az,pre,{c:o.wc||'rgba(255,215,106,.55)',sw:1.1,r:3,fov:o.fov||7}):'')+`</g>`;
+      out+=`<g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;${t.toFixed(3)};${t.toFixed(3)};${t2.toFixed(3)};${t2.toFixed(3)};1" dur="${dur}s" repeatCount="indefinite"/>${path}</g>`;
+    }
+    return out;
+  };
   const d3proj=(p,cx,cy,s,fov)=>{ const k=1+(p.z||0)/(fov||6); return [cx+(p.x*s)/k, cy-(p.y*s)/k]; };
   const d3draw=(shape,cx,cy,s,ax,ay,az,pre,opt)=>{
     const o=opt||{}, fov=o.fov||6, light=(o.light!==false), base=o.c||cyan;
@@ -7959,10 +7978,10 @@
       s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
       return s;
     }
-    if(K==='d3intro'){ /* экран и объём — подробно */
+if(K==='d3intro'){ /* экран и объём — подробно */
       const sh=d3cube(), ax=0.34, ay=-0.66, cx=86, cy=132, sc=38;
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'плоский экран показывает проекцию объёма',{b:1},270)+`</g>`;
+        +fit(159,29,11.5,cyan,'проекция — плоское изображение объёмной модели',{b:1},270)+`</g>`;
       const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
       rv.forEach((q,k)=>{
         const Q=[232+(pr[k][0]-cx)*0.42, 128+(pr[k][1]-cy)*0.42];
@@ -7983,7 +8002,7 @@
     }
     if(K==='d3flat'){ /* четыре подсказки глубины — подробно */
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'четыре подсказки, которые создают объём',{b:1},276)+`</g>`;
+        +fit(159,29,11.5,pur,'объём создают перспектива, перекрытие, размер и тень',{b:1},276)+`</g>`;
       const panel=(x,y,t2,col)=>`<g class="${pre}Pop"><rect x="${x}" y="${y}" width="140" height="92" rx="10" fill="rgba(18,24,44,.97)" stroke="${col}" stroke-width="1.7"/>`
         +fit(x+70,y+82,11,col,t2,{b:1},128)+`</g>`;
       s+=panel(16,44,'перспектива',grn);
@@ -8009,7 +8028,7 @@
       const ax3=[1,0.6], ay3=[0,-1], az3=[-0.85,0.52];
       const P3v=(x,y,z)=>[O[0]+ (ax3[0]*x+ay3[0]*y+az3[0]*z)*u, O[1]+ (ax3[1]*x+ay3[1]*y+az3[1]*z)*u];
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'положение точки задают три числа',{b:1},266)+`</g>`;
+        +fit(159,29,11.5,cyan,'x — вправо, y — вверх, z — на нас',{b:1},266)+`</g>`;
       s+=`<path d="M${O[0]} ${O[1]} L${O[0]+104} ${O[1]+62}" stroke="${grn}" stroke-width="2.2"/><path d="M${O[0]+124} ${O[1]+74} l-12 -2 l4 -11 z" fill="${grn}"/>`;
       s+=`<path d="M${O[0]} ${O[1]} L${O[0]} ${O[1]-126}" stroke="${cyan}" stroke-width="2.2"/><path d="M${O[0]} ${O[1]-126} l-5 12 h10 z" fill="${cyan}"/>`;
       s+=`<path d="M${O[0]} ${O[1]} L${O[0]-84} ${O[1]+52}" stroke="${gold}" stroke-width="2.2"/><path d="M${O[0]-98} ${O[1]+60} l13 -2 l-7 -10 z" fill="${gold}"/>`;
@@ -8029,35 +8048,37 @@
       s+=plate2(20,246,278,30,go?grn:cardB,go?'три числа полностью задают точку в пространстве':'сколько чисел нужно для точки?',11,pre);
       return s;
     }
-    if(K==='d3axes'){ /* оси и координаты модели */
-      const cx=126, cy=170, sc=30, ax=0.28, ay=-0.62;
+    if(K==='d3axes'){ /* оси координат — крупно и ясно */
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,grn,'оси x, y, z: три направления пространства',{b:1},276)+`</g>`;
-      s+=`<path d="M${cx} ${cy} L${cx+124} ${cy+72}" stroke="${grn}" stroke-width="2.4"/><path d="M${cx+124} ${cy+72} l-12 -2 l4 -11 z" fill="${grn}"/>`;
-      s+=`<path d="M${cx} ${cy} L${cx} ${cy-132}" stroke="${cyan}" stroke-width="2.4"/><path d="M${cx} ${cy-132} l-5 12 h10 z" fill="${cyan}"/>`;
-      s+=`<path d="M${cx} ${cy} L${cx-96} ${cy+58}" stroke="${gold}" stroke-width="2.4"/><path d="M${cx-96} ${cy+58} l13 -2 l-7 -10 z" fill="${gold}"/>`;
-      for(let k=1;k<=3;k++){
-        s+=`<line x1="${cx+k*31}" y1="${cy+k*18-4}" x2="${cx+k*31}" y2="${cy+k*18+4}" stroke="${grn}" stroke-width="1.4"/>`;
-        s+=`<line x1="${cx-4}" y1="${cy-k*33}" x2="${cx+4}" y2="${cy-k*33}" stroke="${cyan}" stroke-width="1.4"/>`;
-        s+=`<line x1="${cx-k*24-3}" y1="${cy+k*14.5+3}" x2="${cx-k*24+3}" y2="${cy+k*14.5-3}" stroke="${gold}" stroke-width="1.4"/>`;
-      }
-      s+=fit(cx+134,cy+80,11.5,grn,'x',{b:1},22)+fit(cx-4,cy-142,11.5,cyan,'y',{b:1},22)+fit(cx-108,cy+66,11.5,gold,'z',{b:1},22);
-      s+=d3draw(d3cube(),cx,cy-8,28,ax,ay,0,pre,{c:cyan,sw:1.5,fov:7});
-      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="188" y="60" width="106" height="96" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`
-        +fit(241,84,10.5,grn,'модель стоит',{b:1},96)
-        +fit(241,104,10.5,grn,'в начале',{b:1},96)
-        +fit(241,124,10.5,grn,'координат',{b:1},96)
-        +`<text x="241" y="146" text-anchor="middle" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">(0; 0; 0)</text>`
-        +`</g>`;
-      s+=fit(159,206,11,ink,'точка отсчёта — там, где оси пересекаются',{b:1},292);
-      s+=plate2(20,220,278,32,go?grn:cardB,go?'от начала координат отсчитывают все точки':'откуда начинают отсчёт?',11,pre);
-      s+=fit(159,276,10.5,dim,'чтобы сдвинуть модель, к координатам прибавляют числа',{},296);
+        +fit(159,29,11,grn,'оси пересекаются в начале координат (0; 0; 0)',{b:1},278)+`</g>`;
+      const axLine=(ox,oy,ex,ey,col,lab,lx,ly)=>{
+        const dx=ex-ox, dy=ey-oy, L=Math.hypot(dx,dy), nx=dx/L, ny=dy/L;
+        let r=`<line x1="${ox}" y1="${oy}" x2="${ex}" y2="${ey}" stroke="${col}" stroke-width="2.8" stroke-linecap="round"/>`;
+        r+=`<path d="M${(ex+nx*12).toFixed(1)} ${(ey+ny*12).toFixed(1)} L${(ex-ny*5.5).toFixed(1)} ${(ey+nx*5.5).toFixed(1)} L${(ex+ny*5.5).toFixed(1)} ${(ey-nx*5.5).toFixed(1)} Z" fill="${col}"/>`;
+        for(let k=1;k<=3;k++){
+          const px=ox+dx*k/3.4, py=oy+dy*k/3.4;
+          r+=`<line x1="${(px-ny*4).toFixed(1)}" y1="${(py+nx*4).toFixed(1)}" x2="${(px+ny*4).toFixed(1)}" y2="${(py-nx*4).toFixed(1)}" stroke="${col}" stroke-width="1.5" opacity=".85"/>`;
+        }
+        r+=`<text x="${ex+lx}" y="${ey+ly}" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${col}">${lab}</text>`;
+        return r;
+      };
+      s+=axLine(140,200,250,240,cyan,'x',24,10);
+      s+=axLine(140,200,140,80,grn,'y',0,-16);
+      s+=axLine(140,200,44,252,gold,'z',-26,12);
+      s+=`<circle cx="140" cy="200" r="5" fill="${ink}"/>`;
+      s+=`<circle class="${pre}Pop" style="animation-delay:.4s" cx="140" cy="200" r="13" fill="none" stroke="${ink}" stroke-width="1.3" opacity=".55"/>`;
+      s+=`<path class="${pre}Pop" style="animation-delay:.6s" d="M118 176 L162 176 L162 132 L118 132 Z" fill="rgba(255,215,106,.30)" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=`<path d="M118 176 L104 190 L104 146 L118 132 M104 190 L148 190 L162 176 M104 146 L148 146 L162 132 M148 146 L148 190" fill="none" stroke="${gold}" stroke-width="1.4"/>`;
+      s+=fit(236,120,10,cyan,'модель',{b:1},80);
+      s+=`<g class="${pre}Pop" style="animation-delay:.7s"><rect x="20" y="238" width="278" height="28" rx="9" fill="rgba(125,224,160,.11)" stroke="${grn}" stroke-width="1.6"/>`
+        +fit(159,256,10.5,grn,'x — вправо, y — вверх, z — на нас',{b:1},258)+`</g>`;
+      s+=plate2(20,268,278,30,go?grn:cardB,go?'модель стоит в начале координат':'откуда отсчитывают координаты?',11,pre);
       return s;
     }
     if(K==='d3vertex'){ /* вершины с координатами */
       const sh=d3cube(), ax=0.34, ay=-0.7, cx=104, cy=142, sc=44;
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,gold,'вершины — точки, где сходятся рёбра',{b:1},272)+`</g>`;
+        +fit(159,29,11.5,gold,'вершина — точка с тремя координатами',{b:1},272)+`</g>`;
       s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:cyan,sw:1.4});
       const pr=sh.v.map(q=>d3rot(q,ax,ay,0)).map(q=>d3proj(q,cx,cy,sc,6));
       pr.forEach((p,k)=>{
@@ -8076,7 +8097,7 @@
     if(K==='d3edge'){ /* рёбра с бегущей точкой и счётом */
       const sh=d3cube(), ax=0.34, ay=-0.7, cx=112, cy=140, sc=44;
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'ребро соединяет две соседние вершины',{b:1},276)+`</g>`;
+        +fit(159,29,11.5,cyan,'ребро — отрезок между двумя вершинами',{b:1},276)+`</g>`;
       s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:'rgba(70,80,124,.9)',sw:1.2});
       const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
       let dots='';
@@ -8101,7 +8122,7 @@
     if(K==='d3face'){ /* грани с номерами и видимостью */
       const sh=d3cube(), ax=0.34, ay=-0.7, cx=104, cy=138, sc=44;
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'грань — плоский кусок поверхности',{b:1},272)+`</g>`;
+        +fit(159,29,11.5,pur,'грань — плоский многоугольник поверхности',{b:1},272)+`</g>`;
       s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:pur,sw:1.7,fov:7});
       const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
       const order=sh.faces.map((f,i)=>({i:i,z:f.reduce((a,k)=>a+rv[k].z,0)/f.length})).sort((a,b)=>b.z-a.z);
@@ -8126,7 +8147,7 @@
     if(K==='d3wireframe'){ /* каркас: три фигуры с числами */
       const shapes=[['куб',d3cube(),cyan,'6 граней'],['пирамида',d3pyr(),gold,'5 граней'],['призма',d3prism(),grn,'6 граней']];
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'каркасная модель — только вершины и рёбра',{b:1},280)+`</g>`;
+        +fit(159,29,11.5,cyan,'каркас — только вершины и рёбра',{b:1},280)+`</g>`;
       shapes.forEach((q,k)=>{
         const x=58+k*100;
         s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
@@ -8142,7 +8163,7 @@
     if(K==='d3project'){ /* проекция с номерами вершин */
       const sh=d3cube(), ax=0.3, ay=-0.6, cx=76, cy=136, sc=36;
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'проекция: из пространства на плоскость',{b:1},276)+`</g>`;
+        +fit(159,29,11.5,cyan,'x′ = x : (1 + z : d) — формула перспективы',{b:1},276)+`</g>`;
       const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
       s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:'rgba(70,80,124,.9)',sw:1.2});
       const sp=pr.map(p=>[238+(p[0]-cx)*0.5, 128+(p[1]-cy)*0.5]);
@@ -8165,7 +8186,7 @@
     }
     if(K==='d3rotatey'){ /* 7 кадров поворота вокруг y */
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,grn,'поворот вокруг оси y: модель кружится',{b:1},276)+`</g>`;
+        +fit(159,29,11.5,grn,'поворот вокруг y меняет местами x и z',{b:1},276)+`</g>`;
       s+=`<path d="M22 96 h274" stroke="${cyan}" stroke-width="2" stroke-dasharray="7 5"/>`;
       s+=fit(300,88,10,cyan,'ось y',{an:'end',b:1},50);
       for(let k=0;k<6;k++){
@@ -8183,7 +8204,7 @@
     }
     if(K==='d3rotatex'){ /* наклон вокруг x и крен вокруг z */
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,gold,'наклон вокруг x и крен вокруг z',{b:1},272)+`</g>`;
+        +fit(159,29,11.5,gold,'наклон — это поворот вокруг оси x',{b:1},272)+`</g>`;
       s+=`<rect x="16" y="44" width="286" height="96" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.6"/>`;
       s+=`<path d="M28 92 h100" stroke="${gold}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
       s+=fit(132,70,10,gold,'ось x',{an:'start',b:1},50);
@@ -8204,42 +8225,51 @@
       s+=fit(159,308,10.5,dim,'углы вокруг x, y и z называют углами поворота',{},296);
       return s;
     }
-    if(K==='d3lab'){ /* мастерская 3D — с осями и счётчиком граней */
+    if(K==='d3lab'){ /* 3D-СИМУЛЯТОР: авто-вращение и режимы */
       const name=(st&&st.d3s)||'cube';
       const ax=(st&&typeof st.d3x==='number')?st.d3x:0.34;
       const ay=(st&&typeof st.d3y==='number')?st.d3y:-0.62;
       const az=(st&&typeof st.d3z==='number')?st.d3z:0;
-      const sh=d3shape(name);
-      const rv=sh.v.map(q=>d3rot(q,ax,ay,az));
-      const visFaces=sh.faces.filter(f=>{
-        const p0=rv[f[0]], p1=rv[f[1]], p2=rv[f[2]];
-        const ux=p1.x-p0.x,uy=p1.y-p0.y,uz=p1.z-p0.z,vx=p2.x-p0.x,vy=p2.y-p0.y,vz=p2.z-p0.z;
-        const nz=ux*vy-uy*vx;
-        return nz>0;
-      }).length;
-      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,ink,'мастерская 3D: вращай модель кнопками',{b:1},276)+`</g>`;
+      const showAx=(st&&st.d3a!==0), showEd=(st&&st.d3e!==0), showLi=(st&&st.d3l!==0);
+      const auto=(st&&st.d3auto===1), fast=(st&&st.d3fast===1);
+      const sh=d3shape(name), dur=fast?2.2:5;
+      const nm={cube:'куб',pyr:'пирамида',prism:'призма'}[name]||'куб';
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11,pur,'3D-симулятор: крути модель и включай слои',{b:1},278)+`</g>`;
       [[0,'куб','cube'],[1,'пирамида','pyr'],[2,'призма','prism']].forEach((q,k)=>{
-        const x=22+k*92, on=(name===q[2]);
-        s+=`<g style="cursor:pointer" onclick="inf3d('${lk}','shape','${q[2]}')"><rect x="${x}" y="46" width="84" height="28" rx="8" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${on?grn:cardB}" stroke-width="${on?2:1.4}"/>`
-          +fit(x+42,65,10,on?grn:dim,q[1],{b:on},76)+`</g>`;
+        const x=20+k*70, on=(name===q[2]);
+        s+=`<g style="cursor:pointer" onclick="inf3d('${lk}','shape','${q[2]}')"><rect x="${x}" y="44" width="64" height="26" rx="8" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${on?grn:cardB}" stroke-width="${on?2:1.3}"/>`
+          +fit(x+32,62,9.5,on?grn:dim,q[1],{b:on},58)+`</g>`;
       });
-      s+=`<rect x="22" y="82" width="274" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
-      s+=`<path d="M60 214 L152 214" stroke="${grn}" stroke-width="1.8"/><path d="M152 214 l-8 -4 v8 z" fill="${grn}"/>`;
-      s+=`<path d="M152 214 L152 106" stroke="${cyan}" stroke-width="1.8"/><path d="M152 106 l-4 8 h8 z" fill="${cyan}"/>`;
-      s+=`<path d="M152 214 L70 190" stroke="${gold}" stroke-width="1.8"/><path d="M70 190 l9 -2 l-4 -8 z" fill="${gold}"/>`;
-      s+=fit(156,102,9,cyan,'y',{b:1},18)+fit(160,206,9,grn,'x',{b:1},18)+fit(64,196,9,gold,'z',{b:1},18);
-      s+=d3draw(sh,159,158,44,ax,ay,az,pre,{c:pur,sw:1.7,fov:7});
-      s+=d3wire(sh,159,158,44,ax,ay,az,pre,{c:'rgba(255,215,106,.5)',sw:1,r:3,fov:7});
-      s+=`<g class="${pre}Rise}"><rect x="30" y="238" width="258" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
-        +`<text x="159" y="256" text-anchor="middle" font-size="10" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">углы: ${Math.round(ax*57)}° · ${Math.round(ay*57)}° · ${Math.round(az*57)}° · видимых граней: ${visFaces}</text></g>`;
-      const btn=(x,y,t2,a,b)=>`<g style="cursor:pointer" onclick="inf3d('${lk}','${a}','${b}')"><rect x="${x}" y="${y}" width="46" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
-        +tx(x+23,y+21,14,gold,t2,{b:1})+`</g>`;
-      s+=btn(48,272,'↶','y','-')+btn(98,272,'▲','x','+')+btn(148,272,'▼','x','-')+btn(198,272,'↷','y','+');
-      s+=btn(248,272,'z','z','+');
-      s+=`<g style="cursor:pointer" onclick="inf3d('${lk}','reset','')"><rect x="16" y="272" width="26" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${grn}" stroke-width="1.5"/>`
-        +tx(29,293,13,grn,'0',{b:1})+`</g>`;
-      s+=fit(159,318,10,dim,'↶↷ — вокруг y · ▲▼ — вокруг x · z — вокруг z',{b:1},280);
+      const tg=(x,y,t2,on,col,act)=>`<g style="cursor:pointer" onclick="inf3d('${lk}','${act}','')"><rect x="${x}" y="${y}" width="72" height="26" rx="8" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${on?col:cardB}" stroke-width="${on?1.9:1.3}"/>`
+        +fit(x+36,y+18,9.5,on?col:dim,t2,{b:on},64)+`</g>`;
+      s+=tg(20,76,'оси',showAx,cyan,'axes')+tg(96,76,'рёбра',showEd,gold,'edges')+tg(172,76,'свет',showLi,rose,'light');
+      s+=tg(20,108,'авто',auto,pur,'auto')+tg(96,108,fast?'быстро':'медленно',true,grn,'speed')+tg(172,108,'сброс',false,cardB,'reset');
+      s+=`<rect x="20" y="140" width="278" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      if(showAx){
+        const gx=62, gy=272;
+        s+=`<line x1="${gx}" y1="${gy}" x2="${gx+30}" y2="${gy+13}" stroke="${cyan}" stroke-width="2.4" stroke-linecap="round"/><path d="M${gx+38} ${gy+17} l-10 -1 l5 -8 z" fill="${cyan}"/>`;
+        s+=`<line x1="${gx}" y1="${gy}" x2="${gx}" y2="${gy-30}" stroke="${grn}" stroke-width="2.4" stroke-linecap="round"/><path d="M${gx} ${gy-38} l-4 10 h8 z" fill="${grn}"/>`;
+        s+=`<line x1="${gx}" y1="${gy}" x2="${gx-26}" y2="${gy+15}" stroke="${gold}" stroke-width="2.4" stroke-linecap="round"/><path d="M${gx-33} ${gy+19} l10 -1 l-5 -8 z" fill="${gold}"/>`;
+        s+=`<text x="${gx+42}" y="${gy+22}" font-size="12" font-family="Georgia,serif" font-weight="bold" fill="${cyan}">x</text>`;
+        s+=`<text x="${gx-4}" y="${gy-42}" font-size="12" font-family="Georgia,serif" font-weight="bold" fill="${grn}">y</text>`;
+        s+=`<text x="${gx-38}" y="${gy+26}" font-size="12" font-family="Georgia,serif" font-weight="bold" fill="${gold}">z</text>`;
+      }
+      if(auto){
+        s+=d3spin(sh,159,214,40,ax,ay,az,16,6.283,0,{pre:pre,dur:dur,c:pur,sw:1.4,edges:showEd,light:showLi,wc:'rgba(255,215,106,.5)'});
+        s+=fit(159,300,10,gold,'авто-вращение: 16 кадров за '+dur.toFixed(1)+' с',{b:1},252);
+      } else {
+        s+=d3draw(sh,159,214,40,ax,ay,az,pre,{c:pur,sw:1.5,fov:7,edges:showEd,light:showLi});
+        if(showEd) s+=d3wire(sh,159,214,40,ax,ay,az,pre,{c:'rgba(255,215,106,.5)',sw:1,r:2.8,fov:7});
+        s+=fit(159,300,10,gold,'углы: '+Math.round(ax*57)+'° · '+Math.round(ay*57)+'° · '+Math.round(az*57)+'°',{b:1},264);
+      }
+      s+=`<g class="${pre}Pop"><rect x="20" y="316" width="278" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
+        +fit(159,334,10,ink,'фигура: '+nm+' · рёбер: '+sh.edges.length+' · граней: '+sh.faces.length,{b:1},264)+`</g>`;
+      if(!auto){
+        const b2=(x,y,t2,a,val)=>`<g style="cursor:pointer" onclick="inf3d('${lk}','${a}','${val}')"><rect x="${x}" y="${y}" width="44" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
+          +tx(x+22,y+21,14,gold,t2,{b:1})+`</g>`;
+        s+=b2(18,350,'↶','y','-')+b2(66,350,'↷','y','+')+b2(114,350,'▲','x','+')+b2(162,350,'▼','x','-')+b2(210,350,'z','z','+')+b2(258,350,'⟳','z','-');
+      }
       return s;
     }
     if(K==='d3depth'){ /* порядок отрисовки со значениями z */
@@ -8247,7 +8277,7 @@
       const rv=sh.v.map(q=>d3rot(q,ax,ay,0));
       const order=sh.faces.map((f,i)=>({i:i,z:f.reduce((a,k)=>a+rv[k].z,0)/f.length})).sort((a,b)=>a.z-b.z);
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'порядок отрисовки: от дальних к ближним',{b:1},280)+`</g>`;
+        +fit(159,29,11.5,pur,'сортировка по z: дальние грани рисуют первыми',{b:1},280)+`</g>`;
       s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:cyan,sw:1.5,fov:7});
       s+=fit(cx,196,10.5,grn,'правильно',{b:1},100);
       s+=d3draw(sh,236,132,sc,ax,ay,0,pre,{c:rose,sw:1.5,fov:7,flip:true});
@@ -8262,30 +8292,39 @@
       s+=fit(159,292,10.5,dim,'сортировка по глубине — обязательный шаг',{},296);
       return s;
     }
-    if(K==='d3shade'){ /* свет, нормали и яркость */
-      const sh=d3cube(), ax=0.34, ay=-0.7, cx=176, cy=142, sc=42;
+    if(K==='d3shade'){ /* нормаль и свет — с объяснением */
+      const sh=d3cube(), ax=0.34, ay=-0.7, cx=160, cy=132, sc=36;
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,gold,'свет и тень: яркость зависит от наклона грани',{b:1},290)+`</g>`;
-      s+=`<circle cx="52" cy="76" r="14" fill="rgba(255,215,106,.45)" stroke="${gold}" stroke-width="2"/>`;
-      s+=`<path d="M52 76 L120 116 M52 76 L136 96 M52 76 L112 152 M52 76 L96 176" stroke="${gold}" stroke-width="1.3" stroke-dasharray="4 4" opacity=".8"/>`;
-      s+=fit(52,104,9.5,dim,'свет',{b:1},50);
-      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:gold,sw:1.6,fov:7});
+        +fit(159,29,11,gold,'нормаль — вектор, перпендикулярный грани',{b:1},282)+`</g>`;
+      s+=`<circle cx="46" cy="62" r="12" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`<path d="M46 62 L112 100 M46 62 L126 84 M46 62 L104 134" stroke="${gold}" stroke-width="1.2" stroke-dasharray="4 4" opacity=".85"/>`;
+      s+=fit(52,84,9.5,dim,'свет',{b:1},50);
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:gold,sw:1.5,fov:7});
       const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
-      const f=sh.faces[3];
-      const mx=(pr[f[0]][0]+pr[f[2]][0])/2, my=(pr[f[0]][1]+pr[f[2]][1])/2;
-      s+=`<path d="M${mx.toFixed(1)} ${my.toFixed(1)} l16 -10" stroke="${cyan}" stroke-width="1.8"/><path d="M${(mx+16).toFixed(1)} ${(my-10).toFixed(1)} l-2 8 l-6 -5 z" fill="${cyan}"/>`;
-      s+=fit(mx+8,my-16,8.5,cyan,'нормаль',{b:1},54);
-      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="20" y="206" width="278" height="30" rx="9" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.5"/>`
-        +fit(159,226,10,gold,'яркость = 0,45 + 0,55 · |cos угла|',{b:1},260)+`</g>`;
-      s+=`<rect x="20" y="244" width="278" height="16" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.2"/>`;
-      s+=growBar(22,246,120,12,'#ffe066',1.4,0.9,0)+growBar(146,246,150,12,'#8a6b4a',1.4,1.1,0);
-      s+=fit(82,272,9.5,gold,'освещённая',{b:1},110)+fit(222,272,9.5,dim,'в тени',{b:1},110);
-      s+=plate2(20,282,278,0,cardB,'',11,pre);
+      const f=sh.faces[2];
+      const mx=(pr[f[0]][0]+pr[f[1]][0]+pr[f[2]][0]+pr[f[3]][0])/4;
+      const my=(pr[f[0]][1]+pr[f[1]][1]+pr[f[2]][1]+pr[f[3]][1])/4;
+      s+=`<path d="M${mx.toFixed(1)} ${my.toFixed(1)} L${(mx+32).toFixed(1)} ${(my-30).toFixed(1)}" stroke="${cyan}" stroke-width="2.6" stroke-linecap="round"/>`;
+      s+=`<path d="M${(mx+32).toFixed(1)} ${(my-30).toFixed(1)} l-10 1 l4 -9 z" fill="${cyan}"/>`;
+      s+=`<text x="${(mx+40).toFixed(1)}" y="${(my-34).toFixed(1)}" font-size="10.5" font-family="Georgia,serif" font-weight="bold" fill="${cyan}">нормаль n</text>`;
+      s+=`<path d="M${(mx+22).toFixed(1)} ${(my-22).toFixed(1)} l14 12" stroke="${cardB}" stroke-width="1.4"/>`;
+      s+=`<text x="${(mx+40).toFixed(1)}" y="${(my-8).toFixed(1)}" font-size="10" font-family="Georgia,serif" fill="${dim}">угол θ</text>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.5s"><rect x="20" y="196" width="278" height="30" rx="9" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,215,10,gold,'яркость = 0,45 + 0,55 · |cos θ|',{b:1},264)+`</g>`;
+      const rows=[['грань к свету','0,9','ярко',0.9],['грань боком','0,45','средне',0.5],['грань от света','0,05','темно',0.16]];
+      rows.forEach((q,k)=>{
+        const y=234+k*26;
+        s+=`<rect x="20" y="${y}" width="150" height="22" rx="6" fill="rgba(255,215,106,${q[3].toFixed(2)})" stroke="${cardB}" stroke-width="1.1"/>`;
+        s+=fit(96,y+15,9.5,k<2?ink:dim,q[0],{b:1},140);
+        s+=fit(178,y+15,9,dim,q[1],{an:'start'},54)+fit(292,y+15,9.5,gold,q[2],{an:'end',b:1},60);
+      });
+      s+=`<g class="${pre}Pop"><rect x="20" y="316" width="278" height="28" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
+        +fit(159,334,9.5,dim,'нормаль — перпендикуляр к грани; её считают по рёбрам',{b:1},264)+`</g>`;
       return s;
     }
     if(K==='d3smooth'){ /* гладкость: 4, 8, 16, 32 */
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'чем больше граней, тем глаже поверхность',{b:1},282)+`</g>`;
+        +fit(159,29,11.5,cyan,'шар в 3D — это сотни треугольников',{b:1},282)+`</g>`;
       [4,8,16,32].forEach((n,k)=>{
         const cx=52+k*72, cy=126, R=k<2?34:30;
         let d='';
@@ -8305,7 +8344,7 @@
     if(K==='d3texture'){ /* текстура внутри грани */
       const sh=d3cube(), ax=0.34, ay=-0.7, cx=196, cy=140, sc=42;
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,grn,'текстура — картинка, натянутая на грань',{b:1},280)+`</g>`;
+        +fit(159,29,11.5,grn,'текстура — картинка на грани (UV-координаты)',{b:1},280)+`</g>`;
       for(let r=0;r<5;r++)for(let c=0;c<5;c++)
         s+=`<rect x="${26+c*18}" y="${58+r*18}" width="16" height="16" rx="2" fill="${((r+c)%2)?'rgba(125,224,160,.55)':'rgba(255,215,106,.4)'}"/>`;
       s+=fit(70,168,10,dim,'текстура 5×5',{b:1},110);
@@ -8328,7 +8367,7 @@
     }
     if(K==='d3persp'){ /* точка схода */
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'перспектива: дальние предметы меньше',{b:1},276)+`</g>`;
+        +fit(159,29,11.5,pur,'дальше — меньше: делитель (1 + z : d)',{b:1},276)+`</g>`;
       s+=`<path d="M30 60 L258 116 M30 218 L258 116" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="6 5"/>`;
       s+=`<path d="M30 96 L258 116 M30 182 L258 116" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="6 5"/>`;
       s+=`<circle cx="258" cy="116" r="5" fill="${gold}"/>`;
@@ -8344,7 +8383,7 @@
     }
     if(K==='d3camera'){ /* камера и пирамида видимости */
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'камера: откуда мы смотрим на модель',{b:1},278)+`</g>`;
+        +fit(159,29,11.5,cyan,'камера — точка зрения, фокус и угол обзора',{b:1},278)+`</g>`;
       s+=`<rect x="26" y="112" width="46" height="34" rx="7" fill="rgba(127,214,255,.2)" stroke="${cyan}" stroke-width="2"/>`;
       s+=`<path d="M72 120 l16 -10 v26 l-16 -10 z" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="1.6"/>`;
       s+=fit(49,164,10,cyan,'камера',{b:1},80);
@@ -8363,7 +8402,7 @@
       const st2=[{t:'вершины на экран',c:cyan,m:'wire'},{t:'сборка граней',c:gold,m:'face'},{t:'сортировка по z',c:pur,m:'face'},
                  {t:'свет и текстура',c:grn,m:'dark'},{t:'пиксели на экран',c:blu,m:'wire'}];
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,gold,'как видеокарта рисует один кадр',{b:1},276)+`</g>`;
+        +fit(159,29,11.5,gold,'конвейер: вершины → грани → сортировка → свет → пиксели',{b:1},276)+`</g>`;
       st2.forEach((q,k)=>{
         const y=44+k*34;
         s+=`<g class="${pre}Rise}" style="animation-delay:${(0.1+k*0.15).toFixed(2)}s">`
@@ -8384,7 +8423,7 @@
     }
     if(K==='d3game'){ /* 3D в игре: кадры и нагрузка */
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'в игре сцену пересчитывают каждый кадр',{b:1},280)+`</g>`;
+        +fit(159,29,11.5,pur,'60 кадров в секунду — 60 пересчётов сцены',{b:1},280)+`</g>`;
       for(let k=0;k<4;k++){
         const cx=48+k*58, ay=-0.5-k*0.34;
         s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.15).toFixed(2)}s">`
@@ -8404,7 +8443,7 @@
     }
     if(K==='d3vr'){ /* VR и AR подробнее */
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'VR переносит внутрь, AR добавляет в комнату',{b:1},280)+`</g>`;
+        +fit(159,29,11.5,cyan,'VR — стерео для двух глаз, AR — модель на камере',{b:1},280)+`</g>`;
       s+=`<rect x="22" y="70" width="126" height="74" rx="18" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`;
       s+=`<path d="M22 96 h126" stroke="${cyan}" stroke-width="1.3" opacity=".6"/>`;
       s+=`<circle cx="62" cy="108" r="14" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`;
@@ -8427,7 +8466,7 @@
     }
     if(K==='d3file'){ /* файл модели подробно */
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,grn,'модель хранят в файле как список чисел',{b:1},280)+`</g>`;
+        +fit(159,29,11.5,grn,'v — вершины, f — грани, vt — UV, vn — нормали',{b:1},280)+`</g>`;
       s+=`<rect x="20" y="48" width="152" height="164" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.8"/>`;
       s+=fit(96,70,11,grn,'файл model.obj',{b:1},130);
       const lines=['v 1 1 1','v 1 1 -1','v 1 -1 1','… ещё 5 вершин','f 1 2 4 3','f 5 6 8 7','… ещё 4 грани','vt 0 0 · vt 1 0','vn 0 1 0'];
@@ -8442,7 +8481,7 @@
     }
     if(K==='d3practice'){ /* практика с рисунками */
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'практика: считаем элементы моделей',{b:1},276)+`</g>`;
+        +fit(159,29,11.5,pur,'посчитай сам: рёбра, вершины и углы',{b:1},276)+`</g>`;
       s+=d3wire(d3cube(),54,74,22,0.3,-0.6,0,pre,{c:cyan,sw:1.4,r:2.6});
       s+=fit(54,110,9.5,cyan,'куб',{b:1},60)+fit(54,126,9,dim,'8 · 12 · 6',{},60);
       s+=d3wire(d3pyr(),130,78,22,0.3,-0.6,0,pre,{c:gold,sw:1.4,r:2.6});
@@ -8463,7 +8502,7 @@
     if(K==='d3quiz'){ /* викторина с рисунком */
       const opts=['плоскую проекцию объёмной модели','саму объёмную модель','только текстуру','фотографию'], ok=0, done=(st&&st.pick>=0);
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,ink,'Что видно на плоском экране компьютера?',{b:1},276)+`</g>`;
+        +fit(159,29,11.5,ink,'выбери правильное определение',{b:1},276)+`</g>`;
       const sh=d3cube(), ax=0.34, ay=-0.62, cx=104, cy=96, sc=26;
       const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
       s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:cyan,sw:1.3,fov:6});
@@ -8510,7 +8549,7 @@
                   {t:'проекция превращает 3D в 2D',c:grn,ico:'pr'},{t:'поворот задают три угла',c:pur,ico:'r'},
                   {t:'дальние грани рисуют первыми',c:blu,ico:'d'},{t:'свет и текстура делают картинку',c:red,ico:'l'}];
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'всё главное о 3D-графике',{b:1},262)+`</g>`;
+        +fit(159,29,11.5,cyan,'шпаргалка: всё главное в одном месте',{b:1},262)+`</g>`;
       rows.forEach((q,k)=>{
         const y=46+k*36;
         s+=`<g class="${pre}Rise}" style="animation-delay:${(0.08+k*0.1).toFixed(2)}s">`
@@ -8524,517 +8563,6 @@
         s+=fit(176,y+20,9.5,q.c,q.t,{b:1},190)+`</g>`;
       });
       s+=plate2(16,272,286,28,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
-      return s;
-    }
-    if(K==='animintro'){ /* что такое анимация */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'анимация — это быстро сменяющиеся кадры',{b:1},276)+`</g>`;
-      s+=`<rect x="18" y="48" width="128" height="104" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.6"/>`;
-      s+=anBall(82,120,26,cyan,{pre:'',delay:0.2});
-      s+=fit(82,170,10.5,dim,'один кадр — стоит',{},118);
-      s+=`<path d="M154 100 h22" stroke="${gold}" stroke-width="2.4"/><path d="M170 93 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
-      for(let k=0;k<4;k++){
-        const x=186+k*32;
-        s+=`<rect x="${x}" y="48" width="26" height="104" rx="6" fill="rgba(18,24,44,.97)" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="1.4"/>`;
-        s+=anBall(x+13,120-(k%2)*18,8,[cyan,gold,grn,pur][k],{delay:0.5+k*0.2,pre:''});
-      }
-      s+=fit(240,170,10.5,gold,'кадры показывают по очереди',{},150);
-      s+=fit(159,196,11,ink,'много кадров подряд — и рисунок начинает двигаться',{b:1},292);
-      s+=`<g class="anPop" style="animation-delay:1s"><rect x="24" y="210" width="270" height="30" rx="9" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.6"/>`
-        +fit(159,230,10.5,cyan,'это и есть анимация — «оживление» рисунка',{b:1},250)+`</g>`;
-      s+=plate2(24,248,270,30,go?grn:cardB,go?'движение = быстрая смена кадров':'как рисунок оживает?',11,pre);
-      return s;
-    }
-    if(K==='animframes'){ /* кадры: мяч в полёте */
-      const ys=[0.62,0.34,0.2,0.34,0.62,0.34,0.2,0.34];
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,gold,'каждый кадр — своя поза мяча',{b:1},262)+`</g>`;
-      s+=anStrip(20,48,8,30,116,5,gold,{ball:[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5],ballY:ys,r:7,bc:gold});
-      s+=`<path d="M20 176 H290" stroke="${cardB}" stroke-width="1.6"/>`;
-      for(let k=0;k<8;k++){ s+=fit(35+k*35,190,9,dim,''+k,{b:1},22); }
-      s+=fit(159,210,10.5,dim,'номера кадров',{},140);
-      s+=fit(159,232,11,ink,'8 кадров — и мяч словно прыгает',{b:1},292);
-      s+=`<circle r="6" fill="${cyan}"><animateMotion dur="3.2s" repeatCount="indefinite" path="M35 218 H290"/></circle>`;
-      s+=plate2(20,246,270,32,go?grn:cardB,go?'кадр за кадром — получается движение':'что меняется в кадрах?',11,pre);
-      return s;
-    }
-    if(K==='animfps'){ /* частота кадров и плавность */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,grn,'чем больше кадров в секунду, тем плавнее',{b:1},282)+`</g>`;
-      [[3,'3 кадра в секунду','рывками',rose],[8,'8 кадров в секунду','лучше',gold],[16,'16 кадров в секунду','плавно',grn]].forEach((q,k)=>{
-        const y=48+k*46;
-        s+=fit(20,y+22,10,dim,'',{},10);
-        s+=fit(56,y+22,9.5,q[3],q[1],{b:1},118);
-        for(let j=0;j<q[0];j++){
-          const x=140+j*(150/q[0]);
-          s+=`<rect x="${x.toFixed(1)}" y="${y+6}" width="${(140/q[0]-2).toFixed(1)}" height="26" rx="4" fill="rgba(18,24,44,.97)" stroke="${q[3]}" stroke-width="1.1"/>`;
-          s+=`<circle cx="${(x+140/q[0]/2).toFixed(1)}" cy="${(y+19-(j%2)*6).toFixed(1)}" r="4" fill="${q[3]}"/>`;
-        }
-        s+=fit(286,y+22,9,dim,q[2],{an:'end'},60);
-      });
-      s+=fit(159,196,11,ink,'частота кадров измеряется в кадрах в секунду',{b:1},296);
-      s+=`<g class="anPop" style="animation-delay:.9s"><rect x="20" y="210" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
-        +fit(159,232,10.5,gold,'в кино 24 кадра, в играх 60 кадров в секунду',{b:1},262)+`</g>`;
-      s+=plate2(20,246,278,30,go?grn:cardB,go?'меньше кадров — заметны рывки':'от чего зависит плавность?',11,pre);
-      return s;
-    }
-    if(K==='animkey'){ /* ключевые кадры */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'ключевые кадры — главные позы',{b:1},272)+`</g>`;
-      s+=`<path d="M24 168 H292" stroke="${cardB}" stroke-width="2"/>`;
-      const keys=[[52,52],[122,116],[192,52],[262,116]];
-      keys.forEach((q,k)=>{
-        s+=anBall(q[0],q[1],15,[pur,cyan,grn,gold][k],{delay:0.2+k*0.3,pre:'an'});
-        s+=anKeyIcon(q[0],196,[pur,cyan,grn,gold][k],true);
-        s+=fit(q[0],214,9.5,[pur,cyan,grn,gold][k],'кадр '+(k*4),{b:1},60);
-      });
-      s+=fit(159,234,10.5,dim,'художник рисует только главные позы',{},270);
-      s+=`<g class="anPop" style="animation-delay:1.2s"><rect x="20" y="246" width="278" height="30" rx="9" fill="rgba(176,127,255,.11)" stroke="${pur}" stroke-width="1.6"/>`
-        +fit(159,266,10.5,pur,'остальные кадры между ними — промежуточные',{b:1},262)+`</g>`;
-      return s;
-    }
-    if(K==='animtween'){ /* промежуточные кадры считает компьютер */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'между ключами кадры досчитывает компьютер',{b:1},284)+`</g>`;
-      s+=`<path d="M24 168 H292" stroke="${cardB}" stroke-width="2"/>`;
-      const A=[52,140], B=[262,60];
-      for(let k=0;k<=12;k++){
-        const t=k/12, x=anLerp(A[0],B[0],t), y=anLerp(A[1],B[1],t);
-        const isKey=(k===0||k===12);
-        s+=anBall(x,y,isKey?13:7,isKey?pur:cyan,{delay:0.05*k,pre:'an'});
-      }
-      s+=anKeyIcon(52,196,pur,true)+anKeyIcon(262,196,pur,true);
-      s+=fit(52,214,9.5,pur,'ключ 1',{b:1},60)+fit(262,214,9.5,pur,'ключ 13',{b:1},60);
-      for(let k=1;k<12;k++){ s+=anKeyIcon(anLerp(52,262,k/12),196,cyan,false); }
-      s+=fit(159,236,10.5,dim,'пустые ромбики — это посчитанные кадры',{},270);
-      s+=`<g class="anPop" style="animation-delay:1.3s"><rect x="20" y="248" width="278" height="30" rx="9" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
-        +fit(159,268,10.5,cyan,'так рисуют мультфильмы в программах',{b:1},250)+`</g>`;
-      return s;
-    }
-    if(K==='animeasing'){ /* плавность: ускорение и замедление */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,gold,'замедление и ускорение делают движение живым',{b:1},290)+`</g>`;
-      s+=`<rect x="20" y="48" width="132" height="112" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
-      s+=anCurve(30,150,112,96,t=>t,gold,{dash:false,sw:2.2});
-      s+=fit(86,176,10,dim,'равномерно',{b:1},120);
-      s+=`<rect x="166" y="48" width="132" height="112" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
-      s+=anCurve(176,150,112,96,t=>anEase(t,3),grn,{dash:false,sw:2.2});
-      s+=fit(232,176,10,grn,'с разгоном',{b:1},120);
-      s+=fit(86,196,9,dim,'скорость одна',{},120)+fit(232,196,9,dim,'сначала медленно',{},120)+fit(232,208,9,dim,'потом быстро',{},120);
-      s+=anTrail([[32,150],[44,146],[56,142],[68,138],[80,134]],'transparent',gold,5,3,5);
-      s+=anTrail([[176,150],[190,144],[206,132],[224,112],[242,84]],'transparent',grn,5,3,5);
-      s+=`<g class="anPop" style="animation-delay:1s"><rect x="20" y="222" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
-        +fit(159,244,10.5,gold,'двигай точки на графике — и меняй характер',{b:1},260)+`</g>`;
-      s+=plate2(20,258,278,28,go?grn:cardB,go?'плавное начало и конец — «плавность»':'зачем замедление?',11,pre);
-      return s;
-    }
-    if(K==='animwalk'){ /* походка из 4 кадров */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,grn,'походку рисуют из нескольких поз',{b:1},266)+`</g>`;
-      const poses=[[-14,14],[6,-8],[14,-14],[-8,6]];
-      for(let k=0;k<4;k++){
-        const x=48+k*72;
-        s+=`<rect x="${x-28}" y="48" width="56" height="112" rx="8" fill="rgba(18,24,44,.97)" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="1.5"/>`;
-        const cx=x, cy=104, [l1,l2]=poses[k];
-        s+=`<circle cx="${cx}" cy="${cy-30}" r="9" fill="none" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2"/>`;
-        s+=`<line x1="${cx}" y1="${cy-21}" x2="${cx}" y2="${cy+2}" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2.6" stroke-linecap="round"/>`;
-        s+=`<line x1="${cx}" y1="${cy-12}" x2="${cx-12}" y2="${cy-4}" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2.2" stroke-linecap="round"/>`;
-        s+=`<line x1="${cx}" y1="${cy-12}" x2="${cx+12}" y2="${cy-4}" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2.2" stroke-linecap="round"/>`;
-        s+=`<line x1="${cx}" y1="${cy+2}" x2="${cx+l1}" y2="${cy+30}" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2.6" stroke-linecap="round"/>`;
-        s+=`<line x1="${cx}" y1="${cy+2}" x2="${cx+l2}" y2="${cy+30}" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2.6" stroke-linecap="round"/>`;
-        s+=fit(cx,178,9.5,dim,'поза '+(k+1),{},60);
-      }
-      s+=fit(159,200,10.5,ink,'четыре позы — и человечек идёт',{b:1},280);
-      s+=`<circle r="6" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M24 214 H294"/></circle>`;
-      s+=`<line x1="24" y1="214" x2="292" y2="214" stroke="${cardB}" stroke-width="1.5"/>`;
-      s+=plate2(20,228,278,32,go?grn:cardB,go?'кадры меняют друг друга — герой шагает':'сколько нужно поз?',11,pre);
-      return s;
-    }
-    if(K==='animsprite'){ /* спрайт-лист */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'спрайт-лист: все кадры в одной картинке',{b:1},282)+`</g>`;
-      s+=`<rect x="20" y="46" width="278" height="120" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
-      const poses=[[-10,12],[4,-6],[10,-10],[-6,4]];
-      for(let k=0;k<4;k++){
-        const x=54+k*70, cx=x, cy=100, [l1,l2]=poses[k];
-        s+=`<rect x="${x-28}" y="56" width="56" height="100" rx="8" fill="rgba(255,255,255,.03)" stroke="${cyan}" stroke-width="1.2"/>`;
-        s+=`<circle cx="${cx}" cy="${cy-24}" r="8" fill="none" stroke="${grn}" stroke-width="1.8"/>`;
-        s+=`<line x1="${cx}" y1="${cy-16}" x2="${cx}" y2="${cy+4}" stroke="${grn}" stroke-width="2.2" stroke-linecap="round"/>`;
-        s+=`<line x1="${cx}" y1="${cy+4}" x2="${cx+l1}" y2="${cy+26}" stroke="${grn}" stroke-width="2.2" stroke-linecap="round"/>`;
-        s+=`<line x1="${cx}" y1="${cy+4}" x2="${cx+l2}" y2="${cy+26}" stroke="${grn}" stroke-width="2.2" stroke-linecap="round"/>`;
-        s+=fit(cx,150,8.5,dim,'кадр '+(k+1),{},56);
-      }
-      s+=anPlayhead(54,40,132,gold,0.3,0);
-      s+=fit(159,182,10.5,ink,'программа показывает один кадр за другим',{b:1},292);
-      s+=`<g class="anPop" style="animation-delay:.9s"><rect x="20" y="196" width="278" height="32" rx="10" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
-        +fit(159,218,10.5,cyan,'так хранят героев в играх — целой лентой кадров',{b:1},262)+`</g>`;
-      s+=plate2(20,232,278,30,go?grn:cardB,go?'похоже на урок про спрайты':'зачем все кадры вместе?',11,pre);
-      return s;
-    }
-    if(K==='animparallax'){ /* слои движутся с разной скоростью */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'слои движутся с разной скоростью',{b:1},276)+`</g>`;
-      s+=`<rect x="20" y="46" width="278" height="140" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
-      s+=`<path d="M22 118 L58 92 L94 118 L130 88 L166 118 L202 92 L238 118 L274 88 L296 104" fill="none" stroke="${blu}" stroke-width="2" opacity=".85"/>`;
-      s+=`<path d="M22 152 L58 128 L94 152 L130 124 L166 152 L202 128 L238 152 L274 124 L296 138" fill="none" stroke="${grn}" stroke-width="2.4"/>`;
-      s+=fit(60,124,9.5,blu,'дальние горы',{b:1},90);
-      for(let k=0;k<2;k++){
-        const d=(k===0)?'6.4s':'3.2s';
-        s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;18 0;0 0" dur="${d}" repeatCount="indefinite"/>`
-          +`<circle cx="${90+k*110}" cy="140" r="9" fill="rgba(125,224,160,.4)" stroke="${grn}" stroke-width="1.7"/></g>`;
-      }
-      s+=fit(60,176,9.5,grn,'ближний лес',{b:1},90);
-      for(let k=0;k<2;k++){
-        const d=(k===0)?'1.6s':'0.9s';
-        s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;-22 0;0 0" dur="${d}" repeatCount="indefinite"/>`
-          +`<circle cx="${120+k*90}" cy="168" r="7" fill="rgba(255,215,106,.45)" stroke="${gold}" stroke-width="1.6"/></g>`;
-      }
-      s+=fit(232,176,9.5,gold,'предметы',{b:1},70);
-      s+=`<path d="M22 186 H296" stroke="${cardB}" stroke-width="1.6"/>`;
-      s+=fit(159,206,10.5,ink,'дальнее движется медленно, ближнее — быстро',{b:1},292);
-      s+=plate2(20,220,278,32,go?grn:cardB,go?'это параллакс — он создаёт глубину':'какой слой быстрее?',11,pre);
-      s+=fit(159,276,10.5,dim,'так рисуют фон в мультфильмах и играх',{},296);
-      return s;
-    }
-    if(K==='animpath'){ /* движение по пути */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'объект можно вести по нарисованному пути',{b:1},280)+`</g>`;
-      const d='M34 190 C70 90, 150 90, 180 170 C200 220, 260 210, 286 120';
-      s+=`<path d="${d}" fill="none" stroke="${cardB}" stroke-width="2.4" stroke-dasharray="8 6"/>`;
-      s+=`<circle r="10" fill="rgba(127,214,255,.45)" stroke="${cyan}" stroke-width="2"><animateMotion dur="4.4s" repeatCount="indefinite" path="${d}"/></circle>`;
-      s+=anTrail([[45,160],[75,120],[110,102],[150,104],[180,140],[196,180]],'transparent',cyan,6,3,6);
-      s+=anKeyIcon(34,190,gold,true)+anKeyIcon(286,120,gold,true);
-      s+=fit(34,212,9.5,gold,'начало',{b:1},60)+fit(286,212,9.5,gold,'конец',{b:1},60);
-      s+=fit(159,236,11,ink,'мяч идёт по кривой, а не по прямой',{b:1},292);
-      s+=plate2(20,250,278,32,go?grn:cardB,go?'путь задают кривыми — он плавный':'почему путь кривой?',11,pre);
-      return s;
-    }
-    if(K==='animtransform'){ /* поворот, масштаб, прозрачность */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,gold,'поворот, размер и прозрачность тоже анимируют',{b:1},290)+`</g>`;
-      [[0,'поворот',cyan],[1,'размер',grn],[2,'прозрачность',pur]].forEach((q,k)=>{
-        const x=24+k*94, cx=x+44, cy=110;
-        s+=`<rect x="${x}" y="46" width="88" height="104" rx="9" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.5"/>`;
-        if(k===0) s+=`<g><animateTransform attributeName="transform" type="rotate" values="0 ${cx} ${cy};360 ${cx} ${cy}" dur="4s" repeatCount="indefinite"/>`
-          +`<rect x="${cx-17}" y="${cy-13}" width="34" height="26" rx="4" fill="rgba(127,214,255,.28)" stroke="${cyan}" stroke-width="1.8"/></g>`;
-        else if(k===1) s+=`<rect x="${cx-17}" y="${cy-13}" width="34" height="26" rx="4" fill="rgba(125,224,160,.28)" stroke="${grn}" stroke-width="1.8">`
-          +`<animateTransform attributeName="transform" type="scale" values="1;1.6;1" dur="3s" repeatCount="indefinite" additive="sum"/></rect>`;
-        else s+=`<rect x="${cx-17}" y="${cy-13}" width="34" height="26" rx="4" fill="rgba(176,127,255,.35)" stroke="${pur}" stroke-width="1.8">`
-          +`<animate attributeName="fill-opacity" values="1;0.15;1" dur="3s" repeatCount="indefinite"/></rect>`;
-        s+=fit(cx,172,10.5,q[2],q[1],{b:1},82);
-      });
-      s+=fit(159,196,10.5,ink,'эти свойства меняют по ключевым кадрам',{b:1},292);
-      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="210" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
-        +fit(159,232,10.5,gold,'в программе это просто числа в кадрах',{b:1},262)+`</g>`;
-      s+=plate2(20,246,278,30,go?grn:cardB,go?'поворот, размер и альфа — тоже анимация':'что можно менять?',11,pre);
-      return s;
-    }
-    if(K==='animloop'){ /* цикл анимации */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,grn,'цикл: последний кадр повторяет первый',{b:1},282)+`</g>`;
-      const cx=159, cy=124, R=62;
-      for(let k=0;k<6;k++){
-        const a=-Math.PI/2+k*Math.PI*2/6, x=cx+Math.cos(a)*R, y=cy+Math.sin(a)*R;
-        const col=[cyan,gold,grn,pur,rose,blu][k];
-        s+=`<rect x="${(x-19).toFixed(1)}" y="${(y-14).toFixed(1)}" width="38" height="28" rx="6" fill="rgba(18,24,44,.97)" stroke="${col}" stroke-width="1.4"/>`
-          +fit(x,y+4,9,dim,'к'+(k+1),{},34);
-      }
-      s+=`<path d="M${cx} ${cy-R-16} a${R} ${R} 0 1 1 0 ${2*R}" fill="none" stroke="${gold}" stroke-width="2" stroke-dasharray="7 5"/>`;
-      s+=`<circle r="7" fill="${gold}"><animateMotion dur="4s" repeatCount="indefinite" path="M${cx} ${cy-R} A${R} ${R} 0 1 1 ${cx} ${cy+R} A${R} ${R} 0 1 1 ${cx} ${cy-R}"/></circle>`;
-      s+=fit(cx,cy+6,11,ink,'круг',{b:1},60);
-      s+=fit(159,214,10.5,ink,'движение повторяется — анимация зацикливается',{b:1},296);
-      s+=`<g class="anPop" style="animation-delay:.9s"><rect x="20" y="228" width="278" height="32" rx="10" fill="rgba(125,224,160,.11)" stroke="${grn}" stroke-width="1.6"/>`
-        +fit(159,250,10.5,grn,'так делают ходьбу, бег, полёт и вращение',{b:1},262)+`</g>`;
-      s+=plate2(20,264,278,28,go?grn:cardB,go?'цикл экономит работу художника':'зачем нужен цикл?',11,pre);
-      return s;
-    }
-    if(K==='animsmear'){ /* смазывание движения */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,rose,'быстрое движение «смазывают»',{b:1},262)+`</g>`;
-      s+=`<rect x="20" y="46" width="278" height="104" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
-      s+=anBall(56,98,14,cyan,{pre:'an'});
-      for(let k=0;k<5;k++){
-        const x=100+k*26;
-        s+=`<ellipse cx="${x}" cy="98" rx="${(16-k*2).toFixed(1)}" ry="${(11-k*1.4).toFixed(1)}" fill="${cyan}" fill-opacity="${(0.4-k*0.07).toFixed(2)}"/>`;
-      }
-      s+=anBall(252,98,14,grn,{delay:0.3,pre:'an'});
-      s+=fit(56,168,10,dim,'обычный кадр',{b:1},90)+fit(176,168,10,dim,'смазанный кадр',{b:1},110)+fit(252,168,10,dim,'снова обычный',{b:1},90);
-      s+=fit(159,192,10.5,ink,'в смазанном кадре видно направление движения',{b:1},292);
-      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="206" width="278" height="32" rx="10" fill="rgba(255,143,176,.11)" stroke="${rose}" stroke-width="1.6"/>`
-        +fit(159,228,10.5,rose,'так движение кажется быстрее и резче',{b:1},262)+`</g>`;
-      s+=plate2(20,242,278,30,go?grn:cardB,go?'художники называют это «смаз»':'зачем смазывать кадр?',11,pre);
-      return s;
-    }
-    if(K==='animprinciples'){ /* принципы анимации */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'приёмы, которые оживляют рисунок',{b:1},276)+`</g>`;
-      const it=[['сжатие и растяжение',gold,'squash'],['подготовка к движению',cyan,'anticip'],['движение по инерции',grn,'follow'],['преувеличение',pur,'exag']];
-      it.forEach((q,k)=>{
-        const x=24+(k%2)*140, y=46+Math.floor(k/2)*88;
-        s+=`<rect x="${x}" y="${y}" width="132" height="72" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.6"/>`;
-        const cx=x+66, cy=y+32;
-        if(q[2]==='squash') s+=`<ellipse cx="${cx}" cy="${cy+8}" rx="18" ry="12" fill="rgba(255,215,106,.35)" stroke="${gold}" stroke-width="1.7"/>`;
-        else if(q[2]==='anticip') s+=`<circle cx="${cx-12}" cy="${cy}" r="9" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="1.6"/><path d="M${cx-2} ${cy} h16" stroke="${cyan}" stroke-width="1.8" stroke-dasharray="4 4"/>`;
-        else if(q[2]==='follow') s+=`<circle cx="${cx}" cy="${cy}" r="10" fill="rgba(125,224,160,.35)" stroke="${grn}" stroke-width="1.7"/><circle cx="${cx+16}" cy="${cy+6}" r="6" fill="rgba(125,224,160,.22)" stroke="${grn}" stroke-width="1.4"/>`;
-        else s+=`<circle cx="${cx}" cy="${cy}" r="14" fill="rgba(176,127,255,.32)" stroke="${pur}" stroke-width="1.8"/><ellipse cx="${cx}" cy="${cy+16}" rx="20" ry="5" fill="rgba(176,127,255,.18)"/>`;
-        s+=fit(cx,y+62,9,q[1],q[0],{b:1},124)+`</g>`;
-      });
-      s+=fit(159,238,10.5,ink,'это четыре из двенадцати принципов анимации',{b:1},296);
-      s+=plate2(20,252,278,32,go?grn:cardB,go?'приёмы придумали мультипликаторы Disney':'какие бывают приёмы?',11,pre);
-      return s;
-    }
-    if(K==='animsquash'){ /* сжатие и растяжение мяча */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,gold,'сжатие и растяжение: мяч живой',{b:1},272)+`</g>`;
-      s+=`<path d="M24 232 H292" stroke="${cardB}" stroke-width="2.2"/>`;
-      const frames=[[52,120,6,0],[100,208,10,3],[148,120,6,0],[196,196,0,6],[244,120,6,0]];
-      frames.forEach((q,k)=>{
-        const [x,y,sx,sy]=q;
-        s+=anBall(x,y,15,k===1?rose:(k===3?grn:gold),{pre:'an',delay:0.15+k*0.25,sx:1+sx/10,sy:1-sy/10});
-      });
-      s+=fit(52,200,9,dim,'летит',{},50)+fit(100,250,9,rose,'сжался',{},60)+fit(148,100,9,gold,'летит',{},50)+fit(196,250,9,grn,'растянулся',{},70)+fit(244,100,9,gold,'летит',{},50);
-      s+=`<path d="M52 120 Q76 40 100 208" fill="none" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
-      s+=`<path d="M100 208 Q124 40 148 120" fill="none" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
-      s+=fit(159,272,10.5,ink,'при ударе мяч сжимается, при полёте растягивается',{b:1},296);
-      s+=plate2(20,286,278,0,cardB,'',11,pre);
-      return s;
-    }
-    if(K==='animsound'){ /* звук в анимации */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'звук совпадает с движением кадр в кадр',{b:1},282)+`</g>`;
-      s+=anStrip(20,46,6,42,60,6,cyan,{});
-      for(let k=0;k<6;k++){
-        const x=41+k*48;
-        s+=fit(x,74,9.5,dim,'к'+(k+1),{},30);
-      }
-      s+=anPlayhead(113,40,74,gold,0.3,0);
-      s+=fit(113,124,9.5,gold,'сейчас кадр 3',{b:1},90);
-      for(let k=0;k<12;k++){
-        const x=30+k*22, h=8+((k%4)*7);
-        s+=growBar(x,200-h,14,h,(k<6?cyan:cardB),0.8,0.4+k*0.1,0);
-      }
-      s+=`<line x1="113" y1="140" x2="113" y2="204" stroke="${gold}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
-      s+=fit(159,226,10.5,ink,'звуковая дорожка тоже разбита по кадрам',{b:1},292);
-      s+=`<g class="anPop" style="animation-delay:.7s"><rect x="20" y="240" width="278" height="32" rx="10" fill="rgba(176,127,255,.11)" stroke="${pur}" stroke-width="1.6"/>`
-        +fit(159,262,10.5,pur,'шаг в кадре 3 — звук шага тоже в кадре 3',{b:1},262)+`</g>`;
-      s+=plate2(20,274,278,0,cardB,'',11,pre);
-      return s;
-    }
-    if(K==='animrender'){ /* из анимации в видео */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'анимацию собирают в видеофайл',{b:1},268)+`</g>`;
-      for(let k=0;k<4;k++){
-        const x=26+k*38;
-        s+=`<rect x="${x}" y="52" width="32" height="46" rx="5" fill="rgba(18,24,44,.97)" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="1.4"/>`;
-        s+=anBall(x+16,78-(k%2)*10,7,[cyan,gold,grn,pur][k],{pre:'an',delay:0.2+k*0.2});
-      }
-      s+=fit(159,118,10,dim,'кадры анимации',{b:1},140);
-      s+=`<path d="M188 75 h22" stroke="${gold}" stroke-width="2.4"/><path d="M204 68 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
-      s+=`<rect x="220" y="52" width="74" height="46" rx="8" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2"/>`;
-      s+=fit(257,72,10,gold,'видео',{b:1},64)+fit(257,88,9,dim,'24 кадра/с',{},64);
-      s+=fit(159,148,10.5,ink,'программа собирает кадры в один файл',{b:1},292);
-      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="166" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
-        +fit(159,188,10.5,gold,'1000 кадров при 24 в секунду — это 42 секунды',{b:1},262)+`</g>`;
-      s+=plate2(20,202,278,32,go?grn:cardB,go?'это «рендер» — сборка видео из кадров':'как получают видео?',11,pre);
-      s+=fit(159,258,10.5,dim,'поэтому рендер мультфильма занимает часы',{},296);
-      return s;
-    }
-    if(K==='animtools'){ /* инструменты анимации */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,grn,'два способа делать анимацию',{b:1},262)+`</g>`;
-      s+=`<rect x="18" y="46" width="134" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`;
-      s+=fit(85,70,11,cyan,'покадрово',{b:1},118);
-      for(let k=0;k<4;k++){
-        const x=32+k*30;
-        s+=`<rect x="${x}" y="82" width="26" height="34" rx="4" fill="rgba(255,255,255,.04)" stroke="${cyan}" stroke-width="1.2"/>`;
-        s+=anBall(x+13,98-(k%2)*8,5,cyan,{pre:'an',delay:0.15+k*0.2});
-        s+=fit(x+13,132,8,dim,''+(k+1),{},24);
-      }
-      s+=fit(85,152,9.5,dim,'рисунок в каждом кадре',{},120)+fit(85,168,9.5,dim,'зато полный контроль',{},120)+fit(85,186,9.5,cyan,'подходит для героя',{},120);
-      s+=`<rect x="166" y="46" width="134" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.7"/>`;
-      s+=fit(233,70,11,gold,'по ключам',{b:1},118);
-      s+=`<path d="M182 130 H284" stroke="${cardB}" stroke-width="1.6"/>`;
-      for(let k=0;k<3;k++){
-        const x=196+k*40;
-        s+=anKeyIcon(x,130,gold,true);
-        s+=anBall(x,110-(k%2)*16,6,gold,{pre:'an',delay:0.15+k*0.25});
-      }
-      s+=fit(233,152,9.5,dim,'задаём главные позы',{},120)+fit(233,168,9.5,dim,'остальное считает программа',{},120)+fit(233,186,9.5,gold,'подходит для движения',{},120);
-      s+=fit(159,214,10.5,ink,'выбор способа зависит от задачи',{b:1},292);
-      s+=plate2(18,228,282,32,go?grn:cardB,go?'героя рисуют кадрами, движение — по ключам':'какой способ выбрать?',11,pre);
-      return s;
-    }
-    if(K==='animstopmotion'){ /* стоп-моушен */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,rose,'покадровая съёмка: стоп-моушен',{b:1},276)+`</g>`;
-      s+=`<rect x="24" y="46" width="70" height="54" rx="8" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`;
-      s+=`<path d="M42 66 l20 -12 v24 z" fill="rgba(127,214,255,.4)" stroke="${cyan}" stroke-width="1.4"/>`;
-      s+=`<circle cx="80" cy="58" r="7" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="1.4"/>`;
-      s+=fit(59,116,10,cyan,'камера',{b:1},90);
-      s+=`<path d="M96 74 L200 74" stroke="${gold}" stroke-width="1.6" stroke-dasharray="6 5"/>`;
-      for(let k=0;k<4;k++){
-        const x=214, y=48+k*34;
-        s+=`<rect x="196" y="${y}" width="46" height="28" rx="6" fill="rgba(18,24,44,.97)" stroke="${rose}" stroke-width="1.3"/>`;
-        s+=`<circle cx="${214+k*8}" cy="${y+18}" r="6" fill="rgba(255,143,176,.4)" stroke="${rose}" stroke-width="1.3"/>`;
-      }
-      s+=fit(230,196,10,dim,'сдвиг на чуть-чуть',{},120);
-      s+=fit(159,222,10.5,ink,'фигурку чуть двигают и снимают снова',{b:1},292);
-      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="236" width="278" height="32" rx="10" fill="rgba(255,143,176,.11)" stroke="${rose}" stroke-width="1.6"/>`
-        +fit(159,258,10.5,rose,'так снимают мультфильмы из пластилина',{b:1},262)+`</g>`;
-      s+=plate2(20,270,278,0,cardB,'',11,pre);
-      return s;
-    }
-    if(K==='animcartoon'){ /* как делают мультфильм */
-      const st2=[['сценарий',gold],['раскадровка',cyan],['аниматик',grn],['анимация',pur],['звук',rose],['монтаж',blu]];
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,gold,'мультфильм делают по шагам',{b:1},262)+`</g>`;
-      st2.forEach((q,k)=>{
-        const y=46+k*36;
-        s+=`<g class="anPop" style="animation-delay:${(0.08+k*0.1).toFixed(2)}s">`
-          +`<rect x="24" y="${y}" width="270" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.5"/>`
-          +`<circle cx="44" cy="${y+15}" r="9" fill="rgba(255,255,255,.05)" stroke="${q[1]}" stroke-width="1.2"/>`
-          +tx(44,y+19,9.5,q[1],''+(k+1),{b:1})
-          +fit(168,y+20,10.5,q[1],q[0],{b:1},200)+`</g>`;
-        if(k<5) s+=drawLL({x:159,y:y+32},{x:159,y:y+34},q[1],1.2,0.3+k*0.1,1.2,pre);
-      });
-      s+=fit(159,272,10,dim,'от идеи до готового фильма',{},200);
-      s+=`<circle r="5.5" fill="${gold}"><animateMotion dur="4.2s" repeatCount="indefinite" path="M44 61 L44 256"/></circle>`;
-      return s;
-    }
-    if(K==='animmix'){ /* 2D и 3D вместе */
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'в мультфильмах соединяют 2D и 3D',{b:1},276)+`</g>`;
-      s+=`<rect x="18" y="46" width="134" height="120" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.6"/>`;
-      s+=`<path d="M20 150 Q60 100 100 150" fill="none" stroke="${cyan}" stroke-width="2.4"/>`;
-      s+=(typeof d3draw==='function')?d3draw(d3cube(),146,110,22,0.32,-0.66,0,pre,{c:gold,sw:1.4,fov:7}):'';
-      s+=`<path d="M152 100 L232 78" stroke="${gold}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
-      s+=`<rect x="186" y="46" width="114" height="120" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.6"/>`;
-      s+=`<path d="M196 150 Q236 96 276 150" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
-      s+=fit(85,182,10.5,cyan,'рисованный герой',{b:1},124)+fit(243,182,10.5,gold,'3D-модель',{b:1},110);
-      s+=fit(159,208,10.5,ink,'героя рисуют, а мир вокруг строят в 3D',{b:1},292);
-      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="222" width="278" height="32" rx="10" fill="rgba(176,127,255,.11)" stroke="${pur}" stroke-width="1.6"/>`
-        +fit(159,244,10.5,pur,'так экономят силы и получают красивую картинку',{b:1},262)+`</g>`;
-      s+=plate2(20,256,278,30,go?grn:cardB,go?'например: герой 2D, город 3D':'зачем смешивать?',11,pre);
-      return s;
-    }
-    if(K==='animpractice'){ /* практика */
-      const rows=[
-        {t:'24 кадра в секунду, 5 секунд — сколько кадров?',a:'120 кадров',c:grn},
-        {t:'герой прошёл 240 точек за 4 секунды. Сколько за секунду?',a:'60 точек',c:cyan},
-        {t:'цикл 8 кадров при 24 в секунду — сколько циклов?',a:'3 цикла',c:gold}
-      ];
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,pur,'практика: считаем кадры и скорость',{b:1},276)+`</g>`;
-      rows.forEach((q,k)=>{
-        const y=48+k*58;
-        s+=`<g class="anPop" style="animation-delay:${(0.12+k*0.2).toFixed(2)}s">`
-          +`<rect x="20" y="${y}" width="278" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
-          +fit(142,y+19,9.5,ink,q.t,{},200)
-          +(go?fit(142,y+38,11,q.c,q.a,{b:1},200):fit(142,y+38,10,dim,'нажми «показать»',{},200))+`</g>`;
-      });
-      s+=plate2(20,224,278,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
-      s+=fit(159,276,10,dim,'анимация — это расчёт времени и кадров',{},290);
-      return s;
-    }
-    if(K==='animlab'){ /* ЛАБОРАТОРИЯ: таймлайн и интерполяция */
-      const fr=(st&&typeof st.af==='number')?st.af:0;
-      const keys=(st&&st.ak)?st.ak:[0.65,0.15,0.65];
-      const sel=(st&&typeof st.asel==='number')?st.asel:0;
-      const N=12, kf=[0,6,12];
-      let y=0;
-      for(let i=0;i<kf.length-1;i++){
-        if(fr>=kf[i]&&fr<=kf[i+1]){ const t=(fr-kf[i])/(kf[i+1]-kf[i]); y=anLerp(keys[i],keys[i+1],anEase(t,2)); }
-      }
-      if(fr>=12) y=keys[2];
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,ink,'лаборатория: ключи и промежуточные кадры',{b:1},284)+`</g>`;
-      s+=`<rect x="20" y="46" width="278" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
-      s+=`<line x1="30" y1="180" x2="288" y2="180" stroke="${cardB}" stroke-width="2"/>`;
-      const px=k=>34+k*(244/N), py=v=>180-v*118;
-      let trail='';
-      for(let k=0;k<=N;k++){
-        let v=0;
-        for(let i2=0;i2<kf.length-1;i2++){ if(k>=kf[i2]&&k<=kf[i2+1]){ const t=(k-kf[i2])/(kf[i2+1]-kf[i2]); v=anLerp(keys[i2],keys[i2+1],anEase(t,2)); } }
-        trail+=`<circle cx="${px(k).toFixed(1)}" cy="${py(v).toFixed(1)}" r="${k===fr?7:2.6}" fill="${k===fr?gold:(k%6===0?pur:'rgba(127,214,255,.45)')}"/>`;
-      }
-      s+=trail;
-      kf.forEach((k2,i2)=>{
-        s+=anKeyIcon(px(k2),196,i2===sel?gold:pur,true);
-        s+=fit(px(k2),212,9,i2===sel?gold:pur,'к'+(i2+1),{b:1},34);
-      });
-      s+=anPlayhead(px(fr),52,128,gold,0,0);
-      s+=fit(px(fr)>240?246:px(fr)+6,64,9.5,gold,'кадр '+(fr+1),{b:1},70);
-      s+=`<g class="anPop"><rect x="20" y="222" width="278" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
-        +`<text x="159" y="240" text-anchor="middle" font-size="10" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">высота: ${(y*100).toFixed(0)}% · ключей: 3</text></g>`;
-      const btn=(x,y2,t2,col,act,val,w2)=>`<g style="cursor:pointer" onclick="infAnim('${lk}','${act}','${val}')"><rect x="${x}" y="${y2}" width="${w2}" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${col}" stroke-width="1.6"/>`
-        +fit(x+w2/2,y2+20,10.5,col,t2,{b:1},w2-10)+`</g>`;
-      s+=btn(20,258,'+1 кадр',grn,'frame','+',88);
-      s+=btn(114,258,'выше',gold,'up','',68);
-      s+=btn(188,258,'ниже',rose,'down','',68);
-      s+=btn(20,296,'сначала',cardB,'reset','',88);
-      s+=btn(114,296,'ключ 1',pur,'sel','0',68);
-      s+=btn(188,296,'ключ 3',pur,'sel','2',68);
-      return s;
-    }
-    if(K==='animquiz'){ /* викторина */
-      const opts=['ключевые кадры','промежуточные кадры','спрайт-лист'], ok=0, done=(st&&st.pick>=0);
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,ink,'Как называют главные позы движения?',{b:1},276)+`</g>`;
-      s+=`<rect x="20" y="46" width="278" height="80" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
-      s+=anBall(64,86,14,pur,{pre:'an'});
-      for(let k=1;k<5;k++) s+=anBall(64+k*48,86-(k%2)*18,8,cyan,{pre:'an',delay:0.1*k});
-      s+=anBall(260,86,14,pur,{pre:'an',delay:0.6});
-      s+=anKeyIcon(64,112,pur,true)+anKeyIcon(260,112,pur,true);
-      opts.forEach((t2,k)=>{
-        const y=136+k*36, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
-        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
-          +`<rect x="20" y="${y}" width="278" height="30" rx="8" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.1:1.5}"/>`
-          +fit(159,y+20,10.5,c,t2,{b:on},258)+(on?`<path d="M270 ${y+9} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.2"/>`:'')+`</g>`;
-      });
-      s+=`<g class="anPop"><rect x="20" y="250" width="278" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.5"/>`
-        +fit(159,270,10,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Главные позы — ключевые кадры':'Подумай: их рисует художник',{b:done&&st.pick===ok},256)+`</g>`;
-      s+=fit(159,296,10,dim,'остальные программа досчитывает сама',{},280);
-      return s;
-    }
-    if(K==='animmistakes'){ /* ошибки */
-      const it=[
-        {t:'мало кадров — движение дёргается',f:'увеличь частоту кадров',c:rose},
-        {t:'нет ключей — движение непонятное',f:'задай главные позы',c:gold},
-        {t:'все части движутся одинаково',f:'добавь инерцию и параллакс',c:cyan},
-        {t:'герой не сжимается при ударе',f:'добавь сжатие и растяжение',c:pur}
-      ];
-      let s='';
-      it.forEach((q,k)=>{
-        const y=14+k*56;
-        s+=`<g class="anPop" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
-          +`<rect x="12" y="${y}" width="294" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="1.9"/>`
-          +`<path d="M28 ${y+13} l10 18 h-20 z" fill="${red}" opacity=".9"/><text x="28" y="${y+28}" text-anchor="middle" font-size="10" font-weight="bold" fill="#eaf2ff">!</text>`
-          +fit(96,y+20,Math.min(10.5,150/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},132)
-          +`<path d="M98 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.2"/>`
-          +fit(120,y+37,Math.min(9.5,140/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},140)+`</g>`;
-      });
-      s+=`${tx(159,250,10.5,dim,'проверяй эти четыре места',{})}`;
-      return s;
-    }
-    if(K==='animsheet'){ /* шпаргалка */
-      const rows=[{t:'анимация — быстрая смена кадров',c:cyan},{t:'ключевые кадры рисует человек',c:pur},
-                  {t:'промежуточные считает программа',c:gold},{t:'плавность: ускорение и замедление',c:grn},
-                  {t:'сжатие и растяжение оживляют движение',c:rose},{t:'цикл экономит кадры',c:blu}];
-      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,29,11.5,cyan,'всё главное об анимации',{b:1},262)+`</g>`;
-      rows.forEach((q,k)=>{
-        const y=46+k*36;
-        s+=`<g class="anPop" style="animation-delay:${(0.08+k*0.1).toFixed(2)}s">`
-          +`<rect x="16" y="${y}" width="286" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.5"/>`;
-        if(k===0) s+=anBall(38,y+15,9,q.c,{pre:'an'});
-        else if(k===1) s+=anKeyIcon(38,y+15,q.c,true);
-        else if(k===2) s+=anKeyIcon(38,y+15,q.c,false);
-        else if(k===3) s+=anCurve(28,y+24,22,18,t=>anEase(t,3),q.c,{sw:1.8});
-        else if(k===4) s+=`<ellipse cx="38" cy="${y+19}" rx="11" ry="7" fill="rgba(255,143,176,.4)" stroke="${q.c}" stroke-width="1.4"/>`;
-        else s+=`<path d="M28 ${y+15} a10 10 0 1 1 0 0.01" fill="none" stroke="${q.c}" stroke-width="1.8"/>`;
-        s+=fit(176,y+20,9.5,q.c,q.t,{b:1},190)+`</g>`;
-      });
-      s+=plate2(16,268,286,28,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
       return s;
     }
     if(K==='text'){ /* текстовые строки — «плакат» */
@@ -9237,18 +8765,18 @@
     if(K==='animsheet') return 310;
     if(K==='d3intro') return 300;
     if(K==='d3flat') return 300;
-    if(K==='d3points') return 296;
-    if(K==='d3axes') return 290;
+    if(K==='d3points') return 292;
+    if(K==='d3axes') return 312;
     if(K==='d3vertex') return 308;
     if(K==='d3edge') return 296;
     if(K==='d3face') return 296;
     if(K==='d3wireframe') return 310;
-    if(K==='d3project') return 302;
-    if(K==='d3rotatey') return 296;
-    if(K==='d3rotatex') return 322;
-    if(K==='d3lab') return 344;
+    if(K==='d3project') return 312;
+    if(K==='d3rotatey') return 300;
+    if(K==='d3rotatex') return 326;
+    if(K==='d3lab') return 396;
     if(K==='d3depth') return 308;
-    if(K==='d3shade') return 300;
+    if(K==='d3shade') return 356;
     if(K==='d3smooth') return 306;
     if(K==='d3texture') return 296;
     if(K==='d3persp') return 306;
@@ -11224,15 +10752,21 @@
   };
   window.inf3d=function(lk,ax,val){
     const st=CHS[lk]||(CHS[lk]={});
-    if(ax==='reset'){ st.d3x=0.34; st.d3y=-0.62; st.d3z=0; chRender(0); return; }
     if(ax==='shape'){ st.d3s=val; chRender(0); return; }
+    if(ax==='axes'){ st.d3a=(st.d3a===0)?1:0; chRender(0); return; }
+    if(ax==='edges'){ st.d3e=(st.d3e===0)?1:0; chRender(0); return; }
+    if(ax==='light'){ st.d3l=(st.d3l===0)?1:0; chRender(0); return; }
+    if(ax==='auto'){ st.d3auto=(st.d3auto===1)?0:1; chRender(0); return; }
+    if(ax==='speed'){ st.d3fast=(st.d3fast===1)?0:1; chRender(0); return; }
+    if(ax==='reset'){ st.d3x=0.34; st.d3y=-0.62; st.d3z=0; st.d3t=0; chRender(0); return; }
+    const kf=[0,6,12]; if(typeof st.d3a!=='number') st.d3a=1;
     if(typeof st.d3x!=='number'){ st.d3x=0.34; }
     if(typeof st.d3y!=='number'){ st.d3y=-0.62; }
     if(typeof st.d3z!=='number'){ st.d3z=0; }
     const step=0.26;
     if(ax==='y') st.d3y += (val==='+')?step:-step;
     if(ax==='x') st.d3x += (val==='+')?step:-step;
-    if(ax==='z') st.d3z += step;
+    if(ax==='z') st.d3z += (val==='+')?step:-step;
     st.d3t=(st.d3t||0)+1;
     chRender(0);
   };
