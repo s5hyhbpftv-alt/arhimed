@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 34 уроков (id 500–533) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 35 уроков (id 500–534) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff', rose='#ff8fb0',
@@ -55,6 +55,47 @@
   };
   const growBar=(x,y,w,h,fill,dur,beg,stroke)=>`<rect x="${x}" y="${y}" width="0" height="${h}" rx="${h/2}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="1.2">`
     +`<animate fill="freeze" attributeName="width" values="0;${w};${w}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="1"/></rect>`;
+  /* ---------- движок анимации: ключи, интерполяция, плавность, спрайты ---------- */
+  const anLerp=(a,b,t)=>a+(b-a)*t;
+  const anEase=(t,k)=>{ k=(k===undefined)?2:k; return (k===1)?t:(1-Math.pow(1-t,k)); };
+  const anEaseIn=(t,k)=>{ k=(k===undefined)?2:k; return Math.pow(t,k); };
+  const anBall=(x,y,r,col,opt)=>{
+    const o=opt||{}, sx=(o.sx===undefined)?1:o.sx, sy=(o.sy===undefined)?1:o.sy;
+    return `<g class="${o.pre||'an'}Pop" style="animation-delay:${(o.delay||0).toFixed(2)}s"><ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${(r*sx).toFixed(1)}" ry="${(r*sy).toFixed(1)}" fill="${col}" fill-opacity=".38" stroke="${col}" stroke-width="2"/></g>`;
+  };
+  const anCubeBall=(x,y,r,col,delay)=>`<g class="anPop" style="animation-delay:${(delay||0).toFixed(2)}s"><rect x="${(x-r*0.8).toFixed(1)}" y="${(y-r*0.8).toFixed(1)}" width="${(r*1.6).toFixed(1)}" height="${(r*1.6).toFixed(1)}" rx="4" fill="${col}" fill-opacity=".32" stroke="${col}" stroke-width="1.8"/></g>`;
+  const anStrip=(x0,y,n,cw,hh,gap,col,opt)=>{
+    const o=opt||{}, gap2=gap||4;
+    let s2='';
+    for(let k=0;k<n;k++){
+      const x=x0+k*(cw+gap2);
+      s2+=`<rect class="anPop" style="animation-delay:${(0.05*k).toFixed(2)}s" x="${x}" y="${y}" width="${cw}" height="${hh}" rx="5" fill="rgba(18,24,44,.97)" stroke="${col}" stroke-width="1.5"/>`;
+      if(o.ball) s2+=`<circle cx="${(x+cw*o.ball[k]).toFixed(1)}" cy="${(y+hh*(o.ballY?o.ballY[k]:0.45)).toFixed(1)}" r="${o.r||5}" fill="${o.bc||gold}"/>`;
+    }
+    return s2;
+  };
+  const anTrail=(pts,c1,c2,r0,r1,n)=>{
+    let s2='';
+    const N=n||pts.length;
+    pts.slice(0,N).forEach((p,k)=>{
+      const t=k/Math.max(1,N-1), r=anLerp(r0||7,r1||2.5,t);
+      s2+=`<circle class="anPop" style="animation-delay:${(0.04*k).toFixed(2)}s" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${r.toFixed(1)}" fill="${t<0.5?c1:c2}" fill-opacity="${(0.85-t*0.6).toFixed(2)}"/>`;
+    });
+    return s2;
+  };
+  const anCurve=(x0,y0,w,h,fn,col,opt)=>{
+    const o=opt||{}, n=40, pts=[];
+    for(let i=0;i<=n;i++){
+      const t=i/n;
+      pts.push([x0+t*w, y0-h*fn(t)]);
+    }
+    const d='M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L');
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${o.sw||2.4}" stroke-dasharray="${o.dash?'7 5':''}"/>`
+      +(o.ball?`<circle r="${o.r||6}" fill="${o.bc||gold}"><animateMotion dur="${(o.dur||3).toFixed(1)}s" repeatCount="indefinite" path="${d}"/></circle>`:'');
+  };
+  const anPlayhead=(x,y,h,col,delay,dur)=>`<g class="anFade" style="animation-delay:${(delay||0).toFixed(2)}s"><line x1="${x}" y1="${y}" x2="${x}" y2="${y+h}" stroke="${col}" stroke-width="2"/>`
+    +`<path d="M${x-6} ${y-8} h12 l-6 9 z" fill="${col}"/></g>`;
+  const anKeyIcon=(x,y,col,filled)=>`<path d="M${x} ${y-7} L${x+7} ${y} L${x} ${y+7} L${x-7} ${y} Z" fill="${filled?col:'rgba(18,24,44,.97)'}" stroke="${col}" stroke-width="1.6"/>`;
   /* ---------- движок графики: растр (пиксели), вектор (кривые), RGB, сглаживание ---------- */
   const GX_HEART=[
     '0001100001100000','0011110011110000','0111111111111000','1111111111111100',
@@ -8485,6 +8526,517 @@
       s+=plate2(16,272,286,28,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
       return s;
     }
+    if(K==='animintro'){ /* что такое анимация */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'анимация — это быстро сменяющиеся кадры',{b:1},276)+`</g>`;
+      s+=`<rect x="18" y="48" width="128" height="104" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=anBall(82,120,26,cyan,{pre:'',delay:0.2});
+      s+=fit(82,170,10.5,dim,'один кадр — стоит',{},118);
+      s+=`<path d="M154 100 h22" stroke="${gold}" stroke-width="2.4"/><path d="M170 93 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      for(let k=0;k<4;k++){
+        const x=186+k*32;
+        s+=`<rect x="${x}" y="48" width="26" height="104" rx="6" fill="rgba(18,24,44,.97)" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="1.4"/>`;
+        s+=anBall(x+13,120-(k%2)*18,8,[cyan,gold,grn,pur][k],{delay:0.5+k*0.2,pre:''});
+      }
+      s+=fit(240,170,10.5,gold,'кадры показывают по очереди',{},150);
+      s+=fit(159,196,11,ink,'много кадров подряд — и рисунок начинает двигаться',{b:1},292);
+      s+=`<g class="anPop" style="animation-delay:1s"><rect x="24" y="210" width="270" height="30" rx="9" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,230,10.5,cyan,'это и есть анимация — «оживление» рисунка',{b:1},250)+`</g>`;
+      s+=plate2(24,248,270,30,go?grn:cardB,go?'движение = быстрая смена кадров':'как рисунок оживает?',11,pre);
+      return s;
+    }
+    if(K==='animframes'){ /* кадры: мяч в полёте */
+      const ys=[0.62,0.34,0.2,0.34,0.62,0.34,0.2,0.34];
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,gold,'каждый кадр — своя поза мяча',{b:1},262)+`</g>`;
+      s+=anStrip(20,48,8,30,116,5,gold,{ball:[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5],ballY:ys,r:7,bc:gold});
+      s+=`<path d="M20 176 H290" stroke="${cardB}" stroke-width="1.6"/>`;
+      for(let k=0;k<8;k++){ s+=fit(35+k*35,190,9,dim,''+k,{b:1},22); }
+      s+=fit(159,210,10.5,dim,'номера кадров',{},140);
+      s+=fit(159,232,11,ink,'8 кадров — и мяч словно прыгает',{b:1},292);
+      s+=`<circle r="6" fill="${cyan}"><animateMotion dur="3.2s" repeatCount="indefinite" path="M35 218 H290"/></circle>`;
+      s+=plate2(20,246,270,32,go?grn:cardB,go?'кадр за кадром — получается движение':'что меняется в кадрах?',11,pre);
+      return s;
+    }
+    if(K==='animfps'){ /* частота кадров и плавность */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,grn,'чем больше кадров в секунду, тем плавнее',{b:1},282)+`</g>`;
+      [[3,'3 кадра в секунду','рывками',rose],[8,'8 кадров в секунду','лучше',gold],[16,'16 кадров в секунду','плавно',grn]].forEach((q,k)=>{
+        const y=48+k*46;
+        s+=fit(20,y+22,10,dim,'',{},10);
+        s+=fit(56,y+22,9.5,q[3],q[1],{b:1},118);
+        for(let j=0;j<q[0];j++){
+          const x=140+j*(150/q[0]);
+          s+=`<rect x="${x.toFixed(1)}" y="${y+6}" width="${(140/q[0]-2).toFixed(1)}" height="26" rx="4" fill="rgba(18,24,44,.97)" stroke="${q[3]}" stroke-width="1.1"/>`;
+          s+=`<circle cx="${(x+140/q[0]/2).toFixed(1)}" cy="${(y+19-(j%2)*6).toFixed(1)}" r="4" fill="${q[3]}"/>`;
+        }
+        s+=fit(286,y+22,9,dim,q[2],{an:'end'},60);
+      });
+      s+=fit(159,196,11,ink,'частота кадров измеряется в кадрах в секунду',{b:1},296);
+      s+=`<g class="anPop" style="animation-delay:.9s"><rect x="20" y="210" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,232,10.5,gold,'в кино 24 кадра, в играх 60 кадров в секунду',{b:1},262)+`</g>`;
+      s+=plate2(20,246,278,30,go?grn:cardB,go?'меньше кадров — заметны рывки':'от чего зависит плавность?',11,pre);
+      return s;
+    }
+    if(K==='animkey'){ /* ключевые кадры */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'ключевые кадры — главные позы',{b:1},272)+`</g>`;
+      s+=`<path d="M24 168 H292" stroke="${cardB}" stroke-width="2"/>`;
+      const keys=[[52,52],[122,116],[192,52],[262,116]];
+      keys.forEach((q,k)=>{
+        s+=anBall(q[0],q[1],15,[pur,cyan,grn,gold][k],{delay:0.2+k*0.3,pre:'an'});
+        s+=anKeyIcon(q[0],196,[pur,cyan,grn,gold][k],true);
+        s+=fit(q[0],214,9.5,[pur,cyan,grn,gold][k],'кадр '+(k*4),{b:1},60);
+      });
+      s+=fit(159,234,10.5,dim,'художник рисует только главные позы',{},270);
+      s+=`<g class="anPop" style="animation-delay:1.2s"><rect x="20" y="246" width="278" height="30" rx="9" fill="rgba(176,127,255,.11)" stroke="${pur}" stroke-width="1.6"/>`
+        +fit(159,266,10.5,pur,'остальные кадры между ними — промежуточные',{b:1},262)+`</g>`;
+      return s;
+    }
+    if(K==='animtween'){ /* промежуточные кадры считает компьютер */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'между ключами кадры досчитывает компьютер',{b:1},284)+`</g>`;
+      s+=`<path d="M24 168 H292" stroke="${cardB}" stroke-width="2"/>`;
+      const A=[52,140], B=[262,60];
+      for(let k=0;k<=12;k++){
+        const t=k/12, x=anLerp(A[0],B[0],t), y=anLerp(A[1],B[1],t);
+        const isKey=(k===0||k===12);
+        s+=anBall(x,y,isKey?13:7,isKey?pur:cyan,{delay:0.05*k,pre:'an'});
+      }
+      s+=anKeyIcon(52,196,pur,true)+anKeyIcon(262,196,pur,true);
+      s+=fit(52,214,9.5,pur,'ключ 1',{b:1},60)+fit(262,214,9.5,pur,'ключ 13',{b:1},60);
+      for(let k=1;k<12;k++){ s+=anKeyIcon(anLerp(52,262,k/12),196,cyan,false); }
+      s+=fit(159,236,10.5,dim,'пустые ромбики — это посчитанные кадры',{},270);
+      s+=`<g class="anPop" style="animation-delay:1.3s"><rect x="20" y="248" width="278" height="30" rx="9" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,268,10.5,cyan,'так рисуют мультфильмы в программах',{b:1},250)+`</g>`;
+      return s;
+    }
+    if(K==='animeasing'){ /* плавность: ускорение и замедление */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,gold,'замедление и ускорение делают движение живым',{b:1},290)+`</g>`;
+      s+=`<rect x="20" y="48" width="132" height="112" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=anCurve(30,150,112,96,t=>t,gold,{dash:false,sw:2.2});
+      s+=fit(86,176,10,dim,'равномерно',{b:1},120);
+      s+=`<rect x="166" y="48" width="132" height="112" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=anCurve(176,150,112,96,t=>anEase(t,3),grn,{dash:false,sw:2.2});
+      s+=fit(232,176,10,grn,'с разгоном',{b:1},120);
+      s+=fit(86,196,9,dim,'скорость одна',{},120)+fit(232,196,9,dim,'сначала медленно',{},120)+fit(232,208,9,dim,'потом быстро',{},120);
+      s+=anTrail([[32,150],[44,146],[56,142],[68,138],[80,134]],'transparent',gold,5,3,5);
+      s+=anTrail([[176,150],[190,144],[206,132],[224,112],[242,84]],'transparent',grn,5,3,5);
+      s+=`<g class="anPop" style="animation-delay:1s"><rect x="20" y="222" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,244,10.5,gold,'двигай точки на графике — и меняй характер',{b:1},260)+`</g>`;
+      s+=plate2(20,258,278,28,go?grn:cardB,go?'плавное начало и конец — «плавность»':'зачем замедление?',11,pre);
+      return s;
+    }
+    if(K==='animwalk'){ /* походка из 4 кадров */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,grn,'походку рисуют из нескольких поз',{b:1},266)+`</g>`;
+      const poses=[[-14,14],[6,-8],[14,-14],[-8,6]];
+      for(let k=0;k<4;k++){
+        const x=48+k*72;
+        s+=`<rect x="${x-28}" y="48" width="56" height="112" rx="8" fill="rgba(18,24,44,.97)" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="1.5"/>`;
+        const cx=x, cy=104, [l1,l2]=poses[k];
+        s+=`<circle cx="${cx}" cy="${cy-30}" r="9" fill="none" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2"/>`;
+        s+=`<line x1="${cx}" y1="${cy-21}" x2="${cx}" y2="${cy+2}" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2.6" stroke-linecap="round"/>`;
+        s+=`<line x1="${cx}" y1="${cy-12}" x2="${cx-12}" y2="${cy-4}" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2.2" stroke-linecap="round"/>`;
+        s+=`<line x1="${cx}" y1="${cy-12}" x2="${cx+12}" y2="${cy-4}" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2.2" stroke-linecap="round"/>`;
+        s+=`<line x1="${cx}" y1="${cy+2}" x2="${cx+l1}" y2="${cy+30}" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2.6" stroke-linecap="round"/>`;
+        s+=`<line x1="${cx}" y1="${cy+2}" x2="${cx+l2}" y2="${cy+30}" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="2.6" stroke-linecap="round"/>`;
+        s+=fit(cx,178,9.5,dim,'поза '+(k+1),{},60);
+      }
+      s+=fit(159,200,10.5,ink,'четыре позы — и человечек идёт',{b:1},280);
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M24 214 H294"/></circle>`;
+      s+=`<line x1="24" y1="214" x2="292" y2="214" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=plate2(20,228,278,32,go?grn:cardB,go?'кадры меняют друг друга — герой шагает':'сколько нужно поз?',11,pre);
+      return s;
+    }
+    if(K==='animsprite'){ /* спрайт-лист */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'спрайт-лист: все кадры в одной картинке',{b:1},282)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="120" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      const poses=[[-10,12],[4,-6],[10,-10],[-6,4]];
+      for(let k=0;k<4;k++){
+        const x=54+k*70, cx=x, cy=100, [l1,l2]=poses[k];
+        s+=`<rect x="${x-28}" y="56" width="56" height="100" rx="8" fill="rgba(255,255,255,.03)" stroke="${cyan}" stroke-width="1.2"/>`;
+        s+=`<circle cx="${cx}" cy="${cy-24}" r="8" fill="none" stroke="${grn}" stroke-width="1.8"/>`;
+        s+=`<line x1="${cx}" y1="${cy-16}" x2="${cx}" y2="${cy+4}" stroke="${grn}" stroke-width="2.2" stroke-linecap="round"/>`;
+        s+=`<line x1="${cx}" y1="${cy+4}" x2="${cx+l1}" y2="${cy+26}" stroke="${grn}" stroke-width="2.2" stroke-linecap="round"/>`;
+        s+=`<line x1="${cx}" y1="${cy+4}" x2="${cx+l2}" y2="${cy+26}" stroke="${grn}" stroke-width="2.2" stroke-linecap="round"/>`;
+        s+=fit(cx,150,8.5,dim,'кадр '+(k+1),{},56);
+      }
+      s+=anPlayhead(54,40,132,gold,0.3,0);
+      s+=fit(159,182,10.5,ink,'программа показывает один кадр за другим',{b:1},292);
+      s+=`<g class="anPop" style="animation-delay:.9s"><rect x="20" y="196" width="278" height="32" rx="10" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,218,10.5,cyan,'так хранят героев в играх — целой лентой кадров',{b:1},262)+`</g>`;
+      s+=plate2(20,232,278,30,go?grn:cardB,go?'похоже на урок про спрайты':'зачем все кадры вместе?',11,pre);
+      return s;
+    }
+    if(K==='animparallax'){ /* слои движутся с разной скоростью */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'слои движутся с разной скоростью',{b:1},276)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="140" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=`<path d="M22 118 L58 92 L94 118 L130 88 L166 118 L202 92 L238 118 L274 88 L296 104" fill="none" stroke="${blu}" stroke-width="2" opacity=".85"/>`;
+      s+=`<path d="M22 152 L58 128 L94 152 L130 124 L166 152 L202 128 L238 152 L274 124 L296 138" fill="none" stroke="${grn}" stroke-width="2.4"/>`;
+      s+=fit(60,124,9.5,blu,'дальние горы',{b:1},90);
+      for(let k=0;k<2;k++){
+        const d=(k===0)?'6.4s':'3.2s';
+        s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;18 0;0 0" dur="${d}" repeatCount="indefinite"/>`
+          +`<circle cx="${90+k*110}" cy="140" r="9" fill="rgba(125,224,160,.4)" stroke="${grn}" stroke-width="1.7"/></g>`;
+      }
+      s+=fit(60,176,9.5,grn,'ближний лес',{b:1},90);
+      for(let k=0;k<2;k++){
+        const d=(k===0)?'1.6s':'0.9s';
+        s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;-22 0;0 0" dur="${d}" repeatCount="indefinite"/>`
+          +`<circle cx="${120+k*90}" cy="168" r="7" fill="rgba(255,215,106,.45)" stroke="${gold}" stroke-width="1.6"/></g>`;
+      }
+      s+=fit(232,176,9.5,gold,'предметы',{b:1},70);
+      s+=`<path d="M22 186 H296" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=fit(159,206,10.5,ink,'дальнее движется медленно, ближнее — быстро',{b:1},292);
+      s+=plate2(20,220,278,32,go?grn:cardB,go?'это параллакс — он создаёт глубину':'какой слой быстрее?',11,pre);
+      s+=fit(159,276,10.5,dim,'так рисуют фон в мультфильмах и играх',{},296);
+      return s;
+    }
+    if(K==='animpath'){ /* движение по пути */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'объект можно вести по нарисованному пути',{b:1},280)+`</g>`;
+      const d='M34 190 C70 90, 150 90, 180 170 C200 220, 260 210, 286 120';
+      s+=`<path d="${d}" fill="none" stroke="${cardB}" stroke-width="2.4" stroke-dasharray="8 6"/>`;
+      s+=`<circle r="10" fill="rgba(127,214,255,.45)" stroke="${cyan}" stroke-width="2"><animateMotion dur="4.4s" repeatCount="indefinite" path="${d}"/></circle>`;
+      s+=anTrail([[45,160],[75,120],[110,102],[150,104],[180,140],[196,180]],'transparent',cyan,6,3,6);
+      s+=anKeyIcon(34,190,gold,true)+anKeyIcon(286,120,gold,true);
+      s+=fit(34,212,9.5,gold,'начало',{b:1},60)+fit(286,212,9.5,gold,'конец',{b:1},60);
+      s+=fit(159,236,11,ink,'мяч идёт по кривой, а не по прямой',{b:1},292);
+      s+=plate2(20,250,278,32,go?grn:cardB,go?'путь задают кривыми — он плавный':'почему путь кривой?',11,pre);
+      return s;
+    }
+    if(K==='animtransform'){ /* поворот, масштаб, прозрачность */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,gold,'поворот, размер и прозрачность тоже анимируют',{b:1},290)+`</g>`;
+      [[0,'поворот',cyan],[1,'размер',grn],[2,'прозрачность',pur]].forEach((q,k)=>{
+        const x=24+k*94, cx=x+44, cy=110;
+        s+=`<rect x="${x}" y="46" width="88" height="104" rx="9" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.5"/>`;
+        if(k===0) s+=`<g><animateTransform attributeName="transform" type="rotate" values="0 ${cx} ${cy};360 ${cx} ${cy}" dur="4s" repeatCount="indefinite"/>`
+          +`<rect x="${cx-17}" y="${cy-13}" width="34" height="26" rx="4" fill="rgba(127,214,255,.28)" stroke="${cyan}" stroke-width="1.8"/></g>`;
+        else if(k===1) s+=`<rect x="${cx-17}" y="${cy-13}" width="34" height="26" rx="4" fill="rgba(125,224,160,.28)" stroke="${grn}" stroke-width="1.8">`
+          +`<animateTransform attributeName="transform" type="scale" values="1;1.6;1" dur="3s" repeatCount="indefinite" additive="sum"/></rect>`;
+        else s+=`<rect x="${cx-17}" y="${cy-13}" width="34" height="26" rx="4" fill="rgba(176,127,255,.35)" stroke="${pur}" stroke-width="1.8">`
+          +`<animate attributeName="fill-opacity" values="1;0.15;1" dur="3s" repeatCount="indefinite"/></rect>`;
+        s+=fit(cx,172,10.5,q[2],q[1],{b:1},82);
+      });
+      s+=fit(159,196,10.5,ink,'эти свойства меняют по ключевым кадрам',{b:1},292);
+      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="210" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,232,10.5,gold,'в программе это просто числа в кадрах',{b:1},262)+`</g>`;
+      s+=plate2(20,246,278,30,go?grn:cardB,go?'поворот, размер и альфа — тоже анимация':'что можно менять?',11,pre);
+      return s;
+    }
+    if(K==='animloop'){ /* цикл анимации */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,grn,'цикл: последний кадр повторяет первый',{b:1},282)+`</g>`;
+      const cx=159, cy=124, R=62;
+      for(let k=0;k<6;k++){
+        const a=-Math.PI/2+k*Math.PI*2/6, x=cx+Math.cos(a)*R, y=cy+Math.sin(a)*R;
+        const col=[cyan,gold,grn,pur,rose,blu][k];
+        s+=`<rect x="${(x-19).toFixed(1)}" y="${(y-14).toFixed(1)}" width="38" height="28" rx="6" fill="rgba(18,24,44,.97)" stroke="${col}" stroke-width="1.4"/>`
+          +fit(x,y+4,9,dim,'к'+(k+1),{},34);
+      }
+      s+=`<path d="M${cx} ${cy-R-16} a${R} ${R} 0 1 1 0 ${2*R}" fill="none" stroke="${gold}" stroke-width="2" stroke-dasharray="7 5"/>`;
+      s+=`<circle r="7" fill="${gold}"><animateMotion dur="4s" repeatCount="indefinite" path="M${cx} ${cy-R} A${R} ${R} 0 1 1 ${cx} ${cy+R} A${R} ${R} 0 1 1 ${cx} ${cy-R}"/></circle>`;
+      s+=fit(cx,cy+6,11,ink,'круг',{b:1},60);
+      s+=fit(159,214,10.5,ink,'движение повторяется — анимация зацикливается',{b:1},296);
+      s+=`<g class="anPop" style="animation-delay:.9s"><rect x="20" y="228" width="278" height="32" rx="10" fill="rgba(125,224,160,.11)" stroke="${grn}" stroke-width="1.6"/>`
+        +fit(159,250,10.5,grn,'так делают ходьбу, бег, полёт и вращение',{b:1},262)+`</g>`;
+      s+=plate2(20,264,278,28,go?grn:cardB,go?'цикл экономит работу художника':'зачем нужен цикл?',11,pre);
+      return s;
+    }
+    if(K==='animsmear'){ /* смазывание движения */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,rose,'быстрое движение «смазывают»',{b:1},262)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="104" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=anBall(56,98,14,cyan,{pre:'an'});
+      for(let k=0;k<5;k++){
+        const x=100+k*26;
+        s+=`<ellipse cx="${x}" cy="98" rx="${(16-k*2).toFixed(1)}" ry="${(11-k*1.4).toFixed(1)}" fill="${cyan}" fill-opacity="${(0.4-k*0.07).toFixed(2)}"/>`;
+      }
+      s+=anBall(252,98,14,grn,{delay:0.3,pre:'an'});
+      s+=fit(56,168,10,dim,'обычный кадр',{b:1},90)+fit(176,168,10,dim,'смазанный кадр',{b:1},110)+fit(252,168,10,dim,'снова обычный',{b:1},90);
+      s+=fit(159,192,10.5,ink,'в смазанном кадре видно направление движения',{b:1},292);
+      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="206" width="278" height="32" rx="10" fill="rgba(255,143,176,.11)" stroke="${rose}" stroke-width="1.6"/>`
+        +fit(159,228,10.5,rose,'так движение кажется быстрее и резче',{b:1},262)+`</g>`;
+      s+=plate2(20,242,278,30,go?grn:cardB,go?'художники называют это «смаз»':'зачем смазывать кадр?',11,pre);
+      return s;
+    }
+    if(K==='animprinciples'){ /* принципы анимации */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'приёмы, которые оживляют рисунок',{b:1},276)+`</g>`;
+      const it=[['сжатие и растяжение',gold,'squash'],['подготовка к движению',cyan,'anticip'],['движение по инерции',grn,'follow'],['преувеличение',pur,'exag']];
+      it.forEach((q,k)=>{
+        const x=24+(k%2)*140, y=46+Math.floor(k/2)*88;
+        s+=`<rect x="${x}" y="${y}" width="132" height="72" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.6"/>`;
+        const cx=x+66, cy=y+32;
+        if(q[2]==='squash') s+=`<ellipse cx="${cx}" cy="${cy+8}" rx="18" ry="12" fill="rgba(255,215,106,.35)" stroke="${gold}" stroke-width="1.7"/>`;
+        else if(q[2]==='anticip') s+=`<circle cx="${cx-12}" cy="${cy}" r="9" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="1.6"/><path d="M${cx-2} ${cy} h16" stroke="${cyan}" stroke-width="1.8" stroke-dasharray="4 4"/>`;
+        else if(q[2]==='follow') s+=`<circle cx="${cx}" cy="${cy}" r="10" fill="rgba(125,224,160,.35)" stroke="${grn}" stroke-width="1.7"/><circle cx="${cx+16}" cy="${cy+6}" r="6" fill="rgba(125,224,160,.22)" stroke="${grn}" stroke-width="1.4"/>`;
+        else s+=`<circle cx="${cx}" cy="${cy}" r="14" fill="rgba(176,127,255,.32)" stroke="${pur}" stroke-width="1.8"/><ellipse cx="${cx}" cy="${cy+16}" rx="20" ry="5" fill="rgba(176,127,255,.18)"/>`;
+        s+=fit(cx,y+62,9,q[1],q[0],{b:1},124)+`</g>`;
+      });
+      s+=fit(159,238,10.5,ink,'это четыре из двенадцати принципов анимации',{b:1},296);
+      s+=plate2(20,252,278,32,go?grn:cardB,go?'приёмы придумали мультипликаторы Disney':'какие бывают приёмы?',11,pre);
+      return s;
+    }
+    if(K==='animsquash'){ /* сжатие и растяжение мяча */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,gold,'сжатие и растяжение: мяч живой',{b:1},272)+`</g>`;
+      s+=`<path d="M24 232 H292" stroke="${cardB}" stroke-width="2.2"/>`;
+      const frames=[[52,120,6,0],[100,208,10,3],[148,120,6,0],[196,196,0,6],[244,120,6,0]];
+      frames.forEach((q,k)=>{
+        const [x,y,sx,sy]=q;
+        s+=anBall(x,y,15,k===1?rose:(k===3?grn:gold),{pre:'an',delay:0.15+k*0.25,sx:1+sx/10,sy:1-sy/10});
+      });
+      s+=fit(52,200,9,dim,'летит',{},50)+fit(100,250,9,rose,'сжался',{},60)+fit(148,100,9,gold,'летит',{},50)+fit(196,250,9,grn,'растянулся',{},70)+fit(244,100,9,gold,'летит',{},50);
+      s+=`<path d="M52 120 Q76 40 100 208" fill="none" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
+      s+=`<path d="M100 208 Q124 40 148 120" fill="none" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
+      s+=fit(159,272,10.5,ink,'при ударе мяч сжимается, при полёте растягивается',{b:1},296);
+      s+=plate2(20,286,278,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='animsound'){ /* звук в анимации */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'звук совпадает с движением кадр в кадр',{b:1},282)+`</g>`;
+      s+=anStrip(20,46,6,42,60,6,cyan,{});
+      for(let k=0;k<6;k++){
+        const x=41+k*48;
+        s+=fit(x,74,9.5,dim,'к'+(k+1),{},30);
+      }
+      s+=anPlayhead(113,40,74,gold,0.3,0);
+      s+=fit(113,124,9.5,gold,'сейчас кадр 3',{b:1},90);
+      for(let k=0;k<12;k++){
+        const x=30+k*22, h=8+((k%4)*7);
+        s+=growBar(x,200-h,14,h,(k<6?cyan:cardB),0.8,0.4+k*0.1,0);
+      }
+      s+=`<line x1="113" y1="140" x2="113" y2="204" stroke="${gold}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
+      s+=fit(159,226,10.5,ink,'звуковая дорожка тоже разбита по кадрам',{b:1},292);
+      s+=`<g class="anPop" style="animation-delay:.7s"><rect x="20" y="240" width="278" height="32" rx="10" fill="rgba(176,127,255,.11)" stroke="${pur}" stroke-width="1.6"/>`
+        +fit(159,262,10.5,pur,'шаг в кадре 3 — звук шага тоже в кадре 3',{b:1},262)+`</g>`;
+      s+=plate2(20,274,278,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='animrender'){ /* из анимации в видео */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'анимацию собирают в видеофайл',{b:1},268)+`</g>`;
+      for(let k=0;k<4;k++){
+        const x=26+k*38;
+        s+=`<rect x="${x}" y="52" width="32" height="46" rx="5" fill="rgba(18,24,44,.97)" stroke="${[cyan,gold,grn,pur][k]}" stroke-width="1.4"/>`;
+        s+=anBall(x+16,78-(k%2)*10,7,[cyan,gold,grn,pur][k],{pre:'an',delay:0.2+k*0.2});
+      }
+      s+=fit(159,118,10,dim,'кадры анимации',{b:1},140);
+      s+=`<path d="M188 75 h22" stroke="${gold}" stroke-width="2.4"/><path d="M204 68 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<rect x="220" y="52" width="74" height="46" rx="8" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2"/>`;
+      s+=fit(257,72,10,gold,'видео',{b:1},64)+fit(257,88,9,dim,'24 кадра/с',{},64);
+      s+=fit(159,148,10.5,ink,'программа собирает кадры в один файл',{b:1},292);
+      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="166" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,188,10.5,gold,'1000 кадров при 24 в секунду — это 42 секунды',{b:1},262)+`</g>`;
+      s+=plate2(20,202,278,32,go?grn:cardB,go?'это «рендер» — сборка видео из кадров':'как получают видео?',11,pre);
+      s+=fit(159,258,10.5,dim,'поэтому рендер мультфильма занимает часы',{},296);
+      return s;
+    }
+    if(K==='animtools'){ /* инструменты анимации */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,grn,'два способа делать анимацию',{b:1},262)+`</g>`;
+      s+=`<rect x="18" y="46" width="134" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`;
+      s+=fit(85,70,11,cyan,'покадрово',{b:1},118);
+      for(let k=0;k<4;k++){
+        const x=32+k*30;
+        s+=`<rect x="${x}" y="82" width="26" height="34" rx="4" fill="rgba(255,255,255,.04)" stroke="${cyan}" stroke-width="1.2"/>`;
+        s+=anBall(x+13,98-(k%2)*8,5,cyan,{pre:'an',delay:0.15+k*0.2});
+        s+=fit(x+13,132,8,dim,''+(k+1),{},24);
+      }
+      s+=fit(85,152,9.5,dim,'рисунок в каждом кадре',{},120)+fit(85,168,9.5,dim,'зато полный контроль',{},120)+fit(85,186,9.5,cyan,'подходит для героя',{},120);
+      s+=`<rect x="166" y="46" width="134" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.7"/>`;
+      s+=fit(233,70,11,gold,'по ключам',{b:1},118);
+      s+=`<path d="M182 130 H284" stroke="${cardB}" stroke-width="1.6"/>`;
+      for(let k=0;k<3;k++){
+        const x=196+k*40;
+        s+=anKeyIcon(x,130,gold,true);
+        s+=anBall(x,110-(k%2)*16,6,gold,{pre:'an',delay:0.15+k*0.25});
+      }
+      s+=fit(233,152,9.5,dim,'задаём главные позы',{},120)+fit(233,168,9.5,dim,'остальное считает программа',{},120)+fit(233,186,9.5,gold,'подходит для движения',{},120);
+      s+=fit(159,214,10.5,ink,'выбор способа зависит от задачи',{b:1},292);
+      s+=plate2(18,228,282,32,go?grn:cardB,go?'героя рисуют кадрами, движение — по ключам':'какой способ выбрать?',11,pre);
+      return s;
+    }
+    if(K==='animstopmotion'){ /* стоп-моушен */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,rose,'покадровая съёмка: стоп-моушен',{b:1},276)+`</g>`;
+      s+=`<rect x="24" y="46" width="70" height="54" rx="8" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`;
+      s+=`<path d="M42 66 l20 -12 v24 z" fill="rgba(127,214,255,.4)" stroke="${cyan}" stroke-width="1.4"/>`;
+      s+=`<circle cx="80" cy="58" r="7" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="1.4"/>`;
+      s+=fit(59,116,10,cyan,'камера',{b:1},90);
+      s+=`<path d="M96 74 L200 74" stroke="${gold}" stroke-width="1.6" stroke-dasharray="6 5"/>`;
+      for(let k=0;k<4;k++){
+        const x=214, y=48+k*34;
+        s+=`<rect x="196" y="${y}" width="46" height="28" rx="6" fill="rgba(18,24,44,.97)" stroke="${rose}" stroke-width="1.3"/>`;
+        s+=`<circle cx="${214+k*8}" cy="${y+18}" r="6" fill="rgba(255,143,176,.4)" stroke="${rose}" stroke-width="1.3"/>`;
+      }
+      s+=fit(230,196,10,dim,'сдвиг на чуть-чуть',{},120);
+      s+=fit(159,222,10.5,ink,'фигурку чуть двигают и снимают снова',{b:1},292);
+      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="236" width="278" height="32" rx="10" fill="rgba(255,143,176,.11)" stroke="${rose}" stroke-width="1.6"/>`
+        +fit(159,258,10.5,rose,'так снимают мультфильмы из пластилина',{b:1},262)+`</g>`;
+      s+=plate2(20,270,278,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='animcartoon'){ /* как делают мультфильм */
+      const st2=[['сценарий',gold],['раскадровка',cyan],['аниматик',grn],['анимация',pur],['звук',rose],['монтаж',blu]];
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,gold,'мультфильм делают по шагам',{b:1},262)+`</g>`;
+      st2.forEach((q,k)=>{
+        const y=46+k*36;
+        s+=`<g class="anPop" style="animation-delay:${(0.08+k*0.1).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.5"/>`
+          +`<circle cx="44" cy="${y+15}" r="9" fill="rgba(255,255,255,.05)" stroke="${q[1]}" stroke-width="1.2"/>`
+          +tx(44,y+19,9.5,q[1],''+(k+1),{b:1})
+          +fit(168,y+20,10.5,q[1],q[0],{b:1},200)+`</g>`;
+        if(k<5) s+=drawLL({x:159,y:y+32},{x:159,y:y+34},q[1],1.2,0.3+k*0.1,1.2,pre);
+      });
+      s+=fit(159,272,10,dim,'от идеи до готового фильма',{},200);
+      s+=`<circle r="5.5" fill="${gold}"><animateMotion dur="4.2s" repeatCount="indefinite" path="M44 61 L44 256"/></circle>`;
+      return s;
+    }
+    if(K==='animmix'){ /* 2D и 3D вместе */
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'в мультфильмах соединяют 2D и 3D',{b:1},276)+`</g>`;
+      s+=`<rect x="18" y="46" width="134" height="120" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.6"/>`;
+      s+=`<path d="M20 150 Q60 100 100 150" fill="none" stroke="${cyan}" stroke-width="2.4"/>`;
+      s+=(typeof d3draw==='function')?d3draw(d3cube(),146,110,22,0.32,-0.66,0,pre,{c:gold,sw:1.4,fov:7}):'';
+      s+=`<path d="M152 100 L232 78" stroke="${gold}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
+      s+=`<rect x="186" y="46" width="114" height="120" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=`<path d="M196 150 Q236 96 276 150" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=fit(85,182,10.5,cyan,'рисованный герой',{b:1},124)+fit(243,182,10.5,gold,'3D-модель',{b:1},110);
+      s+=fit(159,208,10.5,ink,'героя рисуют, а мир вокруг строят в 3D',{b:1},292);
+      s+=`<g class="anPop" style="animation-delay:.8s"><rect x="20" y="222" width="278" height="32" rx="10" fill="rgba(176,127,255,.11)" stroke="${pur}" stroke-width="1.6"/>`
+        +fit(159,244,10.5,pur,'так экономят силы и получают красивую картинку',{b:1},262)+`</g>`;
+      s+=plate2(20,256,278,30,go?grn:cardB,go?'например: герой 2D, город 3D':'зачем смешивать?',11,pre);
+      return s;
+    }
+    if(K==='animpractice'){ /* практика */
+      const rows=[
+        {t:'24 кадра в секунду, 5 секунд — сколько кадров?',a:'120 кадров',c:grn},
+        {t:'герой прошёл 240 точек за 4 секунды. Сколько за секунду?',a:'60 точек',c:cyan},
+        {t:'цикл 8 кадров при 24 в секунду — сколько циклов?',a:'3 цикла',c:gold}
+      ];
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'практика: считаем кадры и скорость',{b:1},276)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=48+k*58;
+        s+=`<g class="anPop" style="animation-delay:${(0.12+k*0.2).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(142,y+19,9.5,ink,q.t,{},200)
+          +(go?fit(142,y+38,11,q.c,q.a,{b:1},200):fit(142,y+38,10,dim,'нажми «показать»',{},200))+`</g>`;
+      });
+      s+=plate2(20,224,278,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
+      s+=fit(159,276,10,dim,'анимация — это расчёт времени и кадров',{},290);
+      return s;
+    }
+    if(K==='animlab'){ /* ЛАБОРАТОРИЯ: таймлайн и интерполяция */
+      const fr=(st&&typeof st.af==='number')?st.af:0;
+      const keys=(st&&st.ak)?st.ak:[0.65,0.15,0.65];
+      const sel=(st&&typeof st.asel==='number')?st.asel:0;
+      const N=12, kf=[0,6,12];
+      let y=0;
+      for(let i=0;i<kf.length-1;i++){
+        if(fr>=kf[i]&&fr<=kf[i+1]){ const t=(fr-kf[i])/(kf[i+1]-kf[i]); y=anLerp(keys[i],keys[i+1],anEase(t,2)); }
+      }
+      if(fr>=12) y=keys[2];
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,ink,'лаборатория: ключи и промежуточные кадры',{b:1},284)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=`<line x1="30" y1="180" x2="288" y2="180" stroke="${cardB}" stroke-width="2"/>`;
+      const px=k=>34+k*(244/N), py=v=>180-v*118;
+      let trail='';
+      for(let k=0;k<=N;k++){
+        let v=0;
+        for(let i2=0;i2<kf.length-1;i2++){ if(k>=kf[i2]&&k<=kf[i2+1]){ const t=(k-kf[i2])/(kf[i2+1]-kf[i2]); v=anLerp(keys[i2],keys[i2+1],anEase(t,2)); } }
+        trail+=`<circle cx="${px(k).toFixed(1)}" cy="${py(v).toFixed(1)}" r="${k===fr?7:2.6}" fill="${k===fr?gold:(k%6===0?pur:'rgba(127,214,255,.45)')}"/>`;
+      }
+      s+=trail;
+      kf.forEach((k2,i2)=>{
+        s+=anKeyIcon(px(k2),196,i2===sel?gold:pur,true);
+        s+=fit(px(k2),212,9,i2===sel?gold:pur,'к'+(i2+1),{b:1},34);
+      });
+      s+=anPlayhead(px(fr),52,128,gold,0,0);
+      s+=fit(px(fr)>240?246:px(fr)+6,64,9.5,gold,'кадр '+(fr+1),{b:1},70);
+      s+=`<g class="anPop"><rect x="20" y="222" width="278" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
+        +`<text x="159" y="240" text-anchor="middle" font-size="10" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">высота: ${(y*100).toFixed(0)}% · ключей: 3</text></g>`;
+      const btn=(x,y2,t2,col,act,val,w2)=>`<g style="cursor:pointer" onclick="infAnim('${lk}','${act}','${val}')"><rect x="${x}" y="${y2}" width="${w2}" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${col}" stroke-width="1.6"/>`
+        +fit(x+w2/2,y2+20,10.5,col,t2,{b:1},w2-10)+`</g>`;
+      s+=btn(20,258,'+1 кадр',grn,'frame','+',88);
+      s+=btn(114,258,'выше',gold,'up','',68);
+      s+=btn(188,258,'ниже',rose,'down','',68);
+      s+=btn(20,296,'сначала',cardB,'reset','',88);
+      s+=btn(114,296,'ключ 1',pur,'sel','0',68);
+      s+=btn(188,296,'ключ 3',pur,'sel','2',68);
+      return s;
+    }
+    if(K==='animquiz'){ /* викторина */
+      const opts=['ключевые кадры','промежуточные кадры','спрайт-лист'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,ink,'Как называют главные позы движения?',{b:1},276)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="80" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=anBall(64,86,14,pur,{pre:'an'});
+      for(let k=1;k<5;k++) s+=anBall(64+k*48,86-(k%2)*18,8,cyan,{pre:'an',delay:0.1*k});
+      s+=anBall(260,86,14,pur,{pre:'an',delay:0.6});
+      s+=anKeyIcon(64,112,pur,true)+anKeyIcon(260,112,pur,true);
+      opts.forEach((t2,k)=>{
+        const y=136+k*36, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="20" y="${y}" width="278" height="30" rx="8" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.1:1.5}"/>`
+          +fit(159,y+20,10.5,c,t2,{b:on},258)+(on?`<path d="M270 ${y+9} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.2"/>`:'')+`</g>`;
+      });
+      s+=`<g class="anPop"><rect x="20" y="250" width="278" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.5"/>`
+        +fit(159,270,10,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Главные позы — ключевые кадры':'Подумай: их рисует художник',{b:done&&st.pick===ok},256)+`</g>`;
+      s+=fit(159,296,10,dim,'остальные программа досчитывает сама',{},280);
+      return s;
+    }
+    if(K==='animmistakes'){ /* ошибки */
+      const it=[
+        {t:'мало кадров — движение дёргается',f:'увеличь частоту кадров',c:rose},
+        {t:'нет ключей — движение непонятное',f:'задай главные позы',c:gold},
+        {t:'все части движутся одинаково',f:'добавь инерцию и параллакс',c:cyan},
+        {t:'герой не сжимается при ударе',f:'добавь сжатие и растяжение',c:pur}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="anPop" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="12" y="${y}" width="294" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="1.9"/>`
+          +`<path d="M28 ${y+13} l10 18 h-20 z" fill="${red}" opacity=".9"/><text x="28" y="${y+28}" text-anchor="middle" font-size="10" font-weight="bold" fill="#eaf2ff">!</text>`
+          +fit(96,y+20,Math.min(10.5,150/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},132)
+          +`<path d="M98 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.2"/>`
+          +fit(120,y+37,Math.min(9.5,140/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},140)+`</g>`;
+      });
+      s+=`${tx(159,250,10.5,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='animsheet'){ /* шпаргалка */
+      const rows=[{t:'анимация — быстрая смена кадров',c:cyan},{t:'ключевые кадры рисует человек',c:pur},
+                  {t:'промежуточные считает программа',c:gold},{t:'плавность: ускорение и замедление',c:grn},
+                  {t:'сжатие и растяжение оживляют движение',c:rose},{t:'цикл экономит кадры',c:blu}];
+      let s=`<g class="anPop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'всё главное об анимации',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=46+k*36;
+        s+=`<g class="anPop" style="animation-delay:${(0.08+k*0.1).toFixed(2)}s">`
+          +`<rect x="16" y="${y}" width="286" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.5"/>`;
+        if(k===0) s+=anBall(38,y+15,9,q.c,{pre:'an'});
+        else if(k===1) s+=anKeyIcon(38,y+15,q.c,true);
+        else if(k===2) s+=anKeyIcon(38,y+15,q.c,false);
+        else if(k===3) s+=anCurve(28,y+24,22,18,t=>anEase(t,3),q.c,{sw:1.8});
+        else if(k===4) s+=`<ellipse cx="38" cy="${y+19}" rx="11" ry="7" fill="rgba(255,143,176,.4)" stroke="${q.c}" stroke-width="1.4"/>`;
+        else s+=`<path d="M28 ${y+15} a10 10 0 1 1 0 0.01" fill="none" stroke="${q.c}" stroke-width="1.8"/>`;
+        s+=fit(176,y+20,9.5,q.c,q.t,{b:1},190)+`</g>`;
+      });
+      s+=plate2(16,268,286,28,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -8657,6 +9209,32 @@
     if(K==='gfxquiz') return 312;
     if(K==='gfxmistakes') return 282;
     if(K==='gfxsheet') return 308;
+    if(K==='animintro') return 296;
+    if(K==='animframes') return 298;
+    if(K==='animfps') return 296;
+    if(K==='animkey') return 286;
+    if(K==='animtween') return 292;
+    if(K==='animeasing') return 300;
+    if(K==='animwalk') return 276;
+    if(K==='animsprite') return 280;
+    if(K==='animparallax') return 312;
+    if(K==='animpath') return 294;
+    if(K==='animtransform') return 292;
+    if(K==='animloop') return 314;
+    if(K==='animsmear') return 288;
+    if(K==='animprinciples') return 300;
+    if(K==='animsquash') return 300;
+    if(K==='animsound') return 288;
+    if(K==='animrender') return 272;
+    if(K==='animtools') return 274;
+    if(K==='animstopmotion') return 288;
+    if(K==='animcartoon') return 296;
+    if(K==='animmix') return 300;
+    if(K==='animpractice') return 292;
+    if(K==='animlab') return 344;
+    if(K==='animquiz') return 312;
+    if(K==='animmistakes') return 236;
+    if(K==='animsheet') return 310;
     if(K==='d3intro') return 300;
     if(K==='d3flat') return 300;
     if(K==='d3points') return 296;
@@ -10493,6 +11071,68 @@
       tasks:[
         {q:'Сколько байт займёт рисунок 100 на 100 пикселей, если каждый пиксель занимает 3 байта?', kind:'unit', ans:30000, tol:0, hints:['Сначала число пикселей: 100 · 100.','100 · 100 · 3 = 30 000.'], sol:'100 · 100 · 3 = 30 000'},
         {q:'Сколько цветов можно закодировать тремя числами от 0 до 255?', kind:'choice', choices:['16 777 216','256','65 536','1000'], ans:0, tol:0, hints:['256 · 256 · 256.','Это 16 777 216 цветов.'], sol:'256 · 256 · 256 = 16 777 216'}
+      ] },
+    { id:534, title:'Анимация: как рисунок оживает', ico:'🎬', src:'Информатика · 5–6 класс · С нуля: анимация',
+      explain:[
+                'Анимация — это быстро сменяющиеся кадры. Если показывать их подряд, рисунок начинает двигаться, хотя каждый кадр неподвижен.',
+        'Каждый кадр — своя поза объекта. На ленте из восьми кадров мяч занимает разные положения, и при быстром показе он словно прыгает.',
+        'Плавность зависит от частоты кадров: 3 кадра в секунду дают рывки, а 24–60 кадров в секунду выглядят плавно. В кино 24 кадра, в играх 60.',
+        'Ключевые кадры — главные позы движения. Художник рисует только их, например начало, середину и конец прыжка.',
+        'Промежуточные кадры между ключами досчитывает компьютер: он плавно переносит объект из одной позы в другую — это называют «туининг».',
+        'Плавность задают ускорением и замедлением: движение начинается медленно, разгоняется и мягко останавливается — так выглядит живое движение.',
+        'Походку рисуют из нескольких поз: положение рук и ног меняется, а при быстром показе человечек шагает.',
+        'Спрайт-лист — это все кадры героя в одной картинке. Программа показывает кадры по очереди, и герой «оживает».',
+        'Слои в анимации движутся с разной скоростью: дальние горы медленно, ближний лес быстрее, а мелкие предметы ещё быстрее — это параллакс.',
+        'Объект можно вести по нарисованному пути: он идёт не по прямой, а по плавной кривой, заданной художником.',
+        'Анимируют не только положение: меняют поворот, размер и прозрачность. Все эти свойства задают числами в кадрах.',
+        'Анимация часто повторяется: последний кадр совпадает с первым, и получается цикл — так делают ходьбу, бег и вращение.',
+        'Быстрое движение «смазывают»: в кадре рисуют размытый след, и движение кажется резче и быстрее.',
+        'Есть приёмы, которые оживляют рисунок: сжатие и растяжение, подготовка к движению, движение по инерции и преувеличение.',
+        'Сжатие и растяжение: при ударе о землю мяч сплющивается, а при полёте вытягивается. Без этого мяч выглядит каменным.',
+        'Звук совпадает с движением кадр в кадр: шаг героя и звук шага должны быть на одном кадре, иначе зритель заметит расхождение.',
+        'Готовую анимацию собирают в видеофайл: программа по очереди записывает кадры. 1000 кадров при 24 кадрах в секунду — это 42 секунды.',
+        'Есть два способа анимации: покадровый (рисуем каждый кадр — полный контроль) и по ключам (программа досчитывает движение).',
+        'Стоп-моушен — покадровая съёмка: фигурку чуть сдвигают и снимают снова. Так снимают мультфильмы из пластилина.',
+        'Мультфильм делают по шагам: сценарий, раскадровка, аниматик, анимация, звук и монтаж.',
+        'В современных мультфильмах соединяют 2D и 3D: героя рисуют, а мир вокруг строят трёхмерным.',
+        'Практика: 24 кадра в секунду за 5 секунд — это 120 кадров; 240 точек за 4 секунды — это 60 точек в секунду; цикл из 8 кадров при 24 кадрах в секунду повторяется 3 раза.',
+        'Лаборатория: сдвигай ползунок кадров, меняй высоту ключей кнопками «выше» и «ниже» и смотри, как программа сама досчитывает промежуточные положения.',
+        'Викторина: главные позы движения называют ключевыми кадрами — их рисует художник.',
+        'Частые ошибки: мало кадров (рывки), нет ключей, все части движутся одинаково, герой не сжимается при ударе.',
+        'Шпаргалка: кадры и частота, ключевые и промежуточные кадры, плавность, сжатие и растяжение, цикл. Проверь себя!'
+      ],
+      slides:[
+        {h:'Что такое анимация', v:{kind:'animintro'}, r:'Один кадр — стоит, лента кадров — движется.', d:'Анимация — это быстро сменяющиеся кадры: каждый кадр неподвижен, но при быстром показе рисунок начинает двигаться.'},
+        {h:'Лента кадров', v:{kind:'animframes'}, r:'Восемь кадров — восемь поз мяча.', d:'Лента из восьми кадров: в каждом мяч на новой высоте. Так выглядит любой мультфильм — покадрово.'},
+        {h:'Частота кадров', v:{kind:'animfps'}, r:'3, 8 и 16 кадров в секунду.', d:'Три ленты с разной частотой кадров: 3, 8 и 16 кадров в секунду. Чем больше кадров, тем плавнее движение.'},
+        {h:'Ключевые кадры', v:{kind:'animkey'}, r:'Главные позы рисует художник.', d:'Ключевые кадры — главные позы: художник рисует только их. На рисунке видны ромбики-ключи на дорожке кадров.'},
+        {h:'Промежуточные кадры', v:{kind:'animtween'}, r:'Компьютер досчитывает между ключами.', d:'Между ключами компьютер досчитывает промежуточные кадры: тёмные ромбики — ключи, светлые — посчитанные кадры.'},
+        {h:'Плавность', v:{kind:'animeasing'}, r:'Ускорение и замедление.', d:'Два графика движения: ровный и с разгоном. Точки показывают, где объект находится в каждый момент времени.'},
+        {h:'Походка', v:{kind:'animwalk'}, r:'Четыре позы — и человечек шагает.', d:'Четыре позы походки: меняется положение рук и ног. При быстром показе человечек шагает.'},
+        {h:'Спрайт-лист', v:{kind:'animsprite'}, r:'Все кадры в одной картинке.', d:'Спрайт-лист: все кадры героя в одной картинке, а полоска-курсор показывает, какой кадр показывается сейчас.'},
+        {h:'Параллакс', v:{kind:'animparallax'}, r:'Слои движутся с разной скоростью.', d:'Три слоя движутся с разной скоростью: дальние горы медленно, ближний лес быстрее, предметы ещё быстрее. Это параллакс.'},
+        {h:'Движение по пути', v:{kind:'animpath'}, r:'Мяч идёт по кривой.', d:'Мяч идёт по кривой между двумя ключами: путь нарисован пунктиром, а след показывает, где он уже побывал.'},
+        {h:'Поворот и размер', v:{kind:'animtransform'}, r:'Анимируют не только положение.', d:'Три свойства, которые тоже анимируют: поворот, размер и прозрачность. Все они задаются числами в кадрах.'},
+        {h:'Цикл', v:{kind:'animloop'}, r:'Последний кадр повторяет первый.', d:'Цикл анимации: кадры идут по кругу, и последний совпадает с первым — движение повторяется бесконечно.'},
+        {h:'Смазывание', v:{kind:'animsmear'}, r:'Размытый след в кадре.', d:'Смазанный кадр: вместо чёткого мяча рисуют вытянутый след. Так быстрое движение выглядит резче.'},
+        {h:'Приёмы оживления', v:{kind:'animprinciples'}, r:'Сжатие, подготовка, инерция, преувеличение.', d:'Четыре приёма оживления: сжатие и растяжение, подготовка к движению, инерция и преувеличение.'},
+        {h:'Сжатие и растяжение', v:{kind:'animsquash'}, r:'Мяч живой, а не каменный.', d:'Мяч летит, сжимается при ударе и растягивается в полёте — именно это делает движение живым.'},
+        {h:'Звук в анимации', v:{kind:'animsound'}, r:'Кадр движения и кадр звука совпадают.', d:'Звуковая дорожка разбита по кадрам: шаг в кадре 3 — и звук шага тоже в кадре 3.'},
+        {h:'Сборка в видео', v:{kind:'animrender'}, r:'Кадры записываются по очереди.', d:'Кадры анимации собираются в видеофайл: программа записывает их по очереди в нужном темпе.'},
+        {h:'Два способа', v:{kind:'animtools'}, r:'Покадрово или по ключам.', d:'Покадровый способ: рисунок в каждом кадре. Способ по ключам: задаём главные позы, остальное считает программа.'},
+        {h:'Стоп-моушен', v:{kind:'animstopmotion'}, r:'Фигурку двигают и снимают.', d:'Стоп-моушен: фигурку чуть сдвигают, снимают кадр, снова сдвигают. Так снимают пластилиновые мультфильмы.'},
+        {h:'Как делают мультфильм', v:{kind:'animcartoon'}, r:'Шесть шагов от идеи до монтажа.', d:'Шесть шагов создания мультфильма: от сценария и раскадровки до звука и монтажа.'},
+        {h:'2D и 3D вместе', v:{kind:'animmix'}, r:'Рисованный герой и трёхмерный мир.', d:'Современный мультфильм: рисованный герой и трёхмерный мир вокруг. Это экономит силы и даёт красивую картинку.'},
+        {h:'Практика', v:{kind:'animpractice'}, r:'Считаем кадры и скорость.', d:'Три задачи про кадры и скорость: 120 кадров, 60 точек в секунду и 3 цикла.'},
+        {h:'Лаборатория анимации', v:{kind:'animlab'}, r:'Ставим ключи и смотрим интерполяцию!', d:'Лаборатория: таймлайн с тремя ключами. Двигай кадры, меняй высоту ключей — и смотри, как строится промежуточное движение.'},
+        {h:'Викторина', v:{kind:'animquiz'}, r:'Как называют главные позы?', d:'Викторина: на дорожке видны ключи и посчитанные кадры. Нужно выбрать, как называются главные позы.'},
+        {h:'Частые ошибки', v:{kind:'animmistakes'}, r:'Что ломает анимацию.', d:'Четыре типичные ошибки с иконками: рывки, отсутствие ключей, одинаковое движение частей и жёсткий удар.'},
+        {h:'Шпаргалка', v:{kind:'animsheet'}, r:'Шесть главных мыслей.', d:'Шесть главных мыслей с рисунками: кадры, ключи, промежуточные кадры, плавность, сжатие и цикл.'}
+      ],
+      check:{ q:'Как называют главные позы движения в анимации?', choices:['ключевые кадры','промежуточные кадры','спрайт-лист','звуковую дорожку'], ans:0, exp:'Главные позы рисует художник — это ключевые кадры, остальное досчитывает программа.' },
+      tasks:[
+        {q:'Анимация идёт 5 секунд при 24 кадрах в секунду. Сколько всего кадров?', kind:'unit', ans:120, tol:0, hints:['Кадры в секунду умножаем на секунды.','24 · 5 = 120.'], sol:'24 · 5 = 120'},
+        {q:'В цикле анимации 8 кадров, а показывают 24 кадра в секунду. Сколько циклов пройдёт за секунду?', kind:'unit', ans:3, tol:0, hints:['Делим частоту на длину цикла.','24 : 8 = 3.'], sol:'24 : 8 = 3'}
       ] }
   ];
 
@@ -10507,7 +11147,7 @@
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz'||s.v.kind==='robotlab'||s.v.kind==='robotquiz'||s.v.kind==='modellab'||s.v.kind==='modelquiz'||s.v.kind==='d3lab'||s.v.kind==='d3quiz'||s.v.kind==='gfxlab'||s.v.kind==='gfxquiz');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz'||s.v.kind==='robotlab'||s.v.kind==='robotquiz'||s.v.kind==='modellab'||s.v.kind==='modelquiz'||s.v.kind==='d3lab'||s.v.kind==='d3quiz'||s.v.kind==='gfxlab'||s.v.kind==='gfxquiz'||s.v.kind==='animlab'||s.v.kind==='animquiz');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -10526,6 +11166,8 @@
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
+      : (s.v.kind==='animlab')
+      ? wkRow(wkBtn('сброс таймлайна',`infAnim('${lk}','reset','')`))
       : (s.v.kind==='gfxlab')
       ? wkRow(wkBtn('сброс лаборатории',`infGfx('${lk}','reset','')`))
       : (s.v.kind==='d3lab')
@@ -10549,7 +11191,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='gfxlab')? ((st.gxz>=3) && s.r) : (s.v.kind==='d3lab')? ((st.d3t>=5) && s.r) : (s.v.kind==='modellab')? (((st.my||0)>=5) && s.r) : (s.v.kind==='robotlab')? ((st.rp>=11) && s.r) : (s.v.kind==='gameplay')? ((st.gm>=5) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='animlab')? ((st.af>=8) && s.r) : (s.v.kind==='gfxlab')? ((st.gxz>=3) && s.r) : (s.v.kind==='d3lab')? ((st.d3t>=5) && s.r) : (s.v.kind==='modellab')? (((st.my||0)>=5) && s.r) : (s.v.kind==='robotlab')? ((st.rp>=11) && s.r) : (s.v.kind==='gameplay')? ((st.gm>=5) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -10558,6 +11200,17 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infAnim=function(lk,act,val){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(!st.ak) st.ak=[0.65,0.15,0.65];
+    if(act==='reset'){ st.af=0; st.ak=[0.65,0.15,0.65]; st.asel=0; chRender(0); return; }
+    if(act==='frame'){ st.af=Math.min(12,(typeof st.af==='number'?st.af:0)+1); chRender(0); return; }
+    if(act==='sel'){ st.asel=parseInt(val,10)||0; chRender(0); return; }
+    const i2=(typeof st.asel==='number')?st.asel:0;
+    const kf=[0,6,12]; st.af=kf[i2]||0;
+    if(act==='up'){ st.ak[i2]=Math.min(0.98,(st.ak[i2]||0.5)+0.12); chRender(0); return; }
+    if(act==='down'){ st.ak[i2]=Math.max(0.08,(st.ak[i2]||0.5)-0.12); chRender(0); return; }
+  };
   window.infGfx=function(lk,act,val){
     const st=CHS[lk]||(CHS[lk]={});
     if(act==='reset'){ st.gxm='raster'; st.gxz=2; chRender(0); return; }
