@@ -8732,112 +8732,158 @@ function visL51(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
-    const step=LV.step||0;
-    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
-    let h='';
-    if(step===0){
-      h=col(big('Почему чайник греется долго?'),
-        `<div style="font-size:44px" class="wv-pulse">🔥</div>`+
-        sml('чтобы нагреть воду, нужна ЭНЕРГИЯ. Сегодня узнаем, как её посчитать точно — формулой!'));
-    } else if(step===1){
-      h=col(big('Нагрев — это энергия внутрь'),
-        rowC(chip('нагрели — энергия пришла','rgba(232,160,90,.5)'),chip('остудили — энергия ушла','rgba(127,209,255,.5)'))+
-        sml('количество этой энергии называется КОЛИЧЕСТВОМ ТЕПЛОТЫ Q. Измеряется в джоулях (Дж)'));
-    } else if(step===2){
-      h=col(big('Формула теплоты'),
-        `<div class="wv-ans" style="font-size:24px;color:#7fd1a0;font-family:Georgia,serif">Q = c · m · Δt</div>`+
-        rowC(chip('c — удельная теплоёмкость','rgba(127,209,255,.5)'),chip('m — масса (кг)','rgba(232,160,90,.5)'),chip('Δt — изменение температуры','rgba(127,184,160,.5)'))+
-        sml('три множителя: вещество, масса, на сколько градусов'));
-    } else if(step===3){
-      h=col(big('Что такое Δt'),
-        rowC(chip('Δt = t₂ − t₁','rgba(127,209,255,.5)'),chip('было 20°, стало 30° → Δt = 10°','rgba(127,184,160,.5)'))+
-        sml('греческая «дельта» — разница. Δt — на сколько градусов изменилась температура!'));
-    } else if(step===4){
-      h=col(big('Секрет воды: c = 4200'),
-        rowC(chip('c воды = 4200 Дж/(кг·°C)','rgba(127,209,255,.5)'),chip('чтобы нагреть 1 кг на 1°C — 4200 Дж','rgba(127,184,160,.5)'))+
-        sml('это очень много! Вода — «чемпион» по запасанию тепла'));
-    } else if(step===5){
-      h=col(big('Считаем: 1 кг на 10°C'),
-        rowC(chip('Q = 4200 · 1 · 10','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">Q = 42000 Дж = 42 кДж</div>`+
-        sml('как в нашей проверке! 4200·10 = 42000 Дж = 42 кДж'));
-    } else if(step===6){
-      h=col(big('Задача 1: 2 кг на 10°C'),
-        rowC(chip('Q = 4200 · 2 · 10','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:26px;color:#7fd1a0">Q = 84000 Дж = 84 кДж</div>`+
-        sml('как в наших задачках: масса вдвое — тепло вдвое!'));
-    } else if(step===7){
-      h=col(big('Масса больше — тепла больше'),
-        l51Thermo(40,'a')+
-        l51Pot(0.5,true,'b')+
-        rowC(chip('1 кг на 10° = 42 кДж','rgba(127,209,255,.5)'),chip('2 кг на 10° = 84 кДж','rgba(127,184,160,.5)'))+
-        sml('двойная порция воды — двойное тепло. m прямо в формуле!'));
-    } else if(step===8){
-      h=col(big('Δt больше — тепла больше'),
-        l51Thermo(60,'c')+
-        rowC(chip('на 5° — 21 кДж','rgba(127,209,255,.5)'),chip('на 10° — 42 кДж','rgba(127,184,160,.5)'),chip('на 20° — 84 кДж','rgba(232,160,90,.5)'))+
-        sml('сильнее нагрели — больше энергии ушло на нагрев!'));
-    } else if(step===9){
-      h=col(big('А другие вещества?'),
-        rowC(chip('вода: 4200','rgba(127,209,255,.5)'),chip('лёд: 2100','rgba(127,184,160,.5)'),chip('железо: 460','rgba(232,160,90,.5)'),chip('медь: 400','rgba(127,209,255,.5)'))+
-        sml('железо греется в 9 раз легче воды! Поэтому сковорода нагревается быстро, а суп — медленно'));
-    } else if(step===10){
-      h=col(big('Почему у моря мягкий климат'),
-        rowC(chip('вода запасает много тепла','rgba(127,209,255,.5)'),chip('летом греется медленно','rgba(232,160,90,.5)'),chip('зимой остывает медленно','rgba(127,184,160,.5)'))+
-        sml('огромная теплоёмкость воды сглаживает перепады температуры у побережий!'));
-    } else if(step===11){
-      h=col(big('Охлаждение — та же формула'),
-        rowC(chip('Q = c · m · Δt','rgba(127,209,255,.5)'),chip('Δt — тоже разница температур','rgba(127,184,160,.5)'))+
-        sml('остыла вода со 100° до 20° → Δt = 80°. Энергия ушла — количество теплоты то же самое по формуле!'));
-    } else if(step===12){
-      h=col(big('Термометр показывает Δt'),
-        l51Thermo(20,'d')+
-        sml('термометр измеряет температуру. Разница показаний — это и есть Δt для формулы!'));
-    } else if(step===13){
-      h=col(big('Единицы: Дж и кДж'),
-        rowC(chip('1 кДж = 1000 Дж','rgba(127,209,255,.5)'),chip('42000 Дж = 42 кДж','rgba(127,184,160,.5)'),chip('84000 Дж = 84 кДж','rgba(232,160,90,.5)'))+
-        sml('кило = тысяча. Большие числа удобно записывать в килоджоулях!'));
-    } else if(step===14){
-      h=col(big('Задача 2: теплоёмкость воды'),
-        rowC(chip('c воды = 4200 Дж/(кг·°C)','rgba(217,164,65,.35)'))+
-        sml('как в наших задачках: просто запомни это число — константу воды!'));
-    } else if(step===15){
-      h=col(big('Порядок действий'),
-        rowC(chip('1) найди Δt','rgba(127,209,255,.5)'),chip('2) m · Δt','rgba(232,160,90,.5)'),chip('3) × 4200','rgba(127,184,160,.5)'),chip('4) переведи в кДж','rgba(127,209,255,.5)'))+
-        sml('для воды: умножь массу на градусы, потом на 4200!'));
-    } else if(step===16){
-      const POOL=[['w','1','10'],['w','2','10'],['w','1','5'],['w','3','10'],['w','2','5'],['w','5','10'],['w','1','20'],['w','2','20'],['w','4','10'],['w','5','5'],['w','3','20'],['w','10','10']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], m=+e[1], dt=+e[2];
-      const ans=4200*m*dt/1000;
-      h=col(big('🔥 Тренажёр: количество теплоты'),
-        `<div class="wv-row">${chip('нагреть '+m+' кг воды на '+dt+'°C → Q? (в кДж)','rgba(217,164,65,.35)')}</div>`+
-        l51Thermo(20+dt,'t')+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0">1) Q = 4200·${m}·${dt} = ${4200*m*dt} Дж → :1000</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:28px;color:#7fd1a0;font-weight:bold">${ans} кДж</div>`:'')+
-        btns(btn('1️⃣ подумай',`l51Act('${lk}','s1')`),btn('2️⃣ ответ',`l51Act('${lk}','s2')`),btn('🎲 другая',`l51Act('${lk}','n')`),btn('↺',`l51Act('${lk}','r')`))+
-        sml('Q = 4200·m·Δt, ответ в кДж — дели на 1000!'));
-    } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🔥 Q = c·m·Δt.<br>
-            💧 Вода: c = 4200 Дж/(кг·°C).<br>
-            📏 Δt — разница температур (t₂−t₁).<br>
-            🔢 42000 Дж = 42 кДж (дели на 1000).</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там 1 кг на 10°'));
-    }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+    if(st.h==null) st.h=20;
+    const t=st.h;
+    const dT=t-20;
+    const Q=4200*1*dT;
+    const kd=(v)=>v/1000;
+    const f=(v)=> (Math.round(v*10)/10).toString().replace('.',',');
+    const heat=Math.max(0,Math.min(1,(t+10)/110));
+    const flameH=heat<0.12? 0 : Math.min(30, 6+heat*30);
+    const steamA=Math.max(0,(t-45)/60);
+    const bubbles=t>=50&&t<100;
+    const boiling=t>=100;
+    const ice=t<0;
+    const state=t<-5?'лёд и мороз':(t<0?'лёд тает':(t<40?'холодная вода':(t<80?'тёплая вода':(t<100?'горячая вода, скоро кипит':'кипит! вода превращается в пар'))));
+    const merc=Math.max(6, Math.min(96, 6+((t+20)/140)*90));
+    const glow=Math.max(0,(t-40)/60);
+
+    /* ——— фотографическая сцена: кухня, плита, чайник, пар, лёд, термометр ——— */
+    const scene=`<svg viewBox="0 0 360 262" style="display:block;width:100%;height:auto;border-radius:14px;overflow:hidden">
+      <defs>
+        <radialGradient id="thRoom" cx="50%" cy="34%" r="78%">
+          <stop offset="0" stop-color="#3a2a1c"/><stop offset=".55" stop-color="#1d1712"/><stop offset="1" stop-color="#0c0a09"/>
+        </radialGradient>
+        <linearGradient id="thTable" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#5b3f28"/><stop offset=".25" stop-color="#3d2a1a"/><stop offset="1" stop-color="#241811"/>
+        </linearGradient>
+        <linearGradient id="thSteel" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#7d8489"/><stop offset=".18" stop-color="#e8eef2"/><stop offset=".36" stop-color="#9aa3a8"/>
+          <stop offset=".55" stop-color="#f2f6f8"/><stop offset=".74" stop-color="#868f95"/><stop offset="1" stop-color="#4d5459"/>
+        </linearGradient>
+        <linearGradient id="thFlame" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" stop-color="#ffb347"/><stop offset=".45" stop-color="#ff7a18"/><stop offset="1" stop-color="#4aa8ff" stop-opacity=".15"/>
+        </linearGradient>
+        <radialGradient id="thGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#ff9d3c" stop-opacity=".55"/><stop offset="1" stop-color="#ff7a18" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="thSteam" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" stop-color="#ffffff" stop-opacity=".5"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="thMercury" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#8e1f14"/><stop offset=".5" stop-color="#ff5a3c"/><stop offset="1" stop-color="#a8281a"/>
+        </linearGradient>
+        <filter id="thSoft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4.4"/></filter>
+        <filter id="thSoft2" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.7"/></filter>
+        <filter id="thShadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".55"/></filter>
+      </defs>
+      <rect width="360" height="262" fill="url(#thRoom)"/>
+      <rect y="196" width="360" height="66" fill="url(#thTable)"/>
+      <rect y="196" width="360" height="4" fill="#7a5535" opacity=".55"/>
+      <ellipse cx="180" cy="200" rx="150" ry="12" fill="#000" opacity=".45" filter="url(#thSoft)"/>
+      <!-- плита -->
+      <ellipse cx="176" cy="196" rx="120" ry="20" fill="#14100e"/>
+      <ellipse cx="176" cy="194" rx="112" ry="16" fill="#221a16"/>
+      <ellipse cx="176" cy="193" rx="104" ry="13" fill="none" stroke="#3a2d24" stroke-width="2"/>
+      <ellipse cx="176" cy="192" rx="96" ry="11" fill="none" stroke="#241b16" stroke-width="3"/>
+      <ellipse cx="176" cy="190" rx="86" ry="10" fill="url(#thGlow)" style="opacity:${(0.25+heat*0.75).toFixed(2)}"/>
+      <!-- пламя -->
+      ${flameH>0?`<g filter="url(#thSoft2)" opacity="${(0.5+heat*0.5).toFixed(2)}">
+        <path d="M176 ${190} C150 ${190-flameH*0.5} 152 ${190-flameH} 176 ${190-flameH*1.45} C200 ${190-flameH} 202 ${190-flameH*0.5} 176 ${190} Z" fill="url(#thFlame)">
+          <animateTransform attributeName="transform" type="scale" values="1 1;1 0.86;1 1.06;1 0.92;1 1" dur="0.9s" repeatCount="indefinite" additive="sum"/>
+        </path>
+        <path d="M176 ${190} C160 ${190-flameH*0.35} 162 ${190-flameH*0.7} 176 ${190-flameH} C190 ${190-flameH*0.7} 192 ${190-flameH*0.35} 176 ${190} Z" fill="#ffd76a" opacity=".85">
+          <animate attributeName="opacity" values=".85;.55;.95;.7;.85" dur="1.1s" repeatCount="indefinite"/></path>
+        <path d="M176 ${190} C168 ${190-flameH*0.22} 169 ${190-flameH*0.45} 176 ${190-flameH*0.66} C183 ${190-flameH*0.45} 184 ${190-flameH*0.22} 176 ${190} Z" fill="#fff6d8" opacity=".9"/></g>`:''}
+      <!-- лёд рядом (когда холодно) -->
+      ${ice?`<g filter="url(#thShadow)"><rect x="286" y="176" width="34" height="26" rx="5" fill="#bfe6ff" opacity=".82" stroke="#e8f6ff" stroke-width="1.4"/>
+        <path d="M290 178 l8 12 M300 194 l10 -14" stroke="#fff" stroke-width="1.2" opacity=".7"/>
+        <animateTransform attributeName="transform" type="translate" values="0 0;0 3;0 0" dur="3.2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;.55;1" dur="3.2s" repeatCount="indefinite"/></g>`:''}
+      <!-- чайник -->
+      <g filter="url(#thShadow)">
+        <path d="M112 190 C104 168 106 130 116 116 C128 100 224 100 236 116 C246 130 248 168 240 190 Z" fill="url(#thSteel)"/>
+        <ellipse cx="176" cy="190" rx="64" ry="13" fill="#3f464a"/>
+        <ellipse cx="176" cy="116" rx="60" ry="15" fill="#cfd6da"/>
+        <ellipse cx="176" cy="113" rx="60" ry="14" fill="#eef3f6" opacity=".9"/>
+        <path d="M120 124 C112 118 96 120 92 132 C88 146 100 154 112 150" fill="none" stroke="url(#thSteel)" stroke-width="9" stroke-linecap="round"/>
+        <path d="M148 104 C160 88 200 88 210 104" fill="none" stroke="#2b3033" stroke-width="8" stroke-linecap="round"/>
+        <path d="M124 126 C122 150 122 170 128 186" stroke="#ffffff" stroke-width="7" stroke-linecap="round" opacity=".45" filter="url(#thSoft2)"/>
+        <path d="M216 124 C224 146 226 168 222 184" stroke="#000000" stroke-width="9" stroke-linecap="round" opacity=".18" filter="url(#thSoft2)"/>
+        <ellipse cx="176" cy="106" rx="16" ry="7" fill="#8b9296"/><ellipse cx="176" cy="104" rx="16" ry="6" fill="#dfe6ea"/>
+        <circle cx="176" cy="97" r="6" fill="#2f3437"/>
+      </g>
+      <!-- «вода» внутри: пузыри -->
+      ${bubbles?`<g opacity="${(0.35+steamA*0.5).toFixed(2)}">${[0,1,2,3,4,5].map(k=>`<circle cx="${132+k*18}" cy="176" r="${2+((k*5)%3)}" fill="#eaffff" opacity=".8">
+        <animate attributeName="cy" values="184;${boiling?126:150}" dur="${(1.1+(k%3)*0.35).toFixed(2)}s" begin="${(k*0.22).toFixed(2)}s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;.9;0" dur="${(1.1+(k%3)*0.35).toFixed(2)}s" begin="${(k*0.22).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}</g>`:''}
+      <!-- пар -->
+      ${steamA>0.05?`<g filter="url(#thSoft)" opacity="${steamA.toFixed(2)}">
+        ${[0,1,2,3].map(k=>`<ellipse cx="${150+k*22}" cy="96" rx="${12+k*3}" ry="${9+k*2}" fill="url(#thSteam)">
+          <animateTransform attributeName="transform" type="translate" values="0 0;${(k%2?-12:10)} -46;0 -92" dur="${(3.4+k*0.5).toFixed(1)}s" begin="${(k*0.6).toFixed(1)}s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;.85;0" dur="${(3.4+k*0.5).toFixed(1)}s" begin="${(k*0.6).toFixed(1)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
+      <!-- тёплое свечение вокруг чайника -->
+      <ellipse cx="176" cy="150" rx="96" ry="66" fill="url(#thGlow)" style="opacity:${(glow*0.5).toFixed(2)}"/>
+      <!-- термометр -->
+      <g>
+        <rect x="318" y="34" width="16" height="150" rx="8" fill="#f3f7fa" opacity=".92"/>
+        <rect x="321" y="38" width="10" height="142" rx="5" fill="#dfe9ee"/>
+        <rect x="321" y="${(180-merc).toFixed(1)}" width="10" height="${merc.toFixed(1)}" rx="5" fill="url(#thMercury)">
+          <animate attributeName="height" values="${merc.toFixed(1)};${merc.toFixed(1)}" dur=".4s" fill="freeze"/></rect>
+        <circle cx="326" cy="188" r="11" fill="#d3311c"/>
+        ${[0,25,50,75,100].map((v,k)=>{ const yy=180-(6+((v+20)/140)*90); return `<line x1="318" y1="${yy.toFixed(1)}" x2="312" y2="${yy.toFixed(1)}" stroke="#8fa08f" stroke-width="1.4"/><text x="308" y="${(yy+3).toFixed(1)}" text-anchor="end" font-size="7.5" fill="#b9c6c0">${v}</text>`; }).join('')}
+      </g>
+      <text x="30" y="34" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="#ffd76a">${t>0?'+':''}${f(t)} °C</text>
+      <text x="30" y="52" font-size="10" font-family="Georgia,serif" fill="#cbb9a4">${state}</text>
+    </svg>`;
+
+    const formula = dT===0
+      ? `<div class="wv-big">Q = c · m · Δt</div><div class="wv-sml">температура не меняется — тепла нужно 0 Дж</div>`
+      : `<div class="wv-big">Q = 4200 · 1 · ${f(dT)} = ${Q>0? '' : '−'}${Math.abs(Q).toLocaleString('ru-RU')} Дж = ${f(Math.abs(kd(Q)))} кДж</div>`
+        + `<div class="wv-sml">${dT>0? 'нагреваем 1 кг воды на '+f(dT)+' °C — теплота приходит' : 'вода остывает на '+f(-dT)+' °C — теплота уходит в воздух'}</div>`;
+
+    const btns=`<div class="wv-row">
+      <button class="hint-btn" onclick="hAct('${lk}','down')">−10 °C</button>
+      <button class="hint-btn" onclick="hAct('${lk}','up')">+10 °C</button>
+      <button class="hint-btn" onclick="hAct('${lk}','ice')">лёд (−10°)</button>
+      <button class="hint-btn" onclick="hAct('${lk}','boil')">кипение (100°)</button>
+      <button class="hint-btn" onclick="hAct('${lk}','reset')">↺</button></div>`;
+
+    const hints={
+      0:'Обжигающий чайник, ледяная вода — движением частиц внутри. Нагреваем — частицы бегут быстрее.',
+      1:'Термометр справа показывает температуру: 0 °C — тает лёд, 100 °C — кипит вода.',
+      2:'Нагревание — энергия приходит (пламя греет дно). Остывание — энергия уходит в воздух.',
+      3:'Количество теплоты Q измеряют в джоулях: 1 кДж = 1000 Дж.',
+      4:'Массы больше — тепла больше: залей 2 л, и греться будет вдвое дольше.',
+      5:'Разница температур Δt = t₂ − t₁. Нагрели на 10° — Δt = 10.',
+      6:'Разные вещества греются по-разному: железо быстрее воды почти в 9 раз.',
+      7:'Главная формула: Q = c · m · Δt — теплоёмкость · масса · разница температур.',
+      8:'Для воды c = 4200 Дж/(кг·°C) — вода запасает тепло лучше всех.',
+      9:'1 кг воды на 10 °C: 4200 · 1 · 10 = 42 000 Дж = 42 кДж.',
+      10:'Лёд 2100, железо 460, медь 400, свинец 140 — сравните с водой 4200.',
+      11:'Остывая, тело ОТДАЁТ тепло — формула та же, только Q получается с минусом.',
+      12:'Батарея отдаёт тепло, суп остывает, лёд охлаждает лимонад — всё это про теплоту.',
+      13:'Море — гигантская «батарея тепла»: летом забирает, зимой отдаёт. Причина всё та же — c = 4200.',
+      14:'Порядок расчёта: Δt → m·Δt → умножить на 4200 → перевести в кДж.',
+      15:'3 кг на 5 °C: 3 · 5 = 15 → 4200 · 15 = 63 000 Дж → 63 кДж.',
+      16:'Обратная задача: 84 000 = 4200 · m · 10 → m = 2 кг.',
+      17:'Запомни: Q = c·m·Δt, вода 4200, Δt — разность температур, 1000 Дж = 1 кДж.'
+    };
+    const stepHint=hints[LV.step||0]||'';
+
+    el.innerHTML=`<div class="wv-col">${scene}${formula}${btns}
+      <div class="wv-sml" style="text-align:left;padding:0 6px">💡 ${stepHint}</div></div>`;
+  }catch(e){ el.innerHTML=''; }
+}
+function hAct(lk,act){
+  const st=CHS[lk]||(CHS[lk]={}); if(st.h==null) st.h=20;
+  if(act==='up') st.h=Math.min(120,st.h+10);
+  else if(act==='down') st.h=Math.max(-20,st.h-10);
+  else if(act==='ice') st.h=-10;
+  else if(act==='boil') st.h=100;
+  else if(act==='reset') st.h=20;
+  try{ renderLessonView(); }catch(e){}
 }
 
 function l104Act(lk,act){
