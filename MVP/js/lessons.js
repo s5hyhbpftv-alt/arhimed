@@ -432,7 +432,7 @@ function visMathNew(el){
 
 
 var CHS={};
-function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(window.VISKW&&window.VISKW[LV.id]){ try{ window.VISKW[LV.id](el); }catch(e){ el.innerHTML=''; } return; } if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(LV.id===30) visL30(el); else if(LV.id===31) visL31(el); else if(LV.id===32) visL32(el); else if(LV.id===250) visL250(el); else if(LV.id===251) visL251(el); else if(LV.id===60) visL60(el); else if(LV.id===61) visL61(el); else if(LV.id===59) visL59(el); else if(LV.id===62) visL62(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); else if(window.WAVE_B&&window.WAVE_B[LV.id]){ try{ window.WAVE_B[LV.id](el); }catch(e){ el.innerHTML=''; } } else if(window.WAVE_C&&window.WAVE_C[LV.id]){ try{ window.WAVE_C[LV.id](el); }catch(e){ el.innerHTML=''; } } else if(window.WAVE_D&&window.WAVE_D[LV.id]){ try{ window.WAVE_D[LV.id](el); }catch(e){ el.innerHTML=''; } } else if(window.WAVE_E&&window.WAVE_E[LV.id]){ try{ window.WAVE_E[LV.id](el); }catch(e){ el.innerHTML=''; } } }
+function chRender(lid){ const el=document.getElementById('lvis'); if(!el) return; if(window.VISKW&&window.VISKW[LV.id]){ try{ window.VISKW[LV.id](el); }catch(e){ el.innerHTML=''; } return; } if(LV.id===1) visL1(el); else if(LV.id===3) visL3(el); else if(LV.id===4) visL4(el); else if(LV.id===5) visL5(el); else if(LV.id===6) visL6(el); else if(LV.id===10) visL10(el); else if(LV.id===33) visL33(el); else if(LV.id===34) visL34(el); else if(LV.id===35) visL35(el); else if(LV.id===36) visL36(el); else if(LV.id===37) visL37(el); else if(LV.id===48) visL48(el); else if(LV.id===49) visL49(el); else if(LV.id===50) visL50(el); else if(LV.id===76) visL76(el); else if(LV.id===77) visL77(el); else if(LV.id===78) visL78(el); else if(LV.id===79) visL79(el); else if(LV.id===80) visL80(el); else if(LV.id===81) visL81(el); else if(LV.id===82) visL82(el); else if(LV.id===83) visL83(el); else if(LV.id===46) visL46(el); else if(LV.id===47) visL47(el); else if(LV.id===13) visL13(el); else if(LV.id===14) visL14(el); else if(LV.id===16) visL16(el); else if(LV.id===11) visL11(el); else if(LV.id===12) visL12(el); else if(LV.id===15) visL15(el); else if(LV.id===87) visL87(el); else if(LV.id===99) visL99(el); else if(LV.id===95) visL95(el); else if(LV.id===94) visL94(el); else if(LV.id===93) visL93(el); else if(LV.id===92) visL92(el); else if(LV.id===98) visL98(el); else if(LV.id===108) visL108(el); else if(LV.id===96) visL96(el); else if(LV.id===106) visL106(el); else if(LV.id===104) visL104(el); else if(LV.id===51) visL51(el); else if(LV.id===105) visL105(el); else if(LV.id===19) visL19(el); else if(LV.id===2) visL2(el); else if(LV.id===196) visL196(el); else if(LV.id===43) visL43(el); else if(LV.id===195) visL195(el); else if(LV.id===20) visL20(el); else if(LV.id===8) visL8(el); else if(LV.id===9) visL9(el); else if(LV.id===90) visL90(el); else if(LV.id===7) visL7(el); else if(LV.id===97) visL97(el); else if(LV.id===107) visL107(el); else if(LV.id===103) visL103(el); else if(LV.id===102) visL102(el); else if(LV.id===101) visL101(el); else if(LV.id===100) visL100(el); else if(LV.id===22) visL22(el); else if(LV.id===21) visL21(el); else if(LV.id===18) visL18(el); else if(LV.id===29) visL29(el); else if(LV.id===30) visL30(el); else if(LV.id===31) visL31(el); else if(LV.id===32) visL32(el); else if(LV.id===250) visL250(el); else if(LV.id===251) visL251(el); else if(LV.id===60) visL60(el); else if(LV.id===61) visL61(el); else if(LV.id===59) visL59(el); else if(LV.id===62) visL62(el); else if(visIsChem()) visChemNew(el); else if(visIsPhys()) visPhysNew(el); else if(visIsMath()) visMathNew(el); else if(window.WAVE_B&&window.WAVE_B[LV.id]){ try{ window.WAVE_B[LV.id](el); }catch(e){ el.innerHTML=''; } } else if(window.WAVE_C&&window.WAVE_C[LV.id]){ try{ window.WAVE_C[LV.id](el); }catch(e){ el.innerHTML=''; } } else if(window.WAVE_D&&window.WAVE_D[LV.id]){ try{ window.WAVE_D[LV.id](el); }catch(e){ el.innerHTML=''; } } else if(window.WAVE_E&&window.WAVE_E[LV.id]){ try{ window.WAVE_E[LV.id](el); }catch(e){ el.innerHTML=''; } } }
 function visChemNew(el){
   try{
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
@@ -8806,6 +8806,214 @@ function qAct(lk,act){
   else if(act==='c1') st.on=!st.on;
   try{ renderLessonView(); }catch(e){}
 }
+/* Урок 108 «Химия вокруг нас» — первый урок химии: лабораторные сцены в подаче nobook
+   (стеклянная посуда с блеском, цветные растворы, горелка с пламенем, штатив, осадок, пузыри) */
+function l108css(){
+  if(document.getElementById('l108css')) return;
+  const st=document.createElement('style'); st.id='l108css';
+  st.textContent=`
+  @keyframes l108up{from{transform:translateY(0);opacity:.9}to{transform:translateY(-32px);opacity:0}}
+  @keyframes l108fall{from{transform:translateY(0);opacity:1}to{transform:translateY(30px);opacity:.15}}
+  @keyframes l108flame{from{transform:scaleY(.9) scaleX(1)}to{transform:scaleY(1.14) scaleX(.93)}}
+  @keyframes l108drop{from{transform:translateY(-6px);opacity:0}60%{opacity:1}to{transform:translateY(26px);opacity:0}}
+  .l108-lab{position:relative;width:100%;max-width:340px;margin:0 auto;aspect-ratio:4/3;min-height:250px;border-radius:12px;overflow:hidden;
+    background:radial-gradient(circle at 50% 8%,#3a4757,#141a21 68%)}
+  .l108-bench{position:absolute;left:0;right:0;bottom:0;height:23%;background:linear-gradient(180deg,#46515e,#1c232b);
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.09)}
+  .l108-g{position:relative;background:linear-gradient(100deg,rgba(255,255,255,.24),rgba(255,255,255,.04) 42%,rgba(255,255,255,.2));
+    border:1.6px solid rgba(206,233,255,.55);box-shadow:inset 0 0 14px rgba(150,205,255,.16),0 8px 16px -10px #000;
+    display:flex;align-items:flex-end;justify-content:center}
+  .l108-liq{position:absolute;left:2px;right:2px;bottom:2px;border-radius:0 0 7px 7px;transition:height .8s,background .8s}
+  .l108-shine{position:absolute;top:6%;left:16%;width:12%;height:76%;border-radius:50%;
+    background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.05));filter:blur(1px)}
+  .l108-flame{position:absolute;bottom:-2px;left:50%;width:24px;height:34px;margin-left:-12px;border-radius:50% 50% 46% 46%;
+    background:radial-gradient(circle at 50% 74%,#f2fbff,#8fd0ff 38%,#2f7fd8 72%,transparent);
+    transform-origin:50% 100%;animation:l108flame .5s ease-in-out infinite alternate;filter:blur(.3px)}
+  .l108-bub{position:absolute;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.85);animation:l108up 1.1s linear infinite}
+  .l108-grain{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.95);animation:l108fall 2.2s linear infinite}
+  .l108-drop{position:absolute;width:4px;height:7px;border-radius:50%;background:rgba(180,225,255,.9);animation:l108drop 1.6s linear infinite}
+  .l108-card{border-radius:12px;padding:8px 12px;background:linear-gradient(170deg,rgba(24,47,36,.95),rgba(14,24,48,.6));
+    border:1px solid rgba(217,164,65,.28);font-size:12.5px;color:#e6eef6}
+  .l108-lbl{font-size:9px;color:#9fb0aa;margin-top:4px;text-align:center;line-height:1.25}
+  `;
+  document.head.appendChild(st);
+}
+function l108Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  if(act==='burn') st.burn=!st.burn;
+  else if(act==='salt') st.salt=!st.salt;
+  else if(act==='pour') st.pour=!st.pour;
+  else if(act==='heat') st.heat=!st.heat;
+  else if(act==='magnet') st.mag=!st.mag;
+  else if(act==='state') st.st=((st.st||0)+1)%3;
+  else if(act==='reset'){ st.burn=0; st.salt=0; st.pour=0; st.heat=0; st.mag=0; st.st=0; }
+  try{ renderLessonView(); }catch(e){}
+}
+function g108(kind,col,pct,label,extra){
+  const H=kind==='tube'?96:(kind==='flask'?86:80);
+  const W=kind==='tube'?26:(kind==='flask'?70:66);
+  const r=kind==='tube'?'15px 15px 15px 15px':(kind==='flask'?'8px 8px 10px 10px':'7px 7px 12px 12px');
+  const wid=kind==='flask'?64:W;
+  const bub=(extra&&extra.bub)?[0,1,2].map(k=>`<div class="l108-bub" style="left:${14+k*16}px;bottom:14px;animation-duration:${(1.3-0.2*k).toFixed(2)}s;animation-delay:${(k*0.3).toFixed(1)}s"></div>`).join(''):'';
+  const grain=(extra&&extra.grain)?[0,1,2,3].map(k=>`<div class="l108-grain" style="left:${12+k*14}px;top:18px;animation-delay:${(k*0.4).toFixed(1)}s"></div>`).join(''):'';
+  return `<div style="display:flex;flex-direction:column;align-items:center">
+    <div class="l108-g" style="width:${wid}px;height:${H}px;border-radius:${r}">
+      <div class="l108-liq" style="height:${pct}%;background:${col}"></div>
+      <div class="l108-shine"></div>${bub}${grain}</div>
+    <div class="l108-lbl">${label||''}</div></div>`;
+}
+function burner108(on){
+  return `<div style="position:relative;width:54px;height:${on?74:44}px">
+    <div style="position:absolute;bottom:0;left:50%;margin-left:-16px;width:32px;height:26px;border-radius:6px 6px 10px 10px;
+      background:linear-gradient(100deg,#8d9499,#eef3f6 30%,#7d8589);box-shadow:0 6px 12px -8px #000"></div>
+    ${on?`<div class="l108-flame" style="height:44px;width:26px;margin-left:-13px"></div>
+      <div class="l108-flame" style="height:26px;width:14px;margin-left:-7px;background:radial-gradient(circle at 50% 76%,#fff,#cdeaff 45%,#79b8f0 75%,transparent);animation-duration:.36s"></div>`:''}
+    <div class="l108-lbl">${on?'горелка горит':'горелка выключена'}</div></div>`;
+}
+function stand108(tubeCol){
+  return `<div style="position:relative;width:96px;height:150px">
+    <div style="position:absolute;left:6px;bottom:0;width:78px;height:8px;border-radius:4px;background:linear-gradient(180deg,#9aa2a7,#5a6165)"></div>
+    <div style="position:absolute;left:14px;bottom:6px;width:7px;height:138px;border-radius:4px;background:linear-gradient(90deg,#6d7479,#d7dee2 40%,#6a7176)"></div>
+    <div style="position:absolute;left:14px;top:26px;width:52px;height:6px;border-radius:3px;background:linear-gradient(180deg,#c9d2d7,#788086)"></div>
+    <div style="position:absolute;left:44px;top:28px">${g108('tube',tubeCol,46,'',{bub:true})}</div></div>`;
+}
+function funnel108(poured){
+  return `<div style="position:relative;width:120px;height:132px">
+    <div style="position:absolute;top:0;left:16px;width:88px;height:52px;clip-path:polygon(0 0,100% 0,58% 100%,42% 100%);
+      background:linear-gradient(100deg,rgba(255,255,255,.24),rgba(255,255,255,.05) 45%,rgba(255,255,255,.2));
+      border:1.6px solid rgba(206,233,255,.5);box-sizing:border-box"></div>
+    <div style="position:absolute;top:8px;left:26px;width:68px;height:38px;clip-path:polygon(0 0,100% 0,56% 100%,44% 100%);
+      background:rgba(235,240,235,.5);border-radius:2px"></div>
+    <div style="position:absolute;top:50px;left:57px;width:6px;height:30px;background:linear-gradient(90deg,rgba(255,255,255,.35),rgba(255,255,255,.12))"></div>
+    ${poured?[0,1,2].map(k=>`<div class="l108-drop" style="left:58px;top:${56+k*6}px;animation-delay:${(k*0.45).toFixed(1)}s"></div>`).join(''):''}
+    <div style="position:absolute;bottom:0;left:22px">${g108('beaker',poured?'rgba(180,230,255,.75)':'rgba(150,165,160,.75)',poured?54:44,'')}</div>
+    <div class="l108-lbl" style="position:absolute;bottom:-14px;left:0;right:0">${poured?'капли стекают — фильтрат прозрачный':'воронка с фильтром'}</div></div>`;
+}
+function visL108(el){
+  try{
+    l108css();
+    const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
+    const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
+    const step=LV.step||0;
+    const lab=(inner,bg)=>`<div class="l108-lab" style="${bg||''}"><div class="l108-bench"></div>${inner}</div>`;
+    const put=(x,bottom,inner)=>`<div style="position:absolute;left:${x};bottom:${bottom}">${inner}</div>`;
+    const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
+    const big=x=>`<div class="wv-big">${x}</div>`;
+    const sml=x=>`<div class="wv-sml">${x}</div>`;
+    const row=(...b)=>`<div class="wv-row">${b.join('')}</div>`;
+    const rowC=(...p)=>`<div style="display:flex;gap:14px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:4px 0">${p.join('')}</div>`;
+    const btn=(t,on)=>`<button class="hint-btn" onclick="${on}">${t}</button>`;
+    const card=x=>`<div class="l108-card">${x}</div>`;
+    let h='';
+    if(step===0){
+      h=col(big('Химия — наука о веществах'),
+        lab(put('7%','34%',g108('beaker','rgba(150,215,255,.7)',52,'стакан'))+put('35%','34%',g108('tube','rgba(120,220,190,.7)',40,'пробирка'))+put('58%','34%',g108('flask','rgba(255,190,120,.7)',46,'колба'))),
+        card('всё вокруг состоит из веществ: воздух, вода, стекло, железо, сахар. Химия изучает их свойства и превращения'),
+        sml('посмотри на посуду: стекло прозрачное, поэтому видно цвет раствора, осадок и пузырьки газа'));
+    } else if(step===1){
+      h=col(big('Тело и вещество'),
+        rowC(card('<b style="color:#ffd76a">тело</b><br>гвоздь · стакан · ложка<br><span style="color:#9fb0aa">предмет определённой формы</span>'),
+             card('<b style="color:#7de0a0">вещество</b><br>железо · стекло · алюминий<br><span style="color:#9fb0aa">материал, из которого сделано тело</span>')),
+        card('из одного вещества делают разные тела: из стекла — стакан, линзу и окно; из железа — гвоздь, нож и рельс'),
+        sml('спроси себя: перед тобой предмет или материал? Гвоздь — тело, железо — вещество'));
+    } else if(step===2){
+      h=col(big('Свойства вещества'),
+        lab(put('9%','37%',g108('beaker','rgba(200,235,255,.6)',50,'цвет · блеск'))+put('39%','37%',g108('tube','rgba(255,215,120,.6)',44,'твёрдость'))+put('63%','37%',g108('flask','rgba(170,240,200,.6)',46,'запах · вкус'))),
+        rowC(card('плотность'),card('температура плавления'),card('растворимость'),card('проводимость')),
+        sml('по свойствам вещества отличают друг от друга: например, сахар и соль похожи, но у них разный вкус и форма кристаллов'));
+    } else if(step===3){
+      const s3=st.st||0;
+      const names=['твёрдое: лёд','жидкое: вода','газообразное: пар'];
+      const liq=[62,54,26][s3], cols=['rgba(200,240,255,.85)','rgba(120,200,255,.75)','rgba(220,240,255,.28)'][s3];
+      h=col(big('Три состояния одного вещества'),
+        lab(put('70px','46%',g108('beaker',cols,liq,names[s3]))+put('190px','46%',g108('beaker',s3===2?'rgba(220,240,255,.3)':'rgba(200,240,255,.85)',[26,46,16][s3],s3===2?'испарение':'вода')),
+          put('45%','70%',`<div style="font-size:20px">${s3===0?'❄️':(s3===1?'💧':'☁️')}</div>`)),
+        row(btn(s3===0?'нагреть лёд':(s3===1?'вскипятить воду':'заморозить пар'),`l108Act('${lk}','state')`),btn('↺',`l108Act('${lk}','reset')`)),
+        sml('лёд → вода → пар: это одно вещество вода в разных состояниях. Нагреваем — переход вправо, охлаждаем — влево'));
+    } else if(step===4){
+      h=col(big('Наблюдение и опыт'),
+        rowC(card('<b style="color:#7fd1ff">👁 наблюдение</b><br>что видно: цвет, газ, осадок, тепло'),
+             card('<b style="color:#7de0a0">🧪 опыт</b><br>меняем условия и сравниваем')),
+        card('порядок работы химика: наблюдение → опыт → запись результатов → вывод'),
+        sml('без записи опыт нельзя повторить: в тетради фиксируют, что взяли, сколько и что получилось'));
+    } else if(step===5){
+      h=col(big('Лабораторная посуда'),
+        lab(put('3%','34%',g108('tube','rgba(150,215,255,.7)',40,'пробирка'))+put('20%','34%',g108('beaker','rgba(150,215,255,.7)',52,'стакан'))+
+            put('44%','34%',g108('flask','rgba(150,215,255,.7)',46,'колба'))+
+            put('68%','34%',g108('tube','rgba(150,215,255,.7)',30,'цилиндр'))),
+        sml('пробирка — для малых количеств, стакан — для растворов, колба — для реакций, цилиндр — чтобы измерить объём'));
+    } else if(step===6){
+      h=col(big('Нагревание в пробирке'),
+        lab(put('9%','33%',burner108(!!st.burn))+put('120px','33%',stand108('rgba(150,215,255,.7)'))),
+        row(btn(st.burn?'погасить горелку':'зажечь горелку',`l108Act('${lk}','burn')`),btn('↺',`l108Act('${lk}','reset')`)),
+        sml('пробирку держат в держателе, греют сначала всю, потом у дна. Отверстие — в сторону от себя!'));
+    } else if(step===7){
+      h=col(big('Растворение: соль в воде'),
+        lab(put('33%','34%',g108('beaker',st.salt?'rgba(140,210,255,.7)':'rgba(190,230,255,.55)',56,st.salt?'раствор соли':'чистая вода',{grain:!st.salt}))),
+        row(btn(st.salt?'вылить и начать снова':'добавить соль',`l108Act('${lk}','salt')`),btn('↺',`l108Act('${lk}','reset')`)),
+        sml('крупинки падают на дно и растворяются: частицы соли распределяются между частицами воды, раствор прозрачный и однородный'));
+    } else if(step===8){
+      h=col(big('Фильтрование мутной смеси'),
+        lab(put('33%','30%',funnel108(!!st.pour))),
+        row(btn(st.pour?'вернуть мутную воду':'налить мутную воду',`l108Act('${lk}','pour')`),btn('↺',`l108Act('${lk}','reset')`)),
+        sml('фильтр задерживает песок и мел, а прозрачная жидкость (фильтрат) стекает в стакан'));
+    } else if(step===9){
+      h=col(big('Выпаривание раствора'),
+        lab(put('19%','34%',`<div style="width:96px;height:30px;border-radius:0 0 46px 46px;background:linear-gradient(100deg,rgba(255,255,255,.28),rgba(255,255,255,.06) 45%,rgba(255,255,255,.22));border:2px solid rgba(206,233,255,.5);position:relative">
+            <div style="position:absolute;left:6px;right:6px;bottom:3px;height:12px;border-radius:0 0 40px 40px;background:${st.heat?'rgba(255,235,200,.6)':'rgba(150,215,255,.7)'};transition:background .8s"></div>
+            ${st.heat?[0,1,2].map(k=>`<div class="l108-grain" style="left:${20+k*22}px;bottom:6px;top:auto;animation:none;opacity:.95;background:#eaf6ff"></div>`).join(''):''}</div>`)+
+          put('54%','33%',burner108(!!st.heat))),
+        row(btn(st.heat?'убрать нагрев':'нагреть чашку',`l108Act('${lk}','heat')`),btn('↺',`l108Act('${lk}','reset')`)),
+        sml('вода уходит паром, а на дне остаются кристаллы соли — так добывают соль из морской воды'));
+    } else if(step===10){
+      h=col(big('Признаки химической реакции'),
+        rowC(card('<div style="font-size:20px">🎨</div><b style="color:#ffd76a">цвет</b><br><span style="color:#9fb0aa">раствор изменил окраску</span>'),
+             card('<div style="font-size:20px">🫧</div><b style="color:#7fd1ff">газ</b><br><span style="color:#9fb0aa">пошли пузырьки</span>'),
+             card('<div style="font-size:20px">🌫</div><b style="color:#cfd6da">осадок</b><br><span style="color:#9fb0aa">появились хлопья</span>'),
+             card('<div style="font-size:20px">🔥</div><b style="color:#ff9d3c">тепло</b><br><span style="color:#9fb0aa">сосуд нагрелся</span>')),
+        lab(put('33%','34%',g108('beaker','rgba(190,150,255,.7)',54,'реакция: цвет и газ',{bub:true}))),
+        sml('если признаков нет — скорее всего, было только физическое явление'));
+    } else if(step===11){
+      h=col(big('Чистые вещества и смеси'),
+        rowC(card('<b style="color:#7de0a0">однородные</b><br>раствор соли · воздух<br><span style="color:#9fb0aa">не увидеть частицы</span>'),
+             card('<b style="color:#ffd76a">неоднородные</b><br>вода с песком · гранит · дым<br><span style="color:#9fb0aa">частицы видны</span>')),
+        card('разделяют: фильтрованием, отстаиванием, выпариванием, магнитом, перегонкой'));
+    } else if(step===12){
+      h=col(big('Физическое и химическое явление'),
+        rowC(card('<b style="color:#7fd1ff">физическое</b><br>лёд тает, стекло разбилось, вода кипит<br><span style="color:#9fb0aa">вещество то же</span>'),
+             card('<b style="color:#ff9d3c">химическое</b><br>ржавеет железо, горит бумага, скисает молоко<br><span style="color:#9fb0aa">получились новые вещества</span>')),
+        sml('главный вопрос: осталось ли вещество тем же? Если да — явление физическое'));
+    } else if(step===13){
+      h=col(big('Измерения в химии'),
+        rowC(`<div style="text-align:center"><div style="width:96px;height:44px;border-radius:6px;background:linear-gradient(180deg,#c9d2d7,#6d7479);position:relative"><div style="position:absolute;left:50%;top:6px;width:2px;height:22px;background:#ffd76a"></div></div><div class="l108-lbl">весы · граммы</div></div>`,
+             g108('tube','rgba(150,215,255,.7)',52,'цилиндр · мл'),
+             `<div style="text-align:center"><div style="width:18px;height:96px;border-radius:9px;background:linear-gradient(180deg,#f4f8fa,#dbe4e9);position:relative"><div style="position:absolute;left:4px;right:4px;bottom:8px;height:40px;border-radius:6px;background:linear-gradient(90deg,#8e1f14,#ff5a3c)"></div></div><div class="l108-lbl">термометр · °C</div></div>`),
+        sml('массу измеряют в граммах, объём — в миллилитрах, температуру — в градусах Цельсия'));
+    } else if(step===14){
+      h=col(big('Магнит разделяет смесь'),
+        lab(put('18%','37%',`<div style="width:74px;height:26px;border-radius:6px;background:linear-gradient(90deg,#d94b3a 0 50%,#4b7fd9 50% 100%);box-shadow:0 6px 12px -8px #000"></div>`)+
+          put('51%','37%',g108('beaker','rgba(120,130,140,.7)',50,'смесь с опилками'))+
+          (st.mag?put('41%','58%',`<div style="font-size:16px">🧲 ↓</div>`):'')),
+        row(btn(st.mag?'убрать магнит':'приложить магнит',`l108Act('${lk}','magnet')`),btn('↺',`l108Act('${lk}','reset')`)),
+        sml('железные опилки притягиваются к магниту, а песок или сера остаются — вещество при этом не меняется'));
+    } else if(step===15){
+      h=col(big('Вода — самый частый растворитель'),
+        rowC(card('<b style="color:#7de0a0">растворяются</b><br>соль · сахар · сода · медный купорос'),
+             card('<b style="color:#ff8f70">не растворяются</b><br>песок · мел · стекло · масло')),
+        sml('в горячей воде растворяется быстрее и больше: растворимость зависит от температуры'));
+    } else if(step===16){
+      h=col(big('Техника безопасности'),
+        rowC(card('👕 халат'),card('👃 нюхать ладонью'),card('🚫 не пробовать на вкус'),
+             card('🧪 не наклоняться над сосудом'),card('💧 ожог — холодная вода')),
+        sml('кислоты и щёлочи не смешивают без указания учителя: это опасно'));
+    } else {
+      h=col(big('Главное в первом уроке химии'),
+        card('тело — предмет, вещество — материал<br>свойства: цвет, запах, твёрдость, плотность, растворимость<br>три состояния: твёрдое, жидкое, газообразное<br>смеси разделяют фильтрованием и выпариванием<br>реакцию узнают по цвету, газу, осадку и теплу<br>в лаборатории измеряют, наблюдают и записывают'),
+        rowC(g108('beaker','rgba(150,215,255,.7)',50,'опыт'),g108('flask','rgba(255,190,120,.7)',46,'наблюдение'),g108('tube','rgba(120,220,190,.7)',40,'вывод')));
+    }
+    el.innerHTML=h;
+  }catch(e){ el.innerHTML='<div class="l108-card">Ошибка сцены: '+esc(e&&e.message)+'</div>'; }
+}
 function visL51(el){
   try{
     q51css();
@@ -16753,6 +16961,7 @@ function renderLessonVis(){
   else if(id===93) visL93(el);
   else if(id===92) visL92(el);
   else if(id===98) visL98(el);
+  else if(id===108) visL108(el);
   else if(id===96) visL96(el);
   else if(id===106) visL106(el);
   else if(id===104) visL104(el);
