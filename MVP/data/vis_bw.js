@@ -4000,3 +4000,193 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     if(!f) arr.push(L106);
   })();
 })();
+/* ================= УРОК 107 · Механическая энергия ================= */
+(function(){
+  const L107 = {
+    id: 107, title: 'Механическая энергия', ico: '🎢',
+    src: 'Физика · 8–9 класс · Механическая энергия', subj: 'phys',
+    explain: [
+      'Загадка горки: вагончик подняли наверх — и он сам летит вниз. Топливо не бензин. Это энергия: запас, из которого можно сделать работу.',
+      'Работа A = F · s. Поднял груз — совершил работу, запасся потенциальной энергией. Единица — джоуль.',
+      'Два вида. Eп — энергия положения: камень на обрыве, лук, вагончик наверху. Eк — энергия движения: летящий мяч, едущая машина.',
+      'Eк = m v² / 2. Секрет — скорость в квадрате. Удвоил v — энергия в 4 раза. Поэтому авария на большой скорости так тяжёлая.',
+      'Одна ручка — скорость. График Eк(v) — парабола, не прямая. m = 2 кг: v = 2 → 4 Дж, v = 4 → 16 Дж.',
+      'Eп = m g h. g ≈ 10. Выше или тяжелее — запас больше. 2 кг на 5 м → 100 Дж.',
+      'Проверка: 3 кг на 2 м → 60 Дж. Не 30 и не 12.',
+      'Пружина тоже: Eп = k x² / 2. Лук, рогатка, батут. Сильнее сжал — x², запас растёт быстро.',
+      'Маятник: в крайней точке вся энергия потенциальная, внизу вся кинетическая. На горке высота меняется на скорость.',
+      'Закон сохранения: без трения Eп + Eк = const. Наверху 100 и 0, в середине 40 и 60, внизу 0 и 100. Сумма одна.',
+      'Трение съедает механическую: рельсы греются. Энергия не исчезла — ушла во внутреннюю. Полный закон всеобщий.',
+      'Считаем Eк: 4 кг, 3 м/с. Сначала v² = 9, потом 4 · 9 / 2 = 18 Дж.',
+      'Ищем высоту: Eп = 150 Дж, m = 5 кг → h = 150 / (5 · 10) = 3 м. Сначала буква.',
+      'ГЭС: вода на плотине — Eп. Падая — Eк. Турбина — электричество. Ветер, маятник часов — те же превращения.',
+      'Мощность N = A / t. Ватт — джоуль в секунду. Лампочка 60 Вт, человек ~500 Вт.',
+      'Рецепт. Движение — Eк = mv²/2. Высота — Eп = mgh. Пружина — kx²/2. Сумма без трения постоянна.'
+    ],
+    check: { q: 'Потенциальная энергия груза массой 3 кг на высоте 2 м? (в Дж, g = 10)', choices: ['30','60','12'], ans: 1,
+      exp: 'E = m · g · h = 3 · 10 · 2 = 60 Дж.' },
+    tasks: [
+      { q: 'Кинетическая энергия тела массой 4 кг, движущегося со скоростью 3 м/с? (в Дж)', kind: 'unit', ans: 18, tol: 0,
+        hints: ['Сначала v² = 9.', 'E = 4 · 9 / 2.'], sol: '18 Дж' },
+      { q: 'Груз массой 5 кг, Eп = 150 Дж. Высота? (в м, g = 10)', kind: 'choice',
+        choices: ['3','30','0,3'], ans: 0, hints: ['h = E / (m g).', '150 / 50 = 3.'], sol: '3 м' },
+      { q: 'm = 2 кг, v = 4 м/с. Eк? (в Дж)', kind: 'unit', ans: 16, tol: 0,
+        hints: ['Eк = m v² / 2.', 'v² = 16, 2·16/2 = 16.'], sol: '16 Дж' },
+      { q: 'Наверху Eп = 100 Дж, Eк = 0. Внизу без трения Eк?', kind: 'choice',
+        choices: ['0','50','100'], ans: 2, hints: ['Сумма постоянна.', 'Внизу вся кинетическая.'], sol: '100 Дж' }
+    ]
+  };
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const EK=(m,v)=>Math.round(0.5*m*v*v*1000)/1000;
+  const EP=(m,h)=>Math.round(m*10*h*1000)/1000;
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function pred(st,key,q,opts){
+    const cur=st[key];
+    return `<div style="width:min(100%,340px);text-align:left">
+      <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+        onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
+      ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
+    </div>`;
+  }
+  function visB107(el){
+    try{ window.physKenCss && physKenCss(); }catch(e){}
+    const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'107';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const v=Math.max(0.5, Math.min(8, +(st.v==null?2:st.v)));
+    const hh=Math.max(0.5, Math.min(5, +(st.h==null?5:st.h)));
+    const m=2;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        ${physShot('e_top.mp4','наверху запас')}
+        ${pred(st,'p0','Откуда разгон вниз?',[{k:'e',t:'из энергии высоты'},{k:'eng',t:'из мотора'},{k:'air',t:'из ветра'}])}
+        ${st.p0?note('Запас','Подняли — совершили работу. Этот запас и есть потенциальная энергия. Мотор на спуске не нужен.'):note('Предскажи','Сначала карточка.')}
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        ${physShot('e_winch.mp4','A = F · s')}
+        ${note('Работа','Сила на путь. Поднял цилиндр — запасся. Джоуль — единица работы и энергии: одно имя, потому что работа меняет энергию.')}
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        ${physShot('e_kinds.mp4','положение и движение')}
+        ${pred(st,'p2','Камень на обрыве. Какая энергия?',[{k:'p',t:'потенциальная'},{k:'k',t:'кинетическая'},{k:'none',t:'никакая, он стоит'}])}
+        ${st.p2?note('Два вида','Стоит на высоте — Eп. Летящий мяч — Eк. «Стоит» не значит «нуль»: есть запас высоты.'):note('Предскажи','Не путай покой и ноль энергии.')}
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        ${physShot('e_car.mp4','Eк = m v² / 2')}
+        ${note('Квадрат','Сначала v², потом · m / 2. Удвоил скорость — не вдвое, а вчетверо. Это не опечатка.')}
+      </div>`;
+    } else if(step===4){
+      const ek=EK(m,v);
+      const pts=Array.from({length:17},(_,i)=>{const x=i/2; return [x, EK(m,x)];});
+      h=`<div class="wv-col">
+        ${physShot(v>4?'e_crash.mp4':'e_car.mp4', 'm = 2 кг  ·  v = '+String(v).replace('.',',')+' м/с  ·  Eк = '+ek+' Дж')}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">v
+          <input type="range" min="5" max="80" value="${Math.round(v*10)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].v=this.value/10;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${String(v).replace('.',',')} м/с</b>
+        </label>
+        ${physChart([{pts, col:GOLD, name:'Eк при m = 2'}], v, ek, 'v, м/с', 'кинетическая', 'ek', 'Дж')}
+        ${note('Парабола','Не прямая. v = 2 → 4 Дж, v = 4 → 16 Дж. Четыре скорости — шестнадцать энергий.')}
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        ${physShot('e_crash.mp4','v в квадрате')}
+        ${physChart([{pts:[[1,1],[2,4],[3,9],[4,16]], col:RED, name:'Eк, m = 2 кг'}], 4, 16, 'v, м/с', 'джоули', 'sq', 'Дж')}
+        ${note('Почему опасно','4 м/с против 1 м/с — не в 4 раза, а в 16. Энергия удара растёт с квадратом.')}
+      </div>`;
+    } else if(step===6){
+      const ep=EP(m,hh);
+      const pts=Array.from({length:11},(_,i)=>[i*0.5, EP(m,i*0.5)]);
+      h=`<div class="wv-col">
+        ${physShot(hh>2.5?'e_cliff.mp4':'e_low.mp4', 'm = 2 кг  ·  h = '+String(hh).replace('.',',')+' м  ·  Eп = '+ep+' Дж')}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">h
+          <input type="range" min="5" max="50" value="${Math.round(hh*10)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].h=this.value/10;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${String(hh).replace('.',',')} м</b>
+        </label>
+        ${physChart([{pts, col:BLUE, name:'Eп при m = 2'}], hh, ep, 'h, м', 'потенциальная', 'ep', 'Дж')}
+        ${note('Прямая','Eп = m g h. Удвоил высоту — удвоил запас. Не квадрат: высота входит в первой степени.')}
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        ${physShot('e_mass.mp4','3 кг · 2 м · Eп = ?')}
+        ${note('Проверка','3 · 10 · 2 = 60 Дж. Не 30 (забыл g) и не 12 (перепутал с кинетической).')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${physShot('e_bow.mp4','лук: Eп = k x² / 2')}
+        ${note('Упругая','Сжал сильнее — x². Как у скорости: квадрат. Рогатка, батут, пружина часов — тот же запас.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${physShot('e_tramp.mp4','батут вернул запас')}
+        ${note('Туда-сюда','Полотно сжато — Eп упругости. Распрямилось — стало Eк. Потом снова высота. Энергия перетекает, не исчезает.')}
+      </div>`;
+    } else if(step===10){
+      const lo=!!st.lo;
+      h=`<div class="wv-col">
+        ${physShot(lo?'e_pendlo.mp4':'e_pend.mp4', lo?'внизу вся кинетическая':'в крайней — вся потенциальная')}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].lo=1;chRender(0);}catch(e){}">${lo?'Внизу':'Отпустить'}</button>
+        ${note('Маятник','Край: v = 0, вся Eп. Низ: h минимальна, вся Eк. Сумма одна, если нет трения оси.')}
+      </div>`;
+    } else if(step===11){
+      const ep=EP(m,hh), tot=EP(m,5), ek=Math.max(0, tot-ep);
+      const pEp=Array.from({length:11},(_,i)=>{const x=i*0.5; return [x, EP(m,x)];});
+      const pEk=Array.from({length:11},(_,i)=>{const x=i*0.5; return [x, tot-EP(m,x)];});
+      h=`<div class="wv-col">
+        ${physShot(hh>3?'e_top.mp4':(hh>1.5?'e_drop.mp4':'e_bot.mp4'), 'Eп = '+ep+'  ·  Eк = '+ek+'  ·  сумма '+tot+' Дж')}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">h
+          <input type="range" min="0" max="50" value="${Math.round(hh*10)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].h=this.value/10;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${String(hh).replace('.',',')} м</b>
+        </label>
+        ${physChart([{pts:pEp,col:BLUE,name:'Eп'},{pts:pEk,col:GOLD,name:'Eк'}], hh, ep, 'h, м', 'сохранение, 100 Дж', 'cons', 'Дж')}
+        ${note('Две линии','Синяя падает, золотая растёт. Сумма 100 Дж на любой высоте. Без трения.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        ${physShot('e_fric.mp4','трение греет')}
+        ${pred(st,'p12','Куда делась энергия?',[{k:'heat',t:'в тепло'},{k:'gone',t:'исчезла'},{k:'sound',t:'только в звук'}])}
+        ${st.p12?note('Не исчезла','Механическая уменьшилась, внутренняя выросла. Полный закон всеобщий: виды меняются, сумма мира нет.'):note('Предскажи','Вагончик внизу чуть медленнее идеального.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        ${physShot('e_car.mp4','4 кг · 3 м/с')}
+        ${note('Счёт','v² = 9. 4 · 9 = 36. 36 / 2 = 18 Дж. Сначала квадрат, потом половина произведения.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${physShot('e_dam.mp4','Eп воды → Eк → ток')}
+        ${note('ГЭС','Вода на плотине — высота. Падая — скорость. Турбина и генератор. Ветер, маятник часов — те же превращения.')}
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        ${physShot('e_bot.mp4','3 кг · 2 м · Eп = ?')}
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[['1','движение: mv²/2',GOLD],['2','высота: mgh',BLUE],['3','пружина: kx²/2',GREEN],['4','сумма без трения const',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')}
+        </div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">энергия в джоулях?</div>
+        ${note('Проверка','60 Дж. Потенциальная, не кинетическая.')}
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[107]=visB107;
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===107){ arr[i]=L107; f=true; break; } }
+    if(!f) arr.push(L107);
+  })();
+})();
