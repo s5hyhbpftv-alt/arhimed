@@ -2707,3 +2707,324 @@ window.WAVE_B = window.WAVE_B || {};
   window.WAVE_B[398]=visB398;
   (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===398){ window.ARH_LESSONS[i]=L398; break; } } })();
 })();
+/* ================= УРОК 100 · Плотность ================= */
+(function(){
+  const L100 = {
+    id: 100, title: 'Плотность', ico: '🧊',
+    src: 'Физика · 7 класс · Плотность', subj: 'phys',
+    explain: [
+      'Загадка мастерской: два кубика одного размера. Один поднимает чашу весов, другой рвёт её вниз. Размер один — масса разная. Что спрятано внутри? Паспорт вещества — плотность.',
+      'Плотность говорит, сколько вещества уместилось в одном кубике объёма. В 1 см³ дерева около 0,7 г, в 1 см³ железа — 7,8 г. Не «тяжелее потому что больше», а «тяжелее потому что гуще упаковано».',
+      'Обозначают греческой буквой ρ («ро»). Формула: ρ = m / V. Масса на объём. Единица в задачнике — г/см³. В СИ — кг/м³. Вода: 1 г/см³ = 1000 кг/м³. Числа разные, вещество одно.',
+      'Пример: m = 8 г, V = 2 см³. ρ = 8 / 2 = 4 г/см³. Делишь массу на объём, не наоборот. Если перепутаешь — получится см³/г, бессмыслица.',
+      'Треугольник: m наверху, внизу ρ и V. Закрой пальцем неизвестное. Видны ρ и V — умножай, получишь массу. Видны m и ρ — дели, получишь объём. Видны m и V — дели, получишь плотность.',
+      'Найти массу: ρ = 2 г/см³, V = 5 см³ → m = ρ · V = 10 г. Представь: пять кубиков по 2 г. Найти объём: m = 10 г, ρ = 2 → V = 5 см³. Сколько таких кубиков нужно, чтобы набрать массу.',
+      'Таблица (г/см³): пробка 0,25 · лёд 0,9 · вода 1 · стекло 2,5 · железо 7,8 · золото 19,3. Вода — линейка. Всё, что меньше 1, в воде всплывает. Всё, что больше 1, тонет, если тело сплошное.',
+      'Почему лёд плавает? ρ льда ≈ 0,9, воды — 1. Лёд вытесняет свою массу, часть кубика торчит над водой. Подвинь ползунок плотности: чем ближе к 1, тем глубже сидит; чем меньше, тем выше.',
+      'Железо тонет: 7,8 > 1. Сплошной кубик идёт на дно. Но корабль из стали плавает. Секрет не в «магии железа», а в средней плотности: внутри воздух, среднее ρ корабля меньше 1.',
+      'Средняя плотность = вся масса / весь объём вместе с пустотами. Нажми «Добавить воздух»: объём растёт, масса почти та же, среднее ρ падает ниже воды — корпус всплывает. Это и есть корабль.',
+      'Одинаковый объём, разная масса. 1 см³ воды — 1 г. 1 см³ золота — 19,3 г. Почти в двадцать раз. Поэтому поддельный слиток из меди (8,9) легче настоящего того же размера — весы выдают обман.',
+      'Однородное тело: плотность везде одна. Неоднородное (корабль, пористый камень) — говорят о средней. Формула та же, смысл — средний паспорт, не паспорт каждой крупинки.',
+      'Плавание: тело плавает, если средняя плотность меньше плотности жидкости. Тонет, если больше. Висит в толще, если равны (рыба с пузырём, субмарина). Ползунок в баке это показывает.',
+      'Рецепт. 1) Что ищут: ρ, m или V. 2) Треугольник. 3) Единицы: г и см³ или кг и м³, не мешай. 4) Для плавания сравни с водой. 5) Для полого тела бери средний объём.',
+      'В карман: ρ = m / V. Вода = 1 г/см³. Легче — плавает, тяжелее — тонет, если сплошное. Корабль держит воздух. 6 г и 3 см³ → 2 г/см³.',
+      'Проверка: масса 6 г, объём 3 см³. ρ = 6 / 3 = 2 г/см³. Не 0,5: это перевернули дробь. Не 18: это умножили.'
+    ],
+    check: { q: 'Масса тела 6 г, объём 3 см³. Какова плотность? (в г/см³)', choices: ['0,5', '2', '18'], ans: 1,
+      exp: 'ρ = m / V = 6 / 3 = 2 г/см³. Не наоборот и не произведение.' },
+    tasks: [
+      { q: 'Тело объёмом 3 см³ имеет массу 15 г. Плотность? (в г/см³)', kind: 'unit', ans: 5, tol: 0,
+        hints: ['ρ = m / V.', '15 / 3 = ?'], sol: 'ρ = 15 / 3 = 5 г/см³.' },
+      { q: 'Плотность вещества 4 г/см³, объём 5 см³. Найди массу. (в г)', kind: 'choice',
+        choices: ['20', '1,25', '5'], ans: 0,
+        hints: ['m = ρ · V.', '4 · 5 = ?'], sol: 'm = 4 · 5 = 20 г.' }
+    ]
+  };
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f', WOOD='#d4a574', IRON='#9bb0c4', ICE='#d8eef8';
+  const CSS=`<style>
+    @keyframes l100pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+    @keyframes l100pulse{0%,100%{opacity:.45}50%{opacity:1}}
+    @keyframes l100glow{0%,100%{filter:drop-shadow(0 0 2px ${GOLD})}50%{filter:drop-shadow(0 0 10px ${GOLD})}}
+    @keyframes l100bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+    @keyframes l100wave{0%{transform:translateX(0)}100%{transform:translateX(-18px)}}
+    @keyframes l100tilt{from{transform:rotate(0)}to{transform:rotate(var(--tilt,-8deg))}}
+    .l100c{transform-box:fill-box;transform-origin:center}
+    .l100-lab{paint-order:stroke fill;stroke:#071018;stroke-width:3.4px;stroke-linejoin:round}
+    .l100-bob{animation:l100bob 2.4s ease-in-out infinite}
+    .l100-pulse{animation:l100pulse 1.4s ease-in-out infinite}
+    .l100-glow{animation:l100glow 1.8s ease-in-out infinite}
+  </style>`;
+  function lab(x,y,t,col,anchor,fs,cls){
+    const xx=Math.max(12, Math.min(228, +x)), yy=Math.max(14, Math.min(210, +y));
+    return `<text class="l100-lab ${cls||''}" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner){
+    try{ window._waveCss && _waveCss('css-l100v1', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,320px);height:auto;background:radial-gradient(circle at 50% 0%,#1a2c3c,#071018 72%);border-radius:16px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function defs(){
+    return `<defs>
+      <linearGradient id="wWood" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0c48a"/><stop offset="1" stop-color="#a06a32"/></linearGradient>
+      <linearGradient id="wIron" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d5e2ee"/><stop offset="1" stop-color="#5d7388"/></linearGradient>
+      <linearGradient id="wGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#c48a18"/></linearGradient>
+      <linearGradient id="wIce" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4fbff"/><stop offset="1" stop-color="#9ec8e6"/></linearGradient>
+      <linearGradient id="wWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec8ff" stop-opacity=".55"/><stop offset="1" stop-color="#1a5a88" stop-opacity=".9"/></linearGradient>
+      <linearGradient id="wSteel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c5d0da"/><stop offset="1" stop-color="#4a5a68"/></linearGradient>
+      <filter id="wBlur"><feGaussianBlur stdDeviation="1.2"/></filter>
+    </defs>`;
+  }
+  function isoCube(ox, oy, s, fillTop, fillL, fillR, nMol, molCol){
+    const hx=s*0.86, hy=s*0.5, h=s*0.92;
+    const top=`M ${ox} ${oy} l ${hx} ${-hy} l ${hx} ${hy} l ${-hx} ${hy} Z`;
+    const left=`M ${ox} ${oy} l ${hx} ${hy} l 0 ${h} l ${-hx} ${-hy} Z`;
+    const right=`M ${ox+hx} ${oy+hy} l ${hx} ${-hy} l 0 ${h} l ${-hx} ${hy} Z`;
+    let mol='';
+    const n=Math.max(0, Math.min(28, nMol|0));
+    for(let i=0;i<n;i++){
+      const col=i%3, row=Math.floor(i/3)%4, layer=Math.floor(i/12);
+      const px=ox+hx*0.28+col*hx*0.28+layer*6;
+      const py=oy+hy*0.35+row*h*0.18+col*3;
+      mol+=`<circle class="l100c" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="3.1" fill="${molCol||'#fff'}" opacity=".85"/>`;
+    }
+    return `<g class="l100-cube">
+      <path d="${left}" fill="${fillL}" stroke="#071018" stroke-width="0.6"/>
+      <path d="${right}" fill="${fillR}" stroke="#071018" stroke-width="0.6"/>
+      <path d="${top}" fill="${fillTop}" stroke="#071018" stroke-width="0.6"/>
+      ${mol}
+    </g>`;
+  }
+  function tank(rho, kind){
+    rho=Math.max(0.2, Math.min(8, +rho||1));
+    const H=36, surface=128, bottom=188, left=28, right=212;
+    const float=rho<1;
+    const sub=float?rho:1;
+    const yTop=float? (surface - H*(1-sub)) : (bottom-H-4);
+    const cubeFill=kind==='ice'?'url(#wIce)':kind==='gold'?'url(#wGold)':'url(#wIron)';
+    const wave=`M ${left} ${surface}`;
+    let w=wave;
+    for(let x=left;x<=right;x+=6) w+=` L ${x} ${surface+3.2*Math.sin(x/16)}`;
+    w+=` L ${right} ${bottom} L ${left} ${bottom} Z`;
+    return `<g>
+      <rect x="${left}" y="48" width="${right-left}" height="${bottom-48}" rx="8" fill="none" stroke="#3d6a88" stroke-width="2"/>
+      <path class="l100-water" d="${w}" fill="url(#wWater)"/>
+      <g class="${float?'l100-bob':''}" transform="translate(0,${yTop-90})">
+        ${isoCube(92, 90, 28, cubeFill, kind==='ice'?'#b7d4e8':'#6a7c8c', kind==='ice'?'#8fb8d4':'#8a9aaa', Math.round(rho*4), '#fff')}
+      </g>
+      ${lab(120, 40, (float?'плавает':'тонет')+' · ρ = '+String(rho).replace('.',','), float?GREEN:RED)}
+    </g>`;
+  }
+  function wa(el, kf, opt){ try{ if(el&&el.animate) el.animate(kf,opt); }catch(e){} }
+  function kill100(){ try{ if(window._l100t){ clearTimeout(window._l100t); window._l100t=null; } }catch(e){} }
+  function boot100(root, step){
+    kill100();
+    const svg=root.querySelector('svg'); if(!svg) return;
+    svg.style.pointerEvents='auto';
+    svg.querySelectorAll('.l100-cube, .l100c').forEach((c,i)=>{
+      wa(c,[{transform:'scale(.2)',opacity:0},{transform:'scale(1.08)',opacity:1,offset:.7},{transform:'scale(1)',opacity:1}],
+        {duration:520, delay:i*18, fill:'both', easing:'cubic-bezier(.2,1.35,.25,1)'});
+    });
+    if(step===0){
+      const beam=svg.querySelector('.l100-beam');
+      if(beam) wa(beam,[{transform:'rotate(0deg)'},{transform:'rotate(9deg)'}],{duration:900, fill:'forwards', easing:'cubic-bezier(.2,.8,.2,1)'});
+    }
+  }
+
+  function visB100(el){
+    try{ window._waveCss && _waveCss('css-l100v1', CSS); }catch(e){}
+    const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'100';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const rho=Math.max(0.25, Math.min(3, +(st.rho==null?0.9:st.rho)));
+    const mm=Math.max(1, Math.min(40, +(st.mm==null?8:st.mm)));
+    const vv=Math.max(1, Math.min(20, +(st.vv==null?2:st.vv)));
+    const hid=st.hid||'';
+    const air=!!st.air;
+    let h='';
+
+    if(step===0){
+      const open=!!st.open;
+      h=`<div class="wv-col">
+        ${frame(defs()+
+          `<g class="l100-beam" transform-origin="120px 58px">
+            <line x1="48" y1="58" x2="192" y2="58" stroke="${GOLD}" stroke-width="3" stroke-linecap="round"/>
+            <line x1="120" y1="40" x2="120" y2="58" stroke="${GOLD}" stroke-width="3"/>
+          </g>`+
+          `<circle cx="120" cy="40" r="5" fill="${GOLD}"/>`+
+          isoCube(40, 118, 32, 'url(#wWood)', '#8a5a28', '#c48a48', open?4:3, '#fff4d8')+
+          isoCube(138, 132, 32, 'url(#wIron)', '#5a6a78', '#9aacb8', open?18:8, '#e8f2ff')+
+          lab(120, 22, open?'железо рвёт чашу вниз':'два куба, одни размеры', GOLD, 'middle', 13)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=1;chRender(0);}catch(e){}">${open?'Взвесили':'Взвесить'}</button>
+        ${note('Мастерская','Размер один. Масса разная. Секрет не в «больше кубик», а в том, как густо упаковано вещество внутри.')}
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        ${frame(defs()+
+          isoCube(28, 100, 36, 'url(#wWood)', '#8a5a28', '#c48a48', 4, '#fff4d8')+
+          isoCube(132, 100, 36, 'url(#wIron)', '#5a6a78', '#9aacb8', 20, '#e8f2ff')+
+          lab(62, 200, '0,7 г в 1 см³', WOOD)+lab(168, 200, '7,8 г в 1 см³', IRON)+
+          lab(120, 24, 'густота упаковки', GOLD)
+        )}
+        ${note('Не размер — упаковка','Шарики — условные частицы. В железе их в одном кубике гораздо больше. Это и есть плотность.')}
+      </div>`;
+    } else if(step===2){
+      const p=(mm/vv);
+      h=`<div class="wv-col">
+        ${frame(defs()+
+          isoCube(78, 88, 40, 'url(#wIron)', '#5a6a78', '#9aacb8', Math.round(p*5), '#e8f2ff')+
+          lab(120, 24, 'ρ = m / V = '+(Math.round(p*10)/10).toString().replace('.',',')+' г/см³', GOLD, 'middle', 13)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">m
+          <input type="range" min="1" max="40" value="${mm}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].mm=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD};min-width:36px">${mm} г</b>
+        </label>
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">V
+          <input type="range" min="1" max="20" value="${vv}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].vv=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${BLUE};min-width:48px">${vv} см³</b>
+        </label>
+        ${note('Формула живая','Крути массу и объём. Частиц становится больше, если масса растёт при том же объёме. ρ = m / V.')}
+      </div>`;
+    } else if(step===3){
+      const show=Math.max(0, Math.min(3, st.s==null?0:+st.s));
+      const rows=['m = 8 г,  V = 2 см³','ρ = m / V','ρ = 8 / 2','ρ = 4 г/см³'];
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,280px)">
+          ${rows.map((t,i)=>`<div class="wv-pop" style="opacity:${i<=show?1:.28};border:1px solid #3d5c49;border-left:4px solid ${i===3?GREEN:GOLD};border-radius:10px;padding:8px 12px;font-size:16px;color:${i===3?GREEN:'#e8dcc8'};font-family:Georgia,serif">${t}</div>`).join('')}
+        </div>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].s=Math.min(3,(CHS[k].s||0)+1);chRender(0);}catch(e){}">${show>=3?'Готово':'Следующая строка'}</button>
+        ${note('Порядок','Массу делим на объём. Если разделить наоборот, единица станет см³/г — так не говорят.')}
+      </div>`;
+    } else if(step===4){
+      const map={m:'m = ρ · V', rho:'ρ = m / V', v:'V = m / ρ'};
+      h=`<div class="wv-col">
+        ${frame(
+          `<polygon points="120,36 40,176 200,176" fill="${GOLD}14" stroke="${GOLD}" stroke-width="2"/>`+
+          lab(120, 70, hid==='m'?'?':'m', hid==='m'?RED:GOLD, 'middle', 22)+
+          lab(70, 164, hid==='rho'?'?':'ρ', hid==='rho'?RED:GREEN, 'middle', 20)+
+          lab(170, 164, hid==='v'?'?':'V', hid==='v'?RED:BLUE, 'middle', 20)+
+          lab(120, 208, hid?map[hid]:'закрой неизвестное', GOLD, 'middle', 12)
+        )}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${[['m','закрыть m',GOLD],['rho','закрыть ρ',GREEN],['v','закрыть V',BLUE]].map(x=>`<button type="button" class="btn" style="border-color:${hid===x[0]?x[2]:'#3d5c49'}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].hid='${x[0]}';chRender(0);}catch(e){}">${x[1]}</button>`).join('')}
+        </div>
+        ${note('Треугольник','Закрой то, что ищешь. Остались два — это формула. m наверху всегда: снизу произведение, сверху делимое.')}
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        ${frame(defs()+isoCube(78, 86, 40, 'url(#wWood)', '#8a5a28', '#c48a48', 10, '#fff4d8')+lab(120, 24, 'm = 2 · 5 = 10 г', GOLD, 'middle', 16))}
+        ${note('Из ρ и V','Пять кубиков по 2 г. Умножение. Не деление: объём не «режет» плотность, а складывает порции массы.')}
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        ${frame(lab(120, 80, 'V = 10 / 2', GOLD, 'middle', 22)+lab(120, 124, 'V = 5 см³', GREEN, 'middle', 20)+lab(120, 168, 'сколько кубиков по 2 г', MUTED))}
+        ${note('Из m и ρ','Сколько порций по 2 г нужно, чтобы набрать 10 г. Деление. Проверка: 2 · 5 = 10.')}
+      </div>`;
+    } else if(step===7){
+      const tab=[['пробка',0.25,WOOD],['лёд',0.9,ICE],['вода',1,BLUE],['стекло',2.5,MUTED],['железо',7.8,IRON],['золото',19.3,GOLD]];
+      const max=19.3;
+      h=`<div class="wv-col">
+        ${frame(tab.map((x,i)=>{
+          const y=40+i*28, w=18+x[1]/max*170;
+          return `<rect class="l100c" x="78" y="${y}" width="${w}" height="18" rx="4" fill="${x[2]}" opacity=".85"/>`+lab(70, y+14, x[0], MUTED, 'end', 11)+lab(78+w+8, y+14, String(x[1]).replace('.',','), x[2], 'start', 11);
+        }).join('')+lab(120, 24, 'вода — линейка 1', GOLD))}
+        ${note('Таблица','Меньше 1 — всплывает в воде. Больше 1 — тонет, если сплошное. Золото почти 20 линеек воды в одном кубике.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(defs()+tank(rho, rho<=1?'ice':'iron'))}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">ρ
+          <input type="range" min="25" max="250" value="${Math.round(rho*100)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].rho=this.value/100;chRender(0);}catch(e){}">
+          <b style="color:${GOLD};min-width:52px">${String(rho).replace('.',',')}</b>
+        </label>
+        ${note('Живая вода','ρ < 1 — кубик торчит. ρ = 1 — висит, едва скрыт. ρ > 1 — на дно. Лёд 0,9 почти весь в воде, шапка снаружи.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${frame(defs()+tank(7.8,'iron')+lab(120, 208, 'железо 7,8 — сплошное тонет', RED, 'middle', 12))}
+        ${note('Сплошное железо','Не «металл всегда тонет в принципе». Тонет сплошной кусок, потому что 7,8 > 1. Дальше — дырявый кусок.')}
+      </div>`;
+    } else if(step===10){
+      const avg=air?0.6:7.8;
+      h=`<div class="wv-col">
+        ${frame(defs()+
+          (air
+            ? `<path d="M 48 150 L 70 118 L 170 118 L 192 150 L 180 150 L 168 132 L 72 132 L 60 150 Z" fill="url(#wSteel)" stroke="#071018"/>`+
+              `<ellipse cx="120" cy="168" rx="70" ry="14" fill="url(#wWater)"/>`+
+              lab(120, 40, 'среднее ρ ≈ 0,6 < 1', GREEN)
+            : isoCube(78, 86, 40, 'url(#wSteel)', '#4a5a68', '#8a9aaa', 22, '#e8f2ff')+lab(120, 40, 'сплошная сталь 7,8', RED)
+          )
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].air=!CHS[k].air;chRender(0);}catch(e){}">${air?'Убрать воздух':'Добавить воздух'}</button>
+        ${note('Секрет корабля','Средняя плотность = вся масса / весь объём вместе с пустотами. Воздух почти ничего не весит, объём большой — среднее падает ниже воды.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        ${frame(defs()+
+          isoCube(28, 100, 36, BLUE, '#2a6a88', '#5aa0c8', 5, '#d8f0ff')+
+          isoCube(132, 100, 36, 'url(#wGold)', '#a87810', '#e8c250', 24, '#fff4c8')+
+          lab(62, 200, 'вода 1 г', BLUE)+lab(168, 200, 'золото 19,3 г', GOLD)+
+          lab(120, 24, 'один объём', GOLD)
+        )}
+        ${note('Подделка','Слиток того же размера из меди (~8,9) легче золотого. Весы и штангенциркуль ловят обман лучше, чем блеск.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        ${frame(lab(120, 70, '6 г  /  3 см³', GOLD, 'middle', 20)+lab(120, 118, 'ρ = 2 г/см³', GREEN, 'middle', 22)+lab(120, 160, 'не 0,5 и не 18', MUTED))}
+        ${note('Как в проверке','Деление, не умножение. Не переворачивай дробь: 3/6 было бы 0,5 — это уже не плотность.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        ${frame(lab(120, 80, '15 / 3', GOLD, 'middle', 24)+lab(120, 128, 'ρ = 5 г/см³', GREEN, 'middle', 22))}
+        ${note('Задача 1','Та же формула. Масса 15, объём 3, плотность 5.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(lab(120, 80, '4 · 5', GOLD, 'middle', 24)+lab(120, 128, 'm = 20 г', GREEN, 'middle', 22))}
+        ${note('Задача 2','Ищем массу — умножаем. Треугольник: закрыли m, остались ρ и V.')}
+      </div>`;
+    } else if(step===15){
+      const POOL=[['rho',8,2],['rho',15,3],['m',2,5],['m',4,3],['v',20,4],['v',10,2]];
+      if(st.i==null) st.i=0;
+      const e=POOL[st.i%POOL.length];
+      let desc, formula, ans;
+      if(e[0]==='rho'){ desc='m = '+e[1]+' г, V = '+e[2]+' см³'; formula='ρ = m / V'; ans=e[1]/e[2]+' г/см³'; }
+      else if(e[0]==='m'){ desc='ρ = '+e[1]+' г/см³, V = '+e[2]+' см³'; formula='m = ρ · V'; ans=e[1]*e[2]+' г'; }
+      else { desc='m = '+e[1]+' г, ρ = '+e[2]+' г/см³'; formula='V = m / ρ'; ans=e[1]/e[2]+' см³'; }
+      h=`<div class="wv-col">
+        ${frame(lab(120, 56, desc, GOLD, 'middle', 14)+lab(120, 100, formula, BLUE, 'middle', 16)+lab(120, 148, st.s2?ans:'?', GREEN, 'middle', 22))}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].s2=1;chRender(0);}catch(e){}">Ответ</button>
+          <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].i=(CHS[k].i||0)+1;CHS[k].s2=0;chRender(0);}catch(e){}">Другая</button>
+        </div>
+        ${note('Тренажёр','Сначала назови, что ищешь. Потом треугольник. Потом число.')}
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        ${frame(defs()+isoCube(78, 86, 40, 'url(#wIce)', '#9ec8e6', '#c8e4f4', 6, '#fff')+lab(120, 24, 'ρ = m / V · вода = 1', GOLD, 'middle', 13))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:16px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">6 г и 3 см³ → ?</div>
+        ${note('В карман и проверка','ρ = m / V. Легче воды — плавает. 6 / 3 = 2 г/см³.')}
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+    if(el.isConnected){ try{ boot100(el, step); }catch(e){} }
+  }
+  window.WAVE_B[100]=visB100;
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===100){ arr[i]=L100; f=true; break; } }
+    if(!f) arr.push(L100);
+  })();
+})();
