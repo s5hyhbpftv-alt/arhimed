@@ -10337,6 +10337,348 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
       s+=plate2(16,y-4,286,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных правил',11,pre);
       return s;
     }
+    if(K==='inf5what'){ /* четыре вида информации — свои рисунки */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'информация бывает четырёх видов',{b:1},268)+`</g>`;
+      const it=[['текст','слова и буквы',cyan,'txt'],['число','цифры и счёт',gold,'num'],
+                ['картинка','рисунок и фото',grn,'img'],['звук','музыка и речь',pur,'snd']];
+      it.forEach((q,k)=>{
+        const x=22+(k%2)*140, y=44+Math.floor(k/2)*92;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="132" height="84" rx="11" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.6"/>`;
+        const cx=x+66, cy=y+34;
+        if(q[3]==='txt') s+=`<path d="M${cx-34} ${cy-12} h30 M${cx-34} ${cy-2} h44 M${cx-34} ${cy+8} h24" stroke="${q[2]}" stroke-width="2" stroke-linecap="round"/>`
+          +`<text x="${cx+22}" y="${cy+10}" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="${q[2]}" opacity=".85">Aa</text>`;
+        else if(q[3]==='num') s+=`<text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="24" font-family="'Courier New',monospace" font-weight="bold" fill="${q[2]}">`
+          +`<tspan>1</tspan><tspan opacity="0">2<animate attributeName="opacity" values="0;1;1" keyTimes="0;.5;1" dur="2s" repeatCount="indefinite"/></tspan><tspan opacity="0">3<animate attributeName="opacity" values="0;1;1" keyTimes="0;.5;1" dur="2s" begin=".6s" repeatCount="indefinite"/></tspan></text>`;
+        else if(q[3]==='img') s+=`<rect x="${cx-36}" y="${cy-16}" width="72" height="42" rx="5" fill="none" stroke="${q[2]}" stroke-width="1.6"/>`
+          +`<path d="M${cx-30} ${cy+20} l18 -20 l12 12 l10 -14 l20 22 z" fill="${q[2]}" fill-opacity=".35" stroke="${q[2]}" stroke-width="1.4"/>`
+          +`<circle cx="${cx+18}" cy="${cy-6}" r="5" fill="${q[2]}" fill-opacity=".7"><animate attributeName="r" values="5;6.4;5" dur="2.6s" repeatCount="indefinite"/></circle>`;
+        else [0,1,2,3,4,5,6].forEach(j=>{
+          const hh=[10,18,26,34,26,18,10][j];
+          s+=`<rect x="${cx-30+j*9}" y="${cy-hh/2}" width="6" height="${hh}" rx="3" fill="${q[2]}" opacity=".85">`
+            +`<animate attributeName="height" values="${hh};${hh*0.45};${hh}" dur="1.1s" begin="${(j*0.12).toFixed(2)}s" repeatCount="indefinite"/>`
+            +`<animate attributeName="y" values="${cy-hh/2};${cy-hh*0.22};${cy-hh/2}" dur="1.1s" begin="${(j*0.12).toFixed(2)}s" repeatCount="indefinite"/></rect>`;
+        });
+        s+=fit(cx,y+62,10,q[2],q[0],{b:1},120)+fit(cx,y+76,8.5,dim,q[1],{},120)+`</g>`;
+      });
+      const wy=band(0)+184;
+      s+=`<g class="${pre}Pop" style="animation-delay:.7s"><rect x="22" y="234" width="274" height="28" rx="9" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.5"/>`
+        +fit(159,253,9.5,cyan,'всё это компьютер хранит и обрабатывает',{b:1},258)+`</g>`;
+      return s;
+    }
+    if(K==='inf5senses'){ /* органы чувств — лучи к голове */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'информацию получают органы чувств',{b:1},276)+`</g>`;
+      const cx=159, cy=150;
+      s+=`<circle cx="${cx}" cy="${cy}" r="34" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`<path d="M${cx-16} ${cy-4} q16 -14 32 0" fill="none" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=`<circle cx="${cx-9}" cy="${cy-8}" r="3.4" fill="${gold}"/><circle cx="${cx+9}" cy="${cy-8}" r="3.4" fill="${gold}"/>`;
+      s+=`<path d="M${cx-9} ${cy+12} q9 7 18 0" fill="none" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=fit(cx,cy+56,9.5,dim,'мозг обрабатывает',{b:1},120);
+      const rays=[['глаза · зрение',cx-104,cy-52,cyan,'eye'],['уши · слух',cx+104,cy-52,gold,'ear'],
+                  ['нос · запах',cx-104,cy+52,grn,'nose'],['кожа · осязание',cx+104,cy+52,pur,'hand']];
+      rays.forEach((q,k)=>{
+        const x=q[1], y=q[2];
+        const ex=x+(k%2?54:-54), ey=y+(k<2?26:-26);
+        s+=`<path d="M${ex} ${ey} L${cx+(k%2?34:-34)} ${cy+(k<2?-16:16)}" stroke="${q[3]}" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+        s+=`<circle r="5" fill="${q[3]}"><animateMotion dur="3s" repeatCount="indefinite" path="M${ex} ${ey} L${cx+(k%2?30:-30)} ${cy+(k<2?-12:12)}"/></circle>`;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.15).toFixed(2)}s"><rect x="${x-52}" y="${y-24}" width="104" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[3]}" stroke-width="1.6"/>`;
+        const mx=x, my=y-2;
+        if(q[4]==='eye') s+=`<path d="M${mx-14} ${my} q14 -12 28 0 q-14 12 -28 0" fill="none" stroke="${q[3]}" stroke-width="1.6"/><circle cx="${mx}" cy="${my}" r="4.4" fill="${q[3]}"><animate attributeName="r" values="4.4;2.6;4.4" dur="3s" repeatCount="indefinite"/></circle>`;
+        else if(q[4]==='ear') s+=`<path d="M${mx-4} ${my-10} q14 -4 10 10 q-3 10 -12 8" fill="none" stroke="${q[3]}" stroke-width="1.7"/><path d="M${mx-1} ${my-4} q7 0 5 6" fill="none" stroke="${q[3]}" stroke-width="1.4"/>`;
+        else if(q[4]==='nose') s+=`<path d="M${mx} ${my-12} v14 l-6 6 M${mx} ${my+2} l6 6" fill="none" stroke="${q[3]}" stroke-width="1.7"/>`;
+        else s+=`<path d="M${mx-10} ${my+8} v-10 l7 -6 h8 v10 l-5 12 z" fill="rgba(176,127,255,.2)" stroke="${q[3]}" stroke-width="1.5"/>`;
+        s+=fit(x,y+16,9,q[3],q[0],{b:1},96)+`</g>`;
+      });
+      s+=`<circle cx="${cx}" cy="${cy}" r="44" fill="none" stroke="${gold}" stroke-width="1" opacity=".4"><animate attributeName="r" values="40;54;40" dur="3.4s" repeatCount="indefinite"/></circle>`;
+      s+=plate2(20,232,278,30,go?grn:cardB,go?'мозг соединяет всё в одну картину':'сколько у нас органов чувств?',11,pre);
+      return s;
+    }
+    if(K==='inf5machine'){ /* компьютер: системный блок, монитор, клавиатура */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'компьютер хранит, обрабатывает и передаёт',{b:1},286)+`</g>`;
+      const y=band(150);
+      /* системный блок */
+      s+=`<rect x="24" y="${y+30}" width="70" height="104" rx="8" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`;
+      s+=`<rect x="32" y="${y+40}" width="54" height="10" rx="4" fill="rgba(127,214,255,.14)" stroke="${cardB}" stroke-width="1"/>`;
+      s+=`<circle cx="59" cy="${y+82}" r="22" fill="rgba(255,255,255,.04)" stroke="${cyan}" stroke-width="1.4"/>`;
+      s+=`<g><animateTransform attributeName="transform" type="rotate" values="0 59 ${y+82};360 59 ${y+82}" dur="2.6s" repeatCount="indefinite"/>`
+        +`<path d="M59 ${y+62} v40 M39 ${y+82} h40 M45 ${y+68} l28 28 M73 ${y+68} l-28 28" stroke="${cyan}" stroke-width="1.6" opacity=".8"/></g>`;
+      s+=`<circle cx="59" cy="${y+82}" r="4" fill="${cyan}"/>`;
+      s+=fit(59,y+150,9,cyan,'системный блок',{b:1},90);
+      s+=fit(59,y+164,8.5,dim,'внутри — процессор',{},96);
+      /* монитор */
+      s+=`<rect x="112" y="${y+14}" width="106" height="70" rx="8" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=`<rect x="120" y="${y+22}" width="90" height="54" rx="4" fill="rgba(255,215,106,.08)"/>`;
+      [0,1,2].forEach(k=>{ const ly=y+34+k*14;
+        s+=`<rect x="128" y="${ly}" width="0" height="6" rx="3" fill="${gold}" opacity=".7">`
+          +`<animate attributeName="width" values="0;64;64" dur="${(1.6+k*0.5).toFixed(1)}s" repeatCount="indefinite"/></rect>`; });
+      s+=`<path d="M165 ${y+84} v10 M145 ${y+94} h40" stroke="${gold}" stroke-width="2"/>`;
+      s+=fit(165,y+112,9,gold,'монитор',{b:1},80);
+      /* клавиатура */
+      s+=`<g class="${pre}Pop" style="animation-delay:.4s"><rect x="234" y="${y+56}" width="70" height="34" rx="6" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.6"/>`;
+      for(let r2=0;r2<2;r2++) for(let c2=0;c2<5;c2++){
+        const kx=240+c2*13, ky=y+62+r2*14, hot=(r2*5+c2)%4===1;
+        s+=`<rect x="${kx}" y="${ky}" width="11" height="11" rx="2.5" fill="${hot?'rgba(125,224,160,.55)':'rgba(255,255,255,.06)'}" stroke="${hot?grn:cardB}" stroke-width=".9">`
+          +(hot?`<animate attributeName="fill-opacity" values="1;.25;1" dur="1.3s" begin="${(c2*0.14).toFixed(2)}s" repeatCount="indefinite"/>`:'')+`</rect>`;
+      }
+      s+=`</g>`;
+      s+=fit(269,y+104,9,grn,'клавиатура',{b:1},86);
+      /* мышь */
+      s+=`<rect x="252" y="${y+124}" width="26" height="38" rx="12" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.5"/>`;
+      s+=`<line x1="265" y1="${y+126}" x2="265" y2="${y+140}" stroke="${pur}" stroke-width="1.4"/>`;
+      s+=fit(284,y+146,8.5,pur,'мышь',{b:1},44);
+      const wy=band(0)+166;
+      s+=`<g class="${pre}Pop" style="animation-delay:.7s"><rect x="22" y="${wy}" width="274" height="30" rx="9" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.5"/>`
+        +fit(159,wy+20,9.5,cyan,'кулер крутится, строки на экране бегут, клавиши вспыхивают',{b:1},260)+`</g>`;
+      s+=plate2(22,wy+18,274,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='inf5ipo'){ /* схема: ввод → обработка → вывод */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11,grn,'как работает компьютер: три шага',{b:1},270)+`</g>`;
+      const cy=band(112);
+      const blk=[['ВВОД','информация попадает',cyan,'in'],['ОБРАБОТКА','программа считает',gold,'proc'],['ВЫВОД','результат виден',grn,'out']];
+      blk.forEach((q,k)=>{
+        const x=20+k*94;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="${x}" y="${cy}" width="88" height="96" rx="11" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.7"/>`;
+        const mx=x+44, my=cy+34;
+        if(q[3]==='in') s+=`<rect x="${mx-18}" y="${my-10}" width="36" height="20" rx="4" fill="none" stroke="${q[2]}" stroke-width="1.5"/><path d="M${mx-12} ${my+20} v-8 M${mx-4} ${my+20} v-8 M${mx+4} ${my+20} v-8 M${mx+12} ${my+20} v-8" stroke="${q[2]}" stroke-width="1.5"/>`;
+        else if(q[3]==='proc') s+=`<rect x="${mx-16}" y="${my-14}" width="32" height="30" rx="5" fill="rgba(255,215,106,.16)" stroke="${q[2]}" stroke-width="1.6"/><path d="M${mx-8} ${my} h16 M${mx} ${my-8} v16" stroke="${q[2]}" stroke-width="1.5"/>`;
+        else s+=`<rect x="${mx-19}" y="${my-13}" width="38" height="26" rx="4" fill="rgba(125,224,160,.16)" stroke="${q[2]}" stroke-width="1.6"/><path d="M${mx-13} ${my+3} h26" stroke="${q[2]}" stroke-width="1.4"/>`;
+        s+=fit(mx,cy+66,10.5,q[2],q[0],{b:1},82)+fit(mx,cy+80,8.5,dim,q[1],{},82)+`</g>`;
+        if(k<2){
+          const ax=x+90;
+          s+=`<path d="M${ax} ${cy+34} h4" stroke="${gold}" stroke-width="2"/>`;
+          s+=`<path d="M${ax+2} ${cy+28} l6 6 l-6 6" fill="none" stroke="${gold}" stroke-width="2"/>`;
+          s+=`<circle r="5" fill="${gold}"><animateMotion dur="2.4s" begin="${(k*1.2).toFixed(1)}s" repeatCount="indefinite" path="M${x+90} ${cy+34} L${x+94} ${cy+34}"/></circle>`;
+        }
+      });
+      /* бегущий пакет по всей цепочке */
+      s+=`<circle r="6" fill="#fff7e0"><animateMotion dur="4.2s" repeatCount="indefinite" path="M${20+44} ${cy+112} L${20+2*94+44} ${cy+112}"/></circle>`;
+      s+=`<path d="M${20+44} ${cy+104} L${20+2*94+44} ${cy+104}" stroke="${cardB}" stroke-width="1" stroke-dasharray="4 4"/>`;
+      const wy=band(0)+126;
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="20" y="${wy}" width="278" height="40" rx="10" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.5"/>`
+        +fit(159,wy+17,9.5,gold,'пример: клавиша → программа → буква на экране',{b:1},258)
+        +fit(159,wy+32,9,dim,'информация всегда идёт по этим трём шагам',{},258)+`</g>`;
+      s+=plate2(20,wy+42,278,30,go?grn:cardB,go?'порядок шагов важен':'какой шаг первый?',11,pre);
+      return s;
+    }
+    if(K==='inf5input'){ /* устройства ввода: сигналы идут в компьютер */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'ввод — информация попадает в компьютер',{b:1},282)+`</g>`;
+      const y=band(120);
+      const dev=[['клавиатура',cyan,'kb'],['мышь',cyan,'ms'],['камера',cyan,'cam'],['микрофон',cyan,'mic']];
+      dev.forEach((q,k)=>{
+        const x=22+k*70;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="62" height="62" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.6"/>`;
+        const cx=x+31, cy=y+31;
+        if(q[2]==='kb'){ for(let r2=0;r2<3;r2++) for(let c2=0;c2<4;c2++) s+=`<rect x="${cx-24+c2*13}" y="${cy-18+r2*13}" width="10" height="10" rx="2.5" fill="rgba(127,214,255,.28)" stroke="${q[1]}" stroke-width=".8"/>`; }
+        else if(q[2]==='ms') s+=`<rect x="${cx-9}" y="${cy-18}" width="18" height="34" rx="9" fill="rgba(127,214,255,.16)" stroke="${q[1]}" stroke-width="1.5"/><line x1="${cx}" y1="${cy-16}" x2="${cx}" y2="${cy-6}" stroke="${q[1]}" stroke-width="1.3"/>`;
+        else if(q[2]==='cam') s+=`<rect x="${cx-20}" y="${cy-12}" width="34" height="24" rx="5" fill="rgba(127,214,255,.14)" stroke="${q[1]}" stroke-width="1.5"/><circle cx="${cx}" cy="${cy}" r="7" fill="none" stroke="${q[1]}" stroke-width="1.5"/><path d="M${cx+14} ${cy-6} l8 -5 v17 l-8 -5 z" fill="rgba(127,214,255,.25)" stroke="${q[1]}" stroke-width="1.3"/>`;
+        else s+=`<rect x="${cx-7}" y="${cy-16}" width="14" height="26" rx="7" fill="rgba(127,214,255,.16)" stroke="${q[1]}" stroke-width="1.5"/><path d="M${cx+9} ${cy-5} q7 6 0 12 M${cx+15} ${cy-11} q11 11 0 22" fill="none" stroke="${q[1]}" stroke-width="1.3"/>`;
+        s+=fit(cx,y+52,8.5,q[1],q[0],{b:1},58)+`</g>`;
+        s+=`<circle r="4.5" fill="${gold}"><animateMotion dur="2.2s" begin="${(k*0.4).toFixed(1)}s" repeatCount="indefinite" path="M${cx} ${y+66} L${cx} ${y+92}"/></circle>`;
+      });
+      s+=`<rect x="24" y="${y+96}" width="266" height="26" rx="8" fill="rgba(125,224,160,.10)" stroke="${grn}" stroke-width="1.4"/>`;
+      s+=fit(159,y+113,9.5,grn,'всё это — устройства ввода',{b:1},250);
+      const wy=band(0)+136;
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="22" y="${wy}" width="274" height="30" rx="9" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.5"/>`
+        +fit(159,wy+20,9.5,cyan,'чем «заносят» информацию — то и ввод',{b:1},258)+`</g>`;
+      s+=plate2(22,wy+18,274,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='inf5process'){ /* обработка: число меняется по программе */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'обработка — работа по программе',{b:1},272)+`</g>`;
+      const y=band(104);
+      s+=`<rect x="34" y="${y}" width="112" height="96" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.7"/>`;
+      s+=`<rect x="48" y="${y+14}" width="84" height="68" rx="6" fill="rgba(255,215,106,.08)" stroke="${cardB}" stroke-width="1.2"/>`;
+      s+=`<text x="90" y="${y+42}" text-anchor="middle" font-size="10" font-family="'Courier New',monospace" fill="${dim}">программа</text>`;
+      ['x = x + 3','показать x'].forEach((t2,k)=>{
+        s+=fit(90,y+58+k*16,9,ink,t2,{b:1},76);
+      });
+      s+=`<circle cx="90" cy="${y+86}" r="5" fill="${gold}"><animate attributeName="opacity" values="1;.25;1" dur="1.6s" repeatCount="indefinite"/></circle>`;
+      s+=fit(90,y+112,9,gold,'выполняется шаг за шагом',{b:1},120);
+      s+=`<path d="M152 ${y+48} h22" stroke="${gold}" stroke-width="2.2"/><path d="M168 ${y+42} l6 6 l-6 6" fill="none" stroke="${gold}" stroke-width="2.2"/>`;
+      s+=`<rect x="182" y="${y+18}" width="112" height="68" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`;
+      s+=fit(238,y+40,10,grn,'значение x',{b:1},100);
+      s+=`<text x="238" y="${y+74}" text-anchor="middle" font-size="26" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">5<tspan opacity="0"> <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.3;.4;.95;1" dur="3s" repeatCount="indefinite"/></tspan><tspan opacity="0">8<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.45;.55;.95;1" dur="3s" repeatCount="indefinite"/></tspan></text>`;
+      s+=fit(238,y+96,9,dim,'5 + 3 = 8',{},90);
+      const wy=band(0)+126;
+      s+=`<g class="${pre}Pop" style="animation-delay:.7s"><rect x="22" y="${wy}" width="274" height="30" rx="9" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.5"/>`
+        +fit(159,wy+20,9.5,gold,'компьютер считает, ищет, сравнивает, рисует',{b:1},262)+`</g>`;
+      s+=plate2(22,wy+18,274,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='inf5output'){ /* вывод: результат наружу */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11,grn,'вывод — результат показывают обратно',{b:1},280)+`</g>`;
+      const y=band(112);
+      const dev=[['экран',grn,'mon'],['колонки',grn,'spk'],['принтер',grn,'prn'],['проектор',grn,'prj']];
+      dev.forEach((q,k)=>{
+        const x=22+k*70;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="62" height="62" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.6"/>`;
+        const cx=x+31, cy=y+31;
+        if(q[2]==='mon') s+=`<rect x="${cx-20}" y="${cy-16}" width="40" height="26" rx="4" fill="rgba(125,224,160,.14)" stroke="${q[1]}" stroke-width="1.5"/><path d="M${cx} ${cy+10} v6 M${cx-11} ${cy+16} h22" stroke="${q[1]}" stroke-width="1.5"/>`;
+        else if(q[2]==='spk') s+=`<rect x="${cx-16}" y="${cy-18}" width="32" height="38" rx="6" fill="rgba(125,224,160,.14)" stroke="${q[1]}" stroke-width="1.5"/><circle cx="${cx}" cy="${cy+2}" r="8" fill="none" stroke="${q[1]}" stroke-width="1.4"/><path d="M${cx+18} ${cy-8} q6 10 0 20" fill="none" stroke="${q[1]}" stroke-width="1.3"/>`;
+        else if(q[2]==='prn') s+=`<rect x="${cx-18}" y="${cy-6}" width="36" height="20" rx="4" fill="rgba(125,224,160,.14)" stroke="${q[1]}" stroke-width="1.5"/><rect x="${cx-10}" y="${cy-18}" width="20" height="12" rx="2" fill="none" stroke="${q[1]}" stroke-width="1.4"/><rect x="${cx-10}" y="${cy+14}" width="20" height="10" rx="2" fill="rgba(255,255,255,.10)" stroke="${q[1]}" stroke-width="1.2"/>`;
+        else s+=`<rect x="${cx-18}" y="${cy-12}" width="30" height="20" rx="4" fill="rgba(125,224,160,.14)" stroke="${q[1]}" stroke-width="1.5"/><path d="M${cx+12} ${cy-2} l10 -8 v20 l-10 -8 z" fill="rgba(125,224,160,.25)" stroke="${q[1]}" stroke-width="1.3"/>`;
+        s+=fit(cx,y+76,9,q[1],q[0],{b:1},66)+`</g>`;
+        s+=`<circle r="4.5" fill="${gold}"><animateMotion dur="2.2s" begin="${(k*0.4).toFixed(1)}s" repeatCount="indefinite" path="M${cx} ${y+100} L${cx} ${y+64}"/></circle>`;
+      });
+      s+=`<rect x="24" y="${y+92}" width="266" height="24" rx="8" fill="rgba(125,224,160,.10)" stroke="${grn}" stroke-width="1.4"/>`;
+      s+=fit(159,y+108,9.5,grn,'всё это — устройства вывода',{b:1},250);
+      const wy=band(0)+130;
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="22" y="${wy}" width="274" height="30" rx="9" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.5"/>`
+        +fit(159,wy+20,9.5,gold,'результат всегда виден или слышен человеку',{b:1},262)+`</g>`;
+      s+=plate2(22,wy+18,274,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='inf5example'){ /* пример: клавиша → программа → буква */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11,pur,'пример: нажали клавишу — появилась буква',{b:1},288)+`</g>`;
+      const y=band(120);
+      /* клавиатура с нажатой клавишей */
+      s+=`<rect x="24" y="${y+30}" width="76" height="60" rx="9" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`;
+      for(let r2=0;r2<3;r2++) for(let c2=0;c2<4;c2++){
+        const kx=31+c2*17, ky=y+38+r2*17, hot=(r2===1&&c2===1);
+        s+=`<rect x="${kx}" y="${ky}" width="14" height="14" rx="3" fill="${hot?'rgba(127,214,255,.7)':'rgba(255,255,255,.06)'}" stroke="${hot?cyan:cardB}" stroke-width=".9">`
+          +(hot?`<animate attributeName="fill-opacity" values="1;.3;1" dur="1.6s" repeatCount="indefinite"/>`:'')+`</rect>`;
+      }
+      s+=fit(62,y+108,9,cyan,'ввод: нажали клавишу',{b:1},130);
+      /* процессор */
+      s+=`<path d="M104 ${y+60} h20" stroke="${gold}" stroke-width="2.2"/><path d="M118 ${y+54} l6 6 l-6 6" fill="none" stroke="${gold}" stroke-width="2.2"/>`;
+      s+=`<rect x="128" y="${y+30}" width="70" height="60" rx="9" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.7"/>`;
+      s+=`<rect x="140" y="${y+44}" width="46" height="32" rx="5" fill="rgba(255,215,106,.14)" stroke="${gold}" stroke-width="1.4"/>`;
+      s+=`<text x="163" y="${y+65}" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">A→а</text>`;
+      s+=fit(163,y+108,9,gold,'обработка: программа',{b:1},150);
+      /* монитор с буквой */
+      s+=`<path d="M202 ${y+60} h20" stroke="${grn}" stroke-width="2.2"/><path d="M216 ${y+54} l6 6 l-6 6" fill="none" stroke="${grn}" stroke-width="2.2"/>`;
+      s+=`<rect x="226" y="${y+20}" width="70" height="56" rx="8" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`;
+      s+=`<rect x="233" y="${y+27}" width="56" height="42" rx="4" fill="rgba(125,224,160,.10)"/>`;
+      s+=`<text x="261" y="${y+56}" text-anchor="middle" font-size="22" font-family="Georgia,serif" font-weight="bold" fill="${grn}" opacity="0">А<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.35;.5;1" dur="3s" repeatCount="indefinite"/></text>`;
+      s+=fit(261,y+108,9,grn,'вывод: буква на экране',{b:1},150);
+      s+=`<circle r="6" fill="#fff7e0"><animateMotion dur="3s" repeatCount="indefinite" path="M62 ${y+60} L261 ${y+60}"/></circle>`;
+      const wy=band(0)+126;
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="22" y="${wy}" width="274" height="30" rx="9" fill="rgba(176,127,255,.10)" stroke="${pur}" stroke-width="1.5"/>`
+        +fit(159,wy+20,9.5,pur,'так работает любая программа',{b:1},252)+`</g>`;
+      s+=plate2(22,wy+18,274,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='inf5important'){ /* компьютер не понимает смысла */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.8"/>`
+        +fit(159,29,11,red,'компьютер делает только то, что в программе',{b:1},290)+`</g>`;
+      const y=band(120);
+      s+=`<rect x="24" y="${y+18}" width="120" height="96" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`;
+      s+=`<rect x="38" y="${y+30}" width="92" height="22" rx="5" fill="rgba(127,214,255,.12)" stroke="${cardB}" stroke-width="1.1"/>`;
+      ['1. взять число','2. прибавить 3','3. показать'].forEach((t2,k)=>{
+        s+=fit(84,y+46+k*18,9,ink,t2,{b:1},84)
+          +`<circle cx="46" cy="${y+42+k*18}" r="3.4" fill="${cyan}"><animate attributeName="opacity" values="1;.25;1" dur="1.5s" begin="${(k*0.4).toFixed(1)}s" repeatCount="indefinite"/></circle>`;
+      });
+      s+=fit(84,y+128,9,cyan,'программа человека',{b:1},130);
+      /* робот */
+      s+=`<rect x="176" y="${y+20}" width="76" height="62" rx="10" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.7"/>`;
+      s+=`<circle cx="199" cy="${y+44}" r="7" fill="none" stroke="${pur}" stroke-width="1.5"/><circle cx="229" cy="${y+44}" r="7" fill="none" stroke="${pur}" stroke-width="1.5"/>`;
+      s+=`<rect x="204" y="${y+60}" width="24" height="8" rx="4" fill="rgba(176,127,255,.35)"/>`;
+      s+=`<path d="M214 ${y+20} v-9 M206 ${y+11} h16" stroke="${pur}" stroke-width="1.6"/><circle cx="214" cy="${y+8}" r="4" fill="${red}"><animate attributeName="r" values="4;5.4;4" dur="1.8s" repeatCount="indefinite"/></circle>`;
+      s+=`<rect x="186" y="${y+82}" width="20" height="20" rx="5" fill="rgba(255,255,255,.05)" stroke="${pur}" stroke-width="1.3"/>`;
+      s+=`<rect x="222" y="${y+82}" width="20" height="20" rx="5" fill="rgba(255,255,255,.05)" stroke="${pur}" stroke-width="1.3"/>`;
+      s+=fit(214,y+128,9,pur,'исполнитель команд',{b:1},130);
+      s+=`<path d="M148 ${y+56} h22" stroke="${gold}" stroke-width="2.2"/><path d="M164 ${y+50} l6 6 l-6 6" fill="none" stroke="${gold}" stroke-width="2.2"/>`;
+      s+=`<circle cx="266" cy="${y+34}" r="14" fill="none" stroke="${red}" stroke-width="1.8" stroke-dasharray="4 3"><animate attributeName="stroke-opacity" values="1;.2;1" dur="1.6s" repeatCount="indefinite"/></circle>`;
+      s+=`<path d="M260 ${y+28} l12 12 M272 ${y+28} l-12 12" stroke="${red}" stroke-width="2.2"/>`;
+      s+=fit(266,y+60,8.5,red,'не понимает',{b:1},80);
+      const wy=band(0)+126;
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="22" y="${wy}" width="274" height="30" rx="9" fill="rgba(255,120,100,.10)" stroke="${red}" stroke-width="1.5"/>`
+        +fit(159,wy+20,9.5,red,'смысл придумывает человек, а не машина',{b:1},262)+`</g>`;
+      s+=plate2(22,wy+18,274,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='inf5quiz'){ /* тренажёр: ввод, обработка или вывод */
+      const opts=['ввод','вывод','обработка'];
+      const items=[{q:'клавиатура',ok:0},{q:'экран',ok:1},{q:'принтер',ok:1},{q:'микрофон',ok:0}];
+      const idx=(st&&typeof st.qi==='number')?st.qi:0;
+      const picks=(st&&st.qp)?st.qp:{};
+      const it=items[idx], answered=(picks[idx]!==undefined), correct=answered&&(picks[idx]===it.ok);
+      const score=Object.keys(picks).filter(k=>picks[k]===items[k].ok).length;
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,29,11,ink,'что это: ввод, обработка или вывод?',{b:1},280)+`</g>`;
+      let y=band(20);
+      for(let k=0;k<items.length;k++){
+        const on=(k===idx), ok=(picks[k]!==undefined&&picks[k]===items[k].ok);
+        s+=`<circle cx="${30+k*22}" cy="${y+8}" r="7" fill="${on?'rgba(217,164,65,.35)':(picks[k]!==undefined?(ok?'rgba(125,224,160,.35)':'rgba(255,120,100,.3)'):'rgba(255,255,255,.05)')}" stroke="${on?gold:cardB}" stroke-width="1.3"/>`
+          +tx(30+k*22,y+12,9,on?gold:dim,''+(k+1),{b:1});
+      }
+      s+=fit(250,y+12,9,dim,'верных: '+score+'/'+items.length,{an:'end',b:1},90);
+      y=band(86);
+      s+=`<rect x="20" y="${y}" width="278" height="80" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      const cx=159, cy=y+40;
+      if(it.q==='клавиатура'){ for(let r2=0;r2<3;r2++) for(let c2=0;c2<6;c2++) s+=`<rect x="${cx-48+c2*17}" y="${cy-28+r2*16}" width="14" height="13" rx="3" fill="rgba(127,214,255,.2)" stroke="${cyan}" stroke-width=".9"/>`; }
+      else if(it.q==='экран') s+=`<rect x="${cx-38}" y="${cy-28}" width="76" height="44" rx="5" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="1.6"/><path d="M${cx} ${cy+16} v10 M${cx-16} ${cy+26} h32" stroke="${grn}" stroke-width="1.6"/>`;
+      else if(it.q==='принтер') s+=`<rect x="${cx-34}" y="${cy-10}" width="68" height="30" rx="5" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.6"/><rect x="${cx-20}" y="${cy-28}" width="40" height="18" rx="3" fill="none" stroke="${grn}" stroke-width="1.4"/><rect x="${cx-20}" y="${cy+20}" width="40" height="14" rx="3" fill="rgba(255,255,255,.10)" stroke="${grn}" stroke-width="1.2"/>`;
+      else s+=`<rect x="${cx-9}" y="${cy-24}" width="18" height="34" rx="9" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="1.6"/><path d="M${cx+13} ${cy-8} q9 8 0 16 M${cx+21} ${cy-16} q14 14 0 30" fill="none" stroke="${cyan}" stroke-width="1.4"><animate attributeName="stroke-opacity" values="1;.3;1" dur="1.6s" repeatCount="indefinite"/></path>`;
+      s+=fit(52,y+16,8.5,dim,'карточка '+(idx+1)+' из '+items.length,{an:'start',b:1},110);
+      s+=`<circle cx="${cx}" cy="${cy}" r="34" fill="none" stroke="${gold}" stroke-width="1" opacity=".45"><animate attributeName="r" values="30;38;30" dur="2.6s" repeatCount="indefinite"/></circle>`;
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3s" repeatCount="indefinite" path="M${cx-56} ${y-14} L${cx+56} ${y-14}"/></circle>`;
+      y=band(40);
+      opts.forEach((t2,k)=>{
+        const x=24+k*92, on=(answered&&picks[idx]===k);
+        const good=(k===it.ok), c=on?(good?grn:red):(answered&&good?grn:cardB);
+        s+=`<g style="cursor:pointer" onclick="infQuiz('${lk}',${k})"><rect x="${x}" y="${y}" width="86" height="34" rx="9" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${c}" stroke-width="${on?2.2:(answered&&good?1.8:1.5)}"/>`
+          +fit(x+43,y+22,10.5,c,t2,{b:on},78)+`</g>`;
+      });
+      y=band(38);
+      s+=`<rect x="20" y="${y}" width="278" height="34" rx="10" fill="${answered?(correct?'rgba(125,224,160,.12)':'rgba(255,120,100,.12)'):'rgba(255,255,255,.04)'}" stroke="${answered?(correct?grn:red):cardB}" stroke-width="1.5"/>`;
+      s+=fit(159,y+18,10,answered?(correct?grn:red):dim,answered?(correct?'Верно! ':'Запомни: ')+(it.ok===0?'информация попадает в компьютер':'информация выходит из компьютера'):'выбери ответ',{b:answered},258);
+      y=band(36);
+      s+=`<g style="cursor:pointer" onclick="infQuiz('${lk}','next')"><rect x="88" y="${y}" width="142" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,y+20,10.5,gold,idx<items.length-1?'следующее устройство':'начать заново',{b:1},132)+`</g>`;
+      s+=`<g style="cursor:pointer" onclick="infQuiz('${lk}','reset')"><rect x="20" y="${y}" width="60" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+        +fit(50,y+20,10,dim,'сброс',{b:1},54)+`</g>`;
+      return s;
+    }
+    if(K==='inf5sheet'){ /* шпаргалка */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      const rows=[['информация','сведения об окружающем мире',cyan,'info'],
+                  ['четыре вида','текст · число · картинка · звук',gold,'four'],
+                  ['органы чувств','глаза · уши · нос · кожа',grn,'sense'],
+                  ['схема работы','ВВОД → ОБРАБОТКА → ВЫВОД',pur,'ipo'],
+                  ['правило','машина делает то, что в программе',red,'rule']];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'главное об информации и компьютере',{b:1},278)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=band(40);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.08+k*0.12).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.5"/>`
+          +`<rect x="30" y="${y+7}" width="22" height="20" rx="6" fill="rgba(255,255,255,.04)" stroke="${q[2]}" stroke-width="1.1"/>`;
+        const ix=41, iy=y+17;
+        if(q[3]==='info') s+=`<circle cx="${ix}" cy="${iy}" r="6" fill="none" stroke="${q[2]}" stroke-width="1.4"/><path d="M${ix} ${iy-8} v-3" stroke="${q[2]}" stroke-width="1.4"/>`;
+        else if(q[3]==='four') s+=`<rect x="${ix-7}" y="${iy-6}" width="5" height="12" fill="${q[2]}" opacity=".8"/><rect x="${ix}" y="${iy-6}" width="8" height="12" fill="${q[2]}" opacity=".4"/>`;
+        else if(q[3]==='sense') s+=`<path d="M${ix-6} ${iy} q6 -7 12 0 q-6 7 -12 0" fill="none" stroke="${q[2]}" stroke-width="1.3"/><circle cx="${ix}" cy="${iy}" r="2" fill="${q[2]}"/>`;
+        else if(q[3]==='ipo') s+=`<path d="M${ix-7} ${iy-4} h5 M${ix-2} ${iy-4} h5 M${ix+3} ${iy-4} h4" stroke="${q[2]}" stroke-width="1.4"/><path d="M${ix-7} ${iy+3} h14" stroke="${q[2]}" stroke-width="1.2"/>`;
+        else s+=`<path d="M${ix} ${iy-6} l6 10 h-12 z" fill="none" stroke="${q[2]}" stroke-width="1.4"/><path d="M${ix} ${iy+1} v3" stroke="${q[2]}" stroke-width="1.4"/>`;
+        s+=fit(150,y+15,9.5,q[2],q[0],{b:1},120)+fit(150,y+28,8.5,dim,q[1],{},196)+`</g>`;
+      });
+      const y=band(34);
+      s+=plate2(20,y-2,278,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'пять главных мыслей',11,pre);
+      s+=`<circle r="5" fill="${cyan}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M302 ${44} L302 ${y-6}"/></circle>`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -10561,6 +10903,17 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
     if(K==='secquiz') return 322;
     if(K==='secmistakes') return 274;
     if(K==='secsheet') return 286;
+    if(K==='inf5what') return 261;
+    if(K==='inf5senses') return 277;
+    if(K==='inf5machine') return 392;
+    if(K==='inf5ipo') return 368;
+    if(K==='inf5input') return 332;
+    if(K==='inf5process') return 307;
+    if(K==='inf5output') return 318;
+    if(K==='inf5example') return 322;
+    if(K==='inf5important') return 322;
+    if(K==='inf5quiz') return 271;
+    if(K==='inf5sheet') return 287;
     if(K==='d3intro') return 300;
     if(K==='d3flat') return 300;
     if(K==='d3points') return 292;
@@ -10923,17 +11276,17 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
         'Проверь себя: назови, что здесь ввод, обработка и вывод.',
         'Тренажёр и шпаргалка.' ],
       slides:[
-        {h:'Информация', v:{kind:'cards', items:[{t:'📝 текст', d:'слова, буквы', c:cyan},{t:'🔢 число', d:'цифры', c:gold},{t:'🖼 картинка', d:'изображение', c:grn},{t:'🔊 звук', d:'музыка, речь', c:pur}]}, r:'Информация — это сведения об окружающем мире.', d:'Текст, число, картинка и звук — четыре вида информации: компьютер умеет хранить и обрабатывать все четыре.'} ,
-        {h:'Как мы получаем', v:{kind:'cards', items:[{t:'👁 зрение', c:cyan},{t:'👂 слух', c:gold},{t:'👃 запах', c:grn},{t:'✋ осязание', c:pur}]}, r:'Информацию человек получает органами чувств.', d:'Глаза, уши, нос и кожа — «датчики» человека: через них информация попадает в мозг.'} ,
-        {h:'Компьютер', v:{kind:'machine'}, r:'Компьютер хранит, обрабатывает и передаёт информацию.', d:'Внутри системного блока крутится кулер, на экране бегут строки, на клавиатуре вспыхивают клавиши — компьютер всё время работает с данными.'} ,
-        {h:'Схема работы', v:{kind:'ipo'}, r:'ВВОД → ОБРАБОТКА → ВЫВОД.', d:'Точки бегут по стрелкам и показывают путь информации: сначала ввод, потом обработка, в конце вывод.'} ,
-        {h:'Ввод', v:{kind:'cards', items:[{t:'⌨ клавиатура', c:cyan},{t:'🖱 мышь', c:cyan},{t:'📷 камера', c:cyan},{t:'🎤 микрофон', c:cyan}]}, r:'Ввод — информация попадает в компьютер.', d:'Всё, чем информацию «заносят» в компьютер, — это устройства ввода.'} ,
-        {h:'Обработка', v:{kind:'text', lines:[{t:'Компьютер выполняет программу', b:1},{t:'и меняет информацию', b:1},{t:'(считает, ищет, рисует)', c:dim}]}, r:'Обработка — компьютер работает с информацией по программе.', d:'Обработка — работа по программе: компьютер считает, ищет, сравнивает и рисует.'} ,
-        {h:'Вывод', v:{kind:'cards', items:[{t:'🖥 экран', c:grn},{t:'🔊 колонки', c:grn},{t:'🖨 принтер', c:grn},{t:'📽 проектор', c:grn}]}, r:'Вывод — результат показывают обратно.', d:'Результат компьютер показывает обратно: на экран, в колонки, на бумагу.'} ,
-        {h:'Пример', v:{kind:'ipo'}, r:'Клавиша → программа → буква на экране.', d:'Нажали клавишу — программа обработала сигнал — на экране появилась буква. Так работает любая программа.'} ,
-        {h:'Важно', v:{kind:'text', lines:[{t:'Компьютер сам не «понимает»', b:1, c:red},{t:'Он делает только то, что', c:dim},{t:'заложил человек в программе', b:1, c:grn}]}, r:'Компьютер выполняет команды человека.', d:'Компьютер не понимает смысл того, что делает: он послушно выполняет то, что записал человек.'} ,
-        {h:'Тренажёр', v:{kind:'pick', q:'Клавиатура — это ввод или вывод?', opts:[{t:'ввод', ok:1},{t:'вывод'},{t:'обработка'}], exp:'Клавиатура «заносит» информацию в компьютер — это ввод.'}, r:'Проверь себя: ввод, обработка или вывод.', d:'Смотри на устройство и решай: информация попадает в компьютер или выходит из него?'} ,
-        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'информация', b:1},{t:'текст · число · картинка · звук', c:dim},{t:'ВВОД → ОБРАБОТКА → ВЫВОД', c:grn, b:1}]}, r:'Запомни три шага работы компьютера.', d:'Запомни порядок: информация → ввод → обработка → вывод.'} ],
+        {h:'Информация', v:{kind:'inf5what', items:[{t:'📝 текст', d:'слова, буквы', c:cyan},{t:'🔢 число', d:'цифры', c:gold},{t:'🖼 картинка', d:'изображение', c:grn},{t:'🔊 звук', d:'музыка, речь', c:pur}]}, r:'Информация — это сведения об окружающем мире.', d:'Текст, число, картинка и звук — четыре вида информации: компьютер умеет хранить и обрабатывать все четыре.'} ,
+        {h:'Как мы получаем', v:{kind:'inf5senses', items:[{t:'👁 зрение', c:cyan},{t:'👂 слух', c:gold},{t:'👃 запах', c:grn},{t:'✋ осязание', c:pur}]}, r:'Информацию человек получает органами чувств.', d:'Глаза, уши, нос и кожа — «датчики» человека: через них информация попадает в мозг.'} ,
+        {h:'Компьютер', v:{kind:'inf5machine'}, r:'Компьютер хранит, обрабатывает и передаёт информацию.', d:'Внутри системного блока крутится кулер, на экране бегут строки, на клавиатуре вспыхивают клавиши — компьютер всё время работает с данными.'} ,
+        {h:'Схема работы', v:{kind:'inf5ipo'}, r:'ВВОД → ОБРАБОТКА → ВЫВОД.', d:'Точки бегут по стрелкам и показывают путь информации: сначала ввод, потом обработка, в конце вывод.'} ,
+        {h:'Ввод', v:{kind:'inf5input', items:[{t:'⌨ клавиатура', c:cyan},{t:'🖱 мышь', c:cyan},{t:'📷 камера', c:cyan},{t:'🎤 микрофон', c:cyan}]}, r:'Ввод — информация попадает в компьютер.', d:'Всё, чем информацию «заносят» в компьютер, — это устройства ввода.'} ,
+        {h:'Обработка', v:{kind:'inf5process', lines:[{t:'Компьютер выполняет программу', b:1},{t:'и меняет информацию', b:1},{t:'(считает, ищет, рисует)', c:dim}]}, r:'Обработка — компьютер работает с информацией по программе.', d:'Обработка — работа по программе: компьютер считает, ищет, сравнивает и рисует.'} ,
+        {h:'Вывод', v:{kind:'inf5output', items:[{t:'🖥 экран', c:grn},{t:'🔊 колонки', c:grn},{t:'🖨 принтер', c:grn},{t:'📽 проектор', c:grn}]}, r:'Вывод — результат показывают обратно.', d:'Результат компьютер показывает обратно: на экран, в колонки, на бумагу.'} ,
+        {h:'Пример', v:{kind:'inf5example'}, r:'Клавиша → программа → буква на экране.', d:'Нажали клавишу — программа обработала сигнал — на экране появилась буква. Так работает любая программа.'} ,
+        {h:'Важно', v:{kind:'inf5important', lines:[{t:'Компьютер сам не «понимает»', b:1, c:red},{t:'Он делает только то, что', c:dim},{t:'заложил человек в программе', b:1, c:grn}]}, r:'Компьютер выполняет команды человека.', d:'Компьютер не понимает смысл того, что делает: он послушно выполняет то, что записал человек.'} ,
+        {h:'Тренажёр', v:{kind:'inf5quiz', q:'Клавиатура — это ввод или вывод?', opts:[{t:'ввод', ok:1},{t:'вывод'},{t:'обработка'}], exp:'Клавиатура «заносит» информацию в компьютер — это ввод.'}, r:'Проверь себя: ввод, обработка или вывод.', d:'Смотри на устройство и решай: информация попадает в компьютер или выходит из него?'} ,
+        {h:'Шпаргалка', v:{kind:'inf5sheet', lines:[{t:'информация', b:1},{t:'текст · число · картинка · звук', c:dim},{t:'ВВОД → ОБРАБОТКА → ВЫВОД', c:grn, b:1}]}, r:'Запомни три шага работы компьютера.', d:'Запомни порядок: информация → ввод → обработка → вывод.'} ],
       check:{ q:'Что компьютер делает с информацией?', choices:['хранит, обрабатывает, передаёт','только рисует','ничего'], ans:0, exp:'Компьютер хранит, обрабатывает и передаёт информацию.' },
       tasks:[
         {q:'Что из этого — ВВОД информации?', kind:'choice', choices:['клавиатура','экран','принтер','колонки'], ans:0, tol:0, hints:['Ввод — информация попадает В компьютер.','Клавиатура вводит.'], sol:'клавиатура'},
@@ -12535,7 +12888,7 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz'||s.v.kind==='robotlab'||s.v.kind==='robotquiz'||s.v.kind==='modellab'||s.v.kind==='modelquiz'||s.v.kind==='d3lab'||s.v.kind==='d3quiz'||s.v.kind==='gfxlab'||s.v.kind==='gfxquiz'||s.v.kind==='animlab'||s.v.kind==='animquiz'||s.v.kind==='secpassmeter'||s.v.kind==='secphish3'||s.v.kind==='secquiz');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz'||s.v.kind==='robotlab'||s.v.kind==='robotquiz'||s.v.kind==='modellab'||s.v.kind==='modelquiz'||s.v.kind==='d3lab'||s.v.kind==='d3quiz'||s.v.kind==='gfxlab'||s.v.kind==='gfxquiz'||s.v.kind==='animlab'||s.v.kind==='animquiz'||s.v.kind==='secpassmeter'||s.v.kind==='secphish3'||s.v.kind==='secquiz'||s.v.kind==='inf5quiz');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -12592,6 +12945,14 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infQuiz=function(lk,val){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(!st.qp) st.qp={};
+    if(val==='reset'){ st.qp={}; st.qi=0; chRender(0); return; }
+    if(val==='next'){ st.qi=((typeof st.qi==='number')?st.qi:0)+1; if(st.qi>3) st.qi=0; chRender(0); return; }
+    st.qp[(typeof st.qi==='number')?st.qi:0]=val|0;
+    chRender(0);
+  };
   window.infPass=function(lk,val){
     const st=CHS[lk]||(CHS[lk]={});
     st.spw=(typeof val==='string')?val:(st.spw||'');
