@@ -9380,121 +9380,211 @@ function l96Scene(sunPos,uid){
     <text x="${W-3}" y="${H-6}" fill="#eaf3f8" font-size="8.5" text-anchor="end">солнце: ${sunPos==='left'?'слева':sunPos==='right'?'справа':'высоко'}</text>
   </svg>`;
 }
+/* Урок 96 «Свет и тень» — в стиле урока 49: HTML/CSS-схемы + опыты кнопками */
+function l96css(){
+  if(document.getElementById('l96css')) return;
+  const st=document.createElement('style'); st.id='l96css';
+  st.textContent=`
+  @keyframes l96ray{from{opacity:.35}to{opacity:.95}}
+  @keyframes l96tw{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  .l96-scene{position:relative;height:150px;border-radius:12px;overflow:hidden;
+    background:linear-gradient(180deg,#1a2634,#0e1620 70%,#161009)}
+  .l96-ground{position:absolute;left:0;right:0;bottom:0;height:26px;background:linear-gradient(180deg,#3a2e22,#20180f)}
+  .l96-sun{position:absolute;width:34px;height:34px;border-radius:50%;
+    background:radial-gradient(circle at 40% 38%,#fff6d8,#ffd76a 45%,#ff9d3c 78%,rgba(255,157,60,0));
+    box-shadow:0 0 22px rgba(255,196,90,.75);transition:left .7s,top .7s;animation:l96tw 3.4s ease-in-out infinite}
+  .l96-tree{position:absolute;bottom:22px;left:50%;margin-left:-16px;width:32px;height:64px}
+  .l96-trunk{position:absolute;left:13px;bottom:0;width:7px;height:26px;background:#6b4a2c;border-radius:2px}
+  .l96-crown{position:absolute;left:0;bottom:18px;width:32px;height:26px;border-radius:50% 50% 45% 45%;
+    background:radial-gradient(circle at 38% 32%,#8fd6a0,#3f8b58 70%,#255c39)}
+  .l96-sh{position:absolute;bottom:20px;height:8px;border-radius:5px;background:rgba(6,9,14,.85);
+    filter:blur(1.1px);transition:left .7s,width .7s}
+  .l96-ray{position:absolute;height:2px;background:linear-gradient(90deg,rgba(255,215,106,.9),rgba(255,215,106,.05));
+    transform-origin:0 50%;animation:l96ray 1.6s ease-in-out infinite alternate}
+  .l96-mirror{position:absolute;bottom:22px;left:50%;margin-left:-6px;width:12px;height:56px;border-radius:3px;
+    background:linear-gradient(100deg,#9fe4ff,#eaf7ff 40%,#7fb8cf);box-shadow:0 0 12px rgba(160,220,255,.5);transition:transform .7s}
+  .l96-glass{position:relative;width:52px;height:76px;border:2px solid rgba(200,235,255,.5);border-radius:5px 5px 10px 10px;
+    background:linear-gradient(180deg,rgba(190,230,255,.16),rgba(120,190,230,.4));overflow:hidden}
+  .l96-pencil{position:absolute;left:22px;top:6px;width:5px;height:70px;border-radius:2px;
+    background:linear-gradient(180deg,#ffd76a 0 12%,#e8b23c 12% 100%);transition:transform .7s}
+  .l96-prism{width:0;height:0;border-left:26px solid transparent;border-right:26px solid transparent;border-bottom:42px solid rgba(200,235,255,.35);
+    position:relative;filter:drop-shadow(0 0 8px rgba(190,230,255,.35))}
+  .l96-band{height:7px;border-radius:4px;margin:2px 0;transition:width .8s}
+  .l96-card{border-radius:12px;padding:8px 12px;background:linear-gradient(170deg,rgba(24,47,36,.95),rgba(14,24,48,.6));
+    border:1px solid rgba(217,164,65,.28);font-size:12.5px;color:#e6eef6}
+  .l96-ecl{position:relative;height:110px;border-radius:12px;background:radial-gradient(circle at 20% 50%,rgba(255,214,106,.18),transparent 60%),#0d1520;overflow:hidden}
+  .l96-orb{position:absolute;top:50%;transform:translateY(-50%);border-radius:50%}
+  `;
+  document.head.appendChild(st);
+}
+function l96Act(lk,act){
+  const st=CHS[lk]||(CHS[lk]={});
+  if(st.sun==null) st.sun='left';
+  if(act==='sunL') st.sun='left'; else if(act==='sunT') st.sun='top'; else if(act==='sunR') st.sun='right';
+  else if(act==='far') st.far=!st.far; else if(act==='big') st.big=!st.big;
+  else if(act==='mirror') st.ang=((st.ang||30)+15)%90;
+  else if(act==='water') st.water=!st.water;
+  else if(act==='reset'){ st.sun='left'; st.far=0; st.big=0; st.ang=30; st.water=0; }
+  try{ renderLessonView(); }catch(e){}
+}
+function l96Scene(sunPos,far,big){
+  const sun={left:'left:8px;top:14px',top:'left:50%;margin-left:-17px;top:6px',right:'right:8px;top:14px'}[sunPos||'left'];
+  const dir=(sunPos==='top')?0:((sunPos==='right')?1:-1);
+  const w=far?86:(big?64:44), x=dir===0?(50- (w/2)):(dir<0?(50+8):(50-w-8));
+  const rays=[0,1,2].map(k=>{
+    const ang=(sunPos==='top')?(90+ (k-1)*18):((sunPos==='left')?(28+(k-1)*16):(152+(k-1)*16));
+    return `<div class="l96-ray" style="left:${sunPos==='right'?'calc(100% - 40px)':'20px'};top:${sunPos==='top'?'30px':'44px'};width:${sunPos==='top'?70:120}px;transform:rotate(${ang}deg);animation-delay:${(k*0.25).toFixed(2)}s"></div>`;
+  }).join('');
+  return `<div class="l96-scene"><div class="l96-ground"></div>
+    <div class="l96-sun" style="${sun}"></div>${rays}
+    <div class="l96-tree"><div class="l96-crown"></div><div class="l96-trunk"></div></div>
+    <div class="l96-sh" style="left:${x}%;width:${w}px"></div></div>`;
+}
+function l96Mirror(ang){
+  return `<div class="l96-scene"><div class="l96-ground"></div>
+    <div class="l96-ray" style="left:20px;top:60px;width:120px;transform:rotate(18deg)"></div>
+    <div class="l96-mirror" style="transform:rotate(${(-(ang||30)/2).toFixed(0)}deg)"></div>
+    <div class="l96-ray" style="left:calc(50% + 4px);top:62px;width:120px;transform:rotate(${(-(ang||30)-18).toFixed(0)}deg);background:linear-gradient(90deg,rgba(160,220,255,.95),rgba(160,220,255,.05))"></div>
+    <div style="position:absolute;left:calc(50% + 117px);top:${62 - Math.round(Math.tan(((ang||30)+18)*Math.PI/180)*117)}px;font-size:20px">👁</div></div>`;
+}
 function visL96(el){
   try{
+    l96css();
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     const step=LV.step||0;
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(t,ex)=>`<div class="wv-big" ${ex||''}>${t}</div>`;
-    const sml=(t)=>`<div class="wv-sml">${t}</div>`;
-    const btns=(...bs)=>`<div class="wv-row">${bs.join('')}</div>`;
-    const btn=(txt,on,extra)=>`<button class="hint-btn" onclick="${on}" ${extra||''}>${txt}</button>`;
-    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:15px;color:#d8ecff;margin:2px">${t}</span>`;
-    const rowC=(inner)=>`<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:2px 0">${inner}</div>`;
+    const big=x=>`<div class="wv-big">${x}</div>`;
+    const sml=x=>`<div class="wv-sml">${x}</div>`;
+    const row=(...b)=>`<div class="wv-row">${b.join('')}</div>`;
+    const rowC=(...p)=>`<div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:4px 0">${p.join('')}</div>`;
+    const btn=(txt,on)=>`<button class="hint-btn" onclick="${on}">${txt}</button>`;
+    const SUNB=row(btn('☀️ свет слева',`l96Act('${lk}','sunL')`),btn('☀️ свет сверху',`l96Act('${lk}','sunT')`),btn('☀️ свет справа',`l96Act('${lk}','sunR')`),btn('↺',`l96Act('${lk}','reset')`));
+    const card=(x)=>`<div class="l96-card">${x}</div>`;
+    const where=st.sun==='top'?'под деревом':(st.sun==='right'?'слева от дерева':'справа от дерева');
     let h='';
     if(step===0){
-      h=col(big('Откуда берётся тень?'),
-        `<div style="font-size:44px" class="wv-pulse">🌞</div>`+
-        sml('в солнечный день за деревом появляется тень. Почему? Всё дело в том, как распространяется свет!'));
+      h=col(big('Почему появляется тень?'), l96Scene(st.sun), SUNB,
+        card(`свет идёт по прямой — за деревом остаётся тёмная область: <b style="color:#ffd76a">${where}</b>`),
+        sml('свет не огибает предмет: он идёт прямыми лучами, поэтому за препятствием темно'));
     } else if(step===1){
-      h=col(big('Источники света'),
-        rowC(chip('Солнце','rgba(127,209,255,.5)'),chip('лампочка','rgba(127,184,160,.5)'),chip('свеча','rgba(232,160,90,.5)'),chip('звёзды','rgba(127,209,255,.5)'))+
-        sml('источник света светит САМ. Как в нашей проверке!'));
+      h=col(big('Источники света: кто светит сам'),
+        rowC(...[['☀️','Солнце','само'],['⭐','звезда','само'],['💡','лампа','само'],['🕯','свеча','само']].map(q=>
+          `<div class="l96-card" style="text-align:center;min-width:70px"><div style="font-size:24px">${q[0]}</div>
+           <div style="font-size:10.5px">${q[1]}</div><div style="font-size:9px;color:#7de0a0">${q[2]}</div></div>`)),
+        sml('естественные источники: Солнце, звёзды, молния, огонь. искусственные: лампа, свеча, экран'));
     } else if(step===2){
-      h=col(big('А Луна?'),
-        rowC(chip('Луна НЕ светит сама','rgba(232,160,90,.5)'),chip('она отражает свет Солнца','rgba(127,209,255,.5)'),chip('как зеркало','rgba(127,184,160,.5)'))+
-        `<div style="font-size:40px" class="wv-flick">🌙</div>`+
-        sml('Луна и зеркало — не источники! Они лишь отражают чужой свет'));
+      h=col(big('А Луна и зеркало — не источники'),
+        rowC(`<div class="l96-card" style="text-align:center"><div style="font-size:26px">🌙</div><div style="font-size:10px;color:#9fb0aa">отражает свет Солнца</div></div>`,
+             `<div class="l96-card" style="text-align:center"><div style="font-size:26px">🪞</div><div style="font-size:10px;color:#9fb0aa">отражает свет лампы</div></div>`),
+        sml('мы видим Луну, стену и эту страницу только потому, что от них в глаза попадает отражённый свет'));
     } else if(step===3){
       h=col(big('Свет идёт по прямой'),
-        rowC(chip('лучи — прямые линии','rgba(127,209,255,.5)'),chip('свет не огибает углы','rgba(232,160,90,.5)'))+
-        sml('свет распространяется прямолинейно — не сворачивает и не огибает предметы!'));
+        l96Scene(st.sun), SUNB,
+        card('меняй положение солнца — лучи всегда прямые, а тень переезжает на другую сторону'),
+        sml('скорость света 300 000 км/с: за секунду он облетает Землю 7,5 раза'));
     } else if(step===4){
-      h=col(big('Почему появляется тень'),
-        l96Scene('left','a')+
-        sml('дерево непрозрачное — лучи не проходят сквозь него. За деревом света нет — вот и тень!'));
+      h=col(big('Тень: что нужно для её появления'),
+        rowC(card('1 · источник света'),card('2 · непрозрачный предмет'),card('3 · экран за предметом')),
+        l96Scene(st.sun), SUNB, sml('убери любую из трёх частей — и тени не будет'));
     } else if(step===5){
-      h=col(big('Тень — там, где нет света'),
-        rowC(chip('свет слева → тень справа','rgba(127,209,255,.5)'),chip('свет справа → тень слева','rgba(127,184,160,.5)'))+
-        l96Scene('right','b')+
-        sml('тень всегда ПРОТИВОПОЛОЖНА источнику света!'));
+      h=col(big('Тень всегда напротив источника'), l96Scene(st.sun), SUNB,
+        card(`солнце ${st.sun==='top'?'сверху':(st.sun==='right'?'справа':'слева')} → тень <b style="color:#ffd76a">${where}</b>`),
+        sml('это главное правило: куда светит — оттуда и тень, а не наоборот'));
     } else if(step===6){
-      h=col(big('Задача 1: дерево и солнце'),
-        l96Scene('left','c')+
-        rowC(chip('солнце слева от дерева','rgba(127,209,255,.5)'))+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">тень будет СПРАВА от дерева!</div>`+
-        sml('как в наших задачках: лучи идут слева направо — за деревом света нет'));
+      h=col(big('Размер тени зависит от расстояния'),
+        l96Scene(st.sun, st.far, st.big),
+        row(btn('предмет дальше от экрана',`l96Act('${lk}','far')`),btn('предмет ближе к лампе',`l96Act('${lk}','big')`),btn('↺',`l96Act('${lk}','reset')`)),
+        sml('ближе предмет к источнику и дальше экран — тень больше. Фонарик у ладони даёт огромную тень на стене'));
     } else if(step===7){
-      h=col(big('Солнце движется по небу'),
-        rowC(chip('утро — солнце низко у горизонта','rgba(232,160,90,.5)'),chip('полдень — высоко над головой','rgba(127,209,255,.5)'),chip('вечер — снова низко','rgba(232,160,90,.5)'))+
-        sml('вместе с солнцем «гуляет» и тень!'));
+      h=col(big('Точечный источник и большой источник'),
+        rowC(`<div class="l96-card" style="text-align:center"><div style="font-size:22px">💡</div><div style="font-size:10px;color:#7de0a0">точечный → резкая тень</div></div>`,
+             `<div class="l96-card" style="text-align:center"><div style="font-size:26px">☀️</div><div style="font-size:10px;color:#ffd76a">большой → полутень</div></div>`),
+        sml('у Солнца есть размер, поэтому края тени размыты — это полутень, мягкая серая кайма'));
     } else if(step===8){
-      h=col(big('Утро: длинная тень'),
-        l96Scene('left','d')+
-        sml('солнце низко — лучи скользят по земле — тень длинная и вытянутая'));
+      h=col(big('Солнце движется — тень меняется'),
+        l96Scene(st.sun), SUNB,
+        card('утром и вечером солнце низко — тень длинная; в полдень солнце высоко — тень короткая, лежит под предметом'),
+        sml('поставь солнце сверху — тень станет самой короткой'));
     } else if(step===9){
-      h=col(big('Полдень: тень короткая'),
-        l96Scene('top','e')+
-        sml('солнце высоко — лучи падают почти отвесно — тень коротенькая, почти под деревом!'));
-    } else if(step===10){
-      h=col(big('Задача 2: когда тень короче?'),
-        l96Scene('top','f')+
-        rowC(chip('утром — низко, тень длинная','rgba(232,160,90,.5)'),chip('в полдень — высоко, тень короткая','rgba(127,209,255,.5)'),chip('вечером — опять длинная','rgba(232,160,90,.5)'))+
-        `<div class="wv-ans" style="font-size:22px;color:#7fd1a0">в полдень!</div>`+
-        sml('как в наших задачках: выше солнце — короче тень'));
-    } else if(step===11){
       h=col(big('Солнечные часы'),
-        rowC(chip('тень от столбика','rgba(127,209,255,.5)'),chip('указывает время!','rgba(127,184,160,.5)'))+
-        sml('древние люди мерили время по тени: её направление меняется в течение дня'));
+        `<div class="l96-scene"><div class="l96-ground"></div>
+          <div class="l96-sun" style="left:20px;top:16px"></div>
+          <div style="position:absolute;bottom:20px;left:50%;margin-left:-3px;width:6px;height:44px;background:#d8cbb8;border-radius:3px"></div>
+          <div class="l96-sh" style="left:50%;width:120px;transform:rotate(24deg);transform-origin:0 50%"></div>
+          ${[0,1,2,3,4,5].map(k=>`<div style="position:absolute;bottom:22px;left:50%;width:96px;height:1px;background:rgba(255,215,106,.35);transform:rotate(${-40+k*16}deg);transform-origin:0 50%"></div>`).join('')}
+        </div>`,
+        sml('тень от столбика-гномона заменяла стрелку часов: за день она описывает круг'));
+    } else if(step===10){
+      h=col(big('Пасмурный день — теней почти нет'),
+        rowC(`<div class="l96-card" style="text-align:center"><div style="font-size:24px">☁️</div><div style="font-size:10px;color:#9fb0aa">облака рассеивают свет</div></div>`,
+             `<div class="l96-card" style="text-align:center"><div style="font-size:24px">🌫</div><div style="font-size:10px;color:#9fb0aa">свет приходит со всех сторон</div></div>`),
+        sml('поэтому в тени дерева светло, а под матовым плафоном нет резких теней'));
+    } else if(step===11){
+      h=col(big('Отражение: угол падения равен углу отражения'),
+        l96Mirror(st.ang),
+        row(btn('повернуть зеркало',`l96Act('${lk}','mirror')`),btn('↺',`l96Act('${lk}','reset')`)),
+        sml('свет «отскакивает» от зеркала, как мяч от стены — поэтому мы видим себя в зеркале'));
     } else if(step===12){
-      h=col(big('Тень в туннеле?'),
-        rowC(chip('лампочка маленькая — тень резкая','rgba(127,209,255,.5)'),chip('большой свет — тень мягкая','rgba(127,184,160,.5)'))+
-        sml('в пасмурный день Солнце «размазано» облаками — теней почти нет!'));
+      h=col(big('Где работает отражение'),
+        rowC(...[['🔭','перископ'],['🚲','светоотражатель'],['📷','зеркальный фотоаппарат'],['🪞','зеркало']].map(q=>
+          `<div class="l96-card" style="text-align:center;min-width:76px"><div style="font-size:24px">${q[0]}</div><div style="font-size:10px;color:#9fb0aa">${q[1]}</div></div>`)),
+        sml('ночью светоотражатель «светится» отражённым светом фар, хотя сам не светит'));
     } else if(step===13){
-      h=col(big('Полутень'),
-        rowC(chip('край тени не всегда чёткий','rgba(127,209,255,.5)'),chip('часть света всё же пробивается','rgba(127,184,160,.5)'))+
-        sml('у Солнца есть размер — поэтому у теней бывает мягкий размытый край (полутень)'));
+      const bend=st.water?32:0;
+      h=col(big('Преломление: свет меняет направление'),
+        rowC(`<div style="position:relative;height:96px;width:60px">
+            <div class="l96-pencil" style="transform:rotate(${bend}deg) translateX(${st.water?6:0}px)"></div>
+            <div class="l96-glass" style="position:absolute;left:4px;bottom:0;height:64px">
+              <div style="position:absolute;left:0;right:0;bottom:0;height:${st.water?42:0}px;background:rgba(120,190,230,.5);transition:height .7s"></div></div></div>`,
+          card('ложка в стакане чая кажется сломанной, дно бассейна — ближе, чем на самом деле')),
+        row(btn(st.water?'убрать воду':'долить воду',`l96Act('${lk}','water')`)),
+        sml('в воде и стекле свет идёт медленнее и меняет направление — это преломление'));
     } else if(step===14){
-      h=col(big('Свет в жизни'),
-        rowC(chip('солнечные очки','rgba(127,209,255,.4)'),chip('шторы','rgba(127,209,255,.4)'),chip('зонтик','rgba(127,209,255,.4)'),chip('кино-проектор','rgba(127,209,255,.4)'))+
-        sml('везде, где свет встречает преграду, — появляется тень: и это можно использовать!'));
+      h=col(big('Линза собирает свет'),
+        rowC(`<div class="l96-card" style="text-align:center"><div style="font-size:26px">🔍</div><div style="font-size:10px;color:#7de0a0">лупа: выпуклая линза</div></div>`,
+             `<div class="l96-card" style="text-align:center"><div style="font-size:26px">👓</div><div style="font-size:10px;color:#7fd1ff">очки</div></div>`,
+             `<div class="l96-card" style="text-align:center"><div style="font-size:26px">👁</div><div style="font-size:10px;color:#ffd76a">глаз</div></div>`),
+        sml('собирающая линза сводит лучи в точку и даёт увеличенное изображение'));
     } else if(step===15){
-      h=col(big('Проверь себя'),
-        rowC(chip('свет сверху → тень под предметом','rgba(127,184,160,.5)'),chip('свет слева → тень справа','rgba(127,184,160,.5)'))+
-        sml('тень всегда с противоположной от света стороны!'));
+      const cols=['#ff5a6e','#ff9d3c','#ffe066','#7de0a0','#7fd1ff','#8f7dff','#b07fff'];
+      h=col(big('Белый свет состоит из цветов радуги'),
+        `<div class="l96-card"><div class="l96-prism" style="margin:6px auto"></div>
+          ${cols.map((c,k)=>`<div class="l96-band" style="width:${(40+k*30)}px;background:${c};margin-left:${20+k*18}px"></div>`).join('')}</div>`,
+        sml('призма и капли воды раскладывают белый свет на цвета — это дисперсия; радуга — миллионы капель-призм'));
     } else if(step===16){
-      const POOL=[['left','полдень'],['top','полдень'],['right','полдень'],['left','вечер'],['top','утро'],['right','вечер'],['left','утро'],['top','вечер']];
-      if(st.i==null) st.i=0;
-      const e=POOL[st.i], pos=e[0], time=e[1];
-      let side;
-      if(pos==='left') side='справа от дерева';
-      else if(pos==='right') side='слева от дерева';
-      else side='прямо под деревом (короткая)';
-      const ans=side;
-      const firstStep='лучи идут '+(pos==='left'?'слева → тень справа':pos==='right'?'справа → тень слева':'сверху → тень внизу, короткая');
-      h=col(big('🌞 Тренажёр: где тень?'),
-        `<div class="wv-row">${chip('солнце '+(pos==='left'?'слева':pos==='right'?'справа':'высоко')+' от дерева — где тень?','rgba(217,164,65,.35)')}</div>`+
-        l96Scene(pos,'t')+
-        (st.s1? `<div class="l35-pop" style="font-size:17px;text-align:center;color:#ffd9a0;max-width:280px">1) ${firstStep}</div>`:'')+
-        (st.s2? `<div class="wv-ans" style="font-size:22px;color:#7fd1a0;font-weight:bold">тень — ${ans}</div>`:'')+
-        btns(btn('1️⃣ подумай',`l96Act('${lk}','s1')`),btn('2️⃣ ответ',`l96Act('${lk}','s2')`),btn('🎲 другой',`l96Act('${lk}','n')`),btn('↺',`l96Act('${lk}','r')`))+
-        sml('тень всегда с противоположной от солнца стороны!'));
+      h=col(big('Затмения: когда одно тело закрывает свет другого'),
+        `<div class="l96-ecl">
+          <div class="l96-orb" style="left:14%;width:52px;height:52px;background:radial-gradient(circle at 40% 40%,#fff6d8,#ffd76a 50%,#ff9d3c)"></div>
+          <div class="l96-orb" style="left:46%;width:26px;height:26px;background:radial-gradient(circle at 38% 34%,#cfd6da,#7d8489)"></div>
+          <div class="l96-orb" style="left:76%;width:58px;height:58px;background:radial-gradient(circle at 38% 34%,#6fb4f0,#2c5f96)"></div>
+          <div style="position:absolute;left:14%;bottom:8px;font-size:9px;color:#ffd76a">Солнце</div>
+          <div style="position:absolute;left:46%;bottom:8px;font-size:9px;color:#cfd6da">Луна</div>
+          <div style="position:absolute;left:76%;bottom:8px;font-size:9px;color:#7fd1ff">Земля</div></div>`,
+        sml('солнечное затмение: Луна закрывает Солнце; лунное: Земля закрывает Луне свет'));
+    } else if(step===17){
+      h=col(big('Свет в быту'),
+        rowC(...[['🪟','шторы'],['☂️','зонтик'],['🕶','очки'],['📽','проектор']].map(q=>
+          `<div class="l96-card" style="text-align:center;min-width:74px"><div style="font-size:24px">${q[0]}</div><div style="font-size:10px;color:#9fb0aa">${q[1]}</div></div>`)),
+        sml('проектор посылает луч на экран — и мы видим фильм благодаря отражению света'));
+    } else if(step===18){
+      h=col(big('Как решать задачи про тень'),
+        card('1 · найди источник света<br>2 · определи, с какой он стороны<br>3 · тень будет с противоположной стороны<br>4 · чем ниже источник, тем длиннее тень'),
+        l96Scene(st.sun), SUNB, sml('проверь правило на схеме: меняй солнце и смотри, куда уезжает тень'));
+    } else if(step===19){
+      h=col(big('Пример: солнце в зените'), l96Scene('top'), SUNB,
+        card('лучи падают сверху — тень лежит прямо под предметом и она самая короткая за день'),
+        sml('именно в этот момент солнечные часы показывают полдень'));
+    } else if(step===20){
+      h=col(big('Запомни главное'),
+        card('свет идёт по прямой<br>источники светят сами, остальные отражают<br>тень — с противоположной стороны от источника<br>ниже источник — длиннее тень<br>угол падения равен углу отражения<br>в воде свет преломляется<br>белый свет состоит из цветов радуги'));
     } else {
-      h=col(`<div style="font-size:50px">📜</div>`+big('Совет Архимеда')+
-        `<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
-          <div style="width:88px;opacity:.95">${typeof l35ArchSvg==='function'?l35ArchSvg(88,'down'):''}</div>
-          <div style="background:rgba(217,164,65,.08);border:1px solid rgba(217,164,65,.35);border-radius:12px;padding:10px 14px;max-width:262px;text-align:left;font-size:14px;color:#e8dcc8;line-height:1.9">
-            🌞 Источники светят сами: Солнце, лампа.<br>
-            🌙 Луна и зеркало — отражают чужой свет.<br>
-            📏 Свет идёт по прямой → тень за преградой.<br>
-            ⏰ Выше солнце — короче тень (полдень).</div>
-        </div>`+
-        btn('⟲ вернуться к тренажёру', `lvStep(-1)`)+
-        sml('готов? жми «Понял! Проверю себя» — там про источники света'));
+      h=col(big('Тренажёр: где будет тень?'), l96Scene(st.sun), SUNB,
+        card(`сейчас свет ${st.sun==='top'?'сверху':(st.sun==='right'?'справа':'слева')}, значит тень <b style="color:#7de0a0">${where}</b>`),
+        sml('ответь в проверке: солнце слева — где тень?'));
     }
-    el.innerHTML=`<div class="wv">${h}</div>`;
-  }catch(e){ try{ el.innerHTML=''; }catch(_){} }
+    el.innerHTML=h;
+  }catch(e){ el.innerHTML='<div class="l96-card">Ошибка сцены: '+esc(e&&e.message)+'</div>'; }
 }
 
 function l98Act(lk,act){
