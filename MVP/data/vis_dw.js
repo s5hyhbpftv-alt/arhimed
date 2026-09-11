@@ -700,112 +700,322 @@ window._waveCss = function(id, css){
     id: 419, title: 'Окружность: касательная и углы', ico: '⭕',
     src: 'Математика · 8 класс · Геометрия 8: окружность', subj: 'math',
     explain: [
-      'Касательная — прямая, которая касается окружности ровно в одной точке. Как колесо касается дороги! У касательной есть удивительное свойство с радиусом.',
-      'Главное свойство: радиус, проведённый в точку касания, ПЕРПЕНДИКУЛЯРЕН касательной. Они образуют прямой угол 90°. Это как спица колеса, перпендикулярная дороге!',
-      'Из одной точки к окружности можно провести две касательные. Их отрезки от точки до точек касания РАВНЫ! Это свойство часто используется в задачах.',
-      'Теперь про углы. Вписанный угол — угол с вершиной НА окружности, стороны которого пересекают окружность. Он «опирается» на дугу между своими сторонами.',
-      'Теорема о вписанном угле: вписанный угол равен ПОЛОВИНЕ дуги, на которую он опирается. Если дуга 100°, вписанный угол = 50°. Вдвое меньше!',
-      'А центральный угол (вершина в центре окружности) равен самой дуге. Значит, вписанный угол — половина центрального, опирающегося на ту же дугу. Это связывает оба угла!',
-      'Следствие: вписанный угол, опирающийся на ДИАМЕТР (дуга 180°), равен 90° — он прямой! Это помогает доказывать прямоугольные треугольники в окружности.',
-      'Запомни связку: дуга = центральный угол · вписанный = половина дуги = половина центрального. Вписанный на диаметре — всегда 90°!',
-      'Теперь проверь себя: касательная и радиус в точке касания… Вспомни про прямой угол!'
+      'Загадка: колесо стоит на дороге. В скольких точках оно касается асфальта? На глаз кажется «полоской», на самом деле — одна точка. Эта прямая и есть касательная.',
+      'Касательная — прямая, у которой с окружностью ровно одна общая точка. Секущая протыкает круг дважды. Сдвинь прямую — увидишь, как две точки сливаются в одну.',
+      'Проведи радиус в точку касания. Он стоит к дороге как спица к асфальту: прямой угол 90°. Это главное свойство: радиус ⊥ касательная. На рисунке квадратик в точке касания.',
+      'Из точки снаружи к окружности идут две касательные. Отрезки от этой точки до точек касания равны. Как два одинаковых ремня. Нажми «Показать» — длины загорятся.',
+      'Почему равны? Два радиуса в точки касания, два прямых угла, общая гипотенуза — два прямоугольных треугольника равны. Значит, катеты-касательные равны.',
+      'Теперь углы. Вписанный угол сидит вершиной на окружности, стороны — хорды. Как зритель на трибуне смотрит на дугу-сцену. Он берёт половину этой дуги.',
+      'Дуга 80° — вписанный угол 40°. Дуга 180° (диаметр) — угол 90°. Нажми точку на окружности: дуга загорится, угол покажет половину.',
+      'Центральный угол сидит в центре. Он равен самой дуге, не половине. Один и тот же спектакль: из центра видишь 80°, с края — 40°.',
+      'Подвинь ползунок дуги. Жёлтый — центральный, он совпадает с дугой. Голубой — вписанный, всегда ровно половина. Это одна теорема на двоих.',
+      'Следствие Фалеса: угол, который опирается на диаметр, прямой. Диаметр — дуга 180°, половина — 90°. Посади точку P на полуокружность — угол в P всегда 90°.',
+      'Нажми «Оживить»: P бежит по дуге, прямоугольный треугольник дышит, прямой угол не ломается. Так доказывают «треугольник с гипотенузой-диаметром — прямоугольный».',
+      'Два вписанных угла на одну дугу равны. Два зрителя одного спектакля. Не важно, где сидишь на свободной дуге — угол один.',
+      'Связка в карман: касательная ⊥ радиус. Две касательные из точки равны. Вписанный = дуга/2. Центральный = дуга. На диаметре — 90°.',
+      'Типичная задача: касательная и хорда. Угол между ними равен вписанному, который смотрит на ту же дугу. Касательная «подменяет» сторону угла.',
+      'Рецепт: сначала спроси — касательная или угол? Касательная — ищи 90° и равные отрезки. Угол — спроси, вписанный он или центральный, и возьми дугу.',
+      'Проверка: касательная и радиус в точке касания. Это спица к дороге. Какой угол?'
     ],
     check: { q: 'Касательная и радиус в точке касания…', choices: ['перпендикулярны', 'параллельны', 'равны', 'образуют угол 45°'], ans: 0,
-      exp: 'Радиус ⊥ касательной в точке касания.' },
+      exp: 'Радиус в точку касания перпендикулярен касательной — как спица колеса к дороге.' },
     tasks: [
       { q: 'Вписанный угол опирается на дугу 100°. Чему равен угол?', kind: 'unit', ans: 50, tol: 0,
-        hints: ['Вписанный — половина дуги.', '100 : 2 = 50°.'], sol: '50°' },
-      { q: 'Из одной точки к окружности проведены две касательные. Их отрезки…', kind: 'choice', choices: ['равны', 'разные', 'перпендикулярны', 'в сумме равны диаметру'], ans: 0, tol: 0,
-        hints: ['Свойство касательных.', 'Отрезки касательных из одной точки равны.'], sol: 'равны' }
+        hints: ['Вписанный угол — половина дуги.', '100 : 2 = 50.'], sol: '50°' },
+      { q: 'Из одной точки к окружности проведены две касательные. Их отрезки…', kind: 'choice',
+        choices: ['равны', 'разные', 'перпендикулярны', 'в сумме равны диаметру'], ans: 0, tol: 0,
+        hints: ['Два прямоугольных треугольника с общей гипотенузой.', 'Катеты-касательные равны.'], sol: 'равны' }
     ]
   };
-  const circle=(mode)=>`<svg viewBox="0 0 220 200" style="width:190px;height:173px;background:#101f18;border-radius:12px">
-    <circle cx="110" cy="100" r="70" fill="rgba(127,209,255,.05)" stroke="#7fd1ff" stroke-width="3"/>
-    ${mode==='tan'?`<line x1="20" y1="170" x2="210" y2="60" stroke="#ffd76a" stroke-width="4"/>
-      <line x1="110" y1="100" x2="150" y2="83" stroke="#8fd1a8" stroke-width="3"/>
-      <rect x="138" y="78" width="14" height="14" fill="none" stroke="#8fd1a8" stroke-width="2"/>`:
-    mode==='ins'?`<path d="M110 100 L45 60 A70 70 0 0 1 165 55 Z" fill="rgba(255,215,106,.15)"/>
-      <text x="70" y="52" font-size="13" fill="#ffd76a">α</text>`:
-    mode==='cent'?`<path d="M110 100 L45 60 A70 70 0 0 1 165 55 Z" fill="rgba(255,138,192,.1)"/>
-      <line x1="110" y1="100" x2="45" y2="60" stroke="#ffd76a" stroke-width="3"/>
-      <text x="92" y="90" font-size="13" fill="#ffd76a">β</text>`:''}
-  </svg>`;
+
+  const CX=120, CY=108, R=72, GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l419ink{to{stroke-dashoffset:0}}
+    @keyframes l419pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l419pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l419glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l419-ink{animation:l419ink 1.4s cubic-bezier(.2,.75,.15,1) forwards}
+    .l419-dot{transform-box:fill-box;transform-origin:center;animation:l419pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l419-pulse{animation:l419pulse 1.6s ease-in-out infinite}
+    .l419-glow{animation:l419glow 1.8s ease-in-out infinite}
+    .l419-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.2px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+16);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l419-ink" style="animation-duration:${dur||1.35}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    return `<text class="l419-lab" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function P(deg){ const a=deg*Math.PI/180; return [CX+R*Math.cos(a), CY+R*Math.sin(a)]; }
+  function frame(inner){
+    try{ window._waveCss && _waveCss('css-l419', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 216" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">
+      <circle cx="${CX}" cy="${CY}" r="${R}" fill="rgba(127,209,255,.06)" stroke="#3d6a7a" stroke-width="1.5"/>${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function sq(A,B,col){
+    const vx=A[0]-B[0], vy=A[1]-B[1], L=Math.hypot(vx,vy)||1;
+    const ux=-vy/L*10, uy=vx/L*10;
+    const px=B[0]+(A[0]-B[0])/L*10, py=B[1]+(A[1]-B[1])/L*10;
+    return `<path d="M ${px.toFixed(1)} ${py.toFixed(1)} L ${(px+ux).toFixed(1)} ${(py+uy).toFixed(1)} L ${(B[0]+ux).toFixed(1)} ${(B[1]+uy).toFixed(1)}" fill="none" stroke="${col}" stroke-width="1.6"/>`;
+  }
+  function ang(A,B,C,col,txt){
+    const n=(V)=>{const L=Math.hypot(V[0],V[1])||1; return [V[0]/L,V[1]/L];};
+    const u=n([A[0]-B[0],A[1]-B[1]]), w=n([C[0]-B[0],C[1]-B[1]]);
+    const s=16, p1=[B[0]+u[0]*s,B[1]+u[1]*s], p2=[B[0]+w[0]*s,B[1]+w[1]*s];
+    const bx=u[0]+w[0], by=u[1]+w[1], bL=Math.hypot(bx,by)||1;
+    const lp=[B[0]+(bx/bL)*30, B[1]+(by/bL)*30];
+    return `<path d="M ${p1[0].toFixed(1)} ${p1[1].toFixed(1)} Q ${lp[0].toFixed(1)} ${lp[1].toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}" fill="${col}33" stroke="${col}" stroke-width="1.5"/>`+
+      (txt?lab(lp[0], lp[1]+4, txt, col, 'middle', 11):'');
+  }
+  function arcP(a1,a2,r){
+    let d=a2-a1; while(d<=0) d+=360;
+    const t1=a1*Math.PI/180, t2=a2*Math.PI/180;
+    const x1=CX+r*Math.cos(t1), y1=CY+r*Math.sin(t1), x2=CX+r*Math.cos(t2), y2=CY+r*Math.sin(t2);
+    return `M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 ${d>180?1:0} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+  }
+
   function visD419(el){
+    try{ window._waveCss && _waveCss('css-l419', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'419';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const T=P(40), C=[CX,CY];
+    const arc=Math.max(40, Math.min(160, +(st.arc==null?80:st.arc)));
+    const tP=Math.max(0, Math.min(1, st.t==null?0.35:+st.t));
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Касательная</div>
-        <div style="font-size:44px" class="wv-swing">🛞</div>
-        <div class="wv-sml">прямая касается окружности ровно в одной точке — как колесо дороги!</div>
+        ${frame(
+          `<line x1="18" y1="188" x2="222" y2="188" stroke="${GOLD}" stroke-width="6" ${doDraw?ink(204,1.1,0):''}/>`+
+          `<circle cx="${CX}" cy="${188-R}" r="${R}" fill="rgba(127,209,255,.08)" stroke="${BLUE}" stroke-width="2.4" ${doDraw?ink(2*Math.PI*R,1.3,.1):''}/>`+
+          `<circle class="l419-dot" cx="${CX}" cy="188" r="6" fill="${GOLD}"/>`+
+          lab(CX, 40, open?'1 точка касания':'сколько точек?', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Колесо и дорога','Кажется, колесо лежит на полоске. На чертеже — одна точка. Прямая, которая цепляет окружность один раз, называется касательной.')}
       </div>`;
     } else if(step===1){
+      const k=1.6;
+      const vx=T[0]-C[0], vy=T[1]-C[1];
+      const tx=-vy, ty=vx;
+      const A=[T[0]-tx*k, T[1]-ty*k], B=[T[0]+tx*k, T[1]+ty*k];
       h=`<div class="wv-col">
-        <div class="wv-big">Радиус ⊥ касательной</div>
-        ${circle('tan')}
-        <div style="background:rgba(143,209,168,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 12px;font-size:16px;color:#8fd1a8;font-weight:bold" class="wv-ans">прямой угол 90°!</div>
+        ${frame(
+          `<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="${GOLD}" stroke-width="3" ${doDraw?ink(Math.hypot(B[0]-A[0],B[1]-A[1]),1.2,0):''}/>`+
+          `<circle class="l419-dot" cx="${T[0]}" cy="${T[1]}" r="6" fill="${GOLD}"/>`+
+          lab(T[0]+14, T[1]-8, 'касание', GOLD, 'start')
+        )}
+        ${note('Одна общая точка','Секущая входит и выходит. Касательная только целует окружность. Если сдвинуть прямую ближе к центру — точек станет две.')}
       </div>`;
     } else if(step===2){
+      const vx=T[0]-C[0], vy=T[1]-C[1];
+      const tx=-vy, ty=vx, k=1.5;
+      const A=[T[0]-tx*k, T[1]-ty*k], B=[T[0]+tx*k, T[1]+ty*k];
       h=`<div class="wv-col">
-        <div class="wv-big">Две касательные из точки</div>
-        <svg viewBox="0 0 220 200" style="width:190px;height:173px;background:#101f18;border-radius:12px">
-          <circle cx="130" cy="110" r="60" fill="rgba(127,209,255,.05)" stroke="#7fd1ff" stroke-width="3"/>
-          <line x1="40" y1="180" x2="150" y2="82" stroke="#ffd76a" stroke-width="3.5"/>
-          <line x1="40" y1="180" x2="190" y2="120" stroke="#8fd1a8" stroke-width="3.5"/>
-          <text x="20" y="195" font-size="13" fill="#ffd76a">A</text>
-        </svg>
-        <div class="wv-sml">отрезки касательных из одной точки РАВНЫ!</div>
+        ${frame(
+          `<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="${GOLD}" stroke-width="3"/>`+
+          `<line x1="${C[0]}" y1="${C[1]}" x2="${T[0]}" y2="${T[1]}" stroke="${GREEN}" stroke-width="2.6" class="l419-glow" ${doDraw?ink(R,1.1,0):''}/>`+
+          sq(C,T,GREEN)+
+          `<circle cx="${C[0]}" cy="${C[1]}" r="4" fill="${BLUE}"/>`+
+          `<circle class="l419-dot" cx="${T[0]}" cy="${T[1]}" r="6" fill="${GOLD}"/>`+
+          lab(C[0]-10, C[1]+16, 'O', BLUE)+lab(T[0]+12, T[1]+4, '90°', GREEN, 'start')
+        )}
+        ${note('Спица к дороге','Радиус в точку касания всегда перпендикулярен касательной. Запомни квадратик 90° — его спрашивают почти в каждой задаче.')}
       </div>`;
     } else if(step===3){
+      const S=[36, 36], T1=P(200), T2=P(320);
+      const show=!!st.eq;
       h=`<div class="wv-col">
-        <div class="wv-big">Вписанный угол</div>
-        ${circle('ins')}
-        <div class="wv-sml">вершина НА окружности, стороны пересекают её</div>
+        ${frame(
+          `<line x1="${S[0]}" y1="${S[1]}" x2="${T1[0]}" y2="${T1[1]}" stroke="${GOLD}" stroke-width="2.4" ${doDraw?ink(Math.hypot(T1[0]-S[0],T1[1]-S[1]),1.1,0):''}/>`+
+          `<line x1="${S[0]}" y1="${S[1]}" x2="${T2[0]}" y2="${T2[1]}" stroke="${GOLD}" stroke-width="2.4" ${doDraw?ink(Math.hypot(T2[0]-S[0],T2[1]-S[1]),1.1,.15):''}/>`+
+          (show?`<line x1="${C[0]}" y1="${C[1]}" x2="${T1[0]}" y2="${T1[1]}" stroke="${GREEN}" stroke-width="1.6"/>`+
+            `<line x1="${C[0]}" y1="${C[1]}" x2="${T2[0]}" y2="${T2[1]}" stroke="${GREEN}" stroke-width="1.6"/>`+sq(C,T1,GREEN)+sq(C,T2,GREEN):'')+
+          `<circle class="l419-dot" cx="${S[0]}" cy="${S[1]}" r="6" fill="${BLUE}"/>`+
+          lab(S[0]-8, S[1]-8, 'P', BLUE)+
+          (show?lab((S[0]+T1[0])/2-8,(S[1]+T1[1])/2, 'a', GOLD)+lab((S[0]+T2[0])/2+10,(S[1]+T2[1])/2+8, 'a', GOLD):'')
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].eq=!CHS[k].eq;chRender(0);}catch(e){}">${show?'Скрыть радиусы':'Показать, почему равны'}</button>
+        ${note('Две касательные','Отрезки от внешней точки до точек касания равны. Два прямоугольных треугольника с общей гипотенузой OP — близнецы.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
-        <div class="wv-big">Теорема о вписанном угле</div>
-        ${circle('ins')}
-        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:16px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">угол = половина дуги!</div>
-        <div class="wv-sml">дуга 100° → угол 50°</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
+          ${[['OP общая','гипотенуза',BLUE],['два угла 90°','радиус ⊥ касательная',GREEN],['треугольники равны','катеты-касательные = ',GOLD]].map((r,i)=>
+            `<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${r[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8"><span>${r[0]}</span><b style="color:${r[2]}">${r[1]}</b></div>`).join('')}
+        </div>
+        ${note('Не зубри «равны»','Нарисуй два радиуса, два квадратика, общую гипотенузу. Равенство треугольников само скажет, что отрезки равны.')}
       </div>`;
     } else if(step===5){
+      const A=P(200), B=P(40), V=P(130);
       h=`<div class="wv-col">
-        <div class="wv-big">Центральный угол</div>
-        ${circle('cent')}
-        <div class="wv-sml">центральный = дуге · вписанный = половина центрального</div>
+        ${frame(
+          `<path d="${arcP(200,40,R)}" fill="none" stroke="${GOLD}" stroke-width="6" opacity=".8" ${doDraw?ink(R*Math.PI*200/180,1.3,0):''}/>`+
+          `<path d="M ${A[0]} ${A[1]} L ${V[0]} ${V[1]} L ${B[0]} ${B[1]}" fill="none" stroke="${BLUE}" stroke-width="2.2"/>`+
+          ang(A,V,B,GOLD,'вписанный')+
+          `<circle class="l419-dot" cx="${V[0]}" cy="${V[1]}" r="6" fill="${BLUE}"/>`+
+          lab(V[0]+10, V[1]+14, 'вершина на окружности', MUTED, 'start', 10)
+        )}
+        ${note('Зритель на трибуне','Вершина на ободе, стороны — хорды. Угол смотрит на дугу между концами сторон. Он берёт половину этой дуги.')}
       </div>`;
     } else if(step===6){
+      const A=P(220), B=P(40), V=P(120);
       h=`<div class="wv-col">
-        <div class="wv-big">Угол на диаметре = 90°</div>
-        <svg viewBox="0 0 220 200" style="width:190px;height:173px;background:#101f18;border-radius:12px">
-          <circle cx="110" cy="100" r="70" fill="rgba(127,209,255,.05)" stroke="#7fd1ff" stroke-width="3"/>
-          <line x1="40" y1="100" x2="180" y2="100" stroke="#8fd1a8" stroke-width="3"/>
-          <polygon points="110,100 40,100 158,46" fill="rgba(255,215,106,.12)" stroke="#ffd76a" stroke-width="2"/>
-          <rect x="96" y="86" width="12" height="12" fill="none" stroke="#ffd76a" stroke-width="2"/>
-        </svg>
-        <div class="wv-sml">дуга 180° → вписанный угол 90° — всегда прямой!</div>
+        ${frame(
+          `<path d="${arcP(220,40,R)}" fill="none" stroke="${GOLD}" stroke-width="7"/>`+
+          `<path d="M ${A[0]} ${A[1]} L ${V[0]} ${V[1]} L ${B[0]} ${B[1]}" fill="none" stroke="${BLUE}" stroke-width="2.2"/>`+
+          ang(A,V,B,BLUE,'40°')+
+          lab(CX, CY-R-8, 'дуга 80°', GOLD)
+        )}
+        ${note('Половина дуги','Дуга 80° → угол 40°. Запомни фразу: вписанный берёт половину. Не саму дугу, не двойную — половину.')}
       </div>`;
     } else if(step===7){
+      const A=P(220), B=P(40);
       h=`<div class="wv-col">
-        <div class="wv-big">Памятка</div>
-        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
-          ${chip('дуга = центральный','#ff8ac0')}${chip('вписанный = дуга/2','#ffd76a')}${chip('на диаметре — 90°','#8fd1a8')}
+        ${frame(
+          `<path d="${arcP(220,40,R)}" fill="none" stroke="${GOLD}" stroke-width="7"/>`+
+          `<line x1="${CX}" y1="${CY}" x2="${A[0]}" y2="${A[1]}" stroke="${GOLD}" stroke-width="2.2"/>`+
+          `<line x1="${CX}" y1="${CY}" x2="${B[0]}" y2="${B[1]}" stroke="${GOLD}" stroke-width="2.2"/>`+
+          ang(A,C,B,GOLD,'80°')+
+          `<circle cx="${CX}" cy="${CY}" r="5" fill="${GOLD}" class="l419-glow"/>`+
+          lab(CX, CY+18, 'центр', MUTED)
+        )}
+        ${note('Из центра — вся дуга','Центральный угол равен дуге. Тот же кусок окружности: из центра 80°, с края 40°. Половина — потому что зритель дальше.')}
+      </div>`;
+    } else if(step===8){
+      const a1=220, a2=220+arc;
+      const A=P(a1), B=P(a2%360), V=P((a1+arc/2+180)%360);
+      h=`<div class="wv-col">
+        ${frame(
+          `<path d="${arcP(a1,a2,R)}" fill="none" stroke="${GOLD}" stroke-width="7"/>`+
+          `<line x1="${CX}" y1="${CY}" x2="${A[0]}" y2="${A[1]}" stroke="${GOLD}" stroke-width="1.8"/>`+
+          `<line x1="${CX}" y1="${CY}" x2="${B[0]}" y2="${B[1]}" stroke="${GOLD}" stroke-width="1.8"/>`+
+          `<path d="M ${A[0]} ${A[1]} L ${V[0]} ${V[1]} L ${B[0]} ${B[1]}" fill="none" stroke="${BLUE}" stroke-width="2"/>`+
+          ang(A,C,B,GOLD, Math.round(arc)+'°')+
+          ang(A,V,B,BLUE, Math.round(arc/2)+'°')
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">дуга
+          <input type="range" min="40" max="160" value="${arc}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].arc=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${Math.round(arc)}°</b>
+        </label>
+        ${note('Крути дугу','Жёлтый всегда равен дуге. Голубой — всегда половина. Теорема живая: её видно, а не только заучивают.')}
+      </div>`;
+    } else if(step===9){
+      const Lft=P(180), Rgt=P(0), Pd=P(250);
+      h=`<div class="wv-col">
+        ${frame(
+          `<line x1="${Lft[0]}" y1="${Lft[1]}" x2="${Rgt[0]}" y2="${Rgt[1]}" stroke="${BLUE}" stroke-width="2.6" class="l419-glow"/>`+
+          `<polygon points="${Lft[0]},${Lft[1]} ${Pd[0]},${Pd[1]} ${Rgt[0]},${Rgt[1]}" fill="rgba(255,215,106,.14)" stroke="${GOLD}" stroke-width="2"/>`+
+          ang(Lft,Pd,Rgt,GOLD,'90°')+
+          lab((Lft[0]+Rgt[0])/2, Lft[1]+16, 'диаметр = дуга 180°', BLUE)
+        )}
+        ${note('Фалес','Диаметр высекает дугу 180°. Вписанный берёт половину — 90°. Любая точка на окружности (кроме концов диаметра) даёт прямой угол.')}
+      </div>`;
+    } else if(step===10){
+      if(st.play && !window._l419iv){
+        window._l419iv=setInterval(()=>{
+          try{
+            const k=lidKey(LV.id); CHS[k]=CHS[k]||{}; const s=CHS[k];
+            s.dir=s.dir||1; s.t=(s.t==null?0.2:s.t)+0.012*s.dir;
+            if(s.t>=1){ s.t=1; s.dir=-1; } if(s.t<=0){ s.t=0; s.dir=1; }
+            if(LV.id===419 && LV.step===10 && s.play) chRender(0);
+            else { clearInterval(window._l419iv); window._l419iv=null; }
+          }catch(e){ clearInterval(window._l419iv); window._l419iv=null; }
+        }, 40);
+      }
+      if(!st.play && window._l419iv){ clearInterval(window._l419iv); window._l419iv=null; }
+      const angP=12+tP*156;
+      const Pd=P(180-angP), Lft=P(180), Rgt=P(0);
+      h=`<div class="wv-col">
+        ${frame(
+          `<line x1="${Lft[0]}" y1="${Lft[1]}" x2="${Rgt[0]}" y2="${Rgt[1]}" stroke="${BLUE}" stroke-width="2.4"/>`+
+          `<polygon points="${Lft[0]},${Lft[1]} ${Pd[0]},${Pd[1]} ${Rgt[0]},${Rgt[1]}" fill="rgba(255,215,106,.14)" stroke="${GOLD}" stroke-width="2"/>`+
+          ang(Lft,Pd,Rgt,GOLD,'90°')+
+          `<circle class="l419-glow" cx="${Pd[0]}" cy="${Pd[1]}" r="6" fill="${GOLD}"/>`+
+          lab(Pd[0], Pd[1]-12, 'P', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].play=!CHS[k].play;chRender(0);}catch(e){}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
+        ${note('Угол не ломается','P бежит, стороны качаются, 90° остаётся. Это и есть теорема: гипотенуза — диаметр ⇔ угол прямой.')}
+      </div>`;
+    } else if(step===11){
+      const A=P(210), B=P(30), V1=P(120), V2=P(160);
+      h=`<div class="wv-col">
+        ${frame(
+          `<path d="${arcP(210,30,R)}" fill="none" stroke="${GOLD}" stroke-width="6"/>`+
+          `<path d="M ${A[0]} ${A[1]} L ${V1[0]} ${V1[1]} L ${B[0]} ${B[1]}" fill="none" stroke="${BLUE}" stroke-width="2"/>`+
+          `<path d="M ${A[0]} ${A[1]} L ${V2[0]} ${V2[1]} L ${B[0]} ${B[1]}" fill="none" stroke="${GREEN}" stroke-width="2"/>`+
+          ang(A,V1,B,BLUE,'α')+ang(A,V2,B,GREEN,'α')
+        )}
+        ${note('Один спектакль','Оба угла смотрят на одну дугу — они равны. Где бы ни сел зритель на свободной дуге, градус один.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[['касательная ⊥ радиус','квадратик 90°',GREEN],
+             ['две касательные из точки','отрезки равны',GOLD],
+             ['вписанный = дуга / 2','зритель на ободе',BLUE],
+             ['центральный = дуга','вершина в центре',GOLD],
+             ['на диаметре — 90°','Фалес',GREEN]].map((x,i)=>
+            `<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
+        ${note('Связка','Пять фраз. Начни с вопроса: это касательная или угол? Потом бери нужную строчку.')}
+      </div>`;
+    } else if(step===13){
+      const S=[40,40], T1=P(200), T2=P(330), A=P(40);
+      h=`<div class="wv-col">
+        ${frame(
+          `<line x1="${S[0]}" y1="${S[1]}" x2="${T1[0]}" y2="${T1[1]}" stroke="${GOLD}" stroke-width="2.3"/>`+
+          `<line x1="${T1[0]}" y1="${T1[1]}" x2="${A[0]}" y2="${A[1]}" stroke="${BLUE}" stroke-width="2"/>`+
+          ang(S,T1,A,GOLD,'= вписанному')+
+          lab(CX, 28, 'касательная + хорда', GOLD)
+        )}
+        ${note('Касательная и хорда','Угол между касательной и хордой равен вписанному, который смотрит на ту же дугу. Касательная подменяет одну сторону угла.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[['1','Это касательная? Ищи 90° и равные отрезки',GREEN],
+             ['2','Это угол? Вписанный или центральный?',BLUE],
+             ['3','Возьми дугу: половина или вся',GOLD],
+             ['4','Диаметр → сразу 90°',MUTED]].map((x,i)=>
+            `<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left">
+              <b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('В карман','Дальше вопрос: касательная и радиус. Спица к дороге — какой угол?')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${circle('tan')}
-        <div class="wv-sml">касательная и радиус в точке касания — что?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:15px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">⊥ или ∥?</div>
+        ${frame(
+          `<line x1="30" y1="176" x2="220" y2="70" stroke="${GOLD}" stroke-width="3"/>`+
+          `<line x1="${CX}" y1="${CY}" x2="${T[0]}" y2="${T[1]}" stroke="${GREEN}" stroke-width="2.4"/>`+
+          sq(C,T,GREEN)+lab(T[0]+10, T[1]+16, '?', GOLD, 'start', 18)
+        )}
+        <div class="wv-sml">касательная и радиус в точке касания</div>
+        ${note('Проверка','Перпендикулярны. Квадратик 90°. Не параллельны и не 45°.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[419]=visD419;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===419){ window.ARH_LESSONS[i]=L419; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===419){ arr[i]=L419; f=true; break; } }
+    if(!f) arr.push(L419);
+  })();
 })();
 /* ================= УРОК 420 · Векторы: начало ================= */
 (function(){
@@ -813,124 +1023,321 @@ window._waveCss = function(id, css){
     id: 420, title: 'Векторы: начало', ico: '➡️',
     src: 'Математика · 8 класс · Геометрия 8: векторы', subj: 'math',
     explain: [
-      'Вектор — это отрезок со стрелкой: у него есть НАПРАВЛЕНИЕ и ДЛИНА. Вектор из точки A в точку B обозначают AB⃗. Вектор показывает не только «сколько», но и «куда»!',
-      'У вектора есть начало (A) и конец (B). Длина вектора (её называют модулем) — это расстояние между A и B, записывают |AB⃗|. Как у отрезка, только со стрелкой!',
-      'Зачем векторы? Они описывают движение: скорость ветра, силу, перемещение. «5 км на север» — это вектор: и величина (5 км), и направление (север)!',
-      'Векторы можно СКЛАДЫВАТЬ. Правило треугольника: приставь начало второго вектора к концу первого — сумма идёт от начала первого к концу второго. Как шаги по дороге!',
-      'Правило параллелограмма — другой способ: приложи векторы к одной точке и дострой параллелограмм — его диагональ и есть сумма. Оба правила дают один результат!',
-      'Противоположный вектор −a — такой же по длине, но направлен наоборот. Сумма a + (−a) = 0 — нулевой вектор: вернулись в начало!',
-      'Векторы бывают коллинеарными (лежат на параллельных прямых) и равными (одинаковая длина И одинаковое направление). Равные векторы можно переносить параллельно!',
-      'Координаты вектора: если вектор идёт из (0;0) в (x; y), его записывают {x; y}. Длина по теореме Пифагора: |a| = √(x² + y²). Например, {3; 4} имеет длину 5.',
-      'Теперь проверь себя: как обозначают вектор из точки A в точку B? Вспомни — AB со стрелкой!'
+      'Загадка: чем стрелка на карте отличается от обычного отрезка? Отрезок знает только длину. Стрелка знает ещё и куда. Это и есть вектор: длина плюс направление.',
+      'Вектор из A в B пишут AB⃗. A — начало, B — конец, на конце стрелка. Длина |AB⃗| — сколько километров шага. Направление — куда смотрит нос стрелки.',
+      'Нажми «Оживить»: точка бежит из A в B. Это перемещение. «5 км на север» — вектор: и 5 км, и север. Скорость ветра, сила, сдвиг фигуры — всё векторы.',
+      'Сложение — правило треугольника. Сделай первый шаг, от его конца второй. Сумма — стрелка из самого начала в самый конец. Как два перегона одной дороги.',
+      'Подвинь ползунок: второй вектор пристраивается к концу первого, золотая диагональ растёт. Это a + b. Порядок шагов можно менять — придёшь туда же.',
+      'Правило параллелограмма: приложи оба вектора к одной точке и дострой параллелограмм. Диагональ из общего начала — та же сумма. Два рисунка, один ответ.',
+      'Противоположный вектор −a той же длины, но нос смотрит назад. Нажми кнопку: стрелка разворачивается. Шаг вперёд и шаг назад — ты дома.',
+      'Сумма a + (−a) = 0. Нулевой вектор: длина 0, стрелки нет. На клетчатке это точка, которая никуда не ушла.',
+      'Равные векторы: одна длина и одно направление. Их можно переносить параллельно — стрелка не меняется. Коллинеарные — лежат на параллельных прямых, направление может быть и назад.',
+      'Координаты: из (0;0) в (x; y) пишут {x; y}. {3; 4} — шаг 3 вправо и 4 вверх. Нажми клетку или подвинь ползунки — стрелка живая.',
+      'Длина по Пифагору: |a| = √(x² + y²). Для {3; 4} это √(9+16) = 5. Тот же египетский треугольник, только со стрелкой.',
+      'Подвинь x и y. Число под стрелкой — длина. Когда катеты 3 и 4, длина ровно 5. Когда 6 и 8 — 10. Масштаб тот же.',
+      'Перенос: равный вектор можно посадить в любую точку. Начало другое, стрелка та же. Поэтому в задачах вектор «живёт сам», без привязки к точке, если не просят.',
+      'Рецепт: стрелка = длина + направление. Сумма — треугольник или параллелограмм. Минус — разворот. Координаты {x; y}, длина √(x²+y²).',
+      'В карман: AB⃗ — из A в B. |AB⃗| — сколько. a + (−a) = 0. {3; 4} длиной 5. Дальше вопрос: как обозначить вектор из A в B?',
+      'Ответ проверки: AB⃗. Не |AB| (это длина без направления) и не A + B.'
     ],
     check: { q: 'Как обозначают вектор из точки A в точку B?', choices: ['AB⃗', '|AB|', 'A + B', 'AB²'], ans: 0,
-      exp: 'Вектор с началом A и концом B — AB⃗.' },
+      exp: 'Вектор с началом A и концом B пишут AB⃗. |AB| — только длина, без направления.' },
     tasks: [
       { q: 'Чему равна сумма вектора a и противоположного ему вектора −a?', kind: 'unit', ans: 0, tol: 0,
-        hints: ['Они гасят друг друга.', 'Нулевой вектор: 0.'], sol: '0' },
-      { q: 'Длина вектора — это…', kind: 'choice', choices: ['расстояние между его концами', 'его направление', 'координата x', 'удвоенная длина отрезка'], ans: 0, tol: 0,
-        hints: ['Модуль вектора.', 'Длина вектора = расстояние между концами.'], sol: 'расстояние между концами' }
+        hints: ['Шаг вперёд и шаг назад.', 'Нулевой вектор, длина 0.'], sol: '0' },
+      { q: 'Длина вектора — это…', kind: 'choice',
+        choices: ['расстояние между его концами', 'его направление', 'координата x', 'удвоенная длина отрезка'], ans: 0, tol: 0,
+        hints: ['Её называют модулем.', 'Сколько километров шага, без «куда».'], sol: 'расстояние между концами' }
     ]
   };
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l420ink{to{stroke-dashoffset:0}}
+    @keyframes l420pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l420pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l420glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l420-ink{animation:l420ink 1.35s cubic-bezier(.2,.75,.15,1) forwards}
+    .l420-dot{transform-box:fill-box;transform-origin:center;animation:l420pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l420-pulse{animation:l420pulse 1.6s ease-in-out infinite}
+    .l420-glow{animation:l420glow 1.8s ease-in-out infinite}
+    .l420-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.2px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+16);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l420-ink" style="animation-duration:${dur||1.3}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    return `<text class="l420-lab" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l420', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 180'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function arrow(x1,y1,x2,y2,col,w,draw){
+    const dx=x2-x1, dy=y2-y1, L=Math.hypot(dx,dy)||1;
+    const ux=dx/L, uy=dy/L, px=-uy, py=ux, s=9;
+    const bx=x2-ux*s, by=y2-uy*s;
+    const pts=`${x2},${y2} ${bx+px*5},${by+py*5} ${bx-px*5},${by-py*5}`;
+    return `<line x1="${x1}" y1="${y1}" x2="${(x2-ux*6).toFixed(1)}" y2="${(y2-uy*6).toFixed(1)}" stroke="${col}" stroke-width="${w||3}" ${draw?ink(L,1.15,0):''}/>`+
+      `<polygon points="${pts}" fill="${col}"/>`;
+  }
+  function lerp(a,b,t){ return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t]; }
+
   function visD420(el){
+    try{ window._waveCss && _waveCss('css-l420', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'420';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const t=Math.max(0, Math.min(1, st.t==null?0.55:+st.t));
+    const vx=Math.max(-6, Math.min(6, +(st.vx==null?3:st.vx)));
+    const vy=Math.max(-6, Math.min(6, +(st.vy==null?4:st.vy)));
+    const A=[40,130], B=[190,50];
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Что такое вектор?</div>
-        <svg viewBox="0 0 220 100" style="width:200px;height:91px;background:#101f18;border-radius:12px">
-          <line x1="30" y1="60" x2="180" y2="40" stroke="#ffd76a" stroke-width="4"/>
-          <polygon points="180,40 168,38 174,50" fill="#ffd76a"/>
-          <circle cx="30" cy="60" r="6" fill="#8fd1a8"/><text x="18" y="80" font-size="13" fill="#8fd1a8">A</text>
-          <text x="176" y="32" font-size="13" fill="#ffd76a">B</text>
-        </svg>
-        <div class="wv-sml">направление + длина · «сколько» и «куда»!</div>
+        ${frame(
+          `<line x1="30" y1="90" x2="110" y2="90" stroke="${BLUE}" stroke-width="3"/>`+
+          lab(70, 78, 'отрезок', BLUE)+
+          arrow(130,110,210,50,GOLD,3.2,doDraw)+
+          lab(180, 36, open?'вектор':'?', GOLD)+
+          lab(120, 160, open?'длина + направление':'чем отличаются?', MUTED)
+        , '0 0 240 170')}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Стрелка против отрезка','Отрезок знает только «сколько». Вектор знает ещё «куда». На карте это стрелка ветра, на чертеже — AB⃗.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Начало, конец, длина</div>
-        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
-          ${chip('A — начало','#8fd1a8')}${chip('B — конец','#ffd76a')}${chip('|AB⃗| — длина (модуль)','#7fd1ff')}
-        </div>
-        <div class="wv-sml">длина = расстояние между A и B</div>
+        ${frame(
+          arrow(A[0],A[1],B[0],B[1],GOLD,3.4,doDraw)+
+          `<circle class="l420-dot" cx="${A[0]}" cy="${A[1]}" r="6" fill="${GREEN}"/>`+
+          `<circle class="l420-dot" style="animation-delay:.15s" cx="${B[0]}" cy="${B[1]}" r="6" fill="${GOLD}"/>`+
+          lab(A[0]-10, A[1]+18, 'A', GREEN)+lab(B[0]+10, B[1]-8, 'B', GOLD)+
+          lab(120, 28, 'AB⃗', GOLD, 'middle', 18)
+        )}
+        ${note('Имя вектора','Из A в B — AB⃗. Начало там, где нет стрелки. Конец — наконечник. Не перепутай: BA⃗ — это уже назад.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">Векторы в жизни</div>
-        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-          ${['💨','💪','🚶'].map((e,i)=>`<span style="font-size:40px" class="wv-pop" style="animation-delay:${i*0.1}s">${e}</span>`).join('')}
+        ${frame(
+          arrow(A[0],A[1],B[0],B[1],GOLD,3.2,false)+
+          lab(A[0], A[1]+20, 'начало', GREEN)+lab(B[0], B[1]-14, 'конец', GOLD)+
+          lab(120, 100, '|AB⃗| длина', BLUE)
+        )}
+        <div class="wv-row" style="gap:8px;flex-wrap:wrap;justify-content:center">
+          ${[['A начало',GREEN],['B конец',GOLD],['|AB⃗| модуль',BLUE]].map(x=>`<span class="wv-chip" style="border-color:${x[1]};color:${x[1]}">${x[0]}</span>`).join('')}
         </div>
-        <div class="wv-sml">ветер, сила, перемещение — «5 км на север» это вектор!</div>
+        ${note('Три слова','Начало, конец, длина. Длина — сколько клеток шага. Направление — куда смотрит нос.')}
       </div>`;
     } else if(step===3){
+      if(st.play && !window._l420iv){
+        window._l420iv=setInterval(()=>{
+          try{
+            const k=lidKey(LV.id); CHS[k]=CHS[k]||{}; const s=CHS[k];
+            s.w=(s.w==null?0:s.w)+0.02; if(s.w>1) s.w=0;
+            if(LV.id===420 && LV.step===3 && s.play) chRender(0);
+            else { clearInterval(window._l420iv); window._l420iv=null; }
+          }catch(e){ clearInterval(window._l420iv); window._l420iv=null; }
+        }, 40);
+      }
+      if(!st.play && window._l420iv){ clearInterval(window._l420iv); window._l420iv=null; }
+      const w=st.w==null?0.2:+st.w;
+      const P=lerp(A,B,w);
       h=`<div class="wv-col">
-        <div class="wv-big">Сложение: правило треугольника</div>
-        <svg viewBox="0 0 220 130" style="width:200px;height:118px;background:#101f18;border-radius:12px">
-          <line x1="30" y1="100" x2="110" y2="60" stroke="#8fd1a8" stroke-width="4"/>
-          <polygon points="110,60 98,58 106,70" fill="#8fd1a8"/>
-          <line x1="110" y1="60" x2="190" y2="30" stroke="#ff8ac0" stroke-width="4"/>
-          <polygon points="190,30 178,28 186,40" fill="#ff8ac0"/>
-          <line x1="30" y1="100" x2="190" y2="30" stroke="#ffd76a" stroke-width="4" stroke-dasharray="6 4"/>
-        </svg>
-        <div class="wv-sml">приставь конец к началу · сумма = из начала в конец!</div>
+        ${frame(
+          arrow(A[0],A[1],B[0],B[1],GOLD,3,false)+
+          `<circle class="l420-glow" cx="${P[0]}" cy="${P[1]}" r="7" fill="${BLUE}"/>`+
+          lab(A[0], A[1]+18, 'A', GREEN)+lab(B[0]+8, B[1]-8, 'B', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].play=!CHS[k].play;chRender(0);}catch(e){}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
+        ${note('Перемещение','Точка едет по стрелке. «5 км на север» — ровно это: сколько и куда. Ветер, сила, сдвиг фигуры — те же стрелки.')}
       </div>`;
     } else if(step===4){
+      const C=[A[0]+(B[0]-A[0])*t, A[1]+40];
+      const D=[C[0]+(B[0]-A[0])*0.7, C[1]+(B[1]-A[1])*0.55];
       h=`<div class="wv-col">
-        <div class="wv-big">Правило параллелограмма</div>
-        <svg viewBox="0 0 220 140" style="width:200px;height:127px;background:#101f18;border-radius:12px">
-          <polygon points="30,100 110,60 190,100 110,140" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <line x1="30" y1="100" x2="110" y2="60" stroke="#8fd1a8" stroke-width="4"/><polygon points="110,60 98,58 106,70" fill="#8fd1a8"/>
-          <line x1="30" y1="100" x2="110" y2="140" stroke="#ff8ac0" stroke-width="4"/><polygon points="110,140 108,128 120,136" fill="#ff8ac0"/>
-          <line x1="30" y1="100" x2="190" y2="100" stroke="#ffd76a" stroke-width="4"/><polygon points="190,100 178,96 178,104" fill="#ffd76a"/>
-        </svg>
-        <div class="wv-sml">диагональ параллелограмма = сумма!</div>
+        ${frame(
+          arrow(A[0],A[1],C[0],C[1],BLUE,3,doDraw)+
+          arrow(C[0],C[1],D[0],D[1],GREEN,3,false)+
+          arrow(A[0],A[1],D[0],D[1],GOLD,3.2,false)+
+          lab(A[0]-8, A[1]+16, 'старт', MUTED)+lab((A[0]+D[0])/2, (A[1]+D[1])/2-10, 'a+b', GOLD)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">шаг
+          <input type="range" min="20" max="90" value="${Math.round(t*100)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].t=this.value/100;chRender(0);}catch(e){}">
+        </label>
+        ${note('Правило треугольника','Конец первого — начало второго. Сумма — из самого старта в самый финиш. Два перегона, одна дорога.')}
       </div>`;
     } else if(step===5){
+      const O=[50,140], a=[110,-20], b=[40,-70];
+      const P1=[O[0]+a[0], O[1]+a[1]], P2=[O[0]+b[0], O[1]+b[1]], P3=[O[0]+a[0]+b[0], O[1]+a[1]+b[1]];
       h=`<div class="wv-col">
-        <div class="wv-big">Противоположный вектор</div>
-        <div style="display:flex;align-items:center;gap:8px;justify-content:center">
-          <svg viewBox="0 0 90 40" style="width:80px;height:36px"><line x1="10" y1="20" x2="80" y2="20" stroke="#8fd1a8" stroke-width="3.5"/><polygon points="80,20 71,16 71,24" fill="#8fd1a8"/></svg>
-          <svg viewBox="0 0 90 40" style="width:80px;height:36px"><line x1="80" y1="20" x2="10" y2="20" stroke="#ff8ac0" stroke-width="3.5"/><polygon points="10,20 19,16 19,24" fill="#ff8ac0"/></svg>
-        </div>
-        <div class="wv-sml">a + (−a) = 0 — нулевой вектор, вернулись!</div>
+        ${frame(
+          `<polygon points="${O[0]},${O[1]} ${P1[0]},${P1[1]} ${P3[0]},${P3[1]} ${P2[0]},${P2[1]}" fill="rgba(255,215,106,.1)" stroke="#3d5c49" stroke-width="1.4"/>`+
+          arrow(O[0],O[1],P1[0],P1[1],BLUE,3,doDraw)+
+          arrow(O[0],O[1],P2[0],P2[1],GREEN,3,false)+
+          arrow(O[0],O[1],P3[0],P3[1],GOLD,3.4,false)+
+          lab(P3[0]+8, P3[1], 'a+b', GOLD, 'start')
+        )}
+        ${note('Параллелограмм','Те же два вектора из одной точки. Диагональ — сумма. Совпадает с правилом треугольника: два рисунка, один ответ.')}
       </div>`;
     } else if(step===6){
+      const flip=!!st.flip;
+      const P1=[50,90], P2=flip?[50+(-140),90-(-40)]:[190,50];
       h=`<div class="wv-col">
-        <div class="wv-big">Коллинеарные и равные</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
-          ${[
-            ['коллинеарные','лежат на параллельных прямых','#7fd1ff'],
-            ['равные','одинаковая длина И направление','#8fd1a8']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span style="font-size:12px">${x[1]}</span></div>`).join('')}
-        </div>
+        ${frame(
+          arrow(P1[0],P1[1], flip? (P1[0]-140):(190), flip?(P1[1]+40):50, flip?RED:GOLD, 3.2, doDraw)+
+          lab(120, 28, flip?'−a':'a', flip?RED:GOLD, 'middle', 18)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].flip=!CHS[k].flip;chRender(0);}catch(e){}">${flip?'Вернуть a':'Показать −a'}</button>
+        ${note('Разворот','Противоположный вектор той же длины, но нос назад. Как развернуться на месте и пройти тот же путь обратно.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Координаты и длина</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:17px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">вектор {3; 4}</div>
-          <div class="wv-pop2">длина = √(3² + 4²) = <b style="color:#ffd76a">5</b></div>
+        ${frame(
+          arrow(40,90,190,50,GOLD,3,doDraw)+
+          arrow(190,50,40,90,RED,3,false)+
+          `<circle class="l420-glow" cx="40" cy="90" r="8" fill="${GREEN}"/>`+
+          lab(120, 28, 'a + (−a) = 0', GOLD, 'middle', 16)
+        )}
+        ${note('Домой','Шаг вперёд и шаг назад. Осталась точка. Нулевой вектор: длина 0, направления нет.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(
+          arrow(30,50,120,30,GOLD,2.8,doDraw)+
+          arrow(50,140,140,120,GOLD,2.8,false)+
+          arrow(160,70,160,150,BLUE,2.8,false)+
+          lab(80, 18, 'равные', GOLD)+lab(178, 110, 'коллинеарные', BLUE, 'start', 11)
+        )}
+        ${note('Равные и коллинеарные','Равные — одна длина и одно направление, можно переносить. Коллинеарные — на параллельных прямых, можно и в разные стороны.')}
+      </div>`;
+    } else if(step===9){
+      const O=[50,150], S=14;
+      const Q=[O[0]+vx*S, O[1]-vy*S];
+      let grid='';
+      for(let i=0;i<=8;i++) grid+=`<line x1="${O[0]+i*S}" y1="${O[1]-8*S}" x2="${O[0]+i*S}" y2="${O[1]}" stroke="#1e3328"/>`+
+        `<line x1="${O[0]}" y1="${O[1]-i*S}" x2="${O[0]+8*S}" y2="${O[1]-i*S}" stroke="#1e3328"/>`;
+      h=`<div class="wv-col">
+        ${frame(
+          grid+
+          arrow(O[0],O[1],Q[0],Q[1],GOLD,3,doDraw)+
+          lab(Q[0]+8, Q[1], '{'+vx+'; '+vy+'}', GOLD, 'start')
+        )}
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,300px)">
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">x
+            <input type="range" min="-6" max="6" value="${vx}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].vx=+this.value;chRender(0);}catch(e){}">
+            <b style="color:${BLUE}">${vx}</b></label>
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">y
+            <input type="range" min="-6" max="6" value="${vy}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].vy=+this.value;chRender(0);}catch(e){}">
+            <b style="color:${GREEN}">${vy}</b></label>
         </div>
-        <div class="wv-sml">теорема Пифагора — лучший друг длины вектора!</div>
+        ${note('Координаты','{x; y} — шаг по клеткам вправо и вверх. Минус — влево и вниз. Стрелка растёт из начала координат.')}
+      </div>`;
+    } else if(step===10){
+      const O=[50,150], S=14;
+      const Q=[O[0]+Math.abs(vx)*S, O[1]-Math.abs(vy)*S];
+      const len=Math.sqrt(vx*vx+vy*vy);
+      h=`<div class="wv-col">
+        ${frame(
+          arrow(O[0],O[1],Q[0],Q[1],GOLD,3.2,doDraw)+
+          `<line x1="${O[0]}" y1="${O[1]}" x2="${Q[0]}" y2="${O[1]}" stroke="${BLUE}" stroke-width="2" stroke-dasharray="5 4"/>`+
+          `<line x1="${Q[0]}" y1="${O[1]}" x2="${Q[0]}" y2="${Q[1]}" stroke="${GREEN}" stroke-width="2" stroke-dasharray="5 4"/>`+
+          lab((O[0]+Q[0])/2, O[1]+16, '|x|='+Math.abs(vx), BLUE)+
+          lab(Q[0]+10, (O[1]+Q[1])/2, '|y|='+Math.abs(vy), GREEN, 'start')+
+          lab(120, 28, '|a|=√('+vx+'²+'+vy+'²)='+(Math.round(len*100)/100).toString().replace('.',','), GOLD)
+        )}
+        ${note('Пифагор со стрелкой','Катеты — координаты, гипотенуза — длина. {3; 4} даёт 5. Тот же треугольник, который уже знаком.')}
+      </div>`;
+    } else if(step===11){
+      const O=[50,150], S=14;
+      const Q=[O[0]+Math.abs(vx)*S, O[1]-Math.abs(vy)*S];
+      const len=Math.sqrt(vx*vx+vy*vy);
+      h=`<div class="wv-col">
+        ${frame(
+          arrow(O[0],O[1],Q[0],Q[1],GOLD,3,doDraw)+
+          `<line x1="${O[0]}" y1="${O[1]}" x2="${Q[0]}" y2="${O[1]}" stroke="${BLUE}" stroke-width="2" stroke-dasharray="4 3"/>`+
+          `<line x1="${Q[0]}" y1="${O[1]}" x2="${Q[0]}" y2="${Q[1]}" stroke="${GREEN}" stroke-width="2" stroke-dasharray="4 3"/>`+
+          lab(Q[0]+8, Q[1], '{'+vx+'; '+vy+'}', GOLD, 'start')+
+          lab(120, 28, '|a| = '+(Math.round(len*100)/100).toString().replace('.',','), GREEN, 'middle', 16)
+        )}
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,300px)">
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">x
+            <input type="range" min="-6" max="6" value="${vx}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].vx=+this.value;chRender(0);}catch(e){}">
+            <b style="color:${BLUE}">${vx}</b></label>
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">y
+            <input type="range" min="-6" max="6" value="${vy}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].vy=+this.value;chRender(0);}catch(e){}">
+            <b style="color:${GREEN}">${vy}</b></label>
+        </div>
+        <div class="wv-ans" style="font-size:15px">|{${vx}; ${vy}}| = ${(Math.round(Math.sqrt(vx*vx+vy*vy)*100)/100).toString().replace('.',',')}</div>
+        ${note('Крути катеты','Длина меняется сразу. Поймай 3 и 4 — снова 5. Поймай 6 и 8 — 10. Масштаб тот же.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        ${frame(
+          arrow(30,50,110,30,GOLD,2.8,doDraw)+
+          arrow(80,130,160,110,GOLD,2.8,false)+
+          arrow(140,70,220,50,GOLD,2.8,false)+
+          lab(120, 160, 'равные: переноси куда хочешь', MUTED)
+        )}
+        ${note('Свободный вектор','Начало можно посадить в любую точку. Стрелка не меняется. Поэтому в задачах часто рисуют вектор «сам по себе».')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[['1','Стрелка = длина + направление',GOLD],
+             ['2','Сумма: треугольник или параллелограмм',BLUE],
+             ['3','Минус — разверни нос',RED],
+             ['4','{x; y} и √(x²+y²)',GREEN]].map((x,i)=>
+            `<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left">
+              <b style="color:${x[2]};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Сначала нарисуй стрелку, потом решай. Координаты — если есть сетка. Сумма — если два перемещения подряд.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          arrow(40,120,190,50,GOLD,3.4,doDraw)+
+          lab(40, 140, 'A', GREEN)+lab(198, 44, 'B', GOLD)+
+          lab(120, 28, 'AB⃗', GOLD, 'middle', 22)
+        )}
+        ${note('В карман','Из A в B — AB⃗. Длина — |AB⃗|. Сумма с противоположным — ноль. {3; 4} длиной 5.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        <svg viewBox="0 0 220 100" style="width:180px;height:82px;background:#101f18;border-radius:12px">
-          <line x1="30" y1="60" x2="180" y2="40" stroke="#ffd76a" stroke-width="4"/>
-          <polygon points="180,40 168,38 174,50" fill="#ffd76a"/>
-          <circle cx="30" cy="60" r="6" fill="#8fd1a8"/><text x="18" y="80" font-size="13" fill="#8fd1a8">A</text>
-          <text x="176" y="32" font-size="13" fill="#ffd76a">B</text>
-        </svg>
-        <div class="wv-sml">как обозначить вектор из A в B?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? ⃗</div>
+        ${frame(
+          arrow(40,110,190,50,GOLD,3.4,doDraw)+
+          lab(40, 130, 'A', GREEN)+lab(198, 44, 'B', GOLD)+
+          lab(120, 28, 'как назвать?', MUTED)
+        )}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">? ⃗</div>
+        ${note('Проверка','AB⃗. Не |AB| — это только длина. Не A+B — точки не складывают как векторы без стрелок.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[420]=visD420;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===420){ window.ARH_LESSONS[i]=L420; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===420){ arr[i]=L420; f=true; break; } }
+    if(!f) arr.push(L420);
+  })();
 })();
 /* ================= УРОК 421 · Уравнения в целых числах ================= */
 (function(){
