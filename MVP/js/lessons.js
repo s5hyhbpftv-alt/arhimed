@@ -9441,12 +9441,17 @@ function l96Scene(sunPos,far,big){
     <div class="l96-sh" style="left:${x}%;width:${w}px"></div></div>`;
 }
 function l96Mirror(ang){
+  const A=(ang||30)+18;
+  const dy=Math.round(Math.tan(A*Math.PI/180)*84);
+  const eyeTop=Math.max(10, Math.min(120, 62-dy));
   return `<div class="l96-scene"><div class="l96-ground"></div>
-    <div class="l96-ray" style="left:20px;top:60px;width:120px;transform:rotate(18deg)"></div>
+    <div class="l96-ray" style="left:20px;top:60px;width:112px;transform:rotate(18deg)"></div>
     <div class="l96-mirror" style="transform:rotate(${(-(ang||30)/2).toFixed(0)}deg)"></div>
-    <div class="l96-ray" style="left:calc(50% + 4px);top:62px;width:120px;transform:rotate(${(-(ang||30)-18).toFixed(0)}deg);background:linear-gradient(90deg,rgba(160,220,255,.95),rgba(160,220,255,.05))"></div>
-    <div style="position:absolute;left:calc(50% + 117px);top:${62 - Math.round(Math.tan(((ang||30)+18)*Math.PI/180)*117)}px;font-size:20px">👁</div></div>`;
+    <div class="l96-ray" style="left:calc(50% + 4px);top:62px;width:84px;transform:rotate(${(-A).toFixed(0)}deg);background:linear-gradient(90deg,rgba(160,220,255,.95),rgba(160,220,255,.05))"></div>
+    <div style="position:absolute;right:12px;top:${eyeTop}px;font-size:19px">👁</div>
+    <div style="position:absolute;left:10px;bottom:6px;font-size:9px;color:#9fb0aa">луч падает → отражается → глаз</div></div>`;
 }
+
 function visL96(el){
   try{
     l96css();
