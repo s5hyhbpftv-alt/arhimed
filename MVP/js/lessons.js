@@ -235,7 +235,10 @@ function renderLessonView(){
   if(LV.phase==='explain') renderLessonVis();
   hud();
 }
-function lvStep(d){ const L=lessonById(LV.id); LV.step=Math.max(0,Math.min(lessonSteps(L)-1,LV.step+d)); renderLessonView(); }
+function lvStep(d){ const L=lessonById(LV.id); const before=LV.step;
+  LV.step=Math.max(0,Math.min(lessonSteps(L)-1,LV.step+d));
+  if(LV.step!==before){ try{ bumpDay('lessonSteps',1); logEvent('step',{id:LV.id, step:LV.step, of:lessonSteps(L), title:lessonTitle()}); }catch(e){} }
+  renderLessonView(); }
 function lvToCheck(){ LV.phase='check'; LV.ch=null; renderLessonView(); }
 function lvBackExplain(){ const L=lessonById(LV.id); if(L&&L.comic&&typeof COMIC!=='undefined'&&COMIC.open){ COMIC.open(L); return; } LV.phase='explain'; renderLessonView(); }
 function lvCheck(i){ LV.ch=i; renderLessonView(); }
@@ -257,14 +260,19 @@ function lvNum(){
 function lvWin(){
   const L=lessonById(LV.id); const rec=lrec();
   if(rec.tasks.indexOf(LV.task)>=0) return;
-  rec.tasks.push(LV.task); rec.stars=(rec.stars||0)+1;
+  rec.tasks.push(LV.task); rec.stars=(rec.stars||0)+1; rec.lastTs=Date.now(); rec.steps=Math.max(rec.steps||0,LV.step||0);
+  try{ bumpDay('lessonSteps',1); logEvent('lesson-task',{id:LV.id, title:lessonTitle(), stars:rec.stars}); }catch(e){}
   DB.points+=Math.max(8,18-LV.hints*5);
   save();
-  if(rec.tasks.length>=L.tasks.length){ rec.done=true; save(); }
+  if(rec.tasks.length>=L.tasks.length){ rec.done=true; rec.doneTs=Date.now();
+    try{ bumpDay('lessons',1); logEvent('lesson',{id:LV.id, title:lessonTitle(), stars:rec.stars, src:L.src, steps:rec.steps||0}); }catch(e){}
+    save(); }
   renderLessonView();
 }
 function lvNextTask(){ LV.task++; LV.hints=0; LV.sel=null; renderLessonView(); }
-function lvFinish(){ lrec().done=true; save(); LV.phase='done'; showConfetti(); renderLessonView(); }
+function lvFinish(){ const r=lrec(); const was=!!r.done; r.done=true; r.doneTs=r.doneTs||Date.now();
+  if(!was){ try{ bumpDay('lessons',1); logEvent('lesson',{id:LV.id, title:lessonTitle(), stars:r.stars||0, steps:r.steps||0, manual:1}); }catch(e){} }
+  save(); LV.phase='done'; showConfetti(); renderLessonView(); }
 
 /* ---------- виджеты-визуализации ---------- */
 /* ---------- visMath: иллюстрации для всех уроков математики ---------- */

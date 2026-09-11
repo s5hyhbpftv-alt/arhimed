@@ -64,13 +64,17 @@ function useHint(i){
   DB.points-=cost; CUR.st.hints=i+1; save(); renderTask();
 }
 function wrongPing(){
-  rec(); CUR.st.tries++; CUR.st.wrong=(CUR.st.wrong||0)+1; save();
+  rec(); CUR.st.tries++; CUR.st.wrong=(CUR.st.wrong||0)+1;
+  try{ bumpDay('wrong',1); logEvent('wrong',{id:CUR.task.id, theme:themeOf(CUR.task), island:CUR.task.island}); }catch(e){}
+  save();
   tChosen=-99; renderTask(); // подсветка ошибки
 }
 function pickCh(i){
   if(CUR.st&&CUR.st.done) return;
   const t=CUR.task;
-  if(i===t.answer) win(); else { rec(); CUR.st.tries++; CUR.st.wrong=(CUR.st.wrong||0)+1; save(); tChosen=i; renderTask(); }
+  if(i===t.answer) win(); else { rec(); CUR.st.tries++; CUR.st.wrong=(CUR.st.wrong||0)+1;
+    try{ bumpDay('wrong',1); logEvent('wrong',{id:t.id, theme:themeOf(t), island:t.island}); }catch(e){}
+    save(); tChosen=i; renderTask(); }
 }
 function pickNum(){
   if(CUR.st&&CUR.st.done) return;
@@ -89,6 +93,7 @@ function win(){
   DB.points+=gain; DB.streak++; DB.best=Math.max(DB.best,DB.streak);
   DB.history.unshift({ts:Date.now(), id:CUR.task.id, ok:1});
   if(DB.history.length>200) DB.history.length=200;
+  try{ bumpDay('tasks',1); logEvent('task',{id:CUR.task.id, island:CUR.task.island, theme:themeOf(CUR.task), diff:CUR.task.diff||1, tries:CUR.st.tries||0, hints:hints}); }catch(e){}
   save(); renderTask(); showConfetti(); hud();
 }
 function afterRow(t){

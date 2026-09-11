@@ -10,6 +10,9 @@ function emptyState(){
     points:0, streak:0, best:0,
     history:[],          // {ts, id, ok}
     today:{ date:null, minutes:0 },
+    days:{},             // 'YYYY-M-D' -> {min, tasks, wrong, lessonSteps, lessons, quests}
+    events:[],           // журнал занятий: {ts, type, id, ok, stars, steps}
+    totalMin:0,
     sessionStart: Date.now() };
 }
 let DB = emptyState();
@@ -20,12 +23,26 @@ try{ const s = JSON.parse(localStorage.getItem(KEY));
     else if(s.profile.klass==='3–4') s.profile.klass='3';
     else if(s.profile.klass==='5–6') s.profile.klass='5';
     else if(s.profile.klass==='8+') s.profile.klass='9';
-    DB = Object.assign(emptyState(), s); if(!DB.today || DB.today.date!==todayStr()) DB.today={date:todayStr(),minutes:0};
+    DB = Object.assign(emptyState(), s);
+    DB.days = DB.days || {}; DB.events = DB.events || [];
+    if(!DB.today || DB.today.date!==todayStr()) DB.today={date:todayStr(),minutes:0};
   }
 }catch(e){}
 
 function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function dayKey(ts){ const d=ts?new Date(ts):new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function dayRec(ts){ const k=dayKey(ts); DB.days=DB.days||{};
+  if(!DB.days[k]) DB.days[k]={min:0,tasks:0,wrong:0,lessonSteps:0,lessons:0};
+  const r=DB.days[k]; r.min=r.min||0; r.tasks=r.tasks||0; r.wrong=r.wrong||0; r.lessonSteps=r.lessonSteps||0; r.lessons=r.lessons||0; return r; }
+function bumpDay(field,n,ts){ const r=dayRec(ts); r[field]=(r[field]||0)+(n||1); return r; }
+function logEvent(type,data){ DB.events=DB.events||[];
+  const e=Object.assign({ts:Date.now(), type:type}, data||{}); DB.events.push(e);
+  if(DB.events.length>800) DB.events.splice(0, DB.events.length-800); return e; }
+function minutesOn(k){ const r=(DB.days||{})[k]; return r?(r.min||0):0; }
+function totalMinutes(){ let t=0; const d=DB.days||{}; Object.keys(d).forEach(k=>{ t+=d[k].min||0; }); return t; }
 function save(){ DB.today.minutes = Math.max(DB.today.minutes, Math.round((Date.now()-DB.sessionStart)/60000));
+  const r=dayRec(Date.now()); r.min=Math.max(r.min||0, DB.today.minutes||0);
+  DB.totalMin=totalMinutes();
   try{ localStorage.setItem(KEY, JSON.stringify(DB)); }catch(e){} }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function rankName(){ const n=Object.keys(DB.tasks).filter(id=>DB.tasks[id].done).length;
