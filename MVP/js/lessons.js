@@ -3217,6 +3217,7 @@ function l33Act(lk,act){
   const bump=(k,d,lo)=> st[k]=Math.max(lo||1, Math.round(((st[k]==null?1:st[k])+d)*10)/10);
   switch(act){
     case 'm+': bump('m',1); break; case 'm-': bump('m',-1); break;
+    case 'a10': bump('a',10,0); break; case 'a10-': bump('a',-10,0); break;
     case 'V+': bump('V',1); break; case 'V-': bump('V',-1); break;
     case 'w+': bump('m',5); break; case 'w-': bump('m',-5); break;
     case 'drop': st.drop=(st.drop||0)+1; break;
@@ -16167,7 +16168,7 @@ function visPhysNew(el){
            <div style="position:absolute;left:6px;top:6px;font-size:10px;color:#7fa88f">время: ${st.b} с</div>
          </div>`+
         big(`N = A : t = ${st.a} : ${st.b} = ${N} Вт`)+
-        btns(btn('+100 Дж',`phAct('${lk}','a+')`),btn('−100 Дж',`phAct('${lk}','a-')`),btn('+1 с',`phAct('${lk}','b+')`),btn('−1 с',`phAct('${lk}','b-')`),btn('↺',`phAct('${lk}','r')`))+
+        btns(btn('+10 Дж',`phAct('${lk}','a10')`),btn('−10 Дж',`phAct('${lk}','a10-')`),btn('+1 с',`phAct('${lk}','b+')`),btn('−1 с',`phAct('${lk}','b-')`),btn('↺',`phAct('${lk}','r')`))+
         sml('одна и та же работа быстрее — значит мощность больше: N = A : t'));
     }
     else if(id===95){ const mats=[['Железо','притянулось!','🧷',1],['Сталь','притянулось!','🔩',1],['Дерево','не притягивается','🪵',0],['Стекло','не притягивается','🥛',0],['Пластик','не притягивается','🧴',0]];
