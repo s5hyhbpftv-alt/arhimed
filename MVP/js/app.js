@@ -606,13 +606,16 @@ function taskClassRange(t){
   const R={'Начальная школа':[1,4],Сиракузы:[5,9],Ньютон:[7,9],Лавуазье:[8,9],Информатика:[7,9]};
   return R[(t&&t.island)||'']||[1,9];
 }
-function taskFits(t){ const r=taskClassRange(t),o=openClassRange(); return !(r[1]<o[0]||r[0]>o[1]); }
+/* 🌍 «весь мир»: все острова и задачи доступны независимо от класса (по умолчанию включено) */
+function worldOpen(){ try{ return DB.openWorld!==false; }catch(e){ try{ return !(window.DB && window.DB.openWorld===false); }catch(e2){ return true; } } }
+function taskFits(t){ if(worldOpen()) return true; const r=taskClassRange(t),o=openClassRange(); return !(r[1]<o[0]||r[0]>o[1]); }
 function tasksFit(arr){ return (arr||[]).filter(taskFits); }
 function islandHasTasks(name){ return tasksFit(window.ARH_TASKS.filter(t=>t.island===name)).length>0; }
 
-function taskPool(){ return tasksFit(isJunior()? window.ARH_TASKS.filter(t=>t.island==='Начальная школа') : window.ARH_TASKS.filter(t=>t.island!=='Начальная школа')); }
+function taskPool(){ if(worldOpen()) return window.ARH_TASKS.slice(); return tasksFit(isJunior()? window.ARH_TASKS.filter(t=>t.island==='Начальная школа') : window.ARH_TASKS.filter(t=>t.island!=='Начальная школа')); }
 /* карта путешествий: все острова всегда на месте (младшие — только Начальная школа) */
 function islandVisible(I){
+  if(worldOpen()) return true;
   if(isJunior()) return I.name==='Начальная школа';
   if(I.name==='Начальная школа') return false;
   return true;
@@ -699,6 +702,12 @@ function pdCss(){
 function planOpenIsland(name){ var i=PLAN.open.indexOf(name); if(i>=0){PLAN.open.splice(i,1);}else{PLAN.open.push(name);} renderPath(); }
 function planOpenAll(){ PLAN.open=ISLANDS.filter(function(I){return islandVisible(I)&&islandHasTasks(I.name);}).map(function(I){return encodeURIComponent(I.name);}); renderPath(); }
 function planCloseAll(){ PLAN.open=[]; renderPath(); }
+function worldToggle(){
+  DB.openWorld = !worldOpen();
+  try{ save(); }catch(e){}
+  if(!worldOpen()){ PLAN.open=[]; }
+  renderPath();
+}
 /* чистое имя темы: «Гл.2 · Дроби»→«Дроби», «5–6 кл · Дроби»→«Дроби», «Инф. · Кодирование»→«Кодирование» */
 function planTheme(t){
   const raw=String((t&&t.theme)||'');
@@ -853,7 +862,8 @@ function renderPath(){
   const openedI = (PLAN.open||[]).map(function(enc){ try{ var nm=decodeURIComponent(enc); return islands.find(function(I){ return I.name===nm; }); }catch(err){ return null; } }).filter(Boolean);
   const expanded = openedI.map(dashExpanded).join('');
   s.innerHTML=hero+legendCard+nextBtn+
-    `<div class="pd-title" style="margin-bottom:2px"><div class="l"><div class="h">Карта путешествий по островам</div><div class="s">открытых карт: ${PLAN.open.length} — нажми на остров или разверни все</div></div><div class="btns"><button class="chip pd" onclick="planOpenAll()">развернуть все</button> <button class="chip pd" onclick="planCloseAll()">свернуть все</button></div></div>
+    `<div class="pd-title" style="margin-bottom:2px"><div class="l"><div class="h">Карта путешествий по островам</div><div class="s">открытых карт: ${PLAN.open.length} — нажми на остров или разверни все</div></div><div class="btns"><button class="chip pd" onclick="worldToggle()">${worldOpen()?'🌍 весь мир открыт · вернуть по классам':'🔒 только мой класс · открыть весь мир'}</button> <button class="chip pd" onclick="planOpenAll()">развернуть все</button> <button class="chip pd" onclick="planCloseAll()">свернуть все</button></div></div>
+     <div class="small" style="color:var(--muted);margin:2px 0 8px">${worldOpen()?'Открыты все миры и все задачи — любого класса. Нажми «вернуть по классам», чтобы видеть только свой класс.':'Показаны только задачи твоего класса. Нажми «открыть весь мир», чтобы увидеть все острова.'}</div>
      <div class="dash-mini-row">${minis}</div>
      ${expanded}`+
     plan;
