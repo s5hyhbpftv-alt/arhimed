@@ -1143,107 +1143,356 @@ window.WAVE_D = window.WAVE_D || {};
     id: 423, title: 'Теорема Виета на олимпиадах', ico: '🌿',
     src: 'Математика · 8 класс · Олимп-8: Виета', subj: 'math',
     explain: [
-      'Для квадратного уравнения x² + px + q = 0 теорема Виета — волшебный инструмент: сумма корней равна −p, а произведение равно q. Без решения знаем про корни всё!',
-      'Проверим: у уравнения x² − 5x + 6 = 0 коэффициент p = −5, q = 6. По Виете сумма корней = −p = 5, произведение = q = 6. Какие числа дают сумму 5 и произведение 6? Это 2 и 3!',
-      'Проверим подстановкой: 2² − 5·2 + 6 = 4 − 10 + 6 = 0 ✔. И 3² − 5·3 + 6 = 9 − 15 + 6 = 0 ✔. Корни 2 и 3 — верно!',
-      'Как подбирать корни? Ищем два числа: сумма = −p, произведение = q. Для x² − 4x + 3: сумма 4, произведение 3 → числа 1 и 3. Мгновенно, без дискриминанта!',
-      'На олимпиадах Виета позволяет «угадывать» корни и проверять решения. А ещё — восстанавливать уравнение по корням: x² − (сумма)x + произведение = 0.',
-      'Пример: корни 2 и 5 → уравнение x² − 7x + 10 = 0. Сумма 2+5 = 7 → коэффициент −7, произведение 10 → свободный член 10. Готово!',
-      'Хитрость: если уравнение x² + px + q с ЦЕЛЫМИ корнями — они обязательно делители q! У x² + 3x + 2 делители 2: ±1, ±2. Пробуем: −1 и −2 дают сумму −3 = −p ✔. Корни −1, −2!',
-      'Запомни связку: x² + px + q = 0 → x₁ + x₂ = −p, x₁·x₂ = q. Подбирай пары делителей q, проверяя сумму — и корни находятся за секунды!',
-      'Теперь проверь себя: у x² − 5x + 6 чему равна сумма корней? Вспомни: −p!'
+      'Загадка: два числа. Если их сложить — 5, если перемножить — 6. Какие это числа? Не решай уравнение, просто подбери. Сейчас увидим, зачем эта пара живёт внутри квадратного уравнения.',
+      'Отметим оба числа на прямой. От нуля до первого — один отрезок, дальше до второго — другой. Вместе они дают 5. Сумма — это просто «сколько шагов всего».',
+      'Произведение удобно видеть как площадь. Прямоугольник 2 на 3: внутри ровно 6 клеточек. Сумма живёт на прямой, произведение — в прямоугольнике. Два взгляда на одну пару.',
+      'Если x равен одному из чисел, скобка (x − 2) становится нулём. То же для (x − 3). Произведение скобок равно нулю как раз в корнях. Это и есть уравнение (x − 2)(x − 3) = 0.',
+      'Раскроем скобки по клеткам: x·x = x², x·(−3) = −3x, (−2)·x = −2x, (−2)·(−3) = +6. Складываем средние: −3x − 2x = −5x. Получилось x² − 5x + 6 = 0.',
+      'Смотри связь: коэффициент при x — это сумма корней с минусом, свободный член — произведение. Для x² + px + q = 0: x₁ + x₂ = −p, x₁ · x₂ = q. Это теорема Виета.',
+      'Подвигай корни ползунками. Парабола сама перестроится, уравнение перепишется. Сумма и произведение всегда совпадают с коэффициентами. Формулу не надо зубрить — она на экране.',
+      'Проверка: подставь 2 в x² − 5x + 6. 4 − 10 + 6 = 0. Подставь 3: 9 − 15 + 6 = 0. Оба корня подходят. Виета нашла их без дискриминанта.',
+      'Ещё одно: x² − 4x + 3. Сумма должна быть 4, произведение 3. Какие два числа? 1 и 3. Нажми «Показать» — корни встанут на ось, парабола дорисуется.',
+      'Наоборот: известны корни 2 и 5. Сумма 7, произведение 10. Уравнение пишется сразу: x² − (сумма)x + произведение = 0, то есть x² − 7x + 10 = 0.',
+      'Корни бывают отрицательные. У x² + 3x + 2 сумма равна −3, произведение 2. Пара −1 и −2: (−1)+(−2)=−3, (−1)·(−2)=+2. Минусы не страшны.',
+      'Хитрость: если корни целые, они — делители свободного члена q. Для q = 2 кандидаты ±1 и ±2. Кликай пары: какая даст нужную сумму?',
+      'Откуда минус у суммы? Из раскрытия (x − a)(x − b) = x² − (a+b)x + ab. Перед суммой всегда стоит минус. Поэтому в формуле x₁ + x₂ = −p, а не p.',
+      'Если целых корней нет, Виета всё равно верна: сумма и произведение такие, какие сказали коэффициенты. Просто подбирать «на глаз» уже не выйдет — тогда помогает дискриминант.',
+      'На олимпиаде Виета экономит время: угадать корни, собрать уравнение по корням, проверить чужое решение. Три движения — и без длинной арифметики.',
+      'Рецепт: выпиши p и q → сумма = −p, произведение = q → подбери пару (часто среди делителей q) → проверь подстановкой. Дальше короткий вопрос: чему равна сумма корней у x² − 5x + 6?'
     ],
     check: { q: 'У x² − 5x + 6 чему равна сумма корней?', choices: ['5', '−5', '6', '−6'], ans: 0,
-      exp: 'Сумма корней = −p = −(−5) = 5.' },
+      exp: 'p = −5, сумма корней = −p = 5. Это 2 + 3.' },
     tasks: [
       { q: 'Чему равно произведение корней x² + 3x + 2?', kind: 'unit', ans: 2, tol: 0,
-        hints: ['q = 2.', 'Произведение корней = 2.'], sol: '2' },
-      { q: 'Подбери корни x² − 4x + 3 = 0 по Виете.', kind: 'choice', choices: ['1 и 3', '2 и 2', '−1 и 3', '3 и 4'], ans: 0, tol: 0,
-        hints: ['Сумма 4, произведение 3.', '1 + 3 = 4 и 1·3 = 3 → корни 1 и 3.'], sol: '1 и 3' }
+        hints: ['Свободный член q — это и есть произведение.', 'q = 2.'], sol: 'Произведение корней = q = 2. Корни −1 и −2, (−1)·(−2)=2.' },
+      { q: 'Подбери корни x² − 4x + 3 = 0 по Виете.', kind: 'choice',
+        choices: ['1 и 3', '2 и 2', '−1 и 3', '3 и 4'], ans: 0, tol: 0,
+        hints: ['Сумма должна быть 4, произведение 3.', '1+3=4 и 1·3=3.'], sol: '1 и 3' }
     ]
   };
-  const card=(name,val,c)=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${c};border-radius:12px;padding:8px 14px"><b style="font-size:20px;color:${c};font-family:Georgia,serif">${name}</b><div style="font-size:12px;color:#8fa08f">${val}</div></div>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS = `<style>
+    @keyframes l423ink{to{stroke-dashoffset:0}}
+    @keyframes l423pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l423pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l423glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    @keyframes l423rise{from{transform:scaleY(0);opacity:0}to{transform:scaleY(1);opacity:1}}
+    @keyframes l423slide{from{transform:translateX(-12px);opacity:0}to{transform:none;opacity:1}}
+    .l423-ink{animation:l423ink 1.55s cubic-bezier(.2,.75,.15,1) forwards}
+    .l423-dot{transform-box:fill-box;transform-origin:center;animation:l423pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l423-pulse{animation:l423pulse 1.6s ease-in-out infinite}
+    .l423-glow{animation:l423glow 1.8s ease-in-out infinite}
+    .l423-rise{transform-origin:center bottom;animation:l423rise .8s cubic-bezier(.2,.8,.2,1) both}
+    .l423-slide{animation:l423slide .55s ease both}
+    .l423-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+14);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l423-ink" style="animation-duration:${dur||1.4}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    return `<text class="l423-lab" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    return `${CSS}<svg viewBox="${vb||'0 0 240 200'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">
+      <defs>
+        <linearGradient id="l423g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7fd1ff33"/><stop offset="100%" stop-color="#ffd76a22"/></linearGradient>
+      </defs>${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div>
+    </div>`;
+  }
+  function card(top,bot,c){
+    return `<div class="wv-pop" style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${c};border-radius:12px;padding:8px 12px;min-width:88px">
+      <div style="font-size:18px;color:${c};font-family:Georgia,serif">${top}</div>
+      <div style="font-size:11px;color:${MUTED};margin-top:2px">${bot}</div>
+    </div>`;
+  }
+  function X(x){ return 28 + (x+1)*30; }
+  function Y(y){ return 142 - y*36; }
+  function axis(xmin,xmax){
+    const x1=X(xmin), x2=X(xmax), y=142;
+    let ticks='';
+    for(let i=Math.ceil(xmin);i<=xmax;i++){
+      const px=X(i);
+      ticks += `<line x1="${px}" y1="${y-4}" x2="${px}" y2="${y+4}" stroke="${MUTED}" stroke-width="1"/>`+lab(px,y+16, String(i), MUTED);
+    }
+    return `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#3d5c49" stroke-width="1.6"/>
+      <polygon points="${x2},${y} ${x2-7},${y-4} ${x2-7},${y+4}" fill="#3d5c49"/>${ticks}`;
+  }
+  function para(r1,r2,xmin,xmax){
+    const pts=[];
+    for(let x=xmin;x<=xmax+1e-9;x+=0.1){
+      const y=(x-r1)*(x-r2);
+      pts.push([X(x), Y(Math.max(-1.6, Math.min(3.2,y)))]);
+    }
+    let len=0;
+    for(let i=1;i<pts.length;i++) len+=Math.hypot(pts[i][0]-pts[i-1][0], pts[i][1]-pts[i-1][1]);
+    const d='M '+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L ');
+    return {d,len};
+  }
+  function rootDot(r,col,name,delay,pop){
+    const px=X(r), py=142;
+    return `<g>
+      <line x1="${px}" y1="${py}" x2="${px}" y2="${Y(0)-28}" stroke="${col}" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <circle ${pop?'class="l423-dot"':''} style="animation-delay:${delay||0}s" cx="${px}" cy="${py}" r="6.5" fill="${col}"/>
+      ${lab(px, py+28, name, col)}
+    </g>`;
+  }
+
   function visD423(el){
     const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'423';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw = st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const r1 = Math.max(-4, Math.min(6, +(st.r1==null?2:st.r1)));
+    const r2 = Math.max(-4, Math.min(6, +(st.r2==null?3:st.r2)));
+    const sum=r1+r2, prod=r1*r2;
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Теорема Виета</div>
-        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;font-size:18px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">x² + px + q = 0</div>
-        <div style="display:flex;gap:10px;justify-content:center;margin-top:4px">
-          ${card('сумма','−p','#7fd1ff')}${card('произведение','q','#8fd1a8')}
-        </div>
+        ${frame(
+          axis(-1,6)+
+          (open
+            ? rootDot(2,BLUE,'2',0,true)+rootDot(3,GREEN,'3',.15,true)+
+              `<rect x="${X(0)}" y="78" width="${X(5)-X(0)}" height="10" rx="5" fill="${GOLD}44" stroke="${GOLD}" class="l423-rise"/>`+
+              lab((X(0)+X(5))/2, 72, 'сумма 5', GOLD)
+            : `<g class="l423-pulse">${lab(X(2),120,'?',GOLD,'middle',28)}${lab(X(3.5),120,'?',BLUE,'middle',28)}</g>`
+          )
+        )}
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть числа'}</button>
+        ${note('Загадка','Сложи — 5, перемножь — 6. Нажми кнопку: на прямой появятся 2 и 3. Именно эта пара сидит в уравнении x² − 5x + 6 = 0.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Проверка на x² − 5x + 6</div>
-        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-          ${card('p = −5','сумма = 5','#7fd1ff')}${card('q = 6','произведение = 6','#8fd1a8')}
-        </div>
-        <div class="wv-ans" style="font-size:20px;color:#ffd76a;font-family:Georgia,serif">2 и 3: 2+3=5, 2·3=6!</div>
+        ${frame(
+          axis(-1,6)+
+          `<line x1="${X(0)}" y1="90" x2="${X(2)}" y2="90" stroke="${BLUE}" stroke-width="6" stroke-linecap="round" ${doDraw?ink(X(2)-X(0),1,0):''}/>`+
+          `<line x1="${X(2)}" y1="90" x2="${X(5)}" y2="90" stroke="${GREEN}" stroke-width="6" stroke-linecap="round" ${doDraw?ink(X(5)-X(2),1,.25):''}/>`+
+          lab((X(0)+X(2))/2, 78, '2', BLUE)+
+          lab((X(2)+X(5))/2, 78, '3', GREEN)+
+          lab(X(2.5), 58, '2 + 3 = 5', GOLD)+
+          rootDot(2,BLUE,'2',.1,doDraw)+rootDot(3,GREEN,'3',.25,doDraw)
+        )}
+        ${note('Сумма на прямой','Голубой кусок — первое число, зелёный — второе. Вместе ровно до 5. Сумма корней — это длина двух отрезков, поставленных встык.')}
       </div>`;
     } else if(step===2){
+      const cell=18, cols=3, rows=2, ox=78, oy=46;
+      let grid='';
+      for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+        const dly=(r*cols+c)*0.08;
+        grid += `<rect class="l423-dot" style="animation-delay:${dly}s" x="${ox+c*cell}" y="${oy+r*cell}" width="${cell-3}" height="${cell-3}" rx="3" fill="${GOLD}33" stroke="${GOLD}" stroke-width="1.4"/>`;
+      }
       h=`<div class="wv-col">
-        <div class="wv-big">Проверка подстановкой</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:16px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">2² − 5·2 + 6 = 4 − 10 + 6 = 0 ✔</div>
-          <div class="wv-pop2">3² − 5·3 + 6 = 9 − 15 + 6 = 0 ✔</div>
-        </div>
-        <div class="wv-sml">корни 2 и 3 — верно!</div>
+        ${frame(
+          grid+
+          lab(ox-14, oy+cell, '2', BLUE)+
+          lab(ox+cols*cell/2, oy+rows*cell+20, '3', GREEN)+
+          lab(120, 28, '2 × 3 = 6', GOLD)
+        , '0 0 240 150')}
+        ${note('Произведение — площадь','Прямоугольник 2 на 3. Клеточек шесть — столько же, сколько произведение. Когда говорят «произведение корней равно q», представляют именно такую площадку.')}
       </div>`;
     } else if(step===3){
+      const P=para(2,3,-0.4,5.6);
       h=`<div class="wv-col">
-        <div class="wv-big">Подбираем корни</div>
-        <div class="wv-sml">x² − 4x + 3: сумма 4, произведение 3</div>
-        <div class="wv-row" style="gap:8px">${card('1 + 3 = 4','сумма','#7fd1ff')}${card('1 · 3 = 3','произведение','#8fd1a8')}</div>
-        <div class="wv-ans" style="font-size:20px;color:#ffd76a;font-family:Georgia,serif">корни 1 и 3!</div>
-        <div class="wv-sml">без дискриминанта — мгновенно!</div>
+        ${frame(
+          axis(-1,6)+
+          `<path d="${P.d}" fill="none" stroke="${GOLD}" stroke-width="2.4" class="l423-glow" ${doDraw?ink(P.len,1.6,0):''}/>`+
+          rootDot(2,BLUE,'(x−2)=0',.2,doDraw)+rootDot(3,GREEN,'(x−3)=0',.35,doDraw)
+        )}
+        <div class="wv-ans" style="font-size:16px">(x − 2)(x − 3) = 0</div>
+        ${note('Откуда уравнение','Скобка обнуляется, когда x равен корню. Произведение скобок равно нулю ровно в этих двух точках — там парабола пересекает ось. Корни — это «дыры» на прямой.')}
       </div>`;
     } else if(step===4){
+      const cells=[
+        ['x · x','x²',GOLD],
+        ['x · (−3)','−3x',BLUE],
+        ['(−2) · x','−2x',GREEN],
+        ['(−2)·(−3)','+6',RED]
+      ];
+      const show=Math.max(0, Math.min(4, st.exp==null?0:+st.exp));
       h=`<div class="wv-col">
-        <div class="wv-big">Обратная задача: по корням</div>
-        <div class="wv-sml">корни 2 и 5 → уравнение?</div>
-        <div style="font-size:20px;color:#ffd76a;font-family:Georgia,serif">x² − 7x + 10 = 0</div>
-        <div class="wv-sml">сумма 7 → −7 · произведение 10</div>
+        <div class="wv-ans" style="font-size:16px">(x − 2)(x − 3)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:min(100%,300px)">
+          ${cells.map((c,i)=> i<show
+            ? `<div class="wv-pop" style="animation-delay:${i*.08}s;background:rgba(255,255,255,.04);border:2px solid ${c[2]};border-radius:10px;padding:8px;text-align:center">
+                <div style="font-size:12px;color:${MUTED}">${c[0]}</div>
+                <div style="font-size:20px;color:${c[2]};font-family:Georgia,serif">${c[1]}</div>
+              </div>`
+            : `<div style="background:rgba(255,255,255,.03);border:1px dashed #3d5c49;border-radius:10px;padding:8px;min-height:56px"></div>`
+          ).join('')}
+        </div>
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].exp=Math.min(4,(CHS[k].exp||0)+1);chRender(0);}catch(e){}">${show>=4?'Все четыре клетки':'Следующая клетка'}</button>
+        <div class="wv-ans" style="font-size:15px">${show>=4?'x² + (−3x−2x) + 6 = x² − 5x + 6': show>=3? 'средние сложатся в −5x' : 'раскрываем по одной клетке'}</div>
+        ${note('Четыре произведения','Как таблица умножения: каждый кусок левой скобки на каждый кусок правой. Средние два — это и есть «минус сумма корней».')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        <div class="wv-big">Хитрость с делителями</div>
-        <div class="wv-sml">x² + 3x + 2: делители 2 → ±1, ±2</div>
-        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-size:15px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">−1 и −2: сумма −3 = −p ✔</div>
-          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">корни −1 и −2!</div>
+        <div style="font-size:20px;color:${GOLD};font-family:Georgia,serif">x² + p x + q = 0</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+          ${card('x₁ + x₂ = −p','сумма','#7fd1ff')}
+          ${card('x₁ · x₂ = q','произведение','#8fd1a8')}
         </div>
+        <div class="wv-sml">для x² − 5x + 6: p = −5, q = 6 → сумма 5, произведение 6</div>
+        ${note('Теорема одной фразой','Не решай — прочитай коэффициенты. Сумма корней прячется в среднем с минусом, произведение стоит в конце. Это и есть Виета.')}
       </div>`;
     } else if(step===6){
+      const P=para(r1,r2, Math.min(r1,r2)-1.2, Math.max(r1,r2)+1.2);
+      const xmin=Math.min(-1, r1-1, r2-1), xmax=Math.max(6, r1+1, r2+1);
+      const pCoef=-(sum);
+      const eq = `x² ${pCoef>=0?'+': '−'} ${Math.abs(pCoef)%1?Math.abs(pCoef).toFixed(1):Math.abs(pCoef)}x ${prod>=0?'+':'−'} ${Math.abs(prod)%1?Math.abs(prod).toFixed(1):Math.abs(prod)} = 0`;
       h=`<div class="wv-col">
-        <div class="wv-big">Памятка</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:340px;font-size:15px;color:#e8dcc8;font-family:Georgia,serif">x² + px + q = 0 → x₁+x₂ = −p · x₁·x₂ = q</div>
-        <div class="wv-sml">подбирай пары делителей q, проверяя сумму!</div>
+        ${frame(
+          axis(Math.max(-2,xmin), Math.min(7,xmax))+
+          `<path d="${P.d}" fill="none" stroke="${GOLD}" stroke-width="2.4"/>`+
+          rootDot(r1,BLUE, String(r1),0,false)+rootDot(r2,GREEN, String(r2),0,false)
+        )}
+        <div class="wv-ans" style="font-size:15px">${eq}</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,300px)">
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">корень x₁
+            <input type="range" min="-4" max="6" step="1" value="${r1}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].r1=+this.value;chRender(0);}catch(e){}">
+            <b style="color:${BLUE};min-width:16px">${r1}</b>
+          </label>
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">корень x₂
+            <input type="range" min="-4" max="6" step="1" value="${r2}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].r2=+this.value;chRender(0);}catch(e){}">
+            <b style="color:${GREEN};min-width:16px">${r2}</b>
+          </label>
+        </div>
+        <div class="wv-sml">сумма ${sum} · произведение ${prod%1?prod.toFixed(1):prod}</div>
+        ${note('Живая Виета','Двигай корни. Средний коэффициент — всегда минус сумма, свободный член — всегда произведение. Парабола пересекает ось ровно там, куда ты поставил точки.')}
       </div>`;
     } else if(step===7){
+      const stage=Math.max(0,Math.min(2, st.sub==null?0:+st.sub));
       h=`<div class="wv-col">
-        <div class="wv-big">Где применяется</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+        <div style="font-size:18px;color:${GOLD};font-family:Georgia,serif">x² − 5x + 6</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
+          ${[
+            ['x = 2','4 − 10 + 6 = 0','#7fd1ff'],
+            ['x = 3','9 − 15 + 6 = 0','#8fd1a8']
+          ].map((row,i)=>`<div class="wv-pop" style="display:${i<stage?'flex':'none'};justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${row[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8"><span>${row[0]}</span><b style="color:${row[2]}">${row[1]}</b></div>`).join('')}
+        </div>
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].sub=Math.min(2,(CHS[k].sub||0)+1);chRender(0);}catch(e){}">${stage>=2?'Оба корня на месте':'Подставить корень'}</button>
+        ${note('Проверка','Виета предлагает пару. Подстановка подтверждает: оба числа обнуляют многочлен. Сначала подбери, потом проверь — и дискриминант не нужен.')}
+      </div>`;
+    } else if(step===8){
+      const show=!!st.show13;
+      const P=para(1,3,-0.4,5.2);
+      h=`<div class="wv-col">
+        ${frame(
+          axis(-1,6)+
+          (show? `<path d="${P.d}" fill="none" stroke="${GOLD}" stroke-width="2.4" ${doDraw||st.drew13?ink(P.len,1.5,0):ink(P.len,1.5,0)}/>`+
+            rootDot(1,BLUE,'1',.1,true)+rootDot(3,GREEN,'3',.25,true) : '')
+        )}
+        <div class="wv-ans" style="font-size:15px">x² − 4x + 3 = 0 · сумма 4 · произведение 3</div>
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].show13=true;CHS[k].drew13=true;chRender(0);}catch(e){}">${show?'Корни 1 и 3':'Показать корни'}</button>
+        ${note('Подбери пару','Ищем два числа с суммой 4 и произведением 3. 1 и 3 подходят сразу. Парабола дорисуется до оси в этих точках.')}
+      </div>`;
+    } else if(step===9){
+      const stage=Math.max(0,Math.min(3, st.build==null?0:+st.build));
+      h=`<div class="wv-col">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+          ${card('2 и 5','корни','#ffd76a')}
+          ${stage>=1?card('2+5=7','сумма','#7fd1ff'):''}
+          ${stage>=2?card('2·5=10','произведение','#8fd1a8'):''}
+        </div>
+        ${stage>=3?`<div class="wv-ans" style="font-size:20px;color:${GOLD}">x² − 7x + 10 = 0</div>`:''}
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].build=Math.min(3,(CHS[k].build||0)+1);chRender(0);}catch(e){}">${['Сложить корни','Перемножить','Собрать уравнение','Готово'][Math.min(stage,3)]}</button>
+        ${note('Собрать уравнение','Коэффициенты — это сумма и произведение. Перед суммой ставим минус: x² − 7x + 10. Обратная Виета — как сложить разборный конструктор.')}
+      </div>`;
+    } else if(step===10){
+      const P=para(-1,-2,-3.2,2.2);
+      h=`<div class="wv-col">
+        ${frame(
+          axis(-3.5,2.5)+
+          `<path d="${P.d}" fill="none" stroke="${GOLD}" stroke-width="2.4" ${doDraw?ink(P.len,1.5,0):''}/>`+
+          rootDot(-2,RED,'−2',.1,doDraw)+rootDot(-1,BLUE,'−1',.25,doDraw)
+        )}
+        <div class="wv-ans" style="font-size:15px">x² + 3x + 2 = 0</div>
+        <div class="wv-sml">(−1)+(−2)=−3 = −p · (−1)·(−2)=+2 = q</div>
+        ${note('Отрицательные корни','Минус на минус даёт плюс в произведении, поэтому q положительный, а средний коэффициент тоже плюс: сумма отрицательная, −p > 0. Картинка та же, только слева от нуля.')}
+      </div>`;
+    } else if(step===11){
+      const pairs=[[1,2],[-1,-2],[1,-2],[-1,2],[2,1]];
+      const pick = st.pick==null? -1:+st.pick;
+      const good = pick>=0 && pairs[pick][0]+pairs[pick][1]===-3 && pairs[pick][0]*pairs[pick][1]===2;
+      h=`<div class="wv-col">
+        <div class="wv-ans" style="font-size:15px">x² + 3x + 2 · нужно сумму −3 и произведение 2</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:320px">
+          ${[['1 и 2'],['−1 и −2'],['1 и −2'],['−1 и 2']].map((lab_,i)=>`<button class="btn" style="border-color:${pick===i?(good&&i===1?GREEN:RED):'#3d5c49'}" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].pick=${i};chRender(0);}catch(e){}">${lab_[0]}</button>`).join('')}
+        </div>
+        <div class="wv-sml">${pick<0?'Кликни пару делителей q': good?'Да: сумма −3, произведение 2':'Сумма или произведение не те'}</div>
+        ${note('Делители q','Целый корень обязан делить свободный член. Перебрал делители — проверил сумму — готово. Это самый быстрый олимпиадный ход.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px);text-align:left">
+          ${[
+            ['(x − a)(x − b)', 'две скобки','#7fd1ff'],
+            ['x² − (a+b)x + ab', 'минус перед суммой','#ffd76a'],
+            ['p = −(a+b), q = ab', 'поэтому x₁+x₂ = −p','#8fd1a8']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8"><b style="color:${x[2]};font-family:Georgia,serif">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Откуда минус','Каждая скобка даёт «минус корень». Два минуса в середине складываются. Поэтому в уравнении x² − (сумма)x + произведение. Формула −p — это просто этот минус.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['целые корни есть','подбирай делители q','#8fd1a8'],
+            ['целых нет, Виета всё равно верна','сумма и произведение те же','#7fd1ff'],
+            ['нужны точные значения','тогда дискриминант','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:13.5px;color:#e8dcc8;text-align:left"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('Не только целые','Виета не про «удобные числа». Она всегда связывает коэффициенты и корни. Подбор — бонус, когда корни целые. Иначе считай дискриминант, а проверку всё равно делай через сумму и произведение.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[
             ['угадать корни','без дискриминанта','#7fd1ff'],
-            ['проверить решение','быстрая проверка','#8fd1a8'],
-            ['составить уравнение','по известным корням','#ffd76a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+            ['собрать уравнение','по известным корням','#8fd1a8'],
+            ['проверить решение','сумма и произведение','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
+        ${note('Зачем на олимпиаде','Три коротких движения. Не разворачивай длинный дискриминант, если пара чисел видна сразу. Виета — это чтение коэффициентов вслух.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">x² − 5x + 6</div>
-        <div class="wv-sml">p = −5 → сумма корней = −p = ?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">?</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Выпиши p и q','#7fd1ff'],
+            ['2','Сумма = −p, произведение = q','#8fd1a8'],
+            ['3','Подбери пару (делители q)','#ffd76a'],
+            ['4','Проверь подстановкой','#e86a5a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${x[2]};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span>
+          </div>`).join('')}
+        </div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">x² − 5x + 6 → сумма корней = ?</div>
+        ${note('В карман','Сумма прячется в среднем коэффициенте с минусом. У x² − 5x + 6 это 5. Дальше проверка и две задачи.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[423]=visD423;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===423){ window.ARH_LESSONS[i]=L423; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===423){ arr[i]=L423; f=true; break; } }
+    if(!f) arr.push(L423);
+  })();
 })();
 /* ================= УРОК 424 · Двудольные графы и раскраски ================= */
 (function(){
