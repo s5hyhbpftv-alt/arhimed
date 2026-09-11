@@ -113,10 +113,28 @@ async def agent_relay(request):
     return browser
 
 
+def apply_cache(resp, path):
+    """HTML/JS/SW — не кэшировать. Картинки — можно."""
+    low = str(path).lower()
+    base = os.path.basename(low)
+    if low.endswith(('.html', '.htm')) or base == 'sw.js' or low.endswith('.webmanifest'):
+        resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        resp.headers['Pragma'] = 'no-cache'
+        resp.headers['Expires'] = '0'
+    elif low.endswith(('.js', '.css', '.json', '.mjs', '.map')):
+        resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        resp.headers['Pragma'] = 'no-cache'
+        resp.headers['Expires'] = '0'
+    elif low.endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico', '.svg', '.woff2', '.woff')):
+        resp.headers['Cache-Control'] = 'public, max-age=604800'
+    else:
+        resp.headers['Cache-Control'] = 'no-cache, max-age=0'
+    return resp
+
+
 async def index(request):
     resp = web.FileResponse(os.path.join(ROOT, 'index.html'))
-    resp.headers['Cache-Control'] = 'no-cache'
-    return resp
+    return apply_cache(resp, 'index.html')
 
 
 def make_app():
@@ -131,26 +149,23 @@ async def static_handler(request):
     rel = request.match_info['tail'] or ''
     if not rel:
         resp = web.FileResponse(os.path.join(ROOT, 'index.html'))
-        resp.headers['Cache-Control'] = 'no-cache'
-        return resp
+        return apply_cache(resp, 'index.html')
     path = os.path.normpath(os.path.join(ROOT, rel))
     if not path.startswith(ROOT):
         raise web.HTTPForbidden()
     if os.path.isdir(path):
         candidate = os.path.join(path, 'index.html')
         if os.path.isfile(candidate):
-            return web.FileResponse(candidate)
+            resp = web.FileResponse(candidate)
+            return apply_cache(resp, candidate)
         # листинг папки
         items = sorted(os.listdir(path))
         links = ''.join(f'<div><a href="{rel.rstrip("/")}/{x}">{x}</a></div>' for x in items if not x.startswith('.'))
-        return web.Response(text=f'<meta charset="utf-8"><body style="font-family:Georgia;background:#0b1712;color:#e8e0cc;padding:20px"><h2>АРХИМЕД</h2>{links}</body>', content_type='text/html')
+        resp = web.Response(text=f'<meta charset="utf-8"><body style="font-family:Georgia;background:#0b1712;color:#e8e0cc;padding:20px"><h2>АРХИМЕД</h2>{links}</body>', content_type='text/html')
+        return apply_cache(resp, 'index.html')
     if os.path.isfile(path):
         resp = web.FileResponse(path)
-        # HTML и service worker всегда перепроверяются (чтобы обновления доходили сразу)
-        low = path.lower()
-        if low.endswith(('.html', '.htm')) or low.endswith('sw.js') or low.endswith('manifest.webmanifest'):
-            resp.headers['Cache-Control'] = 'no-cache'
-        return resp
+        return apply_cache(resp, path)
     raise web.HTTPNotFound()
 
 

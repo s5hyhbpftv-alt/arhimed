@@ -2,7 +2,9 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-store">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0b1712">
@@ -687,48 +689,52 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=462"></script>
-<script src="data/lessons.js?v=462"></script>
-<script src="data/lessons_draft.js?v=462"></script>
-<script src="data/comics_12.js?v=462"></script>
-<script src="data/sim_phys.js?v=462"></script>
-<script src="data/vis_bw.js?v=462"></script>
-<script src="data/vis_cw.js?v=462"></script>
-<script src="data/vis_dw.js?v=462"></script>
-<script src="data/vis_ew.js?v=462"></script>
-<script src="data/vis_kl.js?v=462"></script>
-<script src="data/vis_wk.js?v=462"></script>
-<script src="data/inf_56.js?v=462"></script>
-<script src="js/comic.js?v=462"></script>
-<script src="js/core.js?v=462"></script>
-<script src="js/engine.js?v=462"></script>
-<script src="js/app.js?v=462"></script>
-<script src="js/dashboard.js?v=462"></script>
-<script src="js/lessons.js?v=462"></script>
-<script src="js/wave_guard.js?v=462"></script>
-<script src="js/legend.js?v=462"></script>
-<script src="js/simulator.js?v=462"></script>
-<script src="js/duel.js?v=462"></script>
-<script src="js/agent.js?v=462"></script>
-<script src="js/voice.js?v=462"></script>
-<script src="js/assistant.js?v=462"></script>
-<script src="js/agentlive.js?v=462"></script>
+<script src="data/tasks.js?v=463"></script>
+<script src="data/lessons.js?v=463"></script>
+<script src="data/lessons_draft.js?v=463"></script>
+<script src="data/comics_12.js?v=463"></script>
+<script src="data/sim_phys.js?v=463"></script>
+<script src="data/vis_bw.js?v=463"></script>
+<script src="data/vis_cw.js?v=463"></script>
+<script src="data/vis_dw.js?v=463"></script>
+<script src="data/vis_ew.js?v=463"></script>
+<script src="data/vis_kl.js?v=463"></script>
+<script src="data/vis_wk.js?v=463"></script>
+<script src="data/inf_56.js?v=463"></script>
+<script src="js/comic.js?v=463"></script>
+<script src="js/core.js?v=463"></script>
+<script src="js/engine.js?v=463"></script>
+<script src="js/app.js?v=463"></script>
+<script src="js/dashboard.js?v=463"></script>
+<script src="js/lessons.js?v=463"></script>
+<script src="js/wave_guard.js?v=463"></script>
+<script src="js/legend.js?v=463"></script>
+<script src="js/simulator.js?v=463"></script>
+<script src="js/duel.js?v=463"></script>
+<script src="js/agent.js?v=463"></script>
+<script src="js/voice.js?v=463"></script>
+<script src="js/assistant.js?v=463"></script>
+<script src="js/agentlive.js?v=463"></script>
 <script>
   /* сброс кэша при новой сборке — иначе MVP показывает старый урок */
   (function(){
     try{
-      const VER='462';
+      const VER='463';
       if(localStorage.getItem('arh-build')===VER) return;
       localStorage.setItem('arh-build', VER);
       const jobs=[];
       if('caches' in window){ jobs.push(caches.keys().then(ks=>Promise.all(ks.map(k=>caches.delete(k))))); }
       if('serviceWorker' in navigator){ jobs.push(navigator.serviceWorker.getRegistrations().then(rs=>Promise.all(rs.map(r=>r.unregister())))); }
-      Promise.all(jobs).then(()=>{ location.reload(); });
+      Promise.all(jobs).then(()=>{
+        const u=new URL(location.href);
+        u.searchParams.set('b', VER);
+        location.replace(u.toString());
+      });
     }catch(e){}
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=462').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=463').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{
   init(); VOICE.init();

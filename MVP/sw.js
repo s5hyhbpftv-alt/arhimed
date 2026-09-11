@@ -1,12 +1,18 @@
-/* АРХИМЕД MVP · service worker */
-/* Код (html/js/css) — сначала сеть. Иначе в браузере залипает старая сборка. */
-const CACHE='arhimed-mvp-v462';
-const ASSETS=['index.html','img/car.png','data/tasks.js','data/lessons.js','data/sim_phys.js',
- 'js/core.js','js/engine.js','js/app.js','js/dashboard.js','js/lessons.js','js/legend.js','js/comic.js','js/simulator.js','js/duel.js',
- 'manifest.webmanifest','../МОБ_ПРИЛОЖЕНИЕ/icons/icon-192.png'];
+/* АРХИМЕД MVP · service worker
+   HTML/JS всегда с сети. В Cache API не кладём код — иначе залипает старый урок.
+   Картинки можно из кэша. */
+const CACHE='arhimed-mvp-v463';
+const ASSETS=['img/car.png','manifest.webmanifest','../МОБ_ПРИЛОЖЕНИЕ/icons/icon-192.png'];
 
-self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()));});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+self.addEventListener('install',e=>{
+  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()));
+});
+self.addEventListener('activate',e=>{
+  e.waitUntil(
+    caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k))))
+      .then(()=>self.clients.claim())
+  );
+});
 
 function netFirst(req, ms){
   return new Promise((resolve, reject)=>{
@@ -15,18 +21,14 @@ function netFirst(req, ms){
   });
 }
 function isCode(url){
-  return /\.(js|css|json|webmanifest|html)(\?|$)/.test(url) || /[?&]v=\d+/.test(url);
+  return /\.(js|css|json|webmanifest|html)(\?|$)/.test(url) || /[?&]v=\d+/.test(url) || /[?&]b=\d+/.test(url);
 }
 self.addEventListener('fetch',e=>{
   if(e.request.method!=='GET') return;
   const req=e.request;
   if(req.mode==='navigate' || isCode(req.url)){
     e.respondWith(
-      netFirst(req,6000).then(res=>{
-        const cp=res.clone();
-        caches.open(CACHE).then(c=>c.put(req,cp)).catch(()=>{});
-        return res;
-      }).catch(()=>caches.match(req).then(hit=>{
+      netFirst(req, 8000).catch(()=>caches.match(req).then(hit=>{
         if(hit) return hit;
         if(req.mode==='navigate') return caches.match('index.html');
         return new Response('', {status:504, statusText:'offline'});
