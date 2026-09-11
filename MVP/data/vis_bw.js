@@ -5257,3 +5257,198 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     if(!f) arr.push(L10);
   })();
 })();
+/* ================= УРОК 102 · Давление твёрдых тел ================= */
+(function(){
+  const L102 = {
+    id: 102, title: 'Давление твёрдых тел: сила и площадь', ico: '🎿',
+    src: 'Физика · 7 класс · Давление твёрдых тел', subj: 'phys',
+    explain: [
+      'На лыжах не проваливаешься, босиком — да. Сила та же, вес тот же. Меняется площадь. Давление — сила на единицу площади.',
+      'p = F : S. F в ньютонах, S в квадратных метрах. Чем больше площадь, тем меньше давление при той же силе.',
+      'Единица — паскаль: 1 Па = 1 Н / 1 м². В честь Блеза Паскаля. Килопаскаль — тысяча паскалей.',
+      '60 Н на 3 м² → 60 : 3 = 20 Па. Силу делим на площадь, не умножаем.',
+      'Та же 60 Н на 1 м² — 60 Па, на 3 м² — 20 Па. Площадь втрое — давление втрое меньше.',
+      'Нож режет, потому что кромка тонкая. Та же сила руки на крошечной площади — огромное давление.',
+      'Лыжи наоборот: широкая площадь, маленькое давление, снег держит. Чем шире — тем мягче.',
+      'Проверка: 80 Н на 4 м² → 20 Па. Не 320 (это умножили) и не 84 (сложили).',
+      'Треугольник: сверху F, снизу p · S. F = p S, p = F : S, S = F : p.',
+      '40 Па на 5 м² → F = 40 · 5 = 200 Н. 100 Н при 20 Па → S = 5 м².',
+      'Гвоздь и кнопка: остриё крошечное — давление огромное, входит легко.',
+      'Танк не проваливается: гусеницы — огромная площадь. Фундамент дома широкий — та же идея.',
+      'Иголка шприца острая, шины широкие, лыжи, коньки — везде меняют площадь, не силу.',
+      '100 Н на 2 м² → 50 Па. Давление падает, когда площадь растёт.',
+      'График p(S) при постоянной F — гипербола: больше S — меньше p.',
+      'Рецепт. p = F : S. Площадь ↑ давление ↓. Остриё ↑ давление ↑. Не умножать силу на площадь, если ищешь p.'
+    ],
+    check: { q: 'Сила 80 Н действует на площадь 4 м². Каково давление? (в Па)',
+      choices: ['320','20','84'], ans: 1, exp: 'p = F : S = 80 : 4 = 20 Па.' },
+    tasks: [
+      { q: 'Сила 100 Н, площадь 2 м². Давление (Па)?', kind: 'unit', ans: 50, tol: 0,
+        hints: ['p = F : S.','100 : 2.'], sol: '50 Па' },
+      { q: 'Давление 40 Па, площадь 5 м². Сила (Н)?', kind: 'choice',
+        choices: ['8','200','45'], ans: 1, hints: ['F = p · S.','40 · 5.'], sol: '200 Н' },
+      { q: '60 Н на 3 м². Давление (Па)?', kind: 'unit', ans: 20, tol: 0,
+        hints: ['60 : 3.'], sol: '20 Па' },
+      { q: 'Сила 100 Н, давление 20 Па. Площадь (м²)?', kind: 'unit', ans: 5, tol: 0,
+        hints: ['S = F : p.','100 : 20.'], sol: '5 м²' },
+      { q: 'Площадь выросла в 3 раза, сила та же. Давление?', kind: 'choice',
+        choices: ['выросло в 3 раза','упало в 3 раза','не изменилось'], ans: 1,
+        hints: ['p = F : S. S в знаменателе.'], sol: 'упало в 3 раза' },
+      { q: 'Почему нож режет?', kind: 'choice',
+        choices: ['сила руки огромная','площадь кромки крошечная','нож лёгкий'], ans: 1,
+        hints: ['Та же сила на малой площади.'], sol: 'площадь кромки крошечная' }
+    ]
+  };
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function pred(st,key,q,opts){
+    const cur=st[key];
+    return `<div style="width:min(100%,340px);text-align:left">
+      <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+        onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
+      ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
+    </div>`;
+  }
+  function cards(rows){
+    return `<div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">`+
+      rows.map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${x[2]||GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${x[2]||GOLD}">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')+
+      `</div>`;
+  }
+  function pPad(S){
+    const pad=50+S*36, sink=Math.max(8, 46-S*5), cx=170, y=138;
+    const x0=cx-pad/2, top=y-sink-44;
+    return `<svg viewBox="0 0 340 180" width="340" height="180" style="max-width:100%;display:block">
+      <defs>
+        <linearGradient id="sn" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c8d8d0"/><stop offset="100%" stop-color="#6a8a80"/></linearGradient>
+        <linearGradient id="wd" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c4a07a"/><stop offset="100%" stop-color="#6a4a32"/></linearGradient>
+      </defs>
+      <rect x="0" y="${y}" width="340" height="42" fill="url(#sn)"/>
+      <path d="M${x0},${y} Q${cx},${y+sink} ${x0+pad},${y}" fill="#8aa89e" opacity=".7"/>
+      <rect x="${x0}" y="${y-8}" width="${pad}" height="10" rx="4" fill="url(#wd)"/>
+      <rect x="${cx-22}" y="${top}" width="44" height="44" rx="6" fill="#c9a45a"/>
+      <circle cx="${cx}" cy="${top+18}" r="10" fill="#ffd76a"/>
+      <text x="${cx}" y="24" text-anchor="middle" fill="#ffd76a" font-size="13" font-family="Georgia,serif">S = ${String(S).replace('.',',')} м² · снег ${sink>24?'проседает':'держит'}</text>
+    </svg>`;
+  }
+  function visB102(el){
+    try{ window.physKenCss && physKenCss(); }catch(e){}
+    const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'102';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const S=Math.max(1, Math.min(8, +(st.S==null?3:st.S)));
+    const F=60, p=Math.round((F/S)*10)/10;
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        ${physShot('f_ice.mp4','лыжи держат · ботинок тонет')}
+        ${pred(st,'p0','Почему лыжи не тонут?',[{k:'s',t:'площадь больше'},{k:'f',t:'сила меньше'},{k:'m',t:'масса меньше'}])}
+        ${st.p0?note('Ключ','Вес тот же. Меняется площадь. Давление — сила на каждый квадратный метр.'):note('Предскажи','Сила или площадь?')}
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        ${physShot('g_scale.mp4','p = F : S')}
+        ${cards([['F','сила, ньютоны',GOLD],['S','площадь, м²',BLUE],['p','давление, паскали',GREEN]])}
+        ${note('Формула','Силу делим на площадь. Не умножаем: F · S было бы не давление.')}
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        ${physShot('g_stack.mp4','1 Па = 1 Н / 1 м²')}
+        ${note('Паскаль','В честь Блеза Паскаля. 1 Па — очень мало: яблоко на столе даёт сотни паскалей. Часто пишут кПа: 1 кПа = 1000 Па.')}
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        ${physShot('f_area.mp4','60 Н · 3 м²')}
+        ${note('Счёт','60 : 3 = 20 Па. Силу делим на площадь. 60 · 3 = 180 — это уже не давление.')}
+      </div>`;
+    } else if(step===4){
+      const pts=Array.from({length:15},(_,i)=>{const s=0.5+i*0.5; return [s, Math.round(60/s*10)/10];});
+      h=`<div class="wv-col">
+        ${physShot('f_area.mp4', 'F = 60 Н  ·  S = '+String(S).replace('.',',')+' м²  ·  p = '+p+' Па')}
+        ${pPad(S)}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">S
+          <input type="range" min="10" max="80" value="${Math.round(S*10)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].S=this.value/10;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${String(S).replace('.',',')} м²</b>
+        </label>
+        ${physChart([{pts, col:GOLD, name:'p = 60 / S'}], S, p, 'S, м²', 'давление', 'ps', 'Па')}
+        ${note('Гипербола','Площадь втрое — давление втрое меньше. Не прямая: S в знаменателе.')}
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        ${physShot('f_blade.mp4','кромка крошечная')}
+        ${pred(st,'p5','Нож режет, потому что?',[{k:'s',t:'площадь мала'},{k:'f',t:'сила огромна'}])}
+        ${st.p5?note('Остриё','Та же рука. Площадь кромки крошечная — давление огромное. Тупой нож не режет: площадь больше.'):note('Предскажи','Сила или площадь?')}
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        ${physShot('p_wide.jpg','широкие лыжи')}
+        ${note('Наоборот','Большая площадь → маленькое давление → снег держит. Чем шире лыжи, тем мягче.')}
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        ${physShot('g_four.mp4','80 Н · 4 м² · p = ?')}
+        ${note('Проверка','80 : 4 = 20 Па. Не 320 (умножили) и не 84 (сложили).')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${physShot('g_still.mp4','треугольник F, p, S')}
+        ${cards([['p = F : S','давление',GOLD],['F = p · S','сила',BLUE],['S = F : p','площадь',GREEN]])}
+        ${note('Палец','Сверху F, снизу p · S. Закрой неизвестное.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${physShot('n_block.mp4','40 Па · 5 м²')}
+        ${pred(st,'p9','Сила?',[{k:'200',t:'200 Н'},{k:'8',t:'8 Н'},{k:'45',t:'45 Н'}])}
+        ${st.p9?note('Обратно','F = p · S = 40 · 5 = 200 Н. Умножаем, когда ищем силу.'):note('Предскажи','Закрой F.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        ${physShot('p_nail.jpg','остриё входит')}
+        ${note('Гвоздь','Площадь острия крошечная — давление огромное. Шляпка широкая: молоток не продавливает палец так, как остриё — доску.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        ${physShot('n_eng.mp4','гусеницы — большая площадь')}
+        ${note('Танк и трактор','Весят тонны, не проваливаются: гусеница размазывает силу по огромной площади. Давление на грунт маленькое.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        ${physShot('n_slab.mp4','широкий фундамент')}
+        ${note('Дом','Стены тяжёлые. Фундамент шире стен — площадь больше, давление на грунт меньше. Иначе дом уйдёт в землю.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        ${physShot('n_still.mp4','везде меняют площадь')}
+        ${cards([['нож, иголка','площадь ↓ давление ↑',GOLD],['лыжи, шины','площадь ↑ давление ↓',BLUE],['гусеницы, фундамент','тоже площадь ↑',GREEN]])}
+        ${note('Приём','Силу часто не можем изменить. Площадь — можем.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${physShot('e_mass.mp4','100 Н · 2 м²')}
+        ${note('Счёт','100 : 2 = 50 Па. 100 Н при 20 Па → S = 100 : 20 = 5 м².')}
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        ${physShot('f_still.mp4','80 Н · 4 м² · p = ?')}
+        ${cards([['1','p = F : S',GOLD],['2','площадь ↑ давление ↓',BLUE],['3','остриё ↑ давление ↑',GREEN],['4','не умножать, если ищешь p',MUTED]])}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">давление в паскалях?</div>
+        ${note('Проверка','20 Па. 80 : 4.')}
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[102]=visB102;
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===102){ arr[i]=L102; f=true; break; } }
+    if(!f) arr.push(L102);
+  })();
+})();
