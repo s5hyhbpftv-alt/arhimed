@@ -8788,14 +8788,6 @@ function visL51(el){
       <ellipse cx="176" cy="193" rx="104" ry="13" fill="none" stroke="#3a2d24" stroke-width="2"/>
       <ellipse cx="176" cy="192" rx="96" ry="11" fill="none" stroke="#241b16" stroke-width="3"/>
       <ellipse cx="176" cy="190" rx="86" ry="10" fill="url(#thGlow)" style="opacity:${(0.25+heat*0.75).toFixed(2)}"/>
-      <!-- пламя -->
-      ${flameH>0?`<g filter="url(#thSoft2)" opacity="${(0.5+heat*0.5).toFixed(2)}">
-        <path d="M176 ${190} C150 ${190-flameH*0.5} 152 ${190-flameH} 176 ${190-flameH*1.45} C200 ${190-flameH} 202 ${190-flameH*0.5} 176 ${190} Z" fill="url(#thFlame)">
-          <animateTransform attributeName="transform" type="scale" values="1 1;1 0.86;1 1.06;1 0.92;1 1" dur="0.9s" repeatCount="indefinite" additive="sum"/>
-        </path>
-        <path d="M176 ${190} C160 ${190-flameH*0.35} 162 ${190-flameH*0.7} 176 ${190-flameH} C190 ${190-flameH*0.7} 192 ${190-flameH*0.35} 176 ${190} Z" fill="#ffd76a" opacity=".85">
-          <animate attributeName="opacity" values=".85;.55;.95;.7;.85" dur="1.1s" repeatCount="indefinite"/></path>
-        <path d="M176 ${190} C168 ${190-flameH*0.22} 169 ${190-flameH*0.45} 176 ${190-flameH*0.66} C183 ${190-flameH*0.45} 184 ${190-flameH*0.22} 176 ${190} Z" fill="#fff6d8" opacity=".9"/></g>`:''}
       <!-- лёд рядом (когда холодно) -->
       ${ice?`<g filter="url(#thShadow)"><rect x="286" y="176" width="34" height="26" rx="5" fill="#bfe6ff" opacity=".82" stroke="#e8f6ff" stroke-width="1.4"/>
         <path d="M290 178 l8 12 M300 194 l10 -14" stroke="#fff" stroke-width="1.2" opacity=".7"/>
@@ -8812,17 +8804,30 @@ function visL51(el){
         <path d="M124 126 C122 150 122 170 128 186" stroke="#ffffff" stroke-width="7" stroke-linecap="round" opacity=".45" filter="url(#thSoft2)"/>
         <path d="M216 124 C224 146 226 168 222 184" stroke="#000000" stroke-width="9" stroke-linecap="round" opacity=".18" filter="url(#thSoft2)"/>
         <ellipse cx="176" cy="106" rx="16" ry="7" fill="#8b9296"/><ellipse cx="176" cy="104" rx="16" ry="6" fill="#dfe6ea"/>
-        <circle cx="176" cy="97" r="6" fill="#2f3437"/>
+        <circle cx="176" cy="97" r="6" fill="#2f3437"/><animateTransform attributeName="transform" type="translate" values="0 0;0 -2.5;0 0" dur="0.32s" repeatCount="indefinite"/>
       </g>
+      <!-- пламя поверх (видно у дна) -->
+      ${flameH>0?`<g filter="url(#thSoft2)" opacity=".92" opacity="${(0.5+heat*0.5).toFixed(2)}">
+        <path d="M176 ${190} C150 ${190-flameH*0.5} 152 ${190-flameH} 176 ${190-flameH*1.45} C200 ${190-flameH} 202 ${190-flameH*0.5} 176 ${190} Z" fill="url(#thFlame)">
+          <animateTransform attributeName="transform" type="scale" values="1 1;1 0.86;1 1.06;1 0.92;1 1" dur="0.9s" repeatCount="indefinite" additive="sum"/>
+        </path>
+        <path d="M176 ${190} C160 ${190-flameH*0.35} 162 ${190-flameH*0.7} 176 ${190-flameH} C190 ${190-flameH*0.7} 192 ${190-flameH*0.35} 176 ${190} Z" fill="#ffd76a" opacity=".85">
+          <animate attributeName="opacity" values=".85;.55;.95;.7;.85" dur="1.1s" repeatCount="indefinite"/></path>
+        <path d="M176 ${190} C168 ${190-flameH*0.22} 169 ${190-flameH*0.45} 176 ${190-flameH*0.66} C183 ${190-flameH*0.45} 184 ${190-flameH*0.22} 176 ${190} Z" fill="#fff6d8" opacity=".9"/></g>`:''}
+
       <!-- «вода» внутри: пузыри -->
       ${bubbles?`<g opacity="${(0.35+steamA*0.5).toFixed(2)}">${[0,1,2,3,4,5].map(k=>`<circle cx="${132+k*18}" cy="176" r="${2+((k*5)%3)}" fill="#eaffff" opacity=".8">
         <animate attributeName="cy" values="184;${boiling?126:150}" dur="${(1.1+(k%3)*0.35).toFixed(2)}s" begin="${(k*0.22).toFixed(2)}s" repeatCount="indefinite"/>
         <animate attributeName="opacity" values="0;.9;0" dur="${(1.1+(k%3)*0.35).toFixed(2)}s" begin="${(k*0.22).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}</g>`:''}
       <!-- пар -->
-      ${steamA>0.05?`<g filter="url(#thSoft)" opacity="${steamA.toFixed(2)}">
+      ${steamA>0.05?`<g filter="url(#thSoft)" opacity="${Math.min(1,steamA*1.5).toFixed(2)}">
         ${[0,1,2,3].map(k=>`<ellipse cx="${150+k*22}" cy="96" rx="${12+k*3}" ry="${9+k*2}" fill="url(#thSteam)">
           <animateTransform attributeName="transform" type="translate" values="0 0;${(k%2?-12:10)} -46;0 -92" dur="${(3.4+k*0.5).toFixed(1)}s" begin="${(k*0.6).toFixed(1)}s" repeatCount="indefinite"/>
           <animate attributeName="opacity" values="0;.85;0" dur="${(3.4+k*0.5).toFixed(1)}s" begin="${(k*0.6).toFixed(1)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
+      ${steamA>0.15?`<g filter="url(#thSoft)" opacity="${Math.min(1,steamA*1.3).toFixed(2)}">
+        ${[0,1,2].map(k=>`<ellipse cx="90" cy="126" rx="${7+k*2}" ry="${5+k*2}" fill="url(#thSteam)">
+          <animateTransform attributeName="transform" type="translate" values="0 0;-22 -30;-42 -64" dur="${(2.6+k*0.5).toFixed(1)}s" begin="${(k*0.5).toFixed(1)}s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;.8;0" dur="${(2.6+k*0.5).toFixed(1)}s" begin="${(k*0.5).toFixed(1)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
       <!-- тёплое свечение вокруг чайника -->
       <ellipse cx="176" cy="150" rx="96" ry="66" fill="url(#thGlow)" style="opacity:${(glow*0.5).toFixed(2)}"/>
       <!-- термометр -->
