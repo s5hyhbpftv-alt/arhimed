@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 35 уроков (id 500–534) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 36 уроков (id 500–535) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff', rose='#ff8fb0',
@@ -9571,6 +9571,576 @@ s+=`<circle r="5" fill="${cyan}"><animateMotion dur="2.8s" repeatCount="indefini
       s+=plate2(16,268,286,28,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
       return s;
     }
+    if(K==='secintro'){ /* что такое безопасность в сети */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'в сети есть три опасности',{b:1},260)+`</g>`;
+      const it=[['обман','пишут чужие люди',rose],['кража данных','пароли и деньги',gold],['вирусы','вредные программы',pur]];
+      it.forEach((q,k)=>{
+        const x=24+k*92;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="${x}" y="48" width="84" height="92" rx="11" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.7"/>`;
+        if(k===0) s+=`<path d="M${x+30} 84 q12 -16 24 0 q-12 16 -24 0" fill="none" stroke="${q[2]}" stroke-width="1.8"/><circle cx="${x+42}" cy="84" r="3.6" fill="${q[2]}"/><path d="M${x+28} 106 h28" stroke="${q[2]}" stroke-width="1.6" stroke-dasharray="4 3"/>`;
+        else if(k===1) s+=`<rect x="${x+30}" y="76" width="24" height="20" rx="4" fill="rgba(255,215,106,.3)" stroke="${q[2]}" stroke-width="1.7"/><path d="M${x+34} 76 v-6 a8 8 0 0 1 16 0 v6" fill="none" stroke="${q[2]}" stroke-width="1.7"/><circle cx="${x+42}" cy="86" r="3" fill="${q[2]}"/>`;
+        else s+=`<circle cx="${x+42}" cy="86" r="13" fill="rgba(176,127,255,.25)" stroke="${q[2]}" stroke-width="1.7"/><path d="M${x+38} 82 l8 8 M${x+46} 82 l-8 8" stroke="${q[2]}" stroke-width="1.8"/>`;
+        s+=fit(x+42,124,9.5,q[2],q[0],{b:1},78)+fit(x+42,136,8.5,dim,q[1],{},78)+`</g>`;
+      });
+      s+=`<g class="${pre}Pop" style="animation-delay:.7s"><rect x="20" y="152" width="278" height="30" rx="9" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,172,10.5,cyan,'опасность чаще приходит с сообщением, а не сама',{b:1},262)+`</g>`;
+      s+=plate2(20,166,278,32,go?grn:cardB,go?'безопасность — это привычки, а не программа':'чего надо остерегаться?',11,pre);
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="2.8s" repeatCount="indefinite" path="M28 216 H290"/></circle>`;
+      s+=`<line x1="24" y1="216" x2="294" y2="216" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=fit(159,238,10,dim,'ниже — три главных правила защиты',{},280);
+      return s;
+    }
+    if(K==='secdata'){ /* личные данные */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11,grn,'личные данные — это ключ от твоей жизни',{b:1},276)+`</g>`;
+      s+=`<rect x="18" y="46" width="134" height="152" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`;
+      s+=fit(85,68,11,grn,'можно рассказывать',{b:1},124);
+      ['любимый предмет','любимый мультфильм','город (без адреса)','увлечения'].forEach((t,k)=>{
+        s+=`<path d="M30 ${88+k*24} l5 5 l9 -10" fill="none" stroke="${grn}" stroke-width="2.2"/>`
+          +fit(52,88+k*24+4,9.5,ink,t,{an:'start'},96);
+      });
+      s+=`<rect x="166" y="46" width="134" height="152" rx="10" fill="rgba(18,24,44,.97)" stroke="${red}" stroke-width="1.7"/>`;
+      s+=fit(233,68,11,red,'нельзя никому',{b:1},124);
+      ['домашний адрес','номер школы и класс','номер телефона','пароли и коды'].forEach((t,k)=>{
+        s+=`<path d="M180 ${84+k*24} l8 8 M188 ${84+k*24} l-8 8" stroke="${red}" stroke-width="2.2"/>`
+          +fit(202,84+k*24+4,9.5,ink,t,{an:'start'},92);
+      });
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="3s" repeatCount="indefinite" path="M28 214 H290"/></circle>`;
+      s+=plate2(18,222,282,30,go?grn:cardB,go?'личное — это то, что нельзя вернуть назад':'что можно рассказывать?',11,pre);
+      return s;
+    }
+    if(K==='secpass'){ /* как устроен пароль */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'пароль — это секретный ключ',{b:1},266)+`</g>`;
+      s+=`<rect x="40" y="56" width="238" height="38" rx="9" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=fit(159,80,13,gold,'••••••••••',{b:1},200);
+      s+=`<rect x="66" y="112" width="186" height="26" rx="7" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.3"/>`;
+      for(let k=0;k<9;k++){
+        const x=76+k*19;
+        s+=`<rect x="${x}" y="117" width="15" height="16" rx="3" fill="rgba(255,215,106,.35)"/>`;
+      }
+      s+=fit(159,156,10.5,ink,'клавиатура помогает набирать, но подсказывает и чужому',{b:1},290);
+      s+=`<g class="${pre}Pop" style="animation-delay:.5s"><rect x="24" y="170" width="270" height="30" rx="9" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.6"/>`
+        +fit(159,190,10.5,red,'пароль нельзя писать на листке у экрана',{b:1},254)+`</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="24" y="206" width="270" height="30" rx="9" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.6"/>`
+        +fit(159,226,10.5,grn,'а сообщать пароль нельзя даже другу',{b:1},254)+`</g>`;
+      s+=plate2(24,220,270,30,go?grn:cardB,go?'пароль — только твой':'кому можно сказать пароль?',11,pre);
+      s+=`<circle r="6" fill="${cyan}"><animateMotion dur="3.2s" repeatCount="indefinite" path="M52 262 H266"/></circle>`;
+      return s;
+    }
+    if(K==='secpassquality'){ /* что делает пароль сильным */
+      const rows=[{p:'123456',c:red,w:'мгновенно',len:6},{p:'qwerty',c:red,w:'мгновенно',len:6},
+                  {p:'Маша2013',c:gold,w:'несколько часов',len:9},{p:'Синий-Кот-Плывёт-7',c:grn,w:'тысячи лет',len:18}];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11,pur,'силу пароля решают длина и разнообразие',{b:1},280)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=46+k*44;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.15).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="36" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.5"/>`
+          +`<text x="32" y="${y+23}" font-size="10.5" font-family="'Courier New',monospace" font-weight="bold" fill="${ink}">${q.p}</text>`
+          +growBar(140,y+13,(q.c===red)?26:((q.c===gold)?70:132),11,q.c,1.2,0.4+k*0.15,0)
+          +fit(272,y+23,9.5,q.c,q.w,{an:'end',b:1},60)+`</g>`;
+      });
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="20" y="226" width="278" height="32" rx="10" fill="rgba(176,127,255,.11)" stroke="${pur}" stroke-width="1.6"/>`
+        +fit(159,248,10.5,pur,'фраза из слов надёжнее короткого набора символов',{b:1},262)+`</g>`;
+      s+=plate2(20,240,278,30,go?grn:cardB,go?'длинная фраза — и запомнить легче, и взломать труднее':'какой пароль лучше?',11,pre);
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M32 60 L32 220"/></circle>`;
+      return s;
+    }
+    if(K==='secpassmeter'){ /* ИНТЕРАКТИВ: проверка пароля */
+      const pw=(st&&typeof st.spw==='string')?st.spw:'';
+      const calc=(t)=>{
+        let classes=0;
+        if(/[a-zа-я]/.test(t)) classes++;
+        if(/[A-ZА-Я]/.test(t)) classes++;
+        if(/[0-9]/.test(t)) classes++;
+        if(/[^A-Za-zА-Яа-я0-9]/.test(t)) classes++;
+        const L=t.length, bits=L*(Math.log2(classes>0?(classes*26):1)||1.6);
+        return {classes:classes, bits:bits};
+      };
+      const r=calc(pw);
+      const lvl=(r.bits<28)?0:((r.bits<50)?1:((r.bits<80)?2:3));
+      const names=['очень слабый','слабый','надёжный','крепкий'];
+      const cols=[red,gold,grn,cyan];
+      const secs=[0.1,7200,3.15e9,3.15e13][lvl];
+      const humans=['мгновенно','около 2 часов','примерно 100 лет','тысячи лет'];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,29,11,ink,'тренажёр: проверь свой пароль',{b:1},264)+`</g>`;
+      s+=`<rect x="24" y="50" width="270" height="42" rx="10" fill="rgba(18,24,44,.97)" stroke="${cols[lvl]}" stroke-width="2"/>`;
+      s+=`<text x="38" y="77" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${pw?ink:dim}">${pw?pw:'…'}</text>`;
+      s+=`<g class="${pre}Pop"><rect x="24" y="104" width="270" height="16" rx="8" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.2"/>`
+        +growBar(26,106,(266*lvl/3)||3,12,cols[lvl],1.2,0.2,0)+`</g>`;
+      s+=fit(159,138,11.5,cols[lvl],'оценка: '+names[lvl],{b:1},250);
+      s+=`<g class="${pre}Pop"><rect x="24" y="150" width="130" height="60" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+        +fit(89,172,9.5,dim,'длина',{b:1},110)+fit(89,194,14,ink,''+pw.length,{b:1},110)+`</g>`;
+      s+=`<g class="${pre}Pop"><rect x="164" y="150" width="130" height="60" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+        +fit(229,172,9.5,dim,'видов символов',{b:1},110)+fit(229,194,14,ink,''+r.classes,{b:1},110)+`</g>`;
+      s+=`<g class="${pre}Pop"><rect x="24" y="220" width="270" height="34" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,242,10.5,gold,'подбор займёт: '+humans[lvl],{b:1},254)+`</g>`;
+      ['a','A3','Слон-7','Синий-Кот-Плывёт-7'].forEach((q,k)=>{
+        const x=24+k*70;
+        s+=`<g style="cursor:pointer" onclick="infPass('${lk}','${q}')"><rect x="${x}" y="264" width="64" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${pur}" stroke-width="1.5"/>`
+          +fit(x+32,284,10,pur,k===0?'пример 1':('пример '+(k+1)),{b:k===0},58)+`</g>`;
+      });
+      s+=`<g style="cursor:pointer" onclick="infPass('${lk}','')"><rect x="24" y="302" width="120" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+        +fit(84,322,10.5,dim,'очистить',{b:1},112)+`</g>`;
+      s+=fit(159,348,10,dim,'нажимай примеры и смотри оценку',{b:1},280);
+      return s;
+    }
+    if(K==='secpassrules'){ /* правила пароля */
+      const it=[[
+        'у каждого сайта свой пароль',grn],[
+        'пароль не сообщают никому',grn],[
+        'пароль не хранят на виду',gold],[
+        'для важных сайтов — двухшаговый вход',cyan]];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11,grn,'четыре правила обращения с паролем',{b:1},276)+`</g>`;
+      it.forEach((q,k)=>{
+        const y=46+k*46;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="36" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.6"/>`
+          +`<circle cx="42" cy="${y+18}" r="10" fill="rgba(255,255,255,.05)" stroke="${q[1]}" stroke-width="1.3"/>`
+          +tx(42,y+22,11,q[1],''+(k+1),{b:1})
+          +fit(178,y+23,10.5,q[1],q[0],{b:1},204)+`</g>`;
+        if(k<3) s+=drawLL({x:159,y:y+38},{x:159,y:y+44},q[1],1.4,0.3+k*0.12,1.4,pre);
+      });
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="20" y="234" width="278" height="32" rx="10" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,256,10.5,cyan,'менеджер паролей хранит их за одним ключом',{b:1},262)+`</g>`;
+      s+=plate2(20,248,278,30,go?grn:cardB,go?'запомни эти четыре правила':'какие правила ты знаешь?',11,pre);
+      return s;
+    }
+    if(K==='sectwostep'){ /* двухшаговый вход */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'двухшаговый вход: пароль плюс код',{b:1},272)+`</g>`;
+      s+=`<rect x="26" y="56" width="120" height="86" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=`<rect x="40" y="72" width="92" height="20" rx="5" fill="rgba(255,255,255,.06)" stroke="${cardB}" stroke-width="1.2"/>`;
+      s+=`<text x="50" y="87" font-size="10" font-family="'Courier New',monospace" fill="${ink}">••••••••</text>`;
+      s+=fit(86,124,10.5,ink,'шаг 1: пароль',{b:1},112);
+      s+=`<path d="M152 100 h20" stroke="${gold}" stroke-width="2.2"/><path d="M166 94 l8 6 l-8 6" fill="none" stroke="${gold}" stroke-width="2.2"/>`;
+      s+=`<rect x="182" y="52" width="52" height="94" rx="9" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="2"/>`;
+      s+=`<rect x="188" y="60" width="40" height="70" rx="5" fill="rgba(127,214,255,.12)"/>`;
+      s+=fit(208,140,10,cyan,'телефон',{b:1},56);
+      s+=fit(208,80,13,cyan,'4729',{b:1},42);
+      s+=fit(208,100,8.5,dim,'код',{},34);
+      s+=`<rect x="248" y="66" width="46" height="70" rx="9" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.6"/>`;
+      s+=fit(271,90,10,grn,'вход',{b:1},40)+fit(271,110,9,dim,'разрешён',{},42);
+      s+=`<path d="M240 100 h4" stroke="${grn}" stroke-width="2"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.6s"><rect x="20" y="160" width="278" height="32" rx="10" fill="rgba(125,224,160,.11)" stroke="${grn}" stroke-width="1.6"/>`
+        +fit(159,182,10.5,grn,'даже украв пароль, войти не получится',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.9s"><rect x="20" y="196" width="278" height="32" rx="10" fill="rgba(255,120,100,.11)" stroke="${red}" stroke-width="1.6"/>`
+        +fit(159,218,10.5,red,'но код тоже нельзя никому называть',{b:1},262)+`</g>`;
+      s+=plate2(20,210,278,30,go?grn:cardB,go?'это называется двухфакторной защитой':'зачем второй шаг?',11,pre);
+      s+=`<circle r="5" fill="${cyan}"><animateMotion dur="3s" repeatCount="indefinite" path="M96 100 H186"/></circle>`;
+      return s;
+    }
+    if(K==='secphish'){ /* поддельные письма */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.8"/>`
+        +fit(159,29,11,rose,'поддельное письмо выдаёт себя деталями',{b:1},282)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="118" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=`<rect x="20" y="46" width="278" height="26" rx="10" fill="rgba(255,143,176,.12)"/>`;
+      s+=fit(40,64,10,rose,'от: school-prizes@mail-secret.ru',{an:'start',b:1},240);s+=`<rect x="34" y="52" width="252" height="18" rx="5" fill="none" stroke="${red}" stroke-width="1.6" stroke-dasharray="5 4"><animate attributeName="stroke-opacity" values="1;.15;1" dur="1.6s" repeatCount="indefinite"/></rect>`;
+
+      s+=fit(40,90,10.5,ink,'Ты выиграл приз! Срочно введи пароль:',{an:'start'},250);
+      s+=fit(40,110,10.5,ink,'http://school-priz.mail-secret.ru',{an:'start'},250);
+      s+=`<rect x="36" y="122" width="86" height="26" rx="7" fill="rgba(255,120,100,.18)" stroke="${red}" stroke-width="1.5"/>`;
+      s+=fit(79,140,10,red,'перейти',{b:1},78);s+=`<circle r="7" fill="${red}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M150 150 L90 138"/></circle>`;
+
+      s+=`<path d="M212 84 l14 14 M226 84 l-14 14" stroke="${red}" stroke-width="2.4"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.5s"><rect x="20" y="172" width="278" height="30" rx="9" fill="rgba(255,120,100,.11)" stroke="${red}" stroke-width="1.5"/>`
+        +fit(159,192,10,red,'обещают приз, торопят и просят пароль',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="20" y="208" width="278" height="42" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,226,10,gold,'адрес отправителя странный:',{b:1},258)
+        +fit(159,242,9.5,dim,'настоящая школа не пишет с «mail-secret.ru»',{},258)+`</g>`;
+      s+=plate2(20,250,278,30,go?grn:cardB,go?'признаки обмана: приз, спешка, пароль':'что выдаёт обман?',11,pre);
+      return s;
+    }
+    if(K==='secphish2'){ /* поддельный адрес сайта */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'смотри на адрес, а не на картинку',{b:1},266)+`</g>`;
+      const rows=[['school.ru','настоящий сайт школы',grn,true],['school-ru.info','чужой сайт с похожим именем',red,false],
+                  ['school.ru.secure-login.net','обманка: настоящее имя в середине',red,false]];
+      rows.forEach((q,k)=>{
+        const y=46+k*52;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.16).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="44" rx="9" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.6"/>`
+          +`<rect x="30" y="${y+12}" width="20" height="20" rx="4" fill="none" stroke="${q[2]}" stroke-width="1.5"/>`
+          +`<path d="M34 ${y+22} h12" stroke="${q[2]}" stroke-width="1.5"/>`;
+        if(q[3]) s+=`<path d="M${256} ${y+22} l5 6 l10 -12" fill="none" stroke="${grn}" stroke-width="2.4"/>`;
+        else s+=`<path d="M258 ${y+16} l14 14 M272 ${y+16} l-14 14" stroke="${red}" stroke-width="2.4"/>`;
+        s+=`<text x="60" y="${y+21}" font-size="10" font-family="'Courier New',monospace" font-weight="bold" fill="${ink}">${q[0]}</text>`
+          +fit(60,y+36,9,dim,q[1],{an:'start'},180)+`</g>`;
+      });
+      s+=`<g class="${pre}Pop" style="animation-delay:.7s"><rect x="20" y="204" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,226,10.5,gold,'читай адрес справа налево до первой косой',{b:1},262)+`</g>`;
+      s+=plate2(20,218,278,30,go?grn:cardB,go?'картинка может быть украдена, а адрес — нет':'как отличить сайт?',11,pre);
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.2s" repeatCount="indefinite" path="M34 262 H284"/></circle>`;
+      return s;
+    }
+    if(K==='secphish3'){ /* ИНТЕРАКТИВ: можно ли доверять */
+      const items=[
+        {t:'Письмо: «Твой аккаунт удалят через час! Введи пароль»',trust:false,why:'торопят и просят пароль'},
+        {t:'Сообщение от друга: «Привет! Как дела?»',trust:true,why:'обычный разговор без просьб'},
+        {t:'Сайт «sber-bank-online.info» просит карту',trust:false,why:'чужой адрес и данные карты'},
+        {t:'Учитель пишет в школьном чате о домашнем задании',trust:true,why:'знакомый канал и тема'}
+      ];
+      const idx=(st&&typeof st.sti==='number')?st.sti:0;
+      const picks=(st&&st.stk)?st.stk:{};
+      const it=items[idx];
+      const answered=(picks[idx]!==undefined);
+      const correct=answered&&(picks[idx]===it.trust);
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,29,11,ink,'тренажёр: можно ли этому доверять?',{b:1},272)+`</g>`;
+      s+=`<rect x="20" y="46" width="278" height="76" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.6"/>`;
+      const words=it.t.split(' ');
+      let line='', lines=[];
+      words.forEach(w=>{ if((line+w).length>34){ lines.push(line.trim()); line=w+' '; } else line+=w+' '; });
+      lines.push(line.trim());
+      lines.slice(0,3).forEach((q,k)=>{ s+=fit(159,74+k*20,10,ink,q,{b:1},260); });
+      s+=fit(159,134,9.5,dim,'карточка '+(idx+1)+' из '+items.length,{b:1},180);
+      [[true,'можно доверять',grn],[false,'нельзя доверять',red]].forEach((q,k)=>{
+        const x=24+k*140, on=(answered&&picks[idx]===q[0]), bad=(answered&&picks[idx]===q[0]&&q[0]!==it.trust);
+        const c=on?(q[0]===it.trust?grn:red):cardB;
+        s+=`<g style="cursor:pointer" onclick="infTrust('${lk}',${q[0]?'true':'false'})"><rect x="${x}" y="150" width="130" height="38" rx="10" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${c}" stroke-width="${on?2.2:1.5}"/>`
+          +fit(x+65,174,11,c,q[1],{b:on},118)+`</g>`;
+      });
+      s+=`<g class="${pre}Pop"><rect x="20" y="198" width="278" height="40" rx="10" fill="${answered?(correct?'rgba(125,224,160,.12)':'rgba(255,120,100,.12)'):'rgba(255,255,255,.04)'}" stroke="${answered?(correct?grn:red):cardB}" stroke-width="1.6"/>`
+        +fit(159,216,10.5,answered?(correct?grn:red):dim,answered?(correct?'Верно! ':'Не совсем. ')+it.why:'выбери ответ, и я объясню',{b:answered},262)+`</g>`;
+      s+=`<g style="cursor:pointer" onclick="infTrust('${lk}','next')"><rect x="88" y="248" width="142" height="32" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,269,11,gold,idx<items.length-1?'следующая карточка':'начать заново',{b:1},132)+`</g>`;
+      s+=`<g style="cursor:pointer" onclick="infTrust('${lk}','reset')"><rect x="20" y="248" width="60" height="32" rx="9" fill="rgba(12,32,34,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+        +fit(50,269,10,dim,'сброс',{b:1},54)+`</g>`;
+      s+=`<circle r="5" fill="${cyan}"><animateMotion dur="3s" repeatCount="indefinite" path="M34 296 H284"/></circle>`;
+      s+=fit(159,314,10,dim,'верных ответов: '+Object.keys(picks).filter(k=>picks[k]===items[k].trust).length,{b:1},240);
+      return s;
+    }
+    if(K==='seclink'){ /* куда ведёт ссылка */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'ссылка может вести не туда, куда обещает',{b:1},282)+`</g>`;
+      s+=`<rect x="24" y="52" width="270" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=`<text x="36" y="74" font-size="10.5" font-family="'Courier New',monospace" fill="${cyan}" text-decoration="underline">скидка-на-игру.ru/prize</text>`;
+      s+=`<path d="M40 96 q40 26 96 26 M280 96 q-40 26 -96 26" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
+      s+=`<rect x="52" y="132" width="88" height="60" rx="9" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.7"/>`;
+      s+=fit(96,158,10,grn,'настоящий',{b:1},80)+fit(96,176,9,dim,'магазин',{},80);
+      s+=`<rect x="178" y="132" width="88" height="60" rx="9" fill="rgba(255,120,100,.12)" stroke="${red}" stroke-width="1.7"/>`;
+      s+=fit(222,158,10,red,'чужой сайт',{b:1},80)+fit(222,176,9,dim,'крадёт данные',{},80);
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M96 126 L96 130 M222 126 L222 130"/></circle>`;
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.2s" repeatCount="indefinite" path="M40 90 Q136 122 222 126"/></circle>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.6s"><rect x="20" y="204" width="278" height="32" rx="10" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,226,10.5,cyan,'наведи курсор — увидишь настоящий адрес',{b:1},262)+`</g>`;
+      s+=plate2(20,218,278,30,go?grn:cardB,go?'не переходи по незнакомым ссылкам':'куда ведёт ссылка?',11,pre);
+      s+=fit(159,272,10,dim,'а если открыл — не вводи данные',{b:1},260);
+      return s;
+    }
+    if(K==='secvirus'){ /* вирусы и вложения */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11,pur,'вложение может быть вредной программой',{b:1},280)+`</g>`;
+      s+=`<rect x="24" y="52" width="120" height="70" rx="9" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.7"/>`;
+      s+=`<path d="M40 70 h30 l10 10 v34 h-40 z" fill="rgba(176,127,255,.22)" stroke="${pur}" stroke-width="1.6"/>`;
+      s+=fit(84,140,10,pur,'файл «приз.exe»',{b:1},120);
+      s+=`<path d="M152 88 h22" stroke="${gold}" stroke-width="2.4"/><path d="M168 81 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<rect x="182" y="52" width="116" height="70" rx="9" fill="rgba(18,24,44,.97)" stroke="${red}" stroke-width="1.7"/>`;
+      s+=`<rect x="196" y="62" width="88" height="34" rx="4" fill="rgba(255,120,100,.14)" stroke="${red}" stroke-width="1.3"/>`;
+      s+=`<path d="M204 78 h30 M204 88 h50" stroke="${red}" stroke-width="1.6"/>`;
+      s+=fit(240,140,10,red,'вирус в системе',{b:1},116);
+      s+=`<g class="${pre}Pop" style="animation-delay:.5s"><rect x="20" y="158" width="278" height="30" rx="9" fill="rgba(255,120,100,.11)" stroke="${red}" stroke-width="1.5"/>`
+        +fit(159,178,10,red,'что делает: крадёт пароли, шифрует файлы',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="20" y="194" width="278" height="30" rx="9" fill="rgba(125,224,160,.11)" stroke="${grn}" stroke-width="1.5"/>`
+        +fit(159,214,10,grn,'не открывай .exe и не включай макросы',{b:1},262)+`</g>`;
+      s+=plate2(20,208,278,32,go?grn:cardB,go?'файлы от незнакомых — не открываем':'чем опасны вложения?',11,pre);
+      s+=`<circle r="5" fill="${red}"><animateMotion dur="2.4s" repeatCount="indefinite" path="M120 88 H180"/></circle>`;
+      s+=fit(159,264,10,dim,'проверяй файл антивирусом перед открытием',{},280);
+      return s;
+    }
+    if(K==='secantivirus'){ /* защита: обновления и антивирус */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11,grn,'защита: обновления, антивирус, копии',{b:1},280)+`</g>`;
+      s+=`<path d="M159 56 l58 20 v40 q0 44 -58 62 q-58 -18 -58 -62 v-40 z" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="2"/>`;
+      s+=`<path d="M136 116 l14 14 l30 -32" fill="none" stroke="${grn}" stroke-width="3.4" stroke-linecap="round"/>`;
+      s+=fit(159,200,10.5,grn,'обновления закрывают дыры в защите',{b:1},262);
+      const it=[['обновляй систему',cyan],['проверяй антивирусом',pur],['делай резервные копии',gold]];
+      it.forEach((q,k)=>{
+        const x=24+k*92;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.4+k*0.18).toFixed(2)}s"><rect x="${x}" y="212" width="84" height="40" rx="9" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.5"/>`
+          +fit(x+42,237,9.5,q[1],q[0],{b:1},78)+`</g>`;
+      });
+      s+=plate2(24,258,270,30,go?grn:cardB,go?'три привычки защищают лучше всего':'что помогает защититься?',11,pre);
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3s" repeatCount="indefinite" path="M159 96 L159 150"/></circle>`;
+      return s;
+    }
+    if(K==='secwifi'){ /* чужой Wi-Fi */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'в открытой сети тебя могут подслушать',{b:1},280)+`</g>`;
+      s+=`<circle cx="70" cy="150" r="10" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="2"/>`;
+      for(let k=1;k<=3;k++){
+        s+=`<path d="M${70-14*k} ${150-14*k} a${20*k} ${20*k} 0 0 1 ${28*k} 0" fill="none" stroke="${gold}" stroke-width="2" opacity="${(0.85-0.2*k).toFixed(2)}"/>`;
+      }
+      s+=fit(70,196,10,gold,'открытая сеть',{b:1},110);
+      s+=`<path d="M96 140 q32 -26 74 0" fill="none" stroke="${cyan}" stroke-width="1.8" stroke-dasharray="5 4"/>`;
+      s+=`<rect x="176" y="118" width="66" height="44" rx="8" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="1.6"/>`;
+      s+=fit(209,146,9.5,cyan,'твой телефон',{b:1},62);
+      s+=`<circle cx="252" cy="98" r="14" fill="rgba(255,120,100,.2)" stroke="${red}" stroke-width="1.8"/>`;
+      s+=`<path d="M246 92 q12 10 12 10" stroke="${red}" stroke-width="1.6"/>`;
+      s+=`<circle cx="246" cy="108" r="3" fill="${red}"/><circle cx="258" cy="104" r="3" fill="${red}"/>`;
+      s+=fit(252,74,9.5,red,'чужой глаз',{b:1},90);
+      s+=`<path d="M236 112 L214 128" stroke="${red}" stroke-width="1.6" stroke-dasharray="4 4"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.6s"><rect x="20" y="204" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,226,10.5,gold,'в кафе не входи в банк и почту',{b:1},262)+`</g>`;
+      s+=plate2(20,218,278,30,go?grn:cardB,go?'лучше включи мобильный интернет':'чем опасна открытая сеть?',11,pre);
+      s+=`<circle r="5" fill="${cyan}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M100 138 L212 128"/></circle>`;
+      return s;
+    }
+    if(K==='secfraud'){ /* обман по телефону */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.8"/>`
+        +fit(159,29,11,rose,'звонят «из банка» и просят код',{b:1},272)+`</g>`;
+      s+=`<rect x="40" y="56" width="60" height="106" rx="12" fill="rgba(18,24,44,.97)" stroke="${rose}" stroke-width="2"/>`;
+      s+=`<rect x="48" y="68" width="44" height="72" rx="6" fill="rgba(255,143,176,.14)"/>`;
+      s+=`<circle cx="70" cy="152" r="4" fill="${rose}"/>`;
+      s+=fit(70,180,10,rose,'звонок',{b:1},80);for(let k=1;k<=3;k++){
+  s+=`<circle cx="70" cy="108" r="${14+k*10}" fill="none" stroke="${rose}" stroke-width="1.8" opacity="0">`
+    +`<animate attributeName="opacity" values="0;.8;0" dur="2s" begin="${(k*0.35).toFixed(2)}s" repeatCount="indefinite"/></circle>`;
+}
+s+=`<circle r="6" fill="${gold}"><animateMotion dur="2.8s" repeatCount="indefinite" path="M104 100 L176 88"/></circle>`;
+
+      s+=`<path d="M108 92 q30 -18 56 0 M108 118 q30 -18 56 0" fill="none" stroke="${cardB}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
+      s+=`<rect x="178" y="60" width="120" height="98" rx="10" fill="rgba(18,24,44,.97)" stroke="${red}" stroke-width="1.7"/>`;
+      s+=fit(238,84,10,red,'«назовите код из СМС»',{b:1},110);
+      s+=fit(238,104,9.5,dim,'«иначе спишут деньги»',{},110);
+      s+=fit(238,124,9.5,dim,'«я из службы безопасности»',{},110);
+      s+=`<path d="M204 138 l14 14 M218 138 l-14 14" stroke="${red}" stroke-width="2.2"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.6s"><rect x="20" y="196" width="278" height="32" rx="10" fill="rgba(255,120,100,.11)" stroke="${red}" stroke-width="1.6"/>`
+        +fit(159,218,10.5,red,'настоящий банк никогда не спрашивает код',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.9s"><rect x="20" y="232" width="278" height="32" rx="10" fill="rgba(125,224,160,.11)" stroke="${grn}" stroke-width="1.6"/>`
+        +fit(159,254,10.5,grn,'положи трубку и позвони по номеру с карты',{b:1},262)+`</g>`;
+      s+=plate2(20,246,278,30,go?grn:cardB,go?'код из СМС — только для тебя':'что делать при таком звонке?',11,pre);
+      return s;
+    }
+    if(K==='secfootprint'){ /* цифровой след */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11,pur,'в сети остаётся цифровой след',{b:1},266)+`</g>`;
+      s+=`<path d="M30 168 q60 -70 120 0 q60 70 130 -6" fill="none" stroke="${cardB}" stroke-width="1.6" stroke-dasharray="6 5"/>`;s+=`<circle r="6" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M30 168 q60 -70 120 0 q60 70 130 -6"/></circle>`;
+
+      const steps=[['фото',cyan,46,132],['комментарий',grn,110,110],['регистрация',gold,178,120],['покупка',rose,248,150]];
+      steps.forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="${q[2]-30}" y="${q[3]-16}" width="60" height="32" rx="8" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.5"/>`
+          +fit(q[2],q[3]+4,9.5,q[1],q[0],{b:1},54)+`</g>`;
+        s+=`<circle cx="${q[2]}" cy="${q[3]+26}" r="4" fill="${q[1]}" opacity=".6"/>`;
+      });
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="20" y="196" width="278" height="32" rx="10" fill="rgba(176,127,255,.11)" stroke="${pur}" stroke-width="1.6"/>`
+        +fit(159,218,10.5,pur,'удалить навсегда почти невозможно',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:1s"><rect x="20" y="232" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,254,10.5,gold,'думай перед публикацией: это увидят все',{b:1},262)+`</g>`;
+      s+=plate2(20,246,278,30,go?grn:cardB,go?'след остаётся даже после удаления':'что такое цифровой след?',11,pre);
+      return s;
+    }
+    if(K==='secprivacy'){ /* настройки приватности */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'настройки решают, кто тебя видит',{b:1},272)+`</g>`;
+      const rows=[['виден только друзьям',true,grn],['не показывать телефон',true,grn],['не публиковать геометку',true,gold],['открытый профиль для всех',false,red]];
+      rows.forEach((q,k)=>{
+        const y=48+k*42;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.5"/>`
+          +fit(140,y+22,10,q[2],q[0],{b:1},190)
+          +`<rect x="242" y="${y+7}" width="42" height="20" rx="10" fill="${q[1]?'rgba(125,224,160,.3)':'rgba(255,120,100,.25)'}" stroke="${q[2]}" stroke-width="1.4"/>`
+          +`<circle cx="${q[1]?274:252}" cy="${y+17}" r="8" fill="${q[2]}"/>`+`</g>`;
+      });
+      s+=`<g class="${pre}Pop" style="animation-delay:.7s"><rect x="24" y="220" width="270" height="32" rx="10" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,242,10.5,cyan,'проверь настройки сразу после регистрации',{b:1},254)+`</g>`;
+      s+=plate2(24,234,270,30,go?grn:cardB,go?'приватность — это твой выбор':'что лучше включить?',11,pre);
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.2s" repeatCount="indefinite" path="M258 60 L258 190"/></circle>`;
+      return s;
+    }
+    if(K==='secgames'){ /* безопасность в играх */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11,pur,'в игре тоже есть незнакомые люди',{b:1},274)+`</g>`;
+      s+=`<rect x="24" y="52" width="130" height="100" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=`<circle cx="58" cy="88" r="12" fill="rgba(127,214,255,.3)" stroke="${cyan}" stroke-width="1.6"/>`;
+      s+=`<circle cx="122" cy="88" r="12" fill="rgba(176,127,255,.3)" stroke="${pur}" stroke-width="1.6"/>`;
+      s+=`<rect x="46" y="112" width="88" height="22" rx="7" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.2"/>`;
+      s+=fit(90,127,9.5,dim,'«дай мне аккаунт»',{},82);
+      s+=fit(89,170,10,ink,'незнакомец в игре',{b:1},124);
+      s+=`<rect x="170" y="52" width="128" height="100" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=fit(234,80,10,gold,'просит деньги',{b:1},116);
+      s+=fit(234,104,9.5,dim,'или пароль от аккаунта',{},116);
+      s+=`<path d="M204 122 l14 14 M218 122 l-14 14" stroke="${red}" stroke-width="2"/>`;s+=`<g><animateTransform attributeName="transform" type="translate" values="0 0;14 0;0 0" dur="2.4s" repeatCount="indefinite"/>`
+  +`<rect x="46" y="112" width="88" height="22" rx="7" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.2"/></g>`;
+s+=`<circle cx="234" cy="128" r="14" fill="none" stroke="${red}" stroke-width="1.6" stroke-dasharray="4 3"><animate attributeName="stroke-opacity" values="1;.15;1" dur="1.4s" repeatCount="indefinite"/></circle>`;
+
+      s+=fit(234,140,9.5,red,'это обман',{b:1},100);
+      s+=`<g class="${pre}Pop" style="animation-delay:.6s"><rect x="20" y="184" width="278" height="32" rx="10" fill="rgba(255,120,100,.11)" stroke="${red}" stroke-width="1.6"/>`
+        +fit(159,206,10.5,red,'никогда не переводи деньги за игру',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.9s"><rect x="20" y="220" width="278" height="32" rx="10" fill="rgba(125,224,160,.11)" stroke="${grn}" stroke-width="1.6"/>`
+        +fit(159,242,10.5,grn,'расскажи взрослым, если что-то смущает',{b:1},262)+`</g>`;
+      s+=plate2(20,234,278,30,go?grn:cardB,go?'игровые друзья — не настоящие друзья':'кому верить в игре?',11,pre);
+      return s;
+    }
+    if(K==='secbully'){ /* травля в сети */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.8"/>`
+        +fit(159,29,11,rose,'если в сети обижают — это не твоя вина',{b:1},282)+`</g>`;
+      s+=`<rect x="24" y="52" width="270" height="98" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      [[36,'привет, ты новенький?',dim],[36,'ты смешной и глупый',red],[148,'все над тобой смеются',red],[36,'не пиши мне больше',dim]].forEach((q,k)=>{
+        const y=68+k*22, right=(k===1||k===2);
+        s+=`<rect x="${right?132:36}" y="${y-14}" width="150" height="20" rx="8" fill="${right?'rgba(255,120,100,.16)':'rgba(255,255,255,.05)'}" stroke="${right?red:cardB}" stroke-width="1.2"/>`;
+        s+=fit(right?207:111,y,9,right?ink:dim,q[1],{b:1},142);
+      });
+      const opts=[['не отвечать грубостью',grn],['заблокировать и пожаловаться',cyan],['рассказать взрослым',gold]];
+      opts.forEach((q,k)=>{
+        const y=162+k*34;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.2+k*0.16).toFixed(2)}s"><rect x="24" y="${y}" width="270" height="28" rx="9" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.5"/>`
+          +`<path d="M40 ${y+14} l5 5 l9 -10" fill="none" stroke="${q[1]}" stroke-width="2.2"/>`
+          +fit(190,y+19,10,q[1],q[0],{b:1},224)+`</g>`;
+      });
+      s+=plate2(24,268,270,30,go?grn:cardB,go?'молчать нельзя — расскажи взрослым':'что делать, если обижают?',11,pre);
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3s" repeatCount="indefinite" path="M40 148 H280"/></circle>`;
+      return s;
+    }
+    if(K==='secreport'){ /* если что-то случилось */
+      const it=[['сказать родителям',grn],['показать переписку',cyan],['сменить пароль',gold],['не удалять доказательства',pur]];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11,grn,'если что-то случилось — действуй сразу',{b:1},282)+`</g>`;
+      it.forEach((q,k)=>{
+        const y=48+k*44;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.15).toFixed(2)}s">`
+          +`<rect x="24" y="${y}" width="270" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="1.6"/>`
+          +`<circle cx="46" cy="${y+17}" r="10" fill="rgba(255,255,255,.05)" stroke="${q[1]}" stroke-width="1.3"/>`
+          +tx(46,y+21,11,q[1],''+(k+1),{b:1})
+          +fit(170,y+22,10.5,q[1],q[0],{b:1},212)+`</g>`;
+        if(k<3) s+=drawLL({x:159,y:y+36},{x:159,y:y+40},q[1],1.3,0.3+k*0.12,1.3,pre);
+      });
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="24" y="226" width="270" height="32" rx="10" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,248,10.5,cyan,'взрослые помогут, а не будут ругать',{b:1},254)+`</g>`;
+      s+=plate2(24,240,270,30,go?grn:cardB,go?'чем раньше сказать, тем легче исправить':'что делать в беде?',11,pre);
+      return s;
+    }
+    if(K==='seccopy'){ /* чужое — не бери */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'чужая работа — не твоя',{b:1},256)+`</g>`;
+      s+=`<rect x="24" y="52" width="126" height="98" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`;
+      s+=`<rect x="44" y="70" width="86" height="62" rx="6" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="1.5"/>`;
+      s+=`<path d="M54 118 l18 -20 l14 12 l12 -16 l18 24" fill="none" stroke="${grn}" stroke-width="1.6"/>`;
+      s+=fit(87,168,10,grn,'автор разрешил',{b:1},116);
+      s+=`<rect x="168" y="52" width="126" height="98" rx="10" fill="rgba(18,24,44,.97)" stroke="${red}" stroke-width="1.7"/>`;
+      s+=`<rect x="188" y="70" width="86" height="62" rx="6" fill="rgba(255,120,100,.14)" stroke="${red}" stroke-width="1.5"/>`;
+      s+=`<path d="M198 118 l18 -20 l14 12 l12 -16 l18 24" fill="none" stroke="${red}" stroke-width="1.6"/>`;
+      s+=`<path d="M212 78 l58 56" stroke="${red}" stroke-width="2.4"/>`;
+      s+=fit(231,168,10,red,'взял без спроса',{b:1},116);
+      s+=`<g class="${pre}Pop" style="animation-delay:.5s"><rect x="20" y="182" width="278" height="30" rx="9" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.5"/>`
+        +fit(159,202,10,gold,'указывай автора и источник',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="20" y="218" width="278" height="30" rx="9" fill="rgba(125,224,160,.11)" stroke="${grn}" stroke-width="1.5"/>`
+        +fit(159,238,10,grn,'используй картинки со свободной лицензией',{b:1},262)+`</g>`;
+      s+=plate2(20,232,278,32,go?grn:cardB,go?'чужое брать без разрешения нельзя':'как пользоваться чужими работами?',11,pre);
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3s" repeatCount="indefinite" path="M231 168 L87 168"/></circle>`;
+      return s;
+    }
+    if(K==='secbackup'){ /* резервные копии */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'копия спасает от потери файлов',{b:1},270)+`</g>`;
+      s+=`<rect x="30" y="56" width="90" height="70" rx="9" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`;
+      s+=fit(75,84,10.5,cyan,'твой файл',{b:1},80);
+      s+=`<rect x="46" y="94" width="58" height="18" rx="4" fill="rgba(127,214,255,.18)" stroke="${cyan}" stroke-width="1.2"/>`;
+      s+=`<path d="M124 92 h20" stroke="${gold}" stroke-width="2.2"/><path d="M140 86 l8 6 l-8 6" fill="none" stroke="${gold}" stroke-width="2.2"/>`;
+      s+=`<rect x="148" y="56" width="64" height="70" rx="9" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.7"/>`;
+      s+=fit(180,84,10,gold,'копия',{b:1},56);
+      s+=`<rect x="158" y="94" width="44" height="18" rx="4" fill="rgba(255,215,106,.18)" stroke="${gold}" stroke-width="1.2"/>`;
+      s+=`<path d="M216 92 h18" stroke="${grn}" stroke-width="2.2"/><path d="M230 86 l8 6 l-8 6" fill="none" stroke="${grn}" stroke-width="2.2"/>`;
+      s+=`<rect x="234" y="56" width="60" height="70" rx="9" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`;
+      s+=fit(264,84,10,grn,'облако',{b:1},54);
+      s+=`<path d="M246 100 q9 -8 18 0 q9 -8 18 0 q0 12 -18 12 q-18 0 -18 -12 z" fill="rgba(125,224,160,.25)" stroke="${grn}" stroke-width="1.3"/>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.6s"><rect x="20" y="146" width="278" height="32" rx="10" fill="rgba(127,214,255,.11)" stroke="${cyan}" stroke-width="1.6"/>`
+        +fit(159,168,10.5,cyan,'копия должна быть в другом месте',{b:1},262)+`</g>`;
+      s+=`<g class="${pre}Pop" style="animation-delay:.9s"><rect x="20" y="182" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,204,10.5,gold,'делай копию перед важной работой',{b:1},262)+`</g>`;
+      s+=plate2(20,196,278,30,go?grn:cardB,go?'потерять один файл — не потерять всё':'зачем нужна копия?',11,pre);
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="2.8s" repeatCount="indefinite" path="M120 92 H236"/></circle>`;
+      s+=fit(159,252,10,dim,'так же защищают и от вирусов-шифровальщиков',{},282);
+      return s;
+    }
+    if(K==='secpractice'){ /* практика */
+      const rows=[
+        {t:'пароль «12345» — это надёжно?',a:'нет, подбирается мгновенно',c:red},
+        {t:'письмо просит код из СМС. Что делать?',a:'не отвечать, позвонить в банк',c:gold},
+        {t:'можно ли опубликовать адрес школы?',a:'нет, это личные данные',c:pur}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11,grn,'практика: решаем жизненные задачи',{b:1},276)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=48+k*58;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.2).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(142,y+19,9.5,ink,q.t,{},200)
+          +(go?fit(142,y+38,11,q.c,q.a,{b:1},200):fit(142,y+38,10,dim,'нажми «показать»',{},200))+`</g>`;
+      });
+      s+=plate2(20,224,278,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
+      s+=`<circle r="5" fill="${cyan}"><animateMotion dur="3.2s" repeatCount="indefinite" path="M34 272 H284"/></circle>`;
+      return s;
+    }
+    if(K==='secquiz'){ /* викторина */
+      const opts=['это обман, пароль не спрашивают','нужно ответить и помочь','надо перевести деньги','можно отправить код другу'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,29,11,ink,'Незнакомец просит код из СМС. Что делать?',{b:1},282)+`</g>`;
+      s+=`<rect x="24" y="50" width="270" height="66" rx="10" fill="rgba(18,24,44,.97)" stroke="${red}" stroke-width="1.6"/>`;
+      s+=`<circle cx="52" cy="83" r="12" fill="rgba(255,120,100,.2)" stroke="${red}" stroke-width="1.6"/>`;
+      s+=`<path d="M46 88 q6 -10 12 0" fill="none" stroke="${red}" stroke-width="1.4"/>`;
+      s+=fit(180,76,10.5,ink,'«Я из банка, назовите код»',{b:1},190);
+      s+=fit(180,96,9.5,dim,'и торопит: «быстрее!»',{},190);s+=`<rect x="24" y="50" width="270" height="66" rx="10" fill="none" stroke="${red}" stroke-width="1.6" stroke-dasharray="6 5"><animate attributeName="stroke-opacity" values="1;.2;1" dur="1.6s" repeatCount="indefinite"/></rect>`;
+s+=`<circle r="6" fill="${red}"><animateMotion dur="2.4s" repeatCount="indefinite" path="M280 84 L60 84"/></circle>`;
+
+      opts.forEach((t2,k)=>{
+        const y=128+k*33, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})"><rect x="20" y="${y}" width="278" height="28" rx="8" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.1:1.5}"/>`
+          +fit(159,y+19,10,c,t2,{b:on},260)+(on?`<path d="M272 ${y+7} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.2"/>`:'')+`</g>`;
+      });
+      s+=`<g class="${pre}Pop"><rect x="20" y="266" width="278" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.5"/>`
+        +fit(159,286,10,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Код не называют никому':'Подумай: банк спрашивает код?',{b:done&&st.pick===ok},258)+`</g>`;
+      return s;
+    }
+    if(K==='secmistakes'){ /* ошибки */
+      const it=[
+        {t:'один пароль для всех сайтов',f:'утечка на одном откроет все',c:red},
+        {t:'переход по ссылке из письма',f:'адрес может быть поддельным',c:gold},
+        {t:'публикация адреса и школы',f:'это личные данные',c:rose},
+        {t:'молчание, когда обижают',f:'расскажи взрослым',c:cyan}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=12+k*56;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="12" y="${y}" width="294" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="1.9"/>`
+          +`<path d="M28 ${y+13} l10 18 h-20 z" fill="${red}" opacity=".9"/><text x="28" y="${y+28}" text-anchor="middle" font-size="10" font-weight="bold" fill="#eaf2ff">!</text>`
+          +fit(96,y+20,Math.min(10.5,150/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},132)
+          +`<path d="M98 ${y+30} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.2"/>`
+          +fit(120,y+37,Math.min(9.5,140/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},140)+`</g>`;
+      });
+      s+=`${tx(159,250,10.5,dim,'проверяй эти четыре места',{})}`;s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.2s" repeatCount="indefinite" path="M28 36 L28 236"/></circle>`;
+
+      return s;
+    }
+    if(K==='secsheet'){ /* шпаргалка */
+      const rows=[{t:'пароль длинный и свой у каждого сайта',c:gold},{t:'код из СМС никому не называем',c:red},
+                  {t:'адрес сайта читаем, а не картинку',c:cyan},{t:'личное — не публикуем',c:rose},
+                  {t:'копии спасают файлы',c:grn},{t:'обижают — расскажи взрослым',c:pur}];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'шесть правил безопасности',{b:1},260)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=46+k*36;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.08+k*0.1).toFixed(2)}s">`
+          +`<rect x="16" y="${y}" width="286" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.5"/>`;
+        if(k===0) s+=`<rect x="30" y="${y+10}" width="16" height="11" rx="3" fill="${q.c}" opacity=".7"/><path d="M33 ${y+10} v-3 a5 5 0 0 1 10 0 v3" fill="none" stroke="${q.c}" stroke-width="1.3"/>`;
+        else if(k===1) s+=`<rect x="30" y="${y+8}" width="16" height="15" rx="3" fill="none" stroke="${q.c}" stroke-width="1.4"/><text x="38" y="${y+20}" text-anchor="middle" font-size="9" fill="${q.c}">7</text>`;
+        else if(k===2) s+=`<circle cx="38" cy="${y+15}" r="8" fill="none" stroke="${q.c}" stroke-width="1.4"/><path d="M34 ${y+15} h8" stroke="${q.c}" stroke-width="1.3"/>`;
+        else if(k===3) s+=`<path d="M30 ${y+15} q8 -9 16 0 q-8 9 -16 0" fill="none" stroke="${q.c}" stroke-width="1.4"/><circle cx="38" cy="${y+15}" r="2.4" fill="${q.c}"/>`;
+        else if(k===4) s+=`<rect x="30" y="${y+8}" width="16" height="14" rx="3" fill="none" stroke="${q.c}" stroke-width="1.4"/><path d="M30 ${y+13} h16" stroke="${q.c}" stroke-width="1.2"/>`;
+        else s+=`<circle cx="38" cy="${y+15}" r="8" fill="none" stroke="${q.c}" stroke-width="1.4"/><path d="M34 ${y+18} q4 -7 8 0" fill="none" stroke="${q.c}" stroke-width="1.3"/>`;
+        s+=fit(176,y+20,9.5,q.c,q.t,{b:1},190)+`</g>`;
+      });
+      s+=plate2(16,268,286,28,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных правил',11,pre);s+=`<circle r="5" fill="${cyan}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M30 61 L30 250"/></circle>`;
+s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M286 61 L286 250"/></circle>`;
+
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -9769,6 +10339,32 @@ s+=`<circle r="5" fill="${cyan}"><animateMotion dur="2.8s" repeatCount="indefini
     if(K==='animquiz') return 312;
     if(K==='animmistakes') return 236;
     if(K==='animsheet') return 310;
+    if(K==='secintro') return 248;
+    if(K==='secdata') return 242;
+    if(K==='secpass') return 244;
+    if(K==='secpassquality') return 272;
+    if(K==='secpassmeter') return 366;
+    if(K==='secpassrules') return 286;
+    if(K==='sectwostep') return 256;
+    if(K==='secphish') return 278;
+    if(K==='secphish2') return 266;
+    if(K==='secphish3') return 338;
+    if(K==='seclink') return 290;
+    if(K==='secvirus') return 292;
+    if(K==='secantivirus') return 296;
+    if(K==='secwifi') return 258;
+    if(K==='secfraud') return 272;
+    if(K==='secfootprint') return 286;
+    if(K==='secprivacy') return 288;
+    if(K==='secgames') return 276;
+    if(K==='secbully') return 308;
+    if(K==='secreport') return 288;
+    if(K==='seccopy') return 282;
+    if(K==='secbackup') return 280;
+    if(K==='secpractice') return 280;
+    if(K==='secquiz') return 314;
+    if(K==='secmistakes') return 236;
+    if(K==='secsheet') return 310;
     if(K==='d3intro') return 300;
     if(K==='d3flat') return 300;
     if(K==='d3points') return 292;
@@ -11667,6 +12263,68 @@ s+=`<circle r="5" fill="${cyan}"><animateMotion dur="2.8s" repeatCount="indefini
       tasks:[
         {q:'Анимация идёт 5 секунд при 24 кадрах в секунду. Сколько всего кадров?', kind:'unit', ans:120, tol:0, hints:['Кадры в секунду умножаем на секунды.','24 · 5 = 120.'], sol:'24 · 5 = 120'},
         {q:'В цикле анимации 8 кадров, а показывают 24 кадра в секунду. Сколько циклов пройдёт за секунду?', kind:'unit', ans:3, tol:0, hints:['Делим частоту на длину цикла.','24 : 8 = 3.'], sol:'24 : 8 = 3'}
+      ] },
+    { id:535, title:'Безопасность в сети: пароли, обман и цифровой след', ico:'🛡️', src:'Информатика · 5–6 класс · С нуля: безопасность',
+      explain:[
+                'Безопасность в сети — это привычки: не всё, что приходит в сообщении, правда. Главные опасности — обман, кража данных и вредные программы.',
+        'Личные данные — ключ от жизни: домашний адрес, школа и класс, телефон, коды и пароли нельзя сообщать никому в сети.',
+        'Пароль — секретный ключ. Его нельзя писать на листке у экрана и нельзя называть даже другу.',
+        'Силу пароля решают длина и разнообразие символов: «123456» подбирается мгновенно, а длинная фраза из слов — за тысячи лет.',
+        'Проверить пароль можно самому: программа считает длину, число видов символов и примерное время подбора.',
+        'Четыре правила пароля: у каждого сайта свой пароль, никому его не сообщать, не хранить на виду, для важных сайтов включить двухшаговый вход.',
+        'Двухшаговый вход — это пароль плюс код из СМС или приложения. Даже украв пароль, войти не получится, а код тоже нельзя называть.',
+        'Поддельное письмо выдаёт себя деталями: обещает приз, торопит, просит пароль и приходит со странного адреса.',
+        'Поддельный сайт можно узнать по адресу: «school.ru» и «school-ru.info» — разные сайты, а настоящее имя бывает спрятано в середине длинного адреса.',
+        'Тренажёр: смотри на сообщение и решай — можно ли доверять. Признаки обмана: спешка, просьба пароля или денег, чужой адрес.',
+        'Ссылка может вести не туда, куда обещает. Наведи курсор и посмотри настоящий адрес, прежде чем переходить.',
+        'Вложение в письме может быть вредной программой: файлы .exe от незнакомых не открываем и макросы не включаем.',
+        'Защита проста: вовремя обновлять систему, проверять файлы антивирусом и делать резервные копии.',
+        'В открытой сети Wi-Fi тебя могут подслушать, поэтому в кафе не входи в банк и почту — лучше включить мобильный интернет.',
+        'Мошенники звонят «из банка» и просят код из СМС. Настоящий банк никогда этого не спрашивает: положи трубку и позвони по номеру с карты.',
+        'В сети остаётся цифровой след: фото, комментарии, регистрации и покупки. Удалить его полностью почти невозможно, поэтому думай перед публикацией.',
+        'Настройки приватности решают, кто тебя видит: лучше «только друзья», без телефона и без геометок.',
+        'В играх тоже есть незнакомые люди: они могут просить аккаунт, деньги или пароль. Игровые друзья — не настоящие друзья.',
+        'Если в сети обижают — это не твоя вина. Не отвечай грубостью, заблокируй обидчика и расскажи взрослым.',
+        'Если что-то случилось: скажи родителям, покажи переписку, смени пароль и не удаляй доказательства.',
+        'Чужие работы, картинки и музыку нельзя брать без разрешения: указывай автора и источник, используй материалы со свободной лицензией.',
+        'Резервная копия спасает файлы от потери и от вирусов-шифровальщиков: копия должна быть в другом месте.',
+        'Практика: «12345» — плохой пароль; письмо про код из СМС — обман; адрес школы публиковать нельзя.',
+        'Викторина: незнакомец просит код из СМС — это обман, код не называют никому.',
+        'Частые ошибки: один пароль для всех сайтов, переход по ссылке из письма, публикация адреса, молчание, когда обижают.',
+        'Шпаргалка: длинный свой пароль, код из СМС никому, читай адрес сайта, личное не публикуй, делай копии, расскажи взрослым. Проверь себя!'
+      ],
+      slides:[
+        {h:'Три опасности в сети', v:{kind:'secintro'}, r:'Три главные опасности в сети', d:'Три главные опасности в сети: обман, кража данных и вредные программы. Чаще всего они приходят с сообщением.'},
+        {h:'Личные данные', v:{kind:'secdata'}, r:'Личные данные делятся на две группы', d:'Личные данные делятся на две группы: чем можно делиться и что нельзя сообщать никому.'},
+        {h:'Пароль — секретный ключ', v:{kind:'secpass'}, r:'Пароль — это секретный ключ. На рисунке ', d:'Пароль — это секретный ключ. На рисунке показано, как его набирают, и почему нельзя хранить его на виду.'},
+        {h:'Что делает пароль сильным', v:{kind:'secpassquality'}, r:'Четыре пароля и оценка их надёжности', d:'Четыре пароля и оценка их надёжности: сила растёт с длиной и разнообразием символов.'},
+        {h:'Тренажёр: проверка пароля', v:{kind:'secpassmeter'}, r:'Тренажёр', d:'Тренажёр: нажимай примеры паролей и смотри оценку, число видов символов и время подбора.'},
+        {h:'Четыре правила пароля', v:{kind:'secpassrules'}, r:'Четыре правила обращения с паролем', d:'Четыре правила обращения с паролем: свой у каждого сайта, никому не сообщать, не хранить на виду, двухшаговый вход для важного.'},
+        {h:'Двухшаговый вход', v:{kind:'sectwostep'}, r:'Двухшаговый вход', d:'Двухшаговый вход: пароль плюс код из телефона. Даже с украденным паролем войти нельзя.'},
+        {h:'Поддельное письмо', v:{kind:'secphish'}, r:'Поддельное письмо', d:'Поддельное письмо: странный адрес, обещание приза, спешка и просьба ввести пароль.'},
+        {h:'Поддельный сайт', v:{kind:'secphish2'}, r:'Три адреса', d:'Три адреса: настоящий сайт школы и две обманки. Смотри на адрес, а не на картинку.'},
+        {h:'Тренажёр: можно ли доверять', v:{kind:'secphish3'}, r:'Тренажёр «можно ли доверять»', d:'Тренажёр «можно ли доверять»: четыре карточки с сообщениями, две кнопки и объяснение после ответа.'},
+        {h:'Куда ведёт ссылка', v:{kind:'seclink'}, r:'Ссылка ведёт на чужой сайт. Наводи курсо', d:'Ссылка ведёт на чужой сайт. Наводи курсор, чтобы увидеть настоящий адрес.'},
+        {h:'Вирусы и вложения', v:{kind:'secvirus'}, r:'Вложение «приз.exe» превращается в вирус', d:'Вложение «приз.exe» превращается в вирус: он крадёт пароли и шифрует файлы.'},
+        {h:'Защита: обновления и копии', v:{kind:'secantivirus'}, r:'Щит защиты', d:'Щит защиты: обновления, антивирус и резервные копии — три привычки, которые защищают.'},
+        {h:'Открытая сеть Wi-Fi', v:{kind:'secwifi'}, r:'Открытая сеть', d:'Открытая сеть: сигнал ловит кто угодно. В такой сети не входят в банк и почту.'},
+        {h:'Звонок «из банка»', v:{kind:'secfraud'}, r:'Звонок «из банка» с просьбой назвать код', d:'Звонок «из банка» с просьбой назвать код — это обман. Настоящий банк так не делает.'},
+        {h:'Цифровой след', v:{kind:'secfootprint'}, r:'Цифровой след', d:'Цифровой след: фото, комментарии, регистрации и покупки остаются в сети надолго.'},
+        {h:'Настройки приватности', v:{kind:'secprivacy'}, r:'Настройки приватности', d:'Настройки приватности: четыре переключателя — что видят другие и что лучше скрыть.'},
+        {h:'Безопасность в играх', v:{kind:'secgames'}, r:'Незнакомец в игре просит аккаунт или ден', d:'Незнакомец в игре просит аккаунт или деньги — это обман, а не помощь.'},
+        {h:'Травля в сети', v:{kind:'secbully'}, r:'Травля в сети', d:'Травля в сети: как отвечать и что делать. Три верных шага и один неверный.'},
+        {h:'Если что-то случилось', v:{kind:'secreport'}, r:'Если что-то случилось', d:'Если что-то случилось: четыре шага — сказать взрослым, показать переписку, сменить пароль, сохранить доказательства.'},
+        {h:'Чужие работы', v:{kind:'seccopy'}, r:'Чужое изображение с пометкой «автор разр', d:'Чужое изображение с пометкой «автор разрешил» и без неё: во втором случае использовать нельзя.'},
+        {h:'Резервные копии', v:{kind:'secbackup'}, r:'Резервная копия', d:'Резервная копия: файл, копия и облако. Так файл переживёт поломку и вирус.'},
+        {h:'Практика', v:{kind:'secpractice'}, r:'Три жизненные задачи о пароле, письме с ', d:'Три жизненные задачи о пароле, письме с кодом и личных данных.'},
+        {h:'Викторина', v:{kind:'secquiz'}, r:'Викторина', d:'Викторина: звонок с просьбой назвать код из СМС — правильный ответ «это обман».'},
+        {h:'Частые ошибки', v:{kind:'secmistakes'}, r:'Четыре типичные ошибки с иконками', d:'Четыре типичные ошибки с иконками: один пароль, переход по ссылке, публикация адреса, молчание.'},
+        {h:'Шпаргалка', v:{kind:'secsheet'}, r:'Шесть правил безопасности с иконками', d:'Шесть правил безопасности с иконками: пароль, код, адрес, личное, копии, разговор со взрослыми.'}
+      ],
+      check:{ q:'Незнакомец в сообщении просит назвать код из СМС. Что делать?', choices:['это обман: код никому не называем','назвать код, чтобы помочь','отправить код другу','перевести деньги'], ans:0, exp:'Настоящие банки и службы никогда не спрашивают код из СМС — это признак обмана.' },
+      tasks:[
+        {q:'Сколько примерно лет займёт подбор пароля из 18 символов, если короткий пароль подбирают мгновенно, а этот — в 3,15 · 10¹³ раз дольше (в секундах)? Считай, что в году 3,15 · 10⁷ секунд.', kind:'unit', ans:1000000, tol:0, hints:['Раздели время подбора на число секунд в году.','3,15 · 10¹³ : 3,15 · 10⁷ = 10⁶ = 1 000 000 лет.'], sol:'3,15 · 10¹³ : 3,15 · 10⁷ = 1 000 000'},
+        {q:'Пароль «123456» подбирают мгновенно, а пароль из 18 символов — за 10⁶ лет. Во сколько раз он надёжнее, если время подбора первого — 0,1 секунды, а второго — 3,15 · 10¹³ секунд?', kind:'choice', choices:['в 3,15 · 10¹⁴ раз','в 100 раз','в 18 раз','в 2 раза'], ans:0, tol:0, hints:['Раздели большее время на меньшее.','3,15 · 10¹³ : 0,1 = 3,15 · 10¹⁴.'], sol:'3,15 · 10¹³ : 0,1 = 3,15 · 10¹⁴'}
       ] }
   ];
 
@@ -11681,7 +12339,7 @@ s+=`<circle r="5" fill="${cyan}"><animateMotion dur="2.8s" repeatCount="indefini
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz'||s.v.kind==='robotlab'||s.v.kind==='robotquiz'||s.v.kind==='modellab'||s.v.kind==='modelquiz'||s.v.kind==='d3lab'||s.v.kind==='d3quiz'||s.v.kind==='gfxlab'||s.v.kind==='gfxquiz'||s.v.kind==='animlab'||s.v.kind==='animquiz');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz'||s.v.kind==='robotlab'||s.v.kind==='robotquiz'||s.v.kind==='modellab'||s.v.kind==='modelquiz'||s.v.kind==='d3lab'||s.v.kind==='d3quiz'||s.v.kind==='gfxlab'||s.v.kind==='gfxquiz'||s.v.kind==='animlab'||s.v.kind==='animquiz'||s.v.kind==='secpassmeter'||s.v.kind==='secphish3'||s.v.kind==='secquiz');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -11700,6 +12358,10 @@ s+=`<circle r="5" fill="${cyan}"><animateMotion dur="2.8s" repeatCount="indefini
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
+      : (s.v.kind==='secpassmeter')
+      ? wkRow(wkBtn('очистить пароль',`infPass('${lk}','')`))
+      : (s.v.kind==='secphish3')
+      ? wkRow(wkBtn('сброс тренажёра',`infTrust('${lk}','reset')`))
       : (s.v.kind==='animlab')
       ? wkRow(wkBtn('сброс таймлайна',`infAnim('${lk}','reset','')`))
       : (s.v.kind==='gfxlab')
@@ -11725,7 +12387,7 @@ s+=`<circle r="5" fill="${cyan}"><animateMotion dur="2.8s" repeatCount="indefini
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='animlab')? ((st.af>=8) && s.r) : (s.v.kind==='gfxlab')? ((st.gxz>=3) && s.r) : (s.v.kind==='d3lab')? ((st.d3t>=5) && s.r) : (s.v.kind==='modellab')? (((st.my||0)>=5) && s.r) : (s.v.kind==='robotlab')? ((st.rp>=11) && s.r) : (s.v.kind==='gameplay')? ((st.gm>=5) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='secphish3')? ((Object.keys(st.stk||{}).length>=4) && s.r) : (s.v.kind==='animlab')? ((st.af>=8) && s.r) : (s.v.kind==='gfxlab')? ((st.gxz>=3) && s.r) : (s.v.kind==='d3lab')? ((st.d3t>=5) && s.r) : (s.v.kind==='modellab')? (((st.my||0)>=5) && s.r) : (s.v.kind==='robotlab')? ((st.rp>=11) && s.r) : (s.v.kind==='gameplay')? ((st.gm>=5) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -11734,6 +12396,19 @@ s+=`<circle r="5" fill="${cyan}"><animateMotion dur="2.8s" repeatCount="indefini
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.infPass=function(lk,val){
+    const st=CHS[lk]||(CHS[lk]={});
+    st.spw=(typeof val==='string')?val:(st.spw||'');
+    chRender(0);
+  };
+  window.infTrust=function(lk,val){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(!st.stk) st.stk={};
+    if(val==='reset'){ st.stk={}; st.sti=0; chRender(0); return; }
+    if(val==='next'){ st.sti=((typeof st.sti==='number')?st.sti:0)+1; if(st.sti>3) st.sti=0; chRender(0); return; }
+    st.stk[(typeof st.sti==='number')?st.sti:0]=(val==='true');
+    chRender(0);
+  };
   window.infAnim=function(lk,act,val){
     const st=CHS[lk]||(CHS[lk]={});
     if(!st.ak) st.ak=[0.65,0.15,0.65];
