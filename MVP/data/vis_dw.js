@@ -1251,116 +1251,392 @@ window.WAVE_D = window.WAVE_D || {};
     id: 424, title: 'Двудольные графы и раскраски', ico: '🕸️',
     src: 'Математика · 8 класс · Олимп-8: графы', subj: 'math',
     explain: [
-      'Граф — это точки (вершины) и линии (рёбра) между ними. Двудольный граф — особенный: его вершины делятся на ДВЕ группы, и рёбра соединяют ТОЛЬКО вершины из разных групп. Никаких рёбер внутри группы!',
-      'Пример: мальчики и девочки на танцах. Каждое ребро — пара «мальчик — девочка». Мальчик с мальчиком не танцуют, значит, рёбер внутри группы нет — граф двудольный!',
-      'Как проверить двудольность? Попробуй раскрасить вершины в два цвета так, чтобы соседние (соединённые ребром) были РАЗНОГО цвета. Получилось — граф двудольный!',
-      'Красим: возьми первую вершину красной, соседей — синими, их соседей — снова красными… Если нигде не возникает конфликт (два соседа одного цвета) — граф двудольный!',
-      'Звезда — граф «центр и листья»: центр соединяется со всеми листьями, но листья между собой не соединяются. Центр — красный, все листья — синие → двудольный!',
-      'А квадрат-цикл (4 вершины по кругу)? Красим по очереди: красный, синий, красный, синий — получилось! Цикл с ЧЁТНЫМ числом вершин двудольный.',
-      'А треугольник? Три вершины, каждая соединена с двумя другими. Красим: красный, синий… третья соседствует и с красной, и с синей — конфликт! Треугольник НЕ двудольный.',
-      'Правило: граф двудольный ⟺ в нём нет циклов нечётной длины. Треугольник (цикл из 3) — не двудольный, квадрат (цикл из 4) — двудольный. Проверяй раскраской!',
-      'Теперь проверь себя: граф, где рёбра соединяют только вершины из разных групп, называется…?'
+      'Шесть ребят: Аня дружит с Борей и Геной, Боря — с Дашей, Гена — с Дашей и Евой, Вася — с Евой. Можно ли рассадить их в два ряда так, чтобы друзья сидели только напротив, а не рядом в своём ряду?',
+      'Чтобы не запутаться, рисуем схему. Точка — человек. Это вершина графа. Точки появляются по одной, как бусины. Имена стоят снаружи, чтобы ничего не наезжало на рисунок.',
+      'Линия между точками значит «эти двое дружат». Такую линию называют ребром. Ребро без стрелки: дружба в обе стороны. Смотри, как каждая линия дорисовывается до конца — не обрывается на полпути.',
+      'Разложим точки на две кучки: слева и справа. Правило простое: линия идёт только из одной кучки в другую. Внутри кучки линий нет. Кликни точку слева — загорятся те, с кем ей «можно» дружить.',
+      'Как на танцах: мальчики слева, девочки справа. Пара — это ребро. Мальчик с мальчиком не танцует. Если все пары так рисуются — граф двудольный. «Две доли» — две группы.',
+      'Как проверить любой граф? Раскрась точки в два цвета. Соседи по ребру должны быть разного цвета. Нажми «Раскрасить»: цвет побежит волной от первой точки к соседям, потом к их соседям.',
+      'Звезда: одна точка в центре, остальные вокруг, линии только к центру. Центр — красный, все лучи — синие. Конфликта нет. Звезда всегда двудольная: центр — одна доля, листья — другая.',
+      'Цепочка (путь) тоже всегда двудольная. Иди по ней: красный, синий, красный, синий. Нажми «Оживить» и смотри, как шарик бежит и на каждой следующей точке меняет цвет.',
+      'Квадрат — цикл из четырёх вершин. Чётное число точек по кругу. Обходим: красный-синий-красный-синий — вернулись, и цвета сошлись. Чётный цикл двудольный.',
+      'Шестиугольник — тот же фокус. Шесть — чётное. Волна обходит круг и смыкается без ссоры. Запомни картинку: чётный обруч всегда раскрашивается в два цвета.',
+      'Треугольник — три точки, все попарно соединены. Три — нечётное. Красим две — третья соседствует и с красной, и с синей. Куда ни покрась — спор. Нечётный цикл ломает двудольность.',
+      'Теперь сам. Пятиугольник: кликай точки и крась красным или синим. Если соседи одного цвета — ребро вспыхнет тревогой. У пяти точек по кругу конфликт неизбежен: это нечётный цикл.',
+      'Главное правило одним предложением: граф двудольный тогда и только тогда, когда в нём нет циклов нечётной длины. Нет треугольников, пятиугольников и прочих «нечётных обручей».',
+      'Бонус: паросочетание. Это набор рёбер без общих вершин — как посадить максимум пар. В двудольном графе пары искать удобно: берём рёбра слева направо так, чтобы вершины не повторялись.',
+      'Где это в жизни. Расписание: ученики ↔ кружки. Задачи: люди ↔ работы. Сеть: кабели только между двумя типами узлов. Везде две доли и рёбра только между ними.',
+      'Рецепт: нарисуй точки и линии → попробуй два цвета → если два соседа одного цвета, ищи нечётный цикл. Если цвета легли — граф двудольный. Дальше проверка: как называется такой граф?'
     ],
     check: { q: 'Граф, где рёбра соединяют только вершины из разных групп, называется…', choices: ['двудольным', 'полным', 'деревом', 'циклом'], ans: 0,
-      exp: 'Двудольный граф — вершины в двух группах.' },
+      exp: 'Две группы (доли), рёбра только между ними — это двудольный граф. Его всегда можно раскрасить в два цвета.' },
     tasks: [
       { q: 'Сколько цветов достаточно для раскраски двудольного графа?', kind: 'unit', ans: 2, tol: 0,
-        hints: ['По цвету на группу.', 'Два цвета.'], sol: '2' },
-      { q: 'Является ли «звезда» (центр и листья) двудольным графом?', kind: 'choice', choices: ['да', 'нет', 'только с 3 листьями', 'нельзя узнать'], ans: 0, tol: 0,
-        hints: ['Центр — одна группа.', 'Центр в одной группе, листья — в другой → двудольный.'], sol: 'да' }
+        hints: ['По одному цвету на каждую долю.', 'Соседи разного цвета — значит цветов ровно два.'], sol: '2 — по цвету на группу.' },
+      { q: 'Является ли «звезда» (центр и листья) двудольным графом?', kind: 'choice',
+        choices: ['да', 'нет', 'только с 3 листьями', 'нельзя узнать'], ans: 0, tol: 0,
+        hints: ['Центр — одна доля, все листья — другая.', 'Листьев сколько угодно: между ними рёбер нет.'], sol: 'да: центр в одной группе, листья — в другой.' }
     ]
   };
-  const bipartite=(kind)=>`<svg viewBox="0 0 220 150" style="width:200px;height:136px;background:#101f18;border-radius:12px">
-    ${kind==='star'?`<g stroke="#8fd1a8" stroke-width="2.5">${[0,1,2,3,4].map(i=>{const a=-90+i*72; const x=110+52*Math.cos(a*Math.PI/180),y=75+52*Math.sin(a*Math.PI/180); return `<line x1="110" y1="75" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/>`;}).join('')}</g>
-      <circle cx="110" cy="75" r="9" fill="#e86a5a"/>
-      ${[0,1,2,3,4].map(i=>{const a=-90+i*72; const x=110+52*Math.cos(a*Math.PI/180),y=75+52*Math.sin(a*Math.PI/180); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="8" fill="#7fd1ff"/>`;}).join('')}`:
-    kind==='tri'?`<polygon points="110,25 45,125 175,125" fill="none" stroke="#ff9a8a" stroke-width="3"/>
-      <circle cx="110" cy="25" r="9" fill="#e86a5a"/><circle cx="45" cy="125" r="9" fill="#7fd1ff"/><circle cx="175" cy="125" r="9" fill="#7fd1ff"/>`:
-    kind==='sq'?`<rect x="60" y="40" width="100" height="70" fill="none" stroke="#8fd1a8" stroke-width="3"/>
-      <circle cx="60" cy="40" r="9" fill="#e86a5a"/><circle cx="160" cy="40" r="9" fill="#7fd1ff"/><circle cx="60" cy="110" r="9" fill="#7fd1ff"/><circle cx="160" cy="110" r="9" fill="#e86a5a"/>`:''}
-  </svg>`;
+
+  const RED='#e86a5a', BLUE='#7fd1ff', GOLD='#ffd76a', GREEN='#8fd1a8', MUTED='#8fa08f';
+  const CSS = `<style>
+    @keyframes l424ink{to{stroke-dashoffset:0}}
+    @keyframes l424pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.18)}100%{transform:scale(1);opacity:1}}
+    @keyframes l424pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l424glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    @keyframes l424shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+    @keyframes l424spin{to{transform:rotate(360deg)}}
+    .l424-ink{animation:l424ink 1.35s cubic-bezier(.2,.75,.15,1) forwards}
+    .l424-dot{transform-box:fill-box;transform-origin:center;animation:l424pop .42s cubic-bezier(.2,1.4,.4,1) both}
+    .l424-pulse{animation:l424pulse 1.6s ease-in-out infinite}
+    .l424-glow{animation:l424glow 1.7s ease-in-out infinite}
+    .l424-bad{animation:l424shake .45s ease-in-out infinite}
+    .l424-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+    .l424-orbit{transform-origin:120px 100px;animation:l424spin 10s linear infinite}
+  </style>`;
+
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+14);
+    return `stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l424-ink" style="animation-duration:${dur||1.25}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor){
+    return `<text class="l424-lab" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="12" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function dist(a,b){ return Math.hypot(b[0]-a[0], b[1]-a[1]); }
+  function frame(inner, vb){
+    return `${CSS}<svg viewBox="${vb||'0 0 240 210'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">
+      <defs>
+        <linearGradient id="l424g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e86a5a22"/><stop offset="100%" stop-color="#7fd1ff22"/></linearGradient>
+        <filter id="l424b"><feGaussianBlur stdDeviation="1.8"/></filter>
+      </defs>${inner}</svg>`;
+  }
+  function note(title, text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div>
+    </div>`;
+  }
+  function edge(a,b,col,w,delay,doDraw,cls,onClick){
+    const L=dist(a,b);
+    const extra = onClick?`style="cursor:pointer" onclick="${onClick}"`:"";
+    return `<line ${extra} x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" fill="none" stroke="${col}" stroke-width="${w||2.2}" class="${cls||''}" ${doDraw?ink(L,1.05,delay):''}/>`;
+  }
+  function node(p,name,col,on,delay,pop,click,out){
+    const fill = (!col || col===MUTED) ? '#1a2e24' : col;
+    const stroke = col||MUTED;
+    const [lx,ly] = out||[p[0], p[1]-14];
+    const clk = click?`style="cursor:pointer" onclick="${click}"`:'';
+    return `<g ${clk}>
+      ${on?`<circle cx="${p[0]}" cy="${p[1]}" r="13" fill="${stroke}33" class="l424-pulse"/>`:''}
+      <circle ${pop?'class="l424-dot"':''} style="animation-delay:${delay||0}s" cx="${p[0]}" cy="${p[1]}" r="${on?7.5:6}" fill="${fill}" stroke="${stroke}" stroke-width="2.2"/>
+      ${name?lab(lx,ly,name,stroke):''}
+    </g>`;
+  }
+  function poly(n,cx,cy,r,rot){
+    const o=rot|| -90;
+    return Array.from({length:n},(_,i)=>{
+      const a=(o+i*360/n)*Math.PI/180;
+      return [cx+r*Math.cos(a), cy+r*Math.sin(a)];
+    });
+  }
+  function outRad(cx,cy,p,d){
+    const dx=p[0]-cx, dy=p[1]-cy, L=Math.hypot(dx,dy)||1;
+    return [p[0]+dx/L*(d||16), p[1]+dy/L*(d||16)+4];
+  }
+  function lerp(a,b,t){ return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t]; }
+  function walkPt(pts, t, closed){
+    const n = closed ? pts.length : Math.max(1, pts.length-1);
+    const x = ((t % n)+n)%n;
+    const i = Math.floor(x);
+    const f = x-i;
+    return lerp(pts[i], pts[(i+1)%pts.length], f);
+  }
+  function setPlay(flag){
+    return `try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].play=${flag};chRender(0);}catch(e){}`;
+  }
+  function tickWalk(key, nPts){
+    if(!window._l424iv){
+      window._l424iv=setInterval(()=>{
+        try{
+          const k=lidKey(LV.id); CHS[k]=CHS[k]||{};
+          const s=CHS[k];
+          if(!s.play || LV.id!==424){ clearInterval(window._l424iv); window._l424iv=null; return; }
+          s.t=(s.t||0)+0.012;
+          if(s.t>=nPts) s.t-=nPts;
+          if(LV.step===s.walkStep) chRender(0);
+          else { clearInterval(window._l424iv); window._l424iv=null; }
+        }catch(e){ clearInterval(window._l424iv); window._l424iv=null; }
+      }, 40);
+    }
+  }
+
+  const FRIEND = {
+    A:[40,42], D:[40,105], E:[40,168],
+    B:[200,42], G:[200,105], V:[200,168]
+  };
+  const FEDGE = [['A','B'],['A','G'],['B','D'],['G','D'],['G','E'],['V','E']];
+  const FCOL = {A:RED,D:RED,E:RED,B:BLUE,G:BLUE,V:BLUE};
+  const FOUT = {A:[22,42],D:[22,105],E:[22,172],B:[222,42],G:[222,109],V:[222,172]};
+
   function visD424(el){
     const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'424';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw = st.seen!==step;
+    if(st.seen!==step){ st.seen=step; st.play=false; if(window._l424iv){ clearInterval(window._l424iv); window._l424iv=null; } }
+    const clickN = (name)=>`try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].sel='${name}';chRender(0);}catch(e){}`;
     let h='';
+
     if(step===0){
       h=`<div class="wv-col">
-        <div class="wv-big">Двудольный граф</div>
-        <div style="display:flex;align-items:center;gap:12px;justify-content:center">
-          <div style="display:flex;flex-direction:column;gap:8px">${[1,2,3].map(()=>'<span style="width:16px;height:16px;border-radius:50%;background:#e86a5a;display:inline-block"></span>').join('')}</div>
-          <div style="font-size:16px;color:#8fa08f">↔ рёбра только между группами</div>
-          <div style="display:flex;flex-direction:column;gap:8px">${[1,2,3].map(()=>'<span style="width:16px;height:16px;border-radius:50%;background:#7fd1ff;display:inline-block"></span>').join('')}</div>
-        </div>
-        <div class="wv-sml">две группы · рёбра между ними, не внутри!</div>
+        ${frame(
+          FEDGE.map((e,i)=>edge(FRIEND[e[0]],FRIEND[e[1]],GREEN,2.3,.12*i,doDraw,'')).join('')+
+          Object.keys(FRIEND).map((k,i)=>node(FRIEND[k],k, FCOL[k], false, .08*i, doDraw, '', FOUT[k])).join('')
+        )}
+        ${note('Загадка','Друзья должны сидеть напротив, не рядом в своём ряду. Слева красные, справа синие: все шесть дружб идут только между рядами. Значит, рассадить можно.')}
       </div>`;
     } else if(step===1){
+      const pts=[[70,50],[170,50],[70,150],[170,150],[120,100]];
+      const names=['A','B','C','D','E'];
       h=`<div class="wv-col">
-        <div class="wv-big">Танцы: мальчики и девочки</div>
-        <div style="font-size:38px" class="wv-swing">💃</div>
-        <div class="wv-sml">каждое ребро — пара «мальчик–девочка» → граф двудольный!</div>
+        ${frame(pts.map((p,i)=>node(p,names[i], GOLD, false, .18*i, true, '', [p[0], p[1]<90?p[1]-14:p[1]+20])).join('')+
+          lab(120,198,'вершины — это точки','#e8dcc8'))}
+        ${note('Вершина','Не линия, не область — именно точка. Человек, город, задача, урок: всё, что потом с чем-то соединится. Пять бусин уже на столе, рёбер пока нет.')}
       </div>`;
     } else if(step===2){
+      const pts={A:[70,50],B:[170,50],C:[70,150],D:[170,150]};
+      const all=[['A','B'],['A','C'],['B','D'],['C','D']];
+      const shown = st.nE==null?0:Math.min(all.length, +st.nE);
       h=`<div class="wv-col">
-        <div class="wv-big">Проверка раскраской</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
-          ${[
-            ['возьми вершину','красной','#e86a5a'],
-            ['соседей','синими','#7fd1ff'],
-            ['их соседей','снова красными','#e86a5a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
-        </div>
-        <div class="wv-sml">конфликта нет → двудольный!</div>
+        ${frame(
+          all.slice(0,shown).map((e,i)=>edge(pts[e[0]],pts[e[1]],GREEN,2.4,.05, true,'l424-glow')).join('')+
+          Object.keys(pts).map((k,i)=>node(pts[k],k,GOLD,false,.08*i,doDraw,'',[pts[k][0], pts[k][1]<90?pts[k][1]-14:pts[k][1]+20])).join('')
+        )}
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].nE=Math.min(4,(CHS[k].nE||0)+1);chRender(0);}catch(e){}">${shown>=4?'Все рёбра на месте':'Дорисовать ребро'}</button>
+        ${note('Ребро','Нажми кнопку: очередная линия дорисуется до конца. Ребро — это «связь». Пока линия не дошла до второй точки, связи ещё нет.')}
       </div>`;
     } else if(step===3){
+      const Lft=[[50,48],[50,105],[50,162]], Rgt=[[190,48],[190,105],[190,162]];
+      const sel=st.sel==null?0:+st.sel;
+      const pairs=[[0,0],[0,1],[1,0],[1,2],[2,1],[2,2]];
       h=`<div class="wv-col">
-        <div class="wv-big">Звезда — двудольная</div>
-        ${bipartite('star')}
-        <div class="wv-sml">центр красный, листья синие → да!</div>
+        ${frame(
+          pairs.map((p,i)=>edge(Lft[p[0]],Rgt[p[1]], p[0]===sel?GOLD:GREEN, p[0]===sel?3:1.8, .08*i, doDraw, p[0]===sel?'l424-glow':'')).join('')+
+          Lft.map((p,i)=>node(p,'L'+(i+1),RED, sel===i, .08*i, doDraw, `try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].sel=${i};chRender(0);}catch(e){}`, [28,p[1]+4])).join('')+
+          Rgt.map((p,i)=>node(p,'R'+(i+1),BLUE, pairs.some(x=>x[0]===sel&&x[1]===i), .08*i, doDraw, '', [214,p[1]+4])).join('')+
+          lab(50,196,'доля A','#e86a5a')+lab(190,196,'доля B','#7fd1ff')
+        )}
+        ${note('Две доли','Кликни красную точку. Жёлтым загорятся только синие соседи — внутри своей доли дружить нельзя. Так устроен двудольный граф.')}
       </div>`;
     } else if(step===4){
+      const boys=[[48,50],[48,110],[48,170]], girls=[[192,50],[192,110],[192,170]];
+      const pr=[[0,0],[1,0],[1,1],[2,1],[2,2]];
       h=`<div class="wv-col">
-        <div class="wv-big">Квадрат-цикл</div>
-        ${bipartite('sq')}
-        <div class="wv-sml">красный-синий-красный-синий → двудольный!</div>
+        ${frame(
+          pr.map((p,i)=>edge(boys[p[0]],girls[p[1]],GOLD,2.3,.14*i,doDraw,'')).join('')+
+          boys.map((p,i)=>node(p,['Б1','Б2','Б3'][i],RED,false,.1*i,doDraw,'',[26,p[1]+4])).join('')+
+          girls.map((p,i)=>node(p,['Д1','Д2','Д3'][i],BLUE,false,.1*i,doDraw,'',[216,p[1]+4])).join('')
+        )}
+        ${note('Танцы','Каждое ребро — пара «мальчик — девочка». Внутри ряда линий нет. Если мир так устроен, граф двудольный: две доли, рёбра только между ними.')}
       </div>`;
     } else if(step===5){
+      const pts=[[50,50],[190,50],[50,150],[190,150],[120,100]];
+      const names=['A','B','C','D','E'];
+      const eds=[[0,1],[0,2],[0,4],[1,3],[2,3],[3,4]];
+      const wave = Math.max(0, Math.min(3, st.wave==null?0:+st.wave));
+      const colOf = (i)=>{
+        if(wave===0) return MUTED;
+        if(i===0) return RED;
+        if(wave===1) return [1,2,4].includes(i)?BLUE:MUTED;
+        if(i===3) return RED;
+        return [1,2,4].includes(i)?BLUE:RED;
+      };
       h=`<div class="wv-col">
-        <div class="wv-big">Треугольник — НЕ двудольный</div>
-        ${bipartite('tri')}
-        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:7px 12px;font-size:14.5px;color:#ffcfc2;font-weight:bold" class="wv-ans">третья соседствует и с красной, и с синей — конфликт!</div>
+        ${frame(
+          eds.map((e,i)=>edge(pts[e[0]],pts[e[1]],GREEN,2,.08*i,doDraw,'')).join('')+
+          pts.map((p,i)=>node(p,names[i], colOf(i), wave>0 && colOf(i)!==MUTED, .08*i, doDraw, '', [p[0], p[1]<80?p[1]-14:p[1]+20])).join('')
+        )}
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].wave=((CHS[k].wave||0)+1)%4;chRender(0);}catch(e){}">${['Начать с A','Покрасить соседей','Докрасить остальных','Сначала'][wave]}</button>
+        <div class="wv-ans" style="font-size:14px">${['Возьмём A красной','Соседи A — синие','Сосед синих, который ещё белый, — красный','Конфликта нет: граф двудольный'][wave]}</div>
+        ${note('Волна цвета','Соседи обязаны быть другого цвета. Если на каком-то шаге два соседа выходят одного цвета — граф не двудольный. Здесь волна прошла до конца.')}
       </div>`;
     } else if(step===6){
+      const c=[120,100], leaves=poly(5,120,100,70,-90);
       h=`<div class="wv-col">
-        <div class="wv-big">Правило</div>
-        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 12px;max-width:340px;width:100%">
-          <div style="font-size:14.5px;color:#e8dcc8;text-align:center;line-height:1.6">граф двудольный ⟺ <b style="color:#ffd76a">нет циклов нечётной длины</b> (треугольников!)</div>
-        </div>
+        ${frame(
+          `<g class="l424-orbit"><circle cx="${c[0]+70}" cy="${c[1]}" r="2.4" fill="${GOLD}"/></g>`+
+          leaves.map((p,i)=>edge(c,p,GREEN,2.3,.1*i,doDraw,'')).join('')+
+          node(c,'центр',RED,true,0,doDraw,'',[120,78])+
+          leaves.map((p,i)=>{const o=outRad(120,100,p,18); return node(p,'',BLUE,false,.1*i,doDraw,'',o);}).join('')
+        )}
+        ${note('Звезда','Все линии идут к центру, листья между собой не дружат. Одна доля — центр, вторая — все остальные. Сколько ни добавь лучей, звезда останется двудольной.')}
       </div>`;
     } else if(step===7){
+      st.walkStep=7;
+      const pts=[[36,110],[84,50],[132,110],[180,50],[228,110]];
+      const names=['1','2','3','4','5'];
+      if(st.play) tickWalk('path', pts.length-1);
+      const t=st.t||0;
+      const idx=Math.min(pts.length-1, Math.round(t));
+      const wp=walkPt(pts, t, false);
       h=`<div class="wv-col">
-        <div class="wv-big">Где применяется</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+        ${frame(
+          pts.slice(0,-1).map((p,i)=>edge(p,pts[i+1],GREEN,2.4,.12*i,doDraw,'')).join('')+
+          pts.map((p,i)=>node(p,names[i], i%2===0?RED:BLUE, i===idx, .08*i, doDraw,'',[p[0], p[1]<80?p[1]-14:p[1]+20])).join('')+
+          `<circle cx="${wp[0].toFixed(1)}" cy="${wp[1].toFixed(1)}" r="6" fill="${GOLD}" class="l424-glow"/>`
+        )}
+        <button class="btn" onclick="${st.play?setPlay('false'):setPlay('true')}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
+        ${note('Путь','Шарик бежит по цепочке. На нечётной вершине красный, на чётной синий. Ссоры не будет: у пути нет циклов вообще.')}
+      </div>`;
+    } else if(step===8){
+      st.walkStep=8;
+      const pts=[[70,46],[178,46],[178,154],[70,154]];
+      const names=['A','B','C','D'];
+      if(st.play) tickWalk('c4', 4);
+      const t=(st.t||0)%4;
+      const wp=walkPt(pts, t, true);
+      const idx=Math.floor(t)%4;
+      h=`<div class="wv-col">
+        ${frame(
+          pts.map((p,i)=>edge(p,pts[(i+1)%4],GREEN,2.5,.1*i,doDraw,'')).join('')+
+          pts.map((p,i)=>node(p,names[i], i%2===0?RED:BLUE, i===idx, .08*i, doDraw,'',[p[0]+(p[0]<120?-18:18), p[1]+(p[1]<100?-12:20)])).join('')+
+          `<circle cx="${wp[0].toFixed(1)}" cy="${wp[1].toFixed(1)}" r="6.5" fill="${GOLD}" class="l424-glow"/>`
+        )}
+        <button class="btn" onclick="${st.play?setPlay('false'):setPlay('true')}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
+        <div class="wv-ans" style="font-size:14px">C₄ · 4 вершины · чётный цикл</div>
+        ${note('Чётный обруч','Вернулись в A — она снова красная, как в начале. Цвета сомкнулись. Любой цикл чётной длины раскрашивается в два цвета.')}
+      </div>`;
+    } else if(step===9){
+      st.walkStep=9;
+      const pts=poly(6,120,105,72,-90);
+      const names=['1','2','3','4','5','6'];
+      if(st.play) tickWalk('c6', 6);
+      const t=(st.t||0)%6;
+      const wp=walkPt(pts, t, true);
+      const idx=Math.floor(t)%6;
+      h=`<div class="wv-col">
+        ${frame(
+          pts.map((p,i)=>edge(p,pts[(i+1)%6],GREEN,2.3,.08*i,doDraw,'')).join('')+
+          pts.map((p,i)=>{const o=outRad(120,105,p,18); return node(p,names[i], i%2===0?RED:BLUE, i===idx, .07*i, doDraw,'',o);}).join('')+
+          `<circle cx="${wp[0].toFixed(1)}" cy="${wp[1].toFixed(1)}" r="6.5" fill="${GOLD}" class="l424-glow"/>`
+        )}
+        <button class="btn" onclick="${st.play?setPlay('false'):setPlay('true')}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
+        <div class="wv-ans" style="font-size:14px">C₆ · шесть — чётное · двудольный</div>
+        ${note('Ещё один чётный','Шесть точек по кругу. Красный-синий чередуется и сходится. Запомни: чётное число вершин в цикле — двудольность жива.')}
+      </div>`;
+    } else if(step===10){
+      const pts=[[120,40],[50,160],[190,160]];
+      const names=['A','B','C'];
+      const stage=Math.max(0,Math.min(3, st.tri==null?0:+st.tri));
+      const col=['', RED, BLUE, RED][Math.min(stage,3)];
+      h=`<div class="wv-col">
+        ${frame(
+          `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${stage>=3?'rgba(232,106,90,.18)':'none'}" stroke="${stage>=3?RED:GREEN}" stroke-width="2.5" ${doDraw?ink(dist(pts[0],pts[1])+dist(pts[1],pts[2])+dist(pts[2],pts[0]),1.4,0):''} class="${stage>=3?'l424-bad':''}"/>`+
+          pts.map((p,i)=>{
+            const c = i===0&&stage>=1?RED : i===1&&stage>=2?BLUE : i===2&&stage>=3?GOLD : MUTED;
+            return node(p,names[i],c,stage>=3&&i===2, .1*i, doDraw,'',[p[0], p[1]<80?p[1]-14:p[1]+20]);
+          }).join('')
+        )}
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].tri=((CHS[k].tri||0)+1)%4;chRender(0);}catch(e){}">${['Покрасить A','Покрасить B','Покрасить C','Сначала'][stage]}</button>
+        <div class="wv-ans" style="font-size:14px">${['A красная','B синяя — сосед A','C сосед и красной, и синей — конфликт','Треугольник не двудольный'][stage]}</div>
+        ${note('Нечётный цикл','Три — нечётное. Третьей вершине некуда деться: оба цвета уже заняты соседями. Любой нечётный цикл ломает двудольность.')}
+      </div>`;
+    } else if(step===11){
+      const pts=poly(5,120,108,72,-90);
+      const names=['A','B','C','D','E'];
+      const cols=st.cols||{};
+      const pal={r:RED,b:BLUE};
+      const bad=[];
+      for(let i=0;i<5;i++){
+        const a=cols[i], b=cols[(i+1)%5];
+        if(a&&b&&a===b) bad.push(i);
+      }
+      const all=Object.keys(cols).filter(k=>cols[k]).length;
+      h=`<div class="wv-col">
+        ${frame(
+          pts.map((p,i)=>{
+            const clash=bad.includes(i);
+            return edge(p,pts[(i+1)%5], clash?RED:GREEN, clash?3.2:2.2, .08*i, doDraw, clash?'l424-bad l424-pulse':'');
+          }).join('')+
+          pts.map((p,i)=>{
+            const o=outRad(120,108,p,18);
+            const c=pal[cols[i]]||MUTED;
+            return node(p,names[i],c,!!cols[i],.07*i,doDraw,
+              `try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].cols=CHS[k].cols||{};const v=CHS[k].cols[${i}];CHS[k].cols[${i}]=v==='r'?'b':(v==='b'?null:'r');chRender(0);}catch(e){}`, o);
+          }).join('')
+        )}
+        <div class="wv-ans" style="font-size:14px">${bad.length? 'Соседи одного цвета — конфликт!' : all===5? 'Пять точек по кругу не сходятся' : 'Кликай вершины: красный → синий → сброс'}</div>
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].cols={};chRender(0);}catch(e){}">Сбросить</button>
+        ${note('Попробуй сам','C₅ — нечётный цикл. Как ни крась, одно ребро останется «своих с своими». Это и есть доказательство руками: пятиугольник не двудольный.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
           ${[
-            ['расписание','ученики ↔ уроки','#7fd1ff'],
-            ['пары на танцах','мальчики ↔ девочки','#e86a5a'],
-            ['сети','две группы узлов','#8fd1a8']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+            ['нет нечётных циклов','граф двудольный','#8fd1a8'],
+            ['есть треугольник / C₅ / C₇…','не двудольный','#e86a5a'],
+            ['чётный цикл C₄, C₆, C₈','двудольный','#7fd1ff'],
+            ['дерево и путь','всегда двудольные','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:13.5px;color:#e8dcc8;text-align:left"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
+        ${note('Одно правило','Двудольный ⟺ можно раскрасить в 2 цвета ⟺ нет цикла нечётной длины. Три фразы про одно и то же. Проверяй любой из способов — как удобнее.')}
+      </div>`;
+    } else if(step===13){
+      const Lft=[[50,48],[50,105],[50,162]], Rgt=[[190,48],[190,105],[190,162]];
+      const all=[[0,0],[0,1],[1,1],[1,2],[2,0],[2,2]];
+      const match=[[0,1],[1,2],[2,0]];
+      const show=!!st.match;
+      h=`<div class="wv-col">
+        ${frame(
+          all.map((p,i)=>edge(Lft[p[0]],Rgt[p[1]], '#3d5c49',1.4,.05*i,doDraw,'')).join('')+
+          (show?match.map((p,i)=>edge(Lft[p[0]],Rgt[p[1]],GOLD,3.1,.12*i,true,'l424-glow')).join(''):'')+
+          Lft.map((p,i)=>node(p,'L'+(i+1),RED,false,.08*i,doDraw,'',[28,p[1]+4])).join('')+
+          Rgt.map((p,i)=>node(p,'R'+(i+1),BLUE,false,.08*i,doDraw,'',[214,p[1]+4])).join('')
+        )}
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].match=!CHS[k].match;chRender(0);}catch(e){}">${show?'Скрыть пары':'Показать паросочетание'}</button>
+        <div class="wv-ans" style="font-size:14px">${show?'3 ребра, вершины не делятся — максимум':'серые — все дружбы, жёлтые — выбранные пары'}</div>
+        ${note('Паросочетание','Хотим как можно больше пар, но один человек — в одной паре. В двудольном графе такие наборы искать легче: доли уже разделены.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
+          ${[
+            ['танцы и знакомства','мальчики ↔ девочки','#e86a5a'],
+            ['расписание кружков','ученики ↔ занятия','#7fd1ff'],
+            ['работы и исполнители','люди ↔ задачи','#8fd1a8'],
+            ['кабели в сети','два типа узлов','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:13.5px;color:#e8dcc8;text-align:left"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('Зачем это','Как только мир делится на два сорта вещей, а связи идут только между сортами — перед тобой двудольный граф. Дальше работает раскраска и паросочетание.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        <div style="display:flex;align-items:center;gap:10px;justify-content:center">
-          <span style="width:16px;height:16px;border-radius:50%;background:#e86a5a;display:inline-block"></span>
-          <span style="width:16px;height:16px;border-radius:50%;background:#7fd1ff;display:inline-block"></span>
+        <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
+          ${[
+            ['1','Нарисуй вершины и рёбра','#7fd1ff'],
+            ['2','Раскрась соседей в разные цвета','#8fd1a8'],
+            ['3','Конфликт → ищи нечётный цикл','#e86a5a'],
+            ['4','Цвета легли → граф двудольный','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${x[2]};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span>
+          </div>`).join('')}
         </div>
-        <div class="wv-sml">граф с рёбрами только между группами — какой?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? </div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif;margin-top:4px" class="wv-pulse">рёбра только между группами — это…?</div>
+        ${note('В карман','Две доли. Два цвета. Никаких нечётных циклов. Дальше короткая проверка и две задачи.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[424]=visD424;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===424){ window.ARH_LESSONS[i]=L424; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===424){ arr[i]=L424; f=true; break; } }
+    if(!f) arr.push(L424);
+  })();
 })();
 /* ================= УРОК 425 · Метод площадей ================= */
 (function(){
