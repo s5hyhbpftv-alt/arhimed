@@ -74,7 +74,7 @@
       <div class="ap-chips" id="asstChips"></div>
       <div class="ap-hint">💡 Кнопки меню подстраиваются под экран; голосовые — работают, когда разговор включён.</div>
       <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-        <span class="ap-hint" id="asstVer" style="margin:0">сборка v403</span>
+        <span class="ap-hint" id="asstVer" style="margin:0">сборка v404</span>
         <button class="asmall" style="width:auto;padding:0 10px" onclick="ASSIST.hardReload()" title="Сбросить кэш и обновить">🔄 Обновить</button>
       </div>
     </div>`)
@@ -237,18 +237,31 @@
     if(tab) return tab;
     return 'path';
   }
-  /* Подсказка-«облачко» показывается РОВНО ОДИН РАЗ за всё время и больше не всплывает. */
+  /* Подсказка-«облачко» показывается РОВНО ОДИН РАЗ — при запуске приложения,
+     и не более одного раза в день. Больше сама не всплывает. */
   let tipHideTimer=null, tipDone=false;
+  const TIP_KEY='arhimed_assist_tip_day';
+  function tipDaySeen(){
+    try{ if(localStorage.getItem(TIP_KEY)===todayStr()) return true; }catch(e){}
+    try{ return !!(DB&&DB.profile&&DB.profile.tipDay&&DB.profile.tipDay===todayStr()); }catch(e){}
+    return false;
+  }
+  function tipDayMark(){
+    try{ localStorage.setItem(TIP_KEY, todayStr()); }catch(e){}
+    try{ if(DB&&DB.profile){ DB.profile.tipDay=todayStr(); DB.profile.tipDone=1; if(typeof save==='function') save(); } }catch(e){}
+  }
   function tipLoop(){
-    if(tipDone) return; tipDone=true;
-    try{ if(DB&&DB.profile&&DB.profile.tipDone) return; }catch(e){}
+    if(tipDone) return; tipDone=true;                     // один раз за запуск приложения
+    if(tipDaySeen()) return;                              // и не чаще одного раза в день
     setTimeout(()=>{ try{
+      if(!(DB&&DB.profile)) return;                       // не показываем до создания профиля
       if(typeof AGENTLIVE!=='undefined'&&AGENTLIVE.state&&AGENTLIVE.state()) return; // не мешать разговору
+      if(bubEl&&bubEl.classList.contains('show')) return;  // не перебивать уже показанное
       const pool=TIPS[tipKind()]||TIPS.path; if(!pool.length) return;
-      try{ DB.profile.tipDone=1; if(typeof saveDB==='function') saveDB(); }catch(e){}
+      tipDayMark();
       bubEl.innerHTML=esc(pool[0]); bubEl.classList.add('show');
       clearTimeout(tipHideTimer);
-      tipHideTimer=setTimeout(()=>{ bubEl.classList.remove('show'); },4300);
+      tipHideTimer=setTimeout(()=>{ bubEl.classList.remove('show'); },5200);
     }catch(e){} },2500);
   }
   let menuTimer=null;
