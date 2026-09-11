@@ -9387,7 +9387,7 @@ function l96css(){
   st.textContent=`
   @keyframes l96ray{from{opacity:.35}to{opacity:.95}}
   @keyframes l96tw{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-  .l96-scene{position:relative;height:150px;border-radius:12px;overflow:hidden;
+  .l96-scene{width:100%;box-sizing:border-box;position:relative;height:150px;border-radius:12px;overflow:hidden;
     background:linear-gradient(180deg,#1a2634,#0e1620 70%,#161009)}
   .l96-ground{position:absolute;left:0;right:0;bottom:0;height:26px;background:linear-gradient(180deg,#3a2e22,#20180f)}
   .l96-sun{position:absolute;width:34px;height:34px;border-radius:50%;
@@ -9412,7 +9412,7 @@ function l96css(){
   .l96-band{height:7px;border-radius:4px;margin:2px 0;transition:width .8s}
   .l96-card{border-radius:12px;padding:8px 12px;background:linear-gradient(170deg,rgba(24,47,36,.95),rgba(14,24,48,.6));
     border:1px solid rgba(217,164,65,.28);font-size:12.5px;color:#e6eef6}
-  .l96-ecl{position:relative;height:110px;border-radius:12px;background:radial-gradient(circle at 20% 50%,rgba(255,214,106,.18),transparent 60%),#0d1520;overflow:hidden}
+  .l96-ecl{width:100%;box-sizing:border-box;position:relative;height:110px;border-radius:12px;background:radial-gradient(circle at 20% 50%,rgba(255,214,106,.18),transparent 60%),#0d1520;overflow:hidden}
   .l96-orb{position:absolute;top:50%;transform:translateY(-50%);border-radius:50%}
   `;
   document.head.appendChild(st);
@@ -9550,17 +9550,18 @@ function visL96(el){
       const cols=['#ff5a6e','#ff9d3c','#ffe066','#7de0a0','#7fd1ff','#8f7dff','#b07fff'];
       h=col(big('Белый свет состоит из цветов радуги'),
         `<div class="l96-card"><div class="l96-prism" style="margin:6px auto"></div>
-          ${cols.map((c,k)=>`<div class="l96-band" style="width:${(40+k*30)}px;background:${c};margin-left:${20+k*18}px"></div>`).join('')}</div>`,
+          ${cols.map((c,k)=>`<div class="l96-band" style="width:${(78+k*12)}px;background:${c};margin-left:${(4+k*8)}px;height:6px"></div>`).join('')}</div>`,
         sml('призма и капли воды раскладывают белый свет на цвета — это дисперсия; радуга — миллионы капель-призм'));
     } else if(step===16){
       h=col(big('Затмения: когда одно тело закрывает свет другого'),
         `<div class="l96-ecl">
-          <div class="l96-orb" style="left:14%;width:52px;height:52px;background:radial-gradient(circle at 40% 40%,#fff6d8,#ffd76a 50%,#ff9d3c)"></div>
-          <div class="l96-orb" style="left:46%;width:26px;height:26px;background:radial-gradient(circle at 38% 34%,#cfd6da,#7d8489)"></div>
-          <div class="l96-orb" style="left:76%;width:58px;height:58px;background:radial-gradient(circle at 38% 34%,#6fb4f0,#2c5f96)"></div>
-          <div style="position:absolute;left:14%;bottom:8px;font-size:9px;color:#ffd76a">Солнце</div>
-          <div style="position:absolute;left:46%;bottom:8px;font-size:9px;color:#cfd6da">Луна</div>
-          <div style="position:absolute;left:76%;bottom:8px;font-size:9px;color:#7fd1ff">Земля</div></div>`,
+          <div class="l96-orb" style="left:12%;width:50px;height:50px;background:radial-gradient(circle at 40% 40%,#fff6d8,#ffd76a 50%,#ff9d3c)"></div>
+          <div class="l96-orb" style="left:47%;width:24px;height:24px;background:radial-gradient(circle at 38% 34%,#cfd6da,#7d8489)"></div>
+          <div class="l96-orb" style="left:78%;width:54px;height:54px;background:radial-gradient(circle at 38% 34%,#6fb4f0,#2c5f96)"></div>
+        </div>`,
+        rowC(`<div class="l96-card" style="text-align:center;min-width:84px"><div style="font-size:18px">☀️</div><div style="font-size:10px;color:#ffd76a">Солнце</div></div>`,
+             `<div class="l96-card" style="text-align:center;min-width:84px"><div style="font-size:18px">🌑</div><div style="font-size:10px;color:#cfd6da">Луна</div></div>`,
+             `<div class="l96-card" style="text-align:center;min-width:84px"><div style="font-size:18px">🌍</div><div style="font-size:10px;color:#7fd1ff">Земля</div></div>`),
         sml('солнечное затмение: Луна закрывает Солнце; лунное: Земля закрывает Луне свет'));
     } else if(step===17){
       h=col(big('Свет в быту'),
