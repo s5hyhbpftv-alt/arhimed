@@ -1482,90 +1482,329 @@ window.WAVE_D = window.WAVE_D || {};
     id: 426, title: 'Вписанные углы и четырёхугольники', ico: '⭕',
     src: 'Математика · 8 класс · Олимп-8: вписанные углы', subj: 'math',
     explain: [
-      'Четырёхугольник называют ВПИСАННЫМ, если все его четыре вершины лежат на одной окружности. Как рамка вокруг круглого портрета! У таких четырёхугольников есть удивительное свойство углов.',
-      'Вспомни: вписанный угол равен ПОЛОВИНЕ дуги, на которую опирается. Это ключ ко всему! Угол при вершине A «видит» дугу между соседними вершинами.',
-      'Главное свойство: сумма ПРОТИВОПОЛОЖНЫХ углов вписанного четырёхугольника равна 180°. Угол A + угол C = 180°, угол B + угол D = 180°. Проверяется через дуги!',
-      'Почему так? Угол A опирается на дугу BCD, угол C — на дугу DAB. Эти две дуги вместе образуют ВСЮ окружность (360°). Половина от 360° = 180° — вот и сумма!',
-      'Обратный признак: если в четырёхугольнике сумма противоположных углов равна 180°, его можно ВПИСАТЬ в окружность. Это работает в обе стороны!',
-      'Частный случай: прямоугольник — всегда вписанный! Его противоположные углы по 90°, сумма 180°. Окружность проходит через все четыре вершины, центр — пересечение диагоналей.',
-      'А квадрат? Тоже вписанный — он прямоугольник! И равнобедренная трапеция тоже вписанная: у неё углы при основании равны, и сумма противоположных даёт 180°.',
-      'Угол, опирающийся на диаметр, равен 90°. Если в четырёхугольнике один угол опирается на диагональ-диаметр — он прямой! Это часто помогает в задачах.',
-      'Теперь проверь себя: чему равна сумма противоположных углов вписанного четырёхугольника? Вспомни — 180°!'
+      'Смотри: четыре точки A, B, C, D. Вопрос простой — можно ли через них провести одну окружность, как обруч? На глаз не угадаешь. Правило спрятано в углах. Сейчас его откроем шаг за шагом.',
+      'Вписанный угол сидит на окружности: вершина на ободе, две стороны идут хордами к двум другим точкам. Как будто ты стоишь на краю круглого озера и смотришь на берег между двумя деревьями.',
+      'Главное правило: такой угол равен половине дуги, на которую смотрит. Дуга 80° — угол 40°. Дуга 180° (это диаметр) — угол 90°. Нажми на точку A, B, C или D: дуга загорится целиком, угол покажет «половину».',
+      'Если несколько углов смотрят на одну и ту же дугу — они равны. Как два зрителя одного спектакля: видят одно и то же. На рисунке ∠A и ∠P оба смотрят на дугу BD, поэтому ∠A = ∠P.',
+      'Когда все четыре вершины лежат на окружности, четырёхугольник называют вписанным. У него особое свойство: сложи противоположные углы — получится ровно 180°. То есть ∠A + ∠C = 180° и ∠B + ∠D = 180°.',
+      'Почему 180°? Угол A смотрит на одну дугу, угол C — на другую. Эти две дуги вместе — вся окружность, 360°. Каждый угол берёт половину своей дуги. Половина плюс половина = 180°. Вот и всё.',
+      'И наоборот: если в четырёхугольнике противоположные углы в сумме дают 180°, через вершины точно можно провести окружность. Не надо чертить наугад — сложи углы через одну.',
+      'Некоторые фигуры вписаны всегда. Прямоугольник: все углы по 90°, а 90+90=180. Квадрат — тоже. Равнобедренная трапеция — тоже, потому что углы при основании равны.',
+      'Ещё одна картинка: нарисуй диаметр. Это дуга 180°. Любая точка P на окружности даёт прямой угол: ∠APB = 90°. Это теорема Фалеса. Нажми «Оживить» и смотри: P бежит до конца дуги, угол не меняется.',
+      'Запомни три фразы. Вписанный угол — половина дуги. Противоположные углы вписанного четырёхугольника — 180°. Угол на диаметре — 90°. Теперь проверь себя и реши две задачи.'
     ],
     check: { q: 'Сумма противоположных углов вписанного четырёхугольника?', choices: ['180°', '90°', '360°', '270°'], ans: 0,
-      exp: 'Противоположные углы вписанного 4-угольника в сумме 180°.' },
+      exp: 'Две дуги вместе — вся окружность 360°. Каждый угол берёт половину своей дуги, поэтому сумма 180°.' },
     tasks: [
-      { q: 'Чему равен угол, опирающийся на диаметр?', kind: 'unit', ans: 90, tol: 0,
-        hints: ['Диаметр — дуга 180°.', 'Вписанный угол = 90°.'], sol: '90°' },
-      { q: 'Вписанный угол равен…', kind: 'choice', choices: ['половине дуги, на которую опирается', 'самой дуге', 'удвоенной дуге', 'четверти дуги'], ans: 0, tol: 0,
-        hints: ['Свойство вписанного угла.', 'Вписанный угол = ½ дуги.'], sol: 'половине дуги' }
+      { q: 'Чему равен вписанный угол, опирающийся на диаметр? (в градусах)', kind: 'unit', ans: 90, tol: 0,
+        hints: ['Диаметр высекает дугу 180° — половину окружности.', 'Вписанный угол всегда равен половине дуги, на которую смотрит.', 'Половина от 180 — это 90.'], sol: '90° — угол в полуокружности прямой. Это теорема Фалеса.' },
+      { q: 'Вписанный угол равен…', kind: 'choice',
+        choices: ['половине дуги, на которую опирается', 'самой дуге', 'удвоенной дуге', 'четверти дуги'], ans: 0, tol: 0,
+        hints: ['Вершина угла сидит на окружности, стороны — хорды.', 'Он «берёт» половину той дуги, на которую смотрит.'], sol: 'половине дуги, на которую опирается' }
     ]
   };
-  const quadCircle=(kind)=>`<svg viewBox="0 0 220 200" style="width:190px;height:173px;background:#101f18;border-radius:12px">
-    <circle cx="110" cy="100" r="80" fill="rgba(127,209,255,.04)" stroke="#7fd1ff" stroke-width="2.5"/>
-    ${kind==='sq'?`<polygon points="110,25 185,100 110,175 35,100" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="2.5"/>`:
-    kind==='rec'?`<polygon points="55,52 170,52 165,148 45,148" fill="rgba(143,209,168,.08)" stroke="#8fd1a8" stroke-width="2.5"/>`:
-    `<polygon points="110,22 180,120 100,175 40,90" fill="rgba(255,138,192,.06)" stroke="#ff8ac0" stroke-width="2.5"/>`}
-  </svg>`;
+
+  const CX=110, CY=108, R=76;
+  const CIRC=2*Math.PI*R+12;
+  const CSS = `<style>
+    @keyframes l426spin{to{transform:rotate(360deg)}}
+    @keyframes l426pulse{0%,100%{opacity:.45}50%{opacity:1}}
+    @keyframes l426pop{0%{transform:scale(0)}70%{transform:scale(1.18)}100%{transform:scale(1)}}
+    @keyframes l426glow{0%,100%{filter:drop-shadow(0 0 1px #ffd76a)}50%{filter:drop-shadow(0 0 8px #ffd76a)}}
+    @keyframes l426ink{to{stroke-dashoffset:0}}
+    .l426-orbit{transform-origin:${CX}px ${CY}px;animation:l426spin 8s linear infinite}
+    .l426-orbit2{transform-origin:${CX}px ${CY}px;animation:l426spin 12s linear infinite reverse}
+    .l426-arc{animation:l426pulse 1.8s ease-in-out infinite}
+    .l426-dotc{transform-box:fill-box;transform-origin:center;animation:l426pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l426-glow{animation:l426glow 1.8s ease-in-out infinite}
+    .l426-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.2px;stroke-linejoin:round}
+    .l426-ink{animation:l426ink 1.55s cubic-bezier(.2,.75,.15,1) forwards}
+  </style>`;
+
+  function P(deg){
+    const a=deg*Math.PI/180;
+    return [CX+R*Math.cos(a), CY+R*Math.sin(a)];
+  }
+  function outLabel(pt){
+    const dx=pt[0]-CX, dy=pt[1]-CY, L=Math.hypot(dx,dy)||1;
+    const k=20/L;
+    return [pt[0]+dx*k, pt[1]+dy*k];
+  }
+  function arcSweep(a1,a2){
+    let d=a2-a1; while(d<=0) d+=360; while(d>360) d-=360; return d;
+  }
+  function arcPath(a1,a2,r){
+    const to=(d)=>{const t=d*Math.PI/180; return [CX+r*Math.cos(t), CY+r*Math.sin(t)];};
+    const d=arcSweep(a1,a2);
+    const large=d>180?1:0;
+    const [x1,y1]=to(a1), [x2,y2]=to(a2);
+    return `M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+  }
+  function arcLen(a1,a2,r){ return arcSweep(a1,a2)/360*2*Math.PI*r+10; }
+  function polyLen(arr){
+    let s=0;
+    for(let i=0;i<arr.length;i++){
+      const a=arr[i], b=arr[(i+1)%arr.length];
+      s+=Math.hypot(b[0]-a[0], b[1]-a[1]);
+    }
+    return s+10;
+  }
+  function ink(len,dur,delay){
+    const L=Math.ceil(len);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l426-ink" style="--l426len:${L};animation-duration:${dur||1.45}s;animation-delay:${delay||0}s"`;
+  }
+  function pieWedge(r,a1,a2,fill){
+    const to=(d)=>{const t=d*Math.PI/180; return [CX+r*Math.cos(t), CY+r*Math.sin(t)];};
+    const d=arcSweep(a1,a2);
+    const large=d>180?1:0;
+    const [x1,y1]=to(a1), [x2,y2]=to(a2);
+    return `<path d="M ${CX} ${CY} L ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)} Z" fill="${fill}"/>`;
+  }
+  function angMark(A,B,C,col,lab){
+    const v=(X,Y)=>[X[0]-Y[0], X[1]-Y[1]];
+    const n=(V)=>{const L=Math.hypot(V[0],V[1])||1; return [V[0]/L, V[1]/L];};
+    const u=n(v(A,B)), w=n(v(C,B));
+    const s=16;
+    const p1=[B[0]+u[0]*s, B[1]+u[1]*s], p2=[B[0]+w[0]*s, B[1]+w[1]*s];
+    const bx=u[0]+w[0], by=u[1]+w[1], bL=Math.hypot(bx,by)||1;
+    const labPt=[B[0]+(bx/bL)*32, B[1]+(by/bL)*32];
+    const q1=[B[0]+u[0]*s*0.7, B[1]+u[1]*s*0.7], q2=[B[0]+w[0]*s*0.7, B[1]+w[1]*s*0.7];
+    const labTxt = lab
+      ? `<text class="l426-lab" x="${labPt[0].toFixed(1)}" y="${(labPt[1]+4).toFixed(1)}" text-anchor="middle" font-size="11" fill="${col}" font-family="Georgia,serif">${lab}</text>`
+      : '';
+    return `<path d="M ${q1[0].toFixed(1)} ${q1[1].toFixed(1)} Q ${labPt[0].toFixed(1)} ${labPt[1].toFixed(1)} ${q2[0].toFixed(1)} ${q2[1].toFixed(1)}" fill="${col}33" stroke="${col}" stroke-width="1.4"/>
+      <path class="l426-glow" d="M ${p1[0].toFixed(1)} ${p1[1].toFixed(1)} L ${B[0].toFixed(1)} ${B[1].toFixed(1)} L ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}" fill="none" stroke="${col}" stroke-width="2.4" stroke-linecap="round"/>
+      ${labTxt}`;
+  }
+  function dot(pt,name,col,on,delay,pop){
+    const L=outLabel(pt);
+    return `<g style="cursor:pointer" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].sel='${name}';chRender(0);}catch(e){}">
+      ${on?`<circle cx="${pt[0]}" cy="${pt[1]}" r="11" fill="${col}30"><animate attributeName="r" values="9;14;9" dur="1.4s" repeatCount="indefinite"/></circle>`:''}
+      <circle ${pop?'class="l426-dotc"':''} style="animation-delay:${delay||0}s" cx="${pt[0]}" cy="${pt[1]}" r="${on?7:5.5}" fill="${on?col:'#1a2e24'}" stroke="${col}" stroke-width="2"/>
+      <text class="l426-lab" x="${L[0].toFixed(1)}" y="${(L[1]+4).toFixed(1)}" text-anchor="middle" font-size="13" fill="${col}" font-family="Georgia,serif">${name}</text>
+    </g>`;
+  }
+  function sparks(){
+    return `<g class="l426-orbit"><circle cx="${CX+R}" cy="${CY}" r="2.6" fill="#ffd76a"/></g>
+      <g class="l426-orbit2"><circle cx="${CX-R}" cy="${CY}" r="2" fill="#7fd1ff"/></g>`;
+  }
+  function frame(inner){
+    return `${CSS}<svg viewBox="0 0 220 220" style="width:min(100%,260px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:hidden">
+      <defs>
+        <radialGradient id="l426g" cx="50%" cy="50%"><stop offset="0%" stop-color="#7fd1ff22"/><stop offset="100%" stop-color="#101f1800"/></radialGradient>
+        <filter id="l426b"><feGaussianBlur stdDeviation="2"/></filter>
+      </defs>
+      <circle cx="${CX}" cy="${CY}" r="${R}" fill="url(#l426g)" stroke="#3d6a7a" stroke-width="1.4"/>
+      ${sparks()}
+      ${inner}
+    </svg>`;
+  }
+  function note(title, text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:#ffd76a;font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div>
+    </div>`;
+  }
+
+  const AN = { A:-50, B:35, C:145, D:215 };
+  const pts = ()=>({A:P(AN.A), B:P(AN.B), C:P(AN.C), D:P(AN.D)});
+
   function visD426(el){
     const step=LV.step||0;
+    const lk= (typeof lidKey==='function') ? lidKey(LV.id) : '426';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const playing=!!st.play && step===7;
+    const doDraw = (st.seen!==step) && !playing;
+    if(st.seen!==step){ st.seen=step; st.selDrawn=null; }
+    const Q=pts();
+    const arr=[Q.A,Q.B,Q.C,Q.D];
+    const ptsStr=`${Q.A[0]},${Q.A[1]} ${Q.B[0]},${Q.B[1]} ${Q.C[0]},${Q.C[1]} ${Q.D[0]},${Q.D[1]}`;
+    const poly = doDraw
+      ? `<polygon points="${ptsStr}" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="2" ${ink(polyLen(arr),1.35,.18)}/>`
+      : `<polygon points="${ptsStr}" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="2"/>`;
+    const allDots=(sel)=>dot(Q.A,'A','#ffd76a',sel==='A',0,doDraw)+dot(Q.B,'B','#7fd1ff',sel==='B',.08,doDraw)+dot(Q.C,'C','#8fd1a8',sel==='C',.16,doDraw)+dot(Q.D,'D','#ff8ac0',sel==='D',.24,doDraw);
+    const ring=(col,w,d,delay)=> doDraw
+      ? `<circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="${col}" stroke-width="${w}" ${ink(CIRC,d,delay)}/>`
+      : `<circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="${col}" stroke-width="${w}"/>`;
+    const glowArc=(a1,a2,r,col,w)=>{
+      const d=arcPath(a1,a2,r), L=arcLen(a1,a2,r);
+      const draw = (st.selDrawn!==st.sel) || doDraw;
+      return `<path class="l426-arc" d="${d}" fill="none" stroke="${col}" stroke-width="${w}" opacity=".35" filter="url(#l426b)"/>`
+        + (draw
+          ? `<path d="${d}" fill="none" stroke="${col}" stroke-width="${Math.max(2.4,w-5)}" ${ink(L,1.35,0)}/>`
+          : `<path d="${d}" fill="none" stroke="${col}" stroke-width="${Math.max(2.4,w-5)}"/>`);
+    };
     let h='';
+
     if(step===0){
       h=`<div class="wv-col">
-        <div class="wv-big">Вписанный четырёхугольник</div>
-        ${quadCircle('gen')}
-        <div class="wv-sml">все четыре вершины лежат на одной окружности!</div>
+        ${frame(ring('#ffd76a',2.6,1.5,0)+poly+allDots(st.sel))}
+        ${note('Что это значит?','Представь обруч. Если он проходит через все четыре точки — четырёхугольник вписанный. Сейчас научимся проверять это по углам, без циркуля.')}
       </div>`;
     } else if(step===1){
+      const sel=st.sel||'A';
+      const map={
+        A:{from:AN.B, to:AN.D, lab:'∠A = ½ дуги BCD', col:'#ffd76a', a:Q.B, b:Q.A, c:Q.D},
+        B:{from:AN.C, to:AN.A, lab:'∠B = ½ дуги CDA', col:'#7fd1ff', a:Q.C, b:Q.B, c:Q.A},
+        C:{from:AN.D, to:AN.B, lab:'∠C = ½ дуги DAB', col:'#8fd1a8', a:Q.D, b:Q.C, c:Q.B},
+        D:{from:AN.A, to:AN.C, lab:'∠D = ½ дуги ABC', col:'#ff8ac0', a:Q.A, b:Q.D, c:Q.C}
+      };
+      const m=map[sel];
+      const chord=`M ${m.a[0]} ${m.a[1]} L ${m.b[0]} ${m.b[1]} L ${m.c[0]} ${m.c[1]}`;
+      const cLen=Math.hypot(m.b[0]-m.a[0],m.b[1]-m.a[1])+Math.hypot(m.c[0]-m.b[0],m.c[1]-m.b[1])+8;
+      const drawChord = doDraw || st.selDrawn!==sel;
       h=`<div class="wv-col">
-        <div class="wv-big">Ключ: вписанный угол = ½ дуги</div>
-        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:16px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">угол = половина дуги, на которую опирается</div>
+        ${frame(
+          glowArc(m.from,m.to,R,m.col,9)+
+          (drawChord?`<path d="${chord}" fill="none" stroke="${m.col}" stroke-width="1.8" ${ink(cLen,.9,.12)}/>`:`<path d="${chord}" fill="none" stroke="${m.col}" stroke-width="1.8"/>`)+
+          poly+angMark(m.a,m.b,m.c,m.col,'½')+allDots(sel)
+        )}
+        <div class="wv-ans" style="font-size:15px">${m.lab}</div>
+        ${note('Простыми словами','Вписанный угол стоит на окружности и смотрит на дугу. Сколько градусов у дуги — у угла ровно половина. Нажми другую букву: дуга дорисуется до конца.')}
       </div>`;
+      st.selDrawn=sel;
     } else if(step===2){
+      const P2=P(105);
+      const Lp=outLabel(P2);
+      const pPath=`M ${Q.B[0]} ${Q.B[1]} L ${P2[0]} ${P2[1]} L ${Q.D[0]} ${Q.D[1]}`;
+      const pLen=Math.hypot(P2[0]-Q.B[0],P2[1]-Q.B[1])+Math.hypot(Q.D[0]-P2[0],Q.D[1]-P2[1])+8;
       h=`<div class="wv-col">
-        <div class="wv-big">Главное свойство: 180°</div>
-        ${quadCircle('gen')}
-        <div style="background:rgba(127,209,160,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 12px;font-size:16px;color:#8fd1a8;font-weight:bold" class="wv-ans">∠A + ∠C = 180° · ∠B + ∠D = 180°</div>
+        ${frame(
+          glowArc(AN.B, AN.D, R, '#ffd76a', 9)+
+          poly+
+          angMark(Q.B,Q.A,Q.D,'#ffd76a','α')+
+          (doDraw?`<path d="${pPath}" fill="none" stroke="#7fd1ff" stroke-width="1.8" ${ink(pLen,1,.15)}/>`:`<path d="${pPath}" fill="none" stroke="#7fd1ff" stroke-width="1.8"/>`)+
+          angMark(Q.B,P2,Q.D,'#7fd1ff','α')+
+          `<circle cx="${P2[0]}" cy="${P2[1]}" r="6" fill="#7fd1ff"/>
+           <text class="l426-lab" x="${Lp[0].toFixed(1)}" y="${(Lp[1]+4).toFixed(1)}" text-anchor="middle" fill="#7fd1ff" font-size="13">P</text>`
+        )}
+        ${note('Одна дуга — один угол','A и P смотрят на одну жёлтую дугу BD. Поэтому их углы одинаковые: оба α. Где ни встань на окружности, если смотришь на ту же дугу — угол тот же.')}
       </div>`;
+      st.selDrawn=st.sel;
     } else if(step===3){
+      const showC=!!st.selC;
       h=`<div class="wv-col">
-        <div class="wv-big">Почему так?</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.6">угол A смотрит на дугу BCD, угол C — на дугу DAB. Вместе это <b style="color:#ffd76a">вся окружность 360°</b> → сумма = 180°!</div>
+        ${frame(
+          pieWedge(36, AN.B, AN.D, '#ffd76a33')+
+          (showC?pieWedge(26, AN.D, AN.B, '#8fd1a833'):'')+
+          poly+
+          angMark(Q.B,Q.A,Q.D,'#ffd76a','')+
+          (showC?angMark(Q.D,Q.C,Q.B,'#8fd1a8',''):'')+
+          allDots(showC?'C':'A')
+        )}
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].selC=!CHS[k].selC;chRender(0);}catch(e){}" style="margin-top:4px">${showC?'Скрыть угол C':'Показать угол C'}</button>
+        <div class="wv-ans">∠A + ∠C = 180°</div>
+        ${note('Против друг друга','Возьми углы через один: A с C, B с D. У вписанного четырёхугольника эта сумма всегда 180° — как развёрнутая линейка. Нажми кнопку и сравни A и C.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
-        <div class="wv-big">Обратный признак</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.6">если сумма противоположных углов = 180°, четырёхугольник <b style="color:#8fd1a8">можно вписать</b> в окружность — работает в обе стороны!</div>
+        ${frame(
+          glowArc(AN.B, AN.D, R-4, '#ffd76a', 10)+
+          (function(){
+            const d=arcPath(AN.D, AN.B, R-14), L=arcLen(AN.D, AN.B, R-14);
+            return `<path class="l426-arc" d="${d}" fill="none" stroke="#8fd1a8" stroke-width="10" opacity=".35"/>`
+              +(doDraw?`<path d="${d}" fill="none" stroke="#8fd1a8" stroke-width="5" ${ink(L,1.4,.2)}/>`:`<path d="${d}" fill="none" stroke="#8fd1a8" stroke-width="5"/>`);
+          })()+
+          poly+allDots('')
+        )}
+        ${note('Откуда берётся 180°','Жёлтая дуга и зелёная дуга вместе — целый круг, 360°. Угол A берёт половину жёлтой, угол C — половину зелёной. Половина круга = 180°. Поэтому сумма углов 180°.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        <div class="wv-big">Прямоугольник — вписанный!</div>
-        ${quadCircle('rec')}
-        <div class="wv-sml">углы по 90° → сумма 180° · центр — пересечение диагоналей</div>
+        ${frame(poly+allDots('')+ring('#8fd1a8',2.6,1.5,.12))}
+        <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
+          ${[['если ∠A+∠C = 180°','окружность надеть можно','#8fd1a8'],
+             ['если сумма не 180°','окружность не выйдет','#ff9a8a']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.12}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('Проверка без циркуля','Не угадывай на глаз. Сложи противоположные углы. Вышло 180° — обруч надевается. Не вышло — точки не на одной окружности.')}
       </div>`;
     } else if(step===6){
+      const ell=2*Math.PI*Math.sqrt((50*50+32*32)/2)+10;
+      const cir=2*Math.PI*32+10;
       h=`<div class="wv-col">
-        <div class="wv-big">Квадрат и трапеция</div>
-        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
-          ${[['квадрат','вписанный!','#ffd76a'],['равнобедренная трапеция','вписанная!','#8fd1a8']].map(x=>`<span class="wv-chip" style="border-color:${x[2]};color:${x[2]}">${x[0]} — ${x[1]}</span>`).join('')}
+        <div class="wv-row" style="gap:10px;flex-wrap:wrap;justify-content:center">
+          <div style="text-align:center">
+            <svg viewBox="0 0 120 78" style="width:128px;background:#0c1a14;border-radius:10px;display:block">
+              <ellipse cx="60" cy="39" rx="50" ry="32" fill="none" stroke="#7fd1ff" stroke-width="1.8" ${doDraw?ink(ell,1.4,0):''}/>
+              <rect x="22" y="16" width="76" height="46" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2"/>
+            </svg>
+            <div class="wv-sml" style="margin-top:4px">прямоугольник</div>
+          </div>
+          <div style="text-align:center">
+            <svg viewBox="0 0 120 78" style="width:128px;background:#0c1a14;border-radius:10px;display:block">
+              <circle cx="60" cy="39" r="32" fill="none" stroke="#7fd1ff" stroke-width="1.8" ${doDraw?ink(cir,1.4,.08):''}/>
+              <rect x="32" y="11" width="56" height="56" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="2"/>
+            </svg>
+            <div class="wv-sml" style="margin-top:4px">квадрат</div>
+          </div>
         </div>
+        ${note('Кто всегда вписан?','Прямоугольник и квадрат: каждый угол 90°, а 90+90=180. Равнобедренная трапеция тоже: углы при основании равны, сумма противоположных снова 180°.')}
       </div>`;
     } else if(step===7){
+      if(st.play && !window._l426iv){
+        window._l426iv=setInterval(()=>{
+          try{
+            const k=lidKey(LV.id); CHS[k]=CHS[k]||{};
+            const s=CHS[k];
+            s.dir = s.dir||1;
+            s.t = (s.t==null?0.15:s.t) + 0.01*s.dir;
+            if(s.t>=1){ s.t=1; s.dir=-1; }
+            if(s.t<=0){ s.t=0; s.dir=1; }
+            if(LV.id===426 && LV.step===7 && s.play) chRender(0);
+            else { clearInterval(window._l426iv); window._l426iv=null; }
+          }catch(e){ clearInterval(window._l426iv); window._l426iv=null; }
+        }, 40);
+      }
+      if(!st.play && window._l426iv){ clearInterval(window._l426iv); window._l426iv=null; }
+      const t = (st.t==null)? 0.22 : +st.t;
+      const ang = 6 + t*168;
+      const Pd=P(180-ang);
+      const Lp=outLabel(Pd);
+      const Lft=P(180), Rgt=P(0);
+      const tri=`${Lft[0]},${Lft[1]} ${Pd[0]},${Pd[1]} ${Rgt[0]},${Rgt[1]}`;
       h=`<div class="wv-col">
-        <div class="wv-big">Угол на диаметре = 90°</div>
-        ${quadCircle('sq')}
-        <div class="wv-sml">если угол опирается на диагональ-диаметр — он прямой!</div>
+        ${frame(
+          `<line x1="${Lft[0]}" y1="${Lft[1]}" x2="${Rgt[0]}" y2="${Rgt[1]}" stroke="#7fd1ff" stroke-width="2.4" class="l426-glow"/>
+           <polygon points="${tri}" fill="rgba(255,215,106,.14)" stroke="#ffd76a" stroke-width="2"/>`+
+          angMark(Lft,Pd,Rgt,'#ffd76a','90°')+
+          `<circle cx="${Lft[0]}" cy="${Lft[1]}" r="5" fill="#7fd1ff"/><circle cx="${Rgt[0]}" cy="${Rgt[1]}" r="5" fill="#7fd1ff"/>
+           <text class="l426-lab" x="${Lft[0]-14}" y="${Lft[1]+4}" fill="#7fd1ff" font-size="12">A</text>
+           <text class="l426-lab" x="${Rgt[0]+14}" y="${Rgt[1]+4}" text-anchor="middle" fill="#7fd1ff" font-size="12">B</text>
+           <circle cx="${Pd[0]}" cy="${Pd[1]}" r="10" fill="#ffd76a33"/>
+           <circle cx="${Pd[0]}" cy="${Pd[1]}" r="6.5" fill="#ffd76a"/>
+           <text class="l426-lab" x="${Lp[0].toFixed(1)}" y="${(Lp[1]+4).toFixed(1)}" text-anchor="middle" fill="#ffd76a" font-size="13">P</text>`
+        )}
+        <div style="display:flex;align-items:center;gap:8px;width:min(100%,300px);flex-wrap:wrap">
+          <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].play=!CHS[k].play;chRender(0);}catch(e){}">${st.play?'⏸ Стоп':'▶ Оживить'}</button>
+          <input type="range" min="0" max="100" value="${Math.round(t*100)}"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].t=this.value/100;CHS[k].play=false;chRender(0);}catch(e){}"
+            style="flex:1;min-width:140px">
+        </div>
+        ${note('Теорема Фалеса','AB — диаметр, это половина окружности, 180°. Точка P бежит по ободу до конца и обратно. Угол при P всегда прямой: 180 ÷ 2 = 90.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${quadCircle('gen')}
-        <div class="wv-sml">сумма противоположных углов вписанного 4-угольника?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? °</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
+          ${[['вписанный угол','половина дуги','#ffd76a'],
+             ['против. углы вписанного 4-угольника','всегда 180°','#8fd1a8'],
+             ['угол на диаметре','всегда 90°','#7fd1ff']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${frame(poly+allDots(''))}
+        ${note('В карман','Три фразы — и можно решать задачи. Дальше проверка: чему равна сумма противоположных углов во вписанном четырёхугольнике?')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[426]=visD426;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===426){ window.ARH_LESSONS[i]=L426; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===426){ arr[i]=L426; f=true; break; } }
+    if(!f) arr.push(L426);
+  })();
 })();
+
+
+
