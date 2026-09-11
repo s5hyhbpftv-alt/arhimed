@@ -10700,7 +10700,7 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
         const x=52+k*120;
         s+=`<g class="${pre}Pop" style="animation-delay:${(0.2+k*0.2).toFixed(2)}s"><rect x="${x-40}" y="${y}" width="80" height="60" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.6"/>`
           +`<text x="${x}" y="${y+40}" text-anchor="middle" font-size="26" font-family="'Courier New',monospace" font-weight="bold" fill="${q[2]}">${q[0]}</text>`
-          +fit(x,y+54,8.5,q[2],q[1],{},72)+`</g>`;
+          +fit(x,y+60,8.5,q[2],q[1],{},72)+`</g>`;
       });
       y=band(68);
       s+=`<g class="${pre}Pop" style="animation-delay:.6s"><rect x="24" y="${y}" width="270" height="30" rx="9" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.5"/>`
@@ -10721,7 +10721,8 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
           +`</g>`;
       });
       s+=`<path d="M148 ${y+48} h22" stroke="${cardB}" stroke-width="2"/><path d="M164 ${y+42} l6 6 l-6 6" fill="none" stroke="${cardB}" stroke-width="2"/>`;
-      s+=`<circle r="6" fill="${gold}"><animateMotion dur="3.2s" repeatCount="indefinite" path="M88 ${y+48} L230 ${y+48}"/></circle>`;
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="3.2s" repeatCount="indefinite" path="M88 ${y-14} L230 ${y-14}"/></circle>`;
+      s+=`<path d="M88 ${y-6} H230" stroke="${cardB}" stroke-width="1" stroke-dasharray="4 4"/>`;
       /* выключатель */
       let y2=band(116);
       s+=`<rect x="86" y="${y2}" width="146" height="70" rx="12" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`;
@@ -10875,7 +10876,7 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
         for(let r=0;r<3;r++){
           const dig=(c+r)%2;
           s+=`<text x="${x}" y="${y+24+r*44}" font-size="13" font-family="'Courier New',monospace" fill="${dig?gold:cyan}" opacity="${(0.85-r*0.25).toFixed(2)}">${dig}`
-            +`<animateTransform attributeName="transform" type="translate" values="0 0;0 92" dur="${(2.6+((c*7)%5)*0.4).toFixed(1)}s" begin="${(c*0.18).toFixed(2)}s" repeatCount="indefinite"/></text>`;
+            +`<animateTransform attributeName="transform" type="translate" values="0 0;0 58" dur="${(2.6+((c*7)%5)*0.4).toFixed(1)}s" begin="${(c*0.18).toFixed(2)}s" repeatCount="indefinite"/></text>`;
         }
       }
       /* иконки поверх потока */
@@ -10946,7 +10947,7 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
       let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
         +fit(159,29,11,cyan,'главное про биты и байты',{b:1},264)+`</g>`;
       rows.forEach((q,k)=>{
-        const y=band(46);
+        const y=band(50);
         s+=`<g class="${pre}Pop" style="animation-delay:${(0.07+k*0.1).toFixed(2)}s">`
           +`<rect x="20" y="${y}" width="278" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.4"/>`
           +`<rect x="30" y="${y+7}" width="22" height="20" rx="6" fill="rgba(255,255,255,.04)" stroke="${q[2]}" stroke-width="1.1"/>`;
@@ -10956,7 +10957,7 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
         else if(q[3]==='letter') s+=`<text x="${ix}" y="${iy+5}" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${q[2]}">А</text>`;
         else if(q[3]==='more') s+=`<path d="M${ix-8} ${iy+6} h6 v-6 h6 v-8 h6" fill="none" stroke="${q[2]}" stroke-width="1.6"/>`;
         else s+=`<text x="${ix}" y="${iy+5}" text-anchor="middle" font-size="11" font-family="'Courier New',monospace" fill="${q[2]}">01</text>`;
-        s+=fit(150,y+14,9.5,q[2],q[0],{b:1},118)+fit(150,y+28,8.5,dim,q[1],{},196)+`</g>`;
+        s+=fit(150,y+14,9.5,q[2],q[0],{b:1},118)+fit(150,y+27,8,dim,q[1],{},196)+`</g>`;
       });
       const y=band(34);
       s+=plate2(20,y-2,278,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'пять главных мыслей',11,pre);
