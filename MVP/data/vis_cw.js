@@ -2907,10 +2907,10 @@ window._waveCss = window._waveCss || function(id, css){
     explain: [
       'Загадка: доска 7 на 7, плитки домино 1 на 2. Можно ли закрыть всё без дырок и наложений? Не рисуй сто вариантов — сосчитай.',
       'Клеток 7 · 7 = 49. Нечётное число. Каждое домино закрывает две клетки. 49 на 2 не делится — хотя бы одна клетка останется. Уже ответ: нельзя.',
-      'Нажми «Считать»: клетки загораются по одной до 49. Нечёт виден глазами. Для замощения нужен чётный счёт.',
+      'Смотри, как клетки загораются до 49. Нечёт виден глазами. Для замощения нужен чётный счёт.',
       'Раскрась в шахматку. Соседние клетки разного цвета. Домино всегда ложится на одну тёмную и одну светлую — оно покрывает ребро между соседями.',
       'На доске 7×7 тёмных 25, светлых 24. Углы одного цвета, сторона нечётная — тёмных на одну больше. Плитки забирали бы поровну. Поровну нет — замостить нельзя.',
-      'Нажми «Класть домино»: плитки закрывают пары, в конце остаётся одна клетка. Сколько ни клади, одна лишняя. Это та самая 25-я тёмная.',
+      'Плитки сами ложатся на пары. В конце остаётся одна клетка. Сколько ни клади, одна лишняя. Это та самая 25-я тёмная.',
       'Раскраска сильнее голого счёта. На 8×8 клеток 64, чётно, домино влезает. Вырежи два противоположных угла — оба одного цвета, останется 30 и 32. Чётно, а замостить всё равно нельзя.',
       'Вторая задача: двое по очереди красят по клетке 7×7. Кто не может сходить — проиграл. Ходов будет ровно 49, по числу клеток.',
       'Жми клетки. Первый — золото, второй — голубой. Когда доска полная, последний ход за первым: 1, 3, 5, …, 49 — нечётные номера.',
@@ -2935,206 +2935,305 @@ window._waveCss = window._waveCss || function(id, css){
 
   const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
   const CSS=`<style>
-    @keyframes l412ink{to{stroke-dashoffset:0}}
-    @keyframes l412pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
-    @keyframes l412pulse{0%,100%{opacity:.4}50%{opacity:1}}
-    @keyframes l412glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 7px ${GOLD})}}
-    .l412-ink{animation:l412ink 1.3s cubic-bezier(.2,.75,.15,1) forwards}
-    .l412-dot{transform-box:fill-box;transform-origin:center;animation:l412pop .35s cubic-bezier(.2,1.4,.4,1) both}
-    .l412-pulse{animation:l412pulse 1.6s ease-in-out infinite}
-    .l412-glow{animation:l412glow 1.8s ease-in-out infinite}
+    @keyframes l412v-pop{0%{transform:scale(.2) rotate(-12deg);opacity:0}62%{transform:scale(1.14) rotate(3deg);opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}
+    @keyframes l412v-pulse{0%,100%{opacity:.4;filter:drop-shadow(0 0 1px ${RED})}50%{opacity:1;filter:drop-shadow(0 0 10px ${RED})}}
+    @keyframes l412v-glow{0%,100%{filter:drop-shadow(0 0 2px ${GOLD})}50%{filter:drop-shadow(0 0 12px ${GOLD})}}
+    @keyframes l412v-drop{0%{transform:translateY(-18px) scale(.6);opacity:0}70%{transform:translateY(3px) scale(1.06);opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
+    @keyframes l412v-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+    @keyframes l412v-burn{0%{transform:scale(1);opacity:1}100%{transform:scale(0);opacity:0}}
+    @keyframes l412v-wave{0%{opacity:.15}40%{opacity:1}100%{opacity:1}}
+    .l412c{transform-box:fill-box;transform-origin:center;pointer-events:auto}
+    .l412-dom{transform-box:fill-box;transform-origin:center}
     .l412-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.2px;stroke-linejoin:round}
+    .l412-pulse{animation:l412v-pulse 1.2s ease-in-out infinite}
+    .l412-glow{animation:l412v-glow 1.6s ease-in-out infinite}
+    .l412-shake{animation:l412v-shake .4s ease-in-out 3}
   </style>`;
-  function ink(len,dur,delay){
-    const L=Math.ceil((len||1)+18);
-    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l412-ink" style="animation-duration:${dur||1.25}s;animation-delay:${delay||0}s"`;
-  }
-  function lab(x,y,t,col,anchor,fs){
+  function lab(x,y,t,col,anchor,fs,cls){
     const xx=Math.max(14, Math.min(226, +x)), yy=Math.max(16, Math.min(208, +y));
-    return `<text class="l412-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||11}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+    return `<text class="l412-lab ${cls||''}" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
   }
-  function frame(inner, vb){
-    try{ window._waveCss && _waveCss('css-l412', CSS); }catch(e){}
-    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  function frame(inner){
+    try{ window._waveCss && _waveCss('css-l412v3', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,300px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
   }
   function note(title,text){
     return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
       <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
       <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
   }
-  const N=7, CS=22, OX=24, OY=34;
-  function cell(r,c){ return [OX+c*CS, OY+r*CS]; }
-  function isDark(r,c){ return (r+c)%2===0; }
-  function board(opts){
+  const N=7, CS=22, OX=24, OY=36;
+  function cellXY(r,c){ return [OX+c*CS, OY+r*CS]; }
+  function darkOf(r,c){ return (r+c)%2===0; }
+  function fillOf(r,c,mode){
+    if(mode==='chess') return darkOf(r,c)?'url(#gGold)':'url(#gBlue)';
+    if(mode==='plain') return 'url(#gMint)';
+    return '#1e3328';
+  }
+  function defs(){
+    return `<defs>
+      <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#d9a441"/></linearGradient>
+      <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b7e6ff"/><stop offset="1" stop-color="#4aa3d4"/></linearGradient>
+      <linearGradient id="gMint" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8fd1a8"/><stop offset="1" stop-color="#3d8a62"/></linearGradient>
+      <linearGradient id="gRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a8a"/><stop offset="1" stop-color="#e86a5a"/></linearGradient>
+      <filter id="fGlow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>`;
+  }
+  function boardRects(opts){
     opts=opts||{};
-    const paint=opts.paint||[];
-    const cover=opts.cover||[];
-    const lit=opts.lit==null?49:opts.lit;
-    const showColor=!!opts.color;
-    const leftover=opts.leftover;
+    const mode=opts.mode||'chess';
+    const n=opts.n||N;
+    const cs=opts.cs||CS, ox=opts.ox==null?OX:opts.ox, oy=opts.oy==null?OY:opts.oy;
     let d='';
-    let k=0;
-    for(let r=0;r<N;r++) for(let c=0;c<N;c++){
-      const [x,y]=cell(r,c);
-      const idx=r*N+c;
-      const on=k<lit; k++;
-      const dark=isDark(r,c);
-      let fill='#1e3328';
-      if(on && showColor) fill=dark?'rgba(255,215,106,.35)':'rgba(127,209,255,.28)';
-      else if(on) fill='rgba(127,209,255,.16)';
-      const pv=paint[idx];
-      if(pv===1) fill=GOLD;
-      if(pv===2) fill=BLUE;
-      if(cover[idx]) fill=GREEN;
-      if(leftover && leftover[0]===r && leftover[1]===c) fill=RED;
-      d+=`<rect x="${x}" y="${y}" width="${CS-1.2}" height="${CS-1.2}" rx="3" fill="${fill}" stroke="#0c1a14" stroke-width="0.6"/>`;
+    for(let r=0;r<n;r++) for(let c=0;c<n;c++){
+      const x=ox+c*cs, y=oy+r*cs;
+      const i=r*n+c;
+      const extra=opts.cut && ((r===0&&c===0)||(r===n-1&&c===n-1));
+      const fill=extra?'url(#gRed)':fillOf(r,c,mode);
+      d+=`<rect class="l412c" data-i="${i}" data-r="${r}" data-c="${c}" data-dark="${darkOf(r,c)?1:0}" x="${x}" y="${y}" width="${cs-1.4}" height="${cs-1.4}" rx="${Math.max(2,cs/7)}" fill="${fill}" stroke="#0c1a14" stroke-width="0.5" filter="url(#fGlow)"/>`;
     }
     return d;
   }
-  function counts(n){
-    const tot=n*n, dark=(tot+1)>>1, light=tot-dark;
-    return {tot:tot, dark:dark, light:light, odd:tot%2===1};
+  function counts(n){ const tot=n*n, dark=(tot+1)>>1; return {tot:tot, dark:dark, light:tot-dark, odd:tot%2===1}; }
+  function pairs(){
+    const p=[];
+    for(let r=0;r<7;r++) for(let c=0;c<6;c+=2) p.push([[r,c],[r,c+1]]);
+    for(let r=0;r<6;r+=2) p.push([[r,6],[r+1,6]]);
+    return p;
+  }
+  function wa(el, keyframes, opts){
+    try{ if(el && el.animate) el.animate(keyframes, opts); }catch(e){}
+  }
+  function kill412(){
+    try{ if(window._l412t){ clearTimeout(window._l412t); window._l412t=null; } }catch(e){}
+  }
+  function boot412(root, step, st){
+    kill412();
+    const svg=root.querySelector('svg');
+    if(!svg) return;
+    svg.style.pointerEvents='auto';
+    const cells=[...svg.querySelectorAll('rect.l412c')];
+    if(step!==1 && step!==5){
+      cells.forEach((c,i)=>{
+        wa(c, [
+          {transform:'scale(0) rotate(-10deg)', opacity:0},
+          {transform:'scale(1.12) rotate(2deg)', opacity:1, offset:.7},
+          {transform:'scale(1) rotate(0deg)', opacity:1}
+        ], {duration:480, delay:(i%7)*38+Math.floor(i/7)*22, fill:'both', easing:'cubic-bezier(.2,1.35,.25,1)'});
+      });
+    }
+
+    if(step===2){
+      const g=svg.querySelector('.l412-dom');
+      if(g) wa(g,[
+        {transform:'translateY(-24px) rotate(-8deg)', opacity:0},
+        {transform:'translateY(4px) rotate(2deg)', opacity:1, offset:.7},
+        {transform:'translateY(0) rotate(0)', opacity:1}
+      ],{duration:700, easing:'cubic-bezier(.2,1.3,.25,1)', fill:'both'});
+    }
+
+    if(step===1){
+      cells.forEach(c=>c.style.opacity='.12');
+      let k=0;
+      const tick=()=>{
+        if(!(window.LV&&LV.id===412&&LV.step===1)) return;
+        if(k>=cells.length){
+          const t=svg.querySelector('.l412-count');
+          if(t) t.textContent='49 — нечет';
+          return;
+        }
+        const c=cells[k];
+        c.style.opacity='1';
+        wa(c,[{transform:'scale(.4)',opacity:.2},{transform:'scale(1.16)'},{transform:'scale(1)'}],{duration:220,easing:'cubic-bezier(.2,1.4,.3,1)'});
+        k++;
+        const t=svg.querySelector('.l412-count');
+        if(t) t.textContent=k+'/49';
+        window._l412t=setTimeout(tick, 26);
+      };
+      window._l412t=setTimeout(tick, 280);
+    }
+
+    if(step===3){
+      cells.forEach((c,i)=>{
+        wa(c,[
+          {opacity:.2, filter:'brightness(.6)'},
+          {opacity:1, filter:'brightness(1.2)', offset:.5},
+          {opacity:1, filter:'brightness(1)'}
+        ],{duration:700, delay:i*12, fill:'both'});
+      });
+    }
+
+    if(step===4){
+      const darks=cells.filter(c=>c.getAttribute('data-dark')==='1');
+      const lights=cells.filter(c=>c.getAttribute('data-dark')!=='1');
+      darks.forEach((c,i)=>wa(c,[{transform:'scale(1)'},{transform:'scale(1.18)'},{transform:'scale(1)'}],{duration:360, delay:80+i*8}));
+      lights.forEach((c,i)=>wa(c,[{transform:'scale(1)'},{transform:'scale(1.18)'},{transform:'scale(1)'}],{duration:360, delay:520+i*8}));
+    }
+
+    if(step===5){
+      const P=pairs();
+      let d=0;
+      const tick=()=>{
+        if(!(window.LV&&LV.id===412&&LV.step===5)) return;
+        if(d>=24){
+          const last=svg.querySelector('rect[data-i="48"]');
+          if(last){
+            last.setAttribute('fill','url(#gRed)');
+            last.classList.add('l412-pulse');
+            wa(last,[{transform:'scale(1)'},{transform:'scale(1.35)'},{transform:'scale(1)'}],{duration:420});
+          }
+          const t=svg.querySelector('.l412-count');
+          if(t){ t.textContent='24 домино · одна лишняя'; t.setAttribute('fill', RED); }
+          return;
+        }
+        const pair=P[d];
+        pair.forEach(rc=>{
+          const i=rc[0]*7+rc[1];
+          const cell=svg.querySelector('rect[data-i="'+i+'"]');
+          if(!cell) return;
+          cell.setAttribute('fill','url(#gMint)');
+          wa(cell,[{transform:'translateY(-16px) scale(.5)',opacity:0},{transform:'translateY(2px) scale(1.1)',opacity:1, offset:.7},{transform:'translateY(0) scale(1)',opacity:1}],{duration:340,easing:'cubic-bezier(.2,1.3,.25,1)'});
+        });
+        d++;
+        const t=svg.querySelector('.l412-count');
+        if(t) t.textContent=d+' / 24';
+        window._l412t=setTimeout(tick, 70);
+      };
+      window._l412t=setTimeout(tick, 400);
+    }
+
+    if(step===6){
+      const cuts=cells.filter(c=>{
+        const r=+c.getAttribute('data-r'), col=+c.getAttribute('data-c');
+        return (r===0&&col===0)||(r===7&&col===7);
+      });
+      cuts.forEach((c,i)=>{
+        c.setAttribute('fill','url(#gRed)');
+        wa(c,[{transform:'scale(1) rotate(0)',opacity:1},{transform:'scale(0) rotate(25deg)',opacity:0}],{duration:700, delay:600+i*180, fill:'forwards', easing:'cubic-bezier(.6,0,1,1)'});
+      });
+    }
+
+    if(step===8){
+      const title=svg.querySelector('.l412-count');
+      const paint=st.paint||(st.paint=[]);
+      cells.forEach(c=>{
+        c.style.cursor='pointer';
+        const i=+c.getAttribute('data-i');
+        if(paint[i]===1) c.setAttribute('fill','url(#gGold)');
+        if(paint[i]===2) c.setAttribute('fill','url(#gBlue)');
+        c.addEventListener('pointerenter', ()=>{ if(!paint[i]) wa(c,[{transform:'scale(1)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:180}); });
+        c.addEventListener('pointerdown', ev=>{
+          ev.preventDefault(); ev.stopPropagation();
+          if(paint[i]) return;
+          const who=((paint.filter(Boolean).length)%2===0)?1:2;
+          paint[i]=who;
+          c.setAttribute('fill', who===1?'url(#gGold)':'url(#gBlue)');
+          wa(c,[{transform:'scale(.2)'},{transform:'scale(1.2)'},{transform:'scale(1)'}],{duration:280,easing:'cubic-bezier(.2,1.5,.3,1)'});
+          const n=paint.filter(Boolean).length;
+          if(title){
+            title.textContent=n>=49?'первый сделал 49-й':'ход '+(n+1)+' · '+(n%2===0?'первый':'второй');
+            title.setAttribute('fill', n>=49?GREEN:GOLD);
+          }
+        });
+      });
+    }
+
+    if(step===12){
+      cells.forEach((c,i)=>wa(c,[{transform:'scale(.5)',opacity:.3},{transform:'scale(1)',opacity:1}],{duration:280, delay:i*6, fill:'both'}));
+    }
   }
 
   function visC412(el){
-    try{ window._waveCss && _waveCss('css-l412', CSS); }catch(e){}
+    try{ window._waveCss && _waveCss('css-l412v3', CSS); }catch(e){}
     const step=LV.step||0;
     const lk=(typeof lidKey==='function')?lidKey(LV.id):'412';
     if(typeof CHS==='undefined') window.CHS={};
     if(!CHS[lk]) CHS[lk]={};
     const st=CHS[lk];
-    const doDraw=st.seen!==step;
-    if(st.seen!==step) st.seen=step;
-    const lit=Math.max(0, Math.min(49, st.lit==null?0:+st.lit));
-    const dom=Math.max(0, Math.min(24, st.dom==null?0:+st.dom));
+    if(st.seen!==step){
+      st.seen=step;
+      if(step!==1) st.auto1=0;
+      if(step!==5) st.auto5=0;
+    }
     const nn=Math.max(4, Math.min(8, +(st.n==null?7:st.n)));
     let h='';
 
     if(step===0){
       const open=!!st.open;
       h=`<div class="wv-col">
-        ${frame(
-          board({lit:49, color:true})+
-          lab(120, 22, open?'49 клеток, нечётно':'закроем домино?', GOLD, 'middle', 13)+
-          lab(120, 204, open?'нельзя':'7 × 7', MUTED)
-        )}
+        ${frame(defs()+boardRects({mode:'chess'})+lab(120, 22, open?'49 клеток, нечётно':'закроем домино?', GOLD, 'middle', 13, 'l412-count')+lab(120, 208, open?'нельзя':'7 × 7', open?RED:MUTED, 'middle', 12, open?'l412-shake':''))}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
         ${note('Не рисуй сто вариантов','Доска нечётная, плитка чётная. Сейчас это увидим счётом и раскраской, а не перебором.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        ${frame(
-          board({lit:lit||49, color:false})+
-          lab(120, 22, '7 · 7 = 49', GOLD)
-        )}
-        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].lit=Math.min(49,(CHS[k].lit||0)+7);chRender(0);}catch(e){}">${lit>=49?'Все 49':'Ещё ряд'}</button>
-        ${note('Нечётное','Каждый ряд по 7, рядов 7. Нечёт на нечет даёт нечет. Для домино это уже плохой знак.')}
+        ${frame(defs()+boardRects({mode:'plain'})+lab(120, 22, '0/49', GOLD, 'middle', 14, 'l412-count'))}
+        ${note('Нечётное','Клетки загораются сами. Каждый ряд по 7, рядов 7. Нечёт на нечет даёт нечет — для домино плохой знак.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
         ${frame(
-          `<rect x="70" y="80" width="40" height="20" rx="4" fill="${GREEN}" ${doDraw?ink(120,1.1,0):''}/>`+
-          `<rect x="112" y="80" width="40" height="20" rx="4" fill="${BLUE}"/>`+
+          defs()+
+          `<g class="l412-dom"><rect x="58" y="88" width="52" height="26" rx="7" fill="url(#gMint)" filter="url(#fGlow)"/>
+           <rect x="112" y="88" width="52" height="26" rx="7" fill="url(#gBlue)" filter="url(#fGlow)"/></g>`+
           lab(120, 50, 'домино = 2 клетки', GOLD)+
-          lab(120, 140, '49 : 2 = 24 остаток 1', RED)+
-          lab(120, 176, 'одна клетка лишняя', MUTED)
+          lab(120, 150, '49 : 2 = 24  остаток 1', RED, 'middle', 14, 'l412-pulse')+
+          lab(120, 186, 'одна клетка лишняя', MUTED)
         )}
         ${note('Деление на два','24 плитки закрыли бы 48 клеток. 49-я некуда. Это доказательство: не «мне не удалось», а «невозможно».')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        ${frame(
-          board({lit:49, color:true})+
-          lab(120, 22, 'шахматка', GOLD)+
-          lab(120, 204, 'соседи разного цвета', MUTED)
-        )}
-        ${note('Ребро доски','Домино кладётся на двух соседей. Соседи в шахматке всегда разного цвета. Каждая плитка: один тёмный + один светлый.')}
+        ${frame(defs()+boardRects({mode:'chess'})+lab(120, 22, 'шахматка — волна цвета', GOLD)+lab(120, 208, 'соседи всегда разного цвета', MUTED, 'middle', 11))}
+        ${note('Ребро доски','Домино кладётся на двух соседей. Соседи в шахматке разного цвета. Каждая плитка: один тёмный + один светлый.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
-        ${frame(
-          board({lit:49, color:true})+
-          lab(70, 22, 'тёмных 25', GOLD, 'middle', 12)+
-          lab(170, 22, 'светлых 24', BLUE, 'middle', 12)+
-          lab(120, 204, 'не поровну', RED)
-        )}
+        ${frame(defs()+boardRects({mode:'chess'})+lab(70, 22, 'тёмных 25', GOLD)+lab(175, 22, 'светлых 24', BLUE)+lab(120, 208, 'не поровну', RED, 'middle', 13, 'l412-pulse'))}
         ${note('Сторона нечётная','Углы одного цвета. На нечётной доске этот цвет встречается 25 раз, другой — 24. Плитки не могут забрать лишнюю тёмную.')}
       </div>`;
     } else if(step===5){
-      const cover={};
-      const leftover=[6,6];
-      let placed=0;
-      for(let r=0;r<7 && placed<dom;r++){
-        for(let c=0;c<6 && placed<dom;c+=2){
-          cover[r*7+c]=1; cover[r*7+c+1]=1; placed++;
-        }
-      }
-      for(let r=0;r<6 && placed<dom;r+=2){
-        cover[r*7+6]=1; cover[(r+1)*7+6]=1; placed++;
-      }
       h=`<div class="wv-col">
-        ${frame(
-          board({lit:49, color:true, cover:cover, leftover:dom>=24?leftover:null})+
-          lab(120, 22, dom+' домино'+(dom>=24?' · одна лишняя':''), dom>=24?RED:GOLD)
-        )}
-        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].dom=Math.min(24,(CHS[k].dom||0)+3);chRender(0);}catch(e){}">${dom>=24?'Осталась одна':'Класть домино'}</button>
-        ${note('Клади, не поможет','24 плитки, 48 клеток, красная последняя. Раскраска обещала это заранее: лишняя — тёмная.')}
+        ${frame(defs()+boardRects({mode:'chess'})+lab(120, 22, '0 / 24', GOLD, 'middle', 14, 'l412-count'))}
+        ${note('Клади, не поможет','Плитки падают сами. 24 штуки, 48 клеток, красная последняя. Раскраска обещала это заранее: лишняя — тёмная.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
-        ${frame(
-          lab(120, 44, '8×8 без двух углов', GOLD)+
-          Array.from({length:8},(_,r)=>Array.from({length:8},(_,c)=>{
-            const s=16, x=44+c*s, y=60+r*s;
-            const cut=(r===0&&c===0)||(r===7&&c===7);
-            const dark=(r+c)%2===0;
-            return `<rect x="${x}" y="${y}" width="${s-1}" height="${s-1}" fill="${cut?RED:(dark?'rgba(255,215,106,.35)':'rgba(127,209,255,.28)')}"/>`;
-          }).join('')).join('')+
-          lab(120, 204, '30 и 32, чётно — и всё равно нельзя', MUTED, 'middle', 11)
-        )}
-        ${note('Голый счёт слабже','64 − 2 = 62, делится на 2. Но оба угла одного цвета. Цвета 30 и 32. Домино снова бессильно. Раскраска видит то, чего деление не видит.')}
+        ${frame(defs()+boardRects({mode:'chess', n:8, cs:16, ox:44, oy:52, cut:true})+lab(120, 28, '8×8 без двух углов', GOLD)+lab(120, 208, '30 и 32 — чётно, и всё равно нельзя', MUTED, 'middle', 11))}
+        ${note('Голый счёт слабже','64 − 2 = 62, делится на 2. Но оба угла одного цвета. Цвета 30 и 32. Домино снова бессильно.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        ${frame(
-          board({lit:49, color:true})+
-          lab(120, 22, 'игра: крась клетку', GOLD)+
-          lab(120, 204, 'кто не сходит — проиграл', MUTED, 'middle', 11)
-        )}
-        ${note('49 ходов','Клеток 49, ход — одна клетка. Партия длится ровно 49 ходов. Ничья ходами не кончится: доска конечная.')}
+        ${frame(defs()+boardRects({mode:'chess'})+lab(120, 22, 'игра: крась клетку', GOLD)+lab(120, 208, 'кто не сходит — проиграл', MUTED, 'middle', 11))}
+        ${note('49 ходов','Клеток 49, ход — одна клетка. Партия длится ровно 49 ходов. Ничья ходами не кончится.')}
       </div>`;
     } else if(step===8){
-      const paint=st.paint||[];
-      const next=paint.filter(Boolean).length;
-      const who=next%2===0?1:2;
-      const full=next>=49;
-      let cells='';
-      for(let r=0;r<7;r++) for(let c=0;c<7;c++){
-        const [x,y]=cell(r,c);
-        const idx=r*7+c;
-        const pv=paint[idx];
-        const fill=pv===1?GOLD:(pv===2?BLUE:'rgba(127,209,255,.14)');
-        cells+=`<rect x="${x}" y="${y}" width="${CS-1.2}" height="${CS-1.2}" rx="3" fill="${fill}" stroke="#0c1a14" style="cursor:pointer"
-          onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};const p=(CHS[k].paint||[]).slice(); if(p[${idx}]) return; p[${idx}]=((p.filter(Boolean).length)%2===0)?1:2; CHS[k].paint=p; chRender(0);}catch(e){}"/>`;
-      }
       h=`<div class="wv-col">
-        ${frame(cells+lab(120, 22, full?'первый сделал 49-й':'ход '+(next+1)+' · '+(who===1?'первый':'второй'), full?GREEN:GOLD)+lab(120, 204, 'золото — первый, голубой — второй', MUTED, 'middle', 11))}
-        ${note('Жми клетку на доске','Первый — золото. Второй — голубой. Когда закроешь всё, последний цвет золотой: 49 нечётно.')}
+        ${frame(defs()+boardRects({mode:'plain'})+lab(120, 22, 'ход 1 · первый', GOLD, 'middle', 13, 'l412-count')+lab(120, 208, 'жми клетку · золото / голубой', MUTED, 'middle', 11))}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].paint=[];chRender(0);}catch(e){}">Сначала</button>
+        ${note('Жми клетку на доске','Первый — золото. Второй — голубой. Когда закроешь всё, последний цвет золотой: 49 нечётно. Клики не сносят доску.')}
       </div>`;
     } else if(step===9){
+      const nums=Array.from({length:25},(_,i)=>1+i*2);
       h=`<div class="wv-col">
         ${frame(
-          lab(120, 60, 'ходы 1, 3, 5, …, 49', GOLD, 'middle', 16)+
-          lab(120, 110, 'все нечётные — первый', GREEN)+
-          lab(120, 154, 'последний ход выигрывает', BLUE)
+          defs()+
+          nums.map((n,i)=>{
+            const x=22+(i%9)*22, y=58+Math.floor(i/9)*42;
+            return `<g><circle class="l412c" cx="${x+8}" cy="${y}" r="9" fill="${n===49?GOLD:'rgba(255,215,106,.25)'}" stroke="${GOLD}"/>`+lab(x+8, y+4, String(n), n===49?GOLD:MUTED, 'middle', 8)+`</g>`;
+          }).join('')+
+          lab(120, 28, 'нечётные ходы — первый', GOLD)
         )}
-        ${note('Чётность партии','Нечёт ходов отдаёт финал тому, кто начал. Стратегия не нужна: доска не кончится раньше 49.')}
+        ${note('Чётность партии','1, 3, …, 49. Последний ход у того, кто начал. Стратегия не нужна: доска не кончится раньше.')}
       </div>`;
     } else if(step===10){
       h=`<div class="wv-col">
         ${frame(
-          lab(80, 80, '7×7', GOLD)+lab(80, 110, '49 нечет', GREEN)+lab(80, 140, 'первый', GOLD)+
-          lab(170, 80, '8×8', BLUE)+lab(170, 110, '64 чёт', GREEN)+lab(170, 140, 'второй', BLUE)
+          defs()+
+          `<rect x="24" y="56" width="88" height="120" rx="12" fill="${GOLD}18" stroke="${GOLD}"/>`+
+          lab(68, 88, '7×7', GOLD, 'middle', 18)+lab(68, 118, '49 нечет', GREEN)+lab(68, 148, 'первый', GOLD)+
+          `<rect x="128" y="56" width="88" height="120" rx="12" fill="${BLUE}18" stroke="${BLUE}"/>`+
+          lab(172, 88, '8×8', BLUE, 'middle', 18)+lab(172, 118, '64 чёт', GREEN)+lab(172, 148, 'второй', BLUE)
         )}
         ${note('Сменилась чётность','На 8×8 последний ход 64-й — у второго. Одно правило: посчитай ходы, посмотри чётность.')}
       </div>`;
@@ -3146,7 +3245,7 @@ window._waveCss = window._waveCss || function(id, css){
             ['цвета 25 и 24','бьют домино',GOLD],
             ['вырезы одного цвета','бьют даже чётную',BLUE],
             ['нечёт ходов','последний ход первому',GREEN]
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
             <span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
         ${note('Связка','Счёт, раскраска, чётность ходов — три линейки. Ими меряют «можно / нельзя» и «кто выиграет».')}
@@ -3154,18 +3253,8 @@ window._waveCss = window._waveCss || function(id, css){
     } else if(step===12){
       const C=counts(nn);
       const s=Math.min(18, Math.floor(154/nn));
-      const ox=24, oy=40;
-      let brd='';
-      for(let r=0;r<nn;r++) for(let c=0;c<nn;c++){
-        const dark=(r+c)%2===0;
-        brd+=`<rect x="${ox+c*s}" y="${oy+r*s}" width="${s-1}" height="${s-1}" fill="${dark?'rgba(255,215,106,.35)':'rgba(127,209,255,.28)'}"/>`;
-      }
       h=`<div class="wv-col">
-        ${frame(
-          brd+
-          lab(120, 22, nn+'×'+nn+' = '+C.tot+(C.odd?' нечет':' чёт'), GOLD)+
-          lab(120, 204, 'тёмных '+C.dark+' · светлых '+C.light, MUTED, 'middle', 11)
-        )}
+        ${frame(defs()+boardRects({mode:'chess', n:nn, cs:s, ox:24, oy:40})+lab(120, 22, nn+'×'+nn+' = '+C.tot+(C.odd?' нечет':' чёт'), GOLD, 'middle', 13, 'l412-count')+lab(120, 208, 'тёмных '+C.dark+' · светлых '+C.light, MUTED, 'middle', 11))}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">n
           <input type="range" min="4" max="8" value="${nn}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].n=+this.value;chRender(0);}catch(e){}">
@@ -3188,20 +3277,18 @@ window._waveCss = window._waveCss || function(id, css){
       </div>`;
     } else if(step===14){
       h=`<div class="wv-col">
-        ${frame(
-          board({lit:49, color:true})+
-          lab(120, 22, '49 · 25 против 24 · первый', GOLD, 'middle', 12)
-        )}
+        ${frame(defs()+boardRects({mode:'chess'})+lab(120, 22, '49 · 25 против 24 · первый', GOLD, 'middle', 12))}
         ${note('В карман','7×7 нельзя домино. Цвета не равны. В игре на клетки первый берёт последний ход.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        ${frame(board({lit:49, color:true})+lab(120, 22, 'домино на 7×7?', GOLD)+lab(120, 204, 'да / нет', MUTED))}
+        ${frame(defs()+boardRects({mode:'chess'})+lab(120, 22, 'домино на 7×7?', GOLD)+lab(120, 208, 'да / нет', MUTED))}
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">можно?</div>
         ${note('Проверка','Нет. 49 нечётно, цвета 25 и 24. Переворот плитки не поможет.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
+    if(el.isConnected){ try{ boot412(el, step, st); }catch(e){} }
   }
   window.WAVE_C[412]=visC412;
   (function(){
