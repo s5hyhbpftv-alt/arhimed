@@ -1368,113 +1368,328 @@ window.WAVE_D = window.WAVE_D || {};
     id: 425, title: 'Метод площадей', ico: '📐',
     src: 'Математика · 8 класс · Олимп-8: метод площадей', subj: 'math',
     explain: [
-      'Метод площадей — мощный олимпиадный приём: вместо сложных рассуждений о длинах считаем ПЛОЩАДИ. Одна и та же фигура имеет одну площадь — как её ни разрежь!',
-      'Главная формула: площадь треугольника = ½ · основание · высота. Для треугольника с основанием 10 и высотой 6: S = ½·10·6 = 30. Запомни половину!',
-      'Прямоугольный треугольник: его катеты — это основание и высота. S = ½·3·4 = 6 для катетов 3 и 4. Классическая «египетская» пара!',
-      'Ключевая идея метода: посчитай площадь фигуры ДВУМЯ разными способами и приравняй. Получишь уравнение на неизвестную величину — и решишь задачу!',
-      'Пример: в треугольнике провели высоты из разных вершин. Площадь одна, значит, ½·a·hₐ = ½·b·h_b. Сокращаем ½: a·hₐ = b·h_b. Связь сторон и высот найдена!',
-      'Если у двух треугольников равные основания, их площади относятся как высоты: S₁/S₂ = h₁/h₂. Ведь S = ½·a·h, а ½·a одинаково!',
-      'Метод площадей помогает находить высоты, доказывать равенства и находить отношения отрезков. Площадь — «мост» между разными элементами фигуры!',
-      'Запомни рецепт: 1) найди площадь удобным способом; 2) найди её же другим способом; 3) приравняй — получишь уравнение; 4) реши его. Всё!',
-      'Теперь проверь себя: площадь треугольника с основанием 10 и высотой 6? Вспомни формулу с половиной!'
+      'Загадка: у треугольника основание 10, площадь 30. Высоту линейкой не достать — как её найти? Секрет не в сторонах, а в площади. Сейчас научимся считать фигуру «двумя руками».',
+      'Возьми два одинаковых треугольника. Приложи их основаниями — получится параллелограмм, а если опустить высоту — прямоугольник. Треугольник занимает ровно половину. Поэтому в формуле появляется ½.',
+      'Формула простая: S = ½ · основание · высота. Основание — любая сторона, высота — перпендикуляр к ней из противоположной вершины. Подвигай ползунки: площадь растёт вместе с основанием и высотой.',
+      'В прямоугольном треугольнике катеты уже стоят друг к другу под прямым углом. Значит, один катет — основание, второй — высота. Не надо ничего опускать: S = ½ · 3 · 4 = 6.',
+      'Главный приём олимпиад: посчитай ОДНУ площадь двумя способами и приравняй. Получится уравнение — и неизвестная длина сама вылезет. Нажми кнопку: те же 30, но через другую сторону.',
+      'Из каждой вершины можно опустить свою высоту. Площадь одна, поэтому ½·a·hₐ = ½·b·h_b, то есть a·hₐ = b·h_b. Кликни A, B или C: высота дорисуется до основания, числа сойдутся.',
+      'Если у двух треугольников одинаковое основание, площади относятся как высоты. Почему? В формуле ½ и a одни и те же, остаётся только h. Подвигай вторую вершину вверх — отношение S₁:S₂ повторит h₁:h₂.',
+      'Ещё сильнее: если треугольники с общей вершиной стоят на одной прямой, площади относятся как основания. Двигай точку M по стороне: S слева / S справа = BM / MC. На середине — медианы режут площадь пополам.',
+      'Рецепт в карман. 1) Найди площадь удобным способом. 2) Найди её же иначе. 3) Приравняй — получишь уравнение. 4) Реши. Площадь — мост между сторонами, высотами и отрезками.',
+      'Проверь себя. Основание 10, высота 6. Вспомни половину. Если забыл — вернись к ползункам: там формула живая.'
     ],
     check: { q: 'Площадь треугольника с основанием 10 и высотой 6?', choices: ['30', '60', '15', '16'], ans: 0,
-      exp: '½ · 10 · 6 = 30.' },
+      exp: 'Треугольник — половина прямоугольника 10×6. Поэтому S = ½ · 10 · 6 = 30.' },
     tasks: [
       { q: 'Площадь прямоугольного треугольника с катетами 3 и 4?', kind: 'unit', ans: 6, tol: 0,
-        hints: ['½ · 3 · 4.', '6.'], sol: '6' },
-      { q: 'У треугольников равные основания. Тогда площади относятся как…', kind: 'choice', choices: ['высоты', 'углы', 'стороны', 'периметры'], ans: 0, tol: 0,
-        hints: ['S = ½·a·h.', 'Площади пропорциональны высотам.'], sol: 'высоты' }
+        hints: ['Катеты уже стоят под прямым углом: один — основание, второй — высота.', 'S = ½ · 3 · 4.', 'Половина от 12 — это 6.'], sol: 'S = ½ · 3 · 4 = 6' },
+      { q: 'У треугольников равные основания. Тогда площади относятся как…', kind: 'choice',
+        choices: ['высоты', 'углы', 'стороны', 'периметры'], ans: 0, tol: 0,
+        hints: ['S = ½ · a · h, а основание a у обоих одно.', '½ и a сокращаются — остаётся отношение высот.'], sol: 'высоты: S₁/S₂ = h₁/h₂' }
     ]
   };
-  const triPic=(h)=>`<svg viewBox="0 0 180 130" style="width:170px;height:123px">
-    <polygon points="90,15 20,115 160,115" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="3"/>
-    <line x1="90" y1="15" x2="90" y2="115" stroke="#ffd76a" stroke-width="3" stroke-dasharray="5 3"/>
-    <text x="96" y="${h?60:110}" font-size="13" fill="#ffd76a">h</text>
-    <line x1="20" y1="115" x2="160" y2="115" stroke="#8fd1a8" stroke-width="3"/>
-    <text x="90" y="128" text-anchor="middle" font-size="12" fill="#8fd1a8">основание a</text>
-  </svg>`;
+
+  const CSS = `<style>
+    @keyframes l425ink{to{stroke-dashoffset:0}}
+    @keyframes l425pulse{0%,100%{opacity:.45}50%{opacity:1}}
+    @keyframes l425pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l425flip{from{transform:rotate(0)}to{transform:rotate(180deg)}}
+    @keyframes l425grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    @keyframes l425glow{0%,100%{filter:drop-shadow(0 0 1px #ffd76a)}50%{filter:drop-shadow(0 0 7px #ffd76a)}}
+    @keyframes l425fill{from{fill-opacity:0}to{fill-opacity:1}}
+    .l425-ink{animation:l425ink 1.45s cubic-bezier(.2,.75,.15,1) forwards}
+    .l425-pulse{animation:l425pulse 1.8s ease-in-out infinite}
+    .l425-dotc{transform-box:fill-box;transform-origin:center;animation:l425pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l425-flip{transform-origin:110px 148px;animation:l425flip 1.35s .2s cubic-bezier(.2,.7,.2,1) both}
+    .l425-grow{transform-origin:110px 168px;animation:l425grow .9s cubic-bezier(.2,.8,.2,1) both}
+    .l425-glow{animation:l425glow 1.8s ease-in-out infinite}
+    .l425-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+    .l425-fill{animation:l425fill .7s .35s both}
+  </style>`;
+
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+12);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l425-ink" style="animation-duration:${dur||1.35}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor){
+    return `<text class="l425-lab" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="12" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function dist(A,B){ return Math.hypot(B[0]-A[0], B[1]-A[1]); }
+  function foot(P,A,B){
+    const vx=B[0]-A[0], vy=B[1]-A[1];
+    const t=((P[0]-A[0])*vx+(P[1]-A[1])*vy)/((vx*vx+vy*vy)||1);
+    return [A[0]+t*vx, A[1]+t*vy];
+  }
+  function polyLen(arr){
+    let s=0; for(let i=0;i<arr.length;i++){ const a=arr[i], b=arr[(i+1)%arr.length]; s+=dist(a,b); } return s;
+  }
+  function sqMark(F,P,col){
+    const vx=P[0]-F[0], vy=P[1]-F[1], L=Math.hypot(vx,vy)||1;
+    const ux=vx/L, uy=vy/L, px=-uy, py=ux, s=8;
+    const a=[F[0]+ux*s, F[1]+uy*s], b=[a[0]+px*s, a[1]+py*s], c=[F[0]+px*s, F[1]+py*s];
+    return `<path d="M ${a[0].toFixed(1)} ${a[1].toFixed(1)} L ${b[0].toFixed(1)} ${b[1].toFixed(1)} L ${c[0].toFixed(1)} ${c[1].toFixed(1)}" fill="none" stroke="${col}" stroke-width="1.5"/>`;
+  }
+  function frame(inner, vb){
+    const box=vb||'0 0 220 200';
+    return `${CSS}<svg viewBox="${box}" style="width:min(100%,270px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">
+      <defs>
+        <linearGradient id="l425g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7fd1ff33"/><stop offset="100%" stop-color="#ffd76a22"/></linearGradient>
+      </defs>
+      ${inner}
+    </svg>`;
+  }
+  function note(title, text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:#ffd76a;font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div>
+    </div>`;
+  }
+  function vtx(pt,name,col,on,delay,pop){
+    const ly = pt[1]<70 ? pt[1]-12 : pt[1]+18;
+    return `<g style="cursor:pointer" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].sel='${name}';chRender(0);}catch(e){}">
+      ${on?`<circle cx="${pt[0]}" cy="${pt[1]}" r="11" fill="${col}33"><animate attributeName="r" values="8;13;8" dur="1.5s" repeatCount="indefinite"/></circle>`:''}
+      <circle ${pop?'class="l425-dotc"':''} style="animation-delay:${delay||0}s" cx="${pt[0]}" cy="${pt[1]}" r="${on?6.5:5}" fill="${on?col:'#1a2e24'}" stroke="${col}" stroke-width="2"/>
+      ${lab(pt[0], ly, name, col)}
+    </g>`;
+  }
+
+  const A0=[110,28], B0=[28,148], C0=[192,148];
+
   function visD425(el){
     const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'425';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw = st.seen!==step;
+    if(st.seen!==step){ st.seen=step; st.selDrawn=null; }
+    const aN = Math.max(6, Math.min(16, +(st.a==null?10:st.a)));
+    const hN = Math.max(4, Math.min(12, +(st.h==null?6:st.h)));
+    const tM = Math.max(0.08, Math.min(0.92, st.t==null?0.35:+st.t));
+    const sel = st.sel||'A';
+    const S = 0.5*aN*hN;
     let h='';
+
     if(step===0){
+      const tri=`${A0[0]},${A0[1]} ${B0[0]},${B0[1]} ${C0[0]},${C0[1]}`;
+      const H=[110,148];
       h=`<div class="wv-col">
-        <div class="wv-big">Метод площадей</div>
-        <div style="font-size:44px" class="wv-swing">📐</div>
-        <div class="wv-sml" style="max-width:330px">фигура имеет ОДНУ площадь — как её ни разрежь! Считаем площади вместо сложных рассуждений</div>
+        ${frame(
+          (doDraw
+            ? `<polygon points="${tri}" fill="url(#l425g)" stroke="#7fd1ff" stroke-width="2.4" ${ink(polyLen([A0,B0,C0]),1.4,0)}/>`
+            : `<polygon points="${tri}" fill="url(#l425g)" stroke="#7fd1ff" stroke-width="2.4"/>`)+
+          `<line x1="${A0[0]}" y1="${A0[1]}" x2="${H[0]}" y2="${H[1]}" stroke="#ffd76a" stroke-width="2.2" class="l425-glow" ${doDraw?ink(dist(A0,H)+8,1,.35):''}/>`+
+          sqMark(H,A0,'#ffd76a')+
+          lab(110,178,'a = 10','#8fd1a8')+
+          lab(128,92,'h = ?','#ffd76a')+
+          `<g class="l425-dotc"><rect x="78" y="4" width="64" height="20" rx="8" fill="#13251c" stroke="#ffd76a"/>
+           ${lab(110,19,'S = 30','#ffd76a')}</g>`+
+          vtx(A0,'A','#ffd76a',false,0,doDraw)+vtx(B0,'B','#7fd1ff',false,.1,doDraw)+vtx(C0,'C','#8fd1a8',false,.2,doDraw)
+        )}
+        ${note('Загадка','Линейкой высоту не достать. Зато известны площадь и основание. Если площадь — половина «основание × высота», то высоту можно вычислить, а не мерить.')}
       </div>`;
     } else if(step===1){
+      const top=`${A0[0]},${A0[1]} ${B0[0]},${B0[1]} ${C0[0]},${C0[1]}`;
       h=`<div class="wv-col">
-        <div class="wv-big">Формула площади</div>
-        ${triPic(true)}
-        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 14px;font-size:19px;color:#ffd76a;font-weight:bold;font-family:Georgia,serif">S = ½ · a · h</div>
-        <div class="wv-sml">основание 10, высота 6 → ½·10·6 = 30</div>
+        ${frame(
+          `<polygon points="${top}" fill="rgba(127,209,255,.22)" stroke="#7fd1ff" stroke-width="2.3" ${doDraw?ink(polyLen([A0,B0,C0]),1.2,0):''}/>`+
+          `<g class="l425-flip"><polygon points="${top}" fill="rgba(255,215,106,.22)" stroke="#ffd76a" stroke-width="2.3"/></g>`+
+          lab(110,168,'основание a','#8fd1a8')
+        , '0 0 220 280')}
+        ${note('Почему появляется ½?','Жёлтый треугольник переворачивается вокруг основания. Два одинаковых треугольника складываются в параллелограмм. Один занимает ровно половину — поэтому в формуле стоит ½.')}
       </div>`;
     } else if(step===2){
+      const base=80+aN*6;
+      const ht=36+hN*7;
+      const Bx=110-base/2, Cx=110+base/2, By=168, Ay=168-ht;
+      const tri=`${110},${Ay} ${Bx},${By} ${Cx},${By}`;
+      const rect=`${Bx},${Ay} ${Cx},${Ay} ${Cx},${By} ${Bx},${By}`;
       h=`<div class="wv-col">
-        <div class="wv-big">Прямоугольный треугольник</div>
-        <svg viewBox="0 0 180 130" style="width:160px;height:116px">
-          <polygon points="20,115 150,115 20,25" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="3"/>
-          <path d="M20 115 L32 115 L32 103 Z" fill="#8fd1a8"/>
-          <text x="85" y="128" text-anchor="middle" font-size="12" fill="#ffd76a">катет 3</text>
-          <text x="24" y="80" font-size="12" fill="#ffd76a">катет 4</text>
-        </svg>
-        <div class="wv-ans" style="font-size:19px;color:#8fd1a8">S = ½·3·4 = 6</div>
+        ${frame(
+          `<polygon points="${rect}" fill="rgba(143,209,168,.08)" stroke="#3d5c49" stroke-width="1.2" stroke-dasharray="4 3"/>`+
+          `<polygon class="l425-fill" points="${tri}" fill="rgba(127,209,255,.28)" stroke="#7fd1ff" stroke-width="2.4"/>`+
+          `<line class="l425-grow" x1="110" y1="${Ay}" x2="110" y2="${By}" stroke="#ffd76a" stroke-width="2.2"/>`+
+          sqMark([110,By],[110,Ay],'#ffd76a')+
+          lab(110,186,'a = '+aN,'#8fd1a8')+
+          lab(124,(Ay+By)/2,'h = '+hN,'#ffd76a','start')+
+          lab(110,Ay-12,'S = '+(S%1?S.toFixed(1):S),'#ffd76a')
+        , '0 0 220 200')}
+        <div class="wv-ans" style="font-size:16px">S = ½ · ${aN} · ${hN} = ${S%1?S.toFixed(1):S}</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,300px)">
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">основание a
+            <input type="range" min="6" max="16" value="${aN}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].a=+this.value;chRender(0);}catch(e){}">
+            <b style="color:#8fd1a8;min-width:18px">${aN}</b>
+          </label>
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">высота h
+            <input type="range" min="4" max="12" value="${hN}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].h=+this.value;chRender(0);}catch(e){}">
+            <b style="color:#ffd76a;min-width:18px">${hN}</b>
+          </label>
+        </div>
+        ${note('Простыми словами','Пунктирный прямоугольник — это основание × высота. Треугольник занимает его половину. Поэтому в формуле всегда стоит ½. Подвигай ползунки и смотри, как растёт S.')}
       </div>`;
     } else if(step===3){
+      const B=[36,158], C=[176,158], A=[36,38];
+      const legs = st.leg==='ac';
+      const tri=`${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0]},${C[1]}`;
       h=`<div class="wv-col">
-        <div class="wv-big">Считаем двумя способами</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.6">посчитай площадь <b style="color:#ffd76a">двумя способами</b> и приравняй — получишь уравнение на неизвестную!</div>
+        ${frame(
+          `<polygon points="${tri}" fill="rgba(143,209,168,.18)" stroke="#8fd1a8" stroke-width="2.5" ${doDraw?ink(polyLen([A,B,C]),1.3,0):''}/>`+
+          `<rect x="36" y="146" width="12" height="12" fill="none" stroke="#ffd76a" stroke-width="1.8"/>`+
+          (legs
+            ? `<line x1="${A[0]}" y1="${A[1]}" x2="${C[0]}" y2="${C[1]}" stroke="#ffd76a" stroke-width="3" class="l425-glow"/>`+
+              lab(18,100,'катет 4','#7fd1ff')+lab(110,184,'гипотенуза','#ffd76a')
+            : `<line x1="${B[0]}" y1="${B[1]}" x2="${C[0]}" y2="${C[1]}" stroke="#ffd76a" stroke-width="3.2" class="l425-glow"/>`+
+              `<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="#7fd1ff" stroke-width="3.2" class="l425-glow"/>`+
+              lab(18,100,'катет 4','#7fd1ff')+lab(110,184,'катет 3','#ffd76a'))+
+          vtx(A,'A','#ffd76a',false,0,doDraw)+vtx(B,'B','#7fd1ff',false,.1,doDraw)+vtx(C,'C','#8fd1a8',false,.2,doDraw)
+        )}
+        <button class="btn" style="margin-top:4px" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].leg=CHS[k].leg==='ac'?'ab':'ac';chRender(0);}catch(e){}">${legs?'Катеты как основание и высота':'Гипотенуза как основание'}</button>
+        <div class="wv-ans" style="font-size:16px">S = ½ · 3 · 4 = 6</div>
+        ${note('Прямой угол уже есть','Катеты сами стоят буквой Г. Один — основание, второй — высота, ничего опускать не нужно. ½·3·4 = 6. Кнопка показывает: можно взять и гипотенузу, но тогда высота другая — площадь та же.')}
       </div>`;
     } else if(step===4){
+      const way=!!st.way;
+      const H=[110,148];
+      const F=foot(C0,A0,B0);
+      const tri=`${A0[0]},${A0[1]} ${B0[0]},${B0[1]} ${C0[0]},${C0[1]}`;
       h=`<div class="wv-col">
-        <div class="wv-big">Высоты из разных вершин</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:18px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">½·a·hₐ = ½·b·h_b</div>
-          <div class="wv-pop2" style="color:#ffd76a;font-weight:bold">a·hₐ = b·h_b</div>
-        </div>
-        <div class="wv-sml">связь сторон и высот найдена!</div>
+        ${frame(
+          `<polygon points="${tri}" fill="rgba(127,209,255,.16)" stroke="#7fd1ff" stroke-width="2.3" ${doDraw?ink(polyLen([A0,B0,C0]),1.2,0):''}/>`+
+          (way
+            ? `<line x1="${C0[0]}" y1="${C0[1]}" x2="${F[0].toFixed(1)}" y2="${F[1].toFixed(1)}" stroke="#ffd76a" stroke-width="2.2" ${ink(dist(C0,F)+8,1,.1)}/>`+
+              sqMark(F,C0,'#ffd76a')+
+              lab((A0[0]+B0[0])/2-6,(A0[1]+B0[1])/2-8,'b = 8','#8fd1a8')+
+              lab(F[0]+16,(F[1]+C0[1])/2,'h = 7.5','#ffd76a')
+            : `<line x1="${A0[0]}" y1="${A0[1]}" x2="${H[0]}" y2="${H[1]}" stroke="#ffd76a" stroke-width="2.2" ${doDraw?ink(dist(A0,H)+8,1,.15):''}/>`+
+              sqMark(H,A0,'#ffd76a')+
+              lab(110,178,'a = 10','#8fd1a8')+
+              lab(128,92,'h = 6','#ffd76a'))+
+          vtx(A0,'A','#ffd76a',!way,0,doDraw)+vtx(B0,'B','#7fd1ff',false,.1,doDraw)+vtx(C0,'C','#8fd1a8',way,.2,doDraw)
+        )}
+        <button class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].way=!CHS[k].way;chRender(0);}catch(e){}">${way?'Способ 1: основание 10':'Способ 2: другая сторона'}</button>
+        <div class="wv-ans" style="font-size:15px">${way?'½ · 8 · 7.5 = 30':'½ · 10 · 6 = 30'}</div>
+        ${note('Одна площадь — два счёта','Фигура не меняется, значит оба ответа равны: ½·10·6 = ½·8·7.5. Приравниваем — и можно найти неизвестную сторону или высоту. Это и есть метод площадей.')}
       </div>`;
     } else if(step===5){
+      const map={
+        A:{P:A0, base:[B0,C0], col:'#ffd76a'},
+        B:{P:B0, base:[A0,C0], col:'#7fd1ff'},
+        C:{P:C0, base:[A0,B0], col:'#8fd1a8'}
+      };
+      const m=map[sel]||map.A;
+      const F=foot(m.P, m.base[0], m.base[1]);
+      const tri=`${A0[0]},${A0[1]} ${B0[0]},${B0[1]} ${C0[0]},${C0[1]}`;
+      const drawH = doDraw || st.selDrawn!==sel;
       h=`<div class="wv-col">
-        <div class="wv-big">Равные основания</div>
-        <div style="font-size:20px;color:#e8dcc8;font-family:Georgia,serif">S₁/S₂ = h₁/h₂</div>
-        <div class="wv-sml">S = ½·a·h, а ½·a одинаково → площади как высоты!</div>
+        ${frame(
+          `<polygon points="${tri}" fill="rgba(127,209,255,.12)" stroke="#7fd1ff" stroke-width="2.2"/>`+
+          `<line x1="${m.base[0][0]}" y1="${m.base[0][1]}" x2="${m.base[1][0]}" y2="${m.base[1][1]}" stroke="${m.col}" stroke-width="3"/>`+
+          (drawH
+            ? `<line x1="${m.P[0]}" y1="${m.P[1]}" x2="${F[0].toFixed(1)}" y2="${F[1].toFixed(1)}" stroke="${m.col}" stroke-width="2.2" ${ink(dist(m.P,F)+10,1.1,0)}/>`
+            : `<line x1="${m.P[0]}" y1="${m.P[1]}" x2="${F[0].toFixed(1)}" y2="${F[1].toFixed(1)}" stroke="${m.col}" stroke-width="2.2"/>`)+
+          sqMark(F,m.P,m.col)+
+          vtx(A0,'A','#ffd76a',sel==='A',0,doDraw)+vtx(B0,'B','#7fd1ff',sel==='B',.08,doDraw)+vtx(C0,'C','#8fd1a8',sel==='C',.16,doDraw)
+        )}
+        <div class="wv-ans" style="font-size:15px">a · hₐ = b · h_b = c · h_c</div>
+        ${note('Кликни вершину','Площадь одна, поэтому произведение стороны и высоты к ней всегда одно и то же. Высота дорисуется до прямой стороны. Нажми A, потом B, потом C — увидишь три пары с одним произведением.')}
       </div>`;
+      st.selDrawn=sel;
     } else if(step===6){
+      const h2 = Math.max(3, Math.min(12, +(st.h2==null?8:st.h2)));
+      const h1=4;
+      const B=[24,168], C=[108,168], E=[132,168], F=[216,168];
+      const A=[66,168-h1*10], D=[174,168-h2*10];
+      const s1=0.5*8*h1, s2=0.5*8*h2;
       h=`<div class="wv-col">
-        <div class="wv-big">Что даёт метод</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
-          ${[
-            ['найти высоту','через площадь','#7fd1ff'],
-            ['доказать равенство','двумя способами','#8fd1a8'],
-            ['отношения отрезков','площади как «мост»','#ffd76a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
-        </div>
+        ${frame(
+          `<polygon points="${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0]},${C[1]}" fill="rgba(127,209,255,.28)" stroke="#7fd1ff" stroke-width="2"/>`+
+          `<polygon points="${D[0]},${D[1]} ${E[0]},${E[1]} ${F[0]},${F[1]}" fill="rgba(255,215,106,.28)" stroke="#ffd76a" stroke-width="2"/>`+
+          `<line x1="66" y1="${A[1]}" x2="66" y2="168" stroke="#7fd1ff" stroke-width="1.6" stroke-dasharray="4 3"/>`+
+          `<line x1="174" y1="${D[1]}" x2="174" y2="168" stroke="#ffd76a" stroke-width="1.6" stroke-dasharray="4 3"/>`+
+          lab(66,188,'a','#8fd1a8')+lab(174,188,'a','#8fd1a8')+
+          lab(80,(A[1]+168)/2,'h₁='+h1,'#7fd1ff','start')+
+          lab(188,(D[1]+168)/2,'h₂='+h2,'#ffd76a','start')+
+          lab(66,A[1]-10,'S₁='+s1,'#7fd1ff')+
+          lab(174,D[1]-10,'S₂='+s2,'#ffd76a')
+        , '0 0 240 204')}
+        <div class="wv-ans" style="font-size:15px">S₁ : S₂ = ${h1} : ${h2}  →  ${s1} : ${s2}</div>
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">высота справа
+          <input type="range" min="3" max="12" value="${h2}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].h2=+this.value;chRender(0);}catch(e){}">
+          <b style="color:#ffd76a">${h2}</b>
+        </label>
+        ${note('Одинаковые основания','У обоих основание одно и то же. В формуле ½·a сокращается — остаётся отношение высот. Подними жёлтую вершину: площадь растёт ровно так же, как высота.')}
       </div>`;
     } else if(step===7){
+      const B=[24,160], C=[196,160], A=[110,28];
+      const Mx=B[0]+tM*(C[0]-B[0]), M=[Mx,160];
+      const left=`${A[0]},${A[1]} ${B[0]},${B[1]} ${M[0]},${M[1]}`;
+      const right=`${A[0]},${A[1]} ${M[0]},${M[1]} ${C[0]},${C[1]}`;
+      const bm=Math.max(1, Math.round(tM*10)), mc=Math.max(1, 10-bm);
+      const mid=Math.abs(tM-0.5)<0.03;
       h=`<div class="wv-col">
-        <div class="wv-big">Рецепт</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+        ${frame(
+          `<polygon points="${left}" fill="rgba(127,209,255,.32)" stroke="#7fd1ff" stroke-width="2"/>`+
+          `<polygon points="${right}" fill="rgba(255,215,106,.32)" stroke="#ffd76a" stroke-width="2"/>`+
+          `<line x1="${A[0]}" y1="${A[1]}" x2="${M[0]}" y2="${M[1]}" stroke="#8fd1a8" stroke-width="1.8" stroke-dasharray="5 3"/>`+
+          `<circle cx="${M[0]}" cy="${M[1]}" r="6.5" fill="#8fd1a8"/>`+
+          lab(M[0], M[1]+18, 'M', '#8fd1a8')+
+          lab(A[0], A[1]-10, 'A', '#ffd76a')+
+          lab(B[0]-2, B[1]+18, 'B', '#7fd1ff')+
+          lab(C[0]+2, C[1]+18, 'C', '#ffd76a')+
+          lab((B[0]+M[0])/2, 188, 'BM='+bm, '#7fd1ff')+
+          lab((M[0]+C[0])/2, 188, 'MC='+mc, '#ffd76a')
+        , '0 0 220 204')}
+        <div class="wv-ans" style="font-size:15px">S слева : S справа = BM : MC${mid?'  ·  пополам!':''}</div>
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">точка M
+          <input type="range" min="8" max="92" value="${Math.round(tM*100)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].t=this.value/100;chRender(0);}catch(e){}">
+        </label>
+        ${note('Общая вершина','Голубой и жёлтый треугольники имеют одну высоту из A. Значит площади относятся как основания BM и MC. Поставь M на середину — медианы делят площадь пополам. Это частый олимпиадный ход.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px">
           ${[
-            ['1️⃣','найди площадь удобно','#7fd1ff'],
-            ['2️⃣','найди её же иначе','#8fd1a8'],
-            ['3️⃣','приравняй — уравнение!','#ffd76a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;text-align:left;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+            ['1','Найди площадь удобно','через ½·a·h или как половину прямоугольника','#7fd1ff'],
+            ['2','Найди её же иначе','другая сторона, другая высота, другой разрез','#8fd1a8'],
+            ['3','Приравняй оба выражения','площадь одна — значит это уравнение','#ffd76a'],
+            ['4','Реши и проверь','неизвестная сторона, высота или отношение','#ff8ac0']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.12}s;display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[3]};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${x[3]};font-size:18px;min-width:18px">${x[0]}</b>
+            <span><div style="color:#e8dcc8;font-size:14px">${x[1]}</div><div class="wv-sml" style="margin-top:2px">${x[2]}</div></span>
+          </div>`).join('')}
         </div>
+        ${note('Площадь — мост','Не обязательно гоняться за длинами. Посчитай «сколько места занимает фигура» двумя путями — и отрезки сами найдутся.')}
       </div>`;
     } else {
+      const H=[110,148];
+      const tri=`${A0[0]},${A0[1]} ${B0[0]},${B0[1]} ${C0[0]},${C0[1]}`;
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${triPic(true)}
-        <div class="wv-sml">основание 10, высота 6 → S = ?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">½ · 10 · 6 = ?</div>
+        ${frame(
+          `<polygon points="${tri}" fill="rgba(127,209,255,.2)" stroke="#7fd1ff" stroke-width="2.4" ${doDraw?ink(polyLen([A0,B0,C0]),1.2,0):''}/>`+
+          `<line x1="${A0[0]}" y1="${A0[1]}" x2="${H[0]}" y2="${H[1]}" stroke="#ffd76a" stroke-width="2.2" ${doDraw?ink(dist(A0,H)+8,1,.2):''}/>`+
+          sqMark(H,A0,'#ffd76a')+
+          lab(110,178,'a = 10','#8fd1a8')+
+          lab(128,92,'h = 6','#ffd76a')+
+          vtx(A0,'A','#ffd76a',false,0,doDraw)+vtx(B0,'B','#7fd1ff',false,.1,doDraw)+vtx(C0,'C','#8fd1a8',false,.2,doDraw)
+        )}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">½ · 10 · 6 = ?</div>
+        ${note('В карман','Треугольник — половина прямоугольника. Основание 10, высота 6 → половина от 60. Дальше проверка и две задачи.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[425]=visD425;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===425){ window.ARH_LESSONS[i]=L425; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===425){ arr[i]=L425; f=true; break; } }
+    if(!f) arr.push(L425);
+  })();
 })();
 /* ================= УРОК 426 · Вписанные углы и четырёхугольники ================= */
 (function(){
