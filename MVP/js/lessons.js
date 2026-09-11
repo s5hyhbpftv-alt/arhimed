@@ -1,7 +1,7 @@
 /* АРХИМЕД MVP · lessons.js — ВсОШ-уроки «объясни → реши» (встроенные) */
 'use strict';
-let LV = { id:null, step:0, phase:'explain', ch:null, task:0, hints:0, sel:null };
-let LX = null; // визуальное состояние виджетов (улитки/голуби/цифры)
+var LV = { id:null, step:0, phase:'explain', ch:null, task:0, hints:0, sel:null };
+var LX = null; // визуальное состояние виджетов (улитки/голуби/цифры)
 
 function lessonById(id){ return window.ARH_LESSONS.find(L=>L.id===id); }
 function lrec(){ DB.lessons=DB.lessons||{}; if(!DB.lessons[LV.id]) DB.lessons[LV.id]={done:false,stars:0,tasks:[]}; return DB.lessons[LV.id]; }
@@ -16295,6 +16295,8 @@ function renderLessonVis(){
   const el=document.getElementById('lvis'); if(!el) return;
   if(window.VISKW&&window.VISKW[LV.id]){ try{ window.VISKW[LV.id](el); }catch(e){ el.innerHTML=''; } return; }
   const id=LV.id;
+  const wave=(window.WAVE_D&&WAVE_D[id])||(window.WAVE_C&&WAVE_C[id])||(window.WAVE_B&&WAVE_B[id])||(window.WAVE_E&&WAVE_E[id]);
+  if(wave){ try{ wave(el); }catch(e){ el.innerHTML=''; } return; }
   if(id===1) visL1(el);
   else if(id===87) visL87(el);
   else if(id===99) visL99(el);
