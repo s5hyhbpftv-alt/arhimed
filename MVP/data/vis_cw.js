@@ -474,113 +474,273 @@ window._waveCss = window._waveCss || function(id, css){
     id: 403, title: 'Линейные неравенства', ico: '📊',
     src: 'Математика · 7 класс · Алгебра 7: неравенства', subj: 'math',
     explain: [
-      'Неравенство отличается от уравнения только знаком: вместо «=» стоят «>», «<», «≥» или «≤». Например, 2x + 1 > 7. Решить неравенство — значит найти ВСЕ числа x, при которых оно верно.',
-      'Решаем как уравнение: переносим числа, упрощаем. 2x + 1 > 7 → переносим 1 вправо с минусом: 2x > 6. Теперь делим обе части на 2 — число ПОЛОЖИТЕЛЬНОЕ, знак не меняется: x > 3.',
-      'Ответ x > 3 изображают на числовой оси: пустой кружок на 3 (само число 3 не подходит) и луч вправо. Все числа больше 3 подходят: 4, 5, 100…',
-      'А теперь САМОЕ ВАЖНОЕ правило! Если умножить или разделить обе части неравенства на ОТРИЦАТЕЛЬНОЕ число, знак ПЕРЕВОРАЧИВАЕТСЯ. −3x < 9 делим на −3 → x > −3. Был «<», стал «>»!',
-      'Проверим, почему так. Возьмём x = −2: −3·(−2) = 6, а 6 < 9 — верно, −2 подходит. Возьмём x = −4: −3·(−4) = 12, а 12 < 9 — неверно! Значит, подходят числа БОЛЬШЕ −3 → x > −3.',
-      'Кружок: для строгого знака > или < — пустой (число на границе не подходит). Для нестрогого ≥ или ≤ — закрашенный (число подходит). x ≥ −3 включает само −3.',
-      'Всегда проверяй ответ! Подставь одно число из твоего промежутка в исходное неравенство — если получилась правда, ответ верный.',
-      'Запомни раз и навсегда: 1) делишь на положительное — знак тот же; 2) делишь на отрицательное — знак наоборот. Проверка числом — лучшая страховка!',
-      'Теперь проверь себя: реши −3x < 9. Вспомни про деление на отрицательное число!'
+      'Загадка: уравнение 2x + 1 = 7 ищет одну точку. Неравенство 2x + 1 > 7 ищет все точки, где правда. Ответ — не число, а луч. Сейчас нарисуем этот луч и узнаем, когда он вдруг разворачивается.',
+      'Четыре знака. > строго больше, < строго меньше, ≥ не меньше, ≤ не больше. Строгий знак границу не берёт — кружок пустой. Нестрогий берёт — кружок полный. Решить — выписать все x, для которых предложение верно.',
+      'Ход как у уравнения. 2x + 1 > 7: единицу вправо с минусом, 2x > 6. Делим на плюс два — знак тот же: x > 3. Пока делишь на положительное, зеркало не нужно.',
+      'Картинка: пустой кружок на 3 и луч вправо. Тройка не входит: 2·3 + 1 = 7, а нам нужно строго больше. Четвёрка входит, сотня входит, 3,1 входит. Целая половина оси.',
+      'Жми числа на оси. Зелёные — правда, красные — ложь. Граница 3 красная, потому что знак строгий. Так проверяют ответ быстрее, чем алгеброй.',
+      'Главный закон. Умножили или разделили обе части на отрицательное — знак переворачивается. −3x < 9 делим на −3: было «меньше», стало x > −3. Забыл перевернуть — луч уехал не туда.',
+      'Почему зеркало. Возьми x = −2: −3·(−2) = 6 < 9, правда. Возьми x = −4: −3·(−4) = 12 < 9, ложь. Подходят числа больше −3, не меньше. Проба двумя точками ловит ошибку в знаке.',
+      'Нажми «Перевернуть»: стрелка знака меняется местами. Это не фокус, это порядок на оси: умножение на минус разворачивает числа. Больше становится меньше.',
+      'Кружок. > и < — пустой, граница снаружи. ≥ и ≤ — полный, граница внутри. x ≥ −3 включает −3: подставь, получишь верное равенство, а нестрогое это разрешает.',
+      'Страховка: подставь любое число из луча в исходное, не в упрощённое. Если вышла правда — луч смотрит верно. Если ложь — ищи, где забыл минус.',
+      'Счёт целых. 2x < 10 → x < 5. Положительные целые: 1, 2, 3, 4. Четыре штуки. Ноль и отрицательные тоже подходят к неравенству, но вопрос просил только положительные — читай условие.',
+      'Живая ручка: двигай x, смотри 2x + 1 против семёрки. Слева от тройки полоска ниже, справа выше. Неравенство — про высоту полоски, не про одно равенство.',
+      'Связка знаков. Перенос слагаемых — как в уравнении. Деление на плюс — знак тот же. Деление на минус — наоборот. Рисовать ось. Проверять точкой.',
+      'Рецепт. 1) Упрости, как уравнение. 2) Смотри знак делителя. 3) Нарисуй кружок и луч. 4) Проверь точкой из луча и точкой с другой стороны. 5) Если считают целые — не забудь, входит ли граница.',
+      'В карман: 2x + 1 > 7 → x > 3, кружок пустой, вправо. −3x < 9 → x > −3, знак перевернули. 2x < 10, положительных целых четыре. x + 5 > 8 → x > 3.',
+      'Проверка: x + 5 > 8. Пятёрку вправо с минусом. x > 3. Не 13: это сложили. Не «меньше»: минуса в делении не было.'
     ],
     check: { q: 'Реши: x + 5 > 8', choices: ['x > 3', 'x > 13', 'x < 3', 'x > −3'], ans: 0,
-      exp: 'x > 8 − 5 = 3.' },
+      exp: 'Перенесли 5: x > 3. Делили на плюс, знак тот же.' },
     tasks: [
       { q: 'Сколько целых положительных x подходит: 2x < 10?', kind: 'unit', ans: 4, tol: 0,
-        hints: ['x < 5.', '1, 2, 3, 4 — четыре.'], sol: '4' },
-      { q: 'Реши: −3x < 9', kind: 'choice', choices: ['x > −3', 'x < −3', 'x > 3', 'x < 3'], ans: 0, tol: 0,
-        hints: ['Делим на −3 → знак меняется.', 'x > −3.'], sol: 'x > −3' }
+        hints: ['x < 5, положительные целые.', '1, 2, 3, 4 — граница 5 не входит.'], sol: '4' },
+      { q: 'Реши: −3x < 9', kind: 'choice',
+        choices: ['x > −3', 'x < −3', 'x > 3', 'x < 3'], ans: 0, tol: 0,
+        hints: ['Делим на −3, знак переворачивается.', 'x > −3.'], sol: 'x > −3' }
     ]
   };
-  const axis=(val,open)=>`<svg viewBox="0 0 260 80" style="width:230px;height:71px;background:#101f18;border-radius:10px">
-    <line x1="10" y1="44" x2="250" y2="44" stroke="#cfe0cf" stroke-width="2"/>
-    ${[-3,-2,-1,0,1,2,3,4,5].map(n=>`<text x="${130+(n)*18}" y="60" text-anchor="middle" font-size="11" fill="#8fa08f">${n}</text>`).join('')}
-    <circle cx="${130+(val)*18}" cy="44" r="7" fill="${open?'none':'#8fd1a8'}" stroke="#8fd1a8" stroke-width="3"/>
-    <line x1="${130+(val)*18+8}" y1="44" x2="248" y2="44" stroke="#8fd1a8" stroke-width="5" stroke-linecap="round"/>
-  </svg>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l403ink{to{stroke-dashoffset:0}}
+    @keyframes l403pop{0%{transform:scale(.18);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l403pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l403glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l403-ink{animation:l403ink 1.3s cubic-bezier(.2,.75,.15,1) forwards}
+    .l403-dot{transform-box:fill-box;transform-origin:center;animation:l403pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l403-pulse{animation:l403pulse 1.6s ease-in-out infinite}
+    .l403-glow{animation:l403glow 1.8s ease-in-out infinite}
+    .l403-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l403-ink" style="animation-duration:${dur||1.25}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l403-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner){
+    try{ window._waveCss && _waveCss('css-l403', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function AX(n){ return 120 + n*16; }
+  function axis(bound, dir, open, hi){
+    dir=dir==null?1:dir;
+    const y=120;
+    let t=`<line x1="18" y1="${y}" x2="222" y2="${y}" stroke="#3d5c49" stroke-width="2"/>`;
+    const lo=hi?-6:-5, top=hi?6:5;
+    for(let n=lo;n<=top;n++){
+      const x=AX(n);
+      if(x<22||x>218) continue;
+      t+=`<line x1="${x}" y1="${y-6}" x2="${x}" y2="${y+6}" stroke="#3d5c49"/>`+lab(x, y+22, String(n), MUTED, 'middle', 10);
+    }
+    const bx=Math.max(28, Math.min(212, AX(bound)));
+    const end=dir>0?216:24;
+    t+=`<line x1="${bx}" y1="${y}" x2="${end}" y2="${y}" stroke="${GREEN}" stroke-width="6" stroke-linecap="round" opacity=".85"/>`;
+    t+=`<circle class="l403-glow" cx="${bx}" cy="${y}" r="8" fill="${open?'#0c1a14':GREEN}" stroke="${GREEN}" stroke-width="3"/>`;
+    return t;
+  }
+
   function visC403(el){
+    try{ window._waveCss && _waveCss('css-l403', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:16px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'403';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const xv=Math.max(-4, Math.min(8, +(st.x==null?4:st.x)));
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Неравенство — почти уравнение</div>
-        <div style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">2x + 1 > 7</div>
-        <div class="wv-row" style="gap:5px">${chip('>','#ff9a8a')}${chip('<','#7fd1ff')}${chip('≥','#8fd1a8')}${chip('≤','#e8a0d8')}</div>
-        <div class="wv-sml">найти ВСЕ x, при которых верно</div>
+        ${frame(
+          lab(120, 40, open?'луч, не точка':'= ищет точку, > ищет …?', GOLD, 'middle', 14)+
+          (open?axis(3,1,true):`<circle cx="120" cy="120" r="8" fill="${GOLD}"/>`+lab(120, 148, 'x = 3', MUTED))+
+          lab(120, 188, '2x + 1 > 7', BLUE)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть луч'}</button>
+        ${note('Не одно число','Уравнение ставит точку. Неравенство закрашивает все x, где предложение правда. Ответ рисуют лучом.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Решаем как уравнение</div>
-        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:19px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">2x + 1 > 7</div>
-          <div class="wv-pop2">2x > 7 − 1</div>
-          <div class="wv-pop2">2x > 6 | :2</div>
-          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold;font-size:24px">x > 3</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:320px">
+          ${[['>','строго, пустой',RED],['<','строго, пустой',BLUE],['≥','граница внутри',GREEN],['≤','граница внутри',GOLD]].map((x,i)=>
+            `<div class="wv-pop" style="animation-delay:${i*.08}s;min-width:120px;text-align:center;border:2px solid ${x[2]};border-radius:12px;padding:8px 10px">
+              <div style="font-size:22px;color:${x[2]};font-family:Georgia,serif">${x[0]}</div>
+              <div style="font-size:12px;color:#e8dcc8">${x[1]}</div></div>`).join('')}
         </div>
-        <div class="wv-sml">делим на ПОЛОЖИТЕЛЬНОЕ 2 — знак тот же!</div>
+        ${note('Четыре знака','Строгий не берёт границу. Нестрогий берёт. Путать ≥ с > — типичная ошибка на оси: кружок должен быть полным или пустым.')}
       </div>`;
     } else if(step===2){
+      const show=Math.max(0, Math.min(3, st.s==null?0:+st.s));
+      const rows=['2x + 1 > 7','2x > 6','делим на +2, знак тот же','x > 3'];
       h=`<div class="wv-col">
-        <div class="wv-big">Ответ на оси: x > 3</div>
-        ${axis(3,true)}
-        <div class="wv-sml">пустой кружок — само 3 не подходит · луч вправо</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,280px)">
+          ${rows.map((t,i)=>`<div class="wv-pop" style="opacity:${i<=show?1:.28};border:1px solid #3d5c49;border-left:4px solid ${i===3?GREEN:GOLD};border-radius:10px;padding:8px 12px;font-size:16px;color:${i===3?GREEN:'#e8dcc8'};font-family:Georgia,serif">${t}</div>`).join('')}
+        </div>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].s=Math.min(3,(CHS[k].s||0)+1);chRender(0);}catch(e){}">${show>=3?'Готово':'Следующая строка'}</button>
+        ${note('Как уравнение','Перенос слагаемых тот же. Делитель плюс — зеркало не трогаем. Минус появится позже.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        <div class="wv-big">ГЛАВНОЕ: делим на минус!</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:20px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">−3x < 9 | :(−3)</div>
-          <div class="wv-pop2" style="color:#ff9a8a">было «<»</div>
-          <div class="wv-pop3" style="color:#8fd1a8;font-size:26px;font-weight:bold">x > −3 — стало «>»!</div>
-        </div>
-        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:7px 12px;font-size:14px;color:#ffcfc2;font-weight:bold" class="wv-ans">знак перевернулся — как зеркало!</div>
+        ${frame(axis(3,1,true)+lab(120, 40, 'x > 3', GOLD)+lab(120, 188, 'тройка снаружи', MUTED))}
+        ${note('Пустой кружок','2·3 + 1 = 7, равенство, а знак строгий. Граница не в ответе. Луч вправо: все, кто больше.')}
       </div>`;
     } else if(step===4){
+      const pick=st.p;
+      const ok=n=>n>3;
+      const nums=[-1,0,2,3,4,5];
       h=`<div class="wv-col">
-        <div class="wv-big">Проверяем на числах</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
-          ${[
-            ['x = −2','−3·(−2) = 6 < 9 — верно ✔','#8fd1a8'],
-            ['x = −4','−3·(−4) = 12 < 9 — НЕВЕРНО ✘','#ff9a8a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.15}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span style="font-size:12.5px">${x[1]}</span></div>`).join('')}
+        ${frame(axis(3,1,true)+(pick==null?'':`<circle class="l403-dot" cx="${AX(pick)}" cy="120" r="6" fill="${ok(pick)?GREEN:RED}"/>`)+lab(120, 40, pick==null?'жми число':'x = '+pick+(ok(pick)?' правда':' ложь'), pick==null?GOLD:(ok(pick)?GREEN:RED)))}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${nums.map(n=>`<button type="button" class="btn" style="border-color:${pick===n?(ok(n)?GREEN:RED):'#3d5c49'}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].p=${n};chRender(0);}catch(e){}">${n}</button>`).join('')}
         </div>
-        <div class="wv-sml">значит, x > −3 — подтвердилось!</div>
+        ${note('Проба на оси','3 красная: строго. 4 зелёная. 2 красная — не в луче. Так ловят ошибку, не пересчитывая всё.')}
       </div>`;
     } else if(step===5){
+      const fl=!!st.fl;
       h=`<div class="wv-col">
-        <div class="wv-big">Строгий и нестрогий знак</div>
-        ${axis(-3,false)}
-        <div class="wv-sml">x ≥ −3 — кружок ЗАКРАШЕН: само −3 подходит!</div>
+        ${frame(
+          lab(120, 56, '−3x < 9', GOLD, 'middle', 22)+
+          lab(120, 104, fl?'делим на −3':'делим на минус', MUTED)+
+          lab(120, 150, fl?'x > −3':'знак …?', fl?GREEN:RED, 'middle', 22)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].fl=1;chRender(0);}catch(e){}">${fl?'Перевернули':'Перевернуть знак'}</button>
+        ${note('Главный закон','Минус в делителе разворачивает неравенство. Забыл — луч уехал в другую сторону, и все пробы станут красными.')}
       </div>`;
     } else if(step===6){
+      const pick=st.q;
+      const ok=n=>n>-3;
       h=`<div class="wv-col">
-        <div class="wv-big">Проверка — лучшая страховка</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">подставь число из ответа в исходное неравенство: 0 > −3 → −3·0 = 0 < 9 ✔ — правда!</div>
+        ${frame(axis(-3,1,true,true)+(pick==null?'':`<circle class="l403-dot" cx="${AX(pick)}" cy="120" r="6" fill="${ok(pick)?GREEN:RED}"/>`)+lab(120, 40, '−3x < 9  →  x > −3', GOLD, 'middle', 13))}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${[-5,-4,-3,-2,0,2].map(n=>`<button type="button" class="btn" style="border-color:${pick===n?(ok(n)?GREEN:RED):'#3d5c49'}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].q=${n};chRender(0);}catch(e){}">${n}</button>`).join('')}
+        </div>
+        ${note('Две пробы','−2: −3·(−2)=6 < 9, правда. −4: 12 < 9, ложь. Значит луч вправо от −3, не влево. Проба ловит забытый переворот.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Правило на всю жизнь</div>
-        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+        ${frame(
+          lab(80, 70, 'a < b', BLUE, 'middle', 18)+
+          lab(160, 70, '−a > −b', GREEN, 'middle', 18)+
+          lab(120, 130, 'минус разворачивает ось', GOLD)+
+          lab(120, 170, 'больше ↔ меньше', MUTED)
+        )}
+        ${note('Почему зеркало','Умножить на минус — как развернуть линейку. Кто был правее, стал левее. Знак неравенства обязан развернуться вместе с осью.')}
+      </div>`;
+    } else if(step===8){
+      const full=!!st.full;
+      h=`<div class="wv-col">
+        ${frame(axis(-3,1,!full,true)+lab(120, 40, full?'x ≥ −3, граница внутри':'x > −3, граница снаружи', GOLD, 'middle', 13))}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].full=!CHS[k].full;chRender(0);}catch(e){}">${full?'Сделать строгим':'Закрасить кружок'}</button>
+        ${note('Пустой и полный','Строгий — дырка. Нестрогий — диск. Подставь границу: если исходное стало равенством и знак нестрогий — кружок полный.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[
-            ['делишь на плюс','знак тот же','#8fd1a8'],
-            ['делишь на минус','знак наоборот!','#ff9a8a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+            ['точка из луча','должна дать правду',GREEN],
+            ['точка с другой стороны','должна дать ложь',RED],
+            ['граница','правда только если ≥ или ≤',GOLD]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
+        ${note('Страховка','Подставляй в исходное, не в упрощённое. Так ловят ошибку переноса и ошибку знака одним взглядом.')}
+      </div>`;
+    } else if(step===10){
+      const on=st.ints||[];
+      const good=[1,2,3,4];
+      h=`<div class="wv-col">
+        ${frame(axis(5,-1,true)+lab(120, 40, '2x < 10  →  x < 5', GOLD)+lab(120, 188, 'положительные целые?', MUTED))}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${[1,2,3,4,5,6].map(n=>{
+            const sel=on.indexOf(n)>=0;
+            const right=n<5;
+            return `<button type="button" class="btn" style="border-color:${sel?(right?GREEN:RED):'#3d5c49'}"
+              onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};const a=(CHS[k].ints||[]).slice(); if(a.indexOf(${n})<0)a.push(${n}); CHS[k].ints=a; chRender(0);}catch(e){}">${n}</button>`;
+          }).join('')}
+        </div>
+        ${on.length?`<div class="wv-ans" style="font-size:15px">выбрано подходящих: ${on.filter(n=>n<5&&n>0).length} из 4</div>`:''}
+        ${note('Читай вопрос','x < 5. Пятёрка не входит. Положительные: 1–4. Ноль тоже меньше пяти, но его не просили.')}
+      </div>`;
+    } else if(step===11){
+      const v=2*xv+1;
+      const pass=v>7;
+      const hgt=Math.max(8, Math.min(140, v*8));
+      h=`<div class="wv-col">
+        ${frame(
+          `<rect x="70" y="${180-hgt}" width="36" height="${hgt}" rx="6" fill="${pass?GREEN:RED}33" stroke="${pass?GREEN:RED}"/>`+
+          `<line x1="50" y1="${180-56}" x2="190" y2="${180-56}" stroke="${GOLD}" stroke-dasharray="5 4"/>`+
+          lab(170, 180-56-8, '7', GOLD)+
+          lab(88, 40, '2x+1 = '+(Math.round(v*10)/10).toString().replace('.',','), pass?GREEN:RED)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">x
+          <input type="range" min="-20" max="80" value="${Math.round(xv*10)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].x=this.value/10;chRender(0);}catch(e){}">
+          <b style="color:${GOLD};min-width:28px">${xv.toString().replace('.',',')}</b>
+        </label>
+        ${note('Высота против семёрки','Полоска выше золотой черты — правда. Ниже — ложь. Граница x = 3, полоска ровно 7: для строгого знака ещё не хватает.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['перенос','как в уравнении',BLUE],
+            ['деление на плюс','знак тот же',GREEN],
+            ['деление на минус','знак наоборот',RED],
+            ['ось + проба','кружок и две точки',GOLD]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('Связка','Алгебра даёт луч. Ось его рисует. Проба его проверяет. Без одного из трёх легко уехать не туда.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Упрости как уравнение',GOLD],
+            ['2','Смотри знак делителя',RED],
+            ['3','Кружок и луч на оси',GREEN],
+            ['4','Проба из луча и снаружи',BLUE]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Не рисуй луч, пока не решил, куда смотрит знак. Не сдавай, пока две пробы не согласны.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(axis(3,1,true)+lab(120, 40, 'x > 3  ·  пустой  ·  вправо', GOLD, 'middle', 13)+lab(120, 188, 'минус → перевернуть', RED))}
+        ${note('В карман','2x+1>7 → x>3. −3x<9 → x>−3. Положительных целых у 2x<10 — четыре. x+5>8 → x>3.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">−3x < 9</div>
-        <div class="wv-sml">делим на −3 — не забудь перевернуть знак!</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 14px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">x ? −3</div>
+        ${frame(lab(120, 80, 'x + 5 > 8', GOLD, 'middle', 22)+lab(120, 130, 'x ? 3', MUTED))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">x > ?</div>
+        ${note('Проверка','x > 3. Пятёрку перенесли. Не 13 и не меньше: минуса не было.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_C[403]=visC403;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===403){ window.ARH_LESSONS[i]=L403; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===403){ arr[i]=L403; f=true; break; } }
+    if(!f) arr.push(L403);
+  })();
 })();
 /* ================= УРОК 404 · Признаки равенства треугольников ================= */
 (function(){
@@ -588,109 +748,275 @@ window._waveCss = window._waveCss || function(id, css){
     id: 404, title: 'Признаки равенства треугольников', ico: '📐',
     src: 'Математика · 7 класс · Геометрия 7: треугольники', subj: 'math',
     explain: [
-      'Два треугольника равны, если их можно совместить наложением: все стороны и углы совпали. Проверять все шесть элементов долго. Геометры нашли три КОРОТКИХ признака — по ним равенство проверяется быстро!',
-      'Первый признак: если две стороны одного треугольника равны двум сторонам другого И угол МЕЖДУ ними равен — треугольники равны. Сравниваем «палочки» у угла: длина слева, угол, длина справа.',
-      'Почему хватает двух сторон и угла? Треугольник — жёсткая конструкция. Две палочки выходят из вершины под известным углом: их концы заданы длинами, и третья сторона «дорисуется» сама. Шевельнуть нельзя!',
-      'Второй признак: если сторона одного треугольника равна стороне другого и два угла, ПРИЛЕЖАЩИЕ к этой стороне, равны — треугольники равны. Сторона — как «полка», на которой лежат два угла по краям.',
-      'Третий признак — самый простой: если все три стороны одного треугольника равны трём сторонам другого — треугольники равны. Углы даже сравнивать не нужно: стороны определяют форму полностью!',
-      'Как запомнить? Первый: сторона — угол — сторона (СУС). Второй: угол — сторона — угол (УСУ). Третий: сторона — сторона — сторона (ССС). По первым буквам легко вспомнить!',
-      'Помни про сумму углов: она всегда 180°. Зная два угла, третий находим вычитанием: 60° + 70° = 130°, третий = 180 − 130 = 50°. Это часто помогает в задачах на признаки.',
-      'В задачах «докажи, что треугольники равны»: 1) ищи равные стороны (часто — общая сторона!); 2) ищи равные углы (вертикальные или данные); 3) выбери подходящий признак и запиши вывод.',
-      'Теперь проверь себя: равенство по двум сторонам и углу между ними — какой это признак?'
+      'Загадка: два треугольника. Чтобы доказать, что они равны, можно сравнивать все шесть кусков: три стороны и три угла. Геометры нашли три коротких ключа. Одного ключа хватает — если он настоящий.',
+      'Равны значит: можно наложить и они совпадут. Нажми «Наложить»: правый треугольник едет на левый. Если ключ верный, контуры сливаются. Если нет — торчит угол.',
+      'Первый ключ СУС: две стороны и угол между ними. Не любой угол, а тот, что зажат этими сторонами. Две палочки из одной вершины под известным углом: концы заданы, третья сторона дорисуется сама. Шевельнуть нельзя — треугольник жёсткий.',
+      'Почему «между». Если угол не между данными сторонами, это уже не СУС, а ССУ — и такого признака нет. Нажми «Не тот угол»: форма прыгает, равенства нет. Ловушка номера один.',
+      'Второй ключ УСУ: сторона и два прилежащих к ней угла. Сторона как полка, углы сидят по краям. Третий угол сам 180 минус сумма, дальше стороны определяются однозначно.',
+      'Полка важна: углы должны прилежать к этой стороне, не быть «где-то в треугольнике». Если дан угол напротив, это уже другой разговор.',
+      'Третий ключ ССС: три стороны. Углы можно не трогать. Три палочки заданной длины собираются в треугольник одним способом (с точностью до переворота). Форма заморожена.',
+      'Памятка. СУС — первый. УСУ — второй. ССС — третий. Переключай ключи на чертеже: загораются нужные палочки и дуги. Остальное серое — его доказывать не надо.',
+      'Не-ключ ССУ: две стороны и угол напротив одной из них. Иногда получаются два разных треугольника. Поэтому в школе этот набор не признак. Не записывай его как четвёртый.',
+      'Сумма углов 180°. Зная два, третий даром. Часто УСУ получают так: дали один угол, второй нашли вычитанием, сторона общая — и ключ собрался.',
+      'Общая сторона — подарок. Два треугольника с общей BC: эта сторона уже равна себе. Ищи ещё два куска. Нажми общую — она вспыхнет один раз на двоих.',
+      'Как пишут доказательство. 1) Равные стороны (данные, общие, вертикальные не бывают у сторон — у углов). 2) Равные углы (данные, вертикальные, накрест). 3) Имя ключа. 4) Вывод: треугольники равны.',
+      'После равенства соответствующие элементы равны. Соответствие вершин пишут в порядке: ABC = A₁B₁C₁ значит A↔A₁, сторона AB↔A₁B₁. Порядок букв — это карта, не украшение.',
+      'Рецепт. Сначала общая или равные по условию. Потом углы. Собрать СУС, УСУ или ССС. Не хватает куска — не выдумывай ССУ. Проверь соответствие вершин.',
+      'В карман: три ключа. СУС — угол между. УСУ — углы к стороне. ССС — три стороны. ССУ не ключ. Общая сторона считается. Сумма 180° помогает набрать углы.',
+      'Проверка: две стороны и угол между ними — какой признак? Первый, СУС. Не второй: там сторона и два угла. Не третий: там три стороны.'
     ],
     check: { q: 'Равенство по двум сторонам и углу между ними — какой признак?', choices: ['первый', 'второй', 'третий', 'такого нет'], ans: 0,
-      exp: 'Это первый признак равенства.' },
+      exp: 'Первый признак, СУС: две стороны и угол между ними.' },
     tasks: [
       { q: 'Сколько признаков равенства треугольников изучают?', kind: 'unit', ans: 3, tol: 0,
-        hints: ['По сторонам и углам.', 'Три признака.'], sol: '3' },
-      { q: 'По каким элементам проверяют третий признак?', kind: 'choice', choices: ['по трём сторонам', 'по двум сторонам и углу', 'по стороне и двум углам', 'по двум углам'], ans: 0, tol: 0,
-        hints: ['Третий признак.', 'Три стороны.'], sol: 'по трём сторонам' }
+        hints: ['СУС, УСУ, ССС.', 'Три коротких ключа.'], sol: '3' },
+      { q: 'По каким элементам проверяют третий признак?', kind: 'choice',
+        choices: ['по трём сторонам', 'по двум сторонам и углу', 'по стороне и двум углам', 'по двум углам'], ans: 0, tol: 0,
+        hints: ['Третий — ССС.', 'Только стороны.'], sol: 'по трём сторонам' }
     ]
   };
-  const tri=(kind)=>`<svg viewBox="0 0 150 120" style="width:${kind==='sss'?160:150}px;height:120px">
-    ${kind==='sus'?`<polygon points="75,12 15,108 135,108" fill="rgba(127,209,255,.1)" stroke="#7fd1ff" stroke-width="3"/>
-      <line x1="75" y1="12" x2="15" y2="108" stroke="#ffd76a" stroke-width="4"/><line x1="75" y1="12" x2="135" y2="108" stroke="#8fd1a8" stroke-width="4"/>
-      <path d="M75 12 L62 32 A 24 24 0 0 1 87 29 Z" fill="rgba(255,138,192,.5)"/>`:
-    kind==='usu'?`<polygon points="20,108 130,108 75,12" fill="rgba(143,209,168,.1)" stroke="#8fd1a8" stroke-width="3"/>
-      <line x1="20" y1="108" x2="130" y2="108" stroke="#ffd76a" stroke-width="4"/>
-      <path d="M75 12 L62 32 A 24 24 0 0 1 87 29 Z" fill="rgba(255,138,192,.5)"/>
-      <path d="M20 108 L44 88 A 26 26 0 0 0 22 92 Z" fill="rgba(127,209,255,.5)"/>`:
-    `<polygon points="75,12 15,108 135,108" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="3"/>
-      <line x1="75" y1="12" x2="15" y2="108" stroke="#ff9a8a" stroke-width="4"/><line x1="15" y1="108" x2="135" y2="108" stroke="#7fd1ff" stroke-width="4"/><line x1="135" y1="108" x2="75" y2="12" stroke="#8fd1a8" stroke-width="4"/>`}
-  </svg>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', PINK='#ff8ac0', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l404ink{to{stroke-dashoffset:0}}
+    @keyframes l404pop{0%{transform:scale(.18);opacity:0}70%{transform:scale(1.14)}100%{transform:scale(1);opacity:1}}
+    @keyframes l404pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l404glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l404-ink{animation:l404ink 1.35s cubic-bezier(.2,.75,.15,1) forwards}
+    .l404-dot{transform-box:fill-box;transform-origin:center;animation:l404pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l404-pulse{animation:l404pulse 1.6s ease-in-out infinite}
+    .l404-glow{animation:l404glow 1.8s ease-in-out infinite}
+    .l404-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l404-ink" style="animation-duration:${dur||1.3}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l404-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner){
+    try{ window._waveCss && _waveCss('css-l404', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function hyp(ax,ay,bx,by){ return Math.hypot(bx-ax, by-ay); }
+  function poly(A,B,C, col, w, anim){
+    const L=hyp(A[0],A[1],B[0],B[1])+hyp(B[0],B[1],C[0],C[1])+hyp(C[0],C[1],A[0],A[1]);
+    return `<polygon points="${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0]},${C[1]}" fill="${col}14" stroke="${col}" stroke-width="${w||2.4}" ${anim?ink(L,1.3,0):''}/>`;
+  }
+  function seg(A,B,col,w,anim){
+    const L=hyp(A[0],A[1],B[0],B[1]);
+    return `<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="${col}" stroke-width="${w||3}" ${anim?ink(L,1.15,0):''}/>`;
+  }
+  function arc(P, Q, R, col){
+    const vx=Q[0]-P[0], vy=Q[1]-P[1], wx=R[0]-P[0], wy=R[1]-P[1];
+    const nl=Math.hypot(vx,vy)||1, ml=Math.hypot(wx,wy)||1;
+    const r=18;
+    const x1=P[0]+vx/nl*r, y1=P[1]+vy/nl*r, x2=P[0]+wx/ml*r, y2=P[1]+wy/ml*r;
+    const a1=Math.atan2(y1-P[1], x1-P[0]), a2=Math.atan2(y2-P[1], x2-P[0]);
+    let d=a2-a1; while(d<=-Math.PI) d+=2*Math.PI; while(d>Math.PI) d-=2*Math.PI;
+    const sweep=d>0?1:0;
+    return `<path d="M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 0 ${sweep} ${x2.toFixed(1)} ${y2.toFixed(1)}" fill="none" stroke="${col}" stroke-width="2.6"/>`;
+  }
+  const Lft=[[70,36],[24,178],[118,178]];
+  const Rgt=[[168,42],[128,170],[214,178]];
+
   function visC404(el){
+    try{ window._waveCss && _waveCss('css-l404', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'404';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const t=Math.max(0, Math.min(1, +(st.t==null?0:st.t)));
+    const key=st.key||'sus';
+    const A=Lft[0], B=Lft[1], C=Lft[2];
     let h='';
+
     if(step===0){
+      const mix=Rgt.map((p,i)=>[p[0]+t*(Lft[i][0]-p[0]), p[1]+t*(Lft[i][1]-p[1])]);
       h=`<div class="wv-col">
-        <div class="wv-big">Равные треугольники</div>
-        <div style="display:flex;gap:8px;justify-content:center">${tri('sss')}${tri('sss')}</div>
-        <div class="wv-sml">можно наложить — всё совпало! Как проверить быстро?</div>
+        ${frame(poly(Lft[0],Lft[1],Lft[2], BLUE, 2.4, doDraw)+poly(mix[0],mix[1],mix[2], GOLD, 2.4)+lab(120, 18, t>0.9?'совпали':'наложи два треугольника', GOLD, 'middle', 13))}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">наложить
+          <input type="range" min="0" max="100" value="${Math.round(t*100)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].t=this.value/100;chRender(0);}catch(e){}">
+        </label>
+        ${note('Равны = совместить','Если контуры слились, треугольники равны. Проверять все шесть кусков долго. Дальше — три коротких ключа.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">1-й признак: СУС</div>
-        ${tri('sus')}
-        <div class="wv-sml">две стороны + угол <b style="color:#ff8ac0">между ними</b></div>
-        <div class="wv-sml">золотая и зелёная стороны + розовый угол</div>
+        ${frame(
+          poly(A,B,C,BLUE,2.4,doDraw)+
+          lab(A[0], A[1]-12, 'A', GOLD)+lab(B[0]-8, B[1]+16, 'B', GOLD)+lab(C[0]+8, C[1]+16, 'C', GOLD)+
+          lab(120, 90, '3 стороны + 3 угла', MUTED)+
+          lab(120, 18, 'шесть кусков — долго', GOLD)
+        )}
+        ${note('Зачем признаки','Равенство по определению — наложение. На бумаге наложение не сделать. Признак даёт короткое доказательство без кальки.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">Жёсткость треугольника</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">две «палочки» из вершины под углом: их концы заданы → третья сторона <b style="color:#ffd76a">дорисуется сама</b>! Шевельнуть нельзя.</div>
+        ${frame(
+          poly(A,B,C,BLUE,1.6)+
+          seg(A,B,GOLD,3.4,doDraw)+seg(A,C,GREEN,3.4)+
+          arc(A,B,C,PINK)+
+          lab(120, 18, 'СУС: две стороны и угол между', GOLD, 'middle', 12)
+        )}
+        ${note('Первый ключ','Угол зажат данными сторонами. Не сбоку и не напротив. Палочки + угол между ними — жёсткая петля.')}
       </div>`;
     } else if(step===3){
+      const rods=!!st.rods;
       h=`<div class="wv-col">
-        <div class="wv-big">2-й признак: УСУ</div>
-        ${tri('usu')}
-        <div class="wv-sml">сторона + два <b style="color:#ff8ac0">прилежащих</b> угла</div>
+        ${frame(
+          (rods?poly(A,B,C,BLUE,2):'')+
+          seg(A,B,GOLD,4,doDraw)+seg(A,C,GREEN,4)+
+          arc(A,B,C,PINK)+
+          lab(120, 18, rods?'третья сторона сама':'две палочки из вершины', GOLD, 'middle', 13)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].rods=1;chRender(0);}catch(e){}">${rods?'Жёстко':'Дорисовать основание'}</button>
+        ${note('Жёсткость','Концы палочек уже на своих местах. Основание одно. Шевельнуть угол нельзя: его длина зафиксировала раствор.')}
       </div>`;
     } else if(step===4){
+      const wrong=!!st.wrong;
       h=`<div class="wv-col">
-        <div class="wv-big">3-й признак: ССС</div>
-        ${tri('sss')}
-        <div class="wv-sml">три стороны — углы проверять не нужно!</div>
+        ${frame(
+          poly(A,B,C,BLUE,1.6)+
+          seg(A,B,GOLD,3.2)+seg(B,C,GREEN,3.2)+
+          (wrong?arc(B,A,C,RED):arc(A,B,C,PINK))+
+          lab(120, 18, wrong?'ССУ — не признак':'угол между — да', wrong?RED:PINK, 'middle', 13)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].wrong=!CHS[k].wrong;chRender(0);}catch(e){}">${wrong?'Вернуть угол между':'Не тот угол'}</button>
+        ${note('Ловушка','Две стороны и угол не между ними — это ССУ. В школе это не ключ: иногда собираются два разных треугольника.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        <div class="wv-big">Как запомнить</div>
-        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
-          ${chip('СУС — 1-й','#7fd1ff')}${chip('УСУ — 2-й','#8fd1a8')}${chip('ССС — 3-й','#ffd76a')}
-        </div>
-        <div class="wv-sml">по первым буквам легко вспомнить!</div>
+        ${frame(
+          poly(A,B,C,GREEN,1.6)+
+          seg(B,C,GOLD,3.6,doDraw)+
+          arc(B,A,C,PINK)+arc(C,B,A,BLUE)+
+          lab(120, 18, 'УСУ: полка и два угла по краям', GOLD, 'middle', 12)
+        )}
+        ${note('Второй ключ','Сторона — полка. Углы прилежат к ней, сидят на концах. Не «два любых угла», а именно соседние с этой стороной.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
-        <div class="wv-big">Сумма углов 180°</div>
-        <div style="display:flex;gap:8px;justify-content:center;align-items:center">
-          <span class="wv-chip">60°</span><span class="wv-chip">70°</span><span style="color:#ffd76a;font-size:22px">= 130°</span>
-        </div>
-        <div style="font-size:20px;color:#8fd1a8;font-family:Georgia,serif">третий = 180 − 130 = <b class="wv-ans">50°</b></div>
+        ${frame(
+          lab(120, 56, '∠A + ∠B + ∠C = 180°', GOLD, 'middle', 16)+
+          lab(120, 108, '60° + 70° → третий 50°', GREEN)+
+          lab(120, 152, 'второй угол часто даром', MUTED)
+        )}
+        ${note('Сумма помогает','Зная два угла, третий вычитается. Потом смотри, прилежат ли они к данной стороне — и УСУ собирается без нового замера.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Рецепт решения</div>
-        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
-          ${[
-            ['1️⃣','ищи равные стороны (общая сторона!)','#7fd1ff'],
-            ['2️⃣','ищи равные углы (вертикальные)','#8fd1a8'],
-            ['3️⃣','выбери признак и запиши вывод','#ffd76a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;text-align:left;font-size:14px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        ${frame(
+          poly(A,B,C,GOLD,1.6)+
+          seg(A,B,RED,3.2,doDraw)+seg(B,C,BLUE,3.2)+seg(C,A,GREEN,3.2)+
+          lab(120, 18, 'ССС: три стороны', GOLD)
+        )}
+        ${note('Третий ключ','Углы не нужны. Три длины собирают форму одним способом (можно перевернуть, но это тот же треугольник).')}
+      </div>`;
+    } else if(step===8){
+      const vis=key==='sus'?poly(A,B,C,BLUE,1.4)+seg(A,B,GOLD,3.4)+seg(A,C,GREEN,3.4)+arc(A,B,C,PINK)+lab(120,18,'СУС — первый',GOLD)
+        :key==='usu'?poly(A,B,C,GREEN,1.4)+seg(B,C,GOLD,3.4)+arc(B,A,C,PINK)+arc(C,B,A,BLUE)+lab(120,18,'УСУ — второй',GREEN)
+        :poly(A,B,C,GOLD,1.4)+seg(A,B,RED,3)+seg(B,C,BLUE,3)+seg(C,A,GREEN,3)+lab(120,18,'ССС — третий',GOLD);
+      h=`<div class="wv-col">
+        ${frame(vis)}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${[['sus','СУС',GOLD],['usu','УСУ',GREEN],['sss','ССС',BLUE]].map(x=>`<button type="button" class="btn" style="border-color:${key===x[0]?x[2]:'#3d5c49'}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].key='${x[0]}';chRender(0);}catch(e){}">${x[1]}</button>`).join('')}
         </div>
+        ${note('Три кнопки','Загорается только то, что входит в ключ. Серое доказывать не надо. Сначала назови ключ, потом ищи эти куски на чертеже.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${frame(
+          poly(A,B,C,RED,1.6)+
+          seg(A,B,GOLD,3)+seg(A,C,GREEN,3)+
+          arc(B,A,C,RED)+
+          lab(120, 18, 'ССУ — не ключ', RED)
+        )}
+        ${note('Почему нет четвёртого','Две стороны и угол напротив одной из них могут собрать два разных треугольника. Поэтому в этом курсе ССУ не пишут как признак.')}
+      </div>`;
+    } else if(step===10){
+      const D=[118,70];
+      const on=!!st.share;
+      h=`<div class="wv-col">
+        ${frame(
+          poly(A,B,C,BLUE,1.8)+poly(D,B,C,GOLD,1.8)+
+          (on?seg(B,C,PINK,4):seg(B,C,MUTED,2))+
+          lab(B[0]-8, B[1]+16, 'B', GOLD)+lab(C[0]+8, C[1]+16, 'C', GOLD)+
+          lab(120, 18, on?'BC общая, уже равна себе':'два треугольника, одна сторона', GOLD, 'middle', 12)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].share=1;chRender(0);}catch(e){}">${on?'Общая вспыхнула':'Показать общую'}</button>
+        ${note('Подарок чертежа','Общую сторону не надо измерять. Она равна себе. Ищи ещё два куска — и ключ часто собирается.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','равные стороны: данные или общая',GOLD],
+            ['2','равные углы: данные, вертикальные, накрест',PINK],
+            ['3','имя ключа: СУС / УСУ / ССС',GREEN],
+            ['4','вывод: треугольники равны',BLUE]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Как пишут','Не начинай с вывода. Сначала куски, потом имя признака. Порядок букв в ABC = A₁B₁C₁ — это соответствие вершин.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 70, 'ABC = A₁B₁C₁', GOLD, 'middle', 20)+
+          lab(120, 118, 'A↔A₁  B↔B₁  C↔C₁', GREEN)+
+          lab(120, 160, 'AB ↔ A₁B₁', MUTED)
+        )}
+        ${note('Порядок букв','Не «просто равны», а с картой вершин. Иначе соответствующая сторона может оказаться не той.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['найди общую или равные по условию',GOLD],
+            ['собери СУС, УСУ или ССС',GREEN],
+            ['не выдумывай ССУ',RED],
+            ['проверь порядок вершин',BLUE]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;border:1px solid #3d5c49;border-left:4px solid ${x[1]};border-radius:10px;padding:8px 12px;color:#e8dcc8;font-size:14px;text-align:left">${x[0]}</div>`).join('')}
+        </div>
+        ${note('Рецепт','Ключ короткий: три куска в правильном порядке. Четвёртый кусок не спасает, если набор не из списка.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          poly(A,B,C,BLUE,2)+
+          lab(120, 18, 'СУС · УСУ · ССС', GOLD)+
+          lab(120, 100, 'ССУ — нет', RED)
+        )}
+        ${note('В карман','Первый — угол между двумя сторонами. Второй — полка и два края. Третий — три стороны. Общая считается.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${tri('sus')}
-        <div class="wv-sml">две стороны и угол между ними — какой признак?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 14px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">первый? второй? третий?</div>
+        ${frame(poly(A,B,C,GOLD,2)+lab(120, 18, 'две стороны и угол между', GOLD, 'middle', 13))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:16px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">какой признак?</div>
+        ${note('Проверка','Первый, СУС. Не второй и не «такого нет».')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_C[404]=visC404;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===404){ window.ARH_LESSONS[i]=L404; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===404){ arr[i]=L404; f=true; break; } }
+    if(!f) arr.push(L404);
+  })();
 })();
 /* ================= УРОК 405 · Медианы, биссектрисы, высоты ================= */
 (function(){
