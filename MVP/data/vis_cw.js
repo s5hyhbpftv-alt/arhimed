@@ -698,104 +698,229 @@ window._waveCss = window._waveCss || function(id, css){
     id: 405, title: 'Медианы, биссектрисы, высоты', ico: '📐',
     src: 'Математика · 7 класс · Геометрия 7', subj: 'math',
     explain: [
-      'У каждого треугольника есть три замечательных отрезка: медиана, биссектриса и высота. Все они выходят из вершины и тянутся к противоположной стороне. Чем они отличаются? Сейчас разберёмся!',
-      'Медиана — отрезок из вершины к СЕРЕДИНЕ противоположной стороны. Она делит сторону BC пополам: BM = MC. Слово похоже на «средний» — она идёт в середину!',
-      'Биссектриса — отрезок из вершины, который делит УГОЛ пополам. Угол A = 80° → биссектриса делит его на два по 40°. «Бис» — дважды, «сектриса» — режет: режет угол на два равных.',
-      'Высота — отрезок из вершины, опущенный на противоположную сторону ПОД ПРЯМЫМ УГЛОМ (90°). Представь отвес строителя, падающий из вершины. Прямой угол на чертеже помечают квадратиком.',
-      'В равнобедренном треугольнике (две стороны равны) медиана из вершины к основанию ОДНОВРЕМЕННО является и высотой, и биссектрисой! Один отрезок выполняет сразу три работы.',
-      'Все три медианы пересекаются в ОДНОЙ точке — центроиде. Она делит каждую медиану в отношении 2:1 от вершины. Если поставить треугольник на эту точку, он будет балансировать!',
-      'Как не перепутать? Медиана идёт к СЕРЕДИНЕ (равные отрезки на стороне). Биссектриса делит УГОЛ (равные углы). Высота — под 90° (квадратик прямого угла). На рисунке всегда есть подсказка!',
-      'Биссектрисы тоже пересекаются в одной точке — центре вписанной окружности. А высоты — в ортоцентре. У каждого треугольника есть целый «ансамбль» замечательных точек!',
-      'Теперь проверь себя: какой отрезок делит угол пополам — медиана, биссектриса или высота?'
+      'Загадка: из вершины треугольника можно провести три разных отрезка к противоположной стороне. Один ищет середину, второй режет угол, третий падает отвесом. Как их не перепутать и зачем они все?',
+      'Медиана — отрезок из вершины в середину противоположной стороны. Если M — середина BC, то AM — медиана и BM = MC. Слово от «средний»: цель — середина стороны, не середина угла.',
+      'Биссектриса — луч из вершины, делящий угол пополам. Отрезок биссектрисы — кусок этого луча до стороны. «Бис» — дважды, «сец» — резать. Угол 80° даёт два по 40°. Теорема: биссектриса делит противоположную сторону пропорционально боковым: BD/DC = AB/AC.',
+      'Высота — перпендикуляр из вершины на прямую, содержащую противоположную сторону. На чертеже — квадратик 90°. В остроугольном треугольнике основание высоты внутри стороны. В тупоугольном — на продолжении. Это не «самая длинная», это «самая отвесная».',
+      'Три разных основания на одной стороне. Нажми переключатель: медиана, биссектриса и высота из одной вершины почти никогда не совпадают. Совпадение — событие, не норма.',
+      'Равнобедренный треугольник — то самое событие. Медиана к основанию, высота к основанию и биссектриса угла при вершине — один отрезок. Три работы, одна линия. Нажми «Сделать равнобедренным».',
+      'Три медианы пересекаются в одной точке G, центроиде. Центроид делит каждую медиану в отношении 2 : 1, считая от вершины. Две трети пути от A к середине — и ты в центре масс. Треугольник на острие в G балансирует.',
+      'Нажми «Шаг к центру»: точка бежит по медиане и замирает на двух третях. Это не «примерно в середине медианы» — ровно 2 : 1. Запомни отношение, его спрашивают.',
+      'Три биссектрисы тоже в одной точке — инцентре I. Это центр вписанной окружности, она касается всех трёх сторон. Из I на стороны падают равные перпендикуляры — радиусы.',
+      'Три высоты встречаются в ортоцентре H. В остроугольном H внутри, в прямоугольном — в вершине прямого угла, в тупоугольном — снаружи. Не путай H с основанием высоты: основание — нога перпендикуляра, ортоцентр — встреча всех трёх.',
+      'Четвёртая замечательная точка — центр описанной окружности O, пересечение серединных перпендикуляров. Через O проходит окружность всех трёх вершин. Медиана, биссектриса и высота — про чевианы из вершины; O строится иначе.',
+      'Как не перепутать на чертеже. Равные чёрточки на стороне — медиана. Две дуги у угла — биссектриса. Квадратик — высота. Если значков нет, измеряй: середина, половина угла или 90°.',
+      'Площадь через высоту: S = (1/2) · a · h. Высота нужна не для красоты — через неё считают площадь. Медиана делит площадь пополам: две части с равными основаниями и общей высотой.',
+      'Рецепт. 1) Прочитай, что дано: середина, угол или прямой. 2) Поставь значок. 3) В равнобедренном к основанию — три в одном. 4) Медианы — центроид 2:1, биссектрисы — инцентр, высоты — ортоцентр.',
+      'В карман: медиана — середина стороны. Биссектриса — половина угла и пропорция сторон. Высота — 90°. Равнобедренный — совпадают. Центроид делит медиану 2:1.',
+      'Проверка: кто делит угол пополам? Биссектриса. Не медиана: та делит сторону. Не высота: та ставит прямой угол.'
     ],
     check: { q: 'Какой отрезок делит угол пополам?', choices: ['биссектриса', 'медиана', 'высота', 'хорда'], ans: 0,
-      exp: 'Биссектриса делит угол пополам.' },
+      exp: 'Биссектриса режет угол на два равных. Медиана режет сторону, высота ставит 90°.' },
     tasks: [
       { q: 'Сколько медиан у треугольника?', kind: 'unit', ans: 3, tol: 0,
-        hints: ['Из каждой вершины.', 'Три медианы.'], sol: '3' },
-      { q: 'Медиана из вершины равнобедренного треугольника также является…', kind: 'choice', choices: ['высотой и биссектрисой', 'только высотой', 'только биссектрисой', 'ничем'], ans: 0, tol: 0,
-        hints: ['Свойство равнобедренного.', 'Медиана, высота и биссектриса совпадают.'], sol: 'высотой и биссектрисой' }
+        hints: ['Из каждой вершины по одной.', 'Вершин три.'], sol: '3' },
+      { q: 'Медиана из вершины равнобедренного треугольника также является…', kind: 'choice',
+        choices: ['высотой и биссектрисой', 'только высотой', 'только биссектрисой', 'ничем'], ans: 0, tol: 0,
+        hints: ['К основанию все три совпадают.', 'Один отрезок — три имени.'], sol: 'высотой и биссектрисой' }
     ]
   };
-  const triPic=(kind)=>`<svg viewBox="0 0 180 140" style="width:190px;height:148px">
-    <polygon points="90,12 20,128 160,128" fill="rgba(127,209,255,.08)" stroke="#7fd1ff" stroke-width="3"/>
-    ${kind==='med'?`<line x1="90" y1="12" x2="90" y2="128" stroke="#ffd76a" stroke-width="4"/>
-      <circle cx="90" cy="128" r="6" fill="#e86a5a"/><text x="98" y="122" font-size="11" fill="#e86a5a">середина</text>
-      <text x="30" y="140" font-size="10" fill="#ffd76a">BM = MC</text>`:
-    kind==='bis'?`<line x1="90" y1="12" x2="90" y2="112" stroke="#ff8ac0" stroke-width="4"/>
-      <path d="M90 12 L74 34 A 22 22 0 0 1 104 30 Z" fill="rgba(255,138,192,.5)"/>
-      <text x="60" y="36" font-size="10" fill="#ff8ac0">∠1=∠2</text>`:
-    kind==='hgt'?`<line x1="120" y1="46" x2="160" y2="128" stroke="#7fd1ff" stroke-width="2" stroke-dasharray="5 4" opacity=".4"/>
-      <line x1="120" y1="46" x2="120" y2="128" stroke="#7fd1ff" stroke-width="4"/>
-      <rect x="112" y="112" width="16" height="16" fill="none" stroke="#7fd1ff" stroke-width="2"/>`:''}
-  </svg>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', PINK='#ff8ac0', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l405ink{to{stroke-dashoffset:0}}
+    @keyframes l405pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.18)}100%{transform:scale(1);opacity:1}}
+    @keyframes l405pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l405walk{from{offset-distance:0%}to{offset-distance:67%}}
+    @keyframes l405glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l405-ink{animation:l405ink 1.35s cubic-bezier(.2,.75,.15,1) forwards}
+    .l405-dot{transform-box:fill-box;transform-origin:center;animation:l405pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l405-pulse{animation:l405pulse 1.6s ease-in-out infinite}
+    .l405-glow{animation:l405glow 1.8s ease-in-out infinite}
+    .l405-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l405-ink" style="animation-duration:${dur||1.3}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l405-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner){
+    try{ window._waveCss && _waveCss('css-l405', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function hyp(x,y){ return Math.hypot(x,y); }
+  function tri(iso){
+    const A=iso?[120,34]:[70,34], B=[24,186], C=iso?[216,186]:[220,186];
+    const M=[(B[0]+C[0])/2, (B[1]+C[1])/2];
+    const H=[A[0], B[1]];
+    const c=hyp(A[0]-B[0], A[1]-B[1]), b=hyp(A[0]-C[0], A[1]-C[1]), a=hyp(C[0]-B[0], C[1]-B[1]);
+    const D=[B[0]+a*c/(b+c), B[1]];
+    const G=[(A[0]+B[0]+C[0])/3, (A[1]+B[1]+C[1])/3];
+    const per=a+b+c;
+    const I=[(a*A[0]+b*B[0]+c*C[0])/per, (a*A[1]+b*B[1]+c*C[1])/per];
+    const Mb=[(A[0]+C[0])/2,(A[1]+C[1])/2], Mc=[(A[0]+B[0])/2,(A[1]+B[1])/2];
+    const plen=a+b+c;
+    return {A:A,B:B,C:C,M:M,H:H,D:D,G:G,I:I,Mb:Mb,Mc:Mc,plen:plen, poly:A[0]+','+A[1]+' '+B[0]+','+B[1]+' '+C[0]+','+C[1]};
+  }
+  function drawT(T, doDraw){
+    return `<polygon points="${T.poly}" fill="${BLUE}12" stroke="${BLUE}" stroke-width="2.4" ${doDraw?ink(T.plen,1.3,0):''}/>`+
+      lab(T.A[0], T.A[1]-10, 'A', GOLD)+lab(T.B[0]-10, T.B[1]+14, 'B', GOLD)+lab(T.C[0]+10, T.C[1]+14, 'C', GOLD);
+  }
+  function line(P,Q,col,w,anim){
+    const L=hyp(P[0]-Q[0], P[1]-Q[1]);
+    return `<line x1="${P[0]}" y1="${P[1]}" x2="${Q[0]}" y2="${Q[1]}" stroke="${col}" stroke-width="${w||2.6}" ${anim?ink(L,1.2, anim===true?0:anim):''}/>`;
+  }
+  function dot(P,col){ return `<circle class="l405-dot" cx="${P[0]}" cy="${P[1]}" r="5" fill="${col}"/>`; }
+
   function visC405(el){
+    try{ window._waveCss && _waveCss('css-l405', CSS); }catch(e){}
     const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'405';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const iso=!!st.iso;
+    const T=tri(iso);
+    const mode=st.m||'med';
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Три замечательных отрезка</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
-          ${[['медиана','к середине','#ffd76a'],['биссектриса','делит угол','#ff8ac0'],['высота','под 90°','#7fd1ff']].map(x=>`<span class="wv-chip" style="border-color:${x[2]};color:${x[2]}">${x[0]} — ${x[1]}</span>`).join('')}
-        </div>
+        ${frame(drawT(T, doDraw)+(open?line(T.A,T.M,GOLD,3,true)+line(T.A,T.D,PINK,3,.2)+line(T.A,T.H,GREEN,3,.35)+dot(T.M,GOLD)+dot(T.D,PINK)+dot(T.H,GREEN):'')+lab(120, 18, open?'три разных следа':'кто куда идёт?', GOLD))}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Показать три'}</button>
+        ${note('Не один отрезок','Из вершины к стороне можно пойти тремя законами. Сейчас у каждого будет свой след и своя точка на BC.')}
       </div>`;
     } else if(step===1){
-      h=`<div class="wv-col"><div class="wv-big">Медиана: в середину</div>${triPic('med')}<div class="wv-sml">делит сторону пополам: BM = MC</div></div>`;
-    } else if(step===2){
-      h=`<div class="wv-col"><div class="wv-big">Биссектриса: угол пополам</div>${triPic('bis')}<div class="wv-sml">∠1 = ∠2 — «режет» угол на два равных</div></div>`;
-    } else if(step===3){
-      h=`<div class="wv-col"><div class="wv-big">Высота: под 90°</div>${triPic('hgt')}<div class="wv-sml">перпендикуляр к стороне — квадратик прямого угла</div></div>`;
-    } else if(step===4){
       h=`<div class="wv-col">
-        <div class="wv-big">Равнобедренный: всё в одном!</div>
-        <svg viewBox="0 0 180 140" style="width:180px;height:140px">
-          <polygon points="90,12 30,128 150,128" fill="rgba(255,215,106,.08)" stroke="#ffd76a" stroke-width="3"/>
-          <line x1="90" y1="12" x2="90" y2="128" stroke="#ffd76a" stroke-width="4"/>
-        </svg>
-        <div style="background:rgba(255,215,106,.12);border:2px solid #ffd76a;border-radius:12px;padding:7px 12px;font-size:14.5px;color:#ffd76a;font-weight:bold" class="wv-ans">медиана = высота = биссектриса!</div>
+        ${frame(drawT(T,false)+line(T.A,T.M,GOLD,3, doDraw)+dot(T.M,RED)+lab(T.M[0], T.M[1]+16, 'M середина', RED)+lab(120, 18, 'медиана AM', GOLD))}
+        ${note('К середине стороны','BM = MC. Медиана не обещает равные углы и не обещает 90°. Только равные куски стороны.')}
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        ${frame(drawT(T,false)+line(T.A,T.D,PINK,3, doDraw)+dot(T.D,PINK)+lab(T.D[0]+8, T.D[1]+16, 'D', PINK, 'start')+lab(120, 18, 'биссектриса, BD/DC = AB/AC', PINK, 'middle', 12))}
+        ${note('Режет угол, не сторону','Дуги у угла равны. Основание D почти никогда не в середине: оно ближе к меньшей боковой. Это теорема о биссектрисе.')}
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        ${frame(drawT(T,false)+line(T.A,T.H,GREEN,3, doDraw)+`<rect x="${T.H[0]}" y="${T.H[1]-12}" width="12" height="12" fill="none" stroke="${GREEN}" stroke-width="1.8"/>`+dot(T.H,GREEN)+lab(T.H[0]-8, T.H[1]+16, 'H', GREEN, 'end')+lab(120, 18, 'высота, 90°', GREEN))}
+        ${note('Отвес','Квадратик — прямой угол. Высота может упасть внутрь стороны или на продолжение, если угол при основании тупой. Здесь треугольник острый — нога внутри.')}
+      </div>`;
+    } else if(step===4){
+      const foot=mode==='med'?T.M:mode==='bis'?T.D:T.H;
+      const col=mode==='med'?GOLD:mode==='bis'?PINK:GREEN;
+      const name=mode==='med'?'медиана':'биссектриса';
+      const nm=mode==='hgt'?'высота':name;
+      h=`<div class="wv-col">
+        ${frame(drawT(T,false)+line(T.A,foot,col,3)+dot(foot,col)+lab(120, 18, nm+' из A', col))}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${[['med','медиана',GOLD],['bis','биссектриса',PINK],['hgt','высота',GREEN]].map(x=>`<button type="button" class="btn" style="border-color:${st.m===x[0]||(!st.m&&x[0]==='med')?x[2]:'#3d5c49'}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].m='${x[0]}';chRender(0);}catch(e){}">${x[1]}</button>`).join('')}
+        </div>
+        ${note('Три следа','Переключай. В этом треугольнике три основания разные. Совпадут только в особом случае — следующем шаге.')}
       </div>`;
     } else if(step===5){
+      const TT=tri(iso);
       h=`<div class="wv-col">
-        <div class="wv-big">Точка пересечения медиан</div>
-        <svg viewBox="0 0 180 140" style="width:180px;height:140px">
-          <polygon points="90,12 30,128 150,128" fill="rgba(127,209,255,.06)" stroke="#7fd1ff" stroke-width="2.5"/>
-          <line x1="90" y1="12" x2="110" y2="128" stroke="#ffd76a" stroke-width="2.5" opacity=".7"/>
-          <line x1="30" y1="128" x2="140" y2="58" stroke="#8fd1a8" stroke-width="2.5" opacity=".7"/>
-          <line x1="150" y1="128" x2="60" y2="58" stroke="#e8a0d8" stroke-width="2.5" opacity=".7"/>
-          <circle cx="90" cy="78" r="7" fill="#ffd76a"/>
-        </svg>
-        <div class="wv-sml">центроид: делит медиану в отношении 2:1 · точка баланса!</div>
+        ${frame(drawT(TT,false)+line(TT.A,TT.M,GOLD,3)+ (iso?'':line(TT.A,TT.D,PINK,2)+line(TT.A,TT.H,GREEN,2))+dot(TT.M,GOLD)+lab(120, 18, iso?'три в одном':'сдвинь к равнобедренному', GOLD, 'middle', 13))}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].iso=!CHS[k].iso;chRender(0);}catch(e){}">${iso?'Вернуть разносторонний':'Сделать равнобедренным'}</button>
+        ${note('Особый треугольник','Когда AB = AC, середина, нога высоты и основание биссектрисы — одна точка. Один отрезок, три имени. Не обобщай на любой треугольник.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
-        <div class="wv-big">Как не перепутать</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
-          ${[
-            ['медиана','к СЕРЕДИНЕ → равные отрезки','#ffd76a'],
-            ['биссектриса','делит УГОЛ → равные углы','#ff8ac0'],
-            ['высота','под 90° → квадратик','#7fd1ff']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:13.5px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span style="font-size:12px">${x[1]}</span></div>`).join('')}
-        </div>
+        ${frame(drawT(T,false)+line(T.A,T.M,GOLD,2.4, doDraw)+line(T.B,T.Mb,GOLD,2.4,.15)+line(T.C,T.Mc,GOLD,2.4,.3)+dot(T.G,RED)+lab(T.G[0]+10, T.G[1]-6, 'G', RED, 'start')+lab(120, 18, 'три медианы → центроид', GOLD, 'middle', 13))}
+        ${note('Одна точка','Не три случайных пересечения. Все медианы обязаны встретиться. G — центр масс: треугольник на иголке в G стоит.')}
       </div>`;
     } else if(step===7){
+      const walk=!!st.walk;
+      const gx=T.A[0]+2/3*(T.M[0]-T.A[0]), gy=T.A[1]+2/3*(T.M[1]-T.A[1]);
+      const px=walk?gx:T.A[0], py=walk?gy:T.A[1];
       h=`<div class="wv-col">
-        <div class="wv-big">Ансамбль точек</div>
-        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
-          ${[['центроид','медианы'],['инцентр','биссектрисы'],['ортоцентр','высоты']].map(x=>`<span class="wv-chip" style="border-color:#3d5c49;color:#cfe0cf">${x[0]} — ${x[1]}</span>`).join('')}
+        ${frame(drawT(T,false)+line(T.A,T.M,GOLD,3)+dot(T.M,MUTED)+`<circle class="l405-glow" cx="${px}" cy="${py}" r="7" fill="${GREEN}"/>`+lab(gx+12, gy, '2 : 1', GREEN, 'start')+lab(120, 18, 'от вершины две трети', GOLD))}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].walk=1;chRender(0);}catch(e){}">${walk?'На двух третях':'Шаг к центру'}</button>
+        ${note('Отношение 2 : 1','AG : GM = 2 : 1. Не середина медианы. Две части к вершине, одна к стороне. Это спрашивают отдельно от «пересекаются».')}
+      </div>`;
+    } else if(step===8){
+      const r=Math.max(8, T.B[1]-T.I[1]);
+      h=`<div class="wv-col">
+        ${frame(drawT(T,false)+line(T.A,T.D,PINK,2.6, doDraw)+`<circle cx="${T.I[0]}" cy="${T.I[1]}" r="${r}" fill="none" stroke="${PINK}" stroke-width="2" ${doDraw?ink(2*Math.PI*r,1.4,.2):''}/>`+dot(T.I,PINK)+lab(T.I[0]+12, T.I[1]-8, 'I', PINK, 'start')+lab(120, 18, 'инцентр — вписанная', PINK))}
+        ${note('Биссектрисы → окружность внутри','I равноудалён от сторон. Вписанная касается BC, CA, AB. Не путай с описанной: та проходит через вершины.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${frame(drawT(T,false)+line(T.A,T.H,GREEN,2.6)+`<rect x="${T.H[0]}" y="${T.H[1]-12}" width="12" height="12" fill="none" stroke="${GREEN}"/>`+dot(T.H,GREEN)+lab(120, 18, 'ортоцентр: встреча высот', GREEN, 'middle', 13)+lab(T.H[0], 70, 'в остром — внутри', MUTED))}
+        ${note('Три случая','Острый — H внутри. Прямой — H в вершине прямого угла. Тупой — H снаружи. Основание высоты и ортоцентр — разные вещи, кроме прямого угла.')}
+      </div>`;
+    } else if(step===10){
+      const midBC=T.M, midAB=T.Mc, midAC=T.Mb;
+      h=`<div class="wv-col">
+        ${frame(drawT(T,false)+
+          `<line x1="${midBC[0]}" y1="60" x2="${midBC[0]}" y2="200" stroke="${BLUE}" stroke-width="1.8" stroke-dasharray="5 4"/>`+
+          dot(midBC,BLUE)+dot(midAB,BLUE)+dot(midAC,BLUE)+
+          lab(120, 18, 'O — серединные перпендикуляры', BLUE, 'middle', 12))}
+        ${note('Четвёртая точка','Центр описанной окружности строится не из вершины, а из середин сторон. Через O проходят все три вершины. Это другой инструмент.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['чёрточки на стороне','медиана',GOLD],
+            ['две дуги у угла','биссектриса',PINK],
+            ['квадратик 90°','высота',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
+        ${note('Значки на чертеже','Если значков нет — не угадывай. Измерь или построй. Совпадение трёх — только в равнобедренном к основанию.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        ${frame(drawT(T,false)+line(T.A,T.H,GREEN,2.4)+line(T.A,T.M,GOLD,2)+lab(120, 18, 'S = ½ · a · h', GREEN)+lab(T.M[0], 70, 'медиана делит S пополам', GOLD, 'middle', 11))}
+        ${note('Зачем высота и медиана','Площадь через высоту. Медиана режет площадь на два равных куска: основания равны, высота общая. Биссектриса площадь пополам не делит, если боковые разные.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Что дано: середина, угол или 90°',GOLD],
+            ['2','Поставь значок, не путай следы',BLUE],
+            ['3','Равнобедренный к основанию — три в одном',PINK],
+            ['4','G 2:1, I вписанная, H высоты',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Сначала имя отрезка, потом свойство, потом точка пересечения. Не называй всё «высотой».')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(drawT(T,false)+line(T.A,T.M,GOLD,2.4)+dot(T.G,RED)+lab(120, 18, 'медиана · 2:1 · три в одном', GOLD, 'middle', 12))}
+        ${note('В карман','Медиана — середина. Биссектриса — угол и пропорция. Высота — 90°. Центроид 2:1. В равнобедренном к основанию совпадают.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${triPic('bis')}
-        <div class="wv-sml">кто делит угол пополам?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 14px;font-size:17px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">медиана / биссектриса / высота</div>
+        ${frame(drawT(T,false)+lab(120, 18, 'кто делит угол?', GOLD))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:16px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">медиана? биссектриса? высота?</div>
+        ${note('Проверка','Биссектриса. Медиана делит сторону, высота ставит прямой угол.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_C[405]=visC405;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===405){ window.ARH_LESSONS[i]=L405; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===405){ arr[i]=L405; f=true; break; } }
+    if(!f) arr.push(L405);
+  })();
 })();
 /* ================= УРОК 406 · Параллельные прямые и углы ================= */
 (function(){
@@ -803,102 +928,273 @@ window._waveCss = window._waveCss || function(id, css){
     id: 406, title: 'Параллельные прямые и углы', ico: '📐',
     src: 'Математика · 7 класс · Геометрия 7: параллельные', subj: 'math',
     explain: [
-      'Параллельные прямые никогда не пересекаются — как рельсы или строчки в тетради. Если третья прямая (секущая) пересекает обе параллельные, образуются 8 углов. И у этих углов есть удивительные закономерности!',
-      'Накрест лежащие углы лежат ВНУТРИ полосы между прямыми и по разные стороны от секущей — «накрест» друг от друга. При параллельных прямых они РАВНЫ. Это главное свойство!',
-      'Соответственные углы лежат в «одинаковых местах» у пересечений — оба, например, справа от секущей. Они тоже РАВНЫ. Представь: сдвинь нижнее пересечение вверх — углы совпадут!',
-      'Односторонние углы лежат ВНУТРИ полосы по одну сторону от секущей. Их сумма равна 180°. Это как два угла, которые вместе образуют развёрнутый угол.',
-      'Кроме того, при каждом пересечении есть вертикальные углы — они стоят «крест-накрест» и равны. А соседние углы при пересечении дают в сумме 180°. Зная один угол, вычисляешь все остальные!',
-      'Всё работает и НАОБОРОТ — это признаки параллельности: если накрест лежащие углы равны (или соответственные равны, или сумма односторонних 180°), то прямые ПАРАЛЛЕЛЬНЫ. Так доказывают параллельность!',
-      'Практика: на рисунке один угол 70°. Накрест лежащий — тоже 70°. Соседний с ним на прямой: 180 − 70 = 110°. И все углы чередуются: 70°, 110°, 70°, 110°… Один угол — и вся картинка решена!',
-      'Секрет в том, что 8 углов на самом деле принимают всего ДВА значения: 70° и 110°. Остальные — либо равны им (накрест лежащие, соответственные, вертикальные), либо дополняют до 180° (односторонние, соседние).',
-      'Теперь проверь себя: накрест лежащие углы при параллельных прямых… Что с ними происходит?'
+      'Загадка: две прямые как рельсы — не встречаются. Третья режет обе, как шпала наискосок. Появляется восемь углов. Сколько среди них разных величин? Не восемь. Сейчас увидим, почему два.',
+      'Параллельные прямые не пересекаются и лежат в одной плоскости. На чертеже отмечают стрелками «в одну сторону». Секущая — любая прямая, которая пересекает обе. Без секущей углов между рельсами не сравнить.',
+      'Восемь углов: по четыре у каждого пересечения. У одной точки крест: два острых и два тупых, если секущая не перпендикуляр. Вертикальные (через крест) равны. Смежные (соседи на прямой) в сумме 180°.',
+      'Накрест лежащие внутренние: оба внутри полосы, по разные стороны секущей. Рисунок как буква Z. При параллельных они равны. Это главное свойство, из него выводятся остальные.',
+      'Соответственные: в одинаковых «углах дома» у двух пересечений — оба справа-сверху или оба слева-снизу. Рисунок как F. При параллельных равны. Сдвинь нижний крест вверх — углы лягут друг на друга.',
+      'Односторонние внутренние: оба внутри полосы, по одну сторону секущей. Рисунок как C или U. При параллельных сумма 180°. Это развёрнутый угол, разрезанный рельсом.',
+      'Подвинь данный угол. Все восемь пересчитываются сами: острые равны ему, тупые — дополнение до 180°. Восемь углов, две величины. Не больше.',
+      'Пример: дали 70°. Накрест и соответственные — 70°. Смежный и односторонний — 110°. Вертикальный к 70° снова 70°. Один замер — вся схема.',
+      'Признаки — свойства наоборот. Если накрест лежащие равны, прямые параллельны. Если соответственные равны — тоже. Если односторонние в сумме 180° — тоже. Так доказывают «эти двое не встретятся».',
+      'Перпендикуляр к одной из параллельных перпендикулярен и другой. Угол 90° на верхнем рельсе даёт 90° на нижнем: соответственный прямой. Это частный случай, не новый закон.',
+      'Нажми пару: Z — накрест, F — соответственные, C — односторонние. Три буквы — три правила. Их хватает, чтобы закрыть любой номер с рельсами.',
+      'Ловушка: «накрест» без слова «внутренние» иногда путают с вертикальными. Вертикальные равны всегда, даже если прямые не параллельны. Накрест лежащие равны именно из-за параллельности.',
+      'Ещё ловушка: односторонние не равны, они в сумме 180°. Написать «равны» — типичная ошибка. Равны накрест и соответственные. Односторонние — соседи по полосе.',
+      'Рецепт. 1) Найди две параллельные и секущую. 2) Определи пару: Z, F или C. 3) Равны или 180°. 4) Добери остальные через вертикальные и смежные. 5) Для доказательства параллельности включи признак.',
+      'В карман: параллельные + секущая = 8 углов = 2 величины. Z равны, F равны, C сумма 180°. Обратные — признаки. 70° тянет за собой 110°.',
+      'Проверка: накрест лежащие при параллельных… равны. Не 180°: это односторонние.'
     ],
     check: { q: 'Накрест лежащие углы при параллельных прямых…', choices: ['равны', 'в сумме дают 180°', 'всегда разные', 'прямые'], ans: 0,
-      exp: 'Накрест лежащие углы равны.' },
+      exp: 'Накрест лежащие (буква Z) равны. Сумма 180° — у односторонних.' },
     tasks: [
       { q: 'Чему равна сумма односторонних углов при параллельных прямых?', kind: 'unit', ans: 180, tol: 0,
-        hints: ['Свойство параллельных.', '180°.'], sol: '180°' },
-      { q: 'Если соответственные углы равны, то прямые…', kind: 'choice', choices: ['параллельны', 'перпендикулярны', 'обязательно пересекаются', 'неизвестно'], ans: 0, tol: 0,
-        hints: ['Признак параллельности.', 'Прямые параллельны.'], sol: 'параллельны' }
+        hints: ['Буква C: внутри по одну сторону.', 'Дополняют до развёрнутого.'], sol: '180°' },
+      { q: 'Если соответственные углы равны, то прямые…', kind: 'choice',
+        choices: ['параллельны', 'перпендикулярны', 'обязательно пересекаются', 'неизвестно'], ans: 0, tol: 0,
+        hints: ['Это признак, свойство наоборот.', 'Равные соответственные ⇒ параллельны.'], sol: 'параллельны' }
     ]
   };
-  const parPic=(mode,angle)=>`<svg viewBox="0 0 260 170" style="width:230px;height:150px;background:#101f18;border-radius:12px">
-    <line x1="20" y1="52" x2="240" y2="52" stroke="#8fd1a8" stroke-width="4"/>
-    <line x1="20" y1="118" x2="240" y2="118" stroke="#8fd1a8" stroke-width="4"/>
-    <line x1="90" y1="10" x2="180" y2="160" stroke="#ffd76a" stroke-width="3.5"/>
-    ${mode==='nkl'?`<path d="M104 30 A 26 26 0 0 0 96 50 Z" fill="rgba(255,138,192,.6)"/><path d="M166 132 A 26 26 0 0 0 174 112 Z" fill="rgba(255,138,192,.6)"/>`:
-    mode==='sot'?`<path d="M104 30 A 26 26 0 0 0 96 50 Z" fill="rgba(127,209,255,.6)"/><path d="M180 132 A 26 26 0 0 1 174 112 Z" fill="rgba(127,209,255,.6)"/>`:
-    mode==='odn'?`<path d="M104 30 A 26 26 0 0 0 96 50 Z" fill="rgba(143,209,168,.6)"/><path d="M150 132 A 26 26 0 0 0 144 112 Z" fill="rgba(143,209,168,.6)"/>`:''}
-    <text x="86" y="${angle===70?28:44}" font-size="12" fill="#fff">${angle}°</text>
-    <text x="160" y="150" font-size="12" fill="#fff">${mode==='nkl'?'=?':mode==='sot'?'=?':'=?°'}</text>
-  </svg>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', PINK='#ff8ac0', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l406ink{to{stroke-dashoffset:0}}
+    @keyframes l406pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.14)}100%{transform:scale(1);opacity:1}}
+    @keyframes l406pulse{0%,100%{opacity:.45}50%{opacity:1}}
+    @keyframes l406glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l406-ink{animation:l406ink 1.35s cubic-bezier(.2,.75,.15,1) forwards}
+    .l406-dot{transform-box:fill-box;transform-origin:center;animation:l406pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l406-pulse{animation:l406pulse 1.5s ease-in-out infinite}
+    .l406-glow{animation:l406glow 1.8s ease-in-out infinite}
+    .l406-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l406-ink" style="animation-duration:${dur||1.3}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l406-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner){
+    try{ window._waveCss && _waveCss('css-l406', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  const Y1=56, Y2=150, X0=70, Y0=18, DX=0.52;
+  function Xat(y){ return X0 + (y-Y0)*DX; }
+  function rails(doDraw, sleepers){
+    let d=`<line x1="18" y1="${Y1}" x2="222" y2="${Y1}" stroke="${GREEN}" stroke-width="3.2" ${doDraw?ink(204,1.1,0):''}/>`+
+      `<line x1="18" y1="${Y2}" x2="222" y2="${Y2}" stroke="${GREEN}" stroke-width="3.2" ${doDraw?ink(204,1.1,.12):''}/>`;
+    if(sleepers){
+      for(let i=0;i<6;i++){
+        const x=36+i*32;
+        d+=`<line x1="${x}" y1="${Y1}" x2="${x+8}" y2="${Y2}" stroke="#2a4a3a" stroke-width="3"/>`;
+      }
+    }
+    d+=`<line x1="${Xat(12)}" y1="12" x2="${Xat(196)}" y2="196" stroke="${GOLD}" stroke-width="2.6" ${doDraw?ink(220,1.2,.2):''}/>`;
+    return d;
+  }
+  function wedge(cx, cy, a0, a1, col){
+    const r=22, to=Math.PI/180;
+    const x1=cx+r*Math.cos(a0*to), y1=cy+r*Math.sin(a0*to);
+    const x2=cx+r*Math.cos(a1*to), y2=cy+r*Math.sin(a1*to);
+    const large=Math.abs(a1-a0)>180?1:0;
+    return `<path d="M ${cx} ${cy} L ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)} Z" fill="${col}" opacity=".55"/>`;
+  }
+
   function visC406(el){
+    try{ window._waveCss && _waveCss('css-l406', CSS); }catch(e){}
     const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'406';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const ang=Math.max(40, Math.min(80, +(st.ang==null?70:st.ang)));
+    const obt=180-ang;
+    const pair=st.pair||'z';
+    const T=[Xat(Y1), Y1], B=[Xat(Y2), Y2];
+    const secAng=Math.atan(1/DX)*180/Math.PI;
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Параллельные и секущая</div>
-        ${parPic('nkl',70)}
-        <div class="wv-sml">две параллельные + секущая = 8 углов с секретами!</div>
+        ${frame(rails(doDraw, !open)+lab(120, 36, open?'8 углов, 2 величины':'рельсы и косая', GOLD)+lab(40, Y1-8, '∥', GREEN, 'middle', 14)+lab(40, Y2-8, '∥', GREEN, 'middle', 14))}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Пустить секущую'}</button>
+        ${note('Не встречаются','Параллельные — рельсы. Секущая режет оба. Появляются восемь углов. Разных чисел среди них всего два.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Накрест лежащие — равны</div>
-        ${parPic('nkl',70)}
-        <div style="background:rgba(255,138,192,.12);border:2px solid rgba(255,138,192,.5);border-radius:12px;padding:7px 12px;font-size:15px;color:#ff8ac0;font-weight:bold" class="wv-ans">∠1 = ∠2 — «накрест» внутри!</div>
+        ${frame(rails(doDraw,true)+lab(36, Y1-10, 'стрелки ∥', GREEN, 'start', 11)+lab(36, Y2-10, 'стрелки ∥', GREEN, 'start', 11)+lab(120, 36, 'секущая', GOLD))}
+        ${note('Три прямые','Две с меткой параллельности, третья — секущая. Без секущей сравнивать нечего: углов «между рельсами» нет, пока их не разрезали.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">Соответственные — равны</div>
-        ${parPic('sot',70)}
-        <div class="wv-sml">в «одинаковых местах» у пересечений → равны</div>
+        ${frame(
+          rails(false,false)+
+          wedge(T[0], T[1], 20, 70, PINK)+
+          wedge(T[0], T[1], 200, 250, BLUE)+
+          lab(T[0]+28, T[1]-16, 'верт.', PINK, 'start', 11)+
+          lab(120, 36, 'крест: вертикальные равны', GOLD, 'middle', 12)
+        )}
+        ${note('Всегда, не только при ∥','Вертикальные равны на любом кресте. Смежные на прямой дают 180°. Это свойства пересечения, параллельность ещё не нужна.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        <div class="wv-big">Односторонние — сумма 180°</div>
-        ${parPic('odn',70)}
-        <div class="wv-sml">внутри, по одну сторону → ∠1 + ∠2 = 180°</div>
+        ${frame(
+          rails(false,false)+
+          wedge(T[0], T[1], 10, 70, PINK)+
+          wedge(B[0], B[1], 190, 250, PINK)+
+          lab(120, 36, 'Z — накрест, равны', PINK)+
+          lab(T[0]-28, T[1]+22, ang+'°', PINK)+lab(B[0]+22, B[1]+18, ang+'°', PINK, 'start')
+        )}
+        ${note('Внутри и накрест','Оба угла в полосе между рельсами, по разные стороны секущей. Как перекладины буквы Z. При параллельных равны — главный закон урока.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
-        <div class="wv-big">Вертикальные и соседние</div>
-        <div class="wv-row" style="gap:6px;flex-wrap:wrap">
-          ${[['вертикальные','равны','#ff8ac0'],['соседние','в сумме 180°','#8fd1a8']].map(x=>`<span class="wv-chip" style="border-color:${x[2]};color:${x[2]}">${x[0]} — ${x[1]}</span>`).join('')}
-        </div>
-        <div class="wv-sml">зная один угол, вычисляешь все остальные!</div>
+        ${frame(
+          rails(false,false)+
+          wedge(T[0], T[1], 10, 70, BLUE)+
+          wedge(B[0], B[1], 10, 70, BLUE)+
+          lab(120, 36, 'F — соответственные, равны', BLUE, 'middle', 13)+
+          lab(T[0]+22, T[1]-14, ang+'°', BLUE, 'start')+lab(B[0]+22, B[1]-14, ang+'°', BLUE, 'start')
+        )}
+        ${note('Одинаковое место','Оба справа-сверху от креста. Сдвинь нижнее пересечение вверх по секущей — углы совпадут. Поэтому равны.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        <div class="wv-big">Признаки параллельности</div>
-        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 12px;max-width:340px;width:100%">
-          <div style="font-size:14.5px;color:#e8dcc8;text-align:center;line-height:1.6">накрест лежащие равны <b style="color:#ffd76a">или</b> соответственные равны <b style="color:#ffd76a">или</b> односторонние дают 180° → прямые <b style="color:#ffd76a">параллельны</b></div>
-        </div>
+        ${frame(
+          rails(false,false)+
+          wedge(T[0], T[1], 110, 170, GREEN)+
+          wedge(B[0], B[1], 10, 70, GREEN)+
+          lab(120, 36, 'C — односторонние, 180°', GREEN, 'middle', 13)+
+          lab(T[0]-30, T[1]+8, obt+'°', GREEN)+lab(B[0]+22, B[1]-14, ang+'°', GREEN, 'start')
+        )}
+        ${note('По одну сторону полосы','Не равны. Складываются в развёрнутый. 70 + 110 = 180. Типичная ошибка — написать, что они равны.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
-        <div class="wv-big">Считаем: угол 70°</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
-          ${[['70°','накрест лежащий'],['110°','соседний: 180−70'],['70°','соответственный'],['110°','вертикальный к 110°']].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;text-align:center;background:rgba(255,255,255,.04);border:1px solid ${i%2?'#3d5c49':'#5c6b8a'};border-radius:10px;padding:6px 10px"><b style="font-size:19px;color:#ffd76a;font-family:Georgia,serif">${x[0]}</b><div style="font-size:10px;color:#8fa08f">${x[1]}</div></div>`).join('')}
-        </div>
-        <div class="wv-sml">один угол — и вся картинка решена!</div>
+        ${frame(
+          rails(false,false)+
+          lab(T[0]+24, T[1]-12, ang+'°', GOLD, 'start')+
+          lab(T[0]-28, T[1]+20, obt+'°', BLUE)+
+          lab(B[0]+24, B[1]-12, ang+'°', GOLD, 'start')+
+          lab(B[0]-28, B[1]+20, obt+'°', BLUE)+
+          lab(120, 36, '8 углов = '+ang+'° и '+obt+'°', GOLD, 'middle', 13)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">угол
+          <input type="range" min="40" max="80" value="${ang}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].ang=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD};min-width:36px">${ang}°</b>
+        </label>
+        ${note('Две кучки','Крути. Острые все равны данному, тупые — добор до 180°. Восемь мест, два числа. Это вся арифметика схемы.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Секрет: всего два значения</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">8 углов принимают всего <b style="color:#ffd76a">два значения</b>: 70° и 110°! Остальные равны им или дополняют до 180°.</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['дали 70°','старт',GOLD],
+            ['накрест и F','тоже 70°',PINK],
+            ['смежный и C','110°',GREEN],
+            ['вертикальный','снова 70°',BLUE]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('Один замер','Не считай восемь раз. Зацепи один угол и раскидай по Z, F, C, вертикали и смежным.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(
+          rails(false,false)+
+          lab(120, 36, 'признаки: наоборот', GOLD)+
+          lab(120, 100, 'Z равны ⇒ ∥', PINK)+
+          lab(120, 132, 'F равны ⇒ ∥', BLUE)+
+          lab(120, 164, 'C сумма 180° ⇒ ∥', GREEN)
+        )}
+        ${note('Доказать, что не встретятся','Свойство: если уже параллельны, углы такие. Признак: если углы такие, значит параллельны. На олимпиаде чаще признак.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${frame(
+          `<line x1="18" y1="${Y1}" x2="222" y2="${Y1}" stroke="${GREEN}" stroke-width="3"/>`+
+          `<line x1="18" y1="${Y2}" x2="222" y2="${Y2}" stroke="${GREEN}" stroke-width="3"/>`+
+          `<line x1="120" y1="20" x2="120" y2="190" stroke="${GOLD}" stroke-width="2.6" ${doDraw?ink(170,1.2,0):''}/>`+
+          `<rect x="120" y="${Y1}" width="12" height="12" fill="none" stroke="${GOLD}"/>`+
+          `<rect x="120" y="${Y2-12}" width="12" height="12" fill="none" stroke="${GOLD}"/>`+
+          lab(150, 40, '90° и 90°', GOLD)
+        )}
+        ${note('Перпендикуляр к параллельным','Если секущая перпендикулярна одному рельсу, она перпендикулярна и другому. Частный случай соответственных прямых углов.')}
+      </div>`;
+    } else if(step===10){
+      const vis=pair==='z'?rails(false,false)+wedge(T[0],T[1],10,70,PINK)+wedge(B[0],B[1],190,250,PINK)+lab(120,36,'Z накрест',PINK)
+        :pair==='f'?rails(false,false)+wedge(T[0],T[1],10,70,BLUE)+wedge(B[0],B[1],10,70,BLUE)+lab(120,36,'F соответственные',BLUE)
+        :rails(false,false)+wedge(T[0],T[1],110,170,GREEN)+wedge(B[0],B[1],10,70,GREEN)+lab(120,36,'C односторонние',GREEN);
+      h=`<div class="wv-col">
+        ${frame(vis)}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${[['z','Z накрест',PINK],['f','F соответств.',BLUE],['c','C одностор.',GREEN]].map(x=>`<button type="button" class="btn" style="border-color:${pair===x[0]?x[2]:'#3d5c49'}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].pair='${x[0]}';chRender(0);}catch(e){}">${x[1]}</button>`).join('')}
+        </div>
+        ${note('Три буквы','Z равны, F равны, C в сумме 180°. Жми и смотри, какие два сектора загораются. Этого хватает на любой чертёж с рельсами.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        ${frame(rails(false,false)+wedge(T[0],T[1],20,70,GOLD)+wedge(T[0],T[1],200,250,GOLD)+lab(120,36,'вертикальные — всегда', GOLD, 'middle', 13))}
+        ${note('Не путай с Z','Вертикальные равны даже у случайных прямых. Накрест лежащие равны только если рельсы параллельны. Сначала спроси: это крест в одной точке или два угла в полосе?')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['накрест Z','равны',PINK],
+            ['соответственные F','равны',BLUE],
+            ['односторонние C','сумма 180°, не равны',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('Главная ошибка','Написать, что односторонние равны. Нет: они дополнительные. Равны Z и F.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Найди ∥ и секущую',GOLD],
+            ['2','Пара: Z, F или C',PINK],
+            ['3','Равны или 180°',BLUE],
+            ['4','Остальные через крест',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Не нумеруй все восемь сразу. Зацепи пару, добери соседей. Для доказательства ∥ включи признак, не свойство.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(rails(false,false)+lab(120, 36, 'Z =  ·  F =  ·  C = 180°', GOLD, 'middle', 13)+lab(120, 100, ang+'° и '+obt+'°', GREEN))}
+        ${note('В карман','Восемь углов, две величины. Z и F равны. C сумма 180°. Обратные утверждения — признаки параллельности.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${parPic('nkl',70)}
-        <div class="wv-sml">накрест лежащие при параллельных — что?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">равны? или 180°?</div>
+        ${frame(rails(false,false)+lab(120, 36, 'накрест лежащие…', GOLD))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:16px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">равны или 180°?</div>
+        ${note('Проверка','Равны. Сумма 180° — у односторонних, буква C.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_C[406]=visC406;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===406){ window.ARH_LESSONS[i]=L406; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===406){ arr[i]=L406; f=true; break; } }
+    if(!f) arr.push(L406);
+  })();
 })();
 /* ================= УРОК 407 · Модуль и уравнения с модулем ================= */
 (function(){
