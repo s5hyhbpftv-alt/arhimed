@@ -8881,6 +8881,16 @@ function visL51(el){
       <div class="wv-sml" style="text-align:left;padding:0 6px">💡 ${stepHint}</div></div>`;
   }catch(e){ el.innerHTML=''; }
 }
+function wAct(lk,act){
+  const st=CHS[lk]||(CHS[lk]={}); if(st.a==null) st.a=800; if(st.t==null) st.t=20; if(st.up==null) st.up=0;
+  if(act==='a+') st.a=Math.min(20000,st.a+100);
+  else if(act==='a-') st.a=Math.max(100,st.a-100);
+  else if(act==='t+') st.t=Math.min(60,st.t+1);
+  else if(act==='t-') st.t=Math.max(1,st.t-1);
+  else if(act==='lift') st.up=st.up?0:1;
+  else if(act==='r'){ st.a=800; st.t=20; st.up=0; }
+  try{ renderLessonView(); }catch(e){}
+}
 function hAct(lk,act){
   const st=CHS[lk]||(CHS[lk]={}); if(st.h==null) st.h=20;
   if(act==='up') st.h=Math.min(120,st.h+10);
@@ -16205,21 +16215,108 @@ function visPhysNew(el){
       const [nm,ic,ds]=exs[i%exs.length];
       h=col(icon('🔭'), big(L.title), `<div style="font-size:64px" class="wv-pop">${ic}</div>`+big(nm)+sml(ds)+btn('показать ещё явление', `phAct('${lk}','nx')`));
     }
-    else if(id===252){ /* Мощность: N = A : t — интерактивная сцена */
-      if(st.a==null) st.a=600; if(st.b==null) st.b=20;
-      if(st.b<1) st.b=1;
-      const N=Math.round(st.a/Math.max(1,st.b));
-      const lift=Math.min(92, 8+N/4);
-      h=col(icon('🏗️'),
-        `<div style="position:relative;width:210px;height:124px;margin:0 auto">
-           <div style="position:absolute;bottom:6px;left:0;right:0;height:2px;background:#3d5c49"></div>
-           <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:2px;font-size:46px">🏗️</div>
-           <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:${lift}px;width:64px;height:16px;background:#c96f4a;border:2px solid #33291e;border-radius:5px;text-align:center;font-size:10px;line-height:16px;color:#fff;transition:bottom .7s ease">${st.a} Дж</div>
-           <div style="position:absolute;left:6px;top:6px;font-size:10px;color:#7fa88f">время: ${st.b} с</div>
-         </div>`+
-        big(`N = A : t = ${st.a} : ${st.b} = ${N} Вт`)+
-        btns(btn('+10 Дж',`phAct('${lk}','a10')`),btn('−10 Дж',`phAct('${lk}','a10-')`),btn('+1 с',`phAct('${lk}','b+')`),btn('−1 с',`phAct('${lk}','b-')`),btn('↺',`phAct('${lk}','r')`))+
-        sml('одна и та же работа быстрее — значит мощность больше: N = A : t'));
+    else if(id===252){ /* Мощность — фотографическая сцена: кран, лебёдка, секундомер, ваттметр */
+      if(st.a==null) st.a=800; if(st.t==null) st.t=20; if(st.up==null) st.up=0;
+      const A=st.a, T=Math.max(1,st.t), N=Math.round(A/T);
+      const lift=st.up? Math.min(96, 16+N/6) : 14;
+      const kgf=N>=100000?'двигатель автомобиля':N>=1500?'пылесос или чайник':N>=500?'микроволновка':N>=100?'лампа накаливания':N>=10?'энергосберегающая лампа':'подъём яблока';
+      const kw=N>=1000? ' = '+ (Math.round(N/100)/10).toString().replace('.',',') +' кВт' : '';
+      const need=Math.max(0.02,Math.min(1, N/3000));
+      const rot=Math.min(3.6, 0.35+N/1400);
+      const needle=-70+Math.min(140, (Math.log10(Math.max(1,N))/6)*140);
+      const scene=`<svg viewBox="0 0 360 268" style="display:block;width:100%;height:auto;border-radius:14px;overflow:hidden">
+        <defs>
+          <linearGradient id="pwSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2b3a55"/><stop offset=".55" stop-color="#4a5568"/><stop offset="1" stop-color="#8c7a63"/>
+          </linearGradient>
+          <radialGradient id="pwSun" cx="78%" cy="18%" r="42%">
+            <stop offset="0" stop-color="#ffe6b0" stop-opacity=".85"/><stop offset="1" stop-color="#ffe6b0" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="pwMast" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#6d6257"/><stop offset=".3" stop-color="#d8cbb8"/><stop offset=".62" stop-color="#8b7d6c"/><stop offset="1" stop-color="#4c443b"/>
+          </linearGradient>
+          <linearGradient id="pwBlock" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#c9c4bb"/><stop offset=".45" stop-color="#9a958c"/><stop offset="1" stop-color="#6a665f"/>
+          </linearGradient>
+          <linearGradient id="pwGround" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#6f6252"/><stop offset="1" stop-color="#3b332a"/>
+          </linearGradient>
+          <linearGradient id="pwMetal" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#8d9499"/><stop offset=".25" stop-color="#eef3f6"/><stop offset=".55" stop-color="#9aa2a7"/><stop offset="1" stop-color="#5a6165"/>
+          </linearGradient>
+          <filter id="pwBlur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4.2"/></filter>
+          <filter id="pwBlur2" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.6"/></filter>
+          <filter id="pwShadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".5"/></filter>
+        </defs>
+        <rect width="360" height="268" fill="url(#pwSky)"/>
+        <rect width="360" height="268" fill="url(#pwSun)"/>
+        <rect y="214" width="360" height="54" fill="url(#pwGround)"/>
+        <rect y="214" width="360" height="3" fill="#9c8a72" opacity=".5"/>
+        ${[0,1,2,3,4,5,6,7].map(k=>`<circle cx="${26+k*46}" cy="${24+((k*37)%40)}" r="${1.4+(k%3)*0.7}" fill="#fff" opacity=".28">
+          <animateTransform attributeName="transform" type="translate" values="0 0;${(k%2?18:-14)} -22;0 0" dur="${(7+k).toFixed(0)}s" repeatCount="indefinite"/></circle>`).join('')}
+        <ellipse cx="150" cy="222" rx="96" ry="9" fill="#000" opacity=".4" filter="url(#pwBlur)"/>
+        <!-- башня крана -->
+        <g filter="url(#pwShadow)">
+          <rect x="42" y="96" width="18" height="120" fill="url(#pwMast)"/>
+          ${[0,1,2,3,4,5].map(k=>`<path d="M42 ${104+k*19} L60 ${123+k*19}" stroke="#6b6157" stroke-width="2" opacity=".7"/>`).join('')}
+          <rect x="30" y="88" width="200" height="11" rx="3" fill="url(#pwMast)"/>
+          <path d="M30 88 L74 60 L230 88 Z" fill="none" stroke="#8b7d6c" stroke-width="3"/>
+          <rect x="60" y="58" width="16" height="34" fill="url(#pwMast)"/>
+          <rect x="126" y="86" width="34" height="18" rx="4" fill="#3d3730"/>
+          <circle cx="143" cy="95" r="9" fill="url(#pwMetal)"/>
+          <g><animateTransform attributeName="transform" type="rotate" values="0 143 95;360 143 95" dur="${(2.6/rot).toFixed(2)}s" repeatCount="indefinite"/>
+            <path d="M143 87 v16 M135 95 h16" stroke="#2f3437" stroke-width="2.2"/></g>
+        </g>
+        <!-- трос и крюк -->
+        <line x1="160" y1="96" x2="160" y2="${(214-lift-14).toFixed(1)}" stroke="#d9d2c4" stroke-width="2.2"/>
+        <path d="M160 ${(214-lift-14).toFixed(1)} v6" stroke="#8a8377" stroke-width="3"/>
+        <g style="transition:transform .9s cubic-bezier(.3,.9,.3,1)" transform="translate(0 0)">
+          <path d="M154 ${(222-lift).toFixed(1)} q6 10 12 0" fill="none" stroke="url(#pwMetal)" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <!-- бетонный блок -->
+        <g filter="url(#pwShadow)" style="transition:transform .9s cubic-bezier(.3,.9,.3,1);transform:translateY(${(st.up? -82+N/40 : 0).toFixed(1)}px)">
+          <rect x="132" y="${(224-lift).toFixed(1)}" width="56" height="40" rx="3" fill="url(#pwBlock)"/>
+          <rect x="132" y="${(228-lift).toFixed(1)}" width="56" height="4" fill="#fff" opacity=".18"/>
+          <circle cx="146" cy="${(240-lift).toFixed(1)}" r="3.4" fill="#5c5852"/><circle cx="174" cy="${(240-lift).toFixed(1)}" r="3.4" fill="#5c5852"/>
+          <text x="160" y="${(252-lift).toFixed(1)}" text-anchor="middle" font-size="9" fill="#efe9df">${A} Дж</text>
+        </g>
+        <!-- секундомер -->
+        <g transform="translate(300 176)">
+          <circle r="30" fill="#efe9df" opacity=".95"/><circle r="30" fill="none" stroke="#b9a887" stroke-width="3"/>
+          <circle r="3" fill="#3a3a3a"/>
+          <line x1="0" y1="0" x2="0" y2="-22" stroke="#c0392b" stroke-width="2.4">
+            <animateTransform attributeName="transform" type="rotate" values="0;360" dur="${T}s" repeatCount="indefinite"/></line>
+          <text y="20" text-anchor="middle" font-size="10" font-family="Georgia,serif" fill="#3a332a">${T} с</text>
+        </g>
+        <!-- ваттметр -->
+        <g transform="translate(44 182)">
+          <rect x="-26" y="-24" width="52" height="46" rx="7" fill="#1c1a17" stroke="#5b5347" stroke-width="2"/>
+          <text y="-8" text-anchor="middle" font-size="9" fill="#cbb9a4">Вт</text>
+          <line x1="0" y1="8" x2="0" y2="-8" stroke="#ffd76a" stroke-width="2.2">
+            <animateTransform attributeName="transform" type="rotate" values="0;${needle.toFixed(0)}" dur=".6s" fill="freeze"/></line>
+          <text y="18" text-anchor="middle" font-size="9.5" font-family="Georgia,serif" fill="#ffd76a">${N} Вт${kw}</text>
+        </g>
+      </svg>`;
+      const formula=`<div class="wv-big">N = A : t = ${A} : ${T} = ${N} Вт${kw}</div>
+        <div class="wv-sml">${st.up? 'груз поднят — работа '+A+' Дж выполнена за '+T+' с' : 'нажми «поднять груз», чтобы кран выполнил работу'}</div>
+        <div class="wv-sml">такая мощность — как ${kgf}</div>`;
+      const row=`<div class="wv-row">
+        <button class="hint-btn" onclick="wAct('${lk}','a+')">+100 Дж</button>
+        <button class="hint-btn" onclick="wAct('${lk}','a-')">−100 Дж</button>
+        <button class="hint-btn" onclick="wAct('${lk}','t+')">+1 с</button>
+        <button class="hint-btn" onclick="wAct('${lk}','t-')">−1 с</button>
+        <button class="hint-btn" onclick="wAct('${lk}','lift')">${st.up?'опустить':'поднять груз'}</button>
+        <button class="hint-btn" onclick="wAct('${lk}','r')">↺</button></div>`;
+      const tips={0:'Два крана, одна работа — разное время. Разница именно в мощности.',
+        1:'Мощность — это работа за одну секунду.',2:'Формула: N = A : t.',3:'1 ватт = 1 джоуль за 1 секунду.',
+        4:'800 Дж : 20 с = 40 Вт.',5:'то же 800 Дж за 5 с = 160 Вт — вчетверо мощнее!',
+        6:'Обратная задача: A = N · t.',7:'И время: t = A : N.',8:'Треугольник: A сверху, N·t снизу.',
+        9:'Мощность не зависит от способа — только работа и время.',10:'1 кВт = 1000 Вт, 1 МВт = 1 000 000 Вт.',
+        11:'Лампа 10 Вт · чайник 2000 Вт · автомобиль 100 000 Вт.',12:'1 л.с. ≈ 735 Вт.',
+        13:'1 кВт·ч — это работа прибора 1000 Вт за час.',14:'Чайник и лампочка: энергии может быть поровну, мощность — в 100 раз разная.',
+        15:'Порядок: A и t → секунды → N = A : t → кВт.',16:'1500 : 5 = 300 Вт = 0,3 кВт.',
+        17:'Запомни: N = A : t, ватт = Дж/с, 1000 Вт = 1 кВт.'};
+      h=(typeof col==='function')? col(scene+formula+row+(typeof sml==='function'? sml('💡 '+(tips[LV.step||0]||'')):'')) : (scene+formula+row);
     }
     else if(id===95){ const mats=[['Железо','притянулось!','🧷',1],['Сталь','притянулось!','🔩',1],['Дерево','не притягивается','🪵',0],['Стекло','не притягивается','🥛',0],['Пластик','не притягивается','🧴',0]];
       const [nm,res,ic,ok]=mats[i%mats.length];
