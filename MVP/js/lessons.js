@@ -8740,6 +8740,16 @@ function visL51(el){
     const big=(x)=>`<div class="wv-big">${x}</div>`;
     const sml=(x)=>`<div class="wv-sml">${x}</div>`;
     const row=(...b)=>`<div class="wv-row">${b.join('')}</div>`;
+    const spd=Math.max(0.35, 2.6 - ((t+20)/140)*2.2);
+    const state=t<-5?'лёд и мороз':(t<0?'лёд тает':(t<40?'холодная вода':(t<80?'тёплая вода':(t<100?'горячая, скоро кипит':'кипит!'))) );
+    const liveHdr=(x)=>`<g transform="translate(6 4)">
+      <rect width="348" height="30" rx="9" fill="rgba(9,15,20,.78)" stroke="rgba(127,209,255,.28)" stroke-width="1"/>
+      <text x="9" y="13" font-size="8.5" fill="#9fb8d0">${x}</text>
+      <rect x="9" y="18" width="200" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+      <rect x="9" y="18" width="${(((t+20)/140)*200).toFixed(1)}" height="6" rx="3" fill="#ff9d3c"/>
+      <circle r="3.6" fill="#ffd76a"><animateMotion dur="${spd.toFixed(2)}s" repeatCount="indefinite" path="M11 21 L207 21"/></circle>
+      <text x="222" y="24" font-size="9" font-weight="bold" fill="#ffd76a">${t>0?'+':''}${f(t)}°C</text>
+      <text x="342" y="24" text-anchor="end" font-size="8.5" fill="#cfe6ff">${state}</text></g>`;
     const chip=(x,c)=>`<span style="display:inline-block;padding:3px 11px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid ${c};font-size:14px;color:#e6eef6;margin:2px">${x}</span>`;
 
     const DEFS=`<defs>
@@ -8756,7 +8766,7 @@ function visL51(el){
       <radialGradient id="qGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff9d3c" stop-opacity=".55"/><stop offset="1" stop-color="#ff7a18" stop-opacity="0"/></radialGradient>
     </defs>`;
     const S=(body,bg)=>`<svg viewBox="0 0 360 200" style="display:block;width:100%;height:auto;border-radius:14px;overflow:hidden">
-      ${DEFS}<rect width="360" height="200" fill="${bg||'#141a22'}"/>${body}</svg>`;
+      ${DEFS}<rect width="360" height="200" fill="${bg||'#141a22'}"/>${body}${liveHdr('живая модель')}</svg>`;
     const flame=(x,y,hh,op)=>`<g filter="url(#qBlur2)" opacity="${op||1}">
       <path d="M${x} ${y} C${x-14} ${y-hh*0.45} ${x-11} ${y-hh} ${x} ${y-hh*1.3} C${x+11} ${y-hh} ${x+14} ${y-hh*0.45} ${x} ${y} Z" fill="url(#qFlame)">
         <animateTransform attributeName="transform" type="scale" values="1 1;1 .85;1 1.06;1 1" dur=".9s" repeatCount="indefinite" additive="sum"/></path>
@@ -8795,7 +8805,7 @@ function visL51(el){
       example='Пример: чайник обжигает, лёд студит — это движутся частицы внутри.';
     } else if(LV.step===1){
       body=`${thermo(120,150,20,96)}
-        <g transform="translate(120 20)"><path d="M-24 0 h48" stroke="#7fd1ff" stroke-width="1.6"/><text y="-4" text-anchor="middle" font-size="9" fill="#bfe6ff">кислород −183°</text></g>
+        <g transform="translate(120 52)"><path d="M-24 0 h48" stroke="#7fd1ff" stroke-width="1.6"/><text y="-5" text-anchor="middle" font-size="9" fill="#bfe6ff">кислород −183°</text></g>
         <g transform="translate(250 120)">${thermo(0,30,100,60)}</g>
         <text x="250" y="40" text-anchor="middle" font-size="11" fill="#ffd76a">вода кипит при 100 °C</text>
         <text x="250" y="188" text-anchor="middle" font-size="11" fill="#bfe6ff">лёд тает при 0 °C</text>
@@ -8808,7 +8818,7 @@ function visL51(el){
         <path d="M170 140 H130" stroke="#ff9d3c" stroke-width="3" marker-end="url(#a1)"/>
         <text x="150" y="128" text-anchor="middle" font-size="9.5" fill="#ffd76a">теплота идёт в тело</text>
         <path d="M60 70 q-10 -30 -30 -40" stroke="#7fd1ff" stroke-width="2.4" stroke-dasharray="5 4" fill="none"/>
-        <text x="46" y="26" text-anchor="middle" font-size="9.5" fill="#bfe6ff">остывает — тепло уходит</text>
+        <text x="60" y="52" text-anchor="middle" font-size="9.5" fill="#bfe6ff">остывает — тепло уходит</text>
         <g filter="url(#qBlur)"><ellipse cx="300" cy="60" rx="30" ry="18" fill="#ffffff" opacity=".12"><animateTransform attributeName="transform" type="translate" values="0 0;-10 -30;0 0" dur="4s" repeatCount="indefinite"/></ellipse></g>`;
       example='Пример: чашка чая остывает — энергия уходит в воздух, а не исчезает.';
     } else if(LV.step===3){
@@ -8884,7 +8894,7 @@ function visL51(el){
       example='Пример: для двух литров то же нагревание стоит 84 кДж — вдвое дороже по энергии.';
     } else if(LV.step===11){
       const rows=[['вода',4200,'#7fd1ff'],['лёд',2100,'#bfe6ff'],['алюминий',920,'#cfd6da'],['железо',460,'#ff9d3c'],['медь',400,'#d98a4a'],['свинец',140,'#a9b8b2']];
-      body=rows.map((q,k)=>{const y=26+k*26, w=q[1]/4200*230;
+      body=rows.map((q,k)=>{const y=42+k*26, w=q[1]/4200*230;
         return `<text x="76" y="${y+11}" text-anchor="end" font-size="10" fill="#dbe6ee">${q[0]}</text>
         <rect x="84" y="${y}" width="230" height="14" rx="7" fill="rgba(255,255,255,.06)"/>
         <rect x="84" y="${y}" width="${w.toFixed(0)}" height="14" rx="7" fill="${q[2]}"><animate attributeName="width" from="0" to="${w.toFixed(0)}" dur=".8s" begin="${(k*0.12).toFixed(2)}s" fill="freeze"/></rect>
@@ -8894,7 +8904,7 @@ function visL51(el){
       body=`<g filter="url(#qSh)"><path d="M120 60 h120 l-14 74 h-92 Z" fill="#2a323c" stroke="#cfd6da" stroke-width="1.6"/>
         <path d="M126 92 h108 l-8 38 h-92 Z" fill="#7a4a24" opacity=".85"/></g>
         <path d="M240 70 q30 -18 62 -30" stroke="#ff9d3c" stroke-width="2.4" fill="none" stroke-dasharray="6 4"/>
-        <text x="300" y="34" text-anchor="middle" font-size="10" fill="#ff9d3c">тепло уходит в воздух</text>
+        <text x="300" y="54" text-anchor="middle" font-size="10" fill="#ff9d3c">тепло уходит в воздух</text>
         <text x="180" y="164" text-anchor="middle" font-size="12" fill="#ffd76a">чай остыл: 90 °C → 40 °C, Δt = 50 °C</text>
         <text x="180" y="184" text-anchor="middle" font-size="10.5" fill="#cbb9a4">Q = 4200 · m · 50 — вода ОТДАЁТ тепло</text>`;
       example='Пример: остывающий чай отдал комнате 210 кДж — энергия не исчезла.';
