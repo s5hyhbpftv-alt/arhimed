@@ -10679,6 +10679,290 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
       s+=`<circle r="5" fill="${cyan}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M302 ${44} L302 ${y-6}"/></circle>`;
       return s;
     }
+    if(K==='b1signals'){ /* внутри компьютера — только сигналы */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'внутри компьютера — только сигналы',{b:1},276)+`</g>`;
+      let y=band(64);
+      s+=`<rect x="24" y="${y}" width="70" height="52" rx="9" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=`<rect x="38" y="${y+14}" width="42" height="24" rx="4" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.2"/>`;
+      s+=fit(59,y+74,9,dim,'плата',{b:1},60);
+      s+=`<path d="M94 ${y+26} h190" stroke="${cardB}" stroke-width="3" stroke-linecap="round"/>`;
+      /* два состояния провода */
+      [[0,'есть ток',grn],[1,'нет тока',dim]].forEach((q,k)=>{
+        const yy=y+14+k*24;
+        s+=`<path d="M104 ${yy} h170" stroke="${q[2]}" stroke-width="3.4" stroke-linecap="round" opacity="${k?0.5:0.95}"/>`;
+        if(!k) s+=`<circle r="5" fill="#eaffe0"><animateMotion dur="1.8s" repeatCount="indefinite" path="M108 ${yy} L270 ${yy}"/></circle>`;
+        s+=fit(54,yy+4,8.5,q[2],q[1],{b:1},62);
+      });
+      y=band(126);
+      [['1','есть ток',grn],['0','нет тока',dim]].forEach((q,k)=>{
+        const x=52+k*120;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.2+k*0.2).toFixed(2)}s"><rect x="${x-40}" y="${y}" width="80" height="60" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.6"/>`
+          +`<text x="${x}" y="${y+40}" text-anchor="middle" font-size="26" font-family="'Courier New',monospace" font-weight="bold" fill="${q[2]}">${q[0]}</text>`
+          +fit(x,y+54,8.5,q[2],q[1],{},72)+`</g>`;
+      });
+      y=band(68);
+      s+=`<g class="${pre}Pop" style="animation-delay:.6s"><rect x="24" y="${y}" width="270" height="30" rx="9" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.5"/>`
+        +`<text x="159" y="${y+20}" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">есть ток = 1 · нет тока = 0</text></g>`;
+      s+=plate2(24,y+32,270,30,go?grn:cardB,go?'буквы и картинки хранятся как 0 и 1':'что «понимает» компьютер?',11,pre);
+      return s;
+    }
+    if(K==='b1bits'){ /* 0 и 1 — переключение */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'сигнал записывают как 0 или 1',{b:1},272)+`</g>`;
+      const y=band(96);
+      [['0',cyan],['1',gold]].forEach((q,k)=>{
+        const x=88+k*142;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<rect x="${x-56}" y="${y}" width="112" height="96" rx="14" fill="rgba(18,24,44,.97)" stroke="${q[1]}" stroke-width="2"/>`
+          +`<text x="${x}" y="${y+66}" text-anchor="middle" font-size="54" font-family="'Courier New',monospace" font-weight="bold" fill="${q[1]}">${q[0]}</text>`
+          +`</g>`;
+      });
+      s+=`<path d="M148 ${y+48} h22" stroke="${cardB}" stroke-width="2"/><path d="M164 ${y+42} l6 6 l-6 6" fill="none" stroke="${cardB}" stroke-width="2"/>`;
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="3.2s" repeatCount="indefinite" path="M88 ${y+48} L230 ${y+48}"/></circle>`;
+      /* выключатель */
+      let y2=band(116);
+      s+=`<rect x="86" y="${y2}" width="146" height="70" rx="12" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`;
+      s+=`<rect x="100" y="${y2+16}" width="54" height="38" rx="8" fill="rgba(125,224,160,.14)" stroke="${grn}" stroke-width="1.4"/>`;
+      s+=`<circle cx="127" cy="${y2+35}" r="12" fill="rgba(125,224,160,.5)" stroke="${grn}" stroke-width="1.6">`
+        +`<animate attributeName="cx" values="112;142;112" dur="2.4s" repeatCount="indefinite"/>`
+        +`<animate attributeName="fill-opacity" values="0.9;0.25;0.9" dur="2.4s" repeatCount="indefinite"/></circle>`;
+      s+=`<circle cx="209" cy="${y2+35}" r="14" fill="rgba(255,215,106,.16)" stroke="${gold}" stroke-width="1.6"/>`
+        +`<animate attributeName="fill-opacity" values="0.2;1;0.2" dur="2.4s" repeatCount="indefinite"/></circle>`;
+      s+=fit(127,y2+86,9,dim,'выключатель',{b:1},100)+fit(209,y2+86,9,gold,'лампа',{b:1},70);
+      const y3=band(0)+100;
+      s+=plate2(86,y3+4,146,0,cardB,'',11,pre);
+      s+=`<g class="${pre}Pop"><rect x="24" y="${y3+20}" width="270" height="30" rx="9" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.5"/>`
+        +fit(159,y3+40,9.5,gold,'включён — 1, выключен — 0',{b:1},256)+`</g>`;
+      return s;
+    }
+    if(K==='b1bitdef'){ /* что такое бит */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11,pur,'бит — самая маленькая единица информации',{b:1},288)+`</g>`;
+      band(34);
+      const y=band(110);
+      s+=`<rect x="70" y="${y}" width="178" height="90" rx="12" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.8"/>`;
+      s+=`<text x="159" y="${y+62}" text-anchor="middle" font-size="46" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">`
+        +`0<tspan> </tspan><tspan fill="${gold}">1</tspan></text>`;
+      s+=`<path d="M100 ${y-8} h118" stroke="${gold}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
+      s+=`<path d="M100 ${y-8} v-8 M218 ${y-8} v-8" stroke="${gold}" stroke-width="1.4"/>`;
+      s+=fit(159,y-22,9.5,gold,'один бит = один знак',{b:1},170);
+      s+=`<rect x="92" y="${y+10}" width="24" height="24" rx="4" fill="none" stroke="${gold}" stroke-width="1.8" opacity="0">`
+        +`<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.2;.7;1" dur="2.6s" repeatCount="indefinite"/></rect>`;
+      s+=`<rect x="122" y="${y+10}" width="24" height="24" rx="4" fill="none" stroke="${gold}" stroke-width="1.8" opacity="0">`
+        +`<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.3;.5;.8;1" dur="2.6s" repeatCount="indefinite"/></rect>`;
+      const y2=band(120);
+      [['меньше не бывает','одним битом нельзя передать букву',red],['но битов можно много','из них собирают всё остальное',grn]].forEach((q,k)=>{
+        const x=24+k*140;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.2).toFixed(2)}s"><rect x="${x}" y="${y2}" width="130" height="66" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.5"/>`
+          +fit(x+65,y2+22,9.5,q[2],q[0],{b:1},122)+fit(x+65,y2+40,8.5,dim,q[1],{},122)+`</g>`;
+      });
+      const y3=band(0)+76;
+      s+=plate2(24,y3+16,270,30,go?grn:cardB,go?'бит — это 0 или 1':'сколько значений в одном бите?',11,pre);
+      return s;
+    }
+    if(K==='b1switch'){ /* бит = выключатель: четыре выключателя */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11,grn,'бит — как выключатель: включён или нет',{b:1},288)+`</g>`;
+      const y=band(120);
+      const states=[1,0,1,1];
+      states.forEach((v,k)=>{
+        const x=28+k*66;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.14).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y}" width="56" height="104" rx="11" fill="rgba(18,24,44,.97)" stroke="${v?grn:cardB}" stroke-width="1.6"/>`
+          +`<rect x="${x+12}" y="${y+12}" width="32" height="48" rx="8" fill="${v?'rgba(125,224,160,.16)':'rgba(255,255,255,.05)'}" stroke="${v?grn:cardB}" stroke-width="1.3"/>`
+          +`<circle cx="${x+28}" cy="${y+36}" r="11" fill="${v?grn:dim}" opacity=".85">`
+          +`<animate attributeName="cy" values="${v?y+20:y+52};${v?y+52:y+20};${v?y+20:y+52}" dur="${(2.2+k*0.4).toFixed(1)}s" repeatCount="indefinite"/></circle>`
+          +`<circle cx="${x+28}" cy="${y+76}" r="8" fill="rgba(255,215,106,${v?0.9:0.15})" stroke="${gold}" stroke-width="1.2"/>`
+          +(v?`<animate attributeName="opacity" values="1;.5;1" dur="1.6s" repeatCount="indefinite"/>`:'')
+          +`<text x="${x+28}" y="${y+100}" text-anchor="middle" font-size="14" font-family="'Courier New',monospace" font-weight="bold" fill="${v?grn:dim}">${v}</text></g>`;
+      });
+      const y2=band(132);
+      s+=`<g class="${pre}Pop" style="animation-delay:.7s"><rect x="24" y="${y2}" width="270" height="30" rx="9" fill="rgba(125,224,160,.10)" stroke="${grn}" stroke-width="1.5"/>`
+        +`<text x="159" y="${y2+20}" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${grn}">1 0 1 1</text></g>`;
+      s+=fit(159,y2+48,9,dim,'лампа горит — значит 1, не горит — 0',{b:1},280);
+      s+=plate2(24,y2+44,270,30,go?grn:cardB,go?'так биты хранят «да» и «нет»':'что означает горящая лампа?',11,pre);
+      return s;
+    }
+    if(K==='b1little'){ /* мало бит: 1 бит = да/нет */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${red}" stroke-width="1.8"/>`
+        +fit(159,29,11,red,'одним битом можно сказать только «да» или «нет»',{b:1},292)+`</g>`;
+      const y=band(104);
+      s+=`<rect x="24" y="${y}" width="130" height="94" rx="11" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.6"/>`;
+      s+=fit(89,y+22,10,cyan,'свет горит?',{b:1},118);
+      [['да',grn,y+40,1],['нет',red,y+66,0]].forEach((q,k)=>{
+        s+=`<g style="cursor:default"><rect x="40" y="${q[2]}" width="98" height="22" rx="7" fill="${k?'rgba(255,120,100,.14)':'rgba(125,224,160,.14)'}" stroke="${q[1]}" stroke-width="1.3"/>`
+          +fit(89,q[2]+15,9.5,q[1],q[0],{b:1},88)+`</g>`;
+      });
+      s+=`<rect x="166" y="${y}" width="128" height="94" rx="11" fill="rgba(18,24,44,.97)" stroke="${red}" stroke-width="1.6"/>`;
+      s+=fit(230,y+22,10,red,'а больше — нет',{b:1},116);
+      s+=`<path d="M${200} ${y+44} l60 0" stroke="${red}" stroke-width="1.6" stroke-dasharray="4 3"/>`;
+      s+=`<path d="M206 ${y+52} h48 M206 ${y+62} h48 M206 ${y+72} h30" stroke="${dim}" stroke-width="1.6" opacity=".5"/>`;
+      s+=`<path d="M196 ${y+40} l68 40 M264 ${y+40} l-68 40" stroke="${red}" stroke-width="2.2" opacity=".8"/>`;
+      const y2=band(110);
+      s+=`<g class="${pre}Pop" style="animation-delay:.5s"><rect x="24" y="${y2}" width="270" height="40" rx="10" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.5"/>`
+        +fit(159,y2+17,9.5,gold,'чтобы хранить больше — биты объединяют',{b:1},256)
+        +fit(159,y2+32,9,dim,'из нескольких бит получается много значений',{},256)+`</g>`;
+      s+=plate2(24,y2+42,270,30,go?grn:cardB,go?'биты складывают вместе':'сколько хранит один бит?',11,pre);
+      return s;
+    }
+    if(K==='b1byte'){ /* байт = 8 бит */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'8 бит вместе — это один байт',{b:1},276)+`</g>`;
+      const y=band(90);
+      const bits=[1,1,0,1,0,1,1,0];
+      bits.forEach((v,k)=>{
+        const x=24+k*34;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.08+k*0.09).toFixed(2)}s">`
+          +`<rect x="${x}" y="${y+20}" width="30" height="44" rx="7" fill="${v?'rgba(255,215,106,.16)':'rgba(255,255,255,.05)'}" stroke="${v?gold:cardB}" stroke-width="1.5"/>`
+          +`<text x="${x+15}" y="${y+49}" text-anchor="middle" font-size="18" font-family="'Courier New',monospace" font-weight="bold" fill="${v?gold:dim}">${v}</text></g>`;
+      });
+      s+=`<path d="M22 ${y+76} h274" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=`<path d="M22 ${y+76} v-6 M296 ${y+76} v-6" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=fit(159,y+92,10,gold,'1 байт = 8 бит',{b:1},180);
+      s+=`<circle r="4.5" fill="#fff7e0"><animateMotion dur="3.4s" repeatCount="indefinite" path="M30 ${y+42} L288 ${y+42}"/></circle>`;
+      const y2=band(116);
+      [['8','бит',gold],['1','байт',grn]].forEach((q,k)=>{
+        const x=70+k*118;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.5+k*0.2).toFixed(2)}s"><rect x="${x-52}" y="${y2}" width="104" height="72" rx="12" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.7"/>`
+          +`<text x="${x}" y="${y2+44}" text-anchor="middle" font-size="26" font-family="Georgia,serif" font-weight="bold" fill="${q[2]}">${q[0]}</text>`
+          +fit(x,y2+68,9,dim,q[1],{},80)+`</g>`;
+      });
+      s+=`<path d="M124 ${y2+36} h32" stroke="${gold}" stroke-width="2.2"/><path d="M150 ${y2+30} l6 6 l-6 6" fill="none" stroke="${gold}" stroke-width="2.2"/>`;
+      const y3=band(0)+86;
+      s+=plate2(24,y3+16,270,30,go?grn:cardB,go?'байт — «кирпичик» памяти':'сколько бит в байте?',11,pre);
+      return s;
+    }
+    if(K==='b1letter'){ /* байт хранит букву */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11,grn,'один байт — одна буква или знак',{b:1},278)+`</g>`;
+      const y=band(80);
+      s+=`<rect x="24" y="${y}" width="112" height="66" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.6"/>`;
+      s+=`<text x="80" y="${y+30}" text-anchor="middle" font-size="11" font-family="'Courier New',monospace" fill="${dim}">01000001</text>`;
+      s+=`<text x="80" y="${y+56}" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" fill="${cyan}">8 бит</text>`;
+      s+=`<path d="M142 ${y+33} h24" stroke="${gold}" stroke-width="2.2"/><path d="M160 ${y+27} l6 6 l-6 6" fill="none" stroke="${gold}" stroke-width="2.2"/>`;
+      s+=`<rect x="172" y="${y}" width="122" height="66" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.6"/>`;
+      s+=`<text x="233" y="${y+46}" text-anchor="middle" font-size="34" font-family="Georgia,serif" font-weight="bold" fill="${grn}">А</text>`;
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M126 ${y+33} L184 ${y+33}"/></circle>`;
+      const y2=band(96);
+      [['1 байт','= 1 буква',grn,'А'],['1 байт','= 1 цифра',gold,'7'],['1 байт','= 1 знак',pur,'!']].forEach((q,k)=>{
+        const x=24+k*92;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.2+k*0.16).toFixed(2)}s"><rect x="${x}" y="${y2}" width="86" height="82" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.5"/>`
+          +`<text x="${x+43}" y="${y2+34}" text-anchor="middle" font-size="24" font-family="Georgia,serif" font-weight="bold" fill="${q[2]}">${q[3]}</text>`
+          +fit(x+43,y2+54,9,dim,q[0],{},80)+fit(x+43,y2+68,8.5,q[2],q[1],{},80)+`</g>`;
+      });
+      const y3=band(0)+98;
+      s+=plate2(24,y3+14,270,30,go?grn:cardB,go?'буква занимает целый байт':'сколько байт нужно на букву?',11,pre);
+      return s;
+    }
+    if(K==='b1rain'){ /* всё — это 0 и 1 */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11,pur,'буквы, картинки и музыка — тоже 0 и 1',{b:1},288)+`</g>`;
+      band(26);
+      const y=band(150);
+      s+=`<rect x="20" y="${y}" width="278" height="146" rx="10" fill="rgba(9,17,26,.96)" stroke="${cardB}" stroke-width="1.5"/>`;
+      /* «дождь» из нулей и единиц */
+      for(let c=0;c<13;c++){
+        const x=32+c*21;
+        for(let r=0;r<3;r++){
+          const dig=(c+r)%2;
+          s+=`<text x="${x}" y="${y+24+r*44}" font-size="13" font-family="'Courier New',monospace" fill="${dig?gold:cyan}" opacity="${(0.85-r*0.25).toFixed(2)}">${dig}`
+            +`<animateTransform attributeName="transform" type="translate" values="0 0;0 92" dur="${(2.6+((c*7)%5)*0.4).toFixed(1)}s" begin="${(c*0.18).toFixed(2)}s" repeatCount="indefinite"/></text>`;
+        }
+      }
+      /* иконки поверх потока */
+      [['А',grn,64],['🖼',cyan,159],['♫',rose,254]].forEach((q,k)=>{
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.4+k*0.25).toFixed(2)}s">`
+          +`<circle cx="${q[2]}" cy="${y+74}" r="24" fill="rgba(11,23,18,.92)" stroke="${q[1]}" stroke-width="1.8"/>`
+          +`<text x="${q[2]}" y="${y+84}" text-anchor="middle" font-size="22" font-family="Georgia,serif" fill="${q[1]}">${q[0]}</text></g>`;
+      });
+      const y2=band(0)+162;
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="20" y="${y2}" width="278" height="30" rx="9" fill="rgba(176,127,255,.10)" stroke="${pur}" stroke-width="1.5"/>`
+        +fit(159,y2+20,9.5,pur,'внутри — длинная цепочка нулей и единиц',{b:1},260)+`</g>`;
+      s+=plate2(20,y2+18,278,0,cardB,'',11,pre);
+      return s;
+    }
+    if(K==='b1more'){ /* длиннее — больше значений */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11,gold,'чем больше бит, тем больше значений',{b:1},282)+`</g>`;
+      const rows=[['1 бит','2 значения','0 · 1',cyan,2],['2 бита','4 значения','00 · 01 · 10 · 11',gold,4],['3 бита','8 значений','000 … 111',grn,8]];
+      rows.forEach((q,k)=>{
+        const y=band(56);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[3]}" stroke-width="1.5"/>`
+          +fit(58,y+30,11,q[3],q[0],{b:1},64)+fit(130,y+30,10,ink,q[1],{b:1},96)
+          +`<text x="270" y="${y+19}" text-anchor="end" font-size="8.5" font-family="'Courier New',monospace" fill="${dim}">${q[2]}</text>`
+          +`<rect x="176" y="${y+28}" width="0" height="8" rx="4" fill="${q[3]}" opacity=".8">`
+          +`<animate attributeName="width" from="0" to="${(q[4]*11).toFixed(0)}" dur=".8s" begin="${(0.3+k*0.2).toFixed(2)}s" fill="freeze"/></rect></g>`;
+      });
+      const y2=band(56);
+      s+=`<g class="${pre}Pop" style="animation-delay:.8s"><rect x="20" y="${y2}" width="278" height="40" rx="10" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.5"/>`
+        +fit(159,y2+17,9.5,gold,'каждый новый бит удваивает число значений',{b:1},256)
+        +fit(159,y2+32,9,dim,'поэтому биты объединяют в байты',{},256)+`</g>`;
+      s+=plate2(20,y2+42,278,30,go?grn:cardB,go?'больше бит — больше возможностей':'сколько значений у трёх бит?',11,pre);
+      return s;
+    }
+    if(K==='b1quiz'){ /* тренажёр: сколько бит в байте */
+      const opts=['8','10','4'];
+      const ok=0, done=(st&&st.pick>=0);
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,29,11,ink,'сколько бит в одном байте?',{b:1},260)+`</g>`;
+      const y=band(96);
+      s+=`<rect x="66" y="${y}" width="186" height="88" rx="12" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.7"/>`;
+      for(let k=0;k<8;k++){
+        const x=78+k*22;
+        s+=`<rect x="${x}" y="${y+16}" width="18" height="30" rx="5" fill="${(k%2)?'rgba(255,215,106,.18)':'rgba(255,255,255,.05)'}" stroke="${(k%2)?gold:cardB}" stroke-width="1.2"/>`
+          +`<text x="${x+9}" y="${y+37}" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${(k%2)?gold:dim}">${k%2}</text>`;
+      }
+      s+=`<text x="159" y="${y+70}" text-anchor="middle" font-size="16" font-family="Georgia,serif" font-weight="bold" fill="${gold}">?  =  1 байт</text>`;
+      s+=`<rect x="70" y="${y+10}" width="178" height="42" rx="8" fill="none" stroke="${gold}" stroke-width="1.2" opacity=".6"><animate attributeName="stroke-opacity" values=".6;.15;.6" dur="2s" repeatCount="indefinite"/></rect>`;
+      const y2=band(108);
+      opts.forEach((t2,k)=>{
+        const x=36+k*88, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})"><rect x="${x}" y="${y2}" width="76" height="40" rx="10" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.5}"/>`
+          +`<text x="${x+38}" y="${y2+28}" text-anchor="middle" font-size="18" font-family="Georgia,serif" font-weight="bold" fill="${c}">${t2}</text></g>`;
+      });
+      const y3=band(56);
+      s+=`<rect x="36" y="${y3}" width="250" height="40" rx="10" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.5"/>`;
+      s+=fit(161,y3+17,9.5,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно: 8 бит = 1 байт':'Подумай: байт — это «кирпичик»','',258);
+      s+=fit(161,y3+32,9,dim,'в одном байте хранится одна буква',{},258);
+      return s;
+    }
+    if(K==='b1sheet'){ /* шпаргалка */
+      let Y=44; const band=h=>{ const y=Y; Y+=h; return y; };
+      const rows=[['1 бит','0 или 1',gold,'bit'],['1 байт','8 бит',grn,'byte'],
+                  ['1 буква','1 байт',cyan,'letter'],['больше бит','больше значений',pur,'more'],
+                  ['всё внутри','цепочка 0 и 1',rose,'all']];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11,cyan,'главное про биты и байты',{b:1},264)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=band(46);
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.07+k*0.1).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="278" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.4"/>`
+          +`<rect x="30" y="${y+7}" width="22" height="20" rx="6" fill="rgba(255,255,255,.04)" stroke="${q[2]}" stroke-width="1.1"/>`;
+        const ix=41, iy=y+17;
+        if(q[3]==='bit') s+=`<text x="${ix}" y="${iy+5}" text-anchor="middle" font-size="13" font-family="'Courier New',monospace" font-weight="bold" fill="${q[2]}">1</text>`;
+        else if(q[3]==='byte') for(let b=0;b<2;b++) for(let c2=0;c2<2;c2++) s+=`<rect x="${ix-7+c2*8}" y="${iy-7+b*8}" width="6" height="6" rx="1.5" fill="${q[2]}" opacity=".8"/>`;
+        else if(q[3]==='letter') s+=`<text x="${ix}" y="${iy+5}" text-anchor="middle" font-size="13" font-family="Georgia,serif" font-weight="bold" fill="${q[2]}">А</text>`;
+        else if(q[3]==='more') s+=`<path d="M${ix-8} ${iy+6} h6 v-6 h6 v-8 h6" fill="none" stroke="${q[2]}" stroke-width="1.6"/>`;
+        else s+=`<text x="${ix}" y="${iy+5}" text-anchor="middle" font-size="11" font-family="'Courier New',monospace" fill="${q[2]}">01</text>`;
+        s+=fit(150,y+14,9.5,q[2],q[0],{b:1},118)+fit(150,y+28,8.5,dim,q[1],{},196)+`</g>`;
+      });
+      const y=band(34);
+      s+=plate2(20,y-2,278,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'пять главных мыслей',11,pre);
+      s+=`<circle r="5" fill="${cyan}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M302 ${44} L302 ${y-6}"/></circle>`;
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -10725,7 +11009,7 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
     const K=v.kind;
     if(K==='cards') return Math.max(120, Math.ceil((v.items||[]).length/2)*68+16);
     if(K==='ipo') return 152;
-    if(K==='bits') return 172;
+    if(K==='bits') return 179;
     if(K==='binary') return 158;
     if(K==='codes') return 158;
     if(K==='steps') return Math.max(120, (v.steps||[]).length*34+22);
@@ -10914,6 +11198,17 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
     if(K==='inf5important') return 322;
     if(K==='inf5quiz') return 271;
     if(K==='inf5sheet') return 287;
+    if(K==='b1signals') return 295;
+    if(K==='b1bits') return 421;
+    if(K==='b1bitdef') return 412;
+    if(K==='b1switch') return 255;
+    if(K==='b1little') return 237;
+    if(K==='b1byte') return 398;
+    if(K==='b1letter') return 378;
+    if(K==='b1rain') return 390;
+    if(K==='b1more') return 301;
+    if(K==='b1quiz') return 302;
+    if(K==='b1sheet') return 289;
     if(K==='d3intro') return 300;
     if(K==='d3flat') return 300;
     if(K==='d3points') return 292;
@@ -11257,7 +11552,7 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
     if(K==='naming') return 220;
     if(K==='summary513') return 226;
     if(K==='machine') return 216;
-    if(K==='rain') return 212;
+    if(K==='rain') return 224;
     return 180;
   }
   /* ---------- данные 10 уроков ---------- */
@@ -11306,17 +11601,17 @@ s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefini
         'Проверь себя: сколько бит в одном байте?',
         'Тренажёр и шпаргалка.' ],
       slides:[
-        {h:'Внутри компьютера', v:{kind:'text', lines:[{t:'Только сигналы:', b:1},{t:'есть ток · нет тока', c:cyan, b:1},{t:'Любая информация — из них!', c:dim}]}, r:'Компьютер хранит всё как сигналы.', d:'Внутри компьютера нет букв и картинок — только сигналы: есть ток или нет тока.'} ,
-        {h:'0 и 1', v:{kind:'bits', bits:[1,0]}, r:'Есть ток = 1, нет тока = 0.', d:'Два состояния выключателя — два знака: 1 (ток есть) и 0 (тока нет).'} ,
-        {h:'Что такое бит', v:{kind:'text', lines:[{t:'БИТ — один 0 или одна 1', b:1, c:gold},{t:'самая маленькая единица', c:dim},{t:'информации', c:dim}]}, r:'Бит — самая маленькая единица информации.', d:'Один бит — это один знак: либо 0, либо 1. Меньше единицы информации не бывает.'} ,
-        {h:'Бит = выключатель', v:{kind:'bits', bits:[1,1,0,0]}, r:'Включён = 1, выключен = 0.', d:'Каждый бит — как выключатель: 1 — включён, 0 — выключен; вместе биты образуют цепочку.'} ,
-        {h:'Мало бит', v:{kind:'text', lines:[{t:'Один бит = только «да/нет»', b:1},{t:'Поэтому биты объединяют', c:dim},{t:'в группы', c:dim}]}, r:'Из одного бита мало что закодируешь.', d:'Одним битом можно сказать только «да» или «нет», поэтому биты объединяют в группы.'} ,
-        {h:'Байт', v:{kind:'bits', bits:[1,1,1,1,1,1,1,1], note:'8 бит вместе — это 1 байт'}, r:'8 бит = 1 байт.', d:'Смотри на скобку: восемь бит под ней собираются в один байт.'} ,
-        {h:'Байт хранит букву', v:{kind:'cards', items:[{t:'1 байт', d:'= 1 буква', c:grn},{t:'1 байт', d:'= 8 бит', c:blu}]}, r:'В одном байте — одна буква.', d:'Один байт вмещает один символ: букву, цифру или знак.'} ,
-        {h:'Всё — это 0 и 1', v:{kind:'rain'}, r:'Буквы, картинки, музыка — всё цепочки 0 и 1.', d:'По проводам бегут волны нулей и единиц: так хранится и текст, и картинка, и музыка.'} ,
-        {h:'Длиннее — больше', v:{kind:'text', lines:[{t:'Больше бит → больше значений', b:1},{t:'2 бита → 4 значения', c:cyan},{t:'3 бита → 8 значений', c:grn}]}, r:'Чем длиннее цепочка, тем больше вариантов.', d:'Чем больше бит в цепочке, тем больше значений: 2 бита — 4 значения, 3 бита — 8.'} ,
-        {h:'Тренажёр', v:{kind:'pick', q:'Сколько бит в одном байте?', opts:[{t:'8', ok:1},{t:'10'},{t:'100'}], exp:'1 байт = 8 бит — это надо помнить наизусть.'}, r:'Проверь себя про биты и байт.', d:'Вспомни главное число этого урока: 1 байт = 8 бит.'} ,
-        {h:'Шпаргалка', v:{kind:'text', lines:[{t:'1 бит = 0 или 1', b:1},{t:'1 байт = 8 бит', c:grn, b:1},{t:'всё хранится как 0 и 1', c:dim}]}, r:'Запомни: бит, байт, 0 и 1.', d:'Главное про хранение: бит — 0 или 1, байт — 8 бит, а всё остальное собирается из них.'} ],
+        {h:'Внутри компьютера', v:{kind:'b1signals', lines:[{t:'Только сигналы:', b:1},{t:'есть ток · нет тока', c:cyan, b:1},{t:'Любая информация — из них!', c:dim}]}, r:'Компьютер хранит всё как сигналы.', d:'Внутри компьютера нет букв и картинок — только сигналы: есть ток или нет тока.'} ,
+        {h:'0 и 1', v:{kind:'b1bits', bits:[1,0]}, r:'Есть ток = 1, нет тока = 0.', d:'Два состояния выключателя — два знака: 1 (ток есть) и 0 (тока нет).'} ,
+        {h:'Что такое бит', v:{kind:'b1bitdef', lines:[{t:'БИТ — один 0 или одна 1', b:1, c:gold},{t:'самая маленькая единица', c:dim},{t:'информации', c:dim}]}, r:'Бит — самая маленькая единица информации.', d:'Один бит — это один знак: либо 0, либо 1. Меньше единицы информации не бывает.'} ,
+        {h:'Бит = выключатель', v:{kind:'b1switch', bits:[1,1,0,0]}, r:'Включён = 1, выключен = 0.', d:'Каждый бит — как выключатель: 1 — включён, 0 — выключен; вместе биты образуют цепочку.'} ,
+        {h:'Мало бит', v:{kind:'b1little', lines:[{t:'Один бит = только «да/нет»', b:1},{t:'Поэтому биты объединяют', c:dim},{t:'в группы', c:dim}]}, r:'Из одного бита мало что закодируешь.', d:'Одним битом можно сказать только «да» или «нет», поэтому биты объединяют в группы.'} ,
+        {h:'Байт', v:{kind:'b1byte', bits:[1,1,1,1,1,1,1,1], note:'8 бит вместе — это 1 байт'}, r:'8 бит = 1 байт.', d:'Смотри на скобку: восемь бит под ней собираются в один байт.'} ,
+        {h:'Байт хранит букву', v:{kind:'b1letter', items:[{t:'1 байт', d:'= 1 буква', c:grn},{t:'1 байт', d:'= 8 бит', c:blu}]}, r:'В одном байте — одна буква.', d:'Один байт вмещает один символ: букву, цифру или знак.'} ,
+        {h:'Всё — это 0 и 1', v:{kind:'b1rain'}, r:'Буквы, картинки, музыка — всё цепочки 0 и 1.', d:'По проводам бегут волны нулей и единиц: так хранится и текст, и картинка, и музыка.'} ,
+        {h:'Длиннее — больше', v:{kind:'b1more', lines:[{t:'Больше бит → больше значений', b:1},{t:'2 бита → 4 значения', c:cyan},{t:'3 бита → 8 значений', c:grn}]}, r:'Чем длиннее цепочка, тем больше вариантов.', d:'Чем больше бит в цепочке, тем больше значений: 2 бита — 4 значения, 3 бита — 8.'} ,
+        {h:'Тренажёр', v:{kind:'b1quiz', q:'Сколько бит в одном байте?', opts:[{t:'8', ok:1},{t:'10'},{t:'100'}], exp:'1 байт = 8 бит — это надо помнить наизусть.'}, r:'Проверь себя про биты и байт.', d:'Вспомни главное число этого урока: 1 байт = 8 бит.'} ,
+        {h:'Шпаргалка', v:{kind:'b1sheet', lines:[{t:'1 бит = 0 или 1', b:1},{t:'1 байт = 8 бит', c:grn, b:1},{t:'всё хранится как 0 и 1', c:dim}]}, r:'Запомни: бит, байт, 0 и 1.', d:'Главное про хранение: бит — 0 или 1, байт — 8 бит, а всё остальное собирается из них.'} ],
       check:{ q:'Сколько бит в одном байте?', choices:['8','10','1'], ans:0, exp:'1 байт = 8 бит.' },
       tasks:[
         {q:'Сколько бит в одном байте?', kind:'unit', ans:8, tol:0, hints:['Приставка байт = 8 бит.','8.'], sol:'8 бит'},
