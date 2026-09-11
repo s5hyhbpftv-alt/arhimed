@@ -2,6 +2,12 @@
    Заменяет записи ARH_LESSONS на обычные уроки с explain; WAVE_B[id] рисует
    уникальный интерактивный виджет в #lvis по шагу LV.step. */
 window.WAVE_B = window.WAVE_B || {};
+window.physShot=function(file, meter){
+  return `<div style="width:min(100%,340px);border-radius:16px;overflow:hidden;border:1px solid #3d5c49;background:#071018;position:relative">
+    <img src="img/phys/${file}" alt="" style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover">
+    ${meter?`<div style="position:absolute;left:10px;bottom:10px;max-width:86%;background:rgba(7,16,24,.78);border:1px solid rgba(217,164,65,.5);border-radius:10px;padding:6px 10px;color:#ffd76a;font-size:13px;font-family:Georgia,serif">${meter}</div>`:''}
+  </div>`;
+};
 
 /* ================= УРОК 377 · Признаки делимости на 3 и на 9 ================= */
 (function(){
@@ -2904,15 +2910,15 @@ window.WAVE_B = window.WAVE_B || {};
     let h='';
 
     if(step===0){
-      const tilt=st.p0==='iron'||st.p0==='wood'?0.7:0;
+      const tilt=st.p0==='iron'||st.p0==='wood';
       h=`<div class="wv-col">
-        ${frame(defs()+scale(tilt)+lab(50, 36, 'дерево', GOLD, 'middle', 12)+lab(190, 36, 'железо', BLUE, 'middle', 12))}
+        ${physShot(tilt?'scale_tilt.jpg':'scale_empty.jpg', tilt?'железо рвёт чашу вниз':'положи кубики на весы')}
         ${pred(st,'p0','Одинаковый размер. Кто сорвёт чашу весов?',[{k:'wood',t:'дерево'},{k:'iron',t:'железо'},{k:'same',t:'одинаково'}])}
-        ${st.p0?note('После выбора','Железо. Не потому что кубик больше — он такой же. Внутри гуще упаковано. Весы наклоняются вправо.'):note('Сначала предскажи','Не жми наугад дальше. Выбери, потом смотри объяснение.')}
+        ${st.p0?note('После выбора','Как в PhET Density: одинаковый объём, разная масса. Железо гуще упаковано — весы наклоняются.'):note('Сначала предскажи','Как у PhET и Brilliant: сначала карточка, потом смотри весы.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        ${frame(defs()+desk()+isoCube(28,78,36,'wood',4)+isoCube(132,78,36,'iron',16)+lab(120, 24, 'объём один · масса разная', GOLD))}
+        ${physShot('cubes.jpg','объём один · масса разная')}
         ${note('Не размер','Кубики одного размера. Масса разная. Дело не в «больше-меньше», а в том, сколько вещества в одном кубике.')}
       </div>`;
     } else if(step===2){
@@ -2961,7 +2967,7 @@ window.WAVE_B = window.WAVE_B || {};
     } else if(step===7){
       const show=st.p7&&st.go7;
       h=`<div class="wv-col">
-        ${frame(defs()+(show?tank(0.9,'ice'):desk()+isoCube(78,78,42,'ice',6))+lab(120, 24, show?'лёд: 90% в воде':'кубик льда', GOLD))}
+        ${show?physShot('ice.jpg','лёд: ~90% в воде'):physShot('ice.jpg','кубик льда · брось в бак')}
         ${pred(st,'p7','Лёд в воде. Что сделает?',[{k:'float',t:'всплывёт'},{k:'sink',t:'утонет'},{k:'hang',t:'повиснет'}])}
         ${st.p7?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].go7=1;chRender(0);}catch(e){}">Бросить в бак</button>`:''}
         ${show?note('Расчёт','ρ = 0,9. Доля погружения = 0,9 / 1 = 90%. Верх торчит. Ты '+(st.p7==='float'?'угадал':'думал иначе — смотри бак')):note('Предскажи до опыта','Не смотри ответ глазами. Сначала жми карточку.')}
@@ -2981,7 +2987,7 @@ window.WAVE_B = window.WAVE_B || {};
       </div>`;
     } else if(step===9){
       h=`<div class="wv-col">
-        ${frame(defs()+tank(7.8,'iron')+lab(120, 48, 'железо 7,8', RED))}
+        ${physShot('iron.jpg','железо 7,8 · на дне')}
         ${pred(st,'p9','Сплошное железо в воде?',[{k:'sink',t:'тонет'},{k:'float',t:'плывёт'}])}
         ${st.p9?note('Почему корабль тогда плывёт','Сплошной кубик тонет. Корабль не сплошной: внутри воздух, среднее ρ < 1.'):note('Предскажи','Сплошной куб и корабль — не одно и то же.')}
       </div>`;
@@ -2989,7 +2995,7 @@ window.WAVE_B = window.WAVE_B || {};
       const air=!!st.air;
       const avg=air?0.6:7.8;
       h=`<div class="wv-col">
-        ${frame(defs()+tank(avg, air?'ice':'iron')+lab(120, 24, air?'среднее ρ = 0,6':'сталь без воздуха', GOLD))}
+        ${physShot(air?'boat.jpg':'iron.jpg', air?'среднее ρ = 0,6 · плывёт':'сталь без воздуха · тонет')}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].air=1;chRender(0);}catch(e){}">${air?'Плывёт':'Добавить воздух'}</button>
         ${note('Средняя плотность','Масса почти та же, объём вырос. ρ = m / V_всего. Упало ниже воды — корпус всплыл.')}
       </div>`;
@@ -3188,7 +3194,7 @@ window.WAVE_B = window.WAVE_B || {};
     if(step===0){
       const open=!!st.open;
       h=`<div class="wv-col">
-        ${frame(defs()+column(open?8:0.8,1000))}
+        ${physShot(open?'diver_deep.jpg':'diver.jpg', open?'глубина 8 м · уши закладывает':'у поверхности')}
         ${pred(st,'p0','Нырнёшь глубже. Давление?',[{k:'up',t:'вырастет'},{k:'same',t:'то же'},{k:'down',t:'упадёт'}])}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=1;chRender(0);}catch(e){}">Нырнуть</button>
         ${open?note('Столб','Выросло. Не удар волны — выше столб воды над головой.'):note('Предскажи','Сначала карточка, потом ныряй.')}
@@ -3256,13 +3262,7 @@ window.WAVE_B = window.WAVE_B || {};
       const live=[0.15,0.10,0.05].map(y=>P().jet(0.18,y));
       h=`<div class="wv-col">
         ${pred(st,'p8','Какая струя уйдёт дальше?',[{k:'low',t:'нижняя'},{k:'mid',t:'средняя'},{k:'up',t:'верхняя'}])}
-        ${st.p8?frame(defs()+
-          `<rect class="p4f" x="64" y="42" width="60" height="148" rx="8" fill="url(#p4w)" stroke="#9ed4ea" stroke-width="2.4"/>`+
-          live.map((j,i)=>{
-            const y=70+i*38, len=go?18+j.range*220:6;
-            return `<circle cx="124" cy="${y}" r="4" fill="${BLUE}"/>`+(go?`<path class="p4jet" d="M 124 ${y} C ${124+len/2} ${y+6}, ${124+len*0.75} ${y+12}, ${124+len} ${y+16}" fill="none" stroke="${BLUE}" stroke-width="3"/>`:'');
-          }).join('')+lab(120,22,go?'v = √(2gh)':'три дырки',GOLD)
-        ):''}
+        ${st.p8?physShot('jets.jpg', go?'нижняя струя уходит дальше':'три дырки · предскажи'):''}
         ${st.p8?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].jet=1;chRender(0);}catch(e){}">Открыть дырки</button>`:''}
         ${go?note('Торичелли','Скорость больше внизу. За одно падение нижняя уходит дальше. '+(st.p8==='low'?'Угадал.':'Смотри струи.')):note('Предскажи','Школьный опыт. Сначала карточка.')}
       </div>`;
@@ -3285,10 +3285,7 @@ window.WAVE_B = window.WAVE_B || {};
     } else if(step===11){
       const lift=!!st.lift;
       h=`<div class="wv-col">
-        ${frame(`<rect x="38" y="112" width="48" height="68" rx="5" fill="#7a90a4"/>`+
-          `<rect x="138" y="${lift?50:112}" width="78" height="${lift?130:68}" rx="5" fill="#d0dce6"/>`+
-          `<path d="M 62 182 C 62 204, 178 204, 178 182" fill="none" stroke="${BLUE}" stroke-width="9"/>`+
-          lab(62,36,'F₁',GOLD)+lab(176,36,'F₂ > F₁',GREEN)+lab(120,22,'домкрат',GOLD))}
+        ${physShot('jack.jpg', lift?'большая площадь — большая сила':'домкрат · жать малый поршень')}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].lift=1;chRender(0);}catch(e){}">${lift?'Подняли':'Жать малый'}</button>
         ${note('Площади','p = F/S одно. Большой поршень — большая сила.')}
       </div>`;
@@ -3478,7 +3475,7 @@ window.WAVE_B = window.WAVE_B || {};
     if(step===0){
       const on=!!st.on;
       h=`<div class="wv-col">
-        ${frame(scene(on?3:0.12)+lab(120,24,on?'лампа поёт':'кто душит ток?',GOLD))}
+        ${physShot(on?'lamp_on.jpg':'lamp_off.jpg', on?'лампа поёт · ток пошёл':'кто душит ток?')}
         ${pred(st,'p0','Замкнёшь цепь. Нить?',[{k:'on',t:'разгорится'},{k:'off',t:'не изменится'}])}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].on=1;chRender(0);}catch(e){}">Замкнуть</button>
         ${on?note('Ток пошёл','Заряды побежали, нить задышала. Яркость — про ток, не про «сильную батарейку» в отрыве от R.'):note('Предскажи','Сначала карточка.')}
