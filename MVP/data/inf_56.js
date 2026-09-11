@@ -139,7 +139,7 @@
   const d3rot=(p,ax,ay,az)=>{ let q=rotYP(p,ay); q=rotXP(q,ax); return rotZP(q,az); };
   const d3proj=(p,cx,cy,s,fov)=>{ const k=1+(p.z||0)/(fov||6); return [cx+(p.x*s)/k, cy-(p.y*s)/k]; };
   const d3draw=(shape,cx,cy,s,ax,ay,az,pre,opt)=>{
-    const o=opt||{}, fov=o.fov||6, light=(o.light!==false);
+    const o=opt||{}, fov=o.fov||6, light=(o.light!==false), base=o.c||cyan;
     const rv=shape.v.map(q=>d3rot(q,ax,ay,az));
     const pr=rv.map(q=>d3proj(q,cx,cy,s,fov));
     const order=shape.faces.map((f,i)=>{
@@ -154,10 +154,15 @@
       const nl=Math.hypot(nx,ny,nz)||1;
       const facing=(nz/nl)*(o.flip?-1:1);
       const bright=light?Math.max(0.18,Math.min(1,0.45+0.55*Math.abs(facing))):0.55;
-      const base=o.c||cyan;
       const d=pr.map(q=>q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' L');
       out+=`<path class="${pre}Pop" style="animation-delay:${(0.05*idx).toFixed(2)}s" d="M${d} Z" fill="${base}" fill-opacity="${(bright*0.5).toFixed(2)}" stroke="${base}" stroke-width="${o.sw||1.6}"/>`;
     });
+    if(o.edges!==false){
+      shape.edges.forEach((e,k)=>{
+        const a=pr[e[0]], b=pr[e[1]];
+        out+=`<path d="M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}" fill="none" stroke="${o.ec||base}" stroke-width="${o.ew||1.1}" stroke-linecap="round" opacity=".85"/>`;
+      });
+    }
     return out;
   };
   const d3wire=(shape,cx,cy,s,ax,ay,az,pre,opt)=>{
@@ -7913,826 +7918,571 @@
       s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
       return s;
     }
-    if(K==='d3intro'){ /* плоский экран и объём */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'экран плоский, а картинка объёмная',{b:1},266)+`</g>`;
-      s+=d3draw(d3cube(),104,140,46,0.32,-0.62,0,pre,{c:cyan,sw:1.8});
-      s+=`<rect x="196" y="76" width="106" height="76" rx="8" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2.4"/>`;
-      s+=`<rect x="204" y="84" width="90" height="60" rx="4" fill="rgba(127,214,255,.10)"/>`;
-      s+=d3draw(d3cube(),249,114,20,0.32,-0.62,0,pre,{c:gold,sw:1.2});
-      s+=`<rect x="216" y="152" width="66" height="8" rx="3" fill="${gold}" opacity=".5"/>`;
-      s+=fit(249,176,10.5,gold,'плоский экран',{b:1},100);
-      s+=fit(104,206,10.5,cyan,'объёмная модель',{b:1},130);
-      s+=`<path d="M140 140 h48" stroke="${pur}" stroke-width="2" stroke-dasharray="5 4"/>`;
-      s+=fit(159,226,11.5,ink,'экран показывает проекцию — плоское изображение объёма',{b:1},296);
-      s+=plate2(18,240,282,32,go?grn:cardB,go?'внутри — математика: координаты и проекция':'как плоский экран показывает объём?',11,pre);
-      return s;
-    }
-    if(K==='d3flat'){ /* подсказки глубины */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'как рисунок обманывает глаз',{b:1},264)+`</g>`;
-      s+=drawPoly([[40,150],[120,110],[160,130],[140,180],[60,190]],cyan,1.6,0.2,2,{fill:'rgba(127,214,255,.14)',keep:true});
-      s+=drawPoly([[150,140],[230,120],[270,150],[200,180]],gold,1.6,0.6,2,{fill:'rgba(255,215,106,.16)',keep:true});
-      s+=`<path d="M60 190 q40 14 80 -4" fill="none" stroke="${cardB}" stroke-width="3" stroke-dasharray="5 4"/>`;
-      s+=fit(120,214,10.5,dim,'тень и перекрытие',{b:1},150);
-      s+=`<path d="M40 66 L290 66" stroke="${cardB}" stroke-width="1.6"/>`;
-      s+=`<path d="M40 66 L120 92 M290 66 L210 92" stroke="${pur}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
-      s+=fit(165,60,10.5,pur,'линии сходятся — перспектива',{b:1},190);
-      s+=fit(159,240,11.5,ink,'мозг сам достраивает объём по этим подсказкам',{b:1},296);
-      s+=plate2(18,254,282,30,go?grn:cardB,go?'перспектива, перекрытие, тень, размер':'что подсказывает глазу объём?',11,pre);
-      return s;
-    }
-    if(K==='d3points'){ /* три координаты */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'в 3D у точки три координаты',{b:1},266)+`</g>`;
-      const O=[80,206];
-      s+=`<path d="M${O[0]} ${O[1]} L${O[0]+150} ${O[1]}" stroke="${grn}" stroke-width="2.4"/><path d="M${O[0]+150} ${O[1]} l-10 -5 v10 z" fill="${grn}"/>`;
-      s+=`<path d="M${O[0]} ${O[1]} L${O[0]} ${O[1]-140}" stroke="${cyan}" stroke-width="2.4"/><path d="M${O[0]} ${O[1]-140} l-5 10 h10 z" fill="${cyan}"/>`;
-      s+=`<path d="M${O[0]} ${O[1]} L${O[0]-70} ${O[1]+52}" stroke="${gold}" stroke-width="2.4"/><path d="M${O[0]-70} ${O[1]+52} l11 -3 l-6 -8 z" fill="${gold}"/>`;
-      s+=fit(O[0]+152,O[1]+6,11.5,grn,'x',{b:1},26)+fit(O[0]-4,O[1]-150,11.5,cyan,'y',{b:1},26)+fit(O[0]-58,O[1]+60,11.5,gold,'z',{b:1},26);
-      const P=[O[0]+88,O[1]-84];
-      s+=`<path d="M${O[0]} ${O[1]} L${P[0]} ${O[1]} L${P[0]} ${P[1]}" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
-      s+=`<path d="M${O[0]} ${O[1]} L${O[0]-40} ${O[1]+30} L${P[0]-40} ${O[1]+30}" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
-      s+=`<circle class="${pre}Pop" style="animation-delay:.6s" cx="${P[0]}" cy="${P[1]}" r="8" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="2"/>`;
-      s+=fit(P[0]+34,P[1]+4,11,gold,'A(x; y; z)',{b:1},110);
-      s+=fit(159,246,11.5,ink,'три числа полностью задают положение в пространстве',{b:1},296);
-      s+=plate2(24,260,270,30,go?grn:cardB,go?'x, y и z — три измерения':'сколько чисел нужно для 3D?',11,pre);
-      return s;
-    }
-    if(K==='d3axes'){ /* оси и куб */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,grn,'оси показывают, где стоит модель',{b:1},266)+`</g>`;
-      const cx=159, cy=170, s2=44;
-      s+=`<path d="M${cx} ${cy} L${cx+90} ${cy+52}" stroke="${grn}" stroke-width="2.4"/><path d="M${cx+90} ${cy+52} l-12 -2 l4 -10 z" fill="${grn}"/>`;
-      s+=`<path d="M${cx} ${cy} L${cx} ${cy-92}" stroke="${cyan}" stroke-width="2.4"/><path d="M${cx} ${cy-92} l-5 11 h10 z" fill="${cyan}"/>`;
-      s+=`<path d="M${cx} ${cy} L${cx-90} ${cy+52}" stroke="${gold}" stroke-width="2.4"/><path d="M${cx-90} ${cy+52} l12 -2 l-4 -10 z" fill="${gold}"/>`;
-      s+=fit(cx+98,cy+58,11.5,grn,'x',{b:1},24)+fit(cx-6,cy-100,11.5,cyan,'y',{b:1},24)+fit(cx-104,cy+58,11.5,gold,'z',{b:1},24);
-      s+=d3draw(d3cube(),cx,cy-10,34,0.28,-0.65,0,pre,{c:cyan,sw:1.6,fov:7});
-      s+=fit(159,258,11.5,ink,'куб стоит в начале координат — в точке (0; 0; 0)',{b:1},296);
-      s+=plate2(24,272,270,28,go?grn:cardB,go?'оси x, y и z — три направления':'где находится модель?',11,pre);
-      return s;
-    }
-    if(K==='d3vertex'){ /* вершины */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,gold,'вершины куба: их восемь',{b:1},262)+`</g>`;
-      const sh=d3cube(), ax=0.32, ay=-0.62, cx=159, cy=152, sc=54;
-      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:cyan,sw:1.4});
-      const rv=sh.v.map(q=>d3rot(q,ax,ay,0)).map(q=>d3proj(q,cx,cy,sc,6));
-      rv.forEach((p,k)=>{
-        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="9" fill="rgba(255,215,106,.55)" stroke="${gold}" stroke-width="2"/>`
-          +tx(p[0],p[1]+4,10,ink,''.concat(k+1),{b:1});
-      });
-      s+=fit(159,236,11.5,ink,'вершина — это точка, где сходятся рёбра',{b:1},292);
-      s+=plate2(24,250,270,32,go?grn:cardB,go?'8 вершин · 12 рёбер · 6 граней':'сколько вершин у куба?',11,pre);
-      return s;
-    }
-    if(K==='d3edge'){ /* рёбра */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'рёбра куба: их двенадцать',{b:1},262)+`</g>`;
-      const sh=d3cube(), ax=0.32, ay=-0.62, cx=159, cy=152, sc=54;
-      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:'rgba(70,80,124,.9)',sw:1.2});
-      s+=d3wire(sh,cx,cy,sc,ax,ay,0,pre,{c:gold,sw:2.6,r:4.5,fov:6});
-      s+=fit(120,236,11.5,ink,'ребро соединяет две вершины',{b:1},240);
-      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="34" y="250" width="250" height="32" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
-        +`<text x="159" y="272" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">8 вершин + 12 рёбер</text></g>`;
-      return s;
-    }
-    if(K==='d3face'){ /* грани */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'грани куба: шесть квадратов',{b:1},264)+`</g>`;
-      const sh=d3cube(), ax=0.34, ay=-0.66, cx=159, cy=150, sc=52;
-      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:pur,sw:1.8,fov:7});
-      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="30" y="228" width="258" height="34" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
-        +`<text x="159" y="251" text-anchor="middle" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">6 граней · 8 вершин · 12 рёбер</text></g>`;
-      s+=plate2(30,252,258,0,cardB,'',11,pre);
-      s+=`${fit(159,300,11,dim,'грани — это плоские куски поверхности',{},292)}`;
-      return s;
-    }
-    if(K==='d3wireframe'){ /* каркас */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,gold,'3D-модель: сетка из вершин и рёбер',{b:1},268)+`</g>`;
-      s+=d3wire(d3cube(),104,140,44,0.3,-0.6,0,pre,{c:cyan,sw:2,r:4});
-      s+=d3wire(d3pyr(),236,150,42,0.3,-0.6,0,pre,{c:gold,sw:2,r:4});
-      s+=fit(104,214,10.5,cyan,'куб: 6 граней',{b:1},140);
-      s+=fit(236,214,10.5,gold,'пирамида: 5 граней',{b:1},140);
-      s+=fit(159,244,11.5,ink,'из простых фигур собирают сложные модели',{b:1},296);
-      s+=plate2(18,258,282,30,go?grn:cardB,go?'так устроены модели в играх и кино':'из чего состоит модель?',11,pre);
-      return s;
-    }
-    if(K==='d3project'){ /* проекция */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'проекция: из 3D в плоское изображение',{b:1},272)+`</g>`;
-      const sh=d3cube(), ax=0.3, ay=-0.6, cx=82, cy=140, sc=40;
-      const rv=sh.v.map(q=>d3rot(q,ax,ay,0));
-      const pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
-      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:'rgba(70,80,124,.9)',sw:1.2});
+    if(K==='d3intro'){ /* экран и объём — подробно */
+      const sh=d3cube(), ax=0.34, ay=-0.66, cx=86, cy=132, sc=38;
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'плоский экран показывает проекцию объёма',{b:1},270)+`</g>`;
+      const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
       rv.forEach((q,k)=>{
-        const P=pr[k], Q=[250+ (P[0]-cx)*0.55, 150+(P[1]-cy)*0.55];
-        s+=`<path class="${pre}Pop" style="animation-delay:${(0.06*k).toFixed(2)}s" d="M${P[0].toFixed(1)} ${P[1].toFixed(1)} L${Q[0].toFixed(1)} ${Q[1].toFixed(1)}" stroke="${gold}" stroke-width="1" stroke-dasharray="4 4" opacity=".6"/>`;
+        const Q=[232+(pr[k][0]-cx)*0.42, 128+(pr[k][1]-cy)*0.42];
+        s+=`<path class="${pre}Pop" style="animation-delay:${(0.05*k).toFixed(2)}s" d="M${pr[k][0].toFixed(1)} ${pr[k][1].toFixed(1)} L${Q[0].toFixed(1)} ${Q[1].toFixed(1)}" stroke="${gold}" stroke-width="1" stroke-dasharray="4 4" opacity=".55"/>`;
       });
-      s+=`<rect x="196" y="70" width="108" height="92" rx="8" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="2.4"/>`;
-      s+=d3draw(sh,250,116,22,ax,ay,0,pre,{c:grn,sw:1.2,fov:6});
-      s+=fit(250,180,10.5,grn,'проекция на экран',{b:1},104);
-      s+=fit(82,206,10.5,cyan,'модель в пространстве',{b:1},140);
-      s+=fit(159,232,11.5,ink,'каждая вершина попадает на экран по своим правилам',{b:1},296);
-      s+=plate2(18,246,282,30,go?grn:cardB,go?'это делает видеокарта миллионы раз в секунду':'что такое проекция?',11,pre);
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:cyan,sw:1.7,fov:6});
+      s+=`<rect x="196" y="62" width="98" height="98" rx="8" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<rect x="204" y="70" width="82" height="82" rx="4" fill="rgba(127,214,255,.08)"/>`;
+      s+=d3draw(sh,245,111,20,ax,ay,0,pre,{c:gold,sw:1.2,fov:6});
+      s+=`<rect x="216" y="164" width="58" height="6" rx="3" fill="${gold}" opacity=".45"/>`;
+      s+=fit(86,196,10.5,cyan,'модель в пространстве',{b:1},140);
+      s+=fit(245,182,10.5,gold,'плоский экран',{b:1},120);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="24" y="206" width="270" height="30" rx="9" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,226,10.5,gold,'каждая вершина «падает» на экран по своей линии',{b:1},250)+`</g>`;
+      s+=plate2(24,244,270,30,go?grn:cardB,go?'проекция — превращение 3D в 2D':'как из объёма получается картинка?',11,pre);
+      s+=fit(159,292,10.5,dim,'внутри — только числа: координаты и формулы',{},292);
       return s;
     }
-    if(K==='d3rotatey'){ /* поворот вокруг Y */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,grn,'поворот вокруг оси y: куб кружится',{b:1},272)+`</g>`;
-      for(let k=0;k<5;k++){
-        const cx=44+k*54, ay=-0.6+k*0.42;
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.16).toFixed(2)}s">`
-          +d3draw(d3cube(),cx,128,24,0.26,ay,0,pre,{c:cyan,sw:1.2,fov:7})
-          +fit(cx+4,196,9.5,dim,Math.round((k*24))+'°',{},40)+`</g>`;
-        if(k<4) s+=`<path d="M${cx+26} 128 h8" stroke="${gold}" stroke-width="1.6" stroke-dasharray="3 3"/>`;
+    if(K==='d3flat'){ /* четыре подсказки глубины — подробно */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'четыре подсказки, которые создают объём',{b:1},276)+`</g>`;
+      const panel=(x,y,t2,col)=>`<g class="${pre}Pop"><rect x="${x}" y="${y}" width="140" height="92" rx="10" fill="rgba(18,24,44,.97)" stroke="${col}" stroke-width="1.7"/>`
+        +fit(x+70,y+82,11,col,t2,{b:1},128)+`</g>`;
+      s+=panel(16,44,'перспектива',grn);
+      s+=`<path d="M32 116 L108 92 M144 116 L108 92" stroke="${grn}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
+      s+=`<path d="M32 70 L104 92 M144 70 L104 92" stroke="${grn}" stroke-width="1.2" stroke-dasharray="4 5" opacity=".7"/>`;
+      s+=`<circle cx="108" cy="92" r="4" fill="${gold}"/>`;
+      s+=fit(108,64,9,dim,'точка схода',{},80);
+      s+=panel(162,44,'перекрытие',cyan);
+      s+=d3draw(d3cube(),196,82,15,0.3,-0.6,0,pre,{c:cyan,sw:1.2,fov:8});
+      s+=d3draw(d3cube(),244,92,15,0.3,-0.6,0,pre,{c:grn,sw:1.2,fov:8});
+      s+=panel(16,146,'размер',gold);
+      s+=d3draw(d3cube(),58,182,17,0.3,-0.6,0,pre,{c:gold,sw:1.3,fov:8});
+      s+=d3draw(d3cube(),126,186,11,0.3,-0.6,0,pre,{c:dim,sw:1.2,fov:8});
+      s+=fit(196,196,8.5,dim,'дальний меньше',{},74);
+      s+=panel(162,146,'тень',pur);
+      s+=`<ellipse cx="238" cy="206" rx="38" ry="11" fill="rgba(176,127,255,.18)" stroke="${pur}" stroke-width="1.4"/>`;
+      s+=d3draw(d3cube(),232,178,17,0.3,-0.6,0,pre,{c:pur,sw:1.3,fov:8});
+      s+=plate2(16,248,286,30,go?grn:cardB,go?'мозг сам достраивает объём по этим подсказкам':'какие подсказки создают объём?',11,pre);
+      return s;
+    }
+    if(K==='d3points'){ /* три координаты — с числами */
+      const O=[106,200], u=28;
+      const ax3=[1,0.6], ay3=[0,-1], az3=[-0.85,0.52];
+      const P3v=(x,y,z)=>[O[0]+ (ax3[0]*x+ay3[0]*y+az3[0]*z)*u, O[1]+ (ax3[1]*x+ay3[1]*y+az3[1]*z)*u];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'положение точки задают три числа',{b:1},266)+`</g>`;
+      s+=`<path d="M${O[0]} ${O[1]} L${O[0]+104} ${O[1]+62}" stroke="${grn}" stroke-width="2.2"/><path d="M${O[0]+124} ${O[1]+74} l-12 -2 l4 -11 z" fill="${grn}"/>`;
+      s+=`<path d="M${O[0]} ${O[1]} L${O[0]} ${O[1]-126}" stroke="${cyan}" stroke-width="2.2"/><path d="M${O[0]} ${O[1]-126} l-5 12 h10 z" fill="${cyan}"/>`;
+      s+=`<path d="M${O[0]} ${O[1]} L${O[0]-84} ${O[1]+52}" stroke="${gold}" stroke-width="2.2"/><path d="M${O[0]-98} ${O[1]+60} l13 -2 l-7 -10 z" fill="${gold}"/>`;
+      s+=fit(O[0]+106,O[1]+64,11.5,grn,'x',{b:1},20)+fit(O[0]-4,O[1]-136,11.5,cyan,'y',{b:1},22)+fit(O[0]-92,O[1]+60,11.5,gold,'z',{b:1},22);
+      const P=P3v(3,4,2);
+      const Px=P3v(3,0,0), Py=P3v(0,4,0), Pz=P3v(0,0,2), Pxy=P3v(3,4,0), Pxz=P3v(3,0,2), Pyz=P3v(0,4,2);
+      s+=`<path d="M${P[0].toFixed(1)} ${P[1].toFixed(1)} L${Pxy[0].toFixed(1)} ${Pxy[1].toFixed(1)} M${Pxy[0].toFixed(1)} ${Pxy[1].toFixed(1)} L${Py[0].toFixed(1)} ${Py[1].toFixed(1)}" stroke="${cyan}" stroke-width="1.3" stroke-dasharray="5 4"/>`;
+      s+=`<path d="M${P[0].toFixed(1)} ${P[1].toFixed(1)} L${Pxz[0].toFixed(1)} ${Pxz[1].toFixed(1)} M${Pxz[0].toFixed(1)} ${Pxz[1].toFixed(1)} L${Px[0].toFixed(1)} ${Px[1].toFixed(1)}" stroke="${grn}" stroke-width="1.3" stroke-dasharray="5 4"/>`;
+      s+=`<path d="M${P[0].toFixed(1)} ${P[1].toFixed(1)} L${Pyz[0].toFixed(1)} ${Pyz[1].toFixed(1)} M${Pyz[0].toFixed(1)} ${Pyz[1].toFixed(1)} L${Pz[0].toFixed(1)} ${Pz[1].toFixed(1)}" stroke="${gold}" stroke-width="1.3" stroke-dasharray="5 4"/>`;
+      s+=`<circle class="${pre}Pop" style="animation-delay:.8s" cx="${P[0].toFixed(1)}" cy="${P[1].toFixed(1)}" r="8" fill="rgba(255,215,106,.55)" stroke="${gold}" stroke-width="2"/>`;
+      s+=fit(P[0]+6,P[1]-14,11.5,gold,'A(3; 4; 2)',{b:1},110);
+      s+=`<circle cx="${Px[0].toFixed(1)}" cy="${Px[1].toFixed(1)}" r="4" fill="${grn}"/>`;
+      s+=`<circle cx="${Py[0].toFixed(1)}" cy="${Py[1].toFixed(1)}" r="4" fill="${cyan}"/>`;
+      s+=`<circle cx="${Pz[0].toFixed(1)}" cy="${Pz[1].toFixed(1)}" r="4" fill="${gold}"/>`;
+      s+=fit(232,74,10.5,grn,'x = 3',{b:1},60)+fit(232,98,10.5,cyan,'y = 4',{b:1},60)+fit(232,122,10.5,gold,'z = 2',{b:1},60);
+      s+=fit(232,150,10,dim,'разность',{},70)+fit(232,166,10,dim,'по каждой',{},70)+fit(232,182,10,dim,'оси',{},70);
+      s+=plate2(20,246,278,30,go?grn:cardB,go?'три числа полностью задают точку в пространстве':'сколько чисел нужно для точки?',11,pre);
+      return s;
+    }
+    if(K==='d3axes'){ /* оси и координаты модели */
+      const cx=126, cy=170, sc=30, ax=0.28, ay=-0.62;
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,grn,'оси x, y, z: три направления пространства',{b:1},276)+`</g>`;
+      s+=`<path d="M${cx} ${cy} L${cx+124} ${cy+72}" stroke="${grn}" stroke-width="2.4"/><path d="M${cx+124} ${cy+72} l-12 -2 l4 -11 z" fill="${grn}"/>`;
+      s+=`<path d="M${cx} ${cy} L${cx} ${cy-132}" stroke="${cyan}" stroke-width="2.4"/><path d="M${cx} ${cy-132} l-5 12 h10 z" fill="${cyan}"/>`;
+      s+=`<path d="M${cx} ${cy} L${cx-96} ${cy+58}" stroke="${gold}" stroke-width="2.4"/><path d="M${cx-96} ${cy+58} l13 -2 l-7 -10 z" fill="${gold}"/>`;
+      for(let k=1;k<=3;k++){
+        s+=`<line x1="${cx+k*31}" y1="${cy+k*18-4}" x2="${cx+k*31}" y2="${cy+k*18+4}" stroke="${grn}" stroke-width="1.4"/>`;
+        s+=`<line x1="${cx-4}" y1="${cy-k*33}" x2="${cx+4}" y2="${cy-k*33}" stroke="${cyan}" stroke-width="1.4"/>`;
+        s+=`<line x1="${cx-k*24-3}" y1="${cy+k*14.5+3}" x2="${cx-k*24+3}" y2="${cy+k*14.5-3}" stroke="${gold}" stroke-width="1.4"/>`;
       }
-      s+=`<circle r="6" fill="${gold}"><animateMotion dur="4s" repeatCount="indefinite" path="M48 224 L280 224"/></circle>`;
-      s+=`<line x1="40" y1="224" x2="288" y2="224" stroke="${cardB}" stroke-width="1.6"/>`;
-      s+=fit(159,246,11.5,ink,'угол поворота растёт — и куб показывает новые грани',{b:1},296);
-      s+=plate2(18,260,282,30,go?grn:cardB,go?'поворот — это пересчёт координат':'что меняется при повороте?',11,pre);
+      s+=fit(cx+134,cy+80,11.5,grn,'x',{b:1},22)+fit(cx-4,cy-142,11.5,cyan,'y',{b:1},22)+fit(cx-108,cy+66,11.5,gold,'z',{b:1},22);
+      s+=d3draw(d3cube(),cx,cy-8,28,ax,ay,0,pre,{c:cyan,sw:1.5,fov:7});
+      s+=`<g class="${pre}Rise}" style="animation-delay:.6s"><rect x="188" y="60" width="106" height="96" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`
+        +fit(241,84,10.5,grn,'модель стоит',{b:1},96)
+        +fit(241,104,10.5,grn,'в начале',{b:1},96)
+        +fit(241,124,10.5,grn,'координат',{b:1},96)
+        +`<text x="241" y="146" text-anchor="middle" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">(0; 0; 0)</text>`
+        +`</g>`;
+      s+=fit(159,206,11,ink,'точка отсчёта — там, где оси пересекаются',{b:1},292);
+      s+=plate2(20,220,278,32,go?grn:cardB,go?'от начала координат отсчитывают все точки':'откуда начинают отсчёт?',11,pre);
+      s+=fit(159,276,10.5,dim,'чтобы сдвинуть модель, к координатам прибавляют числа',{},296);
       return s;
     }
-    if(K==='d3rotatex'){ /* поворот вокруг X и Z */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,gold,'наклон вокруг x и поворот вокруг z',{b:1},270)+`</g>`;
-      [['вокруг x',0.7,-0.6,gold],['вокруг z',0.3,-0.6,cyan]].forEach((cfg,idx)=>{
-        const cx=idx?236:104, cy=130;
-        for(let k=0;k<3;k++){
-          const ax2=(idx?0.2+k*0.28:0.3), az2=(idx?0:0.2+k*0.3);
-          s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+idx*0.2+k*0.15).toFixed(2)}s">`
-            +d3draw(d3cube(),cx-30+k*30,cy,20,ax2,-0.6,az2,pre,{c:cfg[2],sw:1.1,fov:7})+`</g>`;
-        }
-        s+=fit(cx,202,10.5,cfg[2],cfg[0],{b:1},120);
+    if(K==='d3vertex'){ /* вершины с координатами */
+      const sh=d3cube(), ax=0.34, ay=-0.7, cx=104, cy=142, sc=44;
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,gold,'вершины — точки, где сходятся рёбра',{b:1},272)+`</g>`;
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:cyan,sw:1.4});
+      const pr=sh.v.map(q=>d3rot(q,ax,ay,0)).map(q=>d3proj(q,cx,cy,sc,6));
+      pr.forEach((p,k)=>{
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.08+k*0.1).toFixed(2)}s" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="9" fill="rgba(255,215,106,.55)" stroke="${gold}" stroke-width="1.9"/>`
+          +tx(p[0],p[1]+4,9.5,ink,''.concat(k+1),{b:1});
       });
-      s+=fit(159,228,11.5,ink,'любой поворот задают три угла: вокруг x, y и z',{b:1},296);
-      s+=plate2(18,242,282,32,go?grn:cardB,go?'три угла полностью описывают ориентацию':'сколько нужно углов?',11,pre);
+      s+=`<rect x="192" y="56" width="102" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.7"/>`;
+      s+=fit(243,76,10.5,gold,'координаты',{b:1},92);
+      const coords=['1: (1; 1; 1)','2: (1; 1; −1)','3: (1; −1; 1)','4: (1; −1; −1)','5: (−1; 1; 1)','6: (−1; 1; −1)','7: (−1; −1; 1)','8: (−1; −1; −1)'];
+      coords.forEach((q,k)=>{ s+=fit(243,96+k*13,8.5,dim,q,{},92); });
+      s+=fit(159,222,11,ink,'вершины задают числами — из них строится куб',{b:1},292);
+      s+=plate2(16,236,286,32,go?grn:cardB,go?'8 вершин · 12 рёбер · 6 граней':'сколько вершин у куба?',11,pre);
+      s+=fit(159,292,10.5,dim,'в файле модели так и записано: восемь строк с координатами',{},296);
       return s;
     }
-    if(K==='d3lab'){ /* ИНТЕРАКТИВ: вращаем модель */
+    if(K==='d3edge'){ /* рёбра с бегущей точкой и счётом */
+      const sh=d3cube(), ax=0.34, ay=-0.7, cx=112, cy=140, sc=44;
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'ребро соединяет две соседние вершины',{b:1},276)+`</g>`;
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:'rgba(70,80,124,.9)',sw:1.2});
+      const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
+      let dots='';
+      sh.edges.forEach((e,k)=>{
+        const a=pr[e[0]], b=pr[e[1]];
+        s+=`<path class="${pre}Pop" style="animation-delay:${(0.05*k).toFixed(2)}s" d="M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}" fill="none" stroke="${gold}" stroke-width="2.6" stroke-linecap="round"/>`;
+        if(k%3===0) dots+=`<circle r="5" fill="${cyan}"><animateMotion dur="3s" begin="${(k*0.25).toFixed(2)}s" repeatCount="indefinite" path="M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}"/></circle>`;
+      });
+      s+=dots;
+      rv.forEach((q,k)=>{ s+=`<circle cx="${pr[k][0].toFixed(1)}" cy="${pr[k][1].toFixed(1)}" r="4.5" fill="${ink}"/>`; });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="192" y="56" width="102" height="86" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.7"/>`
+        +fit(243,78,10.5,cyan,'считаем',{b:1},92)
+        +fit(243,98,10,ink,'верх: 4',{},92)
+        +fit(243,114,10,ink,'низ: 4',{},92)
+        +fit(243,130,10,gold,'боковых: 4',{b:1},92)+`</g>`;
+      s+=fit(243,160,11,grn,'итого 12',{b:1},92);
+      s+=fit(159,196,11,ink,'у каждого ребра две вершины и своя длина',{b:1},292);
+      s+=plate2(16,210,286,32,go?grn:cardB,go?'12 рёбер — каркас куба':'сколько рёбер у куба?',11,pre);
+      s+=fit(159,266,10.5,dim,'длину ребра считают по разности координат',{},296);
+      return s;
+    }
+    if(K==='d3face'){ /* грани с номерами и видимостью */
+      const sh=d3cube(), ax=0.34, ay=-0.7, cx=104, cy=138, sc=44;
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'грань — плоский кусок поверхности',{b:1},272)+`</g>`;
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:pur,sw:1.7,fov:7});
+      const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
+      const order=sh.faces.map((f,i)=>({i:i,z:f.reduce((a,k)=>a+rv[k].z,0)/f.length})).sort((a,b)=>b.z-a.z);
+      order.slice(0,3).forEach((f2,k)=>{
+        const f=sh.faces[f2.i];
+        const p=[0,1,2,3].map(j=>pr[f[j]]);
+        const mx=p.reduce((a,q)=>a+q[0],0)/4, my=p.reduce((a,q)=>a+q[1],0)/4;
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.4+k*0.2).toFixed(2)}s" cx="${mx.toFixed(1)}" cy="${my.toFixed(1)}" r="11" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.6"/>`
+          +tx(mx,my+4,10.5,gold,''+(f2.i+1),{b:1});
+      });
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="190" y="52" width="106" height="120" rx="10" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.7"/>`
+        +fit(243,74,10.5,pur,'что видно',{b:1},96)
+        +fit(243,94,9.5,grn,'3 грани видны',{},96)
+        +fit(243,112,9.5,dim,'3 спрятаны',{},96)
+        +fit(243,134,10,ink,'6 граней',{b:1},96)
+        +fit(243,152,9.5,gold,'это квадраты',{},96)+`</g>`;
+      s+=fit(159,196,11,ink,'грани бывают видны и спрятаны — это зависит от поворота',{b:1},296);
+      s+=plate2(16,210,286,32,go?grn:cardB,go?'спрятанные грани рисуют первыми':'почему грани исчезают?',11,pre);
+      s+=fit(159,266,10.5,dim,'если нарисовать ближнюю раньше — картинка сломается',{},296);
+      return s;
+    }
+    if(K==='d3wireframe'){ /* каркас: три фигуры с числами */
+      const shapes=[['куб',d3cube(),cyan,'6 граней'],['пирамида',d3pyr(),gold,'5 граней'],['призма',d3prism(),grn,'6 граней']];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'каркасная модель — только вершины и рёбра',{b:1},280)+`</g>`;
+      shapes.forEach((q,k)=>{
+        const x=58+k*100;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +d3wire(q[1],x,124,32,0.3,-0.62,0,pre,{c:q[2],sw:1.8,r:3.6,fov:7})
+          +fit(x,182,10.5,q[2],q[0],{b:1},90)
+          +fit(x,198,9,dim,q[3],{},90)+`</g>`;
+      });
+      s+=fit(159,222,11,ink,'по каркасу удобно проверять форму до раскраски',{b:1},292);
+      s+=plate2(16,236,286,32,go?grn:cardB,go?'сначала сетка, потом цвет':'зачем нужен каркас?',11,pre);
+      s+=fit(159,292,10.5,dim,'в программах так показывают «скелет» модели',{},296);
+      return s;
+    }
+    if(K==='d3project'){ /* проекция с номерами вершин */
+      const sh=d3cube(), ax=0.3, ay=-0.6, cx=76, cy=136, sc=36;
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'проекция: из пространства на плоскость',{b:1},276)+`</g>`;
+      const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:'rgba(70,80,124,.9)',sw:1.2});
+      const sp=pr.map(p=>[238+(p[0]-cx)*0.5, 128+(p[1]-cy)*0.5]);
+      pr.forEach((p,k)=>{
+        s+=`<path class="${pre}Pop" style="animation-delay:${(0.06*k).toFixed(2)}s" d="M${p[0].toFixed(1)} ${p[1].toFixed(1)} L${sp[k][0].toFixed(1)} ${sp[k][1].toFixed(1)}" stroke="${gold}" stroke-width="1" stroke-dasharray="4 4" opacity=".65"/>`;
+      });
+      s+=`<rect x="196" y="72" width="98" height="98" rx="8" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="2.4"/>`;
+      s+=`<rect x="204" y="80" width="82" height="82" rx="4" fill="rgba(125,224,160,.10)"/>`;
+      s+=d3draw(sh,245,121,18,ax,ay,0,pre,{c:grn,sw:1.2,fov:6});
+      pr.forEach((p,k)=>{
+        s+=`<circle cx="${sp[k][0].toFixed(1)}" cy="${sp[k][1].toFixed(1)}" r="3.2" fill="${gold}"/>`;
+      });
+      s+=`<circle class="${pre}Pop" style="animation-delay:.5s" cx="${pr[3][0].toFixed(1)}" cy="${pr[3][1].toFixed(1)}" r="6" fill="none" stroke="${gold}" stroke-width="1.8"/>`;
+      s+=fit(76,196,10.5,cyan,'вершины модели',{b:1},130);
+      s+=fit(245,182,10.5,grn,'их проекции',{b:1},110);
+      s+=fit(159,212,11,ink,'каждая вершина пересчитывается по формуле проекции',{b:1},296);
+      s+=plate2(16,226,286,32,go?grn:cardB,go?'видеокарта делает это миллионы раз в секунду':'что происходит с вершинами?',11,pre);
+      s+=fit(159,282,10.5,dim,'поэтому 3D требует быстрого «железа»',{},296);
+      return s;
+    }
+    if(K==='d3rotatey'){ /* 7 кадров поворота вокруг y */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,grn,'поворот вокруг оси y: модель кружится',{b:1},276)+`</g>`;
+      s+=`<path d="M22 96 h274" stroke="${cyan}" stroke-width="2" stroke-dasharray="7 5"/>`;
+      s+=fit(300,88,10,cyan,'ось y',{an:'end',b:1},50);
+      for(let k=0;k<6;k++){
+        const cx=40+k*47, ay=-0.62+k*0.3;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.08+k*0.14).toFixed(2)}s">`
+          +d3draw(d3cube(),cx,132,20,0.26,ay,0,pre,{c:cyan,sw:1.1,fov:7})
+          +fit(cx,182,9.5,dim,Math.round(k*36)+'°',{},40)
+          +fit(cx,196,8,dim,'кадр',{},40)+`</g>`;
+      }
+      s+=`<circle r="5.5" fill="${gold}"><animateMotion dur="4.4s" repeatCount="indefinite" path="M40 214 L275 214"/></circle>`;
+      s+=`<line x1="28" y1="214" x2="278" y2="214" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=fit(159,236,11,ink,'угол увеличивается — и открываются новые грани',{b:1},292);
+      s+=plate2(16,250,286,32,go?grn:cardB,go?'поворот — это пересчёт координат по углу':'что происходит с моделью?',11,pre);
+      return s;
+    }
+    if(K==='d3rotatex'){ /* наклон вокруг x и крен вокруг z */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,gold,'наклон вокруг x и крен вокруг z',{b:1},272)+`</g>`;
+      s+=`<rect x="16" y="44" width="286" height="96" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=`<path d="M28 92 h100" stroke="${gold}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
+      s+=fit(132,70,10,gold,'ось x',{an:'start',b:1},50);
+      for(let k=0;k<3;k++){
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +d3draw(d3cube(),64+k*48,92,16,(k-1)*0.4,-0.6,0,pre,{c:gold,sw:1.1,fov:7})
+          +fit(64+k*48,128,8.5,dim,(k===0?'вниз':(k===1?'ровно':'вверх')),{},46)+`</g>`;
+      }
+      s+=`<rect x="16" y="150" width="286" height="96" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.6"/>`;
+      s+=`<path d="M28 198 h100" stroke="${cyan}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
+      s+=fit(132,176,10,cyan,'ось z',{an:'start',b:1},50);
+      for(let k=0;k<3;k++){
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.3+k*0.2).toFixed(2)}s">`
+          +d3draw(d3cube(),64+k*48,198,16,0.28,-0.6,(k-1)*0.45,pre,{c:cyan,sw:1.1,fov:7})
+          +fit(64+k*48,234,8.5,dim,(k===0?'влево':(k===1?'ровно':'вправо')),{},46)+`</g>`;
+      }
+      s+=plate2(16,262,286,30,go?grn:cardB,go?'три угла полностью задают ориентацию модели':'сколько углов нужно?',11,pre);
+      s+=fit(159,308,10.5,dim,'углы вокруг x, y и z называют углами поворота',{},296);
+      return s;
+    }
+    if(K==='d3lab'){ /* мастерская 3D — с осями и счётчиком граней */
       const name=(st&&st.d3s)||'cube';
       const ax=(st&&typeof st.d3x==='number')?st.d3x:0.34;
       const ay=(st&&typeof st.d3y==='number')?st.d3y:-0.62;
       const az=(st&&typeof st.d3z==='number')?st.d3z:0;
       const sh=d3shape(name);
-      let s=`<g class="${pre}Pop"><rect x="16" y="12" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
-        +fit(159,31,11.5,ink,'мастерская 3D: вращай модель',{b:1},266)+`</g>`;
+      const rv=sh.v.map(q=>d3rot(q,ax,ay,az));
+      const visFaces=sh.faces.filter(f=>{
+        const p0=rv[f[0]], p1=rv[f[1]], p2=rv[f[2]];
+        const ux=p1.x-p0.x,uy=p1.y-p0.y,uz=p1.z-p0.z,vx=p2.x-p0.x,vy=p2.y-p0.y,vz=p2.z-p0.z;
+        const nz=ux*vy-uy*vx;
+        return nz>0;
+      }).length;
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,ink,'мастерская 3D: вращай модель кнопками',{b:1},276)+`</g>`;
       [[0,'куб','cube'],[1,'пирамида','pyr'],[2,'призма','prism']].forEach((q,k)=>{
-        const x=24+k*92, on=(name===q[2]);
-        s+=`<g style="cursor:pointer" onclick="inf3d('${lk}','shape','${q[2]}')"><rect x="${x}" y="48" width="84" height="28" rx="8" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${on?grn:cardB}" stroke-width="${on?2:1.4}"/>`
-          +fit(x+42,67,10,on?grn:dim,q[1],{b:on},76)+`</g>`;
+        const x=22+k*92, on=(name===q[2]);
+        s+=`<g style="cursor:pointer" onclick="inf3d('${lk}','shape','${q[2]}')"><rect x="${x}" y="46" width="84" height="28" rx="8" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${on?grn:cardB}" stroke-width="${on?2:1.4}"/>`
+          +fit(x+42,65,10,on?grn:dim,q[1],{b:on},76)+`</g>`;
       });
-      s+=d3draw(sh,159,168,52,ax,ay,az,pre,{c:pur,sw:1.8,fov:7});
-      s+=d3wire(sh,159,168,52,ax,ay,az,pre,{c:'rgba(255,215,106,.55)',sw:1.2,r:3.5,fov:7});
-      s+=`<g class="${pre}Rise}"><rect x="30" y="236" width="258" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.4"/>`
-        +`<text x="159" y="254" text-anchor="middle" font-size="10.5" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">углы: ${Math.round(ax*57)}° · ${Math.round(ay*57)}° · ${Math.round(az*57)}°</text></g>`;
-      const btn=(x,y,t2,a,b)=>`<g style="cursor:pointer" onclick="inf3d('${lk}','${a}','${b}')"><rect x="${x}" y="${y}" width="52" height="32" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
-        +tx(x+26,y+22,15,gold,t2,{b:1})+`</g>`;
-      s+=btn(52,268,'↶','y','-')+btn(112,268,'▲','x','+')+btn(172,268,'▼','x','-')+btn(232,268,'↷','y','+');
-      s+=`<g style="cursor:pointer" onclick="inf3d('${lk}','z','+')"><rect x="24" y="270" width="24" height="28" rx="7" fill="rgba(12,32,34,.97)" stroke="${cyan}" stroke-width="1.5"/><text x="36" y="289" text-anchor="middle" font-size="11" font-weight="bold" fill="${cyan}">z</text></g>`;
-      s+=`<g style="cursor:pointer" onclick="inf3d('${lk}','reset','')"><rect x="266" y="270" width="30" height="28" rx="7" fill="rgba(12,32,34,.97)" stroke="${grn}" stroke-width="1.5"/><text x="281" y="289" text-anchor="middle" font-size="11" font-weight="bold" fill="${grn}">0</text></g>`;
+      s+=`<rect x="22" y="82" width="274" height="150" rx="10" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.5"/>`;
+      s+=`<path d="M60 214 L152 214" stroke="${grn}" stroke-width="1.8"/><path d="M152 214 l-8 -4 v8 z" fill="${grn}"/>`;
+      s+=`<path d="M152 214 L152 106" stroke="${cyan}" stroke-width="1.8"/><path d="M152 106 l-4 8 h8 z" fill="${cyan}"/>`;
+      s+=`<path d="M152 214 L70 190" stroke="${gold}" stroke-width="1.8"/><path d="M70 190 l9 -2 l-4 -8 z" fill="${gold}"/>`;
+      s+=fit(156,102,9,cyan,'y',{b:1},18)+fit(160,206,9,grn,'x',{b:1},18)+fit(64,196,9,gold,'z',{b:1},18);
+      s+=d3draw(sh,159,158,44,ax,ay,az,pre,{c:pur,sw:1.7,fov:7});
+      s+=d3wire(sh,159,158,44,ax,ay,az,pre,{c:'rgba(255,215,106,.5)',sw:1,r:3,fov:7});
+      s+=`<g class="${pre}Rise}"><rect x="30" y="238" width="258" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
+        +`<text x="159" y="256" text-anchor="middle" font-size="10" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">углы: ${Math.round(ax*57)}° · ${Math.round(ay*57)}° · ${Math.round(az*57)}° · видимых граней: ${visFaces}</text></g>`;
+      const btn=(x,y,t2,a,b)=>`<g style="cursor:pointer" onclick="inf3d('${lk}','${a}','${b}')"><rect x="${x}" y="${y}" width="46" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
+        +tx(x+23,y+21,14,gold,t2,{b:1})+`</g>`;
+      s+=btn(48,272,'↶','y','-')+btn(98,272,'▲','x','+')+btn(148,272,'▼','x','-')+btn(198,272,'↷','y','+');
+      s+=btn(248,272,'z','z','+');
+      s+=`<g style="cursor:pointer" onclick="inf3d('${lk}','reset','')"><rect x="16" y="272" width="26" height="30" rx="9" fill="rgba(12,32,34,.97)" stroke="${grn}" stroke-width="1.5"/>`
+        +tx(29,293,13,grn,'0',{b:1})+`</g>`;
+      s+=fit(159,318,10,dim,'↶↷ — вокруг y · ▲▼ — вокруг x · z — вокруг z',{b:1},280);
       return s;
     }
-    if(K==='d3depth'){ /* порядок отрисовки */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'рисуем дальние грани раньше',{b:1},264)+`</g>`;
-      const sh=d3cube(), ax=0.34, ay=-0.7;
-      s+=d3draw(sh,100,132,44,ax,ay,0,pre,{c:cyan,sw:1.5,fov:7});
-      s+=d3draw(sh,236,132,44,ax,ay,0,pre,{c:pur,sw:1.5,fov:7,flip:true});
-      s+=fit(100,204,10.5,cyan,'правильный порядок',{b:1},150);
-      s+=fit(236,204,10.5,red,'неправильный',{b:1},150);
-      s+=fit(159,232,11.5,ink,'если нарисовать ближнюю грань раньше — она «провалится»',{b:1},296);
-      s+=plate2(18,246,282,32,go?grn:cardB,go?'сортировка по глубине убирает ошибку':'почему важен порядок?',11,pre);
+    if(K==='d3depth'){ /* порядок отрисовки со значениями z */
+      const sh=d3cube(), ax=0.34, ay=-0.7, cx=88, cy=132, sc=36;
+      const rv=sh.v.map(q=>d3rot(q,ax,ay,0));
+      const order=sh.faces.map((f,i)=>({i:i,z:f.reduce((a,k)=>a+rv[k].z,0)/f.length})).sort((a,b)=>a.z-b.z);
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'порядок отрисовки: от дальних к ближним',{b:1},280)+`</g>`;
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:cyan,sw:1.5,fov:7});
+      s+=fit(cx,196,10.5,grn,'правильно',{b:1},100);
+      s+=d3draw(sh,236,132,sc,ax,ay,0,pre,{c:rose,sw:1.5,fov:7,flip:true});
+      s+=fit(236,196,10.5,red,'неправильно',{b:1},100);
+      s+=`<rect x="188" y="60" width="108" height="70" rx="9" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.5"/>`;
+      s+=fit(242,80,10,pur,'порядок граней',{b:1},100);
+      order.slice(0,4).forEach((f2,k)=>{
+        s+=fit(242,96+k*13,8.5,k===0?grn:dim,'грань '+(f2.i+1)+': z = '+f2.z.toFixed(1),{},100);
+      });
+      s+=fit(159,222,11,ink,'сначала рисуем то, что дальше по оси z',{b:1},292);
+      s+=plate2(16,236,286,32,go?grn:cardB,go?'так ближние грани закрывают дальние':'почему важен порядок?',11,pre);
+      s+=fit(159,292,10.5,dim,'сортировка по глубине — обязательный шаг',{},296);
       return s;
     }
-    if(K==='d3shade'){ /* освещение */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,gold,'свет и тень делают объём живым',{b:1},268)+`</g>`;
-      s+=`<circle cx="60" cy="70" r="16" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="2"/>`;
-      s+=`<path d="M60 70 L100 110 M60 70 L120 92 M60 70 L88 132" stroke="${gold}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
-      s+=d3draw(d3cube(),186,140,50,0.34,-0.7,0,pre,{c:gold,sw:1.6,fov:7});
-      s+=fit(60,100,10,dim,'источник',{b:1},60);
-      s+=fit(186,222,10.5,gold,'грани освещены по-разному',{b:1},170);
-      s+=fit(159,248,11.5,ink,'по яркости грани мы понимаем форму предмета',{b:1},296);
-      s+=plate2(18,262,282,30,go?grn:cardB,go?'чем ровнее к свету — тем ярче грань':'зачем нужен свет?',11,pre);
+    if(K==='d3shade'){ /* свет, нормали и яркость */
+      const sh=d3cube(), ax=0.34, ay=-0.7, cx=176, cy=142, sc=42;
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,gold,'свет и тень: яркость зависит от наклона грани',{b:1},290)+`</g>`;
+      s+=`<circle cx="52" cy="76" r="14" fill="rgba(255,215,106,.45)" stroke="${gold}" stroke-width="2"/>`;
+      s+=`<path d="M52 76 L120 116 M52 76 L136 96 M52 76 L112 152 M52 76 L96 176" stroke="${gold}" stroke-width="1.3" stroke-dasharray="4 4" opacity=".8"/>`;
+      s+=fit(52,104,9.5,dim,'свет',{b:1},50);
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:gold,sw:1.6,fov:7});
+      const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
+      const f=sh.faces[3];
+      const mx=(pr[f[0]][0]+pr[f[2]][0])/2, my=(pr[f[0]][1]+pr[f[2]][1])/2;
+      s+=`<path d="M${mx.toFixed(1)} ${my.toFixed(1)} l16 -10" stroke="${cyan}" stroke-width="1.8"/><path d="M${(mx+16).toFixed(1)} ${(my-10).toFixed(1)} l-2 8 l-6 -5 z" fill="${cyan}"/>`;
+      s+=fit(mx+8,my-16,8.5,cyan,'нормаль',{b:1},54);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="20" y="206" width="278" height="30" rx="9" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.5"/>`
+        +fit(159,226,10,gold,'яркость = 0,45 + 0,55 · |cos угла|',{b:1},260)+`</g>`;
+      s+=`<rect x="20" y="244" width="278" height="16" rx="8" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.2"/>`;
+      s+=growBar(22,246,120,12,'#ffe066',1.4,0.9,0)+growBar(146,246,150,12,'#8a6b4a',1.4,1.1,0);
+      s+=fit(82,272,9.5,gold,'освещённая',{b:1},110)+fit(222,272,9.5,dim,'в тени',{b:1},110);
+      s+=plate2(20,282,278,0,cardB,'',11,pre);
       return s;
     }
-    if(K==='d3smooth'){ /* многоугольники */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'чем больше граней, тем глаже',{b:1},264)+`</g>`;
-      [4,8,16].forEach((n,k)=>{
-        const cx=62+k*96, cy=148, R=38;
+    if(K==='d3smooth'){ /* гладкость: 4, 8, 16, 32 */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'чем больше граней, тем глаже поверхность',{b:1},282)+`</g>`;
+      [4,8,16,32].forEach((n,k)=>{
+        const cx=52+k*72, cy=126, R=k<2?34:30;
         let d='';
         for(let i=0;i<n;i++){ const a=-Math.PI/2+i*2*Math.PI/n; d+=(i?' L':'M')+(cx+Math.cos(a)*R).toFixed(1)+' '+(cy+Math.sin(a)*R).toFixed(1); }
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
-          +`<path d="${d} Z" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="1.8"/>`
-          +fit(cx,214,10.5,cyan,n+' граней',{b:1},86)+`</g>`;
+        const col=[rose,'gold','cyan',grn][k];
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
+          +`<path d="${d} Z" fill="rgba(127,214,255,.14)" stroke="${col}" stroke-width="1.7"/>`
+          +fit(cx,180,10.5,col,n+' граней',{b:1},68)
+          +fit(cx,196,8.5,dim,['угловато','почти','гладко','как круг'][k],{},68)+`</g>`;
       });
-      s+=fit(159,244,11.5,ink,'шар в модели — это много маленьких плоских граней',{b:1},296);
-      s+=plate2(18,258,282,30,go?grn:cardB,go?'поэтому 3D-модели бывают очень тяжёлыми':'как сделать шар в 3D?',11,pre);
+      s+=fit(159,220,11,ink,'модель шара — это много маленьких плоских граней',{b:1},296);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="20" y="234" width="278" height="34" rx="10" fill="rgba(255,215,120,.10)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,257,10.5,gold,'больше граней — тяжелее файл и дольше расчёт',{b:1},260)+`</g>`;
+      s+=`${fit(159,290,10,dim,'поэтому в играх модели упрощают',{},292)}`;
       return s;
     }
-    if(K==='d3texture'){ /* текстура */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,grn,'текстура: картинка на грани',{b:1},264)+`</g>`;
-      for(let r=0;r<4;r++)for(let c=0;c<5;c++)
-        s+=`<rect x="${46+c*18}" y="${86+r*18}" width="16" height="16" rx="2" fill="${((r+c)%2)?'rgba(125,224,160,.5)':'rgba(255,215,106,.35)'}"/>`;
-      s+=fit(90,182,10.5,dim,'картинка-текстура',{b:1},120);
-      s+=`<path d="M150 140 h34" stroke="${gold}" stroke-width="2.4"/><path d="M178 133 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
-      s+=d3draw(d3cube(),228,142,46,0.34,-0.7,0,pre,{c:grn,sw:1.6,fov:7});
-      s+=fit(228,206,10.5,grn,'натянута на грани',{b:1},140);
-      s+=fit(159,232,11.5,ink,'текстура кладётся на плоскую грань, как обои',{b:1},296);
-      s+=plate2(18,246,282,30,go?grn:cardB,go?'поэтому в играх кирпич не рисуют по одному':'зачем нужна текстура?',11,pre);
+    if(K==='d3texture'){ /* текстура внутри грани */
+      const sh=d3cube(), ax=0.34, ay=-0.7, cx=196, cy=140, sc=42;
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,grn,'текстура — картинка, натянутая на грань',{b:1},280)+`</g>`;
+      for(let r=0;r<5;r++)for(let c=0;c<5;c++)
+        s+=`<rect x="${26+c*18}" y="${58+r*18}" width="16" height="16" rx="2" fill="${((r+c)%2)?'rgba(125,224,160,.55)':'rgba(255,215,106,.4)'}"/>`;
+      s+=fit(70,168,10,dim,'текстура 5×5',{b:1},110);
+      s+=`<path d="M112 140 h26" stroke="${gold}" stroke-width="2.4"/><path d="M132 133 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:grn,sw:1.6,fov:7});
+      const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
+      const top=sh.faces[1].map(k=>pr[k]);
+      const xs=top.map(p=>p[0]), ys=top.map(p=>p[1]);
+      const x0=Math.min.apply(null,xs), x1=Math.max.apply(null,xs), y0=Math.min.apply(null,ys), y1=Math.max.apply(null,ys);
+      const cw=(x1-x0)/5, ch=(y1-y0)/5;
+      s+=`<defs><clipPath id="gxtop"><path d="M${top.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L')} Z"/></clipPath></defs>`;
+      s+=`<g clip-path="url(#gxtop)">`;
+      for(let r=0;r<5;r++)for(let c=0;c<5;c++)
+        s+=`<rect x="${(x0+c*cw).toFixed(1)}" y="${(y0+r*ch).toFixed(1)}" width="${cw.toFixed(1)}" height="${ch.toFixed(1)}" fill="${((r+c)%2)?'rgba(125,224,160,.75)':'rgba(255,215,106,.6)'}"/>`;
+      s+=`</g>`;
+      s+=fit(196,206,10.5,grn,'текстура легла на верхнюю грань',{b:1},180);
+      s+=plate2(20,222,278,32,go?grn:cardB,go?'поэтому кирпичи не рисуют по одному':'зачем нужна текстура?',11,pre);
+      s+=fit(159,278,10.5,dim,'текстура хранится отдельным файлом-картинкой',{},296);
       return s;
     }
-    if(K==='d3persp'){ /* перспектива */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'дальше — значит меньше',{b:1},262)+`</g>`;
-      s+=d3draw(d3cube(),86,140,34,0.3,-0.6,0,pre,{c:cyan,sw:1.6,fov:7});
-      s+=d3draw(d3cube(),232,140,34,0.3,-0.6,0,pre,{c:pur,sw:1.6,fov:2.4});
-      s+=fit(86,200,10.5,cyan,'близко: fov 7',{b:1},130);
-      s+=fit(232,200,10.5,pur,'далеко: fov 2,4',{b:1},130);
-      s+=fit(159,228,11.5,ink,'коэффициент перспективы делает дальние объекты меньше',{b:1},296);
-      s+=plate2(18,242,282,32,go?grn:cardB,go?'без перспективы объём не читается':'что меняет перспектива?',11,pre);
+    if(K==='d3persp'){ /* точка схода */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'перспектива: дальние предметы меньше',{b:1},276)+`</g>`;
+      s+=`<path d="M30 60 L258 116 M30 218 L258 116" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="6 5"/>`;
+      s+=`<path d="M30 96 L258 116 M30 182 L258 116" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="6 5"/>`;
+      s+=`<circle cx="258" cy="116" r="5" fill="${gold}"/>`;
+      s+=fit(292,110,9.5,gold,'точка',{an:'end',b:1},50)+fit(292,124,9.5,gold,'схода',{an:'end',b:1},50);
+      s+=d3draw(d3cube(),84,150,30,0.3,-0.6,0,pre,{c:cyan,sw:1.5,fov:7});
+      s+=d3draw(d3cube(),186,132,16,0.3,-0.6,0,pre,{c:pur,sw:1.4,fov:7});
+      s+=fit(84,196,10.5,cyan,'близкий куб',{b:1},110);
+      s+=fit(186,178,10.5,pur,'дальний — меньше',{b:1},120);
+      s+=fit(159,222,11,ink,'линии сходятся в одну точку — так работает перспектива',{b:1},296);
+      s+=plate2(20,236,278,32,go?grn:cardB,go?'поэтому улица вдаль сужается':'почему дальние предметы меньше?',11,pre);
+      s+=fit(159,292,10.5,dim,'в программе это делает коэффициент перспективы',{},296);
       return s;
     }
-    if(K==='d3camera'){ /* камера */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'камера: откуда мы смотрим на модель',{b:1},270)+`</g>`;
-      s+=`<circle cx="56" cy="168" r="14" fill="rgba(127,214,255,.3)" stroke="${cyan}" stroke-width="2"/>`;
-      s+=`<path d="M66 158 l14 -10 v16 z" fill="${cyan}" opacity=".6"/>`;
-      s+=fit(56,196,10.5,cyan,'камера',{b:1},80);
-      s+=`<path d="M74 164 L220 128" stroke="${gold}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
-      s+=`<path d="M74 172 L220 216" stroke="${gold}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
-      s+=d3draw(d3cube(),238,170,38,0.3,-0.6,0,pre,{c:pur,sw:1.6,fov:7});
-      s+=fit(159,238,11.5,ink,'двигаем камеру — и видим модель с другой стороны',{b:1},296);
-      s+=plate2(18,252,282,32,go?grn:cardB,go?'сцена = модель + камера + свет':'что решает камера?',11,pre);
+    if(K==='d3camera'){ /* камера и пирамида видимости */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'камера: откуда мы смотрим на модель',{b:1},278)+`</g>`;
+      s+=`<rect x="26" y="112" width="46" height="34" rx="7" fill="rgba(127,214,255,.2)" stroke="${cyan}" stroke-width="2"/>`;
+      s+=`<path d="M72 120 l16 -10 v26 l-16 -10 z" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="1.6"/>`;
+      s+=fit(49,164,10,cyan,'камера',{b:1},80);
+      s+=`<path d="M88 118 L262 74 M88 140 L262 190" stroke="${gold}" stroke-width="1.4" stroke-dasharray="6 5"/>`;
+      s+=`<path d="M258 74 L258 190" stroke="${gold}" stroke-width="2.2"/>`;
+      s+=fit(256,196,10,gold,'экран',{b:1},60);
+      s+=d3draw(d3cube(),176,132,26,0.3,-0.6,0,pre,{c:pur,sw:1.5,fov:7});
+      s+=fit(176,180,10.5,pur,'модель',{b:1},80);
+      s+=fit(159,208,11,ink,'камера «смотрит» внутрь конуса видимости',{b:1},292);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="20" y="222" width="278" height="32" rx="10" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,244,10.5,gold,'сцена = модель + камера + свет',{b:1},260)+`</g>`;
+      s+=`${fit(159,278,10.5,dim,'двигаем камеру — видим модель с другой стороны',{},296)}`;
       return s;
     }
-    if(K==='d3engine'){ /* конвейер видеокарты */
-      const rows=[{t:'вершины → на экран',c:cyan},{t:'собрать грани',c:gold},{t:'отсортировать по глубине',c:pur},
-                  {t:'раскрасить и наложить свет',c:grn},{t:'вывести пиксели',c:blu}];
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,gold,'как видеокарта рисует кадр',{b:1},264)+`</g>`;
-      rows.forEach((q,k)=>{
-        const y=52+k*42;
-        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s">`
-          +`<rect x="30" y="${y}" width="258" height="32" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
-          +`<circle cx="50" cy="${y+16}" r="10" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.3"/>`
-          +tx(50,y+20,10.5,q.c,''.concat(k+1),{b:1})
-          +fit(176,y+21,11,q.c,q.t,{b:1},220)+`</g>`;
-        if(k<4) s+=drawLL({x:159,y:y+34},{x:159,y:y+40},q.c,1.6,0.4+k*0.16,1.6,pre);
+    if(K==='d3engine'){ /* конвейер с мини-моделями */
+      const st2=[{t:'вершины на экран',c:cyan,m:'wire'},{t:'сборка граней',c:gold,m:'face'},{t:'сортировка по z',c:pur,m:'face'},
+                 {t:'свет и текстура',c:grn,m:'dark'},{t:'пиксели на экран',c:blu,m:'wire'}];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,gold,'как видеокарта рисует один кадр',{b:1},276)+`</g>`;
+      st2.forEach((q,k)=>{
+        const y=44+k*34;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.1+k*0.15).toFixed(2)}s">`
+          +`<rect x="20" y="${y}" width="212" height="28" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.5"/>`
+          +`<circle cx="38" cy="${y+14}" r="9" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.2"/>`
+          +tx(38,y+18,9.5,q.c,''.concat(k+1),{b:1})
+          +fit(146,y+19,10,q.c,q.t,{b:1},178)+`</g>`;
+        if(k<4) s+=drawLL({x:126,y:y+30},{x:126,y:y+36},q.c,1.4,0.4+k*0.16,1.4,pre);
+        const mx=262, my=y+14;
+        if(q.m==='wire') s+=d3wire(d3cube(),mx,my,12,0.3,-0.6,0,pre,{c:q.c,sw:1,r:2});
+        else if(q.m==='face') s+=d3draw(d3cube(),mx,my,12,0.3,-0.6,0,pre,{c:q.c,sw:1,fov:7});
+        else s+=d3draw(d3cube(),mx,my,12,0.3,-0.6,0,pre,{c:'rgba(70,80,124,.9)',sw:1,fov:7});
       });
-      s+=fit(159,276,11,ink,'60 раз в секунду — как игровой цикл',{b:1},292);
+      s+=`<circle r="5" fill="${gold}"><animateMotion dur="3.4s" repeatCount="indefinite" path="M38 58 L38 196"/></circle>`;
+      s+=plate2(20,222,272,30,go?grn:cardB,go?'всё это повторяется 60 раз в секунду':'сколько раз в секунду?',11,pre);
+      s+=fit(159,272,10.5,dim,'пять шагов — и кадр готов',{},292);
       return s;
     }
-    if(K==='d3game'){ /* 3D в играх */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'в игре сцену пересчитывают каждый кадр',{b:1},272)+`</g>`;
+    if(K==='d3game'){ /* 3D в игре: кадры и нагрузка */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'в игре сцену пересчитывают каждый кадр',{b:1},280)+`</g>`;
       for(let k=0;k<4;k++){
-        const cx=56+k*66, ay=-0.5-k*0.3;
+        const cx=48+k*58, ay=-0.5-k*0.34;
         s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.15).toFixed(2)}s">`
-          +`<rect x="${cx-28}" y="58" width="56" height="56" rx="6" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
-          +d3draw(d3cube(),cx,86,16,0.3,ay,0,pre,{c:pur,sw:1,fov:7})+`</g>`;
+          +`<rect x="${cx-24}" y="48" width="48" height="62" rx="6" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.2"/>`
+          +d3draw(d3cube(),cx,74,14,0.3,ay,0,pre,{c:pur,sw:1,fov:7})
+          +fit(cx,122,8.5,dim,'кадр '+(k+1),{},44)+`</g>`;
       }
-      s+=fit(159,132,10.5,dim,'кадр 1 → кадр 2 → кадр 3 → кадр 4',{b:1},280);
-      s+=`<path d="M40 158 L280 158" stroke="${cardB}" stroke-width="1.6"/>`;
-      s+=`<circle r="6" fill="${gold}"><animateMotion dur="3s" repeatCount="indefinite" path="M40 158 L280 158"/></circle>`;
-      s+=fit(159,186,11.5,ink,'модель поворачивается, а кадры сменяют друг друга',{b:1},296);
-      s+=plate2(18,200,282,32,go?grn:cardB,go?'поэтому для 3D нужна мощная видеокарта':'почему в играх нужна видеокарта?',11,pre);
-      s+=`${fit(159,256,11,dim,'видеокарта считает миллионы вершин в секунду',{},296)}`;
+      s+=fit(280,80,10,gold,'60 кадров',{an:'end',b:1},80);
+      s+=fit(280,96,10,gold,'в секунду',{an:'end',b:1},80);
+      s+=`<rect x="20" y="146" width="278" height="18" rx="9" fill="rgba(255,255,255,.05)" stroke="${cardB}" stroke-width="1.2"/>`;
+      s+=growBar(22,148,220,14,pur,1.4,0.8,0);
+      s+=fit(159,180,10,dim,'нагрузка видеокарты',{b:1},240);
+      s+=fit(159,204,11,ink,'модель поворачивается — и кадры сменяют друг друга',{b:1},296);
+      s+=plate2(20,218,278,32,go?grn:cardB,go?'поэтому для 3D нужна мощная видеокарта':'почему 3D требует мощности?',11,pre);
+      s+=fit(159,274,10.5,dim,'видеокарта считает миллионы вершин каждую секунду',{},296);
       return s;
     }
-    if(K==='d3vr'){ /* VR и AR */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'VR и AR: объём вокруг нас',{b:1},262)+`</g>`;
-      s+=`<rect x="34" y="76" width="120" height="70" rx="16" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`;
-      s+=`<path d="M34 96 h120" stroke="${cyan}" stroke-width="1.4" opacity=".6"/>`;
-      s+=`<circle cx="72" cy="110" r="12" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`;
-      s+=`<circle cx="118" cy="110" r="12" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`;
-      s+=fit(94,164,10.5,cyan,'VR-шлем',{b:1},110);
-      s+=`<rect x="180" y="76" width="60" height="92" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2"/>`;
-      s+=`<rect x="188" y="86" width="44" height="72" rx="5" fill="rgba(255,215,106,.14)"/>`;
-      s+=d3draw(d3cube(),210,122,16,0.3,-0.6,0,pre,{c:gold,sw:1.1,fov:7});
-      s+=fit(210,184,10.5,gold,'AR в телефоне',{b:1},120);
-      s+=fit(159,208,11.5,ink,'VR переносит в модель, AR добавляет её в комнату',{b:1},296);
-      s+=plate2(34,222,250,32,go?grn:cardB,go?'основа та же: 3D-модели и камера':'чем отличаются VR и AR?',11,pre);
+    if(K==='d3vr'){ /* VR и AR подробнее */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'VR переносит внутрь, AR добавляет в комнату',{b:1},280)+`</g>`;
+      s+=`<rect x="22" y="70" width="126" height="74" rx="18" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`;
+      s+=`<path d="M22 96 h126" stroke="${cyan}" stroke-width="1.3" opacity=".6"/>`;
+      s+=`<circle cx="62" cy="108" r="14" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=`<circle cx="108" cy="108" r="14" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=`<circle cx="62" cy="108" r="5" fill="rgba(127,214,255,.5)"/><circle cx="108" cy="108" r="5" fill="rgba(127,214,255,.5)"/>`;
+      s+=`<path d="M22 84 q-14 12 0 26 M148 84 q14 12 0 26" fill="none" stroke="${cyan}" stroke-width="2"/>`;
+      s+=fit(85,164,10.5,cyan,'шлем VR',{b:1},110);
+      s+=fit(85,180,9,dim,'два экрана,',{},110)+fit(85,192,9,dim,'датчики движения',{},110);
+      s+=`<rect x="186" y="62" width="62" height="108" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2"/>`;
+      s+=`<rect x="194" y="72" width="46" height="88" rx="5" fill="rgba(255,215,106,.12)"/>`;
+      s+=`<path d="M194 150 h46" stroke="${gold}" stroke-width="1.6"/>`;
+      s+=d3draw(d3cube(),217,128,15,0.3,-0.6,0,pre,{c:gold,sw:1.1,fov:7});
+      s+=`<path d="M200 122 h34" stroke="${gold}" stroke-width="1.2" stroke-dasharray="4 4" opacity=".7"/>`;
+      s+=fit(217,190,10.5,gold,'AR в телефоне',{b:1},120);
+      s+=fit(217,206,9,dim,'модель на столе',{},120);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="22" y="222" width="270" height="32" rx="10" fill="rgba(125,224,160,.11)" stroke="${grn}" stroke-width="1.6"/>`
+        +fit(159,244,10.5,grn,'основа одна: 3D-модели, камера и датчики',{b:1},256)+`</g>`;
+      s+=`${fit(159,280,10.5,dim,'поэтому уроки 3D и роботов связаны',{},292)}`;
       return s;
     }
-    if(K==='d3file'){ /* хранение 3D-модели */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,grn,'3D-модель хранят как список данных',{b:1},270)+`</g>`;
-      s+=`<rect x="26" y="54" width="140" height="120" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.8"/>`;
-      s+=fit(96,76,11.5,grn,'файл модели',{b:1},120);
-      const lines=['вершина 1: 1 1 1','вершина 2: 1 1 -1','…','грань 1: 0 2 3 1','…'];
-      lines.forEach((q,k)=>{ s+=fit(96,96+k*16,8.5,dim,q,{},128); });
-      s+=`<path d="M172 114 h26" stroke="${gold}" stroke-width="2.4"/><path d="M192 107 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
-      s+=d3draw(d3cube(),238,116,42,0.32,-0.62,0,pre,{c:grn,sw:1.6,fov:7});
-      s+=fit(238,186,10.5,grn,'на экране',{b:1},120);
-      s+=fit(159,210,11.5,ink,'вершины, грани, текстуры — всё это числа в файле',{b:1},296);
-      s+=plate2(26,224,266,32,go?grn:cardB,go?'программа читает числа и рисует модель':'как хранят 3D-модель?',11,pre);
+    if(K==='d3file'){ /* файл модели подробно */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,grn,'модель хранят в файле как список чисел',{b:1},280)+`</g>`;
+      s+=`<rect x="20" y="48" width="152" height="164" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.8"/>`;
+      s+=fit(96,70,11,grn,'файл model.obj',{b:1},130);
+      const lines=['v 1 1 1','v 1 1 -1','v 1 -1 1','… ещё 5 вершин','f 1 2 4 3','f 5 6 8 7','… ещё 4 грани','vt 0 0 · vt 1 0','vn 0 1 0'];
+      lines.forEach((q,k)=>{ s+=fit(96,88+k*15,8,dim,q,{},140); });
+      s+=`<path d="M182 128 h26" stroke="${gold}" stroke-width="2.4"/><path d="M202 121 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=d3draw(d3cube(),248,120,36,0.32,-0.62,0,pre,{c:grn,sw:1.6,fov:7});
+      s+=fit(250,186,10.5,grn,'на экране',{b:1},110);
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="20" y="220" width="278" height="30" rx="9" fill="rgba(255,215,106,.11)" stroke="${gold}" stroke-width="1.6"/>`
+        +fit(159,240,10,gold,'v — вершины · f — грани · vt — текстура · vn — нормали',{b:1},264)+`</g>`;
+      s+=plate2(20,254,278,30,go?grn:cardB,go?'программа читает числа и рисует модель':'что записано в файле?',11,pre);
       return s;
     }
-    if(K==='d3practice'){ /* практика */
-      const rows=[
-        {t:'у куба 8 вершин. Сколько рёбер?',a:'12',c:cyan},
-        {t:'у пирамиды 5 граней. Сколько вершин?',a:'5',c:gold},
-        {t:'модель повернули 5 раз по 30°. Какой угол?',a:'150°',c:grn}
-      ];
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'практика: считаем элементы модели',{b:1},270)+`</g>`;
+    if(K==='d3practice'){ /* практика с рисунками */
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,pur,'практика: считаем элементы моделей',{b:1},276)+`</g>`;
+      s+=d3wire(d3cube(),54,74,22,0.3,-0.6,0,pre,{c:cyan,sw:1.4,r:2.6});
+      s+=fit(54,110,9.5,cyan,'куб',{b:1},60)+fit(54,126,9,dim,'8 · 12 · 6',{},60);
+      s+=d3wire(d3pyr(),130,78,22,0.3,-0.6,0,pre,{c:gold,sw:1.4,r:2.6});
+      s+=fit(130,110,9.5,gold,'пирамида',{b:1},70)+fit(130,126,9,dim,'5 · 8 · 5',{},70);
+      s+=d3draw(d3cube(),212,76,20,0.3,-0.6,0.6,pre,{c:grn,sw:1.3,fov:7});
+      s+=fit(212,110,9.5,grn,'поворот',{b:1},60)+fit(212,126,9,dim,'5 × 30°',{},60);
+      const rows=[{t:'у куба 8 вершин. Сколько рёбер?',a:'12',c:cyan},{t:'у пирамиды 5 граней. Сколько вершин?',a:'5',c:gold},{t:'повернули 5 раз по 30°. Какой угол?',a:'150°',c:grn}];
       rows.forEach((q,k)=>{
-        const y=52+k*58;
+        const y=142+k*40;
         s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
-          +`<rect x="22" y="${y}" width="274" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
-          +fit(146,y+19,10,ink,q.t,{},214)
-          +(go?fit(146,y+38,11.5,q.c,q.a,{b:1},214):fit(146,y+38,10.5,dim,'нажми «показать»',{},214))+`</g>`;
+          +`<rect x="20" y="${y}" width="278" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.5"/>`
+          +fit(140,y+22,9.5,ink,q.t,{},190)
+          +(go?fit(238,y+22,11,q.c,q.a,{b:1},80):fit(238,y+22,9.5,dim,'нажми «показать»',{},80))+`</g>`;
       });
-      s+=plate2(22,228,274,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
+      s+=plate2(20,266,278,28,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
       return s;
     }
-    if(K==='d3quiz'){ /* викторина */
-      const opts=['плоское изображение объёма','сама объёмная модель','фотография','текстура'], ok=0, done=(st&&st.pick>=0);
-      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
-        +fit(159,34,11.5,ink,'Что видно на экране компьютера?',{b:1},266)+`</g>`;
-      s+=d3draw(d3cube(),159,92,26,0.34,-0.62,0,pre,{c:cyan,sw:1.4,fov:7});
+    if(K==='d3quiz'){ /* викторина с рисунком */
+      const opts=['плоскую проекцию объёмной модели','саму объёмную модель','только текстуру','фотографию'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,ink,'Что видно на плоском экране компьютера?',{b:1},276)+`</g>`;
+      const sh=d3cube(), ax=0.34, ay=-0.62, cx=104, cy=96, sc=26;
+      const rv=sh.v.map(q=>d3rot(q,ax,ay,0)), pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:cyan,sw:1.3,fov:6});
+      s+=`<rect x="196" y="60" width="90" height="76" rx="8" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2.2"/>`;
+      s+=`<rect x="203" y="67" width="76" height="62" rx="4" fill="rgba(127,214,255,.08)"/>`;
+      s+=d3draw(sh,241,96,15,ax,ay,0,pre,{c:gold,sw:1.1,fov:6});
+      s+=`<path d="M136 96 h56" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
+      s+=fit(104,132,9.5,cyan,'модель',{b:1},80)+fit(241,146,9.5,gold,'экран',{b:1},80);
       opts.forEach((t2,k)=>{
-        const y=128+k*34, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        const y=158+k*32, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
         s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
-          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.5}"/>`
-          +fit(159,y+20,11,c,t2,{b:on},256)+(on?`<path d="M266 ${y+8} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+          +`<rect x="20" y="${y}" width="278" height="28" rx="8" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.1:1.5}"/>`
+          +fit(159,y+19,10,on?grn:(bad?red:ink),t2,{b:on},258)+(on?`<path d="M270 ${y+8} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.2"/>`:'')+`</g>`;
       });
-      s+=`<g class="${pre}Rise}"><rect x="22" y="268" width="274" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
-        +fit(159,288,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Экран показывает плоскую проекцию':'Подумай: экран плоский или объёмный?',{b:done&&st.pick===ok},256)+`</g>`;
+      s+=`<g class="${pre}Rise}"><rect x="20" y="288" width="278" height="28" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.5"/>`
+        +fit(159,306,10,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Экран показывает только проекцию':'Подумай: экран ведь плоский',{b:done&&st.pick===ok},256)+`</g>`;
       return s;
     }
-    if(K==='d3mistakes'){ /* ошибки */
+    if(K==='d3mistakes'){ /* ошибки с рисунками */
       const it=[
-        {t:'путают модель и её изображение',f:'на экране — проекция, а не сам объём',c:red},
-        {t:'забывают про порядок отрисовки',f:'дальние грани рисуют первыми',c:gold},
-        {t:'ставят мало граней и ждут гладкости',f:'шар из 4 граней не станет круглым',c:cyan},
-        {t:'забывают про свет и тени',f:'без них предмет выглядит плоским',c:pur}
+        {t:'путают модель и её изображение',f:'на экране плоская проекция',c:red,ico:'flat'},
+        {t:'рисуют ближнюю грань первой',f:'порядок — от дальних к ближним',c:gold,ico:'order'},
+        {t:'ставят мало граней и ждут гладкости',f:'шар из 4 граней не круглый',c:cyan,ico:'few'},
+        {t:'забывают про свет и текстуру',f:'без них предмет выглядит плоским',c:pur,ico:'light'}
       ];
       let s='';
       it.forEach((q,k)=>{
-        const y=14+k*56;
+        const y=12+k*54;
         s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
-          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
-          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
-          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
-          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
-          +fit(82,y+42,Math.min(10,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},180)+`</g>`;
+          +`<rect x="12" y="${y}" width="294" height="46" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="1.9"/>`
+          +`<path d="M28 ${y+12} l10 18 h-20 z" fill="${red}" opacity=".9"/><text x="28" y="${y+27}" text-anchor="middle" font-size="10" font-weight="bold" fill="#eaf2ff">!</text>`;
+        if(q.ico==='flat') s+=d3draw(d3cube(),284,y+23,12,0.3,-0.6,0,pre,{c:q.c,sw:1,fov:7});
+        else if(q.ico==='order') s+=d3draw(d3cube(),284,y+23,12,0.3,-0.6,0,pre,{c:q.c,sw:1,fov:7,flip:true});
+        else if(q.ico==='few') s+=`<path d="M272 ${y+32} l12 -18 l12 18 z" fill="rgba(127,214,255,.16)" stroke="${q.c}" stroke-width="1.4"/>`;
+        else s+=`<circle cx="284" cy="${y+23}" r="10" fill="rgba(255,215,106,.25)" stroke="${q.c}" stroke-width="1.4"/>`;
+        s+=fit(96,y+19,Math.min(10,150/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},130)
+          +fit(120,y+34,Math.min(9.5,140/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},140)+`</g>`;
       });
-      s+=`${tx(159,266,11,dim,'проверяй эти четыре места',{})}`;
+      s+=`${tx(159,246,10.5,dim,'проверяй эти четыре места',{})}`;
       return s;
     }
-    if(K==='d3sheet'){ /* шпаргалка */
-      const rows=[{t:'в 3D у точки три координаты',c:cyan},{t:'модель: вершины, рёбра и грани',c:gold},
-                  {t:'проекция превращает 3D в изображение',c:grn},{t:'поворот задают три угла',c:pur},
-                  {t:'дальние грани рисуют первыми',c:blu},{t:'свет и текстура делают картинку живой',c:red}];
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'всё главное о 3D-графике',{b:1},262)+`</g>`;
+    if(K==='d3sheet'){ /* шпаргалка с иконками */
+      const rows=[{t:'в 3D у точки три координаты',c:cyan,ico:'p'},{t:'модель: вершины, рёбра, грани',c:gold,ico:'c'},
+                  {t:'проекция превращает 3D в 2D',c:grn,ico:'pr'},{t:'поворот задают три угла',c:pur,ico:'r'},
+                  {t:'дальние грани рисуют первыми',c:blu,ico:'d'},{t:'свет и текстура делают картинку',c:red,ico:'l'}];
+      let s=`<g class="${pre}Pop"><rect x="14" y="10" width="290" height="28" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.8"/>`
+        +fit(159,29,11.5,cyan,'всё главное о 3D-графике',{b:1},262)+`</g>`;
       rows.forEach((q,k)=>{
-        const y=50+k*36;
-        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
-          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
-          +fit(159,y+20,10,q.c,q.t,{b:1},260)+`</g>`;
+        const y=46+k*36;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.08+k*0.1).toFixed(2)}s">`
+          +`<rect x="16" y="${y}" width="286" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.5"/>`;
+        if(q.ico==='p') s+=`<path d="M36 ${y+24} L58 ${y+16}" stroke="${q.c}" stroke-width="1.4"/><path d="M36 ${y+24} L36 ${y+8}" stroke="${q.c}" stroke-width="1.4"/><circle cx="50" cy="${y+13}" r="3.4" fill="${q.c}"/>`;
+        else if(q.ico==='c') s+=d3wire(d3cube(),46,y+15,9,0.3,-0.6,0,pre,{c:q.c,sw:1,r:1.6});
+        else if(q.ico==='pr') s+=`<path d="M32 ${y+20} L52 ${y+12}" stroke="${q.c}" stroke-width="1.3" stroke-dasharray="3 3"/><rect x="54" y="${y+8}" width="16" height="14" rx="2" fill="none" stroke="${q.c}" stroke-width="1.4"/>`;
+        else if(q.ico==='r') s+=`<path d="M32 ${y+22} q14 -16 28 0" fill="none" stroke="${q.c}" stroke-width="1.5"/><path d="M56 ${y+20} l5 3 l-4 5" fill="none" stroke="${q.c}" stroke-width="1.4"/>`;
+        else if(q.ico==='d') s+=`<rect x="32" y="${y+9}" width="14" height="13" rx="2" fill="rgba(110,168,255,.25)" stroke="${q.c}" stroke-width="1.3"/><rect x="42" y="${y+14}" width="14" height="13" rx="2" fill="rgba(110,168,255,.5)" stroke="${q.c}" stroke-width="1.3"/>`;
+        else s+=`<circle cx="42" cy="${y+15}" r="9" fill="rgba(255,215,106,.25)" stroke="${q.c}" stroke-width="1.3"/><path d="M36 ${y+22} q6 -10 12 0" fill="none" stroke="${q.c}" stroke-width="1.2"/>`;
+        s+=fit(176,y+20,9.5,q.c,q.t,{b:1},190)+`</g>`;
       });
-      s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
-      return s;
-    }
-    if(K==='gfxintro'){ /* два способа */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'два способа рисовать на экране',{b:1},262)+`</g>`;
-      s+=gxRaster(30,56,8,GX_HEART,'#ff8fb0',null,pre,{delay:0.2,step:0.012});
-      s+=gxVectorHeart(236,110,44,'#7fd6ff',2.2,0.4,pre);
-      s+=`<g class="${pre}Rise}" style="animation-delay:1.4s"><rect x="24" y="164" width="130" height="46" rx="10" fill="rgba(255,143,176,.12)" stroke="${rose}" stroke-width="1.8"/>`
-        +fit(89,184,11.5,rose,'растр: точками',{b:1},118)+fit(89,200,9.5,dim,'сетка пикселей',{},118)+`</g>`;
-      s+=`<g class="${pre}Rise}" style="animation-delay:1.6s"><rect x="164" y="164" width="130" height="46" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(229,184,11.5,cyan,'вектор: линиями',{b:1},118)+fit(229,200,9.5,dim,'формулы и кривые',{},118)+`</g>`;
-      s+=fit(159,230,11.5,ink,'одно и то же сердце — но нарисовано по-разному',{b:1},296);
-      s+=plate2(18,244,282,32,go?grn:cardB,go?'растровая и векторная графика':'чем отличаются два рисунка?',11,pre);
-      return s;
-    }
-    if(K==='gfxraster'){ /* растр: пиксели */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,rose,'растровое изображение — сетка пикселей',{b:1},270)+`</g>`;
-      s+=gxRaster(62,52,12,GX_HEART,'#ff8fb0','#ff8fb0',pre,{delay:0.2,step:0.018});
-      s+=`<g class="${pre}Rise}" style="animation-delay:2.2s"><rect x="26" y="222" width="266" height="30" rx="9" fill="rgba(255,143,176,.12)" stroke="${rose}" stroke-width="1.7"/>`
-        +fit(159,242,11,rose,'256 клеток в ширину — и каждая со своим цветом',{b:1},250)+`</g>`;
-      s+=fit(159,272,11.5,ink,'пиксель — самая маленькая точка рисунка',{b:1},292);
-      s+=plate2(26,286,266,0,cardB,'',11,pre);
-      return s;
-    }
-    if(K==='gfxpixel'){ /* пиксель и цвет */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,gold,'у каждого пикселя есть цвет',{b:1},262)+`</g>`;
-      s+=`<rect x="42" y="60" width="96" height="96" rx="6" fill="#ff8fb0" stroke="${gold}" stroke-width="2.4"/>`;
-      s+=`<g class="${pre}Rise}" style="animation-delay:.5s"><rect x="166" y="60" width="126" height="96" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(229,84,11,gold,'красный 255',{b:1},112)
-        +fit(229,106,11,grn,'зелёный 143',{b:1},112)
-        +fit(229,128,11,cyan,'синий 176',{b:1},112)
-        +fit(229,148,9.5,dim,'#FF8FB0',{},112)+`</g>`;
-      s+=fit(90,184,11,dim,'этот пиксель',{b:1},100);
-      s+=fit(229,184,11,ink,'три числа — и цвет готов',{b:1},150);
-      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="34" y="204" width="250" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,227,11.5,cyan,'256 · 256 · 256 = 16 777 216 цветов',{b:1},236)+`</g>`;
-      s+=plate2(34,240,250,32,go?grn:cardB,go?'почти 17 миллионов оттенков':'сколько цветов бывает?',11,pre);
-      return s;
-    }
-    if(K==='gfxrgb'){ /* RGB смешение */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,grn,'цвет собирается из трёх лучей',{b:1},262)+`</g>`;
-      s+=gxRGBmix(159,132,56,pre);
-      s+=fit(159,72,10.5,ink,'красный + зелёный + синий',{b:1},220);
-      s+=fit(110,206,10,rose,'R',{b:1},26)+fit(196,196,10,cyan,'B',{b:1},26)+fit(159,232,10,grn,'G',{b:1},26);
-      s+=`<g class="${pre}Rise}" style="animation-delay:1.1s"><rect x="30" y="244" width="258" height="32" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,266,11.5,gold,'в центре, где всё вместе, — светлый цвет',{b:1},242)+`</g>`;
-      s+=plate2(30,278,258,0,cardB,'',11,pre);
-      return s;
-    }
-    if(K==='gfxpalette'){ /* палитра */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'палитра программы',{b:1},262)+`</g>`;
-      GX_PAL.forEach((q,k)=>{
-        const x=26+(k%4)*68, y=54+Math.floor(k/4)*62;
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.1).toFixed(2)}s">`
-          +`<rect x="${x}" y="${y}" width="60" height="44" rx="9" fill="${q[0]}" stroke="${ink}" stroke-opacity=".35" stroke-width="1.4"/>`
-          +fit(x+30,y+58,8.5,dim,q[1],{},62)+`</g>`;
-      });
-      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="26" y="186" width="266" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,209,11.5,cyan,'градиент: цвет плавно переходит в другой',{b:1},242)+`</g>`;
-      s+=`<defs><linearGradient id="gxgrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff5a6e"/><stop offset=".5" stop-color="#ffe066"/><stop offset="1" stop-color="#5ad6ff"/></linearGradient></defs>`;
-      s+=`<rect x="26" y="230" width="266" height="26" rx="9" fill="url(#gxgrad)" stroke="${cardB}" stroke-width="1.2"/>`;
-      s+=fit(159,278,11,dim,'тысячи оттенков — а записывают их тремя числами',{},292);
-      s+=plate2(26,286,266,0,cardB,'',11,pre);
-      return s;
-    }
-    if(K==='gfxzoomr'){ /* приближаем растр */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${rose}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,rose,'приближаем растр: видны квадратики',{b:1},272)+`</g>`;
-      const mat=[['0001100001100000','0011110011110000','0111111111111000','1111111111111100','0111111111111000','0011111111110000','0001111111100000','0000111111000000']];
-      s+=gxRaster(36,54,7,GX_HEART,'#ff8fb0','#ff8fb0',pre,{delay:0.1,step:0.01});
-      s+=`<rect x="34" y="52" width="34" height="34" rx="3" fill="none" stroke="${gold}" stroke-width="2.4" class="${pre}Blink"/>`;
-      s+=`<path d="M70 70 h26" stroke="${gold}" stroke-width="2.4"/><path d="M90 63 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
-      s+=`<rect x="126" y="52" width="166" height="140" rx="10" fill="rgba(18,24,44,.97)" stroke="${rose}" stroke-width="1.8"/>`;
-      const zoom=[['1','1','1'],['1','0','1'],['1','0','1']];
-      for(let r=0;r<3;r++)for(let c=0;c<3;c++){
-        const on=(r!==1||c!==1);
-        s+=`<rect x="${146+c*44}" y="${66+r*40}" width="42" height="38" rx="4" fill="${on?'#ff8fb0':'rgba(255,255,255,.05)'}" stroke="${on?'#ffb3c9':'#2c3868'}" stroke-width="1.4"/>`;
-      }
-      s+=fit(209,200,10,rose,'один пиксель крупным планом',{b:1},150);
-      s+=fit(159,216,11,ink,'увеличение показывает квадраты, а не плавные линии',{b:1},296);
-      s+=plate2(30,230,258,32,go?grn:cardB,go?'поэтому у растра видны «лесенки»':'что видно при увеличении?',11,pre);
-      return s;
-    }
-    if(K==='gfxvector'){ /* вектор: формулы */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'векторная фигура описана формулой',{b:1},270)+`</g>`;
-      s+=gxVectorCircle(104,134,54,cyan,{fill:'rgba(127,214,255,.16)',radius:true,axes:true});
-      s+=`<g class="${pre}Rise}" style="animation-delay:.7s"><rect x="176" y="60" width="118" height="104" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(235,84,10.5,cyan,'круг',{b:1},104)
-        +fit(235,106,9.5,dim,'центр (104; 134)',{},104)
-        +fit(235,124,9.5,dim,'радиус 54',{},104)
-        +fit(235,146,10,gold,'одна формула',{b:1},104)+`</g>`;
-      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="196" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,219,11.5,gold,'записаны только числа — и рисунок готов',{b:1},240)+`</g>`;
-      s+=fit(159,248,11,ink,'вектор хранит не точки, а описание фигуры',{b:1},292);
-      s+=plate2(30,262,258,30,go?grn:cardB,go?'поэтому вектор легко увеличивать':'что хранит векторный рисунок?',11,pre);
-      return s;
-    }
-    if(K==='gfxzoomv'){ /* приближаем вектор */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'приближаем вектор: линии остаются гладкими',{b:1},276)+`</g>`;
-      s+=gxVectorCircle(80,120,32,cyan,{fill:'rgba(127,214,255,.14)',sw:2.2});
-      s+=`<rect x="52" y="92" width="30" height="30" rx="3" fill="none" stroke="${gold}" stroke-width="2.2" class="${pre}Blink"/>`;
-      s+=`<path d="M112 118 h24" stroke="${gold}" stroke-width="2.4"/><path d="M130 111 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
-      s+=`<rect x="164" y="64" width="128" height="128" rx="10" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`;
-      s+=gxVectorCircle(228,128,54,cyan,{fill:'rgba(127,214,255,.14)',sw:2.8});
-      s+=fit(228,204,10,cyan,'тот же край — без квадратов',{b:1},124);
-      s+=fit(159,232,11,ink,'вектор пересчитывается заново — и потому чёткий',{b:1},296);
-      s+=plate2(30,246,258,32,go?grn:cardB,go?'увеличение не портит векторный рисунок':'что произошло с краем?',11,pre);
-      return s;
-    }
-    if(K==='gfxcompare'){ /* сравнение */
-      const rows=[['увеличение','расплывается','остаётся чётким'],['вес файла','зависит от размера','маленький'],['фото','идеально','не подходит'],['логотип','тяжело','идеально']];
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,gold,'растр и вектор: что выбрать',{b:1},266)+`</g>`;
-      s+=`<rect x="24" y="52" width="86" height="34" rx="9" fill="rgba(255,143,176,.14)" stroke="${rose}" stroke-width="1.7"/>`;
-      s+=fit(67,74,11,rose,'растр',{b:1},74);
-      s+=`<rect x="116" y="52" width="86" height="34" rx="9" fill="rgba(127,214,255,.14)" stroke="${cyan}" stroke-width="1.7"/>`;
-      s+=fit(159,74,11,cyan,'вектор',{b:1},74);
-      s+=`<rect x="208" y="52" width="86" height="34" rx="9" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="1.4"/>`;
-      s+=fit(251,74,11,dim,'что важно',{b:1},74);
-      rows.forEach((q,k)=>{
-        const y=90+k*36;
-        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
-          +`<rect x="24" y="${y}" width="270" height="32" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
-          +fit(67,y+21,9.5,rose,q[1],{b:1},80)
-          +fit(159,y+21,9.5,cyan,q[2],{b:1},80)
-          +fit(251,y+21,9.5,dim,q[0],{},80)+`</g>`;
-      });
-      s+=plate2(24,240,270,32,go?grn:cardB,go?'фото — растр, логотип — вектор':'что выбрать для фото и логотипа?',11,pre);
-      return s;
-    }
-    if(K==='gfxformats'){ /* форматы */
-      const it=[['png','без потерь',grn],['jpg','фото, сжатие',gold],['gif','анимация',pur],['svg','вектор',cyan]];
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'форматы графических файлов',{b:1},262)+`</g>`;
-      it.forEach((q,k)=>{
-        const x=22+(k%2)*140, y=52+Math.floor(k/2)*90;
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.16).toFixed(2)}s">`
-          +`<rect x="${x}" y="${y}" width="132" height="78" rx="11" fill="rgba(12,32,34,.97)" stroke="${q[2]}" stroke-width="1.7"/>`
-          +`<rect x="${x+14}" y="${y+12}" width="34" height="30" rx="4" fill="rgba(255,255,255,.05)" stroke="${q[2]}" stroke-width="1.5"/>`
-          +fit(x+88,y+28,12,q[2],'.'+q[0],{b:1},70)
-          +fit(x+88,y+48,9.5,dim,q[1],{},76)
-          +fit(x+88,y+64,9,dim,(k===3?'масштабируется':'пиксели'),{},76)+`</g>`;
-      });
-      s+=plate2(22,236,274,32,go?grn:cardB,go?'расширение подскажет, что внутри':'какие бывают форматы?',11,pre);
-      s+=`${fit(159,290,11,dim,'svg — векторный, остальные — растровые',{},290)}`;
-      return s;
-    }
-    if(K==='gfxsize'){ /* размер файла */
-      const rows=[{t:'значок 64×64',px:4096,c:grn},{t:'фото 1000×1000',px:1000000,c:gold},{t:'кадр 1920×1080',px:2073600,c:rose}];
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,gold,'сколько весит картинка',{b:1},262)+`</g>`;
-      rows.forEach((q,k)=>{
-        const y=56+k*52;
-        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
-          +`<rect x="24" y="${y}" width="270" height="40" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
-          +fit(88,y+25,10.5,ink,q.t,{b:1},120)
-          +growBar(160,y+15,96*Math.log10(q.px)/7,12,q.c,1.2,0.4+k*0.2,0)
-          +fit(268,y+25,10,q.c,(Math.round(q.px/1000))+' тыс. пикс.',{b:1},80)+`</g>`;
-      });
-      s+=fit(159,222,11.5,ink,'каждый пиксель хранит 3 числа — вот и размер',{b:1},296);
-      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="236" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
-        +`<text x="159" y="259" text-anchor="middle" font-size="11" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">1000 · 1000 · 3 = 3 000 000 байт</text></g>`;
-      s+=`${fit(159,290,11,dim,'поэтому фото и сжимают',{},290)}`;
-      return s;
-    }
-    if(K==='gfxcompress'){ /* сжатие и качество */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'сжатие: качество против размера',{b:1},270)+`</g>`;
-      [[60,'высокое',grn,1],[159,'среднее',gold,0.82],[258,'низкое',rose,0.55]].forEach((q,k)=>{
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
-          +`<rect x="${q[0]-44}" y="56" width="88" height="88" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[2]}" stroke-width="1.7"/>`
-          +`<g opacity="${q[3]}">`
-          +`<circle cx="${q[0]}" cy="92" r="22" fill="rgba(127,214,255,.35)" stroke="${cyan}" stroke-width="2"/>`
-          +`<path d="M${q[0]-14} 118 q14 -18 28 0" fill="none" stroke="${grn}" stroke-width="2"/>`
-          +`</g>`
-          +fit(q[0],162,10.5,q[2],q[1],{b:1},80)+`</g>`;
-        if(k<2) s+=`<path d="M${q[0]+48} 100 h12" stroke="${gold}" stroke-width="2" stroke-dasharray="4 4"/>`;
-      });
-      s+=fit(159,190,11.5,ink,'меньше размер — больше «квадратиков» и мутных пятен',{b:1},296);
-      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="204" width="258" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
-        +fit(159,227,11,grn,'png хранит без потерь, jpg — с потерями',{b:1},240)+`</g>`;
-      s+=plate2(30,240,258,32,go?grn:cardB,go?'для чертежа бери png, для фото — jpg':'какой формат выбрать?',11,pre);
-      return s;
-    }
-    if(K==='gfxaa'){ /* сглаживание */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'лесенка и сглаживание',{b:1},262)+`</g>`;
-      s+=`<rect x="26" y="54" width="130" height="130" rx="8" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="1.4"/>`;
-      s+=gxStairs(38,66,13,9,'#7fd6ff',false);
-      s+=fit(91,200,10.5,rose,'без сглаживания: лесенка',{b:1},130);
-      s+=`<rect x="162" y="54" width="130" height="130" rx="8" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="1.4"/>`;
-      s+=gxStairs(174,66,13,9,'#7fd6ff',true);
-      s+=fit(227,200,10.5,grn,'со сглаживанием: плавно',{b:1},130);
-      s+=fit(159,224,11.5,ink,'крайние пиксели делают полупрозрачными — и линия гладкая',{b:1},296);
-      s+=plate2(26,238,266,32,go?grn:cardB,go?'так убирают «лесенки» на краях':'что изменилось?',11,pre);
-      return s;
-    }
-    if(K==='gfxcolors'){ /* цветовые модели */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'для экрана RGB, для печати CMYK',{b:1},270)+`</g>`;
-      s+=`<rect x="26" y="56" width="130" height="110" rx="10" fill="rgba(127,214,255,.10)" stroke="${cyan}" stroke-width="1.8"/>`;
-      s+=gxRGBmix(91,104,30,pre);
-      s+=fit(91,150,11,cyan,'экран: RGB',{b:1},120);
-      s+=fit(91,182,9.5,dim,'свет складывается',{},124);
-      s+=`<rect x="162" y="56" width="130" height="110" rx="10" fill="rgba(255,215,106,.10)" stroke="${gold}" stroke-width="1.8"/>`;
-      [['#5ad6ff',64],['#ff8fb0',118],['#ffe066',172],['#eaf2ff',226]].forEach((q,k)=>{
-        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s" cx="${q[1]}" cy="104" r="24" fill="${q[0]}" fill-opacity=".6"/>`;
-      });
-      s+=fit(227,150,11,gold,'печать: CMYK',{b:1},120);
-      s+=fit(227,182,9.5,dim,'краски смешиваются',{},124);
-      s+=plate2(26,200,266,32,go?grn:cardB,go?'цвет на экране и на бумаге может отличаться':'чем отличаются модели?',11,pre);
-      s+=`${fit(159,254,11,dim,'поэтому печатают пробный оттиск',{},290)}`;
-      return s;
-    }
-    if(K==='gfxalpha'){ /* прозрачность */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,grn,'прозрачность: четвёртое число',{b:1},266)+`</g>`;
-      s+=`<rect x="40" y="60" width="120" height="120" rx="10" fill="rgba(255,255,255,.04)" stroke="${cardB}" stroke-width="1.4"/>`;
-      for(let r=0;r<6;r++)for(let c=0;c<6;c++)
-        s+=`<rect x="${40+c*20}" y="${60+r*20}" width="20" height="20" fill="${((r+c)%2)?'rgba(255,255,255,.08)':'rgba(255,255,255,.02)'}"/>`;
-      s+=`<circle class="${pre}Pop" style="animation-delay:.3s" cx="120" cy="120" r="42" fill="rgba(125,224,160,.55)"/>`;
-      s+=`<circle class="${pre}Pop" style="animation-delay:.6s" cx="160" cy="120" r="42" fill="rgba(127,214,255,.55)"/>`;
-      s+=fit(100,198,10.5,dim,'фон «шахматка» — значит прозрачно',{},130);
-      s+=`<g class="${pre}Rise}" style="animation-delay:.9s"><rect x="196" y="70" width="98" height="100" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.8"/>`
-        +fit(245,94,10.5,grn,'альфа',{b:1},86)
-        +fit(245,116,9.5,dim,'0 — невидимо',{},86)
-        +fit(245,136,9.5,dim,'255 — плотно',{},86)
-        +fit(245,158,10,gold,'0 … 255',{b:1},86)+`</g>`;
-      s+=plate2(40,214,254,32,go?grn:cardB,go?'так картинки накладывают друг на друга':'что значит «прозрачно»?',11,pre);
-      s+=`${fit(159,268,11,dim,'логотипы часто хранят с прозрачным фоном',{},292)}`;
-      return s;
-    }
-    if(K==='gfxtools'){ /* инструменты */
-      const it=[['кисть','brush',rose],['линия','line',cyan],['прямоугольник','rect',grn],['круг','circle',gold],['заливка','fill',pur],['ластик','eraser',blu]];
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'инструменты графического редактора',{b:1},266)+`</g>`;
-      it.forEach((q,k)=>{
-        const x=22+(k%3)*94, y=52+Math.floor(k/3)*92, cx=x+44, cy=y+34;
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.12+k*0.12).toFixed(2)}s">`
-          +`<rect x="${x}" y="${y}" width="88" height="82" rx="11" fill="rgba(12,32,34,.97)" stroke="${q[2]}" stroke-width="1.7"/>`;
-        if(q[1]==='brush') s+=`<path d="M${cx-14} ${cy+12} l20 -20 l8 8 l-20 20 z" fill="rgba(255,143,176,.35)" stroke="${q[2]}" stroke-width="1.6"/>`;
-        else if(q[1]==='line') s+=`<line x1="${cx-16}" y1="${cy+12}" x2="${cx+16}" y2="${cy-12}" stroke="${q[2]}" stroke-width="2.6"/>`;
-        else if(q[1]==='rect') s+=`<rect x="${cx-17}" y="${cy-13}" width="34" height="26" fill="none" stroke="${q[2]}" stroke-width="1.8"/>`;
-        else if(q[1]==='circle') s+=`<circle cx="${cx}" cy="${cy}" r="14" fill="none" stroke="${q[2]}" stroke-width="1.8"/>`;
-        else if(q[1]==='fill') s+=`<path d="M${cx-14} ${cy+6} l14 -18 l14 18 z" fill="rgba(176,127,255,.4)" stroke="${q[2]}" stroke-width="1.6"/><circle cx="${cx+16}" cy="${cy+10}" r="5" fill="${q[2]}" opacity=".6"/>`;
-        else s+=`<path d="M${cx-14} ${cy+10} l22 -22 l10 10 l-22 22 z" fill="rgba(110,168,255,.3)" stroke="${q[2]}" stroke-width="1.6"/><path d="M${cx+8} ${cy+2} l10 10" stroke="${q[2]}" stroke-width="1.6"/>`;
-        s+=fit(cx,y+66,10,q[2],q[0],{b:1},82)+`</g>`;
-      });
-      s+=plate2(22,240,274,30,go?grn:cardB,go?'все редакторы умеют эти шесть действий':'какой инструмент нужен?',11,pre);
-      return s;
-    }
-    if(K==='gfxlayers'){ /* слои */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'рисунок собирается из слоёв',{b:1},262)+`</g>`;
-      [[0,0,'фон',blu],[18,-16,'дом',grn],[36,-32,'дерево',grn],[54,-48,'птица',gold]].forEach((q,k)=>{
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.22).toFixed(2)}s">`
-          +`<rect x="${56+q[0]}" y="${188+q[1]}" width="150" height="34" rx="8" fill="rgba(18,24,44,.97)" stroke="${q[3]}" stroke-width="1.6"/>`
-          +fit(131+q[0],210+q[1],10.5,q[3],q[2],{b:1},140)+`</g>`;
-      });
-      s+=`<path d="M212 186 v-88" stroke="${gold}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
-      s+=`<rect x="212" y="48" width="80" height="76" rx="9" fill="rgba(18,24,44,.97)" stroke="${pur}" stroke-width="1.7"/>`+fit(252,74,10.5,pur,'итог',{b:1},70)+fit(252,96,9.5,dim,'все слои',{},70)+fit(252,112,9.5,dim,'вместе',{},70);
-      s+=fit(159,238,11.5,ink,'каждый слой можно двигать и выключать отдельно',{b:1},296);
-      s+=plate2(24,252,270,32,go?grn:cardB,go?'слои не портят уже нарисованное':'зачем нужны слои?',11,pre);
-      return s;
-    }
-    if(K==='gfxsprites'){ /* спрайты */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,grn,'спрайты делают из пикселей',{b:1},262)+`</g>`;
-      s+=gxRaster(40,56,9,GX_HOUSE,'#7de0a0','#7de0a0',pre,{delay:0.2,step:0.02});
-      s+=`<rect x="196" y="56" width="102" height="102" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.7"/>`;
-      s+=gxRaster(212,84,6,GX_HEART,'#ff8fb0','#ff8fb0',pre,{delay:0.8,step:0.02});
-      s+=fit(247,176,10,rose,'значок жизни',{b:1},94);
-      s+=fit(100,172,10.5,grn,'домик из пикселей',{b:1},130);
-      s+=fit(159,200,11.5,ink,'в играх так рисуют героев, значки и предметы',{b:1},296);
-      s+=`<g class="${pre}Rise}" style="animation-delay:1.4s"><rect x="30" y="214" width="258" height="34" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
-        +fit(159,237,11.5,cyan,'это те же рисунки из урока про пиксели',{b:1},240)+`</g>`;
-      s+=plate2(30,250,258,0,cardB,'',11,pre);
-      return s;
-    }
-    if(K==='gfxlogo'){ /* вектор для логотипов */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,gold,'логотип делают вектором',{b:1},262)+`</g>`;
-      [['маленький',70,26],['средний',159,42],['большой',248,58]].forEach((q,k)=>{
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
-          +gxVectorCircle(q[1],110,q[2],gold,{fill:'rgba(255,215,106,.18)',sw:2.4})
-          +fit(q[1],186,10,gold,q[0],{b:1},80)+`</g>`;
-      });
-      s+=fit(159,212,11.5,ink,'один и тот же вектор — и на визитке, и на щите',{b:1},296);
-      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="226" width="258" height="34" rx="10" fill="rgba(125,224,160,.12)" stroke="${grn}" stroke-width="1.8"/>`
-        +fit(159,249,11.5,grn,'растровый логотип пришлось бы хранить в 10 размерах',{b:1},244)+`</g>`;
-      s+=plate2(30,262,258,0,cardB,'',11,pre);
-      return s;
-    }
-    if(K==='gfxphoto'){ /* обработка фото */
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'из фото можно сделать много версий',{b:1},266)+`</g>`;
-      [[62,'обычное',1,cyan],[159,'ярче',1.25,gold],[256,'чёрно-белое',1,blu]].forEach((q,k)=>{
-        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
-          +`<rect x="${q[0]-42}" y="56" width="84" height="84" rx="10" fill="rgba(18,24,44,.97)" stroke="${q[3]}" stroke-width="1.7"/>`;
-        const cx=q[0], cy=98;
-        if(k===2) s+=`<circle cx="${cx}" cy="${cy-8}" r="15" fill="rgba(255,255,255,.28)"/><path d="M${cx-16} ${cy+22} q16 -30 32 0" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="3"/>`;
-        else s+=`<circle cx="${cx}" cy="${cy-8}" r="15" fill="rgba(255,143,176,${(0.3*q[2]).toFixed(2)})" stroke="${rose}" stroke-width="1.6"/><path d="M${cx-16} ${cy+22} q16 -30 32 0" fill="none" stroke="${grn}" stroke-width="3" opacity="${Math.min(1,q[2])}"/>`;
-        s+=`${fit(cx,158,10,q[3],q[1],{b:1},80)}</g>`;
-      });
-      s+=fit(159,192,11.5,ink,'яркость, контраст, цвет — всё это меняет числа пикселей',{b:1},296);
-      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="30" y="206" width="258" height="34" rx="10" fill="rgba(255,215,106,.12)" stroke="${gold}" stroke-width="1.8"/>`
-        +fit(159,229,11.5,gold,'фильтр — это правило, по которому меняют числа',{b:1},244)+`</g>`;
-      s+=plate2(30,242,258,32,go?grn:cardB,go?'так работают все фоторедакторы':'что меняет фильтр?',11,pre);
-      return s;
-    }
-    if(K==='gfxpipeline'){ /* конвейер отрисовки */
-      const rows=[{t:'описать фигуры числами',c:gold},{t:'посчитать пиксели',c:cyan},{t:'раскрасить каждый пиксель',c:grn},{t:'вывести на экран',c:pur}];
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'как компьютер рисует картинку',{b:1},266)+`</g>`;
-      rows.forEach((q,k)=>{
-        const y=54+k*44;
-        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.18).toFixed(2)}s">`
-          +`<rect x="30" y="${y}" width="258" height="34" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
-          +`<circle cx="52" cy="${y+17}" r="11" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.3"/>`
-          +tx(52,y+21,11,q.c,''.concat(k+1),{b:1})
-          +fit(176,y+22,11,q.c,q.t,{b:1},214)+`</g>`;
-        if(k<3) s+=drawLL({x:159,y:y+36},{x:159,y:y+42},q.c,1.6,0.4+k*0.18,1.6,pre);
-      });
-      s+=`<circle r="6" fill="${gold}"><animateMotion dur="2.6s" repeatCount="indefinite" path="M52 71 L52 246"/></circle>`;
-      s+=fit(159,250,11,ink,'это происходит за доли секунды, много раз в секунду',{b:1},292);
-      s+=plate2(30,262,258,0,cardB,'',11,pre);
-      return s;
-    }
-    if(K==='gfxpractice'){ /* практика */
-      const rows=[
-        {t:'сколько байт займёт фото 100 на 200 пикселей?',a:'60 000 байт',c:gold},
-        {t:'что лучше для логотипа — растр или вектор?',a:'вектор: масштабируется',c:cyan},
-        {t:'почему на увеличенном фото видны квадраты?',a:'это пиксели',c:rose}
-      ];
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,pur,'практика: считаем и выбираем',{b:1},264)+`</g>`;
-      rows.forEach((q,k)=>{
-        const y=52+k*58;
-        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
-          +`<rect x="22" y="${y}" width="274" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
-          +fit(146,y+19,9.5,ink,q.t,{},214)
-          +(go?fit(146,y+38,11,q.c,q.a,{b:1},214):fit(146,y+38,10.5,dim,'нажми «показать»',{},214))+`</g>`;
-      });
-      s+=plate2(22,228,274,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
-      return s;
-    }
-    if(K==='gfxlab'){ /* ИНТЕРАКТИВ: лаборатория графики */
-      const mode=(st&&st.gxm)||'raster';
-      const zm=(st&&typeof st.gxz==='number')?st.gxz:2;
-      const cell=[3,5,8,12][Math.min(3,zm)];
-      let s=`<g class="${pre}Pop"><rect x="16" y="12" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
-        +fit(159,31,11.5,ink,'лаборатория: растр и вектор в увеличении',{b:1},272)+`</g>`;
-      [['растр','raster',rose],['вектор','vector',cyan]].forEach((q,k)=>{
-        const x=24+k*94, on=(mode===q[1]);
-        s+=`<g style="cursor:pointer" onclick="infGfx('${lk}','mode','${q[1]}')"><rect x="${x}" y="48" width="88" height="28" rx="8" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${on?q[2]:cardB}" stroke-width="${on?2:1.4}"/>`
-          +fit(x+44,67,10.5,on?q[2]:dim,q[0],{b:on},80)+`</g>`;
-      });
-      s+=`<g style="cursor:pointer" onclick="infGfx('${lk}','zoom','-')"><rect x="216" y="48" width="36" height="28" rx="8" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.5"/>`
-        +tx(234,68,15,gold,'−',{b:1})+`</g>`;
-      s+=`<g style="cursor:pointer" onclick="infGfx('${lk}','zoom','+')"><rect x="258" y="48" width="36" height="28" rx="8" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.5"/>`
-        +tx(276,68,15,gold,'+',{b:1})+`</g>`;
-      s+=`<rect x="46" y="84" width="226" height="182" rx="10" fill="rgba(18,24,44,.97)" stroke="${mode==='raster'?rose:cyan}" stroke-width="1.9"/>`;
-      if(mode==='raster'){
-        s+=gxRaster(59,94,cell,GX_HEART,'#ff8fb0','#ff8fb0',pre,{delay:0.06,step:0.004});
-        const px=Math.round(16*14*3/1024*100)/100;
-        s+=`<g class="${pre}Rise}"><rect x="46" y="274" width="226" height="30" rx="9" fill="rgba(255,143,176,.12)" stroke="${rose}" stroke-width="1.6"/>`
-          +fit(159,300,10,rose,'приближение '+zm+'× · видно клетки пикселей · файл ~'+px+' КБ',{b:1},214)+`</g>`;
-      } else {
-        s+=gxVectorHeart(159,168,62,'#7fd6ff',2.4+zm*0.5,0.1,pre);
-        s+=`<circle cx="159" cy="168" r="3.4" fill="${gold}"/>`;
-        s+=`<path d="M159 168 L205 128" stroke="${gold}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
-        s+=`<g class="${pre}Rise}"><rect x="46" y="274" width="226" height="30" rx="9" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.6"/>`
-          +fit(159,300,10,cyan,'приближение '+zm+'× · край гладкий · описание: 2 кривые',{b:1},214)+`</g>`;
-      }
-      s+=plate2(46,308,226,0,cardB,'',11,pre);
-      return s;
-    }
-    if(K==='gfxquiz'){ /* викторина */
-      const opts=['вектор','растр','и то и другое'], ok=0, done=(st&&st.pick>=0);
-      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
-        +fit(159,34,11.5,ink,'Что лучше выбрать для логотипа на футболку и на щит?',{b:1},276)+`</g>`;
-      s+=gxVectorCircle(120,96,34,gold,{fill:'rgba(255,215,106,.16)',sw:2.4});
-      s+=`<rect x="176" y="66" width="60" height="60" rx="8" fill="rgba(18,24,44,.97)" stroke="${rose}" stroke-width="1.6"/>`;
-      s+=gxRaster(184,74,7,[['111111','100001','100001','100001','100001','111111']],'#ff8fb0','#ff8fb0',pre,{delay:0.3,step:0.01});
-      opts.forEach((t2,k)=>{
-        const y=146+k*40, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
-        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
-          +`<rect x="22" y="${y}" width="274" height="34" rx="9" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.6}"/>`
-          +fit(159,y+22,11.5,c,t2,{b:on},256)+(on?`<path d="M266 ${y+11} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
-      });
-      s+=`<g class="${pre}Rise}"><rect x="22" y="272" width="274" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
-        +fit(159,292,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Вектор масштабируется без потерь':'Подумай: логотип нужен в разных размерах',{b:done&&st.pick===ok},256)+`</g>`;
-      return s;
-    }
-    if(K==='gfxmistakes'){ /* ошибки */
-      const it=[
-        {t:'увеличивают растровую картинку',f:'появятся квадраты и мутные пятна',c:rose},
-        {t:'хранят чертёж в jpg',f:'для чертежа нужен png или вектор',c:gold},
-        {t:'забывают про прозрачность',f:'логотип получит белый квадрат',c:cyan},
-        {t:'путают размер файла и размер картинки',f:'это разные вещи',c:pur}
-      ];
-      let s='';
-      it.forEach((q,k)=>{
-        const y=14+k*56;
-        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
-          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
-          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
-          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
-          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
-          +fit(82,y+42,Math.min(10,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},180)+`</g>`;
-      });
-      s+=`${tx(159,266,11,dim,'проверяй эти четыре места',{})}`;
-      return s;
-    }
-    if(K==='gfxsheet'){ /* шпаргалка */
-      const rows=[{t:'растр — сетка пикселей, вектор — формулы',c:rose},{t:'цвет пикселя: три числа 0…255',c:cyan},
-                  {t:'растровый файл тяжелее, вектор легче',c:gold},{t:'увеличение портит растр, но не вектор',c:grn},
-                  {t:'png — без потерь, jpg — с потерями',c:pur},{t:'логотип — вектор, фото — растр',c:blu}];
-      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
-        +fit(159,32,12.5,cyan,'всё главное о компьютерной графике',{b:1},270)+`</g>`;
-      rows.forEach((q,k)=>{
-        const y=50+k*36;
-        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
-          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
-          +fit(159,y+20,10,q.c,q.t,{b:1},260)+`</g>`;
-      });
-      s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
+      s+=plate2(16,272,286,28,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
       return s;
     }
     if(K==='text'){ /* текстовые строки — «плакат» */
@@ -8907,32 +8657,32 @@
     if(K==='gfxquiz') return 312;
     if(K==='gfxmistakes') return 282;
     if(K==='gfxsheet') return 308;
-    if(K==='d3intro') return 268;
-    if(K==='d3flat') return 276;
-    if(K==='d3points') return 284;
-    if(K==='d3axes') return 308;
-    if(K==='d3vertex') return 288;
-    if(K==='d3edge') return 288;
-    if(K==='d3face') return 310;
-    if(K==='d3wireframe') return 276;
-    if(K==='d3project') return 284;
-    if(K==='d3rotatey') return 284;
-    if(K==='d3rotatex') return 280;
-    if(K==='d3lab') return 312;
-    if(K==='d3depth') return 288;
+    if(K==='d3intro') return 300;
+    if(K==='d3flat') return 300;
+    if(K==='d3points') return 296;
+    if(K==='d3axes') return 290;
+    if(K==='d3vertex') return 308;
+    if(K==='d3edge') return 296;
+    if(K==='d3face') return 296;
+    if(K==='d3wireframe') return 310;
+    if(K==='d3project') return 302;
+    if(K==='d3rotatey') return 296;
+    if(K==='d3rotatex') return 322;
+    if(K==='d3lab') return 344;
+    if(K==='d3depth') return 308;
     if(K==='d3shade') return 300;
-    if(K==='d3smooth') return 284;
-    if(K==='d3texture') return 284;
-    if(K==='d3persp') return 284;
-    if(K==='d3camera') return 296;
+    if(K==='d3smooth') return 306;
+    if(K==='d3texture') return 296;
+    if(K==='d3persp') return 306;
+    if(K==='d3camera') return 290;
     if(K==='d3engine') return 292;
-    if(K==='d3game') return 268;
-    if(K==='d3vr') return 264;
-    if(K==='d3file') return 266;
-    if(K==='d3practice') return 278;
-    if(K==='d3quiz') return 310;
-    if(K==='d3mistakes') return 282;
-    if(K==='d3sheet') return 308;
+    if(K==='d3game') return 292;
+    if(K==='d3vr') return 300;
+    if(K==='d3file') return 296;
+    if(K==='d3practice') return 300;
+    if(K==='d3quiz') return 324;
+    if(K==='d3mistakes') return 240;
+    if(K==='d3sheet') return 316;
     if(K==='modelintro') return 292;
     if(K==='modelwhy') return 314;
     if(K==='modelreal') return 270;
@@ -10626,59 +10376,59 @@
       ] },
     { id:532, title:'Трёхмерная графика: как плоский экран показывает объём', ico:'🧊', src:'Информатика · 5–6 класс · С нуля: 3D',
       explain:[
-        'Экран плоский, но на нём можно показать объём. Компьютер рисует проекцию — плоское изображение трёхмерной модели.',
-        'Как рисунок обманывает глаз? Помогают подсказки глубины: перспектива, перекрытие предметов, тени и размер.',
-        'В 3D у точки три координаты: x, y и z. Три числа полностью задают положение точки в пространстве.',
-        'Оси x, y и z показывают направления. Модель удобно ставить в начало координат — в точку (0; 0; 0).',
-        'Модель собирают из простых элементов: вершины — это точки, рёбра соединяют вершины, грани — плоские куски поверхности.',
-        'У куба 8 вершин, 12 рёбер и 6 граней. У пирамиды 5 вершин, 8 рёбер и 5 граней.',
-        'Каркасная модель — это только вершины и рёбра, без заливки. Так удобно проверять форму.',
-        'Проекция: каждая вершина модели пересчитывается по правилам и попадает на экран. Это делает видеокарта — миллионы вершин в секунду.',
-        'Поворот — это пересчёт координат. Модель можно поворачивать вокруг оси x (наклон), вокруг y (кружение) и вокруг z.',
-        'Три угла полностью описывают ориентацию модели: вокруг x, вокруг y и вокруг z.',
-        'Дальние грани рисуют первыми, а ближние — последними. Иначе ближняя грань «провалится» под дальнюю.',
-        'Свет и тень делают объём живым: грань, повёрнутая к свету, ярче, а отвёрнутая — темнее.',
-        'Чем больше граней, тем глаже модель: шар в 3D — это много маленьких плоских граней.',
-        'Текстура — это картинка, натянутая на грань. Поэтому кирпичную стену не рисуют по кирпичику.',
-        'Перспектива делает дальние предметы меньше. Без неё объём почти не читается.',
-        'Сцена состоит из трёх частей: модель, камера (откуда смотрим) и свет.',
-        'Видеокарта каждый кадр проходит шаги: вершины на экран, сборка граней, сортировка по глубине, свет и вывод пикселей.',
-        'В игре сцену пересчитывают каждый кадр, поэтому для 3D нужна мощная видеокарта.',
-        'VR-шлем переносит нас внутрь модели, а AR добавляет модель в нашу комнату через камеру телефона.',
-        '3D-модель хранят в файле как список чисел: координаты вершин, номера граней, текстуры. Программа читает числа и рисует модель.',
-        'Практика: у куба 12 рёбер; у пирамиды 5 вершин; если повернуть модель 5 раз по 30 градусов, получится 150 градусов.',
-        'Мастерская: вращай куб, пирамиду и призму кнопками — и смотри, как меняются углы и вид модели.',
-        'Викторина: на экране мы видим плоскую проекцию объёма, а не саму объёмную модель.',
-        'Частые ошибки: путать модель и её изображение, забывать про порядок отрисовки, ставить мало граней, забывать про свет.',
-        'Трёхмерная графика повсюду: в играх, мультфильмах, чертежах, архитектуре и даже в медицине — везде нужны 3D-модели.',
-        'Шпаргалка: три координаты, вершины-рёбра-грани, проекция, три угла поворота, порядок отрисовки, свет и текстура. Проверь себя!' ],
+        'Экран плоский, но на нём можно показать объём. Компьютер хранит трёхмерную модель и каждый раз пересчитывает её в плоское изображение — проекцию.',
+        'Плоская картинка кажется объёмной благодаря четырём подсказкам: перспективе (линии сходятся в точку схода), перекрытию (ближний предмет закрывает дальний), размеру (дальний меньше) и тени.',
+        'В пространстве у точки три координаты: x, y и z. Например, точка A(3; 4; 2) стоит на 3 вправо, на 4 вверх и на 2 вперёд — три числа полностью задают её положение.',
+        'Оси x, y и z показывают три направления. Там, где они пересекаются, находится начало координат — точка (0; 0; 0). От неё отсчитывают положение модели.',
+        'Модель собирают из простых элементов: вершина — точка, ребро — отрезок между двумя вершинами, грань — плоский кусок поверхности.',
+        'Вершины записывают координатами: у куба это восемь строк вида (1; 1; 1) или (−1; −1; −1), и из этих чисел программа строит куб.',
+        'Ребро соединяет две соседние вершины. У куба четыре ребра сверху, четыре снизу и четыре боковых — всего двенадцать.',
+        'Грань — плоский кусок поверхности. У куба шесть граней-квадратов: три видны с нашей стороны, а три спрятаны за ними.',
+        'Каркасная модель показывает только вершины и рёбра, без заливки. По каркасу удобно проверить форму до раскраски.',
+        'Проекция — превращение 3D в 2D: каждая вершина пересчитывается по формуле и попадает на экран, а видеокарта делает это миллионы раз в секунду.',
+        'Поворот вокруг оси y кружит модель: угол растёт, и открываются новые грани. Поворот — это пересчёт координат по углу.',
+        'Наклон вокруг оси x наклоняет модель вперёд-назад, а поворот вокруг z — влево-вправо. Три угла полностью описывают ориентацию модели.',
+        'Мастерская: вращай куб, пирамиду и призму кнопками «↶ ↷» (вокруг y), «▲ ▼» (вокруг x) и «z»; следи за углами и числом видимых граней.',
+        'Дальние грани рисуют первыми, а ближние — последними: для этого считают среднюю глубину каждой грани и сортируют их по z.',
+        'Свет и тень делают объём живым: яркость грани зависит от наклона к источнику света. В программе это считают через нормаль — перпендикуляр к грани.',
+        'Чем больше граней, тем глаже модель: шар в 3D — это много маленьких плоских граней. Но чем их больше, тем тяжелее файл, поэтому в играх модели упрощают.',
+        'Текстура — картинка, натянутая на грань. Она хранится отдельным файлом, поэтому кирпичную стену не рисуют по одному кирпичику.',
+        'Перспектива делает дальние предметы меньше: линии сходятся в одну точку схода. В программе за это отвечает коэффициент перспективы.',
+        'Сцена состоит из трёх частей: модель, камера (откуда мы смотрим) и свет. Двигая камеру, мы видим модель с разных сторон.',
+        'Видеокарта рисует кадр за пять шагов: вершины на экран, сборка граней, сортировка по глубине, свет и текстура, вывод пикселей.',
+        'В игре сцену пересчитывают каждый кадр, обычно 60 раз в секунду. Поэтому для 3D нужна мощная видеокарта.',
+        'VR-шлем переносит нас внутрь модели: два экрана и датчики движения. AR добавляет модель в комнату через камеру телефона.',
+        '3D-модель хранят в файле как список чисел: v — вершины, f — грани, vt — текстура, vn — нормали. Программа читает числа и рисует модель.',
+        'Практика: у куба 12 рёбер (4 сверху, 4 снизу, 4 боковых), у пирамиды 5 вершин и 5 граней, пять поворотов по 30° дают 150°.',
+        'Викторина: на плоском экране мы видим плоскую проекцию объёмной модели — саму объёмную модель увидеть нельзя.',
+        'Частые ошибки: путать модель и её изображение, рисовать ближнюю грань первой, ставить мало граней, забывать про свет и текстуру. Шпаргалка: координаты, элементы, проекция, повороты, порядок, свет. Проверь себя!' ],
       slides:[
-        {h:'Плоский экран и объём', v:{kind:'d3intro'}, r:'Проекция.', d:'На экране — плоская проекция трёхмерной модели.'},
-        {h:'Подсказки глубины', v:{kind:'d3flat'}, r:'Как обмануть глаз.', d:'Перспектива, перекрытие, тени и размер подсказывают глазу объём.'},
-        {h:'Три координаты', v:{kind:'d3points'}, r:'x, y, z.', d:'В 3D положение точки задают три числа.'},
-        {h:'Оси', v:{kind:'d3axes'}, r:'Три направления.', d:'Оси x, y и z показывают направления; модель ставят в начало координат.'},
-        {h:'Вершины', v:{kind:'d3vertex'}, r:'Восемь точек куба.', d:'Вершина — точка, где сходятся рёбра. У куба их восемь.'},
-        {h:'Рёбра', v:{kind:'d3edge'}, r:'Двенадцать отрезков.', d:'Ребро соединяет две вершины. У куба двенадцать рёбер.'},
-        {h:'Грани', v:{kind:'d3face'}, r:'Шесть квадратов.', d:'Грань — плоский кусок поверхности. У куба шесть граней.'},
-        {h:'Каркасная модель', v:{kind:'d3wireframe'}, r:'Только сетка.', d:'Каркас — вершины и рёбра без заливки. Так проверяют форму.'},
-        {h:'Проекция вершин', v:{kind:'d3project'}, r:'Из 3D в 2D.', d:'Каждая вершина пересчитывается и попадает на экран.'},
-        {h:'Поворот вокруг y', v:{kind:'d3rotatey'}, r:'Кружение.', d:'Поворот — это пересчёт координат по углу.'},
-        {h:'Наклон и крен', v:{kind:'d3rotatex'}, r:'Вокруг x и z.', d:'Три угла полностью описывают ориентацию модели.'},
-        {h:'Мастерская 3D', v:{kind:'d3lab'}, r:'Вращай модель сам!', d:'Кнопками поворачивай куб, пирамиду и призму — смотри на углы и на вид.'},
-        {h:'Порядок отрисовки', v:{kind:'d3depth'}, r:'Дальние — первыми.', d:'Если нарисовать ближнюю грань раньше, она провалится под дальнюю.'},
-        {h:'Свет и тень', v:{kind:'d3shade'}, r:'Объём живой.', d:'Яркость грани зависит от того, насколько она повёрнута к свету.'},
-        {h:'Чем больше граней', v:{kind:'d3smooth'}, r:'Тем глаже.', d:'Шар — это много маленьких плоских граней.'},
-        {h:'Текстура', v:{kind:'d3texture'}, r:'Картинка на грани.', d:'Текстура натягивается на грань, как обои.'},
-        {h:'Перспектива', v:{kind:'d3persp'}, r:'Дальше — меньше.', d:'Коэффициент перспективы делает дальние предметы меньше.'},
-        {h:'Камера', v:{kind:'d3camera'}, r:'Откуда смотрим.', d:'Сцена — это модель, камера и свет.'},
-        {h:'Конвейер видеокарты', v:{kind:'d3engine'}, r:'Пять шагов.', d:'Вершины, грани, сортировка, свет, пиксели — и так каждый кадр.'},
-        {h:'3D в играх', v:{kind:'d3game'}, r:'Каждый кадр заново.', d:'Сцену пересчитывают 60 раз в секунду, поэтому нужна мощная видеокарта.'},
-        {h:'VR и AR', v:{kind:'d3vr'}, r:'Объём вокруг нас.', d:'VR переносит внутрь модели, AR добавляет её в комнату.'},
-        {h:'Хранение модели', v:{kind:'d3file'}, r:'Числа в файле.', d:'Модель хранят как вершины, грани и текстуры — обычные числа.'},
-        {h:'Практика', v:{kind:'d3practice'}, r:'Считаем элементы.', d:'12 рёбер у куба, 5 вершин у пирамиды, 150 градусов после пяти поворотов.'},
-        {h:'Викторина', v:{kind:'d3quiz'}, r:'Что видно на экране?', d:'На экране — плоская проекция объёма.'},
-        {h:'Частые ошибки', v:{kind:'d3mistakes'}, r:'Что путают чаще всего.', d:'Модель и изображение, порядок отрисовки, число граней, свет.'},
-        {h:'Шпаргалка', v:{kind:'d3sheet'}, r:'Шесть главных мыслей.', d:'Координаты, вершины-рёбра-грани, проекция, повороты, порядок, свет.'} ],
+        {h:'Плоский экран и объём', v:{kind:'d3intro'}, r:'Проекция.', d:'Компьютер хранит модель в трёхмерном виде, а на плоский экран выводит её проекцию: каждая вершина «падает» на экран по своей линии.'},
+        {h:'Подсказки глубины', v:{kind:'d3flat'}, r:'Как обмануть глаз.', d:'Объём на плоской картинке создают четыре подсказки: перспектива с точкой схода, перекрытие предметов, разный размер и падающая тень.'},
+        {h:'Три координаты', v:{kind:'d3points'}, r:'x, y, z.', d:'Три числа — x, y и z — полностью задают положение точки. Пунктирные линии показывают, как эти числа отсчитывают по осям.'},
+        {h:'Оси', v:{kind:'d3axes'}, r:'Три направления.', d:'Оси x, y и z пересекаются в начале координат (0; 0; 0). Обычно модель ставят именно туда, а потом сдвигают, прибавляя числа.'},
+        {h:'Вершины', v:{kind:'d3vertex'}, r:'Восемь точек куба.', d:'Вершина — точка, ребро — отрезок между двумя вершинами, грань — плоский кусок поверхности. Вершины записывают координатами, и из них строится куб.'},
+        {h:'Рёбра', v:{kind:'d3edge'}, r:'Двенадцать отрезков.', d:'У куба 8 вершин, и у каждой свои координаты. Именно так выглядит файл модели: восемь строк с тремя числами в каждой.'},
+        {h:'Грани', v:{kind:'d3face'}, r:'Шесть квадратов.', d:'12 рёбер куба: четыре сверху, четыре снизу и четыре боковых. Голубая точка бежит по рёбрам и показывает, что ребро — отрезок между вершинами.'},
+        {h:'Каркасная модель', v:{kind:'d3wireframe'}, r:'Только сетка.', d:'Три грани видны, а три спрятаны за ними. Номера показывают, какие грани оказались ближе к нам при таком повороте.'},
+        {h:'Проекция вершин', v:{kind:'d3project'}, r:'Из 3D в 2D.', d:'Каркас — это «скелет» модели: только вершины и рёбра. По нему удобно проверять форму: у куба 6 граней, у пирамиды 5, у призмы 6.'},
+        {h:'Поворот вокруг y', v:{kind:'d3rotatey'}, r:'Кружение.', d:'Проекция превращает 3D в 2D: каждая вершина пересчитывается и попадает на экран. Светлые точки на экране — проекции вершин.'},
+        {h:'Наклон и крен', v:{kind:'d3rotatex'}, r:'Вокруг x и z.', d:'Поворот вокруг оси y показан шестью кадрами: угол растёт от 0° до 180°, и постепенно открываются новые грани куба.'},
+        {h:'Мастерская 3D', v:{kind:'d3lab'}, r:'Вращай модель сам!', d:'Наклон вокруг оси x показан тремя кадрами (вниз, ровно, вверх), а поворот вокруг z — тремя кадрами (влево, ровно, вправо).'},
+        {h:'Порядок отрисовки', v:{kind:'d3depth'}, r:'Дальние — первыми.', d:'Мастерская 3D: оси нарисованы за моделью, внизу показаны углы и число видимых граней. Кнопки «↶ ↷», «▲ ▼», «z» и «0» управляют моделью.'},
+        {h:'Свет и тень', v:{kind:'d3shade'}, r:'Объём живой.', d:'Дальние грани рисуют первыми: в таблице видно значение z каждой грани. Если порядок перепутан (правый куб), ближняя грань провалится под дальнюю.'},
+        {h:'Чем больше граней', v:{kind:'d3smooth'}, r:'Тем глаже.', d:'Яркость грани зависит от наклона к свету: белая стрелка — нормаль, перпендикулярная грани. Шкала показывает освещённую и теневую грань.'},
+        {h:'Текстура', v:{kind:'d3texture'}, r:'Картинка на грани.', d:'Один и тот же шар из 4, 8, 16 и 32 граней: чем больше граней, тем ближе к кругу. Но тем тяжелее модель, поэтому в играх её упрощают.'},
+        {h:'Перспектива', v:{kind:'d3persp'}, r:'Дальше — меньше.', d:'Текстура натягивается на грань, как обои: шахматная картинка 5×5 легла на верхнюю грань куба. Текстура хранится отдельным файлом.'},
+        {h:'Камера', v:{kind:'d3camera'}, r:'Откуда смотрим.', d:'Перспектива: линии сходятся в точку схода, и дальний куб рисуется меньше ближнего. Поэтому улица, уходящая вдаль, сужается.'},
+        {h:'Конвейер видеокарты', v:{kind:'d3engine'}, r:'Пять шагов.', d:'Камера смотрит внутрь конуса видимости: то, что попадает между линиями, оказывается на экране. Сцена — модель, камера и свет.'},
+        {h:'3D в играх', v:{kind:'d3game'}, r:'Каждый кадр заново.', d:'Пять шагов видеокарты: вершины на экран, сборка граней, сортировка по глубине, свет и текстура, вывод пикселей.'},
+        {h:'VR и AR', v:{kind:'d3vr'}, r:'Объём вокруг нас.', d:'Четыре кадра подряд показывают поворот модели. Игра делает это 60 раз в секунду, поэтому нагрузка на видеокарту большая.'},
+        {h:'Хранение модели', v:{kind:'d3file'}, r:'Числа в файле.', d:'Шлем VR: два экрана и датчики движения. AR: модель стоит на столе и видна через камеру телефона. Основа одна — 3D-модели, камера и датчики.'},
+        {h:'Практика', v:{kind:'d3practice'}, r:'Считаем элементы.', d:'Файл модели: v — вершины, f — грани, vt — текстура, vn — нормали. Программа читает эти числа и строит модель.'},
+        {h:'Викторина', v:{kind:'d3quiz'}, r:'Что видно на экране?', d:'Три задачи с картинками: рёбра куба, вершины пирамиды и угол после пяти поворотов.'},
+        {h:'Частые ошибки', v:{kind:'d3mistakes'}, r:'Что путают чаще всего.', d:'Викторина с рисунком: модель в пространстве и её изображение на плоском экране.'},
+        {h:'Шпаргалка', v:{kind:'d3sheet'}, r:'Шесть главных мыслей.', d:'У каждой ошибки свой рисунок: плоская проекция, неправильный порядок граней, слишком мало граней у шара и предмет без света.'} ],
       check:{ q:'Что видно на плоском экране компьютера?', choices:['плоская проекция объёмной модели','сама объёмная модель','только текстура','фотография модели'], ans:0, exp:'Компьютер рисует проекцию: плоское изображение трёхмерной модели.' },
       tasks:[
         {q:'Сколько рёбер у куба?', kind:'unit', ans:12, tol:0, hints:['Рёбра соединяют вершины куба.','У куба 12 рёбер.'], sol:'12'},
