@@ -906,112 +906,274 @@ window._waveCss = window._waveCss || function(id, css){
     id: 407, title: 'Модуль и уравнения с модулем', ico: '🧮',
     src: 'Математика · 7 класс · Олимп-7: модуль', subj: 'math',
     explain: [
-      'Модуль числа x, запись |x|, — это расстояние от числа до нуля на числовой оси. Расстояние не бывает отрицательным, поэтому модуль всегда ≥ 0. |5| = 5 и |−5| = 5: оба числа на расстоянии 5 от нуля!',
-      'Простейшее правило: модуль положительного числа — само число (|7| = 7), модуль отрицательного — число без минуса (|−7| = 7). Модуль «отрезает» знак минус!',
-      'Уравнение |x| = 4. Вопрос: какие числа находятся на расстоянии 4 от нуля? Слева — число −4, справа — 4. Значит, ДВА решения: x = 4 и x = −4. Вот главная ловушка: у уравнений с модулем обычно два ответа!',
-      'Особый случай |x| = 0: расстояние равно нулю только у самого нуля → x = 0, единственное решение. А |x| = −3 решений не имеет: модуль никогда не бывает отрицательным!',
-      'Усложним: |x − 3| = 2. Это расстояние от x до точки 3 равно 2. Отходим от тройки на 2 влево — в 1, на 2 вправо — в 5. Ответ: x = 5 или x = 1.',
-      'Запомни общее правило: |x − a| = b → x = a + b или x = a − b. Здесь a — центр, b — радиус. Уравнение с модулем — это «найди точки на расстоянии b от точки a»!',
-      'Модуль в жизни: разница температур |+5° − (−3°)| = 8°, расстояние между точками, погрешность измерений. Везде, где важна только величина без знака!',
-      'В олимпиадных задачах модуль — способ сказать «расстояние» одним символом. |x| = a имеет два решения при a > 0, одно при a = 0 и ни одного при a < 0.',
-      'Теперь проверь себя: реши |x| = 4. Вспомни про два направления — влево и вправо от нуля!'
+      'Загадка: два числа, 5 и −5. Они разные, но до нуля им одинаково далеко. Как назвать это «одинаково далеко» одним знаком? Модуль: |5| = |−5| = 5. Модуль — расстояние, а расстояние не бывает минусовым.',
+      'Определение. |x| — расстояние от x до нуля на оси. Поэтому |x| ≥ 0 всегда. Геометрия здесь важнее формулы: точка не может быть «на минус три шага» от нуля.',
+      'Кусочное правило, его и пишут в учебнике. Если x ≥ 0, то |x| = x. Если x < 0, то |x| = −x. Минус перед отрицательным даёт плюс: |−7| = −(−7) = 7. Модуль не «увеличивает», он снимает знак.',
+      'Проверь на оси: |7| = 7, |−7| = 7, |0| = 0. Ноль — единственное число, чей модуль ноль. Это пригодится в уравнениях.',
+      'Уравнение |x| = 4. Вопрос геометрический: какие точки лежат на расстоянии 4 от нуля? Две: 4 справа и −4 слева. Два корня — главная привычка модуля. Не пиши только плюс.',
+      'Три калибра правой части. Если a > 0, у |x| = a два корня ±a. Если a = 0, один корень x = 0. Если a < 0, корней нет: расстояние не бывает отрицательным. |x| = −3 — пустое множество, не «ошибка в знаке».',
+      'Сдвиг центра. |x − 3| = 2 читается: расстояние от x до тройки равно двум. Шагни от 3 влево на 2 — в 1, вправо на 2 — в 5. Корни x = 1 и x = 5.',
+      'Общая формула. |x − a| = b при b > 0 даёт x = a + b или x = a − b. Здесь a — центр, b — радиус. Уравнение с модулем — окружность на прямой: две точки на заданном расстоянии.',
+      'Раскрытие по определению. |A| = B при B ≥ 0 равносильно двум обычным: A = B или A = −B. Так решают |2x − 1| = 5: 2x − 1 = 5 или 2x − 1 = −5 → x = 3 или x = −2. Сначала проверь, что справа не минус.',
+      'Неравенства коротко. |x| < 3 — все точки ближе трёх к нулю, интервал −3 < x < 3. |x| > 3 — две лучи: x < −3 или x > 3. |x| ≤ 3 — отрезок с концами. Равенство — точки, неравенство — куски оси.',
+      'Свойства, которые стоит знать. |xy| = |x| · |y|. |x/y| = |x|/|y| при y ≠ 0. |x + y| ≤ |x| + |y| — неравенство треугольника: обход через ноль не короче прямой. |x| = |y| значит x = y или x = −y.',
+      'Подвинь центр a и радиус b. Две точки едут симметрично. Поймай b = 0 — точки слиплись. Поймай b < 0 — ось пустая. Это вся теория уравнения в одной картинке.',
+      'В жизни модуль — когда знак не важен: насколько ошиблись, на сколько градусов скакнула температура, расстояние между домами на прямой улице. |+5 − (−3)| = 8, не 2.',
+      'Рецепт уравнения. 1) Смотри правую часть: минус — пусто, ноль — одна точка. 2) Переведи на язык расстояния. 3) Два направления от центра. 4) Или раскрой: внутри равно плюс или минус правой части. 5) Проверь подстановкой оба корня.',
+      'В карман: модуль — расстояние, всегда ≥ 0. |x| = 4 → ±4. |x − 3| = 2 → 1 и 5. |x| = −3 пусто. |x| = 0 только ноль. Формула x = a ± b.',
+      'Проверка: |x| = 4. Два направления от нуля. x = 4 или x = −4. Не один плюс.'
     ],
     check: { q: 'Реши: |x| = 4', choices: ['x = 4 или x = −4', 'x = 4', 'x = −4', 'решений нет'], ans: 0,
-      exp: 'Расстояние до нуля 4 → x = ±4.' },
+      exp: 'Расстояние до нуля равно 4: две точки, 4 и −4.' },
     tasks: [
       { q: 'Сколько решений у уравнения |x| = 0?', kind: 'unit', ans: 1, tol: 0,
-        hints: ['Только x = 0.', 'Одно решение.'], sol: '1' },
-      { q: 'Чему равно |−7|?', kind: 'choice', choices: ['7', '−7', '0', '14'], ans: 0, tol: 0,
-        hints: ['Модуль — расстояние.', '|−7| = 7.'], sol: '7' }
+        hints: ['Расстояние 0 только у самого нуля.', 'Один корень: x = 0.'], sol: '1' },
+      { q: 'Чему равно |−7|?', kind: 'choice',
+        choices: ['7', '−7', '0', '14'], ans: 0, tol: 0,
+        hints: ['Модуль снимает знак.', '|−7| = 7.'], sol: '7' }
     ]
   };
-  const numAxis=(marks,highlights)=>`<svg viewBox="0 0 260 90" style="width:240px;height:83px;background:#101f18;border-radius:10px">
-    <line x1="12" y1="50" x2="248" y2="50" stroke="#cfe0cf" stroke-width="2.5"/>
-    <polygon points="248,50 240,45 240,55" fill="#cfe0cf"/>
-    <circle cx="130" cy="50" r="4" fill="#e86a5a"/>
-    ${marks.map(n=>`<text x="${130+n*16}" y="72" text-anchor="middle" font-size="12" fill="#8fa08f">${n}</text>`).join('')}
-    ${(highlights||[]).map(p=>`<circle cx="${130+p.n*16}" cy="50" r="8" fill="${p.c}" opacity=".9"/>
-      <text x="${130+p.n*16}" y="54" text-anchor="middle" font-size="10" fill="#0d1a13" font-weight="bold">${p.n}</text>`).join('')}
-  </svg>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l407ink{to{stroke-dashoffset:0}}
+    @keyframes l407pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l407pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l407glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l407-ink{animation:l407ink 1.3s cubic-bezier(.2,.75,.15,1) forwards}
+    .l407-dot{transform-box:fill-box;transform-origin:center;animation:l407pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l407-pulse{animation:l407pulse 1.6s ease-in-out infinite}
+    .l407-glow{animation:l407glow 1.8s ease-in-out infinite}
+    .l407-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l407-ink" style="animation-duration:${dur||1.25}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l407-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l407', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function AX(n){ return 120 + n*16; }
+  function axis(opts){
+    opts=opts||{};
+    let t=`<line x1="18" y1="120" x2="222" y2="120" stroke="#3d5c49" stroke-width="2"/>`;
+    const lo=opts.lo==null?-6:opts.lo, hi=opts.hi==null?6:opts.hi;
+    for(let n=lo;n<=hi;n++){
+      const x=AX(n);
+      if(x<22||x>218) continue;
+      t+=`<line x1="${x}" y1="114" x2="${x}" y2="126" stroke="#3d5c49"/>`+lab(x, 142, String(n), MUTED, 'middle', 10);
+    }
+    (opts.pts||[]).forEach(p=>{
+      const x=Math.max(24, Math.min(216, AX(p.n)));
+      t+=`<circle class="l407-dot" cx="${x}" cy="120" r="${p.r||7}" fill="${p.c}"/>`;
+      if(p.lab) t+=lab(x, p.up?96:148, p.lab, p.c);
+    });
+    if(opts.seg){
+      const x1=Math.max(24, Math.min(216, AX(opts.seg[0])));
+      const x2=Math.max(24, Math.min(216, AX(opts.seg[1])));
+      t+=`<line x1="${x1}" y1="120" x2="${x2}" y2="120" stroke="${GOLD}" stroke-width="6" opacity=".45"/>`;
+    }
+    return t;
+  }
+
   function visC407(el){
+    try{ window._waveCss && _waveCss('css-l407', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:16px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'407';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const a=+(st.a==null?3:st.a);
+    const b=+(st.b==null?2:st.b);
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Модуль — расстояние</div>
-        ${numAxis([-5,-4,-3,-2,-1,0,1,2,3,4,5],[])}
-        <div class="wv-sml">|−5| = 5 и |5| = 5 — оба на расстоянии 5 от нуля</div>
+        ${frame(
+          axis({pts: open
+            ? [{n:-5,c:BLUE,lab:'|−5|=5',up:1},{n:0,c:RED,lab:'0',up:0},{n:5,c:GREEN,lab:'|5|=5',up:1}]
+            : [{n:0,c:RED,lab:'0',up:1}]})+
+          lab(120, 40, open?'одинаково далеко':'5 и −5 — кто ближе к нулю?', GOLD, 'middle', 13)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Расстояние','Модуль — не «сделать плюс из минуса ради красоты». Это длина отрезка до нуля. Длина не бывает отрицательной.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Минус «отрезается»</div>
-        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
-          ${chip('|7| = 7','#8fd1a8')}${chip('|−7| = 7','#7fd1ff')}${chip('|0| = 0','#e8a0d8')}
-        </div>
-        <div class="wv-sml">модуль не «делает больше» — он убирает знак!</div>
+        ${frame(
+          lab(120, 50, '|x| ≥ 0  всегда', GOLD, 'middle', 20)+
+          lab(120, 100, 'геометрия, не фокус', MUTED)+
+          axis({pts:[{n:0,c:RED,lab:'старт',up:1}]})
+        )}
+        ${note('Почему не минус','Точка на оси не может быть на «минус три шага». Шаги считают без направления. Знак живёт у самой точки, не у расстояния.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">|x| = 4 — два решения!</div>
-        ${numAxis([-5,-4,-3,-2,-1,0,1,2,3,4,5],[{n:-4,c:'#7fd1ff'},{n:4,c:'#8fd1a8'}])}
-        <div class="wv-ans" style="font-size:20px;color:#ffd76a">x = 4 или x = −4</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['если x ≥ 0','|x| = x',GREEN],
+            ['если x < 0','|x| = −x',BLUE],
+            ['пример','|−7| = −(−7) = 7',GOLD]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${x[2]};font-family:Georgia,serif">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('Кусочное определение','Минус перед отрицательным — это плюс. Модуль не прибавляет, он снимает знак. |0| = 0 по первой строке.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        <div class="wv-big">Особые случаи</div>
-        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
-          ${[
-            ['|x| = 0','x = 0 — одно решение','#8fd1a8'],
-            ['|x| = −3','решений нет!','#ff9a8a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14.5px;color:#e8dcc8"><b style="font-family:Georgia,serif">${x[0]}</b><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
-        </div>
+        ${frame(
+          axis({pts:[{n:-5,c:BLUE,lab:'|−5|=5',up:1},{n:0,c:RED},{n:5,c:GREEN,lab:'|5|=5',up:1}]})+
+          lab(120, 40, 'минус отрезается', GOLD)
+        )}
+        ${note('Три пробы','Плюс остаётся плюсом, минус становится плюсом, ноль остаётся нулём. Это вся таблица для числа без буквы.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
-        <div class="wv-big">|x − 3| = 2</div>
-        ${numAxis([-1,0,1,2,3,4,5,6],[{n:3,c:'#e86a5a'},{n:1,c:'#7fd1ff'},{n:5,c:'#8fd1a8'}])}
-        <div class="wv-sml">расстояние от x до 3 равно 2 → x = 5 или x = 1</div>
-        <div class="wv-ans" style="font-size:19px;color:#ffd76a">|x − a| = b → x = a ± b</div>
+        ${frame(
+          axis({pts:[{n:-4,c:BLUE,lab:'−4',up:1},{n:0,c:RED,lab:'0'},{n:4,c:GREEN,lab:'4',up:1}]})+
+          lab(120, 40, '|x| = 4  →  два корня', GOLD)
+        )}
+        ${note('Два направления','От нуля влево и вправо одинаково далеко. Поэтому у |x| = a при a > 0 всегда пара ±a. Писать один плюс — ошибка.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        <div class="wv-big">Общее правило</div>
-        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;max-width:340px;width:100%">
-          <div style="font-size:16px;color:#ffd76a;font-weight:bold;text-align:center;font-family:Georgia,serif">|x − a| = b → x = a + b или x = a − b</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['a > 0','два корня  ±a',GREEN],
+            ['a = 0','один корень  x = 0',GOLD],
+            ['a < 0','пусто, расстояние не минус',RED]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <b style="color:${x[2]}">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
         </div>
-        <div class="wv-sml">a — центр, b — радиус: найди точки на расстоянии b от a!</div>
+        ${note('Сначала правая часть','|x| = −3 не решают «как будто плюс». Модуль ≥ 0, справа минус — сразу пусто. Это теория, не каприз.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
-        <div class="wv-big">Модуль в жизни</div>
-        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-          ${[['🌡️','|+5°−(−3°)| = 8°'],['📏','расстояние'],['🎯','погрешность']].map(x=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid #3d5c49;border-radius:12px;padding:7px 10px"><div style="font-size:24px">${x[0]}</div><div style="font-size:11px;color:#8fa08f">${x[1]}</div></div>`).join('')}
-        </div>
+        ${frame(
+          axis({pts:[{n:1,c:BLUE,lab:'1',up:1},{n:3,c:RED,lab:'центр 3'},{n:5,c:GREEN,lab:'5',up:1}]})+
+          lab(120, 40, '|x − 3| = 2', GOLD)
+        )}
+        ${note('Новый центр','Модуль |x − a| — расстояние до точки a, не до нуля. От тройки на 2 шага: 1 и 5. Нуль здесь ни при чём.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Сколько решений?</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
+        ${frame(
+          lab(120, 56, '|x − a| = b', GOLD, 'middle', 22)+
+          lab(120, 100, 'x = a + b  или  a − b', GREEN, 'middle', 15)+
+          lab(120, 144, 'центр a, радиус b', MUTED)
+        )}
+        ${note('Окружность на прямой','В плоскости окружность — бесконечно точек. На прямой — ровно две. Формула a ± b это и есть.')}
+      </div>`;
+    } else if(step===8){
+      const show=!!st.unf;
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 48, '|2x − 1| = 5', GOLD, 'middle', 18)+
+          lab(120, 90, show?'2x − 1 = 5  или  2x − 1 = −5':'раскрой: внутри = ± справа', show?BLUE:MUTED, 'middle', 12)+
+          lab(120, 140, show?'x = 3  или  x = −2':'', show?GREEN:'transparent', 'middle', 18)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].unf=1;chRender(0);}catch(e){}">${show?'Раскрыли':'Раскрыть'}</button>
+        ${note('Два обычных уравнения','|A| = B при B ≥ 0 есть A = B или A = −B. Потом решай линейные, как без модуля. Подставь оба корня.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${frame(
+          axis({seg:[-3,3], pts:[{n:-3,c:GOLD,lab:'−3',up:1},{n:3,c:GOLD,lab:'3',up:1}]})+
+          lab(120, 40, '|x| < 3  →  −3 < x < 3', GOLD, 'middle', 13)
+        )}
+        ${note('Равенство и неравенство','Равенство — точки. Строго меньше — дырка внутри, без концов. Нестрого ≤ — отрезок с концами. Больше — две лучи наружу.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[
-            ['a > 0','два решения','#8fd1a8'],
-            ['a = 0','одно решение','#7fd1ff'],
-            ['a < 0','ни одного','#ff9a8a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.1}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:6px 12px;font-size:14px;color:#e8dcc8"><b style="font-family:Georgia,serif">|x| = a, ${x[0]}</b><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+            ['|xy| = |x|·|y|','произведение',GREEN],
+            ['|x + y| ≤ |x| + |y|','треугольник',BLUE],
+            ['|x| = |y|','x = y или x = −y',GOLD]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <b style="color:${x[2]};font-family:Georgia,serif">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
         </div>
+        ${note('Свойства в карман','Треугольник: короткий путь не длиннее обхода. Равные модули — числа равны или противоположны. Произведение модулей — модуль произведения.')}
+      </div>`;
+    } else if(step===11){
+      const bb=b;
+      const kind=bb<0?'none':(bb===0?'one':'two');
+      const pts=[{n:a,c:RED,lab:'a='+a, up:0}];
+      if(kind==='two'){ pts.push({n:a-bb,c:BLUE,lab:String(a-bb),up:1},{n:a+bb,c:GREEN,lab:String(a+bb),up:1}); }
+      if(kind==='one') pts[0].c=GOLD;
+      h=`<div class="wv-col">
+        ${frame(axis({pts:pts})+lab(120, 40, '|x − a| = b'+(kind==='none'?'  пусто':''), kind==='none'?RED:GOLD, 'middle', 14))}
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,300px)">
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">a
+            <input type="range" min="-4" max="4" value="${a}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].a=+this.value;chRender(0);}catch(e){}">
+            <b style="color:${GOLD};min-width:20px">${a}</b></label>
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">b
+            <input type="range" min="-2" max="5" value="${bb}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].b=+this.value;chRender(0);}catch(e){}">
+            <b style="color:${BLUE};min-width:20px">${bb}</b></label>
+        </div>
+        ${note('Живой радиус','Крути a — центр едет. Крути b — точки разъезжаются. Ноль — слиплись. Минус — пусто. Вся теория уравнения в двух ручках.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 70, '|+5 − (−3)| = 8', GOLD, 'middle', 18)+
+          lab(120, 120, 'не 2, а 8', GREEN)+
+          lab(120, 164, 'величина без знака', MUTED)
+        )}
+        ${note('Зачем в жизни','Ошибка измерения, скачок температуры, расстояние по улице. Знак говорит «куда», модуль — «насколько».')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Правая часть: минус — пусто, ноль — одна точка',RED],
+            ['2','Переведи: расстояние до центра',GOLD],
+            ['3','Два направления или раскрой ±',BLUE],
+            ['4','Подставь оба корня',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${x[2]};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Не начинай с «снимем модуль». Сначала калибр правой части, потом геометрия, потом алгебра.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          axis({pts:[{n:-4,c:BLUE,lab:'−4',up:1},{n:4,c:GREEN,lab:'4',up:1}]})+
+          lab(120, 40, '|x| = 4  ·  |x−3|=2 → 1 и 5', GOLD, 'middle', 12)
+        )}
+        ${note('В карман','Модуль ≥ 0. Два корня, если справа плюс. Центр a, радиус b. Раскрытие: внутри = ± справа.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${numAxis([-5,-4,-3,-2,-1,0,1,2,3,4,5],[])}
-        <div class="wv-sml">|x| = 4 — какие x?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 14px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">x = ? или x = ?</div>
+        ${frame(axis({pts:[{n:0,c:RED,lab:'0',up:1}]})+lab(120, 40, '|x| = 4', GOLD))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:16px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">x = ? или x = ?</div>
+        ${note('Проверка','4 и −4. Два направления. Не один плюс.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_C[407]=visC407;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===407){ window.ARH_LESSONS[i]=L407; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===407){ arr[i]=L407; f=true; break; } }
+    if(!f) arr.push(L407);
+  })();
 })();
 /* ================= УРОК 408 · Сравнения по модулю ================= */
 (function(){
@@ -1019,117 +1181,260 @@ window._waveCss = window._waveCss || function(id, css){
     id: 408, title: 'Сравнения по модулю: введение', ico: '➗',
     src: 'Математика · 7 класс · Олимп-7: сравнения', subj: 'math',
     explain: [
-      'Начнём с простого: разделим 17 на 5 с остатком. 17 = 3·5 + 2 — частное 3, остаток 2. Запомни этот пример — он станет главным героем урока! Остаток всегда меньше делителя: 2 < 5.',
-      'Запись a ≡ b (mod m) читается «a сравнимо с b по модулю m» и означает: у a и b ОДИНАКОВЫЕ остатки при делении на m. Проверка: a − b должно делиться на m. Пример: 17 ≡ 2 (mod 5), ведь 17 − 2 = 15, а 15 делится на 5!',
-      'Наглядная модель — часы с m делениями. Числа «заворачиваются» по кругу: 2, 7, 12, 17 при делении на 5 дают остаток 2 — все они «одна и та же точка» на циферблате mod 5!',
-      'Находим остаток: сколько будет 23 (mod 4)? Ищем самое большое кратное 4, не большее 23: это 20 = 5·4. Остаток 23 − 20 = 3. Ответ: 23 ≡ 3 (mod 4).',
-      'Проверка через разность: верно ли, что 29 ≡ 5 (mod 6)? Считаем 29 − 5 = 24, а 24 делится на 6 (24 : 6 = 4). Значит, сравнение верное! Оба способа — «остаток» и «разность делится» — равносильны.',
-      'Магия сравнений: остатки можно СКЛАДЫВАТЬ! 17 ≡ 2 (mod 5) и 23 ≡ 3 (mod 5), значит, 17 + 23 ≡ 2 + 3 = 5 ≡ 0 (mod 5). То есть 17 + 23 = 40 делится на 5 — проверь: 40 : 5 = 8!',
-      'Остатки можно и УМНОЖАТЬ: 17 ≡ 2 (mod 5), 23 ≡ 3 (mod 5) → 17·23 ≡ 2·3 = 6 ≡ 1 (mod 5). Огромные вычисления превращаются в маленькие — вот сила сравнений!',
-      'Зачем это на олимпиадах? Доказать, что число не делится на 7, найти последнюю цифру степени, узнать день недели через 100 дней — всё через остатки. Запомни: a ≡ b (mod m) ⟺ a − b ⋮ m.',
-      'Теперь проверь себя: чему равен остаток 17 при делении на 5? Вспомни: 17 = 3·5 + 2.'
+      'Загадка: 17 и 2. Разные числа, но при делении на 5 у обоих остаток 2. Как записать «они одного остатка»? Сравнение: 17 ≡ 2 (mod 5). Читается: семнадцать сравнимо с двумя по модулю пять.',
+      'Сначала деление с остатком. 17 = 3 · 5 + 2. Частное 3, остаток 2. Теорема: для любых целых a и m > 0 найдутся единственные q и r, что a = q·m + r и 0 ≤ r < m. Остаток всегда меньше модуля и не отрицательный.',
+      'Определение. a ≡ b (mod m) значит: a и b дают один остаток при делении на m. Равносильная проверка, её любят на олимпиадах: a − b делится на m, пишут a − b ⋮ m. Для 17 и 2: 17 − 2 = 15, 15 ⋮ 5.',
+      'Почему два определения одно? Если остатки равны, a = q₁m + r, b = q₂m + r, разность (q₁ − q₂)m — кратна m. Наоборот: если разность кратна m, остатки не могут разойтись. Запоминай оба: «одинаковый остаток» и «разность делится».',
+      'Часы с m делениями. Числа бегут по кругу и возвращаются. 2, 7, 12, 17 — одна точка на циферблате mod 5. Класс остатка 2 — все числа вида 5k + 2. Их бесконечно много, точка одна.',
+      'Как найти остаток. 23 (mod 4): самое большое кратное 4, не больше 23, это 20 = 5·4. Остаток 23 − 20 = 3. Значит 23 ≡ 3 (mod 4). Не путай остаток с неполным частным.',
+      'Проверка разностью. 29 ≡ 5 (mod 6)? 29 − 5 = 24, 24 : 6 = 4, делится — да. Если разность не делится, сравнение ложно. Оба способа равносильны, бери удобный.',
+      'Остаток 0 — особое имя: «делится». a ≡ 0 (mod m) значит a ⋮ m. Чётность — это mod 2: чётные ≡ 0, нечётные ≡ 1. Последняя цифра — это mod 10.',
+      'Складывать остатки можно. Если a ≡ a₁ (mod m) и b ≡ b₁ (mod m), то a + b ≡ a₁ + b₁ (mod m). Пример: 17 ≡ 2, 23 ≡ 3 (mod 5) → 40 ≡ 5 ≡ 0 (mod 5). Сумма огромных чисел проверяется на пальцах.',
+      'Умножать тоже. a · b ≡ a₁ · b₁ (mod m). 17 · 23 ≡ 2 · 3 = 6 ≡ 1 (mod 5). Так считают последнюю цифру степени, не выписывая миллион цифр. Делить остатки так просто нельзя: 6 ≡ 2 (mod 4), поделили на 2 — 3 ≡ 1 (mod 4)? Ложь. Деление требует аккуратности.',
+      'Сравнение — отношение эквивалентности. Рефлексивно: a ≡ a. Симметрично: если a ≡ b, то b ≡ a. Транзитивно: a ≡ b и b ≡ c влекут a ≡ c. Поэтому можно заменять число его остатком в любой сумме и произведении.',
+      'Подвинь число n на часах mod 5. Стрелка прыгает по остатку. 0, 5, 10, 15 — в нуле. 2, 7, 12, 17 — на двойке. Это и есть классы.',
+      'Где работает. Доказать, что число не делится на 7. Последняя цифра 7ⁿ. День недели через 100 дней — mod 7. Квадрат по mod 4 бывает только 0 или 1, никогда 3 — отсюда «не сумма двух квадратов».',
+      'Рецепт. 1) Запиши a = q m + r, 0 ≤ r < m. 2) Сравнение проверяй разностью. 3) В суммах и произведениях меняй на маленькие остатки. 4) Остаток 0 = делится. 5) Не дели остатки без проверки.',
+      'В карман: 17 ≡ 2 (mod 5). Остаток меньше модуля. Разность ⋮ m. Складывать и умножать можно. 23 ≡ 3 (mod 4). 29 ≡ 5 (mod 6).',
+      'Проверка: остаток 17 при делении на 5. 17 = 3·5 + 2. Это 2, не 7: семёрка уже больше модуля.'
     ],
     check: { q: 'Чему равен остаток 17 при делении на 5?', choices: ['2', '7', '1', '0'], ans: 0,
-      exp: '17 = 3·5 + 2 → остаток 2, т.е. 17 ≡ 2 (mod 5).' },
+      exp: '17 = 3·5 + 2. Остаток 2, то есть 17 ≡ 2 (mod 5).' },
     tasks: [
       { q: 'Найди остаток от деления 23 на 4.', kind: 'unit', ans: 3, tol: 0,
-        hints: ['23 = 5·4 + 3.', 'Остаток 3.'], sol: '3' },
-      { q: 'Запиши остаток: 29 ≡ … (mod 6)', kind: 'choice', choices: ['5', '6', '1', '3'], ans: 0, tol: 0,
-        hints: ['29 = 4·6 + 5.', '29 ≡ 5 (mod 6).'], sol: '5' }
+        hints: ['20 = 5·4, 23 − 20 = 3.', 'Остаток всегда меньше 4.'], sol: '3' },
+      { q: 'Запиши остаток: 29 ≡ … (mod 6)', kind: 'choice',
+        choices: ['5', '6', '1', '3'], ans: 0, tol: 0,
+        hints: ['24 = 4·6, 29 − 24 = 5.', 'Остаток 5, не 6: шестёрка уже модуль.'], sol: '5' }
     ]
   };
-  const clock=(m)=>`<svg viewBox="0 0 160 160" style="width:150px;height:150px;background:#101f18;border-radius:50%">
-    ${Array.from({length:m},(_,i)=>{ const a=-90+i*(360/m); const x1=80+62*Math.cos(a*Math.PI/180), y1=80+62*Math.sin(a*Math.PI/180);
-      const x2=80+52*Math.cos(a*Math.PI/180), y2=80+52*Math.sin(a*Math.PI/180);
-      const lx=80+44*Math.cos(a*Math.PI/180), ly=80+44*Math.sin(a*Math.PI/180);
-      return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#3d5c49" stroke-width="3"/>
-      <text x="${lx.toFixed(1)}" y="${(ly+5).toFixed(1)}" text-anchor="middle" font-size="13" fill="#cfe0cf">${i}</text>`; }).join('')}
-    <circle cx="80" cy="80" r="70" fill="none" stroke="#5c8a6a" stroke-width="3"/>
-  </svg>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l408ink{to{stroke-dashoffset:0}}
+    @keyframes l408pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l408pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l408glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l408-ink{animation:l408ink 1.3s cubic-bezier(.2,.75,.15,1) forwards}
+    .l408-dot{transform-box:fill-box;transform-origin:center;animation:l408pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l408-pulse{animation:l408pulse 1.6s ease-in-out infinite}
+    .l408-glow{animation:l408glow 1.8s ease-in-out infinite}
+    .l408-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l408-ink" style="animation-duration:${dur||1.25}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l408-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l408', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function clock(m, lit, doDraw){
+    const cx=120, cy=118, R=72;
+    let d=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#3d5c49" stroke-width="2" ${doDraw?ink(2*Math.PI*R,1.3,0):''}/>`;
+    for(let i=0;i<m;i++){
+      const ang=-Math.PI/2 + i*(2*Math.PI/m);
+      const x1=cx+(R-4)*Math.cos(ang), y1=cy+(R-4)*Math.sin(ang);
+      const x2=cx+(R-14)*Math.cos(ang), y2=cy+(R-14)*Math.sin(ang);
+      const lx=cx+(R-26)*Math.cos(ang), ly=cy+(R-26)*Math.sin(ang)+4;
+      const on=i===((lit%m)+m)%m;
+      d+=`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${on?GOLD:'#3d5c49'}" stroke-width="${on?4:2}"/>`;
+      d+=lab(lx, ly, String(i), on?GOLD:MUTED, 'middle', 13);
+      if(on) d+=`<circle class="l408-glow" cx="${(cx+(R-8)*Math.cos(ang)).toFixed(1)}" cy="${(cy+(R-8)*Math.sin(ang)).toFixed(1)}" r="6" fill="${GOLD}"/>`;
+    }
+    return d;
+  }
+
   function visC408(el){
+    try{ window._waveCss && _waveCss('css-l408', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'408';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const n=Math.max(0, Math.min(24, +(st.n==null?17:st.n)));
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">17 : 5 с остатком</div>
-        <div style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">17 = 3·5 + 2</div>
-        <div class="wv-row" style="gap:6px">${chip('частное 3','#7fd1ff')}${chip('остаток 2','#8fd1a8')}</div>
-        <div class="wv-sml">остаток всегда меньше делителя: 2 < 5</div>
+        ${frame(
+          lab(120, 50, open?'17 ≡ 2 (mod 5)':'17 и 2 — родственники?', GOLD, 'middle', 18)+
+          lab(120, 100, open?'один остаток 2':'разные числа', open?GREEN:MUTED, 'middle', 14)+
+          lab(120, 150, '17 = 3·5 + 2', BLUE)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Один остаток','Сравнение — способ сказать: при делении на m эти числа ведут себя одинаково. Не «равны», а «равны с точностью до кругов».')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Запись a ≡ b (mod m)</div>
-        <div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">17 ≡ 2 (mod 5)</div>
-        <div style="font-size:17px;color:#8fd1a8;font-family:Georgia,serif">17 − 2 = 15, а 15 ⋮ 5</div>
-        <div class="wv-sml">одинаковые остатки ⟺ разность делится на m</div>
+        ${frame(
+          lab(120, 56, 'a = q·m + r', GOLD, 'middle', 22)+
+          lab(120, 104, '0 ≤ r < m', GREEN)+
+          lab(120, 150, '17 = 3·5 + 2', BLUE)+
+          lab(120, 186, 'остаток меньше модуля', MUTED, 'middle', 12)
+        )}
+        ${note('Единственность','Частное и остаток для пары (a, m) одни. Остаток не бывает равен модулю: 5 при делении на 5 — это уже 1·5 + 0, остаток 0, не 5.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">«Часы» mod 5</div>
-        ${clock(5)}
-        <div class="wv-sml">2, 7, 12, 17 — «одна и та же точка» по модулю 5!</div>
+        ${frame(
+          lab(120, 50, 'a ≡ b (mod m)', GOLD, 'middle', 20)+
+          lab(120, 96, 'один остаток', GREEN)+
+          lab(120, 140, '⟺  a − b  ⋮  m', BLUE, 'middle', 16)
+        )}
+        ${note('Два языка','«Одинаковый остаток» удобно в голове. «Разность делится» удобно на бумаге: одно вычитание и проверка.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        <div class="wv-big">23 (mod 4)</div>
-        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:19px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">кратное 4, не большее 23 → 20 = 5·4</div>
-          <div class="wv-pop2">23 − 20 = 3</div>
-          <div class="wv-pop3" style="font-size:24px;color:#ffd76a;font-weight:bold">23 ≡ 3 (mod 4)</div>
-        </div>
+        ${frame(
+          lab(120, 48, '17 − 2 = 15  ⋮  5', GOLD, 'middle', 16)+
+          lab(120, 96, '17 = 3·5 + 2', BLUE)+
+          lab(120, 140, '2 = 0·5 + 2', GREEN)+
+          lab(120, 180, 'остаток тот же', MUTED)
+        )}
+        ${note('Почему равносильно','Вычли два представления с одним r — остался кусок, кратный m. Если остатки разные, разность не кратна m.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
-        <div class="wv-big">Проверка через разность</div>
-        <div style="font-size:22px;color:#e8dcc8;font-family:Georgia,serif">29 ≡ 5 (mod 6)?</div>
-        <div style="display:flex;flex-direction:column;gap:4px;font-size:18px;color:#8fd1a8;text-align:center;font-family:Georgia,serif">
-          <div class="wv-pop">29 − 5 = 24</div>
-          <div class="wv-pop2">24 : 6 = 4 — делится! ✔</div>
-        </div>
-        <div class="wv-sml">29 = 4·6 + 5 → остаток 5</div>
+        ${frame(
+          clock(5, 2, doDraw)+
+          lab(120, 28, '2, 7, 12, 17 — одна точка', GOLD, 'middle', 13)
+        )}
+        ${note('Класс остатка','Все числа 5k + 2 живут в одной точке циферблата. Их бесконечно, точка одна. Это и есть «сравнимы по модулю 5».')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        <div class="wv-big">Складываем остатки!</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:18px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">17 ≡ 2 (mod 5) · 23 ≡ 3 (mod 5)</div>
-          <div class="wv-pop2">17 + 23 ≡ 2 + 3 = <b style="color:#8fd1a8">5 ≡ 0</b></div>
-          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">40 : 5 = 8 — делится! ✔</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
+          ${[
+            ['кратное 4 ≤ 23','20 = 5·4',BLUE],
+            ['вычли','23 − 20 = 3',GREEN],
+            ['сравнение','23 ≡ 3 (mod 4)',GOLD]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:15px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
+        ${note('Как считают остаток','Ищи ближайшее кратное снизу. Не деление «в столбик до запятой»: остаток целый и меньше модуля.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
-        <div class="wv-big">Умножаем остатки</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:18px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">17 ≡ 2, 23 ≡ 3 (mod 5)</div>
-          <div class="wv-pop2">17·23 ≡ 2·3 = 6 ≡ <b style="color:#ffd76a">1</b> (mod 5)</div>
-        </div>
-        <div class="wv-sml">огромные вычисления → маленькие остатки!</div>
+        ${frame(
+          lab(120, 60, '29 ≡ 5 (mod 6)?', GOLD, 'middle', 18)+
+          lab(120, 110, '29 − 5 = 24', BLUE)+
+          lab(120, 154, '24 : 6 = 4  →  да', GREEN)
+        )}
+        ${note('Проверка в одну строку','Не обязательно делить оба числа. Вычти и посмотри, делится ли. Если нет — сравнение ложно.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Зачем это нужно</div>
-        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[
-            ['доказать, что число не ⋮ 7','проверь остаток','#7fd1ff'],
-            ['последняя цифра степени','степень по mod 10','#8fd1a8'],
-            ['день недели через 100 дней','mod 7!','#ffd76a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+            ['a ≡ 0 (mod m)','a делится на m',GREEN],
+            ['mod 2','чёт / нечет',BLUE],
+            ['mod 10','последняя цифра',GOLD]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <b style="color:${x[2]}">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
         </div>
+        ${note('Остаток ноль','Это не «ничего», это «делится нацело». Чётность и последняя цифра — сравнения, которые ты уже знаешь.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 48, '17 ≡ 2,  23 ≡ 3', GOLD, 'middle', 16)+
+          lab(120, 96, 'сумма 40 ≡ 5 ≡ 0', GREEN, 'middle', 16)+
+          lab(120, 144, '(mod 5)', MUTED)
+        )}
+        ${note('Сложение остатков','Меняй огромные числа на маленькие остатки, складывай, если вылезло за m — снова остаток. 2+3=5≡0.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 48, '17 · 23 ≡ 2 · 3', GOLD, 'middle', 16)+
+          lab(120, 96, '6 ≡ 1 (mod 5)', GREEN, 'middle', 18)+
+          lab(120, 144, 'делить так нельзя', RED, 'middle', 14)
+        )}
+        ${note('Умножение да, деление нет','Произведение остатков — остаток произведения. А вот 6 ≡ 2 (mod 4) после деления на 2 врёт: 3 ненужно сравнимо с 1 по mod 4.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 56, 'a ≡ a', GOLD)+
+          lab(120, 100, 'a ≡ b  ⇒  b ≡ a', BLUE)+
+          lab(120, 144, 'a ≡ b ≡ c  ⇒  a ≡ c', GREEN)
+        )}
+        ${note('Эквивалентность','Можно заменять число остатком где угодно в суммах и произведениях. Цепочка сравнений не рвётся.')}
+      </div>`;
+    } else if(step===11){
+      const r=((n%5)+5)%5;
+      h=`<div class="wv-col">
+        ${frame(clock(5, r, doDraw)+lab(120, 28, n+' ≡ '+r+' (mod 5)', GOLD))}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">n
+          <input type="range" min="0" max="24" value="${n}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].n=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD};min-width:24px">${n}</b>
+        </label>
+        ${note('Крути число','Стрелка прыгает только по пяти точкам. 0, 5, 10, 15, 20 — в нуле. 2, 7, 12, 17, 22 — на двойке.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['не делится на 7','остаток не 0',RED],
+            ['последняя цифра 7ⁿ','mod 10',GOLD],
+            ['день недели через 100 дней','mod 7',BLUE],
+            ['квадрат по mod 4','только 0 или 1',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('Зачем олимпиаде','Большое число не трогают. Смотрят остаток. Если остаток «неправильный» — исходного числа не бывает.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','a = q m + r,  0 ≤ r < m',GOLD],
+            ['2','Проверка: разность ⋮ m',BLUE],
+            ['3','В суммах и произведениях — маленькие остатки',GREEN],
+            ['4','Не дели остатки бездумно',RED]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Сначала остаток в диапазоне. Потом сравнение разностью. Потом арифметика остатков. Деление — отдельный разговор.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          clock(5, 2, false)+
+          lab(120, 28, '17 ≡ 2 (mod 5)', GOLD)
+        )}
+        ${note('В карман','Остаток меньше модуля. Разность делится. Складывать и умножать можно. 23 ≡ 3 (mod 4), 29 ≡ 5 (mod 6).')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">17 = 3·5 + 2</div>
-        <div class="wv-sml">остаток 17 при делении на 5?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:20px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? (mod 5)</div>
+        ${frame(lab(120, 90, '17  :  5', GOLD, 'middle', 24)+lab(120, 140, 'остаток ?', MUTED))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">? (mod 5)</div>
+        ${note('Проверка','2. Не 7: семёрка уже больше пяти, это не остаток.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_C[408]=visC408;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===408){ window.ARH_LESSONS[i]=L408; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===408){ arr[i]=L408; f=true; break; } }
+    if(!f) arr.push(L408);
+  })();
 })();
 /* ================= УРОК 409 · Параметры: линейные уравнения ================= */
 (function(){
