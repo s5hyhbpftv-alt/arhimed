@@ -2,6 +2,17 @@
    Заменяет записи ARH_LESSONS на обычные уроки с explain; WAVE_D[id] рисует
    уникальный интерактивный виджет в #lvis по шагу LV.step. */
 window.WAVE_D = window.WAVE_D || {};
+window._waveCss = function(id, css){
+  try{
+    if(!document.getElementById(id)){
+      const s=document.createElement('style');
+      s.id=id;
+      s.textContent=String(css).replace(/<\/?style>/gi,'');
+      document.head.appendChild(s);
+    }
+  }catch(e){}
+};
+
 
 /* ================= УРОК 413 · Рациональные дроби ================= */
 (function(){
@@ -1094,6 +1105,7 @@ window.WAVE_D = window.WAVE_D || {};
   function GM(a,b){ return Math.sqrt(Math.max(0,a*b)); }
 
   function visD422(el){
+    try{ window._waveCss('css-l422', CSS); }catch(e){}
     const step=LV.step||0;
     const lk=(typeof lidKey==='function')?lidKey(LV.id):'422';
     if(typeof CHS==='undefined') window.CHS={};
@@ -1458,6 +1470,7 @@ window.WAVE_D = window.WAVE_D || {};
   }
 
   function visD423(el){
+    try{ window._waveCss('css-l423', CSS); }catch(e){}
     const step=LV.step||0;
     const lk=(typeof lidKey==='function')?lidKey(LV.id):'423';
     if(typeof CHS==='undefined') window.CHS={};
@@ -1520,7 +1533,7 @@ window.WAVE_D = window.WAVE_D || {};
         ${frame(
           axis(-1,6)+
           `<path d="${P.d}" fill="none" stroke="${GOLD}" stroke-width="2.4" class="l423-glow" ${doDraw?ink(P.len,1.6,0):''}/>`+
-          rootDot(2,BLUE,'(x−2)=0',.2,doDraw)+rootDot(3,GREEN,'(x−3)=0',.35,doDraw)
+          rootDot(2,BLUE,'2',.2,doDraw)+rootDot(3,GREEN,'3',.35,doDraw)
         )}
         <div class="wv-ans" style="font-size:16px">(x − 2)(x − 3) = 0</div>
         ${note('Откуда уравнение','Скобка обнуляется, когда x равен корню. Произведение скобок равно нулю ровно в этих двух точках — там парабола пересекает ось. Корни — это «дыры» на прямой.')}
@@ -1759,7 +1772,7 @@ window.WAVE_D = window.WAVE_D || {};
 
   function ink(len,dur,delay){
     const L=Math.ceil((len||1)+14);
-    return `stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l424-ink" style="animation-duration:${dur||1.25}s;animation-delay:${delay||0}s"`;
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l424-ink" style="animation-duration:${dur||1.25}s;animation-delay:${delay||0}s"`;
   }
   function lab(x,y,t,col,anchor){
     return `<text class="l424-lab" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="12" fill="${col}" font-family="Georgia,serif">${t}</text>`;
@@ -1841,6 +1854,7 @@ window.WAVE_D = window.WAVE_D || {};
   const FOUT = {A:[22,42],D:[22,105],E:[22,172],B:[222,42],G:[222,109],V:[222,172]};
 
   function visD424(el){
+    try{ window._waveCss('css-l424', CSS); }catch(e){}
     const step=LV.step||0;
     const lk=(typeof lidKey==='function')?lidKey(LV.id):'424';
     if(typeof CHS==='undefined') window.CHS={};
@@ -2146,7 +2160,7 @@ window.WAVE_D = window.WAVE_D || {};
   </style>`;
 
   function ink(len,dur,delay){
-    const L=Math.ceil((len||1)+12);
+    const L=Math.ceil((len||1)+16);
     return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l425-ink" style="animation-duration:${dur||1.35}s;animation-delay:${delay||0}s"`;
   }
   function lab(x,y,t,col,anchor){
@@ -2194,6 +2208,7 @@ window.WAVE_D = window.WAVE_D || {};
   const A0=[110,28], B0=[28,148], C0=[192,148];
 
   function visD425(el){
+    try{ window._waveCss('css-l425', CSS); }catch(e){}
     const step=LV.step||0;
     const lk=(typeof lidKey==='function')?lidKey(LV.id):'425';
     if(typeof CHS==='undefined') window.CHS={};
@@ -2220,8 +2235,8 @@ window.WAVE_D = window.WAVE_D || {};
           sqMark(H,A0,'#ffd76a')+
           lab(110,178,'a = 10','#8fd1a8')+
           lab(128,92,'h = ?','#ffd76a')+
-          `<g class="l425-dotc"><rect x="78" y="4" width="64" height="20" rx="8" fill="#13251c" stroke="#ffd76a"/>
-           ${lab(110,19,'S = 30','#ffd76a')}</g>`+
+          `<g class="l425-dotc"><rect x="6" y="6" width="64" height="20" rx="8" fill="#13251c" stroke="#ffd76a"/>
+           ${lab(38,21,'S = 30','#ffd76a')}</g>`+
           vtx(A0,'A','#ffd76a',false,0,doDraw)+vtx(B0,'B','#7fd1ff',false,.1,doDraw)+vtx(C0,'C','#8fd1a8',false,.2,doDraw)
         )}
         ${note('Загадка','Линейкой высоту не достать. Зато известны площадь и основание. Если площадь — половина «основание × высота», то высоту можно вычислить, а не мерить.')}
@@ -2502,8 +2517,8 @@ window.WAVE_D = window.WAVE_D || {};
     return s+10;
   }
   function ink(len,dur,delay){
-    const L=Math.ceil(len);
-    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l426-ink" style="--l426len:${L};animation-duration:${dur||1.45}s;animation-delay:${delay||0}s"`;
+    const L=Math.ceil((len||1)+16);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l426-ink" style="animation-duration:${dur||1.45}s;animation-delay:${delay||0}s"`;
   }
   function pieWedge(r,a1,a2,fill){
     const to=(d)=>{const t=d*Math.PI/180; return [CX+r*Math.cos(t), CY+r*Math.sin(t)];};
@@ -2541,7 +2556,7 @@ window.WAVE_D = window.WAVE_D || {};
       <g class="l426-orbit2"><circle cx="${CX-R}" cy="${CY}" r="2" fill="#7fd1ff"/></g>`;
   }
   function frame(inner){
-    return `${CSS}<svg viewBox="0 0 220 220" style="width:min(100%,260px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:hidden">
+    return `${CSS}<svg viewBox="-12 -12 244 244" style="width:min(100%,270px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">
       <defs>
         <radialGradient id="l426g" cx="50%" cy="50%"><stop offset="0%" stop-color="#7fd1ff22"/><stop offset="100%" stop-color="#101f1800"/></radialGradient>
         <filter id="l426b"><feGaussianBlur stdDeviation="2"/></filter>
@@ -2562,6 +2577,7 @@ window.WAVE_D = window.WAVE_D || {};
   const pts = ()=>({A:P(AN.A), B:P(AN.B), C:P(AN.C), D:P(AN.D)});
 
   function visD426(el){
+    try{ window._waveCss('css-l426', CSS); }catch(e){}
     const step=LV.step||0;
     const lk= (typeof lidKey==='function') ? lidKey(LV.id) : '426';
     if(typeof CHS==='undefined') window.CHS={};
@@ -2679,6 +2695,7 @@ window.WAVE_D = window.WAVE_D || {};
         <div class="wv-row" style="gap:10px;flex-wrap:wrap;justify-content:center">
           <div style="text-align:center">
             <svg viewBox="0 0 120 78" style="width:128px;background:#0c1a14;border-radius:10px;display:block">
+              ${CSS}
               <ellipse cx="60" cy="39" rx="50" ry="32" fill="none" stroke="#7fd1ff" stroke-width="1.8" ${doDraw?ink(ell,1.4,0):''}/>
               <rect x="22" y="16" width="76" height="46" fill="rgba(143,209,168,.12)" stroke="#8fd1a8" stroke-width="2"/>
             </svg>
@@ -2686,6 +2703,7 @@ window.WAVE_D = window.WAVE_D || {};
           </div>
           <div style="text-align:center">
             <svg viewBox="0 0 120 78" style="width:128px;background:#0c1a14;border-radius:10px;display:block">
+              ${CSS}
               <circle cx="60" cy="39" r="32" fill="none" stroke="#7fd1ff" stroke-width="1.8" ${doDraw?ink(cir,1.4,.08):''}/>
               <rect x="32" y="11" width="56" height="56" fill="rgba(255,215,106,.1)" stroke="#ffd76a" stroke-width="2"/>
             </svg>
