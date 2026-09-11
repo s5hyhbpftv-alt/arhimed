@@ -32,3 +32,9 @@ deepseek-harness/
 !/README.md
 !/.gitignore
 !шлюз_сервер.py
+
+# --- инструменты проекта (без секретов) ---
+!/qa_layout.py
+!/deploy/
+!/deploy/**
+deploy/deploy.local.env
