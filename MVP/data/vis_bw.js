@@ -4522,3 +4522,191 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     if(!f) arr.push(L109);
   })();
 })();
+/* ================= УРОК 101 · Сила тяжести и вес ================= */
+(function(){
+  const L101 = {
+    id: 101, title: 'Сила тяжести и вес тела', ico: '🏋️',
+    src: 'Физика · 7 класс · Сила тяжести и вес', subj: 'phys',
+    explain: [
+      'Яблоко падает вниз, не вверх. Земля притягивает все тела — это сила тяжести. Направлена к центру Земли.',
+      'F = m · g. m — килограммы, g — сколько ньютонов на каждый килограмм. На Земле g ≈ 10 Н/кг.',
+      '1 кг → 10 Н, 2 кг → 20 Н, 3 кг → 30 Н. Массу умножили на десять — получили силу.',
+      'Проверка: 4 кг → 40 Н. Не 4 и не 400: g = 10, не 1 и не 100.',
+      'Наоборот: m = F : g. 120 Н → 12 кг. Силу делим на десять.',
+      'Динамометр — пружина со шкалой. Чем сильнее тянет, тем длиннее пружина. Единица силы — ньютон.',
+      'Вес P — сила, с которой тело давит на опору или тянет подвес. Стоишь — давишь на пол своим весом.',
+      'В покое P = m g. Но это разные силы: тяжесть приложена к телу, вес — к опоре или шнуру.',
+      'На Луне g ≈ 1,6 Н/кг — примерно в 6 раз меньше. 6 кг там тянет всего ~10 Н.',
+      'Масса не меняется: 6 кг и на Земле, и на Луне. Меняется только сила тяжести.',
+      'На орбите опора исчезает — невесомость. Вес ноль, а сила тяжести всё ещё есть: без неё станция улетела бы по прямой.',
+      'Лифт разгоняется вверх — вес растёт, «прижимает». Тормозит — вес падает. Масса одна и та же.',
+      '7 кг → 70 Н. 5 кг → 50 Н. 20 кг → 200 Н. Всегда × 10.',
+      '60 Н → 6 кг, 100 Н → 10 кг. Всегда : 10.',
+      'g точнее 9,8 Н/кг, в задачах 7 класса берут 10. Ньютон — в честь Исаака Ньютона.',
+      'Рецепт. F = m g. Покой: P = F. Масса — свойство тела. Вес — про опору. Невесомость — нет опоры, не нет тяжести.'
+    ],
+    check: { q: 'Сила тяжести, действующая на тело массой 4 кг? (в Н, g = 10)', choices: ['4','40','400'], ans: 1,
+      exp: 'F = m · g = 4 · 10 = 40 Н.' },
+    tasks: [
+      { q: 'Сила тяжести на тело массой 7 кг? (в Н, g = 10)', kind: 'unit', ans: 70, tol: 0,
+        hints: ['F = m · g.','7 · 10 = ?'], sol: '70 Н' },
+      { q: 'Масса тела, если сила тяжести 120 Н? (в кг, g = 10)', kind: 'choice',
+        choices: ['12','1,2','1200'], ans: 0, hints: ['m = F : g.','120 : 10 = ?'], sol: '12 кг' },
+      { q: '5 кг. Сила тяжести? (в Н, g = 10)', kind: 'unit', ans: 50, tol: 0,
+        hints: ['Умножь массу на 10.'], sol: '50 Н' },
+      { q: 'На Луне g ≈ 1,6 Н/кг. Сила тяжести на 10 кг? (в Н)', kind: 'unit', ans: 16, tol: 0,
+        hints: ['F = m · g.','10 · 1,6 = 16.'], sol: '16 Н' },
+      { q: 'Космонавт на орбите. Его вес?', kind: 'choice',
+        choices: ['равен силе тяжести','равен нулю','масса стала нулём'], ans: 1,
+        hints: ['Опоры нет — вес ноль.','Масса и тяжесть никуда не делись.'], sol: 'равен нулю' },
+      { q: 'Лифт разгоняется вверх. Вес пассажира?', kind: 'choice',
+        choices: ['растёт','падает','масса растёт'], ans: 0,
+        hints: ['Прижимает к полу — вес больше.','Масса не меняется.'], sol: 'растёт' }
+    ]
+  };
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const Fg=(m,g)=>Math.round(m*g*10)/10;
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function pred(st,key,q,opts){
+    const cur=st[key];
+    return `<div style="width:min(100%,340px);text-align:left">
+      <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+        onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
+      ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
+    </div>`;
+  }
+  function cards(rows){
+    return `<div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">`+
+      rows.map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${x[2]||GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${x[2]||GOLD}">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')+
+      `</div>`;
+  }
+  function visB101(el){
+    try{ window.physKenCss && physKenCss(); }catch(e){}
+    const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'101';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const m=Math.max(1, Math.min(12, +(st.m==null?4:st.m)));
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        ${physShot('g_fall.mp4','падает вниз, не вверх')}
+        ${pred(st,'p0','Почему вниз?',[{k:'e',t:'Земля притягивает'},{k:'air',t:'воздух толкает'},{k:'w',t:'яблоко устало'}])}
+        ${st.p0?note('Тяжесть','Земля тянет все тела к своему центру. Это сила тяжести. Ньютон описал её как всемирное тяготение.'):note('Предскажи','Сначала карточка.')}
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        ${physShot('g_globe.mp4','к центру Земли')}
+        ${note('Направление','Всегда вниз, к центру. На другом конце планеты «вниз» — тоже к центру, не «под нас».')}
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        ${physShot('g_stack.mp4','F = m · g')}
+        ${cards([['m','масса, кг',GOLD],['g','≈ 10 Н/кг на Земле',BLUE],['F','сила, ньютоны',GREEN]])}
+        ${note('g','Сколько ньютонов на каждый килограмм. 1 кг → 10 Н, 3 кг → 30 Н. Умножили массу на десять.')}
+      </div>`;
+    } else if(step===3){
+      const F=Fg(m,10);
+      const pts=Array.from({length:13},(_,i)=>[i, i*10]);
+      h=`<div class="wv-col">
+        ${physShot(m>=7?'g_seven.mp4':(m>=4?'g_four.mp4':'g_stack.mp4'), 'm = '+m+' кг  ·  F = '+F+' Н')}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">m
+          <input type="range" min="1" max="12" value="${m}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].m=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${m} кг</b>
+        </label>
+        ${physChart([{pts, col:GOLD, name:'F = 10 · m'}], m, F, 'm, кг', 'сила тяжести', 'fg', 'Н')}
+        ${note('Прямая','Удвоил массу — удвоил силу. Не квадрат: g постоянна, F растёт линейно.')}
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        ${physShot('g_four.mp4','4 кг · F = ?')}
+        ${note('Проверка','4 · 10 = 40 Н. Не 4 (забыл g) и не 400 (g не 100).')}
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        ${physShot('g_twelve.mp4','120 Н → m = ?')}
+        ${pred(st,'p5','120 Н. Масса?',[{k:'12',t:'12 кг'},{k:'1200',t:'1200 кг'},{k:'1',t:'1,2 кг'}])}
+        ${st.p5?note('Наоборот','m = F : g = 120 : 10 = 12 кг. Силу делим на десять.'):note('Предскажи','g = 10.')}
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        ${physShot('g_dyn.mp4','пружина тянется')}
+        ${note('Динамометр','Пружина со шкалой. Чем сильнее сила — тем длиннее пружина. Ньютон — единица силы, в честь Исаака Ньютона.')}
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        ${physShot('g_scale.mp4','давишь на опору')}
+        ${pred(st,'p7','Вес — это сила на?',[{k:'sup',t:'опору или подвес'},{k:'body',t:'само тело'},{k:'air',t:'воздух'}])}
+        ${st.p7?note('Вес P','Тело давит на пол или тянет шнур. Это вес. Тяжесть приложена к телу, вес — к опоре. В покое числа равны, точки приложения разные.'):note('Предскажи','Куда приложена сила?')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${physShot('g_hang.mp4','вес на шнуре')}
+        ${note('Покой','P = m g. Шнур тянет вверх с той же силой, с какой Земля тянет вниз. Равновесие. Две силы, одно число.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${physShot('g_moon.mp4','g ≈ 1,6 Н/кг')}
+        ${note('Луна','Притяжение слабее примерно в 6 раз. 6 кг там → около 10 Н. На Земле те же 6 кг → 60 Н.')}
+      </div>`;
+    } else if(step===10){
+      const Fe=Fg(m,10), Fm=Fg(m,1.6);
+      const pE=Array.from({length:13},(_,i)=>[i, i*10]);
+      const pM=Array.from({length:13},(_,i)=>[i, Math.round(i*1.6*10)/10]);
+      h=`<div class="wv-col">
+        ${physShot('g_split.mp4', 'm = '+m+' кг  ·  Земля '+Fe+' Н  ·  Луна '+Fm+' Н')}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">m
+          <input type="range" min="1" max="12" value="${m}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].m=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${m} кг</b>
+        </label>
+        ${physChart([{pts:pE,col:GOLD,name:'Земля, g = 10'},{pts:pM,col:BLUE,name:'Луна, g = 1,6'}], m, Fe, 'm, кг', 'сила тяжести', 'gm', 'Н')}
+        ${note('Масса одна','Ползунок не меняет массу — меняет только две силы. 6 кг есть 6 кг везде.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        ${physShot('g_astro.mp4','опора исчезла')}
+        ${pred(st,'p11','На орбите вес?',[{k:'0',t:'ноль'},{k:'g',t:'как на Земле'},{k:'m0',t:'масса стала нулём'}])}
+        ${st.p11?note('Невесомость','Вес — про опору. Опоры нет — вес ноль. Сила тяжести есть: без неё станция улетела бы по прямой. Масса та же.'):note('Предскажи','Вес и тяжесть — не одно и то же.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        ${physShot('g_lift.mp4','лифт')}
+        ${pred(st,'p12','Разгон вверх. Вес?',[{k:'up',t:'растёт'},{k:'dn',t:'падает'},{k:'m',t:'растёт масса'}])}
+        ${st.p12?note('Перегрузка','Разгон вверх — пол давит сильнее, вес растёт. Торможение — «отпускает». Масса не менялась ни на грамм.'):note('Предскажи','Что чувствуешь в лифте?')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        ${physShot('g_seven.mp4','7 кг · F = ?')}
+        ${note('Счёт','7 · 10 = 70 Н. 5 кг → 50 Н, 20 кг → 200 Н. Всегда × 10.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${physShot('g_twelve.mp4','120 Н · m = ?')}
+        ${note('Обратно','120 : 10 = 12 кг. 60 Н → 6 кг, 100 Н → 10 кг. Всегда : 10.')}
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        ${physShot('g_still.mp4','4 кг · F = ?')}
+        ${cards([['1','F = m g, g ≈ 10',GOLD],['2','вес — на опору',BLUE],['3','масса не от планеты',GREEN],['4','невесомость ≠ нет тяжести',MUTED]])}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">сила в ньютонах?</div>
+        ${note('Проверка','40 Н. Тяжесть 4 кг на Земле.')}
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[101]=visB101;
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===101){ arr[i]=L101; f=true; break; } }
+    if(!f) arr.push(L101);
+  })();
+})();
