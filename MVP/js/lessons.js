@@ -8925,8 +8925,9 @@ function visL108(el){
       const names=['твёрдое: лёд','жидкое: вода','газообразное: пар'];
       const liq=[62,54,26][s3], cols=['rgba(200,240,255,.85)','rgba(120,200,255,.75)','rgba(220,240,255,.28)'][s3];
       h=col(big('Три состояния одного вещества'),
-        lab(put('70px','46%',g108('beaker',cols,liq,names[s3]))+put('190px','46%',g108('beaker',s3===2?'rgba(220,240,255,.3)':'rgba(200,240,255,.85)',[26,46,16][s3],s3===2?'испарение':'вода')),
+        lab(put('70px','46%',g108('beaker',cols,liq,''))+put('190px','46%',g108('beaker',s3===2?'rgba(220,240,255,.3)':'rgba(200,240,255,.85)',[26,46,16][s3],s3===2?'':'')),
           put('76%','80%',`<div style="font-size:20px">${s3===0?'❄️':(s3===1?'💧':'☁️')}</div>`)),
+        `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:3px 0">${names.map((nm,i)=>`<span style="padding:2px 9px;border-radius:9px;border:1px solid ${i===s3?'#ffd76a':'rgba(127,184,160,.45)'};font-size:11.5px;color:${i===s3?'#ffd76a':'#cfe6ff'}">${nm}</span>`).join('')}</div>`+
         row(btn(s3===0?'нагреть лёд':(s3===1?'вскипятить воду':'заморозить пар'),`l108Act('${lk}','state')`),btn('↺',`l108Act('${lk}','reset')`)),
         sml('лёд → вода → пар: это одно вещество вода в разных состояниях. Нагреваем — переход вправо, охлаждаем — влево'));
     } else if(step===4){
