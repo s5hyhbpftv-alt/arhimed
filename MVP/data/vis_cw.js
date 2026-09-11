@@ -2,6 +2,17 @@
    Заменяет записи ARH_LESSONS на обычные уроки с explain; WAVE_C[id] рисует
    уникальный интерактивный виджет в #lvis по шагу LV.step. */
 window.WAVE_C = window.WAVE_C || {};
+window._waveCss = window._waveCss || function(id, css){
+  try{
+    if(!document.getElementById(id)){
+      const s=document.createElement('style');
+      s.id=id;
+      s.textContent=String(css).replace(/<\/?style>/gi,'');
+      document.head.appendChild(s);
+    }
+  }catch(e){}
+};
+
 
 /* ================= УРОК 399 · Многочлены: сложение и умножение ================= */
 (function(){
@@ -1350,100 +1361,293 @@ window.WAVE_C = window.WAVE_C || {};
     id: 411, title: 'Принцип крайнего', ico: '🌟',
     src: 'Математика · 7 класс · Олимп-7: крайний элемент', subj: 'math',
     explain: [
-      'Принцип крайнего — один из красивейших приёмов олимпиадной математики. Идея проста: среди всех объектов задачи выбери КРАЙНИЙ — самый большой, самый маленький, самый близкий — и внимательно посмотри на него. Часто именно он раскрывает всю задачу!',
-      'Пример: докажи, что среди любых трёх целых чисел найдутся два одной чётности. Чётных-нечётных вариантов всего 2, а чисел 3. По принципу Дирихле два числа попадут в одну «клетку» — значит, они одной чётности!',
-      'Обобщение: при делении на m возможны ровно m остатков: 0, 1, …, m−1. Если взять m + 1 чисел, какие-то два дадут ОДИНАКОВЫЙ остаток. А раз остатки равны, их разность делится на m. Готовый инструмент!',
-      'Смотри на картинку: 4 числа, а «клеток» с остатками по модулю 3 всего три. Куда-то обязательно попадут двое — например, a и b. У них одинаковый остаток → a − b делится на 3.',
-      'Другой вариант крайнего: выбери НАИМЕНЬШИЙ делитель d > 1 числа n. Он обязан быть ПРОСТЫМ! Ведь если у d есть делитель поменьше, то и у n он есть — противоречие с выбором наименьшего.',
-      'Мощная разновидность — метод наименьшего контрпримера: чтобы доказать утверждение для всех чисел, предположи, что есть контрпример, и возьми НАИМЕНЬШИЙ. Покажи, что из него получается ещё меньший — противоречие! Значит, контрпримеров нет.',
-      'Как применять? Спроси себя: «Какой элемент тут самый крайний?» Самый большой угол, самый длинный отрезок, самое маленькое число — изучи его свойства, и решение часто находится само.',
-      'Принцип крайнего срабатывает, когда нужно: доказать, что «что-то всегда существует», найти максимум или минимум, или когда прямое доказательство зашло в тупик.',
-      'Теперь проверь себя: что выбирают, применяя принцип крайнего? Вспомни: самый большой или самый маленький элемент!'
+      'Загадка: в очереди пятеро разного роста. Кого спросить, чтобы понять про всех сразу? Не среднего — крайнего: самого высокого или самого низкого. Этот ход и есть принцип крайнего.',
+      'Крайний — самый большой, самый маленький, самый левый, самый близкий. Его свойства жёсткие: дальше уже некуда. Поэтому из него часто следует вся задача.',
+      'Три целых числа и две «коробки»: чёт и нечет. Нажми числа — они сядут в коробки. Когда третий сядет, в одной коробке окажутся двое. Это принцип Дирихле: клеток меньше, чем жильцов.',
+      'Не «может быть», а «обязательно». Три кролика, две клетки — хотя бы в одной двое. Так доказывают «найдутся два одной чётности», не перебирая все тройки.',
+      'Остатки при делении на 3: 0, 1, 2. Ровно три коробки. Четыре числа — снова Дирихле: какие-то два с одним остатком. Нажми число — оно само найдёт коробку.',
+      'Если остатки равны, разность делится на 3. 7 и 4 оба дают остаток 1, 7 − 4 = 3. Это уже готовый инструмент: «возьми на одно больше, чем остатков».',
+      'Другой край: наименьший делитель d > 1 числа n. Нажми делители 12. Самый маленький больше единицы — двойка. Она простая. Так всегда.',
+      'Почему простой? Если у d есть делитель меньше, он делит и n — нашёлся делитель ещё меньше. А мы брали самый маленький. Противоречие. Значит, d простое.',
+      'Метод наименьшего контрпримера: предположи, что утверждение ложно, возьми самый маленький контрпример и построй из него ещё меньше. Этого не бывает — значит, контрпримеров нет.',
+      'Нажми ступени: «есть контрпример» → «самый маленький» → «ещё меньше» → тупик. Крайний снова работает, только теперь это край среди плохих примеров.',
+      'В геометрии крайний — самый большой угол, самая длинная сторона. В числах — минимум или максимум. Вопрос один: кто тут на краю и что из этого следует?',
+      'Когда применять: надо доказать, что «что-то есть»; ищешь максимум или минимум; прямое доказательство зашло в тупик. Тогда зови крайнего.',
+      'Живой Дирихле: дырок n, голубей n+1. Подвинь ползунок. Как только голубей больше, чем дырок, кто-то делит квартиру. Это и есть гарантия, не вероятность.',
+      'Рецепт: найди край. Спроси, почему он крайний. Выведи следствие. Для Дирихле сравни «сколько мест» и «сколько жильцов».',
+      'В карман: крайний — минимум или максимум. Три числа — два одной чётности. m+1 чисел — два с одним остатком по модулю m. Наименьший делитель > 1 — простой.',
+      'Проверка: что выбирают? Не случайный и не средний. Самый маленький или самый большой — крайний элемент.'
     ],
     check: { q: 'Что выбирают, применяя принцип крайнего?', choices: ['наименьший или наибольший элемент', 'случайный элемент', 'средний элемент', 'все элементы сразу'], ans: 0,
-      exp: 'Рассматривают экстремальный (крайний) элемент.' },
+      exp: 'Смотрят на экстремальный элемент: самый большой или самый маленький.' },
     tasks: [
       { q: 'Сколько существует остатков при делении на 2 (чётностей)?', kind: 'unit', ans: 2, tol: 0,
-        hints: ['Чёт и нечет.', 'Два остатка: 0 и 1.'], sol: '2' },
-      { q: 'Среди 4 целых чисел гарантированно найдутся два…', kind: 'choice', choices: ['с одинаковым остатком при делении на 3', 'с разными остатками', 'нечётных', 'чётных'], ans: 0, tol: 0,
-        hints: ['Остатков по модулю 3 всего три.', '4 числа, 3 остатка → два совпадут.'], sol: 'с одинаковым остатком по mod 3' }
+        hints: ['Чёт и нечет.', 'Остатки 0 и 1 — два штуки.'], sol: '2' },
+      { q: 'Среди 4 целых чисел гарантированно найдутся два…', kind: 'choice',
+        choices: ['с одинаковым остатком при делении на 3', 'с разными остатками', 'нечётных', 'чётных'], ans: 0, tol: 0,
+        hints: ['Остатков по модулю 3 ровно три.', '4 жильца, 3 комнаты — двое в одной.'], sol: 'с одинаковым остатком по mod 3' }
     ]
   };
-  const boxes=(count,items,fill)=>`<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;max-width:340px">
-    ${Array.from({length:count},(_,i)=>`<div style="border:2px solid ${fill===i?'#d9a441':'#3d5c49'};border-radius:10px;padding:8px;text-align:center;min-width:56px"><div style="font-size:11px;color:#8fa08f">клетка ${i+1}</div><div style="font-size:16px;color:#ffd76a;font-weight:bold">${items[i]||'—'}</div></div>`).join('')}
-  </div>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f', PINK='#ff8ac0';
+  const CSS=`<style>
+    @keyframes l411ink{to{stroke-dashoffset:0}}
+    @keyframes l411pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l411pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l411glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l411-ink{animation:l411ink 1.35s cubic-bezier(.2,.75,.15,1) forwards}
+    .l411-dot{transform-box:fill-box;transform-origin:center;animation:l411pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l411-pulse{animation:l411pulse 1.6s ease-in-out infinite}
+    .l411-glow{animation:l411glow 1.8s ease-in-out infinite}
+    .l411-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l411-ink" style="animation-duration:${dur||1.3}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l411-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l411', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+
   function visC411(el){
+    try{ window._waveCss && _waveCss('css-l411', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'411';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const holes=Math.max(2, Math.min(5, +(st.h==null?3:st.h)));
     let h='';
+
     if(step===0){
+      const open=!!st.open;
+      const hs=[72,100,128,90,110];
       h=`<div class="wv-col">
-        <div class="wv-big">Принцип крайнего</div>
-        <div style="font-size:48px" class="wv-glow">🌟</div>
-        <div class="wv-sml" style="max-width:330px">выбери <b style="color:#ffd76a">самый крайний</b> объект — и внимательно посмотри на него!</div>
-        <div class="wv-row" style="gap:6px">${chip('самый большой','#8fd1a8')}${chip('самый маленький','#7fd1ff')}${chip('самый близкий','#ffd76a')}</div>
+        ${frame(
+          hs.map((hh,i)=>{
+            const x=32+i*42;
+            const ext=i===0||i===4;
+            return `<rect x="${x}" y="${160-hh}" width="28" height="${hh}" rx="6" fill="${ext&&open?GOLD:BLUE}33" stroke="${ext&&open?GOLD:BLUE}" stroke-width="${ext&&open?3:1.6}" ${doDraw?ink(2*(28+hh),1.1,i*.08):''}/>`+
+              lab(x+14, 176, ['Аня','Боря','Вика','Дима','Егор'][i], ext&&open?GOLD:MUTED, 'middle', 10);
+          }).join('')+
+          lab(120, 28, open?'крайние: Аня и Егор':'кого спросить?', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Не среднего','Самый высокий и самый низкий — жёсткие края. Из их свойств часто следует вся задача. Это принцип крайнего.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Три числа, две чётности</div>
-        ${boxes(2,['чёт','нечет'])}
-        <div class="wv-ans" style="font-size:16px;color:#8fd1a8">3 числа, 2 «клетки» → двое в одной!</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:340px">
+          ${[['самый большой',GREEN],['самый маленький',BLUE],['самый близкий',GOLD],['самый левый',PINK]].map((x,i)=>
+            `<div class="wv-pop" style="animation-delay:${i*.08}s;border:2px solid ${x[1]};border-radius:12px;padding:8px 12px;color:${x[1]};font-size:14px">${x[0]}</div>`).join('')}
+        </div>
+        ${note('Дальше некуда','Крайний тем и хорош, что его нельзя сдвинуть ещё дальше. Любое «а вдруг есть больше» уже отрезано.')}
       </div>`;
     } else if(step===2){
+      const placed=st.par||[];
+      const nums=[4,7,9];
+      const even=placed.filter(n=>n%2===0);
+      const odd=placed.filter(n=>n%2);
       h=`<div class="wv-col">
-        <div class="wv-big">Остатки по модулю m</div>
-        <div style="background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:14px;padding:10px 12px;max-width:340px;width:100%">
-          <div style="font-size:15px;color:#e8dcc8;text-align:center;line-height:1.6">при делении на m — ровно <b style="color:#7fd1ff">m остатков</b>: 0, 1, …, m−1. Взяли m+1 чисел → два с одинаковым остатком!</div>
+        ${frame(
+          `<rect x="20" y="50" width="90" height="120" rx="12" fill="${BLUE}14" stroke="${BLUE}" ${doDraw?ink(420,1.1,0):''}/>`+
+          lab(65, 42, 'чёт', BLUE)+
+          even.map((n,i)=>lab(65, 80+i*28, String(n), GOLD, 'middle', 16)).join('')+
+          `<rect x="130" y="50" width="90" height="120" rx="12" fill="${GREEN}14" stroke="${GREEN}" ${doDraw?ink(420,1.1,.1):''}/>`+
+          lab(175, 42, 'нечет', GREEN)+
+          odd.map((n,i)=>lab(175, 80+i*28, String(n), GOLD, 'middle', 16)).join('')
+        )}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${nums.map(n=>`<button type="button" class="btn" ${placed.indexOf(n)>=0?'disabled':''} style="opacity:${placed.indexOf(n)>=0?.4:1}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].par=(CHS[k].par||[]).concat([${n}]);chRender(0);}catch(e){}">${n}</button>`).join('')}
         </div>
+        ${placed.length>=3?`<div class="wv-ans" style="font-size:15px">трое сели → в одной коробке двое</div>`:''}
+        ${note('Три жильца, две комнаты','Неважно, какие числа: третий обязан сесть к кому-то. Два одной чётности — не случайность, а закон.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        <div class="wv-big">4 числа, 3 клетки mod 3</div>
-        ${boxes(3,['a','b','—'],1)}
-        <div class="wv-sml">a и b с одинаковым остатком → a − b ⋮ 3</div>
+        ${frame(
+          lab(120, 50, '3 кролика', GOLD, 'middle', 18)+
+          lab(120, 90, '2 клетки', BLUE, 'middle', 18)+
+          lab(120, 140, '⇒ двое вместе', GREEN, 'middle', 16)+
+          lab(120, 180, 'Дирихле', MUTED)
+        )}
+        ${note('Не «может», а «обязано»','Принцип Дирихле — родственник крайнего: смотришь не на среднее, а на переполненную клетку. Она-то и крайняя.')}
       </div>`;
     } else if(step===4){
+      const nums=[4,5,7,9];
+      const placed=st.mod||[];
+      const bins=[[],[],[]];
+      placed.forEach(n=>bins[n%3].push(n));
       h=`<div class="wv-col">
-        <div class="wv-big">Наименьший делитель — простой!</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #d9a441;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">взяли наименьший делитель d > 1 числа n. Если у d есть делитель меньше — он есть и у n → <b style="color:#ffd76a">противоречие</b>! Значит, d простой.</div>
+        ${frame(
+          [0,1,2].map((r,i)=>{
+            const x=22+i*72;
+            const full=bins[r].length>=2;
+            return `<rect x="${x}" y="48" width="64" height="130" rx="10" fill="${full?GOLD:BLUE}18" stroke="${full?GOLD:BLUE}"/>`+
+              lab(x+32, 40, 'ост. '+r, full?GOLD:MUTED)+
+              bins[r].map((n,j)=>lab(x+32, 80+j*28, String(n), GOLD, 'middle', 15)).join('');
+          }).join('')
+        )}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${nums.map(n=>`<button type="button" class="btn" style="opacity:${placed.indexOf(n)>=0?.4:1}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};if((CHS[k].mod||[]).indexOf(${n})<0){CHS[k].mod=(CHS[k].mod||[]).concat([${n}]);}chRender(0);}catch(e){}">${n}</button>`).join('')}
+        </div>
+        ${placed.length>=4?`<div class="wv-ans" style="font-size:15px">4 числа, 3 остатка — двое совпали</div>`:''}
+        ${note('Модуль 3','Коробок ровно три. Четвёртое число повторит остаток. Жми по одному — увидишь, какая коробка переполнится.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        <div class="wv-big">Метод наименьшего контрпримера</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-size:14px;color:#e8dcc8">
-          <div class="wv-pop">1️⃣ предположи: есть контрпример</div>
-          <div class="wv-pop2">2️⃣ возьми НАИМЕНЬШИЙ</div>
-          <div class="wv-pop2">3️⃣ построй из него ещё меньший</div>
-          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">противоречие → контрпримеров нет!</div>
-        </div>
+        ${frame(
+          lab(120, 56, '7 и 4', GOLD, 'middle', 20)+
+          lab(120, 96, 'оба остаток 1', BLUE)+
+          lab(120, 140, '7 − 4 = 3', GREEN, 'middle', 18)+
+          lab(120, 176, 'разность ⋮ 3', MUTED)
+        )}
+        ${note('Готовый инструмент','Взял на одно число больше, чем остатков — получил пару с равным остатком и разность, которая делится на m.')}
       </div>`;
     } else if(step===6){
+      const divs=[1,2,3,4,6,12];
+      const on=st.div||[];
+      const mini=on.filter(x=>x>1).sort((a,b)=>a-b)[0];
       h=`<div class="wv-col">
-        <div class="wv-big">Как применять</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #8fd1a8;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">спроси себя: «Какой элемент <b style="color:#8fd1a8">самый крайний</b>?» Самый большой угол, самый длинный отрезок, самое маленькое число — изучи его!</div>
+        ${frame(
+          lab(120, 36, 'делители 12', GOLD)+
+          divs.map((d,i)=>{
+            const x=28+(i%3)*70, y=70+Math.floor(i/3)*70;
+            const sel=on.indexOf(d)>=0;
+            const star=mini===d;
+            return `<rect x="${x}" y="${y}" width="56" height="48" rx="10" fill="${star?GOLD:sel?GREEN:BLUE}22" stroke="${star?GOLD:sel?GREEN:'#3d5c49'}"/>`+
+              lab(x+28, y+30, String(d), star?GOLD:sel?GREEN:MUTED, 'middle', 16);
+          }).join('')
+        )}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${divs.map(d=>`<button type="button" class="btn" style="padding:8px 10px;border-color:${on.indexOf(d)>=0?GOLD:'#3d5c49'}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};const a=CHS[k].div||[];if(a.indexOf(${d})<0)a.push(${d});CHS[k].div=a;chRender(0);}catch(e){}">${d}</button>`).join('')}
+        </div>
+        ${mini?`<div class="wv-ans" style="font-size:15px">наименьший > 1 — это ${mini}, он простой</div>`:''}
+        ${note('Собери делители','Жми все делители 12. Крайний среди тех, что больше 1 — двойка. Она простая. Так у любого n > 1.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Когда применять</div>
-        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[
-            ['доказать, что «что-то есть»','крайний элемент','#7fd1ff'],
-            ['найти максимум/минимум','изучи край','#8fd1a8'],
-            ['прямое доказательство в тупике','попробуй крайнего!','#ffd76a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+            ['взяли наименьший d > 1',GOLD],
+            ['если d составной — есть делитель меньше',BLUE],
+            ['он делил бы и n',MUTED],
+            ['противоречие → d простой',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[1]};border-radius:10px;padding:8px 12px;color:#e8dcc8;font-size:14px;text-align:left">${x[0]}</div>`).join('')}
         </div>
+        ${note('Край запрещает составное','Именно потому, что d самый маленький, он не может разложиться. Крайний сам себя защищает.')}
+      </div>`;
+    } else if(step===8){
+      const k=Math.max(0, Math.min(3, st.k==null?0:+st.k));
+      const steps=['есть контрпример','возьми наименьший','построй ещё меньше','тупик: такого не бывает'];
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
+          ${steps.map((t,i)=>`<div class="wv-pop" style="opacity:${i<=k?1:.3};animation-delay:${i*.08}s;border:1px solid #3d5c49;border-left:4px solid ${i===3?GREEN:GOLD};border-radius:10px;padding:8px 12px;color:#e8dcc8;font-size:14px;text-align:left">${i+1}. ${t}</div>`).join('')}
+        </div>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].k=Math.min(3,(CHS[k].k||0)+1);chRender(0);}catch(e){}">${k>=3?'Цепочка замкнулась':'Следующий шаг'}</button>
+        ${note('Наименьший плохой','Если из самого маленького контрпримера делается ещё меньше, край ломается. Значит, плохих примеров нет.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 50, 'числа → min / max', GOLD)+
+          lab(120, 100, 'фигуры → длинная сторона', BLUE)+
+          lab(120, 150, 'Дирихле → полная клетка', GREEN)
+        )}
+        ${note('Один вопрос','Кто тут на краю? Что из этого следует? Если ответ находится — принцип сработал.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['доказать, что «что-то есть»','крайний элемент',BLUE],
+            ['найти максимум или минимум','изучи край',GREEN],
+            ['прямое доказательство в тупике','попробуй крайнего',GOLD]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+        </div>
+        ${note('Три случая','Не на каждый номер. Когда задача про существование или про «самый-самый» — это его поле.')}
+      </div>`;
+    } else if(step===11){
+      const pigeons=holes+1;
+      h=`<div class="wv-col">
+        ${frame(
+          Array.from({length:holes},(_,i)=>{
+            const x=24+i*(200/holes);
+            const w=200/holes-8;
+            return `<rect x="${x}" y="70" width="${w}" height="90" rx="8" fill="${BLUE}18" stroke="${BLUE}"/>`+lab(x+w/2, 160, 'дыра', MUTED, 'middle', 10);
+          }).join('')+
+          lab(120, 40, holes+' дыр, '+(pigeons)+' голубей', GOLD)+
+          lab(120, 200, 'кто-то не один', GREEN)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">дырок
+          <input type="range" min="2" max="5" value="${holes}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].h=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${holes}</b>
+        </label>
+        ${note('Живой Дирихле','Голубей на одного больше. Гарантия: хотя бы одна дыра с двумя. Не «может», а «обязана».')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Найди край: min, max, полная клетка',GOLD],
+            ['2','Спроси, почему он крайний',BLUE],
+            ['3','Выведи следствие',GREEN],
+            ['4','Для Дирихле: места vs жильцы',MUTED]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[0]==='1'?GOLD:BLUE};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Сначала край, потом свойство, потом вывод. Не начинай со среднего — там свободы слишком много.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 70, 'край = min или max', GOLD, 'middle', 16)+
+          lab(120, 114, '3 числа → одна чётность в паре', BLUE, 'middle', 13)+
+          lab(120, 154, 'наименьший делитель > 1 простой', GREEN, 'middle', 13)
+        )}
+        ${note('Связка','Дирихле — про переполненную клетку. Крайний делитель — про простое. Контрпример — про самый маленький плохой.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 80, 'кто на краю?', GOLD, 'middle', 22)+
+          lab(120, 130, 'что из этого следует?', MUTED)
+        )}
+        ${note('В карман','Бери минимум или максимум. Три числа — два одной чётности. Четыре числа — два с одним остатком по модулю 3.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        <div class="wv-sml">что выбирают при принципе крайнего?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:15px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">самый большой или …?</div>
+        ${frame(lab(120, 100, 'кого выбирают?', GOLD, 'middle', 18)+lab(120, 140, 'средний? случайный? крайний?', MUTED, 'middle', 13))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:16px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">самый большой или …?</div>
+        ${note('Проверка','Наименьший или наибольший. Не средний и не все сразу.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_C[411]=visC411;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===411){ window.ARH_LESSONS[i]=L411; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===411){ arr[i]=L411; f=true; break; } }
+    if(!f) arr.push(L411);
+  })();
 })();
 /* ================= УРОК 412 · Игры и раскраски: уровень 7 ================= */
 (function(){
@@ -1451,108 +1655,309 @@ window.WAVE_C = window.WAVE_C || {};
     id: 412, title: 'Игры и раскраски: уровень 7', ico: '🎨',
     src: 'Математика · 7 класс · Олимп-7: игры', subj: 'math',
     explain: [
-      'Представь доску 7×7 — как шахматную, только 7 на 7. В ней 7·7 = 49 клеток — НЕЧЁТНОЕ число. Эта нечётность станет ключом к целому классу задач!',
-      'Вопрос: можно ли замостить доску 7×7 плитками-домино 1×2? Каждая плитка накрывает 2 клетки. Если бы доску можно было замостить, число клеток делилось бы на 2. Но 49 не делится на 2! Значит, нельзя.',
-      'Раскрась доску в шахматном порядке: синие и голубые клетки. Каждая плитка домино накрывает ровно одну синюю и одну голубую! Если цветов не поровну — замостить нельзя.',
-      'Считаем цвета на доске 7×7: синих 25 (углы и нечётные), голубых 24. Не поровну! Каждая плитка брала бы поровну — по одной клетке каждого цвета. Раз поровну не выходит, замощение невозможно. Красивое доказательство!',
-      'Раскраска — секретное оружие: она превращает геометрию в простой подсчёт. Не нужно перебирать — достаточно сравнить количества клеток разных цветов!',
-      'Вторая классика: два игрока по очереди закрашивают по одной клетке доски 7×7. Кто не может сделать ход — проиграл. Всего клеток 49 — ходов будет ровно 49.',
-      'Последний ход делает ПЕРВЫЙ игрок: ходы идут 1-й, 3-й, 5-й, …, 49-й — все нечётные номера у первого! Значит, первый красит последнюю клетку и выигрывает.',
-      'Запомни рецепт для игр и раскрасок: 1) раскрась доску (шахматно или по цветам); 2) посчитай клетки каждого цвета; 3) выясни, сколько клеток «забирает» плитка или ход; 4) несоответствие → докажи «нельзя»! А для игр: посчитай число ходов — чёт или нечёт решает исход.',
-      'Теперь проверь себя: можно ли замостить домино доску 7×7? Вспомни: 49 клеток, домино накрывает 2!'
+      'Загадка: доска 7 на 7, плитки домино 1 на 2. Можно ли закрыть всё без дырок и наложений? Не рисуй сто вариантов — сосчитай.',
+      'Клеток 7 · 7 = 49. Нечётное число. Каждое домино закрывает две клетки. 49 на 2 не делится — хотя бы одна клетка останется. Уже ответ: нельзя.',
+      'Нажми «Считать»: клетки загораются по одной до 49. Нечёт виден глазами. Для замощения нужен чётный счёт.',
+      'Раскрась в шахматку. Соседние клетки разного цвета. Домино всегда ложится на одну тёмную и одну светлую — оно покрывает ребро между соседями.',
+      'На доске 7×7 тёмных 25, светлых 24. Углы одного цвета, сторона нечётная — тёмных на одну больше. Плитки забирали бы поровну. Поровну нет — замостить нельзя.',
+      'Нажми «Класть домино»: плитки закрывают пары, в конце остаётся одна клетка. Сколько ни клади, одна лишняя. Это та самая 25-я тёмная.',
+      'Раскраска сильнее голого счёта. На 8×8 клеток 64, чётно, домино влезает. Вырежи два противоположных угла — оба одного цвета, останется 30 и 32. Чётно, а замостить всё равно нельзя.',
+      'Вторая задача: двое по очереди красят по клетке 7×7. Кто не может сходить — проиграл. Ходов будет ровно 49, по числу клеток.',
+      'Жми клетки. Первый — золото, второй — голубой. Когда доска полная, последний ход за первым: 1, 3, 5, …, 49 — нечётные номера.',
+      'Нечётное число ходов → последний ход у того, кто начал. Первый выигрывает, если оба играют до конца. Стратегия тут простая: ходы не кончаются раньше.',
+      'На 8×8 клеток 64, чётно. Последний ход — 64-й, у второго. Сменилась чётность — сменился победитель. Рецепт игр: посчитай ходы.',
+      'Связка: нечёт доски бьёт домино. Неравные цвета бьют домино даже на чётной доске с вырезами. Нечёт ходов отдаёт последний ход первому.',
+      'Подвинь размер n. Смотри, чётно ли n² и равны ли цвета. На нечётном n тёмных больше на 1. На чётном — поровну, и домино проходит.',
+      'Рецепт: раскрась. Посчитай цвета. Посмотри, что забирает ход или плитка. Несостыковка — доказал «нельзя». Для игр — чёт или нечет числа ходов.',
+      'В карман: 7×7 = 49, нечётно. Домино по 2. Цвета 25 и 24. Игра в клетки — первый берёт 49-й ход и выигрывает.',
+      'Проверка: можно ли замостить 7×7 домино? Нет. Не из-за «не получилось руками», а потому что 49 нечётно и цвета не равны.'
     ],
     check: { q: 'Можно ли замостить домино доску 7×7?', choices: ['нет', 'да', 'да, если перевернуть', 'нельзя узнать'], ans: 0,
-      exp: '49 клеток нечётно, а домино покрывает 2.' },
+      exp: '49 клеток нечётно, домино покрывает 2. Плюс цвета 25 и 24.' },
     tasks: [
       { q: 'Сколько клеток в доске 7×7?', kind: 'unit', ans: 49, tol: 0,
-        hints: ['7 · 7.', '49 клеток.'], sol: '49' },
-      { q: 'На доске 7×7 красят по одной клетке, проигрывает не сумевший сходить. Кто выигрывает?', kind: 'choice', choices: ['первый', 'второй', 'ничья', 'нельзя узнать'], ans: 0, tol: 0,
-        hints: ['49 — нечётно.', 'Последнюю клетку красит первый.'], sol: 'первый' }
+        hints: ['7 · 7.', '49.'], sol: '49' },
+      { q: 'На доске 7×7 красят по одной клетке, проигрывает не сумевший сходить. Кто выигрывает?', kind: 'choice',
+        choices: ['первый', 'второй', 'ничья', 'нельзя узнать'], ans: 0, tol: 0,
+        hints: ['Ходов 49, число нечётное.', 'Последнюю клетку красит первый.'], sol: 'первый' }
     ]
   };
-  const board=(n,cutColor)=>`<svg viewBox="0 0 200 200" style="width:190px;height:190px">
-    ${Array.from({length:n*n},(_,i)=>{ const r=Math.floor(i/n), c=i%n;
-      return `<rect x="${5+c*(190/n)}" y="${5+r*(190/n)}" width="${190/n}" height="${190/n}" fill="${(r+c)%2?'#4a93d0':'#cfe0ff'}" stroke="#0f1a24" stroke-width="1"/>`; }).join('')}
-  </svg>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l412ink{to{stroke-dashoffset:0}}
+    @keyframes l412pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+    @keyframes l412pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l412glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 7px ${GOLD})}}
+    .l412-ink{animation:l412ink 1.3s cubic-bezier(.2,.75,.15,1) forwards}
+    .l412-dot{transform-box:fill-box;transform-origin:center;animation:l412pop .35s cubic-bezier(.2,1.4,.4,1) both}
+    .l412-pulse{animation:l412pulse 1.6s ease-in-out infinite}
+    .l412-glow{animation:l412glow 1.8s ease-in-out infinite}
+    .l412-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.2px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l412-ink" style="animation-duration:${dur||1.25}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(14, Math.min(226, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l412-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||11}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l412', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  const N=7, CS=22, OX=24, OY=34;
+  function cell(r,c){ return [OX+c*CS, OY+r*CS]; }
+  function isDark(r,c){ return (r+c)%2===0; }
+  function board(opts){
+    opts=opts||{};
+    const paint=opts.paint||[];
+    const cover=opts.cover||[];
+    const lit=opts.lit==null?49:opts.lit;
+    const showColor=!!opts.color;
+    const leftover=opts.leftover;
+    let d='';
+    let k=0;
+    for(let r=0;r<N;r++) for(let c=0;c<N;c++){
+      const [x,y]=cell(r,c);
+      const idx=r*N+c;
+      const on=k<lit; k++;
+      const dark=isDark(r,c);
+      let fill='#1e3328';
+      if(on && showColor) fill=dark?'rgba(255,215,106,.35)':'rgba(127,209,255,.28)';
+      else if(on) fill='rgba(127,209,255,.16)';
+      const pv=paint[idx];
+      if(pv===1) fill=GOLD;
+      if(pv===2) fill=BLUE;
+      if(cover[idx]) fill=GREEN;
+      if(leftover && leftover[0]===r && leftover[1]===c) fill=RED;
+      d+=`<rect x="${x}" y="${y}" width="${CS-1.2}" height="${CS-1.2}" rx="3" fill="${fill}" stroke="#0c1a14" stroke-width="0.6"/>`;
+    }
+    return d;
+  }
+  function counts(n){
+    const tot=n*n, dark=(tot+1)>>1, light=tot-dark;
+    return {tot:tot, dark:dark, light:light, odd:tot%2===1};
+  }
+
   function visC412(el){
+    try{ window._waveCss && _waveCss('css-l412', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'412';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const lit=Math.max(0, Math.min(49, st.lit==null?0:+st.lit));
+    const dom=Math.max(0, Math.min(24, st.dom==null?0:+st.dom));
+    const nn=Math.max(4, Math.min(8, +(st.n==null?7:st.n)));
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Доска 7×7: 49 клеток</div>
-        ${board(7)}
-        <div class="wv-sml">7 · 7 = 49 — нечётное число! Это ключ к задачам</div>
+        ${frame(
+          board({lit:49, color:true})+
+          lab(120, 22, open?'49 клеток, нечётно':'закроем домино?', GOLD, 'middle', 13)+
+          lab(120, 204, open?'нельзя':'7 × 7', MUTED)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Не рисуй сто вариантов','Доска нечётная, плитка чётная. Сейчас это увидим счётом и раскраской, а не перебором.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Домино накрывает 2 клетки</div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <span style="display:inline-block;width:24px;height:24px;background:#4a93d0"></span>
-          <span style="display:inline-block;width:24px;height:24px;background:#cfe0ff"></span>
-        </div>
-        <div class="wv-ans" style="font-size:18px;color:#8fd1a8">49 : 2 не делится → замостить НЕЛЬЗЯ!</div>
+        ${frame(
+          board({lit:lit||49, color:false})+
+          lab(120, 22, '7 · 7 = 49', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].lit=Math.min(49,(CHS[k].lit||0)+7);chRender(0);}catch(e){}">${lit>=49?'Все 49':'Ещё ряд'}</button>
+        ${note('Нечётное','Каждый ряд по 7, рядов 7. Нечёт на нечет даёт нечет. Для домино это уже плохой знак.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">Раскраска — счётчик</div>
-        ${board(7)}
-        <div class="wv-sml">каждая плитка: 1 синяя + 1 голубая</div>
+        ${frame(
+          `<rect x="70" y="80" width="40" height="20" rx="4" fill="${GREEN}" ${doDraw?ink(120,1.1,0):''}/>`+
+          `<rect x="112" y="80" width="40" height="20" rx="4" fill="${BLUE}"/>`+
+          lab(120, 50, 'домино = 2 клетки', GOLD)+
+          lab(120, 140, '49 : 2 = 24 остаток 1', RED)+
+          lab(120, 176, 'одна клетка лишняя', MUTED)
+        )}
+        ${note('Деление на два','24 плитки закрыли бы 48 клеток. 49-я некуда. Это доказательство: не «мне не удалось», а «невозможно».')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        <div class="wv-big">Считаем цвета</div>
-        <div class="wv-row" style="gap:8px">
-          <div style="text-align:center;background:rgba(74,147,208,.25);border:2px solid #4a93d0;border-radius:12px;padding:8px 14px"><b style="font-size:24px;color:#7fb8e0;font-family:Georgia,serif">25</b><div style="font-size:10px;color:#9ec0a8">синих</div></div>
-          <div style="text-align:center;background:rgba(207,224,255,.12);border:2px solid #cfe0ff;border-radius:12px;padding:8px 14px"><b style="font-size:24px;color:#e8eefc;font-family:Georgia,serif">24</b><div style="font-size:10px;color:#9ec0a8">голубых</div></div>
-        </div>
-        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:7px 12px;font-size:15px;color:#ffcfc2;font-weight:bold" class="wv-ans">не поровну → нельзя!</div>
+        ${frame(
+          board({lit:49, color:true})+
+          lab(120, 22, 'шахматка', GOLD)+
+          lab(120, 204, 'соседи разного цвета', MUTED)
+        )}
+        ${note('Ребро доски','Домино кладётся на двух соседей. Соседи в шахматке всегда разного цвета. Каждая плитка: один тёмный + один светлый.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
-        <div class="wv-big">Раскраска = простой подсчёт</div>
-        <div style="background:rgba(127,209,255,.08);border:2px solid #7fd1ff;border-radius:14px;padding:10px 12px;max-width:340px;width:100%">
-          <div style="font-size:15px;color:#e8dcc8;text-align:center;line-height:1.5">раскраска превращает геометрию в <b style="color:#7fd1ff">сравнение количеств цветов</b></div>
-        </div>
+        ${frame(
+          board({lit:49, color:true})+
+          lab(70, 22, 'тёмных 25', GOLD, 'middle', 12)+
+          lab(170, 22, 'светлых 24', BLUE, 'middle', 12)+
+          lab(120, 204, 'не поровну', RED)
+        )}
+        ${note('Сторона нечётная','Углы одного цвета. На нечётной доске этот цвет встречается 25 раз, другой — 24. Плитки не могут забрать лишнюю тёмную.')}
       </div>`;
     } else if(step===5){
+      const cover={};
+      const leftover=[6,6];
+      let placed=0;
+      for(let r=0;r<7 && placed<dom;r++){
+        for(let c=0;c<6 && placed<dom;c+=2){
+          cover[r*7+c]=1; cover[r*7+c+1]=1; placed++;
+        }
+      }
+      for(let r=0;r<6 && placed<dom;r+=2){
+        cover[r*7+6]=1; cover[(r+1)*7+6]=1; placed++;
+      }
       h=`<div class="wv-col">
-        <div class="wv-big">Игра «крась клетку»</div>
-        <div style="display:flex;align-items:center;gap:8px;justify-content:center">
-          <span style="font-size:34px" class="wv-flick">🎨</span>
-          <div class="wv-sml" style="max-width:230px">по очереди красят по одной клетке · кто не сходит — проиграл</div>
-        </div>
-        <div class="wv-sml">ходов будет ровно 49!</div>
+        ${frame(
+          board({lit:49, color:true, cover:cover, leftover:dom>=24?leftover:null})+
+          lab(120, 22, dom+' домино'+(dom>=24?' · одна лишняя':''), dom>=24?RED:GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].dom=Math.min(24,(CHS[k].dom||0)+3);chRender(0);}catch(e){}">${dom>=24?'Осталась одна':'Класть домино'}</button>
+        ${note('Клади, не поможет','24 плитки, 48 клеток, красная последняя. Раскраска обещала это заранее: лишняя — тёмная.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
-        <div class="wv-big">Чей последний ход?</div>
-        <div class="wv-row" style="gap:5px;flex-wrap:wrap">${Array.from({length:49},(_,i)=>`<span style="font-size:9px;color:${i%2===0?'#ffd76a':'#8fa08f'}">${i+1}</span>`).join('')}</div>
-        <div class="wv-sml">нечётные номера (1, 3, …, 49) — у ПЕРВОГО</div>
-        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:12px;padding:8px 12px;font-size:16px;color:#ffd76a;font-weight:bold" class="wv-ans">первый красит 49-ю → выигрывает!</div>
+        ${frame(
+          lab(120, 44, '8×8 без двух углов', GOLD)+
+          Array.from({length:8},(_,r)=>Array.from({length:8},(_,c)=>{
+            const s=16, x=44+c*s, y=60+r*s;
+            const cut=(r===0&&c===0)||(r===7&&c===7);
+            const dark=(r+c)%2===0;
+            return `<rect x="${x}" y="${y}" width="${s-1}" height="${s-1}" fill="${cut?RED:(dark?'rgba(255,215,106,.35)':'rgba(127,209,255,.28)')}"/>`;
+          }).join('')).join('')+
+          lab(120, 204, '30 и 32, чётно — и всё равно нельзя', MUTED, 'middle', 11)
+        )}
+        ${note('Голый счёт слабже','64 − 2 = 62, делится на 2. Но оба угла одного цвета. Цвета 30 и 32. Домино снова бессильно. Раскраска видит то, чего деление не видит.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Рецепт</div>
-        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+        ${frame(
+          board({lit:49, color:true})+
+          lab(120, 22, 'игра: крась клетку', GOLD)+
+          lab(120, 204, 'кто не сходит — проиграл', MUTED, 'middle', 11)
+        )}
+        ${note('49 ходов','Клеток 49, ход — одна клетка. Партия длится ровно 49 ходов. Ничья ходами не кончится: доска конечная.')}
+      </div>`;
+    } else if(step===8){
+      const paint=st.paint||[];
+      const next=paint.filter(Boolean).length;
+      const who=next%2===0?1:2;
+      const full=next>=49;
+      let cells='';
+      for(let r=0;r<7;r++) for(let c=0;c<7;c++){
+        const [x,y]=cell(r,c);
+        const idx=r*7+c;
+        const pv=paint[idx];
+        const fill=pv===1?GOLD:(pv===2?BLUE:'rgba(127,209,255,.14)');
+        cells+=`<rect x="${x}" y="${y}" width="${CS-1.2}" height="${CS-1.2}" rx="3" fill="${fill}" stroke="#0c1a14" style="cursor:pointer"
+          onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};const p=(CHS[k].paint||[]).slice(); if(p[${idx}]) return; p[${idx}]=((p.filter(Boolean).length)%2===0)?1:2; CHS[k].paint=p; chRender(0);}catch(e){}"/>`;
+      }
+      h=`<div class="wv-col">
+        ${frame(cells+lab(120, 22, full?'первый сделал 49-й':'ход '+(next+1)+' · '+(who===1?'первый':'второй'), full?GREEN:GOLD)+lab(120, 204, 'золото — первый, голубой — второй', MUTED, 'middle', 11))}
+        ${note('Жми клетку на доске','Первый — золото. Второй — голубой. Когда закроешь всё, последний цвет золотой: 49 нечётно.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 60, 'ходы 1, 3, 5, …, 49', GOLD, 'middle', 16)+
+          lab(120, 110, 'все нечётные — первый', GREEN)+
+          lab(120, 154, 'последний ход выигрывает', BLUE)
+        )}
+        ${note('Чётность партии','Нечёт ходов отдаёт финал тому, кто начал. Стратегия не нужна: доска не кончится раньше 49.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(80, 80, '7×7', GOLD)+lab(80, 110, '49 нечет', GREEN)+lab(80, 140, 'первый', GOLD)+
+          lab(170, 80, '8×8', BLUE)+lab(170, 110, '64 чёт', GREEN)+lab(170, 140, 'второй', BLUE)
+        )}
+        ${note('Сменилась чётность','На 8×8 последний ход 64-й — у второго. Одно правило: посчитай ходы, посмотри чётность.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[
-            ['1️⃣','раскрась доску','#7fd1ff'],
-            ['2️⃣','посчитай клетки каждого цвета','#8fd1a8'],
-            ['3️⃣','сравни с тем, что «забирает» плитка/ход','#ffd76a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;text-align:left;font-size:14px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+            ['нечёт доски','бьёт домино',RED],
+            ['цвета 25 и 24','бьют домино',GOLD],
+            ['вырезы одного цвета','бьют даже чётную',BLUE],
+            ['нечёт ходов','последний ход первому',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
-        <div class="wv-sml">несоответствие → докажи «нельзя»!</div>
+        ${note('Связка','Счёт, раскраска, чётность ходов — три линейки. Ими меряют «можно / нельзя» и «кто выиграет».')}
+      </div>`;
+    } else if(step===12){
+      const C=counts(nn);
+      const s=Math.min(18, Math.floor(154/nn));
+      const ox=24, oy=40;
+      let brd='';
+      for(let r=0;r<nn;r++) for(let c=0;c<nn;c++){
+        const dark=(r+c)%2===0;
+        brd+=`<rect x="${ox+c*s}" y="${oy+r*s}" width="${s-1}" height="${s-1}" fill="${dark?'rgba(255,215,106,.35)':'rgba(127,209,255,.28)'}"/>`;
+      }
+      h=`<div class="wv-col">
+        ${frame(
+          brd+
+          lab(120, 22, nn+'×'+nn+' = '+C.tot+(C.odd?' нечет':' чёт'), GOLD)+
+          lab(120, 204, 'тёмных '+C.dark+' · светлых '+C.light, MUTED, 'middle', 11)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">n
+          <input type="range" min="4" max="8" value="${nn}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].n=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${nn}</b>
+        </label>
+        ${note('Крути размер','Нечётное n: тёмных на 1 больше, домино нельзя. Чётное n: цвета равны, домино можно. 7 — как раз нельзя.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Раскрась шахматно',GOLD],
+            ['2','Посчитай цвета и чётность',BLUE],
+            ['3','Что забирает плитка или ход?',GREEN],
+            ['4','Несостыковка → «нельзя» / победитель',MUTED]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Не перебирай замощения. Не играй партию до конца, если ходы считаются. Сначала линейка, потом вывод.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          board({lit:49, color:true})+
+          lab(120, 22, '49 · 25 против 24 · первый', GOLD, 'middle', 12)
+        )}
+        ${note('В карман','7×7 нельзя домино. Цвета не равны. В игре на клетки первый берёт последний ход.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${board(7)}
-        <div class="wv-sml">можно ли замостить 7×7 домино?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">да / нет</div>
+        ${frame(board({lit:49, color:true})+lab(120, 22, 'домино на 7×7?', GOLD)+lab(120, 204, 'да / нет', MUTED))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">можно?</div>
+        ${note('Проверка','Нет. 49 нечётно, цвета 25 и 24. Переворот плитки не поможет.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_C[412]=visC412;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===412){ window.ARH_LESSONS[i]=L412; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===412){ arr[i]=L412; f=true; break; } }
+    if(!f) arr.push(L412);
+  })();
 })();
