@@ -938,101 +938,313 @@ window._waveCss = function(id, css){
     id: 421, title: 'Уравнения в целых числах', ico: '🔢',
     src: 'Математика · 8 класс · Олимп-8: уравнения в целых', subj: 'math',
     explain: [
-      'Уравнение в целых числах — это уравнение, где x и y должны быть ЦЕЛЫМИ числами (…, −2, −1, 0, 1, 2, …). Пример: xy = 6. Сколько целых решений? Перебор маленький — найдём все!',
-      'Разложим 6 на множители: 6 = 1·6 = 2·3. Положительные пары (x; y): (1;6), (2;3), (3;2), (6;1). Уже четыре! Порядок важен — x и y разные роли.',
-      'А если разрешить отрицательные? (−1)·(−6) = 6 тоже! Минус на минус даёт плюс. Добавляются (−1;−6), (−2;−3), (−3;−2), (−6;−1) — ещё четыре. Всего 8 решений!',
-      'Главный приём для xy = n: разложи n на множители и перебери все пары (делители). У 6 делители: ±1, ±2, ±3, ±6. Каждая пара множителей — решение!',
-      'Произведение равно нулю: xy = 0 означает, что x = 0 ИЛИ y = 0. Это ключевой приём! Если произведение равно нулю — хотя бы один множитель ноль.',
-      'Линейное уравнение: x + 2y = 5. Если зафиксировать y, x выражается: x = 5 − 2y. При y = 0 → x = 5, при y = 1 → x = 3, при y = 2 → x = 1. Бесконечно много решений!',
-      'Почему бесконечно? Берём любое целое y — и получаем целое x. Все пары (5−2y; y) — решения. Например, y = −1 → x = 7. Сколько хочешь — столько и решений!',
-      'На олимпиадах часто спрашивают «найди все целые решения». План: 1) если xy = n — перебирай делители n; 2) если xy = 0 — один множитель ноль; 3) если линейное — выражай одну переменную через другую.',
-      'Теперь проверь себя: сколько положительных целых пар (x; y) с xy = 6? Вспомни делители шестёрки!'
+      'Загадка: найди все пары целых чисел, которые в произведении дают 6. Не любые числа — только целые: … −2, −1, 0, 1, 2 … Сейчас разложим шестёрку по кирпичикам.',
+      'Целое число — это точка на прямой без дырок между «минус два» и «два». Дроби вроде 1,5 сюда не входят. Если x и y оба целые, пару (x; y) можно поставить на клетчатую бумагу.',
+      'Шестёрку можно сложить прямоугольником из клеточек: 1×6, 2×3, 3×2, 6×1. Каждый прямоугольник — пара (x; y). Порядок важен: (2; 3) и (3; 2) — разные решения.',
+      'Нажми «Следующая пара»: положительные решения выходят по одному. Их четыре. Больше положительных делителей у 6 нет — перебор короткий, ничего не забыли.',
+      'Минус на минус даёт плюс. Значит (−1)·(−6) = 6 тоже подходит. Ещё четыре пары: все знаки минус. Ноль не годится: 0 · что-то = 0, а нам нужно 6.',
+      'Все восемь точек на клетчатке: четыре в первом квадранте, четыре в третьем. Во втором и четвёртом произведение отрицательное — там xy = 6 не живёт.',
+      'Правило: xy = n → бери все делители n. У 6 делители ±1, ±2, ±3, ±6. Нажми делитель — он станет x, а y = 6/x посчитается сам. Так перебирают все решения, не гадая.',
+      'Подвигай x ползунком. Пока x — делитель шестёрки, точка сидит на клетке и y целый. Если x = 4, y = 1,5 — уже не целое, эта пара нам не нужна.',
+      'Другое уравнение: xy = 0. Произведение ноль — значит хотя бы один множитель ноль. Целые решения: вся ось x (y = 0) и вся ось y (x = 0). Крест на клетчатке, точек бесконечно.',
+      'Линейное: x + 2y = 5. Выразим x = 5 − 2y. Берём любое целое y — x получается целым. y = 0 → x = 5; y = 1 → x = 3; y = 2 → x = 1; y = −1 → x = 7.',
+      'Подвигай y. Точка прыгает по прямой с клетки на клетку. Прямая не кончается — решений столько, сколько целых чисел. Это уже не восемь, а бесконечность.',
+      'Почему у xy = 6 решений мало, а у x + 2y = 5 много? Произведение фиксирует площадь — прямоугольников с площадью 6 из целых сторон мало. Сумма — это прямая, она пересекает бесконечно много клеток.',
+      'На олимпиаде пишут «найди все целые решения». Три ящика: произведение равно числу — делители; произведение ноль — крест осей; линейное — вырази одну букву через другую и беги по целым.',
+      'Бонус: x² + y² = 25. Это окружность радиуса 5. Целые точки на ней: (±3; ±4), (±4; ±3), (±5; 0), (0; ±5) — и все комбинации знаков. Снова перебор, но уже по клеткам круга.',
+      'Рецепт в карман: целое = клетка. xy = n — делители. xy = 0 — ноль в одном из множителей. x + by = c — любое целое для одной буквы. Дальше проверка: сколько положительных пар у xy = 6?',
+      'Ответ, который ждёт проверка: четыре положительные пары. (1;6), (2;3), (3;2), (6;1). Отрицательные — отдельно, их тоже четыре, всего восемь.'
     ],
     check: { q: 'Сколько положительных целых пар (x; y) с xy = 6?', choices: ['4', '2', '6', '3'], ans: 0,
-      exp: '(1,6), (2,3), (3,2), (6,1) — четыре пары.' },
+      exp: '(1;6), (2;3), (3;2), (6;1) — четыре пары. Отрицательные не считаем: вопрос про положительные.' },
     tasks: [
       { q: 'Целое решение x + 2y = 5 при y = 1: чему равен x?', kind: 'unit', ans: 3, tol: 0,
-        hints: ['x = 5 − 2.', 'x = 3.'], sol: '3' },
-      { q: 'Уравнение xy = 0 в целых числах означает…', kind: 'choice', choices: ['x = 0 или y = 0', 'x = y = 1', 'x + y = 0', 'решений нет'], ans: 0, tol: 0,
-        hints: ['Произведение равно нулю.', 'Один из множителей равен нулю.'], sol: 'x = 0 или y = 0' }
+        hints: ['x = 5 − 2y.', 'Подставь y = 1: 5 − 2 = 3.'], sol: 'x = 5 − 2·1 = 3' },
+      { q: 'Уравнение xy = 0 в целых числах означает…', kind: 'choice',
+        choices: ['x = 0 или y = 0', 'x = y = 1', 'x + y = 0', 'решений нет'], ans: 0, tol: 0,
+        hints: ['Ноль в произведении.', 'Хотя бы один множитель равен нулю.'], sol: 'x = 0 или y = 0' }
     ]
   };
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f', PINK='#ff8ac0';
+  const CSS = `<style>
+    @keyframes l421ink{to{stroke-dashoffset:0}}
+    @keyframes l421pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.18)}100%{transform:scale(1);opacity:1}}
+    @keyframes l421pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l421glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l421-ink{animation:l421ink 1.35s cubic-bezier(.2,.75,.15,1) forwards}
+    .l421-dot{transform-box:fill-box;transform-origin:center;animation:l421pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l421-pulse{animation:l421pulse 1.6s ease-in-out infinite}
+    .l421-glow{animation:l421glow 1.8s ease-in-out infinite}
+    .l421-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.2px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+16);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l421-ink" style="animation-duration:${dur||1.3}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    return `<text class="l421-lab" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||11}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l421', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 200'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div>
+    </div>`;
+  }
+  const POS=[[1,6],[2,3],[3,2],[6,1]];
+  const NEG=[[-1,-6],[-2,-3],[-3,-2],[-6,-1]];
+  function G(x,y){ return [120+x*14, 100-y*12]; }
+  function grid(xmin,xmax,ymin,ymax){
+    let d='';
+    for(let x=xmin;x<=xmax;x++){ const a=G(x,ymin), b=G(x,ymax); d+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#1e3328" stroke-width="1"/>`; }
+    for(let y=ymin;y<=ymax;y++){ const a=G(xmin,y), b=G(xmax,y); d+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#1e3328" stroke-width="1"/>`; }
+    const o=G(0,0), L=G(xmin,0), R=G(xmax,0), Dn=G(0,ymin), Up=G(0,ymax);
+    d+=`<line x1="${L[0]}" y1="${L[1]}" x2="${R[0]}" y2="${R[1]}" stroke="#3d5c49" stroke-width="1.6"/>`;
+    d+=`<line x1="${Dn[0]}" y1="${Dn[1]}" x2="${Up[0]}" y2="${Up[1]}" stroke="#3d5c49" stroke-width="1.6"/>`;
+    d+=lab(R[0]+10, R[1]+4, 'x', MUTED, 'start', 11)+lab(Up[0]+8, Up[1]+4, 'y', MUTED, 'start', 11);
+    return d;
+  }
+  function pt(x,y,col,name,delay,pop){
+    const p=G(x,y);
+    return `<g>
+      <circle ${pop?'class="l421-dot"':''} style="animation-delay:${delay||0}s" cx="${p[0]}" cy="${p[1]}" r="6" fill="${col}" class="l421-glow"/>
+      ${name?lab(p[0], p[1]-10, name, col, 'middle', 10):''}
+    </g>`;
+  }
+  function rectCells(w,h,x0,y0,col,draw){
+    const s=12;
+    return `<g>
+      <rect x="${x0}" y="${y0}" width="${w*s}" height="${h*s}" fill="${col}22" stroke="${col}" stroke-width="2" ${draw?ink(2*(w+h)*s,1.1,0):''}/>
+      ${lab(x0+w*s/2, y0-6, w+' × '+h, col)}
+    </g>`;
+  }
+
   function visD421(el){
+    try{ window._waveCss && _waveCss('css-l421', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 10px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:14px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'421';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw = st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const shown=Math.max(0, Math.min(4, st.n==null?0:+st.n));
+    const xv=Math.max(-8, Math.min(8, +(st.x==null?2:st.x)));
+    const yv=Math.max(-1, Math.min(4, +(st.y==null?1:st.y)));
+    const pick=st.pick;
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Уравнение в целых числах</div>
-        <div style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">xy = 6</div>
-        <div class="wv-sml">x и y — целые: …, −2, −1, 0, 1, 2, …</div>
+        ${frame(
+          lab(120, 36, 'xy = 6', GOLD, 'middle', 22)+
+          `<rect x="40" y="58" width="160" height="70" rx="10" fill="${BLUE}18" stroke="${BLUE}" stroke-width="2" ${doDraw?ink(460,1.2,0):''}/>`+
+          lab(120, 90, open?'8 целых пар':'сколько пар?', open?GREEN:GOLD, 'middle', 16)+
+          lab(120, 112, open?'4 плюс и 4 минус':'x, y — целые', MUTED)+
+          lab(120, 170, 'не любые числа — только клетки', MUTED)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Загадка','Нужны пары целых, которые в произведении дают 6. Дроби не берём. Сейчас разложим шестёрку по прямоугольникам и расставим точки на клетчатке.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Разложим 6</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
-          ${[['1','6'],['2','3'],['3','2'],['6','1']].map(p=>`<div class="wv-pop" style="text-align:center;background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:10px;padding:6px 10px;min-width:64px"><div style="font-size:17px;color:#ffd76a;font-family:Georgia,serif">(${p[0]}; ${p[1]})</div></div>`).join('')}
-        </div>
-        <div class="wv-sml">порядок важен — четыре пары!</div>
+        ${frame(
+          `<line x1="24" y1="100" x2="216" y2="100" stroke="#3d5c49" stroke-width="2"/>`+
+          [-4,-3,-2,-1,0,1,2,3,4].map((n,i)=>{
+            const x=120+n*22;
+            return `<circle class="l421-dot" style="animation-delay:${i*.05}s" cx="${x}" cy="100" r="${n===0?5:4}" fill="${n===0?GOLD:BLUE}"/>`+lab(x, 122, String(n), n===0?GOLD:MUTED);
+          }).join('')+
+          lab(120, 50, 'целые — точки без дырок', GOLD)
+        )}
+        ${note('Что такое целое','Между −2 и −1 нет других целых. 1,5 на эту прямую не садится. Поэтому решений «на глаз» мало: только клетки тетради.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">Отрицательные тоже!</div>
-        <div class="wv-row" style="gap:5px;flex-wrap:wrap">
-          ${[['−1','−6'],['−2','−3'],['−3','−2'],['−6','−1']].map(p=>`<span class="wv-chip" style="border-color:#ff8ac0;color:#ff8ac0">(${p[0]}; ${p[1]})</span>`).join('')}
-        </div>
-        <div class="wv-sml">минус на минус = плюс → ещё 4 решения, всего 8!</div>
+        ${frame(
+          rectCells(1,6,16,28,BLUE,doDraw)+
+          rectCells(2,3,40,64,GREEN,doDraw)+
+          rectCells(3,2,78,88,GOLD,doDraw)+
+          rectCells(6,1,128,118,PINK,doDraw)
+        , '0 0 240 160')}
+        ${note('Прямоугольники площади 6','Каждый прямоугольник из целых сторон — пара (ширина; высота). 2×3 и 3×2 разные: x и y поменялись местами. Уже четыре картинки.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        <div class="wv-big">Главный приём</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:340px;font-size:14px;color:#e8dcc8;line-height:1.6">xy = n → разложи n и перебери пары делителей. Делители 6: <b style="color:#ffd76a">±1, ±2, ±3, ±6</b></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:340px">
+          ${POS.map((p,i)=> i<shown
+            ? `<div class="wv-pop" style="text-align:center;background:rgba(127,209,255,.1);border:2px solid ${BLUE};border-radius:10px;padding:8px 12px;min-width:72px">
+                <div style="font-size:18px;color:${GOLD};font-family:Georgia,serif">(${p[0]}; ${p[1]})</div>
+                <div class="wv-sml">${p[0]} · ${p[1]} = 6</div>
+              </div>`
+            : `<div style="min-width:72px;height:58px;border:1px dashed #3d5c49;border-radius:10px"></div>`
+          ).join('')}
+        </div>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].n=Math.min(4,(CHS[k].n||0)+1);chRender(0);}catch(e){}">${shown>=4?'Все четыре':'Следующая пара'}</button>
+        ${note('Положительные','Делители 6 справа: 1, 2, 3, 6. Каждому x свой y = 6/x. Больше положительных нет — перебор кончился.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
-        <div class="wv-big">Произведение = 0</div>
-        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">xy = 0</div>
-        <div style="background:rgba(143,209,168,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 12px;font-size:16px;color:#8fd1a8;font-weight:bold" class="wv-ans">x = 0 или y = 0!</div>
+        ${frame(
+          grid(-7,7,-7,7)+
+          NEG.map((p,i)=>pt(p[0], p[1], PINK, '('+p[0]+';'+p[1]+')', i*.08, doDraw)).join('')
+        )}
+        ${note('Минус на минус','(−2)·(−3) = 6. Знаки одинаковые — произведение плюс. Ноль не подходит: 0 · y = 0, а нам нужно 6. Ещё четыре точки, уже в третьем квадранте.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        <div class="wv-big">Линейное: x + 2y = 5</div>
-        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-size:16px;color:#e8dcc8;text-align:center;font-family:Georgia,serif">
-          <div class="wv-pop">x = 5 − 2y</div>
-          <div class="wv-pop2">y=0 → x=5 · y=1 → x=3 · y=2 → x=1</div>
-        </div>
+        ${frame(
+          grid(-7,7,-7,7)+
+          POS.map((p,i)=>pt(p[0], p[1], BLUE, '', i*.06, doDraw)).join('')+
+          NEG.map((p,i)=>pt(p[0], p[1], PINK, '', .2+i*.06, doDraw)).join('')+
+          lab(168, 36, '8 точек', GOLD)
+        )}
+        ${note('Карта всех решений','Сверху справа — плюс на плюс. Снизу слева — минус на минус. Смешанные знаки дают отрицательное произведение, их нет.')}
       </div>`;
     } else if(step===6){
+      const divs=[-6,-3,-2,-1,1,2,3,6];
+      const cur=divs.indexOf(pick)>=0?pick:null;
+      const yy=cur!=null?6/cur:null;
       h=`<div class="wv-col">
-        <div class="wv-big">Бесконечно много!</div>
-        <div class="wv-row" style="gap:5px;flex-wrap:wrap">
-          ${[['y=−1','x=7'],['y=0','x=5'],['y=1','x=3'],['y=2','x=1']].map(p=>`<span class="wv-chip" style="border-color:#7fd1ff;color:#7fd1ff">${p[0]} → ${p[1]}</span>`).join('')}
+        ${frame(
+          grid(-7,7,-7,7)+
+          (cur!=null?pt(cur, yy, GOLD, '('+cur+'; '+yy+')', 0, true):'')
+        )}
+        <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:340px">
+          ${divs.map(d=>`<button type="button" class="btn" style="padding:8px 10px;border:2px solid ${cur===d?GOLD:'#3d5c49'}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].pick=${d};chRender(0);}catch(e){}">${d}</button>`).join('')}
         </div>
-        <div class="wv-sml">любое целое y даёт целое x — решений сколько хочешь!</div>
+        ${note('Жми делитель','x — это кнопка, y = 6/x считается сам. Так на олимпиаде и пишут: «переберём делители n». Не забудь минусы.')}
       </div>`;
     } else if(step===7){
+      const ok=[-6,-3,-2,-1,1,2,3,6].indexOf(xv)>=0;
+      const yy=ok?6/xv:6/xv;
       h=`<div class="wv-col">
-        <div class="wv-big">План решения</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%">
-          ${[
-            ['xy = n','перебирай делители','#7fd1ff'],
-            ['xy = 0','один множитель ноль','#8fd1a8'],
-            ['линейное','вырази одну переменную','#ffd76a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><b style="font-family:Georgia,serif;color:${x[2]}">${x[0]}</b><span style="font-size:12px">${x[1]}</span></div>`).join('')}
+        ${frame(
+          grid(-8,8,-8,8)+
+          pt(xv, Math.max(-8, Math.min(8, yy)), ok?GOLD:RED, ok?('y='+yy):'y не целое', 0, false)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">x
+          <input type="range" min="-8" max="8" value="${xv}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].x=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${ok?GOLD:RED};min-width:18px">${xv}</b>
+        </label>
+        <div class="wv-ans" style="font-size:15px">${xv} · y = 6  →  y = ${ok?yy: (Math.round(yy*100)/100).toString().replace('.',',')} ${ok?'✔ целое':' — не целое'}</div>
+        ${note('Фильтр','Ползунок бежит по всем целым x. Зелёный — делитель, точка на клетке. Красный — y дробный, пару выкидываем.')}
+      </div>`;
+    } else if(step===8){
+      const o=G(0,0), L=G(-8,0), R=G(8,0), Dn=G(0,-8), Up=G(0,8);
+      h=`<div class="wv-col">
+        ${frame(
+          grid(-8,8,-8,8)+
+          `<line x1="${L[0]}" y1="${L[1]}" x2="${R[0]}" y2="${R[1]}" stroke="${GOLD}" stroke-width="5" opacity=".85" ${doDraw?ink(224,1.2,0):''}/>`+
+          `<line x1="${Dn[0]}" y1="${Dn[1]}" x2="${Up[0]}" y2="${Up[1]}" stroke="${GREEN}" stroke-width="5" opacity=".85" ${doDraw?ink(192,1.2,.15):''}/>`+
+          `<circle cx="${o[0]}" cy="${o[1]}" r="7" fill="${BLUE}" class="l421-glow"/>`+
+          lab(200, 108, 'y = 0', GOLD, 'start')+lab(128, 18, 'x = 0', GREEN)
+        )}
+        ${note('Произведение ноль','xy = 0 — крест. Любая точка на осях. Бесконечно много решений, потому что ось — это бесконечная линейка клеток.')}
+      </div>`;
+    } else if(step===9){
+      const ys=[-1,0,1,2];
+      h=`<div class="wv-col">
+        <div class="wv-ans" style="font-size:18px">x + 2y = 5  →  x = 5 − 2y</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
+          ${ys.map((y,i)=>{
+            const x=5-2*y;
+            return `<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${BLUE};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+              <span>y = ${y}</span><b style="color:${GOLD}">x = ${x}</b>
+            </div>`;
+          }).join('')}
         </div>
+        ${note('Выразили x','Одно целое выбрал сам — второе посчиталось. Никакого разложения на множители. Это другой ящик приёмов.')}
+      </div>`;
+    } else if(step===10){
+      const xx=5-2*yv;
+      const p1=G(-7, (5-(-7))/2), p2=G(7, (5-7)/2);
+      h=`<div class="wv-col">
+        ${frame(
+          grid(-8,8,-4,6)+
+          `<line x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="${GOLD}" stroke-width="2" ${doDraw?ink(220,1.3,0):''}/>`+
+          [-1,0,1,2,3].map(y=>pt(5-2*y, y, BLUE, '', 0, false)).join('')+
+          pt(xx, yv, GOLD, '('+xx+'; '+yv+')', 0, true)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">y
+          <input type="range" min="-1" max="4" value="${yv}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].y=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD};min-width:18px">${yv}</b>
+        </label>
+        <div class="wv-ans" style="font-size:15px">x = 5 − 2·${yv} = ${xx}</div>
+        ${note('Прыжок по прямой','Точка не сходит с золотой прямой и всегда на клетке. Крути y — решений не кончится.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        ${frame(
+          grid(-8,8,-7,7)+
+          POS.map(p=>pt(p[0], p[1], BLUE, '', 0, doDraw)).join('')+
+          NEG.map(p=>pt(p[0], p[1], PINK, '', .1, doDraw)).join('')+
+          lab(170, 28, 'xy=6 · 8 точек', BLUE)+
+          [-1,0,1,2,3].map(y=>pt(5-2*y, y, GOLD, '', .2, doDraw)).join('')
+        )}
+        ${note('Мало против много','Синие и розовые — площадь 6, их восемь. Золотые — сумма, их бесконечно (на рисунке шесть, остальные за кадром). Разные уравнения — разная геометрия.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['xy = n','перебери делители n','#7fd1ff'],
+            ['xy = 0','крест: x=0 или y=0','#8fd1a8'],
+            ['x + by = c','вырази и беги по целым','#ffd76a']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <b style="color:${x[2]};font-family:Georgia,serif">${x[0]}</b><span>${x[1]}</span>
+          </div>`).join('')}
+        </div>
+        ${note('Три ящика','Сначала узнай тип. Потом один приём. Не смешивай: для произведения не нужна прямая, для линейного не нужны делители.')}
+      </div>`;
+    } else if(step===13){
+      const circ=[[5,0],[-5,0],[0,5],[0,-5],[3,4],[3,-4],[-3,4],[-3,-4],[4,3],[4,-3],[-4,3],[-4,-3]];
+      h=`<div class="wv-col">
+        ${frame(
+          grid(-6,6,-6,6)+
+          `<circle cx="120" cy="100" r="${5*14}" fill="none" stroke="${GOLD}" stroke-width="1.8" ${doDraw?ink(5*14*2*Math.PI,1.5,0):''}/>`+
+          circ.map((p,i)=>pt(p[0], p[1], BLUE, '', i*.04, doDraw)).join('')
+        )}
+        ${note('Круг на клетках','x² + y² = 25 — окружность радиуса 5. Целые точки: оси и «египетский» 3-4-5. Снова перебор, только по кругу.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Целое = клетка тетради','#7fd1ff'],
+            ['2','Произведение → делители','#8fd1a8'],
+            ['3','Ноль в произведении → крест','#ffd76a'],
+            ['4','Линейное → вырази и шагай','#ff8ac0']
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${x[2]};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span>
+          </div>`).join('')}
+        </div>
+        ${note('В карман','Дальше короткий вопрос: сколько положительных пар у xy = 6? Четыре прямоугольника — четыре пары.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">xy = 6</div>
-        <div class="wv-sml">положительные целые пары — сколько?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">? пары</div>
+        <div style="font-size:22px;color:${GOLD};font-family:Georgia,serif">xy = 6,  x>0, y>0</div>
+        <div class="wv-sml">прямоугольники 1×6, 2×3, 3×2, 6×1</div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">сколько пар?</div>
+        ${note('Проверка','Положительные делители 6 — четыре штуки. Каждому x свой y. Отрицательные вопрос не просит.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[421]=visD421;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===421){ window.ARH_LESSONS[i]=L421; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===421){ arr[i]=L421; f=true; break; } }
+    if(!f) arr.push(L421);
+  })();
 })();
 /* ================= УРОК 422 · Неравенство Коши и средние ================= */
 (function(){
