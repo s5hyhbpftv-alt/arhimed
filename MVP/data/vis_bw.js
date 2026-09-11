@@ -17,6 +17,82 @@ window.physShot=function(file, meter){
 window.physKenCss=function(){
   try{ window._waveCss && _waveCss('css-physken', `@keyframes physKen{from{transform:scale(1.07)}to{transform:scale(1)}}`); }catch(e){}
 };
+window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
+  const GOLD='#ffd76a', BLUE='#7fd1ff', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes a6draw{to{stroke-dashoffset:0}}
+    @keyframes a6fade{from{opacity:0}to{opacity:1}}
+    @keyframes a6halo{0%{transform:scale(.45);opacity:.85}100%{transform:scale(2.4);opacity:0}}
+    @keyframes a6dot{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+    .a6line{stroke-dasharray:520;stroke-dashoffset:520;animation:a6draw 1.25s cubic-bezier(.2,.85,.2,1) forwards}
+    .a6fill{opacity:0;animation:a6fade .7s .25s ease forwards}
+    .a6halo{transform-box:fill-box;transform-origin:center;animation:a6halo 1.7s ease-out infinite}
+    .a6dot{transform-box:fill-box;transform-origin:center;animation:a6dot 1.6s ease-in-out infinite}
+  </style>`;
+  try{ window._waveCss && _waveCss('css-a6v1', CSS); }catch(e){}
+  const W=340, H=220, ox=58, oy=28, pw=258, ph=138;
+  const all=series.flatMap(s=>s.pts);
+  const x1=Math.max(...all.map(p=>p[0]), 1e-6);
+  const y1=Math.max(...all.map(p=>p[1]), 1);
+  const xy=(x,y)=>[ox+x/x1*pw, oy+ph-y/y1*ph];
+  const gid=uid||'pc';
+  const u=unit||'';
+  const tick=function(x,y,t,anchor){
+    return `<text x="${x}" y="${y}" text-anchor="${anchor||'end'}" font-size="10" fill="${MUTED}" font-family="Georgia,serif">${t}</text>`;
+  };
+  const lab=function(x,y,t,col,anchor,fs){
+    const xx=Math.max(14,Math.min(326,+x)), yy=Math.max(16,Math.min(210,+y));
+    return `<text x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif" style="paint-order:stroke fill;stroke:#071018;stroke-width:3.2px">${t}</text>`;
+  };
+  const grid=[0,0.25,0.5,0.75,1].map(f=>{
+    const y=oy+ph-f*ph;
+    return `<line x1="${ox}" y1="${y}" x2="${ox+pw}" y2="${y}" stroke="#1e3a32" stroke-width="${f===0?1.4:1}"/>`+
+      tick(ox-8, y+3, String(Math.round(y1*f)).replace('.',','));
+  }).join('');
+  const xt=[0,0.5,1].map(f=>{
+    const x=ox+f*pw;
+    const v=x1*f;
+    const txt=String(+(v.toFixed(v>=100?0:v>=10?1:2))).replace('.',',');
+    return `<line x1="${x}" y1="${oy+ph}" x2="${x}" y2="${oy+ph+5}" stroke="#4a6a58"/>`+
+      tick(x, oy+ph+16, txt, 'middle');
+  }).join('');
+  const paths=series.map((s,i)=>{
+    const d=s.pts.map((p,j)=>{const q=xy(p[0],p[1]); return (j?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1);}).join(' ');
+    const last=xy(s.pts[s.pts.length-1][0], 0), first=xy(s.pts[0][0], 0);
+    const area=d+` L ${last[0].toFixed(1)} ${last[1].toFixed(1)} L ${first[0].toFixed(1)} ${first[1].toFixed(1)} Z`;
+    return `<path class="a6fill" d="${area}" fill="url(#${gid}f${i})" />
+      <path class="a6line" d="${d}" fill="none" stroke="url(#${gid}s${i})" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#${gid}glow)"/>`;
+  }).join('');
+  let mark='';
+  if(xMark!=null && yMark!=null){
+    const q=xy(xMark, yMark);
+    const pill=(String(Math.round(yMark*10)/10).replace('.',','))+(u?(' '+u):'');
+    mark=`<circle class="a6halo" cx="${q[0]}" cy="${q[1]}" r="8" fill="none" stroke="${GOLD}" stroke-width="1.2"/>
+      <circle class="a6dot" cx="${q[0]}" cy="${q[1]}" r="5.2" fill="${GOLD}" stroke="#fff6c8" stroke-width="1"/>
+      <rect x="${Math.min(Math.max(q[0]+10, ox+8), ox+pw-96)}" y="${Math.max(q[1]-30, oy+4)}" width="96" height="22" rx="8" fill="rgba(7,16,24,.88)" stroke="rgba(217,164,65,.5)"/>
+      ${lab(Math.min(Math.max(q[0]+58, ox+56), ox+pw-48), Math.max(q[1]-14, oy+20), pill, GOLD, 'middle', 11)}`;
+  }
+  const legend=series.map((s,i)=>`<g>
+    <rect x="${ox+i*110}" y="198" width="10" height="10" rx="2" fill="${s.col}"/>
+    ${lab(ox+16+i*110, 208, s.name, MUTED, 'start', 11)}
+  </g>`).join('');
+  const defs=series.map((s,i)=>`
+    <linearGradient id="${gid}s${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${s.col}"/><stop offset="1" stop-color="#fff3c0"/></linearGradient>
+    <linearGradient id="${gid}f${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${s.col}" stop-opacity="0"/><stop offset="1" stop-color="${s.col}" stop-opacity=".32"/></linearGradient>`).join('');
+  return `${CSS}<svg viewBox="0 0 ${W} ${H}" style="width:min(100%,340px);height:auto;background:radial-gradient(120% 80% at 50% 0%,#163028 0%,#071018 70%);border-radius:16px;display:block;margin:0 auto;border:1px solid #3d5c49">
+    <defs>
+      <filter id="${gid}glow"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      ${defs}
+    </defs>
+    <rect x="8" y="8" width="${W-16}" height="${H-16}" rx="12" fill="rgba(7,16,24,.25)"/>
+    ${grid}${xt}
+    <line x1="${ox}" y1="${oy}" x2="${ox}" y2="${oy+ph}" stroke="#7fd1ff" stroke-opacity=".35" stroke-width="1.4"/>
+    <line x1="${ox}" y1="${oy+ph}" x2="${ox+pw}" y2="${oy+ph}" stroke="#7fd1ff" stroke-opacity=".35" stroke-width="1.4"/>
+    ${paths}${mark}${legend}
+    ${lab(ox+pw/2, 16, yl, GOLD, 'middle', 12)}
+    ${lab(ox+pw/2, H-6, xl, MUTED, 'middle', 11)}
+  </svg>`;
+};
 
 /* ================= УРОК 377 · Признаки делимости на 3 и на 9 ================= */
 (function(){
@@ -3067,22 +3143,22 @@ window.physKenCss=function(){
     id: 104, title: 'Закон Паскаля и давление жидкости', ico: '🌊',
     src: 'Физика · 8–9 класс · Закон Паскаля и давление жидкости', subj: 'phys',
     explain: [
-      'Загадка столба: на берегу уши спокойны, на двух метрах закладывает, на десяти — больно. Вода давит всегда. Чем выше столб над тобой, тем сильнее.',
+      'Загадка столба: на берегу уши спокойны, на двух метрах закладывает. Вода давит всегда. Чем выше столб, тем сильнее. Это ещё не Паскаль — это столб ρgh.',
       'Жидкость давит во все стороны: на дно, на стенки и снизу вверх. Давление в точке — скаляр, не «стрелка вниз».',
-      'p = ρ · g · h. ρ — плотность, g ≈ 10 в задачниках, h — глубина по вертикали, не длина трубы. Вода: 1 м → 10 кПа.',
-      'Полное давление p = p₀ + ρgh. p₀ — атмосфера ≈ 100 кПа. В школьных задачах часто считают только столб — избыточное, «манометрическое».',
-      'Вода 1000 кг/м³. Масло 900, керосин 800. Легче столб — слабее давит при той же глубине.',
-      'Одна ручка — глубина. График p(h) — прямая. Удвоил h — удвоил p. Форма сосуда не входит в формулу.',
-      '2 м → 20, 5 м → 50, 10 м → 100 кПа. Десять метров воды ≈ одна атмосфера.',
-      'Масло против воды на 2 м: 18 кПа против 20. Та же глубина, другая плотность.',
-      'Бутылка — уже гидродинамика. v = √(2gh), формула Торричелли. Нижняя дырка быстрее, за одно падение струя уходит дальше. Это не Паскаль.',
-      'Два закона. Столб ρgh считает глубину. Паскаль: добавка давления в закрытой жидкости уходит во все точки одинаково.',
-      'Шар Паскаля: равные струйки из всех дырок. Если бы «любило низ», нижние были бы длиннее.',
-      'Домкрат: p = F/S одно на малом и большом поршне. Большая площадь — большая сила. Тормоза машины — тот же приём.',
-      'F₁/S₁ = F₂/S₂. Выигрыш в силе, проигрыш в пути: большой поршень едет меньше.',
-      'Сообщающиеся сосуды: однородная жидкость — один уровень. Чайник, шлюз, гидрозатвор. Разные жидкости: ρ₁h₁ = ρ₂h₂.',
-      'Гидростатический парадокс: давление на дне зависит от h и ρ, не от формы и не от «сколько налили сбоку». Узкая колба и широкий таз при одном h — сила на одинаковое дно одна.',
-      'Рецепт. ρ и h в метрах. p = ρgh, кПа = Па/1000. Не путай столб и Паскаль. Плавание — урок плотности.'
+      'p = ρ · g · h. Вода: 1 м → 10 кПа. h — вертикаль, не длина шланга. Форма сосуда в формулу не входит.',
+      'Полное p = p₀ + ρgh. p₀ ≈ 100 кПа. В задачниках часто считают только столб — избыточное.',
+      'График p(h) — прямая. Удвоил глубину — удвоил давление. Масло 900 легче воды 1000: тот же метр даёт меньше паскалей.',
+      '10 м воды ≈ одна атмосфера. 2 м → 20, 5 м → 50, 10 м → 100 кПа.',
+      'Закон Паскаля — про другое. Добавка давления в закрытой жидкости уходит во все точки одинаково. Надавил поршнем — разошлось по всему объёму.',
+      'Шприц: толкнул узкий — широкий выезжает. Жидкость почти несжимаема, давление передалось, не «побежало вниз».',
+      'Шар Паскаля: равные струйки из всех дырок. Если бы любило низ, нижние были бы длиннее. Они равны — это и есть закон.',
+      'p = F / S. Одно и то же давление на малом и большом поршне. Большая площадь — большая сила: F₂ = F₁ · (S₂ / S₁).',
+      'Домкрат: жмёшь слабо на малый, большой поднимает машину. Тормоза — тот же приём: нога на педаль, колодки к барабану.',
+      'Выигрыш в силе, проигрыш в пути. S₂ = 10 S₁ → F₂ = 10 F₁, но большой поршень едет в 10 раз меньше.',
+      'Газ тоже подчиняется Паскалю: мяч и шина давят на стенки равно. Сдулся — держаться нечем.',
+      'Не путай два закона. Столб ρgh считает глубину в открытом баке. Паскаль считает, как поршень разнёс добавку в закрытой жидкости.',
+      'Сообщающиеся сосуды — следствие давления: однородная жидкость — один уровень. Чайник, шлюз, гидрозатвор.',
+      'Рецепт. Столб: p = ρgh. Паскаль: p одно, F = pS. Гидравлика: F₂/F₁ = S₂/S₁. КПа = Па/1000.'
     ],
     check: { q: 'Каково давление воды на глубине 5 м? (в кПа, ρ = 1000 кг/м³, g = 10)', choices: ['5', '50', '500'], ans: 1,
       exp: 'p = 1000 · 10 · 5 = 50 000 Па = 50 кПа.' },
@@ -3098,7 +3174,12 @@ window.physKenCss=function(){
         choices: ['одинаковые', 'в узком выше', 'в широком выше'], ans: 0,
         hints: ['Давление в соединении должно совпасть.', 'Одна жидкость — одна высота.'], sol: 'одинаковые' },
       { q: 'Домкрат: S₂ = 10 S₁, F₁ = 20 Н. Сила на большом поршне? (в Н)', kind: 'unit', ans: 200, tol: 0,
-        hints: ['F₁/S₁ = F₂/S₂.', 'F₂ = 20 · 10.'], sol: '200 Н' }
+        hints: ['F₁/S₁ = F₂/S₂.', 'F₂ = 20 · 10.'], sol: '200 Н' },
+      { q: 'Давление в жидкости 50 кПа, площадь поршня 0,02 м². Сила? (в Н)', kind: 'unit', ans: 1000, tol: 0,
+        hints: ['F = p · S. 50 кПа = 50 000 Па.', '50 000 · 0,02 = 1000.'], sol: '1000 Н' },
+      { q: 'Шар Паскаля. Струйки из дырок?', kind: 'choice',
+        choices: ['равные во все стороны', 'длиннее снизу', 'только вниз'], ans: 0,
+        hints: ['Закон Паскаля: добавка одинакова.', 'Не путай со столбом ρgh.'], sol: 'равные во все стороны' }
     ]
   };
 
@@ -3254,7 +3335,8 @@ window.physKenCss=function(){
       </div>`;
     } else if(step===5){
       const s=P().pascal(1000,hM);
-      const pts=(P().T&&P().T.pascal&&P().T.pascal.water)||[[0,0],[10,100]];
+      const water=Array.from({length:11},(_,i)=>[i, i*10]);
+      const oil=Array.from({length:11},(_,i)=>[i, i*9]);
       h=`<div class="wv-col">
         ${physShot(hM>5?'diver_deep.mp4':'diver.mp4', Math.round(s.kPa)+' кПа на '+String(hM).replace('.',',')+' м')}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">h
@@ -3262,77 +3344,79 @@ window.physKenCss=function(){
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].h=this.value/10;chRender(0);}catch(e){}">
           <b style="color:${GOLD}">${String(hM).replace('.',',')} м</b>
         </label>
-        ${frame(plot(pts, hM, s.kPa, 'h, м'))}
-        ${note('Одна ручка','Глубина. График — прямая. Форма бака в формулу не входит.')}
+        ${physChart([{pts:water,col:BLUE,name:'вода'},{pts:oil,col:GOLD,name:'масло'}], hM, s.kPa, 'h, м', 'давление столба', 'ph', 'кПа')}
+        ${note('Прямая','Удвоил h — удвоил p. Масло ниже: легче столб. Это ещё не Паскаль — это глубина.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
         ${physShot('diver_deep.mp4','10 м воды ≈ 1 атмосфера')}
-        ${frame(defs()+`<rect width="240" height="220" fill="url(#p4sky)"/>`+[['2','20'],['5','50'],['10','100']].map((x,i)=>`<rect class="p4f" x="${48+i*56}" y="${196-x[1]*1.4}" width="44" height="${x[1]*1.4}" rx="7" fill="${BLUE}" opacity="${.4+i*.2}" style="animation-delay:${i*.12}s"/>`+lab(70+i*56,34,x[0]+' м',GOLD)+lab(70+i*56,54,x[1]+' кПа',GREEN)).join(''))}
+        ${physChart([{pts:[[0,0],[2,20],[5,50],[10,100]], col:BLUE, name:'вода'}], 10, 100, 'h, м', 'кПа', 'atm', 'кПа')}
         ${note('Десять метров','100 кПа столба — как воздух над тобой. Поэтому 10 м — круглая граница.')}
       </div>`;
     } else if(step===7){
-      const oil=rho===900;
-      const s=P().pascal(oil?900:1000, 2);
       h=`<div class="wv-col">
-        ${pred(st,'p7','2 м масла против 2 м воды. Давление масла?',[{k:'less',t:'меньше'},{k:'same',t:'такое же'},{k:'more',t:'больше'}])}
-        ${st.p7?physShot('oil.mp4', Math.round(s.kPa)+' кПа · '+(oil?'масло 900':'вода 1000')):''}
-        ${st.p7?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].rho=CHS[k].rho===900?1000:900;chRender(0);}catch(e){}">${oil?'Снова вода':'Залить масло'}</button>`:''}
-        ${st.p7?note('Та же глубина','18 против 20. Легче жидкость — меньше p. '+(st.p7==='less'?'Угадал.':'Смотри число.')):note('Предскажи до заливки','Не смотри бак, пока не выбрал.')}
+        ${physShot('syringe.mp4','толкнул узкий — широкий выехал')}
+        ${pred(st,'p7','Давление ушло только вниз?',[{k:'all',t:'во все точки одинаково'},{k:'down',t:'только вниз'},{k:'near',t:'только рядом с поршнем'}])}
+        ${st.p7?note('Паскаль','Добавка не «любит низ». В закрытой жидкости она одна и та же везде. Шприц — закон руками.'):note('Предскажи','Это уже не столб ρgh.')}
       </div>`;
     } else if(step===8){
-      const go=!!st.jet;
-      h=`<div class="wv-col">
-        ${pred(st,'p8','Какая струя уйдёт дальше?',[{k:'low',t:'нижняя'},{k:'mid',t:'средняя'},{k:'up',t:'верхняя'}])}
-        ${st.p8?physShot(go?'jets.mp4':'jets.jpg', go?'v = √(2gh) · нижняя быстрее':'три дырки · предскажи'):''}
-        ${st.p8?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].jet=1;chRender(0);}catch(e){}">Открыть дырки</button>`:''}
-        ${go?note('Торричелли','Это уже гидродинамика, не Паскаль. Энергия столба становится скоростью. '+(st.p8==='low'?'Угадал.':'Смотри струи.')):note('Предскажи','Школьный опыт. Сначала карточка.')}
-      </div>`;
-    } else if(step===9){
-      h=`<div class="wv-col">
-        ${physShot('pascal.jpg','столб ρgh  ≠  добавка Паскаля')}
-        ${note('Два закона','Столб считает глубину. Паскаль считает, как поршень разнёс добавку по всему объёму закрытой жидкости. Не путай.')}
-      </div>`;
-    } else if(step===10){
       const on=!!st.ball;
       h=`<div class="wv-col">
         ${physShot(on?'pascal.mp4':'pascal.jpg', on?'равные струйки':'шар Паскаля')}
+        ${pred(st,'p8','Надавишь. Струйки?',[{k:'eq',t:'одинаковые'},{k:'low',t:'длиннее снизу'},{k:'up',t:'длиннее сверху'}])}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].ball=1;chRender(0);}catch(e){}">Надавить</button>
-        ${note('Одинаково','Если бы любило низ, нижние были бы длиннее. Они равны — добавка ушла во все стороны.')}
+        ${on?note('Одинаково','Если бы любило низ, нижние были бы длиннее. Они равны. '+(st.p8==='eq'?'Угадал.':'Смотри шар, не бутылку с дырками.')):note('Предскажи','Не путай с Торричелли: там открытый столб, тут закрытый шар.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${physShot('press.jpg','p = F / S  ·  одно на обоих поршнях')}
+        ${note('Определение','Давление — сила на площадь. Паскаль говорит: это p одно и то же в жидкости. Значит F₂ / S₂ = F₁ / S₁.')}
+      </div>`;
+    } else if(step===10){
+      const k=Math.max(2, Math.min(12, +(st.k==null?5:st.k)));
+      const F1=20, F2=F1*k;
+      const pts=Array.from({length:11},(_,i)=>[i+2, F1*(i+2)]);
+      h=`<div class="wv-col">
+        ${physShot('press.mp4', 'F₁ = 20 Н  ·  S₂/S₁ = '+k+'  ·  F₂ = '+F2+' Н')}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">S₂/S₁
+          <input type="range" min="2" max="12" value="${k}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].k=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">×${k}</b>
+        </label>
+        ${physChart([{pts, col:GOLD, name:'F₂ при F₁ = 20 Н'}], k, F2, 'S₂ / S₁', 'сила на большом', 'fk', 'Н')}
+        ${note('Гидравлика','Площадь вдвое — сила вдвое. Одна ручка — отношение площадей. p одно, F = pS.')}
       </div>`;
     } else if(step===11){
       const lift=!!st.lift;
       h=`<div class="wv-col">
         ${physShot(lift?'jack.mp4':'jack.jpg', lift?'большая площадь — большая сила':'домкрат · жать малый поршень')}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].lift=1;chRender(0);}catch(e){}">${lift?'Подняли':'Жать малый'}</button>
-        ${note('Площади','p = F/S одно. Большой поршень — большая сила. Тормоза машины — тот же Паскаль.')}
+        ${note('Машина','S₂ = 10 S₁, F₁ = 20 Н → F₂ = 200 Н. Жмёшь слабо — большой поршень держит вес.')}
       </div>`;
     } else if(step===12){
       h=`<div class="wv-col">
-        ${physShot('jack.jpg','F₁ / S₁ = F₂ / S₂')}
-        ${note('Выигрыш и проигрыш','S₂ = 5 S₁ → F₂ = 5 F₁. Что выиграл в силе, отдал в расстоянии: большой поршень едет меньше.')}
+        ${physShot('press.jpg','выигрыш в силе · проигрыш в пути')}
+        ${note('Путь','Что выиграл в силе, отдал в расстоянии. Большой поршень едет в k раз меньше. Работа почти та же: F₁s₁ ≈ F₂s₂.')}
       </div>`;
     } else if(step===13){
       h=`<div class="wv-col">
-        ${physShot('vessels.mp4','один уровень')}
-        ${physShot('teapot.jpg','чайник — те же сосуды')}
-        ${pred(st,'p13','Узкая трубка и широкий бак. Вода?',[{k:'same',t:'на одном уровне'},{k:'wide',t:'в широком выше'},{k:'thin',t:'в узком выше'}])}
-        ${st.p13?note('Сообщающиеся','Однородная жидкость — один уровень. Давление в соединении обязано совпасть. Разные жидкости: выше тот столб, что легче.'):note('Предскажи','Чайник, шлюз, гидрозатвор.')}
+        ${physShot('brakes.mp4','педаль → жидкость → колодки')}
+        ${note('Тормоза','Малый цилиндр у педали, большие у колёс. Паскаль разносит давление по трубкам одинаково на все колёса.')}
       </div>`;
     } else if(step===14){
       h=`<div class="wv-col">
-        ${physShot('paradox.mp4','форма не входит в p = ρgh')}
+        ${physShot('tire.jpg','газ тоже: мяч и шина')}
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
-          ${[['1','ρ и h в метрах',GOLD],['2','p = ρgh, кПа = Па/1000',BLUE],['3','форма сосуда не важна',GREEN],['4','Паскаль — про передачу',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')}
+          ${[['1','Столб: p = ρgh',GOLD],['2','Паскаль: добавка одинакова',BLUE],['3','Гидравлика: F₂/F₁ = S₂/S₁',GREEN],['4','Не путай шар и бутылку',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')}
         </div>
-        ${note('Парадокс','Одинаковое дно и одинаковый h — одинаковая сила, даже если воды налили разный объём.')}
+        ${note('Два закона','Столб считает глубину. Паскаль считает передачу. Шар — Паскаль. Дырки в открытой бутылке — Торричелли, не он.')}
       </div>`;
     } else {
       const s=P().pascal(1000,5);
       h=`<div class="wv-col">
         ${physShot('diver_deep.mp4','5 м воды · модель: '+Math.round(s.kPa)+' кПа')}
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">давление в кПа?</div>
-        ${note('Проверка','50 кПа. Не 5 и не 500. Столб, не Паскаль.')}
+        ${note('Проверка','50 кПа. Столб ρgh. Паскаль спросит про домкрат в задачках.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;

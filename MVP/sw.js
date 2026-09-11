@@ -1,7 +1,7 @@
 /* АРХИМЕД MVP · service worker
    HTML/JS всегда с сети. В Cache API не кладём код — иначе залипает старый урок.
    Картинки можно из кэша. */
-const CACHE='arhimed-mvp-v469';
+const CACHE='arhimed-mvp-v470';
 const ASSETS=['img/car.png','manifest.webmanifest','../МОБ_ПРИЛОЖЕНИЕ/icons/icon-192.png'];
 
 self.addEventListener('install',e=>{
