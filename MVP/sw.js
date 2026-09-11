@@ -1,6 +1,6 @@
 /* АРХИМЕД MVP · service worker */
 /* Код (html/js/css) — сначала сеть. Иначе в браузере залипает старая сборка. */
-const CACHE='arhimed-mvp-v450';
+const CACHE='arhimed-mvp-v451';
 const ASSETS=['index.html','img/car.png','data/tasks.js','data/lessons.js',
  'js/core.js','js/engine.js','js/app.js','js/dashboard.js','js/lessons.js','js/legend.js','js/comic.js','js/simulator.js','js/duel.js',
  'manifest.webmanifest','../МОБ_ПРИЛОЖЕНИЕ/icons/icon-192.png'];

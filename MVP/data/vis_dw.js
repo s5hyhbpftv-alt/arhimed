@@ -20,120 +20,287 @@ window._waveCss = function(id, css){
     id: 413, title: 'Рациональные дроби', ico: '🧮',
     src: 'Математика · 8 класс · Алгебра 8: дроби', subj: 'math',
     explain: [
-      'Рациональная дробь — это отношение двух многочленов: (x + 1)/(x − 2). Числитель — сверху, знаменатель — снизу. Как обычная дробь, только вместо чисел стоят выражения с буквой x!',
-      'Самое главное правило: НА НОЛЬ ДЕЛИТЬ НЕЛЬЗЯ! Значит, знаменатель не может быть нулём. У дроби (x + 1)/(x − 2) знаменатель x − 2: он равен нулю при x = 2. Пишут: ОДЗ: x ≠ 2.',
-      'ОДЗ — область допустимых значений. Это все x, при которых дробь ИМЕЕТ СМЫСЛ. У дроби 3/(x − 5) знаменатель x − 5 = 0 при x = 5 → дробь не определена при x = 5.',
-      'Сокращение дробей: можно сокращать общие множители числителя и знаменателя. Пример: (x² − 4)/(x − 2). Заметим: x² − 4 = (x − 2)(x + 2) — разность квадратов! Сокращаем (x − 2): получаем x + 2 (при x ≠ 2).',
-      'Почему «при x ≠ 2»? Мы сократили множитель (x − 2), но при x = 2 исходная дробь была не определена (знаменатель ноль). После сокращения выражение x + 2 определено, но РАВЕНСТВО верно только при x ≠ 2!',
-      'Найди значение (x² − 9)/(x − 3) при x = 5. Сначала сократим: x² − 9 = (x − 3)(x + 3) → сокращаем (x − 3) → x + 3. Теперь подставляем 5: 5 + 3 = 8.',
-      'Сложение дробей: приводим к общему знаменателю, как с обычными дробями. 1/x + 1/(x+1): общий знаменатель x(x+1). Первая дробь: (x+1)/(x(x+1)), вторая: x/(x(x+1)). Складываем числители: (2x+1)/(x(x+1)).',
-      'Запомни: сначала ОДЗ (знаменатель ≠ 0), потом сокращение по формулам (разность квадратов!), потом подстановка. Такой порядок спасает от ошибок!',
-      'Теперь проверь себя: при каком x не определена дробь 3/(x − 5)? Вспомни: знаменатель не может быть нулём!'
+      'Загадка: сверху выражение, снизу другое. Похоже на обычную дробь, только вместо чисел — буквы. Как её зовут и почему иногда она «ломается»?',
+      'Рациональная дробь — отношение двух многочленов. Числитель сверху, знаменатель снизу. Пример: (x + 1)/(x − 2). Как кусок пирога, только размер зависит от x.',
+      'Главное правило: на ноль делить нельзя. Если знаменатель стал нулём, дроби нет. У (x + 1)/(x − 2) это случается при x = 2. На оси появляется дырка.',
+      'ОДЗ — все x, при которых дробь имеет смысл. Пишут: x ≠ 2. Нажми точку на оси: зелёная — можно подставлять, красная дырка — нельзя.',
+      'Подвинь x. Дробь считает сама. Чем ближе к 2, тем число огромнее — график улетает вверх или вниз. На самой двойке — обрыв.',
+      'Сокращение: общие множители сверху и снизу можно вычеркнуть. Сначала разложи. x² − 4 — это разность квадратов: (x − 2)(x + 2).',
+      'Нажми «Сократить»: (x − 2) уходит. Остаётся x + 2. Но дырка на x = 2 никуда не делась: исходная дробь там не жила, и равенство верно только при x ≠ 2.',
+      'Посчитай при x = 5. После сокращения 5 + 2 = 8. Можно и в лоб: (25 − 9)/(5 − 3) = 16/2 = 8. Сокращение быстрее, когда числа большие.',
+      'Сложение: общий знаменатель, как у обычных дробей. 1/x + 1/(x + 1) → общий x(x + 1). Числители: (x + 1) + x = 2x + 1. ОДЗ: x ≠ 0 и x ≠ −1.',
+      'Порядок, который спасает: сначала ОДЗ, потом разложить, потом сократить, потом подставить. Если подставить раньше ОДЗ — можно попасть в дырку и не заметить.',
+      'График после сокращения — прямая y = x + 2, но с выколотой точкой (2; 4). Нажми «Дырка»: точка пустая. Прямая есть, точки нет.',
+      'Проверь ОДЗ кнопками. x = 5 — можно, x = 2 — нельзя, x = 0 — можно. Зелёный кружок или крест.',
+      'Ещё пример: 3/(x − 5). Дырка при x = 5. ОДЗ: x ≠ 5. Числитель на ОДЗ не влияет — ноль сверху это ноль дроби, ноль снизу это обрыв.',
+      'Рецепт: найди, где знаменатель ноль — это запрет. Разложи по формулам. Сократи общее. Подставь. Не забудь приписать x ≠ …',
+      'В карман: дробь многочленов. ОДЗ — знаменатель ≠ 0. Разность квадратов помогает сократить. После сокращения дырка остаётся. (x² − 9)/(x − 3) при 5 равна 8.',
+      'Проверка: 3/(x − 5) не определена, когда снизу ноль. x − 5 = 0 → x = 5.'
     ],
     check: { q: 'При каком x не определена дробь 3/(x − 5)?', choices: ['x = 5', 'x = 0', 'x = 3', 'всегда определена'], ans: 0,
-      exp: 'На ноль делить нельзя: x − 5 = 0 → x = 5.' },
+      exp: 'Знаменатель x − 5 = 0 при x = 5. На ноль делить нельзя.' },
     tasks: [
       { q: 'Найди значение (x² − 9)/(x − 3) при x = 5.', kind: 'unit', ans: 8, tol: 0,
-        hints: ['(25 − 9) : (5 − 3).', '16 : 2 = 8.'], sol: '8' },
-      { q: 'ОДЗ дроби (x + 1)/(x + 4): x ≠ …', kind: 'choice', choices: ['−4', '4', '−1', '0'], ans: 0, tol: 0,
+        hints: ['Сократи: (x − 3)(x + 3)/(x − 3) = x + 3.', '5 + 3 = 8.'], sol: '8' },
+      { q: 'ОДЗ дроби (x + 1)/(x + 4): x ≠ …', kind: 'choice',
+        choices: ['−4', '4', '−1', '0'], ans: 0, tol: 0,
         hints: ['Знаменатель не равен нулю.', 'x + 4 ≠ 0 → x ≠ −4.'], sol: '−4' }
     ]
   };
-  const frac=(top,bot,size)=>`<div style="display:flex;flex-direction:column;align-items:center;margin:0 4px">
-    <div style="font-size:${size||26}px;color:#ffd76a;font-family:Georgia,serif;padding:0 6px">${top}</div>
-    <div style="border-top:2px solid #8fa08f;width:100%;margin-top:2px;padding-top:2px;font-size:${size||26}px;color:#ffd76a;font-family:Georgia,serif;text-align:center">${bot}</div>
-  </div>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l413ink{to{stroke-dashoffset:0}}
+    @keyframes l413pop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l413pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l413glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l413-ink{animation:l413ink 1.35s cubic-bezier(.2,.75,.15,1) forwards}
+    .l413-dot{transform-box:fill-box;transform-origin:center;animation:l413pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l413-pulse{animation:l413pulse 1.6s ease-in-out infinite}
+    .l413-glow{animation:l413glow 1.8s ease-in-out infinite}
+    .l413-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l413-ink" style="animation-duration:${dur||1.3}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l413-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l413', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function fracBox(top, bot, x, y, col, strike){
+    col=col||GOLD;
+    return `<g>
+      ${lab(x, y-8, top, col, 'middle', 16)}
+      <line x1="${x-38}" y1="${y+4}" x2="${x+38}" y2="${y+4}" stroke="${col}" stroke-width="2" ${strike?'stroke-dasharray="4 3"':''}/>
+      ${lab(x, y+22, bot, strike?RED:col, 'middle', 16)}
+    </g>`;
+  }
+  function AX(n){ return 120 + n*22; }
+  function axis(hole){
+    let t=`<line x1="18" y1="120" x2="222" y2="120" stroke="#3d5c49" stroke-width="2"/>`;
+    for(let n=-4;n<=4;n++){
+      t+=`<line x1="${AX(n)}" y1="114" x2="${AX(n)}" y2="126" stroke="#3d5c49"/>`+lab(AX(n), 142, String(n), MUTED, 'middle', 11);
+    }
+    if(hole!=null) t+=`<circle cx="${AX(hole)}" cy="120" r="8" fill="#0c1a14" stroke="${RED}" stroke-width="3" class="l413-glow"/>`+lab(AX(hole), 96, 'дырка', RED);
+    return t;
+  }
+
   function visD413(el){
+    try{ window._waveCss && _waveCss('css-l413', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'413';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const xv=Math.max(-3, Math.min(5, +(st.x==null?0:st.x)));
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Что такое рациональная дробь?</div>
-        <div style="display:flex;align-items:center;gap:6px;justify-content:center">
-          ${frac('x + 1','x − 2',30)}
-          <span style="font-size:24px;color:#8fa08f">=</span>
-          <span style="font-size:40px">🍕</span>
-        </div>
-        <div class="wv-sml">числитель сверху · знаменатель снизу · вместо чисел — выражения!</div>
+        ${frame(
+          fracBox(open?'x + 1':'?', open?'x − 2':'?', 120, 90, GOLD, false)+
+          lab(120, 40, open?'рациональная дробь':'что это?', GOLD, 'middle', 15)+
+          lab(120, 180, 'сверху и снизу — многочлены', MUTED)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Дробь из букв','Как обычная дробь, только вместо чисел выражения. Сейчас найдём, где она ломается и как её сокращать.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">На ноль делить нельзя!</div>
-        <div style="display:flex;align-items:center;gap:8px;justify-content:center">
-          ${frac('x + 1','x − 2',30)}
-        </div>
-        <div class="wv-sml">x − 2 = 0 при x = 2 → знаменатель ноль!</div>
-        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:8px 12px;font-size:17px;color:#ffcfc2;font-weight:bold" class="wv-ans">ОДЗ: x ≠ 2</div>
+        ${frame(
+          `<rect x="70" y="40" width="100" height="48" rx="10" fill="${GOLD}22" stroke="${GOLD}" ${doDraw?ink(296,1.1,0):''}/>`+
+          lab(120, 70, 'x + 1', GOLD, 'middle', 18)+
+          lab(120, 108, 'числитель', MUTED, 'middle', 11)+
+          `<rect x="70" y="128" width="100" height="48" rx="10" fill="${BLUE}22" stroke="${BLUE}" ${doDraw?ink(296,1.1,.15):''}/>`+
+          lab(120, 158, 'x − 2', BLUE, 'middle', 18)+
+          lab(120, 196, 'знаменатель', MUTED, 'middle', 11)
+        )}
+        ${note('Два этажа','Сверху — что делим. Снизу — на что делим. Если нижний этаж ноль, верхний уже не спасает.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">ОДЗ — область допустимых значений</div>
-        <div style="display:flex;align-items:center;gap:8px;justify-content:center">
-          ${frac('3','x − 5',30)}
-        </div>
-        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-size:16px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">x − 5 = 0 → x = 5</div>
-          <div class="wv-pop2" style="color:#ff9a8a;font-weight:bold">дробь не определена при x = 5!</div>
-        </div>
+        ${frame(
+          axis(2)+
+          lab(120, 40, 'на ноль делить нельзя', RED, 'middle', 14)
+        )}
+        ${note('Дырка','x − 2 = 0 при x = 2. На оси выкалываем точку. Дробь там не существует — это не «ноль», это обрыв.')}
       </div>`;
     } else if(step===3){
+      const pick=st.pick;
+      const pts=[-2,-1,0,1,2,3,4];
       h=`<div class="wv-col">
-        <div class="wv-big">Сокращение дробей</div>
-        <div style="display:flex;align-items:center;gap:6px;justify-content:center">
-          ${frac('x² − 4','x − 2',24)}
-          <span style="font-size:24px;color:#8fa08f">=</span>
-          <div style="text-align:center;background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:10px;padding:4px 10px;font-size:19px;color:#7fd1ff;font-family:Georgia,serif">x²−4=(x−2)(x+2)</div>
+        ${frame(
+          axis(2)+
+          (pick!=null?`<circle class="l413-dot" cx="${AX(pick)}" cy="120" r="6" fill="${pick===2?RED:GREEN}"/>`:'')+
+          lab(120, 40, 'ОДЗ: x ≠ 2', GOLD)
+        )}
+        <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:340px">
+          ${pts.map(n=>`<button type="button" class="btn" style="padding:8px 10px;border:2px solid ${pick===n?(n===2?RED:GREEN):'#3d5c49'}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].pick=${n};chRender(0);}catch(e){}">${n}</button>`).join('')}
         </div>
-        <div class="wv-ans" style="font-size:22px;color:#8fd1a8">сокращаем (x−2) → x + 2</div>
-        <div class="wv-sml">разность квадратов — лучший друг сокращения!</div>
+        ${note('Жми x','Зелёный — дробь жива. Красный на 2 — знаменатель ноль. ОДЗ: все числа кроме запрещённого.')}
       </div>`;
     } else if(step===4){
+      const near=Math.abs(xv-2)<0.15;
+      const val=near?null:(xv+1)/(xv-2);
+      const vs=val==null?'обрыв':(Math.round(val*100)/100).toString().replace('.',',');
       h=`<div class="wv-col">
-        <div class="wv-big">Почему «при x ≠ 2»?</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">при x = 2 исходная дробь не определена (знаменатель 0). Сокращённое x + 2 определено, но равенство верно только при <b style="color:#ffd76a">x ≠ 2</b>!</div>
+        ${frame(
+          axis(2)+
+          `<circle class="l413-glow" cx="${Math.max(24, Math.min(216, AX(xv)))}" cy="120" r="6" fill="${near?RED:GOLD}"/>`+
+          lab(120, 40, '(x+1)/(x−2) = '+vs, near?RED:GOLD, 'middle', 14)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">x
+          <input type="range" min="-30" max="50" value="${Math.round(xv*10)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].x=this.value/10;chRender(0);}catch(e){}">
+          <b style="color:${near?RED:GOLD};min-width:28px">${xv.toString().replace('.',',')}</b>
+        </label>
+        ${note('Чем ближе к дырке','Число становится огромным. На самой двойке — обрыв. Это вертикальная асимптота, но нам пока важна дырка.')}
       </div>`;
     } else if(step===5){
+      const show=!!st.fac;
       h=`<div class="wv-col">
-        <div class="wv-big">Считаем значение</div>
-        <div class="wv-sml">(x² − 9)/(x − 3) при x = 5</div>
-        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-size:17px;color:#e8dcc8;text-align:center;font-family:Georgia,serif">
-          <div class="wv-pop">x² − 9 = (x − 3)(x + 3)</div>
-          <div class="wv-pop2">сокращаем → x + 3</div>
-          <div class="wv-pop3" style="font-size:24px;color:#ffd76a;font-weight:bold">5 + 3 = 8 ✔</div>
-        </div>
+        ${frame(
+          lab(120, 48, 'x² − 4', GOLD, 'middle', 22)+
+          lab(120, 88, show?'↓': '', MUTED)+
+          lab(120, 128, show?'(x − 2)(x + 2)': 'разность квадратов?', show?GREEN:MUTED, 'middle', 16)+
+          lab(120, 180, 'a² − b² = (a − b)(a + b)', MUTED, 'middle', 12)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].fac=1;chRender(0);}catch(e){}">${show?'Разложили':'Разложить'}</button>
+        ${note('Формула в карман','Квадрат минус квадрат всегда раскладывается. Без этого сокращать (x² − 4)/(x − 2) не получится.')}
       </div>`;
     } else if(step===6){
+      const cut=!!st.cut;
       h=`<div class="wv-col">
-        <div class="wv-big">Сложение дробей</div>
-        <div style="display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap">
-          ${frac('1','x',20)}<span style="color:#8fa08f">+</span>${frac('1','x + 1',20)}<span style="color:#8fa08f">=</span>${frac('2x + 1','x(x + 1)',20)}
-        </div>
-        <div class="wv-sml">общий знаменатель x(x+1) — как с обычными дробями!</div>
+        ${frame(
+          fracBox(cut?'(x − 2)(x + 2)':'(x − 2)(x + 2)', '(x − 2)', 120, 80, GOLD, cut)+
+          lab(120, 150, cut?'= x + 2,  x ≠ 2':'сократи общее', cut?GREEN:MUTED, 'middle', 16)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].cut=!CHS[k].cut;chRender(0);}catch(e){}">${cut?'Вернуть множитель':'Сократить (x − 2)'}</button>
+        ${note('Дырка остаётся','Множитель вычеркнули, выражение стало проще. Но при x = 2 исходная дробь не существовала — это условие нельзя выкинуть.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Порядок действий</div>
-        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
-          ${[
-            ['1️⃣','ОДЗ: знаменатель ≠ 0','#ff9a8a'],
-            ['2️⃣','сокращай по формулам','#7fd1ff'],
-            ['3️⃣','только потом подставляй x','#8fd1a8']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;text-align:left;font-size:14px;color:#e8dcc8"><span>${x[0]}</span>${x[1]}</div>`).join('')}
+        <div class="wv-ans" style="font-size:18px">(x² − 9)/(x − 3)  при x = 5</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,300px)">
+          ${[['разложили','(x − 3)(x + 3)/(x − 3)',BLUE],['сократили','x + 3',GREEN],['подставили 5','5 + 3 = 8',GOLD]].map((r,i)=>
+            `<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${r[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8"><span>${r[0]}</span><b style="color:${r[2]}">${r[1]}</b></div>`).join('')}
         </div>
+        ${note('Два пути','В лоб: (25 − 9)/(5 − 3) = 8. Через сокращение: x + 3 = 8. Когда числа большие, сокращение быстрее.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(70, 50, '1/x', BLUE)+lab(170, 50, '1/(x+1)', GREEN)+
+          lab(120, 88, '+', GOLD, 'middle', 20)+
+          lab(120, 128, 'общий: x(x+1)', GOLD)+
+          lab(120, 168, '(2x + 1) / [x(x+1)]', GREEN, 'middle', 14)+
+          lab(120, 200, 'x ≠ 0 и x ≠ −1', RED, 'middle', 12)
+        )}
+        ${note('Как обычные дроби','Общий знаменатель — произведение. Числители сложили. ОДЗ собрали с обоих этажей: два запрета.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','ОДЗ: где знаменатель ноль',RED],
+            ['2','Разложи числитель и знаменатель',BLUE],
+            ['3','Сократи общее, оставь запрет',GOLD],
+            ['4','Потом подставляй число',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${x[2]};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Порядок','Подстановка раньше ОДЗ — классическая ловушка. Сначала дырки, потом алгебра.')}
+      </div>`;
+    } else if(step===10){
+      const hole=st.hole!==false;
+      h=`<div class="wv-col">
+        ${frame(
+          `<line x1="28" y1="170" x2="212" y2="50" stroke="${GOLD}" stroke-width="2.6" ${doDraw?ink(220,1.3,0):''}/>`+
+          `<line x1="20" y1="190" x2="220" y2="190" stroke="#3d5c49"/>`+
+          `<line x1="40" y1="28" x2="40" y2="200" stroke="#3d5c49"/>`+
+          (hole?`<circle cx="120" cy="110" r="7" fill="#0c1a14" stroke="${RED}" stroke-width="3" class="l413-glow"/>`+lab(148, 110, '(2; 4)', RED, 'start'):`<circle cx="120" cy="110" r="6" fill="${GREEN}"/>`)+
+          lab(120, 28, 'y = x + 2  с дыркой', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].hole=!(CHS[k].hole===false);chRender(0);}catch(e){}">${hole?'Это выколотая точка':'Убрать дырку (ошибка)'}</button>
+        ${note('Прямая почти','После сокращения график — прямая, но точки (2; 4) нет. Если забыть дырку, ответ на ОДЗ будет неверным.')}
+      </div>`;
+    } else if(step===11){
+      const tests=[[5,'можно',true],[2,'нельзя',false],[0,'можно',true],[-1,'можно',true]];
+      const pick=st.t;
+      h=`<div class="wv-col">
+        <div class="wv-sml">дробь (x + 1)/(x − 2)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:320px">
+          ${tests.map((r,i)=>`<button type="button" class="btn" style="border-color:${pick===i?(r[2]?GREEN:RED):'#3d5c49'}"
+            onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].t=${i};chRender(0);}catch(e){}">x = ${r[0]}</button>`).join('')}
+        </div>
+        ${pick!=null?`<div class="wv-ans" style="font-size:16px;color:${tests[pick][2]?GREEN:RED}">x = ${tests[pick][0]} — ${tests[pick][1]}</div>`:''}
+        ${note('Тренировка ОДЗ','Запрет только там, где знаменатель ноль. Ноль в числителе — это просто ноль дроби, это можно.')}
+      </div>`;
+    } else if(step===12){
+      function AX5(n){ return 36 + (n-1)*28; }
+      h=`<div class="wv-col">
+        ${frame(
+          fracBox('3', 'x − 5', 120, 56, GOLD, false)+
+          `<line x1="20" y1="150" x2="220" y2="150" stroke="#3d5c49" stroke-width="2"/>`+
+          [1,2,3,4,5,6,7].map(n=>`<line x1="${AX5(n)}" y1="144" x2="${AX5(n)}" y2="156" stroke="#3d5c49"/>`+lab(AX5(n), 174, String(n), MUTED, 'middle', 11)).join('')+
+          `<circle cx="${AX5(5)}" cy="150" r="8" fill="#0c1a14" stroke="${RED}" stroke-width="3" class="l413-glow"/>`+
+          lab(AX5(5), 128, 'дырка', RED)+
+          lab(120, 28, 'ОДЗ: x ≠ 5', RED)
+        )}
+        ${note('Числитель не спасает','Тройка сверху никогда не станет проблемой. Проблема только снизу: x = 5. ОДЗ не смотрит на числитель.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['ОДЗ','знаменатель ≠ 0',RED],
+            ['формула','a² − b² = (a − b)(a + b)',BLUE],
+            ['сократить','общее вычеркнуть, запрет оставить',GOLD],
+            ['подставить','только после ОДЗ',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <b style="color:${x[2]}">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Четыре шага. Пропуск первого — дырка в ответе. Пропуск второго — не сократится.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          fracBox('x² − 9', 'x − 3', 120, 80, GOLD, false)+
+          lab(120, 150, 'при x = 5  →  8', GREEN)+
+          lab(120, 184, 'и x ≠ 3', RED)
+        )}
+        ${note('В карман','Дробь многочленов. ОДЗ — дырка. Разность квадратов. Сократили — запрет остался. При пятёрке получается 8.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        <div style="display:flex;justify-content:center">${frac('3','x − 5',26)}</div>
-        <div class="wv-sml">при каком x дробь не определена?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 14px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">x = ?</div>
+        ${frame(fracBox('3', 'x − 5', 120, 90, GOLD, false)+lab(120, 160, 'при каком x обрыв?', MUTED))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">x = ?</div>
+        ${note('Проверка','x = 5. Знаменатель ноль. Не 0 и не 3 — они снизу не обнуляют.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[413]=visD413;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===413){ window.ARH_LESSONS[i]=L413; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===413){ arr[i]=L413; f=true; break; } }
+    if(!f) arr.push(L413);
+  })();
 })();
 /* ================= УРОК 414 · Степень с целым показателем ================= */
 (function(){
@@ -141,104 +308,266 @@ window._waveCss = function(id, css){
     id: 414, title: 'Степень с целым показателем', ico: '🔢',
     src: 'Математика · 8 класс · Алгебра 8: степени', subj: 'math',
     explain: [
-      'Ты уже знаешь степени с натуральным показателем: 2³ = 2·2·2 = 8. Сегодня узнаешь, что значат степени с НУЛЕВЫМ и ОТРИЦАТЕЛЬНЫМ показателем: 2⁰, 2⁻³. Математики договорились об этом очень удобно!',
-      'Отрицательная степень: a⁻ⁿ = 1/aⁿ. Проще говоря, минус в показателе «переворачивает» дробь. Пример: 2⁻³ = 1/2³ = 1/8. Двойка «ушла в знаменатель»!',
-      'Проверим на примере: 3⁻¹ = 1/3. И 10⁻² = 1/10² = 1/100 = 0,01. Смотри: 10⁻² — это просто запись числа 0,01 через степень! Очень удобно для маленьких чисел.',
-      'Нулевая степень: a⁰ = 1 при a ≠ 0. Любое ненулевое число в нулевой степени равно единице: 5⁰ = 1, (−7)⁰ = 1. А вот 0⁰ не определяют — это особый случай!',
-      'Почему a⁰ = 1? Смотри на закономерность: 2³ = 8, 2² = 4, 2¹ = 2, 2⁰ = 1. Каждый шаг вниз — делим на 2! Значит, 2⁰ = 1. Логично, правда?',
-      'Теперь свойства. При умножении степеней с ОДИНАКОВЫМ основанием показатели складываются: aᵐ · aⁿ = aᵐ⁺ⁿ. Пример: 2³ · 2² = 2⁵ = 32. Проверь: 8·4 = 32!',
-      'При возведении степени в степень показатели перемножаются: (aᵐ)ⁿ = aᵐⁿ. Пример: (2²)³ = 2⁶ = 64. А при делении показатели вычитаются: aᵐ : aⁿ = aᵐ⁻ⁿ. 2⁵:2³ = 2² = 4.',
-      'Соберём всё вместе: 2⁻³ · 2⁵ = 2² = 4 (показатели −3+5 = 2). Видишь, отрицательные показатели работают в тех же правилах! Минус — это просто «обратная дробь».',
-      'Теперь проверь себя: чему равно 2⁻³? Вспомни: a⁻ⁿ = 1/aⁿ!'
+      'Загадка: 2³ = 8 понятно — три двойки. А что такое 2⁰ и 2⁻³? Не «ноль двоек» и не «минус три двойки». Математики договорились так, чтобы лестница степеней не ломалась.',
+      'Положительная степень — повторное умножение. 2³ = 2·2·2. Нажми «Ещё двойку»: столбик растёт 2, 4, 8. Это уже знакомо.',
+      'Отрицательная степень переворачивает: a⁻ⁿ = 1/aⁿ. Минус в показателе — билет вниз, в знаменатель. 2⁻³ = 1/2³ = 1/8.',
+      'Нажми «Перевернуть»: восемь кубиков становятся одной восьмой. Не минус восемь. Знак минус сидит в показателе, не перед числом.',
+      'Ещё примеры. 3⁻¹ = 1/3. 10⁻² = 1/100 = 0,01. Так пишут маленькие числа: не ноль-запятая-ноль-один, а десять в минус второй.',
+      'Лестница вниз: 2³ = 8, 2² = 4, 2¹ = 2. Каждый шаг — делим на 2. Значит, следующий шаг 2⁰ = 1. И дальше 2⁻¹ = 1/2, 2⁻² = 1/4.',
+      'Поэтому a⁰ = 1, если a не ноль. 5⁰ = 1, (−7)⁰ = 1. Ноль в нулевой степени не определяют: лестница из нулей не делится.',
+      'Нажми ступеньки сверху вниз. Числа 8 → 4 → 2 → 1 → 1/2. Одна и та же кнопка «разделить на основание».',
+      'Умножение степеней с одним основанием: показатели складываются. aᵐ · aⁿ = aᵐ⁺ⁿ. 2³ · 2² = 2⁵ = 32. Проверка: 8 · 4 = 32.',
+      'Степень в степень: показатели умножаются. (aᵐ)ⁿ = aᵐⁿ. (2²)³ = 2⁶ = 64. Сначала 4, потом 4·4·4 = 64.',
+      'Деление: показатели вычитаются. aᵐ : aⁿ = aᵐ⁻ⁿ. 2⁵ : 2³ = 2² = 4. 32 : 8 = 4. Минус в показателе здесь появляется сам, если вычитаем больше.',
+      'Смешали: 2⁻³ · 2⁵ = 2² = 4. Отрицательный показатель работает в том же правиле. −3 + 5 = 2. Не надо отдельно «переворачивать», если складываешь показатели.',
+      'Подвинь показатель n у двойки. Живая башня: вправо — умножаем, влево — делим, через ноль — единица, дальше дроби.',
+      'Рецепт: минус — в знаменатель. Ноль — единица. Умножили — сложи показатели. Степень в степень — умножь. Деление — вычти.',
+      'В карман: 2⁻³ = 1/8. 5⁰ = 1. 2³ · 2² = 2⁵. Не путай 2⁻³ и −8. Минус вверху — это переворот, не смена знака.',
+      'Проверка: 2⁻³. Перевернули 2³. Это 1/8, не −8 и не 1/6.'
     ],
     check: { q: 'Чему равно 2⁻³?', choices: ['1/8', '−8', '1/6', '8'], ans: 0,
-      exp: 'a⁻ⁿ = 1/aⁿ → 2⁻³ = 1/8.' },
+      exp: 'a⁻ⁿ = 1/aⁿ → 2⁻³ = 1/8. Не минус восемь.' },
     tasks: [
       { q: 'Чему равно 5⁰?', kind: 'unit', ans: 1, tol: 0,
-        hints: ['Любое ненулевое число в нулевой степени — 1.', '5⁰ = 1.'], sol: '1' },
-      { q: 'Чему равно 3⁻¹?', kind: 'choice', choices: ['1/3', '−3', '3', '1/9'], ans: 0, tol: 0,
+        hints: ['Ненулевое число в нулевой степени — 1.', '5⁰ = 1.'], sol: '1' },
+      { q: 'Чему равно 3⁻¹?', kind: 'choice',
+        choices: ['1/3', '−3', '3', '1/9'], ans: 0, tol: 0,
         hints: ['a⁻¹ = 1/a.', '3⁻¹ = 1/3.'], sol: '1/3' }
     ]
   };
-  const pow=(b,e,res,c)=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${c||'#3d5c49'};border-radius:12px;padding:7px 10px;min-width:64px"><div style="font-size:22px;color:#ffd76a;font-family:Georgia,serif">${b}<sup style="font-size:13px">${e}</sup></div><div style="font-size:12px;color:${c||'#8fa08f'}">= ${res}</div></div>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l414ink{to{stroke-dashoffset:0}}
+    @keyframes l414pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l414pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l414glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l414-ink{animation:l414ink 1.3s cubic-bezier(.2,.75,.15,1) forwards}
+    .l414-dot{transform-box:fill-box;transform-origin:center;animation:l414pop .35s cubic-bezier(.2,1.4,.4,1) both}
+    .l414-pulse{animation:l414pulse 1.6s ease-in-out infinite}
+    .l414-glow{animation:l414glow 1.8s ease-in-out infinite}
+    .l414-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l414-ink" style="animation-duration:${dur||1.25}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l414-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l414', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function cubes(n, col){
+    const s=16, gap=3, max=8;
+    const k=Math.min(max, Math.max(0, n));
+    let d='';
+    for(let i=0;i<k;i++){
+      const x=40+(i%4)*(s+gap), y=140-Math.floor(i/4)*(s+gap);
+      d+=`<rect class="l414-dot" style="animation-delay:${i*.05}s" x="${x}" y="${y}" width="${s}" height="${s}" rx="3" fill="${col}"/>`;
+    }
+    return d;
+  }
+  function fmtPow(n){
+    if(n>=0) return String(1<<n);
+    const d=1<<(-n);
+    return '1/'+d;
+  }
+
   function visD414(el){
+    try{ window._waveCss && _waveCss('css-l414', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'414';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const n=Math.max(-4, Math.min(5, +(st.n==null?3:st.n)));
+    const stair=Math.max(0, Math.min(5, st.st==null?0:+st.st));
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Новые степени</div>
-        <div class="wv-row" style="gap:8px">${pow('2','3','8','#8fd1a8')}${pow('2','0','?','#ffd76a')}${pow('2','−3','?','#7fd1ff')}</div>
-        <div class="wv-sml">что значат нулевой и отрицательный показатели?</div>
+        ${frame(
+          lab(60, 80, '2³ = 8', GREEN, 'middle', 16)+
+          lab(120, 80, open?'2⁰ = 1':'2⁰ = ?', GOLD, 'middle', 16)+
+          lab(180, 80, open?'2⁻³ = 1/8':'2⁻³ = ?', BLUE, 'middle', 16)+
+          lab(120, 150, open?'лестница не ломается':'что значат эти степени?', MUTED, 'middle', 13)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Три соседа','Одна двойка, три показателя. Сейчас увидим, почему ноль даёт единицу, а минус — переворот, а не минус восемь.')}
       </div>`;
     } else if(step===1){
+      const c=Math.max(1, Math.min(3, st.c==null?1:+st.c));
       h=`<div class="wv-col">
-        <div class="wv-big">Отрицательная степень</div>
-        <div style="background:rgba(127,209,255,.12);border:2px solid #7fd1ff;border-radius:14px;padding:10px 14px;font-size:22px;color:#7fd1ff;font-weight:bold;font-family:Georgia,serif">a⁻ⁿ = 1/aⁿ</div>
-        <div style="display:flex;gap:8px;justify-content:center;margin-top:4px">${pow('2','−3','1/8','#8fd1a8')}</div>
-        <div class="wv-sml">минус «переворачивает» дробь!</div>
+        ${frame(
+          cubes(1<<c, GREEN)+
+          lab(120, 40, '2'+['','¹','²','³'][c]+' = '+(1<<c), GOLD, 'middle', 18)+
+          lab(180, 160, '×2 каждый раз', MUTED, 'start', 11)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].c=Math.min(3,(CHS[k].c||1)+1);chRender(0);}catch(e){}">${c>=3?'Столбик полный':'Ещё двойку'}</button>
+        ${note('Повторное умножение','2, 4, 8. Это натуральный показатель. Дальше пойдём вниз — через единицу в дроби.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">Примеры</div>
-        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
-          ${pow('3','−1','1/3','#8fd1a8')}${pow('10','−2','0,01','#7fd1ff')}
-        </div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #7fd1ff;border-radius:9px;padding:7px 12px;max-width:330px;font-size:13.5px;color:#e8dcc8">10⁻² = 1/100 = 0,01 — удобная запись маленьких чисел!</div>
+        ${frame(
+          lab(120, 70, 'a⁻ⁿ = 1 / aⁿ', GOLD, 'middle', 22)+
+          `<rect x="50" y="110" width="140" height="50" rx="12" fill="${BLUE}18" stroke="${BLUE}" ${doDraw?ink(380,1.2,0):''}/>`+
+          lab(120, 140, 'минус → в знаменатель', BLUE)
+        )}
+        ${note('Билет вниз','Минус в показателе не меняет знак числа. Он переворачивает: степень уезжает вниз, сверху остаётся 1.')}
       </div>`;
     } else if(step===3){
+      const flip=!!st.flip;
       h=`<div class="wv-col">
-        <div class="wv-big">Нулевая степень</div>
-        <div style="background:rgba(143,209,168,.12);border:2px solid #8fd1a8;border-radius:14px;padding:10px 14px;font-size:22px;color:#8fd1a8;font-weight:bold;font-family:Georgia,serif">a⁰ = 1 (a ≠ 0)</div>
-        <div class="wv-row" style="gap:8px;margin-top:4px">${pow('5','0','1','#8fd1a8')}${pow('−7','0','1','#7fd1ff')}</div>
-        <div class="wv-sml">0⁰ не определяют — особый случай!</div>
+        ${frame(
+          (flip
+            ? lab(120, 80, '1 / 8', GOLD, 'middle', 28)+lab(120, 130, '2⁻³', BLUE, 'middle', 16)
+            : cubes(8, GREEN)+lab(180, 80, '2³ = 8', GREEN, 'start'))+
+          lab(120, 190, flip?'перевернули':'восемь кубиков', MUTED)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].flip=!CHS[k].flip;chRender(0);}catch(e){}">${flip?'Вернуть 8':'Перевернуть → 1/8'}</button>
+        ${note('Не минус восемь','2⁻³ = 1/8. Если написать −8, перепутал место минуса: он в показателе, не перед двойкой.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
-        <div class="wv-big">Почему a⁰ = 1?</div>
-        <div style="display:flex;flex-direction:column;gap:4px;max-width:200px;width:100%;font-size:20px;color:#e8dcc8;text-align:center;font-family:Georgia,serif">
-          <div class="wv-pop">2³ = 8</div>
-          <div class="wv-pop2">2² = 4 <span style="font-size:12px;color:#8fa08f">(:2)</span></div>
-          <div class="wv-pop2">2¹ = 2</div>
-          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">2⁰ = 1 ← делим на 2!</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+          ${[['3⁻¹','1/3',GREEN],['10⁻²','0,01',BLUE],['5⁻¹','1/5',GOLD]].map((x,i)=>
+            `<div class="wv-pop" style="animation-delay:${i*.1}s;text-align:center;border:2px solid ${x[2]};border-radius:12px;padding:10px 14px;min-width:80px">
+              <div style="font-size:18px;color:${GOLD};font-family:Georgia,serif">${x[0]}</div>
+              <div style="font-size:14px;color:${x[2]}">${x[1]}</div></div>`).join('')}
         </div>
+        ${note('Маленькие числа','10⁻² удобнее, чем 0,01, когда нулей много. 10⁻⁶ — миллионная, не шесть нулей руками.')}
       </div>`;
     } else if(step===5){
+      const rows=[['2³','8'],['2²','4'],['2¹','2'],['2⁰','1'],['2⁻¹','1/2'],['2⁻²','1/4']];
       h=`<div class="wv-col">
-        <div class="wv-big">Умножение: aᵐ·aⁿ = aᵐ⁺ⁿ</div>
-        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">2³ · 2² = 2⁵ = 32</div>
-        <div class="wv-sml">показатели складываются: 3 + 2 = 5 · проверка: 8·4 = 32 ✔</div>
+        <div style="display:flex;flex-direction:column;gap:4px;width:min(100%,260px)">
+          ${rows.map((r,i)=>`<div class="wv-pop" style="animation-delay:${i*.07}s;display:flex;justify-content:space-between;opacity:${i<=stair?1:.25};background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${i===3?GOLD:BLUE};border-radius:10px;padding:7px 12px;font-size:15px;color:#e8dcc8">
+            <span>${r[0]}</span><b style="color:${i===3?GOLD:GREEN}">${r[1]}</b></div>`).join('')}
+        </div>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].st=Math.min(5,(CHS[k].st||0)+1);chRender(0);}catch(e){}">${stair>=5?'Вся лестница':'Шаг вниз ÷2'}</button>
+        ${note('Каждый шаг — делим на 2','8, 4, 2, 1, 1/2, 1/4. Ноль в показателе — просто следующая ступенька, не фокус.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
-        <div class="wv-big">Степень в степени и деление</div>
-        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
-          ${[
-            ['(aᵐ)ⁿ = aᵐⁿ','(2²)³ = 2⁶ = 64','#7fd1ff'],
-            ['aᵐ : aⁿ = aᵐ⁻ⁿ','2⁵ : 2³ = 2² = 4','#8fd1a8']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><b style="color:${x[2]};font-family:Georgia,serif">${x[0]}</b><span style="font-size:12.5px">${x[1]}</span></div>`).join('')}
-        </div>
+        ${frame(
+          lab(120, 70, 'a⁰ = 1', GREEN, 'middle', 28)+
+          lab(120, 110, 'если a ≠ 0', MUTED)+
+          lab(70, 160, '5⁰=1', GOLD)+lab(170, 160, '(−7)⁰=1', BLUE)
+        )}
+        ${note('Любое ненулевое','Плюс, минус, дробь — в нулевой степени единица. Исключение одно: ноль в нулевой не определяют.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Всё вместе</div>
-        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;font-size:22px;color:#e8dcc8;font-family:Georgia,serif">
-          <span>2⁻³ · 2⁵ =</span><b style="color:#ffd76a">2² = 4</b>
+        ${frame(
+          `<rect x="40" y="70" width="160" height="70" rx="12" fill="${RED}14" stroke="${RED}" ${doDraw?ink(460,1.2,0):''}/>`+
+          lab(120, 110, '0⁰ не определяют', RED, 'middle', 16)+
+          lab(120, 170, 'лестница из нулей ломается', MUTED, 'middle', 12)
+        )}
+        ${note('Почему','0³=0, 0²=0, 0¹=0 — делить на ноль, чтобы спуститься к 0⁰, нельзя. Поэтому эту ступеньку выкинули.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 50, 'aᵐ · aⁿ = aᵐ⁺ⁿ', GOLD, 'middle', 18)+
+          lab(120, 100, '2³ · 2² = 2⁵', BLUE, 'middle', 20)+
+          lab(120, 148, '8 · 4 = 32', GREEN, 'middle', 18)
+        )}
+        ${note('Сложили показатели','Одинаковое основание — степени можно склеить. Разные основания (2³·3²) так не складывают.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 50, '(aᵐ)ⁿ = aᵐⁿ', GOLD, 'middle', 18)+
+          lab(120, 100, '(2²)³ = 2⁶', BLUE, 'middle', 20)+
+          lab(120, 148, '4 · 4 · 4 = 64', GREEN, 'middle', 18)
+        )}
+        ${note('Умножили показатели','Сначала внутренняя степень, потом повторили её n раз. 2·3 = 6, не 2+3. Здесь ловушка: путают с умножением степеней.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 50, 'aᵐ : aⁿ = aᵐ⁻ⁿ', GOLD, 'middle', 18)+
+          lab(120, 100, '2⁵ : 2³ = 2²', BLUE, 'middle', 20)+
+          lab(120, 148, '32 : 8 = 4', GREEN, 'middle', 18)
+        )}
+        ${note('Вычли показатели','Если сверху меньше, получится отрицательный показатель — это нормально, получится дробь.')}
+      </div>`;
+    } else if(step===11){
+      const show=!!st.mix;
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 60, '2⁻³ · 2⁵', GOLD, 'middle', 22)+
+          lab(120, 110, show?'2⁻³⁺⁵ = 2² = 4':'сложи показатели', show?GREEN:MUTED, 'middle', 16)+
+          lab(120, 160, show?'−3 + 5 = 2':'минус тоже складывается', MUTED, 'middle', 12)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].mix=1;chRender(0);}catch(e){}">${show?'Готово':'Сложить'}</button>
+        ${note('Один закон','Не надо сначала переворачивать 2⁻³ в 1/8, если можно сложить показатели. Минус участвует в сложении как обычное число.')}
+      </div>`;
+    } else if(step===12){
+      const val=fmtPow(n);
+      h=`<div class="wv-col">
+        ${frame(
+          (n>0?cubes(Math.min(8,1<<n), GOLD):'')+
+          lab(120, n>0?48:100, '2ⁿ = '+val, GOLD, 'middle', 22)+
+          (n===0?lab(120, 140, 'единица', GREEN):'')+
+          (n<0?lab(120, 150, 'дробь', BLUE):'')
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">n
+          <input type="range" min="-4" max="5" value="${n}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].n=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD};min-width:24px">${n}</b>
+        </label>
+        ${note('Живая башня','Вправо — умножаем на 2. Влево — делим на 2. Ноль — единица. Минус — дроби. Одна ручка, вся тема.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['минус','a⁻ⁿ = 1/aⁿ',BLUE],
+            ['ноль','a⁰ = 1 (a ≠ 0)',GREEN],
+            ['умножили','показатели сложить',GOLD],
+            ['степень в степень','показатели умножить',MUTED]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;gap:8px;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <b style="color:${x[2]}">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
         </div>
-        <div class="wv-sml">показатели −3 + 5 = 2 — минус работает в тех же правилах!</div>
+        ${note('Рецепт','Сначала посмотри на знак показателя. Потом решай, какое свойство. Не путай сложение и умножение показателей.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 70, '2⁻³ = 1/8', GOLD, 'middle', 22)+
+          lab(120, 120, '5⁰ = 1', GREEN, 'middle', 18)+
+          lab(120, 164, 'не −8', RED)
+        )}
+        ${note('В карман','Минус вверху — переворот. Ноль — единица. 2³·2²=2⁵. Главная ловушка: 2⁻³ это не −8.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        ${pow('2','−3','?','#ffd76a')}
-        <div class="wv-sml">a⁻ⁿ = 1/aⁿ → 2⁻³ = ?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 14px;font-size:18px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">1 / ?</div>
+        ${frame(lab(120, 100, '2⁻³ = ?', GOLD, 'middle', 26))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">1 / ?</div>
+        ${note('Проверка','1/8. Перевернули 8. Не −8 и не 1/6.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_D[414]=visD414;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===414){ window.ARH_LESSONS[i]=L414; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===414){ arr[i]=L414; f=true; break; } }
+    if(!f) arr.push(L414);
+  })();
 })();
 /* ================= УРОК 415 · Квадратичная функция ================= */
 (function(){
