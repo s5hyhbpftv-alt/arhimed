@@ -5070,3 +5070,190 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     if(!f) arr.push(L103);
   })();
 })();
+/* ================= УРОК 10 · Средняя скорость ================= */
+(function(){
+  const L10 = {
+    id: 10, title: 'Средняя скорость', ico: '🚴',
+    src: 'Физика · движение · средняя скорость', subj: 'phys',
+    explain: [
+      'В школу 30 км/ч, обратно 20. Многие считают (30+20):2 = 25. Не торопись — проверь на числах.',
+      'Путь туда 60 км и обратно 60. Весь путь 120 км. Половинки равные — это важно.',
+      'Туда: t₁ = 60 : 30 = 2 ч. Быстро — времени мало.',
+      'Обратно: t₂ = 60 : 20 = 3 ч. Медленно — на час дольше.',
+      '120 км за 2+3 = 5 ч. v = 120 : 5 = 24 км/ч. Не 25.',
+      'Медленный участок занял 3 часа из пяти. Он «весит» в средней больше и тянет её вниз.',
+      'Формула для двух равных путей: v = 2 v₁ v₂ / (v₁ + v₂). Это гармоническое среднее.',
+      'Подставим: 2·30·20 / (30+20) = 1200 / 50 = 24. Совпало.',
+      'Всегда меньше полусуммы (30+20):2 = 25. Если вышло больше — ошибся.',
+      'Полпути 12 и полпути 6: 2·12·6 / 18 = 8. Не 9.',
+      'Равные пути → гармоническое. Равные времена → обычное среднее (30+20):2 = 25. Не путай.',
+      '40 и 60: 2·40·60 / 100 = 48. Не 50.',
+      'Средняя скорость — весь путь на всё время. Не среднее скоростей, если равны пути.',
+      'Единицы: км/ч или м/с. 1 м/с = 3,6 км/ч. Сначала приведи к одним.',
+      'Ловушка: (v₁+v₂):2 только если равны времена, не пути.',
+      'Рецепт. Равные пути: 2ab/(a+b). Равные времена: (a+b)/2. Честно: S : t.'
+    ],
+    check: { q: 'Половину пути ехали 12 км/ч, половину — 6 км/ч. Средняя скорость?',
+      choices: ['8','9','12','18'], ans: 0,
+      exp: '2·12·6/(12+6) = 144/18 = 8 км/ч.' },
+    tasks: [
+      { q: 'Половину пути 30 км/ч, половину 20 км/ч. Средняя?', kind: 'unit', ans: 24, tol: 0.05,
+        hints: ['v = 2·v₁·v₂/(v₁+v₂).','1200 : 50 = 24.'], sol: '24 км/ч' },
+      { q: 'Половину пути 40 км/ч, половину 60 км/ч. Средняя?', kind: 'unit', ans: 48, tol: 0.05,
+        hints: ['2·40·60 = 4800; 40+60 = 100.'], sol: '48 км/ч' },
+      { q: 'Полпути 12 км/ч и полпути 6 км/ч. Средняя?', kind: 'unit', ans: 8, tol: 0,
+        hints: ['Не 9. Это гармоническое.'], sol: '8 км/ч' },
+      { q: 'Час ехали 30, час — 20. Средняя?', kind: 'choice',
+        choices: ['24','25','20'], ans: 1,
+        hints: ['Равны времена, не пути.','(30+20):2.'], sol: '25 км/ч' },
+      { q: 'Полусумма 30 и 20. Чему равна?', kind: 'unit', ans: 25, tol: 0,
+        hints: ['Это ловушка для равных путей.'], sol: '25, но средняя по пути 24' },
+      { q: '60 км за 2 ч и 60 км за 3 ч. Средняя (км/ч)?', kind: 'unit', ans: 24, tol: 0,
+        hints: ['120 : 5.'], sol: '24 км/ч' }
+    ]
+  };
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const harm=(a,b)=>Math.round(2000*a*b/(a+b))/1000;
+  const arith=(a,b)=>Math.round((a+b)*5)/10;
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function pred(st,key,q,opts){
+    const cur=st[key];
+    return `<div style="width:min(100%,340px);text-align:left">
+      <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+        onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
+      ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
+    </div>`;
+  }
+  function cards(rows){
+    return `<div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">`+
+      rows.map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${x[2]||GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${x[2]||GOLD}">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')+
+      `</div>`;
+  }
+  function visB10(el){
+    try{ window.physKenCss && physKenCss(); }catch(e){}
+    const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'10';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const a=Math.max(6, Math.min(60, +(st.a==null?30:st.a)));
+    const b=Math.max(6, Math.min(60, +(st.b==null?20:st.b)));
+    const vh=harm(a,b), va=arith(a,b);
+    let h='';
+    if(step===0){
+      h=`<div class="wv-col">
+        ${physShot('v_dawn.mp4','туда 30 · обратно 20')}
+        ${pred(st,'p0','Средняя?',[{k:'25',t:'25 км/ч'},{k:'24',t:'надо считать путь и время'}])}
+        ${st.p0?note('Не торопись','Полусумма 25 кажется очевидной. Проверим на километрах и часах.'):note('Предскажи','Сначала карточка.')}
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        ${physShot('v_road.mp4','60 км туда · 60 км обратно')}
+        ${note('Равные пути','Весь путь 120 км. Половинки равные — это условие гармонического среднего. Не равные времена.')}
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        ${physShot('v_fast.mp4','60 : 30 = 2 ч')}
+        ${note('Быстрый участок','t = S : v. Едем быстро — часов мало. 2 часа на первую половину.')}
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        ${physShot('v_slow.mp4','60 : 20 = 3 ч')}
+        ${note('Медленный','Та же 60 км, скорость меньше — времени больше. 3 часа. Уже видно: медленный «весит» дольше.')}
+      </div>`;
+    } else if(step===4){
+      h=`<div class="wv-col">
+        ${physShot('v_watch.mp4','120 км · 5 ч')}
+        ${pred(st,'p4','Средняя?',[{k:'24',t:'24 км/ч'},{k:'25',t:'25 км/ч'}])}
+        ${st.p4?note('Честно','v = S : t = 120 : 5 = 24 км/ч. Не 25. Средняя — путь на время, не среднее скоростей.'):note('Предскажи','120 : 5.')}
+      </div>`;
+    } else if(step===5){
+      h=`<div class="wv-col">
+        ${physShot('v_split.mp4','3 часа медленно · 2 быстро')}
+        ${note('Почему вниз','Медленный участок занял 3 часа из пяти. Он тянет среднюю вниз. Поэтому 24, а не 25.')}
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        ${physShot('v_gauge.mp4','v = 2 v₁ v₂ / (v₁ + v₂)')}
+        ${cards([['1','две половины пути равны',GOLD],['2','сложить времена S/v₁ + S/v₂',BLUE],['3','весь путь 2S на сумму времён',GREEN]])}
+        ${note('Гармоническое','Не путай с (v₁+v₂):2. Эта формула — только для равных путей.')}
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        ${physShot('v_comp.mp4','2 · 30 · 20 / 50')}
+        ${note('Подставили','1200 : 50 = 24. Совпало с 120 : 5. Формула — сокращённый честный счёт.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${physShot('v_pair.mp4','всегда меньше полусуммы')}
+        ${note('Проверка','(30+20):2 = 25. Гармоническое всегда ниже, пока скорости разные. Если получил 26 — ошибся.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${physShot('v_rain.mp4','12 и 6')}
+        ${pred(st,'p9','Полпути 12 и 6. Средняя?',[{k:'8',t:'8'},{k:'9',t:'9'}])}
+        ${st.p9?note('Не 9','2·12·6 / 18 = 8. Полусумма 9 — ловушка. Медленные 6 км/ч заняли вдвое больше времени.'):note('Предскажи','Не полусумма.')}
+      </div>`;
+    } else if(step===10){
+      const pH=Array.from({length:12},(_,i)=>{const x=6+i*5; return [x, harm(a,x)];});
+      const pA=Array.from({length:12},(_,i)=>{const x=6+i*5; return [x, arith(a,x)];});
+      h=`<div class="wv-col">
+        ${physShot(b<a?'v_slow.mp4':'v_fast.mp4', 'v₁ = '+a+'  ·  v₂ = '+b+'  ·  гармонич. '+vh+'  ·  полусумма '+va)}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">v₁
+          <input type="range" min="6" max="60" value="${a}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].a=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${a}</b>
+        </label>
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">v₂
+          <input type="range" min="6" max="60" value="${b}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].b=+this.value;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${b}</b>
+        </label>
+        ${physChart([{pts:pH,col:GOLD,name:'гармоническое'},{pts:pA,col:BLUE,name:'полусумма'}], b, vh, 'v₂', 'средняя', 'hm', '')}
+        ${note('Две линии','Золотая всегда ниже синей, пока v₁ ≠ v₂. Крути — увидишь, как медленный тянет вниз.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        ${physShot('v_hour.mp4','равные времена')}
+        ${pred(st,'p11','Час на 30 и час на 20. Средняя?',[{k:'25',t:'25'},{k:'24',t:'24'}])}
+        ${st.p11?note('Другой случай','Равны времена — среднее арифметическое: (30+20):2 = 25. Формула 2ab/(a+b) здесь не нужна.'):note('Предскажи','Пути или часы равны?')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        ${physShot('v_high.mp4','40 и 60')}
+        ${note('Счёт','2·40·60 / 100 = 48. Не 50. Снова ниже полусуммы.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        ${physShot('v_mile.mp4','v = S : t')}
+        ${note('Определение','Средняя скорость — весь путь на всё время. Формулы — сокращения. Если сомневаешься, сложи пути и часы.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${physShot('v_map.mp4','ловушка полусуммы')}
+        ${cards([['равные пути','2ab / (a+b)',GOLD],['равные времена','(a+b) / 2',BLUE],['вообще','S : t',GREEN]])}
+        ${note('Не путай','Задача почти всегда про равные пути. Полусумма — самая частая ошибка.')}
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        ${physShot('v_still.mp4','12 и 6 · средняя?')}
+        ${cards([['1','весь путь : всё время',GOLD],['2','равные пути → гармоническое',BLUE],['3','всегда ниже полусуммы',GREEN],['4','равные времена → (a+b)/2',MUTED]])}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">скорость?</div>
+        ${note('Проверка','8 км/ч. Не 9.')}
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[10]=visB10;
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===10){ arr[i]=L10; f=true; break; } }
+    if(!f) arr.push(L10);
+  })();
+})();
