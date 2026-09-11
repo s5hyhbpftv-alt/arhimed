@@ -3647,3 +3647,272 @@ window.physKenCss=function(){
     if(!f) arr.push(L105);
   })();
 })();
+/* ================= УРОК 106 · Сила Архимеда ================= */
+(function(){
+  const L106 = {
+    id: 106, title: 'Сила Архимеда', ico: '⛵',
+    src: 'Физика · 8–9 класс · Сила Архимеда', subj: 'phys',
+    explain: [
+      'Загадка ванны: сел — вода полезла через край. Объём вытесненной воды равен объёму погружённого тела. Архимед закричал «Эврика!».',
+      'На любое тело в жидкости действует выталкивающая сила вверх. В бассейне друга поднять легко: вода уже толкает.',
+      'Сила Архимеда — вес вытесненной жидкости. Не вес тела. Не «вода любит вверх». Разница давлений: снизу сильнее, чем сверху.',
+      'F_A = ρ_ж · g · V_погр. ρ — плотность жидкости, g ≈ 10, V — объём погружённой части. Вода 1000 кг/м³.',
+      'Треугольник: F наверху, внизу ρ, g и V. Ищешь силу — умножай три числа. Ищешь объём — дели силу на ρg.',
+      '0,2 м³ в воде: 1000 · 10 · 0,2 = 2000 Н. Сначала ρ·g, потом ·V.',
+      'Одна ручка — объём. График F(V) — прямая из начала. Удвоил объём — удвоил силу.',
+      'Керосин 800, вода 1000, море 1030, Мёртвое море ≈ 1240. Плотнее жидкость — сильнее толкает при том же V.',
+      'То же тело 0,5 м³: в керосине 4000 Н, в воде 5000 Н. Предскажи до числа.',
+      'В Мёртвом море человек не тонет: соль подняла ρ жидкости выше средней плотности тела.',
+      'Кажущийся вес = mg − F_A. Весы в воде показывают меньше. Если F_A > mg — всплывает.',
+      'Сплошная сталь тонет: ρ = 7800 > 1000. Корабль полый: среднее ρ меньше воды, V огромный — F_A держит.',
+      'Рыба надувает пузырь — объём больше, F_A выросла, всплывает. Лодка травит цистерны — то же.',
+      'Воздух тоже жидкость по Архимеду: F_A = ρ_возд · g · V. ρ ≈ 1,3 кг/м³. Шар с гелием легче окружающего воздуха — поднимается.',
+      'Плавает, если среднее ρ тела меньше жидкости. Тонет, если больше. Висит, если равны. Сравни не «тяжёлое», а плотности.',
+      'Рецепт. 1) ρ жидкости. 2) V погружённый. 3) F = ρgV. 4) Сравни с весом. 5) Для корабля — средний объём с воздухом.'
+    ],
+    check: { q: 'Тело объёмом 0,2 м³ полностью погружено в воду (ρ = 1000 кг/м³). Сила Архимеда? (в Н, g = 10)', choices: ['200','2000','20000'], ans: 1,
+      exp: 'F = ρ · g · V = 1000 · 10 · 0,2 = 2000 Н.' },
+    tasks: [
+      { q: 'Тело объёмом 0,5 м³ полностью погружено в воду (ρ = 1000 кг/м³). Сила Архимеда? (в Н, g = 10)', kind: 'unit', ans: 5000, tol: 0,
+        hints: ['F = ρ · g · V.', '1000 · 10 · 0,5 = ?'], sol: '5000 Н' },
+      { q: 'Тело объёмом 0,5 м³ погружено в керосин (ρ = 800 кг/м³). Сила Архимеда? (в Н, g = 10)', kind: 'choice',
+        choices: ['400','4000','40000'], ans: 1, hints: ['Плотность керосина 800.', '800 · 10 · 0,5 = 4000.'], sol: '4000 Н' },
+      { q: 'Тело 0,3 м³ в морской воде (ρ = 1030 кг/м³). F_A? (в Н, g = 10)', kind: 'unit', ans: 3090, tol: 0,
+        hints: ['F = 1030 · 10 · 0,3.', '10300 · 0,3 = 3090.'], sol: '3090 Н' },
+      { q: 'Вес тела 6000 Н, F_A = 5000 Н. Тело?', kind: 'choice',
+        choices: ['всплывёт','повиснет','пойдёт на дно'], ans: 2,
+        hints: ['Сравни вес и выталкивание.', 'Вес больше — равнодействующая вниз.'], sol: 'пойдёт на дно' }
+    ]
+  };
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const P=()=>window.PHYS||{};
+  const FA=(rho,V)=>Math.round((+rho)*10*(+V)*1000)/1000;
+  const CSS=`<style>
+    @keyframes a6draw{to{stroke-dashoffset:0}}
+    @keyframes a6fade{from{opacity:0}to{opacity:1}}
+    @keyframes a6halo{0%{transform:scale(.45);opacity:.85}100%{transform:scale(2.4);opacity:0}}
+    @keyframes a6dot{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+    @keyframes a6rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    .a6line{stroke-dasharray:520;stroke-dashoffset:520;animation:a6draw 1.25s cubic-bezier(.2,.85,.2,1) forwards}
+    .a6fill{opacity:0;animation:a6fade .7s .25s ease forwards}
+    .a6halo{transform-box:fill-box;transform-origin:center;animation:a6halo 1.7s ease-out infinite}
+    .a6dot{transform-box:fill-box;transform-origin:center;animation:a6dot 1.6s ease-in-out infinite}
+    .a6bar{transform-origin:50% 100%;transform-box:fill-box;animation:a6rise .85s cubic-bezier(.2,.85,.2,1) both}
+    .a6lab{paint-order:stroke fill;stroke:#071018;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(14,Math.min(326,+x)), yy=Math.max(16,Math.min(210,+y));
+    return `<text class="a6lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function pred(st,key,q,opts){
+    const cur=st[key];
+    return `<div style="width:min(100%,340px);text-align:left">
+      <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+        onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
+      ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
+    </div>`;
+  }
+  function chart(series, xMark, yMark, xl, yl, uid){
+    const W=340, H=220, ox=58, oy=28, pw=258, ph=138;
+    const all=series.flatMap(s=>s.pts);
+    const x1=Math.max(...all.map(p=>p[0]), 1e-6);
+    const y1=Math.max(...all.map(p=>p[1]), 1);
+    const xy=(x,y)=>[ox+x/x1*pw, oy+ph-y/y1*ph];
+    const gid=uid||'a6';
+    const tick=function(x,y,t,anchor){
+      return `<text x="${x}" y="${y}" text-anchor="${anchor||'end'}" font-size="10" fill="${MUTED}" font-family="Georgia,serif">${t}</text>`;
+    };
+    const grid=[0,0.25,0.5,0.75,1].map(f=>{
+      const y=oy+ph-f*ph;
+      return `<line x1="${ox}" y1="${y}" x2="${ox+pw}" y2="${y}" stroke="#1e3a32" stroke-width="${f===0?1.4:1}"/>`+
+        tick(ox-8, y+3, String(Math.round(y1*f)).replace('.',','));
+    }).join('');
+    const xt=[0,0.5,1].map(f=>{
+      const x=ox+f*pw;
+      return `<line x1="${x}" y1="${oy+ph}" x2="${x}" y2="${oy+ph+5}" stroke="#4a6a58"/>`+
+        tick(x, oy+ph+16, String(+(x1*f).toFixed(x1>=100?0:1)).replace('.',','), 'middle');
+    }).join('');
+    const paths=series.map((s,i)=>{
+      const d=s.pts.map((p,j)=>{const q=xy(p[0],p[1]); return (j?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1);}).join(' ');
+      const last=xy(s.pts[s.pts.length-1][0], 0), first=xy(s.pts[0][0], 0);
+      const area=d+` L ${last[0].toFixed(1)} ${last[1].toFixed(1)} L ${first[0].toFixed(1)} ${first[1].toFixed(1)} Z`;
+      return `<path class="a6fill" d="${area}" fill="url(#${gid}f${i})" />
+        <path class="a6line" d="${d}" fill="none" stroke="url(#${gid}s${i})" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#${gid}glow)"/>`;
+    }).join('');
+    let mark='';
+    if(xMark!=null && yMark!=null){
+      const q=xy(xMark, yMark);
+      mark=`<circle class="a6halo" cx="${q[0]}" cy="${q[1]}" r="8" fill="none" stroke="${GOLD}" stroke-width="1.2"/>
+        <circle class="a6dot" cx="${q[0]}" cy="${q[1]}" r="5.2" fill="${GOLD}" stroke="#fff6c8" stroke-width="1"/>
+        <rect x="${Math.min(Math.max(q[0]+10, ox+8), ox+pw-90)}" y="${Math.max(q[1]-30, oy+4)}" width="88" height="22" rx="8" fill="rgba(7,16,24,.88)" stroke="rgba(217,164,65,.5)"/>
+        ${lab(Math.min(Math.max(q[0]+54, ox+52), ox+pw-46), Math.max(q[1]-14, oy+20), String(yMark).replace('.',',')+' Н', GOLD, 'middle', 11)}`;
+    }
+    const legend=series.map((s,i)=>`<g>
+      <rect x="${ox+i*110}" y="198" width="10" height="10" rx="2" fill="${s.col}"/>
+      ${lab(ox+16+i*110, 208, s.name, MUTED, 'start', 11)}
+    </g>`).join('');
+    const defs=series.map((s,i)=>`
+      <linearGradient id="${gid}s${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${s.col}"/><stop offset="1" stop-color="#fff3c0"/></linearGradient>
+      <linearGradient id="${gid}f${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${s.col}" stop-opacity="0"/><stop offset="1" stop-color="${s.col}" stop-opacity=".32"/></linearGradient>`).join('');
+    try{ window._waveCss && _waveCss('css-a6v1', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 ${W} ${H}" style="width:min(100%,340px);height:auto;background:radial-gradient(120% 80% at 50% 0%,#163028 0%,#071018 70%);border-radius:16px;display:block;margin:0 auto;border:1px solid #3d5c49">
+      <defs>
+        <filter id="${gid}glow"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        ${defs}
+      </defs>
+      <rect x="8" y="8" width="${W-16}" height="${H-16}" rx="12" fill="rgba(7,16,24,.25)"/>
+      ${grid}${xt}
+      <line x1="${ox}" y1="${oy}" x2="${ox}" y2="${oy+ph}" stroke="#7fd1ff" stroke-opacity=".35" stroke-width="1.4"/>
+      <line x1="${ox}" y1="${oy+ph}" x2="${ox+pw}" y2="${oy+ph}" stroke="#7fd1ff" stroke-opacity=".35" stroke-width="1.4"/>
+      ${paths}${mark}${legend}
+      ${lab(ox+pw/2, 16, yl, GOLD, 'middle', 12)}
+      ${lab(ox+pw/2, H-6, xl, MUTED, 'middle', 11)}
+    </svg>`;
+  }
+
+  function visB106(el){
+    try{ window._waveCss && _waveCss('css-a6v1', CSS); }catch(e){}
+    try{ window.physKenCss && physKenCss(); }catch(e){}
+    const step=LV.step||0;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'106';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const V=Math.max(0.05, Math.min(1, +(st.V==null?0.2:st.V)));
+    const rho=+(st.rho==null?1000:st.rho);
+    const F=FA(rho,V);
+    const Fw=FA(1000,V);
+    let h='';
+
+    if(step===0){
+      h=`<div class="wv-col">
+        ${physShot('eureka.mp4','вода полезла через край')}
+        ${pred(st,'p0','Почему вылезла вода?',[{k:'vol',t:'тело заняло место'},{k:'w',t:'потому что тяжёлое'},{k:'heat',t:'вода нагрелась'}])}
+        ${st.p0?note('Эврика','Объём вытесненной воды равен объёму погружённой части. Не масса — объём. Корона и ванна.'):note('Предскажи','Сначала карточка.')}
+      </div>`;
+    } else if(step===1){
+      h=`<div class="wv-col">
+        ${physShot('pool.mp4','в воде поднимать легче')}
+        ${pred(st,'p1','Куда толкает вода?',[{k:'up',t:'вверх'},{k:'down',t:'вниз'},{k:'side',t:'в стороны и всё'}])}
+        ${st.p1?note('Вверх','Сила Архимеда против тяжести. Давление снизу больше, чем сверху — равнодействующая вверх.'):note('Предскажи','Не путай со давлением «во все стороны».')}
+      </div>`;
+    } else if(step===2){
+      h=`<div class="wv-col">
+        ${physShot('overflow.mp4','вытесненный объём = погружённый')}
+        ${note('Вес жидкости','F_A равна весу той воды, что вылилась в стакан. Не весу кубика.')}
+      </div>`;
+    } else if(step===3){
+      h=`<div class="wv-col">
+        ${physShot('scale_w.mp4','F_A = ρ_ж · g · V')}
+        ${note('Три множителя','ρ жидкости, не тела. g ≈ 10. V — только погружённая часть. Вода: 1000 · 10 · V.')}
+      </div>`;
+    } else if(step===4){
+      const hid=st.hid||'';
+      const map={F:'F = ρ · g · V', V:'V = F / (ρ · g)', rho:'ρ = F / (g · V)'};
+      h=`<div class="wv-col">
+        ${physShot('tri.jpg', hid?map[hid]:'F наверху')}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          ${[['F','закрыть F'],['V','закрыть V'],['rho','закрыть ρ']].map(x=>`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].hid='${x[0]}';chRender(0);}catch(e){}">${x[1]}</button>`).join('')}
+        </div>
+        ${note('Треугольник','Ищешь силу — умножай. Ищешь объём — дели F на ρg.')}
+      </div>`;
+    } else if(step===5){
+      const pts=Array.from({length:11},(_,i)=>[i/10, FA(1000,i/10)]);
+      h=`<div class="wv-col">
+        ${physShot(V>0.6?'iron.mp4':'scale_w.mp4', 'V = '+String(V).replace('.',',')+' м³  ·  F = '+F+' Н')}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">V
+          <input type="range" min="5" max="100" value="${Math.round(V*100)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].V=this.value/100;CHS[k].rho=1000;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${String(V).replace('.',',')} м³</b>
+        </label>
+        ${chart([{pts, col:GOLD, name:'F_A в воде'}], V, Fw, 'V, м³', 'сила Архимеда', 'fv')}
+        ${note('Прямая','Удвоил объём — удвоил силу. График из той же модели F = 1000·10·V.')}
+      </div>`;
+    } else if(step===6){
+      h=`<div class="wv-col">
+        ${physShot('scale_w.jpg','0,2 м³ · 2000 Н')}
+        ${note('Проверка','1000 · 10 · 0,2 = 2000 Н. Не 200 и не 20000.')}
+      </div>`;
+    } else if(step===7){
+      h=`<div class="wv-col">
+        ${physShot('overflow.jpg','больше V — сильнее толкает')}
+        ${chart([{pts:[[0.1,1000],[0.2,2000],[0.5,5000],[1,10000]], col:BLUE, name:'F_A'}], 0.5, 5000, 'V, м³', 'Н', 'bars')}
+        ${note('Четыре точки','0,1 → 1000 Н; 0,2 → 2000; 0,5 → 5000; 1 → 10 000. Объём стоит прямо в формуле.')}
+      </div>`;
+    } else if(step===8){
+      const pts=[[800,4000],[900,4500],[1000,5000],[1030,5150],[1240,6200]];
+      const F5=FA(rho,0.5);
+      h=`<div class="wv-col">
+        ${physShot(rho>1100?'deadsea.mp4':'oil.mp4', 'ρ = '+rho+'  ·  V = 0,5 м³  ·  F = '+F5+' Н')}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">ρ
+          <input type="range" min="800" max="1240" step="10" value="${rho}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].rho=+this.value;CHS[k].V=0.5;chRender(0);}catch(e){}">
+          <b style="color:${GOLD}">${rho}</b>
+        </label>
+        ${chart([{pts, col:GREEN, name:'F_A при V = 0,5'}], rho, F5, 'ρ жидкости', 'сила Архимеда', 'fr')}
+        ${note('Плотнее жидкость','Керосин 800, вода 1000, море 1030, Мёртвое море 1240. Одна ручка — ρ жидкости.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${pred(st,'p9','0,5 м³ в керосине против воды. F_A в керосине?',[{k:'less',t:'меньше'},{k:'same',t:'такая же'},{k:'more',t:'больше'}])}
+        ${st.p9?physShot('oil.mp4','керосин 4000 Н · вода 5000 Н'):''}
+        ${st.p9?note('Легче жидкость','800 · 10 · 0,5 = 4000 Н. '+(st.p9==='less'?'Угадал.':'Смотри ρ жидкости, не тела.')):note('Предскажи','Такой же объём, другая жидкость.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        ${physShot('deadsea.mp4','ρ ≈ 1240 · человек легче рассола')}
+        ${note('Мёртвое море','Соль подняла плотность жидкости выше средней плотности тела. F_A > mg — не тонет.')}
+      </div>`;
+    } else if(step===11){
+      const mg=10000, fa=5000;
+      const ptsW=[[0,0],[1,mg]], ptsA=[[0,0],[1,fa]];
+      h=`<div class="wv-col">
+        ${physShot('scales.mp4','кажущийся вес = mg − F_A')}
+        ${chart([{pts:ptsW, col:RED, name:'вес mg'},{pts:ptsA, col:GOLD, name:'F_A воды'}], 1, fa, 'погружение', 'силы', 'ww')}
+        ${note('Две линии','Красная — вес. Золотая — выталкивание. Если красная выше — тонет. Весы в воде показывают разность.')}
+      </div>`;
+    } else if(step===12){
+      const air=!!st.air;
+      h=`<div class="wv-col">
+        ${physShot(air?'boat.mp4':'iron.mp4', air?'среднее ρ < 1 · F_A держит':'сплошная сталь · тонет')}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].air=1;chRender(0);}catch(e){}">${air?'Плывёт':'Сделать корпус'}</button>
+        ${note('Полый объём','Сталь 7800, но внутри воздух. V огромный — F_A = ρgV_корпуса больше веса.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        ${physShot(st.sub?'sub.mp4':'fish.mp4', st.sub?'цистерны · среднее ρ':'пузырь · объём')}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].sub=1;chRender(0);}catch(e){}">${st.sub?'Лодка':'Как рыба'}</button>
+        ${note('Управление объёмом','Надула пузырь — V больше — F_A выросла — всплыла. Лодка травит воду в цистерны — среднее ρ растёт — тонет.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${physShot('balloon.mp4','воздух тоже выталкивает')}
+        ${note('Аэростатика','F_A = ρ_возд · g · V, ρ ≈ 1,3 кг/м³. Гелий или тёплый воздух легче окружающего — шар идёт вверх. Без тяжести Архимед не работает.')}
+      </div>`;
+    } else {
+      h=`<div class="wv-col">
+        ${physShot('scale_w.mp4','0,2 м³ в воде · F_A = ?')}
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[['1','ρ жидкости, не тела',GOLD],['2','V погружённый',BLUE],['3','F = ρgV',GREEN],['4','сравни с весом mg',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')}
+        </div>
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">сила в ньютонах?</div>
+        ${note('Проверка','2000 Н. Дело в вытесненной воде, не в «тяжёлом железе».')}
+      </div>`;
+    }
+    el.innerHTML=`<div class="wv">${h}</div>`;
+  }
+  window.WAVE_B[106]=visB106;
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===106){ arr[i]=L106; f=true; break; } }
+    if(!f) arr.push(L106);
+  })();
+})();
