@@ -1,4 +1,4 @@
-/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 32 уроков (id 500–531) · «Азбука информатики Архимеда» ================= */
+/* ================= ИНФОРМАТИКА С НУЛЯ · 5–6 класс · курс из 33 уроков (id 500–532) · «Азбука информатики Архимеда» ================= */
 (function(){
   /* ---------- общий набор ---------- */
   const ink='#eaf2ff', dim='#93a6c8', gold='#ffd76a', grn='#7de0a0', red='#ff9a8a', blu='#6ea8ff', cyan='#7fd6ff', pur='#b07fff',
@@ -55,6 +55,70 @@
   };
   const growBar=(x,y,w,h,fill,dur,beg,stroke)=>`<rect x="${x}" y="${y}" width="0" height="${h}" rx="${h/2}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="1.2">`
     +`<animate fill="freeze" attributeName="width" values="0;${w};${w}" keyTimes="0;.75;1" dur="${dur}s" begin="${beg||0}s" repeatCount="1"/></rect>`;
+  /* ---------- мини-движок 3D: вершины, повороты, проекция, грани ---------- */
+  const P3=(x,y,z)=>({x:x,y:y,z:z});
+  const rotYP=(p,a)=>{const c=Math.cos(a),s=Math.sin(a);return P3(p.x*c+p.z*s,p.y,-p.x*s+p.z*c);};
+  const rotXP=(p,a)=>{const c=Math.cos(a),s=Math.sin(a);return P3(p.x,p.y*c-p.z*s,p.y*s+p.z*c);};
+  const rotZP=(p,a)=>{const c=Math.cos(a),s=Math.sin(a);return P3(p.x*c-p.y*s,p.x*s+p.y*c,p.z);};
+  const d3cube=()=>{
+    const v=[];
+    for(let i=0;i<8;i++) v.push(P3(((i&1)?1:-1),((i&2)?1:-1),((i&4)?1:-1)));
+    const faces=[[0,2,3,1],[4,5,7,6],[0,1,5,4],[2,6,7,3],[0,4,6,2],[1,3,7,5]];
+    const edges=[[0,1],[0,2],[1,3],[2,3],[4,5],[4,6],[5,7],[6,7],[0,4],[1,5],[2,6],[3,7]];
+    return {v:v,faces:faces,edges:edges};
+  };
+  const d3pyr=()=>{
+    const v=[P3(-1,-1,-1),P3(1,-1,-1),P3(1,-1,1),P3(-1,-1,1),P3(0,1.2,0)];
+    const faces=[[0,3,2,1],[0,1,4],[1,2,4],[2,3,4],[3,0,4]];
+    const edges=[[0,1],[1,2],[2,3],[3,0],[0,4],[1,4],[2,4],[3,4]];
+    return {v:v,faces:faces,edges:edges};
+  };
+  const d3prism=()=>{
+    const v=[P3(-1,-1,-1),P3(1,-1,-1),P3(1,-1,1),P3(-1,-1,1),P3(-1,1,-1),P3(1,1,-1),P3(1,1,1),P3(-1,1,1)];
+    const faces=[[0,3,2,1],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]];
+    const edges=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+    return {v:v,faces:faces,edges:edges};
+  };
+  const d3shape=(name)=>(name==='pyr')?d3pyr():((name==='prism')?d3prism():d3cube());
+  const d3rot=(p,ax,ay,az)=>{ let q=rotYP(p,ay); q=rotXP(q,ax); return rotZP(q,az); };
+  const d3proj=(p,cx,cy,s,fov)=>{ const k=1+(p.z||0)/(fov||6); return [cx+(p.x*s)/k, cy-(p.y*s)/k]; };
+  const d3draw=(shape,cx,cy,s,ax,ay,az,pre,opt)=>{
+    const o=opt||{}, fov=o.fov||6, light=(o.light!==false);
+    const rv=shape.v.map(q=>d3rot(q,ax,ay,az));
+    const pr=rv.map(q=>d3proj(q,cx,cy,s,fov));
+    const order=shape.faces.map((f,i)=>{
+      const z=f.reduce((acc,k)=>acc+rv[k].z,0)/f.length; return {i:i,z:z};
+    }).sort((a,b)=>a.z-b.z);
+    let out='';
+    order.forEach((f2,idx)=>{
+      const f=shape.faces[f2.i];
+      const p0=rv[f[0]], p1=rv[f[1]], p2=rv[f[2]];
+      const ux=p1.x-p0.x, uy=p1.y-p0.y, uz=p1.z-p0.z, vx=p2.x-p0.x, vy=p2.y-p0.y, vz=p2.z-p0.z;
+      const nx=uy*vz-uz*vy, ny=uz*vx-ux*vz, nz=ux*vy-uy*vx;
+      const nl=Math.hypot(nx,ny,nz)||1;
+      const facing=(nz/nl)*(o.flip?-1:1);
+      const bright=light?Math.max(0.18,Math.min(1,0.45+0.55*Math.abs(facing))):0.55;
+      const base=o.c||cyan;
+      const d=pr.map(q=>q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' L');
+      out+=`<path class="${pre}Pop" style="animation-delay:${(0.05*idx).toFixed(2)}s" d="M${d} Z" fill="${base}" fill-opacity="${(bright*0.5).toFixed(2)}" stroke="${base}" stroke-width="${o.sw||1.6}"/>`;
+    });
+    return out;
+  };
+  const d3wire=(shape,cx,cy,s,ax,ay,az,pre,opt)=>{
+    const o=opt||{}, fov=o.fov||6;
+    const rv=shape.v.map(q=>d3rot(q,ax,ay,az));
+    const pr=rv.map(q=>d3proj(q,cx,cy,s,fov));
+    let out='';
+    shape.edges.forEach((e,k)=>{
+      const a=pr[e[0]], b=pr[e[1]];
+      out+=`<path class="${pre}Pop" style="animation-delay:${(0.04*k).toFixed(2)}s" d="M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}" fill="none" stroke="${o.c||cyan}" stroke-width="${o.sw||2}" stroke-linecap="round"/>`;
+    });
+    rv.forEach((q,k)=>{
+      const p=pr[k];
+      out+=`<circle class="${pre}Pop" style="animation-delay:${(0.04*k).toFixed(2)}s" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${o.r||4}" fill="${o.vc||gold}"/>`;
+    });
+    return out;
+  };
   /* ---------- движок ИИ: данные, нейросеть, график точности ---------- */
   const aiExamples=[{x:0.20,y:0,ch:'квадрат'},{x:0.30,y:0,ch:'квадрат'},{x:0.35,y:0,ch:'квадрат'},{x:0.42,y:0,ch:'квадрат'},{x:0.48,y:0,ch:'квадрат'},
                     {x:0.55,y:1,ch:'круг'},{x:0.62,y:1,ch:'круг'},{x:0.68,y:0,ch:'квадрат'},{x:0.75,y:1,ch:'круг'},{x:0.85,y:1,ch:'круг'}];
@@ -7793,6 +7857,395 @@
       s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
       return s;
     }
+    if(K==='d3intro'){ /* плоский экран и объём */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'экран плоский, а картинка объёмная',{b:1},266)+`</g>`;
+      s+=d3draw(d3cube(),104,140,46,0.32,-0.62,0,pre,{c:cyan,sw:1.8});
+      s+=`<rect x="196" y="76" width="106" height="76" rx="8" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=`<rect x="204" y="84" width="90" height="60" rx="4" fill="rgba(127,214,255,.10)"/>`;
+      s+=d3draw(d3cube(),249,114,20,0.32,-0.62,0,pre,{c:gold,sw:1.2});
+      s+=`<rect x="216" y="152" width="66" height="8" rx="3" fill="${gold}" opacity=".5"/>`;
+      s+=fit(249,176,10.5,gold,'плоский экран',{b:1},100);
+      s+=fit(104,206,10.5,cyan,'объёмная модель',{b:1},130);
+      s+=`<path d="M140 140 h48" stroke="${pur}" stroke-width="2" stroke-dasharray="5 4"/>`;
+      s+=fit(159,226,11.5,ink,'экран показывает проекцию — плоское изображение объёма',{b:1},296);
+      s+=plate2(18,240,282,32,go?grn:cardB,go?'внутри — математика: координаты и проекция':'как плоский экран показывает объём?',11,pre);
+      return s;
+    }
+    if(K==='d3flat'){ /* подсказки глубины */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'как рисунок обманывает глаз',{b:1},264)+`</g>`;
+      s+=drawPoly([[40,150],[120,110],[160,130],[140,180],[60,190]],cyan,1.6,0.2,2,{fill:'rgba(127,214,255,.14)',keep:true});
+      s+=drawPoly([[150,140],[230,120],[270,150],[200,180]],gold,1.6,0.6,2,{fill:'rgba(255,215,106,.16)',keep:true});
+      s+=`<path d="M60 190 q40 14 80 -4" fill="none" stroke="${cardB}" stroke-width="3" stroke-dasharray="5 4"/>`;
+      s+=fit(120,214,10.5,dim,'тень и перекрытие',{b:1},150);
+      s+=`<path d="M40 66 L290 66" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=`<path d="M40 66 L120 92 M290 66 L210 92" stroke="${pur}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
+      s+=fit(165,60,10.5,pur,'линии сходятся — перспектива',{b:1},190);
+      s+=fit(159,240,11.5,ink,'мозг сам достраивает объём по этим подсказкам',{b:1},296);
+      s+=plate2(18,254,282,30,go?grn:cardB,go?'перспектива, перекрытие, тень, размер':'что подсказывает глазу объём?',11,pre);
+      return s;
+    }
+    if(K==='d3points'){ /* три координаты */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'в 3D у точки три координаты',{b:1},266)+`</g>`;
+      const O=[80,206];
+      s+=`<path d="M${O[0]} ${O[1]} L${O[0]+150} ${O[1]}" stroke="${grn}" stroke-width="2.4"/><path d="M${O[0]+150} ${O[1]} l-10 -5 v10 z" fill="${grn}"/>`;
+      s+=`<path d="M${O[0]} ${O[1]} L${O[0]} ${O[1]-140}" stroke="${cyan}" stroke-width="2.4"/><path d="M${O[0]} ${O[1]-140} l-5 10 h10 z" fill="${cyan}"/>`;
+      s+=`<path d="M${O[0]} ${O[1]} L${O[0]-70} ${O[1]+52}" stroke="${gold}" stroke-width="2.4"/><path d="M${O[0]-70} ${O[1]+52} l11 -3 l-6 -8 z" fill="${gold}"/>`;
+      s+=fit(O[0]+152,O[1]+6,11.5,grn,'x',{b:1},26)+fit(O[0]-4,O[1]-150,11.5,cyan,'y',{b:1},26)+fit(O[0]-58,O[1]+60,11.5,gold,'z',{b:1},26);
+      const P=[O[0]+88,O[1]-84];
+      s+=`<path d="M${O[0]} ${O[1]} L${P[0]} ${O[1]} L${P[0]} ${P[1]}" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
+      s+=`<path d="M${O[0]} ${O[1]} L${O[0]-40} ${O[1]+30} L${P[0]-40} ${O[1]+30}" stroke="${cardB}" stroke-width="1.4" stroke-dasharray="5 4"/>`;
+      s+=`<circle class="${pre}Pop" style="animation-delay:.6s" cx="${P[0]}" cy="${P[1]}" r="8" fill="rgba(255,215,106,.5)" stroke="${gold}" stroke-width="2"/>`;
+      s+=fit(P[0]+34,P[1]+4,11,gold,'A(x; y; z)',{b:1},110);
+      s+=fit(159,246,11.5,ink,'три числа полностью задают положение в пространстве',{b:1},296);
+      s+=plate2(24,260,270,30,go?grn:cardB,go?'x, y и z — три измерения':'сколько чисел нужно для 3D?',11,pre);
+      return s;
+    }
+    if(K==='d3axes'){ /* оси и куб */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'оси показывают, где стоит модель',{b:1},266)+`</g>`;
+      const cx=159, cy=170, s2=44;
+      s+=`<path d="M${cx} ${cy} L${cx+90} ${cy+52}" stroke="${grn}" stroke-width="2.4"/><path d="M${cx+90} ${cy+52} l-12 -2 l4 -10 z" fill="${grn}"/>`;
+      s+=`<path d="M${cx} ${cy} L${cx} ${cy-92}" stroke="${cyan}" stroke-width="2.4"/><path d="M${cx} ${cy-92} l-5 11 h10 z" fill="${cyan}"/>`;
+      s+=`<path d="M${cx} ${cy} L${cx-90} ${cy+52}" stroke="${gold}" stroke-width="2.4"/><path d="M${cx-90} ${cy+52} l12 -2 l-4 -10 z" fill="${gold}"/>`;
+      s+=fit(cx+98,cy+58,11.5,grn,'x',{b:1},24)+fit(cx-6,cy-100,11.5,cyan,'y',{b:1},24)+fit(cx-104,cy+58,11.5,gold,'z',{b:1},24);
+      s+=d3draw(d3cube(),cx,cy-10,34,0.28,-0.65,0,pre,{c:cyan,sw:1.6,fov:7});
+      s+=fit(159,258,11.5,ink,'куб стоит в начале координат — в точке (0; 0; 0)',{b:1},296);
+      s+=plate2(24,272,270,28,go?grn:cardB,go?'оси x, y и z — три направления':'где находится модель?',11,pre);
+      return s;
+    }
+    if(K==='d3vertex'){ /* вершины */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'вершины куба: их восемь',{b:1},262)+`</g>`;
+      const sh=d3cube(), ax=0.32, ay=-0.62, cx=159, cy=152, sc=54;
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:cyan,sw:1.4});
+      const rv=sh.v.map(q=>d3rot(q,ax,ay,0)).map(q=>d3proj(q,cx,cy,sc,6));
+      rv.forEach((p,k)=>{
+        s+=`<circle class="${pre}Pop" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="9" fill="rgba(255,215,106,.55)" stroke="${gold}" stroke-width="2"/>`
+          +tx(p[0],p[1]+4,10,ink,''.concat(k+1),{b:1});
+      });
+      s+=fit(159,236,11.5,ink,'вершина — это точка, где сходятся рёбра',{b:1},292);
+      s+=plate2(24,250,270,32,go?grn:cardB,go?'8 вершин · 12 рёбер · 6 граней':'сколько вершин у куба?',11,pre);
+      return s;
+    }
+    if(K==='d3edge'){ /* рёбра */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'рёбра куба: их двенадцать',{b:1},262)+`</g>`;
+      const sh=d3cube(), ax=0.32, ay=-0.62, cx=159, cy=152, sc=54;
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:'rgba(70,80,124,.9)',sw:1.2});
+      s+=d3wire(sh,cx,cy,sc,ax,ay,0,pre,{c:gold,sw:2.6,r:4.5,fov:6});
+      s+=fit(120,236,11.5,ink,'ребро соединяет две вершины',{b:1},240);
+      s+=`<g class="${pre}Rise}" style="animation-delay:1s"><rect x="34" y="250" width="250" height="32" rx="10" fill="rgba(127,214,255,.12)" stroke="${cyan}" stroke-width="1.8"/>`
+        +`<text x="159" y="272" text-anchor="middle" font-size="12" font-family="'Courier New',monospace" font-weight="bold" fill="${cyan}">8 вершин + 12 рёбер</text></g>`;
+      return s;
+    }
+    if(K==='d3face'){ /* грани */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'грани куба: шесть квадратов',{b:1},264)+`</g>`;
+      const sh=d3cube(), ax=0.34, ay=-0.66, cx=159, cy=150, sc=52;
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:pur,sw:1.8,fov:7});
+      s+=`<g class="${pre}Rise}" style="animation-delay:.8s"><rect x="30" y="228" width="258" height="34" rx="10" fill="rgba(176,127,255,.12)" stroke="${pur}" stroke-width="1.8"/>`
+        +`<text x="159" y="251" text-anchor="middle" font-size="12.5" font-family="'Courier New',monospace" font-weight="bold" fill="${pur}">6 граней · 8 вершин · 12 рёбер</text></g>`;
+      s+=plate2(30,252,258,0,cardB,'',11,pre);
+      s+=`${fit(159,300,11,dim,'грани — это плоские куски поверхности',{},292)}`;
+      return s;
+    }
+    if(K==='d3wireframe'){ /* каркас */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'3D-модель: сетка из вершин и рёбер',{b:1},268)+`</g>`;
+      s+=d3wire(d3cube(),104,140,44,0.3,-0.6,0,pre,{c:cyan,sw:2,r:4});
+      s+=d3wire(d3pyr(),236,150,42,0.3,-0.6,0,pre,{c:gold,sw:2,r:4});
+      s+=fit(104,214,10.5,cyan,'куб: 6 граней',{b:1},140);
+      s+=fit(236,214,10.5,gold,'пирамида: 5 граней',{b:1},140);
+      s+=fit(159,244,11.5,ink,'из простых фигур собирают сложные модели',{b:1},296);
+      s+=plate2(18,258,282,30,go?grn:cardB,go?'так устроены модели в играх и кино':'из чего состоит модель?',11,pre);
+      return s;
+    }
+    if(K==='d3project'){ /* проекция */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'проекция: из 3D в плоское изображение',{b:1},272)+`</g>`;
+      const sh=d3cube(), ax=0.3, ay=-0.6, cx=82, cy=140, sc=40;
+      const rv=sh.v.map(q=>d3rot(q,ax,ay,0));
+      const pr=rv.map(q=>d3proj(q,cx,cy,sc,6));
+      s+=d3draw(sh,cx,cy,sc,ax,ay,0,pre,{c:'rgba(70,80,124,.9)',sw:1.2});
+      rv.forEach((q,k)=>{
+        const P=pr[k], Q=[250+ (P[0]-cx)*0.55, 150+(P[1]-cy)*0.55];
+        s+=`<path class="${pre}Pop" style="animation-delay:${(0.06*k).toFixed(2)}s" d="M${P[0].toFixed(1)} ${P[1].toFixed(1)} L${Q[0].toFixed(1)} ${Q[1].toFixed(1)}" stroke="${gold}" stroke-width="1" stroke-dasharray="4 4" opacity=".6"/>`;
+      });
+      s+=`<rect x="196" y="70" width="108" height="92" rx="8" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="2.4"/>`;
+      s+=d3draw(sh,250,116,22,ax,ay,0,pre,{c:grn,sw:1.2,fov:6});
+      s+=fit(250,180,10.5,grn,'проекция на экран',{b:1},104);
+      s+=fit(82,206,10.5,cyan,'модель в пространстве',{b:1},140);
+      s+=fit(159,232,11.5,ink,'каждая вершина попадает на экран по своим правилам',{b:1},296);
+      s+=plate2(18,246,282,30,go?grn:cardB,go?'это делает видеокарта миллионы раз в секунду':'что такое проекция?',11,pre);
+      return s;
+    }
+    if(K==='d3rotatey'){ /* поворот вокруг Y */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'поворот вокруг оси y: куб кружится',{b:1},272)+`</g>`;
+      for(let k=0;k<5;k++){
+        const cx=44+k*54, ay=-0.6+k*0.42;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.16).toFixed(2)}s">`
+          +d3draw(d3cube(),cx,128,24,0.26,ay,0,pre,{c:cyan,sw:1.2,fov:7})
+          +fit(cx+4,196,9.5,dim,Math.round((k*24))+'°',{},40)+`</g>`;
+        if(k<4) s+=`<path d="M${cx+26} 128 h8" stroke="${gold}" stroke-width="1.6" stroke-dasharray="3 3"/>`;
+      }
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="4s" repeatCount="indefinite" path="M48 224 L280 224"/></circle>`;
+      s+=`<line x1="40" y1="224" x2="288" y2="224" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=fit(159,246,11.5,ink,'угол поворота растёт — и куб показывает новые грани',{b:1},296);
+      s+=plate2(18,260,282,30,go?grn:cardB,go?'поворот — это пересчёт координат':'что меняется при повороте?',11,pre);
+      return s;
+    }
+    if(K==='d3rotatex'){ /* поворот вокруг X и Z */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'наклон вокруг x и поворот вокруг z',{b:1},270)+`</g>`;
+      [['вокруг x',0.7,-0.6,gold],['вокруг z',0.3,-0.6,cyan]].forEach((cfg,idx)=>{
+        const cx=idx?236:104, cy=130;
+        for(let k=0;k<3;k++){
+          const ax2=(idx?0.2+k*0.28:0.3), az2=(idx?0:0.2+k*0.3);
+          s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+idx*0.2+k*0.15).toFixed(2)}s">`
+            +d3draw(d3cube(),cx-30+k*30,cy,20,ax2,-0.6,az2,pre,{c:cfg[2],sw:1.1,fov:7})+`</g>`;
+        }
+        s+=fit(cx,202,10.5,cfg[2],cfg[0],{b:1},120);
+      });
+      s+=fit(159,228,11.5,ink,'любой поворот задают три угла: вокруг x, y и z',{b:1},296);
+      s+=plate2(18,242,282,32,go?grn:cardB,go?'три угла полностью описывают ориентацию':'сколько нужно углов?',11,pre);
+      return s;
+    }
+    if(K==='d3lab'){ /* ИНТЕРАКТИВ: вращаем модель */
+      const name=(st&&st.d3s)||'cube';
+      const ax=(st&&typeof st.d3x==='number')?st.d3x:0.34;
+      const ay=(st&&typeof st.d3y==='number')?st.d3y:-0.62;
+      const az=(st&&typeof st.d3z==='number')?st.d3z:0;
+      const sh=d3shape(name);
+      let s=`<g class="${pre}Pop"><rect x="16" y="12" width="286" height="28" rx="9" fill="url(#${pre}card)" stroke="${A}" stroke-width="1.8"/>`
+        +fit(159,31,11.5,ink,'мастерская 3D: вращай модель',{b:1},266)+`</g>`;
+      [[0,'куб','cube'],[1,'пирамида','pyr'],[2,'призма','prism']].forEach((q,k)=>{
+        const x=24+k*92, on=(name===q[2]);
+        s+=`<g style="cursor:pointer" onclick="inf3d('${lk}','shape','${q[2]}')"><rect x="${x}" y="48" width="84" height="28" rx="8" fill="${on?'rgba(19,60,44,.97)':'rgba(12,32,34,.97)'}" stroke="${on?grn:cardB}" stroke-width="${on?2:1.4}"/>`
+          +fit(x+42,67,10,on?grn:dim,q[1],{b:on},76)+`</g>`;
+      });
+      s+=d3draw(sh,159,168,52,ax,ay,az,pre,{c:pur,sw:1.8,fov:7});
+      s+=d3wire(sh,159,168,52,ax,ay,az,pre,{c:'rgba(255,215,106,.55)',sw:1.2,r:3.5,fov:7});
+      s+=`<g class="${pre}Rise}"><rect x="30" y="236" width="258" height="26" rx="8" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.4"/>`
+        +`<text x="159" y="254" text-anchor="middle" font-size="10.5" font-family="'Courier New',monospace" font-weight="bold" fill="${gold}">углы: ${Math.round(ax*57)}° · ${Math.round(ay*57)}° · ${Math.round(az*57)}°</text></g>`;
+      const btn=(x,y,t2,a,b)=>`<g style="cursor:pointer" onclick="inf3d('${lk}','${a}','${b}')"><rect x="${x}" y="${y}" width="52" height="32" rx="9" fill="rgba(12,32,34,.97)" stroke="${gold}" stroke-width="1.6"/>`
+        +tx(x+26,y+22,15,gold,t2,{b:1})+`</g>`;
+      s+=btn(52,268,'↶','y','-')+btn(112,268,'▲','x','+')+btn(172,268,'▼','x','-')+btn(232,268,'↷','y','+');
+      s+=`<g style="cursor:pointer" onclick="inf3d('${lk}','z','+')"><rect x="24" y="270" width="24" height="28" rx="7" fill="rgba(12,32,34,.97)" stroke="${cyan}" stroke-width="1.5"/><text x="36" y="289" text-anchor="middle" font-size="11" font-weight="bold" fill="${cyan}">z</text></g>`;
+      s+=`<g style="cursor:pointer" onclick="inf3d('${lk}','reset','')"><rect x="266" y="270" width="30" height="28" rx="7" fill="rgba(12,32,34,.97)" stroke="${grn}" stroke-width="1.5"/><text x="281" y="289" text-anchor="middle" font-size="11" font-weight="bold" fill="${grn}">0</text></g>`;
+      return s;
+    }
+    if(K==='d3depth'){ /* порядок отрисовки */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'рисуем дальние грани раньше',{b:1},264)+`</g>`;
+      const sh=d3cube(), ax=0.34, ay=-0.7;
+      s+=d3draw(sh,100,132,44,ax,ay,0,pre,{c:cyan,sw:1.5,fov:7});
+      s+=d3draw(sh,236,132,44,ax,ay,0,pre,{c:pur,sw:1.5,fov:7,flip:true});
+      s+=fit(100,204,10.5,cyan,'правильный порядок',{b:1},150);
+      s+=fit(236,204,10.5,red,'неправильный',{b:1},150);
+      s+=fit(159,232,11.5,ink,'если нарисовать ближнюю грань раньше — она «провалится»',{b:1},296);
+      s+=plate2(18,246,282,32,go?grn:cardB,go?'сортировка по глубине убирает ошибку':'почему важен порядок?',11,pre);
+      return s;
+    }
+    if(K==='d3shade'){ /* освещение */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'свет и тень делают объём живым',{b:1},268)+`</g>`;
+      s+=`<circle cx="60" cy="70" r="16" fill="rgba(255,215,106,.4)" stroke="${gold}" stroke-width="2"/>`;
+      s+=`<path d="M60 70 L100 110 M60 70 L120 92 M60 70 L88 132" stroke="${gold}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
+      s+=d3draw(d3cube(),186,140,50,0.34,-0.7,0,pre,{c:gold,sw:1.6,fov:7});
+      s+=fit(60,100,10,dim,'источник',{b:1},60);
+      s+=fit(186,222,10.5,gold,'грани освещены по-разному',{b:1},170);
+      s+=fit(159,248,11.5,ink,'по яркости грани мы понимаем форму предмета',{b:1},296);
+      s+=plate2(18,262,282,30,go?grn:cardB,go?'чем ровнее к свету — тем ярче грань':'зачем нужен свет?',11,pre);
+      return s;
+    }
+    if(K==='d3smooth'){ /* многоугольники */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'чем больше граней, тем глаже',{b:1},264)+`</g>`;
+      [4,8,16].forEach((n,k)=>{
+        const cx=62+k*96, cy=148, R=38;
+        let d='';
+        for(let i=0;i<n;i++){ const a=-Math.PI/2+i*2*Math.PI/n; d+=(i?' L':'M')+(cx+Math.cos(a)*R).toFixed(1)+' '+(cy+Math.sin(a)*R).toFixed(1); }
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.15+k*0.2).toFixed(2)}s">`
+          +`<path d="${d} Z" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="1.8"/>`
+          +fit(cx,214,10.5,cyan,n+' граней',{b:1},86)+`</g>`;
+      });
+      s+=fit(159,244,11.5,ink,'шар в модели — это много маленьких плоских граней',{b:1},296);
+      s+=plate2(18,258,282,30,go?grn:cardB,go?'поэтому 3D-модели бывают очень тяжёлыми':'как сделать шар в 3D?',11,pre);
+      return s;
+    }
+    if(K==='d3texture'){ /* текстура */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'текстура: картинка на грани',{b:1},264)+`</g>`;
+      for(let r=0;r<4;r++)for(let c=0;c<5;c++)
+        s+=`<rect x="${46+c*18}" y="${86+r*18}" width="16" height="16" rx="2" fill="${((r+c)%2)?'rgba(125,224,160,.5)':'rgba(255,215,106,.35)'}"/>`;
+      s+=fit(90,182,10.5,dim,'картинка-текстура',{b:1},120);
+      s+=`<path d="M150 140 h34" stroke="${gold}" stroke-width="2.4"/><path d="M178 133 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=d3draw(d3cube(),228,142,46,0.34,-0.7,0,pre,{c:grn,sw:1.6,fov:7});
+      s+=fit(228,206,10.5,grn,'натянута на грани',{b:1},140);
+      s+=fit(159,232,11.5,ink,'текстура кладётся на плоскую грань, как обои',{b:1},296);
+      s+=plate2(18,246,282,30,go?grn:cardB,go?'поэтому в играх кирпич не рисуют по одному':'зачем нужна текстура?',11,pre);
+      return s;
+    }
+    if(K==='d3persp'){ /* перспектива */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'дальше — значит меньше',{b:1},262)+`</g>`;
+      s+=d3draw(d3cube(),86,140,34,0.3,-0.6,0,pre,{c:cyan,sw:1.6,fov:7});
+      s+=d3draw(d3cube(),232,140,34,0.3,-0.6,0,pre,{c:pur,sw:1.6,fov:2.4});
+      s+=fit(86,200,10.5,cyan,'близко: fov 7',{b:1},130);
+      s+=fit(232,200,10.5,pur,'далеко: fov 2,4',{b:1},130);
+      s+=fit(159,228,11.5,ink,'коэффициент перспективы делает дальние объекты меньше',{b:1},296);
+      s+=plate2(18,242,282,32,go?grn:cardB,go?'без перспективы объём не читается':'что меняет перспектива?',11,pre);
+      return s;
+    }
+    if(K==='d3camera'){ /* камера */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'камера: откуда мы смотрим на модель',{b:1},270)+`</g>`;
+      s+=`<circle cx="56" cy="168" r="14" fill="rgba(127,214,255,.3)" stroke="${cyan}" stroke-width="2"/>`;
+      s+=`<path d="M66 158 l14 -10 v16 z" fill="${cyan}" opacity=".6"/>`;
+      s+=fit(56,196,10.5,cyan,'камера',{b:1},80);
+      s+=`<path d="M74 164 L220 128" stroke="${gold}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
+      s+=`<path d="M74 172 L220 216" stroke="${gold}" stroke-width="1.8" stroke-dasharray="6 5"/>`;
+      s+=d3draw(d3cube(),238,170,38,0.3,-0.6,0,pre,{c:pur,sw:1.6,fov:7});
+      s+=fit(159,238,11.5,ink,'двигаем камеру — и видим модель с другой стороны',{b:1},296);
+      s+=plate2(18,252,282,32,go?grn:cardB,go?'сцена = модель + камера + свет':'что решает камера?',11,pre);
+      return s;
+    }
+    if(K==='d3engine'){ /* конвейер видеокарты */
+      const rows=[{t:'вершины → на экран',c:cyan},{t:'собрать грани',c:gold},{t:'отсортировать по глубине',c:pur},
+                  {t:'раскрасить и наложить свет',c:grn},{t:'вывести пиксели',c:blu}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${gold}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,gold,'как видеокарта рисует кадр',{b:1},264)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*42;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.12+k*0.16).toFixed(2)}s">`
+          +`<rect x="30" y="${y}" width="258" height="32" rx="9" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +`<circle cx="50" cy="${y+16}" r="10" fill="rgba(255,255,255,.05)" stroke="${q.c}" stroke-width="1.3"/>`
+          +tx(50,y+20,10.5,q.c,''.concat(k+1),{b:1})
+          +fit(176,y+21,11,q.c,q.t,{b:1},220)+`</g>`;
+        if(k<4) s+=drawLL({x:159,y:y+34},{x:159,y:y+40},q.c,1.6,0.4+k*0.16,1.6,pre);
+      });
+      s+=fit(159,276,11,ink,'60 раз в секунду — как игровой цикл',{b:1},292);
+      return s;
+    }
+    if(K==='d3game'){ /* 3D в играх */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'в игре сцену пересчитывают каждый кадр',{b:1},272)+`</g>`;
+      for(let k=0;k<4;k++){
+        const cx=56+k*66, ay=-0.5-k*0.3;
+        s+=`<g class="${pre}Pop" style="animation-delay:${(0.1+k*0.15).toFixed(2)}s">`
+          +`<rect x="${cx-28}" y="58" width="56" height="56" rx="6" fill="rgba(18,24,44,.97)" stroke="${cardB}" stroke-width="1.3"/>`
+          +d3draw(d3cube(),cx,86,16,0.3,ay,0,pre,{c:pur,sw:1,fov:7})+`</g>`;
+      }
+      s+=fit(159,132,10.5,dim,'кадр 1 → кадр 2 → кадр 3 → кадр 4',{b:1},280);
+      s+=`<path d="M40 158 L280 158" stroke="${cardB}" stroke-width="1.6"/>`;
+      s+=`<circle r="6" fill="${gold}"><animateMotion dur="3s" repeatCount="indefinite" path="M40 158 L280 158"/></circle>`;
+      s+=fit(159,186,11.5,ink,'модель поворачивается, а кадры сменяют друг друга',{b:1},296);
+      s+=plate2(18,200,282,32,go?grn:cardB,go?'поэтому для 3D нужна мощная видеокарта':'почему в играх нужна видеокарта?',11,pre);
+      s+=`${fit(159,256,11,dim,'видеокарта считает миллионы вершин в секунду',{},296)}`;
+      return s;
+    }
+    if(K==='d3vr'){ /* VR и AR */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'VR и AR: объём вокруг нас',{b:1},262)+`</g>`;
+      s+=`<rect x="34" y="76" width="120" height="70" rx="16" fill="rgba(127,214,255,.16)" stroke="${cyan}" stroke-width="2.2"/>`;
+      s+=`<path d="M34 96 h120" stroke="${cyan}" stroke-width="1.4" opacity=".6"/>`;
+      s+=`<circle cx="72" cy="110" r="12" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=`<circle cx="118" cy="110" r="12" fill="rgba(18,24,44,.97)" stroke="${cyan}" stroke-width="1.8"/>`;
+      s+=fit(94,164,10.5,cyan,'VR-шлем',{b:1},110);
+      s+=`<rect x="180" y="76" width="60" height="92" rx="10" fill="rgba(18,24,44,.97)" stroke="${gold}" stroke-width="2"/>`;
+      s+=`<rect x="188" y="86" width="44" height="72" rx="5" fill="rgba(255,215,106,.14)"/>`;
+      s+=d3draw(d3cube(),210,122,16,0.3,-0.6,0,pre,{c:gold,sw:1.1,fov:7});
+      s+=fit(210,184,10.5,gold,'AR в телефоне',{b:1},120);
+      s+=fit(159,208,11.5,ink,'VR переносит в модель, AR добавляет её в комнату',{b:1},296);
+      s+=plate2(34,222,250,32,go?grn:cardB,go?'основа та же: 3D-модели и камера':'чем отличаются VR и AR?',11,pre);
+      return s;
+    }
+    if(K==='d3file'){ /* хранение 3D-модели */
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${grn}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,grn,'3D-модель хранят как список данных',{b:1},270)+`</g>`;
+      s+=`<rect x="26" y="54" width="140" height="120" rx="10" fill="rgba(18,24,44,.97)" stroke="${grn}" stroke-width="1.8"/>`;
+      s+=fit(96,76,11.5,grn,'файл модели',{b:1},120);
+      const lines=['вершина 1: 1 1 1','вершина 2: 1 1 -1','…','грань 1: 0 2 3 1','…'];
+      lines.forEach((q,k)=>{ s+=fit(96,96+k*16,8.5,dim,q,{},128); });
+      s+=`<path d="M172 114 h26" stroke="${gold}" stroke-width="2.4"/><path d="M192 107 l8 7 l-8 7" fill="none" stroke="${gold}" stroke-width="2.4"/>`;
+      s+=d3draw(d3cube(),238,116,42,0.32,-0.62,0,pre,{c:grn,sw:1.6,fov:7});
+      s+=fit(238,186,10.5,grn,'на экране',{b:1},120);
+      s+=fit(159,210,11.5,ink,'вершины, грани, текстуры — всё это числа в файле',{b:1},296);
+      s+=plate2(26,224,266,32,go?grn:cardB,go?'программа читает числа и рисует модель':'как хранят 3D-модель?',11,pre);
+      return s;
+    }
+    if(K==='d3practice'){ /* практика */
+      const rows=[
+        {t:'у куба 8 вершин. Сколько рёбер?',a:'12',c:cyan},
+        {t:'у пирамиды 5 граней. Сколько вершин?',a:'5',c:gold},
+        {t:'модель повернули 5 раз по 30°. Какой угол?',a:'150°',c:grn}
+      ];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${pur}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,pur,'практика: считаем элементы модели',{b:1},270)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=52+k*58;
+        s+=`<g class="${pre}Rise}" style="animation-delay:${(0.15+k*0.25).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="48" rx="10" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.7"/>`
+          +fit(146,y+19,10,ink,q.t,{},214)
+          +(go?fit(146,y+38,11.5,q.c,q.a,{b:1},214):fit(146,y+38,10.5,dim,'нажми «показать»',{},214))+`</g>`;
+      });
+      s+=plate2(22,228,274,30,go?grn:cardB,go?'вот три ответа':'нажми «показать»',11,pre);
+      return s;
+    }
+    if(K==='d3quiz'){ /* викторина */
+      const opts=['плоское изображение объёма','сама объёмная модель','фотография','текстура'], ok=0, done=(st&&st.pick>=0);
+      let s=`<g class="${pre}Pop"><rect x="16" y="14" width="286" height="30" rx="10" fill="url(#${pre}card)" stroke="${A}" stroke-width="2"/>`
+        +fit(159,34,11.5,ink,'Что видно на экране компьютера?',{b:1},266)+`</g>`;
+      s+=d3draw(d3cube(),159,92,26,0.34,-0.62,0,pre,{c:cyan,sw:1.4,fov:7});
+      opts.forEach((t2,k)=>{
+        const y=128+k*34, on=(done&&k===ok), bad=(done&&st.pick===k&&!on), c=on?grn:(bad?red:cardB);
+        s+=`<g style="cursor:pointer" onclick="infPick('${lk}',${k})">`
+          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="${on?'rgba(19,60,44,.97)':(bad?'rgba(52,22,26,.97)':'rgba(12,32,34,.97)')}" stroke="${c}" stroke-width="${(on||bad)?2.2:1.5}"/>`
+          +fit(159,y+20,11,c,t2,{b:on},256)+(on?`<path d="M266 ${y+8} l4 5 l9 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`:'')+`</g>`;
+      });
+      s+=`<g class="${pre}Rise}"><rect x="22" y="268" width="274" height="30" rx="9" fill="${done&&st.pick===ok?'rgba(125,224,160,.12)':'rgba(255,255,255,.04)'}" stroke="${done&&st.pick===ok?grn:A}" stroke-width="1.6"/>`
+        +fit(159,288,11,done&&st.pick===ok?grn:dim,done&&st.pick===ok?'Верно! Экран показывает плоскую проекцию':'Подумай: экран плоский или объёмный?',{b:done&&st.pick===ok},256)+`</g>`;
+      return s;
+    }
+    if(K==='d3mistakes'){ /* ошибки */
+      const it=[
+        {t:'путают модель и её изображение',f:'на экране — проекция, а не сам объём',c:red},
+        {t:'забывают про порядок отрисовки',f:'дальние грани рисуют первыми',c:gold},
+        {t:'ставят мало граней и ждут гладкости',f:'шар из 4 граней не станет круглым',c:cyan},
+        {t:'забывают про свет и тени',f:'без них предмет выглядит плоским',c:pur}
+      ];
+      let s='';
+      it.forEach((q,k)=>{
+        const y=14+k*56;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.14).toFixed(2)}s">`
+          +`<rect x="14" y="${y}" width="290" height="48" rx="11" fill="url(#${pre}card)" stroke="${q.c}" stroke-width="2"/>`
+          +`<path d="M34 ${y+13} l12 21 h-24 z" fill="${red}" opacity=".9"/><text x="34" y="${y+30}" text-anchor="middle" font-size="11" font-weight="bold" fill="#eaf2ff">!</text>`
+          +fit(60,y+21,Math.min(11,200/Math.max(1,q.t.length)/0.72),q.c,q.t,{an:'start',b:1},200)
+          +`<path d="M60 ${y+31} l5 5 l10 -11" fill="none" stroke="${grn}" stroke-width="2.4"/>`
+          +fit(82,y+42,Math.min(10,180/Math.max(1,q.f.length)/0.72),grn,q.f,{an:'start'},180)+`</g>`;
+      });
+      s+=`${tx(159,266,11,dim,'проверяй эти четыре места',{})}`;
+      return s;
+    }
+    if(K==='d3sheet'){ /* шпаргалка */
+      const rows=[{t:'в 3D у точки три координаты',c:cyan},{t:'модель: вершины, рёбра и грани',c:gold},
+                  {t:'проекция превращает 3D в изображение',c:grn},{t:'поворот задают три угла',c:pur},
+                  {t:'дальние грани рисуют первыми',c:blu},{t:'свет и текстура делают картинку живой',c:red}];
+      let s=`<g class="${pre}Pop"><rect x="18" y="12" width="282" height="30" rx="9" fill="url(#${pre}card)" stroke="${cyan}" stroke-width="1.9"/>`
+        +fit(159,32,12.5,cyan,'всё главное о 3D-графике',{b:1},262)+`</g>`;
+      rows.forEach((q,k)=>{
+        const y=50+k*36;
+        s+=`<g class="${pre}Rise" style="animation-delay:${(0.1+k*0.12).toFixed(2)}s">`
+          +`<rect x="22" y="${y}" width="274" height="30" rx="8" fill="rgba(18,24,44,.97)" stroke="${q.c}" stroke-width="1.6"/>`
+          +fit(159,y+20,10,q.c,q.t,{b:1},260)+`</g>`;
+      });
+      s+=plate2(22,268,274,30,go?grn:cardB,go?'жми «Понял! Проверю себя» →':'шесть главных мыслей',11,pre);
+      return s;
+    }
     if(K==='text'){ /* текстовые строки — «плакат» */
       const L=(v.lines||[]), n=L.length||1, rh=32, gp=7, tot=n*rh+(n-1)*gp;
       if(n<=2){ /* короткая мысль — крупный медальон и большая строка */
@@ -7939,6 +8392,32 @@
     if(K==='outofrange') return 202;
     if(K==='marks') return 220;
     if(K==='findcell') return 210;
+    if(K==='d3intro') return 268;
+    if(K==='d3flat') return 276;
+    if(K==='d3points') return 284;
+    if(K==='d3axes') return 308;
+    if(K==='d3vertex') return 288;
+    if(K==='d3edge') return 288;
+    if(K==='d3face') return 310;
+    if(K==='d3wireframe') return 276;
+    if(K==='d3project') return 284;
+    if(K==='d3rotatey') return 284;
+    if(K==='d3rotatex') return 280;
+    if(K==='d3lab') return 312;
+    if(K==='d3depth') return 288;
+    if(K==='d3shade') return 300;
+    if(K==='d3smooth') return 284;
+    if(K==='d3texture') return 284;
+    if(K==='d3persp') return 284;
+    if(K==='d3camera') return 296;
+    if(K==='d3engine') return 292;
+    if(K==='d3game') return 268;
+    if(K==='d3vr') return 264;
+    if(K==='d3file') return 266;
+    if(K==='d3practice') return 278;
+    if(K==='d3quiz') return 310;
+    if(K==='d3mistakes') return 282;
+    if(K==='d3sheet') return 308;
     if(K==='modelintro') return 292;
     if(K==='modelwhy') return 314;
     if(K==='modelreal') return 270;
@@ -9629,6 +10108,66 @@
       tasks:[
         {q:'Скорость 70 км/ч, время 3 часа. Какой путь пройдёт машина по модели S = v · t?', kind:'unit', ans:210, tol:0, hints:['Путь равен скорости, умноженной на время.','70 · 3 = 210.'], sol:'70 · 3 = 210'},
         {q:'Кроликов было 2, и каждый год их число удваивается. Сколько кроликов будет через 4 года?', kind:'unit', ans:32, tol:0, hints:['Через год — 4, через два — 8.','2 · 2 · 2 · 2 · 2 = 32.'], sol:'2 · 2 · 2 · 2 · 2 = 32'}
+      ] },
+    { id:532, title:'Трёхмерная графика: как плоский экран показывает объём', ico:'🧊', src:'Информатика · 5–6 класс · С нуля: 3D',
+      explain:[
+        'Экран плоский, но на нём можно показать объём. Компьютер рисует проекцию — плоское изображение трёхмерной модели.',
+        'Как рисунок обманывает глаз? Помогают подсказки глубины: перспектива, перекрытие предметов, тени и размер.',
+        'В 3D у точки три координаты: x, y и z. Три числа полностью задают положение точки в пространстве.',
+        'Оси x, y и z показывают направления. Модель удобно ставить в начало координат — в точку (0; 0; 0).',
+        'Модель собирают из простых элементов: вершины — это точки, рёбра соединяют вершины, грани — плоские куски поверхности.',
+        'У куба 8 вершин, 12 рёбер и 6 граней. У пирамиды 5 вершин, 8 рёбер и 5 граней.',
+        'Каркасная модель — это только вершины и рёбра, без заливки. Так удобно проверять форму.',
+        'Проекция: каждая вершина модели пересчитывается по правилам и попадает на экран. Это делает видеокарта — миллионы вершин в секунду.',
+        'Поворот — это пересчёт координат. Модель можно поворачивать вокруг оси x (наклон), вокруг y (кружение) и вокруг z.',
+        'Три угла полностью описывают ориентацию модели: вокруг x, вокруг y и вокруг z.',
+        'Дальние грани рисуют первыми, а ближние — последними. Иначе ближняя грань «провалится» под дальнюю.',
+        'Свет и тень делают объём живым: грань, повёрнутая к свету, ярче, а отвёрнутая — темнее.',
+        'Чем больше граней, тем глаже модель: шар в 3D — это много маленьких плоских граней.',
+        'Текстура — это картинка, натянутая на грань. Поэтому кирпичную стену не рисуют по кирпичику.',
+        'Перспектива делает дальние предметы меньше. Без неё объём почти не читается.',
+        'Сцена состоит из трёх частей: модель, камера (откуда смотрим) и свет.',
+        'Видеокарта каждый кадр проходит шаги: вершины на экран, сборка граней, сортировка по глубине, свет и вывод пикселей.',
+        'В игре сцену пересчитывают каждый кадр, поэтому для 3D нужна мощная видеокарта.',
+        'VR-шлем переносит нас внутрь модели, а AR добавляет модель в нашу комнату через камеру телефона.',
+        '3D-модель хранят в файле как список чисел: координаты вершин, номера граней, текстуры. Программа читает числа и рисует модель.',
+        'Практика: у куба 12 рёбер; у пирамиды 5 вершин; если повернуть модель 5 раз по 30 градусов, получится 150 градусов.',
+        'Мастерская: вращай куб, пирамиду и призму кнопками — и смотри, как меняются углы и вид модели.',
+        'Викторина: на экране мы видим плоскую проекцию объёма, а не саму объёмную модель.',
+        'Частые ошибки: путать модель и её изображение, забывать про порядок отрисовки, ставить мало граней, забывать про свет.',
+        'Трёхмерная графика повсюду: в играх, мультфильмах, чертежах, архитектуре и даже в медицине — везде нужны 3D-модели.',
+        'Шпаргалка: три координаты, вершины-рёбра-грани, проекция, три угла поворота, порядок отрисовки, свет и текстура. Проверь себя!' ],
+      slides:[
+        {h:'Плоский экран и объём', v:{kind:'d3intro'}, r:'Проекция.', d:'На экране — плоская проекция трёхмерной модели.'},
+        {h:'Подсказки глубины', v:{kind:'d3flat'}, r:'Как обмануть глаз.', d:'Перспектива, перекрытие, тени и размер подсказывают глазу объём.'},
+        {h:'Три координаты', v:{kind:'d3points'}, r:'x, y, z.', d:'В 3D положение точки задают три числа.'},
+        {h:'Оси', v:{kind:'d3axes'}, r:'Три направления.', d:'Оси x, y и z показывают направления; модель ставят в начало координат.'},
+        {h:'Вершины', v:{kind:'d3vertex'}, r:'Восемь точек куба.', d:'Вершина — точка, где сходятся рёбра. У куба их восемь.'},
+        {h:'Рёбра', v:{kind:'d3edge'}, r:'Двенадцать отрезков.', d:'Ребро соединяет две вершины. У куба двенадцать рёбер.'},
+        {h:'Грани', v:{kind:'d3face'}, r:'Шесть квадратов.', d:'Грань — плоский кусок поверхности. У куба шесть граней.'},
+        {h:'Каркасная модель', v:{kind:'d3wireframe'}, r:'Только сетка.', d:'Каркас — вершины и рёбра без заливки. Так проверяют форму.'},
+        {h:'Проекция вершин', v:{kind:'d3project'}, r:'Из 3D в 2D.', d:'Каждая вершина пересчитывается и попадает на экран.'},
+        {h:'Поворот вокруг y', v:{kind:'d3rotatey'}, r:'Кружение.', d:'Поворот — это пересчёт координат по углу.'},
+        {h:'Наклон и крен', v:{kind:'d3rotatex'}, r:'Вокруг x и z.', d:'Три угла полностью описывают ориентацию модели.'},
+        {h:'Мастерская 3D', v:{kind:'d3lab'}, r:'Вращай модель сам!', d:'Кнопками поворачивай куб, пирамиду и призму — смотри на углы и на вид.'},
+        {h:'Порядок отрисовки', v:{kind:'d3depth'}, r:'Дальние — первыми.', d:'Если нарисовать ближнюю грань раньше, она провалится под дальнюю.'},
+        {h:'Свет и тень', v:{kind:'d3shade'}, r:'Объём живой.', d:'Яркость грани зависит от того, насколько она повёрнута к свету.'},
+        {h:'Чем больше граней', v:{kind:'d3smooth'}, r:'Тем глаже.', d:'Шар — это много маленьких плоских граней.'},
+        {h:'Текстура', v:{kind:'d3texture'}, r:'Картинка на грани.', d:'Текстура натягивается на грань, как обои.'},
+        {h:'Перспектива', v:{kind:'d3persp'}, r:'Дальше — меньше.', d:'Коэффициент перспективы делает дальние предметы меньше.'},
+        {h:'Камера', v:{kind:'d3camera'}, r:'Откуда смотрим.', d:'Сцена — это модель, камера и свет.'},
+        {h:'Конвейер видеокарты', v:{kind:'d3engine'}, r:'Пять шагов.', d:'Вершины, грани, сортировка, свет, пиксели — и так каждый кадр.'},
+        {h:'3D в играх', v:{kind:'d3game'}, r:'Каждый кадр заново.', d:'Сцену пересчитывают 60 раз в секунду, поэтому нужна мощная видеокарта.'},
+        {h:'VR и AR', v:{kind:'d3vr'}, r:'Объём вокруг нас.', d:'VR переносит внутрь модели, AR добавляет её в комнату.'},
+        {h:'Хранение модели', v:{kind:'d3file'}, r:'Числа в файле.', d:'Модель хранят как вершины, грани и текстуры — обычные числа.'},
+        {h:'Практика', v:{kind:'d3practice'}, r:'Считаем элементы.', d:'12 рёбер у куба, 5 вершин у пирамиды, 150 градусов после пяти поворотов.'},
+        {h:'Викторина', v:{kind:'d3quiz'}, r:'Что видно на экране?', d:'На экране — плоская проекция объёма.'},
+        {h:'Частые ошибки', v:{kind:'d3mistakes'}, r:'Что путают чаще всего.', d:'Модель и изображение, порядок отрисовки, число граней, свет.'},
+        {h:'Шпаргалка', v:{kind:'d3sheet'}, r:'Шесть главных мыслей.', d:'Координаты, вершины-рёбра-грани, проекция, повороты, порядок, свет.'} ],
+      check:{ q:'Что видно на плоском экране компьютера?', choices:['плоская проекция объёмной модели','сама объёмная модель','только текстура','фотография модели'], ans:0, exp:'Компьютер рисует проекцию: плоское изображение трёхмерной модели.' },
+      tasks:[
+        {q:'Сколько рёбер у куба?', kind:'unit', ans:12, tol:0, hints:['Рёбра соединяют вершины куба.','У куба 12 рёбер.'], sol:'12'},
+        {q:'Модель повернули 6 раз по 30 градусов. Какой угол получился?', kind:'unit', ans:180, tol:0, hints:['Углы складываются.','30 · 6 = 180.'], sol:'30 · 6 = 180'}
       ] }
   ];
 
@@ -9643,7 +10182,7 @@
       st.arr=(s.v.kind==='sortgame')?(s.v.vals||[7,2,9,3,1]).slice():null; st.glo=null; st.gi=null; st.gsteps=0; st.tab=null; st.bad=-1; st.tabOk=0; st.wnode=0; st.wsteps=0; st.wbad=-1;
       st.grid=(s.v.kind==='drawgame')?(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]]).map(r=>r.map(()=>0)):null; }
     const go=st.go||0;
-    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz'||s.v.kind==='robotlab'||s.v.kind==='robotquiz'||s.v.kind==='modellab'||s.v.kind==='modelquiz');
+    const isPick=(s.v.kind==='pick'||s.v.kind==='sort'||s.v.kind==='find'||s.v.kind==='findcell'||s.v.kind==='sortgame'||s.v.kind==='guessnum'||s.v.kind==='tabgame'||s.v.kind==='walkgame'||s.v.kind==='drawgame'||s.v.kind==='sndgame'||s.v.kind==='vidgame'||s.v.kind==='vidgame2'||s.v.kind==='vcheck'||s.v.kind==='netgame'||s.v.kind==='netgame2'||s.v.kind==='netcheck'||s.v.kind==='cpgame1'||s.v.kind==='cpgame2'||s.v.kind==='cpdial'||s.v.kind==='cpcheck'||s.v.kind==='fraccreator'||s.v.kind==='aitrain'||s.v.kind==='aitreegame'||s.v.kind==='aitest'||s.v.kind==='hwgame1'||s.v.kind==='hwgame2'||s.v.kind==='filegame1'||s.v.kind==='filegame2'||s.v.kind==='gameplay'||s.v.kind==='gamequiz'||s.v.kind==='robotlab'||s.v.kind==='robotquiz'||s.v.kind==='modellab'||s.v.kind==='modelquiz'||s.v.kind==='d3lab'||s.v.kind==='d3quiz');
     const H=vizH(s.v)+30;
     const inner = `<g class="${pre}In">${(go||isPick)? viz(s.v,pre,step,st,lk) : ''}</g>`;
     const btnRow = (s.v.kind==='sort')
@@ -9662,6 +10201,8 @@
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infFind('${lk}',-1,0)`)) : '')
       : (s.v.kind==='findcell')
       ? (st.find>=0? wkRow(wkBtn('искать снова',`infCell('${lk}',-1,0)`)) : '')
+      : (s.v.kind==='d3lab')
+      ? wkRow(wkBtn('сброс углов',`inf3d('${lk}','reset','')`))
       : (s.v.kind==='modellab')
       ? wkRow(wkBtn('сброс модели',`infModel('${lk}','reset',0)`))
       : (s.v.kind==='robotlab')
@@ -9681,7 +10222,7 @@
       : isPick
       ? (st.pick>=0? wkRow(wkBtn('ещё раз',`infPick('${lk}',-1)`)) : '')
       : wkRow(go?wkBtn('сброс',`infAct('${lk}')`):wkBtn('показать',`infAct('${lk}')`));
-    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='modellab')? (((st.my||0)>=5) && s.r) : (s.v.kind==='robotlab')? ((st.rp>=11) && s.r) : (s.v.kind==='gameplay')? ((st.gm>=5) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
+    const capShown = (s.v.kind==='sort')? (((st.seq||[]).length===(s.v.items||[]).length) && s.r) : (s.v.kind==='find'||s.v.kind==='findcell')? (st.find>=0 && s.r) : (s.v.kind==='sortgame')? (((st.arr||[]).length>0 && (st.arr||[]).every((x,i,a)=>i===0||a[i-1]<=x)) && s.r) : (s.v.kind==='guessnum')? ((st.glo!=null && st.glo>=st.gi) && s.r) : (s.v.kind==='tabgame')? (st.tabOk===1 && s.r) : (s.v.kind==='walkgame')? ((st.wnode===4) && s.r) : (s.v.kind==='drawgame')? (!!(st.grid&&st.grid.every((row,k)=>row.every((v2,c)=>{const t2=(s.v.mat||[[0,1,0,0,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,1,0,0],[0,0,0,0,0,0]])[k]||[]; return v2===t2[c];}))) && s.r) : (s.v.kind==='vcheck'||s.v.kind==='netcheck'||s.v.kind==='cpcheck')? (((st.q||0)>=4) && s.r) : (s.v.kind==='d3lab')? ((st.d3t>=5) && s.r) : (s.v.kind==='modellab')? (((st.my||0)>=5) && s.r) : (s.v.kind==='robotlab')? ((st.rp>=11) && s.r) : (s.v.kind==='gameplay')? ((st.gm>=5) && s.r) : (s.v.kind==='aitrain')? ((st.n>=6) && s.r) : (s.v.kind==='aitreegame')? ((st.a3>0) && s.r) : (s.v.kind==='fraccreator')? ((st.lvl>=3) && s.r) : (s.v.kind==='cpdial')? ((st.sh===3) && s.r) : (isPick? (st.pick>=0 && s.r) : (go && s.r));
     let h = wkFrame(`<div class="wk-big" style="font-size:23px">${s.h}</div>`+
       wkHero(arh(318,H,inner,pre))+
       (capShown?wkRow(chip(s.r,grn,pre)):'')+
@@ -9690,6 +10231,20 @@
       wkSml(L.title));
     el.innerHTML=`<div style="margin-top:6px">${h}</div>`;
   }
+  window.inf3d=function(lk,ax,val){
+    const st=CHS[lk]||(CHS[lk]={});
+    if(ax==='reset'){ st.d3x=0.34; st.d3y=-0.62; st.d3z=0; chRender(0); return; }
+    if(ax==='shape'){ st.d3s=val; chRender(0); return; }
+    if(typeof st.d3x!=='number'){ st.d3x=0.34; }
+    if(typeof st.d3y!=='number'){ st.d3y=-0.62; }
+    if(typeof st.d3z!=='number'){ st.d3z=0; }
+    const step=0.26;
+    if(ax==='y') st.d3y += (val==='+')?step:-step;
+    if(ax==='x') st.d3x += (val==='+')?step:-step;
+    if(ax==='z') st.d3z += step;
+    st.d3t=(st.d3t||0)+1;
+    chRender(0);
+  };
   window.infModel=function(lk,act,val){
     const st=CHS[lk]||(CHS[lk]={});
     if(act==='reset'){ st.mk=1; st.my=0; chRender(0); return; }
