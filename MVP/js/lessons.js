@@ -8740,16 +8740,21 @@ function visL51(el){
     const big=(x)=>`<div class="wv-big">${x}</div>`;
     const sml=(x)=>`<div class="wv-sml">${x}</div>`;
     const row=(...b)=>`<div class="wv-row">${b.join('')}</div>`;
-    const spd=Math.max(0.35, 2.6 - ((t+20)/140)*2.2);
+    const hlev=Math.max(0,Math.min(1,(t+20)/140));          /* 0 — мороз, 1 — кипяток */
     const state=t<-5?'лёд и мороз':(t<0?'лёд тает':(t<40?'холодная вода':(t<80?'тёплая вода':(t<100?'горячая, скоро кипит':'кипит!'))) );
-    const liveHdr=(x)=>`<g transform="translate(6 4)">
-      <rect width="348" height="30" rx="9" fill="rgba(9,15,20,.78)" stroke="rgba(127,209,255,.28)" stroke-width="1"/>
-      <text x="9" y="13" font-size="8.5" fill="#9fb8d0">${x}</text>
-      <rect x="9" y="18" width="200" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
-      <rect x="9" y="18" width="${(((t+20)/140)*200).toFixed(1)}" height="6" rx="3" fill="#ff9d3c"/>
-      <circle r="3.6" fill="#ffd76a"><animateMotion dur="${spd.toFixed(2)}s" repeatCount="indefinite" path="M11 21 L207 21"/></circle>
-      <text x="222" y="24" font-size="9" font-weight="bold" fill="#ffd76a">${t>0?'+':''}${f(t)}°C</text>
-      <text x="342" y="24" text-anchor="end" font-size="8.5" fill="#cfe6ff">${state}</text></g>`;
+    /* ВТОРОСТЕПЕННЫЕ ДЕЙСТВИЯ: пылинки в воздухе и «дыхание» тепла — сцена никогда не замирает */
+    const ambient=()=>`<g><g opacity=".55">${Array.from({length:9},(_,k)=>`<circle cx="${18+k*40}" cy="${34+((k*53)%126)}" r="${0.9+(k%3)*0.55}" fill="#ffe9c4">
+        <animateTransform attributeName="transform" type="translate" values="0 0;${(k%2?13:-10)} ${(k%3?8:-12)};0 0" dur="${(6+k*0.7).toFixed(1)}s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values=".12;.45;.12" dur="${(5+k*0.6).toFixed(1)}s" repeatCount="indefinite"/></circle>`).join('')}</g>
+      <ellipse cx="180" cy="198" rx="152" ry="24" fill="url(#qGlow)" opacity="${(0.12+hlev*0.5).toFixed(2)}">
+        <animate attributeName="opacity" values="${(0.12+hlev*0.5).toFixed(2)};${(0.2+hlev*0.6).toFixed(2)};${(0.12+hlev*0.5).toFixed(2)}" dur="4.2s" repeatCount="indefinite"/></ellipse></g>`;
+    /* КОМПАКТНЫЙ ИНДИКАТОР МОДЕЛИ: шкала + значение + состояние (без шарика) */
+    const hdr=()=>`<g transform="translate(6 4)">
+      <rect width="348" height="26" rx="9" fill="rgba(9,15,20,.74)" stroke="rgba(127,209,255,.26)" stroke-width="1"/>
+      <rect x="9" y="14" width="196" height="7" rx="3.5" fill="rgba(255,255,255,.08)"/>
+      <rect x="9" y="14" width="${(hlev*196).toFixed(1)}" height="7" rx="3.5" fill="url(#qHeat)"/>
+      <text x="214" y="20" font-size="10.5" font-weight="bold" fill="#ffd76a">${t>0?'+':''}${f(t)}°C</text>
+      <text x="342" y="20" text-anchor="end" font-size="8.5" fill="#cfe6ff">${state}</text></g>`;
     const chip=(x,c)=>`<span style="display:inline-block;padding:3px 11px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid ${c};font-size:14px;color:#e6eef6;margin:2px">${x}</span>`;
 
     const DEFS=`<defs>
@@ -8764,9 +8769,10 @@ function visL51(el){
       <filter id="qBlur2" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.5"/></filter>
       <filter id="qSh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity=".5"/></filter>
       <radialGradient id="qGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff9d3c" stop-opacity=".55"/><stop offset="1" stop-color="#ff7a18" stop-opacity="0"/></radialGradient>
+      <linearGradient id="qHeat" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6fd0ff"/><stop offset=".45" stop-color="#ffe066"/><stop offset="1" stop-color="#ff5a2c"/></linearGradient>
     </defs>`;
     const S=(body,bg)=>`<svg viewBox="0 0 360 200" style="display:block;width:100%;height:auto;border-radius:14px;overflow:hidden">
-      ${DEFS}<rect width="360" height="200" fill="${bg||'#141a22'}"/>${body}${liveHdr('живая модель')}</svg>`;
+      ${DEFS}<rect width="360" height="200" fill="${bg||'#141a22'}"/>${body}${ambient()}${hdr()}</svg>`;
     const flame=(x,y,hh,op)=>`<g filter="url(#qBlur2)" opacity="${op||1}">
       <path d="M${x} ${y} C${x-14} ${y-hh*0.45} ${x-11} ${y-hh} ${x} ${y-hh*1.3} C${x+11} ${y-hh} ${x+14} ${y-hh*0.45} ${x} ${y} Z" fill="url(#qFlame)">
         <animateTransform attributeName="transform" type="scale" values="1 1;1 .85;1 1.06;1 1" dur=".9s" repeatCount="indefinite" additive="sum"/></path>
@@ -8800,6 +8806,8 @@ function visL51(el){
           <animate attributeName="opacity" values="1;.75;1" dur="3s" repeatCount="indefinite"/></g>
         <text x="133" y="42" text-anchor="middle" font-size="11" fill="#ffd76a">горячий чайник</text>
         <text x="261" y="100" text-anchor="middle" font-size="11" fill="#bfe6ff">холодный лёд</text>
+        <g>${Array.from({length:7},(_,k)=>`<circle cx="${104+(k%4)*16}" cy="${104+Math.floor(k/4)*14}" r="${1.6+(k%2)*0.8}" fill="#ffd9a8" opacity=".85">
+            <animateTransform attributeName="transform" type="translate" values="0 0;${(k%2?5:-5)} ${(k%3?4:-6)};0 0" dur="${(2.4-hlev*1.9).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}</g>
         <path d="M120 52 q0 26 -22 40" stroke="#ff9d3c" stroke-width="2" stroke-dasharray="4 3" fill="none"/>
         <path d="M258 112 q0 -22 -18 -34" stroke="#7fd1ff" stroke-width="2" stroke-dasharray="4 3" fill="none"/>`;
       example='Пример: чайник обжигает, лёд студит — это движутся частицы внутри.';
