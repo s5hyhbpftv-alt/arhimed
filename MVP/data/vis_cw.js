@@ -1137,105 +1137,266 @@ window._waveCss = window._waveCss || function(id, css){
     id: 409, title: 'Параметры: линейные уравнения', ico: '⚙️',
     src: 'Математика · 7 класс · Олимп-7: параметры', subj: 'math',
     explain: [
-      'Уравнение с параметром выглядит как обычное: ax = b. Но a и b — это БУКВЫ, за которыми прячутся числа. Параметр a — как «ручка настройки»: крутишь её — уравнение меняется. Наша задача — понять, как ответ зависит от ручки!',
-      'Случай 1: a ≠ 0. Всё просто — делим обе части на a: x = b/a. Например, 3x = 6 → x = 2. При a ≠ 0 уравнение всегда имеет РОВНО ОДНО решение.',
-      'Случай 2: a = 0 и b = 0. Уравнение превращается в 0·x = 0, то есть 0 = 0 — верно при ЛЮБОМ x! Подставь 5, 100, −7 — всё подойдёт. Решений бесконечно много.',
-      'Случай 3: a = 0 и b ≠ 0, например 0·x = 5. Слева всегда 0, а справа 5. Ноль не равен пяти никогда! Значит, уравнение НЕ имеет решений.',
-      'Сводим к виду ax = b. В задачах уравнение дают не готовым: ax + 1 = 5. Упрощаем как обычно: переносим 1 вправо с минусом: ax = 4. Теперь видно: при a ≠ 0 → x = 4/a, при a = 0 решений нет (4 ≠ 0).',
-      'Олимпиадный пример: при каком a уравнение ax = 6 не имеет решений? По правилу: решений нет, когда a = 0 (0·x = 6 — ложь). А при a = 0 и b = 0 (0·x = 0) решений, наоборот, бесконечно много.',
-      'Запомни три строки-шпаргалку: 1) a ≠ 0 → x = b/a (одно решение); 2) a = 0, b = 0 → бесконечно много; 3) a = 0, b ≠ 0 → ни одного. Сведи к виду ax = b — и смотри на a и b!',
-      'Параметры — это «уравнения с секретом»: ответ зависит от буквы. На олимпиадах любят спрашивать: «при каком значении параметра…» — теперь ты знаешь все три случая!',
-      'Теперь проверь себя: реши ax = 6 при a = 3. Просто раздели 6 на 3 — параметр «превратился» в обычное число!'
+      'Загадка: уравнение ax = 6. Если a = 3, x = 2. А если a = 0? А если справа тоже ноль? Одна буква a — ручка. Крутишь ручку — меняется весь ответ. Это параметр.',
+      'Параметр — число, которое ещё не выбрали. x ищем, a настраиваем. Задача: описать x для каждого a. Не одно число, а таблица случаев.',
+      'Случай 1: a не ноль. Делим на a: x = b/a. Одно решение. Подвинь a: точка на оси едет. При a = 3 и b = 6 точка на 2.',
+      'Пример: 3x = 6 → x = 2. Ручка зафиксировалась, уравнение стало обычным. Параметр «превратился» в тройку.',
+      'Случай 2: a = 0 и b = 0. Получается 0 · x = 0, то есть 0 = 0. Это правда при любом x. На оси загорается вся прямая. Решений бесконечно много.',
+      'Случай 3: a = 0 и b не ноль. 0 · x = 5 — слева всегда ноль, справа пять. Ноль не равен пяти. На оси пусто. Решений нет.',
+      'Три карточки. a ≠ 0 — одно. Оба нуля — все x. Только a ноль — никого. Запомни вид ax = b: сначала упрости, потом смотри на a и b.',
+      'Не готовое: ax + 1 = 5. Перенеси 1: ax = 4. Теперь видно: a ≠ 0 → x = 4/a; a = 0 → 0 = 4, решений нет.',
+      'Олимпиадный вопрос: при каком a уравнение ax = 6 не имеет решений? Справа 6 ≠ 0, значит только когда a = 0. Не путай с 0 · x = 0 — там наоборот бесконечно много.',
+      'Подвинь две ручки a и b. Подпись скажет случай и решение. Поймай «одно», «все» и «пусто». Три мира на одной оси.',
+      'Картинка: одна точка, вся прямая или ничего. Это и есть ответ с параметром — не число, а описание.',
+      'Особый случай ax = 0. Если a ≠ 0, то x = 0. Если a = 0, то 0 = 0, все x. Ноль справа дружит с нулём слева.',
+      'Рецепт: сведи к ax = b. Смотри a. Не ноль — дели. Ноль — смотри b. b ноль — все, b не ноль — никто.',
+      'Фраза «при каком a» почти всегда просит один из трёх случаев. Сначала упрости, потом ручка.',
+      'В карман: ax = b. a ≠ 0 → x = b/a. a = b = 0 → все. a = 0, b ≠ 0 → пусто. Для ax = 6 при a = 3 получается 2.',
+      'Проверка: ax = 6, a = 3. Делим 6 на 3. x = 2. Не 3 и не 18.'
     ],
     check: { q: 'Уравнение ax = 6. При a = 3 чему равен x?', choices: ['2', '3', '6', '18'], ans: 0,
-      exp: 'x = 6 : 3 = 2.' },
+      exp: 'a ≠ 0, значит x = 6/3 = 2.' },
     tasks: [
       { q: 'При каком a уравнение ax = 0 имеет бесконечно много решений?', kind: 'unit', ans: 0, tol: 0,
-        hints: ['0·x = 0 верно при любом x.', 'a = 0.'], sol: '0' },
-      { q: 'Сколько решений у уравнения 0·x = 5?', kind: 'choice', choices: ['ни одного', 'x = 5', 'бесконечно много', 'x = 0'], ans: 0, tol: 0,
-        hints: ['0 ≠ 5.', 'Решений нет.'], sol: 'ни одного' }
+        hints: ['0 · x = 0 верно при любом x.', 'Это когда a = 0.'], sol: '0' },
+      { q: 'Сколько решений у уравнения 0·x = 5?', kind: 'choice',
+        choices: ['ни одного', 'x = 5', 'бесконечно много', 'x = 0'], ans: 0, tol: 0,
+        hints: ['Слева 0, справа 5.', '0 ≠ 5, решений нет.'], sol: 'ни одного' }
     ]
   };
-  const caseCard=(title,body,color,ok)=>`<div style="text-align:center;background:rgba(255,255,255,.04);border:2px solid ${color};border-radius:14px;padding:10px 12px;max-width:320px;width:100%">
-    <b style="font-size:15px;color:${color}">${title}</b>
-    <div style="font-family:Georgia,serif;font-size:19px;color:#e8dcc8;margin-top:4px">${body}</div>
-    <div style="font-size:13px;color:${ok?'#8fd1a8':'#ff9a8a'};font-weight:bold;margin-top:3px">${ok?'✔ одно решение':'✘ решений нет'}</div>
-  </div>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l409ink{to{stroke-dashoffset:0}}
+    @keyframes l409pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l409pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l409glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l409-ink{animation:l409ink 1.3s cubic-bezier(.2,.75,.15,1) forwards}
+    .l409-dot{transform-box:fill-box;transform-origin:center;animation:l409pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l409-pulse{animation:l409pulse 1.6s ease-in-out infinite}
+    .l409-glow{animation:l409glow 1.8s ease-in-out infinite}
+    .l409-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l409-ink" style="animation-duration:${dur||1.25}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l409-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l409', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function AX(x){ return 120 + x*16; }
+  function axis(kind, xv){
+    let t=`<line x1="20" y1="120" x2="220" y2="120" stroke="#3d5c49" stroke-width="2" ${kind==='all'?'stroke="'+GREEN+'" stroke-width="6"':''}/>`;
+    for(let n=-5;n<=5;n++) t+=`<line x1="${AX(n)}" y1="114" x2="${AX(n)}" y2="126" stroke="#3d5c49"/>`+lab(AX(n), 142, String(n), MUTED, 'middle', 10);
+    if(kind==='one' && xv!=null && isFinite(xv)){
+      const px=Math.max(24, Math.min(216, AX(xv)));
+      t+=`<circle class="l409-glow" cx="${px}" cy="120" r="7" fill="${GOLD}"/>`+lab(px, 96, 'x='+ (Math.round(xv*100)/100).toString().replace('.',','), GOLD);
+    }
+    if(kind==='none') t+=lab(120, 88, 'пусто', RED);
+    if(kind==='all') t+=lab(120, 88, 'все x', GREEN);
+    return t;
+  }
+
   function visC409(el){
+    try{ window._waveCss && _waveCss('css-l409', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'409';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const a=+(st.a==null?3:st.a);
+    const b=+(st.b==null?6:st.b);
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Уравнение с параметром</div>
-        <div style="font-size:26px;color:#ffd76a;font-family:Georgia,serif">ax = b</div>
-        <div class="wv-row" style="gap:5px;flex-wrap:wrap">
-          ${chip('a — «ручка настройки»','#7fd1ff')}${chip('b — число','#8fd1a8')}${chip('x — неизвестное','#ffd76a')}
-        </div>
+        ${frame(
+          lab(120, 50, 'ax = 6', GOLD, 'middle', 24)+
+          lab(120, 100, open?'ручка a меняет ответ':'что будет при a = 0?', open?GREEN:MUTED, 'middle', 14)+
+          lab(120, 150, open?'три случая':'одна буква — секрет', MUTED)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Ручка настройки','x ищем, a ещё не выбрали. Ответ — не одно число, а описание: при таком a вот такой x.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Случай 1: a ≠ 0</div>
-        ${caseCard('a ≠ 0', 'x = b/a', '#8fd1a8', true)}
-        <div class="wv-sml" style="color:#8fd1a8">пример: 3x = 6 → x = 2</div>
+        ${frame(
+          lab(70, 80, 'a ручка', BLUE)+lab(170, 80, 'x ищем', GOLD)+
+          lab(120, 130, 'ax = b', GREEN, 'middle', 20)+
+          lab(120, 176, 'b — данное число', MUTED)
+        )}
+        ${note('Три роли','Параметр настраивают. Неизвестное ищут. Свободный член дан. Не путай a и x местами.')}
       </div>`;
     } else if(step===2){
+      const aa=a===0?0.5:a;
+      const xv=6/aa;
       h=`<div class="wv-col">
-        <div class="wv-big">Случай 2: a = 0, b = 0</div>
-        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">0·x = 0 → 0 = 0</div>
-        <div style="background:rgba(127,209,160,.12);border:2px solid #4c8a5a;border-radius:12px;padding:8px 12px;font-size:16px;color:#8fd1a8;font-weight:bold" class="wv-ans">бесконечно много решений!</div>
-        <div class="wv-sml">подставь 5, 100, −7 — всё подойдёт</div>
+        ${frame(axis('one', xv)+lab(120, 40, 'a ≠ 0  →  x = 6/a', GOLD))}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">a
+          <input type="range" min="-40" max="40" value="${Math.round(aa*10)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].a=this.value/10; if(+this.value===0) CHS[k].a=0.5; chRender(0);}catch(e){}">
+          <b style="color:${GOLD};min-width:32px">${aa.toString().replace('.',',')}</b>
+        </label>
+        ${note('Одно решение','Пока a не ноль, делим. Точка едет по оси. Чем a меньше, тем x дальше.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        <div class="wv-big">Случай 3: a = 0, b ≠ 0</div>
-        <div style="font-size:24px;color:#ff9a8a;font-family:Georgia,serif">0·x = 5</div>
-        <div style="background:rgba(232,106,90,.12);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:8px 12px;font-size:16px;color:#ffcfc2;font-weight:bold" class="wv-ans">0 = 5 — ложь → решений НЕТ</div>
+        ${frame(
+          lab(120, 60, '3x = 6', GOLD, 'middle', 22)+
+          lab(120, 110, 'x = 2', GREEN, 'middle', 22)+
+          axis('one', 2)
+        , '0 0 240 200')}
+        ${note('Ручка зафиксировалась','a стало 3, уравнение обычное. Параметр умеет превращаться в число — тогда решаем как всегда.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
-        <div class="wv-big">Сводим к виду ax = b</div>
-        <div style="display:flex;flex-direction:column;gap:4px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:19px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">ax + 1 = 5</div>
-          <div class="wv-pop2">ax = 5 − 1 = <b style="color:#ffd76a">4</b></div>
-        </div>
-        <div class="wv-sml">a ≠ 0 → x = 4/a · a = 0 → решений нет (4 ≠ 0)</div>
+        ${frame(
+          lab(120, 40, '0 · x = 0', GOLD, 'middle', 20)+
+          axis('all')+
+          lab(120, 176, '5, 100, −7 — все годятся', MUTED, 'middle', 12)
+        )}
+        ${note('Вся прямая','Ноль равен нулю всегда. Это не «x = 0», это «какой хочешь x». Бесконечно много решений.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        <div class="wv-big">Олимпиадный пример</div>
-        <div class="wv-sml">при каком a уравнение ax = 6 не имеет решений?</div>
-        <div style="background:rgba(232,106,90,.1);border:2px solid rgba(232,106,90,.5);border-radius:12px;padding:8px 12px;font-size:17px;color:#ffcfc2;font-weight:bold" class="wv-ans">a = 0: 0·x = 6 — решений нет!</div>
-        <div class="wv-sml">а при a = 0, b = 0 — бесконечно много</div>
+        ${frame(
+          lab(120, 40, '0 · x = 5', RED, 'middle', 20)+
+          axis('none')+
+          lab(120, 176, '0 ≠ 5 никогда', MUTED)
+        )}
+        ${note('Пусто','Слева ноль при любом x, справа пять. Противоречие. Решений нет — и это тоже ответ.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
-        <div class="wv-big">Шпаргалка: три случая</div>
-        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[
-            ['a ≠ 0','x = b/a — одно решение','#8fd1a8'],
-            ['a = 0, b = 0','0 = 0 — ∞ решений','#7fd1ff'],
-            ['a = 0, b ≠ 0','0 = b — нет решений','#ff9a8a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:14px;color:#e8dcc8"><b style="color:${x[2]};font-family:Georgia,serif">${x[0]}</b><span style="font-size:12.5px">${x[1]}</span></div>`).join('')}
+            ['a ≠ 0','x = b/a  · одно',GREEN],
+            ['a = 0, b = 0','все x',BLUE],
+            ['a = 0, b ≠ 0','пусто',RED]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <b style="color:${x[2]}">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
         </div>
+        ${note('Три карточки','Сначала упрости до ax = b. Потом только смотри на a и b. Не прыгай к x, пока не понял случай.')}
       </div>`;
     } else if(step===7){
+      const show=!!st.red;
       h=`<div class="wv-col">
-        <div class="wv-big">Что такое параметры</div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid #ffd76a;border-radius:9px;padding:8px 12px;max-width:330px;font-size:14px;color:#e8dcc8;line-height:1.6">«уравнения с секретом»: ответ зависит от буквы a. На олимпиадах спрашивают «при каком значении параметра…» — теперь знаешь все случаи!</div>
+        ${frame(
+          lab(120, 56, 'ax + 1 = 5', GOLD, 'middle', 20)+
+          lab(120, 100, show?'↓ перенесли 1': '', MUTED)+
+          lab(120, 140, show?'ax = 4': 'упрости', show?GREEN:MUTED, 'middle', 18)+
+          lab(120, 180, show?'a ≠ 0 → x = 4/a': '', BLUE, 'middle', 13)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].red=1;chRender(0);}catch(e){}">${show?'Свели':'Свести к ax = b'}</button>
+        ${note('Сначала алгебра','Параметр не мешает переносить слагаемые. Когда вид ax = b готов, включается шпаргалка из трёх строк.')}
+      </div>`;
+    } else if(step===8){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 70, 'ax = 6  без решений?', GOLD, 'middle', 16)+
+          lab(120, 120, 'справа 6 ≠ 0', MUTED)+
+          lab(120, 164, 'только a = 0', RED, 'middle', 20)
+        )}
+        ${note('Ловушка','Не путай с 0 · x = 0. Там решений полно. Здесь справа не ноль — ноль слева даёт ложь.')}
+      </div>`;
+    } else if(step===9){
+      const aa=a, bb=b;
+      let kind='one', xv=null, msg='';
+      if(aa===0 && bb===0){ kind='all'; msg='все x'; }
+      else if(aa===0){ kind='none'; msg='пусто'; }
+      else { xv=bb/aa; msg='x = '+(Math.round(xv*100)/100).toString().replace('.',','); }
+      h=`<div class="wv-col">
+        ${frame(axis(kind, xv)+lab(120, 40, 'a='+aa.toString().replace('.',',')+'  b='+bb.toString().replace('.',',')+'  →  '+msg, kind==='none'?RED:kind==='all'?GREEN:GOLD, 'middle', 13))}
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,300px)">
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">a
+            <input type="range" min="-40" max="40" value="${Math.round(aa*10)}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].a=this.value/10;chRender(0);}catch(e){}">
+            <b style="color:${GOLD};min-width:32px">${aa.toString().replace('.',',')}</b></label>
+          <label class="wv-sml" style="display:flex;align-items:center;gap:8px">b
+            <input type="range" min="-60" max="60" value="${Math.round(bb*10)}" style="flex:1"
+              oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].b=this.value/10;chRender(0);}catch(e){}">
+            <b style="color:${BLUE};min-width:32px">${bb.toString().replace('.',',')}</b></label>
+        </div>
+        ${note('Поймай три мира','Поставь a = 0 и b = 0 — вся ось. a = 0 и b = 5 — пусто. a = 3 и b = 6 — точка на 2.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(50, 50, 'точка', GOLD)+`<circle cx="50" cy="100" r="7" fill="${GOLD}"/>`+
+          lab(120, 50, 'прямая', GREEN)+`<line x1="80" y1="100" x2="160" y2="100" stroke="${GREEN}" stroke-width="6"/>`+
+          lab(190, 50, 'пусто', RED)+lab(190, 104, '∅', RED, 'middle', 22)
+        , '0 0 240 160')}
+        ${note('Три картинки','Ответ с параметром рисуют так: точка, вся прямая или пустое множество. Не одно число.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 56, 'ax = 0', GOLD, 'middle', 22)+
+          lab(120, 110, 'a ≠ 0 → x = 0', GREEN)+
+          lab(120, 150, 'a = 0 → все x', BLUE)
+        )}
+        ${note('Ноль справа','Он дружит с нулём слева. Поэтому ax = 0 при a = 0 — не пусто, а наоборот все.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Сведи к ax = b',GOLD],
+            ['2','a ≠ 0? Дели, одно решение',GREEN],
+            ['3','a = 0? Смотри b',BLUE],
+            ['4','b = 0 — все, иначе пусто',RED]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${x[2]};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Не начинай с «x = …». Сначала вид, потом случай, потом формула.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 70, '«при каком a …»', GOLD, 'middle', 18)+
+          lab(120, 120, 'это вопрос про случай', MUTED)+
+          lab(120, 164, 'упрости → смотри ручку', GREEN, 'middle', 14)
+        )}
+        ${note('Олимпиадная фраза','Почти всегда ждут: при таких a одно, при таких все, при таких нет. Три куска ответа.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 70, 'ax = b', GOLD, 'middle', 22)+
+          lab(120, 120, 'одно / все / пусто', GREEN)+
+          lab(120, 164, 'a=3, b=6 → x=2', BLUE)
+        )}
+        ${note('В карман','Три случая. ax = 6 при тройке даёт двойку. ax = 0 при a = 0 — все x.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        <div style="font-size:24px;color:#ffd76a;font-family:Georgia,serif">3x = 6</div>
-        <div class="wv-sml">a = 3 — делим: x = ?</div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 16px;font-size:20px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">x = ?</div>
+        ${frame(lab(120, 80, 'ax = 6,  a = 3', GOLD, 'middle', 20)+lab(120, 130, 'x = ?', MUTED))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:20px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">x = ?</div>
+        ${note('Проверка','2. Шесть на три. Не 18 — это умножили, а надо делить.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_C[409]=visC409;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===409){ window.ARH_LESSONS[i]=L409; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===409){ arr[i]=L409; f=true; break; } }
+    if(!f) arr.push(L409);
+  })();
 })();
 /* ================= УРОК 410 · Средние: неравенство о средних ================= */
 (function(){
@@ -1243,117 +1404,279 @@ window._waveCss = window._waveCss || function(id, css){
     id: 410, title: 'Средние: неравенство о средних', ico: '📊',
     src: 'Математика · 7 класс · Олимп-7: средние', subj: 'math',
     explain: [
-      'Для двух чисел a и b есть два знаменитых средних. Среднее арифметическое: (a + b)/2 — складываем и делим на 2. Среднее геометрическое: √(a·b) — перемножаем и извлекаем корень. Для 4 и 9: (4+9)/2 = 6,5, а √(4·9) = √36 = 6.',
-      'Великое неравенство о средних: для положительных a и b всегда (a + b)/2 ≥ √(a·b). Среднее арифметическое НЕ МЕНЬШЕ среднего геометрического! Проверим на 4 и 9: 6,5 ≥ 6 — верно.',
-      'Когда достигается равенство? Только когда a = b! Например, при a = b = 9: (9+9)/2 = 9 и √81 = 9 — оба средних равны. Разница между ними показывает, насколько числа отличаются.',
-      'Почему неравенство верно? Квадрат любого числа неотрицателен: (√a − √b)² ≥ 0. Раскрываем: a − 2√(ab) + b ≥ 0 → a + b ≥ 2√(ab). Делим на 2 — получаем наше неравенство!',
-      'Применяем: найди минимум x + 4/x при x > 0. Это сумма двух чисел: x и 4/x. Их произведение: x·(4/x) = 4. По неравенству сумма ≥ 2·√4 = 4. Минимум равен 4!',
-      'Когда достигается минимум? Равенство при a = b, то есть x = 4/x → x² = 4 → x = 2 (x > 0). Проверяем: 2 + 4/2 = 2 + 2 = 4. Минимум достигнут при x = 2!',
-      'Ещё проверка: среднее арифметическое 8 и 12: (8+12)/2 = 10. Среднее геометрическое: √(8·12) = √96 ≈ 9,8. Видим: 10 ≥ 9,8 — неравенство снова работает!',
-      'Где применяется на олимпиадах: доказать x + 1/x ≥ 2 при x > 0, найти наименьшее a + b при заданном произведении, оценить площадь при данном периметре. Главный инструмент задач на минимум и максимум!',
-      'Теперь проверь себя: что больше при a = b = 9 — (a+b)/2 или √(ab)? Вспомни: при равных числах средние равны!'
+      'Загадка: два числа 4 и 9. Можно сложить и разделить на два — получится 6,5. Можно перемножить и взять корень — получится 6. Какое «среднее» честнее и какое всегда не меньше?',
+      'Среднее арифметическое: (a + b)/2. Сложили, пополам. Для 4 и 9 это 13/2 = 6,5. Как середина отрезка на прямой.',
+      'Среднее геометрическое: √(a · b). Для положительных. 4 · 9 = 36, корень 6. Как сторона квадрата той же площади, что прямоугольник 4 на 9.',
+      'Великое неравенство: (a + b)/2 ≥ √(a · b) для положительных a, b. Арифметическое никогда не меньше геометрического. 6,5 ≥ 6 — видно.',
+      'Равенство только когда a = b. Два одинаковых: (9+9)/2 = 9 и √81 = 9. Чем числа разнее, тем арифметическое сильнее отрывается.',
+      'Почему верно: (√a − √b)² ≥ 0 всегда. Раскрой: a − 2√(ab) + b ≥ 0, значит a + b ≥ 2√(ab). Раздели на 2 — готово. Нажми «Раскрыть».',
+      'Прямоугольник 4×9 и квадрат площади 36. Периметр прямоугольника 26, периметр квадрата 24. При той же площади квадрат «экономнее». Это то же неравенство.',
+      'Задача: минимум x + 4/x при x > 0. Произведение кусков равно 4, корень 2, сумма не меньше 4. Минимум 4.',
+      'Подвинь x. Сумма x + 4/x живая. Дно чаши — 4, в точке x = 2. Слева и справа сумма больше. Равенство, когда x = 4/x.',
+      'Проверка: x = 2 → 2 + 2 = 4. x = 1 → 1 + 4 = 5, уже больше. x = 4 → 4 + 1 = 5. Симметрия.',
+      'Ещё пара: 8 и 12. Арифметическое 10, геометрическое √96 ≈ 9,8. Снова 10 ≥ 9,8.',
+      'Классика: x + 1/x ≥ 2 при x > 0. Произведение 1, корень 1, сумма ≥ 2. Равенство при x = 1.',
+      'Где работает: наименьшая сумма при данном произведении, оценка стороны, «докажи что не меньше». Один инструмент — куча номеров.',
+      'Рецепт: узнай произведение двух положительных кусков. Корень — геометрическое. Сумма не меньше удвоенного. Равенство, когда куски равны.',
+      'В карман: AM ≥ GM. Равенство при a = b. Для 4 и 9 это 6,5 ≥ 6. Минимум x + 4/x равен 4 при x = 2. При равных девятках средние равны.',
+      'Проверка: a = b = 9. Что больше — (a+b)/2 или √(ab)? Ничто: оба 9. Равенство в неравенстве.'
     ],
     check: { q: 'Что больше при a = b = 9: (a+b)/2 или √(ab)?', choices: ['они равны', 'среднее арифметическое', 'среднее геометрическое', 'нельзя сравнить'], ans: 0,
-      exp: '(9+9)/2 = 9 и √81 = 9 — равны.' },
+      exp: '(9+9)/2 = 9 и √81 = 9. Равенство, потому что числа равны.' },
     tasks: [
       { q: 'Найди среднее арифметическое чисел 8 и 12.', kind: 'unit', ans: 10, tol: 0,
-        hints: ['(8 + 12) : 2.', '10.'], sol: '10' },
-      { q: 'Для положительных a и b всегда верно…', kind: 'choice', choices: ['(a+b)/2 ≥ √(ab)', '(a+b)/2 < √(ab)', '(a+b)/2 = √(ab) всегда', 'сравнить нельзя'], ans: 0, tol: 0,
-        hints: ['Неравенство о средних.', 'Среднее арифметическое ≥ среднего геометрического.'], sol: '(a+b)/2 ≥ √(ab)' }
+        hints: ['Сложи и раздели на 2.', '(8+12)/2 = 10.'], sol: '10' },
+      { q: 'Для положительных a и b всегда верно…', kind: 'choice',
+        choices: ['(a+b)/2 ≥ √(ab)', '(a+b)/2 < √(ab)', '(a+b)/2 = √(ab) всегда', 'сравнить нельзя'], ans: 0, tol: 0,
+        hints: ['Арифметическое не меньше геометрического.', 'Равенство только при a = b.'], sol: '(a+b)/2 ≥ √(ab)' }
     ]
   };
-  const bar2=(a,b,labelA,labelB)=>`<div style="display:flex;align-items:flex-end;gap:14px;justify-content:center;height:110px;padding:6px 10px;background:#101f18;border-radius:12px">
-    <div style="display:flex;flex-direction:column;align-items:center"><div style="width:36px;height:${a*2}px;background:linear-gradient(#7fd1ff,#4a93d0);border-radius:4px 4px 0 0"></div><span style="font-size:12px;color:#7fd1ff;margin-top:2px">${labelA||a}</span></div>
-    <div style="display:flex;flex-direction:column;align-items:center"><div style="width:36px;height:${b*2}px;background:linear-gradient(#8fd1a8,#4c8a5a);border-radius:4px 4px 0 0"></div><span style="font-size:12px;color:#8fd1a8;margin-top:2px">${labelB||b}</span></div>
-  </div>`;
+
+  const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
+  const CSS=`<style>
+    @keyframes l410ink{to{stroke-dashoffset:0}}
+    @keyframes l410pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+    @keyframes l410pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes l410glow{0%,100%{filter:drop-shadow(0 0 1px ${GOLD})}50%{filter:drop-shadow(0 0 8px ${GOLD})}}
+    .l410-ink{animation:l410ink 1.35s cubic-bezier(.2,.75,.15,1) forwards}
+    .l410-dot{transform-box:fill-box;transform-origin:center;animation:l410pop .4s cubic-bezier(.2,1.4,.4,1) both}
+    .l410-pulse{animation:l410pulse 1.6s ease-in-out infinite}
+    .l410-glow{animation:l410glow 1.8s ease-in-out infinite}
+    .l410-lab{paint-order:stroke fill;stroke:#0c1a14;stroke-width:3.4px;stroke-linejoin:round}
+  </style>`;
+  function ink(len,dur,delay){
+    const L=Math.ceil((len||1)+18);
+    return `stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${L}" stroke-dashoffset="${L}" class="l410-ink" style="animation-duration:${dur||1.3}s;animation-delay:${delay||0}s"`;
+  }
+  function lab(x,y,t,col,anchor,fs){
+    const xx=Math.max(16, Math.min(224, +x)), yy=Math.max(16, Math.min(208, +y));
+    return `<text class="l410-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+  }
+  function frame(inner, vb){
+    try{ window._waveCss && _waveCss('css-l410', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="${vb||'0 0 240 220'}" style="width:min(100%,280px);height:auto;background:#0c1a14;border-radius:14px;display:block;margin:0 auto;overflow:visible">${inner}</svg>`;
+  }
+  function note(title,text){
+    return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
+      <div style="color:${GOLD};font-size:13px;font-family:Georgia,serif;margin-bottom:4px">${title}</div>
+      <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
+  }
+  function bar(x, h, col, name, val){
+    const y=170-h;
+    return `<rect x="${x}" y="${y}" width="28" height="${h}" rx="5" fill="${col}33" stroke="${col}" stroke-width="2"/>`+
+      lab(x+14, y-8, val, col)+lab(x+14, 188, name, MUTED, 'middle', 11);
+  }
+
   function visC410(el){
+    try{ window._waveCss && _waveCss('css-l410', CSS); }catch(e){}
     const step=LV.step||0;
-    const chip=(t,c)=>`<span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:2px solid ${c};font-size:15px;color:${c};font-weight:bold;font-family:Georgia,serif;margin:2px">${t}</span>`;
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):'410';
+    if(typeof CHS==='undefined') window.CHS={};
+    if(!CHS[lk]) CHS[lk]={};
+    const st=CHS[lk];
+    const doDraw=st.seen!==step;
+    if(st.seen!==step) st.seen=step;
+    const xv=Math.max(0.5, Math.min(8, +(st.x==null?2:st.x)));
     let h='';
+
     if(step===0){
+      const open=!!st.open;
       h=`<div class="wv-col">
-        <div class="wv-big">Два средних</div>
-        <div class="wv-row" style="gap:8px;flex-wrap:wrap">
-          ${chip('(a+b)/2 — арифметическое','#7fd1ff')}${chip('√(a·b) — геометрическое','#8fd1a8')}
-        </div>
-        <div class="wv-sml">для 4 и 9: (4+9)/2 = 6,5 · √36 = 6</div>
+        ${frame(
+          bar(50, 80, BLUE, '4', '4')+
+          bar(100, 140, GREEN, '9', '9')+
+          lab(180, 80, open?'AM 6,5':'два средних?', GOLD, 'middle', 13)+
+          lab(180, 110, open?'GM 6':'', GREEN, 'middle', 13)+
+          lab(120, 28, '4 и 9', GOLD)
+        )}
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'Скрыть':'Открыть'}</button>
+        ${note('Два способа усреднить','Сложить пополам или корень из произведения. Какое не меньше? Сейчас увидим и докажем.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        <div class="wv-big">Неравенство о средних</div>
-        <div style="background:rgba(217,164,65,.12);border:2px solid #ffd76a;border-radius:14px;padding:10px 14px;max-width:340px;width:100%">
-          <div style="font-size:19px;color:#ffd76a;font-weight:bold;text-align:center;font-family:Georgia,serif">(a+b)/2 ≥ √(a·b)</div>
-        </div>
-        <div class="wv-sml">для положительных a и b · проверка: 6,5 ≥ 6 ✔</div>
+        ${frame(
+          `<line x1="30" y1="120" x2="210" y2="120" stroke="#3d5c49" stroke-width="2"/>`+
+          `<circle cx="50" cy="120" r="6" fill="${BLUE}"/>`+lab(50, 144, '4', BLUE)+
+          `<circle cx="190" cy="120" r="6" fill="${GREEN}"/>`+lab(190, 144, '9', GREEN)+
+          `<circle class="l410-glow" cx="120" cy="120" r="7" fill="${GOLD}"/>`+lab(120, 96, '6,5', GOLD)+
+          lab(120, 40, '(a + b)/2', GOLD, 'middle', 16)
+        )}
+        ${note('Середина отрезка','Арифметическое — точка ровно посередине между 4 и 9. Никакой площади, просто прямая.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        <div class="wv-big">Равенство при a = b</div>
-        <div class="wv-row" style="gap:8px">
-          <div style="text-align:center;background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#7fd1ff;font-family:Georgia,serif">(9+9)/2 = 9</b><div style="font-size:10px;color:#9ec0a8">арифметическое</div></div>
-          <div style="text-align:center;background:rgba(143,209,168,.1);border:2px solid #8fd1a8;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#8fd1a8;font-family:Georgia,serif">√81 = 9</b><div style="font-size:10px;color:#9ec0a8">геометрическое</div></div>
-        </div>
-        <div class="wv-sml">при a = b средние равны!</div>
+        ${frame(
+          `<rect x="30" y="70" width="48" height="108" fill="${BLUE}22" stroke="${BLUE}" stroke-width="2" ${doDraw?ink(312,1.2,0):''}/>`+
+          lab(54, 60, '4×9', BLUE)+
+          `<rect x="120" y="70" width="72" height="72" fill="${GOLD}22" stroke="${GOLD}" stroke-width="2" ${doDraw?ink(288,1.2,.15):''}/>`+
+          lab(156, 60, '√36 = 6', GOLD)+
+          lab(120, 200, 'одна площадь 36', MUTED)
+        )}
+        ${note('Квадрат той же площади','Геометрическое — сторона квадрата. Прямоугольник 4 на 9 и квадрат 6 на 6 — площадь одна.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
-        <div class="wv-big">Почему это правда?</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:17px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">(√a − √b)² ≥ 0</div>
-          <div class="wv-pop2">a − 2√(ab) + b ≥ 0</div>
-          <div class="wv-pop2">a + b ≥ 2√(ab)</div>
-          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">делим на 2 — готово!</div>
-        </div>
-        <div class="wv-sml">квадрат числа не бывает отрицательным!</div>
+        ${frame(
+          lab(120, 70, '(a + b)/2  ≥  √(a·b)', GOLD, 'middle', 16)+
+          lab(120, 120, '6,5  ≥  6', GREEN, 'middle', 22)+
+          lab(120, 164, 'для положительных a, b', MUTED)
+        )}
+        ${note('Арифметическое сверху','Никогда не меньше геометрического. Это закон, не пример. Примеры только проверяют.')}
       </div>`;
     } else if(step===4){
+      const t=Math.max(0, Math.min(1, st.t==null?0.4:+st.t));
+      const a=4+5*t, b=9-5*t;
+      const am=(a+b)/2, gm=Math.sqrt(a*b);
       h=`<div class="wv-col">
-        <div class="wv-big">Минимум x + 4/x</div>
-        <div class="wv-sml">x и 4/x — сумма двух чисел, произведение = x·(4/x) = 4</div>
-        <div style="font-size:22px;color:#e8dcc8;font-family:Georgia,serif">x + 4/x ≥ 2·√4 = <b style="color:#8fd1a8" class="wv-ans">4</b></div>
+        ${frame(
+          bar(60, a*8, BLUE, 'a', (Math.round(a*10)/10).toString().replace('.',','))+
+          bar(150, b*8, GREEN, 'b', (Math.round(b*10)/10).toString().replace('.',','))+
+          lab(120, 28, 'AM '+ (Math.round(am*10)/10).toString().replace('.',',') +'  GM '+(Math.round(gm*10)/10).toString().replace('.',','), GOLD, 'middle', 13)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">сблизь
+          <input type="range" min="0" max="100" value="${Math.round(t*100)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].t=this.value/100;chRender(0);}catch(e){}">
+        </label>
+        ${note('Равенство при a = b','Сдвинь ползунок вправо: числа встречаются в 6,5, столбики равны, AM = GM. Разные числа — щель.')}
       </div>`;
     } else if(step===5){
+      const show=!!st.prf;
       h=`<div class="wv-col">
-        <div class="wv-big">Когда минимум?</div>
-        <div style="display:flex;flex-direction:column;gap:5px;max-width:340px;width:100%;font-family:Georgia,serif;font-size:18px;color:#e8dcc8;text-align:center">
-          <div class="wv-pop">равенство при x = 4/x</div>
-          <div class="wv-pop2">x² = 4 → x = 2 (x > 0)</div>
-          <div class="wv-pop3" style="color:#ffd76a;font-weight:bold">2 + 4/2 = 4 ✔ минимум!</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,330px)">
+          ${[
+            ['(√a − √b)² ≥ 0',GOLD],
+            [show?'a − 2√(ab) + b ≥ 0':'раскрой квадрат',BLUE],
+            [show?'a + b ≥ 2√(ab)':'…',GREEN],
+            [show?'(a+b)/2 ≥ √(ab)':'…',GOLD]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;border:1px solid #3d5c49;border-left:4px solid ${x[1]};border-radius:10px;padding:8px 12px;color:${x[1]};font-size:15px;font-family:Georgia,serif">${x[0]}</div>`).join('')}
         </div>
+        <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].prf=1;chRender(0);}catch(e){}">${show?'Доказано':'Раскрыть'}</button>
+        ${note('Квадрат неотрицателен','Одна строка (√a − √b)² ≥ 0 тянет всё неравенство. Равенство, когда корень из a равен корню из b, то есть a = b.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
-        <div class="wv-big">Проверка: 8 и 12</div>
-        ${bar2(10,9.8,'(8+12)/2 = 10','√96 ≈ 9,8')}
-        <div class="wv-sml">10 ≥ 9,8 — неравенство работает!</div>
+        ${frame(
+          `<rect x="24" y="70" width="40" height="90" fill="${BLUE}22" stroke="${BLUE}" stroke-width="2"/>`+
+          lab(44, 60, 'P=26', BLUE)+
+          `<rect x="100" y="70" width="72" height="72" fill="${GOLD}22" stroke="${GOLD}" stroke-width="2"/>`+
+          lab(136, 60, 'P=24', GOLD)+
+          lab(120, 196, 'площадь 36 у обоих', MUTED)
+        )}
+        ${note('Квадрат экономнее','При одной площади периметр квадрата меньше. Это AM ≥ GM в картинке: полусумма сторон ≥ сторона квадрата.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
-        <div class="wv-big">Где применяется</div>
-        <div style="display:flex;flex-direction:column;gap:6px;max-width:340px;width:100%">
+        ${frame(
+          lab(120, 56, 'x + 4/x', GOLD, 'middle', 22)+
+          lab(120, 100, 'произведение = 4', BLUE)+
+          lab(120, 140, 'сумма ≥ 2·√4 = 4', GREEN, 'middle', 16)+
+          lab(120, 180, 'минимум 4', GOLD)
+        )}
+        ${note('Два куска','x и 4/x. Их произведение всегда 4, если x > 0. Неравенство сразу даёт пол: сумма не ниже 4.')}
+      </div>`;
+    } else if(step===8){
+      const sum=xv+4/xv;
+      const pts=[];
+      for(let t=0.5;t<=8.01;t+=0.12){
+        const px=28+t*24, py=170-Math.min(12, t+4/t)*12;
+        if(px<=220 && py>=36) pts.push([px,py]);
+      }
+      let plen=0; for(let i=1;i<pts.length;i++) plen+=Math.hypot(pts[i][0]-pts[i-1][0], pts[i][1]-pts[i-1][1]);
+      const d='M '+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L ');
+      const px=Math.max(28, Math.min(220, 28+xv*24));
+      const py=Math.max(36, Math.min(190, 170-Math.min(12,sum)*12));
+      h=`<div class="wv-col">
+        ${frame(
+          `<path d="${d}" fill="none" stroke="${GOLD}" stroke-width="2.4" ${doDraw?ink(plen,1.4,0):''}/>`+
+          `<circle class="l410-glow" cx="${px}" cy="${py}" r="6" fill="${GREEN}"/>`+
+          lab(120, 28, 'x + 4/x = '+(Math.round(sum*100)/100).toString().replace('.',','), GOLD)
+        )}
+        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">x
+          <input type="range" min="5" max="80" value="${Math.round(xv*10)}" style="flex:1"
+            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].x=this.value/10;chRender(0);}catch(e){}">
+          <b style="color:${GOLD};min-width:28px">${xv.toString().replace('.',',')}</b>
+        </label>
+        ${note('Дно чаши','Крути x. Самая низкая точка — 4, около x = 2. Слева и справа сумма больше. Это и есть минимум.')}
+      </div>`;
+    } else if(step===9){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 50, 'x = 4/x', GOLD, 'middle', 18)+
+          lab(120, 96, 'x² = 4,  x = 2', GREEN, 'middle', 18)+
+          lab(120, 140, '2 + 4/2 = 4', BLUE, 'middle', 18)
+        )}
+        ${note('Когда дно','Равенство в AM-GM, когда куски равны. x = 4/x, x > 0 → x = 2. Подстановка подтверждает: 4.')}
+      </div>`;
+    } else if(step===10){
+      h=`<div class="wv-col">
+        ${frame(
+          bar(50, 80, BLUE, '8', '8')+
+          bar(100, 120, GREEN, '12', '12')+
+          lab(180, 90, 'AM 10', GOLD)+
+          lab(180, 120, 'GM ≈ 9,8', GREEN)+
+          lab(120, 28, '10 ≥ 9,8', GOLD)
+        )}
+        ${note('Ещё одна пара','Не только 4 и 9. Любые положительные. Щель тем больше, чем числа разнее.')}
+      </div>`;
+    } else if(step===11){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 70, 'x + 1/x ≥ 2', GOLD, 'middle', 22)+
+          lab(120, 120, 'x > 0', MUTED)+
+          lab(120, 160, 'равенство при x = 1', GREEN)
+        )}
+        ${note('Классика','Произведение кусков 1, корень 1, удвоенный корень 2. Одна строка вместо кучи преобразований.')}
+      </div>`;
+    } else if(step===12){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[
-            ['x + 1/x ≥ 2','при x > 0','#7fd1ff'],
-            ['минимум a + b','при a·b = const','#8fd1a8'],
-            ['оценка площади','при данном периметре','#ffd76a']
-          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*0.12}s;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:9px;padding:7px 12px;font-size:13.5px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
+            ['сумма при данном произведении','минимум',GOLD],
+            ['x + 1/x','≥ 2',BLUE],
+            ['площадь при периметре','квадрат лучший',GREEN]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${x[2]==='минимум'||i===0?GOLD:x[2]};border-radius:10px;padding:8px 12px;font-size:14px;color:#e8dcc8">
+            <span>${x[0]}</span><b style="color:${GOLD}">${x[1]}</b></div>`).join('')}
         </div>
-        <div class="wv-sml">главный инструмент задач на минимум и максимум!</div>
+        ${note('Один инструмент','Олимпиада любит «найди наименьшее». Если видишь сумму и произведение — это оно.')}
+      </div>`;
+    } else if(step===13){
+      h=`<div class="wv-col">
+        <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
+          ${[
+            ['1','Два положительных куска',GOLD],
+            ['2','Их произведение → корень GM',BLUE],
+            ['3','Сумма ≥ 2 · GM',GREEN],
+            ['4','Равенство, когда куски равны',MUTED]
+          ].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left">
+            <b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8;font-size:14px">${x[1]}</span></div>`).join('')}
+        </div>
+        ${note('Рецепт','Не зубри 6,5 ≥ 6. Зубри ход: произведение, корень, удвоить, сравнить с суммой.')}
+      </div>`;
+    } else if(step===14){
+      h=`<div class="wv-col">
+        ${frame(
+          lab(120, 70, 'AM ≥ GM', GOLD, 'middle', 22)+
+          lab(120, 120, '4 и 9 → 6,5 ≥ 6', GREEN)+
+          lab(120, 160, 'x + 4/x ≥ 4', BLUE)
+        )}
+        ${note('В карман','Равенство при a = b. Минимум x + 4/x равен 4 при x = 2. Две девятки — средние равны.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        <div class="wv-big">Проверь себя</div>
-        <div class="wv-sml">a = b = 9: (a+b)/2 или √(ab)?</div>
-        <div class="wv-row" style="gap:8px">
-          <div style="text-align:center;background:rgba(127,209,255,.1);border:2px solid #7fd1ff;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#7fd1ff;font-family:Georgia,serif">(9+9)/2 = 9</b></div>
-          <div style="text-align:center;background:rgba(143,209,168,.1);border:2px solid #8fd1a8;border-radius:12px;padding:8px 12px"><b style="font-size:19px;color:#8fd1a8;font-family:Georgia,serif">√81 = 9</b></div>
-        </div>
-        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:6px 12px;font-size:16px;color:#ffd76a;font-family:Georgia,serif" class="wv-pulse">что больше?</div>
+        ${frame(lab(120, 80, 'a = b = 9', GOLD, 'middle', 20)+lab(120, 130, 'что больше?', MUTED))}
+        <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:16px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">что больше?</div>
+        ${note('Проверка','Они равны. Оба 9. Равенство в неравенстве, потому что числа одинаковые.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
   }
   window.WAVE_C[410]=visC410;
-  (function(){ for(let i=0;i<window.ARH_LESSONS.length;i++){ if(window.ARH_LESSONS[i].id===410){ window.ARH_LESSONS[i]=L410; break; } } })();
+  (function(){
+    const arr=window.ARH_LESSONS||[];
+    let f=false;
+    for(let i=0;i<arr.length;i++){ if(arr[i].id===410){ arr[i]=L410; f=true; break; } }
+    if(!f) arr.push(L410);
+  })();
 })();
 /* ================= УРОК 411 · Принцип крайнего ================= */
 (function(){

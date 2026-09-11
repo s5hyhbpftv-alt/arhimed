@@ -687,36 +687,36 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=452"></script>
-<script src="data/lessons.js?v=452"></script>
-<script src="data/lessons_draft.js?v=452"></script>
-<script src="data/comics_12.js?v=452"></script>
-<script src="data/vis_bw.js?v=452"></script>
-<script src="data/vis_cw.js?v=452"></script>
-<script src="data/vis_dw.js?v=452"></script>
-<script src="data/vis_ew.js?v=452"></script>
-<script src="data/vis_kl.js?v=452"></script>
-<script src="data/vis_wk.js?v=452"></script>
-<script src="data/inf_56.js?v=452"></script>
-<script src="js/comic.js?v=452"></script>
-<script src="js/core.js?v=452"></script>
-<script src="js/engine.js?v=452"></script>
-<script src="js/app.js?v=452"></script>
-<script src="js/dashboard.js?v=452"></script>
-<script src="js/lessons.js?v=452"></script>
-<script src="js/wave_guard.js?v=452"></script>
-<script src="js/legend.js?v=452"></script>
-<script src="js/simulator.js?v=452"></script>
-<script src="js/duel.js?v=452"></script>
-<script src="js/agent.js?v=452"></script>
-<script src="js/voice.js?v=452"></script>
-<script src="js/assistant.js?v=452"></script>
-<script src="js/agentlive.js?v=452"></script>
+<script src="data/tasks.js?v=453"></script>
+<script src="data/lessons.js?v=453"></script>
+<script src="data/lessons_draft.js?v=453"></script>
+<script src="data/comics_12.js?v=453"></script>
+<script src="data/vis_bw.js?v=453"></script>
+<script src="data/vis_cw.js?v=453"></script>
+<script src="data/vis_dw.js?v=453"></script>
+<script src="data/vis_ew.js?v=453"></script>
+<script src="data/vis_kl.js?v=453"></script>
+<script src="data/vis_wk.js?v=453"></script>
+<script src="data/inf_56.js?v=453"></script>
+<script src="js/comic.js?v=453"></script>
+<script src="js/core.js?v=453"></script>
+<script src="js/engine.js?v=453"></script>
+<script src="js/app.js?v=453"></script>
+<script src="js/dashboard.js?v=453"></script>
+<script src="js/lessons.js?v=453"></script>
+<script src="js/wave_guard.js?v=453"></script>
+<script src="js/legend.js?v=453"></script>
+<script src="js/simulator.js?v=453"></script>
+<script src="js/duel.js?v=453"></script>
+<script src="js/agent.js?v=453"></script>
+<script src="js/voice.js?v=453"></script>
+<script src="js/assistant.js?v=453"></script>
+<script src="js/agentlive.js?v=453"></script>
 <script>
   /* сброс кэша при новой сборке — иначе MVP показывает старый урок */
   (function(){
     try{
-      const VER='452';
+      const VER='453';
       if(localStorage.getItem('arh-build')===VER) return;
       localStorage.setItem('arh-build', VER);
       const jobs=[];
@@ -727,7 +727,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=452').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=453').catch(()=>{}); });
 }
 window.addEventListener('DOMContentLoaded', ()=>{
   init(); VOICE.init();
