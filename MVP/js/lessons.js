@@ -9351,36 +9351,56 @@ function l96Act(lk,act){
   }
   chRender(0);
 }
-function l96Scene(sunPos,uid){
-  // сцена: солнце sunPos 'left'|'top'|'right', дерево по центру, земля; тень от дерева
-  const W=200,H=120;
-  const sunXY={left:[24,22],top:[100,14],right:[176,22]}[sunPos];
-  // тень: направление от солнца через дерево(100,86) до земли (y=108)
-  // дерево в (100,86), верх дерева (100,44)
-  let shadow='';
-  const groundY=110;
-  const dir = sunPos==='left'?1:sunPos==='right'?-1:0;
-  const len = sunPos==='top'?14:44;
-  const sx=sunPos==='top'?100:100+dir*len;
-  shadow=`<ellipse cx="${sx}" cy="${groundY}" rx="${sunPos==='top'?7:26}" ry="3.5" fill="#1d3327" opacity=".45"/>`;
-  // лучи от солнца к дереву
-  let rays='';
-  if(sunPos==='top'){
-    for(let i=0;i<5;i++) rays+=`<line x1="${100-26+i*13}" y1="16" x2="${100-22+i*11}" y2="42" stroke="#ffd966" stroke-width="1.4" opacity=".7"/>`;
-  } else {
-    const dx=sunPos==='left'?1:-1;
-    for(let i=0;i<5;i++) rays+=`<line x1="${sunXY[0]+dx*4}" y1="${sunXY[1]+6+i*10}" x2="${100-dx*8}" y2="${40+i*12}" stroke="#ffd966" stroke-width="1.4" opacity=".65"/>`;
-  }
-  return `<svg width="${W}" height="${H}" style="display:block;margin:2px auto;background:linear-gradient(180deg,#bcd9f0,#e8f0e0 60%,#5a7a3a 60%,#4a6a30)">
-    <circle cx="${sunXY[0]}" cy="${sunXY[1]}" r="11" fill="#ffd966" stroke="#e8b03c" stroke-width="2"/>
-    ${rays}
-    <rect x="93" y="46" width="14" height="40" fill="#6a4a26"/>
-    <ellipse cx="100" cy="92" rx="22" ry="12" fill="#3c8f5f"/>
-    ${shadow}
-    <text x="${W-3}" y="${H-6}" fill="#eaf3f8" font-size="8.5" text-anchor="end">солнце: ${sunPos==='left'?'слева':sunPos==='right'?'справа':'высоко'}</text>
-  </svg>`;
+function l96Scene(sunPos,far,big){
+  /* ОДНА геометрия на всю сцену: угол берётся от солнца к дереву,
+     лучи идут вдоль него, тень — продолжение той же прямой за деревом. */
+  const baseX=186, baseY=200, crownY=138, crownR=34;
+  const SUN={left:[58,52], top:[180,26], right:[302,52]}[sunPos||'left'];
+  const dx=baseX-SUN[0], dy=baseY-SUN[1];
+  const ang=Math.atan2(dy,dx);
+  const elev=Math.atan2(baseY-SUN[1], Math.abs(dx))*180/Math.PI;
+  let L=Math.round(40+170*(1-Math.min(1,elev/70)));
+  if(far) L=Math.round(L*1.3);
+  if(big) L=Math.round(L*0.78);
+  L=Math.max(30,Math.min(225,L));
+  const cx=Math.cos(ang), cy=Math.sin(ang), nx=-cy, ny=cx;
+  const hw=9;
+  const P=(a,b)=>a.toFixed(1)+','+b.toFixed(1);
+  const shadow='<polygon points="'+P(baseX-nx*hw,baseY-ny*hw)+' '+P(baseX+nx*hw,baseY+ny*hw)+' '
+    +P(baseX+cx*L+nx*hw,baseY+cy*L+ny*hw)+' '+P(baseX+cx*L-nx*hw,baseY+cy*L-ny*hw)+'" fill="rgba(4,7,11,.85)"/>';
+  const rays=[-34,0,34].map((o,k)=>{
+    const x1=SUN[0]+nx*o, y1=SUN[1]+ny*o;
+    const d=Math.hypot(baseX-x1, baseY-y1);
+    const len=Math.max(30, d-crownR-2);
+    const x2=x1+Math.cos(ang)*len, y2=y1+Math.sin(ang)*len;
+    return '<line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="rgba(255,215,106,.72)" stroke-width="2" stroke-linecap="round">'
+      +'<animate attributeName="opacity" values=".3;.95;.3" dur="'+(1.5+k*0.3).toFixed(1)+'s" repeatCount="indefinite"/></line>';
+  }).join('');
+  const side=Math.abs(cx)<0.3?'под деревом':(cx>0?'справа от дерева':'слева от дерева');
+  return '<div class="l96-scene" data-side="'+side+'" data-ang="'+(ang*180/Math.PI).toFixed(1)+'">'
+   +'<svg viewBox="0 0 360 240" style="display:block;width:100%;height:100%">'
+   +'<defs>'
+   +'<linearGradient id="l96sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2735"/><stop offset="1" stop-color="#0d151f"/></linearGradient>'
+   +'<linearGradient id="l96gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2f23"/><stop offset="1" stop-color="#1b140c"/></linearGradient>'
+   +'<radialGradient id="l96sunG" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff8e2"/><stop offset=".45" stop-color="#ffd76a"/><stop offset="1" stop-color="#ff9d3c" stop-opacity=".18"/></radialGradient>'
+   +'<radialGradient id="l96crG" cx="38%" cy="32%" r="72%"><stop offset="0" stop-color="#93dba4"/><stop offset=".68" stop-color="#3f8b58"/><stop offset="1" stop-color="#224f31"/></radialGradient>'
+   +'<filter id="l96soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.6"/></filter>'
+   +'</defs>'
+   +'<rect width="360" height="240" fill="url(#l96sky)"/>'
+   +'<rect y="'+(baseY-3)+'" width="360" height="43" fill="url(#l96gr)"/>'
+   +'<g filter="url(#l96soft)">'+shadow+'</g>'
+   +rays
+   +'<circle cx="'+SUN[0]+'" cy="'+SUN[1]+'" r="21" fill="url(#l96sunG)"><animate attributeName="r" values="20;23;20" dur="3.6s" repeatCount="indefinite"/></circle>'
+   +'<rect x="'+(baseX-4)+'" y="'+(baseY-44)+'" width="8" height="44" rx="2.5" fill="#6b4a2c"/>'
+   +'<circle cx="'+baseX+'" cy="'+crownY+'" r="'+crownR+'" fill="url(#l96crG)"/>'
+   +'<circle cx="'+(baseX-11)+'" cy="'+(crownY-9)+'" r="11" fill="#a9e7b7" opacity=".3"/>'
+   +'<text x="'+SUN[0]+'" y="'+Math.max(18, SUN[1]-30)+'" text-anchor="middle" font-size="11" fill="#ffd76a">солнце</text>'
+   +'<text x="'+Math.round(baseX+cx*L*0.62)+'" y="'+(baseY+20)+'" text-anchor="middle" font-size="11" fill="#9fb0aa">тень</text>'
+   +'<text x="180" y="234" text-anchor="middle" font-size="10" fill="#9fb0aa">'
+   +side+' · солнце '+elev.toFixed(0)+'° над горизонтом'+(far?' · предмет дальше от экрана':'')+(big?' · предмет ближе к источнику':'')+'</text>'
+   +'</svg></div>';
 }
-/* Урок 96 «Свет и тень» — в стиле урока 49: HTML/CSS-схемы + опыты кнопками */
+
 function l96css(){
   if(document.getElementById('l96css')) return;
   const st=document.createElement('style'); st.id='l96css';
@@ -9426,19 +9446,6 @@ function l96Act(lk,act){
   else if(act==='water') st.water=!st.water;
   else if(act==='reset'){ st.sun='left'; st.far=0; st.big=0; st.ang=30; st.water=0; }
   try{ renderLessonView(); }catch(e){}
-}
-function l96Scene(sunPos,far,big){
-  const sun={left:'left:8px;top:14px',top:'left:50%;margin-left:-17px;top:6px',right:'right:8px;top:14px'}[sunPos||'left'];
-  const dir=(sunPos==='top')?0:((sunPos==='right')?1:-1);
-  const w=far?86:(big?64:44), x=dir===0?(50- (w/2)):(dir<0?(50+8):(50-w-8));
-  const rays=[0,1,2].map(k=>{
-    const ang=(sunPos==='top')?(90+ (k-1)*18):((sunPos==='left')?(28+(k-1)*16):(152+(k-1)*16));
-    return `<div class="l96-ray" style="left:${sunPos==='right'?'calc(100% - 40px)':'20px'};top:${sunPos==='top'?'30px':'44px'};width:${sunPos==='top'?70:120}px;transform:rotate(${ang}deg);animation-delay:${(k*0.25).toFixed(2)}s"></div>`;
-  }).join('');
-  return `<div class="l96-scene"><div class="l96-ground"></div>
-    <div class="l96-sun" style="${sun}"></div>${rays}
-    <div class="l96-tree"><div class="l96-crown"></div><div class="l96-trunk"></div></div>
-    <div class="l96-sh" style="left:${x}%;width:${w}px"></div></div>`;
 }
 function l96Mirror(ang){
   const A=(ang||30)+18;
