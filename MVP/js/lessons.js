@@ -8728,311 +8728,200 @@ function l51Pot(level,heat,uid){
     ${heat?'<div class="wv-rise" style="position:absolute;left:60%;top:-6px;font-size:16px">♨️</div>':'<div class="wv-rise" style="position:absolute;left:60%;top:-6px;font-size:16px;opacity:.3">♨️</div>'}
   </div>`;
 }
+/* Урок 51 «Нагревание и охлаждение» — в стиле урока 49: схемы на HTML/CSS + эксперимент кнопками */
+function q51css(){
+  if(document.getElementById('q51css')) return;
+  const st=document.createElement('style'); st.id='q51css';
+  st.textContent=`
+  @keyframes qUp{from{transform:translateY(0);opacity:.95}to{transform:translateY(-30px);opacity:0}}
+  @keyframes qFlame{from{transform:scaleY(.88) scaleX(1)}to{transform:scaleY(1.12) scaleX(.94)}}
+  @keyframes qWave{from{transform:translateX(0)}to{transform:translateX(14px)}}
+  .q-pot{position:relative;width:118px;height:74px;margin:0 auto}
+  .q-body{position:absolute;bottom:0;left:0;right:0;height:60px;border-radius:6px 6px 16px 16px;
+    background:linear-gradient(100deg,#5c666c,#e9eef1 22%,#8e979c 48%,#f3f7f9 66%,#5a6266);
+    box-shadow:0 8px 14px -8px rgba(0,0,0,.9),inset 0 -6px 10px rgba(0,0,0,.35)}
+  .q-lid{position:absolute;top:0;left:6px;right:6px;height:11px;border-radius:6px;
+    background:linear-gradient(180deg,#f2f6f8,#a9b2b7);box-shadow:0 2px 4px rgba(0,0,0,.5)}
+  .q-knob{position:absolute;top:-7px;left:50%;margin-left:-9px;width:18px;height:8px;border-radius:4px;background:#7d8589}
+  .q-hand{position:absolute;top:14px;width:14px;height:9px;border-radius:5px;background:#8f979b}
+  .q-hand.l{left:-12px}.q-hand.r{right:-12px}
+  .q-water{position:absolute;left:10px;right:10px;bottom:34px;height:14px;border-radius:4px;transition:background .7s,height .7s}
+  .q-fl{position:absolute;bottom:-20px;left:50%;margin-left:-13px;width:26px;height:26px;border-radius:50% 50% 45% 45%;
+    background:radial-gradient(circle at 50% 70%,#fff3c4,#ff9d3c 45%,#e2571a 80%,transparent);
+    transform-origin:50% 100%;animation:qFlame .62s ease-in-out infinite alternate}
+  .q-steam{position:absolute;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.75);filter:blur(3px);
+    animation:qUp 2.6s ease-out infinite}
+  .q-bub{position:absolute;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.85);animation:qUp 1.1s linear infinite}
+  .q-thermo{width:26px;height:150px;border-radius:13px;background:linear-gradient(180deg,#f4f8fa,#dbe4e9);
+    border:1px solid rgba(255,255,255,.5);position:relative;box-shadow:inset 0 0 6px rgba(0,0,0,.18)}
+  .q-merc{position:absolute;left:7px;right:7px;bottom:12px;border-radius:7px;
+    background:linear-gradient(90deg,#8e1f14,#ff5a3c,#a8281a);transition:height .7s cubic-bezier(.3,.9,.3,1)}
+  .q-bulb{position:absolute;left:50%;margin-left:-11px;bottom:-13px;width:22px;height:22px;border-radius:50%;background:#d3311c}
+  .q-scale{position:absolute;left:-24px;right:-6px;bottom:12px;height:126px}
+  .q-scale span{position:absolute;font-size:9px;color:#9fb0aa;left:0;transform:translateY(50%)}
+  .q-ice{width:44px;height:40px;border-radius:6px;background:linear-gradient(135deg,#eaf9ff,#8ec8e8);
+    box-shadow:inset 0 0 8px rgba(255,255,255,.8),0 6px 12px -6px rgba(0,0,0,.9);position:relative;transition:opacity .6s,transform .6s}
+  .q-card2{border-radius:12px;padding:8px 12px;background:linear-gradient(170deg,rgba(24,47,36,.95),rgba(14,24,48,.6));
+    border:1px solid rgba(217,164,65,.28);font-size:12.5px;color:#e6eef6}
+  .q-bars i{display:block;height:11px;border-radius:6px;transition:width .9s cubic-bezier(.3,.9,.3,1)}
+  `;
+  document.head.appendChild(st);
+}
+function qPot(hot,lab,sub,bubRate,waterCol){
+  const h=Math.round(Math.max(0,Math.min(1,hot))*10);
+  const fl=hot>0.12? `<div class="q-fl" style="height:${16+h*12}px;width:${22+h*8}px;margin-left:-${11+h*4}px"></div>`:'';
+  const st=hot>0.4? `<div class="q-steam" style="left:32px;bottom:78px;animation-duration:${(3.2-hot).toFixed(1)}s"></div>
+    <div class="q-steam" style="left:62px;bottom:82px;animation-delay:.7s;animation-duration:${(3.4-hot).toFixed(1)}s"></div>`:'';
+  const bub=(hot>0.35? [0,1,2].map(k=>`<div class="q-bub" style="left:${18+k*26}px;bottom:36px;animation-duration:${(1.5-hot).toFixed(2)}s;animation-delay:${(k*0.3).toFixed(1)}s"></div>`).join('') : '');
+  return `<div style="text-align:center"><div class="q-pot">${fl}${st}
+      <div class="q-body"></div><div class="q-lid"></div><div class="q-knob"></div>
+      <div class="q-hand l"></div><div class="q-hand r"></div>
+      <div class="q-water" style="background:${waterCol||'rgba(159,216,255,.7)'}"></div>${bub}</div>
+    <div style="font-size:11.5px;color:#dbe6ee;margin-top:16px">${lab}</div>
+    <div style="font-size:10px;color:#9fb0aa">${sub||''}</div></div>`;
+}
+function qThermo(t,cap){
+  const h=Math.round(Math.max(4,Math.min(126,((t+20)/140)*126)));
+  const marks=[0,25,50,75,100].map(v=>{const yy=126-(((v+20)/140)*126);return `<span style="bottom:${yy.toFixed(0)}px">${v}</span>`;}).join('');
+  return `<div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+    <div class="q-thermo"><div class="q-merc" style="height:${h}px"></div><div class="q-bulb"></div><div class="q-scale">${marks}</div></div>
+    <div style="font-size:13px;color:#ffd76a;font-weight:bold">${t>0?'+':''}${t} °C</div>
+    <div style="font-size:10px;color:#9fb0aa">${cap||''}</div></div>`;
+}
+function qGlass(t){
+  const h=Math.round(Math.max(6,Math.min(74,((t+20)/140)*74)));
+  const col=t<0?'rgba(190,230,255,.85)':(t<40?'rgba(150,210,240,.8)':(t<80?'rgba(255,205,140,.75)':'rgba(255,150,90,.8)'));
+  const bub=(t>45? [0,1,2,3].map(k=>`<div class="q-bub" style="left:${10+k*11}px;bottom:${12+k*2}px;animation-duration:${(1.4-(t/140)).toFixed(2)}s;animation-delay:${(k*0.25).toFixed(1)}s"></div>`).join('') : '');
+  return `<div style="position:relative;width:64px;height:86px;border:2px solid rgba(255,255,255,.45);border-radius:6px 6px 12px 12px;
+      background:rgba(255,255,255,.05);overflow:hidden">
+      <div style="position:absolute;left:0;right:0;bottom:0;height:${h}px;background:${col};transition:height .7s,background .7s"></div>${bub}</div>`;
+}
+function qAct(lk,act){
+  const st=CHS[lk]||(CHS[lk]={}); if(st.h==null) st.h=20;
+  if(act==='up') st.h=Math.min(120,st.h+10);
+  else if(act==='down') st.h=Math.max(-20,st.h-10);
+  else if(act==='ice') st.h=-10;
+  else if(act==='boil') st.h=100;
+  else if(act==='reset') st.h=20;
+  else if(act==='c1') st.on=!st.on;
+  try{ renderLessonView(); }catch(e){}
+}
 function visL51(el){
   try{
+    q51css();
     const L=lessonById(LV.id); if(!L){ el.innerHTML=''; return; }
     const lk=lidKey(LV.id); if(!CHS[lk]) CHS[lk]={}; const st=CHS[lk];
     if(st.h==null) st.h=20;
-    const t=st.h, dT=t-20, Q=4200*dT;
-    const f=(v)=>(Math.round(v*10)/10).toString().replace('.',',');
-    const T=(v)=>Math.abs(v).toLocaleString('ru-RU');
+    const step=LV.step||0, t=st.h, dT=t-20, Q=4200*dT;
+    const f=v=>(Math.round(v*10)/10).toString().replace('.',',');
     const col=(...ps)=>`<div class="wv-col">${ps.join('')}</div>`;
-    const big=(x)=>`<div class="wv-big">${x}</div>`;
-    const sml=(x)=>`<div class="wv-sml">${x}</div>`;
+    const big=x=>`<div class="wv-big">${x}</div>`;
+    const sml=x=>`<div class="wv-sml">${x}</div>`;
     const row=(...b)=>`<div class="wv-row">${b.join('')}</div>`;
-    const hlev=Math.max(0,Math.min(1,(t+20)/140));          /* 0 — мороз, 1 — кипяток */
-    const state=t<-5?'лёд и мороз':(t<0?'лёд тает':(t<40?'холодная вода':(t<80?'тёплая вода':(t<100?'горячая, скоро кипит':'кипит!'))) );
-    /* ВТОРОСТЕПЕННЫЕ ДЕЙСТВИЯ: пылинки в воздухе и «дыхание» тепла — сцена никогда не замирает */
-    const ambient=()=>`<g><g opacity=".55">${Array.from({length:9},(_,k)=>`<circle cx="${18+k*40}" cy="${34+((k*53)%126)}" r="${0.9+(k%3)*0.55}" fill="#ffe9c4">
-        <animateTransform attributeName="transform" type="translate" values="0 0;${(k%2?13:-10)} ${(k%3?8:-12)};0 0" dur="${(6+k*0.7).toFixed(1)}s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values=".12;.45;.12" dur="${(5+k*0.6).toFixed(1)}s" repeatCount="indefinite"/></circle>`).join('')}</g>
-      <ellipse cx="180" cy="198" rx="152" ry="24" fill="url(#qGlow)" opacity="${(0.12+hlev*0.5).toFixed(2)}">
-        <animate attributeName="opacity" values="${(0.12+hlev*0.5).toFixed(2)};${(0.2+hlev*0.6).toFixed(2)};${(0.12+hlev*0.5).toFixed(2)}" dur="4.2s" repeatCount="indefinite"/></ellipse></g>`;
-    /* СМЫСЛОВЫЕ АНИМАЦИИ: у каждого шага своё движение, привязанное к его смыслу */
-    const extra=(n)=>'';
-    /* КОМПАКТНЫЙ ИНДИКАТОР МОДЕЛИ: шкала + значение + состояние (без шарика) */
-    const hdr=()=>`<g transform="translate(6 4)">
-      <rect width="348" height="26" rx="9" fill="rgba(9,15,20,.74)" stroke="rgba(127,209,255,.26)" stroke-width="1"/>
-      <rect x="9" y="14" width="196" height="7" rx="3.5" fill="rgba(255,255,255,.08)"/>
-      <rect x="9" y="14" width="${(hlev*196).toFixed(1)}" height="7" rx="3.5" fill="url(#qHeat)"/>
-      <text x="214" y="20" font-size="10.5" font-weight="bold" fill="#ffd76a">${t>0?'+':''}${f(t)}°C</text>
-      <text x="342" y="20" text-anchor="end" font-size="8.5" fill="#cfe6ff">${state}</text></g>`;
-    const chip=(x,c)=>`<span style="display:inline-block;padding:3px 11px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid ${c};font-size:14px;color:#e6eef6;margin:2px">${x}</span>`;
-
-    const DEFS=`<defs>
-      <linearGradient id="qWarm" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff9d3c"/><stop offset="1" stop-color="#7a2b0c" stop-opacity=".2"/></linearGradient>
-      <linearGradient id="qFlame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffd76a"/><stop offset=".5" stop-color="#ff7a18"/><stop offset="1" stop-color="#7fd1ff" stop-opacity=".12"/></linearGradient>
-      <linearGradient id="qSteel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#71787d"/><stop offset=".22" stop-color="#eef3f6"/><stop offset=".55" stop-color="#98a1a6"/><stop offset="1" stop-color="#4f565a"/></linearGradient>
-      <linearGradient id="qWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd8ff" stop-opacity=".75"/><stop offset="1" stop-color="#2f6f9e" stop-opacity=".85"/></linearGradient>
-      <linearGradient id="qIce" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eaf9ff"/><stop offset="1" stop-color="#8ec8e8"/></linearGradient>
-      <linearGradient id="qGlass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity=".5"/><stop offset=".5" stop-color="#ffffff" stop-opacity=".12"/><stop offset="1" stop-color="#ffffff" stop-opacity=".45"/></linearGradient>
-      <linearGradient id="qTable" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a4c2f"/><stop offset="1" stop-color="#2c1f14"/></linearGradient>
-      <filter id="qBlur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4"/></filter>
-      <filter id="qBlur2" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.5"/></filter>
-      <filter id="qSh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity=".5"/></filter>
-      <radialGradient id="qGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff9d3c" stop-opacity=".55"/><stop offset="1" stop-color="#ff7a18" stop-opacity="0"/></radialGradient>
-      <linearGradient id="qHeat" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6fd0ff"/><stop offset=".45" stop-color="#ffe066"/><stop offset="1" stop-color="#ff5a2c"/></linearGradient>
-    </defs>`;
-    const S=(body,bg)=>`<svg viewBox="0 0 360 200" style="display:block;width:100%;height:auto;border-radius:14px;overflow:hidden">
-      ${DEFS}<rect width="360" height="200" fill="${bg||'#141a22'}"/>${body}${extra(LV.step)}${ambient()}${hdr()}</svg>`;
-    const flame=(x,y,hh,op)=>`<g filter="url(#qBlur2)" opacity="${op||1}">
-      <path d="M${x} ${y} C${x-14} ${y-hh*0.45} ${x-11} ${y-hh} ${x} ${y-hh*1.3} C${x+11} ${y-hh} ${x+14} ${y-hh*0.45} ${x} ${y} Z" fill="url(#qFlame)">
-        <animateTransform attributeName="transform" type="scale" values="1 1;1 .85;1 1.06;1 1" dur=".9s" repeatCount="indefinite" additive="sum"/></path>
-      <path d="M${x} ${y} C${x-7} ${y-hh*0.3} ${x-6} ${y-hh*0.6} ${x} ${y-hh*0.82} C${x+6} ${y-hh*0.6} ${x+7} ${y-hh*0.3} ${x} ${y} Z" fill="#fff6d8" opacity=".9"/></g>`;
-    const kettle=(x,y,w,hh,hot)=>`<g filter="url(#qSh)">
-      <ellipse cx="${x+w/2}" cy="${y+3}" rx="${w*0.52}" ry="7" fill="#000" opacity=".45"/>
-      <path d="M${x} ${y} C${x-5} ${y-hh*0.55} ${x+2} ${y-hh*0.92} ${x+14} ${y-hh*0.96} L${x+w-14} ${y-hh*0.96} C${x+w-2} ${y-hh*0.92} ${x+w+5} ${y-hh*0.55} ${x+w} ${y} Z" fill="url(#qSteel)"/>
-      <ellipse cx="${x+w/2}" cy="${y}" rx="${w/2}" ry="6" fill="#394044"/>
-      <path d="M${x+w-6} ${y-hh*0.72} C${x+w+18} ${y-hh*0.78} ${x+w+22} ${y-hh*0.96} ${x+w+14} ${y-hh*1.06} C${x+w+6} ${y-hh*0.92} ${x+w+2} ${y-hh*0.84} ${x+w-4} ${y-hh*0.8} Z" fill="url(#qSteel)"/>
-      <ellipse cx="${x+w/2}" cy="${y-hh*0.98}" rx="${w*0.42}" ry="7" fill="#dfe6ea"/>
-      <ellipse cx="${x+w/2}" cy="${y-hh*1.01}" rx="${w*0.42}" ry="6" fill="#f2f6f8"/>
-      <rect x="${x+w/2-10}" y="${y-hh*1.1}" width="20" height="7" rx="3.5" fill="#8b9296"/>
-      <path d="M${x+12} ${y-hh*0.86} C${x+9} ${y-hh*0.6} ${x+10} ${y-hh*0.3} ${x+13} ${y-6}" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".4" filter="url(#qBlur2)"/>
-      <path d="M${x+w-16} ${y-hh*0.86} C${x+w-20} ${y-hh*0.5} ${x+w-20} ${y-hh*0.24} ${x+w-15} ${y-6}" stroke="#000" stroke-width="7" stroke-linecap="round" opacity=".16" filter="url(#qBlur2)"/>
-      ${hot>0.35?`<g filter="url(#qBlur)" opacity="${Math.min(.95,(hot-0.35)/0.5).toFixed(2)}">${[0,1,2].map(k=>`<ellipse cx="${x+w+16+k*4}" cy="${y-hh*1.05-k*3}" rx="${6+k}" ry="${5+k*1.4}" fill="#fff" opacity=".65">
-        <animateTransform attributeName="transform" type="translate" values="0 0;${k%2?12:-10} -26;0 -52" dur="${(2.2+k*0.5).toFixed(1)}s" begin="${(k*0.45).toFixed(1)}s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0;.85;0" dur="${(2.2+k*0.5).toFixed(1)}s" begin="${(k*0.45).toFixed(1)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
-      ${hot>0.25?`<ellipse cx="${x+w/2}" cy="${y-hh*0.45}" rx="${w*0.55}" ry="${hh*0.45}" fill="url(#qGlow)" opacity="${(hot*0.7).toFixed(2)}"/>`:''}
-    </g>`;
-    const thermo=(x,y,val,hh)=>`<g transform="translate(${x} ${y})">
-      <rect x="-11" y="${-hh}" width="22" height="${hh+14}" rx="11" fill="#f3f7fa" opacity=".96"/>
-      <rect x="-11" y="${-hh}" width="22" height="${hh+14}" rx="11" fill="url(#qGlass)"/>
-      <rect x="-6" y="${-hh+6}" width="12" height="${hh+4}" rx="6" fill="#dfe9ee"/>
-      <rect x="-6" y="${(-8-Math.max(6,Math.min(hh-12,((val+20)/140)*(hh-18)))).toFixed(1)}" width="12" height="${Math.max(6,Math.min(hh-12,((val+20)/140)*(hh-18))).toFixed(1)}" rx="6" fill="#e0341c"/>
-      <circle cy="16" r="12" fill="#d3311c"/><circle cy="16" r="12" fill="url(#qGlass)" opacity=".5"/>
-      ${[0,25,50,75,100].map(v=>{const yy=(-8-((v+20)/140)*(hh-18)).toFixed(1);return `<line x1="-12" y1="${yy}" x2="-19" y2="${yy}" stroke="#9fb0aa" stroke-width="1.3"/><text x="-22" y="${(+yy+3).toFixed(1)}" text-anchor="end" font-size="8" fill="#a9b8b2">${v}</text>`;}).join('')}
-      <text y="${hh+26}" text-anchor="middle" font-size="9" fill="#9fb0aa">термометр</text></g>`;
-    const pan=(x,y,w,hh,fill,lab,sub,hot)=>`<g filter="url(#qSh)">
-      <ellipse cx="${x+w/2}" cy="${y+3}" rx="${w*0.48}" ry="6" fill="#000" opacity=".4"/>
-      <path d="M${x} ${y} L${x+w} ${y} L${x+w-6} ${y-hh} L${x+6} ${y-hh} Z" fill="url(#qSteel)"/>
-      <ellipse cx="${x+w/2}" cy="${y-hh}" rx="${w/2-4}" ry="7" fill="#cfd6da"/>
-      <ellipse cx="${x+w/2}" cy="${y-hh+3}" rx="${w/2-7}" ry="5.5" fill="${fill}" opacity=".95">
-        <animateTransform attributeName="transform" type="scale" values="1 1;1.01 .96;1 1" dur="3.2s" repeatCount="indefinite" additive="sum"/></ellipse>
-      <ellipse cx="${x+w/2}" cy="${y-hh-3}" rx="${w/2-2}" ry="6" fill="#e8eef2" opacity=".95"/>
-      <rect x="${x+w/2-9}" y="${y-hh-11}" width="18" height="7" rx="3.5" fill="#8b9296"/>
-      <path d="M${x+3} ${y-hh+8} h-12" stroke="#8f979b" stroke-width="5" stroke-linecap="round"/>
-      <path d="M${x+w-3} ${y-hh+8} h12" stroke="#8f979b" stroke-width="5" stroke-linecap="round"/>
-      <path d="M${x+10} ${y-hh+12} L${x+12} ${y-6}" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".35" filter="url(#qBlur2)"/>
-      ${(hot||0)>0.45?`<g filter="url(#qBlur)" opacity="${Math.min(.85,((hot||0)-0.45)/0.5).toFixed(2)}">${[0,1,2].map(k=>`<ellipse cx="${x+w/2-8+k*8}" cy="${y-hh-16}" rx="${5+k}" ry="${4+k}" fill="#fff" opacity=".6">
-        <animateTransform attributeName="transform" type="translate" values="0 0;${k%2?9:-8} -22;0 -44" dur="${(2.4+k*0.5).toFixed(1)}s" begin="${(k*0.4).toFixed(1)}s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0;.8;0" dur="${(2.4+k*0.5).toFixed(1)}s" begin="${(k*0.4).toFixed(1)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
-      <text x="${x+w/2}" y="${y+16}" text-anchor="middle" font-size="10" fill="#dbe6ee">${lab}</text>
-      <text x="${x+w/2}" y="${y+28}" text-anchor="middle" font-size="8.5" fill="#9fb0aa">${sub}</text></g>`;
-    let body='', example='', hot=0;
-    if(LV.step===0){
-      const hh=Math.max(0,Math.min(1,(t+20)/140));
-      body=`<rect y="152" width="360" height="48" fill="url(#qTable)"/>
-        <ellipse cx="120" cy="152" rx="86" ry="14" fill="#201914"/>
-        <ellipse cx="120" cy="150" rx="76" ry="11" fill="none" stroke="#3a2d24" stroke-width="2.5"/>
-        ${hh>0.12?`<ellipse cx="120" cy="150" rx="64" ry="9" fill="url(#qGlow)" opacity="${(0.3+hh*0.7).toFixed(2)}"/>`:''}
-        
-        ${kettle(78,150,84,62,hh)}${hh>0.12?`<g filter="url(#qBlur2)" opacity="${(0.30+hh*0.45).toFixed(2)}">
-          ${[0,1,2].map(k=>`<path d="M${120} 150 C${112-k*6} ${150-10-hh*10} ${114-k*4} ${150-18-hh*22} ${120} ${150-24-hh*30} C${128+k*6} ${150-18-hh*22} ${126+k*4} ${150-10-hh*10} ${120} 150 Z" fill="url(#qFlame)">
-            <animateTransform attributeName="transform" type="scale" values="1 1;1 .84;1 1.07;1 1" dur="${(0.62+k*0.16).toFixed(2)}s" repeatCount="indefinite" additive="sum"/>
-            <animate attributeName="opacity" values=".95;.6;1;.75;.95" dur="${(1.1+k*0.2).toFixed(2)}s" repeatCount="indefinite"/></path>`).join('')}
-          ${[0,1,2].map(k=>`<ellipse cx="${108+k*12}" cy="${150-26-hh*30}" rx="${3+k%2}" ry="${2+(k%2)*1.5}" fill="#fff6d8" opacity=".85">
-            <animate attributeName="cy" values="${150-24-hh*28};${150-40-hh*44}" dur="${(1.1+k*0.2).toFixed(2)}s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;.9;0" dur="${(1.1+k*0.2).toFixed(2)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
-        <ellipse cx="268" cy="158" rx="46" ry="11" fill="#cfd6da" opacity=".25"/>
-        <ellipse cx="268" cy="156" rx="42" ry="9" fill="#e8eef2" opacity=".35"/>
-        <g filter="url(#qSh)">
-          <rect x="246" y="120" width="44" height="36" rx="5" fill="url(#qIce)" stroke="#eaf9ff" stroke-width="1.3"/>
-          <path d="M251 124 l12 14 M266 148 l10 -16" stroke="#fff" stroke-width="1.1" opacity=".75"/>
-          <animate attributeName="opacity" values="1;.82;1" dur="3.4s" repeatCount="indefinite"/>
-          <animateTransform attributeName="transform" type="translate" values="0 0;0 2.5;0 0" dur="3.4s" repeatCount="indefinite"/></g>
-        ${t>=0?`<g opacity="${Math.min(1,(t+6)/18).toFixed(2)}">${[0,1,2].map(k=>`<ellipse cx="${248+k*18}" cy="${160+k*2}" rx="${7-k}" ry="3" fill="#9fd8ff" opacity=".85">
-          <animate attributeName="opacity" values=".9;.2;.9" dur="${(1.6+k*0.3).toFixed(1)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
-        <text x="120" y="42" text-anchor="middle" font-size="11" fill="#ffd76a">чайник на плите</text>
-        <text x="268" y="108" text-anchor="middle" font-size="11" fill="#bfe6ff">лёд на тарелке</text>
-        <text x="180" y="190" text-anchor="middle" font-size="9.5" fill="#9fb0aa">${hh>0.5?'вода кипит — из носика идёт пар':(t<0?'лёд тает: появляется талая вода':'огонь греет дно — тепло идёт в воду')}</text>`;
-      example='Пример: пламя греет дно чайника; лёд на тарелке тает и превращается в воду.';
-    } else if(LV.step===1){
-      body=`${thermo(120,150,20,96)}
-        <g transform="translate(120 52)"><path d="M-24 0 h48" stroke="#7fd1ff" stroke-width="1.6"/><text y="-5" text-anchor="middle" font-size="9" fill="#bfe6ff">кислород −183°</text></g>
-        <g transform="translate(250 120)">${thermo(0,30,100,60)}</g>
-        <text x="250" y="40" text-anchor="middle" font-size="11" fill="#ffd76a">вода кипит при 100 °C</text>
-        <text x="250" y="188" text-anchor="middle" font-size="11" fill="#bfe6ff">лёд тает при 0 °C</text>
-        <text x="120" y="188" text-anchor="middle" font-size="11" fill="#e6eef6">сейчас: ${t>0?'+':''}${f(t)} °C</text>`;
-      example='Пример: термометр — линейка для температуры; 0 °C и 100 °C — её главные метки.';
-    } else if(LV.step===2){
-      const hh=Math.max(0,Math.min(1,(t+20)/140));
-      body=`<rect y="156" width="360" height="44" fill="url(#qTable)"/>
-        <path d="M92 156 h176 v10 h-176 z" fill="#4a4038"/>
-        ${hh>0.1?`<g filter="url(#qBlur2)" opacity="${(0.4+hh*0.6).toFixed(2)}">${[0,1,2,3].map(k=>`<path d="M${150+k*16} 152 C${144+k*16} 142 ${146+k*16} 134 ${150+k*16} 128 C${156+k*16} 134 ${154+k*16} 142 ${150+k*16} 152 Z" fill="url(#qFlame)">
-          <animateTransform attributeName="transform" type="scale" values="1 1;1 .85;1 1.06;1 1" dur="${(0.66+(k%2)*0.2).toFixed(2)}s" repeatCount="indefinite" additive="sum"/></path>`).join('')}</g>`:''}
-        <g filter="url(#qSh)"><rect x="104" y="104" width="152" height="16" rx="6" fill="url(#qSteel)"/>
-          <rect x="112" y="106" width="136" height="4" rx="2" fill="#fff" opacity=".35"/>
-          <rect x="96" y="118" width="168" height="8" rx="4" fill="#6d757a"/></g>
-        <g>${Array.from({length:9},(_,k)=>`<circle cx="${116+(k%5)*32}" cy="${110+Math.floor(k/5)*6}" r="${1.4+(k%2)*0.7}" fill="#ffd9a8" opacity="${(0.35+hh*0.6).toFixed(2)}">
-          <animateTransform attributeName="transform" type="translate" values="0 0;${(k%2?6:-6)} ${(k%3?4:-5)};0 0" dur="${(2.6-hh*2.0).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}</g>
-        <text x="180" y="52" text-anchor="middle" font-size="11" fill="#e6eef6">железный стержень на подставке</text>
-        <text x="180" y="70" text-anchor="middle" font-size="9.5" fill="#9fb0aa">${hh>0.5?'частицы внутри движутся быстро — стержень горячий':'частицы движутся медленно — стержень холодный'}</text>
-        ${hh>0.2?`<g filter="url(#qBlur)" opacity="${(hh*0.8).toFixed(2)}">${[0,1].map(k=>`<ellipse cx="${120+k*120}" cy="96" rx="10" ry="6" fill="#fff" opacity=".4">
-          <animateTransform attributeName="transform" type="translate" values="0 0;${k?12:-12} -22;0 -44" dur="${(2.6+k*0.6).toFixed(1)}s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0;.7;0" dur="${(2.6+k*0.6).toFixed(1)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
-        <text x="180" y="188" text-anchor="middle" font-size="9.5" fill="#cbb9a4">нагрели — энергия пришла в стержень; остынет — уйдёт в воздух</text>`;
-      example='Пример: ложка в горячем чае нагревается, а вынутая — остывает, отдавая тепло воздуху.';
-    } else if(LV.step===3){
-      body=`<g transform="translate(90 120)" filter="url(#qSh)"><circle r="30" fill="url(#qSteel)"/><text y="5" text-anchor="middle" font-size="14" fill="#2b3033">1 Дж</text></g>
-        <g transform="translate(250 120)" filter="url(#qSh)"><rect x="-40" y="-28" width="80" height="56" rx="8" fill="#2a323c" stroke="#7fd1ff" stroke-width="1.8"/>
-          <text y="4" text-anchor="middle" font-size="13" fill="#bfe6ff">1000 Дж</text></g>
-        <text x="90" y="180" text-anchor="middle" font-size="10" fill="#cbb9a4">маленькая энергия</text>
-        <text x="250" y="180" text-anchor="middle" font-size="10" fill="#bfe6ff">= 1 кДж («кило» — тысяча)</text>
-        <path d="M126 120 H204" stroke="#ffd76a" stroke-width="2" stroke-dasharray="6 4"/>
-        <text x="165" y="112" text-anchor="middle" font-size="9.5" fill="#ffd76a">×1000</text>`;
-      example='Пример: чтобы вскипятить чайник, нужно около 300 000 Дж = 300 кДж.';
-    } else if(LV.step===4){
-      body=`<rect y="152" width="360" height="48" fill="url(#qTable)"/>
-        <ellipse cx="96" cy="150" rx="72" ry="12" fill="#201914"/><ellipse cx="264" cy="150" rx="72" ry="12" fill="#201914"/>
-        ${[0,1,2].map(k=>`<path d="M${96} 150 C${88-k*4} ${140} ${90-k*3} ${132} ${96} ${126} C${104+k*4} ${132} ${102+k*3} ${140} ${96} 150 Z" fill="url(#qFlame)" opacity=".9">
-          <animateTransform attributeName="transform" type="scale" values="1 1;1 .85;1 1.06;1 1" dur="${(0.6+k*0.14).toFixed(2)}s" repeatCount="indefinite" additive="sum"/></path>`).join('')}
-        ${[0,1,2].map(k=>`<path d="M${264} 150 C${256-k*4} ${140} ${258-k*3} ${132} ${264} ${126} C${272+k*4} ${132} ${270+k*3} ${140} ${264} 150 Z" fill="url(#qFlame)" opacity=".9">
-          <animateTransform attributeName="transform" type="scale" values="1 1;1 .85;1 1.06;1 1" dur="${(0.6+k*0.14).toFixed(2)}s" repeatCount="indefinite" additive="sum"/></path>`).join('')}
-        ${pan(58,150,76,54,'url(#qWater)','1 литр','вскипает за 5 мин',Math.max(0,Math.min(1,(t+20)/140)))}
-        ${pan(226,150,76,54,'url(#qWater)','2 литра','вскипает за 10 мин',Math.max(0,Math.min(1,(t+20)/140)))}
-        <text x="180" y="42" text-anchor="middle" font-size="11" fill="#ffd76a">одинаковые кастрюли, разное количество воды</text>
-        <path d="M138 78 q42 16 84 -2" stroke="#7fd1ff" stroke-width="2" fill="none" stroke-dasharray="5 4">
-          <animate attributeName="stroke-dashoffset" values="0;-18" dur="1.1s" repeatCount="indefinite"/></path>
-        <text x="180" y="74" text-anchor="middle" font-size="9.5" fill="#bfe6ff">массы вдвое больше — времени вдвое больше</text>
-        <text x="180" y="190" text-anchor="middle" font-size="9.5" fill="#9fb0aa">пузыри в правой кастрюле появляются реже: Q зависит от массы</text>`;
-      example='Пример: 2 литра вскипают вдвое дольше, чем 1 литр — тепла нужно вдвое больше.';
-    } else if(LV.step===5){
-      body=`<rect y="150" width="360" height="50" fill="url(#qTable)"/>
-        ${pan(150,150,86,60,'url(#qWater)','','Δ')}
-        <g stroke-linecap="round"><path d="M40 120 H300" stroke="#3c4650" stroke-width="2"/>
-          <path d="M60 120 C120 120 150 118 176 96" stroke="#ffd76a" stroke-width="2.4" fill="none"/>
-          <path d="M60 120 C130 120 170 112 200 62" stroke="#ff9d3c" stroke-width="2.4" fill="none" stroke-dasharray="6 4"/></g>
-        <text x="205" y="94" font-size="10" fill="#ffd76a">на 10 °C — 42 кДж</text>
-        <text x="205" y="60" font-size="10" fill="#ff9d3c">на 20 °C — 84 кДж</text>
-        <text x="60" y="140" font-size="9" fill="#9fb0aa">одинаковая вода, разная Δt</text>`;
-      example='Пример: нагреть на 20 °C — вдвое больше тепла, чем на 10 °C.';
-    } else if(LV.step===6){
-      body=`<rect y="150" width="360" height="50" fill="url(#qTable)"/>
-        ${pan(56,150,88,58,'url(#qWater)','вода','c = 4200')}
-        <g filter="url(#qSh)"><rect x="216" y="92" width="88" height="58" rx="6" fill="url(#qSteel)"/><rect x="222" y="98" width="76" height="8" rx="4" fill="#fff" opacity=".28"/></g>
-        <text x="260" y="170" text-anchor="middle" font-size="10" fill="#dbe6ee">железо · c = 460</text>
-        ${flame(100,176,30,1)}${flame(260,176,30,1)}
-        <text x="100" y="46" text-anchor="middle" font-size="10" fill="#ffd76a">долго: 4200 Дж на градус</text>
-        <text x="260" y="46" text-anchor="middle" font-size="10" fill="#ff9d3c">быстро: 460 Дж на градус</text>`;
-      example='Пример: железная ложка в чае обжигает быстрее, чем вода той же массы.';
-    } else if(LV.step===7){
-      body=`<g filter="url(#qSh)"><rect x="30" y="60" width="300" height="80" rx="14" fill="#1b232c" stroke="#ffd76a" stroke-width="1.8"/></g>
-        <text x="180" y="112" text-anchor="middle" font-size="30" font-family="Georgia,serif" font-weight="bold" fill="#ffd76a">Q = c · m · Δt</text>
-        <text x="70" y="52" text-anchor="middle" font-size="10" fill="#ffd76a">вещество</text>
-        <text x="180" y="52" text-anchor="middle" font-size="10" fill="#7fd1ff">масса</text>
-        <text x="292" y="52" text-anchor="middle" font-size="10" fill="#7de0a0">разница температур</text>
-        <text x="180" y="168" text-anchor="middle" font-size="11" fill="#cbb9a4">теплота = теплоёмкость · масса · Δt</text>`;
-      example='Пример: подставь c, m и Δt — и получишь нужное тепло в джоулях.';
-    } else if(LV.step===8){
-      body=`<g transform="translate(110 110)" filter="url(#qSh)"><rect x="-34" y="-34" width="68" height="68" rx="8" fill="url(#qWater)" stroke="#bfe6ff" stroke-width="1.6"/>
-          <text y="4" text-anchor="middle" font-size="12" fill="#08202e">1 кг</text></g>
-        <g transform="translate(250 110)" filter="url(#qSh)"><circle r="38" fill="#1b232c" stroke="#ffd76a" stroke-width="1.8"/>
-          <text y="-2" text-anchor="middle" font-size="13" font-family="Georgia,serif" fill="#ffd76a">4200</text>
-          <text y="16" text-anchor="middle" font-size="8.5" fill="#cbb9a4">Дж/(кг·°C)</text></g>
-        <text x="180" y="52" text-anchor="middle" font-size="11" fill="#e6eef6">вода — чемпион по запасанию тепла</text>
-        <text x="180" y="182" text-anchor="middle" font-size="10" fill="#9fb0aa">на 1 °C целого килограмма воды нужно 4200 Дж</text>`;
-      example='Пример: вода в батарее отопления долго хранит тепло именно из-за c = 4200.';
-    } else if(LV.step===9){
-      body=`<text x="180" y="52" text-anchor="middle" font-size="13" fill="#ffd76a">1 кг воды нагрели на 10 °C</text>
-        ${[['4200','теплоёмкость'],['· 1','масса'],['· 10','Δt']].map((q,k)=>`<g transform="translate(${58+k*110} 116)">
-          <rect x="-46" y="-30" width="92" height="60" rx="10" fill="#1b232c" stroke="#7fd1ff" stroke-width="1.5"/>
-          <text y="0" text-anchor="middle" font-size="16" font-family="Georgia,serif" font-weight="bold" fill="#ffd76a">${q[0]}</text>
-          <text y="20" text-anchor="middle" font-size="8.5" fill="#9fb0aa">${q[1]}</text></g>`).join('')}
-        <text x="180" y="176" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="#7de0a0">= 42 000 Дж = 42 кДж</text>
-        <path d="M104 116 h12 M214 116 h12" stroke="#7fd1ff" stroke-width="2"/>`;
-      example='Пример: 4200 · 1 · 10 = 42 000 Дж, то есть 42 килоджоуля.';
-    } else if(LV.step===10){
-      body=`<text x="180" y="48" text-anchor="middle" font-size="12" fill="#ffd76a">масса выросла вдвое → тепла вдвое</text>
-        ${pan(48,140,92,56,'url(#qWater)','1 кг','42 кДж')}
-        ${pan(216,140,92,56,'url(#qWater)','2 кг','84 кДж')}
-        <path d="M150 112 q30 -24 62 0" stroke="#7de0a0" stroke-width="2" fill="none" stroke-dasharray="5 4"/>
-        <text x="180" y="98" text-anchor="middle" font-size="10" fill="#7de0a0">× 2</text>
-        <text x="180" y="182" text-anchor="middle" font-size="10.5" fill="#cbb9a4">4200 · 2 · 10 = 84 000 Дж</text>`;
-      example='Пример: для двух литров то же нагревание стоит 84 кДж — вдвое дороже по энергии.';
-    } else if(LV.step===11){
+    const rowC=(...p)=>`<div style="display:flex;gap:12px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:2px 0">${p.join('')}</div>`;
+    const btn=(txt,on)=>`<button class="hint-btn" onclick="${on}">${txt}</button>`;
+    const chip=(x,c)=>`<span style="display:inline-block;padding:2px 10px;border-radius:9px;background:rgba(127,209,255,.07);border:1px solid ${c||'rgba(127,184,160,.5)'};font-size:14px;color:#d8ecff;margin:2px">${x}</span>`;
+    const hot=(t+20)/140;
+    const ctl=btns51=>btns51;
+    const BTNS=row(btn('−10 °C',`qAct('${lk}','down')`),btn('+10 °C',`qAct('${lk}','up')`),btn('лёд',`qAct('${lk}','ice')`),btn('100 °C',`qAct('${lk}','boil')`),btn('↺',`qAct('${lk}','reset')`));
+    let h='';
+    if(step===0){
+      h=col(big('Почему горячее — это быстрое движение?'),
+        rowC(qGlass(t), qThermo(t,'термометр показывает'), `<div style="text-align:center">${`<div class="q-ice" style="margin:0 auto">
+            <div style="position:absolute;left:6px;top:8px;width:14px;height:12px;background:rgba(255,255,255,.7);transform:rotate(-18deg)"></div></div>`}
+          <div style="font-size:11px;color:#bfe6ff;margin-top:8px">лёд (${t<0?'ещё лежит':'тает'})</div></div>`),
+        BTNS,
+        sml('частицы внутри воды: при −10 °C еле шевелятся, при 100 °C бегут — поэтому вода горячая'));
+    } else if(step===1){
+      h=col(big('Температура: измеряем и сравниваем'),
+        rowC(qThermo(t,'сейчас'), qThermo(0,'лёд тает'), qThermo(100,'вода кипит')),
+        BTNS, sml('0 °C — тает лёд, 100 °C — кипит вода. Термометр показывает разницу температур Δt'));
+    } else if(step===2){
+      h=col(big('Нагревание и охлаждение'),
+        rowC(`<div style="font-size:34px" class="q-fl" style="width:30px">🔥</div>`+qPot(hot,'тело у огня','теплота приходит'),
+             qPot(Math.max(0.05,hot-0.4),'тело остывает','теплота уходит в воздух')),
+        BTNS, sml('нагрели — энергия пришла внутрь; остудили — ушла. Количество этой энергии — Q'));
+    } else if(step===3){
+      h=col(big('Джоуль — единица теплоты'),
+        rowC(`<div class="q-card2" style="font-size:26px">1 Дж</div>`+`<div style="font-size:20px;color:#ffd76a">×1000 →</div>`+
+             `<div class="q-card2" style="font-size:22px">1000 Дж<br><span style="font-size:12px;color:#9fb0aa">= 1 кДж</span></div>`),
+        sml('чтобы вскипятить чайник, нужно около 300 000 Дж = 300 кДж'));
+    } else if(step===4){
+      h=col(big('Опыт: масса и теплота'),
+        rowC(qPot(0.85,'1 литр','вскипает за 5 мин'), qPot(0.55,'2 литра','вскипает за 10 мин')),
+        sml('пузыри в правой кастрюле появляются реже: воды вдвое больше — тепла нужно вдвое больше'));
+    } else if(step===5){
+      h=col(big('Опыт: разница температур Δt'),
+        rowC(qThermo(t,'нагрели на Δt = '+f(dT)), qThermo(Math.min(120,20+dT*2),'вдвое сильнее')),
+        BTNS, sml('чем больше Δt, тем больше тепла: на 20 °C нужно вдвое больше, чем на 10 °C'));
+    } else if(step===6){
+      h=col(big('Опыт: вода против железа'),
+        rowC(qThermo(Math.min(120,20+ (t-20)*0.25 + 10),'вода: греется медленно (4200)'),
+             qThermo(Math.min(120,20+ (t-20)*2 + 40),'железо: греется быстро (460)')),
+        sml('одинаковая масса, одинаковое время — железо нагреется почти в 9 раз сильнее'));
+    } else if(step===7){
+      h=col(big('Главная формула'),
+        `<div class="q-card2" style="text-align:center;font-size:24px;font-family:Georgia,serif;color:#ffd76a">Q = c · m · Δt</div>`,
+        rowC(chip('c — вещество'),chip('m — масса'),chip('Δt — разница температур')),
+        sml('теплота = удельная теплоёмкость · масса · разница температур'));
+    } else if(step===8){
+      h=col(big('Вода — чемпион по теплоёмкости'),
+        rowC(qGlass(t), `<div class="q-card2" style="font-size:20px">c = 4200<br><span style="font-size:11px;color:#9fb0aa">Дж/(кг·°C)</span></div>`),
+        sml('на 1 °C целого килограмма воды нужно 4200 Дж — больше, чем для любого другого вещества'));
+    } else if(step===9){
+      const tiles=[['4200','теплоёмкость'],['· 1','масса'],['· 10','Δt']].map(q=>`<div class="q-card2" style="text-align:center;min-width:78px">
+        <div style="font-size:17px;color:#ffd76a;font-family:Georgia,serif">${q[0]}</div><div style="font-size:9.5px;color:#9fb0aa">${q[1]}</div></div>`).join('');
+      h=col(big('Считаем вместе'), rowC(tiles),
+        `<div class="q-card2" style="text-align:center;font-size:17px;color:#7de0a0">= 42 000 Дж = 42 кДж</div>`,
+        sml('1 кг воды нагрели на 10 °C — понадобилось 42 килоджоуля'));
+    } else if(step===10){
+      h=col(big('Масса выросла — тепла больше'),
+        rowC(qPot(0.7,'1 кг','42 кДж'), `<div style="font-size:20px;color:#7de0a0">× 2</div>`, qPot(0.7,'2 кг','84 кДж')),
+        sml('4200 · 2 · 10 = 84 000 Дж — для двух литров нужно ровно вдвое больше'));
+    } else if(step===11){
       const rows=[['вода',4200,'#7fd1ff'],['лёд',2100,'#bfe6ff'],['алюминий',920,'#cfd6da'],['железо',460,'#ff9d3c'],['медь',400,'#d98a4a'],['свинец',140,'#a9b8b2']];
-      body=rows.map((q,k)=>{const y=42+k*26, w=q[1]/4200*230;
-        return `<text x="76" y="${y+11}" text-anchor="end" font-size="10" fill="#dbe6ee">${q[0]}</text>
-        <rect x="84" y="${y}" width="230" height="14" rx="7" fill="rgba(255,255,255,.06)"/>
-        <rect x="84" y="${y}" width="${w.toFixed(0)}" height="14" rx="7" fill="${q[2]}"><animate attributeName="width" from="0" to="${w.toFixed(0)}" dur=".8s" begin="${(k*0.12).toFixed(2)}s" fill="freeze"/></rect>
-        <text x="322" y="${y+11}" text-anchor="end" font-size="9" fill="#9fb0aa">${q[1]}</text>`;}).join('');
-      example='Пример: свинец греется в 30 раз легче воды — 140 против 4200.';
-    } else if(LV.step===12){
-      body=`<g filter="url(#qSh)"><path d="M120 60 h120 l-14 74 h-92 Z" fill="#2a323c" stroke="#cfd6da" stroke-width="1.6"/>
-        <path d="M126 92 h108 l-8 38 h-92 Z" fill="#7a4a24" opacity=".85"/></g>
-        <path d="M240 70 q30 -18 62 -30" stroke="#ff9d3c" stroke-width="2.4" fill="none" stroke-dasharray="6 4"/>
-        <text x="300" y="54" text-anchor="middle" font-size="10" fill="#ff9d3c">тепло уходит в воздух</text>
-        <text x="180" y="164" text-anchor="middle" font-size="12" fill="#ffd76a">чай остыл: 90 °C → 40 °C, Δt = 50 °C</text>
-        <text x="180" y="184" text-anchor="middle" font-size="10.5" fill="#cbb9a4">Q = 4200 · m · 50 — вода ОТДАЁТ тепло</text>`;
-      example='Пример: остывающий чай отдал комнате 210 кДж — энергия не исчезла.';
-    } else if(LV.step===13){
-      const ic=[['🔥','батарея','отдаёт тепло комнате'],['🍲','суп','остывает на столе'],['🥤','лёд в лимонаде','забирает тепло'],['🫖','термос','мешает теплу уходить']];
-      body=ic.map((q,k)=>{const x=20+k*86;
-        return `<g class="wv-pop"><rect x="${x}" y="56" width="76" height="80" rx="12" fill="#1b232c" stroke="#7fd1ff" stroke-width="1.4"/>
-        <text x="${x+38}" y="104" text-anchor="middle" font-size="30">${q[0]}</text>
-        <text x="${x+38}" y="124" text-anchor="middle" font-size="9.5" fill="#e6eef6">${q[1]}</text>
-        <text x="${x+38}" y="152" text-anchor="middle" font-size="8" fill="#9fb0aa">${q[2]}</text></g>`;}).join('');
-      example='Пример: всё это — про одно и то же: теплота переходит от горячего к холодному.';
-    } else if(LV.step===14){
-      body=`<rect y="96" width="360" height="104" fill="#1a3a52"/>
-        <path d="M0 96 q60 -14 120 0 t120 0 t120 0 v14 q-60 14 -120 0 t-120 0 t-120 0 Z" fill="url(#qWater)" opacity=".85"/>
-        <circle cx="300" cy="40" r="18" fill="#ffe6b0" opacity=".9"><animate attributeName="opacity" values=".9;.6;.9" dur="4s" repeatCount="indefinite"/></circle>
-        <text x="60" y="40" font-size="11" fill="#ffd76a">лето</text><text x="60" y="56" font-size="9" fill="#cbb9a4">вода медленно греется</text>
-        <text x="60" y="186" font-size="11" fill="#bfe6ff">зима</text><text x="60" y="172" font-size="9" fill="#9fb0aa">вода медленно отдаёт тепло</text>
-        <path d="M150 120 q60 -18 120 0" stroke="#ff9d3c" stroke-width="2" fill="none" stroke-dasharray="5 4"/>
-        <path d="M270 168 q-60 18 -120 0" stroke="#7fd1ff" stroke-width="2" fill="none" stroke-dasharray="5 4"/>`;
-      example='Пример: поэтому у моря климат мягче, чем в глубине материка.';
-    } else if(LV.step===15){
-      const st4=[['1','найди Δt','t₂ − t₁'],['2','посчитай m · Δt','масса на градусы'],['3','умножь на 4200','теплоёмкость воды'],['4','переведи в кДж','раздели на 1000']];
-      body=st4.map((q,k)=>{const y=26+k*40;
-        return `<g><rect x="30" y="${y}" width="300" height="34" rx="9" fill="#1b232c" stroke="#7fd1ff" stroke-width="1.4"/>
-        <circle cx="52" cy="${y+17}" r="11" fill="rgba(255,215,106,.25)" stroke="#ffd76a" stroke-width="1.4"/>
-        <text x="52" y="${y+21}" text-anchor="middle" font-size="11" fill="#ffd76a">${q[0]}</text>
-        <text x="74" y="${y+16}" font-size="10.5" fill="#e6eef6">${q[1]}</text>
-        <text x="74" y="${y+28}" font-size="8.5" fill="#9fb0aa">${q[2]}</text></g>`;}).join('');
-      example='Пример: 2 кг, Δt = 8 → 2·8 = 16 → 4200·16 = 67 200 Дж = 67,2 кДж.';
-    } else if(LV.step===16){
-      body=`<text x="180" y="40" text-anchor="middle" font-size="12" fill="#ffd76a">нагреть 3 кг воды на 5 °C</text>
-        ${[['3 · 5 = 15','масса · Δt'],['4200 · 15 = 63 000 Дж','теплоёмкость'],['63 000 : 1000 = 63 кДж','перевод']].map((q,k)=>`<g transform="translate(180 ${64+k*38})">
-          <rect x="-150" y="-14" width="300" height="30" rx="8" fill="#1b232c" stroke="#7de0a0" stroke-width="1.3"/>
-          <text y="6" text-anchor="middle" font-size="12" font-family="Georgia,serif" fill="#7de0a0">${q[0]}</text>
-          <text x="140" y="6" text-anchor="end" font-size="8.5" fill="#9fb0aa">${q[1]}</text></g>`).join('')}
-        <text x="180" y="190" text-anchor="middle" font-size="11" fill="#ffd76a">ответ: 63 кДж</text>`;
-      example='Пример: 3 кг на 5 °C — это 63 килоджоуля.';
+      h=col(big('Удельная теплоёмкость разных веществ'),
+        `<div class="q-bars" style="max-width:320px;margin:0 auto">${rows.map(q=>`<div style="display:flex;align-items:center;gap:8px;margin:5px 0">
+          <span style="width:70px;text-align:right;font-size:11px;color:#dbe6ee">${q[0]}</span>
+          <span style="flex:1;background:rgba(255,255,255,.06);border-radius:6px"><i style="width:${(q[1]/4200*100).toFixed(0)}%;background:${q[2]}"></i></span>
+          <span style="width:42px;font-size:10px;color:#9fb0aa">${q[1]}</span></div>`).join('')}</div>`,
+        sml('свинец греется в 30 раз легче воды: 140 против 4200'));
+    } else if(step===12){
+      h=col(big('Остывание — та же формула'),
+        rowC(qPot(Math.max(0.05,hot-0.5),'чай остывает','90 °C → 40 °C'), qThermo(t,'Δt = 50 °C')),
+        BTNS, sml('Q = 4200 · m · 50 — вода ОТДАЁТ тепло, но формула та же'));
+    } else if(step===13){
+      const ic=[['🔥','батарея'],['🍲','суп остывает'],['🥤','лёд в лимонаде'],['🫖','термос']];
+      h=col(big('Это каждый день вокруг нас'),
+        rowC(ic.map(q=>`<div class="q-card2" style="text-align:center;min-width:74px"><div style="font-size:26px">${q[0]}</div>
+          <div style="font-size:9.5px;color:#9fb0aa">${q[1]}</div></div>`).join('')),
+        sml('теплота всегда переходит от горячего тела к холодному'));
+    } else if(step===14){
+      h=col(big('Почему у моря мягкий климат'),
+        rowC(`<div class="q-card2" style="text-align:center"><div style="font-size:26px">☀️🌊</div><div style="font-size:10px;color:#9fb0aa">лето: вода забирает тепло</div></div>`,
+             `<div class="q-card2" style="text-align:center"><div style="font-size:26px">❄️🌊</div><div style="font-size:10px;color:#9fb0aa">зима: вода отдаёт тепло</div></div>`),
+        sml('вода работает как огромная батарея тепла — из-за c = 4200'));
+    } else if(step===15){
+      const s4=[['1','найди Δt','t₂ − t₁'],['2','посчитай m · Δt','масса на градусы'],['3','умножь на 4200','теплоёмкость'],['4','переведи в кДж','раздели на 1000']];
+      h=col(big('Порядок расчёта задачи'),
+        `<div style="max-width:320px;margin:0 auto">${s4.map(q=>`<div class="q-card2" style="display:flex;gap:10px;align-items:center;margin:6px 0">
+          <span style="width:22px;height:22px;border-radius:50%;background:rgba(255,215,106,.25);border:1px solid #ffd76a;display:flex;align-items:center;justify-content:center;font-size:11px;color:#ffd76a">${q[0]}</span>
+          <span style="flex:1">${q[1]}</span><span style="font-size:10px;color:#9fb0aa">${q[2]}</span></div>`).join('')}</div>`,
+        sml('пример: 2 кг, Δt = 8 → 2·8 = 16 → 4200·16 = 67 200 Дж = 67,2 кДж'));
+    } else if(step===16){
+      h=col(big('Разбираем пример'),
+        `<div class="q-card2" style="text-align:center">3 кг воды нагреть на 5 °C</div>`,
+        `<div style="max-width:320px;margin:0 auto">${['3 · 5 = 15','4200 · 15 = 63 000 Дж','63 000 : 1000 = 63 кДж'].map(t2=>`<div class="q-card2" style="text-align:center;margin:6px 0;color:#7de0a0">${t2}</div>`).join('')}</div>`,
+        sml('ответ: 63 кДж'));
     } else {
-      body=`<text x="180" y="40" text-anchor="middle" font-size="12" fill="#bfe6ff">вода отдала 84 кДж, остыв на 10 °C</text>
-        <text x="180" y="80" text-anchor="middle" font-size="14" font-family="Georgia,serif" fill="#e6eef6">84 000 = 4200 · m · 10</text>
-        <text x="180" y="110" text-anchor="middle" font-size="14" font-family="Georgia,serif" fill="#e6eef6">42 000 · m = 84 000</text>
-        <g filter="url(#qSh)"><rect x="96" y="126" width="168" height="44" rx="10" fill="#12301f" stroke="#7de0a0" stroke-width="1.8"/></g>
-        <text x="180" y="156" text-anchor="middle" font-size="18" font-family="Georgia,serif" font-weight="bold" fill="#7de0a0">m = 2 кг</text>
-        <path d="M180 118 v6" stroke="#7de0a0" stroke-width="2"/><path d="M174 116 l6 8 l6 -8" fill="none" stroke="#7de0a0" stroke-width="2"/>`;
-      example='Пример: формулу можно «поворачивать» — из неё находится и масса, и Δt.';
+      h=col(big('Обратная задача'),
+        `<div class="q-card2" style="text-align:center;font-size:15px">вода отдала 84 кДж, остыв на 10 °C</div>`,
+        `<div class="q-card2" style="text-align:center;font-size:15px">84 000 = 4200 · m · 10</div>`,
+        `<div class="q-card2" style="text-align:center;font-size:22px;color:#7de0a0">m = 2 кг</div>`,
+        BTNS, sml('формулу можно «поворачивать»: из неё находится и масса, и Δt'));
     }
-
-    const btnRow=`<div class="wv-row">
-      <button class="hint-btn" onclick="hAct('${lk}','down')">−10 °C</button>
-      <button class="hint-btn" onclick="hAct('${lk}','up')">+10 °C</button>
-      <button class="hint-btn" onclick="hAct('${lk}','ice')">лёд</button>
-      <button class="hint-btn" onclick="hAct('${lk}','boil')">100 °C</button>
-      <button class="hint-btn" onclick="hAct('${lk}','reset')">↺</button></div>`;
-    const showCalc=(LV.step>=4&&LV.step<=12);
-    const calc=showCalc? big(`Q = 4200 · 1 · ${f(dT)} = ${T(Q)} Дж = ${f(Math.abs(Q)/1000)} кДж`)+(dT<0? sml('Δt отрицательный — тело ОТДАЁТ тепло'):''):'';
-    el.innerHTML=col(S(body),
-      (LV.step===1||LV.step===3)? row(chip(`сейчас: ${t>0?'+':''}${f(t)} °C`,'rgba(255,215,106,.45)'),chip(dT>=0?`Δ t = ${f(dT)} °C`:`Δ t = ${f(dT)} °C`,'rgba(127,209,255,.45)')): calc,
-      sml('💡 '+example),
-      btnRow);
-  }catch(e){ el.innerHTML=''; }
-}
-
-function wAct(lk,act){
-  const st=CHS[lk]||(CHS[lk]={}); if(st.a==null) st.a=800; if(st.t==null) st.t=20; if(st.up==null) st.up=0;
-  if(act==='a+') st.a=Math.min(20000,st.a+100);
-  else if(act==='a-') st.a=Math.max(100,st.a-100);
-  else if(act==='t+') st.t=Math.min(60,st.t+1);
-  else if(act==='t-') st.t=Math.max(1,st.t-1);
-  else if(act==='lift') st.up=st.up?0:1;
-  else if(act==='r'){ st.a=800; st.t=20; st.up=0; }
-  try{ renderLessonView(); }catch(e){}
+    el.innerHTML=h;
+  }catch(e){ el.innerHTML='<div class="q-card2">Ошибка сцены: '+esc(e&&e.message)+'</div>'; }
 }
 function hAct(lk,act){
   const st=CHS[lk]||(CHS[lk]={}); if(st.h==null) st.h=20;
