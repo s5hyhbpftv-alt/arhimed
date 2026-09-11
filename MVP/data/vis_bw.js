@@ -3035,21 +3035,21 @@ window.WAVE_B = window.WAVE_B || {};
     src: 'Физика · 8–9 класс · Закон Паскаля и давление жидкости', subj: 'phys',
     explain: [
       'Загадка столба: на берегу уши спокойны, на двух метрах их закладывает, на десяти — больно. Вода не «ударила один раз». Она давит всегда, и чем выше столб над тобой, тем сильнее.',
-      'Жидкость давит во все стороны: на дно, на стенки и снизу вверх. Ныряльщик чувствует уши не только сверху. Давление в точке зависит от глубины, не от «направления взгляда».',
-      'Формула: p = ρ · g · h. ρ — плотность жидкости (кг/м³), g ≈ 10 Н/кг, h — глубина (м). Произведение даёт паскали. 1000 Па = 1 кПа. Для воды удобно: каждые 1 м → 10 кПа.',
+      'Жидкость давит во все стороны: на дно, на стенки и снизу вверх. Ныряльщик чувствует уши не только сверху. Давление в точке зависит от глубины, не от направления взгляда.',
+      'Формула: p = ρ · g · h. ρ — плотность жидкости (кг/м³), g ≈ 10 Н/кг, h — глубина (м). Произведение — паскали. Для воды удобно: каждые 1 м → 10 кПа.',
       'Вода ρ = 1000 кг/м³: кубометр весит тонну. Масло 900, керосин 800. Легче жидкость — тот же столб давит слабее. Не путай плотность жидкости с плотностью ныряльщика.',
       'Счёт: 2 м воды → p = 1000 · 10 · 2 = 20 000 Па = 20 кПа. Сначала ρ · g = 10 000, потом на глубину. Подвинь ныряльщика: число на манометре растёт линейно.',
-      'Глубже — больше. 2 м → 20 кПа, 5 м → 50 кПа, 10 м → 100 кПа. Десять метров воды ≈ одна атмосфера. Поэтому в ушах на дне бассейна уже слышно «давит».',
-      'Проверка урока: 5 м воды → 50 кПа. Не 5 и не 500: забыли ноль или добавили лишний. 1000 · 10 · 5 = 50 000 Па = 50 кПа.',
-      'Другая жидкость. Масло 900 кг/м³, 2 м → 900 · 10 · 2 = 18 000 Па = 18 кПа. Та же глубина, давление меньше, чем у воды (20 кПа). Столб легче — давит слабее.',
-      'Бутылка с дырками. Нижнее отверстие сидит под большим столбом, скорость струи больше. Школьный опыт: нижняя бьёт дальше. Давление растёт с глубиной — это видно струями, не только формулой.',
-      'Закон Паскаля: давление, созданное в жидкости или газе, передаётся во все стороны одинаково. Надавил поршнем в одном месте — прибавилось везде. Не «потекло вниз», а разошлось по всему объёму.',
-      'Шар Паскаля: дырочки по кругу, поршень сверху. Струйки одной длины. Если бы давление «любило низ», нижние били бы сильнее. Они равны — закон живой.',
-      'Гидравлический домкрат. Два поршня, жидкость между ними. Давление одно: F₁ / S₁ = F₂ / S₂. Большая площадь → большая сила. Жмёшь слабо на малый, поднимаешь машину на большом.',
-      'Почему усиливает. p одно и то же. S₂ в пять раз больше S₁ — сила в пять раз больше. Выигрыш в силе, проигрыш в пути: большой поршень едет меньше. Золотое правило механики никто не отменял.',
-      'Газ тоже Паскаль. Воздух в мяче давит на стенки равно. Шина держит машину всей площадью. Надутый мяч упругий, сдутый — нет: мало давления внутри.',
-      'Рецепт. 1) Вода или другая жидкость? 2) ρ, g = 10, h в метрах. 3) p = ρgh в паскалях, для кПа дели на 1000. 4) Для воды: 1 м → 10 кПа. 5) Паскаль — про передачу, ρgh — про столб.',
-      'В карман: p = ρgh. Вода: 1 м → 10 кПа, 5 м → 50 кПа. Масло 2 м → 18 кПа. Давление во все стороны. Гидравлика: малое S, большая F. Проверка: 5 м → 50 кПа.'
+      'Глубже — больше. 2 м → 20 кПа, 5 м → 50 кПа, 10 м → 100 кПа. Десять метров воды ≈ одна атмосфера.',
+      'Проверка урока: 5 м воды → 50 кПа. Не 5 и не 500: забыли ноль или добавили лишний.',
+      'Масло 900 кг/м³, 2 м → 18 кПа. Та же глубина, давление меньше, чем у воды (20 кПа). Столб легче — давит слабее.',
+      'Бутылка с дырками. Нижнее отверстие под большим столбом, струя резче. Школьный опыт: нижняя бьёт дальше.',
+      'Закон Паскаля: давление, созданное в жидкости или газе, передаётся во все стороны одинаково. Надавил поршнем — прибавилось везде.',
+      'Шар Паскаля: дырочки по кругу. Струйки одной длины. Если бы давление любило низ, нижние били бы сильнее. Они равны.',
+      'Гидравлический домкрат. Давление одно: F₁ / S₁ = F₂ / S₂. Большая площадь — большая сила.',
+      'S₂ в пять раз больше S₁ — сила в пять раз больше. Выигрыш в силе, проигрыш в пути.',
+      'Газ тоже Паскаль. Воздух в мяче давит на стенки равно. Шина держит машину всей площадью.',
+      'Рецепт. 1) Жидкость и ρ. 2) h в метрах, g = 10. 3) p = ρgh, кПа = Па/1000. 4) Для воды 1 м → 10 кПа. 5) Паскаль — про передачу, ρgh — про столб.',
+      'В карман: p = ρgh. Вода: 5 м → 50 кПа. Масло 2 м → 18 кПа. Давление во все стороны. Гидравлика: малое S, большая F.'
     ],
     check: { q: 'Каково давление воды на глубине 5 м? (в кПа, ρ = 1000 кг/м³, g = 10)', choices: ['5', '50', '500'], ans: 1,
       exp: 'p = 1000 · 10 · 5 = 50 000 Па = 50 кПа.' },
@@ -3064,24 +3064,40 @@ window.WAVE_B = window.WAVE_B || {};
 
   const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
   const CSS=`<style>
-    @keyframes l104bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-    @keyframes l104jet{0%{stroke-dashoffset:24}100%{stroke-dashoffset:0}}
-    @keyframes l104pulse{0%,100%{opacity:.4}50%{opacity:1}}
-    @keyframes l104glow{0%,100%{filter:drop-shadow(0 0 2px ${BLUE})}50%{filter:drop-shadow(0 0 10px ${BLUE})}}
-    .l104c{transform-box:fill-box;transform-origin:center}
-    .l104-lab{paint-order:stroke fill;stroke:#071018;stroke-width:3.4px;stroke-linejoin:round}
-    .l104-bob{animation:l104bob 2.2s ease-in-out infinite}
-    .l104-jet{stroke-dasharray:6 5;animation:l104jet .7s linear infinite}
-    .l104-pulse{animation:l104pulse 1.4s ease-in-out infinite}
-    .l104-glow{animation:l104glow 1.8s ease-in-out infinite}
+    @keyframes p2rise{from{transform:scaleY(0);opacity:.2}to{transform:scaleY(1);opacity:1}}
+    @keyframes p2sink{0%{transform:translateY(-48px);opacity:0}70%{transform:translateY(6px);opacity:1}100%{transform:translateY(0);opacity:1}}
+    @keyframes p2bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+    @keyframes p2bub{0%{transform:translateY(0) scale(1);opacity:.85}100%{transform:translateY(-90px) scale(.35);opacity:0}}
+    @keyframes p2shim{0%{transform:translateX(0)}100%{transform:translateX(-22px)}}
+    @keyframes p2out{0%{transform:scale(.15);opacity:0}65%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:.9}}
+    @keyframes p2spray{0%{stroke-dashoffset:48}100%{stroke-dashoffset:0}}
+    @keyframes p2ring{0%{transform:scale(.2);opacity:.95}100%{transform:scale(2.4);opacity:0}}
+    @keyframes p2needle{from{transform:rotate(-50deg)}to{transform:rotate(var(--ang,20deg))}}
+    @keyframes p2lift{from{transform:translateY(28px)}to{transform:translateY(0)}}
+    @keyframes p2pulse{0%,100%{opacity:.35}50%{opacity:1}}
+    @keyframes p2glow{0%,100%{filter:drop-shadow(0 0 1px ${BLUE})}50%{filter:drop-shadow(0 0 12px ${BLUE})}}
+    @keyframes p2bar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    .p2f{transform-origin:50% 100%;transform-box:fill-box;animation:p2rise 1.15s cubic-bezier(.18,.86,.22,1) both}
+    .p2diver{transform-box:fill-box;transform-origin:center;animation:p2sink .9s cubic-bezier(.2,1.2,.3,1) both, p2bob 2.4s ease-in-out .9s infinite}
+    .p2bub{animation:p2bub 2.1s ease-out infinite}
+    .p2shim{animation:p2shim 1.8s linear infinite}
+    .p2out{transform-box:fill-box;transform-origin:center;animation:p2out .7s cubic-bezier(.2,1.4,.25,1) both}
+    .p2jet{stroke-dasharray:7 6;stroke-linecap:round;animation:p2spray .55s linear infinite}
+    .p2ring{transform-box:fill-box;transform-origin:center;animation:p2ring 2s ease-out infinite}
+    .p2needle{transform-box:fill-box;transform-origin:bottom center;animation:p2needle 1s cubic-bezier(.2,.8,.2,1) both}
+    .p2lift{animation:p2lift .85s cubic-bezier(.2,1.15,.25,1) both}
+    .p2bar{transform-origin:50% 100%;transform-box:fill-box;animation:p2bar .8s cubic-bezier(.2,.85,.2,1) both}
+    .p2glow{animation:p2glow 1.6s ease-in-out infinite}
+    .p2pulse{animation:p2pulse 1.3s ease-in-out infinite}
+    .p2lab{paint-order:stroke fill;stroke:#071018;stroke-width:3.4px;stroke-linejoin:round}
   </style>`;
   function lab(x,y,t,col,anchor,fs){
     const xx=Math.max(12, Math.min(228, +x)), yy=Math.max(14, Math.min(210, +y));
-    return `<text class="l104-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+    return `<text class="p2lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
   }
   function frame(inner){
-    try{ window._waveCss && _waveCss('css-l104v1', CSS); }catch(e){}
-    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,320px);height:auto;background:radial-gradient(circle at 50% 0%,#123044,#071018 74%);border-radius:16px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
+    try{ window._waveCss && _waveCss('css-l104v2', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,320px);height:auto;background:radial-gradient(circle at 50% 0%,#16425c,#071018 76%);border-radius:16px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
   }
   function note(title,text){
     return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
@@ -3090,51 +3106,45 @@ window.WAVE_B = window.WAVE_B || {};
   }
   function defs(){
     return `<defs>
-      <linearGradient id="pWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ad0ff" stop-opacity=".5"/><stop offset="1" stop-color="#163a58" stop-opacity=".95"/></linearGradient>
-      <linearGradient id="pOil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8c878" stop-opacity=".45"/><stop offset="1" stop-color="#6a4a18" stop-opacity=".9"/></linearGradient>
-      <linearGradient id="pSkin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd2a8"/><stop offset="1" stop-color="#c47a48"/></linearGradient>
+      <linearGradient id="p2w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ee0ff" stop-opacity=".55"/><stop offset="1" stop-color="#0d3a5c" stop-opacity=".96"/></linearGradient>
+      <linearGradient id="p2o" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0d08a" stop-opacity=".5"/><stop offset="1" stop-color="#5a3a10" stop-opacity=".95"/></linearGradient>
+      <linearGradient id="p2skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd8b0"/><stop offset="1" stop-color="#c47a40"/></linearGradient>
     </defs>`;
+  }
+  function bubbles(x, y0){
+    return [0,1,2,3].map(i=>`<circle class="p2bub" cx="${x-8+i*6}" cy="${y0}" r="${2.2+i%2}" fill="#d8f6ff" opacity=".7" style="animation-duration:${1.6+i*.25}s;animation-delay:${i*.28}s"/>`).join('');
   }
   function column(h, rho){
     h=Math.max(0.4, Math.min(10, +h));
     rho=rho||1000;
-    const top=36, bot=196, Hpx=bot-top;
+    const top=40, bot=198, Hpx=bot-top;
     const fill=h/10;
     const ySurf=bot-fill*Hpx;
-    const yDiv=bot-(h/10)*Hpx+8;
+    const yDiv=Math.min(bot-18, Math.max(ySurf+16, bot-fill*Hpx+10));
     const kPa=Math.round(rho*10*h/1000);
-    const isOil=rho<1000;
+    const oil=rho<1000;
     return `<g>
-      <rect x="78" y="${top}" width="84" height="${bot-top}" rx="8" fill="none" stroke="#3d6a88" stroke-width="2.2"/>
-      <rect x="80" y="${ySurf}" width="80" height="${bot-ySurf-2}" fill="${isOil?'url(#pOil)':'url(#pWater)'}"/>
-      <g class="l104-bob">
-        <circle cx="120" cy="${Math.min(bot-16, Math.max(ySurf+14, yDiv))}" r="11" fill="url(#pSkin)" stroke="#071018"/>
-        <rect x="114" y="${Math.min(bot-16, Math.max(ySurf+14, yDiv))+8}" width="12" height="16" rx="3" fill="#2a6a88"/>
+      <rect x="78" y="${top}" width="84" height="${bot-top}" rx="10" fill="none" stroke="#4a88aa" stroke-width="2.4"/>
+      <rect class="p2f" x="80" y="${ySurf}" width="80" height="${bot-ySurf-2}" fill="${oil?'url(#p2o)':'url(#p2w)'}"/>
+      <g class="p2shim" opacity=".35">
+        <path d="M 80 ${ySurf+2} Q 100 ${ySurf-4}, 120 ${ySurf+2} T 160 ${ySurf+2}" fill="none" stroke="#fff" stroke-width="2"/>
       </g>
+      <g class="p2diver">
+        <circle cx="120" cy="${yDiv}" r="11" fill="url(#p2skin)" stroke="#071018"/>
+        <rect x="114" y="${yDiv+8}" width="12" height="16" rx="3" fill="#1e5a7a"/>
+        <ellipse cx="120" cy="${yDiv-8}" rx="10" ry="5" fill="#cfefff" opacity=".45"/>
+      </g>
+      ${bubbles(120, Math.min(bot-8, yDiv+20))}
       ${lab(120, 22, h.toString().replace('.',',')+' м · '+kPa+' кПа', GOLD, 'middle', 13)}
-      ${lab(48, (ySurf+bot)/2, 'h', BLUE)}
     </g>`;
   }
-  function arrows(cx, cy){
-    const a=[[0,-22],[22,0],[0,22],[-22,0],[16,-16],[16,16],[-16,16],[-16,-16]];
-    return a.map((v,i)=>`<line class="l104-glow" x1="${cx}" y1="${cy}" x2="${cx+v[0]}" y2="${cy+v[1]}" stroke="${BLUE}" stroke-width="2.2" stroke-linecap="round" style="animation-delay:${i*.08}s"/>`).join('');
-  }
-  function wa(el,kf,opt){ try{ if(el&&el.animate) el.animate(kf,opt); }catch(e){} }
-  function boot104(root, step){
-    const svg=root.querySelector('svg'); if(!svg) return;
-    svg.style.pointerEvents='auto';
-    svg.querySelectorAll('.l104c, circle, rect').forEach((c,i)=>{
-      wa(c,[{transform:'scale(.85)',opacity:0},{transform:'scale(1)',opacity:1}],{duration:420, delay:i*12, fill:'both', easing:'cubic-bezier(.2,1.3,.25,1)'});
-    });
-    if(step===10){
-      svg.querySelectorAll('.l104-jet').forEach((j,i)=>{
-        wa(j,[{strokeDashoffset:30},{strokeDashoffset:0}],{duration:600+i*80, iterations:Infinity});
-      });
-    }
+  function arrows(){
+    const a=[[0,-26],[26,0],[0,26],[-26,0],[18,-18],[18,18],[-18,18],[-18,-18]];
+    return a.map((v,i)=>`<line class="p2out p2glow" x1="120" y1="118" x2="${120+v[0]}" y2="${118+v[1]}" stroke="${BLUE}" stroke-width="2.6" stroke-linecap="round" style="animation-delay:${i*.07}s"/>`).join('');
   }
 
   function visB104(el){
-    try{ window._waveCss && _waveCss('css-l104v1', CSS); }catch(e){}
+    try{ window._waveCss && _waveCss('css-l104v2', CSS); }catch(e){}
     const step=LV.step||0;
     const lk=(typeof lidKey==='function')?lidKey(LV.id):'104';
     if(typeof CHS==='undefined') window.CHS={};
@@ -3142,136 +3152,143 @@ window.WAVE_B = window.WAVE_B || {};
     const st=CHS[lk];
     const hM=Math.max(0.5, Math.min(10, +(st.h==null?2:st.h)));
     const rho=+(st.rho==null?1000:st.rho);
-    const kPa=Math.round(rho*10*hM/1000);
     let h='';
 
     if(step===0){
       const open=!!st.open;
       h=`<div class="wv-col">
-        ${frame(defs()+column(open?8:0.8, 1000)+lab(200, 80, open?'заложило':'берег', open?RED:GREEN))}
+        ${frame(defs()+column(open?8:0.7,1000)+lab(204, 84, open?'заложило':'берег', open?RED:GREEN))}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].open=!CHS[k].open;chRender(0);}catch(e){}">${open?'На берег':'Нырнуть'}</button>
-        ${note('Столб над головой','Не удар волны. Столб воды. Чем он выше, тем сильнее давит — в ушах это слышно первым.')}
+        ${note('Столб над головой','Не удар волны. Столб воды поднимается, пузыри идут вверх, ныряльщик садится глубже — давление растёт.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
-        ${frame(defs()+`<circle cx="120" cy="118" r="36" fill="${BLUE}22" stroke="${BLUE}"/>`+arrows(120,118)+lab(120, 24, 'во все стороны', GOLD))}
-        ${note('Не только вниз','На дно, на стенки и снизу вверх. Точка в жидкости не выбирает направление: давление скаляр, сила — по нормали к площадке.')}
+        ${frame(`<circle class="p2ring" cx="120" cy="118" r="22" fill="none" stroke="${BLUE}" stroke-width="2"/>`+
+          `<circle cx="120" cy="118" r="34" fill="${BLUE}18" stroke="${BLUE}"/>`+arrows()+lab(120, 24, 'во все стороны', GOLD))}
+        ${note('Не только вниз','На дно, на стенки и снизу вверх. Стрелки выстреливают из точки — давление скаляр, сила по нормали.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
-        ${frame(lab(120, 56, 'p = ρ · g · h', GOLD, 'middle', 22)+lab(120, 100, 'ρ кг/м³  ·  g ≈ 10  ·  h м', MUTED, 'middle', 12)+lab(120, 140, 'Па,  потом /1000 → кПа', GREEN, 'middle', 14)+lab(120, 178, 'вода: 1 м → 10 кПа', BLUE))}
-        ${note('Три множителя','Плотность жидкости, десятка и глубина. Не плотность ныряльщика. Не высота бассейна, если ты не на дне: h — твой столб над головой.')}
+        ${frame(lab(120, 56, 'p = ρ · g · h', GOLD, 'middle', 22)+lab(120, 100, 'ρ кг/м³  ·  g ≈ 10  ·  h м', MUTED, 'middle', 12)+lab(120, 142, 'Па, потом /1000 → кПа', GREEN)+lab(120, 178, 'вода: 1 м → 10 кПа', BLUE, 'middle', 14))}
+        ${note('Три множителя','Плотность жидкости, десятка и глубина. Не плотность ныряльщика. h — столб над тобой.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
           ${[['вода','1000 кг/м³',BLUE],['масло','900 кг/м³',GOLD],['керосин','800 кг/м³',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
-        ${note('Легче столб — слабее давит','Кубометр воды — тонна. Масло легче: тот же метр глубины даёт меньше паскалей.')}
+        ${note('Легче столб — слабее давит','Кубометр воды — тонна. Масло легче: тот же метр даёт меньше паскалей.')}
       </div>`;
     } else if(step===4){
+      const ang=-50+hM*10;
       h=`<div class="wv-col">
-        ${frame(defs()+column(hM, 1000))}
+        ${frame(defs()+column(hM,1000)+
+          `<g transform="translate(196,70)">
+            <path d="M 0 48 A 28 28 0 0 1 0 0" fill="none" stroke="#4a88aa" stroke-width="3"/>
+            <line class="p2needle" x1="0" y1="48" x2="0" y2="14" stroke="${RED}" stroke-width="2.6" style="--ang:${ang}deg"/>
+          </g>`)}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">h
           <input type="range" min="5" max="100" value="${Math.round(hM*10)}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].h=this.value/10;chRender(0);}catch(e){}">
           <b style="color:${GOLD};min-width:70px">${String(hM).replace('.',',')} м</b>
         </label>
-        ${note('Линейно','Удвоил глубину — удвоил давление. На манометре не скачок, а прямая. 2 м воды → 20 кПа.')}
+        ${note('Линейно','Столб растёт снизу, стрелка манометра едет вправо. Удвоил глубину — удвоил давление.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
         ${frame(
-          [['2 м','20',40],['5 м','50',90],['10 м','100',150]].map((x,i)=>`<rect class="l104c" x="${48+i*56}" y="${190-x[2]}" width="44" height="${x[2]}" rx="6" fill="${BLUE}" opacity="${.35+i*.2}"/>`+lab(70+i*56, 36, x[0], GOLD)+lab(70+i*56, 58, x[1]+' кПа', GREEN)).join('')
+          [['2 м','20',48],['5 м','50',96],['10 м','100',150]].map((x,i)=>
+            `<rect class="p2bar" x="${48+i*56}" y="${196-x[2]}" width="44" height="${x[2]}" rx="7" fill="${BLUE}" opacity="${.4+i*.2}" style="animation-delay:${i*.15}s"/>`+
+            lab(70+i*56, 34, x[0], GOLD)+lab(70+i*56, 54, x[1]+' кПа', GREEN)
+          ).join('')
         )}
-        ${note('Десять метров ≈ атмосфера','100 кПа — как воздух над тобой на суше. Водный столб умеет заменить небо, если его достаточно.')}
+        ${note('Десять метров ≈ атмосфера','Столбики вырастают снизу. 100 кПа — как воздух над тобой на суше.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
-        ${frame(defs()+column(5,1000)+lab(200, 120, '50 кПа', GREEN, 'middle', 16))}
-        ${note('Проверка','5 м · 10 кПа/м = 50 кПа. Не 5 (забыли десятку) и не 500 (лишний ноль).')}
+        ${frame(defs()+column(5,1000)+lab(204, 110, '50 кПа', GREEN, 'middle', 16))}
+        ${note('Проверка','5 м · 10 кПа/м = 50 кПа. Не 5 и не 500.')}
       </div>`;
     } else if(step===7){
       const oil=rho===900;
       h=`<div class="wv-col">
-        ${frame(defs()+column(2, oil?900:1000)+lab(200, 90, oil?'18 кПа':'20 кПа', oil?GOLD:BLUE))}
+        ${frame(defs()+column(2, oil?900:1000)+lab(204, 90, oil?'18 кПа':'20 кПа', oil?GOLD:BLUE))}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].rho=CHS[k].rho===900?1000:900;chRender(0);}catch(e){}">${oil?'Снова вода':'Залить масло'}</button>
-        ${note('Та же глубина','2 м масла → 18 кПа. 2 м воды → 20. Легче жидкость — меньше p. В задаче смотри, что налито.')}
+        ${note('Та же глубина','Столб перекрашивается и пересчитывается. Масло легче — 18 вместо 20.')}
       </div>`;
     } else if(step===8){
       const go=!!st.jet;
       h=`<div class="wv-col">
         ${frame(defs()+
-          `<rect x="70" y="40" width="70" height="150" rx="8" fill="url(#pWater)" stroke="#3d6a88" stroke-width="2"/>`+
+          `<rect class="p2f" x="64" y="42" width="64" height="148" rx="8" fill="url(#p2w)" stroke="#4a88aa" stroke-width="2"/>`+
           [0,1,2].map(i=>{
-            const y=70+i*40, len=go?28+i*28:8;
-            return `<circle cx="140" cy="${y}" r="4" fill="${BLUE}"/>`+
-              `<path class="l104-jet" d="M 140 ${y} Q ${140+len/2} ${y+8} ${140+len} ${y+18}" fill="none" stroke="${BLUE}" stroke-width="3"/>`;
-          }).join('')+
-          lab(120, 22, go?'нижняя бьёт дальше':'три дырки', GOLD)
+            const y=72+i*38, len=go?26+i*30:6;
+            return `<circle cx="128" cy="${y}" r="4.2" fill="${BLUE}"/>`+
+              (go?`<path class="p2jet" d="M 128 ${y} C ${128+len/2} ${y+4}, ${128+len*.7} ${y+10}, ${128+len} ${y+16}" fill="none" stroke="${BLUE}" stroke-width="3.4" style="animation-delay:${i*.12}s"/>`:'');
+          }).join('')+lab(120, 22, go?'нижняя бьёт дальше':'три дырки', GOLD)
         )}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].jet=1;chRender(0);}catch(e){}">${go?'Струи бьют':'Открыть дырки'}</button>
-        ${note('Глубже — быстрее','Нижний столб выше, давление больше, струя резче. Школьный опыт показывает рост p с глубиной без манометра.')}
+        ${note('Глубже — быстрее','Струи бегут штрихом. Нижний столб выше — путь длиннее.')}
       </div>`;
     } else if(step===9){
       h=`<div class="wv-col">
-        ${frame(lab(120, 70, 'надавил здесь', GOLD, 'middle', 16)+lab(120, 110, 'прибавилось везде', BLUE, 'middle', 16)+lab(120, 154, 'во все стороны одинаково', GREEN, 'middle', 13))}
-        ${note('Закон Паскаля','Не путай со столбом ρgh. Столб — про глубину. Паскаль — про передачу добавки. Надавил поршнем — плюс ко всем точкам сразу.')}
+        ${frame(lab(120, 70, 'надавил здесь', GOLD, 'middle', 16)+lab(120, 112, 'прибавилось везде', BLUE, 'middle', 16)+lab(120, 154, 'во все стороны одинаково', GREEN, 'middle', 13))}
+        ${note('Закон Паскаля','Столб — про глубину. Паскаль — про передачу добавки. Не мешай две идеи.')}
       </div>`;
     } else if(step===10){
       const on=!!st.ball;
       h=`<div class="wv-col">
         ${frame(
-          `<circle cx="120" cy="118" r="44" fill="${BLUE}18" stroke="${BLUE}" stroke-width="2.4"/>`+
+          `<circle class="p2ring" cx="120" cy="120" r="20" fill="none" stroke="${BLUE}" stroke-width="1.6"/>`+
+          `<circle cx="120" cy="120" r="42" fill="${BLUE}16" stroke="${BLUE}" stroke-width="2.4"/>`+
           (on?Array.from({length:8},(_,i)=>{
-            const a=i*Math.PI/4, x2=120+70*Math.cos(a), y2=118+70*Math.sin(a);
-            return `<line class="l104-jet" x1="120" y1="118" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${BLUE}" stroke-width="3"/>`;
+            const a=i*Math.PI/4, x2=120+68*Math.cos(a), y2=120+68*Math.sin(a);
+            return `<line class="p2jet" x1="120" y1="120" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${BLUE}" stroke-width="3.2" style="animation-delay:${i*.08}s"/>`;
           }).join(''):'')+
-          `<rect x="112" y="54" width="16" height="28" rx="3" fill="${GOLD}"/>`+
+          `<rect x="112" y="56" width="16" height="26" rx="3" fill="${GOLD}"/>`+
           lab(120, 22, on?'равные струйки':'шар Паскаля', GOLD)
         )}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].ball=1;chRender(0);}catch(e){}">${on?'Бьёт равно':'Надавить'}</button>
-        ${note('Одинаковая длина','Если бы давление любило низ, нижние струи были бы длиннее. Они равны — добавка ушла во все стороны.')}
+        ${note('Одинаковая длина','Кольцо разбегается, струйки одной длины. Давление не любит низ — оно равно.')}
       </div>`;
     } else if(step===11){
       const lift=!!st.lift;
       h=`<div class="wv-col">
         ${frame(
-          `<rect x="40" y="${lift?70:110}" width="44" height="70" rx="4" fill="#8aa0b4"/>`+
-          `<rect x="140" y="${lift?50:110}" width="72" height="${lift?90:70}" rx="4" fill="#c5d0da"/>`+
-          `<path d="M 62 180 C 62 200, 176 200, 176 180" fill="none" stroke="${BLUE}" stroke-width="8"/>`+
-          lab(62, 40, 'F₁', GOLD)+lab(176, 40, 'F₂ > F₁', GREEN)+
-          lab(120, 24, 'домкрат', GOLD)
+          `<rect x="38" y="112" width="48" height="68" rx="5" fill="#7a90a4"/>`+
+          `<rect class="${lift?'p2lift':''}" x="138" y="${lift?48:112}" width="78" height="${lift?132:68}" rx="5" fill="#d0dce6"/>`+
+          `<path d="M 62 182 C 62 204, 178 204, 178 182" fill="none" stroke="${BLUE}" stroke-width="9" class="p2glow"/>`+
+          lab(62, 36, 'F₁', GOLD)+lab(176, 36, 'F₂ > F₁', GREEN)+lab(120, 22, 'домкрат', GOLD)
         )}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].lift=1;chRender(0);}catch(e){}">${lift?'Подняли':'Жать малый'}</button>
-        ${note('Площади разные','p = F/S одно. Большой поршень — большая сила. Жмёшь слабо, машина едет вверх.')}
+        ${note('Площади разные','Большой поршень выезжает вверх. p одно, сила больше там, где площадь больше.')}
       </div>`;
     } else if(step===12){
       h=`<div class="wv-col">
-        ${frame(lab(120, 70, 'F₁ / S₁ = F₂ / S₂', GOLD, 'middle', 18)+lab(120, 112, 'S₂ = 5 · S₁  →  F₂ = 5 · F₁', GREEN, 'middle', 14)+lab(120, 154, 'путь большого меньше', MUTED))}
-        ${note('Выигрыш и проигрыш','Сила выросла, путь уменьшился. Золотое правило: что выиграл в силе, отдал в расстоянии.')}
+        ${frame(lab(120, 70, 'F₁ / S₁ = F₂ / S₂', GOLD, 'middle', 18)+lab(120, 112, 'S₂ = 5 · S₁  →  F₂ = 5 · F₁', GREEN, 'middle', 13)+lab(120, 154, 'путь большого меньше', MUTED))}
+        ${note('Выигрыш и проигрыш','Сила выросла, путь уменьшился. Что выиграл в силе, отдал в расстоянии.')}
       </div>`;
     } else if(step===13){
       h=`<div class="wv-col">
-        ${frame(`<circle cx="120" cy="118" r="48" fill="${GOLD}18" stroke="${GOLD}" stroke-width="3"/>`+arrows(120,118)+lab(120, 24, 'мяч и шина', GOLD))}
-        ${note('Газ тоже','Воздух давит на стенки равно. Шина держит машину площадью. Сдулся — давления мало, держаться нечем.')}
+        ${frame(`<circle class="p2ring" cx="120" cy="118" r="18" fill="none" stroke="${GOLD}" stroke-width="2"/>`+
+          `<circle cx="120" cy="118" r="46" fill="${GOLD}14" stroke="${GOLD}" stroke-width="3"/>`+arrows()+lab(120, 24, 'мяч и шина', GOLD))}
+        ${note('Газ тоже','Кольца и стрелки — давление на стенки равно. Сдулся — держаться нечем.')}
       </div>`;
     } else if(step===14){
       h=`<div class="wv-col">
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[['1','Жидкость и ρ',GOLD],['2','h в метрах, g = 10',BLUE],['3','p = ρgh, кПа = Па/1000',GREEN],['4','Паскаль — про передачу',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')}
         </div>
-        ${note('Рецепт','Столб считает глубину. Паскаль считает, как добавка разбежалась. Не мешай две идеи в одной фразе.')}
+        ${note('Рецепт','Столб считает глубину. Паскаль считает, как добавка разбежалась.')}
       </div>`;
     } else {
       h=`<div class="wv-col">
-        ${frame(defs()+column(5,1000)+lab(200, 80, '5 м → ?', GOLD))}
+        ${frame(defs()+column(5,1000)+lab(204, 80, '5 м → ?', GOLD))}
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">давление в кПа?</div>
         ${note('Проверка','50 кПа. Вода, 5 м, десятка на метр.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
-    if(el.isConnected){ try{ boot104(el, step); }catch(e){} }
   }
   window.WAVE_B[104]=visB104;
   (function(){
@@ -3287,22 +3304,22 @@ window.WAVE_B = window.WAVE_B || {};
     id: 105, title: 'Закон Ома: ток и напряжение', ico: '🔋',
     src: 'Физика · 8–9 класс · Закон Ома', subj: 'phys',
     explain: [
-      'Загадка цепи: одна лампа поёт, другая едва дышит. Батарейка та же, провода похожи. Что душит ток? В 1827 году Георг Ом нашёл три числа, которые этим управляют.',
-      'Три жителя. Ток I (амперы) — сколько заряда в секунду. Напряжение U (вольты) — напор источника. Сопротивление R (омы) — как сильно участок мешает. Без всех трёх цепь не прочитать.',
-      'Водопровод. Насос — батарейка (U — напор). Труба — провод (R — узость и длина). Поток — ток I. Сильнее насос — больше поток. Уже труба — меньше поток. Это не «вода течёт в проводе», это карта зависимостей.',
-      'Закон Ома: I = U / R. Больше напряжение — больше ток. Больше сопротивление — меньше ток. Прямая к U, обратная к R. Не сумма и не произведение вслепую.',
-      'Треугольник: U наверху, внизу I и R. Закрой неизвестное. Видны I и R — умножай, получишь U. Видны U и R — дели, получишь I. Видны U и I — дели, получишь R.',
-      'Счёт тока: 12 В и 6 Ом → I = 12 / 6 = 2 А. Подвинь напор и узость: лампа разгорается, когда I растёт. Не яркость «от батарейки напрямую», а от тока через нить.',
-      'Проверка: 15 В и 5 Ом → I = 3 А. Не 10 (сложили) и не 0,3 (перевернули не туда). Деление напряжения на сопротивление.',
-      'U растёт — I растёт. При R = 6 Ом: 6 В → 1 А, 12 В → 2 А, 24 В → 4 А. Удвоил напор — удвоил поток. Прямая пропорциональность.',
-      'R растёт — I падает. При U = 12 В: 3 Ом → 4 А, 6 Ом → 2 А, 12 Ом → 1 А. Удвоил сопротивление — ток вдвое меньше. Обратная пропорциональность.',
-      'Ищем R: U = 20 В, I = 4 А → R = 20 / 4 = 5 Ом. Ищем U: I = 3 А, R = 7 Ом → U = 21 В. Сначала имя неизвестного, потом сторона треугольника.',
-      'Имена единиц. Ампер — Андре-Мари Ампер. Вольт — Алессандро Вольта, «вольтов столб». Ом — Георг Ом. Фонарик ~0,3 А, чайник ~10 А. Число без единицы — не ответ.',
-      'От чего R. Длиннее провод — больше R. Толще — меньше R. Медь почти не мешает, нихром мешает сильно: из него спирали. Материал, длина, сечение — три ручки сопротивления.',
-      'Реостат. Ползунок меняет длину включённого куска. Больше R → меньше I → лампа тусклее. Так устроены старые диммеры. Крути ползунок на схеме — нить отвечает.',
-      'Безопасность. 0,001 А — щекотка. 0,01 А — мышцы сводит. 0,1 А — смертельно. Розетка не игрушка. Закон Ома считает учебную цепь, живую сеть — не щупают руками.',
-      'Рецепт. 1) Что ищут: I, U или R. 2) Треугольник. 3) Единицы А, В, Ом. 4) Проверка: I · R должно дать U. 5) Яркость лампы — про ток, не про «сильную батарейку» в отрыве от R.',
-      'В карман: I = U / R. U наверху. 15 В и 5 Ом → 3 А. 20 В и 4 А → 5 Ом. 3 А и 7 Ом → 21 В. Больше U — больше I, больше R — меньше I.'
+      'Загадка цепи: одна лампа поёт, другая едва дышит. Батарейка та же. Что душит ток? Георг Ом связал три числа одной дробью.',
+      'Три жителя. Ток I (амперы) — сколько заряда в секунду. Напряжение U (вольты) — напор источника. Сопротивление R (омы) — как сильно участок мешает.',
+      'Водопровод как карта. Насос — батарейка. Труба — провод. Поток — ток. Сильнее насос — больше поток. Уже труба — меньше поток.',
+      'Закон Ома: I = U / R. Больше напряжение — больше ток. Больше сопротивление — меньше ток. Прямая к U, обратная к R.',
+      'Треугольник: U наверху, внизу I и R. Закрой неизвестное. Видны I и R — умножай. Видны U и R — дели, получишь ток.',
+      'Счёт: 12 В и 6 Ом → I = 2 А. Крути напор и узость: нить разгорается, заряды бегут чаще, когда ток растёт.',
+      'Проверка: 15 В и 5 Ом → 3 А. Не 10 (сложили) и не 0,3 (перевернули).',
+      'U растёт — I растёт. При R = 6 Ом: 6 В → 1 А, 12 В → 2 А, 24 В → 4 А. Удвоил напор — удвоил поток.',
+      'R растёт — I падает. При U = 12 В: 3 Ом → 4 А, 6 Ом → 2 А, 12 Ом → 1 А. Удвоил сопротивление — ток вдвое меньше.',
+      'Ищем R: 20 В и 4 А → 5 Ом. Ищем U: 3 А и 7 Ом → 21 В. Сначала буква, потом сторона треугольника.',
+      'Ампер, вольт, ом. Фонарик ~0,3 А, чайник ~10 А. Число без единицы — не ответ.',
+      'R зависит от длины, сечения и материала. Медь почти не мешает, нихром мешает сильно.',
+      'Реостат: ползунок меняет длину включённого куска. Больше R — меньше I — лампа тусклее.',
+      'Безопасность. 0,001 А — щекотка. 0,01 А — сводит. 0,1 А — смертельно. Розетку руками не щупают.',
+      'Рецепт. 1) I, U или R. 2) Треугольник. 3) Единицы. 4) Проверка: I · R = U. 5) Яркость — про ток.',
+      'В карман: I = U / R. 15 В и 5 Ом → 3 А. 20 В и 4 А → 5 Ом. 3 А и 7 Ом → 21 В.'
     ],
     check: { q: 'Напряжение 15 В, сопротивление 5 Ом. Сила тока? (в А)', choices: ['3', '10', '0,3'], ans: 0,
       exp: 'I = U / R = 15 / 5 = 3 А.' },
@@ -3317,23 +3334,33 @@ window.WAVE_B = window.WAVE_B || {};
 
   const GOLD='#ffd76a', BLUE='#7fd1ff', GREEN='#8fd1a8', RED='#e86a5a', MUTED='#8fa08f';
   const CSS=`<style>
-    @keyframes l105run{to{offset-distance:100%}}
-    @keyframes l105glow{0%,100%{filter:drop-shadow(0 0 2px #ffd76a)}50%{filter:drop-shadow(0 0 14px #ffe08a)}}
-    @keyframes l105pulse{0%,100%{opacity:.4}50%{opacity:1}}
-    @keyframes l105flick{0%,100%{opacity:.85}40%{opacity:1}70%{opacity:.7}}
-    .l105e{offset-path:path('M 44 118 H 196'); animation:l105run 1.6s linear infinite}
-    .l105-lab{paint-order:stroke fill;stroke:#071018;stroke-width:3.4px;stroke-linejoin:round}
-    .l105-glow{animation:l105glow 1.2s ease-in-out infinite}
-    .l105-pulse{animation:l105pulse 1.4s ease-in-out infinite}
-    .l105c{transform-box:fill-box;transform-origin:center}
+    @keyframes o2run{to{offset-distance:100%}}
+    @keyframes o2dash{to{stroke-dashoffset:0}}
+    @keyframes o2glow{0%,100%{filter:drop-shadow(0 0 2px #ffd36a) brightness(1)}40%{filter:drop-shadow(0 0 18px #fff1a8) brightness(1.35)}70%{filter:drop-shadow(0 0 8px #ffc84a) brightness(1.1)}}
+    @keyframes o2flick{0%,100%{opacity:.82}45%{opacity:1}72%{opacity:.7}}
+    @keyframes o2volt{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.18)}}
+    @keyframes o2spark{0%{opacity:0;transform:scale(.2)}30%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(.4)}}
+    @keyframes o2bar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    @keyframes o2pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+    @keyframes o2halo{0%{transform:scale(.6);opacity:.8}100%{transform:scale(1.8);opacity:0}}
+    @keyframes o2flow{0%{stroke-dashoffset:32}100%{stroke-dashoffset:0}}
+    .o2e{offset-path:path('M 48 122 H 192');animation:o2run 1.35s linear infinite}
+    .o2wire{stroke-dasharray:10 8;animation:o2flow .7s linear infinite}
+    .o2lamp{transform-box:fill-box;transform-origin:center;animation:o2glow 1.1s ease-in-out infinite, o2flick 2.2s ease-in-out infinite}
+    .o2halo{transform-box:fill-box;transform-origin:center;animation:o2halo 1.6s ease-out infinite}
+    .o2volt{transform-box:fill-box;transform-origin:center;animation:o2volt .8s ease-in-out infinite}
+    .o2spark{transform-box:fill-box;transform-origin:center;animation:o2spark .7s ease-out infinite}
+    .o2bar{transform-origin:50% 100%;transform-box:fill-box;animation:o2bar .75s cubic-bezier(.2,.85,.2,1) both}
+    .o2pop{transform-box:fill-box;transform-origin:center;animation:o2pop .45s cubic-bezier(.2,1.4,.25,1) both}
+    .o2lab{paint-order:stroke fill;stroke:#071018;stroke-width:3.4px;stroke-linejoin:round}
   </style>`;
   function lab(x,y,t,col,anchor,fs){
     const xx=Math.max(12, Math.min(228, +x)), yy=Math.max(14, Math.min(210, +y));
-    return `<text class="l105-lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
+    return `<text class="o2lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
   }
   function frame(inner){
-    try{ window._waveCss && _waveCss('css-l105v1', CSS); }catch(e){}
-    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,320px);height:auto;background:radial-gradient(circle at 50% 0%,#1c2030,#071018 74%);border-radius:16px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
+    try{ window._waveCss && _waveCss('css-l105v2', CSS); }catch(e){}
+    return `${CSS}<svg viewBox="0 0 240 220" style="width:min(100%,320px);height:auto;background:radial-gradient(circle at 50% 0%,#241c3a,#071018 76%);border-radius:16px;display:block;margin:0 auto;overflow:visible;pointer-events:auto">${inner}</svg>`;
   }
   function note(title,text){
     return `<div style="max-width:340px;width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid #3d5c49;border-radius:12px;padding:10px 12px">
@@ -3341,40 +3368,37 @@ window.WAVE_B = window.WAVE_B || {};
       <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${text}</div></div>`;
   }
   function lamp(I){
-    const on=I>0.15;
-    const glow=Math.max(0.15, Math.min(1, I/4));
-    const col=on?`rgba(255, 220, 120, ${glow})`:'#3a4030';
+    const on=I>0.2;
+    const g=Math.max(0.12, Math.min(1, I/4));
+    const col=on?`rgba(255, 224, 130, ${0.35+g*.65})`:'#2a2e22';
     return `<g>
-      <ellipse class="${on?'l105-glow':''}" cx="120" cy="72" rx="${18+glow*8}" ry="${22+glow*6}" fill="${col}" stroke="${GOLD}" stroke-width="2"/>
-      <rect x="108" y="92" width="24" height="14" rx="3" fill="#8a8a70"/>
-      <path d="M 112 92 Q 120 78 128 92" fill="none" stroke="#5a4030" stroke-width="1.6"/>
+      ${on?`<ellipse class="o2halo" cx="120" cy="70" rx="${26+g*10}" ry="${30+g*8}" fill="none" stroke="${GOLD}" stroke-width="1.4"/>`:''}
+      <ellipse class="${on?'o2lamp':''}" cx="120" cy="70" rx="${16+g*8}" ry="${20+g*7}" fill="${col}" stroke="${GOLD}" stroke-width="2.2"/>
+      <path d="M 112 88 Q 120 74 128 88" fill="none" stroke="#6a4830" stroke-width="1.7"/>
+      <rect x="108" y="90" width="24" height="13" rx="3" fill="#8a8870"/>
     </g>`;
   }
   function batt(){
-    return `<g>
-      <line x1="44" y1="100" x2="44" y2="136" stroke="${GOLD}" stroke-width="5"/>
-      <line x1="54" y1="108" x2="54" y2="128" stroke="${GOLD}" stroke-width="3"/>
-      ${lab(49, 154, 'U', GOLD, 'middle', 11)}
+    return `<g class="o2volt">
+      <line x1="42" y1="102" x2="42" y2="142" stroke="${GOLD}" stroke-width="6" stroke-linecap="round"/>
+      <line x1="54" y1="110" x2="54" y2="134" stroke="${GOLD}" stroke-width="3.2"/>
+      ${lab(48, 158, 'U', GOLD, 'middle', 11)}
     </g>`;
   }
   function wire(){
-    return `<path d="M 54 118 H 196" fill="none" stroke="#4a6070" stroke-width="6" stroke-linecap="round"/>`;
+    return `<path class="o2wire" d="M 54 122 H 192" fill="none" stroke="#6a90aa" stroke-width="5.5" stroke-linecap="round"/>`;
   }
   function electrons(n, speed){
-    const dur=Math.max(0.45, Math.min(2.4, 2.2/Math.max(0.3, speed)));
-    return Array.from({length:n},(_,i)=>`<circle class="l105e" r="4" fill="${GOLD}" style="animation-duration:${dur}s;animation-delay:${(i/n)*dur}s"/>`).join('');
+    const dur=Math.max(0.4, Math.min(2.2, 1.8/Math.max(0.35, speed)));
+    return Array.from({length:n},(_,i)=>`<circle class="o2e" r="4.2" fill="${GOLD}" style="animation-duration:${dur}s;animation-delay:${(i/n)*dur}s"/>`).join('');
   }
-  function wa(el,kf,opt){ try{ if(el&&el.animate) el.animate(kf,opt); }catch(e){} }
-  function boot105(root){
-    const svg=root.querySelector('svg'); if(!svg) return;
-    svg.style.pointerEvents='auto';
-    svg.querySelectorAll('.l105c, ellipse').forEach((c,i)=>{
-      wa(c,[{transform:'scale(.7)',opacity:0},{transform:'scale(1)',opacity:1}],{duration:380, delay:i*20, fill:'both', easing:'cubic-bezier(.2,1.4,.25,1)'});
-    });
+  function sparks(){
+    return [[70,108],[110,136],[150,108],[180,136]].map((p,i)=>
+      `<circle class="o2spark" cx="${p[0]}" cy="${p[1]}" r="3" fill="#fff6c8" style="animation-delay:${i*.18}s"/>`).join('');
   }
 
   function visB105(el){
-    try{ window._waveCss && _waveCss('css-l105v1', CSS); }catch(e){}
+    try{ window._waveCss && _waveCss('css-l105v2', CSS); }catch(e){}
     const step=LV.step||0;
     const lk=(typeof lidKey==='function')?lidKey(LV.id):'105';
     if(typeof CHS==='undefined') window.CHS={};
@@ -3389,9 +3413,9 @@ window.WAVE_B = window.WAVE_B || {};
     if(step===0){
       const bright=!!st.on;
       h=`<div class="wv-col">
-        ${frame(batt()+wire()+electrons(bright?8:2, bright?3:0.4)+lamp(bright?3:0.2)+lab(120, 24, bright?'лампа поёт':'кто душит ток?', GOLD))}
+        ${frame(batt()+wire()+electrons(bright?9:2, bright?3.2:0.4)+lamp(bright?3.2:0.15)+(bright?sparks():'')+lab(120, 24, bright?'лампа поёт':'кто душит ток?', GOLD))}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].on=1;chRender(0);}catch(e){}">${bright?'Горит':'Замкнуть'}</button>
-        ${note('Две лампы, одна загадка','Не «батарейка слабая». Три числа: напор, узость, поток. Ом связал их одной дробью.')}
+        ${note('Загадка нити','Провод бежит штрихом, заряды едут по пути, нить дышит светом. Три числа решают, будет ли песня или тление.')}
       </div>`;
     } else if(step===1){
       h=`<div class="wv-col">
@@ -3403,22 +3427,22 @@ window.WAVE_B = window.WAVE_B || {};
     } else if(step===2){
       h=`<div class="wv-col">
         ${frame(
-          lab(48, 70, 'насос U', GOLD)+lab(120, 70, 'труба R', GREEN)+lab(192, 70, 'поток I', BLUE)+
-          `<path d="M 30 120 C 70 90, 110 150, 150 110 S 210 140, 220 120" fill="none" stroke="${BLUE}" stroke-width="6"/>`+
+          lab(48, 64, 'насос U', GOLD)+lab(120, 64, 'труба R', GREEN)+lab(192, 64, 'поток I', BLUE)+
+          `<path class="o2wire" d="M 28 124 C 70 88, 110 160, 152 112 S 214 150, 226 124" fill="none" stroke="${BLUE}" stroke-width="6"/>`+
           lab(120, 24, 'карта, не вода в проводе', GOLD, 'middle', 13)
         )}
-        ${note('Водопровод как карта','Напор больше — поток больше. Труба уже — поток меньше. Так запоминают закон, не утверждают, что в меди плещется река.')}
+        ${note('Водопровод как карта','Напор больше — поток больше. Труба уже — поток меньше.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
         ${frame(lab(120, 80, 'I = U / R', GOLD, 'middle', 26)+lab(120, 124, 'к U прямо, к R обратно', GREEN)+lab(120, 164, 'не сумма и не «на глаз»', MUTED))}
-        ${note('Закон','Ток — частное. Увеличил U — I вырос. Увеличил R — I упал. Это и есть Ом.')}
+        ${note('Закон','Ток — частное. Увеличил U — I вырос. Увеличил R — I упал.')}
       </div>`;
     } else if(step===4){
       const map={U:'U = I · R', I:'I = U / R', R:'R = U / I'};
       h=`<div class="wv-col">
         ${frame(
-          `<polygon points="120,36 40,176 200,176" fill="${GOLD}14" stroke="${GOLD}" stroke-width="2"/>`+
+          `<polygon class="o2pop" points="120,36 40,176 200,176" fill="${GOLD}14" stroke="${GOLD}" stroke-width="2"/>`+
           lab(120, 70, hid==='U'?'?':'U', hid==='U'?RED:GOLD, 'middle', 22)+
           lab(70, 164, hid==='I'?'?':'I', hid==='I'?RED:BLUE, 'middle', 20)+
           lab(170, 164, hid==='R'?'?':'R', hid==='R'?RED:GREEN, 'middle', 20)+
@@ -3428,11 +3452,11 @@ window.WAVE_B = window.WAVE_B || {};
           ${[['U','закрыть U',GOLD],['I','закрыть I',BLUE],['R','закрыть R',GREEN]].map(x=>`<button type="button" class="btn" style="border-color:${hid===x[0]?x[2]:'#3d5c49'}"
             onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].hid='${x[0]}';chRender(0);}catch(e){}">${x[1]}</button>`).join('')}
         </div>
-        ${note('Треугольник','U наверху всегда. Снизу произведение I · R. Ищешь ток — дели напряжение на сопротивление.')}
+        ${note('Треугольник','U наверху. Снизу произведение. Ищешь ток — дели напряжение на сопротивление.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
-        ${frame(batt()+wire()+electrons(Math.max(2, Math.min(10, Math.round(I*2))), I)+lamp(I)+lab(120, 24, 'I = '+String(I).replace('.',',')+' А', GOLD)+lab(120, 200, U+' В  ·  '+R+' Ом', MUTED))}
+        ${frame(batt()+wire()+electrons(Math.max(2, Math.min(12, Math.round(I*2.4))), I)+lamp(I)+sparks()+lab(120, 24, 'I = '+String(I).replace('.',',')+' А', GOLD)+lab(120, 200, U+' В  ·  '+R+' Ом', MUTED))}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">U
           <input type="range" min="1" max="24" value="${U}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].U=+this.value;chRender(0);}catch(e){}">
@@ -3443,54 +3467,50 @@ window.WAVE_B = window.WAVE_B || {};
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].R=+this.value;chRender(0);}catch(e){}">
           <b style="color:${GREEN};min-width:48px">${R} Ом</b>
         </label>
-        ${note('Живая цепь','Крути напор и узость. Заряды бегут быстрее, лампа ярче — когда ток вырос. 12 / 6 = 2 А.')}
+        ${note('Живая цепь','Батарея дышит, провод бежит, заряды мчатся, нить пульсирует. 12 / 6 = 2 А.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
         ${frame(lab(120, 70, '15 / 5', GOLD, 'middle', 24)+lab(120, 118, 'I = 3 А', GREEN, 'middle', 22)+lab(120, 158, 'не 10 и не 0,3', MUTED))}
-        ${note('Проверка','Деление. Сложение 15+5 не про ток. Переворот 5/15 — не закон Ома.')}
+        ${note('Проверка','Деление. Сложение и переворот дроби — чужие ответы.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
         ${frame(
-          [[6,1],[12,2],[24,4]].map((x,i)=>`<rect class="l105c" x="${40+i*62}" y="${170-x[1]*28}" width="48" height="${x[1]*28}" rx="6" fill="${GOLD}" opacity="${.4+i*.2}"/>`+lab(64+i*62, 36, x[0]+' В', GOLD)+lab(64+i*62, 56, x[1]+' А', GREEN)).join('')
+          [[6,1],[12,2],[24,4]].map((x,i)=>`<rect class="o2bar" x="${40+i*62}" y="${176-x[1]*28}" width="48" height="${x[1]*28}" rx="7" fill="${GOLD}" opacity="${.45+i*.18}" style="animation-delay:${i*.14}s"/>`+lab(64+i*62, 34, x[0]+' В', GOLD)+lab(64+i*62, 54, x[1]+' А', GREEN)).join('')
         )}
-        ${note('Прямо к U','R заморожен. Напор вдвое — ток вдвое. График — прямая через ноль.')}
+        ${note('Прямо к U','Столбики вырастают снизу. Напор вдвое — ток вдвое.')}
       </div>`;
     } else if(step===8){
       h=`<div class="wv-col">
         ${frame(
-          [[3,4],[6,2],[12,1]].map((x,i)=>`<rect class="l105c" x="${40+i*62}" y="${170-x[1]*28}" width="48" height="${x[1]*28}" rx="6" fill="${GREEN}" opacity="${.7-i*.15}"/>`+lab(64+i*62, 36, x[0]+' Ом', GREEN)+lab(64+i*62, 56, x[1]+' А', GOLD)).join('')
+          [[3,4],[6,2],[12,1]].map((x,i)=>`<rect class="o2bar" x="${40+i*62}" y="${176-x[1]*28}" width="48" height="${x[1]*28}" rx="7" fill="${GREEN}" opacity="${.75-i*.15}" style="animation-delay:${i*.14}s"/>`+lab(64+i*62, 34, x[0]+' Ом', GREEN)+lab(64+i*62, 54, x[1]+' А', GOLD)).join('')
         )}
-        ${note('Обратно к R','U заморожен. Сопротивление вдвое — ток вдвое меньше. Уже труба, меньше поток.')}
+        ${note('Обратно к R','Сопротивление вдвое — ток вдвое меньше. Столбики это показывают сразу.')}
       </div>`;
     } else if(step===9){
       h=`<div class="wv-col">
         ${frame(lab(120, 60, 'R = 20 / 4 = 5 Ом', GOLD, 'middle', 16)+lab(120, 110, 'U = 3 · 7 = 21 В', GREEN, 'middle', 16)+lab(120, 154, 'сначала имя неизвестного', MUTED))}
-        ${note('Две стороны','Ищешь омы — дели вольты на амперы. Ищешь вольты — умножай. Не начинай с числа, начни с буквы.')}
+        ${note('Две стороны','Ищешь омы — дели вольты на амперы. Ищешь вольты — умножай.')}
       </div>`;
     } else if(step===10){
       h=`<div class="wv-col">
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
           ${[['А ампер','~0,3 фонарик · ~10 чайник',GOLD],['В вольт','столб Вольты, напор',BLUE],['Ом','насколько мешает участок',GREEN]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${x[2]}">${x[0]}</b><div style="color:#e8dcc8;font-size:13px">${x[1]}</div></div>`).join('')}
         </div>
-        ${note('Имена','Число без единицы — не ответ. 3 чего? Амперы, если спрашивали ток.')}
+        ${note('Имена','Число без единицы — не ответ.')}
       </div>`;
     } else if(step===11){
       h=`<div class="wv-col">
-        ${frame(
-          lab(120, 50, 'длиннее → R больше', GOLD)+
-          lab(120, 90, 'толще → R меньше', BLUE)+
-          lab(120, 130, 'медь почти не мешает', GREEN)+
-          lab(120, 170, 'нихром мешает сильно', RED)
-        )}
-        ${note('Три ручки R','Длина, сечение, материал. Спираль чайника длинная и нихромовая — специально, чтобы греть, не чтобы «пропустить всё».')}
+        ${frame(lab(120, 50, 'длиннее → R больше', GOLD)+lab(120, 90, 'толще → R меньше', BLUE)+lab(120, 130, 'медь почти не мешает', GREEN)+lab(120, 170, 'нихром мешает сильно', RED))}
+        ${note('Три ручки R','Длина, сечение, материал. Спираль чайника длинная и нихромовая — чтобы греть.')}
       </div>`;
     } else if(step===12){
       h=`<div class="wv-col">
-        ${frame(batt()+wire()+electrons(Math.max(2, Math.min(10, Math.round(I*2))), I)+lamp(I)+
-          `<rect x="150" y="96" width="40" height="44" rx="6" fill="#2a3a44" stroke="${GREEN}"/>`+
-          `<circle cx="${150+8+(R-1)/23*24}" cy="118" r="6" fill="${GOLD}"/>`+
+        ${frame(batt()+wire()+electrons(Math.max(2, Math.min(12, Math.round(I*2.4))), I)+lamp(I)+
+          `<rect x="148" y="98" width="46" height="48" rx="7" fill="#1e2c38" stroke="${GREEN}"/>`+
+          `<circle class="o2pop" cx="${154+(R-1)/23*32}" cy="122" r="7" fill="${GOLD}"/>`+
+          sparks()+
           lab(120, 24, 'реостат · I = '+String(I).replace('.',',')+' А', GOLD, 'middle', 13)
         )}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">R
@@ -3498,14 +3518,14 @@ window.WAVE_B = window.WAVE_B || {};
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].R=+this.value;chRender(0);}catch(e){}">
           <b style="color:${GREEN}">${R} Ом</b>
         </label>
-        ${note('Ползунок яркости','Длиннее включённый кусок — больше R — меньше I — темнее нить. Диммер в учебной версии.')}
+        ${note('Ползунок яркости','Нить и заряды отвечают сразу: длиннее кусок — темнее свет.')}
       </div>`;
     } else if(step===13){
       h=`<div class="wv-col">
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
           ${[['0,001 А','щекотка',GREEN],['0,01 А','сводит мышцы',GOLD],['0,1 А','смертельно',RED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
         </div>
-        ${note('Уважение к розетке','Закон Ома считают на батарейке и лампе. Живую сеть руками не проверяют. Десятая ампера — уже предел, который не прощают.')}
+        ${note('Уважение к розетке','Учебную цепь считают. Живую сеть руками не проверяют.')}
       </div>`;
     } else if(step===14){
       const POOL=[['I',15,5],['I',12,6],['R',20,4],['U',3,7]];
@@ -3525,13 +3545,12 @@ window.WAVE_B = window.WAVE_B || {};
       </div>`;
     } else {
       h=`<div class="wv-col">
-        ${frame(batt()+wire()+electrons(6,3)+lamp(3)+lab(120, 24, '15 В и 5 Ом', GOLD))}
+        ${frame(batt()+wire()+electrons(8,3)+lamp(3)+sparks()+lab(120, 24, '15 В и 5 Ом', GOLD))}
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">ток ? А</div>
         ${note('Проверка','3 А. I = 15 / 5.')}
       </div>`;
     }
     el.innerHTML=`<div class="wv">${h}</div>`;
-    if(el.isConnected){ try{ boot105(el); }catch(e){} }
   }
   window.WAVE_B[105]=visB105;
   (function(){
