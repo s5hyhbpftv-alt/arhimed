@@ -8748,6 +8748,58 @@ function visL51(el){
         <animate attributeName="opacity" values=".12;.45;.12" dur="${(5+k*0.6).toFixed(1)}s" repeatCount="indefinite"/></circle>`).join('')}</g>
       <ellipse cx="180" cy="198" rx="152" ry="24" fill="url(#qGlow)" opacity="${(0.12+hlev*0.5).toFixed(2)}">
         <animate attributeName="opacity" values="${(0.12+hlev*0.5).toFixed(2)};${(0.2+hlev*0.6).toFixed(2)};${(0.12+hlev*0.5).toFixed(2)}" dur="4.2s" repeatCount="indefinite"/></ellipse></g>`;
+    /* СМЫСЛОВЫЕ АНИМАЦИИ: у каждого шага своё движение, привязанное к его смыслу */
+    const extra=(n)=>{
+      const pulse=(x,y,w,h,c,delay)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="9" fill="none" stroke="${c}" stroke-width="1.8" opacity="0">
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.7;1" dur="2.4s" begin="${delay}s" repeatCount="indefinite"/></rect>`;
+      if(n===1) return `<g><circle cx="120" cy="164" r="12" fill="none" stroke="#7fd1ff" stroke-width="1.5" opacity=".7">
+          <animate attributeName="r" values="11;18;11" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;.7" dur="2.6s" repeatCount="indefinite"/></circle>
+        <circle cx="250" cy="150" r="12" fill="none" stroke="#ffd76a" stroke-width="1.5" opacity=".7">
+          <animate attributeName="r" values="11;18;11" dur="2.2s" begin=".5s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;.7" dur="2.2s" begin=".5s" repeatCount="indefinite"/></circle>
+        <circle r="5" fill="#ffd76a"><animateMotion dur="3.2s" repeatCount="indefinite" path="M214 168 L262 100"/></circle></g>`;
+      if(n===3) return `<g><circle r="6" fill="#ffd76a" opacity=".9"><animateMotion dur="2.4s" repeatCount="indefinite" path="M90 62 L90 108"/></circle>
+        <circle cx="90" cy="120" r="30" fill="none" stroke="#ffd76a" stroke-width="1.4" opacity=".5">
+          <animate attributeName="r" values="30;40;30" dur="2.4s" repeatCount="indefinite"/></circle></g>`;
+      if(n===7) return `<g>${[[70,'0s'],[180,'.4s'],[292,'.8s']].map(q=>`<circle cx="${q[0]}" cy="40" r="7" fill="#ffd76a" opacity=".85">
+          <animate attributeName="opacity" values="0;1;.2" dur="1.6s" begin="${q[1]}" repeatCount="indefinite"/>
+          <animate attributeName="r" values="4;9;4" dur="1.6s" begin="${q[1]}" repeatCount="indefinite"/></circle>`).join('')}
+        <circle r="4" fill="#7fd1ff"><animateMotion dur="2.8s" repeatCount="indefinite" path="M40 160 L320 160"/></circle></g>`;
+      if(n===8) return `<g>${[0,1,2].map(k=>`<path d="M${100+k*10} 150 q8 -18 0 -34" fill="none" stroke="#ff9d3c" stroke-width="2" opacity="0">
+          <animate attributeName="opacity" values="0;.85;0" dur="2s" begin="${(k*0.35).toFixed(2)}s" repeatCount="indefinite"/>
+          <animateTransform attributeName="transform" type="translate" values="0 0;-6 -22" dur="2s" begin="${(k*0.35).toFixed(2)}s" repeatCount="indefinite"/></path>`).join('')}
+        <circle cx="250" cy="110" r="38" fill="none" stroke="#ffd76a" stroke-width="1.3" opacity=".5">
+          <animate attributeName="r" values="36;44;36" dur="2.6s" repeatCount="indefinite"/></circle></g>`;
+      if(n===9) return `<g>${[0,1,2].map(k=>pulse(12+k*110,86,92,60,'#ffd76a',(k*0.55).toFixed(2))).join('')}
+        <circle r="5" fill="#7de0a0"><animateMotion dur="2.6s" repeatCount="indefinite" path="M20 176 L340 176"/></circle></g>`;
+      if(n===10) return `<g>${[0,1,2].map(k=>`<circle cx="${62+k*16}" cy="128" r="3" fill="#eaffff" opacity=".85">
+          <animate attributeName="cy" values="136;112" dur="1.1s" begin="${(k*0.22).toFixed(2)}s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.9;0" dur="1.1s" begin="${(k*0.22).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}
+        ${[0,1,2].map(k=>`<circle cx="${230+k*16}" cy="128" r="3" fill="#eaffff" opacity=".7">
+          <animate attributeName="cy" values="136;112" dur="2.2s" begin="${(k*0.45).toFixed(2)}s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.7;0" dur="2.2s" begin="${(k*0.45).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}</g>`;
+      if(n===12) return `<g>${[0,1,2,3].map(k=>`<path d="M${146+k*12} 46 q8 -14 0 -26" fill="none" stroke="#ff9d3c" stroke-width="2" opacity="0">
+          <animate attributeName="opacity" values="0;.8;0" dur="2.4s" begin="${(k*0.4).toFixed(2)}s" repeatCount="indefinite"/>
+          <animateTransform attributeName="transform" type="translate" values="0 0;${k%2?7:-7} -20" dur="2.4s" begin="${(k*0.4).toFixed(2)}s" repeatCount="indefinite"/></path>`).join('')}</g>`;
+      if(n===13) return `<g>${[0,1,2,3].map(k=>`<circle cx="${58+k*86}" cy="96" r="26" fill="none" stroke="#7fd1ff" stroke-width="1.5" opacity=".55">
+          <animate attributeName="r" values="24;34;24" dur="2.2s" begin="${(k*0.3).toFixed(2)}s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values=".55;.05;.55" dur="2.2s" begin="${(k*0.3).toFixed(2)}s" repeatCount="indefinite"/></circle>`).join('')}</g>`;
+      if(n===14) return `<g><circle cx="300" cy="40" r="18" fill="#ffe6b0" opacity=".35"><animate attributeName="r" values="16;22;16" dur="3.4s" repeatCount="indefinite"/></circle>
+        <circle r="4" fill="#bfe6ff"><animateMotion dur="4.2s" repeatCount="indefinite" path="M320 60 q-40 30 -120 34"/></circle>
+        <circle r="4" fill="#ffd76a"><animateMotion dur="4.6s" begin="1s" repeatCount="indefinite" path="M40 150 q60 26 120 30"/></circle></g>`;
+      if(n===15) return `<g>${[0,1,2,3].map(k=>pulse(30,26+k*40,300,34,'#7fd1ff',(k*0.5).toFixed(2))).join('')}
+        <circle cx="20" cy="43" r="4.5" fill="#ffd76a"><animate attributeName="cy" values="43;163;43" dur="3.6s" repeatCount="indefinite"/></circle></g>`;
+      if(n===16) return `<g>${[0,1,2].map(k=>pulse(30,50+k*38,300,30,'#7de0a0',(k*0.6).toFixed(2))).join('')}
+        <circle r="5" fill="#7de0a0"><animateMotion dur="3s" repeatCount="indefinite" path="M40 188 L320 188"/></circle></g>`;
+      if(n===17) return `<g>${pulse(96,126,168,44,'#7de0a0','0s')}
+        <circle cx="130" cy="148" r="4" fill="#7de0a0"><animateMotion dur="2.4s" repeatCount="indefinite" path="M110 148 L250 148"/></circle>
+        <circle cx="292" cy="196" r="6" fill="none" stroke="#7de0a0" stroke-width="1.6" opacity=".8">
+          <animate attributeName="r" values="5;11;5" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0;.8" dur="2s" repeatCount="indefinite"/></circle></g>`;
+      if(n===4) return `<g><circle r="4.5" fill="#ffd76a"><animateMotion dur="3s" repeatCount="indefinite" path="M118 190 L272 190"/></circle></g>`;
+      if(n===5) return `<g><circle r="4.5" fill="#7fd1ff"><animateMotion dur="3.4s" repeatCount="indefinite" path="M60 120 q60 6 120 -30"/></circle></g>`;
+      if(n===6) return `<g><circle r="4" fill="#ff9d3c"><animateMotion dur="1s" repeatCount="indefinite" path="M216 190 L304 190"/></circle></g>`;
+      if(n===11) return `<g><circle r="4" fill="#7fd1ff"><animateMotion dur="2.6s" repeatCount="indefinite" path="M84 40 L84 182"/></circle></g>`;
+      if(n===2) return `<g><circle r="5" fill="#ff9d3c"><animateMotion dur="2.2s" repeatCount="indefinite" path="M216 140 L136 140"/></circle></g>`;
+      if(n===0) return `<g><circle r="5" fill="#ffd76a"><animateMotion dur="2.6s" repeatCount="indefinite" path="M96 120 L170 120"/></circle></g>`;
+      return '';
+    };
     /* КОМПАКТНЫЙ ИНДИКАТОР МОДЕЛИ: шкала + значение + состояние (без шарика) */
     const hdr=()=>`<g transform="translate(6 4)">
       <rect width="348" height="26" rx="9" fill="rgba(9,15,20,.74)" stroke="rgba(127,209,255,.26)" stroke-width="1"/>
@@ -8772,7 +8824,7 @@ function visL51(el){
       <linearGradient id="qHeat" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6fd0ff"/><stop offset=".45" stop-color="#ffe066"/><stop offset="1" stop-color="#ff5a2c"/></linearGradient>
     </defs>`;
     const S=(body,bg)=>`<svg viewBox="0 0 360 200" style="display:block;width:100%;height:auto;border-radius:14px;overflow:hidden">
-      ${DEFS}<rect width="360" height="200" fill="${bg||'#141a22'}"/>${body}${ambient()}${hdr()}</svg>`;
+      ${DEFS}<rect width="360" height="200" fill="${bg||'#141a22'}"/>${body}${extra(LV.step)}${ambient()}${hdr()}</svg>`;
     const flame=(x,y,hh,op)=>`<g filter="url(#qBlur2)" opacity="${op||1}">
       <path d="M${x} ${y} C${x-14} ${y-hh*0.45} ${x-11} ${y-hh} ${x} ${y-hh*1.3} C${x+11} ${y-hh} ${x+14} ${y-hh*0.45} ${x} ${y} Z" fill="url(#qFlame)">
         <animateTransform attributeName="transform" type="scale" values="1 1;1 .85;1 1.06;1 1" dur=".9s" repeatCount="indefinite" additive="sum"/></path>
