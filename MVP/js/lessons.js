@@ -8825,14 +8825,14 @@ function visL51(el){
         <ellipse cx="120" cy="152" rx="86" ry="14" fill="#201914"/>
         <ellipse cx="120" cy="150" rx="76" ry="11" fill="none" stroke="#3a2d24" stroke-width="2.5"/>
         ${hh>0.12?`<ellipse cx="120" cy="150" rx="64" ry="9" fill="url(#qGlow)" opacity="${(0.3+hh*0.7).toFixed(2)}"/>`:''}
-        ${hh>0.12?`<g filter="url(#qBlur2)" opacity="${(0.45+hh*0.55).toFixed(2)}">
+        
+        ${kettle(78,150,84,62,hh)}${hh>0.12?`<g filter="url(#qBlur2)" opacity="${(0.30+hh*0.45).toFixed(2)}">
           ${[0,1,2].map(k=>`<path d="M${120} 150 C${112-k*6} ${150-10-hh*10} ${114-k*4} ${150-18-hh*22} ${120} ${150-24-hh*30} C${128+k*6} ${150-18-hh*22} ${126+k*4} ${150-10-hh*10} ${120} 150 Z" fill="url(#qFlame)">
             <animateTransform attributeName="transform" type="scale" values="1 1;1 .84;1 1.07;1 1" dur="${(0.62+k*0.16).toFixed(2)}s" repeatCount="indefinite" additive="sum"/>
             <animate attributeName="opacity" values=".95;.6;1;.75;.95" dur="${(1.1+k*0.2).toFixed(2)}s" repeatCount="indefinite"/></path>`).join('')}
           ${[0,1,2].map(k=>`<ellipse cx="${108+k*12}" cy="${150-26-hh*30}" rx="${3+k%2}" ry="${2+(k%2)*1.5}" fill="#fff6d8" opacity=".85">
             <animate attributeName="cy" values="${150-24-hh*28};${150-40-hh*44}" dur="${(1.1+k*0.2).toFixed(2)}s" repeatCount="indefinite"/>
             <animate attributeName="opacity" values="0;.9;0" dur="${(1.1+k*0.2).toFixed(2)}s" repeatCount="indefinite"/></ellipse>`).join('')}</g>`:''}
-        ${kettle(78,150,84,62,hh)}
         <ellipse cx="268" cy="158" rx="46" ry="11" fill="#cfd6da" opacity=".25"/>
         <ellipse cx="268" cy="156" rx="42" ry="9" fill="#e8eef2" opacity=".35"/>
         <g filter="url(#qSh)">
