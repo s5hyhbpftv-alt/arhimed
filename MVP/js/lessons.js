@@ -12,7 +12,8 @@ const SUBJ_META={
   math:{ico:'🏛', name:'Математика', dsc:'Сиракузы · логика, числа, комбинаторика'},
   phys:{ico:'🍎', name:'Физика', dsc:'Ньютон · движение, силы, энергия'},
   chem:{ico:'⚗️', name:'Химия', dsc:'Лавуазье · вещества, реакции, растворы'},
-  inf:{ico:'💻', name:'Информатика', dsc:'Код, алгоритмы, логика'}};
+  inf:{ico:'💻', name:'Информатика', dsc:'Код, алгоритмы, логика'},
+  rus:{ico:'📖', name:'Русский язык', dsc:'Части речи, орфография, пунктуация'}};
 
 /* ---------- фильтр по классу профиля ---------- */
 function profileClassNum(){ try{ const k=parseInt(String((typeof DB!=='undefined'&&DB.profile)?DB.profile.klass:''),10); return isNaN(k)?7:k; }catch(e){ return 7; } }
@@ -39,7 +40,15 @@ function lessonFits(L){ /* при открытом мире уроки не пр
   try{ if(typeof worldOpen==='function' && worldOpen()) return true; }catch(e){}
   const r=lessonClassRange(L), o=openClassRange(); return !(r[1]<o[0]||r[0]>o[1]); }
 
-function subjOf(L){ return (L&&L.subj) || (/Начальная школа/.test(L.src||'')?'jun':/Информатика/.test(L.src||'')?'inf':/физика/i.test(L.src||'')?'phys':'math'); }
+function subjOf(L){
+  const src=(L&&L.src)||'';
+  return (L&&L.subj)
+    || (/Начальная школа/.test(src)?'jun'
+      : /Информатика/.test(src)?'inf'
+      : /Русский язык/.test(src)?'rus'
+      : /Химия/.test(src)?'chem'
+      : /физика/i.test(src)?'phys':'math');
+}
 /* сортировка списка: сначала уроки ТЕКУЩЕГО класса (в порядке обучения),
    затем все остальные (в прежнем порядке). Порядок внутри групп сохраняется. */
 function sortByCurrentClass(list){
@@ -96,7 +105,7 @@ function renderBookList(){
   const doneAll=pool.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
   const totalL=pool.length;
   const junior=typeof isJunior==='function'&&isJunior();
-  const order=junior? ['jun'] : ['all','math','phys','chem','inf'];
+  const order=junior? ['jun'] : ['all','math','rus','phys','chem','inf'];
   const grouped=order.filter(s=>s==='all'||pool.some(L=>subjOf(L)===s)).map(subj=>{
     if(subj==='all') return { subj:'all', meta:{ico:'📚',name:'Все предметы'}, items:pool };
     const meta=SUBJ_META[subj]; return { subj, meta, items:pool.filter(L=>subjOf(L)===subj) };

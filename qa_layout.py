@@ -45,18 +45,22 @@ JS = r"""()=>{
     if(ov>0 && small>0 && ov/small>0.12) out.push({k:'наложение', t:texts[i].t+' / '+texts[j].t});
   }
   // центровка: центр содержимого против центра #lvis
-  let L=1e9,R=-1e9;
+  let L=1e9,R=-1e9,leaves=0;
   host.querySelectorAll('*').forEach(e=>{ const st=getComputedStyle(e);
     if(st.display==='none'||parseFloat(st.opacity||'1')<0.05) return;
+    if(e.children.length) return;                 /* контейнеры и служебный CSS не меряем — только листья */
+    if(e.tagName==='STYLE'||e.tagName==='DEFS'||e.tagName==='LINEARGRADIENT') return;
     const b=e.getBoundingClientRect(); if(b.width<4||b.height<4) return;
     if(b.width>hb.width-4) return;
+    leaves++;
     L=Math.min(L,b.left); R=Math.max(R,b.right); });
   const dev=Math.round(((L+R)/2)-((hb.left+hb.right)/2));
   host.querySelectorAll('.l96-scene,.l96-ecl,[class*=scene]').forEach(e=>{
     const b=e.getBoundingClientRect();
     if(b.width<8||b.height<8) out.push({k:'сцена схлопнута', t:(e.className||'').slice(0,20), c:Math.round(b.width)+'x'+Math.round(b.height)});
   });
-  return {issues:out, dev:dev, texts:texts.length};
+  if(!leaves) out.push({k:'пустая сцена', t:(host.innerText||'').trim().slice(0,20)||'нет содержимого'});
+  return {issues:out, dev:leaves?dev:0, leaves:leaves, texts:texts.length};
 }"""
 def run(ids):
     with sync_playwright() as p:
@@ -72,8 +76,9 @@ def run(ids):
                 bad=[]; devs=[]
                 for i in range(n):
                     pg.evaluate(f"()=>openLessonView({lid})"); pg.wait_for_timeout(90)
-                    for _ in range(i): pg.evaluate("()=>lvStep(1)"); pg.wait_for_timeout(10)
+                    for _ in range(i): pg.evaluate("()=>lvStep(1)"); pg.wait_for_timeout(60)
                     pg.evaluate("()=>{const b=[...document.querySelectorAll('.wk-btn')].find(x=>/показать/.test(x.innerText)); if(b)b.click();}"); pg.wait_for_timeout(90)
+                    pg.wait_for_timeout(180)
                     r=pg.evaluate(JS)
                     if r.get('issues'): bad.append((i,r['issues'][:3]))
                     devs.append(abs(r.get('dev',0)))
