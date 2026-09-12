@@ -2993,7 +2993,10 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     if(!CHS[lk]) CHS[lk]={};
     const st=CHS[lk];
     const rho=Math.max(0.2, Math.min(1.8, +(st.rho==null?0.7:st.rho)));
-    const m=+(st.m==null?6:st.m), V=+(st.V==null?3:st.V);
+    const card100=(file,title,val)=>`<div style="flex:1 1 96px;max-width:160px;background:linear-gradient(180deg,#1b3527,#12241a);border:1px solid #3d5c49;border-radius:12px;overflow:hidden;text-align:center">
+      <img src="img/phys/${file}" alt="" style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover">
+      <div style="padding:5px 6px 7px"><div style="font-size:11px;color:#9fb0aa">${title}</div><div style="font-size:12.5px;color:#ffd76a;font-weight:bold">${val}</div></div></div>`;
+  const m=+(st.m==null?6:st.m), V=+(st.V==null?3:st.V);
     const D=P().density(m,V);
     let h='';
 
@@ -3040,14 +3043,23 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         ${note('Треугольник','m наверху. Ищешь плотность — дели массу на объём. Ищешь массу — умножай.')}
       </div>`;
     } else if(step===5){
+      const setM=(v)=>`try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].m=Math.max(1,${v});chRender(0);}catch(e){}`;
+      const setV=(v)=>`try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].V=Math.max(1,${v});chRender(0);}catch(e){}`;
       h=`<div class="wv-col">
-        ${physShot('lab.jpg','m = '+m+' г  ·  V = '+V+' см³  ·  ρ = '+String(D.rho).replace('.',','))}
-        <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">m
-          <input type="range" min="1" max="20" value="${m}" style="flex:1"
-            oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].m=+this.value;chRender(0);}catch(e){}">
-          <b style="color:${GOLD}">${m} г</b>
-        </label>
-        ${note('Одна ручка','Меняй только массу. Объём заморожен. Плотность считает та же модель, что и лабораторный скрипт.')}
+        <div style="display:flex;gap:8px;justify-content:center;align-items:stretch;flex-wrap:wrap;width:100%;max-width:340px">
+          ${card100('scale_w.jpg','масса','m = '+m+' г')}
+          ${card100('cubes.jpg','объём','V = '+V+' см³')}
+          ${card100('tri.jpg','плотность','ρ = ?')}
+        </div>
+        <div class="wv-big">ρ = m : V = ${m} : ${V} = ${String(Math.round(D.rho*100)/100).replace('.',',')} г/см³</div>
+        <div class="wv-row">
+          <button class="hint-btn" onclick="${setM(m-2)}">−2 г</button>
+          <button class="hint-btn" onclick="${setM(m+2)}">+2 г</button>
+          <button class="hint-btn" onclick="${setV(V-1)}">−1 см³</button>
+          <button class="hint-btn" onclick="${setV(V+1)}">+1 см³</button>
+          <button class="hint-btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].m=6;CHS[k].V=3;chRender(0);}catch(e){}">↺</button>
+        </div>
+        ${note('Что меняется','Массу берут на весах, объём — мензуркой. Меняй их кнопками и смотри, как ведёт себя плотность: дели массу на объём.')}
       </div>`;
     } else if(step===6){
       const tab=(P().T&&P().T.density&&P().T.density.table)||[['лёд',0.9],['вода',1],['железо',7.8]];
@@ -3078,7 +3090,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].rho=this.value/100;chRender(0);}catch(e){}">
           <b style="color:${GOLD}">${String(rho).replace('.',',')}</b>
         </label>
-        ${frame(plot(pts, rho, fs.frac, 'ρ', 'доля'))}
+        ${physChart([{pts:pts,col:GOLD,name:'доля погружения'}], rho, fs.frac, 'ρ, г/см³', 'доля в воде', 'd100', '')}
         ${note('График из модели','Пока ρ < 1, доля = ρ. После 1 линия упирается в 1: тело на дне. Одна ручка — плотность.')}
       </div>`;
     } else if(step===9){
