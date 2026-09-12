@@ -3835,7 +3835,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     .a6lab{paint-order:stroke fill;stroke:#071018;stroke-width:3.4px;stroke-linejoin:round}
   </style>`;
   function lab(x,y,t,col,anchor,fs){
-    const xx=Math.max(14,Math.min(326,+x)), yy=Math.max(16,Math.min(210,+y));
+    const xx=Math.max(14,Math.min(326,+x)), yy=Math.max(16,Math.min(232,+y));
     return `<text class="a6lab" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" text-anchor="${anchor||'middle'}" font-size="${fs||12}" fill="${col}" font-family="Georgia,serif">${t}</text>`;
   }
   function note(title,text){
@@ -3853,7 +3853,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     </div>`;
   }
   function chart(series, xMark, yMark, xl, yl, uid){
-    const W=340, H=220, ox=58, oy=28, pw=258, ph=138;
+    const W=340, H=238, ox=58, oy=28, pw=258, ph=138;
     const all=series.flatMap(s=>s.pts);
     const x1=Math.max(...all.map(p=>p[0]), 1e-6);
     const y1=Math.max(...all.map(p=>p[1]), 1);
@@ -3888,8 +3888,8 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         ${lab(Math.min(Math.max(q[0]+54, ox+52), ox+pw-46), Math.max(q[1]-14, oy+20), String(yMark).replace('.',',')+' Н', GOLD, 'middle', 11)}`;
     }
     const legend=series.map((s,i)=>`<g>
-      <rect x="${ox+i*110}" y="198" width="10" height="10" rx="2" fill="${s.col}"/>
-      ${lab(ox+16+i*110, 208, s.name, MUTED, 'start', 11)}
+      <rect x="${ox+i*110}" y="212" width="10" height="10" rx="2" fill="${s.col}"/>
+      ${lab(ox+16+i*110, 230, s.name, MUTED, 'start', 11)}
     </g>`).join('');
     const defs=series.map((s,i)=>`
       <linearGradient id="${gid}s${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${s.col}"/><stop offset="1" stop-color="#fff3c0"/></linearGradient>
@@ -3906,7 +3906,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       <line x1="${ox}" y1="${oy+ph}" x2="${ox+pw}" y2="${oy+ph}" stroke="#7fd1ff" stroke-opacity=".35" stroke-width="1.4"/>
       ${paths}${mark}${legend}
       ${lab(ox+pw/2, 16, yl, GOLD, 'middle', 12)}
-      ${lab(ox+pw/2, H-6, xl, MUTED, 'middle', 11)}
+      ${lab(ox+pw/2, 200, xl, MUTED, 'middle', 11)}
     </svg>`;
   }
 
@@ -4418,7 +4418,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         ${note('Итог','Вещество узнают по свойствам. Реакцию — по признакам. В лаборатории измеряют, наблюдают и не нюхают из горла колбы.')}
       </div>`;
     }
-    el.innerHTML=`<div class="wv">${h}</div>`;
+    el.innerHTML=`<div class="wv">${h}</div>`+qkPred(108,step);
   }
   window.WAVE_B[108]=visB108;
   (function(){
@@ -4584,7 +4584,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         ${note('Итог','Вещества в смеси свойства сохраняют. Найди различие — выбери метод.')}
       </div>`;
     }
-    el.innerHTML=`<div class="wv">${h}</div>`;
+    el.innerHTML=`<div class="wv">${h}</div>`+qkPred(109,step);
   }
   window.WAVE_B[109]=visB109;
   (function(){

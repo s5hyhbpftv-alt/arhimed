@@ -82,27 +82,46 @@ def expected_version():
 
 
 def remote_script():
+    """Инкрементальная выкладка: на сервере живёт постоянный git-клон,
+    поэтому тянется только то, что изменилось, а не весь архив с видео."""
     return f'''
 set -e
 cd {ROOT}
-cp {APP}/{KEYFILE} /tmp/arhimed_key.bak 2>/dev/null || true
-rm -rf {APP}-new {APP}-main
-curl -sL https://codeload.github.com/{REPO}/tar.gz/refs/heads/{BRANCH} -o /tmp/arhimed.tar.gz
-tar xzf /tmp/arhimed.tar.gz -C {ROOT}
-mv {APP}-{BRANCH} {APP}-new
-cp /tmp/arhimed_key.bak {APP}-new/{KEYFILE} 2>/dev/null || true
-if [ -x {ROOT}/{APP}/venv/bin/python ] && [ -d {ROOT}/{APP}/venv ]; then
-  cp -r {ROOT}/{APP}/venv {ROOT}/{APP}-new/venv
+START=$(date +%s)
+
+# 1) постоянный клон: забираем только новые объекты
+if [ -d {ROOT}/{APP}-src/.git ]; then
+  echo "--- обновляю клон (только изменения):"
+  git -C {ROOT}/{APP}-src fetch --depth 1 origin {BRANCH} -q
+  git -C {ROOT}/{APP}-src reset --hard FETCH_HEAD -q
+else
+  echo "--- первый раз: делаю клон репозитория"
+  rm -rf {ROOT}/{APP}-src
+  git clone --depth 1 -q https://github.com/{REPO}.git {ROOT}/{APP}-src
+fi
+echo "--- коммит на сервере: $(git -C {ROOT}/{APP}-src rev-parse --short HEAD)"
+
+# 2) собираем новую версию из клона: hardlinks, без копирования мегабайтов
+rm -rf {ROOT}/{APP}-new
+cp -al {ROOT}/{APP}-src {ROOT}/{APP}-new
+
+# 3) ключ и окружение переносим отдельно (они живут только на сервере)
+cp {ROOT}/{APP}/{KEYFILE} {ROOT}/{APP}-new/{KEYFILE} 2>/dev/null || true
+if [ -d {ROOT}/{APP}/venv ]; then
+  cp -a {ROOT}/{APP}/venv {ROOT}/{APP}-new/venv
   {ROOT}/{APP}-new/venv/bin/pip install -q --disable-pip-version-check aiohttp 2>/dev/null || true
 else
   python3 -m venv {ROOT}/{APP}-new/venv
   {ROOT}/{APP}-new/venv/bin/pip install -q --disable-pip-version-check aiohttp
 fi
+
+# 4) переключаем и перезапускаем
 rm -rf {ROOT}/{APP}_old
 mv {ROOT}/{APP} {ROOT}/{APP}_old
 mv {ROOT}/{APP}-new {ROOT}/{APP}
 systemctl restart {SERVICE}
 sleep 3
+
 echo "--- версия на сервере:"
 grep -o 'v=[0-9]*' {ROOT}/{APP}/MVP/index.html | sort | uniq -c | head
 echo "--- ключ на месте:"
@@ -110,6 +129,7 @@ test -f {ROOT}/{APP}/{KEYFILE} && echo YES || echo NO
 echo "--- ответ сайта:"
 curl -s -o /dev/null -w "%{{http_code}}" {SITE} || true
 echo ""
+echo "--- выкладка заняла: $(( $(date +%s) - START )) c"
 '''
 
 
