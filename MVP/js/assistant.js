@@ -58,6 +58,22 @@
   /* ---------- DOM ---------- */
   function el(html){ const d=document.createElement('div'); d.innerHTML=html.trim(); return d.firstChild; }
 
+  /* Номер сборки берём из реально подключённых скриптов (?v=NNN),
+     а не из зашитой строки — иначе счётчик «застывает» и врёт. */
+  function buildTag(){
+    try{
+      let v=null;
+      document.querySelectorAll('script[src]').forEach(function(sc){
+        const m=/[?&]v=(\d+)/.exec(sc.getAttribute('src')||'');
+        if(m){ const n=+m[1]; if(v===null||n>v) v=n; }
+      });
+      if(v!==null) return 'сборка v'+v;
+    }catch(e){}
+    try{ const m=/v=(\d+)/.exec(String(window.ARH_BUILD||'')); if(m) return 'сборка v'+m[1]; }catch(e){}
+    return 'сборка';
+  }
+  function syncBuildTag(){ try{ const n=document.getElementById('asstVer'); if(n) n.textContent=buildTag(); }catch(e){} }
+
   function build(){
     const wrap=el(`<div class="asst" id="asst">
       <div class="abubble" id="asstBub"></div>
@@ -74,7 +90,7 @@
       <div class="ap-chips" id="asstChips"></div>
       <div class="ap-hint">💡 Кнопки меню подстраиваются под экран; голосовые — работают, когда разговор включён.</div>
       <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-        <span class="ap-hint" id="asstVer" style="margin:0">сборка v438</span>
+        <span class="ap-hint" id="asstVer" style="margin:0">сборка</span>
         <button class="asmall" style="width:auto;padding:0 10px" onclick="ASSIST.hardReload()" title="Сбросить кэш и обновить">🔄 Обновить</button>
       </div>
     </div>`)
@@ -86,6 +102,7 @@
   /* ---------- состояние ---------- */
   let wrapEl=null, bubEl=null, panEl=null;
   function ensure(){ if(!wrapEl){ wrapEl=build(); bubEl=document.getElementById('asstBub'); panEl=document.getElementById('asstPanel'); }
+    syncBuildTag();
     watchMenu(); tipLoop(); }
   function sayBub(t,holdMs){ caption=t||''; if(!bubEl) return;
     if(t){ bubEl.innerHTML=esc(t); bubEl.classList.add('show'); lastAt=Date.now(); }
@@ -93,6 +110,7 @@
     else bubEl.classList.remove('show');
   }
   function toggle(){ open=!open; panEl.classList.toggle('open',open);
+    if(open) syncBuildTag();
     if(open){ ctxMenu(); watchMenu(); }
     if(open&&!caption){ sayBub('Привет! Я Архимед. Нажми 🎙 и скажи «объясни задачу» — или просто ткни «🗣 Прочитай контекст».',4200); }
   }
