@@ -4325,3 +4325,49 @@ window.RU615PAPER = (function(){
   };
   return {render:render};
 })();
+
+/* ================= Иллюстрации 615 один в один с PDF =================
+   Перерисованы по вырезам из демоварианта: обе диаграммы — СТОЛБЧАТЫЕ
+   (была ошибка: температуру я рисовал линией), столбцы сплошные синие и
+   голубые без подписей значений, ось Y с сеткой и вертикальной подписью,
+   под осью X — подпись «Отметка», у температуры — месяцы. */
+(function(){
+  const F="Georgia,'Times New Roman',serif";
+  const BLUE='#2f7fb8', ICE='#a9d5ea', GRIDC='rgba(42,33,24,.20)', INK='#2a2118', MUT='#6b5b45';
+  const sv=(inner,h)=>`<svg viewBox="0 0 360 ${h}" width="100%" style="display:block;max-width:100%">${inner}</svg>`;
+  const tx=(x,y,s,size,fill,anchor,rot)=>`<text x="${x}" y="${y}"${rot?' transform="rotate(-90 '+x+' '+y+')"':''} text-anchor="${anchor||'middle'}" font-family="${F}" font-size="${size||11}" fill="${fill||MUT}">${s}</text>`;
+  function marksChart(){
+    const v=[3,6,8,5], X0=64, Y0=150, T=12.5;      /* 1 ученик = 12.5 px, ось 0…9 */
+    const y=n=>Y0-n*T;
+    let s='';
+    for(let n=0;n<=9;n++){
+      s+=`<line x1="${X0}" y1="${y(n)}" x2="${X0+236}" y2="${y(n)}" stroke="${GRIDC}" stroke-width=".8"/>`;
+      s+=tx(X0-8, y(n)+4, n, 11, MUT, 'end');
+    }
+    s+=`<line x1="${X0}" y1="${y(0)}" x2="${X0+236}" y2="${y(0)}" stroke="${INK}" stroke-width="1.1"/>`;
+    s+=`<line x1="${X0}" y1="${y(0)}" x2="${X0}" y2="${y(9)}" stroke="${INK}" stroke-width="1.1"/>`;
+    v.forEach((n,i)=>{ const bw=34, x=X0+26+i*58; s+=`<rect x="${x}" y="${y(n)}" width="${bw}" height="${n*T}" fill="${BLUE}"/>`;
+      s+=tx(x+bw/2, Y0+18, '×'+(i+2), 11.5, MUT); });
+    s+=tx(18, (y(0)+y(9))/2, 'Число учеников', 11, MUT, 'middle', true);
+    s+=tx(X0+118, Y0+38, 'Отметка', 11.5, MUT);
+    return sv(s,196);
+  }
+  function tempChart(){
+    const v=[-8,-10,0,10,12,16,17,16,12,4,-4,-8], X0=58, Y0=118, T=3.4;   /* 1 °C = 3.4 px, ось −18…18 */
+    const y=c=>Y0-c*T;
+    let s='';
+    for(let c=-16;c<=16;c+=4){
+      s+=`<line x1="${X0}" y1="${y(c)}" x2="${X0+250}" y2="${y(c)}" stroke="${GRIDC}" stroke-width=".8"/>`;
+      s+=tx(X0-8, y(c)+4, c, 11, MUT, 'end');
+    }
+    s+=`<line x1="${X0-6}" y1="${y(0)}" x2="${X0+250}" y2="${y(0)}" stroke="${INK}" stroke-width="1.1"/>`;
+    s+=`<line x1="${X0}" y1="${y(0)}" x2="${X0}" y2="${y(18)}" stroke="${INK}" stroke-width="1.1"/>`;
+    const months=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+    v.forEach((c,i)=>{ const bw=16, x=X0+8+i*20, top=c>=0?y(c):y(0), hh=Math.abs(c)*T;
+      s+=`<rect x="${x}" y="${top}" width="${bw}" height="${hh}" fill="${ICE}" stroke="rgba(42,33,24,.35)" stroke-width=".6"/>`;
+      s+=tx(x+bw/2, Y0+40, months[i], 9.5, MUT); });
+    s+=tx(16, (y(16)+y(-16))/2, 'Температура, °C', 10.5, MUT, 'middle', true);
+    return sv(s,178);
+  }
+  if(window.RU615 && window.RU615.art){ window.RU615.art.chart=marksChart; window.RU615.art.temp=tempChart; }
+})();
