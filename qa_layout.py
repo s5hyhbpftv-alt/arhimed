@@ -22,7 +22,16 @@ JS = r"""()=>{
     const softer=(st.filter&&st.filter!=='none');
     const deco=e.closest('.l96-scene,.l96-ecl,.l96-ground,.q-pot,.l96-orb,.l96-sun,.l96-ray,.l96-mirror,.l96-sh,.l96-trunk,.l96-crown');
     if(rotated||softer||deco) { if(isText(e)) texts.push({t:e.textContent.trim().slice(0,20), b, el:e}); return; }
-    // обрезка: элемент вылезает за #lvis или за контейнер с overflow hidden
+    // обрезка: элемент вылезает за #lvis или за контейнер с overflow hidden.
+    // Полноэкранные кадры (.rk-scene) и их контейнеры намеренно шире #lvis — их не судим,
+    // у них своя проверка: содержимое не должно выходить за края экрана.
+    const inScene=!!(e.closest&&e.closest('.rk-scene'));
+    const hasScene=!!(e.querySelector&&e.querySelector('.rk-scene'));
+    if(inScene||hasScene){
+      if(isText(e)) texts.push({t:e.textContent.trim().slice(0,20), b, el:e});
+      if(inScene && (b.left<hb.left-2||b.right>hb.right+2||b.bottom>hb.bottom+2)) out.push({k:'обрезано', t:(e.textContent||'').trim().slice(0,18), c:'rk'});
+      return;
+    }
     let p=e.parentElement, clipped=false, anc=null;
     while(p && p!==document.body){
       const ps=getComputedStyle(p);

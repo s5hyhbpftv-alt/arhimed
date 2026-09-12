@@ -98,6 +98,85 @@ window.RUKIT = (function(){
   return {GOLD, BLUE, GREEN, RED, MUTED, PALE, T, T2, SV, NOTE, PRED, CARDS, word, row, tag, morph, rule, box, plus, check, cross};
 })();
 
+
+/* ================= RUKIT v2: полноэкранный глянцевый слой отображения =================
+   Меняет не сцены, а саму систему: кадр занимает весь экран, типографика крупнее,
+   у каждого шага — входная хореография, блик по карточке и живой фон. */
+(function(){
+  const R = window.RUKIT;
+  /* сохраняем исходные функции: иначе новые будут вызывать сами себя */
+  const OSV=R.SV, OT=R.T, OL2=R.T2, Oword=R.word, Orow=R.row, Otag=R.tag, Omorph=R.morph, Obox=R.box, Orule=R.rule;
+  const TYPE = 1.0;                     /* общий масштаб шрифтов в сценах */
+  const CSS2 = `
+  @keyframes rkRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes rkSheen{0%{transform:translateX(-120%) rotate(8deg)}55%{transform:translateX(220%) rotate(8deg)}100%{transform:translateX(220%) rotate(8deg)}}
+  @keyframes rkGlow{0%,100%{box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 0 1px rgba(255,215,106,.16)}50%{box-shadow:0 22px 64px rgba(0,0,0,.6),0 0 0 1px rgba(255,215,106,.34)}}
+  @keyframes rkFloat{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-7px);opacity:.85}}
+  @keyframes rkDraw{from{stroke-dashoffset:640}to{stroke-dashoffset:0}}
+  .rk-scene{position:relative;width:100%;margin:0;box-sizing:border-box;overflow:hidden;
+    animation:rkGlow 6.5s ease-in-out infinite;border-radius:0}
+  .rk-scene svg{width:100%!important;max-width:100%!important;height:auto!important;display:block}
+  .rk-scene svg > *{animation:rkRise .52s cubic-bezier(.22,.9,.24,1) both}
+  .rk-scene svg > *:nth-child(1){animation-delay:.04s}.rk-scene svg > *:nth-child(2){animation-delay:.09s}
+  .rk-scene svg > *:nth-child(3){animation-delay:.14s}.rk-scene svg > *:nth-child(4){animation-delay:.19s}
+  .rk-scene svg > *:nth-child(5){animation-delay:.24s}.rk-scene svg > *:nth-child(6){animation-delay:.29s}
+  .rk-scene svg > *:nth-child(7){animation-delay:.34s}.rk-scene svg > *:nth-child(8){animation-delay:.39s}
+  .rk-scene svg > *:nth-child(n+9){animation-delay:.44s}
+  .rk-scene .rk-sheen{position:absolute;top:-30%;left:0;width:42%;height:160%;pointer-events:none;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.09),transparent);animation:rkSheen 7s ease-in-out infinite}
+  .rk-scene .rk-dust{position:absolute;inset:0;pointer-events:none}
+  .rk-scene .rk-dust i{position:absolute;width:3px;height:3px;border-radius:50%;background:#ffd76a;opacity:.5;animation:rkFloat 5.5s ease-in-out infinite}
+  .rk-note{width:100%;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+    border:1px solid rgba(255,215,106,.28);border-left:4px solid #ffd76a;border-radius:16px;padding:14px 16px;
+    animation:rkRise .5s cubic-bezier(.22,.9,.24,1) both;animation-delay:.1s}
+  .rk-note .rk-kicker{color:#ffd76a;font:600 12.5px/1 Georgia,serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+  .rk-note .rk-body{color:#f1e8d6;font-size:16px;line-height:1.62;font-family:Georgia,serif}
+  .rk-pred{width:100%;text-align:left}
+  .rk-pred .rk-q{color:#ffd76a;font:600 15.5px/1.4 Georgia,serif;margin-bottom:10px}
+  .rk-pred .rk-opts{display:flex;flex-wrap:wrap;gap:10px}
+  .rk-pred .rk-opt{flex:1 1 44%;min-width:140px;font-size:16px!important;padding:14px 12px!important;border-radius:14px!important}
+  .rk-pred .rk-said{color:#d8e4d8;font-size:14px;margin-top:8px;opacity:.9}
+  `;
+  function injectCss(){
+    try{
+      if(window._waveCss) window._waveCss('css-rkv2', CSS2);
+      let st=document.getElementById('rkv2-style');
+      if(!st){ st=document.createElement('style'); st.id='rkv2-style'; document.head.appendChild(st); }
+      if(st.textContent!==CSS2) st.textContent=CSS2;
+    }catch(e){}
+  }
+  /* полноэкранный кадр: сам рисунок + блик + пылинки */
+  function SV2(inner, o){
+    injectCss();
+    const svg = OSV(inner, o);
+    const dust = [[12,18,0],[74,10,1],[38,64,2],[88,44,3],[22,86,4],[66,78,5]]
+      .map(([l,t,d])=>`<i style="left:${l}%;top:${t}%;animation-delay:${d*0.7}s"></i>`).join('');
+    return `<div class="rk-scene">${svg}<span class="rk-sheen"></span><span class="rk-dust">${dust}</span></div>`;
+  }
+  /* крупная типографика: масштабируем все подписи сцен */
+  function T2(x,y,t,col,o){ o=o||{}; return OT(x,y,t,col,Object.assign({},o,{fs:(o.fs||12)*TYPE})); }
+  function L2(x,y,t,col,o){ o=o||{}; return OL2(x,y,t,col,Object.assign({},o,{fs:(o.fs||12)*TYPE})); }
+  function word2(x,y,text,col,o){ return Oword(x,y,text,col,Object.assign({},o,{fs:((o&&o.fs)||15)*TYPE})); }
+  function row2(y,items,o){ return Orow(y,items,Object.assign({},o,{fs:((o&&o.fs)||15)*TYPE})); }
+  function tag2(x,y,text,col,fs){ return Otag(x,y,text,col,(fs||11)*TYPE); }
+  function morph2(parts,y,o){ return Omorph(parts,y,Object.assign({},o,{fs:((o&&o.fs)||20)*TYPE})); }
+  function box2(x,y,w,h,col,title,lines){ return Obox(x,y,w,h,col,title,lines); }
+  function rule2(y,title,text,col,width){ return Orule(y,title,text,col,width); }
+  function note2(title,text){
+    return `<div class="rk-note"><div class="rk-kicker">${title}</div><div class="rk-body">${text}</div></div>`;
+  }
+  function pred2(st,key,q,opts){
+    const cur=st[key];
+    return `<div class="rk-pred"><div class="rk-q">${q}</div><div class="rk-opts">${opts.map(o=>
+      `<button type="button" class="btn rk-opt" style="${cur===o.k?'border-color:#ffd76a;box-shadow:0 0 0 1px rgba(255,215,106,.45) inset':''}"
+        onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
+      ${cur?`<div class="rk-said">ты выбрал: ${(opts.filter(o=>o.k===cur)[0]||{}).t||cur}</div>`:''}</div>`;
+  }
+  /* подменяем систему целиком — все уроки и работы подхватывают новый вид */
+  Object.assign(R, {SV:SV2, T:T2, T2:L2, word:word2, row:row2, tag:tag2, morph:morph2,
+                    box:box2, rule:rule2, NOTE:note2, PRED:pred2, TYPE:TYPE, injectCss:injectCss});
+})();
+
 /* ================= УРОК 601 · Части речи: что называет слово ================= */
 (function(){
   const R=window.RUKIT, GOLD=R.GOLD, BLUE=R.BLUE, GREEN=R.GREEN, RED=R.RED, MUTED=R.MUTED, PALE=R.PALE;
@@ -269,8 +348,8 @@ window.RUKIT = (function(){
       let extra='';
       if(step===8){
         const done=st.gRes!=null;
-        extra=`<div style="display:flex;gap:6px;width:min(100%,340px)">${[['n','сущ.'],['a','прил.'],['v','гл.']].map(x=>
-          `<button type="button" class="btn" style="flex:1 1 30%;font-size:13px;padding-left:4px;padding-right:4px" onclick="ru601Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
+        extra=`<div style="display:flex;gap:10px;width:100%">${[['n','сущ.'],['a','прил.'],['v','гл.']].map(x=>
+          `<button type="button" class="btn" style="flex:1 1 30%;font-size:16px;padding:13px 4px;border-radius:14px" onclick="ru601Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'определи часть речи'}</div>`;
       }
       const p=(step===8)?null:PRED601[step];
@@ -455,8 +534,8 @@ window.RUKIT = (function(){
       let extra='';
       if(step===8){
         const done=st.gRes!=null;
-        extra=`<div style="display:flex;gap:6px;width:min(100%,340px)">${[['приставка','приставка'],['суффикс','суффикс'],['окончание','окончание']].map(x=>
-          `<button type="button" class="btn" style="flex:1 1 30%;font-size:12.5px;padding-left:3px;padding-right:3px" onclick="ru602Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
+        extra=`<div style="display:flex;gap:10px;width:100%">${[['приставка','приставка'],['суффикс','суффикс'],['окончание','окончание']].map(x=>
+          `<button type="button" class="btn" style="flex:1 1 30%;font-size:16px;padding:13px 3px;border-radius:14px" onclick="ru602Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'что за часть слова спрятана?'}</div>`;
       }
       const p=(step===8)?null:PRED602[step];
@@ -636,7 +715,7 @@ window.RUKIT = (function(){
       let extra='';
       if(step===8){
         const done=st.gRes!=null;
-        extra=`<div style="display:flex;gap:6px;width:min(100%,340px)">${[['о','о'],['е','е'],['и','и']].map(x=>
+        extra=`<div style="display:flex;gap:10px;width:100%">${[['о','о'],['е','е'],['и','и']].map(x=>
           `<button type="button" class="btn" style="flex:1 1 30%;font-size:14px" onclick="ru603Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'выбери букву'}</div>`;
       }
@@ -813,8 +892,8 @@ window.RUKIT = (function(){
       let extra='';
       if(step===8){
         const done=st.gRes!=null;
-        extra=`<div style="display:flex;gap:6px;width:min(100%,340px)">${[['г','г'],['з','з'],['б','б'],['ж','ж']].map(x=>
-          `<button type="button" class="btn" style="flex:1 1 22%;font-size:14px" onclick="ru604Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
+        extra=`<div style="display:flex;gap:10px;width:100%">${[['г','г'],['з','з'],['б','б'],['ж','ж']].map(x=>
+          `<button type="button" class="btn" style="flex:1 1 22%;font-size:16.5px;padding:14px 4px;border-radius:14px" onclick="ru604Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'выбери букву'}</div>`;
       }
       const p=(step===8)?null:PRED604[step];
@@ -988,8 +1067,8 @@ window.RUKIT = (function(){
       let extra='';
       if(step===8){
         const done=st.gRes!=null;
-        extra=`<div style="display:flex;gap:6px;width:min(100%,340px)">${[['слитно','слитно'],['раздельно','раздельно']].map(x=>
-          `<button type="button" class="btn" style="flex:1;font-size:14px" onclick="ru605Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
+        extra=`<div style="display:flex;gap:10px;width:100%">${[['слитно','слитно'],['раздельно','раздельно']].map(x=>
+          `<button type="button" class="btn" style="flex:1;font-size:16.5px;padding:14px 10px;border-radius:14px" onclick="ru605Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'выбери написание'}</div>`;
       }
       const p=(step===8)?null:PRED605[step];
@@ -1163,8 +1242,8 @@ window.RUKIT = (function(){
       let extra='';
       if(step===8){
         const done=st.gRes!=null;
-        extra=`<div style="display:flex;gap:6px;width:min(100%,340px)">${[['он','он'],['она','она'],['оно','оно']].map(x=>
-          `<button type="button" class="btn" style="flex:1;font-size:14px" onclick="ru606Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
+        extra=`<div style="display:flex;gap:10px;width:100%">${[['он','он'],['она','она'],['оно','оно']].map(x=>
+          `<button type="button" class="btn" style="flex:1;font-size:16.5px;padding:14px 10px;border-radius:14px" onclick="ru606Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'подставь местоимение'}</div>`;
       }
       const p=(step===8)?null:PRED606[step];
@@ -1346,8 +1425,8 @@ window.RUKIT = (function(){
       let extra='';
       if(step===8){
         const done=st.gRes!=null;
-        extra=`<div style="display:flex;gap:5px;width:min(100%,340px);flex-wrap:wrap">${[['и','им.'],['р','род.'],['д','дат.'],['в','вин.'],['т','твор.'],['п','пр.']].map(x=>
-          `<button type="button" class="btn" style="flex:1 1 28%;font-size:12.5px;padding-left:2px;padding-right:2px" onclick="ru607Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
+        extra=`<div style="display:flex;gap:10px;width:100%;flex-wrap:wrap">${[['и','им.'],['р','род.'],['д','дат.'],['в','вин.'],['т','твор.'],['п','пр.']].map(x=>
+          `<button type="button" class="btn" style="flex:1 1 28%;font-size:15px;padding:12px 2px;border-radius:12px" onclick="ru607Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее сочетание':'выбери падеж'}</div>`;
       }
       const p=(step===8)?null:PRED607[step];
@@ -1525,8 +1604,8 @@ window.RUKIT = (function(){
       let extra='';
       if(step===8){
         const done=st.gRes!=null;
-        extra=`<div style="display:flex;gap:6px;width:min(100%,340px)">${[['прош','прош.'],['наст','наст.'],['буд','буд.']].map(x=>
-          `<button type="button" class="btn" style="flex:1;font-size:13px" onclick="ru608Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
+        extra=`<div style="display:flex;gap:10px;width:100%">${[['прош','прош.'],['наст','наст.'],['буд','буд.']].map(x=>
+          `<button type="button" class="btn" style="flex:1;font-size:16px;padding:13px 6px;border-radius:14px" onclick="ru608Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующий глагол':'выбери время'}</div>`;
       }
       const p=(step===8)?null:PRED608[step];
@@ -1701,8 +1780,8 @@ window.RUKIT = (function(){
       let extra='';
       if(step===8){
         const done=st.gRes!=null;
-        extra=`<div style="display:flex;gap:6px;width:min(100%,340px)">${[['тся','-тся'],['ться','-ться']].map(x=>
-          `<button type="button" class="btn" style="flex:1;font-size:14px" onclick="ru609Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
+        extra=`<div style="display:flex;gap:10px;width:100%">${[['тся','-тся'],['ться','-ться']].map(x=>
+          `<button type="button" class="btn" style="flex:1;font-size:16.5px;padding:14px 10px;border-radius:14px" onclick="ru609Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'выбери написание'}</div>`;
       }
       const p=(step===8)?null:PRED609[step];
@@ -1886,8 +1965,8 @@ window.RUKIT = (function(){
       let extra='';
       if(step===8){
         const done=st.gRes!=null;
-        extra=`<div style="display:flex;gap:5px;width:min(100%,340px);flex-wrap:wrap">${[['нет','запятые не нужны'],['одна','одна запятая'],['две','две запятые'],['зап','перечисление'],['перед а','перед «а»'],['слож','две основы']].map(x=>
-          `<button type="button" class="btn" style="flex:1 1 30%;font-size:11.5px;padding-left:2px;padding-right:2px" onclick="ru610Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
+        extra=`<div style="display:flex;gap:10px;width:100%;flex-wrap:wrap">${[['нет','запятые не нужны'],['одна','одна запятая'],['две','две запятые'],['зап','перечисление'],['перед а','перед «а»'],['слож','две основы']].map(x=>
+          `<button type="button" class="btn" style="flex:1 1 30%;font-size:14px;padding:12px 2px;border-radius:12px" onclick="ru610Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее предложение':'выбери ответ'}</div>`;
       }
       const p=(step===8)?null:PRED610[step];
@@ -2068,8 +2147,8 @@ window.RUKEXAM = (function(){
           const it = items[qi];
           const picked = st.ans[qi];
           const labels = it.opts || [it.ans];
-          extra = `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;width:min(100%,340px)">
-            ${labels.map(o => `<button type="button" class="btn" style="min-width:64px;${picked===o?'border-color:'+GOLD:''}"
+          extra = `<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;width:100%">
+            ${labels.map(o => `<button type="button" class="btn" style="min-width:74px;font-size:17px;padding:14px 10px;border-radius:14px;${picked===o?'border-color:'+GOLD:''}"
               onclick="ruExamPick(${cfg.id},${qi},'${o}')">${o}</button>`).join('')}</div>
             <div class="wv-sml" style="color:${MUTED}">${picked!=null ? 'нажми другой вариант, если хочешь исправить ответ' : 'выбери верное написание'}</div>`;
         }
@@ -2235,8 +2314,8 @@ window.RUKEXAM = (function(){
           const got = st.ans[qi];
           const locked = got != null;
           const parts = [];
-          const boxS = 'width:min(100%,340px);text-align:left;color:#e8dcc8;font-size:13.5px;line-height:1.5';
-          if(it.material) parts.push(`<div style="${boxS};background:rgba(255,255,255,.04);border:1px solid #3d5c49;border-radius:12px;padding:8px 10px">${it.material}</div>`);
+          const boxS = 'width:100%;box-sizing:border-box;text-align:left;color:#f1e8d6;font-size:16.5px;line-height:1.6;font-family:Georgia,serif';
+          if(it.material) parts.push(`<div style="${boxS};box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,215,106,.22);border-radius:14px;padding:12px 14px">${it.material}</div>`);
           parts.push(`<div style="${boxS}">${it.q}</div>`);
           if(!locked){
             const labels = it.opts || [];
@@ -2248,12 +2327,12 @@ window.RUKEXAM = (function(){
             } else if(it.kind === 'multi'){
               const chosen = ((st.tmp||{})[qi] || []);
               parts.push(`<div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">${labels.map((o,k) =>
-                `<button type="button" class="btn" style="text-align:left;font-size:12.5px;padding:7px 10px;${chosen.indexOf(k)>=0?'border-color:#ffd76a;background:rgba(255,215,106,.10)':''}"
+                `<button type="button" class="btn" style="text-align:left;font-size:16px;padding:14px 14px;border-radius:14px;${chosen.indexOf(k)>=0?'border-color:#ffd76a;background:rgba(255,215,106,.12)':''}"
                   onclick="ruMckoToggle(${cfg.id},${k})">${o}</button>`).join('')}</div>
                 <button type="button" class="btn" onclick="ruMckoCheck(${cfg.id})">Ответить</button>`);
             } else {
               parts.push(`<div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">${labels.map((o,k) =>
-                `<button type="button" class="btn" style="text-align:left;font-size:12.5px;padding:7px 10px" onclick="ruMckoPick(${cfg.id},${k})">${o}</button>`).join('')}</div>`);
+                `<button type="button" class="btn" style="text-align:left;font-size:16px;padding:14px 14px;border-radius:14px" onclick="ruMckoPick(${cfg.id},${k})">${o}</button>`).join('')}</div>`);
             }
           } else {
             const pts2 = itemScore(it, got);

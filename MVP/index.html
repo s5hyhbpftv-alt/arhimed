@@ -388,7 +388,7 @@
   /* ================= интерактивные виджеты (v70): крупнее + анимации ================= */
   #lvis { width:100%; }
   #lvis .hint-btn { padding:11px 16px; font-size:14px; border-radius:12px; min-height:46px; }
-  .wv { background:linear-gradient(180deg,rgba(24,47,36,.9),rgba(16,31,24,.9));
+  .wv { width:100%; max-width:100vw; box-sizing:border-box; background:linear-gradient(180deg,rgba(24,47,36,.9),rgba(16,31,24,.9));
     border:1px solid #3d5c49; border-radius:16px; padding:14px 12px; margin-top:12px; }
   .wv-big { font-size:23px; color:var(--brass); font-family:Georgia,serif; line-height:1.25; }
   .wv-sml { color:#cbb89a; font-size:13.5px; line-height:1.45; }
@@ -453,7 +453,7 @@
 
   .wv-row > .hint-btn, .wv-row > .btn { flex:1 1 calc(50% - 5px); max-width:calc(50% - 5px); min-width:0; text-align:center; }
   .wv-row > .hint-btn:only-child, .wv-row > .btn:only-child { max-width:100%; flex-basis:100%; }
-  .wv-col { display:flex; flex-direction:column; align-items:center; gap:9px; text-align:center; }
+  .wv-col { display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; width:100%; max-width:100vw; box-sizing:border-box; }
   .wv-chip { display:inline-block; margin:1px; padding:2px 9px; background:#13251c; border:1px solid #3d5c49;
     border-radius:9px; font-size:15px; }
   .wv-pop { animation:wvPop .38s ease both; }
@@ -766,38 +766,38 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=524"></script>
-<script src="data/tasks_ru.js?v=524"></script>
-<script src="data/lessons.js?v=524"></script>
-<script src="data/lessons_draft.js?v=524"></script>
-<script src="data/comics_12.js?v=524"></script>
-<script src="data/sim_phys.js?v=524"></script>
-<script src="data/vis_bw.js?v=524"></script>
-<script src="data/vis_pw.js?v=524"></script>
-<script src="data/vis_ru.js?v=524"></script>
-<script src="data/vis_cw.js?v=524"></script>
-<script src="data/vis_dw.js?v=524"></script>
-<script src="data/vis_ew.js?v=524"></script>
-<script src="data/vis_kl.js?v=524"></script>
-<script src="data/vis_wk.js?v=524"></script>
-<script src="data/inf_56.js?v=524"></script>
-<script src="js/comic.js?v=524"></script>
-<script src="js/core.js?v=524"></script>
-<script src="js/engine.js?v=524"></script>
-<script src="js/app.js?v=524"></script>
-<script src="js/dashboard.js?v=524"></script>
-<script src="js/pinpad.js?v=524"></script>
-<script src="js/kid.js?v=524"></script>
-<script src="js/notemodal.js?v=524"></script>
-<script src="js/lessons.js?v=524"></script>
-<script src="js/wave_guard.js?v=524"></script>
-<script src="js/legend.js?v=524"></script>
-<script src="js/simulator.js?v=524"></script>
-<script src="js/duel.js?v=524"></script>
-<script src="js/agent.js?v=524"></script>
-<script src="js/voice.js?v=524"></script>
-<script src="js/assistant.js?v=524"></script>
-<script src="js/agentlive.js?v=524"></script>
+<script src="data/tasks.js?v=525"></script>
+<script src="data/tasks_ru.js?v=525"></script>
+<script src="data/lessons.js?v=525"></script>
+<script src="data/lessons_draft.js?v=525"></script>
+<script src="data/comics_12.js?v=525"></script>
+<script src="data/sim_phys.js?v=525"></script>
+<script src="data/vis_bw.js?v=525"></script>
+<script src="data/vis_pw.js?v=525"></script>
+<script src="data/vis_ru.js?v=525"></script>
+<script src="data/vis_cw.js?v=525"></script>
+<script src="data/vis_dw.js?v=525"></script>
+<script src="data/vis_ew.js?v=525"></script>
+<script src="data/vis_kl.js?v=525"></script>
+<script src="data/vis_wk.js?v=525"></script>
+<script src="data/inf_56.js?v=525"></script>
+<script src="js/comic.js?v=525"></script>
+<script src="js/core.js?v=525"></script>
+<script src="js/engine.js?v=525"></script>
+<script src="js/app.js?v=525"></script>
+<script src="js/dashboard.js?v=525"></script>
+<script src="js/pinpad.js?v=525"></script>
+<script src="js/kid.js?v=525"></script>
+<script src="js/notemodal.js?v=525"></script>
+<script src="js/lessons.js?v=525"></script>
+<script src="js/wave_guard.js?v=525"></script>
+<script src="js/legend.js?v=525"></script>
+<script src="js/simulator.js?v=525"></script>
+<script src="js/duel.js?v=525"></script>
+<script src="js/agent.js?v=525"></script>
+<script src="js/voice.js?v=525"></script>
+<script src="js/assistant.js?v=525"></script>
+<script src="js/agentlive.js?v=525"></script>
 <script>
   /* сброс кэша при новой сборке: номер берём из адресов самих скриптов,
      поэтому после каждой выкладки старый кэш и старый service worker снимаются сами */
@@ -824,7 +824,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=524').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=525').catch(()=>{}); });
 }
 window.addEventListener('hashchange', ()=>{
   try{
