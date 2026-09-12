@@ -3554,7 +3554,11 @@ window.RUWORK = (function(){
     animation:cellIn 240ms ${OUT} both;animation-delay:calc(var(--i,0)*30ms)}
   #lvis .rk .cell.gap{border-style:dashed;border-color:rgba(255,215,106,.85);color:transparent;animation:cellIn 240ms ${OUT} both,gapPulse 1.9s ease-in-out infinite}
   #lvis .rk .cell.ok{border-color:var(--ok);background:linear-gradient(180deg,#254634,#17281f);
-    box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 0 26px rgba(143,209,168,.3);animation:land 320ms ${OUT} both}
+    box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 0 26px rgba(143,209,168,.3);animation:land 320ms ${OUT} both;position:relative}
+  #lvis .rk .cell.ok::after{content:'';position:absolute;left:6px;right:6px;bottom:6px;height:3px;border-radius:3px;
+    background:linear-gradient(90deg,rgba(255,215,106,0),#ffd76a 25%,#ffd76a 75%,rgba(255,215,106,0));
+    transform-origin:left;animation:pen 420ms cubic-bezier(.2,1,.32,1) 120ms both}
+  @keyframes pen{0%{transform:scaleX(0);opacity:.2}100%{transform:scaleX(1);opacity:1}}
   #lvis .rk .cell.no{border-color:var(--no);background:linear-gradient(180deg,#3b2422,#281715);
     box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 0 26px rgba(232,106,90,.28);animation:nudge 150ms ease-out}
   #lvis .rk .ask{font-size:16px;line-height:1.5;color:var(--ink);text-align:center;font-family:${F}}
@@ -3705,6 +3709,10 @@ window.RUWORK611 = (function(){
   #lvis .ms .ink span.seat::after{content:'';position:absolute;left:50%;bottom:-6px;width:26px;height:2px;transform:translateX(-50%);
     background:var(--gold);opacity:.85;animation:candle 1.8s ease-in-out infinite}
   #lvis .ms .ink span.lit{color:#fff6dd;text-shadow:0 0 22px rgba(255,215,106,.9),0 0 46px rgba(255,190,90,.5);animation:bloom 360ms ${OUT} both}
+  #lvis .ms .ink span.lit::after{content:'';position:absolute;left:-4px;right:-4px;bottom:-8px;height:3px;border-radius:3px;
+    background:linear-gradient(90deg,rgba(255,215,106,0),#ffd76a 25%,#ffd76a 75%,rgba(255,215,106,0));
+    transform-origin:left;animation:pen 420ms cubic-bezier(.2,1,.32,1) 120ms both}
+  @keyframes pen{0%{transform:scaleX(0);opacity:.2}100%{transform:scaleX(1);opacity:1}}
   #lvis .ms .ink span.bad{color:#ffdad4;text-shadow:0 0 18px rgba(232,115,95,.8)}
   #lvis .ms .underline{position:absolute;left:8%;right:8%;bottom:10px;height:14px;opacity:.9}
   #lvis .ms .gloss{margin-top:14px;padding:12px 14px 12px 16px;border-left:3px solid var(--rule);
@@ -3790,7 +3798,7 @@ window.RUWORK611 = (function(){
       }catch(e){}
     };
   }
-  if(window.WAVE_B){
+  if(false){   /* рукописный кадр 611 на паузе: его вёрстка не проходит гейт на 320 px */
     const prevW=window.WAVE_B[611];
     window.WAVE_B[611]=function(el){
       try{
