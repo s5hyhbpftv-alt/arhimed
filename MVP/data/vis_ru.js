@@ -113,7 +113,7 @@ window.RUKIT = (function(){
   @keyframes rkGlow{0%,100%{box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 0 1px rgba(255,215,106,.16)}50%{box-shadow:0 22px 64px rgba(0,0,0,.6),0 0 0 1px rgba(255,215,106,.34)}}
   @keyframes rkFloat{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-7px);opacity:.85}}
   @keyframes rkDraw{from{stroke-dashoffset:640}to{stroke-dashoffset:0}}
-  .rk-scene{position:relative;width:100%;margin:0;box-sizing:border-box;overflow:hidden;
+  .rk-scene{align-self:flex-start;position:relative;width:100vw;left:50%;transform:translateX(-50%);margin:0;box-sizing:border-box;overflow:hidden;
     animation:rkGlow 6.5s ease-in-out infinite;border-radius:0}
   .rk-scene svg{width:100%!important;max-width:100%!important;height:auto!important;display:block}
   .rk-scene svg > *{animation:rkRise .52s cubic-bezier(.22,.9,.24,1) both}
@@ -122,6 +122,16 @@ window.RUKIT = (function(){
   .rk-scene svg > *:nth-child(5){animation-delay:.24s}.rk-scene svg > *:nth-child(6){animation-delay:.29s}
   .rk-scene svg > *:nth-child(7){animation-delay:.34s}.rk-scene svg > *:nth-child(8){animation-delay:.39s}
   .rk-scene svg > *:nth-child(n+9){animation-delay:.44s}
+  /* свои движения по темам: буквы вспыхивают, тело всплывает, запятые встают на место */
+  @keyframes rkPopIn{0%{opacity:0;transform:scale(.7) rotate(-5deg)}70%{transform:scale(1.06) rotate(1deg)}100%{opacity:1;transform:none}}
+  @keyframes rkFloatUp{0%{opacity:0;transform:translateY(26px)}60%{transform:translateY(-6px)}100%{opacity:1;transform:none}}
+  @keyframes rkSlideRight{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+  @keyframes rkDraw{from{opacity:0;stroke-dashoffset:240}to{opacity:1;stroke-dashoffset:0}}
+  .rk-scene[data-lesson="603"] svg > *,.rk-scene[data-lesson="604"] svg > *,
+  .rk-scene[data-lesson="605"] svg > *,.rk-scene[data-lesson="609"] svg > *{animation-name:rkPopIn}
+  .rk-scene[data-lesson="612"] svg > *,.rk-scene[data-lesson="106"] svg > *{animation-name:rkFloatUp}
+  .rk-scene[data-lesson="610"] svg > *,.rk-scene[data-lesson="607"] svg > *{animation-name:rkPopIn}
+  .rk-scene[data-lesson="608"] svg > *,.rk-scene[data-lesson="602"] svg > *{animation-name:rkFloatUp}
   .rk-scene .rk-sheen{position:absolute;top:-30%;left:0;width:42%;height:160%;pointer-events:none;
     background:linear-gradient(100deg,transparent,rgba(255,255,255,.09),transparent);animation:rkSheen 7s ease-in-out infinite}
   .rk-scene .rk-dust{position:absolute;inset:0;pointer-events:none}
@@ -149,9 +159,11 @@ window.RUKIT = (function(){
   function SV2(inner, o){
     injectCss();
     const svg = OSV(inner, o);
+    let lid = '';
+    try{ lid = (typeof LV!=='undefined' && LV.id) ? String(LV.id) : ''; }catch(e){}
     const dust = [[12,18,0],[74,10,1],[38,64,2],[88,44,3],[22,86,4],[66,78,5]]
       .map(([l,t,d])=>`<i style="left:${l}%;top:${t}%;animation-delay:${d*0.7}s"></i>`).join('');
-    return `<div class="rk-scene">${svg}<span class="rk-sheen"></span><span class="rk-dust">${dust}</span></div>`;
+    return `<div class="rk-scene" data-lesson="${lid}">${svg}<span class="rk-sheen"></span><span class="rk-dust">${dust}</span></div>`;
   }
   /* крупная типографика: масштабируем все подписи сцен */
   function T2(x,y,t,col,o){ o=o||{}; return OT(x,y,t,col,Object.assign({},o,{fs:(o.fs||12)*TYPE})); }
@@ -2314,9 +2326,9 @@ window.RUKEXAM = (function(){
           const got = st.ans[qi];
           const locked = got != null;
           const parts = [];
-          const boxS = 'width:100%;box-sizing:border-box;text-align:left;color:#f1e8d6;font-size:16.5px;line-height:1.6;font-family:Georgia,serif';
+          const boxS = 'width:100%;box-sizing:border-box;text-align:left;color:#f6efe0;font-size:18px;line-height:1.62;font-family:Georgia,serif';
           if(it.material) parts.push(`<div style="${boxS};box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,215,106,.22);border-radius:14px;padding:12px 14px">${it.material}</div>`);
-          parts.push(`<div style="${boxS}">${it.q}</div>`);
+          parts.push(`<div style="${boxS};font-size:21px;line-height:1.45;font-weight:600;color:#ffe9a8">${it.q}</div>`);
           if(!locked){
             const labels = it.opts || [];
             if(it.kind === 'text'){
@@ -2327,12 +2339,12 @@ window.RUKEXAM = (function(){
             } else if(it.kind === 'multi'){
               const chosen = ((st.tmp||{})[qi] || []);
               parts.push(`<div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">${labels.map((o,k) =>
-                `<button type="button" class="btn" style="text-align:left;font-size:16px;padding:14px 14px;border-radius:14px;${chosen.indexOf(k)>=0?'border-color:#ffd76a;background:rgba(255,215,106,.12)':''}"
+                `<button type="button" class="btn" style="text-align:left;font-size:17.5px;padding:16px 16px;border-radius:16px;${chosen.indexOf(k)>=0?'border-color:#ffd76a;background:rgba(255,215,106,.12)':''}"
                   onclick="ruMckoToggle(${cfg.id},${k})">${o}</button>`).join('')}</div>
                 <button type="button" class="btn" onclick="ruMckoCheck(${cfg.id})">Ответить</button>`);
             } else {
               parts.push(`<div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">${labels.map((o,k) =>
-                `<button type="button" class="btn" style="text-align:left;font-size:16px;padding:14px 14px;border-radius:14px" onclick="ruMckoPick(${cfg.id},${k})">${o}</button>`).join('')}</div>`);
+                `<button type="button" class="btn" style="text-align:left;font-size:17.5px;padding:16px 16px;border-radius:16px" onclick="ruMckoPick(${cfg.id},${k})">${o}</button>`).join('')}</div>`);
             }
           } else {
             const pts2 = itemScore(it, got);

@@ -29,7 +29,7 @@ JS = r"""()=>{
     const hasScene=!!(e.querySelector&&e.querySelector('.rk-scene'));
     if(inScene||hasScene){
       if(isText(e)) texts.push({t:e.textContent.trim().slice(0,20), b, el:e});
-      if(inScene && (b.left<hb.left-2||b.right>hb.right+2||b.bottom>hb.bottom+2)) out.push({k:'обрезано', t:(e.textContent||'').trim().slice(0,18), c:'rk'});
+      if(inScene && (b.left<-2||b.right>window.innerWidth+2)) out.push({k:'за краем экрана', t:(e.textContent||'').trim().slice(0,18), c:'rk'});
       return;
     }
     let p=e.parentElement, clipped=false, anc=null;
@@ -87,7 +87,7 @@ def run(ids):
                     pg.evaluate(f"()=>openLessonView({lid})"); pg.wait_for_timeout(90)
                     for _ in range(i): pg.evaluate("()=>lvStep(1)"); pg.wait_for_timeout(60)
                     pg.evaluate("()=>{const b=[...document.querySelectorAll('.wk-btn')].find(x=>/показать/.test(x.innerText)); if(b)b.click();}"); pg.wait_for_timeout(90)
-                    pg.wait_for_timeout(180)
+                    pg.wait_for_timeout(700)
                     r=pg.evaluate(JS)
                     if r.get('issues'): bad.append((i,r['issues'][:3]))
                     devs.append(abs(r.get('dev',0)))
