@@ -4093,3 +4093,136 @@ window.RUWORKEDGES = (function(){
   });
   return {prolog:prolog, itog:itog};
 })();
+
+/* ================= УРОК 615 «ПУТЬ МИШУТКИ» (русский язык) =================
+   Десять заданий демонстрационного варианта олимпиады школы № 1517
+   (school1517.ru/adt/20260910.pdf) — по условиям и ключу, с иллюстрациями,
+   нарисованными заново в векторе: корзинки, столбчатая диаграмма, график
+   температуры, координатная прямая, карта часовых поясов и часы, семья,
+   клумба с заборчиком, карта округов, таблица тарифов, коврик с осями. */
+window.RU615 = (function(){
+  const F="Georgia,'Times New Roman',serif", G='#ffd76a', P='#f6efe0', M='#d8c9b8',
+        AX='rgba(255,215,106,.45)', OK='#8fd1a8', NO='#e86a5a';
+  const frame=(inner,h)=>`<svg viewBox="0 0 360 ${h}" width="100%" style="display:block;max-width:100%">${inner}</svg>`;
+  const T=(x,y,s,size,fill,anchor)=>`<text x="${x}" y="${y}" text-anchor="${anchor||'middle'}" font-family="${F}" font-size="${size||12}" fill="${fill||M}">${s}</text>`;
+  const ART={
+    orehi: ()=>frame([0,1,2,3,4].map(i=>{const x=24+i*66;
+      return `<path d="M${x} 118 L${x+54} 118 L${x+46} 156 L${x+8} 156 Z" fill="rgba(255,215,106,.10)" stroke="${AX}"/>`+
+        [0,1,2].map(k=>`<circle cx="${x+17+k*10}" cy="${110-k*7}" r="5" fill="#c98b4a"/>`).join('')+
+        T(x+27,146,['81','34','17','23','75'][i],13);}).join('')+T(180,180,'поровну на пять корзинок',14,G),200),
+    chart: ()=>{const v=[3,6,8,5];
+      return frame([0,2,4,6,8].map(t=>`<line x1="46" y1="${168-t*16}" x2="332" y2="${168-t*16}" stroke="rgba(255,255,255,.10)"/>`+
+        T(40,172-t*16,t,11,M,'end')).join('')+
+        v.map((n,i)=>{const h=n*16,x=78+i*62;
+          return `<rect x="${x}" y="${168-h}" width="44" height="${h}" rx="5" fill="rgba(255,215,106,.55)" stroke="${G}"/>`+
+            T(x+22,162-h,n,13,P)+T(x+22,186,'«'+(i+2)+'»',13,G);}).join('')+
+        T(190,20,'результаты контрольной в 6 «В»',13),210);},
+    temp: ()=>{const t=[-8,-10,0,10,12,16,17,16,12,4,-4,-8], y=v=>96-v*3.1;
+      return frame([-16,-8,0,8,16].map(v=>`<line x1="34" y1="${y(v)}" x2="338" y2="${y(v)}" stroke="rgba(255,255,255,.10)"/>`+
+        T(28,y(v)+4,v,10,M,'end')).join('')+
+        `<rect x="84" y="${y(16)-8}" width="78" height="${y(-16)-y(16)+16}" fill="rgba(143,209,168,.14)" stroke="rgba(143,209,168,.45)" rx="6"/>`+
+        `<polyline points="${t.map((v,i)=>`${46+i*24},${y(v)}`).join(' ')}" fill="none" stroke="${G}" stroke-width="2.2"/>`+
+        t.map((v,i)=>`<circle cx="${46+i*24}" cy="${y(v)}" r="3" fill="${v>0?G:'#7fb7d8'}"/>`).join('')+
+        ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'].map((m,i)=>T(46+i*24,118,m,9.5)).join('')+
+        T(186,140,'весна выделена',12,'#9fd8b4'),160);},
+    line: ()=>{const X=u=>40+u*62;
+      return frame(`<line x1="24" y1="96" x2="342" y2="96" stroke="${P}" stroke-width="1.6"/>`+
+        [0,1,2,3,4].map(u=>`<line x1="${X(u)}" y1="88" x2="${X(u)}" y2="104" stroke="${P}" stroke-width="1.6"/>`+T(X(u),122,u,12)).join('')+
+        [['A',1.5],['B',2.105],['C',3.5]].map(([n,u])=>`<circle cx="${X(u)}" cy="96" r="5.5" fill="${G}"/>`+T(X(u),78,n,14,P)).join('')+
+        T(186,150,'числа: 0,67 · 1,5 · 2,105 · 2,9 · 3,5',12.5),180);},
+    zones: ()=>frame(
+      [['МСК+6','Якутск',110],['МСК+5','Чита',180],['МСК+7','Магадан',250],['МСК+9','Анадырь',318]].map(([z,n,x],i)=>
+        `<rect x="${x-32}" y="24" width="64" height="40" rx="8" fill="rgba(255,215,106,${i===0?.24:.08})" stroke="${AX}"/>`+
+        T(x,44,z,12,G)+T(x,60,n,11)).join('')+
+      `<line x1="36" y1="78" x2="336" y2="78" stroke="${AX}" stroke-dasharray="4 4"/>`+
+      `<circle cx="76" cy="126" r="34" fill="none" stroke="${AX}" stroke-width="2"/>`+
+      `<circle cx="76" cy="126" r="2.4" fill="${P}"/>`+
+      `<line x1="76" y1="126" x2="${76+18*Math.cos((-75)*Math.PI/180)}" y2="${126+18*Math.sin((-75)*Math.PI/180)}" stroke="${P}" stroke-width="2.6" stroke-linecap="round"/>`+
+      `<line x1="76" y1="126" x2="${76+26*Math.cos((150)*Math.PI/180)}" y2="${126+26*Math.sin((150)*Math.PI/180)}" stroke="${P}" stroke-width="2.6" stroke-linecap="round"/>`+
+      T(200,120,'часы Коли: 19:50 по Якутску',12.5,G)+T(180,168,'разница с Москвой +6 часов',12),190),
+    family: ()=>frame(
+      [0,1,2].map(i=>`<g transform="translate(${84+i*54},66)"><circle r="12" fill="#5b8fc9"/><rect x="-12" y="0" width="24" height="30" rx="8" fill="#5b8fc9"/></g>`).join('')+
+      [0,1].map(i=>`<g transform="translate(${118+i*54},142)"><circle r="12" fill="#d98aa8"/><rect x="-12" y="0" width="24" height="30" rx="8" fill="#d98aa8"/></g>`).join('')+
+      T(180,192,'три мальчика и две девочки — пятеро детей',12.5),210),
+    flower: ()=>frame(
+      `<circle cx="150" cy="92" r="52" fill="rgba(143,209,168,.10)" stroke="#9fd8b4" stroke-width="2.4" stroke-dasharray="6 5"/>`+
+      `<circle cx="150" cy="92" r="6" fill="${G}"/><line x1="150" y1="92" x2="150" y2="42" stroke="${AX}"/>`+
+      T(158,40,'R',12.5,G)+T(150,164,'заборчик по границе: 18,84 м',13,P)+T(150,184,'π = 3,14',12),200),
+    map: ()=>{const D=[[1,186,96],[2,168,64],[3,206,64],[4,236,78],[5,212,116],[6,186,128],[7,150,116],[8,138,92],[9,150,64],[10,62,34],[11,150,166],[12,108,176]];
+      return frame(D.map(([n,x,y])=>`<circle cx="${x}" cy="${y}" r="${n===10?20:18}" fill="rgba(255,215,106,${n===10?.30:.09})" stroke="${AX}"/>`+
+        T(x,y+4,n,12,G)).join('')+T(180,206,'12 округов Москвы · Зеленоградский стоит отдельно',12),220);},
+    fares: ()=>frame(
+      `<rect x="16" y="22" width="328" height="112" rx="12" fill="rgba(255,255,255,.04)" stroke="${AX}"/>`+
+      `<line x1="16" y1="50" x2="344" y2="50" stroke="${AX}"/><line x1="16" y1="84" x2="344" y2="84" stroke="${AX}"/>`+
+      ['Тройка','«90 минут»','банк. карта','биометрия'].map((h,i)=>T(120+i*60,42,h,10)).join('')+
+      T(24,74,'метро',12,P,'start')+T(24,108,'наземный',12,P,'start')+
+      ['57','85','64','53'].map((v,i)=>T(120+i*60,74,v,12,G)).join('')+
+      ['57','85','64','—'].map((v,i)=>T(120+i*60,108,v,12,G)).join('')+
+      T(180,160,'семья из трёх человек · цены в рублях',12.5),180),
+    carpet: ()=>frame(
+      `<polygon points="150,34 92,138 208,138" fill="rgba(143,209,168,.16)" stroke="#9fd8b4" stroke-width="2"/>`+
+      `<line x1="150" y1="20" x2="150" y2="162" stroke="${G}" stroke-width="2.4"/>`+
+      `<line x1="60" y1="86" x2="248" y2="86" stroke="${AX}" stroke-width="1.4"/>`+
+      `<line x1="98" y1="150" x2="202" y2="30" stroke="${AX}" stroke-width="1.4"/>`+
+      `<line x1="202" y1="150" x2="98" y2="30" stroke="${AX}" stroke-width="1.4"/>`+
+      T(158,26,'b',13,P)+T(54,90,'c',13,P)+T(254,90,'a',13,P)+T(208,28,'d',13,P)+
+      T(150,186,'какая прямая — ось симметрии?',12),200)
+  };
+  const Q=[
+   {k:'orehi',t:'Орехи в корзинках',q:'81, 34, 17, 23 и 75 орехов разложили в пять корзинок поровну. Сколько орехов в каждой корзинке?',opts:['46','40','50'],ans:'46',why:'Сумма 230, делим на 5 — 46.'},
+   {k:'chart',t:'Результаты контрольной',q:'На диаграмме — отметки в 6 «В»: «2» — 3, «3» — 6, «4» — 8, «5» — 5. Сколько всего учеников писало работу?',opts:['22','18','24'],ans:'22',why:'3 + 6 + 8 + 5 = 22.'},
+   {k:'temp',t:'Температура весной',q:'График среднемесячной температуры в Нижнем Новгороде за 1994 год. Какая наибольшая температура была весной?',opts:['10 °C','12 °C','16 °C'],ans:'10 °C',why:'Весна — март, апрель, май: наибольшая 10 °C.'},
+   {k:'line',t:'Точки на прямой',q:'Точки A, B и C на координатной прямой. Запиши три номера их координат подряд: A, B, C.',opts:['412','415','214'],ans:'412',why:'A → 1,5; B → 2,105; C → 3,5 — номера 4, 1, 2.'},
+   {k:'zones',t:'Посадка самолёта',q:'Коля летит из Якутска (МСК+6) в Москву. Часы показывают 19:50 по Якутску, до посадки 2 часа. Во сколько сядет самолёт по московскому времени?',opts:['15:50','21:50','13:50'],ans:'15:50',why:'19:50 − 6 = 13:50, плюс 2 часа — 15:50.'},
+   {k:'family',t:'Пятеро детей',q:'В семье Михайловых пятеро детей: три мальчика и две девочки. Укажи номера истинных утверждений двумя цифрами.',opts:['34','12','23'],ans:'34',why:'Мальчиков больше, чем девочек; у каждого мальчика два брата и две сестры.'},
+   {k:'flower',t:'Круглая клумба',q:'Заборчик по границе круглой клумбы — 18,84 м, π = 3,14. Найди площадь клумбы.',opts:['28,26 м²','18,84 м²','56,52 м²'],ans:'28,26 м²',why:'R = 18,84 : 6,28 = 3 м; S = 3,14 × 9 = 28,26 м².'},
+   {k:'map',t:'Карта Москвы',q:'Зеленоградский округ не граничит ни с одним другим округом. Каким номером он обозначен?',opts:['10','1','12'],ans:'10',why:'Зеленоградский — 10, он стоит отдельно.'},
+   {k:'fares',t:'Проезд семьи',q:'Семья из трёх человек. Билет «90 минут» стоит 85 рублей. Сколько заплатит семья, если каждый возьмёт «90 минут»?',opts:['255','171','342'],ans:'255',why:'85 × 3 = 255; по отдельным билетам — 342.'},
+   {k:'carpet',t:'Ось симметрии',q:'Треугольный коврик и прямые a, b, c, d. Какая прямая является осью симметрии?',opts:['b','a','d'],ans:'b',why:'Ось проходит через вершину и середину основания.'}
+  ];
+  const CSS=`
+  #lvis .mk{box-sizing:border-box;max-width:100%;width:100%;font-family:${F};color:${P};display:flex;flex-direction:column;gap:14px}
+  #lvis .mk .kick{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:${M}}
+  #lvis .mk h2{font-size:clamp(20px,5.6vw,24px);line-height:1.14;font-weight:600;color:${G};margin:0;letter-spacing:-.02em}
+  #lvis .mk .art{background:linear-gradient(180deg,#1d3027,#15231c);border:1px solid rgba(255,215,106,.24);border-radius:18px;padding:12px 10px;box-shadow:0 16px 38px rgba(0,0,0,.45)}
+  #lvis .mk .q{font-size:clamp(15px,4.2vw,17px);line-height:1.5}
+  #lvis .mk .opts{display:flex;gap:12px;flex-wrap:wrap}
+  #lvis .mk .opt{flex:1 1 28%;min-width:88px;padding:15px 12px;border-radius:16px;cursor:pointer;font-family:${F};
+    font-size:clamp(17px,4.8vw,20px);font-weight:600;color:${P};background:linear-gradient(180deg,#25392e,#182720);
+    border:1.5px solid rgba(255,215,106,.26);transition:transform 120ms cubic-bezier(.2,0,0,1),border-color 160ms}
+  #lvis .mk .opt:active{transform:translateY(2px)}
+  #lvis .mk .opt:focus-visible{outline:3px solid ${G};outline-offset:3px}
+  #lvis .mk .opt.good{border-color:${OK}}#lvis .mk .opt.bad{border-color:${NO}}
+  #lvis .mk .prog{display:flex;gap:5px}#lvis .mk .prog i{width:9px;height:9px;transform:rotate(45deg);border:1px solid rgba(255,215,106,.35)}
+  #lvis .mk .prog i.done{background:linear-gradient(180deg,#ffd76a,#e2b23f)}
+  `;
+  function css(){ try{ let e=document.getElementById('mk-style'); if(!e){ e=document.createElement('style'); e.id='mk-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  function render(el){
+    css();
+    const lk=(typeof lidKey==='function')?lidKey(615):'615';
+    if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={ans:{}}; const st=CHS[lk]; if(!st.ans) st.ans={};
+    const step=Math.max(0,Math.min(Q.length-1,((typeof LV!=='undefined'&&LV.step)||0)));
+    const it=Q[step], picked=st.ans[step], done=picked!=null, ok=picked===it.ans;
+    el.innerHTML=`<div class="mk">
+      <div class="kick">Путь Мишутки · шаг ${step+1} из ${Q.length}</div>
+      <div class="prog">${Q.map((_,i)=>`<i class="${st.ans[i]!=null?'done':''}"></i>`).join('')}</div>
+      <h2>${it.t}</h2>
+      <div class="art">${ART[it.k]()}</div>
+      <div class="q">${it.q}</div>
+      <div class="opts">${it.opts.map(o=>`<button type="button" class="opt ${done?(o===it.ans?'good':(o===picked?'bad':'')):''}" onclick="mkPick(${step},'${o}')">${o}</button>`).join('')}</div>
+      ${done ? (ok ? window.RUFEED.note('ok','верно',it.why) : window.RUFEED.note('no','исправить','Правильно «'+it.ans+'». '+it.why))
+             : `<div class="q" style="color:${M}">Задача из демонстрационного варианта олимпиады школы № 1517.</div>`}
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        ${step>0?`<button type="button" class="opt" style="flex:1 1 40%" onclick="mkStep(-1)">← Назад</button>`:''}
+        ${step<Q.length-1?`<button type="button" class="opt" style="flex:1 1 40%" onclick="mkStep(1)">Дальше →</button>`:''}
+      </div></div>`;
+  }
+  window.mkPick=(i,o)=>{ const lk=lidKey(615); CHS[lk].ans=CHS[lk].ans||{}; if(CHS[lk].ans[i]!=null) return; CHS[lk].ans[i]=o; chRender(0); };
+  window.mkStep=(d)=>{ try{ const n=((typeof LV!=='undefined'&&LV.step)||0)+d; if(n<0||n>=Q.length) return; LV.step=n; chRender(0); }catch(e){} };
+  if(window.ARH_LESSONS && !window.ARH_LESSONS.some(x=>x.id===615)){
+    window.ARH_LESSONS.push({id:615,title:'Путь Мишутки',ico:'🐻',src:'Русский язык · 5–6 класс · Путь Мишутки',subj:'rus',
+      explain:['Путь Мишутки: десять задач олимпиады школы № 1517.'].concat(Q.map((x,i)=>(i+1)+'. '+x.t+'. '+x.q)),check:1,tasks:[]});
+  }
+  if(window.WAVE_B) window.WAVE_B[615]=function(el){ try{ render(el); }catch(e){ el.innerHTML=''; } };
+  return {render:render,data:Q};
+})();
