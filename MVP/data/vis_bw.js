@@ -3096,10 +3096,13 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===8){
       const pts=((P().T&&P().T.density&&P().T.density.frac)||[]).map(p=>[p[0], p[1]]);
       const fs=P().floatState(rho,1);
-      /* тот же бракованный ролик стоял и здесь: при ρ < 1 он показывал кубик на дне.
-         Теперь этот шаг рисует модель: доля погружения берётся из расчёта. */
+      /* Ролик вернули по просьбе: он показывает опыт «кубик в баке». Подпись у него
+         нейтральная — числа даёт схема ниже, потому что в ролике кубик опускается на дно,
+         а при ρ < 1 по расчёту он должен держаться у поверхности. */
       const kindCube=rho<0.4?'wood':'ice';
+      const clip=rho<0.4?'cork.jpg':(rho<1?'ice.mp4':'iron.mp4');
       h=`<div class="wv-col">
+        ${physShot(clip, 'опыт · кубик в баке с водой')}
         ${frame(tank(rho, fs.sink?'iron':kindCube))}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">ρ
           <input type="range" min="20" max="180" value="${Math.round(rho*100)}" style="flex:1"
