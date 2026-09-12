@@ -3087,27 +3087,24 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       </div>`;
     } else if(step===7){
       const show=st.p7&&st.go7;
-      /* Ролик вернули и на опыт: он показывает кубик в баке, но подпись у него нейтральная —
-         числа про 90 % даёт схема ниже, потому что в ролике кубик опускается на дно. */
       h=`<div class="wv-col">
         ${show
-          ? physShot('ice.mp4','опыт · кубик в баке с водой')+frame(tank(0.9,'ice'))
+          ? physShot('ice.mp4','лёд в воде · ρ = 0,9 г/см³')
           : physShot('ice.jpg','кубик льда · брось в бак')}
         ${pred(st,'p7','Лёд в воде. Что сделает?',[{k:'float',t:'всплывёт'},{k:'sink',t:'утонет'},{k:'hang',t:'повиснет'}])}
         ${st.p7&&!st.go7?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].go7=1;chRender(0);}catch(e){}">Бросить в бак</button>`:''}
-        ${show?note('Расчёт','ρ = 0,9. Доля погружения = 0,9 / 1 = 90 %. Схема показывает, как это выглядит: почти весь кубик под водой. Ты '+(st.p7==='float'?'угадал':'думал иначе — смотри схему')):note('Предскажи до опыта','Не смотри ответ глазами. Сначала выбери вариант.')}
+        ${show?note('Расчёт','ρ = 0,9. Доля погружения = 0,9 / 1 = 90 %: под водой остаётся девять десятых, а над поверхностью — только десятая часть. Ты '+(st.p7==='float'?'угадал':'думал иначе — пересчитай сам')):note('Предскажи до опыта','Не смотри ответ глазами. Сначала выбери вариант.')}
       </div>`;
     } else if(step===8){
       const pts=((P().T&&P().T.density&&P().T.density.frac)||[]).map(p=>[p[0], p[1]]);
       const fs=P().floatState(rho,1);
-      /* Ролик вернули по просьбе: он показывает опыт «кубик в баке». Подпись у него
-         нейтральная — числа даёт схема ниже, потому что в ролике кубик опускается на дно,
-         а при ρ < 1 по расчёту он должен держаться у поверхности. */
-      const kindCube=rho<0.4?'wood':'ice';
+      /* Подпись factual: показываем плотность, а долю погружения считает график ниже
+         (в ролике кубик опускается на дно, поэтому «N % в воде» на нём писать нельзя). */
       const clip=rho<0.4?'cork.jpg':(rho<1?'ice.mp4':'iron.mp4');
+      const cap=fs.sink ? ('ρ = '+String(rho).replace('.',',')+' · на дне')
+                        : ('ρ = '+String(rho).replace('.',',')+' г/см³ · тело в воде');
       h=`<div class="wv-col">
-        ${physShot(clip, 'опыт · кубик в баке с водой')}
-        ${frame(tank(rho, fs.sink?'iron':kindCube))}
+        ${physShot(clip, cap)}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">ρ
           <input type="range" min="20" max="180" value="${Math.round(rho*100)}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].rho=this.value/100;chRender(0);}catch(e){}">
