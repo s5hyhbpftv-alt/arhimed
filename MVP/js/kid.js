@@ -107,6 +107,8 @@ function kidTake(r){
   kidSaveState();
   kidRender();
   kidNoteBadge();
+  /* новая заметка родителя — показываем во весь экран поверх всего */
+  if (typeof noteFullCheck === 'function') setTimeout(noteFullCheck, 400);
 }
 function kidPull(){
   if (!kidReady()) { kidEnsure(); return; }
@@ -242,6 +244,9 @@ function kidBoot(){
   kidEnsure().then(() => { kidPush(1); kidPull(); });
   kidRender();
   setInterval(kidPull, 60000);
+  /* проверяем заметки и сами: если ребёнок только что закончил знакомство */
+  setInterval(() => { if (typeof noteFullCheck === 'function') noteFullCheck(); }, 20000);
+  setTimeout(() => { if (typeof noteFullCheck === 'function') noteFullCheck(); }, 3000);
   try{
     window.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') kidPull(); else kidPush(1);

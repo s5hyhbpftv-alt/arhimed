@@ -766,34 +766,35 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=501"></script>
-<script src="data/lessons.js?v=501"></script>
-<script src="data/lessons_draft.js?v=501"></script>
-<script src="data/comics_12.js?v=501"></script>
-<script src="data/sim_phys.js?v=501"></script>
-<script src="data/vis_bw.js?v=501"></script>
-<script src="data/vis_pw.js?v=501"></script>
-<script src="data/vis_cw.js?v=501"></script>
-<script src="data/vis_dw.js?v=501"></script>
-<script src="data/vis_ew.js?v=501"></script>
-<script src="data/vis_kl.js?v=501"></script>
-<script src="data/vis_wk.js?v=501"></script>
-<script src="data/inf_56.js?v=501"></script>
-<script src="js/comic.js?v=501"></script>
-<script src="js/core.js?v=501"></script>
-<script src="js/engine.js?v=501"></script>
-<script src="js/app.js?v=501"></script>
-<script src="js/dashboard.js?v=501"></script>
-<script src="js/kid.js?v=501"></script>
-<script src="js/lessons.js?v=501"></script>
-<script src="js/wave_guard.js?v=501"></script>
-<script src="js/legend.js?v=501"></script>
-<script src="js/simulator.js?v=501"></script>
-<script src="js/duel.js?v=501"></script>
-<script src="js/agent.js?v=501"></script>
-<script src="js/voice.js?v=501"></script>
-<script src="js/assistant.js?v=501"></script>
-<script src="js/agentlive.js?v=501"></script>
+<script src="data/tasks.js?v=502"></script>
+<script src="data/lessons.js?v=502"></script>
+<script src="data/lessons_draft.js?v=502"></script>
+<script src="data/comics_12.js?v=502"></script>
+<script src="data/sim_phys.js?v=502"></script>
+<script src="data/vis_bw.js?v=502"></script>
+<script src="data/vis_pw.js?v=502"></script>
+<script src="data/vis_cw.js?v=502"></script>
+<script src="data/vis_dw.js?v=502"></script>
+<script src="data/vis_ew.js?v=502"></script>
+<script src="data/vis_kl.js?v=502"></script>
+<script src="data/vis_wk.js?v=502"></script>
+<script src="data/inf_56.js?v=502"></script>
+<script src="js/comic.js?v=502"></script>
+<script src="js/core.js?v=502"></script>
+<script src="js/engine.js?v=502"></script>
+<script src="js/app.js?v=502"></script>
+<script src="js/dashboard.js?v=502"></script>
+<script src="js/kid.js?v=502"></script>
+<script src="js/notemodal.js?v=502"></script>
+<script src="js/lessons.js?v=502"></script>
+<script src="js/wave_guard.js?v=502"></script>
+<script src="js/legend.js?v=502"></script>
+<script src="js/simulator.js?v=502"></script>
+<script src="js/duel.js?v=502"></script>
+<script src="js/agent.js?v=502"></script>
+<script src="js/voice.js?v=502"></script>
+<script src="js/assistant.js?v=502"></script>
+<script src="js/agentlive.js?v=502"></script>
 <script>
   /* сброс кэша при новой сборке: номер берём из адресов самих скриптов,
      поэтому после каждой выкладки старый кэш и старый service worker снимаются сами */
@@ -820,7 +821,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=501').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=502').catch(()=>{}); });
 }
 window.addEventListener('hashchange', ()=>{
   try{
