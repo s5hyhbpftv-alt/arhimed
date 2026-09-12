@@ -3450,14 +3450,14 @@ window.RU601V2 = (function(){
        ${T('p',1,'lead','Признак действия: как? где? когда? Наречие не изменяется — у него нет окончания.')}
        <div class="col">
          ${[['бежит','быстро · как?'],['живёт','вдали · где?'],['вернулся','вечером · когда?']].map((p,k)=>
-           T('div',2+k,'split',`<span class="word"><b>${p[0]}</b></span><span class="tag">${p[1]}</span>`)).join('')}
+           T('div',2+k,'split',`<span class="word"><b style="font-size:32px">${p[0]}</b></span><span class="tag">${p[1]}</span>`)).join('')}
        </div>`,
     8:`${T('div',0,'kicker','08 · Служебные части речи')}
        ${T('p',1,'lead','Ничего не называют — <b style="color:#ffd76a">служат</b>: связывают слова.')}
        <div class="row">${T('div',2,'card','<div class="ic">🔗</div><div class="nm">предлог</div><div class="ex">в, на, под</div>')}
        ${T('div',3,'card','<div class="ic">➕</div><div class="nm">союз</div><div class="ex">и, но, а</div>')}
        ${T('div',4,'card','<div class="ic">❕</div><div class="nm">частица</div><div class="ex">не, бы, же</div>')}</div>
-       <div class="split">${T('span',5,'word', s.sv==null?'<b>кот · столе · спит</b><i>без службы рассыпается</i>':'<b>кот <span style="color:#ffd76a">на</span> столе <span style="color:#ffd76a">и</span> спит</b><i>служебные слова на месте</i>')}</div>
+       <div class="split">${T('span',5,'word', s.sv==null?'<b style="font-size:34px">кот · столе · спит</b><i>без службы</i>':'<b style="font-size:34px;letter-spacing:0">кот <span style="color:#ffd76a">на</span> столе <span style="color:#ffd76a">и</span> спит</b><i>служебные на месте</i>')}</div>
        ${BTN(6,'cta', s.sv==null?'Собрать фразу':'Разобрать снова',`s6Serv()`)}`,
     9:(()=>{ const i=(s.gIdx||0)%SC.length, it=SC[i], got=s.gRes, done=got!=null, ok=got===it[2];
       return `${T('div',0,'kicker','09 · Тренажёр')}
@@ -3505,6 +3505,155 @@ window.RU601V2 = (function(){
   if(window.WAVE_B){
     const prev=window.WAVE_B[601];
     window.WAVE_B[601]=function(el){ try{ render(el); }catch(e){ try{ prev(el); }catch(e2){} } };
+  }
+  return {render:render};
+})();
+
+/* ================= РАБОТЫ 611–613: свет, глубина и своя хореография =================
+   Данные и обработчики прежние (RU_EXAM_ITEMS, ruExamPick, CHS[lk].ans, st.ok/st.bad),
+   поэтому машинные проверки работ продолжают работать. Новое — оформление и движение:
+   подсветка гнезда, объёмные плитки, блик по правильному ответу, полоса прогресса,
+   влетающая буква. Сверено с motion-principles, typeset, emil-design-eng, accessibility-ux. */
+window.RUWORK = (function(){
+  const F="Georgia,'Times New Roman',serif";
+  const EASE="cubic-bezier(.2,0,0,1)", OUT="cubic-bezier(.23,1,.32,1)";
+  const CSS=`
+  #lvis .rk{--gold:#ffd76a;--ink:#f6efe0;--mut:#d8c9a6;--ok:#8fd1a8;--no:#e86a5a;--line:rgba(255,215,106,.26);
+    position:relative;font-family:${F};color:var(--ink);width:100%;display:flex;flex-direction:column;gap:18px;
+    padding:20px 16px 22px;border-radius:22px;overflow:hidden;
+    background:radial-gradient(120% 90% at 50% -10%,rgba(255,215,106,.10),transparent 60%),linear-gradient(180deg,#1c2f26,#14211b);
+    border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)}
+  #lvis .rk::before{content:'';position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(60% 45% at 50% 0%,rgba(255,215,106,.14),transparent 70%)}
+  #lvis .rk>*{position:relative;z-index:1}
+  #lvis .rk .top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  #lvis .rk .kick{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-variant-numeric:tabular-nums}
+  #lvis .rk .qnum{font-size:14px;color:var(--mut);font-variant-numeric:tabular-nums}
+  #lvis .rk .bar{height:6px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden}
+  #lvis .rk .bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#ffd76a,#e2b23f);
+    transform-origin:left;transition:transform 200ms ${EASE}}
+  #lvis .rk .divider{display:flex;align-items:center;gap:10px;color:var(--line)}
+  #lvis .rk .divider span{flex:1;height:1px;background:currentColor}
+  #lvis .rk .divider b{font-size:12px;color:rgba(255,215,106,.55)}
+  #lvis .rk .wordwrap{position:relative;display:flex;justify-content:center;padding:8px 0 4px}
+  #lvis .rk .halo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:230px;height:120px;pointer-events:none;
+    background:radial-gradient(closest-side,rgba(255,215,106,.22),transparent 72%);filter:blur(6px);animation:haloPulse 2.6s ease-in-out infinite}
+  #lvis .rk .word{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}
+  #lvis .rk .cell{min-width:52px;height:70px;padding:0 12px;display:flex;align-items:center;justify-content:center;
+    font-size:48px;font-weight:600;line-height:1;letter-spacing:-.02em;color:#f8f2e4;
+    background:linear-gradient(180deg,#26402f,#17271f);border:1.5px solid var(--line);border-radius:16px;
+    box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);
+    animation:cellIn 240ms ${OUT} both;animation-delay:calc(var(--i,0)*30ms)}
+  #lvis .rk .cell.gap{border-style:dashed;border-color:rgba(255,215,106,.85);color:transparent;animation:cellIn 240ms ${OUT} both,gapPulse 1.9s ease-in-out infinite}
+  #lvis .rk .cell.ok{border-color:var(--ok);background:linear-gradient(180deg,#254634,#17281f);
+    box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 0 26px rgba(143,209,168,.3);animation:land 320ms ${OUT} both}
+  #lvis .rk .cell.no{border-color:var(--no);background:linear-gradient(180deg,#3b2422,#281715);
+    box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 0 26px rgba(232,106,90,.28);animation:nudge 150ms ease-out}
+  #lvis .rk .ask{font-size:16px;line-height:1.5;color:var(--ink);text-align:center;font-family:${F}}
+  #lvis .rk .opts{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  #lvis .rk .opt{position:relative;overflow:hidden;min-width:92px;padding:16px 22px;border-radius:18px;cursor:pointer;
+    font-family:${F};font-size:32px;font-weight:600;line-height:1.1;color:var(--ink);
+    background:linear-gradient(180deg,#25392e,#182720);border:1.5px solid var(--line);
+    box-shadow:0 10px 22px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06);
+    transition:transform 120ms ${EASE},box-shadow 180ms ease-out,border-color 180ms ease-out}
+  #lvis .rk .opt:hover{transform:translateY(-2px)}
+  #lvis .rk .opt:active{transform:translateY(2px)}
+  #lvis .rk .opt:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+  #lvis .rk .opt.picked{border-color:var(--gold);box-shadow:0 10px 22px rgba(0,0,0,.4),0 0 0 4px rgba(255,215,106,.16)}
+  #lvis .rk .opt::after{content:'';position:absolute;top:0;bottom:0;width:46px;left:-60px;transform:skewX(-18deg);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);pointer-events:none}
+  #lvis .rk .opt.picked.ok::after{animation:sheen 520ms ${OUT} 80ms both}
+  #lvis .rk .verdict{font-size:16px;line-height:1.55;text-align:center}
+  #lvis .rk .verdict.ok{color:#b8e8cc}#lvis .rk .verdict.no{color:#f3b3aa}
+  #lvis .rk .score{font-size:16px;color:var(--mut);text-align:center;font-variant-numeric:tabular-nums}
+  @keyframes cellIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes gapPulse{0%,100%{box-shadow:0 10px 24px rgba(0,0,0,.45),0 0 0 0 rgba(255,215,106,.2)}50%{box-shadow:0 10px 24px rgba(0,0,0,.45),0 0 0 10px rgba(255,215,106,0)}}
+  @keyframes haloPulse{0%,100%{opacity:.55}50%{opacity:.95}}
+  @keyframes land{0%{opacity:.4}100%{opacity:1}}
+  @keyframes nudge{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  @keyframes sheen{to{left:120%}}
+  #lvis .rk .fly{position:fixed;z-index:340;pointer-events:none;font-family:${F};font-weight:600;color:#ffe9a8;
+    text-shadow:0 0 16px rgba(255,215,106,.75);transition:transform 260ms ${EASE},opacity 260ms ease-out}
+  @media (prefers-reduced-motion: reduce){
+    #lvis .rk *,#lvis .rk *::before,#lvis .rk *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    #lvis .rk .fly{display:none!important}}
+  `;
+  function css(){ try{ let e=document.getElementById('rk-style'); if(!e){ e=document.createElement('style'); e.id='rk-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  function render(el, id, qi, it, total, st){
+    css();
+    const picked = st.ans ? st.ans[qi] : null;
+    const done = picked != null;
+    const ok = picked === it.ans;
+    const parts = String(it.word||'').split('');
+    const cells = parts.map((ch,k)=>{
+      const isGap = (ch==='_'||ch==='?');
+      const cls = isGap ? (done ? (ok?'cell ok':'cell no') : 'cell gap') : 'cell';
+      const txt = isGap ? (done ? picked : '') : ch;
+      return `<div class="${cls}" style="--i:${k}" ${isGap?'id="rkGap"':''}>${txt}</div>`;
+    }).join('');
+    const opts = (it.opts || [it.ans]).map(o=>{
+      const cls='opt'+(picked===o?' picked'+(o===it.ans?' ok':''):'');
+      return `<button type="button" class="${cls}" onclick="ruExamPick(${id},${qi},'${o}')">${o}</button>`;
+    }).join('');
+    const spell = it.spell || String(it.word||'').replace('_', it.ans);
+    const why = it.hint || it.ask || '';
+    el.innerHTML = `<div class="rk" data-work="${id}">
+      <div class="top"><div class="kick">Проверочная работа · ${id}</div><div class="qnum">${qi+1} / ${total}</div></div>
+      <div class="bar"><i style="transform:scaleX(${((qi+ (done?1:0))/total).toFixed(3)})"></i></div>
+      <div class="divider"><span></span><b>◆</b><span></span></div>
+      <div class="wordwrap"><div class="halo"></div><div class="word">${cells}</div></div>
+      <p class="ask">${it.ask||'Выбери верное написание'}</p>
+      <div class="opts">${opts}</div>
+      <p class="verdict ${done?(ok?'ok':'no'):''}" aria-live="polite">${done ? (ok ? '✅ верно: '+spell+(why?' — '+why:'') : '❌ правильно «'+it.ans+'» — '+spell) : 'Выбери букву — она встанет в слово.'}</p>
+      <p class="score">верно: ${st.ok||0} · ошибок: ${st.bad||0} · всего: ${total}</p>
+    </div>`;
+  }
+  /* буква влетает в гнездо: только transform и opacity, масштаб не ниже 0,9 */
+  const origPick = window.RU_EXAM_PICK;
+  window.RU_EXAM_PICK = {};
+  Object.keys(origPick||{}).forEach(k=>{ window.RU_EXAM_PICK[k]=origPick[k]; });
+  [611,612,613].forEach(id=>{
+    const prev = window.RU_EXAM_PICK[id];
+    window.RU_EXAM_PICK[id] = function(qi, val){
+      let from=null,to=null;
+      try{
+        const btn=[...document.querySelectorAll('#lvis .rk .opt')].find(b=>b.textContent.trim()===String(val));
+        const gap=document.getElementById('rkGap');
+        if(btn) from=btn.getBoundingClientRect();
+        if(gap) to=gap.getBoundingClientRect();
+      }catch(e){}
+      if(typeof prev==='function') prev(qi,val);   /* состояние и счёт считает прежний обработчик */
+      try{
+        if(!from||!to) return;
+        const c=document.createElement('div'); c.className='fly'; c.textContent=val;
+        c.style.left=from.left+'px'; c.style.top=from.top+'px'; c.style.fontSize=Math.min(44,to.height*0.62)+'px';
+        document.body.appendChild(c);
+        const dx=(to.left+to.width/2)-(from.left+from.width/2), dy=(to.top+to.height/2)-(from.top+from.height/2);
+        requestAnimationFrame(()=>{ c.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px) scale(.92)'; c.style.opacity='.06'; });
+        setTimeout(()=>{ try{c.remove();}catch(e){} }, 300);
+      }catch(e){}
+    };
+  });
+  /* подменяем кадр только на шагах с вопросами; вступление и разбор остаются прежними */
+  if(window.WAVE_B){
+    [611,612,613].forEach(id=>{
+      const prevW=window.WAVE_B[id]; if(typeof prevW!=='function') return;
+      window.WAVE_B[id]=function(el){
+        try{
+          const lk=(typeof lidKey==='function')?lidKey(LV.id):String(id);
+          if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; if(!CHS[lk].ans) CHS[lk].ans={};
+          const L=(window.ARH_LESSONS||[]).find(x=>x.id===id);
+          const txt=L?(L.explain[LV.step||0]||''):'';
+          const m=/^Вопрос (\d+) из (\d+)\./.exec(txt);
+          const items=(window.RU_EXAM_ITEMS||{})[id];
+          if(m && items){
+            const qi=parseInt(m[1],10)-1, it=items[qi];
+            if(it && it.word && it.ans){ render(el, id, qi, it, parseInt(m[2],10)||items.length, CHS[lk]); return; }
+          }
+        }catch(e){}
+        return prevW(el);
+      };
+    });
   }
   return {render:render};
 })();
