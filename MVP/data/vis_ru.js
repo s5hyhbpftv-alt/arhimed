@@ -2867,10 +2867,151 @@ window.RUTRAIN = (function(){
     Object.keys(window.RUTRAIN_DATA).forEach(id=>{
       const orig=window.WAVE_B[id]; if(typeof orig!=='function') return;
       window.WAVE_B[id]=function(el){
-        try{ if(((typeof LV!=='undefined'&&LV.step)||0)===8){ render(el, id); return; } }catch(e){}
+        try{ if(((typeof LV!=='undefined'&&LV.step)||0)===8 && window.RUTRAIN_DATA[id]){ render(el, id); return; } }catch(e){}
         return orig(el);
       };
     });
   }
   return {render:render, data:window.RUTRAIN_DATA};
+})();
+
+/* ================= СВОИ ИНТЕРАКТИВЫ ПО ТЕМАМ (без общего шаблона) =================
+   601 — сортировка: слово летит в свой ящик (существительное / прилагательное / глагол)
+   610 — запятые: ребёнок ставит их между словами, знак встаёт на место и остаётся */
+window.RUTHEME = (function(){
+  const CSS = `
+  #lvis .th-wrap{width:100%;display:flex;flex-direction:column;align-items:center;gap:14px}
+  #lvis .th-title{font:600 20px/1.2 Georgia,serif;color:#ffd76a}
+  #lvis .th-tip{color:#cbb89a;font-size:14.5px}
+  #lvis .th-score{font-size:14px;color:#cbb89a}
+  #lvis .th-verdict{font-size:15px;color:#e8dcc8;text-align:center;min-height:22px}
+  /* 601: сортировка по ящикам */
+  #lvis .th-word{font:600 40px/1 Georgia,serif;color:#f6efe0;padding:16px 26px;border-radius:20px;
+    background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.03));border:1.5px solid rgba(255,215,106,.35);
+    box-shadow:0 10px 30px rgba(0,0,0,.45);animation:thDrop .5s cubic-bezier(.2,1.2,.3,1) both}
+  @keyframes thDrop{0%{opacity:0;transform:translateY(-26px) scale(.9)}100%{opacity:1;transform:none}}
+  @keyframes thInto{0%{transform:translate(var(--dx),var(--dy)) scale(1)}60%{transform:translate(calc(var(--dx)*.55),calc(var(--dy)*.6)) scale(.72)}100%{transform:translate(var(--dx),var(--dy)) scale(.1);opacity:0}}
+  @keyframes thBounce{0%{transform:translateY(0)}35%{transform:translateY(-10px)}70%{transform:translateY(3px)}100%{transform:translateY(0)}}
+  #lvis .th-crates{display:flex;gap:10px;width:100%;justify-content:center;flex-wrap:wrap}
+  #lvis .th-crate{flex:1 1 30%;min-width:96px;padding:14px 8px 12px;border-radius:18px;border:1.6px solid rgba(255,215,106,.35);
+    background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;
+    transition:transform .18s cubic-bezier(.2,1.3,.3,1), box-shadow .2s, border-color .2s}
+  #lvis .th-crate:hover{transform:translateY(-3px)}
+  #lvis .th-crate.hit{animation:thBounce .6s ease-out;border-color:#8fd1a8;box-shadow:0 0 0 4px rgba(143,209,168,.18)}
+  #lvis .th-crate.miss{border-color:#e86a5a;animation:rtShake .5s}
+  #lvis .th-crate .th-ico{font-size:26px;line-height:1}
+  #lvis .th-crate .th-nm{font:600 15px/1.2 Georgia,serif;color:#ffe9a8;text-align:center;padding:0 4px;white-space:nowrap;overflow-wrap:normal}
+  #lvis .th-crate .th-ex{font-size:12.5px;color:#cbb89a}
+  #lvis .th-fly{position:fixed;z-index:320;pointer-events:none;font:600 34px/1 Georgia,serif;color:#ffe9a8;
+    text-shadow:0 0 20px rgba(255,215,106,.85);transition:transform .62s cubic-bezier(.35,.05,.2,1), opacity .62s ease-in}
+  /* 610: запятые в предложении */
+  #lvis .th-sent{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0;width:100%;
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,215,106,.25);border-radius:18px;padding:16px 12px}
+  #lvis .th-w{font:600 19px/1.5 Georgia,serif;color:#f6efe0;padding:2px 1px}
+  #lvis .th-slot{position:relative;width:22px;height:34px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+  #lvis .th-slot::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:14px;height:2px;border-radius:2px;background:rgba(255,215,106,.25)}
+  #lvis .th-slot.on::after{background:transparent}
+  #lvis .th-comma{font:700 30px/1 Georgia,serif;color:#ffd76a;opacity:0;transform:translateY(-18px) scale(.4)}
+  #lvis .th-slot.on .th-comma{animation:thComma .55s cubic-bezier(.2,1.6,.3,1) both, thCommaGlow 1.2s ease-out .4s}
+  @keyframes thComma{0%{opacity:0;transform:translateY(-18px) scale(.4)}100%{opacity:1;transform:none}}
+  @keyframes thCommaGlow{0%{text-shadow:0 0 0 rgba(255,215,106,.9)}100%{text-shadow:0 0 18px rgba(255,215,106,0)}}
+  #lvis .th-slot.bad .th-comma{color:#e86a5a;animation:rtShake .5s}
+  #lvis .th-btn{font:600 17px/1 Georgia,serif!important;padding:15px 18px!important;border-radius:16px!important}
+  `;
+  function css(){ try{ if(!document.getElementById('th-style')){ const e=document.createElement('style'); e.id='th-style'; e.textContent=CSS; document.head.appendChild(e); } }catch(e){} }
+  function st(lk){ if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; }
+
+  /* ---------- 601: сортировка по ящикам ---------- */
+  const CRATES=[['н','🧱','сущ.','существительное','кто? что?'],['п','🎨','прил.','прилагательное','какой?'],['г','⚡','глагол','глагол','что делает?']];
+  const W601=[['снег','н'],['пушистый','п'],['летит','г'],['дорога','н'],['весёлый','п'],['рисует','г'],['радость','н'],['зимний','п'],['светит','г']];
+  function render601(el){
+    css(); const lk=lidKey(601), s=st(lk); if(s.gIdx==null) s.gIdx=0; if(s.gRes===undefined) s.gRes=null;
+    const i=s.gIdx%W601.length, pair=W601[i], word=pair[0], key=pair[1], picked=s.gRes;
+    const crates=CRATES.map(c=>{
+      const cls='th-crate'+(picked==null?'':(picked===c[0]?(c[0]===key?' hit':' miss'):''));
+      return `<div class="${cls}" data-crate="${c[0]}" onclick="thSort('${c[0]}')">
+        <span class="th-ico">${c[1]}</span><span class="th-nm">${c[2]}</span><span class="th-ex">${c[4]}</span></div>`;
+    }).join('');
+    const full = CRATES.filter(c=>c[0]===key)[0][3];
+    const verdict = picked==null ? '' : (picked===key ? '✅ верно: '+word+' — '+full : '❌ '+word+' — это '+full);
+    el.innerHTML=`<div class="th-wrap">
+      <div class="th-title">Разложи слова по ящикам</div>
+      <div class="th-word" id="thWord">${word}</div>
+      <div class="th-verdict">${verdict||'выбери ящик для слова'}</div>
+      <div class="th-crates">${crates}</div>
+      <div class="th-score">верно: ${s.gOk||0} · ошибок: ${s.gBad||0} · всего: ${W601.length}</div>
+      <div class="th-tip">${picked==null?'нажми ящик':'нажми любой ящик — следующее слово'}</div></div>`;
+  }
+  window.thSort=function(key){
+    try{
+      const lk=lidKey(601), s=st(lk);
+      if(s.gRes!=null){ s.gIdx=(s.gIdx||0)+1; s.gRes=null; chRender(0); return; }
+      const i=(s.gIdx||0)%W601.length, correct=W601[i][1];
+      const card=document.getElementById('thWord'), crate=document.querySelector('#lvis .th-crate[data-crate="'+key+'"]');
+      const from=card?card.getBoundingClientRect():null, to=crate?crate.getBoundingClientRect():null;
+      s.gRes=key; if(key===correct) s.gOk=(s.gOk||0)+1; else s.gBad=(s.gBad||0)+1;
+      chRender(0);
+      if(from&&to){
+        const f=document.createElement('span'); f.className='th-fly'; f.textContent=W601[i][0];
+        f.style.left=from.left+'px'; f.style.top=from.top+'px'; document.body.appendChild(f);
+        const dx=(to.left+to.width/2)-(from.left+from.width/2), dy=(to.top+to.height/2)-(from.top+from.height/2);
+        requestAnimationFrame(()=>{ f.style.transform='translate('+dx+'px,'+dy+'px) scale(.35)'; f.style.opacity='0.2'; });
+        setTimeout(()=>{ try{ f.remove(); }catch(e){} }, 700);
+      }
+    }catch(e){}
+  };
+
+  /* ---------- 610: запятые в предложении ---------- */
+  const S610=[['яблони|груши|сливы',[1,2]],['яблони|и|груши',[]],['Маша|помоги|мне',[1]],
+              ['Светит|солнце|и|поют|птицы',[3]],['не|груши|а|сливы',[2]],['Спасибо|Маша|за|помощь',[1,2]]];
+  const OK610=['между однородными ставятся запятые','одиночный союз «и» — запятая не нужна','обращение в начале — одна запятая',
+               'две основы — запятая перед «и»','союз «а» — запятая','обращение в середине — две запятые'];
+  function render610(el){
+    css(); const lk=lidKey(610), s=st(lk); if(s.gIdx==null) s.gIdx=0; if(s.gSet===undefined) s.gSet=null;
+    const i=s.gIdx%S610.length, words=S610[i][0].split('|'), need=S610[i][1], now=s.gSet, done=now!==null;
+    let html='';
+    words.forEach((w,k)=>{
+      if(k>0){
+        const isOn = done ? (need.indexOf(k)>=0) : now && now.indexOf(k)>=0;
+        const bad = done && now.indexOf(k)>=0 && need.indexOf(k)<0;
+        html+=`<span class="th-slot ${isOn?'on':''} ${bad?'bad':''}" onclick="${done?'':'thSlot('+k+')'}"><span class="th-comma">,</span></span>`;
+      }
+      html+=`<span class="th-w">${w}</span>`;
+    });
+    const verdict = !done ? '' : (s.gOk610 ? '✅ верно: '+OK610[i] : '❌ '+OK610[i]);
+    el.innerHTML=`<div class="th-wrap">
+      <div class="th-title">Поставь запятые</div>
+      <div class="th-tip">нажимай на промежутки между словами</div>
+      <div class="th-sent">${html}</div>
+      <div class="th-verdict">${verdict||'отметь места для запятых'}</div>
+      <div class="th-btns" style="display:flex;gap:10px">${done?`<button type="button" class="btn th-btn" onclick="thNext()">Дальше</button>`:`<button type="button" class="btn th-btn" onclick="thCheck()">Проверить</button>`}</div>
+      <div class="th-score">верно: ${s.gOk610||0} · ошибок: ${s.gBad610||0} · всего: ${S610.length}</div>
+      <div class="th-tip">${done?'нажми «Дальше»':'запятые встанут на места сразу'}</div></div>`;
+  }
+  window.thSlot=function(k){
+    try{ const lk=lidKey(610), s=st(lk); s.gSet=s.gSet||[]; const p=s.gSet.indexOf(k); if(p>=0) s.gSet.splice(p,1); else s.gSet.push(k); chRender(0); }catch(e){}
+  };
+  window.thCheck=function(){
+    try{ const lk=lidKey(610), s=st(lk); const i=(s.gIdx||0)%S610.length, need=S610[i][1];
+      const got=(s.gSet||[]).slice().sort().join(','), right=need.slice().sort().join(',');
+      if(got===right) s.gOk610=(s.gOk610||0)+1; else s.gBad610=(s.gBad610||0)+1;
+      s.gRes=got; chRender(0);
+    }catch(e){}
+  };
+  window.thNext=function(){
+    try{ const lk=lidKey(610), s=st(lk); s.gIdx=(s.gIdx||0)+1; s.gSet=null; s.gRes=null; chRender(0); }catch(e){}
+  };
+
+  /* подменяем тренажёрный кадр: 601 — ящики, 610 — запятые; уроки-буквы остаются на RUTRAIN */
+  if(window.WAVE_B){
+    const wrap=(id, fn)=>{ const orig=window.WAVE_B[id]; if(typeof orig!=='function') return;
+      window.WAVE_B[id]=function(el){ try{ if(((typeof LV!=='undefined'&&LV.step)||0)===8){ fn(el); return; } }catch(e){} return orig(el); }; };
+    wrap(601, render601);   /* 610 включим, когда придёт его черёд — сейчас делаем по одному */
+  }
+  /* уроки, где вставка знака в слово — не их метафора, возвращаем прежний кадр (свои интерактивы будут следующими) */
+  if(window.RUTRAIN && window.RUTRAIN.data){
+    [602,606,607,608].forEach(id=>{ delete window.RUTRAIN.data[id]; });
+  }
+  window.RUTHEME_DATA={601:W601, 610:S610, ok610:OK610, crates:CRATES};
+  return {render601:render601, render610:render610};
 })();
