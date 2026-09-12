@@ -2977,7 +2977,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
@@ -3283,7 +3283,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
@@ -3559,7 +3559,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
@@ -3799,7 +3799,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
@@ -4049,7 +4049,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
@@ -4238,7 +4238,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
@@ -4406,7 +4406,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
@@ -4576,7 +4576,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
@@ -4763,7 +4763,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
@@ -4946,7 +4946,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
@@ -5125,7 +5125,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
@@ -5310,7 +5310,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     const cur=st[key];
     return `<div style="width:min(100%,340px);text-align:left">
       <div style="color:${GOLD};font-size:13px;margin-bottom:6px">${q}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
+      <div class="wv-row">${opts.map(o=>`<button type="button" class="btn" style="border-color:${cur===o.k?GOLD:'#3d5c49'}"
         onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k]['${key}']='${o.k}';chRender(0);}catch(e){}">${o.t}</button>`).join('')}</div>
       ${cur?`<div class="wv-sml" style="margin-top:6px;color:#e8dcc8">ты выбрал: ${opts.filter(o=>o.k===cur).map(o=>o.t)[0]||cur}</div>`:''}
     </div>`;
