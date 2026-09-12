@@ -3977,3 +3977,119 @@ window.RU601MOTION = (function(){
   watch();
   return {decorate:decorate, sparks:sparks};
 })();
+
+/* ================= Пролог и итог работ 611–614: первые три и последние два кадра =================
+   Раньше эти кадры оставались прежними сценами. Теперь у них своя вёрстка в языке работ:
+   пролог объясняет, что проверяет работа и сколько в ней вопросов; итог показывает балл,
+   процент, отметку по школьной шкале и разбор всех ответов. */
+window.RUWORKEDGES = (function(){
+  const F="Georgia,'Times New Roman',serif";
+  const CSS=`
+  #lvis .rkw{box-sizing:border-box;max-width:100%;position:relative;width:100%;padding:clamp(14px,4vw,22px) clamp(12px,3.4vw,18px);
+    border-radius:20px;font-family:${F};color:#f6efe0;overflow:hidden;
+    background:radial-gradient(90% 60% at 50% 0%,rgba(255,205,110,.14),transparent 62%),linear-gradient(180deg,#1b2c24,#131e19);
+    border:1px solid rgba(255,215,106,.26);box-shadow:0 22px 54px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05);
+    display:flex;flex-direction:column;gap:14px}
+  #lvis .rkw .kick{font-size:clamp(11px,3.2vw,14px);letter-spacing:.12em;text-transform:uppercase;color:#d8c9a6}
+  #lvis .rkw h2{font-size:clamp(20px,6vw,24px);line-height:1.12;font-weight:600;color:#ffd76a;margin:0;letter-spacing:-.02em;text-wrap:balance}
+  #lvis .rkw p{margin:0;font-size:clamp(15px,4.2vw,16px);line-height:1.55}
+  #lvis .rkw .what{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+  #lvis .rkw .what li{position:relative;padding-left:22px;list-style:none;font-size:clamp(15px,4.2vw,16px);line-height:1.5}
+  #lvis .rkw .what li::before{content:'';position:absolute;left:4px;top:9px;width:8px;height:8px;transform:rotate(45deg);
+    background:linear-gradient(180deg,#ffd76a,#e2b23f)}
+  #lvis .rkw .count{display:flex;gap:10px;flex-wrap:wrap;margin-top:2px}
+  #lvis .rkw .pill{padding:8px 14px;border-radius:12px;border:1px solid rgba(255,215,106,.3);background:rgba(255,215,106,.10);
+    font-size:clamp(14px,3.8vw,16px);color:#ffd76a;font-variant-numeric:tabular-nums}
+  #lvis .rkw .score{font-size:clamp(34px,11vw,48px);font-weight:600;line-height:1;color:#fff6dd;font-variant-numeric:tabular-nums}
+  #lvis .rkw .bands{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+  #lvis .rkw .band{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:12px;
+    border:1px solid rgba(255,215,106,.18);font-size:clamp(14px,3.8vw,16px)}
+  #lvis .rkw .band.on{border-color:#ffd76a;background:rgba(255,215,106,.12);color:#ffeaa8}
+  #lvis .rkw .band span:last-child{color:#d8c9a6;font-variant-numeric:tabular-nums}
+  #lvis .rkw .cta{width:100%;padding:16px 18px;border-radius:16px;border:1.5px solid #ffd76a;cursor:pointer;
+    background:linear-gradient(180deg,#ffd76a,#e2b23f);color:#20180a;font-family:${F};font-size:clamp(16px,4.4vw,20px);font-weight:600;
+    transition:transform 140ms cubic-bezier(.2,0,0,1)}
+  #lvis .rkw .cta:active{transform:translateY(2px)}
+  #lvis .rkw .cta:focus-visible{outline:3px solid #ffd76a;outline-offset:3px}
+  #lvis .rkw .back{display:flex;gap:10px;flex-wrap:wrap}
+  #lvis .rkw .back button{flex:1 1 44%;padding:13px 16px;border-radius:14px;border:1.5px solid rgba(255,215,106,.3);
+    background:rgba(255,255,255,.05);color:#f6efe0;font-family:${F};font-size:clamp(15px,4vw,17px);cursor:pointer}
+  #lvis .rkw .rev{display:flex;flex-direction:column;gap:6px}
+  #lvis .rkw .rev div{display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.04);
+    font-size:clamp(13px,3.6vw,15px)}
+  #lvis .rkw .rev .ok{color:#b8e8cc}#lvis .rkw .rev .no{color:#f3b3aa}
+  @media (prefers-reduced-motion: reduce){#lvis .rkw *{animation:none!important;transition:none!important}}
+  `;
+  function css(){ try{ let e=document.getElementById('rkw-style'); if(!e){ e=document.createElement('style'); e.id='rkw-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  function prolog(el,id,L,step){
+    css();
+    const txt=L.explain[step]||'';
+    const cnt=(window.RU_EXAM_ITEMS&&window.RU_EXAM_ITEMS[id])?window.RU_EXAM_ITEMS[id].length:12;
+    el.innerHTML=`<div class="rkw">
+      <div class="kick">Проверочная работа · ${id} · шаг ${step+1} из ${L.explain.length}</div>
+      <h2>${L.title||'Проверочная работа'}</h2>
+      <p>${txt}</p>
+      <ul class="what">
+        <li>Проверяем ${id===611?'безударные гласные в корне':id===612?'парные согласные и непроизносимые согласные':id===613?'приставки, предлоги и разделительный знак':'функциональную грамотность'}</li>
+        <li>Каждый вопрос с выбором ответа: буква встаёт в слово, правильность объясняется.</li>
+        <li>В конце работы — балл, процент и отметка по школьной шкале.</li>
+      </ul>
+      <div class="count"><span class="pill">вопросов: ${cnt}</span><span class="pill">без ограничения времени</span></div>
+      <p style="color:#d8c9a6">Читай задание до конца: подсказка говорит, что именно проверяется в этом слове.</p>
+    </div>`;
+  }
+  function itog(el,id,L){
+    css();
+    const lk=(typeof lidKey==='function')?lidKey(LV.id):String(id);
+    const st=(typeof CHS!=='undefined'&&CHS[lk])?CHS[lk]:{};
+    const items=(window.RU_EXAM_ITEMS&&window.RU_EXAM_ITEMS[id])||[];
+    const total=items.length||12;
+    const ok=st.ok||0, bad=st.bad||0, answered=ok+bad;
+    const pct=total?Math.round(ok*100/total):0;
+    const bands=[['повышенный','больше 80 %',pct>80],['базовый','50–80 %',pct>50&&pct<=80],['пониженный','30–50 %',pct>30&&pct<=50],['недостаточный','меньше 30 %',pct<=30]];
+    const rows=items.map((it,i)=>{
+      const a=st.ans?st.ans[i]:null;
+      return `<div><span>${i+1}. ${String(it.word||'').replace('_','_')}</span><span class="${a==null?'':(a===it.ans?'ok':'no')}">${a==null?'нет ответа':(a===it.ans?'верно: '+(it.spell||''):'ответ «'+a+'», нужно «'+it.ans+'»')}</span></div>`;
+    }).join('');
+    el.innerHTML=`<div class="rkw">
+      <div class="kick">Итог работы · ${id}</div>
+      <h2>${answered===total?'Работа пройдена':'Работа не закончена'}</h2>
+      <div class="score">${ok} / ${total}</div>
+      <p>Правильно ${ok}, ошибок ${bad}, без ответа ${total-answered}. Это ${pct} % работы.</p>
+      <div class="bands">${bands.map(b=>`<div class="band ${b[2]?'on':''}"><span>${b[0]}</span><span>${b[1]}</span></div>`).join('')}</div>
+      <div class="rev">${rows}</div>
+      <div class="back">
+        <button type="button" onclick="rkwRestart(${id})">Пройти заново</button>
+        <button type="button" onclick="rkwToFirst(${id})">К первому вопросу</button>
+      </div>
+      <p style="color:#d8c9a6">Отметка по школьной шкале: 85 % и выше — «5», 65–84 % — «4», 45–64 % — «3». В МЦКО отметок нет, там уровень.</p>
+    </div>`;
+  }
+  window.rkwRestart=(id)=>{ try{ const lk=lidKey(LV.id); CHS[lk]={ans:{},ok:0,bad:0}; LV.step=0; chRender(0); }catch(e){} };
+  window.rkwToFirst=(id)=>{ try{ const L=ARH_LESSONS.find(x=>x.id===id); const i=L.explain.findIndex(t=>/^Вопрос 1 /.test(t)); LV.step=i>0?i:1; chRender(0); }catch(e){} };
+  [611,612,613,614].forEach(id=>{
+    if(!window.WAVE_B) return;
+    const prev=window.WAVE_B[id]; if(typeof prev!=='function') return;
+    window.WAVE_B[id]=function(el){
+      try{
+        const L=(window.ARH_LESSONS||[]).find(x=>x.id===id);
+        const step=(typeof LV!=='undefined'&&LV.step)||0;
+        if(L){
+          const txt=L.explain[step]||'';
+          const isQ=/^Вопрос \d+ из \d+\./.test(txt);
+          const m=isQ?/^Вопрос (\d+) из (\d+)\./.exec(txt):null;
+          const qi=m?parseInt(m[1],10)-1:-1;
+          const items=(window.RU_EXAM_ITEMS||{})[id];
+          /* вопросные кадры — прежний движок (важно для МЦКО: у неё свой формат) */
+          if(items&&qi>=0&&items[qi]&&items[qi].word) return prev(el);
+          const last=[L.explain.length-2, L.explain.length-1];
+          if(last.indexOf(step)>=0){ itog(el,id,L); return; }        /* последние два кадра — итог */
+          if(step<=2){ prolog(el,id,L,step); return; }                /* первые три — пролог */
+          return prev(el);                                            /* середина — прежний кадр */
+        }
+      }catch(e){}
+      return prev(el);
+    };
+  });
+  return {prolog:prolog, itog:itog};
+})();
