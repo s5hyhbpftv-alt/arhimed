@@ -3359,6 +3359,12 @@ window.RU601V2 = (function(){
   #lvis .s6 .note.warn{border-color:rgba(232,106,90,.55);background:linear-gradient(90deg,rgba(232,106,90,.08),transparent 70%)}
   #lvis .s6 .pr{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(255,215,106,.22)}
   #lvis .s6 .pr .q{font-size:17px;line-height:1.4;margin-bottom:10px}
+  #lvis .s6 .ex-list{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+  #lvis .s6 .ex-list li{position:relative;padding-left:22px;font-size:16px;line-height:1.5}
+  #lvis .s6 .ex-list li::before{content:'';position:absolute;left:4px;top:9px;width:8px;height:8px;transform:rotate(45deg);
+    background:linear-gradient(180deg,#ffd76a,#e2b23f)}
+  #lvis .s6 .pr .row{gap:10px;justify-content:flex-start}
+  #lvis .s6 .pr .chip{font-size:20px;padding:12px 16px}
   #lvis .s6 .split{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap}
   #lvis .s6 .rail{display:flex;gap:14px;justify-content:center;padding:10px 0;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line)}
   #lvis .s6 .crates{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
@@ -4046,7 +4052,7 @@ window.RU601V3 = (function(){
     const P=frames(s).p;
     const body = (step>=1 && step<=7) ? (()=>{ const t=THEORY[step-1];
         return `<div class="kicker">${t.n} · теория</div><h2>${t.t}</h2><p class="lead">${t.lead}</p>
-          <div class="row">${t.ex.map((e,k)=>`<span class="tag" data-anim style="--i:${k+2}">${e}</span>`).join('')}</div>
+          <ul class="ex-list">${t.ex.map((e,k)=>`<li data-anim style="--i:${k+2}">${e}</li>`).join('')}</ul>
           <div class="note"><span class="lbl">как проверить</span>${t.how}</div>
           <div class="note warn"><span class="lbl">частая ошибка</span>${t.err}</div>`; })()
       : (P[step] ? P[step]() : P[8]());

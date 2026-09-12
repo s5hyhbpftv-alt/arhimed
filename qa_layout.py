@@ -87,7 +87,7 @@ def run(ids):
                     pg.evaluate(f"()=>openLessonView({lid})"); pg.wait_for_timeout(90)
                     for _ in range(i): pg.evaluate("()=>lvStep(1)"); pg.wait_for_timeout(60)
                     pg.evaluate("()=>{const b=[...document.querySelectorAll('.wk-btn')].find(x=>/показать/.test(x.innerText)); if(b)b.click();}"); pg.wait_for_timeout(90)
-                    pg.wait_for_timeout(700)
+                    pg.wait_for_timeout(1300)   # ждём окончания входного каскада (60 мс × 8 + 420 мс)
                     r=pg.evaluate(JS)
                     if r.get('issues'): bad.append((i,r['issues'][:3]))
                     devs.append(abs(r.get('dev',0)))
