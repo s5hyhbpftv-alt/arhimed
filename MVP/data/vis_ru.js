@@ -4239,18 +4239,25 @@ window.RU615PAPER = (function(){
   const INK='#2a2118', MUT='#6b5b45', RULE='#d8c9a8', PAPER='#f7f1e4', PAPER2='#fffdf7', OKC='#2f6b46', NOC='#9c2f22';
   const CSS=`
   #lvis .pp{box-sizing:border-box;width:100%;max-width:520px;margin:0 auto;font-family:${F};color:${INK};
-    background:linear-gradient(180deg,${PAPER2},${PAPER});border:1px solid ${RULE};border-radius:14px;
+    background-color:#fdf6e0;
+    background-image:
+      linear-gradient(rgba(96,128,168,.22) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(96,128,168,.22) 1px, transparent 1px),
+      linear-gradient(180deg,#fffaea,#fbf1d6);
+    background-size:20px 20px, 20px 20px, 100% 100%;
+    background-position:0 0, 0 0, 0 0;
+    border:1px solid ${RULE};border-radius:14px;
     padding:clamp(14px,4vw,22px) clamp(14px,4vw,24px) clamp(16px,4.4vw,24px);
     box-shadow:0 10px 26px rgba(26,20,12,.28),inset 0 1px 0 rgba(255,255,255,.7);
     display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
-  #lvis .pp::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.05;
-    background-image:radial-gradient(${INK} .6px,transparent .6px);background-size:7px 7px}
+  #lvis .pp::after{content:'';position:absolute;top:0;bottom:0;left:38px;width:1px;pointer-events:none;
+    background:linear-gradient(180deg,rgba(200,90,100,0),rgba(200,90,100,.5) 8%,rgba(200,90,100,.5) 92%,rgba(200,90,100,0))}
   #lvis .pp .head{position:static;width:auto;display:flex;justify-content:space-between;align-items:baseline;gap:10px;
     border-bottom:1px solid ${RULE};padding-bottom:8px}
   #lvis .pp .num{font-size:clamp(12px,3.4vw,14px);letter-spacing:.1em;text-transform:uppercase;color:${MUT}}
   #lvis .pp .of{font-size:clamp(12px,3.4vw,14px);color:${MUT};font-variant-numeric:tabular-nums}
   #lvis .pp h2{font-size:clamp(19px,5.4vw,23px);line-height:1.18;font-weight:600;margin:0;color:${INK};letter-spacing:-.01em}
-  #lvis .pp .fig{border:1px solid ${RULE};border-radius:10px;background:${PAPER2};padding:10px 8px}
+  #lvis .pp .fig{border:1px solid ${RULE};border-radius:10px;background:rgba(255,253,247,.92);padding:10px 8px}
   #lvis .pp .fig svg *{stroke-linecap:round}
   #lvis .pp .q{font-size:clamp(15.5px,4.3vw,17px);line-height:1.55;color:${INK}}
   #lvis .pp .opts{display:flex;flex-direction:column;gap:10px}
@@ -4370,4 +4377,206 @@ window.RU615PAPER = (function(){
     return sv(s,178);
   }
   if(window.RU615 && window.RU615.art){ window.RU615.art.chart=marksChart; window.RU615.art.temp=tempChart; }
+})();
+
+/* Прямая и карта часовых поясов — по вырезам из PDF (продолжение приведения к соответствию) */
+(function(){
+  const F="Georgia,'Times New Roman',serif";
+  const INK='#2a2118', MUT='#6b5b45', GOLD='#8a6a1f', LINE='rgba(42,33,24,.75)', GRID='rgba(42,33,24,.22)';
+  const sv=(inner,h)=>`<svg viewBox="0 0 360 ${h}" width="100%" style="display:block;max-width:100%">${inner}</svg>`;
+  const tx=(x,y,s,size,fill,anchor,rot)=>`<text x="${x}" y="${y}"${rot?' transform="rotate(-90 '+x+' '+y+')"':''} text-anchor="${anchor||'middle'}" font-family="${F}" font-size="${size||11}" fill="${fill||MUT}">${s}</text>`;
+  /* прямая: в PDF подписаны только 0 и 1, точки A, B, C без числовых подписей */
+  function coordLine(){
+    const X=u=>46+u*54, Y=74;              /* 0 при x=46, шаг деления 54 px */
+    let s='';
+    for(let u=0;u<=5;u++){
+      s+=`<line x1="${X(u)}" y1="${Y-9}" x2="${X(u)}" y2="${Y+9}" stroke="${LINE}" stroke-width="1.3"/>`;
+      if(u===0||u===1) s+=tx(X(u), Y+26, u, 12, INK);
+    }
+    s+=`<line x1="${X(0)-46}" y1="${Y}" x2="${X(5)+26}" y2="${Y}" stroke="${LINE}" stroke-width="1.3"/>`;
+    [['A',1.5],['B',2.105],['C',3.5]].forEach(([n,u])=>{
+      s+=`<circle cx="${X(u)}" cy="${Y}" r="5" fill="${INK}"/>`+tx(X(u), Y-18, n, 13, INK);
+    });
+    return sv(s,120);
+  }
+  /* карта часовых поясов Дальнего Востока и часы Коли (19:50) */
+  function zones(){
+    const R=[
+      ['МСК+6','Якутск',  92, 96, 58, 'Чита'],
+      ['МСК+7','',       152, 92, 52, 'Благовещенск'],
+      ['МСК+8','Магадан',214, 92, 54, 'Хабаровск'],
+      ['МСК+9','Анадырь',276, 92, 52, 'Владивосток']
+    ];
+    let s='';
+    /* условная карта: пять цветных областей, как на карте округа */
+    const FILL=['#5bc4a0','#6fc9b4','#98d2c6','#8fc7e0','#7fb2d8'];
+    R.forEach((r,i)=>{ const [z,city,cx,cy,w]=r;
+      s+=`<rect x="${cx-w/2}" y="${cy-30}" width="${w}" height="56" rx="8" fill="${FILL[i]}" opacity=".55" stroke="rgba(42,33,24,.35)"/>`;
+      s+=tx(cx, cy-8, z, 12, INK);
+      if(city) s+=tx(cx, cy+10, city, 10.5, INK);
+    });
+    /* подписи городов вдоль нижнего края, как на карте */
+    const CITIES=[['Улан-Удэ',60,146],['Чита',104,158],['Благовещенск',170,146],['Хабаровск',228,158],
+                  ['Владивосток',120,184],['Южно-Сахалинск',206,184],['Петропавловск-Камч.',300,170]];
+    CITIES.forEach(([n,x,y])=>{ s+=`<circle cx="${x}" cy="${y-4}" r="2.6" fill="${INK}"/>`+tx(x,y+10,n,9.5,INK); });
+    s+=tx(184,22,'Дальневосточный федеральный округ · пять часовых поясов',10.5,INK);
+    /* часы: 19:50 — часовая между 7 и 8, минутная на 10 */
+    const cx=318, cy=170, r=26;
+    s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fffdf7" stroke="${INK}" stroke-width="1.6"/>`;
+    for(let h=0;h<12;h++){ const a=(h*30-90)*Math.PI/180;
+      s+=`<line x1="${cx+Math.cos(a)*(r-3)}" y1="${cy+Math.sin(a)*(r-3)}" x2="${cx+Math.cos(a)*r}" y2="${cy+Math.sin(a)*r}" stroke="${INK}" stroke-width="1"/>`; }
+    const hA=(7.83*30-90)*Math.PI/180, mA=(50*6-90)*Math.PI/180;
+    s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(hA)*(r*0.55)}" y2="${cy+Math.sin(hA)*(r*0.55)}" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/>`;
+    s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(mA)*(r*0.8)}" y2="${cy+Math.sin(mA)*(r*0.8)}" stroke="${GOLD}" stroke-width="1.8" stroke-linecap="round"/>`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="1.8" fill="${INK}"/>`;
+    s+=tx(cx, cy+40, 'часы Коли: 19:50', 10, INK);
+    return sv(s,214);
+  }
+  if(window.RU615 && window.RU615.art){ window.RU615.art.line=coordLine; window.RU615.art.zones=zones; }
+})();
+
+/* Карта Москвы: контуры округов с теми же номерами и расположением, как на карте в PDF.
+   Контуры упрощённые (не обводка по растрy), но состав, номера и взаимное положение
+   округов совпадают с файлом: центр 1, кольцо вокруг, Зеленоградский 10 отдельно
+   на северо-западе, присоединённые 11 и 12 — крупные области на юге. */
+(function(){
+  const F="Georgia,'Times New Roman',serif";
+  const INK='#2a2118', MUT='#6b5b45';
+  const COL=['#e8b64c','#9fc4e8','#c9b3e0','#7fc4a8','#f0c3a0','#d9a0a0','#a8c9a0','#e0c98f','#b8c9e0','#7fc4a8','#cfe0a8','#8fd0c0'];
+  const sv=(inner,h)=>`<svg viewBox="0 0 360 ${h}" width="100%" style="display:block;max-width:100%">${inner}</svg>`;
+  const tx=(x,y,s,size,fill)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="${F}" font-size="${size||11}" fill="${fill||INK}">${s}</text>`;
+  function hex(cx,cy,r,rot){ const pts=[]; for(let i=0;i<6;i++){ const a=(rot+i*60)*Math.PI/180; pts.push([cx+Math.cos(a)*r, cy+Math.sin(a)*r*0.86]); } return pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' '); }
+  const D=[
+    [1, 190, 98, 17, 0],    /* центр */
+    [2, 172, 64, 15, -10], [3, 210, 64, 15, 10],
+    [4, 244, 82, 16, 0],   /* ВАО */
+    [5, 216, 122, 14, -12], [6, 190, 134, 15, 0],  /* ЮАО */
+    [7, 152, 122, 14, 12], [8, 140, 94, 15, 0],    /* ЗАО */
+    [9, 152, 62, 14, 0],
+    [10, 58, 32, 21, 0],   /* Зеленоградский — отдельно */
+    [11, 168, 176, 26, 0], [12, 116, 188, 24, 0]   /* присоединённые */
+  ];
+  function moscowMap(){
+    let s=tx(180,18,'Москва: 12 административных округов',10.5,MUT);
+    D.forEach(([n,cx,cy,r,rot],i)=>{
+      s+=`<polygon points="${hex(cx,cy,r,rot)}" fill="${COL[i]}" opacity=".85" stroke="rgba(42,33,24,.45)" stroke-width="1"/>`;
+      s+=tx(cx,cy+4,n,12,INK);
+    });
+    s+=tx(58,64,'не граничит ни с кем',9.5,MUT);
+    s+=tx(250,150,'ЦАО — 1 · ВАО — 4 · ЗАО — 8',9.5,MUT);
+    s+=tx(168,222,'Зеленоградский — 10 · присоединённые — 11 и 12',9.5,MUT);
+    return sv(s,234);
+  }
+  if(window.RU615 && window.RU615.art) window.RU615.art.map=moscowMap;
+})();
+
+/* ---- Семья и клумба: детальная проработка (объём, свет, тени, текстура) ---- */
+(function(){
+  const F="Georgia,'Times New Roman',serif";
+  const INK='#2a2118', MUT='#6b5b45';
+  const sv=(inner,h)=>`<svg viewBox="0 0 360 ${h}" width="100%" style="display:block;max-width:100%">${inner}</svg>`;
+  const tx=(x,y,s,size,fill)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="${F}" font-size="${size||11}" fill="${fill||MUT}">${s}</text>`;
+  /* один ребёнок: голова с волосами и лицом, рубашка с рукавами, ноги, обувь, мягкая тень */
+  function kid(x,base,skin,hair,shirt,pants,scale,long){
+    const k=(v)=>v*scale;
+    return `<g transform="translate(${x},${base}) scale(${scale})">
+      <ellipse cx="0" cy="2" rx="20" ry="5" fill="rgba(42,33,24,.22)"/>
+      ${long?`<path d="M-13 -34 q13 -14 26 0 q3 10 -2 14 q-11 -7 -22 0 q-5 -5 -2 -14 z" fill="${hair}"/>`:''}
+      <circle cx="0" cy="-40" r="13" fill="url(#skinG)"/>
+      <path d="M-13 -44 q13 -13 26 0 q1 -9 -13 -12 q-14 3 -13 12 z" fill="${hair}"/>
+      <circle cx="-4.5" cy="-41" r="1.7" fill="${INK}"/><circle cx="4.5" cy="-41" r="1.7" fill="${INK}"/>
+      <path d="M-4 -35 q4 4 8 0" stroke="${INK}" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <path d="M-11 -27 q11 -5 22 0 l3 22 q-14 4 -28 0 z" fill="${shirt}"/>
+      <path d="M-11 -27 q-7 4 -9 12 q3 3 6 1 q2 -7 5 -9 z" fill="${shirt}" opacity=".9"/>
+      <path d="M11 -27 q7 4 9 12 q-3 3 -6 1 q-2 -7 -5 -9 z" fill="${shirt}" opacity=".9"/>
+      <path d="M-9 -5 l-2 20 h7 l3 -20 z" fill="${pants}"/><path d="M9 -5 l2 20 h-7 l-3 -20 z" fill="${pants}"/>
+      <rect x="-13" y="14" width="11" height="5" rx="2.5" fill="${INK}"/><rect x="2" y="14" width="11" height="5" rx="2.5" fill="${INK}"/>
+    </g>`;
+  }
+  function family(){
+    let s=`<defs>
+      <radialGradient id="skinG" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#f6d9bd"/><stop offset="1" stop-color="#d9a97f"/></radialGradient>
+      <linearGradient id="shirtB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fa3dd"/><stop offset="1" stop-color="#3d6fae"/></linearGradient>
+      <linearGradient id="shirtP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0a0bc"/><stop offset="1" stop-color="#c9678c"/></linearGradient>
+      <linearGradient id="pantsG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4f63"/><stop offset="1" stop-color="#2c3040"/></linearGradient>
+      <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(42,33,24,.10)"/><stop offset="1" stop-color="rgba(42,33,24,0)"/></linearGradient>
+    </defs>`;
+    s+=`<rect x="18" y="176" width="324" height="34" fill="url(#floor)" rx="8"/>`;
+    s+=kid(96,178,'','#6b4a2a','url(#shirtB)','url(#pantsG)',1.02,false);
+    s+=kid(152,178,'','#3d2a18','url(#shirtB)','url(#pantsG)',1.06,false);
+    s+=kid(210,178,'','#7a5230','url(#shirtB)','url(#pantsG)',0.98,false);
+    s+=kid(262,176,'','#8a5a2a','url(#shirtP)','url(#pantsG)',0.96,true);
+    s+=kid(310,174,'','#c98b3a','url(#shirtP)','url(#pantsG)',0.94,true);
+    s+=tx(180,214,'трое мальчиков и две девочки — пятеро детей',12,INK);
+    return sv(s,228);
+  }
+  /* клумба: земля с текстурой, цветы с лепестками, зелень, декоративный заборчик, размерная линия */
+  function flower(){
+    let s=`<defs>
+      <radialGradient id="soil" cx=".38" cy=".32" r=".9"><stop offset="0" stop-color="#8a6242"/><stop offset="1" stop-color="#553a26"/></radialGradient>
+      <radialGradient id="grass" cx=".5" cy=".4" r=".9"><stop offset="0" stop-color="#7fae62"/><stop offset="1" stop-color="#4d7a3c"/></radialGradient>
+      <linearGradient id="picket" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8d6ac"/><stop offset="1" stop-color="#b99a63"/></linearGradient>
+      <radialGradient id="petal" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#fff0f3"/><stop offset="1" stop-color="#e0768f"/></radialGradient>
+      <radialGradient id="petal2" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#fff6e0"/><stop offset="1" stop-color="#e8b23f"/></radialGradient>
+    </defs>`;
+    s+=`<ellipse cx="180" cy="126" rx="118" ry="66" fill="url(#grass)" opacity=".55"/>`;
+    s+=`<ellipse cx="180" cy="120" rx="96" ry="52" fill="url(#soil)"/>`;
+    for(let i=0;i<26;i++){ const a=Math.random()*Math.PI*2, r=Math.sqrt(Math.random())*40;
+      s+=`<circle cx="${(180+Math.cos(a)*r*1.7).toFixed(1)}" cy="${(120+Math.sin(a)*r).toFixed(1)}" r="${(0.8+Math.random()*1.4).toFixed(1)}" fill="rgba(255,235,200,.22)"/>`; }
+    const fl=(x,y,sc,p)=>`<g transform="translate(${x},${y}) scale(${sc})">
+        ${[0,72,144,216,288].map(a=>`<ellipse cx="0" cy="-7" rx="3.4" ry="7" fill="url(#${p})" transform="rotate(${a})" opacity=".95"/>`).join('')}
+        <circle r="3.2" fill="#c9761f"/></g>`;
+    [[140,104,1.15,'petal'],[176,94,1.3,'petal2'],[214,102,1.1,'petal'],[158,126,1.25,'petal2'],
+     [196,128,1.15,'petal'],[180,112,1.4,'petal'],[126,124,1.0,'petal2'],[232,120,1.0,'petal2']]
+      .forEach(([x,y,sc,p])=>{ s+=`<path d="M${x} ${y+6} q-4 16 2 24" stroke="#3f6b33" stroke-width="2" fill="none"/>`+fl(x,y,sc,p); });
+    for(let i=0;i<16;i++){ const a=i*22.5*Math.PI/180; const x=180+Math.cos(a)*92, y=126+Math.sin(a)*50;
+      s+=`<rect x="${(x-2.6).toFixed(1)}" y="${(y-16).toFixed(1)}" width="5.2" height="22" rx="2" fill="url(#picket)" stroke="rgba(42,33,24,.35)" stroke-width=".6" transform="rotate(${(a*180/Math.PI+90).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})"/>`; }
+    s+=`<line x1="180" y1="120" x2="180" y2="76" stroke="${INK}" stroke-width="1" stroke-dasharray="4 3"/>`;
+    s+=tx(188,74,'R',12,INK);
+    s+=tx(180,196,'заборчик по границе клумбы: 18,84 м',12,INK);
+    s+=tx(180,212,'π = 3,14',11,MUT);
+    return sv(s,224);
+  }
+  if(window.RU615 && window.RU615.art){ window.RU615.art.family=family; window.RU615.art.flower=flower; }
+})();
+
+/* Таблица тарифов и треугольный коврик — по вырезам из PDF (последние два пункта) */
+(function(){
+  const F="Georgia,'Times New Roman',serif";
+  const INK='#2a2118', MUT='#6b5b45', BLUE='#a8d4e8';
+  const sv=(inner,h)=>`<svg viewBox="0 0 360 ${h}" width="100%" style="display:block;max-width:100%">${inner}</svg>`;
+  const tx=(x,y,s,size,fill,anchor)=>`<text x="${x}" y="${y}" text-anchor="${anchor||'middle'}" font-family="${F}" font-size="${size||11}" fill="${fill||INK}">${s}</text>`;
+  /* таблица: шапка как в PDF — «Карта «Тройка»» с двумя подколонками, банковская карта, оплата по биометрии */
+  function fares(){
+    const BX=8, BW=344, BY=6, BH=118;
+    const V1=126, V2=214, V3=278;                 /* границы колонок */
+    const cA=148, cM=192, cB=246, cBio=315;       /* центры чисел */
+    let t=`<rect x="${BX}" y="${BY}" width="${BW}" height="${BH}" rx="8" fill="rgba(255,253,247,.92)" stroke="rgba(42,33,24,.35)"/>`;
+    [38,66,94].forEach(y=>{ t+=`<line x1="${BX}" y1="${y}" x2="${BX+BW}" y2="${y}" stroke="rgba(42,33,24,.45)" stroke-width="${y===38?1:.8}"/>`; });
+    [V1,V2,V3].forEach(x=>{ t+=`<line x1="${x}" y1="${BY}" x2="${x}" y2="${BY+BH}" stroke="rgba(42,33,24,.3)"/>`; });
+    t+=tx(64,26,'Способы оплаты',10.5);
+    t+=tx(170,26,'Карта «Тройка»',10.5);
+    t+=tx(cB,22,'Банковская',8.5); t+=tx(cB,33,'карта',8.5);
+    t+=tx(cBio,22,'Оплата',8.5);   t+=tx(cBio,33,'по биометрии',8.5);
+    t+=tx(cA,56,'1 поездка',9);    t+=tx(cM,56,'90 минут',9);
+    t+=tx(14,80,'Метрополитен',10,INK,'start');
+    t+=tx(14,110,'Наземный транспорт',10,INK,'start');
+    t+=tx(cA,80,'57',11.5)+tx(cM,80,'85',11.5)+tx(cB,80,'64',11.5)+tx(cBio,80,'53',11.5);
+    t+=tx(cA,110,'57',11.5)+tx(cM,110,'85',11.5)+tx(cB,110,'64',11.5)+tx(cBio,110,'—',11.5);
+    t+=tx(180,146,'семья из трёх человек · цены в рублях',11,MUT);
+    return sv(t,162);
+  }
+  /* коврик: синяя заливка, ось симметрии вертикалью, прямые a, b, c, d как в PDF */
+  function carpet(){
+    const APEX=[176,34], L=[120,140], R=[232,140];
+    let s=`<polygon points="${APEX} ${L} ${R}" fill="${BLUE}" opacity=".85" stroke="rgba(42,33,24,.5)" stroke-width="1"/>`;
+    s+=`<line x1="176" y1="18" x2="176" y2="164" stroke="${INK}" stroke-width="1.2"/>`;      /* b — ось */
+    s+=`<line x1="92" y1="88" x2="268" y2="88" stroke="${INK}" stroke-width="1"/>`;           /* a — горизонталь */
+    s+=`<line x1="124" y1="156" x2="230" y2="30" stroke="${INK}" stroke-width="1"/>`;         /* c */
+    s+=`<line x1="230" y1="156" x2="124" y2="30" stroke="${INK}" stroke-width="1"/>`;         /* d */
+    s+=tx(176,14,'b',12)+tx(84,92,'c',12)+tx(276,92,'a',12)+tx(238,28,'d',12);
+    s+=tx(180,186,'какая прямая — ось симметрии?',11,MUT);
+    return sv(s,196);
+  }
+  if(window.RU615 && window.RU615.art){ window.RU615.art.fares=fares; window.RU615.art.carpet=carpet; }
 })();
