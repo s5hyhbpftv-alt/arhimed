@@ -395,6 +395,37 @@
   .wv-ic { font-size:64px; line-height:1.1; }
   .wv-ic2 { font-size:80px; line-height:1; }
   .wv-row { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; align-items:stretch; }
+  /* ===== золотые блики на кнопках и ползунках ===== */
+  @keyframes arSheen { 0%{transform:translateX(-160%) skewX(-18deg)} 100%{transform:translateX(260%) skewX(-18deg)} }
+  .hint-btn, .btn { position:relative; overflow:hidden; }
+  .hint-btn::after, .btn::after {
+    content:''; position:absolute; top:-45%; left:0; width:38%; height:190%; pointer-events:none; opacity:0;
+    background:linear-gradient(100deg, rgba(255,215,106,0) 0%, rgba(255,236,180,.45) 45%, rgba(255,215,106,.75) 55%, rgba(255,215,106,0) 100%);
+    transform:translateX(-160%) skewX(-18deg);
+  }
+  .hint-btn:hover::after, .btn:hover::after { opacity:1; animation:arSheen 1.15s ease-out; }
+  .hint-btn:focus-visible::after, .btn:focus-visible::after { opacity:1; animation:arSheen 1.15s ease-out; }
+  .hint-btn:hover { border-color:rgba(255,215,106,.85); background:linear-gradient(180deg,#2b523c,#17301f);
+    box-shadow:0 0 0 1px rgba(255,215,106,.28), 0 8px 20px -10px rgba(255,196,90,.6), inset 0 1px 0 rgba(255,255,255,.08); }
+  .btn:hover { box-shadow:0 0 0 1px rgba(255,215,106,.35), 0 10px 22px -10px rgba(255,196,90,.7), inset 0 1px 0 rgba(255,255,255,.4); }
+  /* ползунки */
+  #lvis input[type=range] { -webkit-appearance:none; appearance:none; height:28px; background:transparent; cursor:pointer; }
+  #lvis input[type=range]::-webkit-slider-runnable-track {
+    height:8px; border-radius:6px; background:linear-gradient(90deg,#26482f,#3d6b52);
+    border:1px solid rgba(217,164,65,.4); box-shadow:inset 0 1px 3px rgba(0,0,0,.55); }
+  #lvis input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance:none; width:22px; height:22px; margin-top:-8px; border-radius:50%;
+    background:radial-gradient(circle at 34% 28%,#fff3cf,#ffd76a 45%,#d9a441 75%,#8a5f16);
+    border:1px solid rgba(255,240,200,.9); box-shadow:0 2px 6px rgba(0,0,0,.5), 0 0 10px rgba(255,196,90,.45);
+    transition:transform .12s ease, box-shadow .18s ease; }
+  #lvis input[type=range]:hover::-webkit-slider-thumb { transform:scale(1.1);
+    box-shadow:0 2px 8px rgba(0,0,0,.5), 0 0 20px rgba(255,215,106,.85); }
+  #lvis input[type=range]:active::-webkit-slider-thumb { transform:scale(1.03); }
+  #lvis input[type=range]:hover::-webkit-slider-runnable-track { border-color:rgba(255,215,106,.8); }
+  #lvis input[type=range]::-moz-range-track { height:8px; border-radius:6px; background:linear-gradient(90deg,#26482f,#3d6b52); border:1px solid rgba(217,164,65,.4); }
+  #lvis input[type=range]::-moz-range-thumb { width:20px; height:20px; border-radius:50%; border:1px solid rgba(255,240,200,.9);
+    background:radial-gradient(circle at 34% 28%,#fff3cf,#ffd76a 45%,#d9a441 75%,#8a5f16); }
+
   .wv-row > .hint-btn, .wv-row > .btn { flex:1 1 calc(50% - 5px); max-width:calc(50% - 5px); min-width:0; text-align:center; }
   .wv-row > .hint-btn:only-child, .wv-row > .btn:only-child { max-width:100%; flex-basis:100%; }
   .wv-col { display:flex; flex-direction:column; align-items:center; gap:9px; text-align:center; }
@@ -710,32 +741,32 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=492"></script>
-<script src="data/lessons.js?v=492"></script>
-<script src="data/lessons_draft.js?v=492"></script>
-<script src="data/comics_12.js?v=492"></script>
-<script src="data/sim_phys.js?v=492"></script>
-<script src="data/vis_bw.js?v=492"></script>
-<script src="data/vis_cw.js?v=492"></script>
-<script src="data/vis_dw.js?v=492"></script>
-<script src="data/vis_ew.js?v=492"></script>
-<script src="data/vis_kl.js?v=492"></script>
-<script src="data/vis_wk.js?v=492"></script>
-<script src="data/inf_56.js?v=492"></script>
-<script src="js/comic.js?v=492"></script>
-<script src="js/core.js?v=492"></script>
-<script src="js/engine.js?v=492"></script>
-<script src="js/app.js?v=492"></script>
-<script src="js/dashboard.js?v=492"></script>
-<script src="js/lessons.js?v=492"></script>
-<script src="js/wave_guard.js?v=492"></script>
-<script src="js/legend.js?v=492"></script>
-<script src="js/simulator.js?v=492"></script>
-<script src="js/duel.js?v=492"></script>
-<script src="js/agent.js?v=492"></script>
-<script src="js/voice.js?v=492"></script>
-<script src="js/assistant.js?v=492"></script>
-<script src="js/agentlive.js?v=492"></script>
+<script src="data/tasks.js?v=493"></script>
+<script src="data/lessons.js?v=493"></script>
+<script src="data/lessons_draft.js?v=493"></script>
+<script src="data/comics_12.js?v=493"></script>
+<script src="data/sim_phys.js?v=493"></script>
+<script src="data/vis_bw.js?v=493"></script>
+<script src="data/vis_cw.js?v=493"></script>
+<script src="data/vis_dw.js?v=493"></script>
+<script src="data/vis_ew.js?v=493"></script>
+<script src="data/vis_kl.js?v=493"></script>
+<script src="data/vis_wk.js?v=493"></script>
+<script src="data/inf_56.js?v=493"></script>
+<script src="js/comic.js?v=493"></script>
+<script src="js/core.js?v=493"></script>
+<script src="js/engine.js?v=493"></script>
+<script src="js/app.js?v=493"></script>
+<script src="js/dashboard.js?v=493"></script>
+<script src="js/lessons.js?v=493"></script>
+<script src="js/wave_guard.js?v=493"></script>
+<script src="js/legend.js?v=493"></script>
+<script src="js/simulator.js?v=493"></script>
+<script src="js/duel.js?v=493"></script>
+<script src="js/agent.js?v=493"></script>
+<script src="js/voice.js?v=493"></script>
+<script src="js/assistant.js?v=493"></script>
+<script src="js/agentlive.js?v=493"></script>
 <script>
   /* сброс кэша при новой сборке — иначе MVP показывает старый урок */
   (function(){
@@ -755,7 +786,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=492').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=493').catch(()=>{}); });
 }
 window.addEventListener('hashchange', ()=>{
   try{
