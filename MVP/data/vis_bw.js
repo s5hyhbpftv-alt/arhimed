@@ -2960,19 +2960,32 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       ${lab(18, oy+H/2, yl, MUTED,'middle',11)}
     </g>`;
   }
+  /* Бак с водой: доля погружения считается по видимой грани кубика, поэтому
+     картинка всегда совпадает с подписью. Подводная часть прикрыта плёнкой воды. */
   function tank(rho, kind){
     const st=P().floatState(rho,1);
-    const surf=92, bot=188, H=26;
-    const y = st.sink ? bot-H-6 : surf-(1-st.frac)*H;
-    const k=kind|| (st.sink?'iron':'ice');
-    return `${desk().replace('178','208')}
-      <rect x="70" y="58" width="100" height="138" rx="6" fill="#0a2030" stroke="#8ec8e0" stroke-width="3"/>
-      <rect x="73" y="61" width="8" height="132" rx="2" fill="#fff" opacity=".12"/>
-      <rect class="d4f" x="74" y="${surf}" width="92" height="${bot-surf}" fill="url(#d4w)"/>
-      <path d="M 74 ${surf} Q 96 ${surf-6} 120 ${surf} T 166 ${surf}" fill="none" stroke="#e8f8ff" stroke-width="1.8" opacity=".7"/>
-      <ellipse cx="120" cy="186" rx="40" ry="6" fill="#3a2a18" opacity=".55"/>
-      <g class="${st.sink?'d4drop':'d4bob'}">${isoCube(96, y-6, 22, k, 0)}</g>
-      ${lab(120, 24, 'ρ = '+String(rho).replace('.',',')+(st.sink?' · на дне':' · '+Math.round(st.frac*100)+'% в воде'), GOLD, 'middle', 12)}`;
+    const sB=24, hx=sB*0.82, hy=sB*0.46, hh=sB*0.9;
+    const L=62, R=178, topT=34, botT=180, surf=96, sandY=166;
+    const ox=120-hx;
+    /* верхняя передняя грань кубика начинается в oy+hy, её высота hh:
+       под водой должна оказаться доля frac, значит вода режет грань на этой высоте */
+    const oy = st.sink ? (sandY-hy-hh) : (surf-hy-hh*(1-st.frac));
+    const k=kind||(st.sink?'iron':'ice');
+    const num=String(rho).replace('.',',');
+    const cap=st.sink ? ('ρ = '+num+' · на дне') : ('ρ = '+num+' · '+Math.round(st.frac*100)+' % под водой');
+    return `${desk()}
+      <rect x="${L}" y="${topT}" width="${R-L}" height="${botT-topT}" rx="7" fill="#0a2030" stroke="#8ec8e0" stroke-width="3"/>
+      <rect x="${L+3}" y="${topT+3}" width="9" height="${botT-topT-6}" rx="3" fill="#fff" opacity=".12"/>
+      <rect x="${L+4}" y="${surf}" width="${R-L-8}" height="${sandY-surf}" fill="url(#d4w)"/>
+      <rect x="${L+4}" y="${sandY}" width="${R-L-8}" height="${botT-sandY-3}" fill="#8a7350" opacity=".5"/>
+      <ellipse cx="120" cy="${sandY+2}" rx="${(R-L-8)/2}" ry="4" fill="#c9b48a" opacity=".55"/>
+      <g class="${st.sink?'d4drop':'d4bob'}">${isoCube(ox, oy, sB, k, 0)}</g>
+      <rect x="${L+4}" y="${surf}" width="${R-L-8}" height="${sandY-surf}" fill="url(#d4w)" opacity=".42"/>
+      <path d="M ${L+4} ${surf} Q ${L+34} ${surf-6} ${L+62} ${surf} T ${R-4} ${surf}" fill="none" stroke="#e8f8ff" stroke-width="1.8" opacity=".8"/>
+      ${lab(120, 22, cap, st.sink?RED:GOLD, 'middle', 12.5)}
+      ${st.sink
+        ? lab(120, 200, 'плотность больше воды — лёг на дно', MUTED,'middle',11)
+        : lab(120, 200, 'над водой '+Math.round((1-st.frac)*100)+' %  ·  под водой '+Math.round(st.frac*100)+' %', BLUE,'middle',11)}`;
   }
   function pred(st, key, q, opts){
     const cur=st[key];
@@ -3076,18 +3089,19 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===7){
       const show=st.p7&&st.go7;
       h=`<div class="wv-col">
-        ${physShot(show?'ice.mp4':'ice.jpg', show?'лёд: ~90% в воде':'кубик льда · брось в бак')}
+        ${show?frame(tank(0.9,'ice')):physShot('ice.jpg','кубик льда · брось в бак')}
         ${pred(st,'p7','Лёд в воде. Что сделает?',[{k:'float',t:'всплывёт'},{k:'sink',t:'утонет'},{k:'hang',t:'повиснет'}])}
         ${st.p7?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].go7=1;chRender(0);}catch(e){}">Бросить в бак</button>`:''}
-        ${show?note('Расчёт','ρ = 0,9. Доля погружения = 0,9 / 1 = 90%. Верх торчит. Ты '+(st.p7==='float'?'угадал':'думал иначе — смотри бак')):note('Предскажи до опыта','Не смотри ответ глазами. Сначала жми карточку.')}
+        ${show?note('Расчёт','ρ = 0,9. Доля погружения = 0,9 / 1 = 90 %. Схема показывает, как это выглядит: почти весь кубик под водой. Ты '+(st.p7==='float'?'угадал':'думал иначе — смотри схему')):note('Предскажи до опыта','Не смотри ответ глазами. Сначала выбери вариант.')}
       </div>`;
     } else if(step===8){
       const pts=((P().T&&P().T.density&&P().T.density.frac)||[]).map(p=>[p[0], p[1]]);
       const fs=P().floatState(rho,1);
-      const clip=rho<0.4?'cork.jpg':rho<1?'ice.mp4':'iron.mp4';
-      const cap=fs.sink?'ρ = '+String(rho).replace('.',',')+' · на дне':'ρ = '+String(rho).replace('.',',')+' · '+Math.round(fs.frac*100)+'% в воде';
+      /* тот же бракованный ролик стоял и здесь: при ρ < 1 он показывал кубик на дне.
+         Теперь этот шаг рисует модель: доля погружения берётся из расчёта. */
+      const kindCube=rho<0.4?'wood':'ice';
       h=`<div class="wv-col">
-        ${physShot(clip, cap)}
+        ${frame(tank(rho, fs.sink?'iron':kindCube))}
         <label class="wv-sml" style="display:flex;align-items:center;gap:8px;width:min(100%,300px)">ρ
           <input type="range" min="20" max="180" value="${Math.round(rho*100)}" style="flex:1"
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].rho=this.value/100;chRender(0);}catch(e){}">
@@ -3095,7 +3109,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         </label>
         ${physChart([{pts:pts,col:GOLD,name:'доля погружения'}], rho, fs.frac, 'ρ, г/см³', 'доля в воде', 'd100', '')}
         ${pred(st,'q8',"Один грамм на кубический сантиметр — это…",[{k:"1000",t:"1000 \u043a\u0433/\u043c\u00b3"},{k:"1",t:"1 \u043a\u0433/\u043c\u00b3"}])}
-        ${note('График из модели','Пока ρ < 1, доля = ρ. После 1 линия упирается в 1: тело на дне. Одна ручка — плотность.')}
+        ${note('График из модели','Пока ρ < 1, доля = ρ: двигай ползунок — кубик в баке садится глубже. После 1 он ложится на дно.')}
       </div>`;
     } else if(step===9){
       h=`<div class="wv-col">
@@ -3106,7 +3120,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===10){
       const air=!!st.air;
       h=`<div class="wv-col">
-        ${physShot(air?'boat.mp4':'iron.mp4', air?'среднее ρ = 0,6 · плывёт':'сталь без воздуха · тонет')}
+        ${physShot(air?'boat.mp4':'iron.mp4', air?'среднее ρ меньше 1 · плывёт':'сталь без воздуха · тонет')}
         <button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].air=1;chRender(0);}catch(e){}">${air?'Плывёт':'Добавить воздух'}</button>
         ${note('Средняя плотность','Масса почти та же, объём вырос. ρ = m / V_всего. Упало ниже воды — корпус всплыл.')}
       </div>`;
