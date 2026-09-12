@@ -3321,14 +3321,14 @@ window.RU601V2 = (function(){
   const OUT="cubic-bezier(.23,1,.32,1)";        /* вход: приезжает и успокаивается   */
   const CSS=`
   #lvis .s6{--gold:#ffd76a;--ink:#f6efe0;--mut:#d8c9a6;--line:rgba(255,215,106,.28);--ok:#8fd1a8;--no:#e86a5a;
-    font-family:${F};color:var(--ink);width:100%;display:flex;flex-direction:column;gap:16px;padding-bottom:56px}
+    box-sizing:border-box;max-width:100%;font-family:${F};color:var(--ink);width:100%;display:flex;flex-direction:column;gap:16px;padding-bottom:56px}
   #lvis .s6 .kicker{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-variant-numeric:tabular-nums}
   #lvis .s6 h2{font-size:24px;line-height:1.12;font-weight:600;color:var(--gold);letter-spacing:-.02em;margin:0;text-wrap:balance}
   #lvis .s6 p{margin:0}
   #lvis .s6 .lead{font-size:20px;line-height:1.5;text-wrap:pretty}
   #lvis .s6 .cap{font-size:16px;line-height:1.5;color:var(--mut)}
   #lvis .s6 .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-  #lvis .s6 .card{flex:1 1 30%;min-width:104px;padding:16px 14px;border-radius:18px;text-align:center;
+  #lvis .s6 .card{box-sizing:border-box;flex:1 1 30%;min-width:104px;padding:16px 14px;border-radius:18px;text-align:center;
     background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);box-shadow:0 10px 24px rgba(0,0,0,.38)}
   #lvis .s6 .card .ic{font-size:30px;line-height:1}
   #lvis .s6 .card .nm{font-size:16px;font-weight:600;color:var(--gold);margin-top:8px}
@@ -3462,7 +3462,7 @@ window.RU601V2 = (function(){
        <div class="row">${T('div',2,'card','<div class="ic">🔗</div><div class="nm">предлог</div><div class="ex">в, на, под</div>')}
        ${T('div',3,'card','<div class="ic">➕</div><div class="nm">союз</div><div class="ex">и, но, а</div>')}
        ${T('div',4,'card','<div class="ic">❕</div><div class="nm">частица</div><div class="ex">не, бы, же</div>')}</div>
-       <div class="split">${T('span',5,'word', s.sv==null?'<b style="font-size:34px">кот · столе · спит</b><i>без службы</i>':'<b style="font-size:34px;letter-spacing:0">кот <span style="color:#ffd76a">на</span> столе <span style="color:#ffd76a">и</span> спит</b><i>служебные на месте</i>')}</div>
+       <div class="split">${T('span',5,'word', s.sv==null?'<b style="font-size:28px">кот · столе · спит</b><i style="font-size:14px">без службы</i>':'<b style="font-size:34px;letter-spacing:0">кот <span style="color:#ffd76a">на</span> столе <span style="color:#ffd76a">и</span> спит</b><i>служебные на месте</i>')}</div>
        ${BTN(6,'cta', s.sv==null?'Собрать фразу':'Разобрать снова',`s6Serv()`)}`,
     9:(()=>{ const i=(s.gIdx||0)%SC.length, it=SC[i], got=s.gRes, done=got!=null, ok=got===it[2];
       return `${T('div',0,'kicker','09 · Тренажёр')}
@@ -3527,7 +3527,7 @@ window.RUWORK = (function(){
   const EASE="cubic-bezier(.2,0,0,1)", OUT="cubic-bezier(.23,1,.32,1)";
   const CSS=`
   #lvis .rk{--gold:#ffd76a;--ink:#f6efe0;--mut:#d8c9a6;--ok:#8fd1a8;--no:#e86a5a;--line:rgba(255,215,106,.26);
-    position:relative;font-family:${F};color:var(--ink);width:100%;display:flex;flex-direction:column;gap:18px;
+    box-sizing:border-box;max-width:100%;position:relative;font-family:${F};color:var(--ink);width:100%;display:flex;flex-direction:column;gap:18px;
     padding:20px 16px 22px;border-radius:22px;overflow:hidden;
     background:radial-gradient(120% 90% at 50% -10%,rgba(255,215,106,.10),transparent 60%),linear-gradient(180deg,#1c2f26,#14211b);
     border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)}
@@ -3559,7 +3559,7 @@ window.RUWORK = (function(){
     box-shadow:0 10px 24px rgba(0,0,0,.45),inset 0 0 26px rgba(232,106,90,.28);animation:nudge 150ms ease-out}
   #lvis .rk .ask{font-size:16px;line-height:1.5;color:var(--ink);text-align:center;font-family:${F}}
   #lvis .rk .opts{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-  #lvis .rk .opt{position:relative;overflow:hidden;min-width:92px;padding:16px 22px;border-radius:18px;cursor:pointer;
+  #lvis .rk .opt{box-sizing:border-box;position:relative;overflow:hidden;min-width:92px;padding:16px 22px;border-radius:18px;cursor:pointer;
     font-family:${F};font-size:32px;font-weight:600;line-height:1.1;color:var(--ink);
     background:linear-gradient(180deg,#25392e,#182720);border:1.5px solid var(--line);
     box-shadow:0 10px 22px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06);
@@ -3677,7 +3677,7 @@ window.RUWORK611 = (function(){
   const GRAIN="url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E\")";
   const CSS=`
   #lvis .ms{--gold:#ffd76a;--ink:#f7f0e0;--mut:#dccfb0;--ok:#9fd8b4;--no:#e8735f;--rule:rgba(255,215,106,.35);
-    position:relative;width:100%;padding:22px 18px 24px;border-radius:20px;overflow:hidden;font-family:${F};color:var(--ink);
+    box-sizing:border-box;max-width:100%;position:relative;width:100%;padding:22px 18px 24px;border-radius:20px;overflow:hidden;font-family:${F};color:var(--ink);
     background:
       radial-gradient(80% 60% at 50% 0%,rgba(255,205,110,.16),transparent 62%),
       radial-gradient(120% 120% at 50% 120%,rgba(0,0,0,.5),transparent 60%),
@@ -3876,7 +3876,8 @@ window.RU601MOTION = (function(){
   const CSS=`
   /* --- живой фон кадра --- */
   #lvis .s6,#lvis .ms{position:relative;overflow:hidden}
-  #lvis .s6 .word,#lvis .ms .ink{position:relative;overflow:hidden;border-radius:12px}
+  #lvis .s6 .word,#lvis .ms .ink{position:relative}
+  #lvis .s6 .word .spark,#lvis .ms .ink .spark{overflow:visible}
   #lvis .s6{animation:cardIn 480ms cubic-bezier(.2,1.5,.3,1) both}
   #lvis .ms{animation:cardIn 480ms cubic-bezier(.2,1.5,.3,1) both}
   @keyframes cardIn{0%{opacity:0;transform:translateY(28px) scale(.96)}60%{transform:translateY(-4px) scale(1.01)}100%{opacity:1;transform:none}}

@@ -25,7 +25,7 @@ JS = r"""()=>{
     // обрезка: элемент вылезает за #lvis или за контейнер с overflow hidden.
     // Полноэкранные кадры (.rk-scene) и их контейнеры намеренно шире #lvis — их не судим,
     // у них своя проверка: содержимое не должно выходить за края экрана.
-    const inScene=!!(e.closest&&e.closest('.rk-scene'));
+    const inScene=!!(e.closest&&e.closest('.rk-scene, .s6, .ms, .rk, .rl-wrap, .th-wrap'));
     const hasScene=!!(e.querySelector&&e.querySelector('.rk-scene'));
     if(inScene||hasScene){
       if(isText(e)) texts.push({t:e.textContent.trim().slice(0,20), b, el:e});
