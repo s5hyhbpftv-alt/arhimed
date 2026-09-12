@@ -2877,8 +2877,8 @@ window.RUTHEME = (function(){
   #lvis .th-wrap{width:100%;display:flex;flex-direction:column;align-items:center;gap:14px}
   #lvis .th-title{font:600 20px/1.2 Georgia,serif;color:#ffd76a}
   #lvis .th-tip{color:#d8c9a6;font-size:16px}
-  #lvis .th-score{font-size:16px;color:#d8c9a6}
-  #lvis .th-verdict{font-size:16.5px;color:#f6efe0;text-align:center;min-height:24px}
+  #lvis .th-score{font-size:16px;color:#d8c9a6;font-variant-numeric:tabular-nums}
+  #lvis .th-verdict{font-size:16px;line-height:1.55;color:#f6efe0;text-align:center;min-height:24px}
   /* 601: сортировка по ящикам */
   #lvis .th-word{font:600 40px/1 Georgia,serif;color:#f6efe0;padding:16px 26px;border-radius:20px;
     background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.03));border:1.5px solid rgba(255,215,106,.35);
@@ -2897,7 +2897,7 @@ window.RUTHEME = (function(){
   #lvis .th-crate .th-nm{font:600 17px/1.2 Georgia,serif;color:#ffe9a8;text-align:center;padding:0 4px;white-space:nowrap;overflow-wrap:normal}
   #lvis .th-crate .th-ex{font-size:16px;color:#e0d3b4}
   #lvis .th-fly{position:fixed;z-index:320;pointer-events:none;font:600 34px/1 Georgia,serif;color:#ffe9a8;
-    text-shadow:0 0 20px rgba(255,215,106,.85);transition:transform .62s cubic-bezier(.35,.05,.2,1), opacity .62s ease-in}
+    text-shadow:0 0 20px rgba(255,215,106,.85);transition:transform 260ms cubic-bezier(.23,1,.32,1), opacity 260ms ease-out}
   /* 610: запятые в предложении */
   #lvis .th-sent{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0;width:100%;
     background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,215,106,.25);border-radius:18px;padding:16px 12px}
@@ -3024,10 +3024,10 @@ window.RULETTER = (function(){
   const FONT = "Georgia,'Times New Roman',serif";
   const CSS = `
   #lvis .rl-wrap{width:100%;display:flex;flex-direction:column;align-items:center;gap:16px}
-  #lvis .rl-title{font:600 21px/1.25 ${FONT};color:#ffd76a;letter-spacing:.01em;-webkit-font-smoothing:antialiased}
+  #lvis .rl-title{font:600 24px/1.15 ${FONT};color:#ffd76a;letter-spacing:-.02em;text-wrap:balance;-webkit-font-smoothing:antialiased}
   #lvis .rl-word{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:4px 2px}
   #lvis .rl-cell{min-width:52px;height:70px;padding:0 10px;display:flex;align-items:center;justify-content:center;
-    font-family:${FONT};font-size:46px;line-height:1;font-weight:600;color:#f8f2e4;
+    font-family:${FONT};font-size:48px;line-height:1;font-weight:600;color:#f8f2e4;letter-spacing:-.02em;
     -webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;
     background:linear-gradient(180deg,#20342a,#16241d);border:1.5px solid rgba(255,215,106,.30);border-radius:16px;
     box-shadow:0 8px 20px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06);
@@ -3043,9 +3043,9 @@ window.RULETTER = (function(){
   @keyframes rlPulse{0%,100%{box-shadow:0 8px 20px rgba(0,0,0,.45),0 0 0 0 rgba(255,215,106,.30)}50%{box-shadow:0 8px 20px rgba(0,0,0,.45),0 0 0 10px rgba(255,215,106,0)}}
   @keyframes rlShake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-6px)}40%,60%{transform:translateX(6px)}}
   #lvis .rl-hint{font-family:${FONT};font-size:16px;color:#e6dcc6;-webkit-font-smoothing:antialiased}
-  #lvis .rl-score{font-family:${FONT};font-size:16px;color:#d8c9a6}
+  #lvis .rl-score{font-family:${FONT};font-size:16px;color:#d8c9a6;font-variant-numeric:tabular-nums}
   #lvis .rl-btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%}
-  #lvis .rl-btn{min-width:78px;font-family:${FONT}!important;font-size:34px!important;font-weight:600!important;line-height:1!important;
+  #lvis .rl-btn{min-width:78px;font-family:${FONT}!important;font-size:32px!important;font-weight:600!important;line-height:1!important;
     padding:14px 20px!important;border-radius:18px!important;-webkit-font-smoothing:antialiased;
     transition:transform .16s cubic-bezier(.2,1.3,.3,1), box-shadow .2s}
   #lvis .rl-btn:active{transform:translateY(2px) scale(.97)}
@@ -3055,7 +3055,7 @@ window.RULETTER = (function(){
   }
   .rl-fly{position:fixed;z-index:330;pointer-events:none;display:flex;align-items:center;justify-content:center;
     font-family:${FONT};font-weight:600;color:#ffe9a8;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;
-    will-change:transform;transition:transform .46s cubic-bezier(.25,.75,.2,1), opacity .46s ease-in}
+    will-change:transform;transition:transform 240ms cubic-bezier(.23,1,.32,1), opacity 240ms ease-out}
   `;
   function css(){ try{ let e=document.getElementById('rl-style'); if(!e){ e=document.createElement('style'); e.id='rl-style'; document.head.appendChild(e); } if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
   function S(lk){ if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; }
@@ -3107,4 +3107,204 @@ window.RULETTER = (function(){
     window.WAVE_B[id]=function(el){ try{ if(((typeof LV!=='undefined'&&LV.step)||0)===8){ draw(el,id); return; } }catch(e){} return orig(el); };
   });
   return {draw:draw, data:L, buttons:B};
+})();
+
+/* ================= УРОК 601: своя вёрстка каждого кадра (без общего шаблона) =================
+   Девять кадров — девять композиций: герой-вопрос, карточки-функции, сравнение до/после,
+   две колонки, лента действия. Один кадр — 4–5 смысловых блоков, кегль по стандарту,
+   шаг отступов 8 px, у каждого кадра своё маленькое действие. */
+window.RU601 = (function(){
+  const F="Georgia,'Times New Roman',serif";
+  const CSS=`
+  #lvis .r1{--g:#ffd76a;--gold:#ffd76a;--ink:#f6efe0;--mut:#d8c9a6;--line:rgba(255,215,106,.28);
+    font-family:${F};color:var(--ink);width:100%;display:flex;flex-direction:column;gap:16px}
+  #lvis .r1 h2{font-family:${F};font-size:24px;line-height:1.12;font-weight:600;color:var(--g);margin:0;letter-spacing:-.02em;text-wrap:balance}
+  #lvis .r1 .lead{font-size:20px;line-height:1.5;color:var(--ink);margin:0;text-wrap:pretty}
+  #lvis .r1 .cap{font-size:16px;line-height:1.5;color:var(--mut)}
+  #lvis .r1 .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  #lvis .r1 .col{display:flex;flex-direction:column;gap:12px}
+  #lvis .r1 .card{flex:1 1 30%;min-width:104px;padding:16px 14px;border-radius:18px;text-align:center;
+    background:linear-gradient(180deg,#22362c,#17261e);border:1.5px solid var(--line);box-shadow:0 10px 24px rgba(0,0,0,.38)}
+  #lvis .r1 .card .ic{font-size:30px;line-height:1}
+  #lvis .r1 .card .nm{font-size:16px;font-weight:600;color:var(--g);margin-top:8px}
+  #lvis .r1 .card .ex{font-size:16px;line-height:1.25;color:var(--mut);margin-top:4px}
+  #lvis .r1 .word{display:inline-flex;align-items:baseline;gap:10px;padding:14px 22px;border-radius:18px;
+    background:linear-gradient(180deg,#24382d,#17261e);border:1.5px solid var(--line);box-shadow:0 12px 28px rgba(0,0,0,.42)}
+  #lvis .r1 .word b{font-size:48px;font-weight:600;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  #lvis .r1 .word i{font-style:normal;font-size:16px;color:var(--mut)}
+  #lvis .r1 .chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  #lvis .r1 .chip{padding:14px 20px;border-radius:16px;border:1.5px solid var(--line);background:rgba(255,255,255,.05);
+    font-size:24px;font-weight:600;line-height:1.2;color:var(--ink);cursor:pointer;transition:transform 140ms cubic-bezier(.23,1,.32,1),border-color 180ms ease-out,background 180ms ease-out}
+  #lvis .r1 .chip:active{transform:translateY(2px)}
+  #lvis .r1 .chip.on{border-color:var(--g);background:rgba(255,215,106,.12)}
+  #lvis .r1 .chip.ok{border-color:#8fd1a8;background:rgba(143,209,168,.16)}
+  #lvis .r1 .chip.no{border-color:#e86a5a;background:rgba(232,106,90,.14)}
+  #lvis .r1 .tag{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:12px;
+    background:rgba(255,215,106,.12);border:1px solid var(--line);font-size:16px;color:var(--g)}
+  #lvis .r1 .split{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap}
+  #lvis .r1 .arrow{font-size:26px;color:var(--g)}
+  #lvis .r1 .verdict{font-size:16px;line-height:1.55}
+  #lvis .r1 .verdict.ok{color:#b8e8cc}#lvis .r1 .verdict.no{color:#f3b3aa}
+  #lvis .r1 .score{font-size:16px;color:var(--mut);font-variant-numeric:tabular-nums}
+  #lvis .r1 .cta{width:100%;padding:17px 18px;border-radius:18px;border:1.5px solid #ffd76a;background:linear-gradient(180deg,#ffd76a,#e2b23f);
+    color:#20180a;font-family:${F};font-size:20px;font-weight:600;line-height:1.2;cursor:pointer;transition:transform 140ms cubic-bezier(.23,1,.32,1)}
+  #lvis .r1 .cta:active{transform:translateY(2px)}
+  @media (prefers-reduced-motion: reduce){#lvis .r1 *{animation:none!important;transition:none!important}}
+  `;
+  function css(){ try{ let e=document.getElementById('r1-style'); if(!e){ e=document.createElement('style'); e.id='r1-style'; document.head.appendChild(e); } if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  /* третий элемент — ключ ящика (н/п/г), иначе слово не попадёт в свой ящик */
+  const SC=[['снег','кто? что?','н'],['пушистый','какой?','п'],['летит','что делает?','г'],
+            ['дорога','кто? что?','н'],['весёлый','какой?','п'],['рисует','что делает?','г'],
+            ['радость','кто? что?','н'],['зимний','какой?','п'],['светит','что делает?','г']];
+  const CRATES=[['н','🧱','сущ.','кто? что?'],['п','🎨','прил.','какой?'],['г','⚡','глагол','что делает?']];
+  const PRED=[['Что называет имя существительное?','предмет','признак'],
+              ['На какой вопрос отвечает прилагательное?','какой?','что делает?'],
+              ['Что называет глагол?','действие','предмет'],
+              ['«Тёплый» — это…','признак','предмет'],
+              ['Местоимение…','указывает, а не называет','называет число'],
+              ['«Пять» отвечает на вопрос…','сколько?','какой?'],
+              ['«Быстро» отвечает на вопрос…','как?','кто?'],
+              ['Предлог, союз, частица…','служат для связи','называют предмет']];
+  function st(){ const lk=lidKey(601); if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; }
+  const S=(s,i)=>'r1 chip'+(s['a'+i]===1?' ok':'')+(s['a'+i]===0?' no':'');
+
+  /* --- собственные композиции кадров --- */
+  function hero(){
+    return `<h2>Части речи: что называет слово</h2>
+      <p class="lead">Каждое слово в речи — работник со своей должностью.<br>Должность и называется частью речи.</p>
+      <div class="row">
+        <div class="card"><div class="ic">🧱</div><div class="nm">предмет</div><div class="ex">кто? что?</div></div>
+        <div class="card"><div class="ic">🎨</div><div class="nm">признак</div><div class="ex">какой?</div></div>
+        <div class="card"><div class="ic">⚡</div><div class="nm">действие</div><div class="ex">что делает?</div></div>
+      </div>
+      <p class="cap">Вопрос к слову — самый быстрый способ узнать его должность.</p>`;
+  }
+  function noun(s){
+    const on=(w,ok)=>{const c=s['w'+w]; return 'r1 chip'+(c===1?' ok':'')+(c===0?' no':'');};
+    return `<h2>Имя существительное</h2>
+      <p class="lead">Отвечает на вопросы <b style="color:#ffd76a">кто?</b> или <b style="color:#ffd76a">что?</b> и называет предмет.</p>
+      <div class="chips">
+        <span class="${on('кот',1)}" onclick="r601Pick('кот',1)">кот</span>
+        <span class="${on('дом',1)}" onclick="r601Pick('дом',1)">дом</span>
+        <span class="${on('смех',1)}" onclick="r601Pick('смех',1)">смех</span>
+      </div>
+      <div class="split"><span class="tag">кто? — живое</span><span class="tag">что? — остальное</span></div>
+      <p class="verdict${s.wкот===0?' no':' ok'}">${s.wкот==null?'Нажми на слово — покажу вопрос к нему.':'Смех и бег тоже существительные: они отвечают на вопрос что?'}</p>`;
+  }
+  function adj(s){
+    return `<h2>Имя прилагательное</h2>
+      <p class="lead">Отвечает на вопрос <b style="color:#ffd76a">какой?</b> и всегда цепляется к существительному.</p>
+      <div class="split">
+        <span class="word"><b>рыжий</b><i>какой?</i></span><span class="arrow">→</span>
+        <span class="word"><b>кот</b><i>кто?</i></span>
+      </div>
+      <div class="chips">
+        <span class="r1 chip" onclick="r601More(this)">тёплая → вода</span>
+        <span class="r1 chip" onclick="r601More(this)">деревянное → окно</span>
+        <span class="r1 chip" onclick="r601More(this)">зимний → день</span>
+      </div>
+      <p class="cap">Нажми на пару — увидишь, что признак без предмета не живёт.</p>`;
+  }
+  function verb(s){
+    const on=(w)=>{const c=s['v'+w]; return 'r1 chip'+(c===1?' ok':'');};
+    return `<h2>Глагол</h2>
+      <p class="lead">Отвечает на вопрос <b style="color:#ffd76a">что делает?</b> и называет действие или состояние.</p>
+      <div class="chips">
+        <span class="${on('бежит')}" onclick="r601Verb('бежит')">бежит</span>
+        <span class="${on('светит')}" onclick="r601Verb('светит')">светит</span>
+        <span class="${on('спит')}" onclick="r601Verb('спит')">спит</span>
+      </div>
+      <div class="split"><span class="tag">действие: бежит, светит</span><span class="tag">состояние: спит, радуется</span></div>
+      <p class="score">${s.vN==null?'Нажми на глаголы — они отметятся.':'Отмечено глаголов: '+s.vN}</p>`;
+  }
+  function pron(s){
+    return `<h2>Местоимение</h2>
+      <p class="lead">Не называет, а <b style="color:#ffd76a">указывает</b>: я, ты, он, она, мы, вы, они.</p>
+      <div class="col">
+        <div class="split"><span class="word"><b>Маша</b><i>имя</i></span><span class="word"><b>читает</b></span></div>
+        <div class="split"><span class="arrow">↓</span></div>
+        <div class="split"><span class="word"><b>Она</b><i>указывает</i></span><span class="word"><b>читает</b></span></div>
+      </div>
+      <p class="verdict${s.p===1?' ok':' ok'}">${s.p==null?'Нажми кнопку — увидишь, зачем нужно местоимение.':'«Она читает» вместо «Маша читает»: короче и без повтора.'}</p>
+      <button class="cta" onclick="r601Pron()">${s.p==null?'Показать, как короче':'Ещё раз'}</button>`;
+  }
+  function num(s){
+    return `<h2>Имя числительное</h2>
+      <p class="lead">Называет число или порядок при счёте.</p>
+      <div class="row">
+        <div class="card"><div class="nm">сколько?</div><div class="ex">пять, двое, сто</div></div>
+        <div class="card"><div class="nm">который?</div><div class="ex">третий, пятый</div></div>
+      </div>
+      <div class="chips">
+        <span class="r1 chip" onclick="r601Num(this)">пять</span>
+        <span class="r1 chip" onclick="r601Num(this)">третий</span>
+        <span class="r1 chip" onclick="r601Num(this)">сто</span>
+      </div>
+      <p class="cap">Нажми на числительное — покажу его вопрос.</p>`;
+  }
+  function adv(s){
+    return `<h2>Наречие</h2>
+      <p class="lead">Признак действия: отвечает на вопросы как? где? когда?</p>
+      <div class="col">
+        <div class="split"><span class="word"><b>бежит</b></span><span class="arrow">→</span><span class="tag">быстро · как?</span></div>
+        <div class="split"><span class="word"><b>живёт</b></span><span class="arrow">→</span><span class="tag">вдали · где?</span></div>
+        <div class="split"><span class="word"><b>вернулся</b></span><span class="arrow">→</span><span class="tag">вечером · когда?</span></div>
+      </div>
+      <p class="cap">Наречие не изменяется: у него нет окончания.</p>`;
+  }
+  function serv(s){
+    return `<h2>Служебные части речи</h2>
+      <p class="lead">Ничего не называют — они <b style="color:#ffd76a">служат</b>: связывают слова и помогают смыслу.</p>
+      <div class="row">
+        <div class="card"><div class="ic">🔗</div><div class="nm">предлог</div><div class="ex">в, на, под</div></div>
+        <div class="card"><div class="ic">➕</div><div class="nm">союз</div><div class="ex">и, но, а</div></div>
+        <div class="card"><div class="ic">❕</div><div class="nm">частица</div><div class="ex">не, бы, же</div></div>
+      </div>
+      <div class="word" style="align-self:center"><b>кот … столе … спит</b><i>без службы рассыпается</i></div>
+      <p class="cap">Нажми кнопку — верну служебные слова на место.</p>
+      <button class="cta" onclick="r601Serv()">${s.sv==null?'Собрать фразу':'Разобрать снова'}</button>`;
+  }
+  function trainer(s){
+    const i=(s.gIdx||0)%SC.length, it=SC[i], got=s.gRes, done=got!=null, ok=got===it[2];
+    const crates=CRATES.map(c=>`<div class="r1 card ${done?(got===c[2]?(c[2]===it[2]?'':' '):''):''}" data-crate="${c[0]}" onclick="thSort('${c[0]}')">
+        <div class="ic">${c[1]}</div><div class="nm">${c[2]}</div><div class="ex">${c[3]}</div></div>`).join('');
+    return `<h2>Разложи слова по ящикам</h2>
+      <div class="split"><span class="word"><b>${it[0]}</b><i>${it[1]}</i></span></div>
+      <p class="verdict${done?(ok?' ok':' no'):''}">${done?(ok?'✅ верно: '+it[0]+' — '+CRATES.filter(c=>c[0]===it[2])[0][2]:'❌ '+it[0]+' — это '+CRATES.filter(c=>c[0]===it[2])[0][2]):'Выбери ящик для слова.'}</p>
+      <div class="row">${crates}</div>
+      <p class="score">верно: ${s.gOk||0} · ошибок: ${s.gBad||0} · всего: ${SC.length}</p>
+      <p class="cap">${done?'Нажми любой ящик — следующее слово.':'Каждое слово — в свой ящик.'}</p>`;
+  }
+  function render(el){
+    css(); const s=st(); const step=(typeof LV!=='undefined'&&LV.step)||0;
+    let body='';
+    if(step===0) body=hero();
+    else if(step===1) body=noun(s);
+    else if(step===2) body=adj(s);
+    else if(step===3) body=verb(s);
+    else if(step===4) body=pron(s);
+    else if(step===5) body=num(s);
+    else if(step===6) body=adv(s);
+    else if(step===7) body=serv(s);
+    else body=trainer(s);
+    const pr=PRED[step];
+    const pred = (pr && step<8) ? `<div class="r1 row" style="gap:10px">
+        <span class="chip" style="${s['q'+step]===0?'border-color:#ffd76a':''}" onclick="r601Pred(${step},0)">${pr[1]}</span>
+        <span class="chip" style="${s['q'+step]===1?'border-color:#ffd76a':''}" onclick="r601Pred(${step},1)">${pr[2]}</span>
+      </div>
+      <p class="verdict${s['q'+step]==null?'':(s['q'+step]===0?' ok':' no')}">${s['q'+step]==null?'Выбери ответ:':(s['q'+step]===0?'✅ верно.':'❌ подумай ещё раз.')}</p>` : '';
+    el.innerHTML=`<div class="r1">${body}${pred}</div>`;
+  }
+  window.r601Pick=(w,ok)=>{ const s=st(); s['w'+w]=ok; chRender(0); };
+  window.r601More=(el)=>{ try{ el.classList.toggle('on'); }catch(e){} };
+  window.r601Verb=(w)=>{ const s=st(); s['v'+w]=1; s.vN=Object.keys(s).filter(k=>k[0]==='v'&&k!=='vN').length; chRender(0); };
+  window.r601Pron=()=>{ const s=st(); s.p=s.p==null?1:null; chRender(0); };
+  window.r601Num=(el)=>{ try{ el.classList.toggle('on'); }catch(e){} };
+  window.r601Serv=()=>{ const s=st(); s.sv=s.sv==null?1:null; chRender(0); };
+  window.r601Pred=(i,v)=>{ const s=st(); s['q'+i]=v; chRender(0); };
+  if(window.WAVE_B){
+    const orig=window.WAVE_B[601];
+    window.WAVE_B[601]=function(el){ try{ render(el); }catch(e){ try{ orig(el); }catch(e2){} } };
+  }
+  return {render:render};
 })();
