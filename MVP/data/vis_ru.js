@@ -3075,7 +3075,8 @@ window.RULETTER = (function(){
     el.innerHTML=`<div class="rl-wrap">
       <div class="rl-title">Вставь букву</div>
       <div class="rl-word">${cells}</div>
-      <div class="rl-hint">${verdict}</div>
+      ${done ? (ok ? window.RUFEED.note('ok','верно',hint) : window.RUFEED.note('no','исправить','<b>'+right+'</b> — '+hint))
+             : `<div class="rl-hint">${verdict}</div>`}
       <div class="rl-btns">${B[id].map(b=>`<button type="button" class="btn rl-btn" data-key="${b[0]}" onclick="rlPick(${id},'${b[0]}')">${b[1]}</button>`).join('')}</div>
       <div class="rl-score">верно: ${s.gOk||0} · ошибок: ${s.gBad||0} · всего: ${L[id].length}</div>
       <div class="rl-hint">${done?'нажми любую букву — следующее слово':'выбери букву'}</div></div>`;
@@ -3462,7 +3463,10 @@ window.RU601V2 = (function(){
     9:(()=>{ const i=(s.gIdx||0)%SC.length, it=SC[i], got=s.gRes, done=got!=null, ok=got===it[2];
       return `${T('div',0,'kicker','09 · Тренажёр')}
        <div class="split">${T('span',1,'word',`<b>${it[0]}</b><i>${it[1]}</i>`)}</div>
-       <p class="verdict ${done?(ok?'ok':'no'):''}" aria-live="polite">${done?(ok?'✅ верно: '+it[0]+' — '+CR.filter(c=>c[0]===it[2])[0][2]:'❌ '+it[0]+' — это '+CR.filter(c=>c[0]===it[2])[0][2]):'Выбери ящик для слова.'}</p>
+       ${done
+         ? (ok ? window.RUFEED.note('ok','верно',it[0]+' — '+CR.filter(c=>c[0]===it[2])[0][2])
+               : window.RUFEED.note('no','исправить','<b>'+it[0]+'</b> — это '+CR.filter(c=>c[0]===it[2])[0][2]+', а не '+CR.filter(c=>c[0]===got)[0][2]))
+         : `<div class="verdict">Выбери ящик для слова.</div>`}
        <div class="crates">${CR.map((c,k)=>{ const cls='crate'+(done&&got===c[2]?(c[2]===it[2]?' hit':' miss'):'');
          return BTN(2+k,cls,`<div class="ic">${c[1]}</div><div class="nm">${c[2]}</div><div class="ex">${c[3]}</div>`,`s6Sort('${c[0]}')`); }).join('')}</div>
        <p class="score">верно: ${s.gOk||0} · ошибок: ${s.gBad||0} · всего: ${SC.length}</p>
@@ -3751,11 +3755,10 @@ window.RUWORK611 = (function(){
         <div class="ink">${ink}</div>
         <svg class="underline" viewBox="0 0 300 14" preserveAspectRatio="none"><path class="draw" d="M2 8 C60 14,120 2,180 8 C230 13,270 5,298 9" fill="none" stroke="rgba(255,215,106,.5)" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="320" stroke-dashoffset="320"/></svg>
       </div>
-      <div class="gloss ${done?(ok?'ok':'no'):''}" aria-live="polite">
-        <span class="lbl">${done?(ok?'верно':'исправить'):'подсказка'}</span>
-        ${done ? (ok ? 'Написание: <b>'+spell+'</b>'+(why?' · '+why:'') : 'Правильно «<b>'+it.ans+'</b>» — '+spell)
-               : (it.ask||'Выбери букву: она сядет на прочерк и загорится.')}
-      </div>
+      ${done
+        ? (ok ? window.RUFEED.note('ok','верно','Написание: <b>'+spell+'</b>'+(why?' · '+why:'')).replace('class="fb ok"','class="fb ok gloss ok" aria-live="polite"')
+              : window.RUFEED.note('no','исправить','Правильно «<b>'+it.ans+'</b>» — '+spell+' · подсказка: '+why+'<span class="ghost"> '+String(it.word||'').replace('_',it.ans)+'</span>').replace('class="fb no"','class="fb no gloss no" aria-live="polite"'))
+        : `<div class="gloss" aria-live="polite"><span class="lbl">подсказка</span>${it.ask||'Выбери букву: она сядет на прочерк и загорится.'}</div>`}
       <div class="seals">${seals}</div>
       <div class="score">верно: ${st.ok||0} · ошибок: ${st.bad||0} · всего: ${total}</div>
     </div>`;
@@ -3799,4 +3802,164 @@ window.RUWORK611 = (function(){
     };
   }
   return {render:render};
+})();
+
+/* ================= ДВИЖОК ОТКЛИКА: вместо шаблонного «верно / не верно» =================
+   Правильный ответ: печать впечатывается (320 мс), от неё идёт волна-кольцо, буква
+   наливается светом, глосса разворачивается сверху вниз.
+   Ошибка: чернильный оттиск расходится, буква вздрагивает и тает, на её месте
+   проступает призрак верной буквы — ребёнок видит, что должно было быть.
+   Никаких библиотек: только transform, opacity и clip-path. reduced-motion выключает всё. */
+window.RUFEED = (function(){
+  const F="Georgia,'Times New Roman',serif";
+  const CSS=`
+  #lvis .fb{position:relative;margin-top:14px;padding:14px 16px 14px 18px;border-left:3px solid var(--rule,rgba(255,215,106,.35));
+    background:linear-gradient(90deg,rgba(255,215,106,.08),transparent 72%);font-family:${F};font-size:16px;line-height:1.55;
+    transform-origin:top left;animation:fbUnfold 260ms cubic-bezier(.23,1,.32,1) both}
+  #lvis .fb .lbl{display:block;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut,#dccfb0);margin-bottom:4px}
+  #lvis .fb.ok{border-color:#9fd8b4}#lvis .fb.no{border-color:#e8735f}
+  #lvis .fb .stamp{position:absolute;right:10px;top:-14px;width:56px;height:56px;pointer-events:none}
+  #lvis .fb .stamp .seal{fill:none;stroke:#9fd8b4;stroke-width:2.4}
+  #lvis .fb .stamp .mark{stroke:#9fd8b4;stroke-width:3.2;fill:none;stroke-linecap:round;stroke-dasharray:40;stroke-dashoffset:40}
+  #lvis .fb.no .stamp .seal,#lvis .fb.no .stamp .mark{stroke:#e8735f}
+  #lvis .fb .ring{position:absolute;right:16px;top:-8px;width:44px;height:44px;border-radius:50%;
+    border:2px solid rgba(159,216,180,.65);pointer-events:none;animation:fbRing 520ms cubic-bezier(.2,0,0,1) 120ms both}
+  #lvis .fb.no .ring{border-color:rgba(232,115,95,.6)}
+  #lvis .fb .blot{position:absolute;left:-6px;bottom:-6px;width:26px;height:26px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,rgba(232,115,95,.55),transparent 70%);animation:fbBlot 420ms ease-out both}
+  #lvis .fb.ok .stamp{animation:fbStamp 320ms cubic-bezier(.2,1.4,.3,1) 40ms both}
+  #lvis .fb.no .stamp{animation:fbStampNo 260ms cubic-bezier(.36,.07,.19,.97) both}
+  #lvis .fb.ok .stamp .mark{animation:fbMark 300ms cubic-bezier(.2,1,.32,1) 220ms both}
+  #lvis .fb .ghost{color:rgba(255,215,106,.55)}
+  @keyframes fbUnfold{from{opacity:0;transform:scaleY(.6)}to{opacity:1;transform:none}}
+  @keyframes fbStamp{0%{opacity:0;transform:translateY(-14px) rotate(-10deg) scale(.92)}70%{transform:translateY(2px) rotate(2deg) scale(1.04)}100%{opacity:1;transform:none}}
+  @keyframes fbStampNo{0%,100%{opacity:1;transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+  @keyframes fbMark{to{stroke-dashoffset:0}}
+  @keyframes fbRing{0%{opacity:.9;transform:scale(.5)}100%{opacity:0;transform:scale(1.7)}}
+  @keyframes fbBlot{0%{opacity:.9;transform:scale(.3)}100%{opacity:0;transform:scale(1.5)}}
+  @keyframes fbTremble{0%,100%{transform:none}25%{transform:translateY(-2px)}75%{transform:translateY(2px)}}
+  /* буква, которая села верно, наливается светом; неверная — вздрагивает и тает */
+  #lvis .ms .ink span.lit{animation:fbBloom 460ms cubic-bezier(.23,1,.32,1) both}
+  #lvis .ms .ink span.bad{animation:fbTremble 220ms ease-out both,fbFade 300ms ease-out 240ms both}
+  #lvis .s6 .word b.lit{animation:fbBloom 420ms cubic-bezier(.23,1,.32,1) both}
+  #lvis .s6 .crate.hit::after{content:'';position:absolute;inset:-6px;border-radius:20px;border:2px solid rgba(143,209,168,.6);
+    animation:fbRing 460ms cubic-bezier(.2,0,0,1) 60ms both;pointer-events:none}
+  #lvis .s6 .crate{position:relative}
+  @keyframes fbBloom{0%{opacity:.35;transform:scale(.92)}60%{transform:scale(1.05)}100%{opacity:1;transform:none}}
+  @keyframes fbFade{to{opacity:.25}}
+  @media (prefers-reduced-motion: reduce){#lvis .fb,#lvis .fb *,#lvis .fb *::before{animation-duration:.01ms!important;transition-duration:.01ms!important}
+    #lvis .fb .ring,#lvis .fb .blot{display:none!important}}
+  `;
+  function css(){ try{ let e=document.getElementById('fb-style'); if(!e){ e=document.createElement('style'); e.id='fb-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  /* html: содержимое глоссы; kind: 'ok' | 'no' | 'hint' */
+  function note(kind, label, html, extra){
+    css();
+    const stamp = kind==='ok'
+      ? `<svg class="stamp" viewBox="0 0 56 56"><circle class="seal" cx="28" cy="30" r="20"/><path class="mark" d="M18 31 L25 38 L39 23"/></svg><span class="ring"></span>`
+      : (kind==='no' ? `<svg class="stamp" viewBox="0 0 56 56"><circle class="seal" cx="28" cy="30" r="20"/><path class="mark" d="M20 22 L36 38 M36 22 L20 38" stroke-dasharray="0"/></svg><span class="blot"></span>` : '');
+    return `<div class="fb ${kind==='ok'?'ok':(kind==='no'?'no':'')}"><span class="lbl">${label}</span>${html}${stamp||''}${extra||''}</div>`;
+  }
+  return {note:note, css:css};
+})();
+
+/* ================= УСИЛЕНИЕ ДВИЖЕНИЯ: кадр живёт, ответ празднуется =================
+   Было: движение 8–14 px за 240 мс — глазом не читается. Стало: крупный вход с
+   пружиной, каскад 60 мс, световой проход по карточке, пыль в воздухе, дыхание
+   подсветки; на верный ответ — подъём карточки, вспышка буквы, разлёт искр и печать
+   с волной; на ошибку — наклон карточки, дрожь буквы и чернильный оттиск.
+   Только transform и opacity, вход не длиннее 500 мс (motion-principles). */
+window.RU601MOTION = (function(){
+  const CSS=`
+  /* --- живой фон кадра --- */
+  #lvis .s6,#lvis .ms{position:relative;overflow:hidden}
+  #lvis .s6{animation:cardIn 480ms cubic-bezier(.2,1.5,.3,1) both}
+  #lvis .ms{animation:cardIn 480ms cubic-bezier(.2,1.5,.3,1) both}
+  @keyframes cardIn{0%{opacity:0;transform:translateY(28px) scale(.96)}60%{transform:translateY(-4px) scale(1.01)}100%{opacity:1;transform:none}}
+  #lvis .s6::after,#lvis .ms::after{content:'';position:absolute;top:-40%;bottom:-40%;width:180px;left:-240px;
+    transform:skewX(-16deg);pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(255,231,170,.16),transparent);
+    animation:sweep 3.4s cubic-bezier(.4,0,.2,1) 300ms infinite}
+  @keyframes sweep{0%{left:-240px}55%{left:120%}100%{left:120%}}
+  #lvis .amb{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:inherit}
+  #lvis .amb i{position:absolute;width:5px;height:5px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,226,150,.85),transparent 70%);animation:drift 7s ease-in-out infinite}
+  @keyframes drift{0%{opacity:0;transform:translateY(14px) scale(.6)}20%{opacity:.9}60%{opacity:.5;transform:translateY(-26px) translateX(10px) scale(1)}100%{opacity:0;transform:translateY(-52px) translateX(-6px) scale(.7)}}
+  #lvis .haloGlow{position:absolute;left:50%;top:42%;width:min(78%,420px);height:150px;transform:translate(-50%,-50%);
+    pointer-events:none;background:radial-gradient(closest-side,rgba(255,205,110,.22),transparent 70%);
+    filter:blur(4px);animation:breathe 3.6s ease-in-out infinite}
+  @keyframes breathe{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+  /* --- каскад: заметный вход --- */
+  #lvis .s6 [data-anim]{animation-duration:420ms!important;animation-timing-function:cubic-bezier(.2,1.4,.3,1)!important;animation-delay:calc(var(--i,0)*60ms)!important}
+  #lvis .ms .ink span{animation-duration:420ms!important;animation-delay:calc(var(--i,0)*70ms)!important;animation-timing-function:cubic-bezier(.2,1.4,.3,1)!important}
+  /* --- ответ: подъём и наклон всей карточки --- */
+  #lvis .s6.lift,#lvis .ms.lift{animation:lift 260ms cubic-bezier(.2,1.4,.3,1) both}
+  #lvis .s6.tilt,#lvis .ms.tilt{animation:tiltCard 300ms cubic-bezier(.36,.07,.19,.97) both}
+  @keyframes lift{0%{transform:none}45%{transform:translateY(-7px)}100%{transform:none}}
+  @keyframes tiltCard{0%,100%{transform:none}20%{transform:rotate(-1.6deg)}55%{transform:rotate(1.6deg)}}
+  /* --- буква и ящик --- */
+  #lvis .ms .ink span.lit{animation:bigBloom 620ms cubic-bezier(.2,1.5,.3,1) both}
+  @keyframes bigBloom{0%{opacity:.3;transform:scale(.86)}45%{transform:scale(1.16)}70%{transform:scale(1.02)}100%{opacity:1;transform:none}}
+  #lvis .ms .ink span.bad{animation:buzz 260ms ease-out both}
+  @keyframes buzz{0%,100%{transform:none}20%{transform:translateX(-4px) rotate(-2deg)}50%{transform:translateX(4px) rotate(2deg)}80%{transform:translateX(-2px)}}
+  #lvis .s6 .crate.hit{animation:crateHit 460ms cubic-bezier(.2,1.5,.3,1) both}
+  @keyframes crateHit{0%{transform:none}35%{transform:translateY(-12px) scale(1.03)}70%{transform:translateY(2px)}100%{transform:none}}
+  #lvis .s6 .crate.miss{animation:crateMiss 300ms cubic-bezier(.36,.07,.19,.97) both}
+  @keyframes crateMiss{0%,100%{transform:none}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+  /* --- искры на верный ответ --- */
+  #lvis .spark{position:absolute;left:50%;top:50%;width:7px;height:7px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,#fff3cf,rgba(255,205,110,.1) 70%);animation:spark 700ms cubic-bezier(.2,1,.3,1) both}
+  @keyframes spark{0%{opacity:1;transform:translate(-50%,-50%) scale(.4)}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1)}}
+  @media (prefers-reduced-motion: reduce){
+    #lvis .s6,#lvis .ms,#lvis .s6::after,#lvis .ms::after,#lvis .amb i,#lvis .haloGlow,#lvis .spark{animation:none!important}
+    #lvis .s6 [data-anim],#lvis .ms .ink span{animation-duration:.01ms!important;animation-delay:0ms!important}}
+  `;
+  function css(){ try{ let e=document.getElementById('mot-style'); if(!e){ e=document.createElement('style'); e.id='mot-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  const DUST=[[10,72,0],[22,84,1.4],[36,66,2.6],[52,88,0.8],[66,70,2.1],[78,82,3.2],[88,64,1.1],[46,58,3.8]];
+  function decorate(root){
+    if(!root || root.querySelector('.amb')) return;
+    const d=document.createElement('div'); d.className='amb';
+    d.innerHTML=DUST.map(([x,y,t])=>`<i style="left:${x}%;top:${y}%;animation-delay:${t}s"></i>`).join('');
+    root.insertBefore(d, root.firstChild);
+    const g=document.createElement('div'); g.className='haloGlow'; root.insertBefore(g, d.nextSibling);
+  }
+  function sparks(root){
+    try{
+      const host=root.querySelector('.ink, .word, .crates') || root;
+      for(let i=0;i<10;i++){
+        const s=document.createElement('span'); s.className='spark';
+        const a=(i/10)*Math.PI*2, r=54+Math.random()*34;
+        s.style.setProperty('--dx', (Math.cos(a)*r).toFixed(1)+'px');
+        s.style.setProperty('--dy', (Math.sin(a)*r).toFixed(1)+'px');
+        s.style.animationDelay=(i*18)+'ms';
+        host.appendChild(s);
+        setTimeout(()=>{ try{s.remove();}catch(e){} }, 900);
+      }
+    }catch(e){}
+  }
+  /* наблюдаем состояние: как только ответ дан — подъём карточки, искры при верном, наклон при ошибке */
+  function watch(){
+    try{
+      const lk=()=> (typeof lidKey==='function'&&typeof LV!=='undefined') ? lidKey(LV.id) : null;
+      let last=null;
+      setInterval(()=>{
+        const host=document.getElementById('lvis'); if(!host) return;
+        const root=host.querySelector('.s6, .ms'); if(!root) return;
+        decorate(root);
+        const k=lk(); if(!k||typeof CHS==='undefined'||!CHS[k]) return;
+        const st=CHS[k];
+        const step=(typeof LV!=='undefined'&&LV.step)||0;
+        const sig=(st.gRes!=null?String(st.gRes):'')+'|'+(st.ans?JSON.stringify(st.ans).slice(0,80):'');
+        if(sig===last) return;
+        const fresh=(last!==null);
+        last=sig;
+        if(!fresh) return;
+        const okNow = /"(ok|gOk)"/.test('') ? false : (st.gRes!=null ? (document.querySelector('#lvis .cell.ok,#lvis .crate.hit,#lvis .fb.ok,#lvis .seat.lit,.ink span.lit')!==null) : false);
+        root.classList.add(okNow?'lift':'tilt');
+        setTimeout(()=>root.classList.remove('lift','tilt'), 520);
+        if(okNow) sparks(root);
+      }, 90);
+    }catch(e){}
+  }
+  watch();
+  return {decorate:decorate, sparks:sparks};
 })();
