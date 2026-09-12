@@ -2734,3 +2734,131 @@ window.RUKEXAM.buildMcko({
       hints: ['Смотри шкалу в начале работы.', 'Самый высокий диапазон — от 85 %.', 'Верно: 85–100 %.'], sol: '85–100 %' }
   ]
 });
+
+/* ================= RUTRAIN: живой тренажёр с вставкой буквы в слово =================
+   Слово рисуется плитками, пропуск пульсирует. Когда ребёнок выбирает букву,
+   она физически влетает из кнопки в пропуск (FLIP-анимация), плитка вспыхивает
+   зелёным и слово читается целиком; при ошибке плитка краснеет и вздрагивает. */
+window.RUTRAIN = (function(){
+  const CSS = `
+  #lvis .rt-wrap{width:100%;display:flex;flex-direction:column;align-items:center;gap:14px}
+  #lvis .rt-title{font:600 20px/1.2 Georgia,serif;color:#ffd76a;letter-spacing:.02em}
+  #lvis .rt-tip{color:#cbb89a;font-size:14.5px}
+  #lvis .rt-word{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;padding:6px 2px}
+  #lvis .rt-cell{min-width:44px;height:60px;padding:0 8px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+    font:600 30px/1 Georgia,serif;color:#f1e8d6;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+    border:1.5px solid rgba(255,215,106,.28);box-shadow:0 6px 18px rgba(0,0,0,.35);
+    animation:rtRise .46s cubic-bezier(.22,.9,.24,1) both}
+  #lvis .rt-cell.rt-gap{border-style:dashed;border-color:rgba(255,215,106,.75);color:transparent;
+    animation:rtPulse 1.7s ease-in-out infinite}
+  #lvis .rt-cell.rt-ok{border-color:#8fd1a8;background:linear-gradient(180deg,rgba(143,209,168,.28),rgba(143,209,168,.10));color:#eafff2;
+    animation:rtPop .6s cubic-bezier(.2,1.5,.3,1) both, rtGlow 1.4s ease-out .3s}
+  #lvis .rt-cell.rt-no{border-color:#e86a5a;background:linear-gradient(180deg,rgba(232,106,90,.26),rgba(232,106,90,.08));color:#ffe6e2;
+    animation:rtShake .55s cubic-bezier(.36,.07,.19,.97) both}
+  #lvis .rt-verdict{font-size:15px;color:#e8dcc8;text-align:center;min-height:22px;animation:rtFade .45s both}
+  #lvis .rt-score{font-size:14px;color:#cbb89a}
+  #lvis .rt-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;width:100%}
+  #lvis .rt-btn{flex:1 1 auto;min-width:86px;font:600 19px/1 Georgia,serif!important;padding:16px 14px!important;border-radius:16px!important;
+    transition:transform .18s cubic-bezier(.2,1.3,.3,1), box-shadow .2s}
+  #lvis .rt-btn:hover{transform:translateY(-2px) scale(1.02)}
+  #lvis .rt-btn:active{transform:scale(.94)}
+  .rt-fly{position:fixed;z-index:300;pointer-events:none;display:flex;align-items:center;justify-content:center;
+    font:600 30px/1 Georgia,serif;color:#ffe9a8;text-shadow:0 0 18px rgba(255,215,106,.9);
+    transition:transform .5s cubic-bezier(.2,.85,.2,1), opacity .5s ease-out}
+  @keyframes rtRise{from{opacity:0;transform:translateY(16px) scale(.9)}to{opacity:1;transform:none}}
+  @keyframes rtFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @keyframes rtPulse{0%,100%{box-shadow:0 6px 18px rgba(0,0,0,.35),0 0 0 0 rgba(255,215,106,.32)}50%{box-shadow:0 6px 18px rgba(0,0,0,.35),0 0 0 9px rgba(255,215,106,0)}}
+  @keyframes rtPop{0%{transform:scale(.55) rotate(-8deg)}60%{transform:scale(1.18) rotate(2deg)}100%{transform:scale(1) rotate(0)}}
+  @keyframes rtGlow{0%{box-shadow:0 0 0 0 rgba(143,209,168,.75)}100%{box-shadow:0 0 0 16px rgba(143,209,168,0)}}
+  @keyframes rtShake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
+  `;
+  function css(){ try{ const st=document.getElementById('rt-style'); if(!st){ const e=document.createElement('style'); e.id='rt-style'; document.head.appendChild(e); e.textContent=CSS; } }catch(e){} }
+  const B=[['н','сущ.'],['п','прил.'],['г','глагол']];
+  window.RUTRAIN_DATA = {
+    601:{title:'Кто это слово?', tip:'определи часть речи', buttons:[['н','сущ.'],['п','прил.'],['г','глагол']],
+      items:[['снег','н','существительное'],['пушистый','п','прилагательное'],['летит','г','глагол'],['дорога','н','существительное'],['весёлый','п','прилагательное'],['рисует','г','глагол'],['радость','н','существительное'],['зимний','п','прилагательное'],['светит','г','глагол']]},
+    602:{title:'Что спрятано в слове?', tip:'приставка, суффикс или окончание', buttons:[['приставка','приставка'],['суффикс','суффикс'],['окончание','окончание']],
+      items:[['приехать','приставка','приставка при-'],['лесник','суффикс','суффикс -ник'],['леса','окончание','окончание -а'],['переход','приставка','приставка пере-'],['домик','суффикс','суффикс -ик'],['книгу','окончание','окончание -у']]},
+    603:{title:'Вставь букву', tip:'подбери проверочное слово', buttons:[['о','о'],['е','е'],['и','и']],
+      items:[['м_лодой','о','мОлодость'],['л_сной','е','лЕс'],['г_ра','о','гОры'],['п_сьмо','и','пИсьма'],['з_мля','е','зЕмли'],['х_лодный','о','хОлод']]},
+    604:{title:'Вставь букву', tip:'проверь согласную', buttons:[['г','г'],['з','з'],['б','б'],['ж','ж']],
+      items:[['сне_','г','снега'],['гла_','з','глаза'],['ло_ка','ж','ложечка'],['моро_','з','морозы'],['зу_','б','зубы'],['кни_ка','ж','книжечка']]},
+    605:{title:'Слитно или раздельно?', tip:'можно ли вставить слово между', buttons:[['слитно','слитно'],['раздельно','раздельно']],
+      items:[['(за)шёл','слитно','зашёл — приставка'],['(на)столе','раздельно','на столе — предлог'],['(под)ъезд','слитно','подъезд — приставка'],['(в)лесу','раздельно','в лесу — предлог'],['(от)нёс','слитно','отнёс — приставка'],['(за)домом','раздельно','за домом — предлог']]},
+    606:{title:'Определи род', tip:'подставь он, она или оно', buttons:[['он','он'],['она','она'],['оно','оно']],
+      items:[['ночь','она','женский род'],['стол','он','мужской род'],['окно','оно','средний род'],['мышь','она','женский род'],['ключ','он','мужской род'],['поле','оно','средний род']]},
+    607:{title:'Определи падеж', tip:'задай вопрос от соседнего слова', buttons:[['и','им.'],['р','род.'],['д','дат.'],['в','вин.'],['т','твор.'],['п','пр.']],
+      items:[['читаю книгу: «книгу»','в','винительный'],['нет книги: «книги»','р','родительный'],['дать другу: «другу»','д','дательный'],['рисую карандашом: «карандашом»','т','творительный'],['думаю о книге: «книге»','п','предложный'],['ученик читает: «ученик»','и','именительный']]},
+    608:{title:'Определи время глагола', tip:'вчера — сейчас — завтра', buttons:[['прош','прош.'],['наст','наст.'],['буд','буд.']],
+      items:[['читает','наст','настоящее время'],['читал','прош','прошедшее время'],['прочитает','буд','будущее время'],['будет читать','буд','будущее сложное'],['читали','прош','прошедшее время'],['читаю','наст','настоящее время']]},
+    609:{title:'Как писать?', tip:'ь переходит из вопроса в слово', buttons:[['тся','-тся'],['ться','-ться']],
+      items:[['Он учит?ся','тся','что делает? — без ь'],['Надо учит?ся','ться','что делать? — с ь'],['Ему не хоч?тся спать','тся','что делает? — без ь'],['Она улыбает?ся','тся','что делает? — без ь'],['Хочу учит?ся','ться','что делать? — с ь'],['Дети улыбают?ся','тся','что делают? — без ь']]},
+    610:{title:'Где нужна запятая?', tip:'посчитай основы и однородные члены', buttons:[['нет','запятые не нужны'],['одна','одна запятая'],['две','две запятые'],['зап','перечисление'],['перед а','перед «а»'],['слож','две основы']],
+      items:[['яблони груши сливы','зап','нужны запятые между однородными'],['яблони и груши','нет','одиночный союз и — без запятой'],['Маша помоги мне','одна','обращение в начале — одна запятая'],['Светит солнце и поют птицы','слож','две основы — запятая перед и'],['не груши а сливы','перед а','союз а — запятая'],['Спасибо Маша за помощь','две','обращение в середине — две запятые']]}
+  };
+  function st(lk){ if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; }
+  function fly(from, to, ch){
+    try{
+      const s=document.createElement('span'); s.className='rt-fly'; s.textContent=ch;
+      const w=Math.max(28,from.width), h=Math.max(28,from.height);
+      s.style.width=w+'px'; s.style.height=h+'px';
+      s.style.left=from.left+'px'; s.style.top=from.top+'px'; s.style.fontSize=Math.round(from.height*0.42)+'px';
+      document.body.appendChild(s);
+      const dx=(to.left+to.width/2)-(from.left+from.width/2), dy=(to.top+to.height/2)-(from.top+from.height/2);
+      requestAnimationFrame(()=>{ s.style.transform='translate('+dx+'px,'+dy+'px) scale(1.15)'; s.style.opacity='0.15'; });
+      setTimeout(()=>{ try{ s.remove(); }catch(e){} }, 520);
+    }catch(e){}
+  }
+  function render(el, id){
+    css();
+    const cfg=window.RUTRAIN_DATA[id]; if(!cfg) return;
+    const lk=lidKey(LV.id), s=st(lk);
+    if(s.gIdx==null) s.gIdx=0;
+    if(s.gRes===undefined) s.gRes=null;
+    const item=cfg.items[s.gIdx%cfg.items.length];
+    const word=item[0], correct=item[1], hint=item[2];
+    const picked=s.gRes;
+    const ok = picked===correct;
+    const cells=[...word].map((ch,i)=>{
+      const isGap=(ch==='_'||ch==='?');
+      const cls = isGap ? (picked==null?'rt-cell rt-gap':(ok?'rt-cell rt-ok':'rt-cell rt-no')) : 'rt-cell';
+      const shown = isGap ? (picked==null?'':picked) : ch;
+      return `<span class="${cls}" style="animation-delay:${(i*0.045).toFixed(2)}s" ${isGap?'id="rtGap"':''}>${shown}</span>`;
+    }).join('');
+    const verdict = picked==null ? '' :
+      (ok ? `✅ верно: ${hint}` : `❌ не так · правильно «${correct}» — ${hint}`);
+    el.innerHTML = `<div class="wv"><div class="wv-col"><div class="rt-wrap">
+      <div class="rt-title">${cfg.title}</div>
+      <div class="rt-word">${cells}</div>
+      <div class="rt-verdict">${verdict || cfg.tip}</div>
+      <div class="rt-score">верно: ${s.gOk||0} · ошибок: ${s.gBad||0} · всего: ${cfg.items.length}</div>
+      <div class="rt-btns">${cfg.buttons.map(b=>`<button type="button" class="btn rt-btn" data-key="${b[0]}" onclick="rtPick(${id},'${b[0]}')">${b[1]}</button>`).join('')}</div>
+      <div class="rt-tip">${picked==null?'выбери вариант':'нажми любую кнопку — следующее слово'}</div>
+    </div></div></div>`;
+  }
+  window.rtPick=function(id,key){
+    try{
+      const cfg=window.RUTRAIN_DATA[id]; const lk=lidKey(LV.id), s=st(lk);
+      if(s.gRes!=null){ s.gIdx=(s.gIdx||0)+1; s.gRes=null; chRender(0); return; }
+      const btn=document.querySelector('#lvis button[data-key="'+key+'"]');
+      const gap=document.getElementById('rtGap');
+      const from=btn?btn.getBoundingClientRect():null, to=gap?gap.getBoundingClientRect():null;
+      s.gRes=key;
+      const correct=cfg.items[(s.gIdx||0)%cfg.items.length][1];
+      if(key===correct) s.gOk=(s.gOk||0)+1; else s.gBad=(s.gBad||0)+1;
+      chRender(0);
+      if(from&&to) fly(from,to,correct);
+    }catch(e){}
+  };
+  /* подменяем кадр тренажёра во всех уроках русского */
+  if(window.WAVE_B){
+    Object.keys(window.RUTRAIN_DATA).forEach(id=>{
+      const orig=window.WAVE_B[id]; if(typeof orig!=='function') return;
+      window.WAVE_B[id]=function(el){
+        try{ if(((typeof LV!=='undefined'&&LV.step)||0)===8){ render(el, id); return; } }catch(e){}
+        return orig(el);
+      };
+    });
+  }
+  return {render:render, data:window.RUTRAIN_DATA};
+})();
