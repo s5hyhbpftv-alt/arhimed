@@ -22,7 +22,7 @@
   body { font-family:Georgia,'Times New Roman',serif; color:var(--ivory); min-height:100vh;
     background: radial-gradient(ellipse at 50% -10%, #1a3226 0%, transparent 55%),
       radial-gradient(ellipse at 90% 110%, #132a20 0%, transparent 45%), var(--deep); }
-  .wrap { max-width:900px; margin:0 auto; padding:14px 14px 120px; }
+  .wrap { max-width:900px; margin:0 auto; padding:14px 14px 140px; }
   header { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
     border-bottom:1px solid var(--hairline); padding-bottom:10px; margin-bottom:12px; }
   .logo { font-size:20px; color:var(--brass); letter-spacing:.05em; }
@@ -36,7 +36,7 @@
   .logout:hover { background:rgba(232,106,90,.15); border-color:var(--danger); color:var(--danger); }
   .logout.hidden { display:none; }
   .nav { position:fixed; left:0; right:0; bottom:0; display:flex; background:rgba(11,23,18,.97);
-    border-top:1px solid var(--hairline); z-index:40; backdrop-filter:blur(6px);
+    border-top:1px solid var(--hairline); z-index:85; backdrop-filter:blur(6px);
     padding:6px 8px env(safe-area-inset-bottom,0px); max-width:900px; margin:0 auto; }
   .nav button { flex:1; background:none; border:none; color:var(--muted); font-family:inherit; font-size:10.5px;
     padding:6px 0 5px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:4px; cursor:pointer; }
@@ -291,7 +291,7 @@
   .bar i { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--brass-d),var(--brass)); }
   .small { font-size:12px; color:var(--muted); }
   .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  @media (max-width:640px){ .grid2 { grid-template-columns:1fr; } .wrap{padding:10px 10px 84px;} }
+  @media (max-width:640px){ .grid2 { grid-template-columns:1fr; } .wrap{padding:10px 10px 104px;} }
   .hint-btn { background:var(--panel); color:var(--glass); border:1px solid rgba(127,184,160,.4); border-radius:8px;
     padding:6px 12px; font-family:inherit; font-size:12px; cursor:pointer; }
   .hint-btn:disabled { opacity:.4; cursor:not-allowed; }
@@ -689,32 +689,32 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=481"></script>
-<script src="data/lessons.js?v=481"></script>
-<script src="data/lessons_draft.js?v=481"></script>
-<script src="data/comics_12.js?v=481"></script>
-<script src="data/sim_phys.js?v=481"></script>
-<script src="data/vis_bw.js?v=481"></script>
-<script src="data/vis_cw.js?v=481"></script>
-<script src="data/vis_dw.js?v=481"></script>
-<script src="data/vis_ew.js?v=481"></script>
-<script src="data/vis_kl.js?v=481"></script>
-<script src="data/vis_wk.js?v=481"></script>
-<script src="data/inf_56.js?v=481"></script>
-<script src="js/comic.js?v=481"></script>
-<script src="js/core.js?v=481"></script>
-<script src="js/engine.js?v=481"></script>
-<script src="js/app.js?v=481"></script>
-<script src="js/dashboard.js?v=481"></script>
-<script src="js/lessons.js?v=481"></script>
-<script src="js/wave_guard.js?v=481"></script>
-<script src="js/legend.js?v=481"></script>
-<script src="js/simulator.js?v=481"></script>
-<script src="js/duel.js?v=481"></script>
-<script src="js/agent.js?v=481"></script>
-<script src="js/voice.js?v=481"></script>
-<script src="js/assistant.js?v=481"></script>
-<script src="js/agentlive.js?v=481"></script>
+<script src="data/tasks.js?v=482"></script>
+<script src="data/lessons.js?v=482"></script>
+<script src="data/lessons_draft.js?v=482"></script>
+<script src="data/comics_12.js?v=482"></script>
+<script src="data/sim_phys.js?v=482"></script>
+<script src="data/vis_bw.js?v=482"></script>
+<script src="data/vis_cw.js?v=482"></script>
+<script src="data/vis_dw.js?v=482"></script>
+<script src="data/vis_ew.js?v=482"></script>
+<script src="data/vis_kl.js?v=482"></script>
+<script src="data/vis_wk.js?v=482"></script>
+<script src="data/inf_56.js?v=482"></script>
+<script src="js/comic.js?v=482"></script>
+<script src="js/core.js?v=482"></script>
+<script src="js/engine.js?v=482"></script>
+<script src="js/app.js?v=482"></script>
+<script src="js/dashboard.js?v=482"></script>
+<script src="js/lessons.js?v=482"></script>
+<script src="js/wave_guard.js?v=482"></script>
+<script src="js/legend.js?v=482"></script>
+<script src="js/simulator.js?v=482"></script>
+<script src="js/duel.js?v=482"></script>
+<script src="js/agent.js?v=482"></script>
+<script src="js/voice.js?v=482"></script>
+<script src="js/assistant.js?v=482"></script>
+<script src="js/agentlive.js?v=482"></script>
 <script>
   /* сброс кэша при новой сборке — иначе MVP показывает старый урок */
   (function(){
@@ -734,7 +734,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=481').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=482').catch(()=>{}); });
 }
 window.addEventListener('hashchange', ()=>{
   try{
