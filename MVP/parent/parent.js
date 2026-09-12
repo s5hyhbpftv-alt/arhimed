@@ -48,7 +48,12 @@ function rodStateSave(){
 }
 function rodStateLoad(){
   try{
-    const s = JSON.parse(localStorage.getItem(ROD_KEY) || 'null');
+    let s = JSON.parse(localStorage.getItem(ROD_KEY) || 'null');
+    /* переносим вход из первой версии приложения, чтобы не вводить всё заново */
+    if (!s){
+      const old = JSON.parse(localStorage.getItem('arh_rod_v1') || 'null');
+      if (old && old.code) s = {code: old.code, pin: old.pin || '', card: null, remember: old.remember == null ? 1 : old.remember};
+    }
     if (s && s.code) ROD = Object.assign(ROD, s);
   }catch(e){}
 }
