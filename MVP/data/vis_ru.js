@@ -3360,6 +3360,7 @@ window.RU601V2 = (function(){
   body:has(#lvis .s6) .avatar,body:has(#lvis .s6) .mascot,body:has(#lvis .s6) .assistant,body:has(#lvis .s6) .guide,
   body:has(#lvis .ms) .avatar,body:has(#lvis .ms) .mascot,body:has(#lvis .ms) .assistant,body:has(#lvis .ms) .guide,
   body:has(#lvis .rl-wrap) .avatar,body:has(#lvis .rl-wrap) .mascot{display:none!important}
+  body:has(#lvis .pp) .avatar,body:has(#lvis .pp) .mascot,body:has(#lvis .pp) .assistant{display:none!important}
   #lvis .s6 .crate{flex:1 1 30%;min-width:104px;padding:16px 12px;text-align:center}
   #lvis .s6 .crate .ic{font-size:30px}
   #lvis .s6 .crate .nm{font-size:17px;font-weight:600;color:var(--gold);margin-top:8px;white-space:nowrap}
@@ -4195,6 +4196,7 @@ window.RU615 = (function(){
   #lvis .mk .opt.good{border-color:${OK}}#lvis .mk .opt.bad{border-color:${NO}}
   #lvis .mk .prog{display:flex;gap:5px}#lvis .mk .prog i{width:9px;height:9px;transform:rotate(45deg);border:1px solid rgba(255,215,106,.35)}
   #lvis .mk .prog i.done{background:linear-gradient(180deg,#ffd76a,#e2b23f)}
+  body.paper-mode .avatar,body.paper-mode .mascot,body.paper-mode .assistant{display:none!important}
   `;
   function css(){ try{ let e=document.getElementById('mk-style'); if(!e){ e=document.createElement('style'); e.id='mk-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
   function render(el){
@@ -4221,8 +4223,92 @@ window.RU615 = (function(){
   window.mkStep=(d)=>{ try{ const n=((typeof LV!=='undefined'&&LV.step)||0)+d; if(n<0||n>=Q.length) return; LV.step=n; chRender(0); }catch(e){} };
   if(window.ARH_LESSONS && !window.ARH_LESSONS.some(x=>x.id===615)){
     window.ARH_LESSONS.push({id:615,title:'Путь Мишутки',ico:'🐻',src:'Русский язык · 5–6 класс · Путь Мишутки',subj:'rus',
-      explain:['Путь Мишутки: десять задач олимпиады школы № 1517.'].concat(Q.map((x,i)=>(i+1)+'. '+x.t+'. '+x.q)),check:1,tasks:[]});
+      explain:Q.map((x,i)=>(i+1)+'. '+x.t+'. '+x.q),check:1,tasks:[]});
   }
   if(window.WAVE_B) window.WAVE_B[615]=function(el){ try{ render(el); }catch(e){ el.innerHTML=''; } };
-  return {render:render,data:Q};
+  return {render:render,data:Q,art:ART};
+})();
+
+/* ================= ПУТЬ МИШУТКИ: лист задания, а не тёмная панель =================
+   По совету скил-базы (раздел стилей): E-Ink / Paper — бумага, матовость, высокий
+   контраст, спокойствие, без бликов и лишнего движения. Кадр собран как страница
+   задания из PDF: номер задания, рамка вокруг рисунка, условие, варианты списком,
+   пометка проверки. Ширина ограничена колонкой приложения, во весь экран не растягивается. */
+window.RU615PAPER = (function(){
+  const F="Georgia,'Times New Roman',serif";
+  const INK='#2a2118', MUT='#6b5b45', RULE='#d8c9a8', PAPER='#f7f1e4', PAPER2='#fffdf7', OKC='#2f6b46', NOC='#9c2f22';
+  const CSS=`
+  #lvis .pp{box-sizing:border-box;width:100%;max-width:520px;margin:0 auto;font-family:${F};color:${INK};
+    background:linear-gradient(180deg,${PAPER2},${PAPER});border:1px solid ${RULE};border-radius:14px;
+    padding:clamp(14px,4vw,22px) clamp(14px,4vw,24px) clamp(16px,4.4vw,24px);
+    box-shadow:0 10px 26px rgba(26,20,12,.28),inset 0 1px 0 rgba(255,255,255,.7);
+    display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
+  #lvis .pp::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.05;
+    background-image:radial-gradient(${INK} .6px,transparent .6px);background-size:7px 7px}
+  #lvis .pp .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    border-bottom:1px solid ${RULE};padding-bottom:8px}
+  #lvis .pp .num{font-size:clamp(12px,3.4vw,14px);letter-spacing:.1em;text-transform:uppercase;color:${MUT}}
+  #lvis .pp .of{font-size:clamp(12px,3.4vw,14px);color:${MUT};font-variant-numeric:tabular-nums}
+  #lvis .pp h2{font-size:clamp(19px,5.4vw,23px);line-height:1.18;font-weight:600;margin:0;color:${INK};letter-spacing:-.01em}
+  #lvis .pp .fig{border:1px solid ${RULE};border-radius:10px;background:${PAPER2};padding:10px 8px}
+  #lvis .pp .fig svg *{stroke-linecap:round}
+  #lvis .pp .q{font-size:clamp(15.5px,4.3vw,17px);line-height:1.55;color:${INK}}
+  #lvis .pp .opts{display:flex;flex-direction:column;gap:10px}
+  #lvis .pp .opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+    padding:clamp(11px,3.2vw,14px) clamp(12px,3.4vw,16px);border-radius:10px;border:1px solid ${RULE};
+    background:${PAPER2};font-family:${F};font-size:clamp(15px,4.2vw,17px);color:${INK};
+    transition:transform 120ms cubic-bezier(.2,0,0,1),border-color 140ms,background 140ms}
+  #lvis .pp .opt:hover{border-color:#b9a67f}
+  #lvis .pp .opt:active{transform:translateY(1px)}
+  #lvis .pp .opt:focus-visible{outline:3px solid ${INK};outline-offset:3px}
+  #lvis .pp .opt .k{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid ${RULE};
+    display:flex;align-items:center;justify-content:center;font-size:14px;color:${MUT}}
+  #lvis .pp .opt.good{border-color:${OKC};background:#eef6ef}
+  #lvis .pp .opt.good .k{border-color:${OKC};color:${OKC}}
+  #lvis .pp .opt.bad{border-color:${NOC};background:#fbeeec}
+  #lvis .pp .opt.bad .k{border-color:${NOC};color:${NOC}}
+  #lvis .pp .mark{display:flex;gap:10px;align-items:flex-start;border-top:1px solid ${RULE};padding-top:10px;
+    animation:ppIn 260ms cubic-bezier(.23,1,.32,1) both}
+  #lvis .pp .mark svg{flex:none;width:26px;height:26px}
+  #lvis .pp .mark .d{stroke-dasharray:34;stroke-dashoffset:34;animation:ppDraw 360ms cubic-bezier(.2,1,.32,1) 120ms both}
+  #lvis .pp .mark p{margin:0;font-size:clamp(14.5px,4vw,16px);line-height:1.5}
+  #lvis .pp .mark.ok p{color:${OKC}}#lvis .pp .mark.no p{color:${NOC}}
+  #lvis .pp .nav{display:flex;gap:10px;flex-wrap:wrap}
+  #lvis .pp .nav button{flex:1 1 45%;min-width:120px;padding:12px 12px;white-space:nowrap;border-radius:10px;border:1px solid ${RULE};background:${PAPER2};
+    font-family:${F};font-size:clamp(15px,4vw,16px);color:${INK};cursor:pointer}
+  #lvis .pp .nav button:active{transform:translateY(1px)}
+  @keyframes ppIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @keyframes ppDraw{to{stroke-dashoffset:0}}
+  @media (prefers-reduced-motion: reduce){#lvis .pp *{animation:none!important;transition:none!important}}
+  `;
+  function css(){ try{ let e=document.getElementById('pp-style'); if(!e){ e=document.createElement('style'); e.id='pp-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  function render(el){
+    css();
+    try{ document.body.classList.add('paper-mode'); }catch(e){}
+    const src=window.RU615; if(!src||!src.data) return;
+    const Q=src.data, ART=src.art;
+    const lk=(typeof lidKey==='function')?lidKey(615):'615';
+    if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={ans:{}}; const st=CHS[lk]; if(!st.ans) st.ans={};
+    const step=Math.max(0,Math.min(Q.length-1,((typeof LV!=='undefined'&&LV.step)||0)));
+    const it=Q[step], picked=st.ans[step], done=picked!=null, ok=picked===it.ans;
+    const art=`<div class="fig" style="filter:invert(0)">${String(ART[it.k]()).replace(/fill="#f6efe0"/g,'fill="#2a2118"').replace(/fill="#d8c9b8"/g,'fill="#6b5b45"').replace(/fill="#ffd76a"/g,'fill="#8a6a1f"').replace(/rgba\(255,215,106,\.45\)/g,'rgba(138,106,31,.5)').replace(/rgba\(255,255,255,\.10\)/g,'rgba(42,33,24,.12)').replace(/fill="#9fd8b4"/g,'fill="#2f6b46"').replace(/fill="#8fd1a8"/g,'fill="#2f6b46"').replace(/fill="#7fb7d8"/g,'fill="#2a5f8a"').replace(/fill="#5b8fc9"/g,'fill="#2a5f8a"').replace(/fill="#d98aa8"/g,'fill="#9c4a63"').replace(/fill="#c98b4a"/g,'fill="#8a5a2a"').replace(/fill="#e86a5a"/g,'fill="#9c2f22"').replace(/fill="#f6efe0"/g,'fill="#2a2118"')}</div>`;
+    el.innerHTML=`<div class="pp">
+      <div class="head"><div class="num">Задание ${step+1} из ${Q.length}</div><div class="of">Путь Мишутки</div></div>
+      <h2>${it.t}</h2>
+      ${art}
+      <div class="q">${it.q}</div>
+      <div class="opts">${it.opts.map((o,i)=>`<button type="button" class="opt ${done?(o===it.ans?'good':(o===picked?'bad':'')):''}" onclick="mkPick(${step},'${o}')">
+        <span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div>
+      ${done ? `<div class="mark ${ok?'ok':'no'}">
+          <svg viewBox="0 0 24 24">${ok?`<path class="d" d="M4 13 L10 19 L20 6" fill="none" stroke="${OKC}" stroke-width="2.6"/>`
+            :`<path class="d" d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="${NOC}" stroke-width="2.6"/>`}</svg>
+          <p>${ok?'Верно. ':'Правильно «'+it.ans+'». '}${it.why}</p></div>`
+        : `<div class="q" style="color:${MUT}">Задача из демонстрационного варианта олимпиады школы № 1517.</div>`}
+      <div class="nav">
+        ${step>0?`<button type="button" onclick="mkStep(-1)">← Назад</button>`:''}
+        ${step<Q.length-1?`<button type="button" onclick="mkStep(1)">Дальше →</button>`:''}
+      </div></div>`;
+  }
+  if(window.WAVE_B) window.WAVE_B[615]=function(el){ try{ render(el); }catch(e){ try{ window.RU615.render(el); }catch(e2){ el.innerHTML=''; } } };
+  return {render:render};
 })();
