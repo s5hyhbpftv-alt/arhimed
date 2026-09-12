@@ -3657,3 +3657,146 @@ window.RUWORK = (function(){
   }
   return {render:render};
 })();
+
+/* ================= РАБОТА 611: рукописная страница с иллюминацией (своя, не шаблон) =================
+   Вместо трёх одинаковых карточек и общей плиточной сетки: надпись на строке с прочерком,
+   гнездо как каретка со свечой, выбор буквы — медальоны, верная буква — иллюминированная
+   буквица с лучами, разбор — глосса на поле, прогресс — ромбы по числу вопросов.
+   Сверено с design-taste-frontend (запрет шаблонов), motion-principles, typeset, accessibility-ux. */
+window.RUWORK611 = (function(){
+  const F="Georgia,'Times New Roman',serif";
+  const EASE="cubic-bezier(.2,0,0,1)", OUT="cubic-bezier(.23,1,.32,1)";
+  const GRAIN="url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E\")";
+  const CSS=`
+  #lvis .ms{--gold:#ffd76a;--ink:#f7f0e0;--mut:#dccfb0;--ok:#9fd8b4;--no:#e8735f;--rule:rgba(255,215,106,.35);
+    position:relative;width:100%;padding:22px 18px 24px;border-radius:20px;overflow:hidden;font-family:${F};color:var(--ink);
+    background:
+      radial-gradient(80% 60% at 50% 0%,rgba(255,205,110,.16),transparent 62%),
+      radial-gradient(120% 120% at 50% 120%,rgba(0,0,0,.5),transparent 60%),
+      linear-gradient(180deg,#1b2c24,#131e19);
+    border:1px solid var(--rule);box-shadow:0 26px 64px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.05)}
+  #lvis .ms .grain{position:absolute;inset:0;background-image:${GRAIN};pointer-events:none;mix-blend-mode:overlay}
+  #lvis .ms .vine{position:absolute;left:10px;right:10px;top:8px;height:18px;opacity:.75;pointer-events:none}
+  #lvis .ms .vine.b{top:auto;bottom:8px;transform:scaleY(-1)}
+  #lvis .ms .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  #lvis .ms .work{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+  #lvis .ms .num{font-size:14px;color:var(--mut);font-variant-numeric:tabular-nums}
+  #lvis .ms .gems{display:flex;gap:6px;margin-top:10px;justify-content:center}
+  #lvis .ms .gem{width:9px;height:9px;transform:rotate(45deg);border:1px solid var(--rule);background:rgba(255,255,255,.04);
+    transition:background 200ms ease-out,box-shadow 200ms ease-out,border-color 200ms ease-out}
+  #lvis .ms .gem.done{background:linear-gradient(180deg,#ffd76a,#e2b23f);border-color:#ffd76a;box-shadow:0 0 10px rgba(255,215,106,.55)}
+  #lvis .ms .inscribe{position:relative;margin:26px 0 8px;padding:18px 8px 22px;text-align:center}
+  #lvis .ms .ink{font-size:52px;line-height:1;font-weight:600;letter-spacing:.01em;display:inline-flex;gap:2px;align-items:flex-end}
+  #lvis .ms .ink span{animation:inkIn 240ms ${OUT} both;animation-delay:calc(var(--i,0)*24ms)}
+  #lvis .ms .ink span.seat{position:relative;min-width:42px;color:transparent;
+    border-bottom:3px solid rgba(255,215,106,.85);box-shadow:0 12px 22px -10px rgba(255,215,106,.55)}
+  #lvis .ms .ink span.seat::before{content:'?';position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
+    font-size:22px;color:rgba(255,215,106,.35);font-weight:600}
+  #lvis .ms .ink span.seat.lit,#lvis .ms .ink span.seat.bad{border-bottom-color:transparent;box-shadow:none}
+  #lvis .ms .ink span.seat.lit::before,#lvis .ms .ink span.seat.bad::before{content:''}
+  #lvis .ms .ink span.seat::after{content:'';position:absolute;left:50%;bottom:-6px;width:26px;height:2px;transform:translateX(-50%);
+    background:var(--gold);opacity:.85;animation:candle 1.8s ease-in-out infinite}
+  #lvis .ms .ink span.lit{color:#fff6dd;text-shadow:0 0 22px rgba(255,215,106,.9),0 0 46px rgba(255,190,90,.5);animation:bloom 360ms ${OUT} both}
+  #lvis .ms .ink span.bad{color:#ffdad4;text-shadow:0 0 18px rgba(232,115,95,.8)}
+  #lvis .ms .underline{position:absolute;left:8%;right:8%;bottom:10px;height:14px;opacity:.9}
+  #lvis .ms .gloss{margin-top:14px;padding:12px 14px 12px 16px;border-left:3px solid var(--rule);
+    background:linear-gradient(90deg,rgba(255,215,106,.08),transparent 70%);font-size:16px;line-height:1.55}
+  #lvis .ms .gloss .lbl{display:block;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
+  #lvis .ms .gloss.ok{border-color:var(--ok)}#lvis .ms .gloss.no{border-color:var(--no)}
+  #lvis .ms .seals{display:flex;gap:18px;justify-content:center;margin-top:18px}
+  #lvis .ms .seal{position:relative;width:84px;height:84px;border-radius:50%;cursor:pointer;font-family:${F};font-size:34px;font-weight:600;color:var(--ink);
+    background:radial-gradient(circle at 35% 28%,#2c4536,#17251e 70%);border:2px solid var(--rule);
+    box-shadow:0 10px 22px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.09),inset 0 -6px 14px rgba(0,0,0,.35);
+    transition:transform 120ms ${EASE},box-shadow 180ms ease-out,border-color 180ms ease-out}
+  #lvis .ms .seal:hover{transform:translateY(-2px)}
+  #lvis .ms .seal:active{transform:translateY(2px) scale(.98)}
+  #lvis .ms .seal:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+  #lvis .ms .seal.chosen{border-color:var(--gold);box-shadow:0 10px 22px rgba(0,0,0,.45),0 0 0 6px rgba(255,215,106,.12)}
+  #lvis .ms .seal.press{animation:press 320ms ${OUT} both}
+  #lvis .ms .seal.tip{animation:tilt 150ms ease-out}
+  #lvis .ms .score{margin-top:14px;text-align:center;font-size:16px;color:var(--mut);font-variant-numeric:tabular-nums}
+  #lvis .ms .fly{position:fixed;z-index:340;pointer-events:none;font-family:${F};font-weight:600;color:#fff6dd;
+    text-shadow:0 0 20px rgba(255,215,106,.9);transition:transform 280ms ${EASE},opacity 280ms ease-out}
+  @keyframes inkIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @keyframes candle{0%,100%{opacity:.55}50%{opacity:1}}
+  @keyframes bloom{0%{opacity:.4;transform:scale(.92)}60%{transform:scale(1.04)}100%{opacity:1;transform:none}}
+  @keyframes press{0%{transform:none}45%{transform:scale(.92)}100%{transform:none}}
+  @keyframes tilt{0%,100%{transform:rotate(0)}30%{transform:rotate(-4deg)}70%{transform:rotate(4deg)}}
+  @media (prefers-reduced-motion: reduce){#lvis .ms *,#lvis .ms *::before{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    #lvis .ms .fly{display:none!important}}
+  `;
+  const VINE=`<svg class="vine" viewBox="0 0 300 18" preserveAspectRatio="none"><path d="M4 12 C40 4,70 16,110 9 C150 2,180 15,220 8 C250 3,275 12,296 7" fill="none" stroke="rgba(255,215,106,.45)" stroke-width="1.2" stroke-linecap="round"/><circle cx="4" cy="12" r="2.2" fill="rgba(255,215,106,.6)"/><circle cx="296" cy="7" r="2.2" fill="rgba(255,215,106,.6)"/></svg>`;
+  function css(){ try{ let e=document.getElementById('ms-style'); if(!e){ e=document.createElement('style'); e.id='ms-style'; document.head.appendChild(e);} if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  function render(el, id, qi, it, total, st){
+    css();
+    const picked = st.ans ? st.ans[qi] : null, done = picked!=null, ok = picked===it.ans;
+    const chars=[...String(it.word||'')];
+    const ink = chars.map((ch,k)=>{
+      const isGap = (ch==='_'||ch==='?');
+      const cls = isGap ? ('seat'+(done?(ok?' lit':' bad'):'')) : '';
+      return `<span class="${cls}" style="--i:${k}" ${isGap?'id="msSeat"':''}>${isGap?(done?picked:''):ch}</span>`;
+    }).join('');
+    const gems = Array.from({length:total},(_,i)=>`<i class="gem ${st.ans&&st.ans[i]!=null?'done':''}"></i>`).join('');
+    const seals = (it.opts||[it.ans]).map(o=>{
+      const cls='seal'+(picked===o?(' chosen'+(o===it.ans?' press':' tip')):'');
+      return `<button type="button" class="${cls}" onclick="ruExamPick(${id},${qi},'${o}')">${o}</button>`;
+    }).join('');
+    const spell = it.spell || String(it.word||'').replace('_', it.ans);
+    const why = it.hint || it.ask || '';
+    el.innerHTML=`<div class="ms" data-work="${id}">
+      <div class="grain"></div>${VINE}${VINE.replace('class="vine"','class="vine b"')}
+      <div class="head"><div class="work">Проверочная работа · ${id}</div><div class="num">${qi+1} / ${total}</div></div>
+      <div class="gems">${gems}</div>
+      <div class="inscribe">
+        <div class="ink">${ink}</div>
+        <svg class="underline" viewBox="0 0 300 14" preserveAspectRatio="none"><path class="draw" d="M2 8 C60 14,120 2,180 8 C230 13,270 5,298 9" fill="none" stroke="rgba(255,215,106,.5)" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="320" stroke-dashoffset="320"/></svg>
+      </div>
+      <div class="gloss ${done?(ok?'ok':'no'):''}" aria-live="polite">
+        <span class="lbl">${done?(ok?'верно':'исправить'):'подсказка'}</span>
+        ${done ? (ok ? 'Написание: <b>'+spell+'</b>'+(why?' · '+why:'') : 'Правильно «<b>'+it.ans+'</b>» — '+spell)
+               : (it.ask||'Выбери букву: она сядет на прочерк и загорится.')}
+      </div>
+      <div class="seals">${seals}</div>
+      <div class="score">верно: ${st.ok||0} · ошибок: ${st.bad||0} · всего: ${total}</div>
+    </div>`;
+    const u=el.querySelector('#lvis .ms .underline path'); if(u) requestAnimationFrame(()=>{ u.style.strokeDashoffset='0'; });
+  }
+  /* буква слетает в прочерк: только transform и opacity */
+  const prev = window.RU_EXAM_PICK && window.RU_EXAM_PICK[611];
+  if(window.RU_EXAM_PICK){
+    window.RU_EXAM_PICK[611]=function(qi,val){
+      let from=null,to=null;
+      try{
+        const seal=[...document.querySelectorAll('#lvis .ms .seal')].find(b=>b.textContent.trim()===String(val));
+        const seat=document.getElementById('msSeat');
+        if(seal) from=seal.getBoundingClientRect(); if(seat) to=seat.getBoundingClientRect();
+      }catch(e){}
+      if(typeof prev==='function') prev(qi,val);
+      try{
+        if(!from||!to) return;
+        const c=document.createElement('div'); c.className='fly'; c.textContent=val;
+        c.style.left=from.left+'px'; c.style.top=from.top+'px'; c.style.fontSize=Math.min(46,to.height||46)+'px';
+        document.body.appendChild(c);
+        const dx=(to.left+to.width/2)-(from.left+from.width/2), dy=(to.top+to.height/2)-(from.top+from.height/2);
+        requestAnimationFrame(()=>{ c.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px)'; c.style.opacity='.05'; });
+        setTimeout(()=>{ try{c.remove();}catch(e){} }, 320);
+      }catch(e){}
+    };
+  }
+  if(window.WAVE_B){
+    const prevW=window.WAVE_B[611];
+    window.WAVE_B[611]=function(el){
+      try{
+        const lk=(typeof lidKey==='function')?lidKey(LV.id):'611';
+        if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; if(!CHS[lk].ans) CHS[lk].ans={};
+        const L=(window.ARH_LESSONS||[]).find(x=>x.id===611);
+        const m=/^Вопрос (\d+) из (\d+)\./.exec(L?(L.explain[LV.step||0]||''):'');
+        const items=(window.RU_EXAM_ITEMS||{})[611];
+        if(m&&items){ const qi=parseInt(m[1],10)-1, it=items[qi];
+          if(it&&it.word&&it.ans){ render(el,611,qi,it,parseInt(m[2],10)||items.length,CHS[lk]); return; } }
+      }catch(e){}
+      return prevW(el);
+    };
+  }
+  return {render:render};
+})();
