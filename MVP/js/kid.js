@@ -253,7 +253,7 @@ function kidRender(){
 
 /* ================= привязка устройства и вход по своему PIN ================= */
 const KID_SESSION = 'arh_kid_unlocked';
-const KID_UNLOCK_SEC = 60;              /* 60 секунд после перезагрузки страницы вход не сбрасывается, дальше — только PIN */
+const KID_UNLOCK_SEC = 180;             /* три минуты паузы вход держится (случайная перезагрузка, короткий уход), дальше — только PIN */
 
 function kidCss(){
   if (document.getElementById('kidGateCss')) return;

@@ -50,12 +50,15 @@ function noteCss(){
   document.head.appendChild(st);
 }
 
+const NOTE_QUEUE_MAX = 8;      /* больше восьми окон подряд показывать нельзя — это уже не помощь */
+
 function noteQueueUnread(){
   try{
-    if (typeof kidNotes !== 'function') return [];
+    if (typeof kidNotes !== 'function') return {list: [], total: 0};
     const seen = (typeof kidSt === 'function') ? (kidSt().noteSeen || 0) : 0;
-    return kidNotes().slice().reverse().filter(n => (n.ts || 0) > seen);
-  }catch(e){ return []; }
+    const unread = kidNotes().slice().reverse().filter(n => (n.ts || 0) > seen);
+    return {list: unread.slice(0, NOTE_QUEUE_MAX), total: unread.length};
+  }catch(e){ return {list: [], total: 0}; }
 }
 
 /* открыть окно, если есть непрочитанные заметки */
@@ -64,9 +67,10 @@ function noteFullOpen(){
   try{ if (!DB || !DB.profile) return false; }catch(e){ return false; }   /* на знакомстве не перебиваем */
   /* и не поверх замка с PIN */
   try{ if (typeof parentNoteAllowed === 'function' && !parentNoteAllowed()) return false; }catch(e){}
-  const list = noteQueueUnread();
-  if (!list.length) return false;
-  NOTE_MODAL.queue = list;
+  const q = noteQueueUnread();
+  if (!q.list.length) return false;
+  NOTE_MODAL.queue = q.list;
+  NOTE_MODAL.totalUnread = q.total;
   NOTE_MODAL.idx = 0;
   NOTE_MODAL.focusBack = document.activeElement;
   noteFullShow();
@@ -103,7 +107,9 @@ function noteFullShow(){
       <button type="button" class="btn nf-btn" id="nfOk" onclick="noteFullNext()">${last ? 'Понятно' : 'Дальше →'}</button>
       <button type="button" class="btn ghost nf-btn" onclick="noteFullCloseAll()">Закрыть</button>
     </div>
-    <div class="nf-hint">Нажми «Понятно» — и вернёшься к занятиям.<br><b>АРХИМЕД · острова познания</b></div>
+    <div class="nf-hint">${last && NOTE_MODAL.totalUnread > total
+      ? 'Показаны последние ' + total + ' сообщений из ' + NOTE_MODAL.totalUnread + ' — остальные уже отмечены прочитанными.<br>'
+      : ''}Нажми «Понятно» — и вернёшься к занятиям.<br><b>АРХИМЕД · острова познания</b></div>
   </div>`;
   if (!NOTE_MODAL.open){
     NOTE_MODAL.open = true;

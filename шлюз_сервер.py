@@ -27,7 +27,10 @@ MAX_BODY = 400 * 1024                              # снимок прогрес
 MAX_NOTES = 40
 _tlock = asyncio.Lock()
 _new_calls = {}          # ip -> [времена создания кодов]
-NEW_PER_HOUR = 20
+# Один класс за школьным NAT — это десятки новых устройств с одного адреса,
+# поэтому лимит мягкий: пачка за минуту + потолок за час.
+NEW_PER_MIN = 30
+NEW_PER_HOUR = 200
 
 
 def data_dir():
@@ -141,6 +144,9 @@ async def kid_api(request):
         ip = (request.headers.get('X-Real-IP') or (request.remote or '?')).strip()
         now_ts = time.time()
         seen = [t for t in _new_calls.get(ip, []) if now_ts - t < 3600]
+        last_min = [t for t in seen if now_ts - t < 60]
+        if len(last_min) >= NEW_PER_MIN:
+            return bad('toomany', wait=int(60 - (now_ts - last_min[0])))
         if len(seen) >= NEW_PER_HOUR:
             return bad('toomany', wait=int(3600 - (now_ts - seen[0])))
         seen.append(now_ts)
