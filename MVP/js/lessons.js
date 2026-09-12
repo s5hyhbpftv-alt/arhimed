@@ -16291,7 +16291,7 @@ function phAct(lk,act){
 }
 function visIsPhys(){ try{ const L=lessonById(LV.id); return !!L && L.subj==='phys'; }catch(e){ return false; } }
 
-function renderLessonVis(){
+function renderLessonVisCore(){
   const el=document.getElementById('lvis'); if(!el) return;
   if(window.VISKW&&window.VISKW[LV.id]){ try{ window.VISKW[LV.id](el); }catch(e){ el.innerHTML=''; } return; }
   const id=LV.id;
@@ -17605,3 +17605,41 @@ function visL6(el){
   }catch(e){ try{ el.innerHTML=''; }catch(_){} }
 }
 
+/* ===== Защита уроков =====
+   Если рендерер урока удалён или упал, урок всё равно открывается:
+   сначала пробуем по предмету, потом реестры волн. Раньше в таком случае
+   страница урока падала с ReferenceError и оставалась пустой. */
+function renderLessonVis(){
+  const el=document.getElementById('lvis'); if(!el) return;
+  try{ return renderLessonVisCore(); }
+  catch(e){
+    try{
+      const L=(typeof lessonById==='function' && typeof LV!=='undefined' && LV) ? lessonById(LV.id) : null;
+      const id=(typeof LV!=='undefined' && LV) ? LV.id : null;
+      if(L && L.subj==='phys' && typeof visPhysNew==='function') return visPhysNew(el);
+      if(L && L.subj==='chem' && typeof visChemNew==='function') return visChemNew(el);
+      if(L && L.subj==='math' && typeof visMathNew==='function') return visMathNew(el);
+      if(id!=null && window.WAVE_B && window.WAVE_B[id]) return window.WAVE_B[id](el);
+      if(id!=null && window.WAVE_C && window.WAVE_C[id]) return window.WAVE_C[id](el);
+      if(id!=null && window.WAVE_D && window.WAVE_D[id]) return window.WAVE_D[id](el);
+      if(id!=null && window.WAVE_E && window.WAVE_E[id]) return window.WAVE_E[id](el);
+    }catch(e2){}
+    el.innerHTML='<div class="wv-col"><div class="wv-big">Урок загружается</div>'
+      +'<div class="wv-sml">Обнови страницу. Если не помогло — сообщи, какой это урок, починим.</div></div>';
+  }
+}
+/* Физика 92–95: их рендереры были удалены при переходе на кадры, уроки падали.
+   Возвращаем через кадровый рендерер, а если его нет — через карточки физики. */
+(function(){
+  function fallbackFor(n){
+    return function(el){
+      try{ if(window.WAVE_B && window.WAVE_B[n]) return window.WAVE_B[n](el); }catch(e){}
+      try{ if(typeof visPhysNew==='function') return visPhysNew(el); }catch(e){}
+      el.innerHTML='';
+    };
+  }
+  const PHYS_IDS=[10,49,50,51,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,252];
+  PHYS_IDS.forEach(function(n){
+    if(typeof window['visL'+n]!=='function') window['visL'+n]=fallbackFor(n);
+  });
+})();
