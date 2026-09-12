@@ -3010,6 +3010,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===1){
       h=`<div class="wv-col">
         ${physShot('cubes.mp4','объём один · масса разная')}
+        ${pred(st,'q1',"Что показывает плотность?",[{k:"v",t:"\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0432\u0435\u0449\u0435\u0441\u0442\u0432\u0430 \u0443\u043c\u0435\u0441\u0442\u0438\u043b\u043e\u0441\u044c \u0432 \u043a\u0443\u0431\u0438\u043a\u0435 1 \u0441\u043c\u00b3"},{k:"t",t:"\u043d\u0430\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0442\u0435\u043b\u043e \u0442\u044f\u0436\u0451\u043b\u043e\u0435"}])}
         ${note('Не размер','Кубики одного размера. Масса разная. Дело не в «больше-меньше», а в том, сколько вещества в одном кубике.')}
       </div>`;
     } else if(step===2){
@@ -3025,6 +3026,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       const d=P().density(6,3);
       h=`<div class="wv-col">
         ${physShot('lab.jpg','ρ = m / V  ·  6 / 3 = '+d.rho)}
+        ${pred(st,'q3',"Масса 6 г, объём 3 см³. Какая плотность?",[{k:"2",t:"2 \u0433/\u0441\u043c\u00b3"},{k:"05",t:"0,5 \u0433/\u0441\u043c\u00b3"}])}
         ${note('Лаборатория посчитала','Гири и стакан — масса и объём. Делишь массу на объём: 6 г и 3 см³ → 2. Перевернёшь дробь — 0,5, чужой ответ.')}
       </div>`;
     } else if(step===4){
@@ -3068,6 +3070,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
           ${tab.map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.06}s;display:flex;justify-content:space-between;border:1px solid #3d5c49;border-left:4px solid ${+x[1]<1?GREEN:+x[1]===1?BLUE:GOLD};border-radius:10px;padding:7px 12px;color:#e8dcc8"><span>${x[0]}</span><b>${String(x[1]).replace('.',',')} г/см³</b></div>`).join('')}
         </div>
+        ${pred(st,'q6',"У чего плотность больше: у пробки или у железа?",[{k:"f",t:"\u0443 \u0436\u0435\u043b\u0435\u0437\u0430"},{k:"p",t:"\u0443 \u043f\u0440\u043e\u0431\u043a\u0438"}])}
         ${note('Вода — линейка','Меньше 1 — в воде всплывает. Больше 1 — тонет, если сплошное.')}
       </div>`;
     } else if(step===7){
@@ -3091,6 +3094,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">${String(rho).replace('.',',')}</b>
         </label>
         ${physChart([{pts:pts,col:GOLD,name:'доля погружения'}], rho, fs.frac, 'ρ, г/см³', 'доля в воде', 'd100', '')}
+        ${pred(st,'q8',"Один грамм на кубический сантиметр — это…",[{k:"1000",t:"1000 \u043a\u0433/\u043c\u00b3"},{k:"1",t:"1 \u043a\u0433/\u043c\u00b3"}])}
         ${note('График из модели','Пока ρ < 1, доля = ρ. После 1 линия упирается в 1: тело на дне. Одна ручка — плотность.')}
       </div>`;
     } else if(step===9){
@@ -3110,11 +3114,13 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       h=`<div class="wv-col">
         ${physShot('gold.mp4','вода 1 г · золото 19,3 г · один кубик')}
         ${physShot('fake.jpg','настоящее золото тяжелее подделки')}
+        ${pred(st,'q11',"Как проверить, настоящее ли золото, зная плотность?",[{k:"m",t:"\u0441\u0440\u0430\u0432\u043d\u0438\u0442\u044c \u043c\u0430\u0441\u0441\u044b \u043e\u0434\u0438\u043d\u0430\u043a\u043e\u0432\u044b\u0445 \u043e\u0431\u044a\u0451\u043c\u043e\u0432"},{k:"c",t:"\u043f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u043d\u0430 \u0446\u0432\u0435\u0442"}])}
         ${note('Одинаковый объём','Золото в двадцать раз гуще воды. Медный слиток того же размера легче настоящего — весы выдают обман.')}
       </div>`;
     } else if(step===12){
       h=`<div class="wv-col">
         ${physShot('ship.mp4','однородное vs среднее ρ')}
+        ${pred(st,'q12',"Какая плотность у корабля?",[{k:"s",t:"\u0441\u0440\u0435\u0434\u043d\u044f\u044f: \u0441\u0442\u0430\u043b\u044c \u0432\u043c\u0435\u0441\u0442\u0435 \u0441 \u0432\u043e\u0437\u0434\u0443\u0445\u043e\u043c \u0432\u043d\u0443\u0442\u0440\u0438"},{k:"t",t:"\u0442\u0430\u043a\u0430\u044f \u0436\u0435, \u043a\u0430\u043a \u0443 \u0441\u0442\u0430\u043b\u0438"}])}
         ${note('Смысл','Для льдины ρ — паспорт вещества. Для корабля — средний паспорт корпуса с воздухом. Формула та же: m / V.')}
       </div>`;
     } else if(step===13){
@@ -3123,6 +3129,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[['ρ < 1','плавает',GREEN],['ρ = 1','висит',BLUE],['ρ > 1','тонет, если сплошное',RED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;color:#e8dcc8"><b style="color:${x[2]}">${x[0]}</b><span>${x[1]}</span></div>`).join('')}
         </div>
+        ${pred(st,'q13',"Тело плавает, если…",[{k:"m",t:"\u0435\u0433\u043e \u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u044c \u043c\u0435\u043d\u044c\u0448\u0435 \u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u0438 \u0436\u0438\u0434\u043a\u043e\u0441\u0442\u0438"},{k:"b",t:"\u0435\u0433\u043e \u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u044c \u0431\u043e\u043b\u044c\u0448\u0435"}])}
         ${note('Правило бака','Сравни среднее ρ тела с ρ жидкости. Не «тяжёлое тонет» — тонет более плотное.')}
       </div>`;
     } else if(step===14){
@@ -3131,6 +3138,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[['1','Что ищут: ρ, m или V',GOLD],['2','Треугольник',BLUE],['3','Единицы не мешать',GREEN],['4','Плавание: сравни с водой',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')}
         </div>
+        ${pred(st,'q14',"Если плотности тела и жидкости равны, тело…",[{k:"v",t:"\u0432\u0438\u0441\u0438\u0442 \u0432 \u0442\u043e\u043b\u0449\u0435"},{k:"p",t:"\u0432\u0441\u043f\u043b\u044b\u0432\u0430\u0435\u0442"}])}
         ${note('Рецепт','Сначала буква, потом формула, потом число. Айсберг торчит, потому что ρ льда 0,9.')}
       </div>`;
     } else {
@@ -3138,6 +3146,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       h=`<div class="wv-col">
         ${physShot('lab.jpg','6 г · 3 см³ · ρ = ?')}
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">плотность?</div>
+        ${pred(st,'q15',"С чего начинают задачу на плотность?",[{k:"c",t:"\u043f\u043e\u043d\u0438\u043c\u0430\u044e\u0442, \u0447\u0442\u043e \u0438\u0449\u0443\u0442: \u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u044c, \u043c\u0430\u0441\u0441\u0443 \u0438\u043b\u0438 \u043e\u0431\u044a\u0451\u043c"},{k:"d",t:"\u0441\u0440\u0430\u0437\u0443 \u0434\u0435\u043b\u044f\u0442 \u043c\u0430\u0441\u0441\u0443 \u043d\u0430 \u043e\u0431\u044a\u0451\u043c"}])}
         ${note('Проверка','Модель считает '+d.rho+' г/см³. Деление, не переворот и не произведение.')}
       </div>`;
     }
@@ -3333,11 +3342,13 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       const s=P().pascal(1000,2);
       h=`<div class="wv-col">
         ${physShot('tank.jpg','p = ρ · g · h  ·  2 м → '+s.kPa+' кПа')}
+        ${pred(st,'q2',"От чего зависит давление столба жидкости?",[{k:"p",t:"\u043e\u0442 \u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u0438 \u0436\u0438\u0434\u043a\u043e\u0441\u0442\u0438 \u0438 \u0433\u043b\u0443\u0431\u0438\u043d\u044b"},{k:"s",t:"\u043e\u0442 \u0444\u043e\u0440\u043c\u044b \u0441\u043e\u0441\u0443\u0434\u0430"}])}
         ${note('Столб','Сначала ρ·g, потом ·h. Вода: 1 м → 10 кПа. h — вертикаль, не длина шланга.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
         ${physShot('diver_deep.mp4','p = p₀ + ρgh')}
+        ${pred(st,'q3',"Полное давление на глубине — это…",[{k:"a",t:"\u0430\u0442\u043c\u043e\u0441\u0444\u0435\u0440\u043d\u043e\u0435 \u043f\u043b\u044e\u0441 \u0434\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u043e\u043b\u0431\u0430"},{k:"s",t:"\u0442\u043e\u043b\u044c\u043a\u043e \u0434\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u043e\u043b\u0431\u0430"}])}
         ${note('Атмосфера сверху','p₀ ≈ 100 кПа — воздух над водой. В задачниках часто просят только столб ρgh — избыточное давление. Полное больше на одну атмосферу.')}
       </div>`;
     } else if(step===4){
@@ -3346,6 +3357,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
           ${[['вода','1000 кг/м³',BLUE],['масло','900 кг/м³',GOLD],['керосин','800 кг/м³',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;justify-content:space-between;border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;color:#e8dcc8"><span>${x[0]}</span><b style="color:${x[2]}">${x[1]}</b></div>`).join('')}
         </div>
+        ${pred(st,'q4',"Глубину удвоили. Давление…",[{k:"2",t:"\u0443\u0434\u0432\u043e\u0438\u043b\u043e\u0441\u044c"},{k:"0",t:"\u043d\u0435 \u0438\u0437\u043c\u0435\u043d\u0438\u043b\u043e\u0441\u044c"}])}
         ${note('Легче столб','Кубометр воды — тонна. Масло легче: тот же метр даёт меньше паскалей.')}
       </div>`;
     } else if(step===5){
@@ -3360,12 +3372,14 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">${String(hM).replace('.',',')} м</b>
         </label>
         ${physChart([{pts:water,col:BLUE,name:'вода'},{pts:oil,col:GOLD,name:'масло'}], hM, s.kPa, 'h, м', 'давление столба', 'ph', 'кПа')}
+        ${pred(st,'q5',"Столб воды высотой 10 м даёт примерно…",[{k:"1",t:"\u043e\u0434\u043d\u0443 \u0430\u0442\u043c\u043e\u0441\u0444\u0435\u0440\u0443"},{k:"10",t:"\u0434\u0435\u0441\u044f\u0442\u044c \u0430\u0442\u043c\u043e\u0441\u0444\u0435\u0440"}])}
         ${note('Прямая','Удвоил h — удвоил p. Масло ниже: легче столб. Это ещё не Паскаль — это глубина.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
         ${physShot('diver_deep.mp4','10 м воды ≈ 1 атмосфера')}
         ${physChart([{pts:[[0,0],[2,20],[5,50],[10,100]], col:BLUE, name:'вода'}], 10, 100, 'h, м', 'кПа', 'atm', 'кПа')}
+        ${pred(st,'q6',"Давление в закрытой жидкости передаётся…",[{k:"v",t:"\u0432\u043e \u0432\u0441\u0435 \u0442\u043e\u0447\u043a\u0438 \u043e\u0434\u0438\u043d\u0430\u043a\u043e\u0432\u043e"},{k:"n",t:"\u0442\u043e\u043b\u044c\u043a\u043e \u0432\u043d\u0438\u0437"}])}
         ${note('Десять метров','100 кПа столба — как воздух над тобой. Поэтому 10 м — круглая граница.')}
       </div>`;
     } else if(step===7){
@@ -3385,6 +3399,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===9){
       h=`<div class="wv-col">
         ${physShot('press.jpg','p = F / S  ·  одно на обоих поршнях')}
+        ${pred(st,'q9',"Сила на большом поршне по сравнению с малым…",[{k:"b",t:"\u0431\u043e\u043b\u044c\u0448\u0435"},{k:"s",t:"\u0442\u0430\u043a\u0430\u044f \u0436\u0435"}])}
         ${note('Определение','Давление — сила на площадь. Паскаль говорит: это p одно и то же в жидкости. Значит F₂ / S₂ = F₁ / S₁.')}
       </div>`;
     } else if(step===10){
@@ -3399,6 +3414,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">×${k}</b>
         </label>
         ${physChart([{pts, col:GOLD, name:'F₂ при F₁ = 20 Н'}], k, F2, 'S₂ / S₁', 'сила на большом', 'fk', 'Н')}
+        ${pred(st,'q10',"Домкрат позволяет…",[{k:"f",t:"\u0432\u044b\u0438\u0433\u0440\u0430\u0442\u044c \u0432 \u0441\u0438\u043b\u0435"},{k:"r",t:"\u0432\u044b\u0438\u0433\u0440\u0430\u0442\u044c \u0432 \u0440\u0430\u0431\u043e\u0442\u0435"}])}
         ${note('Гидравлика','Площадь вдвое — сила вдвое. Одна ручка — отношение площадей. p одно, F = pS.')}
       </div>`;
     } else if(step===11){
@@ -3411,11 +3427,13 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===12){
       h=`<div class="wv-col">
         ${physShot('press.jpg','выигрыш в силе · проигрыш в пути')}
+        ${pred(st,'q12',"Газы передают давление…",[{k:"g",t:"\u0442\u0430\u043a \u0436\u0435, \u043a\u0430\u043a \u0436\u0438\u0434\u043a\u043e\u0441\u0442\u0438"},{k:"n",t:"\u043d\u0435 \u043f\u0435\u0440\u0435\u0434\u0430\u044e\u0442 \u0432\u043e\u043e\u0431\u0449\u0435"}])}
         ${note('Путь','Что выиграл в силе, отдал в расстоянии. Большой поршень едет в k раз меньше. Работа почти та же: F₁s₁ ≈ F₂s₂.')}
       </div>`;
     } else if(step===13){
       h=`<div class="wv-col">
         ${physShot('brakes.mp4','педаль → жидкость → колодки')}
+        ${pred(st,'q13',"Формула ρgh считает…",[{k:"s",t:"\u0434\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u043e\u043b\u0431\u0430 \u0436\u0438\u0434\u043a\u043e\u0441\u0442\u0438"},{k:"p",t:"\u0434\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u043f\u043e\u0440\u0448\u043d\u044f"}])}
         ${note('Тормоза','Малый цилиндр у педали, большие у колёс. Паскаль разносит давление по трубкам одинаково на все колёса.')}
       </div>`;
     } else if(step===14){
@@ -3424,6 +3442,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,340px)">
           ${[['1','Столб: p = ρgh',GOLD],['2','Паскаль: добавка одинакова',BLUE],['3','Гидравлика: F₂/F₁ = S₂/S₁',GREEN],['4','Не путай шар и бутылку',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.1}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')}
         </div>
+        ${pred(st,'q14',"В сообщающихся сосудах однородная жидкость…",[{k:"o",t:"\u0441\u0442\u043e\u0438\u0442 \u043d\u0430 \u043e\u0434\u043d\u043e\u043c \u0443\u0440\u043e\u0432\u043d\u0435"},{k:"u",t:"\u0432\u044b\u0448\u0435 \u0432 \u0443\u0437\u043a\u043e\u043c \u0441\u043e\u0441\u0443\u0434\u0435"}])}
         ${note('Два закона','Столб считает глубину. Паскаль считает передачу. Шар — Паскаль. Дырки в открытой бутылке — Торричелли, не он.')}
       </div>`;
     } else {
@@ -3431,6 +3450,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       h=`<div class="wv-col">
         ${physShot('diver_deep.mp4','5 м воды · модель: '+Math.round(s.kPa)+' кПа')}
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">давление в кПа?</div>
+        ${pred(st,'q15',"Один килопаскаль — это…",[{k:"1000",t:"1000 \u043f\u0430\u0441\u043a\u0430\u043b\u0435\u0439"},{k:"100",t:"100 \u043f\u0430\u0441\u043a\u0430\u043b\u0435\u0439"}])}
         ${note('Проверка','50 кПа. Столб ρgh. Паскаль спросит про домкрат в задачках.')}
       </div>`;
     }
@@ -3611,17 +3631,20 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
           ${[['I ток','амперы, поток заряда',GOLD],['U напряжение','вольты, напор',BLUE],['R сопротивление','омы, помеха',GREEN]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${x[2]}">${x[0]}</b><div style="color:#e8dcc8;font-size:13px">${x[1]}</div></div>`).join('')}
         </div>
+        ${pred(st,'q1',"В чём измеряют сопротивление?",[{k:"o",t:"\u0432 \u043e\u043c\u0430\u0445"},{k:"v",t:"\u0432 \u0432\u043e\u043b\u044c\u0442\u0430\u0445"}])}
         ${note('Три жителя','Амперметр в разрыв цепи, вольтметр — параллельно. Без всех трёх цепь не прочитать.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
         ${physShot('pump.mp4','насос U · труба R · поток I')}
+        ${pred(st,'q2',"Напряжение увеличили. Ток…",[{k:"u",t:"\u0432\u044b\u0440\u043e\u0441"},{k:"d",t:"\u0443\u043f\u0430\u043b"}])}
         ${note('Карта','Напор больше — поток больше. Труба уже — поток меньше. Узкое сопло быстрее, как палец на шланге. Это карта, не «вода в проводе».')}
       </div>`;
     } else if(step===3){
       const s=P().ohm(12,6);
       h=`<div class="wv-col">
         ${physShot('meters.jpg','I = U / R  ·  12 / 6 = '+s.I+' А')}
+        ${pred(st,'q3',"Напряжение 12 В, сопротивление 4 Ом. Какой ток?",[{k:"3",t:"3 \u0410"},{k:"48",t:"48 \u0410"}])}
         ${note('Закон','Ток — частное. Прямо к U, обратно к R. Модель та же, что Python-лаборатория.')}
       </div>`;
     } else if(step===4){
@@ -3649,18 +3672,21 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">${U} В</b>
         </label>
         ${frame(plot(pts, U, s.I, 'U, В', 'I'))}
+        ${pred(st,'q5',"График тока от напряжения при постоянном сопротивлении — это…",[{k:"p",t:"\u043f\u0440\u044f\u043c\u0430\u044f \u043b\u0438\u043d\u0438\u044f"},{k:"g",t:"\u0433\u0438\u043f\u0435\u0440\u0431\u043e\u043b\u0430"}])}
         ${note('Одна ручка','Сопротивление заморожено. График — прямая. Больше напор — ярче нить.')}
       </div>`;
     } else if(step===6){
       const s=P().ohm(15,5);
       h=`<div class="wv-col">
         ${physShot('meters.jpg','15 / 5 = '+s.I+' А')}
+        ${pred(st,'q6',"Напряжение 15 В, сопротивление 5 Ом. Какой ток?",[{k:"3",t:"3 \u0410"},{k:"03",t:"0,3 \u0410"}])}
         ${note('Проверка','Деление. Сложение и переворот — чужие ответы.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
         ${physShot('lamp_on.mp4','U вдвое — I вдвое')}
         ${frame([[6,1],[12,2],[24,4]].map((x,i)=>`<rect class="o4bar" x="${40+i*62}" y="${176-x[1]*28}" width="48" height="${x[1]*28}" rx="7" fill="${GOLD}" opacity="${.45+i*.18}" style="animation-delay:${i*.12}s"/>`+lab(64+i*62,34,x[0]+' В',GOLD)+lab(64+i*62,54,x[1]+' А',GREEN)).join(''))}
+        ${pred(st,'q7',"Напряжение выросло вдвое. Ток…",[{k:"2",t:"\u0432\u044b\u0440\u043e\u0441 \u0432\u0434\u0432\u043e\u0435"},{k:"4",t:"\u0432\u044b\u0440\u043e\u0441 \u0432\u0447\u0435\u0442\u0432\u0435\u0440\u043e"}])}
         ${note('Прямо к U','R = 6. Напор вдвое — ток вдвое. Это и есть прямая пропорциональность.')}
       </div>`;
     } else if(step===8){
@@ -3674,11 +3700,13 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GREEN}">${R} Ом</b>
         </label>
         ${frame(plot(pts, R, s.I, 'R, Ом', 'I'))}
+        ${pred(st,'q8',"Сопротивление увеличили. Ток…",[{k:"u",t:"\u0443\u043c\u0435\u043d\u044c\u0448\u0438\u043b\u0441\u044f"},{k:"r",t:"\u0432\u044b\u0440\u043e\u0441"}])}
         ${note('Одна ручка','Напряжение заморожено. График — гипербола: больше R, меньше I.')}
       </div>`;
     } else if(step===9){
       h=`<div class="wv-col">
         ${physShot('meters.jpg','R = U/I · U = I·R')}
+        ${pred(st,'q9',"Ток 3 А при сопротивлении 7 Ом. Какое напряжение?",[{k:"21",t:"21 \u0412"},{k:"23",t:"2,3 \u0412"}])}
         ${note('Две стороны','Ищешь омы — дели вольты на амперы. Ищешь вольты — умножай. Сначала имя неизвестного.')}
       </div>`;
     } else if(step===10){
@@ -3687,11 +3715,13 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         <div style="display:flex;flex-direction:column;gap:6px;width:min(100%,320px)">
           ${[['А ампер','~0,3 фонарик · ~10 чайник',GOLD],['В вольт','напор источника',BLUE],['Ом','насколько мешает участок',GREEN]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;border:1px solid #3d5c49;border-left:4px solid ${x[2]};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${x[2]}">${x[0]}</b><div style="color:#e8dcc8;font-size:13px">${x[1]}</div></div>`).join('')}
         </div>
+        ${pred(st,'q10',"Как включают амперметр?",[{k:"p",t:"\u043f\u043e\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u043d\u043e \u0441 \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u043c \u0446\u0435\u043f\u0438"},{k:"v",t:"\u043f\u0430\u0440\u0430\u043b\u043b\u0435\u043b\u044c\u043d\u043e \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u0443"}])}
         ${note('Имена','Число без единицы — не ответ.')}
       </div>`;
     } else if(step===11){
       h=`<div class="wv-col">
         ${physShot('nichrome.mp4','медь почти не мешает · нихром греет')}
+        ${pred(st,'q11',"Что сильнее мешает току?",[{k:"n",t:"\u043d\u0438\u0445\u0440\u043e\u043c"},{k:"c",t:"\u043c\u0435\u0434\u044c"}])}
         ${note('Три ручки R','Длина, сечение, материал. Спираль чайника длинная и нихромовая — чтобы греть, а не чтобы «просто провести».')}
       </div>`;
     } else if(step===12){
@@ -3703,6 +3733,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
             oninput="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].R=+this.value;CHS[k].U=12;chRender(0);}catch(e){}">
           <b style="color:${GREEN}">${R} Ом</b>
         </label>
+        ${pred(st,'q12',"Реостат меняет…",[{k:"l",t:"\u0434\u043b\u0438\u043d\u0443 \u043f\u0440\u043e\u0432\u043e\u0434\u0430 \u0432 \u0446\u0435\u043f\u0438"},{k:"u",t:"\u043d\u0430\u043f\u0440\u044f\u0436\u0435\u043d\u0438\u0435 \u0431\u0430\u0442\u0430\u0440\u0435\u0439\u043a\u0438"}])}
         ${note('Ползунок яркости','Двигаешь контакт — меняется длина куска проволоки. Нить из той же модели I = U/R.')}
       </div>`;
     } else if(step===13){
@@ -3734,6 +3765,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       h=`<div class="wv-col">
         ${physShot('lamp_on.mp4','15 В и 5 Ом')}
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">ток ? А</div>
+        ${pred(st,'q15',"Проверка закона Ома: I · R = …",[{k:"u",t:"U"},{k:"r",t:"R"}])}
         ${note('Проверка','Модель: '+s.I+' А. Деление.')}
       </div>`;
     }
@@ -3907,11 +3939,13 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===2){
       h=`<div class="wv-col">
         ${physShot('overflow.mp4','вытесненный объём = погружённый')}
+        ${pred(st,'q2',"Чему равна сила Архимеда?",[{k:"v",t:"\u0432\u0435\u0441\u0443 \u0432\u044b\u0442\u0435\u0441\u043d\u0435\u043d\u043d\u043e\u0439 \u0436\u0438\u0434\u043a\u043e\u0441\u0442\u0438"},{k:"t",t:"\u0432\u0435\u0441\u0443 \u0441\u0430\u043c\u043e\u0433\u043e \u0442\u0435\u043b\u0430"}])}
         ${note('Вес жидкости','F_A равна весу той воды, что вылилась в стакан. Не весу кубика.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
         ${physShot('scale_w.mp4','F_A = ρ_ж · g · V')}
+        ${pred(st,'q3',"Что входит в формулу силы Архимеда?",[{k:"f",t:"\u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u044c \u0436\u0438\u0434\u043a\u043e\u0441\u0442\u0438, g \u0438 \u043e\u0431\u044a\u0451\u043c \u043f\u043e\u0433\u0440\u0443\u0436\u0451\u043d\u043d\u043e\u0439 \u0447\u0430\u0441\u0442\u0438"},{k:"m",t:"\u043c\u0430\u0441\u0441\u0430 \u0442\u0435\u043b\u0430 \u0438 \u0432\u044b\u0441\u043e\u0442\u0430"}])}
         ${note('Три множителя','ρ жидкости, не тела. g ≈ 10. V — только погружённая часть. Вода: 1000 · 10 · V.')}
       </div>`;
     } else if(step===4){
@@ -3934,17 +3968,20 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">${String(V).replace('.',',')} м³</b>
         </label>
         ${chart([{pts, col:GOLD, name:'F_A в воде'}], V, Fw, 'V, м³', 'сила Архимеда', 'fv')}
+        ${pred(st,'q5',"Тело объёмом 0,2 м³ полностью в воде. Какая сила Архимеда?",[{k:"2000",t:"2000 \u041d"},{k:"200",t:"200 \u041d"}])}
         ${note('Прямая','Удвоил объём — удвоил силу. График из той же модели F = 1000·10·V.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
         ${physShot('scale_w.jpg','0,2 м³ · 2000 Н')}
+        ${pred(st,'q6',"Погружённый объём удвоили. Сила Архимеда…",[{k:"2",t:"\u0443\u0434\u0432\u043e\u0438\u043b\u0430\u0441\u044c"},{k:"0",t:"\u043d\u0435 \u0438\u0437\u043c\u0435\u043d\u0438\u043b\u0430\u0441\u044c"}])}
         ${note('Проверка','1000 · 10 · 0,2 = 2000 Н. Не 200 и не 20000.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
         ${physShot('overflow.jpg','больше V — сильнее толкает')}
         ${chart([{pts:[[0.1,1000],[0.2,2000],[0.5,5000],[1,10000]], col:BLUE, name:'F_A'}], 0.5, 5000, 'V, м³', 'Н', 'bars')}
+        ${pred(st,'q7',"Где выталкивающая сила больше: в воде или в керосине?",[{k:"v",t:"\u0432 \u0432\u043e\u0434\u0435"},{k:"k",t:"\u0432 \u043a\u0435\u0440\u043e\u0441\u0438\u043d\u0435"}])}
         ${note('Четыре точки','0,1 → 1000 Н; 0,2 → 2000; 0,5 → 5000; 1 → 10 000. Объём стоит прямо в формуле.')}
       </div>`;
     } else if(step===8){
@@ -3958,6 +3995,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">${rho}</b>
         </label>
         ${chart([{pts, col:GREEN, name:'F_A при V = 0,5'}], rho, F5, 'ρ жидкости', 'сила Архимеда', 'fr')}
+        ${pred(st,'q8',"В Мёртвом море сила Архимеда по сравнению с пресной водой…",[{k:"b",t:"\u0431\u043e\u043b\u044c\u0448\u0435"},{k:"m",t:"\u043c\u0435\u043d\u044c\u0448\u0435"}])}
         ${note('Плотнее жидкость','Керосин 800, вода 1000, море 1030, Мёртвое море 1240. Одна ручка — ρ жидкости.')}
       </div>`;
     } else if(step===9){
@@ -3969,6 +4007,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===10){
       h=`<div class="wv-col">
         ${physShot('deadsea.mp4','ρ ≈ 1240 · человек легче рассола')}
+        ${pred(st,'q10',"Весы под водой показывают…",[{k:"m",t:"\u043c\u0435\u043d\u044c\u0448\u0435, \u0447\u0435\u043c \u043d\u0430 \u0432\u043e\u0437\u0434\u0443\u0445\u0435"},{k:"b",t:"\u0431\u043e\u043b\u044c\u0448\u0435, \u0447\u0435\u043c \u043d\u0430 \u0432\u043e\u0437\u0434\u0443\u0445\u0435"}])}
         ${note('Мёртвое море','Соль подняла плотность жидкости выше средней плотности тела. F_A > mg — не тонет.')}
       </div>`;
     } else if(step===11){
@@ -3977,6 +4016,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       h=`<div class="wv-col">
         ${physShot('scales.mp4','кажущийся вес = mg − F_A')}
         ${chart([{pts:ptsW, col:RED, name:'вес mg'},{pts:ptsA, col:GOLD, name:'F_A воды'}], 1, fa, 'погружение', 'силы', 'ww')}
+        ${pred(st,'q11',"Почему стальной корабль не тонет?",[{k:"s",t:"\u0435\u0433\u043e \u0441\u0440\u0435\u0434\u043d\u044f\u044f \u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u044c \u043c\u0435\u043d\u044c\u0448\u0435 \u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u0438 \u0432\u043e\u0434\u044b"},{k:"t",t:"\u0441\u0442\u0430\u043b\u044c \u043b\u0435\u0433\u0447\u0435 \u0432\u043e\u0434\u044b"}])}
         ${note('Две линии','Красная — вес. Золотая — выталкивание. Если красная выше — тонет. Весы в воде показывают разность.')}
       </div>`;
     } else if(step===12){
@@ -3995,6 +4035,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===14){
       h=`<div class="wv-col">
         ${physShot('balloon.mp4','воздух тоже выталкивает')}
+        ${pred(st,'q14',"Тело висит в толще воды, если…",[{k:"r",t:"\u0435\u0433\u043e \u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u044c \u0440\u0430\u0432\u043d\u0430 \u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u0438 \u0432\u043e\u0434\u044b"},{k:"l",t:"\u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u044c \u0442\u0435\u043b\u0430 \u043c\u0435\u043d\u044c\u0448\u0435"}])}
         ${note('Аэростатика','F_A = ρ_возд · g · V, ρ ≈ 1,3 кг/м³. Гелий или тёплый воздух легче окружающего — шар идёт вверх. Без тяжести Архимед не работает.')}
       </div>`;
     } else {
@@ -4004,6 +4045,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           ${[['1','ρ жидкости, не тела',GOLD],['2','V погружённый',BLUE],['3','F = ρgV',GREEN],['4','сравни с весом mg',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')}
         </div>
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">сила в ньютонах?</div>
+        ${pred(st,'q15',"Чтобы понять, утонет тело или нет, сравнивают…",[{k:"p",t:"\u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u044c \u0442\u0435\u043b\u0430 \u0438 \u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u044c \u0436\u0438\u0434\u043a\u043e\u0441\u0442\u0438"},{k:"w",t:"\u0432\u0435\u0441 \u0442\u0435\u043b\u0430 \u0438 \u0435\u0433\u043e \u043e\u0431\u044a\u0451\u043c"}])}
         ${note('Проверка','2000 Н. Дело в вытесненной воде, не в «тяжёлом железе».')}
       </div>`;
     }
@@ -4091,6 +4133,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===1){
       h=`<div class="wv-col">
         ${physShot('e_winch.mp4','A = F · s')}
+        ${pred(st,'q1',"В чём измеряют работу и энергию?",[{k:"d",t:"\u0432 \u0434\u0436\u043e\u0443\u043b\u044f\u0445"},{k:"n",t:"\u0432 \u043d\u044c\u044e\u0442\u043e\u043d\u0430\u0445"}])}
         ${note('Работа','Сила на путь. Поднял цилиндр — запасся. Джоуль — единица работы и энергии: одно имя, потому что работа меняет энергию.')}
       </div>`;
     } else if(step===2){
@@ -4102,6 +4145,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===3){
       h=`<div class="wv-col">
         ${physShot('e_car.mp4','Eк = m v² / 2')}
+        ${pred(st,'q3',"Скорость тела удвоили. Кинетическая энергия…",[{k:"4",t:"\u0432\u044b\u0440\u043e\u0441\u043b\u0430 \u0432\u0447\u0435\u0442\u0432\u0435\u0440\u043e"},{k:"2",t:"\u0432\u044b\u0440\u043e\u0441\u043b\u0430 \u0432\u0434\u0432\u043e\u0435"}])}
         ${note('Квадрат','Сначала v², потом · m / 2. Удвоил скорость — не вдвое, а вчетверо. Это не опечатка.')}
       </div>`;
     } else if(step===4){
@@ -4115,12 +4159,14 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">${String(v).replace('.',',')} м/с</b>
         </label>
         ${physChart([{pts, col:GOLD, name:'Eк при m = 2'}], v, ek, 'v, м/с', 'кинетическая', 'ek', 'Дж')}
+        ${pred(st,'q4',"График кинетической энергии от скорости — это…",[{k:"p",t:"\u043f\u0430\u0440\u0430\u0431\u043e\u043b\u0430"},{k:"l",t:"\u043f\u0440\u044f\u043c\u0430\u044f \u043b\u0438\u043d\u0438\u044f"}])}
         ${note('Парабола','Не прямая. v = 2 → 4 Дж, v = 4 → 16 Дж. Четыре скорости — шестнадцать энергий.')}
       </div>`;
     } else if(step===5){
       h=`<div class="wv-col">
         ${physShot('e_crash.mp4','v в квадрате')}
         ${physChart([{pts:[[1,1],[2,4],[3,9],[4,16]], col:RED, name:'Eк, m = 2 кг'}], 4, 16, 'v, м/с', 'джоули', 'sq', 'Дж')}
+        ${pred(st,'q5',"Тело 2 кг поднято на 5 м. Какая потенциальная энергия?",[{k:"100",t:"100 \u0414\u0436"},{k:"10",t:"10 \u0414\u0436"}])}
         ${note('Почему опасно','4 м/с против 1 м/с — не в 4 раза, а в 16. Энергия удара растёт с квадратом.')}
       </div>`;
     } else if(step===6){
@@ -4134,21 +4180,25 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">${String(hh).replace('.',',')} м</b>
         </label>
         ${physChart([{pts, col:BLUE, name:'Eп при m = 2'}], hh, ep, 'h, м', 'потенциальная', 'ep', 'Дж')}
+        ${pred(st,'q6',"Тело 3 кг на высоте 2 м. Сколько энергии?",[{k:"60",t:"60 \u0414\u0436"},{k:"6",t:"6 \u0414\u0436"}])}
         ${note('Прямая','Eп = m g h. Удвоил высоту — удвоил запас. Не квадрат: высота входит в первой степени.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
         ${physShot('e_mass.mp4','3 кг · 2 м · Eп = ?')}
+        ${pred(st,'q7',"Сильнее сжали пружину. Запас энергии…",[{k:"v",t:"\u0432\u044b\u0440\u043e\u0441"},{k:"n",t:"\u043d\u0435 \u0438\u0437\u043c\u0435\u043d\u0438\u043b\u0441\u044f"}])}
         ${note('Проверка','3 · 10 · 2 = 60 Дж. Не 30 (забыл g) и не 12 (перепутал с кинетической).')}
       </div>`;
     } else if(step===8){
       h=`<div class="wv-col">
         ${physShot('e_bow.mp4','лук: Eп = k x² / 2')}
+        ${pred(st,'q8',"В крайней точке маятник обладает…",[{k:"p",t:"\u043f\u043e\u0442\u0435\u043d\u0446\u0438\u0430\u043b\u044c\u043d\u043e\u0439 \u044d\u043d\u0435\u0440\u0433\u0438\u0435\u0439"},{k:"k",t:"\u043a\u0438\u043d\u0435\u0442\u0438\u0447\u0435\u0441\u043a\u043e\u0439 \u044d\u043d\u0435\u0440\u0433\u0438\u0435\u0439"}])}
         ${note('Упругая','Сжал сильнее — x². Как у скорости: квадрат. Рогатка, батут, пружина часов — тот же запас.')}
       </div>`;
     } else if(step===9){
       h=`<div class="wv-col">
         ${physShot('e_tramp.mp4','батут вернул запас')}
+        ${pred(st,'q9',"Без трения сумма потенциальной и кинетической энергии…",[{k:"n",t:"\u043d\u0435 \u043c\u0435\u043d\u044f\u0435\u0442\u0441\u044f"},{k:"u",t:"\u043f\u043e\u0441\u0442\u0435\u043f\u0435\u043d\u043d\u043e \u0443\u043c\u0435\u043d\u044c\u0448\u0430\u0435\u0442\u0441\u044f"}])}
         ${note('Туда-сюда','Полотно сжато — Eп упругости. Распрямилось — стало Eк. Потом снова высота. Энергия перетекает, не исчезает.')}
       </div>`;
     } else if(step===10){
@@ -4170,6 +4220,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">${String(hh).replace('.',',')} м</b>
         </label>
         ${physChart([{pts:pEp,col:BLUE,name:'Eп'},{pts:pEk,col:GOLD,name:'Eк'}], hh, ep, 'h, м', 'сохранение, 100 Дж', 'cons', 'Дж')}
+        ${pred(st,'q11',"Тело 4 кг движется со скоростью 3 м/с. Кинетическая энергия?",[{k:"18",t:"18 \u0414\u0436"},{k:"36",t:"36 \u0414\u0436"}])}
         ${note('Две линии','Синяя падает, золотая растёт. Сумма 100 Дж на любой высоте. Без трения.')}
       </div>`;
     } else if(step===12){
@@ -4181,11 +4232,13 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===13){
       h=`<div class="wv-col">
         ${physShot('e_car.mp4','4 кг · 3 м/с')}
+        ${pred(st,'q13',"Вода на плотине ГЭС обладает…",[{k:"p",t:"\u043f\u043e\u0442\u0435\u043d\u0446\u0438\u0430\u043b\u044c\u043d\u043e\u0439 \u044d\u043d\u0435\u0440\u0433\u0438\u0435\u0439"},{k:"k",t:"\u043a\u0438\u043d\u0435\u0442\u0438\u0447\u0435\u0441\u043a\u043e\u0439 \u044d\u043d\u0435\u0440\u0433\u0438\u0435\u0439"}])}
         ${note('Счёт','v² = 9. 4 · 9 = 36. 36 / 2 = 18 Дж. Сначала квадрат, потом половина произведения.')}
       </div>`;
     } else if(step===14){
       h=`<div class="wv-col">
         ${physShot('e_dam.mp4','Eп воды → Eк → ток')}
+        ${pred(st,'q14',"Что показывает мощность?",[{k:"b",t:"\u043a\u0430\u043a \u0431\u044b\u0441\u0442\u0440\u043e \u0441\u043e\u0432\u0435\u0440\u0448\u0430\u0435\u0442\u0441\u044f \u0440\u0430\u0431\u043e\u0442\u0430"},{k:"a",t:"\u043a\u0430\u043a\u0443\u044e \u0440\u0430\u0431\u043e\u0442\u0443 \u0441\u043e\u0432\u0435\u0440\u0448\u0438\u043b\u0438 \u0432\u0441\u0435\u0433\u043e"}])}
         ${note('ГЭС','Вода на плотине — высота. Падая — скорость. Турбина и генератор. Ветер, маятник часов — те же превращения.')}
       </div>`;
     } else {
@@ -4195,6 +4248,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           ${[['1','движение: mv²/2',GOLD],['2','высота: mgh',BLUE],['3','пружина: kx²/2',GREEN],['4','сумма без трения const',MUTED]].map((x,i)=>`<div class="wv-pop" style="animation-delay:${i*.08}s;display:flex;gap:10px;border:1px solid #3d5c49;border-left:4px solid ${GOLD};border-radius:10px;padding:8px 12px;text-align:left"><b style="color:${GOLD};font-size:18px">${x[0]}</b><span style="color:#e8dcc8">${x[1]}</span></div>`).join('')}
         </div>
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">энергия в джоулях?</div>
+        ${pred(st,'q15',"Формула кинетической энергии…",[{k:"k",t:"mv\u00b2/2"},{k:"p",t:"mgh"}])}
         ${note('Проверка','60 Дж. Потенциальная, не кинетическая.')}
       </div>`;
     }
@@ -4622,12 +4676,14 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===1){
       h=`<div class="wv-col">
         ${physShot('g_globe.mp4','к центру Земли')}
+        ${pred(st,'q1',"Что означает g = 10 Н/кг?",[{k:"k",t:"\u043d\u0430 \u043a\u0430\u0436\u0434\u044b\u0439 \u043a\u0438\u043b\u043e\u0433\u0440\u0430\u043c\u043c \u0434\u0435\u0439\u0441\u0442\u0432\u0443\u0435\u0442 10 \u043d\u044c\u044e\u0442\u043e\u043d\u043e\u0432"},{k:"t",t:"\u043d\u0430 \u0432\u0441\u0451 \u0442\u0435\u043b\u043e \u0434\u0435\u0439\u0441\u0442\u0432\u0443\u0435\u0442 10 \u043d\u044c\u044e\u0442\u043e\u043d\u043e\u0432"}])}
         ${note('Направление','Всегда вниз, к центру. На другом конце планеты «вниз» — тоже к центру, не «под нас».')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
         ${physShot('g_stack.mp4','F = m · g')}
         ${cards([['m','масса, кг',GOLD],['g','≈ 10 Н/кг на Земле',BLUE],['F','сила, ньютоны',GREEN]])}
+        ${pred(st,'q2',"Тело 3 кг. Какая сила тяжести?",[{k:"30",t:"30 \u041d"},{k:"3",t:"3 \u041d"}])}
         ${note('g','Сколько ньютонов на каждый килограмм. 1 кг → 10 Н, 3 кг → 30 Н. Умножили массу на десять.')}
       </div>`;
     } else if(step===3){
@@ -4641,11 +4697,13 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">${m} кг</b>
         </label>
         ${physChart([{pts, col:GOLD, name:'F = 10 · m'}], m, F, 'm, кг', 'сила тяжести', 'fg', 'Н')}
+        ${pred(st,'q3',"Тело 4 кг. Какая сила тяжести?",[{k:"40",t:"40 \u041d"},{k:"400",t:"400 \u041d"}])}
         ${note('Прямая','Удвоил массу — удвоил силу. Не квадрат: g постоянна, F растёт линейно.')}
       </div>`;
     } else if(step===4){
       h=`<div class="wv-col">
         ${physShot('g_four.mp4','4 кг · F = ?')}
+        ${pred(st,'q4',"Сила тяжести 120 Н. Какова масса?",[{k:"12",t:"12 \u043a\u0433"},{k:"1200",t:"1200 \u043a\u0433"}])}
         ${note('Проверка','4 · 10 = 40 Н. Не 4 (забыл g) и не 400 (g не 100).')}
       </div>`;
     } else if(step===5){
@@ -4657,6 +4715,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===6){
       h=`<div class="wv-col">
         ${physShot('g_dyn.mp4','пружина тянется')}
+        ${pred(st,'q6',"Вес — это сила, с которой тело…",[{k:"o",t:"\u0434\u0430\u0432\u0438\u0442 \u043d\u0430 \u043e\u043f\u043e\u0440\u0443 \u0438\u043b\u0438 \u0442\u044f\u043d\u0435\u0442 \u043f\u043e\u0434\u0432\u0435\u0441"},{k:"z",t:"\u043f\u0440\u0438\u0442\u044f\u0433\u0438\u0432\u0430\u0435\u0442\u0441\u044f \u043a \u0417\u0435\u043c\u043b\u0435"}])}
         ${note('Динамометр','Пружина со шкалой. Чем сильнее сила — тем длиннее пружина. Ньютон — единица силы, в честь Исаака Ньютона.')}
       </div>`;
     } else if(step===7){
@@ -4668,11 +4727,13 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===8){
       h=`<div class="wv-col">
         ${physShot('g_hang.mp4','вес на шнуре')}
+        ${pred(st,'q8',"На Луне сила тяжести…",[{k:"m",t:"\u043f\u0440\u0438\u043c\u0435\u0440\u043d\u043e \u0432 6 \u0440\u0430\u0437 \u043c\u0435\u043d\u044c\u0448\u0435"},{k:"s",t:"\u0442\u0430\u043a\u0430\u044f \u0436\u0435, \u043a\u0430\u043a \u043d\u0430 \u0417\u0435\u043c\u043b\u0435"}])}
         ${note('Покой','P = m g. Шнур тянет вверх с той же силой, с какой Земля тянет вниз. Равновесие. Две силы, одно число.')}
       </div>`;
     } else if(step===9){
       h=`<div class="wv-col">
         ${physShot('g_moon.mp4','g ≈ 1,6 Н/кг')}
+        ${pred(st,'q9',"Тело 6 кг на Луне будет весить…",[{k:"6",t:"\u043c\u0430\u0441\u0441\u0430 \u043e\u0441\u0442\u0430\u043d\u0435\u0442\u0441\u044f 6 \u043a\u0433"},{k:"1",t:"\u043c\u0430\u0441\u0441\u0430 \u0441\u0442\u0430\u043d\u0435\u0442 1 \u043a\u0433"}])}
         ${note('Луна','Притяжение слабее примерно в 6 раз. 6 кг там → около 10 Н. На Земле те же 6 кг → 60 Н.')}
       </div>`;
     } else if(step===10){
@@ -4687,6 +4748,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">${m} кг</b>
         </label>
         ${physChart([{pts:pE,col:GOLD,name:'Земля, g = 10'},{pts:pM,col:BLUE,name:'Луна, g = 1,6'}], m, Fe, 'm, кг', 'сила тяжести', 'gm', 'Н')}
+        ${pred(st,'q10',"На орбите вес равен нулю, а сила тяжести…",[{k:"o",t:"\u043e\u0441\u0442\u0430\u0451\u0442\u0441\u044f \u0438 \u0434\u0435\u0440\u0436\u0438\u0442 \u0441\u043f\u0443\u0442\u043d\u0438\u043a"},{k:"i",t:"\u0442\u043e\u0436\u0435 \u0438\u0441\u0447\u0435\u0437\u0430\u0435\u0442"}])}
         ${note('Масса одна','Ползунок не меняет массу — меняет только две силы. 6 кг есть 6 кг везде.')}
       </div>`;
     } else if(step===11){
@@ -4704,11 +4766,13 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===13){
       h=`<div class="wv-col">
         ${physShot('g_seven.mp4','7 кг · F = ?')}
+        ${pred(st,'q13',"Сила тяжести 60 Н. Какова масса?",[{k:"6",t:"6 \u043a\u0433"},{k:"60",t:"60 \u043a\u0433"}])}
         ${note('Счёт','7 · 10 = 70 Н. 5 кг → 50 Н, 20 кг → 200 Н. Всегда × 10.')}
       </div>`;
     } else if(step===14){
       h=`<div class="wv-col">
         ${physShot('g_twelve.mp4','120 Н · m = ?')}
+        ${pred(st,'q14',"Какое значение g берут в задачах седьмого класса?",[{k:"10",t:"10 \u041d/\u043a\u0433"},{k:"98",t:"9,8 \u041d/\u043a\u0433"}])}
         ${note('Обратно','120 : 10 = 12 кг. 60 Н → 6 кг, 100 Н → 10 кг. Всегда : 10.')}
       </div>`;
     } else {
@@ -4716,6 +4780,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
         ${physShot('g_still.mp4','4 кг · F = ?')}
         ${cards([['1','F = m g, g ≈ 10',GOLD],['2','вес — на опору',BLUE],['3','масса не от планеты',GREEN],['4','невесомость ≠ нет тяжести',MUTED]])}
         <div style="background:rgba(217,164,65,.1);border:2px dashed #d9a441;border-radius:12px;padding:8px 12px;font-size:18px;color:${GOLD};font-family:Georgia,serif" class="wv-pulse">сила в ньютонах?</div>
+        ${pred(st,'q15',"Что меняется на Луне, а что нет?",[{k:"f",t:"\u0441\u0438\u043b\u0430 \u0442\u044f\u0436\u0435\u0441\u0442\u0438 \u043c\u0435\u043d\u044f\u0435\u0442\u0441\u044f, \u043c\u0430\u0441\u0441\u0430 \u0442\u0430 \u0436\u0435"},{k:"m",t:"\u043c\u0430\u0441\u0441\u0430 \u043c\u0435\u043d\u044f\u0435\u0442\u0441\u044f, \u0441\u0438\u043b\u0430 \u0442\u0430 \u0436\u0435"}])}
         ${note('Проверка','40 Н. Тяжесть 4 кг на Земле.')}
       </div>`;
     }
@@ -5199,16 +5264,19 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===1){
       h=`<div class="wv-col">
         ${physShot('v_road.mp4','60 км туда · 60 км обратно')}
+        ${pred(st,'q1',"Почему важно, что половины пути равные?",[{k:"r",t:"\u0444\u043e\u0440\u043c\u0443\u043b\u0430 \u0433\u0430\u0440\u043c\u043e\u043d\u0438\u0447\u0435\u0441\u043a\u043e\u0433\u043e \u0441\u0440\u0435\u0434\u043d\u0435\u0433\u043e \u0432\u0435\u0440\u043d\u0430 \u0442\u043e\u043b\u044c\u043a\u043e \u0434\u043b\u044f \u0440\u0430\u0432\u043d\u044b\u0445 \u043f\u043e\u043b\u043e\u0432\u0438\u043d"},{k:"k",t:"\u0442\u0430\u043a \u0441\u0447\u0438\u0442\u0430\u0442\u044c \u043a\u043e\u0440\u043e\u0447\u0435"}])}
         ${note('Равные пути','Весь путь 120 км. Половинки равные — это условие гармонического среднего. Не равные времена.')}
       </div>`;
     } else if(step===2){
       h=`<div class="wv-col">
         ${physShot('v_fast.mp4','60 : 30 = 2 ч')}
+        ${pred(st,'q2',"60 км при скорости 30 км/ч — сколько времени?",[{k:"2",t:"2 \u0447\u0430\u0441\u0430"},{k:"1800",t:"1800 \u0447\u0430\u0441\u043e\u0432"}])}
         ${note('Быстрый участок','t = S : v. Едем быстро — часов мало. 2 часа на первую половину.')}
       </div>`;
     } else if(step===3){
       h=`<div class="wv-col">
         ${physShot('v_slow.mp4','60 : 20 = 3 ч')}
+        ${pred(st,'q3',"60 км при скорости 20 км/ч — сколько времени?",[{k:"3",t:"3 \u0447\u0430\u0441\u0430"},{k:"1200",t:"1200 \u0447\u0430\u0441\u043e\u0432"}])}
         ${note('Медленный','Та же 60 км, скорость меньше — времени больше. 3 часа. Уже видно: медленный «весит» дольше.')}
       </div>`;
     } else if(step===4){
@@ -5220,22 +5288,26 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===5){
       h=`<div class="wv-col">
         ${physShot('v_split.mp4','3 часа медленно · 2 быстро')}
+        ${pred(st,'q5',"Какой участок сильнее влияет на среднюю скорость?",[{k:"d",t:"\u0442\u043e\u0442, \u0433\u0434\u0435 \u0435\u0445\u0430\u043b\u0438 \u0434\u043e\u043b\u044c\u0448\u0435"},{k:"b",t:"\u0442\u043e\u0442, \u0433\u0434\u0435 \u0435\u0445\u0430\u043b\u0438 \u0431\u044b\u0441\u0442\u0440\u0435\u0435"}])}
         ${note('Почему вниз','Медленный участок занял 3 часа из пяти. Он тянет среднюю вниз. Поэтому 24, а не 25.')}
       </div>`;
     } else if(step===6){
       h=`<div class="wv-col">
         ${physShot('v_gauge.mp4','v = 2 v₁ v₂ / (v₁ + v₂)')}
         ${cards([['1','две половины пути равны',GOLD],['2','сложить времена S/v₁ + S/v₂',BLUE],['3','весь путь 2S на сумму времён',GREEN]])}
+        ${pred(st,'q6',"В формуле 2ab/(a+b) в знаменателе стоит…",[{k:"s",t:"\u0441\u0443\u043c\u043c\u0430 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0435\u0439"},{k:"p",t:"\u043f\u0440\u043e\u0438\u0437\u0432\u0435\u0434\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0435\u0439"}])}
         ${note('Гармоническое','Не путай с (v₁+v₂):2. Эта формула — только для равных путей.')}
       </div>`;
     } else if(step===7){
       h=`<div class="wv-col">
         ${physShot('v_comp.mp4','2 · 30 · 20 / 50')}
+        ${pred(st,'q7',"Чему равно 2·30·20 / (30+20)?",[{k:"24",t:"24"},{k:"25",t:"25"}])}
         ${note('Подставили','1200 : 50 = 24. Совпало с 120 : 5. Формула — сокращённый честный счёт.')}
       </div>`;
     } else if(step===8){
       h=`<div class="wv-col">
         ${physShot('v_pair.mp4','всегда меньше полусуммы')}
+        ${pred(st,'q8',"Средняя скорость при разных скоростях всегда…",[{k:"m",t:"\u043c\u0435\u043d\u044c\u0448\u0435 \u043f\u043e\u043b\u0443\u0441\u0443\u043c\u043c\u044b"},{k:"b",t:"\u0431\u043e\u043b\u044c\u0448\u0435 \u043f\u043e\u043b\u0443\u0441\u0443\u043c\u043c\u044b"}])}
         ${note('Проверка','(30+20):2 = 25. Гармоническое всегда ниже, пока скорости разные. Если получил 26 — ошибся.')}
       </div>`;
     } else if(step===9){
@@ -5260,6 +5332,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           <b style="color:${GOLD}">${b}</b>
         </label>
         ${physChart([{pts:pH,col:GOLD,name:'гармоническое'},{pts:pA,col:BLUE,name:'полусумма'}], b, vh, 'v₂', 'средняя', 'hm', '')}
+        ${pred(st,'q10',"Половину пути 12 км/ч, половину 6 км/ч. Какая средняя?",[{k:"8",t:"8 \u043a\u043c/\u0447"},{k:"9",t:"9 \u043a\u043c/\u0447"}])}
         ${note('Две линии','Золотая всегда ниже синей, пока v₁ ≠ v₂. Крути — увидишь, как медленный тянет вниз.')}
       </div>`;
     } else if(step===11){
@@ -5271,17 +5344,20 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
     } else if(step===12){
       h=`<div class="wv-col">
         ${physShot('v_high.mp4','половина пути 40 км/ч · половина 60 км/ч')}
+        ${pred(st,'q12',"Половину пути 40 км/ч, половину 60 км/ч. Какая средняя?",[{k:"48",t:"48 \u043a\u043c/\u0447"},{k:"50",t:"50 \u043a\u043c/\u0447"}])}
         ${note('Счёт','2·40·60 / 100 = 48. Не 50. Снова ниже полусуммы.')}
       </div>`;
     } else if(step===13){
       h=`<div class="wv-col">
         ${physShot('v_mile.mp4','v = S : t')}
+        ${pred(st,'q13',"Средняя скорость — это…",[{k:"s",t:"\u0432\u0435\u0441\u044c \u043f\u0443\u0442\u044c, \u0434\u0435\u043b\u0451\u043d\u043d\u044b\u0439 \u043d\u0430 \u0432\u0441\u0451 \u0432\u0440\u0435\u043c\u044f"},{k:"a",t:"\u0441\u0440\u0435\u0434\u043d\u0435\u0435 \u0430\u0440\u0438\u0444\u043c\u0435\u0442\u0438\u0447\u0435\u0441\u043a\u043e\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0435\u0439"}])}
         ${note('Определение','Средняя скорость — весь путь на всё время. Формулы — сокращения. Если сомневаешься, сложи пути и часы.')}
       </div>`;
     } else if(step===14){
       h=`<div class="wv-col">
         ${physShot('v_map.mp4','ловушка полусуммы')}
         ${cards([['равные пути','2ab / (a+b)',GOLD],['равные времена','(a+b) / 2',BLUE],['вообще','S : t',GREEN]])}
+        ${pred(st,'q14',"Скорость 1 м/с — это…",[{k:"36",t:"3,6 \u043a\u043c/\u0447"},{k:"16",t:"1,6 \u043a\u043c/\u0447"}])}
         ${note('Не путай','Задача почти всегда про равные пути. Полусумма — самая частая ошибка.')}
       </div>`;
     } else {
