@@ -397,19 +397,30 @@
   .wv-row { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; align-items:stretch; }
   /* ===== золотые блики на кнопках и ползунках ===== */
   @keyframes arSheen {
-    0%   { transform:translateX(-170%) skewX(-16deg); opacity:0 }
-    18%  { opacity:.85 }
-    55%  { opacity:.95 }
-    100% { transform:translateX(270%) skewX(-16deg); opacity:0 }
+    0%   { transform:translateX(-165%) skewX(-16deg); opacity:0 }
+    14%  { opacity:.6 }
+    32%  { opacity:.85 }
+    60%  { opacity:.95 }
+    84%  { opacity:.6 }
+    100% { transform:translateX(245%) skewX(-16deg); opacity:0 }
   }
   .hint-btn, .btn { position:relative; overflow:hidden; }
   .hint-btn::after, .btn::after {
-    content:''; position:absolute; top:-60%; left:0; width:52%; height:220%; pointer-events:none; opacity:0;
-    background:linear-gradient(96deg,
-      rgba(255,215,106,0) 0%, rgba(255,236,180,.16) 28%,
-      rgba(255,240,200,.42) 48%, rgba(255,215,106,.30) 62%, rgba(255,215,106,0) 100%);
-    filter:blur(3px);
-    transform:translateX(-170%) skewX(-16deg);
+    content:''; position:absolute; top:-70%; left:0; width:54%; height:240%; pointer-events:none; opacity:0;
+    background:linear-gradient(97deg,
+      rgba(255,215,106,0)    0%,
+      rgba(255,224,140,.03) 10%,
+      rgba(255,230,160,.12) 22%,
+      rgba(255,236,180,.30) 34%,
+      rgba(255,240,200,.46) 44%,
+      rgba(255,243,212,.52) 50%,
+      rgba(255,240,200,.46) 56%,
+      rgba(255,236,180,.30) 66%,
+      rgba(255,230,160,.12) 78%,
+      rgba(255,224,140,.03) 90%,
+      rgba(255,215,106,0)  100%);
+    filter:blur(6px);
+    transform:translateX(-165%) skewX(-16deg);
   }
   .hint-btn:hover::after, .btn:hover::after,
   .hint-btn:focus-visible::after, .btn:focus-visible::after {
@@ -755,33 +766,33 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=497"></script>
-<script src="data/lessons.js?v=497"></script>
-<script src="data/lessons_draft.js?v=497"></script>
-<script src="data/comics_12.js?v=497"></script>
-<script src="data/sim_phys.js?v=497"></script>
-<script src="data/vis_bw.js?v=497"></script>
-<script src="data/vis_pw.js?v=497"></script>
-<script src="data/vis_cw.js?v=497"></script>
-<script src="data/vis_dw.js?v=497"></script>
-<script src="data/vis_ew.js?v=497"></script>
-<script src="data/vis_kl.js?v=497"></script>
-<script src="data/vis_wk.js?v=497"></script>
-<script src="data/inf_56.js?v=497"></script>
-<script src="js/comic.js?v=497"></script>
-<script src="js/core.js?v=497"></script>
-<script src="js/engine.js?v=497"></script>
-<script src="js/app.js?v=497"></script>
-<script src="js/dashboard.js?v=497"></script>
-<script src="js/lessons.js?v=497"></script>
-<script src="js/wave_guard.js?v=497"></script>
-<script src="js/legend.js?v=497"></script>
-<script src="js/simulator.js?v=497"></script>
-<script src="js/duel.js?v=497"></script>
-<script src="js/agent.js?v=497"></script>
-<script src="js/voice.js?v=497"></script>
-<script src="js/assistant.js?v=497"></script>
-<script src="js/agentlive.js?v=497"></script>
+<script src="data/tasks.js?v=498"></script>
+<script src="data/lessons.js?v=498"></script>
+<script src="data/lessons_draft.js?v=498"></script>
+<script src="data/comics_12.js?v=498"></script>
+<script src="data/sim_phys.js?v=498"></script>
+<script src="data/vis_bw.js?v=498"></script>
+<script src="data/vis_pw.js?v=498"></script>
+<script src="data/vis_cw.js?v=498"></script>
+<script src="data/vis_dw.js?v=498"></script>
+<script src="data/vis_ew.js?v=498"></script>
+<script src="data/vis_kl.js?v=498"></script>
+<script src="data/vis_wk.js?v=498"></script>
+<script src="data/inf_56.js?v=498"></script>
+<script src="js/comic.js?v=498"></script>
+<script src="js/core.js?v=498"></script>
+<script src="js/engine.js?v=498"></script>
+<script src="js/app.js?v=498"></script>
+<script src="js/dashboard.js?v=498"></script>
+<script src="js/lessons.js?v=498"></script>
+<script src="js/wave_guard.js?v=498"></script>
+<script src="js/legend.js?v=498"></script>
+<script src="js/simulator.js?v=498"></script>
+<script src="js/duel.js?v=498"></script>
+<script src="js/agent.js?v=498"></script>
+<script src="js/voice.js?v=498"></script>
+<script src="js/assistant.js?v=498"></script>
+<script src="js/agentlive.js?v=498"></script>
 <script>
   /* сброс кэша при новой сборке — иначе MVP показывает старый урок */
   (function(){
@@ -801,7 +812,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=497').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=498').catch(()=>{}); });
 }
 window.addEventListener('hashchange', ()=>{
   try{
