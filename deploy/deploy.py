@@ -31,7 +31,8 @@ APP = os.environ.get('ARH_APP', 'arhimed')
 KEYFILE = os.environ.get('ARH_KEYFILE', 'ключ_яндекса.txt')
 LOCAL_INDEX = Path(os.environ.get('ARH_LOCAL_INDEX', 'MVP/index.html'))
 # приложение родителя и API кодов детей
-SITE_PARENT = SITE + urllib.parse.quote('родитель') + '/'
+SITE_PARENT = SITE + 'parent/'
+SITE_PARENT_OLD = SITE + urllib.parse.quote('родитель') + '/'
 SITE_API = SITE.rsplit('/MVP/', 1)[0] + '/api/kid'
 DATADIR = f'{ROOT}/{APP}-data'
 
@@ -141,6 +142,9 @@ curl -s -o /dev/null -w "%{{http_code}}" {SITE} || true
 echo ""
 echo "--- ответ приложения родителя:"
 curl -s -o /dev/null -w "%{{http_code}}" '{SITE_PARENT}' || true
+echo ""
+echo "--- старый адрес родителя (редирект):"
+curl -s -o /dev/null -w "%{{http_code}}" '{SITE_PARENT_OLD}' || true
 echo ""
 echo "--- ответ API кодов:"
 curl -s {SITE_API} | head -c 90 || true

@@ -4,6 +4,22 @@
    оттуда же приходят лимит времени и заметки родителя. */
 'use strict';
 
+const KID_KEY = 'arh_kid_v1';
+function kidSaveState(){
+  try{
+    const k = kidSt();
+    localStorage.setItem(KID_KEY, JSON.stringify({code: k.code || '', token: k.token || '',
+      created: k.created || 0, introShown: k.introShown || 0, noteSeen: k.noteSeen || 0,
+      noteToast: k.noteToast || 0, limitDay: k.limitDay || null,
+      limits: k.limits || {}, notes: k.notes || [], srvUpdated: k.srvUpdated || 0}));
+  }catch(e){}
+}
+function kidLoadState(){
+  try{
+    const s = JSON.parse(localStorage.getItem(KID_KEY) || 'null');
+    if (s && s.code && s.token) DB.kid = Object.assign({}, DB.kid || {}, s);
+  }catch(e){}
+}
 function kidApiUrl(){
   const p = location.pathname || '';
   const i = p.indexOf('/MVP/');
@@ -28,6 +44,7 @@ function kidEnsure(){
     if (r && r.ok && r.code && r.token){
       k.code = r.code; k.token = r.token; k.created = Date.now();
       try{ save(); }catch(e){}
+      kidSaveState();
       kidRender();
       kidPush(1);
     }
@@ -87,6 +104,7 @@ function kidTake(r){
   if (r.notes) k.notes = r.notes;
   if (typeof r.updated === 'number') k.srvUpdated = r.updated;
   try{ save(); }catch(e){}
+  kidSaveState();
   kidRender();
   kidNoteBadge();
 }
@@ -106,6 +124,7 @@ function kidLimitCheck(){
   if (kidSt().limitDay === day) return;
   kidSt().limitDay = day;
   try{ save(); }catch(e){}
+  kidSaveState();
   try{ toast('На сегодня лимит занятий выполнен — родитель увидит прогресс'); }catch(e){}
 }
 
@@ -115,10 +134,17 @@ function kidNoteNew(){
   const seen = kidSt().noteSeen || 0;
   return kidNotes().filter(n => (n.ts || 0) > seen);
 }
+function kidIntroDone(){
+  kidSt().introShown = 1;
+  try{ save(); }catch(e){}
+  kidSaveState();
+  kidRender();
+}
 function kidNoteSeen(){
   const n = kidNotes()[0];
   if (n) kidSt().noteSeen = n.ts || Date.now();
   try{ save(); }catch(e){}
+  kidSaveState();
   kidRender();
 }
 function kidNoteBadge(){
@@ -128,6 +154,7 @@ function kidNoteBadge(){
   if (last === n[0].ts) return;
   kidSt().noteToast = n[0].ts;
   try{ save(); }catch(e){}
+  kidSaveState();
   try{ toast('Заметка от родителя: ' + String(n[0].text).slice(0, 60)); }catch(e){}
 }
 
@@ -148,8 +175,11 @@ function kidCodeCard(){
       <b style="font-family:Georgia,serif;font-size:22px;color:var(--brass);letter-spacing:.08em">${esc(k.code)}</b>
       <button class="btn ghost" style="min-height:36px;padding:6px 12px" onclick="kidCopyCode()">Скопировать</button>
     </div>
-    <div class="small" style="margin-top:8px">Родитель открывает <b>123.teramont.pro/MVP/родитель/</b>,
+    <div class="small" style="margin-top:8px">Родитель открывает <a href="parent/" style="color:var(--brass)">123.teramont.pro/MVP/parent/</a>,
       вводит этот код и придумывает PIN из 4 цифр. Тогда ему будет виден отчёт о занятиях.</div>
+    <div class="rod-row" style="margin-top:8px">
+      <a class="btn ghost" style="text-decoration:none;display:inline-flex;align-items:center;min-height:38px;padding:7px 12px" href="parent/">Открыть приложение родителя →</a>
+    </div>
     ${lim ? `<div class="small" style="margin-top:8px">Лимит занятий на день: <b>${lim} мин</b> · сегодня ${mins} мин${mins >= lim ? ' — лимит выполнен' : ''}</div>` : ''}
   </div>`;
 }
@@ -160,6 +190,23 @@ function kidRender(){
   const k = kidSt();
   const notes = kidNoteNew();
   const parts = [];
+  /* при первом входе сразу показываем код: родителю его надо увидеть и записать */
+  if (k.code && !k.introShown){
+    parts.push(`<div class="card" style="border-color:rgba(255,215,106,.6);margin-bottom:10px">
+      <div class="small" style="color:var(--brass);font-size:11.5px">🎁 Твой код для родителя</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:4px">
+        <b style="font-family:Georgia,serif;font-size:23px;color:var(--brass);letter-spacing:.08em">${esc(k.code)}</b>
+        <button class="btn ghost" style="min-height:36px;padding:6px 12px" onclick="kidCopyCode()">Скопировать</button>
+      </div>
+      <div class="small" style="margin-top:8px">Покажи код родителю: он откроет
+        <a href="parent/" style="color:var(--brass)">123.teramont.pro/MVP/parent/</a>, введёт код,
+        придумает PIN — и увидит отчёт о твоих занятиях.</div>
+      <div class="rod-row" style="margin-top:8px">
+        <a class="btn ghost" style="text-decoration:none;display:inline-flex;align-items:center;min-height:38px;padding:7px 12px" href="parent/">Я родитель — открыть →</a>
+        <button class="btn" style="min-height:38px;padding:7px 14px" onclick="kidIntroDone()">Понятно</button>
+      </div>
+    </div>`);
+  }
   if (notes.length){
     parts.push(`<div class="card" style="border-color:rgba(217,164,65,.55);margin-bottom:10px">
       <div class="small" style="color:var(--brass);font-size:11.5px">📩 От родителя · ${pvDate(notes[0].ts)}</div>
@@ -191,6 +238,7 @@ function kidRender(){
 }
 
 function kidBoot(){
+  kidLoadState();
   kidEnsure().then(() => { kidPush(1); kidPull(); });
   kidRender();
   setInterval(kidPull, 60000);

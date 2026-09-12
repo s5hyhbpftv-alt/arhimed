@@ -242,6 +242,9 @@ function renderOnboard(){
         <button class="btn" onclick="obGo(1)">← Назад</button>
         <button class="btn" onclick="finishOnboard()">В путь →</button>
       </div>
+      <div class="small" style="text-align:center;margin-top:10px">
+        <a href="parent/" style="color:var(--brass);text-decoration:none">🛡 Я родитель — приложение для родителей →</a>
+      </div>
     </div>
   </div></div>`;
   obMagic(); hud();

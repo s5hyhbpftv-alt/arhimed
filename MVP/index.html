@@ -766,46 +766,53 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data/tasks.js?v=500"></script>
-<script src="data/lessons.js?v=500"></script>
-<script src="data/lessons_draft.js?v=500"></script>
-<script src="data/comics_12.js?v=500"></script>
-<script src="data/sim_phys.js?v=500"></script>
-<script src="data/vis_bw.js?v=500"></script>
-<script src="data/vis_pw.js?v=500"></script>
-<script src="data/vis_cw.js?v=500"></script>
-<script src="data/vis_dw.js?v=500"></script>
-<script src="data/vis_ew.js?v=500"></script>
-<script src="data/vis_kl.js?v=500"></script>
-<script src="data/vis_wk.js?v=500"></script>
-<script src="data/inf_56.js?v=500"></script>
-<script src="js/comic.js?v=500"></script>
-<script src="js/core.js?v=500"></script>
-<script src="js/engine.js?v=500"></script>
-<script src="js/app.js?v=500"></script>
-<script src="js/dashboard.js?v=500"></script>
-<script src="js/kid.js?v=500"></script>
-<script src="js/lessons.js?v=500"></script>
-<script src="js/wave_guard.js?v=500"></script>
-<script src="js/legend.js?v=500"></script>
-<script src="js/simulator.js?v=500"></script>
-<script src="js/duel.js?v=500"></script>
-<script src="js/agent.js?v=500"></script>
-<script src="js/voice.js?v=500"></script>
-<script src="js/assistant.js?v=500"></script>
-<script src="js/agentlive.js?v=500"></script>
+<script src="data/tasks.js?v=501"></script>
+<script src="data/lessons.js?v=501"></script>
+<script src="data/lessons_draft.js?v=501"></script>
+<script src="data/comics_12.js?v=501"></script>
+<script src="data/sim_phys.js?v=501"></script>
+<script src="data/vis_bw.js?v=501"></script>
+<script src="data/vis_pw.js?v=501"></script>
+<script src="data/vis_cw.js?v=501"></script>
+<script src="data/vis_dw.js?v=501"></script>
+<script src="data/vis_ew.js?v=501"></script>
+<script src="data/vis_kl.js?v=501"></script>
+<script src="data/vis_wk.js?v=501"></script>
+<script src="data/inf_56.js?v=501"></script>
+<script src="js/comic.js?v=501"></script>
+<script src="js/core.js?v=501"></script>
+<script src="js/engine.js?v=501"></script>
+<script src="js/app.js?v=501"></script>
+<script src="js/dashboard.js?v=501"></script>
+<script src="js/kid.js?v=501"></script>
+<script src="js/lessons.js?v=501"></script>
+<script src="js/wave_guard.js?v=501"></script>
+<script src="js/legend.js?v=501"></script>
+<script src="js/simulator.js?v=501"></script>
+<script src="js/duel.js?v=501"></script>
+<script src="js/agent.js?v=501"></script>
+<script src="js/voice.js?v=501"></script>
+<script src="js/assistant.js?v=501"></script>
+<script src="js/agentlive.js?v=501"></script>
 <script>
-  /* сброс кэша при новой сборке — иначе MVP показывает старый урок */
+  /* сброс кэша при новой сборке: номер берём из адресов самих скриптов,
+     поэтому после каждой выкладки старый кэш и старый service worker снимаются сами */
   (function(){
     try{
-      const VER='478';
+      var VER='0';
+      document.querySelectorAll('script[src]').forEach(function(s){
+        var m=/[?&]v=(\d+)/.exec(s.getAttribute('src')||'');
+        if(m && +m[1] > +VER) VER=m[1];
+      });
+      if(VER==='0') return;
       if(localStorage.getItem('arh-build')===VER) return;
       localStorage.setItem('arh-build', VER);
-      const jobs=[];
-      if('caches' in window){ jobs.push(caches.keys().then(ks=>Promise.all(ks.map(k=>caches.delete(k))))); }
-      if('serviceWorker' in navigator){ jobs.push(navigator.serviceWorker.getRegistrations().then(rs=>Promise.all(rs.map(r=>r.unregister())))); }
-      Promise.all(jobs).then(()=>{
-        const u=new URL(location.href);
+      var jobs=[];
+      if('caches' in window){ jobs.push(caches.keys().then(function(ks){ return Promise.all(ks.map(function(k){ return caches.delete(k); })); })); }
+      if('serviceWorker' in navigator){ jobs.push(navigator.serviceWorker.getRegistrations().then(function(rs){ return Promise.all(rs.map(function(r){ return r.unregister(); })); })); }
+      Promise.all(jobs).then(function(){
+        var u=new URL(location.href);
+        if(u.searchParams.get('b')===VER) return;      /* второй раз не перезагружаем */
         u.searchParams.set('b', VER);
         location.replace(u.toString());
       });
@@ -813,7 +820,7 @@
   })();
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=500').catch(()=>{}); });
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js?v=501').catch(()=>{}); });
 }
 window.addEventListener('hashchange', ()=>{
   try{
