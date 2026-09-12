@@ -373,17 +373,38 @@ function kidRebind(){
 }
 
 /* начать с чистого листа: новый код и новый PIN (прогресс на устройстве остаётся) */
-function kidNewCode(){
-  if (!confirm('Создать новый код? Родителю нужно будет привязаться к нему заново.')) return;
+/* свой диалог вместо системного confirm — он выглядит чужеродно на планшете */
+function kidAskNewCode(){
+  kidCss();
+  if (document.getElementById('kidAsk')) return;
+  const el = document.createElement('div');
+  el.id = 'kidAsk'; el.className = 'kg-bg';
+  el.innerHTML = `<div class="kg-card">
+    <div class="kg-ico">🔑</div>
+    <div class="kg-kick">Новый код</div>
+    <div class="kg-txt">Создаём новый код и новый PIN? Родителю нужно будет привязаться к нему заново.
+      Прогресс на этом устройстве останется.</div>
+    <div class="kg-row">
+      <button type="button" class="btn" onclick="kidNewCode(1)">Да, создать</button>
+      <button type="button" class="btn ghost" onclick="kidAskClose()">Отмена</button>
+    </div>
+  </div>`;
+  document.body.appendChild(el);
+}
+function kidAskClose(){ const el = document.getElementById('kidAsk'); if (el) el.remove(); }
+function kidNewCode(confirmed){
+  if (!confirmed && typeof kidAskNewCode === 'function'){ kidAskNewCode(); return; }
+  kidAskClose();
   const k = kidSt();
   k.code = ''; k.token = ''; k.dpin = 0; k.linked = 0; k.introShown = 0; k.notes = []; k.limits = {};
   k.noteSeen = 0; k.noteToast = 0;
   kidSaveState(); kidLock(); kidUnlinkedDone();
+  try{ localStorage.removeItem(KID_KEY); }catch(e){}
   kidEnsure().then(() => kidBindFlow());
 }
 function kidForgotPin(){
   if (PinPad.isOpen()) PinPad.hide();
-  setTimeout(kidNewCode, 80);
+  setTimeout(kidAskNewCode, 80);
 }
 
 /* что показать при входе: знакомство, создание PIN, замок или приложение */

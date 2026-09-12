@@ -26,6 +26,8 @@ CODE_RE = re.compile(r'^ARH-[A-Z0-9]{4}-[A-Z0-9]{2}$')
 MAX_BODY = 400 * 1024                              # снимок прогресса не больше 400 КБ
 MAX_NOTES = 40
 _tlock = asyncio.Lock()
+_new_calls = {}          # ip -> [времена создания кодов]
+NEW_PER_HOUR = 20
 
 
 def data_dir():
@@ -115,21 +117,34 @@ async def kid_api(request):
     if request.method == 'GET':
         return web.json_response({'ok': True, 'service': 'arhimed-kid', 'dir': os.path.basename(data_dir())},
                                  headers={'Cache-Control': 'no-store'})
+    no_store = {'Cache-Control': 'no-store'}
     try:
         body = await request.json()
+    except web.HTTPRequestEntityTooLarge:
+        # тело больше допустимого: отвечаем понятной ошибкой, а не «неизвестным действием»
+        return web.json_response({'ok': False, 'err': 'big'}, status=413, headers=no_store)
     except Exception:
         body = {}
     if not isinstance(body, dict):
         body = {}
     act = str(body.get('act') or '')
     code = str(body.get('code') or '').strip().upper()
-    no_store = {'Cache-Control': 'no-store'}
 
     def bad(err, **kw):
         return web.json_response(dict({'ok': False, 'err': err}, **kw), headers=no_store)
 
+    if not act:
+        return bad('act')
+
     # --- создать нового ребёнка: код + ключ устройства ---
     if act == 'new':
+        ip = (request.headers.get('X-Real-IP') or (request.remote or '?')).strip()
+        now_ts = time.time()
+        seen = [t for t in _new_calls.get(ip, []) if now_ts - t < 3600]
+        if len(seen) >= NEW_PER_HOUR:
+            return bad('toomany', wait=int(3600 - (now_ts - seen[0])))
+        seen.append(now_ts)
+        _new_calls[ip] = seen
         async with _tlock:
             for _ in range(6):
                 c = new_code()
@@ -179,6 +194,7 @@ async def kid_api(request):
             if rec[fails] >= 8:
                 rec[until] = now + 600
                 rec[fails] = 0
+                return ('blocked', int(rec[until] - now))
             return ('pin', rec[fails])
         rec[fails] = 0
         rec[until] = 0
@@ -208,10 +224,11 @@ async def kid_api(request):
             return bad('unlinked')
         err, extra = check_pin('d', str(body.get('pin') or '').strip())
         if err:
-            if err == 'pin':
+            if err in ('pin', 'blocked'):
                 async with _tlock:
                     save_kid(rec)
-            return bad(err, **({'fails': extra} if extra is not None else {}))
+            return bad(err, **({'fails': extra} if err == 'pin' and extra is not None else
+                               ({'wait': extra} if err == 'blocked' and extra is not None else {})))
         async with _tlock:
             save_kid(rec)
         return web.json_response({'ok': True, 'code': rec['code'], 'limits': rec.get('limits') or {},
@@ -222,10 +239,11 @@ async def kid_api(request):
     if act == 'rebind':
         err, extra = check_pin('d', str(body.get('pin') or '').strip())
         if err:
-            if err == 'pin':
+            if err in ('pin', 'blocked'):
                 async with _tlock:
                     save_kid(rec)
-            return bad(err, **({'fails': extra} if extra is not None else {}))
+            return bad(err, **({'fails': extra} if err == 'pin' and extra is not None else
+                               ({'wait': extra} if err == 'blocked' and extra is not None else {})))
         rec['token'] = secrets.token_hex(16)
         rec['linked'] = 1
         rec['unlinked'] = 0
@@ -284,6 +302,9 @@ async def kid_api(request):
                 if rec['fails_p'] >= 8:
                     rec['blocked_p_until'] = now + 600
                     rec['fails_p'] = 0
+                    async with _tlock:
+                        save_kid(rec)
+                    return bad('blocked', wait=int(rec['blocked_p_until'] - now))
                 async with _tlock:
                     save_kid(rec)
                 return bad('pin', fails=rec['fails_p'])

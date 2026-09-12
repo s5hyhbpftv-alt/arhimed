@@ -42,7 +42,8 @@ function rodNormCode(v){
 }
 function rodStateSave(){
   try{
-    if (ROD.remember) localStorage.setItem(ROD_KEY, JSON.stringify({code: ROD.code, pin: ROD.pin, card: ROD.card, remember: 1}));
+    /* PIN на устройстве не храним: при каждом входе спрашиваем только его */
+    if (ROD.remember) localStorage.setItem(ROD_KEY, JSON.stringify({code: ROD.code, card: ROD.card, remember: 1}));
     else localStorage.removeItem(ROD_KEY);
   }catch(e){}
 }
@@ -52,9 +53,10 @@ function rodStateLoad(){
     /* переносим вход из первой версии приложения, чтобы не вводить всё заново */
     if (!s){
       const old = JSON.parse(localStorage.getItem('arh_rod_v1') || 'null');
-      if (old && old.code) s = {code: old.code, pin: old.pin || '', card: null, remember: old.remember == null ? 1 : old.remember};
+      if (old && old.code) s = {code: old.code, card: null, remember: old.remember == null ? 1 : old.remember};
     }
     if (s && s.code) ROD = Object.assign(ROD, s);
+    ROD.pin = '';
   }catch(e){}
 }
 function rodForgetAccount(){ try{ localStorage.removeItem(ROD_KEY); }catch(e){} }
@@ -143,10 +145,12 @@ function rodCreatePin(){
 /* обычный вход: только PIN */
 function rodEnterPin(){
   const c = ROD.card || {};
+  const known = !!(c.name || c.klass);
   PinPad.ask({
-    avatar: rodAva(c, 64),
-    title: rodChildLine(),
-    subtitle: 'Введите свой PIN — четыре цифры',
+    avatar: known ? rodAva(c, 64) : '🔐',
+    title: known ? rodChildLine() : 'PIN родителя',
+    subtitle: known ? 'Введите свой PIN — четыре цифры'
+                    : 'Код ' + esc(ROD.code) + ' · введите PIN, который задали при привязке',
     cancel: true,
     foot: `<span class="pp-link" onclick="rodAnotherCode()">Другой код ребёнка</span>`,
     verify: pin => rodPost({act: 'get', code: ROD.code, pin: pin}).then(r => {
@@ -345,14 +349,15 @@ window.resetAll = function(){ toast('Сброс прогресса делает 
 /* ---------- старт ---------- */
 window.addEventListener('DOMContentLoaded', function(){
   rodStateLoad();
-  if (ROD.code && ROD.pin){
-    rodPost({act: 'get', code: ROD.code, pin: ROD.pin}).then(r => {
-      if (r && r.ok) rodApply(r);
-      else if (r && r.err === 'nopin'){ rodForgetAccount(); rodScreenLogin(); }
-      else { ROD.pin = ''; rodStateSave(); rodEnterPin(); }
-    }).catch(() => rodEnterPin());
+  if (ROD.code && ROD.card){
+    rodEnterPin();                  /* приветствие: аватар, имя, класс и только PIN */
   } else if (ROD.code){
-    rodEnterPin();
+    /* код помним, а имя ребёнка ещё не видели — подтянем после ввода PIN */
+    rodPost({act: 'probe', code: ROD.code}).then(r => {
+      if (r && r.ok) rodEnterPin();
+      else if (r && r.err === 'notfound'){ rodForgetAccount(); rodScreenLogin(); }
+      else rodEnterPin();
+    }).catch(() => rodEnterPin());
   } else {
     rodScreenLogin();
   }
