@@ -96,6 +96,11 @@ function lessonsWithDivider(items){
   }
   return out;
 }
+function bookIcoHTML(subj, meta){
+  /* у русского направления в книге знаний — присланная картинка Мишутки */
+  if(subj==='rus') return '<img src="img/mishutka.png" alt="" style="width:26px;height:26px;object-fit:contain;border-radius:50%;display:block">';
+  return meta.ico;
+}
 function renderBookList(){
   const s=document.getElementById('screen');
   const pool=lessonPool();
@@ -114,7 +119,7 @@ function renderBookList(){
     const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
     const p=Math.round(gd/g.items.length*100);
     return `<button class="btab ${on?'on':''}" onclick="bookPick('${g.subj}')">
-      <span class="bt-ico">${g.meta.ico}</span>
+      <span class="bt-ico">${bookIcoHTML(g.subj,g.meta)}</span>
       <span class="bt-name">${g.subj==='all'? 'Все': g.meta.name}</span>
       <span class="bt-bar"><i style="width:${p}%"></i></span>
     </button>`;}).join('');
@@ -123,7 +128,7 @@ function renderBookList(){
     ? (()=>{ const g=grouped.find(x=>x.subj===sel); if(!g) return '';
         const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
         return `<div class="book-subj-head">
-            <span class="bsh-ico">${g.meta.ico}</span>
+            <span class="bsh-ico">${bookIcoHTML(g.subj,g.meta)}</span>
             <span><b>${g.meta.name}</b><br>
             <span class="small" style="color:var(--muted)">${esc(g.meta.dsc)} · ${gd}/${g.items.length} пройдено</span></span>
           </div>${lessonsWithDivider(g.items)}`; })()
