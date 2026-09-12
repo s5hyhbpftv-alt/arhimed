@@ -76,7 +76,7 @@ function lessonRow(L){
   const rec=DB.lessons&&DB.lessons[L.id];
   const done=!!(rec&&rec.done);
   return `<div class="lesson-row ${done?'done':''}" onclick="openLessonView(${L.id})">
-    <span class="lr-ico">${L.ico}</span>
+    <span class="lr-ico">${L.img?`<img src="${L.img}" alt="" style="width:26px;height:26px;object-fit:contain;border-radius:50%;display:block">`:L.ico}</span>
     <span class="lr-ti"><span class="lr-tt">${esc(L.title)}</span>
     <span class="lr-td">${esc(L.src)} · ${L.comic? L.comic.length+' кадров': L.explain.length+' шагов'}</span></span>
     <span class="lr-pr">${done?'✅':(rec&&rec.stars? '⭐ '+rec.stars+'/2':'⭐ 0/2')}</span>
@@ -97,8 +97,7 @@ function lessonsWithDivider(items){
   return out;
 }
 function bookIcoHTML(subj, meta){
-  /* у русского направления в книге знаний — присланная картинка Мишутки */
-  if(subj==='rus') return '<img src="img/mishutka.png" alt="" style="width:26px;height:26px;object-fit:contain;border-radius:50%;display:block">';
+  /* значок предмета; картинка показывается только у конкретного урока (см. ниже) */
   return meta.ico;
 }
 function renderBookList(){
