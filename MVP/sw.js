@@ -1,11 +1,19 @@
 /* АРХИМЕД MVP · service worker
    HTML/JS всегда с сети. В Cache API не кладём код — иначе залипает старый урок.
    Картинки можно из кэша. */
-const CACHE='arhimed-mvp-v480';
-const ASSETS=['img/car.png','manifest.webmanifest','../МОБ_ПРИЛОЖЕНИЕ/icons/icon-192.png'];
+const CACHE='arhimed-mvp-v481';
+/* В кэш кладём только то, что реально есть в репозитории.
+   Раньше здесь был путь вне MVP (../МОБ_ПРИЛОЖЕНИЕ/...), его на сервере нет —
+   addAll падал, и service worker вообще не устанавливался. */
+const ASSETS=['img/car.png','manifest.webmanifest'];
+function precache(c){
+  return Promise.all(ASSETS.map(function(u){
+    return c.add(u).catch(function(){ return null; });   // одна ошибка не ломает установку
+  }));
+}
 
 self.addEventListener('install',e=>{
-  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then(precache).then(()=>self.skipWaiting()));
 });
 self.addEventListener('activate',e=>{
   e.waitUntil(
