@@ -413,7 +413,8 @@ function kidGate(){
     if (PinPad.isOpen()) return;
     const k = kidSt();
     if (!DB.profile) return;                      /* идёт знакомство */
-    if (!k.code || !k.token){ kidBindFlow(); return; }
+    /* код ещё не пришёл (медленная сеть) — сначала дождёмся его, потом просим PIN */
+    if (!k.code || !k.token){ kidEnsure(); return; }
     /* PIN был, а устройство отвязали родителем — предлагаем привязаться заново */
     if (k.dpin && k.linked === 0){ kidUnlinkedScreen(); return; }
     if (!k.dpin){ kidBindFlow(); return; }        /* первое устройство: свой PIN */
