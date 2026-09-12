@@ -4581,3 +4581,46 @@ window.RU615PAPER = (function(){
   }
   if(window.RU615 && window.RU615.art){ window.RU615.art.fares=fares; window.RU615.art.carpet=carpet; }
 })();
+
+/* ================= ПЕРЕДЕЛКА 615, ЗАДАНИЕ 1: корзины с орехами =================
+   Порядок переделки: 1 → 10 (см. deploy/ПЕРЕДЕЛКА_615.md).
+   Корзины объёмные: плетёный корпус с градиентом, обод, ручка, тень под каждой,
+   орехи с бликом, число под корзиной, подпись под рядом. */
+(function(){
+  const F="Georgia,'Times New Roman',serif";
+  const INK='#2a2118', MUT='#6b5b45';
+  const sv=(inner,h)=>`<svg viewBox="0 0 360 ${h}" width="100%" style="display:block;max-width:100%">${inner}</svg>`;
+  const tx=(x,y,s,size,fill)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="${F}" font-size="${size||11}" fill="${fill||MUT}">${s}</text>`;
+  function basket(x,nuts,count){
+    const W=17, H=42;
+    let s=`<defs>
+      <linearGradient id="wick" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#e0b070"/><stop offset=".5" stop-color="#c08a44"/><stop offset="1" stop-color="#8f5f2a"/></linearGradient>
+      <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#f0d59c"/><stop offset="1" stop-color="#b98a4a"/></linearGradient>
+      <radialGradient id="nut" cx=".35" cy=".3" r=".9">
+        <stop offset="0" stop-color="#e8c187"/><stop offset="1" stop-color="#9c6528"/></radialGradient>
+    </defs>`;
+    s+=`<ellipse cx="${x}" cy="${132+H*0.86}" rx="${W+8}" ry="6" fill="rgba(42,33,24,.22)"/>`;
+    s+=`<path d="M${x-W} 132 L${x+W} 132 L${x+W-6} ${132+H} L${x-W+6} ${132+H} Z" fill="url(#wick)" stroke="rgba(60,40,15,.5)" stroke-width=".8"/>`;
+    for(let i=1;i<5;i++){ const yy=132+i*(H/5); const w=W-i*1.2;
+      s+=`<path d="M${x-w} ${yy} Q${x} ${yy+3} ${x+w} ${yy}" stroke="rgba(70,45,15,.42)" fill="none" stroke-width="1.1"/>`; }
+    for(let i=-2;i<=2;i++){ const xx=x+i*6;
+      s+=`<path d="M${xx} 133 Q${xx+(i*0.6)} ${133+H/2} ${xx} ${131+H}" stroke="rgba(70,45,15,.28)" fill="none" stroke-width=".9"/>`; }
+    s+=`<ellipse cx="${x}" cy="132" rx="${W}" ry="6.5" fill="url(#rim)" stroke="rgba(60,40,15,.5)" stroke-width=".8"/>`;
+    s+=`<path d="M${x-W+3} 130 Q${x} ${132-30} ${x+W-3} 130" stroke="url(#rim)" stroke-width="3.4" fill="none" stroke-linecap="round"/>`;
+    for(let i=0;i<nuts;i++){ const a=-1.1+i*(2.2/Math.max(1,nuts-1)), nx=x+Math.sin(a)*(W-4), ny=126+Math.cos(a)*3;
+      s+=`<ellipse cx="${nx.toFixed(1)}" cy="${(ny-i%2*4).toFixed(1)}" rx="4.4" ry="3.6" fill="url(#nut)" stroke="rgba(60,40,15,.45)" stroke-width=".6"/>`;
+      s+=`<ellipse cx="${(nx-1.2).toFixed(1)}" cy="${(ny-1.6-i%2*4).toFixed(1)}" rx="1.2" ry=".9" fill="rgba(255,240,210,.75)"/>`; }
+    s+=tx(x,188,String(count),12.5,INK);
+    return s;
+  }
+  function orehiNew(){
+    const DATA=[[44,4,81],[110,5,34],[176,6,17],[242,5,23],[308,6,75]];
+    let s=DATA.map(([x,n,c])=>basket(x,n,c)).join('');
+    s+=`<line x1="20" y1="196" x2="340" y2="196" stroke="rgba(42,33,24,.25)"/>`;
+    s+=tx(180,212,'поровну на пять корзинок',11.5,INK);
+    return sv(s,224);
+  }
+  if(window.RU615 && window.RU615.art) window.RU615.art.orehi=orehiNew;
+})();
