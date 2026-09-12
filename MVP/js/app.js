@@ -601,7 +601,7 @@ const ISLANDS=[
   {name:'Лавуазье', ico:'⚗️', dsc:'Химия · молекулы, растворы, газы'},
   {name:'Информатика', ico:'💻', dsc:'Информатика · двоичный код, алгоритмы, логика'},
   {name:'Русский язык', ico:'📖', dsc:'Русский язык · части речи, орфография, пунктуация'},
-  {name:'Разбор с Мишуткой', ico:'🐻', dsc:'Олимпиадная смекалка · диаграммы, таблицы, логика'}];
+  {name:'Разбор с Мишуткой', ico:'🐻', img:'img/mishutka.png', dsc:'Олимпиадная смекалка · диаграммы, таблицы, логика'}];
 function isJunior(){ try{ return !!DB.profile&&/^[1-4]$/.test(String(DB.profile.klass||'').trim()); }catch(e){ return false; } }
 /* ---------- фильтр задач по классу ---------- */
 function taskClassRange(t){
@@ -641,15 +641,16 @@ function islStats(name){
   const done=ts.filter(t=>DB.tasks[t.id]&&DB.tasks[t.id].done).length;
   return {total:ts.length, done};
 }
-function ringHTML(pct, size, label){
+function ringHTML(pct, size, label, img){
   // анимированное кольцо прогресса
   const r=(size-10)/2, c=2*Math.PI*r;
   const off=c*(1-Math.min(100,Math.max(0,pct))/100);
   return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" class="ring" style="--off:${off};--len:${c}">
     <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="5"/>
+    ${img?`<image href="${img}" x="${size*0.5-size*0.30}" y="${size*0.5-size*0.30}" width="${size*0.60}" height="${size*0.60}" preserveAspectRatio="xMidYMid meet"/>`:''}
     <circle class="ring-fg" cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--brass)" stroke-width="5"
       stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c}" transform="rotate(-90 ${size/2} ${size/2})"/>
-    <text x="50%" y="53%" text-anchor="middle" dominant-baseline="middle" fill="#e8e0cc" font-size="${size*0.21}" font-family="Georgia,serif">${label}</text>
+    ${img?'':`<text x="50%" y="53%" text-anchor="middle" dominant-baseline="middle" fill="#e8e0cc" font-size="${size*0.21}" font-family="Georgia,serif">${label}</text>`}
   </svg>`;
 }
 /* ================= ПУТЬ: план обучения + дашборды ================= */
@@ -786,11 +787,11 @@ function dashMini(I,i){
   const locked=st.total===0;
   const openAt=locked? islandOpenAt(I.name):null;
   const inner = locked
-    ? `<div style="display:flex;justify-content:center;opacity:.55">${ringHTML(0,44,I.ico)}</div>
+    ? `<div style="display:flex;justify-content:center;opacity:.55">${ringHTML(0,44,I.ico,I.img)}</div>
        <div class="nm">${esc(I.name)}</div>
        <div class="pc">🔒 ${openAt? 'откроется в '+openAt+' классе':'задач пока нет'}</div>
        <div class="expand-hint">остров закрыт — вернёшься позже</div>`
-    : `<div style="display:flex;justify-content:center">${ringHTML(pct,44,I.ico)}</div>
+    : `<div style="display:flex;justify-content:center">${ringHTML(pct,44,I.ico,I.img)}</div>
        <div class="nm">${esc(I.name)}</div>
        <div class="pc">${st.done}/${st.total} · ${pct}%</div>
        <div class="expand-hint">${on?'карта развёрнута · нажми, чтобы свернуть':'нажми — развернуть карту'}</div>`;
@@ -806,7 +807,7 @@ function dashExpanded(I){
     return `<div class="island path-island" style="margin-top:8px">
       <div class="fold-top"><button class="chip pd" onclick="planOpenIsland('${encodeURIComponent(I.name)}')">− свернуть</button><span style="font-size:11.5px;color:var(--muted)">остров «${esc(I.name)}»</span></div>
       <div class="pi-head">
-        ${ringHTML(0,58,I.ico)}
+        ${ringHTML(0,58,I.ico,I.img)}
         <div style="flex:1;min-width:0">
           <div class="nm">${esc(I.name)}</div>
           <div class="sub">${esc(I.dsc)}</div>
@@ -826,7 +827,7 @@ function dashExpanded(I){
   return `<div class="island path-island" style="margin-top:8px">
     <div class="fold-top"><button class="chip pd" onclick="planOpenIsland('${encodeURIComponent(I.name)}')">− свернуть</button><span style="font-size:11.5px;color:var(--muted)">остров «${esc(I.name)}» — карта развёрнута</span></div>
     <div class="pi-head">
-      ${ringHTML(pct,58,I.ico)}
+      ${ringHTML(pct,58,I.ico,I.img)}
       <div style="flex:1;min-width:0">
         <div class="nm">${esc(I.name)}</div>
         <div class="sub">${esc(I.dsc)}</div>

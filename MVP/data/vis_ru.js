@@ -4223,7 +4223,7 @@ window.RU615 = (function(){
   window.mkStep=(d)=>{ try{ const n=((typeof LV!=='undefined'&&LV.step)||0)+d; if(n<0||n>=Q.length) return; LV.step=n; chRender(0); }catch(e){} };
   if(window.ARH_LESSONS && !window.ARH_LESSONS.some(x=>x.id===615)){
     window.ARH_LESSONS.push({id:615,title:'Путь Мишутки',ico:'🐻',src:'Русский язык · 5–6 класс · Путь Мишутки',subj:'rus',
-      explain:Q.map((x,i)=>(i+1)+'. '+x.t+'. '+x.q),check:1,tasks:[]});
+      explain:Q.map((x,i)=>(i+1)+'. '+x.t),check:1,tasks:[],img:'img/mishutka.png'});
   }
   if(window.WAVE_B) window.WAVE_B[615]=function(el){ try{ render(el); }catch(e){ el.innerHTML=''; } };
   return {render:render,data:Q,art:ART};
@@ -4294,7 +4294,9 @@ window.RU615PAPER = (function(){
     const it=Q[step], picked=st.ans[step], done=picked!=null, ok=picked===it.ans;
     const art=`<div class="fig" style="filter:invert(0)">${String(ART[it.k]()).replace(/fill="#f6efe0"/g,'fill="#2a2118"').replace(/fill="#d8c9b8"/g,'fill="#6b5b45"').replace(/fill="#ffd76a"/g,'fill="#8a6a1f"').replace(/rgba\(255,215,106,\.45\)/g,'rgba(138,106,31,.5)').replace(/rgba\(255,255,255,\.10\)/g,'rgba(42,33,24,.12)').replace(/fill="#9fd8b4"/g,'fill="#2f6b46"').replace(/fill="#8fd1a8"/g,'fill="#2f6b46"').replace(/fill="#7fb7d8"/g,'fill="#2a5f8a"').replace(/fill="#5b8fc9"/g,'fill="#2a5f8a"').replace(/fill="#d98aa8"/g,'fill="#9c4a63"').replace(/fill="#c98b4a"/g,'fill="#8a5a2a"').replace(/fill="#e86a5a"/g,'fill="#9c2f22"').replace(/fill="#f6efe0"/g,'fill="#2a2118"')}</div>`;
     el.innerHTML=`<div class="pp">
-      <div class="head"><div class="num">Задание ${step+1} из ${Q.length}</div><div class="of">Путь Мишутки</div></div>
+      <div class="head"><div class="num">Задание ${step+1} из ${Q.length}</div>
+        <div class="of" style="display:flex;align-items:center;gap:8px">
+          <img src="img/mishutka.png" alt="Мишутка" style="width:34px;height:34px;object-fit:contain;border-radius:50%">Путь Мишутки</div></div>
       <h2>${it.t}</h2>
       ${art}
       <div class="q">${it.q}</div>
@@ -4310,6 +4312,16 @@ window.RU615PAPER = (function(){
         ${step<Q.length-1?`<button type="button" onclick="mkStep(1)">Дальше →</button>`:''}
       </div></div>`;
   }
-  if(window.WAVE_B) window.WAVE_B[615]=function(el){ try{ render(el); }catch(e){ try{ window.RU615.render(el); }catch(e2){ el.innerHTML=''; } } };
+  if(window.WAVE_B) window.WAVE_B[615]=function(el){
+    try{ render(el); }catch(e){ try{ window.RU615.render(el); }catch(e2){ el.innerHTML=''; } }
+    /* персонаж приложения пересоздаётся после отрисовки — гасим его, пока открыт лист */
+    try{
+      const kill=()=>document.querySelectorAll('.avatar,.mascot,.assistant').forEach(a=>{ a.style.display='none'; });
+      kill();
+      if(!window.__ppWatch){
+        window.__ppWatch=setInterval(()=>{ if(document.querySelector('#lvis .pp')) kill(); },200);
+      }
+    }catch(e){}
+  };
   return {render:render};
 })();
