@@ -3092,7 +3092,7 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
           ? physShot('ice.mp4','лёд в воде · ρ = 0,9 г/см³')
           : physShot('ice.jpg','кубик льда · брось в бак')}
         ${pred(st,'p7','Лёд в воде. Что сделает?',[{k:'float',t:'всплывёт'},{k:'sink',t:'утонет'},{k:'hang',t:'повиснет'}])}
-        ${st.p7?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].go7=1;chRender(0);}catch(e){}">${st.go7?'Ещё раз':'Бросить в бак'}</button>`:''}
+        ${st.p7?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].go7=1;chRender(0);}catch(e){}">Бросить в бак</button>`:''}
         ${show?note('Расчёт','ρ = 0,9. Доля погружения = 0,9 / 1 = 90 %: под водой остаётся девять десятых, а над поверхностью — только десятая часть. Ты '+(st.p7==='float'?'угадал':'думал иначе — пересчитай сам')):note('Предскажи до опыта','Не смотри ответ глазами. Сначала выбери вариант.')}
       </div>`;
     } else if(step===8){
