@@ -54,7 +54,8 @@ function fbHtml(t,done){
   return '';
 }
 function solHtml(t){
-  const rule = t.rule ? `<div style="width:100%;text-align:left;background:rgba(143,209,168,.10);border:1px solid #8fd1a8;border-left:4px solid #8fd1a8;border-radius:12px;padding:10px 12px;margin-bottom:8px">
+  const ru = /Русский язык|Разбор с Мишуткой/.test(t.island||'');
+  const rule = (t.rule && ru) ? `<div style="width:100%;text-align:left;background:rgba(143,209,168,.10);border:1px solid #8fd1a8;border-left:4px solid #8fd1a8;border-radius:12px;padding:10px 12px;margin-bottom:8px">
       <div style="color:#8fd1a8;font-size:12.5px;font-family:Georgia,serif;margin-bottom:4px">📌 Правило</div>
       <div style="color:#e8dcc8;font-size:13.5px;line-height:1.55">${esc(t.rule)}</div></div>` : '';
   return rule + `<div class="arch"><span class="who">◈ Решение Архимеда</span>${esc(t.sol)}</div>`;

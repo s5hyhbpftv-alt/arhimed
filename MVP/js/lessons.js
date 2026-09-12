@@ -42,12 +42,9 @@ function lessonFits(L){ /* при открытом мире уроки не пр
 
 function subjOf(L){
   const src=(L&&L.src)||'';
-  return (L&&L.subj)
-    || (/Начальная школа/.test(src)?'jun'
-      : /Информатика/.test(src)?'inf'
-      : /Русский язык/.test(src)?'rus'
-      : /Химия/.test(src)?'chem'
-      : /физика/i.test(src)?'phys':'math');
+  if(L&&L.subj) return L.subj;
+  if(/Русский язык/.test(src)) return 'rus';   /* единственная добавленная ветка */
+  return /Начальная школа/.test(src)?'jun':/Информатика/.test(src)?'inf':/физика/i.test(src)?'phys':'math';
 }
 /* сортировка списка: сначала уроки ТЕКУЩЕГО класса (в порядке обучения),
    затем все остальные (в прежнем порядке). Порядок внутри групп сохраняется. */
