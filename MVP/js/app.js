@@ -578,6 +578,8 @@ function finishOnboard(){
     level:chosenLevel,
     limitMin:45, createdAt:Date.now() };
   DB.sessionStart=Date.now(); save(); showNav(true); go('path'); toast('Добро пожаловать, '+name+'!');
+  /* сразу просим придумать свой PIN — устройство привязывается к ученику */
+  try{ if (typeof kidGate === 'function') setTimeout(kidGate, 250); }catch(e){}
 }
 /* ---------- ВЫХОД ИЗ ПРОФИЛЯ ---------- */
 function logoutProfile(){

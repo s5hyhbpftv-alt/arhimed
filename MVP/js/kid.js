@@ -9,6 +9,7 @@ function kidSaveState(){
   try{
     const k = kidSt();
     localStorage.setItem(KID_KEY, JSON.stringify({code: k.code || '', token: k.token || '',
+      dpin: k.dpin || 0, linked: (k.linked == null ? 1 : k.linked),
       created: k.created || 0, introShown: k.introShown || 0, noteSeen: k.noteSeen || 0,
       noteToast: k.noteToast || 0, limitDay: k.limitDay || null,
       limits: k.limits || {}, notes: k.notes || [], srvUpdated: k.srvUpdated || 0}));
@@ -85,6 +86,8 @@ function kidSnapshot(){
 let _kidPushAt = 0, _kidPushBusy = false;
 function kidPush(force){
   if (!kidReady()) { kidEnsure(); return; }
+  const st = kidSt();
+  if (!st.dpin || st.linked === 0) return;      /* до привязки синхронизировать нечего */
   const now = Date.now();
   if (!force && now - _kidPushAt < 15000) return;
   if (_kidPushBusy) return;
@@ -92,7 +95,8 @@ function kidPush(force){
   const k = kidSt();
   kidPost({act: 'sync', code: k.code, token: k.token, data: kidSnapshot()}).then(r => {
     _kidPushBusy = false;
-    if (r && r.ok){ kidTake(r); }
+    if (r && r.ok){ kidTake(r); return; }
+    if (r && r.err === 'unlinked'){ kidSt().linked = 0; kidSaveState(); kidUnlinkedScreen(); }
   }).catch(() => { _kidPushBusy = false; });
 }
 
@@ -113,7 +117,11 @@ function kidTake(r){
 function kidPull(){
   if (!kidReady()) { kidEnsure(); return; }
   const k = kidSt();
-  kidPost({act: 'take', code: k.code, token: k.token}).then(r => { if (r && r.ok) kidTake(r); }).catch(() => {});
+  if (!k.dpin || k.linked === 0) return;
+  kidPost({act: 'take', code: k.code, token: k.token}).then(r => {
+    if (r && r.ok){ kidTake(r); return; }
+    if (r && r.err === 'unlinked'){ kidSt().linked = 0; kidSaveState(); kidUnlinkedScreen(); }
+  }).catch(() => {});
 }
 
 /* --- 5. лимит времени --- */
@@ -239,12 +247,167 @@ function kidRender(){
   el.innerHTML = parts.join('');
 }
 
+/* ================= привязка устройства и вход по своему PIN ================= */
+const KID_SESSION = 'arh_kid_unlocked';
+const KID_UNLOCK_SEC = 60;              /* 60 секунд после перезагрузки страницы вход не сбрасывается, дальше — только PIN */
+
+function kidCss(){
+  if (document.getElementById('kidGateCss')) return;
+  const st = document.createElement('style');
+  st.id = 'kidGateCss';
+  st.textContent = `
+  .kg-bg { position:fixed; inset:0; z-index:148; display:flex; align-items:center; justify-content:center;
+    padding:max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+    background:radial-gradient(120% 80% at 50% 0%, rgba(26,50,38,.97), rgba(4,9,6,.98) 62%);
+    -webkit-backdrop-filter:blur(7px); backdrop-filter:blur(7px); }
+  .kg-card { width:100%; max-width:440px; max-height:calc(100vh - 24px); overflow:auto; text-align:center;
+    background:linear-gradient(180deg,#1a3226,#101f18); border:1px solid rgba(217,164,65,.5); border-radius:22px;
+    padding:22px 18px 18px; box-shadow:0 24px 70px rgba(0,0,0,.7); }
+  .kg-ico { font-size:36px; }
+  .kg-kick { font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:#d9a441; margin-top:6px; }
+  .kg-txt { font-size:16px; line-height:1.55; color:#e8e0cc; margin:12px 0 4px; }
+  .kg-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+  .kg-row .btn { flex:1 1 46%; min-height:50px; }
+  `;
+  document.head.appendChild(st);
+}
+function kidAvatar(){
+  const p = DB.profile || {};
+  return p.gender === 'girl' ? '👧' : (p.gender === 'boy' ? '👦' : '🙂');
+}
+function kidBound(){ const k = kidSt(); return !!(k.code && k.token && k.linked !== 0); }
+function kidPinSet(){ return !!kidSt().dpin; }
+function kidUnlocked(){
+  try{
+    const s = JSON.parse(sessionStorage.getItem(KID_SESSION) || 'null');
+    return !!(s && s.code === kidCode() && (Date.now() - (s.ts || 0)) < KID_UNLOCK_SEC * 1000);
+  }catch(e){ return false; }
+}
+function kidUnlock(){ try{ sessionStorage.setItem(KID_SESSION, JSON.stringify({code: kidCode(), ts: Date.now()})); }catch(e){} }
+function kidLock(){ try{ sessionStorage.removeItem(KID_SESSION); }catch(e){} }
+function parentNoteAllowed(){ return !kidBound() || kidUnlocked(); }
+
+/* первый вход: ребёнок придумывает свой PIN и привязывает устройство */
+function kidBindFlow(){
+  const k = kidSt();
+  if (k.binding || PinPad.isOpen()) return;
+  k.binding = 1;
+  PinPad.set({}).then(pin => {
+    k.binding = 0;
+    if (!pin) return;
+    kidPost({act: 'device', code: k.code, token: k.token, pin: pin}).then(r => {
+      if (r && r.ok){
+        k.dpin = 1; k.linked = 1;
+        kidSaveState(); kidUnlock(); kidRender();
+        kidPush(1); kidPull();
+        try{ toast('PIN создан — запомни его'); }catch(e){}
+        if (!k.introShown) setTimeout(() => { try{ kidRender(); }catch(e){} }, 300);
+        return;
+      }
+      if (r && r.err === 'pinset'){ k.dpin = 1; kidSaveState(); kidUnlock(); kidRender(); return; }
+      if (r && r.err === 'unlinked'){ kidUnlinkedScreen(); return; }
+      try{ toast('Не получилось сохранить PIN — проверим связь'); }catch(e){}
+    }).catch(() => { try{ toast('Нет связи: PIN сохранится, когда появится интернет'); }catch(e){} });
+  });
+}
+
+/* вход: только свой PIN */
+function kidLockScreen(){
+  if (PinPad.isOpen()) return;
+  const p = DB.profile || {};
+  PinPad.ask({
+    avatar: kidAvatar(),
+    title: 'Привет, ' + (p.name || 'друг') + '!',
+    subtitle: 'Введи свой PIN — четыре цифры',
+    foot: 'Забыл PIN? <span class="pp-link" onclick="kidForgotPin()">Создать новый код</span>',
+    verify: pin => kidPost({act: 'enter', code: kidCode(), pin: pin}).then(r => {
+      if (r && r.ok){ kidUnlock(); kidTake(r); kidPush(1); return true; }
+      if (r && r.err === 'pin') return 'Не подошёл. Попробуй ещё';
+      if (r && r.err === 'blocked') return 'Слишком много попыток. Подожди ' + Math.ceil((r.wait || 600) / 60) + ' мин.';
+      if (r && r.err === 'unlinked'){ setTimeout(kidUnlinkedScreen, 60); return 'Устройство отвязано родителем'; }
+      return 'Нет связи с сервером';
+    })
+  }).then(pin => { if (pin) kidRender(); });
+}
+
+/* устройство отвязали из приложения родителя */
+function kidUnlinkedScreen(){
+  kidCss();
+  if (document.getElementById('kidUnlinked')) return;
+  kidLock();
+  const el = document.createElement('div');
+  el.id = 'kidUnlinked'; el.className = 'kg-bg';
+  el.innerHTML = `<div class="kg-card">
+    <div class="kg-ico">🔓</div>
+    <div class="kg-kick">Устройство отвязано</div>
+    <div class="kg-txt">Родитель отвязал это устройство. Прогресс на нём сохранён.
+      Привяжись заново своим PIN или создай новый код.</div>
+    <div class="kg-row">
+      <button type="button" class="btn" onclick="kidRebind()">Привязать заново</button>
+      <button type="button" class="btn ghost" onclick="kidNewCode()">Создать новый код</button>
+    </div>
+  </div>`;
+  document.body.appendChild(el);
+}
+function kidUnlinkedDone(){ const el = document.getElementById('kidUnlinked'); if (el) el.remove(); }
+
+/* привязка заново тем же PIN (код и заметки родителя сохраняются) */
+function kidRebind(){
+  PinPad.ask({
+    avatar: kidAvatar(),
+    title: 'Привязка заново',
+    subtitle: 'Введи свой PIN — четыре цифры',
+    cancel: true,
+    foot: 'Код и заметки родителя останутся прежними',
+    verify: pin => kidPost({act: 'rebind', code: kidCode(), pin: pin}).then(r => {
+      if (r && r.ok){
+        kidSt().token = r.token; kidSt().linked = 1; kidSt().dpin = 1;
+        kidSaveState(); kidUnlock(); kidUnlinkedDone(); kidRender(); kidPush(1); kidPull();
+        return true;
+      }
+      if (r && r.err === 'pin') return 'Не подошёл. Попробуй ещё';
+      if (r && r.err === 'blocked') return 'Слишком много попыток. Подожди ' + Math.ceil((r.wait || 600) / 60) + ' мин.';
+      return 'Нет связи с сервером';
+    })
+  });
+}
+
+/* начать с чистого листа: новый код и новый PIN (прогресс на устройстве остаётся) */
+function kidNewCode(){
+  if (!confirm('Создать новый код? Родителю нужно будет привязаться к нему заново.')) return;
+  const k = kidSt();
+  k.code = ''; k.token = ''; k.dpin = 0; k.linked = 0; k.introShown = 0; k.notes = []; k.limits = {};
+  k.noteSeen = 0; k.noteToast = 0;
+  kidSaveState(); kidLock(); kidUnlinkedDone();
+  kidEnsure().then(() => kidBindFlow());
+}
+function kidForgotPin(){
+  if (PinPad.isOpen()) PinPad.hide();
+  setTimeout(kidNewCode, 80);
+}
+
+/* что показать при входе: знакомство, создание PIN, замок или приложение */
+function kidGate(){
+  try{
+    if (PinPad.isOpen()) return;
+    const k = kidSt();
+    if (!DB.profile) return;                      /* идёт знакомство */
+    if (!k.code || !k.token){ kidBindFlow(); return; }
+    /* PIN был, а устройство отвязали родителем — предлагаем привязаться заново */
+    if (k.dpin && k.linked === 0){ kidUnlinkedScreen(); return; }
+    if (!k.dpin){ kidBindFlow(); return; }        /* первое устройство: свой PIN */
+    if (!kidUnlocked()) kidLockScreen();
+  }catch(e){}
+}
+
 function kidBoot(){
   kidLoadState();
-  kidEnsure().then(() => { kidPush(1); kidPull(); });
+  kidGate();
+  kidEnsure().then(() => { kidGate(); kidPush(1); kidPull(); });
   kidRender();
   setInterval(kidPull, 60000);
   /* проверяем заметки и сами: если ребёнок только что закончил знакомство */
+  setInterval(() => { kidGate(); }, 4000);
   setInterval(() => { if (typeof noteFullCheck === 'function') noteFullCheck(); }, 20000);
   setTimeout(() => { if (typeof noteFullCheck === 'function') noteFullCheck(); }, 3000);
   try{
@@ -257,6 +420,7 @@ function kidBoot(){
     window.addEventListener('pagehide', () => {
       if (!kidReady()) return;
       const k = kidSt();
+      if (!k.dpin || k.linked === 0) return;
       const body = JSON.stringify({act: 'sync', code: k.code, token: k.token, data: kidSnapshot()});
       try{ navigator.sendBeacon(kidApiUrl(), new Blob([body], {type: 'application/json'})); }catch(e){}
     });

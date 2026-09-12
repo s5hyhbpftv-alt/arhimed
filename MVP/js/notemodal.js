@@ -62,6 +62,8 @@ function noteQueueUnread(){
 function noteFullOpen(){
   if (NOTE_MODAL.open || NOTE_MODAL.lock) return false;
   try{ if (!DB || !DB.profile) return false; }catch(e){ return false; }   /* на знакомстве не перебиваем */
+  /* и не поверх замка с PIN */
+  try{ if (typeof parentNoteAllowed === 'function' && !parentNoteAllowed()) return false; }catch(e){}
   const list = noteQueueUnread();
   if (!list.length) return false;
   NOTE_MODAL.queue = list;

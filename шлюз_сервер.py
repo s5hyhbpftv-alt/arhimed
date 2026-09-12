@@ -77,6 +77,24 @@ def save_kid(rec):
     return True
 
 
+def norm_rec(rec):
+    """Старые записи (до разделения PIN) приводим к новому виду."""
+    if rec.get('pin') and not rec.get('ppin'):
+        rec['ppin'] = rec.pop('pin')
+        rec['psalt'] = rec.get('salt') or secrets.token_hex(8)
+    rec.setdefault('ppin', None)
+    rec.setdefault('psalt', rec.get('salt') or secrets.token_hex(8))
+    rec.setdefault('dpin', None)
+    rec.setdefault('salt', secrets.token_hex(8))
+    rec.setdefault('token', '')
+    rec.setdefault('linked', 1 if rec.get('token') else 0)
+    rec.setdefault('unlinked', 0)
+    rec.setdefault('fails_d', 0); rec.setdefault('fails_p', 0)
+    rec.setdefault('blocked_d_until', 0); rec.setdefault('blocked_p_until', 0)
+    rec.setdefault('limits', {'minutes': 0}); rec.setdefault('notes', [])
+    return rec
+
+
 def public_rec(rec):
     """То, что уходит родителю: снимок прогресса, лимит и заметки."""
     return {'ok': True,
@@ -86,7 +104,10 @@ def public_rec(rec):
             'limits': rec.get('limits') or {},
             'notes': rec.get('notes') or [],
             'updated': rec.get('updated') or 0,
-            'pinSet': bool(rec.get('pin'))}
+            'pinSet': bool(rec.get('ppin')),
+            'linked': int(rec.get('linked') or 0),
+            'childPin': bool(rec.get('dpin')),
+            'unlinked': rec.get('unlinked') or 0}
 
 
 async def kid_api(request):
@@ -115,7 +136,9 @@ async def kid_api(request):
                 if not os.path.exists(kid_file(c)):
                     break
             rec = {'code': c, 'token': secrets.token_hex(16), 'salt': secrets.token_hex(8),
-                   'pin': None, 'fails': 0, 'blocked_until': 0,
+                   'dpin': None, 'ppin': None, 'psalt': secrets.token_hex(8),
+                   'linked': 0, 'unlinked': 0,
+                   'fails_d': 0, 'fails_p': 0, 'blocked_d_until': 0, 'blocked_p_until': 0,
                    'created': int(time.time() * 1000), 'updated': 0,
                    'data': None, 'limits': {'minutes': 0}, 'notes': []}
             if not save_kid(rec):
@@ -128,9 +151,92 @@ async def kid_api(request):
     rec = load_kid(code)
     if not rec:
         return bad('notfound')
+    rec = norm_rec(rec)
+
+    # --- что известно про код: нужен ли PIN родителя, привязано ли устройство ---
+    if act == 'probe':
+        return web.json_response({'ok': True, 'code': code,
+                                  'pinSet': bool(rec.get('ppin')),
+                                  'childPin': bool(rec.get('dpin')),
+                                  'linked': int(rec.get('linked') or 0),
+                                  'unlinked': rec.get('unlinked') or 0}, headers=no_store)
+
+    def check_pin(which, pin):
+        """Проверка PIN: у ребёнка свой, у родителя свой; с блокировкой после 8 промахов."""
+        field = 'dpin' if which == 'd' else 'ppin'
+        salt = rec.get('salt') if which == 'd' else rec.get('psalt')
+        fails = 'fails_d' if which == 'd' else 'fails_p'
+        until = 'blocked_d_until' if which == 'd' else 'blocked_p_until'
+        now = time.time()
+        if rec.get(until, 0) > now:
+            return ('blocked', int(rec[until] - now))
+        if not re.match(r'^\d{4}$', pin):
+            return ('pin4', None)
+        if not rec.get(field):
+            return ('nopin', None)
+        if pin_hash(salt or '', pin) != rec[field]:
+            rec[fails] = int(rec.get(fails) or 0) + 1
+            if rec[fails] >= 8:
+                rec[until] = now + 600
+                rec[fails] = 0
+            return ('pin', rec[fails])
+        rec[fails] = 0
+        rec[until] = 0
+        return (None, None)
+
+    # --- устройство ребёнка: первый вход, свой PIN ---
+    if act == 'device':
+        if rec.get('unlinked'):
+            return bad('unlinked')
+        if str(body.get('token') or '') != rec.get('token'):
+            return bad('token')
+        pin = str(body.get('pin') or '').strip()
+        if not re.match(r'^\d{4}$', pin):
+            return bad('pin4')
+        if rec.get('dpin'):
+            return bad('pinset')
+        rec['dpin'] = pin_hash(rec['salt'], pin)
+        rec['linked'] = 1
+        rec['unlinked'] = 0
+        async with _tlock:
+            save_kid(rec)
+        return web.json_response({'ok': True, 'code': rec['code'], 'linked': 1}, headers=no_store)
+
+    # --- вход ребёнка: только свой PIN (устройство уже привязано) ---
+    if act == 'enter':
+        if rec.get('unlinked') or not rec.get('linked'):
+            return bad('unlinked')
+        err, extra = check_pin('d', str(body.get('pin') or '').strip())
+        if err:
+            if err == 'pin':
+                async with _tlock:
+                    save_kid(rec)
+            return bad(err, **({'fails': extra} if extra is not None else {}))
+        async with _tlock:
+            save_kid(rec)
+        return web.json_response({'ok': True, 'code': rec['code'], 'limits': rec.get('limits') or {},
+                                  'notes': rec.get('notes') or [], 'updated': rec.get('updated') or 0},
+                                 headers=no_store)
+
+    # --- привязка заново (родитель отвязал устройство, ребёнок вводит свой PIN) ---
+    if act == 'rebind':
+        err, extra = check_pin('d', str(body.get('pin') or '').strip())
+        if err:
+            if err == 'pin':
+                async with _tlock:
+                    save_kid(rec)
+            return bad(err, **({'fails': extra} if extra is not None else {}))
+        rec['token'] = secrets.token_hex(16)
+        rec['linked'] = 1
+        rec['unlinked'] = 0
+        async with _tlock:
+            save_kid(rec)
+        return web.json_response({'ok': True, 'code': rec['code'], 'token': rec['token']}, headers=no_store)
 
     # --- ребёнок присылает прогресс ---
     if act == 'sync':
+        if not rec.get('linked') or rec.get('unlinked'):
+            return bad('unlinked')
         if str(body.get('token') or '') != rec.get('token'):
             return bad('token')
         data = body.get('data')
@@ -149,31 +255,64 @@ async def kid_api(request):
                                   'notes': rec.get('notes') or [], 'updated': rec['updated']},
                                  headers=no_store)
 
-    # --- вход родителя: первый раз задаём PIN, потом проверяем ---
-    if act in ('claim', 'get', 'set'):
+    # --- ребёнок забирает лимит и заметки ---
+    if act == 'take':
+        if not rec.get('linked') or rec.get('unlinked'):
+            return bad('unlinked')
+        if str(body.get('token') or '') != rec.get('token'):
+            return bad('token')
+        return web.json_response({'ok': True, 'limits': rec.get('limits') or {},
+                                  'notes': rec.get('notes') or [],
+                                  'updated': rec.get('updated') or 0}, headers=no_store)
+
+    # --- родитель: первый вход задаёт свой PIN, дальше только проверка ---
+    if act in ('claim', 'get', 'set', 'unlink', 'delparent'):
         pin = str(body.get('pin') or '').strip()
         now = time.time()
-        if rec.get('blocked_until', 0) > now:
-            return bad('blocked', wait=int(rec['blocked_until'] - now))
+        if rec.get('blocked_p_until', 0) > now:
+            return bad('blocked', wait=int(rec['blocked_p_until'] - now))
         if not re.match(r'^\d{4}$', pin):
             return bad('pin4')
-        if not rec.get('pin'):
+        if not rec.get('ppin'):
             if act != 'claim':
                 return bad('nopin')
-            rec['pin'] = pin_hash(rec['salt'], pin)
+            rec['ppin'] = pin_hash(rec['psalt'], pin)
             first = True
         else:
-            if pin_hash(rec['salt'], pin) != rec['pin']:
-                rec['fails'] = int(rec.get('fails') or 0) + 1
-                if rec['fails'] >= 8:
-                    rec['blocked_until'] = now + 600
-                    rec['fails'] = 0
+            if pin_hash(rec['psalt'], pin) != rec['ppin']:
+                rec['fails_p'] = int(rec.get('fails_p') or 0) + 1
+                if rec['fails_p'] >= 8:
+                    rec['blocked_p_until'] = now + 600
+                    rec['fails_p'] = 0
                 async with _tlock:
                     save_kid(rec)
-                return bad('pin', fails=rec['fails'])
+                return bad('pin', fails=rec['fails_p'])
             first = False
-        rec['fails'] = 0
-        rec['blocked_until'] = 0
+        rec['fails_p'] = 0
+        rec['blocked_p_until'] = 0
+
+        if act == 'unlink':
+            rec['token'] = ''            # старое устройство больше не пустят
+            rec['linked'] = 0
+            rec['unlinked'] = int(time.time() * 1000)
+            async with _tlock:
+                save_kid(rec)
+            return web.json_response({'ok': True, 'linked': 0}, headers=no_store)
+
+        if act == 'delparent':
+            # удаляем всё, что принадлежит родителю: PIN, лимит, заметки, отчёт
+            rec['ppin'] = None
+            rec['psalt'] = secrets.token_hex(8)
+            rec['notes'] = []
+            rec['limits'] = {'minutes': 0}
+            rec['data'] = None
+            rec['updated'] = 0
+            rec['token'] = ''
+            rec['linked'] = 0
+            rec['unlinked'] = int(time.time() * 1000)
+            async with _tlock:
+                save_kid(rec)
+            return web.json_response({'ok': True, 'deleted': 1}, headers=no_store)
 
         if act == 'set':
             lim = body.get('limits')
@@ -194,14 +333,6 @@ async def kid_api(request):
         out = public_rec(rec)
         out['first'] = first
         return web.json_response(out, headers=no_store)
-
-    # --- ребёнок забирает лимит и заметки (по ключу устройства) ---
-    if act == 'take':
-        if str(body.get('token') or '') != rec.get('token'):
-            return bad('token')
-        return web.json_response({'ok': True, 'limits': rec.get('limits') or {},
-                                  'notes': rec.get('notes') or [],
-                                  'updated': rec.get('updated') or 0}, headers=no_store)
 
     return bad('act')
 
