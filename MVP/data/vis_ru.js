@@ -3691,14 +3691,14 @@ window.RUWORK611 = (function(){
   #lvis .ms .vine{position:absolute;left:10px;right:10px;top:8px;height:18px;opacity:.75;pointer-events:none}
   #lvis .ms .vine.b{top:auto;bottom:8px;transform:scaleY(-1)}
   #lvis .ms .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-  #lvis .ms .work{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+  #lvis .ms .work{font-size:clamp(11px,3.2vw,14px);letter-spacing:clamp(.06em,.14em,.14em);text-transform:uppercase;color:var(--mut)}
   #lvis .ms .num{font-size:14px;color:var(--mut);font-variant-numeric:tabular-nums}
-  #lvis .ms .gems{display:flex;gap:6px;margin-top:10px;justify-content:center}
-  #lvis .ms .gem{width:9px;height:9px;transform:rotate(45deg);border:1px solid var(--rule);background:rgba(255,255,255,.04);
+  #lvis .ms .gems{display:flex;gap:clamp(3px,1.2vw,6px);margin-top:10px;justify-content:center;flex-wrap:wrap;max-width:100%}
+  #lvis .ms .gem{width:clamp(7px,2.2vw,9px);height:clamp(7px,2.2vw,9px);transform:rotate(45deg);border:1px solid var(--rule);background:rgba(255,255,255,.04);
     transition:background 200ms ease-out,box-shadow 200ms ease-out,border-color 200ms ease-out}
   #lvis .ms .gem.done{background:linear-gradient(180deg,#ffd76a,#e2b23f);border-color:#ffd76a;box-shadow:0 0 10px rgba(255,215,106,.55)}
-  #lvis .ms .inscribe{position:relative;margin:26px 0 8px;padding:18px 8px 22px;text-align:center}
-  #lvis .ms .ink{font-size:52px;line-height:1;font-weight:600;letter-spacing:.01em;display:inline-flex;gap:2px;align-items:flex-end}
+  #lvis .ms .inscribe{position:relative;margin:clamp(14px,4vw,26px) 0 8px;padding:clamp(10px,3vw,18px) 4px clamp(14px,4vw,22px);text-align:center;max-width:100%}
+  #lvis .ms .ink{font-size:clamp(26px,10.6vw,52px);line-height:1.05;font-weight:600;letter-spacing:.01em;display:inline-flex;gap:2px;align-items:flex-end;flex-wrap:wrap;justify-content:center;max-width:100%}
   #lvis .ms .ink span{animation:inkIn 240ms ${OUT} both;animation-delay:calc(var(--i,0)*24ms)}
   #lvis .ms .ink span.seat{position:relative;min-width:42px;color:transparent;
     border-bottom:3px solid rgba(255,215,106,.85);box-shadow:0 12px 22px -10px rgba(255,215,106,.55)}
@@ -3715,12 +3715,12 @@ window.RUWORK611 = (function(){
   @keyframes pen{0%{transform:scaleX(0);opacity:.2}100%{transform:scaleX(1);opacity:1}}
   #lvis .ms .ink span.bad{color:#ffdad4;text-shadow:0 0 18px rgba(232,115,95,.8)}
   #lvis .ms .underline{position:absolute;left:8%;right:8%;bottom:10px;height:14px;opacity:.9}
-  #lvis .ms .gloss{margin-top:14px;padding:12px 14px 12px 16px;border-left:3px solid var(--rule);
+  #lvis .ms .gloss{margin-top:14px;padding:12px clamp(10px,3vw,14px) 12px clamp(12px,3.4vw,16px);border-left:3px solid var(--rule);
     background:linear-gradient(90deg,rgba(255,215,106,.08),transparent 70%);font-size:16px;line-height:1.55}
   #lvis .ms .gloss .lbl{display:block;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
   #lvis .ms .gloss.ok{border-color:var(--ok)}#lvis .ms .gloss.no{border-color:var(--no)}
-  #lvis .ms .seals{display:flex;gap:18px;justify-content:center;margin-top:18px}
-  #lvis .ms .seal{position:relative;width:84px;height:84px;border-radius:50%;cursor:pointer;font-family:${F};font-size:34px;font-weight:600;color:var(--ink);
+  #lvis .ms .seals{display:flex;gap:clamp(10px,3.4vw,18px);justify-content:center;margin-top:clamp(12px,3.4vw,18px);flex-wrap:wrap}
+  #lvis .ms .seal{position:relative;width:clamp(58px,17vw,84px);height:clamp(58px,17vw,84px);border-radius:50%;cursor:pointer;font-family:${F};font-size:clamp(24px,7vw,34px);font-weight:600;color:var(--ink);
     background:radial-gradient(circle at 35% 28%,#2c4536,#17251e 70%);border:2px solid var(--rule);
     box-shadow:0 10px 22px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.09),inset 0 -6px 14px rgba(0,0,0,.35);
     transition:transform 120ms ${EASE},box-shadow 180ms ease-out,border-color 180ms ease-out}
@@ -3798,7 +3798,7 @@ window.RUWORK611 = (function(){
       }catch(e){}
     };
   }
-  if(false){   /* рукописный кадр 611 на паузе: его вёрстка не проходит гейт на 320 px */
+  if(false){   /* рукописный кадр 611 снова на паузе: на 390 чист, на 320 даёт 12 отметок, природу которых я не изолировал */
     const prevW=window.WAVE_B[611];
     window.WAVE_B[611]=function(el){
       try{
