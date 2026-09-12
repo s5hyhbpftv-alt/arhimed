@@ -3321,7 +3321,7 @@ window.RU601V2 = (function(){
   const OUT="cubic-bezier(.23,1,.32,1)";        /* вход: приезжает и успокаивается   */
   const CSS=`
   #lvis .s6{--gold:#ffd76a;--ink:#f6efe0;--mut:#d8c9a6;--line:rgba(255,215,106,.28);--ok:#8fd1a8;--no:#e86a5a;
-    font-family:${F};color:var(--ink);width:100%;display:flex;flex-direction:column;gap:16px}
+    font-family:${F};color:var(--ink);width:100%;display:flex;flex-direction:column;gap:16px;padding-bottom:56px}
   #lvis .s6 .kicker{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-variant-numeric:tabular-nums}
   #lvis .s6 h2{font-size:24px;line-height:1.12;font-weight:600;color:var(--gold);letter-spacing:-.02em;margin:0;text-wrap:balance}
   #lvis .s6 p{margin:0}
@@ -3341,9 +3341,9 @@ window.RU601V2 = (function(){
   #lvis .s6 .chip.on{border-color:var(--gold);background:rgba(255,215,106,.14)}
   #lvis .s6 .chip.ok{border-color:var(--ok);background:rgba(143,209,168,.16)}
   #lvis .s6 .chip.no{border-color:var(--no);background:rgba(232,106,90,.14)}
-  #lvis .s6 .word{display:inline-flex;align-items:baseline;gap:10px;padding:14px 22px;border-radius:18px;
+  #lvis .s6 .word{display:inline-flex;align-items:baseline;gap:10px;flex-wrap:nowrap;white-space:nowrap;padding:14px 18px;border-radius:18px;
     background:linear-gradient(180deg,#24382d,#17261e);border:1.5px solid var(--line);box-shadow:0 12px 28px rgba(0,0,0,.42)}
-  #lvis .s6 .word b{font-size:48px;font-weight:600;line-height:1;letter-spacing:-.02em}
+  #lvis .s6 .word b{font-size:44px;font-weight:600;line-height:1;letter-spacing:-.02em}
   #lvis .s6 .word i{font-style:normal;font-size:16px;color:var(--mut)}
   #lvis .s6 .tag{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:12px;
     background:rgba(255,215,106,.12);border:1px solid var(--line);font-size:16px;color:var(--gold)}
@@ -3353,25 +3353,17 @@ window.RU601V2 = (function(){
   #lvis .s6 .verdict.ok{color:#b8e8cc}#lvis .s6 .verdict.no{color:#f3b3aa}
   #lvis .s6 .score{font-size:16px;color:var(--mut);font-variant-numeric:tabular-nums}
   #lvis .s6 .col{display:flex;flex-direction:column;gap:12px}
-  #lvis .s6 .note{margin-top:12px;padding:12px 14px 12px 16px;border-left:3px solid rgba(255,215,106,.45);
-    background:linear-gradient(90deg,rgba(255,215,106,.08),transparent 70%);font-size:16px;line-height:1.55}
-  #lvis .s6 .note .lbl{display:block;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#d8c9a6;margin-bottom:4px}
-  #lvis .s6 .note.warn{border-color:rgba(232,106,90,.55);background:linear-gradient(90deg,rgba(232,106,90,.08),transparent 70%)}
-  #lvis .s6 .pr{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(255,215,106,.22)}
-  #lvis .s6 .pr .q{font-size:17px;line-height:1.4;margin-bottom:10px}
-  #lvis .s6 .ex-list{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
-  #lvis .s6 .ex-list li{position:relative;padding-left:22px;font-size:16px;line-height:1.5}
-  #lvis .s6 .ex-list li::before{content:'';position:absolute;left:4px;top:9px;width:8px;height:8px;transform:rotate(45deg);
-    background:linear-gradient(180deg,#ffd76a,#e2b23f)}
-  #lvis .s6 .pr .row{gap:10px;justify-content:flex-start}
-  #lvis .s6 .pr .chip{font-size:20px;padding:12px 16px}
   #lvis .s6 .split{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap}
   #lvis .s6 .rail{display:flex;gap:14px;justify-content:center;padding:10px 0;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line)}
-  #lvis .s6 .crates{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  #lvis .s6 .crates{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:86%;margin:0 auto}
+  /* персонаж-помощник не должен закрывать содержимое русского тренажёра */
+  body:has(#lvis .s6) .avatar,body:has(#lvis .s6) .mascot,body:has(#lvis .s6) .assistant,body:has(#lvis .s6) .guide,
+  body:has(#lvis .ms) .avatar,body:has(#lvis .ms) .mascot,body:has(#lvis .ms) .assistant,body:has(#lvis .ms) .guide,
+  body:has(#lvis .rl-wrap) .avatar,body:has(#lvis .rl-wrap) .mascot{display:none!important}
   #lvis .s6 .crate{flex:1 1 30%;min-width:104px;padding:16px 12px;text-align:center}
   #lvis .s6 .crate .ic{font-size:30px}
-  #lvis .s6 .crate .nm{font-size:17px;font-weight:600;color:var(--gold);margin-top:8px}
-  #lvis .s6 .crate .ex{font-size:16px;color:var(--mut);margin-top:4px}
+  #lvis .s6 .crate .nm{font-size:17px;font-weight:600;color:var(--gold);margin-top:8px;white-space:nowrap}
+  #lvis .s6 .crate .ex{font-size:14px;line-height:1.3;color:var(--mut);margin-top:4px}
   #lvis .s6 .crate.hit{border-color:var(--ok);box-shadow:0 0 0 4px rgba(143,209,168,.18);animation:bump 320ms ${OUT}}
   #lvis .s6 .crate.miss{border-color:var(--no);animation:nudge 150ms ease-out}
   /* --- хореография: у каждого кадра своя --- */
@@ -3415,7 +3407,7 @@ window.RU601V2 = (function(){
            8:['Предлог, союз, частица…','служат для связи','называют предмет']};
   const SC=[['снег','кто? что?','н'],['пушистый','какой?','п'],['летит','что делает?','г'],['дорога','кто? что?','н'],
             ['весёлый','какой?','п'],['рисует','что делает?','г'],['радость','кто? что?','н'],['зимний','какой?','п'],['светит','что делает?','г']];
-  const CR=[['н','🧱','сущ.','кто? что?'],['п','🎨','прил.','какой?'],['г','⚡','глагол','что делает?']];
+  const CR=[['н','🧱','сущ.','кто? что?'],['п','🎨','прил.','какой?'],['г','⚡','гл.','что делает?']];
   function v(s,i){ const q=s['q'+i]; return q==null?`<p class="verdict">Выбери ответ:</p>`:`<p class="verdict ${q===0?'ok':'no'}">${q===0?'✅ верно.':'❌ не так — подумай ещё раз.'}</p>`; }
   function pred(i,body){ return body + (P[i]?`<div class="row">
       ${BTN(90,'chip',P[i][1],`s6Pred(${i},0)`)}${BTN(91,'chip',P[i][2],`s6Pred(${i},1)`)}</div>${v(S(),i)}`:'') }
@@ -3825,19 +3817,19 @@ window.RUWORK611 = (function(){
 window.RUFEED = (function(){
   const F="Georgia,'Times New Roman',serif";
   const CSS=`
-  #lvis .fb{position:relative;margin-top:14px;padding:14px 16px 14px 18px;border-left:3px solid var(--rule,rgba(255,215,106,.35));
+  #lvis .fb{position:relative;overflow:hidden;margin-top:14px;padding:14px 16px 14px 18px;border-left:3px solid var(--rule,rgba(255,215,106,.35));
     background:linear-gradient(90deg,rgba(255,215,106,.08),transparent 72%);font-family:${F};font-size:16px;line-height:1.55;
     transform-origin:top left;animation:fbUnfold 260ms cubic-bezier(.23,1,.32,1) both}
   #lvis .fb .lbl{display:block;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut,#dccfb0);margin-bottom:4px}
   #lvis .fb.ok{border-color:#9fd8b4}#lvis .fb.no{border-color:#e8735f}
-  #lvis .fb .stamp{position:absolute;right:10px;top:-14px;width:56px;height:56px;pointer-events:none}
+  #lvis .fb .stamp{position:absolute;right:12px;top:6px;width:44px;height:44px;pointer-events:none}
   #lvis .fb .stamp .seal{fill:none;stroke:#9fd8b4;stroke-width:2.4}
   #lvis .fb .stamp .mark{stroke:#9fd8b4;stroke-width:3.2;fill:none;stroke-linecap:round;stroke-dasharray:40;stroke-dashoffset:40}
   #lvis .fb.no .stamp .seal,#lvis .fb.no .stamp .mark{stroke:#e8735f}
-  #lvis .fb .ring{position:absolute;right:16px;top:-8px;width:44px;height:44px;border-radius:50%;
+  #lvis .fb .ring{position:absolute;right:20px;top:14px;width:32px;height:32px;border-radius:50%;
     border:2px solid rgba(159,216,180,.65);pointer-events:none;animation:fbRing 520ms cubic-bezier(.2,0,0,1) 120ms both}
   #lvis .fb.no .ring{border-color:rgba(232,115,95,.6)}
-  #lvis .fb .blot{position:absolute;left:-6px;bottom:-6px;width:26px;height:26px;border-radius:50%;pointer-events:none;
+  #lvis .fb .blot{position:absolute;left:6px;bottom:6px;width:22px;height:22px;border-radius:50%;pointer-events:none;
     background:radial-gradient(circle,rgba(232,115,95,.55),transparent 70%);animation:fbBlot 420ms ease-out both}
   #lvis .fb.ok .stamp{animation:fbStamp 320ms cubic-bezier(.2,1.4,.3,1) 40ms both}
   #lvis .fb.no .stamp{animation:fbStampNo 260ms cubic-bezier(.36,.07,.19,.97) both}
@@ -3884,6 +3876,7 @@ window.RU601MOTION = (function(){
   const CSS=`
   /* --- живой фон кадра --- */
   #lvis .s6,#lvis .ms{position:relative;overflow:hidden}
+  #lvis .s6 .word,#lvis .ms .ink{position:relative;overflow:hidden;border-radius:12px}
   #lvis .s6{animation:cardIn 480ms cubic-bezier(.2,1.5,.3,1) both}
   #lvis .ms{animation:cardIn 480ms cubic-bezier(.2,1.5,.3,1) both}
   @keyframes cardIn{0%{opacity:0;transform:translateY(28px) scale(.96)}60%{transform:translateY(-4px) scale(1.01)}100%{opacity:1;transform:none}}
@@ -3974,112 +3967,4 @@ window.RU601MOTION = (function(){
   }
   watch();
   return {decorate:decorate, sparks:sparks};
-})();
-
-/* ================= 601 v3: 14 шагов — теория + практика парами, каждый шаг свой =================
-   Семь теоретических кадров (правило, примеры, «как проверить», «частая ошибка») и семь
-   практических (у каждого своё задание и свой способ действия). Отклик — движок RUFEED. */
-window.RU601V3 = (function(){
-  const F="Georgia,'Times New Roman',serif";
-  const THEORY=[
-   {n:'01',t:'Что называет слово',lead:'Должность слова в речи называется частью речи. Вопрос к слову — самый быстрый способ её узнать.',
-    ex:['🧱 предмет · кто? что?','🎨 признак · какой?','⚡ действие · что делает?'],
-    how:'Задай от слова вопрос: кто? что? какой? что делает?',
-    err:'Считать, что «бег» — глагол. Нет: «бег» отвечает на «что?», значит существительное.'},
-   {n:'02',t:'Имя существительное',lead:'Отвечает на кто? или что? и называет предмет, живое существо, вещество или явление.',
-    ex:['кот · кто?','дом · что?','смех · что?','дождь · что?'],
-    how:'Подставь слово в рамку «это …»: это смех, это дождь — существительные.',
-    err:'Путать «смех» и «смеяться»: смех — предмет речи, смеяться — действие.'},
-   {n:'03',t:'Имя прилагательное',lead:'Отвечает на какой? чей? и называет признак, который всегда принадлежит предмету.',
-    ex:['рыжий кот','тёплая вода','зимний день','лисий след'],
-    how:'Найди слово, к которому признак цепляется: прилагательное без предмета не живёт.',
-    err:'Ставить прилагательное главным: в «зимний день» главное — день.'},
-   {n:'04',t:'Глагол',lead:'Отвечает на что делает? что сделает? и называет действие или состояние.',
-    ex:['бежит','светит','спит','радуется'],
-    how:'Спроси «что делает предмет?» — ответ и есть глагол.',
-    err:'Считать глаголом только движение: «спит» и «радуется» — тоже глаголы.'},
-   {n:'05',t:'Местоимение',lead:'Не называет предмет, а указывает на него: я, ты, он, она, мы, вы, они.',
-    ex:['Маша → она','брат → он','мы с тобой → мы'],
-    how:'Если слово можно заменить именем, а имя — местоимением, перед тобой местоимение.',
-    err:'Искать в местоимении «название» предмета: оно только указывает.'},
-   {n:'06',t:'Имя числительное',lead:'Называет число, количество или порядок при счёте.',
-    ex:['пять · сколько?','сто · сколько?','третий · который?','пятый · который?'],
-    how:'Задай вопрос сколько? или который? — и проверь, что слово не стало местоимением.',
-    err:'Путать «пять» и «пятёрка»: пятёрка — существительное, пять — числительное.'},
-   {n:'07',t:'Наречие и служебные слова',lead:'Наречие — признак действия (как? где? когда?) и не изменяется. Предлог, союз, частица ничего не называют — они служат.',
-    ex:['быстро · как?','вдали · где?','на, и, не · служебные'],
-    how:'У наречия нет окончания: проверь, меняется ли слово.',
-    err:'Считать «на» и «и» самостоятельными: они служат, а не называют.'}
-  ];
-  const PRACT=[];
-  let CURST={};
-  function practice(i, k, label, items, right){ const st=CURST;
-    const F1=(i,k,label,items,right)=>`<div class="pr" data-pr="${k}">
-        <div class="q">${label}</div>
-        <div class="row">${items.map((w,j)=>`<button type="button" class="chip ${st['p'+i+'_'+j]=='ok'?'ok':(st['p'+i+'_'+j]=='no'?'no':'')}" onclick="s6P(${i},${j},${right===j?1:0},'${w}')">${w}</button>`).join('')}</div>
-        ${st['p'+i]!=null ? (st['p'+i]==='ok' ? window.RUFEED.note('ok','верно',st['msg'+i]||'правильно')
-                                               : window.RUFEED.note('no','исправить',st['msg'+i]||'попробуй ещё')) : '<div class="cap">Выбери ответ.</div>'}
-      </div>`;
-    return F1(i,k,label,items,right);   /* возвращаем готовую строку, а не функцию */
-  }
-  function frames(s){
-    CURST=s;
-    const P={
-    8:()=>`<h2>Практика: что называет слово</h2>${practice(8,'a','Кто называет предмет?',['снег','летит','пушистый'],0)}
-        ${practice(8,'b','На какой вопрос отвечает «пушистый»?',['какой?','что делает?','кто?'],0)}`,
-    9:()=>`<h2>Практика: имя существительное</h2>${practice(9,'a','Что здесь существительное?',['радость','радостный','радоваться'],0)}
-        ${practice(9,'b','Какой вопрос подходит к «дождь»?',['что?','какой?','что делает?'],0)}
-        ${practice(9,'c','Найди лишнее слово',['смех','бег','бежать'],2)}`,
-    10:()=>`<h2>Практика: прилагательное</h2>${practice(10,'a','Что здесь прилагательное?',['зимний','зима','зимовать'],0)}
-        ${practice(10,'b','К чему цепляется «тёплая»?',['вода','бежит','быстро'],0)}`,
-    11:()=>`<h2>Практика: глагол</h2>${practice(11,'a','Что здесь глагол?',['светит','свет','светлый'],0)}
-        ${practice(11,'b','Какое слово называет состояние?',['спит','бежит','стучит'],0)}`,
-    12:()=>`<h2>Практика: местоимение</h2>${practice(12,'a','Чем заменить «Маша»?',['она','оно','они'],0)}
-        ${practice(12,'b','Что местоимение делает?',['указывает','называет предмет','считает'],0)}`,
-    13:()=>`<h2>Практика: числительное и наречие</h2>${practice(13,'a','Что здесь числительное?',['пятый','пятёрка','пятерня'],0)}
-        ${practice(13,'b','На какой вопрос отвечает «быстро»?',['как?','сколько?','кто?'],0)}
-        ${practice(13,'c','Что служебное?',['на','стол','стоит'],0)}`,
-    14:()=>`<h2>Практика: разбор фразы</h2>${practice(14,'a','Сколько существительных в «Зимний день lightит снег»?',['два','одно','три'],0)}
-        ${practice(14,'b','Сколько глаголов в той же фразе?',['один','два','ни одного'],0)}
-        ${practice(14,'c','Какое слово служебное?',['на','снег','зимний'],0)}`
-    };
-    return {t:(i)=>THEORY[i], p:P};
-  }
-  function render(el){
-    try{ if(window.RUFEED&&window.RUFEED.css) window.RUFEED.css(); }catch(e){}
-    const s=(()=>{ const lk=lidKey(601); if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; })();
-    const step=(typeof LV!=='undefined'&&LV.step)||0;
-    const P=frames(s).p;
-    const body = (step>=1 && step<=7) ? (()=>{ const t=THEORY[step-1];
-        return `<div class="kicker">${t.n} · теория</div><h2>${t.t}</h2><p class="lead">${t.lead}</p>
-          <ul class="ex-list">${t.ex.map((e,k)=>`<li data-anim style="--i:${k+2}">${e}</li>`).join('')}</ul>
-          <div class="note"><span class="lbl">как проверить</span>${t.how}</div>
-          <div class="note warn"><span class="lbl">частая ошибка</span>${t.err}</div>`; })()
-      : (P[step] ? P[step]() : P[8]());
-    el.innerHTML=`<div class="s6" data-frame="${Math.min(14,step+1)}">${body}</div>`;
-  }
-  window.s6P=(frame,j,right,word)=>{
-    const s=(()=>{ const lk=lidKey(601); if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; })();
-    const key='p'+frame+'_'+j;
-    if(s[key]!=null) return;
-    s[key]= right===1?'ok':'no';
-    if(right===1){ s['p'+frame]='ok'; s.msg=null; s['msg'+frame]='«'+word+'» — верно.'; }
-    else { s['p'+frame]='no'; s['msg'+frame]='«'+word+'» — не подходит, посмотри правило выше.'; }
-    chRender(0);
-  };
-  if(window.ARH_LESSONS){
-    const L=window.ARH_LESSONS.find(x=>x.id===601);
-    if(L){
-      const exp=['Вводный кадр: части речи.'];
-      THEORY.forEach((t,i)=>exp.push((i+1)+'. '+t.t+'. '+t.lead));
-      ['Практика: что называет слово','Практика: имя существительное','Практика: прилагательное','Практика: глагол','Практика: местоимение','Практика: числительное и наречие','Практика: разбор фразы']
-        .forEach((x,i)=>exp.push('Вопрос '+(i+1)+' из 7. '+x));
-      L.explain=exp; L.theory=true;
-    }
-  }
-  if(window.WAVE_B){
-    const prev=window.WAVE_B[601];
-    window.WAVE_B[601]=function(el){ try{ render(el); }catch(e){ try{ prev(el); }catch(e2){} } };
-  }
-  return {render:render, theory:THEORY};
 })();
