@@ -273,7 +273,7 @@ window.RUKIT = (function(){
           `<button type="button" class="btn" style="flex:1 1 30%;font-size:13px;padding-left:4px;padding-right:4px" onclick="ru601Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'определи часть речи'}</div>`;
       }
-      const p=PRED601[step];
+      const p=(step===8)?null:PRED601[step];
       const predHtml=p?PRED(st,p[0],p[1],p[2]):'';
       const noteHtml=NOTES601[step]?NOTE(NOTES601[step][0],NOTES601[step][1]):'';
       el.innerHTML=`<div class="wv"><div class="wv-col">${scene(step,st)}${extra}${predHtml}${noteHtml}</div></div>`;
@@ -459,7 +459,7 @@ window.RUKIT = (function(){
           `<button type="button" class="btn" style="flex:1 1 30%;font-size:12.5px;padding-left:3px;padding-right:3px" onclick="ru602Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'что за часть слова спрятана?'}</div>`;
       }
-      const p=PRED602[step];
+      const p=(step===8)?null:PRED602[step];
       const predHtml=p?PRED(st,p[0],p[1],p[2]):'';
       const noteHtml=NOTES602[step]?NOTE(NOTES602[step][0],NOTES602[step][1]):'';
       el.innerHTML=`<div class="wv"><div class="wv-col">${scene(step,st)}${extra}${predHtml}${noteHtml}</div></div>`;
@@ -640,7 +640,7 @@ window.RUKIT = (function(){
           `<button type="button" class="btn" style="flex:1 1 30%;font-size:14px" onclick="ru603Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'выбери букву'}</div>`;
       }
-      const p=PRED603[step];
+      const p=(step===8)?null:PRED603[step];
       const predHtml=p?PRED(st,p[0],p[1],p[2]):'';
       const noteHtml=NOTES603[step]?NOTE(NOTES603[step][0],NOTES603[step][1]):'';
       el.innerHTML=`<div class="wv"><div class="wv-col">${scene(step,st)}${extra}${predHtml}${noteHtml}</div></div>`;
@@ -817,7 +817,7 @@ window.RUKIT = (function(){
           `<button type="button" class="btn" style="flex:1 1 22%;font-size:14px" onclick="ru604Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'выбери букву'}</div>`;
       }
-      const p=PRED604[step];
+      const p=(step===8)?null:PRED604[step];
       const predHtml=p?PRED(st,p[0],p[1],p[2]):'';
       const noteHtml=NOTES604[step]?NOTE(NOTES604[step][0],NOTES604[step][1]):'';
       el.innerHTML=`<div class="wv"><div class="wv-col">${scene(step,st)}${extra}${predHtml}${noteHtml}</div></div>`;
@@ -992,7 +992,7 @@ window.RUKIT = (function(){
           `<button type="button" class="btn" style="flex:1;font-size:14px" onclick="ru605Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'выбери написание'}</div>`;
       }
-      const p=PRED605[step];
+      const p=(step===8)?null:PRED605[step];
       const predHtml=p?PRED(st,p[0],p[1],p[2]):'';
       const noteHtml=NOTES605[step]?NOTE(NOTES605[step][0],NOTES605[step][1]):'';
       el.innerHTML=`<div class="wv"><div class="wv-col">${scene(step,st)}${extra}${predHtml}${noteHtml}</div></div>`;
@@ -1167,7 +1167,7 @@ window.RUKIT = (function(){
           `<button type="button" class="btn" style="flex:1;font-size:14px" onclick="ru606Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'подставь местоимение'}</div>`;
       }
-      const p=PRED606[step];
+      const p=(step===8)?null:PRED606[step];
       const predHtml=p?PRED(st,p[0],p[1],p[2]):'';
       const noteHtml=NOTES606[step]?NOTE(NOTES606[step][0],NOTES606[step][1]):'';
       el.innerHTML=`<div class="wv"><div class="wv-col">${scene(step,st)}${extra}${predHtml}${noteHtml}</div></div>`;
@@ -1350,7 +1350,7 @@ window.RUKIT = (function(){
           `<button type="button" class="btn" style="flex:1 1 28%;font-size:12.5px;padding-left:2px;padding-right:2px" onclick="ru607Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее сочетание':'выбери падеж'}</div>`;
       }
-      const p=PRED607[step];
+      const p=(step===8)?null:PRED607[step];
       const predHtml=p?PRED(st,p[0],p[1],p[2]):'';
       const noteHtml=NOTES607[step]?NOTE(NOTES607[step][0],NOTES607[step][1]):'';
       el.innerHTML=`<div class="wv"><div class="wv-col">${scene(step,st)}${extra}${predHtml}${noteHtml}</div></div>`;
@@ -1529,7 +1529,7 @@ window.RUKIT = (function(){
           `<button type="button" class="btn" style="flex:1;font-size:13px" onclick="ru608Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующий глагол':'выбери время'}</div>`;
       }
-      const p=PRED608[step];
+      const p=(step===8)?null:PRED608[step];
       const predHtml=p?PRED(st,p[0],p[1],p[2]):'';
       const noteHtml=NOTES608[step]?NOTE(NOTES608[step][0],NOTES608[step][1]):'';
       el.innerHTML=`<div class="wv"><div class="wv-col">${scene(step,st)}${extra}${predHtml}${noteHtml}</div></div>`;
@@ -1705,7 +1705,7 @@ window.RUKIT = (function(){
           `<button type="button" class="btn" style="flex:1;font-size:14px" onclick="ru609Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее слово':'выбери написание'}</div>`;
       }
-      const p=PRED609[step];
+      const p=(step===8)?null:PRED609[step];
       const predHtml=p?PRED(st,p[0],p[1],p[2]):'';
       const noteHtml=NOTES609[step]?NOTE(NOTES609[step][0],NOTES609[step][1]):'';
       el.innerHTML=`<div class="wv"><div class="wv-col">${scene(step,st)}${extra}${predHtml}${noteHtml}</div></div>`;
@@ -1890,7 +1890,7 @@ window.RUKIT = (function(){
           `<button type="button" class="btn" style="flex:1 1 30%;font-size:11.5px;padding-left:2px;padding-right:2px" onclick="ru610Game('${x[0]}')">${x[1]}</button>`).join('')}</div>`
           +`<div class="wv-sml" style="color:${MUTED}">${done?'нажми любую кнопку — следующее предложение':'выбери ответ'}</div>`;
       }
-      const p=PRED610[step];
+      const p=(step===8)?null:PRED610[step];
       const predHtml=p?PRED(st,p[0],p[1],p[2]):'';
       const noteHtml=NOTES610[step]?NOTE(NOTES610[step][0],NOTES610[step][1]):'';
       el.innerHTML=`<div class="wv"><div class="wv-col">${scene(step,st)}${extra}${predHtml}${noteHtml}</div></div>`;
@@ -2095,6 +2095,8 @@ window.RUKEXAM = (function(){
       if(typeof f === 'function') f(qi, val);
     };
 
+    window.RU_EXAM_ITEMS = window.RU_EXAM_ITEMS || {};
+    window.RU_EXAM_ITEMS[cfg.id] = items;
     window.WAVE_B[cfg.id] = vis;
     (function(){
       const arr = window.ARH_LESSONS || [];
@@ -2299,6 +2301,8 @@ window.RUKEXAM = (function(){
       return Math.max(0, step - cfg.intro.length);
     }
 
+    window.RU_EXAM_ITEMS = window.RU_EXAM_ITEMS || {};
+    window.RU_EXAM_ITEMS[cfg.id] = items;
     window.WAVE_B[cfg.id] = vis;
     (function(){
       const arr = window.ARH_LESSONS || [];
@@ -2335,7 +2339,7 @@ window.RUKEXAM.build({
         '3–4 ошибки — «3»  ·  больше — надо повторить'], ['Важно', 'Отметка покажет, какие слова ещё учить.', '#8fd1a8']]
   ],
   items: [
-    {word:'ап_льсин', hint:"Слово пришло из голландского. Вспомни первый слог.", ans:'а', opts:['а','о'], icon:'orange', spell:'апельсин', ask:'проверяем гласную в первом слоге', rule:'Словарное слово: пишем «апельсин».', note:'Апельсин — от голландского appelsien, «китайское яблоко».'},
+    {word:'ап_льсин', hint:"Слово пришло из голландского. Гласная во втором слоге — не и.", ans:'е', opts:['е','и'], icon:'orange', spell:'апельсин', ask:'проверяем гласную во втором слоге', rule:'Словарное слово: пишем «апельсин» (а-п-е-л-ь-с-и-н).', note:'Апельсин — от голландского appelsien, «китайское яблоко»: ап-ЕЛЬ-син.'},
     {word:'в_лосипед', hint:"Слово собрано из «быстрый» и «нога». Вспомни первую гласную.", ans:'е', opts:['е','и'], icon:'bike', spell:'велосипед', ask:'проверяем гласную в первом слоге', rule:'Словарное слово: пишем «велосипед».', note:'Велосипед — от латинского velox («быстрый») и pes («нога»).'},
     {word:'г_рдероб', hint:"Слово из французского: «хранить» + «одежда».", ans:'а', opts:['а','о'], icon:'hanger', spell:'гардероб', ask:'проверяем гласную в первом слоге', rule:'Словарное слово: пишем «гардероб».', note:'Гардероб — от французского garder («хранить») и robe («одежда»).'},
     {word:'к_лендарь', hint:"Слово из латыни: «первый день месяца».", ans:'а', opts:['а','о'], icon:'calendar', spell:'календарь', ask:'проверяем гласную в первом слоге', rule:'Словарное слово: пишем «календарь».', note:'Календарь — от латинского calendae, «первый день месяца».'},
