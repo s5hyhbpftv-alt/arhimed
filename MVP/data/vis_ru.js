@@ -113,9 +113,11 @@ window.RUKIT = (function(){
   @keyframes rkGlow{0%,100%{box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 0 1px rgba(255,215,106,.16)}50%{box-shadow:0 22px 64px rgba(0,0,0,.6),0 0 0 1px rgba(255,215,106,.34)}}
   @keyframes rkFloat{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-7px);opacity:.85}}
   @keyframes rkDraw{from{stroke-dashoffset:640}to{stroke-dashoffset:0}}
-  .rk-scene{align-self:flex-start;position:relative;width:100vw;left:50%;transform:translateX(-50%);margin:0;box-sizing:border-box;overflow:hidden;
+  .rk-scene{align-self:stretch;position:relative;width:100%;margin:0;box-sizing:border-box;overflow:hidden;
     animation:rkGlow 6.5s ease-in-out infinite;border-radius:0}
   .rk-scene svg{width:100%!important;max-width:100%!important;height:auto!important;display:block}
+  /* на телефоне рисунок занимает весь экран, на планшете и ноутбуке — остаётся в колонке */
+  @media (max-width:640px){ .rk-scene{align-self:flex-start;width:100vw;left:50%;transform:translateX(-50%)} }
   .rk-scene svg > *{animation:rkRise .52s cubic-bezier(.22,.9,.24,1) both}
   .rk-scene svg > *:nth-child(1){animation-delay:.04s}.rk-scene svg > *:nth-child(2){animation-delay:.09s}
   .rk-scene svg > *:nth-child(3){animation-delay:.14s}.rk-scene svg > *:nth-child(4){animation-delay:.19s}
