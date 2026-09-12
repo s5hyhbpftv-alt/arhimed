@@ -72,9 +72,10 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       <rect x="${Math.min(Math.max(q[0]+10, ox+8), ox+pw-96)}" y="${Math.max(q[1]-30, oy+4)}" width="96" height="22" rx="8" fill="rgba(7,16,24,.88)" stroke="rgba(217,164,65,.5)"/>
       ${lab(Math.min(Math.max(q[0]+58, ox+56), ox+pw-48), Math.max(q[1]-14, oy+20), pill, GOLD, 'middle', 11)}`;
   }
+  /* легенда — вертикальным столбиком: длинные названия серий больше не наезжают друг на друга */
   const legend=series.map((s,i)=>`<g>
-    <rect x="${ox+i*110}" y="198" width="10" height="10" rx="2" fill="${s.col}"/>
-    ${lab(ox+16+i*110, 208, s.name, MUTED, 'start', 11)}
+    <rect x="${ox}" y="${178+i*13}" width="9" height="9" rx="2" fill="${s.col}"/>
+    ${lab(ox+13, 186+i*13, s.name, MUTED, 'start', 10.5)}
   </g>`).join('');
   const defs=series.map((s,i)=>`
     <linearGradient id="${gid}s${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${s.col}"/><stop offset="1" stop-color="#fff3c0"/></linearGradient>

@@ -16079,9 +16079,9 @@ function visPhysNew(el){
           if(st.p==null) st.p=Math.max(nums[0]||40,1); if(st.t==null) st.t=Math.max(nums[1]||4,1);
           const v=Math.round(st.p/st.t*10)/10; const px=Math.min(208, st.p*3);
           h=col(
-            `<div class="wv-road" style="width:300px"><div class="wv-lane"></div>
-              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=77" style="width:88px;height:auto;display:block"></div>
-              <div style="position:absolute;top:-4px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${st.p} км</div>
+            `<div class="wv-road" style="width:min(300px,100%)"><div class="wv-lane"></div>
+              <div style="position:absolute;bottom:0;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=77" style="width:88px;height:auto;display:block"></div>
+              <div style="position:absolute;top:2px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${st.p} км</div>
               <div style="position:absolute;top:1px;left:4px;font-size:12px;color:#9fc5f5">⏱ ${st.t} ч</div></div>`+
             big(`S = ${st.p} км · t = ${st.t} ч`)+big(`v = S : t = ${st.p} : ${st.t} = ${v} км/ч`)+
             btns(btn('+10 км',`phAct('${lk}','p+')`),btn('−10 км',`phAct('${lk}','p-')`),btn('⏱ +1 ч',`phAct('${lk}','t+')`),btn('⏱ −1 ч',`phAct('${lk}','t-')`),btn('↺',`phAct('${lk}','r')`))+
@@ -16090,9 +16090,9 @@ function visPhysNew(el){
           if(st.v==null) st.v=Math.max(nums[0]||15,1); if(st.t==null) st.t=Math.max(nums[1]||2,1);
           const S=st.v*st.t; const px=Math.min(208, S*3);
           h=col(
-            `<div class="wv-road" style="width:300px"><div class="wv-lane"></div>
-              <div style="position:absolute;bottom:-2px;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=77" style="width:88px;height:auto;display:block"></div>
-              <div style="position:absolute;top:-4px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${S} км</div></div>`+
+            `<div class="wv-road" style="width:min(300px,100%)"><div class="wv-lane"></div>
+              <div style="position:absolute;bottom:0;left:2px;transform:translateX(${px}px);transition:transform 1s ease;line-height:0"><img src="img/car.png?v=77" style="width:88px;height:auto;display:block"></div>
+              <div style="position:absolute;top:2px;right:2px;font-size:12px;color:#7fa88f;font-weight:bold">${S} км</div></div>`+
             big(`v=${st.v} км/ч · t=${st.t} ч`)+big(`S = v·t = ${S} км`)+
             btns(btn('🚗 +5 км/ч',`phAct('${lk}','v+')`),btn('−5 км/ч',`phAct('${lk}','v-')`),btn('⏱ +1 ч',`phAct('${lk}','t+')`),btn('⏱ −1 ч',`phAct('${lk}','t-')`),btn('↺',`phAct('${lk}','r')`))+
             sml('машинка едет v км/ч t часов — путь S = v·t'));
@@ -16235,7 +16235,7 @@ function visPhysNew(el){
     else if(sel==='units'){
       if(st.v==null) st.v=Math.max(nums[0]||3,1);
       h=col(
-        `<div class="wv-road" style="width:240px;background:#13251c">
+        `<div class="wv-road" style="width:min(240px,100%);background:#13251c">
           <div style="position:absolute;top:0;left:0;bottom:0;width:${Math.min(230,st.v*40)}px;background:linear-gradient(90deg,#7fd1ff,var(--brass));transition:width .6s;display:flex;align-items:center;justify-content:flex-end;padding-right:4px;font-size:13px;font-weight:bold;color:#0b1712">${st.v} м</div></div>`+
         big(`${st.v} м = ${st.v*100} см`)+
         btns(btn('+1 м',`phAct('${lk}','v+')`),btn('−1 м',`phAct('${lk}','v-')`),btn('↺',`phAct('${lk}','r')`))+
