@@ -188,7 +188,6 @@ function rodTop(){
   const notes = (ROD.notes || []).slice(-6).reverse();
   document.getElementById('rodSub').textContent = 'приложение родителя · ' + rodDate(ROD.updated);
   document.getElementById('rodHud').innerHTML =
-    `<span class="chip">👦 <b>${esc(c.name || 'ребёнок')}</b>${c.klass ? ' · ' + esc(c.klass) + ' кл' : ''}</span>` +
     `<span class="chip">код <b>${esc(ROD.code)}</b></span>` +
     `<button class="chip" style="cursor:pointer" onclick="rodRefresh()">↻ Обновить</button>` +
     `<button class="chip" style="cursor:pointer" onclick="rodClear()">⏻ Выйти</button>`;
