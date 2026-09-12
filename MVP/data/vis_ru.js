@@ -3353,6 +3353,12 @@ window.RU601V2 = (function(){
   #lvis .s6 .verdict.ok{color:#b8e8cc}#lvis .s6 .verdict.no{color:#f3b3aa}
   #lvis .s6 .score{font-size:16px;color:var(--mut);font-variant-numeric:tabular-nums}
   #lvis .s6 .col{display:flex;flex-direction:column;gap:12px}
+  #lvis .s6 .note{margin-top:12px;padding:12px 14px 12px 16px;border-left:3px solid rgba(255,215,106,.45);
+    background:linear-gradient(90deg,rgba(255,215,106,.08),transparent 70%);font-size:16px;line-height:1.55}
+  #lvis .s6 .note .lbl{display:block;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#d8c9a6;margin-bottom:4px}
+  #lvis .s6 .note.warn{border-color:rgba(232,106,90,.55);background:linear-gradient(90deg,rgba(232,106,90,.08),transparent 70%)}
+  #lvis .s6 .pr{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(255,215,106,.22)}
+  #lvis .s6 .pr .q{font-size:17px;line-height:1.4;margin-bottom:10px}
   #lvis .s6 .split{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap}
   #lvis .s6 .rail{display:flex;gap:14px;justify-content:center;padding:10px 0;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line)}
   #lvis .s6 .crates{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
@@ -3962,4 +3968,112 @@ window.RU601MOTION = (function(){
   }
   watch();
   return {decorate:decorate, sparks:sparks};
+})();
+
+/* ================= 601 v3: 14 шагов — теория + практика парами, каждый шаг свой =================
+   Семь теоретических кадров (правило, примеры, «как проверить», «частая ошибка») и семь
+   практических (у каждого своё задание и свой способ действия). Отклик — движок RUFEED. */
+window.RU601V3 = (function(){
+  const F="Georgia,'Times New Roman',serif";
+  const THEORY=[
+   {n:'01',t:'Что называет слово',lead:'Должность слова в речи называется частью речи. Вопрос к слову — самый быстрый способ её узнать.',
+    ex:['🧱 предмет · кто? что?','🎨 признак · какой?','⚡ действие · что делает?'],
+    how:'Задай от слова вопрос: кто? что? какой? что делает?',
+    err:'Считать, что «бег» — глагол. Нет: «бег» отвечает на «что?», значит существительное.'},
+   {n:'02',t:'Имя существительное',lead:'Отвечает на кто? или что? и называет предмет, живое существо, вещество или явление.',
+    ex:['кот · кто?','дом · что?','смех · что?','дождь · что?'],
+    how:'Подставь слово в рамку «это …»: это смех, это дождь — существительные.',
+    err:'Путать «смех» и «смеяться»: смех — предмет речи, смеяться — действие.'},
+   {n:'03',t:'Имя прилагательное',lead:'Отвечает на какой? чей? и называет признак, который всегда принадлежит предмету.',
+    ex:['рыжий кот','тёплая вода','зимний день','лисий след'],
+    how:'Найди слово, к которому признак цепляется: прилагательное без предмета не живёт.',
+    err:'Ставить прилагательное главным: в «зимний день» главное — день.'},
+   {n:'04',t:'Глагол',lead:'Отвечает на что делает? что сделает? и называет действие или состояние.',
+    ex:['бежит','светит','спит','радуется'],
+    how:'Спроси «что делает предмет?» — ответ и есть глагол.',
+    err:'Считать глаголом только движение: «спит» и «радуется» — тоже глаголы.'},
+   {n:'05',t:'Местоимение',lead:'Не называет предмет, а указывает на него: я, ты, он, она, мы, вы, они.',
+    ex:['Маша → она','брат → он','мы с тобой → мы'],
+    how:'Если слово можно заменить именем, а имя — местоимением, перед тобой местоимение.',
+    err:'Искать в местоимении «название» предмета: оно только указывает.'},
+   {n:'06',t:'Имя числительное',lead:'Называет число, количество или порядок при счёте.',
+    ex:['пять · сколько?','сто · сколько?','третий · который?','пятый · который?'],
+    how:'Задай вопрос сколько? или который? — и проверь, что слово не стало местоимением.',
+    err:'Путать «пять» и «пятёрка»: пятёрка — существительное, пять — числительное.'},
+   {n:'07',t:'Наречие и служебные слова',lead:'Наречие — признак действия (как? где? когда?) и не изменяется. Предлог, союз, частица ничего не называют — они служат.',
+    ex:['быстро · как?','вдали · где?','на, и, не · служебные'],
+    how:'У наречия нет окончания: проверь, меняется ли слово.',
+    err:'Считать «на» и «и» самостоятельными: они служат, а не называют.'}
+  ];
+  const PRACT=[];
+  let CURST={};
+  function practice(i, k, label, items, right){ const st=CURST;
+    const F1=(i,k,label,items,right)=>`<div class="pr" data-pr="${k}">
+        <div class="q">${label}</div>
+        <div class="row">${items.map((w,j)=>`<button type="button" class="chip ${st['p'+i+'_'+j]=='ok'?'ok':(st['p'+i+'_'+j]=='no'?'no':'')}" onclick="s6P(${i},${j},${right===j?1:0},'${w}')">${w}</button>`).join('')}</div>
+        ${st['p'+i]!=null ? (st['p'+i]==='ok' ? window.RUFEED.note('ok','верно',st['msg'+i]||'правильно')
+                                               : window.RUFEED.note('no','исправить',st['msg'+i]||'попробуй ещё')) : '<div class="cap">Выбери ответ.</div>'}
+      </div>`;
+    return F1(i,k,label,items,right);   /* возвращаем готовую строку, а не функцию */
+  }
+  function frames(s){
+    CURST=s;
+    const P={
+    8:()=>`<h2>Практика: что называет слово</h2>${practice(8,'a','Кто называет предмет?',['снег','летит','пушистый'],0)}
+        ${practice(8,'b','На какой вопрос отвечает «пушистый»?',['какой?','что делает?','кто?'],0)}`,
+    9:()=>`<h2>Практика: имя существительное</h2>${practice(9,'a','Что здесь существительное?',['радость','радостный','радоваться'],0)}
+        ${practice(9,'b','Какой вопрос подходит к «дождь»?',['что?','какой?','что делает?'],0)}
+        ${practice(9,'c','Найди лишнее слово',['смех','бег','бежать'],2)}`,
+    10:()=>`<h2>Практика: прилагательное</h2>${practice(10,'a','Что здесь прилагательное?',['зимний','зима','зимовать'],0)}
+        ${practice(10,'b','К чему цепляется «тёплая»?',['вода','бежит','быстро'],0)}`,
+    11:()=>`<h2>Практика: глагол</h2>${practice(11,'a','Что здесь глагол?',['светит','свет','светлый'],0)}
+        ${practice(11,'b','Какое слово называет состояние?',['спит','бежит','стучит'],0)}`,
+    12:()=>`<h2>Практика: местоимение</h2>${practice(12,'a','Чем заменить «Маша»?',['она','оно','они'],0)}
+        ${practice(12,'b','Что местоимение делает?',['указывает','называет предмет','считает'],0)}`,
+    13:()=>`<h2>Практика: числительное и наречие</h2>${practice(13,'a','Что здесь числительное?',['пятый','пятёрка','пятерня'],0)}
+        ${practice(13,'b','На какой вопрос отвечает «быстро»?',['как?','сколько?','кто?'],0)}
+        ${practice(13,'c','Что служебное?',['на','стол','стоит'],0)}`,
+    14:()=>`<h2>Практика: разбор фразы</h2>${practice(14,'a','Сколько существительных в «Зимний день lightит снег»?',['два','одно','три'],0)}
+        ${practice(14,'b','Сколько глаголов в той же фразе?',['один','два','ни одного'],0)}
+        ${practice(14,'c','Какое слово служебное?',['на','снег','зимний'],0)}`
+    };
+    return {t:(i)=>THEORY[i], p:P};
+  }
+  function render(el){
+    try{ if(window.RUFEED&&window.RUFEED.css) window.RUFEED.css(); }catch(e){}
+    const s=(()=>{ const lk=lidKey(601); if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; })();
+    const step=(typeof LV!=='undefined'&&LV.step)||0;
+    const P=frames(s).p;
+    const body = (step>=1 && step<=7) ? (()=>{ const t=THEORY[step-1];
+        return `<div class="kicker">${t.n} · теория</div><h2>${t.t}</h2><p class="lead">${t.lead}</p>
+          <div class="row">${t.ex.map((e,k)=>`<span class="tag" data-anim style="--i:${k+2}">${e}</span>`).join('')}</div>
+          <div class="note"><span class="lbl">как проверить</span>${t.how}</div>
+          <div class="note warn"><span class="lbl">частая ошибка</span>${t.err}</div>`; })()
+      : (P[step] ? P[step]() : P[8]());
+    el.innerHTML=`<div class="s6" data-frame="${Math.min(14,step+1)}">${body}</div>`;
+  }
+  window.s6P=(frame,j,right,word)=>{
+    const s=(()=>{ const lk=lidKey(601); if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; })();
+    const key='p'+frame+'_'+j;
+    if(s[key]!=null) return;
+    s[key]= right===1?'ok':'no';
+    if(right===1){ s['p'+frame]='ok'; s.msg=null; s['msg'+frame]='«'+word+'» — верно.'; }
+    else { s['p'+frame]='no'; s['msg'+frame]='«'+word+'» — не подходит, посмотри правило выше.'; }
+    chRender(0);
+  };
+  if(window.ARH_LESSONS){
+    const L=window.ARH_LESSONS.find(x=>x.id===601);
+    if(L){
+      const exp=['Вводный кадр: части речи.'];
+      THEORY.forEach((t,i)=>exp.push((i+1)+'. '+t.t+'. '+t.lead));
+      ['Практика: что называет слово','Практика: имя существительное','Практика: прилагательное','Практика: глагол','Практика: местоимение','Практика: числительное и наречие','Практика: разбор фразы']
+        .forEach((x,i)=>exp.push('Вопрос '+(i+1)+' из 7. '+x));
+      L.explain=exp; L.theory=true;
+    }
+  }
+  if(window.WAVE_B){
+    const prev=window.WAVE_B[601];
+    window.WAVE_B[601]=function(el){ try{ render(el); }catch(e){ try{ prev(el); }catch(e2){} } };
+  }
+  return {render:render, theory:THEORY};
 })();
