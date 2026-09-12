@@ -112,7 +112,6 @@
   function toggle(){ open=!open; panEl.classList.toggle('open',open);
     if(open) syncBuildTag();
     if(open){ ctxMenu(); watchMenu(); }
-    if(open&&!caption){ sayBub('Привет! Я Архимед. Нажми 🎙 и скажи «объясни задачу» — или просто ткни «🗣 Прочитай контекст».',4200); }
   }
   function setTalking(v){ talking=v;
     wrapEl.classList.toggle('talking',v);
@@ -259,18 +258,28 @@
      и не более одного раза в день. Больше сама не всплывает. */
   let tipHideTimer=null, tipDone=false;
   const TIP_KEY='arhimed_assist_tip_day';
+  /* Подсказка показывается ОДИН РАЗ НА УСТРОЙСТВО, только на стартовом экране,
+     и висит ровно 3 секунды. При обновлении страницы больше не выскакивает. */
   function tipDaySeen(){
-    try{ if(localStorage.getItem(TIP_KEY)===todayStr()) return true; }catch(e){}
-    try{ return !!(DB&&DB.profile&&DB.profile.tipDay&&DB.profile.tipDay===todayStr()); }catch(e){}
+    try{ if(localStorage.getItem(TIP_KEY)) return true; }catch(e){}
+    try{ return !!(DB&&DB.profile&&(DB.profile.tipDone||DB.profile.tipDay)); }catch(e){}
     return false;
   }
   function tipDayMark(){
-    try{ localStorage.setItem(TIP_KEY, todayStr()); }catch(e){}
-    try{ if(DB&&DB.profile){ DB.profile.tipDay=todayStr(); DB.profile.tipDone=1; if(typeof save==='function') save(); } }catch(e){}
+    try{ localStorage.setItem(TIP_KEY,'1'); }catch(e){}
+    try{ if(DB&&DB.profile){ DB.profile.tipDone=1; if(typeof save==='function') save(); } }catch(e){}
+  }
+  function onStartScreen(){
+    try{
+      if(typeof LV!=='undefined' && LV && LV.id) return false;               // внутри урока — не показываем
+      if(typeof UI!=='undefined' && UI && UI.tab && UI.tab!=='path') return false;
+      return true;
+    }catch(e){ return false; }
   }
   function tipLoop(){
     if(tipDone) return; tipDone=true;                     // один раз за запуск приложения
-    if(tipDaySeen()) return;                              // и не чаще одного раза в день
+    if(tipDaySeen()) return;                              // и только один раз за всё время
+    if(!onStartScreen()) return;                          // и только на стартовом экране
     setTimeout(()=>{ try{
       if(!(DB&&DB.profile)) return;                       // не показываем до создания профиля
       if(typeof AGENTLIVE!=='undefined'&&AGENTLIVE.state&&AGENTLIVE.state()) return; // не мешать разговору
