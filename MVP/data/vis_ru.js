@@ -4399,38 +4399,39 @@ window.RU615PAPER = (function(){
     });
     return sv(s,120);
   }
-  /* карта часовых поясов Дальнего Востока и часы Коли (19:50) */
+  /* карта часовых поясов: силуэт Дальневосточного округа, разбитый на цветные пояса,
+     как на карте в PDF (розовый МСК+5, бирюзовый МСК+6, оранжевый МСК+7,
+     жёлто-зелёный МСК+8, синий МСК+9) плюс часы Коли */
   function zones(){
-    const R=[
-      ['МСК+6','Якутск',  92, 96, 58, 'Чита'],
-      ['МСК+7','',       152, 92, 52, 'Благовещенск'],
-      ['МСК+8','Магадан',214, 92, 54, 'Хабаровск'],
-      ['МСК+9','Анадырь',276, 92, 52, 'Владивосток']
+    const Z=[
+      ['#f0a8c8','МСК+5','', '10,150 52,132 66,150 60,176 20,176'],            /* розовый, слева внизу */
+      ['#3fc9a0','МСК+6','Якутск', '10,64 84,44 132,58 148,86 140,140 96,158 52,132 10,150'],   /* бирюзовый */
+      ['#f0a04a','МСК+7','', '132,58 178,46 208,66 214,120 176,152 140,140 148,86'],             /* оранжевый */
+      ['#c8d84a','МСК+8','Магадан', '178,46 250,52 276,84 268,132 214,150 176,152 214,120 208,66'], /* жёлто-зелёный */
+      ['#3f9fd8','МСК+9','Анадырь', '250,52 300,44 336,60 344,96 318,132 276,132 276,84']         /* синий */
     ];
-    let s='';
-    /* условная карта: пять цветных областей, как на карте округа */
-    const FILL=['#5bc4a0','#6fc9b4','#98d2c6','#8fc7e0','#7fb2d8'];
-    R.forEach((r,i)=>{ const [z,city,cx,cy,w]=r;
-      s+=`<rect x="${cx-w/2}" y="${cy-30}" width="${w}" height="56" rx="8" fill="${FILL[i]}" opacity=".55" stroke="rgba(42,33,24,.35)"/>`;
-      s+=tx(cx, cy-8, z, 12, INK);
-      if(city) s+=tx(cx, cy+10, city, 10.5, INK);
+    const LX={'МСК+5':[38,146],'МСК+6':[84,96],'МСК+7':[178,92],'МСК+8':[240,96],'МСК+9':[306,88]};
+    const CX={'Якутск':[84,116],'Магадан':[240,116],'Анадырь':[306,108]};
+    let s=tx(180,20,'Дальневосточный федеральный округ России',11.5,INK);
+    Z.forEach(([col,lab,city,pts])=>{
+      s+=`<polygon points="${pts}" fill="${col}" opacity=".8" stroke="rgba(42,33,24,.45)" stroke-width=".8"/>`;
+      const L=LX[lab]; s+=tx(L[0],L[1],lab,11,INK);
+      if(city){ const C=CX[city]; s+=tx(C[0],C[1],city,10,INK); }
     });
-    /* подписи городов вдоль нижнего края, как на карте */
-    const CITIES=[['Улан-Удэ',60,146],['Чита',104,158],['Благовещенск',170,146],['Хабаровск',228,158],
-                  ['Владивосток',120,184],['Южно-Сахалинск',206,184],['Петропавловск-Камч.',300,170]];
-    CITIES.forEach(([n,x,y])=>{ s+=`<circle cx="${x}" cy="${y-4}" r="2.6" fill="${INK}"/>`+tx(x,y+10,n,9.5,INK); });
-    s+=tx(184,22,'Дальневосточный федеральный округ · пять часовых поясов',10.5,INK);
-    /* часы: 19:50 — часовая между 7 и 8, минутная на 10 */
-    const cx=318, cy=170, r=26;
-    s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fffdf7" stroke="${INK}" stroke-width="1.6"/>`;
+    /* острова */
+    s+=`<ellipse cx="196" cy="34" rx="14" ry="5" fill="#3fc9a0" opacity=".8"/>`;
+    s+=`<ellipse cx="228" cy="30" rx="9" ry="4" fill="#3fc9a0" opacity=".7"/>`;
+    /* часы: 19:50 */
+    const cx=316, cy=176, r=24;
+    s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fffdf7" stroke="${INK}" stroke-width="1.4"/>`;
     for(let h=0;h<12;h++){ const a=(h*30-90)*Math.PI/180;
-      s+=`<line x1="${cx+Math.cos(a)*(r-3)}" y1="${cy+Math.sin(a)*(r-3)}" x2="${cx+Math.cos(a)*r}" y2="${cy+Math.sin(a)*r}" stroke="${INK}" stroke-width="1"/>`; }
+      s+=`<line x1="${cx+Math.cos(a)*(r-3)}" y1="${cy+Math.sin(a)*(r-3)}" x2="${cx+Math.cos(a)*r}" y2="${cy+Math.sin(a)*r}" stroke="${INK}" stroke-width=".9"/>`; }
     const hA=(7.83*30-90)*Math.PI/180, mA=(50*6-90)*Math.PI/180;
-    s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(hA)*(r*0.55)}" y2="${cy+Math.sin(hA)*(r*0.55)}" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/>`;
-    s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(mA)*(r*0.8)}" y2="${cy+Math.sin(mA)*(r*0.8)}" stroke="${GOLD}" stroke-width="1.8" stroke-linecap="round"/>`;
-    s+=`<circle cx="${cx}" cy="${cy}" r="1.8" fill="${INK}"/>`;
-    s+=tx(cx, cy+40, 'часы Коли: 19:50', 10, INK);
-    return sv(s,214);
+    s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(hA)*(r*0.55)}" y2="${cy+Math.sin(hA)*(r*0.55)}" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"/>`;
+    s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(mA)*(r*0.78)}" y2="${cy+Math.sin(mA)*(r*0.78)}" stroke="${GOLD}" stroke-width="1.6" stroke-linecap="round"/>`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="1.6" fill="${INK}"/>`;
+    s+=tx(232,176,'часы Коли: 19:50',10,INK);
+    return sv(s,210);
   }
   if(window.RU615 && window.RU615.art){ window.RU615.art.line=coordLine; window.RU615.art.zones=zones; }
 })();
