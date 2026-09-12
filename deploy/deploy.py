@@ -19,6 +19,7 @@
 import os
 import re
 import sys
+import urllib.parse
 from pathlib import Path
 
 REPO = os.environ.get('ARH_REPO', 's5hyhbpftv-alt/arhimed')
@@ -29,6 +30,10 @@ ROOT = os.environ.get('ARH_ROOT', '/opt')
 APP = os.environ.get('ARH_APP', 'arhimed')
 KEYFILE = os.environ.get('ARH_KEYFILE', 'ключ_яндекса.txt')
 LOCAL_INDEX = Path(os.environ.get('ARH_LOCAL_INDEX', 'MVP/index.html'))
+# приложение родителя и API кодов детей
+SITE_PARENT = SITE + urllib.parse.quote('родитель') + '/'
+SITE_API = SITE.rsplit('/MVP/', 1)[0] + '/api/kid'
+DATADIR = f'{ROOT}/{APP}-data'
 
 HERE = Path(__file__).resolve().parent
 ENV_FILE = HERE / 'deploy.local.env'
@@ -122,12 +127,23 @@ mv {ROOT}/{APP}-new {ROOT}/{APP}
 systemctl restart {SERVICE}
 sleep 3
 
+# 5) каталог с кодами детей — ВНЕ папки выкладки, поэтому обновления его не трогают
+mkdir -p {DATADIR}/kids
+echo "--- коды детей на сервере:"
+ls {DATADIR}/kids 2>/dev/null | wc -l
+
 echo "--- версия на сервере:"
 grep -o 'v=[0-9]*' {ROOT}/{APP}/MVP/index.html | sort | uniq -c | head
 echo "--- ключ на месте:"
 test -f {ROOT}/{APP}/{KEYFILE} && echo YES || echo NO
 echo "--- ответ сайта:"
 curl -s -o /dev/null -w "%{{http_code}}" {SITE} || true
+echo ""
+echo "--- ответ приложения родителя:"
+curl -s -o /dev/null -w "%{{http_code}}" '{SITE_PARENT}' || true
+echo ""
+echo "--- ответ API кодов:"
+curl -s {SITE_API} | head -c 90 || true
 echo ""
 echo "--- выкладка заняла: $(( $(date +%s) - START )) c"
 '''
@@ -169,6 +185,18 @@ def main():
             ok = False
     if 'YES' not in out:
         print('ВНИМАНИЕ: ключ_яндекса.txt на сервере не найден')
+        ok = False
+    # приложение родителя: страница и API кодов должны отвечать
+    par = re.search(r'ответ приложения родителя:\s*(\d+)', out)
+    if par and par.group(1) == '200':
+        print('ПРОВЕРКА: приложение родителя отвечает 200')
+    else:
+        print('ПРОВЕРКА НЕ ПРОШЛА: приложение родителя не отвечает (ждём 200)')
+        ok = False
+    if 'arhimed-kid' in out:
+        print('ПРОВЕРКА: API кодов детей работает')
+    else:
+        print('ПРОВЕРКА НЕ ПРОШЛА: API кодов детей не отвечает')
         ok = False
     print('ИТОГ:', 'выложено успешно' if ok else 'есть замечания, смотри вывод выше')
     sys.exit(0 if ok else 1)

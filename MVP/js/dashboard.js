@@ -38,7 +38,10 @@ function renderParentLock(){
     <input class="gate-in" id="gatePass" type="password" placeholder="•••••">
     <button class="btn" style="width:100%;margin-top:12px" onclick="tryParent()">Войти</button>
     <div class="small" style="margin-top:8px">Доступ по умолчанию: admin / admin</div>
-  </div>`;
+    <div class="small" style="margin-top:10px">Отчёт можно смотреть и с телефона родителя — в приложении «Родитель».
+      Для этого нужен код ребёнка.</div>
+  </div>
+  ${typeof kidCodeCard==='function'?kidCodeCard():''}`;
   const p=document.getElementById('gatePass'); if(p){ p.focus(); p.addEventListener('keydown',e=>{ if(e.key==='Enter') tryParent(); }); }
   hud();
 }

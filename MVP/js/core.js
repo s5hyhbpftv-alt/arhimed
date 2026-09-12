@@ -43,7 +43,9 @@ function totalMinutes(){ let t=0; const d=DB.days||{}; Object.keys(d).forEach(k=
 function save(){ DB.today.minutes = Math.max(DB.today.minutes, Math.round((Date.now()-DB.sessionStart)/60000));
   const r=dayRec(Date.now()); r.min=Math.max(r.min||0, DB.today.minutes||0);
   DB.totalMin=totalMinutes();
-  try{ localStorage.setItem(KEY, JSON.stringify(DB)); }catch(e){} }
+  try{ localStorage.setItem(KEY, JSON.stringify(DB)); }catch(e){}
+  try{ if(typeof kidPush==='function') kidPush(); }catch(e){}
+  try{ if(typeof kidLimitCheck==='function') kidLimitCheck(); }catch(e){} }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function rankName(){ const n=Object.keys(DB.tasks).filter(id=>DB.tasks[id].done).length;
   let r=RANKS[0][1]; for(const [t,x] of RANKS) if(n>=t) r=x; return r; }
