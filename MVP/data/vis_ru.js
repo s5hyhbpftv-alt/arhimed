@@ -2865,15 +2865,7 @@ window.RUTRAIN = (function(){
     }catch(e){}
   };
   /* подменяем кадр тренажёра во всех уроках русского */
-  if(window.WAVE_B){
-    Object.keys(window.RUTRAIN_DATA).forEach(id=>{
-      const orig=window.WAVE_B[id]; if(typeof orig!=='function') return;
-      window.WAVE_B[id]=function(el){
-        try{ if(((typeof LV!=='undefined'&&LV.step)||0)===8 && window.RUTRAIN_DATA[id]){ render(el, id); return; } }catch(e){}
-        return orig(el);
-      };
-    });
-  }
+  /* RUTRAIN больше не подключается к урокам: буквы теперь рисует RULETTER (см. ниже) */
   return {render:render, data:window.RUTRAIN_DATA};
 })();
 
@@ -3016,4 +3008,95 @@ window.RUTHEME = (function(){
   }
   window.RUTHEME_DATA={601:W601, 610:S610, ok610:OK610, crates:CRATES};
   return {render601:render601, render610:render610};
+})();
+
+/* ================= RULETTER: вставка буквы в слово, переписано с нуля =================
+   Почему заново: прежний вариант масштабировал текст при анимации (transform: scale),
+   из-за этого буква мылилась, а на планшете интерактив мог не отрисоваться вовсе.
+   Здесь: буква создаётся сразу нужного кегля и анимируется ТОЛЬКО положением,
+   у шрифта включены сглаживание и точная отрисовка, а если измерить позиции не удалось —
+   буква всё равно встаёт в слово мгновенно, без анимации. */
+window.RULETTER = (function(){
+  const FONT = "Georgia,'Times New Roman',serif";
+  const CSS = `
+  #lvis .rl-wrap{width:100%;display:flex;flex-direction:column;align-items:center;gap:16px}
+  #lvis .rl-title{font:600 21px/1.25 ${FONT};color:#ffd76a;letter-spacing:.01em;-webkit-font-smoothing:antialiased}
+  #lvis .rl-word{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:4px 2px}
+  #lvis .rl-cell{min-width:52px;height:70px;padding:0 10px;display:flex;align-items:center;justify-content:center;
+    font-family:${FONT};font-size:46px;line-height:1;font-weight:600;color:#f8f2e4;
+    -webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;
+    background:linear-gradient(180deg,#20342a,#16241d);border:1.5px solid rgba(255,215,106,.30);border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06);
+    animation:rlIn .42s cubic-bezier(.22,.9,.24,1) both}
+  #lvis .rl-cell.rl-gap{border-style:dashed;border-color:rgba(255,215,106,.85);background:linear-gradient(180deg,#22352b,#16241d);
+    animation:rlPulse 1.8s ease-in-out infinite}
+  #lvis .rl-cell.rl-ok{border-color:#8fd1a8;background:linear-gradient(180deg,#244233,#182a21);box-shadow:0 8px 20px rgba(0,0,0,.45), inset 0 0 22px rgba(143,209,168,.28);
+    animation:rlLand .5s cubic-bezier(.2,1.25,.3,1) both}
+  #lvis .rl-cell.rl-no{border-color:#e86a5a;background:linear-gradient(180deg,#3a2422,#281815);box-shadow:0 8px 20px rgba(0,0,0,.45), inset 0 0 22px rgba(232,106,90,.26);
+    animation:rlShake .5s cubic-bezier(.36,.07,.19,.97) both}
+  @keyframes rlIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes rlLand{0%{opacity:.35}60%{opacity:1}100%{opacity:1}}
+  @keyframes rlPulse{0%,100%{box-shadow:0 8px 20px rgba(0,0,0,.45),0 0 0 0 rgba(255,215,106,.30)}50%{box-shadow:0 8px 20px rgba(0,0,0,.45),0 0 0 10px rgba(255,215,106,0)}}
+  @keyframes rlShake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-6px)}40%,60%{transform:translateX(6px)}}
+  #lvis .rl-hint{font-family:${FONT};font-size:16px;color:#e6dcc6;-webkit-font-smoothing:antialiased}
+  #lvis .rl-score{font-family:${FONT};font-size:15px;color:#cbb89a}
+  #lvis .rl-btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%}
+  #lvis .rl-btn{min-width:78px;font-family:${FONT}!important;font-size:34px!important;font-weight:600!important;line-height:1!important;
+    padding:14px 20px!important;border-radius:18px!important;-webkit-font-smoothing:antialiased;
+    transition:transform .16s cubic-bezier(.2,1.3,.3,1), box-shadow .2s}
+  #lvis .rl-btn:active{transform:translateY(2px) scale(.97)}
+  .rl-fly{position:fixed;z-index:330;pointer-events:none;display:flex;align-items:center;justify-content:center;
+    font-family:${FONT};font-weight:600;color:#ffe9a8;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;
+    will-change:transform;transition:transform .46s cubic-bezier(.25,.75,.2,1), opacity .46s ease-in}
+  `;
+  function css(){ try{ let e=document.getElementById('rl-style'); if(!e){ e=document.createElement('style'); e.id='rl-style'; document.head.appendChild(e); } if(e.textContent!==CSS) e.textContent=CSS; }catch(e){} }
+  function S(lk){ if(typeof CHS==='undefined') window.CHS={}; if(!CHS[lk]) CHS[lk]={}; return CHS[lk]; }
+  const L={603:[['м_лодой','о','мОлодость'],['л_сной','е','лЕс'],['г_ра','о','гОры'],['п_сьмо','и','пИсьма'],['з_мля','е','зЕмли'],['х_лодный','о','хОлод']],
+           604:[['сне_','г','снега'],['гла_','з','глаза'],['ло_ка','ж','ложечка'],['моро_','з','морозы'],['зу_','б','зубы'],['кни_ка','ж','книжечка']]};
+  const B={603:[['о','о'],['е','е'],['и','и']], 604:[['г','г'],['з','з'],['б','б'],['ж','ж']]};
+  function draw(el,id){
+    css(); const lk=lidKey(id), s=S(lk); if(s.gIdx==null||s.gIdx>=L[id].length*4) s.gIdx=0; if(s.gRes===undefined) s.gRes=null;
+    const i=(s.gIdx||0)%L[id].length, it=L[id][i], word=it[0], right=it[1], hint=it[2], got=s.gRes, done=got!=null, ok=got===right;
+    const cells=[...word].map((ch,k)=>{
+      const gap=(ch==='_');
+      const cls='rl-cell'+(gap?(done?(ok?' rl-ok':' rl-no'):' rl-gap'):'');
+      const txt=gap?(done?got:''):ch;
+      return `<div class="${cls}" ${gap?'id="rlGap"':''} style="animation-delay:${(k*0.04).toFixed(2)}s">${txt}</div>`;
+    }).join('');
+    const verdict = done ? (ok ? '✅ верно: '+hint : '❌ правильно «'+right+'» — '+hint) : 'найди проверочное слово и выбери букву';
+    el.innerHTML=`<div class="rl-wrap">
+      <div class="rl-title">Вставь букву</div>
+      <div class="rl-word">${cells}</div>
+      <div class="rl-hint">${verdict}</div>
+      <div class="rl-btns">${B[id].map(b=>`<button type="button" class="btn rl-btn" data-key="${b[0]}" onclick="rlPick(${id},'${b[0]}')">${b[1]}</button>`).join('')}</div>
+      <div class="rl-score">верно: ${s.gOk||0} · ошибок: ${s.gBad||0} · всего: ${L[id].length}</div>
+      <div class="rl-hint">${done?'нажми любую букву — следующее слово':'выбери букву'}</div></div>`;
+  }
+  window.rlPick=function(id,key){
+    let from=null,to=null;
+    try{
+      const lk=lidKey(id), s=S(lk), i=(s.gIdx||0)%L[id].length, right=L[id][i][1];
+      if(s.gRes!=null){ s.gIdx=(s.gIdx||0)+1; s.gRes=null; chRender(0); return; }
+      const btn=document.querySelector('#lvis button[data-key="'+key+'"]');
+      const gap=document.getElementById('rlGap');
+      if(btn) from=btn.getBoundingClientRect();
+      if(gap) to=gap.getBoundingClientRect();
+      s.gRes=key; if(key===right) s.gOk=(s.gOk||0)+1; else s.gBad=(s.gBad||0)+1;
+      chRender(0);                       /* буква встаёт в слово сразу — работает даже без анимации */
+    }catch(e){}
+    try{
+      if(!from||!to) return;
+      const c=document.createElement('div'); c.className='rl-fly'; c.textContent=key;
+      c.style.fontSize=to.height*0.62+'px'; c.style.width=to.width+'px'; c.style.height=to.height+'px';
+      c.style.left=from.left+'px'; c.style.top=from.top+'px'; document.body.appendChild(c);
+      const dx=(to.left+to.width/2)-(from.left+from.width/2), dy=(to.top+to.height/2)-(from.top+from.height/2);
+      requestAnimationFrame(()=>{ c.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px)'; c.style.opacity='0'; });
+      setTimeout(()=>{ try{ c.remove(); }catch(e){} }, 520);
+    }catch(e){}
+  };
+  if(window.WAVE_B) Object.keys(L).forEach(id=>{
+    const orig=window.WAVE_B[id]; if(typeof orig!=='function') return;
+    window.WAVE_B[id]=function(el){ try{ if(((typeof LV!=='undefined'&&LV.step)||0)===8){ draw(el,id); return; } }catch(e){} return orig(el); };
+  });
+  return {draw:draw, data:L, buttons:B};
 })();
