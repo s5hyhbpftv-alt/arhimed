@@ -4245,7 +4245,7 @@ window.RU615PAPER = (function(){
     display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
   #lvis .pp::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.05;
     background-image:radial-gradient(${INK} .6px,transparent .6px);background-size:7px 7px}
-  #lvis .pp .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  #lvis .pp .head{position:static;width:auto;display:flex;justify-content:space-between;align-items:baseline;gap:10px;
     border-bottom:1px solid ${RULE};padding-bottom:8px}
   #lvis .pp .num{font-size:clamp(12px,3.4vw,14px);letter-spacing:.1em;text-transform:uppercase;color:${MUT}}
   #lvis .pp .of{font-size:clamp(12px,3.4vw,14px);color:${MUT};font-variant-numeric:tabular-nums}
@@ -4273,7 +4273,8 @@ window.RU615PAPER = (function(){
   #lvis .pp .mark .d{stroke-dasharray:34;stroke-dashoffset:34;animation:ppDraw 360ms cubic-bezier(.2,1,.32,1) 120ms both}
   #lvis .pp .mark p{margin:0;font-size:clamp(14.5px,4vw,16px);line-height:1.5}
   #lvis .pp .mark.ok p{color:${OKC}}#lvis .pp .mark.no p{color:${NOC}}
-  #lvis .pp .nav{display:flex;gap:10px;flex-wrap:wrap}
+  #lvis .pp .nav{display:flex;gap:10px;flex-wrap:wrap;position:static;left:auto;right:auto;top:auto;bottom:auto;
+    width:auto;max-width:100%;padding:0;margin:0;background:none;border:none;box-shadow:none;transform:none}
   #lvis .pp .nav button{flex:1 1 45%;min-width:120px;padding:12px 12px;white-space:nowrap;border-radius:10px;border:1px solid ${RULE};background:${PAPER2};
     font-family:${F};font-size:clamp(15px,4vw,16px);color:${INK};cursor:pointer}
   #lvis .pp .nav button:active{transform:translateY(1px)}
