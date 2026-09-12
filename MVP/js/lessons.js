@@ -35,7 +35,9 @@ function lessonClassRange(L){
     return sub==='phys'?[7,9] : sub==='chem'?[8,9] : sub==='inf'?[7,9] : [5,9];
   }catch(e){ return [5,9]; }
 }
-function lessonFits(L){ const r=lessonClassRange(L), o=openClassRange(); return !(r[1]<o[0]||r[0]>o[1]); }
+function lessonFits(L){ /* при открытом мире уроки не прячем по классу — как и задачи */
+  try{ if(typeof worldOpen==='function' && worldOpen()) return true; }catch(e){}
+  const r=lessonClassRange(L), o=openClassRange(); return !(r[1]<o[0]||r[0]>o[1]); }
 
 function subjOf(L){ return (L&&L.subj) || (/Начальная школа/.test(L.src||'')?'jun':/Информатика/.test(L.src||'')?'inf':/физика/i.test(L.src||'')?'phys':'math'); }
 /* сортировка списка: сначала уроки ТЕКУЩЕГО класса (в порядке обучения),
@@ -120,7 +122,7 @@ function renderBookList(){
             <span class="small" style="color:var(--muted)">${esc(g.meta.dsc)} · ${gd}/${g.items.length} пройдено</span></span>
           </div>${lessonsWithDivider(g.items)}`; })()
     : grouped.filter(g=>g.subj!=='all').map((g,i)=>{
-        const isOpen = BK.open[g.subj]===true || (BK.open[g.subj]===undefined && i===0);
+        const isOpen = BK.open[g.subj]!==false;   /* разделы каталога раскрыты по умолчанию: уроки видно сразу */
         const gd=g.items.filter(L=>DB.lessons&&DB.lessons[L.id]&&DB.lessons[L.id].done).length;
         return `<div class="book-sec">
           <div class="bs-head" onclick="bookToggle('${g.subj}')">
