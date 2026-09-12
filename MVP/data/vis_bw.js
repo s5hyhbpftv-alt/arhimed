@@ -3087,10 +3087,14 @@ window.physChart=function(series, xMark, yMark, xl, yl, uid, unit){
       </div>`;
     } else if(step===7){
       const show=st.p7&&st.go7;
+      /* Ролик вернули и на опыт: он показывает кубик в баке, но подпись у него нейтральная —
+         числа про 90 % даёт схема ниже, потому что в ролике кубик опускается на дно. */
       h=`<div class="wv-col">
-        ${show?frame(tank(0.9,'ice')):physShot('ice.jpg','кубик льда · брось в бак')}
+        ${show
+          ? physShot('ice.mp4','опыт · кубик в баке с водой')+frame(tank(0.9,'ice'))
+          : physShot('ice.jpg','кубик льда · брось в бак')}
         ${pred(st,'p7','Лёд в воде. Что сделает?',[{k:'float',t:'всплывёт'},{k:'sink',t:'утонет'},{k:'hang',t:'повиснет'}])}
-        ${st.p7?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].go7=1;chRender(0);}catch(e){}">Бросить в бак</button>`:''}
+        ${st.p7&&!st.go7?`<button type="button" class="btn" onclick="try{const k=lidKey(LV.id);CHS[k]=CHS[k]||{};CHS[k].go7=1;chRender(0);}catch(e){}">Бросить в бак</button>`:''}
         ${show?note('Расчёт','ρ = 0,9. Доля погружения = 0,9 / 1 = 90 %. Схема показывает, как это выглядит: почти весь кубик под водой. Ты '+(st.p7==='float'?'угадал':'думал иначе — смотри схему')):note('Предскажи до опыта','Не смотри ответ глазами. Сначала выбери вариант.')}
       </div>`;
     } else if(step===8){
